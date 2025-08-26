@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151033093AB;
-	Tue, 26 Aug 2025 11:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34111F560B;
+	Tue, 26 Aug 2025 11:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208061; cv=none; b=eb7Wk6bvCqBYWLmncRqcq0FOeCOw4GGUcTwbgokCmtn46kRTViAXmEG03UJu4zCDlQ5scLmYqGn1JuUfHDe27AvtGxqdnHnekC6ni3Vn22SjMD9Kvy3iNoppR7wDURqrL6YRw6buTTi76DF8Z5iOHef6lGJwjRA0TQOHgPGRi2k=
+	t=1756208063; cv=none; b=ZFxChH4ke6H8PbUVfNJ07f9ClO1ifu0RAoqrm2DLY0I/OryStw64/1k+uyEy6YDtWeX7tKKo2x6gtcvaESphWyjlQfOjFObQbKaPnXkux+p+SFkBEolfh0ElDnWKh51o45sClgaiUMrGoUIXf7LG921I7M+iKd7l5ZCyaqTin4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208061; c=relaxed/simple;
-	bh=HcPcDJ0sdbE/aRPeJU4bNS71nqG4RmuXhJM4TQ9gnTg=;
+	s=arc-20240116; t=1756208063; c=relaxed/simple;
+	bh=4jaPy8N1tohOVSOCwD+dohrIYf+sHv82UE3wuJsJMSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrIYb/ufhwAN1QA6eHHuQospz9AJxe58aNBjrNT8guOSUzGayXHEaBL0wcF4/9YgkW92ZYkSwGWeTBlPtP2NFpbKrWm7XxvZ6OPZq4ehN3XMgDaSG2vghiq8tfcDHQLYZV1Y31Ar8IUQdXGQw/hxTWpc1QVINrM0gX6Sj+FLjig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwRwrdTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5hGnlk5AFpRFCprdmKopnlDbDJGnnUYlhGUzNCznJSk4rRATbkrspp0CK3ErRYBAVgBl+j08z4MlAYKR7b6vpayVKibeedVgiCer9PeetkqNeGFXisUvDcO2tzJlO5UEl2fe9wYDcIuMk8sR1omkvYaYFZpn2FrLOADMfTznt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5zPZX/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwRwrdTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49D2C4CEF1;
-	Tue, 26 Aug 2025 11:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5zPZX/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4527BC4CEF1;
+	Tue, 26 Aug 2025 11:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208061;
-	bh=HcPcDJ0sdbE/aRPeJU4bNS71nqG4RmuXhJM4TQ9gnTg=;
+	s=korg; t=1756208063;
+	bh=4jaPy8N1tohOVSOCwD+dohrIYf+sHv82UE3wuJsJMSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwRwrdTdlXk/H7wmrBQRHU48on38HjDU2XQTbiIGBWOVpBNKIotiBEoxycbfnDUL8
-	 HfvGhJqKQ6kUUFgIN3tfyeqzaEI0JQTi0hrsfaSWBIkXhIf+AyQzM0UPSLF2hajpDY
-	 bmd82Q7NjxLnoQWRXYFxvSt6DuH7Vn8gXpMCowfA=
+	b=d5zPZX/5hjNB1lM2cQesgJlEep6U//YlKB+Oagv31vvPtmvqaEqtM5m9noRMEV782
+	 WMbP6zTgfiYe51o/xy2MGtbGid9PALrXtKwgK5amrXm9Hk0RkGWxvXlltan1uBbrys
+	 K/t/+mz7zeCwxHTDBfvbTiwVIMtwfsb+4FGKCa7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kanglong Wang <wangkanglong@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 415/457] net/smc: fix UAF on smcsk after smc_listen_out()
-Date: Tue, 26 Aug 2025 13:11:39 +0200
-Message-ID: <20250826110947.550085781@linuxfoundation.org>
+Subject: [PATCH 6.16 424/457] LoongArch: Optimize module load time by optimizing PLT/GOT counting
+Date: Tue, 26 Aug 2025 13:11:48 +0200
+Message-ID: <20250826110947.769406077@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -54,105 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Kanglong Wang <wangkanglong@loongson.cn>
 
-[ Upstream commit d9cef55ed49117bd63695446fb84b4b91815c0b4 ]
+[ Upstream commit 63dbd8fb2af3a89466538599a9acb2d11ef65c06 ]
 
-BPF CI testing report a UAF issue:
+When enabling CONFIG_KASAN, CONFIG_PREEMPT_VOLUNTARY_BUILD and
+CONFIG_PREEMPT_VOLUNTARY at the same time, there will be soft deadlock,
+the relevant logs are as follows:
 
-  [   16.446633] BUG: kernel NULL pointer dereference, address: 000000000000003  0
-  [   16.447134] #PF: supervisor read access in kernel mod  e
-  [   16.447516] #PF: error_code(0x0000) - not-present pag  e
-  [   16.447878] PGD 0 P4D   0
-  [   16.448063] Oops: Oops: 0000 [#1] PREEMPT SMP NOPT  I
-  [   16.448409] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:1 Tainted: G           OE      6.13.0-rc3-g89e8a75fda73-dirty #4  2
-  [   16.449124] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODUL  E
-  [   16.449502] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/201  4
-  [   16.450201] Workqueue: smc_hs_wq smc_listen_wor  k
-  [   16.450531] RIP: 0010:smc_listen_work+0xc02/0x159  0
-  [   16.452158] RSP: 0018:ffffb5ab40053d98 EFLAGS: 0001024  6
-  [   16.452526] RAX: 0000000000000001 RBX: 0000000000000002 RCX: 000000000000030  0
-  [   16.452994] RDX: 0000000000000280 RSI: 00003513840053f0 RDI: 000000000000000  0
-  [   16.453492] RBP: ffffa097808e3800 R08: ffffa09782dba1e0 R09: 000000000000000  5
-  [   16.453987] R10: 0000000000000000 R11: 0000000000000000 R12: ffffa0978274640  0
-  [   16.454497] R13: 0000000000000000 R14: 0000000000000000 R15: ffffa09782d4092  0
-  [   16.454996] FS:  0000000000000000(0000) GS:ffffa097bbc00000(0000) knlGS:000000000000000  0
-  [   16.455557] CS:  0010 DS: 0000 ES: 0000 CR0: 000000008005003  3
-  [   16.455961] CR2: 0000000000000030 CR3: 0000000102788004 CR4: 0000000000770ef  0
-  [   16.456459] PKRU: 5555555  4
-  [   16.456654] Call Trace  :
-  [   16.456832]  <TASK  >
-  [   16.456989]  ? __die+0x23/0x7  0
-  [   16.457215]  ? page_fault_oops+0x180/0x4c  0
-  [   16.457508]  ? __lock_acquire+0x3e6/0x249  0
-  [   16.457801]  ? exc_page_fault+0x68/0x20  0
-  [   16.458080]  ? asm_exc_page_fault+0x26/0x3  0
-  [   16.458389]  ? smc_listen_work+0xc02/0x159  0
-  [   16.458689]  ? smc_listen_work+0xc02/0x159  0
-  [   16.458987]  ? lock_is_held_type+0x8f/0x10  0
-  [   16.459284]  process_one_work+0x1ea/0x6d  0
-  [   16.459570]  worker_thread+0x1c3/0x38  0
-  [   16.459839]  ? __pfx_worker_thread+0x10/0x1  0
-  [   16.460144]  kthread+0xe0/0x11  0
-  [   16.460372]  ? __pfx_kthread+0x10/0x1  0
-  [   16.460640]  ret_from_fork+0x31/0x5  0
-  [   16.460896]  ? __pfx_kthread+0x10/0x1  0
-  [   16.461166]  ret_from_fork_asm+0x1a/0x3  0
-  [   16.461453]  </TASK  >
-  [   16.461616] Modules linked in: bpf_testmod(OE) [last unloaded: bpf_testmod(OE)  ]
-  [   16.462134] CR2: 000000000000003  0
-  [   16.462380] ---[ end trace 0000000000000000 ]---
-  [   16.462710] RIP: 0010:smc_listen_work+0xc02/0x1590
+rcu: INFO: rcu_sched self-detected stall on CPU
+...
+Call Trace:
+[<900000000024f9e4>] show_stack+0x5c/0x180
+[<90000000002482f4>] dump_stack_lvl+0x94/0xbc
+[<9000000000224544>] rcu_dump_cpu_stacks+0x1fc/0x280
+[<900000000037ac80>] rcu_sched_clock_irq+0x720/0xf88
+[<9000000000396c34>] update_process_times+0xb4/0x150
+[<90000000003b2474>] tick_nohz_handler+0xf4/0x250
+[<9000000000397e28>] __hrtimer_run_queues+0x1d0/0x428
+[<9000000000399b2c>] hrtimer_interrupt+0x214/0x538
+[<9000000000253634>] constant_timer_interrupt+0x64/0x80
+[<9000000000349938>] __handle_irq_event_percpu+0x78/0x1a0
+[<9000000000349a78>] handle_irq_event_percpu+0x18/0x88
+[<9000000000354c00>] handle_percpu_irq+0x90/0xf0
+[<9000000000348c74>] handle_irq_desc+0x94/0xb8
+[<9000000001012b28>] handle_cpu_irq+0x68/0xa0
+[<9000000001def8c0>] handle_loongarch_irq+0x30/0x48
+[<9000000001def958>] do_vint+0x80/0xd0
+[<9000000000268a0c>] kasan_mem_to_shadow.part.0+0x2c/0x2a0
+[<90000000006344f4>] __asan_load8+0x4c/0x120
+[<900000000025c0d0>] module_frob_arch_sections+0x5c8/0x6b8
+[<90000000003895f0>] load_module+0x9e0/0x2958
+[<900000000038b770>] __do_sys_init_module+0x208/0x2d0
+[<9000000001df0c34>] do_syscall+0x94/0x190
+[<900000000024d6fc>] handle_syscall+0xbc/0x158
 
-The direct cause of this issue is that after smc_listen_out_connected(),
-newclcsock->sk may be NULL since it will releases the smcsk. Therefore,
-if the application closes the socket immediately after accept,
-newclcsock->sk can be NULL. A possible execution order could be as
+After analysis, this is because the slow speed of loading the amdgpu
+module leads to the long time occupation of the cpu and then the soft
+deadlock.
+
+When loading a module, module_frob_arch_sections() tries to figure out
+the number of PLTs/GOTs that will be needed to handle all the RELAs. It
+will call the count_max_entries() to find in an out-of-order date which
+counting algorithm has O(n^2) complexity.
+
+To make it faster, we sort the relocation list by info and addend. That
+way, to check for a duplicate relocation, it just needs to compare with
+the previous entry. This reduces the complexity of the algorithm to O(n
+ log n), as done in commit d4e0340919fb ("arm64/module: Optimize module
+load time by optimizing PLT counting"). This gives sinificant reduction
+in module load time for modules with large number of relocations.
+
+After applying this patch, the soft deadlock problem has been solved,
+and the kernel starts normally without "Call Trace".
+
+Using the default configuration to test some modules, the results are as
 follows:
 
-smc_listen_work                                 | userspace
------------------------------------------------------------------
-lock_sock(sk)                                   |
-smc_listen_out_connected()                      |
-| \- smc_listen_out                             |
-|    | \- release_sock                          |
-     | |- sk->sk_data_ready()                   |
-                                                | fd = accept();
-                                                | close(fd);
-                                                |  \- socket->sk = NULL;
-/* newclcsock->sk is NULL now */
-SMC_STAT_SERV_SUCC_INC(sock_net(newclcsock->sk))
+Module              Size
+ip_tables           36K
+fat                 143K
+radeon              2.5MB
+amdgpu              16MB
 
-Since smc_listen_out_connected() will not fail, simply swapping the order
-of the code can easily fix this issue.
+Without this patch:
+Module              Module load time (ms)	Count(PLTs/GOTs)
+ip_tables           18				59/6
+fat                 0				162/14
+radeon              54				1221/84
+amdgpu              1411			4525/1098
 
-Fixes: 3b2dec2603d5 ("net/smc: restructure client and server code in af_smc")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20250818054618.41615-1-alibuda@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+With this patch:
+Module              Module load time (ms)	Count(PLTs/GOTs)
+ip_tables           18				59/6
+fat                 0				162/14
+radeon              22				1221/84
+amdgpu              45				4525/1098
+
+Fixes: fcdfe9d22bed ("LoongArch: Add ELF and module support")
+Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/module-sections.c | 36 ++++++++++++-------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 1882bab8e00e..dc72ff353813 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -2568,8 +2568,9 @@ static void smc_listen_work(struct work_struct *work)
- 			goto out_decl;
- 	}
+diff --git a/arch/loongarch/kernel/module-sections.c b/arch/loongarch/kernel/module-sections.c
+index e2f30ff9afde..a43ba7f9f987 100644
+--- a/arch/loongarch/kernel/module-sections.c
++++ b/arch/loongarch/kernel/module-sections.c
+@@ -8,6 +8,7 @@
+ #include <linux/module.h>
+ #include <linux/moduleloader.h>
+ #include <linux/ftrace.h>
++#include <linux/sort.h>
  
--	smc_listen_out_connected(new_smc);
- 	SMC_STAT_SERV_SUCC_INC(sock_net(newclcsock->sk), ini);
-+	/* smc_listen_out() will release smcsk */
-+	smc_listen_out_connected(new_smc);
- 	goto out_free;
+ Elf_Addr module_emit_got_entry(struct module *mod, Elf_Shdr *sechdrs, Elf_Addr val)
+ {
+@@ -61,39 +62,38 @@ Elf_Addr module_emit_plt_entry(struct module *mod, Elf_Shdr *sechdrs, Elf_Addr v
+ 	return (Elf_Addr)&plt[nr];
+ }
  
- out_unlock:
+-static int is_rela_equal(const Elf_Rela *x, const Elf_Rela *y)
+-{
+-	return x->r_info == y->r_info && x->r_addend == y->r_addend;
+-}
++#define cmp_3way(a, b)  ((a) < (b) ? -1 : (a) > (b))
+ 
+-static bool duplicate_rela(const Elf_Rela *rela, int idx)
++static int compare_rela(const void *x, const void *y)
+ {
+-	int i;
++	int ret;
++	const Elf_Rela *rela_x = x, *rela_y = y;
+ 
+-	for (i = 0; i < idx; i++) {
+-		if (is_rela_equal(&rela[i], &rela[idx]))
+-			return true;
+-	}
++	ret = cmp_3way(rela_x->r_info, rela_y->r_info);
++	if (ret == 0)
++		ret = cmp_3way(rela_x->r_addend, rela_y->r_addend);
+ 
+-	return false;
++	return ret;
+ }
+ 
+ static void count_max_entries(Elf_Rela *relas, int num,
+ 			      unsigned int *plts, unsigned int *gots)
+ {
+-	unsigned int i, type;
++	unsigned int i;
++
++	sort(relas, num, sizeof(Elf_Rela), compare_rela, NULL);
+ 
+ 	for (i = 0; i < num; i++) {
+-		type = ELF_R_TYPE(relas[i].r_info);
+-		switch (type) {
++		if (i && !compare_rela(&relas[i-1], &relas[i]))
++			continue;
++
++		switch (ELF_R_TYPE(relas[i].r_info)) {
+ 		case R_LARCH_SOP_PUSH_PLT_PCREL:
+ 		case R_LARCH_B26:
+-			if (!duplicate_rela(relas, i))
+-				(*plts)++;
++			(*plts)++;
+ 			break;
+ 		case R_LARCH_GOT_PC_HI20:
+-			if (!duplicate_rela(relas, i))
+-				(*gots)++;
++			(*gots)++;
+ 			break;
+ 		default:
+ 			break; /* Do nothing. */
 -- 
 2.50.1
 
