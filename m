@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4B3199935;
-	Tue, 26 Aug 2025 11:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4250393DD1;
+	Tue, 26 Aug 2025 11:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208472; cv=none; b=Lt+cjPmy4Tjrou7h5EC/zJ9vrVMfC4vBXv39sp3N5skhqYu16acErpWxU5bxWdhX+tPwJKQ4S3Zz+lzAzJVpCwA/UCVCZAolcP/SoY4lT67k4dV31t7YWVIeIdVnwZE+o/KKJ2o/uWct/hwYuRbpaciP157OezCQ6spuygR5VfQ=
+	t=1756208475; cv=none; b=S39JHmxtFIT2OG6yWpF0PkFgujOR/s0+Cpx3GvfOudt96fdVD6umoJ3J/KnH5kUDvmVm7zTW9LYrIYF0XX1PkokAmia35d5AWl+ATwyhN++/4APdOqvnwZuwF1PUIU4keVmYCdvp7mHW5sACsDcwv53jtDH4Bps60FTvwj/qd1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208472; c=relaxed/simple;
-	bh=MiZbG2fJNkaDDDuT19hTO4lWQjbhH2WmFXA4HU4+wyk=;
+	s=arc-20240116; t=1756208475; c=relaxed/simple;
+	bh=4zi3oAg/r1x81hagi5S5TgFcrDpVDJJHK9Cak/T8AY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRXGgKKnJtvdzX1Uk6ddUZH3kNre/hyu1wTSn0jdUez/vUv2bzkK2fp36UOnpVW/DRnltzM4UtDVZkquD3N16WsQtDNNpUghKh6eZ3GKlqoeCNa4O0HK9wGwsl2XfAd9pm20p8DKPSQz8Fwym9lmz43Q7aJ/6WnWbt1jrFq7F00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5Ci9eQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=crkTKm+lHFgrnduclyBaaUHkr/hxMl+xLgx3BZ7GENo5dAOsV6Iq/RHE8JIsBAy/HzIJWmxyvyEr7r0veVmW7rN9yO7zjIHwMyIGJC0AMcoTLBY2I/C3ahku85FBgsNEWWQnVtfcYtyobyzzL9eVIIBs19F4gdRskTEN7eF0ko8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYh2lr9E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5Ci9eQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F90C4CEF1;
-	Tue, 26 Aug 2025 11:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYh2lr9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719FAC4CEF1;
+	Tue, 26 Aug 2025 11:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208472;
-	bh=MiZbG2fJNkaDDDuT19hTO4lWQjbhH2WmFXA4HU4+wyk=;
+	s=korg; t=1756208474;
+	bh=4zi3oAg/r1x81hagi5S5TgFcrDpVDJJHK9Cak/T8AY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5Ci9eQWePXLYcRjWAf4ilPaRuJoQj47TKaRaoy3Sa5GnY6HxEsSP5IixhWC9Hd57
-	 3Du246bj94xe2ffPqZZuiYtjD61poTFwjcRaaQrdOQJkb8hMTlFB9Cu1g1M6up5lOM
-	 +Ss1N3+A6gF1OeqalSTla67xa45SGPA2Uv/kJ54k=
+	b=eYh2lr9EzUO17Zoz2iIlnRfqN35iJ0+fAoyflUwadH1f05CM5vX1bGjxjAHcWig9O
+	 tAXvhzTmJzFJLfp4L/M4LJHpt9SdnZZqmIAtfGVsa+j5NUopmzbjNbLTkleWLPO3TO
+	 i7QFEfBI98uJPMM6XRKH8sAkzCNjvpCugvsYlXOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 124/322] drm/amdgpu: update mmhub 3.0.1 client id mappings
-Date: Tue, 26 Aug 2025 13:08:59 +0200
-Message-ID: <20250826110918.861252934@linuxfoundation.org>
+Subject: [PATCH 6.12 125/322] drm/amdgpu: update mmhub 4.1.0 client id mappings
+Date: Tue, 26 Aug 2025 13:09:00 +0200
+Message-ID: <20250826110918.886022528@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,33 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 0bae62cc989fa99ac9cb564eb573aad916d1eb61 upstream.
+commit a0b34e4c8663b13e45c78267b4de3004b1a72490 upstream.
 
 Update the client id mapping so the correct clients
 get printed when there is a mmhub page fault.
 
+Tested-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
 Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2a2681eda73b99a2c1ee8cdb006099ea5d0c2505)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c |   57 ++++++++++++++++--------------
- 1 file changed, 32 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c |   34 +++++++++++-------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-@@ -36,40 +36,47 @@
- 
- static const char *mmhub_client_ids_v3_0_1[][2] = {
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
+@@ -37,39 +37,31 @@
+ static const char *mmhub_client_ids_v4_1_0[][2] = {
  	[0][0] = "VMC",
-+	[1][0] = "ISPXT",
-+	[2][0] = "ISPIXT",
  	[4][0] = "DCEDMC",
- 	[5][0] = "DCEVGA",
+-	[5][0] = "DCEVGA",
  	[6][0] = "MP0",
  	[7][0] = "MP1",
--	[8][0] = "MPIO",
+ 	[8][0] = "MPIO",
 -	[16][0] = "HDP",
 -	[17][0] = "LSDMA",
 -	[18][0] = "JPEG",
@@ -88,31 +85,25 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -	[23][0] = "VCN1",
 -	[32+20][0] = "VCN0",
 -	[2][1] = "DBGUNBIO",
-+	[8][0] = "MPM",
-+	[12][0] = "ISPTNR",
-+	[14][0] = "ISPCRD0",
-+	[15][0] = "ISPCRD1",
-+	[16][0] = "ISPCRD2",
-+	[22][0] = "HDP",
-+	[23][0] = "LSDMA",
-+	[24][0] = "JPEG",
-+	[27][0] = "VSCH",
-+	[28][0] = "VCNU",
-+	[29][0] = "VCN",
-+	[1][1] = "ISPXT",
-+	[2][1] = "ISPIXT",
++	[16][0] = "LSDMA",
++	[17][0] = "JPEG",
++	[19][0] = "VCNU",
++	[22][0] = "VSCH",
++	[23][0] = "HDP",
++	[32+23][0] = "VCNRD",
  	[3][1] = "DCEDWB",
  	[4][1] = "DCEDMC",
- 	[5][1] = "DCEVGA",
+-	[5][1] = "DCEVGA",
  	[6][1] = "MP0",
  	[7][1] = "MP1",
--	[8][1] = "MPIO",
--	[10][1] = "DBGU0",
--	[11][1] = "DBGU1",
+ 	[8][1] = "MPIO",
+ 	[10][1] = "DBGU0",
+ 	[11][1] = "DBGU1",
 -	[12][1] = "DBGU2",
 -	[13][1] = "DBGU3",
--	[14][1] = "XDP",
--	[15][1] = "OSSSYS",
++	[12][1] = "DBGUNBIO",
+ 	[14][1] = "XDP",
+ 	[15][1] = "OSSSYS",
 -	[16][1] = "HDP",
 -	[17][1] = "LSDMA",
 -	[18][1] = "JPEG",
@@ -121,25 +112,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -	[21][1] = "VSCH",
 -	[22][1] = "VCNU1",
 -	[23][1] = "VCN1",
-+	[8][1] = "MPM",
-+	[10][1] = "ISPMWR0",
-+	[11][1] = "ISPMWR1",
-+	[12][1] = "ISPTNR",
-+	[13][1] = "ISPSWR",
-+	[14][1] = "ISPCWR0",
-+	[15][1] = "ISPCWR1",
-+	[16][1] = "ISPCWR2",
-+	[17][1] = "ISPCWR3",
-+	[18][1] = "XDP",
-+	[21][1] = "OSSSYS",
-+	[22][1] = "HDP",
-+	[23][1] = "LSDMA",
-+	[24][1] = "JPEG",
-+	[27][1] = "VSCH",
-+	[28][1] = "VCNU",
-+	[29][1] = "VCN",
++	[16][1] = "LSDMA",
++	[17][1] = "JPEG",
++	[18][1] = "VCNWR",
++	[19][1] = "VCNU",
++	[22][1] = "VSCH",
++	[23][1] = "HDP",
  };
  
- static uint32_t mmhub_v3_0_1_get_invalidate_req(unsigned int vmid,
+ static uint32_t mmhub_v4_1_0_get_invalidate_req(unsigned int vmid,
 
 
