@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B8734A32E;
-	Tue, 26 Aug 2025 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1C23451A0;
+	Tue, 26 Aug 2025 13:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216192; cv=none; b=fwHKI4HfzwLaPVdmbh1MNDwwta6leB41ZYjVPxsS3S92POR2hIkXp4Jdioou9U8r0YbAHmt0Rdp3pup7xYfzf0KIoyjyuMA5qFrZZbEOrRD2ud5Zu2oy4SHj8A0G5QEd3E8VaOOAZDb+CMxmVrT8n+ZUO4PUjGKlPrDX4JfUefg=
+	t=1756216195; cv=none; b=MHn+Gi7XONv1fLcC0JVqtp63j1R23bmrH/mRgVPSBgNGh5qk0SvfkZft5vLNG5lnenHXkqKzGULsfOAVykBHmtqifgT+l3cK03Ndn8fmBkehSDSLprlAWADr1yzTr5rTNVyyH+T4RFWLWNMiAvg6mqqJYdm/+05T4nWpDAghO1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216192; c=relaxed/simple;
-	bh=MpaSvR5DLCvf8O3cRpprGshLSN79sKuC+UmzM2+/Kkw=;
+	s=arc-20240116; t=1756216195; c=relaxed/simple;
+	bh=se38gZVO9wzvvv/WVhovKXaMpy8dyMnSPRFaP+tUWMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uB5DmEZEZ43Cbr4GDT7CNA/PVCENx+4FhVIb3+/r9wAWKTHpVL4MzfD120GA1xB6jGn1Ctv2fUJmTpdrT6Z8NLmgWCHpm4hRwJoI6VYio3vV09ZKS+Zrswu/V/CGQHeGcxC5cnbWjcQ0AHp7Y50NEW3Nf5BjZO7Sp8hTyAPU5a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSGqTxTm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tayY+/Y8xc63RwbJmZhzGctIfyI38rN9DpoxZ4wjWKiQzeKVWhrQ6KzHac9ytp6EEF28IMuR26w6T6Dujq91+8HqwHAKt26Fsz+KDon8Gb+LcW6GbhmZARTq8Q2yYfRn6Ifde1FIoDwgfPPQFQASJxFOCj8mJ9HuY+F9AaFMSEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09rXedlE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSGqTxTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5182BC4CEF1;
-	Tue, 26 Aug 2025 13:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09rXedlE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F379AC4CEF1;
+	Tue, 26 Aug 2025 13:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216192;
-	bh=MpaSvR5DLCvf8O3cRpprGshLSN79sKuC+UmzM2+/Kkw=;
+	s=korg; t=1756216195;
+	bh=se38gZVO9wzvvv/WVhovKXaMpy8dyMnSPRFaP+tUWMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSGqTxTmOmMsMUrgsTAAkckYJlTaq536c5eYXq8OD6UiD1cuvrI7Uh0LBUnsiPyfR
-	 fKLyX6Du+S2L7MtuCrk63HanU31yjUuuv0CWS0WshoKS3ySYaxjCI5Tg0+Qndtk7l+
-	 Q3b+dHjwIHVLHjyEq0VeF44Tvnz05i7WTl1nd9WQ=
+	b=09rXedlEt83o4Kkbz3L9LN0OZmDwQHTwGz7SLfHCoi9E0vExv6BN4wYxyZsykLs4l
+	 MAZQJCoKnUr+GlWkRcukqk5EgGVHakFnFy2pMmKG+Grc0omyEu65h994RdfQGeskT1
+	 fL2/Ei3qVddWfPdxAbw3lBsLxa4ZUNzIk9m8Y21g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eliav Farber <farbere@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 319/644] ACPI: APEI: GHES: add TAINT_MACHINE_CHECK on GHES panic path
-Date: Tue, 26 Aug 2025 13:06:50 +0200
-Message-ID: <20250826110954.289345986@linuxfoundation.org>
+Subject: [PATCH 5.15 320/644] pps: clients: gpio: fix interrupt handling order in remove path
+Date: Tue, 26 Aug 2025 13:06:51 +0200
+Message-ID: <20250826110954.315789302@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,41 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Eliav Farber <farbere@amazon.com>
 
-[ Upstream commit 4734c8b46b901cff2feda8b82abc710b65dc31c1 ]
+[ Upstream commit 6bca1e955830808dc90e0506b2951b4256b81bbb ]
 
-When a GHES (Generic Hardware Error Source) triggers a panic, add the
-TAINT_MACHINE_CHECK taint flag to the kernel. This explicitly marks the
-kernel as tainted due to a machine check event, improving diagnostics
-and post-mortem analysis. The taint is set with LOCKDEP_STILL_OK to
-indicate lockdep remains valid.
+The interrupt handler in pps_gpio_probe() is registered after calling
+pps_register_source() using devm_request_irq(). However, in the
+corresponding remove function, pps_unregister_source() is called before
+the IRQ is freed, since devm-managed resources are released after the
+remove function completes.
 
-At large scale deployment, this helps to quickly determine panics that
-are coming due to hardware failures.
+This creates a potential race condition where an interrupt may occur
+after the PPS source is unregistered but before the handler is removed,
+possibly leading to a kernel panic.
 
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20250702-add_tain-v1-1-9187b10914b9@debian.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+To prevent this, switch from devm-managed IRQ registration to manual
+management by using request_irq() and calling free_irq() explicitly in
+the remove path before unregistering the PPS source. This ensures the
+interrupt handler is safely removed before deactivating the PPS source.
+
+Signed-off-by: Eliav Farber <farbere@amazon.com>
+Link: https://lore.kernel.org/r/20250527053355.37185-1-farbere@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pps/clients/pps-gpio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 72087e05b5a5..250ea9ec5f0c 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -860,6 +860,8 @@ static void __ghes_panic(struct ghes *ghes,
+diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
+index bf3b6f1aa984..41e1fdbcda16 100644
+--- a/drivers/pps/clients/pps-gpio.c
++++ b/drivers/pps/clients/pps-gpio.c
+@@ -206,8 +206,8 @@ static int pps_gpio_probe(struct platform_device *pdev)
+ 	}
  
- 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
+ 	/* register IRQ interrupt handler */
+-	ret = devm_request_irq(dev, data->irq, pps_gpio_irq_handler,
+-			get_irqf_trigger_flags(data), data->info.name, data);
++	ret = request_irq(data->irq, pps_gpio_irq_handler,
++			  get_irqf_trigger_flags(data), data->info.name, data);
+ 	if (ret) {
+ 		pps_unregister_source(data->pps);
+ 		dev_err(dev, "failed to acquire IRQ %d\n", data->irq);
+@@ -224,6 +224,7 @@ static int pps_gpio_remove(struct platform_device *pdev)
+ {
+ 	struct pps_gpio_device_data *data = platform_get_drvdata(pdev);
  
-+	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
-+
- 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
- 
- 	if (!panic_timeout)
++	free_irq(data->irq, data);
+ 	pps_unregister_source(data->pps);
+ 	del_timer_sync(&data->echo_timer);
+ 	/* reset echo pin in any case */
 -- 
 2.39.5
 
