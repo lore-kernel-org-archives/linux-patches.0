@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C161FBCB1;
-	Tue, 26 Aug 2025 13:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A58418DB01;
+	Tue, 26 Aug 2025 13:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213222; cv=none; b=OjLCZ8zNqm5PVW/1gcour4ZJYsHPfKEVN+fW/vm6DqJKWXqysj8Nudx4+eYCMMzWGGfhtg5MXzu6wrJ5Qfo4fDySVq6SX8kxX5ComNX9r4kUOvR5nHgOiw5kdRTaVVj8pLyQzi5whgxEtmnFJu7qsj6zm+1y2flWfbJ7tMWd8Og=
+	t=1756213225; cv=none; b=fHNxLM2ct3s1TKxqrJvGQjj7i8qDilQ3C6LMf/yrtCePbFgIBbagVb1j1WjiLfvh5P31yFgpKD/OnhNpbypeNs8A72/XKX362DdblrZPQ6pkh5PEIcZ61XinArnvLRnPFUYcaZu0cHbxSwx4fLo0Xo/uoQBrWD/2B7/LQfh5lV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213222; c=relaxed/simple;
-	bh=QfgT9QgrPmp0YJZ3PyDO4ebJO+ZKrheFIHvjN8vKEL4=;
+	s=arc-20240116; t=1756213225; c=relaxed/simple;
+	bh=EJCLGANMnrkkmbB0124qqtjZdpOWiZXEaOH5R8JKdGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOjLkBGZtFltg2igVfVvQ96r4Q+HXKsPZX4rMfH06fjK2jtpZXXDhAa3Us87oh5kkT1hAiUJsArQLjC9AqjNrHzh1Cc5Cje6/PyXwbM3ca6tywrW1nSEPw45aXWyr3oTAu0ykcGI2PNcsbjSBi06kKEsdYgTPcI8E55kxOWjhQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nScpUUHo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwZ5m6KFaO3q+3f+vcY4EvUtOVmhgNH46sJ0REP4ygYsE+kIUjrbL9V5f/7x651jLFar/7cud2R2K4oj3B+0WE9kGOzMTcVW78IuAHk9KJH6qZiyj+FrwOV4BagDs2Geo1bYIymCGKvKksFVUg+k6QadCkox4jEbAYKfwqReTxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5NQckYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nScpUUHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07095C4CEF1;
-	Tue, 26 Aug 2025 13:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5NQckYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93993C4CEF1;
+	Tue, 26 Aug 2025 13:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213222;
-	bh=QfgT9QgrPmp0YJZ3PyDO4ebJO+ZKrheFIHvjN8vKEL4=;
+	s=korg; t=1756213224;
+	bh=EJCLGANMnrkkmbB0124qqtjZdpOWiZXEaOH5R8JKdGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nScpUUHoBIra6cKKfDV7bnl7jNf0qTotjYBN8eOk/BPuVnrY8uwak5PTZVolqhewd
-	 LSDHLzSmfkIedWvF+0ipm5ss8jk08FdQVVMO4Ej9g3m1I5Z59gLQGkl7TwfkDZzoiP
-	 K6QiT4XPGJDJ5c3S3PkmsK43EzW9pJXzo1L/Q+wQ=
+	b=a5NQckYwj5XUIU96myk3oqwHGgmDjLecaLYlv7mBHFywq7BusfGiBS7RyCoyeGCN0
+	 hhWM3wgSRgUYbEdXj/6YkKwZQbb8y+p3V/zWk5RnJ5IWKJLfbxWEwbM59hrPzyZYg4
+	 GKhhLgO6ZnsUUgoM2ucb/BCOgVEcISCFmZ9a3gJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Marques <jorge.marques@analog.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 267/587] i3c: master: Initialize ret in i3c_i2c_notifier_call()
-Date: Tue, 26 Aug 2025 13:06:56 +0200
-Message-ID: <20250826110959.719460587@linuxfoundation.org>
+Subject: [PATCH 6.6 268/587] dm-mpath: dont print the "loaded" message if registering fails
+Date: Tue, 26 Aug 2025 13:06:57 +0200
+Message-ID: <20250826110959.746278248@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,34 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Marques <jorge.marques@analog.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 290ce8b2d0745e45a3155268184523a8c75996f1 ]
+[ Upstream commit 6e11952a6abc4641dc8ae63f01b318b31b44e8db ]
 
-Set ret to -EINVAL if i3c_i2c_notifier_call() receives an invalid
-action, resolving uninitialized warning.
+If dm_register_path_selector, don't print the "version X loaded" message.
 
-Signed-off-by: Jorge Marques <jorge.marques@analog.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20250622-i3c-master-ret-uninitialized-v1-1-aabb5625c932@analog.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-ps-historical-service-time.c | 4 +++-
+ drivers/md/dm-ps-queue-length.c            | 4 +++-
+ drivers/md/dm-ps-round-robin.c             | 4 +++-
+ drivers/md/dm-ps-service-time.c            | 4 +++-
+ 4 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 7e526da11524..b6995e767850 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2430,6 +2430,8 @@ static int i3c_i2c_notifier_call(struct notifier_block *nb, unsigned long action
- 	case BUS_NOTIFY_DEL_DEVICE:
- 		ret = i3c_master_i2c_detach(adap, client);
- 		break;
-+	default:
-+		ret = -EINVAL;
- 	}
- 	i3c_bus_maintenance_unlock(&master->bus);
+diff --git a/drivers/md/dm-ps-historical-service-time.c b/drivers/md/dm-ps-historical-service-time.c
+index b49e10d76d03..2c8626a83de4 100644
+--- a/drivers/md/dm-ps-historical-service-time.c
++++ b/drivers/md/dm-ps-historical-service-time.c
+@@ -541,8 +541,10 @@ static int __init dm_hst_init(void)
+ {
+ 	int r = dm_register_path_selector(&hst_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " HST_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-queue-length.c b/drivers/md/dm-ps-queue-length.c
+index e305f05ad1e5..eb543e6431e0 100644
+--- a/drivers/md/dm-ps-queue-length.c
++++ b/drivers/md/dm-ps-queue-length.c
+@@ -260,8 +260,10 @@ static int __init dm_ql_init(void)
+ {
+ 	int r = dm_register_path_selector(&ql_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " QL_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-round-robin.c b/drivers/md/dm-ps-round-robin.c
+index 0f04b673597a..62ac820125cb 100644
+--- a/drivers/md/dm-ps-round-robin.c
++++ b/drivers/md/dm-ps-round-robin.c
+@@ -220,8 +220,10 @@ static int __init dm_rr_init(void)
+ {
+ 	int r = dm_register_path_selector(&rr_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " RR_VERSION " loaded");
+ 
+diff --git a/drivers/md/dm-ps-service-time.c b/drivers/md/dm-ps-service-time.c
+index 969d31c40272..f8c43aecdb27 100644
+--- a/drivers/md/dm-ps-service-time.c
++++ b/drivers/md/dm-ps-service-time.c
+@@ -341,8 +341,10 @@ static int __init dm_st_init(void)
+ {
+ 	int r = dm_register_path_selector(&st_ps);
+ 
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		return r;
++	}
+ 
+ 	DMINFO("version " ST_VERSION " loaded");
  
 -- 
 2.39.5
