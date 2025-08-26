@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC21034F49A;
-	Tue, 26 Aug 2025 13:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778DB34F49D;
+	Tue, 26 Aug 2025 13:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216253; cv=none; b=r0rbn1BVcWtBFyDGZvW+Gka48/CnbB2TTcozwbWEznrWiUJItI8AAUYM8oLYufGSu/Kj7bAtWwWjPrxF0EYIrd6IB1qqeCl3yIXoWmeMQIiqgwh1xhqTCYf9yPC0PmUEzZtw5GOHt4y65TCLjJrfBwJFAXFCHsnjzo2XzDgD6QQ=
+	t=1756216255; cv=none; b=n9f/068OSvvDnmYXK6LzIRvBBN5BTzI3p621L7Hc3aDqzBSnpF068XORPcixvboNF2+W4bWNwI42Y+E6WFGkThhQVJNP6xgdsxqdiLuDABewmou+MyaHb7uYm7i3iJQ+lQZrppISHEGzxpRs5i9Us5nIBJnPgVl0YqA19Ltoi4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216253; c=relaxed/simple;
-	bh=fRkE3D7+HFACO5iU1jkKB91oIPTFhfhekZbRYnH6gqM=;
+	s=arc-20240116; t=1756216255; c=relaxed/simple;
+	bh=QRN9JVLng10BfUXHvP/Kpfis2PVqKBzmYN7v6p9rytI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvMFluzLKzuwu+uML2PNL5dKfTHeHbr+WOf/ZPNYqFDXJFFecQglIk/7bHnbzfPJsupMajRO1k5jz+EWETwtj7LRDQ8AEM6NxNi4XJFOEIsjvRw+Y9L29S09h1sFNa3hYhzwItI/EYGBJIKoLyjSAj1KWIwmHXEqM9x1Tqch6Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEl1c9W6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCL+2u6gZYpUxh234Z9OFgoUb3T6KE8fyzmGNLWcHNzDv4PCFPW5mF4NQQHDjjj8j7My9eHZDdrLMZIEW3UBaoA0pkOAMtnO/6J4IhiP4xoLGjAFCYEdD/pFjxGlNYpUxPHFV5cVUy7CV6ULeFsQmi3YFXX2Rl/AemV4O8EEdSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2suxF2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEl1c9W6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F40EC113CF;
-	Tue, 26 Aug 2025 13:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2suxF2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052A3C4CEF1;
+	Tue, 26 Aug 2025 13:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216252;
-	bh=fRkE3D7+HFACO5iU1jkKB91oIPTFhfhekZbRYnH6gqM=;
+	s=korg; t=1756216255;
+	bh=QRN9JVLng10BfUXHvP/Kpfis2PVqKBzmYN7v6p9rytI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEl1c9W6OF7h9UhC1prMvzAo6cKuod+MJrT91NhQ/eWSveXkHzKtX/HlJ3QGcnuYw
-	 MAq1hD3xmZPu3VsmgahcaS7XwWKFHbqCe8WJO0jCADrgzRPLTGsLZgWJYCwKlXnyQw
-	 9GLWCT8dsttBwE6f2bHrxZemdvu8vhruq8tRhOYE=
+	b=Q2suxF2kWbSCL3/GA4aBaQeaT2AjntNlUnteiKcNkqtg9rTZOfgbegW3BByxdudff
+	 txu+I2feWsEdGxIQoe8dQjB9OhjxrFt7ntaKIih8xo3SD1XULuc87vQBlPZe9E77IZ
+	 mYzy+FFFnG217yZ+Hp4xfX7LVj9e9w2TubORvGf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 339/644] wifi: cfg80211: reject HTC bit for management frames
-Date: Tue, 26 Aug 2025 13:07:10 +0200
-Message-ID: <20250826110954.787743262@linuxfoundation.org>
+Subject: [PATCH 5.15 340/644] s390/time: Use monotonic clock in get_cycles()
+Date: Tue, 26 Aug 2025 13:07:11 +0200
+Message-ID: <20250826110954.814315982@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,36 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit be06a8c7313943109fa870715356503c4c709cbc ]
+[ Upstream commit 09e7e29d2b49ba84bcefb3dc1657726d2de5bb24 ]
 
-Management frames sent by userspace should never have the
-order/HTC bit set, reject that. It could also cause some
-confusion with the length of the buffer and the header so
-the validation might end up wrong.
+Otherwise the code might not work correctly when the clock
+is changed.
 
-Link: https://patch.msgid.link/20250718202307.97a0455f0f35.I1805355c7e331352df16611839bc8198c855a33f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/timex.h | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index 783acd2c4211..5c805a2bda62 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -661,7 +661,8 @@ int cfg80211_mlme_mgmt_tx(struct cfg80211_registered_device *rdev,
+diff --git a/arch/s390/include/asm/timex.h b/arch/s390/include/asm/timex.h
+index bc50ee0e91ff..a046a4d13816 100644
+--- a/arch/s390/include/asm/timex.h
++++ b/arch/s390/include/asm/timex.h
+@@ -196,13 +196,6 @@ static inline unsigned long get_tod_clock_fast(void)
+ 	return get_tod_clock();
+ #endif
+ }
+-
+-static inline cycles_t get_cycles(void)
+-{
+-	return (cycles_t) get_tod_clock() >> 2;
+-}
+-#define get_cycles get_cycles
+-
+ int get_phys_clock(unsigned long *clock);
+ void init_cpu_timer(void);
  
- 	mgmt = (const struct ieee80211_mgmt *)params->buf;
+@@ -225,6 +218,12 @@ static inline unsigned long get_tod_clock_monotonic(void)
+ 	return tod;
+ }
  
--	if (!ieee80211_is_mgmt(mgmt->frame_control))
-+	if (!ieee80211_is_mgmt(mgmt->frame_control) ||
-+	    ieee80211_has_order(mgmt->frame_control))
- 		return -EINVAL;
- 
- 	stype = le16_to_cpu(mgmt->frame_control) & IEEE80211_FCTL_STYPE;
++static inline cycles_t get_cycles(void)
++{
++	return (cycles_t)get_tod_clock_monotonic() >> 2;
++}
++#define get_cycles get_cycles
++
+ /**
+  * tod_to_ns - convert a TOD format value to nanoseconds
+  * @todval: to be converted TOD format value
 -- 
 2.39.5
 
