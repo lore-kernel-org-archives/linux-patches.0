@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B03DF49;
-	Tue, 26 Aug 2025 13:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2C828FD;
+	Tue, 26 Aug 2025 13:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213639; cv=none; b=kU6h1dOSaS3x8n+zrvNbTIc0zjuvGfE3o4jrBZHF88QmRob0Eb4zQGnMbR+ZnwSL0RF7UJ4/lB/eFop7UZo+kwwlKrEuZDd7jCLeUlSNo0ipDWg0tIO5ZG5B8pAXZMue7SJoigiGvrmOOchjZNKONufS6tgh8m4hkAIfXWr50uQ=
+	t=1756213641; cv=none; b=AGqPcuYDEQytUjOV7Oz3D983U+k/XCG7mXOawtPa4+ztyru0cUu0lLCRslXgVQGmnHjj1eiRZDQ2cHmthcfXPldE+OqwnOFrwDIUE2iBboUvocSEln3FOWmToLJnD+9LKyFjqMlGuozdOP1E6nKsfuc7MghniphN0eMBN+FWRV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213639; c=relaxed/simple;
-	bh=XBT67+YyECdRKMUms5u6Tzvn5h3yWT8NWpCHg7+Zyo8=;
+	s=arc-20240116; t=1756213641; c=relaxed/simple;
+	bh=RUk/p38orSiVjK1buMoSPOdGHaXXTZTj/1Ju93R/b0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBUjCFCMc/aFMUVwYXs52cmb5w2JTNR5gQWTAWXHW4lXBUj8fQFadTOFawYMAnqq4jMw27Ned2miOAhE9cNo+YphCFlCFI+91p68hLgTFGc3ixz9IhOSuUB5Lrbllylhut9LFU/yI80LM+uh43aBd2Q/w+hImNOJFEa8gMR/Wjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjeG+07/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y7x3c/7xYRCCI+6YX5IUWZmpl3MBnbcPfc+CRtb1nig6sstUvMDspDmFsvmHAnUvdN4c+JOnzxYrPMWPMqwHqKpKfrBnORl3sqzMWJUGfoARXVr6m12ad+TgPIW+4g1ddMpMwM1gkNFqcoc+Dr+uA/vH7qEI52Q9P2eQv+7z9p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwKFM3hp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjeG+07/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96680C4CEF1;
-	Tue, 26 Aug 2025 13:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwKFM3hp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D03C4CEF1;
+	Tue, 26 Aug 2025 13:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213638;
-	bh=XBT67+YyECdRKMUms5u6Tzvn5h3yWT8NWpCHg7+Zyo8=;
+	s=korg; t=1756213641;
+	bh=RUk/p38orSiVjK1buMoSPOdGHaXXTZTj/1Ju93R/b0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SjeG+07/wbclJwAFsIxTVaBod569v9jp5h1Y2HLIUyu3xLGzQ7a7Zf+b603NAY2l8
-	 r2stHf81bis3LJEFL/vV8AlZbRkpSHXkabbAmyAsoPLdalJ/t2RRHWLHH+IcVSApmf
-	 h+4OxM1IpwELedRDZDU6aBt8bU+xuDWmzL/H9QUE=
+	b=WwKFM3hpRSkoGCNH5HmMRuDFZvY6rIAQGaLnjf6C7MBO9/lRpEjDgz+Y/hkFze9cH
+	 JVURpYd9tpCSPRQIyk1Qy3dxFYzNC3rBtFgGYkOYl0dGp/lIffSdRwWfEREZKd1bJ/
+	 FfIZlb0WOqDAINqc2dvXjz2oZgKKWODBhJERSBc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 424/587] ipv6: sr: Fix MAC comparison to be constant-time
-Date: Tue, 26 Aug 2025 13:09:33 +0200
-Message-ID: <20250826111003.725217606@linuxfoundation.org>
+	"Govindarajulu, Hariganesh" <hariganesh.govindarajulu@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 425/587] ACPI: pfr_update: Fix the driver update version check
+Date: Tue, 26 Aug 2025 13:09:34 +0200
+Message-ID: <20250826111003.751337896@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,42 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Chen Yu <yu.c.chen@intel.com>
 
-commit a458b2902115b26a25d67393b12ddd57d1216aaa upstream.
+commit 8151320c747efb22d30b035af989fed0d502176e upstream.
 
-To prevent timing attacks, MACs need to be compared in constant time.
-Use the appropriate helper function for this.
+The security-version-number check should be used rather
+than the runtime version check for driver updates.
 
-Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20250818202724.15713-1-ebiggers@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Otherwise, the firmware update would fail when the update binary had
+a lower runtime version number than the current one.
+
+Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
+Cc: 5.17+ <stable@vger.kernel.org> # 5.17+
+Reported-by: "Govindarajulu, Hariganesh" <hariganesh.govindarajulu@intel.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Link: https://patch.msgid.link/20250722143233.3970607-1-yu.c.chen@intel.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_hmac.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/pfr_update.c  |    2 +-
+ include/uapi/linux/pfrut.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -35,6 +35,7 @@
- #include <net/xfrm.h>
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -310,7 +310,7 @@ static bool applicable_image(const void
+ 	if (type == PFRU_CODE_INJECT_TYPE)
+ 		return payload_hdr->rt_ver >= cap->code_rt_version;
  
- #include <crypto/hash.h>
-+#include <crypto/utils.h>
- #include <net/seg6.h>
- #include <net/genetlink.h>
- #include <net/seg6_hmac.h>
-@@ -269,7 +270,7 @@ bool seg6_hmac_validate_skb(struct sk_bu
- 	if (seg6_hmac_compute(hinfo, srh, &ipv6_hdr(skb)->saddr, hmac_output))
- 		return false;
+-	return payload_hdr->rt_ver >= cap->drv_rt_version;
++	return payload_hdr->svn_ver >= cap->drv_svn;
+ }
  
--	if (memcmp(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN) != 0)
-+	if (crypto_memneq(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN))
- 		return false;
+ static void print_update_debug_info(struct pfru_updated_result *result,
+--- a/include/uapi/linux/pfrut.h
++++ b/include/uapi/linux/pfrut.h
+@@ -89,6 +89,7 @@ struct pfru_payload_hdr {
+ 	__u32 hw_ver;
+ 	__u32 rt_ver;
+ 	__u8 platform_id[16];
++	__u32 svn_ver;
+ };
  
- 	return true;
+ enum pfru_dsm_status {
 
 
