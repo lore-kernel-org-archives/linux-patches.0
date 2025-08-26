@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026A30146A;
-	Tue, 26 Aug 2025 13:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8DB34F485;
+	Tue, 26 Aug 2025 13:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216666; cv=none; b=J1j9fOvO1YMIQ4+U+i7IhGNkBHASfok85cMw+ik9pJYzMdCN76u/TTz08KSujWr4kukcm59wD98KK77i53NyvX5+2sMyb7aO2vX7/EUqDHp3yigK4fqetoA8VyjZN26wxon93KV9qV7qcciOZADo9J/cn/jyFCRFSldNK4g2GzA=
+	t=1756216669; cv=none; b=WmIU43L73wEcxd5rZMwgRhh9R9Pyhev2+mPPcoC/Qmgx4/BA5/h3tXoGGVlY2SXQBZ/huYqVh5ylhu3UKO8sJlAUFoVIJm45npJBioYZXIy3YHsAL5NmVjlqtZRBlJUwem18wvLHbZgIYxAigZmdyeS/zie4JhTZ+7ZyNx6uxx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216666; c=relaxed/simple;
-	bh=QPm1apT2R44XuOdlqLiu0JEpl7NzQD2tb6fuL2rCzCs=;
+	s=arc-20240116; t=1756216669; c=relaxed/simple;
+	bh=wztK95UM4EsuTdSZz38aNEClMqs6aErU0DuiWlQ0Gq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KmR73XcLbc1W5SSlWyqL8HI1UaBJLKKS6RpEkgVJt99GXdzMDtLz5QIW99ef+RmtUN/v4T0vgxW2ouez6gljmj7XH3xY/eRjZlHCEMTbfShDDQnypT+ywdoNikCVKDid+sHGX5KIPCB64Cx+VEcGatarhDse2r04It5+I91sUjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q75EQcq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J7Uwf87gc0EPWLe4CVWzkwHqjyGEihAr1ZDYeMjgdCb/4nZUF4JAugbLIJqj9Rk0NQY2OH6LxGJ1rltlEKhEpZl8kiAlq91z/jxEYVwMtWMzws7zP6XdmVfxeMTx+ESZqvK8000QQOkjIfhVjGvI2CIf0rqZ0qcFZCSdZbutYe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/MoRc0U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q75EQcq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEF7C4CEF1;
-	Tue, 26 Aug 2025 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/MoRc0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57BFC4CEF1;
+	Tue, 26 Aug 2025 13:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216666;
-	bh=QPm1apT2R44XuOdlqLiu0JEpl7NzQD2tb6fuL2rCzCs=;
+	s=korg; t=1756216669;
+	bh=wztK95UM4EsuTdSZz38aNEClMqs6aErU0DuiWlQ0Gq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q75EQcq4b/x2wSQXYEXrVD+GMsbkaa8+aEAlKMbdeqF3PuoWdIveon0YkRWf6tiPY
-	 tCvK7lWl0oHG+nsZrMvdd8Bp993Isfkc856SXyZbUrrj75xnBYgyVytSkYLOgYcL+x
-	 MfHQb0PY56CrXz518WF0O4/qcnoJ++dTZnixFDD4=
+	b=b/MoRc0UJ/7+QSa+ipHfTDQhbcgWqN85OFC4YrbefFtTQAYqbyxttvM9DjwJMbN6t
+	 ppKHjZUlmI+GpWWzu0zlhElHv+GQWYY6gd2GxTU5E/pSg1gIsvGprL0wa9mLXnZ8LL
+	 Xf1boK2GCbHPTEq9nvchiNdh3cZ4iM33hlBiPILs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Bryan ODonoghue <bod@kernel.org>
-Subject: [PATCH 5.15 496/644] media: venus: venc: Clamp param smaller than 1fps and bigger than 240
-Date: Tue, 26 Aug 2025 13:09:47 +0200
-Message-ID: <20250826110958.785724377@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.15 497/644] drm/amd: Restore cached power limit during resume
+Date: Tue, 26 Aug 2025 13:09:48 +0200
+Message-ID: <20250826110958.810757190@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,45 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 417c01b92ec278a1118a05c6ad8a796eaa0c9c52 upstream.
+commit ed4efe426a49729952b3dc05d20e33b94409bdd1 upstream.
 
-The driver uses "whole" fps in all its calculations (e.g. in
-load_per_instance()). Those calculation expect an fps bigger than 1, and
-not big enough to overflow.
+The power limit will be cached in smu->current_power_limit but
+if the ASIC goes into S3 this value won't be restored.
 
-Clamp the param if the user provides a value that will result in an invalid
-fps.
+Restore the value during SMU resume.
 
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
-Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://lore.kernel.org/r/20250725031222.3015095-2-superm1@kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 26a609e053a6fc494403e95403bc6a2470383bec)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-[bod: Change "parm" to "param"]
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/venc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -408,11 +408,10 @@ static int venc_s_parm(struct file *file
- 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
- 	do_div(us_per_frame, timeperframe->denominator);
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -1573,6 +1573,12 @@ static int smu_resume(void *handle)
  
--	if (!us_per_frame)
--		return -EINVAL;
--
-+	us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
- 	fps = (u64)USEC_PER_SEC;
- 	do_div(fps, us_per_frame);
-+	fps = min(VENUS_MAX_FPS, fps);
+ 	adev->pm.dpm_enabled = true;
  
- 	inst->timeperframe = *timeperframe;
- 	inst->fps = fps;
++	if (smu->current_power_limit) {
++		ret = smu_set_power_limit(smu, smu->current_power_limit);
++		if (ret && ret != -EOPNOTSUPP)
++			return ret;
++	}
++
+ 	dev_info(adev->dev, "SMU is resumed successfully!\n");
+ 
+ 	return 0;
 
 
