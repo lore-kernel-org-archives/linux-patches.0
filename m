@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296921E51E1;
-	Tue, 26 Aug 2025 12:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31A81E51E1;
+	Tue, 26 Aug 2025 12:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213014; cv=none; b=pLOGHBihXEWW5mXUFBlrSt6WzaRGSqsmxuD7XYIegtjRZxIScYH5WKfgkwn6ZdiqMJTIxdJul1QelrLyaDbkhBuPL6dScw/dVBV6i5h09d5REtXE/3DEHm8izdEjeaFuqF9ArPTEAVArFvee2WdCG2TqLyFlH36AexQlyJYRmBs=
+	t=1756213016; cv=none; b=d0B7e8iXNA7U92a8KRYhleuavCvQx86nr7gidUCHLZq/hTqURAyetu7QvRayDfYfubmOb3ObM2EOzEPKgl0BqsR1jSmyOEgXpNs2ot7HBDuCs7z7+V/UxkCmRtJkcQkppB+53D8q40y+HXXEsH7/MIjTz36ofkM3Lx51ec3sIao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213014; c=relaxed/simple;
-	bh=7Xs6hza05cEWjxsHnGRj6A8rXhuXWW83+Z9zeRrqEmM=;
+	s=arc-20240116; t=1756213016; c=relaxed/simple;
+	bh=Pilra5kor0eTop2X9kn5H/vBed6lAASEmY/vAP2F+s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzOf1aPlyj0Oj0vnAiSzRHOZR5z3fJUSkc77NwWFt4tq3QJLy2ygM1/loHfmwwx/Zjsly5wllvm6TUskdsGDanhrjmX/jjVsgXImGR7uOQNeZY2d1xcig4ndCn4ERShs1tnsCqiZAUk2W2AOjhP0OHjdXpld8aF1ih74xaC0COA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ml3S06ei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgBO4S/cSCm9rsHHv88L94evAmg7M3R2rjVqV44/wSmn2R1+RTQIaobRiJNTOnv8JFZGMrRPTRGVzd+aJtbybb2Dhwj8TLsiMT5rlUF6MOzXLAfSDAqX98daebbO6vx7tCws5SIqyCC7paw/ZKmXMI+pObQAJFAR6g1JaObBtgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9WDJU7G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ml3S06ei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE74C113CF;
-	Tue, 26 Aug 2025 12:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9WDJU7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5D9C4CEF1;
+	Tue, 26 Aug 2025 12:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213014;
-	bh=7Xs6hza05cEWjxsHnGRj6A8rXhuXWW83+Z9zeRrqEmM=;
+	s=korg; t=1756213016;
+	bh=Pilra5kor0eTop2X9kn5H/vBed6lAASEmY/vAP2F+s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ml3S06ei63P9Zmd08X2gQCXTARGNuOncNRRTVVLMowirkYel9+I+mt4sw2JDNNSD4
-	 kChrcyw1Bor3eDhUmtbypfWbHlVqzq4jV3hSBjkwkTSCz4gDMj/6/VGJVYGl4SBlgD
-	 8Xn7DoU+2T+7zSsw1x0oznou5MhQtpWuISCrgBek=
+	b=b9WDJU7GMGzPg9BHLCAJ1DKk/RPL07FD08VVGcl+Dn34/L3NPbTIF21EHRPgVT2IT
+	 slmZZlLfiDTqCYgKeHshR9GSuI3kqf1CjiX/S3si4sTF4Yp0nlpyFVd/dO++XgHTL3
+	 0Y2Fz3X6sJ2hgyoaDJdFBN+ZIvGH+bTAq/2nyW9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/587] net: phy: micrel: Add ksz9131_resume()
-Date: Tue, 26 Aug 2025 13:05:07 +0200
-Message-ID: <20250826110956.968003369@linuxfoundation.org>
+Subject: [PATCH 6.6 159/587] perf/cxlpmu: Remove unintended newline from IRQ name format string
+Date: Tue, 26 Aug 2025 13:05:08 +0200
+Message-ID: <20250826110956.991492165@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit f25a7eaa897f21396e99f90809af82ca553c9d14 ]
+[ Upstream commit 3e870815ccf5bc75274158f0b5e234fce6f93229 ]
 
-The Renesas RZ/G3E SMARC EVK uses KSZ9131RNXC phy. On deep power state,
-PHY loses the power and on wakeup the rgmii delays are not reconfigured
-causing it to fail.
+The IRQ name format string used in devm_kasprintf() mistakenly included
+a newline character "\n".
+This could lead to confusing log output or misformatted names in sysfs
+or debug messages.
 
-Replace the callback kszphy_resume()->ksz9131_resume() for reconfiguring
-the rgmii_delay when it exits from PM suspend state.
+This fix removes the newline to ensure proper IRQ naming.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250711054029.48536-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://lore.kernel.org/r/20250624194350.109790-3-alok.a.tiwari@oracle.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/perf/cxl_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index d4017c442201..6a114883ed8c 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4722,6 +4722,14 @@ static int lan8841_suspend(struct phy_device *phydev)
- 	return genphy_suspend(phydev);
- }
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index 308c9969642e..c03df0f52889 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -881,7 +881,7 @@ static int cxl_pmu_probe(struct device *dev)
+ 		return rc;
+ 	irq = rc;
  
-+static int ksz9131_resume(struct phy_device *phydev)
-+{
-+	if (phydev->suspended && phy_interface_is_rgmii(phydev))
-+		ksz9131_config_rgmii_delay(phydev);
-+
-+	return kszphy_resume(phydev);
-+}
-+
- static struct phy_driver ksphy_driver[] = {
- {
- 	.phy_id		= PHY_ID_KS8737,
-@@ -4968,7 +4976,7 @@ static struct phy_driver ksphy_driver[] = {
- 	.get_strings	= kszphy_get_strings,
- 	.get_stats	= kszphy_get_stats,
- 	.suspend	= kszphy_suspend,
--	.resume		= kszphy_resume,
-+	.resume		= ksz9131_resume,
- 	.cable_test_start	= ksz9x31_cable_test_start,
- 	.cable_test_get_status	= ksz9x31_cable_test_get_status,
- 	.get_features	= ksz9477_get_features,
+-	irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_overflow\n", dev_name);
++	irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_overflow", dev_name);
+ 	if (!irq_name)
+ 		return -ENOMEM;
+ 
 -- 
 2.39.5
 
