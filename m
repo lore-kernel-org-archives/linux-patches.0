@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0438341AA1;
-	Tue, 26 Aug 2025 14:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614A334DCED;
+	Tue, 26 Aug 2025 14:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217999; cv=none; b=jDKfKpbqWr3IWvQhx5NwUpoSPXIW8ugQ7ViTTzk+qgVODBCyv5ecfrDV/KZRedCycVokU6VzcVkrnvLOHNiQ/913yQUaRhgNYRI91WfI9/MqEcQa9RMgNKV6H1E/2jJ4ZXrlq0L/e75BqUG7nISXj9tb8IXC8w/ZsvSORxPu/Xw=
+	t=1756218002; cv=none; b=SrD22uNWcNzNVTKPE6mhCFLhekfnHaPKsHEF16oVbmosSP70giYaoThYtjnMcrKI0LHpiPyCwL8cnmdLp1+iVMTtMj57rN7bJO0NEuSMIEqXZDNNjdkz9Bt4mNF9td/VVtWi5VRrpG10azPeS54y/eifH8Ka3A735VqvOSWbLX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217999; c=relaxed/simple;
-	bh=Ee5iboJYb4rKgiSM/yLABJzbE4H6DBMv/KB5ekWKp6M=;
+	s=arc-20240116; t=1756218002; c=relaxed/simple;
+	bh=rEqgJ3pncP/8R7LeOyhqtwd/hNlXQ5jSl1hF/Y2Vo5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gFvnP3Z3lu9tN4HX5F/teB99xPJP/6s+3NTqyXbOcMSKDsDBHM7FhJ+njt7wi/JG2Pk64QRE3C2DcafFN0aF9M+YpwXR/1QTYlcW/oLv0o7sKCUetLGh0h4ypRHi6JgTIGT0atNWC+cTNI+MaFpk05bso8WwnH3AhMUfm4KLM1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7P6DwB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b7P5QGJyKlUvBi26sEmAjaELFY3z2alJmW5k3PNXTOvmHGJwR1h+RbOrIUpon5O0rO2FE04HYsyvNoSq0dCtPXJvhwo4/JhyUYmZ9ZKBjo1zW3DBGGFZTzw3RsdzyLuuvyaqZLpCZHrF0M/zPES1iww0X1RcVAtx1arNG4E15uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeuBosOI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7P6DwB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414F7C4CEF1;
-	Tue, 26 Aug 2025 14:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeuBosOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6154C4CEF1;
+	Tue, 26 Aug 2025 14:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217999;
-	bh=Ee5iboJYb4rKgiSM/yLABJzbE4H6DBMv/KB5ekWKp6M=;
+	s=korg; t=1756218002;
+	bh=rEqgJ3pncP/8R7LeOyhqtwd/hNlXQ5jSl1hF/Y2Vo5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7P6DwB/EEFg/5mt0tx9EA3nK81aot36NDFmzWs8JQJIMew1+SvnSTIEcO6UNFeiK
-	 11mOw/2RDtt5FTgBbHIzH0XJ3TyxIX5HeZI0UDg+c6uB4Y6m7AC4+GyfiCuVXCLYkC
-	 +aUl+naS7pXLgHKyT2xzNhOo1w57aLvr9Ja1FXhI=
+	b=YeuBosOIpZ5t4H5L+ZUb9+Kcj98oJxFHxDyZx/l6sCc9wYxfQPcXMCAzMGgAP8HQh
+	 x58Ig7aLaYjtBAW3ZdONYfcjVq73WUbz7Cl3K1BL9lUCUBxXke2XS6YIZm23Yu2xeh
+	 84PGIVnZG6mg+hEJm2uqvhzEZIiqkN50ULWjgyNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.10 355/523] usb: atm: cxacru: Merge cxacru_upload_firmware() into cxacru_heavy_init()
-Date: Tue, 26 Aug 2025 13:09:25 +0200
-Message-ID: <20250826110933.223932561@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 356/523] usb: gadget: udc: renesas_usb3: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:09:26 +0200
+Message-ID: <20250826110933.248072756@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -49,231 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 8d1b02e5d7e3a6d2acffb1f4c094678fda9e3456 upstream.
+commit 868837b0a94c6b1b1fdbc04d3ba218ca83432393 upstream.
 
-After a recent change in clang to expose uninitialized warnings from
-const variables [1], there is a warning in cxacru_heavy_init():
+Make sure to drop the reference to the companion device taken during
+probe when the driver is unbound.
 
-  drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
-   1104 |         if (instance->modem_type->boot_rom_patch) {
-        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
-   1113 |         cxacru_upload_firmware(instance, fw, bp);
-        |                                              ^~
-  drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
-   1104 |         if (instance->modem_type->boot_rom_patch) {
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
-   1095 |         const struct firmware *fw, *bp;
-        |                                       ^
-        |                                        = NULL
-
-While the warning is technically correct that bp is conditionally passed
-uninitialized to cxacru_upload_firmware(), it is ultimately a false
-positive warning on the uninitialized use of bp because the same
-condition that initializes bp, instance->modem_type->boot_rom_patch, is
-the same one that gates the use of bp within cxacru_upload_firmware().
-As this warning occurs in clang's frontend before inlining occurs, it
-cannot know that these conditions are indentical to avoid the warning.
-
-Manually inline cxacru_upload_firmware() into cxacru_heavy_init(), as
-that is its only callsite, so that clang can see that bp is initialized
-and used under the same condition, clearing up the warning without any
-functional changes to the code (LLVM was already doing this inlining
-later).
-
-Cc: stable@vger.kernel.org
-Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
-Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/cxacru.c |  106 +++++++++++++++++++++--------------------------
- 1 file changed, 49 insertions(+), 57 deletions(-)
+ drivers/usb/gadget/udc/renesas_usb3.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -983,25 +983,60 @@ cleanup:
- 	return ret;
- }
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2566,6 +2566,7 @@ static int renesas_usb3_remove(struct pl
+ 	struct renesas_usb3 *usb3 = platform_get_drvdata(pdev);
  
--static void cxacru_upload_firmware(struct cxacru_data *instance,
--				   const struct firmware *fw,
--				   const struct firmware *bp)
-+
-+static int cxacru_find_firmware(struct cxacru_data *instance,
-+				char *phase, const struct firmware **fw_p)
- {
--	int ret;
-+	struct usbatm_data *usbatm = instance->usbatm;
-+	struct device *dev = &usbatm->usb_intf->dev;
-+	char buf[16];
-+
-+	sprintf(buf, "cxacru-%s.bin", phase);
-+	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
-+
-+	if (request_firmware(fw_p, buf, dev)) {
-+		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
-+		return -ENOENT;
-+	}
-+
-+	usb_info(usbatm, "found firmware %s\n", buf);
-+
-+	return 0;
-+}
-+
-+static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
-+			     struct usb_interface *usb_intf)
-+{
-+	const struct firmware *fw, *bp;
-+	struct cxacru_data *instance = usbatm_instance->driver_data;
- 	struct usbatm_data *usbatm = instance->usbatm;
- 	struct usb_device *usb_dev = usbatm->usb_dev;
- 	__le16 signature[] = { usb_dev->descriptor.idVendor,
- 			       usb_dev->descriptor.idProduct };
- 	__le32 val;
-+	int ret;
-+
-+	ret = cxacru_find_firmware(instance, "fw", &fw);
-+	if (ret) {
-+		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
-+		return ret;
-+	}
+ 	debugfs_remove_recursive(usb3->dentry);
++	put_device(usb3->host_dev);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
--	usb_dbg(usbatm, "%s\n", __func__);
-+	if (instance->modem_type->boot_rom_patch) {
-+		ret = cxacru_find_firmware(instance, "bp", &bp);
-+		if (ret) {
-+			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
-+			release_firmware(fw);
-+			return ret;
-+		}
-+	}
- 
- 	/* FirmwarePllFClkValue */
- 	val = cpu_to_le32(instance->modem_type->pll_f_clk);
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLFCLK_ADDR, (u8 *) &val, 4);
- 	if (ret) {
- 		usb_err(usbatm, "FirmwarePllFClkValue failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* FirmwarePllBClkValue */
-@@ -1009,7 +1044,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLBCLK_ADDR, (u8 *) &val, 4);
- 	if (ret) {
- 		usb_err(usbatm, "FirmwarePllBClkValue failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Enable SDRAM */
-@@ -1017,7 +1052,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SDRAMEN_ADDR, (u8 *) &val, 4);
- 	if (ret) {
- 		usb_err(usbatm, "Enable SDRAM failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Firmware */
-@@ -1025,7 +1060,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, FW_ADDR, fw->data, fw->size);
- 	if (ret) {
- 		usb_err(usbatm, "Firmware upload failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Boot ROM patch */
-@@ -1034,7 +1069,7 @@ static void cxacru_upload_firmware(struc
- 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
- 		if (ret) {
- 			usb_err(usbatm, "Boot ROM patching failed: %d\n", ret);
--			return;
-+			goto done;
- 		}
- 	}
- 
-@@ -1042,7 +1077,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SIG_ADDR, (u8 *) signature, 4);
- 	if (ret) {
- 		usb_err(usbatm, "Signature storing failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	usb_info(usbatm, "starting device\n");
-@@ -1054,7 +1089,7 @@ static void cxacru_upload_firmware(struc
- 	}
- 	if (ret) {
- 		usb_err(usbatm, "Passing control to firmware failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Delay to allow firmware to start up. */
-@@ -1068,53 +1103,10 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_cm(instance, CM_REQUEST_CARD_GET_STATUS, NULL, 0, NULL, 0);
- 	if (ret < 0) {
- 		usb_err(usbatm, "modem failed to initialize: %d\n", ret);
--		return;
--	}
--}
--
--static int cxacru_find_firmware(struct cxacru_data *instance,
--				char *phase, const struct firmware **fw_p)
--{
--	struct usbatm_data *usbatm = instance->usbatm;
--	struct device *dev = &usbatm->usb_intf->dev;
--	char buf[16];
--
--	sprintf(buf, "cxacru-%s.bin", phase);
--	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
--
--	if (request_firmware(fw_p, buf, dev)) {
--		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
--		return -ENOENT;
-+		goto done;
- 	}
- 
--	usb_info(usbatm, "found firmware %s\n", buf);
--
--	return 0;
--}
--
--static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
--			     struct usb_interface *usb_intf)
--{
--	const struct firmware *fw, *bp;
--	struct cxacru_data *instance = usbatm_instance->driver_data;
--	int ret = cxacru_find_firmware(instance, "fw", &fw);
--
--	if (ret) {
--		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
--		return ret;
--	}
--
--	if (instance->modem_type->boot_rom_patch) {
--		ret = cxacru_find_firmware(instance, "bp", &bp);
--		if (ret) {
--			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
--			release_firmware(fw);
--			return ret;
--		}
--	}
--
--	cxacru_upload_firmware(instance, fw, bp);
--
-+done:
- 	if (instance->modem_type->boot_rom_patch)
- 		release_firmware(bp);
- 	release_firmware(fw);
+ 	cancel_work_sync(&usb3->role_work);
 
 
