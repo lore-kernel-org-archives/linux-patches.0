@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C7E352084;
-	Tue, 26 Aug 2025 14:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AE6356905;
+	Tue, 26 Aug 2025 14:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218649; cv=none; b=sFTgY1mEUryyoUgbZG0rAkW212Qud6xPgL722W813UQx+a/4G8Xk2OHs6uqt23w9hlfrICOTDDHHE6h2h0wCa5YUHPy91OP+fNTISU7yGapX2RegP2FWPO2cfUtCdqqSfK87ypTG+pk36ZD1rZAIsuSCZSmNfSsRQxS/Yorh4t8=
+	t=1756218652; cv=none; b=Ia9A0EzVBT+85McBFMikf7E/LhuU/lAv4irHh0FGxU2AguIUMUiDoq0gNbGRujSw6O5U3bCaXvKA+BzQAmtxQ7D3anyUVhBtZlBHz4S7YXo2lT8D2jV0Z/qh8AmWvpqw+cQhnvh4fHO8BlpbAcQkbsUXpmtmXuC9feSeUfzfBhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218649; c=relaxed/simple;
-	bh=seMxkweLD7HqC5V7kncGJXpxbIoJTve4ElWvcdV2BQg=;
+	s=arc-20240116; t=1756218652; c=relaxed/simple;
+	bh=dzJWEQdDddMejg+IWXQ7Zes43mRUH0i5LoO2uZFV63A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBOMIbBBDmGVzRbGdYMRDeWugaCmQifgdNlNef/2DHXsN34Ka+GhRg+RaGYT/DHtkzQ+5+RZhRpsoVGxbxgtu0fATJ7mMOzxr+7APdc+ndfeJR1zUOTjgbCbqaJAFz6atrAQMN1UsziU2JeTvxY8cxXOVUghXyy8mWmNb0tdI54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqvMRzjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cfibz1qHNPt6bRib7pdz88xRHjOSTn1LaKINBklMfqyey3r10nHkeGr+iVXoeWhujTBDZZZjTyTtBkoqJpJjLpFCoIlH94leS9c0n1nS5pbgWLDHn5OG8APHmU64wmrnG2reKoOYAHnid9cAW2vA28aof4JalUaLPQFFk25mPF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqRDrNj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqvMRzjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A39EC4CEF1;
-	Tue, 26 Aug 2025 14:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqRDrNj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4547AC4CEF1;
+	Tue, 26 Aug 2025 14:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218649;
-	bh=seMxkweLD7HqC5V7kncGJXpxbIoJTve4ElWvcdV2BQg=;
+	s=korg; t=1756218651;
+	bh=dzJWEQdDddMejg+IWXQ7Zes43mRUH0i5LoO2uZFV63A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BqvMRzjt13yx6x/6DawcStHoB3b7Ljzw/BkxWKztpuyoKnFsV+N66i7zTPI1HA+AV
-	 +RX85pbE8QSXBEEdFa2VVPFUKdT7IEDjvtD2e3eZ65VQQoCzXj8MF14y9PyVvEAICZ
-	 KO+Lh66vWXdQlIdcKvzJjRsjiA0IRUJYgaphhlFQ=
+	b=XqRDrNj5ssyfQ31PTJKEYCdo8xH5hrOoO/mfkegS80Zv0hpOSMw/w0Cb6LT0oWQjg
+	 BKaoui26jVSuLmuzHhi3jH4g2GgB1Pw2UJBpPMSfeaG+YaTayWfz/jc/RVHsP5ya69
+	 BPu793sDsfI7TFRg32P5wQqUTPGw6csk1EVmpIdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/403] usb: early: xhci-dbc: Fix early_ioremap leak
-Date: Tue, 26 Aug 2025 13:06:45 +0200
-Message-ID: <20250826110908.636068927@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Octavian Purdila <tavip@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.4 050/403] net_sched: sch_sfq: dont allow 1 packet limit
+Date: Tue, 26 Aug 2025 13:06:16 +0200
+Message-ID: <20250826110907.234787530@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,56 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit 2b7eec2ec3015f52fc74cf45d0408925e984ecd1 ]
+[ Upstream commit 10685681bafce6febb39770f3387621bf5d67d0b ]
 
-Using the kernel param earlyprintk=xdbc,keep without proper hardware
-setup leads to this:
+The current implementation does not work correctly with a limit of
+1. iproute2 actually checks for this and this patch adds the check in
+kernel as well.
 
-	[ ] xhci_dbc:early_xdbc_parse_parameter: dbgp_num: 0
-	...
-	[ ] xhci_dbc:early_xdbc_setup_hardware: failed to setup the connection to host
-	...
-	[ ] calling  kmemleak_late_init+0x0/0xa0 @ 1
-	[ ] kmemleak: Kernel memory leak detector initialized (mem pool available: 14919)
-	[ ] kmemleak: Automatic memory scanning thread started
-	[ ] initcall kmemleak_late_init+0x0/0xa0 returned 0 after 417 usecs
-	[ ] calling  check_early_ioremap_leak+0x0/0x70 @ 1
-	[ ] ------------[ cut here ]------------
-	[ ] Debug warning: early ioremap leak of 1 areas detected.
-	    please boot with early_ioremap_debug and report the dmesg.
-	[ ] WARNING: CPU: 11 PID: 1 at mm/early_ioremap.c:90 check_early_ioremap_leak+0x4e/0x70
+This fixes the following syzkaller reported crash:
 
-When early_xdbc_setup_hardware() fails, make sure to call
-early_iounmap() since xdbc_init() won't handle it.
+UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:210:6
+index 65535 is out of range for type 'struct sfq_head[128]'
+CPU: 0 PID: 2569 Comm: syz-executor101 Not tainted 5.10.0-smp-DEV #1
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+  __dump_stack lib/dump_stack.c:79 [inline]
+  dump_stack+0x125/0x19f lib/dump_stack.c:120
+  ubsan_epilogue lib/ubsan.c:148 [inline]
+  __ubsan_handle_out_of_bounds+0xed/0x120 lib/ubsan.c:347
+  sfq_link net/sched/sch_sfq.c:210 [inline]
+  sfq_dec+0x528/0x600 net/sched/sch_sfq.c:238
+  sfq_dequeue+0x39b/0x9d0 net/sched/sch_sfq.c:500
+  sfq_reset+0x13/0x50 net/sched/sch_sfq.c:525
+  qdisc_reset+0xfe/0x510 net/sched/sch_generic.c:1026
+  tbf_reset+0x3d/0x100 net/sched/sch_tbf.c:319
+  qdisc_reset+0xfe/0x510 net/sched/sch_generic.c:1026
+  dev_reset_queue+0x8c/0x140 net/sched/sch_generic.c:1296
+  netdev_for_each_tx_queue include/linux/netdevice.h:2350 [inline]
+  dev_deactivate_many+0x6dc/0xc20 net/sched/sch_generic.c:1362
+  __dev_close_many+0x214/0x350 net/core/dev.c:1468
+  dev_close_many+0x207/0x510 net/core/dev.c:1506
+  unregister_netdevice_many+0x40f/0x16b0 net/core/dev.c:10738
+  unregister_netdevice_queue+0x2be/0x310 net/core/dev.c:10695
+  unregister_netdevice include/linux/netdevice.h:2893 [inline]
+  __tun_detach+0x6b6/0x1600 drivers/net/tun.c:689
+  tun_detach drivers/net/tun.c:705 [inline]
+  tun_chr_close+0x104/0x1b0 drivers/net/tun.c:3640
+  __fput+0x203/0x840 fs/file_table.c:280
+  task_work_run+0x129/0x1b0 kernel/task_work.c:185
+  exit_task_work include/linux/task_work.h:33 [inline]
+  do_exit+0x5ce/0x2200 kernel/exit.c:931
+  do_group_exit+0x144/0x310 kernel/exit.c:1046
+  __do_sys_exit_group kernel/exit.c:1057 [inline]
+  __se_sys_exit_group kernel/exit.c:1055 [inline]
+  __x64_sys_exit_group+0x3b/0x40 kernel/exit.c:1055
+ do_syscall_64+0x6c/0xd0
+ entry_SYSCALL_64_after_hwframe+0x61/0xcb
+RIP: 0033:0x7fe5e7b52479
+Code: Unable to access opcode bytes at RIP 0x7fe5e7b5244f.
+RSP: 002b:00007ffd3c800398 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fe5e7b52479
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
+RBP: 00007fe5e7bcd2d0 R08: ffffffffffffffb8 R09: 0000000000000014
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe5e7bcd2d0
+R13: 0000000000000000 R14: 00007fe5e7bcdd20 R15: 00007fe5e7b24270
 
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Fixes: aeb9dd1de98c ("usb/early: Add driver for xhci debug capability")
-Link: https://lore.kernel.org/r/20250627-xdbc-v1-1-43cc8c317b1b@intel.com
+The crash can be also be reproduced with the following (with a tc
+recompiled to allow for sfq limits of 1):
+
+tc qdisc add dev dummy0 handle 1: root tbf rate 1Kbit burst 100b lat 1s
+../iproute2-6.9.0/tc/tc qdisc add dev dummy0 handle 2: parent 1:10 sfq limit 1
+ifconfig dummy0 up
+ping -I dummy0 -f -c2 -W0.1 8.8.8.8
+sleep 1
+
+Scenario that triggers the crash:
+
+* the first packet is sent and queued in TBF and SFQ; qdisc qlen is 1
+
+* TBF dequeues: it peeks from SFQ which moves the packet to the
+  gso_skb list and keeps qdisc qlen set to 1. TBF is out of tokens so
+  it schedules itself for later.
+
+* the second packet is sent and TBF tries to queues it to SFQ. qdisc
+  qlen is now 2 and because the SFQ limit is 1 the packet is dropped
+  by SFQ. At this point qlen is 1, and all of the SFQ slots are empty,
+  however q->tail is not NULL.
+
+At this point, assuming no more packets are queued, when sch_dequeue
+runs again it will decrement the qlen for the current empty slot
+causing an underflow and the subsequent out of bounds access.
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Octavian Purdila <tavip@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241204030520.2084663-2-tavip@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/early/xhci-dbc.c | 4 ++++
+ net/sched/sch_sfq.c |    4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/early/xhci-dbc.c b/drivers/usb/early/xhci-dbc.c
-index 5a462a1d1896..7673ded077a4 100644
---- a/drivers/usb/early/xhci-dbc.c
-+++ b/drivers/usb/early/xhci-dbc.c
-@@ -678,6 +678,10 @@ int __init early_xdbc_setup_hardware(void)
- 
- 		xdbc.table_base = NULL;
- 		xdbc.out_buf = NULL;
-+
-+		early_iounmap(xdbc.xhci_base, xdbc.xhci_length);
-+		xdbc.xhci_base = NULL;
-+		xdbc.xhci_length = 0;
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -652,6 +652,10 @@ static int sfq_change(struct Qdisc *sch,
+ 		if (!p)
+ 			return -ENOMEM;
  	}
- 
- 	return ret;
--- 
-2.39.5
-
++	if (ctl->limit == 1) {
++		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
++		return -EINVAL;
++	}
+ 	sch_tree_lock(sch);
+ 	if (ctl->quantum)
+ 		q->quantum = ctl->quantum;
 
 
