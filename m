@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C67221D3F2;
-	Tue, 26 Aug 2025 14:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426FF2192F2;
+	Tue, 26 Aug 2025 14:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217200; cv=none; b=CUZu1bNw/9ZATiY0GpHKbGBs/JihrfbKsRaXdHc54lDAD1lNFWHILUd7DLOs2Iuo/jAeUZbwO6qgZz26sCOzm0QtvfWbJi9EvPbwsyosdoIMwEfQVEzlAQVdIxQIoniUJUBSOaLsEbHxOTEcuVfuc+MuiqHnIRnLDE2WaYw9YJk=
+	t=1756217200; cv=none; b=oNqWSCPkUlYSXp6+Ctqo7XwlN8zdf0sKfWZ3U+0FnIMh9wdcbPmHedE/3v31Dn2IYEVQdu1yb6rrs+S/M0X8tNAfrGbNtcPFm3AhrMK7xEfH70o2zy2SktyhRkxzqck0d4KbI4bYDs5dB6DCWLJVEC8MUqkNCqzLIoNBBHjKz54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756217200; c=relaxed/simple;
-	bh=D82G4aV9diF+wH428zQNlfpXg0MqS1aF5yFDZlH+8BA=;
+	bh=luFQrnHwPf9684fAPp2uAqyGsRF8GZ9i8pKqJia7OFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JazisVT/9ljmrqp7DLzodjCy3/r6hgF6CkTk8vztDlIBn6+CCbim73vKldsXrdJFNZkO59eM3eeFlsCjSGWBGjrWJk7gLTV96UlzaapeMEdAg/8QaEZIvWRCnyZzugB58I4aklaNyovECw+Ttf3F/4nCsxR6SRx4VPSFnTEJr60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN/WHlXe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XssJB611DzzW48CP8j3u0o0PtuC0eNC1M7gHDiKfkJq1mrjZnSOYsTNCpQoMd/pOTF8ppP1CTGdaqTfvOGUg27jaEbiJFgHQ9lp0/HF8DwS70L4c9CXrAFl//1Ck9Lvc3yNAOqZNxTuGX6juq1TOCsDUSpLqKYwjZX3Cbmj2OGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOS0JPHo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN/WHlXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C96C4CEF1;
-	Tue, 26 Aug 2025 14:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOS0JPHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA71FC113CF;
+	Tue, 26 Aug 2025 14:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217197;
-	bh=D82G4aV9diF+wH428zQNlfpXg0MqS1aF5yFDZlH+8BA=;
+	s=korg; t=1756217200;
+	bh=luFQrnHwPf9684fAPp2uAqyGsRF8GZ9i8pKqJia7OFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vN/WHlXejPFMFiuConSYK1E/q5hUSgBqOn6OkTUzkMFazd+Lg8ci7nFC+qk2pX8sJ
-	 I9uwGm0r4I/NkjYhFpbLOsW9POnzPcIJH9q6xon9A1GtOVcFMCpdrEYyrH22xWQ3ay
-	 53FiPgU+a7F2b6c2fywiEKk0JRP7x1H/DF0cDUog=
+	b=cOS0JPHoJi+UypARgZZyY3K1zJVZsy2y8KjzHzPjnJOStpLFyxFr9syJ20wXZBqqU
+	 N59086UAn/7l1SOj75Sw/yCh1ouYgfhjZnXW8bgZAMi3y/u9TUTMSsxNxt9ybBJKu+
+	 YQaCDdXaViot8EVcDl/K7zRsRsmscUgsXKXs14sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 052/523] mm/vmalloc: leave lazy MMU mode on PTE mapping error
-Date: Tue, 26 Aug 2025 13:04:22 +0200
-Message-ID: <20250826110925.879663643@linuxfoundation.org>
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 053/523] virtio-net: ensure the received length does not exceed allocated size
+Date: Tue, 26 Aug 2025 13:04:23 +0200
+Message-ID: <20250826110925.903845524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,62 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-commit fea18c686320a53fce7ad62a87a3e1d10ad02f31 upstream.
+commit 315dbdd7cdf6aa533829774caaf4d25f1fd20e73 upstream.
 
-vmap_pages_pte_range() enters the lazy MMU mode, but fails to leave it in
-case an error is encountered.
+In xdp_linearize_page, when reading the following buffers from the ring,
+we forget to check the received length with the true allocate size. This
+can lead to an out-of-bound read. This commit adds that missing check.
 
-Link: https://lkml.kernel.org/r/20250623075721.2817094-1-agordeev@linux.ibm.com
-Fixes: 2ba3e6947aed ("mm/vmalloc: track which page-table levels were modified")
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202506132017.T1l1l6ME-lkp@intel.com/
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4941d472bf95 ("virtio-net: do not reset during XDP set")
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20250630144212.48471-2-minhquangbui99@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ adapted virtqueue_get_buf() to virtqueue_get_buf_ctx() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmalloc.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/virtio_net.c |   38 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -193,6 +193,7 @@ static int vmap_pte_range(pmd_t *pmd, un
- 		unsigned long end, pgprot_t prot, struct page **pages, int *nr,
- 		pgtbl_mod_mask *mask)
- {
-+	int err = 0;
- 	pte_t *pte;
- 
- 	/*
-@@ -206,15 +207,20 @@ static int vmap_pte_range(pmd_t *pmd, un
- 	do {
- 		struct page *page = pages[*nr];
- 
--		if (WARN_ON(!pte_none(*pte)))
--			return -EBUSY;
--		if (WARN_ON(!page))
--			return -ENOMEM;
-+		if (WARN_ON(!pte_none(*pte))) {
-+			err = -EBUSY;
-+			break;
-+		}
-+		if (WARN_ON(!page)) {
-+			err = -ENOMEM;
-+			break;
-+		}
- 		set_pte_at(&init_mm, addr, pte, mk_pte(page, prot));
- 		(*nr)++;
- 	} while (pte++, addr += PAGE_SIZE, addr != end);
- 	*mask |= PGTBL_PTE_MODIFIED;
--	return 0;
-+
-+	return err;
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -394,6 +394,26 @@ static unsigned int mergeable_ctx_to_tru
+ 	return (unsigned long)mrg_ctx & ((1 << MRG_CTX_HEADER_SHIFT) - 1);
  }
  
- static int vmap_pmd_range(pud_t *pud, unsigned long addr,
++static int check_mergeable_len(struct net_device *dev, void *mrg_ctx,
++			       unsigned int len)
++{
++	unsigned int headroom, tailroom, room, truesize;
++
++	truesize = mergeable_ctx_to_truesize(mrg_ctx);
++	headroom = mergeable_ctx_to_headroom(mrg_ctx);
++	tailroom = headroom ? sizeof(struct skb_shared_info) : 0;
++	room = SKB_DATA_ALIGN(headroom + tailroom);
++
++	if (len > truesize - room) {
++		pr_debug("%s: rx error: len %u exceeds truesize %lu\n",
++			 dev->name, len, (unsigned long)(truesize - room));
++		dev->stats.rx_length_errors++;
++		return -1;
++	}
++
++	return 0;
++}
++
+ /* Called from bottom half context */
+ static struct sk_buff *page_to_skb(struct virtnet_info *vi,
+ 				   struct receive_queue *rq,
+@@ -639,7 +659,8 @@ static unsigned int virtnet_get_headroom
+  * across multiple buffers (num_buf > 1), and we make sure buffers
+  * have enough headroom.
+  */
+-static struct page *xdp_linearize_page(struct receive_queue *rq,
++static struct page *xdp_linearize_page(struct net_device *dev,
++				       struct receive_queue *rq,
+ 				       u16 *num_buf,
+ 				       struct page *p,
+ 				       int offset,
+@@ -659,18 +680,27 @@ static struct page *xdp_linearize_page(s
+ 	memcpy(page_address(page) + page_off, page_address(p) + offset, *len);
+ 	page_off += *len;
+ 
++	/* Only mergeable mode can go inside this while loop. In small mode,
++	 * *num_buf == 1, so it cannot go inside.
++	 */
+ 	while (--*num_buf) {
+ 		unsigned int buflen;
+ 		void *buf;
++		void *ctx;
+ 		int off;
+ 
+-		buf = virtqueue_get_buf(rq->vq, &buflen);
++		buf = virtqueue_get_buf_ctx(rq->vq, &buflen, &ctx);
+ 		if (unlikely(!buf))
+ 			goto err_buf;
+ 
+ 		p = virt_to_head_page(buf);
+ 		off = buf - page_address(p);
+ 
++		if (check_mergeable_len(dev, ctx, buflen)) {
++			put_page(p);
++			goto err_buf;
++		}
++
+ 		/* guard against a misconfigured or uncooperative backend that
+ 		 * is sending packet larger than the MTU.
+ 		 */
+@@ -745,7 +775,7 @@ static struct sk_buff *receive_small(str
+ 			headroom = vi->hdr_len + header_offset;
+ 			buflen = SKB_DATA_ALIGN(GOOD_PACKET_LEN + headroom) +
+ 				 SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+-			xdp_page = xdp_linearize_page(rq, &num_buf, page,
++			xdp_page = xdp_linearize_page(dev, rq, &num_buf, page,
+ 						      offset, header_offset,
+ 						      &tlen);
+ 			if (!xdp_page)
+@@ -916,7 +946,7 @@ static struct sk_buff *receive_mergeable
+ 		if (unlikely(num_buf > 1 ||
+ 			     headroom < virtnet_get_headroom(vi))) {
+ 			/* linearize data for XDP */
+-			xdp_page = xdp_linearize_page(rq, &num_buf,
++			xdp_page = xdp_linearize_page(dev, rq, &num_buf,
+ 						      page, offset,
+ 						      VIRTIO_XDP_HEADROOM,
+ 						      &len);
 
 
