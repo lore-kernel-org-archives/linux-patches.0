@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814F21F4C90;
-	Tue, 26 Aug 2025 14:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7399C350D5D;
+	Tue, 26 Aug 2025 14:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217005; cv=none; b=KqfX3pMadcROffPk6Fgq7d/Yd+09Ap3A0M06FRnDRGXumh/dDqoPe6cJzPwupUuVS2Bjup+WhONlqG6uxyvONrMLAt6Sz78uB4GT5kIFtOXSWWi8dP3+ByjliVrrT2j119TsqXUWSUO4DoK9AfM7SxUXXtxe+7uD/rBMUXMHZ2c=
+	t=1756217008; cv=none; b=iS9Jr3QKI0HS89meTOb26kYdS8JEnCffIl5ilylz9DRnWmRm08LSdH8pOASkemjDMAZ2+LIiiwlGxTCnSFN1pTq1NmWFIx7ap5yExw2435Usd+rI/x27G9j1sJQ7akzqEMnfTj3rwKGWAPqSLz2uPESMd/AD6U1KmOen7CieZoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217005; c=relaxed/simple;
-	bh=yTzxLPzyhfqx6lLkM8ZgbvlyzTdq3BWRIVgyTnIrnBo=;
+	s=arc-20240116; t=1756217008; c=relaxed/simple;
+	bh=GmLehD7kMGtY0JSGqiqsvZLHu79BX6/18zL+6j428FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLi42eBpYRrC4b34qBUC5SsxBCHSVAPW6EHKoVa5J1TQuB3PW4Np2iEoHCJ+vZN10BHrg9WuDTbBgOtw88DOCFLZ90Ogoe7BOgzQly+pWSdekHuZ2NEfxeGuN+Y+CBnNSITTYRf9s1qtqpigAM/mSaryWl8HIwF7o3Dj3KlUl74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0A4zCux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S/ZPM/SNNe9v1ntUtihLbYXyKvrp1drYUdn4e5Zuv0o6RTv7bSfy7umfdhyJoWYIKEe+MV/CW+euWPOzdGTs5xFpXsp/KEVHf/hJth3dZOiQ7CjhxaAm/0OfMoNHJh7JHyi8kwfjg9KGS5RtFRne5z3srGG6vlllqwBSEm0Tu20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haXMqXFD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0A4zCux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1794BC113D0;
-	Tue, 26 Aug 2025 14:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haXMqXFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0C1C4CEF1;
+	Tue, 26 Aug 2025 14:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217005;
-	bh=yTzxLPzyhfqx6lLkM8ZgbvlyzTdq3BWRIVgyTnIrnBo=;
+	s=korg; t=1756217008;
+	bh=GmLehD7kMGtY0JSGqiqsvZLHu79BX6/18zL+6j428FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0A4zCuxROGxrCN0gkpv6tLMZOBfsRLd9A+Tbc00PE0kTmje5bA6U4UvvTgp3lv/B
-	 0x09ovCnPEda/4qfdqvusmTw/ilS27PFJPhxm9gN20fVIVuYI7nXyGGeGQq+VbVWjq
-	 YlzAjrCJLepPI65pK3eXs5xiTtRMQWCKne61Uizw=
+	b=haXMqXFD1mDg+pCnBnGGTGfPwSL8o4gggdGOKuxsvCIWPZCOtJnZsxRuMFK4MhWGQ
+	 RF4F52xTPSZlYg97FvXTD/FxeU4LVOEhE0btC38q//qWzNyAepyy/a5dG3PFTaYI18
+	 /s1r9wg9WDDLSGDWgcTB+VHEg4h9F+r3kKbT33f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Wang Liang <wangliang74@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 623/644] net: bridge: fix soft lockup in br_multicast_query_expired()
-Date: Tue, 26 Aug 2025 13:11:54 +0200
-Message-ID: <20250826111001.995257619@linuxfoundation.org>
+Subject: [PATCH 5.15 624/644] scsi: qla4xxx: Prevent a potential error pointer dereference
+Date: Tue, 26 Aug 2025 13:11:55 +0200
+Message-ID: <20250826111002.018856513@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,106 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d1547bf460baec718b3398365f8de33d25c5f36f ]
+[ Upstream commit 9dcf111dd3e7ed5fce82bb108e3a3fc001c07225 ]
 
-When set multicast_query_interval to a large value, the local variable
-'time' in br_multicast_send_query() may overflow. If the time is smaller
-than jiffies, the timer will expire immediately, and then call mod_timer()
-again, which creates a loop and may trigger the following soft lockup
-issue.
+The qla4xxx_get_ep_fwdb() function is supposed to return NULL on error,
+but qla4xxx_ep_connect() returns error pointers.  Propagating the error
+pointers will lead to an Oops in the caller, so change the error pointers
+to NULL.
 
-  watchdog: BUG: soft lockup - CPU#1 stuck for 221s! [rb_consumer:66]
-  CPU: 1 UID: 0 PID: 66 Comm: rb_consumer Not tainted 6.16.0+ #259 PREEMPT(none)
-  Call Trace:
-   <IRQ>
-   __netdev_alloc_skb+0x2e/0x3a0
-   br_ip6_multicast_alloc_query+0x212/0x1b70
-   __br_multicast_send_query+0x376/0xac0
-   br_multicast_send_query+0x299/0x510
-   br_multicast_query_expired.constprop.0+0x16d/0x1b0
-   call_timer_fn+0x3b/0x2a0
-   __run_timers+0x619/0x950
-   run_timer_softirq+0x11c/0x220
-   handle_softirqs+0x18e/0x560
-   __irq_exit_rcu+0x158/0x1a0
-   sysvec_apic_timer_interrupt+0x76/0x90
-   </IRQ>
-
-This issue can be reproduced with:
-  ip link add br0 type bridge
-  echo 1 > /sys/class/net/br0/bridge/multicast_querier
-  echo 0xffffffffffffffff >
-  	/sys/class/net/br0/bridge/multicast_query_interval
-  ip link set dev br0 up
-
-The multicast_startup_query_interval can also cause this issue. Similar to
-the commit 99b40610956a ("net: bridge: mcast: add and enforce query
-interval minimum"), add check for the query interval maximum to fix this
-issue.
-
-Link: https://lore.kernel.org/netdev/20250806094941.1285944-1-wangliang74@huawei.com/
-Link: https://lore.kernel.org/netdev/20250812091818.542238-1-wangliang74@huawei.com/
-Fixes: d902eee43f19 ("bridge: Add multicast count/interval sysfs entries")
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250813021054.1643649-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 13483730a13b ("[SCSI] qla4xxx: fix flash/ddb support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/aJwnVKS9tHsw1tEu@stanley.mountain
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 16 ++++++++++++++++
- net/bridge/br_private.h   |  2 ++
- 2 files changed, 18 insertions(+)
+ drivers/scsi/qla4xxx/ql4_os.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index 085c9e706bc4..b8fb1e23b107 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -4608,6 +4608,14 @@ void br_multicast_set_query_intvl(struct net_bridge_mcast *brmctx,
- 		intvl_jiffies = BR_MULTICAST_QUERY_INTVL_MIN;
- 	}
+diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
+index ab89f3171a09..da2ed81673c4 100644
+--- a/drivers/scsi/qla4xxx/ql4_os.c
++++ b/drivers/scsi/qla4xxx/ql4_os.c
+@@ -6607,6 +6607,8 @@ static struct iscsi_endpoint *qla4xxx_get_ep_fwdb(struct scsi_qla_host *ha,
  
-+	if (intvl_jiffies > BR_MULTICAST_QUERY_INTVL_MAX) {
-+		br_info(brmctx->br,
-+			"trying to set multicast query interval above maximum, setting to %lu (%ums)\n",
-+			jiffies_to_clock_t(BR_MULTICAST_QUERY_INTVL_MAX),
-+			jiffies_to_msecs(BR_MULTICAST_QUERY_INTVL_MAX));
-+		intvl_jiffies = BR_MULTICAST_QUERY_INTVL_MAX;
-+	}
-+
- 	brmctx->multicast_query_interval = intvl_jiffies;
+ 	ep = qla4xxx_ep_connect(ha->host, (struct sockaddr *)dst_addr, 0);
+ 	vfree(dst_addr);
++	if (IS_ERR(ep))
++		return NULL;
+ 	return ep;
  }
- 
-@@ -4624,6 +4632,14 @@ void br_multicast_set_startup_query_intvl(struct net_bridge_mcast *brmctx,
- 		intvl_jiffies = BR_MULTICAST_STARTUP_QUERY_INTVL_MIN;
- 	}
- 
-+	if (intvl_jiffies > BR_MULTICAST_STARTUP_QUERY_INTVL_MAX) {
-+		br_info(brmctx->br,
-+			"trying to set multicast startup query interval above maximum, setting to %lu (%ums)\n",
-+			jiffies_to_clock_t(BR_MULTICAST_STARTUP_QUERY_INTVL_MAX),
-+			jiffies_to_msecs(BR_MULTICAST_STARTUP_QUERY_INTVL_MAX));
-+		intvl_jiffies = BR_MULTICAST_STARTUP_QUERY_INTVL_MAX;
-+	}
-+
- 	brmctx->multicast_startup_query_interval = intvl_jiffies;
- }
- 
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 1718168bd927..8acb427ae6de 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -30,6 +30,8 @@
- #define BR_MULTICAST_DEFAULT_HASH_MAX 4096
- #define BR_MULTICAST_QUERY_INTVL_MIN msecs_to_jiffies(1000)
- #define BR_MULTICAST_STARTUP_QUERY_INTVL_MIN BR_MULTICAST_QUERY_INTVL_MIN
-+#define BR_MULTICAST_QUERY_INTVL_MAX msecs_to_jiffies(86400000) /* 24 hours */
-+#define BR_MULTICAST_STARTUP_QUERY_INTVL_MAX BR_MULTICAST_QUERY_INTVL_MAX
- 
- #define BR_HWDOM_MAX BITS_PER_LONG
  
 -- 
 2.50.1
