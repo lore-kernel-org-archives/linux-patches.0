@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF7324DD11;
-	Tue, 26 Aug 2025 13:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB632187554;
+	Tue, 26 Aug 2025 13:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215409; cv=none; b=UxNQAso/dRaNqq+Is/lXoouEL6EL0bZhQfuNVPq58itmugAiT9pi1//vvY+zVzCwhVNA3cjcJAwmpwMUBesMYQnegEPaPpBai3HD16GDZK8llZ2W50ZB5wAOhP18E1SXvoA0qmfGRSlNzbzdf4rg/mT/tKA5FZTeTPLAmeemgns=
+	t=1756215412; cv=none; b=OL6IXJNBaeOe6a2tDBOAmw0jJyrKLKqa/9+y0dM3TKj29Yab+Jj8DFlmHVefXVHm7HJJBFLLBabOyi99N7oZU+CCVlc1U2GT+G8yZhatGTkSKnnOr10fD+mGEMU4xt0NyyuN1tAWD77HPOZN52YnPblvoeZH38Mp7DakMeGpA3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215409; c=relaxed/simple;
-	bh=w9e+tgWFkkSp+8OQ6/al256LFqwibCemOBWhxejePy0=;
+	s=arc-20240116; t=1756215412; c=relaxed/simple;
+	bh=KP6iZWoHMthHCb6gQli6NBT0m7a5g+P1wIdR1OxmSSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcyZwYcY02W70KaMY7+VbHqiY6b0luGcRWm3r55yAeZvUStY6H9djBlBouKHJwh6qIx71HmeMpLR8Y1WKaopJuU2a9bY8tAS/C7tcIS9kqrYMbcn4ZLToiIznze2AYCSCL81VWeA8qe9nDc5BuE85sUSmB/17ebF+3WC5gio6rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXiOiy1U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qqsh/+6nu9BPYDPABMcnhrbE55KBt/H1GAHRbMZ4uWUZYxFEPDsneRD7NHKEWEmPZbDq9BsosXs2WtyKL952D/j9+pDMuHBKpq/sdKfYNQ2FbptiXhIgedeibC0vrAL6fZLpylAOAPh3lmkbe0Yl3pAK8/tQW7gLssv9TAiRMng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLKQhsFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXiOiy1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8024C4CEF1;
-	Tue, 26 Aug 2025 13:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLKQhsFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD87C4CEF1;
+	Tue, 26 Aug 2025 13:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215409;
-	bh=w9e+tgWFkkSp+8OQ6/al256LFqwibCemOBWhxejePy0=;
+	s=korg; t=1756215411;
+	bh=KP6iZWoHMthHCb6gQli6NBT0m7a5g+P1wIdR1OxmSSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zXiOiy1ULNOiApgopmkO/2zD1aUF/hie0pLd0p4Gfu75lCwT6AOjHhmRbXR/4JMgI
-	 A7/ohcR4fLzLDdpHHab30wy+DYRC31d7dgrh9/r+YJHalKf3sBbRfHN63jvbweIjFB
-	 HZjR4DGYjF09rH6zuHsb64c4Mnp0f/N2F+Upn1Cw=
+	b=XLKQhsFWycTirNMskg8rVsgRjPqUwrd80eBsb9CLgSPVx5I9y9L5ZHCEOZgVMkWYM
+	 lJLJ9rWWosF3pMBdPvaLb/5rKpTky5XX2b62VMNtJJBml96xiFBFpIT+RsgoRKO77u
+	 IA0WATxgydHusA3ulQcQdo2uN7Q+Pg+mVPT+KiJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 022/644] mmc: sdhci_am654: Workaround for Errata i2312
-Date: Tue, 26 Aug 2025 13:01:53 +0200
-Message-ID: <20250826110947.058476329@linuxfoundation.org>
+Subject: [PATCH 5.15 023/644] pmdomain: governor: Consider CPU latency tolerance from pm_domain_cpu_gov
+Date: Tue, 26 Aug 2025 13:01:54 +0200
+Message-ID: <20250826110947.082373911@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,62 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-commit 6d0b1c01847fedd7c85a5cdf59b8cfc7d14512e6 upstream.
+commit 500ba33284416255b9a5b50ace24470b6fe77ea5 upstream.
 
-Errata i2312 [0] for K3 silicon mentions the maximum obtainable
-timeout through MMC host controller is 700ms. And for commands taking
-longer than 700ms, hardware timeout should be disabled and software
-timeout should be used.
+pm_domain_cpu_gov is selecting a cluster idle state but does not consider
+latency tolerance of child CPUs. This results in deeper cluster idle state
+whose latency does not meet latency tolerance requirement.
 
-The workaround for Errata i2312 can be achieved by adding
-SDHCI_QUIRK2_DISABLE_HW_TIMEOUT quirk in sdhci_am654.
+Select deeper idle state only if global and device latency tolerance of all
+child CPUs meet.
 
-[0] https://www.ti.com/lit/pdf/sprz487
+Test results on SM8750 with 300 usec PM-QoS on CPU0 which is less than
+domain idle state entry (2150) + exit (1983) usec latency mentioned in
+devicetree, demonstrate the issue.
 
-Signed-off-by: Judith Mendez <jm@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: 41fd4caeb00b ("mmc: sdhci_am654: Add Initial Support for AM654 SDHCI driver")
+	# echo 300 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
+
+Before: (Usage is incrementing)
+======
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             29817          537        8          270        0
+
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             30348          542        8          271        0
+
+After: (Usage is not incrementing due to latency tolerance)
+======
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             39319          626        14         307        0
+
+	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
+	State          Time Spent(ms) Usage      Rejected   Above      Below
+	S0             39319          626        14         307        0
+
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Fixes: e94999688e3a ("PM / Domains: Add genpd governor for CPUs")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250626231452.3460987-1-jm@ti.com
+Link: https://lore.kernel.org/r/20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/base/power/domain_governor.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -558,7 +558,8 @@ static struct sdhci_ops sdhci_am654_ops
- static const struct sdhci_pltfm_data sdhci_am654_pdata = {
- 	.ops = &sdhci_am654_ops,
- 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
- };
+--- a/drivers/base/power/domain_governor.c
++++ b/drivers/base/power/domain_governor.c
+@@ -8,6 +8,7 @@
+ #include <linux/pm_domain.h>
+ #include <linux/pm_qos.h>
+ #include <linux/hrtimer.h>
++#include <linux/cpu.h>
+ #include <linux/cpuidle.h>
+ #include <linux/cpumask.h>
+ #include <linux/ktime.h>
+@@ -339,6 +340,8 @@ static bool cpu_power_down_ok(struct dev
+ 	struct cpuidle_device *dev;
+ 	ktime_t domain_wakeup, next_hrtimer;
+ 	ktime_t now = ktime_get();
++	struct device *cpu_dev;
++	s64 cpu_constraint, global_constraint;
+ 	s64 idle_duration_ns;
+ 	int cpu, i;
  
- static const struct sdhci_am654_driver_data sdhci_am654_sr1_drvdata = {
-@@ -588,7 +589,8 @@ static struct sdhci_ops sdhci_j721e_8bit
- static const struct sdhci_pltfm_data sdhci_j721e_8bit_pdata = {
- 	.ops = &sdhci_j721e_8bit_ops,
- 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
- };
+@@ -349,6 +352,7 @@ static bool cpu_power_down_ok(struct dev
+ 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
+ 		return true;
  
- static const struct sdhci_am654_driver_data sdhci_j721e_8bit_drvdata = {
-@@ -612,7 +614,8 @@ static struct sdhci_ops sdhci_j721e_4bit
- static const struct sdhci_pltfm_data sdhci_j721e_4bit_pdata = {
- 	.ops = &sdhci_j721e_4bit_ops,
- 	.quirks = SDHCI_QUIRK_MULTIBLOCK_READ_ACMD12,
--	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
-+		   SDHCI_QUIRK2_DISABLE_HW_TIMEOUT,
- };
++	global_constraint = cpu_latency_qos_limit();
+ 	/*
+ 	 * Find the next wakeup for any of the online CPUs within the PM domain
+ 	 * and its subdomains. Note, we only need the genpd->cpus, as it already
+@@ -362,8 +366,16 @@ static bool cpu_power_down_ok(struct dev
+ 			if (ktime_before(next_hrtimer, domain_wakeup))
+ 				domain_wakeup = next_hrtimer;
+ 		}
++
++		cpu_dev = get_cpu_device(cpu);
++		if (cpu_dev) {
++			cpu_constraint = dev_pm_qos_raw_resume_latency(cpu_dev);
++			if (cpu_constraint < global_constraint)
++				global_constraint = cpu_constraint;
++		}
+ 	}
  
- static const struct sdhci_am654_driver_data sdhci_j721e_4bit_drvdata = {
++	global_constraint *= NSEC_PER_USEC;
+ 	/* The minimum idle duration is from now - until the next wakeup. */
+ 	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, now));
+ 	if (idle_duration_ns <= 0)
+@@ -376,8 +388,10 @@ static bool cpu_power_down_ok(struct dev
+ 	 */
+ 	i = genpd->state_idx;
+ 	do {
+-		if (idle_duration_ns >= (genpd->states[i].residency_ns +
+-		    genpd->states[i].power_off_latency_ns)) {
++		if ((idle_duration_ns >= (genpd->states[i].residency_ns +
++		    genpd->states[i].power_off_latency_ns)) &&
++		    (global_constraint >= (genpd->states[i].power_on_latency_ns +
++		    genpd->states[i].power_off_latency_ns))) {
+ 			genpd->state_idx = i;
+ 			return true;
+ 		}
 
 
