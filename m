@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623AE20DD51;
-	Tue, 26 Aug 2025 14:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B3035083D;
+	Tue, 26 Aug 2025 14:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218775; cv=none; b=m2HhXmlEqFdw5chCxcj6kV1qjR5AvC2amGEV7HcurAHPWsSIU4LD8Y0bF8Uq8DLQ16c2VpD8zzkIMNI6JmD8p5vPuc+hk84JdUemE6l7BWy/cpnBHd31zHaigBau7J56kELcLkX0RKKZiKsKVdXQN0t6c3rnuuIQ+qybTuwhpV4=
+	t=1756218778; cv=none; b=Wsb9ROcjb0aPVhV+U7FNovY6bX3PIAqbAuERv9bYFj0np0BcvNdDw1JEFxaRttmLyRQJcP9fYqPCHuWerpdNVzu9y7BkndgImksAHC0QqV1hWPPKFyPO7QK0FctY7sEOIbgAjErHeCCWRPBI8+AXC8pE+DwLa9llzl6YYQbEU0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218775; c=relaxed/simple;
-	bh=pipHSf7fOpqIUnBmCE+gVf3qKiDEUmqAUO7roc6Wqxw=;
+	s=arc-20240116; t=1756218778; c=relaxed/simple;
+	bh=NJQsJvFP+HYCWiZBOV4V3Vk4EaD6hilBwK5IOzVi+pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEUnNxwyZABP3gLmsQ1fss6rgJfGs/hpSIAM6KLEuXw+BqfGxpuvHb+dkfhYSEOdliAuUKQqlEknuhXTu7scqGjGgQoyrUSDq7GUwx+gnV54aCIc2BTbCmkOuFwSDb0lC2M6JEzWtqbciKJu6iJlmPWZeLqpexxK7UdrCbhfOhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txJAPT8N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2WBH89TxJOBZrBxXIEQxSZGJJV73EHNrNLdMyDyh+6+8xcNeC0ZAlliJ5d9XHSEEWl2IB5iqbzctApz9nDTMNeHpNk1I/NRB6SoSWy6Rni/rXeG3uYN+uyMRp70kZ2ZeJ59CiMQY9NZmfNcCBvp6TD6LGy7SlLfirZEjlg1s+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+uLuZU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txJAPT8N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8489C4CEF1;
-	Tue, 26 Aug 2025 14:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+uLuZU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850E8C4CEF1;
+	Tue, 26 Aug 2025 14:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218775;
-	bh=pipHSf7fOpqIUnBmCE+gVf3qKiDEUmqAUO7roc6Wqxw=;
+	s=korg; t=1756218777;
+	bh=NJQsJvFP+HYCWiZBOV4V3Vk4EaD6hilBwK5IOzVi+pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txJAPT8NFInxIMrlweq/FUdTiRwEAWGkFzSQbmA5xytEhfrCyRyzJUROuw39rfOWJ
-	 McgTDJu5dqr+GxczxbGs5KHSbDe0DPiIruTcGf20p+1aBTbg40dOuoz/mUeuteznZq
-	 mt0O1Ps020rtChXHX/1HOZWwzYRDQVIYuCJ5MDsY=
+	b=u+uLuZU0+D8/Mp8uohS1JV7GSPSJoAr5F2+kkAeDhxRFXBHVfmprZpE7ES8UR52A+
+	 gzLqyts1gnkfU7aLmvp104vt40vs+npXBV8gxkrLcRbWz3vyUNnnVftQcvvHoBYmSe
+	 DJziA5+uB2S56SQ6ZpSWrOxTd2YQqEFQkz98G7E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 129/403] bpf: Check flow_dissector ctx accesses are aligned
-Date: Tue, 26 Aug 2025 13:07:35 +0200
-Message-ID: <20250826110910.304043212@linuxfoundation.org>
+Subject: [PATCH 5.4 130/403] module: Restore the moduleparam prefix length check
+Date: Tue, 26 Aug 2025 13:07:36 +0200
+Message-ID: <20250826110910.332607705@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -54,46 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit ead3d7b2b6afa5ee7958620c4329982a7d9c2b78 ]
+[ Upstream commit bdc877ba6b7ff1b6d2ebeff11e63da4a50a54854 ]
 
-flow_dissector_is_valid_access doesn't check that the context access is
-aligned. As a consequence, an unaligned access within one of the exposed
-field is considered valid and later rejected by
-flow_dissector_convert_ctx_access when we try to convert it.
+The moduleparam code allows modules to provide their own definition of
+MODULE_PARAM_PREFIX, instead of using the default KBUILD_MODNAME ".".
 
-The later rejection is problematic because it's reported as a verifier
-bug with a kernel warning and doesn't point to the right instruction in
-verifier logs.
+Commit 730b69d22525 ("module: check kernel param length at compile time,
+not runtime") added a check to ensure the prefix doesn't exceed
+MODULE_NAME_LEN, as this is what param_sysfs_builtin() expects.
 
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Reported-by: syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccac90e482b2a81d74aa
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/cc1b036be484c99be45eddf48bd78cc6f72839b1.1754039605.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Later, commit 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking
+for sysfs perms.") removed this check, but there is no indication this was
+intentional.
+
+Since the check is still useful for param_sysfs_builtin() to function
+properly, reintroduce it in __module_param_call(), but in a modernized form
+using static_assert().
+
+While here, clean up the __module_param_call() comments. In particular,
+remove the comment "Default value instead of permissions?", which comes
+from commit 9774a1f54f17 ("[PATCH] Compile-time check re world-writeable
+module params"). This comment was related to the test variable
+__param_perm_check_##name, which was removed in the previously mentioned
+commit 58f86cc89c33.
+
+Fixes: 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking for sysfs perms.")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Link: https://lore.kernel.org/r/20250630143535.267745-4-petr.pavlu@suse.com
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/moduleparam.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index e6ec6f013ec0..fd18497977bd 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7282,6 +7282,9 @@ static bool flow_dissector_is_valid_access(int off, int size,
- 	if (off < 0 || off >= sizeof(struct __sk_buff))
- 		return false;
+diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
+index 4d5a851cafe8..6e9062caa7df 100644
+--- a/include/linux/moduleparam.h
++++ b/include/linux/moduleparam.h
+@@ -214,10 +214,9 @@ struct kparam_array
+ #define __moduleparam_const const
+ #endif
  
-+	if (off % size != 0)
-+		return false;
-+
- 	if (type == BPF_WRITE)
- 		return false;
- 
+-/* This is the fundamental function for registering boot/module
+-   parameters. */
++/* This is the fundamental function for registering boot/module parameters. */
+ #define __module_param_call(prefix, name, ops, arg, perm, level, flags)	\
+-	/* Default value instead of permissions? */			\
++	static_assert(sizeof(""prefix) - 1 <= MAX_PARAM_PREFIX_LEN);	\
+ 	static const char __param_str_##name[] = prefix #name;		\
+ 	static struct kernel_param __moduleparam_const __param_##name	\
+ 	__used								\
 -- 
 2.39.5
 
