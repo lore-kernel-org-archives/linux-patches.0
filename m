@@ -1,101 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01222BD5BC;
-	Tue, 26 Aug 2025 11:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B43F31B139
+	for <patches@lists.linux.dev>; Tue, 26 Aug 2025 12:06:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756209010; cv=none; b=g4jMGTYUi2fDHsZwFThZLRcFr4SaMYtSkW1wz/6oHS2DZWEvczXdIBAFBvIzJIOOle0ffY1eptuAulJWA0sX0i7+HLjYl/QytKfvWycGuT0lmrJvtm2Zr+O0dIf4Vg9t6ITURhp6tLoCRSwipzP8BWeEMts5tGoodijSbstbEfA=
+	t=1756209981; cv=none; b=sx+hiLaIfGawAi1CCccpZFlVXDeFcN+jupENyq2oKklD7k1EYJj0xsEruLz/p8+fUtzI4uQauYc52nnmgUiVRPDc5veis5cHDf/oBRupcUXuO7hGN6HmAdPSxxTTAD0399VZ2h6yZMYOZvt8ZPjeSWl6SiVP3g8ruc5SvQRsUxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756209010; c=relaxed/simple;
-	bh=3BXjM9o5zfr38dbvZQHoeT29KW5t8NNhgUKaxwjXSHk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sSUCxoiSaqpP+AJSjFbAqtt0aWYkoQXE7RfjKuqZ3FPzdqn8cTdQkt/vpbL/0evJeQ+Qq4Gl6ZmY8vktFjngDdEVnCgBUvDJzd4exe2Asei/yqOmFH5jIm+b9mOz7lIbB7Nc2KoBwBSDZg0rP6rUS03yyip+Y2RyHMbtXuiYYuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TABr+T9R; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756209981; c=relaxed/simple;
+	bh=bSRRUAqhvp44h3dVi1WARRkNFMByO0ADl300jk30jNI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BmelSoIy6DW055vVp1QZ2cT4B6SHnVbxRGBP3oKdU63E7za7AAvi4YiYd3FbDdUwH+VHHuDoOF/Fk3r5mkgtYwUJlLC6dtW3NLlrI4wPckxpr6ok9KZYQsnsk3awlgZ6Zt9Ve8vQKUbUHqFM2KvJq2V40l+M5PR1j4LIMU4m8h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nJlGIfTa; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TABr+T9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD80BC4CEF1;
-	Tue, 26 Aug 2025 11:50:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756209010;
-	bh=3BXjM9o5zfr38dbvZQHoeT29KW5t8NNhgUKaxwjXSHk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TABr+T9Rt8wYV/ZdjltPWLHDy7C3QrIJEeWDW/9VgRhwrdhlcMHjcq7AFT1VMDPFO
-	 DkbzWcf5NEUmbL4H+16JTN0qJulF1+Fu/nJOykKqH2zze+3F08WALq76/mmX2Wmo+r
-	 mdb2RgUZgsz44EDUEq/4di5vottaaW3PxLlybpLM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Tristram Ha <tristram.ha@microchip.com>,
-	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/322] net: dsa: microchip: Fix KSZ9477 HSR port setup issue
-Date: Tue, 26 Aug 2025 13:12:01 +0200
-Message-ID: <20250826110923.445955096@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
-References: <20250826110915.169062587@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nJlGIfTa"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7a3b3a9so816274766b.2
+        for <patches@lists.linux.dev>; Tue, 26 Aug 2025 05:06:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756209975; x=1756814775; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lxFjkTB2P79PoUaLxLAUp+gv0c2aOYdZxNYZuNh3BDw=;
+        b=nJlGIfTaKJpGQU28Bfgj9HhacG6pMH0e00Yw43rzB7ugyrKA9s9Nm586hjB3FeuE1s
+         PMClWfCZ+J8nzU2sWHaaKHjMsCvKuUM5CtAhJlIk9Eq0mrYodhZH/ejhZUdh+zXZu32Q
+         fNfnk/dzCx6oaq7BeRxbugvVtZzyY9oSPWuuxeriLb1rpGFhIOxAfSnMb5qwA+7DZG1l
+         5d6K2pTY47mknGoA//ABLAS7/ry7eINBojUG0h/1ruardy1YdFMIzdcReMvPg0x/8Zus
+         BlQIEBGBs9LzRwBxnFNOjcxC/kNZTpW4fr07eEw3KMtx5tKKuZqfKZAAqkqIJrPXx2se
+         IHOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756209975; x=1756814775;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lxFjkTB2P79PoUaLxLAUp+gv0c2aOYdZxNYZuNh3BDw=;
+        b=Y6fTOWOBB8aGmFK2WEuE9Ooc84exf6nJM2tPJyGxAW0GbaiqLihSToTTM4qAso90F6
+         GXWnhtxRXbdA2TLntCeIVsewiMpLUzvLBpcVU+W5PSMjgPrdO7t06ArVoRSAAl+1aDwp
+         mNsQ4usf5huIQ6EOOUC1DRhFJ6Nrut8koR881SkHAulrDYo5XIL/lKGHJGTS+rtznBQf
+         GejTcj70XQemfX5ms20EIjRIZ1hAxCA2Eo/LAZJ1QRZCwQzgqHXKC3mPM+kW74hbliUV
+         SLbzM0U2I6aSw5jEEdncxqi5ft/zGvyNiKeE1t+aH5gUqJgi7I8IPZS13l3J5ucfka/Z
+         A+CA==
+X-Forwarded-Encrypted: i=1; AJvYcCUWraqfOKR0ctcxg6HVQBLBOgCAWxRS6uoccF9w6L3sHpryqMMn+01ssfHi/NwaDhgdHCdqyENK@lists.linux.dev
+X-Gm-Message-State: AOJu0YzflvfDTD4tKEZ/rwBosPtwNwdTboL92L/+RdguM7IrLq0/rBL8
+	/NEg40gADXLhdRDs0o0A2Zn6uXW9zswtqt1gTXdDySN/vKqOha2z++b5Va+U3uNy1BgSiz46ybV
+	6BOcYXVm2qPfR11Ptj4NZXwo/biyFJMB5In1bVBiTCA==
+X-Gm-Gg: ASbGncu9E3J8XR4y+5c4qJ3nMHZRwCQx9P6NdvdP6WeMQS6BOfbiBhxJD6GYG/ohsz4
+	DkjZx5FAXpFsCh7HzfUS8ggju0Lzjg/8m2SPBAJFBrBGX6HjO1eLMoaUMX7h8by25fDCDkDn1l8
+	oBtX66sKftXWJbMYWdCz4RwlLukAmJU5csbwHHQUdJUYj7Qbk7YJXmCu+kFhFYxBpuYbmTFiDPU
+	AiZGT+WG6KENPyxCq7i0m89J9suQcs01ILjmPY=
+X-Google-Smtp-Source: AGHT+IHCPPogA5I5xYJjZ3AF2Jj1OEbjkizkVIqqQo3oG7dsb9k66ChvqgzLqUtgok2+xdd2moMuf4gTw379MNCuFxA=
+X-Received: by 2002:a17:907:3f0f:b0:ae0:b3be:f214 with SMTP id
+ a640c23a62f3a-afe28ec592dmr1369727666b.9.1756209975430; Tue, 26 Aug 2025
+ 05:06:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250818124458.334548733@linuxfoundation.org> <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
+ <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
+ <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com> <2025081931-chump-uncurled-656b@gregkh>
+In-Reply-To: <2025081931-chump-uncurled-656b@gregkh>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 26 Aug 2025 14:06:04 +0200
+X-Gm-Features: Ac12FXzW7NUCjgYWSamJwSOH-347hP9Z3Gi-swjOizdLDz6f5VXnlkQBVvbGglE
+Message-ID: <CACMJSesMDcUM+bvmT76m2s05a+-T7NxGQwe72yS03zkEJ-KzCw@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
+	Ben Copeland <benjamin.copeland@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>, srinivas.kandagatla@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On Tue, 19 Aug 2025 at 13:52, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Tue, Aug 19, 2025 at 01:30:46PM +0200, Bartosz Golaszewski wrote:
+> > On Tue, 19 Aug 2025 at 12:02, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > >
+> > > On Tue, 19 Aug 2025 at 00:18, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > > >
+> > > >
+> > > > Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
+> > > > Unable to handle kernel NULL pointer dereference
+> > > > qcom_scm_shm_bridge_enable
+> > >
+> > > I have reverted the following patch and the regression got fixed.
+> > >
+> > > firmware: qcom: scm: initialize tzmem before marking SCM as available
+> > >     [ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
+> > >
+> >
+> > Hi! I'm on vacation, I will look into this next week. I expect there
+> > to be a fix on top of this commit.
+>
+> Ok, I'll go and drop this one from the queues now, thanks.
+>
+> greg k-h
 
-------------------
+Hi!
 
-From: Tristram Ha <tristram.ha@microchip.com>
+The issue was caused by only picking up commit 7ab36b51c6bee
+("firmware: qcom: scm: request the waitqueue irq *after* initializing
+SCM") into stable, while the following four must be applied instead:
 
-[ Upstream commit e318cd6714592fb762fcab59c5684a442243a12f ]
+23972da96e1ee ("firmware: qcom: scm: remove unused arguments from SHM
+bridge routines")
+dc3f4e75c54c1 ("firmware: qcom: scm: take struct device as argument in
+SHM bridge enable")
+87be3e7a2d003 ("firmware: qcom: scm: initialize tzmem before marking
+SCM as available")
+7ab36b51c6bee ("firmware: qcom: scm: request the waitqueue irq *after*
+initializing SCM")
 
-ksz9477_hsr_join() is called once to setup the HSR port membership, but
-the port can be enabled later, or disabled and enabled back and the port
-membership is not set correctly inside ksz_update_port_member().  The
-added code always use the correct HSR port membership for HSR port that
-is enabled.
-
-Fixes: 2d61298fdd7b ("net: dsa: microchip: Enable HSR offloading for KSZ9477")
-Reported-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
-Reviewed-by: Łukasz Majewski <lukma@nabladev.com>
-Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Link: https://patch.msgid.link/20250819010457.563286-1-Tristram.Ha@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/dsa/microchip/ksz_common.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index bf26cd0abf6d..0a34fd6887fc 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -2208,6 +2208,12 @@ static void ksz_update_port_member(struct ksz_device *dev, int port)
- 		dev->dev_ops->cfg_port_member(dev, i, val | cpu_port);
- 	}
- 
-+	/* HSR ports are setup once so need to use the assigned membership
-+	 * when the port is enabled.
-+	 */
-+	if (!port_member && p->stp_state == BR_STATE_FORWARDING &&
-+	    (dev->hsr_ports & BIT(port)))
-+		port_member = dev->hsr_ports;
- 	dev->dev_ops->cfg_port_member(dev, port, port_member | cpu_port);
- }
- 
--- 
-2.50.1
-
-
-
+Bartosz
