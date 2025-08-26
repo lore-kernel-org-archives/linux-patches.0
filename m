@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F336D35690D;
-	Tue, 26 Aug 2025 14:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F76E356903;
+	Tue, 26 Aug 2025 14:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218583; cv=none; b=JaaRn+mK0adY7kzd9TUACTbYGt58iob5YFTig++ROmU3qMeR9M3b0QQOJuhUS/oBzpqxlxAh5nZ4DwR5s2HKYZtkLOatfweABpwuJ2P/2J6ZYR4VvxBxF+kCU6b8RVv3oJ/BnLJPMOJ91JiVILjlmybO9i5lbykrKmB2L+gTU5k=
+	t=1756218585; cv=none; b=SYOE5jdx3mxRWq5JBr0/4j96bAAOLxCb75QWE0SKtQAqo1KBmmpfNc/5PdFe0COvU4zhuf7YQ4e0Oh3wYzGKgYnjDGfoIscl88AnkoJ8ggikIFc6b8B3jS9r/ux1IqTL2Vp2zHMDXzGpH4Id0aOV+zOHFQpGUdxGGkYOvwUsVUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218583; c=relaxed/simple;
-	bh=vmYZNKVtSpBzizZZgpCjTqDksBn1HFliqqyU9Pm36aY=;
+	s=arc-20240116; t=1756218585; c=relaxed/simple;
+	bh=wPo7f0QesYrlhyBXK6O6qPhzir4nDNWoahpm2vmZwCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9+Ae3XDgQDR4N4EbJ9G0FXq8FCs8VVLZWj13SHzg/w4n1YgWypg8LuZa2d68IXtjpjEHpeHay2p/Xrw0IGxWg8IP3Jvd3kiP43/uyUGD6/jnLh8BC/Nf9JGiLIwknWkd1e7sjo/w/VBoGIA2JBWICMFisouaM6Yv2jpy6D4wqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiVvJnZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nfZhVUf/4c3YmHSAltvFoD1TJEpWeF+KDP0N+DjrbH/bUPJyKq2XGkvhLrhk0DXIiYS85SWGqUg/2fId0M9mdbB2EcJ7wyzBTl47St7VuupiX4Mmxv03djCMEJOokGLROWhc3btvj8NHLdpUgZ7DDWyqHzDEyBnCE934q2DpfXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IC4r4Z9/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiVvJnZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B155C113CF;
-	Tue, 26 Aug 2025 14:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IC4r4Z9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B6CC4CEF1;
+	Tue, 26 Aug 2025 14:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218582;
-	bh=vmYZNKVtSpBzizZZgpCjTqDksBn1HFliqqyU9Pm36aY=;
+	s=korg; t=1756218585;
+	bh=wPo7f0QesYrlhyBXK6O6qPhzir4nDNWoahpm2vmZwCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiVvJnZY9xQHgC2gqETzxV2QBA1WYjUIYVsEuU0y3UshAwClcAAYGDppMuOeU18Pv
-	 u8zJcej/a20YajbqPejoedbX2LZ0VxFnJasCuYrvVa8dEMY41zCHCSTRuhxiVc/fey
-	 x62XPrYu5MGHUSRr8DZuK8vClPNK5UfIMMAm1yHs=
+	b=IC4r4Z9/htTAAmScJm6EZXZSp+gKnAb4C3TqeXXVaBMlJ4VWyMrPkhRM4+kSiUB2t
+	 homN9tHj22GyKek4z8vYKEeBu2oy94mo6NGEQNZFxl2qJErEwrZNqFoZpi2E4dtheo
+	 cCrEyHyXHPFBNS0vmkHKwl3YKAefkagwB1VKKU0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Carminati <acarmina@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/403] regulator: core: fix NULL dereference on unbind due to stale coupling data
-Date: Tue, 26 Aug 2025 13:06:22 +0200
-Message-ID: <20250826110907.416027491@linuxfoundation.org>
+Subject: [PATCH 5.4 057/403] RDMA/core: Rate limit GID cache warning messages
+Date: Tue, 26 Aug 2025 13:06:23 +0200
+Message-ID: <20250826110907.443169335@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Carminati <acarmina@redhat.com>
+From: Maor Gottlieb <maorg@nvidia.com>
 
-[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
+[ Upstream commit 333e4d79316c9ed5877d7aac8b8ed22efc74e96d ]
 
-Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
-lead to NULL pointer dereference when regulators are accessed post-unbind.
+The GID cache warning messages can flood the kernel log when there are
+multiple failed attempts to add GIDs. This can happen when creating many
+virtual interfaces without having enough space for their GIDs in the GID
+table.
 
-This can happen during runtime PM or other regulator operations that rely
-on coupling metadata.
+Change pr_warn to pr_warn_ratelimited to prevent log flooding while still
+maintaining visibility of the issue.
 
-For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
-a panic in regulator_lock_recursive() due to stale coupling state.
-
-Ensure n_coupled is set to 0 to prevent access to invalid pointers.
-
-Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
-Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/r/fd45ed4a1078e743f498b234c3ae816610ba1b18.1750062357.git.leon@kernel.org
+Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/cache.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index a01a769b2f2d1..e5ce97dc32158 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5062,6 +5062,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
- 				 err);
- 	}
- 
-+	rdev->coupling_desc.n_coupled = 0;
- 	kfree(rdev->coupling_desc.coupled_rdevs);
- 	rdev->coupling_desc.coupled_rdevs = NULL;
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index 7affe6b4ae210..641e537a0069a 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -578,8 +578,8 @@ static int __ib_cache_gid_add(struct ib_device *ib_dev, u8 port,
+ out_unlock:
+ 	mutex_unlock(&table->lock);
+ 	if (ret)
+-		pr_warn("%s: unable to add gid %pI6 error=%d\n",
+-			__func__, gid->raw, ret);
++		pr_warn_ratelimited("%s: unable to add gid %pI6 error=%d\n",
++				    __func__, gid->raw, ret);
+ 	return ret;
  }
+ 
 -- 
 2.39.5
 
