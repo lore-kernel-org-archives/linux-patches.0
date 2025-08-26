@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA4029B233;
-	Tue, 26 Aug 2025 11:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263B82135B8;
+	Tue, 26 Aug 2025 11:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208218; cv=none; b=CDeQBR8GIBuMKDDFepPYPHAByvOCMxkY0+yzRde7YDkTSEbuqc3i3NpZWEy1y9vbJmR8rtLUYUFyb0q4bnxpHiFZ8vVOw/HQJSjx4Xxq7XJyRwSi8P9XdjG4HGb/1e4x24Vo1rsvgojgTKtiD7R9O8RdP3raevNUfx10A7qUDCk=
+	t=1756208221; cv=none; b=F9+VOOcoA5FA+PwCCuiixcnylp/U01CS+FXrgxAQeXDq5/zmhw3jZOq30iEd7M3stdfCNMKYABVuduKK0A+QWM511sjIQbKjTF5ds1q7T8qqL6W79ucwcz9/jKT/FYdHAS+PZ3cfJVrcYBMNm/JsiyPRFLjWGAxxwkWb8G4IYDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208218; c=relaxed/simple;
-	bh=7KhX+t56lxonE5aa9WDdhUbqIHXlvDviWmJyur8GYmw=;
+	s=arc-20240116; t=1756208221; c=relaxed/simple;
+	bh=K8JNaqr98Wq51P3kqdeXTlwUlSIfQSEiUmju4EQXPLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tX4DEuHMMSI3SdaeG2TNuZQmG5QtjQJOpkVaCI61sG3O0nn1Jtokp/KEs+QT1P52sYxKlOh/UBxUm23pSF6QRUVAHFCE2BB3iyDUxCMRuWBOOH+6eHi1eqhvpzcWZ/lucIKlixEGF5nKuXsfIAD4Ez63G3gnUKHSz290Ec1lIf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCXXHLH2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ff2AXD9wjkLQc9/37eCjMuwaW9NQnA4afZG9BrDQd2yqo8P3zOkV5+6jPfiWqft7nmtLC29kH7SgPvRXDxeGG0FHHIZHtAgEC73uN3kpi2H3QYstAav5X+2mXkMSsCteq+UBT9ylDjsTFHV+5FgtzMZsG4WGzYx2j115rgcJDU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avSaFMIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCXXHLH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1641CC4CEF1;
-	Tue, 26 Aug 2025 11:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avSaFMIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B477BC4CEF1;
+	Tue, 26 Aug 2025 11:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208218;
-	bh=7KhX+t56lxonE5aa9WDdhUbqIHXlvDviWmJyur8GYmw=;
+	s=korg; t=1756208221;
+	bh=K8JNaqr98Wq51P3kqdeXTlwUlSIfQSEiUmju4EQXPLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCXXHLH2cB8zFyhP2XyQEi+6Kjiow0m9aHVVJhovcyyhqxAuitp8mvy/vRxARF+cl
-	 1TfOXYxc8U7dWRgmvDPr0U/32g0Nqlgfofg6eBmLb/FvFKuSLNPKAPkzePzYqDDmyo
-	 wi5xauAgaffVPs89yVHanwisZRavPNN1OHWj68xQ=
+	b=avSaFMIsPBg0vMYLnJN1hJ+CgonvjyATkLJyYgUik2W28DVn2KC3jL6i0uoIwVMl+
+	 dCVehX3v5sN9yW0iuRhEaPlk4mmm+IuM9WHSQAOov9XoKXf2Nlgm2nzMi0AwL3+2qS
+	 awDu7WPRjX3lQmEtUBI8nyvYF50iJpO8TFq0MOPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyan Xu <ziyan@securitygossip.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 026/322] ksmbd: fix refcount leak causing resource not released
-Date: Tue, 26 Aug 2025 13:07:21 +0200
-Message-ID: <20250826110915.947699642@linuxfoundation.org>
+Subject: [PATCH 6.12 027/322] ksmbd: extend the connection limiting mechanism to support IPv6
+Date: Tue, 26 Aug 2025 13:07:22 +0200
+Message-ID: <20250826110915.978310966@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,61 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyan Xu <ziyan@securitygossip.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 89bb430f621124af39bb31763c4a8b504c9651e2 upstream.
+commit c0d41112f1a5828c194b59cca953114bc3776ef2 upstream.
 
-When ksmbd_conn_releasing(opinfo->conn) returns true,the refcount was not
-decremented properly, causing a refcount leak that prevents the count from
-reaching zero and the memory from being released.
+Update the connection tracking logic to handle both IPv4 and IPv6
+address families.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Ziyan Xu <ziyan@securitygossip.com>
+Fixes: e6bb91939740 ("ksmbd: limit repeated connections from clients with the same IP")
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/smb/server/connection.h    |    7 ++++++-
+ fs/smb/server/transport_tcp.c |   26 +++++++++++++++++++++++---
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1102,8 +1102,10 @@ void smb_send_parent_lease_break_noti(st
- 			if (!atomic_inc_not_zero(&opinfo->refcount))
- 				continue;
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -46,7 +46,12 @@ struct ksmbd_conn {
+ 	struct mutex			srv_mutex;
+ 	int				status;
+ 	unsigned int			cli_cap;
+-	__be32				inet_addr;
++	union {
++		__be32			inet_addr;
++#if IS_ENABLED(CONFIG_IPV6)
++		u8			inet6_addr[16];
++#endif
++	};
+ 	char				*request_buf;
+ 	struct ksmbd_transport		*transport;
+ 	struct nls_table		*local_nls;
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -87,7 +87,14 @@ static struct tcp_transport *alloc_trans
+ 		return NULL;
+ 	}
  
--			if (ksmbd_conn_releasing(opinfo->conn))
-+			if (ksmbd_conn_releasing(opinfo->conn)) {
-+				opinfo_put(opinfo);
- 				continue;
++#if IS_ENABLED(CONFIG_IPV6)
++	if (client_sk->sk->sk_family == AF_INET6)
++		memcpy(&conn->inet6_addr, &client_sk->sk->sk_v6_daddr, 16);
++	else
++		conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
++#else
+ 	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
++#endif
+ 	conn->transport = KSMBD_TRANS(t);
+ 	KSMBD_TRANS(t)->conn = conn;
+ 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
+@@ -231,7 +238,6 @@ static int ksmbd_kthread_fn(void *p)
+ {
+ 	struct socket *client_sk = NULL;
+ 	struct interface *iface = (struct interface *)p;
+-	struct inet_sock *csk_inet;
+ 	struct ksmbd_conn *conn;
+ 	int ret;
+ 
+@@ -254,13 +260,27 @@ static int ksmbd_kthread_fn(void *p)
+ 		/*
+ 		 * Limits repeated connections from clients with the same IP.
+ 		 */
+-		csk_inet = inet_sk(client_sk->sk);
+ 		down_read(&conn_list_lock);
+ 		list_for_each_entry(conn, &conn_list, conns_list)
+-			if (csk_inet->inet_daddr == conn->inet_addr) {
++#if IS_ENABLED(CONFIG_IPV6)
++			if (client_sk->sk->sk_family == AF_INET6) {
++				if (memcmp(&client_sk->sk->sk_v6_daddr,
++					   &conn->inet6_addr, 16) == 0) {
++					ret = -EAGAIN;
++					break;
++				}
++			} else if (inet_sk(client_sk->sk)->inet_daddr ==
++				 conn->inet_addr) {
+ 				ret = -EAGAIN;
+ 				break;
+ 			}
++#else
++			if (inet_sk(client_sk->sk)->inet_daddr ==
++			    conn->inet_addr) {
++				ret = -EAGAIN;
++				break;
 +			}
- 
- 			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL);
- 			opinfo_put(opinfo);
-@@ -1139,8 +1141,11 @@ void smb_lazy_parent_lease_break_close(s
- 			if (!atomic_inc_not_zero(&opinfo->refcount))
- 				continue;
- 
--			if (ksmbd_conn_releasing(opinfo->conn))
-+			if (ksmbd_conn_releasing(opinfo->conn)) {
-+				opinfo_put(opinfo);
- 				continue;
-+			}
-+
- 			oplock_break(opinfo, SMB2_OPLOCK_LEVEL_NONE, NULL);
- 			opinfo_put(opinfo);
- 		}
-@@ -1343,8 +1348,10 @@ void smb_break_all_levII_oplock(struct k
- 		if (!atomic_inc_not_zero(&brk_op->refcount))
++#endif
+ 		up_read(&conn_list_lock);
+ 		if (ret == -EAGAIN)
  			continue;
- 
--		if (ksmbd_conn_releasing(brk_op->conn))
-+		if (ksmbd_conn_releasing(brk_op->conn)) {
-+			opinfo_put(brk_op);
- 			continue;
-+		}
- 
- 		if (brk_op->is_lease && (brk_op->o_lease->state &
- 		    (~(SMB2_LEASE_READ_CACHING_LE |
 
 
