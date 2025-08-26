@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A4633437B;
-	Tue, 26 Aug 2025 13:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919091FBCB1;
+	Tue, 26 Aug 2025 13:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214832; cv=none; b=CaadA0fJ6ZuG6/U9KVoMpB3JSTNk7/xGX2EpeWyFL+mAkDMv7B5r3MihLudZE9ovSZD+jDJxZICG6uOKNIAQV9o3iAe0zE5q5yZfNTnEUleAIn5iS3HvbONmvaGAOUHHOJzz8ui0MMC8jAiw3A/1D4EQgcVWFpIz54YsRcNdUm4=
+	t=1756214836; cv=none; b=jZTJ2xwpHZX+K6HmROPVy74TcMizc5C1hCWSuzL6eq1NoVkz1Qd/Gd3nHxWEQ1MSuoB7terHKTseO946v0UoH9KzOB6a+Kg0zgF3vTO3dBH3e36/piLOU3EpEz5JJvC7fMXil2nHpDLKZe4x04gsD+Etzu8JljnLVwGvhXYMt28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214832; c=relaxed/simple;
-	bh=0j9lUwOXv2oaWObDoIaqs+SmHLH3LItla8MReZ/NSZA=;
+	s=arc-20240116; t=1756214836; c=relaxed/simple;
+	bh=5XvexmZ+i3+PZwRvhAYqVH4DXaR5W3C3vEWMmGh8rzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5LMsCzq1fhNpqYaIp5D6UzMSNQo8vLZXBOojyIA0YNr9pmsmoWU8aUHLLjMu8NVkvtKRu4LPpmFYc1XW7+Nhu75BvsigalWHGR6Tvok3gkty/u2IPc+2+Xg912drO89ALlB3grd6eG6gCiox3fNFbNdlqRFYLoIKOCo36FLlMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/HJyJuj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3VjJDoAPYe4CWqbt26Lv4mc1bLWyZcR6zEYvGe9hFM1mrJaetT2YwChZdrWte60EgZjAZKhFxV2AOYRCgL1AsJfYyBaeL7wSUNLWrnuw0lTXP4DUA6JxcCIgiB47s5QEpwjrr2J4URXNN69Yhm3pUleM8ia3zVuuEPpZ/obbNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjAVbF6X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/HJyJuj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45910C4CEF1;
-	Tue, 26 Aug 2025 13:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjAVbF6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86DEC4CEF1;
+	Tue, 26 Aug 2025 13:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214832;
-	bh=0j9lUwOXv2oaWObDoIaqs+SmHLH3LItla8MReZ/NSZA=;
+	s=korg; t=1756214835;
+	bh=5XvexmZ+i3+PZwRvhAYqVH4DXaR5W3C3vEWMmGh8rzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/HJyJujd9uCziZNfyhLiHkZe8D5Q1828CcuFB7hu0SgJ2x+pYQ3Bu7EMz8fSHAHd
-	 ettc1thGwFLAU6uAF73N9OfZ8K6eTd1JDOcFpjBX/4VdYOHSGp7zppRafnpMwCWc1u
-	 wLKA0YGuR6B/BQbdnU392gZA36cgyjf7wtjZhxYk=
+	b=MjAVbF6XqKqA9MIzGAQtn1N0y+gqg3P7HZmo5pPGRifmkma4FwV8Q7UigSSKYz2Io
+	 4WgE17iyWrlBTY9v6oqMp/5G/EBhTZIxnseZBvklqHivF3cPyH/s28ukjuH9FMLuTA
+	 DNlnwU9Zd60yX1/9VPxoY3+nOEzOYRxn3NFuiHWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Jung <ptr1337@cachyos.org>,
-	burneddi <burneddi@protonmail.com>,
-	Russell Haley <yumpusamongus@gmail.com>,
-	Boris Burkov <boris@bur.io>,
 	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 255/482] btrfs: fix log tree replay failure due to file with 0 links and extents
-Date: Tue, 26 Aug 2025 13:08:28 +0200
-Message-ID: <20250826110937.067430570@linuxfoundation.org>
+Subject: [PATCH 6.1 256/482] btrfs: do not allow relocation of partially dropped subvolumes
+Date: Tue, 26 Aug 2025 13:08:29 +0200
+Message-ID: <20250826110937.092594773@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -54,147 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 0a32e4f0025a74c70dcab4478e9b29c22f5ecf2f upstream.
+commit 4289b494ac553e74e86fed1c66b2bf9530bc1082 upstream.
 
-If we log a new inode (not persisted in a past transaction) that has 0
-links and extents, then log another inode with an higher inode number, we
-end up with failing to replay the log tree with -EINVAL. The steps for
-this are:
+[BUG]
+There is an internal report that balance triggered transaction abort,
+with the following call trace:
 
-1) create new file A
-2) write some data to file A
-3) open an fd on file A
-4) unlink file A
-5) fsync file A using the previously open fd
-6) create file B (has higher inode number than file A)
-7) fsync file B
-8) power fail before current transaction commits
+  item 85 key (594509824 169 0) itemoff 12599 itemsize 33
+          extent refs 1 gen 197740 flags 2
+          ref#0: tree block backref root 7
+  item 86 key (594558976 169 0) itemoff 12566 itemsize 33
+          extent refs 1 gen 197522 flags 2
+          ref#0: tree block backref root 7
+ ...
+ BTRFS error (device loop0): extent item not found for insert, bytenr 594526208 num_bytes 16384 parent 449921024 root_objectid 934 owner 1 offset 0
+ BTRFS error (device loop0): failed to run delayed ref for logical 594526208 num_bytes 16384 type 182 action 1 ref_mod 1: -117
+ ------------[ cut here ]------------
+ BTRFS: Transaction aborted (error -117)
+ WARNING: CPU: 1 PID: 6963 at ../fs/btrfs/extent-tree.c:2168 btrfs_run_delayed_refs+0xfa/0x110 [btrfs]
 
-Now when attempting to mount the fs, the log replay will fail with
--ENOENT at replay_one_extent() when attempting to replay the first
-extent of file A. The failure comes when trying to open the inode for
-file A in the subvolume tree, since it doesn't exist.
+And btrfs check doesn't report anything wrong related to the extent
+tree.
 
-Before commit 5f61b961599a ("btrfs: fix inode lookup error handling
-during log replay"), the returned error was -EIO instead of -ENOENT,
-since we converted any errors when attempting to read an inode during
-log replay to -EIO.
+[CAUSE]
+The cause is a little complex, firstly the extent tree indeed doesn't
+have the backref for 594526208.
 
-The reason for this is that the log replay procedure fails to ignore
-the current inode when we are at the stage LOG_WALK_REPLAY_ALL, our
-current inode has 0 links and last inode we processed in the previous
-stage has a non 0 link count. In other words, the issue is that at
-replay_one_extent() we only update wc->ignore_cur_inode if the current
-replay stage is LOG_WALK_REPLAY_INODES.
+The extent tree only have the following two backrefs around that bytenr
+on-disk:
 
-Fix this by updating wc->ignore_cur_inode whenever we find an inode item
-regardless of the current replay stage. This is a simple solution and easy
-to backport, but later we can do other alternatives like avoid logging
-extents or inode items other than the inode item for inodes with a link
-count of 0.
+        item 65 key (594509824 METADATA_ITEM 0) itemoff 13880 itemsize 33
+                refs 1 gen 197740 flags TREE_BLOCK
+                tree block skinny level 0
+                (176 0x7) tree block backref root CSUM_TREE
+        item 66 key (594558976 METADATA_ITEM 0) itemoff 13847 itemsize 33
+                refs 1 gen 197522 flags TREE_BLOCK
+                tree block skinny level 0
+                (176 0x7) tree block backref root CSUM_TREE
 
-The problem with the wc->ignore_cur_inode logic has been around since
-commit f2d72f42d5fa ("Btrfs: fix warning when replaying log after fsync
-of a tmpfile") but it only became frequent to hit since the more recent
-commit 5e85262e542d ("btrfs: fix fsync of files with no hard links not
-persisting deletion"), because we stopped skipping inodes with a link
-count of 0 when logging, while before the problem would only be triggered
-if trying to replay a log tree created with an older kernel which has a
-logged inode with 0 links.
+But the such missing backref item is not an corruption on disk, as the
+offending delayed ref belongs to subvolume 934, and that subvolume is
+being dropped:
 
-A test case for fstests will be submitted soon.
+        item 0 key (934 ROOT_ITEM 198229) itemoff 15844 itemsize 439
+                generation 198229 root_dirid 256 bytenr 10741039104 byte_limit 0 bytes_used 345571328
+                last_snapshot 198229 flags 0x1000000000001(RDONLY) refs 0
+                drop_progress key (206324 EXTENT_DATA 2711650304) drop_level 2
+                level 2 generation_v2 198229
 
-Reported-by: Peter Jung <ptr1337@cachyos.org>
-Link: https://lore.kernel.org/linux-btrfs/fce139db-4458-4788-bb97-c29acf6cb1df@cachyos.org/
-Reported-by: burneddi <burneddi@protonmail.com>
-Link: https://lore.kernel.org/linux-btrfs/lh4W-Lwc0Mbk-QvBhhQyZxf6VbM3E8VtIvU3fPIQgweP_Q1n7wtlUZQc33sYlCKYd-o6rryJQfhHaNAOWWRKxpAXhM8NZPojzsJPyHMf2qY=@protonmail.com/#t
-Reported-by: Russell Haley <yumpusamongus@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/598ecc75-eb80-41b3-83c2-f2317fbb9864@gmail.com/
-Fixes: f2d72f42d5fa ("Btrfs: fix warning when replaying log after fsync of a tmpfile")
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+And that offending tree block 594526208 is inside the dropped range of
+that subvolume.  That explains why there is no backref item for that
+bytenr and why btrfs check is not reporting anything wrong.
+
+But this also shows another problem, as btrfs will do all the orphan
+subvolume cleanup at a read-write mount.
+
+So half-dropped subvolume should not exist after an RW mount, and
+balance itself is also exclusive to subvolume cleanup, meaning we
+shouldn't hit a subvolume half-dropped during relocation.
+
+The root cause is, there is no orphan item for this subvolume.
+In fact there are 5 subvolumes from around 2021 that have the same
+problem.
+
+It looks like the original report has some older kernels running, and
+caused those zombie subvolumes.
+
+Thankfully upstream commit 8d488a8c7ba2 ("btrfs: fix subvolume/snapshot
+deletion not triggered on mount") has long fixed the bug.
+
+[ENHANCEMENT]
+For repairing such old fs, btrfs-progs will be enhanced.
+
+Considering how delayed the problem will show up (at run delayed ref
+time) and at that time we have to abort transaction already, it is too
+late.
+
+Instead here we reject any half-dropped subvolume for reloc tree at the
+earliest time, preventing confusion and extra time wasted on debugging
+similar bugs.
+
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |   48 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
+ fs/btrfs/relocation.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -298,8 +298,7 @@ struct walk_control {
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -751,6 +751,25 @@ static struct btrfs_root *create_reloc_r
+ 	if (root->root_key.objectid == objectid) {
+ 		u64 commit_root_gen;
  
- 	/*
- 	 * Ignore any items from the inode currently being processed. Needs
--	 * to be set every time we find a BTRFS_INODE_ITEM_KEY and we are in
--	 * the LOG_WALK_REPLAY_INODES stage.
-+	 * to be set every time we find a BTRFS_INODE_ITEM_KEY.
- 	 */
- 	bool ignore_cur_inode;
- 
-@@ -2427,23 +2426,30 @@ static int replay_one_buffer(struct btrf
- 
- 	nritems = btrfs_header_nritems(eb);
- 	for (i = 0; i < nritems; i++) {
--		btrfs_item_key_to_cpu(eb, &key, i);
-+		struct btrfs_inode_item *inode_item;
- 
--		/* inode keys are done during the first stage */
--		if (key.type == BTRFS_INODE_ITEM_KEY &&
--		    wc->stage == LOG_WALK_REPLAY_INODES) {
--			struct btrfs_inode_item *inode_item;
--			u32 mode;
-+		btrfs_item_key_to_cpu(eb, &key, i);
- 
--			inode_item = btrfs_item_ptr(eb, i,
--					    struct btrfs_inode_item);
-+		if (key.type == BTRFS_INODE_ITEM_KEY) {
-+			inode_item = btrfs_item_ptr(eb, i, struct btrfs_inode_item);
- 			/*
--			 * If we have a tmpfile (O_TMPFILE) that got fsync'ed
--			 * and never got linked before the fsync, skip it, as
--			 * replaying it is pointless since it would be deleted
--			 * later. We skip logging tmpfiles, but it's always
--			 * possible we are replaying a log created with a kernel
--			 * that used to log tmpfiles.
-+			 * An inode with no links is either:
-+			 *
-+			 * 1) A tmpfile (O_TMPFILE) that got fsync'ed and never
-+			 *    got linked before the fsync, skip it, as replaying
-+			 *    it is pointless since it would be deleted later.
-+			 *    We skip logging tmpfiles, but it's always possible
-+			 *    we are replaying a log created with a kernel that
-+			 *    used to log tmpfiles;
-+			 *
-+			 * 2) A non-tmpfile which got its last link deleted
-+			 *    while holding an open fd on it and later got
-+			 *    fsynced through that fd. We always log the
-+			 *    parent inodes when inode->last_unlink_trans is
-+			 *    set to the current transaction, so ignore all the
-+			 *    inode items for this inode. We will delete the
-+			 *    inode when processing the parent directory with
-+			 *    replay_dir_deletes().
- 			 */
- 			if (btrfs_inode_nlink(eb, inode_item) == 0) {
- 				wc->ignore_cur_inode = true;
-@@ -2451,8 +2457,14 @@ static int replay_one_buffer(struct btrf
- 			} else {
- 				wc->ignore_cur_inode = false;
- 			}
--			ret = replay_xattr_deletes(wc->trans, root, log,
--						   path, key.objectid);
++		/*
++		 * Relocation will wait for cleaner thread, and any half-dropped
++		 * subvolume will be fully cleaned up at mount time.
++		 * So here we shouldn't hit a subvolume with non-zero drop_progress.
++		 *
++		 * If this isn't the case, error out since it can make us attempt to
++		 * drop references for extents that were already dropped before.
++		 */
++		if (unlikely(btrfs_disk_key_objectid(&root->root_item.drop_progress))) {
++			struct btrfs_key cpu_key;
++
++			btrfs_disk_key_to_cpu(&cpu_key, &root->root_item.drop_progress);
++			btrfs_err(fs_info,
++	"cannot relocate partially dropped subvolume %llu, drop progress key (%llu %u %llu)",
++				  objectid, cpu_key.objectid, cpu_key.type, cpu_key.offset);
++			ret = -EUCLEAN;
++			goto fail;
 +		}
 +
-+		/* Inode keys are done during the first stage. */
-+		if (key.type == BTRFS_INODE_ITEM_KEY &&
-+		    wc->stage == LOG_WALK_REPLAY_INODES) {
-+			u32 mode;
-+
-+			ret = replay_xattr_deletes(wc->trans, root, log, path, key.objectid);
- 			if (ret)
- 				break;
- 			mode = btrfs_inode_mode(eb, inode_item);
+ 		/* called by btrfs_init_reloc_root */
+ 		ret = btrfs_copy_root(trans, root, root->commit_root, &eb,
+ 				      BTRFS_TREE_RELOC_OBJECTID);
 
 
