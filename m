@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B1D239573;
-	Tue, 26 Aug 2025 11:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E083F227599;
+	Tue, 26 Aug 2025 11:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207525; cv=none; b=WYlzsnjfSN4lx3OS2T3e0N5abZrDuYOFNwzcwO4HBuefqXyTgnm/eiFmB9LTWn/jekgzJ462WleAewUQ7SxZXtTQEXYuTkTO7U6IcCa4XAnDDpAPeI03nAkvtl1/Htc2tCR3DA/N7/szwmewMbDF8w52ra1vfH2+HcbXUSTwUD4=
+	t=1756207528; cv=none; b=Kv6LIQQ/LoLcmF5rZ+EzgtjGavv+o3+uaHyW+7LoLFCNq7mDt1WTd3oLlEQKvGPmZwbzg8mAr5lSyU4XVYcaKdLYqxmMZLFF41/ajEahsPGzluye5kWPJNjHbrk+gfSrqT61ZCwuzC+9tVXTI+rBLgENJenoSu6/4XrjS5rhNug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207525; c=relaxed/simple;
-	bh=lzMXDcnzhnvnFcAfm2Fv2h+pKdXWAYvJyf4wOpi7//Q=;
+	s=arc-20240116; t=1756207528; c=relaxed/simple;
+	bh=FPl7iX8UEoOpdMF3zVDtD+Qpos/CN5o/Fhy+IJpJApQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPrOLeH/7pswyzDnnzUVNrq58QLk65CReSrfbc6bVhiiiWPP4Cae2w8Osc/Xvtj8X3ZfShaPMxHhY5vwgMOMwpO95v2sLqO3L2YXyeQqkPgRZJ8LE4awqJRJXbVCrkiLKYLhs9h/WDOo58rdJmLg58wXodvo2NfZCN7EMF1E2s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTWQOx67; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQ0FPkE1p8zCfOSD7L43zCX+jSsqdP64f8sgMYzteVIRV4r4kp86hTwvTrlYPTkZr4zaKH8tZgTXU3BAABT2N+jP6c6eePIp7PynmLaTZ83RQxRr5+F+8s65QD9t7joMvqs9PWQt3s+iFEychmhFBEClKO9FrU8DqWpqZFff9WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvu1wuBg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTWQOx67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBB2C4CEF1;
-	Tue, 26 Aug 2025 11:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvu1wuBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780EFC4CEF1;
+	Tue, 26 Aug 2025 11:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207525;
-	bh=lzMXDcnzhnvnFcAfm2Fv2h+pKdXWAYvJyf4wOpi7//Q=;
+	s=korg; t=1756207527;
+	bh=FPl7iX8UEoOpdMF3zVDtD+Qpos/CN5o/Fhy+IJpJApQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTWQOx67c83f1Te2cGCBKDOMSUXIfu9AwxR8Nj9w8GWLWXUdmS82i/oSfdrv0hOR7
-	 YAUZZbw1PP8O2ikZytM0GzF9f/vP3bSfSOs0M4RvNP+lQbA6QylpFlnpaqKp69aOwC
-	 fii/v831mNtoVWIeAeBeF+7FF837IPlVLGkDnsgc=
+	b=pvu1wuBgaX5IASL69juwAVkdHUYx4/89dLD2lFgBG4uUkknchBt81O5EiVzLpFepe
+	 UYPZcO4soa/75ZriyF+MyNP0mPnjO+Tn9bEwPpw3fVm8HYMDa8qTTBe7wfsaWcEWMe
+	 MzyB8WubOptBdXGVuCHGZtmOjZBYf36w3dN/a92w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mangesh Gadre <Mangesh.Gadre@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 184/457] drm/amdgpu: Update supported modes for GC v9.5.0
-Date: Tue, 26 Aug 2025 13:07:48 +0200
-Message-ID: <20250826110941.919860841@linuxfoundation.org>
+Subject: [PATCH 6.16 185/457] drm/amdkfd: Destroy KFD debugfs after destroy KFD wq
+Date: Tue, 26 Aug 2025 13:07:49 +0200
+Message-ID: <20250826110941.944675879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Amber Lin <Amber.Lin@amd.com>
 
-commit 389d79a195a9f71a103b39097ee8341a7ca60927 upstream.
+commit 2e58401a24e7b2d4ec619104e1a76590c1284a4c upstream.
 
-For GC v9.5.0 SOCs, both CPX and QPX compute modes are also supported in
-NPS2 mode.
+Since KFD proc content was moved to kernel debugfs, we can't destroy KFD
+debugfs before kfd_process_destroy_wq. Move kfd_process_destroy_wq prior
+to kfd_debugfs_fini to fix a kernel NULL pointer problem. It happens
+when /sys/kernel/debug/kfd was already destroyed in kfd_debugfs_fini but
+kfd_process_destroy_wq calls kfd_debugfs_remove_process. This line
+    debugfs_remove_recursive(entry->proc_dentry);
+tries to remove /sys/kernel/debug/kfd/proc/<pid> while
+/sys/kernel/debug/kfd is already gone. It hangs the kernel by kernel
+NULL pointer.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Acked-by: Mangesh Gadre <Mangesh.Gadre@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Eric Huang <jinhuieric.huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9d1ac25c7f830e0132aa816393b1e9f140e71148)
+(cherry picked from commit 0333052d90683d88531558dcfdbf2525cc37c233)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_module.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-+++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
-@@ -453,6 +453,7 @@ static int __aqua_vanjaram_get_px_mode_i
- 					    uint16_t *nps_modes)
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_module.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_module.c
+@@ -78,8 +78,8 @@ err_ioctl:
+ static void kfd_exit(void)
  {
- 	struct amdgpu_device *adev = xcp_mgr->adev;
-+	uint32_t gc_ver = amdgpu_ip_version(adev, GC_HWIP, 0);
- 
- 	if (!num_xcp || !nps_modes || !(xcp_mgr->supp_xcp_modes & BIT(px_mode)))
- 		return -EINVAL;
-@@ -476,12 +477,14 @@ static int __aqua_vanjaram_get_px_mode_i
- 		*num_xcp = 4;
- 		*nps_modes = BIT(AMDGPU_NPS1_PARTITION_MODE) |
- 			     BIT(AMDGPU_NPS4_PARTITION_MODE);
-+		if (gc_ver == IP_VERSION(9, 5, 0))
-+			*nps_modes |= BIT(AMDGPU_NPS2_PARTITION_MODE);
- 		break;
- 	case AMDGPU_CPX_PARTITION_MODE:
- 		*num_xcp = NUM_XCC(adev->gfx.xcc_mask);
- 		*nps_modes = BIT(AMDGPU_NPS1_PARTITION_MODE) |
- 			     BIT(AMDGPU_NPS4_PARTITION_MODE);
--		if (amdgpu_sriov_vf(adev))
-+		if (gc_ver == IP_VERSION(9, 5, 0))
- 			*nps_modes |= BIT(AMDGPU_NPS2_PARTITION_MODE);
- 		break;
- 	default:
+ 	kfd_cleanup_processes();
+-	kfd_debugfs_fini();
+ 	kfd_process_destroy_wq();
++	kfd_debugfs_fini();
+ 	kfd_procfs_shutdown();
+ 	kfd_topology_shutdown();
+ 	kfd_chardev_exit();
 
 
