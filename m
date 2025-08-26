@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C2B17A303;
-	Tue, 26 Aug 2025 12:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F011F1C6BE;
+	Tue, 26 Aug 2025 12:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212801; cv=none; b=JBzjc2K9H5YmSgZz3IsTe9Ldx9DkguaD7/GhtNgqufd+UiXhWV7rF38fXzIZTY6qekiZ8NM6A4qGXuoyn4NsAF6GiZFckjs0zO53oKNJ2X7HNSmviwh7JxP2/mFmBzAwS32gbGckHOzABDkySkfX0Fygl8Ow9R97KpK+wPwKWQM=
+	t=1756212804; cv=none; b=Up/YPR6Zx2s6076tsGgAmk+XXMYD0OVbvXBp4SqEwO0jxSqRxXiLh0Ot9+4rotBHAT5Llqq16qwODBSc4McUReFsQ6KXxsCz0hS9TBccuHyO+kBwTlTSpa9YuVhk7418ASXZIJZgS6juac18z8i102XA3OF6A7EH350v7VJZbAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212801; c=relaxed/simple;
-	bh=JYReefcxODb+cJdmL2hExkG0yM2zXbTnUI8B4Fv0xlY=;
+	s=arc-20240116; t=1756212804; c=relaxed/simple;
+	bh=UrgcIKlhZY5rWxbEp8hwmlAPbP2oUmCTFacnnhGNJyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qa7QqwxTuZuhOoFUsXWR6oL5vkTc0JEs7u6Vt+e+i7tqAz12rUvEsUiiiASALJ0n0lExJ5qKz5OrRcVhX/p8acb13uUI4klwx1To8CnJDO8USP6xa05845F3ZtIAAebEJgczb+gDjHQCUI0pmBIorzdeiukrPqq/4llonDSuQ3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnFlUmG/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSPuGU05BX3gF6eAhx+TnGrI3jDJXIubF2JyrEF566dJ96Th0YYmXY6chUAI15i1Jfqs6nFExxArGMgBAzQWp7yA6XfSldyz4vIpjzqdtnfkC+0yjGyulcfp6vQYU6fqH6JXyggCajdsw5MsFAmpYrTicGJj8AEBzvR/82+bvZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcRyV0BN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnFlUmG/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5A9C4CEF1;
-	Tue, 26 Aug 2025 12:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcRyV0BN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E21C4CEF1;
+	Tue, 26 Aug 2025 12:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212801;
-	bh=JYReefcxODb+cJdmL2hExkG0yM2zXbTnUI8B4Fv0xlY=;
+	s=korg; t=1756212803;
+	bh=UrgcIKlhZY5rWxbEp8hwmlAPbP2oUmCTFacnnhGNJyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnFlUmG/zLzxA+3R0+75GGlo9/WsF5IOig0Vq1QkyRMA3y59UmG1IBDWmqPlvBb+y
-	 akDDiF1/neVjjCbII8tl62pWLjjuRbBPrrDQHZXLuNJFc68yLaC5jDDKyURcoNuY6m
-	 vfv1UP8w4WPJmpeegul07qvpDhEh1Z6TvWfi2g4k=
+	b=wcRyV0BNb4/tc/Njbhllk2eooGOf53JfDYtNlPxa/b/n7bW9WIQYIGp/lGSnfcGtQ
+	 x8oaGUwpO2lJChOemOnXcXu3jA7YVmZkYk9VH114tXWPg0XoreoqNAShp/nrO2AaNo
+	 grrV+a5LsJI8WrhXLrEqVBVbG93nvvoUbS4JF6JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Qiyu <qiyuzhu2@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/587] ACPI: PRM: Reduce unnecessary printing to avoid user confusion
-Date: Tue, 26 Aug 2025 13:04:16 +0200
-Message-ID: <20250826110955.662362553@linuxfoundation.org>
+Subject: [PATCH 6.6 108/587] firmware: tegra: Fix IVC dependency problems
+Date: Tue, 26 Aug 2025 13:04:17 +0200
+Message-ID: <20250826110955.687450358@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,81 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Qiyu <qiyuzhu2@amd.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 3db5648c4d608b5483470efc1da9780b081242dd ]
+[ Upstream commit 78eb18020a88a4eed15f5af7700ed570642ff8f1 ]
 
-Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
-handler and context") introduced non-essential printing "Failed to find
-VA for GUID: xxxx, PA: 0x0" which may confuse users to think that
-something wrong is going on while it is not the case.
+The IVC code is library code that other drivers need to select if they
+need that library. However, if the symbol is user-selectable this can
+lead to conflicts.
 
-According to the PRM Spec Section 4.1.2 [1], both static data buffer
-address and ACPI parameter buffer address may be NULL if they are not
-needed, so there is no need to print out the "Failed to find VA ... "
-in those cases.
+Fix this by making the symbol only selectable for COMPILE_TEST and add
+a select TEGRA_IVC to TEGRA_BPMP, which is currently the only user.
 
-Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
-Signed-off-by: Zhu Qiyu <qiyuzhu2@amd.com>
-Link: https://patch.msgid.link/20250704014104.82524-1-qiyuzhu2@amd.com
-[ rjw: Edits in new comments, subject and changelog ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20250506133118.1011777-10-thierry.reding@gmail.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/prmt.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/firmware/tegra/Kconfig | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index a34f7d37877c..eb8f2a1ce138 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -85,8 +85,6 @@ static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
- 		}
- 	}
+diff --git a/drivers/firmware/tegra/Kconfig b/drivers/firmware/tegra/Kconfig
+index cde1ab8bd9d1..91f2320c0d0f 100644
+--- a/drivers/firmware/tegra/Kconfig
++++ b/drivers/firmware/tegra/Kconfig
+@@ -2,7 +2,7 @@
+ menu "Tegra firmware driver"
  
--	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
--
- 	return 0;
- }
+ config TEGRA_IVC
+-	bool "Tegra IVC protocol"
++	bool "Tegra IVC protocol" if COMPILE_TEST
+ 	depends on ARCH_TEGRA
+ 	help
+ 	  IVC (Inter-VM Communication) protocol is part of the IPC
+@@ -13,8 +13,9 @@ config TEGRA_IVC
  
-@@ -154,13 +152,37 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
-+		/*
-+		 * Print a warning message if handler_addr is zero which is not expected to
-+		 * ever happen.
-+		 */
-+		if (unlikely(!th->handler_addr))
-+			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->handler_address);
- 
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
-+		/*
-+		 * According to the PRM specification, static_data_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->static_data_buffer_addr && handler_info->static_data_buffer_address))
-+			pr_warn("Failed to find VA of static data buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->static_data_buffer_address);
- 
- 		th->acpi_param_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
- 
-+		/*
-+		 * According to the PRM specification, acpi_param_buffer_address can be zero,
-+		 * so avoid printing a warning message in that case.  Otherwise, if the
-+		 * return value of efi_pa_va_lookup() is zero, print the message.
-+		 */
-+		if (unlikely(!th->acpi_param_buffer_addr && handler_info->acpi_param_buffer_address))
-+			pr_warn("Failed to find VA of acpi param buffer for GUID: %pUL, PA: 0x%llx",
-+				&th->guid, handler_info->acpi_param_buffer_address);
-+
- 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
- 
- 	return 0;
+ config TEGRA_BPMP
+ 	bool "Tegra BPMP driver"
+-	depends on ARCH_TEGRA && TEGRA_HSP_MBOX && TEGRA_IVC
++	depends on ARCH_TEGRA && TEGRA_HSP_MBOX
+ 	depends on !CPU_BIG_ENDIAN
++	select TEGRA_IVC
+ 	help
+ 	  BPMP (Boot and Power Management Processor) is designed to off-loading
+ 	  the PM functions which include clock/DVFS/thermal/power from the CPU.
 -- 
 2.39.5
 
