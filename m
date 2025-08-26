@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692D6200112;
-	Tue, 26 Aug 2025 11:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C07200112;
+	Tue, 26 Aug 2025 11:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208882; cv=none; b=Po22EUuH+nI6bgcXNAef/YLKpdrCKf4aFkn0/VgOb/94fSeVQW92OZddvrslAX7QHXWCcgtrrDunn2aOaYTy1rkZiNUmbaSl5NhwARhlHsIy3JnGs8nttrCbkHIAJtqJGrdZ42DnwhjLvC1sEM7OtLXVTVwBuVl7OMr6PGTMF2c=
+	t=1756208885; cv=none; b=riGRKovopUr+/ETFigaGUpio/yEsCWWkD2sPoIYZNV2+34pVtG9WsaaZ4hOgPKq2xivO6H2FAf6cMD/z2qyF+fGkUcH5+2Wns/hrOpB4zpfHPlh7gbUB98CWcwE9TMQU0Bq42HP+u8NfRWKEUTRl8qJ9UIA9mLj1l7POVBot/Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208882; c=relaxed/simple;
-	bh=8Zxy6UYmvc+xVS0ECn38l6TaDiz1II0i20M+C5CpOGY=;
+	s=arc-20240116; t=1756208885; c=relaxed/simple;
+	bh=OI4Q8ElkOcT15UjbFAf4sk6bgPWfzwWT7PwqZrwXpds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYWOyJTafsFuMOcCsmhZmrz6G2q27JGpVtGZQBbZHwlGfvEc9A/gf84oZ/gvvaoJftcIr7jwYgcICpRJ+/PT8d5XT25zbDmOEDOBmhn1NAOOD+YbOnJ7ok3ANvI5IefxN+Y3j3IqEhA4c4hPEXDm0eBT6XAKU3OAjx3IR78HLl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmIoszMT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iu3ykRTMCZE+QhXBt7lRoUnZn682WS7+0aKd3waEEWY0x0oNFJuM0AdAzIydMcPTXSdQ3TvVuu/L/ACMbxd1+qEUlpLcQ4jLt6PzdSEXDXQY+Le+0RNZZiM7AXBswcEs4i9DJ3lszmm9TsQCOv6JKWD2Ej7OlsT58XC7acN/dgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yas+L+LD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmIoszMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED203C4CEF1;
-	Tue, 26 Aug 2025 11:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yas+L+LD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C72EC4CEF1;
+	Tue, 26 Aug 2025 11:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208882;
-	bh=8Zxy6UYmvc+xVS0ECn38l6TaDiz1II0i20M+C5CpOGY=;
+	s=korg; t=1756208884;
+	bh=OI4Q8ElkOcT15UjbFAf4sk6bgPWfzwWT7PwqZrwXpds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmIoszMTd4ZVlaSapfusguzVXmTkpu81mormjFLwFIZHqat8KIFaIi9tS4x9cayga
-	 97nzr9TxK39Z0YjFD56Ltis1QbasZSG49CyJbSFzA9+WW0fsFiUaL8SURINBynqrVq
-	 9BgAmmPk03L+gF74NACyVj/IS5tDCIVo6UFkOqS4=
+	b=Yas+L+LDtu8ng0EzMGuqb/9+cZh5zqk/7S4dpzBi9wcrAw0t55PmZjWiegtp1WZ5+
+	 YU6IW9GQ01qh6XKS8IkBCU2PyxJlhpPKNIOfhJjO9jrQo30XV1rKrveJIvuez5zdCa
+	 GhTn19c5IReG4YqIdHGvPA2YjFFJm0FNT6CJwHUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoey Mertes <zoey@cloudflare.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 282/322] mlxsw: spectrum: Forward packets with an IPv4 link-local source IP
-Date: Tue, 26 Aug 2025 13:11:37 +0200
-Message-ID: <20250826110922.886041169@linuxfoundation.org>
+Subject: [PATCH 6.12 283/322] rust: alloc: fix `rusttest` by providing `Cmalloc::aligned_layout` too
+Date: Tue, 26 Aug 2025 13:11:38 +0200
+Message-ID: <20250826110922.908766318@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,55 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit f604d3aaf64ff0d90cc875295474d3abf4155629 ]
+[ Upstream commit 0f580d5d3d9d9cd0953695cd32e43aac3a946338 ]
 
-By default, the device does not forward IPv4 packets with a link-local
-source IP (i.e., 169.254.0.0/16). This behavior does not align with the
-kernel which does forward them.
+Commit fde578c86281 ("rust: alloc: replace aligned_size() with
+Kmalloc::aligned_layout()") provides a public `aligned_layout` function
+in `Kamlloc`, but not in `Cmalloc`, and thus uses of it will trigger an
+error in `rusttest`.
 
-Fix by instructing the device to forward such packets instead of
-dropping them.
+Such a user appeared in the following commit 22ab0641b939 ("rust: drm:
+ensure kmalloc() compatible Layout"):
 
-Fixes: ca360db4b825 ("mlxsw: spectrum: Disable DIP_LINK_LOCAL check in hardware pipeline")
-Reported-by: Zoey Mertes <zoey@cloudflare.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/6721e6b2c96feb80269e72ce8d0b426e2f32d99c.1755174341.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    error[E0599]: no function or associated item named `aligned_layout` found for struct `alloc::allocator_test::Cmalloc` in the current scope
+       --> rust/kernel/drm/device.rs:100:31
+        |
+    100 |         let layout = Kmalloc::aligned_layout(Layout::new::<Self>());
+        |                               ^^^^^^^^^^^^^^ function or associated item not found in `Cmalloc`
+        |
+       ::: rust/kernel/alloc/allocator_test.rs:19:1
+        |
+    19  | pub struct Cmalloc;
+        | ------------------ function or associated item `aligned_layout` not found for this struct
+
+Thus add an equivalent one for `Cmalloc`.
+
+Fixes: fde578c86281 ("rust: alloc: replace aligned_size() with Kmalloc::aligned_layout()")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://lore.kernel.org/r/20250816204215.2719559-1-ojeda@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum.c | 2 ++
- drivers/net/ethernet/mellanox/mlxsw/trap.h     | 1 +
- 2 files changed, 3 insertions(+)
+ rust/kernel/alloc/allocator_test.rs | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-index 3f5e5d99251b..26401bb57572 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
-@@ -2507,6 +2507,8 @@ static const struct mlxsw_listener mlxsw_sp_listener[] = {
- 			     ROUTER_EXP, false),
- 	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_DIP_LINK_LOCAL, FORWARD,
- 			     ROUTER_EXP, false),
-+	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_SIP_LINK_LOCAL, FORWARD,
-+			     ROUTER_EXP, false),
- 	/* Multicast Router Traps */
- 	MLXSW_SP_RXL_MARK(ACL1, TRAP_TO_CPU, MULTICAST, false),
- 	MLXSW_SP_RXL_L3_MARK(ACL2, TRAP_TO_CPU, MULTICAST, false),
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/trap.h b/drivers/net/ethernet/mellanox/mlxsw/trap.h
-index 83477c8e6971..5bfc1499347a 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/trap.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/trap.h
-@@ -95,6 +95,7 @@ enum {
- 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_SIP_BC = 0x16A,
- 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_DIP_LOCAL_NET = 0x16B,
- 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_DIP_LINK_LOCAL = 0x16C,
-+	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_SIP_LINK_LOCAL = 0x16D,
- 	MLXSW_TRAP_ID_DISCARD_ROUTER_IRIF_EN = 0x178,
- 	MLXSW_TRAP_ID_DISCARD_ROUTER_ERIF_EN = 0x179,
- 	MLXSW_TRAP_ID_DISCARD_ROUTER_LPM4 = 0x17B,
+diff --git a/rust/kernel/alloc/allocator_test.rs b/rust/kernel/alloc/allocator_test.rs
+index c37d4c0c64e9..ec13385489df 100644
+--- a/rust/kernel/alloc/allocator_test.rs
++++ b/rust/kernel/alloc/allocator_test.rs
+@@ -22,6 +22,17 @@ pub type Kmalloc = Cmalloc;
+ pub type Vmalloc = Kmalloc;
+ pub type KVmalloc = Kmalloc;
+ 
++impl Cmalloc {
++    /// Returns a [`Layout`] that makes [`Kmalloc`] fulfill the requested size and alignment of
++    /// `layout`.
++    pub fn aligned_layout(layout: Layout) -> Layout {
++        // Note that `layout.size()` (after padding) is guaranteed to be a multiple of
++        // `layout.align()` which together with the slab guarantees means that `Kmalloc` will return
++        // a properly aligned object (see comments in `kmalloc()` for more information).
++        layout.pad_to_align()
++    }
++}
++
+ extern "C" {
+     #[link_name = "aligned_alloc"]
+     fn libc_aligned_alloc(align: usize, size: usize) -> *mut crate::ffi::c_void;
 -- 
 2.50.1
 
