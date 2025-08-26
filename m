@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497B534A315;
-	Tue, 26 Aug 2025 13:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E419334DCCA;
+	Tue, 26 Aug 2025 13:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216635; cv=none; b=bqvMaYvLI4jfSIgOZ7Aev9FpHPE1yTwMH1TjsTvR72eal+hPj9/uCpADIdo6ptarf7ege9uNVVKDl+4hjtHDwi8DSQm/VOB3PS9Z053UWIcLqQJZmHUmfcSNGo1x58EP508FmWydQmGRKnx0/nW7+Pt1tv113Ki5hGKj9ix+sr0=
+	t=1756216638; cv=none; b=G4Afpbd7RykwjD4VYC6AvaS2j0v5yE9NKqGYM4ze7oaEm9kIXFOD+EX6Kzl1JWLtQWgNx5ywmNEx1gEfvnZhTHpBzHVEIbpXH6fIw7JJB9od/F/0pWUDHUAVU2C7XEi8fqE4ue6XyAKD79MTy9aPdb5mB7QQaI6d/bm7o5kmSlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216635; c=relaxed/simple;
-	bh=ODNx0Q/OY2RIe7WOZYYGJP1MExq8daKcxA8zObLeNEA=;
+	s=arc-20240116; t=1756216638; c=relaxed/simple;
+	bh=3wCi7UugKmw36M0cn2U+8cX7KFnBjW6Ikvqc+ic6gn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0LsZsgE9nXEWVqhoIL8R1cRaXTRu3PIJSml/YeKo4tLgDPEabtihFjW6AdJq6PzsCkJUUHHx/pOCyETatY/ptdM/QL/+/tnZQ+6D4hWyoxfs9TU7Df/c5oL9BVyeXxr3n28DUyR9hjw79Apa0tSV/3FAWKfdasVbfdhqF5EbQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrXpsbNl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjLv7Q1THC1TSAaQT8OxuA7iIDK07lLDvaM8vGPc1hebcqfuVdR1yKJZCaF0JvVslSIG7prFiITe+JB7yxnIoa7zWcfsaRvcyYpL+qRGWWyMMMsX7h8JDOj4XLhwYUFFziR/oroJUYkqgzCv5GAETtKe3NGYuRea94zVYFG5UTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E03bXb39; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrXpsbNl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B3EC4CEF1;
-	Tue, 26 Aug 2025 13:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E03bXb39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775F6C4CEF1;
+	Tue, 26 Aug 2025 13:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216635;
-	bh=ODNx0Q/OY2RIe7WOZYYGJP1MExq8daKcxA8zObLeNEA=;
+	s=korg; t=1756216637;
+	bh=3wCi7UugKmw36M0cn2U+8cX7KFnBjW6Ikvqc+ic6gn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrXpsbNlE/zLikNid/09bT+YnQg79bTnwf5qa1N861g35WPuhsqDzQKbc5rcSPeIT
-	 mfgiBooP2/p503aPMRYosL6w6I9BBaoGmEX4PFPDCEodOSyXwGPpKRzywN8J0+42ja
-	 1+ypwDfujuwh+I5Ng7cMMBKp6U9ED/EMMmmKYSFw=
+	b=E03bXb39Nm79ea9fE5KbT3fH40tv3d8LEDq5mUbpjiiVVr/EUYADH3EZiKZGgph3P
+	 WLIISAsscqyywsM9thaSX/SQP7KniobZ6PTVKhzN/4mkTxvhzmMPjkPqP6B07VnhPD
+	 FnkXLsXWNOFuXs+sVAp02t4Nk9EL4sLMFse99diU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Disha Goel <disgoel@linux.ibm.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 468/644] ext4: fix fsmap end of range reporting with bigalloc
-Date: Tue, 26 Aug 2025 13:09:19 +0200
-Message-ID: <20250826110958.077651066@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.15 486/644] media: gspca: Add bounds checking to firmware parser
+Date: Tue, 26 Aug 2025 13:09:37 +0200
+Message-ID: <20250826110958.533596320@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,120 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit bae76c035bf0852844151e68098c9b7cd63ef238 upstream.
+commit aef89c0b2417da79cb2062a95476288f9f203ab0 upstream.
 
-With bigalloc enabled, the logic to report last extent has a bug since
-we try to use cluster units instead of block units. This can cause an
-issue where extra incorrect entries might be returned back to the
-user. This was flagged by generic/365 with 64k bs and -O bigalloc.
+This sd_init() function reads the firmware.  The firmware data holds a
+series of records and the function reads each record and sends the data
+to the device.  The request_ihex_firmware() function
+calls ihex_validate_fw() which ensures that the total length of all the
+records won't read out of bounds of the fw->data[].
 
-** Details of issue **
+However, a potential issue is if there is a single very large
+record (larger than PAGE_SIZE) and that would result in memory
+corruption.  Generally we trust the firmware, but it's always better to
+double check.
 
-The issue was noticed on 5G 64k blocksize FS with -O bigalloc which has
-only 1 bg.
-
-$ xfs_io -c "fsmap -d" /mnt/scratch
-
-  0: 253:48 [0..127]: static fs metadata 128   /* sb */
-  1: 253:48 [128..255]: special 102:1 128   /* gdt */
-  3: 253:48 [256..383]: special 102:3 128   /* block bitmap */
-  4: 253:48 [384..2303]: unknown 1920       /* flex bg empty space */
-  5: 253:48 [2304..2431]: special 102:4 128   /* inode bitmap */
-  6: 253:48 [2432..4351]: unknown 1920      /* flex bg empty space */
-  7: 253:48 [4352..6911]: inodes 2560
-  8: 253:48 [6912..538623]: unknown 531712
-  9: 253:48 [538624..10485759]: free space 9947136
-
-The issue can be seen with:
-
-$ xfs_io -c "fsmap -d 0 3" /mnt/scratch
-
-  0: 253:48 [0..127]: static fs metadata 128
-  1: 253:48 [384..2047]: unknown 1664
-
-Only the first entry was expected to be returned but we get 2. This is
-because:
-
-ext4_getfsmap_datadev()
-  first_cluster, last_cluster = 0
-  ...
-  info->gfi_last = true;
-  ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1, 0, info);
-    fsb = C2B(1) = 16
-    fslen = 0
-    ...
-    /* Merge in any relevant extents from the meta_list */
-    list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
-      ...
-      // since fsb = 16, considers all metadata which starts before 16 blockno
-      iter 1: error = ext4_getfsmap_helper(sb, info, p);  // p = sb (0,1), nop
-        info->gfi_next_fsblk = 1
-      iter 2: error = ext4_getfsmap_helper(sb, info, p);  // p = gdt (1,2), nop
-        info->gfi_next_fsblk = 2
-      iter 3: error = ext4_getfsmap_helper(sb, info, p);  // p = blk bitmap (2,3), nop
-        info->gfi_next_fsblk = 3
-      iter 4: error = ext4_getfsmap_helper(sb, info, p);  // p = ino bitmap (18,19)
-        if (rec_blk > info->gfi_next_fsblk) { // (18 > 3)
-          // emits an extra entry ** BUG **
-        }
-    }
-
-Fix this by directly calling ext4_getfsmap_datadev() with a dummy
-record that has fmr_physical set to (end_fsb + 1) instead of
-last_cluster + 1. By using the block instead of cluster we get the
-correct behavior.
-
-Replacing ext4_getfsmap_datadev_helper() with ext4_getfsmap_helper()
-is okay since the gfi_lastfree and metadata checks in
-ext4_getfsmap_datadev_helper() are anyways redundant when we only want
-to emit the last allocated block of the range, as we have already
-taken care of emitting metadata and any last free blocks.
-
-Cc: stable@kernel.org
-Reported-by: Disha Goel <disgoel@linux.ibm.com>
-Fixes: 4a622e4d477b ("ext4: fix FS_IOC_GETFSMAP handling")
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://patch.msgid.link/e7472c8535c9c5ec10f425f495366864ea12c9da.1754377641.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 49b61ec9b5af ("[media] gspca: Add new vicam subdriver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fsmap.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/media/usb/gspca/vicam.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/fsmap.c
-+++ b/fs/ext4/fsmap.c
-@@ -526,6 +526,7 @@ static int ext4_getfsmap_datadev(struct
- 	ext4_group_t end_ag;
- 	ext4_grpblk_t first_cluster;
- 	ext4_grpblk_t last_cluster;
-+	struct ext4_fsmap irec;
- 	int error = 0;
+--- a/drivers/media/usb/gspca/vicam.c
++++ b/drivers/media/usb/gspca/vicam.c
+@@ -227,6 +227,7 @@ static int sd_init(struct gspca_dev *gsp
+ 	const struct ihex_binrec *rec;
+ 	const struct firmware *fw;
+ 	u8 *firmware_buf;
++	int len;
  
- 	bofs = le32_to_cpu(sbi->s_es->s_first_data_block);
-@@ -609,10 +610,18 @@ static int ext4_getfsmap_datadev(struct
- 			goto err;
+ 	ret = request_ihex_firmware(&fw, VICAM_FIRMWARE,
+ 				    &gspca_dev->dev->dev);
+@@ -241,9 +242,14 @@ static int sd_init(struct gspca_dev *gsp
+ 		goto exit;
  	}
- 
--	/* Report any gaps at the end of the bg */
-+	/*
-+	 * The dummy record below will cause ext4_getfsmap_helper() to report
-+	 * any allocated blocks at the end of the range.
-+	 */
-+	irec.fmr_device = 0;
-+	irec.fmr_physical = end_fsb + 1;
-+	irec.fmr_length = 0;
-+	irec.fmr_owner = EXT4_FMR_OWN_FREE;
-+	irec.fmr_flags = 0;
-+
- 	info->gfi_last = true;
--	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1,
--					     0, info);
-+	error = ext4_getfsmap_helper(sb, info, &irec);
- 	if (error)
- 		goto err;
- 
+ 	for (rec = (void *)fw->data; rec; rec = ihex_next_binrec(rec)) {
+-		memcpy(firmware_buf, rec->data, be16_to_cpu(rec->len));
++		len = be16_to_cpu(rec->len);
++		if (len > PAGE_SIZE) {
++			ret = -EINVAL;
++			break;
++		}
++		memcpy(firmware_buf, rec->data, len);
+ 		ret = vicam_control_msg(gspca_dev, 0xff, 0, 0, firmware_buf,
+-					be16_to_cpu(rec->len));
++					len);
+ 		if (ret < 0)
+ 			break;
+ 	}
 
 
