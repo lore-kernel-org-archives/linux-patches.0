@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73474191F98;
-	Tue, 26 Aug 2025 12:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58C0195811;
+	Tue, 26 Aug 2025 12:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212720; cv=none; b=lteUqpb5gMJE7PtPbjbjDvyX28d2LT2x0GGYurlQQwts339pa1ewDqlDIPpJy7EE63dxGfGP7gyVrKxOmvWZ73V5MkbAxRkIWLSC5loqRNJVSsARjvCG6thgKq8teOmgCAqWTHOjgrJuJ6Fpjoa5ytjzUUvX76B2zP5Jg0LAyNs=
+	t=1756212722; cv=none; b=li7Dn+6yurNhwZG1crkWl6Usg69NmeZCvDsZRz0O5cO91/lcZujUjyhGaau7tkAgvb+GXZF3LglE4QqND+N5JJq8JlSuXdzr1IKcdKypNOSeAv2wzCzyqC4Vo5uKAa0QRFb85rmqFI+yt0UbPKlAnin/hPSD42rAQeZ7uvKMiQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212720; c=relaxed/simple;
-	bh=YanGN13DcQip7C3YjbaMPN9Zwv3Sy9nAHJ9BxImq2Jw=;
+	s=arc-20240116; t=1756212722; c=relaxed/simple;
+	bh=kc5cybpjKSbR1pDESOqVsx/PaNUQ4GF90+wq8q1/mwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdhpRt4tVKvhGQ1na9XOCDW0YKR+0mgGo0nC3mzX3K1TVEwvojhRSuqPigb5TweFw2A1BCjn0HsuXFPvX95UwfrKWN26ggnsUd5dAEPmPC//Aogf/vIHx2IThe7gMWiV12dPj3Lz/ggEYYEEsOHDuw/jT/D1kO8bEsgmylkuOHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bj3bAGOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WvRYxWzef6gRiqq/kJqnotFbhtbCAvXwcD8wgvt0ipRCKkwPXp6SZ9W9JF1aSU0ddYmHjlIJmLVLCsEkST9gu2qS/yEnDVNxIX4yjd4qJFyxom8cR5Wu7pMj5cNyPvJ6bnVj5GL+4tS2yDRrnONAyKhMBnSYJPfz5HQbw+XTXOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjkoJz2A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bj3bAGOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E70AC4CEF1;
-	Tue, 26 Aug 2025 12:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjkoJz2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FDFC4CEF1;
+	Tue, 26 Aug 2025 12:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212720;
-	bh=YanGN13DcQip7C3YjbaMPN9Zwv3Sy9nAHJ9BxImq2Jw=;
+	s=korg; t=1756212722;
+	bh=kc5cybpjKSbR1pDESOqVsx/PaNUQ4GF90+wq8q1/mwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bj3bAGOoRj+2/cYZGPS7zcm17A4EGFOcbEaIFd1++Liip/SK/dPkHZUf6Y/VlZUcw
-	 vOSab18qmDgce3WfpINonQZX/H5js6i/Kem3GeT1X67F8okj4qQlNgcT8Q1cXJqoxx
-	 +9i8CvX9dV/kKZivATMfhB85OHdMSQfgG7C7WQjw=
+	b=kjkoJz2ACyxS/fNpLqDuBA5nCIC43r45atbuAmny+jZL8aCASebQXFBRtnbxjTKvg
+	 cKFWEuYP0RvUL15uYI8cKYvVf8dZZATu9+fYwNtNpIzy9UxeHGuC/5JT3/wRe+YNwi
+	 7FLekwKoCmHTSMEof6UeIQ7yXf9sW/ScnSDm99P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
+	syzbot+598057afa0f49e62bd23@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/587] ata: libata-sata: Disallow changing LPM state if not supported
-Date: Tue, 26 Aug 2025 13:03:45 +0200
-Message-ID: <20250826110954.868333952@linuxfoundation.org>
+Subject: [PATCH 6.6 077/587] fs/ntfs3: Add sanity check for file name
+Date: Tue, 26 Aug 2025 13:03:46 +0200
+Message-ID: <20250826110954.891969843@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,40 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit 413e800cadbf67550d76c77c230b2ecd96bce83a ]
+[ Upstream commit e841ecb139339602bc1853f5f09daa5d1ea920a2 ]
 
-Modify ata_scsi_lpm_store() to return an error if a user attempts to set
-a link power management policy for a port that does not support LPM,
-that is, ports flagged with ATA_FLAG_NO_LPM.
+The length of the file name should be smaller than the directory entry size.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20250701125321.69496-6-dlemoal@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reported-by: syzbot+598057afa0f49e62bd23@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=598057afa0f49e62bd23
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-sata.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ntfs3/dir.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index be72030a500d..9e0a820d6961 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -817,6 +817,11 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index e1b856ecce61..6b93c909bdc9 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -304,6 +304,9 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
+ 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
+ 		return true;
  
- 	spin_lock_irqsave(ap->lock, flags);
- 
-+	if (ap->flags & ATA_FLAG_NO_LPM) {
-+		count = -EOPNOTSUPP;
-+		goto out_unlock;
-+	}
++	if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
++		return true;
 +
- 	ata_for_each_link(link, ap, EDGE) {
- 		ata_for_each_dev(dev, &ap->link, ENABLED) {
- 			if (dev->horkage & ATA_HORKAGE_NOLPM) {
+ 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
+ 				     PATH_MAX);
+ 	if (name_len <= 0) {
 -- 
 2.39.5
 
