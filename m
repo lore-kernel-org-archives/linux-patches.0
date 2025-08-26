@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E0E28314A;
-	Tue, 26 Aug 2025 13:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35D42192EA;
+	Tue, 26 Aug 2025 13:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215336; cv=none; b=K0bW7sjVS1tENHAcvwQ4lnqp3rSddUdHSlTkcrDImWDbl9rXzjWHbfGo/ikQmK+ofhurr3yXVUTNd/fum3nHyXNUhFINK7LhIGnEzffFnklxD7amVG8CwUtRIodiMNvknTVdJL56J1uS0wnTdgftEPXVW4cOil+q2Fty4xMu3aM=
+	t=1756215338; cv=none; b=sgLhxlrJkYvAfsBqEO+hucysApoof58kVeKPXknVS5Tq/lWm+O3rsjOUOPlsqRgPHiYMkhLYCl0w+R7qmbiurp0krpblBj530rtCtFnQs5Eecp/N+GuT+8qBpnQYK+Mji1hqoKDrZuPYbmR3FonOQU2g+nzWNfDdYxtbWpkg+Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215336; c=relaxed/simple;
-	bh=RFeOXaeZGCf9SYWoBjZ8BExoDv5tzfLCC8xHe9LYgUI=;
+	s=arc-20240116; t=1756215338; c=relaxed/simple;
+	bh=ucPS2bfKpJI236Awuba795sLBfoOioSpOTVSKxtEYqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnAuwW8dClAtGIczM3xKe6eT7VNYiD5RVBEJGeB1mTnFPF541SuEyBYYt2hwBT7gv/BPa2Dwu662wcpYdIpwxwll8XrnaYn4uFXxrvqqItc99RZlApV/3EnpZi5Mr6kHKcyYQ89XCroTepBwG4lcH55pa/1GDllYp/F0DJHdzVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ni3zbYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eh1jOYwC55gPRmGSLSX5w2LodgwnLP7GUfRXUuqmdKNwYIji/c8QxoAe0YTVZHjSefa/80m/jMivgvwqN2tVmPCbfSz9VcgumcnYMvN0Ub+9J3ysGlKTxPh7OadRVzHFq7POh8ZzTHHeHI3yPCZYXbnhySyYKm5mVktkO9AXA5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0f7gOBZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ni3zbYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683EBC4CEF1;
-	Tue, 26 Aug 2025 13:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0f7gOBZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D2EC4CEF1;
+	Tue, 26 Aug 2025 13:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215335;
-	bh=RFeOXaeZGCf9SYWoBjZ8BExoDv5tzfLCC8xHe9LYgUI=;
+	s=korg; t=1756215338;
+	bh=ucPS2bfKpJI236Awuba795sLBfoOioSpOTVSKxtEYqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Ni3zbYSB6j89FwOLg0qHrX89+Y37tdeN9gAjFh2tdO6NamYP7jYkSi9vQn1FJBk9
-	 A8uQaMLVhcZkDG0ucPyfQnYFRvYGz9Sqk3GB9dXwwj4In+pE2sD61swOFefuVjHI6G
-	 yBp0Aw9F+uNMRq9c2x0YDbDmV3+hxZK4Ah3kxh6M=
+	b=X0f7gOBZ6Ob/u+oPh7nwg6RfA+yyBm3xBF5pdajIrwMRwylXQ2tAIXWXy4YbtnO3q
+	 vl5bmwOVBfjbY4t3NJj4n3Leh93H79yHrQGfp89Ob+5sk//BBg0uuHSG2qEDtM6UXL
+	 XUScqVWXvV4TQ6gU1m2cr1czNhXzHFE3C7uO7+vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 475/482] net/sched: Remove unnecessary WARNING condition for empty child qdisc in htb_activate
-Date: Tue, 26 Aug 2025 13:12:08 +0200
-Message-ID: <20250826110942.554478300@linuxfoundation.org>
+Subject: [PATCH 6.1 476/482] bonding: update LACP activity flag after setting lacp_active
+Date: Tue, 26 Aug 2025 13:12:09 +0200
+Message-ID: <20250826110942.578080695@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,36 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 2c2192e5f9c7c2892fe2363244d1387f62710d83 ]
+[ Upstream commit b64d035f77b1f02ab449393342264b44950a75ae ]
 
-The WARN_ON trigger based on !cl->leaf.q->q.qlen is unnecessary in
-htb_activate. htb_dequeue_tree already accounts for that scenario.
+The port's actor_oper_port_state activity flag should be updated immediately
+after changing the lacp_active option to reflect the current mode correctly.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: William Liu <will@willsroot.io>
-Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250819033632.579854-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3a755cd8b7c6 ("bonding: add new option lacp_active")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20250815062000.22220-2-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bonding/bond_3ad.c     | 25 +++++++++++++++++++++++++
+ drivers/net/bonding/bond_options.c |  1 +
+ include/net/bond_3ad.h             |  1 +
+ 3 files changed, 27 insertions(+)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index 1e19d3ffbf21..7aac0916205b 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -589,7 +589,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
-  */
- static inline void htb_activate(struct htb_sched *q, struct htb_class *cl)
- {
--	WARN_ON(cl->level || !cl->leaf.q || !cl->leaf.q->q.qlen);
-+	WARN_ON(cl->level || !cl->leaf.q);
+diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
+index 9270977e6c7f..7557c525615e 100644
+--- a/drivers/net/bonding/bond_3ad.c
++++ b/drivers/net/bonding/bond_3ad.c
+@@ -2725,6 +2725,31 @@ void bond_3ad_update_lacp_rate(struct bonding *bond)
+ 	spin_unlock_bh(&bond->mode_lock);
+ }
  
- 	if (!cl->prio_activity) {
- 		cl->prio_activity = 1 << cl->prio;
++/**
++ * bond_3ad_update_lacp_active - change the lacp active
++ * @bond: bonding struct
++ *
++ * Update actor_oper_port_state when lacp_active is modified.
++ */
++void bond_3ad_update_lacp_active(struct bonding *bond)
++{
++	struct port *port = NULL;
++	struct list_head *iter;
++	struct slave *slave;
++	int lacp_active;
++
++	lacp_active = bond->params.lacp_active;
++	spin_lock_bh(&bond->mode_lock);
++	bond_for_each_slave(bond, slave, iter) {
++		port = &(SLAVE_AD_INFO(slave)->port);
++		if (lacp_active)
++			port->actor_oper_port_state |= LACP_STATE_LACP_ACTIVITY;
++		else
++			port->actor_oper_port_state &= ~LACP_STATE_LACP_ACTIVITY;
++	}
++	spin_unlock_bh(&bond->mode_lock);
++}
++
+ size_t bond_3ad_stats_size(void)
+ {
+ 	return nla_total_size_64bit(sizeof(u64)) + /* BOND_3AD_STAT_LACPDU_RX */
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index 21ca95cdef42..8a24c016f667 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -1634,6 +1634,7 @@ static int bond_option_lacp_active_set(struct bonding *bond,
+ 	netdev_dbg(bond->dev, "Setting LACP active to %s (%llu)\n",
+ 		   newval->string, newval->value);
+ 	bond->params.lacp_active = newval->value;
++	bond_3ad_update_lacp_active(bond);
+ 
+ 	return 0;
+ }
+diff --git a/include/net/bond_3ad.h b/include/net/bond_3ad.h
+index a016f275cb01..2d9596dba84d 100644
+--- a/include/net/bond_3ad.h
++++ b/include/net/bond_3ad.h
+@@ -303,6 +303,7 @@ int bond_3ad_lacpdu_recv(const struct sk_buff *skb, struct bonding *bond,
+ int bond_3ad_set_carrier(struct bonding *bond);
+ void bond_3ad_update_lacp_active(struct bonding *bond);
+ void bond_3ad_update_lacp_rate(struct bonding *bond);
++void bond_3ad_update_lacp_active(struct bonding *bond);
+ void bond_3ad_update_ad_actor_settings(struct bonding *bond);
+ int bond_3ad_stats_fill(struct sk_buff *skb, struct bond_3ad_stats *stats);
+ size_t bond_3ad_stats_size(void);
 -- 
 2.50.1
 
