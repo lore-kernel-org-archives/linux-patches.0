@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65D52264A3;
-	Tue, 26 Aug 2025 11:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4402E20B7EE;
+	Tue, 26 Aug 2025 11:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207014; cv=none; b=n+qjeMKSB8pZibmfpJc8U3OTiV9zcLrISYZRd/5zPu08gXDzGsdYukTZZ8CKSDBuqHyzbtSm3w3ABal8QQ3pc72HxnsUjaJ+517/cIiwnDjt/I+ZLPVH8EXOSxbVD8MG8C3SrVOskAUwc1xijfp62K7ACeQPat4hwIt1/ovH1rg=
+	t=1756207017; cv=none; b=Jly1KBxJ5ETd0kI0SOB1a4/HtiRH/e3I5LL8TAeDLZsBm2T0/Pn8fbMW92hJbJmznQmxdQEqm6ZU1axvOx0w33UW0yicOn6rK/NNz2wM+jpHl6wMZRnEI10ZygsnTUz/MEoUF3EgoAtCkkIhON9Ryz/GAApO4KoMBv4iUoZrs70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207014; c=relaxed/simple;
-	bh=XTPXpdcGmQJdHuEOhveCInpbOOergG6vzUH59KoC808=;
+	s=arc-20240116; t=1756207017; c=relaxed/simple;
+	bh=HVZx9S9y1IcVOlM11qrfkc/FWOCZu7wC2jlPZinAK8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yt5/8f4WYmA0gDbuburhEG5bJjkawOvDgE+i1ic2nijXMEkzE5rvEMqZ9lXyn7k7jEHV8uygVpGlgPniWww/ShpXm5Af9NwNwa8ACx+eckpSFSgVeYYBzAyJIzG9pACGuONrpDhSOa/vqfP1SZ9hx4/OvbVVkZ+OzVVihINUdCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6ifuxji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8gAtELMqgh1noPcdybtDn9mGiUOu7hJBPoD322kTUsNgJTxbT2P9R0M3XyCVt+txtEmAN76rSrYYaZq6yZ2HqvA9M30RWpxYj3ttFoQmB003IwugeKjlabBlhQ2NxC4Xk4sfmHpTezXH7x3DbxYNXdZxMlkFeiM8h+U/dzeVIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKa35DVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6ifuxji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117B3C4CEF1;
-	Tue, 26 Aug 2025 11:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKa35DVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4DDC4CEF1;
+	Tue, 26 Aug 2025 11:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207014;
-	bh=XTPXpdcGmQJdHuEOhveCInpbOOergG6vzUH59KoC808=;
+	s=korg; t=1756207016;
+	bh=HVZx9S9y1IcVOlM11qrfkc/FWOCZu7wC2jlPZinAK8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6ifuxjiNPVyp2dVycAALLL7TprKycGH126LXrHJVYcJFkfwCBBCeXQ2tLUFhvDJF
-	 qNPiQxnFrp0LVWxQtVd+NsPEBbUpvUtYl/AXHCteV7FoMf3n7syjnWaDK76kECALdO
-	 dtSFcPWV3ygxeHEoCjZpbEZkT3lWM55YegJQYzqY=
+	b=yKa35DVyPh4Su2jZgRmk7vURd3FEOKbAQ0R5vQJzAhe/ve+YFldlKhUmi9ft56Dfb
+	 HpVl5O7sjdxrRF3erXZ2mpaKyZZLWM0gJRGz17yFNeQDrWukiJf+oodNNZkb8Sh1iW
+	 W7XxDnsygE0zFVV8QaYM5nA6kAasjuTvI4I7pD8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.16 010/457] usb: atm: cxacru: Merge cxacru_upload_firmware() into cxacru_heavy_init()
-Date: Tue, 26 Aug 2025 13:04:54 +0200
-Message-ID: <20250826110937.567546861@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.16 002/457] ata: Fix SATA_MOBILE_LPM_POLICY description in Kconfig
+Date: Tue, 26 Aug 2025 13:04:46 +0200
+Message-ID: <20250826110937.358644446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -49,231 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 8d1b02e5d7e3a6d2acffb1f4c094678fda9e3456 upstream.
+commit ed62a62a18bc144f73eadf866ae46842e8f6606e upstream.
 
-After a recent change in clang to expose uninitialized warnings from
-const variables [1], there is a warning in cxacru_heavy_init():
+Improve the description of the possible default SATA link power
+management policies and add the missing description for policy 5.
+No functional changes.
 
-  drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
-   1104 |         if (instance->modem_type->boot_rom_patch) {
-        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
-   1113 |         cxacru_upload_firmware(instance, fw, bp);
-        |                                              ^~
-  drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
-   1104 |         if (instance->modem_type->boot_rom_patch) {
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
-   1095 |         const struct firmware *fw, *bp;
-        |                                       ^
-        |                                        = NULL
-
-While the warning is technically correct that bp is conditionally passed
-uninitialized to cxacru_upload_firmware(), it is ultimately a false
-positive warning on the uninitialized use of bp because the same
-condition that initializes bp, instance->modem_type->boot_rom_patch, is
-the same one that gates the use of bp within cxacru_upload_firmware().
-As this warning occurs in clang's frontend before inlining occurs, it
-cannot know that these conditions are indentical to avoid the warning.
-
-Manually inline cxacru_upload_firmware() into cxacru_heavy_init(), as
-that is its only callsite, so that clang can see that bp is initialized
-and used under the same condition, clearing up the warning without any
-functional changes to the code (LLVM was already doing this inlining
-later).
-
+Fixes: a5ec5a7bfd1f ("ata: ahci: Support state with min power but Partial low power state")
 Cc: stable@vger.kernel.org
-Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
-Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/cxacru.c |  106 +++++++++++++++++++++--------------------------
- 1 file changed, 49 insertions(+), 57 deletions(-)
+ drivers/ata/Kconfig |   32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -980,25 +980,60 @@ cleanup:
- 	return ret;
- }
+--- a/drivers/ata/Kconfig
++++ b/drivers/ata/Kconfig
+@@ -117,23 +117,39 @@ config SATA_AHCI
  
--static void cxacru_upload_firmware(struct cxacru_data *instance,
--				   const struct firmware *fw,
--				   const struct firmware *bp)
-+
-+static int cxacru_find_firmware(struct cxacru_data *instance,
-+				char *phase, const struct firmware **fw_p)
- {
--	int ret;
-+	struct usbatm_data *usbatm = instance->usbatm;
-+	struct device *dev = &usbatm->usb_intf->dev;
-+	char buf[16];
-+
-+	sprintf(buf, "cxacru-%s.bin", phase);
-+	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
-+
-+	if (request_firmware(fw_p, buf, dev)) {
-+		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
-+		return -ENOENT;
-+	}
-+
-+	usb_info(usbatm, "found firmware %s\n", buf);
-+
-+	return 0;
-+}
-+
-+static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
-+			     struct usb_interface *usb_intf)
-+{
-+	const struct firmware *fw, *bp;
-+	struct cxacru_data *instance = usbatm_instance->driver_data;
- 	struct usbatm_data *usbatm = instance->usbatm;
- 	struct usb_device *usb_dev = usbatm->usb_dev;
- 	__le16 signature[] = { usb_dev->descriptor.idVendor,
- 			       usb_dev->descriptor.idProduct };
- 	__le32 val;
-+	int ret;
-+
-+	ret = cxacru_find_firmware(instance, "fw", &fw);
-+	if (ret) {
-+		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
-+		return ret;
-+	}
+ config SATA_MOBILE_LPM_POLICY
+ 	int "Default SATA Link Power Management policy"
+-	range 0 4
++	range 0 5
+ 	default 3
+ 	depends on SATA_AHCI
+ 	help
+ 	  Select the Default SATA Link Power Management (LPM) policy to use
+ 	  for chipsets / "South Bridges" supporting low-power modes. Such
+ 	  chipsets are ubiquitous across laptops, desktops and servers.
++	  Each policy combines power saving states and features:
++	   - Partial: The Phy logic is powered but is in a reduced power
++                      state. The exit latency from this state is no longer than
++                      10us).
++	   - Slumber: The Phy logic is powered but is in an even lower power
++                      state. The exit latency from this state is potentially
++		      longer, but no longer than 10ms.
++	   - DevSleep: The Phy logic may be powered down. The exit latency from
++	               this state is no longer than 20 ms, unless otherwise
++		       specified by DETO in the device Identify Device Data log.
++	   - HIPM: Host Initiated Power Management (host automatically
++		   transitions to partial and slumber).
++	   - DIPM: Device Initiated Power Management (device automatically
++		   transitions to partial and slumber).
  
--	usb_dbg(usbatm, "%s\n", __func__);
-+	if (instance->modem_type->boot_rom_patch) {
-+		ret = cxacru_find_firmware(instance, "bp", &bp);
-+		if (ret) {
-+			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
-+			release_firmware(fw);
-+			return ret;
-+		}
-+	}
+-	  The value set has the following meanings:
++	  The possible values for the default SATA link power management
++	  policies are:
+ 		0 => Keep firmware settings
+-		1 => Maximum performance
+-		2 => Medium power
+-		3 => Medium power with Device Initiated PM enabled
+-		4 => Minimum power
++		1 => No power savings (maximum performance)
++		2 => HIPM (Partial)
++		3 => HIPM (Partial) and DIPM (Partial and Slumber)
++		4 => HIPM (Partial and DevSleep) and DIPM (Partial and Slumber)
++		5 => HIPM (Slumber and DevSleep) and DIPM (Partial and Slumber)
  
- 	/* FirmwarePllFClkValue */
- 	val = cpu_to_le32(instance->modem_type->pll_f_clk);
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLFCLK_ADDR, (u8 *) &val, 4);
- 	if (ret) {
- 		usb_err(usbatm, "FirmwarePllFClkValue failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
+-	  Note "Minimum power" is known to cause issues, including disk
+-	  corruption, with some disks and should not be used.
++	  Excluding the value 0, higher values represent policies with higher
++	  power savings.
  
- 	/* FirmwarePllBClkValue */
-@@ -1006,7 +1041,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLBCLK_ADDR, (u8 *) &val, 4);
- 	if (ret) {
- 		usb_err(usbatm, "FirmwarePllBClkValue failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Enable SDRAM */
-@@ -1014,7 +1049,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SDRAMEN_ADDR, (u8 *) &val, 4);
- 	if (ret) {
- 		usb_err(usbatm, "Enable SDRAM failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Firmware */
-@@ -1022,7 +1057,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, FW_ADDR, fw->data, fw->size);
- 	if (ret) {
- 		usb_err(usbatm, "Firmware upload failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Boot ROM patch */
-@@ -1031,7 +1066,7 @@ static void cxacru_upload_firmware(struc
- 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
- 		if (ret) {
- 			usb_err(usbatm, "Boot ROM patching failed: %d\n", ret);
--			return;
-+			goto done;
- 		}
- 	}
- 
-@@ -1039,7 +1074,7 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SIG_ADDR, (u8 *) signature, 4);
- 	if (ret) {
- 		usb_err(usbatm, "Signature storing failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	usb_info(usbatm, "starting device\n");
-@@ -1051,7 +1086,7 @@ static void cxacru_upload_firmware(struc
- 	}
- 	if (ret) {
- 		usb_err(usbatm, "Passing control to firmware failed: %d\n", ret);
--		return;
-+		goto done;
- 	}
- 
- 	/* Delay to allow firmware to start up. */
-@@ -1065,53 +1100,10 @@ static void cxacru_upload_firmware(struc
- 	ret = cxacru_cm(instance, CM_REQUEST_CARD_GET_STATUS, NULL, 0, NULL, 0);
- 	if (ret < 0) {
- 		usb_err(usbatm, "modem failed to initialize: %d\n", ret);
--		return;
--	}
--}
--
--static int cxacru_find_firmware(struct cxacru_data *instance,
--				char *phase, const struct firmware **fw_p)
--{
--	struct usbatm_data *usbatm = instance->usbatm;
--	struct device *dev = &usbatm->usb_intf->dev;
--	char buf[16];
--
--	sprintf(buf, "cxacru-%s.bin", phase);
--	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
--
--	if (request_firmware(fw_p, buf, dev)) {
--		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
--		return -ENOENT;
-+		goto done;
- 	}
- 
--	usb_info(usbatm, "found firmware %s\n", buf);
--
--	return 0;
--}
--
--static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
--			     struct usb_interface *usb_intf)
--{
--	const struct firmware *fw, *bp;
--	struct cxacru_data *instance = usbatm_instance->driver_data;
--	int ret = cxacru_find_firmware(instance, "fw", &fw);
--
--	if (ret) {
--		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
--		return ret;
--	}
--
--	if (instance->modem_type->boot_rom_patch) {
--		ret = cxacru_find_firmware(instance, "bp", &bp);
--		if (ret) {
--			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
--			release_firmware(fw);
--			return ret;
--		}
--	}
--
--	cxacru_upload_firmware(instance, fw, bp);
--
-+done:
- 	if (instance->modem_type->boot_rom_patch)
- 		release_firmware(bp);
- 	release_firmware(fw);
+ config SATA_AHCI_PLATFORM
+ 	tristate "Platform AHCI SATA support"
 
 
