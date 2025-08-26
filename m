@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF56E33436C;
-	Tue, 26 Aug 2025 11:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E406322524;
+	Tue, 26 Aug 2025 11:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207098; cv=none; b=BZNNefqDC1+P/n0dP77ZqB0IbCJNyroGLsE2BWGYBnd8RvaSWXKZbqhn3+1pTD+Kktmta5+Kz73wEOzaFPD5JvSpKiMshS5aV/HBeW0FrDk7St9D8ZG1giI4+ONQzQcsfSZ6PUOYGlh7HODRUmz85m0O+EQa68g4KWTI4NnWrb8=
+	t=1756207101; cv=none; b=WoAfZRK+8iMoFM0BtijA4xjd+rpQqZ2pKW9rbQUU+caABxg8WSYPopzBMTDhe2m6Al5oXLV66r39/LvOSDnyeLGGXKyZ+A/VtiAn5LrfnUahudqio4zhrNCRwJui4GShlO/iY7ACf7G1a/BVsmOE2heN+K0HukjKXyHDtQ6364c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207098; c=relaxed/simple;
-	bh=cUI7rYYBST0RVbY7EPRRYqz318BfyjcTNTGD2JtZL0U=;
+	s=arc-20240116; t=1756207101; c=relaxed/simple;
+	bh=yhFRPgUtTOVwfYitBtgSPYU/A3PhBbHsfvqLEqVtWL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvN3mEAsTwR9yLu0yIuTtgGHC5WVua3zlh/I2OxwwRSZOTc6Lb7aDdOTZCXXzcMmCVNyvQeXEaRJCSfYJI1le1AEbis5cfwJfQhgYwlSiL5PuVTKU7pBVz7SAJU3bKWISZF2p9Ui+wfs4ZWzE3d4dM1sc/OtF7UvwU2iqs8HILk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfxfG8bv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S3QT1Qmy8wcQGS1vO2XjBkgXi8GDYnykkMARLXbYTlVmzO+gNNPGP3HC3FD9fSDjCSN/nw/fIrx+i99jG9fZDAPXWKUZzfWghSHeVtvqFxb9KJ5BjXDZpwFVQCmZExBWM8b+6CWMMjQopFo8N2zeffVKy11YuNkr0LN048yyyHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ul7lMGQV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfxfG8bv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417F9C4CEF1;
-	Tue, 26 Aug 2025 11:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ul7lMGQV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E301FC4CEF1;
+	Tue, 26 Aug 2025 11:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207098;
-	bh=cUI7rYYBST0RVbY7EPRRYqz318BfyjcTNTGD2JtZL0U=;
+	s=korg; t=1756207101;
+	bh=yhFRPgUtTOVwfYitBtgSPYU/A3PhBbHsfvqLEqVtWL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfxfG8bvsM/wD3HoizCmsxrB6GBazvvxuM6m/ElXDcQOw2hIRlgstvVD2nvPVYDa7
-	 1VkQfFu9tWufu/TF7l3MHnE5cXw8fxwBuz71eXtkn52R+v+q00zWQDBsmt9O3KlPWF
-	 GiA3BfGz13voMlz8SBg4xsXMXRrC0xiVN1T37rm4=
+	b=ul7lMGQVpnpdEjFiKlIBRLvWt3WOW1NttdEtE/b5dhug4sUTfcOaOpXuB/xMEjiZH
+	 yZws39oDrH3hBkD8IIdlLwXP3q+dyAzbIQTaNfQXVNfvDETmAk3lwjIgJSdFxHsPck
+	 xURTvI1R7mK9vSnqpi63YC9Tb5MA/IqFBujZ1ISk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.16 020/457] lib/crypto: mips/chacha: Fix clang build and remove unneeded byteswap
-Date: Tue, 26 Aug 2025 13:05:04 +0200
-Message-ID: <20250826110937.830125943@linuxfoundation.org>
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.16 011/457] usb: gadget: udc: renesas_usb3: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:04:55 +0200
+Message-ID: <20250826110937.592838655@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,104 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 22375adaa0d9fbba9646c8e2b099c6e87c97bfae upstream.
+commit 868837b0a94c6b1b1fdbc04d3ba218ca83432393 upstream.
 
-The MIPS32r2 ChaCha code has never been buildable with the clang
-assembler.  First, clang doesn't support the 'rotl' pseudo-instruction:
+Make sure to drop the reference to the companion device taken during
+probe when the driver is unbound.
 
-    error: unknown instruction, did you mean: rol, rotr?
-
-Second, clang requires that both operands of the 'wsbh' instruction be
-explicitly given:
-
-    error: too few operands for instruction
-
-To fix this, align the code with the real instruction set by (1) using
-the real instruction 'rotr' instead of the nonstandard pseudo-
-instruction 'rotl', and (2) explicitly giving both operands to 'wsbh'.
-
-To make removing the use of 'rotl' a bit easier, also remove the
-unnecessary special-casing for big endian CPUs at
-.Lchacha_mips_xor_bytes.  The tail handling is actually
-endian-independent since it processes one byte at a time.  On big endian
-CPUs the old code byte-swapped SAVED_X, then iterated through it in
-reverse order.  But the byteswap and reverse iteration canceled out.
-
-Tested with chacha20poly1305-selftest in QEMU using "-M malta" with both
-little endian and big endian mips32r2 kernels.
-
-Fixes: 49aa7c00eddf ("crypto: mips/chacha - import 32r2 ChaCha code from Zinc")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505080409.EujEBwA0-lkp@intel.com/
-Link: https://lore.kernel.org/r/20250619225535.679301-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/lib/crypto/chacha-core.S |   20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/usb/gadget/udc/renesas_usb3.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/mips/lib/crypto/chacha-core.S
-+++ b/arch/mips/lib/crypto/chacha-core.S
-@@ -55,17 +55,13 @@
- #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
- #define MSB 0
- #define LSB 3
--#define ROTx rotl
--#define ROTR(n) rotr n, 24
- #define	CPU_TO_LE32(n) \
--	wsbh	n; \
-+	wsbh	n, n; \
- 	rotr	n, 16;
- #else
- #define MSB 3
- #define LSB 0
--#define ROTx rotr
- #define CPU_TO_LE32(n)
--#define ROTR(n)
- #endif
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2657,6 +2657,7 @@ static void renesas_usb3_remove(struct p
+ 	struct renesas_usb3 *usb3 = platform_get_drvdata(pdev);
  
- #define FOR_EACH_WORD(x) \
-@@ -192,10 +188,10 @@ CONCAT3(.Lchacha_mips_xor_aligned_, PLUS
- 	xor	X(W), X(B); \
- 	xor	X(Y), X(C); \
- 	xor	X(Z), X(D); \
--	rotl	X(V), S;    \
--	rotl	X(W), S;    \
--	rotl	X(Y), S;    \
--	rotl	X(Z), S;
-+	rotr	X(V), 32 - S; \
-+	rotr	X(W), 32 - S; \
-+	rotr	X(Y), 32 - S; \
-+	rotr	X(Z), 32 - S;
+ 	debugfs_remove_recursive(usb3->dentry);
++	put_device(usb3->host_dev);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
- .text
- .set	reorder
-@@ -372,21 +368,19 @@ chacha_crypt_arch:
- 	/* First byte */
- 	lbu	T1, 0(IN)
- 	addiu	$at, BYTES, 1
--	CPU_TO_LE32(SAVED_X)
--	ROTR(SAVED_X)
- 	xor	T1, SAVED_X
- 	sb	T1, 0(OUT)
- 	beqz	$at, .Lchacha_mips_xor_done
- 	/* Second byte */
- 	lbu	T1, 1(IN)
- 	addiu	$at, BYTES, 2
--	ROTx	SAVED_X, 8
-+	rotr	SAVED_X, 8
- 	xor	T1, SAVED_X
- 	sb	T1, 1(OUT)
- 	beqz	$at, .Lchacha_mips_xor_done
- 	/* Third byte */
- 	lbu	T1, 2(IN)
--	ROTx	SAVED_X, 8
-+	rotr	SAVED_X, 8
- 	xor	T1, SAVED_X
- 	sb	T1, 2(OUT)
- 	b	.Lchacha_mips_xor_done
+ 	cancel_work_sync(&usb3->role_work);
 
 
