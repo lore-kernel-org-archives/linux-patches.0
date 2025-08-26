@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B70343D9E;
-	Tue, 26 Aug 2025 13:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63819322A1E;
+	Tue, 26 Aug 2025 13:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214519; cv=none; b=YKwOGgiJ7hXs1cFrkMVxR20ica9Lj5HsD69aSD7jQMXphW+R2JI/JxZWj9GOEt+xyzDqzk000qzyVEFe9MGGsnvqLMqyOOMgBff7pwibUURmaAtdb6IBOH6nl+RZmtQnMnX+CidNsIR+Z5oiWdbY0uIK5WCz6waX7MnA+zLTlTI=
+	t=1756214522; cv=none; b=V6hyDyFjl8URqH8FEXr1MUm+otNZ8z8buKUC17IxT2cZlSAS6HFCX4lhIlHauNhmlKaUdijusxA9sAwYxA/pLVQVdxZCbO9QdwTaz5XddhK22xcpaWOhnMpU2P2zH2scU4Y0NeUh1G7eY3phuqdZpnTexL2exKf2qtVwmvpnKfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214519; c=relaxed/simple;
-	bh=AYSrZsJHqxZo8Yn9qg/JcPnMMzvp/jgBdnj30NCCeXI=;
+	s=arc-20240116; t=1756214522; c=relaxed/simple;
+	bh=+NcZmecy0kUWG56/viLpnzJqLLwN09pEaM7b0CQhxw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HuDGvMgGvj8A0/Wjczx73pbrIT8n9/UQPa8GdXppx4UHM5ffftoUmdwpUI7cRZkfx1XwRSICWNfmLr3B7hl/fak+Om/zyEOAakHBfn2C/UYJ1WEzwBKgMzBdToeRVGCYv/oCcwSF0a3kTmAaeRCT0/sRZm/kUMqWytIocpgXKF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhOZ9qIx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dQ+uoDc1RtswaIztnKfBYhy5wyp+pINDeBvMMpG77P5xJyhn3WFHcV5L83E9KEoPHsHOT9BN2J+nGmVi6OVbTbLv30f5pzKzWXQSFAPV/vy4SRabVTl/LoGiI8YGfPf1MwJ+owdMZC0h2F2C4WCfr5GdUl7zptHitEaL81GyR1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEzJWets; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhOZ9qIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EFAC4CEF1;
-	Tue, 26 Aug 2025 13:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEzJWets"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC93C113CF;
+	Tue, 26 Aug 2025 13:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214519;
-	bh=AYSrZsJHqxZo8Yn9qg/JcPnMMzvp/jgBdnj30NCCeXI=;
+	s=korg; t=1756214522;
+	bh=+NcZmecy0kUWG56/viLpnzJqLLwN09pEaM7b0CQhxw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mhOZ9qIx8kJbpPZs4j1AXUKowE+MOh20eD8s8mKPnxEmntpv/eIvABQ6bkataKPY8
-	 UJdZ2PjNOWOblQUL1L9Mztt3dyyp+vCjoRFZoREQySMwQdCn1uSq5/EozA9wTFULFf
-	 uQLCg0Iw8MYZkvn65MgUsX9kly5BgUQenED4Ca9g=
+	b=vEzJWetsrC/U44cZCevtkJOzHp1EobekKxiw6FQTXPhG4d2FyCgrAu6knwHn/JjpT
+	 DqmOOVR/J/Ot+XIYj4XzOIAOJoirx4jD/S3PqI8kge9l/os8Sn8epmeOpkCHV2Jzod
+	 TYZSshLDFhF0yRMQQu+9+i8IE/FSdl+mNMtDzoEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/482] selftests/bpf: Fix a user_ringbuf failure with arm64 64KB page size
-Date: Tue, 26 Aug 2025 13:07:01 +0200
-Message-ID: <20250826110934.961902959@linuxfoundation.org>
+Subject: [PATCH 6.1 169/482] drm/ttm: Respect the shrinker core free target
+Date: Tue, 26 Aug 2025 13:07:02 +0200
+Message-ID: <20250826110934.986358578@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -45,63 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit bbc7bd658ddc662083639b9e9a280b90225ecd9a ]
+[ Upstream commit eac21f8ebeb4f84d703cf41dc3f81d16fa9dc00a ]
 
-The ringbuf max_entries must be PAGE_ALIGNED. See kernel function
-ringbuf_map_alloc(). So for arm64 64KB page size, adjust max_entries
-properly.
+Currently the TTM shrinker aborts shrinking as soon as it frees pages from
+any of the page order pools and by doing so it can fail to respect the
+freeing target which was configured by the shrinker core.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20250607013626.1553001-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+We use the wording "can fail" because the number of freed pages will
+depend on the presence of pages in the pools and the order of the pools on
+the LRU list. For example if there are no free pages in the high order
+pools the shrinker core may require multiple passes over the TTM shrinker
+before it will free the default target of 128 pages (assuming there are
+free pages in the low order pools). This inefficiency can be compounded by
+the pool LRU where multiple further calls into the TTM shrinker are
+required to end up looking at the pool with pages.
+
+Improve this by never freeing less than the shrinker core has requested.
+
+At the same time we start reporting the number of scanned pages (freed in
+this case), which prevents the core shrinker from giving up on the TTM
+shrinker too soon and moving on.
+
+v2:
+ * Simplify loop logic. (Christian)
+ * Improve commit message.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20250603112750.34997-2-tvrtko.ursulin@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/user_ringbuf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/ttm/ttm_pool.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-index ca81d660eb96..5e88d37973c5 100644
---- a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-@@ -23,8 +23,7 @@
- static size_t log_buf_sz = 1 << 20; /* 1 MB */
- static char obj_log_buf[1048576];
- static const long c_sample_size = sizeof(struct sample) + BPF_RINGBUF_HDR_SZ;
--static const long c_ringbuf_size = 1 << 12; /* 1 small page */
--static const long c_max_entries = c_ringbuf_size / c_sample_size;
-+static long c_ringbuf_size, c_max_entries;
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index 393b97b4a991..a223208b83e0 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -592,7 +592,6 @@ void ttm_pool_fini(struct ttm_pool *pool)
+ 	synchronize_shrinkers();
+ }
  
- static void drain_current_samples(void)
+-/* As long as pages are available make sure to release at least one */
+ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
+ 					    struct shrink_control *sc)
  {
-@@ -426,7 +425,9 @@ static void test_user_ringbuf_loop(void)
- 	uint32_t remaining_samples = total_samples;
- 	int err;
+@@ -600,9 +599,12 @@ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
  
--	BUILD_BUG_ON(total_samples <= c_max_entries);
-+	if (!ASSERT_LT(c_max_entries, total_samples, "compare_c_max_entries"))
-+		return;
-+
- 	err = load_skel_create_user_ringbuf(&skel, &ringbuf);
- 	if (err)
- 		return;
-@@ -739,6 +740,9 @@ void test_user_ringbuf(void)
- {
- 	int i;
+ 	do
+ 		num_freed += ttm_pool_shrink();
+-	while (!num_freed && atomic_long_read(&allocated_pages));
++	while (num_freed < sc->nr_to_scan &&
++	       atomic_long_read(&allocated_pages));
  
-+	c_ringbuf_size = getpagesize(); /* 1 page */
-+	c_max_entries = c_ringbuf_size / c_sample_size;
+-	return num_freed;
++	sc->nr_scanned = num_freed;
 +
- 	for (i = 0; i < ARRAY_SIZE(success_tests); i++) {
- 		if (!test__start_subtest(success_tests[i].test_name))
- 			continue;
++	return num_freed ?: SHRINK_STOP;
+ }
+ 
+ /* Return the number of pages available or SHRINK_EMPTY if we have none */
 -- 
 2.39.5
 
