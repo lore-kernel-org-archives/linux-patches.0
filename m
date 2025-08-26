@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7AB21A23A4;
-	Tue, 26 Aug 2025 13:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1171A23A4;
+	Tue, 26 Aug 2025 13:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214176; cv=none; b=L/3V4aUrO4peL/vHJMIgWA2HqNkMApagc63gmzLyPkF+C778vQs2zmWuXLMlMAH76LDBr0C6NgmStdEXGmMdOF3NoM3BAnSL0H8Hqkv86GB5swfhnGNGil+r8K8N7zmMjDKcXgvqqpE8ZoB3f+J4VMWwZadIPZApE7swNwkZJqY=
+	t=1756214179; cv=none; b=VuNskHzAKw/CfMtmOs8JS8cD24p1+VlP/wX+EvmMwvr4+45rNs022pN/9vLAGuwAMIpit8F7tENn6Bi9KPlL6Y1vFVR5sB4k85P4b3171eq5beauHhDXR1mCbXf49ls5G0gmpy0IVrywVMqrqM8u73nqg6m36RGkp7xb+41u03o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214176; c=relaxed/simple;
-	bh=QDXLo2HulwoGT0T0DbZ+L/Ox43BWA2lJk13EGKg8TQQ=;
+	s=arc-20240116; t=1756214179; c=relaxed/simple;
+	bh=dukydRT4itf/w/M6hfzvZLpX/0Cg7RdzqA3tq4WUECs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uH5ZVvoDr1ETd8NweBYsoDlJPDnpPOxzGwgsoNGaMLISVL2R/kJC67r3gj9VT8D++ui7eUHW9snhaM7tNM+w3cAVKZWWfstA9Ea3SHdrOlBpw2mf9cbcNMPp6F5BU1yygaXJjFipoEW3i7zVjH7E/CRk0wf8CLgdi7tNoa7Djfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyWmBgnR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VRzo+dudNBZTmqPPsvPbhseaNP1WkQJAjJNl5hXEeFcpNvJo6vey/+TJayrZRAsTL1XjuautJyLuU38cp5e4+mZw4RVf0ApUi4Xu7SkCjZljfIvN0v659cOJXBnXjiFuiBSn5zmldEFQzTtIVXoEE8zywh8goR6gK6pU7I57x0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dX0HtBPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyWmBgnR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B2EC4CEF1;
-	Tue, 26 Aug 2025 13:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX0HtBPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E011FC4CEF1;
+	Tue, 26 Aug 2025 13:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214176;
-	bh=QDXLo2HulwoGT0T0DbZ+L/Ox43BWA2lJk13EGKg8TQQ=;
+	s=korg; t=1756214179;
+	bh=dukydRT4itf/w/M6hfzvZLpX/0Cg7RdzqA3tq4WUECs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yyWmBgnRU2wN/rVeY7/64eE29fkTyGMZbTvPvlkEd873cKSpDlE5kw+8Vlc8tLz+O
-	 NMItTRvK1jxFeCYeCuN+9o5oG62rDroRYsrAK5IgRUWjbmczCgAejEN+CINqMXRoLd
-	 S/qLAO5DKMaSzngGVlUzF92pTd+76ZYOMterD3+w=
+	b=dX0HtBPrH8CONNkadzzwn7PFSZRBeeT138xQx5x+XLzAXFdSaTaRTn4VjL+9dbW31
+	 hPC0G8mdYDYYNpa7Va6Tb4y+mzqXIciISAWuJumvI9cufquV+LnjcU/TNYs5Q9CxJL
+	 QwjYK69nkUye9T2tLxX6SD+OKjb2u8sTW/TlL0ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/482] KVM: x86: Fully defer to vendor code to decide how to force immediate exit
-Date: Tue, 26 Aug 2025 13:04:52 +0200
-Message-ID: <20250826110931.776075944@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johan Hovold <johan@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 013/482] net: mtk_eth_soc: fix device leak at probe
+Date: Tue, 26 Aug 2025 13:04:26 +0200
+Message-ID: <20250826110931.114017244@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,264 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 0ec3d6d1f169baa7fc512ae4b78d17e7c94b7763 ]
+commit 3e13274ca8750823e8b68181bdf185d238febe0d upstream.
 
-Now that vmx->req_immediate_exit is used only in the scope of
-vmx_vcpu_run(), use force_immediate_exit to detect that KVM should usurp
-the VMX preemption to force a VM-Exit and let vendor code fully handle
-forcing a VM-Exit.
+The reference count to the WED devices has already been incremented when
+looking them up using of_find_device_by_node() so drop the bogus
+additional reference taken during probe.
 
-Opportunsitically drop __kvm_request_immediate_exit() and just have
-vendor code call smp_send_reschedule() directly.  SVM already does this
-when injecting an event while also trying to single-step an IRET, i.e.
-it's not exactly secret knowledge that KVM uses a reschedule IPI to force
-an exit.
-
-Link: https://lore.kernel.org/r/20240110012705.506918-7-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[sean: resolve absurd conflict due to funky kvm_x86_ops.sched_in prototype]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 804775dfc288 ("net: ethernet: mtk_eth_soc: add support for Wireless Ethernet Dispatch (WED)")
+Cc: stable@vger.kernel.org	# 5.19
+Cc: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250725171213.880-5-johan@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm-x86-ops.h |  1 -
- arch/x86/include/asm/kvm_host.h    |  3 ---
- arch/x86/kvm/svm/svm.c             |  7 ++++---
- arch/x86/kvm/vmx/vmx.c             | 32 +++++++++++++-----------------
- arch/x86/kvm/vmx/vmx.h             |  2 --
- arch/x86/kvm/x86.c                 | 10 +---------
- 6 files changed, 19 insertions(+), 36 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_wed.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/kvm-x86-ops.h b/arch/x86/include/asm/kvm-x86-ops.h
-index 29bef25ac77c..0e5ae3b0c867 100644
---- a/arch/x86/include/asm/kvm-x86-ops.h
-+++ b/arch/x86/include/asm/kvm-x86-ops.h
-@@ -100,7 +100,6 @@ KVM_X86_OP(write_tsc_multiplier)
- KVM_X86_OP(get_exit_info)
- KVM_X86_OP(check_intercept)
- KVM_X86_OP(handle_exit_irqoff)
--KVM_X86_OP(request_immediate_exit)
- KVM_X86_OP(sched_in)
- KVM_X86_OP_OPTIONAL(update_cpu_dirty_logging)
- KVM_X86_OP_OPTIONAL(vcpu_blocking)
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index 93f523762854..86f3bd6601e7 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1590,8 +1590,6 @@ struct kvm_x86_ops {
- 			       struct x86_exception *exception);
- 	void (*handle_exit_irqoff)(struct kvm_vcpu *vcpu);
+--- a/drivers/net/ethernet/mediatek/mtk_wed.c
++++ b/drivers/net/ethernet/mediatek/mtk_wed.c
+@@ -1074,7 +1074,6 @@ void mtk_wed_add_hw(struct device_node *
+ 	if (!pdev)
+ 		goto err_of_node_put;
  
--	void (*request_immediate_exit)(struct kvm_vcpu *vcpu);
--
- 	void (*sched_in)(struct kvm_vcpu *kvm, int cpu);
- 
- 	/*
-@@ -2059,7 +2057,6 @@ extern bool kvm_find_async_pf_gfn(struct kvm_vcpu *vcpu, gfn_t gfn);
- 
- int kvm_skip_emulated_instruction(struct kvm_vcpu *vcpu);
- int kvm_complete_insn_gp(struct kvm_vcpu *vcpu, int err);
--void __kvm_request_immediate_exit(struct kvm_vcpu *vcpu);
- 
- void __user *__x86_set_memory_region(struct kvm *kvm, int id, gpa_t gpa,
- 				     u32 size);
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 337a304d211b..12de50db401f 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4033,9 +4033,12 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu,
- 		 * is enough to force an immediate vmexit.
- 		 */
- 		disable_nmi_singlestep(svm);
--		smp_send_reschedule(vcpu->cpu);
-+		force_immediate_exit = true;
- 	}
- 
-+	if (force_immediate_exit)
-+		smp_send_reschedule(vcpu->cpu);
-+
- 	pre_svm_run(vcpu);
- 
- 	sync_lapic_to_cr8(vcpu);
-@@ -4874,8 +4877,6 @@ static struct kvm_x86_ops svm_x86_ops __initdata = {
- 	.check_intercept = svm_check_intercept,
- 	.handle_exit_irqoff = svm_handle_exit_irqoff,
- 
--	.request_immediate_exit = __kvm_request_immediate_exit,
--
- 	.sched_in = svm_sched_in,
- 
- 	.nested_ops = &svm_nested_ops,
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 4db9d41d988c..179747d04edc 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -49,6 +49,8 @@
- #include <asm/virtext.h>
- #include <asm/vmx.h>
- 
-+#include <trace/events/ipi.h>
-+
- #include "capabilities.h"
- #include "cpuid.h"
- #include "evmcs.h"
-@@ -1223,8 +1225,6 @@ void vmx_prepare_switch_to_guest(struct kvm_vcpu *vcpu)
- 	u16 fs_sel, gs_sel;
- 	int i;
- 
--	vmx->req_immediate_exit = false;
--
- 	/*
- 	 * Note that guest MSRs to be saved/restored can also be changed
- 	 * when guest state is loaded. This happens when guest transitions
-@@ -5929,7 +5929,8 @@ static int handle_pml_full(struct kvm_vcpu *vcpu)
- 	return 1;
- }
- 
--static fastpath_t handle_fastpath_preemption_timer(struct kvm_vcpu *vcpu)
-+static fastpath_t handle_fastpath_preemption_timer(struct kvm_vcpu *vcpu,
-+						   bool force_immediate_exit)
- {
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
- 
-@@ -5945,7 +5946,7 @@ static fastpath_t handle_fastpath_preemption_timer(struct kvm_vcpu *vcpu)
- 	 * If the timer expired because KVM used it to force an immediate exit,
- 	 * then mission accomplished.
- 	 */
--	if (vmx->req_immediate_exit)
-+	if (force_immediate_exit)
- 		return EXIT_FASTPATH_EXIT_HANDLED;
- 
- 	/*
-@@ -7090,13 +7091,13 @@ static void atomic_switch_perf_msrs(struct vcpu_vmx *vmx)
- 					msrs[i].host, false);
- }
- 
--static void vmx_update_hv_timer(struct kvm_vcpu *vcpu)
-+static void vmx_update_hv_timer(struct kvm_vcpu *vcpu, bool force_immediate_exit)
- {
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
- 	u64 tscl;
- 	u32 delta_tsc;
- 
--	if (vmx->req_immediate_exit) {
-+	if (force_immediate_exit) {
- 		vmcs_write32(VMX_PREEMPTION_TIMER_VALUE, 0);
- 		vmx->loaded_vmcs->hv_timer_soft_disabled = false;
- 	} else if (vmx->hv_deadline_tsc != -1) {
-@@ -7149,7 +7150,8 @@ void noinstr vmx_spec_ctrl_restore_host(struct vcpu_vmx *vmx,
- 	barrier_nospec();
- }
- 
--static fastpath_t vmx_exit_handlers_fastpath(struct kvm_vcpu *vcpu)
-+static fastpath_t vmx_exit_handlers_fastpath(struct kvm_vcpu *vcpu,
-+					     bool force_immediate_exit)
- {
- 	/*
- 	 * If L2 is active, some VMX preemption timer exits can be handled in
-@@ -7163,7 +7165,7 @@ static fastpath_t vmx_exit_handlers_fastpath(struct kvm_vcpu *vcpu)
- 	case EXIT_REASON_MSR_WRITE:
- 		return handle_fastpath_set_msr_irqoff(vcpu);
- 	case EXIT_REASON_PREEMPTION_TIMER:
--		return handle_fastpath_preemption_timer(vcpu);
-+		return handle_fastpath_preemption_timer(vcpu, force_immediate_exit);
- 	default:
- 		return EXIT_FASTPATH_NONE;
- 	}
-@@ -7284,7 +7286,9 @@ static fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit)
- 		vmx_passthrough_lbr_msrs(vcpu);
- 
- 	if (enable_preemption_timer)
--		vmx_update_hv_timer(vcpu);
-+		vmx_update_hv_timer(vcpu, force_immediate_exit);
-+	else if (force_immediate_exit)
-+		smp_send_reschedule(vcpu->cpu);
- 
- 	kvm_wait_lapic_expire(vcpu);
- 
-@@ -7358,7 +7362,7 @@ static fastpath_t vmx_vcpu_run(struct kvm_vcpu *vcpu, bool force_immediate_exit)
- 	vmx_recover_nmi_blocking(vmx);
- 	vmx_complete_interrupts(vmx);
- 
--	return vmx_exit_handlers_fastpath(vcpu);
-+	return vmx_exit_handlers_fastpath(vcpu, force_immediate_exit);
- }
- 
- static void vmx_vcpu_free(struct kvm_vcpu *vcpu)
-@@ -7865,11 +7869,6 @@ static __init void vmx_set_cpu_caps(void)
- 		kvm_cpu_cap_check_and_set(X86_FEATURE_WAITPKG);
- }
- 
--static void vmx_request_immediate_exit(struct kvm_vcpu *vcpu)
--{
--	to_vmx(vcpu)->req_immediate_exit = true;
--}
--
- static int vmx_check_intercept_io(struct kvm_vcpu *vcpu,
- 				  struct x86_instruction_info *info)
- {
-@@ -8275,8 +8274,6 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
- 	.check_intercept = vmx_check_intercept,
- 	.handle_exit_irqoff = vmx_handle_exit_irqoff,
- 
--	.request_immediate_exit = vmx_request_immediate_exit,
--
- 	.sched_in = vmx_sched_in,
- 
- 	.cpu_dirty_log_size = PML_ENTITY_NUM,
-@@ -8533,7 +8530,6 @@ static __init int hardware_setup(void)
- 	if (!enable_preemption_timer) {
- 		vmx_x86_ops.set_hv_timer = NULL;
- 		vmx_x86_ops.cancel_hv_timer = NULL;
--		vmx_x86_ops.request_immediate_exit = __kvm_request_immediate_exit;
- 	}
- 
- 	kvm_caps.supported_mce_cap |= MCG_LMCE_P;
-diff --git a/arch/x86/kvm/vmx/vmx.h b/arch/x86/kvm/vmx/vmx.h
-index 357819872d80..ddbe73958d7f 100644
---- a/arch/x86/kvm/vmx/vmx.h
-+++ b/arch/x86/kvm/vmx/vmx.h
-@@ -343,8 +343,6 @@ struct vcpu_vmx {
- 	unsigned int ple_window;
- 	bool ple_window_dirty;
- 
--	bool req_immediate_exit;
--
- 	/* Support for PML */
- #define PML_ENTITY_NUM		512
- 	struct page *pml_pg;
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 08c3da88f402..400a6e9fb0be 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10578,12 +10578,6 @@ static void kvm_vcpu_reload_apic_access_page(struct kvm_vcpu *vcpu)
- 	static_call_cond(kvm_x86_set_apic_access_page_addr)(vcpu);
- }
- 
--void __kvm_request_immediate_exit(struct kvm_vcpu *vcpu)
--{
--	smp_send_reschedule(vcpu->cpu);
--}
--EXPORT_SYMBOL_GPL(__kvm_request_immediate_exit);
--
- /*
-  * Called within kvm->srcu read side.
-  * Returns 1 to let vcpu_run() continue the guest execution loop without
-@@ -10817,10 +10811,8 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
- 		goto cancel_injection;
- 	}
- 
--	if (req_immediate_exit) {
-+	if (req_immediate_exit)
- 		kvm_make_request(KVM_REQ_EVENT, vcpu);
--		static_call(kvm_x86_request_immediate_exit)(vcpu);
--	}
- 
- 	fpregs_assert_state_consistent();
- 	if (test_thread_flag(TIF_NEED_FPU_LOAD))
--- 
-2.50.1
-
+-	get_device(&pdev->dev);
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		goto err_put_device;
 
 
