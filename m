@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BBF1B87E8;
-	Tue, 26 Aug 2025 13:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39542230BDF;
+	Tue, 26 Aug 2025 13:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214485; cv=none; b=bqiEp16RIMi+Lz3N66E9kpB5r7shBCUwI9FhWRQrdJgc12TUfv04C64JckYYVaRUsWiRF2Cql38VB3JZRPi4iM2OkTVLsbAqz1gwKTCTpbsMvJ8FG52mFkMLQCW+Ui2fbKsToFUk8mRX3s+bO8fGN2z8r+Ieo9pqkFL/sRAhRJY=
+	t=1756214488; cv=none; b=PchyCWCx8DPH85opAcMPLhmjED1UL4cjbORlZ19WYqMZ/ts13YLYhcd7Sgnzt/d1/0RN+8Z20jTnwm/X7U75PUk44vCrA0BaSs3APPqgFmtilvfk8zY1FxfP4polEtYN2Zga1CgxcHzH6iVhYoOod4fUwoqfDORyg3o2RkJgrSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214485; c=relaxed/simple;
-	bh=j3WlBwmDQRAsUaSvZaH0lEINPVOI6/eckEmY42w19Fc=;
+	s=arc-20240116; t=1756214488; c=relaxed/simple;
+	bh=+ynJnMWlzU7zNDpl1ql88Ks5USQAkwqrhM1OgUNO9Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7il0FPQ5oyVPkYcA7d2PqfxR248wM2VJJYNJmj6HhKBa7Bn7OAAzD84musd19nYnpIhHU1KzVjR8YjWjlpuvsfEI/HvwUM6y7EkFBMlxd3rs/cKkTJuqzWJfy2vuW9uZL8y76Iv2zQFOgwYAiff259rsfVQ7NLbWliydKBV+8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+jP2UJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNYkGbXrOJzwFaMV4l+3rCjrPvmcuLuO4P9TyBodbrlXl7aUkBSM/M5umvrk3mKyKsV9u/3ZnJs5Y09nN0taBwgzUI4BIM7VnSrEigFoEn1Mo8g8acvNf4ooqx2vCg0FgKDCGLjACn8r9GHEelvRL6LFBC8MV4QW3oLg3FbZSSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBm1en+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+jP2UJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3314C113D0;
-	Tue, 26 Aug 2025 13:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBm1en+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D41C4CEF1;
+	Tue, 26 Aug 2025 13:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214485;
-	bh=j3WlBwmDQRAsUaSvZaH0lEINPVOI6/eckEmY42w19Fc=;
+	s=korg; t=1756214487;
+	bh=+ynJnMWlzU7zNDpl1ql88Ks5USQAkwqrhM1OgUNO9Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+jP2UJLXrY5rvhPbrIesLwtTMxTXvV4dKYzWMvSNpN4r4BgUdXI1SFQorjGql/Zc
-	 vs2RRNt+cbnxtWxOMX8sHVvhusCT+P58UqAaF99Oq3HBwW0rXRHNVLU4nwFNoklJnO
-	 6L7UGwLElaCJINMcPam4Kpz840AlY9bTtTmD1VL4=
+	b=RBm1en+D2vYyN5Wks711tZBBFJcnx/zqrPOBqxGARtOfKql2gELyYwV3rHAob5ChE
+	 ZNOjchgSTKzVXM6tjq4+UMNWxntDojhJbQL2wpqG+grmL5rjrnwCDuBN7yltv55nxd
+	 KYgMYPEqXYX4AOXzWOvvhiU29riJvqYYxB2mmClA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
-	Ramasamy Kaliappan <ramasamy.kaliappan@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/482] wifi: mac80211: update radar_required in channel context after channel switch
-Date: Tue, 26 Aug 2025 13:06:41 +0200
-Message-ID: <20250826110934.475741435@linuxfoundation.org>
+Subject: [PATCH 6.1 157/482] gve: Return error for unknown admin queue command
+Date: Tue, 26 Aug 2025 13:06:50 +0200
+Message-ID: <20250826110934.692519342@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,46 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 140c6a61d83cbd85adba769b5ef8d61acfa5b392 ]
+[ Upstream commit b11344f63fdd9e8c5121148a6965b41079071dd2 ]
 
-Currently, when a non-DFS channel is brought up and the bandwidth is
-expanded from 80 MHz to 160 MHz, where the primary 80 MHz is non-DFS
-and the secondary 80 MHz consists of DFS channels, radar detection
-fails if radar occurs in the secondary 80 MHz.
+In gve_adminq_issue_cmd(), return -EINVAL instead of 0 when an unknown
+admin queue command opcode is encountered.
 
-When the channel is switched from 80 MHz to 160 MHz, with the primary
-80 MHz being non-DFS and the secondary 80 MHz consisting of DFS
-channels, the radar required flag in the channel switch parameters
-is set to true. However, when using a reserved channel context,
-it is not updated in sdata, which disables radar detection in the
-secondary 80 MHz DFS channels.
+This prevents the function from silently succeeding on invalid input
+and prevents undefined behavior by ensuring the function fails gracefully
+when an unrecognized opcode is provided.
 
-Update the radar required flag in sdata to fix this issue when using
-a reserved channel context.
+These changes improve error handling.
 
-Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
-Signed-off-by: Ramasamy Kaliappan <ramasamy.kaliappan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250608140324.1687117-1-ramasamy.kaliappan@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250616054504.1644770-2-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 1 +
+ drivers/net/ethernet/google/gve/gve_adminq.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index f07e34bed8f3..648af67b8ec8 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -1308,6 +1308,7 @@ ieee80211_link_use_reserved_reassign(struct ieee80211_link_data *link)
- 		goto out;
+diff --git a/drivers/net/ethernet/google/gve/gve_adminq.c b/drivers/net/ethernet/google/gve/gve_adminq.c
+index f7621ab672b9..32a9943432ac 100644
+--- a/drivers/net/ethernet/google/gve/gve_adminq.c
++++ b/drivers/net/ethernet/google/gve/gve_adminq.c
+@@ -409,6 +409,7 @@ static int gve_adminq_issue_cmd(struct gve_priv *priv,
+ 		break;
+ 	default:
+ 		dev_err(&priv->pdev->dev, "unknown AQ command opcode %d\n", opcode);
++		return -EINVAL;
  	}
  
-+	link->radar_required = link->reserved_radar_required;
- 	list_move(&link->assigned_chanctx_list, &new_ctx->assigned_links);
- 	rcu_assign_pointer(link_conf->chanctx_conf, &new_ctx->conf);
- 
+ 	return 0;
 -- 
 2.39.5
 
