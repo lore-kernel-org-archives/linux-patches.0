@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6A8340DAE;
-	Tue, 26 Aug 2025 11:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9279434165A;
+	Tue, 26 Aug 2025 11:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207818; cv=none; b=m8J3xUayZ13u5szehN9ppYUV0+Gd4pYS+D9jH57vsRCSkZ6zuaBYQMstjHcrEqCoj4Xzq08/gEGImw1CzxFj4iheTuuglczdEM84nFI+FtPpqRiJ/+6D/WTmOEEfTiKdn7T0H6nRVBlpctDt6C0HS3o6qr2EipnASWUI1V0gSQw=
+	t=1756207820; cv=none; b=aKDXbfpumjcWq9jmFgq03Ytghr14uLWzhaYwnDnwvYDbDw3Sr+GE+YqSllx0iAkHCZZzlwz92V2RYK25Obpx7mePY5yEUHGw0QzWRE6SI5kpCOi/BywUi69Ie34zGE/5Gxz1nmquOTJH0WuyS7ktFf0jaLp3YvHVMxVvkMNeLTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207818; c=relaxed/simple;
-	bh=qf79HUoOgwzwCNMvRLcWl3iSfHZ3kHMw1gESj4+PmNI=;
+	s=arc-20240116; t=1756207820; c=relaxed/simple;
+	bh=h2kMCeDcT9D410Cm1MDTZuKVB2Tg5u9L4+omnCIqy8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VtKApwhZDjMvqkdMH098qFD4pTYdX2fIqNxwMgLlqssTxcJlE+rwwbCJFW0nV6zkUs+mLZdQe2HL2rDz9kPltboXbBjI0+zWRnx1upUzE/s96+zA+cWJ0NnzHdWicRaTfJ+PcxOCcgEP5gnASgvIvYsxnWRspHhhbuCLsNSx+vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9WC6JK0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2OPpZkN39Ih+psEgMYJ08vfpw92Sqv7CfOQdZwJwx7LYtskAg6RzjdK+koDHcj2IAw2rgboe2fojmluq784sp9GUL45Dyvg08Ts2jvKNw/aQB4q6ghq8TEUzrKaV985Gw/uVSkdTjXGhYYMxbDcoS28Do23rJlKM7NvZu6J8mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1BtHzSB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9WC6JK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C136C4CEF1;
-	Tue, 26 Aug 2025 11:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1BtHzSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B23C4CEF1;
+	Tue, 26 Aug 2025 11:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207817;
-	bh=qf79HUoOgwzwCNMvRLcWl3iSfHZ3kHMw1gESj4+PmNI=;
+	s=korg; t=1756207820;
+	bh=h2kMCeDcT9D410Cm1MDTZuKVB2Tg5u9L4+omnCIqy8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9WC6JK0TxCYkkF9rAmvFCGYZjMJLojtxauxhhKXIYMybljA9bO2oq1jyRy0seBpW
-	 CjkdOtr8U4MWBhSG4k3ob4iCtToh1Fs3x5PdIdlQOF2FhDwguJCQUVje60beixGEs0
-	 JC/mzMWusvksGTqS5nexU3Hl9SnPc6vwp4D+VpJg=
+	b=p1BtHzSBVCTDnEPDCfRLZFjcvbvK+ZW/P+6QH3e4N7CAoKOEcescdp12xTm+nTdf8
+	 wdgK+9Ob8vDpw3pNwDznZ4h8EaysNc+6p57r06HXRc/ms2Vg9ub0zwQS084//UwL3h
+	 asmbqwUkoOq7/A1pNPYfnnAt1TehuWrkjrYXcaHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: [PATCH 6.16 329/457] PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link up
-Date: Tue, 26 Aug 2025 13:10:13 +0200
-Message-ID: <20250826110945.474899014@linuxfoundation.org>
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Billy Jheng Bing-Jhong <billy@starlabs.sg>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.16 330/457] tls: fix handling of zero-length records on the rx_list
+Date: Tue, 26 Aug 2025 13:10:14 +0200
+Message-ID: <20250826110945.498306143@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,48 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 80dc18a0cba8dea42614f021b20a04354b213d86 upstream.
+commit 62708b9452f8eb77513115b17c4f8d1a22ebf843 upstream.
 
-As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link speeds
-greater than 5.0 GT/s, software must wait a minimum of 100 ms after Link
-training completes before sending a Configuration Request.
+Each recvmsg() call must process either
+ - only contiguous DATA records (any number of them)
+ - one non-DATA record
 
-Add this delay in dw_pcie_wait_for_link(), after the link is reported as
-up. The delay will only be performed in the success case where the link
-came up.
+If the next record has different type than what has already been
+processed we break out of the main processing loop. If the record
+has already been decrypted (which may be the case for TLS 1.3 where
+we don't know type until decryption) we queue the pending record
+to the rx_list. Next recvmsg() will pick it up from there.
 
-DWC glue drivers that have a link up IRQ (drivers that set
-use_linkup_irq = true) do not call dw_pcie_wait_for_link(), instead they
-perform this delay in their threaded link up IRQ handler.
+Queuing the skb to rx_list after zero-copy decrypt is not possible,
+since in that case we decrypted directly to the user space buffer,
+and we don't have an skb to queue (darg.skb points to the ciphertext
+skb for access to metadata like length).
 
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Link: https://patch.msgid.link/20250625102347.1205584-14-cassel@kernel.org
+Only data records are allowed zero-copy, and we break the processing
+loop after each non-data record. So we should never zero-copy and
+then find out that the record type has changed. The corner case
+we missed is when the initial record comes from rx_list, and it's
+zero length.
+
+Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Billy Jheng Bing-Jhong <billy@starlabs.sg>
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20250820021952.143068-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/tls/tls_sw.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -714,6 +714,14 @@ int dw_pcie_wait_for_link(struct dw_pcie
- 		return -ETIMEDOUT;
- 	}
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1808,6 +1808,9 @@ int decrypt_skb(struct sock *sk, struct
+ 	return tls_decrypt_sg(sk, NULL, sgout, &darg);
+ }
  
-+	/*
-+	 * As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link
-+	 * speeds greater than 5.0 GT/s, software must wait a minimum of 100 ms
-+	 * after Link training completes before sending a Configuration Request.
-+	 */
-+	if (pci->max_link_speed > 2)
-+		msleep(PCIE_RESET_CONFIG_WAIT_MS);
-+
- 	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	val = dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKSTA);
++/* All records returned from a recvmsg() call must have the same type.
++ * 0 is not a valid content type. Use it as "no type reported, yet".
++ */
+ static int tls_record_content_type(struct msghdr *msg, struct tls_msg *tlm,
+ 				   u8 *control)
+ {
+@@ -2051,8 +2054,10 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	if (err < 0)
+ 		goto end;
  
++	/* process_rx_list() will set @control if it processed any records */
+ 	copied = err;
+-	if (len <= copied || (copied && control != TLS_RECORD_TYPE_DATA) || rx_more)
++	if (len <= copied || rx_more ||
++	    (control && control != TLS_RECORD_TYPE_DATA))
+ 		goto end;
+ 
+ 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, len);
 
 
