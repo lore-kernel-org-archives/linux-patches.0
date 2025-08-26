@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C863B1D5CD4;
-	Tue, 26 Aug 2025 14:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813DF2FDC5C;
+	Tue, 26 Aug 2025 14:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218111; cv=none; b=jeCp89vITl4rwUE91TFFmfyfd2AwqXjIbC+ZNxzQ5+pEMp9KZsGOUIvQQSz5rpsoII3rSIpeytVbQDdVaQ/C0hezyl3o2D8H/XQBKHXkc1YzrRIy54GTI78LAaKxX6oLxHEb7tT+P8wKFYbbtHFEZSNPvRPKBU4hgtrt+S3DUKw=
+	t=1756218114; cv=none; b=GJDUNX7z+2Lzz3CqMZB38b24Vbl1MkKIfxb86BguBO50+B2Mme/N1ktNQPYCSVjtfvPpt3qhsqLskzh3ktdtlCnutvKq4RBmGC/+lb2UZJg0pxZPUIhAjVKGujBcz+KAISLu3Pd1dqZqDuQiJM9DbK7VCG7iflUcxfEwQ8elAl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218111; c=relaxed/simple;
-	bh=XbPAd6SgtHKgqyjTqPqlecvHu5Ejt+xGdy6Pe0PAP9w=;
+	s=arc-20240116; t=1756218114; c=relaxed/simple;
+	bh=e528EYKKb59N/ihmvJ5KEoM1tTCTsbyyA4uVnRIItmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rgi/IF2Tp7iP0kAH++Ty15n1VcApq7wCslWZZEzUfg++bwnJ04oRg3Gf/KI4VEO2e5RAuWbo2lSVOchQZaIu7SVqetQCdH78pXuMVuwKGyZ+vVsTPzDsS6LNpdvNS+1i4aPiBaBiG7/jiw1MTsMeBNXlhywyxvzppLucZzxXJhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t988myqT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ys40Z1YR6fP/GsYv0IIR5iFgqiwcwZwyml/fzqPpZUOrauv3Jz4MBW/luItmbAQk4YiHAuTMStWD22/0fLEBA+HydeHtl1AcoaoqIiXrggWgrRLwgqiTvSNQq9zLpDELqvnYLTAc6wveHgdJUa2GAp8wso7Q/CvPNWC8d9qAwcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUkgJOoP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t988myqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F77CC4CEF1;
-	Tue, 26 Aug 2025 14:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUkgJOoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1106FC4CEF1;
+	Tue, 26 Aug 2025 14:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218111;
-	bh=XbPAd6SgtHKgqyjTqPqlecvHu5Ejt+xGdy6Pe0PAP9w=;
+	s=korg; t=1756218114;
+	bh=e528EYKKb59N/ihmvJ5KEoM1tTCTsbyyA4uVnRIItmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t988myqT/OrS7GmaMzr5IkBFtdQrj3byWofvV8SuAGYkXos3+K0HBcmG47SX+TUIu
-	 7/5PIgvtQuuuRT4eCFnH2XYFcZFoz4R1kHR8GGV/bkDph/x9Qj8OTakSIIKQcEDms8
-	 EXE6lu1qYIDiQEpPDToIoofV48k3WQCHfqyBut4g=
+	b=QUkgJOoPHmcSg2AWsy36GYX3ssvy5yGidfmQtn4/TXSQyVL9ZAkbWjWP1kCOWSqyh
+	 /9306TRBW1Sm/sAD8dueowJR+nrcxyi+X/66R5Ib8P4BKBC8S3WkgYRfPDlEapAdge
+	 PrMx1TLTtF44mCuiksbJaHrlrkWUhc99+xNdWfHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
-Subject: [PATCH 5.10 397/523] drm/amd/display: Fix DP audio DTO1 clock source on DCE 6.
-Date: Tue, 26 Aug 2025 13:10:07 +0200
-Message-ID: <20250826110934.254222718@linuxfoundation.org>
+	Tim Harvey <tharvey@gateworks.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 371/523] hwmon: (gsc-hwmon) fix fan pwm setpoint show functions
+Date: Tue, 26 Aug 2025 13:09:41 +0200
+Message-ID: <20250826110933.617942726@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -45,95 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-commit 297a4833a68aac3316eb808b4123eb016ef242d7 upstream.
+commit 9c62e2282900332c8b711d9f9e37af369a8ef71b upstream.
 
-On DCE 6, DP audio was not working. However, it worked when an
-HDMI monitor was also plugged in.
+The Linux hwmon sysfs API values for pwmX_auto_pointY_pwm represent an
+integer value between 0 (0%) to 255 (100%) and the pwmX_auto_pointY_temp
+represent millidegrees Celcius.
 
-Looking at dce_aud_wall_dto_setup it seems that the main
-difference is that we use DTO1 when only DP is plugged in.
+Commit a6d80df47ee2 ("hwmon: (gsc-hwmon) fix fan pwm temperature
+scaling") properly addressed the incorrect scaling in the
+pwm_auto_point_temp_store implementation but erroneously scaled
+the pwm_auto_point_pwm_show (pwm value) instead of the
+pwm_auto_point_temp_show (temp value) resulting in:
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_pwm
+ 25500
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_temp
+ 4500
 
-When programming DTO1, it uses audio_dto_source_clock_in_khz
-which is set from get_dp_ref_freq_khz
+Fix the scaling of these attributes:
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_pwm
+ 255
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_temp
+ 45000
 
-The dce60_get_dp_ref_freq_khz implementation looks incorrect,
-because DENTIST_DISPCLK_CNTL seems to be always zero on DCE 6,
-so it isn't usable.
-I compared dce60_get_dp_ref_freq_khz to the legacy display code,
-specifically dce_v6_0_audio_set_dto, and it turns out that in
-case of DCE 6, it needs to use the display clock. With that,
-DP audio started working on Pitcairn, Oland and Cape Verde.
-
-However, it still didn't work on Tahiti. Despite having the
-same DCE version, Tahiti seems to have a different audio device.
-After some trial and error I realized that it works with the
-default display clock as reported by the VBIOS, not the current
-display clock.
-
-The patch was tested on all four SI GPUs:
-
-* Pitcairn (DCE 6.0)
-* Oland (DCE 6.4)
-* Cape Verde (DCE 6.0)
-* Tahiti (DCE 6.0 but different)
-
-The testing was done on Samsung Odyssey G7 LS28BG700EPXEN on
-each of the above GPUs, at the following settings:
-
-* 4K 60 Hz
-* 1080p 60 Hz
-* 1080p 144 Hz
-
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 645cc7863da5de700547d236697dffd6760cf051)
+Fixes: a6d80df47ee2 ("hwmon: (gsc-hwmon) fix fan pwm temperature scaling")
 Cc: stable@vger.kernel.org
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Link: https://lore.kernel.org/r/20250718200259.1840792-1-tharvey@gateworks.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c |   21 +++--------
- 1 file changed, 6 insertions(+), 15 deletions(-)
+ drivers/hwmon/gsc-hwmon.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-@@ -83,22 +83,13 @@ static const struct state_dependent_cloc
- static int dce60_get_dp_ref_freq_khz(struct clk_mgr *clk_mgr_base)
- {
- 	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
--	int dprefclk_wdivider;
--	int dp_ref_clk_khz;
--	int target_div;
-+	struct dc_context *ctx = clk_mgr_base->ctx;
-+	int dp_ref_clk_khz = 0;
+--- a/drivers/hwmon/gsc-hwmon.c
++++ b/drivers/hwmon/gsc-hwmon.c
+@@ -65,7 +65,7 @@ static ssize_t pwm_auto_point_temp_show(
+ 		return ret;
  
--	/* DCE6 has no DPREFCLK_CNTL to read DP Reference Clock source */
--
--	/* Read the mmDENTIST_DISPCLK_CNTL to get the currently
--	 * programmed DID DENTIST_DPREFCLK_WDIVIDER*/
--	REG_GET(DENTIST_DISPCLK_CNTL, DENTIST_DPREFCLK_WDIVIDER, &dprefclk_wdivider);
--
--	/* Convert DENTIST_DPREFCLK_WDIVIDERto actual divider*/
--	target_div = dentist_get_divider_from_did(dprefclk_wdivider);
--
--	/* Calculate the current DFS clock, in kHz.*/
--	dp_ref_clk_khz = (DENTIST_DIVIDER_RANGE_SCALE_FACTOR
--		* clk_mgr->base.dentist_vco_freq_khz) / target_div;
-+	if (ASIC_REV_IS_TAHITI_P(ctx->asic_id.hw_internal_rev))
-+		dp_ref_clk_khz = ctx->dc_bios->fw_info.default_display_engine_pll_frequency;
-+	else
-+		dp_ref_clk_khz = clk_mgr_base->clks.dispclk_khz;
- 
- 	return dce_adjust_dp_ref_freq_for_ss(clk_mgr, dp_ref_clk_khz);
+ 	ret = regs[0] | regs[1] << 8;
+-	return sprintf(buf, "%d\n", ret * 10);
++	return sprintf(buf, "%d\n", ret * 100);
  }
+ 
+ static ssize_t pwm_auto_point_temp_store(struct device *dev,
+@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(s
+ {
+ 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+ 
+-	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
++	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
+ }
+ 
+ static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
 
 
