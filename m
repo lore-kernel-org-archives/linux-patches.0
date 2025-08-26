@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE72D350831;
-	Tue, 26 Aug 2025 14:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2E0350825;
+	Tue, 26 Aug 2025 14:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217577; cv=none; b=ljGP6FjEZC5BfhwYWq+9+gG4nX92efd+RnMudhWC2H6QKnX2zqrIktFBQM9Javddynle4qs4T4V/SnoPRWKjllr1DVBG7NOA0S/rg1/vSQsbeRwrQ391h5IBWww9DyduisGT65OdxA82FlJLfo0MyhUyDjcSVaurwzLYxVEHCtQ=
+	t=1756217580; cv=none; b=C/DtwqEYugdpVsP1QgGn7vA/xvV7j9vIrfT7hxgiQSpSofki+xPZ9iRP7Gye2yVkY/LGpje1T1J9PBoo9y+qYXxu4/nvIO6/zh90UcfedjqkReYvKIELvqh2KKHaZmZOyQ6lek4BPAgJKEinQlRdjI9///TQMdfq52Zx5bF1QI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217577; c=relaxed/simple;
-	bh=hZsD4Zmbkntt7xLApH98TT5u1sF/KMerh0pU56i7Bfo=;
+	s=arc-20240116; t=1756217580; c=relaxed/simple;
+	bh=t0lw5MLIqX/MLXnFDqKHWJgFb9eUQyaE0ZRgqT51QPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpuW5Z1OelVJTuESFXQl0ZVP/wtgAHZnGRnutucvo1XtqNPb4xwkTyTjoMrfM/T3WukfpxJQNY9fNkA7009Z0rPiVnt1IZoyrWTvRFNCJFWt2xclAtfY/5kF4epNhMq2A2HuGOanPlQhy6cpcgyFXyLfxU0paE+Mn/QwN3Kgpcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8js+ZgX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=do0X6V/dGsPzfnOY6HuY4dUcfxAjOSpSiBiMkN4LqlU85cB7liXZyzQmT+Al1amgN2fSD6Q9GBRQC++m30uluWKM/t1lWwMH1TGjkwARGBcs3b7vi/rzEGo7q/khvzDE+LAEnIedPLztJV9NV0pGBoudb7Z9RgaL8aQdy1KT1W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ds9r4L7S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8js+ZgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B17DC4CEF1;
-	Tue, 26 Aug 2025 14:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ds9r4L7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3966C113D0;
+	Tue, 26 Aug 2025 14:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217577;
-	bh=hZsD4Zmbkntt7xLApH98TT5u1sF/KMerh0pU56i7Bfo=;
+	s=korg; t=1756217580;
+	bh=t0lw5MLIqX/MLXnFDqKHWJgFb9eUQyaE0ZRgqT51QPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8js+ZgXxNVG+tzOMtRuXnnb5UKJEXMSYX0akGgmtOMVWTTCyXyA3viae+AshPLFX
-	 k0BOJQHv9d/0T22eUxL65jPCcr/+w4/fQEp5Di+1mhpfWKVZ/HwB7DeNPOCxIiosQV
-	 Oy6sYJI2U6oz6yz6qdqd/K/bNUi4Dsf8gxIq3Uw0=
+	b=ds9r4L7Si6aSdxu/z6UBZ8QXdyu8ZdZTRFIg0VOXWhNKJSR3oz8gFuZ1DotgIMyHY
+	 Inc4PVZTbVYhiLD7pmARXixM0G4j7VxEEr0bDuLy5URrHfzBsEH/RMwYHiPFUsbACA
+	 a4Ta6XfGMpGpIBAOxTefpTqK9AzNejKL0wNMN9bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 195/523] netlink: avoid infinite retry looping in netlink_unicast()
-Date: Tue, 26 Aug 2025 13:06:45 +0200
-Message-ID: <20250826110929.257713093@linuxfoundation.org>
+	zhangjian <zhangjian496@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 169/523] NFS: Fix filehandle bounds checking in nfs_fh_to_dentry()
+Date: Tue, 26 Aug 2025 13:06:19 +0200
+Message-ID: <20250826110928.637759412@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,80 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 759dfc7d04bab1b0b86113f1164dc1fec192b859 upstream.
+[ Upstream commit ef93a685e01a281b5e2a25ce4e3428cf9371a205 ]
 
-netlink_attachskb() checks for the socket's read memory allocation
-constraints. Firstly, it has:
+The function needs to check the minimal filehandle length before it can
+access the embedded filehandle.
 
-  rmem < READ_ONCE(sk->sk_rcvbuf)
-
-to check if the just increased rmem value fits into the socket's receive
-buffer. If not, it proceeds and tries to wait for the memory under:
-
-  rmem + skb->truesize > READ_ONCE(sk->sk_rcvbuf)
-
-The checks don't cover the case when skb->truesize + sk->sk_rmem_alloc is
-equal to sk->sk_rcvbuf. Thus the function neither successfully accepts
-these conditions, nor manages to reschedule the task - and is called in
-retry loop for indefinite time which is caught as:
-
-  rcu: INFO: rcu_sched self-detected stall on CPU
-  rcu:     0-....: (25999 ticks this GP) idle=ef2/1/0x4000000000000000 softirq=262269/262269 fqs=6212
-  (t=26000 jiffies g=230833 q=259957)
-  NMI backtrace for cpu 0
-  CPU: 0 PID: 22 Comm: kauditd Not tainted 5.10.240 #68
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc42 04/01/2014
-  Call Trace:
-  <IRQ>
-  dump_stack lib/dump_stack.c:120
-  nmi_cpu_backtrace.cold lib/nmi_backtrace.c:105
-  nmi_trigger_cpumask_backtrace lib/nmi_backtrace.c:62
-  rcu_dump_cpu_stacks kernel/rcu/tree_stall.h:335
-  rcu_sched_clock_irq.cold kernel/rcu/tree.c:2590
-  update_process_times kernel/time/timer.c:1953
-  tick_sched_handle kernel/time/tick-sched.c:227
-  tick_sched_timer kernel/time/tick-sched.c:1399
-  __hrtimer_run_queues kernel/time/hrtimer.c:1652
-  hrtimer_interrupt kernel/time/hrtimer.c:1717
-  __sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1113
-  asm_call_irq_on_stack arch/x86/entry/entry_64.S:808
-  </IRQ>
-
-  netlink_attachskb net/netlink/af_netlink.c:1234
-  netlink_unicast net/netlink/af_netlink.c:1349
-  kauditd_send_queue kernel/audit.c:776
-  kauditd_thread kernel/audit.c:897
-  kthread kernel/kthread.c:328
-  ret_from_fork arch/x86/entry/entry_64.S:304
-
-Restore the original behavior of the check which commit in Fixes
-accidentally missed when restructuring the code.
-
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250728080727.255138-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: zhangjian <zhangjian496@huawei.com>
+Fixes: 20fa19027286 ("nfs: add export operations")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/export.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1213,7 +1213,7 @@ int netlink_attachskb(struct sock *sk, s
- 	nlk = nlk_sk(sk);
- 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+diff --git a/fs/nfs/export.c b/fs/nfs/export.c
+index 993be63ab301..784d0f1cfb93 100644
+--- a/fs/nfs/export.c
++++ b/fs/nfs/export.c
+@@ -67,14 +67,21 @@ nfs_fh_to_dentry(struct super_block *sb, struct fid *fid,
+ 	struct nfs4_label *label = NULL;
+ 	struct nfs_fattr *fattr = NULL;
+ 	struct nfs_fh *server_fh = nfs_exp_embedfh(fid->raw);
+-	size_t fh_size = offsetof(struct nfs_fh, data) + server_fh->size;
++	size_t fh_size = offsetof(struct nfs_fh, data);
+ 	const struct nfs_rpc_ops *rpc_ops;
+ 	struct dentry *dentry;
+ 	struct inode *inode;
+-	int len = EMBED_FH_OFF + XDR_QUADLEN(fh_size);
++	int len = EMBED_FH_OFF;
+ 	u32 *p = fid->raw;
+ 	int ret;
  
--	if ((rmem == skb->truesize || rmem < READ_ONCE(sk->sk_rcvbuf)) &&
-+	if ((rmem == skb->truesize || rmem <= READ_ONCE(sk->sk_rcvbuf)) &&
- 	    !test_bit(NETLINK_S_CONGESTED, &nlk->state)) {
- 		netlink_skb_set_owner_r(skb, sk);
- 		return 0;
++	/* Initial check of bounds */
++	if (fh_len < len + XDR_QUADLEN(fh_size) ||
++	    fh_len > XDR_QUADLEN(NFS_MAXFHSIZE))
++		return NULL;
++	/* Calculate embedded filehandle size */
++	fh_size += server_fh->size;
++	len += XDR_QUADLEN(fh_size);
+ 	/* NULL translates to ESTALE */
+ 	if (fh_len < len || fh_type != len)
+ 		return NULL;
+-- 
+2.39.5
+
 
 
