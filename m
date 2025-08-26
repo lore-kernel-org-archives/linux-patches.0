@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A9C2139C9;
-	Tue, 26 Aug 2025 13:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B731F4CA9;
+	Tue, 26 Aug 2025 13:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215610; cv=none; b=kfKR2enzJmUf4+QHXkYBxjMJ4s4ntSwu3M5qy6coUiNsvO/slgFIdYpRbytLrdBTO50ayTQZwOGPCd7GWCjL+9hJTRWNaKfVGiuqKirWWlaW5sXAXQ5wHpiVxHvdAXZRgfrZyB+RAFHu7e9Q4BEggwPwhNAPkcuiRKhuRb1kmIs=
+	t=1756215613; cv=none; b=SdQTsh5LxVRHnSIJnFanJ+s5jQrPNuEMhGjm5/PHXb1JIn74Tc7HFQ37FRVFwDAflhSpxMlF5Kr/7tRocL3nlc/j7OUW6oMKmFN83+aFD6I9cFJhbGlYci/6EjyoznVuDgB4aX+2o4VwgvRlYNiOAI0Nr0+A6k0OIOYoG3BBfdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215610; c=relaxed/simple;
-	bh=iKWBSoy+WsUEoS59omuBmIBvyVL94TQaMmpyp78de4E=;
+	s=arc-20240116; t=1756215613; c=relaxed/simple;
+	bh=NNHMUlkd8IdHmDjHcqjEpmOQHXaJ+Wt+ScVu1OTYdNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcitxPoSb+BQZ7Zz+Ymu0q8KoGsAOwN8APPNoc4G7BNPp2fiaE47QRVrk0L6igDkq1Xapq/EPXjZNdZMq0IbOQI7VRBJxQx/a0/7hxfT8ZBA1DTQiXQBa7CVzb6TRIRR0DPc8IZXf1vPLNYKDzLWIrGC4seYZgj1yL5+NwsDTNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDrObrsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EG8HsIMzAY/ygTv+Xw90UHABTXot5BZck6r8SeLwOZLqsZvCL6rh7Md4WsUlUO7c+SKTH6kiTJ1uf07in67nKpiXtscxBqm+Koy7K8kT8n3L/w2ni5PP/44pXfxZeQxNJ0ZeOk7j5Hx/3LdKWyk8ePp3utTeAMM0dQPigbV/FDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vg7UYk2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDrObrsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCA2C4CEF1;
-	Tue, 26 Aug 2025 13:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vg7UYk2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1891C4CEF1;
+	Tue, 26 Aug 2025 13:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215610;
-	bh=iKWBSoy+WsUEoS59omuBmIBvyVL94TQaMmpyp78de4E=;
+	s=korg; t=1756215613;
+	bh=NNHMUlkd8IdHmDjHcqjEpmOQHXaJ+Wt+ScVu1OTYdNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDrObrscAPY4oOd+cjIp5jI1HRcf68IuXoxV9ak7+kPOKWHSt/sukGrJjbNO6Z87C
-	 gWJbpqEbQCz+CtRQOuzQCdfdvVoguYWsv5sSEUwrXRC1e4Rl6XNUbx1T55XlpLc6OD
-	 aYcUL79+CSlwZFuE0L6rkVPB7x1dgvh8dSC9xJbU=
+	b=vg7UYk2cGsltdaZ9EteMbDSh+b9rLpaMOxE78j4c88Xk7VUmqrWlKMonPXEUqJAsx
+	 IL0wuvT3RGPw1dZvE1xA4c/zW7RcrtDJTP9AKjkFHhPB/CS1S7kg++3BXy5Ov4K36P
+	 2b1dVX2comqeko0N5eM8lQ3eXhOQFJv8QA4VvwS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/644] net/sched: Return NULL when htb_lookup_leaf encounters an empty rbtree
-Date: Tue, 26 Aug 2025 13:02:29 +0200
-Message-ID: <20250826110947.940679503@linuxfoundation.org>
+	Dawid Rezler <dawidrezler.patches@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 092/644] ALSA: hda/realtek - Add mute LED support for HP Pavilion 15-eg0xxx
+Date: Tue, 26 Aug 2025 13:03:03 +0200
+Message-ID: <20250826110948.782693124@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,96 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Dawid Rezler <dawidrezler.patches@gmail.com>
 
-[ Upstream commit 0e1d5d9b5c5966e2e42e298670808590db5ed628 ]
+commit 9744ede7099e8a69c04aa23fbea44c15bc390c04 upstream.
 
-htb_lookup_leaf has a BUG_ON that can trigger with the following:
+The mute LED on the HP Pavilion Laptop 15-eg0xxx,
+which uses the ALC287 codec, didn't work.
+This patch fixes the issue by enabling the ALC287_FIXUP_HP_GPIO_LED quirk.
 
-tc qdisc del dev lo root
-tc qdisc add dev lo root handle 1: htb default 1
-tc class add dev lo parent 1: classid 1:1 htb rate 64bit
-tc qdisc add dev lo parent 1:1 handle 2: netem
-tc qdisc add dev lo parent 2:1 handle 3: blackhole
-ping -I lo -c1 -W0.001 127.0.0.1
+Tested on a physical device, the LED now works as intended.
 
-The root cause is the following:
-
-1. htb_dequeue calls htb_dequeue_tree which calls the dequeue handler on
-   the selected leaf qdisc
-2. netem_dequeue calls enqueue on the child qdisc
-3. blackhole_enqueue drops the packet and returns a value that is not
-   just NET_XMIT_SUCCESS
-4. Because of this, netem_dequeue calls qdisc_tree_reduce_backlog, and
-   since qlen is now 0, it calls htb_qlen_notify -> htb_deactivate ->
-   htb_deactiviate_prios -> htb_remove_class_from_row -> htb_safe_rb_erase
-5. As this is the only class in the selected hprio rbtree,
-   __rb_change_child in __rb_erase_augmented sets the rb_root pointer to
-   NULL
-6. Because blackhole_dequeue returns NULL, netem_dequeue returns NULL,
-   which causes htb_dequeue_tree to call htb_lookup_leaf with the same
-   hprio rbtree, and fail the BUG_ON
-
-The function graph for this scenario is shown here:
- 0)               |  htb_enqueue() {
- 0) + 13.635 us   |    netem_enqueue();
- 0)   4.719 us    |    htb_activate_prios();
- 0) # 2249.199 us |  }
- 0)               |  htb_dequeue() {
- 0)   2.355 us    |    htb_lookup_leaf();
- 0)               |    netem_dequeue() {
- 0) + 11.061 us   |      blackhole_enqueue();
- 0)               |      qdisc_tree_reduce_backlog() {
- 0)               |        qdisc_lookup_rcu() {
- 0)   1.873 us    |          qdisc_match_from_root();
- 0)   6.292 us    |        }
- 0)   1.894 us    |        htb_search();
- 0)               |        htb_qlen_notify() {
- 0)   2.655 us    |          htb_deactivate_prios();
- 0)   6.933 us    |        }
- 0) + 25.227 us   |      }
- 0)   1.983 us    |      blackhole_dequeue();
- 0) + 86.553 us   |    }
- 0) # 2932.761 us |    qdisc_warn_nonwc();
- 0)               |    htb_lookup_leaf() {
- 0)               |      BUG_ON();
- ------------------------------------------
-
-The full original bug report can be seen here [1].
-
-We can fix this just by returning NULL instead of the BUG_ON,
-as htb_dequeue_tree returns NULL when htb_lookup_leaf returns
-NULL.
-
-[1] https://lore.kernel.org/netdev/pF5XOOIim0IuEfhI-SOxTgRvNoDwuux7UHKnE_Y5-zVd4wmGvNk2ceHjKb8ORnzw0cGwfmVu42g9dL7XyJLf1NEzaztboTWcm0Ogxuojoeo=@willsroot.io/
-
-Fixes: 512bb43eb542 ("pkt_sched: sch_htb: Optimize WARN_ONs in htb_dequeue_tree() etc.")
-Signed-off-by: William Liu <will@willsroot.io>
-Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250717022816.221364-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dawid Rezler <dawidrezler.patches@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250720154907.80815-2-dawidrezler.patches@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_htb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index 8ce999e4ca323..35eaf7c85ba08 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -817,7 +817,9 @@ static struct htb_class *htb_lookup_leaf(struct htb_prio *hprio, const int prio)
- 		u32 *pid;
- 	} stk[TC_HTB_MAXDEPTH], *sp = stk;
- 
--	BUG_ON(!hprio->row.rb_node);
-+	if (unlikely(!hprio->row.rb_node))
-+		return NULL;
-+
- 	sp->root = hprio->row.rb_node;
- 	sp->pptr = &hprio->ptr;
- 	sp->pid = &hprio->last_ptr_id;
--- 
-2.39.5
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9350,6 +9350,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 
 
