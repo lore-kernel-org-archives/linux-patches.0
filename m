@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD5E3568EC;
-	Tue, 26 Aug 2025 14:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77B93568F5;
+	Tue, 26 Aug 2025 14:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217367; cv=none; b=uKiFSG6MHCCCRI0yfdqAF4xPts7TrVl5L1PG5Srnv0SDyH58tR+7rjDSZ2QO85WDQ/G+SjTWTANble6gflKGRHXs4OPRGK9o5vuXjKiYWvEfue5CNsanekOO62aUfftth0dBhXbmQI3hkM+U5D/dE3ZfZYh7CjoeOa7WqSH/BmI=
+	t=1756217369; cv=none; b=ayMWD2Z3C233cfJePwdS74XUOuGl+RUFBA6FsssaC1VXr2sPjWzxBWkCtBAeU773Z2XJ0zVefkWFtHy6LpRctY62GPkUC0QSpftC3jIKRYYVflnkWXncNFUCCEnMCj/x+JfJ5l88YQA0jlEqjRxNrTpbMWLkKbII/mk99ST146Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217367; c=relaxed/simple;
-	bh=sllNx+MkKnEu1KuuVuEjogaTKCbTUa1+UJSPNssQbHM=;
+	s=arc-20240116; t=1756217369; c=relaxed/simple;
+	bh=Byb4tjI4zxx6DrrFdIgtQBCFLhnG0+7wKtDqiNkp3mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmB1h3d/vim885IrwC95cmcbgJ9y/zHPfKiiDuwtnwZUL/Ubny0FEZ6yNeKTa79psJn2ImiuZnMNztCH7fJH3tjLTYquLkXQ5kQ2tamRz7bGrz1TFVh6eOXKXL3oHtk06x4v8iY9/JvDq3jiwxPuemLLwOCYQSim+aESX9aLELA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+dqlAab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sYUQsR1ZAA4R6cOT3MQ8Vh0HmMEa0WGB7GplCE8ivEY/t5ucV4vVTwLYBWtGIuqB9MvZdEetPviCHAY990Znlgw47DpyGqdTM5DJNmbLd067o0gMnIULJRLuDWzfhgMC7l2waslwNJ8iiXfbq9LRHfQHJvtb42WvS5Uakn9hBdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dY+glk7c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+dqlAab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709EDC4AF09;
-	Tue, 26 Aug 2025 14:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dY+glk7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A496C113CF;
+	Tue, 26 Aug 2025 14:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217366;
-	bh=sllNx+MkKnEu1KuuVuEjogaTKCbTUa1+UJSPNssQbHM=;
+	s=korg; t=1756217369;
+	bh=Byb4tjI4zxx6DrrFdIgtQBCFLhnG0+7wKtDqiNkp3mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+dqlAab4I2PdUzAo3K7eOLcWRwOxrUUS9dBDkmPx6Pjq4YqOAdwS6ZHrwEKIDP7r
-	 ZOPgHQV2O4ROmFvZIlkdEJp93KIl+ErpIQ1VNRrYHSq9GTmgsJ19oeWY3dNt9pw3bA
-	 KIL7Im4gGW+0CvLBO2kM+utwM1iRgAepVNcFrg+g=
+	b=dY+glk7cTa0i+G+ge7ZsalPR+ecGVwTgTchH3g1pFyOAvhYbFawEtNvezRROQx9BN
+	 nySXm08NZCAhDym+pGaXY2XF5ufwkWugLajKQmujZZ5mIz84as7b04vNPm1GfZMAzC
+	 oF5mTzBEqIMQV8Y91RVJnltcZ8ozXoUgUMoBzt7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 117/523] netfilter: xt_nfacct: dont assume acct name is null-terminated
-Date: Tue, 26 Aug 2025 13:05:27 +0200
-Message-ID: <20250826110927.405924914@linuxfoundation.org>
+Subject: [PATCH 5.10 100/523] iwlwifi: Add missing check for alloc_ordered_workqueue
+Date: Tue, 26 Aug 2025 13:05:10 +0200
+Message-ID: <20250826110927.005224008@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,48 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit bf58e667af7d96c8eb9411f926a0a0955f41ce21 ]
+[ Upstream commit 90a0d9f339960448a3acc1437a46730f975efd6a ]
 
-BUG: KASAN: slab-out-of-bounds in .. lib/vsprintf.c:721
-Read of size 1 at addr ffff88801eac95c8 by task syz-executor183/5851
-[..]
- string+0x231/0x2b0 lib/vsprintf.c:721
- vsnprintf+0x739/0xf00 lib/vsprintf.c:2874
- [..]
- nfacct_mt_checkentry+0xd2/0xe0 net/netfilter/xt_nfacct.c:41
- xt_check_match+0x3d1/0xab0 net/netfilter/x_tables.c:523
+Add check for the return value of alloc_ordered_workqueue since it may
+return NULL pointer.
 
-nfnl_acct_find_get() handles non-null input, but the error
-printk relied on its presence.
-
-Reported-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4ff165b9251e4d295690
-Tested-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
-Fixes: ceb98d03eac5 ("netfilter: xtables: add nfacct match to support extended accounting")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://patch.msgid.link/20230110014848.28226-1-jiasheng@iscas.ac.cn
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_nfacct.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/dvm/main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/xt_nfacct.c b/net/netfilter/xt_nfacct.c
-index a97c2259bbc8..dd72f6fc57aa 100644
---- a/net/netfilter/xt_nfacct.c
-+++ b/net/netfilter/xt_nfacct.c
-@@ -38,8 +38,8 @@ nfacct_mt_checkentry(const struct xt_mtchk_param *par)
+diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/main.c b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+index 6a19fc4c6860..54fef25a11a1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/dvm/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/dvm/main.c
+@@ -1054,9 +1054,11 @@ static void iwl_bg_restart(struct work_struct *data)
+  *
+  *****************************************************************************/
  
- 	nfacct = nfnl_acct_find_get(par->net, info->name);
- 	if (nfacct == NULL) {
--		pr_info_ratelimited("accounting object `%s' does not exists\n",
--				    info->name);
-+		pr_info_ratelimited("accounting object `%.*s' does not exist\n",
-+				    NFACCT_NAME_MAX, info->name);
- 		return -ENOENT;
- 	}
- 	info->nfacct = nfacct;
+-static void iwl_setup_deferred_work(struct iwl_priv *priv)
++static int iwl_setup_deferred_work(struct iwl_priv *priv)
+ {
+ 	priv->workqueue = alloc_ordered_workqueue(DRV_NAME, 0);
++	if (!priv->workqueue)
++		return -ENOMEM;
+ 
+ 	INIT_WORK(&priv->restart, iwl_bg_restart);
+ 	INIT_WORK(&priv->beacon_update, iwl_bg_beacon_update);
+@@ -1073,6 +1075,8 @@ static void iwl_setup_deferred_work(struct iwl_priv *priv)
+ 	timer_setup(&priv->statistics_periodic, iwl_bg_statistics_periodic, 0);
+ 
+ 	timer_setup(&priv->ucode_trace, iwl_bg_ucode_trace, 0);
++
++	return 0;
+ }
+ 
+ void iwl_cancel_deferred_work(struct iwl_priv *priv)
+@@ -1462,7 +1466,9 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+ 	/********************
+ 	 * 6. Setup services
+ 	 ********************/
+-	iwl_setup_deferred_work(priv);
++	if (iwl_setup_deferred_work(priv))
++		goto out_uninit_drv;
++
+ 	iwl_setup_rx_handlers(priv);
+ 
+ 	iwl_power_initialize(priv);
+@@ -1500,6 +1506,7 @@ static struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+ 	iwl_cancel_deferred_work(priv);
+ 	destroy_workqueue(priv->workqueue);
+ 	priv->workqueue = NULL;
++out_uninit_drv:
+ 	iwl_uninit_drv(priv);
+ out_free_eeprom_blob:
+ 	kfree(priv->eeprom_blob);
 -- 
 2.39.5
 
