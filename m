@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA397145B3E;
-	Tue, 26 Aug 2025 12:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38150187554;
+	Tue, 26 Aug 2025 12:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212998; cv=none; b=IVumO2C12PIBLDZGeCxuy16FDvVfSmAWoq/vP5zeHN+ounoXgtmo41CZwKt41jdJXi+E8g5/ZVM78KXAw7K1/2Sn321JMZO+olT9HrsOjJNUmFqnI+vxiXFbaHFs6ZQ20exc7ed3QRybrQWMjJ+JU/3lFcgTajfIl7zAyLkYGcs=
+	t=1756213001; cv=none; b=tpC4iQSwr7agm2E8WlnfUbK7FhatxSmWsdcrMs1weXdbFd3/yvR6ri/S2sH5GPKigy/P7njsN9GtYtnzzivq2H364TJDF5EGKDfBYONZw2b2+/vQVB3ZatniqlMTjV7NRBf4tK8HbGK7e1w6QKMWnY2b2DWHwgzictezGKu7Nyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212998; c=relaxed/simple;
-	bh=zAOY3dJhmY2x2aVSvrHUBTeg0wjDKX0bK3alxP7sbmE=;
+	s=arc-20240116; t=1756213001; c=relaxed/simple;
+	bh=5u+XWO80XN+bdA6a9bfneou5xWgon2NEJFX383ohxIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTaj6mIZHsD/0CHH2KIQN85frKi2CgULUBxNYitZi47ku1FVUP3ZmrMh3WwBKESei9qZsWYRTxi7lSCfUlbkZ0k4oaDjXY4hPx9GsrHQu2h1F5omURYPPqdxS33pmDtBiVKwQYW3Kec5Wii93V45WCbb7KUhmRMIMcoR8QqHXWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlYA2qDd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=buLYq0Ye3TDoNsEbLA6WQ5o1pgkX8oVXrWPVdR6BZMiIHvisXG76B2OpbHOWgVvEI78Gk+QbulmcraTNfiquSgzoLCUhDMkDqvs9Jws2tNlULlPZ5BxXx+DeW0BYpwK/5Rrzwao6Sy41Jsv7gQ+vSkDqI0Q0G3vD6voaZSYc8nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6O5xTvT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlYA2qDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B43EC4CEF1;
-	Tue, 26 Aug 2025 12:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6O5xTvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EA1C4CEF1;
+	Tue, 26 Aug 2025 12:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212998;
-	bh=zAOY3dJhmY2x2aVSvrHUBTeg0wjDKX0bK3alxP7sbmE=;
+	s=korg; t=1756213001;
+	bh=5u+XWO80XN+bdA6a9bfneou5xWgon2NEJFX383ohxIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlYA2qDdxWeKqtDT5gEPBOU49kadhbR2ckxpRa4M16rjgKMr1PVTteDWBdKsqUI0J
-	 4P1Evjb29P7W6zYx2xOQ6irdv5dYz5+4A0G0cr2JhMU8iB9C8oxvotMZj8T5tTMRKh
-	 yeTkWqqUHk3dGehN+ovzIBnNzwEYJmD6G/3cM2no=
+	b=B6O5xTvTMUjizrvCG10ujkvrTQ7kWi6T7pUGbeQAoPfBlGc8ZN+sTH0PSU8hX8pbN
+	 GgSGYvWTHvA4o3QeT3Ua2FgE+OX564O7Emx7vsMO7Mcprq1i91rmFnxjPRGTtxDyiJ
+	 q5RwK3qewx7RZ+NZfRpTyM3tRyfQz8xBBqtvnsDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wen Chen <Wen.Chen3@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/587] wifi: iwlwifi: fw: Fix possible memory leak in iwl_fw_dbg_collect
-Date: Tue, 26 Aug 2025 13:05:31 +0200
-Message-ID: <20250826110957.572494480@linuxfoundation.org>
+Subject: [PATCH 6.6 183/587] drm/amd/display: Fix failed to blank crtc!
+Date: Tue, 26 Aug 2025 13:05:32 +0200
+Message-ID: <20250826110957.597768155@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -45,51 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Wen Chen <Wen.Chen3@amd.com>
 
-[ Upstream commit cc8d9cbf269dab363c768bfa9312265bc807fca5 ]
+[ Upstream commit 01f60348d8fb6b3fbcdfc7bdde5d669f95b009a4 ]
 
-Ensure descriptor is freed on error to avoid memory leak.
+[why]
+DCN35 is having “DC: failed to blank crtc!” when running HPO
+test cases. It's caused by not having sufficient udelay time.
 
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250611222325.8158d15ec866.Ifa3e422c302397111f20a16da7509e6574bc19e3@changeid
+[how]
+Replace the old wait_for_blank_complete function with fsleep function to
+sleep just until the next frame should come up. This way it doesn't poll
+in case the pixel clock or other clock was bugged or until vactive and
+the vblank are hit again.
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Wen Chen <Wen.Chen3@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index 0a1f302ad6d3..2deb259615d9 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -2816,6 +2816,7 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
- 	struct iwl_fw_dump_desc *desc;
- 	unsigned int delay = 0;
- 	bool monitor_only = false;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+index f3c682c7fbe6..f0b472e84a53 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
+@@ -781,7 +781,7 @@ enum dc_status dcn20_enable_stream_timing(
+ 		return DC_ERROR_UNEXPECTED;
+ 	}
  
- 	if (trigger) {
- 		u16 occurrences = le16_to_cpu(trigger->occurrences) - 1;
-@@ -2846,7 +2847,11 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
- 	desc->trig_desc.type = cpu_to_le32(trig);
- 	memcpy(desc->trig_desc.data, str, len);
+-	hws->funcs.wait_for_blank_complete(pipe_ctx->stream_res.opp);
++	fsleep(stream->timing.v_total * (stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz));
  
--	return iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
-+	ret = iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
-+	if (ret)
-+		kfree(desc);
-+
-+	return ret;
- }
- IWL_EXPORT_SYMBOL(iwl_fw_dbg_collect);
- 
+ 	params.vertical_total_min = stream->adjust.v_total_min;
+ 	params.vertical_total_max = stream->adjust.v_total_max;
 -- 
 2.39.5
 
