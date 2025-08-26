@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC50D35CED2;
-	Tue, 26 Aug 2025 14:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E190306D3F;
+	Tue, 26 Aug 2025 14:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219113; cv=none; b=al8R9hBCaPXobqn0PZvQn/84lgg0ej9i+ciqrTZwId6W2Jh/KZ7YOiE+n7luN0O9YTI2XTDXf11uiKqD5Ah9Z1H4DixMQcym8aQIXL43ZTqLzxa6+5mWaSMUOf9HU7VyJYCMO+BAO+1XgK+Zvm2076kdP51EwmGMMpQKIKa6Sdc=
+	t=1756219115; cv=none; b=AUYdQLi7aJ4SW2/PvXem30XYtZxlcRKz0doUS3B+N+Xo4pMT1NqfjooLjMgYDy6LRLrtt2AvFVQBtSHI5MJf51Z+CGblBK4K/f9lioMmAl2AIwA5vnkPLfVnq2ueej3VGTW/Yfy+giVacxgLNMiEKpYTHBb2JOCzd1nK9WSujaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219113; c=relaxed/simple;
-	bh=PyPGkXxU1NeG0ZHGCcU8hEXy2AVXWwgAacAPOhKitYY=;
+	s=arc-20240116; t=1756219115; c=relaxed/simple;
+	bh=o91LiZDMEpclgAP1lNjkoNWgokebjK8Vb33V9ehpooY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNmZE5MR39ZZRCO6C6hZHbKruDo4qC782QP+b8TQKGimOm4LNraGnXvGT97TUjkyFMerpxHn+Ac/Un6u6gcXHVEek+KmV5cRCNR1iewJsk4V/wGw7znb6dI2OHSCJdu6oPBL5HfmGJJh6C2X+kyQKnbwvcQv4gHjBVUNpIyQoy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqtsA41T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULbgk+fpbujFyK+hYPUgZo2jD/EsJuwjTVtQtThMMA4ltccymp7HAivERLerbWR/pJApxRFdnGOTsmN1+nm0X2Y7o5lMop5bDMstFMMNuN1nI/A8ol34HwscJekeehV5zg5CnAcdaBxfLSbJs7xOET6Dto66ULnnfyPTk/H60CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnaC9/uC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqtsA41T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E163C4CEF1;
-	Tue, 26 Aug 2025 14:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnaC9/uC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BFBC4CEF1;
+	Tue, 26 Aug 2025 14:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219112;
-	bh=PyPGkXxU1NeG0ZHGCcU8hEXy2AVXWwgAacAPOhKitYY=;
+	s=korg; t=1756219115;
+	bh=o91LiZDMEpclgAP1lNjkoNWgokebjK8Vb33V9ehpooY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqtsA41TjkELw+p8ss8MwhZJH5oM0jXcumstJd5q2Owt+2YVPt9aoqdg2iPqEWBIG
-	 X4pFefiEZLSAef27dbvi+kNsUiRMkvA4jozLKBl+upSCSm872A4fXSWlxOctKn8Z0x
-	 BrucsHDGD3D9kIMe2xUfMdmI8hJM+dxrCcUKzCfA=
+	b=QnaC9/uCQjaxCqouNwBtbB6QYs05y/EZdVPv5b5BnQx56bNPGiRSZqsSQXakZ+O/J
+	 T2S3nm4wurzcqvojEV85AxbzVZwGHaaPn3eEIeEvNIyBKVjC8PJOMIWzBt6Qg1etcC
+	 6L05sMsfY3yFs8kH4PJ5PKuaFBhfShJgWju9vjQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Alex Guo <alexguo1023@gmail.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 216/403] wifi: iwlwifi: mvm: fix scan request validation
-Date: Tue, 26 Aug 2025 13:09:02 +0200
-Message-ID: <20250826110912.806010496@linuxfoundation.org>
+Subject: [PATCH 5.4 251/403] media: dvb-frontends: dib7090p: fix null-ptr-deref in dib7090p_rw_on_apb()
+Date: Tue, 26 Aug 2025 13:09:37 +0200
+Message-ID: <20250826110913.754912844@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,35 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Alex Guo <alexguo1023@gmail.com>
 
-[ Upstream commit 7c2f3ec7707188d8d5269ae2dce97d7be3e9f261 ]
+[ Upstream commit ce5cac69b2edac3e3246fee03e8f4c2a1075238b ]
 
-The scan request validation function uses bitwise and instead
-of logical and. Fix it.
+In dib7090p_rw_on_apb, msg is controlled by user. When msg[0].buf is null and
+msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing
+msg[0].buf[2] without sanity check, null pointer deref would happen. We add
+check on msg[0].len to prevent crash. Similar issue occurs when access
+msg[1].buf[0] and msg[1].buf[1].
 
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709230308.3fbc1f27871b.I7a8ee91f463c1a2d9d8561c8232e196885d02c43@changeid
+Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+
+Signed-off-by: Alex Guo <alexguo1023@gmail.com>
+Link: https://lore.kernel.org/r/20250616013231.730221-1-alexguo1023@gmail.com
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-frontends/dib7000p.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 55292e9b15c1..b860aad4c155 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -874,7 +874,7 @@ static inline bool iwl_mvm_scan_fits(struct iwl_mvm *mvm, int n_ssids,
- 				     int n_channels)
- {
- 	return ((n_ssids <= PROBE_OPTION_MAX) &&
--		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &
-+		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &&
- 		(ies->common_ie_len +
- 		 ies->len[NL80211_BAND_2GHZ] +
- 		 ies->len[NL80211_BAND_5GHZ] <=
+diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
+index fd08a851a452..d31ce5c7104d 100644
+--- a/drivers/media/dvb-frontends/dib7000p.c
++++ b/drivers/media/dvb-frontends/dib7000p.c
+@@ -2261,8 +2261,12 @@ static int dib7090p_rw_on_apb(struct i2c_adapter *i2c_adap,
+ 	u16 word;
+ 
+ 	if (num == 1) {		/* write */
++		if (msg[0].len < 3)
++			return -EOPNOTSUPP;
+ 		dib7000p_write_word(state, apb_address, ((msg[0].buf[1] << 8) | (msg[0].buf[2])));
+ 	} else {
++		if (msg[1].len < 2)
++			return -EOPNOTSUPP;
+ 		word = dib7000p_read_word(state, apb_address);
+ 		msg[1].buf[0] = (word >> 8) & 0xff;
+ 		msg[1].buf[1] = (word) & 0xff;
 -- 
 2.39.5
 
