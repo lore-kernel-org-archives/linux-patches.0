@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F7C352080;
-	Tue, 26 Aug 2025 14:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44CB1662E7;
+	Tue, 26 Aug 2025 14:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217753; cv=none; b=IxROW6IUxlqDgTM+9YnzgE4Zc7Y+mUPlQ5Jn/TxWTOhVsBnwIE09ZmaFR9+NyzEC387PaACl0z+XhWgQ4eCRi65LpxtLrqjsprgEBw+IQvUt3vC0hL4TpBwyAgay5wrAWp/pO6aUQHUTabuyDWYTc2e5co3DmrOvTdKRUalIbmg=
+	t=1756217756; cv=none; b=XOcfJkFsVS2HiERuUHKSOobkEK2oABuYpNLr39Lx/njQ3AI94Eg9lb8H6OZag242c4x7RNANtHo0z9h4szhtJX8GpWWgI2gku3rOvDU3pjK43FD81LEaGd33EaQVUgFpQgsioAInMTtmhzB4ZDR8DBeA0PHBAFFgdz4c1StYhkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217753; c=relaxed/simple;
-	bh=nUYe9XoljcbfyH83UU6TkWVNNP6cWuDXK6IWfMU0EM8=;
+	s=arc-20240116; t=1756217756; c=relaxed/simple;
+	bh=3FBKxPpoOhetmYgNRvcyu8LsG/GLnIfu8AVfS57lchE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfXhrPnzLiuMA9gNPLeCO0JzqIxZibJktIlr88i7p934eOxRj2I8e6GbcBttd6JQGvmJR4v/QN0F3hwe7DRHWfKlN2CkEpYZqOO+IyEOVZLhwotKLs6E2r0PV8Qb7r9iR2FWAxq2Ouj3gu/vao5dpjoD7yjfrGhrLttHQrpg4CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJJOgBa9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LPteGDMgIimgbTBCOZ2+hHoHMaPWAtfoVhuiuW02a9EehvYUrWmdATJsFyO0ydll6QjXMFz6nmyJqAeF8kHylDzi6UHVNlj8QRtKI3j4bYFk1KsRBqY8kRexJjsJQwPbAv9UblQPz3qQMFq1OolC95Cwmi4nMuzMA6KyRS99Bwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikHsARUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJJOgBa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2265C4CEF1;
-	Tue, 26 Aug 2025 14:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikHsARUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771D5C4CEF1;
+	Tue, 26 Aug 2025 14:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217753;
-	bh=nUYe9XoljcbfyH83UU6TkWVNNP6cWuDXK6IWfMU0EM8=;
+	s=korg; t=1756217755;
+	bh=3FBKxPpoOhetmYgNRvcyu8LsG/GLnIfu8AVfS57lchE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJJOgBa9bDgWz+rG+u67vjzpF2DOlA5Ur2QQh2x+fhP6gW+orRpLqO2mJPhMgTNNf
-	 pzjzeckOKmZJtDH7kpVLTGU6HTnsin/SpoOdLdQukElmbO5eMSztzIH/cXStx7xEEJ
-	 Fhq5ZnHRxvti8CdZmL3Y5hi2KFCv0xpIqp6qRags=
+	b=ikHsARURvf7AtkoEUTAlwDeqwtkLVhEpBkvtpRjfBLINLuKebXdZXsvOOltFygGlu
+	 EqzkOidkefGKGAbPbHzS+ocuKv7fpuUMcAGEp413wZTYrYe4/uqG5EV/4ErvDUjPh2
+	 6eaBa6cizvvhdpwnOQt3hx3IhZKeQ5CVFParRYvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 261/523] s390/time: Use monotonic clock in get_cycles()
-Date: Tue, 26 Aug 2025 13:07:51 +0200
-Message-ID: <20250826110930.863753146@linuxfoundation.org>
+Subject: [PATCH 5.10 262/523] be2net: Use correct byte order and format string for TCP seq and ack_seq
+Date: Tue, 26 Aug 2025 13:07:52 +0200
+Message-ID: <20250826110930.888410603@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,52 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 09e7e29d2b49ba84bcefb3dc1657726d2de5bb24 ]
+[ Upstream commit 4701ee5044fb3992f1c910630a9673c2dc600ce5 ]
 
-Otherwise the code might not work correctly when the clock
-is changed.
+The TCP header fields seq and ack_seq are 32-bit values in network
+byte order as (__be32). these fields were earlier printed using
+ntohs(), which converts only 16-bit values and produces incorrect
+results for 32-bit fields. This patch is changeing the conversion
+to ntohl(), ensuring correct interpretation of these sequence numbers.
 
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Notably, the format specifier is updated from %d to %u to reflect the
+unsigned nature of these fields.
+
+improves the accuracy of debug log messages for TCP sequence and
+acknowledgment numbers during TX timeouts.
+
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250717193552.3648791-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/timex.h | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/s390/include/asm/timex.h b/arch/s390/include/asm/timex.h
-index 588aa0f2c842..d0260a1ec298 100644
---- a/arch/s390/include/asm/timex.h
-+++ b/arch/s390/include/asm/timex.h
-@@ -167,13 +167,6 @@ static inline unsigned long long get_tod_clock_fast(void)
- 	return get_tod_clock();
- #endif
- }
--
--static inline cycles_t get_cycles(void)
--{
--	return (cycles_t) get_tod_clock() >> 2;
--}
--#define get_cycles get_cycles
--
- int get_phys_clock(unsigned long *clock);
- void init_cpu_timer(void);
- 
-@@ -196,6 +189,12 @@ static inline unsigned long long get_tod_clock_monotonic(void)
- 	return tod;
- }
- 
-+static inline cycles_t get_cycles(void)
-+{
-+	return (cycles_t)get_tod_clock_monotonic() >> 2;
-+}
-+#define get_cycles get_cycles
-+
- /**
-  * tod_to_ns - convert a TOD format value to nanoseconds
-  * @todval: to be converted TOD format value
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index ff3ea24d2e3f..97cbe7737eb4 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1466,10 +1466,10 @@ static void be_tx_timeout(struct net_device *netdev, unsigned int txqueue)
+ 						 ntohs(tcphdr->source));
+ 					dev_info(dev, "TCP dest port %d\n",
+ 						 ntohs(tcphdr->dest));
+-					dev_info(dev, "TCP sequence num %d\n",
+-						 ntohs(tcphdr->seq));
+-					dev_info(dev, "TCP ack_seq %d\n",
+-						 ntohs(tcphdr->ack_seq));
++					dev_info(dev, "TCP sequence num %u\n",
++						 ntohl(tcphdr->seq));
++					dev_info(dev, "TCP ack_seq %u\n",
++						 ntohl(tcphdr->ack_seq));
+ 				} else if (ip_hdr(skb)->protocol ==
+ 					   IPPROTO_UDP) {
+ 					udphdr = udp_hdr(skb);
 -- 
 2.39.5
 
