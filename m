@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9216672605;
-	Tue, 26 Aug 2025 13:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7493019A3;
+	Tue, 26 Aug 2025 13:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214761; cv=none; b=KvgLewwFN6/jaut7+ZtDvK9gWHSiGr+I7g4FOPK+HXJ332B076uRCRfMSdKWyWlI9DYGdxJWN/Xkkf3XuGmbiSvPQhGL9akG/Yx5C1rdx8tIyFwZdcbo4+2G/Y4Dfo3BzvLocfzykQWZVAMI9GYoIbSfsg90VLq2FfKffOqZFlQ=
+	t=1756214764; cv=none; b=iN0CLxgI5LT0XzjqnitLELjYfKCvs4BWZGg7E47E/3XSsY5eq2U0m62SP2qdn2dTGlX0FAxVKtjl1D4zJBwL6an6WJ25YRwIlbTU+eSM54+F3kK0iHBb5fTuSi3rA8tN1G+KlmIKksNkU7qSfKOc3HZFsUrgsdFC6z+zYvdQ6i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214761; c=relaxed/simple;
-	bh=Xjf/WAv0uCm+2UQ5g8a635bn0S49Rli9iAFuR5YcF2c=;
+	s=arc-20240116; t=1756214764; c=relaxed/simple;
+	bh=l6M4+hzqphpXagZnL4UxsvknRBYSZMlzv97Ho36bplg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q5i66xtoSEFrXQ7yV4wgt9GnhsTpdLc9Z5jeHnct58gCLCsOngIJH1ok28L3MYcwT6QkV4Insspvxvxn/pJqqTiiq3zt07o1O/AJoSigSbugOOSz7Eq1h8A18jKFhEzPE529FE3Nol0vToF7guCC37K0LqBi3/hMg38PrhL7bKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2m+2bhXs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OBNi2Z6QbH5AUSbALT5tQJD3m/PtXiWj4K2yGcOFtOOtg2unOfcIol2HDN9MLw+iu4VF7MI/qZcdDfFnVdJJrOiG0wZsAttW6KyZFWd6+/andZqoFtt4kmRrKeDPvtKAQ3CFf00Oy4a7K5K+c1Q7UPZUcrcA0FLV5y0aur2T3Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHd6xl+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2m+2bhXs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293C7C4CEF1;
-	Tue, 26 Aug 2025 13:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHd6xl+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75B7C4CEF1;
+	Tue, 26 Aug 2025 13:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214761;
-	bh=Xjf/WAv0uCm+2UQ5g8a635bn0S49Rli9iAFuR5YcF2c=;
+	s=korg; t=1756214764;
+	bh=l6M4+hzqphpXagZnL4UxsvknRBYSZMlzv97Ho36bplg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2m+2bhXs1+vroHCaRPiwjMpCTNnKnHxUadhbITrXlMWSwKviSyNUKe61CoeLdGee7
-	 9w1YI1ZeOxt4JqmKB5LM+rXlWvDgGVdRHxIbWMKYefCSCP9hoSi/UwZrX1asB4x+FN
-	 9Va0cwiAss7zC9Y/jL26BEtQ66QkYA2XpJsXnlv4=
+	b=aHd6xl+P+EavprdofeNryqMYOGxPJzN61tco8aaFRfm5GZzqrYu9pPEW7iJvLw5sB
+	 Tt0VcemWMOetMo1DPlHAeuwXqdIXPA4hvxg8az3QiGlG//PmnHvzH3WW9IfUe/5eCp
+	 7RNYukmSNBEaDzMAxA1n96bx5nteHZN5TUp4xPi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 260/482] mm/kmemleak: avoid soft lockup in __kmemleak_do_cleanup()
-Date: Tue, 26 Aug 2025 13:08:33 +0200
-Message-ID: <20250826110937.192169589@linuxfoundation.org>
+Subject: [PATCH 6.1 261/482] mm/kmemleak: avoid deadlock by moving pr_warn() outside kmemleak_lock
+Date: Tue, 26 Aug 2025 13:08:34 +0200
+Message-ID: <20250826110937.217929042@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,66 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit d1534ae23c2b6be350c8ab060803fbf6e9682adc upstream.
+commit 47b0f6d8f0d2be4d311a49e13d2fd5f152f492b2 upstream.
 
-A soft lockup warning was observed on a relative small system x86-64
-system with 16 GB of memory when running a debug kernel with kmemleak
-enabled.
+When netpoll is enabled, calling pr_warn_once() while holding
+kmemleak_lock in mem_pool_alloc() can cause a deadlock due to lock
+inversion with the netconsole subsystem.  This occurs because
+pr_warn_once() may trigger netpoll, which eventually leads to
+__alloc_skb() and back into kmemleak code, attempting to reacquire
+kmemleak_lock.
 
-  watchdog: BUG: soft lockup - CPU#8 stuck for 33s! [kworker/8:1:134]
+This is the path for the deadlock.
 
-The test system was running a workload with hot unplug happening in
-parallel.  Then kemleak decided to disable itself due to its inability to
-allocate more kmemleak objects.  The debug kernel has its
-CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE set to 40,000.
+mem_pool_alloc()
+  -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
+      -> pr_warn_once()
+          -> netconsole subsystem
+	     -> netpoll
+	         -> __alloc_skb
+		   -> __create_object
+		     -> raw_spin_lock_irqsave(&kmemleak_lock, flags);
 
-The soft lockup happened in kmemleak_do_cleanup() when the existing
-kmemleak objects were being removed and deleted one-by-one in a loop via a
-workqueue.  In this particular case, there are at least 40,000 objects
-that need to be processed and given the slowness of a debug kernel and the
-fact that a raw_spinlock has to be acquired and released in
-__delete_object(), it could take a while to properly handle all these
-objects.
+Fix this by setting a flag and issuing the pr_warn_once() after
+kmemleak_lock is released.
 
-As kmemleak has been disabled in this case, the object removal and
-deletion process can be further optimized as locking isn't really needed.
-However, it is probably not worth the effort to optimize for such an edge
-case that should rarely happen.  So the simple solution is to call
-cond_resched() at periodic interval in the iteration loop to avoid soft
-lockup.
-
-Link: https://lkml.kernel.org/r/20250728190248.605750-1-longman@redhat.com
-Signed-off-by: Waiman Long <longman@redhat.com>
+Link: https://lkml.kernel.org/r/20250731-kmemleak_lock-v1-1-728fd470198f@debian.org
+Fixes: c5665868183f ("mm: kmemleak: use the memory pool for early allocations")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reported-by: Jakub Kicinski <kuba@kernel.org>
 Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ mm/kmemleak.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/mm/kmemleak.c
 +++ b/mm/kmemleak.c
-@@ -1992,6 +1992,7 @@ static const struct file_operations kmem
- static void __kmemleak_do_cleanup(void)
+@@ -441,6 +441,7 @@ static struct kmemleak_object *mem_pool_
  {
- 	struct kmemleak_object *object, *tmp;
-+	unsigned int cnt = 0;
+ 	unsigned long flags;
+ 	struct kmemleak_object *object;
++	bool warn = false;
  
- 	/*
- 	 * Kmemleak has already been disabled, no need for RCU list traversal
-@@ -2000,6 +2001,10 @@ static void __kmemleak_do_cleanup(void)
- 	list_for_each_entry_safe(object, tmp, &object_list, object_list) {
- 		__remove_object(object);
- 		__delete_object(object);
-+
-+		/* Call cond_resched() once per 64 iterations to avoid soft lockup */
-+		if (!(++cnt & 0x3f))
-+			cond_resched();
- 	}
+ 	/* try the slab allocator first */
+ 	if (object_cache) {
+@@ -458,8 +459,10 @@ static struct kmemleak_object *mem_pool_
+ 	else if (mem_pool_free_count)
+ 		object = &mem_pool[--mem_pool_free_count];
+ 	else
+-		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
++		warn = true;
+ 	raw_spin_unlock_irqrestore(&kmemleak_lock, flags);
++	if (warn)
++		pr_warn_once("Memory pool empty, consider increasing CONFIG_DEBUG_KMEMLEAK_MEM_POOL_SIZE\n");
+ 
+ 	return object;
  }
- 
 
 
