@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AE418DF9D;
-	Tue, 26 Aug 2025 11:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114552BF002;
+	Tue, 26 Aug 2025 11:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208310; cv=none; b=sBFPncDdBhINDVluAK+5GoBX67Q+JPE9/tCL3dPa5eKr4r3GPjZ+Hjj8FVQHFhuRrqikXS2jjhEDY4i9k7diwju845oGEtRgTq8J14QR0FoI33CDu+q0c18Bk1Wq9ZLIYGp7vLgm0iOUniMnbWGB2yOaZJ9y1kUMNZ4nLsnbLy8=
+	t=1756208313; cv=none; b=n3z5b4D4j5J8CSf7u5IW+TQqzjrFT3sgSXV1BKuYwUm1/YJQp0UvA/aY4GS4k00lia7Q4xSgLWBJxbPsx0xIu2pJrVqK6ubkcXeNXRFH1WQqgKoGLFnC7q9+uYdyKMxkaO/+mIlZiPFljxGDJqWPQl6me6J5x8H9sWlAOLY8XFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208310; c=relaxed/simple;
-	bh=cKLQDdcnoCanbpHrNUq0z7smr6edkq/+NrXx0Wf+yCA=;
+	s=arc-20240116; t=1756208313; c=relaxed/simple;
+	bh=3X1IjHrJeIpquTfdhqGGizJ4LoVDsFBJyc7yeTipc9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIl5k3VpvrhYJ26/be1msjiHESOXj9gPzf+XQlpIhAPSgrlwzJ0QEbeC7vVyZ81w+Wlbcpl6jYIFLMM/xdVq367OUakg4fbKoIDsi42z/hI7ehOex0x8Eoa4RVfFbJzU8Y/e7x9ibzFPQ1U2U03K429v0k6RtJBvFhNJJD0MmmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXrPVtlf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kk2CvQ8SiBEHW8tZLz4+lCbJXqjCwMm01wheqUcNobnSEPZ6yfmS1r0DosoJtKNrYMP9JR7JfopPC0vwcVJgMqZIQJPJ8KNRI4IuTNbuTN98G8vkPI25ITKvpgUaXwiizcGGA6ejolODtIlGo1LFomreVGEtvTK+HF23+4YSbcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEIHFwoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXrPVtlf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3C9C4CEF1;
-	Tue, 26 Aug 2025 11:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEIHFwoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E3DC4CEF1;
+	Tue, 26 Aug 2025 11:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208310;
-	bh=cKLQDdcnoCanbpHrNUq0z7smr6edkq/+NrXx0Wf+yCA=;
+	s=korg; t=1756208312;
+	bh=3X1IjHrJeIpquTfdhqGGizJ4LoVDsFBJyc7yeTipc9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXrPVtlfEsO0eWMj6knyRwNnND+12rf+wV8E/kgXDQy/mhjW4MvC31YBUcvruDb+J
-	 UQdSnb6dZAwJJO05wmdLo/47VY8l6DUEek3OutbZARlVA1COmAE5ldGdi/GO4BEqmE
-	 khntq4xwptgkCU0RInTANWstdQUXEZ+iJ85DMkDg=
+	b=rEIHFwoLLalZTDqcOMMM98dhvlFjefyqMExoE001xmBcbdFzgiuq41obzhHc5xfxc
+	 /lPwsHmkaiwDx6BvAwfo1uplnPiyDv3V/1IwgqL7Y4iFgbR0SwW4vLD1Kntuk0rFNi
+	 43JLkl8RDAfD/YPkNdF1KS2Qcu9u7/tBG55aMcys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Baochen Qiang <quic_bqiang@quicinc.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 062/322] wifi: ath11k: fix dest ring-buffer corruption
-Date: Tue, 26 Aug 2025 13:07:57 +0200
-Message-ID: <20250826110917.078627020@linuxfoundation.org>
+Subject: [PATCH 6.12 063/322] wifi: ath11k: fix source ring-buffer corruption
+Date: Tue, 26 Aug 2025 13:07:58 +0200
+Message-ID: <20250826110917.107899096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,81 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 8c1ba5091fa9a2d1478da63173b16a701bdf86bb upstream.
+commit 6efa0df54022c6c9fd4d294b87622c7fcdc418c8 upstream.
 
-Add the missing memory barrier to make sure that destination ring
-descriptors are read after the head pointers to avoid using stale data
-on weakly ordered architectures like aarch64.
+Add the missing memory barrier to make sure that LMAC source ring
+descriptors are written before updating the head pointer to avoid
+passing stale data to the firmware on weakly ordered architectures like
+aarch64.
 
-The barrier is added to the ath11k_hal_srng_access_begin() helper for
-symmetry with follow-on fixes for source ring buffer corruption which
-will add barriers to ath11k_hal_srng_access_end().
+Note that non-LMAC rings use MMIO write accessors which have the
+required write memory barrier.
 
 Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
 
 Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org	# 5.6
+Cc: stable@vger.kernel.org      # 5.6
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250604143457.26032-2-johan+linaro@kernel.org
+Link: https://patch.msgid.link/20250604143457.26032-5-johan+linaro@kernel.org
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/ce.c    |    3 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |    3 ---
- drivers/net/wireless/ath/ath11k/hal.c   |   12 +++++++++++-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath11k/hal.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/ath/ath11k/ce.c
-+++ b/drivers/net/wireless/ath/ath11k/ce.c
-@@ -393,9 +393,6 @@ static int ath11k_ce_completed_recv_next
- 		goto err;
- 	}
- 
--	/* Make sure descriptor is read after the head pointer. */
--	dma_rmb();
--
- 	*nbytes = ath11k_hal_ce_dst_status_get_length(desc);
- 
- 	*skb = pipe->dest_ring->skb[sw_index];
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2650,9 +2650,6 @@ int ath11k_dp_process_rx(struct ath11k_b
- try_again:
- 	ath11k_hal_srng_access_begin(ab, srng);
- 
--	/* Make sure descriptor is read after the head pointer. */
--	dma_rmb();
--
- 	while (likely(desc =
- 	      (struct hal_reo_dest_ring *)ath11k_hal_srng_dst_get_next_entry(ab,
- 									     srng))) {
 --- a/drivers/net/wireless/ath/ath11k/hal.c
 +++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -823,13 +823,23 @@ u32 *ath11k_hal_srng_src_peek(struct ath
- 
- void ath11k_hal_srng_access_begin(struct ath11k_base *ab, struct hal_srng *srng)
- {
-+	u32 hp;
-+
- 	lockdep_assert_held(&srng->lock);
- 
- 	if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
- 		srng->u.src_ring.cached_tp =
- 			*(volatile u32 *)srng->u.src_ring.tp_addr;
- 	} else {
--		srng->u.dst_ring.cached_hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
-+		hp = READ_ONCE(*srng->u.dst_ring.hp_addr);
-+
-+		if (hp != srng->u.dst_ring.cached_hp) {
-+			srng->u.dst_ring.cached_hp = hp;
-+			/* Make sure descriptor is read after the head
-+			 * pointer.
+@@ -862,7 +862,11 @@ void ath11k_hal_srng_access_end(struct a
+ 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
+ 			srng->u.src_ring.last_tp =
+ 				*(volatile u32 *)srng->u.src_ring.tp_addr;
+-			*srng->u.src_ring.hp_addr = srng->u.src_ring.hp;
++			/* Make sure descriptor is written before updating the
++			 * head pointer.
 +			 */
-+			dma_rmb();
-+		}
- 
- 		/* Try to prefetch the next descriptor in the ring */
- 		if (srng->flags & HAL_SRNG_FLAGS_CACHED)
++			dma_wmb();
++			WRITE_ONCE(*srng->u.src_ring.hp_addr, srng->u.src_ring.hp);
+ 		} else {
+ 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
+ 			*srng->u.dst_ring.tp_addr = srng->u.dst_ring.tp;
+@@ -871,6 +875,10 @@ void ath11k_hal_srng_access_end(struct a
+ 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
+ 			srng->u.src_ring.last_tp =
+ 				*(volatile u32 *)srng->u.src_ring.tp_addr;
++			/* Assume implementation use an MMIO write accessor
++			 * which has the required wmb() so that the descriptor
++			 * is written before the updating the head pointer.
++			 */
+ 			ath11k_hif_write32(ab,
+ 					   (unsigned long)srng->u.src_ring.hp_addr -
+ 					   (unsigned long)ab->mem,
 
 
