@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE85D352FE7;
-	Tue, 26 Aug 2025 14:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8B4356913;
+	Tue, 26 Aug 2025 14:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216919; cv=none; b=dLNrXRk1tH4fVO+uxqZ/JCcd+U+Wj2esESEbEh2Syg+CnrcMpyIqBpUbookePO0ZuycmmI0dGDOy9/BIbBIP1GsI7/9Vb3AXXTjd+YzCYxG/en9cy9wVL9YUSO0UWQdfHvgmDd0zDvaBsd6yEZ7q4DL6v3FjuG/IVN8r0TlQv/E=
+	t=1756216922; cv=none; b=WbPmw21JHHPSagmHFJTzyIQwsTqnXU3S5vC1tu29Rd36xARqt6bgy7oVp2vHjmINevdONZV2u9Gd5nl4E8cSKfYaVPxXLVE/DuJ6ftGzaLLDB2TUPo7NxWJN4l1Yvl9xZg9VxgxpZ6Jxp5pzwlaOPxwYcr7FlHHOAmsNmQ5o7wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216919; c=relaxed/simple;
-	bh=Nd9Oz6gH3/Mj56TNyjvgAaWSOs1ir2dUmySTkb0CtTU=;
+	s=arc-20240116; t=1756216922; c=relaxed/simple;
+	bh=xoSHTfNzMBP8Plchqk8PWmXzRjCy64SbxpU9T3KzJv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=drVpW17Tjv8jMT4vNpt5Re0jFuDGcrwt/6+SfPoG6/1wBahHQ5jleXUU4sEyMJ5z7SQdH7VLWKdYupwewF4gxyGKoIrKEmR7KgdOVoPXxqxTkKkM7UxLagYMET8RhhpTkUWyyisuE5dX2Q4nbTefb1vinimM5o2uEarZmbgjZ8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3P3B16Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXF2UxLh2Gm4hFXz0ZRTw+1cPBGa7YxzEmusv81MFxzjw7E2ZbA4iQgI1y2vOzlADqGVIhligY9Xj10vsnxdtMYdUA+dyytcf4jaYUCDZxg/BIWC+JZXmsiwlRpPD9V/Ec6vacEni+1wmm/wuc1HXBbwGD6CgTzb69rr2hOGyzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGq8Igb+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3P3B16Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF69C113CF;
-	Tue, 26 Aug 2025 14:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGq8Igb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADA1C4CEF1;
+	Tue, 26 Aug 2025 14:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216919;
-	bh=Nd9Oz6gH3/Mj56TNyjvgAaWSOs1ir2dUmySTkb0CtTU=;
+	s=korg; t=1756216922;
+	bh=xoSHTfNzMBP8Plchqk8PWmXzRjCy64SbxpU9T3KzJv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o3P3B16QK79G1/ELsX6NP2T9KqwhYbukzkayL2sH0y7wXAYsIlgmHz4LGDgpsWo6j
-	 Ylgfvt5qPzY8qNhHP4qTn/DEeseX3kV8eQ1waWVR9m6ACynCuErWS4NRoASPrFErCQ
-	 HkFkZEOW6feSU+4cfWSPRNFD6yKAdzbpKmhKsIm4=
+	b=nGq8Igb+/uPRYTE2ci9Lzok4DqH5aP/v9axHCBz/WOrK+hqFVXycPfZxCefMgB8/L
+	 aOMZ9A6sBHH7CzPPKpkxIT/bdkBNFyymR/LlXgtcwiqnUDcQUBRfcxTcKRXVYjwFMl
+	 VVY1xVKMU+Py/72jOMQRc2d2AmND2v3BkMYD1tS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 592/644] drm/amd/display: Dont overclock DCE 6 by 15%
-Date: Tue, 26 Aug 2025 13:11:23 +0200
-Message-ID: <20250826111001.208125081@linuxfoundation.org>
+Subject: [PATCH 5.15 593/644] mptcp: disable add_addr retransmission when timeout is 0
+Date: Tue, 26 Aug 2025 13:11:24 +0200
+Message-ID: <20250826111001.234336662@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,59 +46,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit cb7b7ae53b557d168b4af5cd8549f3eff920bfb5 ]
+[ Upstream commit f5ce0714623cffd00bf2a83e890d09c609b7f50a ]
 
-The extra 15% clock was added as a workaround for a Polaris issue
-which uses DCE 11, and should not have been used on DCE 6 which
-is already hardcoded to the highest possible display clock.
-Unfortunately, the extra 15% was mistakenly copied and kept
-even on code paths which don't affect Polaris.
+When add_addr_timeout was set to 0, this caused the ADD_ADDR to be
+retransmitted immediately, which looks like a buggy behaviour. Instead,
+interpret 0 as "no retransmissions needed".
 
-This commit fixes that and also adds a check to make sure
-not to exceed the maximum DCE 6 display clock.
+The documentation is updated to explicitly state that setting the timeout
+to 0 disables retransmission.
 
-Fixes: 8cd61c313d8b ("drm/amd/display: Raise dispclk value for Polaris")
-Fixes: dc88b4a684d2 ("drm/amd/display: make clk mgr soc specific")
-Fixes: 3ecb3b794e2c ("drm/amd/display: dc/clk_mgr: add support for SI parts (v2)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 427980c1cbd22bb256b9385f5ce73c0937562408)
+Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
 Cc: stable@vger.kernel.org
-[ `MIN` => `min` ]
+Suggested-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-5-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ pm.c => pm_netlink.c , drop mptcp_pm_alloc_anno_list hunk ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ Documentation/networking/mptcp-sysctl.rst |    2 ++
+ net/mptcp/pm_netlink.c                    |   13 ++++++++++---
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-@@ -112,11 +112,9 @@ static void dce60_update_clocks(struct c
- {
- 	struct clk_mgr_internal *clk_mgr_dce = TO_CLK_MGR_INTERNAL(clk_mgr_base);
- 	struct dm_pp_power_level_change_request level_change_req;
--	int patched_disp_clk = context->bw_ctx.bw.dce.dispclk_khz;
--
--	/*TODO: W/A for dal3 linux, investigate why this works */
--	if (!clk_mgr_dce->dfs_bypass_active)
--		patched_disp_clk = patched_disp_clk * 115 / 100;
-+	const int max_disp_clk =
-+		clk_mgr_dce->max_clks_by_state[DM_PP_CLOCKS_STATE_PERFORMANCE].display_clk_khz;
-+	int patched_disp_clk = min(max_disp_clk, context->bw_ctx.bw.dce.dispclk_khz);
+--- a/Documentation/networking/mptcp-sysctl.rst
++++ b/Documentation/networking/mptcp-sysctl.rst
+@@ -20,6 +20,8 @@ add_addr_timeout - INTEGER (seconds)
+ 	resent to an MPTCP peer that has not acknowledged a previous
+ 	ADD_ADDR message.
  
- 	level_change_req.power_level = dce_get_required_clocks_state(clk_mgr_base, context);
- 	/* get max clock state from PPLIB */
++	Do not retransmit if set to 0.
++
+ 	The default value matches TCP_RTO_MAX. This is a per-namespace
+ 	sysctl.
+ 
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -316,6 +316,7 @@ static void mptcp_pm_add_timer(struct ti
+ 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
+ 	struct mptcp_sock *msk = entry->sock;
+ 	struct sock *sk = (struct sock *)msk;
++	unsigned int timeout;
+ 
+ 	pr_debug("msk=%p\n", msk);
+ 
+@@ -333,6 +334,10 @@ static void mptcp_pm_add_timer(struct ti
+ 		goto out;
+ 	}
+ 
++	timeout = mptcp_get_add_addr_timeout(sock_net(sk));
++	if (!timeout)
++		goto out;
++
+ 	spin_lock_bh(&msk->pm.lock);
+ 
+ 	if (!mptcp_pm_should_add_signal_addr(msk)) {
+@@ -344,7 +349,7 @@ static void mptcp_pm_add_timer(struct ti
+ 
+ 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
+ 		sk_reset_timer(sk, timer,
+-			       jiffies + mptcp_get_add_addr_timeout(sock_net(sk)));
++			       jiffies + timeout);
+ 
+ 	spin_unlock_bh(&msk->pm.lock);
+ 
+@@ -386,6 +391,7 @@ static bool mptcp_pm_alloc_anno_list(str
+ 	struct mptcp_pm_add_entry *add_entry = NULL;
+ 	struct sock *sk = (struct sock *)msk;
+ 	struct net *net = sock_net(sk);
++	unsigned int timeout;
+ 
+ 	lockdep_assert_held(&msk->pm.lock);
+ 
+@@ -403,8 +409,9 @@ static bool mptcp_pm_alloc_anno_list(str
+ 	add_entry->retrans_times = 0;
+ 
+ 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
+-	sk_reset_timer(sk, &add_entry->add_timer,
+-		       jiffies + mptcp_get_add_addr_timeout(net));
++	timeout = mptcp_get_add_addr_timeout(net);
++	if (timeout)
++		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
+ 
+ 	return true;
+ }
 
 
