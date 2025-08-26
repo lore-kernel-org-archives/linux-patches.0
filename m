@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372C7352077;
-	Tue, 26 Aug 2025 14:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9247352077;
+	Tue, 26 Aug 2025 14:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218988; cv=none; b=aZr/3rdvM3Oh9GZLtWDNUeZTk6Z5Eq6j+eAvD32dDkzUWoPTTzbRFzMDrc4qekgq4nBEEI6Q/XhuEDZPeD6Fg89H1kZpU8pL3uF/QiqglhVkzJ7+YsHugRg2eIn15opeN7J2VDPTTimHEKpHUt86lApgg8itEw8AMraNM+ZnHzU=
+	t=1756218990; cv=none; b=rwytN9Mr/myoC6N2Q1jB5jjwPklBuAn4VdCh65tp2mHSgCdS3L8jXq/D57TKjEvcBWBney4cgvyHURjekpUErjYilF+Ee0OceYp9ay+qt0LLAgGoFAnn6tTMbgp9QsLTUVjNd/wSQEkA+enHLFG+ITkHPtIm+qmvhd2Slt5LvpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218988; c=relaxed/simple;
-	bh=CsPCV7L8OYFxUqPv2yl/EsEGg4xwEscNOVySSKpAzvo=;
+	s=arc-20240116; t=1756218990; c=relaxed/simple;
+	bh=o6r9s7x++xvuZbUF3N26pobTwwbJO8P4LnP51JFujZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/h+gwGRked6NeeXGWgnP+1ofTAUtSe3RoRX5tAU8MotZO04NKPMZYSPUYGj8UIc0+hqQiQIZWFuQiUXgTb+NV2WVZ/UgKTtgFQ1v0cuzfZPIcOw0DL7hJiTjcKvJnlbkdZrUQE2eOtFP+i59fx6WGeJuq+L/ZylKyPcClyDQxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSHO8569; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nk7muvSGV/uAlki2UExiI/B3QsWkaYc2nouSk/mMyF373X+vATO57v+eC17cnEkhgqVwEY64EdZxWNrPLEuWVcgQF5wHqqYUtYQwuSpbgVXo45vF1DHoouXZ6Sosu5mZQznz1Mc+toOiztmYL4Hdx/rddJBCJmezjB4a6UXBHW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aG767lEF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSHO8569"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7D7C4CEF1;
-	Tue, 26 Aug 2025 14:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aG767lEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AC5C113CF;
+	Tue, 26 Aug 2025 14:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218987;
-	bh=CsPCV7L8OYFxUqPv2yl/EsEGg4xwEscNOVySSKpAzvo=;
+	s=korg; t=1756218990;
+	bh=o6r9s7x++xvuZbUF3N26pobTwwbJO8P4LnP51JFujZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSHO856960kSWxBUJiQWlUSm1ZjKpFohXevGEnKuWBiHjVpcqoJPZq0vsRHfMGaIH
-	 NxbrsY09ytbg/zxA5AaGnDsVNzg/FIwKwt5C5nuUH87gHJT5fam2Pe6DawbCz2OlTn
-	 pOG4KordRvzk6vavQU9157KYaUGSdy5qzJSShaG8=
+	b=aG767lEF7XF5x5XeqrzPm+FlnWe9xY3VjAsmuvwRhXrbsFfiTTopriJTmloirzkvp
+	 U5lNtASItTOK2Q5lM3KkngtSBr1qCN5orPfdh/DEeQVhGw/NVNWBCgr04Dx9untD/t
+	 kIct1gnMtDpt8CnhR7DSHUhplokg6usdBCFPXjWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Mark Einon <mark.einon@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 209/403] be2net: Use correct byte order and format string for TCP seq and ack_seq
-Date: Tue, 26 Aug 2025 13:08:55 +0200
-Message-ID: <20250826110912.619249275@linuxfoundation.org>
+Subject: [PATCH 5.4 210/403] et131x: Add missing check after DMA map
+Date: Tue, 26 Aug 2025 13:08:56 +0200
+Message-ID: <20250826110912.645730308@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,50 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 4701ee5044fb3992f1c910630a9673c2dc600ce5 ]
+[ Upstream commit d61f6cb6f6ef3c70d2ccc0d9c85c508cb8017da9 ]
 
-The TCP header fields seq and ack_seq are 32-bit values in network
-byte order as (__be32). these fields were earlier printed using
-ntohs(), which converts only 16-bit values and produces incorrect
-results for 32-bit fields. This patch is changeing the conversion
-to ntohl(), ensuring correct interpretation of these sequence numbers.
+The DMA map functions can fail and should be tested for errors.
+If the mapping fails, unmap and return an error.
 
-Notably, the format specifier is updated from %d to %u to reflect the
-unsigned nature of these fields.
-
-improves the accuracy of debug log messages for TCP sequence and
-acknowledgment numbers during TX timeouts.
-
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Mark Einon <mark.einon@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250717193552.3648791-1-alok.a.tiwari@oracle.com
+Link: https://patch.msgid.link/20250716094733.28734-2-fourier.thomas@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/agere/et131x.c | 36 +++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
-index 4b9380003c85..ce235def334f 100644
---- a/drivers/net/ethernet/emulex/benet/be_main.c
-+++ b/drivers/net/ethernet/emulex/benet/be_main.c
-@@ -1467,10 +1467,10 @@ static void be_tx_timeout(struct net_device *netdev)
- 						 ntohs(tcphdr->source));
- 					dev_info(dev, "TCP dest port %d\n",
- 						 ntohs(tcphdr->dest));
--					dev_info(dev, "TCP sequence num %d\n",
--						 ntohs(tcphdr->seq));
--					dev_info(dev, "TCP ack_seq %d\n",
--						 ntohs(tcphdr->ack_seq));
-+					dev_info(dev, "TCP sequence num %u\n",
-+						 ntohl(tcphdr->seq));
-+					dev_info(dev, "TCP ack_seq %u\n",
-+						 ntohl(tcphdr->ack_seq));
- 				} else if (ip_hdr(skb)->protocol ==
- 					   IPPROTO_UDP) {
- 					udphdr = udp_hdr(skb);
+diff --git a/drivers/net/ethernet/agere/et131x.c b/drivers/net/ethernet/agere/et131x.c
+index 174344c450af..f6232e8178b8 100644
+--- a/drivers/net/ethernet/agere/et131x.c
++++ b/drivers/net/ethernet/agere/et131x.c
+@@ -2464,6 +2464,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 							  skb->data,
+ 							  skb_headlen(skb),
+ 							  DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      dma_addr))
++					return -ENOMEM;
++
+ 				desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 				desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 				frag++;
+@@ -2473,6 +2477,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 							  skb->data,
+ 							  skb_headlen(skb) / 2,
+ 							  DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      dma_addr))
++					return -ENOMEM;
++
+ 				desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 				desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 				frag++;
+@@ -2483,6 +2491,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 							  skb_headlen(skb) / 2,
+ 							  skb_headlen(skb) / 2,
+ 							  DMA_TO_DEVICE);
++				if (dma_mapping_error(&adapter->pdev->dev,
++						      dma_addr))
++					goto unmap_first_out;
++
+ 				desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 				desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 				frag++;
+@@ -2494,6 +2506,9 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 						    0,
+ 						    desc[frag].len_vlan,
+ 						    DMA_TO_DEVICE);
++			if (dma_mapping_error(&adapter->pdev->dev, dma_addr))
++				goto unmap_out;
++
+ 			desc[frag].addr_lo = lower_32_bits(dma_addr);
+ 			desc[frag].addr_hi = upper_32_bits(dma_addr);
+ 			frag++;
+@@ -2583,6 +2598,27 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
+ 		       &adapter->regs->global.watchdog_timer);
+ 	}
+ 	return 0;
++
++unmap_out:
++	// Unmap the body of the packet with map_page
++	while (--i) {
++		frag--;
++		dma_addr = desc[frag].addr_lo;
++		dma_addr |= (u64)desc[frag].addr_hi << 32;
++		dma_unmap_page(&adapter->pdev->dev, dma_addr,
++			       desc[frag].len_vlan, DMA_TO_DEVICE);
++	}
++
++unmap_first_out:
++	// Unmap the header with map_single
++	while (frag--) {
++		dma_addr = desc[frag].addr_lo;
++		dma_addr |= (u64)desc[frag].addr_hi << 32;
++		dma_unmap_single(&adapter->pdev->dev, dma_addr,
++				 desc[frag].len_vlan, DMA_TO_DEVICE);
++	}
++
++	return -ENOMEM;
+ }
+ 
+ static int send_packet(struct sk_buff *skb, struct et131x_adapter *adapter)
 -- 
 2.39.5
 
