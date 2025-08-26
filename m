@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B11305E08;
-	Tue, 26 Aug 2025 11:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E746321424;
+	Tue, 26 Aug 2025 11:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208702; cv=none; b=U2cL1CvCfcPjsJ+2DU7hH2dXskiPOnSXsCnghxEssghMadeRuG7jfoF5Hj7m+0cutOeFxZuEWMhFyGIw7IkYEAtaucsb/Nhu8VX1Qk08X5Q28i4/P0023SX5emKaTb+pL+Rq7DNeo2muvwwJXJBWu/fCM0o4r6fk/YNrFpkjgHE=
+	t=1756208705; cv=none; b=Lbw83zm2fXQrh53X7duuw9uTP1eu5myLOks8aeATUIBz6U5GSX7/PMxEVFmB9k6NBN6q59FN2DTCiIcy1g9kIAH5020mjlmjZ2G+/OFAy3Id57aLEBK1N4DkmW1XtCHfk8HEuIqoefYRMu9PR75TQ21v/ofnHlD2riBmkPuiIgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208702; c=relaxed/simple;
-	bh=PjbjFpE8FfzE3Y5MyxKCPeVUzZA60QpFKC1TJRFRr4I=;
+	s=arc-20240116; t=1756208705; c=relaxed/simple;
+	bh=4YQENb/os56DcxuxsebwF+W6czW9EqpkXj5/tRDT6Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQo8komg6SyoAkhS+Rat2wTVAwQXyWxlt09b8O/LSpeB+uhKAqGHhdb5Wu/vVTQpAE6PmZxRQbL6BTAy4/bcMNTH96dQiJhQrOClKGgG9WKwrlpfag3zwebON2GcySJ7NJdKrMizGTO370p7qITAstB8kggF9usypwy0fBKfMlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmkt95/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQKLE4+6oNZ5bafWRlZQpJeDLS+bms99dKwHeATB8b6Izoa3bmnJjXtIqJd0QMxaoVqCHgzuxWFRUD8DgQWvrAdR0vRehnF5ub1R/f2VLOj7Q3a/5KDyDVwyVyzBLXc6XtJPKarktmqohcW3WseuybcXgFnbFPwpvTQ9dUymk4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGACr1FL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmkt95/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1F8C4CEF4;
-	Tue, 26 Aug 2025 11:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGACr1FL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94174C4CEF1;
+	Tue, 26 Aug 2025 11:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208702;
-	bh=PjbjFpE8FfzE3Y5MyxKCPeVUzZA60QpFKC1TJRFRr4I=;
+	s=korg; t=1756208704;
+	bh=4YQENb/os56DcxuxsebwF+W6czW9EqpkXj5/tRDT6Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmkt95/vENrqcWarXI5xWzCQWadDKfyVQ/VtZmWk7CxKSu06MU6UNfaBQY6zYhXuz
-	 Wkkc30Fu2TJDA5BLpqzQOCEagA5n8SAabdpWOgAgvYI/o+JQHkkP4Kya2NXeg7jK5f
-	 cCBsZHxFPMj9GEeXzGRKssqkTNNIqC3fu8QA93iQ=
+	b=oGACr1FLBeTUXvTUrvHfu4GfCDQzuoqFtF/R53wDianMBhCvzTTTAPgkBMJCdhVaG
+	 Uc+ZH2ejx8Z6/fl1Riq0yx5J82UgPDvufPYcLTtyd7ueJgtPWKqilc7JDW9u9vr83y
+	 z6xxzo9so7+5mY9YXXUOzHvYHlY55j4M4JyZuRp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 205/322] arm64: dts: ti: k3-am62*: Move eMMC pinmux to top level board file
-Date: Tue, 26 Aug 2025 13:10:20 +0200
-Message-ID: <20250826110920.931391189@linuxfoundation.org>
+	Pavel Pisa <pisa@fel.cvut.cz>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.12 214/322] fpga: zynq_fpga: Fix the wrong usage of dma_map_sgtable()
+Date: Tue, 26 Aug 2025 13:10:29 +0200
+Message-ID: <20250826110921.163253411@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,150 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Xu Yilun <yilun.xu@linux.intel.com>
 
-[ Upstream commit a0b8da04153eb61cc2eaeeea5cc404e91e557f6b ]
+commit 1ca61060de92a4320d73adfe5dc8d335653907ac upstream.
 
-This moves pinmux child nodes for sdhci0 node from k3-am62x-sk-common
-to each top level board file. This is needed since we require internal
-pullups for AM62x SK and not for AM62 LP SK since it has external
-pullups on DATA 1-7.
+dma_map_sgtable() returns only 0 or the error code. Read sgt->nents to
+get the number of mapped segments.
 
-Internal pulls are required for AM62 SK as per JESD84 spec
-recommendation to prevent unconnected lines floating.
-
-Fixes: d19a66ae488a ("arm64: dts: ti: k3-am625-sk: Enable on board peripherals")
-Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Link: https://lore.kernel.org/r/20250707190830.3951619-1-jm@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 37e00703228a ("zynq_fpga: use sgtable-based scatterlist wrappers")
+Reported-by: Pavel Pisa <pisa@fel.cvut.cz>
+Closes: https://lore.kernel.org/linux-fpga/202508041548.22955.pisa@fel.cvut.cz/
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Link: https://lore.kernel.org/r/20250806070605.1920909-2-yilun.xu@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts       |   24 ++++++++++++++++++++++++
- arch/arm64/boot/dts/ti/k3-am625-sk.dts         |   24 ++++++++++++++++++++++++
- arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi |   24 ------------------------
- 3 files changed, 48 insertions(+), 24 deletions(-)
+ drivers/fpga/zynq-fpga.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
-@@ -74,6 +74,22 @@
- };
+--- a/drivers/fpga/zynq-fpga.c
++++ b/drivers/fpga/zynq-fpga.c
+@@ -405,12 +405,12 @@ static int zynq_fpga_ops_write(struct fp
+ 		}
+ 	}
  
- &main_pmx0 {
-+	main_mmc0_pins_default: main-mmc0-default-pins {
-+		bootph-all;
-+		pinctrl-single,pins = <
-+			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (V3) MMC0_CMD */
-+			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (Y1) MMC0_CLK */
-+			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (V2) MMC0_DAT0 */
-+			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (V1) MMC0_DAT1 */
-+			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (W2) MMC0_DAT2 */
-+			AM62X_IOPAD(0x208, PIN_INPUT, 0) /* (W1) MMC0_DAT3 */
-+			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (Y2) MMC0_DAT4 */
-+			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (W3) MMC0_DAT5 */
-+			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (W4) MMC0_DAT6 */
-+			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (V4) MMC0_DAT7 */
-+		>;
-+	};
-+
- 	vddshv_sdio_pins_default: vddshv-sdio-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x07c, PIN_OUTPUT, 7) /* (M19) GPMC0_CLK.GPIO0_31 */
-@@ -144,6 +160,14 @@
- 	};
- };
+-	priv->dma_nelms =
+-	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
+-	if (priv->dma_nelms == 0) {
++	err = dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
++	if (err) {
+ 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
+-		return -ENOMEM;
++		return err;
+ 	}
++	priv->dma_nelms = sgt->nents;
  
-+&sdhci0 {
-+	bootph-all;
-+	non-removable;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&main_mmc0_pins_default>;
-+	status = "okay";
-+};
-+
- &sdhci1 {
- 	vmmc-supply = <&vdd_mmc1>;
- 	vqmmc-supply = <&vddshv_sdio>;
---- a/arch/arm64/boot/dts/ti/k3-am625-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
-@@ -106,6 +106,22 @@
- };
- 
- &main_pmx0 {
-+	main_mmc0_pins_default: main-mmc0-default-pins {
-+		bootph-all;
-+		pinctrl-single,pins = <
-+			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
-+			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
-+			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
-+			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
-+			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
-+			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /* (Y4) MMC0_DAT3 */
-+			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
-+			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
-+			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
-+			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
-+		>;
-+	};
-+
- 	main_rgmii2_pins_default: main-rgmii2-default-pins {
- 		bootph-all;
- 		pinctrl-single,pins = <
-@@ -195,6 +211,14 @@
- 	};
- };
- 
-+&sdhci0 {
-+	bootph-all;
-+	non-removable;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&main_mmc0_pins_default>;
-+	status = "okay";
-+};
-+
- &sdhci1 {
- 	vmmc-supply = <&vdd_mmc1>;
- 	vqmmc-supply = <&vdd_sd_dv>;
---- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-@@ -182,22 +182,6 @@
- 		>;
- 	};
- 
--	main_mmc0_pins_default: main-mmc0-default-pins {
--		bootph-all;
--		pinctrl-single,pins = <
--			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3/V3) MMC0_CMD */
--			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1/Y1) MMC0_CLK */
--			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2/V2) MMC0_DAT0 */
--			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (AA1/V1) MMC0_DAT1 */
--			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (AA3/W2) MMC0_DAT2 */
--			AM62X_IOPAD(0x208, PIN_INPUT, 0) /* (Y4/W1) MMC0_DAT3 */
--			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (AB2/Y2) MMC0_DAT4 */
--			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (AC1/W3) MMC0_DAT5 */
--			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (AD2/W4) MMC0_DAT6 */
--			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (AC2/V4) MMC0_DAT7 */
--		>;
--	};
--
- 	main_mmc1_pins_default: main-mmc1-default-pins {
- 		bootph-all;
- 		pinctrl-single,pins = <
-@@ -413,14 +397,6 @@
- 	clock-frequency = <400000>;
- };
- 
--&sdhci0 {
--	bootph-all;
--	status = "okay";
--	non-removable;
--	pinctrl-names = "default";
--	pinctrl-0 = <&main_mmc0_pins_default>;
--};
--
- &sdhci1 {
- 	/* SD/MMC */
- 	bootph-all;
+ 	/* enable clock */
+ 	err = clk_enable(priv->clk);
 
 
