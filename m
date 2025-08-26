@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5268B2BDC00;
-	Tue, 26 Aug 2025 11:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA5620B7EE;
+	Tue, 26 Aug 2025 11:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756206773; cv=none; b=AwLrzzHgReGwV3aNtbusQHVqBNfLyRBdU3bqvlul9ac5kUJksGynzQgs1TKKjiIOzAhQ4HkeC8I7vfneKvLTaw+Wo70Zsk81FkM1T+Y4JW4qojbqWL2hQaAx60HHFcp2kuXpHADDwP5kAVrLURdQs0+JK807dFVuPukBGASRERA=
+	t=1756206776; cv=none; b=Zz98t46b5tuiqTandI/WICd+oB0iwtLK2TUX1HpsaZ/5zGq4jAW5cXFv9SZsOvopkmcZvYJP2vndqK9igrvQ1wwIyXCX7O2QLpiABv5OTzeUZrtYjgzeAgm8ba3rfCDnfdIPDE6tOMGXEULHsXGcVkY59lgw3CgGQXZDpsKtcJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756206773; c=relaxed/simple;
-	bh=QvRsfbrxLBufMfmtaWFWdYNN5UZAq3pE+WJVD79S/5w=;
+	s=arc-20240116; t=1756206776; c=relaxed/simple;
+	bh=osAfmBSyVzf1FxJNLaGqIkPBAu+oBVA7n5eZSmu9Z8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfsYyPEyooOTw17J6dWLamVFji9J9dfrjWV4FxzIWelOR4SHMA5J3RNqcarqhkxjLXn2OwEAWdzoVjcBd25jq9sIF9Z/BRw/jRZzit13UutOCq2QyiQmUQIHozxXf8dLSVsd11aZg7Sh4bUmqokED8GCwtVOWhqwH+TNQoaTfhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbTvGqW5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WgKrL/EBdpzjwzqcH7XHM3bcFpqyD0rGcCoO20FkqRA46QjclWxztCfgS4Y2n9e+DjgTyKV3KFkKa0WUblQLkqf5dbFIh0RktT1kKf7Hmg5kdtcUIZyJS+939mM4m9SoVmTZ6MXT2dhTx9Xy0ZDQd+RW8A5aHtYSXw2skiCBLuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3P22QzP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbTvGqW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBFDC4CEF4;
-	Tue, 26 Aug 2025 11:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3P22QzP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46322C4CEF4;
+	Tue, 26 Aug 2025 11:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756206773;
-	bh=QvRsfbrxLBufMfmtaWFWdYNN5UZAq3pE+WJVD79S/5w=;
+	s=korg; t=1756206775;
+	bh=osAfmBSyVzf1FxJNLaGqIkPBAu+oBVA7n5eZSmu9Z8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbTvGqW5OIWBGjH6TDaRzKk5xYzvfmc4CaPsovreMHXhE2VvaHEy6vJVk4bQVYOAD
-	 NpxN9wqCWnnF61JQHaNcnHphnnM3LnT9dEpulKi51TYw8BVpK1d//G4E+OAxRfvHSr
-	 cQuR+G0TAePwbkjPd8n2eVOhMBc+VErsghzZew1M=
+	b=H3P22QzPwiMqKbY8UryE1wT+R13EPWoN7MWq6qEh8tPEm9mCZvI5HAxgrxQVL//Wz
+	 WH0lrKVueiriFFak/slnzp3surDEHgSteezR+3MVKI/Z4ZcZXZCQDdqN8DEc+Wurb2
+	 uffQT9AwIKeRPKXS/eYQowbIvd1MjO/XXDIexYIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 001/482] io_uring: dont use int for ABI
-Date: Tue, 26 Aug 2025 13:04:14 +0200
-Message-ID: <20250826110930.812183608@linuxfoundation.org>
+Subject: [PATCH 6.6 001/587] io_uring: dont use int for ABI
+Date: Tue, 26 Aug 2025 13:02:30 +0200
+Message-ID: <20250826110952.984811109@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
-References: <20250826110930.769259449@linuxfoundation.org>
+In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
+References: <20250826110952.942403671@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -71,7 +71,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/include/uapi/linux/io_uring.h
 +++ b/include/uapi/linux/io_uring.h
-@@ -38,7 +38,7 @@ struct io_uring_sqe {
+@@ -46,7 +46,7 @@ struct io_uring_sqe {
  	};
  	__u32	len;		/* buffer size or number of iovecs */
  	union {
