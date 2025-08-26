@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9203B26C3A4;
-	Tue, 26 Aug 2025 11:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692D6200112;
+	Tue, 26 Aug 2025 11:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208879; cv=none; b=qVSO4lp7XEpLbcQBbqmQnKgsYrqiD2ARZNwd0yFEN1FchX4wZj+BLgDuXtr464xcQbONr5uEBgeVckuhuvfVcyl90yiitJ2SsYMqX0S4TkZnLa/9ecHxJqHZ2bVd9vIG9OvRMtddniSke8XnzY9MyZuhChQo3CZv6BfEv1s0fpM=
+	t=1756208882; cv=none; b=Po22EUuH+nI6bgcXNAef/YLKpdrCKf4aFkn0/VgOb/94fSeVQW92OZddvrslAX7QHXWCcgtrrDunn2aOaYTy1rkZiNUmbaSl5NhwARhlHsIy3JnGs8nttrCbkHIAJtqJGrdZ42DnwhjLvC1sEM7OtLXVTVwBuVl7OMr6PGTMF2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208879; c=relaxed/simple;
-	bh=9sgWwNasB7qs8rHSCbKT6Inr/0S7MknTHi6ikeradD8=;
+	s=arc-20240116; t=1756208882; c=relaxed/simple;
+	bh=8Zxy6UYmvc+xVS0ECn38l6TaDiz1II0i20M+C5CpOGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aH/r94W0vGXyaTuNGgIhZVtT7tYotvKz+Ls5dVA85+rDM6NZxSNfMF9XvsRThyrI4oXUNoS9j0aUaHF1bPJ18cKQGtuf8x9sqZmibk6Ms8SE5waEM+ByqIQvZxfK1zGt+cG52ywjAdyxQgyvdEcoQunUmWb8T9PuDcij1v3lsc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=waSjKMsW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYWOyJTafsFuMOcCsmhZmrz6G2q27JGpVtGZQBbZHwlGfvEc9A/gf84oZ/gvvaoJftcIr7jwYgcICpRJ+/PT8d5XT25zbDmOEDOBmhn1NAOOD+YbOnJ7ok3ANvI5IefxN+Y3j3IqEhA4c4hPEXDm0eBT6XAKU3OAjx3IR78HLl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmIoszMT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="waSjKMsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B13C4CEF1;
-	Tue, 26 Aug 2025 11:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmIoszMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED203C4CEF1;
+	Tue, 26 Aug 2025 11:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208879;
-	bh=9sgWwNasB7qs8rHSCbKT6Inr/0S7MknTHi6ikeradD8=;
+	s=korg; t=1756208882;
+	bh=8Zxy6UYmvc+xVS0ECn38l6TaDiz1II0i20M+C5CpOGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=waSjKMsWHnM5nnUukNieacPZUDQKjXyCq3yn+Q5FEbuih5rGUq4w2JCPlqEyyGIk7
-	 E2C19k8UStCDt9FOomNhnR5cJKzD3eYtnh2bFURc85z08kFXyPuxxP5SO2gdMyVjkb
-	 LUqcT1NUfr4m0nFX17ZOnda9TqVEn1a1/oJjTFiM=
+	b=wmIoszMTd4ZVlaSapfusguzVXmTkpu81mormjFLwFIZHqat8KIFaIi9tS4x9cayga
+	 97nzr9TxK39Z0YjFD56Ltis1QbasZSG49CyJbSFzA9+WW0fsFiUaL8SURINBynqrVq
+	 9BgAmmPk03L+gF74NACyVj/IS5tDCIVo6UFkOqS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Wang Liang <wangliang74@huawei.com>,
+	Zoey Mertes <zoey@cloudflare.com>,
 	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 273/322] net: bridge: fix soft lockup in br_multicast_query_expired()
-Date: Tue, 26 Aug 2025 13:11:28 +0200
-Message-ID: <20250826110922.667132475@linuxfoundation.org>
+Subject: [PATCH 6.12 282/322] mlxsw: spectrum: Forward packets with an IPv4 link-local source IP
+Date: Tue, 26 Aug 2025 13:11:37 +0200
+Message-ID: <20250826110922.886041169@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,107 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit d1547bf460baec718b3398365f8de33d25c5f36f ]
+[ Upstream commit f604d3aaf64ff0d90cc875295474d3abf4155629 ]
 
-When set multicast_query_interval to a large value, the local variable
-'time' in br_multicast_send_query() may overflow. If the time is smaller
-than jiffies, the timer will expire immediately, and then call mod_timer()
-again, which creates a loop and may trigger the following soft lockup
-issue.
+By default, the device does not forward IPv4 packets with a link-local
+source IP (i.e., 169.254.0.0/16). This behavior does not align with the
+kernel which does forward them.
 
-  watchdog: BUG: soft lockup - CPU#1 stuck for 221s! [rb_consumer:66]
-  CPU: 1 UID: 0 PID: 66 Comm: rb_consumer Not tainted 6.16.0+ #259 PREEMPT(none)
-  Call Trace:
-   <IRQ>
-   __netdev_alloc_skb+0x2e/0x3a0
-   br_ip6_multicast_alloc_query+0x212/0x1b70
-   __br_multicast_send_query+0x376/0xac0
-   br_multicast_send_query+0x299/0x510
-   br_multicast_query_expired.constprop.0+0x16d/0x1b0
-   call_timer_fn+0x3b/0x2a0
-   __run_timers+0x619/0x950
-   run_timer_softirq+0x11c/0x220
-   handle_softirqs+0x18e/0x560
-   __irq_exit_rcu+0x158/0x1a0
-   sysvec_apic_timer_interrupt+0x76/0x90
-   </IRQ>
+Fix by instructing the device to forward such packets instead of
+dropping them.
 
-This issue can be reproduced with:
-  ip link add br0 type bridge
-  echo 1 > /sys/class/net/br0/bridge/multicast_querier
-  echo 0xffffffffffffffff >
-  	/sys/class/net/br0/bridge/multicast_query_interval
-  ip link set dev br0 up
-
-The multicast_startup_query_interval can also cause this issue. Similar to
-the commit 99b40610956a ("net: bridge: mcast: add and enforce query
-interval minimum"), add check for the query interval maximum to fix this
-issue.
-
-Link: https://lore.kernel.org/netdev/20250806094941.1285944-1-wangliang74@huawei.com/
-Link: https://lore.kernel.org/netdev/20250812091818.542238-1-wangliang74@huawei.com/
-Fixes: d902eee43f19 ("bridge: Add multicast count/interval sysfs entries")
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250813021054.1643649-1-wangliang74@huawei.com
+Fixes: ca360db4b825 ("mlxsw: spectrum: Disable DIP_LINK_LOCAL check in hardware pipeline")
+Reported-by: Zoey Mertes <zoey@cloudflare.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/6721e6b2c96feb80269e72ce8d0b426e2f32d99c.1755174341.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 16 ++++++++++++++++
- net/bridge/br_private.h   |  2 ++
- 2 files changed, 18 insertions(+)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum.c | 2 ++
+ drivers/net/ethernet/mellanox/mlxsw/trap.h     | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index 733ff6b758f6..0a00c3f57815 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -4808,6 +4808,14 @@ void br_multicast_set_query_intvl(struct net_bridge_mcast *brmctx,
- 		intvl_jiffies = BR_MULTICAST_QUERY_INTVL_MIN;
- 	}
- 
-+	if (intvl_jiffies > BR_MULTICAST_QUERY_INTVL_MAX) {
-+		br_info(brmctx->br,
-+			"trying to set multicast query interval above maximum, setting to %lu (%ums)\n",
-+			jiffies_to_clock_t(BR_MULTICAST_QUERY_INTVL_MAX),
-+			jiffies_to_msecs(BR_MULTICAST_QUERY_INTVL_MAX));
-+		intvl_jiffies = BR_MULTICAST_QUERY_INTVL_MAX;
-+	}
-+
- 	brmctx->multicast_query_interval = intvl_jiffies;
- }
- 
-@@ -4824,6 +4832,14 @@ void br_multicast_set_startup_query_intvl(struct net_bridge_mcast *brmctx,
- 		intvl_jiffies = BR_MULTICAST_STARTUP_QUERY_INTVL_MIN;
- 	}
- 
-+	if (intvl_jiffies > BR_MULTICAST_STARTUP_QUERY_INTVL_MAX) {
-+		br_info(brmctx->br,
-+			"trying to set multicast startup query interval above maximum, setting to %lu (%ums)\n",
-+			jiffies_to_clock_t(BR_MULTICAST_STARTUP_QUERY_INTVL_MAX),
-+			jiffies_to_msecs(BR_MULTICAST_STARTUP_QUERY_INTVL_MAX));
-+		intvl_jiffies = BR_MULTICAST_STARTUP_QUERY_INTVL_MAX;
-+	}
-+
- 	brmctx->multicast_startup_query_interval = intvl_jiffies;
- }
- 
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 6a1bce8959af..5026a256bf92 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -31,6 +31,8 @@
- #define BR_MULTICAST_DEFAULT_HASH_MAX 4096
- #define BR_MULTICAST_QUERY_INTVL_MIN msecs_to_jiffies(1000)
- #define BR_MULTICAST_STARTUP_QUERY_INTVL_MIN BR_MULTICAST_QUERY_INTVL_MIN
-+#define BR_MULTICAST_QUERY_INTVL_MAX msecs_to_jiffies(86400000) /* 24 hours */
-+#define BR_MULTICAST_STARTUP_QUERY_INTVL_MAX BR_MULTICAST_QUERY_INTVL_MAX
- 
- #define BR_HWDOM_MAX BITS_PER_LONG
- 
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+index 3f5e5d99251b..26401bb57572 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum.c
+@@ -2507,6 +2507,8 @@ static const struct mlxsw_listener mlxsw_sp_listener[] = {
+ 			     ROUTER_EXP, false),
+ 	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_DIP_LINK_LOCAL, FORWARD,
+ 			     ROUTER_EXP, false),
++	MLXSW_SP_RXL_NO_MARK(DISCARD_ING_ROUTER_SIP_LINK_LOCAL, FORWARD,
++			     ROUTER_EXP, false),
+ 	/* Multicast Router Traps */
+ 	MLXSW_SP_RXL_MARK(ACL1, TRAP_TO_CPU, MULTICAST, false),
+ 	MLXSW_SP_RXL_L3_MARK(ACL2, TRAP_TO_CPU, MULTICAST, false),
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/trap.h b/drivers/net/ethernet/mellanox/mlxsw/trap.h
+index 83477c8e6971..5bfc1499347a 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/trap.h
++++ b/drivers/net/ethernet/mellanox/mlxsw/trap.h
+@@ -95,6 +95,7 @@ enum {
+ 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_SIP_BC = 0x16A,
+ 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_IPV4_DIP_LOCAL_NET = 0x16B,
+ 	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_DIP_LINK_LOCAL = 0x16C,
++	MLXSW_TRAP_ID_DISCARD_ING_ROUTER_SIP_LINK_LOCAL = 0x16D,
+ 	MLXSW_TRAP_ID_DISCARD_ROUTER_IRIF_EN = 0x178,
+ 	MLXSW_TRAP_ID_DISCARD_ROUTER_ERIF_EN = 0x179,
+ 	MLXSW_TRAP_ID_DISCARD_ROUTER_LPM4 = 0x17B,
 -- 
 2.50.1
 
