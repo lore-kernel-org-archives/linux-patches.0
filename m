@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6271E2BE03C;
-	Tue, 26 Aug 2025 11:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5A321ADA7;
+	Tue, 26 Aug 2025 11:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207599; cv=none; b=QTaJcmiiKJJGakZpwRhfOXx0HPY3kICFp/GU/JYt2jeUXhRS8mmAwpYM9FGYSuY6DHVDWTq/5MDPUnm3fBty9m+u7sr5axZabqesBMXQwxVZM0l8ehFlzYOVS/n99LCgD5WaCvAem+KLElM32XjEiRxCV0H7O2FdQko2Ws/sR+w=
+	t=1756207601; cv=none; b=dlcC9yXUgssmw5tKC+Hfgo2EraMKkw8Yn+VKSMg3dBRJCNX7X7eRfW4lYLVaT+mxW3hEofw/LejP7AkGavoTjtgero6CPr1fvvwcofoyQIVtsu1LeA34m+SZ2km23LwHD7CWMjq5LRCgQzccpzUAB1vp7Tm/HGri5LL/Wimv1Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207599; c=relaxed/simple;
-	bh=akr7KNtNIpGGRbcmMiIQILYa0zxuHK4nFFITbeEx0sE=;
+	s=arc-20240116; t=1756207601; c=relaxed/simple;
+	bh=j8oCPmUA/auJpGwhVorq8j1cc7TsXbJYVU0cpuL0ZqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeS9bfdkQf8QTCk4hV6QzfH5t1mEbnpyz5dFz4B56TWpOkx4Lc655d4mOq4moTeXN2yioBZV90bo3il9Q6KCYl4/3orG+bCYwmStK3ttStWTx1H9MOjU75CjbSSeOx9d/PHxulGQU+ZkhXrDAcen/s0zSjYtDDMjv839IbXxUyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynfZ7I4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iczu7Vj1i9P4+w1Imc1j0aP4j2xjLagveVg8mduWHpn0Rp6ihxfRXOb0o0jY+n5ny8J4TuDLK5TISkz0d3zQU7GVcsv+HPEJ2mxnYcD8SG4yn4xqfs2pCbdHOd11Zq+RXtE/1QJApbCXT/ZLSyo9Y5Vn84CRH9E6XZvP7Phszu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRql9ICs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynfZ7I4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB9CC4CEF1;
-	Tue, 26 Aug 2025 11:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRql9ICs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558E7C4CEF1;
+	Tue, 26 Aug 2025 11:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207599;
-	bh=akr7KNtNIpGGRbcmMiIQILYa0zxuHK4nFFITbeEx0sE=;
+	s=korg; t=1756207601;
+	bh=j8oCPmUA/auJpGwhVorq8j1cc7TsXbJYVU0cpuL0ZqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynfZ7I4zJ7j1xBLumWQIEelBrLfoKdhQLClCd6pErWh5773uiDL8PdneMWFMhtrCp
-	 Zu4dCqV8xyfQbMxfn9Qv9i9vrZMoELW2uJ/xsQWLnfmrHvFm5vNjBuJ9u7RIdiGXrZ
-	 jlw3ryPEc0H6nvATUv12WSaXq7a30Njm9okms7cQ=
+	b=YRql9ICs785tkf3VxlF2sXiDA2QshCRpnk5BTbvFFYYb3L7e6Cqolc5+xRcdrQE0C
+	 El4Vs7QfcN5jMTgyS5ELNPyjwsNOyYkX7sage9XGlOXPZw0FaXpUiqPz0+yey9NIxi
+	 V+fVbMfQDHjSQnMVFWolUHp/HUCohPiqwfh77QPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Andrew Davis <afd@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.16 243/457] mmc: sdhci_am654: Disable HS400 for AM62P SR1.0 and SR1.1
-Date: Tue, 26 Aug 2025 13:08:47 +0200
-Message-ID: <20250826110943.376794790@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Joe Quanaim <jdq@meta.com>,
+	Andrew Steffen <aksteffen@meta.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.16 244/457] NFS: Fix a race when updating an existing write
+Date: Tue, 26 Aug 2025 13:08:48 +0200
+Message-ID: <20250826110943.401253317@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,81 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit d2d7a96b29ea6ab093973a1a37d26126db70c79f upstream.
+commit 76d2e3890fb169168c73f2e4f8375c7cc24a765e upstream.
 
-This adds SDHCI_AM654_QUIRK_DISABLE_HS400 quirk which shall be used
-to disable HS400 support. AM62P SR1.0 and SR1.1 do not support HS400
-due to errata i2458 [0] so disable HS400 for these SoC revisions.
+After nfs_lock_and_join_requests() tests for whether the request is
+still attached to the mapping, nothing prevents a call to
+nfs_inode_remove_request() from succeeding until we actually lock the
+page group.
+The reason is that whoever called nfs_inode_remove_request() doesn't
+necessarily have a lock on the page group head.
 
-[0] https://www.ti.com/lit/er/sprz574a/sprz574a.pdf
-Fixes: 37f28165518f ("arm64: dts: ti: k3-am62p: Add ITAP/OTAP values for MMC")
+So in order to avoid races, let's take the page group lock earlier in
+nfs_lock_and_join_requests(), and hold it across the removal of the
+request in nfs_inode_remove_request().
+
+Reported-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Joe Quanaim <jdq@meta.com>
+Tested-by: Andrew Steffen <aksteffen@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: bd37d6fce184 ("NFSv4: Convert nfs_lock_and_join_requests() to use nfs_page_find_head_request()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Andrew Davis <afd@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250820193047.4064142-1-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ fs/nfs/pagelist.c        |    9 +++++----
+ fs/nfs/write.c           |   29 ++++++++++-------------------
+ include/linux/nfs_page.h |    1 +
+ 3 files changed, 16 insertions(+), 23 deletions(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -156,6 +156,7 @@ struct sdhci_am654_data {
- 
- #define SDHCI_AM654_QUIRK_FORCE_CDTEST BIT(0)
- #define SDHCI_AM654_QUIRK_SUPPRESS_V1P8_ENA BIT(1)
-+#define SDHCI_AM654_QUIRK_DISABLE_HS400 BIT(2)
- };
- 
- struct window {
-@@ -765,6 +766,7 @@ static int sdhci_am654_init(struct sdhci
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
-+	struct device *dev = mmc_dev(host->mmc);
- 	u32 ctl_cfg_2 = 0;
- 	u32 mask;
- 	u32 val;
-@@ -820,6 +822,12 @@ static int sdhci_am654_init(struct sdhci
- 	if (ret)
- 		goto err_cleanup_host;
- 
-+	if (sdhci_am654->quirks & SDHCI_AM654_QUIRK_DISABLE_HS400 &&
-+	    host->mmc->caps2 & (MMC_CAP2_HS400 | MMC_CAP2_HS400_ES)) {
-+		dev_info(dev, "HS400 mode not supported on this silicon revision, disabling it\n");
-+		host->mmc->caps2 &= ~(MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
-+	}
-+
- 	ret = __sdhci_add_host(host);
- 	if (ret)
- 		goto err_cleanup_host;
-@@ -883,6 +891,12 @@ static int sdhci_am654_get_of_property(s
- 	return 0;
+--- a/fs/nfs/pagelist.c
++++ b/fs/nfs/pagelist.c
+@@ -253,13 +253,14 @@ nfs_page_group_unlock(struct nfs_page *r
+ 	nfs_page_clear_headlock(req);
  }
  
-+static const struct soc_device_attribute sdhci_am654_descope_hs400[] = {
-+	{ .family = "AM62PX", .revision = "SR1.0" },
-+	{ .family = "AM62PX", .revision = "SR1.1" },
-+	{ /* sentinel */ }
-+};
-+
- static const struct of_device_id sdhci_am654_of_match[] = {
- 	{
- 		.compatible = "ti,am654-sdhci-5.1",
-@@ -975,6 +989,10 @@ static int sdhci_am654_probe(struct plat
- 		goto err_pltfm_free;
+-/*
+- * nfs_page_group_sync_on_bit_locked
++/**
++ * nfs_page_group_sync_on_bit_locked - Test if all requests have @bit set
++ * @req: request in page group
++ * @bit: PG_* bit that is used to sync page group
+  *
+  * must be called with page group lock held
+  */
+-static bool
+-nfs_page_group_sync_on_bit_locked(struct nfs_page *req, unsigned int bit)
++bool nfs_page_group_sync_on_bit_locked(struct nfs_page *req, unsigned int bit)
+ {
+ 	struct nfs_page *head = req->wb_head;
+ 	struct nfs_page *tmp;
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -153,20 +153,10 @@ nfs_page_set_inode_ref(struct nfs_page *
+ 	}
+ }
+ 
+-static int
+-nfs_cancel_remove_inode(struct nfs_page *req, struct inode *inode)
++static void nfs_cancel_remove_inode(struct nfs_page *req, struct inode *inode)
+ {
+-	int ret;
+-
+-	if (!test_bit(PG_REMOVE, &req->wb_flags))
+-		return 0;
+-	ret = nfs_page_group_lock(req);
+-	if (ret)
+-		return ret;
+ 	if (test_and_clear_bit(PG_REMOVE, &req->wb_flags))
+ 		nfs_page_set_inode_ref(req, inode);
+-	nfs_page_group_unlock(req);
+-	return 0;
+ }
+ 
+ /**
+@@ -585,19 +575,18 @@ retry:
+ 		}
  	}
  
-+	soc = soc_device_match(sdhci_am654_descope_hs400);
-+	if (soc)
-+		sdhci_am654->quirks |= SDHCI_AM654_QUIRK_DISABLE_HS400;
++	ret = nfs_page_group_lock(head);
++	if (ret < 0)
++		goto out_unlock;
 +
- 	host->mmc_host_ops.start_signal_voltage_switch = sdhci_am654_start_signal_voltage_switch;
- 	host->mmc_host_ops.execute_tuning = sdhci_am654_execute_tuning;
+ 	/* Ensure that nobody removed the request before we locked it */
+ 	if (head != folio->private) {
++		nfs_page_group_unlock(head);
+ 		nfs_unlock_and_release_request(head);
+ 		goto retry;
+ 	}
  
+-	ret = nfs_cancel_remove_inode(head, inode);
+-	if (ret < 0)
+-		goto out_unlock;
+-
+-	ret = nfs_page_group_lock(head);
+-	if (ret < 0)
+-		goto out_unlock;
++	nfs_cancel_remove_inode(head, inode);
+ 
+ 	/* lock each request in the page group */
+ 	for (subreq = head->wb_this_page;
+@@ -786,7 +775,8 @@ static void nfs_inode_remove_request(str
+ {
+ 	struct nfs_inode *nfsi = NFS_I(nfs_page_to_inode(req));
+ 
+-	if (nfs_page_group_sync_on_bit(req, PG_REMOVE)) {
++	nfs_page_group_lock(req);
++	if (nfs_page_group_sync_on_bit_locked(req, PG_REMOVE)) {
+ 		struct folio *folio = nfs_page_to_folio(req->wb_head);
+ 		struct address_space *mapping = folio->mapping;
+ 
+@@ -798,6 +788,7 @@ static void nfs_inode_remove_request(str
+ 		}
+ 		spin_unlock(&mapping->i_private_lock);
+ 	}
++	nfs_page_group_unlock(req);
+ 
+ 	if (test_and_clear_bit(PG_INODE_REF, &req->wb_flags)) {
+ 		atomic_long_dec(&nfsi->nrequests);
+--- a/include/linux/nfs_page.h
++++ b/include/linux/nfs_page.h
+@@ -160,6 +160,7 @@ extern void nfs_join_page_group(struct n
+ extern int nfs_page_group_lock(struct nfs_page *);
+ extern void nfs_page_group_unlock(struct nfs_page *);
+ extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
++extern bool nfs_page_group_sync_on_bit_locked(struct nfs_page *, unsigned int);
+ extern	int nfs_page_set_headlock(struct nfs_page *req);
+ extern void nfs_page_clear_headlock(struct nfs_page *req);
+ extern bool nfs_async_iocounter_wait(struct rpc_task *, struct nfs_lock_context *);
 
 
