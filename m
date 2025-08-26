@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BA034DCF2;
-	Tue, 26 Aug 2025 14:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEBB352066;
+	Tue, 26 Aug 2025 14:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218049; cv=none; b=dOgKGPd6AY8VtnzZbIGKIxPuI0TeRFxbJxbPDldKaIPeatYnaXH1faFaOy8okUYHpCyVprFnDwgc7FomrWZpib2vYpEvpWjUhq5e7QMgpnfyYgG3cmZ1QGH/z/jwsDGQg/smZGAbm/rChn9xXkAAG8PqG80xn/3WFreAkpAuPcg=
+	t=1756218053; cv=none; b=BVHNI4Flv2VRrfdySiiJhOBqtTE0IqI+RE/19xUa3Xt0dkeLLfRQIinv9j3HcN8qfg8D3qakpeQlOAOXlGgYfSICG+xVPY1VTxnhwA6X0RWx46iyua0hvnyAUGoR0IT4MoUuVoEpMM9kEm6GwgisuwcynyyU14Ne/JFylh9QwZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218049; c=relaxed/simple;
-	bh=+9bD4+t/QnvfZsrfeBYzbDF6sDjpie8a6im4Kw+EYwM=;
+	s=arc-20240116; t=1756218053; c=relaxed/simple;
+	bh=9gXjk+YYhT4tHWuRg9h7kAjdKUdy1zUvQd5CHnYYkKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnndAWPkLTiWg4g/rOLc7pzMVcBI9rcuQ4AQCCN+j0Kn0LepfzFj5eU3lsiziYxFgRxLrsovvNyO1o4zdIucTKzl6uqdHc+wmis/I5lfTmkyewukDLDgzd1RygcubaGW2F+9F1pFMQ2ynay3ImFCGCCHs3t9TUkMforhyFbZMjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grPA3PzL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxhextBY9x1kI3GjVGjjgWFhEqk6elkCr+chs2GtL3/wEFYlz1r4MLujWE7FrCSxBXKgOyg7+/MfxCgb/v4/cnwCssoph0R0hKgbvtCiQQ/j9M1kiBygg0TQazA2eZ/L5svJGL1q1ThLYQ4e2KubadaYySipWEj4QopcZQsxwGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw4C670v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grPA3PzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BC6C4CEF1;
-	Tue, 26 Aug 2025 14:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw4C670v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F0FC4CEF1;
+	Tue, 26 Aug 2025 14:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218049;
-	bh=+9bD4+t/QnvfZsrfeBYzbDF6sDjpie8a6im4Kw+EYwM=;
+	s=korg; t=1756218052;
+	bh=9gXjk+YYhT4tHWuRg9h7kAjdKUdy1zUvQd5CHnYYkKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grPA3PzLEVxc346wuiT4b9wA0HtB3O4XKk36RGCdgpIToScEsc8VATqBrgL6wdjOF
-	 NG2HeXg9wbIRMD3Ry8vmqwDLBHDg/W/Q5wJHIGQt1emikC+InSqkPvDDxqxiPtOVGM
-	 szJhi/XWetfMtbA85vHkjV6YstyoCecQNibAuBOc=
+	b=vw4C670v3ZO++4FzYyODC0fZe2Fw7nHQObue9LIh4Cz4m4vstWGsuzQ4JRRNZEzNd
+	 6w5VWZ29ykFFnpHd/JifTm4BayNFjeI+DYniK4bQMpmxYG71OlA0DrhkJrTxucB4Ls
+	 K29m8+VWroGGec+Gv1IMBiKrTeITOz60WCeyYjDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 343/523] usb: typec: ucsi: Update power_supply on power role change
-Date: Tue, 26 Aug 2025 13:09:13 +0200
-Message-ID: <20250826110932.928775149@linuxfoundation.org>
+	Konstantin Evtushenko <koevtushenko@yandex.com>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 334/523] pNFS: Handle RPC size limit for layoutcommits
+Date: Tue, 26 Aug 2025 13:09:04 +0200
+Message-ID: <20250826110932.714389028@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,37 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-commit 7616f006db07017ef5d4ae410fca99279aaca7aa upstream.
+[ Upstream commit d897d81671bc4615c80f4f3bd5e6b218f59df50c ]
 
-The current power direction of an USB-C port also influences the
-power_supply's online status, so a power role change should also update
-the power_supply.
+When there are too many block extents for a layoutcommit, they may not
+all fit into the maximum-sized RPC. This patch allows the generic pnfs
+code to properly handle -ENOSPC returned by the block/scsi layout driver
+and trigger additional layoutcommits if necessary.
 
-Fixes an issue on some systems where plugging in a normal USB device in
-for the first time after a reboot will cause upower to erroneously
-consider the system to be connected to AC power.
-
-Cc: stable <stable@kernel.org>
-Fixes: 0e6371fbfba3 ("usb: typec: ucsi: Report power supply changes")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250721-fix-ucsi-pwr-dir-notify-v1-1-e53d5340cb38@qtmlabs.xyz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250630183537.196479-5-sergeybashirov@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/pnfs.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -779,6 +779,7 @@ static void ucsi_handle_connector_change
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 758689877d85..e14cf7140bab 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -3219,6 +3219,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
+ 	struct nfs_inode *nfsi = NFS_I(inode);
+ 	loff_t end_pos;
+ 	int status;
++	bool mark_as_dirty = false;
  
- 	if (con->status.change & UCSI_CONSTAT_CONNECT_CHANGE) {
- 		typec_set_pwr_role(con->port, role);
-+		ucsi_port_psy_changed(con);
+ 	if (!pnfs_layoutcommit_outstanding(inode))
+ 		return 0;
+@@ -3270,19 +3271,23 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
+ 	if (ld->prepare_layoutcommit) {
+ 		status = ld->prepare_layoutcommit(&data->args);
+ 		if (status) {
+-			put_cred(data->cred);
++			if (status != -ENOSPC)
++				put_cred(data->cred);
+ 			spin_lock(&inode->i_lock);
+ 			set_bit(NFS_INO_LAYOUTCOMMIT, &nfsi->flags);
+ 			if (end_pos > nfsi->layout->plh_lwb)
+ 				nfsi->layout->plh_lwb = end_pos;
+-			goto out_unlock;
++			if (status != -ENOSPC)
++				goto out_unlock;
++			spin_unlock(&inode->i_lock);
++			mark_as_dirty = true;
+ 		}
+ 	}
  
- 		switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
- 		case UCSI_CONSTAT_PARTNER_TYPE_UFP:
+ 
+ 	status = nfs4_proc_layoutcommit(data, sync);
+ out:
+-	if (status)
++	if (status || mark_as_dirty)
+ 		mark_inode_dirty_sync(inode);
+ 	dprintk("<-- %s status %d\n", __func__, status);
+ 	return status;
+-- 
+2.39.5
+
 
 
