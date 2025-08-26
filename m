@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22045196C7C;
-	Tue, 26 Aug 2025 13:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCB01FBCB1;
+	Tue, 26 Aug 2025 13:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214909; cv=none; b=n5wgfF6J4cujDWt8HXZGvewuueCR7q7ZLv+ZWtFVsCUNyHVSqlFh4bkMJ2+kytkU4TwLJ8ii7Xpw7Ag9y4wBOxJzK0PTHRogAMTy2kBuiG+4hZgJc97Y3Nm3NWbyuRlZpdzuS05L4hvqcPWClXKb/QyDgMuU8oVPyelk3S+olCA=
+	t=1756214911; cv=none; b=AKCf4fc67V5IwGrG4hKONj//qspJgi74JZrpcHdLzT1XQE7GCUxJDA1ZCYSjor0z53jgt4l6RtPlS+syaGalcTNjpA+flmaxDHwpKUJZ+jpcrkIzytoq+FFwFWjLNZjsINQP5NORW9uT/rRNTujRsEAsptVeXIV9UlWPQkbUIWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214909; c=relaxed/simple;
-	bh=NJcANyMcr7nj4qtqahjWMFURurftgHdlcxPZSeOIKPA=;
+	s=arc-20240116; t=1756214911; c=relaxed/simple;
+	bh=AZvh2OKdoCLimHv1Fg8BHtE4iE5AFWkDYQrJ71IsZcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LW+PR9i6YueqOW8uymEDvkJSBnZik1yeH7ScKi8CKLU9xU4p86/1BYP87G5sD1upw7nzQE0OICwjdkwrt/f1ig2hz9/rAZCT6ihc9HlMTYM54o+kI2FXCvuPM7yT57E8cmlPFQFBuYVY6rsdNh7wtonSIaDf523qgZ9KncNVvnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDt9k/ld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Giqz01hpPd/q7Yq1o0zEY82ykAUFc9ie5aqsYWphwb/rHQyQE75r0hqa5TrHk7+n//Ki0f4kPk123KqsfbQUy2JmjPgDCzNpX8VXn6Iz3XpHRc+ftZNr8WHA4gh4x37tTcTneAyKHwUS5ZPJBUn6TppV+R/+XwoAcRzEsryY2yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr+XVKjR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDt9k/ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4A8C4CEF1;
-	Tue, 26 Aug 2025 13:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr+XVKjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C4DC4CEF1;
+	Tue, 26 Aug 2025 13:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214908;
-	bh=NJcANyMcr7nj4qtqahjWMFURurftgHdlcxPZSeOIKPA=;
+	s=korg; t=1756214911;
+	bh=AZvh2OKdoCLimHv1Fg8BHtE4iE5AFWkDYQrJ71IsZcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDt9k/ldfhOzCX1XZhM8KMMc8s7NJlOQfWG3A+6Kao6BNtV+mu8aqCflbzx6nzACd
-	 FTHphXSecUycTvd61ao74PA8Llq+m8lBCRJucf2HVapRtoJxPrF42n2vmj5Gvq5epz
-	 ZgKBwufOkD6o5Dkmq5rBhSl+bJb7GJq0SqO4HsYw=
+	b=Yr+XVKjR6BTO94/S1IsI0SSeBbeeFvzkEF30mrEyD5p7o5W5JlYNwf09Jr0HHtLr9
+	 30X8sO7IxOtSnCszJsikaQlzZcWD8H3shpZcggblEJAubtP8bLU0nFIUKYMFFoULXT
+	 w4aiqbuqW/xRaaw3Nu5XnWQiMLbvUhNP9d5EhwE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	linux-parisc@vger.kernel.org
-Subject: [PATCH 6.1 314/482] parisc: Makefile: explain that 64BIT requires both 32-bit and 64-bit compilers
-Date: Tue, 26 Aug 2025 13:09:27 +0200
-Message-ID: <20250826110938.561541011@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 315/482] parisc: Revise __get_user() to probe user read access
+Date: Tue, 26 Aug 2025 13:09:28 +0200
+Message-ID: <20250826110938.585993365@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,37 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: John David Anglin <dave.anglin@bell.net>
 
-commit 305ab0a748c52eeaeb01d8cff6408842d19e5cb5 upstream.
+commit 89f686a0fb6e473a876a9a60a13aec67a62b9a7e upstream.
 
-For building a 64-bit kernel, both 32-bit and 64-bit VDSO binaries
-are built, so both 32-bit and 64-bit compilers (and tools) should be
-in the PATH environment variable.
+Because of the way read access support is implemented, read access
+interruptions are only triggered at privilege levels 2 and 3. The
+kernel executes at privilege level 0, so __get_user() never triggers
+a read access interruption (code 26). Thus, it is currently possible
+for user code to access a read protected address via a system call.
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-parisc@vger.kernel.org
+Fix this by probing read access rights at privilege level 3 (PRIV_USER)
+and setting __gu_err to -EFAULT (-14) if access isn't allowed.
+
+Note the cmpiclr instruction does a 32-bit compare because COND macro
+doesn't work inside asm.
+
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.3+
+Cc: stable@vger.kernel.org # v5.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Makefile |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/parisc/include/asm/uaccess.h |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/arch/parisc/Makefile
-+++ b/arch/parisc/Makefile
-@@ -39,7 +39,9 @@ endif
+--- a/arch/parisc/include/asm/uaccess.h
++++ b/arch/parisc/include/asm/uaccess.h
+@@ -42,9 +42,24 @@
+ 	__gu_err;					\
+ })
  
- export LD_BFD
+-#define __get_user(val, ptr)				\
+-({							\
+-	__get_user_internal(SR_USER, val, ptr);	\
++#define __probe_user_internal(sr, error, ptr)			\
++({								\
++	__asm__("\tproberi (%%sr%1,%2),%3,%0\n"			\
++		"\tcmpiclr,= 1,%0,%0\n"				\
++		"\tldi %4,%0\n"					\
++		: "=r"(error)					\
++		: "i"(sr), "r"(ptr), "i"(PRIV_USER),		\
++		  "i"(-EFAULT));				\
++})
++
++#define __get_user(val, ptr)					\
++({								\
++	register long __gu_err;					\
++								\
++	__gu_err = __get_user_internal(SR_USER, val, ptr);	\
++	if (likely(!__gu_err))					\
++		__probe_user_internal(SR_USER, __gu_err, ptr);	\
++	__gu_err;						\
+ })
  
--# Set default 32 bits cross compilers for vdso
-+# Set default 32 bits cross compilers for vdso.
-+# This means that for 64BIT, both the 64-bit tools and the 32-bit tools
-+# need to be in the path.
- CC_ARCHES_32 = hppa hppa2.0 hppa1.1
- CC_SUFFIXES  = linux linux-gnu unknown-linux-gnu suse-linux
- CROSS32_COMPILE := $(call cc-cross-prefix, \
+ #define __get_user_asm(sr, val, ldx, ptr)		\
 
 
