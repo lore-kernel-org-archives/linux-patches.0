@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2C61FECAB;
-	Tue, 26 Aug 2025 11:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B755718DF9D;
+	Tue, 26 Aug 2025 11:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208115; cv=none; b=Sym9/icYiBOvFs4/MKoVFrEN4/qHQKvO6oY4fqqWVtewu6RGmbRXZmQTKGcjb2C69XuM19RjLua0yly/KIcsafSfxsNPqagPjIHEt+MCTfii4nhXsHrSH2kA/iHF3l9FYR0uS2lJM+xZoGvQ24B6Iwa6nbhV2NmLYLxoBEfnoGk=
+	t=1756208118; cv=none; b=gF9u3K+rZWeCYm6Q9aMJ0gP5E+7TnfZWmzsJJKei28UCKkK4cDbLJ+IeoFXOkGJHhH19EK/FDMmHQbspyWtCfTcdzL0LQm8UqT0Hg8W7KHv8dArYFEubtpHzXc0mIv0uv/c9Iauss/mL9OtkE/p/Q03dZxUwfZRfp7OYAoXVvkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208115; c=relaxed/simple;
-	bh=OReVZQPQ1+xgQUT/zxW7XMYnU0cdrkndbOTJWUwNh4M=;
+	s=arc-20240116; t=1756208118; c=relaxed/simple;
+	bh=z0iHdEifPBUbkLFyUokutelBdFn0AaB3U2Z0jZivJcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjbc74gk/pqjT4sw5lLnr0uOgpoIUqe6FdOA0sSjGYUwhkzI5cuB7QHcUHx2VDvO0Ck82G7QvKG8zd8OYPAnJxUyoBniDXsRIFwwt8546/Fl1X6fS5aF5EsiCuVzBhiDMDtgDjLLyUq5iyz4TF0lnJOmGaFWHmAnaM6vCOc9UC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiPpKKUj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLH9WkPEByGQ9gXeNLoxXEU8KLoZwkSHAtBireiXa5TZV/1FPu5VqJ2o9fX7ja2dMrvlw6O1o6+paNEq+FPYHCh2v0oVsMXYzlGhBkfYd9V5onI6aWNb8+hRsPO3jBij0r7ln5uMNaqG85zdkBV5CkK38n+1Dc2O5nvjx7ptRj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyVgD/S9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiPpKKUj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BBEC4CEF1;
-	Tue, 26 Aug 2025 11:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyVgD/S9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DD6C4CEF1;
+	Tue, 26 Aug 2025 11:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208115;
-	bh=OReVZQPQ1+xgQUT/zxW7XMYnU0cdrkndbOTJWUwNh4M=;
+	s=korg; t=1756208118;
+	bh=z0iHdEifPBUbkLFyUokutelBdFn0AaB3U2Z0jZivJcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiPpKKUj2J80+8KOuPoZowMLltJ1Q+Eq3WPMRuIDapIMTfBd0rr5DzQ/rHFrUT7W2
-	 YHigOW8vi1m0NVdd6JyPxwyWivb5fR98mKkybGO7aax3u4LbOz3MdQpp2odKRNVHah
-	 dgt50d2bH09AS1V1qGsxneZcb+4k+drXUZZvzcT8=
+	b=PyVgD/S9BXarcSxA95/LcnF+Uml/VmLDdgq6JMDnThjNrMWCSbo6vZ1Q9wPpXC4Fz
+	 V5xS+MPAJNA4S3GUAl3v1GaYQ9sbWTIl/eCM9s5zNkqlNAs8Yg+HocgCGrlVg6BVOv
+	 tYkF8D+R8FWv/6wZXkwds+nNnCkMUP3lYSFtX6eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Vlad Dogaru <vdogaru@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 443/457] blk-mq: fix lockdep warning in __blk_mq_update_nr_hw_queues
-Date: Tue, 26 Aug 2025 13:12:07 +0200
-Message-ID: <20250826110948.233001612@linuxfoundation.org>
+Subject: [PATCH 6.16 417/457] net/mlx5: HWS, fix complex rules rehash error flow
+Date: Tue, 26 Aug 2025 13:11:41 +0200
+Message-ID: <20250826110947.599147971@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,84 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit 2d82f3bd8910eb65e30bb2a3c9b945bfb3b6d661 ]
+[ Upstream commit 4a842b1bf18a32ee0c25dd6dd98728b786a76fe4 ]
 
-Commit 5989bfe6ac6b ("block: restore two stage elevator switch while
-running nr_hw_queue update") reintroduced a lockdep warning by calling
-blk_mq_freeze_queue_nomemsave() before switching the I/O scheduler.
+Moving rules from matcher to matcher should not fail.
+However, if it does fail due to various reasons, the error flow
+should allow the kernel to continue functioning (albeit with broken
+steering rules) instead of going into series of soft lock-ups or
+some other problematic behaviour.
 
-The function blk_mq_elv_switch_none() calls elevator_change_done().
-Running this while the queue is frozen causes a lockdep warning.
+Similar to the simple rules, complex rules rehash logic suffers
+from the same problems. This patch fixes the error flow for moving
+complex rules:
+ - If new rule creation fails before it was even enqeued, do not
+   poll for completion
+ - If TIMEOUT happened while moving the rule, no point trying
+   to poll for completions for other rules. Something is broken,
+   completion won't come, just abort the rehash sequence.
+ - If some other completion with error received, don't give up.
+   Continue handling rest of the rules to minimize the damage.
+ - Make sure that the first error code that was received will
+   be actually returned to the caller instead of replacing it
+   with the generic error code.
 
-Fix this by reordering the operations: first, switch the I/O scheduler
-to 'none', and then freeze the queue. This ensures that elevator_change_done()
-is not called on an already frozen queue. And this way is safe because
-elevator_set_none() does freeze queue before switching to none.
+All the aforementioned issues stem from the same bad error flow,
+so no point fixing them one by one and leaving partially broken
+code - fixing them in one patch.
 
-Also we still have to rely on blk_mq_elv_switch_back() for switching
-back, and it has to cover unfrozen queue case.
-
-Cc: Nilay Shroff <nilay@linux.ibm.com>
-Cc: Yu Kuai <yukuai3@huawei.com>
-Fixes: 5989bfe6ac6b ("block: restore two stage elevator switch while running nr_hw_queue update")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250815131737.331692-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 17e0accac577 ("net/mlx5: HWS, support complex matchers")
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Reviewed-by: Vlad Dogaru <vdogaru@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250817202323.308604-4-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ .../mlx5/core/steering/hws/bwc_complex.c      | 41 +++++++++++++------
+ 1 file changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 4cb2f5ca8656..355db0abe44b 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -5031,6 +5031,7 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	unsigned int memflags;
- 	int i;
- 	struct xarray elv_tbl, et_tbl;
-+	bool queues_frozen = false;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc_complex.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc_complex.c
+index ca7501c57468..14e79579c719 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc_complex.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc_complex.c
+@@ -1328,11 +1328,11 @@ mlx5hws_bwc_matcher_move_all_complex(struct mlx5hws_bwc_matcher *bwc_matcher)
+ {
+ 	struct mlx5hws_context *ctx = bwc_matcher->matcher->tbl->ctx;
+ 	struct mlx5hws_matcher *matcher = bwc_matcher->matcher;
+-	bool move_error = false, poll_error = false;
+ 	u16 bwc_queues = mlx5hws_bwc_queues(ctx);
+ 	struct mlx5hws_bwc_rule *tmp_bwc_rule;
+ 	struct mlx5hws_rule_attr rule_attr;
+ 	struct mlx5hws_table *isolated_tbl;
++	int move_error = 0, poll_error = 0;
+ 	struct mlx5hws_rule *tmp_rule;
+ 	struct list_head *rules_list;
+ 	u32 expected_completions = 1;
+@@ -1391,11 +1391,15 @@ mlx5hws_bwc_matcher_move_all_complex(struct mlx5hws_bwc_matcher *bwc_matcher)
+ 			ret = mlx5hws_matcher_resize_rule_move(matcher,
+ 							       tmp_rule,
+ 							       &rule_attr);
+-			if (unlikely(ret && !move_error)) {
+-				mlx5hws_err(ctx,
+-					    "Moving complex BWC rule failed (%d), attempting to move rest of the rules\n",
+-					    ret);
+-				move_error = true;
++			if (unlikely(ret)) {
++				if (!move_error) {
++					mlx5hws_err(ctx,
++						    "Moving complex BWC rule: move failed (%d), attempting to move rest of the rules\n",
++						    ret);
++					move_error = ret;
++				}
++				/* Rule wasn't queued, no need to poll */
++				continue;
+ 			}
  
- 	lockdep_assert_held(&set->tag_list_lock);
+ 			expected_completions = 1;
+@@ -1403,11 +1407,19 @@ mlx5hws_bwc_matcher_move_all_complex(struct mlx5hws_bwc_matcher *bwc_matcher)
+ 						     rule_attr.queue_id,
+ 						     &expected_completions,
+ 						     true);
+-			if (unlikely(ret && !poll_error)) {
+-				mlx5hws_err(ctx,
+-					    "Moving complex BWC rule: poll failed (%d), attempting to move rest of the rules\n",
+-					    ret);
+-				poll_error = true;
++			if (unlikely(ret)) {
++				if (ret == -ETIMEDOUT) {
++					mlx5hws_err(ctx,
++						    "Moving complex BWC rule: timeout polling for completions (%d), aborting rehash\n",
++						    ret);
++					return ret;
++				}
++				if (!poll_error) {
++					mlx5hws_err(ctx,
++						    "Moving complex BWC rule: polling for completions failed (%d), attempting to move rest of the rules\n",
++						    ret);
++					poll_error = ret;
++				}
+ 			}
  
-@@ -5054,9 +5055,6 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		blk_mq_sysfs_unregister_hctxs(q);
+ 			/* Done moving the rule to the new matcher,
+@@ -1422,8 +1434,11 @@ mlx5hws_bwc_matcher_move_all_complex(struct mlx5hws_bwc_matcher *bwc_matcher)
+ 		}
  	}
  
--	list_for_each_entry(q, &set->tag_list, tag_set_list)
--		blk_mq_freeze_queue_nomemsave(q);
--
- 	/*
- 	 * Switch IO scheduler to 'none', cleaning up the data associated
- 	 * with the previous scheduler. We will switch back once we are done
-@@ -5066,6 +5064,9 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		if (blk_mq_elv_switch_none(q, &elv_tbl))
- 			goto switch_back;
+-	if (move_error || poll_error)
+-		ret = -EINVAL;
++	/* Return the first error that happened */
++	if (unlikely(move_error))
++		return move_error;
++	if (unlikely(poll_error))
++		return poll_error;
  
-+	list_for_each_entry(q, &set->tag_list, tag_set_list)
-+		blk_mq_freeze_queue_nomemsave(q);
-+	queues_frozen = true;
- 	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0)
- 		goto switch_back;
- 
-@@ -5089,8 +5090,12 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	}
- switch_back:
- 	/* The blk_mq_elv_switch_back unfreezes queue for us. */
--	list_for_each_entry(q, &set->tag_list, tag_set_list)
-+	list_for_each_entry(q, &set->tag_list, tag_set_list) {
-+		/* switch_back expects queue to be frozen */
-+		if (!queues_frozen)
-+			blk_mq_freeze_queue_nomemsave(q);
- 		blk_mq_elv_switch_back(q, &elv_tbl, &et_tbl);
-+	}
- 
- 	list_for_each_entry(q, &set->tag_list, tag_set_list) {
- 		blk_mq_sysfs_register_hctxs(q);
+ 	return ret;
+ }
 -- 
 2.50.1
 
