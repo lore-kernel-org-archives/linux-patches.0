@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A2917332C;
-	Tue, 26 Aug 2025 11:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42BC29D292;
+	Tue, 26 Aug 2025 11:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208425; cv=none; b=cZL14eWDXQ4oLdLex2ObXTalJKcmv4bZt/ddjVEMX/9AmV2hgFAiQbGMHPzu5MiJ97N0wyEHURljV+oLBQOYh1qNH/FbgGxKQDOHBmwzhAjnyPi6p43Dv+Dp7Jf0y2uteY0ugRSZWyfz5161bpr/tJMb0kxlEhPkXxTF0fsM/C4=
+	t=1756208427; cv=none; b=a+1tA+0Pb/x5YpRsnUhtf5jJoW7v6LJB8NMziCtEmOLmD1knO16DpplOs3NDCX56gfFYKm2i20WLcqvsT50ZtTbgJoNVyEvWGvBW7HEW51Sj6ujlPH17Wh2UtnfNMpWvwsWolyUkGtSuW0L5ZFK0IDU/X9VExMg7OBMXLBhyM3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208425; c=relaxed/simple;
-	bh=LV3xA1arGqXTtGZ990gfKgzyaDCE3p+501u6E9AofN4=;
+	s=arc-20240116; t=1756208427; c=relaxed/simple;
+	bh=mt57IDL936qb85nFr10b/C94eIMFNXDoNiQ38owuLyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/j/FH0U6sm5Y1ZujKdENgbEzXVfC/DI1OtP4sc76PJv6BzK4Yt5qQ9upWQXyJbw1XVZQKwBGZNzde4UuuDzEdUUjtFiwsJb8RFL5wb570lrybM5F6+5jeycBmQzBJkLkt75GPRc357kfmqSmVG7EUftlB9JqziBCwDxL7nKQB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alFRmeR8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TroIJdjM9Vor278lU/+bK0uBnq9ny4cFuwVPzZ1ZB0xHrl3POS23TXqSBSPB0658TT2i5aTn4xhnqs2tnlodgwOCVTG4Tq4ixVL8GqJvh07Am9iR1Mpcfk5pRZ+NFqKUBsYvyRCmmrSmyLAoAOPQjTRW845H9COdOb98wX0t9EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xpf3xC62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alFRmeR8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12456C4CEF1;
-	Tue, 26 Aug 2025 11:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xpf3xC62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC54C4CEF1;
+	Tue, 26 Aug 2025 11:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208425;
-	bh=LV3xA1arGqXTtGZ990gfKgzyaDCE3p+501u6E9AofN4=;
+	s=korg; t=1756208427;
+	bh=mt57IDL936qb85nFr10b/C94eIMFNXDoNiQ38owuLyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=alFRmeR8b+ZlD3y7/AugiFZvLarHnE0nwOoKI29m4kQHDndDQrvJxuXM437PiF4Ui
-	 Jt2EQ3T0OaZSrQYFpkI6KNjb36h5cuctWgmkGg2phzqVlVwnAxvpIbT/WuA3Bf13Qs
-	 SD76nU4Hm5/USWJHDxDFoc8+Qm58XuE0WRKw2z+Q=
+	b=Xpf3xC62ulkkPkCN+dtAdLgqT+rSObxEEXwMDuvmg02Y6bww6A/K2VDg74dQ8QPCs
+	 hDl0O1PLSh3+mBYD8H4I7myd/cQrZdH4w35rQal5toQtyB8tCEX7wkvEen7m9TFfAO
+	 NoS/1ElxqsAmI54LICQRPbb0irc9mcy5NRN0YLaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 075/322] PCI: endpoint: Fix configfs group list head handling
-Date: Tue, 26 Aug 2025 13:08:10 +0200
-Message-ID: <20250826110917.455173096@linuxfoundation.org>
+Subject: [PATCH 6.12 076/322] PCI: endpoint: Fix configfs group removal on driver teardown
+Date: Tue, 26 Aug 2025 13:08:11 +0200
+Message-ID: <20250826110917.482013908@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,58 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-commit d79123d79a8154b4318529b7b2ff7e15806f480b upstream.
+commit 910bdb8197f9322790c738bb32feaa11dba26909 upstream.
 
-Doing a list_del() on the epf_group field of struct pci_epf_driver in
-pci_epf_remove_cfs() is not correct as this field is a list head, not
-a list entry. This list_del() call triggers a KASAN warning when an
-endpoint function driver which has a configfs attribute group is torn
-down:
+An endpoint driver configfs attributes group is added to the
+epf_group list of struct pci_epf_driver by pci_epf_add_cfs() but an
+added group is not removed from this list when the attribute group is
+unregistered with pci_ep_cfs_remove_epf_group().
 
-==================================================================
-BUG: KASAN: slab-use-after-free in pci_epf_remove_cfs+0x17c/0x198
-Write of size 8 at addr ffff00010f4a0d80 by task rmmod/319
+Add the missing list_del() call in pci_ep_cfs_remove_epf_group()
+to correctly remove the attribute group from the driver list.
 
-CPU: 3 UID: 0 PID: 319 Comm: rmmod Not tainted 6.16.0-rc2 #1 NONE
-Hardware name: Radxa ROCK 5B (DT)
-Call trace:
-show_stack+0x2c/0x84 (C)
-dump_stack_lvl+0x70/0x98
-print_report+0x17c/0x538
-kasan_report+0xb8/0x190
-__asan_report_store8_noabort+0x20/0x2c
-pci_epf_remove_cfs+0x17c/0x198
-pci_epf_unregister_driver+0x18/0x30
-nvmet_pci_epf_cleanup_module+0x24/0x30 [nvmet_pci_epf]
-__arm64_sys_delete_module+0x264/0x424
-invoke_syscall+0x70/0x260
-el0_svc_common.constprop.0+0xac/0x230
-do_el0_svc+0x40/0x58
-el0_svc+0x48/0xdc
-el0t_64_sync_handler+0x10c/0x138
-el0t_64_sync+0x198/0x19c
-...
-
-Remove this incorrect list_del() call from pci_epf_remove_cfs().
+With this change, once the loop over all attribute groups in
+pci_epf_remove_cfs() completes, the driver epf_group list should be
+empty. Add a WARN_ON() to make sure of that.
 
 Fixes: ef1433f717a2 ("PCI: endpoint: Create configfs entry for each pci_epf_device_id table entry")
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250624114544.342159-2-dlemoal@kernel.org
+Link: https://patch.msgid.link/20250624114544.342159-3-dlemoal@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-epf-core.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/endpoint/pci-ep-cfs.c   |    1 +
+ drivers/pci/endpoint/pci-epf-core.c |    1 +
+ 2 files changed, 2 insertions(+)
 
+--- a/drivers/pci/endpoint/pci-ep-cfs.c
++++ b/drivers/pci/endpoint/pci-ep-cfs.c
+@@ -691,6 +691,7 @@ void pci_ep_cfs_remove_epf_group(struct
+ 	if (IS_ERR_OR_NULL(group))
+ 		return;
+ 
++	list_del(&group->group_entry);
+ 	configfs_unregister_default_group(group);
+ }
+ EXPORT_SYMBOL(pci_ep_cfs_remove_epf_group);
 --- a/drivers/pci/endpoint/pci-epf-core.c
 +++ b/drivers/pci/endpoint/pci-epf-core.c
-@@ -334,7 +334,6 @@ static void pci_epf_remove_cfs(struct pc
+@@ -334,6 +334,7 @@ static void pci_epf_remove_cfs(struct pc
  	mutex_lock(&pci_epf_mutex);
  	list_for_each_entry_safe(group, tmp, &driver->epf_group, group_entry)
  		pci_ep_cfs_remove_epf_group(group);
--	list_del(&driver->epf_group);
++	WARN_ON(!list_empty(&driver->epf_group));
  	mutex_unlock(&pci_epf_mutex);
  }
  
