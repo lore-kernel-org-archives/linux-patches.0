@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DA73002D2;
-	Tue, 26 Aug 2025 11:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C55749C;
+	Tue, 26 Aug 2025 11:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208969; cv=none; b=Ww6QNTGQNH27Xy4UKRM61hcp2cuNR+MZIWjIFa2x7CkXBXXG9mH7JC3pqVhSW9wu1LQ+Odg63nW+fxmSZOoxjCjCr/GxsD0gKL2MvTOQjNFpV5eHKSohUrhvbGpViFdmpTCfslYmnBUZzhLPazzgXk8DrGwY0L7Vh8VDKabK0io=
+	t=1756208972; cv=none; b=gHsGiKgD4nQ+IzR0fRZVevbG0cOVxY6vbUJ7HFtRE7+ilea2pyETFYagRu6wDfp619AZs14HObFblcyXYcQnvMp/lC6MCC/D7sZ8Jsx0V/S9c/xdiik1RLd4COCZkfkU1zaKvZJTnx2hFgXzP5KEGHfERWg0q83nn69clcYgfrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208969; c=relaxed/simple;
-	bh=tO9GkSWm+vG4MtI+b1sqpWOXbuybEwMsMxmt7/RC6QY=;
+	s=arc-20240116; t=1756208972; c=relaxed/simple;
+	bh=ohhpY+ec6Bzb6jUWjpEjUR7vgD0N+3rZqUQmLRGgjz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hXBj5ziBQ6Uzm2jwuhUvKE+w13dkO8UvOnHX+pDVVq8a+j7kPpIZeXrysaCWg+u1z7FYVJDn9rkVGy8ez6QwWBtkleb8KVr815w8Pq1+ny4zJ05O0Pa8Hw2bM2CJra/boFE8BWrH+4jakXjSeqn35rfSkRVHzc2VhjHdRusKCyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cRFfRWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPMmzyT6g/wBEY6HRrlFeVhU/fpgME1N1wRc8H0DZJ4jp3mLgr89Z0IkCB8hSSLYtqqz6kxIrlWSBneyjiM2PwMiBJqoItzCmAw0HaxJ/MiOJi/YTj4kJ0o1i4vPPGGit6NpYxXGC2dHqtWXhbQDj+aln2uG3id2kuFMs12wgnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSNtonty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cRFfRWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41EBC4CEF4;
-	Tue, 26 Aug 2025 11:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSNtonty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE64C4CEF1;
+	Tue, 26 Aug 2025 11:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208969;
-	bh=tO9GkSWm+vG4MtI+b1sqpWOXbuybEwMsMxmt7/RC6QY=;
+	s=korg; t=1756208971;
+	bh=ohhpY+ec6Bzb6jUWjpEjUR7vgD0N+3rZqUQmLRGgjz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cRFfRWwoCvs4YJu44pRVLRr5eWIDqv4gFso8+JtaSqn134TcOTRpgBZ2Whwj8w6j
-	 g4QjywKhDZBKGep17ROe14XlEJXeEOzTBEg9pooIPUXSk6BFi8gQgreTp+ZdP8kOpt
-	 eOT+ZiwETNbGpzEIY7Th9PTWBz10APrHcrNrF/Zc=
+	b=lSNtonty88/dOiFBApdZvyIVdK6L5OQ3IQnGJDCnbBrPvlHKZW/1/KaK60Pvwbo7N
+	 YoQClWE583QAcJ0JpeKTjgGbM/hAZDxO//ZXM34GczRnMLCc+a1PfpkGkwublqmuXi
+	 w/dQ38GRTHuBThiLIqmsxItWLk3UcFPpe5jZ5vUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 307/322] net/sched: Make cake_enqueue return NET_XMIT_CN when past buffer_limit
-Date: Tue, 26 Aug 2025 13:12:02 +0200
-Message-ID: <20250826110923.472302851@linuxfoundation.org>
+Subject: [PATCH 6.12 316/322] net/mlx5e: Query FW for buffer ownership
+Date: Tue, 26 Aug 2025 13:12:11 +0200
+Message-ID: <20250826110923.691854758@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -48,95 +48,147 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit 15de71d06a400f7fdc15bf377a2552b0ec437cf5 ]
+[ Upstream commit 451d2849ea66659040b59ae3cb7e50cc97404733 ]
 
-The following setup can trigger a WARNING in htb_activate due to
-the condition: !cl->leaf.q->q.qlen
+The SW currently saves local buffer ownership when setting
+the buffer.
+This means that the SW assumes it has ownership of the buffer
+after the command is set.
 
-tc qdisc del dev lo root
-tc qdisc add dev lo root handle 1: htb default 1
-tc class add dev lo parent 1: classid 1:1 \
-       htb rate 64bit
-tc qdisc add dev lo parent 1:1 handle f: \
-       cake memlimit 1b
-ping -I lo -f -c1 -s64 -W0.001 127.0.0.1
+If setting the buffer fails and we remain in FW ownership,
+the local buffer ownership state incorrectly remains as SW-owned.
+This leads to incorrect behavior in subsequent PFC commands,
+causing failures.
 
-This is because the low memlimit leads to a low buffer_limit, which
-causes packet dropping. However, cake_enqueue still returns
-NET_XMIT_SUCCESS, causing htb_enqueue to call htb_activate with an
-empty child qdisc. We should return NET_XMIT_CN when packets are
-dropped from the same tin and flow.
+Instead of saving local buffer ownership in SW,
+query the FW for buffer ownership when setting the buffer.
+This ensures that the buffer ownership state is accurately
+reflected, avoiding the issues caused by incorrect ownership
+states.
 
-I do not believe return value of NET_XMIT_CN is necessary for packet
-drops in the case of ack filtering, as that is meant to optimize
-performance, not to signal congestion.
-
-Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
-Signed-off-by: William Liu <will@willsroot.io>
-Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20250819033601.579821-1-will@willsroot.io
+Fixes: ecdf2dadee8e ("net/mlx5e: Receive buffer support for DCBX")
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250820133209.389065-8-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en/dcbnl.h    |  1 -
+ .../ethernet/mellanox/mlx5/core/en_dcbnl.c    | 12 ++++++++---
+ .../ethernet/mellanox/mlx5/core/mlx5_core.h   |  2 ++
+ .../net/ethernet/mellanox/mlx5/core/port.c    | 20 +++++++++++++++++++
+ 4 files changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 2c2e2a67f3b2..6cbe8a7a0e5c 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1745,7 +1745,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	ktime_t now = ktime_get();
- 	struct cake_tin_data *b;
- 	struct cake_flow *flow;
--	u32 idx;
-+	u32 idx, tin;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h b/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h
+index b59aee75de94..2c98a5299df3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/dcbnl.h
+@@ -26,7 +26,6 @@ struct mlx5e_dcbx {
+ 	u8                         cap;
  
- 	/* choose flow to insert into */
- 	idx = cake_classify(sch, &b, skb, q->flow_mode, &ret);
-@@ -1755,6 +1755,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		__qdisc_drop(skb, to_free);
- 		return ret;
- 	}
-+	tin = (u32)(b - q->tins);
- 	idx--;
- 	flow = &b->flows[idx];
+ 	/* Buffer configuration */
+-	bool                       manual_buffer;
+ 	u32                        cable_len;
+ 	u32                        xoff;
+ 	u16                        port_buff_cell_sz;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 8705cffc747f..b08328fe1aa3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -362,6 +362,7 @@ static int mlx5e_dcbnl_ieee_getpfc(struct net_device *dev,
+ static int mlx5e_dcbnl_ieee_setpfc(struct net_device *dev,
+ 				   struct ieee_pfc *pfc)
+ {
++	u8 buffer_ownership = MLX5_BUF_OWNERSHIP_UNKNOWN;
+ 	struct mlx5e_priv *priv = netdev_priv(dev);
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u32 old_cable_len = priv->dcbx.cable_len;
+@@ -389,7 +390,14 @@ static int mlx5e_dcbnl_ieee_setpfc(struct net_device *dev,
  
-@@ -1922,13 +1923,22 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		q->buffer_max_used = q->buffer_used;
- 
- 	if (q->buffer_used > q->buffer_limit) {
-+		bool same_flow = false;
- 		u32 dropped = 0;
-+		u32 drop_id;
- 
- 		while (q->buffer_used > q->buffer_limit) {
- 			dropped++;
--			cake_drop(sch, to_free);
-+			drop_id = cake_drop(sch, to_free);
+ 	if (MLX5_BUFFER_SUPPORTED(mdev)) {
+ 		pfc_new.pfc_en = (changed & MLX5E_PORT_BUFFER_PFC) ? pfc->pfc_en : curr_pfc_en;
+-		if (priv->dcbx.manual_buffer)
++		ret = mlx5_query_port_buffer_ownership(mdev,
++						       &buffer_ownership);
++		if (ret)
++			netdev_err(dev,
++				   "%s, Failed to get buffer ownership: %d\n",
++				   __func__, ret);
 +
-+			if ((drop_id >> 16) == tin &&
-+			    (drop_id & 0xFFFF) == idx)
-+				same_flow = true;
- 		}
- 		b->drop_overlimit += dropped;
-+
-+		if (same_flow)
-+			return NET_XMIT_CN;
- 	}
- 	return NET_XMIT_SUCCESS;
++		if (buffer_ownership == MLX5_BUF_OWNERSHIP_SW_OWNED)
+ 			ret = mlx5e_port_manual_buffer_config(priv, changed,
+ 							      dev->mtu, &pfc_new,
+ 							      NULL, NULL);
+@@ -982,7 +990,6 @@ static int mlx5e_dcbnl_setbuffer(struct net_device *dev,
+ 	if (!changed)
+ 		return 0;
+ 
+-	priv->dcbx.manual_buffer = true;
+ 	err = mlx5e_port_manual_buffer_config(priv, changed, dev->mtu, NULL,
+ 					      buffer_size, prio2buffer);
+ 	return err;
+@@ -1250,7 +1257,6 @@ void mlx5e_dcbnl_initialize(struct mlx5e_priv *priv)
+ 		priv->dcbx.cap |= DCB_CAP_DCBX_HOST;
+ 
+ 	priv->dcbx.port_buff_cell_sz = mlx5e_query_port_buffers_cell_size(priv);
+-	priv->dcbx.manual_buffer = false;
+ 	priv->dcbx.cable_len = MLX5E_DEFAULT_CABLE_LEN;
+ 
+ 	mlx5e_ets_init(priv);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 52c9a196728d..dc6965f6746e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -351,6 +351,8 @@ int mlx5_query_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *out);
+ int mlx5_set_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *in);
+ int mlx5_set_trust_state(struct mlx5_core_dev *mdev, u8 trust_state);
+ int mlx5_query_trust_state(struct mlx5_core_dev *mdev, u8 *trust_state);
++int mlx5_query_port_buffer_ownership(struct mlx5_core_dev *mdev,
++				     u8 *buffer_ownership);
+ int mlx5_set_dscp2prio(struct mlx5_core_dev *mdev, u8 dscp, u8 prio);
+ int mlx5_query_dscp2prio(struct mlx5_core_dev *mdev, u8 *dscp2prio);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+index dee4e44e2274..389b34d56b75 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+@@ -968,6 +968,26 @@ int mlx5_query_trust_state(struct mlx5_core_dev *mdev, u8 *trust_state)
+ 	return err;
  }
+ 
++int mlx5_query_port_buffer_ownership(struct mlx5_core_dev *mdev,
++				     u8 *buffer_ownership)
++{
++	u32 out[MLX5_ST_SZ_DW(pfcc_reg)] = {};
++	int err;
++
++	if (!MLX5_CAP_PCAM_FEATURE(mdev, buffer_ownership)) {
++		*buffer_ownership = MLX5_BUF_OWNERSHIP_UNKNOWN;
++		return 0;
++	}
++
++	err = mlx5_query_pfcc_reg(mdev, out, sizeof(out));
++	if (err)
++		return err;
++
++	*buffer_ownership = MLX5_GET(pfcc_reg, out, buf_ownership);
++
++	return 0;
++}
++
+ int mlx5_set_dscp2prio(struct mlx5_core_dev *mdev, u8 dscp, u8 prio)
+ {
+ 	int sz = MLX5_ST_SZ_BYTES(qpdpm_reg);
 -- 
 2.50.1
 
