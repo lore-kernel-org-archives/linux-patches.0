@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103A44C6D;
-	Tue, 26 Aug 2025 13:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B379018F2FC;
+	Tue, 26 Aug 2025 13:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213875; cv=none; b=gGiW+tWQMBsMQgizNpm98aBkPfhY6GHOtE25B/7iPNsnDxUamV/45afZb1tCvvVf5ihJFRvMsx+K3k5mUfqUDqXoI10YJkBlI6EhGEInyoWMHvbivmQR0LaxJMhgZjYH3gzEY6Boxw2F4F1XHyFGc3mYlklD3J/ieCxlu9v4jg8=
+	t=1756213877; cv=none; b=uxyML9BikJnPI5HK81DXabikqD2gdMJxS1468gsy8GFECPtiM9+n6H3kc6X8zocQF/OUmDlsGycf3Qzm+bjAYSIbqxZ0XuHvdDbFUxois9scxCbf5gLU0zReevM61PcDXUehPXJIi1oJeGzECdCehqLtkbGTPuzZeUg+qIBxbkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213875; c=relaxed/simple;
-	bh=Nrdl1pXBFaqBcOTlEECAUlrrovYH08BVoXI5SxBxVCk=;
+	s=arc-20240116; t=1756213877; c=relaxed/simple;
+	bh=nRxttC8r5Rzg9vH1XkZv7NnhqvkPCCxz1/gmVk2UxUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0eEW1mI0gexwG5rueCjXqhWgxOKm5qHw528cPxPTXR0lqV79Ybn1oEkjOiKAj7NopZCRPmL18NdBEP+h2oS9yxjnyN+DnGQ6GKRVWQ7IqheF3CJ08DAj7O7jr5zJQ0W9szMpViGR3UZMluV7P0pmt6SskDQ29Sa2g6Ayj8mYog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xvbuu6lb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ph25ig3ANkQrq98t85S02XQlQ9gYZiSwQLwpA/amv5LxwkjwblGWooF5zEWIn+k4UTFQo+8bgS9gb3unn/ErNj9tneHAL8194bbt3vga/6NoXydVFCHRdjKHyWXmzcE+paT5o5MjA4rJIVTw1VPbr0BZ1UZn9lYDjOPc/reEqaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IB1J7pwB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xvbuu6lb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955FDC4CEF1;
-	Tue, 26 Aug 2025 13:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IB1J7pwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382FCC4CEF1;
+	Tue, 26 Aug 2025 13:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213874;
-	bh=Nrdl1pXBFaqBcOTlEECAUlrrovYH08BVoXI5SxBxVCk=;
+	s=korg; t=1756213877;
+	bh=nRxttC8r5Rzg9vH1XkZv7NnhqvkPCCxz1/gmVk2UxUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xvbuu6lb59h8P68AkMbhaqUjHpIB9ca/vkj8veieQBw2PWHkBMiGz4MU6Tl5nz8yw
-	 zUKvvT9+4TmclBkIBhHvpmikZxZ26b3+2byBh8Ax0HJgbwuLIqA27JxwvbV4eWSbuv
-	 hHH7DXsTAkSrOZqBMJA6pjRvcCoVrdvywp395elY=
+	b=IB1J7pwBOz7dUzSmyTh8NkydyZp/VzbPv0o4yszqLoLShL7Wt4vuoRanH9z1njBHk
+	 dsMidqPdHnywm8e1B6c3/lrZeuseuIz5vmT/cxNFLZw0kTJ29NcJ66phhjKz0yWiyj
+	 ZIlkI5axeHQD2ovgSflpUtq7ge8YG7Mgyl+CXnZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Shih <victor.shih@genesyslogic.com.tw>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 481/587] mmc: sdhci-pci-gli: GL9763e: Rename the gli_set_gl9763e() for consistency
-Date: Tue, 26 Aug 2025 13:10:30 +0200
-Message-ID: <20250826111005.209193051@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Scott GUO <scottzhguo@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 482/587] squashfs: fix memory leak in squashfs_fill_super
+Date: Tue, 26 Aug 2025 13:10:31 +0200
+Message-ID: <20250826111005.235399634@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,43 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Shih <victor.shih@genesyslogic.com.tw>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit 293ed0f5f34e1e9df888456af4b0a021f57b5f54 upstream.
+commit b64700d41bdc4e9f82f1346c15a3678ebb91a89c upstream.
 
-In preparation to fix replay timer timeout, rename the
-gli_set_gl9763e() to gl9763e_hw_setting() for consistency.
+If sb_min_blocksize returns 0, squashfs_fill_super exits without freeing
+allocated memory (sb->s_fs_info).
 
-Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
-Fixes: 1ae1d2d6e555 ("mmc: sdhci-pci-gli: Add Genesys Logic GL9763E support")
-Cc: stable@vger.kernel.org
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250731065752.450231-3-victorshihgli@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fix this by moving the call to sb_min_blocksize to before memory is
+allocated.
+
+Link: https://lkml.kernel.org/r/20250811223740.110392-1-phillip@squashfs.org.uk
+Fixes: 734aa85390ea ("Squashfs: check return result of sb_min_blocksize")
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: Scott GUO <scottzhguo@tencent.com>
+Closes: https://lore.kernel.org/all/20250811061921.3807353-1-scott_gzh@163.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/squashfs/super.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -1343,7 +1343,7 @@ cleanup:
- 	return ret;
- }
+--- a/fs/squashfs/super.c
++++ b/fs/squashfs/super.c
+@@ -187,10 +187,15 @@ static int squashfs_fill_super(struct su
+ 	unsigned short flags;
+ 	unsigned int fragments;
+ 	u64 lookup_table_start, xattr_id_table_start, next_table;
+-	int err;
++	int err, devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
  
--static void gli_set_gl9763e(struct sdhci_pci_slot *slot)
-+static void gl9763e_hw_setting(struct sdhci_pci_slot *slot)
- {
- 	struct pci_dev *pdev = slot->chip->pdev;
- 	u32 value;
-@@ -1515,7 +1515,7 @@ static int gli_probe_slot_gl9763e(struct
- 	gli_pcie_enable_msi(slot);
- 	host->mmc_host_ops.hs400_enhanced_strobe =
- 					gl9763e_hs400_enhanced_strobe;
--	gli_set_gl9763e(slot);
-+	gl9763e_hw_setting(slot);
- 	sdhci_enable_v4_mode(host);
+ 	TRACE("Entered squashfs_fill_superblock\n");
  
- 	return 0;
++	if (!devblksize) {
++		errorf(fc, "squashfs: unable to set blocksize\n");
++		return -EINVAL;
++	}
++
+ 	sb->s_fs_info = kzalloc(sizeof(*msblk), GFP_KERNEL);
+ 	if (sb->s_fs_info == NULL) {
+ 		ERROR("Failed to allocate squashfs_sb_info\n");
+@@ -201,12 +206,7 @@ static int squashfs_fill_super(struct su
+ 
+ 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
+ 
+-	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
+-	if (!msblk->devblksize) {
+-		errorf(fc, "squashfs: unable to set blocksize\n");
+-		return -EINVAL;
+-	}
+-
++	msblk->devblksize = devblksize;
+ 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 
+ 	mutex_init(&msblk->meta_index_mutex);
 
 
