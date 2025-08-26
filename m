@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2575032143C;
-	Tue, 26 Aug 2025 11:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87624301486;
+	Tue, 26 Aug 2025 11:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208095; cv=none; b=Bh/cDHBF5UUA7ZIw5zjPcL1zhkA2BaQXicc7qZRRO2cYitD62PmgKN88Xt/tK2922blLiPJpU91dlyWNKdVLD+ewUyk5lFEOyf5zmNeiDT/k2Jq/+hNRy/OBZCpS3jn/w+RoTpu/DK4albyM3F9mdqKwvgvL+VMn6B3/i41UGrg=
+	t=1756208097; cv=none; b=KRWuTRIa56OcaLQMgK6CLJA/ZHYZEUB/lSeyAJ1kErtVdfmMa+CdCU9N/3QPEzYswPkmjWSmXnMlwAInMaJSNUpZsAMKsZytwkuEKFGEleFE2CuyQ0yb43JW/SSElFJdEH1WlOc9HXSN8SCDuohWFgtIifhioGseAioRWMffsJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208095; c=relaxed/simple;
-	bh=MKPB5vTy7HbFNBKrsPoEYEcDDbKQknCfzICQogCeDIc=;
+	s=arc-20240116; t=1756208097; c=relaxed/simple;
+	bh=iF5mqqMdo3J6gJ7BfvYlhrgE5ufTJ9rVfthM+gBd8DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2bWa8tOZ0EAYOquGzW5g4EisNK+XL+Vc0ordx/HR4qmSIseXDsS5y9mKoQM79TlZaMQmDC3+mz9DFgn6vBLCaHjHR8fwloCJdpMQCta3/dFmKD4q4lLDK/V18IPt4+pJ8TmLvNyaWc2ra0FjVq6rPeSqnUOb6LI/07asLVFJD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvXlvf7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=daMNZixj5QavKvkabMF4dQ/t+PShYwHhhLudnHKrOBDXxuX61T3rff8QqdseFcye+xoNtJ9Ltw+lrOPdy5F0ltR9LoTc3MdPpH1HHA64bDGAyqLNNrBd5S2E65Lwm+zcvMwZJdSh9+ilndgIbJqKE6v54pmHkco8hJTkRGlAaG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kN1eo6f9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvXlvf7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C3FC4CEF1;
-	Tue, 26 Aug 2025 11:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN1eo6f9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21625C4CEF1;
+	Tue, 26 Aug 2025 11:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208095;
-	bh=MKPB5vTy7HbFNBKrsPoEYEcDDbKQknCfzICQogCeDIc=;
+	s=korg; t=1756208097;
+	bh=iF5mqqMdo3J6gJ7BfvYlhrgE5ufTJ9rVfthM+gBd8DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvXlvf7COkn+3rxo6VuZUiO7BQofeCYa7mfeSlHcZLfrMLeQUp7qm5oFLCCXnvn0a
-	 yYbVo4UsHQNXkg5Tsmd8Ea6HJHYGRMnSVzMYViMETaUNJO7Y7hD0q8cdVb9pstGj01
-	 B7+jFqcfFIP08LrZizKQhz8h3qjYAr/l85HfR5Ng=
+	b=kN1eo6f9epQyNYGfwcbVZP5w+zWq6gf7It1n4HHvasZGmR2iRkud/nGki3mlxY2Wx
+	 C2kwgKLjteVzBagjnrLYOKT0a1ZGGT89J9rlzoUGk5A6veFMBlVxj01SC4XGhKRpJP
+	 kTBMpjdLpnJqLOGwrQWAuIZw81rFhZ4wdveqPkik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dewei Meng <mengdewei@cqsoftware.com.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 435/457] net/sched: Remove unnecessary WARNING condition for empty child qdisc in htb_activate
-Date: Tue, 26 Aug 2025 13:11:59 +0200
-Message-ID: <20250826110948.039652840@linuxfoundation.org>
+Subject: [PATCH 6.16 436/457] ALSA: timer: fix ida_free call while not allocated
+Date: Tue, 26 Aug 2025 13:12:00 +0200
+Message-ID: <20250826110948.063166851@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,36 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Dewei Meng <mengdewei@cqsoftware.com.cn>
 
-[ Upstream commit 2c2192e5f9c7c2892fe2363244d1387f62710d83 ]
+[ Upstream commit 5003a65790ed66be882d1987cc2ca86af0de3db1 ]
 
-The WARN_ON trigger based on !cl->leaf.q->q.qlen is unnecessary in
-htb_activate. htb_dequeue_tree already accounts for that scenario.
+In the snd_utimer_create() function, if the kasprintf() function return
+NULL, snd_utimer_put_id() will be called, finally use ida_free()
+to free the unallocated id 0.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: William Liu <will@willsroot.io>
-Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250819033632.579854-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+the syzkaller reported the following information:
+  ------------[ cut here ]------------
+  ida_free called for id=0 which is not allocated.
+  WARNING: CPU: 1 PID: 1286 at lib/idr.c:592 ida_free+0x1fd/0x2f0 lib/idr.c:592
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 1286 Comm: syz-executor164 Not tainted 6.15.8 #3 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.fc42 04/01/2014
+  RIP: 0010:ida_free+0x1fd/0x2f0 lib/idr.c:592
+  Code: f8 fc 41 83 fc 3e 76 69 e8 70 b2 f8 (...)
+  RSP: 0018:ffffc900007f79c8 EFLAGS: 00010282
+  RAX: 0000000000000000 RBX: 1ffff920000fef3b RCX: ffffffff872176a5
+  RDX: ffff88800369d200 RSI: 0000000000000000 RDI: ffff88800369d200
+  RBP: 0000000000000000 R08: ffffffff87ba60a5 R09: 0000000000000000
+  R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+  R13: 0000000000000002 R14: 0000000000000000 R15: 0000000000000000
+  FS:  00007f6f1abc1740(0000) GS:ffff8880d76a0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f6f1ad7a784 CR3: 000000007a6e2000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   snd_utimer_put_id sound/core/timer.c:2043 [inline] [snd_timer]
+   snd_utimer_create+0x59b/0x6a0 sound/core/timer.c:2184 [snd_timer]
+   snd_utimer_ioctl_create sound/core/timer.c:2202 [inline] [snd_timer]
+   __snd_timer_user_ioctl.isra.0+0x724/0x1340 sound/core/timer.c:2287 [snd_timer]
+   snd_timer_user_ioctl+0x75/0xc0 sound/core/timer.c:2298 [snd_timer]
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:907 [inline]
+   __se_sys_ioctl fs/ioctl.c:893 [inline]
+   __x64_sys_ioctl+0x198/0x200 fs/ioctl.c:893
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x7b/0x160 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [...]
+
+The utimer->id should be set properly before the kasprintf() function,
+ensures the snd_utimer_put_id() function will free the allocated id.
+
+Fixes: 37745918e0e75 ("ALSA: timer: Introduce virtual userspace-driven timers")
+Signed-off-by: Dewei Meng <mengdewei@cqsoftware.com.cn>
+Link: https://patch.msgid.link/20250821014317.40786-1-mengdewei@cqsoftware.com.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/timer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index c968ea763774..b5e40c51655a 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -592,7 +592,7 @@ htb_change_class_mode(struct htb_sched *q, struct htb_class *cl, s64 *diff)
-  */
- static inline void htb_activate(struct htb_sched *q, struct htb_class *cl)
- {
--	WARN_ON(cl->level || !cl->leaf.q || !cl->leaf.q->q.qlen);
-+	WARN_ON(cl->level || !cl->leaf.q);
+diff --git a/sound/core/timer.c b/sound/core/timer.c
+index 8072183c33d3..a352247519be 100644
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -2139,14 +2139,14 @@ static int snd_utimer_create(struct snd_timer_uinfo *utimer_info,
+ 		goto err_take_id;
+ 	}
  
- 	if (!cl->prio_activity) {
- 		cl->prio_activity = 1 << cl->prio;
++	utimer->id = utimer_id;
++
+ 	utimer->name = kasprintf(GFP_KERNEL, "snd-utimer%d", utimer_id);
+ 	if (!utimer->name) {
+ 		err = -ENOMEM;
+ 		goto err_get_name;
+ 	}
+ 
+-	utimer->id = utimer_id;
+-
+ 	tid.dev_sclass = SNDRV_TIMER_SCLASS_APPLICATION;
+ 	tid.dev_class = SNDRV_TIMER_CLASS_GLOBAL;
+ 	tid.card = -1;
 -- 
 2.50.1
 
