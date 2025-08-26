@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F37267386;
-	Tue, 26 Aug 2025 11:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C090D31CA74;
+	Tue, 26 Aug 2025 11:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207275; cv=none; b=WVGcquX+Sk+m+mYWYmTfc7tmCsdbLBFErA7mK67vB+K9WYZjUnGz3pkqCsNsGVfE6Fkn9ZM3xIuokEr4PFAa5Q4NqzcBONrGUHjJBTYemLENHwvUCOpYz6JqEANnG4BwRQNYtYpmyVS8x1cMTPVomxvjdHt1qHv4wFZiuKpkn4E=
+	t=1756207278; cv=none; b=IbHPJMo7AasZavAnWzzM92ha3k/2hslXZAyimPdNEggajA/le5A0eQ81cXwMXzZpmTzY7YvDsFEy0PzWLSNkhR0FsGZpBmUUTjC3Jw/LKMcL1psrS+A0sVrDvc/6iBogEevxPImwVD8n8s5vVkPQU+2Jsqxf7V40KW4SzQcbMM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207275; c=relaxed/simple;
-	bh=rUyCpyoCUTPxChwEgQPXGW4qfNZwCJ1/8zvSMJtmspM=;
+	s=arc-20240116; t=1756207278; c=relaxed/simple;
+	bh=k3vGpgSkgDSIZFDMBKi3qr7fhky9fN5uWsIHn2Fr/Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XLQPJtPEONbWGcPquj4xnErBgzmA3lfL+cq97+wAz/I0Hmhmy0e2wIFl01SOgpFkpPAVe/NUz35flaH40XZ/o3K2wTekb2G8beq5ZtwQfWjPaMFmowlrt6KjjnlZNOet75JsCA8F9GsRHafk1D07LXAKaf+UkMTBjmo++QpSWRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXmPQQLQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U88q990LPchICaYeXZk5/z3Z/2wIvsZWedS9v8+yNXUsV7EkKIFhY6bH9wUSMcLx9Pg6S6Btt04pCAklephNaxp6rj6yyhBlz3UT3tZdhozs/CNm7d0CnPscU3ZNEKPwMV6ZMFD1v5djKOjoexwNsbNTZL41JejCo5zPpv6JUTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbVbjxZg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXmPQQLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE6FC4CEF1;
-	Tue, 26 Aug 2025 11:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbVbjxZg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F33DC4CEF1;
+	Tue, 26 Aug 2025 11:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207275;
-	bh=rUyCpyoCUTPxChwEgQPXGW4qfNZwCJ1/8zvSMJtmspM=;
+	s=korg; t=1756207277;
+	bh=k3vGpgSkgDSIZFDMBKi3qr7fhky9fN5uWsIHn2Fr/Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXmPQQLQ4rJgbKSagykhEB9qgqXfTjs3NNBT03S8eW1JZ2qEuhn3oToliTqKSta9l
-	 Rw+6iQndEdArUhMIZDzeq2KNfk2H+nN2kQ3m4MME+6ei4noNavDtx+zv/Pf2UprkH8
-	 hfEAU2Romsyaq2VG3X9uYe7jlm2BMJpZ7yLWFst0=
+	b=hbVbjxZgdZEDTItXiVPpw8ITsHrz49+yT4hsHGH+2uvPbft95x9ylHxgzSfrz8cI2
+	 4kr9D/lgZ+1cdDM3Jt1FQd+mlQHmWfy5VQ5T6+QV/TYx0QOgxYrUyNmQKf12gjzOeE
+	 1tOhr4WqFhql/q6zQUk+sRm2kb8oYuXEJn8kx1iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 6.16 087/457] pwm: imx-tpm: Reset counter if CMOD is 0
-Date: Tue, 26 Aug 2025 13:06:11 +0200
-Message-ID: <20250826110939.531314706@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.16 078/457] iio: adc: ad7173: fix calibration channel
+Date: Tue, 26 Aug 2025 13:06:02 +0200
+Message-ID: <20250826110939.303009623@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,55 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 65c6f742ab14ab1a2679fba72b82dcc0289d96f1 upstream.
+commit 1d9a21ffb43b6fd326ead98f0d0afd6d104b739a upstream.
 
-As per the i.MX93 TRM, section 67.3.2.1 "MOD register update", the value
-of the TPM counter does NOT get updated when writing MOD.MOD unless
-SC.CMOD != 0. Therefore, with the current code, assuming the following
-sequence:
+Fix the channel index values passed to ad_sd_calibrate() in
+ad7173_calibrate_all().
 
-	1) pwm_disable()
-	2) pwm_apply_might_sleep() /* period is changed here */
-	3) pwm_enable()
+ad7173_calibrate_all() expects these values to be that of the CHANNELx
+register assigned to the channel, not the datasheet INPUTx number of the
+channel. The incorrect values were causing register writes to fail for
+some channels because they set the WEN bit that must always be 0 for
+register access and set the R/W bit to read instead of write. For other
+channels, the channel number was just wrong because the CHANNELx
+registers are generally assigned in reverse order and so almost never
+match the INPUTx numbers.
 
-and assuming only one channel is active, if CNT.COUNT is higher than the
-MOD.MOD value written during the pwm_apply_might_sleep() call then, when
-re-enabling the PWM during pwm_enable(), the counter will end up resetting
-after UINT32_MAX - CNT.COUNT + MOD.MOD cycles instead of MOD.MOD cycles as
-normally expected.
-
-Fix this problem by forcing a reset of the TPM counter before MOD.MOD is
-written.
-
-Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
-Link: https://lore.kernel.org/r/20250728194144.22884-1-laurentiumihalcea111@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 031bdc8aee01 ("iio: adc: ad7173: add calibration support")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250708-iio-adc-ad7313-fix-calibration-channel-v1-1-e6174e2c7cbf@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-imx-tpm.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/iio/adc/ad7173.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/pwm/pwm-imx-tpm.c
-+++ b/drivers/pwm/pwm-imx-tpm.c
-@@ -205,6 +205,15 @@ static int pwm_imx_tpm_apply_hw(struct p
- 		writel(val, tpm->base + PWM_IMX_TPM_SC);
+--- a/drivers/iio/adc/ad7173.c
++++ b/drivers/iio/adc/ad7173.c
+@@ -392,13 +392,12 @@ static int ad7173_calibrate_all(struct a
+ 		if (indio_dev->channels[i].type != IIO_VOLTAGE)
+ 			continue;
  
- 		/*
-+		 * if the counter is disabled (CMOD == 0), programming the new
-+		 * period length (MOD) will not reset the counter (CNT). If
-+		 * CNT.COUNT happens to be bigger than the new MOD value then
-+		 * the counter will end up being reset way too late. Therefore,
-+		 * manually reset it to 0.
-+		 */
-+		if (!cmod)
-+			writel(0x0, tpm->base + PWM_IMX_TPM_CNT);
-+		/*
- 		 * set period count:
- 		 * if the PWM is disabled (CMOD[1:0] = 2b00), then MOD register
- 		 * is updated when MOD register is written.
+-		ret = ad_sd_calibrate(&st->sd, AD7173_MODE_CAL_INT_ZERO, st->channels[i].ain);
++		ret = ad_sd_calibrate(&st->sd, AD7173_MODE_CAL_INT_ZERO, i);
+ 		if (ret < 0)
+ 			return ret;
+ 
+ 		if (st->info->has_internal_fs_calibration) {
+-			ret = ad_sd_calibrate(&st->sd, AD7173_MODE_CAL_INT_FULL,
+-					      st->channels[i].ain);
++			ret = ad_sd_calibrate(&st->sd, AD7173_MODE_CAL_INT_FULL, i);
+ 			if (ret < 0)
+ 				return ret;
+ 		}
 
 
