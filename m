@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65582277C8C;
-	Tue, 26 Aug 2025 11:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107C927AC3E;
+	Tue, 26 Aug 2025 11:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207008; cv=none; b=CsYUOw6UnWlcydlDKMhzn+VfyzmQPukFqUoeobzkWgUmBXyMfAIOkVke160HL+cqk0tF7I6/z7JTpksUvzCAsf2LRa84FspnhrXOtv4sxc/zeoDHaFafN7ErO9u0DOqJ8oCIYVgJiDUL8AL1BVqB+ezMPdRUOZo3KqQaxEhhENg=
+	t=1756207010; cv=none; b=eeMHk+7dFRqY7QQnoX7p+fpmB36/ZKBBShSDGrkFSMkybLqwiovnxvkw0EPa/QHnYcdGFSt7crMP9M86fow2kId9Z7HY0e1NG5lR9cZiIJbmfm1wnuoJo1H5KDC0PruO+5ULUlliI9YYXSAcityZlrrggeMhWukMjPW7uMYUd+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207008; c=relaxed/simple;
-	bh=J16su88oVKEnLwXyXZo3NDKFVQwKtTM82InrsiYaZEc=;
+	s=arc-20240116; t=1756207010; c=relaxed/simple;
+	bh=cyHIKhVPuuws/VYluDQPTrAZ+IZPFsv3Kn6BMXaA0C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkXiR4kqzxCeOVNOGa6D5CDt2aIFfI4peFWH0ATZZbRBFgBvJKNbqs8mC0i0Jmz5i/iM44c6nbWsvhs3UkZN3yp5CjmXQujw8RisbxfKhx/MgrUswtjbdGVT/B9uHog+IfJ6nkZZSDKAPN54iC6FDlW9F1F+2p4PhHHi0kKNdiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xmg7pqA/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IntADvUDP3en7srxggkfNksrqa/3LPOPXkzOcK3xfgdEO4Be6CmBu2Rgw8E+k739gdSgwC8wN+nJ8SOjLP/Ka/8L0YPBnKuWOvxstXzsxpbczXeXBhr4yOG1pJq/cYYscWIAmMdmmci50zm8sFGDDcrB3cTM+z3Yqa23rp334VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhHhsGGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xmg7pqA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3AEC4CEF1;
-	Tue, 26 Aug 2025 11:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhHhsGGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DC6C4CEF1;
+	Tue, 26 Aug 2025 11:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207006;
-	bh=J16su88oVKEnLwXyXZo3NDKFVQwKtTM82InrsiYaZEc=;
+	s=korg; t=1756207009;
+	bh=cyHIKhVPuuws/VYluDQPTrAZ+IZPFsv3Kn6BMXaA0C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xmg7pqA/OYvHccHgypnfprXAGnVTmDLufwymxx3t+JAuR+nkGm6OKZZxnUivSzC+u
-	 kkjLAR6jaY76yWhNmIWCIUZo0mzU+gP4pQMnc0ijTUAO0WKUG0Sv1T8UzHUH09sAZ5
-	 zr0e9YvEks69fQrIcQs4Ryt7pbqvEMlAyefHGG8Q=
+	b=xhHhsGGuHYi7aWytJy8OokxbKl7zfvA8SaG55yy6TBxVEB5jexY0SfMfUx5Vat45+
+	 UWdWa35PvIBRBIW9vRFrTS4KZgVnI8CYI+ITy+baXKth+4gihcrhElFXzGp30D9lHl
+	 TjA4ptlgJQ3VPuiwMpyOl9EJPnuisB2j3yrMNy00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.16 007/457] dm: Check for forbidden splitting of zone write operations
-Date: Tue, 26 Aug 2025 13:04:51 +0200
-Message-ID: <20250826110937.489229085@linuxfoundation.org>
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 6.16 008/457] m68k: Fix lost column on framebuffer debug console
+Date: Tue, 26 Aug 2025 13:04:52 +0200
+Message-ID: <20250826110937.515968022@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,67 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit 409f9287dab3b53bffe8d28d883a529028aa6a42 upstream.
+commit 210a1ce8ed4391b64a888b3fb4b5611a13f5ccc7 upstream.
 
-DM targets must not split zone append and write operations using
-dm_accept_partial_bio() as doing so is forbidden for zone append BIOs,
-breaks zone append emulation using regular write BIOs and potentially
-creates deadlock situations with queue freeze operations.
+Move the cursor position rightward after rendering the character,
+not before. This avoids complications that arise when the recursive
+console_putc call has to wrap the line and/or scroll the display.
+This also fixes the linewrap bug that crops off the rightmost column.
 
-Modify dm_accept_partial_bio() to add missing BUG_ON() checks for all
-these cases, that is, check that the BIO is a write or write zeroes
-operation. This change packs all the zone related checks together under
-a static_branch_unlikely(&zoned_enabled) and done only if the target is
-a zoned device.
+When the cursor is at the bottom of the display, a linefeed will not
+move the cursor position further downward. Instead, the display scrolls
+upward. Avoid the repeated add/subtract sequence by way of a single
+subtraction at the initialization of console_struct_num_rows.
 
-Fixes: f211268ed1f9 ("dm: Use the block layer zone append emulation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
-Link: https://lore.kernel.org/r/20250625093327.548866-6-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/9d4e8c68a456d5f2bc254ac6f87a472d066ebd5e.1743115195.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ arch/m68k/kernel/head.S |   31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1293,8 +1293,9 @@ out:
- /*
-  * A target may call dm_accept_partial_bio only from the map routine.  It is
-  * allowed for all bio types except REQ_PREFLUSH, REQ_OP_ZONE_* zone management
-- * operations, REQ_OP_ZONE_APPEND (zone append writes) and any bio serviced by
-- * __send_duplicate_bios().
-+ * operations, zone append writes (native with REQ_OP_ZONE_APPEND or emulated
-+ * with write BIOs flagged with BIO_EMULATES_ZONE_APPEND) and any bio serviced
-+ * by __send_duplicate_bios().
-  *
-  * dm_accept_partial_bio informs the dm that the target only wants to process
-  * additional n_sectors sectors of the bio and the rest of the data should be
-@@ -1327,11 +1328,19 @@ void dm_accept_partial_bio(struct bio *b
- 	unsigned int bio_sectors = bio_sectors(bio);
+--- a/arch/m68k/kernel/head.S
++++ b/arch/m68k/kernel/head.S
+@@ -3400,6 +3400,7 @@ L(console_clear_loop):
  
- 	BUG_ON(dm_tio_flagged(tio, DM_TIO_IS_DUPLICATE_BIO));
--	BUG_ON(op_is_zone_mgmt(bio_op(bio)));
--	BUG_ON(bio_op(bio) == REQ_OP_ZONE_APPEND);
- 	BUG_ON(bio_sectors > *tio->len_ptr);
- 	BUG_ON(n_sectors > bio_sectors);
+ 	movel	%d4,%d1				/* screen height in pixels */
+ 	divul	%a0@(FONT_DESC_HEIGHT),%d1	/* d1 = max num rows */
++	subql	#1,%d1				/* row range is 0 to num - 1 */
  
-+	if (static_branch_unlikely(&zoned_enabled) &&
-+	    unlikely(bdev_is_zoned(bio->bi_bdev))) {
-+		enum req_op op = bio_op(bio);
+ 	movel	%d0,%a2@(Lconsole_struct_num_columns)
+ 	movel	%d1,%a2@(Lconsole_struct_num_rows)
+@@ -3546,15 +3547,14 @@ func_start	console_putc,%a0/%a1/%d0-%d7
+ 	cmpib	#10,%d7
+ 	jne	L(console_not_lf)
+ 	movel	%a0@(Lconsole_struct_cur_row),%d0
+-	addil	#1,%d0
+-	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	movel	%a0@(Lconsole_struct_num_rows),%d1
+ 	cmpl	%d1,%d0
+ 	jcs	1f
+-	subil	#1,%d0
+-	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	console_scroll
++	jra	L(console_exit)
+ 1:
++	addql	#1,%d0
++	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	jra	L(console_exit)
+ 
+ L(console_not_lf):
+@@ -3581,12 +3581,6 @@ L(console_not_cr):
+  */
+ L(console_not_home):
+ 	movel	%a0@(Lconsole_struct_cur_column),%d0
+-	addql	#1,%a0@(Lconsole_struct_cur_column)
+-	movel	%a0@(Lconsole_struct_num_columns),%d1
+-	cmpl	%d1,%d0
+-	jcs	1f
+-	console_putc	#'\n'	/* recursion is OK! */
+-1:
+ 	movel	%a0@(Lconsole_struct_cur_row),%d1
+ 
+ 	/*
+@@ -3633,6 +3627,23 @@ L(console_do_font_scanline):
+ 	addq	#1,%d1
+ 	dbra	%d7,L(console_read_char_scanline)
+ 
++	/*
++	 *	Register usage in the code below:
++	 *	a0 = pointer to console globals
++	 *	d0 = cursor column
++	 *	d1 = cursor column limit
++	 */
 +
-+		BUG_ON(op_is_zone_mgmt(op));
-+		BUG_ON(op == REQ_OP_WRITE);
-+		BUG_ON(op == REQ_OP_WRITE_ZEROES);
-+		BUG_ON(op == REQ_OP_ZONE_APPEND);
-+	}
++	lea	%pc@(L(console_globals)),%a0
 +
- 	*tio->len_ptr -= bio_sectors - n_sectors;
- 	bio->bi_iter.bi_size = n_sectors << SECTOR_SHIFT;
++	movel	%a0@(Lconsole_struct_cur_column),%d0
++	addql	#1,%d0
++	movel	%d0,%a0@(Lconsole_struct_cur_column)	/* Update cursor pos */
++	movel	%a0@(Lconsole_struct_num_columns),%d1
++	cmpl	%d1,%d0
++	jcs	L(console_exit)
++	console_putc	#'\n'		/* Line wrap using tail recursion */
++
+ L(console_exit):
+ func_return	console_putc
  
 
 
