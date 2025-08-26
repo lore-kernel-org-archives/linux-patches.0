@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1041D26B747;
-	Tue, 26 Aug 2025 13:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6413526B747;
+	Tue, 26 Aug 2025 13:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215858; cv=none; b=awJ8+JQsTmtHsJ79Apos+2xHIXxELc2jo0pQy1ERT8iMQO9oN/cQ8+SYhDT0iWbmXqw8nJdemgE2pVm2+tcRmjzp1lyOLJl6Wm92dcAF5TAoYhGUxA7byZQNFo5YRRVSZyW4rWUtuXd4ovdpUDtx9IJQXdDm8PzfMxSvS6nll8Y=
+	t=1756215860; cv=none; b=jKPEYnT36dWrYjKh2njSNNdmrcRwMcSjqU2dB1WhVszhqoeFkMMLGKNZbhhAOx5EfwYNOxI/HafyTtUz4stV867iRzOE5rayYafQihrcKqKrbu8HD2zMedwgn1rucL26O1YklwLvxxc21F7fi5obz2dFr5nzGPLNaF4ZfVeSuU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215858; c=relaxed/simple;
-	bh=EhO5/GVmxP29CyYjCvy4Bg/FhJxjTQkJ3psTtU79EMg=;
+	s=arc-20240116; t=1756215860; c=relaxed/simple;
+	bh=mkrg6r/j2XawwhfTvqAFeU5g0V0/BMVIlUDK9it6pJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NVgl7ehpBqsiF98WROX9mEd+uFOunc7MHSlGOTSL6k4BjDVCjkjXxMULurbifIWLlNuG3wG1KZ3zlcwJgGU+TjQn1s8ttOVKFXda0D4JmoXi1qTOtQqPFV/U79kus931+WJ6lMHG7gBkPmpPb5FO4IepPtMec7QawTVoES87uIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gU31Ouo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzkOPPLvQTcGNVjjUFqZZb5j/yImvavY0Gi0I8eME+Vkbc7PzgvDrgDBJqu6NuP3E9rSBU4ryut/oekCmkGlCaVx5uALObOluRRrsHmcIEmZWtompaf/pnNuNJb7xu4W5RPCgFc5XBM7s7oJ5ayCF4Bu1gP7n1AXQvm73r6Qv8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AA4Wc+BO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gU31Ouo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E07BC4CEF1;
-	Tue, 26 Aug 2025 13:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AA4Wc+BO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF7DC4CEF1;
+	Tue, 26 Aug 2025 13:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215854;
-	bh=EhO5/GVmxP29CyYjCvy4Bg/FhJxjTQkJ3psTtU79EMg=;
+	s=korg; t=1756215860;
+	bh=mkrg6r/j2XawwhfTvqAFeU5g0V0/BMVIlUDK9it6pJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gU31OuoSU2N3EAux9HGTpr+ceKkyau+YPvap5AuAZH3v1sqBdpgliOR3x+Q81usI
-	 lbQYGwIIR2VtNErs5OaIuw3LmbgH1ZxQZmsOqe5INq0fvMCir5eP6m1lfukPyZInyg
-	 ZEQHQwS01vg44UT4OkDEXj3faLdcQFxxTq+WtcQ8=
+	b=AA4Wc+BOaD4vc2ucA3Z9dC2/LI25h+druVIzttaGlWGt0MXdn+MDON/QS8vkkTNas
+	 U7/RtUiCMvfKwnABZuep32x+WyqGSMJqNvMS6yFbIJQv/D3W/H3OGS8J+vWsZgFHqU
+	 llRPSspjXgRyw81TqFJiG7wxvAKans2qX7Vug8kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/644] soundwire: stream: restore params when prepare ports fail
-Date: Tue, 26 Aug 2025 13:04:41 +0200
-Message-ID: <20250826110951.164627137@linuxfoundation.org>
+Subject: [PATCH 5.15 162/644] netfilter: xt_nfacct: dont assume acct name is null-terminated
+Date: Tue, 26 Aug 2025 13:04:13 +0200
+Message-ID: <20250826110950.492207757@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,45 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit dba7d9dbfdc4389361ff3a910e767d3cfca22587 ]
+[ Upstream commit bf58e667af7d96c8eb9411f926a0a0955f41ce21 ]
 
-The bus->params should be restored if the stream is failed to prepare.
-The issue exists since beginning. The Fixes tag just indicates the
-first commit that the commit can be applied to.
+BUG: KASAN: slab-out-of-bounds in .. lib/vsprintf.c:721
+Read of size 1 at addr ffff88801eac95c8 by task syz-executor183/5851
+[..]
+ string+0x231/0x2b0 lib/vsprintf.c:721
+ vsnprintf+0x739/0xf00 lib/vsprintf.c:2874
+ [..]
+ nfacct_mt_checkentry+0xd2/0xe0 net/netfilter/xt_nfacct.c:41
+ xt_check_match+0x3d1/0xab0 net/netfilter/x_tables.c:523
 
-Fixes: 17ed5bef49f4 ("soundwire: add missing newlines in dynamic debug logs")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://lore.kernel.org/r/20250626060952.405996-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+nfnl_acct_find_get() handles non-null input, but the error
+printk relied on its presence.
+
+Reported-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4ff165b9251e4d295690
+Tested-by: syzbot+4ff165b9251e4d295690@syzkaller.appspotmail.com
+Fixes: ceb98d03eac5 ("netfilter: xtables: add nfacct match to support extended accounting")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_nfacct.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
-index 8f9f4ee7860c..1b62cdadb089 100644
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1575,7 +1575,7 @@ static int _sdw_prepare_stream(struct sdw_stream_runtime *stream,
- 		if (ret < 0) {
- 			dev_err(bus->dev, "Prepare port(s) failed ret = %d\n",
- 				ret);
--			return ret;
-+			goto restore_params;
- 		}
- 	}
+diff --git a/net/netfilter/xt_nfacct.c b/net/netfilter/xt_nfacct.c
+index 7c6bf1c16813..0ca1cdfc4095 100644
+--- a/net/netfilter/xt_nfacct.c
++++ b/net/netfilter/xt_nfacct.c
+@@ -38,8 +38,8 @@ nfacct_mt_checkentry(const struct xt_mtchk_param *par)
  
+ 	nfacct = nfnl_acct_find_get(par->net, info->name);
+ 	if (nfacct == NULL) {
+-		pr_info_ratelimited("accounting object `%s' does not exists\n",
+-				    info->name);
++		pr_info_ratelimited("accounting object `%.*s' does not exist\n",
++				    NFACCT_NAME_MAX, info->name);
+ 		return -ENOENT;
+ 	}
+ 	info->nfacct = nfacct;
 -- 
 2.39.5
 
