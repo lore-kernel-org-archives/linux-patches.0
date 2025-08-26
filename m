@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA7A352094;
-	Tue, 26 Aug 2025 14:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8423570B9;
+	Tue, 26 Aug 2025 14:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219407; cv=none; b=IlujiRqIT7H8OZIXWZncGlyOrkHGcsbLgyotx9vT6znWhJgv+enTj12Ey/e7tOweYkX9yEDrdicD6KpzjvkNPF9sU9mjpK1OB8vsPOAK/Jnr5t7Afzdim6St6oaPB5SR522uHza2bYsXxLaBRmGVj8pi1+GpG4EpmLvm9WjBofA=
+	t=1756219409; cv=none; b=epsFn0eZBAx8BfMZ9Dq2vp4IGemY83PNi6rDMscLAG3BeuWL64xWRPJXqhQUfRiJ4YcR3MqUdHIw5Gs8Tot2J2olvQk8VEv7JfAI7IUXJm9RzacZjStR6aVNEP/6XpyG4Yof3/A7JwI14DLkwAHFhD+B3ydOdJXU53MJDHoqBG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219407; c=relaxed/simple;
-	bh=yeJ0s/Jes2wEvFFEGH1IFqRroruyKein3FUpxf8hfvo=;
+	s=arc-20240116; t=1756219409; c=relaxed/simple;
+	bh=Q0VpzMIFFzSWITD716La6SR+tpAPNB83+EO5kylzX2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDmJGGpGcIJCIIOHhEQKei91wVAauJtBOibyC12DY7vcd++3t+CMLHDtQbyYGgHK50u8K6227C+fuCFtjKqVn3m/d3lbAFcQfzd/HE6UIFJv6Nx4TMwmgRYZzSxlp+Gtg08oo3F/KdxiKtezldNCODkgSuQ/VFf40nncwcVYxNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TidTXRnM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lKebT4aBg4/+3iGip8VUXmc/kdPHv49dOp0T8lPo60pmtINgzVdbQInFB1lpZ+mEeqYT/ncBDjRBY2UiH5/4QT6Rc/FXSgBu+9Y2KW5WHPvjhuJ2U1V0x3klxJOrcunVNN/+DSRDTVwjp2JIA1qZa0ZBKdC16B1PDHF1sspeL24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8e2wFkK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TidTXRnM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFAFC4CEF1;
-	Tue, 26 Aug 2025 14:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8e2wFkK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71ECC113CF;
+	Tue, 26 Aug 2025 14:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219406;
-	bh=yeJ0s/Jes2wEvFFEGH1IFqRroruyKein3FUpxf8hfvo=;
+	s=korg; t=1756219409;
+	bh=Q0VpzMIFFzSWITD716La6SR+tpAPNB83+EO5kylzX2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TidTXRnMBY+hPBeOSogOgbIgce942x/u0B7Wl05TnFyUnlaNG1U7/kYx9bvMRt2HY
-	 FLt+8xYxiBawEnMJAxtEeXQPrB3L4s42UeICQyn51isNFJfZQRq9Nkp/7SUty6zph3
-	 ykDJ/nzjeyCei91GMEOio4B2/wPe0x+l2jYWbJCQ=
+	b=y8e2wFkKqqHMHCfyGYqKZScm5H1jbwtS4PmWyS0+uZFB7lKW4VWWTy/OLbknjSJAj
+	 Ftmu/OzDAIDJfAzP3QQlbyKqyaefH0ro3RqNjh28ZIikH7ek4ELLdteJFcIJSc1ppI
+	 HIP+IuC6uR/D01U/W6HhSAT6eySRpNVMjWkR2t9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 370/403] media: qcom: camss: cleanup media device allocated resource on error path
-Date: Tue, 26 Aug 2025 13:11:36 +0200
-Message-ID: <20250826110917.228691919@linuxfoundation.org>
+Subject: [PATCH 5.4 353/403] cdc-acm: fix race between initial clearing halt and open
+Date: Tue, 26 Aug 2025 13:11:19 +0200
+Message-ID: <20250826110916.627524290@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,48 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 69080ec3d0daba8a894025476c98ab16b5a505a4 ]
+[ Upstream commit 64690a90cd7c6db16d3af8616be1f4bf8d492850 ]
 
-A call to media_device_init() requires media_device_cleanup() counterpart
-to complete cleanup and release any allocated resources.
+On the devices that need their endpoints to get an
+initial clear_halt, this needs to be done before
+the devices can be opened. That means it needs to be
+before the devices are registered.
 
-This has been done in the driver .remove() right from the beginning, but
-error paths on .probe() shall also be fixed.
-
-Fixes: a1d7c116fcf7 ("media: camms: Add core files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[ err_genpd_cleanup => err_cleanup ]
+Fixes: 15bf722e6f6c0 ("cdc-acm: Add support of ATOL FPrint fiscal printers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20250717141259.2345605-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -888,7 +888,7 @@ static int camss_probe(struct platform_d
- 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
--		goto err_cleanup;
-+		goto err_media_device_cleanup;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1527,6 +1527,12 @@ skip_countries:
+ 	usb_driver_claim_interface(&acm_driver, data_interface, acm);
+ 	usb_set_intfdata(data_interface, acm);
+ 
++	if (quirks & CLEAR_HALT_CONDITIONS) {
++		/* errors intentionally ignored */
++		usb_clear_halt(usb_dev, acm->in);
++		usb_clear_halt(usb_dev, acm->out);
++	}
++
+ 	tty_dev = tty_port_register_device(&acm->port, acm_tty_driver, minor,
+ 			&control_interface->dev);
+ 	if (IS_ERR(tty_dev)) {
+@@ -1534,11 +1540,6 @@ skip_countries:
+ 		goto alloc_fail6;
  	}
  
- 	ret = camss_register_entities(camss);
-@@ -945,6 +945,8 @@ err_register_subdevs:
- 	camss_unregister_entities(camss);
- err_register_entities:
- 	v4l2_device_unregister(&camss->v4l2_dev);
-+err_media_device_cleanup:
-+	media_device_cleanup(&camss->media_dev);
- err_cleanup:
- 	v4l2_async_notifier_cleanup(&camss->notifier);
- err_free:
+-	if (quirks & CLEAR_HALT_CONDITIONS) {
+-		usb_clear_halt(usb_dev, acm->in);
+-		usb_clear_halt(usb_dev, acm->out);
+-	}
+-
+ 	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
+ 
+ 	return 0;
 
 
