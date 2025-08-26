@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A0923C4E3;
-	Tue, 26 Aug 2025 13:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAF02BE032;
+	Tue, 26 Aug 2025 13:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214094; cv=none; b=QInTzG/dT+jHPYkPzYOTy5GjgZ5utki9gDaPuXj6WqlI/slTal17yggjS86M2D1ZT3oXiUlO2epV6b5B7bsxvcUj1TQcSR2/ECa8EP2OPr1cocwcpiTBJCYw0cBvjY4YM6+hR9y64YqCOzmB6E95s8pFy3dKE5TBeTqGQ8iS82Y=
+	t=1756214097; cv=none; b=M0ggOwywsv6MaU9ZcfKjwpiaiAMOMCKRYF5D3P6deDovC2LoEuRQA8ljxx1FdtU1o2EMvvSNr2mG/JGBLD1njabiy/Wn3n2xNkQ6S2MzQnCLArrtcoTpSY0FxbiZHoI3dtsmAc1Z6SfnvIvCgrCHL9KnNmWjvYCQ//NlEK4ZLvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214094; c=relaxed/simple;
-	bh=UDXZMMiSFEN9Ws7rvOIFCq+fOVhFsbE9hxWbBa1b7MY=;
+	s=arc-20240116; t=1756214097; c=relaxed/simple;
+	bh=3ApCrz14rs5ZWCBChf/0F/PGaM8uR3mRo7b1N2GHKdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1DKzmPLvzD7e6h+BtVLwpZ0LvM6pozV+989Py6U27RMQIRcw2IFFdRpYOiUbllwiyaF7nCHiSw1S5A/+nWQD/nwPEt9K5wkIKAYdNh7FoTsl1kMOtGeG1HNjy2iKO1Y++xBlEFBZBV4efQ0PWOc7u4g/xDb6kSmpJb5R1HBOVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hkll2995; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BR87gC+HKvoUkh90LIuPi0WZzua5IrHuy1Ey0/cBi4A8cmpJImuN99yu0yiqhKinKR8IcW9CElOxXJXaT22Cx/jIylAtwpsZ841j791Tt2bFWz9RurzVUGT9L+24YSJ3sFtQf1G2c1RuMWP2ISJz7lSLttKYLrHs+5SPHl8qbO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2zNsuwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hkll2995"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA97C19421;
-	Tue, 26 Aug 2025 13:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2zNsuwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CC8C16AAE;
+	Tue, 26 Aug 2025 13:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214094;
-	bh=UDXZMMiSFEN9Ws7rvOIFCq+fOVhFsbE9hxWbBa1b7MY=;
+	s=korg; t=1756214097;
+	bh=3ApCrz14rs5ZWCBChf/0F/PGaM8uR3mRo7b1N2GHKdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hkll29956VQrcvWB64L0sqRoxGm3/jvGWtujqzKp03Gf/g4jq2ArVevvaRxneBbC6
-	 cgNSpyjC2fj9AEzSBPVngZTJw+pV4oj8I6pzfgJ227LKzJcPi8ZAM6uUikLrLHL1cd
-	 vbwab7b0JEKiA4VSflORlA7t78XicxLVLGNJxz6k=
+	b=b2zNsuwUfPkP3y8uqGrStDoTFyKMDvlfkgUxkRCHUTpxLoUTD+vsar01m3p9yOO33
+	 Nla6A81cNPvHw5EGq+/NZeth/s2352iBcxkRhV7lYftVEv1rRTFQkHj0SmEz5pbSbq
+	 D4MFmyBE1Vo0ye0IHuTlO/bvQloHvewLrQauX5OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aahil Awatramani <aahila@google.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 587/587] netfilter: nf_reject: dont leak dst refcount for loopback packets
-Date: Tue, 26 Aug 2025 13:12:16 +0200
-Message-ID: <20250826111007.971015745@linuxfoundation.org>
+Subject: [PATCH 6.6 579/587] bonding: Add independent control state machine
+Date: Tue, 26 Aug 2025 13:12:08 +0200
+Message-ID: <20250826111007.765952934@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,86 +52,542 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Aahil Awatramani <aahila@google.com>
 
-[ Upstream commit 91a79b792204313153e1bdbbe5acbfc28903b3a5 ]
+[ Upstream commit 240fd405528bbf7fafa0559202ca7aa524c9cd96 ]
 
-recent patches to add a WARN() when replacing skb dst entry found an
-old bug:
+Add support for the independent control state machine per IEEE
+802.1AX-2008 5.4.15 in addition to the existing implementation of the
+coupled control state machine.
 
-WARNING: include/linux/skbuff.h:1165 skb_dst_check_unset include/linux/skbuff.h:1164 [inline]
-WARNING: include/linux/skbuff.h:1165 skb_dst_set include/linux/skbuff.h:1210 [inline]
-WARNING: include/linux/skbuff.h:1165 nf_reject_fill_skb_dst+0x2a4/0x330 net/ipv4/netfilter/nf_reject_ipv4.c:234
-[..]
-Call Trace:
- nf_send_unreach+0x17b/0x6e0 net/ipv4/netfilter/nf_reject_ipv4.c:325
- nft_reject_inet_eval+0x4bc/0x690 net/netfilter/nft_reject_inet.c:27
- expr_call_ops_eval net/netfilter/nf_tables_core.c:237 [inline]
- ..
+Introduces two new states, AD_MUX_COLLECTING and AD_MUX_DISTRIBUTING in
+the LACP MUX state machine for separated handling of an initial
+Collecting state before the Collecting and Distributing state. This
+enables a port to be in a state where it can receive incoming packets
+while not still distributing. This is useful for reducing packet loss when
+a port begins distributing before its partner is able to collect.
 
-This is because blamed commit forgot about loopback packets.
-Such packets already have a dst_entry attached, even at PRE_ROUTING stage.
+Added new functions such as bond_set_slave_tx_disabled_flags and
+bond_set_slave_rx_enabled_flags to precisely manage the port's collecting
+and distributing states. Previously, there was no dedicated method to
+disable TX while keeping RX enabled, which this patch addresses.
 
-Instead of checking hook just check if the skb already has a route
-attached to it.
+Note that the regular flow process in the kernel's bonding driver remains
+unaffected by this patch. The extension requires explicit opt-in by the
+user (in order to ensure no disruptions for existing setups) via netlink
+support using the new bonding parameter coupled_control. The default value
+for coupled_control is set to 1 so as to preserve existing behaviour.
 
-Fixes: f53b9b0bdc59 ("netfilter: introduce support for reject at prerouting stage")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20250820123707.10671-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Aahil Awatramani <aahila@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20240202175858.1573852-1-aahila@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 0599640a21e9 ("bonding: send LACPDUs periodically in passive mode after receiving partner's LACPDU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++----
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 ++---
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ Documentation/networking/bonding.rst |  12 ++
+ drivers/net/bonding/bond_3ad.c       | 157 +++++++++++++++++++++++++--
+ drivers/net/bonding/bond_main.c      |   1 +
+ drivers/net/bonding/bond_netlink.c   |  16 +++
+ drivers/net/bonding/bond_options.c   |  28 ++++-
+ include/net/bond_3ad.h               |   2 +
+ include/net/bond_options.h           |   1 +
+ include/net/bonding.h                |  23 ++++
+ include/uapi/linux/if_link.h         |   1 +
+ tools/include/uapi/linux/if_link.h   |   1 +
+ 10 files changed, 234 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 675b5bbed638..2d663fe50f87 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -247,8 +247,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (!oth)
- 		return;
+diff --git a/Documentation/networking/bonding.rst b/Documentation/networking/bonding.rst
+index f7a73421eb76..e774b48de9f5 100644
+--- a/Documentation/networking/bonding.rst
++++ b/Documentation/networking/bonding.rst
+@@ -444,6 +444,18 @@ arp_missed_max
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(oldskb) < 0)
-+	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
- 		return;
+ 	The default value is 2, and the allowable range is 1 - 255.
  
- 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
-@@ -321,8 +320,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (iph->frag_off & htons(IP_OFFSET))
- 		return;
++coupled_control
++
++    Specifies whether the LACP state machine's MUX in the 802.3ad mode
++    should have separate Collecting and Distributing states.
++
++    This is by implementing the independent control state machine per
++    IEEE 802.1AX-2008 5.4.15 in addition to the existing coupled control
++    state machine.
++
++    The default value is 1. This setting does not separate the Collecting
++    and Distributing states, maintaining the bond in coupled control.
++
+ downdelay
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
+ 	Specifies the time, in milliseconds, to wait before disabling
+diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
+index 56b18ab2fa28..a92a841ccec9 100644
+--- a/drivers/net/bonding/bond_3ad.c
++++ b/drivers/net/bonding/bond_3ad.c
+@@ -106,6 +106,9 @@ static void ad_agg_selection_logic(struct aggregator *aggregator,
+ static void ad_clear_agg(struct aggregator *aggregator);
+ static void ad_initialize_agg(struct aggregator *aggregator);
+ static void ad_initialize_port(struct port *port, int lacp_fast);
++static void ad_enable_collecting(struct port *port);
++static void ad_disable_distributing(struct port *port,
++				    bool *update_slave_arr);
+ static void ad_enable_collecting_distributing(struct port *port,
+ 					      bool *update_slave_arr);
+ static void ad_disable_collecting_distributing(struct port *port,
+@@ -171,9 +174,38 @@ static inline int __agg_has_partner(struct aggregator *agg)
+ 	return !is_zero_ether_addr(agg->partner_system.mac_addr_value);
+ }
  
- 	if (skb_csum_unnecessary(skb_in) ||
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index e4776bd2ed89..f3579bccf0a5 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -293,7 +293,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	fl6.fl6_sport = otcph->dest;
- 	fl6.fl6_dport = otcph->source;
++/**
++ * __disable_distributing_port - disable the port's slave for distributing.
++ * Port will still be able to collect.
++ * @port: the port we're looking at
++ *
++ * This will disable only distributing on the port's slave.
++ */
++static void __disable_distributing_port(struct port *port)
++{
++	bond_set_slave_tx_disabled_flags(port->slave, BOND_SLAVE_NOTIFY_LATER);
++}
++
++/**
++ * __enable_collecting_port - enable the port's slave for collecting,
++ * if it's up
++ * @port: the port we're looking at
++ *
++ * This will enable only collecting on the port's slave.
++ */
++static void __enable_collecting_port(struct port *port)
++{
++	struct slave *slave = port->slave;
++
++	if (slave->link == BOND_LINK_UP && bond_slave_is_up(slave))
++		bond_set_slave_rx_enabled_flags(slave, BOND_SLAVE_NOTIFY_LATER);
++}
++
+ /**
+  * __disable_port - disable the port's slave
+  * @port: the port we're looking at
++ *
++ * This will disable both collecting and distributing on the port's slave.
+  */
+ static inline void __disable_port(struct port *port)
+ {
+@@ -183,6 +215,8 @@ static inline void __disable_port(struct port *port)
+ /**
+  * __enable_port - enable the port's slave, if it's up
+  * @port: the port we're looking at
++ *
++ * This will enable both collecting and distributing on the port's slave.
+  */
+ static inline void __enable_port(struct port *port)
+ {
+@@ -193,10 +227,27 @@ static inline void __enable_port(struct port *port)
+ }
  
--	if (hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) {
-+	if (!skb_dst(oldskb)) {
- 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
- 		if (!dst)
- 			return;
-@@ -397,8 +397,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
+ /**
+- * __port_is_enabled - check if the port's slave is in active state
++ * __port_move_to_attached_state - check if port should transition back to attached
++ * state.
++ * @port: the port we're looking at
++ */
++static bool __port_move_to_attached_state(struct port *port)
++{
++	if (!(port->sm_vars & AD_PORT_SELECTED) ||
++	    (port->sm_vars & AD_PORT_STANDBY) ||
++	    !(port->partner_oper.port_state & LACP_STATE_SYNCHRONIZATION) ||
++	    !(port->actor_oper_port_state & LACP_STATE_SYNCHRONIZATION))
++		port->sm_mux_state = AD_MUX_ATTACHED;
++
++	return port->sm_mux_state == AD_MUX_ATTACHED;
++}
++
++/**
++ * __port_is_collecting_distributing - check if the port's slave is in the
++ * combined collecting/distributing state
+  * @port: the port we're looking at
+  */
+-static inline int __port_is_enabled(struct port *port)
++static int __port_is_collecting_distributing(struct port *port)
+ {
+ 	return bond_is_active_slave(port->slave);
+ }
+@@ -942,6 +993,7 @@ static int ad_marker_send(struct port *port, struct bond_marker *marker)
+  */
+ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
+ {
++	struct bonding *bond = __get_bond_by_port(port);
+ 	mux_states_t last_state;
  
--	if ((hooknum == NF_INET_PRE_ROUTING || hooknum == NF_INET_INGRESS) &&
--	    nf_reject6_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
+ 	/* keep current State Machine state to compare later if it was
+@@ -999,9 +1051,13 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
+ 			if ((port->sm_vars & AD_PORT_SELECTED) &&
+ 			    (port->partner_oper.port_state & LACP_STATE_SYNCHRONIZATION) &&
+ 			    !__check_agg_selection_timer(port)) {
+-				if (port->aggregator->is_active)
+-					port->sm_mux_state =
+-					    AD_MUX_COLLECTING_DISTRIBUTING;
++				if (port->aggregator->is_active) {
++					int state = AD_MUX_COLLECTING_DISTRIBUTING;
++
++					if (!bond->params.coupled_control)
++						state = AD_MUX_COLLECTING;
++					port->sm_mux_state = state;
++				}
+ 			} else if (!(port->sm_vars & AD_PORT_SELECTED) ||
+ 				   (port->sm_vars & AD_PORT_STANDBY)) {
+ 				/* if UNSELECTED or STANDBY */
+@@ -1019,11 +1075,45 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
+ 			}
+ 			break;
+ 		case AD_MUX_COLLECTING_DISTRIBUTING:
++			if (!__port_move_to_attached_state(port)) {
++				/* if port state hasn't changed make
++				 * sure that a collecting distributing
++				 * port in an active aggregator is enabled
++				 */
++				if (port->aggregator->is_active &&
++				    !__port_is_collecting_distributing(port)) {
++					__enable_port(port);
++					*update_slave_arr = true;
++				}
++			}
++			break;
++		case AD_MUX_COLLECTING:
++			if (!__port_move_to_attached_state(port)) {
++				if ((port->sm_vars & AD_PORT_SELECTED) &&
++				    (port->partner_oper.port_state & LACP_STATE_SYNCHRONIZATION) &&
++				    (port->partner_oper.port_state & LACP_STATE_COLLECTING)) {
++					port->sm_mux_state = AD_MUX_DISTRIBUTING;
++				} else {
++					/* If port state hasn't changed, make sure that a collecting
++					 * port is enabled for an active aggregator.
++					 */
++					struct slave *slave = port->slave;
++
++					if (port->aggregator->is_active &&
++					    bond_is_slave_rx_disabled(slave)) {
++						ad_enable_collecting(port);
++						*update_slave_arr = true;
++					}
++				}
++			}
++			break;
++		case AD_MUX_DISTRIBUTING:
+ 			if (!(port->sm_vars & AD_PORT_SELECTED) ||
+ 			    (port->sm_vars & AD_PORT_STANDBY) ||
++			    !(port->partner_oper.port_state & LACP_STATE_COLLECTING) ||
+ 			    !(port->partner_oper.port_state & LACP_STATE_SYNCHRONIZATION) ||
+ 			    !(port->actor_oper_port_state & LACP_STATE_SYNCHRONIZATION)) {
+-				port->sm_mux_state = AD_MUX_ATTACHED;
++				port->sm_mux_state = AD_MUX_COLLECTING;
+ 			} else {
+ 				/* if port state hasn't changed make
+ 				 * sure that a collecting distributing
+@@ -1031,7 +1121,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
+ 				 */
+ 				if (port->aggregator &&
+ 				    port->aggregator->is_active &&
+-				    !__port_is_enabled(port)) {
++				    !__port_is_collecting_distributing(port)) {
+ 					__enable_port(port);
+ 					*update_slave_arr = true;
+ 				}
+@@ -1082,6 +1172,20 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
+ 							  update_slave_arr);
+ 			port->ntt = true;
+ 			break;
++		case AD_MUX_COLLECTING:
++			port->actor_oper_port_state |= LACP_STATE_COLLECTING;
++			port->actor_oper_port_state &= ~LACP_STATE_DISTRIBUTING;
++			port->actor_oper_port_state |= LACP_STATE_SYNCHRONIZATION;
++			ad_enable_collecting(port);
++			ad_disable_distributing(port, update_slave_arr);
++			port->ntt = true;
++			break;
++		case AD_MUX_DISTRIBUTING:
++			port->actor_oper_port_state |= LACP_STATE_DISTRIBUTING;
++			port->actor_oper_port_state |= LACP_STATE_SYNCHRONIZATION;
++			ad_enable_collecting_distributing(port,
++							  update_slave_arr);
++			break;
+ 		default:
+ 			break;
+ 		}
+@@ -1906,6 +2010,45 @@ static void ad_initialize_port(struct port *port, int lacp_fast)
+ 	}
+ }
  
- 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
++/**
++ * ad_enable_collecting - enable a port's receive
++ * @port: the port we're looking at
++ *
++ * Enable @port if it's in an active aggregator
++ */
++static void ad_enable_collecting(struct port *port)
++{
++	if (port->aggregator->is_active) {
++		struct slave *slave = port->slave;
++
++		slave_dbg(slave->bond->dev, slave->dev,
++			  "Enabling collecting on port %d (LAG %d)\n",
++			  port->actor_port_number,
++			  port->aggregator->aggregator_identifier);
++		__enable_collecting_port(port);
++	}
++}
++
++/**
++ * ad_disable_distributing - disable a port's transmit
++ * @port: the port we're looking at
++ * @update_slave_arr: Does slave array need update?
++ */
++static void ad_disable_distributing(struct port *port, bool *update_slave_arr)
++{
++	if (port->aggregator &&
++	    !MAC_ADDRESS_EQUAL(&port->aggregator->partner_system,
++			       &(null_mac_addr))) {
++		slave_dbg(port->slave->bond->dev, port->slave->dev,
++			  "Disabling distributing on port %d (LAG %d)\n",
++			  port->actor_port_number,
++			  port->aggregator->aggregator_identifier);
++		__disable_distributing_port(port);
++		/* Slave array needs an update */
++		*update_slave_arr = true;
++	}
++}
++
+ /**
+  * ad_enable_collecting_distributing - enable a port's transmit/receive
+  * @port: the port we're looking at
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 85ab69257162..cd5691ed9f17 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -6399,6 +6399,7 @@ static int __init bond_check_params(struct bond_params *params)
+ 	params->ad_actor_sys_prio = ad_actor_sys_prio;
+ 	eth_zero_addr(params->ad_actor_system);
+ 	params->ad_user_port_key = ad_user_port_key;
++	params->coupled_control = 1;
+ 	if (packets_per_slave > 0) {
+ 		params->reciprocal_packets_per_slave =
+ 			reciprocal_value(packets_per_slave);
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index 27cbe148f0db..aebc814ad495 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -122,6 +122,7 @@ static const struct nla_policy bond_policy[IFLA_BOND_MAX + 1] = {
+ 	[IFLA_BOND_PEER_NOTIF_DELAY]    = NLA_POLICY_FULL_RANGE(NLA_U32, &delay_range),
+ 	[IFLA_BOND_MISSED_MAX]		= { .type = NLA_U8 },
+ 	[IFLA_BOND_NS_IP6_TARGET]	= { .type = NLA_NESTED },
++	[IFLA_BOND_COUPLED_CONTROL]	= { .type = NLA_U8 },
+ };
+ 
+ static const struct nla_policy bond_slave_policy[IFLA_BOND_SLAVE_MAX + 1] = {
+@@ -549,6 +550,16 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
+ 			return err;
+ 	}
+ 
++	if (data[IFLA_BOND_COUPLED_CONTROL]) {
++		int coupled_control = nla_get_u8(data[IFLA_BOND_COUPLED_CONTROL]);
++
++		bond_opt_initval(&newval, coupled_control);
++		err = __bond_opt_set(bond, BOND_OPT_COUPLED_CONTROL, &newval,
++				     data[IFLA_BOND_COUPLED_CONTROL], extack);
++		if (err)
++			return err;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -615,6 +626,7 @@ static size_t bond_get_size(const struct net_device *bond_dev)
+ 						/* IFLA_BOND_NS_IP6_TARGET */
+ 		nla_total_size(sizeof(struct nlattr)) +
+ 		nla_total_size(sizeof(struct in6_addr)) * BOND_MAX_NS_TARGETS +
++		nla_total_size(sizeof(u8)) +	/* IFLA_BOND_COUPLED_CONTROL */
+ 		0;
+ }
+ 
+@@ -774,6 +786,10 @@ static int bond_fill_info(struct sk_buff *skb,
+ 		       bond->params.missed_max))
+ 		goto nla_put_failure;
+ 
++	if (nla_put_u8(skb, IFLA_BOND_COUPLED_CONTROL,
++		       bond->params.coupled_control))
++		goto nla_put_failure;
++
+ 	if (BOND_MODE(bond) == BOND_MODE_8023AD) {
+ 		struct ad_info info;
+ 
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index b282ed5b59a9..8291803e4f00 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -85,7 +85,8 @@ static int bond_option_ad_user_port_key_set(struct bonding *bond,
+ 					    const struct bond_opt_value *newval);
+ static int bond_option_missed_max_set(struct bonding *bond,
+ 				      const struct bond_opt_value *newval);
+-
++static int bond_option_coupled_control_set(struct bonding *bond,
++					   const struct bond_opt_value *newval);
+ 
+ static const struct bond_opt_value bond_mode_tbl[] = {
+ 	{ "balance-rr",    BOND_MODE_ROUNDROBIN,   BOND_VALFLAG_DEFAULT},
+@@ -233,6 +234,12 @@ static const struct bond_opt_value bond_missed_max_tbl[] = {
+ 	{ NULL,		-1,	0},
+ };
+ 
++static const struct bond_opt_value bond_coupled_control_tbl[] = {
++	{ "on",  1,  BOND_VALFLAG_DEFAULT},
++	{ "off", 0,  0},
++	{ NULL,  -1, 0},
++};
++
+ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
+ 	[BOND_OPT_MODE] = {
+ 		.id = BOND_OPT_MODE,
+@@ -497,6 +504,15 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
+ 		.desc = "Delay between each peer notification on failover event, in milliseconds",
+ 		.values = bond_peer_notif_delay_tbl,
+ 		.set = bond_option_peer_notif_delay_set
++	},
++	[BOND_OPT_COUPLED_CONTROL] = {
++		.id = BOND_OPT_COUPLED_CONTROL,
++		.name = "coupled_control",
++		.desc = "Opt into using coupled control MUX for LACP states",
++		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
++		.flags = BOND_OPTFLAG_IFDOWN,
++		.values = bond_coupled_control_tbl,
++		.set = bond_option_coupled_control_set,
+ 	}
+ };
+ 
+@@ -1812,3 +1828,13 @@ static int bond_option_ad_user_port_key_set(struct bonding *bond,
+ 	bond->params.ad_user_port_key = newval->value;
+ 	return 0;
+ }
++
++static int bond_option_coupled_control_set(struct bonding *bond,
++					   const struct bond_opt_value *newval)
++{
++	netdev_info(bond->dev, "Setting coupled_control to %s (%llu)\n",
++		    newval->string, newval->value);
++
++	bond->params.coupled_control = newval->value;
++	return 0;
++}
+diff --git a/include/net/bond_3ad.h b/include/net/bond_3ad.h
+index 29f2a681aa14..078e16d2512a 100644
+--- a/include/net/bond_3ad.h
++++ b/include/net/bond_3ad.h
+@@ -54,6 +54,8 @@ typedef enum {
+ 	AD_MUX_DETACHED,	/* mux machine */
+ 	AD_MUX_WAITING,		/* mux machine */
+ 	AD_MUX_ATTACHED,	/* mux machine */
++	AD_MUX_COLLECTING,	/* mux machine */
++	AD_MUX_DISTRIBUTING,	/* mux machine */
+ 	AD_MUX_COLLECTING_DISTRIBUTING	/* mux machine */
+ } mux_states_t;
+ 
+diff --git a/include/net/bond_options.h b/include/net/bond_options.h
+index f631d9f09941..18687ccf0638 100644
+--- a/include/net/bond_options.h
++++ b/include/net/bond_options.h
+@@ -76,6 +76,7 @@ enum {
+ 	BOND_OPT_MISSED_MAX,
+ 	BOND_OPT_NS_TARGETS,
+ 	BOND_OPT_PRIO,
++	BOND_OPT_COUPLED_CONTROL,
+ 	BOND_OPT_LAST
+ };
+ 
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index 94594026a5c5..8bb5f016969f 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -148,6 +148,7 @@ struct bond_params {
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	struct in6_addr ns_targets[BOND_MAX_NS_TARGETS];
+ #endif
++	int coupled_control;
+ 
+ 	/* 2 bytes of padding : see ether_addr_equal_64bits() */
+ 	u8 ad_actor_system[ETH_ALEN + 2];
+@@ -167,6 +168,7 @@ struct slave {
+ 	u8     backup:1,   /* indicates backup slave. Value corresponds with
+ 			      BOND_STATE_ACTIVE and BOND_STATE_BACKUP */
+ 	       inactive:1, /* indicates inactive slave */
++	       rx_disabled:1, /* indicates whether slave's Rx is disabled */
+ 	       should_notify:1, /* indicates whether the state changed */
+ 	       should_notify_link:1; /* indicates whether the link changed */
+ 	u8     duplex;
+@@ -568,6 +570,14 @@ static inline void bond_set_slave_inactive_flags(struct slave *slave,
+ 		bond_set_slave_state(slave, BOND_STATE_BACKUP, notify);
+ 	if (!slave->bond->params.all_slaves_active)
+ 		slave->inactive = 1;
++	if (BOND_MODE(slave->bond) == BOND_MODE_8023AD)
++		slave->rx_disabled = 1;
++}
++
++static inline void bond_set_slave_tx_disabled_flags(struct slave *slave,
++						 bool notify)
++{
++	bond_set_slave_state(slave, BOND_STATE_BACKUP, notify);
+ }
+ 
+ static inline void bond_set_slave_active_flags(struct slave *slave,
+@@ -575,6 +585,14 @@ static inline void bond_set_slave_active_flags(struct slave *slave,
+ {
+ 	bond_set_slave_state(slave, BOND_STATE_ACTIVE, notify);
+ 	slave->inactive = 0;
++	if (BOND_MODE(slave->bond) == BOND_MODE_8023AD)
++		slave->rx_disabled = 0;
++}
++
++static inline void bond_set_slave_rx_enabled_flags(struct slave *slave,
++					       bool notify)
++{
++	slave->rx_disabled = 0;
+ }
+ 
+ static inline bool bond_is_slave_inactive(struct slave *slave)
+@@ -582,6 +600,11 @@ static inline bool bond_is_slave_inactive(struct slave *slave)
+ 	return slave->inactive;
+ }
+ 
++static inline bool bond_is_slave_rx_disabled(struct slave *slave)
++{
++	return slave->rx_disabled;
++}
++
+ static inline void bond_propose_link_state(struct slave *slave, int state)
+ {
+ 	slave->link_new_state = state;
+diff --git a/include/uapi/linux/if_link.h b/include/uapi/linux/if_link.h
+index ce3117df9cec..6750911da4f0 100644
+--- a/include/uapi/linux/if_link.h
++++ b/include/uapi/linux/if_link.h
+@@ -950,6 +950,7 @@ enum {
+ 	IFLA_BOND_AD_LACP_ACTIVE,
+ 	IFLA_BOND_MISSED_MAX,
+ 	IFLA_BOND_NS_IP6_TARGET,
++	IFLA_BOND_COUPLED_CONTROL,
+ 	__IFLA_BOND_MAX,
+ };
+ 
+diff --git a/tools/include/uapi/linux/if_link.h b/tools/include/uapi/linux/if_link.h
+index 39e659c83cfd..cb8b0a3029d3 100644
+--- a/tools/include/uapi/linux/if_link.h
++++ b/tools/include/uapi/linux/if_link.h
+@@ -865,6 +865,7 @@ enum {
+ 	IFLA_BOND_AD_LACP_ACTIVE,
+ 	IFLA_BOND_MISSED_MAX,
+ 	IFLA_BOND_NS_IP6_TARGET,
++	IFLA_BOND_COUPLED_CONTROL,
+ 	__IFLA_BOND_MAX,
+ };
+ 
 -- 
 2.50.1
 
