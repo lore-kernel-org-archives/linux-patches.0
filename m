@@ -1,122 +1,108 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA48246BC5
-	for <patches@lists.linux.dev>; Tue, 26 Aug 2025 13:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C551A2F6564;
+	Tue, 26 Aug 2025 13:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214876; cv=none; b=RToe4TMMg1CTgDsLoTsGKdXK5FsYZh8PhgLEao3R6lsN2rAixbFhCOePxFynPmCoGuVlJ94d/X+bQFRwGp4lNWsRLe/SSwFfqhLhJwVFQiuLLeC1fG4MsRha478nvhku6WnhWNiVmwy6YNJLYMrYoqxweAyQdKMDJLAIG66pdZM=
+	t=1756214876; cv=none; b=UFFUwbfNN6NhCX5Ca2M0j0oMmlpLPHxAeWHEg+G3Ruw4nnHg8r07F9/1NVY2kbivoFihwoEO/88rDVpOvIZJZX86HCpXo45gu+4AfITPBsmD1fdS+U61VCXk7Wn3uad7zX4Pp+pLpeiwU5+TT6GoD17+mLVczkJxbI1z5KHXrx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756214876; c=relaxed/simple;
-	bh=xPc5VouSLZAk6rtzQm+iCZVTSD4C5Pa1mhNOLz1cBgQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XsgfWVhH8+dOpYeOzlU3yFJgiZS8/Xj4wWl6f+xFuqoq2gVngJuJTtCSCy5WOyfHY/tJyoRBudS6Exg+ByJdYtGic1scsWiLp7rJrqIofsM01QJS55ZsWOEqZgEXp7XtLIiwSBuJDG+8voqnjMjKidPw/sn+biT868vdcZYybao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=VNNHrc0G; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	bh=jqj9kMp7l7G/ogANlYC5U6o4h1ltQW3QQ4gN7ULnX28=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fW91w8S/hmDAJu9BmUNOZfLQ5S4bYlokbGVJ+ub3URYFTWsxPUm9VEHiHrlLoKnwPKfukaBitX1tVsmcyjn3NwELgc1lUzDH9rJ+yoQ20gY1V8HJL7/wYGXLW/gLtCgqiGQRJBLoKIE5pM43TVakfvHoR+P0ZC7fI/Xwvoxj+vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZi7caf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="VNNHrc0G"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-246ef40cf93so15694975ad.0
-        for <patches@lists.linux.dev>; Tue, 26 Aug 2025 06:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1756214874; x=1756819674; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KVZs1Yt4B+M7h5+3RE2O89FKpxSDOyOXZc0rIy9h7QY=;
-        b=VNNHrc0G3B20BEmLwHNAMvWnY6wYqwFh6JkRmg3PTw75KNat4YUPfnvlFYDWjW1i5+
-         8lGNoXNIWC6Dac6+qUcdxbhmc8c/xxAN9NuRo2Fc0UVVqXAXRoy7210yOAyiDcBE3WjU
-         AKja8bwkOHWs8826OItFSftiV3oddAkL2S1Yut4Og7vITejaV8kBZxFGQ+/SE9lXYVDg
-         3MOEir3Ylsnwi8RU7qreCRMiiaL1334bHbzXrFE+6CIQtasNbSFM/toeoriOergRDCA2
-         Wf0Yqlj7qQBn0HrunybbUrjO9RXxlQ0bQz9vNjZAE1Nn0VyUTAh4ONqF3u6mHbpPOPUu
-         ULOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756214874; x=1756819674;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KVZs1Yt4B+M7h5+3RE2O89FKpxSDOyOXZc0rIy9h7QY=;
-        b=ZdqhgfGkCxBLjKZ2Bi/yqYL/0i4VqLf38U02SxpfHnO7TMFtgMWRJI+WzWBzMq2skp
-         ZEDyzkrkZrOz4GUXxlREDKSkaWNsfPOsq9yHZTuamrZ58czoAuyGRQVQbut+Ip+fMJiK
-         ROwH88l7uPJjY6j9pPmeSD+rUEGW4TEGjK23m2itgK/Bm9t4YQj+L9/GFm7YeH9mQKpa
-         ef2IxMbOGjjQFyB4d11RnnihSvCHq5PrHaTzs4JEJcVA6mIshI39N+XNTMH0FCWRteA6
-         g3EHhXjxUrgo3epB/U51iiJg2cPb3e+WwySkhTzG2bdvgAdCMWKcFV6GJyvXjcJwQyd0
-         Bf1A==
-X-Forwarded-Encrypted: i=1; AJvYcCXrE7LQ+pUqAzMRMCkM0qmAqIxAnWI61QY5UckhAgMpgdEo/XRsFOZmk7xqKMhX1Fe5zX9bJqcu@lists.linux.dev
-X-Gm-Message-State: AOJu0YyD+iGWfZv989ougeAeLlfnB2SMtI2B8PDWPCcjvP/N+Ezvupo8
-	xxoBxjezlr4ELcAyWDdyr3lnOLyAu3NEz+Bhg30V8zYWxOtuS/bW8+upayv8M0I+0ZdGFhQMk+L
-	ctItE6MkBIxZRdsRoqh8Pxtqg9oPjSlykuHdd+owKNQ==
-X-Gm-Gg: ASbGncuOCadBs63zQy5bw4rvjtLfbCIM67Tnao8Q+6tnH4bEir80WvIxrXseu8xmMrk
-	3F/ZY7qfrFUW2zJTn18N/LDokPdMMh99m8MpGqQj/R83N7+J1gWb3uvKJX9rT2ZuiOlmf3iqLoD
-	FjDit23++Nl2SRYv8d/nCRbMw7hTq6046XWA2gibFUOEiA8Erru07bCW4zhu5lakcZ1277JMuNh
-	EJOEuo=
-X-Google-Smtp-Source: AGHT+IE2SVk4t97EhOugJmDZ3uaQs0E4tn3j9laRwvd64gm7WJAI+S2PXD6GkLMAVmz/RilHosSphia3Mhafwg0GRug=
-X-Received: by 2002:a17:902:db0a:b0:246:f123:ccdd with SMTP id
- d9443c01a7336-246f123d18dmr59187785ad.8.1756214873982; Tue, 26 Aug 2025
- 06:27:53 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZi7caf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F07C116B1;
+	Tue, 26 Aug 2025 13:27:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1756214875;
+	bh=jqj9kMp7l7G/ogANlYC5U6o4h1ltQW3QQ4gN7ULnX28=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GZi7caf1gETnD8AvkRz8y7F77W55prLJp7qH447DWPwAeL7+uQfBPvY3cWc6aDsNH
+	 j1RMQebivHLk5xmk8wWqxjK0VyMVuVmKnDfK0djoK+qpTTG5zvObf+Rh0Ijwuri7aK
+	 yVcZL2JYXfrYIbgYzDTt3UQ7eCAf8+rdi3NVcyTU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Tim Harvey <tharvey@gateworks.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 302/482] hwmon: (gsc-hwmon) fix fan pwm setpoint show functions
+Date: Tue, 26 Aug 2025 13:09:15 +0200
+Message-ID: <20250826110938.261255421@linuxfoundation.org>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
+References: <20250826110930.769259449@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250826110937.289866482@linuxfoundation.org>
-In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 26 Aug 2025 22:27:38 +0900
-X-Gm-Features: Ac12FXzRfFlBpNNsy7AVluxhNzcPDiGjNZum3e6mUgmwnrD5CHykobV1b5JZI_0
-Message-ID: <CAKL4bV6_QsjosQHz-vVzwKBN2Zu=vc7QwEM0djuipP=g77d3_A@mail.gmail.com>
-Subject: Re: [PATCH 6.16 000/457] 6.16.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, achill@achill.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-On Tue, Aug 26, 2025 at 8:14=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.16.4 release.
-> There are 457 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 28 Aug 2025 11:08:27 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.16.4-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.16.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+------------------
 
-6.16.4-rc1 tested.
+From: Tim Harvey <tharvey@gateworks.com>
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+commit 9c62e2282900332c8b711d9f9e37af369a8ef71b upstream.
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+The Linux hwmon sysfs API values for pwmX_auto_pointY_pwm represent an
+integer value between 0 (0%) to 255 (100%) and the pwmX_auto_pointY_temp
+represent millidegrees Celcius.
 
-[    0.000000] Linux version 6.16.4-rc1rv-g2894c4c9dabd
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20250813, GNU ld (GNU
-Binutils) 2.45.0) #1 SMP PREEMPT_DYNAMIC Tue Aug 26 21:54:15 JST 2025
+Commit a6d80df47ee2 ("hwmon: (gsc-hwmon) fix fan pwm temperature
+scaling") properly addressed the incorrect scaling in the
+pwm_auto_point_temp_store implementation but erroneously scaled
+the pwm_auto_point_pwm_show (pwm value) instead of the
+pwm_auto_point_temp_show (temp value) resulting in:
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_pwm
+ 25500
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_temp
+ 4500
 
-Thanks
+Fix the scaling of these attributes:
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_pwm
+ 255
+ # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_temp
+ 45000
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Fixes: a6d80df47ee2 ("hwmon: (gsc-hwmon) fix fan pwm temperature scaling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Link: https://lore.kernel.org/r/20250718200259.1840792-1-tharvey@gateworks.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/hwmon/gsc-hwmon.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/drivers/hwmon/gsc-hwmon.c
++++ b/drivers/hwmon/gsc-hwmon.c
+@@ -65,7 +65,7 @@ static ssize_t pwm_auto_point_temp_show(
+ 		return ret;
+ 
+ 	ret = regs[0] | regs[1] << 8;
+-	return sprintf(buf, "%d\n", ret * 10);
++	return sprintf(buf, "%d\n", ret * 100);
+ }
+ 
+ static ssize_t pwm_auto_point_temp_store(struct device *dev,
+@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(s
+ {
+ 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+ 
+-	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
++	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
+ }
+ 
+ static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
+
+
