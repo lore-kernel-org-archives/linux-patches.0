@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F08352FDF;
-	Tue, 26 Aug 2025 14:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B8A350D6A;
+	Tue, 26 Aug 2025 14:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217798; cv=none; b=Biz/5sx8qXc4qQSkEc34MVM7zxxmR4QHjh34Ne6i2QvEG0vecOBnRcubAx499Q7mbX7Y/ODViVRjXqjE68UL/93GMaAB+c8HUU/Dh/eq4RCZnTAHeLXwC8zJbCuUgsjaLKS7OGoJqCGvSi8RATxV3nBOXd0WbNGp/P3OLJ27Frg=
+	t=1756217801; cv=none; b=iLcVU5zsQg5WXnoS3Pbko8irgDWvGyktjGciuC0i9+WX1uHILf3FxRcb2WfCs/xVVb2qLGelr/Bbqbh+TXu6XEjmGOSoANX/INO68QfR/8B3h3l0x6SEvTjn/3wgOX+wwXO4fdKRg4ZpxbFQKq8Joz2f/O9IboQ6tJGkO/kW0Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217798; c=relaxed/simple;
-	bh=XUTO6oR0n1SZGYZRxuwK/GUuyoTIgZyZbChJaojaH5g=;
+	s=arc-20240116; t=1756217801; c=relaxed/simple;
+	bh=13NA/SCX+kJD1FqlT/sl3u27lCoPCw5FEr2gSJGnyl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qelu35AxfVVeo6zDzvXh0tp3sWvdSY75LrbrtGsK0WFzEXXmGoVVi9WiIE9o4oX/Eq1dwkfuds/aN2Url52OHSRD4OxE/w132vtIRYdzfr6BCUG8m0PEISwyfg3CcDwIQYDAydu8/BSd6YI7L8TPPEya4KJ6Z4JSTJ4V2d494p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4nDOMvj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xyi4s8BkuesiRY5KBmGW+3eV2NZR9rUC3ESCopg369XY0OEG8P6MZa5ZviMrVFdGqTaPd6Km40dGHgzbYSF3ZQ5Xo9kjqki0USqbTDNpsoKM6w4II/OXRCsIy3dWi8sbPYU1zm09C4q46CxIUvZwWWRANuOb/s/Y7h2k8vnYtEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaNSo3xy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4nDOMvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE22C4CEF1;
-	Tue, 26 Aug 2025 14:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaNSo3xy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A69C4CEF1;
+	Tue, 26 Aug 2025 14:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217798;
-	bh=XUTO6oR0n1SZGYZRxuwK/GUuyoTIgZyZbChJaojaH5g=;
+	s=korg; t=1756217800;
+	bh=13NA/SCX+kJD1FqlT/sl3u27lCoPCw5FEr2gSJGnyl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l4nDOMvjFDKwbbCFARmoxrM5z0dUQciQqJyaPUGw+3cTHKwWQls5zP03zhBBbeHSi
-	 Aq814BMzyC+goxVgPvUBy65l3KAg3NHwvrtLcIj0BXwh3f5gwxesjQYWgrR79lv5fK
-	 2PvNTUlv9IqlPEhpJ0seOhWdRtT+REHzG82nQjOs=
+	b=PaNSo3xy2YIxvd/BJvKNG6gjmH6YW+2cJjhF4emnwuyconDDgP5+AZvuNsQGnHzEG
+	 x9GuJfXvXIvouOM1xaapG+to05SXwT8q1oLZcJGxAda3AXOaXgwR5Pfvd1bQ1aZ7tV
+	 ND36/xw3cSh4X9yUDYA0bQHuOLFlmieMa5tLI9p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexei Safin <a.safin@rosa.ru>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alex Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 279/523] wifi: iwlegacy: Check rate_idx range after addition
-Date: Tue, 26 Aug 2025 13:08:09 +0200
-Message-ID: <20250826110931.315278976@linuxfoundation.org>
+Subject: [PATCH 5.10 280/523] net: vlan: Replace BUG() with WARN_ON_ONCE() in vlan_dev_* stubs
+Date: Tue, 26 Aug 2025 13:08:10 +0200
+Message-ID: <20250826110931.342010577@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,41 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 0de19d5ae0b2c5b18b88c5c7f0442f707a207409 ]
+[ Upstream commit 60a8b1a5d0824afda869f18dc0ecfe72f8dfda42 ]
 
-Limit rate_idx to IL_LAST_OFDM_RATE for 5GHz band for thinkable case
-the index is incorrect.
+When CONFIG_VLAN_8021Q=n, a set of stub helpers are used, three of these
+helpers use BUG() unconditionally.
 
-Reported-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reported-by: Alexei Safin <a.safin@rosa.ru>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20250525144524.GA172583@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This code should not be reached, as callers of these functions should
+always check for is_vlan_dev() first, but the usage of BUG() is not
+recommended, replace it with WARN_ON() instead.
+
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20250616132626.1749331-3-gal@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/4965-mac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/if_vlan.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-index 2549902552e1..6e5decf79a06 100644
---- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
-@@ -1574,8 +1574,11 @@ il4965_tx_cmd_build_rate(struct il_priv *il,
- 	    || rate_idx > RATE_COUNT_LEGACY)
- 		rate_idx = rate_lowest_index(&il->bands[info->band], sta);
- 	/* For 5 GHZ band, remap mac80211 rate indices into driver indices */
--	if (info->band == NL80211_BAND_5GHZ)
-+	if (info->band == NL80211_BAND_5GHZ) {
- 		rate_idx += IL_FIRST_OFDM_RATE;
-+		if (rate_idx > IL_LAST_OFDM_RATE)
-+			rate_idx = IL_LAST_OFDM_RATE;
-+	}
- 	/* Get PLCP rate for tx_cmd->rate_n_flags */
- 	rate_plcp = il_rates[rate_idx].plcp;
- 	/* Zero out flags for this packet */
+diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
+index 64cfe7cd292c..3728e3978f83 100644
+--- a/include/linux/if_vlan.h
++++ b/include/linux/if_vlan.h
+@@ -248,19 +248,19 @@ vlan_for_each(struct net_device *dev,
+ 
+ static inline struct net_device *vlan_dev_real_dev(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return NULL;
+ }
+ 
+ static inline u16 vlan_dev_vlan_id(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return 0;
+ }
+ 
+ static inline __be16 vlan_dev_vlan_proto(const struct net_device *dev)
+ {
+-	BUG();
++	WARN_ON_ONCE(1);
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
