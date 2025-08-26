@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9428314A;
-	Tue, 26 Aug 2025 13:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6052E6106;
+	Tue, 26 Aug 2025 13:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215069; cv=none; b=jNi7OCpgBg9Dy4s2dAU27yzoWLG7QK/6AzPZciU9s35T1qYPEecDpp9k3h8bjbMCO93Igl3RIDsqaOETJ0hH+0prYnTo3fVzFPeqmo7NJ5bo69Bo0h0KNMJ7xxtDgJP4woaFLfa7KKtso4OHGGo/8OzPlGDO+PWXhknIEPEz5y0=
+	t=1756215071; cv=none; b=MsK75dkhhRbEkWujphhPgE5Pv3HTmbedP04NOPVhIBYuXav3KMVJhTTvrUD87ESFrrc/G5suIt4TNMgJc45Y5ZNWKQo7NW6MFSHOAxPBk6o70SbpejPNWRLNz+pA2XY50SWnNmKm59Aa2kAfii6kNWFFrwRCs7A/Eua3Pznmyw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215069; c=relaxed/simple;
-	bh=cADI3dfpAytBmOFDJazL8Fa6TLNAvEoSQpD24+0oZB4=;
+	s=arc-20240116; t=1756215071; c=relaxed/simple;
+	bh=M/Q3NLdRTUTvSl3J86WcLxZaxl7y1KBAoPyx7r1/q80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ns/Y1unfMcCJ4p/c9RK+TsQdlurp0nP7wMfU9asZkBrnqLhwR/LpltH6k2gHVa5xlsJLgFkm95BUm/s1Vzaxl99MQlvK/ioZQHzPXk2TVuBmCDkyeKaRqEvpQUUEewdb3H5dFZeClu3b+PV/XpqLwN2q7JPs6N8sA3ViJUHK/Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLVohrs7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTUF4FTZMZBVUrS4akp4IFJqFSdf2YdpRHFZEr/R6Ec/DMEo5KNrotwWE4y150cMk5A0025eB/uA9bDcSTbI/01jgDCMXRJlYDkArHZjA7OECS9r9fW8L026gshqw0BVh/+4P9f4eAB+g3D7Mpchm0UOL4JjC0UVV85nZ/kMqdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLF7g/Fu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLVohrs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3AFC4CEF1;
-	Tue, 26 Aug 2025 13:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLF7g/Fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE57C113CF;
+	Tue, 26 Aug 2025 13:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215068;
-	bh=cADI3dfpAytBmOFDJazL8Fa6TLNAvEoSQpD24+0oZB4=;
+	s=korg; t=1756215071;
+	bh=M/Q3NLdRTUTvSl3J86WcLxZaxl7y1KBAoPyx7r1/q80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLVohrs7etNLleM11pK8QGsU0XEhDz0QY8Epqi8r73prB9rxQtTQK6xstraTKEqsv
-	 NmdQby+QbA6o9Ov5MxgjG9FBPReRU/Jw8Fyz7vk1wXT06/Iax6Eij0nRmqDCPZfjYb
-	 47XZId1BC2ytLp+by+qjZXJMfDmzpyg1SSPAhLjg=
+	b=tLF7g/FuT+7LrCN7eKwlRUfj0z2evsE29YH4TBookDw7RPYL0q/b3dTRN/VBFithF
+	 G4ZF8WCL9r/P318lyH3COBqdRWeVnfG/Res6IWmzGEdh64XsJLrX5fnY39IjMZkDcW
+	 b8E8vXiSToTeva3ymSbrdMZa0XclxYwMyWt4fefg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Niklas Cassel <cassel@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 375/482] ata: Fix SATA_MOBILE_LPM_POLICY description in Kconfig
-Date: Tue, 26 Aug 2025 13:10:28 +0200
-Message-ID: <20250826110940.095241178@linuxfoundation.org>
+Subject: [PATCH 6.1 376/482] btrfs: populate otime when logging an inode item
+Date: Tue, 26 Aug 2025 13:10:29 +0200
+Message-ID: <20250826110940.118855535@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,76 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit ed62a62a18bc144f73eadf866ae46842e8f6606e ]
+[ Upstream commit 1ef94169db0958d6de39f9ea6e063ce887342e2d ]
 
-Improve the description of the possible default SATA link power
-management policies and add the missing description for policy 5.
-No functional changes.
+[TEST FAILURE WITH EXPERIMENTAL FEATURES]
+When running test case generic/508, the test case will fail with the new
+btrfs shutdown support:
 
-Fixes: a5ec5a7bfd1f ("ata: ahci: Support state with min power but Partial low power state")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-[ Adjust context ]
+generic/508       - output mismatch (see /home/adam/xfstests/results//generic/508.out.bad)
+#    --- tests/generic/508.out	2022-05-11 11:25:30.806666664 +0930
+#    +++ /home/adam/xfstests/results//generic/508.out.bad	2025-07-02 14:53:22.401824212 +0930
+#    @@ -1,2 +1,6 @@
+#     QA output created by 508
+#     Silence is golden
+#    +Before:
+#    +After : stat.btime = Thu Jan  1 09:30:00 1970
+#    +Before:
+#    +After : stat.btime = Wed Jul  2 14:53:22 2025
+#    ...
+#    (Run 'diff -u /home/adam/xfstests/tests/generic/508.out /home/adam/xfstests/results//generic/508.out.bad'  to see the entire diff)
+Ran: generic/508
+Failures: generic/508
+Failed 1 of 1 tests
+
+Please note that the test case requires shutdown support, thus the test
+case will be skipped using the current upstream kernel, as it doesn't
+have shutdown ioctl support.
+
+[CAUSE]
+The direct cause the 0 time stamp in the log tree:
+
+leaf 30507008 items 2 free space 16057 generation 9 owner TREE_LOG
+leaf 30507008 flags 0x1(WRITTEN) backref revision 1
+checksum stored e522548d
+checksum calced e522548d
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 9 transid 9 size 0 nbytes 0
+		block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
+		sequence 1 flags 0x0(none)
+		atime 1751432947.492000000 (2025-07-02 14:39:07)
+		ctime 1751432947.492000000 (2025-07-02 14:39:07)
+		mtime 1751432947.492000000 (2025-07-02 14:39:07)
+		otime 0.0 (1970-01-01 09:30:00) <<<
+
+But the old fs tree has all the correct time stamp:
+
+btrfs-progs v6.12
+fs tree key (FS_TREE ROOT_ITEM 0)
+leaf 30425088 items 2 free space 16061 generation 5 owner FS_TREE
+leaf 30425088 flags 0x1(WRITTEN) backref revision 1
+checksum stored 48f6c57e
+checksum calced 48f6c57e
+fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
+chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
+	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
+		generation 3 transid 0 size 0 nbytes 16384
+		block group 0 mode 40755 links 1 uid 0 gid 0 rdev 0
+		sequence 0 flags 0x0(none)
+		atime 1751432947.0 (2025-07-02 14:39:07)
+		ctime 1751432947.0 (2025-07-02 14:39:07)
+		mtime 1751432947.0 (2025-07-02 14:39:07)
+		otime 1751432947.0 (2025-07-02 14:39:07) <<<
+
+The root cause is that fill_inode_item() in tree-log.c is only
+populating a/c/m time, not the otime (or btime in statx output).
+
+Part of the reason is that, the vfs inode only has a/c/m time, no native
+btime support yet.
+
+[FIX]
+Thankfully btrfs has its otime stored in btrfs_inode::i_otime_sec and
+btrfs_inode::i_otime_nsec.
+
+So what we really need is just fill the otime time stamp in
+fill_inode_item() of tree-log.c
+
+There is another fill_inode_item() in inode.c, which is doing the proper
+otime population.
+
+Fixes: 94edf4ae43a5 ("Btrfs: don't bother committing delayed inode updates when fsyncing")
+CC: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ timespec changes in older tree ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/Kconfig |   33 +++++++++++++++++++++++++--------
- 1 file changed, 25 insertions(+), 8 deletions(-)
+ fs/btrfs/tree-log.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/ata/Kconfig
-+++ b/drivers/ata/Kconfig
-@@ -117,7 +117,7 @@ config SATA_AHCI
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -4210,6 +4210,11 @@ static void fill_inode_item(struct btrfs
+ 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
+ 				      inode->i_ctime.tv_nsec);
  
- config SATA_MOBILE_LPM_POLICY
- 	int "Default SATA Link Power Management policy for low power chipsets"
--	range 0 4
-+	range 0 5
- 	default 0
- 	depends on SATA_AHCI
- 	help
-@@ -126,15 +126,32 @@ config SATA_MOBILE_LPM_POLICY
- 	  chipsets are typically found on most laptops but desktops and
- 	  servers now also widely use chipsets supporting low power modes.
- 
--	  The value set has the following meanings:
-+	  Each policy combines power saving states and features:
-+	   - Partial: The Phy logic is powered but is in a reduced power
-+                      state. The exit latency from this state is no longer than
-+                      10us).
-+	   - Slumber: The Phy logic is powered but is in an even lower power
-+                      state. The exit latency from this state is potentially
-+		      longer, but no longer than 10ms.
-+	   - DevSleep: The Phy logic may be powered down. The exit latency from
-+	               this state is no longer than 20 ms, unless otherwise
-+		       specified by DETO in the device Identify Device Data log.
-+	   - HIPM: Host Initiated Power Management (host automatically
-+		   transitions to partial and slumber).
-+	   - DIPM: Device Initiated Power Management (device automatically
-+		   transitions to partial and slumber).
++	btrfs_set_token_timespec_sec(&token, &item->otime,
++				     BTRFS_I(inode)->i_otime.tv_sec);
++	btrfs_set_token_timespec_nsec(&token, &item->otime,
++				      BTRFS_I(inode)->i_otime.tv_nsec);
 +
-+	  The possible values for the default SATA link power management
-+	  policies are:
- 		0 => Keep firmware settings
--		1 => Maximum performance
--		2 => Medium power
--		3 => Medium power with Device Initiated PM enabled
--		4 => Minimum power
-+		1 => No power savings (maximum performance)
-+		2 => HIPM (Partial)
-+		3 => HIPM (Partial) and DIPM (Partial and Slumber)
-+		4 => HIPM (Partial and DevSleep) and DIPM (Partial and Slumber)
-+		5 => HIPM (Slumber and DevSleep) and DIPM (Partial and Slumber)
- 
--	  Note "Minimum power" is known to cause issues, including disk
--	  corruption, with some disks and should not be used.
-+	  Excluding the value 0, higher values represent policies with higher
-+	  power savings.
- 
- config SATA_AHCI_PLATFORM
- 	tristate "Platform AHCI SATA support"
+ 	/*
+ 	 * We do not need to set the nbytes field, in fact during a fast fsync
+ 	 * its value may not even be correct, since a fast fsync does not wait
 
 
