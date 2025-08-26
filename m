@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB02C34A32E;
-	Tue, 26 Aug 2025 14:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DCF223335;
+	Tue, 26 Aug 2025 14:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217334; cv=none; b=Tfu/XaRI4IQ2yqgj3TQVg/sp8IyHmm788CKgxPt/lm6NxqHQJg2i+cGTHrgsXM+AzAwrOVdjjzbQHaQg2RUKfHGWoohm/tRnFxbMyoHZRY+fcXKNeeFt5s6sYUcXJJ13QeG6Sbmjz7q/auFAmo9xMJdNjkTaj2vjo7RxSiDq8HI=
+	t=1756217337; cv=none; b=nM9tMOkEinvVaIqgokKSAP9JDFZ9kDavjLTXGAIv8zMPsltbM622+qKTquSqBj/4VvHuQRdW456UXgq1xBHVgo27cYxvlf+ZlXkz7qd11tiQ6y5yqoCHOtnPmm5uhWIvrmhjyqXw8UyKQNJ2q5qOAz3Yq18otmQ1ABGOA55VEcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217334; c=relaxed/simple;
-	bh=9uUomh74xzFMnRUyk7DT+t68LUHPq9AwmHHRHlFqx5U=;
+	s=arc-20240116; t=1756217337; c=relaxed/simple;
+	bh=kgrqdfcQZJ15uygipZhogQfcW0TZdtF7WbFl4EIiVyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDn+vVY8tCOpGmQ3zLmUrLt00HkOZsRhlCj4VYTrscxVtj5nzJBzAu2uSuX4Hybeay56Zys1aokR0mjoOrQ3puPuEDeZ5P5vLDD+B1knypom8H7NVGieVx0vGCgQCaf+e7eaOI1qk2Rw6KOhPgQ5RMiYJF0Uut+pL7UE+D7Ss6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGqzrXQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QcAXEfO+sAFRrB7PFZ1/i/TFrP28zSwL4zP6JTeAWuRQUR8nM0214xfqxNmNQIQJrgVhq3UXKm+d8v3luCP1nYTGJrO7LABjMQUFNntjPd1fdS7MLW8jRhs6rHXD1S8Xmd7r/sakKPRv/HdMCrca2XE3V/sApR4lfCdOkh6Hi7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRWSTGsX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGqzrXQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70308C4CEF1;
-	Tue, 26 Aug 2025 14:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRWSTGsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DA8C4CEF1;
+	Tue, 26 Aug 2025 14:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217334;
-	bh=9uUomh74xzFMnRUyk7DT+t68LUHPq9AwmHHRHlFqx5U=;
+	s=korg; t=1756217337;
+	bh=kgrqdfcQZJ15uygipZhogQfcW0TZdtF7WbFl4EIiVyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGqzrXQ4DUXrdDvmRO9Vgo+QOk8qgjaEQ1kLIwhwBEdr97wpMurGCNgX1G5cSA1Dm
-	 +y29sdlCu9ArXthOs/L4MOp5ebtghGwuekdDtVqyo2W82DQzh865tYOMDQ4xX1u8qJ
-	 mwPSxvY2sRQQw+nrOdzSjgDhh3oLkqplOVOP42y0=
+	b=jRWSTGsXPvEfJr9RUezDau45KJbcf4hK9tEWw7jS6/xgYZXiyaQR41L33DSiX1W0k
+	 mnCcT8iS+k2jYx1Gh4/LiICqSl4taDqJ8aa194AbQtIclq6mSbtZ5/ZOiBOnmY5Opt
+	 wiFzfPPoe4C5bVrkeSUtA2Pib1PvanY6TsE1BoRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/523] usb: chipidea: add USB PHY event
-Date: Tue, 26 Aug 2025 13:04:43 +0200
-Message-ID: <20250826110926.371168030@linuxfoundation.org>
+	Yang Xiwen <forbidden405@outlook.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 064/523] i2c: qup: jump out of the loop in case of timeout
+Date: Tue, 26 Aug 2025 13:04:34 +0200
+Message-ID: <20250826110926.159249308@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,95 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Yang Xiwen <forbidden405@outlook.com>
 
-[ Upstream commit b7a62611fab72e585c729a7fcf666aa9c4144214 ]
+commit a7982a14b3012527a9583d12525cd0dc9f8d8934 upstream.
 
-Add USB PHY event for below situation:
-- usb role changed
-- vbus connect
-- vbus disconnect
-- gadget driver is enumerated
+Original logic only sets the return value but doesn't jump out of the
+loop if the bus is kept active by a client. This is not expected. A
+malicious or buggy i2c client can hang the kernel in this case and
+should be avoided. This is observed during a long time test with a
+PCA953x GPIO extender.
 
-USB PHY driver can get the last event after above situation occurs
-and deal with different situations.
+Fix it by changing the logic to not only sets the return value, but also
+jumps out of the loop and return to the caller with -ETIMEDOUT.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20230627110353.1879477-1-xu.yang_2@nxp.com
+Fixes: fbfab1ab0658 ("i2c: qup: reorganization of driver code to remove polling for qup v1")
+Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
+Cc: <stable@vger.kernel.org> # v4.17+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250616-qca-i2c-v1-1-2a8d37ee0a30@outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci.h  | 18 ++++++++++++++++--
- drivers/usb/chipidea/udc.c | 10 ++++++++++
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-qup.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/chipidea/ci.h b/drivers/usb/chipidea/ci.h
-index 7b00b93dad9b..f12e177bfc55 100644
---- a/drivers/usb/chipidea/ci.h
-+++ b/drivers/usb/chipidea/ci.h
-@@ -278,8 +278,19 @@ static inline int ci_role_start(struct ci_hdrc *ci, enum ci_role role)
- 		return -ENXIO;
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -452,8 +452,10 @@ static int qup_i2c_bus_active(struct qup
+ 		if (!(status & I2C_STATUS_BUS_ACTIVE))
+ 			break;
  
- 	ret = ci->roles[role]->start(ci);
--	if (!ret)
--		ci->role = role;
-+	if (ret)
-+		return ret;
-+
-+	ci->role = role;
-+
-+	if (ci->usb_phy) {
-+		if (role == CI_ROLE_HOST)
-+			usb_phy_set_event(ci->usb_phy, USB_EVENT_ID);
-+		else
-+			/* in device mode but vbus is invalid*/
-+			usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
-+	}
-+
- 	return ret;
- }
+-		if (time_after(jiffies, timeout))
++		if (time_after(jiffies, timeout)) {
+ 			ret = -ETIMEDOUT;
++			break;
++		}
  
-@@ -293,6 +304,9 @@ static inline void ci_role_stop(struct ci_hdrc *ci)
- 	ci->role = CI_ROLE_END;
- 
- 	ci->roles[role]->stop(ci);
-+
-+	if (ci->usb_phy)
-+		usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
- }
- 
- static inline enum usb_role ci_role_to_usb_role(struct ci_hdrc *ci)
-diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-index 1c7af91bf03a..122d2d82c67c 100644
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -1697,6 +1697,13 @@ static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
- 		ret = ci->platdata->notify_event(ci,
- 				CI_HDRC_CONTROLLER_VBUS_EVENT);
- 
-+	if (ci->usb_phy) {
-+		if (is_active)
-+			usb_phy_set_event(ci->usb_phy, USB_EVENT_VBUS);
-+		else
-+			usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
-+	}
-+
- 	if (ci->driver)
- 		ci_hdrc_gadget_connect(_gadget, is_active);
- 
-@@ -2012,6 +2019,9 @@ static irqreturn_t udc_irq(struct ci_hdrc *ci)
- 		if (USBi_PCI & intr) {
- 			ci->gadget.speed = hw_port_is_high_speed(ci) ?
- 				USB_SPEED_HIGH : USB_SPEED_FULL;
-+			if (ci->usb_phy)
-+				usb_phy_set_event(ci->usb_phy,
-+					USB_EVENT_ENUMERATED);
- 			if (ci->suspended) {
- 				if (ci->driver->resume) {
- 					spin_unlock(&ci->lock);
--- 
-2.39.5
-
+ 		usleep_range(len, len * 2);
+ 	}
 
 
