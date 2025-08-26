@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51713570A2;
-	Tue, 26 Aug 2025 14:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E4C35AABB;
+	Tue, 26 Aug 2025 14:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217511; cv=none; b=gM8bxurHYsWGzpObUqvK8xMyMeRKmsaxZx7K18DNH2FxHY4Pvy14CoBzAfSS+c9iD1Rx8alxNoGT58Raz5Qr631fQK9hKvFaAg59icqpClmjlouVi1F7+o903i1RInOCh1fA0wJg5IQq/UEAvVglAECiwAe6xqWINarBtlk25fo=
+	t=1756217514; cv=none; b=qwQIsJ1BxvQedGMrBkWZlVSDELfY4BJ9VGJH6rw7g8xtfLfY8L/CsgeDW0pdTTE4NLtm6n8CSobdnn8wiUkUmMjO6/prepl5rNaFGCAbXyIuj8ySuimtvv/yVdWTCfnWcQQNcTL1+dsH7yJjBeV1szXLvog8Xvu99O7RL9Qg1Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217511; c=relaxed/simple;
-	bh=29d6AP3fseZSiC3APVUJRFeQnibEmFkzNwoC8sPTB2I=;
+	s=arc-20240116; t=1756217514; c=relaxed/simple;
+	bh=i1RHUSfKF9TeWunGcND9WYhknd5HY2fYFXs5KQG8T0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MqxAZOHuAmwjKFa8qHg08ASqnlTijS7eoePcPDiSvM1zHRNqW1euHKfCEdTW+T5fbTGcdoQ5e9LI9o+Ww17KzkP9oy7FkboRnwC0SARytI8bugt1VTl3O5x2JFpdtMCAAIgly2/1ciStj7e2kZMWYYIYopvca9k/+b0hIsLpkjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9IaVRcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EkejGYDaayBaW4pTGSPrVohv0t02h30yTI+kToRoEQX0aF/pyDXQZ2kDQLJT7x/qtac++btd/kTO9Wr8rWCmaUQgXu/Wchl6whgevyLWIg6//RysxsDiuTs40XjWQNGvmMbCNOC7tGepoglrypGlFNhHfcHmCshOxbhT4xULRno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFnaX0u7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9IaVRcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D85C4CEF1;
-	Tue, 26 Aug 2025 14:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFnaX0u7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA0EC113D0;
+	Tue, 26 Aug 2025 14:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217510;
-	bh=29d6AP3fseZSiC3APVUJRFeQnibEmFkzNwoC8sPTB2I=;
+	s=korg; t=1756217513;
+	bh=i1RHUSfKF9TeWunGcND9WYhknd5HY2fYFXs5KQG8T0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9IaVRcG6PCAngjCjaujkLZlSGJzAa3nLyquaiyiTXsHXu2OrM5hzGupA7XEYDE9C
-	 GqPpzQG0AyDCUkjESNbgcv3ldd4fqEDsXvlGdkZjxTtBmsmS3gqTtz/nLjKkjmW1Xx
-	 sjQOWGamirUsd75K+LTlUDcqncx5iZ8WF/kgehkE=
+	b=XFnaX0u7xRUHSU92K5RswsJI5tzDdnOFunmDMam34uhzlaiiINQGE3EAaRJB5bdSY
+	 X/bm/1czukcLaPDIn4AGBFLWtauZjHReMInnXprBHx++E40nVCEIFMQM7XhqUoj5TN
+	 uqcCE4Ejg6hJpaTIjz7c+kMqONtk+DkaJIvOGBVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 139/523] dmaengine: nbpfaxi: Add missing check after DMA map
-Date: Tue, 26 Aug 2025 13:05:49 +0200
-Message-ID: <20250826110927.928938337@linuxfoundation.org>
+Subject: [PATCH 5.10 140/523] sh: Do not use hyphen in exported variable name
+Date: Tue, 26 Aug 2025 13:05:50 +0200
+Message-ID: <20250826110927.952968663@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,53 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit c6ee78fc8f3e653bec427cfd06fec7877ee782bd ]
+[ Upstream commit c32969d0362a790fbc6117e0b6a737a7e510b843 ]
 
-The DMA map functions can fail and should be tested for errors.
-If the mapping fails, unmap and return an error.
+arch/sh/Makefile defines and exports ld-bfd to be used by
+arch/sh/boot/compressed/Makefile and arch/sh/boot/romimage/Makefile.
+However some shells, including dash, will not pass through environment
+variables whose name includes a hyphen.  Usually GNU make does not use
+a shell to recurse, but if e.g. $(srctree) contains '~' it will use a
+shell here.
 
-Fixes: b45b262cefd5 ("dmaengine: add a driver for AMBA AXI NBPF DMAC IP cores")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250707075752.28674-2-fourier.thomas@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Other instances of this problem were previously fixed by commits
+2bfbe7881ee0 "kbuild: Do not use hyphen in exported variable name"
+and 82977af93a0d "sh: rename suffix-y to suffix_y".
+
+Rename the variable to ld_bfd.
+
+References: https://buildd.debian.org/status/fetch.php?pkg=linux&arch=sh4&ver=4.13%7Erc5-1%7Eexp1&stamp=1502943967&raw=0
+Fixes: 7b022d07a0fd ("sh: Tidy up the ldscript output format specifier.")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/nbpfaxi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/sh/Makefile                 | 10 +++++-----
+ arch/sh/boot/compressed/Makefile |  4 ++--
+ arch/sh/boot/romimage/Makefile   |  4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
-index bbedf57e3612..94e7e3290691 100644
---- a/drivers/dma/nbpfaxi.c
-+++ b/drivers/dma/nbpfaxi.c
-@@ -712,6 +712,9 @@ static int nbpf_desc_page_alloc(struct nbpf_channel *chan)
- 		list_add_tail(&ldesc->node, &lhead);
- 		ldesc->hwdesc_dma_addr = dma_map_single(dchan->device->dev,
- 					hwdesc, sizeof(*hwdesc), DMA_TO_DEVICE);
-+		if (dma_mapping_error(dchan->device->dev,
-+				      ldesc->hwdesc_dma_addr))
-+			goto unmap_error;
+diff --git a/arch/sh/Makefile b/arch/sh/Makefile
+index 2faebfd72eca..8e8e24227fff 100644
+--- a/arch/sh/Makefile
++++ b/arch/sh/Makefile
+@@ -103,16 +103,16 @@ UTS_MACHINE		:= sh
+ LDFLAGS_vmlinux		+= -e _stext
  
- 		dev_dbg(dev, "%s(): mapped 0x%p to %pad\n", __func__,
- 			hwdesc, &ldesc->hwdesc_dma_addr);
-@@ -738,6 +741,16 @@ static int nbpf_desc_page_alloc(struct nbpf_channel *chan)
- 	spin_unlock_irq(&chan->lock);
+ ifdef CONFIG_CPU_LITTLE_ENDIAN
+-ld-bfd			:= elf32-sh-linux
+-LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64 --oformat $(ld-bfd)
++ld_bfd			:= elf32-sh-linux
++LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64 --oformat $(ld_bfd)
+ KBUILD_LDFLAGS		+= -EL
+ else
+-ld-bfd			:= elf32-shbig-linux
+-LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64+4 --oformat $(ld-bfd)
++ld_bfd			:= elf32-shbig-linux
++LDFLAGS_vmlinux		+= --defsym jiffies=jiffies_64+4 --oformat $(ld_bfd)
+ KBUILD_LDFLAGS		+= -EB
+ endif
  
- 	return ARRAY_SIZE(dpage->desc);
-+
-+unmap_error:
-+	while (i--) {
-+		ldesc--; hwdesc--;
-+
-+		dma_unmap_single(dchan->device->dev, ldesc->hwdesc_dma_addr,
-+				 sizeof(hwdesc), DMA_TO_DEVICE);
-+	}
-+
-+	return -ENOMEM;
- }
+-export ld-bfd
++export ld_bfd
  
- static void nbpf_desc_put(struct nbpf_desc *desc)
+ head-y	:= arch/sh/kernel/head_32.o
+ 
+diff --git a/arch/sh/boot/compressed/Makefile b/arch/sh/boot/compressed/Makefile
+index 589d2d8a573d..d4baaaace17f 100644
+--- a/arch/sh/boot/compressed/Makefile
++++ b/arch/sh/boot/compressed/Makefile
+@@ -30,7 +30,7 @@ endif
+ 
+ ccflags-remove-$(CONFIG_MCOUNT) += -pg
+ 
+-LDFLAGS_vmlinux := --oformat $(ld-bfd) -Ttext $(IMAGE_OFFSET) -e startup \
++LDFLAGS_vmlinux := --oformat $(ld_bfd) -Ttext $(IMAGE_OFFSET) -e startup \
+ 		   -T $(obj)/../../kernel/vmlinux.lds
+ 
+ #
+@@ -68,7 +68,7 @@ $(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
+ 
+ OBJCOPYFLAGS += -R .empty_zero_page
+ 
+-LDFLAGS_piggy.o := -r --format binary --oformat $(ld-bfd) -T
++LDFLAGS_piggy.o := -r --format binary --oformat $(ld_bfd) -T
+ 
+ $(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/vmlinux.bin.$(suffix-y) FORCE
+ 	$(call if_changed,ld)
+diff --git a/arch/sh/boot/romimage/Makefile b/arch/sh/boot/romimage/Makefile
+index c7c8be58400c..17b03df0a8de 100644
+--- a/arch/sh/boot/romimage/Makefile
++++ b/arch/sh/boot/romimage/Makefile
+@@ -13,7 +13,7 @@ mmcif-obj-$(CONFIG_CPU_SUBTYPE_SH7724)	:= $(obj)/mmcif-sh7724.o
+ load-$(CONFIG_ROMIMAGE_MMCIF)		:= $(mmcif-load-y)
+ obj-$(CONFIG_ROMIMAGE_MMCIF)		:= $(mmcif-obj-y)
+ 
+-LDFLAGS_vmlinux := --oformat $(ld-bfd) -Ttext $(load-y) -e romstart \
++LDFLAGS_vmlinux := --oformat $(ld_bfd) -Ttext $(load-y) -e romstart \
+ 		   -T $(obj)/../../kernel/vmlinux.lds
+ 
+ $(obj)/vmlinux: $(obj)/head.o $(obj-y) $(obj)/piggy.o FORCE
+@@ -24,7 +24,7 @@ OBJCOPYFLAGS += -j .empty_zero_page
+ $(obj)/zeropage.bin: vmlinux FORCE
+ 	$(call if_changed,objcopy)
+ 
+-LDFLAGS_piggy.o := -r --format binary --oformat $(ld-bfd) -T
++LDFLAGS_piggy.o := -r --format binary --oformat $(ld_bfd) -T
+ 
+ $(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/zeropage.bin arch/sh/boot/zImage FORCE
+ 	$(call if_changed,ld)
 -- 
 2.39.5
 
