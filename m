@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8083568E9;
-	Tue, 26 Aug 2025 14:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F002FDC5C;
+	Tue, 26 Aug 2025 14:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219508; cv=none; b=OU4uy2DyK8jzA6jGj3ItVxm+Mbztk5cTVCn4LOiBmwgrMpxjIG6LJSyvj19H5A62DkxQiBt0onnW2ljgVHKns5BocY6ahbq9RPvP+k3BrVhkgPc6zrFLT3mZGwwS80xIpWxaSFqcRSwD9TThCDoydhF9R4oU8L5nmKjzno/6JSQ=
+	t=1756219510; cv=none; b=k77MhYPWPky7OzVamZt1WSGvqaxMLeeuBIBN6iwnMx5y2EpJ2P7mRIH0TdFJDDfW5O1VN8xW4CBAQV5Td5biCBt5+POMhQTvO57Sjiensttj0queK2hkjqlkajPkCaqU2lV4U0nNyVS0px1H7AHP/d2NQWETXt6NqA0QRlvdEUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219508; c=relaxed/simple;
-	bh=3Au6NSmyIHgl5ZXOD9+x3otRWyWGyfGl838cmtt4qpM=;
+	s=arc-20240116; t=1756219510; c=relaxed/simple;
+	bh=aFBnRvvV98YqgdZJRGGH8pIlFVwyIeHNlLl3Ci6HqZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tifnkthwBJyTOHo/9lrroDLrCm5wGe7ltJECqBj+nqRcBFh579DKLMVls67XRYphSHmE/9kK1QUhxZeRGJoopU03m/SILXhezzDOyP3sPY94YNq0p/ZtPYx/1P5TOQl1M5gzgmjWD0motvOnTlHNx/oPk5RPxDF7uwFPxBXIqZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewovIPkf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0YFTJH60yLXTVrKWyIlLIbqZFwhJoCX2Qy6pCqV+Ad0PYDFWl9Jaqj7vLgCXZVzxNWoo5aX4I7vNFj+xw/O3sjyIb89CbgE3n9+Eqkmr/7+n9VySyNBWp6ugiQQ6/KXsJM/XCc7Dh4fNOTiC1HWtoOvEikkCkI5shhyQrsrZyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSXWGexB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewovIPkf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FD4C4CEF1;
-	Tue, 26 Aug 2025 14:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSXWGexB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AD0C4CEF1;
+	Tue, 26 Aug 2025 14:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219507;
-	bh=3Au6NSmyIHgl5ZXOD9+x3otRWyWGyfGl838cmtt4qpM=;
+	s=korg; t=1756219510;
+	bh=aFBnRvvV98YqgdZJRGGH8pIlFVwyIeHNlLl3Ci6HqZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewovIPkfG3jCAdTwsfuLSRsTdla1nWWJuA/vWh4goJ9mWNinNsUHiR0QFy5s8BbrM
-	 2NeWpLzrdPEGHbBBn/Ew7sZHaxPaJMu0EvDEz7KUEdbdOY/oQA2JHjueuyBLzeTXZ6
-	 MmqYoPeTvu4AwEV6Kt5qqQnDrBZ2NFs4PIa5GpeQ=
+	b=NSXWGexBhA4MVd6kQbL9gGHzitiUR2DtDm1wG6PeqE8ojByu1g3ktVgqmiYfZpolT
+	 AKrvx8EN0gG7q3fPPZ7aiMfqSmIKGn/4rLQIrJZq2dcfsBZbtI8+4dIuyfH2PVEKQm
+	 YvRDuXYS1eRG77t8+llaNvRIGpOHwmIo0SerTivQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Steve French <stfrench@microsoft.com>,
-	He Zhe <zhe.he@windriver.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
-	Chanho Min <chanho.min@lge.com>
-Subject: [PATCH 5.4 391/403] cifs: Fix UAF in cifs_demultiplex_thread()
-Date: Tue, 26 Aug 2025 13:11:57 +0200
-Message-ID: <20250826110917.832508077@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Chanho Min <chanho.min@lge.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 392/403] NFS: Fix up commit deadlocks
+Date: Tue, 26 Aug 2025 13:11:58 +0200
+Message-ID: <20250826110917.863347852@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -54,251 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit d527f51331cace562393a8038d870b3e9916686f upstream.
+commit 133a48abf6ecc535d7eddc6da1c3e4c972445882 upstream.
 
-There is a UAF when xfstests on cifs:
+If O_DIRECT bumps the commit_info rpcs_out field, then that could lead
+to fsync() hangs. The fix is to ensure that O_DIRECT calls
+nfs_commit_end().
 
-  BUG: KASAN: use-after-free in smb2_is_network_name_deleted+0x27/0x160
-  Read of size 4 at addr ffff88810103fc08 by task cifsd/923
-
-  CPU: 1 PID: 923 Comm: cifsd Not tainted 6.1.0-rc4+ #45
-  ...
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   print_report+0x171/0x472
-   kasan_report+0xad/0x130
-   kasan_check_range+0x145/0x1a0
-   smb2_is_network_name_deleted+0x27/0x160
-   cifs_demultiplex_thread.cold+0x172/0x5a4
-   kthread+0x165/0x1a0
-   ret_from_fork+0x1f/0x30
-   </TASK>
-
-  Allocated by task 923:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   __kasan_slab_alloc+0x54/0x60
-   kmem_cache_alloc+0x147/0x320
-   mempool_alloc+0xe1/0x260
-   cifs_small_buf_get+0x24/0x60
-   allocate_buffers+0xa1/0x1c0
-   cifs_demultiplex_thread+0x199/0x10d0
-   kthread+0x165/0x1a0
-   ret_from_fork+0x1f/0x30
-
-  Freed by task 921:
-   kasan_save_stack+0x1e/0x40
-   kasan_set_track+0x21/0x30
-   kasan_save_free_info+0x2a/0x40
-   ____kasan_slab_free+0x143/0x1b0
-   kmem_cache_free+0xe3/0x4d0
-   cifs_small_buf_release+0x29/0x90
-   SMB2_negotiate+0x8b7/0x1c60
-   smb2_negotiate+0x51/0x70
-   cifs_negotiate_protocol+0xf0/0x160
-   cifs_get_smb_ses+0x5fa/0x13c0
-   mount_get_conns+0x7a/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-The UAF is because:
-
- mount(pid: 921)               | cifsd(pid: 923)
--------------------------------|-------------------------------
-                               | cifs_demultiplex_thread
-SMB2_negotiate                 |
- cifs_send_recv                |
-  compound_send_recv           |
-   smb_send_rqst               |
-    wait_for_response          |
-     wait_event_state      [1] |
-                               |  standard_receive3
-                               |   cifs_handle_standard
-                               |    handle_mid
-                               |     mid->resp_buf = buf;  [2]
-                               |     dequeue_mid           [3]
-     KILL the process      [4] |
-    resp_iov[i].iov_base = buf |
- free_rsp_buf              [5] |
-                               |   is_network_name_deleted [6]
-                               |   callback
-
-1. After send request to server, wait the response until
-    mid->mid_state != SUBMITTED;
-2. Receive response from server, and set it to mid;
-3. Set the mid state to RECEIVED;
-4. Kill the process, the mid state already RECEIVED, get 0;
-5. Handle and release the negotiate response;
-6. UAF.
-
-It can be easily reproduce with add some delay in [3] - [6].
-
-Only sync call has the problem since async call's callback is
-executed in cifsd process.
-
-Add an extra state to mark the mid state to READY before wakeup the
-waitter, then it can get the resp safely.
-
-Fixes: ec637e3ffb6b ("[CIFS] Avoid extra large buffer allocation (and memcpy) in cifs_readpages")
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[fs/cifs was moved to fs/smb/client since
-38c8a9a52082 ("smb: move client and server files to common directory fs/smb").
-We apply the patch to fs/cifs with some minor context changes.]
-Signed-off-by: He Zhe <zhe.he@windriver.com>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-[ chanho: Backported to v5.4.y ]
+Fixes: 723c921e7dfc ("sched/wait, fs/nfs: Convert wait_on_atomic_t() usage to the new wait_var_event() API")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Chanho Min <chanho.min@lge.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsglob.h  |    1 +
- fs/cifs/transport.c |   34 +++++++++++++++++++++++-----------
- 2 files changed, 24 insertions(+), 11 deletions(-)
+ fs/nfs/direct.c        |    2 +-
+ fs/nfs/write.c         |    9 ++++++---
+ include/linux/nfs_fs.h |    1 +
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -1722,6 +1722,7 @@ static inline bool is_retryable_error(in
- #define   MID_RETRY_NEEDED      8 /* session closed while this request out */
- #define   MID_RESPONSE_MALFORMED 0x10
- #define   MID_SHUTDOWN		 0x20
-+#define   MID_RESPONSE_READY 0x40 /* ready for other process handle the rsp */
- 
- /* Flags */
- #define   MID_WAIT_CANCELLED	 1 /* Cancelled while waiting for response */
---- a/fs/cifs/transport.c
-+++ b/fs/cifs/transport.c
-@@ -47,6 +47,8 @@
- void
- cifs_wake_up_task(struct mid_q_entry *mid)
- {
-+	if (mid->mid_state == MID_RESPONSE_RECEIVED)
-+		mid->mid_state = MID_RESPONSE_READY;
- 	wake_up_process(mid->callback_data);
- }
- 
-@@ -99,7 +101,8 @@ static void _cifs_mid_q_entry_release(st
- 	struct TCP_Server_Info *server = midEntry->server;
- 
- 	if (midEntry->resp_buf && (midEntry->mid_flags & MID_WAIT_CANCELLED) &&
--	    midEntry->mid_state == MID_RESPONSE_RECEIVED &&
-+	    (midEntry->mid_state == MID_RESPONSE_RECEIVED ||
-+	     midEntry->mid_state == MID_RESPONSE_READY) &&
- 	    server->ops->handle_cancelled_mid)
- 		server->ops->handle_cancelled_mid(midEntry->resp_buf, server);
- 
-@@ -737,7 +740,8 @@ wait_for_response(struct TCP_Server_Info
- 	int error;
- 
- 	error = wait_event_freezekillable_unsafe(server->response_q,
--				    midQ->mid_state != MID_REQUEST_SUBMITTED);
-+				    midQ->mid_state != MID_REQUEST_SUBMITTED &&
-+				    midQ->mid_state != MID_RESPONSE_RECEIVED);
- 	if (error < 0)
- 		return -ERESTARTSYS;
- 
-@@ -889,7 +893,7 @@ cifs_sync_mid_result(struct mid_q_entry
- 
- 	spin_lock(&GlobalMid_Lock);
- 	switch (mid->mid_state) {
--	case MID_RESPONSE_RECEIVED:
-+	case MID_RESPONSE_READY:
- 		spin_unlock(&GlobalMid_Lock);
- 		return rc;
- 	case MID_RETRY_NEEDED:
-@@ -987,6 +991,9 @@ cifs_compound_callback(struct mid_q_entr
- 	credits.instance = server->reconnect_instance;
- 
- 	add_credits(server, &credits, mid->optype);
-+
-+	if (mid->mid_state == MID_RESPONSE_RECEIVED)
-+		mid->mid_state = MID_RESPONSE_READY;
- }
- 
- static void
-@@ -1150,7 +1157,8 @@ compound_send_recv(const unsigned int xi
- 			send_cancel(server, &rqst[i], midQ[i]);
- 			spin_lock(&GlobalMid_Lock);
- 			midQ[i]->mid_flags |= MID_WAIT_CANCELLED;
--			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED) {
-+			if (midQ[i]->mid_state == MID_REQUEST_SUBMITTED ||
-+			    midQ[i]->mid_state == MID_RESPONSE_RECEIVED) {
- 				midQ[i]->callback = cifs_cancelled_callback;
- 				cancelled_mid[i] = true;
- 				credits[i].value = 0;
-@@ -1171,7 +1179,7 @@ compound_send_recv(const unsigned int xi
- 		}
- 
- 		if (!midQ[i]->resp_buf ||
--		    midQ[i]->mid_state != MID_RESPONSE_RECEIVED) {
-+		    midQ[i]->mid_state != MID_RESPONSE_READY) {
- 			rc = -EIO;
- 			cifs_dbg(FYI, "Bad MID state?\n");
- 			goto out;
-@@ -1348,7 +1356,8 @@ SendReceive(const unsigned int xid, stru
- 	if (rc != 0) {
- 		send_cancel(server, &rqst, midQ);
- 		spin_lock(&GlobalMid_Lock);
--		if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
-+		if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+		    midQ->mid_state == MID_RESPONSE_RECEIVED) {
- 			/* no longer considered to be "in-flight" */
- 			midQ->callback = DeleteMidQEntry;
- 			spin_unlock(&GlobalMid_Lock);
-@@ -1365,7 +1374,7 @@ SendReceive(const unsigned int xid, stru
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -700,7 +700,7 @@ static void nfs_direct_commit_complete(s
+ 		nfs_unlock_and_release_request(req);
  	}
  
- 	if (!midQ->resp_buf || !out_buf ||
--	    midQ->mid_state != MID_RESPONSE_RECEIVED) {
-+	    midQ->mid_state != MID_RESPONSE_READY) {
- 		rc = -EIO;
- 		cifs_server_dbg(VFS, "Bad MID state?\n");
- 		goto out;
-@@ -1485,13 +1494,15 @@ SendReceiveBlockingLock(const unsigned i
+-	if (atomic_dec_and_test(&cinfo.mds->rpcs_out))
++	if (nfs_commit_end(cinfo.mds))
+ 		nfs_direct_write_complete(dreq);
+ }
  
- 	/* Wait for a reply - allow signals to interrupt. */
- 	rc = wait_event_interruptible(server->response_q,
--		(!(midQ->mid_state == MID_REQUEST_SUBMITTED)) ||
-+		(!(midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+		   midQ->mid_state == MID_RESPONSE_RECEIVED)) ||
- 		((server->tcpStatus != CifsGood) &&
- 		 (server->tcpStatus != CifsNew)));
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -1658,10 +1658,13 @@ static void nfs_commit_begin(struct nfs_
+ 	atomic_inc(&cinfo->rpcs_out);
+ }
  
- 	/* Were we interrupted by a signal ? */
- 	if ((rc == -ERESTARTSYS) &&
--		(midQ->mid_state == MID_REQUEST_SUBMITTED) &&
-+		(midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+		 midQ->mid_state == MID_RESPONSE_RECEIVED) &&
- 		((server->tcpStatus == CifsGood) ||
- 		 (server->tcpStatus == CifsNew))) {
+-static void nfs_commit_end(struct nfs_mds_commit_info *cinfo)
++bool nfs_commit_end(struct nfs_mds_commit_info *cinfo)
+ {
+-	if (atomic_dec_and_test(&cinfo->rpcs_out))
++	if (atomic_dec_and_test(&cinfo->rpcs_out)) {
+ 		wake_up_var(&cinfo->rpcs_out);
++		return true;
++	}
++	return false;
+ }
  
-@@ -1521,7 +1532,8 @@ SendReceiveBlockingLock(const unsigned i
- 		if (rc) {
- 			send_cancel(server, &rqst, midQ);
- 			spin_lock(&GlobalMid_Lock);
--			if (midQ->mid_state == MID_REQUEST_SUBMITTED) {
-+			if (midQ->mid_state == MID_REQUEST_SUBMITTED ||
-+			    midQ->mid_state == MID_RESPONSE_RECEIVED) {
- 				/* no longer considered to be "in-flight" */
- 				midQ->callback = DeleteMidQEntry;
- 				spin_unlock(&GlobalMid_Lock);
-@@ -1539,7 +1551,7 @@ SendReceiveBlockingLock(const unsigned i
- 		return rc;
+ void nfs_commitdata_release(struct nfs_commit_data *data)
+@@ -1756,6 +1759,7 @@ void nfs_init_commit(struct nfs_commit_d
+ 	data->res.fattr   = &data->fattr;
+ 	data->res.verf    = &data->verf;
+ 	nfs_fattr_init(&data->fattr);
++	nfs_commit_begin(cinfo->mds);
+ }
+ EXPORT_SYMBOL_GPL(nfs_init_commit);
  
- 	/* rcvd frame is ok */
--	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_RECEIVED) {
-+	if (out_buf == NULL || midQ->mid_state != MID_RESPONSE_READY) {
- 		rc = -EIO;
- 		cifs_tcon_dbg(VFS, "Bad MID state?\n");
- 		goto out;
+@@ -1801,7 +1805,6 @@ nfs_commit_list(struct inode *inode, str
+ 
+ 	/* Set up the argument struct */
+ 	nfs_init_commit(data, head, NULL, cinfo);
+-	atomic_inc(&cinfo->mds->rpcs_out);
+ 	return nfs_initiate_commit(NFS_CLIENT(inode), data, NFS_PROTO(inode),
+ 				   data->mds_ops, how, 0);
+ }
+--- a/include/linux/nfs_fs.h
++++ b/include/linux/nfs_fs.h
+@@ -549,6 +549,7 @@ extern int nfs_wb_page_cancel(struct ino
+ extern int  nfs_commit_inode(struct inode *, int);
+ extern struct nfs_commit_data *nfs_commitdata_alloc(bool never_fail);
+ extern void nfs_commit_free(struct nfs_commit_data *data);
++bool nfs_commit_end(struct nfs_mds_commit_info *cinfo);
+ 
+ static inline int
+ nfs_have_writebacks(struct inode *inode)
 
 
