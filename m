@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9980B34AB0D;
-	Tue, 26 Aug 2025 14:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E743352FD2;
+	Tue, 26 Aug 2025 14:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217137; cv=none; b=RQn6NnJqhjs6QgI65tzYJsWzxnAxmbjIG49Z1I7EZXmYLfBWaLdthylDaG0wPfBLYAx341ccbqkpYN/TyWp/uTmYM4myTmatV46OaKeRJz5YtEADeQpYY/41dkNADv9sEHA9M3vlEhpico7PYQ5tJ5NBZvYglM3xvRyyoUfSKvQ=
+	t=1756217140; cv=none; b=UI2bd/2IvAC1HJ5WdiBGjZsPcD2wAjDHmyFrb3uP44vqqO+BohVqDnyo66T4gl2QSw+MI2YYvkRqL4vbBzfYLb0DSD4ksbF6bgVAyVPMVCZX1jVgJIDOAa4f+foVwAvbVDmAflfHfVhwK0HWGtGgq3qXJNhzIiNA+KL/YCBsIpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217137; c=relaxed/simple;
-	bh=ri0E2APLt4U2yrk08d4QovnFQlvs/3hxokWiJFRbwM4=;
+	s=arc-20240116; t=1756217140; c=relaxed/simple;
+	bh=xgMfy3fV7jCv+AxR53VpPRBsAuYkbigCTGgY4BdrjrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/m9J0JgNK04q7jEF4/jhFhjLqYq42blHoibEXJZePoE4WNdJh5v7Jy++jXgJGHT7RdXKCPb5LsrPRd5IPt+l1kWnRNec3GcpdNGgH34S8aCi1L6ZZ7LxDJYcA0GFJNklKUish5Nk81p+VBLA/L3zB3knsc1eOgaEiWPaSIECLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA2QM3nL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEnmPa0KwKeSGMQDUXD7qr3e73Zrji3rMGOmhp7IrB/CrV0NSISnnOl0z/v5mrkWb+bSJojQcoXdE1jp6SzAkaldbUgnuruJ/DC4q9qnLBif6WCRMtwIZy//yxwAVKkRJcV3b4cHEFThW+vTe6E7fbNnDZ4ydv19E6c3VKS2Er8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkZeoguf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA2QM3nL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBE1C4CEF1;
-	Tue, 26 Aug 2025 14:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkZeoguf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBFFC4CEF1;
+	Tue, 26 Aug 2025 14:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217137;
-	bh=ri0E2APLt4U2yrk08d4QovnFQlvs/3hxokWiJFRbwM4=;
+	s=korg; t=1756217140;
+	bh=xgMfy3fV7jCv+AxR53VpPRBsAuYkbigCTGgY4BdrjrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IA2QM3nLRpw/3korKvvNIQ/mi+aKkVlUfM2cnONVRNG1w7OLgeck9Ul6ExRE7xXEo
-	 9PGfXmW7nfgFdrDQU2ozaHsZIMm29UpHc1UyzB8Hh5bwFrR0BFJHBd78ibhocKp2TB
-	 prpdOTGrs9G6ytnUNgUO3eOpC+CEoKgMB2gpp3Rw=
+	b=HkZeoguf2AHP75pU3ednJKmagPTqSZwlgrQmMuRk4ASEIIaY++PgfH0JU1qBULWVD
+	 PA3bFeNauI675AfsWn7kSgigW3ASBvAHBFBCSnR+6rAtjBbklMvFvcwouIJOtG4Osl
+	 9V9FBbbgkJzyrMCDeO2Eeb9WlR2ueJGFAzXBLCDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com,
-	"Enju, Kohei" <enjuk@amazon.co.jp>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.10 029/523] comedi: das16m1: Fix bit shift out of bounds
-Date: Tue, 26 Aug 2025 13:03:59 +0200
-Message-ID: <20250826110925.315851917@linuxfoundation.org>
+	Xinyu Liu <katieeliu@tencent.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 005/523] usb: gadget: configfs: Fix OOB read on empty string write
+Date: Tue, 26 Aug 2025 13:03:35 +0200
+Message-ID: <20250826110924.707774542@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,44 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Xinyu Liu <1171169449@qq.com>
 
-commit ed93c6f68a3be06e4e0c331c6e751f462dee3932 upstream.
+commit 3014168731b7930300aab656085af784edc861f6 upstream.
 
-When checking for a supported IRQ number, the following test is used:
+When writing an empty string to either 'qw_sign' or 'landingPage'
+sysfs attributes, the store functions attempt to access page[l - 1]
+before validating that the length 'l' is greater than zero.
 
-	/* only irqs 2, 3, 4, 5, 6, 7, 10, 11, 12, 14, and 15 are valid */
-	if ((1 << it->options[1]) & 0xdcfc) {
+This patch fixes the vulnerability by adding a check at the beginning
+of os_desc_qw_sign_store() and webusb_landingPage_store() to handle
+the zero-length input case gracefully by returning immediately.
 
-However, `it->options[i]` is an unchecked `int` value from userspace, so
-the shift amount could be negative or out of bounds.  Fix the test by
-requiring `it->options[1]` to be within bounds before proceeding with
-the original test.
-
-Reported-by: syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c52293513298e0fd9a94
-Fixes: 729988507680 ("staging: comedi: das16m1: tidy up the irq support in das16m1_attach()")
-Tested-by: syzbot+c52293513298e0fd9a94@syzkaller.appspotmail.com
-Suggested-by: "Enju, Kohei" <enjuk@amazon.co.jp>
-Cc: stable@vger.kernel.org # 5.13+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250707130908.70758-1-abbotti@mev.co.uk
+Signed-off-by: Xinyu Liu <katieeliu@tencent.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/tencent_B1C9481688D0E95E7362AB2E999DE8048207@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/das16m1.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/configfs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/staging/comedi/drivers/das16m1.c
-+++ b/drivers/staging/comedi/drivers/das16m1.c
-@@ -523,7 +523,8 @@ static int das16m1_attach(struct comedi_
- 	devpriv->extra_iobase = dev->iobase + DAS16M1_8255_IOBASE;
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -855,6 +855,8 @@ static ssize_t os_desc_qw_sign_store(str
+ 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
+ 	int res, l;
  
- 	/* only irqs 2, 3, 4, 5, 6, 7, 10, 11, 12, 14, and 15 are valid */
--	if ((1 << it->options[1]) & 0xdcfc) {
-+	if (it->options[1] >= 2 && it->options[1] <= 15 &&
-+	    (1 << it->options[1]) & 0xdcfc) {
- 		ret = request_irq(it->options[1], das16m1_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0)
++	if (!len)
++		return len;
+ 	l = min((int)len, OS_STRING_QW_SIGN_LEN >> 1);
+ 	if (page[l - 1] == '\n')
+ 		--l;
 
 
