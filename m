@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ADC26FDBF;
-	Tue, 26 Aug 2025 13:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFF226FDBF;
+	Tue, 26 Aug 2025 13:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214302; cv=none; b=Ab7SA8Aow7cZrViVIOv1Jup7ii1QQlKS9iUd8j0U6Qd3LbCkPLhROniNksaxbSpbF1TfaAcrDINCmeG5fm4q8Sx7ce6Qt5u5+zUAWC2i5VsDsZ0D88UzEVicBGN6TbjV2HGO2MNMVxmT44/SoCdYnDhgRTHocgJosUkckCX0XNU=
+	t=1756214305; cv=none; b=EkD66Y3OUPPsEjAmNPe8QrQ7TQurs7tnZMPlpyTmEY5lMioUbL9vcJSvivwgkkAsXNhP5e0Ae1wTMO74GfHTEJxpeF93st4sn5UYRWXPsR+ZbLWGW4ElDil40+dOObQ6MeUZJcbru5YEhBvfFvKHVcqW6NUXelpcdn+EJIWsrCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214302; c=relaxed/simple;
-	bh=keb5UXWHXk7mHRAZ3l4uookjXPztH02KErlX8jR/wlE=;
+	s=arc-20240116; t=1756214305; c=relaxed/simple;
+	bh=EraQzWekIz5XCwR3mgIpitlUMC5nj6Yq+26G3THtVek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NjGH7gCaKGPNeHWoFrf9Ywa0Rc+X3E8YQbIl+8+ouFHwo3ruEZZemxYkYX8TZ7KO1KgJtTq/2wNwYBadQdYXrjXqXDwwyOVYnGxj1S7pTJrxqa48HMzA76GvBFoiNNlfIsLQcwi8lQx5E463X8OTBoKpSuX+h4nmEcQprjH94Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtxN8g2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BtpmXwTWWiIxH5+cb4hH34fQmuvzXIN3Fo/DOFt+04XELWiD2WI2zTPxkEgPTSxsfUu5vUri3foerSaDi584U6OsWelaxEe8Qkph3T2uu+Fzh9kRnRbsUXSungkg1vSibLs1S2ZKElaOmiUwItEkPbmZ06/n8fQyBJfX+jkiTsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpH69aKE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtxN8g2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AEDC4CEF1;
-	Tue, 26 Aug 2025 13:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpH69aKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB74C4CEF1;
+	Tue, 26 Aug 2025 13:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214302;
-	bh=keb5UXWHXk7mHRAZ3l4uookjXPztH02KErlX8jR/wlE=;
+	s=korg; t=1756214305;
+	bh=EraQzWekIz5XCwR3mgIpitlUMC5nj6Yq+26G3THtVek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtxN8g2JL+6+cmrdbQLLanz8f4uKBmqqKwoutKqxzeOHc19NOIYi/Gxg0WvL89Bxd
-	 N68d31R0nr7dLppjC8Q40CAeKX4lERwIpbLPNcVQo11HDWC3I5yI1c65xiBWepZ20Y
-	 EGgg5deHIdpGjxnuT5Sd4//ChqPeuPl0FQao8EHY=
+	b=dpH69aKELV8dZxdk3CpBbkLl3H+JfGcM8tf3CdQkgE05f7V6TNyKCA54OWzZ2AcX+
+	 Lc23LlsNsRUA2ddD5LJO2p8sO6d642aMrFl4Oxx1o9961nmsF8gQROT56hffW+sQIZ
+	 N226IR0bpoKzBxVO0ZJtnStuXICJeGtS9/JtS4bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Willy Tarreau <w@1wt.eu>,
+	tuhaowen <tuhaowen@uniontech.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/482] tools/nolibc: define time_t in terms of __kernel_old_time_t
-Date: Tue, 26 Aug 2025 13:05:33 +0200
-Message-ID: <20250826110932.808692690@linuxfoundation.org>
+Subject: [PATCH 6.1 089/482] PM: sleep: console: Fix the black screen issue
+Date: Tue, 26 Aug 2025 13:05:42 +0200
+Message-ID: <20250826110933.027276390@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -45,56 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: tuhaowen <tuhaowen@uniontech.com>
 
-[ Upstream commit d5094bcb5bfdfea2cf0de8aaf77cc65db56cbdb5 ]
+[ Upstream commit 4266e8fa56d3d982bf451d382a410b9db432015c ]
 
-Nolibc assumes that the kernel ABI is using a time values that are as
-large as a long integer. For most ABIs this holds true.
-But for x32 this is not correct, as it uses 32bit longs but 64bit times.
+When the computer enters sleep status without a monitor
+connected, the system switches the console to the virtual
+terminal tty63(SUSPEND_CONSOLE).
 
-Also the 'struct stat' implementation of nolibc relies on timespec::tv_sec
-and time_t being the same type. While timespec::tv_sec comes from the
-kernel and is of type __kernel_old_time_t, time_t is defined within nolibc.
+If a monitor is subsequently connected before waking up,
+the system skips the required VT restoration process
+during wake-up, leaving the console on tty63 instead of
+switching back to tty1.
 
-Switch to the __kernel_old_time_t to always get the correct type.
+To fix this issue, a global flag vt_switch_done is introduced
+to record whether the system has successfully switched to
+the suspend console via vt_move_to_console() during suspend.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20250712-nolibc-x32-v1-1-6d81cb798710@weissschuh.net
-Acked-by: Willy Tarreau <w@1wt.eu>
+If the switch was completed, vt_switch_done is set to 1.
+Later during resume, this flag is checked to ensure that
+the original console is restored properly by calling
+vt_move_to_console(orig_fgconsole, 0).
+
+This prevents scenarios where the resume logic skips console
+restoration due to incorrect detection of the console state,
+especially when a monitor is reconnected before waking up.
+
+Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
+Link: https://patch.msgid.link/20250611032345.29962-1-tuhaowen@uniontech.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/std.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/power/console.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/std.h b/tools/include/nolibc/std.h
-index 1747ae125392..a0ea830e1ba1 100644
---- a/tools/include/nolibc/std.h
-+++ b/tools/include/nolibc/std.h
-@@ -33,6 +33,8 @@ typedef unsigned long     uintptr_t;
- typedef   signed long      intptr_t;
- typedef   signed long     ptrdiff_t;
+diff --git a/kernel/power/console.c b/kernel/power/console.c
+index fcdf0e14a47d..19c48aa5355d 100644
+--- a/kernel/power/console.c
++++ b/kernel/power/console.c
+@@ -16,6 +16,7 @@
+ #define SUSPEND_CONSOLE	(MAX_NR_CONSOLES-1)
  
-+#include <linux/types.h>
+ static int orig_fgconsole, orig_kmsg;
++static bool vt_switch_done;
+ 
+ static DEFINE_MUTEX(vt_switch_mutex);
+ 
+@@ -136,17 +137,21 @@ void pm_prepare_console(void)
+ 	if (orig_fgconsole < 0)
+ 		return;
+ 
++	vt_switch_done = true;
 +
- /* those are commonly provided by sys/types.h */
- typedef unsigned int          dev_t;
- typedef unsigned long         ino_t;
-@@ -44,6 +46,6 @@ typedef unsigned long       nlink_t;
- typedef   signed long         off_t;
- typedef   signed long     blksize_t;
- typedef   signed long      blkcnt_t;
--typedef   signed long        time_t;
-+typedef __kernel_old_time_t  time_t;
+ 	orig_kmsg = vt_kmsg_redirect(SUSPEND_CONSOLE);
+ 	return;
+ }
  
- #endif /* _NOLIBC_STD_H */
+ void pm_restore_console(void)
+ {
+-	if (!pm_vt_switch())
++	if (!pm_vt_switch() && !vt_switch_done)
+ 		return;
+ 
+ 	if (orig_fgconsole >= 0) {
+ 		vt_move_to_console(orig_fgconsole, 0);
+ 		vt_kmsg_redirect(orig_kmsg);
+ 	}
++
++	vt_switch_done = false;
+ }
 -- 
 2.39.5
 
