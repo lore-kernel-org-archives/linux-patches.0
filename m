@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C97FC1D;
-	Tue, 26 Aug 2025 12:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A742A1B78F3;
+	Tue, 26 Aug 2025 12:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212736; cv=none; b=J1Axwwbfqs2eEvcBr4KRuTydceJ+HIJ/4mVfYd95aaLmYpEDnZlo29GkGJhf2EfQPbWzxfite6y3b9lGXJ5nWRC14d+RmHCjhb9cgSOC63i88ZwhGQXSN3U9jyfos9ZUYiuIKCbEyO8ENQy2q0QCbWi5ZP0+FHy0d7ccjH4awMQ=
+	t=1756212738; cv=none; b=MQ7oa1EEAYeMGOb0EtPGN1DHxgQmeC702+y6egtVO24Ki0F1GxjYyE1M3niplExjCVoNi9pZK9H4xxybMNXs19jB7t089J6iky17rFm5Ppeqiw+RLpqvMcYRrqvbqYHygYq6RXCJbBQMwy/prGe3phUuRKjbEszCzWpFApCCSms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212736; c=relaxed/simple;
-	bh=4j7X8lo9HrDMzruo24zrsk2mR5J8ardP1WnmvDz+dK0=;
+	s=arc-20240116; t=1756212738; c=relaxed/simple;
+	bh=GSzkq3xgRYvEIh7X65gkJOJccH1iduCsdbGZ0Pd6Lck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q93vKqlYx/l/rNsmNpWJAoQcYzMZJesplwulBeNl1UTwF1+d4ypH3fp49b6BPARZ42ULQnGykIONGNv2Cqb8jJ9Yx6NK4/7UBYQzzVWEDXYlhulfPCjpxULItUmWoSce9sMxEIDLPGDZOmPOIJ/mHN9TspYEzZe0Wolek/Nm6LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKCFHoG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clyUXBM6F8yR2VEZ9UzXfNx09JOg+4nM5BG5jo4WhsBvcKQbAGCMk0z0jmJXYpHqJ6jqYYSGR0ke6TJWRioA1ce8zOLMNDyx78CcTSgmFUXTqGTz0aNtbdFU1ua6E7e0U32GMUWo+6S498/LZo5LFcaFs6ijabrIPazVh5+e+F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBNWUUq+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKCFHoG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CF7C4CEF1;
-	Tue, 26 Aug 2025 12:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBNWUUq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36081C4CEF1;
+	Tue, 26 Aug 2025 12:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212735;
-	bh=4j7X8lo9HrDMzruo24zrsk2mR5J8ardP1WnmvDz+dK0=;
+	s=korg; t=1756212738;
+	bh=GSzkq3xgRYvEIh7X65gkJOJccH1iduCsdbGZ0Pd6Lck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKCFHoG8VGb3WACG3dqXBaPMlZhS00BRug2S+1DlFwttT6DmSrLa3sd7rkcdOHIs5
-	 FRTi6IPeAAwfCLdxmVza2kNIMz7d0qgcn5fJ8IFpsVZ5jw/ZY5Z3kGpdN2dKWF5Btc
-	 AezYifg1OEHglLuvlHGNftQ8GV7pPNev379s7d/A=
+	b=aBNWUUq+AY3V/ms4wOuiVLpyHMTFqaRh/7dynXSydSmKQJwtJvc3MdbDlsswfYx8R
+	 4rmTXzgBuRpKkSbTXul7HAC3m/2mwImuDwn81T7toSBu184hWEwqRmvHH5MTb5WRhA
+	 LksTpSN26lZRPJWeoNokUAHyd16lY2WR1OhPsjL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Su Hui <suhui@nfschina.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/587] tracefs: Add d_delete to remove negative dentries
-Date: Tue, 26 Aug 2025 13:03:51 +0200
-Message-ID: <20250826110955.020818672@linuxfoundation.org>
+Subject: [PATCH 6.6 083/587] usb: xhci: print xhci->xhc_state when queue_command failed
+Date: Tue, 26 Aug 2025 13:03:52 +0200
+Message-ID: <20250826110955.045530930@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,55 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit d9b13cdad80dc11d74408cf201939a946e9303a6 ]
+[ Upstream commit 7919407eca2ef562fa6c98c41cfdf6f6cdd69d92 ]
 
-If a lookup in tracefs is done on a file that does not exist, it leaves a
-dentry hanging around until memory pressure removes it. But eventfs
-dentries should hang around as when their ref count goes to zero, it
-requires more work to recreate it. For the rest of the tracefs dentries,
-they hang around as their dentry is used as a descriptor for the tracing
-system. But if a file lookup happens for a file in tracefs that does not
-exist, it should be deleted.
+When encounters some errors like these:
+xhci_hcd 0000:4a:00.2: xHCI dying or halted, can't queue_command
+xhci_hcd 0000:4a:00.2: FIXME: allocate a command ring segment
+usb usb5-port6: couldn't allocate usb_device
 
-Add a .d_delete callback that checks if dentry->fsdata is set or not. Only
-eventfs dentries set fsdata so if it has content it should not be deleted
-and should hang around in the cache.
+It's hard to know whether xhc_state is dying or halted. So it's better
+to print xhc_state's value which can help locate the resaon of the bug.
 
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20250725060117.1773770-1-suhui@nfschina.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/inode.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/usb/host/xhci-ring.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/tracefs/inode.c b/fs/tracefs/inode.c
-index 7d389dd5ed51..6b70965063d7 100644
---- a/fs/tracefs/inode.c
-+++ b/fs/tracefs/inode.c
-@@ -483,9 +483,20 @@ static int tracefs_d_revalidate(struct dentry *dentry, unsigned int flags)
- 	return !(ei && ei->is_freed);
- }
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 44352df58c9e..c6d89b51c678 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -4454,7 +4454,8 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
  
-+static int tracefs_d_delete(const struct dentry *dentry)
-+{
-+	/*
-+	 * We want to keep eventfs dentries around but not tracefs
-+	 * ones. eventfs dentries have content in d_fsdata.
-+	 * Use d_fsdata to determine if it's a eventfs dentry or not.
-+	 */
-+	return dentry->d_fsdata == NULL;
-+}
-+
- static const struct dentry_operations tracefs_dentry_operations = {
- 	.d_revalidate = tracefs_d_revalidate,
- 	.d_release = tracefs_d_release,
-+	.d_delete = tracefs_d_delete,
- };
+ 	if ((xhci->xhc_state & XHCI_STATE_DYING) ||
+ 		(xhci->xhc_state & XHCI_STATE_HALTED)) {
+-		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command\n");
++		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command. state: 0x%x\n",
++			 xhci->xhc_state);
+ 		return -ESHUTDOWN;
+ 	}
  
- static int trace_fill_super(struct super_block *sb, void *data, int silent)
 -- 
 2.39.5
 
