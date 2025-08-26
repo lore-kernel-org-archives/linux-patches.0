@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B6D22370D;
-	Tue, 26 Aug 2025 14:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F482AE68;
+	Tue, 26 Aug 2025 14:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218486; cv=none; b=Od/hr29d9cHwN90S6eZXpFouRoT/S6lwBCDBO5qhbMT/tC4BctKDQJzW0S390/ARqKLhyk3MKDOqVwdapvpk9l1Ru8agkNiIQh4qBHIKWhy8dsqHjn6b/aPxw7kjW4YOQyQpsxQUi3piVIHChUtYCDuZzvFRs7D6eXWgpE8ZWAQ=
+	t=1756218489; cv=none; b=pi9QASRYX9uUdWNB1gYJ77THnCVmjXTo9FMjZzz3yzGyoMlCY5I5gZTAHGsxdR2lygiTCl26k1R9xD2Fanbma0WF7zNMga5Ja+FIqwnBmLzZezWTVtDuw8PdtzTTIPXP0C89N1qGe7ybVDsEBSuWSKMF5xsBY9VqbjIwKpZU9qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218486; c=relaxed/simple;
-	bh=38GfBvmAvoC95LoskYKrWBoW8qQDm6A0oKL2SrQt+Xs=;
+	s=arc-20240116; t=1756218489; c=relaxed/simple;
+	bh=RCXLJj2RhnfhPhFzf9aLG4wgnfS1p4eh1dfYruLoXAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEwVnoHTbvcn7sGtLFTWsGs7GsF5Z0aEM438mjk/+62o53N5K7WyVdchNJT/3MxHZQw+0/t8HeVmm4G+lycKbMqKRGhrkURGZFkZ8JFMSNIKfHFn3QaNzNDqD29uf7QHAyWJwRDEdZNK3hrCiPGH0kvPgVo26RAFVyvUFDgEssM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G41aAe59; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dzdKxHTdj7iWrlrN8CkrbzSAzamjceEnPNVpGYR8a11C30m0WBTmzRblpinliCn184caDFHkSSCGwfAcoy0bJ0VsMH207fbs+B52+oKKrOjoX5qjfgcpwNUTCP+EmjEbfU7A3zQYKtHoNvIJATvOlETIXpb7p3KZBvbHtn/GxT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0CZukk2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G41aAe59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8336C4CEF1;
-	Tue, 26 Aug 2025 14:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0CZukk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AAFC4CEF1;
+	Tue, 26 Aug 2025 14:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218486;
-	bh=38GfBvmAvoC95LoskYKrWBoW8qQDm6A0oKL2SrQt+Xs=;
+	s=korg; t=1756218488;
+	bh=RCXLJj2RhnfhPhFzf9aLG4wgnfS1p4eh1dfYruLoXAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G41aAe59lmC17lXqA4EFHnVY2X6cf6o/Y5sAJdcARjJ1QrleGFUwfNhbzGsf1AXAu
-	 BoI/KcjKso63YBe5zHRAARx5d26Z4q9hg7+xHTmnIZx/K4SK8lMoFy0bGZiHptCeW9
-	 8Ur5FPfNqBSFJQYMKiQnVoa87GEvBeYk1O43xJ6I=
+	b=g0CZukk2gSOkQYUR62BpsKNlLtxKQEsC8mx9G689Bpyi7osipUPZnhCnSbjH846VI
+	 3+h5Tjl4xx9zlgppBmZkeZrdAav9Hu2x3PXauhpgRTUbyX4akGbCPVemXD4D1X+mzE
+	 w0zsIwL7Ls+MYo74lekdTWkQxSWMnqOPbuGbia4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 011/403] phonet/pep: Move call to pn_skb_get_dst_sockaddr() earlier in pep_sock_accept()
-Date: Tue, 26 Aug 2025 13:05:37 +0200
-Message-ID: <20250826110905.998778655@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 002/403] USB: serial: option: add Foxconn T99W640
+Date: Tue, 26 Aug 2025 13:05:28 +0200
+Message-ID: <20250826110905.684734517@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,50 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit 17ba793f381eb813596d6de1cc6820bcbda5ed8b upstream.
+commit 08f49cdb71f3759368fded4dbc9dde35a404ec2b upstream.
 
-A new warning in clang [1] points out a place in pep_sock_accept() where
-dst is uninitialized then passed as a const pointer to pep_find_pipe():
+T99W640 is designed based on Qualconn SDX72 chip. There are 3
+serial ports to be enumerated: Diag, NMEA and AT.
 
-  net/phonet/pep.c:829:37: error: variable 'dst' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-    829 |         newsk = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
-        |                                            ^~~:
+Test evidence as below:
+T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  1
+P:  Vendor=0489 ProdID=e167 Rev=05.15
+S:  Manufacturer=QCOM
+S:  Product=SDXPINNL USB WWAN Adapter
+S:  SerialNumber=cc1f1d92
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-Move the call to pn_skb_get_dst_sockaddr(), which initializes dst, to
-before the call to pep_find_pipe(), so that dst is consistently used
-initialized throughout the function.
+0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
 
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 Cc: stable@vger.kernel.org
-Fixes: f7ae8d59f661 ("Phonet: allocate sock from accept syscall rather than soft IRQ")
-Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2101
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20250715-net-phonet-fix-uninit-const-pointer-v1-1-8efd1bd188b3@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/phonet/pep.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/phonet/pep.c
-+++ b/net/phonet/pep.c
-@@ -825,6 +825,7 @@ static struct sock *pep_sock_accept(stru
- 	}
- 
- 	/* Check for duplicate pipe handle */
-+	pn_skb_get_dst_sockaddr(skb, &dst);
- 	newsk = pep_find_pipe(&pn->hlist, &dst, pipe_handle);
- 	if (unlikely(newsk)) {
- 		__sock_put(newsk);
-@@ -849,7 +850,6 @@ static struct sock *pep_sock_accept(stru
- 	newsk->sk_destruct = pipe_destruct;
- 
- 	newpn = pep_sk(newsk);
--	pn_skb_get_dst_sockaddr(skb, &dst);
- 	pn_skb_get_src_sockaddr(skb, &src);
- 	newpn->pn_sk.sobject = pn_sockaddr_get_object(&dst);
- 	newpn->pn_sk.dobject = pn_sockaddr_get_object(&src);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
++	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+ 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
 
 
