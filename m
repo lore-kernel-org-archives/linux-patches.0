@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F7A34164F;
-	Tue, 26 Aug 2025 13:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDA324A066;
+	Tue, 26 Aug 2025 13:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215357; cv=none; b=NVAVcfKXYB6Wf/WfOLRjHWLxoABRLaTS67WMCAJMHSVbCo4jDRQ0zkJ262z/amQzOE9vuO2SI7jUETztOKmhr5364gggJWK/c+PCbL77FZv5FyHLNowiOtiaf0BbfqiCsCG9b15vYyaRNMS1y/SjBvHJ1Ngfgz5PZ0hP1iHK8E8=
+	t=1756215359; cv=none; b=BGSL5mw7uMa50rnILf8kJFBCcRe7MgdJg5QgV5R+dO3dKNLT+nX01XGAgIjPRuJisYvhS79HTb2ZUuuq8wGbBNyDF2+Nvl6TQ6ojLe7Vlcv7abn8ajJ12vAybS8nKAFYRzoZFNXA4iXLOskGWbVcLjLO0FgOQ4ndM8rkH14SRnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215357; c=relaxed/simple;
-	bh=2nzQTN6dpCr6MbfDScPxgGfnlBBR5hXoGPTqOrbCCWg=;
+	s=arc-20240116; t=1756215359; c=relaxed/simple;
+	bh=bfxtljiKPqAqnqW61nldhmEqOZqouoDtsBaExWL62o0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdBlFWAPeoa13TRNugDGmTsWIkHGJi1CuYEU15+VbK/cBlf7wNH06KKYiGv7UAaKQM4f/TEDGxxtZWS0LEHyj6OZa6TtIN++EMu5DD31KtT53agnta/gUqmfPDPWvWpcIREIreJfMYuSIRl2y/nIUzkkrNF0ZURff10U8x+QPaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3OBGLi4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oOZKbtVLcn5bpgrIVA7exc3ASsylgAdgaeK1r006JPoAnSxzogoZrSGwOjT2ouVqiiiwc+eAyDBG1dgqOEsqijXMshqgM0pz9rnVyMuh8Qn+9k9YGpIAL+s6Gd0197Evb02/ogOoYKF6hLQEdTPiHJxAq9kKOJMDRjKlSWvfPSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQj1Iumj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3OBGLi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE6AC4CEF1;
-	Tue, 26 Aug 2025 13:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQj1Iumj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5425C113CF;
+	Tue, 26 Aug 2025 13:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215356;
-	bh=2nzQTN6dpCr6MbfDScPxgGfnlBBR5hXoGPTqOrbCCWg=;
+	s=korg; t=1756215359;
+	bh=bfxtljiKPqAqnqW61nldhmEqOZqouoDtsBaExWL62o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3OBGLi4QupSLnEfjpiE68UG97BQl8jCT8hXntpY8PRSd/dm9A3mlEPWIbYVf86mL
-	 WzHYTXa5LgqE6GOtsBU+o+lHiF46jED/t0Rv2ywNLCvhf11mcg8OC903VdjYN0bqEA
-	 LbwaQWmuSKhh1NqRo2dWPynIkKD9PvJmucrEmeuY=
+	b=HQj1IumjF4LNJxyHUiFzlGRC7LpKi1vuivS9+1QJBHBiQvycAWzdGEr68SgAs437f
+	 VS+swEMlmrB94bM2DuqP1h7KZtiPqzFugqSaNGG/ii3JDOv4n3Whav+3jXpMvuFJse
+	 6h/x0Ol82veXd6qI2iyioRF56d6OOfRHI5h/gbG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 482/482] netfilter: nf_reject: dont leak dst refcount for loopback packets
-Date: Tue, 26 Aug 2025 13:12:15 +0200
-Message-ID: <20250826110942.722946738@linuxfoundation.org>
+Subject: [PATCH 6.1 454/482] iosys-map: Fix undefined behavior in iosys_map_clear()
+Date: Tue, 26 Aug 2025 13:11:47 +0200
+Message-ID: <20250826110942.044149690@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,86 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-[ Upstream commit 91a79b792204313153e1bdbbe5acbfc28903b3a5 ]
+[ Upstream commit 5634c8cb298a7146b4e38873473e280b50e27a2c ]
 
-recent patches to add a WARN() when replacing skb dst entry found an
-old bug:
+The current iosys_map_clear() implementation reads the potentially
+uninitialized 'is_iomem' boolean field to decide which union member
+to clear. This causes undefined behavior when called on uninitialized
+structures, as 'is_iomem' may contain garbage values like 0xFF.
 
-WARNING: include/linux/skbuff.h:1165 skb_dst_check_unset include/linux/skbuff.h:1164 [inline]
-WARNING: include/linux/skbuff.h:1165 skb_dst_set include/linux/skbuff.h:1210 [inline]
-WARNING: include/linux/skbuff.h:1165 nf_reject_fill_skb_dst+0x2a4/0x330 net/ipv4/netfilter/nf_reject_ipv4.c:234
-[..]
-Call Trace:
- nf_send_unreach+0x17b/0x6e0 net/ipv4/netfilter/nf_reject_ipv4.c:325
- nft_reject_inet_eval+0x4bc/0x690 net/netfilter/nft_reject_inet.c:27
- expr_call_ops_eval net/netfilter/nf_tables_core.c:237 [inline]
- ..
+UBSAN detects this as:
+    UBSAN: invalid-load in include/linux/iosys-map.h:267
+    load of value 255 is not a valid value for type '_Bool'
 
-This is because blamed commit forgot about loopback packets.
-Such packets already have a dst_entry attached, even at PRE_ROUTING stage.
+Fix by unconditionally clearing the entire structure with memset(),
+eliminating the need to read uninitialized data and ensuring all
+fields are set to known good values.
 
-Instead of checking hook just check if the skb already has a route
-attached to it.
-
-Fixes: f53b9b0bdc59 ("netfilter: introduce support for reject at prerouting stage")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20250820123707.10671-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14639
+Fixes: 01fd30da0474 ("dma-buf: Add struct dma-buf-map for storing struct dma_buf.vaddr_ptr")
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://lore.kernel.org/r/20250718105051.2709487-1-nitin.r.gote@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++----
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 ++---
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ include/linux/iosys-map.h | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 675b5bbed638..2d663fe50f87 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -247,8 +247,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (!oth)
- 		return;
+diff --git a/include/linux/iosys-map.h b/include/linux/iosys-map.h
+index cb71aa616bd3..631d58d0b838 100644
+--- a/include/linux/iosys-map.h
++++ b/include/linux/iosys-map.h
+@@ -264,12 +264,7 @@ static inline bool iosys_map_is_set(const struct iosys_map *map)
+  */
+ static inline void iosys_map_clear(struct iosys_map *map)
+ {
+-	if (map->is_iomem) {
+-		map->vaddr_iomem = NULL;
+-		map->is_iomem = false;
+-	} else {
+-		map->vaddr = NULL;
+-	}
++	memset(map, 0, sizeof(*map));
+ }
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(oldskb) < 0)
-+	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
- 		return;
- 
- 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
-@@ -321,8 +320,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (iph->frag_off & htons(IP_OFFSET))
- 		return;
- 
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
- 
- 	if (skb_csum_unnecessary(skb_in) ||
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index e4776bd2ed89..f3579bccf0a5 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -293,7 +293,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	fl6.fl6_sport = otcph->dest;
- 	fl6.fl6_dport = otcph->source;
- 
--	if (hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) {
-+	if (!skb_dst(oldskb)) {
- 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
- 		if (!dst)
- 			return;
-@@ -397,8 +397,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
- 
--	if ((hooknum == NF_INET_PRE_ROUTING || hooknum == NF_INET_INGRESS) &&
--	    nf_reject6_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
- 
- 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
+ /**
 -- 
 2.50.1
 
