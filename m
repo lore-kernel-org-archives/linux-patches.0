@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38150187554;
-	Tue, 26 Aug 2025 12:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71D91ACEDE;
+	Tue, 26 Aug 2025 12:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213001; cv=none; b=tpC4iQSwr7agm2E8WlnfUbK7FhatxSmWsdcrMs1weXdbFd3/yvR6ri/S2sH5GPKigy/P7njsN9GtYtnzzivq2H364TJDF5EGKDfBYONZw2b2+/vQVB3ZatniqlMTjV7NRBf4tK8HbGK7e1w6QKMWnY2b2DWHwgzictezGKu7Nyw=
+	t=1756213003; cv=none; b=BGNqXrGeeIj/XtoGO7rCZ5pmA9mDiQ8yMFKy7D8FzI/MukXKKvHU3xPy1hpbFPphI8Sdw3O/kQtAT+0nwrT4iOZMeU7RYR2WpYv/Z+6ZM7hHVR20ew5MtWDlqWk66NSThuD8ZALM7Rhj04M9ci1z8kZ1oKGUoVqU+zIIStKOEAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213001; c=relaxed/simple;
-	bh=5u+XWO80XN+bdA6a9bfneou5xWgon2NEJFX383ohxIU=;
+	s=arc-20240116; t=1756213003; c=relaxed/simple;
+	bh=NmVZhW0dWqOGAPWAUIPSCsa4LjqW5tSOOaqvduw8yfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=buLYq0Ye3TDoNsEbLA6WQ5o1pgkX8oVXrWPVdR6BZMiIHvisXG76B2OpbHOWgVvEI78Gk+QbulmcraTNfiquSgzoLCUhDMkDqvs9Jws2tNlULlPZ5BxXx+DeW0BYpwK/5Rrzwao6Sy41Jsv7gQ+vSkDqI0Q0G3vD6voaZSYc8nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6O5xTvT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iKABcl4BrKOduiAXawSHfpdLzMV0k3WpCMPZtQfj7SVndIhlrjtunDQ9wn1MTkKDcrSE/a1CaTaemWiNNQn6li10B/A4+WUq7uWWcm/oy0Z48oAheFIx3x89/ftoZo0OB1A3D/ZdbjVbkPpkH/coBDDK/VYbbXd77HmJJ2LUPq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZRqIH5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6O5xTvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EA1C4CEF1;
-	Tue, 26 Aug 2025 12:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZRqIH5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A60C4CEF1;
+	Tue, 26 Aug 2025 12:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213001;
-	bh=5u+XWO80XN+bdA6a9bfneou5xWgon2NEJFX383ohxIU=;
+	s=korg; t=1756213003;
+	bh=NmVZhW0dWqOGAPWAUIPSCsa4LjqW5tSOOaqvduw8yfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6O5xTvTMUjizrvCG10ujkvrTQ7kWi6T7pUGbeQAoPfBlGc8ZN+sTH0PSU8hX8pbN
-	 GgSGYvWTHvA4o3QeT3Ua2FgE+OX564O7Emx7vsMO7Mcprq1i91rmFnxjPRGTtxDyiJ
-	 q5RwK3qewx7RZ+NZfRpTyM3tRyfQz8xBBqtvnsDo=
+	b=LZRqIH5xcjqMNpzWBLjPuYa+t4pT8JslWaxFm7Pr0lzV+JXPTambkYY3dIRA+5Gtz
+	 ivkFRceoEEdCwWYWZygXiaTyxOIC6hS3iFBnNMPj3AUx8l54RRaiDzJNvBKwx8UZps
+	 i1Pekysd7ER1i7nY5uoySo1Jj24LjtlTzqcNhZVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Wen Chen <Wen.Chen3@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/587] drm/amd/display: Fix failed to blank crtc!
-Date: Tue, 26 Aug 2025 13:05:32 +0200
-Message-ID: <20250826110957.597768155@linuxfoundation.org>
+Subject: [PATCH 6.6 157/587] net: thunderx: Fix format-truncation warning in bgx_acpi_match_id()
+Date: Tue, 26 Aug 2025 13:05:06 +0200
+Message-ID: <20250826110956.941375296@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -55,43 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Chen <Wen.Chen3@amd.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 01f60348d8fb6b3fbcdfc7bdde5d669f95b009a4 ]
+[ Upstream commit 53d20606c40678d425cc03f0978c614dca51f25e ]
 
-[why]
-DCN35 is having “DC: failed to blank crtc!” when running HPO
-test cases. It's caused by not having sufficient udelay time.
+The buffer bgx_sel used in snprintf() was too small to safely hold
+the formatted string "BGX%d" for all valid bgx_id values. This caused
+a -Wformat-truncation warning with `Werror` enabled during build.
 
-[how]
-Replace the old wait_for_blank_complete function with fsleep function to
-sleep just until the next frame should come up. This way it doesn't poll
-in case the pixel clock or other clock was bugged or until vactive and
-the vblank are hit again.
+Increase the buffer size from 5 to 7 and use `sizeof(bgx_sel)` in
+snprintf() to ensure safety and suppress the warning.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Wen Chen <Wen.Chen3@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Build warning:
+  CC      drivers/net/ethernet/cavium/thunder/thunder_bgx.o
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c: In function
+‘bgx_acpi_match_id’:
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:27: error: ‘%d’
+directive output may be truncated writing between 1 and 3 bytes into a
+region of size 2 [-Werror=format-truncation=]
+    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
+                             ^~
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:23: note:
+directive argument in the range [0, 255]
+    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
+                         ^~~~~~~
+  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:2: note:
+‘snprintf’ output between 5 and 7 bytes into a destination of size 5
+    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
+
+compiler warning due to insufficient snprintf buffer size.
+
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250711140532.2463602-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index f3c682c7fbe6..f0b472e84a53 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -781,7 +781,7 @@ enum dc_status dcn20_enable_stream_timing(
- 		return DC_ERROR_UNEXPECTED;
- 	}
+diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+index a317feb8decb..087d4c2b3efd 100644
+--- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
++++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+@@ -1427,9 +1427,9 @@ static acpi_status bgx_acpi_match_id(acpi_handle handle, u32 lvl,
+ {
+ 	struct acpi_buffer string = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct bgx *bgx = context;
+-	char bgx_sel[5];
++	char bgx_sel[7];
  
--	hws->funcs.wait_for_blank_complete(pipe_ctx->stream_res.opp);
-+	fsleep(stream->timing.v_total * (stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz));
- 
- 	params.vertical_total_min = stream->adjust.v_total_min;
- 	params.vertical_total_max = stream->adjust.v_total_max;
+-	snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
++	snprintf(bgx_sel, sizeof(bgx_sel), "BGX%d", bgx->bgx_id);
+ 	if (ACPI_FAILURE(acpi_get_name(handle, ACPI_SINGLE_NAME, &string))) {
+ 		pr_warn("Invalid link device\n");
+ 		return AE_OK;
 -- 
 2.39.5
 
