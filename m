@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE2A33A015;
-	Tue, 26 Aug 2025 13:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE10F1C4609;
+	Tue, 26 Aug 2025 13:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214200; cv=none; b=ZfnZnM84HHHnuHweN3tACcg+u4Ixzrnqa5Vsiq7FjNx73NlPFnfchn8JIf0OcOvuXnso5KDiHaNBXFlR3FlP/uUQUIhT0i/PN1GIGbveVEvInHeFva5PEKkXSmDxXWSIrbJ409VvLabEK3hSl3rGIDplXuPAzhCzNxWIAifQSYM=
+	t=1756214203; cv=none; b=ShCNoOBXIjFEHZfepDKAxfL/x12JrbYTAmMBJMy777+tsK2EnBXQAi9kSv5ekasffLQJFVNf8Z8rAN0LXtrXvl9TcGlPcV+bvkFbPZ0pQh1Za0+YMyqoheatH9BsvGdlpEspYnM4D8JbIwTm6uYu/NxkF8llwfIWRc55HJV3jjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214200; c=relaxed/simple;
-	bh=Ri7Yi+owbYkqp4Cq/NfRZuRWWj8kN2T18dVtye6UHb0=;
+	s=arc-20240116; t=1756214203; c=relaxed/simple;
+	bh=GxEBocbi+qKDq7yrT2cmexv68dBhDgNrUWcqXaFPcN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLW2NQ89MPSF+KmCaIbROILMJWUR9EhJO2VbciXFxHCxQGThIZaGY2/Iu2pYR2o6IRLDOYcfkLil0km88Xyd6wxuAURBgYAd9LmsUa/JE1MNEc5Avzexym+TWg46QJADRuHaa2K/EDBgHbvhDI/gKnS8+0R0cKInhbbFKKFoFkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK6KUWp3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0z+1ezOSaCzqSgVSCtUVXKeiGcFEljqj6xpN8sk5ep7WzcS6pWb9D/x0FO9K3BELunEaGcBqtx+5+9/ciE8/NJrOQvoBXLFPY2UatbP15ig+UOz7xb6QaADswDM7aa2fAAqfGcUQoMqVxdLCw/Gg4gaOutOvU46zIFBk3Y7GIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmWWzj1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK6KUWp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61BCC4CEF1;
-	Tue, 26 Aug 2025 13:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmWWzj1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8092FC4CEF1;
+	Tue, 26 Aug 2025 13:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214200;
-	bh=Ri7Yi+owbYkqp4Cq/NfRZuRWWj8kN2T18dVtye6UHb0=;
+	s=korg; t=1756214202;
+	bh=GxEBocbi+qKDq7yrT2cmexv68dBhDgNrUWcqXaFPcN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xK6KUWp3S6T5Mz17sUDlC051s2tV2qhx03fTZxlOwP+MKJGCDioM1ycouxerCQrlm
-	 PYj4+rPdcqe2YTCcLMpHWeLJSdm5gYh2hDa49KSCebH0ZE6DMd45WL2PujHuBPTrsx
-	 yf3zmevOKe9MTDYtFYLbIbg2lQbBCS70Jxx3++ps=
+	b=OmWWzj1YoH2JWRAzD7qDNzmI+b/a4OY42+GUG5UKiKJ2RiCcN9mlhU8NwVcoXnZWW
+	 YV/FaG7LUqBSFF6VIN7H/oy1kJZGjGug0MdFeyC+wb/j3LW+Rkc7GdJuqVAi88Tee1
+	 BTTBJGETGQXFGoyO6Z8yUn+UT2tjO5KJM4ZYNO8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei lu <llfamsec@gmail.com>,
+	Petro Pavlov <petro.pavlov@vastdata.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 016/482] nfsd: handle get_client_locked() failure in nfsd4_setclientid_confirm()
-Date: Tue, 26 Aug 2025 13:04:29 +0200
-Message-ID: <20250826110931.189000359@linuxfoundation.org>
+Subject: [PATCH 6.1 017/482] NFSD: detect mismatch of file handle and delegation stateid in OPEN op
+Date: Tue, 26 Aug 2025 13:04:30 +0200
+Message-ID: <20250826110931.214725105@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,71 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-commit 908e4ead7f757504d8b345452730636e298cbf68 upstream.
+commit 9c65001c57164033ad08b654c8b5ae35512ddf4a upstream.
 
-Lei Lu recently reported that nfsd4_setclientid_confirm() did not check
-the return value from get_client_locked(). a SETCLIENTID_CONFIRM could
-race with a confirmed client expiring and fail to get a reference. That
-could later lead to a UAF.
+When the client sends an OPEN with claim type CLAIM_DELEG_CUR_FH or
+CLAIM_DELEGATION_CUR, the delegation stateid and the file handle
+must belong to the same file, otherwise return NFS4ERR_INVAL.
 
-Fix this by getting a reference early in the case where there is an
-extant confirmed client. If that fails then treat it as if there were no
-confirmed client found at all.
+Note that RFC8881, section 8.2.4, mandates the server to return
+NFS4ERR_BAD_STATEID if the selected table entry does not match the
+current filehandle. However returning NFS4ERR_BAD_STATEID in the
+OPEN causes the client to retry the operation and therefor get the
+client into a loop. To avoid this situation we return NFS4ERR_INVAL
+instead.
 
-In the case where the unconfirmed client is expiring, just fail and
-return the result from get_client_locked().
-
-Reported-by: lei lu <llfamsec@gmail.com>
-Closes: https://lore.kernel.org/linux-nfs/CAEBF3_b=UvqzNKdnfD_52L05Mqrqui9vZ2eFamgAbV0WG+FNWQ@mail.gmail.com/
-Fixes: d20c11d86d8f ("nfsd: Protect session creation and client confirm using client_lock")
+Reported-by: Petro Pavlov <petro.pavlov@vastdata.com>
+Fixes: c44c5eeb2c02 ("[PATCH] nfsd4: add open state code for CLAIM_DELEGATE_CUR")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4state.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -4285,10 +4285,16 @@ nfsd4_setclientid_confirm(struct svc_rqs
- 	}
- 	status = nfs_ok;
- 	if (conf) {
--		old = unconf;
--		unhash_client_locked(old);
--		nfsd4_change_callback(conf, &unconf->cl_cb_conn);
--	} else {
-+		if (get_client_locked(conf) == nfs_ok) {
-+			old = unconf;
-+			unhash_client_locked(old);
-+			nfsd4_change_callback(conf, &unconf->cl_cb_conn);
-+		} else {
-+			conf = NULL;
-+		}
-+	}
-+
-+	if (!conf) {
- 		old = find_confirmed_client_by_name(&unconf->cl_name, nn);
- 		if (old) {
- 			status = nfserr_clid_inuse;
-@@ -4305,10 +4311,14 @@ nfsd4_setclientid_confirm(struct svc_rqs
- 			}
- 			trace_nfsd_clid_replaced(&old->cl_clientid);
- 		}
-+		status = get_client_locked(unconf);
-+		if (status != nfs_ok) {
-+			old = NULL;
+@@ -5733,6 +5733,20 @@ nfsd4_process_open2(struct svc_rqst *rqs
+ 		status = nfs4_check_deleg(cl, open, &dp);
+ 		if (status)
+ 			goto out;
++		if (dp && nfsd4_is_deleg_cur(open) &&
++				(dp->dl_stid.sc_file != fp)) {
++			/*
++			 * RFC8881 section 8.2.4 mandates the server to return
++			 * NFS4ERR_BAD_STATEID if the selected table entry does
++			 * not match the current filehandle. However returning
++			 * NFS4ERR_BAD_STATEID in the OPEN can cause the client
++			 * to repeatedly retry the operation with the same
++			 * stateid, since the stateid itself is valid. To avoid
++			 * this situation NFSD returns NFS4ERR_INVAL instead.
++			 */
++			status = nfserr_inval;
 +			goto out;
 +		}
- 		move_to_confirmed(unconf);
- 		conf = unconf;
- 	}
--	get_client_locked(conf);
- 	spin_unlock(&nn->client_lock);
- 	if (conf == unconf)
- 		fsnotify_dentry(conf->cl_nfsd_info_dentry, FS_MODIFY);
+ 		stp = nfsd4_find_and_lock_existing_open(fp, open);
+ 	} else {
+ 		open->op_file = NULL;
 
 
