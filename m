@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E671C4609;
-	Tue, 26 Aug 2025 13:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAAC22DFA7;
+	Tue, 26 Aug 2025 13:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214846; cv=none; b=U93+vacB+y4/qamAam61OiENx2q92I4J6W8QTOMn0pzmX0dpH7Un/Dq1r5poxjy/RdxGXAr20f7K8X30CTWKH5V4MGxxncO7xnU/5e/FmmIUNX+Jgpy6rsc/uR6mUxYi/RLdZI5TARFxLs8q2rmR9tZ0iyuDnx9pvGkkn6ws7UQ=
+	t=1756214848; cv=none; b=FTttKNaVIpIJsOyOYi3SIW1zkguj5vkwmvoVlTUGg0Z59AIkxX1toaJ/+fiCPKRpv4Xz06N4YNiF5B+vMvbLbXyaCMNs1R3ROHP23q2yRkf4UDucrWQGXlHyHTmYKaYSnMDI5OzXUsB7psgbmoC8NCurQqKnqLmj1pWkn067ob8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214846; c=relaxed/simple;
-	bh=iY+bZYGKfSchmggfVc0HkMmIae9i6kZU4jsLZVeVvEs=;
+	s=arc-20240116; t=1756214848; c=relaxed/simple;
+	bh=JSHTg8gjy0Qkl2Z4s7FYwVIGXaL7r7UcXlvx7wFb5AA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGRb8fM4ZfC3dGmihDLZ6lmkldo0hYo7SMKfNhuf7iwTvjq6HG538XESJrVp07mNNv/2dYdRNcOXxceZ8SkbZvQEJ+3hUaNQ479mVTqV+wYwXnmpvhvTf/4YyzgtEl83bYCwQYCdvcXWVeckzEPVwXd3+miWpWzkuDhMd7kmU5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUv9hhz9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPhtHgnic5VkBi/B3yWiQueOPNXtbXh4XCuhpea/ZblXGUT1SKfsF0yJ4RWaaMQG1y8OUrdp2QDT6o4XGeFRVRahc6SsxPCjsiHlMcgfHytlIl1sI51CmqazzG70EbSgislFbInhmFZap0UarcrtRZCpoVk0whRrGPVjG3HAi74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnA/2al0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUv9hhz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6A2C4CEF1;
-	Tue, 26 Aug 2025 13:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnA/2al0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867F5C4CEF1;
+	Tue, 26 Aug 2025 13:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214846;
-	bh=iY+bZYGKfSchmggfVc0HkMmIae9i6kZU4jsLZVeVvEs=;
+	s=korg; t=1756214848;
+	bh=JSHTg8gjy0Qkl2Z4s7FYwVIGXaL7r7UcXlvx7wFb5AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUv9hhz9GxYID4N+YFM2pHsq/RaMvy9yquPAWKzmjDNf8pOUqS9mF3oBuLWxlepef
-	 3k324WkAPjakGCHNOMFxS8z+pmkCunLGxtskls30TYEgg/bSvXPt7jZXUK4+neZh0X
-	 dzVeh0AqLNYUKGfCGXk3lBdgl4A+FmvrGFlCXchY=
+	b=UnA/2al0+bsZezdc/65Tsm/TTH8KtYPehBBnjQEkIQWDVJGGvf38xhMkiKgQe5U3O
+	 e3c/VxR7H7uLGWXb8/eJuD2T2zQVH0GFNHLTv1b0TXRM4q/Q4GghWjyMDKt2dqJNPX
+	 IVGoNRJvdcBYrV+4lyIidYRFcw3gbpteUH2Ys3Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.1 292/482] zynq_fpga: use sgtable-based scatterlist wrappers
-Date: Tue, 26 Aug 2025 13:09:05 +0200
-Message-ID: <20250826110938.005309828@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 293/482] iio: imu: bno055: fix OOB access of hw_xlate array
+Date: Tue, 26 Aug 2025 13:09:06 +0200
+Message-ID: <20250826110938.031458484@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,46 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 37e00703228ab44d0aacc32a97809a4f6f58df1b upstream.
+commit 399b883ec828e436f1a721bf8551b4da8727e65b upstream.
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of statterlists related calls. dma_unmap_sg() function
-has to be called with the number of elements originally passed to the
-dma_map_sg() function, not the one returned in sgtable's nents.
+Fix a potential out-of-bounds array access of the hw_xlate array in
+bno055.c.
 
-CC: stable@vger.kernel.org
-Fixes: 425902f5c8e3 ("fpga zynq: Use the scatterlist interface")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250616120932.1090614-1-m.szyprowski@samsung.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+In bno055_get_regmask(), hw_xlate was iterated over the length of the
+vals array instead of the length of the hw_xlate array. In the case of
+bno055_gyr_scale, the vals array is larger than the hw_xlate array,
+so this could result in an out-of-bounds access. In practice, this
+shouldn't happen though because a match should always be found which
+breaks out of the for loop before it iterates beyond the end of the
+hw_xlate array.
+
+By adding a new hw_xlate_len field to the bno055_sysfs_attr, we can be
+sure we are iterating over the correct length.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507100510.rGt1YOOx-lkp@intel.com/
+Fixes: 4aefe1c2bd0c ("iio: imu: add Bosch Sensortec BNO055 core driver")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250709-iio-const-data-19-v2-1-fb3fc9191251@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/zynq-fpga.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/imu/bno055/bno055.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/fpga/zynq-fpga.c
-+++ b/drivers/fpga/zynq-fpga.c
-@@ -406,7 +406,7 @@ static int zynq_fpga_ops_write(struct fp
- 	}
+diff --git a/drivers/iio/imu/bno055/bno055.c b/drivers/iio/imu/bno055/bno055.c
+index 3f4c18dc3ee9..0eb5e1334e55 100644
+--- a/drivers/iio/imu/bno055/bno055.c
++++ b/drivers/iio/imu/bno055/bno055.c
+@@ -118,6 +118,7 @@ struct bno055_sysfs_attr {
+ 	int len;
+ 	int *fusion_vals;
+ 	int *hw_xlate;
++	int hw_xlate_len;
+ 	int type;
+ };
  
- 	priv->dma_nelms =
--	    dma_map_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	if (priv->dma_nelms == 0) {
- 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
- 		return -ENOMEM;
-@@ -478,7 +478,7 @@ out_clk:
- 	clk_disable(priv->clk);
+@@ -170,20 +171,24 @@ static int bno055_gyr_scale_vals[] = {
+ 	1000, 1877467, 2000, 1877467,
+ };
  
- out_free:
--	dma_unmap_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	dma_unmap_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	return err;
- }
++static int bno055_gyr_scale_hw_xlate[] = {0, 1, 2, 3, 4};
+ static struct bno055_sysfs_attr bno055_gyr_scale = {
+ 	.vals = bno055_gyr_scale_vals,
+ 	.len = ARRAY_SIZE(bno055_gyr_scale_vals),
+ 	.fusion_vals = (int[]){1, 900},
+-	.hw_xlate = (int[]){4, 3, 2, 1, 0},
++	.hw_xlate = bno055_gyr_scale_hw_xlate,
++	.hw_xlate_len = ARRAY_SIZE(bno055_gyr_scale_hw_xlate),
+ 	.type = IIO_VAL_FRACTIONAL,
+ };
  
+ static int bno055_gyr_lpf_vals[] = {12, 23, 32, 47, 64, 116, 230, 523};
++static int bno055_gyr_lpf_hw_xlate[] = {5, 4, 7, 3, 6, 2, 1, 0};
+ static struct bno055_sysfs_attr bno055_gyr_lpf = {
+ 	.vals = bno055_gyr_lpf_vals,
+ 	.len = ARRAY_SIZE(bno055_gyr_lpf_vals),
+ 	.fusion_vals = (int[]){32},
+-	.hw_xlate = (int[]){5, 4, 7, 3, 6, 2, 1, 0},
++	.hw_xlate = bno055_gyr_lpf_hw_xlate,
++	.hw_xlate_len = ARRAY_SIZE(bno055_gyr_lpf_hw_xlate),
+ 	.type = IIO_VAL_INT,
+ };
+ 
+@@ -561,7 +566,7 @@ static int bno055_get_regmask(struct bno055_priv *priv, int *val, int *val2,
+ 
+ 	idx = (hwval & mask) >> shift;
+ 	if (attr->hw_xlate)
+-		for (i = 0; i < attr->len; i++)
++		for (i = 0; i < attr->hw_xlate_len; i++)
+ 			if (attr->hw_xlate[i] == idx) {
+ 				idx = i;
+ 				break;
+-- 
+2.50.1
+
 
 
