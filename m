@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA79E35209D;
-	Tue, 26 Aug 2025 14:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F23342CA7;
+	Tue, 26 Aug 2025 14:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218219; cv=none; b=uUQduFVUJZdxoVhNdHdchNt1F/bWwjzheTu++PysOSeBpSijYsr7s3vExd568irzi9MNN6pb/StlfSNzoc/VHI3vGDAH8mrnJCGVv1lj+kjDApw7UB6S2KnPAukewFePeTEtSAOGjw10CKl8/nzqa5MC5vVRlpc+bXfribyFV9o=
+	t=1756218222; cv=none; b=FSUW9rtG47pv8QBa9a/JisUB8sDeV9mz8rrPXNXQELTEdE00cNyTi9VMLu/vfbtXEFBq9UJvUiLauAvusw97R2zrD6SUzS5a/acljfoahDEgyUDu2L5xffzYqz3eu5wDcYMvJdovIlMp5jU4L8njznrW0yl8kyNdiK7sJUKbd/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218219; c=relaxed/simple;
-	bh=HevwML83kkrw+yC/+IBfSoZ99k8uFb34/GHDyx7Zv+c=;
+	s=arc-20240116; t=1756218222; c=relaxed/simple;
+	bh=nKfC1cZaz/4i7VQIcQY7c95GeRcBJaCha1d4Oi2KxVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOZNcbHk/3dVEw5CvfGGUBnXP3XGU0yILjZ95v4KBkvTsqpZG5zzgviFHUqzgz2uzGef3u0YoOhUrsqHwa+V99DTZbcvijiE1qgdWIVdl3avW1EUjbWfH2fPe9f9f6KifbvSUovFnVxUaYbGctfMCKQ8e3U/bAKrQTzaf94BVqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUditx2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBb7SWwGYyNqUJlkxKsMnSAqkHt9d7sKGcrDBSvINVByFyZt/cVXjpgJFr4P5Iqzdz/kSvewojLdQ3CvskcHoCkCh83RVnEviaVM0bawfc35cdmOrQy8qUgOplK/ntrnK7053IUUpzAGcFTYoQ8wvKAJHomCHo+HQjJLURvdHCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQswnDYI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUditx2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD0AC4CEF1;
-	Tue, 26 Aug 2025 14:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQswnDYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EA2C4CEF1;
+	Tue, 26 Aug 2025 14:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218219;
-	bh=HevwML83kkrw+yC/+IBfSoZ99k8uFb34/GHDyx7Zv+c=;
+	s=korg; t=1756218221;
+	bh=nKfC1cZaz/4i7VQIcQY7c95GeRcBJaCha1d4Oi2KxVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUditx2tNvjgS3saVGPH61MrcdOZ63WUmcyQxDy3ulh4OBEyLCP+UxisD/eiOJUKo
-	 zs3XAqmfO4GnuUB5+OF2F4LEhYEqbzW4VIgoQQF5v+vlDI8YJnVmpu03iPhvxNUK5N
-	 2WxFDIjTITzZ7TGPDsqNAc4uqSZO//WHnEdpLZJo=
+	b=MQswnDYIYpldLVCjURZ20LW7di/BDJbxGhWDYVMuxXnhhdQWo8KEbT0ROCxCnW0e5
+	 Xt96c1Z2vh5gUVgAXrvNPrVBapWBTrLhiF1s6uBxMgtrGkzxkx3WmDGM3UDw0Tzs05
+	 wnHKmCK8ErB5hBBsdrlvkpP5sLscqWDm9rd0v1LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Miaoqian Lin <linmq006@gmail.com>
-Subject: [PATCH 5.10 408/523] most: core: Drop device reference after usage in get_channel()
-Date: Tue, 26 Aug 2025 13:10:18 +0200
-Message-ID: <20250826110934.522282914@linuxfoundation.org>
+	Miao Li <limiao@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 409/523] usb: quirks: Add DELAY_INIT quick for another SanDisk 3.2Gen1 Flash Drive
+Date: Tue, 26 Aug 2025 13:10:19 +0200
+Message-ID: <20250826110934.546701042@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,34 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Miao Li <limiao@kylinos.cn>
 
-commit b47b493d6387ae437098112936f32be27f73516c upstream.
+commit e664036cf36480414936cd91f4cfa2179a3d8367 upstream.
 
-In get_channel(), the reference obtained by bus_find_device_by_name()
-was dropped via put_device() before accessing the device's driver data
-Move put_device() after usage to avoid potential issues.
+Another SanDisk 3.2Gen1 Flash Drive also need DELAY_INIT quick,
+or it will randomly work incorrectly on Huawei hisi platforms
+when doing reboot test.
 
-Fixes: 2485055394be ("staging: most: core: drop device reference")
+Signed-off-by: Miao Li <limiao@kylinos.cn>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20250804082955.3621026-1-linmq006@gmail.com
+Link: https://lore.kernel.org/r/20250801082728.469406-1-limiao870622@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/most/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/most/core.c
-+++ b/drivers/most/core.c
-@@ -538,8 +538,8 @@ static struct most_channel *get_channel(
- 	dev = bus_find_device_by_name(&mostbus, NULL, mdev);
- 	if (!dev)
- 		return NULL;
--	put_device(dev);
- 	iface = dev_get_drvdata(dev);
-+	put_device(dev);
- 	list_for_each_entry_safe(c, tmp, &iface->p->channel_list, list) {
- 		if (!strcmp(dev_name(&c->dev), mdev_ch))
- 			return c;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -368,6 +368,7 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
+ 
+ 	/* SanDisk Corp. SanDisk 3.2Gen1 */
++	{ USB_DEVICE(0x0781, 0x5596), .driver_info = USB_QUIRK_DELAY_INIT },
+ 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
+ 
+ 	/* SanDisk Extreme 55AE */
 
 
