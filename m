@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EBF341AA6;
-	Tue, 26 Aug 2025 14:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F93296BDF;
+	Tue, 26 Aug 2025 14:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219495; cv=none; b=e77xqSqufADF9h6BJ3eZ/617w+jb/26rBW5jUNj5ybB7A4pHCEerStR7dQO8wcaSvxnm3AlFvHv9I7CRQ+JgcRcMu0S/9IWIM+AdazoN0bF+tpci/gnVrVn9xlOACJGlRUVq7gJDE9T+ovNDXJGHf7+VDf/Ew8yEtNUIOMrJ4JE=
+	t=1756219497; cv=none; b=RcxlkqU0Bfe7KzX2NDGHs017FBy7ktXfT+4Pj5V5ENXw1yHqESZATX5sQmHVv4Xu2K3sdhmqoKbM12gxYqu3MsquukmZ7hfpVMQ6pL9c0yXq/OruoyYJayQekcv2zBlCdHcPZbTBobvuXDyubZXl3067+Cnhwz6yVnCMTXtGCrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219495; c=relaxed/simple;
-	bh=xnRSBTlmvlORcuXWCZtYqGEpRvA6Qbj51tCaRepXVoc=;
+	s=arc-20240116; t=1756219497; c=relaxed/simple;
+	bh=YHiytu09ntTOIrYFSegI8pzis7I53/RKQ2ty3h4QnqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q7yTe5G9Io3pHM9uUoX7jneVlRPa0fvMg0y8mrHBIEGHcaNPfnKeDE5lpOeGb1e4yUDjO0WSnFLm89zBPaS9oRXVHag2BdYmu1vrUCgXqIz0XWM0tliFj1WYiT2Bn9GXGr/Q5P0+reo251gTGgvculQ8+4gwDKXDhIqcoz6M+6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7xw/9xK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mvOwMbRFsv91tqa+GqdCm/li4C0HXXnWeoC+Fve9g0ATj89IljqcNl5g2uavH9ZL8el2bV0EBy7EM7mXjTOKmfM8tnBU+NFYsiYDF3amYHBZGVYDRf9VFvx69C2X7clYEwpYYzSsAYFrVREn8NRN0OQ1uCqjpNFPMpulgUX4uKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLQx7RlT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7xw/9xK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B932C4CEF1;
-	Tue, 26 Aug 2025 14:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLQx7RlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044E6C4CEF1;
+	Tue, 26 Aug 2025 14:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219494;
-	bh=xnRSBTlmvlORcuXWCZtYqGEpRvA6Qbj51tCaRepXVoc=;
+	s=korg; t=1756219497;
+	bh=YHiytu09ntTOIrYFSegI8pzis7I53/RKQ2ty3h4QnqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7xw/9xKjIJWC2Z7haQfR/iMRcSkVurkc+uYmGI6PybahBt54xYLljkeP1IkTHBa2
-	 2xkBPZ1ykWPI/yZdS4HQdhAuZxbfgtX83wH3pQZDtsJwS/2hVsWXKhQCvrka87RK4D
-	 L0bGW7cCmRzS+D6yqpgOCL/oBsYVUGQk8YnqD2zA=
+	b=SLQx7RlTGPcaOp/cmXKro5KRsKZj5XILcp6ZgUsGSRtEzXClISrMLQE/jgjaz/LEF
+	 OaQu6Wv48aIEpXJYrPN6Yao0dSRBwrcdmqU2clZ4A7+tBtmaIYNrGAXfLOTW9Sb78f
+	 wMV/pFxVpjmi92xiPvM7W5X0UNXAtO8Hqe1fjXCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@mellanox.com>,
-	Ido Schimmel <idosch@mellanox.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	wenxu <wenxu@ucloud.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Shubham Kulkarni <skulkarni@mvista.com>
-Subject: [PATCH 5.4 386/403] selftests: forwarding: tc_actions.sh: add matchall mirror test
-Date: Tue, 26 Aug 2025 13:11:52 +0200
-Message-ID: <20250826110917.682840395@linuxfoundation.org>
+Subject: [PATCH 5.4 387/403] net/sched: act_mirred: refactor the handle of xmit
+Date: Tue, 26 Aug 2025 13:11:53 +0200
+Message-ID: <20250826110917.710119672@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,90 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@mellanox.com>
+From: wenxu <wenxu@ucloud.cn>
 
-[ Upstream commit 075c8aa79d541ea08c67a2e6d955f6457e98c21c ]
+[ Upstream commit fa6d639930ee5cd3f932cc314f3407f07a06582d ]
 
-Add test for matchall classifier with mirred egress mirror action.
+This one is prepare for the next patch.
 
-Signed-off-by: Jiri Pirko <jiri@mellanox.com>
-Signed-off-by: Ido Schimmel <idosch@mellanox.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: wenxu <wenxu@ucloud.cn>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ skulkarni: Adjusted patch for file 'sch_generic.h' wrt the mainline commit ]
 Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
 Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/tc_actions.sh |   26 +++++++++++++------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ include/net/sch_generic.h |    5 -----
+ net/sched/act_mirred.c    |   21 +++++++++++++++------
+ 2 files changed, 15 insertions(+), 11 deletions(-)
 
---- a/tools/testing/selftests/net/forwarding/tc_actions.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -2,7 +2,8 @@
- # SPDX-License-Identifier: GPL-2.0
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -1320,11 +1320,6 @@ void mini_qdisc_pair_swap(struct mini_Qd
+ void mini_qdisc_pair_init(struct mini_Qdisc_pair *miniqp, struct Qdisc *qdisc,
+ 			  struct mini_Qdisc __rcu **p_miniq);
  
- ALL_TESTS="gact_drop_and_ok_test mirred_egress_redirect_test \
--	mirred_egress_mirror_test gact_trap_test"
-+	mirred_egress_mirror_test matchall_mirred_egress_mirror_test \
-+	gact_trap_test"
- NUM_NETIFS=4
- source tc_common.sh
- source lib.sh
-@@ -50,6 +51,9 @@ switch_destroy()
- mirred_egress_test()
+-static inline int skb_tc_reinsert(struct sk_buff *skb, struct tcf_result *res)
+-{
+-	return res->ingress ? netif_receive_skb(skb) : dev_queue_xmit(skb);
+-}
+-
+ /* Make sure qdisc is no longer in SCHED state. */
+ static inline void qdisc_synchronize(const struct Qdisc *q)
  {
- 	local action=$1
-+	local protocol=$2
-+	local classifier=$3
-+	local classifier_args=$4
- 
- 	RET=0
- 
-@@ -62,9 +66,9 @@ mirred_egress_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_fail $? "Matched without redirect rule inserted"
- 
--	tc filter add dev $swp1 ingress protocol ip pref 1 handle 101 flower \
--		$tcflags dst_ip 192.0.2.2 action mirred egress $action \
--		dev $swp2
-+	tc filter add dev $swp1 ingress protocol $protocol pref 1 handle 101 \
-+		$classifier $tcflags $classifier_args \
-+		action mirred egress $action dev $swp2
- 
- 	$MZ $h1 -c 1 -p 64 -a $h1mac -b $h2mac -A 192.0.2.1 -B 192.0.2.2 \
- 		-t ip -q
-@@ -72,10 +76,11 @@ mirred_egress_test()
- 	tc_check_packets "dev $h2 ingress" 101 1
- 	check_err $? "Did not match incoming $action packet"
- 
--	tc filter del dev $swp1 ingress protocol ip pref 1 handle 101 flower
-+	tc filter del dev $swp1 ingress protocol $protocol pref 1 handle 101 \
-+		$classifier
- 	tc filter del dev $h2 ingress protocol ip pref 1 handle 101 flower
- 
--	log_test "mirred egress $action ($tcflags)"
-+	log_test "mirred egress $classifier $action ($tcflags)"
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -206,6 +206,18 @@ release_idr:
+ 	return err;
  }
  
- gact_drop_and_ok_test()
-@@ -187,12 +192,17 @@ cleanup()
- 
- mirred_egress_redirect_test()
- {
--	mirred_egress_test "redirect"
-+	mirred_egress_test "redirect" "ip" "flower" "dst_ip 192.0.2.2"
- }
- 
- mirred_egress_mirror_test()
- {
--	mirred_egress_test "mirror"
-+	mirred_egress_test "mirror" "ip" "flower" "dst_ip 192.0.2.2"
++static int tcf_mirred_forward(bool want_ingress, struct sk_buff *skb)
++{
++	int err;
++
++	if (!want_ingress)
++		err = dev_queue_xmit(skb);
++	else
++		err = netif_receive_skb(skb);
++
++	return err;
 +}
 +
-+matchall_mirred_egress_mirror_test()
-+{
-+	mirred_egress_test "mirror" "all" "matchall" ""
- }
+ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 			  struct tcf_result *res)
+ {
+@@ -295,18 +307,15 @@ static int tcf_mirred_act(struct sk_buff
+ 		/* let's the caller reinsert the packet, if possible */
+ 		if (use_reinsert) {
+ 			res->ingress = want_ingress;
+-			if (skb_tc_reinsert(skb, res))
++			err = tcf_mirred_forward(res->ingress, skb);
++			if (err)
+ 				tcf_action_inc_overlimit_qstats(&m->common);
+ 			__this_cpu_dec(mirred_rec_level);
+ 			return TC_ACT_CONSUMED;
+ 		}
+ 	}
  
- trap cleanup EXIT
+-	if (!want_ingress)
+-		err = dev_queue_xmit(skb2);
+-	else
+-		err = netif_receive_skb(skb2);
+-
++	err = tcf_mirred_forward(want_ingress, skb2);
+ 	if (err) {
+ out:
+ 		tcf_action_inc_overlimit_qstats(&m->common);
 
 
