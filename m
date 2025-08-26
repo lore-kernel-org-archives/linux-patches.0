@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6AC350830;
-	Tue, 26 Aug 2025 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BD2350830;
+	Tue, 26 Aug 2025 14:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219386; cv=none; b=EahTsDkGnr0hkvPf3aGNoYDZCvuOUkTKem72On6P0PcQ88a1TGCkOo6ySVZQIlgFiYf5lgMcNDRwI5ytqMPkLYIwAO6Whaku5VTb+hCerM2KGkSg7iYrW+TgFb2sv5HCYtccC/xWX0T2+ffzgm++2VlReInYg/v1jWWylPHWerw=
+	t=1756219388; cv=none; b=eHU56QsHi9O7vlYUlyjhKeXyGN7jAwIKIGdyoHmn6cO4nKSNUoBUv9Azta9y5/3ALK4zL1M5LuFom2YvHXh8bLTtsTqNz/oP20i1tpk6AzbhWQ08AArsjeiuy7/nUQCW/hnHl0DegUbumUBKjLwELQn7r+JQ9Az7HC8iqi77Te4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219386; c=relaxed/simple;
-	bh=iJ8+0ZvlzZ0qJpXAldcMttoXDSfCaGfAcO3jj4W5TDo=;
+	s=arc-20240116; t=1756219388; c=relaxed/simple;
+	bh=cfaoWJ0UhYBXtMUVrk+LMqXdNKP/PmNsQaswjaCaiZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iE/QVBn7e5vMljjt7UyJhkFzStHQeOCeAkwz1GY+97ukgg8bQIBRlLwqQszk5g6+Bctcs8R1Qx24WUz0eKOdHD8EzCP9x0cawPFJY0Indt5rfONrrGUwCv5FR4ZZHOVHORCxGh12q5y5fOS3mfTQwfaN+bJS+8DoJcIm0XRzPb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJ3QwAc0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQ3yCzNZrkmRFRVp9duNEIfWD5G/pxTXjudMN0rWgwsNdlMdmZcmvnL3OOEK1NsQd2JGmg4VELsuKVxWj4y50FYoXHutUT1XbKSe3r26zIkGwZzWi6ArNZUvsijG/GsC9grvJYNJz77T4sk1DgnNyeXFvHt5gbxeG+AZC+WAFf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4LZ2Yiv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJ3QwAc0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286DAC4CEF1;
-	Tue, 26 Aug 2025 14:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4LZ2Yiv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6362C4CEF1;
+	Tue, 26 Aug 2025 14:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219385;
-	bh=iJ8+0ZvlzZ0qJpXAldcMttoXDSfCaGfAcO3jj4W5TDo=;
+	s=korg; t=1756219388;
+	bh=cfaoWJ0UhYBXtMUVrk+LMqXdNKP/PmNsQaswjaCaiZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJ3QwAc0YOjeqRl+SJ5fva3yrd0I2APBFc0t44m7tZoLUhPeLFzVsbp0kp+Y6ktaj
-	 AMk6NsBcE1gRHw5cs3KFgjkDeoViS1DkxrQNDX+NjAt1cVdpcNv+zaw+wLJoZEFyG+
-	 uU5Q976msmuhX67H6c1tszEyjNNuo3CyhEd1VZDA=
+	b=s4LZ2YivHbcgWRAySLOyFVdTU/jWjOtVvoCu3Kh9T1d2t2KLIScuVgORH011gFbLc
+	 gZsZ9psklP6uJJ5YsyaJeFVg6pYL1aV2B/icbVxM1H935zcp0Cm2kDBwls3BR+TIPq
+	 vUwd8AJL+A9ajC2rv7e7qYuLcswbNRxDYyydXljc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 362/403] media: v4l2-ctrls: always copy the controls on completion
-Date: Tue, 26 Aug 2025 13:11:28 +0200
-Message-ID: <20250826110917.001640279@linuxfoundation.org>
+Subject: [PATCH 5.4 363/403] media: v4l2-ctrls: Dont reset handlers error in v4l2_ctrl_handler_free()
+Date: Tue, 26 Aug 2025 13:11:29 +0200
+Message-ID: <20250826110917.029426329@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,91 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit c3bf5129f33923c92bf3bddaf4359b7b25ecb4ba ]
+[ Upstream commit 5a0400aca5fa7c6b8ba456c311a460e733571c88 ]
 
-When v4l2_ctrl_request_complete() is called and there is no control
-handler object found in the request, then create such an object so
-that all controls at completion state can be stored and are available
-to userspace.
+It's a common pattern in drivers to free the control handler's resources
+and then return the handler's error code on drivers' error handling paths.
+Alas, the v4l2_ctrl_handler_free() function also zeroes the error field,
+effectively indicating successful return to the caller.
 
-Otherwise any attempt by userspace to read the completed request data
-will fail.
+There's no apparent need to touch the error field while releasing the
+control handler's resources and cleaning up stale pointers. Not touching
+the handler's error field is a more certain way to address this problem
+than changing all the users, in which case the pattern would be likely to
+re-emerge in new drivers.
 
-If allocating the control handler object failed, then indicate that
-by returning ENOMEM when attempting to get the controls from the
-completed request instead of returning ENOENT.
+Do just that, don't touch the control handler's error field in
+v4l2_ctrl_handler_free().
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: 5a0400aca5fa ("media: v4l2-ctrls: Don't reset handler's error in v4l2_ctrl_handler_free()")
+Fixes: 0996517cf8ea ("V4L/DVB: v4l2: Add new control handling framework")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[ v4l2-ctrls.c => v4l2-ctrls-core.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls.c |   36 +++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls.c |    1 -
+ 1 file changed, 1 deletion(-)
 
 --- a/drivers/media/v4l2-core/v4l2-ctrls.c
 +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
-@@ -3529,8 +3529,19 @@ v4l2_ctrls_find_req_obj(struct v4l2_ctrl
- 	obj = media_request_object_find(req, &req_ops, hdl);
- 	if (obj)
- 		return obj;
-+	/*
-+	 * If there are no controls in this completed request,
-+	 * then that can only happen if:
-+	 *
-+	 * 1) no controls were present in the queued request, and
-+	 * 2) v4l2_ctrl_request_complete() could not allocate a
-+	 *    control handler object to store the completed state in.
-+	 *
-+	 * So return ENOMEM to indicate that there was an out-of-memory
-+	 * error.
-+	 */
- 	if (!set)
--		return ERR_PTR(-ENOENT);
-+		return ERR_PTR(-ENOMEM);
- 
- 	new_hdl = kzalloc(sizeof(*new_hdl), GFP_KERNEL);
- 	if (!new_hdl)
-@@ -3541,8 +3552,8 @@ v4l2_ctrls_find_req_obj(struct v4l2_ctrl
- 	if (!ret)
- 		ret = v4l2_ctrl_request_bind(req, new_hdl, hdl);
- 	if (ret) {
-+		v4l2_ctrl_handler_free(new_hdl);
- 		kfree(new_hdl);
--
- 		return ERR_PTR(ret);
- 	}
- 
-@@ -4113,8 +4124,25 @@ void v4l2_ctrl_request_complete(struct m
- 	 * wants to leave the controls unchanged.
- 	 */
- 	obj = media_request_object_find(req, &req_ops, main_hdl);
--	if (!obj)
--		return;
-+	if (!obj) {
-+		int ret;
-+
-+		/* Create a new request so the driver can return controls */
-+		hdl = kzalloc(sizeof(*hdl), GFP_KERNEL);
-+		if (!hdl)
-+			return;
-+
-+		ret = v4l2_ctrl_handler_init(hdl, (main_hdl->nr_of_buckets - 1) * 8);
-+		if (!ret)
-+			ret = v4l2_ctrl_request_bind(req, hdl, main_hdl);
-+		if (ret) {
-+			v4l2_ctrl_handler_free(hdl);
-+			kfree(hdl);
-+			return;
-+		}
-+		hdl->request_is_queued = true;
-+		obj = media_request_object_find(req, &req_ops, main_hdl);
-+	}
- 	hdl = container_of(obj, struct v4l2_ctrl_handler, req_obj);
- 
- 	list_for_each_entry(ref, &hdl->ctrl_refs, node) {
+@@ -2187,7 +2187,6 @@ void v4l2_ctrl_handler_free(struct v4l2_
+ 	kvfree(hdl->buckets);
+ 	hdl->buckets = NULL;
+ 	hdl->cached = NULL;
+-	hdl->error = 0;
+ 	mutex_unlock(hdl->lock);
+ 	mutex_destroy(&hdl->_lock);
+ }
 
 
