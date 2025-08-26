@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44D72AE7F;
-	Tue, 26 Aug 2025 14:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49813126D6;
+	Tue, 26 Aug 2025 14:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217083; cv=none; b=Z6P0+Scz8dUrCMeCGL42sxIsmNcAI2VunMJ6kmNA80ydvI3x+Rqtf/2Yz+Krmke6z3hWl24T0/489a621aD1zE6wlCAyt8mdrOO7TkGxkizNcFkyTfc2zYYkXGsgRnwFKQu7iRQO+Fex5G06JF/kdvukU+0j8tFl1CAx1QQqZPg=
+	t=1756217086; cv=none; b=CewCNspwMhNr6hOUvllKTUA5MIRgqJ+GSWw4Z4FhO/toU0goWadRsrc6ZAT/hJwSn7AUKhkJXW0aV1KG/l2FQykPEjWCFiFmpIIHQwZcOobQc6ouWSbL72y3z4T6DUsg2HJTQYRrwC4oPWCepuo2Reps0iZyfDPQnFHmHq23PvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217083; c=relaxed/simple;
-	bh=4obc0n+8Ax21jeVcaicNxq0m7k6FzfFiaxqrjnhEESI=;
+	s=arc-20240116; t=1756217086; c=relaxed/simple;
+	bh=bolk9TXC/2cQB5SaZOk74qAFxBCa0/UXot/wjEm8wJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRvsI+4CsoOdesGAAZsNbuv7Ewxk0DyAIL9veMNe0GZCHiAYHrZZ6CJXJFrrXuGJcJ+Gp9xtuiHjb8Geoe/zahenBb2OYg6XZRAoS6pD29fkdrLLgdlijO4yAH+tOAyBb1pcl3Uqvju27ex5n7+fWD7mZD2nz9VcTPKrVp85USU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzEeBJAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VM/hzmDzeHlsK3RF+7XOyO40+m/Q6Ei0dZexV8YKSSpTjP9gG5hQRdgHbrGXI4i3eRZrjBGkxtGNPpaK3Kfpa63FU5JO+hcRmhKAC+53c/wQX4mRaITRGs2Tvj6mFdc1YGRye9haqvjssz5IYJ6iOBin2tpKotG98/7Q1j+YbAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6fVFEp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzEeBJAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37377C4CEF1;
-	Tue, 26 Aug 2025 14:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6fVFEp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3527C4CEF1;
+	Tue, 26 Aug 2025 14:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217083;
-	bh=4obc0n+8Ax21jeVcaicNxq0m7k6FzfFiaxqrjnhEESI=;
+	s=korg; t=1756217086;
+	bh=bolk9TXC/2cQB5SaZOk74qAFxBCa0/UXot/wjEm8wJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzEeBJAz8A4K7h6ROxyVIuHzU2CxJ9hOmkwE6Mw73Zs0ouOm3qjKlLOfYMZd12ur1
-	 Y6KcMiQdJh2fBlV9a4FnjWH9RfKQ5+fdpMWoEISuZwEHAsL2pV9qhAlQ/tfKYdHOav
-	 cPL5C7ekeCWZYnQxFEyRvv4UrjMgNdf3WUjy1zLY=
+	b=r6fVFEp3H/nNH1oYH1tYt+VzbxHmD43JpEMhvfVtIMD83lfwftzdwDyguYagp/3Cm
+	 2UYBlaOnamGLw/z0Vw5ANPaPEyasi8xUreubGOsT4SEYFqAWVBUVZT9chNjGRGdNPB
+	 uvsrx0vhN+luBpikxgSGmftrBsrMgyDUKsUeZyX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+20537064367a0f98d597@syzkaller.appspotmail.com,
-	Yuichiro Tsuji <yuichtsu@amazon.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 634/644] net: usb: asix_devices: Fix PHY address mask in MDIO bus initialization
-Date: Tue, 26 Aug 2025 13:12:05 +0200
-Message-ID: <20250826111002.270467178@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 003/523] USB: serial: option: add Foxconn T99W640
+Date: Tue, 26 Aug 2025 13:03:33 +0200
+Message-ID: <20250826110924.655196220@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
-References: <20250826110946.507083938@linuxfoundation.org>
+In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
+References: <20250826110924.562212281@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,51 +46,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuichiro Tsuji <yuichtsu@amazon.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-[ Upstream commit 24ef2f53c07f273bad99173e27ee88d44d135b1c ]
+commit 08f49cdb71f3759368fded4dbc9dde35a404ec2b upstream.
 
-Syzbot reported shift-out-of-bounds exception on MDIO bus initialization.
+T99W640 is designed based on Qualconn SDX72 chip. There are 3
+serial ports to be enumerated: Diag, NMEA and AT.
 
-The PHY address should be masked to 5 bits (0-31). Without this
-mask, invalid PHY addresses could be used, potentially causing issues
-with MDIO bus operations.
+Test evidence as below:
+T:  Bus=04 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=5000 MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS= 9 #Cfgs=  1
+P:  Vendor=0489 ProdID=e167 Rev=05.15
+S:  Manufacturer=QCOM
+S:  Product=SDXPINNL USB WWAN Adapter
+S:  SerialNumber=cc1f1d92
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-Fix this by masking the PHY address with 0x1f (31 decimal) to ensure
-it stays within the valid range.
+0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
 
-Fixes: 4faff70959d5 ("net: usb: asix_devices: add phy_mask for ax88772 mdio bus")
-Reported-by: syzbot+20537064367a0f98d597@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=20537064367a0f98d597
-Tested-by: syzbot+20537064367a0f98d597@syzkaller.appspotmail.com
-Signed-off-by: Yuichiro Tsuji <yuichtsu@amazon.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250818084541.1958-1-yuichtsu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix_devices.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/usb/asix_devices.c b/drivers/net/usb/asix_devices.c
-index 928516222959..97d2037e7fee 100644
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -669,7 +669,7 @@ static int ax88772_init_mdio(struct usbnet *dev)
- 	priv->mdio->read = &asix_mdio_bus_read;
- 	priv->mdio->write = &asix_mdio_bus_write;
- 	priv->mdio->name = "Asix MDIO Bus";
--	priv->mdio->phy_mask = ~(BIT(priv->phy_addr) | BIT(AX_EMBD_PHY_ADDR));
-+	priv->mdio->phy_mask = ~(BIT(priv->phy_addr & 0x1f) | BIT(AX_EMBD_PHY_ADDR));
- 	/* mii bus name is usb-<usb bus number>-<usb device number> */
- 	snprintf(priv->mdio->id, MII_BUS_ID_SIZE, "usb-%03d:%03d",
- 		 dev->udev->bus->busnum, dev->udev->devnum);
--- 
-2.50.1
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2346,6 +2346,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe167, 0xff),                     /* Foxconn T99W640 MBIM */
++	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+ 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
 
 
