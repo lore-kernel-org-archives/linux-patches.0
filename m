@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402DF2E6106;
-	Tue, 26 Aug 2025 13:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E61223DE5;
+	Tue, 26 Aug 2025 13:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213794; cv=none; b=DWIlW5yJ+kM07Ik4OM5z9yNV7b0TtsHKHxstXcpvEtL4tpSWLuexw3jqbHblykPCC6f/rd7Eny/OPJ42JP9OttLCC+QQiAMWEPklvbvQko86Du8/jVQRKGeCFiX6wScPKAJ4q1rvBzo4xFCRDAeqgSDb/i1mWNys/aO2li0IORk=
+	t=1756213796; cv=none; b=cX9pzzO2U8GA3e+LCF+7G+ZxaTHlRiBbnMI9sCbZmaqr1vfEFggFLfH/oQfDFFtgbGrv0bqZr6dXuU/fAtprW3bHAF0tNRNmd/O+Txi2HncW5is+wj5tiKPMLqvJ6D4TipCvbqSGNJF44dqT4/JDoh/BM1x2f9ApghMLLwKQBY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213794; c=relaxed/simple;
-	bh=rIZ903vtMGOnxp16r25j08+7fsM5ztH8SMfbLPgWINQ=;
+	s=arc-20240116; t=1756213796; c=relaxed/simple;
+	bh=iK4LZosbQTl8P4inROIG+0lSISg+PVe8hklX8+f4lmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6QVJ5wwtb9VdvV90rP245dK7MW5dDd9Hm5KEUyyg6WnMJ34GZBeP9/1OXgH7v3NjwY09DAo0F7j2ZFbJ+rSqSg1harzvg8mLUx2RBGxfbzWvSchBcJUcRq456St0zhSS8YYyLocgOKuPUJy3htNBJ9bxZTt0rmPNhzn6eeFz4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rn7XR8MQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hs9ZtBqy5jzhwTqGNgQqNpYY9SjJgLlsYLe4xXmo5lAoQOMwxv9YmhS+jZ6/shihbmDoemA2TylVwIW1qyxLNAh6dhPj93KIjLQ3ATmvn50QJki4y9TMxRswqFTfAr68gQ8EI0su8EN/JRL2y/V84By/I69tCtjcp9dvtXm13jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqRXzXJr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rn7XR8MQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65560C4CEF1;
-	Tue, 26 Aug 2025 13:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqRXzXJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA965C4CEF1;
+	Tue, 26 Aug 2025 13:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213793;
-	bh=rIZ903vtMGOnxp16r25j08+7fsM5ztH8SMfbLPgWINQ=;
+	s=korg; t=1756213796;
+	bh=iK4LZosbQTl8P4inROIG+0lSISg+PVe8hklX8+f4lmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn7XR8MQiwkCUMJTV17hWlpNxTqMbabyf5EdmFNnQSuMJvweqvTYqKC05THspLcTo
-	 2CwLhk/9gfG4xfmLQuJnEL0UFC9ebJCULx11duyej0kjrq/nxgoVWwgxDV9sfOTKHC
-	 6Y5EqLj4EUmO7ZLnkcVBD3porf7uI8R6Bddj7Z6g=
+	b=FqRXzXJrlc77YXnPRCetnUTlFTbvCvP1PsXXfMjIOEIfXQYBq7tcQwHOVI+lQf8A3
+	 aVyZ9QvFrROqeUGvvgHxeStC9tXqsbSAW0rclc1fJLZxLgahz3Zk2MaWYc3bxOqo0D
+	 CIh1ja1o4TkluBmX0vib0FUuP6VvO7NZFD7ga1xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Sterba <dsterba@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 450/587] btrfs: open code timespec64 in struct btrfs_inode
-Date: Tue, 26 Aug 2025 13:09:59 +0200
-Message-ID: <20250826111004.405945365@linuxfoundation.org>
+Subject: [PATCH 6.6 451/587] btrfs: fix ssd_spread overallocation
+Date: Tue, 26 Aug 2025 13:10:00 +0200
+Message-ID: <20250826111004.431237547@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,135 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit c6e8f898f56fae2cb5bc4396bec480f23cd8b066 ]
+[ Upstream commit 807d9023e75fc20bfd6dd2ac0408ce4af53f1648 ]
 
-The type of timespec64::tv_nsec is 'unsigned long', while we have only
-u32 for on-disk and in-memory. This wastes a few bytes in btrfs_inode.
-Add separate members for sec and nsec with the corresponding type width.
-This creates a 4 byte hole in btrfs_inode which can be utilized in the
-future.
+If the ssd_spread mount option is enabled, then we run the so called
+clustered allocator for data block groups. In practice, this results in
+creating a btrfs_free_cluster which caches a block_group and borrows its
+free extents for allocation.
 
+Since the introduction of allocation size classes in 6.1, there has been
+a bug in the interaction between that feature and ssd_spread.
+find_free_extent() has a number of nested loops. The loop going over the
+allocation stages, stored in ffe_ctl->loop and managed by
+find_free_extent_update_loop(), the loop over the raid levels, and the
+loop over all the block_groups in a space_info. The size class feature
+relies on the block_group loop to ensure it gets a chance to see a
+block_group of a given size class.  However, the clustered allocator
+uses the cached cluster block_group and breaks that loop. Each call to
+do_allocation() will really just go back to the same cached block_group.
+Normally, this is OK, as the allocation either succeeds and we don't
+want to loop any more or it fails, and we clear the cluster and return
+its space to the block_group.
+
+But with size classes, the allocation can succeed, then later fail,
+outside of do_allocation() due to size class mismatch. That latter
+failure is not properly handled due to the highly complex multi loop
+logic. The result is a painful loop where we continue to allocate the
+same num_bytes from the cluster in a tight loop until it fails and
+releases the cluster and lets us try a new block_group. But by then, we
+have skipped great swaths of the available block_groups and are likely
+to fail to allocate, looping the outer loop. In pathological cases like
+the reproducer below, the cached block_group is often the very last one,
+in which case we don't perform this tight bg loop but instead rip
+through the ffe stages to LOOP_CHUNK_ALLOC and allocate a chunk, which
+is now the last one, and we enter the tight inner loop until an
+allocation failure. Then allocation succeeds on the final block_group
+and if the next allocation is a size mismatch, the exact same thing
+happens again.
+
+Triggering this is as easy as mounting with -o ssd_spread and then
+running:
+
+  mount -o ssd_spread $dev $mnt
+  dd if=/dev/zero of=$mnt/big bs=16M count=1 &>/dev/null
+  dd if=/dev/zero of=$mnt/med bs=4M count=1 &>/dev/null
+  sync
+
+if you do the two writes + sync in a loop, you can force btrfs to spin
+an excessive amount on semi-successful clustered allocations, before
+ultimately failing and advancing to the stage where we force a chunk
+allocation. This results in 2G of data allocated per iteration, despite
+only using ~20M of data. By using a small size classed extent, the inner
+loop takes longer and we can spin for longer.
+
+The simplest, shortest term fix to unbreak this is to make the clustered
+allocator size_class aware in the dumbest way, where it fails on size
+class mismatch. This may hinder the operation of the clustered
+allocator, but better hindered than completely broken and terribly
+overallocating.
+
+Further re-design improvements are also in the works.
+
+Fixes: 52bb7a2166af ("btrfs: introduce size class to block group allocator")
+CC: stable@vger.kernel.org # 6.1+
+Reported-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 1ef94169db09 ("btrfs: populate otime when logging an inode item")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/btrfs_inode.h   |    3 ++-
- fs/btrfs/delayed-inode.c |   12 ++++--------
- fs/btrfs/inode.c         |   26 ++++++++++++--------------
- 3 files changed, 18 insertions(+), 23 deletions(-)
+ fs/btrfs/extent-tree.c |   33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
---- a/fs/btrfs/btrfs_inode.h
-+++ b/fs/btrfs/btrfs_inode.h
-@@ -251,7 +251,8 @@ struct btrfs_inode {
- 	struct btrfs_delayed_node *delayed_node;
- 
- 	/* File creation time. */
--	struct timespec64 i_otime;
-+	u64 i_otime_sec;
-+	u32 i_otime_nsec;
- 
- 	/* Hook into fs_info->delayed_iputs */
- 	struct list_head delayed_iput;
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -1849,10 +1849,8 @@ static void fill_stack_inode_item(struct
- 	btrfs_set_stack_timespec_nsec(&inode_item->ctime,
- 				      inode_get_ctime(inode).tv_nsec);
- 
--	btrfs_set_stack_timespec_sec(&inode_item->otime,
--				     BTRFS_I(inode)->i_otime.tv_sec);
--	btrfs_set_stack_timespec_nsec(&inode_item->otime,
--				     BTRFS_I(inode)->i_otime.tv_nsec);
-+	btrfs_set_stack_timespec_sec(&inode_item->otime, BTRFS_I(inode)->i_otime_sec);
-+	btrfs_set_stack_timespec_nsec(&inode_item->otime, BTRFS_I(inode)->i_otime_nsec);
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -3530,6 +3530,21 @@ btrfs_release_block_group(struct btrfs_b
+ 	btrfs_put_block_group(cache);
  }
  
- int btrfs_fill_inode(struct inode *inode, u32 *rdev)
-@@ -1901,10 +1899,8 @@ int btrfs_fill_inode(struct inode *inode
- 	inode_set_ctime(inode, btrfs_stack_timespec_sec(&inode_item->ctime),
- 			btrfs_stack_timespec_nsec(&inode_item->ctime));
++static bool find_free_extent_check_size_class(const struct find_free_extent_ctl *ffe_ctl,
++					      const struct btrfs_block_group *bg)
++{
++	if (ffe_ctl->policy == BTRFS_EXTENT_ALLOC_ZONED)
++		return true;
++	if (!btrfs_block_group_should_use_size_class(bg))
++		return true;
++	if (ffe_ctl->loop >= LOOP_WRONG_SIZE_CLASS)
++		return true;
++	if (ffe_ctl->loop >= LOOP_UNSET_SIZE_CLASS &&
++	    bg->size_class == BTRFS_BG_SZ_NONE)
++		return true;
++	return ffe_ctl->size_class == bg->size_class;
++}
++
+ /*
+  * Helper function for find_free_extent().
+  *
+@@ -3551,7 +3566,8 @@ static int find_free_extent_clustered(st
+ 	if (!cluster_bg)
+ 		goto refill_cluster;
+ 	if (cluster_bg != bg && (cluster_bg->ro ||
+-	    !block_group_bits(cluster_bg, ffe_ctl->flags)))
++	    !block_group_bits(cluster_bg, ffe_ctl->flags) ||
++	    !find_free_extent_check_size_class(ffe_ctl, cluster_bg)))
+ 		goto release_cluster;
  
--	BTRFS_I(inode)->i_otime.tv_sec =
--		btrfs_stack_timespec_sec(&inode_item->otime);
--	BTRFS_I(inode)->i_otime.tv_nsec =
--		btrfs_stack_timespec_nsec(&inode_item->otime);
-+	BTRFS_I(inode)->i_otime_sec = btrfs_stack_timespec_sec(&inode_item->otime);
-+	BTRFS_I(inode)->i_otime_nsec = btrfs_stack_timespec_nsec(&inode_item->otime);
+ 	offset = btrfs_alloc_from_cluster(cluster_bg, last_ptr,
+@@ -4107,21 +4123,6 @@ static int find_free_extent_update_loop(
+ 	return -ENOSPC;
+ }
  
- 	inode->i_generation = BTRFS_I(inode)->generation;
- 	BTRFS_I(inode)->index_cnt = (u64)-1;
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3785,10 +3785,8 @@ static int btrfs_read_locked_inode(struc
- 	inode_set_ctime(inode, btrfs_timespec_sec(leaf, &inode_item->ctime),
- 			btrfs_timespec_nsec(leaf, &inode_item->ctime));
- 
--	BTRFS_I(inode)->i_otime.tv_sec =
--		btrfs_timespec_sec(leaf, &inode_item->otime);
--	BTRFS_I(inode)->i_otime.tv_nsec =
--		btrfs_timespec_nsec(leaf, &inode_item->otime);
-+	BTRFS_I(inode)->i_otime_sec = btrfs_timespec_sec(leaf, &inode_item->otime);
-+	BTRFS_I(inode)->i_otime_nsec = btrfs_timespec_nsec(leaf, &inode_item->otime);
- 
- 	inode_set_bytes(inode, btrfs_inode_nbytes(leaf, inode_item));
- 	BTRFS_I(inode)->generation = btrfs_inode_generation(leaf, inode_item);
-@@ -3958,10 +3956,8 @@ static void fill_inode_item(struct btrfs
- 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
- 				      inode_get_ctime(inode).tv_nsec);
- 
--	btrfs_set_token_timespec_sec(&token, &item->otime,
--				     BTRFS_I(inode)->i_otime.tv_sec);
--	btrfs_set_token_timespec_nsec(&token, &item->otime,
--				      BTRFS_I(inode)->i_otime.tv_nsec);
-+	btrfs_set_token_timespec_sec(&token, &item->otime, BTRFS_I(inode)->i_otime_sec);
-+	btrfs_set_token_timespec_nsec(&token, &item->otime, BTRFS_I(inode)->i_otime_nsec);
- 
- 	btrfs_set_token_inode_nbytes(&token, item, inode_get_bytes(inode));
- 	btrfs_set_token_inode_generation(&token, item,
-@@ -5644,7 +5640,8 @@ static struct inode *new_simple_dir(stru
- 	inode->i_mode = S_IFDIR | S_IRUGO | S_IWUSR | S_IXUGO;
- 	inode->i_mtime = inode_set_ctime_current(inode);
- 	inode->i_atime = dir->i_atime;
--	BTRFS_I(inode)->i_otime = inode->i_mtime;
-+	BTRFS_I(inode)->i_otime_sec = inode->i_mtime.tv_sec;
-+	BTRFS_I(inode)->i_otime_nsec = inode->i_mtime.tv_nsec;
- 	inode->i_uid = dir->i_uid;
- 	inode->i_gid = dir->i_gid;
- 
-@@ -6321,7 +6318,8 @@ int btrfs_create_new_inode(struct btrfs_
- 
- 	inode->i_mtime = inode_set_ctime_current(inode);
- 	inode->i_atime = inode->i_mtime;
--	BTRFS_I(inode)->i_otime = inode->i_mtime;
-+	BTRFS_I(inode)->i_otime_sec = inode->i_mtime.tv_sec;
-+	BTRFS_I(inode)->i_otime_nsec = inode->i_mtime.tv_nsec;
- 
- 	/*
- 	 * We're going to fill the inode item now, so at this point the inode
-@@ -8550,8 +8548,8 @@ struct inode *btrfs_alloc_inode(struct s
- 
- 	ei->delayed_node = NULL;
- 
--	ei->i_otime.tv_sec = 0;
--	ei->i_otime.tv_nsec = 0;
-+	ei->i_otime_sec = 0;
-+	ei->i_otime_nsec = 0;
- 
- 	inode = &ei->vfs_inode;
- 	extent_map_tree_init(&ei->extent_tree);
-@@ -8703,8 +8701,8 @@ static int btrfs_getattr(struct mnt_idma
- 	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
- 
- 	stat->result_mask |= STATX_BTIME;
--	stat->btime.tv_sec = BTRFS_I(inode)->i_otime.tv_sec;
--	stat->btime.tv_nsec = BTRFS_I(inode)->i_otime.tv_nsec;
-+	stat->btime.tv_sec = BTRFS_I(inode)->i_otime_sec;
-+	stat->btime.tv_nsec = BTRFS_I(inode)->i_otime_nsec;
- 	if (bi_flags & BTRFS_INODE_APPEND)
- 		stat->attributes |= STATX_ATTR_APPEND;
- 	if (bi_flags & BTRFS_INODE_COMPRESS)
+-static bool find_free_extent_check_size_class(struct find_free_extent_ctl *ffe_ctl,
+-					      struct btrfs_block_group *bg)
+-{
+-	if (ffe_ctl->policy == BTRFS_EXTENT_ALLOC_ZONED)
+-		return true;
+-	if (!btrfs_block_group_should_use_size_class(bg))
+-		return true;
+-	if (ffe_ctl->loop >= LOOP_WRONG_SIZE_CLASS)
+-		return true;
+-	if (ffe_ctl->loop >= LOOP_UNSET_SIZE_CLASS &&
+-	    bg->size_class == BTRFS_BG_SZ_NONE)
+-		return true;
+-	return ffe_ctl->size_class == bg->size_class;
+-}
+-
+ static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
+ 					struct find_free_extent_ctl *ffe_ctl,
+ 					struct btrfs_space_info *space_info,
 
 
