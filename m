@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DE12BEFF0;
-	Tue, 26 Aug 2025 11:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DB721D00E;
+	Tue, 26 Aug 2025 11:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207214; cv=none; b=WBAI2x24c0JQYwqER7JutrI7USQmYr4Q8iYg/4Lk1VQtSmZH2tOLeOXqHz8levrAEGdyS3fWrGiRJgpYBecsdv1Zhg5uKoYp9Wz+zXHH7rYt9ezaDRZiTi7Dji8mkuEzPum9z16UwtRrVD6NElsObFtyVBFFOL0zRQ38MWWUxRY=
+	t=1756207216; cv=none; b=uJfSvx0I8wRqO+6hgrx+EFxNWZKytBTnvwkGjIoC03AQhLXNRwABMr5TRriVXk8s0QwcIygVJuM7GDzI+RtOWAJt1d1sas6Z4ld24ElzlR7Wi5F2FEgjfvHUjzNXdKP9MCKWf6R/6Ua1EkcfLDZoKsYoZRbe81anLUMFgtfVbfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207214; c=relaxed/simple;
-	bh=mSw3gSa1AzCnPnC3h/qhZvjbN+rLJ8a1MkX/9GIRTwc=;
+	s=arc-20240116; t=1756207216; c=relaxed/simple;
+	bh=/sY/2tpCN6npTnUy18LW9l8yytKwSGP9G4A83O7+x9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQWODqAQEhFYPPSnxK8z45qMSEoqcf68FD5KwhMz14ghZirz5M030iyWiOYmNf4mvN+Tdj8i5VO2kgXl16g9t7E8/p91oTWsgHL2r5DcboPX8W9n5LFXHsMFemyuXqGI1u7yD2ghp6m23VGJMi30UN6B9lbxHNzXRoR7m0W5SX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkpWnqGJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMcfW21FPOVEe9NW7xaLwJIvbTtkEG4b1nyOgmcs69d43LIxMc+VdxG1nuNaSmjUIxeO98ecn3/jM/+UjxftnSAZF/WRUOoVzMozuMhE2wQQArIprQ4dJ8rsh0+yyQoTgMqR4NTIwTJPHsvZNth7Jqc7BOpxqsZ+ZU8Ulx/iwJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPL5wAOB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkpWnqGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0ECC4CEF1;
-	Tue, 26 Aug 2025 11:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPL5wAOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A20FC4CEF1;
+	Tue, 26 Aug 2025 11:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207214;
-	bh=mSw3gSa1AzCnPnC3h/qhZvjbN+rLJ8a1MkX/9GIRTwc=;
+	s=korg; t=1756207216;
+	bh=/sY/2tpCN6npTnUy18LW9l8yytKwSGP9G4A83O7+x9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkpWnqGJnFdxw41qsLlnF1EHBTgtKqpq0f9S0YlkRwyLwnb/W5nGH3zmLjtP/LKtn
-	 qUPYskzT+eOpQEn0V6hpAnCYBAoSe4GX94PKmhN0lls9uRv6tWqy90WbPiWvlr/VAP
-	 mec5yZ6U74zOfh1AfjgnYZ3AX5ABOnELypC8xICA=
+	b=wPL5wAOB001IyppZ8tuNZSv5/4zsz4UuTyJTKv9ecFwLzxJpefnOjSF2mvimgo4xY
+	 gClD0KgKfVMEHclg6jUIO0jaiqsai2BrE3sc9kA+6IOC1VHdrH3qfVKdL+TxHBpV69
+	 DnG2rVpAD+qJUI6h393GxLOuDi89ZEE78hVWSdDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.16 095/457] mfd: mt6397: Do not use generic name for keypad sub-devices
-Date: Tue, 26 Aug 2025 13:06:19 +0200
-Message-ID: <20250826110939.725782152@linuxfoundation.org>
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Jan Kara <jack@suse.cz>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 096/457] readahead: fix return value of page_cache_next_miss() when no hole is found
+Date: Tue, 26 Aug 2025 13:06:20 +0200
+Message-ID: <20250826110939.749740107@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,83 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-commit 92ab1e41569416c639643cd75eea2379190a65f2 upstream.
+commit bbcaee20e03ecaeeecba32a703816a0d4502b6c4 upstream.
 
-Do not use "mtk-pmic-keys" when creating sub-device for the keypad to
-make sure the keypad driver will only bind to the sub-device if it has
-support for the variant/has matching compatible.
+max_scan in page_cache_next_miss always decreases to zero when no hole is
+found, causing the return value to be index + 0.
 
-Cc: stable@vger.kernel.org
-Fixes: 6e31bb8d3a63 ("mfd: mt6397: Add initial support for MT6328")
-Fixes: de58cee8c6b8 ("mfd: mt6397-core: Add MT6357 PMIC support")
-Fixes: 4a901e305011 ("mfd: mt6397-core: Add resources for PMIC keys for MT6359")
-Reported-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Tested-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com> # on
-Link: https://lore.kernel.org/r/r4k3pgd3ew3ypne7ernxuzwgniiyvzosbce4cfajbcu7equblt@yato35tjb3lw
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fix this by preserving the max_scan value throughout the loop.
+
+Jan said "From what I know and have seen in the past, wrong responses
+from page_cache_next_miss() can lead to readahead window reduction and
+thus reduced read speeds."
+
+Link: https://lkml.kernel.org/r/20250605054935.2323451-1-chizhiling@163.com
+Fixes: 901a269ff3d5 ("filemap: fix page_cache_next_miss() when no hole found")
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/mt6397-core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ mm/filemap.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mfd/mt6397-core.c
-+++ b/drivers/mfd/mt6397-core.c
-@@ -136,7 +136,7 @@ static const struct mfd_cell mt6323_devs
- 		.name = "mt6323-led",
- 		.of_compatible = "mediatek,mt6323-led"
- 	}, {
--		.name = "mtk-pmic-keys",
-+		.name = "mt6323-keys",
- 		.num_resources = ARRAY_SIZE(mt6323_keys_resources),
- 		.resources = mt6323_keys_resources,
- 		.of_compatible = "mediatek,mt6323-keys"
-@@ -153,7 +153,7 @@ static const struct mfd_cell mt6328_devs
- 		.name = "mt6328-regulator",
- 		.of_compatible = "mediatek,mt6328-regulator"
- 	}, {
--		.name = "mtk-pmic-keys",
-+		.name = "mt6328-keys",
- 		.num_resources = ARRAY_SIZE(mt6328_keys_resources),
- 		.resources = mt6328_keys_resources,
- 		.of_compatible = "mediatek,mt6328-keys"
-@@ -175,7 +175,7 @@ static const struct mfd_cell mt6357_devs
- 		.name = "mt6357-sound",
- 		.of_compatible = "mediatek,mt6357-sound"
- 	}, {
--		.name = "mtk-pmic-keys",
-+		.name = "mt6357-keys",
- 		.num_resources = ARRAY_SIZE(mt6357_keys_resources),
- 		.resources = mt6357_keys_resources,
- 		.of_compatible = "mediatek,mt6357-keys"
-@@ -196,7 +196,7 @@ static const struct mfd_cell mt6331_mt63
- 		.name = "mt6332-regulator",
- 		.of_compatible = "mediatek,mt6332-regulator"
- 	}, {
--		.name = "mtk-pmic-keys",
-+		.name = "mt6331-keys",
- 		.num_resources = ARRAY_SIZE(mt6331_keys_resources),
- 		.resources = mt6331_keys_resources,
- 		.of_compatible = "mediatek,mt6331-keys"
-@@ -240,7 +240,7 @@ static const struct mfd_cell mt6359_devs
- 	},
- 	{ .name = "mt6359-sound", },
- 	{
--		.name = "mtk-pmic-keys",
-+		.name = "mt6359-keys",
- 		.num_resources = ARRAY_SIZE(mt6359_keys_resources),
- 		.resources = mt6359_keys_resources,
- 		.of_compatible = "mediatek,mt6359-keys"
-@@ -272,7 +272,7 @@ static const struct mfd_cell mt6397_devs
- 		.name = "mt6397-pinctrl",
- 		.of_compatible = "mediatek,mt6397-pinctrl",
- 	}, {
--		.name = "mtk-pmic-keys",
-+		.name = "mt6397-keys",
- 		.num_resources = ARRAY_SIZE(mt6397_keys_resources),
- 		.resources = mt6397_keys_resources,
- 		.of_compatible = "mediatek,mt6397-keys"
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1778,8 +1778,9 @@ pgoff_t page_cache_next_miss(struct addr
+ 			     pgoff_t index, unsigned long max_scan)
+ {
+ 	XA_STATE(xas, &mapping->i_pages, index);
++	unsigned long nr = max_scan;
+ 
+-	while (max_scan--) {
++	while (nr--) {
+ 		void *entry = xas_next(&xas);
+ 		if (!entry || xa_is_value(entry))
+ 			return xas.xa_index;
 
 
