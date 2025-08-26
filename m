@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3524321D3C0;
-	Tue, 26 Aug 2025 11:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C198A22D792;
+	Tue, 26 Aug 2025 11:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208577; cv=none; b=I7vSBljM70QQPeuRHQAirUEVOf8SuLERiX4dZ11lmVejGxANXphZtqKaSO4mMQkRThi6Brj6C+/eQNsXw3WlK7PohbgvVTRFEhLdTCMGfpSZE3zQrbzYCFiXHnq60C4eQj1Rp4l66U4yeW4pcFStMVN0puzZ+5jDl6Tk/XwS75k=
+	t=1756208579; cv=none; b=CckvZ00IpBA2bxjvOEWvX6w/Qct6Lha2ux3ikMjoJm++bpvNvAk04VmqhXTbDs4/6GU7SJALlQ09n/my+dk30s+d88QstSxzPYl69SiCale4nJNTjQWntNPVJWmW1V2kesKx/XBqk7BoHKJkGdmXPNr8TdCIMspVOYtDD9syeEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208577; c=relaxed/simple;
-	bh=km1kAcrntA8pLmP/QWWkEL4tKkHs1JFK28nNLu6bPo0=;
+	s=arc-20240116; t=1756208579; c=relaxed/simple;
+	bh=+5A3IbCx/wd+kq9L/Zi3a/X1WPrUeZ5dPrzyIFWLfk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irjGeSwX68h5kVibH3WR+SceT1pA96Tc3f3Dr9KpE7Oi/5QHgJTjEAC2KXSCLindort8jOmAO7+WW/AV2ybNmLpLBsJsdzicbOtNC7j2yv5cd8NBuzA+h9HhJg3a8U6vBT0injRSLfVvXp5Qt6M2cXQlq+4fIhMNus9c8k42Tzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0gg7w3q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ueNkwM7qVha6/3ShcZhAzIX5POw4pBwCNNLk9ZgNOa5q48o/zEBjwNKIcpoX9aM0CW1mTbMaASwfr/Ao8Eiqrgxi2XjvyU6cFPnj6qJPRvWXQQ13SBefwb2sjLeudOg35MsqvFEzGZF36iAmgS+9qGUF2HdCm95RWC3rnlg+mzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWTCpFm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0gg7w3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93365C4CEF1;
-	Tue, 26 Aug 2025 11:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWTCpFm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B84C16AAE;
+	Tue, 26 Aug 2025 11:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208577;
-	bh=km1kAcrntA8pLmP/QWWkEL4tKkHs1JFK28nNLu6bPo0=;
+	s=korg; t=1756208579;
+	bh=+5A3IbCx/wd+kq9L/Zi3a/X1WPrUeZ5dPrzyIFWLfk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0gg7w3q6BIpWLjipL5ZFeAKtnm61kpnU/MPo+HcIj8GWX5v14Tu5mQ6zBhoJZaec
-	 MorqcyAGtrNtyvYZr0WGk07VuXETlp/LOKDNxRD/1VoiR0lMhBngbL79HAA6qeS/JZ
-	 D17z9ye+BlkNbuxbdCJpTpzArg+xjRtCmFtwOhys=
+	b=sWTCpFm0og3dQ2hnX2g/D7tHiV2g3OeF6HcfqoeQ7XMax9T10yBZzhLAjadJxxqP/
+	 Z9hvn+sQTenQscXjH0S9j62+st4JRcxOfq6+aqE7X8jhjWNv8HjNMpqH7VY+Zr2iIO
+	 1O57HQAzUTaaBaxHb5ob0bCcMSXK8jMpjLZJqqLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Maximilian Bosch <maximilian@mbosch.me>,
-	Ryan Lahfa <ryan@lahfa.xyz>,
-	Christian Theune <ct@flyingcircus.io>,
-	Arnout Engelen <arnout@bzzt.net>,
-	David Howells <dhowells@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 164/322] iov_iter: iterate_folioq: fix handling of offset >= folio size
-Date: Tue, 26 Aug 2025 13:09:39 +0200
-Message-ID: <20250826110919.880310488@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.12 165/322] iommu/arm-smmu-v3: Fix smmu_domain->nr_ats_masters decrement
+Date: Tue, 26 Aug 2025 13:09:40 +0200
+Message-ID: <20250826110919.906732492@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -58,87 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 808471ddb0fa785559c3e7aee59be20a13b46ef5 upstream.
+commit 685ca577b408ffd9c5a4057a2acc0cd3e6978b36 upstream.
 
-It's apparently possible to get an iov advanced all the way up to the end
-of the current page we're looking at, e.g.
+The arm_smmu_attach_commit() updates master->ats_enabled before calling
+arm_smmu_remove_master_domain() that is supposed to clean up everything
+in the old domain, including the old domain's nr_ats_masters. So, it is
+supposed to use the old ats_enabled state of the device, not an updated
+state.
 
-(gdb) p *iter
-$24 = {iter_type = 4 '\004', nofault = false, data_source = false, iov_offset = 4096, {__ubuf_iovec = {
-      iov_base = 0xffff88800f5bc000, iov_len = 655}, {{__iov = 0xffff88800f5bc000, kvec = 0xffff88800f5bc000,
-        bvec = 0xffff88800f5bc000, folioq = 0xffff88800f5bc000, xarray = 0xffff88800f5bc000,
-        ubuf = 0xffff88800f5bc000}, count = 655}}, {nr_segs = 2, folioq_slot = 2 '\002', xarray_start = 2}}
+This isn't a problem if switching between two domains where:
+ - old ats_enabled = false; new ats_enabled = false
+ - old ats_enabled = true;  new ats_enabled = true
+but can fail cases where:
+ - old ats_enabled = false; new ats_enabled = true
+   (old domain should keep the counter but incorrectly decreased it)
+ - old ats_enabled = true;  new ats_enabled = false
+   (old domain needed to decrease the counter but incorrectly missed it)
 
-Where iov_offset is 4k with 4k-sized folios
+Update master->ats_enabled after arm_smmu_remove_master_domain() to fix
+this.
 
-This should have been fine because we're only in the 2nd slot and there's
-another one after this, but iterate_folioq should not try to map a folio
-that skips the whole size, and more importantly part here does not end up
-zero (because 'PAGE_SIZE - skip % PAGE_SIZE' ends up PAGE_SIZE and not
-zero..), so skip forward to the "advance to next folio" code
-
-Link: https://lkml.kernel.org/r/20250813-iot_iter_folio-v3-0-a0ffad2b665a@codewreck.org
-Link: https://lkml.kernel.org/r/20250813-iot_iter_folio-v3-1-a0ffad2b665a@codewreck.org
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Fixes: db0aa2e9566f ("mm: Define struct folio_queue and ITER_FOLIOQ to handle a sequence of folios")
-Reported-by: Maximilian Bosch <maximilian@mbosch.me>
-Reported-by: Ryan Lahfa <ryan@lahfa.xyz>
-Reported-by: Christian Theune <ct@flyingcircus.io>
-Reported-by: Arnout Engelen <arnout@bzzt.net>
-Link: https://lkml.kernel.org/r/D4LHHUNLG79Y.12PI0X6BEHRHW@mbosch.me/
-Acked-by: David Howells <dhowells@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>	[6.12+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7497f4211f4f ("iommu/arm-smmu-v3: Make changing domains be hitless for ATS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Link: https://lore.kernel.org/r/20250801030127.2006979-1-nicolinc@nvidia.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iov_iter.h | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/iov_iter.h b/include/linux/iov_iter.h
-index c4aa58032faf..f9a17fbbd398 100644
---- a/include/linux/iov_iter.h
-+++ b/include/linux/iov_iter.h
-@@ -160,7 +160,7 @@ size_t iterate_folioq(struct iov_iter *iter, size_t len, void *priv, void *priv2
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2778,9 +2778,9 @@ static void arm_smmu_attach_commit(struc
+ 		/* ATS is being switched off, invalidate the entire ATC */
+ 		arm_smmu_atc_inv_master(master, IOMMU_NO_PASID);
+ 	}
+-	master->ats_enabled = state->ats_enabled;
  
- 	do {
- 		struct folio *folio = folioq_folio(folioq, slot);
--		size_t part, remain, consumed;
-+		size_t part, remain = 0, consumed;
- 		size_t fsize;
- 		void *base;
+ 	arm_smmu_remove_master_domain(master, state->old_domain, state->ssid);
++	master->ats_enabled = state->ats_enabled;
+ }
  
-@@ -168,14 +168,16 @@ size_t iterate_folioq(struct iov_iter *iter, size_t len, void *priv, void *priv2
- 			break;
- 
- 		fsize = folioq_folio_size(folioq, slot);
--		base = kmap_local_folio(folio, skip);
--		part = umin(len, PAGE_SIZE - skip % PAGE_SIZE);
--		remain = step(base, progress, part, priv, priv2);
--		kunmap_local(base);
--		consumed = part - remain;
--		len -= consumed;
--		progress += consumed;
--		skip += consumed;
-+		if (skip < fsize) {
-+			base = kmap_local_folio(folio, skip);
-+			part = umin(len, PAGE_SIZE - skip % PAGE_SIZE);
-+			remain = step(base, progress, part, priv, priv2);
-+			kunmap_local(base);
-+			consumed = part - remain;
-+			len -= consumed;
-+			progress += consumed;
-+			skip += consumed;
-+		}
- 		if (skip >= fsize) {
- 			skip = 0;
- 			slot++;
--- 
-2.50.1
-
+ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
 
 
