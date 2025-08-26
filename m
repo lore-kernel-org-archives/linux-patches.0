@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABB83568EA;
-	Tue, 26 Aug 2025 14:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C351135335B;
+	Tue, 26 Aug 2025 14:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218387; cv=none; b=n8JD2LOS3YOLqc3fO/osaEsYu+ji7Zvp/PxvpaIJE7I6crcq2XQ6DBSwRFELkpcYWahY9aYACXnu9+0D6xxToUNxDwom9FMcCEzpqqAfG9RmJ+fxUPqQy62ntzeefsoFSVZ0FaG8qEoPwj58rM0sYVB+a/qGGHdDQzm6QJ0bvYw=
+	t=1756218389; cv=none; b=eCz0ovcHm5WGwI5Ofe9kQ451OZSDdoESPH+YeeUZSpfg35dCTxb9t3yBQrJ2+N20Uhjn/D5sVx1IcX7GWib28x8MPPt5QmIkKDHa6YycLSNXeofoORQ26Ks2zOy1o+cCYwWCwqhh4vZx7h36XW1KAUYv2rSbkIHRCahGimFW0HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218387; c=relaxed/simple;
-	bh=eFdP8uQwayKi3f43Bg6xyNOGDUSDmCN15hH9YAb6QQ8=;
+	s=arc-20240116; t=1756218389; c=relaxed/simple;
+	bh=pspQxnExUxQZQZtbc/TES+KjP3PBDStU5SOAosNI1yw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RB8gTfLrbJ/T7JZy3uj4xvgap7wFNCTIfADAKeOsB8BpZNpzyw8aUSTQ/qJ5G2VCg/eT9jAG5JvxVHsl3eLsUR+TennMDdjEjgLBMltPkETAGTjhJbHNGrwFZinHOXPZ9sn7mBv4tE/n5Y2vWZC26o3ZF1c89wwR4u8oB0WxbKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjXGKX3K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gPhhAYLo0R3ZuQnr3mfNbNdPEUTMGi8q2neQprk9+02peNhNeTTsuM0pjCT73xBOlSS9tyXLk3LTT/Cka87V0gYG1kreOkchzrZaXAEFhAOqH+YK/n+Ggxa6tOuWKd2iiosXZUKK049CfJv3XpKJKi1IBV9XaNf82756B1bw5QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agLFE0hX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjXGKX3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB075C4CEF1;
-	Tue, 26 Aug 2025 14:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agLFE0hX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D4FC4CEF1;
+	Tue, 26 Aug 2025 14:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218387;
-	bh=eFdP8uQwayKi3f43Bg6xyNOGDUSDmCN15hH9YAb6QQ8=;
+	s=korg; t=1756218389;
+	bh=pspQxnExUxQZQZtbc/TES+KjP3PBDStU5SOAosNI1yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjXGKX3KLuveHge4yX5BUxcOTvvtgUs1hV4/wUKw81NiytJmKcVro2uHaO2dpzPPz
-	 4vG5Vxfndnde/co6FrDeUPiFzaMavs0Z4HCI0P0RkjEuPJxnbSDphSsVEhJ4ZpQbUR
-	 j6/Mkc1e1uzWBhheEdDcYWFNUlbiu/pTMeAsCJbc=
+	b=agLFE0hXkhKE7beNkGzHvg4Iyj/9GskTQh45eojhQJlKWlJqUvl/h5oOCTEMVAIBk
+	 UzAlkGivYDo3ZMsY2bnXUx4ZaylM3EZP0g9//+VWMLQlDXVAotTkwWrbVxXgpF4J3W
+	 9q3OOM2dtqWbP09ezmIK2Mf3wFGTlKSSyDwqt2g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 501/523] compiler: remove __ADDRESSABLE_ASM{_STR,}() again
-Date: Tue, 26 Aug 2025 13:11:51 +0200
-Message-ID: <20250826110936.798345728@linuxfoundation.org>
+Subject: [PATCH 5.10 473/523] platform/chrome: cros_ec: Use per-device lockdep key
+Date: Tue, 26 Aug 2025 13:11:23 +0200
+Message-ID: <20250826110936.112442337@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,77 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 8ea815399c3fcce1889bd951fec25b5b9a3979c1 ]
+[ Upstream commit 961a325becd9a142ae5c8b258e5c2f221f8bfac8 ]
 
-__ADDRESSABLE_ASM_STR() is where the necessary stringification happens.
-As long as "sym" doesn't contain any odd characters, no quoting is
-required for its use with .quad / .long. In fact the quotation gets in
-the way with gas 2.25; it's only from 2.26 onwards that quoted symbols
-are half-way properly supported.
+Lockdep reports a bogus possible deadlock on MT8192 Chromebooks due to
+the following lock sequences:
 
-However, assembly being different from C anyway, drop
-__ADDRESSABLE_ASM_STR() and its helper macro altogether. A simple
-.global directive will suffice to get the symbol "declared", i.e. into
-the symbol table. While there also stop open-coding STATIC_CALL_TRAMP()
-and STATIC_CALL_KEY().
+1. lock(i2c_register_adapter) [1]; lock(&ec_dev->lock)
+2. lock(&ec_dev->lock); lock(prepare_lock);
 
-Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <609d2c74-de13-4fae-ab1a-1ec44afb948d@suse.com>
+The actual dependency chains are much longer. The shortened version
+looks somewhat like:
+
+1. cros-ec-rpmsg on mtk-scp
+   ec_dev->lock -> prepare_lock
+2. In rt5682_i2c_probe() on native I2C bus:
+   prepare_lock -> regmap->lock -> (possibly) i2c_adapter->bus_lock
+3. In rt5682_i2c_probe() on native I2C bus:
+   regmap->lock -> i2c_adapter->bus_lock
+4. In sbs_probe() on i2c-cros-ec-tunnel I2C bus attached on cros-ec:
+   i2c_adapter->bus_lock -> ec_dev->lock
+
+While lockdep is correct that the shared lockdep classes have a circular
+dependency, it is bogus because
+
+  a) 2+3 happen on a native I2C bus
+  b) 4 happens on the actual EC on ChromeOS devices
+  c) 1 happens on the SCP coprocessor on MediaTek Chromebooks that just
+     happens to expose a cros-ec interface, but does not have an
+     i2c-cros-ec-tunnel I2C bus
+
+In short, the "dependencies" are actually on different devices.
+
+Setup a per-device lockdep key for cros_ec devices so lockdep can tell
+the two instances apart. This helps with getting rid of the bogus
+lockdep warning. For ChromeOS devices that only have one cros-ec
+instance this doesn't change anything.
+
+Also add a missing mutex_destroy, just to make the teardown complete.
+
+[1] This is likely the per I2C bus lock with shared lockdep class
+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20230111074146.2624496-1-wenst@chromium.org
+Stable-dep-of: e23749534619 ("platform/chrome: cros_ec: Unregister notifier in cros_ec_unregister()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/xen/hypercall.h |    6 ++++--
- include/linux/compiler.h             |    8 --------
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ drivers/platform/chrome/cros_ec.c           |   14 +++++++++++---
+ include/linux/platform_data/cros_ec_proto.h |    4 ++++
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
---- a/arch/x86/include/asm/xen/hypercall.h
-+++ b/arch/x86/include/asm/xen/hypercall.h
-@@ -37,6 +37,7 @@
- #include <linux/spinlock.h>
- #include <linux/errno.h>
- #include <linux/string.h>
-+#include <linux/stringify.h>
- #include <linux/types.h>
- #include <linux/pgtable.h>
- #include <linux/instrumentation.h>
-@@ -94,12 +95,13 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
- #ifdef MODULE
- #define __ADDRESSABLE_xen_hypercall
- #else
--#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
-+#define __ADDRESSABLE_xen_hypercall \
-+	__stringify(.global STATIC_CALL_KEY(xen_hypercall);)
- #endif
+--- a/drivers/platform/chrome/cros_ec.c
++++ b/drivers/platform/chrome/cros_ec.c
+@@ -186,12 +186,14 @@ int cros_ec_register(struct cros_ec_devi
+ 	if (!ec_dev->dout)
+ 		return -ENOMEM;
  
- #define __HYPERCALL					\
- 	__ADDRESSABLE_xen_hypercall			\
--	"call __SCT__xen_hypercall"
-+	__stringify(call STATIC_CALL_TRAMP(xen_hypercall))
++	lockdep_register_key(&ec_dev->lockdep_key);
+ 	mutex_init(&ec_dev->lock);
++	lockdep_set_class(&ec_dev->lock, &ec_dev->lockdep_key);
  
- #define __HYPERCALL_ENTRY(x)	"a" (x)
+ 	err = cros_ec_query_all(ec_dev);
+ 	if (err) {
+ 		dev_err(dev, "Cannot identify the EC: error %d\n", err);
+-		return err;
++		goto destroy_mutex;
+ 	}
  
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -242,14 +242,6 @@ static inline void *offset_to_ptr(const
- 	static void * __section(".discard.addressable") __used \
- 		__UNIQUE_ID(__PASTE(__addressable_,sym)) = (void *)&sym;
+ 	if (ec_dev->irq > 0) {
+@@ -203,7 +205,7 @@ int cros_ec_register(struct cros_ec_devi
+ 		if (err) {
+ 			dev_err(dev, "Failed to request IRQ %d: %d",
+ 				ec_dev->irq, err);
+-			return err;
++			goto destroy_mutex;
+ 		}
+ 	}
  
--#define __ADDRESSABLE_ASM(sym)						\
--	.pushsection .discard.addressable,"aw";				\
--	.align ARCH_SEL(8,4);						\
--	ARCH_SEL(.quad, .long) __stringify(sym);			\
--	.popsection;
--
--#define __ADDRESSABLE_ASM_STR(sym) __stringify(__ADDRESSABLE_ASM(sym))
--
- /* &a[0] degrades to a pointer: a different type from an array */
- #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+@@ -214,7 +216,8 @@ int cros_ec_register(struct cros_ec_devi
+ 	if (IS_ERR(ec_dev->ec)) {
+ 		dev_err(ec_dev->dev,
+ 			"Failed to create CrOS EC platform device\n");
+-		return PTR_ERR(ec_dev->ec);
++		err = PTR_ERR(ec_dev->ec);
++		goto destroy_mutex;
+ 	}
  
+ 	if (ec_dev->max_passthru) {
+@@ -273,6 +276,9 @@ int cros_ec_register(struct cros_ec_devi
+ exit:
+ 	platform_device_unregister(ec_dev->ec);
+ 	platform_device_unregister(ec_dev->pd);
++destroy_mutex:
++	mutex_destroy(&ec_dev->lock);
++	lockdep_unregister_key(&ec_dev->lockdep_key);
+ 	return err;
+ }
+ EXPORT_SYMBOL(cros_ec_register);
+@@ -290,6 +296,8 @@ void cros_ec_unregister(struct cros_ec_d
+ 	if (ec_dev->pd)
+ 		platform_device_unregister(ec_dev->pd);
+ 	platform_device_unregister(ec_dev->ec);
++	mutex_destroy(&ec_dev->lock);
++	lockdep_unregister_key(&ec_dev->lockdep_key);
+ }
+ EXPORT_SYMBOL(cros_ec_unregister);
+ 
+--- a/include/linux/platform_data/cros_ec_proto.h
++++ b/include/linux/platform_data/cros_ec_proto.h
+@@ -9,6 +9,7 @@
+ #define __LINUX_CROS_EC_PROTO_H
+ 
+ #include <linux/device.h>
++#include <linux/lockdep_types.h>
+ #include <linux/mutex.h>
+ #include <linux/notifier.h>
+ 
+@@ -114,6 +115,8 @@ struct cros_ec_command {
+  *            command. The caller should check msg.result for the EC's result
+  *            code.
+  * @pkt_xfer: Send packet to EC and get response.
++ * @lockdep_key: Lockdep class for each instance. Unused if CONFIG_LOCKDEP is
++ *		 not enabled.
+  * @lock: One transaction at a time.
+  * @mkbp_event_supported: 0 if MKBP not supported. Otherwise its value is
+  *                        the maximum supported version of the MKBP host event
+@@ -159,6 +162,7 @@ struct cros_ec_device {
+ 			struct cros_ec_command *msg);
+ 	int (*pkt_xfer)(struct cros_ec_device *ec,
+ 			struct cros_ec_command *msg);
++	struct lock_class_key lockdep_key;
+ 	struct mutex lock;
+ 	u8 mkbp_event_supported;
+ 	bool host_sleep_v1;
 
 
