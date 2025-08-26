@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5DF3375DC;
-	Tue, 26 Aug 2025 11:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86B7338F3F;
+	Tue, 26 Aug 2025 11:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207065; cv=none; b=Xc810kNXX+757S1WtHd63lOh3cNGhClSwk2x+XUcx4jOVq8oeFkpnA5rqmJ9vxuw9XY/WVWs0BbzQtUiAgqBHtMoYhdlGxf/8HniTM1atdL4DaoraKC0u6PCAfnlaWo0ephVzu21teu+wkoI0DyxRI6kyM0TQbk+c1HnDr4Kqe8=
+	t=1756207067; cv=none; b=awI68GCl+yS/x8ins8FHpr1o3KNr+kZBr+pn/U91Gah4LpetNHq3vvwzwofWAJq8beNMpWL9lLIdjZ6dll5NOw/bAoF7RUZij/guCkJRHelLqGs9OOgPZrhcb9yNWlxavYtQxX/ERFLAfB8yR+/mAPpPK/AsP6YUwylGiT0VPio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207065; c=relaxed/simple;
-	bh=ULJH31bzaTJaExtg7+vRNM+gkj/LJ9duOzOc+MiwPgA=;
+	s=arc-20240116; t=1756207067; c=relaxed/simple;
+	bh=2qwVv6+sX6PG0gNsN8RTeUIrKUouVzQcHdWNy8I+tzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAVcO5MYgnScCQ7Pxn/5jPpnN+KNfzd1BN3eccMTlo1Cpob9KtTBjCX7UmCZO2QXp330XZMay85/pyrRuypohyH/A0ZF4k8JRBLjPuR1MJ0vFe/KfudlnGwiTzFbA000qEmRO4wXWaF7bCY/l3kKlD1bAVJyUZf03iXNIwReIeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZTF+J4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gGCKCS5RSrCr8qwFigDU91q+DVbaTVzGgbERxQrGfCSe4ZoYp/eyZ/v5YRORBsOOJo2pGL8it5poSGQjsbIwVin0C+5lTBxu5Uut1NjSTnRDUaMp5Ol1H46Y0y7XuZGI5H/fsMJpoAQjX9Hz1DeD4oAWrV294jDCYdmFdzRfbnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2ypz6/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZTF+J4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A53C4CEF1;
-	Tue, 26 Aug 2025 11:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2ypz6/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F57C116B1;
+	Tue, 26 Aug 2025 11:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207065;
-	bh=ULJH31bzaTJaExtg7+vRNM+gkj/LJ9duOzOc+MiwPgA=;
+	s=korg; t=1756207067;
+	bh=2qwVv6+sX6PG0gNsN8RTeUIrKUouVzQcHdWNy8I+tzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZTF+J4IIRQgtGN2YUHObEYpMbdwsA18Yr8S5n1GX6mH6RGpKmFimAiirqDQTfOQl
-	 w9aTR+7vf5Er5e1c0iXBzfFZlNOwolcKqndJDjY+oxBKm5d0lwFgPEpExi8H6kYQr3
-	 ZqiDXSP1Wk5TIufIyMdJ6DUHH8MBQYar/9t38BY8=
+	b=B2ypz6/85O1/+P/edDb1DtM0NqMxhsWJ4poHzoTStYduK/WxuKzG3fSDnK5XqyA7q
+	 0ueaFr88IX8m0NN1XgbTsvqV69Qx9Agf++Khoo8y1xG0aM6WcFmu8vvYSxZM6XDc13
+	 SQurzZUPDIpIB+GWA8jW7gL2kKSDfd7UBG7zzAqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger@whamcloud.com>,
+	Li Dongyang <dongyangli@ddn.com>,
+	Alex Zhuravlev <bzzz@whamcloud.com>,
+	Oleg Drokin <green@whamcloud.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.16 037/457] ext4: preserve SB_I_VERSION on remount
-Date: Tue, 26 Aug 2025 13:05:21 +0200
-Message-ID: <20250826110938.261885427@linuxfoundation.org>
+Subject: [PATCH 6.16 038/457] ext4: check fast symlink for ea_inode correctly
+Date: Tue, 26 Aug 2025 13:05:22 +0200
+Message-ID: <20250826110938.287890823@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,55 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Andreas Dilger <adilger@dilger.ca>
 
-commit f2326fd14a224e4cccbab89e14c52279ff79b7ec upstream.
+commit b4cc4a4077268522e3d0d34de4b2dc144e2330fa upstream.
 
-IMA testing revealed that after an ext4 remount, file accesses triggered
-full measurements even without modifications, instead of skipping as
-expected when i_version is unchanged.
+The check for a fast symlink in the presence of only an
+external xattr inode is incorrect.  If a fast symlink does
+not have an xattr block (i_file_acl == 0), but does have
+an external xattr inode that increases inode i_blocks, then
+the check for a fast symlink will incorrectly fail and
+__ext4_iget()->ext4_ind_check_inode() will report the inode
+is corrupt when it "validates" i_data[] on the next read:
 
-Debugging showed `SB_I_VERSION` was cleared in reconfigure_super() during
-remount due to commit 1ff20307393e ("ext4: unconditionally enable the
-i_version counter") removing the fix from commit 960e0ab63b2e ("ext4: fix
-i_version handling on remount").
+    # ln -s foo /mnt/tmp/bar
+    # setfattr -h -n trusted.test \
+               -v "$(yes | head -n 4000)" /mnt/tmp/bar
+    # umount /mnt/tmp
+    # mount /mnt/tmp
+    # ls -l /mnt/tmp
+    ls: cannot access '/mnt/tmp/bar': Structure needs cleaning
+    total 4
+     ? l?????????? ? ?    ?        ?            ? bar
+    # dmesg | tail -1
+    EXT4-fs error (device dm-8): __ext4_iget:5098:
+        inode #24578: block 7303014: comm ls: invalid block
 
-To rectify this, `SB_I_VERSION` is always set for `fc->sb_flags` in
-ext4_init_fs_context(), instead of `sb->s_flags` in __ext4_fill_super(),
-ensuring it persists across all mounts.
+(note that "block 7303014" = 0x6f6f66 = "foo" in LE order).
 
-Cc: stable@kernel.org
-Fixes: 1ff20307393e ("ext4: unconditionally enable the i_version counter")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250703073903.6952-2-libaokun@huaweicloud.com
+ext4_inode_is_fast_symlink() should check the superblock
+EXT4_FEATURE_INCOMPAT_EA_INODE feature flag, not the inode
+EXT4_EA_INODE_FL, since the latter is only set on the xattr
+inode itself, and not on the inode that uses this xattr.
+
+Cc: stable@vger.kernel.org
+Fixes: fc82228a5e38 ("ext4: support fast symlinks from ext3 file systems")
+Signed-off-by: Andreas Dilger <adilger@whamcloud.com>
+Reviewed-by: Li Dongyang <dongyangli@ddn.com>
+Reviewed-by: Alex Zhuravlev <bzzz@whamcloud.com>
+Reviewed-by: Oleg Drokin <green@whamcloud.com>
+Reviewed-on: https://review.whamcloud.com/59879
+Lustre-bug-id: https://jira.whamcloud.com/browse/LU-19121
+Link: https://patch.msgid.link/20250717063709.757077-1-adilger@dilger.ca
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1998,6 +1998,9 @@ int ext4_init_fs_context(struct fs_conte
- 	fc->fs_private = ctx;
- 	fc->ops = &ext4_context_ops;
- 
-+	/* i_version is always enabled now */
-+	fc->sb_flags |= SB_I_VERSION;
-+
- 	return 0;
- }
- 
-@@ -5314,9 +5317,6 @@ static int __ext4_fill_super(struct fs_c
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
- 
--	/* i_version is always enabled now */
--	sb->s_flags |= SB_I_VERSION;
--
- 	/* HSM events are allowed by default. */
- 	sb->s_iflags |= SB_I_ALLOW_HSM;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -146,7 +146,7 @@ static inline int ext4_begin_ordered_tru
+  */
+ int ext4_inode_is_fast_symlink(struct inode *inode)
+ {
+-	if (!(EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)) {
++	if (!ext4_has_feature_ea_inode(inode->i_sb)) {
+ 		int ea_blocks = EXT4_I(inode)->i_file_acl ?
+ 				EXT4_CLUSTER_SIZE(inode->i_sb) >> 9 : 0;
  
 
 
