@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A35242D7B;
-	Tue, 26 Aug 2025 13:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F072C08A8;
+	Tue, 26 Aug 2025 13:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213734; cv=none; b=X6PQWRj7ZCcWCp5KM/LCkEUVfUNwfN3wPunlas4+lQNCRwPehsqaqy7uB1zE9KKig3PulQqjH2Y5VG2l1Y//sioRmKKVzg85tN2D/wiKUc2cDfJ3rkkLt7BI+t5n8J0VDYBy0JUf9QD+sKcl1JDOpZ8mH9mf7mN+w5KeX304T3E=
+	t=1756213737; cv=none; b=Q7yDdn3HfUTCNU9xlpuU1fDQd3tKTbXz/eZW+dKmpDjvpVqXT5kSR6DTjhXfpIMTv8HjjkNKwhkI2hQmLgOFc0imPwUESZbEyzH4Kz2n7VbYXc3u+qbvY9rugQTZ1o7ldCx3HkVIAU2u8dozrsuZ7S/9mie8P+KsVFL8PTm8wZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213734; c=relaxed/simple;
-	bh=+4gItVbcHxILRlqQvC+oBcBtXaKmDgUf9QSU7l7Z/sY=;
+	s=arc-20240116; t=1756213737; c=relaxed/simple;
+	bh=5PAXjjr0tXz5Pvh0aQdLBAPxlGnFj0Qjmo8Mn4vPxyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQ75DTB1Q6jx3mykZiqaYz8G0XZvVapGLy8SkJQttzxAsP76e1Vp07Lit2Z5LyG/w9rLOUdJFHzU6niOZxJzbTc/cncEocaYtXcvm87CyrfRsqkkfPHHhqdY6v1AnBqmLDvuAEQ5pVJQm1Y9LAvvUBJWd/DwMpeAxx4pes/Yoms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdzOr7Q2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATQKZwrcJQikxUb3INoxEUewCGAu5pIF/m0jDE+wD6hrmMrzVV/vh4WdHqvglXKc8ykTXAjci+g5EPyFtQMv+OQPHMQeDG95TjdsFprOdsXsxlE70G5kvfQaC4hF//e3J5YsjX/K07UqCEEGZbRDHr3a22oOYouS34J3rggJm8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvLf1fjl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdzOr7Q2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E592EC113CF;
-	Tue, 26 Aug 2025 13:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvLf1fjl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C87C4CEF1;
+	Tue, 26 Aug 2025 13:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213734;
-	bh=+4gItVbcHxILRlqQvC+oBcBtXaKmDgUf9QSU7l7Z/sY=;
+	s=korg; t=1756213736;
+	bh=5PAXjjr0tXz5Pvh0aQdLBAPxlGnFj0Qjmo8Mn4vPxyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdzOr7Q2iHZykCF4SqfkvPDximFEJDesaQctALlPX1X0ZCSytT4kfdm5vG+UPYO9c
-	 0Z2eYCfQhxSWR7kpKN5TkenNfPtbUbaf4BktrYLv8TODTS2Pux6X5+73eOM6FPAdhA
-	 tRyPe6rd1fmSnHlbP4VbvmhJz1qVYZ2gu9qtUIow=
+	b=wvLf1fjlEdVH+VUiuU09sE2/fsRdOV2yuuLk5aL/b0X3VlKkEyLlpxL7kb62axUxs
+	 zW5h20ti2dGwX1KHR2Tw0oV957JipRYeo6H7mG/3f3FNuWIq5RTAC0g8J/Jr2pYCyY
+	 yCAJEFx7wW9tGfKJ2qFnhvE6z9OhyKibe7yK80mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 460/587] btrfs: send: make fs_path_len() inline and constify its argument
-Date: Tue, 26 Aug 2025 13:10:09 +0200
-Message-ID: <20250826111004.674516687@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Subject: [PATCH 6.6 461/587] s390/mm: Remove possible false-positive warning in pte_free_defer()
+Date: Tue, 26 Aug 2025 13:10:10 +0200
+Message-ID: <20250826111004.702688479@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,32 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-[ Upstream commit 920e8ee2bfcaf886fd8c0ad9df097a7dddfeb2d8 ]
+commit 5647f61ad9171e8f025558ed6dc5702c56a33ba3 upstream.
 
-The helper function fs_path_len() is trivial and doesn't need to change
-its path argument, so make it inline and constify the argument.
+Commit 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing
+page") added a warning to pte_free_defer(), on our request. It was meant
+to warn if this would ever be reached for KVM guest mappings, because
+the page table would be freed w/o a gmap_unlink(). THP mappings are not
+allowed for KVM guests on s390, so this should never happen.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, it is possible that the warning is triggered in a valid case as
+false-positive.
+
+s390_enable_sie() takes the mmap_lock, marks all VMAs as VM_NOHUGEPAGE and
+splits possibly existing THP guest mappings. mm->context.has_pgste is set
+to 1 before that, to prevent races with the mm_has_pgste() check in
+MADV_HUGEPAGE.
+
+khugepaged drops the mmap_lock for file mappings and might run in parallel,
+before a vma is marked VM_NOHUGEPAGE, but after mm->context.has_pgste was
+set to 1. If it finds file mappings to collapse, it will eventually call
+pte_free_defer(). This will trigger the warning, but it is a valid case
+because gmap is not yet set up, and the THP mappings will be split again.
+
+Therefore, remove the warning and the comment.
+
+Fixes: 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing page")
+Cc: <stable@vger.kernel.org> # 6.6+
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/mm/pgalloc.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -478,7 +478,7 @@ static void fs_path_free(struct fs_path
- 	kfree(p);
+--- a/arch/s390/mm/pgalloc.c
++++ b/arch/s390/mm/pgalloc.c
+@@ -456,11 +456,6 @@ void pte_free_defer(struct mm_struct *mm
+ 	page = virt_to_page(pgtable);
+ 	SetPageActive(page);
+ 	page_table_free(mm, (unsigned long *)pgtable);
+-	/*
+-	 * page_table_free() does not do the pgste gmap_unlink() which
+-	 * page_table_free_rcu() does: warn us if pgste ever reaches here.
+-	 */
+-	WARN_ON_ONCE(mm_has_pgste(mm));
  }
+ #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
  
--static int fs_path_len(struct fs_path *p)
-+static inline int fs_path_len(const struct fs_path *p)
- {
- 	return p->end - p->start;
- }
 
 
