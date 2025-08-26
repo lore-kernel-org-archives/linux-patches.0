@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC9729C339;
-	Tue, 26 Aug 2025 11:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4658C3469F3;
+	Tue, 26 Aug 2025 11:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207882; cv=none; b=g0/b+u9ik0v8lDJgtX3O/TSWdyYMDW3m6p12Q2TDLUypr7iQ1diupvwRB6yXZvPotMVH8nLyAaZWYJ173CYP5HAmhP4XXbhHKCs8vKHOYvkCZOKX2Zj7XPsscCt2GyJWfnU4dkQJZZ+jhitJkBDCUxpryLA09WJC404iQqN+ALI=
+	t=1756207885; cv=none; b=mItdTAafrW8fDKeH45oi4mkNGl7sW+CJcV4f6Ry3LdcE425k1AW7kSJluxXNM6PLj5JC05BFhoJwoCRpYU8oVD6H3sfbksP12yh14vB0qKgkfy9cy7LCQsqdBNa6saOht9JHFLUhdYaUSHtJwSf6Vs9JwksWmYwF6pIjC7Ba4Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207882; c=relaxed/simple;
-	bh=rGnBXiq4mjhfPQxYKyG6JkNfkuqtRqacBTbA8R5Ptlw=;
+	s=arc-20240116; t=1756207885; c=relaxed/simple;
+	bh=e6tjujKkaLliXI0EF+hyjNCf7VbmrMcvq13WYXLVe+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jV34HM2xI8HQRP8oU/l9YWPORVrPmkZf+L78lOf52Akc5WKuXxJLOmcMdwD3lghrYuHMnIwBc8ZoAoWb5Q4MDwCEBxihKbGUQUyWQCibzcwVngHgOHBl4kFIOWVxDmK7MwKeMunt/OTXLB3Z+JKmNHSpqNR1EwXaTh6A7o/BBJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjmQQfgv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HTbvhNB8vlV+XNbHxLWZRjZ9CMhNAQJuqspCupmrfEW9g/qjIpwosM5cDCmixku620Vg4PcdKsCXZMtwpxT5kMe16VjD9IgeBJ4knt8bHjnCr4GBIZik91cEsJdAca2T0tZjhwudCaS8+un5oOjKnBqRpTHDbXN5iWQr4UarI6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/caArKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjmQQfgv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6654BC4CEF1;
-	Tue, 26 Aug 2025 11:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/caArKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5764C4CEF1;
+	Tue, 26 Aug 2025 11:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207882;
-	bh=rGnBXiq4mjhfPQxYKyG6JkNfkuqtRqacBTbA8R5Ptlw=;
+	s=korg; t=1756207885;
+	bh=e6tjujKkaLliXI0EF+hyjNCf7VbmrMcvq13WYXLVe+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjmQQfgvUDz31YN/zpApRiz5rh1xWwtPsIqsVdOQ+HRiiNYBObvL/Gw0HpAQSRVPR
-	 vZbqbiGEdTVEYsz9WruWzLLiYZaOaW9NuH6PMa7SSt+Wzc34OpEtOFYifWo/xPBs6s
-	 IFizPf1Ow+nimbEYoWhLORNrFykNw3cyRSqRFbmc=
+	b=B/caArKQQL6dhQsyaJ4y/e4pu5pZ3NbOLXfNQq7B8T+UhMITjQQ6wdoFRDA1rQHrh
+	 RqrIGhl/RKWqhk5tQpN3hpIbU2cjIwgHOna2b+U+Ol+kz2hhssHuUzuEBl6+asCfwp
+	 mara/KkyOAnc8TVxKffVXveJgd84CZgsFE/AKios=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com,
-	syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.16 313/457] comedi: Fix use of uninitialized memory in do_insn_ioctl() and do_insnlist_ioctl()
-Date: Tue, 26 Aug 2025 13:09:57 +0200
-Message-ID: <20250826110945.095928764@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 347/457] cgroup/cpuset: Fix a partition error with CPU hotplug
+Date: Tue, 26 Aug 2025 13:10:31 +0200
+Message-ID: <20250826110945.903270429@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,72 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Waiman Long <longman@redhat.com>
 
-commit 3cd212e895ca2d58963fdc6422502b10dd3966bb upstream.
+[ Upstream commit 150e298ae0ccbecff2357a72fbabd80f8849ea6e ]
 
-syzbot reports a KMSAN kernel-infoleak in `do_insn_ioctl()`.  A kernel
-buffer is allocated to hold `insn->n` samples (each of which is an
-`unsigned int`).  For some instruction types, `insn->n` samples are
-copied back to user-space, unless an error code is being returned.  The
-problem is that not all the instruction handlers that need to return
-data to userspace fill in the whole `insn->n` samples, so that there is
-an information leak.  There is a similar syzbot report for
-`do_insnlist_ioctl()`, although it does not have a reproducer for it at
-the time of writing.
+It was found during testing that an invalid leaf partition with an
+empty effective exclusive CPU list can become a valid empty partition
+with no CPU afer an offline/online operation of an unrelated CPU. An
+empty partition root is allowed in the special case that it has no
+task in its cgroup and has distributed out all its CPUs to its child
+partitions. That is certainly not the case here.
 
-One culprit is `insn_rw_emulate_bits()` which is used as the handler for
-`INSN_READ` or `INSN_WRITE` instructions for subdevices that do not have
-a specific handler for that instruction, but do have an `INSN_BITS`
-handler.  For `INSN_READ` it only fills in at most 1 sample, so if
-`insn->n` is greater than 1, the remaining `insn->n - 1` samples copied
-to userspace will be uninitialized kernel data.
+The problem is in the cpumask_subsets() test in the hotplug case
+(update with no new mask) of update_parent_effective_cpumask() as it
+also returns true if the effective exclusive CPU list is empty. Fix that
+by addding the cpumask_empty() test to root out this exception case.
+Also add the cpumask_empty() test in cpuset_hotplug_update_tasks()
+to avoid calling update_parent_effective_cpumask() for this special case.
 
-Another culprit is `vm80xx_ai_insn_read()` in the "vm80xx" driver.  It
-never returns an error, even if it fails to fill the buffer.
-
-Fix it in `do_insn_ioctl()` and `do_insnlist_ioctl()` by making sure
-that uninitialized parts of the allocated buffer are zeroed before
-handling each instruction.
-
-Thanks to Arnaud Lecomte for their fix to `do_insn_ioctl()`.  That fix
-replaced the call to `kmalloc_array()` with `kcalloc()`, but it is not
-always necessary to clear the whole buffer.
-
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Reported-by: syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a5e45f768aab5892da5d
-Reported-by: syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fb4362a104d45ab09cf9
-Cc: stable <stable@kernel.org> # 5.13+
-Cc: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250725125324.80276-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c7f293efc87 ("cgroup/cpuset: Add cpuset.cpus.exclusive.effective for v2")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/comedi_fops.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/cgroup/cpuset.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -1587,6 +1587,9 @@ static int do_insnlist_ioctl(struct come
- 				memset(&data[n], 0, (MIN_SAMPLES - n) *
- 						    sizeof(unsigned int));
- 			}
-+		} else {
-+			memset(data, 0, max_t(unsigned int, n, MIN_SAMPLES) *
-+					sizeof(unsigned int));
- 		}
- 		ret = parse_insn(dev, insns + i, data, file);
- 		if (ret < 0)
-@@ -1670,6 +1673,8 @@ static int do_insn_ioctl(struct comedi_d
- 			memset(&data[insn->n], 0,
- 			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
- 		}
-+	} else {
-+		memset(data, 0, n_data * sizeof(unsigned int));
- 	}
- 	ret = parse_insn(dev, insn, data, file);
- 	if (ret < 0)
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 77396bab071a..f9d7799c5c94 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1843,7 +1843,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 			if (is_partition_valid(cs))
+ 				adding = cpumask_and(tmp->addmask,
+ 						xcpus, parent->effective_xcpus);
+-		} else if (is_partition_invalid(cs) &&
++		} else if (is_partition_invalid(cs) && !cpumask_empty(xcpus) &&
+ 			   cpumask_subset(xcpus, parent->effective_xcpus)) {
+ 			struct cgroup_subsys_state *css;
+ 			struct cpuset *child;
+@@ -3870,9 +3870,10 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
+ 		partcmd = partcmd_invalidate;
+ 	/*
+ 	 * On the other hand, an invalid partition root may be transitioned
+-	 * back to a regular one.
++	 * back to a regular one with a non-empty effective xcpus.
+ 	 */
+-	else if (is_partition_valid(parent) && is_partition_invalid(cs))
++	else if (is_partition_valid(parent) && is_partition_invalid(cs) &&
++		 !cpumask_empty(cs->effective_xcpus))
+ 		partcmd = partcmd_update;
+ 
+ 	if (partcmd >= 0) {
+-- 
+2.50.1
+
 
 
