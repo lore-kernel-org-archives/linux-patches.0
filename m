@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05F13451B0;
-	Tue, 26 Aug 2025 11:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1B5346A1D;
+	Tue, 26 Aug 2025 11:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207698; cv=none; b=DZvm0mm/MsSX8xUbynipAabl0xbm+g+WXtP0gsnvhp489pmXufPPwldFqS51MS0XQh/AnqzRxB/R2FHP7Q5kcfQoh4b0y6JPcDkUvC/Kl6ZRZO3s7hKkVxRX6LQI0CRwpRxsXGOSnmny/doqLkPxATEBjhVqEBJcxdIdAOv1b38=
+	t=1756207701; cv=none; b=SfmLfhC17Y9HF/qJJhWI5TZEbWnZGhyV2JdRpp07W142jd4XvZAqut1RG1Av8Iy2c7a1w/7mjCYMqUbZ8Mw1PN/Pld3UlN3VUlAsulwA94ghq26xdkzeGS7Wxg1wuZFxGDSTpLeU6aY+l/ATzxSQ77xSz/6MzsYr9JKSaYzwgrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207698; c=relaxed/simple;
-	bh=MwNSpGGxIJqfIMS95eAaWZApVuFL16c0uce/Al0ZiQM=;
+	s=arc-20240116; t=1756207701; c=relaxed/simple;
+	bh=ix7Y2EVT+FasLKTP+wz8VJh7yH2ee7+yBR64noQlLzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwJA3a1BEPvO6bynL6ETfyeHUg07vv2auHqffkTcBe/fCne89VDPBr/oDBS+zQEmFswX73BfwHA2/fLjP3Sj7wQb6hM6XuDoo0K1a6bwXmW60CzC0FSyn+0i7ayrM8j/mp3qsvKQ+NlZhW3+W6L+SwYrEIDBqHGOtkJ3l+vIjOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXbLCTvk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSUiYdUX+En69ppvKWyyLX61lb1E+xywfaNVaS7i13iGgVZIX+TGb5fNaC9nkXhqCWi+k3zD5NlsUR/vFl2xFs4/BzU7gOSlGzrza1W2NAyhNGt0qYw57LaAsdAd1HEtI7aVauDPxte4nd2/kAdwK2ZWlVLqRlyPuDcWuJ2s6Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DstzZKXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXbLCTvk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8DEC4CEF1;
-	Tue, 26 Aug 2025 11:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DstzZKXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDE8C4CEF4;
+	Tue, 26 Aug 2025 11:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207698;
-	bh=MwNSpGGxIJqfIMS95eAaWZApVuFL16c0uce/Al0ZiQM=;
+	s=korg; t=1756207701;
+	bh=ix7Y2EVT+FasLKTP+wz8VJh7yH2ee7+yBR64noQlLzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXbLCTvkBw1h4uanDu22a7tHA7RwaL9FKXsA/jTGybjURoMEZ6Ubl0IReRXLSlS63
-	 lbbD+jyGZZh2oCgT6U4loedYMNte5zKd9Gu2hXNsQWJumqvOI3YE2nmu5K/dNiz0V1
-	 cYot5LGOKRWMiskvO4Tb3v+UcaGkpYgOy5k3PknQ=
+	b=DstzZKXeXxj4KDWGch8aHekOew9W+rNP+0DDVEozUkQVo1N+lzhxwnhVK5BYorOj0
+	 tEt9D+OMnAJ24ZcQqwj83iXjY5ClBCa+pTiaybIjN7FjI5l+IZFz+RQbDJ/wriGGBt
+	 W4AqnngYNN8nA/hRU1anDb10ezoTxOHcsFEjNcHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8425ccfb599521edb153@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.16 252/457] RDMA/rxe: Flush delayed SKBs while releasing RXE resources
-Date: Tue, 26 Aug 2025 13:08:56 +0200
-Message-ID: <20250826110943.587778657@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>
+Subject: [PATCH 6.16 253/457] s390/sclp: Fix SCCB present check
+Date: Tue, 26 Aug 2025 13:08:57 +0200
+Message-ID: <20250826110943.611599404@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,110 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit 3c3e9a9f2972b364e8c2cfbfdeb23c6d6be4f87f upstream.
+commit 430fa71027b6ac9bb0ce5532b8d0676777d4219a upstream.
 
-When skb packets are sent out, these skb packets still depends on
-the rxe resources, for example, QP, sk, when these packets are
-destroyed.
+Tracing code called by the SCLP interrupt handler contains early exits
+if the SCCB address associated with an interrupt is NULL. This check is
+performed after physical to virtual address translation.
 
-If these rxe resources are released when the skb packets are destroyed,
-the call traces will appear.
+If the kernel identity mapping does not start at address zero, the
+resulting virtual address is never zero, so that the NULL checks won't
+work. Subsequently this may result in incorrect accesses to the first
+page of the identity mapping.
 
-To avoid skb packets hang too long time in some network devices,
-a timestamp is added when these skb packets are created. If these
-skb packets hang too long time in network devices, these network
-devices can free these skb packets to release rxe resources.
+Fix this by introducing a function that handles the NULL case before
+address translation.
 
-Reported-by: syzbot+8425ccfb599521edb153@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8425ccfb599521edb153
-Tested-by: syzbot+8425ccfb599521edb153@syzkaller.appspotmail.com
-Fixes: 1a633bdc8fd9 ("RDMA/rxe: Let destroy qp succeed with stuck packet")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20250726013104.463570-1-yanjun.zhu@linux.dev
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ada1da31ce34 ("s390/sclp: sort out physical vs virtual pointers usage")
+Cc: stable@vger.kernel.org
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/rxe/rxe_net.c |   29 ++++++++---------------------
- drivers/infiniband/sw/rxe/rxe_qp.c  |    2 +-
- 2 files changed, 9 insertions(+), 22 deletions(-)
+ drivers/s390/char/sclp.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/sw/rxe/rxe_net.c
-+++ b/drivers/infiniband/sw/rxe/rxe_net.c
-@@ -345,33 +345,15 @@ int rxe_prepare(struct rxe_av *av, struc
+--- a/drivers/s390/char/sclp.c
++++ b/drivers/s390/char/sclp.c
+@@ -76,6 +76,13 @@ unsigned long sclp_console_full;
+ /* The currently active SCLP command word. */
+ static sclp_cmdw_t active_cmd;
  
- static void rxe_skb_tx_dtor(struct sk_buff *skb)
- {
--	struct net_device *ndev = skb->dev;
--	struct rxe_dev *rxe;
--	unsigned int qp_index;
--	struct rxe_qp *qp;
-+	struct rxe_qp *qp = skb->sk->sk_user_data;
- 	int skb_out;
- 
--	rxe = rxe_get_dev_from_net(ndev);
--	if (!rxe && is_vlan_dev(ndev))
--		rxe = rxe_get_dev_from_net(vlan_dev_real_dev(ndev));
--	if (WARN_ON(!rxe))
--		return;
--
--	qp_index = (int)(uintptr_t)skb->sk->sk_user_data;
--	if (!qp_index)
--		return;
--
--	qp = rxe_pool_get_index(&rxe->qp_pool, qp_index);
--	if (!qp)
--		goto put_dev;
--
- 	skb_out = atomic_dec_return(&qp->skb_out);
--	if (qp->need_req_skb && skb_out < RXE_INFLIGHT_SKBS_PER_QP_LOW)
-+	if (unlikely(qp->need_req_skb &&
-+		skb_out < RXE_INFLIGHT_SKBS_PER_QP_LOW))
- 		rxe_sched_task(&qp->send_task);
- 
- 	rxe_put(qp);
--put_dev:
--	ib_device_put(&rxe->ib_dev);
- 	sock_put(skb->sk);
- }
- 
-@@ -383,6 +365,7 @@ static int rxe_send(struct sk_buff *skb,
- 	sock_hold(sk);
- 	skb->sk = sk;
- 	skb->destructor = rxe_skb_tx_dtor;
-+	rxe_get(pkt->qp);
- 	atomic_inc(&pkt->qp->skb_out);
- 
- 	if (skb->protocol == htons(ETH_P_IP))
-@@ -405,6 +388,7 @@ static int rxe_loopback(struct sk_buff *
- 	sock_hold(sk);
- 	skb->sk = sk;
- 	skb->destructor = rxe_skb_tx_dtor;
-+	rxe_get(pkt->qp);
- 	atomic_inc(&pkt->qp->skb_out);
- 
- 	if (skb->protocol == htons(ETH_P_IP))
-@@ -497,6 +481,9 @@ struct sk_buff *rxe_init_packet(struct r
- 		goto out;
- 	}
- 
-+	/* Add time stamp to skb. */
-+	skb->tstamp = ktime_get();
++static inline struct sccb_header *sclpint_to_sccb(u32 sccb_int)
++{
++	if (sccb_int)
++		return __va(sccb_int);
++	return NULL;
++}
 +
- 	skb_reserve(skb, hdr_len + LL_RESERVED_SPACE(ndev));
+ static inline void sclp_trace(int prio, char *id, u32 a, u64 b, bool err)
+ {
+ 	struct sclp_trace_entry e;
+@@ -619,7 +626,7 @@ __sclp_find_req(u32 sccb)
  
- 	/* FIXME: hold reference to this netdev until life of this skb. */
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -244,7 +244,7 @@ static int rxe_qp_init_req(struct rxe_de
- 	err = sock_create_kern(&init_net, AF_INET, SOCK_DGRAM, 0, &qp->sk);
- 	if (err < 0)
- 		return err;
--	qp->sk->sk->sk_user_data = (void *)(uintptr_t)qp->elem.index;
-+	qp->sk->sk->sk_user_data = qp;
+ static bool ok_response(u32 sccb_int, sclp_cmdw_t cmd)
+ {
+-	struct sccb_header *sccb = (struct sccb_header *)__va(sccb_int);
++	struct sccb_header *sccb = sclpint_to_sccb(sccb_int);
+ 	struct evbuf_header *evbuf;
+ 	u16 response;
  
- 	/* pick a source UDP port number for this QP based on
- 	 * the source QPN. this spreads traffic for different QPs
+@@ -658,7 +665,7 @@ static void sclp_interrupt_handler(struc
+ 
+ 	/* INT: Interrupt received (a=intparm, b=cmd) */
+ 	sclp_trace_sccb(0, "INT", param32, active_cmd, active_cmd,
+-			(struct sccb_header *)__va(finished_sccb),
++			sclpint_to_sccb(finished_sccb),
+ 			!ok_response(finished_sccb, active_cmd));
+ 
+ 	if (finished_sccb) {
 
 
