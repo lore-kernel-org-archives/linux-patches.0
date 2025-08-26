@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212BD347C3;
-	Tue, 26 Aug 2025 13:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01AD28FD;
+	Tue, 26 Aug 2025 13:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213631; cv=none; b=uEwE/PSaarOGspSyJsnAWNwYwNKa3//EneN4eBDfFqaRRv6qCjytcsSyNmsXUqHmS7f+QcZ3b1AhU9mfNq/vNmvTFFavt6pv4t0DQNLTyD+k6DQfKinkYgtKK9JXfAUE1vSCe06qtjxKDxGrN2X3xr+CmW7jJN5oTzP76x7JJ8c=
+	t=1756213633; cv=none; b=JcUG2NJBiDnfGNmO/rNax04UW25z/oOD4e1UTWXOycii2b1ceLnyVKWSbVR3zzp/diI8BOcujOp+4au070Etn2t23uVFjJ71YNdpBrZZM+3QsCBE+sHVg/x175I3MBBFM+uw2tHAP9TXp4nfJQCvXhlyPqWbQ8sThl2cj/g4Hls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213631; c=relaxed/simple;
-	bh=jFlsMSjY+rBwuzuIqk8fuQjkeluaLapZpk+YOYD+KrM=;
+	s=arc-20240116; t=1756213633; c=relaxed/simple;
+	bh=5aUsVyMrcRBhTmf1Ywjlwclwr489Hy81aQunPZO+lMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P5h9GnPH4+8+troREAxfuJSWDTZ7Rrs4C2W3YZ+U9sOrM95SOkgFq/1gU/B0yeRD+uB4DF+cVSbbkoV6zgFjwhkixLs1ZSQ3mI+GBUOLDV6OrsW4unXXwiwMCbSOsUAFLOTuvZDNLCu5reueHDLrr0GZOyaCkUcE58Fd/LBFCkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAAsZHGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TtEWSuJ8oGxzlg+HIIAMWTTZmG2e8dw4/ySvJNS7FiMgnc7vd3DLUmbeUzkAEitnWjqRZaJV1RlnI6zlITnm8+DEsZDGnXXtIuwWJzUc7xwotb+/I+EqwmPz8f3nqwl5QhcMCIilKoBz8lgeD2atZTTr0H5H5NRt2r5eLViboyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWxUfz/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAAsZHGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4399C4CEF1;
-	Tue, 26 Aug 2025 13:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWxUfz/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5093EC4CEF1;
+	Tue, 26 Aug 2025 13:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213631;
-	bh=jFlsMSjY+rBwuzuIqk8fuQjkeluaLapZpk+YOYD+KrM=;
+	s=korg; t=1756213633;
+	bh=5aUsVyMrcRBhTmf1Ywjlwclwr489Hy81aQunPZO+lMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAAsZHGqgrrQzuoYQTMwZXJkqH3VK/vD03uVgHi5deOGygEqu3i1qSLc6ZcareVu4
-	 PlxVpIu3LOamoD8tXnwy2lnAiZG215AawiIm+1+vNt28ICqRJ7vGIGUsdZu2l7/MN1
-	 8WHfOVJOGWEqHdZbG3n2HQe6mCubpZbN0zEZ8P/s=
+	b=gWxUfz/UXe2n6oqM5uAVap/BiFT9FnmpGAqzEnHB5BFCUUyoqvqziwiDYoOnXC/2q
+	 UVJoiSSOQ/GM8ruoLZhDGcAcHol2hX+3fTJRWWm+q+CJAecAGWdBHJ3flAIHVt9xbI
+	 eHb4KYoY+GqFo1teVM7yXWwNLhCSrPEq0uKe7DPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xaver Hugl <xaver.hugl@kde.org>,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 421/587] drm/amd/display: Add primary plane to commits for correct VRR handling
-Date: Tue, 26 Aug 2025 13:09:30 +0200
-Message-ID: <20250826111003.648334327@linuxfoundation.org>
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
+Subject: [PATCH 6.6 422/587] drm/amd/display: Dont overwrite dce60_clk_mgr
+Date: Tue, 26 Aug 2025 13:09:31 +0200
+Message-ID: <20250826111003.674674631@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,50 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 3477c1b0972dc1c8a46f78e8fb1fa6966095b5ec upstream.
+commit 4db9cd554883e051df1840d4d58d636043101034 upstream.
 
-amdgpu_dm_commit_planes calls update_freesync_state_on_stream only for
-the primary plane. If a commit affects a CRTC but not its primary plane,
-it would previously not trigger a refresh cycle or affect LFC, violating
-current UAPI semantics.
+dc_clk_mgr_create accidentally overwrites the dce60_clk_mgr
+with the dce_clk_mgr, causing incorrect behaviour on DCE6.
+Fix it by removing the extra dce_clk_mgr_construct.
 
-Fixes e.g. atomic commits affecting only the cursor plane being limited
-to the minimum refresh rate.
-
-Don't do this for the legacy cursor ioctls though, it would break the
-UAPI semantics for those.
-
-Suggested-by: Xaver Hugl <xaver.hugl@kde.org>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3034
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Fixes: 62eab49faae7 ("drm/amd/display: hide VGH asic specific structs")
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cc7bfba95966251b254cb970c21627124da3b7f4)
+(cherry picked from commit bbddcbe36a686af03e91341b9bbfcca94bd45fb6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -410,6 +410,15 @@ static int dm_crtc_helper_atomic_check(s
- 		return -EINVAL;
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
+@@ -162,7 +162,6 @@ struct clk_mgr *dc_clk_mgr_create(struct
+ 			return NULL;
+ 		}
+ 		dce60_clk_mgr_construct(ctx, clk_mgr);
+-		dce_clk_mgr_construct(ctx, clk_mgr);
+ 		return &clk_mgr->base;
  	}
- 
-+	if (!state->legacy_cursor_update && amdgpu_dm_crtc_vrr_active(dm_crtc_state)) {
-+		struct drm_plane_state *primary_state;
-+
-+		/* Pull in primary plane for correct VRR handling */
-+		primary_state = drm_atomic_get_plane_state(state, crtc->primary);
-+		if (IS_ERR(primary_state))
-+			return PTR_ERR(primary_state);
-+	}
-+
- 	/* In some use cases, like reset, no stream is attached */
- 	if (!dm_crtc_state->stream)
- 		return 0;
+ #endif
 
 
