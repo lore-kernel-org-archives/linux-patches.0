@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ADE1ADFFE;
-	Tue, 26 Aug 2025 13:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DD71ADFFE;
+	Tue, 26 Aug 2025 13:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215225; cv=none; b=diqD54natp+BxMVgF428ynZyGITnKgKp/a67P+Pl1L1sj63riIej0Xyvedblu+pQfCMprG0G5H844bgz5ZIKqyU6Gf68QZgobdoBg3BQpHroaaXghkdr3gtveYU9AO7asCp9AF5ON5XxJlvlDtDCkcJpjYwPQf7ICjSa2VYlX9s=
+	t=1756215228; cv=none; b=Go+5zuSdKXqAwkGb531MQvvVwLNc8w5MvYcTFyZgOzsN7MT4fJfLuG6EQi/oORmwyp163sLvshgm3R8HKdNwt7gLL0KrehjSwntQ7oApBbivvlWIyrNr88AGEedaGbWa4gUOmVkxBUz6rFcj8PfIpTvPJrUMjRSEDhMwNCLpywU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215225; c=relaxed/simple;
-	bh=BnLjIobkcfxYaGyFq6uGY5v5ne9BmvKIK31gvrjJ+TU=;
+	s=arc-20240116; t=1756215228; c=relaxed/simple;
+	bh=EfM1qeyhZiXrkzaLQ6A/WbMxDqMh2O2wRwBJBzfatf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llyakRg6Xa+jsgVKJxw0BxvwmkF9zLloQor5SVBGIvPZCfmTMXFCvGNX7CwyF2E2a2vISNWE/QgsCv+0hSvc4CbGtKiAy8Eb5VU7TBvrTprpiWxW7cpV+zfukt+65rr0CmfyrG/gpSslVheTcfmpQJBqc5Z8mrrWxY26fKW4j10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdZjKHnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pprNfGjTpyMHgHzQ/P6edgd0n/BCn6OACClkLgmuFr5IoFvirz6xD/ySSabTsUegty3vIC3+evWno5y24SclGFRMei9sPNabPi11hTBUOhOHgExmT3zMD5iMbNKHhx2cY6lOTPHiSuphUYnmRjNUatZUiZO5RhjKHEnagHUqvSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NabkhMOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdZjKHnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558ADC4CEF1;
-	Tue, 26 Aug 2025 13:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NabkhMOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082CCC113D0;
+	Tue, 26 Aug 2025 13:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215225;
-	bh=BnLjIobkcfxYaGyFq6uGY5v5ne9BmvKIK31gvrjJ+TU=;
+	s=korg; t=1756215228;
+	bh=EfM1qeyhZiXrkzaLQ6A/WbMxDqMh2O2wRwBJBzfatf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WdZjKHnrRuXEC6lqDTP/SFG6YgJjuAvRBGMuZMWPMEo8icKY6eLU2yEI/xx2/0Nmm
-	 7pBLMIYv9BVJ4hr8WjwAXQm20rPfCCoGN0TW1JVfNNM2ZQh6aO8t6c8eINPAKxdHze
-	 UuD6VktGAniYe2iZwiM3F14SqSzN2dAQCkR1ZzgE=
+	b=NabkhMOEAG1PdazjX8T2kQUBjpYfertUduRXE/KLK9QhibZtmLfsmE4YkHQjayVFQ
+	 qgux1JSny7MYKNhnJsDjGWtzqOp2PWdJAxaII4khLk7DH3RP+bU222hQtnM4Yb0bS0
+	 SoZXe3CCiNrdOxcKdQQsbtZWhB+GC1IjnT4msAx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 435/482] mptcp: disable add_addr retransmission when timeout is 0
-Date: Tue, 26 Aug 2025 13:11:28 +0200
-Message-ID: <20250826110941.577071436@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>
+Subject: [PATCH 6.1 418/482] usb: renesas-xhci: Fix External ROM access timeouts
+Date: Tue, 26 Aug 2025 13:11:11 +0200
+Message-ID: <20250826110941.153767446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -46,111 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit f5ce0714623cffd00bf2a83e890d09c609b7f50a ]
+commit f9420f4757752f056144896024d5ea89e5a611f1 upstream.
 
-When add_addr_timeout was set to 0, this caused the ADD_ADDR to be
-retransmitted immediately, which looks like a buggy behaviour. Instead,
-interpret 0 as "no retransmissions needed".
+Increase the External ROM access timeouts to prevent failures during
+programming of External SPI EEPROM chips. The current timeouts are
+too short for some SPI EEPROMs used with uPD720201 controllers.
 
-The documentation is updated to explicitly state that setting the timeout
-to 0 disables retransmission.
+The current timeout for Chip Erase in renesas_rom_erase() is 100 ms ,
+the current timeout for Sector Erase issued by the controller before
+Page Program in renesas_fw_download_image() is also 100 ms. Neither
+timeout is sufficient for e.g. the Macronix MX25L5121E or MX25V5126F.
 
-Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
-Cc: stable@vger.kernel.org
-Suggested-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-5-521fe9957892@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Apply to net/mptcp/pm_netlink.c , structural changes in mptcp_pm_alloc_anno_list ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+MX25L5121E reference manual [1] page 35 section "ERASE AND PROGRAMMING
+PERFORMANCE" and page 23 section "Table 8. AC CHARACTERISTICS (Temperature
+= 0°C to 70°C for Commercial grade, VCC = 2.7V ~ 3.6V)" row "tCE" indicate
+that the maximum time required for Chip Erase opcode to complete is 2 s,
+and for Sector Erase it is 300 ms .
+
+MX25V5126F reference manual [2] page 47 section "13. ERASE AND PROGRAMMING
+PERFORMANCE (2.3V - 3.6V)" and page 42 section "Table 8. AC CHARACTERISTICS
+(Temperature = -40°C to 85°C for Industrial grade, VCC = 2.3V - 3.6V)" row
+"tCE" indicate that the maximum time required for Chip Erase opcode to
+complete is 3.2 s, and for Sector Erase it is 400 ms .
+
+Update the timeouts such, that Chip Erase timeout is set to 5 seconds,
+and Sector Erase timeout is set to 500 ms. Such lengthy timeouts ought
+to be sufficient for majority of SPI EEPROM chips.
+
+[1] https://www.macronix.com/Lists/Datasheet/Attachments/8634/MX25L5121E,%203V,%20512Kb,%20v1.3.pdf
+[2] https://www.macronix.com/Lists/Datasheet/Attachments/8750/MX25V5126F,%202.5V,%20512Kb,%20v1.1.pdf
+
+Fixes: 2478be82de44 ("usb: renesas-xhci: Add ROM loader for uPD720201")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://lore.kernel.org/r/20250802225526.25431-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/mptcp-sysctl.rst |    2 ++
- net/mptcp/pm_netlink.c                    |   18 ++++++++++++------
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ drivers/usb/host/xhci-pci-renesas.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/Documentation/networking/mptcp-sysctl.rst
-+++ b/Documentation/networking/mptcp-sysctl.rst
-@@ -20,6 +20,8 @@ add_addr_timeout - INTEGER (seconds)
- 	resent to an MPTCP peer that has not acknowledged a previous
- 	ADD_ADDR message.
+--- a/drivers/usb/host/xhci-pci-renesas.c
++++ b/drivers/usb/host/xhci-pci-renesas.c
+@@ -47,8 +47,9 @@
+ #define RENESAS_ROM_ERASE_MAGIC				0x5A65726F
+ #define RENESAS_ROM_WRITE_MAGIC				0x53524F4D
  
-+	Do not retransmit if set to 0.
-+
- 	The default value matches TCP_RTO_MAX. This is a per-namespace
- 	sysctl.
+-#define RENESAS_RETRY	10000
+-#define RENESAS_DELAY	10
++#define RENESAS_RETRY			50000	/* 50000 * RENESAS_DELAY ~= 500ms */
++#define RENESAS_CHIP_ERASE_RETRY	500000	/* 500000 * RENESAS_DELAY ~= 5s */
++#define RENESAS_DELAY			10
  
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -304,6 +304,7 @@ static void mptcp_pm_add_timer(struct ti
- 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
-+	unsigned int timeout;
+ static int renesas_fw_download_image(struct pci_dev *dev,
+ 				     const u32 *fw, size_t step, bool rom)
+@@ -405,7 +406,7 @@ static void renesas_rom_erase(struct pci
+ 	/* sleep a bit while ROM is erased */
+ 	msleep(20);
  
- 	pr_debug("msk=%p\n", msk);
- 
-@@ -321,6 +322,10 @@ static void mptcp_pm_add_timer(struct ti
- 		goto out;
- 	}
- 
-+	timeout = mptcp_get_add_addr_timeout(sock_net(sk));
-+	if (!timeout)
-+		goto out;
-+
- 	spin_lock_bh(&msk->pm.lock);
- 
- 	if (!mptcp_pm_should_add_signal_addr(msk)) {
-@@ -332,7 +337,7 @@ static void mptcp_pm_add_timer(struct ti
- 
- 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
- 		sk_reset_timer(sk, timer,
--			       jiffies + mptcp_get_add_addr_timeout(sock_net(sk)));
-+			       jiffies + timeout);
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
-@@ -374,6 +379,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 	struct mptcp_pm_add_entry *add_entry = NULL;
- 	struct sock *sk = (struct sock *)msk;
- 	struct net *net = sock_net(sk);
-+	unsigned int timeout;
- 
- 	lockdep_assert_held(&msk->pm.lock);
- 
-@@ -383,9 +389,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
- 			return false;
- 
--		sk_reset_timer(sk, &add_entry->add_timer,
--			       jiffies + mptcp_get_add_addr_timeout(net));
--		return true;
-+		goto reset_timer;
- 	}
- 
- 	add_entry = kmalloc(sizeof(*add_entry), GFP_ATOMIC);
-@@ -399,8 +403,10 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 	add_entry->retrans_times = 0;
- 
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
--	sk_reset_timer(sk, &add_entry->add_timer,
--		       jiffies + mptcp_get_add_addr_timeout(net));
-+reset_timer:
-+	timeout = mptcp_get_add_addr_timeout(net);
-+	if (timeout)
-+		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
- 
- 	return true;
- }
+-	for (i = 0; i < RENESAS_RETRY; i++) {
++	for (i = 0; i < RENESAS_CHIP_ERASE_RETRY; i++) {
+ 		retval = pci_read_config_byte(pdev, RENESAS_ROM_STATUS,
+ 					      &status);
+ 		status &= RENESAS_ROM_STATUS_ERASE;
 
 
