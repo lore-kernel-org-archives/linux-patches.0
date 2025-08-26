@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978F61E502;
-	Tue, 26 Aug 2025 13:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455462FC870;
+	Tue, 26 Aug 2025 13:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215141; cv=none; b=Pr/k3G6xRGxa+MCVachMYnoue6FDXk13JQWtsaw/RXczSgy9mD9IFAOWuxTdIV+KKYCNfVe3kLGLjAKWJCVFgwcaRdrMyraQcRxA4GlQuoOF5xgg7wOYePxJroPHk+ZEliSgU5kZNkpsO/uXb91tTtICRKN5vj122JCOb+NEH4k=
+	t=1756215144; cv=none; b=elJyaxEZRNBudO/s540z+YIjng9+YOqJc429jOrwTECHvBfbnJ311LXDhtz/Cq9mcihg4srg+UDEVlY8QEHfoCGGnipU4tjqbQEpFQ9xaSh9JJsWyrOSHizCChwjhmrOIFWMz/Xlb0ijj9y1CQoaDW0KkZMnh8te9eah/sI3oF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215141; c=relaxed/simple;
-	bh=YosTZs+prh/NV4AOH4NstFwRUxfK5qC2JCt2AEUtDsk=;
+	s=arc-20240116; t=1756215144; c=relaxed/simple;
+	bh=vAtccH7llEtiWC4DzRymrE39bextzu/47VunGqwEPxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjbQIZ4RyiZRRh2i9aZd0ngnNcXyjmPu4WJ+p50QuXVNatLdkI+GM/7qZDUlYcw5GLIxtIvYqfwQuCtcZ6ieBxIqBxlmKBjfC+sjAtFUF8KrXQZV7rVcJ0Gq924BhIED1q86uSxcyl6k0UCAS04h3kFWhNsmV2x08FAJiGu/7ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXzPEmBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tCZhmgfzuZmnl4qpdX6CKOYCi+7Ez/5J716kKSH1XWuPS/apSiDl6PsMb1j/R/WovouKHJsXK9kgF5c87ZDAOBnsFW1SJbsfHhGrMIF3bLiFmeeCgJbqTxu2mMx+J9p4uWINWduULm01N5qYVmBH7cV2OCdvEMkqigYt/3eTpFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upuDgo1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXzPEmBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0528DC4CEF1;
-	Tue, 26 Aug 2025 13:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upuDgo1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15F5C4CEF1;
+	Tue, 26 Aug 2025 13:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215141;
-	bh=YosTZs+prh/NV4AOH4NstFwRUxfK5qC2JCt2AEUtDsk=;
+	s=korg; t=1756215144;
+	bh=vAtccH7llEtiWC4DzRymrE39bextzu/47VunGqwEPxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXzPEmBUIRVSxJ7AR34Ibq5+1Jvb3KTaBFmC2HH3vMs3WygitJVEUFj2YF+ZRlIx8
-	 NgJA8n4vXsEhQZbuC75nSBKgPGRKLgkKwB0AnaxM6OLkq/4j+X4oN8Ga3XGjNbyPL6
-	 LKr6NlZdBfm1CsP4euzIyJPD/o1W2mDDwfUGLC6A=
+	b=upuDgo1CLI4KvIG+Nfi7ueOBuzNUS7CnxmlWOfjUd7zWH+PTLiLsN+JdT2YQvJu42
+	 RJTy5JctJBlDO47cglMCXoX4xzDzygTKVmSNWjS7CxucN4He8M007yJy0gW/3KH6aD
+	 K+tED2jY/p+X/+QaHHBC8C9bL41kE4TsiJV4DvZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Andy Lutomirski <luto@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 6.1 385/482] mm: update memfd seal write check to include F_SEAL_WRITE
-Date: Tue, 26 Aug 2025 13:10:38 +0200
-Message-ID: <20250826110940.340396010@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Hung <alex.hung@amd.com>
+Subject: [PATCH 6.1 403/482] drm/amd/display: Find first CRTC and its line time in dce110_fill_display_configs
+Date: Tue, 26 Aug 2025 13:10:56 +0200
+Message-ID: <20250826110940.785607180@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,107 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Stoakes <lstoakes@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 28464bbb2ddc199433383994bcb9600c8034afa1 ]
+commit 669f73a26f6112eedbadac53a2f2707ac6d0b9c8 upstream.
 
-The seal_check_future_write() function is called by shmem_mmap() or
-hugetlbfs_file_mmap() to disallow any future writable mappings of an memfd
-sealed this way.
+dce110_fill_display_configs is shared between DCE 6-11, and
+finding the first CRTC and its line time is relevant to DCE 6 too.
+Move the code to find it from DCE 11 specific code.
 
-The F_SEAL_WRITE flag is not checked here, as that is handled via the
-mapping->i_mmap_writable mechanism and so any attempt at a mapping would
-fail before this could be run.
-
-However we intend to change this, meaning this check can be performed for
-F_SEAL_WRITE mappings also.
-
-The logic here is equally applicable to both flags, so update this
-function to accommodate both and rename it accordingly.
-
-Link: https://lkml.kernel.org/r/913628168ce6cce77df7d13a63970bae06a526e0.1697116581.git.lstoakes@gmail.com
-Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4ab09785f8d5d03df052827af073d5c508ff5f63)
 Cc: stable@vger.kernel.org
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hugetlbfs/inode.c |    2 +-
- include/linux/mm.h   |   15 ++++++++-------
- mm/shmem.c           |    2 +-
- 3 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |   30 ++++++----
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -136,7 +136,7 @@ static int hugetlbfs_file_mmap(struct fi
- 	vma->vm_flags |= VM_HUGETLB | VM_DONTEXPAND;
- 	vma->vm_ops = &hugetlb_vm_ops;
- 
--	ret = seal_check_future_write(info->seals, vma);
-+	ret = seal_check_write(info->seals, vma);
- 	if (ret)
- 		return ret;
- 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3526,25 +3526,26 @@ static inline void mem_dump_obj(void *ob
- #endif
- 
- /**
-- * seal_check_future_write - Check for F_SEAL_FUTURE_WRITE flag and handle it
-+ * seal_check_write - Check for F_SEAL_WRITE or F_SEAL_FUTURE_WRITE flags and
-+ *                    handle them.
-  * @seals: the seals to check
-  * @vma: the vma to operate on
-  *
-- * Check whether F_SEAL_FUTURE_WRITE is set; if so, do proper check/handling on
-- * the vma flags.  Return 0 if check pass, or <0 for errors.
-+ * Check whether F_SEAL_WRITE or F_SEAL_FUTURE_WRITE are set; if so, do proper
-+ * check/handling on the vma flags.  Return 0 if check pass, or <0 for errors.
-  */
--static inline int seal_check_future_write(int seals, struct vm_area_struct *vma)
-+static inline int seal_check_write(int seals, struct vm_area_struct *vma)
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
+@@ -120,9 +120,12 @@ void dce110_fill_display_configs(
+ 	const struct dc_state *context,
+ 	struct dm_pp_display_configuration *pp_display_cfg)
  {
--	if (seals & F_SEAL_FUTURE_WRITE) {
-+	if (seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE)) {
- 		/*
- 		 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
--		 * "future write" seal active.
-+		 * write seals are active.
- 		 */
- 		if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_WRITE))
- 			return -EPERM;
++	struct dc *dc = context->clk_mgr->ctx->dc;
+ 	int j;
+ 	int num_cfgs = 0;
  
- 		/*
--		 * Since an F_SEAL_FUTURE_WRITE sealed memfd can be mapped as
-+		 * Since an F_SEAL_[FUTURE_]WRITE sealed memfd can be mapped as
- 		 * MAP_SHARED and read-only, take care to not allow mprotect to
- 		 * revert protections on such mappings. Do this only for shared
- 		 * mappings. For private mappings, don't need to mask
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -2302,7 +2302,7 @@ static int shmem_mmap(struct file *file,
- 	struct shmem_inode_info *info = SHMEM_I(file_inode(file));
- 	int ret;
++	pp_display_cfg->crtc_index = dc->res_pool->res_cap->num_timing_generator;
++
+ 	for (j = 0; j < context->stream_count; j++) {
+ 		int k;
  
--	ret = seal_check_future_write(info->seals, vma);
-+	ret = seal_check_write(info->seals, vma);
- 	if (ret)
- 		return ret;
+@@ -164,6 +167,23 @@ void dce110_fill_display_configs(
+ 		cfg->v_refresh /= stream->timing.h_total;
+ 		cfg->v_refresh = (cfg->v_refresh + stream->timing.v_total / 2)
+ 							/ stream->timing.v_total;
++
++		/* Find first CRTC index and calculate its line time.
++		 * This is necessary for DPM on SI GPUs.
++		 */
++		if (cfg->pipe_idx < pp_display_cfg->crtc_index) {
++			const struct dc_crtc_timing *timing =
++				&context->streams[0]->timing;
++
++			pp_display_cfg->crtc_index = cfg->pipe_idx;
++			pp_display_cfg->line_time_in_us =
++				timing->h_total * 10000 / timing->pix_clk_100hz;
++		}
++	}
++
++	if (!num_cfgs) {
++		pp_display_cfg->crtc_index = 0;
++		pp_display_cfg->line_time_in_us = 0;
+ 	}
  
+ 	pp_display_cfg->display_count = num_cfgs;
+@@ -232,16 +252,6 @@ void dce11_pplib_apply_display_requireme
+ 
+ 	dce110_fill_display_configs(context, pp_display_cfg);
+ 
+-	/* TODO: is this still applicable?*/
+-	if (pp_display_cfg->display_count == 1) {
+-		const struct dc_crtc_timing *timing =
+-			&context->streams[0]->timing;
+-
+-		pp_display_cfg->crtc_index =
+-			pp_display_cfg->disp_configs[0].pipe_idx;
+-		pp_display_cfg->line_time_in_us = timing->h_total * 10000 / timing->pix_clk_100hz;
+-	}
+-
+ 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
+ 		dm_pp_apply_display_requirements(dc->ctx, pp_display_cfg);
+ }
 
 
