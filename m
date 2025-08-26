@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B4421D00E;
-	Tue, 26 Aug 2025 11:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85418321438;
+	Tue, 26 Aug 2025 11:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207316; cv=none; b=sp1JTugW0LkzSOzLX4ywV+DpC8gAcmHeN8WqQPI+RmL3ZUscHekHmLZBdw3RGJF+djFdNm5RHxJtOhWjaKILHzeJjt+CHjOPFVSSVsL+CgxM0PJxbuN+5wweQz2lqYEnEkFjRAI6ItYfkzfge/BvJN2avCMIZO3Y7YVFO/Gxg+I=
+	t=1756207318; cv=none; b=fNJL+X0KbZKaQz4qMpENA2CkACTX3fEse/BWc540ifSm4P7F9q0T03ZQLaUGoXBgZANC5AD/lkZ9O70oPQbFFWqNr+jD8S0xN/Br4cgxuTzvj0W1nIRiXbXle4uXFJD/MGSmZ6AFGiijJmareqEwQ1WTSLx8E2y5xp+t+umsbQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207316; c=relaxed/simple;
-	bh=LG6oV8+txay3YxL7Z2EWLLvZ0u0CfsOtWzBn0uHTp7M=;
+	s=arc-20240116; t=1756207318; c=relaxed/simple;
+	bh=LqeyKk6kugEMKza6ZV2u9IR7Jx/bfb1DMHyXFS+zLaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bo0/Qyjy/VloctEippyzWz1WkvZdmYJcVYaXZbJ2xiyU9zwXJv4pZTd4TxF8OdOsdqVysogjTWPDeHgS/heo52+0Ifh9vJJJZ9wREhYM3VAHyZ3mB7VhcGxyEXwDVP1/uV2T31Ph77e7SdA/jbrNyK01dpt5SctBlEmDNEJRgSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWL4guLZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UKsS7seg69uXH7rWBRPrPGtiI0FcwI9WAvYn+T76/qSFMQ3vyXmeXvgHdZ66CYA/xWeWIfyN840TX8F7dbIUmOsarq+Fa1asQXCUvYElGW/LNbbKzoiXl5kh+DKVdxNZwPGwXOycVgFoqBE8LCeuYTZryYKpXswYhPT503lY7pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3c/5Avc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWL4guLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EEEC4CEF1;
-	Tue, 26 Aug 2025 11:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3c/5Avc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175EFC4CEF1;
+	Tue, 26 Aug 2025 11:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207315;
-	bh=LG6oV8+txay3YxL7Z2EWLLvZ0u0CfsOtWzBn0uHTp7M=;
+	s=korg; t=1756207318;
+	bh=LqeyKk6kugEMKza6ZV2u9IR7Jx/bfb1DMHyXFS+zLaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wWL4guLZbmr34lsdb+QOFbh5EOphNbPsShFL/HMLVuiPn93xPKIgtf+iTb1MiTinL
-	 gqjg/CErVzGvRaQPfYhKPLmqqNVe10P/5azoZKC9DmyomZAVhkevJ+E/uCAhpyQZAs
-	 TVdi2qpy+Yx6/49tEiIK+t1Hzt/NvvEtHCKCnfaw=
+	b=l3c/5AvcTe/l1GyOZV2erektWOIU6RqBD5SqoeOAcj+gP3GF8FMbkhg7Y/hjTkVHk
+	 XSAoPIAZ39LH1nPhfH2BKYo5VmUCKkFs5EHgeGc+DsVRMkKuZLWB/vn0N3Bs3Ai1fY
+	 LagevaNGt9YA9IyS2ghtnCwooNmfDmklvpGRw6oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.16 134/457] media: vivid: fix wrong pixel_array control size
-Date: Tue, 26 Aug 2025 13:06:58 +0200
-Message-ID: <20250826110940.686069619@linuxfoundation.org>
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.16 135/457] media: verisilicon: Fix AV1 decoder clock frequency
+Date: Tue, 26 Aug 2025 13:06:59 +0200
+Message-ID: <20250826110940.709981677@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,52 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-commit 3e43442d4994c9e1e202c98129a87e330f7faaed upstream.
+commit 01350185fe02ae3ea2c12d578e06af0d5186f33e upstream.
 
-The pixel_array control size was calculated incorrectly:
-the dimensions were swapped (dims[0] should be the height), and the
-values should be the width or height divided by PIXEL_ARRAY_DIV
-and rounded up. So don't use roundup, but use DIV_ROUND_UP instead.
+The desired clock frequency was correctly set to 400MHz in the device tree
+but was lowered by the driver to 300MHz breaking 4K 60Hz content playback.
+Fix the issue by removing the driver call to clk_set_rate(), which reduce
+the amount of board specific code.
 
-This bug is harmless in the sense that nothing will break, except that
-it consumes way too much memory for this control.
-
-Fixes: 6bc7643d1b9c ("media: vivid: add pixel_array test control")
-Cc: <stable@vger.kernel.org>
+Fixes: 003afda97c65 ("media: verisilicon: Enable AV1 decoder on rk3588")
+Cc: stable@vger.kernel.org
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-ctrls.c   |    3 ++-
- drivers/media/test-drivers/vivid/vivid-vid-cap.c |    4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/platform/verisilicon/rockchip_vpu_hw.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
-+++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
-@@ -244,7 +244,8 @@ static const struct v4l2_ctrl_config viv
- 	.min = 0x00,
- 	.max = 0xff,
- 	.step = 1,
--	.dims = { 640 / PIXEL_ARRAY_DIV, 360 / PIXEL_ARRAY_DIV },
-+	.dims = { DIV_ROUND_UP(360, PIXEL_ARRAY_DIV),
-+		  DIV_ROUND_UP(640, PIXEL_ARRAY_DIV) },
- };
+--- a/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
++++ b/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
+@@ -17,7 +17,6 @@
  
- static const struct v4l2_ctrl_config vivid_ctrl_s32_array = {
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -454,8 +454,8 @@ void vivid_update_format_cap(struct vivi
- 	if (keep_controls)
- 		return;
+ #define RK3066_ACLK_MAX_FREQ (300 * 1000 * 1000)
+ #define RK3288_ACLK_MAX_FREQ (400 * 1000 * 1000)
+-#define RK3588_ACLK_MAX_FREQ (300 * 1000 * 1000)
  
--	dims[0] = roundup(dev->src_rect.width, PIXEL_ARRAY_DIV);
--	dims[1] = roundup(dev->src_rect.height, PIXEL_ARRAY_DIV);
-+	dims[0] = DIV_ROUND_UP(dev->src_rect.height, PIXEL_ARRAY_DIV);
-+	dims[1] = DIV_ROUND_UP(dev->src_rect.width, PIXEL_ARRAY_DIV);
- 	v4l2_ctrl_modify_dimensions(dev->pixel_array, dims);
+ #define ROCKCHIP_VPU981_MIN_SIZE 64
+ 
+@@ -454,13 +453,6 @@ static int rk3066_vpu_hw_init(struct han
+ 	return 0;
  }
  
+-static int rk3588_vpu981_hw_init(struct hantro_dev *vpu)
+-{
+-	/* Bump ACLKs to max. possible freq. to improve performance. */
+-	clk_set_rate(vpu->clocks[0].clk, RK3588_ACLK_MAX_FREQ);
+-	return 0;
+-}
+-
+ static int rockchip_vpu_hw_init(struct hantro_dev *vpu)
+ {
+ 	/* Bump ACLK to max. possible freq. to improve performance. */
+@@ -821,7 +813,6 @@ const struct hantro_variant rk3588_vpu98
+ 	.codec_ops = rk3588_vpu981_codec_ops,
+ 	.irqs = rk3588_vpu981_irqs,
+ 	.num_irqs = ARRAY_SIZE(rk3588_vpu981_irqs),
+-	.init = rk3588_vpu981_hw_init,
+ 	.clk_names = rk3588_vpu981_vpu_clk_names,
+ 	.num_clocks = ARRAY_SIZE(rk3588_vpu981_vpu_clk_names)
+ };
 
 
