@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD40F24A066;
-	Tue, 26 Aug 2025 13:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23752BE653;
+	Tue, 26 Aug 2025 13:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214540; cv=none; b=C/L7OvJ4ug5+Z79uuv8DR7Tvlv6CqQmAXRH0RPd9xg0V+PXuhslIMCUViMd1c2ir3Aq4gBYHNX+4Vl6NL7UfCcSJAZ5ExeSvb/Qy+XltZ3jNty0icmIm0pfR0Xg/AE8TW/ZGUSHahJDh0t7q8rhUrMj27At5RM55KySttB+luZ4=
+	t=1756214543; cv=none; b=bTnXdjiOqTXohH2xXQ761YycoLdIs296b2iBJbfgrr6d+0muLBRSvmuZ9uwBG2iBdDnMYh8DYSHoJSSd284OUMKff54jw1Q4Sr56LJNvb8ayesRGL6LnIURTSPIY5lcDkMXnm9CyBA+AZs25v3TZqmM+lwanII+hYKODFOwdNj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214540; c=relaxed/simple;
-	bh=7vhrjCTcHCJQ+Jgb59b++lwWRCX7f2e6HmU2MWIjSko=;
+	s=arc-20240116; t=1756214543; c=relaxed/simple;
+	bh=BR8DHIVy1BXgng6Hienw4W1Ps/VaKLK9EI0JuDuMVtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkBjRxAeoU9ZFHCe9lyyUcUWc8aTBJ6tB6T5HrSjXf0Zqx8q5zoznDjDa6s3Mg0GC+TXMVKlXZvBRxbN3t6ly8Bj4LF+pfYWJdJzZlYzeAGVn0t2xbQH81tDKkD1E76LSp1KNNbVvTPr6goG3l/Lah3/TNBrJAAclWRzUO+AUKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKaqT+P0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUboO6Aycy3gmtepCCcMtgYaaM3WWvNYrH3+GSrekyWjqlF6YGePb275gHfiXKUvrFHCU7QWtTC6NvFJxSnJwqSYk44xDhhCGtcVStC2XkZsRlg6ap3ffylfZrJ44/7vLQNA2ci8GhyM24i4+18QOwcFIXPkVkWYPBNhU4Ly76A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIJDEECG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKaqT+P0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47180C4CEF1;
-	Tue, 26 Aug 2025 13:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIJDEECG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54CAC4CEF1;
+	Tue, 26 Aug 2025 13:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214540;
-	bh=7vhrjCTcHCJQ+Jgb59b++lwWRCX7f2e6HmU2MWIjSko=;
+	s=korg; t=1756214543;
+	bh=BR8DHIVy1BXgng6Hienw4W1Ps/VaKLK9EI0JuDuMVtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKaqT+P0Bp2WPyfmqdmaD4CvcphKoNYSQ6HN9POUk3ertiZjqF1UirzIrA2Fovpar
-	 vefmdmaZ7B+nW61r4TN49MaPH/9+y61ULTPq32H1UkgANI5igw0ZZea6/KEM0IBWAs
-	 nY5A4V0CGYpaAnkIMh6aBDu3/RwZGIqZsnJd4L9g=
+	b=HIJDEECGRZtE4qFVbVU6WzzVsDrFf32AqSv3aJVQRUk6+H2oWBX7SPBR9VGlA/9kg
+	 5rtgbMv3uE+xV7EnpHNxULWxs4a8fM/30AYkh2trA5qoLbkuXV40bPnm3xkLk0DWpR
+	 oz2KI6VwbLQFPsBIWa5a9xjrvxDEGIt8Ulb7fO60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongzhen Zhang <zhangyongzhen@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/482] fbdev: fix potential buffer overflow in do_register_framebuffer()
-Date: Tue, 26 Aug 2025 13:07:09 +0200
-Message-ID: <20250826110935.157154121@linuxfoundation.org>
+Subject: [PATCH 6.1 150/482] powerpc: floppy: Add missing checks after DMA map
+Date: Tue, 26 Aug 2025 13:06:43 +0200
+Message-ID: <20250826110934.523652241@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 523b84dc7ccea9c4d79126d6ed1cf9033cf83b05 ]
+[ Upstream commit cf183c1730f2634245da35e9b5d53381b787d112 ]
 
-The current implementation may lead to buffer overflow when:
-1.  Unregistration creates NULL gaps in registered_fb[]
-2.  All array slots become occupied despite num_registered_fb < FB_MAX
-3.  The registration loop exceeds array bounds
+The DMA map functions can fail and should be tested for errors.
 
-Add boundary check to prevent registered_fb[FB_MAX] access.
-
-Signed-off-by: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250620075602.12575-1-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbmem.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/include/asm/floppy.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index f8c32c58b5b2..5128ffed6a23 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -1549,6 +1549,9 @@ static int do_register_framebuffer(struct fb_info *fb_info)
- 		if (!registered_fb[i])
- 			break;
+diff --git a/arch/powerpc/include/asm/floppy.h b/arch/powerpc/include/asm/floppy.h
+index f8ce178b43b7..34abf8bea2cc 100644
+--- a/arch/powerpc/include/asm/floppy.h
++++ b/arch/powerpc/include/asm/floppy.h
+@@ -144,9 +144,12 @@ static int hard_dma_setup(char *addr, unsigned long size, int mode, int io)
+ 		bus_addr = 0;
+ 	}
  
-+	if (i >= FB_MAX)
-+		return -ENXIO;
-+
- 	if (!fb_info->modelist.prev || !fb_info->modelist.next)
- 		INIT_LIST_HEAD(&fb_info->modelist);
+-	if (!bus_addr)	/* need to map it */
++	if (!bus_addr) {	/* need to map it */
+ 		bus_addr = dma_map_single(&isa_bridge_pcidev->dev, addr, size,
+ 					  dir);
++		if (dma_mapping_error(&isa_bridge_pcidev->dev, bus_addr))
++			return -ENOMEM;
++	}
  
+ 	/* remember this one as prev */
+ 	prev_addr = addr;
 -- 
 2.39.5
 
