@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09AE299959;
-	Tue, 26 Aug 2025 11:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8E02F83C1;
+	Tue, 26 Aug 2025 11:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207576; cv=none; b=npYW3PIM5s+SC5YIiWgtFDy7KQla4ZoeCdgG9CX3bLpne70K/zfqUk8DKd3i/hF+nUbExmRXnjYHeDVrZJm5GKvwgqYaaVrml/PDwyUrib23pJM2NhYjWrEI7XBjBCEp7wgCPMLjhHfdd5ATdfQs5iSl/5qVA46oC9oit5ADBvM=
+	t=1756207579; cv=none; b=GVnCmtH3pxX3fG/HJoD+LwJNQdbAsH60L5d3uSNQQfB77rwBkX0t3sTL31o776DJSJcWMPKPDbLi7VGhJ4KBvPVnGAnmpCuFF5nzERvIKDZog4Bixh3BXjRkmxvdcSADjirxA/bAN2IgKIg6BZUcslm0wYZV1hdlgnwLNT/meHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207576; c=relaxed/simple;
-	bh=VtKkq3qaKvCSqp7qDVZHW9vETeBVaIW7CYymuaXLhec=;
+	s=arc-20240116; t=1756207579; c=relaxed/simple;
+	bh=oE73+Tye9RA7W7g3RfF7sWg4rgNJI/nM0Zsati+x204=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W96Wan1wuzPOdypAbSUZRLcZmFaz08uSby8q515SPnpNXvfg/ZgAxddTKH8gxefLAy7pfMeDaF91JdNF+2GNw/wvNYLcmXzsZ3sNbvw6iBUtv6yFsV/poTCgFbOFkXP2fpTurEWdzQiAkcDX9nRINGaw8EOap1UFUYvHaZK/VvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp6NvCpY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDVyvl0dxoUNpqILNCmfYHLGyAfCOOwW6N1idsaRkp2cQpdcu2kh+FXuLZAjl+rA1Xc0CKy98rm84T0ef5w5vnbSGg+tDlvbftT6STGE/5DOOcvgDZFSHZANxecklAsSQ94/M5q2F37iyGUR/0X+lX83q8+keIcUlwBtVhswn6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8VvCpyc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp6NvCpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5010EC4CEF1;
-	Tue, 26 Aug 2025 11:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8VvCpyc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1409C4CEF1;
+	Tue, 26 Aug 2025 11:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207576;
-	bh=VtKkq3qaKvCSqp7qDVZHW9vETeBVaIW7CYymuaXLhec=;
+	s=korg; t=1756207579;
+	bh=oE73+Tye9RA7W7g3RfF7sWg4rgNJI/nM0Zsati+x204=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tp6NvCpY9rhToxbtJCjjRCWM+3iaSNwMEHRM85j5V7EIH0b2103yBQbkLetH+1d4H
-	 R2u7lyHoVLpWOTprDG6KSH4lqnovuG5y+iTQArgA361VTJUQZJ8bz9OGZxDj4X93hV
-	 +CeW52rErvMeWQXTNbOb8OhK+COrbpkw8zaqnSCs=
+	b=K8VvCpycqPrNVQz3f+DyBEF/vvK8pQWO/2AVas6Azf6gja5iTuqnz18k075GnzTwH
+	 L72o7l2frLXdCDdjXkz5jnOJ+4K+11jAQnSziVM9U+XfPT+IB90I8DVOQTqFrGbR0T
+	 Y98h6IGcy8K/KhZWhNZWXWXmaTuIDbzOadQGjbyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
+	Victor Shih <victor.shih@genesyslogic.com.tw>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.16 235/457] mmc: sdhci-of-arasan: Ensure CD logic stabilization before power-up
-Date: Tue, 26 Aug 2025 13:08:39 +0200
-Message-ID: <20250826110943.181609012@linuxfoundation.org>
+Subject: [PATCH 6.16 236/457] mmc: sdhci-pci-gli: Add a new function to simplify the code
+Date: Tue, 26 Aug 2025 13:08:40 +0200
+Message-ID: <20250826110943.206064293@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,133 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
+From: Victor Shih <victor.shih@genesyslogic.com.tw>
 
-commit e251709aaddb3ee1e8ac1ed5e361a608a1cc92de upstream.
+commit dec8b38be4b35cae5f7fa086daf2631e2cfa09c1 upstream.
 
-During SD suspend/resume without a full card rescan (when using
-non-removable SD cards for rootfs), the SD card initialization may fail
-after resume. This occurs because, after a host controller reset, the
-card detect logic may take time to stabilize due to debounce logic.
-Without waiting for stabilization, the host may attempt powering up the
-card prematurely, leading to command timeouts during resume flow.
-Add sdhci_arasan_set_power_and_bus_voltage() to wait for the card detect
-stable bit before power up the card. Since the stabilization time
-is not fixed, a maximum timeout of one second is used to ensure
-sufficient wait time for the card detect signal to stabilize.
+In preparation to fix replay timer timeout, add
+sdhci_gli_mask_replay_timer_timeout() function
+to simplify some of the code, allowing it to be re-used.
 
-Signed-off-by: Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
+Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
+Fixes: 1ae1d2d6e555 ("mmc: sdhci-pci-gli: Add Genesys Logic GL9763E support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250730060543.1735971-1-sai.krishna.potthuri@amd.com
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20250731065752.450231-2-victorshihgli@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-arasan.c |   33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-pci-gli.c |   30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
---- a/drivers/mmc/host/sdhci-of-arasan.c
-+++ b/drivers/mmc/host/sdhci-of-arasan.c
-@@ -99,6 +99,9 @@
- #define HIWORD_UPDATE(val, mask, shift) \
- 		((val) << (shift) | (mask) << ((shift) + 16))
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -287,6 +287,20 @@
+ #define GLI_MAX_TUNING_LOOP 40
  
-+#define CD_STABLE_TIMEOUT_US		1000000
-+#define CD_STABLE_MAX_SLEEP_US		10
-+
- /**
-  * struct sdhci_arasan_soc_ctl_field - Field used in sdhci_arasan_soc_ctl_map
-  *
-@@ -206,12 +209,15 @@ struct sdhci_arasan_data {
-  * 19MHz instead
-  */
- #define SDHCI_ARASAN_QUIRK_CLOCK_25_BROKEN BIT(2)
-+/* Enable CD stable check before power-up */
-+#define SDHCI_ARASAN_QUIRK_ENSURE_CD_STABLE	BIT(3)
- };
- 
- struct sdhci_arasan_of_data {
- 	const struct sdhci_arasan_soc_ctl_map *soc_ctl_map;
- 	const struct sdhci_pltfm_data *pdata;
- 	const struct sdhci_arasan_clk_ops *clk_ops;
-+	u32 quirks;
- };
- 
- static const struct sdhci_arasan_soc_ctl_map rk3399_soc_ctl_map = {
-@@ -514,6 +520,24 @@ static int sdhci_arasan_voltage_switch(s
- 	return -EINVAL;
- }
- 
-+static void sdhci_arasan_set_power_and_bus_voltage(struct sdhci_host *host, unsigned char mode,
-+						   unsigned short vdd)
+ /* Genesys Logic chipset */
++static void sdhci_gli_mask_replay_timer_timeout(struct pci_dev *pdev)
 +{
-+	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-+	struct sdhci_arasan_data *sdhci_arasan = sdhci_pltfm_priv(pltfm_host);
-+	u32 reg;
++	int aer;
++	u32 value;
 +
-+	/*
-+	 * Ensure that the card detect logic has stabilized before powering up, this is
-+	 * necessary after a host controller reset.
-+	 */
-+	if (mode == MMC_POWER_UP && sdhci_arasan->quirks & SDHCI_ARASAN_QUIRK_ENSURE_CD_STABLE)
-+		read_poll_timeout(sdhci_readl, reg, reg & SDHCI_CD_STABLE, CD_STABLE_MAX_SLEEP_US,
-+				  CD_STABLE_TIMEOUT_US, false, host, SDHCI_PRESENT_STATE);
-+
-+	sdhci_set_power_and_bus_voltage(host, mode, vdd);
++	/* mask the replay timer timeout of AER */
++	aer = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_ERR);
++	if (aer) {
++		pci_read_config_dword(pdev, aer + PCI_ERR_COR_MASK, &value);
++		value |= PCI_ERR_COR_REP_TIMER;
++		pci_write_config_dword(pdev, aer + PCI_ERR_COR_MASK, value);
++	}
 +}
 +
- static const struct sdhci_ops sdhci_arasan_ops = {
- 	.set_clock = sdhci_arasan_set_clock,
- 	.get_max_clock = sdhci_pltfm_clk_get_max_clock,
-@@ -521,7 +545,7 @@ static const struct sdhci_ops sdhci_aras
- 	.set_bus_width = sdhci_set_bus_width,
- 	.reset = sdhci_arasan_reset,
- 	.set_uhs_signaling = sdhci_set_uhs_signaling,
--	.set_power = sdhci_set_power_and_bus_voltage,
-+	.set_power = sdhci_arasan_set_power_and_bus_voltage,
- 	.hw_reset = sdhci_arasan_hw_reset,
- };
+ static inline void gl9750_wt_on(struct sdhci_host *host)
+ {
+ 	u32 wt_value;
+@@ -607,7 +621,6 @@ static void gl9750_hw_setting(struct sdh
+ {
+ 	struct sdhci_pci_slot *slot = sdhci_priv(host);
+ 	struct pci_dev *pdev;
+-	int aer;
+ 	u32 value;
  
-@@ -570,7 +594,7 @@ static const struct sdhci_ops sdhci_aras
- 	.set_bus_width = sdhci_set_bus_width,
- 	.reset = sdhci_arasan_reset,
- 	.set_uhs_signaling = sdhci_set_uhs_signaling,
--	.set_power = sdhci_set_power_and_bus_voltage,
-+	.set_power = sdhci_arasan_set_power_and_bus_voltage,
- 	.irq = sdhci_arasan_cqhci_irq,
- };
+ 	pdev = slot->chip->pdev;
+@@ -626,12 +639,7 @@ static void gl9750_hw_setting(struct sdh
+ 	pci_set_power_state(pdev, PCI_D0);
  
-@@ -1447,6 +1471,7 @@ static const struct sdhci_arasan_clk_ops
- static struct sdhci_arasan_of_data sdhci_arasan_zynqmp_data = {
- 	.pdata = &sdhci_arasan_zynqmp_pdata,
- 	.clk_ops = &zynqmp_clk_ops,
-+	.quirks = SDHCI_ARASAN_QUIRK_ENSURE_CD_STABLE,
- };
+ 	/* mask the replay timer timeout of AER */
+-	aer = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_ERR);
+-	if (aer) {
+-		pci_read_config_dword(pdev, aer + PCI_ERR_COR_MASK, &value);
+-		value |= PCI_ERR_COR_REP_TIMER;
+-		pci_write_config_dword(pdev, aer + PCI_ERR_COR_MASK, value);
+-	}
++	sdhci_gli_mask_replay_timer_timeout(pdev);
  
- static const struct sdhci_arasan_clk_ops versal_clk_ops = {
-@@ -1457,6 +1482,7 @@ static const struct sdhci_arasan_clk_ops
- static struct sdhci_arasan_of_data sdhci_arasan_versal_data = {
- 	.pdata = &sdhci_arasan_zynqmp_pdata,
- 	.clk_ops = &versal_clk_ops,
-+	.quirks = SDHCI_ARASAN_QUIRK_ENSURE_CD_STABLE,
- };
+ 	gl9750_wt_off(host);
+ }
+@@ -806,7 +814,6 @@ static void sdhci_gl9755_set_clock(struc
+ static void gl9755_hw_setting(struct sdhci_pci_slot *slot)
+ {
+ 	struct pci_dev *pdev = slot->chip->pdev;
+-	int aer;
+ 	u32 value;
  
- static const struct sdhci_arasan_clk_ops versal_net_clk_ops = {
-@@ -1467,6 +1493,7 @@ static const struct sdhci_arasan_clk_ops
- static struct sdhci_arasan_of_data sdhci_arasan_versal_net_data = {
- 	.pdata = &sdhci_arasan_versal_net_pdata,
- 	.clk_ops = &versal_net_clk_ops,
-+	.quirks = SDHCI_ARASAN_QUIRK_ENSURE_CD_STABLE,
- };
+ 	gl9755_wt_on(pdev);
+@@ -841,12 +848,7 @@ static void gl9755_hw_setting(struct sdh
+ 	pci_set_power_state(pdev, PCI_D0);
  
- static struct sdhci_arasan_of_data intel_keembay_emmc_data = {
-@@ -1945,6 +1972,8 @@ static int sdhci_arasan_probe(struct pla
- 	if (of_device_is_compatible(np, "rockchip,rk3399-sdhci-5.1"))
- 		sdhci_arasan_update_clockmultiplier(host, 0x0);
+ 	/* mask the replay timer timeout of AER */
+-	aer = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_ERR);
+-	if (aer) {
+-		pci_read_config_dword(pdev, aer + PCI_ERR_COR_MASK, &value);
+-		value |= PCI_ERR_COR_REP_TIMER;
+-		pci_write_config_dword(pdev, aer + PCI_ERR_COR_MASK, value);
+-	}
++	sdhci_gli_mask_replay_timer_timeout(pdev);
  
-+	sdhci_arasan->quirks |= data->quirks;
-+
- 	if (of_device_is_compatible(np, "intel,keembay-sdhci-5.1-emmc") ||
- 	    of_device_is_compatible(np, "intel,keembay-sdhci-5.1-sd") ||
- 	    of_device_is_compatible(np, "intel,keembay-sdhci-5.1-sdio")) {
+ 	gl9755_wt_off(pdev);
+ }
 
 
