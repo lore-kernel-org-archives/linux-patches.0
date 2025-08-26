@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028A71494D9;
-	Tue, 26 Aug 2025 14:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949B9338F51;
+	Tue, 26 Aug 2025 14:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216896; cv=none; b=p5lEvJkhbPJxfgb5u47hWlVVqGCMUbeQVcSoSg1W4WhfgJOPmfKR3yPEd1q2UgFu6nFp8olW8LdRU/zOlE4uFHE/bB5P744rKT3hkb9o6ka2Hs/zFcUHpjo50U9TS1eNR6r33JIa3BRDJF1TxKDXVG8O3jism7GBYFoxTLy63IA=
+	t=1756216898; cv=none; b=gTuBwIf2rXABJbEsoiJjZ8JRAn4tBHgxANUsg60Jv8WM876Q13tvYOTKYr0kaGnOKEr5JX3wEtbPcoV9LYYyJ4cAwTyutIKc5JSQLZd8ughoEBrwLWC7ZXFoB4FJi7UJjM/bzSyf+KG0C7x+XCO4LYv8vo8DxxNuX2EPEpGesTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216896; c=relaxed/simple;
-	bh=ePzAQaD/uumj52/Vt7sv10Oe7Egbsn3ZvDrFdfqJPEQ=;
+	s=arc-20240116; t=1756216898; c=relaxed/simple;
+	bh=1sdUX26wuyTlCprdjEVcaabsePPT0CQtRlrxA8Ih96A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcTRw0192KRB66vT1YlbciPs1WLdh9rFdvwit+Kx/ldBhWFtnwKUiv0UI5twSPCsrkmoT2zT5gUrQVD2ObqeOw6pFyiZ6ji726zm0QDt03YsVY5RQOUkKnYc/p5BDlFpHIHL4YEqhtxY24uOMSroaWR3zihbS9st5E+8tZiL41k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIuqK8g0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dd+oU2ybXtV1ErPX7N+i3qRkl66pGlUJy6WBrEQ7jM7x3slegWgGaD6qUmwgD3SskDK3v4C7HFGWTYKe2nf5Fe1Cc4v2PAfBNPiwUVTYYpqL2ocgmM1LKX0uaGakMYyvX40w59KLQITuiQj9lsKHgjkowjjeY3HG8fo57faCt8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XL3R1FK8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIuqK8g0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889ADC4CEF1;
-	Tue, 26 Aug 2025 14:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XL3R1FK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DFFC4CEF1;
+	Tue, 26 Aug 2025 14:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216895;
-	bh=ePzAQaD/uumj52/Vt7sv10Oe7Egbsn3ZvDrFdfqJPEQ=;
+	s=korg; t=1756216898;
+	bh=1sdUX26wuyTlCprdjEVcaabsePPT0CQtRlrxA8Ih96A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIuqK8g06JvmMnYDr0oJzxc43jOkwQc70BNp/RTd77NiIbMMYwiDpr3TVZj88uUkm
-	 XEQmf64xHho3jCHHWYsY8gSIiXb3HbGPaJv6er+AhGm9cEXk/e75Ek7Bp8rXzTLkvU
-	 UpCMtaoyNrHRE81Cu5BOvFagP38WwWnntyGi5pTA=
+	b=XL3R1FK8Ns2yzlRtbizs8OzjvWd45/2YL2S1z2iImF+pNvJdbyL/OnW/qJQlD0ems
+	 lVl3uSvnZcBI3oHKsJI6/3MTTL+6qT1V4Ii9xjpnPOntzmweF7SezrSzA1uOKrdzzl
+	 EYwiuWjwYA+FCpbr5YyiH+7VY8VbDzKMG6F1KQC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com,
-	syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 584/644] comedi: Fix use of uninitialized memory in do_insn_ioctl() and do_insnlist_ioctl()
-Date: Tue, 26 Aug 2025 13:11:15 +0200
-Message-ID: <20250826111001.006504041@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jun Li <jun.li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 585/644] usb: core: hcd: fix accessing unmapped memory in SINGLE_STEP_SET_FEATURE test
+Date: Tue, 26 Aug 2025 13:11:16 +0200
+Message-ID: <20250826111001.032066401@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,72 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 3cd212e895ca2d58963fdc6422502b10dd3966bb upstream.
+commit 8fe06185e11ae753414aa6117f0e798aa77567ff upstream.
 
-syzbot reports a KMSAN kernel-infoleak in `do_insn_ioctl()`.  A kernel
-buffer is allocated to hold `insn->n` samples (each of which is an
-`unsigned int`).  For some instruction types, `insn->n` samples are
-copied back to user-space, unless an error code is being returned.  The
-problem is that not all the instruction handlers that need to return
-data to userspace fill in the whole `insn->n` samples, so that there is
-an information leak.  There is a similar syzbot report for
-`do_insnlist_ioctl()`, although it does not have a reproducer for it at
-the time of writing.
+The USB core will unmap urb->transfer_dma after SETUP stage completes.
+Then the USB controller will access unmapped memory when it received
+device descriptor. If iommu is equipped, the entire test can't be
+completed due to the memory accessing is blocked.
 
-One culprit is `insn_rw_emulate_bits()` which is used as the handler for
-`INSN_READ` or `INSN_WRITE` instructions for subdevices that do not have
-a specific handler for that instruction, but do have an `INSN_BITS`
-handler.  For `INSN_READ` it only fills in at most 1 sample, so if
-`insn->n` is greater than 1, the remaining `insn->n - 1` samples copied
-to userspace will be uninitialized kernel data.
+Fix it by calling map_urb_for_dma() again for IN stage. To reduce
+redundant map for urb->transfer_buffer, this will also set
+URB_NO_TRANSFER_DMA_MAP flag before first map_urb_for_dma() to skip
+dma map for urb->transfer_buffer and clear URB_NO_TRANSFER_DMA_MAP
+flag before second map_urb_for_dma().
 
-Another culprit is `vm80xx_ai_insn_read()` in the "vm80xx" driver.  It
-never returns an error, even if it fails to fill the buffer.
-
-Fix it in `do_insn_ioctl()` and `do_insnlist_ioctl()` by making sure
-that uninitialized parts of the allocated buffer are zeroed before
-handling each instruction.
-
-Thanks to Arnaud Lecomte for their fix to `do_insn_ioctl()`.  That fix
-replaced the call to `kmalloc_array()` with `kcalloc()`, but it is not
-always necessary to clear the whole buffer.
-
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Reported-by: syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a5e45f768aab5892da5d
-Reported-by: syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fb4362a104d45ab09cf9
-Cc: stable <stable@kernel.org> # 5.13+
-Cc: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250725125324.80276-1-abbotti@mev.co.uk
+Fixes: 216e0e563d81 ("usb: core: hcd: use map_urb_for_dma for single step set feature urb")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Jun Li <jun.li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250806083955.3325299-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/core/hcd.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -1582,6 +1582,9 @@ static int do_insnlist_ioctl(struct come
- 				memset(&data[n], 0, (MIN_SAMPLES - n) *
- 						    sizeof(unsigned int));
- 			}
-+		} else {
-+			memset(data, 0, max_t(unsigned int, n, MIN_SAMPLES) *
-+					sizeof(unsigned int));
- 		}
- 		ret = parse_insn(dev, insns + i, data, file);
- 		if (ret < 0)
-@@ -1665,6 +1668,8 @@ static int do_insn_ioctl(struct comedi_d
- 			memset(&data[insn->n], 0,
- 			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
- 		}
-+	} else {
-+		memset(data, 0, n_data * sizeof(unsigned int));
- 	}
- 	ret = parse_insn(dev, insn, data, file);
- 	if (ret < 0)
+--- a/drivers/usb/core/hcd.c
++++ b/drivers/usb/core/hcd.c
+@@ -2183,7 +2183,7 @@ static struct urb *request_single_step_s
+ 	urb->complete = usb_ehset_completion;
+ 	urb->status = -EINPROGRESS;
+ 	urb->actual_length = 0;
+-	urb->transfer_flags = URB_DIR_IN;
++	urb->transfer_flags = URB_DIR_IN | URB_NO_TRANSFER_DMA_MAP;
+ 	usb_get_urb(urb);
+ 	atomic_inc(&urb->use_count);
+ 	atomic_inc(&urb->dev->urbnum);
+@@ -2247,9 +2247,15 @@ int ehset_single_step_set_feature(struct
+ 
+ 	/* Complete remaining DATA and STATUS stages using the same URB */
+ 	urb->status = -EINPROGRESS;
++	urb->transfer_flags &= ~URB_NO_TRANSFER_DMA_MAP;
+ 	usb_get_urb(urb);
+ 	atomic_inc(&urb->use_count);
+ 	atomic_inc(&urb->dev->urbnum);
++	if (map_urb_for_dma(hcd, urb, GFP_KERNEL)) {
++		usb_put_urb(urb);
++		goto out1;
++	}
++
+ 	retval = hcd->driver->submit_single_step_set_feature(hcd, urb, 0);
+ 	if (!retval && !wait_for_completion_timeout(&done,
+ 						msecs_to_jiffies(2000))) {
 
 
