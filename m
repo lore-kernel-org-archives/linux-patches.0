@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FC0352071;
-	Tue, 26 Aug 2025 14:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7276C25DB0A;
+	Tue, 26 Aug 2025 14:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218338; cv=none; b=C3eubm5d7+gWu1iV/a+rSuATuAw35QPr7k59pZ2b/V2YTR3zXkh+G1YKn7A7eHaTO6SFC3rfQb3G+0Pm8+s4JoLlDqtcDdDXABxa9PxpP9pyfLnBnTT26nY4CAA9rHHECN0Lny8/VN19fcUeqWCykr1P+kPY9egnxv3p8pzBHuY=
+	t=1756218339; cv=none; b=r1j7wY9LGIW4lrbFujdHu3wUc6cOnYZHhw64BkskYK3Karcgh5FwCx+lyo7Ri/fmcADuQtsMlYJZr8y/76WqLKbYkLJlY7sLcafvxjJgZFefjqCmrPo8ywIioNRyyRll7bMK66Cxd3xJ0bFsPbhPd3MNL5bDFKPzf+koVid2ITE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218338; c=relaxed/simple;
-	bh=UHXDjpYFTj59MXY5mm8ncKlCeDBTXyVizshzBejTnHE=;
+	s=arc-20240116; t=1756218339; c=relaxed/simple;
+	bh=BhLD4rryrNe2cajUSGamNNZLKSxmkL/j5CMZzC9Cf1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eX7EljQE0h6C4D6aB+3NiMeVS0GcIof5ou9bC3UB0qIoacikw+mUf3dSNxjOC7Xju5DvFnBK1dbbjFCkFPr6iz11WsdNOAb7JMGNVr2hcLBhTwuiIvi1sL+AiL2GncsSLJHiFznXNu4b0O9fEvgNQLeIXg9JCA5PCjunH+gjthM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ya5fUiEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXIBDpyg8McheBnUM8cTvZ4XD+QJjTGCuY6UWG52+op7xA8k48LRrImwSuP6iv8U4aJ3ynZzhGBCpm+aX5CNLkIcgZRJhI7XTjhbwYas8Q0q0FMNZjlwIAHn7MpOof35JPUww7HnfjDtQ3Va+yrmSxcNj6j0PJ9HCPeJgAI7yDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmGKqTmJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ya5fUiEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330ACC113CF;
-	Tue, 26 Aug 2025 14:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmGKqTmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938E7C4CEF1;
+	Tue, 26 Aug 2025 14:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218338;
-	bh=UHXDjpYFTj59MXY5mm8ncKlCeDBTXyVizshzBejTnHE=;
+	s=korg; t=1756218335;
+	bh=BhLD4rryrNe2cajUSGamNNZLKSxmkL/j5CMZzC9Cf1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ya5fUiEhYjzdNK5zqjb/eiSlrINVPLozHB20h+nHRLGtzYdU8MEXIzZiYhCdgb7k7
-	 atqbTcIm5BcmtCbI8YRg9nAt4trWuOfMKGIsfmKhZS+3FFmwv/iW5gr1z2xpvuJ0HT
-	 25DhIhXkUSJUIMSUf/POqdL+G8/x9tbVx/bvmSbM=
+	b=wmGKqTmJ6YiTagmI5bf9MDsOZ1ck9cFaF8kfAWomkpi9fKwBP6RnCNUmtOIfHfIwi
+	 y5DT5b1jwxp9DkEtHPb58rQdiv51sPxX++k8x8iyokHq3L8606oWkyEkDohAQgk3iP
+	 G8hoiZhVudpnz3Y0Q1mp5y/i5fX/0JvnNFqm7vm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 485/523] media: venus: hfi: explicitly release IRQ during teardown
-Date: Tue, 26 Aug 2025 13:11:35 +0200
-Message-ID: <20250826110936.410617860@linuxfoundation.org>
+Subject: [PATCH 5.10 484/523] media: venus: dont de-reference NULL pointers at IRQ time
+Date: Tue, 26 Aug 2025 13:11:34 +0200
+Message-ID: <20250826110936.386593321@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,37 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 640803003cd903cea73dc6a86bf6963e238e2b3f ]
+[ Upstream commit 686ee9b6253f9b6d7f1151e73114698940cc0894 ]
 
-Ensure the IRQ is disabled - and all pending handlers completed - before
-dismantling the interrupt routing and clearing related pointers.
+Smatch is warning that:
+	drivers/media/platform/qcom/venus/hfi_venus.c:1100 venus_isr() warn: variable dereferenced before check 'hdev' (see line 1097)
 
-This prevents any possibility of the interrupt triggering after the
-handler context has been invalidated.
+The logic basically does:
+	hdev = to_hfi_priv(core);
 
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+with is translated to:
+	hdev = core->priv;
+
+If the IRQ code can receive a NULL pointer for hdev, there's
+a bug there, as it will first try to de-reference the pointer,
+and then check if it is null.
+
+After looking at the code, it seems that this indeed can happen:
+Basically, the venus IRQ thread is started with:
+	devm_request_threaded_irq()
+So, it will only be freed after the driver unbinds.
+
+In order to prevent the IRQ code to work with freed data,
+the logic at venus_hfi_destroy() sets core->priv to NULL,
+which would make the IRQ code to ignore any pending IRQs.
+
+There is, however a race condition, as core->priv is set
+to NULL only after being freed. So, we need also to move the
+core->priv = NULL to happen earlier.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: 640803003cd9 ("media: venus: hfi: explicitly release IRQ during teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 --- a/drivers/media/platform/qcom/venus/hfi_venus.c
 +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1620,6 +1620,7 @@ void venus_hfi_destroy(struct venus_core
+@@ -1071,12 +1071,15 @@ static irqreturn_t venus_isr(struct venu
+ {
+ 	struct venus_hfi_device *hdev = to_hfi_priv(core);
+ 	u32 status;
+-	void __iomem *cpu_cs_base = hdev->core->cpu_cs_base;
+-	void __iomem *wrapper_base = hdev->core->wrapper_base;
++	void __iomem *cpu_cs_base;
++	void __iomem *wrapper_base;
+ 
+ 	if (!hdev)
+ 		return IRQ_NONE;
+ 
++	cpu_cs_base = hdev->core->cpu_cs_base;
++	wrapper_base = hdev->core->wrapper_base;
++
+ 	status = readl(wrapper_base + WRAPPER_INTR_STATUS);
+ 
+ 	if (status & WRAPPER_INTR_STATUS_A2H_MASK ||
+@@ -1613,10 +1616,10 @@ void venus_hfi_destroy(struct venus_core
+ {
+ 	struct venus_hfi_device *hdev = to_hfi_priv(core);
+ 
++	core->priv = NULL;
  	venus_interface_queues_release(hdev);
  	mutex_destroy(&hdev->lock);
  	kfree(hdev);
-+	disable_irq(core->irq);
+-	core->priv = NULL;
  	core->ops = NULL;
  }
  
