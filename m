@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31359350857;
-	Tue, 26 Aug 2025 14:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC50D35CED2;
+	Tue, 26 Aug 2025 14:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219110; cv=none; b=Tm1ZKZLR9m4m7x0O0JgH0TBGhvJ7pVouZmk375CZ6ut7zq6gxFpeq5hkSITRY0g2BLVGVZgmQOExZvxfsrKn8BWA7tW6ve0vw/y4EbZiIE/1G4awiSpCO2KfBmnFmXFEm1JJcAT7XaDe7DBYx6dNEboT8UHmN/XUPbxWPEP/sKo=
+	t=1756219113; cv=none; b=al8R9hBCaPXobqn0PZvQn/84lgg0ej9i+ciqrTZwId6W2Jh/KZ7YOiE+n7luN0O9YTI2XTDXf11uiKqD5Ah9Z1H4DixMQcym8aQIXL43ZTqLzxa6+5mWaSMUOf9HU7VyJYCMO+BAO+1XgK+Zvm2076kdP51EwmGMMpQKIKa6Sdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219110; c=relaxed/simple;
-	bh=td8k8FgYoalC6gFM1G2qRWVYGmPj4Zp8Nk/MZcRDwOI=;
+	s=arc-20240116; t=1756219113; c=relaxed/simple;
+	bh=PyPGkXxU1NeG0ZHGCcU8hEXy2AVXWwgAacAPOhKitYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HldXc+Dtnk3YHOl5zOgf1/aKzmGHxW7TsfttOJcnPsewtprHadYqMRyW8jg1BOB4073PsWJeSgm7jb90/tROXCBmjtpHyml7NNnXwk2tFtR8X6o9WV7zRjmK/zqXcgOmboAXEpj88BXRRQamM457DDOrRVCIV5RqBny+CAxnF+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8E6eI21; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNmZE5MR39ZZRCO6C6hZHbKruDo4qC782QP+b8TQKGimOm4LNraGnXvGT97TUjkyFMerpxHn+Ac/Un6u6gcXHVEek+KmV5cRCNR1iewJsk4V/wGw7znb6dI2OHSCJdu6oPBL5HfmGJJh6C2X+kyQKnbwvcQv4gHjBVUNpIyQoy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqtsA41T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8E6eI21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E8DC4CEF1;
-	Tue, 26 Aug 2025 14:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqtsA41T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E163C4CEF1;
+	Tue, 26 Aug 2025 14:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219110;
-	bh=td8k8FgYoalC6gFM1G2qRWVYGmPj4Zp8Nk/MZcRDwOI=;
+	s=korg; t=1756219112;
+	bh=PyPGkXxU1NeG0ZHGCcU8hEXy2AVXWwgAacAPOhKitYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8E6eI21c0cTyk6rsV1VI3kgtN6NtCJR1elsopqhkHWy7AKsOb/QgCAQYSWxGR5tT
-	 oQm2IW00aHxuMhyb4gsZK/x8aHB43ujltu1y6y5JyhLrD1mTtOT940D8tMlSDw8WS7
-	 LA7/bgebSHb+11Oy6akxVJ1CXJvN2mdi4VxO6HEQ=
+	b=YqtsA41TjkELw+p8ss8MwhZJH5oM0jXcumstJd5q2Owt+2YVPt9aoqdg2iPqEWBIG
+	 X4pFefiEZLSAef27dbvi+kNsUiRMkvA4jozLKBl+upSCSm872A4fXSWlxOctKn8Z0x
+	 BrucsHDGD3D9kIMe2xUfMdmI8hJM+dxrCcUKzCfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lazar <alazar@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 225/403] net: vlan: Replace BUG() with WARN_ON_ONCE() in vlan_dev_* stubs
-Date: Tue, 26 Aug 2025 13:09:11 +0200
-Message-ID: <20250826110913.045200810@linuxfoundation.org>
+Subject: [PATCH 5.4 216/403] wifi: iwlwifi: mvm: fix scan request validation
+Date: Tue, 26 Aug 2025 13:09:02 +0200
+Message-ID: <20250826110912.806010496@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,54 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 60a8b1a5d0824afda869f18dc0ecfe72f8dfda42 ]
+[ Upstream commit 7c2f3ec7707188d8d5269ae2dce97d7be3e9f261 ]
 
-When CONFIG_VLAN_8021Q=n, a set of stub helpers are used, three of these
-helpers use BUG() unconditionally.
+The scan request validation function uses bitwise and instead
+of logical and. Fix it.
 
-This code should not be reached, as callers of these functions should
-always check for is_vlan_dev() first, but the usage of BUG() is not
-recommended, replace it with WARN_ON() instead.
-
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20250616132626.1749331-3-gal@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250709230308.3fbc1f27871b.I7a8ee91f463c1a2d9d8561c8232e196885d02c43@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_vlan.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
-index b3dae069bcd9..52ce74226ba2 100644
---- a/include/linux/if_vlan.h
-+++ b/include/linux/if_vlan.h
-@@ -240,19 +240,19 @@ vlan_for_each(struct net_device *dev,
- 
- static inline struct net_device *vlan_dev_real_dev(const struct net_device *dev)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 55292e9b15c1..b860aad4c155 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -874,7 +874,7 @@ static inline bool iwl_mvm_scan_fits(struct iwl_mvm *mvm, int n_ssids,
+ 				     int n_channels)
  {
--	BUG();
-+	WARN_ON_ONCE(1);
- 	return NULL;
- }
- 
- static inline u16 vlan_dev_vlan_id(const struct net_device *dev)
- {
--	BUG();
-+	WARN_ON_ONCE(1);
- 	return 0;
- }
- 
- static inline __be16 vlan_dev_vlan_proto(const struct net_device *dev)
- {
--	BUG();
-+	WARN_ON_ONCE(1);
- 	return 0;
- }
- 
+ 	return ((n_ssids <= PROBE_OPTION_MAX) &&
+-		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &
++		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &&
+ 		(ies->common_ie_len +
+ 		 ies->len[NL80211_BAND_2GHZ] +
+ 		 ies->len[NL80211_BAND_5GHZ] <=
 -- 
 2.39.5
 
