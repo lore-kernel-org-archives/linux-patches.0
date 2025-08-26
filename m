@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A58A206F23;
-	Tue, 26 Aug 2025 12:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1752E221726;
+	Tue, 26 Aug 2025 12:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212844; cv=none; b=a90tHeBUco0o6MDoQLGv6lBPbAGCj/J5fQO/6ZM2t6goU1zfaz+LWY+SWFzn4thYoybn7bmIKKHcDb8i7BngCfq5gOd2MR8Z4/UdRU7NBiKmy9N3VzbptT1g57JM41JE//2c5Ni1HUEAJwTde8VkMBZhn5uUh6uk3Ymm51K6nBs=
+	t=1756212847; cv=none; b=Dcu3vKqty8Ua3LevkH7OwzBlwNN18FvVboStyUWZCMaDHYoXBJXeWJPf68mjwIIAYZ+hMlQg3/yMpjhaBKrmh5tJgs0BArUKrDwjveC5TpO79922uaU8MajbbBsebXHsDczTTJDqJzlrDRj4Hv5LT0B3NffYV/paoBscHdT+JdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212844; c=relaxed/simple;
-	bh=kftSc76U4+CRwj4G0R2HLC2tzQ52s+2dbiRmbNa6liE=;
+	s=arc-20240116; t=1756212847; c=relaxed/simple;
+	bh=MwgnKaC8qUJwie9RTcW7dW+abjp95hXTg03jC6aEGd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9FwyrpD+O7ueNN3m7vFgWel0dAmcdOFFma838i8k2z44WKFq0hNuabAxpGCLsP481Kc4rk2uwS+GIg7DaqMH+UmRBBb1cNQgN1OV8RQsN0HCmyo58rebtecnniyOR9zuapvy+2bT5LD4yEGxZSgBepCRoRiirZL+Z+nlsoNPZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upRS4KF0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHdLD04WPtk6dW0HfhiU3mEOckGDM2mDCi59BdcG4VPJFYjUdBDrtw5TrR2ZcVYZ2cEvyh1vWdlzXTWjs94TVi7BnMUgOlJMo8YdWU7avjEjIvioJPgX9TxsobGoD7A0qHp74wbHBPosERJK1srNAeM+MWFVLYHFt1AbRxAL3dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glNQte6s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upRS4KF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE9BC113CF;
-	Tue, 26 Aug 2025 12:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glNQte6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB59C4CEF1;
+	Tue, 26 Aug 2025 12:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212844;
-	bh=kftSc76U4+CRwj4G0R2HLC2tzQ52s+2dbiRmbNa6liE=;
+	s=korg; t=1756212847;
+	bh=MwgnKaC8qUJwie9RTcW7dW+abjp95hXTg03jC6aEGd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=upRS4KF00wUgVy8a85+DHeZiRwgT1jKuh0QjCqY25LQdAAQANy6udON+NzQxTG4th
-	 G699AXvrD91meETFgUb8rbDqqCTzws0kuTp6pEGERmplqqk1/mUcuX4xk6AC1TfgGc
-	 3zt8foKX5G32RU+Bn3pvHaMsRGudCygvENJLmZ+M=
+	b=glNQte6stE+DVLu4kKtQwBtsS7yikxVtPBjNXy0Bt3Pw27y80BPNEf3zkbBCR22Vz
+	 4W0n1xB5/NE0ZxuiBeza6dxjD6a/qDlgz3DrHtNZnaOroi3mP6S+ONGgitgIvZ2X/g
+	 4yKJ75QWGoZfBeapG8tcK2bK5/07vmXo03i9GMVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hiago De Franco <hiago.franco@toradex.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/587] ACPI: APEI: send SIGBUS to current task if synchronous memory error not recovered
-Date: Tue, 26 Aug 2025 13:04:01 +0200
-Message-ID: <20250826110955.277208963@linuxfoundation.org>
+Subject: [PATCH 6.6 093/587] remoteproc: imx_rproc: skip clock enable when M-core is managed by the SCU
+Date: Tue, 26 Aug 2025 13:04:02 +0200
+Message-ID: <20250826110955.303308652@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -56,64 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Hiago De Franco <hiago.franco@toradex.com>
 
-[ Upstream commit 79a5ae3c4c5eb7e38e0ebe4d6bf602d296080060 ]
+[ Upstream commit 496deecb020d14ba89ba7084fbc3024f91687023 ]
 
-If a synchronous error is detected as a result of user-space process
-triggering a 2-bit uncorrected error, the CPU will take a synchronous
-error exception such as Synchronous External Abort (SEA) on Arm64. The
-kernel will queue a memory_failure() work which poisons the related
-page, unmaps the page, and then sends a SIGBUS to the process, so that
-a system wide panic can be avoided.
+For the i.MX8X and i.MX8 family SoCs, when the Cortex-M core is powered
+up and started by the Cortex-A core using the bootloader (e.g., via the
+U-Boot bootaux command), both M-core and Linux run within the same SCFW
+(System Controller Firmware) partition. With that, Linux has permission
+to control the M-core.
 
-However, no memory_failure() work will be queued when abnormal
-synchronous errors occur. These errors can include situations like
-invalid PA, unexpected severity, no memory failure config support,
-invalid GUID section, etc. In such a case, the user-space process will
-trigger SEA again.  This loop can potentially exceed the platform
-firmware threshold or even trigger a kernel hard lockup, leading to a
-system reboot.
+But once the M-core is started by the bootloader, the SCFW automatically
+enables its clock and sets the clock rate. If Linux later attempts to
+enable the same clock via clk_prepare_enable(), the SCFW returns a
+'LOCKED' error, as the clock is already configured by the SCFW. This
+causes the probe function in imx_rproc.c to fail, leading to the M-core
+power domain being shut down while the core is still running. This
+results in a fault from the SCU (System Controller Unit) and triggers a
+system reset.
 
-Fix it by performing a force kill if no memory_failure() work is queued
-for synchronous errors.
+To address this issue, ignore handling the clk for i.MX8X and i.MX8
+M-core, as SCFW already takes care of enabling and configuring the
+clock.
 
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Reviewed-by: Jane Chu <jane.chu@oracle.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Link: https://patch.msgid.link/20250714114212.31660-2-xueshuai@linux.alibaba.com
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Hiago De Franco <hiago.franco@toradex.com>
+Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Link: https://lore.kernel.org/r/20250629172512.14857-3-hiagofranco@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/remoteproc/imx_rproc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 2abf20736702..22db720b128b 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -715,6 +715,17 @@ static bool ghes_do_proc(struct ghes *ghes,
- 		}
- 	}
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 610a69928dff..251f9840d85b 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -1088,8 +1088,8 @@ static int imx_rproc_clk_enable(struct imx_rproc *priv)
+ 	struct device *dev = priv->dev;
+ 	int ret;
  
-+	/*
-+	 * If no memory failure work is queued for abnormal synchronous
-+	 * errors, do a force kill.
-+	 */
-+	if (sync && !queued) {
-+		dev_err(ghes->dev,
-+			HW_ERR GHES_PFX "%s:%d: synchronous unrecoverable error (SIGBUS)\n",
-+			current->comm, task_pid_nr(current));
-+		force_sig(SIGBUS);
-+	}
-+
- 	return queued;
- }
+-	/* Remote core is not under control of Linux */
+-	if (dcfg->method == IMX_RPROC_NONE)
++	/* Remote core is not under control of Linux or it is managed by SCU API */
++	if (dcfg->method == IMX_RPROC_NONE || dcfg->method == IMX_RPROC_SCU_API)
+ 		return 0;
  
+ 	priv->clk = devm_clk_get(dev, NULL);
 -- 
 2.39.5
 
