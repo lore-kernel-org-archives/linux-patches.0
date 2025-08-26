@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C3C1FECAB;
-	Tue, 26 Aug 2025 11:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A833093AB;
+	Tue, 26 Aug 2025 11:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208801; cv=none; b=JP7Fb5mRr0kjcfj0GbQH+CyLT/85JR4nmlgDEduwHwZVbxy/qUD4jOU0UVCUWMTsHYhLfsDCcvHDCLO8N2+ggLkTCATUj+LzXd7ADE+B97v4j3EAZkUKYol7cq7jOISF/NYBaN4UzavgYK5UreXkUVgdz7kSZ0q8dyT0QoUCWf4=
+	t=1756208803; cv=none; b=GfEtTsjOw0R7s/gVJYcPTJl6fLhbAOCEgpd79F3lQtNP4gCNNPFcJ62LGwS5YR8PVZcqAzCwHIiSQrra4MxQCZ1QPjyXLrg/xROVj44I4+RoZwpnNnHOcBBQQJjmhszqRfx6mc8/UQwTqEq1YTTg6lDNbMQECX3VmJuVvElbE+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208801; c=relaxed/simple;
-	bh=7fLRG5FYxnYQU91J9DfDgvnZocFixz91ni1EsEyDF/0=;
+	s=arc-20240116; t=1756208803; c=relaxed/simple;
+	bh=hkK0Ygknl+5DZHp72qhEC1iavKW2WHHaKGnAxRcc3HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jhfny1yZTJG+S+nK1sy0uFsUL/Y1ZeNqECHfWvXIQt9BXvaj1hTBpsc3J0StW2Wip+K8qm8djAIN0A51pdE7oYOa3d1z66s19JhyX6DAsWR67xWWilh+v48nDO27evsRfgQ7vEXuef+uL9Jn82mhxTP+EgVyhwRmhnap1mVx3N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRQ55H6G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OarcnzbqndxDo5UUXAS9CSGtoqy5e4kmCBOYYOuYiRvbNTpfjf8gOCTKB4LNnJZ+lpnPnF+3cMpaCc5zHLrBR/oS0P64hcDG/5MWK56sDLzJmRfcyVfgboQItGH9aKKLHmE9tCNDzAbpj4e1f7IIcIU8htO733sIfHdU4KtEtYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouIkcyMR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRQ55H6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80ABAC113CF;
-	Tue, 26 Aug 2025 11:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouIkcyMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B824C4CEF1;
+	Tue, 26 Aug 2025 11:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208800;
-	bh=7fLRG5FYxnYQU91J9DfDgvnZocFixz91ni1EsEyDF/0=;
+	s=korg; t=1756208803;
+	bh=hkK0Ygknl+5DZHp72qhEC1iavKW2WHHaKGnAxRcc3HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRQ55H6GOZJca8d3oqETCw3XhFLLnPtc7LlmfQ3RH0ec2YQIXmEpPkrFJlXD83c4+
-	 rIBSmnl8cf126vy1u5Im926GdsU7O7GUlNsBb6doUhpBW3XVQ3eS4BXtI6cI0hEB+8
-	 4ahpKuWa2KPALf1CQCXDiuqzFs6VlbL0V9kD9zzg=
+	b=ouIkcyMRBYoDRBOgBFM/9pb5c50OqNExNnbIZsnsv5Ms4b/TgZ1rb3DWz0gm/9GCk
+	 fYIL5h0UzdaRwbhVkXh8iUlDj9N+PepE93BnMvDcVO+VwalQVz9Pf8r7HqX8xu2Clf
+	 8Dx65EZ2o2r9QCc1c+1eRPir/xTcldhkswZAtiP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianxiang Peng <txpeng@tencent.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Hui Li <caelli@tencent.com>,
-	stable@kernel.org
-Subject: [PATCH 6.12 251/322] x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper
-Date: Tue, 26 Aug 2025 13:11:06 +0200
-Message-ID: <20250826110922.127304928@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 252/322] spi: spi-fsl-lpspi: Clamp too high speed_hz
+Date: Tue, 26 Aug 2025 13:11:07 +0200
+Message-ID: <20250826110922.154198801@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,56 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianxiang Peng <txpeng@tencent.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit d8df126349dad855cdfedd6bbf315bad2e901c2f upstream.
+[ Upstream commit af357a6a3b7d685e7aa621c6fb1d4ed6c349ec9e ]
 
-Since
+Currently the driver is not able to handle the case that a SPI device
+specifies a higher spi-max-frequency than half of per-clk:
 
-  923f3a2b48bd ("x86/resctrl: Query LLC monitoring properties once during boot")
+    per-clk should be at least two times of transfer speed
 
-resctrl_cpu_detect() has been moved from common CPU initialization code to
-the vendor-specific BSP init helper, while Hygon didn't put that call in their
-code.
+Fix this by clamping to the max possible value and use the minimum SCK
+period of 2 cycles.
 
-This triggers a division by zero fault during early booting stage on our
-machines with X86_FEATURE_CQM* supported, where get_rdt_mon_resources() tries
-to calculate mon_l3_config with uninitialized boot_cpu_data.x86_cache_occ_scale.
-
-Add the missing resctrl_cpu_detect() in the Hygon BSP init helper.
-
-  [ bp: Massage commit message. ]
-
-Fixes: 923f3a2b48bd ("x86/resctrl: Query LLC monitoring properties once during boot")
-Signed-off-by: Tianxiang Peng <txpeng@tencent.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Hui Li <caelli@tencent.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/20250623093153.3016937-1-txpeng@tencent.com
-Signed-off-by: Tianxiang Peng <txpeng@tencent.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 77736a98b859 ("spi: lpspi: add the error info of transfer speed setting")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20250807100742.9917-1-wahrenst@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/hygon.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-fsl-lpspi.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kernel/cpu/hygon.c
-+++ b/arch/x86/kernel/cpu/hygon.c
-@@ -15,6 +15,7 @@
- #include <asm/cacheinfo.h>
- #include <asm/spec-ctrl.h>
- #include <asm/delay.h>
-+#include <asm/resctrl.h>
- 
- #include "cpu.h"
- 
-@@ -116,6 +117,8 @@ static void bsp_init_hygon(struct cpuinf
- 			x86_amd_ls_cfg_ssbd_mask = 1ULL << 10;
- 		}
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 29b9676fe43d..f8cacb9c7408 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -330,13 +330,11 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
  	}
-+
-+	resctrl_cpu_detect(c);
- }
  
- static void early_init_hygon(struct cpuinfo_x86 *c)
+ 	if (config.speed_hz > perclk_rate / 2) {
+-		dev_err(fsl_lpspi->dev,
+-		      "per-clk should be at least two times of transfer speed");
+-		return -EINVAL;
++		div = 2;
++	} else {
++		div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
+ 	}
+ 
+-	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
+-
+ 	for (prescale = 0; prescale <= prescale_max; prescale++) {
+ 		scldiv = div / (1 << prescale) - 2;
+ 		if (scldiv >= 0 && scldiv < 256) {
+-- 
+2.50.1
+
 
 
