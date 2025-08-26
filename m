@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE051309DDC;
-	Tue, 26 Aug 2025 11:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920AF29BDBA;
+	Tue, 26 Aug 2025 11:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208819; cv=none; b=L1gq9KkaDUVWqdc6haEa+us53oCE8rKrgevmBNgTssSaF0nVIyLGsPaiF3onH1cq4SB4bmiz4PxvzHv5rCgiEQ/r7NrkQoR5KrLyg8flPpfAq1fv6Ohhwzrn9mqXbTziXfNwlRY1JMMaajj9V7SfaNdALiN5zgSMJXfMqF3HUpA=
+	t=1756208822; cv=none; b=iZPUCvoKderniBBL+1nthTW127Y5DxdHovGGmUVh5c4WHA/xsqTQco86enSlnIFRJoXZIodws7QvAS8BKVVyshMfMYxu44QM4JDHqGFh2/duqvKX52hfudZNbQQnU4I8o8StKqkKreflNVjuhDoI554t9pL8QYbp4ITAPU2CDJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208819; c=relaxed/simple;
-	bh=MCaB++Diw298MF0Ccawg9hQdP7xqMKttHMognpxsvgw=;
+	s=arc-20240116; t=1756208822; c=relaxed/simple;
+	bh=OSYN37+ollnujCJdb7zCGsYjXV5RF77Z51CF+XIxcew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3/Qi0ir79h3qjcn6mIt7NBF6FGdnzzDbXKOhDWcEuOg8gFYfI//TvYq8fdKRfRoMHBl8yiHvPu7qS4G25ib912BkKQPQGrHdS4nq0Zg41S+0P0cic37a28xTKRRtd8gXuhxthBkmeIt3OmGZMuNhGm3kW/XPGtquZPqjktmMiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1K12gRYA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTY3H45QcLuiXwEoqi9zdQuwXogEFZNFZM0xcX16utyv0XwRyDPQo2iE7gReWEMQbmXzPGwsa2TXXgUHbOcwzmjvrW8ApUWUxYjAUMx6N/zwH4kVnl3+qtnCioCiTumE3IyXo5IBq6iLwYdhYgG5KzUKdwrZgORC4MX13dX7svk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4ejI9IN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1K12gRYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F31EC4CEF1;
-	Tue, 26 Aug 2025 11:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4ejI9IN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B02C113CF;
+	Tue, 26 Aug 2025 11:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208819;
-	bh=MCaB++Diw298MF0Ccawg9hQdP7xqMKttHMognpxsvgw=;
+	s=korg; t=1756208822;
+	bh=OSYN37+ollnujCJdb7zCGsYjXV5RF77Z51CF+XIxcew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1K12gRYATFQoLN3JAkH0bdme91hQjxgJLr5Njuy2CdaTuEeBEukOrlpFtOLm6xA1c
-	 HiuGpWXTqaCXiF0qcLQHwkaVzEXEyJB9MY+N1yOs8KzcqsYch6kuVRP+cJAm4+cxly
-	 R6NhfWZljZTfmvhNUga3fyeIptF1DUHeaDTqU+Q0=
+	b=A4ejI9INTmc8PQkaNJO1emRW9ZnZoZ+wyqLEk1sg/14BtoecBYzJmuiM3PGgHWZlz
+	 6NlzhpZDodFwJoDpwRBMR7Z/hBzLYzUkk8qw8q0XZ0+VQHNvP7e26j4RakgQXYCHta
+	 6gYb7R+UmQmgcNmZe+JqwiVO5kEPU0mM/Otrip0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kerem Karabay <kekrby@gmail.com>,
+	Aditya Garg <gargaditya08@live.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/322] tracing: Limit access to parser->buffer when trace_get_user failed
-Date: Tue, 26 Aug 2025 13:10:55 +0200
-Message-ID: <20250826110921.839083790@linuxfoundation.org>
+Subject: [PATCH 6.12 258/322] drm/format-helper: Add conversion from XRGB8888 to BGR888
+Date: Tue, 26 Aug 2025 13:11:13 +0200
+Message-ID: <20250826110922.306779203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,139 +52,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Kerem Karabay <kekrby@gmail.com>
 
-[ Upstream commit 6a909ea83f226803ea0e718f6e88613df9234d58 ]
+[ Upstream commit c9043706cb11b8005e145debe0a3211acd08e2c1 ]
 
-When the length of the string written to set_ftrace_filter exceeds
-FTRACE_BUFF_MAX, the following KASAN alarm will be triggered:
+Add XRGB8888 emulation helper for devices that only support BGR888.
 
-BUG: KASAN: slab-out-of-bounds in strsep+0x18c/0x1b0
-Read of size 1 at addr ffff0000d00bd5ba by task ash/165
-
-CPU: 1 UID: 0 PID: 165 Comm: ash Not tainted 6.16.0-g6bcdbd62bd56-dirty
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- show_stack+0x34/0x50 (C)
- dump_stack_lvl+0xa0/0x158
- print_address_description.constprop.0+0x88/0x398
- print_report+0xb0/0x280
- kasan_report+0xa4/0xf0
- __asan_report_load1_noabort+0x20/0x30
- strsep+0x18c/0x1b0
- ftrace_process_regex.isra.0+0x100/0x2d8
- ftrace_regex_release+0x484/0x618
- __fput+0x364/0xa58
- ____fput+0x28/0x40
- task_work_run+0x154/0x278
- do_notify_resume+0x1f0/0x220
- el0_svc+0xec/0xf0
- el0t_64_sync_handler+0xa0/0xe8
- el0t_64_sync+0x1ac/0x1b0
-
-The reason is that trace_get_user will fail when processing a string
-longer than FTRACE_BUFF_MAX, but not set the end of parser->buffer to 0.
-Then an OOB access will be triggered in ftrace_regex_release->
-ftrace_process_regex->strsep->strpbrk. We can solve this problem by
-limiting access to parser->buffer when trace_get_user failed.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/20250813040232.1344527-1-pulehui@huaweicloud.com
-Fixes: 8c9af478c06b ("ftrace: Handle commands when closing set_ftrace_filter file")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Kerem Karabay <kekrby@gmail.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/9A67EA95-9BC7-4D56-8F87-05EAC1C166AD@live.com
+Stable-dep-of: 05663d88fd0b ("drm/tests: Fix drm_test_fb_xrgb8888_to_xrgb2101010() on big-endian")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   18 ++++++++++++------
- kernel/trace/trace.h |    8 +++++++-
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/drm_format_helper.c           | 54 +++++++++++++
+ .../gpu/drm/tests/drm_format_helper_test.c    | 81 +++++++++++++++++++
+ include/drm/drm_format_helper.h               |  3 +
+ 3 files changed, 138 insertions(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1754,7 +1754,7 @@ int trace_get_user(struct trace_parser *
- 
- 	ret = get_user(ch, ubuf++);
- 	if (ret)
--		return ret;
-+		goto fail;
- 
- 	read++;
- 	cnt--;
-@@ -1768,7 +1768,7 @@ int trace_get_user(struct trace_parser *
- 		while (cnt && isspace(ch)) {
- 			ret = get_user(ch, ubuf++);
- 			if (ret)
--				return ret;
-+				goto fail;
- 			read++;
- 			cnt--;
- 		}
-@@ -1786,12 +1786,14 @@ int trace_get_user(struct trace_parser *
- 	while (cnt && !isspace(ch) && ch) {
- 		if (parser->idx < parser->size - 1)
- 			parser->buffer[parser->idx++] = ch;
--		else
--			return -EINVAL;
-+		else {
-+			ret = -EINVAL;
-+			goto fail;
-+		}
- 
- 		ret = get_user(ch, ubuf++);
- 		if (ret)
--			return ret;
-+			goto fail;
- 		read++;
- 		cnt--;
- 	}
-@@ -1806,11 +1808,15 @@ int trace_get_user(struct trace_parser *
- 		/* Make sure the parsed string always terminates with '\0'. */
- 		parser->buffer[parser->idx] = 0;
- 	} else {
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail;
- 	}
- 
- 	*ppos += read;
- 	return read;
-+fail:
-+	trace_parser_fail(parser);
-+	return ret;
+diff --git a/drivers/gpu/drm/drm_format_helper.c b/drivers/gpu/drm/drm_format_helper.c
+index b1be458ed4dd..4f60c8d8f63e 100644
+--- a/drivers/gpu/drm/drm_format_helper.c
++++ b/drivers/gpu/drm/drm_format_helper.c
+@@ -702,6 +702,57 @@ void drm_fb_xrgb8888_to_rgb888(struct iosys_map *dst, const unsigned int *dst_pi
  }
+ EXPORT_SYMBOL(drm_fb_xrgb8888_to_rgb888);
  
- /* TODO add a seq_buf_to_buffer() */
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1230,6 +1230,7 @@ bool ftrace_event_is_function(struct tra
-  */
- struct trace_parser {
- 	bool		cont;
-+	bool		fail;
- 	char		*buffer;
- 	unsigned	idx;
- 	unsigned	size;
-@@ -1237,7 +1238,7 @@ struct trace_parser {
- 
- static inline bool trace_parser_loaded(struct trace_parser *parser)
- {
--	return (parser->idx != 0);
-+	return !parser->fail && parser->idx != 0;
- }
- 
- static inline bool trace_parser_cont(struct trace_parser *parser)
-@@ -1251,6 +1252,11 @@ static inline void trace_parser_clear(st
- 	parser->idx = 0;
- }
- 
-+static inline void trace_parser_fail(struct trace_parser *parser)
++static void drm_fb_xrgb8888_to_bgr888_line(void *dbuf, const void *sbuf, unsigned int pixels)
 +{
-+	parser->fail = true;
++	u8 *dbuf8 = dbuf;
++	const __le32 *sbuf32 = sbuf;
++	unsigned int x;
++	u32 pix;
++
++	for (x = 0; x < pixels; x++) {
++		pix = le32_to_cpu(sbuf32[x]);
++		/* write red-green-blue to output in little endianness */
++		*dbuf8++ = (pix & 0x00ff0000) >> 16;
++		*dbuf8++ = (pix & 0x0000ff00) >> 8;
++		*dbuf8++ = (pix & 0x000000ff) >> 0;
++	}
 +}
 +
- extern int trace_parser_get_init(struct trace_parser *parser, int size);
- extern void trace_parser_put(struct trace_parser *parser);
- extern int trace_get_user(struct trace_parser *parser, const char __user *ubuf,
++/**
++ * drm_fb_xrgb8888_to_bgr888 - Convert XRGB8888 to BGR888 clip buffer
++ * @dst: Array of BGR888 destination buffers
++ * @dst_pitch: Array of numbers of bytes between the start of two consecutive scanlines
++ *             within @dst; can be NULL if scanlines are stored next to each other.
++ * @src: Array of XRGB8888 source buffers
++ * @fb: DRM framebuffer
++ * @clip: Clip rectangle area to copy
++ * @state: Transform and conversion state
++ *
++ * This function copies parts of a framebuffer to display memory and converts the
++ * color format during the process. Destination and framebuffer formats must match. The
++ * parameters @dst, @dst_pitch and @src refer to arrays. Each array must have at
++ * least as many entries as there are planes in @fb's format. Each entry stores the
++ * value for the format's respective color plane at the same index.
++ *
++ * This function does not apply clipping on @dst (i.e. the destination is at the
++ * top-left corner).
++ *
++ * Drivers can use this function for BGR888 devices that don't natively
++ * support XRGB8888.
++ */
++void drm_fb_xrgb8888_to_bgr888(struct iosys_map *dst, const unsigned int *dst_pitch,
++			       const struct iosys_map *src, const struct drm_framebuffer *fb,
++			       const struct drm_rect *clip, struct drm_format_conv_state *state)
++{
++	static const u8 dst_pixsize[DRM_FORMAT_MAX_PLANES] = {
++		3,
++	};
++
++	drm_fb_xfrm(dst, dst_pitch, dst_pixsize, src, fb, clip, false, state,
++		    drm_fb_xrgb8888_to_bgr888_line);
++}
++EXPORT_SYMBOL(drm_fb_xrgb8888_to_bgr888);
++
+ static void drm_fb_xrgb8888_to_argb8888_line(void *dbuf, const void *sbuf, unsigned int pixels)
+ {
+ 	__le32 *dbuf32 = dbuf;
+@@ -1035,6 +1086,9 @@ int drm_fb_blit(struct iosys_map *dst, const unsigned int *dst_pitch, uint32_t d
+ 		} else if (dst_format == DRM_FORMAT_RGB888) {
+ 			drm_fb_xrgb8888_to_rgb888(dst, dst_pitch, src, fb, clip, state);
+ 			return 0;
++		} else if (dst_format == DRM_FORMAT_BGR888) {
++			drm_fb_xrgb8888_to_bgr888(dst, dst_pitch, src, fb, clip, state);
++			return 0;
+ 		} else if (dst_format == DRM_FORMAT_ARGB8888) {
+ 			drm_fb_xrgb8888_to_argb8888(dst, dst_pitch, src, fb, clip, state);
+ 			return 0;
+diff --git a/drivers/gpu/drm/tests/drm_format_helper_test.c b/drivers/gpu/drm/tests/drm_format_helper_test.c
+index b4d62fb1d909..2a3d80b27cae 100644
+--- a/drivers/gpu/drm/tests/drm_format_helper_test.c
++++ b/drivers/gpu/drm/tests/drm_format_helper_test.c
+@@ -60,6 +60,11 @@ struct convert_to_rgb888_result {
+ 	const u8 expected[TEST_BUF_SIZE];
+ };
+ 
++struct convert_to_bgr888_result {
++	unsigned int dst_pitch;
++	const u8 expected[TEST_BUF_SIZE];
++};
++
+ struct convert_to_argb8888_result {
+ 	unsigned int dst_pitch;
+ 	const u32 expected[TEST_BUF_SIZE];
+@@ -107,6 +112,7 @@ struct convert_xrgb8888_case {
+ 	struct convert_to_argb1555_result argb1555_result;
+ 	struct convert_to_rgba5551_result rgba5551_result;
+ 	struct convert_to_rgb888_result rgb888_result;
++	struct convert_to_bgr888_result bgr888_result;
+ 	struct convert_to_argb8888_result argb8888_result;
+ 	struct convert_to_xrgb2101010_result xrgb2101010_result;
+ 	struct convert_to_argb2101010_result argb2101010_result;
+@@ -151,6 +157,10 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
+ 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
+ 			.expected = { 0x00, 0x00, 0xFF },
+ 		},
++		.bgr888_result = {
++			.dst_pitch = TEST_USE_DEFAULT_PITCH,
++			.expected = { 0xFF, 0x00, 0x00 },
++		},
+ 		.argb8888_result = {
+ 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
+ 			.expected = { 0xFFFF0000 },
+@@ -217,6 +227,10 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
+ 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
+ 			.expected = { 0x00, 0x00, 0xFF },
+ 		},
++		.bgr888_result = {
++			.dst_pitch = TEST_USE_DEFAULT_PITCH,
++			.expected = { 0xFF, 0x00, 0x00 },
++		},
+ 		.argb8888_result = {
+ 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
+ 			.expected = { 0xFFFF0000 },
+@@ -330,6 +344,15 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
+ 				0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00,
+ 			},
+ 		},
++		.bgr888_result = {
++			.dst_pitch = TEST_USE_DEFAULT_PITCH,
++			.expected = {
++				0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00,
++				0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
++				0x00, 0x00, 0xFF, 0xFF, 0x00, 0xFF,
++				0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF,
++			},
++		},
+ 		.argb8888_result = {
+ 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
+ 			.expected = {
+@@ -468,6 +491,17 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
+ 				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 			},
+ 		},
++		.bgr888_result = {
++			.dst_pitch = 15,
++			.expected = {
++				0x0E, 0x44, 0x9C, 0x11, 0x4D, 0x05, 0xA8, 0xF3, 0x03,
++				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++				0x6C, 0xF0, 0x73, 0x0E, 0x44, 0x9C, 0x11, 0x4D, 0x05,
++				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++				0xA8, 0x03, 0x03, 0x6C, 0xF0, 0x73, 0x0E, 0x44, 0x9C,
++				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++			},
++		},
+ 		.argb8888_result = {
+ 			.dst_pitch = 20,
+ 			.expected = {
+@@ -914,6 +948,52 @@ static void drm_test_fb_xrgb8888_to_rgb888(struct kunit *test)
+ 	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
+ }
+ 
++static void drm_test_fb_xrgb8888_to_bgr888(struct kunit *test)
++{
++	const struct convert_xrgb8888_case *params = test->param_value;
++	const struct convert_to_bgr888_result *result = &params->bgr888_result;
++	size_t dst_size;
++	u8 *buf = NULL;
++	__le32 *xrgb8888 = NULL;
++	struct iosys_map dst, src;
++
++	struct drm_framebuffer fb = {
++		.format = drm_format_info(DRM_FORMAT_XRGB8888),
++		.pitches = { params->pitch, 0, 0 },
++	};
++
++	dst_size = conversion_buf_size(DRM_FORMAT_BGR888, result->dst_pitch,
++				       &params->clip, 0);
++	KUNIT_ASSERT_GT(test, dst_size, 0);
++
++	buf = kunit_kzalloc(test, dst_size, GFP_KERNEL);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buf);
++	iosys_map_set_vaddr(&dst, buf);
++
++	xrgb8888 = cpubuf_to_le32(test, params->xrgb8888, TEST_BUF_SIZE);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, xrgb8888);
++	iosys_map_set_vaddr(&src, xrgb8888);
++
++	/*
++	 * BGR888 expected results are already in little-endian
++	 * order, so there's no need to convert the test output.
++	 */
++	drm_fb_xrgb8888_to_bgr888(&dst, &result->dst_pitch, &src, &fb, &params->clip,
++				  &fmtcnv_state);
++	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
++
++	buf = dst.vaddr; /* restore original value of buf */
++	memset(buf, 0, dst_size);
++
++	int blit_result = 0;
++
++	blit_result = drm_fb_blit(&dst, &result->dst_pitch, DRM_FORMAT_BGR888, &src, &fb, &params->clip,
++				  &fmtcnv_state);
++
++	KUNIT_EXPECT_FALSE(test, blit_result);
++	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
++}
++
+ static void drm_test_fb_xrgb8888_to_argb8888(struct kunit *test)
+ {
+ 	const struct convert_xrgb8888_case *params = test->param_value;
+@@ -1851,6 +1931,7 @@ static struct kunit_case drm_format_helper_test_cases[] = {
+ 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_argb1555, convert_xrgb8888_gen_params),
+ 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_rgba5551, convert_xrgb8888_gen_params),
+ 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_rgb888, convert_xrgb8888_gen_params),
++	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_bgr888, convert_xrgb8888_gen_params),
+ 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_argb8888, convert_xrgb8888_gen_params),
+ 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_xrgb2101010, convert_xrgb8888_gen_params),
+ 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_argb2101010, convert_xrgb8888_gen_params),
+diff --git a/include/drm/drm_format_helper.h b/include/drm/drm_format_helper.h
+index 428d81afe215..aa1604d92c1a 100644
+--- a/include/drm/drm_format_helper.h
++++ b/include/drm/drm_format_helper.h
+@@ -96,6 +96,9 @@ void drm_fb_xrgb8888_to_rgba5551(struct iosys_map *dst, const unsigned int *dst_
+ void drm_fb_xrgb8888_to_rgb888(struct iosys_map *dst, const unsigned int *dst_pitch,
+ 			       const struct iosys_map *src, const struct drm_framebuffer *fb,
+ 			       const struct drm_rect *clip, struct drm_format_conv_state *state);
++void drm_fb_xrgb8888_to_bgr888(struct iosys_map *dst, const unsigned int *dst_pitch,
++			       const struct iosys_map *src, const struct drm_framebuffer *fb,
++			       const struct drm_rect *clip, struct drm_format_conv_state *state);
+ void drm_fb_xrgb8888_to_argb8888(struct iosys_map *dst, const unsigned int *dst_pitch,
+ 				 const struct iosys_map *src, const struct drm_framebuffer *fb,
+ 				 const struct drm_rect *clip, struct drm_format_conv_state *state);
+-- 
+2.50.1
+
 
 
