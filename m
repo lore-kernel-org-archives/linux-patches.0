@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79ADFBF0;
-	Tue, 26 Aug 2025 13:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FB98462;
+	Tue, 26 Aug 2025 13:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214064; cv=none; b=DeAQxKMBK2fVvWR7f3rggMVqsYTOyNv0snHx90zw3i8qnSX6NBlEQg6ZuNPLmOu3ZTvxe6PoQganJ1X9sAY2x1tUG46EfZ7wWOCWs68IsPiou1T1/b3fjKc4BdGDnnZibCVbSMrQ3aRcVXUafhycnDFvHWOuRas3XIfk086Qaqs=
+	t=1756214067; cv=none; b=ibDohHSFoQy+x/Paev3i/fJKJKi1r2Z0kMIP8GSVamhr6r2MFKI0VLsjFV/r2AGXDpgcG4KCuBVGAWz54zOoEh+DdjDzYvx4ubNCC+NYfQZTe6tgVPpd+LQo8EiwDlznVzF6lUKa+Qx99Aq58h0P698bo2Skm3csAM7gTC/bC3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214064; c=relaxed/simple;
-	bh=uxYB0vHT0VYPqXmT99aNuxfJCQXwcbWDfgcuDz5ZZzU=;
+	s=arc-20240116; t=1756214067; c=relaxed/simple;
+	bh=2416IFVnRAJRYWExfk40aZdaS0gWQT+/A65kki6Debc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEA2pE1blgU3VJ2XLn+mZF5cYr3b4XIV9eTn/JL3GrgizBrVeUIMQOj7IZ4rAyxGlwy2n2ibSXK91wLywrjYUcxMx95S3h9lwIAaMILSjgwRu5lzFP9JG7UYGc/pQrb3yQWJ3bh27z7MMAvvfTJ4OPGt4xAemSvS3kVZEe26nqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsIeKdhL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mwL1pd6g7RuugoGT5AiMzMlRZTv1BtxWe+wSOZ3JhHJDjbVl1OCtuZDkA0WL5Q7RsCDPtv5+c0wqCF/Sii9zCHJn8yfR6pVH/dR0fG0fU7QDDB/GTadiV0qjl5AHpNbImnZPQ3ZcwnPK5mWZrFyCUC0nrBNBLQKA5XlZM8wzUTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyDcCEmR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsIeKdhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E21C4CEF1;
-	Tue, 26 Aug 2025 13:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyDcCEmR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8379C4CEF1;
+	Tue, 26 Aug 2025 13:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214063;
-	bh=uxYB0vHT0VYPqXmT99aNuxfJCQXwcbWDfgcuDz5ZZzU=;
+	s=korg; t=1756214067;
+	bh=2416IFVnRAJRYWExfk40aZdaS0gWQT+/A65kki6Debc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsIeKdhLgyxcM1AhFDPn1IadK77oB7QH5tMuU5IKo9Kt+NKU9M6JXz6HndRE1CR7G
-	 NBWJ4mRaj8F0IQaT8zWYsojyRjegxes5QvK1sRlmtCVmpiTsSCfqgxkr79ifb6IfKd
-	 tYel+McqlL46TJ2SzCdxfwV3ko7fA20c0BRab4QI=
+	b=cyDcCEmR5G2Oty/z9RiYyNLzVAFo3JgI66+6ma4xa5zn9JGhhtx5XF7amTmXggCaL
+	 VPDVT05v9rDRW92+sIq4bBZjb06/6YdRT94DXPZpsPsQ0soxJ46/SUyZQdLMnlCbHJ
+	 ZiaQ7XefehSFrz3V+9MXzn84B+tzCW5f9MZyKn1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Boshi Yu <boshiyu@linux.alibaba.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 552/587] RDMA/erdma: Fix ignored return value of init_kernel_qp
-Date: Tue, 26 Aug 2025 13:11:41 +0200
-Message-ID: <20250826111007.065964860@linuxfoundation.org>
+Subject: [PATCH 6.6 553/587] RDMA/bnxt_re: Fix to do SRQ armena by default
+Date: Tue, 26 Aug 2025 13:11:42 +0200
+Message-ID: <20250826111007.090002803@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boshi Yu <boshiyu@linux.alibaba.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit d5c74713f0117d07f91eb48b10bc2ad44e23c9b9 ]
+[ Upstream commit 6296f9a5293ada28558f2867ac54c487e1e2b9f2 ]
 
-The init_kernel_qp interface may fail. Check its return value and free
-related resources properly when it does.
+Whenever SRQ is created, make sure SRQ arm enable is always
+set. Driver is always ready to receive SRQ ASYNC event.
 
-Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
-Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Boshi Yu <boshiyu@linux.alibaba.com>
-Link: https://patch.msgid.link/20250725055410.67520-3-boshiyu@linux.alibaba.com
+Additional note -
+There is no need to do srq arm enable conditionally.
+See bnxt_qplib_armen_db in bnxt_qplib_create_cq().
+
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Link: https://patch.msgid.link/20250805101000.233310-2-kalesh-anakkur.purayil@broadcom.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_verbs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index 29ad2f5ffabe..e990690d8b3c 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -979,7 +979,9 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 		if (ret)
- 			goto err_out_cmd;
- 	} else {
--		init_kernel_qp(dev, qp, attrs);
-+		ret = init_kernel_qp(dev, qp, attrs);
-+		if (ret)
-+			goto err_out_xa;
- 	}
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 68ea4ed0b171..8dc707f98fff 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -685,8 +685,7 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
+ 	srq->dbinfo.db = srq->dpi->dbr;
+ 	srq->dbinfo.max_slot = 1;
+ 	srq->dbinfo.priv_db = res->dpi_tbl.priv_db;
+-	if (srq->threshold)
+-		bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
++	bnxt_qplib_armen_db(&srq->dbinfo, DBC_DBC_TYPE_SRQ_ARMENA);
+ 	srq->arm_req = false;
  
- 	qp->attrs.max_send_sge = attrs->cap.max_send_sge;
+ 	return 0;
 -- 
 2.50.1
 
