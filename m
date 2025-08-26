@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C551A2F6564;
-	Tue, 26 Aug 2025 13:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AEB307AF5;
+	Tue, 26 Aug 2025 13:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214876; cv=none; b=UFFUwbfNN6NhCX5Ca2M0j0oMmlpLPHxAeWHEg+G3Ruw4nnHg8r07F9/1NVY2kbivoFihwoEO/88rDVpOvIZJZX86HCpXo45gu+4AfITPBsmD1fdS+U61VCXk7Wn3uad7zX4Pp+pLpeiwU5+TT6GoD17+mLVczkJxbI1z5KHXrx8=
+	t=1756214878; cv=none; b=jXpLtsiDFWxgUKCzpldOYAVpzz1HuBmfs2lp8DHqChxQ445kRGoRvZEn7AA1N9bChoiktTjCBT5yFhxLT8g4sONhQkCFBQxE/DNFtrITAqlv0Fo3SdmFxX5FOywM/HacAT/FQu9J85TWJD8USNRPwm9Fui8tuUUfDs5rQob01i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214876; c=relaxed/simple;
-	bh=jqj9kMp7l7G/ogANlYC5U6o4h1ltQW3QQ4gN7ULnX28=;
+	s=arc-20240116; t=1756214878; c=relaxed/simple;
+	bh=c2LDDjcwhxSkwBj7FmESPaUHSOe53R140DTb3uwoID4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fW91w8S/hmDAJu9BmUNOZfLQ5S4bYlokbGVJ+ub3URYFTWsxPUm9VEHiHrlLoKnwPKfukaBitX1tVsmcyjn3NwELgc1lUzDH9rJ+yoQ20gY1V8HJL7/wYGXLW/gLtCgqiGQRJBLoKIE5pM43TVakfvHoR+P0ZC7fI/Xwvoxj+vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZi7caf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BIkRTgoKoAXkMrrK+h6bI0tcqdEUuVRyMKampMrmW3P6FH4+SWiH4J9OtPZ2JT7h1Sl753TQny+q2Y9VAdueINxTPlSPxb1ybo1j/4lTwqu3axM1GviUHudEQGbqxfAWcznPyDV5K6ZyqVUV+r+bYagh+wVdfN9xF/hgdX//nzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsxyH6TC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZi7caf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F07C116B1;
-	Tue, 26 Aug 2025 13:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsxyH6TC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7364AC113CF;
+	Tue, 26 Aug 2025 13:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214875;
-	bh=jqj9kMp7l7G/ogANlYC5U6o4h1ltQW3QQ4gN7ULnX28=;
+	s=korg; t=1756214877;
+	bh=c2LDDjcwhxSkwBj7FmESPaUHSOe53R140DTb3uwoID4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZi7caf1gETnD8AvkRz8y7F77W55prLJp7qH447DWPwAeL7+uQfBPvY3cWc6aDsNH
-	 j1RMQebivHLk5xmk8wWqxjK0VyMVuVmKnDfK0djoK+qpTTG5zvObf+Rh0Ijwuri7aK
-	 yVcZL2JYXfrYIbgYzDTt3UQ7eCAf8+rdi3NVcyTU=
+	b=JsxyH6TC4zyDO/V70MSvk20yqa75iXjonbB89YN54ECtMey+GnriJj5zA1b95yvRd
+	 zvEBlQrOxHH0M6IV7gh/RlkjBWoEShaBJKdyEkFFX0nXOrns+gGdRERVEQPhrmU2Pk
+	 +W8i+yt0LQR9zJ8W7BXBmvOJlnYFAFUEi9Bhk1rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 302/482] hwmon: (gsc-hwmon) fix fan pwm setpoint show functions
-Date: Tue, 26 Aug 2025 13:09:15 +0200
-Message-ID: <20250826110938.261255421@linuxfoundation.org>
+	Jean-Marc Ranger <jmranger@hotmail.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>
+Subject: [PATCH 6.1 303/482] mtd: spi-nor: Fix spi_nor_try_unlock_all()
+Date: Tue, 26 Aug 2025 13:09:16 +0200
+Message-ID: <20250826110938.286359060@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,59 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: Michael Walle <mwalle@kernel.org>
 
-commit 9c62e2282900332c8b711d9f9e37af369a8ef71b upstream.
+commit 2e3a7476ec3989e77270b9481e76e137824b17c0 upstream.
 
-The Linux hwmon sysfs API values for pwmX_auto_pointY_pwm represent an
-integer value between 0 (0%) to 255 (100%) and the pwmX_auto_pointY_temp
-represent millidegrees Celcius.
+Commit ff67592cbdfc ("mtd: spi-nor: Introduce spi_nor_set_mtd_info()")
+moved all initialization of the mtd fields at the end of spi_nor_scan().
+Normally, the mtd info is only needed for the mtd ops on the device,
+with one exception: spi_nor_try_unlock_all(), which will also make use
+of the mtd->size parameter. With that commit, the size will always be
+zero because it is not initialized. Fix that by not using the size of
+the mtd_info struct, but use the size from struct spi_nor_flash_parameter.
 
-Commit a6d80df47ee2 ("hwmon: (gsc-hwmon) fix fan pwm temperature
-scaling") properly addressed the incorrect scaling in the
-pwm_auto_point_temp_store implementation but erroneously scaled
-the pwm_auto_point_pwm_show (pwm value) instead of the
-pwm_auto_point_temp_show (temp value) resulting in:
- # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_pwm
- 25500
- # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_temp
- 4500
-
-Fix the scaling of these attributes:
- # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_pwm
- 255
- # cat /sys/class/hwmon/hwmon0/pwm1_auto_point6_temp
- 45000
-
-Fixes: a6d80df47ee2 ("hwmon: (gsc-hwmon) fix fan pwm temperature scaling")
+Fixes: ff67592cbdfc ("mtd: spi-nor: Introduce spi_nor_set_mtd_info()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Link: https://lore.kernel.org/r/20250718200259.1840792-1-tharvey@gateworks.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Jean-Marc Ranger <jmranger@hotmail.com>
+Closes: https://lore.kernel.org/all/DM6PR06MB561177323DC5207E34AF2A06C547A@DM6PR06MB5611.namprd06.prod.outlook.com/
+Tested-by: Jean-Marc Ranger <jmranger@hotmail.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250701140426.2355182-1-mwalle@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/gsc-hwmon.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/spi-nor/swp.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
---- a/drivers/hwmon/gsc-hwmon.c
-+++ b/drivers/hwmon/gsc-hwmon.c
-@@ -65,7 +65,7 @@ static ssize_t pwm_auto_point_temp_show(
- 		return ret;
- 
- 	ret = regs[0] | regs[1] << 8;
--	return sprintf(buf, "%d\n", ret * 10);
-+	return sprintf(buf, "%d\n", ret * 100);
- }
- 
- static ssize_t pwm_auto_point_temp_store(struct device *dev,
-@@ -100,7 +100,7 @@ static ssize_t pwm_auto_point_pwm_show(s
+--- a/drivers/mtd/spi-nor/swp.c
++++ b/drivers/mtd/spi-nor/swp.c
+@@ -50,7 +50,6 @@ static u64 spi_nor_get_min_prot_length_s
+ static void spi_nor_get_locked_range_sr(struct spi_nor *nor, u8 sr, loff_t *ofs,
+ 					uint64_t *len)
  {
- 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+-	struct mtd_info *mtd = &nor->mtd;
+ 	u64 min_prot_len;
+ 	u8 mask = spi_nor_get_sr_bp_mask(nor);
+ 	u8 tb_mask = spi_nor_get_sr_tb_mask(nor);
+@@ -71,13 +70,13 @@ static void spi_nor_get_locked_range_sr(
+ 	min_prot_len = spi_nor_get_min_prot_length_sr(nor);
+ 	*len = min_prot_len << (bp - 1);
  
--	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)));
-+	return sprintf(buf, "%d\n", 255 * (50 + (attr->index * 10)) / 100);
+-	if (*len > mtd->size)
+-		*len = mtd->size;
++	if (*len > nor->params->size)
++		*len = nor->params->size;
+ 
+ 	if (nor->flags & SNOR_F_HAS_SR_TB && sr & tb_mask)
+ 		*ofs = 0;
+ 	else
+-		*ofs = mtd->size - *len;
++		*ofs = nor->params->size - *len;
  }
  
- static SENSOR_DEVICE_ATTR_RO(pwm1_auto_point1_pwm, pwm_auto_point_pwm, 0);
+ /*
+@@ -153,7 +152,6 @@ static bool spi_nor_is_unlocked_sr(struc
+  */
+ static int spi_nor_sr_lock(struct spi_nor *nor, loff_t ofs, uint64_t len)
+ {
+-	struct mtd_info *mtd = &nor->mtd;
+ 	u64 min_prot_len;
+ 	int ret, status_old, status_new;
+ 	u8 mask = spi_nor_get_sr_bp_mask(nor);
+@@ -178,7 +176,7 @@ static int spi_nor_sr_lock(struct spi_no
+ 		can_be_bottom = false;
+ 
+ 	/* If anything above us is unlocked, we can't use 'top' protection */
+-	if (!spi_nor_is_locked_sr(nor, ofs + len, mtd->size - (ofs + len),
++	if (!spi_nor_is_locked_sr(nor, ofs + len, nor->params->size - (ofs + len),
+ 				  status_old))
+ 		can_be_top = false;
+ 
+@@ -190,11 +188,11 @@ static int spi_nor_sr_lock(struct spi_no
+ 
+ 	/* lock_len: length of region that should end up locked */
+ 	if (use_top)
+-		lock_len = mtd->size - ofs;
++		lock_len = nor->params->size - ofs;
+ 	else
+ 		lock_len = ofs + len;
+ 
+-	if (lock_len == mtd->size) {
++	if (lock_len == nor->params->size) {
+ 		val = mask;
+ 	} else {
+ 		min_prot_len = spi_nor_get_min_prot_length_sr(nor);
+@@ -238,7 +236,6 @@ static int spi_nor_sr_lock(struct spi_no
+  */
+ static int spi_nor_sr_unlock(struct spi_nor *nor, loff_t ofs, uint64_t len)
+ {
+-	struct mtd_info *mtd = &nor->mtd;
+ 	u64 min_prot_len;
+ 	int ret, status_old, status_new;
+ 	u8 mask = spi_nor_get_sr_bp_mask(nor);
+@@ -263,7 +260,7 @@ static int spi_nor_sr_unlock(struct spi_
+ 		can_be_top = false;
+ 
+ 	/* If anything above us is locked, we can't use 'bottom' protection */
+-	if (!spi_nor_is_unlocked_sr(nor, ofs + len, mtd->size - (ofs + len),
++	if (!spi_nor_is_unlocked_sr(nor, ofs + len, nor->params->size - (ofs + len),
+ 				    status_old))
+ 		can_be_bottom = false;
+ 
+@@ -275,7 +272,7 @@ static int spi_nor_sr_unlock(struct spi_
+ 
+ 	/* lock_len: length of region that should remain locked */
+ 	if (use_top)
+-		lock_len = mtd->size - (ofs + len);
++		lock_len = nor->params->size - (ofs + len);
+ 	else
+ 		lock_len = ofs;
+ 
 
 
