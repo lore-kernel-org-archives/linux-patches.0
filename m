@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C341C4609;
-	Tue, 26 Aug 2025 13:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213CA23F439;
+	Tue, 26 Aug 2025 13:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214851; cv=none; b=Xvouw0lxi96dIK+kqbpnjqZH9s9xAplGj72xWX0zRZEzJoqu6tt73+3v1vfmgQZ8DSZOim2In4T6sld0B9CaRue1AHsDp8IZiYucOpzsUMoLrvBoDPsZun3vuXATsFbBTZsAN/8j7E9JVaoBreYWizOuXWLcx5HwazKhDwrbVnQ=
+	t=1756214854; cv=none; b=Vr3+LihAQKsQa5Q8MdoRS8F+FXUZsoMJsRBfIS/Wb95c8JOonvR/J6bh1t2z+E9FjZySBXC8P3ptx0yAobLzmYEMrKQN/x8gMv7XEgerX7s9EqDIeLQP3rzJwVhAMVIxTgTKJOiH5cCj1+Xiw1ydE6k0oyjII3ApiWgpBFzjvmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214851; c=relaxed/simple;
-	bh=GDJacT/RBxj1lM/s77g/DAJWsliywwn2TP7C7+wM0Wk=;
+	s=arc-20240116; t=1756214854; c=relaxed/simple;
+	bh=6BY4rau6xF24liU3SO0M+iI2lHsEYBIWZI3ZDVvRp/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q/khvSrSC9OdnKJXjXMjqm7lfF3PAZZkf82wISkpa1jm6efzjmvLY4K+QbZE8uYTslj0p/I5+u/g6a4/N5c/89wvSX2qtkei1DJI44GKZuzm6ruI+2i2H7xWV2S8PkFU54OXqrHBDAL36KH0CgjKtFK4KyI2ehpY+jlChNsOAO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8WAl09D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gojAkI+z7sfVso3AhBXGXUVWg7WktZalv+0Sr+/sSRmoeC3NLf6mMhMKfG/3R22cNqoUOnxLcjKrhbOi8cv2SYM/3F9qxGDaHujAEaJjRMnAjsyzZs/LG9Z15AnEiJvpJlmE27Ht+mbXI56d6jnFvOQ7tDWFI2q+HNg0EFWotvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aaNW1sB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8WAl09D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F0CC4CEF1;
-	Tue, 26 Aug 2025 13:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aaNW1sB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACC1C4CEF1;
+	Tue, 26 Aug 2025 13:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214851;
-	bh=GDJacT/RBxj1lM/s77g/DAJWsliywwn2TP7C7+wM0Wk=;
+	s=korg; t=1756214854;
+	bh=6BY4rau6xF24liU3SO0M+iI2lHsEYBIWZI3ZDVvRp/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8WAl09DlLw1I90no/m3CCd8G0AAC3P71X4k/5gyN4+Q34aUQZj5wGTOKvtcmrvF3
-	 x9Yye+0hKsjCPD+HQnf1srbxiR03hbJUQ7ogG7+iTjkHfkIYeo9XdeXBFNvkTjlGUh
-	 hPWsgMmbikNWQoLsKpBah45itF4hqQgIsCuW1fMg=
+	b=1aaNW1sBSq5F7nL5iTAdnOdPauHwu0087Xf3T6QuwqGzPM1Ra58yPN/LzjFqMY3+Q
+	 N26KzQozCFxNruK72ivCWupivc2Kn+3tthcN6DDDDUt1aVG5l0Z10R0JkI3/4rh0Ge
+	 VYwFJ9eIbkjnW7aLTA2Tro2D8fFCIQ86E9//ExlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 294/482] iio: adc: ad_sigma_delta: change to buffer predisable
-Date: Tue, 26 Aug 2025 13:09:07 +0200
-Message-ID: <20250826110938.056414766@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>
+Subject: [PATCH 6.1 295/482] wifi: brcmsmac: Remove const from tbl_ptr parameter in wlc_lcnphy_common_read_table()
+Date: Tue, 26 Aug 2025 13:09:08 +0200
+Message-ID: <20250826110938.080607973@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -45,54 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 66d4374d97f85516b5a22418c5e798aed2606dec upstream.
+commit 81284e86bf8849f8e98e8ead3ff5811926b2107f upstream.
 
-Change the buffer disable callback from postdisable to predisable.
-This balances the existing posteanble callback. Using postdisable
-with posteanble can be problematic, for example, if update_scan_mode
-fails, it would call postdisable without ever having called posteanble,
-so the drivers using this would be in an unexpected state when
-postdisable was called.
+A new warning in clang [1] complains that diq_start in
+wlc_lcnphy_tx_iqlo_cal() is passed uninitialized as a const pointer to
+wlc_lcnphy_common_read_table():
 
-Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250703-iio-adc-ad_sigma_delta-buffer-predisable-v1-1-f2ab85138f1f@baylibre.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c:2728:13: error: variable 'diq_start' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
+   2728 |                                                      &diq_start, 1, 16, 69);
+        |                                                       ^~~~~~~~~
+
+The table pointer passed to wlc_lcnphy_common_read_table() should not be
+considered constant, as wlc_phy_read_table() is ultimately going to
+update it. Remove the const qualifier from the tbl_ptr to clear up the
+warning.
+
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2108
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>>
+Link: https://patch.msgid.link/20250715-brcmsmac-fix-uninit-const-pointer-v1-1-16e6a51a8ef4@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -406,7 +406,7 @@ err_unlock:
- 	return ret;
- }
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -919,7 +919,7 @@ void wlc_lcnphy_read_table(struct brcms_
  
--static int ad_sd_buffer_postdisable(struct iio_dev *indio_dev)
-+static int ad_sd_buffer_predisable(struct iio_dev *indio_dev)
+ static void
+ wlc_lcnphy_common_read_table(struct brcms_phy *pi, u32 tbl_id,
+-			     const u16 *tbl_ptr, u32 tbl_len,
++			     u16 *tbl_ptr, u32 tbl_len,
+ 			     u32 tbl_width, u32 tbl_offset)
  {
- 	struct ad_sigma_delta *sigma_delta = iio_device_get_drvdata(indio_dev);
- 
-@@ -534,7 +534,7 @@ static bool ad_sd_validate_scan_mask(str
- 
- static const struct iio_buffer_setup_ops ad_sd_buffer_setup_ops = {
- 	.postenable = &ad_sd_buffer_postenable,
--	.postdisable = &ad_sd_buffer_postdisable,
-+	.predisable = &ad_sd_buffer_predisable,
- 	.validate_scan_mask = &ad_sd_validate_scan_mask,
- };
- 
+ 	struct phytbl_info tab;
 
 
