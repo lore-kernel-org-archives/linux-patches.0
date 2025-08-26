@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1EF34AAF8;
-	Tue, 26 Aug 2025 14:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1D7352FFF;
+	Tue, 26 Aug 2025 14:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219237; cv=none; b=Q1UxkDPFTi5sfu3D3HlS+DbBMaMD+NbD/onmPLQoyHxpFxGDNnC75+eRvRESJdBAhLb8qlf5x4fu6VFvkU8ZmY9tMamMdbnfuGuEICoJkA+XaSpMvTdYElFKnmCSa21WaGIWcu89r3zRq5khtuqv135b6UeoOOvnBPF3a08m6W4=
+	t=1756219240; cv=none; b=m4vzV9zYqsylKg+sIHiTK6OIXSNoAkMFa0W1QkqATJpa4ClnkfYhfOZt/Ll5ldZwkZhyja2MyRkLmmtXxI7z64dtfHxz72UAYHq7djPfhW9LNd22HFxobHY6v1vFJjjhXIRKHg6S98O01w/LC1394wtMSkViQbuN3lvIhJqTJ4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219237; c=relaxed/simple;
-	bh=pxPzXMhy/WdPbf7/OitDRUO5o+pRit7qw8HUHwYZV3c=;
+	s=arc-20240116; t=1756219240; c=relaxed/simple;
+	bh=vhc/YdDWSVs4JD8SQ6xu8ZI/GpVHgQZ+BDJ+W1XX89s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvbObQ7z0om1FS/KM2EAdybhVlHKcYH7AfVSjp/+UQ2K2jV9gnYwM6IB/sdTM4skdNY0/6ut5VAHF2HrQXVjITnYtUG59b0IXfnk7U8dJ3RH+g+tUHVg2NKlmFiGYCEe/PD5O8RXjwB3yKrGIX8Firf+YMdVivWho/4WyTow1xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jO+IMw/I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uAI4M4NcsGmTm6ecrxYFTL44Gr56mhZskOFA0qTzDEwHzHIGxKBa75azAq8TiHaEfC6Kw7qjIYCQZyEamfbrX84uAfuORrz0iTeT0arIKHM7shGZ8HRd11bdLY6UgdQh/qZu7zSbIhkPXYfpbULQ1VLt1QKWIWbALnykcS+Rbzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+8xPdqK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jO+IMw/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9E2C4CEF1;
-	Tue, 26 Aug 2025 14:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+8xPdqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A58C4CEF1;
+	Tue, 26 Aug 2025 14:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219237;
-	bh=pxPzXMhy/WdPbf7/OitDRUO5o+pRit7qw8HUHwYZV3c=;
+	s=korg; t=1756219240;
+	bh=vhc/YdDWSVs4JD8SQ6xu8ZI/GpVHgQZ+BDJ+W1XX89s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jO+IMw/IXJUdslKnbZW+FPpzqT/LYNDGfLMQppFu51miUbEWzLeDLDJj+zb530Fw8
-	 gBT9GSDcKS9NMS/b9pnQeL4rIQeKZYvtIm8d6nL35Uk29G47NXJzjp4aqVuAY/7gB5
-	 WoWRmwinIlWMIcjF7voYkx3w+Jylv65XBJ3PGtbs=
+	b=O+8xPdqK1HBXzwJPykXV7y0tiCWMuKFGQpXC9U39D9nyLi5yCcRDKDCRRAu/uXplb
+	 eXUDIwY+QnU49TEU1LDYN35B/4w2ZnH5syApETIAZvNzgqTkDbDMVP9abs18pDvtGZ
+	 O91aXMt4sUIf+KGv24j0YHbs6vVYt/4GFczi71W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ludwig Disterhof <ludwig@disterhof.eu>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.4 305/403] media: usbtv: Lock resolution while streaming
-Date: Tue, 26 Aug 2025 13:10:31 +0200
-Message-ID: <20250826110915.244060855@linuxfoundation.org>
+Subject: [PATCH 5.4 306/403] media: ov2659: Fix memory leaks in ov2659_probe()
+Date: Tue, 26 Aug 2025 13:10:32 +0200
+Message-ID: <20250826110915.269951167@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,39 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ludwig Disterhof <ludwig@disterhof.eu>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-commit 7e40e0bb778907b2441bff68d73c3eb6b6cd319f upstream.
+commit 76142b137b968d47b35cdd8d1dc924677d319c8b upstream.
 
-When an program is streaming (ffplay) and another program (qv4l2)
-changes the TV standard from NTSC to PAL, the kernel crashes due to trying
-to copy to unmapped memory.
+ov2659_probe() doesn't properly free control handler resources in failure
+paths, causing memory leaks. Add v4l2_ctrl_handler_free() to prevent these
+memory leaks and reorder the ctrl_handler assignment for better code flow.
 
-Changing from NTSC to PAL increases the resolution in the usbtv struct,
-but the video plane buffer isn't adjusted, so it overflows.
-
-Fixes: 0e0fe3958fdd13d ("[media] usbtv: Add support for PAL video source")
+Fixes: c4c0283ab3cd ("[media] media: i2c: add support for omnivision's ov2659 sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ludwig Disterhof <ludwig@disterhof.eu>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[hverkuil: call vb2_is_busy instead of vb2_is_streaming]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/usbtv/usbtv-video.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/i2c/ov2659.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/usbtv/usbtv-video.c
-+++ b/drivers/media/usb/usbtv/usbtv-video.c
-@@ -73,6 +73,10 @@ static int usbtv_configure_for_norm(stru
+--- a/drivers/media/i2c/ov2659.c
++++ b/drivers/media/i2c/ov2659.c
+@@ -1432,14 +1432,15 @@ static int ov2659_probe(struct i2c_clien
+ 				     V4L2_CID_TEST_PATTERN,
+ 				     ARRAY_SIZE(ov2659_test_pattern_menu) - 1,
+ 				     0, 0, ov2659_test_pattern_menu);
+-	ov2659->sd.ctrl_handler = &ov2659->ctrls;
+ 
+ 	if (ov2659->ctrls.error) {
+ 		dev_err(&client->dev, "%s: control initialization error %d\n",
+ 			__func__, ov2659->ctrls.error);
++		v4l2_ctrl_handler_free(&ov2659->ctrls);
+ 		return  ov2659->ctrls.error;
  	}
  
- 	if (params) {
-+		if (vb2_is_busy(&usbtv->vb2q) &&
-+		    (usbtv->width != params->cap_width ||
-+		     usbtv->height != params->cap_height))
-+			return -EBUSY;
- 		usbtv->width = params->cap_width;
- 		usbtv->height = params->cap_height;
- 		usbtv->n_chunks = usbtv->width * usbtv->height
++	ov2659->sd.ctrl_handler = &ov2659->ctrls;
+ 	sd = &ov2659->sd;
+ 	client->flags |= I2C_CLIENT_SCCB;
+ #ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
 
 
