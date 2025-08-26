@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D506B196C7C;
-	Tue, 26 Aug 2025 13:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697552405E1;
+	Tue, 26 Aug 2025 13:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214265; cv=none; b=D2uGi9w7zuf1UtpOzDbBUWTeRr4EZyAd2EILD1OQA/dl8Ku9QIPtZkxsoG7ZYSv+AcDGJla2/l/BH5w8Rxs2/7R2YUZG7kMbAHCd/oSuBUf948jQHz5WbrQkhsCNqQOnz0ppNmIKb9/HjYN7nYcMiI3++F7iuEmItqCP2ZYYn9k=
+	t=1756214268; cv=none; b=Fzx44ho1QzVonema9cEp535Emw9qnLi26rwW36ca+ApCy2tXVpNSdA9ztmHxAWoavkqMcF7rtQGP5UdncpbPXbPC6FxIVAlEH+kRPjt9bRRLEhc+HZEtWkTRXU3QqtpJ1LV9TDgttq9Mqhs5WOT4p3LI4LD+VXIlcSmv5SKcg98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214265; c=relaxed/simple;
-	bh=GOTfFHXAD8fo36C+M+zI7MUpFno2tSRGB4xP7K6rlZg=;
+	s=arc-20240116; t=1756214268; c=relaxed/simple;
+	bh=ol/1tBdWBJM12u5MUwaIJQfY44IuF1gjj712BiaW494=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Le1blbe7imMdNQ0fcf7GlzgVABO6x0EBmlJqNvsraDoLiAI1AMyQuyrS//pxsmyiwijwGcfojyyFMPv44PMp82+6aCRfemqnYTC1/aVlcVwQkMFTdUrXHbf9VrWjfEvlcArNANGmfIN+Niy+EEnsTb/+c6sYgflxGIeKsYnq55Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuSBAzsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uc7Hu5LireU8sDvrzKVNXA450a62GQkS8NxOSlAnIINMou8iQTtT60YPE5tdpF3RsPTq7RZZ3do32rLFdN/BrQwI0Yug166jWSIvn8NxrIGJI8mC8Bd0/LKEvv9yxhitXgbA0xokr6qaO8X1Pj7HQyGP8XBrwgO0YfLaBulmzI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YofyZh7k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuSBAzsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1C6C4CEF1;
-	Tue, 26 Aug 2025 13:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YofyZh7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A09C4CEF1;
+	Tue, 26 Aug 2025 13:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214265;
-	bh=GOTfFHXAD8fo36C+M+zI7MUpFno2tSRGB4xP7K6rlZg=;
+	s=korg; t=1756214268;
+	bh=ol/1tBdWBJM12u5MUwaIJQfY44IuF1gjj712BiaW494=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BuSBAzsScH62H3DJvUA6p/udOvgYOiZ7Ivr9LaSNiWfneI2+M/JzqGSLNcdXpQ2+h
-	 TRgu5ejuhywY3s7q31AtUoMbdDsvUXf/DTvcCKx/CckyGaCawqXOrLhJIc07Uwc2mf
-	 5lWM1tzLVxaanhbq6BEDvWY6GGIIxRq7lm+iqD5I=
+	b=YofyZh7k1B5po82AIi19L/95q5ziMqMbGeuYf5W9FGMTovHjk53XWlOxmxgTgvOFc
+	 DzmwH8KSMIjdtnFc0hAJa4TRNmp+ARf8675+q/MYmkoObBajMC5iSGq19cMxS/4dU5
+	 C5NCGjc9MLreWs+txj5XVOson0YLB43FfGw4kTGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/482] gpio: wcd934x: check the return value of regmap_update_bits()
-Date: Tue, 26 Aug 2025 13:05:26 +0200
-Message-ID: <20250826110932.638910460@linuxfoundation.org>
+Subject: [PATCH 6.1 074/482] cpufreq: Exit governor when failed to start old governor
+Date: Tue, 26 Aug 2025 13:05:27 +0200
+Message-ID: <20250826110932.662958972@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,40 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit ff0f0d7c6587e38c308be9905e36f86e98fb9c1f ]
+[ Upstream commit 0ae204405095abfbc2d694ee0fbb49bcbbe55c57 ]
 
-regmap_update_bits() can fail so check its return value in
-wcd_gpio_direction_output() for consistency with the rest of the code
-and propagate any errors.
+Detect the result of starting old governor in cpufreq_set_policy(). If it
+fails, exit the governor and clear policy->governor.
 
-Link: https://lore.kernel.org/r/20250709-gpiochip-set-rv-gpio-remaining-v1-2-b8950f69618d@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20250709104145.2348017-5-zhenglifeng1@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-wcd934x.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-wcd934x.c b/drivers/gpio/gpio-wcd934x.c
-index 97e6caedf1f3..c00968ce7a56 100644
---- a/drivers/gpio/gpio-wcd934x.c
-+++ b/drivers/gpio/gpio-wcd934x.c
-@@ -45,9 +45,12 @@ static int wcd_gpio_direction_output(struct gpio_chip *chip, unsigned int pin,
- 				     int val)
- {
- 	struct wcd_gpio_data *data = gpiochip_get_data(chip);
-+	int ret;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 805b4d26e9d2..90bdccab1dff 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2649,10 +2649,12 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
+ 	pr_debug("starting governor %s failed\n", policy->governor->name);
+ 	if (old_gov) {
+ 		policy->governor = old_gov;
+-		if (cpufreq_init_governor(policy))
++		if (cpufreq_init_governor(policy)) {
+ 			policy->governor = NULL;
+-		else
+-			cpufreq_start_governor(policy);
++		} else if (cpufreq_start_governor(policy)) {
++			cpufreq_exit_governor(policy);
++			policy->governor = NULL;
++		}
+ 	}
  
--	regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
--			   WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
-+	ret = regmap_update_bits(data->map, WCD_REG_DIR_CTL_OFFSET,
-+				 WCD_PIN_MASK(pin), WCD_PIN_MASK(pin));
-+	if (ret)
-+		return ret;
- 
- 	return regmap_update_bits(data->map, WCD_REG_VAL_CTL_OFFSET,
- 				  WCD_PIN_MASK(pin),
+ 	return ret;
 -- 
 2.39.5
 
