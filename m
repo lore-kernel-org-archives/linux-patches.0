@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F4A1E7C08;
-	Tue, 26 Aug 2025 14:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F133451A0;
+	Tue, 26 Aug 2025 14:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216961; cv=none; b=Ng++TeIWfU3oB5xGMD3wn7j5sfxGnY3+EIqfFiqt8u1E8MPcBzuCI7CIYLnUBz8kSi4Ruw7/Uu6ea7htiyaAgwKzg+Cf4JYRQYwYTJpWVixrFlHv9FJssa/hOJm60IRX/YkVQgBHcgI8SkkywO2ZzDtII/F+ifqexT23pZG6RY4=
+	t=1756216964; cv=none; b=snSnAClMpIxzGsbfYRqtU1NVbU01k1BehHyisYtDzyocqywK5DaoMVbDCCoohG7Wj3S7lOKe2PfG3VHOcc4N7FKXhzyrWIonnSlySSTgSinoWyuew8oWdWAwYTgJatN+OtG8D0sVTvfK96yp35TRGDkZsj9WUKf79CY4ymCbpfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216961; c=relaxed/simple;
-	bh=XtFooGdewyaJDnvh37CDBzzC15Apr4Fwr5Z2swuNOUM=;
+	s=arc-20240116; t=1756216964; c=relaxed/simple;
+	bh=X/wjVYGPKqyTVgfxj43LxW0dmGK6dbXskaGHy9uBluU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcfU0LHNYsUcTFRXpvMaX1XS7qx4LzAPM/rHNT0pddqqIZmE7iZ93dNUdq96aotVisL9RtFrg1GGEdq7niOntjkJDf+VhK/zpych5FjNKxEJ4f0BMtpXjz2gLeGhD8BrBPAAK3nDYotW3Q1kTurfFHXs5EXxROuz+U7XhO06G4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfFurcQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lFlqnUaWKWhzh4s3cWaESQXAUNWwsafmsZSqSuZ7q1ScaCIsqzEO/KP0Jc25U9uXzxilIL+SmgL3LKbuINhNYMiMl6xmZqgOFjWoGSUmlfgeEEYawVlMUoHaEhtHcDRwyPZY32v/C6ANhGTopsBzpkqJuS5f+f47IqTKev/P64o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTRTLkN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfFurcQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62EEC4CEF1;
-	Tue, 26 Aug 2025 14:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTRTLkN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A03C4CEF1;
+	Tue, 26 Aug 2025 14:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216961;
-	bh=XtFooGdewyaJDnvh37CDBzzC15Apr4Fwr5Z2swuNOUM=;
+	s=korg; t=1756216963;
+	bh=X/wjVYGPKqyTVgfxj43LxW0dmGK6dbXskaGHy9uBluU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfFurcQYEGAEcVGt9BdObMKaaF3Omyjvaa+g2i5XWlaTTbGhwkAnZXYSgkVHBrzET
-	 3N0+8of2BCrujWbc0wTV21UQRggkUBuBOv84aVs3gnfNwKNT6oZbJyKHYSk7p1LoMg
-	 o02kSnfuaxlWe5MLQT8EI4VZM2tqAWDF8qKmJJAU=
+	b=YTRTLkN5jina3YelMbFbCZ5/RhR3mgPHBLfeX6DgmjQwKkUGTMYOTmgS/IMMGI6pf
+	 4HV/C0fGwQls7kAZAbN7/lmsCbPcoj7v45tMYqBGsPmLshU5CBtZKO5hkRZ7nJFGhk
+	 WJE37urni7eq9vQBx4xhoUWbK0+pRCyqhQFlAgT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@gmail.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 575/644] use uniform permission checks for all mount propagation changes
-Date: Tue, 26 Aug 2025 13:11:06 +0200
-Message-ID: <20250826111000.779189458@linuxfoundation.org>
+	Pavel Pisa <pisa@fel.cvut.cz>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 5.15 576/644] fpga: zynq_fpga: Fix the wrong usage of dma_map_sgtable()
+Date: Tue, 26 Aug 2025 13:11:07 +0200
+Message-ID: <20250826111000.804849271@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,103 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Xu Yilun <yilun.xu@linux.intel.com>
 
-[ Upstream commit cffd0441872e7f6b1fce5e78fb1c99187a291330 ]
+commit 1ca61060de92a4320d73adfe5dc8d335653907ac upstream.
 
-do_change_type() and do_set_group() are operating on different
-aspects of the same thing - propagation graph.  The latter
-asks for mounts involved to be mounted in namespace(s) the caller
-has CAP_SYS_ADMIN for.  The former is a mess - originally it
-didn't even check that mount *is* mounted.  That got fixed,
-but the resulting check turns out to be too strict for userland -
-in effect, we check that mount is in our namespace, having already
-checked that we have CAP_SYS_ADMIN there.
+dma_map_sgtable() returns only 0 or the error code. Read sgt->nents to
+get the number of mapped segments.
 
-What we really need (in both cases) is
-	* only touch mounts that are mounted.  That's a must-have
-constraint - data corruption happens if it get violated.
-	* don't allow to mess with a namespace unless you already
-have enough permissions to do so (i.e. CAP_SYS_ADMIN in its userns).
-
-That's an equivalent of what do_set_group() does; let's extract that
-into a helper (may_change_propagation()) and use it in both
-do_set_group() and do_change_type().
-
-Fixes: 12f147ddd6de "do_change_type(): refuse to operate on unmounted/not ours mounts"
-Acked-by: Andrei Vagin <avagin@gmail.com>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Tested-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 37e00703228a ("zynq_fpga: use sgtable-based scatterlist wrappers")
+Reported-by: Pavel Pisa <pisa@fel.cvut.cz>
+Closes: https://lore.kernel.org/linux-fpga/202508041548.22955.pisa@fel.cvut.cz/
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Link: https://lore.kernel.org/r/20250806070605.1920909-2-yilun.xu@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ drivers/fpga/zynq-fpga.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 9e1717692be3..35d63bb3b22d 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2296,6 +2296,19 @@ static int graft_tree(struct mount *mnt, struct mount *p, struct mountpoint *mp)
- 	return attach_recursive_mnt(mnt, p, mp, false);
- }
+--- a/drivers/fpga/zynq-fpga.c
++++ b/drivers/fpga/zynq-fpga.c
+@@ -405,12 +405,12 @@ static int zynq_fpga_ops_write(struct fp
+ 		}
+ 	}
  
-+static int may_change_propagation(const struct mount *m)
-+{
-+        struct mnt_namespace *ns = m->mnt_ns;
-+
-+	 // it must be mounted in some namespace
-+	 if (IS_ERR_OR_NULL(ns))         // is_mounted()
-+		 return -EINVAL;
-+	 // and the caller must be admin in userns of that namespace
-+	 if (!ns_capable(ns->user_ns, CAP_SYS_ADMIN))
-+		 return -EPERM;
-+	 return 0;
-+}
-+
- /*
-  * Sanity check the flags to change_mnt_propagation.
-  */
-@@ -2332,10 +2345,10 @@ static int do_change_type(struct path *path, int ms_flags)
- 		return -EINVAL;
+-	priv->dma_nelms =
+-	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
+-	if (priv->dma_nelms == 0) {
++	err = dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
++	if (err) {
+ 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
+-		return -ENOMEM;
++		return err;
+ 	}
++	priv->dma_nelms = sgt->nents;
  
- 	namespace_lock();
--	if (!check_mnt(mnt)) {
--		err = -EINVAL;
-+	err = may_change_propagation(mnt);
-+	if (err)
- 		goto out_unlock;
--	}
-+
- 	if (type == MS_SHARED) {
- 		err = invent_group_ids(mnt, recurse);
- 		if (err)
-@@ -2730,18 +2743,11 @@ static int do_set_group(struct path *from_path, struct path *to_path)
- 
- 	namespace_lock();
- 
--	err = -EINVAL;
--	/* To and From must be mounted */
--	if (!is_mounted(&from->mnt))
--		goto out;
--	if (!is_mounted(&to->mnt))
--		goto out;
--
--	err = -EPERM;
--	/* We should be allowed to modify mount namespaces of both mounts */
--	if (!ns_capable(from->mnt_ns->user_ns, CAP_SYS_ADMIN))
-+	err = may_change_propagation(from);
-+	if (err)
- 		goto out;
--	if (!ns_capable(to->mnt_ns->user_ns, CAP_SYS_ADMIN))
-+	err = may_change_propagation(to);
-+	if (err)
- 		goto out;
- 
- 	err = -EINVAL;
--- 
-2.50.1
-
+ 	/* enable clock */
+ 	err = clk_enable(priv->clk);
 
 
