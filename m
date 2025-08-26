@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7399C350D5D;
-	Tue, 26 Aug 2025 14:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB91C1F4C90;
+	Tue, 26 Aug 2025 14:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217008; cv=none; b=iS9Jr3QKI0HS89meTOb26kYdS8JEnCffIl5ilylz9DRnWmRm08LSdH8pOASkemjDMAZ2+LIiiwlGxTCnSFN1pTq1NmWFIx7ap5yExw2435Usd+rI/x27G9j1sJQ7akzqEMnfTj3rwKGWAPqSLz2uPESMd/AD6U1KmOen7CieZoY=
+	t=1756217010; cv=none; b=RJN+3gqRjcgy0Sljm+1XXUjwf1yILhPDu5TbfVgb6/0orAEyyNc4AOeo9hyCRGfpMg+A1qzUUnwuU/M2FBuMkrOc3ObR/69f8C8/Cd0i+FH5Sq+u79Kxu70wOAnP7OKwCu+6rqnKPmlPHLsKJxjURhcEt6snKsItok6EgswOam8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217008; c=relaxed/simple;
-	bh=GmLehD7kMGtY0JSGqiqsvZLHu79BX6/18zL+6j428FQ=;
+	s=arc-20240116; t=1756217010; c=relaxed/simple;
+	bh=nqVB92KaIodojWGTHpGnWQSuyFxIR03l8giBS+8s4Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/ZPM/SNNe9v1ntUtihLbYXyKvrp1drYUdn4e5Zuv0o6RTv7bSfy7umfdhyJoWYIKEe+MV/CW+euWPOzdGTs5xFpXsp/KEVHf/hJth3dZOiQ7CjhxaAm/0OfMoNHJh7JHyi8kwfjg9KGS5RtFRne5z3srGG6vlllqwBSEm0Tu20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haXMqXFD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3tTsYBluRQPmP7z6EbrTUP4WS1xPlYAfbwS/gpuVpCnFi/RHCC91IbF2Dh4vnw+OCXPWVXo42a0BNTWX2ff+p53ADTCkKcxgYRI7dcUKVggmFGoWX9P3hhiCAhY90k95oEu1STbu15GDcbUg//R3EWJAXYb/OOgVSCL23OSt8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDdAgLBl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haXMqXFD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0C1C4CEF1;
-	Tue, 26 Aug 2025 14:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDdAgLBl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD65C4CEF1;
+	Tue, 26 Aug 2025 14:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217008;
-	bh=GmLehD7kMGtY0JSGqiqsvZLHu79BX6/18zL+6j428FQ=;
+	s=korg; t=1756217010;
+	bh=nqVB92KaIodojWGTHpGnWQSuyFxIR03l8giBS+8s4Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=haXMqXFD1mDg+pCnBnGGTGfPwSL8o4gggdGOKuxsvCIWPZCOtJnZsxRuMFK4MhWGQ
-	 RF4F52xTPSZlYg97FvXTD/FxeU4LVOEhE0btC38q//qWzNyAepyy/a5dG3PFTaYI18
-	 /s1r9wg9WDDLSGDWgcTB+VHEg4h9F+r3kKbT33f4=
+	b=HDdAgLBlgOdHDhNxOW7MK48k2gWhtoZjsUks1Xv2H0GfFZUh8PDE7cS7Tfm/q2DAS
+	 tBNXM5R/rnI8fAlLQpLFDZjECdO/dBYiK5dwNIMNdRogpzO6A4aF/afnPX8rOGRggY
+	 Ql/34jQAdORyY457Id2s3pY2J693sCCGz9z3Ky1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Simcha Kosman <simcha.kosman@cyberark.com>,
+	Kees Cook <kees@kernel.org>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 624/644] scsi: qla4xxx: Prevent a potential error pointer dereference
-Date: Tue, 26 Aug 2025 13:11:55 +0200
-Message-ID: <20250826111002.018856513@linuxfoundation.org>
+Subject: [PATCH 5.15 625/644] iommu/amd: Avoid stack buffer overflow from kernel cmdline
+Date: Tue, 26 Aug 2025 13:11:56 +0200
+Message-ID: <20250826111002.043644075@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,38 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 9dcf111dd3e7ed5fce82bb108e3a3fc001c07225 ]
+[ Upstream commit 8503d0fcb1086a7cfe26df67ca4bd9bd9e99bdec ]
 
-The qla4xxx_get_ep_fwdb() function is supposed to return NULL on error,
-but qla4xxx_ep_connect() returns error pointers.  Propagating the error
-pointers will lead to an Oops in the caller, so change the error pointers
-to NULL.
+While the kernel command line is considered trusted in most environments,
+avoid writing 1 byte past the end of "acpiid" if the "str" argument is
+maximum length.
 
-Fixes: 13483730a13b ("[SCSI] qla4xxx: fix flash/ddb support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/aJwnVKS9tHsw1tEu@stanley.mountain
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Simcha Kosman <simcha.kosman@cyberark.com>
+Closes: https://lore.kernel.org/all/AS8P193MB2271C4B24BCEDA31830F37AE84A52@AS8P193MB2271.EURP193.PROD.OUTLOOK.COM
+Fixes: b6b26d86c61c ("iommu/amd: Add a length limitation for the ivrs_acpihid command-line parameter")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Link: https://lore.kernel.org/r/20250804154023.work.970-kees@kernel.org
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla4xxx/ql4_os.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/amd/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qla4xxx/ql4_os.c b/drivers/scsi/qla4xxx/ql4_os.c
-index ab89f3171a09..da2ed81673c4 100644
---- a/drivers/scsi/qla4xxx/ql4_os.c
-+++ b/drivers/scsi/qla4xxx/ql4_os.c
-@@ -6607,6 +6607,8 @@ static struct iscsi_endpoint *qla4xxx_get_ep_fwdb(struct scsi_qla_host *ha,
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index b6ee83b81d32..065d626d5905 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3286,7 +3286,7 @@ static int __init parse_ivrs_acpihid(char *str)
+ {
+ 	u32 seg = 0, bus, dev, fn;
+ 	char *hid, *uid, *p, *addr;
+-	char acpiid[ACPIID_LEN] = {0};
++	char acpiid[ACPIID_LEN + 1] = { }; /* size with NULL terminator */
+ 	int i;
  
- 	ep = qla4xxx_ep_connect(ha->host, (struct sockaddr *)dst_addr, 0);
- 	vfree(dst_addr);
-+	if (IS_ERR(ep))
-+		return NULL;
- 	return ep;
- }
+ 	addr = strchr(str, '@');
+@@ -3312,7 +3312,7 @@ static int __init parse_ivrs_acpihid(char *str)
+ 	/* We have the '@', make it the terminator to get just the acpiid */
+ 	*addr++ = 0;
  
+-	if (strlen(str) > ACPIID_LEN + 1)
++	if (strlen(str) > ACPIID_LEN)
+ 		goto not_found;
+ 
+ 	if (sscanf(str, "=%s", acpiid) != 1)
 -- 
 2.50.1
 
