@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC4F350D50;
-	Tue, 26 Aug 2025 14:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A65D350843;
+	Tue, 26 Aug 2025 14:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218971; cv=none; b=DFg57Jt8yOc07EvIal0O+QoolonPxk4lZQY5jO53JOMXf+KgS4MO8jPzTPyWImxZ1P1WkPbTLGj8w0xQF1IGA7GSrFaWRtDRt4eLNz2u0sDUTsP7Yjk3E3vK24aiMCjtm11PljvoyaSsK5iFJhIYnnBFeTco9tzJWqV6GmNh98I=
+	t=1756218974; cv=none; b=XF4CZbVUzkZbwsaT66Kliv0xorZEZ3uc+3YKHtGwIyXCZwh44FZKZEfOTLibkwTLvh2ApiHW9njFtqSKsB7wKpu7cZEvMVuwufns5I++NlNU4B/lJSRDYBwFijyyRi1/vmrvl+dDWx8loaHld1o54G+oHLd/eZNYzbzzwQLNDP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218971; c=relaxed/simple;
-	bh=LdeMQYV+/hmHW6UlrKEHYN6tJXxZHNrCqr/aoF40NmA=;
+	s=arc-20240116; t=1756218974; c=relaxed/simple;
+	bh=AW74IdItf0v2KgngWRAMlDN1Ut4q8cZWI7ba+WCxa7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbiRbL7RRYkxZXN9ndz6VB2FlR3k/Wg2c27P1Ls0nVNXYrwnfPWPdOUhK53kQz6k4y4vYAhJ/oBduEo6+B4QcEb4UU0Pq8/Hyg8bTykSF+WsY+Ph3jFmzFnkOoefPxuKISHU6623S+LU78FlvfodltRsCTK3jHQnaur+WQbYByk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FC8GJncm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UjXxMyKzThz9o8utoHLj7BYs5bUifHXT/olzDHB5rHSQvA4l5cxisZVi9V9iHQfZDGLRkUpzi58kJt3HKCA841A0z+wjoetI+X481sQsQf+AHGq6qeWPNSalrc3YABDpZYtOXtyi8r5ofn+WGFQicFVcvsOJ69Sahs2Qc54bC40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epTDaO0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FC8GJncm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F04AC4CEF1;
-	Tue, 26 Aug 2025 14:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epTDaO0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4B5C4CEF1;
+	Tue, 26 Aug 2025 14:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218969;
-	bh=LdeMQYV+/hmHW6UlrKEHYN6tJXxZHNrCqr/aoF40NmA=;
+	s=korg; t=1756218974;
+	bh=AW74IdItf0v2KgngWRAMlDN1Ut4q8cZWI7ba+WCxa7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FC8GJncmVCqIU4ZZHCXcZVLSYesHD9oy+Hd6xWlQpkbCJusVyZJf1ttEVaam3a5eg
-	 xQ86ShbyUEktUr+FD8a4rZtfqt6X+DGnu0jy6kXKlcT7ygj9eTkFvea/dfVaLLcp24
-	 zlF8nW89gLe4QkRcbJHDOmZSfvLD8RJ3Z3CDLYRA=
+	b=epTDaO0BouQ/z7i/r6BicyhiBTWAHbVx+C3ktZddxwAU5d1zIwTaaZIcM59TB/ae2
+	 P+UcDSVj61r7byqwcAC0tWCDDe2tOuJ36FVqFU2jyL8QDJ0IEJjacZQ0b7gpueC+BS
+	 vGhPAfgQmjQNluv1Nfj141sXVm5u7Vds9gugggR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Lucy Thrun <lucy.thrun@digital-rabbithole.de>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 203/403] ALSA: hda/ca0132: Fix buffer overflow in add_tuning_control
-Date: Tue, 26 Aug 2025 13:08:49 +0200
-Message-ID: <20250826110912.462723310@linuxfoundation.org>
+Subject: [PATCH 5.4 204/403] ALSA: usb-audio: Avoid precedence issues in mixer_quirks macros
+Date: Tue, 26 Aug 2025 13:08:50 +0200
+Message-ID: <20250826110912.488152364@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,39 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit a409c60111e6bb98fcabab2aeaa069daa9434ca0 ]
+[ Upstream commit fd3ab72e42e9871a9902b945a2bf8bb87b49c718 ]
 
-The 'sprintf' call in 'add_tuning_control' may exceed the 44-byte
-buffer if either string argument is too long. This triggers a compiler
-warning.
-Replaced 'sprintf' with 'snprintf' to limit string lengths to prevent
-overflow.
+Fix all macro related issues identified by checkpatch.pl:
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506100642.95jpuMY1-lkp@intel.com/
-Signed-off-by: Lucy Thrun <lucy.thrun@digital-rabbithole.de>
-Link: https://patch.msgid.link/20250610175012.918-3-lucy.thrun@digital-rabbithole.de
+  CHECK: Macro argument 'x' may be better as '(x)' to avoid precedence issues
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-3-1a821463b632@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_ca0132.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/pci/hda/patch_ca0132.c b/sound/pci/hda/patch_ca0132.c
-index 40f50571ad63..dee38dd872b5 100644
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -4014,7 +4014,7 @@ static int add_tuning_control(struct hda_codec *codec,
- 	}
- 	knew.private_value =
- 		HDA_COMPOSE_AMP_VAL(nid, 1, 0, type);
--	sprintf(namestr, "%s %s Volume", name, dirstr[dir]);
-+	snprintf(namestr, sizeof(namestr), "%s %s Volume", name, dirstr[dir]);
- 	return snd_hda_ctl_add(codec, nid, snd_ctl_new1(&knew, codec));
- }
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index e752b6bb03ec..04267d4e3ecf 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1990,15 +1990,15 @@ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
+ #define SND_RME_CLK_FREQMUL_SHIFT		18
+ #define SND_RME_CLK_FREQMUL_MASK		0x7
+ #define SND_RME_CLK_SYSTEM(x) \
+-	((x >> SND_RME_CLK_SYSTEM_SHIFT) & SND_RME_CLK_SYSTEM_MASK)
++	(((x) >> SND_RME_CLK_SYSTEM_SHIFT) & SND_RME_CLK_SYSTEM_MASK)
+ #define SND_RME_CLK_AES(x) \
+-	((x >> SND_RME_CLK_AES_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
++	(((x) >> SND_RME_CLK_AES_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
+ #define SND_RME_CLK_SPDIF(x) \
+-	((x >> SND_RME_CLK_SPDIF_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
++	(((x) >> SND_RME_CLK_SPDIF_SHIFT) & SND_RME_CLK_AES_SPDIF_MASK)
+ #define SND_RME_CLK_SYNC(x) \
+-	((x >> SND_RME_CLK_SYNC_SHIFT) & SND_RME_CLK_SYNC_MASK)
++	(((x) >> SND_RME_CLK_SYNC_SHIFT) & SND_RME_CLK_SYNC_MASK)
+ #define SND_RME_CLK_FREQMUL(x) \
+-	((x >> SND_RME_CLK_FREQMUL_SHIFT) & SND_RME_CLK_FREQMUL_MASK)
++	(((x) >> SND_RME_CLK_FREQMUL_SHIFT) & SND_RME_CLK_FREQMUL_MASK)
+ #define SND_RME_CLK_AES_LOCK			0x1
+ #define SND_RME_CLK_AES_SYNC			0x4
+ #define SND_RME_CLK_SPDIF_LOCK			0x2
+@@ -2007,9 +2007,9 @@ static int dell_dock_mixer_init(struct usb_mixer_interface *mixer)
+ #define SND_RME_SPDIF_FORMAT_SHIFT		5
+ #define SND_RME_BINARY_MASK			0x1
+ #define SND_RME_SPDIF_IF(x) \
+-	((x >> SND_RME_SPDIF_IF_SHIFT) & SND_RME_BINARY_MASK)
++	(((x) >> SND_RME_SPDIF_IF_SHIFT) & SND_RME_BINARY_MASK)
+ #define SND_RME_SPDIF_FORMAT(x) \
+-	((x >> SND_RME_SPDIF_FORMAT_SHIFT) & SND_RME_BINARY_MASK)
++	(((x) >> SND_RME_SPDIF_FORMAT_SHIFT) & SND_RME_BINARY_MASK)
  
+ static const u32 snd_rme_rate_table[] = {
+ 	32000, 44100, 48000, 50000,
 -- 
 2.39.5
 
