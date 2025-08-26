@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4A120CCCA;
-	Tue, 26 Aug 2025 13:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE481ADFFE;
+	Tue, 26 Aug 2025 13:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215133; cv=none; b=SajnYnNLhh5PvEzggwOTTi3/VbJTCvstEq/QBsWzSzOzhmKwOxtWOEDVaITh4DiKTLxEOa4FTASU48BKlgvAAS62T2f+VaAKkZ8+4pVvBONj4xyV+J3n0tqi5/8mjuZnmca0unkkHpXJSW5MIbk2ZKoeHhWDlxrFmi6ZY9RSdBA=
+	t=1756215136; cv=none; b=h0Jjwl3/xNVm4RHvheAkDqBw2+177dDkiSpCih7IyDUVXVqbBD4php7UFNZDzs2nSsmsPMGSZs+ep+MCZ0Yf5VFja6eVVGt+hMl0sU2CXcU+FsN/2+U0ImC37uF/4vRdLbwDiK5GlG2Cahq2nwj4sp9ySGoEY5mosawMmfcnfas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215133; c=relaxed/simple;
-	bh=1+XFc0pIx5Aiv1xYlcEPSAMhq0k/pQdxpAvPBTmFKuE=;
+	s=arc-20240116; t=1756215136; c=relaxed/simple;
+	bh=zdWAc5yeIqOcMwiu1d3hcfaK+HJbKEzorYUUJC4fUXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vaz49NM1wQvwhzSrsi5CaCdWypGasT/s2ccgSMLfxlMFfupA7tSljYOEsw9FOXbQOhdfOlAXrLaI956EcJblyJfztKg6YT7SSaew3cXIhB1kSMnjkoHWkErCg3mxcv+g7+zYwSkYYjCnxtYhi7CMvxX0YXLvtzuodJR6qEFq6Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02ie1Z79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Uwaijs9MaSe5oF67rqB7kzBSh75e4ddY2hnfcsnCY5pSFoGKrqjKefW7uSVUzLFt+z7LQ/KZftSnyQIDlvaZ1/XagZ0s+Xicq7PPOceRS1+yO7cH7BJLwD5RiSjkTqACrxFOQqDca0ZkAjYCSYhaszfy1eNaC7fPnjKChT1oB0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmV8MJI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02ie1Z79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD67C4CEF1;
-	Tue, 26 Aug 2025 13:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmV8MJI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F83C4CEF1;
+	Tue, 26 Aug 2025 13:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215133;
-	bh=1+XFc0pIx5Aiv1xYlcEPSAMhq0k/pQdxpAvPBTmFKuE=;
+	s=korg; t=1756215136;
+	bh=zdWAc5yeIqOcMwiu1d3hcfaK+HJbKEzorYUUJC4fUXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=02ie1Z79VNY/bHBMRrb7V5P0rvUBfn3BHO/2sdxJrf3TAJJTY0NTvN+DlDc3dAilI
-	 zMCXZPGBUaojr+TK4hvNO5x09PaguQAe6apiGy7RESn8inXp0AXcqkgEOgYY0ZOVvl
-	 RqdwBc8oMNvWhZLGiSvcRNXJ7Pa/8H88FJ5bjtWE=
+	b=zmV8MJI2EuuJcIsPhBIkmWqGAdm4cV4cJi4bF5sxEMpCtkiendeD3gIqtFAd7iJYe
+	 e1yEWm0PY8XfFphp3nDuRm0OV3eexNStN4JoUx0C0u0G3aKfIfnjVL4q20TX5a9lJb
+	 brnSXbUHYVJEP2M+TJ1/gXDGhFvkRlDt7gJsAb8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 400/482] drm/amd/display: Avoid a NULL pointer dereference
-Date: Tue, 26 Aug 2025 13:10:53 +0200
-Message-ID: <20250826110940.709805095@linuxfoundation.org>
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Hung <alex.hung@amd.com>
+Subject: [PATCH 6.1 401/482] drm/amd/display: Fix fractional fb divider in set_pixel_clock_v3
+Date: Tue, 26 Aug 2025 13:10:54 +0200
+Message-ID: <20250826110940.733379107@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -47,48 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 07b93a5704b0b72002f0c4bd1076214af67dc661 upstream.
+commit 10507478468f165ea681605d133991ed05cdff62 upstream.
 
-[WHY]
-Although unlikely drm_atomic_get_new_connector_state() or
-drm_atomic_get_old_connector_state() can return NULL.
+For later VBIOS versions, the fractional feedback divider is
+calculated as the remainder of dividing the feedback divider by
+a factor, which is set to 1000000. For reference, see:
+- calculate_fb_and_fractional_fb_divider
+- calc_pll_max_vco_construct
 
-[HOW]
-Check returns before dereference.
+However, in case of old VBIOS versions that have
+set_pixel_clock_v3, they only have 1 byte available for the
+fractional feedback divider, and it's expected to be set to the
+remainder from dividing the feedback divider by 10.
+For reference see the legacy display code:
+- amdgpu_pll_compute
+- amdgpu_atombios_crtc_program_pll
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+This commit fixes set_pixel_clock_v3 by dividing the fractional
+feedback divider passed to the function by 100000.
+
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1e5e8d672fec9f2ab352be121be971877bff2af9)
+(cherry picked from commit 027e7acc7e17802ebf28e1edb88a404836ad50d6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/bios/command_table.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6620,6 +6620,9 @@ amdgpu_dm_connector_atomic_check(struct
- 	struct amdgpu_dm_connector *aconn = to_amdgpu_dm_connector(conn);
- 	int ret;
+--- a/drivers/gpu/drm/amd/display/dc/bios/command_table.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/command_table.c
+@@ -993,7 +993,7 @@ static enum bp_result set_pixel_clock_v3
+ 	allocation.sPCLKInput.usFbDiv =
+ 			cpu_to_le16((uint16_t)bp_params->feedback_divider);
+ 	allocation.sPCLKInput.ucFracFbDiv =
+-			(uint8_t)bp_params->fractional_feedback_divider;
++			(uint8_t)(bp_params->fractional_feedback_divider / 100000);
+ 	allocation.sPCLKInput.ucPostDiv =
+ 			(uint8_t)bp_params->pixel_clock_post_divider;
  
-+	if (WARN_ON(unlikely(!old_con_state || !new_con_state)))
-+		return -EINVAL;
-+
- 	trace_amdgpu_dm_connector_atomic_check(new_con_state);
- 
- 	if (conn->connector_type == DRM_MODE_CONNECTOR_DisplayPort) {
 
 
