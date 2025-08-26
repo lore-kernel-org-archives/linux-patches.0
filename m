@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF19233A00A;
-	Tue, 26 Aug 2025 13:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91787393DC0;
+	Tue, 26 Aug 2025 13:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215964; cv=none; b=BSoiUHlv2tc+2DZYxIzq8/6CZt0kfH/ByroaeayuxUh50T1xhsCPGmrqG8hpsj8iYuBeHRG73YkRJPdYEBF1njwC6W4AgKBAJrZLFXHFovcEJeEyTl0jwGdxhYLy6RbC19XEb1WXdpudFtwfNM5v8Q9dZ/H+Jlu+vDqZ73XDslU=
+	t=1756215966; cv=none; b=pS6+il9z63whVz1XGr9Xu+XSXZoraZnkGtUKYaKgdQUwqn0c1rGRBTRxvzY/nOAFISswz7HovbEbnzqJ25u7pj6gpE/TGWkko3uGrqHpx7DdWP6gfMdcKwTkd8l0NPltRqHFn7EeZ3GNc/G4WpwdKxmGfxbd+3eaxeddv0k7QuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215964; c=relaxed/simple;
-	bh=G2EEl9eV528VylSR5tTXqYkp5FE0zYTFNUHISaxWW/w=;
+	s=arc-20240116; t=1756215966; c=relaxed/simple;
+	bh=9W4H26GWAofZk8NMisxD8xqMkGs2adUWrelsWDQjqd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ge/VpmqdTE6kNJvvQ02Z4s8HXxNgDupmn6cLPuqTrIuZkHrRP+dj1LC4+wp+WeBLFHODyvKv/jymsU9asKNeHp18IYBigdqD77qvciDNg/D4U7JZzNMeTuBd3QyZb5iDtvA2u3fykBoui/i9WFg3cj9EGy5AZ/g6f7YSH9GQ6fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0tJyGax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=syi+yNfL26jn1khmwJbyiDCfNUrNqbn3W5BEPMZe5/OtPP3rF9f1m0fvuc0vuNmKZYr2iiCDeAXp2KziHEMeH7/PaNUPecNkUYYi0kQIJtWpKv2iCtR1MDTu5KorGT5aNRqmk9cHkiKRoE6IbvSEFrrzZulffqiZN6vEetrV98A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yP/hiY7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0tJyGax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F7EC4CEF1;
-	Tue, 26 Aug 2025 13:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yP/hiY7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F942C4CEF1;
+	Tue, 26 Aug 2025 13:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215963;
-	bh=G2EEl9eV528VylSR5tTXqYkp5FE0zYTFNUHISaxWW/w=;
+	s=korg; t=1756215966;
+	bh=9W4H26GWAofZk8NMisxD8xqMkGs2adUWrelsWDQjqd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c0tJyGaxACHp25z52Yr0oblVRkB16sZWAGaQ3KGgr0rQ7ILRSFS14iI0G3wB6XBA7
-	 /IsGlMC6PecfrEJBAJh/ohbB/B7h/haim04mzTJLP9QktfIfGEr0zeIxROQJhcwyy3
-	 d5QiCDPt7CSZYbVYYw+50pjJlWCpUI7Oq/W5hOeQ=
+	b=yP/hiY7tv7xbFYLu2ScXZft8s3h3UCxLvjq3kOw0nk4VRQ3gfhNPdgz5pOwvZXym7
+	 sWbu13DCPirMZY1esIy5LQjKpbKOddpCCeblIm20sa/4fRPf/NTPnnA3oWo0UgmVAW
+	 tPghLztn6fy8jS7SqXlH61zlf5Ja+tMDaHsX6xJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zixun LI <admin@hifiphile.com>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/644] mtd: rawnand: atmel: set pmecc data setup time
-Date: Tue, 26 Aug 2025 13:04:52 +0200
-Message-ID: <20250826110951.421059565@linuxfoundation.org>
+Subject: [PATCH 5.15 192/644] fs/orangefs: Allow 2 more characters in do_c_string()
+Date: Tue, 26 Aug 2025 13:04:43 +0200
+Message-ID: <20250826110951.212424298@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,55 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
+[ Upstream commit 2138e89cb066b40386b1d9ddd61253347d356474 ]
 
-Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
-by the datasheet.
+The do_k_string() and do_c_string() functions do essentially the same
+thing which is they add a string and a comma onto the end of an existing
+string.  At the end, the caller will overwrite the last comma with a
+newline.  Later, in orangefs_kernel_debug_init(), we add a newline to
+the string.
 
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-Reported-by: Zixun LI <admin@hifiphile.com>
-Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
-Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+The change to do_k_string() is just cosmetic.  I moved the "- 1" to
+the other side of the comparison and made it "+ 1".  This has no
+effect on runtime, I just wanted the functions to match each other
+and the rest of the file.
+
+However in do_c_string(), I removed the "- 2" which allows us to print
+two extra characters.  I noticed this issue while reviewing the code
+and I doubt affects anything in real life.  My guess is that this was
+double counting the comma and the newline.  The "+ 1" accounts for
+the newline, and the caller will delete the final comma which ensures
+there is enough space for the newline.
+
+Removing the "- 2" lets us print 2 more characters, but mainly it makes
+the code more consistent and understandable for reviewers.
+
+Fixes: 44f4641073f1 ("orangefs: clean up debugfs globals")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/orangefs/orangefs-debugfs.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
-index d1ed5878b3b1..28ed65dd3d43 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
- 	int nstrengths;
- 	int el_offset;
- 	bool correct_erased_chunks;
-+	bool clk_ctrl;
- };
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index fa41db088488..b57140ebfad0 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -728,8 +728,8 @@ static void do_k_string(void *k_mask, int index)
  
- struct atmel_pmecc {
-@@ -846,6 +847,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
- 	if (IS_ERR(pmecc->regs.errloc))
- 		return ERR_CAST(pmecc->regs.errloc);
- 
-+	/* pmecc data setup time */
-+	if (caps->clk_ctrl)
-+		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
-+
- 	/* Disable all interrupts before registering the PMECC handler. */
- 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
- 	atmel_pmecc_reset(pmecc);
-@@ -899,6 +904,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
- 	.strengths = atmel_pmecc_strengths,
- 	.nstrengths = 5,
- 	.el_offset = 0x8c,
-+	.clk_ctrl = true,
- };
- 
- static struct atmel_pmecc_caps sama5d4_caps = {
+ 	if (*mask & s_kmod_keyword_mask_map[index].mask_val) {
+ 		if ((strlen(kernel_debug_string) +
+-		     strlen(s_kmod_keyword_mask_map[index].keyword))
+-			< ORANGEFS_MAX_DEBUG_STRING_LEN - 1) {
++		     strlen(s_kmod_keyword_mask_map[index].keyword) + 1)
++			< ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 				strcat(kernel_debug_string,
+ 				       s_kmod_keyword_mask_map[index].keyword);
+ 				strcat(kernel_debug_string, ",");
+@@ -756,7 +756,7 @@ static void do_c_string(void *c_mask, int index)
+ 	    (mask->mask2 & cdm_array[index].mask2)) {
+ 		if ((strlen(client_debug_string) +
+ 		     strlen(cdm_array[index].keyword) + 1)
+-			< ORANGEFS_MAX_DEBUG_STRING_LEN - 2) {
++			< ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 				strcat(client_debug_string,
+ 				       cdm_array[index].keyword);
+ 				strcat(client_debug_string, ",");
 -- 
 2.39.5
 
