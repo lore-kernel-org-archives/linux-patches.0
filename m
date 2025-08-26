@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A75E306D3F;
-	Tue, 26 Aug 2025 14:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA132F83BA;
+	Tue, 26 Aug 2025 14:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218196; cv=none; b=bBX4NqXkqygItdZKURmO61/bewa7uttMI6TiOKhOihnKGe/F+dAj+m4YN18vLa3Q3AeUTORPnxcTtleRfRUtr8S7dvSb+Xw6Y9mLl2nfrGhFuQAacgsFZH24Kjb4RN/R1GL8fcDRuVG/XeRnfkruS+9jA7XWZp8I4lVylouhaBI=
+	t=1756218198; cv=none; b=mvJ6wzCNOMalxjrSADEtXsE/Rju0x/IqzoymLyqzbZ+9cqC8JFKYnyrw4BVAZ3plWC5+zRKYXeIMSH0Hjh5SYHiqX9Os926J69WEfiKMCLMIQcgxFtRNmHNgOggDRoeg813E8dcgu7+h+P6z2EnAoCsj4fpEcHUVL9HYep9lw9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218196; c=relaxed/simple;
-	bh=R/pweSUh+99glOD47I5Y1pP55Y8dXmkAENo2uKTjeqU=;
+	s=arc-20240116; t=1756218198; c=relaxed/simple;
+	bh=0jdoZmxgPsPaJiVcqkbLb5Qo1q1KqScL5mI8d0CSQCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJIvk6iidUWPfJ5xi4mb+blTO2JVoX4y6JmbaVWonieNAHWOjQkWWsH3iKk/PtNY+gJxt2dGCEuPuj7A32GQAFri84QbNAYeThuciRokFsyBA42l8YlbI8cQ0q0Tx5egvcns8ge9ZsLXDixl32nHg2l2/O7PsEE1dgb2B35SLzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am4Sc5mR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t7EywpLFgW3ltn72LNbKkrlKaZcKTU24yGldi5aJ7lKqFkYgw2T2wBDOQu10kyhpoTD2W5n8jKW9oG/MKAC3h6QlT8Rdw94Tsub17TeJr/w6Ms3YwVxxBfWRMwo9sFiPhVTQrpD093r8dChSaCs0NtoiHO3J1zeOiTea49ZojbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1o3rVhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am4Sc5mR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20C9C4CEF1;
-	Tue, 26 Aug 2025 14:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1o3rVhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0A8C4CEF1;
+	Tue, 26 Aug 2025 14:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218196;
-	bh=R/pweSUh+99glOD47I5Y1pP55Y8dXmkAENo2uKTjeqU=;
+	s=korg; t=1756218198;
+	bh=0jdoZmxgPsPaJiVcqkbLb5Qo1q1KqScL5mI8d0CSQCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Am4Sc5mR4og9IckbmZj5wK25nX6JtXeCiigErQ1PqUD3OWnFThHZVdShV+79TmtQu
-	 h2hST8OxZgRaHxgegkv+mhnkHGZNLvz/2h+lnBTyccES7df3PkRmugxKCA1wZfKRHn
-	 Dq54eCSACGGIO56/XRxYU5kOlX7hd48B9pLHO+IM=
+	b=z1o3rVhADLIeBrwQIPOoko9+WVdKiOLMVurRj8yNpNXPE3YM0rMMHb0pl+nyUCQB5
+	 2j3rDG4D6v7dTB9Yq5d4EXa84MXCM8oHXWZytG/qsX5BmQnnri63rAQgdSWjGtYyML
+	 KoJsAprbNG8CxoofBNxkXn4kRUhzTGYk0/G+0BnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	John Ernberg <john.ernberg@actia.se>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 429/523] ALSA: scarlett2: Add retry on -EPROTO from scarlett2_usb_tx()
-Date: Tue, 26 Aug 2025 13:10:39 +0200
-Message-ID: <20250826110935.036748900@linuxfoundation.org>
+Subject: [PATCH 5.10 430/523] net: usbnet: Avoid potential RCU stall on LINK_CHANGE event
+Date: Tue, 26 Aug 2025 13:10:40 +0200
+Message-ID: <20250826110935.062155899@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,72 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Geoffrey D. Bennett" <g@b4.vu>
+From: John Ernberg <john.ernberg@actia.se>
 
-[ Upstream commit 8a15ca0ca51399b652b1bbb23b590b220cf03d62 ]
+[ Upstream commit 0d9cfc9b8cb17dbc29a98792d36ec39a1cf1395f ]
 
-During communication with Focusrite Scarlett Gen 2/3/4 USB audio
-interfaces, -EPROTO is sometimes returned from scarlett2_usb_tx(),
-snd_usb_ctl_msg() which can cause initialisation and control
-operations to fail intermittently.
+The Gemalto Cinterion PLS83-W modem (cdc_ether) is emitting confusing link
+up and down events when the WWAN interface is activated on the modem-side.
 
-This patch adds up to 5 retries in scarlett2_usb(), with a delay
-starting at 5ms and doubling each time. This follows the same approach
-as the fix for usb_set_interface() in endpoint.c (commit f406005e162b
-("ALSA: usb-audio: Add retry on -EPROTO from usb_set_interface()")),
-which resolved similar -EPROTO issues during device initialisation,
-and is the same approach as in fcp.c:fcp_usb().
+Interrupt URBs will in consecutive polls grab:
+* Link Connected
+* Link Disconnected
+* Link Connected
 
-Fixes: 9e4d5c1be21f ("ALSA: usb-audio: Scarlett Gen 2 mixer interface")
-Closes: https://github.com/geoffreybennett/linux-fcp/issues/41
+Where the last Connected is then a stable link state.
+
+When the system is under load this may cause the unlink_urbs() work in
+__handle_link_change() to not complete before the next usbnet_link_change()
+call turns the carrier on again, allowing rx_submit() to queue new SKBs.
+
+In that event the URB queue is filled faster than it can drain, ending up
+in a RCU stall:
+
+    rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 0-.... } 33108 jiffies s: 201 root: 0x1/.
+    rcu: blocking rcu_node structures (internal RCU debug):
+    Sending NMI from CPU 1 to CPUs 0:
+    NMI backtrace for cpu 0
+
+    Call trace:
+     arch_local_irq_enable+0x4/0x8
+     local_bh_enable+0x18/0x20
+     __netdev_alloc_skb+0x18c/0x1cc
+     rx_submit+0x68/0x1f8 [usbnet]
+     rx_alloc_submit+0x4c/0x74 [usbnet]
+     usbnet_bh+0x1d8/0x218 [usbnet]
+     usbnet_bh_tasklet+0x10/0x18 [usbnet]
+     tasklet_action_common+0xa8/0x110
+     tasklet_action+0x2c/0x34
+     handle_softirqs+0x2cc/0x3a0
+     __do_softirq+0x10/0x18
+     ____do_softirq+0xc/0x14
+     call_on_irq_stack+0x24/0x34
+     do_softirq_own_stack+0x18/0x20
+     __irq_exit_rcu+0xa8/0xb8
+     irq_exit_rcu+0xc/0x30
+     el1_interrupt+0x34/0x48
+     el1h_64_irq_handler+0x14/0x1c
+     el1h_64_irq+0x68/0x6c
+     _raw_spin_unlock_irqrestore+0x38/0x48
+     xhci_urb_dequeue+0x1ac/0x45c [xhci_hcd]
+     unlink1+0xd4/0xdc [usbcore]
+     usb_hcd_unlink_urb+0x70/0xb0 [usbcore]
+     usb_unlink_urb+0x24/0x44 [usbcore]
+     unlink_urbs.constprop.0.isra.0+0x64/0xa8 [usbnet]
+     __handle_link_change+0x34/0x70 [usbnet]
+     usbnet_deferred_kevent+0x1c0/0x320 [usbnet]
+     process_scheduled_works+0x2d0/0x48c
+     worker_thread+0x150/0x1dc
+     kthread+0xd8/0xe8
+     ret_from_fork+0x10/0x20
+
+Get around the problem by delaying the carrier on to the scheduled work.
+
+This needs a new flag to keep track of the necessary action.
+
+The carrier ok check cannot be removed as it remains required for the
+LINK_RESET event flow.
+
+Fixes: 4b49f58fff00 ("usbnet: handle link change")
 Cc: stable@vger.kernel.org
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://patch.msgid.link/aIdDO6ld50WQwNim@m.b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ Applied retry logic directly in scarlett2_usb() instead of scarlett2_usb_tx() ]
+Signed-off-by: John Ernberg <john.ernberg@actia.se>
+Link: https://patch.msgid.link/20250723102526.1305339-1-john.ernberg@actia.se
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adjust context in header ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett_gen2.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/usb/usbnet.c   |   11 ++++++++---
+ include/linux/usb/usbnet.h |    1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -95,6 +95,7 @@
- #include <linux/slab.h>
- #include <linux/usb.h>
- #include <linux/moduleparam.h>
-+#include <linux/delay.h>
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1080,6 +1080,9 @@ static void __handle_link_change(struct
+ 		 * tx queue is stopped by netcore after link becomes off
+ 		 */
+ 	} else {
++		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
++			netif_carrier_on(dev->net);
++
+ 		/* submitting URBs for reading packets */
+ 		tasklet_schedule(&dev->bh);
+ 	}
+@@ -1960,10 +1963,12 @@ EXPORT_SYMBOL(usbnet_manage_power);
+ void usbnet_link_change(struct usbnet *dev, bool link, bool need_reset)
+ {
+ 	/* update link after link is reseted */
+-	if (link && !need_reset)
+-		netif_carrier_on(dev->net);
+-	else
++	if (link && !need_reset) {
++		set_bit(EVENT_LINK_CARRIER_ON, &dev->flags);
++	} else {
++		clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags);
+ 		netif_carrier_off(dev->net);
++	}
  
- #include <sound/control.h>
- #include <sound/tlv.h>
-@@ -591,6 +592,8 @@ static int scarlett2_usb(
- 	u16 req_buf_size = sizeof(struct scarlett2_usb_packet) + req_size;
- 	u16 resp_buf_size = sizeof(struct scarlett2_usb_packet) + resp_size;
- 	struct scarlett2_usb_packet *req = NULL, *resp = NULL;
-+	int retries = 0;
-+	const int max_retries = 5;
- 	int err = 0;
- 
- 	req = kmalloc(req_buf_size, GFP_KERNEL);
-@@ -614,6 +617,7 @@ static int scarlett2_usb(
- 	if (req_size)
- 		memcpy(req->data, req_data, req_size);
- 
-+retry:
- 	err = snd_usb_ctl_msg(mixer->chip->dev,
- 			usb_sndctrlpipe(mixer->chip->dev, 0),
- 			SCARLETT2_USB_VENDOR_SPECIFIC_CMD_REQ,
-@@ -624,6 +628,10 @@ static int scarlett2_usb(
- 			req_buf_size);
- 
- 	if (err != req_buf_size) {
-+		if (err == -EPROTO && ++retries <= max_retries) {
-+			msleep(5 * (1 << (retries - 1)));
-+			goto retry;
-+		}
- 		usb_audio_err(
- 			mixer->chip,
- 			"Scarlett Gen 2 USB request result cmd %x was %d\n",
+ 	if (need_reset && link)
+ 		usbnet_defer_kevent(dev, EVENT_LINK_RESET);
+--- a/include/linux/usb/usbnet.h
++++ b/include/linux/usb/usbnet.h
+@@ -83,6 +83,7 @@ struct usbnet {
+ #		define EVENT_LINK_CHANGE	11
+ #		define EVENT_SET_RX_MODE	12
+ #		define EVENT_NO_IP_ALIGN	13
++#		define EVENT_LINK_CARRIER_ON	14
+ 	u32			rx_speed;	/* in bps - NOT Mbps */
+ 	u32			tx_speed;	/* in bps - NOT Mbps */
+ };
 
 
