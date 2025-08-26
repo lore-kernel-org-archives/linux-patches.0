@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FB729BDB8;
-	Tue, 26 Aug 2025 11:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819C8267386;
+	Tue, 26 Aug 2025 11:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208548; cv=none; b=a2OyZ99pkPL9MANQCZRAskTzW7JNmk5CWt0sz67T9VUAZHOsfy1yIW/SpulkpV85ZKdVYNli4vxv/KXqGyuoMW4RaHvWGSOh8MNOuBTfkgKTSiSL7k37/st65a4XT769UN1f7iiNbnPLH4a90ZU+ePwXa6V1vNkNoEX+caFg9D8=
+	t=1756208550; cv=none; b=RMspUjpNFAU0uHsePwgz+lJlb4t2jZnceZ2KDQJdhU573YzburuXx1ORjuTz/8ieqSqtfmTvhBNiSUXeH+zKa8aX1+wYxon01cQXWD0Rmuzl87mHWAS3VRHu8oRboCEikvacyFA5X47QbQR4A/MOWSE76+1BQKeAFW1nIespWnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208548; c=relaxed/simple;
-	bh=qQ1d0qWiJbLYIYwS9QA8iO8JBm5PX23CVYBVcwdI8IE=;
+	s=arc-20240116; t=1756208550; c=relaxed/simple;
+	bh=VGnn0HnH5p2dyl/yKKTSvnGzaxhtD6CZPLP+ET97WII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9N2JHtBy22cjZZpoBy0KICKpz2oUEEsBpEB2IzeB5y2XNB85Nxv6Of+pXOl4/M5hHhcdFwvl9MiSvLnFdxSXLyn9ZKkyQhbCmcnZTSzUkHOsmPvBR0ObJxb+1eVdY+qtLSH03mVmKq6UPlQJacoyqwI5UZj3PVvz5hlWqVyVKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Po4Bl+Jl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/D/7/1OZVJthhOK0UfqiLQIKV3NSJuirn/FaPR5G0EZ/NSwcKgyHlypBtY+ZDS4Mzf70/RTnj3CDGtyYvTZkzjz0x5VM3y8kk7kOK2h+z+Lq/GP+UXV9YR5nmxM+urfiV+5VCGnztxouxCUZgBq4NGExbDbNruqhK7UeURlVx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIm+HXkD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Po4Bl+Jl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADD6C4CEF1;
-	Tue, 26 Aug 2025 11:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIm+HXkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E02C4CEF1;
+	Tue, 26 Aug 2025 11:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208547;
-	bh=qQ1d0qWiJbLYIYwS9QA8iO8JBm5PX23CVYBVcwdI8IE=;
+	s=korg; t=1756208550;
+	bh=VGnn0HnH5p2dyl/yKKTSvnGzaxhtD6CZPLP+ET97WII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Po4Bl+JloL7/YNe5wSdJrdQMYjeiThzYabzk3YHjJq/OWvDGqelLJDaGWZe/NWDFd
-	 qgMfXGjqSCGpwHTt8m8Tqk6+CaTBgT9y5+S23Fq1Gp54zuAY7WW8OgqIuWBZXck96Y
-	 mxl9kCqiGCRoEd4NSbbgY0c+PiJawa8VxsYtdNUk=
+	b=oIm+HXkDgekBp2Xj8rVOHaHMUHCcpfEB0DC4s338s8/CAmGprb2Z8slC3KUQDdNx9
+	 Og6nak7rSaWb90s4q5cRpdzhtmA8jUOMqJRRj6qA3/OPJo7e+6Cw+O6J3URCK0LYnd
+	 DwPzDxZz+u3dt2eWercTmuuSu2RkPkmivxPpL9Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/322] btrfs: send: keep the current inodes path cached
-Date: Tue, 26 Aug 2025 13:09:29 +0200
-Message-ID: <20250826110919.620220940@linuxfoundation.org>
+Subject: [PATCH 6.12 155/322] btrfs: send: avoid path allocation for the current inode when issuing commands
+Date: Tue, 26 Aug 2025 13:09:30 +0200
+Message-ID: <20250826110919.647069185@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,26 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit fc746acb7aa9aeaa2cb5dcba449323319ba5c8eb ]
+[ Upstream commit 374d45af6435534a11b01b88762323abf03dd755 ]
 
-Whenever we need to send a command for the current inode, like sending
-writes, xattr updates, truncates, utimes, etc, we compute the inode's
-path each time, which implies doing some memory allocations and traversing
-the inode hierarchy to extract the name of the inode and each ancestor
-directory, and that implies doing lookups in the subvolume tree amongst
-other operations.
+Whenever we issue a command we allocate a path and then compute it. For
+the current inode this is not necessary since we have one preallocated
+and computed in the send context structure, so we can use it instead
+and avoid allocating and freeing a path.
 
-Most of the time, by far, the current inode's path doesn't change while
-we are processing it (like if we need to issue 100 write commands, the
-path remains the same and it's pointless to compute it 100 times).
+For example if we have 100 extents to send (100 write commands) for a
+file, we are allocating and freeing paths 100 times.
 
-To avoid this keep the current inode's path cached in the send context
-and invalidate it or update it whenever it's needed (after unlinks or
-renames).
+So improve on this by avoiding path allocation and freeing whenever a
+command is for the current inode by using the current inode's path
+stored in the send context structure.
 
-A performance test, and its results, is mentioned in the next patch in
-the series (subject: "btrfs: send: avoid path allocation for the current
-inode when issuing commands").
+A test was run before applying this patch and the previous one in the
+series:
+
+  "btrfs: send: keep the current inode's path cached"
+
+The test script is the following:
+
+  $ cat test.sh
+  #!/bin/bash
+
+  DEV=/dev/nullb0
+  MNT=/mnt/nullb0
+
+  mkfs.btrfs -f $DEV > /dev/null
+  mount $DEV $MNT
+
+  DIR="$MNT/one/two/three/four"
+  FILE="$DIR/foobar"
+
+  mkdir -p $DIR
+
+  # Create some empty files to get a deeper btree and therefore make
+  # path computations slower.
+  for ((i = 1; i <= 30000; i++)); do
+      echo -n > "$DIR/filler_$i"
+  done
+
+  for ((i = 0; i < 10000; i += 2)); do
+     offset=$(( i * 4096 ))
+     xfs_io -f -c "pwrite -S 0xab $offset 4K" $FILE > /dev/null
+  done
+
+  btrfs subvolume snapshot -r $MNT $MNT/snap
+
+  start=$(date +%s%N)
+  btrfs send -f /dev/null $MNT/snap
+  end=$(date +%s%N)
+
+  echo -e "\nsend took $(( (end - start) / 1000000 )) milliseconds"
+
+  umount $MNT
+
+Result before applying the 2 patches:  1121 milliseconds
+Result after applying the 2 patches:    815 milliseconds  (-31.6%)
 
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
@@ -81,155 +119,481 @@ Stable-dep-of: 005b0a0c24e1 ("btrfs: send: use fallocate for hole punching with 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |   53 ++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 48 insertions(+), 5 deletions(-)
+ fs/btrfs/send.c |  215 +++++++++++++++++++++++++-------------------------------
+ 1 file changed, 97 insertions(+), 118 deletions(-)
 
 --- a/fs/btrfs/send.c
 +++ b/fs/btrfs/send.c
-@@ -178,6 +178,7 @@ struct send_ctx {
- 	u64 cur_inode_rdev;
- 	u64 cur_inode_last_extent;
- 	u64 cur_inode_next_write_offset;
-+	struct fs_path cur_inode_path;
- 	bool cur_inode_new;
- 	bool cur_inode_new_gen;
- 	bool cur_inode_deleted;
-@@ -436,6 +437,14 @@ static void fs_path_reset(struct fs_path
- 	}
- }
- 
-+static void init_path(struct fs_path *p)
-+{
-+	p->reversed = 0;
-+	p->buf = p->inline_buf;
-+	p->buf_len = FS_PATH_INLINE_SIZE;
-+	fs_path_reset(p);
-+}
-+
- static struct fs_path *fs_path_alloc(void)
- {
- 	struct fs_path *p;
-@@ -443,10 +452,7 @@ static struct fs_path *fs_path_alloc(voi
- 	p = kmalloc(sizeof(*p), GFP_KERNEL);
- 	if (!p)
- 		return NULL;
--	p->reversed = 0;
--	p->buf = p->inline_buf;
--	p->buf_len = FS_PATH_INLINE_SIZE;
--	fs_path_reset(p);
-+	init_path(p);
- 	return p;
- }
- 
-@@ -624,6 +630,14 @@ static void fs_path_unreverse(struct fs_
- 	p->reversed = 0;
- }
- 
-+static inline bool is_current_inode_path(const struct send_ctx *sctx,
-+					 const struct fs_path *path)
-+{
-+	const struct fs_path *cur = &sctx->cur_inode_path;
-+
-+	return (strncmp(path->start, cur->start, fs_path_len(cur)) == 0);
-+}
-+
- static struct btrfs_path *alloc_path_for_send(void)
- {
- 	struct btrfs_path *path;
-@@ -2450,6 +2464,14 @@ static int get_cur_path(struct send_ctx
- 	u64 parent_inode = 0;
- 	u64 parent_gen = 0;
- 	int stop = 0;
-+	const bool is_cur_inode = (ino == sctx->cur_ino && gen == sctx->cur_inode_gen);
-+
-+	if (is_cur_inode && fs_path_len(&sctx->cur_inode_path) > 0) {
-+		if (dest != &sctx->cur_inode_path)
-+			return fs_path_copy(dest, &sctx->cur_inode_path);
-+
-+		return 0;
-+	}
- 
- 	name = fs_path_alloc();
- 	if (!name) {
-@@ -2501,8 +2523,12 @@ static int get_cur_path(struct send_ctx
- 
- out:
- 	fs_path_free(name);
--	if (!ret)
-+	if (!ret) {
- 		fs_path_unreverse(dest);
-+		if (is_cur_inode && dest != &sctx->cur_inode_path)
-+			ret = fs_path_copy(&sctx->cur_inode_path, dest);
-+	}
-+
+@@ -2623,6 +2623,47 @@ out:
  	return ret;
  }
  
-@@ -3112,6 +3138,11 @@ static int orphanize_inode(struct send_c
- 		goto out;
- 
- 	ret = send_rename(sctx, path, orphan);
-+	if (ret < 0)
-+		goto out;
++static struct fs_path *get_cur_inode_path(struct send_ctx *sctx)
++{
++	if (fs_path_len(&sctx->cur_inode_path) == 0) {
++		int ret;
++
++		ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen,
++				   &sctx->cur_inode_path);
++		if (ret < 0)
++			return ERR_PTR(ret);
++	}
++
++	return &sctx->cur_inode_path;
++}
++
++static struct fs_path *get_path_for_command(struct send_ctx *sctx, u64 ino, u64 gen)
++{
++	struct fs_path *path;
++	int ret;
 +
 +	if (ino == sctx->cur_ino && gen == sctx->cur_inode_gen)
-+		ret = fs_path_copy(&sctx->cur_inode_path, orphan);
- 
- out:
- 	fs_path_free(orphan);
-@@ -4175,6 +4206,10 @@ static int rename_current_inode(struct s
- 	if (ret < 0)
- 		return ret;
- 
-+	ret = fs_path_copy(&sctx->cur_inode_path, new_path);
-+	if (ret < 0)
-+		return ret;
++		return get_cur_inode_path(sctx);
 +
- 	return fs_path_copy(current_path, new_path);
++	path = fs_path_alloc();
++	if (!path)
++		return ERR_PTR(-ENOMEM);
++
++	ret = get_cur_path(sctx, ino, gen, path);
++	if (ret < 0) {
++		fs_path_free(path);
++		return ERR_PTR(ret);
++	}
++
++	return path;
++}
++
++static void free_path_for_command(const struct send_ctx *sctx, struct fs_path *path)
++{
++	if (path != &sctx->cur_inode_path)
++		fs_path_free(path);
++}
++
+ static int send_truncate(struct send_ctx *sctx, u64 ino, u64 gen, u64 size)
+ {
+ 	struct btrfs_fs_info *fs_info = sctx->send_root->fs_info;
+@@ -2631,17 +2672,14 @@ static int send_truncate(struct send_ctx
+ 
+ 	btrfs_debug(fs_info, "send_truncate %llu size=%llu", ino, size);
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
++	p = get_path_for_command(sctx, ino, gen);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+ 	ret = begin_cmd(sctx, BTRFS_SEND_C_TRUNCATE);
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, ino, gen, p);
+-	if (ret < 0)
+-		goto out;
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_SIZE, size);
+ 
+@@ -2649,7 +2687,7 @@ static int send_truncate(struct send_ctx
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(p);
++	free_path_for_command(sctx, p);
+ 	return ret;
  }
  
-@@ -4368,6 +4403,7 @@ static int process_recorded_refs(struct
- 				if (ret > 0) {
- 					orphanized_ancestor = true;
- 					fs_path_reset(valid_path);
-+					fs_path_reset(&sctx->cur_inode_path);
- 					ret = get_cur_path(sctx, sctx->cur_ino,
- 							   sctx->cur_inode_gen,
- 							   valid_path);
-@@ -4567,6 +4603,8 @@ static int process_recorded_refs(struct
- 				ret = send_unlink(sctx, cur->full_path);
- 				if (ret < 0)
- 					goto out;
-+				if (is_current_inode_path(sctx, cur->full_path))
-+					fs_path_reset(&sctx->cur_inode_path);
- 			}
- 			ret = dup_ref(cur, &check_dirs);
- 			if (ret < 0)
-@@ -6902,6 +6940,7 @@ static int changed_inode(struct send_ctx
- 	sctx->cur_inode_last_extent = (u64)-1;
- 	sctx->cur_inode_next_write_offset = 0;
- 	sctx->ignore_cur_inode = false;
-+	fs_path_reset(&sctx->cur_inode_path);
+@@ -2661,17 +2699,14 @@ static int send_chmod(struct send_ctx *s
  
- 	/*
- 	 * Set send_progress to current inode. This will tell all get_cur_xxx
-@@ -8174,6 +8213,7 @@ long btrfs_ioctl_send(struct btrfs_inode
+ 	btrfs_debug(fs_info, "send_chmod %llu mode=%llu", ino, mode);
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
++	p = get_path_for_command(sctx, ino, gen);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+ 	ret = begin_cmd(sctx, BTRFS_SEND_C_CHMOD);
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, ino, gen, p);
+-	if (ret < 0)
+-		goto out;
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_MODE, mode & 07777);
+ 
+@@ -2679,7 +2714,7 @@ static int send_chmod(struct send_ctx *s
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(p);
++	free_path_for_command(sctx, p);
+ 	return ret;
+ }
+ 
+@@ -2694,17 +2729,14 @@ static int send_fileattr(struct send_ctx
+ 
+ 	btrfs_debug(fs_info, "send_fileattr %llu fileattr=%llu", ino, fileattr);
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
++	p = get_path_for_command(sctx, ino, gen);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+ 	ret = begin_cmd(sctx, BTRFS_SEND_C_FILEATTR);
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, ino, gen, p);
+-	if (ret < 0)
+-		goto out;
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_FILEATTR, fileattr);
+ 
+@@ -2712,7 +2744,7 @@ static int send_fileattr(struct send_ctx
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(p);
++	free_path_for_command(sctx, p);
+ 	return ret;
+ }
+ 
+@@ -2725,17 +2757,14 @@ static int send_chown(struct send_ctx *s
+ 	btrfs_debug(fs_info, "send_chown %llu uid=%llu, gid=%llu",
+ 		    ino, uid, gid);
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
++	p = get_path_for_command(sctx, ino, gen);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+ 	ret = begin_cmd(sctx, BTRFS_SEND_C_CHOWN);
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, ino, gen, p);
+-	if (ret < 0)
+-		goto out;
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_UID, uid);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_GID, gid);
+@@ -2744,7 +2773,7 @@ static int send_chown(struct send_ctx *s
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(p);
++	free_path_for_command(sctx, p);
+ 	return ret;
+ }
+ 
+@@ -2761,9 +2790,9 @@ static int send_utimes(struct send_ctx *
+ 
+ 	btrfs_debug(fs_info, "send_utimes %llu", ino);
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
++	p = get_path_for_command(sctx, ino, gen);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+ 	path = alloc_path_for_send();
+ 	if (!path) {
+@@ -2788,9 +2817,6 @@ static int send_utimes(struct send_ctx *
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, ino, gen, p);
+-	if (ret < 0)
+-		goto out;
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_BTRFS_TIMESPEC(sctx, BTRFS_SEND_A_ATIME, eb, &ii->atime);
+ 	TLV_PUT_BTRFS_TIMESPEC(sctx, BTRFS_SEND_A_MTIME, eb, &ii->mtime);
+@@ -2802,7 +2828,7 @@ static int send_utimes(struct send_ctx *
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(p);
++	free_path_for_command(sctx, p);
+ 	btrfs_free_path(path);
+ 	return ret;
+ }
+@@ -4929,13 +4955,9 @@ static int send_set_xattr(struct send_ct
+ 	struct fs_path *path;
+ 	int ret;
+ 
+-	path = fs_path_alloc();
+-	if (!path)
+-		return -ENOMEM;
+-
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, path);
+-	if (ret < 0)
+-		goto out;
++	path = get_cur_inode_path(sctx);
++	if (IS_ERR(path))
++		return PTR_ERR(path);
+ 
+ 	ret = begin_cmd(sctx, BTRFS_SEND_C_SET_XATTR);
+ 	if (ret < 0)
+@@ -4949,8 +4971,6 @@ static int send_set_xattr(struct send_ct
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(path);
+-
+ 	return ret;
+ }
+ 
+@@ -5008,23 +5028,14 @@ static int __process_deleted_xattr(int n
+ 				   const char *name, int name_len,
+ 				   const char *data, int data_len, void *ctx)
+ {
+-	int ret;
+ 	struct send_ctx *sctx = ctx;
+ 	struct fs_path *p;
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
+-
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, p);
+-	if (ret < 0)
+-		goto out;
+-
+-	ret = send_remove_xattr(sctx, p, name, name_len);
++	p = get_cur_inode_path(sctx);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+-out:
+-	fs_path_free(p);
+-	return ret;
++	return send_remove_xattr(sctx, p, name, name_len);
+ }
+ 
+ static int process_new_xattr(struct send_ctx *sctx)
+@@ -5257,21 +5268,13 @@ static int process_verity(struct send_ct
+ 	if (ret < 0)
+ 		goto iput;
+ 
+-	p = fs_path_alloc();
+-	if (!p) {
+-		ret = -ENOMEM;
++	p = get_cur_inode_path(sctx);
++	if (IS_ERR(p)) {
++		ret = PTR_ERR(p);
+ 		goto iput;
+ 	}
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, p);
+-	if (ret < 0)
+-		goto free_path;
+ 
+ 	ret = send_verity(sctx, p, sctx->verity_descriptor);
+-	if (ret < 0)
+-		goto free_path;
+-
+-free_path:
+-	fs_path_free(p);
+ iput:
+ 	iput(inode);
+ 	return ret;
+@@ -5393,31 +5396,25 @@ static int send_write(struct send_ctx *s
+ 	int ret = 0;
+ 	struct fs_path *p;
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
+-
+ 	btrfs_debug(fs_info, "send_write offset=%llu, len=%d", offset, len);
+ 
+-	ret = begin_cmd(sctx, BTRFS_SEND_C_WRITE);
+-	if (ret < 0)
+-		goto out;
++	p = get_cur_inode_path(sctx);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, p);
++	ret = begin_cmd(sctx, BTRFS_SEND_C_WRITE);
+ 	if (ret < 0)
+-		goto out;
++		return ret;
+ 
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_FILE_OFFSET, offset);
+ 	ret = put_file_data(sctx, offset, len);
+ 	if (ret < 0)
+-		goto out;
++		return ret;
+ 
+ 	ret = send_cmd(sctx);
+ 
+ tlv_put_failure:
+-out:
+-	fs_path_free(p);
+ 	return ret;
+ }
+ 
+@@ -5430,6 +5427,7 @@ static int send_clone(struct send_ctx *s
+ {
+ 	int ret = 0;
+ 	struct fs_path *p;
++	struct fs_path *cur_inode_path;
+ 	u64 gen;
+ 
+ 	btrfs_debug(sctx->send_root->fs_info,
+@@ -5437,6 +5435,10 @@ static int send_clone(struct send_ctx *s
+ 		    offset, len, btrfs_root_id(clone_root->root),
+ 		    clone_root->ino, clone_root->offset);
+ 
++	cur_inode_path = get_cur_inode_path(sctx);
++	if (IS_ERR(cur_inode_path))
++		return PTR_ERR(cur_inode_path);
++
+ 	p = fs_path_alloc();
+ 	if (!p)
+ 		return -ENOMEM;
+@@ -5445,13 +5447,9 @@ static int send_clone(struct send_ctx *s
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, p);
+-	if (ret < 0)
+-		goto out;
+-
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_FILE_OFFSET, offset);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_CLONE_LEN, len);
+-	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
++	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, cur_inode_path);
+ 
+ 	if (clone_root->root == sctx->send_root) {
+ 		ret = get_inode_gen(sctx->send_root, clone_root->ino, &gen);
+@@ -5502,17 +5500,13 @@ static int send_update_extent(struct sen
+ 	int ret = 0;
+ 	struct fs_path *p;
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
++	p = get_cur_inode_path(sctx);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
+ 
+ 	ret = begin_cmd(sctx, BTRFS_SEND_C_UPDATE_EXTENT);
+ 	if (ret < 0)
+-		goto out;
+-
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, p);
+-	if (ret < 0)
+-		goto out;
++		return ret;
+ 
+ 	TLV_PUT_PATH(sctx, BTRFS_SEND_A_PATH, p);
+ 	TLV_PUT_U64(sctx, BTRFS_SEND_A_FILE_OFFSET, offset);
+@@ -5521,8 +5515,6 @@ static int send_update_extent(struct sen
+ 	ret = send_cmd(sctx);
+ 
+ tlv_put_failure:
+-out:
+-	fs_path_free(p);
+ 	return ret;
+ }
+ 
+@@ -5551,12 +5543,10 @@ static int send_hole(struct send_ctx *sc
+ 	if (sctx->flags & BTRFS_SEND_FLAG_NO_FILE_DATA)
+ 		return send_update_extent(sctx, offset, end - offset);
+ 
+-	p = fs_path_alloc();
+-	if (!p)
+-		return -ENOMEM;
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, p);
+-	if (ret < 0)
+-		goto tlv_put_failure;
++	p = get_cur_inode_path(sctx);
++	if (IS_ERR(p))
++		return PTR_ERR(p);
++
+ 	while (offset < end) {
+ 		u64 len = min(end - offset, read_size);
+ 
+@@ -5577,7 +5567,6 @@ static int send_hole(struct send_ctx *sc
+ 	}
+ 	sctx->cur_inode_next_write_offset = offset;
+ tlv_put_failure:
+-	fs_path_free(p);
+ 	return ret;
+ }
+ 
+@@ -5600,9 +5589,9 @@ static int send_encoded_inline_extent(st
+ 	if (IS_ERR(inode))
+ 		return PTR_ERR(inode);
+ 
+-	fspath = fs_path_alloc();
+-	if (!fspath) {
+-		ret = -ENOMEM;
++	fspath = get_cur_inode_path(sctx);
++	if (IS_ERR(fspath)) {
++		ret = PTR_ERR(fspath);
  		goto out;
  	}
  
-+	init_path(&sctx->cur_inode_path);
- 	INIT_LIST_HEAD(&sctx->new_refs);
- 	INIT_LIST_HEAD(&sctx->deleted_refs);
+@@ -5610,10 +5599,6 @@ static int send_encoded_inline_extent(st
+ 	if (ret < 0)
+ 		goto out;
  
-@@ -8459,6 +8499,9 @@ out:
- 		btrfs_lru_cache_clear(&sctx->dir_created_cache);
- 		btrfs_lru_cache_clear(&sctx->dir_utimes_cache);
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, fspath);
+-	if (ret < 0)
+-		goto out;
+-
+ 	btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
+ 	ei = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_file_extent_item);
+ 	ram_bytes = btrfs_file_extent_ram_bytes(leaf, ei);
+@@ -5642,7 +5627,6 @@ static int send_encoded_inline_extent(st
  
-+		if (sctx->cur_inode_path.buf != sctx->cur_inode_path.inline_buf)
-+			kfree(sctx->cur_inode_path.buf);
-+
- 		kfree(sctx);
+ tlv_put_failure:
+ out:
+-	fs_path_free(fspath);
+ 	iput(inode);
+ 	return ret;
+ }
+@@ -5667,9 +5651,9 @@ static int send_encoded_extent(struct se
+ 	if (IS_ERR(inode))
+ 		return PTR_ERR(inode);
+ 
+-	fspath = fs_path_alloc();
+-	if (!fspath) {
+-		ret = -ENOMEM;
++	fspath = get_cur_inode_path(sctx);
++	if (IS_ERR(fspath)) {
++		ret = PTR_ERR(fspath);
+ 		goto out;
  	}
  
+@@ -5677,10 +5661,6 @@ static int send_encoded_extent(struct se
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = get_cur_path(sctx, sctx->cur_ino, sctx->cur_inode_gen, fspath);
+-	if (ret < 0)
+-		goto out;
+-
+ 	btrfs_item_key_to_cpu(leaf, &key, path->slots[0]);
+ 	ei = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_file_extent_item);
+ 	disk_bytenr = btrfs_file_extent_disk_bytenr(leaf, ei);
+@@ -5747,7 +5727,6 @@ static int send_encoded_extent(struct se
+ 
+ tlv_put_failure:
+ out:
+-	fs_path_free(fspath);
+ 	iput(inode);
+ 	return ret;
+ }
 
 
