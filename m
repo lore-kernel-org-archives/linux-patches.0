@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13EE34F490;
-	Tue, 26 Aug 2025 14:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF81352FFA;
+	Tue, 26 Aug 2025 14:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217945; cv=none; b=Xfx5GQ0HcZklELjShmGVUuBnaypiAc3ydEEFVV9n23QlCODtzKZkxliZcTZVGPE7uEtJWmLGmhKs+rQRcEdmIr035cAmX5Y3nYfNXeJ0oZFGDHtAPoXTvQL4/eiex+568YjOa/AR1LNOMKDYP+hmaUogCc4qk1RrW+dCS3Qd65I=
+	t=1756217947; cv=none; b=t72Tg4Za/fUU9N9vEyzwDxzw8o9uNMN7FmDVpBFeJSRs8uoYAdzp8yUTGjA3mfuqC08Gta/2NJKVkTWARbf408zy5fW6CJ9G7eDM1SkPAEK82z7aiG3VsDyRKkJHNvyDbaD6YxmrwLXMvcQ6PJzO2mWN6C8msUNLTPpxPeNnV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217945; c=relaxed/simple;
-	bh=WCC9EAZqJk3NllHWFAAntXEKHwp2Wo5WEaJFl+gRDBk=;
+	s=arc-20240116; t=1756217947; c=relaxed/simple;
+	bh=w/90j2oxKqdPJAN2ZDfffp1ZyMYlD8WgfaenWo/qVa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYE+VyPP0JOigupoQkBrimhO6QJwrNKq00KW3tMm5SDnLYJk77i8HSZLXzrge1HEkmghu67t0Tm8hpP1NnvNUvSDXrg7a9NEyr520Sqn+D0RFiG+vgmT+hFTPvcl2cWPAuYZ51dDatWjVRJfyayNW62CtUNo+fzejHkdZVLxd6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVgem2Fs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAOx0yj+EWbLI1wLPOJ7x3wcfbKpnLlcRSZf2f9+nvEUNjWDPHAGu+Hpr1Wx8DE+ykNOp+Ym8L+2PeyHObqzSbhdOTz7P5z56iFzZlYtg2yBhRMWOCgtOaiZTNmmof+wBvIOVc09lGWhsn1EhkwLo40Byg7oVWVCeTshxiknJlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mCDIB8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVgem2Fs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B48C4CEF1;
-	Tue, 26 Aug 2025 14:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mCDIB8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15D8C4CEF1;
+	Tue, 26 Aug 2025 14:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217944;
-	bh=WCC9EAZqJk3NllHWFAAntXEKHwp2Wo5WEaJFl+gRDBk=;
+	s=korg; t=1756217947;
+	bh=w/90j2oxKqdPJAN2ZDfffp1ZyMYlD8WgfaenWo/qVa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVgem2FshpGjOJDpCifTcO/AlxDd4BvD157PVPdrj5bMlldehPxjZtX8t4HAmP2A8
-	 rpo4P1KjmvS4Nm43BvurmCmdamJuPamEYzeA8928HfDJOU4AVtUs+AbENIglnCH8yN
-	 gnofht5/QGDSf6nCi7CoF8XFp+KXK06YKoZv94G8=
+	b=1mCDIB8BNUH0YmVAt/asEHmt/KlpY1mIK3ueedyhr1d+bnJIaUGwesxjsScorkNzg
+	 xmPd8CWXr+RG7GISRlXpfLGnk0tgRV+33kp2S6Aco4GUkKXGASj2jEumI5PjXEmuND
+	 vp05bXioHtKjTYik0nhd2GoRiMngl786z3uX9px4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 333/523] pNFS: Fix disk addr range check in block/scsi layout
-Date: Tue, 26 Aug 2025 13:09:03 +0200
-Message-ID: <20250826110932.691070981@linuxfoundation.org>
+Subject: [PATCH 5.10 304/523] RDMA/core: reduce stack using in nldev_stat_get_doit()
+Date: Tue, 26 Aug 2025 13:08:34 +0200
+Message-ID: <20250826110931.953809994@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,39 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7db6e66663681abda54f81d5916db3a3b8b1a13d ]
+[ Upstream commit 43163f4c30f94d2103c948a247cdf2cda5068ca7 ]
 
-At the end of the isect translation, disc_addr represents the physical
-disk offset. Thus, end calculated from disk_addr is also a physical disk
-offset. Therefore, range checking should be done using map->disk_offset,
-not map->start.
+In the s390 defconfig, gcc-10 and earlier end up inlining three functions
+into nldev_stat_get_doit(), and each of them uses some 600 bytes of stack.
 
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250702133226.212537-1-sergeybashirov@gmail.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+The result is a function with an overly large stack frame and a warning:
+
+drivers/infiniband/core/nldev.c:2466:1: error: the frame size of 1720 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+
+Mark the three functions noinline_for_stack to prevent this, ensuring
+that only one copy of the nlattr array is on the stack of each function.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250620113335.3776965-1-arnd@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/nldev.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index a9e563145e0c..a853711bcad2 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -171,8 +171,8 @@ do_add_page_to_bio(struct bio *bio, int npg, int rw, sector_t isect,
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index f8dfec7ad7cc..1475069aa428 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -1240,10 +1240,11 @@ static const struct nldev_fill_res_entry fill_entries[RDMA_RESTRACK_MAX] = {
+ 	},
+ };
  
- 	/* limit length to what the device mapping allows */
- 	end = disk_addr + *len;
--	if (end >= map->start + map->len)
--		*len = map->start + map->len - disk_addr;
-+	if (end >= map->disk_offset + map->len)
-+		*len = map->disk_offset + map->len - disk_addr;
+-static int res_get_common_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			       struct netlink_ext_ack *extack,
+-			       enum rdma_restrack_type res_type,
+-			       res_fill_func_t fill_func)
++static noinline_for_stack int
++res_get_common_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
++		    struct netlink_ext_ack *extack,
++		    enum rdma_restrack_type res_type,
++		    res_fill_func_t fill_func)
+ {
+ 	const struct nldev_fill_res_entry *fe = &fill_entries[res_type];
+ 	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
+@@ -1877,10 +1878,10 @@ static int nldev_stat_del_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	return ret;
+ }
  
- retry:
- 	if (!bio) {
+-static int stat_get_doit_default_counter(struct sk_buff *skb,
+-					 struct nlmsghdr *nlh,
+-					 struct netlink_ext_ack *extack,
+-					 struct nlattr *tb[])
++static noinline_for_stack int
++stat_get_doit_default_counter(struct sk_buff *skb, struct nlmsghdr *nlh,
++			      struct netlink_ext_ack *extack,
++			      struct nlattr *tb[])
+ {
+ 	struct rdma_hw_stats *stats;
+ 	struct nlattr *table_attr;
+@@ -1970,8 +1971,9 @@ static int stat_get_doit_default_counter(struct sk_buff *skb,
+ 	return ret;
+ }
+ 
+-static int stat_get_doit_qp(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			    struct netlink_ext_ack *extack, struct nlattr *tb[])
++static noinline_for_stack int
++stat_get_doit_qp(struct sk_buff *skb, struct nlmsghdr *nlh,
++		 struct netlink_ext_ack *extack, struct nlattr *tb[])
+ 
+ {
+ 	static enum rdma_nl_counter_mode mode;
 -- 
 2.39.5
 
