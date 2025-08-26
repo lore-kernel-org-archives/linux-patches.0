@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322082676E9;
-	Tue, 26 Aug 2025 14:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0723413C3F2;
+	Tue, 26 Aug 2025 14:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219097; cv=none; b=BrgDusELlXdo+wZfwGoCrttNG+/KMVuLqsR6oYSJU4LR+RopYG2WxTQmm+Tdf4lxmew1fWoY9Kqw3bxvESs8kAC7uByuRySZ9Por3ZbKWcp5swTfBwwcZaqMmYP74iJembls8wItAR40h7+aFJoxgisRnGJz1TkAn5WnhIYoWJY=
+	t=1756219102; cv=none; b=O9z6OIeBteFjt8OYEFPuC9p5avebwR/Ck2VTQiTFCJLgjFj/crC03NxnPBc+4J6dH6t01KFHDN9DQK+2BOwIuH8JHM/8CG2s/ipGG8XZWGOdO4k2MpPeEhOqTJafktNvWO85D4bB8nTdhRG4cIJb/ZP5jYNOpeomJ6iQH32rW0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219097; c=relaxed/simple;
-	bh=gMkgl1pz0MaWPGp5iT1Z1e/4tr7iCls0Bbt05+MrUdc=;
+	s=arc-20240116; t=1756219102; c=relaxed/simple;
+	bh=Dv5IGcnS7pE5c5+MmOSfOsTkmioXEv9AGn0tmpJre2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1p6Y9urQt6pFXzRhH312opEKpTfPeH4fewzTSMzMfrsMoYb8muOKNMqHsMiBLXm250hplUDrdl/LGcxte4dVlbikCB2TZCnPiOmk/A7z/nW5hQwBjrx2GP0euhaqPkgTuS43E2ZmAYHiBfZwSd14c3tAn8lC7VFGTmtXuO8z4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M00aZfaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HDC+1A8iQOl6T1WcP574wzsMwVAuOWy2ICAL2hFHZ2734tZ5BtHBiV1+N8mlCOUXP0cJxN38mcs+Ir9J75vGDhTJpA1KnXIFMsyxPwJ25WhWcnyxnTHwLyZQA+5PnR7xUhBC7ufW/BCLl7EzmDyCxaPO+b6VDbhAzG/0I5gvEAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMnqTyyq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M00aZfaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AC3C4CEF1;
-	Tue, 26 Aug 2025 14:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMnqTyyq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EDEC4CEF1;
+	Tue, 26 Aug 2025 14:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219097;
-	bh=gMkgl1pz0MaWPGp5iT1Z1e/4tr7iCls0Bbt05+MrUdc=;
+	s=korg; t=1756219099;
+	bh=Dv5IGcnS7pE5c5+MmOSfOsTkmioXEv9AGn0tmpJre2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M00aZfaW7SXAIcq6nlo/BVdAq47SJIVKAa4TJhtX32GesZamEOhLessKF4dcuCvKU
-	 EPBmseHBzdma5qzPO0aM39pglZzRdJwnhztLX4wU7Y7kymNKWx71x5pDggu2znbXCi
-	 ZneLF0yGOlL3Gps6SctnWhVs29UdhvA4MJMFDj8Y=
+	b=WMnqTyyqEAdLcNF+jt9P9STU+6fhBWkUxv3wAsSrn1g7dKVBEMqbJBUxYzkbumpzZ
+	 EizydKSNBE87db7dy40ylztz/+ftHKKRu0Ui9HG/zz9JvhFRAgTbuy08W7fmKuRJto
+	 S5hFBVBUAijU/j+NeOw1e9+yGTHGbI7yKAishLpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 220/403] wifi: iwlwifi: dvm: fix potential overflow in rs_fill_link_cmd()
-Date: Tue, 26 Aug 2025 13:09:06 +0200
-Message-ID: <20250826110912.910165178@linuxfoundation.org>
+Subject: [PATCH 5.4 221/403] wifi: iwlwifi: fw: Fix possible memory leak in iwl_fw_dbg_collect
+Date: Tue, 26 Aug 2025 13:09:07 +0200
+Message-ID: <20250826110912.937295051@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit e3ad987e9dc7d1e12e3f2f1e623f0e174cd0ca78 ]
+[ Upstream commit cc8d9cbf269dab363c768bfa9312265bc807fca5 ]
 
-The 'index' variable in the rs_fill_link_cmd() function can reach
-LINK_QUAL_MAX_RETRY_NUM during the execution of the inner loop. This
-variable is used as an index for the lq_cmd->rs_table array, which has a
-size of LINK_QUAL_MAX_RETRY_NUM, without proper validation.
+Ensure descriptor is freed on error to avoid memory leak.
 
-Modify the condition of the inner loop to ensure that the 'index' variable
-does not exceed LINK_QUAL_MAX_RETRY_NUM - 1, thereby preventing any
-potential overflow issues.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Link: https://patch.msgid.link/20240313101755.269209-1-rand.sec96@gmail.com
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250611222325.8158d15ec866.Ifa3e422c302397111f20a16da7509e6574bc19e3@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/rs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/rs.c b/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-index e68a13c33c45..19defdb43126 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-@@ -2935,7 +2935,7 @@ static void rs_fill_link_cmd(struct iwl_priv *priv,
- 		/* Repeat initial/next rate.
- 		 * For legacy IWL_NUMBER_TRY == 1, this loop will not execute.
- 		 * For HT IWL_HT_NUMBER_TRY == 3, this executes twice. */
--		while (repeat_rate > 0 && (index < LINK_QUAL_MAX_RETRY_NUM)) {
-+		while (repeat_rate > 0 && index < (LINK_QUAL_MAX_RETRY_NUM - 1)) {
- 			if (is_legacy(tbl_type.lq_type)) {
- 				if (ant_toggle_cnt < NUM_TRY_BEFORE_ANT_TOGGLE)
- 					ant_toggle_cnt++;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index 286b5ca3b167..14f96bd41377 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -2130,6 +2130,7 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
+ 	struct iwl_fw_dump_desc *desc;
+ 	unsigned int delay = 0;
+ 	bool monitor_only = false;
++	int ret;
+ 
+ 	if (trigger) {
+ 		u16 occurrences = le16_to_cpu(trigger->occurrences) - 1;
+@@ -2160,7 +2161,11 @@ int iwl_fw_dbg_collect(struct iwl_fw_runtime *fwrt,
+ 	desc->trig_desc.type = cpu_to_le32(trig);
+ 	memcpy(desc->trig_desc.data, str, len);
+ 
+-	return iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
++	ret = iwl_fw_dbg_collect_desc(fwrt, desc, monitor_only, delay);
++	if (ret)
++		kfree(desc);
++
++	return ret;
+ }
+ IWL_EXPORT_SYMBOL(iwl_fw_dbg_collect);
+ 
 -- 
 2.39.5
 
