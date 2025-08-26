@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8F53431F4;
-	Tue, 26 Aug 2025 13:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD29229BD83;
+	Tue, 26 Aug 2025 13:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214935; cv=none; b=AVP6Y4wjvDLaOKatkr3dp1FaZFD5XrF1uq2nV858DnEO5mYEcu+3O988pwCxlvoZRCcA7ys2AJFauchR38cE/R8zJf4sBk2oiJZmZKUSwbASc36gzjESFzwcVTQfOhrUaj54fEMLyVNoa6Ff5fTdT7MlXVbvkabrQcko6wssVyM=
+	t=1756214937; cv=none; b=mXuAkEaj3GfPmXDsR7k21XX45T0vJ0URCx79HG+TXFXtw30UKQal69Y4bty4ck/NxIOW2H69nVV6wUoFE819jMs1NLMzoKc7ZuXzAamnfrIQ+1AIDWRHfRU66/aw9clM3BQVLDjiQVH7Ezc+Dl4DzUrYyr9Ekk2UlP/jc9WOIIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214935; c=relaxed/simple;
-	bh=58fUJVtT14MZR1U/4cZsAwUDpKdMmByJGIwiS5PB+Uw=;
+	s=arc-20240116; t=1756214937; c=relaxed/simple;
+	bh=eoEMHxd+TdTtf5uUJFPJbfXy2/5JSKsXVeGVdF8r990=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWYgUGKKPq2FZ9XhXlgUwxKWCObpONUHJX9BmvAGrr7AXA/N58OIqvowtlferR4WpvJL2zuABB5Oe+MiegDQBt1l3P9Am69//nlTtBuqkR7bwBQC8LDWjlIalfNWnyFR/LzdTUEljuEgGTDmlt9Tp7Vq4XyXH0T/63xBXEz3aoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQEA/mFG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L43RlezcOYVk7KMbSUXitDqhVJj0ZvQQZnGC7UcxSwyF1AO8g4LVe/cP57WCs5eCRMycibl3Dlhpt0r2zpMmc1RJ+wevQmJiobfEvTn7mhSFKiVvO2gnatDuVkKgIOvW7rqhKfrNmAzOqf8e4VeWa+NhhsE4yi0vKwI322UqtF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BA6qhv81; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQEA/mFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3CAC4CEF1;
-	Tue, 26 Aug 2025 13:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BA6qhv81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEBEC4CEF1;
+	Tue, 26 Aug 2025 13:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214935;
-	bh=58fUJVtT14MZR1U/4cZsAwUDpKdMmByJGIwiS5PB+Uw=;
+	s=korg; t=1756214937;
+	bh=eoEMHxd+TdTtf5uUJFPJbfXy2/5JSKsXVeGVdF8r990=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQEA/mFGU2Y8rlfAbUu4phaIQbuIXWeTlOsR+8rlurtCT+fsrbfs0VOUcPrNpF+16
-	 CKnl83RWgyG58sN+HsDutCVYkZihjuzKDKU7wWSAy950orPjOzhrwnQaPyHzEKNX3M
-	 En+KPr2K7UpRnyb06HyDZIyGLXZ48Sn2qYnKqgzU=
+	b=BA6qhv81MLsXjlId+skcSYBK+S+fhBAPtvsnC9jcvVqVQGE1igsyaqgEC8RPoU4BG
+	 mObS02Yo5DbmHxNsBoQ8anvSyug3jfU5PLlGrMidnaZwBYxwJd5ro5m0RqMEbfaIgP
+	 uJ4hk8NFlkJ7vvAG0gjwUP7NgQDb9eRilmZ6Bi8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 326/482] media: ov2659: Fix memory leaks in ov2659_probe()
-Date: Tue, 26 Aug 2025 13:09:39 +0200
-Message-ID: <20250826110938.866543428@linuxfoundation.org>
+Subject: [PATCH 6.1 327/482] media: qcom: camss: cleanup media device allocated resource on error path
+Date: Tue, 26 Aug 2025 13:09:40 +0200
+Message-ID: <20250826110938.891554313@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,42 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit 76142b137b968d47b35cdd8d1dc924677d319c8b upstream.
+commit 69080ec3d0daba8a894025476c98ab16b5a505a4 upstream.
 
-ov2659_probe() doesn't properly free control handler resources in failure
-paths, causing memory leaks. Add v4l2_ctrl_handler_free() to prevent these
-memory leaks and reorder the ctrl_handler assignment for better code flow.
+A call to media_device_init() requires media_device_cleanup() counterpart
+to complete cleanup and release any allocated resources.
 
-Fixes: c4c0283ab3cd ("[media] media: i2c: add support for omnivision's ov2659 sensor")
+This has been done in the driver .remove() right from the beginning, but
+error paths on .probe() shall also be fixed.
+
+Fixes: a1d7c116fcf7 ("media: camms: Add core files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov2659.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/camss/camss.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ov2659.c
-+++ b/drivers/media/i2c/ov2659.c
-@@ -1479,14 +1479,15 @@ static int ov2659_probe(struct i2c_clien
- 				     V4L2_CID_TEST_PATTERN,
- 				     ARRAY_SIZE(ov2659_test_pattern_menu) - 1,
- 				     0, 0, ov2659_test_pattern_menu);
--	ov2659->sd.ctrl_handler = &ov2659->ctrls;
- 
- 	if (ov2659->ctrls.error) {
- 		dev_err(&client->dev, "%s: control initialization error %d\n",
- 			__func__, ov2659->ctrls.error);
-+		v4l2_ctrl_handler_free(&ov2659->ctrls);
- 		return  ov2659->ctrls.error;
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1658,7 +1658,7 @@ static int camss_probe(struct platform_d
+ 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
+-		goto err_genpd_cleanup;
++		goto err_media_device_cleanup;
  	}
  
-+	ov2659->sd.ctrl_handler = &ov2659->ctrls;
- 	sd = &ov2659->sd;
- 	client->flags |= I2C_CLIENT_SCCB;
- #ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+ 	v4l2_async_nf_init(&camss->notifier);
+@@ -1710,6 +1710,8 @@ err_v4l2_device_unregister:
+ 	v4l2_device_unregister(&camss->v4l2_dev);
+ 	v4l2_async_nf_cleanup(&camss->notifier);
+ 	pm_runtime_disable(dev);
++err_media_device_cleanup:
++	media_device_cleanup(&camss->media_dev);
+ err_genpd_cleanup:
+ 	camss_genpd_cleanup(camss);
+ 
 
 
