@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1A331CA74;
-	Tue, 26 Aug 2025 11:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6F0284B5B;
+	Tue, 26 Aug 2025 11:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207280; cv=none; b=J8rGBvvsH/5kiOgqY1H23Mh8MXH92wvBJKnrUTZtikwTrAXBy6+8qbQ3Wx5lu8+iEgqeSb6DipbZJZt+M7XL+WfoUKteAIXIjEXWZxDmlKWuK13nbC7d3pydzPVcCoZcATPBnM3s5duDP6Z4zIfU5K9Gg3rr4dar5xHaTDehE5w=
+	t=1756207282; cv=none; b=JdW8t+RXGnfyBSpzlGe/65Z6IaIlRQaWNQSARBfijJAAinvHbEU/6xpEZ5ISmSXVdsxEm1LCQO1/ZCSUDj3LbpIbYd0GMhx19UlT0hyfFa+d+Wy7o4xjbiF4qHSvMyGsPBTSmcMld1glZfvTVMtP3JyVbHofYuUM7R41oWMVmCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207280; c=relaxed/simple;
-	bh=sLrdOECDng2V/QnWmv1SBA5ohoDOOo/9GVT6dWc+MPE=;
+	s=arc-20240116; t=1756207282; c=relaxed/simple;
+	bh=gIvOHxGxUTNMz41N887YMmS8hltahLIDYutCngOQLiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XG0gTHD/JKGux61691h0FiGQTNTvWzEMP4w1HKJ9iBja2xnsDqSyG3rZB3KMGRh5ztsbiJA/gHuzzNaGatXt3huXGHnCm2GpfhXGtwKkU66dwXbGgtoz1nLVouvbyqeHH/m+vaX347XNS2Bj5FQ4B7VEoUut6Wu1lzxxh4U3MjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcxOy7+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwrWIepZmxp2kInGGJICoT0/W8VjKoKbFjWxSD6H2lvO/KblKfpnlPe7cxlz2ocvjKUp5Tpyd7kWJOFufECGXVBlB+PTpc5PKDiYx1qDyZxf2osSJ/0vnh45sCtcr8jFkyr1+eBQYROv7/dG0VeC6xsp6AOWBle4apShtlXOMlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVXPoNta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcxOy7+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C59C4CEF4;
-	Tue, 26 Aug 2025 11:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVXPoNta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6DCC4CEF1;
+	Tue, 26 Aug 2025 11:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207279;
-	bh=sLrdOECDng2V/QnWmv1SBA5ohoDOOo/9GVT6dWc+MPE=;
+	s=korg; t=1756207282;
+	bh=gIvOHxGxUTNMz41N887YMmS8hltahLIDYutCngOQLiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zcxOy7+TA36W3sZHeiyrlVtQa0W7KncHZyHRNVkfcYWOUwFX/pW0XoOkTdNtNyvu6
-	 3iMWLraqsxCeqK9m3KqrhYTrgRrlqCzb544j3L23YqFbLBxDEIF4bhLmEGTTbY0I4/
-	 bB0Of248Dzu9sR5L3HB+X8IpMTlq6jA9n2LuRBMY=
+	b=TVXPoNtamYj9JrAYtKOryTxsLgQGbrhtRNCx9UvIsC/waLPcP7gOqNZMktzeZ5Mcs
+	 cYbDeddJthtjXiYLSMbKFP6/6g5RW1nHlkHewSFNI5eZumNcglagH2Zx5EdNRKoSqT
+	 2lQDTeZxtOGjVVvIiJaDb4ILhWtqG9WXRUe6Mb7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.16 113/457] iomap: Fix broken data integrity guarantees for O_SYNC writes
-Date: Tue, 26 Aug 2025 13:06:37 +0200
-Message-ID: <20250826110940.164042769@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.16 122/457] parisc: Define and use set_pte_at()
+Date: Tue, 26 Aug 2025 13:06:46 +0200
+Message-ID: <20250826110940.388697725@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -54,58 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: John David Anglin <dave.anglin@bell.net>
 
-commit 6b65028e2b51c023a816eabffea88980fdd5564e upstream.
+commit 802e55488bc2cc1ab6423b720255a785ccac42ce upstream.
 
-Commit d279c80e0bac ("iomap: inline iomap_dio_bio_opflags()") has broken
-the logic in iomap_dio_bio_iter() in a way that when the device does
-support FUA (or has no writeback cache) and the direct IO happens to
-freshly allocated or unwritten extents, we will *not* issue fsync after
-completing direct IO O_SYNC / O_DSYNC write because the
-IOMAP_DIO_WRITE_THROUGH flag stays mistakenly set. Fix the problem by
-clearing IOMAP_DIO_WRITE_THROUGH whenever we do not perform FUA write as
-it was originally intended.
+When a PTE is changed, we need to flush the PTE. set_pte_at()
+was lost in the folio update. PA-RISC version is the same as
+the generic version.
 
-CC: John Garry <john.g.garry@oracle.com>
-CC: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Fixes: d279c80e0bac ("iomap: inline iomap_dio_bio_opflags()")
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/20250730102840.20470-2-jack@suse.cz
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v5.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/direct-io.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/parisc/include/asm/pgtable.h |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -368,14 +368,14 @@ static int iomap_dio_bio_iter(struct iom
- 		if (iomap->flags & IOMAP_F_SHARED)
- 			dio->flags |= IOMAP_DIO_COW;
+--- a/arch/parisc/include/asm/pgtable.h
++++ b/arch/parisc/include/asm/pgtable.h
+@@ -276,7 +276,7 @@ extern unsigned long *empty_zero_page;
+ #define pte_none(x)     (pte_val(x) == 0)
+ #define pte_present(x)	(pte_val(x) & _PAGE_PRESENT)
+ #define pte_user(x)	(pte_val(x) & _PAGE_USER)
+-#define pte_clear(mm, addr, xp)  set_pte(xp, __pte(0))
++#define pte_clear(mm, addr, xp) set_pte_at((mm), (addr), (xp), __pte(0))
  
--		if (iomap->flags & IOMAP_F_NEW) {
-+		if (iomap->flags & IOMAP_F_NEW)
- 			need_zeroout = true;
--		} else if (iomap->type == IOMAP_MAPPED) {
--			if (iomap_dio_can_use_fua(iomap, dio))
--				bio_opf |= REQ_FUA;
--			else
--				dio->flags &= ~IOMAP_DIO_WRITE_THROUGH;
--		}
-+		else if (iomap->type == IOMAP_MAPPED &&
-+			 iomap_dio_can_use_fua(iomap, dio))
-+			bio_opf |= REQ_FUA;
-+
-+		if (!(bio_opf & REQ_FUA))
-+			dio->flags &= ~IOMAP_DIO_WRITE_THROUGH;
+ #define pmd_flag(x)	(pmd_val(x) & PxD_FLAG_MASK)
+ #define pmd_address(x)	((unsigned long)(pmd_val(x) &~ PxD_FLAG_MASK) << PxD_VALUE_SHIFT)
+@@ -392,6 +392,7 @@ static inline void set_ptes(struct mm_st
+ 	}
+ }
+ #define set_ptes set_ptes
++#define set_pte_at(mm, addr, ptep, pte) set_ptes(mm, addr, ptep, pte, 1)
  
- 		/*
- 		 * We can only do deferred completion for pure overwrites that
+ /* Used for deferring calls to flush_dcache_page() */
+ 
+@@ -456,7 +457,7 @@ static inline int ptep_test_and_clear_yo
+ 	if (!pte_young(pte)) {
+ 		return 0;
+ 	}
+-	set_pte(ptep, pte_mkold(pte));
++	set_pte_at(vma->vm_mm, addr, ptep, pte_mkold(pte));
+ 	return 1;
+ }
+ 
+@@ -466,7 +467,7 @@ pte_t ptep_clear_flush(struct vm_area_st
+ struct mm_struct;
+ static inline void ptep_set_wrprotect(struct mm_struct *mm, unsigned long addr, pte_t *ptep)
+ {
+-	set_pte(ptep, pte_wrprotect(*ptep));
++	set_pte_at(mm, addr, ptep, pte_wrprotect(*ptep));
+ }
+ 
+ #define pte_same(A,B)	(pte_val(A) == pte_val(B))
 
 
