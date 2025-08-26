@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920AF29BDBA;
-	Tue, 26 Aug 2025 11:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F331D271475;
+	Tue, 26 Aug 2025 11:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208822; cv=none; b=iZPUCvoKderniBBL+1nthTW127Y5DxdHovGGmUVh5c4WHA/xsqTQco86enSlnIFRJoXZIodws7QvAS8BKVVyshMfMYxu44QM4JDHqGFh2/duqvKX52hfudZNbQQnU4I8o8StKqkKreflNVjuhDoI554t9pL8QYbp4ITAPU2CDJI=
+	t=1756208825; cv=none; b=g1Kd48y7BtvhyBPCoGp3WsrcYGIHR54EdiGv59zvWFZz2lUS5iierzGkLvFRAPDaqgdUJfksu5MAxPKpA1P0tlSBuzdgas5kmZoVK5gzRdNtsaCXd4dmJ3mae+Ko2zF7Vw2cDVL1nXKjEefDn4tayfRxtZomlMDPDgUwomfgnVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208822; c=relaxed/simple;
-	bh=OSYN37+ollnujCJdb7zCGsYjXV5RF77Z51CF+XIxcew=;
+	s=arc-20240116; t=1756208825; c=relaxed/simple;
+	bh=gdaRiH7jYy2S2ZfDrglTWkJ7Yotw2MBm9dwj5W9Qi5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTY3H45QcLuiXwEoqi9zdQuwXogEFZNFZM0xcX16utyv0XwRyDPQo2iE7gReWEMQbmXzPGwsa2TXXgUHbOcwzmjvrW8ApUWUxYjAUMx6N/zwH4kVnl3+qtnCioCiTumE3IyXo5IBq6iLwYdhYgG5KzUKdwrZgORC4MX13dX7svk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4ejI9IN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2GTyclfEhTosXX1FjkZeWQa99MUVTk1072q9sJPpnt9ceyvQFaYU65Ny4S+Qg5ghRFWDLO5hSAJLKIy2uW19tlLF+13Qv0SJtfJMhpLHp2MYCw3fDt3o3DJchOXhbHoZv+1ez8Pr0eGgvbPBzRCuubXbBEqX3P4qBIgcahP5/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKKUzVTL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4ejI9IN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B02C113CF;
-	Tue, 26 Aug 2025 11:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKKUzVTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D87DC4CEF1;
+	Tue, 26 Aug 2025 11:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208822;
-	bh=OSYN37+ollnujCJdb7zCGsYjXV5RF77Z51CF+XIxcew=;
+	s=korg; t=1756208824;
+	bh=gdaRiH7jYy2S2ZfDrglTWkJ7Yotw2MBm9dwj5W9Qi5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4ejI9INTmc8PQkaNJO1emRW9ZnZoZ+wyqLEk1sg/14BtoecBYzJmuiM3PGgHWZlz
-	 6NlzhpZDodFwJoDpwRBMR7Z/hBzLYzUkk8qw8q0XZ0+VQHNvP7e26j4RakgQXYCHta
-	 6gYb7R+UmQmgcNmZe+JqwiVO5kEPU0mM/Otrip0Y=
+	b=DKKUzVTLM+pOjz2ImO8QgeJHV192bBw+si/FdWCUQLPTAwTAWw1mz+FzfxCU3dIcI
+	 LWWEeNunPc3+F1Jgge86AfVXJnAaO6NtSIOWmEwMSchIL9zcK5dMVxbvQ7ge4nwDox
+	 ee8kq0yw2xn8e0DyW9Aq3gp4FlSaGlQLxRYkFsP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kerem Karabay <kekrby@gmail.com>,
-	Aditya Garg <gargaditya08@live.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 258/322] drm/format-helper: Add conversion from XRGB8888 to BGR888
-Date: Tue, 26 Aug 2025 13:11:13 +0200
-Message-ID: <20250826110922.306779203@linuxfoundation.org>
+Subject: [PATCH 6.12 259/322] drm/format-helper: Move helpers for pixel conversion to header file
+Date: Tue, 26 Aug 2025 13:11:14 +0200
+Message-ID: <20250826110922.330294999@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,252 +51,281 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kerem Karabay <kekrby@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit c9043706cb11b8005e145debe0a3211acd08e2c1 ]
+[ Upstream commit c46d18f98261d99711003517c444417a303c7fae ]
 
-Add XRGB8888 emulation helper for devices that only support BGR888.
+The DRM draw helpers contain format-conversion helpers that operate
+on individual pixels. Move them into an internal header file and adopt
+them as individual API. Update the draw code accordingly. The pixel
+helpers will also be useful for other format conversion helpers.
 
-Signed-off-by: Kerem Karabay <kekrby@gmail.com>
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/9A67EA95-9BC7-4D56-8F87-05EAC1C166AD@live.com
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://lore.kernel.org/r/20250328141709.217283-2-tzimmermann@suse.de
 Stable-dep-of: 05663d88fd0b ("drm/tests: Fix drm_test_fb_xrgb8888_to_xrgb2101010() on big-endian")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_format_helper.c           | 54 +++++++++++++
- .../gpu/drm/tests/drm_format_helper_test.c    | 81 +++++++++++++++++++
- include/drm/drm_format_helper.h               |  3 +
- 3 files changed, 138 insertions(+)
+ drivers/gpu/drm/drm_draw.c            | 100 +++-------------------
+ drivers/gpu/drm/drm_format_internal.h | 119 ++++++++++++++++++++++++++
+ 2 files changed, 130 insertions(+), 89 deletions(-)
+ create mode 100644 drivers/gpu/drm/drm_format_internal.h
 
-diff --git a/drivers/gpu/drm/drm_format_helper.c b/drivers/gpu/drm/drm_format_helper.c
-index b1be458ed4dd..4f60c8d8f63e 100644
---- a/drivers/gpu/drm/drm_format_helper.c
-+++ b/drivers/gpu/drm/drm_format_helper.c
-@@ -702,6 +702,57 @@ void drm_fb_xrgb8888_to_rgb888(struct iosys_map *dst, const unsigned int *dst_pi
- }
- EXPORT_SYMBOL(drm_fb_xrgb8888_to_rgb888);
+diff --git a/drivers/gpu/drm/drm_draw.c b/drivers/gpu/drm/drm_draw.c
+index cb2ad12bce57..d41f8ae1c148 100644
+--- a/drivers/gpu/drm/drm_draw.c
++++ b/drivers/gpu/drm/drm_draw.c
+@@ -11,85 +11,7 @@
+ #include <drm/drm_fourcc.h>
  
-+static void drm_fb_xrgb8888_to_bgr888_line(void *dbuf, const void *sbuf, unsigned int pixels)
-+{
-+	u8 *dbuf8 = dbuf;
-+	const __le32 *sbuf32 = sbuf;
-+	unsigned int x;
-+	u32 pix;
+ #include "drm_draw_internal.h"
+-
+-/*
+- * Conversions from xrgb8888
+- */
+-
+-static u16 convert_xrgb8888_to_rgb565(u32 pix)
+-{
+-	return ((pix & 0x00F80000) >> 8) |
+-	       ((pix & 0x0000FC00) >> 5) |
+-	       ((pix & 0x000000F8) >> 3);
+-}
+-
+-static u16 convert_xrgb8888_to_rgba5551(u32 pix)
+-{
+-	return ((pix & 0x00f80000) >> 8) |
+-	       ((pix & 0x0000f800) >> 5) |
+-	       ((pix & 0x000000f8) >> 2) |
+-	       BIT(0); /* set alpha bit */
+-}
+-
+-static u16 convert_xrgb8888_to_xrgb1555(u32 pix)
+-{
+-	return ((pix & 0x00f80000) >> 9) |
+-	       ((pix & 0x0000f800) >> 6) |
+-	       ((pix & 0x000000f8) >> 3);
+-}
+-
+-static u16 convert_xrgb8888_to_argb1555(u32 pix)
+-{
+-	return BIT(15) | /* set alpha bit */
+-	       ((pix & 0x00f80000) >> 9) |
+-	       ((pix & 0x0000f800) >> 6) |
+-	       ((pix & 0x000000f8) >> 3);
+-}
+-
+-static u32 convert_xrgb8888_to_argb8888(u32 pix)
+-{
+-	return pix | GENMASK(31, 24); /* fill alpha bits */
+-}
+-
+-static u32 convert_xrgb8888_to_xbgr8888(u32 pix)
+-{
+-	return ((pix & 0x00ff0000) >> 16) <<  0 |
+-	       ((pix & 0x0000ff00) >>  8) <<  8 |
+-	       ((pix & 0x000000ff) >>  0) << 16 |
+-	       ((pix & 0xff000000) >> 24) << 24;
+-}
+-
+-static u32 convert_xrgb8888_to_abgr8888(u32 pix)
+-{
+-	return ((pix & 0x00ff0000) >> 16) <<  0 |
+-	       ((pix & 0x0000ff00) >>  8) <<  8 |
+-	       ((pix & 0x000000ff) >>  0) << 16 |
+-	       GENMASK(31, 24); /* fill alpha bits */
+-}
+-
+-static u32 convert_xrgb8888_to_xrgb2101010(u32 pix)
+-{
+-	pix = ((pix & 0x000000FF) << 2) |
+-	      ((pix & 0x0000FF00) << 4) |
+-	      ((pix & 0x00FF0000) << 6);
+-	return pix | ((pix >> 8) & 0x00300C03);
+-}
+-
+-static u32 convert_xrgb8888_to_argb2101010(u32 pix)
+-{
+-	pix = ((pix & 0x000000FF) << 2) |
+-	      ((pix & 0x0000FF00) << 4) |
+-	      ((pix & 0x00FF0000) << 6);
+-	return GENMASK(31, 30) /* set alpha bits */ | pix | ((pix >> 8) & 0x00300C03);
+-}
+-
+-static u32 convert_xrgb8888_to_abgr2101010(u32 pix)
+-{
+-	pix = ((pix & 0x00FF0000) >> 14) |
+-	      ((pix & 0x0000FF00) << 4) |
+-	      ((pix & 0x000000FF) << 22);
+-	return GENMASK(31, 30) /* set alpha bits */ | pix | ((pix >> 8) & 0x00300C03);
+-}
++#include "drm_format_internal.h"
+ 
+ /**
+  * drm_draw_color_from_xrgb8888 - convert one pixel from xrgb8888 to the desired format
+@@ -104,28 +26,28 @@ u32 drm_draw_color_from_xrgb8888(u32 color, u32 format)
+ {
+ 	switch (format) {
+ 	case DRM_FORMAT_RGB565:
+-		return convert_xrgb8888_to_rgb565(color);
++		return drm_pixel_xrgb8888_to_rgb565(color);
+ 	case DRM_FORMAT_RGBA5551:
+-		return convert_xrgb8888_to_rgba5551(color);
++		return drm_pixel_xrgb8888_to_rgba5551(color);
+ 	case DRM_FORMAT_XRGB1555:
+-		return convert_xrgb8888_to_xrgb1555(color);
++		return drm_pixel_xrgb8888_to_xrgb1555(color);
+ 	case DRM_FORMAT_ARGB1555:
+-		return convert_xrgb8888_to_argb1555(color);
++		return drm_pixel_xrgb8888_to_argb1555(color);
+ 	case DRM_FORMAT_RGB888:
+ 	case DRM_FORMAT_XRGB8888:
+ 		return color;
+ 	case DRM_FORMAT_ARGB8888:
+-		return convert_xrgb8888_to_argb8888(color);
++		return drm_pixel_xrgb8888_to_argb8888(color);
+ 	case DRM_FORMAT_XBGR8888:
+-		return convert_xrgb8888_to_xbgr8888(color);
++		return drm_pixel_xrgb8888_to_xbgr8888(color);
+ 	case DRM_FORMAT_ABGR8888:
+-		return convert_xrgb8888_to_abgr8888(color);
++		return drm_pixel_xrgb8888_to_abgr8888(color);
+ 	case DRM_FORMAT_XRGB2101010:
+-		return convert_xrgb8888_to_xrgb2101010(color);
++		return drm_pixel_xrgb8888_to_xrgb2101010(color);
+ 	case DRM_FORMAT_ARGB2101010:
+-		return convert_xrgb8888_to_argb2101010(color);
++		return drm_pixel_xrgb8888_to_argb2101010(color);
+ 	case DRM_FORMAT_ABGR2101010:
+-		return convert_xrgb8888_to_abgr2101010(color);
++		return drm_pixel_xrgb8888_to_abgr2101010(color);
+ 	default:
+ 		WARN_ONCE(1, "Can't convert to %p4cc\n", &format);
+ 		return 0;
+diff --git a/drivers/gpu/drm/drm_format_internal.h b/drivers/gpu/drm/drm_format_internal.h
+new file mode 100644
+index 000000000000..5f82f0b9c8e8
+--- /dev/null
++++ b/drivers/gpu/drm/drm_format_internal.h
+@@ -0,0 +1,119 @@
++/* SPDX-License-Identifier: GPL-2.0 or MIT */
 +
-+	for (x = 0; x < pixels; x++) {
-+		pix = le32_to_cpu(sbuf32[x]);
-+		/* write red-green-blue to output in little endianness */
-+		*dbuf8++ = (pix & 0x00ff0000) >> 16;
-+		*dbuf8++ = (pix & 0x0000ff00) >> 8;
-+		*dbuf8++ = (pix & 0x000000ff) >> 0;
-+	}
-+}
++#ifndef DRM_FORMAT_INTERNAL_H
++#define DRM_FORMAT_INTERNAL_H
 +
-+/**
-+ * drm_fb_xrgb8888_to_bgr888 - Convert XRGB8888 to BGR888 clip buffer
-+ * @dst: Array of BGR888 destination buffers
-+ * @dst_pitch: Array of numbers of bytes between the start of two consecutive scanlines
-+ *             within @dst; can be NULL if scanlines are stored next to each other.
-+ * @src: Array of XRGB8888 source buffers
-+ * @fb: DRM framebuffer
-+ * @clip: Clip rectangle area to copy
-+ * @state: Transform and conversion state
++#include <linux/bits.h>
++#include <linux/types.h>
++
++/*
++ * Each pixel-format conversion helper takes a raw pixel in a
++ * specific input format and returns a raw pixel in a specific
++ * output format. All pixels are in little-endian byte order.
 + *
-+ * This function copies parts of a framebuffer to display memory and converts the
-+ * color format during the process. Destination and framebuffer formats must match. The
-+ * parameters @dst, @dst_pitch and @src refer to arrays. Each array must have at
-+ * least as many entries as there are planes in @fb's format. Each entry stores the
-+ * value for the format's respective color plane at the same index.
++ * Function names are
 + *
-+ * This function does not apply clipping on @dst (i.e. the destination is at the
-+ * top-left corner).
++ *   drm_pixel_<input>_to_<output>_<algorithm>()
 + *
-+ * Drivers can use this function for BGR888 devices that don't natively
-+ * support XRGB8888.
++ * where <input> and <output> refer to pixel formats. The
++ * <algorithm> is optional and hints to the method used for the
++ * conversion. Helpers with no algorithm given apply pixel-bit
++ * shifting.
++ *
++ * The argument type is u32. We expect this to be wide enough to
++ * hold all conversion input from 32-bit RGB to any output format.
++ * The Linux kernel should avoid format conversion for anything
++ * but XRGB8888 input data. Converting from other format can still
++ * be acceptable in some cases.
++ *
++ * The return type is u32. It is wide enough to hold all conversion
++ * output from XRGB8888. For output formats wider than 32 bit, a
++ * return type of u64 would be acceptable.
 + */
-+void drm_fb_xrgb8888_to_bgr888(struct iosys_map *dst, const unsigned int *dst_pitch,
-+			       const struct iosys_map *src, const struct drm_framebuffer *fb,
-+			       const struct drm_rect *clip, struct drm_format_conv_state *state)
++
++/*
++ * Conversions from XRGB8888
++ */
++
++static inline u32 drm_pixel_xrgb8888_to_rgb565(u32 pix)
 +{
-+	static const u8 dst_pixsize[DRM_FORMAT_MAX_PLANES] = {
-+		3,
-+	};
-+
-+	drm_fb_xfrm(dst, dst_pitch, dst_pixsize, src, fb, clip, false, state,
-+		    drm_fb_xrgb8888_to_bgr888_line);
-+}
-+EXPORT_SYMBOL(drm_fb_xrgb8888_to_bgr888);
-+
- static void drm_fb_xrgb8888_to_argb8888_line(void *dbuf, const void *sbuf, unsigned int pixels)
- {
- 	__le32 *dbuf32 = dbuf;
-@@ -1035,6 +1086,9 @@ int drm_fb_blit(struct iosys_map *dst, const unsigned int *dst_pitch, uint32_t d
- 		} else if (dst_format == DRM_FORMAT_RGB888) {
- 			drm_fb_xrgb8888_to_rgb888(dst, dst_pitch, src, fb, clip, state);
- 			return 0;
-+		} else if (dst_format == DRM_FORMAT_BGR888) {
-+			drm_fb_xrgb8888_to_bgr888(dst, dst_pitch, src, fb, clip, state);
-+			return 0;
- 		} else if (dst_format == DRM_FORMAT_ARGB8888) {
- 			drm_fb_xrgb8888_to_argb8888(dst, dst_pitch, src, fb, clip, state);
- 			return 0;
-diff --git a/drivers/gpu/drm/tests/drm_format_helper_test.c b/drivers/gpu/drm/tests/drm_format_helper_test.c
-index b4d62fb1d909..2a3d80b27cae 100644
---- a/drivers/gpu/drm/tests/drm_format_helper_test.c
-+++ b/drivers/gpu/drm/tests/drm_format_helper_test.c
-@@ -60,6 +60,11 @@ struct convert_to_rgb888_result {
- 	const u8 expected[TEST_BUF_SIZE];
- };
- 
-+struct convert_to_bgr888_result {
-+	unsigned int dst_pitch;
-+	const u8 expected[TEST_BUF_SIZE];
-+};
-+
- struct convert_to_argb8888_result {
- 	unsigned int dst_pitch;
- 	const u32 expected[TEST_BUF_SIZE];
-@@ -107,6 +112,7 @@ struct convert_xrgb8888_case {
- 	struct convert_to_argb1555_result argb1555_result;
- 	struct convert_to_rgba5551_result rgba5551_result;
- 	struct convert_to_rgb888_result rgb888_result;
-+	struct convert_to_bgr888_result bgr888_result;
- 	struct convert_to_argb8888_result argb8888_result;
- 	struct convert_to_xrgb2101010_result xrgb2101010_result;
- 	struct convert_to_argb2101010_result argb2101010_result;
-@@ -151,6 +157,10 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
- 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
- 			.expected = { 0x00, 0x00, 0xFF },
- 		},
-+		.bgr888_result = {
-+			.dst_pitch = TEST_USE_DEFAULT_PITCH,
-+			.expected = { 0xFF, 0x00, 0x00 },
-+		},
- 		.argb8888_result = {
- 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
- 			.expected = { 0xFFFF0000 },
-@@ -217,6 +227,10 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
- 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
- 			.expected = { 0x00, 0x00, 0xFF },
- 		},
-+		.bgr888_result = {
-+			.dst_pitch = TEST_USE_DEFAULT_PITCH,
-+			.expected = { 0xFF, 0x00, 0x00 },
-+		},
- 		.argb8888_result = {
- 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
- 			.expected = { 0xFFFF0000 },
-@@ -330,6 +344,15 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
- 				0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00,
- 			},
- 		},
-+		.bgr888_result = {
-+			.dst_pitch = TEST_USE_DEFAULT_PITCH,
-+			.expected = {
-+				0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00,
-+				0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-+				0x00, 0x00, 0xFF, 0xFF, 0x00, 0xFF,
-+				0xFF, 0xFF, 0x00, 0x00, 0xFF, 0xFF,
-+			},
-+		},
- 		.argb8888_result = {
- 			.dst_pitch = TEST_USE_DEFAULT_PITCH,
- 			.expected = {
-@@ -468,6 +491,17 @@ static struct convert_xrgb8888_case convert_xrgb8888_cases[] = {
- 				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
- 			},
- 		},
-+		.bgr888_result = {
-+			.dst_pitch = 15,
-+			.expected = {
-+				0x0E, 0x44, 0x9C, 0x11, 0x4D, 0x05, 0xA8, 0xF3, 0x03,
-+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+				0x6C, 0xF0, 0x73, 0x0E, 0x44, 0x9C, 0x11, 0x4D, 0x05,
-+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+				0xA8, 0x03, 0x03, 0x6C, 0xF0, 0x73, 0x0E, 0x44, 0x9C,
-+				0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+			},
-+		},
- 		.argb8888_result = {
- 			.dst_pitch = 20,
- 			.expected = {
-@@ -914,6 +948,52 @@ static void drm_test_fb_xrgb8888_to_rgb888(struct kunit *test)
- 	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
- }
- 
-+static void drm_test_fb_xrgb8888_to_bgr888(struct kunit *test)
-+{
-+	const struct convert_xrgb8888_case *params = test->param_value;
-+	const struct convert_to_bgr888_result *result = &params->bgr888_result;
-+	size_t dst_size;
-+	u8 *buf = NULL;
-+	__le32 *xrgb8888 = NULL;
-+	struct iosys_map dst, src;
-+
-+	struct drm_framebuffer fb = {
-+		.format = drm_format_info(DRM_FORMAT_XRGB8888),
-+		.pitches = { params->pitch, 0, 0 },
-+	};
-+
-+	dst_size = conversion_buf_size(DRM_FORMAT_BGR888, result->dst_pitch,
-+				       &params->clip, 0);
-+	KUNIT_ASSERT_GT(test, dst_size, 0);
-+
-+	buf = kunit_kzalloc(test, dst_size, GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buf);
-+	iosys_map_set_vaddr(&dst, buf);
-+
-+	xrgb8888 = cpubuf_to_le32(test, params->xrgb8888, TEST_BUF_SIZE);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, xrgb8888);
-+	iosys_map_set_vaddr(&src, xrgb8888);
-+
-+	/*
-+	 * BGR888 expected results are already in little-endian
-+	 * order, so there's no need to convert the test output.
-+	 */
-+	drm_fb_xrgb8888_to_bgr888(&dst, &result->dst_pitch, &src, &fb, &params->clip,
-+				  &fmtcnv_state);
-+	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
-+
-+	buf = dst.vaddr; /* restore original value of buf */
-+	memset(buf, 0, dst_size);
-+
-+	int blit_result = 0;
-+
-+	blit_result = drm_fb_blit(&dst, &result->dst_pitch, DRM_FORMAT_BGR888, &src, &fb, &params->clip,
-+				  &fmtcnv_state);
-+
-+	KUNIT_EXPECT_FALSE(test, blit_result);
-+	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
++	return ((pix & 0x00f80000) >> 8) |
++	       ((pix & 0x0000fc00) >> 5) |
++	       ((pix & 0x000000f8) >> 3);
 +}
 +
- static void drm_test_fb_xrgb8888_to_argb8888(struct kunit *test)
- {
- 	const struct convert_xrgb8888_case *params = test->param_value;
-@@ -1851,6 +1931,7 @@ static struct kunit_case drm_format_helper_test_cases[] = {
- 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_argb1555, convert_xrgb8888_gen_params),
- 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_rgba5551, convert_xrgb8888_gen_params),
- 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_rgb888, convert_xrgb8888_gen_params),
-+	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_bgr888, convert_xrgb8888_gen_params),
- 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_argb8888, convert_xrgb8888_gen_params),
- 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_xrgb2101010, convert_xrgb8888_gen_params),
- 	KUNIT_CASE_PARAM(drm_test_fb_xrgb8888_to_argb2101010, convert_xrgb8888_gen_params),
-diff --git a/include/drm/drm_format_helper.h b/include/drm/drm_format_helper.h
-index 428d81afe215..aa1604d92c1a 100644
---- a/include/drm/drm_format_helper.h
-+++ b/include/drm/drm_format_helper.h
-@@ -96,6 +96,9 @@ void drm_fb_xrgb8888_to_rgba5551(struct iosys_map *dst, const unsigned int *dst_
- void drm_fb_xrgb8888_to_rgb888(struct iosys_map *dst, const unsigned int *dst_pitch,
- 			       const struct iosys_map *src, const struct drm_framebuffer *fb,
- 			       const struct drm_rect *clip, struct drm_format_conv_state *state);
-+void drm_fb_xrgb8888_to_bgr888(struct iosys_map *dst, const unsigned int *dst_pitch,
-+			       const struct iosys_map *src, const struct drm_framebuffer *fb,
-+			       const struct drm_rect *clip, struct drm_format_conv_state *state);
- void drm_fb_xrgb8888_to_argb8888(struct iosys_map *dst, const unsigned int *dst_pitch,
- 				 const struct iosys_map *src, const struct drm_framebuffer *fb,
- 				 const struct drm_rect *clip, struct drm_format_conv_state *state);
++static inline u32 drm_pixel_xrgb8888_to_rgbx5551(u32 pix)
++{
++	return ((pix & 0x00f80000) >> 8) |
++	       ((pix & 0x0000f800) >> 5) |
++	       ((pix & 0x000000f8) >> 2);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_rgba5551(u32 pix)
++{
++	return drm_pixel_xrgb8888_to_rgbx5551(pix) |
++	       BIT(0); /* set alpha bit */
++}
++
++static inline u32 drm_pixel_xrgb8888_to_xrgb1555(u32 pix)
++{
++	return ((pix & 0x00f80000) >> 9) |
++	       ((pix & 0x0000f800) >> 6) |
++	       ((pix & 0x000000f8) >> 3);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_argb1555(u32 pix)
++{
++	return BIT(15) | /* set alpha bit */
++	       drm_pixel_xrgb8888_to_xrgb1555(pix);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_argb8888(u32 pix)
++{
++	return GENMASK(31, 24) | /* fill alpha bits */
++	       pix;
++}
++
++static inline u32 drm_pixel_xrgb8888_to_xbgr8888(u32 pix)
++{
++	return ((pix & 0xff000000)) | /* also copy filler bits */
++	       ((pix & 0x00ff0000) >> 16) |
++	       ((pix & 0x0000ff00)) |
++	       ((pix & 0x000000ff) << 16);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_abgr8888(u32 pix)
++{
++	return GENMASK(31, 24) | /* fill alpha bits */
++	       drm_pixel_xrgb8888_to_xbgr8888(pix);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_xrgb2101010(u32 pix)
++{
++	pix = ((pix & 0x000000ff) << 2) |
++	      ((pix & 0x0000ff00) << 4) |
++	      ((pix & 0x00ff0000) << 6);
++	return pix | ((pix >> 8) & 0x00300c03);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_argb2101010(u32 pix)
++{
++	return GENMASK(31, 30) | /* set alpha bits */
++	       drm_pixel_xrgb8888_to_xrgb2101010(pix);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_xbgr2101010(u32 pix)
++{
++	pix = ((pix & 0x00ff0000) >> 14) |
++	      ((pix & 0x0000ff00) << 4) |
++	      ((pix & 0x000000ff) << 22);
++	return pix | ((pix >> 8) & 0x00300c03);
++}
++
++static inline u32 drm_pixel_xrgb8888_to_abgr2101010(u32 pix)
++{
++	return GENMASK(31, 30) | /* set alpha bits */
++	       drm_pixel_xrgb8888_to_xbgr2101010(pix);
++}
++
++#endif
 -- 
 2.50.1
 
