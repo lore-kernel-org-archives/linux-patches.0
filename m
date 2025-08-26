@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376A72BE643;
-	Tue, 26 Aug 2025 11:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2B32BE643;
+	Tue, 26 Aug 2025 11:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208403; cv=none; b=iTx5p5IijJSPQm1IscYcM74AZxkY5C983gLixbM9ZsJk+VQRiugLsWUTayw1CiBEgWoVioy1+RqCYpZDnZrt8h13EVp3DnyVeLGUzabMye/DI0uDG+J/zzGmX1QYORYXYb/LO8h3qLmlJmngaJHuwdmu8vmf+hKCK1AUod+0RxY=
+	t=1756208405; cv=none; b=am2AchrhUTrDjSqWVpHkDiBwaustYcKFBBSHxsvX+r29oPYKZHG2LeFzuViBFZBrcEeE7N/JXVd/nryVE7MYwAc4fnw5OLKyquIcNjWO9fLYCkB73+lTDm2AfVXRiUKlQ2pCRSBNFX7Kj84VMUdL9G1ONoNvD49doI0471dlfwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208403; c=relaxed/simple;
-	bh=XFcLju0UdtT6JAullpycXv6+2bwGLIFq9NnaC7A+qwU=;
+	s=arc-20240116; t=1756208405; c=relaxed/simple;
+	bh=Bw3ea0f6aHo+ndLkN2uGJiReFPXFsh9g1vQMTnWZtSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hV3/QwID7YW7BeVXti+Is3pA8SC6RsK/g5tpVcQLeTX9mEUONpJm3cspun9O2EvrR8U0DBwBItHDj5VI9bQXXS3RlFLwsMF7MNKwL3BfLOKcpPOj3zZh2E+aGcHRY6wYqkejDUcdjbFcKBrLyoinP1op5Ds4MglqjILfWFZh7h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3ENPJuG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R2rwAEmv+fZly6iOiWGDANsT+O6lAI3AoVYfecqmmKgVOVl87XfCIuJ4IHrd1DawyTV3zoFCa4zsdIgQrzD+zysqXFS8e1vyFg3RJskSR9sbc0emJJ9DGDRK8hHxzQ64OU6qKuxdE3NjfA6YA0NEUQ9gZxdE1JaGSnGjocLYOGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxPKTvgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3ENPJuG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BB5C4CEF1;
-	Tue, 26 Aug 2025 11:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxPKTvgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B388C4CEF1;
+	Tue, 26 Aug 2025 11:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208402;
-	bh=XFcLju0UdtT6JAullpycXv6+2bwGLIFq9NnaC7A+qwU=;
+	s=korg; t=1756208405;
+	bh=Bw3ea0f6aHo+ndLkN2uGJiReFPXFsh9g1vQMTnWZtSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3ENPJuGQCGJ5jqiGzd+XNvN2d++CwlzTQqhWlBBrrXD4wRd6Gh24qJyUBt2lQU+Z
-	 nA36TAcNX7ODQ0c7ni40sJXdP5QYDipn0TPVPdufU9l5lrsENT3QV62OXvJ891WXgj
-	 8tdPPZktDs2tCReoJVgYGo797RP8u+pYzrxJ6NpQ=
+	b=pxPKTvgtbkoEN/0nJ+Klw7aQfTP+UT7zwlmH6OGn+KLLVnMXBAVPW53yqERQHNvae
+	 5LQuhP48EIKQEBsGrA1sUQ5GLD++YE86/n5HHy9etx8iCXlIS84l+w/Ag5cj9YTgni
+	 m+QliWdi7DV4x0yKChr4SXSLaet1ObSrJfilXlDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 097/322] parisc: Update comments in make_insert_tlb
-Date: Tue, 26 Aug 2025 13:08:32 +0200
-Message-ID: <20250826110918.083972972@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.12 098/322] media: gspca: Add bounds checking to firmware parser
+Date: Tue, 26 Aug 2025 13:08:33 +0200
+Message-ID: <20250826110918.114619424@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,98 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave.anglin@bell.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit cb22f247f371bd206a88cf0e0c05d80b8b62fb26 upstream.
+commit aef89c0b2417da79cb2062a95476288f9f203ab0 upstream.
 
-The following testcase exposed a problem with our read access checks
-in get_user() and raw_copy_from_user():
+This sd_init() function reads the firmware.  The firmware data holds a
+series of records and the function reads each record and sends the data
+to the device.  The request_ihex_firmware() function
+calls ihex_validate_fw() which ensures that the total length of all the
+records won't read out of bounds of the fw->data[].
 
-#include <stdint.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/mman.h>
-#include <sys/types.h>
+However, a potential issue is if there is a single very large
+record (larger than PAGE_SIZE) and that would result in memory
+corruption.  Generally we trust the firmware, but it's always better to
+double check.
 
-int main(int argc, char **argv)
-{
-  unsigned long page_size = sysconf(_SC_PAGESIZE);
-  char *p = malloc(3 * page_size);
-  char *p_aligned;
-
-  /* initialize memory region. If not initialized, write syscall below will correctly return EFAULT. */
-  if (1)
-	memset(p, 'X', 3 * page_size);
-
-  p_aligned = (char *) ((((uintptr_t) p) + (2*page_size - 1)) & ~(page_size - 1));
-  /* Drop PROT_READ protection. Kernel and userspace should fault when accessing that memory region */
-  mprotect(p_aligned, page_size, PROT_NONE);
-
-  /* the following write() should return EFAULT, since PROT_READ was dropped by previous mprotect() */
-  int ret = write(2, p_aligned, 1);
-  if (!ret || errno != EFAULT)
-	printf("\n FAILURE: write() did not returned expected EFAULT value\n");
-
-  return 0;
-}
-
-Because of the way _PAGE_READ is handled, kernel code never generates
-a read access fault when it access a page as the kernel privilege level
-is always less than PL1 in the PTE.
-
-This patch reworks the comments in the make_insert_tlb macro to try
-to make this clearer.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v5.12+
+Fixes: 49b61ec9b5af ("[media] gspca: Add new vicam subdriver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/entry.S |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/media/usb/gspca/vicam.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -499,6 +499,12 @@
- 	 * this happens is quite subtle, read below */
- 	.macro		make_insert_tlb	spc,pte,prot,tmp
- 	space_to_prot   \spc \prot        /* create prot id from space */
-+
-+#if _PAGE_SPECIAL_BIT == _PAGE_DMB_BIT
-+	/* need to drop DMB bit, as it's used as SPECIAL flag */
-+	depi		0,_PAGE_SPECIAL_BIT,1,\pte
-+#endif
-+
- 	/* The following is the real subtlety.  This is depositing
- 	 * T <-> _PAGE_REFTRAP
- 	 * D <-> _PAGE_DIRTY
-@@ -511,17 +517,18 @@
- 	 * Finally, _PAGE_READ goes in the top bit of PL1 (so we
- 	 * trigger an access rights trap in user space if the user
- 	 * tries to read an unreadable page */
--#if _PAGE_SPECIAL_BIT == _PAGE_DMB_BIT
--	/* need to drop DMB bit, as it's used as SPECIAL flag */
--	depi		0,_PAGE_SPECIAL_BIT,1,\pte
--#endif
- 	depd            \pte,8,7,\prot
+--- a/drivers/media/usb/gspca/vicam.c
++++ b/drivers/media/usb/gspca/vicam.c
+@@ -227,6 +227,7 @@ static int sd_init(struct gspca_dev *gsp
+ 	const struct ihex_binrec *rec;
+ 	const struct firmware *fw;
+ 	u8 *firmware_buf;
++	int len;
  
- 	/* PAGE_USER indicates the page can be read with user privileges,
- 	 * so deposit X1|11 to PL1|PL2 (remember the upper bit of PL1
--	 * contains _PAGE_READ) */
-+	 * contains _PAGE_READ). While the kernel can't directly write
-+	 * user pages which have _PAGE_WRITE zero, it can read pages
-+	 * which have _PAGE_READ zero (PL <= PL1). Thus, the kernel
-+	 * exception fault handler doesn't trigger when reading pages
-+	 * that aren't user read accessible */
- 	extrd,u,*=      \pte,_PAGE_USER_BIT+32,1,%r0
- 	depdi		7,11,3,\prot
-+
- 	/* If we're a gateway page, drop PL2 back to zero for promotion
- 	 * to kernel privilege (so we can execute the page as kernel).
- 	 * Any privilege promotion page always denys read and write */
+ 	ret = request_ihex_firmware(&fw, VICAM_FIRMWARE,
+ 				    &gspca_dev->dev->dev);
+@@ -241,9 +242,14 @@ static int sd_init(struct gspca_dev *gsp
+ 		goto exit;
+ 	}
+ 	for (rec = (void *)fw->data; rec; rec = ihex_next_binrec(rec)) {
+-		memcpy(firmware_buf, rec->data, be16_to_cpu(rec->len));
++		len = be16_to_cpu(rec->len);
++		if (len > PAGE_SIZE) {
++			ret = -EINVAL;
++			break;
++		}
++		memcpy(firmware_buf, rec->data, len);
+ 		ret = vicam_control_msg(gspca_dev, 0xff, 0, 0, firmware_buf,
+-					be16_to_cpu(rec->len));
++					len);
+ 		if (ret < 0)
+ 			break;
+ 	}
 
 
