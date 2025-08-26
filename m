@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47B22139C9;
-	Tue, 26 Aug 2025 13:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6469B2139C9;
+	Tue, 26 Aug 2025 13:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215673; cv=none; b=mLs8nJ5D9nZftBMkBJIm+c423Ax1ED5XuSVTy3gerfT2UQtfbWW3ASVATx1qBXuDfz/hdDsyeIAftPdt55R5al6AXjBjSwHGbFmTeP77R2Idjl+/4REabpmxCsBnnEg3AuVpybqQOoq4zF1nrmFQjrGEp7ITkm28qLdnoCpLlMs=
+	t=1756215676; cv=none; b=XpbN8cAPmx0j1jgGvA4qQk1U1J8EbY/TfsF2RYs0ipCrXVSsxTeQ3mnDmxEn42QDsXbGpqMADqyRQKOwtSAfa+hhT5uOets/tAvaNt8oJA1KHpjOK6HC3KmJ9d01O/2vN0L2PAFr4DgL+SyWippaB/cmwBRY8X+UBk6GttcMRTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215673; c=relaxed/simple;
-	bh=b1CPYhPjK8pO0sqLGRNO5ZMtiE/BpI2TPOuOn+bZWDA=;
+	s=arc-20240116; t=1756215676; c=relaxed/simple;
+	bh=/kf5xct5pyw/s188KBVOE4KDlxWeHtk8AB8Q952iUws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZeoRfkwIJLB5gzR8XZc8ERQIJnb5QHMEeP9tCNO4IeJ+Y+3IJwYRmLQS8vP6youDpp6J5NmSyb5KyOSvgTYMCfcxTbK/TaiI2pY7pj7rR6KY6utKBi5GhsweGdjR8yIBbnf+XGfE0pvWFwDs8Qk9pemVHBq0xcJPsXc/6Js3SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxbF6SlH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NfpqyrJy4D6NbUNRUIZI+PpG96oSqN7n+Yzsgbg3xDNeMpxyQw+ue4WRQLJZWKB+7Q8P1jw2VY9Wr94L9wCo7PlTSWb8AFTE/CaewSfyb71wI4z4FclYV8QWigr7Gwh260rwx6t8OtGmbNSCrHvenBS8mcdldzCVyJle69fG5q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqD12r7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxbF6SlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5659CC113D0;
-	Tue, 26 Aug 2025 13:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqD12r7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E165AC4CEF1;
+	Tue, 26 Aug 2025 13:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215673;
-	bh=b1CPYhPjK8pO0sqLGRNO5ZMtiE/BpI2TPOuOn+bZWDA=;
+	s=korg; t=1756215676;
+	bh=/kf5xct5pyw/s188KBVOE4KDlxWeHtk8AB8Q952iUws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxbF6SlHx8TuP1YU+0rxP21pq5Asy0TFk+C2vZBGne7R+C7Xpc3IWVNkmZmMQP2/p
-	 DmvdHdFKeq/+xFwN7LXHcXK9UibE0r+aOmYrtaes0YjxB7QNlV+Nqm3g2O9IfFbTDd
-	 2hxtbuyiMu3lDPLnPdWVBHCIseET1QL6a58b8a8s=
+	b=YqD12r7Awof51eWptYC29W3p5vw1LOqtVTcPiOTKFu1SK1OSiomxfJBUBu7mwZ1xI
+	 m0HSrRAgNk//jcxpJT9HKqqzxzYZRT4CuNlCnIKCCz6y5FYbF/JT1Rm52jq5xwtC34
+	 TqPLmZbIbuUsrp/HPukMRUaTisSWtIG/ZlGKhoD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis OSTERLAND-HEIM <denis.osterland@diehl.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Lizhi Xu <lizhi.xu@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/644] pps: fix poll support
-Date: Tue, 26 Aug 2025 13:03:32 +0200
-Message-ID: <20250826110949.518277935@linuxfoundation.org>
+Subject: [PATCH 5.15 122/644] Revert "vmci: Prevent the dispatching of uninitialized payloads"
+Date: Tue, 26 Aug 2025 13:03:33 +0200
+Message-ID: <20250826110949.542233978@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,100 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 12c409aa1ec2592280a2ddcc66ff8f3c7f7bb171 ]
+[ Upstream commit 8f5d9bed6122b8d96508436e5ad2498bb797eb6b ]
 
-Because pps_cdev_poll() returns unconditionally EPOLLIN,
-a user space program that calls select/poll get always an immediate data
-ready-to-read response. As a result the intended use to wait until next
-data becomes ready does not work.
+This reverts commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031.
 
-User space snippet:
+While the code "looks" correct, the compiler has no way to know that
+doing "fun" pointer math like this really isn't a write off the end of
+the structure as there is no hint anywhere that the structure has data
+at the end of it.
 
-    struct pollfd pollfd = {
-      .fd = open("/dev/pps0", O_RDONLY),
-      .events = POLLIN|POLLERR,
-      .revents = 0 };
-    while(1) {
-      poll(&pollfd, 1, 2000/*ms*/); // returns immediate, but should wait
-      if(revents & EPOLLIN) { // always true
-        struct pps_fdata fdata;
-        memset(&fdata, 0, sizeof(memdata));
-        ioctl(PPS_FETCH, &fdata); // currently fetches data at max speed
-      }
-    }
+This causes the following build warning:
 
-Lets remember the last fetch event counter and compare this value
-in pps_cdev_poll() with most recent event counter
-and return 0 if they are equal.
+In function 'fortify_memset_chk',
+    inlined from 'ctx_fire_notification.isra' at drivers/misc/vmw_vmci/vmci_context.c:254:3:
+include/linux/fortify-string.h:480:25: error: call to '__write_overflow_field' declared with attribute warning: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  480 |                         __write_overflow_field(p_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
-Co-developed-by: Rodolfo Giometti <giometti@enneenne.com>
-Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
-Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
-Link: https://lore.kernel.org/all/f6bed779-6d59-4f0f-8a59-b6312bd83b4e@enneenne.com/
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/c3c50ad1eb19ef553eca8a57c17f4c006413ab70.camel@gmail.com
+So revert it for now and it can come back in the future in a "sane" way
+that either correctly makes the structure know that there is trailing
+data, OR just the payload structure is properly referenced and zeroed
+out.
+
+Fixes: bfb4cf9fb97e ("vmci: Prevent the dispatching of uninitialized payloads")
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://lore.kernel.org/r/20250703171021.0aee1482@canb.auug.org.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/pps.c          | 11 +++++++++--
- include/linux/pps_kernel.h |  1 +
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/misc/vmw_vmci/vmci_context.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
-index 2d008e0d116a..ea966fc67d28 100644
---- a/drivers/pps/pps.c
-+++ b/drivers/pps/pps.c
-@@ -41,6 +41,9 @@ static __poll_t pps_cdev_poll(struct file *file, poll_table *wait)
+diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
+index a8df60b9301c..c0b5e339d5a1 100644
+--- a/drivers/misc/vmw_vmci/vmci_context.c
++++ b/drivers/misc/vmw_vmci/vmci_context.c
+@@ -251,8 +251,6 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
+ 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
+ 						  VMCI_CONTEXT_RESOURCE_ID);
+ 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
+-		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
+-			ev.msg.hdr.payload_size);
+ 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
+ 		ev.payload.context_id = context_id;
  
- 	poll_wait(file, &pps->queue, wait);
- 
-+	if (pps->last_fetched_ev == pps->last_ev)
-+		return 0;
-+
- 	return EPOLLIN | EPOLLRDNORM;
- }
- 
-@@ -186,9 +189,11 @@ static long pps_cdev_ioctl(struct file *file,
- 		if (err)
- 			return err;
- 
--		/* Return the fetched timestamp */
-+		/* Return the fetched timestamp and save last fetched event  */
- 		spin_lock_irq(&pps->lock);
- 
-+		pps->last_fetched_ev = pps->last_ev;
-+
- 		fdata.info.assert_sequence = pps->assert_sequence;
- 		fdata.info.clear_sequence = pps->clear_sequence;
- 		fdata.info.assert_tu = pps->assert_tu;
-@@ -272,9 +277,11 @@ static long pps_cdev_compat_ioctl(struct file *file,
- 		if (err)
- 			return err;
- 
--		/* Return the fetched timestamp */
-+		/* Return the fetched timestamp and save last fetched event  */
- 		spin_lock_irq(&pps->lock);
- 
-+		pps->last_fetched_ev = pps->last_ev;
-+
- 		compat.info.assert_sequence = pps->assert_sequence;
- 		compat.info.clear_sequence = pps->clear_sequence;
- 		compat.info.current_mode = pps->current_mode;
-diff --git a/include/linux/pps_kernel.h b/include/linux/pps_kernel.h
-index c7abce28ed29..aab0aebb529e 100644
---- a/include/linux/pps_kernel.h
-+++ b/include/linux/pps_kernel.h
-@@ -52,6 +52,7 @@ struct pps_device {
- 	int current_mode;			/* PPS mode at event time */
- 
- 	unsigned int last_ev;			/* last PPS event id */
-+	unsigned int last_fetched_ev;		/* last fetched PPS event id */
- 	wait_queue_head_t queue;		/* PPS event queue */
- 
- 	unsigned int id;			/* PPS source unique ID */
 -- 
 2.39.5
 
