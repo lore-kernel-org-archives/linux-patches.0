@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA83450FE;
-	Tue, 26 Aug 2025 12:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C57128816;
+	Tue, 26 Aug 2025 12:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212599; cv=none; b=QP93D/WfekmIeejtBbRTSnpr+xCuDYcoWugQ88Kycd1xAS/dMNB/UOhmQSL6gCWFxKxSj3vKtwi42gGIA/6Bu7CloeyPqO/MaF5u3aQLGbhC3sIuNyRBbZ4FGa++8sE8YcGK2PH/erkuJsd02/TPmevVmEYmAoycualNLL4erFQ=
+	t=1756212601; cv=none; b=kF3EP/mjCQZH+KFJZhflP7Bvg1z6+7fmBsu0oMF0jmemyK6bPJw9XoQRaLXz0YE1kLzpUOQ9hdf+tt3vIhbd+58mDJJiRBmP3lk+D/+2VhO5g25b38F0hAC5JZGFoV2Gy3GtxnzuPnDB2kmGujIf+rMN6qqXIqLKy6j81zdJWW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212599; c=relaxed/simple;
-	bh=k91fLtOmFukQibiPqA+4YDIqR0Y5Sa2ZcDF0itX6/uI=;
+	s=arc-20240116; t=1756212601; c=relaxed/simple;
+	bh=avrj+QOJu0OCm3tOrkSt3ZpHxVlv3spHXXI8I2h0d0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjvS5/J1h2smuFW+ufdEO3Ux3hXVBpp+gA/czQNR/t6IIFMtx6FjgknUHcdjKj3qIhWA+5qfgX40HP+H/+1XB0PQ2TIR8P2dWYPEQ/nuIVMuAcxaMVoVuwZHyuEN9ovaMqcZA7hXJnqLd11902r6zLosGLmAmnuTJ9zlgXo9gZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hQExv1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XTsOw+k1xkBzZzoMCUb1c42qDioqiepbNd0SPH9rlGdjnsGiKsTgTIHQDMo/Nd63y1qjB1AVTNeIh6jtSYtShtxXqK4ArQZcKMGjJxdvN9pJwxwRGniHAJQV5aa/5xYsB1gT92d+mIFWl3qzxvZc4106WDTjVGIc6xWwfSUCKxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8zrQdr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hQExv1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF1BC4CEF1;
-	Tue, 26 Aug 2025 12:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8zrQdr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A92C4CEF1;
+	Tue, 26 Aug 2025 12:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212599;
-	bh=k91fLtOmFukQibiPqA+4YDIqR0Y5Sa2ZcDF0itX6/uI=;
+	s=korg; t=1756212601;
+	bh=avrj+QOJu0OCm3tOrkSt3ZpHxVlv3spHXXI8I2h0d0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hQExv1XNwhNV1Dp8HEHKY/ebmkNsN48k9hHs30SnH5m1fAPyoC5NM723ZJKBNxNr
-	 vhjZyylUeaNv7IRK3YVTw2YRbSZtFVy2NOCGvsOFZRDKXVUv1riN669+hfbBVYSF4M
-	 UiowuQKnfpXAPZIzvaLZsK0Yd5wPAqWCPajZQ6Fw=
+	b=d8zrQdr3Yd8WpSxpXw1Ezx72tKbJecsrNPByINUCx9doEae04JI23IsVSxsxR43SW
+	 vpPXt4xl1A9hPPDhkgVLR+6AZF13GKjH4cDD2U2b+XWdAvooFqdyPQJ93soUDbZvfl
+	 MVS5h8sIuutWJJcemE0/M1f/uUelFU+Naf/qd5P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayi Li <lijiayi@kylinos.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 031/587] ACPI: processor: perflib: Fix initial _PPC limit application
-Date: Tue, 26 Aug 2025 13:03:00 +0200
-Message-ID: <20250826110953.744975443@linuxfoundation.org>
+Subject: [PATCH 6.6 032/587] ACPI: processor: perflib: Move problematic pr->performance check
+Date: Tue, 26 Aug 2025 13:03:01 +0200
+Message-ID: <20250826110953.771145063@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,80 +49,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayi Li <lijiayi@kylinos.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit d33bd88ac0ebb49e7f7c8f29a8c7ee9eae85d765 upstream.
+commit d405ec23df13e6df599f5bd965a55d13420366b8 upstream.
 
-If the BIOS sets a _PPC frequency limit upfront, it will fail to take
-effect due to a call ordering issue.  Namely, freq_qos_update_request()
-is called before freq_qos_add_request() for the given request causing
-the constraint update to be ignored.  The call sequence in question is
-as follows:
+Commit d33bd88ac0eb ("ACPI: processor: perflib: Fix initial _PPC limit
+application") added a pr->performance check that prevents the frequency
+QoS request from being added when the given processor has no performance
+object.  Unfortunately, this causes a WARN() in freq_qos_remove_request()
+to trigger on an attempt to take the given CPU offline later because the
+frequency QoS object has not been added for it due to the missing
+performance object.
 
-cpufreq_policy_online()
-  acpi_cpufreq_cpu_init()
-    acpi_processor_register_performance()
-      acpi_processor_get_performance_info()
-        acpi_processor_get_platform_limit()
-         freq_qos_update_request(&perflib_req) <- inactive QoS request
-  blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
-                               CPUFREQ_CREATE_POLICY)
-    acpi_processor_notifier()
-      acpi_processor_ppc_init()
-        freq_qos_add_request(&perflib_req) <- QoS request activation
+Address this by moving the pr->performance check before calling
+acpi_processor_get_platform_limit() so it only prevents a limit from
+being set for the CPU if the performance object is not present.  This
+way, the frequency QoS request is added as it was before the above
+commit and it is present all the time along with the CPU's cpufreq
+policy regardless of whether or not the CPU is online.
 
-Address this by adding an acpi_processor_get_platform_limit() call
-to acpi_processor_ppc_init(), after the perflib_req activation via
-freq_qos_add_request(), which causes the initial _PPC limit to be
-picked up as appropriate.  However, also ensure that the _PPC limit
-will not be picked up in the cases when the cpufreq driver does not
-call acpi_processor_register_performance() by adding a pr->performance
-check to the related_cpus loop in acpi_processor_ppc_init().
-
-Fixes: d15ce412737a ("ACPI: cpufreq: Switch to QoS requests instead of cpufreq notifier")
-Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-Link: https://patch.msgid.link/20250721032606.3459369-1-lijiayi@kylinos.cn
-[ rjw: Consolidate pr-related checks in acpi_processor_ppc_init() ]
-[ rjw: Subject and changelog adjustments ]
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 2d8b39a62a5d ACPI: processor: Avoid NULL pointer dereferences at init time
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 3000ce3c52f8 cpufreq: Use per-policy frequency QoS
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: a1bb46c36ce3 ACPI: processor: Add QoS requests for all CPUs
+Fixes: d33bd88ac0eb ("ACPI: processor: perflib: Fix initial _PPC limit application")
+Tested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2801421.mvXUDI8C0e@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/processor_perflib.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/acpi/processor_perflib.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/acpi/processor_perflib.c
 +++ b/drivers/acpi/processor_perflib.c
-@@ -174,11 +174,14 @@ void acpi_processor_ppc_init(struct cpuf
- {
- 	unsigned int cpu;
- 
-+	if (ignore_ppc == 1)
-+		return;
-+
- 	for_each_cpu(cpu, policy->related_cpus) {
+@@ -181,7 +181,7 @@ void acpi_processor_ppc_init(struct cpuf
  		struct acpi_processor *pr = per_cpu(processors, cpu);
  		int ret;
  
--		if (!pr)
-+		if (!pr || !pr->performance)
+-		if (!pr || !pr->performance)
++		if (!pr)
  			continue;
  
  		/*
-@@ -194,6 +197,11 @@ void acpi_processor_ppc_init(struct cpuf
- 		if (ret < 0)
+@@ -198,6 +198,9 @@ void acpi_processor_ppc_init(struct cpuf
  			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
  			       cpu, ret);
-+
-+		ret = acpi_processor_get_platform_limit(pr);
-+		if (ret)
-+			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
-+			       cpu, ret);
- 	}
- }
  
++		if (!pr->performance)
++			continue;
++
+ 		ret = acpi_processor_get_platform_limit(pr);
+ 		if (ret)
+ 			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
 
 
