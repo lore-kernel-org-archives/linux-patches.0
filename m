@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318E414883F;
-	Tue, 26 Aug 2025 12:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63331DEFF5;
+	Tue, 26 Aug 2025 12:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212941; cv=none; b=dp9ZoY2P+cvp5FHWwkO6C3q0/0WaEqWX4mz5SfmgorERTchd0i/sb18lMS4bqlqS/3pnYVG8JMgbwdLjNKhYuAEw07gr0PRCTP3UtFpmDsvERdYRdK44Yr8sN33g7Z6TcPNRaH5bV1olLldrn7xuC8lBESbMucObECfpKPcIiUI=
+	t=1756212943; cv=none; b=rkOw/28TNLnQHh0oByNNDTwyeVe+Z+cekEbkU4gzE3OecBwQ2YTHnrYfmRN+nZMfVfffdlMPYIoPYvIk3mLhB9Vp43qDW+tdepapXj0k5Zvzc3uWHuO3EI3nHAkqXsDZ24YY5+kuAePK8m8JHsM1qQMOkj1QaWiZcOMql5+NcWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212941; c=relaxed/simple;
-	bh=O0+T5/f65bXMiNyTs9su2pRr6au5cyjTA+8d3l0J/28=;
+	s=arc-20240116; t=1756212943; c=relaxed/simple;
+	bh=idQoVXWA0UMvPX/HudZ9YPkIRnOauooC8a1hGaWdbB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l51xrgju67hST1GWBaMhm1HuEPqmELqb1YrU9xJ9KzsFqQnEUbaI6W68hOY3LBlWJGGn9MUWs/A+pCVPqGsB2MDpgViN4iecgciJWxRrq893mb4yonkAChs6FIpmqNOVfL4jlojXochPK3Aqe7vmC80bHNpwSrtxyK/bnbOYT88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkZpAg0C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y1PAgS4PrEAZx3/kgBj+K8SnVguc4LyO2Zyz276gVCxJR1vnXVbRel67CjUwVZxJUDtYFWb73BG8602rGyHslI/Ds7AYfhUbhE2JiSXuTMci7XPAjyh0n2no27oOs5shDh5j+WtbuZ7E/j2fbi7lIVboV3homPsTJwKbe3AR/bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erlMjw0L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkZpAg0C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46FBC4CEF1;
-	Tue, 26 Aug 2025 12:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erlMjw0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58012C4CEF1;
+	Tue, 26 Aug 2025 12:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212941;
-	bh=O0+T5/f65bXMiNyTs9su2pRr6au5cyjTA+8d3l0J/28=;
+	s=korg; t=1756212943;
+	bh=idQoVXWA0UMvPX/HudZ9YPkIRnOauooC8a1hGaWdbB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mkZpAg0CQ5ro0U6kYbGn9aG2dt75cgeWnJICg3YSeeuummxqaGPrEFJJ9d7Z22l/C
-	 jsdmssjWFkm14JBFJOYcx/b2plOkbwK8oI/nBXQgpUKTAm155kenAa7tDsotUWqHIR
-	 BPAnY4wo5ZQfHqpfGTbnCJA0ca5brRWJSdNU1JqU=
+	b=erlMjw0LZvauDQEtY92QeLIlpnfMQ4FSRhyDfowJO9adR/IPmvvgiUVOn+layOasX
+	 I6eS4o8WLnSoIJUdXnDVP3ROm0OnFTbvTc19udngs33C6zkNPyGzNjJ+W06r3rfSQc
+	 JJwyhRH3S2TGwY6mUnWnE1J2MdiYUXXEMQ9KHSfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Joakim Zhang <joakim.zhang@cixtech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/587] soc: qcom: mdt_loader: Actually use the e_phoff
-Date: Tue, 26 Aug 2025 13:04:39 +0200
-Message-ID: <20250826110956.263813162@linuxfoundation.org>
+Subject: [PATCH 6.6 121/587] ALSA: hda: Disable jack polling at shutdown
+Date: Tue, 26 Aug 2025 13:04:30 +0200
+Message-ID: <20250826110956.039029972@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,72 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 47e339cac89143709e84a3b71ba8bd9b2fdd2368 ]
+[ Upstream commit 1adcbdf54f76e1004bdf71df4eb1888c26e7ad06 ]
 
-Rather than relying/assuming that the tools generating the firmware
-places the program headers immediately following the ELF header, use
-e_phoff as intended to find the program headers.
+Although the jack polling is canceled at shutdown in
+snd_hda_codec_shutdown(), it might be still re-triggered when the work
+is being processed at cancel_delayed_work_sync() call.  This may
+result in the unexpected hardware access that should have been already
+disabled.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-3-f7073e9ab899@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+For assuring to stop the jack polling, clear codec->jackpoll_interval
+at shutdown.
+
+Reported-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Closes: https://lore.kernel.org/20250619020844.2974160-4-joakim.zhang@cixtech.com
+Tested-by: Joakim Zhang <joakim.zhang@cixtech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250623131437.10670-2-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/mdt_loader.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/pci/hda/hda_codec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 6f177e46fa0f..8de1d478bec2 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -85,7 +85,7 @@ ssize_t qcom_mdt_get_size(const struct firmware *fw)
- 	int i;
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index 2d4b7527b840..80c3084189b0 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -3038,6 +3038,7 @@ void snd_hda_codec_shutdown(struct hda_codec *codec)
+ 	if (!codec->core.registered)
+ 		return;
  
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
-@@ -137,7 +137,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len,
- 	void *data;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	if (ehdr->e_phnum < 2)
- 		return ERR_PTR(-EINVAL);
-@@ -217,7 +217,7 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- 	int i;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
-@@ -272,7 +272,7 @@ static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_na
- 	int i;
- 
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		/*
-@@ -314,7 +314,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 
- 	is_split = qcom_mdt_bins_are_split(fw, fw_name);
- 	ehdr = (struct elf32_hdr *)fw->data;
--	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+	phdrs = (struct elf32_phdr *)(fw->data + ehdr->e_phoff);
- 
- 	for (i = 0; i < ehdr->e_phnum; i++) {
- 		phdr = &phdrs[i];
++	codec->jackpoll_interval = 0; /* don't poll any longer */
+ 	cancel_delayed_work_sync(&codec->jackpoll_work);
+ 	list_for_each_entry(cpcm, &codec->pcm_list_head, list)
+ 		snd_pcm_suspend_all(cpcm->pcm);
 -- 
 2.39.5
 
