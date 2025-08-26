@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBCB2A1BF;
-	Tue, 26 Aug 2025 14:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7D8341AD4;
+	Tue, 26 Aug 2025 14:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218625; cv=none; b=O1Q5/ZT5zt+ulgANOsV8in0bsoRF0N+FmzQCTYvo1it0GggJdLMIMxqmEA7kl4zpzkN5z/Zewsj6R0xXCYmuchn3SLnhWUjQ24A/JxAYT+1wvTV65iS8C38Ltqefk2psVLKeCUfMYzGlFMFzcu3RkKWg0eLE2DGpa/c5DtVD5aQ=
+	t=1756218628; cv=none; b=FsFCHoLQU2xHMS3hTQ1WFMZhDcsK5wzfpx3VfDoBh8RNGxIA1q8I30OknmCc1vzt2OhF3cJsD366SvJIpiCcFU+COVzDVk3oLduwcyAmj3hZPgCA6eP9rT0+Vr/UWVBaHhMHU51YWVY6QRnypliGhrodysTOdDWL0QCCOIKy/Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218625; c=relaxed/simple;
-	bh=sNW0RxiE5JmZlPeQMO4mKTGO6fTP/Gbs01KoW55/8LE=;
+	s=arc-20240116; t=1756218628; c=relaxed/simple;
+	bh=mKD/5B22os2jPjurvNoK3n1hytFX3RsY9zDUu2u1gW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWp05JiBHh/W97IpHCpeHE4ZJt2FWE9sHe9oXsIwRiW5Qnsev7wHTJvxl+VNl/z4mrwxztGatq+Gqv4bet7zebBZw59c/lzCaQMGPJ8MrxyCgpdVsh/csAX6nv8aaLd8FOg2BQv+0IWPpPAKYd5cNncprKHMmm9STJuqD1/eciQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdkHWt17; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0vWaSeYELvydo4WJA9UuE7Z7JpjzII14TaMbgNiZtG/h8B0NF79Ij+FS6UDEFsiQeYtpNRtjysz2G6+bd0l8ouJP0teTnnnmgz5c+S7VlRRJsldqp4SszqXFRRxpm5EvBDbev8gMF7Avup6FYvK/HlO+uWp/O2EzAm1RKSFELw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2q56JRBh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdkHWt17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44272C4CEF1;
-	Tue, 26 Aug 2025 14:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2q56JRBh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7129C4CEF1;
+	Tue, 26 Aug 2025 14:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218625;
-	bh=sNW0RxiE5JmZlPeQMO4mKTGO6fTP/Gbs01KoW55/8LE=;
+	s=korg; t=1756218628;
+	bh=mKD/5B22os2jPjurvNoK3n1hytFX3RsY9zDUu2u1gW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdkHWt17F/z10B5SYE1fVEyykgJg1ZIwrfXz9ZMbrKWtCdLh3SSHVLnUXPB0MQd+l
-	 jqAzSsQ8spA9WRP0crJAqfUNeJuWr+BP8ZcieAFgY7RS/goqywF6YUCkR1bcpaCKnC
-	 0ILZUfAtDhOb1iVo3Wt/knw9yK4TqSuLCbpNGBKM=
+	b=2q56JRBhS3DfQC+yHX4fR+c5Pqg+8MP7wBIVnL2SLZcEAVW4zByWSXCKArUpKLHfQ
+	 i9bgcNcpc/5jl3f9qBinSk7jPHLvqyQ2s5aAptib7wjom14Cb/X7FtH+y1SrVUFn3Q
+	 7xMluziCC/m2u52Ifh8FU67ngWfZ+ACgQDN6e4cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com,
+	Yangtao Li <frank.li@vivo.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/403] ASoC: Intel: fix SND_SOC_SOF dependencies
-Date: Tue, 26 Aug 2025 13:06:37 +0200
-Message-ID: <20250826110908.279483320@linuxfoundation.org>
+Subject: [PATCH 5.4 072/403] hfsplus: remove mutex_lock check in hfsplus_free_extents
+Date: Tue, 26 Aug 2025 13:06:38 +0200
+Message-ID: <20250826110908.314924879@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,62 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit e837b59f8b411b5baf5e3de7a5aea10b1c545a63 ]
+[ Upstream commit fcb96956c921f1aae7e7b477f2435c56f77a31b4 ]
 
-It is currently possible to configure a kernel with all Intel SoC
-configs as loadable modules, but the board config as built-in. This
-causes a link failure in the reference to the snd_soc_sof.ko module:
+Syzbot reported an issue in hfsplus filesystem:
 
-x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_hw_params':
-sof_rt5682.c:(.text+0x1f9): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sof_rt5682.c:(.text+0x234): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_rt5682.o: in function `sof_rt5682_codec_init':
-sof_rt5682.c:(.text+0x3e0): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_cs42l42.o: in function `sof_cs42l42_hw_params':
-sof_cs42l42.c:(.text+0x2a): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_nau8825.o: in function `sof_nau8825_hw_params':
-sof_nau8825.c:(.text+0x7f): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_da7219.o: in function `da7219_codec_init':
-sof_da7219.c:(.text+0xbf): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_maxim_common.o: in function `max_98373_hw_params':
-sof_maxim_common.c:(.text+0x6f9): undefined reference to `sof_dai_get_tdm_slots'
-x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1015_hw_params':
-sof_realtek_common.c:(.text+0x54c): undefined reference to `sof_dai_get_bclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_realtek_common.o: in function `rt1308_hw_params':
-sof_realtek_common.c:(.text+0x702): undefined reference to `sof_dai_get_mclk'
-x86_64-linux-ld: sound/soc/intel/boards/sof_cirrus_common.o: in function `cs35l41_hw_params':
-sof_cirrus_common.c:(.text+0x2f): undefined reference to `sof_dai_get_bclk'
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 4400 at fs/hfsplus/extents.c:346
+	hfsplus_free_extents+0x700/0xad0
+Call Trace:
+<TASK>
+hfsplus_file_truncate+0x768/0xbb0 fs/hfsplus/extents.c:606
+hfsplus_write_begin+0xc2/0xd0 fs/hfsplus/inode.c:56
+cont_expand_zero fs/buffer.c:2383 [inline]
+cont_write_begin+0x2cf/0x860 fs/buffer.c:2446
+hfsplus_write_begin+0x86/0xd0 fs/hfsplus/inode.c:52
+generic_cont_expand_simple+0x151/0x250 fs/buffer.c:2347
+hfsplus_setattr+0x168/0x280 fs/hfsplus/inode.c:263
+notify_change+0xe38/0x10f0 fs/attr.c:420
+do_truncate+0x1fb/0x2e0 fs/open.c:65
+do_sys_ftruncate+0x2eb/0x380 fs/open.c:193
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Add an optional dependency on SND_SOC_SOF_INTEL_COMMON, to ensure that whenever
-the SOF support is in a loadable module, none of the board code can be built-in.
+To avoid deadlock, Commit 31651c607151 ("hfsplus: avoid deadlock
+on file truncation") unlock extree before hfsplus_free_extents(),
+and add check wheather extree is locked in hfsplus_free_extents().
 
-This may be be a little heavy-handed, but I also don't see a reason why one would
-want the boards to be built-in but not the SoC, so it shouldn't actually cause
-any usability problems.
+However, when operations such as hfsplus_file_release,
+hfsplus_setattr, hfsplus_unlink, and hfsplus_get_block are executed
+concurrently in different files, it is very likely to trigger the
+WARN_ON, which will lead syzbot and xfstest to consider it as an
+abnormality.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250709145626.64125-1-arnd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The comment above this warning also describes one of the easy
+triggering situations, which can easily trigger and cause
+xfstest&syzbot to report errors.
+
+[task A]			[task B]
+->hfsplus_file_release
+  ->hfsplus_file_truncate
+    ->hfs_find_init
+      ->mutex_lock
+    ->mutex_unlock
+				->hfsplus_write_begin
+				  ->hfsplus_get_block
+				    ->hfsplus_file_extend
+				      ->hfsplus_ext_read_extent
+				        ->hfs_find_init
+					  ->mutex_lock
+    ->hfsplus_free_extents
+      WARN_ON(mutex_is_locked) !!!
+
+Several threads could try to lock the shared extents tree.
+And warning can be triggered in one thread when another thread
+has locked the tree. This is the wrong behavior of the code and
+we need to remove the warning.
+
+Fixes: 31651c607151f ("hfsplus: avoid deadlock on file truncation")
+Reported-by: syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/00000000000057fa4605ef101c4c@google.com/
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250529061807.2213498-1-frank.li@vivo.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/extents.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index 5c27f7ab4a5f..78a75c29ed88 100644
---- a/sound/soc/intel/boards/Kconfig
-+++ b/sound/soc/intel/boards/Kconfig
-@@ -11,7 +11,7 @@ menuconfig SND_SOC_INTEL_MACH
-          kernel: saying N will just cause the configurator to skip all
-          the questions about Intel ASoC machine drivers.
+diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
+index c95a2f0ed4a7..fad1c250f150 100644
+--- a/fs/hfsplus/extents.c
++++ b/fs/hfsplus/extents.c
+@@ -342,9 +342,6 @@ static int hfsplus_free_extents(struct super_block *sb,
+ 	int i;
+ 	int err = 0;
  
--if SND_SOC_INTEL_MACH
-+if SND_SOC_INTEL_MACH && (SND_SOC_SOF_INTEL_COMMON || !SND_SOC_SOF_INTEL_COMMON)
- 
- if SND_SOC_INTEL_HASWELL
- 
+-	/* Mapping the allocation file may lock the extent tree */
+-	WARN_ON(mutex_is_locked(&HFSPLUS_SB(sb)->ext_tree->tree_lock));
+-
+ 	hfsplus_dump_extent(extent);
+ 	for (i = 0; i < 8; extent++, i++) {
+ 		count = be32_to_cpu(extent->block_count);
 -- 
 2.39.5
 
