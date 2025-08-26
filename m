@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564EF11187;
-	Tue, 26 Aug 2025 12:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B47611187;
+	Tue, 26 Aug 2025 12:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212562; cv=none; b=Rb2++XOSOGx4qCYVv6yGNNKn0sBOcrKiRJYPzLylhMKN8Q3LwMkUWoX4bVZk1+LMToRGQWsXA9lLad2Q9+k33XViD8Kt2IQNL59tQMSCOl4hPwnolUVnj7uhJRvik37EoVHU2O2On+O2IKpOIfdWnIXUpN9ePU0SabnD65zMLtc=
+	t=1756212565; cv=none; b=txO6gaxExS5PeRcs/57jB6valR2QwkMbNkBwM3ODkr3ngeYu1QG9rqr8GGgYH7GBTHoUH5wjRCGHdts40w4gajGtzRWXWBuVKBjnpEH6PGIHxaYoVp0F2+RL1XY0yXyRs/6RR3wHmO3+zRtERgfS372VfNU17pgd+XMulhVx5Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212562; c=relaxed/simple;
-	bh=pbQgeMLnkrcYQFrS0T56cuprPmARJOx3usr1whXfQ2Y=;
+	s=arc-20240116; t=1756212565; c=relaxed/simple;
+	bh=0q1HZL5oVhpzfQjTf/aAvb4aQF2JYwxEp35NBux3dJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBeGojjppjZ7hH/7Z6VwoObU9c81z2MmfEgZ9xGZMKKrag6jMHp4Qd6rPkZ1vqJskcLMf07id5ub/770sA5GEbYrF2cBrD2kigNGM2yX3n99c6plJu/XzlRUEnsnj4WA9f5rSvLF1QZOq+FhRdEn+IzJ8tAQS3tWHr3aMsrjwuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09dOmAeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WosE/CL/0TDguJL/SwhBk1K4dpWrr6yW6HgG5zJ/tuDtShhsYHgW9HD6kMJQCeJme53HwvvbSckdeYL5DDLb0QHFynfyNdYdC5JENpeCSiTRPBAh5q0zQKa3sor/mJSLTTyVohgIhonOf4u6aNpuQgXkJx69LgPBzrOttc6Dh/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSOtAxBb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09dOmAeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815E7C116B1;
-	Tue, 26 Aug 2025 12:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSOtAxBb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E02C4CEF4;
+	Tue, 26 Aug 2025 12:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212561;
-	bh=pbQgeMLnkrcYQFrS0T56cuprPmARJOx3usr1whXfQ2Y=;
+	s=korg; t=1756212564;
+	bh=0q1HZL5oVhpzfQjTf/aAvb4aQF2JYwxEp35NBux3dJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09dOmAeH8FX5z0Atr496dmhlgjzPYjgD46g9k/nr0oZxnjoNmxNW2PggwlkuEjP0a
-	 76OrXiL8gqRj05w7pJVpe/4MGLWfaQEvtxpTgSgeD1+F5WMIxqlDPR2YHrsK0pY5kJ
-	 af2de3JvDttepNhnKJZ78B5A/dMgXs6jLNOryth8=
+	b=SSOtAxBbhl0gGdGXWEwkbJojeG5TzeAGqPu4TAW4Joiam42M6BeBejcjo6jDexV4t
+	 uq09yg10nqZMPfKG16ThQi9pnc2v8cZ2nLage4CwAcsdEB4hVK94YFqPlBjXKURwyp
+	 YpH73cO/wkQeUwJc2qywgY94P3LccD6Q9oAG3fz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Roger Quadros <rogerq@kernel.org>,
 	Johan Hovold <johan@kernel.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 017/587] net: mtk_eth_soc: fix device leak at probe
-Date: Tue, 26 Aug 2025 13:02:46 +0200
-Message-ID: <20250826110953.391412534@linuxfoundation.org>
+Subject: [PATCH 6.6 018/587] net: ti: icss-iep: fix device and OF node leaks at probe
+Date: Tue, 26 Aug 2025 13:02:47 +0200
+Message-ID: <20250826110953.418046467@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -54,33 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 3e13274ca8750823e8b68181bdf185d238febe0d upstream.
+commit e05c54974a05ab19658433545d6ced88d9075cf0 upstream.
 
-The reference count to the WED devices has already been incremented when
-looking them up using of_find_device_by_node() so drop the bogus
-additional reference taken during probe.
+Make sure to drop the references to the IEP OF node and device taken by
+of_parse_phandle() and of_find_device_by_node() when looking up IEP
+devices during probe.
 
-Fixes: 804775dfc288 ("net: ethernet: mtk_eth_soc: add support for Wireless Ethernet Dispatch (WED)")
-Cc: stable@vger.kernel.org	# 5.19
-Cc: Felix Fietkau <nbd@nbd.name>
+Drop the bogus additional reference taken on successful lookup so that
+the device is released correctly by icss_iep_put().
+
+Fixes: c1e0230eeaab ("net: ti: icss-iep: Add IEP driver")
+Cc: stable@vger.kernel.org	# 6.6
+Cc: Roger Quadros <rogerq@kernel.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250725171213.880-5-johan@kernel.org
+Link: https://patch.msgid.link/20250725171213.880-6-johan@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_wed.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/ti/icssg/icss_iep.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/mediatek/mtk_wed.c
-+++ b/drivers/net/ethernet/mediatek/mtk_wed.c
-@@ -1886,7 +1886,6 @@ void mtk_wed_add_hw(struct device_node *
- 	if (!pdev)
- 		goto err_of_node_put;
+--- a/drivers/net/ethernet/ti/icssg/icss_iep.c
++++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
+@@ -702,11 +702,17 @@ struct icss_iep *icss_iep_get_idx(struct
+ 	struct platform_device *pdev;
+ 	struct device_node *iep_np;
+ 	struct icss_iep *iep;
++	int ret;
  
--	get_device(&pdev->dev);
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0)
- 		goto err_put_device;
+ 	iep_np = of_parse_phandle(np, "ti,iep", idx);
+-	if (!iep_np || !of_device_is_available(iep_np))
++	if (!iep_np)
+ 		return ERR_PTR(-ENODEV);
+ 
++	if (!of_device_is_available(iep_np)) {
++		of_node_put(iep_np);
++		return ERR_PTR(-ENODEV);
++	}
++
+ 	pdev = of_find_device_by_node(iep_np);
+ 	of_node_put(iep_np);
+ 
+@@ -715,21 +721,28 @@ struct icss_iep *icss_iep_get_idx(struct
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 
+ 	iep = platform_get_drvdata(pdev);
+-	if (!iep)
+-		return ERR_PTR(-EPROBE_DEFER);
++	if (!iep) {
++		ret = -EPROBE_DEFER;
++		goto err_put_pdev;
++	}
+ 
+ 	device_lock(iep->dev);
+ 	if (iep->client_np) {
+ 		device_unlock(iep->dev);
+ 		dev_err(iep->dev, "IEP is already acquired by %s",
+ 			iep->client_np->name);
+-		return ERR_PTR(-EBUSY);
++		ret = -EBUSY;
++		goto err_put_pdev;
+ 	}
+ 	iep->client_np = np;
+ 	device_unlock(iep->dev);
+-	get_device(iep->dev);
+ 
+ 	return iep;
++
++err_put_pdev:
++	put_device(&pdev->dev);
++
++	return ERR_PTR(ret);
+ }
+ EXPORT_SYMBOL_GPL(icss_iep_get_idx);
+ 
 
 
