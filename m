@@ -1,45 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B31B35AADD;
-	Tue, 26 Aug 2025 14:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826E35207F;
+	Tue, 26 Aug 2025 14:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218655; cv=none; b=DB2Vf0p0B+TDrjGbeGJN60DM/dMXr6JNr7130xnK3iRlGl7OjgKQtNksPz7rorw2u1668tRe+iIklzRdp6FAUqEzUeaNYF/Ne/SYEA5mwlHw6mc2HN68indEr5U1uLXTI9QgOUP/p9Ldo+tkuRmzCSJigE1jVNUPdeDsxahd8sI=
+	t=1756218656; cv=none; b=Ocmvt6xQuhvyrCKEgsGOMMNlHbep5E1771XTEO5a5wn8Y/sLT85DrQkz320HkxlWbcAQCJpLYEdLdhDTzXNYRQ55eMRz7qakPgtWHvML9Vmwq8aK/Film5dvH9gdRRqf0XX1pNZdYLVfvOTnIbyKoHzqMptgjHKeOhIULOQif2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218655; c=relaxed/simple;
-	bh=anTHzID9FuEVynkE+aZkJWRQNREpyCKWrdIgQD60gV0=;
+	s=arc-20240116; t=1756218656; c=relaxed/simple;
+	bh=+rmzZsG8xK7vteIdQuM27KggxzTNqYPJge+IHh1hNXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FY61sKIkL1BmPVKJEXUAh+s36Zeqhs84z5UvCUAzt2M6QUKHu6PgX6+CnXa8eKof3q/n1z1h/P+ZpcgIBiM+TM1lu1A7tJgGvKEW2yUX4FiKy5W/XQ5h2hNb4QbxvUxm5PbARLDrhb2u+aJz4AtukHVewK35AFm69gUqzgq8XzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzUHcZys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Swlf2vOY2bZGyLyOKgPm6fAgSW3XlSlqqlJGumeEVJg8XB9LktQG0q1hUZzr6uTag0LOkomScXfnNfgWoDt1mtRYbfC9CrtI/URwwghmTOePOnQOTkdUlTMlQOnX2s+AuGJXigljffGhlMzTPf33B/50nGmroYfiTBf/I7YhKhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DjK7I457; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzUHcZys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CEBC4CEF1;
-	Tue, 26 Aug 2025 14:30:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218654;
-	bh=anTHzID9FuEVynkE+aZkJWRQNREpyCKWrdIgQD60gV0=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DjK7I457"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5455C116B1;
+	Tue, 26 Aug 2025 14:30:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756218656;
+	bh=+rmzZsG8xK7vteIdQuM27KggxzTNqYPJge+IHh1hNXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzUHcZysdpLyug5C9QYjUn3vFw2k0bleieY1XWOG0GRoLnelm6HbH+XZWO0Jgdl6T
-	 cZtiZp3do3xmP2numty4CsrNFbLYOx7drvCQiEkZnChUobAMNkGxWDcogd9U+2ebY7
-	 YVbALMos16ANn5/zmWFicAkxJmOwi1+NWjAgNJpk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	b=DjK7I457i2u1IumoQ45fmH6vjRxvhI2a9IK3kixPvNvX9aRXE4FecdY9GbXaOEAm/
+	 5Mfr7hhzhaQEVGy0NzQD6riKpfj5XvgSlLbnnlMRDBWzP5fU2x51L3AaKFq0oJjQDu
+	 8AE7bdFDoYnV1K9DNDEC4ZNnFh8Yypvwf5PoQufa6iH4tzwn2nGNz1UdKk98Q+abcN
+	 TPtFvKCuHPqh03hRL17LE02aagFmuqt7yNwc2HSevta3odB3CYndP+7976ChpCnC9I
+	 0l6ROE+ABrqEcHYnqsG0XY9bG7ArqRRogaUj1DiXJVk5Rl4dHK/FgBKS3i4Q0feCsU
+	 DpX/cen9gh3RA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
 	patches@lists.linux.dev,
-	Octavian Purdila <tavip@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.4 051/403] net_sched: sch_sfq: use a temporary work area for validating configuration
-Date: Tue, 26 Aug 2025 13:06:17 +0200
-Message-ID: <20250826110907.269075859@linuxfoundation.org>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
-References: <20250826110905.607690791@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.6 000/587] 6.6.103-rc1 review
+Date: Tue, 26 Aug 2025 16:30:43 +0200
+Message-ID: <20250826143043.711658-1-ojeda@kernel.org>
+In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
+References: <20250826110952.942403671@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,122 +61,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+On Tue, 26 Aug 2025 13:02:29 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.103 release.
+> There are 587 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 28 Aug 2025 11:08:24 +0000.
+> Anything received after that time might be too late.
 
-------------------
+Boot-tested under QEMU for Rust x86_64:
 
-From: Octavian Purdila <tavip@google.com>
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 8c0cea59d40cf6dd13c2950437631dd614fbade6 ]
+Thanks!
 
-Many configuration parameters have influence on others (e.g. divisor
--> flows -> limit, depth -> limit) and so it is difficult to correctly
-do all of the validation before applying the configuration. And if a
-validation error is detected late it is difficult to roll back a
-partially applied configuration.
-
-To avoid these issues use a temporary work area to update and validate
-the configuration and only then apply the configuration to the
-internal state.
-
-Signed-off-by: Octavian Purdila <tavip@google.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/sched/sch_sfq.c |   56 ++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 44 insertions(+), 12 deletions(-)
-
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -631,6 +631,15 @@ static int sfq_change(struct Qdisc *sch,
- 	struct red_parms *p = NULL;
- 	struct sk_buff *to_free = NULL;
- 	struct sk_buff *tail = NULL;
-+	unsigned int maxflows;
-+	unsigned int quantum;
-+	unsigned int divisor;
-+	int perturb_period;
-+	u8 headdrop;
-+	u8 maxdepth;
-+	int limit;
-+	u8 flags;
-+
- 
- 	if (opt->nla_len < nla_attr_size(sizeof(*ctl)))
- 		return -EINVAL;
-@@ -656,36 +665,59 @@ static int sfq_change(struct Qdisc *sch,
- 		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
- 		return -EINVAL;
- 	}
-+
- 	sch_tree_lock(sch);
-+
-+	limit = q->limit;
-+	divisor = q->divisor;
-+	headdrop = q->headdrop;
-+	maxdepth = q->maxdepth;
-+	maxflows = q->maxflows;
-+	perturb_period = q->perturb_period;
-+	quantum = q->quantum;
-+	flags = q->flags;
-+
-+	/* update and validate configuration */
- 	if (ctl->quantum)
--		q->quantum = ctl->quantum;
--	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
-+		quantum = ctl->quantum;
-+	perturb_period = ctl->perturb_period * HZ;
- 	if (ctl->flows)
--		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
-+		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
- 	if (ctl->divisor) {
--		q->divisor = ctl->divisor;
--		q->maxflows = min_t(u32, q->maxflows, q->divisor);
-+		divisor = ctl->divisor;
-+		maxflows = min_t(u32, maxflows, divisor);
- 	}
- 	if (ctl_v1) {
- 		if (ctl_v1->depth)
--			q->maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
-+			maxdepth = min_t(u32, ctl_v1->depth, SFQ_MAX_DEPTH);
- 		if (p) {
--			swap(q->red_parms, p);
--			red_set_parms(q->red_parms,
-+			red_set_parms(p,
- 				      ctl_v1->qth_min, ctl_v1->qth_max,
- 				      ctl_v1->Wlog,
- 				      ctl_v1->Plog, ctl_v1->Scell_log,
- 				      NULL,
- 				      ctl_v1->max_P);
- 		}
--		q->flags = ctl_v1->flags;
--		q->headdrop = ctl_v1->headdrop;
-+		flags = ctl_v1->flags;
-+		headdrop = ctl_v1->headdrop;
- 	}
- 	if (ctl->limit) {
--		q->limit = min_t(u32, ctl->limit, q->maxdepth * q->maxflows);
--		q->maxflows = min_t(u32, q->maxflows, q->limit);
-+		limit = min_t(u32, ctl->limit, maxdepth * maxflows);
-+		maxflows = min_t(u32, maxflows, limit);
- 	}
- 
-+	/* commit configuration */
-+	q->limit = limit;
-+	q->divisor = divisor;
-+	q->headdrop = headdrop;
-+	q->maxdepth = maxdepth;
-+	q->maxflows = maxflows;
-+	WRITE_ONCE(q->perturb_period, perturb_period);
-+	q->quantum = quantum;
-+	q->flags = flags;
-+	if (p)
-+		swap(q->red_parms, p);
-+
- 	qlen = sch->q.qlen;
- 	while (sch->q.qlen > q->limit) {
- 		dropped += sfq_drop(sch, &to_free);
-
-
+Cheers,
+Miguel
