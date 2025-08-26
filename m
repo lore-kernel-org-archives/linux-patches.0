@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0B8405F7;
-	Tue, 26 Aug 2025 13:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3375820F079;
+	Tue, 26 Aug 2025 13:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213649; cv=none; b=usdn+jP+lgac8suQnEL/wh7ey74DsNkpH+/ah8Ll2684f2rxsfI2g29Mv08WcypYzZ6RAVVpDSZXnR4GNrxPGa+k0wOhkojDVc1bZQoM3bY0XtIz6OKtZ66y6oZH/mnXZWxkAK4ysOFeuNSPwzcsfKZzGUTFtfzUucKc+6WTYS4=
+	t=1756213652; cv=none; b=mbB2bvN33VSugyy4QKl4BkH5g/pqiOCQ76aWDe/DJ7j8yncglI12ICyUeP64Hf+vEpkESLy9rxLKeRLkVkPMtCgDICjgSMUesW4toyxo5GDteXaTpJ5EBkaFwEoYZboVwnEK2qrKfYDkX6UJS1gEhXRwdELkDZmByXfqHKkxWWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213649; c=relaxed/simple;
-	bh=mXiABuuMW/8BKcM6I28sv+NZkdZbMplxoNy/9gtRVtc=;
+	s=arc-20240116; t=1756213652; c=relaxed/simple;
+	bh=p3VK4s1Andzji0srFuKqoKGkRdVFv0PaeNkEm/WaxiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W08eleXLzuvlDSm+MLO68rmT3hZd76taQBw1iF7tWCXEIoCckLx9Hug7dhn8qmyUstDr2sKCRcLZMDuRPthW14gMyg8uy7PHJbvLXe2k2aUG/QLRT5q9AhHkkB8MwD/rhltT+5xWgAssVWnOXUNl8/nYw37ti/Ce7PULB0N6PsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOmYhPK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cyymC7KLWPwATY71+2amyxs6VRoZ51ScezppeM0iiRe5miP9TP5b8MRwkdrYs0y5w3/MbHz80eX2sRvUH6U/P/Gk2FlL71L6NX5XoRMBi30BmtLJSNs2i/l1jH8SZx4H9YMpvgNEK20UXWORzjwBQUGwdRebTbBZGBrLFyUjE1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo5/snpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOmYhPK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9669C4CEF1;
-	Tue, 26 Aug 2025 13:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo5/snpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893ABC4CEF4;
+	Tue, 26 Aug 2025 13:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213649;
-	bh=mXiABuuMW/8BKcM6I28sv+NZkdZbMplxoNy/9gtRVtc=;
+	s=korg; t=1756213652;
+	bh=p3VK4s1Andzji0srFuKqoKGkRdVFv0PaeNkEm/WaxiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOmYhPK5Hae49UjPKkCfHegZsP71Y5aAC5FtxB1DL0w0ioSVHQAcnN4qHYCqVd6j7
-	 eJCtBF4lVfWciOkwsKBE2AqSgrzfv+eeqKyxf85d7wuUM/cPX2rzR19QDsix2MHGHx
-	 bBdPHeSVDrJx/c0TvPLwZg7W0Q8Kqu5fdIbtww7Y=
+	b=Yo5/snpWjnDV+yqn0aRQw0bbn9DkXMPo/m88mm0J75M9TQNhFPKqQPILVwGY2YaoB
+	 uCZtwQNGq7iNekcj4jFDqIWgPEl3/vMMT5R2mbpgocQumWsOsYs/au1EfKjbhrFEfk
+	 Go+Y1LnIpRCtFgI264euvPfjUJUNBnUW1ou2Slf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Andy Lutomirski <luto@kernel.org>,
 	Jan Kara <jack@suse.cz>,
 	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andy Lutomirski <luto@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Hugh Dickins <hughd@google.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Muchun Song <muchun.song@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 6.6 428/587] mm: drop the assumption that VM_SHARED always implies writable
-Date: Tue, 26 Aug 2025 13:09:37 +0200
-Message-ID: <20250826111003.829531582@linuxfoundation.org>
+Subject: [PATCH 6.6 429/587] mm: update memfd seal write check to include F_SEAL_WRITE
+Date: Tue, 26 Aug 2025 13:09:38 +0200
+Message-ID: <20250826111003.856299371@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -63,68 +63,27 @@ From: "Isaac J. Manjarres" <isaacmanjarres@google.com>
 
 From: Lorenzo Stoakes <lstoakes@gmail.com>
 
-[ Upstream commit e8e17ee90eaf650c855adb0a3e5e965fd6692ff1 ]
+[ Upstream commit 28464bbb2ddc199433383994bcb9600c8034afa1 ]
 
-Patch series "permit write-sealed memfd read-only shared mappings", v4.
+The seal_check_future_write() function is called by shmem_mmap() or
+hugetlbfs_file_mmap() to disallow any future writable mappings of an memfd
+sealed this way.
 
-The man page for fcntl() describing memfd file seals states the following
-about F_SEAL_WRITE:-
+The F_SEAL_WRITE flag is not checked here, as that is handled via the
+mapping->i_mmap_writable mechanism and so any attempt at a mapping would
+fail before this could be run.
 
-    Furthermore, trying to create new shared, writable memory-mappings via
-    mmap(2) will also fail with EPERM.
+However we intend to change this, meaning this check can be performed for
+F_SEAL_WRITE mappings also.
 
-With emphasis on 'writable'.  In turns out in fact that currently the
-kernel simply disallows all new shared memory mappings for a memfd with
-F_SEAL_WRITE applied, rendering this documentation inaccurate.
+The logic here is equally applicable to both flags, so update this
+function to accommodate both and rename it accordingly.
 
-This matters because users are therefore unable to obtain a shared mapping
-to a memfd after write sealing altogether, which limits their usefulness.
-This was reported in the discussion thread [1] originating from a bug
-report [2].
-
-This is a product of both using the struct address_space->i_mmap_writable
-atomic counter to determine whether writing may be permitted, and the
-kernel adjusting this counter when any VM_SHARED mapping is performed and
-more generally implicitly assuming VM_SHARED implies writable.
-
-It seems sensible that we should only update this mapping if VM_MAYWRITE
-is specified, i.e.  whether it is possible that this mapping could at any
-point be written to.
-
-If we do so then all we need to do to permit write seals to function as
-documented is to clear VM_MAYWRITE when mapping read-only.  It turns out
-this functionality already exists for F_SEAL_FUTURE_WRITE - we can
-therefore simply adapt this logic to do the same for F_SEAL_WRITE.
-
-We then hit a chicken and egg situation in mmap_region() where the check
-for VM_MAYWRITE occurs before we are able to clear this flag.  To work
-around this, perform this check after we invoke call_mmap(), with careful
-consideration of error paths.
-
-Thanks to Andy Lutomirski for the suggestion!
-
-[1]:https://lore.kernel.org/all/20230324133646.16101dfa666f253c4715d965@linux-foundation.org/
-[2]:https://bugzilla.kernel.org/show_bug.cgi?id=217238
-
-This patch (of 3):
-
-There is a general assumption that VMAs with the VM_SHARED flag set are
-writable.  If the VM_MAYWRITE flag is not set, then this is simply not the
-case.
-
-Update those checks which affect the struct address_space->i_mmap_writable
-field to explicitly test for this by introducing
-[vma_]is_shared_maywrite() helper functions.
-
-This remains entirely conservative, as the lack of VM_MAYWRITE guarantees
-that the VMA cannot be written to.
-
-Link: https://lkml.kernel.org/r/cover.1697116581.git.lstoakes@gmail.com
-Link: https://lkml.kernel.org/r/d978aefefa83ec42d18dfa964ad180dbcde34795.1697116581.git.lstoakes@gmail.com
+Link: https://lkml.kernel.org/r/913628168ce6cce77df7d13a63970bae06a526e0.1697116581.git.lstoakes@gmail.com
 Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
-Suggested-by: Andy Lutomirski <luto@kernel.org>
 Reviewed-by: Jan Kara <jack@suse.cz>
 Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Andy Lutomirski <luto@kernel.org>
 Cc: Christian Brauner <brauner@kernel.org>
 Cc: Hugh Dickins <hughd@google.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
@@ -132,130 +91,71 @@ Cc: Mike Kravetz <mike.kravetz@oracle.com>
 Cc: Muchun Song <muchun.song@linux.dev>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Cc: stable@vger.kernel.org
-[isaacmanjarres: resolved merge conflicts due to
-due to refactoring that happened in upstream commit
-5de195060b2e ("mm: resolve faulty mmap_region() error path behaviour")]
 Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fs.h |    4 ++--
- include/linux/mm.h |   11 +++++++++++
- kernel/fork.c      |    2 +-
- mm/filemap.c       |    2 +-
- mm/madvise.c       |    2 +-
- mm/mmap.c          |    8 ++++----
- 6 files changed, 20 insertions(+), 9 deletions(-)
+ fs/hugetlbfs/inode.c |    2 +-
+ include/linux/mm.h   |   15 ++++++++-------
+ mm/shmem.c           |    2 +-
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -456,7 +456,7 @@ extern const struct address_space_operat
-  *   It is also used to block modification of page cache contents through
-  *   memory mappings.
-  * @gfp_mask: Memory allocation flags to use for allocating pages.
-- * @i_mmap_writable: Number of VM_SHARED mappings.
-+ * @i_mmap_writable: Number of VM_SHARED, VM_MAYWRITE mappings.
-  * @nr_thps: Number of THPs in the pagecache (non-shmem only).
-  * @i_mmap: Tree of private and shared mappings.
-  * @i_mmap_rwsem: Protects @i_mmap and @i_mmap_writable.
-@@ -559,7 +559,7 @@ static inline int mapping_mapped(struct
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -136,7 +136,7 @@ static int hugetlbfs_file_mmap(struct fi
+ 	vm_flags_set(vma, VM_HUGETLB | VM_DONTEXPAND);
+ 	vma->vm_ops = &hugetlb_vm_ops;
  
- /*
-  * Might pages of this file have been modified in userspace?
-- * Note that i_mmap_writable counts all VM_SHARED vmas: do_mmap
-+ * Note that i_mmap_writable counts all VM_SHARED, VM_MAYWRITE vmas: do_mmap
-  * marks vma as VM_SHARED if it is shared, and the file was opened for
-  * writing i.e. vma may be mprotected writable even if now readonly.
-  *
+-	ret = seal_check_future_write(info->seals, vma);
++	ret = seal_check_write(info->seals, vma);
+ 	if (ret)
+ 		return ret;
+ 
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
-@@ -941,6 +941,17 @@ static inline bool vma_is_accessible(str
- 	return vma->vm_flags & VM_ACCESS_FLAGS;
- }
+@@ -4023,25 +4023,26 @@ static inline void mem_dump_obj(void *ob
+ #endif
  
-+static inline bool is_shared_maywrite(vm_flags_t vm_flags)
-+{
-+	return (vm_flags & (VM_SHARED | VM_MAYWRITE)) ==
-+		(VM_SHARED | VM_MAYWRITE);
-+}
-+
-+static inline bool vma_is_shared_maywrite(struct vm_area_struct *vma)
-+{
-+	return is_shared_maywrite(vma->vm_flags);
-+}
-+
- static inline
- struct vm_area_struct *vma_find(struct vma_iterator *vmi, unsigned long max)
- {
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -739,7 +739,7 @@ static __latent_entropy int dup_mmap(str
- 
- 			get_file(file);
- 			i_mmap_lock_write(mapping);
--			if (tmp->vm_flags & VM_SHARED)
-+			if (vma_is_shared_maywrite(tmp))
- 				mapping_allow_writable(mapping);
- 			flush_dcache_mmap_lock(mapping);
- 			/* insert tmp into the share list, just after mpnt */
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3716,7 +3716,7 @@ int generic_file_mmap(struct file *file,
+ /**
+- * seal_check_future_write - Check for F_SEAL_FUTURE_WRITE flag and handle it
++ * seal_check_write - Check for F_SEAL_WRITE or F_SEAL_FUTURE_WRITE flags and
++ *                    handle them.
+  * @seals: the seals to check
+  * @vma: the vma to operate on
+  *
+- * Check whether F_SEAL_FUTURE_WRITE is set; if so, do proper check/handling on
+- * the vma flags.  Return 0 if check pass, or <0 for errors.
++ * Check whether F_SEAL_WRITE or F_SEAL_FUTURE_WRITE are set; if so, do proper
++ * check/handling on the vma flags.  Return 0 if check pass, or <0 for errors.
   */
- int generic_file_readonly_mmap(struct file *file, struct vm_area_struct *vma)
+-static inline int seal_check_future_write(int seals, struct vm_area_struct *vma)
++static inline int seal_check_write(int seals, struct vm_area_struct *vma)
  {
--	if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_MAYWRITE))
-+	if (vma_is_shared_maywrite(vma))
- 		return -EINVAL;
- 	return generic_file_mmap(file, vma);
- }
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -987,7 +987,7 @@ static long madvise_remove(struct vm_are
- 			return -EINVAL;
- 	}
+-	if (seals & F_SEAL_FUTURE_WRITE) {
++	if (seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE)) {
+ 		/*
+ 		 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
+-		 * "future write" seal active.
++		 * write seals are active.
+ 		 */
+ 		if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_WRITE))
+ 			return -EPERM;
  
--	if ((vma->vm_flags & (VM_SHARED|VM_WRITE)) != (VM_SHARED|VM_WRITE))
-+	if (!vma_is_shared_maywrite(vma))
- 		return -EACCES;
+ 		/*
+-		 * Since an F_SEAL_FUTURE_WRITE sealed memfd can be mapped as
++		 * Since an F_SEAL_[FUTURE_]WRITE sealed memfd can be mapped as
+ 		 * MAP_SHARED and read-only, take care to not allow mprotect to
+ 		 * revert protections on such mappings. Do this only for shared
+ 		 * mappings. For private mappings, don't need to mask
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -2396,7 +2396,7 @@ static int shmem_mmap(struct file *file,
+ 	struct shmem_inode_info *info = SHMEM_I(inode);
+ 	int ret;
  
- 	offset = (loff_t)(start - vma->vm_start)
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -107,7 +107,7 @@ void vma_set_page_prot(struct vm_area_st
- static void __remove_shared_vm_struct(struct vm_area_struct *vma,
- 		struct file *file, struct address_space *mapping)
- {
--	if (vma->vm_flags & VM_SHARED)
-+	if (vma_is_shared_maywrite(vma))
- 		mapping_unmap_writable(mapping);
+-	ret = seal_check_future_write(info->seals, vma);
++	ret = seal_check_write(info->seals, vma);
+ 	if (ret)
+ 		return ret;
  
- 	flush_dcache_mmap_lock(mapping);
-@@ -383,7 +383,7 @@ static unsigned long count_vma_pages_ran
- static void __vma_link_file(struct vm_area_struct *vma,
- 			    struct address_space *mapping)
- {
--	if (vma->vm_flags & VM_SHARED)
-+	if (vma_is_shared_maywrite(vma))
- 		mapping_allow_writable(mapping);
- 
- 	flush_dcache_mmap_lock(mapping);
-@@ -2845,7 +2845,7 @@ cannot_expand:
- 	mm->map_count++;
- 	if (vma->vm_file) {
- 		i_mmap_lock_write(vma->vm_file->f_mapping);
--		if (vma->vm_flags & VM_SHARED)
-+		if (vma_is_shared_maywrite(vma))
- 			mapping_allow_writable(vma->vm_file->f_mapping);
- 
- 		flush_dcache_mmap_lock(vma->vm_file->f_mapping);
-@@ -2926,7 +2926,7 @@ unsigned long mmap_region(struct file *f
- 		return -EINVAL;
- 
- 	/* Map writable and ensure this isn't a sealed memfd. */
--	if (file && (vm_flags & VM_SHARED)) {
-+	if (file && is_shared_maywrite(vm_flags)) {
- 		int error = mapping_map_writable(file->f_mapping);
- 
- 		if (error)
 
 
