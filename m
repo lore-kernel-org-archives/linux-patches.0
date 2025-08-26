@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412B9227E82;
-	Tue, 26 Aug 2025 13:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0E222A4EE;
+	Tue, 26 Aug 2025 13:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213209; cv=none; b=cT82FF/M/vYBVZgQ9qConZczG7JoCZtRx3Q9jYRvKVqZckvo8GroF/pgkavcH+gVK4Gokh6Hwv/KswXyeHWsAyGz9vMs51m4T0n+1/WmESmj77S8kxOMCzopbi7H5BjuoE+hp+Xw2HarucZmJkaEDtVOjAmezLaGNmbIAHR3JP0=
+	t=1756213212; cv=none; b=SfO2DuXRB5eMdvhuBB6kDFVtR39LIHGUEBQZVh1dO1IhPKLNOPnSbWNTQx38cbVQDDBiPS03CmDBX6rdVej0/mJai6HPE2J1hzFSf4YevTMHPWB6QLM9JmfCtLUOKUNRmTyGIoXYBS93cHbbHkjWK46fit9UFYgsYlJzcxE+s0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213209; c=relaxed/simple;
-	bh=AcKnGCdWoiFqOV/A3pQ9vIds7glWlEVFlJVq6uk7ZUY=;
+	s=arc-20240116; t=1756213212; c=relaxed/simple;
+	bh=lMGBQNwLdG3+T1N2Wn6QJ7yXauxDufGTSx0KTB7PXPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KP5yf1RTJRfovHf2WXL765dbi8WJaV66EyVJrhrUcCLhkhLKCRuWO3fdp7msFP0mezyZEpxSKr99fSupRuuM02A4I0KRHVqrbfTWWbP/xIplY+L7PWhNr3huD/6WBPcvPIwXPtUg+vVzbeNXZ6OPtTZqf3asyiyXJ0qbY1i+mnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtUKXAeF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kEd/EvjFVpv4x5jGqjkkRz9XDaIKEqwiSDue0TYTwg1Q6PszFgcRb7WwG3Ehin4y8BVAhS6tgDHyZS+X+mY2rqvZBVZp1+ugoHyXa50naWFVx+WH6E8wWYh8HU5UZVDuX3LsJmYCdL/es0NMumbNbVisZGVb7alsn35PIRPKnkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00rXSDZs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtUKXAeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40FAC4CEF1;
-	Tue, 26 Aug 2025 13:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00rXSDZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702FBC4CEF4;
+	Tue, 26 Aug 2025 13:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213209;
-	bh=AcKnGCdWoiFqOV/A3pQ9vIds7glWlEVFlJVq6uk7ZUY=;
+	s=korg; t=1756213211;
+	bh=lMGBQNwLdG3+T1N2Wn6QJ7yXauxDufGTSx0KTB7PXPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtUKXAeFtMItbeMJ5htgARxL4eNwWayLv91WTn97KwxWainSiUWDD1I+ISh+DMb5L
-	 DgqAjBUaHkXQzh6xjoN6tAb21z2RzLErLHaOeJyQ9++OeSe/oU6yWI9v0XfTMnQPU6
-	 ZmHz7ALbiIBHVrZtREV9Qy7YZpStiOzEmALSZrD4=
+	b=00rXSDZsFf4BVT4BiB6LXHDCzPhSYHCJHG5hD00inLA2rSQ1fdpuMWCyn5cFASwGG
+	 HoC3zBf6//oD16FD+93GueXeb2/ju9cw/SCreMdulIZV3Tm0ihlUCfN00vGfU2ux87
+	 EddKBjOmwh+ALazhbEFHCBQZFhHnyQPLmDyUYGqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florin Leotescu <florin.leotescu@nxp.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yongzhen Zhang <zhangyongzhen@kylinos.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/587] hwmon: (emc2305) Set initial PWM minimum value during probe based on thermal state
-Date: Tue, 26 Aug 2025 13:06:19 +0200
-Message-ID: <20250826110958.785465109@linuxfoundation.org>
+Subject: [PATCH 6.6 221/587] fbdev: fix potential buffer overflow in do_register_framebuffer()
+Date: Tue, 26 Aug 2025 13:06:10 +0200
+Message-ID: <20250826110958.560164512@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,53 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florin Leotescu <florin.leotescu@nxp.com>
+From: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
 
-[ Upstream commit 0429415a084a15466e87d504e8c2a502488184a5 ]
+[ Upstream commit 523b84dc7ccea9c4d79126d6ed1cf9033cf83b05 ]
 
-Prevent the PWM value from being set to minimum when thermal zone
-temperature exceeds any trip point during driver probe. Otherwise, the
-PWM fan speed will remains at minimum speed and not respond to
-temperature changes.
+The current implementation may lead to buffer overflow when:
+1.  Unregistration creates NULL gaps in registered_fb[]
+2.  All array slots become occupied despite num_registered_fb < FB_MAX
+3.  The registration loop exceeds array bounds
 
-Signed-off-by: Florin Leotescu <florin.leotescu@nxp.com>
-Link: https://lore.kernel.org/r/20250603113125.3175103-5-florin.leotescu@oss.nxp.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Add boundary check to prevent registered_fb[FB_MAX] access.
+
+Signed-off-by: Yongzhen Zhang <zhangyongzhen@kylinos.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc2305.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/core/fbmem.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
-index 29f0e4945f19..840acd5260f4 100644
---- a/drivers/hwmon/emc2305.c
-+++ b/drivers/hwmon/emc2305.c
-@@ -303,6 +303,12 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
- 		dev_err(dev, "Failed to register cooling device %s\n", emc2305_fan_name[idx]);
- 		return PTR_ERR(data->cdev_data[cdev_idx].cdev);
- 	}
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index 52bd3af54369..942b942f6bf9 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -943,6 +943,9 @@ static int do_register_framebuffer(struct fb_info *fb_info)
+ 		if (!registered_fb[i])
+ 			break;
+ 
++	if (i >= FB_MAX)
++		return -ENXIO;
 +
-+	if (data->cdev_data[cdev_idx].cur_state > 0)
-+		/* Update pwm when temperature is above trips */
-+		pwm = EMC2305_PWM_STATE2DUTY(data->cdev_data[cdev_idx].cur_state,
-+					     data->max_state, EMC2305_FAN_MAX);
-+
- 	/* Set minimal PWM speed. */
- 	if (data->pwm_separate) {
- 		ret = emc2305_set_pwm(dev, pwm, cdev_idx);
-@@ -316,10 +322,10 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
- 		}
- 	}
- 	data->cdev_data[cdev_idx].cur_state =
--		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
-+		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
- 				       EMC2305_FAN_MAX);
- 	data->cdev_data[cdev_idx].last_hwmon_state =
--		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
-+		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
- 				       EMC2305_FAN_MAX);
- 	return 0;
- }
+ 	if (!fb_info->modelist.prev || !fb_info->modelist.next)
+ 		INIT_LIST_HEAD(&fb_info->modelist);
+ 
 -- 
 2.39.5
 
