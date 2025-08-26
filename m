@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF5C350D46;
-	Tue, 26 Aug 2025 14:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C51435208B;
+	Tue, 26 Aug 2025 14:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218832; cv=none; b=bdxq44IZN9A+99mB3ksBsRx9g/Yd2/2qXMxy72dXFZVvUfHSKZBT/JWJQ8ZcpL4ZG65Zn+Bu0WFUXzgZv8x33qehRicCDcPf6DXNgqJqwkFd0OCSdDERPXat7ycevlcTq+Sz2eHWKEN2ZXPgzhEVYn5mr0cSRxjNARA5iT/nwR0=
+	t=1756218835; cv=none; b=Y+esKSdN/XA3ViKwtmBTarQb8SSd1HJ3tQF6YroiWzDmXnaIQi7saZKn/0kjeJ9g+/mjja2g93kmyLPN50XOxxWZPMinDegdhrs62hB8INEH27eAM3RVMAGBGEbjoh2DCtAj5WnfuOeSYOzVl3aW5rpXEE6Z1R9B7qeIV7xdLOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218832; c=relaxed/simple;
-	bh=tLaCkFAwmEruqqkprHyQqcI6rmm53XbP/DeDDmPdDAY=;
+	s=arc-20240116; t=1756218835; c=relaxed/simple;
+	bh=oaYjI6oVFfD23Fn6Toz6wNpGYQK/SonMs7/8vBFkAzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=da79HVFP1V2TOFxdWfSJMlzGJjvW3BRCfNKIC3V86e+v+HdMdGj4eZAkhXUdYZWgt9CGGsMOrO6ybFSYVcOwCEJvBNnLBVb0pu3zQ5N5SZPHDLbLTnlWakiwyayZrfJtXek5gKHKXc55Pkc2+jt77AJQ7xyhVIcmwSJCnCrYxd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2eecDgu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q67YUw1MnB6HJfRzSEyEulQOo95yJlnFHjJUhI1kt0dM/id/XRfkhKv4aGytkF6H4LSvHm5wWeNPOgb44GkSq42coSISHHBCS8WCWnSIYZEiG11yxctBdtM6q05qt0LO/OMsNXzLILMGMnnXidDx1nkNWZfmj4YrDpaYUjnVf8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxeM/6Qi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2eecDgu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50288C113CF;
-	Tue, 26 Aug 2025 14:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxeM/6Qi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC171C4CEF1;
+	Tue, 26 Aug 2025 14:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218832;
-	bh=tLaCkFAwmEruqqkprHyQqcI6rmm53XbP/DeDDmPdDAY=;
+	s=korg; t=1756218835;
+	bh=oaYjI6oVFfD23Fn6Toz6wNpGYQK/SonMs7/8vBFkAzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2eecDguI7xJmJA+FYcBhr1qm/0qHP015PmCHLAn+jxgV73XiPeiW2HTlTV6EPQFI
-	 WjEevOsIglLNW8t8XZu+fMz52VH4HC/7VGGDlzEweRAQE6N8ksc1Tr6kR8KtcnYHGu
-	 FW4Lemld9SQS+gmijlklPMD/g8l/61NnHkC2ec3M=
+	b=pxeM/6Qid2xA7MNIlo/ToZTFvESQcOOO+tMDAyDM/cL4zfoVw196HWbzecpGi/lxJ
+	 Es1oX02cRs9tni5yjDuASYyBsbBhFQ+8lt7i0VrjF7yweVmeezy5Sv7Sqzq4kUo/Eh
+	 QkfXaSM8t41lZtYhpzy1lhA0s7JA2GIsPQnpJ1ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 119/403] crypto: img-hash - Fix dma_unmap_sg() nents value
-Date: Tue, 26 Aug 2025 13:07:25 +0200
-Message-ID: <20250826110910.024325687@linuxfoundation.org>
+Subject: [PATCH 5.4 120/403] soundwire: stream: restore params when prepare ports fail
+Date: Tue, 26 Aug 2025 13:07:26 +0200
+Message-ID: <20250826110910.051104930@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -45,40 +47,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 34b283636181ce02c52633551f594fec9876bec7 ]
+[ Upstream commit dba7d9dbfdc4389361ff3a910e767d3cfca22587 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+The bus->params should be restored if the stream is failed to prepare.
+The issue exists since beginning. The Fixes tag just indicates the
+first commit that the commit can be applied to.
 
-Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 17ed5bef49f4 ("soundwire: add missing newlines in dynamic debug logs")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20250626060952.405996-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/img-hash.c | 2 +-
+ drivers/soundwire/stream.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
-index 17cc44f14e5c..b5fd15e0c050 100644
---- a/drivers/crypto/img-hash.c
-+++ b/drivers/crypto/img-hash.c
-@@ -434,7 +434,7 @@ static int img_hash_write_via_dma_stop(struct img_hash_dev *hdev)
- 	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
+diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
+index 3b3f909407c3..6e4c7bf9eb0d 100644
+--- a/drivers/soundwire/stream.c
++++ b/drivers/soundwire/stream.c
+@@ -1532,7 +1532,7 @@ static int _sdw_prepare_stream(struct sdw_stream_runtime *stream)
+ 		if (ret < 0) {
+ 			dev_err(bus->dev, "Prepare port(s) failed ret = %d\n",
+ 				ret);
+-			return ret;
++			goto restore_params;
+ 		}
+ 	}
  
- 	if (ctx->flags & DRIVER_FLAGS_SG)
--		dma_unmap_sg(hdev->dev, ctx->sg, ctx->dma_ct, DMA_TO_DEVICE);
-+		dma_unmap_sg(hdev->dev, ctx->sg, 1, DMA_TO_DEVICE);
- 
- 	return 0;
- }
 -- 
 2.39.5
 
