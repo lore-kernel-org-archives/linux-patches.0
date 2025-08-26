@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F8A33A03C;
-	Tue, 26 Aug 2025 11:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C14338F54;
+	Tue, 26 Aug 2025 11:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208267; cv=none; b=dA4vcHKzN8ileJfobZwwXmDOEDPAFFAwER/1plpDlGkqt/H1XIQtibKNf/bQt+V5tliWmH+Zk5cb4Pl4Asu8GOq/wWL2RSmJV2PscMjLb1bwsm4QI0px9Bxs+HCCJETmkdhlifCNB2IEjb3qhzFpdmJN/IRQZyABbJ6lnc611DM=
+	t=1756208270; cv=none; b=dQ9EEK68UMKG88RCh5OoZuUKtOWtXIOJ7KWv8qGLj9holqqP828u1IRp9A2YR78yyW+jl5+ZGENqe5U8icZk9IoC/R8JukcUpmZbXWiEBTKz7h33rlfxQT+RrUDhRbFlQh0Dht7AwcR5M5pEzLESGDK7O+m5VFBwnP/39Wcnt9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208267; c=relaxed/simple;
-	bh=7s1gy1+aUWXSGel2r4HB9KJ41AU5EsSJeFPobkE6/ZI=;
+	s=arc-20240116; t=1756208270; c=relaxed/simple;
+	bh=feC+uPoT9tpxCojU0ahGcMMp59zeLUNg+JDEPcCa1dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeRliqUHY6hPpKRitLGu3ZimWYI8S0ccn8rBoIBnFPspooaAfGj2im73pd9Fnz/gglT6xqR5XCiAkcf805/wdI/Otm4qRZ5c4sZLrjt/nVlNvhcycZ65BLWfg8VpLzePa11QcYW1o30wESToJAZcxWuDS8mwmsy1k8m9rQXIcDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdMZb2ES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VFB5GplDLZnYzsOh2p52pxpomrhQsDbvT9aoqNvwjK7wagpmQnn70jVT0WakI1Xw+QwgHR2+1hLgp+VO3Krkeosrqxj4mk56LSXIdKNn2MVumCWJEOUKtgkHQnFRl/CGxZR36kEtv2ruSjr5rdVuMCw5excO2HzgaxLnTYyolec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLp2XLoV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdMZb2ES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD538C116B1;
-	Tue, 26 Aug 2025 11:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLp2XLoV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB81C4CEF1;
+	Tue, 26 Aug 2025 11:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208267;
-	bh=7s1gy1+aUWXSGel2r4HB9KJ41AU5EsSJeFPobkE6/ZI=;
+	s=korg; t=1756208269;
+	bh=feC+uPoT9tpxCojU0ahGcMMp59zeLUNg+JDEPcCa1dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdMZb2ESOSqRwHcbz/kXRKVpiPd6eK0t+YodqXBZ00RzjHsGEiWEAzIJLVaSbwIvI
-	 yFtdkGeMpQpcjAStmPGt+I1gdCN7/mr3jEjjP9FYcjMYEKe8w1CPdeNCNVc/JR9VlS
-	 p2LHfyqwM6nQubds3Zb8s+8k/FNeiZxs8x/+CfSc=
+	b=YLp2XLoVy9htKYNnmnb3E9Q+X5oTwrPP/gCW21eixe6B2GtHFdbxVMUTd8x7WyB9e
+	 k/upylQNmZUwEvY5eLMtkn3ychVmZX7VoOkmgVEcoKL9mORYo34/jHdcIJ0DR9b43H
+	 lH53YU7TR0bSTvEMpDFYQFh/BYHZdxlkkCZSUeys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 046/322] dt-bindings: display: sprd,sharkl3-dsi-host: Fix missing clocks constraints
-Date: Tue, 26 Aug 2025 13:07:41 +0200
-Message-ID: <20250826110916.527854341@linuxfoundation.org>
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 047/322] scsi: dt-bindings: mediatek,ufs: Add ufs-disable-mcq flag for UFS host
+Date: Tue, 26 Aug 2025 13:07:42 +0200
+Message-ID: <20250826110916.555233345@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,34 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Macpaul Lin <macpaul.lin@mediatek.com>
 
-commit 2558df8c13ae3bd6c303b28f240ceb0189519c91 upstream.
+commit 794ff7a0a6e76af93c5ec09a49b86fe73373ca59 upstream.
 
-'minItems' alone does not impose upper bound, unlike 'maxItems' which
-implies lower bound.  Add missing clock constraint so the list will have
-exact number of items (clocks).
+Add the 'mediatek,ufs-disable-mcq' property to the UFS device-tree
+bindings. This flag corresponds to the UFS_MTK_CAP_DISABLE_MCQ host
+capability recently introduced in the UFS host driver, allowing it to
+disable the Multiple Circular Queue (MCQ) feature when present.  The
+binding schema has also been updated to resolve DTBS check errors.
 
-Fixes: 2295bbd35edb ("dt-bindings: display: add Unisoc's mipi dsi controller bindings")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250720123003.37662-4-krzysztof.kozlowski@linaro.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 46bd3e31d74b ("scsi: ufs: mediatek: Add UFS_MTK_CAP_DISABLE_MCQ")
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Link: https://lore.kernel.org/r/20250722085721.2062657-2-macpaul.lin@mediatek.com
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/display/sprd/sprd,sharkl3-dsi-host.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/Documentation/devicetree/bindings/display/sprd/sprd,sharkl3-dsi-host.yaml
-+++ b/Documentation/devicetree/bindings/display/sprd/sprd,sharkl3-dsi-host.yaml
-@@ -20,7 +20,7 @@ properties:
-     maxItems: 2
+diff --git a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
+index 32fd535a514a..20f341d25ebc 100644
+--- a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
+@@ -33,6 +33,10 @@ properties:
  
-   clocks:
--    minItems: 1
-+    maxItems: 1
+   vcc-supply: true
  
-   clock-names:
-     items:
++  mediatek,ufs-disable-mcq:
++    $ref: /schemas/types.yaml#/definitions/flag
++    description: The mask to disable MCQ (Multi-Circular Queue) for UFS host.
++
+ required:
+   - compatible
+   - clocks
+-- 
+2.50.1
+
 
 
