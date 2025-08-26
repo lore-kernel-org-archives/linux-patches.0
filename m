@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F273D35206B;
-	Tue, 26 Aug 2025 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8412239E8B;
+	Tue, 26 Aug 2025 13:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216453; cv=none; b=pfe108MVBeuXlFNkFsqxtLzbXYrZ0MN37QwieFEtaH4p1NUS3iQ8JggN2Sen4u98GpTpfJX3yzIiA/567r9kfKPxB8EZCAyjCjomSnrLX3WWxL5xmm8G+14zb9NhJzvagTyBJEUMdWxwriQM2udf9+tE0cHeDwCYzNtAQwcbP98=
+	t=1756216457; cv=none; b=QKd1jvMjpgLs9nuT0iMLZJo/BuUoXk3XU5EtAcY2KCdRNGctCGYR3aFE+Rkg6VVnRvpHrwoV5vcc7eizyJjCdjKmihhseXDQIEPWQZju6U24JMruPE0d4v0JhMpNSPKZu+OFmZPRmcWTP6U0n6+mvegPhX6q8xOJQm6YAzFcbIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216453; c=relaxed/simple;
-	bh=iSpNi5nCW5319nOtwsw3UQX6rUGo/LA0kRoLxk+przE=;
+	s=arc-20240116; t=1756216457; c=relaxed/simple;
+	bh=XO1EPy1TaU83QxriFoKke2Q8z6uFDO9spDT732cBXm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPgzj1R6zXC4Qn7LWCcdrgEawXJ418CId+h/C/1e3m7RXRTm7arcRCW+nRpfwnwrUu0i21TV4Khss6hrti3hkAwtMBfuASN/Q9ekWUeH8VepBzax4xlSLCxesv7Z96Qli6WYIzVkw/VmPoXWPudIHMapgevNhcQ4x1cd2bzF3o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JH9FEgHw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2i6Z/hD1tnew3VgmiK+v8PS+pXHCJcSUj/+yxokYNxeMw1TnVeKvjuzuFZhz35kcESElbnlBm2ATkvi0NyT58EcL6h2r5LV+0pSx9DsEYMgLTDt1Hu89ZRNs0qzvsC53o+l5kKSNttRkIbjh6q1E72qjV0KKQRv8eBEmBhKGwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pxamc5oR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JH9FEgHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D3AC4CEF1;
-	Tue, 26 Aug 2025 13:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pxamc5oR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BB1C4CEF1;
+	Tue, 26 Aug 2025 13:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216452;
-	bh=iSpNi5nCW5319nOtwsw3UQX6rUGo/LA0kRoLxk+przE=;
+	s=korg; t=1756216457;
+	bh=XO1EPy1TaU83QxriFoKke2Q8z6uFDO9spDT732cBXm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JH9FEgHwxftLX1AZF6ga1zVpEYuUm8lw8WtYuAFAUG127ygTLQPxbqOICEE0iai4w
-	 xbh3TgwfdlSzqdnutZqqmCineVgafesV47DnrMLCb49sgQazZGB64sEz0XuTAyyok2
-	 ZC6rm5Bu7k2/1pgLBQ/sy+WylJ3YdqV5W+aeDO6M=
+	b=Pxamc5oRzO5MYug5b8lEP47UpEq9bScMj/tOqB8GIlZD9uxbOy96xJ7uLpCRZy8sW
+	 wX4vdUkEM+mauKOWEPQ6a5wEZg8szp5FK9BjjYZSX/q3pt8kCOIGeguHGseeC8z3Pd
+	 oaYtz3DRcyRXBy3/zWLGgbDUYEUjcGOoOrybSQdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"fangzhong.zhou" <myth5@myth5.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Suchit Karunakaran <suchitkarunakaran@gmail.com>,
+	Nicolas Schier <nicolas.schier@linux.dev>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 417/644] i2c: Force DLL0945 touchpad i2c freq to 100khz
-Date: Tue, 26 Aug 2025 13:08:28 +0200
-Message-ID: <20250826110956.791602535@linuxfoundation.org>
+Subject: [PATCH 5.15 418/644] kconfig: lxdialog: replace strcpy() with strncpy() in inputbox.c
+Date: Tue, 26 Aug 2025 13:08:29 +0200
+Message-ID: <20250826110956.817069163@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,37 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: fangzhong.zhou <myth5@myth5.com>
+From: Suchit Karunakaran <suchitkarunakaran@gmail.com>
 
-[ Upstream commit 0b7c9528facdb5a73ad78fea86d2e95a6c48dbc4 ]
+[ Upstream commit 5ac726653a1029a2eccba93bbe59e01fc9725828 ]
 
-This patch fixes an issue where the touchpad cursor movement becomes
-slow on the Dell Precision 5560. Force the touchpad freq to 100khz
-as a workaround.
+strcpy() performs no bounds checking and can lead to buffer overflows if
+the input string exceeds the destination buffer size. This patch replaces
+it with strncpy(), and null terminates the input string.
 
-Tested on Dell Precision 5560 with 6.14 to 6.14.6. Cursor movement
-is now smooth and responsive.
-
-Signed-off-by: fangzhong.zhou <myth5@myth5.com>
-[wsa: kept sorting and removed unnecessary parts from commit msg]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Suchit Karunakaran <suchitkarunakaran@gmail.com>
+Reviewed-by: Nicolas Schier <nicolas.schier@linux.dev>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/kconfig/lxdialog/inputbox.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index 8b06f5d4a4c3..3fabf4b1f6fd 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -342,6 +342,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
- 	 * the device works without issues on Windows at what is expected to be
- 	 * a 400KHz frequency. The root cause of the issue is not known.
- 	 */
-+	{ "DLL0945", 0 },
- 	{ "ELAN06FA", 0 },
- 	{}
- };
+diff --git a/scripts/kconfig/lxdialog/inputbox.c b/scripts/kconfig/lxdialog/inputbox.c
+index 1dcfb288ee63..327b60cdb8da 100644
+--- a/scripts/kconfig/lxdialog/inputbox.c
++++ b/scripts/kconfig/lxdialog/inputbox.c
+@@ -39,8 +39,10 @@ int dialog_inputbox(const char *title, const char *prompt, int height, int width
+ 
+ 	if (!init)
+ 		instr[0] = '\0';
+-	else
+-		strcpy(instr, init);
++	else {
++		strncpy(instr, init, sizeof(dialog_input_result) - 1);
++		instr[sizeof(dialog_input_result) - 1] = '\0';
++	}
+ 
+ do_resize:
+ 	if (getmaxy(stdscr) <= (height - INPUTBOX_HEIGTH_MIN))
 -- 
 2.39.5
 
