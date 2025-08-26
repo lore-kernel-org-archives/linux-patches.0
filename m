@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB8F29D26A;
-	Tue, 26 Aug 2025 11:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB8C27A917;
+	Tue, 26 Aug 2025 11:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207520; cv=none; b=QRA8QYyU82oxKo/LBaqKkps7NEeW0YG7khkfpEQNq4ltWIMMjsWNFRL5O3P/egIz+rklD61uiw7O0hpuSoWNTvbzZAsGdhEeM82cO9XrR6fD3cR/c4WBxLZcPdfgX/+TDnAtaiR0VVEXKU/wwRbAMqsUhL8a5XnqN3xNSU0GgMA=
+	t=1756207523; cv=none; b=uHsNrY/L+PCwRhDotKx/GlCdAalqRcLuDYx/lHRcCNxy3q2x0mgZ9jWJVPKNm2OP3JzOIJoeB0DUK7YrccEn2SOkw31jxCRIBcBZKlmEKRkpPucSl8ImXX26Q0EsKubWQvSp4gY0wv85BMWCrn9McNQVcNmtp2XijdydC0T9KTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207520; c=relaxed/simple;
-	bh=n8RP4xWxLKNzgtJkLhjyAbXmwCBTdvXw/N5kSfJDKzI=;
+	s=arc-20240116; t=1756207523; c=relaxed/simple;
+	bh=jT5f7Fj35mChPeSKA+E+ea2PUy2q8bGCE0biwjoDMVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GmpsV9cFEyyqc8ufm6yPkrEX7DTEsBJWl+8RYF+++bih6fdjvUui1L+Rc8TXazodyyT9T8ASzvgTAFZ4BJfRdwhU5sItwwkg3oIin6Xqtz4b1IUrTjKfHWGSsvbhHD+BGTha5M7jeMI4hayMDea9CLcttRPnkYqkVbL6AMoxDjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLNjxJb6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6oLjW6ZWxDSMzjxi6q3ldHq5v/5hF/XqY47goB+gSDu4tvujFTSdbb/SgXYSXk3SW2Nue9W6Iec6hudYNsJFCBhQkrySMr7awKCAIawPlrTiCfFRAW9WL9jfEIA9CqFVdDfbiaSj2fMcoKOjgIJpNHN0S76MuYjw2pvwyazyXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmBzSKf8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLNjxJb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1ADC4CEF1;
-	Tue, 26 Aug 2025 11:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmBzSKf8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D02C4CEF1;
+	Tue, 26 Aug 2025 11:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207520;
-	bh=n8RP4xWxLKNzgtJkLhjyAbXmwCBTdvXw/N5kSfJDKzI=;
+	s=korg; t=1756207522;
+	bh=jT5f7Fj35mChPeSKA+E+ea2PUy2q8bGCE0biwjoDMVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLNjxJb69DioDV/gHOlI7CA94CSCNQYIUVN3AEvW4kBdOhD9pDqh45qiLW/eKnTo1
-	 FZl9bzWzgIcVD7d3uG+ED+k4KqjUFViOfN8VulhyyMD5hb2bFifyfkGiekry5gfYQa
-	 9QVdveHHdqHwDSlLr6WPPLgp/GjTtQmG6fOcGP9g=
+	b=OmBzSKf862V+pnqUPZIAUNrRJV7bvHWb6avTbEdXeudHC4WiEJ3/rDziB2YW2w/Yc
+	 +tDXf/R5g4l1zqYWnYHsAWjOeZ88nlsiS2tY8/PaEEJBESolPRMbGktHINCHVXJoxw
+	 vXBmpg2qV4OLPMdYd2ajnn9jf4lCFbGWu9GK2Q0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 212/457] btrfs: move transaction aborts to the error site in add_block_group_free_space()
-Date: Tue, 26 Aug 2025 13:08:16 +0200
-Message-ID: <20250826110942.601789080@linuxfoundation.org>
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.16 183/457] drm/amdgpu: update mmhub 4.1.0 client id mappings
+Date: Tue, 26 Aug 2025 13:07:47 +0200
+Message-ID: <20250826110941.895534794@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,43 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit b63c8c1ede4407835cb8c8bed2014d96619389f3 ]
+commit a0b34e4c8663b13e45c78267b4de3004b1a72490 upstream.
 
-Transaction aborts should be done next to the place the error happens,
-which was not done in add_block_group_free_space().
+Update the client id mapping so the correct clients
+get printed when there is a mmhub page fault.
 
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 1f06c942aa70 ("btrfs: always abort transaction on failure to add block group to free space tree")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Tested-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/free-space-tree.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c |   34 +++++++++++-------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1456,16 +1456,17 @@ int add_block_group_free_space(struct bt
- 	path = btrfs_alloc_path();
- 	if (!path) {
- 		ret = -ENOMEM;
-+		btrfs_abort_transaction(trans, ret);
- 		goto out;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
+@@ -37,39 +37,31 @@
+ static const char *mmhub_client_ids_v4_1_0[][2] = {
+ 	[0][0] = "VMC",
+ 	[4][0] = "DCEDMC",
+-	[5][0] = "DCEVGA",
+ 	[6][0] = "MP0",
+ 	[7][0] = "MP1",
+ 	[8][0] = "MPIO",
+-	[16][0] = "HDP",
+-	[17][0] = "LSDMA",
+-	[18][0] = "JPEG",
+-	[19][0] = "VCNU0",
+-	[21][0] = "VSCH",
+-	[22][0] = "VCNU1",
+-	[23][0] = "VCN1",
+-	[32+20][0] = "VCN0",
+-	[2][1] = "DBGUNBIO",
++	[16][0] = "LSDMA",
++	[17][0] = "JPEG",
++	[19][0] = "VCNU",
++	[22][0] = "VSCH",
++	[23][0] = "HDP",
++	[32+23][0] = "VCNRD",
+ 	[3][1] = "DCEDWB",
+ 	[4][1] = "DCEDMC",
+-	[5][1] = "DCEVGA",
+ 	[6][1] = "MP0",
+ 	[7][1] = "MP1",
+ 	[8][1] = "MPIO",
+ 	[10][1] = "DBGU0",
+ 	[11][1] = "DBGU1",
+-	[12][1] = "DBGU2",
+-	[13][1] = "DBGU3",
++	[12][1] = "DBGUNBIO",
+ 	[14][1] = "XDP",
+ 	[15][1] = "OSSSYS",
+-	[16][1] = "HDP",
+-	[17][1] = "LSDMA",
+-	[18][1] = "JPEG",
+-	[19][1] = "VCNU0",
+-	[20][1] = "VCN0",
+-	[21][1] = "VSCH",
+-	[22][1] = "VCNU1",
+-	[23][1] = "VCN1",
++	[16][1] = "LSDMA",
++	[17][1] = "JPEG",
++	[18][1] = "VCNWR",
++	[19][1] = "VCNU",
++	[22][1] = "VSCH",
++	[23][1] = "HDP",
+ };
  
- 	ret = __add_block_group_free_space(trans, block_group, path);
-+	if (ret)
-+		btrfs_abort_transaction(trans, ret);
- 
- out:
- 	btrfs_free_path(path);
- 	mutex_unlock(&block_group->free_space_lock);
--	if (ret)
--		btrfs_abort_transaction(trans, ret);
- 	return ret;
- }
- 
+ static uint32_t mmhub_v4_1_0_get_invalidate_req(unsigned int vmid,
 
 
