@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507A885260;
-	Tue, 26 Aug 2025 12:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40AA1E51E1;
+	Tue, 26 Aug 2025 12:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213043; cv=none; b=AvTNr7TeRjORWLW2vIGO3QbsutzIHAQHXI5Tl1sl5UIdsxh3EPiC8OfjIwH1fdTMnrYW+JinPaQRO3sYroOk+tOeJd4g7EJ5AuzmrhtPeOSZMvunNI/Xp6UeQBFXlkXliJwMZNM79URZHL0p2M2s9fAqo5/96sADPYIct96EJU4=
+	t=1756213046; cv=none; b=o7fE3kXDB9gpFsvqmjpF/3mzwTOlBd0iZaFcp/WvGg14enywHWclUYw/SLA7nVQZ8fu6HbZPazHvdm2Jcxd+G7lCn5QPsZD4LYadxpNf9qgThGIU/OKdagicobX8X2ceqsnh5K+RG6w8dAD+BwjejWcfK2k73bx8cYnpy/+6n+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213043; c=relaxed/simple;
-	bh=jRiiUrCxOYDln0qHiWeGobrwIgpM8OiBAv8b7OC9jUc=;
+	s=arc-20240116; t=1756213046; c=relaxed/simple;
+	bh=K54trnWXGHfjojaFppYY3lMIrKMccwxDkRMf5Y4ty+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRSQUAlbCS3PNX1ZKKolq4W+Yhy4GkZB72nIDyEguZ6pyE9YQNsMrhOsxCsqcfX7k0QjpOQRvauI0OTEjKh9cvIRwD25knz2JfH4p7Z2hGwiRNIMaUSbjiYlwTHMHeyntIbCF0FoUpkpfg1JUXCOpLYN5uhSP8WQ060jOqkeYFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLn/Rho9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cYAbSgoSad9lRuPC+/81lfqEPX5GibWFV8o8QoJB5SF6KTLMoqjdxHHRPZ5houtGbBvSQDYEBvv5rcVR/KrYrz7OmVUWZVDyaeqUNxPhP5DXLMFf0RT3QU4xYVvHRYwRvXHbYxWJhkGdPySw5P3FXl5EQevG9b4Pxazs8EWUnUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnuOzQJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLn/Rho9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5CCC4CEF1;
-	Tue, 26 Aug 2025 12:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnuOzQJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E77C4CEF1;
+	Tue, 26 Aug 2025 12:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213043;
-	bh=jRiiUrCxOYDln0qHiWeGobrwIgpM8OiBAv8b7OC9jUc=;
+	s=korg; t=1756213045;
+	bh=K54trnWXGHfjojaFppYY3lMIrKMccwxDkRMf5Y4ty+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLn/Rho9Likn+CqaABuqa+5T6tCe27PFoINEkY3ZBvc6X1GpdjmvArUgPgRxAJCBo
-	 sGnUTKsHVE5TkAbglZvqjAODs1O6XWeZnwJryvi3L8FbVgPfwOy3ghEYTh4u5jYXYc
-	 vouG0DQZMZB0PXJPj1Sb4inxWvw8yPQK+itbU59w=
+	b=BnuOzQJ8+WxG5fEoH6J8uTgC3Or2QABPBr5h4ZFIa7q36VNcMuXTrNz9oGX/abzfB
+	 ZvWyGqnMbF5eHKDSrJBhGCjBEo2uHPt44uTg11VnMYGZvVjQqkMKsZh7g5/iFD1nGO
+	 raXvZ8h70icRgZb/JKPXG8wfb0VxYj7Gnw8weGh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 200/587] net: dsa: b53: prevent SWITCH_CTRL access on BCM5325
-Date: Tue, 26 Aug 2025 13:05:49 +0200
-Message-ID: <20250826110958.028745595@linuxfoundation.org>
+Subject: [PATCH 6.6 201/587] bpftool: Fix JSON writer resource leak in version command
+Date: Tue, 26 Aug 2025 13:05:50 +0200
+Message-ID: <20250826110958.052999051@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -46,51 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 22ccaaca43440e90a3b68d2183045b42247dc4be ]
+[ Upstream commit 85cd83fed8267cde0dd1cea719808aad95ae4de7 ]
 
-BCM5325 doesn't implement SWITCH_CTRL register so we should avoid reading
-or writing it.
+When using `bpftool --version -j/-p`, the JSON writer object
+created in do_version() was not properly destroyed after use.
+This caused a memory leak each time the version command was
+executed with JSON output.
 
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Link: https://patch.msgid.link/20250614080000.1884236-8-noltari@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix: 004b45c0e51a (tools: bpftool: provide JSON output for all possible commands)
+
+Suggested-by: Quentin Monnet <qmo@kernel.org>
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20250617132442.9998-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ tools/bpf/bpftool/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 5daefb60885e..6378e3f0f1fe 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -339,11 +339,12 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
+diff --git a/tools/bpf/bpftool/main.c b/tools/bpf/bpftool/main.c
+index 08d0ac543c67..a0536528dfde 100644
+--- a/tools/bpf/bpftool/main.c
++++ b/tools/bpf/bpftool/main.c
+@@ -534,9 +534,9 @@ int main(int argc, char **argv)
+ 		usage();
  
- 	b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_MODE, mgmt);
+ 	if (version_requested)
+-		return do_version(argc, argv);
+-
+-	ret = cmd_select(commands, argc, argv, do_help);
++		ret = do_version(argc, argv);
++	else
++		ret = cmd_select(commands, argc, argv, do_help);
  
--	/* Include IMP port in dumb forwarding mode
--	 */
--	b53_read8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, &mgmt);
--	mgmt |= B53_MII_DUMB_FWDG_EN;
--	b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, mgmt);
-+	if (!is5325(dev)) {
-+		/* Include IMP port in dumb forwarding mode */
-+		b53_read8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, &mgmt);
-+		mgmt |= B53_MII_DUMB_FWDG_EN;
-+		b53_write8(dev, B53_CTRL_PAGE, B53_SWITCH_CTRL, mgmt);
-+	}
- 
- 	/* Look at B53_UC_FWD_EN and B53_MC_FWD_EN to decide whether
- 	 * frames should be flooded or not.
+ 	if (json_output)
+ 		jsonw_destroy(&json_wtr);
 -- 
 2.39.5
 
