@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5794225762;
-	Tue, 26 Aug 2025 12:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E0D1F55FA;
+	Tue, 26 Aug 2025 12:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212854; cv=none; b=VusOdWsiICk3KiL3Cr9RoQ/JgCQ8mzcL6k1lBrvHa9TRISvw9BnOLjDsY6MNDyXVnmxuQu6maN729YLAOA3GcBTeh1J2n/ACYJ4hPZIt8B3JGA5dlgi+6kjBS+nVChFEAbtGCrBY58cBmdjaA0nPR/Pc+o09qe6H5BrUM1pVGSM=
+	t=1756212859; cv=none; b=exBzGbmO70Bd0Pxpp2ptaaap6AYb16rUSIx1/Yxkv4/lGqN/1VAdSrxQQf3kIlpJ9I/h8F61bDR5kKXyzNayKCsB89FR1IBhN8q0XP+rFmWFEVLPJVOAYgDHynlDygX5uAz5XdXbqsQEX6OBY4PwxR9qEirLWqjaGSKW5LGZMps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212854; c=relaxed/simple;
-	bh=8HKPIErnSByPB3ICdIUu1wR5N+DZ/6pmM7lKMkxBFe0=;
+	s=arc-20240116; t=1756212859; c=relaxed/simple;
+	bh=V6Mcp0G7TiMnJLvE7XxdFt+sI5bmoQQRBdtEcepHM04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Czy0Om6xL6uVUaN4vKYHyFkjXsWyvGP2xqZYae6khcX3RUhWoICy5zacKmJrpnUsUzSzfLxLFfi1xK0PyNY7syaj684CGPepRcpJVBuqn0vP9mtuQSkZjjIZw8BiA/CCFn796KgqH8BtQrUFa/2AjefVH41nA+umwCgatElw8xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X94h5Swp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tb1GHYoV+iJY5upLfhDX/8mnKnpUnDA1lWg/TbXmAA3t16UyMaDhZ3wGozgiRKkDK2lVyv+id6ZpNbMrg4LjuiZRVlFA0fN+h4QnimzGWjxChhxvCT0bpslTOSsZyMMIWp4eX8II98GP46D6MN0UOydqReqLgDn4KOStvHVLeR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAf87ilY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X94h5Swp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65879C4CEF1;
-	Tue, 26 Aug 2025 12:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAf87ilY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB468C4CEF1;
+	Tue, 26 Aug 2025 12:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212854;
-	bh=8HKPIErnSByPB3ICdIUu1wR5N+DZ/6pmM7lKMkxBFe0=;
+	s=korg; t=1756212857;
+	bh=V6Mcp0G7TiMnJLvE7XxdFt+sI5bmoQQRBdtEcepHM04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X94h5SwpFOTB6qeeMOvaWQ7S6SuAKrh4iBoh0IiEuwThgo1DYW2MOiCc+Ow5Adomq
-	 RzEgMbBYEFlv9w0NuFtZ32sDrfQ+AScw0DQAzkQSAPx9ULYMQ5VW00aIWlWoKzNmD/
-	 /ULxyrXNhCBGloQxFraWm2jL+p4BR8tfVvZbFqh8=
+	b=CAf87ilYzuJcezbzpWgqz6XNRdjRMHQfhQw03MfA8l5bIe/iC15R6BXU35BhR32Mh
+	 3xzAT27/Xu7O/ld+UQ8nzEdfC1EBiQTm12yYnz31D8sXMxpXeJAmnuulG+fHDJAm8a
+	 Ru+De4YpGuFXxYY45tCytSpC9CK1d0yP5HJ382Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kochetkov <al.kochet@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Benson Leung <bleung@chromium.org>,
+	Jameson Thies <jthies@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/587] ARM: rockchip: fix kernel hang during smp initialization
-Date: Tue, 26 Aug 2025 13:04:05 +0200
-Message-ID: <20250826110955.384608006@linuxfoundation.org>
+Subject: [PATCH 6.6 087/587] usb: typec: ucsi: psy: Set current max to 100mA for BC 1.2 and Default
+Date: Tue, 26 Aug 2025 13:03:56 +0200
+Message-ID: <20250826110955.146055445@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,68 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Kochetkov <al.kochet@gmail.com>
+From: Benson Leung <bleung@chromium.org>
 
-[ Upstream commit 7cdb433bb44cdc87dc5260cdf15bf03cc1cd1814 ]
+[ Upstream commit af833e7f7db3cf4c82f063668e1b52297a30ec18 ]
 
-In order to bring up secondary CPUs main CPU write trampoline
-code to SRAM. The trampoline code is written while secondary
-CPUs are powered on (at least that true for RK3188 CPU).
-Sometimes that leads to kernel hang. Probably because secondary
-CPU execute trampoline code while kernel doesn't expect.
+ucsi_psy_get_current_max would return 0mA as the maximum current if
+UCSI detected a BC or a Default USB Power sporce.
 
-The patch moves SRAM initialization step to the point where all
-secondary CPUs are powered down.
+The comment in this function is true that we can't tell the difference
+between DCP/CDP or SDP chargers, but we can guarantee that at least 1-unit
+of USB 1.1/2.0 power is available, which is 100mA, which is a better
+fallback value than 0, which causes some userspaces, including the ChromeOS
+power manager, to regard this as a power source that is not providing
+any power.
 
-That fixes rarely hangs on RK3188:
-[    0.091568] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
-[    0.091996] rockchip_smp_prepare_cpus: ncores 4
+In reality, 100mA is guaranteed from all sources in these classes.
 
-Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
-Link: https://lore.kernel.org/r/20250703140453.1273027-1-al.kochet@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Jameson Thies <jthies@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://lore.kernel.org/r/20250717200805.3710473-1-bleung@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-rockchip/platsmp.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/usb/typec/ucsi/psy.c  | 2 +-
+ drivers/usb/typec/ucsi/ucsi.h | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/mach-rockchip/platsmp.c b/arch/arm/mach-rockchip/platsmp.c
-index 36915a073c23..f432d22bfed8 100644
---- a/arch/arm/mach-rockchip/platsmp.c
-+++ b/arch/arm/mach-rockchip/platsmp.c
-@@ -279,11 +279,6 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
+diff --git a/drivers/usb/typec/ucsi/psy.c b/drivers/usb/typec/ucsi/psy.c
+index b35c6e07911e..9b0157063df0 100644
+--- a/drivers/usb/typec/ucsi/psy.c
++++ b/drivers/usb/typec/ucsi/psy.c
+@@ -163,7 +163,7 @@ static int ucsi_psy_get_current_max(struct ucsi_connector *con,
+ 	case UCSI_CONSTAT_PWR_OPMODE_DEFAULT:
+ 	/* UCSI can't tell b/w DCP/CDP or USB2/3x1/3x2 SDP chargers */
+ 	default:
+-		val->intval = 0;
++		val->intval = UCSI_TYPEC_DEFAULT_CURRENT * 1000;
+ 		break;
  	}
+ 	return 0;
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index 7706f4e95125..51e745117dcb 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -340,9 +340,10 @@ struct ucsi {
+ #define UCSI_MAX_SVID		5
+ #define UCSI_MAX_ALTMODES	(UCSI_MAX_SVID * 6)
  
- 	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
--		if (rockchip_smp_prepare_sram(node)) {
--			of_node_put(node);
--			return;
--		}
--
- 		/* enable the SCU power domain */
- 		pmu_set_power_domain(PMU_PWRDN_SCU, true);
+-#define UCSI_TYPEC_VSAFE5V	5000
+-#define UCSI_TYPEC_1_5_CURRENT	1500
+-#define UCSI_TYPEC_3_0_CURRENT	3000
++#define UCSI_TYPEC_VSAFE5V		5000
++#define UCSI_TYPEC_DEFAULT_CURRENT	 100
++#define UCSI_TYPEC_1_5_CURRENT		1500
++#define UCSI_TYPEC_3_0_CURRENT		3000
  
-@@ -316,11 +311,19 @@ static void __init rockchip_smp_prepare_cpus(unsigned int max_cpus)
- 		asm ("mrc p15, 1, %0, c9, c0, 2\n" : "=r" (l2ctlr));
- 		ncores = ((l2ctlr >> 24) & 0x3) + 1;
- 	}
--	of_node_put(node);
- 
- 	/* Make sure that all cores except the first are really off */
- 	for (i = 1; i < ncores; i++)
- 		pmu_set_power_domain(0 + i, false);
-+
-+	if (read_cpuid_part() == ARM_CPU_PART_CORTEX_A9) {
-+		if (rockchip_smp_prepare_sram(node)) {
-+			of_node_put(node);
-+			return;
-+		}
-+	}
-+
-+	of_node_put(node);
- }
- 
- static void __init rk3036_smp_prepare_cpus(unsigned int max_cpus)
+ struct ucsi_connector {
+ 	int num;
 -- 
 2.39.5
 
