@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E828F299A94;
-	Tue, 26 Aug 2025 13:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4872C3451A0;
+	Tue, 26 Aug 2025 13:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216400; cv=none; b=KmthsrIlkQz0BSTObMhk5f8HGJGGK7akNPgHNZd7/sHpM4ddU62iifx02NyfGtcVJ+lKBWNbxa6VPiA/A1eqE27HfyPMrhVtc7h8AGr+GaGyMRjoIb/1nLcEBq0TGKcG6v7cxqRUQRwwXw9uDZ0UpgB9UEnidJhkHv6FV0TKpKY=
+	t=1756216402; cv=none; b=rifGP1TsecjnQTfTwwlXPFs+nEo3RUJg4rsNTB7yqQpU5eC7thNVxNp1Qs5g6voZgldFaH0jqmSk3qavfPoe8prsiuiuR1wv0IXuE5dDZjUlnVO8Wrjl1KciJIp+aXjYK6xZwf3R1sFbAflXeadj6q+gEez8iUQpVzy/nKOXVJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216400; c=relaxed/simple;
-	bh=bHwNT7kO5f4EC/hIuUObZ8IzohljjdJ7FZIr89MmcFk=;
+	s=arc-20240116; t=1756216402; c=relaxed/simple;
+	bh=bgz22AhpP7fBVcsTv+T9dXnwV19cg1mltLtYm/I7Cz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iN2L/x7JltGEbdFpzHjYhAa3X9mR+0g8NJ74L568NcQitdAApSmLrNUQPCN+R1uspSg8d0wPjfWzNcqMK5XiKBfmkCuHhLDG7Gci7lSmYE7JXsoVSmRQBkXHmHHVIYBhUnmIhUEDNTtfELlCP5YzQ/LHrc1avZ8mMVQva6w/Kr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/1XfuBD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pvn5TCkiQFv69sCRFfvua1tUH4kCobgyIkj/MxXgExCDadlyJJaMBLxXJnZK+Gi3L4ftEdu0EhfhDLiFBKfaJUL9ljgg824SsklbxXdCr1MnIbDqB481amVDUS+9Nju/iMxi3pF8h4C2LIlj/Yx7pXXRfgcpJrZ5dSLaxwo8+j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wa8SbdOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/1XfuBD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313B5C4CEF1;
-	Tue, 26 Aug 2025 13:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wa8SbdOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C982FC4CEF1;
+	Tue, 26 Aug 2025 13:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216399;
-	bh=bHwNT7kO5f4EC/hIuUObZ8IzohljjdJ7FZIr89MmcFk=;
+	s=korg; t=1756216402;
+	bh=bgz22AhpP7fBVcsTv+T9dXnwV19cg1mltLtYm/I7Cz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/1XfuBDP281BdXwNKDSIoe+CjUgUqoJaOsxYLyhjp5cAAp1rBW+cj/yVhdjj5TP2
-	 cdFNWTNPANLmZI9pc2ggY+WVPpnrK0SUJPj+Kd9FVs9G1T7HaZS4KCCPTA9oHWx7wi
-	 d1Hdx8Yy6DMcATiqJnmavBKoQsUT4qwysasN11R0=
+	b=Wa8SbdODtS7uUFuDireDiYElucdC4ht1IJScVzVvYQ+myl4QEwHmvZ//LkZRvsBEG
+	 YOlwZt/1Y6FhdK9UTtTdax3ZVgBLrgKrcU9k3A7tWZFPFNHNnlrqSz7eJQfmGF89Lr
+	 P/yba5JBQbLHuBApYEDkZNuhTr+ZsBRkLngXdtUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Jan Hendrik Farr <kernel@jfarr.cc>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 353/644] s390/stp: Remove udelay from stp_sync_clock()
-Date: Tue, 26 Aug 2025 13:07:24 +0200
-Message-ID: <20250826110955.145394291@linuxfoundation.org>
+Subject: [PATCH 5.15 354/644] wifi: mac80211: dont complete management TX on SAE commit
+Date: Tue, 26 Aug 2025 13:07:25 +0200
+Message-ID: <20250826110955.170591291@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,42 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b367017cdac21781a74eff4e208d3d38e1f38d3f ]
+[ Upstream commit 6b04716cdcac37bdbacde34def08bc6fdb5fc4e2 ]
 
-When an stp sync check is handled on a system with multiple
-cpus each cpu gets a machine check but only the first one
-actually handles the sync operation. All other CPUs spin
-waiting for the first one to finish with a short udelay().
-But udelay can't be used here as the first CPU modifies tod_clock_base
-before performing the sync op. During this timeframe
-get_tod_clock_monotonic() might return a non-monotonic time.
+When SAE commit is sent and received in response, there's no
+ordering for the SAE confirm messages. As such, don't call
+drivers to stop listening on the channel when the confirm
+message is still expected.
 
-The time spent waiting should be very short and udelay is a busy loop
-anyways, therefore simply remove the udelay.
+This fixes an issue if the local confirm is transmitted later
+than the AP's confirm, for iwlwifi (and possibly mt76) the
+AP's confirm would then get lost since the device isn't on
+the channel at the time the AP transmit the confirm.
 
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+For iwlwifi at least, this also improves the overall timing
+of the authentication handshake (by about 15ms according to
+the report), likely since the session protection won't be
+aborted and rescheduled.
+
+Note that even before this, mgd_complete_tx() wasn't always
+called for each call to mgd_prepare_tx() (e.g. in the case
+of WEP key shared authentication), and the current drivers
+that have the complete callback don't seem to mind. Document
+this as well though.
+
+Reported-by: Jan Hendrik Farr <kernel@jfarr.cc>
+Closes: https://lore.kernel.org/all/aB30Ea2kRG24LINR@archlinux/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250609213232.12691580e140.I3f1d3127acabcd58348a110ab11044213cf147d3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/mac80211.h | 2 ++
+ net/mac80211/mlme.c    | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/time.c b/arch/s390/kernel/time.c
-index f0a1484ee00b..58cdd4119f45 100644
---- a/arch/s390/kernel/time.c
-+++ b/arch/s390/kernel/time.c
-@@ -576,7 +576,7 @@ static int stp_sync_clock(void *data)
- 		atomic_dec(&sync->cpus);
- 		/* Wait for in_sync to be set. */
- 		while (READ_ONCE(sync->in_sync) == 0)
--			__udelay(1);
-+			;
- 	}
- 	if (sync->in_sync != 1)
- 		/* Didn't work. Clear per-cpu in sync bit again. */
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index c713edfbe2b6..f101ef4a1fd6 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -3787,6 +3787,8 @@ struct ieee80211_prep_tx_info {
+  * @mgd_complete_tx: Notify the driver that the response frame for a previously
+  *	transmitted frame announced with @mgd_prepare_tx was received, the data
+  *	is filled similarly to @mgd_prepare_tx though the duration is not used.
++ *	Note that this isn't always called for each mgd_prepare_tx() call, for
++ *	example for SAE the 'confirm' messages can be on the air in any order.
+  *
+  * @mgd_protect_tdls_discover: Protect a TDLS discovery session. After sending
+  *	a TDLS discovery-request, we expect a reply to arrive on the AP's
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index ae379bd9dccc..6e86a23c647d 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -2960,6 +2960,7 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 	struct ieee80211_prep_tx_info info = {
+ 		.subtype = IEEE80211_STYPE_AUTH,
+ 	};
++	bool sae_need_confirm = false;
+ 
+ 	sdata_assert_lock(sdata);
+ 
+@@ -3005,6 +3006,8 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 				jiffies + IEEE80211_AUTH_WAIT_SAE_RETRY;
+ 			ifmgd->auth_data->timeout_started = true;
+ 			run_again(sdata, ifmgd->auth_data->timeout);
++			if (auth_transaction == 1)
++				sae_need_confirm = true;
+ 			goto notify_driver;
+ 		}
+ 
+@@ -3047,6 +3050,9 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 	     ifmgd->auth_data->expected_transaction == 2)) {
+ 		if (!ieee80211_mark_sta_auth(sdata, bssid))
+ 			return; /* ignore frame -- wait for timeout */
++	} else if (ifmgd->auth_data->algorithm == WLAN_AUTH_SAE &&
++		   auth_transaction == 1) {
++		sae_need_confirm = true;
+ 	} else if (ifmgd->auth_data->algorithm == WLAN_AUTH_SAE &&
+ 		   auth_transaction == 2) {
+ 		sdata_info(sdata, "SAE peer confirmed\n");
+@@ -3055,7 +3061,8 @@ static void ieee80211_rx_mgmt_auth(struct ieee80211_sub_if_data *sdata,
+ 
+ 	cfg80211_rx_mlme_mgmt(sdata->dev, (u8 *)mgmt, len);
+ notify_driver:
+-	drv_mgd_complete_tx(sdata->local, sdata, &info);
++	if (!sae_need_confirm)
++		drv_mgd_complete_tx(sdata->local, sdata, &info);
+ }
+ 
+ #define case_WLAN(type) \
 -- 
 2.39.5
 
