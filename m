@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FF229BDAC;
-	Tue, 26 Aug 2025 11:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A871C2BE03C;
+	Tue, 26 Aug 2025 11:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207594; cv=none; b=DEn0Cq+bEdysWEpzrtLsm1XQyvIBjbl3ppdAel+GbyXrqXfrasLJMrUsSSbJzd3R/XakRsoscdUFFHk5engwriPQpEuT7ABCoe8hqI7d6s/e60MV60Y/Z0KSHdxzcQfMtb0h76UHcTmSM2kGt1KPLitJ9DSF6Pv91dxoNAG6xH8=
+	t=1756207596; cv=none; b=ewa5n5IjulyKH81wwjK1vMRBfGe1mQwwPHSjAYJ/yMzVZpJXk2arxi5aCvwGSqFlfLxPHzBdKi2T1cpN76JTf+vvpUeArOKY3cXZELc+YqLZGuWaoWH06Jov1eeAuNZHW3709sLc2OhW/FJn98w/6/xZ0AIyZvx4qjmfFaUuLys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207594; c=relaxed/simple;
-	bh=fjBkNvVAcwltmcJ0w2qL3bXOoGwNC2xOheKxDXqzT6E=;
+	s=arc-20240116; t=1756207596; c=relaxed/simple;
+	bh=5nSW2E5JhAU1NzCeUaO2HBpqqHJk7N4Vs0gaFUWwRuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmk5uiQzD/H3jnKJFjHavDuLZlN4ZUMCHlTYpmmcdT5OyEOrU1oNY7o8geQY1XdR1oVbhR3slJ9jMvefBmsYuZvatq7/ofQyflZPhL5rXmCVxZ5C5MeGrVmoruHtIZR/e0hUJ82KGXMHF2j+6CX6uiMxc5tY/XzBAcdErd9ZUxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiF8lFMb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6KI8mh4s9Tg7qfFWeBHrK/aVkQkuC5TJgufkd/R4OvhXApcxL/UITvZTNKbho8HXkSYCbMt5z3ci3ZuVSqMpOlihvayRvESR4urHfppQCBdTRJql9dVZ667wgZ9fSTXyD0JeSWVMoWayMrM5FuibcpHsybkNpBn2uvkov2CaEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjRS5Rst; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiF8lFMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E143C4CEF1;
-	Tue, 26 Aug 2025 11:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjRS5Rst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356F3C4CEF1;
+	Tue, 26 Aug 2025 11:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207593;
-	bh=fjBkNvVAcwltmcJ0w2qL3bXOoGwNC2xOheKxDXqzT6E=;
+	s=korg; t=1756207596;
+	bh=5nSW2E5JhAU1NzCeUaO2HBpqqHJk7N4Vs0gaFUWwRuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiF8lFMbcMLktXC2f+KADnxNXJ1UlSF4UDp7lCTyALcrzs8tzvBhbLMMMYJ2V5asj
-	 dkWJiN6nJkeSjWvEPibsmBCwiIRsy4whc4kOqNpxaoDTjdMzz8Y198d0mZxoiotFE7
-	 FP04qeCm39KiycGrAhjqJQzYVQ6HCHIT7Bx2WpDw=
+	b=JjRS5RstYvBdE/kfxG18pBbyQSZbPrnTMaQNdpTlXGkc5bTQ2eTAoHZrvUrdeaHpt
+	 wK8gWje4nmHDwkdOgPphySgeseaBBFmnY8Gc/KEPSJfKyqO5cg4fTgbM6XC3OR1hYF
+	 5qBNTgiXjzrhi7+tYvWYA6jAcDZOY6HGmS6nTjzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Shih <victor.shih@genesyslogic.com.tw>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.16 242/457] mmc: sdhci-pci-gli: GL9763e: Rename the gli_set_gl9763e() for consistency
-Date: Tue, 26 Aug 2025 13:08:46 +0200
-Message-ID: <20250826110943.351219722@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 216/457] btrfs: add comment for optimization in free_extent_buffer()
+Date: Tue, 26 Aug 2025 13:08:20 +0200
+Message-ID: <20250826110942.702075942@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,43 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Shih <victor.shih@genesyslogic.com.tw>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 293ed0f5f34e1e9df888456af4b0a021f57b5f54 upstream.
+[ Upstream commit 2697b6159744e5afae0f7715da9f830ba6f9e45a ]
 
-In preparation to fix replay timer timeout, rename the
-gli_set_gl9763e() to gl9763e_hw_setting() for consistency.
+There's this special atomic compare and exchange logic which serves to
+avoid locking the extent buffers refs_lock spinlock and therefore reduce
+lock contention, so add a comment to make it more obvious.
 
-Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
-Fixes: 1ae1d2d6e555 ("mmc: sdhci-pci-gli: Add Genesys Logic GL9763E support")
-Cc: stable@vger.kernel.org
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250731065752.450231-3-victorshihgli@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: ad580dfa388f ("btrfs: fix subpage deadlock in try_release_subpage_extent_buffer()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/extent_io.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -1753,7 +1753,7 @@ cleanup:
- 	return ret;
- }
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -3493,6 +3493,7 @@ void free_extent_buffer(struct extent_bu
+ 			break;
+ 		}
  
--static void gli_set_gl9763e(struct sdhci_pci_slot *slot)
-+static void gl9763e_hw_setting(struct sdhci_pci_slot *slot)
- {
- 	struct pci_dev *pdev = slot->chip->pdev;
- 	u32 value;
-@@ -1928,7 +1928,7 @@ static int gli_probe_slot_gl9763e(struct
- 	gli_pcie_enable_msi(slot);
- 	host->mmc_host_ops.hs400_enhanced_strobe =
- 					gl9763e_hs400_enhanced_strobe;
--	gli_set_gl9763e(slot);
-+	gl9763e_hw_setting(slot);
- 	sdhci_enable_v4_mode(host);
- 
- 	return 0;
++		/* Optimization to avoid locking eb->refs_lock. */
+ 		if (atomic_try_cmpxchg(&eb->refs, &refs, refs - 1))
+ 			return;
+ 	}
 
 
