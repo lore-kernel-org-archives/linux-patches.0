@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC7F3375D9;
-	Tue, 26 Aug 2025 11:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5CA27A917;
+	Tue, 26 Aug 2025 11:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207162; cv=none; b=o0JW2strCXNeKi1IVb4Wi+BUm9xva5TAqKZoUMXGlu3dnIIdqHQ8384WVxxj50coiAjditdu+mTKsk/g90Luv9DUto+xTiDfu0ue5Z8h1vzo2iuaB/c7vfteP3epEnVa3ZkSbLe7Vg7E6Cl4dUu5AwtHZFhw6oVAftprXChCjUU=
+	t=1756207164; cv=none; b=SZmUFi3GhP0LjjiXyDhLZIuQ96z4ppILkDkvzfQSSjpgmkQlhVLj1GClOh6EAWg1CccEjwtwJUNppvkKvUojkePMWDVC/0BiKPD7PSnK8yI0LUNFJ48NTaEnN1+rSdTBk4VxPx3e/hZusTFUkLWwHi984fa0xUmGjO/0X9dko5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207162; c=relaxed/simple;
-	bh=3F3GeHFfhmGLNyDK7oqixUTxWJYc4aojTsIsYlMsPfY=;
+	s=arc-20240116; t=1756207164; c=relaxed/simple;
+	bh=ZauHOtZVD0w8ag9YH6GUftvrOQ5gY+tcTSUX2FivZqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHSkVXgn+SSgfC16Wq7mlTuesutp5CqZxHRmIydUy6ul2uVovQiHBbM9g/Av45qwYWWqJvzBeLqPEX9X8rjZXQf52lXY34Tu659zpjfPX6sd9fpLw1i/QvZ8jWIErLHJlOBnNGMkA+LH99JkEU1AG2yAjEQWoBUuqviiywZGCYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fX4j85r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D06jtyPja6izKvdZkwjzsAZgXQhohYA6LAMVS+a7Ygz9ey6t9Y2vV7rxbmAjaHItsWLoXITCd7m2P0lH7F36+ZWJXCoozyzl0tzDP3R6q77pfmQ1iCpw6+UEh3eudpFV43y14UxUD52d5VcU5eZJGsak6h9+kPBiG8Y0Ys5BKN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adu9d27t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fX4j85r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05900C4CEF1;
-	Tue, 26 Aug 2025 11:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adu9d27t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6612BC4CEF4;
+	Tue, 26 Aug 2025 11:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207162;
-	bh=3F3GeHFfhmGLNyDK7oqixUTxWJYc4aojTsIsYlMsPfY=;
+	s=korg; t=1756207164;
+	bh=ZauHOtZVD0w8ag9YH6GUftvrOQ5gY+tcTSUX2FivZqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fX4j85r1W2jwHsakmBYXcztk6OVIlN8YYK+mKD2eGapB5ngO7SDf0dmdkIZoj+ET
-	 58up9iYe3SjKsoxp367SzhgVc2J5lH6sOgqY8uMqJxT73yf4cuGwsixWzmaxvO5the
-	 rMiyw2tGabFDgmsJ4RnS/3cUZ5e73wQcAYqLaaBw=
+	b=adu9d27tCBb8Rh1cMhC8XrJ92HBrKlF4Pf3DEM2Bc8H2p8SvbyM/irnYcEVdydWwH
+	 qYUcPgT7eX4PrfZ7y8uQ2qzYXBJMGTzNKuzHNpcDD0eWQBCvz4B9/2RR3uoSf1zc9P
+	 SsJA3HTDUo+WO4WnZ6isOTsI3RovkSlJgFv2u2Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Kyoji Ogasawara <sawara04.o@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 047/457] btrfs: fix printing of mount info messages for NODATACOW/NODATASUM
-Date: Tue, 26 Aug 2025 13:05:31 +0200
-Message-ID: <20250826110938.510552873@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>
+Subject: [PATCH 6.16 074/457] zynq_fpga: use sgtable-based scatterlist wrappers
+Date: Tue, 26 Aug 2025 13:05:58 +0200
+Message-ID: <20250826110939.202932129@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,43 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyoji Ogasawara <sawara04.o@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 74857fdc5dd2cdcdeb6e99bdf26976fd9299d2bb upstream.
+commit 37e00703228ab44d0aacc32a97809a4f6f58df1b upstream.
 
-The NODATASUM message was printed twice by mistake and the NODATACOW was
-missing from the 'unset' part.  Fix the duplication and make the output
-look the same.
+Use common wrappers operating directly on the struct sg_table objects to
+fix incorrect use of statterlists related calls. dma_unmap_sg() function
+has to be called with the number of elements originally passed to the
+dma_map_sg() function, not the one returned in sgtable's nents.
 
-Fixes: eddb1a433f26 ("btrfs: add reconfigure callback for fs_context")
-CC: stable@vger.kernel.org # 6.8+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Kyoji Ogasawara <sawara04.o@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+CC: stable@vger.kernel.org
+Fixes: 425902f5c8e3 ("fpga zynq: Use the scatterlist interface")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20250616120932.1090614-1-m.szyprowski@samsung.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/fpga/zynq-fpga.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1430,7 +1430,7 @@ static void btrfs_emit_options(struct bt
- {
- 	btrfs_info_if_set(info, old, NODATASUM, "setting nodatasum");
- 	btrfs_info_if_set(info, old, DEGRADED, "allowing degraded mounts");
--	btrfs_info_if_set(info, old, NODATASUM, "setting nodatasum");
-+	btrfs_info_if_set(info, old, NODATACOW, "setting nodatacow");
- 	btrfs_info_if_set(info, old, SSD, "enabling ssd optimizations");
- 	btrfs_info_if_set(info, old, SSD_SPREAD, "using spread ssd allocation scheme");
- 	btrfs_info_if_set(info, old, NOBARRIER, "turning off barriers");
-@@ -1452,6 +1452,7 @@ static void btrfs_emit_options(struct bt
- 	btrfs_info_if_set(info, old, IGNOREMETACSUMS, "ignoring meta csums");
- 	btrfs_info_if_set(info, old, IGNORESUPERFLAGS, "ignoring unknown super block flags");
+--- a/drivers/fpga/zynq-fpga.c
++++ b/drivers/fpga/zynq-fpga.c
+@@ -406,7 +406,7 @@ static int zynq_fpga_ops_write(struct fp
+ 	}
  
-+	btrfs_info_if_unset(info, old, NODATASUM, "setting datasum");
- 	btrfs_info_if_unset(info, old, NODATACOW, "setting datacow");
- 	btrfs_info_if_unset(info, old, SSD, "not using ssd optimizations");
- 	btrfs_info_if_unset(info, old, SSD_SPREAD, "not using spread ssd allocation scheme");
+ 	priv->dma_nelms =
+-	    dma_map_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
++	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
+ 	if (priv->dma_nelms == 0) {
+ 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
+ 		return -ENOMEM;
+@@ -478,7 +478,7 @@ out_clk:
+ 	clk_disable(priv->clk);
+ 
+ out_free:
+-	dma_unmap_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
++	dma_unmap_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
+ 	return err;
+ }
+ 
 
 
