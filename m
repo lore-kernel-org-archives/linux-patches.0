@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85959405F7;
-	Tue, 26 Aug 2025 14:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03B7405F7;
+	Tue, 26 Aug 2025 14:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218557; cv=none; b=GMlHbDpL+SeJslVLPNGtJlpllcOFFkmeWnqrL377LIAAei5zww42Ea7Fmfm2qq5JRv6xyVPSJrLb7uUI7J+G0edI4zfhmtUs6jouzb1aYhe3YKjCMbqE81+obCBHeTnwmtbebrhGDnxU4OD1KCpqY7e6jktulsJ8QqrxLYUl5yw=
+	t=1756218562; cv=none; b=bVWpZn0xcLP40LTRLYTPT0Xuok22UCj49+46GS8RKw5rkjHGXtUoobdOciRF5SEbGlCtsOF8/pewaGGLN6x2P/igeqX2E9DTqoGd0T9BZgzZFvYtrunghsZLMTJgMHSPYSQV/mA/873bSqfM1f59Vt/qXkUgs7G6NBQf0LN69h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218557; c=relaxed/simple;
-	bh=qO5zuwbXz7zMwSmKt3nrWfc7y/+pxQwmpQUM62eTQoE=;
+	s=arc-20240116; t=1756218562; c=relaxed/simple;
+	bh=a/iilQZQHUxo24Vj78b/8p5VNM9l9VQrEugQGUZHoLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q95aYeaCgYTAbSU/tZnTY4+xNS36xduePty51kz9bozwB+0HL5kItwoiMAgV8vT0QswJ3yIC7ooUXULklWcTBWANV5avkkiP/jPZ4oaqdGwHXYhdxGOSAtiNTkhCng5+SL5GV7x/ggCXiGvXMUR7PzXjJOyrr+uiqk/M6hWdOtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7nVhLrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6PNwftPYnpK7Wx3F7u56jio/0AOeeUn99HbBjx1IyhYatRCP89fOBIHg8QjkkAJqukkUPnNw238boOLdz6u+xHhgLYe/yLCWsYPil2/NbXOFjkB2DsqojmoAuI1Al3sCwHMCBxvTLxLZ29ibFB0DuBkOlMfy74O5zvMTpNHQto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtpTvjM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7nVhLrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2223C4CEF1;
-	Tue, 26 Aug 2025 14:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtpTvjM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3966AC4CEF1;
+	Tue, 26 Aug 2025 14:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218557;
-	bh=qO5zuwbXz7zMwSmKt3nrWfc7y/+pxQwmpQUM62eTQoE=;
+	s=korg; t=1756218559;
+	bh=a/iilQZQHUxo24Vj78b/8p5VNM9l9VQrEugQGUZHoLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7nVhLrdeKoyM+3wxELNYzWZa0qQ2IyH5xhx9KKlXT6a961fkm0nyHaeLncz1kULw
-	 KAsYIba9RtNXl5qrurARzMwzRS0398XV2L+xZolzHuBiBLwVHeW2cVjY2Kb2Abgmy2
-	 /uubpVQN8iw99DlH1AqVwf1h+FcCNP5nhoEIpSWs=
+	b=CtpTvjM8ARRkaCyOv7nsfLV7INgeCLy5k8SddVI/PFJRdE/fqA0LhvQlcONMawf4A
+	 1kUwcuNJaMLvhmbpZ90zdXoHS5fjhk8D/hQEHPFlHpc5LSVgeaXYc9VPUDla0ipf+q
+	 PioLL5jzYQAnlMk2SIeVtm9zv0xEzxiZ+fqI8MJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hongyu Xie <xiehongyu1@kylinos.cn>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 044/403] xhci: Disable stream for xHC controller with XHCI_BROKEN_STREAMS
-Date: Tue, 26 Aug 2025 13:06:10 +0200
-Message-ID: <20250826110907.045835620@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Shubham Kulkarni <skulkarni@mvista.com>
+Subject: [PATCH 5.4 045/403] power: supply: bq24190_charger: Fix runtime PM imbalance on error
+Date: Tue, 26 Aug 2025 13:06:11 +0200
+Message-ID: <20250826110907.075731305@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,35 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyu Xie <xiehongyu1@kylinos.cn>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-commit cd65ee81240e8bc3c3119b46db7f60c80864b90b upstream.
+[ Upstream commit 1a37a039711610dd53ec03d8cab9e81875338225 ]
 
-Disable stream for platform xHC controller with broken stream.
+pm_runtime_get_sync() increments the runtime PM usage counter even
+it returns an error code. Thus a pairing decrement is needed on
+the error handling path to keep the counter balanced.
 
-Fixes: 14aec589327a6 ("storage: accept some UAS devices if streams are unavailable")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250627144127.3889714-3-mathias.nyman@linux.intel.com
-[ removed xhci_get_usb3_hcd() call ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 47c29d692129 ("power: supply: bq24190: Fix use after free bug in bq24190_remove due to race condition")
+Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-plat.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/power/supply/bq24190_charger.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -333,7 +333,8 @@ static int xhci_plat_probe(struct platfo
+--- a/drivers/power/supply/bq24190_charger.c
++++ b/drivers/power/supply/bq24190_charger.c
+@@ -484,8 +484,10 @@ static ssize_t bq24190_sysfs_store(struc
+ 		return ret;
+ 
+ 	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put_noidle(bdi->dev);
+ 		return ret;
++	}
+ 
+ 	ret = bq24190_write_mask(bdi, info->reg, info->mask, info->shift, v);
  	if (ret)
- 		goto disable_usb_phy;
- 
--	if (HCC_MAX_PSA(xhci->hcc_params) >= 4)
-+	if (HCC_MAX_PSA(xhci->hcc_params) >= 4 &&
-+	    !(xhci->quirks & XHCI_BROKEN_STREAMS))
- 		xhci->shared_hcd->can_do_streams = 1;
- 
- 	ret = usb_add_hcd(xhci->shared_hcd, irq, IRQF_SHARED);
 
 
