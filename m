@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C90D34DCFE;
-	Tue, 26 Aug 2025 13:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A60434DCFA;
+	Tue, 26 Aug 2025 13:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216473; cv=none; b=Vci6Om1FERwvLzcEV17kat7lRNr+SOqz74zI/5evqviXt46S3AKOmLTItJ8/G1sF7kswIGLFdEQOiL9yBVUpFi/5mz9yvBYG8P0w5QXkvoX4lZ5CTDGgrJt1/lAtY7npStgHA1ZNWOjyTpG6wSN5wKdGeCct0nFBe+B2LhoLRsM=
+	t=1756216478; cv=none; b=Uv/8mFE9cNwoRB6edSuK4XrtkjBnNSgnhCmD7V7Dd12KulEqCdTyFoc9iEJrku+jHJWZEv8cIqpd0vWhxSImY0E4v2ZZbuTmRDhP+Pj1S/FixKGARBEq42oVLVIgRT7IYdumLiC1DEsyg/ny0qcf8WiUqltaC3n9/jmu0w9J/Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216473; c=relaxed/simple;
-	bh=XafPz7ZIQksSvraX3qw4iZjZdaX6Hx5mlLXztQ5FQlo=;
+	s=arc-20240116; t=1756216478; c=relaxed/simple;
+	bh=NvU7SrWJt0zVXCnfx3ayn5OG2ELPvrO44WbJvYrNst0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YM+YKmnQumrG5MPLiPC9ycf0DSUZqaAYyq8mVkKzVXOORrVqLXHVSvhEx7RdVDRw7OdbTyXHOTSvRO/X9U+HlW9rMfgBEFcVzuNSuTgyY737aW2fc1TJvQf/RAgfilMYOaDjkwy6Ainx7LIucVBX0tEMor6NaW5OlXFvq+elg2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGP78ZYC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=paT0pNpuS3bTVt28VzOsqRhV3iNx4gv8rVsieBehXEpsV0ZAhhcf4hW8CP1+HWMMBL02fqxdRLh0NRD2Fh/IffURT+AeIFnHBcQM4hxkR0ymX0qt9/2khCLHQ5EiRNb/3Gq3MUVfJ4hQeGOrsYUtnUFdxvcLJ/oa/s0KsyMwdVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANqHiBkn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGP78ZYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92B1C4CEF1;
-	Tue, 26 Aug 2025 13:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANqHiBkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958DDC4CEF1;
+	Tue, 26 Aug 2025 13:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216473;
-	bh=XafPz7ZIQksSvraX3qw4iZjZdaX6Hx5mlLXztQ5FQlo=;
+	s=korg; t=1756216475;
+	bh=NvU7SrWJt0zVXCnfx3ayn5OG2ELPvrO44WbJvYrNst0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGP78ZYCDm7PMS88jloYoo/V/lDenzelTAFl4vy9XvBoNnC4c7r85Ok3gfr/1eCmv
-	 MMLNbiFhP/uqbyzU8/1o2xuEPDpj21gXJ0odWJy4XqlO8P17udXjGhck5AmF0jp4oi
-	 SkJnwfePxHsTJpQJ+EiLgY6vEdGn0FzfKymARCN8=
+	b=ANqHiBknjUgL7Ix7U+nJNFhS/uybkS15ZCOWdMosVMW/9o9uPxwXRZ74YCOc3OraS
+	 N85VAbunzUFmmr47bzOC8cTLdocTZhXompZn3q8ritTDXSQMlH0B1U0VNmRnK52Yy4
+	 AteypslWqa+jzSEtTMm+e59Gq7ZXn3OBqKEAXb0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Corey Minyard <corey@minyard.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 423/644] ipmi: Use dev_warn_ratelimited() for incorrect message warnings
-Date: Tue, 26 Aug 2025 13:08:34 +0200
-Message-ID: <20250826110956.943113287@linuxfoundation.org>
+Subject: [PATCH 5.15 424/644] kconfig: gconf: avoid hardcoding model2 in on_treeview2_cursor_changed()
+Date: Tue, 26 Aug 2025 13:08:35 +0200
+Message-ID: <20250826110956.966466146@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit ec50ec378e3fd83bde9b3d622ceac3509a60b6b5 ]
+[ Upstream commit cae9cdbcd9af044810bcceeb43a87accca47c71d ]
 
-During BMC firmware upgrades on live systems, the ipmi_msghandler
-generates excessive "BMC returned incorrect response" warnings
-while the BMC is temporarily offline. This can flood system logs
-in large deployments.
+The on_treeview2_cursor_changed() handler is connected to both the left
+and right tree views, but it hardcodes model2 (the GtkTreeModel of the
+right tree view). This is incorrect. Get the associated model from the
+view.
 
-Replace dev_warn() with dev_warn_ratelimited() to throttle these
-warnings and prevent log spam during BMC maintenance operations.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Message-ID: <20250710-ipmi_ratelimit-v1-1-6d417015ebe9@debian.org>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ scripts/kconfig/gconf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 15c211c5d6f4..af563ee827aa 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -4294,10 +4294,10 @@ static int handle_one_recv_msg(struct ipmi_smi *intf,
- 		 * The NetFN and Command in the response is not even
- 		 * marginally correct.
- 		 */
--		dev_warn(intf->si_dev,
--			 "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
--			 (msg->data[0] >> 2) | 1, msg->data[1],
--			 msg->rsp[0] >> 2, msg->rsp[1]);
-+		dev_warn_ratelimited(intf->si_dev,
-+				     "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
-+				     (msg->data[0] >> 2) | 1, msg->data[1],
-+				     msg->rsp[0] >> 2, msg->rsp[1]);
+diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
+index 5d1404178e48..87f8a4db5bc6 100644
+--- a/scripts/kconfig/gconf.c
++++ b/scripts/kconfig/gconf.c
+@@ -977,13 +977,14 @@ on_treeview2_key_press_event(GtkWidget * widget,
+ void
+ on_treeview2_cursor_changed(GtkTreeView * treeview, gpointer user_data)
+ {
++	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+ 	GtkTreeSelection *selection;
+ 	GtkTreeIter iter;
+ 	struct menu *menu;
  
- 		/* Generate an error response for the message. */
- 		msg->rsp[0] = msg->data[0] | (1 << 2);
+ 	selection = gtk_tree_view_get_selection(treeview);
+-	if (gtk_tree_selection_get_selected(selection, &model2, &iter)) {
+-		gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
++	if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
++		gtk_tree_model_get(model, &iter, COL_MENU, &menu, -1);
+ 		text_insert_help(menu);
+ 	}
+ }
 -- 
 2.39.5
 
