@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4B01A0BD0;
-	Tue, 26 Aug 2025 12:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA3E770FE;
+	Tue, 26 Aug 2025 12:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213029; cv=none; b=Z7ObgGEavd+8GfsnVFiZk7nCl9TqPdNrlwZo8nT/XfELiw3YFkbZoWSsmb2VjjmFnr2fr2bE18MIh9NCSvb+HUV2LLxGLR5dMdK2UObxSxZuGbITtX8/05OnKwr46I47RSrktadOVSvABgF0auppmg9pqJZRf5vJrHMLVHDI0V8=
+	t=1756213032; cv=none; b=tD40XiJ01xQLBopBEFaIx9qARG5HLXS0Nao/Z/9Ovf6BU9DA4ptpXv94jQpfQm+MM1clU/qOY215zYR+3jFR02ScVGgOqLECmyP0H64YupAMoehPCzWM5nGboA+KFhdxSAOmViUeKZzIhaReMhGF/lPik4zy0IvmKOLefpliS0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213029; c=relaxed/simple;
-	bh=mIaazettDwWgxMxCqsOe++y8UNKGtTVtfSPMHDOZIdw=;
+	s=arc-20240116; t=1756213032; c=relaxed/simple;
+	bh=8u1p7njBNiB5iO7z9ZEBvgYvISXb/oo3OJ8T4it1Pgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlFKuoeZWcACqyaqdTvjLP0JbqgljzNz6WyxynBwQ4V959Z8akc5w1UpO/e4C7v5W9Jodr6g8sZgHRZZn6eytj+iJtm47JSnbNcp63ypxINrfl7IGsNnk1pOjUECK+ZrDBcBJ9pd78ue7hkLNOX044CY2ESEfvt0d3feGxqnhnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aReAeJPI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h28ugFaM1i47keztbVtx4D7X11JvR0tf8DTWnQyJ4qlGCaGRzuCjMGZ1Q/To6BIpgjpCSWZVNMoJcgndiWaWdtsivMftw+a9tZbtRWmP/hV/JL/GNEMiZLn6fQdpB37JDmxRrlE7z5jjz7UGr4qITYkwz4YNhx9O3t8HCOK0DgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvETi1TZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aReAeJPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5219FC4CEF1;
-	Tue, 26 Aug 2025 12:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvETi1TZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA71FC4CEF1;
+	Tue, 26 Aug 2025 12:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213029;
-	bh=mIaazettDwWgxMxCqsOe++y8UNKGtTVtfSPMHDOZIdw=;
+	s=korg; t=1756213032;
+	bh=8u1p7njBNiB5iO7z9ZEBvgYvISXb/oo3OJ8T4it1Pgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aReAeJPI77koUk73Jd0+6GLVN9qC+4pLCeqeuSXiMqRczB3bv/8RRwTva4wlBctHX
-	 QlwpvebtvWbW305e2xo/Qy/ixk6apYeKcXi8zInCezMuNEfx/+KK4RBP8A1J/Ii3m6
-	 aXLSrszMhDFpXTySlWKpiCAkxZpJQCgjQ/6tOMAA=
+	b=RvETi1TZeIbgh5pEcIym1D63w4Vs6wvuw2eIzvdrHSYiv6+RY3C5j2LH5B2aLjotP
+	 3rKfGhGKzt2Qx/mPA+YlRu3/QxcM+KMBrcVmEPP7Vho7QF/yPat2JgPBD6QUSBmc66
+	 ByIxHgaUARpmxTw/mUq05oVy2p+5WH2gpRSaeTM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Johnston <matt@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 154/587] net: mctp: Prevent duplicate binds
-Date: Tue, 26 Aug 2025 13:05:03 +0200
-Message-ID: <20250826110956.865295244@linuxfoundation.org>
+Subject: [PATCH 6.6 188/587] powerpc: floppy: Add missing checks after DMA map
+Date: Tue, 26 Aug 2025 13:05:37 +0200
+Message-ID: <20250826110957.723893353@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,77 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Johnston <matt@codeconstruct.com.au>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 3954502377ec05a1b37e2dc9bef0bacd4bbd71b2 ]
+[ Upstream commit cf183c1730f2634245da35e9b5d53381b787d112 ]
 
-Disallow bind() calls that have the same arguments as existing bound
-sockets.  Previously multiple sockets could bind() to the same
-type/local address, with an arbitrary socket receiving matched messages.
+The DMA map functions can fail and should be tested for errors.
 
-This is only a partial fix, a future commit will define precedence order
-for MCTP_ADDR_ANY versus specific EID bind(), which are allowed to exist
-together.
-
-Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250710-mctp-bind-v4-2-8ec2f6460c56@codeconstruct.com.au
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250620075602.12575-1-fourier.thomas@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ arch/powerpc/include/asm/floppy.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index 8032cfba22d1..5f9592fb57ad 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -73,7 +73,6 @@ static int mctp_bind(struct socket *sock, struct sockaddr *addr, int addrlen)
+diff --git a/arch/powerpc/include/asm/floppy.h b/arch/powerpc/include/asm/floppy.h
+index f8ce178b43b7..34abf8bea2cc 100644
+--- a/arch/powerpc/include/asm/floppy.h
++++ b/arch/powerpc/include/asm/floppy.h
+@@ -144,9 +144,12 @@ static int hard_dma_setup(char *addr, unsigned long size, int mode, int io)
+ 		bus_addr = 0;
+ 	}
  
- 	lock_sock(sk);
- 
--	/* TODO: allow rebind */
- 	if (sk_hashed(sk)) {
- 		rc = -EADDRINUSE;
- 		goto out_release;
-@@ -549,15 +548,36 @@ static void mctp_sk_close(struct sock *sk, long timeout)
- static int mctp_sk_hash(struct sock *sk)
- {
- 	struct net *net = sock_net(sk);
-+	struct sock *existing;
-+	struct mctp_sock *msk;
-+	int rc;
-+
-+	msk = container_of(sk, struct mctp_sock, sk);
- 
- 	/* Bind lookup runs under RCU, remain live during that. */
- 	sock_set_flag(sk, SOCK_RCU_FREE);
- 
- 	mutex_lock(&net->mctp.bind_lock);
-+
-+	/* Prevent duplicate binds. */
-+	sk_for_each(existing, &net->mctp.binds) {
-+		struct mctp_sock *mex =
-+			container_of(existing, struct mctp_sock, sk);
-+
-+		if (mex->bind_type == msk->bind_type &&
-+		    mex->bind_addr == msk->bind_addr &&
-+		    mex->bind_net == msk->bind_net) {
-+			rc = -EADDRINUSE;
-+			goto out;
-+		}
+-	if (!bus_addr)	/* need to map it */
++	if (!bus_addr) {	/* need to map it */
+ 		bus_addr = dma_map_single(&isa_bridge_pcidev->dev, addr, size,
+ 					  dir);
++		if (dma_mapping_error(&isa_bridge_pcidev->dev, bus_addr))
++			return -ENOMEM;
 +	}
-+
- 	sk_add_node_rcu(sk, &net->mctp.binds);
--	mutex_unlock(&net->mctp.bind_lock);
-+	rc = 0;
  
--	return 0;
-+out:
-+	mutex_unlock(&net->mctp.bind_lock);
-+	return rc;
- }
- 
- static void mctp_sk_unhash(struct sock *sk)
+ 	/* remember this one as prev */
+ 	prev_addr = addr;
 -- 
 2.39.5
 
