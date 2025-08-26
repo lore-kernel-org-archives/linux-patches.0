@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C78246333;
-	Tue, 26 Aug 2025 13:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21A622AE5D;
+	Tue, 26 Aug 2025 13:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213705; cv=none; b=ggyrQ/Lg16cgg5KCVvbNy0beGlFoAi8FMXGWfF59QAj+IVp7sWcE7EpYZeRhb6BhnT7htxdNfPpBzcvIO2rb5+puvjImzUxoCX1ac9+HhZDE6MHY2c9xhlYEI6xqQhv20BswXOVHnSA4N/x0U9Z3oOE7nyUp8JCGe9OndDAG1aU=
+	t=1756213707; cv=none; b=sOC+qX4u7sHWegb1nYWW0gTFc0Pzxqvq8PJOcta1sk1ouNM0c9cSIRe4jRWrftKfy+hHN8Y4jmnKps6NHbOXL5yx5QnuqQiQF7FuwAiD4uWnr9uMIoLorfuSbOvwqmhcat6T4wLg/hVxYHdwJSPg30+jCW4JbLFLn5HyCWMnEdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213705; c=relaxed/simple;
-	bh=6TB62S90yzr0ghSDfPZdqHCslh+qomAEo81A0jYPkmk=;
+	s=arc-20240116; t=1756213707; c=relaxed/simple;
+	bh=hMDZ+wzAXkwoDnLpJfgR/XGA6jZbcLKyxqkdJlCe490=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B7YIyawyezW+FgLaymNF9/iMJFC92GzIbJeFU8f5IyeOhcnp2PWzakTpzl5fcoO7gM9SBtlhJVmhdlSYArDMbeFb4fZVroSEy5sUk29+V64L0qHDAAGcjem3rRUM4pq/uBpToMTG/+g1ENrrm49aavnvjumQp7gUwk2DUA0TsNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNqFf/bV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pa45fVUgqz0uEztb6aOKQz/lYCWxc29PVozwPKrvmnwyftTwiORp5IBlftuwxjiTO5VfJAqijPKd2rWWhsquuXJ/Uei3yg2kccouuGOCBvYcv4tfMyUjYwu8Wo3IFMMmjBi8tuVh5hULgNWmeCkknh0kKZwzRn+gw/xnk+jf2HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Yt8rBW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNqFf/bV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D38C4CEF1;
-	Tue, 26 Aug 2025 13:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Yt8rBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37423C4CEF1;
+	Tue, 26 Aug 2025 13:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213704;
-	bh=6TB62S90yzr0ghSDfPZdqHCslh+qomAEo81A0jYPkmk=;
+	s=korg; t=1756213707;
+	bh=hMDZ+wzAXkwoDnLpJfgR/XGA6jZbcLKyxqkdJlCe490=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNqFf/bVoiX6uPxdBA32zZns79oTyKcq2X2EUMM5P5zsJ+4kFyl0TSILxGhj/uaNr
-	 snKKKTFm+AUacb0Mod3dhX7qoDZJ46f2IldGIKFt28OZtUQ1cJRrXEK5EWaNpb2Gmp
-	 OyffTSHfDcseI3VHCuILE4XUx0VXMb67scw0z+Ws=
+	b=X6Yt8rBWzu1/C+5k/RJGd1lAKd/33vNNJc/JCKXD1QAGJ6TBRb71RZFfjW2f/SzCW
+	 9ezCX/XZCgKRdPYJ+b99cAa+r+A/2Pa1s6wsC5+mF6gsfJ2L4lo+kuCMRSaWKD/XdT
+	 /bUeVmH9MlYt/6P+7HIsW4IWTXlrhcRrwdKIFMQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Gang Ba <Gang.Ba@amd.com>,
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 418/587] drm/amdgpu: Avoid extra evict-restore process.
-Date: Tue, 26 Aug 2025 13:09:27 +0200
-Message-ID: <20250826111003.572440089@linuxfoundation.org>
+Subject: [PATCH 6.6 419/587] drm/amdgpu: update mmhub 3.0.1 client id mappings
+Date: Tue, 26 Aug 2025 13:09:28 +0200
+Message-ID: <20250826111003.598716703@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -45,66 +44,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gang Ba <Gang.Ba@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 1f02f2044bda1db1fd995bc35961ab075fa7b5a2 upstream.
+commit 0bae62cc989fa99ac9cb564eb573aad916d1eb61 upstream.
 
-If vm belongs to another process, this is fclose after fork,
-wait may enable signaling KFD eviction fence and cause parent process queue evicted.
+Update the client id mapping so the correct clients
+get printed when there is a mmhub page fault.
 
-[677852.634569]  amdkfd_fence_enable_signaling+0x56/0x70 [amdgpu]
-[677852.634814]  __dma_fence_enable_signaling+0x3e/0xe0
-[677852.634820]  dma_fence_wait_timeout+0x3a/0x140
-[677852.634825]  amddma_resv_wait_timeout+0x7f/0xf0 [amdkcl]
-[677852.634831]  amdgpu_vm_wait_idle+0x2d/0x60 [amdgpu]
-[677852.635026]  amdgpu_flush+0x34/0x50 [amdgpu]
-[677852.635208]  filp_flush+0x38/0x90
-[677852.635213]  filp_close+0x14/0x30
-[677852.635216]  do_close_on_exec+0xdd/0x130
-[677852.635221]  begin_new_exec+0x1da/0x490
-[677852.635225]  load_elf_binary+0x307/0xea0
-[677852.635231]  ? srso_alias_return_thunk+0x5/0xfbef5
-[677852.635235]  ? ima_bprm_check+0xa2/0xd0
-[677852.635240]  search_binary_handler+0xda/0x260
-[677852.635245]  exec_binprm+0x58/0x1a0
-[677852.635249]  bprm_execve.part.0+0x16f/0x210
-[677852.635254]  bprm_execve+0x45/0x80
-[677852.635257]  do_execveat_common.isra.0+0x190/0x200
-
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Gang Ba <Gang.Ba@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2a2681eda73b99a2c1ee8cdb006099ea5d0c2505)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c |   57 ++++++++++++++++--------------
+ 1 file changed, 32 insertions(+), 25 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2125,13 +2125,11 @@ void amdgpu_vm_adjust_size(struct amdgpu
-  */
- long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout)
- {
--	timeout = dma_resv_wait_timeout(vm->root.bo->tbo.base.resv,
--					DMA_RESV_USAGE_BOOKKEEP,
--					true, timeout);
-+	timeout = drm_sched_entity_flush(&vm->immediate, timeout);
- 	if (timeout <= 0)
- 		return timeout;
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
+@@ -36,40 +36,47 @@
  
--	return dma_fence_wait_timeout(vm->last_unlocked, true, timeout);
-+	return drm_sched_entity_flush(&vm->delayed, timeout);
- }
+ static const char *mmhub_client_ids_v3_0_1[][2] = {
+ 	[0][0] = "VMC",
++	[1][0] = "ISPXT",
++	[2][0] = "ISPIXT",
+ 	[4][0] = "DCEDMC",
+ 	[5][0] = "DCEVGA",
+ 	[6][0] = "MP0",
+ 	[7][0] = "MP1",
+-	[8][0] = "MPIO",
+-	[16][0] = "HDP",
+-	[17][0] = "LSDMA",
+-	[18][0] = "JPEG",
+-	[19][0] = "VCNU0",
+-	[21][0] = "VSCH",
+-	[22][0] = "VCNU1",
+-	[23][0] = "VCN1",
+-	[32+20][0] = "VCN0",
+-	[2][1] = "DBGUNBIO",
++	[8][0] = "MPM",
++	[12][0] = "ISPTNR",
++	[14][0] = "ISPCRD0",
++	[15][0] = "ISPCRD1",
++	[16][0] = "ISPCRD2",
++	[22][0] = "HDP",
++	[23][0] = "LSDMA",
++	[24][0] = "JPEG",
++	[27][0] = "VSCH",
++	[28][0] = "VCNU",
++	[29][0] = "VCN",
++	[1][1] = "ISPXT",
++	[2][1] = "ISPIXT",
+ 	[3][1] = "DCEDWB",
+ 	[4][1] = "DCEDMC",
+ 	[5][1] = "DCEVGA",
+ 	[6][1] = "MP0",
+ 	[7][1] = "MP1",
+-	[8][1] = "MPIO",
+-	[10][1] = "DBGU0",
+-	[11][1] = "DBGU1",
+-	[12][1] = "DBGU2",
+-	[13][1] = "DBGU3",
+-	[14][1] = "XDP",
+-	[15][1] = "OSSSYS",
+-	[16][1] = "HDP",
+-	[17][1] = "LSDMA",
+-	[18][1] = "JPEG",
+-	[19][1] = "VCNU0",
+-	[20][1] = "VCN0",
+-	[21][1] = "VSCH",
+-	[22][1] = "VCNU1",
+-	[23][1] = "VCN1",
++	[8][1] = "MPM",
++	[10][1] = "ISPMWR0",
++	[11][1] = "ISPMWR1",
++	[12][1] = "ISPTNR",
++	[13][1] = "ISPSWR",
++	[14][1] = "ISPCWR0",
++	[15][1] = "ISPCWR1",
++	[16][1] = "ISPCWR2",
++	[17][1] = "ISPCWR3",
++	[18][1] = "XDP",
++	[21][1] = "OSSSYS",
++	[22][1] = "HDP",
++	[23][1] = "LSDMA",
++	[24][1] = "JPEG",
++	[27][1] = "VSCH",
++	[28][1] = "VCNU",
++	[29][1] = "VCN",
+ };
  
- /**
+ static uint32_t mmhub_v3_0_1_get_invalidate_req(unsigned int vmid,
 
 
