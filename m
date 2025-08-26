@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE57239E8B;
-	Tue, 26 Aug 2025 13:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297671E519;
+	Tue, 26 Aug 2025 13:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216037; cv=none; b=IGiSi4jTXMh+DJZumefVJX1+1T2T9tSrlcAf8wpmNRbnPh5lUO5ExGmWt4KxJ/O1/Gt2XzYBC3TvVr4YYL+gfpZ4Ldcv7H1JIFnBNBtqgOlSg9Fmut+z0UvODz3eq6XWNnxCmRaRM8TJJNMiorK5gUV5vUygPgNe2J7I4rEEKok=
+	t=1756216040; cv=none; b=YO8kgCMEia+PHIBdnJ7Inu1fLGpZb4+dD+yme612fpemh4yfbIPtDa+51D53/kD2h0SY2QyHVi4Wuuqtqqos7xXiiUEe2hlwhePvVDjiGwbHDrY3N4mc26qjQOfJyMjLI6p8k4EkdPPqZa+UerO3qHJSinNWQ3/OwSJkJ0prnD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216037; c=relaxed/simple;
-	bh=YijJo4Dhjr9uKhf9RidH5gehdTxnDIwTa7L2LjZsaSg=;
+	s=arc-20240116; t=1756216040; c=relaxed/simple;
+	bh=Ujb6+gcj+1T7lufy0+UMH48g6cXDwuDWgK9mIDNE+9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxmwPt1Eos1lHBi3uSt+nFCoW8YJZ9bM/Cfpv5vGS1X1xTANVnZrrHHZvYVZqigxpnd+YtYJWp0aI8s9OnMiFWjZnMsSOJEWlEeRCyOnQUBG7Dcclsv40CId8wzqlysWTCO8VHb+yb/D6b3JkFPE/pHxhDZgVqyUFFqjyhf6lLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAD3b7S1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FFGZma/44WC4sHDxHDa1rnwJ/6CjQCwd1dJJV+avDDZQh/8cTbL6XT6lRktbAS5LP1927eAgF3J6+bDtmeoxgGSXNmq+erfSUxQx23UO0sEp5hKtfwXQoZqdZPuiIs4VJQ5fsicuvFSuIAjk9jx9NefG3XL0bB/hOfCAPaSNwkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toN3hCYf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAD3b7S1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBE3C4CEF1;
-	Tue, 26 Aug 2025 13:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toN3hCYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13BFC4CEF1;
+	Tue, 26 Aug 2025 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216037;
-	bh=YijJo4Dhjr9uKhf9RidH5gehdTxnDIwTa7L2LjZsaSg=;
+	s=korg; t=1756216040;
+	bh=Ujb6+gcj+1T7lufy0+UMH48g6cXDwuDWgK9mIDNE+9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAD3b7S1eEzZWuWgf5uzhTCs87LU4ujTBtLrG2AwoANpwnoRc23fK6neG0i2kVjVf
-	 x9RMHI31dI4cNwAegFWZ0UI/p418I4g3+5IxFceNDNbzLRGzDp2YwuM0IIV8ts4xMF
-	 +MERC7HYKTBW54fBSq27DGN+fqfWZwSo9nxMD5Ow=
+	b=toN3hCYfY7hgRgKq3McKIwt3GDHW0YTen6EUgL6DwfckbLkq5fGjWp9MBHRxRoAyd
+	 JKdjftXo4hb2ShOI8UoHnw7lFa4dlERp4hA53eZRZfJdAliPgWYB1ZOvRSV/fKaP+8
+	 /4cNohZjHX0ucdUWT2Wo+MXUhgLirTXgA+sfCBEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Youngjun Lee <yjjuny.lee@samsung.com>
-Subject: [PATCH 5.15 259/644] ALSA: usb-audio: Validate UAC3 power domain descriptors, too
-Date: Tue, 26 Aug 2025 13:05:50 +0200
-Message-ID: <20250826110952.796459752@linuxfoundation.org>
+Subject: [PATCH 5.15 260/644] ALSA: usb-audio: Validate UAC3 cluster segment descriptors
+Date: Tue, 26 Aug 2025 13:05:51 +0200
+Message-ID: <20250826110952.820737101@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,49 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit d832ccbc301fbd9e5a1d691bdcf461cdb514595f upstream.
+commit ecfd41166b72b67d3bdeb88d224ff445f6163869 upstream.
 
-UAC3 power domain descriptors need to be verified with its variable
-bLength for avoiding the unexpected OOB accesses by malicious
-firmware, too.
+UAC3 class segment descriptors need to be verified whether their sizes
+match with the declared lengths and whether they fit with the
+allocated buffer sizes, too.  Otherwise malicious firmware may lead to
+the unexpected OOB accesses.
 
-Fixes: 9a2fe9b801f5 ("ALSA: usb: initial USB Audio Device Class 3.0 support")
+Fixes: 11785ef53228 ("ALSA: usb-audio: Initial Power Domain support")
 Reported-and-tested-by: Youngjun Lee <yjjuny.lee@samsung.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250814081245.8902-1-tiwai@suse.de
+Link: https://patch.msgid.link/20250814081245.8902-2-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/validate.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/usb/stream.c |   25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -221,6 +221,17 @@ static bool validate_uac3_feature_unit(c
- 	return d->bLength >= sizeof(*d) + 4 + 2;
- }
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -341,20 +341,28 @@ snd_pcm_chmap_elem *convert_chmap_v3(str
  
-+static bool validate_uac3_power_domain_unit(const void *p,
-+					    const struct usb_desc_validator *v)
-+{
-+	const struct uac3_power_domain_descriptor *d = p;
-+
-+	if (d->bLength < sizeof(*d))
-+		return false;
-+	/* baEntities[] + wPDomainDescrStr */
-+	return d->bLength >= sizeof(*d) + d->bNrEntities + 2;
-+}
-+
- static bool validate_midi_out_jack(const void *p,
- 				   const struct usb_desc_validator *v)
- {
-@@ -285,6 +296,7 @@ static const struct usb_desc_validator a
- 	      struct uac3_clock_multiplier_descriptor),
- 	/* UAC_VERSION_3, UAC3_SAMPLE_RATE_CONVERTER: not implemented yet */
- 	/* UAC_VERSION_3, UAC3_CONNECTORS: not implemented yet */
-+	FUNC(UAC_VERSION_3, UAC3_POWER_DOMAIN, validate_uac3_power_domain_unit),
- 	{ } /* terminator */
- };
+ 	len = le16_to_cpu(cluster->wLength);
+ 	c = 0;
+-	p += sizeof(struct uac3_cluster_header_descriptor);
++	p += sizeof(*cluster);
++	len -= sizeof(*cluster);
  
+-	while (((p - (void *)cluster) < len) && (c < channels)) {
++	while (len > 0 && (c < channels)) {
+ 		struct uac3_cluster_segment_descriptor *cs_desc = p;
+ 		u16 cs_len;
+ 		u8 cs_type;
+ 
++		if (len < sizeof(*p))
++			break;
+ 		cs_len = le16_to_cpu(cs_desc->wLength);
++		if (len < cs_len)
++			break;
+ 		cs_type = cs_desc->bSegmentType;
+ 
+ 		if (cs_type == UAC3_CHANNEL_INFORMATION) {
+ 			struct uac3_cluster_information_segment_descriptor *is = p;
+ 			unsigned char map;
+ 
++			if (cs_len < sizeof(*is))
++				break;
++
+ 			/*
+ 			 * TODO: this conversion is not complete, update it
+ 			 * after adding UAC3 values to asound.h
+@@ -456,6 +464,7 @@ snd_pcm_chmap_elem *convert_chmap_v3(str
+ 			chmap->map[c++] = map;
+ 		}
+ 		p += cs_len;
++		len -= cs_len;
+ 	}
+ 
+ 	if (channels < c)
+@@ -876,7 +885,7 @@ snd_usb_get_audioformat_uac3(struct snd_
+ 	u64 badd_formats = 0;
+ 	unsigned int num_channels;
+ 	struct audioformat *fp;
+-	u16 cluster_id, wLength;
++	u16 cluster_id, wLength, cluster_wLength;
+ 	int clock = 0;
+ 	int err;
+ 
+@@ -1003,6 +1012,16 @@ snd_usb_get_audioformat_uac3(struct snd_
+ 			iface_no, altno);
+ 		kfree(cluster);
+ 		return ERR_PTR(-EIO);
++	}
++
++	cluster_wLength = le16_to_cpu(cluster->wLength);
++	if (cluster_wLength < sizeof(*cluster) ||
++	    cluster_wLength > wLength) {
++		dev_err(&dev->dev,
++			"%u:%d : invalid Cluster Descriptor size\n",
++			iface_no, altno);
++		kfree(cluster);
++		return ERR_PTR(-EIO);
+ 	}
+ 
+ 	num_channels = cluster->bNrChannels;
 
 
