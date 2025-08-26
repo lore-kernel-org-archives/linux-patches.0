@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219C81FBCB5;
-	Tue, 26 Aug 2025 13:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B931DB127;
+	Tue, 26 Aug 2025 13:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214901; cv=none; b=dXPWOwL38Ezx9NJMvauBDYz7lrVZrTiDwn8UAc/z5H0qK8jpQYuyyHgaleNDkmbSg+xsR0s2vd6mF/8ZhhgOBWIXz1TG8jPNnLX35SmjmOtkfdgCBA+SXAzZmsuQCM1jmFkjt8ulfx476+dJDhQaR3cz+WtcoO//+4OzEsdoyeQ=
+	t=1756214904; cv=none; b=UDxp6ynCXcq07wxUfzva8PIn0yCVxqO4oH8lZ3CY8ynHkAqL0/Iq0SDTJf59bNp6lAGfH4O+ZjhEpC8xtArgnjjKEoP/Em0UP//MXzv7wempOp38r4YZ1gDTU2mqFoF5Hxf/qOcso+s7+KM2Ii74I0rOqZNIAOj3uLJ5XLuXf+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214901; c=relaxed/simple;
-	bh=N1dewOGJXQJ2xe1zxismJUzJamfT9e/6TlDgrbrNYe8=;
+	s=arc-20240116; t=1756214904; c=relaxed/simple;
+	bh=NHnmXC3Qnv4kp9TRBj31TDEq8n7/0BT69PywKdqKUbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZ76mSNm2DRwhUMZhx7vbJOGyv/aFNkkc+PWPD64oGDZpNKruz45K6/5vPOSfxJhyxGPncqMtgX/LhxP+LF2hTyivZN+nnrH7X6Bh+NufTUQK3JuuQ92E+KIrRAxJe1mbOELQN7wyQav7BnBR5YdvCnsjq9t6sQxyRZSVGaj4sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SATdMGII; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B3K7ZcWY6mgDVAW5GtgI7qzuTnswYbJ4Mu+VuZo7/bA3urLKAlY4exARbG3M6BNsgJB9/Iq9A95FY6IQpFm8PWE3Er6zCbU5eqWDH3jUKhHFcjXidCo1mVFr5dpmdhm1ih5OttJelUbxlXQ1mMpqTvl/TYDgTmsKOPCzg9nPVzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXDt98PC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SATdMGII"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8706C113D0;
-	Tue, 26 Aug 2025 13:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXDt98PC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBDCC4CEF1;
+	Tue, 26 Aug 2025 13:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214901;
-	bh=N1dewOGJXQJ2xe1zxismJUzJamfT9e/6TlDgrbrNYe8=;
+	s=korg; t=1756214903;
+	bh=NHnmXC3Qnv4kp9TRBj31TDEq8n7/0BT69PywKdqKUbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SATdMGIIEhznwxGtdyWf4N13PBSMF5jtrTnVg1IGe8mjr1LltSbLImyOF2/06jCvh
-	 dxTPxYMVkGZJgdA56aEZPZFabEw5B5GuSN9QxPdq7VViNuEj00qvtVda7Y+Ia5m+/4
-	 KKJAzThxasdWED6iSOWMjbQ/ZcDDGz3Nv3u3qEv8=
+	b=vXDt98PCM4XymzuyKtax+QM3NlBJ3R86jjuwnMmRSr4OOqakCpWQjUb37LKAE37hy
+	 8L+t2BD7xU4FE4QFzhIBCH734el62SoDhqIlC4gL3BSsFy4w2C48gOLA4RkqEb/cif
+	 DE2oWAhkk80zYG33G31Ok5ydXvsMiAU9h46040V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Qu Wenruo <wqu@suse.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 285/482] ext4: fix hole length calculation overflow in non-extent inodes
-Date: Tue, 26 Aug 2025 13:08:58 +0200
-Message-ID: <20250826110937.831022100@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 312/482] soc/tegra: pmc: Ensure power-domains are in a known state
+Date: Tue, 26 Aug 2025 13:09:25 +0200
+Message-ID: <20250826110938.509799536@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,80 +50,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 02c7f7219ac0e2277b3379a3a0e9841ef464b6d4 upstream.
+commit b6bcbce3359619d05bf387d4f5cc3af63668dbaa upstream.
 
-In a filesystem with a block size larger than 4KB, the hole length
-calculation for a non-extent inode in ext4_ind_map_blocks() can easily
-exceed INT_MAX. Then it could return a zero length hole and trigger the
-following waring and infinite in the iomap infrastructure.
+After commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on
+until late_initcall_sync") was applied, the Tegra210 Jetson TX1 board
+failed to boot. Looking into this issue, before this commit was applied,
+if any of the Tegra power-domains were in 'on' state when the kernel
+booted, they were being turned off by the genpd core before any driver
+had chance to request them. This was purely by luck and a consequence of
+the power-domains being turned off earlier during boot. After this
+commit was applied, any power-domains in the 'on' state are kept on for
+longer during boot and therefore, may never transitioned to the off
+state before they are requested/used. The hang on the Tegra210 Jetson
+TX1 is caused because devices in some power-domains are accessed without
+the power-domain being turned off and on, indicating that the
+power-domain is not in a completely on state.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 3 PID: 434101 at fs/iomap/iter.c:34 iomap_iter_done+0x148/0x190
-  CPU: 3 UID: 0 PID: 434101 Comm: fsstress Not tainted 6.16.0-rc7+ #128 PREEMPT(voluntary)
-  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : iomap_iter_done+0x148/0x190
-  lr : iomap_iter+0x174/0x230
-  sp : ffff8000880af740
-  x29: ffff8000880af740 x28: ffff0000db8e6840 x27: 0000000000000000
-  x26: 0000000000000000 x25: ffff8000880af830 x24: 0000004000000000
-  x23: 0000000000000002 x22: 000001bfdbfa8000 x21: ffffa6a41c002e48
-  x20: 0000000000000001 x19: ffff8000880af808 x18: 0000000000000000
-  x17: 0000000000000000 x16: ffffa6a495ee6cd0 x15: 0000000000000000
-  x14: 00000000000003d4 x13: 00000000fa83b2da x12: 0000b236fc95f18c
-  x11: ffffa6a4978b9c08 x10: 0000000000001da0 x9 : ffffa6a41c1a2a44
-  x8 : ffff8000880af5c8 x7 : 0000000001000000 x6 : 0000000000000000
-  x5 : 0000000000000004 x4 : 000001bfdbfa8000 x3 : 0000000000000000
-  x2 : 0000000000000000 x1 : 0000004004030000 x0 : 0000000000000000
-  Call trace:
-   iomap_iter_done+0x148/0x190 (P)
-   iomap_iter+0x174/0x230
-   iomap_fiemap+0x154/0x1d8
-   ext4_fiemap+0x110/0x140 [ext4]
-   do_vfs_ioctl+0x4b8/0xbc0
-   __arm64_sys_ioctl+0x8c/0x120
-   invoke_syscall+0x6c/0x100
-   el0_svc_common.constprop.0+0x48/0xf0
-   do_el0_svc+0x24/0x38
-   el0_svc+0x38/0x120
-   el0t_64_sync_handler+0x10c/0x138
-   el0t_64_sync+0x198/0x1a0
-  ---[ end trace 0000000000000000 ]---
+>From reviewing the Tegra PMC driver code, if a power-domain is in the
+'on' state there is no guarantee that all the necessary clocks
+associated with the power-domain are on and even if they are they would
+not have been requested via the clock framework and so could be turned
+off later. Some power-domains also have a 'clamping' register that needs
+to be configured as well. In short, if a power-domain is already 'on' it
+is difficult to know if it has been configured correctly. Given that the
+power-domains happened to be switched off during boot previously, to
+ensure that they are in a good known state on boot, fix this by
+switching off any power-domains that are on initially when registering
+the power-domains with the genpd framework.
 
-Cc: stable@kernel.org
-Fixes: facab4d9711e ("ext4: return hole from ext4_map_blocks()")
-Reported-by: Qu Wenruo <wqu@suse.com>
-Closes: https://lore.kernel.org/linux-ext4/9b650a52-9672-4604-a765-bb6be55d1e4a@gmx.com/
-Tested-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250811064532.1788289-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Note that commit 05cfb988a4d0 ("soc/tegra: pmc: Initialise resets
+associated with a power partition") updated the
+tegra_powergate_of_get_resets() function to pass the 'off' to ensure
+that the resets for the power-domain are in the correct state on boot.
+However, now that we may power off a domain on boot, if it is on, it is
+better to move this logic into the tegra_powergate_add() function so
+that there is a single place where we are handling the initial state of
+the power-domain.
+
+Fixes: a38045121bf4 ("soc/tegra: pmc: Add generic PM domain support")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250731121832.213671-1-jonathanh@nvidia.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/indirect.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/tegra/pmc.c |   51 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -539,7 +539,7 @@ int ext4_ind_map_blocks(handle_t *handle
- 	int indirect_blks;
- 	int blocks_to_boundary = 0;
- 	int depth;
--	int count = 0;
-+	u64 count = 0;
- 	ext4_fsblk_t first_block = 0;
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -1224,7 +1224,7 @@ err:
+ }
  
- 	trace_ext4_ind_map_blocks_enter(inode, map->m_lblk, map->m_len, flags);
-@@ -588,7 +588,7 @@ int ext4_ind_map_blocks(handle_t *handle
- 		count++;
- 		/* Fill in size of a hole we found */
- 		map->m_pblk = 0;
--		map->m_len = min_t(unsigned int, map->m_len, count);
-+		map->m_len = umin(map->m_len, count);
- 		goto cleanup;
+ static int tegra_powergate_of_get_resets(struct tegra_powergate *pg,
+-					 struct device_node *np, bool off)
++					 struct device_node *np)
+ {
+ 	struct device *dev = pg->pmc->dev;
+ 	int err;
+@@ -1239,22 +1239,6 @@ static int tegra_powergate_of_get_resets
+ 	err = reset_control_acquire(pg->reset);
+ 	if (err < 0) {
+ 		pr_err("failed to acquire resets: %d\n", err);
+-		goto out;
+-	}
+-
+-	if (off) {
+-		err = reset_control_assert(pg->reset);
+-	} else {
+-		err = reset_control_deassert(pg->reset);
+-		if (err < 0)
+-			goto out;
+-
+-		reset_control_release(pg->reset);
+-	}
+-
+-out:
+-	if (err) {
+-		reset_control_release(pg->reset);
+ 		reset_control_put(pg->reset);
  	}
  
+@@ -1299,20 +1283,43 @@ static int tegra_powergate_add(struct te
+ 		goto set_available;
+ 	}
+ 
+-	err = tegra_powergate_of_get_resets(pg, np, off);
++	err = tegra_powergate_of_get_resets(pg, np);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to get resets for %pOFn: %d\n", np, err);
+ 		goto remove_clks;
+ 	}
+ 
+-	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
+-		if (off)
+-			WARN_ON(tegra_powergate_power_up(pg, true));
++	/*
++	 * If the power-domain is off, then ensure the resets are asserted.
++	 * If the power-domain is on, then power down to ensure that when is
++	 * it turned on the power-domain, clocks and resets are all in the
++	 * expected state.
++	 */
++	if (off) {
++		err = reset_control_assert(pg->reset);
++		if (err) {
++			pr_err("failed to assert resets: %d\n", err);
++			goto remove_resets;
++		}
++	} else {
++		err = tegra_powergate_power_down(pg);
++		if (err) {
++			dev_err(dev, "failed to turn off PM domain %s: %d\n",
++				pg->genpd.name, err);
++			goto remove_resets;
++		}
++	}
+ 
++	/*
++	 * If PM_GENERIC_DOMAINS is not enabled, power-on
++	 * the domain and skip the genpd registration.
++	 */
++	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
++		WARN_ON(tegra_powergate_power_up(pg, true));
+ 		goto remove_resets;
+ 	}
+ 
+-	err = pm_genpd_init(&pg->genpd, NULL, off);
++	err = pm_genpd_init(&pg->genpd, NULL, true);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to initialise PM domain %pOFn: %d\n", np,
+ 		       err);
 
 
