@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD86350D7C;
-	Tue, 26 Aug 2025 14:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D2535CEB4;
+	Tue, 26 Aug 2025 14:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218845; cv=none; b=koLdewqUnPCK7D67/xAxhC3N/J8Qaa6/3bACkeeNFJv+x9gH9+pjgNDUNzwMo1WXBlIEUK8Is4JOReXd2g/wtnhvd/MidSG5DSsw2rUP9y6cN8uIswOnQD3OkIvVxGkpeG6TsMsqzgxg1QTlHy8DOwjg3k/Suj/Pnd0cqx2f2L4=
+	t=1756218848; cv=none; b=EQRy1pQ1jplhDsYIYMM97apxHcbRI6kxvbsB8tAfZUZiq/vty+wAfm/Y/+JilCl0co3cL5bWJow8cTU8iynObsv5JV0Se9kNIUdB0CgDFke8ag3z7w3AkgymOIeISMIJcDjXEsyVqBdt8SiK6X3tgK73139kEbpxYMUev9ig24Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218845; c=relaxed/simple;
-	bh=DN3PSFwHBpY+fhHaMudo7O6eqT3t5jlhcYwe+tvCieY=;
+	s=arc-20240116; t=1756218848; c=relaxed/simple;
+	bh=ZcVnp1h+CfNOAgmF1NODjQdWr5ysbP3R2IeIhx3+Wks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+PX5nH3qyj0XLjPM+LGnNiewuJK/V7yN7GBCGrvRwmUIK66K1gxfJwg3vSEIEPOJAaDDxHF09mUWrD0hgBcZ8MT9fKJYYTS5YO8BBfBOEkjZJs5Lfakg8sKTW99x1q88JjOKyLSODUeTWOOWy7qpP0Lc/XUkeIfoIrsuDxxZgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEWj+gFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YVU/ljWwayC3wGK2t7brogBm7wkwB5gmoi3MN9Xo0sO83uY3vlFd0RNwP5sNtAz8EADqLGN4pnXvgmKz1TNeHS2MzVOIRzMyAOhf4RSEVoK2IEIRXXsb1x0oRDxkcc5dYtzvCe+LevlgQc1+/T9NorYxLSPe4xH7TcxJaQ2GecQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuIBRxde; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEWj+gFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1F5C4CEF1;
-	Tue, 26 Aug 2025 14:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuIBRxde"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7700C19423;
+	Tue, 26 Aug 2025 14:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218845;
-	bh=DN3PSFwHBpY+fhHaMudo7O6eqT3t5jlhcYwe+tvCieY=;
+	s=korg; t=1756218848;
+	bh=ZcVnp1h+CfNOAgmF1NODjQdWr5ysbP3R2IeIhx3+Wks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEWj+gFBPGMU8hu1gvVYi8LUQV8/iyC7gmxxgZms55I97+PGzqCPrQXzKPrzyeYCL
-	 VKpLR7EXMXgUGwrybYRZ6tyXcQ50V8mR5hS0JV20jTt6hapiK4GjPrpPgZnYEp8MoD
-	 jDRwGcYTf9/BM8ab9ytpwc4Ft80O6QdrViw3FL0g=
+	b=QuIBRxdeNTI8r/9Dpzt42TL/+Q7mIe2tQDjmG/hqrHe3mKFrhvovb+/CH05pfIQ7Z
+	 P4twDYrsX9HlbM5FcpxUYNLg8GPYBNegxG7cQsnd1X9a5asVCD7BlyBqMStaFre1yt
+	 VoCi2Dx179YOw3w2tDRg8uMZY2h4q0MC7KLXJP9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 114/403] scsi: ibmvscsi_tgt: Fix dma_unmap_sg() nents value
-Date: Tue, 26 Aug 2025 13:07:20 +0200
-Message-ID: <20250826110909.881506866@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Subject: [PATCH 5.4 149/403] perf/core: Exit early on perf_mmap() fail
+Date: Tue, 26 Aug 2025 13:07:55 +0200
+Message-ID: <20250826110910.980812700@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,48 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 023a293b9cd0bb86a9b50cd7688a3d9d266826db ]
+commit 07091aade394f690e7b655578140ef84d0e8d7b0 upstream.
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+When perf_mmap() fails to allocate a buffer, it still invokes the
+event_mapped() callback of the related event. On X86 this might increase
+the perf_rdpmc_allowed reference counter. But nothing undoes this as
+perf_mmap_close() is never called in this case, which causes another
+reference count leak.
 
-Fixes: 88a678bbc34c ("ibmvscsis: Initial commit of IBM VSCSI Tgt Driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250630111803.94389-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Return early on failure to prevent that.
+
+Fixes: 1e0fb9ec679c ("perf/core: Add pmu callbacks to track event mapping and unmapping")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ibmvscsi_tgt/libsrp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/events/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/ibmvscsi_tgt/libsrp.c b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-index 8a0e28aec928..0ecad398ed3d 100644
---- a/drivers/scsi/ibmvscsi_tgt/libsrp.c
-+++ b/drivers/scsi/ibmvscsi_tgt/libsrp.c
-@@ -184,7 +184,8 @@ static int srp_direct_data(struct ibmvscsis_cmd *cmd, struct srp_direct_buf *md,
- 	err = rdma_io(cmd, sg, nsg, md, 1, dir, len);
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6003,6 +6003,9 @@ unlock:
+ aux_unlock:
+ 	mutex_unlock(&event->mmap_mutex);
  
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- 	return err;
- }
-@@ -256,7 +257,8 @@ static int srp_indirect_data(struct ibmvscsis_cmd *cmd, struct srp_cmd *srp_cmd,
- 	err = rdma_io(cmd, sg, nsg, md, nmd, dir, len);
- 
- 	if (dma_map)
--		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
-+		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
-+			     DMA_BIDIRECTIONAL);
- 
- free_mem:
- 	if (token && dma_map) {
--- 
-2.39.5
-
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Since pinned accounting is per vm we cannot allow fork() to copy our
+ 	 * vma.
 
 
