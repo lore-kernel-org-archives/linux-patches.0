@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7352BE03C;
-	Tue, 26 Aug 2025 11:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6250221FC3;
+	Tue, 26 Aug 2025 11:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207726; cv=none; b=XnLT+wlByogP0GJhmfaZE4pWymr7QTdBdJ7pnurZGt8HSy/8P6A9VuJTtdgakXkMhMizUus5WSCa02xNsNODVguAzWNtRUB5JO0O2l9huq5Yr4a3hIUXD3fp1yhor0aeQBbhc1IsqpdCc7CvX9sW4fPN/CmoslBVrO7j3UMVrZE=
+	t=1756207729; cv=none; b=JE2AcSvqScQktV8ZWABh/ZQNouvYdHrdB6t9K0kT2OPb1GB8n+vIVxEbhJFsijKjksZFSQcl2RwHsFvnxMFKSLpV/Wt6ybHq/hQwGVpQOPpbDfp3t9MCXp+MMDdRCK6NUOm51sheihynt6FvmN8aJ0eWAXVVCXLPkYgVcoTfD5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207726; c=relaxed/simple;
-	bh=fvNtfJf25K9AgTUrK4IXyDHy4/oxLgxj4DSg9zoe6mM=;
+	s=arc-20240116; t=1756207729; c=relaxed/simple;
+	bh=Re6TdDaNA0KmN05WMcIcLPsHClB3qKVlWmI77Wzp/FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/uRc2fDVT6WDOBMhBErtk43Om1IxNhBcU881jwXl0F4V/p1XLY+fVP+ZkKsxHHKC1q+j2rIWjvAFOaNZ/2DNay/Gw3zGNrUhxmyWWWP55/ZOapD6ljY9204yQrrVLXZlUo0sEtnE55scrCpTljVeKgn526sVm1+0bnrgWRWAqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp84mVyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SKVe2suv64lRYPBV7Pu5LRcLRar54IPNtZfCkMscVcPx01ikCF2wF3Uar2MGuLUmYKVLjMViMJU2RlMpS6t3qc7jVJvtZpx5YciY3kzIJKS9dCjfLGoVwvhV//SuWSyLiceXE+JJvLi/kLnDlch16u71KfngJVmzddxmIxH6d0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKxM30nA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp84mVyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB59CC4CEF1;
-	Tue, 26 Aug 2025 11:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKxM30nA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02989C4CEF1;
+	Tue, 26 Aug 2025 11:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207726;
-	bh=fvNtfJf25K9AgTUrK4IXyDHy4/oxLgxj4DSg9zoe6mM=;
+	s=korg; t=1756207729;
+	bh=Re6TdDaNA0KmN05WMcIcLPsHClB3qKVlWmI77Wzp/FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xp84mVyiBLfJhZYXA9meUv0OWMQQbYDysmCHI+nGuLJZxAKX0t5WCw6D3wqZ1VXra
-	 tNyFrK1rWoLllLNUVW58SvHEhrausyxrvu5gsXgSXRYDFUmg7wAI6WDFCo6qN6IqE4
-	 q2ptITweZzvb/qjbkD+kXNdLJLJLkRrjcw7x1DQA=
+	b=kKxM30nALBHPZrxmQpfSIdurwsf67R+EFKgRTGzVtFwt/WlCQQ9SU/BLkYStRaWrC
+	 VWZ+Rro6nDizt8gp4mTcaIOqZ6m/naR8yLxXXMOqf1plvVjWyA5noIss6Pz0zjXvmd
+	 ERo2RK0vKgOApzPsZrWnFF3K4U2KP3PAR2xVZLSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Pisa <pisa@fel.cvut.cz>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 6.16 294/457] fpga: zynq_fpga: Fix the wrong usage of dma_map_sgtable()
-Date: Tue, 26 Aug 2025 13:09:38 +0200
-Message-ID: <20250826110944.648316785@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.16 295/457] iio: adc: ad7380: fix missing max_conversion_rate_hz on adaq4381-4
+Date: Tue, 26 Aug 2025 13:09:39 +0200
+Message-ID: <20250826110944.671482830@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,44 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yilun <yilun.xu@linux.intel.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit 1ca61060de92a4320d73adfe5dc8d335653907ac upstream.
+commit b04e4551893fb8a06106a175ed7055d41a9279c4 upstream.
 
-dma_map_sgtable() returns only 0 or the error code. Read sgt->nents to
-get the number of mapped segments.
+Add max_conversion_rate_hz to the chip info for "adaq4381-4". Without
+this, the driver fails to probe because it tries to set the initial
+sample rate to 0 Hz, which is not valid.
 
-Fixes: 37e00703228a ("zynq_fpga: use sgtable-based scatterlist wrappers")
-Reported-by: Pavel Pisa <pisa@fel.cvut.cz>
-Closes: https://lore.kernel.org/linux-fpga/202508041548.22955.pisa@fel.cvut.cz/
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Link: https://lore.kernel.org/r/20250806070605.1920909-2-yilun.xu@linux.intel.com
+Fixes: bbeaec81a03e ("iio: ad7380: add support for SPI offload")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patch.msgid.link/20250811-iio-adc-ad7380-fix-missing-max_conversion_rate_hs-on-ad4381-4-v1-1-ffb728d7a71c@baylibre.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/zynq-fpga.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7380.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/fpga/zynq-fpga.c
-+++ b/drivers/fpga/zynq-fpga.c
-@@ -405,12 +405,12 @@ static int zynq_fpga_ops_write(struct fp
- 		}
- 	}
+diff --git a/drivers/iio/adc/ad7380.c b/drivers/iio/adc/ad7380.c
+index 6f7034b6c266..fa251dc1aae6 100644
+--- a/drivers/iio/adc/ad7380.c
++++ b/drivers/iio/adc/ad7380.c
+@@ -873,6 +873,7 @@ static const struct ad7380_chip_info adaq4381_4_chip_info = {
+ 	.has_hardware_gain = true,
+ 	.available_scan_masks = ad7380_4_channel_scan_masks,
+ 	.timing_specs = &ad7380_4_timing,
++	.max_conversion_rate_hz = 4 * MEGA,
+ };
  
--	priv->dma_nelms =
--	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
--	if (priv->dma_nelms == 0) {
-+	err = dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
-+	if (err) {
- 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
--		return -ENOMEM;
-+		return err;
- 	}
-+	priv->dma_nelms = sgt->nents;
- 
- 	/* enable clock */
- 	err = clk_enable(priv->clk);
+ static const struct spi_offload_config ad7380_offload_config = {
+-- 
+2.50.1
+
 
 
