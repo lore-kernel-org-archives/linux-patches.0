@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865AB1FECAB;
-	Tue, 26 Aug 2025 11:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B77393DD1;
+	Tue, 26 Aug 2025 11:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208464; cv=none; b=HdFv1/49klDTb9lV0rVuQH3FrsyscfaC+uDkSDbiU2veDiWhwJ163i4sUxfhLtQP0Nsvpr/5qOwi+4zcsrQW6odD8jLJynQb/fxcL1lN7SzqzO+CWFvnjNEi6oBb0hSVBYDr32R92feVh+YwnrU03OCg22g1tmqV/roz/mxxPQU=
+	t=1756208467; cv=none; b=r3fxxaOQBYRTvm9U/AGj5x9KZG4+s2Se5Zqiq/F0AXV6H2IwF4g974LKK3w8OuJNY9PD6TLtgzqDaGGAcJopEFx/tupyPHNRlxp9u2XNJW2c9MMlV/KnR0EdaCXLpkvLSyl4q7us8K0ZTmyrU98RRP9L6z+wfoKPWSo11Rki2o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208464; c=relaxed/simple;
-	bh=SqXTZnkwnFlDWSW1V25f72fh52nz2opGM54qLoUE1rI=;
+	s=arc-20240116; t=1756208467; c=relaxed/simple;
+	bh=FtFRlrD587Axszw4cC6IEaJh48jiIvHwazaBZEAjzIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dhv5TAcu4S13Da+barMc23NXmwb9Csmw+gqRdDDUzy47vA0ZN2UjLr0+ww17V8YUdcvcdE7WanimRtbKr744GzTCm+O+Iws+5jniiTBb2XaW9QLGqiZsZOKEhly8232LiWzpgfPTCMSaQm3hLQEt9rBhLyilT2ymciZtPNHjeTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+C6WWmh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YbVjcRDmwLpheyEhZGwPmin8s6XWK0/PRl/hDNgSTdMA0c/Vp7/kxjpSewAggpVtfgo3xsT4Gnn8r7m8KBeugYrrwfGnlVUHS6cWL00M7uu20lME0bbunTj3hApAyk1kIh9RFTiEcKwGgwXi2Cz/CzW4EYWbYg9I/2aiW5ko/xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJcGEydI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+C6WWmh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C79C4CEF1;
-	Tue, 26 Aug 2025 11:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJcGEydI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7FFC4CEF1;
+	Tue, 26 Aug 2025 11:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208464;
-	bh=SqXTZnkwnFlDWSW1V25f72fh52nz2opGM54qLoUE1rI=;
+	s=korg; t=1756208466;
+	bh=FtFRlrD587Axszw4cC6IEaJh48jiIvHwazaBZEAjzIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+C6WWmhJqFfIJN5Nczp/aicQPCldanQ0gF6mbF0fOrxgTBMnSrknFt96bE9S19mu
-	 KnWeL9nzudrzD0zFpsIgcEBNLXDocQPPXTPdhu1RS28H3V8eluBrYyeBBNt31KnnmH
-	 +njynsuUze4OON6vZ8pyFRmj/4f/lXhZ1rkhFwKo=
+	b=KJcGEydIUrV3JAIEF40JvsIIWq/bD/8DfSsR1XOOVlaqV+4P1o7GOOUWfVoUdVVKR
+	 j/Eo6z9sEIzfRuAF7yt7R55Ne0zx/uS8gdlYMa3SKBqWM78VC1i2wIOi5UY5d0OW60
+	 8CQ/pqwOek2mnB43eHFjM3mCWQ/wrZvqzX1jAcTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 122/322] drm/amdgpu: Initialize data to NULL in imu_v12_0_program_rlc_ram()
-Date: Tue, 26 Aug 2025 13:08:57 +0200
-Message-ID: <20250826110918.812217633@linuxfoundation.org>
+Subject: [PATCH 6.12 123/322] drm/amdgpu: Update external revid for GC v9.5.0
+Date: Tue, 26 Aug 2025 13:08:58 +0200
+Message-ID: <20250826110918.835764517@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,50 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit c90f2e1172c51fa25492471dc9910e2d7c1444b9 upstream.
+commit 05c8b690511854ba31d8d1bff7139a13ec66b9e7 upstream.
 
-After a recent change in clang to expose uninitialized warnings from
-const variables and pointers [1], there is a warning in
-imu_v12_0_program_rlc_ram() because data is passed uninitialized to
-program_imu_rlc_ram():
+Use different external revid for GC v9.5.0 SOCs.
 
-  drivers/gpu/drm/amd/amdgpu/imu_v12_0.c:374:30: error: variable 'data' is uninitialized when used here [-Werror,-Wuninitialized]
-    374 |                         program_imu_rlc_ram(adev, data, (const u32)size);
-        |                                                   ^~~~
-
-As this warning happens early in clang's frontend, it does not realize
-that due to the assignment of r to -EINVAL, program_imu_rlc_ram() is
-never actually called, and even if it were, data would not be
-dereferenced because size is 0.
-
-Just initialize data to NULL to silence the warning, as the commit that
-added program_imu_rlc_ram() mentioned it would eventually be used over
-the old method, at which point data can be properly initialized and
-used.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2107
-Fixes: 56159fffaab5 ("drm/amdgpu: use new method to program rlc ram")
-Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 21c6764ed4bfaecad034bc4fd15dd64c5a436325)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/imu_v12_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/soc15.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/imu_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/imu_v12_0.c
-@@ -361,7 +361,7 @@ static void program_imu_rlc_ram(struct a
- static void imu_v12_0_program_rlc_ram(struct amdgpu_device *adev)
- {
- 	u32 reg_data, size = 0;
--	const u32 *data;
-+	const u32 *data = NULL;
- 	int r = -EINVAL;
- 
- 	WREG32_SOC15(GC, 0, regGFX_IMU_RLC_RAM_INDEX, 0x2);
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -1183,6 +1183,8 @@ static int soc15_common_early_init(void
+ 			AMD_PG_SUPPORT_JPEG;
+ 		/*TODO: need a new external_rev_id for GC 9.4.4? */
+ 		adev->external_rev_id = adev->rev_id + 0x46;
++		if (amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 5, 0))
++			adev->external_rev_id = adev->rev_id + 0x50;
+ 		break;
+ 	default:
+ 		/* FIXME: not supported yet */
 
 
