@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074092BEC34;
-	Tue, 26 Aug 2025 11:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF662248A5;
+	Tue, 26 Aug 2025 11:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207561; cv=none; b=YBBu1VBryoOUMNQ3OBHjlMMGL3BMamVx/k9B3JljlX7WxNwo2xCK4EoLV3oxLDW5jSl4S9RXOqc053UP/Ny+uJg5c+1iqxaMp5OhxV6EdyOrFVimOkAKCMQBqoE2e9mvmJWf+TX/N6S6BUxzY6NJRC1mPqq5sdL2ncch1mv/4CI=
+	t=1756207563; cv=none; b=YfUtlncdAn3ocdeF8Cz0Zmk0F98tvQvQ/NQpzl9dSpbHK5JPvreDG5ja9wvh0k136qTiDk3DrCQ2e3+yaem7Ub4yFYvw8cKHjrNbla/TBCCvI2p4IPPSUgRcZ13BoQ0j+Mtbf/dZjh7SezIhK71wAW1qhOyHJdEibS6ypQUKgWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207561; c=relaxed/simple;
-	bh=wb2X+FomgvSFke2B+XeoU0IveTJ/ScB/8sq0flCb8Y8=;
+	s=arc-20240116; t=1756207563; c=relaxed/simple;
+	bh=LhEBcpz4vBEt/u80N10X/12Gq3zgfMX+IiQWmwk0Dbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MII5BRd/BV0wtJhnjvl1jK5GZ1WXEyxbi6wbt33j28bZ7M3P1rDlw0O/MGWhjRHb+99UWjDWrtWebZPkwJ8LJOfpnPeCWnmAY13nsdQvmPh6uKh8nw63AlFnkbKowTfKzVye4SM+xFvlMeIhEkDPKMXVfHv59LyGTtVDUf7JxKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCX8914j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQX2G4zVVrkfP/mOyStk/PkUpOtyY0HkVEqVMMlWG80A3BUh2Q2nz7pFBtV1Xx6nEQSRAWbrjwx27lj8DonEvqOgHh0Mm/rbJXJMkY3H3aXcgpQ8gArDGeUyYDtTJdtFgr1UEsqejvrg6qPkZGU1Ob/7qAz7E+NhWk6nyub/VOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTJ479Wg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCX8914j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B52C113CF;
-	Tue, 26 Aug 2025 11:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTJ479Wg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BDDC4CEF1;
+	Tue, 26 Aug 2025 11:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207560;
-	bh=wb2X+FomgvSFke2B+XeoU0IveTJ/ScB/8sq0flCb8Y8=;
+	s=korg; t=1756207563;
+	bh=LhEBcpz4vBEt/u80N10X/12Gq3zgfMX+IiQWmwk0Dbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCX8914j3Jf/2dwZkUnk++Tips2HMkVRIoaWjcPKTS8ME8zkkpGkLPZIVqZBPlpZI
-	 M9cRI9vpj5Ogr4MD4h3+oWSBKZ5MFNyD8iE3smsYouZvSceo5yxT4/auY1EuyIwm45
-	 FvvYYiJrSyXaEgXzmshNNHo8Eri7e1AL2rl0HLWg=
+	b=aTJ479Wg/6xEY+Gkopov7QqUQ9kBi8bPGHkuIIyswb4caCgXaj++zFyFBX4SUbFV7
+	 4SSS7X+Zr+pJmxPxE+bOiWk0PhG/3cEBDByCWgy7Iyb9/jUIJkLjt1QS5mD9fjXhOp
+	 u+KzglTfBzPxu+fggjBMIeY5n5Cg+9dzS8tnOwVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	XianLiang Huang <huangxianliang@lanxincomputing.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.16 230/457] iommu/riscv: prevent NULL deref in iova_to_phys
-Date: Tue, 26 Aug 2025 13:08:34 +0200
-Message-ID: <20250826110943.057186910@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.16 231/457] io_uring/futex: ensure io_futex_wait() cleans up properly on failure
+Date: Tue, 26 Aug 2025 13:08:35 +0200
+Message-ID: <20250826110943.083192979@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,38 +49,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: XianLiang Huang <huangxianliang@lanxincomputing.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 99d4d1a070870aa08163af8ce0522992b7f35d8c upstream.
+commit 508c1314b342b78591f51c4b5dadee31a88335df upstream.
 
-The riscv_iommu_pte_fetch() function returns either NULL for
-unmapped/never-mapped iova, or a valid leaf pte pointer that
-requires no further validation.
+The io_futex_data is allocated upfront and assigned to the io_kiocb
+async_data field, but the request isn't marked with REQ_F_ASYNC_DATA
+at that point. Those two should always go together, as the flag tells
+io_uring whether the field is valid or not.
 
-riscv_iommu_iova_to_phys() failed to handle NULL returns.
-Prevent null pointer dereference in
-riscv_iommu_iova_to_phys(), and remove the pte validation.
+Additionally, on failure cleanup, the futex handler frees the data but
+does not clear ->async_data. Clear the data and the flag in the error
+path as well.
 
-Fixes: 488ffbf18171 ("iommu/riscv: Paging domain support")
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: XianLiang Huang <huangxianliang@lanxincomputing.com>
-Link: https://lore.kernel.org/r/20250820072248.312-1-huangxianliang@lanxincomputing.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Thanks to Trend Micro Zero Day Initiative and particularly ReDress for
+reporting this.
+
+Cc: stable@vger.kernel.org
+Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/riscv/iommu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/futex.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -1283,7 +1283,7 @@ static phys_addr_t riscv_iommu_iova_to_p
- 	unsigned long *ptr;
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -288,6 +288,7 @@ int io_futex_wait(struct io_kiocb *req,
+ 		goto done_unlock;
+ 	}
  
- 	ptr = riscv_iommu_pte_fetch(domain, iova, &pte_size);
--	if (_io_pte_none(*ptr) || !_io_pte_present(*ptr))
-+	if (!ptr)
- 		return 0;
- 
- 	return pfn_to_phys(__page_val_to_pfn(*ptr)) | (iova & (pte_size - 1));
++	req->flags |= REQ_F_ASYNC_DATA;
+ 	req->async_data = ifd;
+ 	ifd->q = futex_q_init;
+ 	ifd->q.bitset = iof->futex_mask;
+@@ -309,6 +310,8 @@ done:
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
++	req->async_data = NULL;
++	req->flags &= ~REQ_F_ASYNC_DATA;
+ 	kfree(ifd);
+ 	return IOU_COMPLETE;
+ }
 
 
