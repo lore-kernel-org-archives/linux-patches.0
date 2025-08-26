@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BD9343218;
-	Tue, 26 Aug 2025 13:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1692343218;
+	Tue, 26 Aug 2025 13:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216685; cv=none; b=S86jogmzvkpswmw0GpoMpu+PC0MTpuVR26534dt+Easq3o6nUMN28vfBWKYYu+yKJg5Rw2vVWgqvR/4JR3j6UGhHYBsi3GS+/A/8lUK+0JLrdXn8WXpcM7RIaJHfqSAJgVV6TObUzYg7X7TsgnZLKtJu8c7+FnupZjclHdvzDtg=
+	t=1756216687; cv=none; b=bXnxVlDDUTpIvnlP2J7B/j2IK5yTx1dcJEETLUgNCg8nFdTDq6DbFUtKLUYIkbssUPVG5c+VqM/XlmAF1tmsTm7voTqCkUWpUE9sast3xRk7H+DEFGvqHnhXE4RNtaDuUBn2YKpiCUW0sQQwJWierKSDxfU3dlYnQwKsZ6iJtrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216685; c=relaxed/simple;
-	bh=w1hSzjOthFMBe8PLUnAbAwrdtfAzb2dt8GNI0lWziDk=;
+	s=arc-20240116; t=1756216687; c=relaxed/simple;
+	bh=2/l1tCSOLk87WZraJHNcC+bDDbKS6mtR9NQNDeqoTAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i610vOdLB3gZnJ4U0aeNG7kov6DI+cOuFs61QknaLQI4V/g/7sRj45tx/YvOoW0RvkFolWUOI9gEdpCQvT0PHGPIy6nL6f8/5CTlPX+KbqN/AAinIcyrmCauaKI/q8WZUKa3U4c6W15zkBb1je1kHe8dWqCAVFr8GROtwukGN8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2DHnRMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IGcBGkVuYKIyL/LjcrHZfDjGElpx5+NGg7rc91jaYLOGYJqkCU8qbVsV5B/7ZVyZiL848CDAfhusoQ3rcA/FIvuliaw8Y9sJoe31Z4JfQAv0XsKY6WnYCu53IHrtJ2mlg/yXlDchA+nz9rz6PCvWHjvdaAYE43qp5V8RzsCty0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPmdbHWj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2DHnRMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C60C4CEF1;
-	Tue, 26 Aug 2025 13:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPmdbHWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F02C4CEF1;
+	Tue, 26 Aug 2025 13:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216685;
-	bh=w1hSzjOthFMBe8PLUnAbAwrdtfAzb2dt8GNI0lWziDk=;
+	s=korg; t=1756216687;
+	bh=2/l1tCSOLk87WZraJHNcC+bDDbKS6mtR9NQNDeqoTAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2DHnRMZsQdNApOZER2YnNRHQOkBlQqXSH+0kEIgeUZDFc5uLeA3xGMfC7VPRLi8+
-	 yuGtteLwnIo3hIvSJShtjakKv5i6ooLOdoY5p/jdVQKOayvJD/U3WvQxArY3M9DhW2
-	 CVQ/QlW1dpq8Pdok3uFoxk/ywRN12bG6LwKCfhZ0=
+	b=wPmdbHWjsvlWjy2j6JH9K9ilgOmKvbdua2/WUtkggrAb8rN06NWlEEKva3Pr6wdmy
+	 jWLNFSTGrojxRWohV7LVxlvGJftbmY+vU2ggNIQ4BQpfe2R4S6PAiag5wP7/s416xX
+	 b1LGjsDXSHnEb+SJm+edn1gOjTuBJ6Hm5GdfUDKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Lorenz Brun <lorenz@brun.one>,
+	Brandon Schwartz <Brandon.Schwartz@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 473/644] scsi: mpi3mr: Fix race between config read submit and interrupt completion
-Date: Tue, 26 Aug 2025 13:09:24 +0200
-Message-ID: <20250826110958.204334015@linuxfoundation.org>
+Subject: [PATCH 5.15 474/644] ata: libata-scsi: Fix ata_to_sense_error() status handling
+Date: Tue, 26 Aug 2025 13:09:25 +0200
+Message-ID: <20250826110958.228011997@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,40 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit e6327c4acf925bb6d6d387d76fc3bd94471e10d8 upstream.
+commit cf3fc037623c54de48d2ec1a1ee686e2d1de2d45 upstream.
 
-The "is_waiting" flag was updated after calling complete(), which could
-lead to a race where the waiting thread wakes up before the flag is
-cleared. This may cause a missed wakeup or stale state check.
+Commit 8ae720449fca ("libata: whitespace fixes in ata_to_sense_error()")
+inadvertantly added the entry 0x40 (ATA_DRDY) to the stat_table array in
+the function ata_to_sense_error(). This entry ties a failed qc which has
+a status filed equal to ATA_DRDY to the sense key ILLEGAL REQUEST with
+the additional sense code UNALIGNED WRITE COMMAND. This entry will be
+used to generate a failed qc sense key and sense code when the qc is
+missing sense data and there is no match for the qc error field in the
+sense_table array of ata_to_sense_error().
 
-Reorder the operations to update "is_waiting" before signaling completion
-to ensure consistent state.
+As a result, for a failed qc for which we failed to get sense data (e.g.
+read log 10h failed if qc is an NCQ command, or REQUEST SENSE EXT
+command failed for the non-ncq case, the user very often end up seeing
+the completely misleading "unaligned write command" error, even if qc
+was not a write command. E.g.:
 
-Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
+sd 0:0:0:0: [sda] tag#12 FAILED Result: hostbyte=DID_OK driverbyte=DRIVER_OK cmd_age=0s
+sd 0:0:0:0: [sda] tag#12 Sense Key : Illegal Request [current]
+sd 0:0:0:0: [sda] tag#12 Add. Sense: Unaligned write command
+sd 0:0:0:0: [sda] tag#12 CDB: Read(10) 28 00 00 00 10 00 00 00 08 00
+I/O error, dev sda, sector 4096 op 0x0:(READ) flags 0x80700 phys_seg 1 prio class 0
+
+Fix this by removing the ATA_DRDY entry from the stat_table array so
+that we default to always returning ABORTED COMMAND without any
+additional sense code, since we do not know any better. The entry 0x08
+(ATA_DRQ) is also removed since signaling ABORTED COMMAND with a parity
+error is also misleading (as a parity error would likely be signaled
+through a bus error). So for this case, also default to returning
+ABORTED COMMAND without any additional sense code. With this, the
+previous example error case becomes:
+
+sd 0:0:0:0: [sda] tag#17 FAILED Result: hostbyte=DID_OK driverbyte=DRIVER_OK cmd_age=0s
+sd 0:0:0:0: [sda] tag#17 Sense Key : Aborted Command [current]
+sd 0:0:0:0: [sda] tag#17 Add. Sense: No additional sense information
+sd 0:0:0:0: [sda] tag#17 CDB: Read(10) 28 00 00 00 10 00 00 00 08 00
+I/O error, dev sda, sector 4096 op 0x0:(READ) flags 0x80700 phys_seg 1 prio class 0
+
+Together with these fixes, refactor stat_table to make it more readable
+by putting the entries comments in front of the entries and using the
+defined status bits macros instead of hardcoded values.
+
+Reported-by: Lorenz Brun <lorenz@brun.one>
+Reported-by: Brandon Schwartz <Brandon.Schwartz@wdc.com>
+Fixes: 8ae720449fca ("libata: whitespace fixes in ata_to_sense_error()")
 Cc: stable@vger.kernel.org
-Co-developed-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20250627194539.48851-2-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-scsi.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -372,8 +372,8 @@ static void mpi3mr_process_admin_reply_d
- 				    mrioc->facts.reply_sz);
- 			}
- 			if (cmdptr->is_waiting) {
--				complete(&cmdptr->done);
- 				cmdptr->is_waiting = 0;
-+				complete(&cmdptr->done);
- 			} else if (cmdptr->callback)
- 				cmdptr->callback(mrioc, cmdptr);
- 		}
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -770,18 +770,14 @@ static void ata_to_sense_error(unsigned
+ 		{0xFF, 0xFF, 0xFF, 0xFF}, // END mark
+ 	};
+ 	static const unsigned char stat_table[][4] = {
+-		/* Must be first because BUSY means no other bits valid */
+-		{0x80,		ABORTED_COMMAND, 0x47, 0x00},
+-		// Busy, fake parity for now
+-		{0x40,		ILLEGAL_REQUEST, 0x21, 0x04},
+-		// Device ready, unaligned write command
+-		{0x20,		HARDWARE_ERROR,  0x44, 0x00},
+-		// Device fault, internal target failure
+-		{0x08,		ABORTED_COMMAND, 0x47, 0x00},
+-		// Timed out in xfer, fake parity for now
+-		{0x04,		RECOVERED_ERROR, 0x11, 0x00},
+-		// Recovered ECC error	  Medium error, recovered
+-		{0xFF, 0xFF, 0xFF, 0xFF}, // END mark
++		/* Busy: must be first because BUSY means no other bits valid */
++		{ ATA_BUSY,	ABORTED_COMMAND, 0x00, 0x00 },
++		/* Device fault: INTERNAL TARGET FAILURE */
++		{ ATA_DF,	HARDWARE_ERROR,  0x44, 0x00 },
++		/* Corrected data error */
++		{ ATA_CORR,	RECOVERED_ERROR, 0x00, 0x00 },
++
++		{ 0xFF, 0xFF, 0xFF, 0xFF }, /* END mark */
+ 	};
+ 
+ 	/*
 
 
