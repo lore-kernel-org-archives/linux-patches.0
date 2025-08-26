@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FA2196C7C;
-	Tue, 26 Aug 2025 13:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD3F1917ED;
+	Tue, 26 Aug 2025 13:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214687; cv=none; b=oB+Iak9/zegqhKwblqDyzaDBp4JjoW0IZiEfHrRXO2qRqJEj8Up1T6OYC4MSo0T+2tmra3jsCkmBAxqQxEHUKDXzgyfyLMXQ0UilNb/EKgPLMSZZbUBMIka3OMBIg1VWRguOSmjPVUFK9nrEtvef+o7kKGxWK7JRGpmBJz8k8pM=
+	t=1756214690; cv=none; b=YgI9r7sv9fYwlCd1tgDwWa9i0TcMMcRZ5n3EIOfHKeO/QyfYRFVWfsmW4hZ2ze/g9Lho8wU7RpGjWCy9A2V8ItmXLebMr3Xs1v//zHNUpPhjd2Xbhq+mKH5ZoPXSodtL+DfevhpEkKQGiLXPdzjWOMebvu36wiGoXbgBy2dSfdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214687; c=relaxed/simple;
-	bh=+9A24ZZCwsxlixOBvNVL/W7hoFdZw2qYNtYYzUxJd3A=;
+	s=arc-20240116; t=1756214690; c=relaxed/simple;
+	bh=Hx9VbZTPlUq6OoWEN1lWFhRM2B46JY2US+ZwjTx5waY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BeFkDHnLEIzdCs2LlWE9k3KJm7pM8QSoFBlmacb2KtVfkHLqwhcCOvbpSmuXGbkb7B/Vz1/oBVekURXO4KS4hq6kXbY19Dcmo9XjqD83ozr7HeYfgTemCJzGbF9N/WfyIooXdcGt0UUkZr4Md1FeK4zGSVpmwqT5GsuA5a6olnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol0deSoQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOuNa7kZYmSEBQrq7j7vdewPRAQUEC+nypiq1BJsxP7mLkjSdRInMhRiVncjFqJsl6QEmOF2jGdC25UaTZEYKj9iWw3hCm1S0QaGvjb9/uVkDq3th997ca2C1FvWB3I4Yo5UBlf0VSe+pCYjP4DtpbwP0qPW1j/QzBhywROItGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMOQlZmT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol0deSoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B73C4CEF1;
-	Tue, 26 Aug 2025 13:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMOQlZmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC84BC4CEF1;
+	Tue, 26 Aug 2025 13:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214687;
-	bh=+9A24ZZCwsxlixOBvNVL/W7hoFdZw2qYNtYYzUxJd3A=;
+	s=korg; t=1756214690;
+	bh=Hx9VbZTPlUq6OoWEN1lWFhRM2B46JY2US+ZwjTx5waY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ol0deSoQ4Lk+Hy/unkhJY6/DqkP95yo11G0fPBS/xC5xlPp7ePGWpxdn52gnvf0e/
-	 tQt/Fqb8QgctExYYqyiwQI2XWsO+hB+XND/fakJSujCxhJrJ5a5aHybIfpVtSmVXa4
-	 7TzpgvqEDU9CzNcHIJZ0d02pIXYRP0u2aitUchSw=
+	b=fMOQlZmTPLAsawnzfI2YPDQYqTqY5tGjfR0FrgvTXvZpkFf3Yvtsh/wjaUxjbuk5e
+	 FDk7k/2XxAwjN1TFqnk0nUyGQpbVU1ZJPUodpiX0P/9Dqz2/wCUAbqX12dfmGBYVMZ
+	 R7hfKLqadf4P7Pft7LmQxEMwyfpCXKO8QgHKv3o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 232/482] block: avoid possible overflow for chunk_sectors check in blk_stack_limits()
-Date: Tue, 26 Aug 2025 13:08:05 +0200
-Message-ID: <20250826110936.504505273@linuxfoundation.org>
+Subject: [PATCH 6.1 233/482] pNFS: Fix stripe mapping in block/scsi layout
+Date: Tue, 26 Aug 2025 13:08:06 +0200
+Message-ID: <20250826110936.528091416@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -54,41 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-[ Upstream commit 448dfecc7ff807822ecd47a5c052acedca7d09e8 ]
+[ Upstream commit 81438498a285759f31e843ac4800f82a5ce6521f ]
 
-In blk_stack_limits(), we check that the t->chunk_sectors value is a
-multiple of the t->physical_block_size value.
+Because of integer division, we need to carefully calculate the
+disk offset. Consider the example below for a stripe of 6 volumes,
+a chunk size of 4096, and an offset of 70000.
 
-However, by finding the chunk_sectors value in bytes, we may overflow
-the unsigned int which holds chunk_sectors, so change the check to be
-based on sectors.
+chunk = div_u64(offset, dev->chunk_size) = 70000 / 4096 = 17
+offset = chunk * dev->chunk_size = 17 * 4096 = 69632
+disk_offset_wrong = div_u64(offset, dev->nr_children) = 69632 / 6 = 11605
+disk_chunk = div_u64(chunk, dev->nr_children) = 17 / 6 = 2
+disk_offset = disk_chunk * dev->chunk_size = 2 * 4096 = 8192
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250729091448.1691334-2-john.g.garry@oracle.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250701122341.199112-1-sergeybashirov@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-settings.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/blocklayout/dev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-settings.c b/block/blk-settings.c
-index c702f408bbc0..305b47a38429 100644
---- a/block/blk-settings.c
-+++ b/block/blk-settings.c
-@@ -628,7 +628,7 @@ int blk_stack_limits(struct queue_limits *t, struct queue_limits *b,
- 	}
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index ce2ea6239797..fc6413953600 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -199,10 +199,11 @@ static bool bl_map_stripe(struct pnfs_block_dev *dev, u64 offset,
+ 	struct pnfs_block_dev *child;
+ 	u64 chunk;
+ 	u32 chunk_idx;
++	u64 disk_chunk;
+ 	u64 disk_offset;
  
- 	/* chunk_sectors a multiple of the physical block size? */
--	if ((t->chunk_sectors << 9) & (t->physical_block_size - 1)) {
-+	if (t->chunk_sectors % (t->physical_block_size >> SECTOR_SHIFT)) {
- 		t->chunk_sectors = 0;
- 		t->misaligned = 1;
- 		ret = -1;
+ 	chunk = div_u64(offset, dev->chunk_size);
+-	div_u64_rem(chunk, dev->nr_children, &chunk_idx);
++	disk_chunk = div_u64_rem(chunk, dev->nr_children, &chunk_idx);
+ 
+ 	if (chunk_idx >= dev->nr_children) {
+ 		dprintk("%s: invalid chunk idx %d (%lld/%lld)\n",
+@@ -215,7 +216,7 @@ static bool bl_map_stripe(struct pnfs_block_dev *dev, u64 offset,
+ 	offset = chunk * dev->chunk_size;
+ 
+ 	/* disk offset of the stripe */
+-	disk_offset = div_u64(offset, dev->nr_children);
++	disk_offset = disk_chunk * dev->chunk_size;
+ 
+ 	child = &dev->children[chunk_idx];
+ 	child->map(child, disk_offset, map);
 -- 
 2.39.5
 
