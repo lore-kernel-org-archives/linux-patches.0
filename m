@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68922101F2;
-	Tue, 26 Aug 2025 13:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12560101F2;
+	Tue, 26 Aug 2025 13:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213243; cv=none; b=tZd+FweIgENBxtYZd13a+9zmhG9I+0lJoQWrAm11DyO6bKHsby9CnJDVR4DOTDbaEJ/dUgW4XO7QWM65E2P2TFv4Qyt1dDmNkj8ks0s5NtHZq1mIies0NvCSlUOlAcrJdh7lKvpRVKtgmKQrdZsrRzeNd3SOyoYbSSBw9bod+3Y=
+	t=1756213246; cv=none; b=QLstuhKX6++mztKcYmTaieA/HfYXHvMOCOJIKutE01UP7prkc10fqs64apMSJrQz6T0+krdpmqdwE1DVkvmo0FMl5ce3dKLtUBTs/4SvE/44Auu4xzV0Nfa32rTVhfuK5alq/xXOndeWkRYbsZ2v2VSC7ooYLb6mBKxynG9oopU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213243; c=relaxed/simple;
-	bh=yn0zCl9RecvZXRUvCIHmjpdH2hE8bABn9iwkIQHSoQk=;
+	s=arc-20240116; t=1756213246; c=relaxed/simple;
+	bh=3WBbV79wxdRbsy/kVlkc/CYxPgXUnh0kId2OktlLo+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g53VfLqd7u/BJt1m4AGI+ozvNePzUx+0HDMu8Mel2SXt9JzYKsERRLsUIfMkFUkMRIUBebadnsVFh7AwIdk+Ja3RJ7fTXFAsTZAmeBveZ3QUlttNljq1jMwy8sK5+yILNs9Y7SkMcXHuf92GS8lWbmzW1fcvmmczy6gbenDuoYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWZwZxMe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8Os9V5SWuDJvk4SE05M0DplpStm7tbjMwz1FWiR4OWe6ae5Msic6QaTTJ0sNBmHTRk9WvfJ1u0XIVyf7oEh5v9PeJQ69AmCxuW+CMQNVfT08jvaCDdBeCuF+Y4BIBpgbY+7Iq+QQ5GTCGG8AdaWHTBoi3Rq8KZTb6oKjR9WjoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuCwu0V2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWZwZxMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE2CC4CEF1;
-	Tue, 26 Aug 2025 13:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuCwu0V2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9611AC4CEF1;
+	Tue, 26 Aug 2025 13:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213243;
-	bh=yn0zCl9RecvZXRUvCIHmjpdH2hE8bABn9iwkIQHSoQk=;
+	s=korg; t=1756213245;
+	bh=3WBbV79wxdRbsy/kVlkc/CYxPgXUnh0kId2OktlLo+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWZwZxMe3yenXo+iF91XLTh8w/TH0BakVeb+hslJSpQgLU8UzYItPfeLM5xGdsOc/
-	 arnLUHq7JJrdmuviuatkXPe6zIBvGNmXTQuSK43fTMCgj7fEw+BvAKavu2Z1l7IXXI
-	 gzPXxNxRAez6NT+7MX4nh6271yX1vdi6HmvQv+YA=
+	b=IuCwu0V2oENSNJuTadkSaXbjWpXtjtd3x9cfItH5FYbDr9yBFGqBEOEYXNncigSeK
+	 V8mBSwK7v96WbmdzFmXFu52R64jseS/sFQW1zIqRWwto6Vz051Au2RDYqMj4McWeGU
+	 D+Sw8gLG0ijmbfyjHqTReIGDCSc0XT7STda7V4oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chenchangcheng <chenchangcheng@kylinos.cn>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Keith Busch <kbusch@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 257/587] media: uvcvideo: Fix bandwidth issue for Alcor camera
-Date: Tue, 26 Aug 2025 13:06:46 +0200
-Message-ID: <20250826110959.470242022@linuxfoundation.org>
+Subject: [PATCH 6.6 275/587] vfio/type1: conditional rescheduling while pinning
+Date: Tue, 26 Aug 2025 13:07:04 +0200
+Message-ID: <20250826110959.924241369@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,50 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chenchangcheng <chenchangcheng@kylinos.cn>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 9764401bf6f8a20eb11c2e78470f20fee91a9ea7 ]
+[ Upstream commit b1779e4f209c7ff7e32f3c79d69bca4e3a3a68b6 ]
 
-Some broken device return wrong dwMaxPayloadTransferSize fields as
-follows:
+A large DMA mapping request can loop through dma address pinning for
+many pages. In cases where THP can not be used, the repeated vmf_insert_pfn can
+be costly, so let the task reschedule as need to prevent CPU stalls. Failure to
+do so has potential harmful side effects, like increased memory pressure
+as unrelated rcu tasks are unable to make their reclaim callbacks and
+result in OOM conditions.
 
-[  218.632537] uvcvideo: Device requested 2752512 B/frame bandwidth.
-[  218.632598] uvcvideo: No fast enough alt setting for requested bandwidth.
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:   36-....: (20999 ticks this GP) idle=b01c/1/0x4000000000000000 softirq=35839/35839 fqs=3538
+ rcu:            hardirqs   softirqs   csw/system
+ rcu:    number:        0        107            0
+ rcu:   cputime:       50          0        10446   ==> 10556(ms)
+ rcu:   (t=21075 jiffies g=377761 q=204059 ncpus=384)
+...
+  <TASK>
+  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
+  ? walk_system_ram_range+0x63/0x120
+  ? walk_system_ram_range+0x46/0x120
+  ? pgprot_writethrough+0x20/0x20
+  lookup_memtype+0x67/0xf0
+  track_pfn_insert+0x20/0x40
+  vmf_insert_pfn_prot+0x88/0x140
+  vfio_pci_mmap_huge_fault+0xf9/0x1b0 [vfio_pci_core]
+  __do_fault+0x28/0x1b0
+  handle_mm_fault+0xef1/0x2560
+  fixup_user_fault+0xf5/0x270
+  vaddr_get_pfns+0x169/0x2f0 [vfio_iommu_type1]
+  vfio_pin_pages_remote+0x162/0x8e0 [vfio_iommu_type1]
+  vfio_iommu_type1_ioctl+0x1121/0x1810 [vfio_iommu_type1]
+  ? futex_wake+0x1c1/0x260
+  x64_sys_call+0x234/0x17a0
+  do_syscall_64+0x63/0x130
+  ? exc_page_fault+0x63/0x130
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-When dwMaxPayloadTransferSize is greater than maxpsize, it will prevent
-the camera from starting. So use the bandwidth of maxpsize.
-
-Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250510061803.811433-1-ccc194101@163.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/20250715184622.3561598-1-kbusch@meta.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/vfio/vfio_iommu_type1.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 9572fdfe74f2..83abca42c5f1 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -258,6 +258,15 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 5fe7aed3672e..f63f116b9cd0 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -635,6 +635,13 @@ static long vfio_pin_pages_remote(struct vfio_dma *dma, unsigned long vaddr,
  
- 		ctrl->dwMaxPayloadTransferSize = bandwidth;
- 	}
+ 	while (npage) {
+ 		if (!batch->size) {
++			/*
++			 * Large mappings may take a while to repeatedly refill
++			 * the batch, so conditionally relinquish the CPU when
++			 * needed to avoid stalls.
++			 */
++			cond_resched();
 +
-+	if (stream->intf->num_altsetting > 1 &&
-+	    ctrl->dwMaxPayloadTransferSize > stream->maxpsize) {
-+		dev_warn_ratelimited(&stream->intf->dev,
-+				     "UVC non compliance: the max payload transmission size (%u) exceeds the size of the ep max packet (%u). Using the max size.\n",
-+				     ctrl->dwMaxPayloadTransferSize,
-+				     stream->maxpsize);
-+		ctrl->dwMaxPayloadTransferSize = stream->maxpsize;
-+	}
- }
+ 			/* Empty batch, so refill it. */
+ 			long req_pages = min_t(long, npage, batch->capacity);
  
- static size_t uvc_video_ctrl_size(struct uvc_streaming *stream)
 -- 
 2.39.5
 
