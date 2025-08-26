@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653D61E5710;
-	Tue, 26 Aug 2025 13:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1960230146A;
+	Tue, 26 Aug 2025 13:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216129; cv=none; b=Kwxldgwq0VgKPYQ6DGz0XjlIvTnoK9fbFuY/yj2ZaXLp5dJ9GS7AZwKRk+TDLB4hItV/M/kZ4n1y8z9RGhfZov+LrmVqSfDQXWOaSFG2eSyLaSeFfiFOG7FoYsM+htLV9qygrccQcvfSNbgNLhcT+H1dlL07bQEnY+fcdjqdk2Q=
+	t=1756216132; cv=none; b=BjTm9soCZWSKqP0YD0W1ApUAvRzljsrJ7jBp4HSeFaP/vArYctLE4QJxFSV+on1rqXuvkjB45z+SLx0+w7hzvjxlDkhwTLt1ELsm1qe7XVwk2YJ2EfvaIXclNEBNh46H9p8dNDA6Cw2SALgD+P8fTwUjFsKy3J8BisnHv2BpquE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216129; c=relaxed/simple;
-	bh=sGhVW17/jfp32+r3t2eLC12SiL5BUCNYIj9QQZOVUiU=;
+	s=arc-20240116; t=1756216132; c=relaxed/simple;
+	bh=V84DhD5UtnA61Mmd25QrLoT3rJtXWp6tA652P1nw8Ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWITk9hQhxczWwQvx2oGQwrCSBFO1Feoom2l5CEPfpUPm9VZAkxdGX1CA0VERNFlmZzf1o3wXiFOy6OTannXI9xh53jTPOxjD0mU55U6ulgnqXA6t2kmTQOxsJGJIHboPollxFuXsUZHzj6adsioSvO+qyaBiWZ4X0sgKLMANmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBuFBfVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BLbpkFd9ljIqsfzJ/62BjQ1SbAEyEyDXE0+CeqxmL+jUDxoRKIfSk3vbNWP03aoryWgVnUP9ntfeEioHCxN7Xpy8uHA3hrdcqjNpmyW4NzKc01dBLiFysJnEOjljkaV1XYE18Iw1q5FqusY0WjO/sfGhzJLRmwbo7c2PjfBGZRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVgoY5pU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBuFBfVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCF4C4CEF1;
-	Tue, 26 Aug 2025 13:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVgoY5pU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EC3C4CEF1;
+	Tue, 26 Aug 2025 13:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216129;
-	bh=sGhVW17/jfp32+r3t2eLC12SiL5BUCNYIj9QQZOVUiU=;
+	s=korg; t=1756216131;
+	bh=V84DhD5UtnA61Mmd25QrLoT3rJtXWp6tA652P1nw8Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBuFBfVGTcFEyAVh+47iYd4jzipJ4rlw2QqS9CQNkkDJxdo6zMY6T0XyqmiMlgRzY
-	 CP3sK3tD40j4folcktTjuVzKtDO7eEyV9uy2TM9pV+pbrbNHrvvs74t+yna/tgET0v
-	 lkXFZe/VWMCuf37zdF9cBC5uCTQNNyyrhd1yOheA=
+	b=bVgoY5pUyBKpfzJjnpGMc8h8ilMBZbuF87TPvVwnyScbOLGal79Zn7yI7Ph+E9/qJ
+	 NO1kJXDRDlERJNdt2cVzg46kXwI5a4yfGCii55Qn/EFQOBBNgukdf83rFsCZ+Rn4WB
+	 Xn+ZL9OKaQ+p6LiofLAbHZTHfj67XQz5duQx7UC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Su Hui <suhui@nfschina.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 294/644] securityfs: dont pin dentries twice, once is enough...
-Date: Tue, 26 Aug 2025 13:06:25 +0200
-Message-ID: <20250826110953.667481713@linuxfoundation.org>
+Subject: [PATCH 5.15 295/644] usb: xhci: print xhci->xhc_state when queue_command failed
+Date: Tue, 26 Aug 2025 13:06:26 +0200
+Message-ID: <20250826110953.694211617@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,42 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 27cd1bf1240d482e4f02ca4f9812e748f3106e4f ]
+[ Upstream commit 7919407eca2ef562fa6c98c41cfdf6f6cdd69d92 ]
 
-incidentally, securityfs_recursive_remove() is broken without that -
-it leaks dentries, since simple_recursive_removal() does not expect
-anything of that sort.  It could be worked around by dput() in
-remove_one() callback, but it's easier to just drop that double-get
-stuff.
+When encounters some errors like these:
+xhci_hcd 0000:4a:00.2: xHCI dying or halted, can't queue_command
+xhci_hcd 0000:4a:00.2: FIXME: allocate a command ring segment
+usb usb5-port6: couldn't allocate usb_device
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+It's hard to know whether xhc_state is dying or halted. So it's better
+to print xhc_state's value which can help locate the resaon of the bug.
+
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20250725060117.1773770-1-suhui@nfschina.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/inode.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/host/xhci-ring.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/inode.c b/security/inode.c
-index 6c326939750d..e6e07787eec9 100644
---- a/security/inode.c
-+++ b/security/inode.c
-@@ -159,7 +159,6 @@ static struct dentry *securityfs_create_dentry(const char *name, umode_t mode,
- 		inode->i_fop = fops;
- 	}
- 	d_instantiate(dentry, inode);
--	dget(dentry);
- 	inode_unlock(dir);
- 	return dentry;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index cd94b0a4e021..626f02605192 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -4486,7 +4486,8 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
  
-@@ -306,7 +305,6 @@ void securityfs_remove(struct dentry *dentry)
- 			simple_rmdir(dir, dentry);
- 		else
- 			simple_unlink(dir, dentry);
--		dput(dentry);
+ 	if ((xhci->xhc_state & XHCI_STATE_DYING) ||
+ 		(xhci->xhc_state & XHCI_STATE_HALTED)) {
+-		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command\n");
++		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command. state: 0x%x\n",
++			 xhci->xhc_state);
+ 		return -ESHUTDOWN;
  	}
- 	inode_unlock(dir);
- 	simple_release_fs(&mount, &mount_count);
+ 
 -- 
 2.39.5
 
