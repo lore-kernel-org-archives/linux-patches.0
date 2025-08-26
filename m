@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67C81B85F8;
-	Tue, 26 Aug 2025 13:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794CE23026B;
+	Tue, 26 Aug 2025 13:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213911; cv=none; b=GoxznQSqH/U9mpulmxsuKDVQXtWsiYzo1J0kO13ASLB5JZodMrhQfUI0nLr/6yPLyLZu92Xcf9d5eiPmyburAWLOe2nC/M+9nbE1urwqALMOWnp+f0p6Ag7+o102OlY/gOVYEjUJ6+ZDKP4uES5fSdhqdH5RayVMlS2lxjdWa6o=
+	t=1756213914; cv=none; b=AKJFzC6V7XfeiPB5V4CvvwbQDO5PjtRAwK3KOlYUXVnosm/B/pVU3AXW5gvmh7cC5tr9APYOzToaoNkgAWwcBzIWxC+9K7EhY6czZ2R7fk/EuxHCBUB2YS92wPJYRiAsZqNN+tQvOVzJmjXwrPQ4n3dDlQS0kSE1DjU+nDm10Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213911; c=relaxed/simple;
-	bh=OMoamD2RZGbFWXOWrJo8vyke3r7l30a0QH/kPTBUr2g=;
+	s=arc-20240116; t=1756213914; c=relaxed/simple;
+	bh=ADK310Mq2o8I9W92IHUWpq+POjH4hzL+S8flOdDzjRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ji6xKqM/NHoWe+4eGNY3phlJlgb2S8E0rVNhLW4kLHAhTXnkwJ5LRuzngcDJQAF1VZk7/hJ1hFtv53ovGz1lUROn59CxFajIfvgATSK/LjClaSZszHz8bOCi6lqZVxR+3wDc7JVtPofDP+WldfaGmihf4FRF3bFfh6mhUUddqRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocV6pu3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETNjm6jZwG2dOX77M95qEUoxDKZqVjiPzGQweW40g96AIKUvdtHCobji3CWvLygEDjEv2rTeP7myU4yFHcKeLa5b3mrHcxpZRnSjKUiDsuyqgMdlfsjLfusmtVITXJBAK0G0H7ZORv03Mhn4fPXa1Gnr2bgDtXzinpppTUOB2+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVNJnD8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocV6pu3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F4AC4CEF1;
-	Tue, 26 Aug 2025 13:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVNJnD8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC1CC4CEF1;
+	Tue, 26 Aug 2025 13:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213911;
-	bh=OMoamD2RZGbFWXOWrJo8vyke3r7l30a0QH/kPTBUr2g=;
+	s=korg; t=1756213914;
+	bh=ADK310Mq2o8I9W92IHUWpq+POjH4hzL+S8flOdDzjRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocV6pu3MNd6F+UFgE6lLvm+cStDaheSDGMRO0ZKdx2J1omgvLpU+mSz+1jL2JTMBl
-	 V/d++kTVcbsRe4btxUmqPUpvAMgLqEQ7hji11E0aYA1GbDrLZosbr5oef4xXjtV1Q6
-	 GbFh57NuSfP9M6Iu0u9gv2M+o8c2ORVl3xdhPu0s=
+	b=jVNJnD8hsjZ1oUCprmNZL7P2BG7sOXq4znfEmdWvkMEebPJzjzFRAowcL+QYUgNno
+	 4Jb8kGyMLZjEIW63P+G3pn1eH8UgkJntnAao0Z4B/tub3W/eMPOVpGEm3UJEL1bO8Y
+	 eAUMrPOymX+BxG/G3B7Qn04bpwJZLwfhI+d1pQHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Zenm Chen <zenmchen@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 527/587] USB: storage: Ignore driver CD mode for Realtek multi-mode Wi-Fi dongles
-Date: Tue, 26 Aug 2025 13:11:16 +0200
-Message-ID: <20250826111006.407710680@linuxfoundation.org>
+	Kuen-Han Tsai <khtsai@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 528/587] usb: dwc3: Ignore late xferNotReady event to prevent halt timeout
+Date: Tue, 26 Aug 2025 13:11:17 +0200
+Message-ID: <20250826111006.434939868@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,79 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-commit a3dc32c635bae0ae569f489e00de0e8f015bfc25 upstream.
+commit 58577118cc7cec9eb7c1836bf88f865ff2c5e3a3 upstream.
 
-Many Realtek USB Wi-Fi dongles released in recent years have two modes:
-one is driver CD mode which has Windows driver onboard, another one is
-Wi-Fi mode. Add the US_FL_IGNORE_DEVICE quirk for these multi-mode devices.
-Otherwise, usb_modeswitch may fail to switch them to Wi-Fi mode.
+During a device-initiated disconnect, the End Transfer command resets
+the event filter, allowing a new xferNotReady event to be generated
+before the controller is fully halted. Processing this late event
+incorrectly triggers a Start Transfer, which prevents the controller
+from halting and results in a DSTS.DEVCTLHLT bit polling timeout.
 
-Currently there are only two USB IDs known to be used by these multi-mode
-Wi-Fi dongles: 0bda:1a2b and 0bda:a192.
+Ignore the late xferNotReady event if the controller is already in a
+disconnected state.
 
-Information about Mercury MW310UH in /sys/kernel/debug/usb/devices.
-T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 12 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=a192 Rev= 2.00
-S:  Manufacturer=Realtek
-S:  Product=DISK
-C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=(none)
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Information about D-Link AX9U rev. A1 in /sys/kernel/debug/usb/devices.
-T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#= 55 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=1a2b Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=DISK
-C:* #Ifs= 1 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=(none)
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250813162415.2630-1-zenmchen@gmail.com
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250807090700.2397190-1-khtsai@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/usb/dwc3/gadget.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -1501,6 +1501,28 @@ UNUSUAL_DEV( 0x0bc2, 0x3332, 0x0000, 0x9
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NO_WP_DETECT ),
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -3735,6 +3735,15 @@ static void dwc3_gadget_endpoint_transfe
+ static void dwc3_gadget_endpoint_transfer_not_ready(struct dwc3_ep *dep,
+ 		const struct dwc3_event_depevt *event)
+ {
++	/*
++	 * During a device-initiated disconnect, a late xferNotReady event can
++	 * be generated after the End Transfer command resets the event filter,
++	 * but before the controller is halted. Ignore it to prevent a new
++	 * transfer from starting.
++	 */
++	if (!dep->dwc->connected)
++		return;
++
+ 	dwc3_gadget_endpoint_frame_from_event(dep, event);
  
-+/*
-+ * Reported by Zenm Chen <zenmchen@gmail.com>
-+ * Ignore driver CD mode, otherwise usb_modeswitch may fail to switch
-+ * the device into Wi-Fi mode.
-+ */
-+UNUSUAL_DEV( 0x0bda, 0x1a2b, 0x0000, 0xffff,
-+		"Realtek",
-+		"DISK",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_IGNORE_DEVICE ),
-+
-+/*
-+ * Reported by Zenm Chen <zenmchen@gmail.com>
-+ * Ignore driver CD mode, otherwise usb_modeswitch may fail to switch
-+ * the device into Wi-Fi mode.
-+ */
-+UNUSUAL_DEV( 0x0bda, 0xa192, 0x0000, 0xffff,
-+		"Realtek",
-+		"DISK",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_IGNORE_DEVICE ),
-+
- UNUSUAL_DEV(  0x0d49, 0x7310, 0x0000, 0x9999,
- 		"Maxtor",
- 		"USB to SATA",
+ 	/*
 
 
