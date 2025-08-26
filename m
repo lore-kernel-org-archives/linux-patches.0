@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60964352094;
-	Tue, 26 Aug 2025 14:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA7A352094;
+	Tue, 26 Aug 2025 14:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219404; cv=none; b=lPtGGDbsjr5WfBQjf7wh0UKbrvc1vP49wAm9KnOD54fcrIlO5L8vFwDxXaUA/lVe3fLtX3tgAkMSsKiU7QxfJp4Iwz0QovauIocClY5dOVq+DVSGRPah7zVYFPv/wIrcIrAwH+FPg5ktpFv9/FFq52fnJGKFZ4L1Oe4CHDdG2yI=
+	t=1756219407; cv=none; b=IlujiRqIT7H8OZIXWZncGlyOrkHGcsbLgyotx9vT6znWhJgv+enTj12Ey/e7tOweYkX9yEDrdicD6KpzjvkNPF9sU9mjpK1OB8vsPOAK/Jnr5t7Afzdim6St6oaPB5SR522uHza2bYsXxLaBRmGVj8pi1+GpG4EpmLvm9WjBofA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219404; c=relaxed/simple;
-	bh=JyKAMQqodtPFnzt68NS3Fx7U9MukBwLqhOfWBws2cdQ=;
+	s=arc-20240116; t=1756219407; c=relaxed/simple;
+	bh=yeJ0s/Jes2wEvFFEGH1IFqRroruyKein3FUpxf8hfvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnG9DIiOeuW3GrH6ZydudgzK0YPDA05c2PuM7TcD2i07Gazw/pcabrcCsc7rHX2/CmgCSXYkRCgwT9Qj/nFa3ppq2ckffwpEvdk/zon37GlG5HPJzicO+Xaz4fAmTWhPYsJjOpl9V0KpfOnGfLV76XxS9J/TUVbF8XmzVAWda4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDNeVnIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDmJGGpGcIJCIIOHhEQKei91wVAauJtBOibyC12DY7vcd++3t+CMLHDtQbyYGgHK50u8K6227C+fuCFtjKqVn3m/d3lbAFcQfzd/HE6UIFJv6Nx4TMwmgRYZzSxlp+Gtg08oo3F/KdxiKtezldNCODkgSuQ/VFf40nncwcVYxNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TidTXRnM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDNeVnIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AEEC4CEF1;
-	Tue, 26 Aug 2025 14:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TidTXRnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFAFC4CEF1;
+	Tue, 26 Aug 2025 14:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219404;
-	bh=JyKAMQqodtPFnzt68NS3Fx7U9MukBwLqhOfWBws2cdQ=;
+	s=korg; t=1756219406;
+	bh=yeJ0s/Jes2wEvFFEGH1IFqRroruyKein3FUpxf8hfvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDNeVnItk1+wfiwRo4lDDQuVS4m+xK2fksCi2gCY+sCQCJKjz5obME6bH6zJGskK8
-	 ojclJmwDfltH6Mfxgn0EJBnP42OlMzCvUUIE3nJoVoz70KYNeo/r8g/6HrFq5xFZ/H
-	 N3pkRJsYjpyMEp664sYDmZDa3X/eopxjJ4K5aK5o=
+	b=TidTXRnMBY+hPBeOSogOgbIgce942x/u0B7Wl05TnFyUnlaNG1U7/kYx9bvMRt2HY
+	 FLt+8xYxiBawEnMJAxtEeXQPrB3L4s42UeICQyn51isNFJfZQRq9Nkp/7SUty6zph3
+	 ykDJ/nzjeyCei91GMEOio4B2/wPe0x+l2jYWbJCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
 	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 369/403] media: venus: vdec: Clamp param smaller than 1fps and bigger than 240.
-Date: Tue, 26 Aug 2025 13:11:35 +0200
-Message-ID: <20250826110917.201093723@linuxfoundation.org>
+Subject: [PATCH 5.4 370/403] media: qcom: camss: cleanup media device allocated resource on error path
+Date: Tue, 26 Aug 2025 13:11:36 +0200
+Message-ID: <20250826110917.228691919@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,61 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 377dc500d253f0b26732b2cb062e89668aef890a ]
+[ Upstream commit 69080ec3d0daba8a894025476c98ab16b5a505a4 ]
 
-The driver uses "whole" fps in all its calculations (e.g. in
-load_per_instance()). Those calculation expect an fps bigger than 1, and
-not big enough to overflow.
+A call to media_device_init() requires media_device_cleanup() counterpart
+to complete cleanup and release any allocated resources.
 
-Clamp the value if the user provides a param that will result in an invalid
-fps.
+This has been done in the driver .remove() right from the beginning, but
+error paths on .probe() shall also be fixed.
 
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
-Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
+Fixes: a1d7c116fcf7 ("media: camms: Add core files")
 Cc: stable@vger.kernel.org
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5615-rb5
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-[bod: Change "parm" to "param"]
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[ Adjust context in header ]
+[ err_genpd_cleanup => err_cleanup ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/core.h |    2 ++
- drivers/media/platform/qcom/venus/vdec.c |    5 ++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -16,6 +16,8 @@
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -888,7 +888,7 @@ static int camss_probe(struct platform_d
+ 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
+-		goto err_cleanup;
++		goto err_media_device_cleanup;
+ 	}
  
- #define VIDC_CLKS_NUM_MAX	4
- 
-+#define VENUS_MAX_FPS			240
-+
- struct freq_tbl {
- 	unsigned int load;
- 	unsigned long freq;
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -418,11 +418,10 @@ static int vdec_s_parm(struct file *file
- 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
- 	do_div(us_per_frame, timeperframe->denominator);
- 
--	if (!us_per_frame)
--		return -EINVAL;
--
-+	us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
- 	fps = (u64)USEC_PER_SEC;
- 	do_div(fps, us_per_frame);
-+	fps = min(VENUS_MAX_FPS, fps);
- 
- 	inst->fps = fps;
- 	inst->timeperframe = *timeperframe;
+ 	ret = camss_register_entities(camss);
+@@ -945,6 +945,8 @@ err_register_subdevs:
+ 	camss_unregister_entities(camss);
+ err_register_entities:
+ 	v4l2_device_unregister(&camss->v4l2_dev);
++err_media_device_cleanup:
++	media_device_cleanup(&camss->media_dev);
+ err_cleanup:
+ 	v4l2_async_notifier_cleanup(&camss->notifier);
+ err_free:
 
 
