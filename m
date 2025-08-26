@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B5F33A010;
-	Tue, 26 Aug 2025 13:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749E7322A1E;
+	Tue, 26 Aug 2025 13:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214993; cv=none; b=AimjnmbDKenA2J9+aJHnsD24o74CqB2o3PZpUUaDxEWAQiKdW+euKAZnGFcNILUtphe+1Cjrzj6OioaAQgth0z6FQEhOPR2+pQ8Eagn3USE82/jl5OA0dU0IUCJof9xCSdZ7PNwd33aLw8LeMtb+0/OqMnhivjR5KyjEgqMspBU=
+	t=1756214995; cv=none; b=cHYHXMQdPD5Gs5hHcxZXah8LMnSgsVsquVD9Z0LnbVYg1M3oET1xX5QcTtOF5Kqs1DpUU/IHOByX5Qmo8FxLoncyzCE8macz51a9ACuwsk8yiq94VVjZ+SV8ZdkFkTqTzT8c+GGGQQcHPhtCHuzHN6FCgjJrPzWqBWxD385qeqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214993; c=relaxed/simple;
-	bh=JeXRW9IHqmQ5IPSBqAWXSyLaWrDIcQ4dcSEG5rS/+xY=;
+	s=arc-20240116; t=1756214995; c=relaxed/simple;
+	bh=Sz1wEg9qLpJj7KWIgpcoWkYFk2OhfgzyhzY38GwgMsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mmfTh6xkCL+8f7ZCWBtFggmE/m7+VF523gHN8YfhCa6FIxlJDl/5EgWu0k/3ZNZHFJ2qDBBBrHBHZl5gfjnGfMwB1B1K/L5nQkdF2Fx4GclmZI3z0wFcSbIci6iZnwGhMmbFQwVj+0ew6ODoeErG0U5+lNKUQcCjcFRrLZPNUAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaE9pkbA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pF/hGKC7/dYjFtFBvJinR3p1QKdA1H6qD2D8oGxa1G5o5a1CpULs9mrMjGd1CZcIlnqP4mJyx6KyfPeCHvShx59va6IpO1yRcwF31CleI5bc+3IBZUXYALSsie+iTc14+y/JxBzUe7aLV30HZEBIJOpIOKNwupML7V+udVLp+I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jB1CjeXL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaE9pkbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F6DC16AAE;
-	Tue, 26 Aug 2025 13:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jB1CjeXL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8998C4CEF1;
+	Tue, 26 Aug 2025 13:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214992;
-	bh=JeXRW9IHqmQ5IPSBqAWXSyLaWrDIcQ4dcSEG5rS/+xY=;
+	s=korg; t=1756214995;
+	bh=Sz1wEg9qLpJj7KWIgpcoWkYFk2OhfgzyhzY38GwgMsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaE9pkbAzKrNypXvTih/PMd9J1ihYEDvRNAZPCZrgXJduAz7cK7xEXPZIDfz/q2nM
-	 rfph7tZ99i1ycAIDDoRrf0Hu4SKFEBkfO+VCXtpLILfPTOh9+TCUaWJbnXMT+xbcV1
-	 zZdY5xdkzmzWEYjscLf4mXph9ZACmnt9ZU97GnSI=
+	b=jB1CjeXLLAVaOaqcTIOwc9W2da9XpZn4v8XDzuIdNBa/OGJMIYrsF/9h71vYX8a4N
+	 ePlF+3029Shk5Dk1WT8TngGq1u1P2jRsu+lbrDGvxdJd6AVLPivO3+IBK9/o2r+YIB
+	 fRLgV7j5yMTWyT8kA/olBzWAosVrG0kElBeAD5O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 319/482] media: gspca: Add bounds checking to firmware parser
-Date: Tue, 26 Aug 2025 13:09:32 +0200
-Message-ID: <20250826110938.688634714@linuxfoundation.org>
+	Vince Weaver <vincent.weaver@maine.edu>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 346/482] perf/x86/intel: Fix crash in icl_update_topdown_event()
+Date: Tue, 26 Aug 2025 13:09:59 +0200
+Message-ID: <20250826110939.378195558@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,56 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit aef89c0b2417da79cb2062a95476288f9f203ab0 upstream.
+[ Upstream commit b0823d5fbacb1c551d793cbfe7af24e0d1fa45ed ]
 
-This sd_init() function reads the firmware.  The firmware data holds a
-series of records and the function reads each record and sends the data
-to the device.  The request_ihex_firmware() function
-calls ihex_validate_fw() which ensures that the total length of all the
-records won't read out of bounds of the fw->data[].
+The perf_fuzzer found a hard-lockup crash on a RaptorLake machine:
 
-However, a potential issue is if there is a single very large
-record (larger than PAGE_SIZE) and that would result in memory
-corruption.  Generally we trust the firmware, but it's always better to
-double check.
+  Oops: general protection fault, maybe for address 0xffff89aeceab400: 0000
+  CPU: 23 UID: 0 PID: 0 Comm: swapper/23
+  Tainted: [W]=WARN
+  Hardware name: Dell Inc. Precision 9660/0VJ762
+  RIP: 0010:native_read_pmc+0x7/0x40
+  Code: cc e8 8d a9 01 00 48 89 03 5b cd cc cc cc cc 0f 1f ...
+  RSP: 000:fffb03100273de8 EFLAGS: 00010046
+  ....
+  Call Trace:
+    <TASK>
+    icl_update_topdown_event+0x165/0x190
+    ? ktime_get+0x38/0xd0
+    intel_pmu_read_event+0xf9/0x210
+    __perf_event_read+0xf9/0x210
 
-Fixes: 49b61ec9b5af ("[media] gspca: Add new vicam subdriver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+CPUs 16-23 are E-core CPUs that don't support the perf metrics feature.
+The icl_update_topdown_event() should not be invoked on these CPUs.
+
+It's a regression of commit:
+
+  f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+
+The bug introduced by that commit is that the is_topdown_event() function
+is mistakenly used to replace the is_topdown_count() call to check if the
+topdown functions for the perf metrics feature should be invoked.
+
+Fix it.
+
+Fixes: f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+Closes: https://lore.kernel.org/lkml/352f0709-f026-cd45-e60c-60dfd97f73f3@maine.edu/
+Reported-by: Vince Weaver <vincent.weaver@maine.edu>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Vince Weaver <vincent.weaver@maine.edu>
+Cc: stable@vger.kernel.org # v6.15+
+Link: https://lore.kernel.org/r/20250612143818.2889040-1-kan.liang@linux.intel.com
+[ omitted PEBS check ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/vicam.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/gspca/vicam.c
-+++ b/drivers/media/usb/gspca/vicam.c
-@@ -227,6 +227,7 @@ static int sd_init(struct gspca_dev *gsp
- 	const struct ihex_binrec *rec;
- 	const struct firmware *fw;
- 	u8 *firmware_buf;
-+	int len;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2703,7 +2703,7 @@ static void intel_pmu_read_event(struct
+ 		if (pmu_enabled)
+ 			intel_pmu_disable_all();
  
- 	ret = request_ihex_firmware(&fw, VICAM_FIRMWARE,
- 				    &gspca_dev->dev->dev);
-@@ -241,9 +242,14 @@ static int sd_init(struct gspca_dev *gsp
- 		goto exit;
- 	}
- 	for (rec = (void *)fw->data; rec; rec = ihex_next_binrec(rec)) {
--		memcpy(firmware_buf, rec->data, be16_to_cpu(rec->len));
-+		len = be16_to_cpu(rec->len);
-+		if (len > PAGE_SIZE) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		memcpy(firmware_buf, rec->data, len);
- 		ret = vicam_control_msg(gspca_dev, 0xff, 0, 0, firmware_buf,
--					be16_to_cpu(rec->len));
-+					len);
- 		if (ret < 0)
- 			break;
- 	}
+-		if (is_topdown_event(event))
++		if (is_topdown_count(event))
+ 			static_call(intel_pmu_update_topdown_event)(event);
+ 		else
+ 			intel_pmu_drain_pebs_buffer();
 
 
