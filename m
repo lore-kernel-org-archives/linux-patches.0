@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F072C08A8;
-	Tue, 26 Aug 2025 13:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BC523026B;
+	Tue, 26 Aug 2025 13:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213737; cv=none; b=Q7yDdn3HfUTCNU9xlpuU1fDQd3tKTbXz/eZW+dKmpDjvpVqXT5kSR6DTjhXfpIMTv8HjjkNKwhkI2hQmLgOFc0imPwUESZbEyzH4Kz2n7VbYXc3u+qbvY9rugQTZ1o7ldCx3HkVIAU2u8dozrsuZ7S/9mie8P+KsVFL8PTm8wZc=
+	t=1756213739; cv=none; b=RpKY04BOiOus6nUuwp8W0n82zDrhFDhPUz3/4pVby6hrv4JQyfIxxP0z/b15D0jYsIGrqtJDEbNy5oUaZLkDLvmEZsN0YfJpvU05gICS2lvET0svDYtnhH0UPFC5GRBG8Bm0r6zTRpFNeDKpLevj6KKe6L45cRpyPxxdDKZ5q1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213737; c=relaxed/simple;
-	bh=5PAXjjr0tXz5Pvh0aQdLBAPxlGnFj0Qjmo8Mn4vPxyY=;
+	s=arc-20240116; t=1756213739; c=relaxed/simple;
+	bh=b49btHaJNt+mRHvPNS/vCim1+qtXR94DmAzYPmFQGLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATQKZwrcJQikxUb3INoxEUewCGAu5pIF/m0jDE+wD6hrmMrzVV/vh4WdHqvglXKc8ykTXAjci+g5EPyFtQMv+OQPHMQeDG95TjdsFprOdsXsxlE70G5kvfQaC4hF//e3J5YsjX/K07UqCEEGZbRDHr3a22oOYouS34J3rggJm8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvLf1fjl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgC7vlrPha0QqujTtj+Bq1hBD7gqFcVGymm8tWtQzS5fsyZLJU+AFTzXHF8PX1B/lYjkFrkgii3vuxpZfbq+a7bFzsTZH/vr9+4jh6LoGlYUHBNsehkNZriSKA8SdsztkhM6eYep2ubkP5WLS4O7/P3RreW7JJrLwSFchjKH0r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIE9vtS2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvLf1fjl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C87C4CEF1;
-	Tue, 26 Aug 2025 13:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIE9vtS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33638C4CEF1;
+	Tue, 26 Aug 2025 13:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213736;
-	bh=5PAXjjr0tXz5Pvh0aQdLBAPxlGnFj0Qjmo8Mn4vPxyY=;
+	s=korg; t=1756213739;
+	bh=b49btHaJNt+mRHvPNS/vCim1+qtXR94DmAzYPmFQGLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvLf1fjlEdVH+VUiuU09sE2/fsRdOV2yuuLk5aL/b0X3VlKkEyLlpxL7kb62axUxs
-	 zW5h20ti2dGwX1KHR2Tw0oV957JipRYeo6H7mG/3f3FNuWIq5RTAC0g8J/Jr2pYCyY
-	 yCAJEFx7wW9tGfKJ2qFnhvE6z9OhyKibe7yK80mo=
+	b=bIE9vtS2fbo04s6uhhQDpDGCEdkC4lNWVJdFH66Y5f6jZWdoJ9UtAKTC/t4wdxISY
+	 OtzLvtT+DHxOifVIhZ+DBKXdpaSDll/b9bxSSSrDzbcTX6vYaKdFV3mJtPCY+f8YCD
+	 gADTz+snN4fkXoM4dbIc8pdIVaBbixQinG9JhJU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Subject: [PATCH 6.6 461/587] s390/mm: Remove possible false-positive warning in pte_free_defer()
-Date: Tue, 26 Aug 2025 13:10:10 +0200
-Message-ID: <20250826111004.702688479@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 462/587] KVM: x86: Take irqfds.lock when adding/deleting IRQ bypass producer
+Date: Tue, 26 Aug 2025 13:10:11 +0200
+Message-ID: <20250826111004.730102814@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,56 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 5647f61ad9171e8f025558ed6dc5702c56a33ba3 upstream.
+commit f1fb088d9cecde5c3066d8ff8846789667519b7d upstream.
 
-Commit 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing
-page") added a warning to pte_free_defer(), on our request. It was meant
-to warn if this would ever be reached for KVM guest mappings, because
-the page table would be freed w/o a gmap_unlink(). THP mappings are not
-allowed for KVM guests on s390, so this should never happen.
+Take irqfds.lock when adding/deleting an IRQ bypass producer to ensure
+irqfd->producer isn't modified while kvm_irq_routing_update() is running.
+The only lock held when a producer is added/removed is irqbypass's mutex.
 
-However, it is possible that the warning is triggered in a valid case as
-false-positive.
-
-s390_enable_sie() takes the mmap_lock, marks all VMAs as VM_NOHUGEPAGE and
-splits possibly existing THP guest mappings. mm->context.has_pgste is set
-to 1 before that, to prevent races with the mm_has_pgste() check in
-MADV_HUGEPAGE.
-
-khugepaged drops the mmap_lock for file mappings and might run in parallel,
-before a vma is marked VM_NOHUGEPAGE, but after mm->context.has_pgste was
-set to 1. If it finds file mappings to collapse, it will eventually call
-pte_free_defer(). This will trigger the warning, but it is a valid case
-because gmap is not yet set up, and the THP mappings will be split again.
-
-Therefore, remove the warning and the comment.
-
-Fixes: 8211dad627981 ("s390: add pte_free_defer() for pgtables sharing page")
-Cc: <stable@vger.kernel.org> # 6.6+
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 872768800652 ("KVM: x86: select IRQ_BYPASS_MANAGER")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-5-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[sean: account for lack of kvm_x86_call()]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/pgalloc.c |    5 -----
- 1 file changed, 5 deletions(-)
+ arch/x86/kvm/x86.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/arch/s390/mm/pgalloc.c
-+++ b/arch/s390/mm/pgalloc.c
-@@ -456,11 +456,6 @@ void pte_free_defer(struct mm_struct *mm
- 	page = virt_to_page(pgtable);
- 	SetPageActive(page);
- 	page_table_free(mm, (unsigned long *)pgtable);
--	/*
--	 * page_table_free() does not do the pgste gmap_unlink() which
--	 * page_table_free_rcu() does: warn us if pgste ever reaches here.
--	 */
--	WARN_ON_ONCE(mm_has_pgste(mm));
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13266,16 +13266,22 @@ int kvm_arch_irq_bypass_add_producer(str
+ {
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 	int ret;
+ 
+-	irqfd->producer = prod;
+ 	kvm_arch_start_assignment(irqfd->kvm);
++
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = prod;
++
+ 	ret = static_call(kvm_x86_pi_update_irte)(irqfd->kvm,
+ 					 prod->irq, irqfd->gsi, 1);
+-
+ 	if (ret)
+ 		kvm_arch_end_assignment(irqfd->kvm);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	return ret;
  }
- #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
+ 
+@@ -13285,9 +13291,9 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	int ret;
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 
+ 	WARN_ON(irqfd->producer != prod);
+-	irqfd->producer = NULL;
+ 
+ 	/*
+ 	 * When producer of consumer is unregistered, we change back to
+@@ -13295,11 +13301,17 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	 * when the irq is masked/disabled or the consumer side (KVM
+ 	 * int this case doesn't want to receive the interrupts.
+ 	*/
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = NULL;
++
+ 	ret = static_call(kvm_x86_pi_update_irte)(irqfd->kvm, prod->irq, irqfd->gsi, 0);
+ 	if (ret)
+ 		printk(KERN_INFO "irq bypass consumer (token %p) unregistration"
+ 		       " fails: %d\n", irqfd->consumer.token, ret);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	kvm_arch_end_assignment(irqfd->kvm);
+ }
  
 
 
