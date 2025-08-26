@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DF6350D44;
-	Tue, 26 Aug 2025 14:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE1D10E0;
+	Tue, 26 Aug 2025 14:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218185; cv=none; b=mbxsnrJhRkg/IkPNY+S/9+q1jwbXF48+MuMhZmuBrQPPnKFiVUOSahTrCv3g7te1GLA0HppwQMGa2y747QJ8l315nlMrnCY8NzYq9HVxkV4ae24alkboewSPf1VgGk6ErazPFYNOqeFHoQeWsqyPFHzycIyNiqPCVB8Gk491rgw=
+	t=1756218188; cv=none; b=b83Th4Bq3LjWbLK2JkT3GK7MiRQCLVCkEGoH05ell1dI9I3uuLvcLWGm0Z4m9O7/jqyUMdu/0O+lq7EydpPT51Ooc/zhoD9OU1HaU+X1eL03xG3YJeH6xaSU4RU8P6prI4CoyyXPSwtf1KyWtYPAxs/yeGunwKq9SGp6Tc4ddT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218185; c=relaxed/simple;
-	bh=EpmJmZuS4roX/LfFGMLqCZWyUyw0RP710rCsZar78vU=;
+	s=arc-20240116; t=1756218188; c=relaxed/simple;
+	bh=7J4nFONPhlLszpGvd51ppet5mJrujuqzZTRk9CbghIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GKMRAOyrr8hEy4z4I5hqh0qDaOJixC7BiZLiRjN+EPvdWxRgw0PTzukcX4m/ncRTMPZw7GMlu+3McR8rnc2dWfcvP1FEbditll3eG56hcmlT1/Q6+v0Gw18KUObHMaWLrh4jf2zvxRiyOX/OHLrfeiOgV4kULi9dDfNX572q3Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSn41LH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tpM4uE6uXB+TA9VZ60YcFWgChfbSbz2zzyI+jJx4QAD8NN2eDkKJQPkqnTnzoXH9ICDxZY3Yr/nevkHL6eM1vrtSt7nHsLMLmwc+/pg12AdJMn9Zm2f1wKZ63tlJumLKgMtl7O/3rg4tVLKTjipAq2rstxDyo/0HJa8gsK3Bp1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xo3LAFFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSn41LH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26642C4CEF1;
-	Tue, 26 Aug 2025 14:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo3LAFFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A0EC4CEF1;
+	Tue, 26 Aug 2025 14:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218185;
-	bh=EpmJmZuS4roX/LfFGMLqCZWyUyw0RP710rCsZar78vU=;
+	s=korg; t=1756218188;
+	bh=7J4nFONPhlLszpGvd51ppet5mJrujuqzZTRk9CbghIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSn41LH1n3QsiYR1RDJ70mgeSf5946Cgz4L45UkMJTM0FL3pAA0LyNE3b/J03u1h3
-	 KEfWVPlARUeBXs2xyS+H49GkmQjlShrANrUYfZsx8ZGAfGWsEIdxwAb1fNQa5cgpeu
-	 UFTRmrZtHaW1o7gikwpiYVFr358idPVc+FYsvAI0=
+	b=Xo3LAFFp5enwKna4vfHtxmtbeRJl+5IwqzqIXU3dbU+XYAsiZipNOIlm8hpn1Oclb
+	 1W+g8EtnJvicD9GP2u9jqc5QI6n3CCymI62lGTny7iIIT8gR8lBveELcTKNbVrOu+2
+	 9CY2L/VkLlN4EooEhbZ+67MSycF5RrQPzArY7o1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin.Cao" <lincao12@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philipp Stanner <phasta@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Sergey Senozhatsky <sergey.senozhatsky@gmail.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 425/523] drm/sched: Remove optimization that causes hang when killing dependent jobs
-Date: Tue, 26 Aug 2025 13:10:35 +0200
-Message-ID: <20250826110934.940266937@linuxfoundation.org>
+Subject: [PATCH 5.10 426/523] mm/zsmalloc.c: convert to use kmem_cache_zalloc in cache_alloc_zspage()
+Date: Tue, 26 Aug 2025 13:10:36 +0200
+Message-ID: <20250826110934.964700624@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -46,89 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Lin.Cao" <lincao12@amd.com>
+From: Miaohe Lin <linmiaohe@huawei.com>
 
-[ Upstream commit 15f77764e90a713ee3916ca424757688e4f565b9 ]
+[ Upstream commit f0231305acd53375c6cf736971bf5711105dd6bb ]
 
-When application A submits jobs and application B submits a job with a
-dependency on A's fence, the normal flow wakes up the scheduler after
-processing each job. However, the optimization in
-drm_sched_entity_add_dependency_cb() uses a callback that only clears
-dependencies without waking up the scheduler.
+We always memset the zspage allocated via cache_alloc_zspage.  So it's
+more convenient to use kmem_cache_zalloc in cache_alloc_zspage than caller
+do it manually.
 
-When application A is killed before its jobs can run, the callback gets
-triggered but only clears the dependency without waking up the scheduler,
-causing the scheduler to enter sleep state and application B to hang.
-
-Remove the optimization by deleting drm_sched_entity_clear_dep() and its
-usage, ensuring the scheduler is always woken up when dependencies are
-cleared.
-
-Fixes: 777dbd458c89 ("drm/amdgpu: drop a dummy wakeup scheduler")
-Cc: stable@vger.kernel.org # v4.6+
-Signed-off-by: Lin.Cao <lincao12@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20250717084453.921097-1-lincao12@amd.com
-[ adjust context ]
+Link: https://lkml.kernel.org/r/20210114120032.25885-1-linmiaohe@huawei.com
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 694d6b99923e ("mm/zsmalloc: do not pass __GFP_MOVABLE if CONFIG_COMPACTION=n")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+ mm/zsmalloc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -314,19 +314,6 @@ void drm_sched_entity_destroy(struct drm
- EXPORT_SYMBOL(drm_sched_entity_destroy);
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -357,7 +357,7 @@ static void cache_free_handle(struct zs_
  
- /**
-- * drm_sched_entity_clear_dep - callback to clear the entities dependency
-- */
--static void drm_sched_entity_clear_dep(struct dma_fence *f,
--				       struct dma_fence_cb *cb)
--{
--	struct drm_sched_entity *entity =
--		container_of(cb, struct drm_sched_entity, cb);
--
--	entity->dependency = NULL;
--	dma_fence_put(f);
--}
--
--/**
-  * drm_sched_entity_clear_dep - callback to clear the entities dependency and
-  * wake up scheduler
-  */
-@@ -336,7 +323,8 @@ static void drm_sched_entity_wakeup(stru
- 	struct drm_sched_entity *entity =
- 		container_of(cb, struct drm_sched_entity, cb);
- 
--	drm_sched_entity_clear_dep(f, cb);
-+	entity->dependency = NULL;
-+	dma_fence_put(f);
- 	drm_sched_wakeup(entity->rq->sched);
+ static struct zspage *cache_alloc_zspage(struct zs_pool *pool, gfp_t flags)
+ {
+-	return kmem_cache_alloc(pool->zspage_cachep,
++	return kmem_cache_zalloc(pool->zspage_cachep,
+ 			flags & ~(__GFP_HIGHMEM|__GFP_MOVABLE));
  }
  
-@@ -392,13 +380,6 @@ static bool drm_sched_entity_add_depende
- 		fence = dma_fence_get(&s_fence->scheduled);
- 		dma_fence_put(entity->dependency);
- 		entity->dependency = fence;
--		if (!dma_fence_add_callback(fence, &entity->cb,
--					    drm_sched_entity_clear_dep))
--			return true;
--
--		/* Ignore it when it is already scheduled */
--		dma_fence_put(fence);
--		return false;
- 	}
+@@ -1067,7 +1067,6 @@ static struct zspage *alloc_zspage(struc
+ 	if (!zspage)
+ 		return NULL;
  
- 	if (!dma_fence_add_callback(entity->dependency, &entity->cb,
+-	memset(zspage, 0, sizeof(struct zspage));
+ 	zspage->magic = ZSPAGE_MAGIC;
+ 	migrate_lock_init(zspage);
+ 
 
 
