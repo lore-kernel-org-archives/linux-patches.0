@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9257F245012;
-	Tue, 26 Aug 2025 11:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B79729BD87;
+	Tue, 26 Aug 2025 11:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207400; cv=none; b=MzIm/nxbpBRxzHbsgG1sQ+9CqwTAZkAYnZxgKrt+L/8aprWNpAqt4cb4axTYNZ5Z0BJ/KSAECMnfrmFHDV+fmA6NjyF2maxrR2VQ5RQ/yRn+MjH6J6lDgTpydL1T/UNfq4aJFvJDROCyco0s9ZSg49FqQuv23E8Ag5MHuixHWTs=
+	t=1756207403; cv=none; b=tDo2fWnAi1t2QQm1FrMcMcx3d6eFJdDjHUFW3RDxEgDidpyRz/Gy5RTrp/Yq7w0hUME4nwDIBU3kqGqrsloYzPx1nfwdCc81czz1kQ0UTi2NxmAdMEViF93KbbD4NwotVP3GS0dGM9aiSjgY1fNjYEllcEO7dP8KsT0cN+phDMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207400; c=relaxed/simple;
-	bh=d50SzxnAb4GPmi8J/YYKiq7EXYDu8yLO1zxiPEPGdUk=;
+	s=arc-20240116; t=1756207403; c=relaxed/simple;
+	bh=X1BslSxcTA124aasO/YzMS8UjycengwLD2l3MTTeL0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAteRK7Hxu7tr4OnAabCSgkFjrxYRxO7VsB0k8YzKVoxfeya4NFftdqqwi405hfjy4uu14vEFWFMsT038VzQrQwdSx8QTKRzEjXKw3dTRCW0Pmhy1a4Zq62AGG3BMLnTLjITuAjYlRHKqG0wykkALNSIjDy+3GF0ue+wID4/N4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwP+LMt5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VnRvhyGWOh6F/aauteBolL4/yRYgzq7YbpMfLdrop6QTITiOlGo9GK08aC+Ygjb6KoiOrc22KOf4mQROpxGIS2BofTyWC6ZyNquBDHdTTpAmfnkI6fU2KRfZvnLdMkoRTG1TlmPMS4hA2z6CqZd921VZvISjhqers+81uAhqkT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHT9XfY7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwP+LMt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1CAC4CEF1;
-	Tue, 26 Aug 2025 11:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHT9XfY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633AFC4CEF1;
+	Tue, 26 Aug 2025 11:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207400;
-	bh=d50SzxnAb4GPmi8J/YYKiq7EXYDu8yLO1zxiPEPGdUk=;
+	s=korg; t=1756207402;
+	bh=X1BslSxcTA124aasO/YzMS8UjycengwLD2l3MTTeL0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwP+LMt5S5pMI4R/2tG46mGuBlgmeAl/IbsOV08kZxyFpKXuxCEm/Z227RT1bdnXE
-	 B0E4n7X/nQtgmkLMH2q5Ol7n9FJkJNUMIF844HBj+edBuHtiAJiwyHxv9TCv7iLKZw
-	 oMznxNuq0QD85oKfRoUHkCI96WuASMWONr2RnNJs=
+	b=KHT9XfY7m7YmKE7UGnfPcZmxn2pKm1SjuBUFEUmn96B8a0vEQrcKl8cimOhneDhbG
+	 3I+uzt+qiPpRWQaQMpll5JLUj/aBAjUYHYLyDLEahSgpIkwpTkQMRAzvd9pllF+xsA
+	 NvDtZkpmqAHKxU/VXLudJPZKbjeng7fqnbbVTYOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.16 167/457] media: iris: Remove unnecessary re-initialization of flush completion
-Date: Tue, 26 Aug 2025 13:07:31 +0200
-Message-ID: <20250826110941.503440285@linuxfoundation.org>
+	"Vodapalli, Ravi Kumar" <ravi.kumar.vodapalli@intel.com>,
+	Shekhar Chauhan <shekhar.chauhan@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>
+Subject: [PATCH 6.16 168/457] drm/xe/bmg: Add one additional PCI ID
+Date: Tue, 26 Aug 2025 13:07:32 +0200
+Message-ID: <20250826110941.527694527@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,46 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Vodapalli, Ravi Kumar <ravi.kumar.vodapalli@intel.com>
 
-commit b7a898184e74a8261c34f1265139ac1799ee4e1c upstream.
+commit ccfb15b8158c11a8304204aeac354c7b1cfb18a3 upstream.
 
-Currently, The flush completion signal is being re-initialized even
-though no response is expected during a sequence change.
+One additional PCI ID is added in Bspec for BMG, Add it so that
+driver recognizes this device with this new ID.
 
-Simplify the code by removing re-initialization of flush completion
-signal as it is redundant.
-
-Cc: stable@vger.kernel.org
-Fixes: 84e17adae3e3 ("media: iris: add support for dynamic resolution change")
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # on sa8775p-ride
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Bspec: 68090
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Vodapalli, Ravi Kumar <ravi.kumar.vodapalli@intel.com>
+Reviewed-by: Shekhar Chauhan <shekhar.chauhan@intel.com>
+Acked-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/20250704103527.100178-1-ravi.kumar.vodapalli@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/drm/intel/pciids.h |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-index aaad32a70b9e..c8c0aa23536b 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-@@ -201,7 +201,6 @@ static void iris_hfi_gen1_event_seq_changed(struct iris_inst *inst,
- 	iris_hfi_gen1_read_changed_params(inst, pkt);
- 
- 	if (inst->state != IRIS_INST_ERROR && !(inst->sub_state & IRIS_INST_SUB_FIRST_IPSC)) {
--		reinit_completion(&inst->flush_completion);
- 
- 		flush_pkt.shdr.hdr.size = sizeof(struct hfi_session_flush_pkt);
- 		flush_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_FLUSH;
--- 
-2.50.1
-
+--- a/include/drm/intel/pciids.h
++++ b/include/drm/intel/pciids.h
+@@ -846,6 +846,7 @@
+ /* BMG */
+ #define INTEL_BMG_IDS(MACRO__, ...) \
+ 	MACRO__(0xE202, ## __VA_ARGS__), \
++	MACRO__(0xE209, ## __VA_ARGS__), \
+ 	MACRO__(0xE20B, ## __VA_ARGS__), \
+ 	MACRO__(0xE20C, ## __VA_ARGS__), \
+ 	MACRO__(0xE20D, ## __VA_ARGS__), \
 
 
