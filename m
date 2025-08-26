@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3253C306D3F;
-	Tue, 26 Aug 2025 14:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD4F352066;
+	Tue, 26 Aug 2025 14:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217625; cv=none; b=MQwX9V/0vs27d1TsStv9rk7IQG+iCtbzHp8UaQRIzZZctlwTwKmeNYX/vKT1HLp7VXiBL3SJ2DHKbaLHiH0VIvzUvksi5UgnhqrCNmb4Yl9aP3Ka+ZlYJKtc4TEg+fSbqB5hUo1JWamhlqI7ULIBaEVvvmhpiRTEl2mbHFKBdDw=
+	t=1756217627; cv=none; b=b9d9tIT2LtkzYEXct4LcvbvIFIn3H+fXvYYtrXVXdOW4ZIQRl8JWpX4OZVYMemfUEzNqNplm/VnvzM+39uAKU4sNM3O4Rqlb1wTx3mH1shrZIA2hRf2M0zreEX9L0VhathHRfuL8CoK/vo+OV/yA1Njp21CEE9AbUo06IgXLGk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217625; c=relaxed/simple;
-	bh=zKEc+gXo2d37EHJtDe66AewJipiQp62Jz7W8DcFrWKI=;
+	s=arc-20240116; t=1756217627; c=relaxed/simple;
+	bh=6X+vhEe38Eql3131+bwFzfEVysXSZ/4bYJzHmaMdYmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7pJXDuB8wxnoDN5uDAF+GQJR2MtkUS1vDtUKDJh9LIcSpCWCbwJZgjqn8q2bRd5z/KbvrshZfk1om9dwcBVnGZMfYwunT5oEDYQMcq0ZZ/UMulyGs+vKvAZxm3Y8uyoBXrHOxlXosNFby8ZQHytkUkG4WSUvh4QNWm8gcWgB6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYvOdeC2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlFOaR5N9t69HGgwsuj23KiC5Y1ZeMuY34PbeV2GXvYxcuoQYKYwkcTKcO0mZ0mc3yGb4XFbvq/NV190YnWnZRYY+EV1hM/vWfyRZ3MN7X+8bzqguzx9ytSOvJO0YF1cyFebO/MTLFEN1N4RAZXzT5lt1adPL/bExUTCjZEiyXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abFh6j/9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYvOdeC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A20C4CEF1;
-	Tue, 26 Aug 2025 14:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abFh6j/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494B4C4CEF1;
+	Tue, 26 Aug 2025 14:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217625;
-	bh=zKEc+gXo2d37EHJtDe66AewJipiQp62Jz7W8DcFrWKI=;
+	s=korg; t=1756217627;
+	bh=6X+vhEe38Eql3131+bwFzfEVysXSZ/4bYJzHmaMdYmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYvOdeC2D+dw7CwbY8OVXsCqe/PGCBqenVSEcBXEWMg2KO4OufviJMJRTqnbT/6il
-	 4JjVP2EqBaREuutUbs9UVP/l940i7V3tIrrVUjZyIuDvSYBJ/bNuviO0tXoiggqzP6
-	 +lljLWgMzbzP5wVr0D8ppJw0btQWQMWhzUfTBNK8=
+	b=abFh6j/9wFwKP9uTJUxYf0sKOxe/NsArK+IDrMXc2u9+RHzKtMGNSH9678ltYU4Ac
+	 nmRJAuzlyvur2jzu9H7K4G68Pc1MtsPxC44vLNIVMJiMDFc7VViLh5zyry+SQO0PO3
+	 zCmKwbu/moyGO6OWL0MbQafxZd/Bj8G9A1+QfJqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
+	syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 214/523] arm64: Handle KCOV __init vs inline mismatches
-Date: Tue, 26 Aug 2025 13:07:04 +0200
-Message-ID: <20250826110929.743763799@linuxfoundation.org>
+Subject: [PATCH 5.10 215/523] udf: Verify partition map count
+Date: Tue, 26 Aug 2025 13:07:05 +0200
+Message-ID: <20250826110929.767113946@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,49 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 65c430906efffee9bd7551d474f01a6b1197df90 ]
+[ Upstream commit 1a11201668e8635602577dcf06f2e96c591d8819 ]
 
-GCC appears to have kind of fragile inlining heuristics, in the
-sense that it can change whether or not it inlines something based on
-optimizations. It looks like the kcov instrumentation being added (or in
-this case, removed) from a function changes the optimization results,
-and some functions marked "inline" are _not_ inlined. In that case,
-we end up with __init code calling a function not marked __init, and we
-get the build warnings I'm trying to eliminate in the coming patch that
-adds __no_sanitize_coverage to __init functions:
+Verify that number of partition maps isn't insanely high which can lead
+to large allocation in udf_sb_alloc_partition_maps(). All partition maps
+have to fit in the LVD which is in a single block.
 
-WARNING: modpost: vmlinux: section mismatch in reference: acpi_get_enable_method+0x1c (section: .text.unlikely) -> acpi_psci_present (section: .init.text)
-
-This problem is somewhat fragile (though using either __always_inline
-or __init will deterministically solve it), but we've tripped over
-this before with GCC and the solution has usually been to just use
-__always_inline and move on.
-
-For arm64 this requires forcing one ACPI function to be inlined with
-__always_inline.
-
-Link: https://lore.kernel.org/r/20250724055029.3623499-1-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-by: syzbot+478f2c1a6f0f447a46bb@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/acpi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/acpi.h b/arch/arm64/include/asm/acpi.h
-index 702587fda70c..8cbbd08cc8c5 100644
---- a/arch/arm64/include/asm/acpi.h
-+++ b/arch/arm64/include/asm/acpi.h
-@@ -128,7 +128,7 @@ acpi_set_mailbox_entry(int cpu, struct acpi_madt_generic_interrupt *processor)
- {}
- #endif
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index 8dae5e73a00b..723184b1201f 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1410,7 +1410,7 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 	struct genericPartitionMap *gpm;
+ 	uint16_t ident;
+ 	struct buffer_head *bh;
+-	unsigned int table_len;
++	unsigned int table_len, part_map_count;
+ 	int ret;
  
--static inline const char *acpi_get_enable_method(int cpu)
-+static __always_inline const char *acpi_get_enable_method(int cpu)
- {
- 	if (acpi_psci_present())
- 		return "psci";
+ 	bh = udf_read_tagged(sb, block, block, &ident);
+@@ -1431,7 +1431,16 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 					   "logical volume");
+ 	if (ret)
+ 		goto out_bh;
+-	ret = udf_sb_alloc_partition_maps(sb, le32_to_cpu(lvd->numPartitionMaps));
++
++	part_map_count = le32_to_cpu(lvd->numPartitionMaps);
++	if (part_map_count > table_len / sizeof(struct genericPartitionMap1)) {
++		udf_err(sb, "error loading logical volume descriptor: "
++			"Too many partition maps (%u > %u)\n", part_map_count,
++			table_len / (unsigned)sizeof(struct genericPartitionMap1));
++		ret = -EIO;
++		goto out_bh;
++	}
++	ret = udf_sb_alloc_partition_maps(sb, part_map_count);
+ 	if (ret)
+ 		goto out_bh;
+ 
 -- 
 2.39.5
 
