@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066E035AABF;
-	Tue, 26 Aug 2025 14:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9242520DD51;
+	Tue, 26 Aug 2025 14:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218807; cv=none; b=n3GceRcBAmDUkSAb61CCXLC//By38vYJ3m7nmxnfYpJvT5+P3IFGOPRZELl/C1VGD7mRGiJnj7iZTsmPcV0CWbUI261AMYgbIxFZ4luw7kHk3Z0Rt5Y09xyrxy9EfX+adBhu3qCjY2U27mtlnePXa49oWch4J//OXb7+pcQQ4Sc=
+	t=1756218809; cv=none; b=njC5pQvQsIm//1pyTCEdz7zJ6nwbucNT+PTVhSichYp7rmQg2rQ25aQsDXroJdzPHfrddof8+/3hqMrCe2J84vtGMz+ZTQ40urGp+dt+26N9BL6wlp+M4oS5hG+9aZFk+Chrgss95Ugu/zO/hWtDBB3oKC4G62KURGhwHZMrv6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218807; c=relaxed/simple;
-	bh=lhnBjVi4+2pIe1jep4sOsHFt5eiD+ou2Lsn52oZvdPU=;
+	s=arc-20240116; t=1756218809; c=relaxed/simple;
+	bh=zKbpOFfVAaEraczKG0tcC9RxmgN8WLOxbA4jPbIlQyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qi8nvJPHMFQ80gJvg1sxtmbQeeWTBkegoL2U2725eI3Y1upRabSa7+FU7SpQ0DQGOWLBoaqtx517DjdpN5GVfEyY8A9DWi1EsmCbwbi12VHOsnVkIIC7BMGFT0KkbqkTIEXIQxOL2SusSgInNQxDhmq/Q0lvWOAWDsUUTZkHw8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLM87aEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssjNo/9oDrs3GccLle5ghnVlBVEQD3o7mgFwfpPl+LgC2sHEbzefj538QRe5wBdhT1sNSS4iPcu8TYSSfA813ZyCvW4C67q5+iEDhFS21MPzzivLihdS1ABP31GCiliB+OTuTtL7kVSIKIfPh27Ug+/t4id1s7LjjxTNr3XNwsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmkW8a+j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLM87aEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D8BC4CEF1;
-	Tue, 26 Aug 2025 14:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmkW8a+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EE0C113D0;
+	Tue, 26 Aug 2025 14:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218806;
-	bh=lhnBjVi4+2pIe1jep4sOsHFt5eiD+ou2Lsn52oZvdPU=;
+	s=korg; t=1756218809;
+	bh=zKbpOFfVAaEraczKG0tcC9RxmgN8WLOxbA4jPbIlQyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLM87aEtbXOjOwZn8aqGtu2x2LK9iTO1lkxvtfbATPt5oC8lcpO1A3j9jWbKM6mlp
-	 EQRUOsE4UqEigrHgKq0JdrRNVi8C/C/LjcBlcQPfOnhMbBlVWVP3cR1b4XVhatXcev
-	 xbtiCoQa0oIiVtp8xkdgMzPt+8Zy7Bt9ch8CCt6M=
+	b=KmkW8a+jCjbUiTivhi8vppQ9RYIgYDRCq4UZ7axnMm9y5dpZ8QpUTG+4L+XWnYwqR
+	 JdfuKbCL7iLgtbGNAig0f0AhPRm57LTEAJOOalQ8sx3VHwaSl+YB5XvngC+xQYPuJp
+	 PT3T2c2zKuMIMJhAWEyQLds02v/6O5MB0bNca2cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhangjian <zhangjian496@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 140/403] NFS: Fix filehandle bounds checking in nfs_fh_to_dentry()
-Date: Tue, 26 Aug 2025 13:07:46 +0200
-Message-ID: <20250826110910.623942587@linuxfoundation.org>
+Subject: [PATCH 5.4 141/403] netpoll: prevent hanging NAPI when netcons gets enabled
+Date: Tue, 26 Aug 2025 13:07:47 +0200
+Message-ID: <20250826110910.652263331@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,49 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit ef93a685e01a281b5e2a25ce4e3428cf9371a205 ]
+[ Upstream commit 2da4def0f487f24bbb0cece3bb2bcdcb918a0b72 ]
 
-The function needs to check the minimal filehandle length before it can
-access the embedded filehandle.
+Paolo spotted hangs in NIPA running driver tests against virtio.
+The tests hang in virtnet_close() -> virtnet_napi_tx_disable().
 
-Reported-by: zhangjian <zhangjian496@huawei.com>
-Fixes: 20fa19027286 ("nfs: add export operations")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+The problem is only reproducible if running multiple of our tests
+in sequence (I used TEST_PROGS="xdp.py ping.py netcons_basic.sh \
+netpoll_basic.py stats.py"). Initial suspicion was that this is
+a simple case of double-disable of NAPI, but instrumenting the
+code reveals:
+
+ Deadlocked on NAPI ffff888007cd82c0 (virtnet_poll_tx):
+   state: 0x37, disabled: false, owner: 0, listed: false, weight: 64
+
+The NAPI was not in fact disabled, owner is 0 (rather than -1),
+so the NAPI "thinks" it's scheduled for CPU 0 but it's not listed
+(!list_empty(&n->poll_list) => false). It seems odd that normal NAPI
+processing would wedge itself like this.
+
+Better suspicion is that netpoll gets enabled while NAPI is polling,
+and also grabs the NAPI instance. This confuses napi_complete_done():
+
+  [netpoll]                                   [normal NAPI]
+                                        napi_poll()
+                                          have = netpoll_poll_lock()
+                                            rcu_access_pointer(dev->npinfo)
+                                              return NULL # no netpoll
+                                          __napi_poll()
+					    ->poll(->weight)
+  poll_napi()
+    cmpxchg(->poll_owner, -1, cpu)
+      poll_one_napi()
+        set_bit(NAPI_STATE_NPSVC, ->state)
+                                              napi_complete_done()
+                                                if (NAPIF_STATE_NPSVC)
+                                                  return false
+                                           # exit without clearing SCHED
+
+This feels very unlikely, but perhaps virtio has some interactions
+with the hypervisor in the NAPI ->poll that makes the race window
+larger?
+
+Best I could to to prove the theory was to add and trigger this
+warning in napi_poll (just before netpoll_poll_unlock()):
+
+      WARN_ONCE(!have && rcu_access_pointer(n->dev->npinfo) &&
+                napi_is_scheduled(n) && list_empty(&n->poll_list),
+                "NAPI race with netpoll %px", n);
+
+If this warning hits the next virtio_close() will hang.
+
+This patch survived 30 test iterations without a hang (without it
+the longest clean run was around 10). Credit for triggering this
+goes to Breno's recent netconsole tests.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/c5a93ed1-9abe-4880-a3bb-8d1678018b1d@redhat.com
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://patch.msgid.link/20250726010846.1105875-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/export.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/core/netpoll.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/nfs/export.c b/fs/nfs/export.c
-index deecb67638aa..97b6fa0adb57 100644
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -67,14 +67,21 @@ nfs_fh_to_dentry(struct super_block *sb, struct fid *fid,
- 	struct nfs4_label *label = NULL;
- 	struct nfs_fattr *fattr = NULL;
- 	struct nfs_fh *server_fh = nfs_exp_embedfh(fid->raw);
--	size_t fh_size = offsetof(struct nfs_fh, data) + server_fh->size;
-+	size_t fh_size = offsetof(struct nfs_fh, data);
- 	const struct nfs_rpc_ops *rpc_ops;
- 	struct dentry *dentry;
- 	struct inode *inode;
--	int len = EMBED_FH_OFF + XDR_QUADLEN(fh_size);
-+	int len = EMBED_FH_OFF;
- 	u32 *p = fid->raw;
- 	int ret;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 940d371f5f3b..09ae2fc41fa9 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -807,6 +807,13 @@ int netpoll_setup(struct netpoll *np)
+ 		goto put;
  
-+	/* Initial check of bounds */
-+	if (fh_len < len + XDR_QUADLEN(fh_size) ||
-+	    fh_len > XDR_QUADLEN(NFS_MAXFHSIZE))
-+		return NULL;
-+	/* Calculate embedded filehandle size */
-+	fh_size += server_fh->size;
-+	len += XDR_QUADLEN(fh_size);
- 	/* NULL translates to ESTALE */
- 	if (fh_len < len || fh_type != len)
- 		return NULL;
+ 	rtnl_unlock();
++
++	/* Make sure all NAPI polls which started before dev->npinfo
++	 * was visible have exited before we start calling NAPI poll.
++	 * NAPI skips locking if dev->npinfo is NULL.
++	 */
++	synchronize_rcu();
++
+ 	return 0;
+ 
+ put:
 -- 
 2.39.5
 
