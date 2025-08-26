@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E6135AAC8;
-	Tue, 26 Aug 2025 14:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C02135AAD4;
+	Tue, 26 Aug 2025 14:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219013; cv=none; b=qhQnXiSm2fErgaCBdpt8Rx1bWTLcvIFbBXZOaqf1Wg9rpV+2nd9RrZDVcisWRuFcQu+i7pusw7M/s3+grn0s297zjUuu57mZfydsAzl8qYuiRv4N8H2cL77Hqpc36PTVvaBDbwmv74wxF8JqjHR/Zq4SmkyQkoPzRtx4v8TkIyU=
+	t=1756219016; cv=none; b=qlvtMf8wV+Bug8yqv0HdaAJgJwEX6b4mWblp9MCftu+e7HOfiS2191HChVhuct9+dM10kx6/BoH5cn0glrEMFIFssGCQNLt90WE27KzkS3gLNn4QkA+XD3V+j5FV2T6ajOkxZs7rsr2yLVsZ7TdLGVhfvbTJNni9JGJXAR5T/t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219013; c=relaxed/simple;
-	bh=VYb8AFKSx8YJARe6Upsdj2S+Rm0thMw2YRzFBtMtw9M=;
+	s=arc-20240116; t=1756219016; c=relaxed/simple;
+	bh=NweRU+vvUU+dYFIy8JWPZmVKNa8pbv/ZFSZEmh5PPak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHQ1Y+7wjLBMcYoqhytwF9q6OxLw3GWxGSLQ8NAqO33hlUqMTTly5M/cmxBmE+FUZYMWXe6/E6qdD57XE+jOMBzOmK2w8R5U6+uqv75TjUva2n6FEIWddXH6G2LfaHa47ICnntawJTe6U04FHC9vc1l/YdRbua8NOFUJ/UI3DWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzLH3olX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLf1NqiCCbuuIhdVdIPnSwFmaJsYYxqwaxjXCIwGohYwse6piw/ZUS2VoZQHrlMA6HErFvzvqaxZu4fgK8OrhUxfu+dgn1gWMz/dKsG8479rNraIpDFCuqsCbK85JzXoFZAa5kErl00qehxmCGVuhJI4j+PpNs1XwcnIG58yLnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCut3a18; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzLH3olX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59777C4CEF1;
-	Tue, 26 Aug 2025 14:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCut3a18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7193C4CEF1;
+	Tue, 26 Aug 2025 14:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219013;
-	bh=VYb8AFKSx8YJARe6Upsdj2S+Rm0thMw2YRzFBtMtw9M=;
+	s=korg; t=1756219016;
+	bh=NweRU+vvUU+dYFIy8JWPZmVKNa8pbv/ZFSZEmh5PPak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzLH3olXvT0uem/zBHSKehc707r+TYSxx1d104mpcc8gSPJI7zQHAtWRVX2jt13ap
-	 YUjXelQxHX8QUzdfimp/t8b025F0vW+DkVdA1f1c2J5JDPiEk5TL9FgJagjtSVKxR6
-	 aFVCM4inEzcJ/dssrxO9PVbTQkwY5iIYAI56A9nE=
+	b=jCut3a18zcUDxrr8H0aPafSnzVOkIHYHog35PEKnZOYOJJr0GEvgm05DVK/8Lq0RG
+	 38dT7PGNnYgBh2ZucDfBhDqHRiJkwtxkbTNPPeXesDjKIrHIsdiVWN1faEp5HwuOpg
+	 QXcGlbfWGPTH/OMBydZbbN/XNI6r79Fbwv5soQVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 188/403] ASoC: soc-dapm: set bias_level if snd_soc_dapm_set_bias_level() was successed
-Date: Tue, 26 Aug 2025 13:08:34 +0200
-Message-ID: <20250826110912.070673029@linuxfoundation.org>
+Subject: [PATCH 5.4 189/403] gpio: tps65912: check the return value of regmap_update_bits()
+Date: Tue, 26 Aug 2025 13:08:35 +0200
+Message-ID: <20250826110912.098618106@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,70 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit f40ecc2743652c0b0f19935f81baf57c601eb7f0 ]
+[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
 
-ASoC has 2 functions to set bias level.
-	(A) snd_soc_dapm_force_bias_level()
-	(B) snd_soc_dapm_set_bias_level()
+regmap_update_bits() can fail, check its return value like we do
+elsewhere in the driver.
 
-snd_soc_dapm_force_bias_level() (A) will set dapm->bias_level (a) if
-successed.
-
-(A)	int snd_soc_dapm_force_bias_level(...)
-	{
-		...
-		if (ret == 0)
-(a)			dapm->bias_level = level;
-		...
-	}
-
-snd_soc_dapm_set_bias_level() (B) is also a function that sets bias_level.
-It will call snd_soc_dapm_force_bias_level() (A) inside, but doesn't
-set dapm->bias_level by itself. One note is that (A) might not be called.
-
-(B)	static int snd_soc_dapm_set_bias_level(...)
-	{
-		...
-		ret = snd_soc_card_set_bias_level(...);
-		...
-		if (dapm != &card->dapm)
-(A)			ret = snd_soc_dapm_force_bias_level(...);
-		...
-		ret = snd_soc_card_set_bias_level_post(...);
-		...
-	}
-
-dapm->bias_level will be set if (A) was called, but might not be set
-if (B) was called, even though it calles set_bias_level() function.
-
-We should set dapm->bias_level if we calls
-snd_soc_dapm_set_bias_level() (B), too.
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87qzyn4g4h.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dapm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpio-tps65912.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index 9f764d92469e..6142ce468c3b 100644
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -741,6 +741,10 @@ static int snd_soc_dapm_set_bias_level(struct snd_soc_dapm_context *dapm,
- out:
- 	trace_snd_soc_bias_level_done(card, level);
+diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
+index 3ad68bd78282..736af805e54a 100644
+--- a/drivers/gpio/gpio-tps65912.c
++++ b/drivers/gpio/gpio-tps65912.c
+@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
+ 					  unsigned offset, int value)
+ {
+ 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
++	int ret;
  
-+	/* success */
-+	if (ret == 0)
-+		snd_soc_dapm_init_bias_level(dapm, level);
-+
- 	return ret;
- }
+ 	/* Set the initial value */
+-	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+-			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
++				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
++	if (ret)
++		return ret;
  
+ 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
+ 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
 -- 
 2.39.5
 
