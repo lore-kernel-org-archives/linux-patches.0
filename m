@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16772FDC5C;
-	Tue, 26 Aug 2025 13:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427CA341672;
+	Tue, 26 Aug 2025 13:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215845; cv=none; b=EVFCJJiY5FpexMkbOwtqPndShVmn/tYaSXNPap2RpgeQ4mdAzaftI7LYJKgIamv8C2e436TATFNr0tkzs0qCpa4frmHzeMfWegNNMw1zLVGtewRhjU+uPvjWzghfM8CCCySG8TIEA/6iWpVX6pUMATPEy9f1OYzkhLMMhY35xPU=
+	t=1756215847; cv=none; b=WQGCKo9W66SgE9XbmHrVwP9mN13kt2qxi/N8bFOR5sZ2k2nihqvuLJYT/pVS/HX2fC1D/vfSULKUzuBRvKZvaFCVHesf35EaOVQz5WfjMMTTwQrnXU0oHHd8ylQcTCASJOfrNLYSHIxwEl9TLlQi63psDVtiWgVeN1zkYUChyzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215845; c=relaxed/simple;
-	bh=N75kTO/57jUPD7suIaVEv7E2XAIEjwfwlAduqjavVvw=;
+	s=arc-20240116; t=1756215847; c=relaxed/simple;
+	bh=kIVeoDS7oz9Pd8O2h81gEWJygiGIkHRw8A4xohFt7LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvDabpXofLDCQEbqcgC7JuBWDDJUTYjdVj3eKcMWTAtJA2erLbBxLOzr2DjUtDbV1TyV/sXFRnWR5YYimqVfYmnwK5req+mTN+avHlCfrtxX5dTlc0Aytizo0XKl8ZClFBJdCEBjhGEb8DSjcUm2m/rAhTmjqS3izfdWnGCw7bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USiMs1jh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ji61eo4Cd54U6Ld81VlrQqEySb0pTvMcdH77CO1sz09wMizrmTrczBWxWk/fR7fDbfHUi0100KIQZli1LzjwQumjSXTXgWV8SKNE5pDVe/Gva9ouCLYP3SaqTRaNTMpKwjEsXjknkPubn4lbEdO2vcj2tjGJxHFplg0J5wr4OBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTRjftne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USiMs1jh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454D4C4CEF1;
-	Tue, 26 Aug 2025 13:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTRjftne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9D8C4CEF1;
+	Tue, 26 Aug 2025 13:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215844;
-	bh=N75kTO/57jUPD7suIaVEv7E2XAIEjwfwlAduqjavVvw=;
+	s=korg; t=1756215847;
+	bh=kIVeoDS7oz9Pd8O2h81gEWJygiGIkHRw8A4xohFt7LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USiMs1jhQM1usJ8+Czq+54GMPiRsbIOG7Oq71gTLjrHWql7yZvg0R/bMLWOWoPW82
-	 ntyKdHhIfLD3DkgtXxwUwVyyZhUwDroH4U0JepkJz0SwwVehPYEwrThwkeriArnW1O
-	 /mgkchYKJH4f72TRsgeJYvlcREIuxYPoRK1kmv4c=
+	b=nTRjftneDmh28jqugpsREJ6ABiTtlbQ4T2aBeSv8hEBAzx6dwPVizbdM3OtmLgzwr
+	 iycuYlJiOG3JCr7vJHJ9IG2iX2sxfQeD6UbVtf7UTl/JEny1VLhls9+BMxK065zewN
+	 NnLR9Dv54Mgx8LmQx7ZJfGkqX49e/1rFl9XnsNkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/644] hwrng: mtk - handle devm_pm_runtime_enable errors
-Date: Tue, 26 Aug 2025 13:04:38 +0200
-Message-ID: <20250826110951.095161067@linuxfoundation.org>
+Subject: [PATCH 5.15 161/644] can: kvaser_usb: Assign netdev.dev_port based on device channel index
+Date: Tue, 26 Aug 2025 13:04:12 +0200
+Message-ID: <20250826110950.466753203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-[ Upstream commit 522a242a18adc5c63a24836715dbeec4dc3faee1 ]
+[ Upstream commit c151b06a087a61c7a1790b75ee2f1d6edb6a8a45 ]
 
-Although unlikely, devm_pm_runtime_enable() call might fail, so handle
-the return value.
+Assign netdev.dev_port based on the device channel index, to indicate the
+port number of the network device.
+While this driver already uses netdev.dev_id for that purpose, dev_port is
+more appropriate. However, retain dev_id to avoid potential regressions.
 
-Fixes: 78cb66caa6ab ("hwrng: mtk - Use devm_pm_runtime_enable")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 3e66d0138c05 ("can: populate netdev::dev_id for udev discrimination")
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://patch.msgid.link/20250725123452.41-4-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/mtk-rng.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/hw_random/mtk-rng.c b/drivers/char/hw_random/mtk-rng.c
-index 3e00506543b6..72269d0f2a4e 100644
---- a/drivers/char/hw_random/mtk-rng.c
-+++ b/drivers/char/hw_random/mtk-rng.c
-@@ -142,7 +142,9 @@ static int mtk_rng_probe(struct platform_device *pdev)
- 	dev_set_drvdata(&pdev->dev, priv);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_use_autosuspend(&pdev->dev);
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+index f6cb5ba61ac9..d5f119f607ef 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -838,6 +838,7 @@ static int kvaser_usb_init_one(struct kvaser_usb *dev, int channel)
  
- 	dev_info(&pdev->dev, "registered RNG driver\n");
+ 	SET_NETDEV_DEV(netdev, &dev->intf->dev);
+ 	netdev->dev_id = channel;
++	netdev->dev_port = channel;
+ 
+ 	dev->nets[channel] = priv;
  
 -- 
 2.39.5
