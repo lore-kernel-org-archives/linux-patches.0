@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629CE1FBCB5;
-	Tue, 26 Aug 2025 13:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2667A230BDF;
+	Tue, 26 Aug 2025 13:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215045; cv=none; b=SpZxQbyntavzesQjx/G7Fh4kdkO4XrY+M6VFVn9F5QsLCUWyrX5HVK8mvVHg2c/5xft9Ja5D1GvhD3662A12WieuofcJAZBPnYWH2T93prf1Q7JkP8LU3tP5Kw3fPJJjMLGoPH6X/QU6MB0MWefttsGTfZ5+w0koHFmAwfiMg/g=
+	t=1756215048; cv=none; b=NE2Hjin1RLdRxlUhRRwSwFQ2CwK7vqIEWwjvAbknfQfgbFhlqwpcauh4MlHMS3+YKa14wnpZAKxP3iEW6k0at8T6qv1IFTeTZM0xFo0yToL1r6045m+hBDENYaEXw77h/u9Mxvg5u8lVqLZW3/0jMNq0aqyH4bYQen1aqF2aY5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215045; c=relaxed/simple;
-	bh=y9F26Ww+p9yh/T2/HgmkT9+UzNBM2zokm7r1f3M7u5M=;
+	s=arc-20240116; t=1756215048; c=relaxed/simple;
+	bh=9mg6LpofAR1I6tr6Xi4V7CFfmDrwuS+OqUYIMEQ4JXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/gb5BZyvTiBP1byJKTpo6LavDhLj6vLuIOa9B6b2J4zaZnPrv9sYlO6kUod1yY/51xxBvlUqeU/W3fIsYxeMS1k2F7gbBQYWNqpO+0Xs4JBy6td0MuvXl3D3qNyBuaqVurv1t3QCfcQeI4WFyS/BoB6PsXfcD/3CgdY47N69BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0Ilw6z1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMEO6k6AWbgZgtamCQQHeBzqC3kUxPWYwOYFqcu8Dai7b3W+gRweKRhfzDHzzcg8PkspsuSYuYtzGp/bne5trqdxPn6exSjtNwrwt1RUGHWLXBUl0IImWFb4rKPuCydsjScWQgcR8K4L2fEAsyCO4KRP9Y020juNZA+LT/Dnv1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnNUeBBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0Ilw6z1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0100C4CEF1;
-	Tue, 26 Aug 2025 13:30:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnNUeBBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D08C4CEF1;
+	Tue, 26 Aug 2025 13:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215045;
-	bh=y9F26Ww+p9yh/T2/HgmkT9+UzNBM2zokm7r1f3M7u5M=;
+	s=korg; t=1756215048;
+	bh=9mg6LpofAR1I6tr6Xi4V7CFfmDrwuS+OqUYIMEQ4JXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0Ilw6z1+FyFCM7PX2nmVsuT82UoM68FxzdpGfWCLs+32P0819wQACKtGvVzhYHYU
-	 Ybkwz3wZlLW8NBL/15tbrxlqRGHEIs/WPZMEAAALJ9NTfwjJZbsix93pC1VIOz25kA
-	 dvgkqKbblHHpH67uiVMVDhpN/ebTzq+89R9FvCos=
+	b=PnNUeBBVfQaJb0VbRNEkbiIz5/g6ZgF4gVq66rBttY1XDB1JkrAVmFA9BM3YXdjuk
+	 HgQxWGJRSgVH2OrYDDU58ryKEpzOqOqi9EsN2g/bvnbfKJPdQ/8+y0kB1Wdzhwb+9P
+	 rJ0ktHxYkU241ZacD8NvAYomXun+RICL6RAafll8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vedang Nagar <quic_vnagar@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 367/482] media: venus: Introduce accessors for remapped hfi_buffer_reqs members
-Date: Tue, 26 Aug 2025 13:10:20 +0200
-Message-ID: <20250826110939.902081070@linuxfoundation.org>
+Subject: [PATCH 6.1 368/482] media: venus: Fix OOB read due to missing payload bound check
+Date: Tue, 26 Aug 2025 13:10:21 +0200
+Message-ID: <20250826110939.925986866@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,206 +55,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Vedang Nagar <quic_vnagar@quicinc.com>
 
-[ Upstream commit bbfc89e6f67ccb1ddefc3e8a284248bcfea58544 ]
+[ Upstream commit 06d6770ff0d8cc8dfd392329a8cc03e2a83e7289 ]
 
-Currently we have macros to access these, but they don't provide a
-way to override the remapped fields. Replace the macros with actual
-get/set pairs to fix that.
+Currently, The event_seq_changed() handler processes a variable number
+of properties sent by the firmware. The number of properties is indicated
+by the firmware and used to iterate over the payload. However, the
+payload size is not being validated against the actual message length.
 
+This can lead to out-of-bounds memory access if the firmware provides a
+property count that exceeds the data available in the payload. Such a
+condition can result in kernel crashes or potential information leaks if
+memory beyond the buffer is accessed.
+
+Fix this by properly validating the remaining size of the payload before
+each property access and updating bounds accordingly as properties are
+parsed.
+
+This ensures that property parsing is safely bounded within the received
+message buffer and protects against malformed or malicious firmware
+behavior.
+
+Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 06d6770ff0d8 ("media: venus: Fix OOB read due to missing payload bound check")
+Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/helpers.c    |    2 
- drivers/media/platform/qcom/venus/hfi_helper.h |   61 +++++++++++++++++++++----
- drivers/media/platform/qcom/venus/hfi_msgs.c   |    2 
- drivers/media/platform/qcom/venus/vdec.c       |    8 +--
- drivers/media/platform/qcom/venus/vdec_ctrls.c |    2 
- drivers/media/platform/qcom/venus/venc.c       |    4 -
- drivers/media/platform/qcom/venus/venc_ctrls.c |    2 
- 7 files changed, 63 insertions(+), 18 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_msgs.c |   83 ++++++++++++++++++---------
+ 1 file changed, 58 insertions(+), 25 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -189,7 +189,7 @@ int venus_helper_alloc_dpb_bufs(struct v
- 	if (ret)
- 		return ret;
- 
--	count = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-+	count = hfi_bufreq_get_count_min(&bufreq, ver);
- 
- 	for (i = 0; i < count; i++) {
- 		buf = kzalloc(sizeof(*buf), GFP_KERNEL);
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -1150,14 +1150,6 @@ struct hfi_buffer_display_hold_count_act
- 	u32 hold_count;
- };
- 
--/* HFI 4XX reorder the fields, use these macros */
--#define HFI_BUFREQ_HOLD_COUNT(bufreq, ver)	\
--	((ver) == HFI_VERSION_4XX ? 0 : (bufreq)->hold_count)
--#define HFI_BUFREQ_COUNT_MIN(bufreq, ver)	\
--	((ver) == HFI_VERSION_4XX ? (bufreq)->hold_count : (bufreq)->count_min)
--#define HFI_BUFREQ_COUNT_MIN_HOST(bufreq, ver)	\
--	((ver) == HFI_VERSION_4XX ? (bufreq)->count_min : 0)
--
- struct hfi_buffer_requirements {
- 	u32 type;
- 	u32 size;
-@@ -1169,6 +1161,59 @@ struct hfi_buffer_requirements {
- 	u32 alignment;
- };
- 
-+/* On HFI 4XX, some of the struct members have been swapped. */
-+static inline u32 hfi_bufreq_get_hold_count(struct hfi_buffer_requirements *req,
-+					    u32 ver)
-+{
-+	if (ver == HFI_VERSION_4XX)
-+		return 0;
-+
-+	return req->hold_count;
-+};
-+
-+static inline u32 hfi_bufreq_get_count_min(struct hfi_buffer_requirements *req,
-+					   u32 ver)
-+{
-+	if (ver == HFI_VERSION_4XX)
-+		return req->hold_count;
-+
-+	return req->count_min;
-+};
-+
-+static inline u32 hfi_bufreq_get_count_min_host(struct hfi_buffer_requirements *req,
-+						u32 ver)
-+{
-+	if (ver == HFI_VERSION_4XX)
-+		return req->count_min;
-+
-+	return 0;
-+};
-+
-+static inline void hfi_bufreq_set_hold_count(struct hfi_buffer_requirements *req,
-+					     u32 ver, u32 val)
-+{
-+	if (ver == HFI_VERSION_4XX)
-+		return;
-+
-+	req->hold_count = val;
-+};
-+
-+static inline void hfi_bufreq_set_count_min(struct hfi_buffer_requirements *req,
-+					    u32 ver, u32 val)
-+{
-+	if (ver == HFI_VERSION_4XX)
-+		req->hold_count = val;
-+
-+	req->count_min = val;
-+};
-+
-+static inline void hfi_bufreq_set_count_min_host(struct hfi_buffer_requirements *req,
-+						 u32 ver, u32 val)
-+{
-+	if (ver == HFI_VERSION_4XX)
-+		req->count_min = val;
-+};
-+
- struct hfi_data_payload {
- 	u32 size;
- 	u8 data[1];
 --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
 +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-@@ -99,7 +99,7 @@ static void event_seq_changed(struct ven
+@@ -33,8 +33,9 @@ static void event_seq_changed(struct ven
+ 	struct hfi_buffer_requirements *bufreq;
+ 	struct hfi_extradata_input_crop *crop;
+ 	struct hfi_dpb_counts *dpb_count;
++	u32 ptype, rem_bytes;
++	u32 size_read = 0;
+ 	u8 *data_ptr;
+-	u32 ptype;
+ 
+ 	inst->error = HFI_ERR_NONE;
+ 
+@@ -44,86 +45,118 @@ static void event_seq_changed(struct ven
+ 		break;
+ 	default:
+ 		inst->error = HFI_ERR_SESSION_INVALID_PARAMETER;
+-		goto done;
++		inst->ops->event_notify(inst, EVT_SYS_EVENT_CHANGE, &event);
++		return;
+ 	}
+ 
+ 	event.event_type = pkt->event_data1;
+ 
+ 	num_properties_changed = pkt->event_data2;
+-	if (!num_properties_changed) {
+-		inst->error = HFI_ERR_SESSION_INSUFFICIENT_RESOURCES;
+-		goto done;
+-	}
++	if (!num_properties_changed)
++		goto error;
+ 
+ 	data_ptr = (u8 *)&pkt->ext_event_data[0];
++	rem_bytes = pkt->shdr.hdr.size - sizeof(*pkt);
++
+ 	do {
++		if (rem_bytes < sizeof(u32))
++			goto error;
+ 		ptype = *((u32 *)data_ptr);
++
++		data_ptr += sizeof(u32);
++		rem_bytes -= sizeof(u32);
++
+ 		switch (ptype) {
+ 		case HFI_PROPERTY_PARAM_FRAME_SIZE:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_framesize))
++				goto error;
++
+ 			frame_sz = (struct hfi_framesize *)data_ptr;
+ 			event.width = frame_sz->width;
+ 			event.height = frame_sz->height;
+-			data_ptr += sizeof(*frame_sz);
++			size_read = sizeof(struct hfi_framesize);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_PROFILE_LEVEL_CURRENT:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_profile_level))
++				goto error;
++
+ 			profile_level = (struct hfi_profile_level *)data_ptr;
+ 			event.profile = profile_level->profile;
+ 			event.level = profile_level->level;
+-			data_ptr += sizeof(*profile_level);
++			size_read = sizeof(struct hfi_profile_level);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_bit_depth))
++				goto error;
++
+ 			pixel_depth = (struct hfi_bit_depth *)data_ptr;
+ 			event.bit_depth = pixel_depth->bit_depth;
+-			data_ptr += sizeof(*pixel_depth);
++			size_read = sizeof(struct hfi_bit_depth);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_pic_struct))
++				goto error;
++
+ 			pic_struct = (struct hfi_pic_struct *)data_ptr;
+ 			event.pic_struct = pic_struct->progressive_only;
+-			data_ptr += sizeof(*pic_struct);
++			size_read = sizeof(struct hfi_pic_struct);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_colour_space))
++				goto error;
++
+ 			colour_info = (struct hfi_colour_space *)data_ptr;
+ 			event.colour_space = colour_info->colour_space;
+-			data_ptr += sizeof(*colour_info);
++			size_read = sizeof(struct hfi_colour_space);
+ 			break;
+ 		case HFI_PROPERTY_CONFIG_VDEC_ENTROPY:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(u32))
++				goto error;
++
+ 			event.entropy_mode = *(u32 *)data_ptr;
+-			data_ptr += sizeof(u32);
++			size_read = sizeof(u32);
+ 			break;
  		case HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS:
- 			data_ptr += sizeof(u32);
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_buffer_requirements))
++				goto error;
++
  			bufreq = (struct hfi_buffer_requirements *)data_ptr;
--			event.buf_count = HFI_BUFREQ_COUNT_MIN(bufreq, ver);
-+			event.buf_count = hfi_bufreq_get_count_min(bufreq, ver);
- 			data_ptr += sizeof(*bufreq);
+ 			event.buf_count = hfi_bufreq_get_count_min(bufreq, ver);
+-			data_ptr += sizeof(*bufreq);
++			size_read = sizeof(struct hfi_buffer_requirements);
  			break;
  		case HFI_INDEX_EXTRADATA_INPUT_CROP:
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -864,13 +864,13 @@ static int vdec_num_buffers(struct venus
- 	if (ret)
- 		return ret;
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_extradata_input_crop))
++				goto error;
++
+ 			crop = (struct hfi_extradata_input_crop *)data_ptr;
+ 			event.input_crop.left = crop->left;
+ 			event.input_crop.top = crop->top;
+ 			event.input_crop.width = crop->width;
+ 			event.input_crop.height = crop->height;
+-			data_ptr += sizeof(*crop);
++			size_read = sizeof(struct hfi_extradata_input_crop);
+ 			break;
+ 		case HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS:
+-			data_ptr += sizeof(u32);
++			if (rem_bytes < sizeof(struct hfi_dpb_counts))
++				goto error;
++
+ 			dpb_count = (struct hfi_dpb_counts *)data_ptr;
+ 			event.buf_count = dpb_count->fw_min_cnt;
+-			data_ptr += sizeof(*dpb_count);
++			size_read = sizeof(struct hfi_dpb_counts);
+ 			break;
+ 		default:
++			size_read = 0;
+ 			break;
+ 		}
++		data_ptr += size_read;
++		rem_bytes -= size_read;
+ 		num_properties_changed--;
+ 	} while (num_properties_changed > 0);
  
--	*in_num = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-+	*in_num = hfi_bufreq_get_count_min(&bufreq, ver);
- 
- 	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
- 	if (ret)
- 		return ret;
- 
--	*out_num = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-+	*out_num = hfi_bufreq_get_count_min(&bufreq, ver);
- 
- 	return 0;
+-done:
++	inst->ops->event_notify(inst, EVT_SYS_EVENT_CHANGE, &event);
++	return;
++
++error:
++	inst->error = HFI_ERR_SESSION_INSUFFICIENT_RESOURCES;
+ 	inst->ops->event_notify(inst, EVT_SYS_EVENT_CHANGE, &event);
  }
-@@ -984,14 +984,14 @@ static int vdec_verify_conf(struct venus
- 		return ret;
  
- 	if (inst->num_output_bufs < bufreq.count_actual ||
--	    inst->num_output_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-+	    inst->num_output_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
- 		return -EINVAL;
- 
- 	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
- 	if (ret)
- 		return ret;
- 
--	if (inst->num_input_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-+	if (inst->num_input_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
- 		return -EINVAL;
- 
- 	return 0;
---- a/drivers/media/platform/qcom/venus/vdec_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/vdec_ctrls.c
-@@ -79,7 +79,7 @@ static int vdec_op_g_volatile_ctrl(struc
- 	case V4L2_CID_MIN_BUFFERS_FOR_CAPTURE:
- 		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
- 		if (!ret)
--			ctrl->val = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-+			ctrl->val = hfi_bufreq_get_count_min(&bufreq, ver);
- 		break;
- 	default:
- 		return -EINVAL;
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1176,7 +1176,7 @@ static int venc_verify_conf(struct venus
- 		return ret;
- 
- 	if (inst->num_output_bufs < bufreq.count_actual ||
--	    inst->num_output_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-+	    inst->num_output_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
- 		return -EINVAL;
- 
- 	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
-@@ -1184,7 +1184,7 @@ static int venc_verify_conf(struct venus
- 		return ret;
- 
- 	if (inst->num_input_bufs < bufreq.count_actual ||
--	    inst->num_input_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-+	    inst->num_input_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
- 		return -EINVAL;
- 
- 	return 0;
---- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-+++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-@@ -358,7 +358,7 @@ static int venc_op_g_volatile_ctrl(struc
- 	case V4L2_CID_MIN_BUFFERS_FOR_OUTPUT:
- 		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
- 		if (!ret)
--			ctrl->val = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-+			ctrl->val = hfi_bufreq_get_count_min(&bufreq, ver);
- 		break;
- 	default:
- 		return -EINVAL;
 
 
