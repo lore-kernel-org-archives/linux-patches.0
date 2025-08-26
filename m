@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C539353364;
-	Tue, 26 Aug 2025 13:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFAB302CA6;
+	Tue, 26 Aug 2025 13:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216350; cv=none; b=DQSVUQxPxpFvOTfZh5rAFstL074H3x5FZVIG/Ch3F6cDUEZKuLA/LrsHNoMD80GMRjMuP9mV6kzfedRBHYvVhfXX0qNd1GBMOUVK3y0b1ymgS3AWNe1kZvu0aL7L/OFas2SrQBjb1r1CQlQmht8ZvbvI2JmsQZZO/zrVzO/6ANw=
+	t=1756216352; cv=none; b=XPc4E9U5ZUgEgGVJep16n5SZje3efXjFtorBzFd8thkqb3xAa4OuDH7VVLz1qiRLsHeoDqNWXPtsc3hhIruZKiFOAT7BNqPj+O/phULIESlXB1Uf+tr/m+Z+YpzCSmdkOJXryOBN+6ULLHpwjYEMf2WwPYuN7Vmx7QK9CQTkTHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216350; c=relaxed/simple;
-	bh=G22Msik/hG3vEj3O0E+zCiDWlFGXEAH6aqGnBVhghlg=;
+	s=arc-20240116; t=1756216352; c=relaxed/simple;
+	bh=wRBi6UOqPD47LsN93uQu6yXGrvaLL40ofvMMb0umr3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iK7oYvz2N+RGgbnGw+N1LMYLPO47WpnjvDRoIPQbH3Dqg5eyuAv3eRXltN/Ly9SF4Lfs65dS12Lla/+hTGjbrKGllXgNL/6V8Xy8Z/XQlDIF1+8SE/+iI22btarTP00UAQrIQGVxK3C+nV+q30KsIv9u9C3zExtcbs4J6f/Y0Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5spZzL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rboWSRFN6wiYrNXWhUHYdWJnrUOMds0WGpYcsVv3Q1BA3uo31q0GpgewGjiRlmVXot0Uzw68BTIgY+Zhts77L1wh7BdUxzVrYn7qNNv0ELQwUOrRfN7NcNQYGu47F1sksfT8XUZGoafl5U4suvr6SWFR2+xw9SbNILEsJFPm8rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S69ls6A4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5spZzL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D913C19422;
-	Tue, 26 Aug 2025 13:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S69ls6A4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABB8C4CEF1;
+	Tue, 26 Aug 2025 13:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216349;
-	bh=G22Msik/hG3vEj3O0E+zCiDWlFGXEAH6aqGnBVhghlg=;
+	s=korg; t=1756216352;
+	bh=wRBi6UOqPD47LsN93uQu6yXGrvaLL40ofvMMb0umr3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5spZzL1JVnGS35dQW6fAXvQe3A5u2iCPX9JPcuCBJw+vVBkhwbAvE3Qq+iqFyb92
-	 unKzKHB268Pq0YmCfoc3EaeEknCqPibz/H2hu4/FbS8QmppAtRlAD6wq/u3YotU3p6
-	 3ZenWmsUMZq86PIQ0P9LRqZ0r5QtaEvKzDcwMoHo=
+	b=S69ls6A4hlNfpOThJRIYAV0I+oaQ2v3QdUcmw3kCCChIVreq9w5Ga8b31Z7Y3UzUS
+	 zsqbFvDAP1UVYYaM+5ptI/RBwxcfLa5CmTs8w1r5YjSMTl2stZ5ar1DStJ69WyHOBC
+	 rl/yb/e35NDFeEvdNoT8CJL8IGCpsRbzTXTVSI4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Emily Deng <Emily.Deng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 377/644] net: ncsi: Fix buffer overflow in fetching version id
-Date: Tue, 26 Aug 2025 13:07:48 +0200
-Message-ID: <20250826110955.764813834@linuxfoundation.org>
+Subject: [PATCH 5.15 378/644] drm/ttm: Should to return the evict error
+Date: Tue, 26 Aug 2025 13:07:49 +0200
+Message-ID: <20250826110955.789647801@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,56 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+From: Emily Deng <Emily.Deng@amd.com>
 
-[ Upstream commit 8e16170ae972c7fed132bc928914a2ffb94690fc ]
+[ Upstream commit 4e16a9a00239db5d819197b9a00f70665951bf50 ]
 
-In NC-SI spec v1.2 section 8.4.44.2, the firmware name doesn't
-need to be null terminated while its size occupies the full size
-of the field. Fix the buffer overflow issue by adding one
-additional byte for null terminator.
+For the evict fail case, the evict error should be returned.
 
-Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
-Reviewed-by: Paul Fertser <fercerpav@gmail.com>
-Link: https://patch.msgid.link/20250610193338.1368-1-kalavakunta.hari.prasad@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+v2: Consider ENOENT case.
+
+v3: Abort directly when the eviction failed for some reason (except for -ENOENT)
+ and not wait for the move to finish
+
+Signed-off-by: Emily Deng <Emily.Deng@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250603091154.3472646-1-Emily.Deng@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h | 2 +-
- net/ncsi/ncsi-rsp.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_resource.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index 2c260f33b55c..ad1f671ffc37 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -110,7 +110,7 @@ struct ncsi_channel_version {
- 	u8   update;		/* NCSI version update */
- 	char alpha1;		/* NCSI version alpha1 */
- 	char alpha2;		/* NCSI version alpha2 */
--	u8  fw_name[12];	/* Firmware name string                */
-+	u8  fw_name[12 + 1];	/* Firmware name string                */
- 	u32 fw_version;		/* Firmware version                   */
- 	u16 pci_ids[4];		/* PCI identification                 */
- 	u32 mf_id;		/* Manufacture ID                     */
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 8668888c5a2f..d5ed80731e89 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -775,6 +775,7 @@ static int ncsi_rsp_handler_gvi(struct ncsi_request *nr)
- 	ncv->alpha1 = rsp->alpha1;
- 	ncv->alpha2 = rsp->alpha2;
- 	memcpy(ncv->fw_name, rsp->fw_name, 12);
-+	ncv->fw_name[12] = '\0';
- 	ncv->fw_version = ntohl(rsp->fw_version);
- 	for (i = 0; i < ARRAY_SIZE(ncv->pci_ids); i++)
- 		ncv->pci_ids[i] = ntohs(rsp->pci_ids[i]);
+diff --git a/drivers/gpu/drm/ttm/ttm_resource.c b/drivers/gpu/drm/ttm/ttm_resource.c
+index 2c590b4c46cb..9a8f565aa6ad 100644
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -150,6 +150,9 @@ int ttm_resource_manager_evict_all(struct ttm_device *bdev,
+ 	}
+ 	spin_unlock(&bdev->lru_lock);
+ 
++	if (ret && ret != -ENOENT)
++		return ret;
++
+ 	spin_lock(&man->move_lock);
+ 	fence = dma_fence_get(man->move);
+ 	spin_unlock(&man->move_lock);
 -- 
 2.39.5
 
