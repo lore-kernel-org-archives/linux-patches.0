@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DCD11187;
-	Tue, 26 Aug 2025 13:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF9D15A8;
+	Tue, 26 Aug 2025 13:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215422; cv=none; b=JTVbvXenokQZtm+jvqVJxvsYB7sPrR8WIwZZDySrbZzGgnQl56MNnGWUM7gqcGiDu1m9wfTMNBq1UrPfCRw5dUM2SmyXhT8ZVMUTpuLzNJT7+Ll9lGAhDlr/2tc6Fie2BGyDGBUj6sF3BsKbrknV3yHBB4gaUDEl5ly+0FRzY/Y=
+	t=1756215425; cv=none; b=UhGxxAMdCuVugXs/1GAb+RnRrosShr2t31q8vyv/7gKO5XX1TXUnz7IAjImQtc/82ZfDVC7UiQAIMdnxgfqtCmdzAPHqNnZqsW76kqIAvBnyM+FACATkp3Z+tCD7PNXScpDEhtgcs3NZWykzzAU0IqSowzC/cz8iMWWBLBAzBcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215422; c=relaxed/simple;
-	bh=IUyvY7r76yLlL+A/K2mYMG4PAZ4zC0pZhyw9R5TcPPA=;
+	s=arc-20240116; t=1756215425; c=relaxed/simple;
+	bh=GzmCeuA2O8aa/0d/8MGm1sYzgxaYlGUmoaAoO+Lo9FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0rMMMw+Cpuzl6i3CRZjRF1bhIUYiOwQM+8XUQkNmGzuH+w73gQwnsq38CWEw+Mee8h5ChrW8ROOeyl4E6k7XuI+E8YYWBN8diwaI9gCO7BrqZM8/buQi6bq2eeCxv2VbLcn8xeeoBPwkD02vdQstL1djR2dpP/QtNHwlVaLJvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAFpGLNI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QdB/en2kW3OuU2KwFUyGgnyeOFYzN0o+7/2eo+YP0fK305ezcAIeGaAQB3OmCBrW8JFxDqF2a+IYJZOnhDXlrwHxRHJ+ocRGolHbCfY3hL8aY3IQIusNiKGsRXxZOrhiHRlD3hZLFepNL9v8nkF+D2aEuYu3zar3TcVD+jMlXLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUusFzWn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAFpGLNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3014CC4CEF1;
-	Tue, 26 Aug 2025 13:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUusFzWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59FFC4CEF1;
+	Tue, 26 Aug 2025 13:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215422;
-	bh=IUyvY7r76yLlL+A/K2mYMG4PAZ4zC0pZhyw9R5TcPPA=;
+	s=korg; t=1756215425;
+	bh=GzmCeuA2O8aa/0d/8MGm1sYzgxaYlGUmoaAoO+Lo9FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAFpGLNIkOeWX7RvsvVnhrN6Ww9ALJxInmBJp+Dv3PoXMkX2mRljjKjHVFCdWgbvg
-	 ErG8ALKdFY+6jYQxvaIziU2vltwXkqR9nOmkobG3BBosfR23ywJCrthUfI1R7ihaR1
-	 nF+37N681arVqy/+rgU8o9T5SCS+d0nZdJoMjO7I=
+	b=mUusFzWn+euvOrKSMU+IbJPVDuReGnMrWF31P+riggsK3ZNHYl0ApeoM3DN5lYKCR
+	 JzmLuf1dOR8rI1FLPjzyQWKn9gGFMKmMOXe1iBEqYX8YQ4Ir03G8dcWg5LH5H8zbJJ
+	 FcaBbs0zjSkdIuLeFKm6coKMYHL5DgtMEV9EgIPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Nilton Perim Neto <niltonperimneto@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 008/644] Input: xpad - set correct controller type for Acer NGR200
-Date: Tue, 26 Aug 2025 13:01:39 +0200
-Message-ID: <20250826110946.718073824@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 5.15 009/644] pch_uart: Fix dma_sync_sg_for_device() nents value
+Date: Tue, 26 Aug 2025 13:01:40 +0200
+Message-ID: <20250826110946.743056198@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilton Perim Neto <niltonperimneto@gmail.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit bcce05041b21888f10b80ea903dcfe51a25c586e upstream.
+commit 6c0e9f05c9d7875995b0e92ace71be947f280bbd upstream.
 
-The controller should have been set as XTYPE_XBOX360 and not XTYPE_XBOX.
-Also the entry is in the wrong place. Fix it.
+The dma_sync_sg_for_device() functions should be called with the same
+nents as the dma_map_sg(), not the value the map function returned
+according to the documentation in Documentation/core-api/dma-api.rst:450:
+	With the sync_sg API, all the parameters must be the same
+	as those passed into the sg mapping API.
 
-Reported-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Nilton Perim Neto <niltonperimneto@gmail.com>
-Link: https://lore.kernel.org/r/20250708033126.26216-2-niltonperimneto@gmail.com
-Fixes: 22c69d786ef8 ("Input: xpad - support Acer NGR 200 Controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250701113452.18590-2-fourier.thomas@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 +-
+ drivers/tty/serial/pch_uart.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -144,12 +144,12 @@ static const struct xpad_device {
- 	{ 0x046d, 0xca88, "Logitech Compact Controller for Xbox", 0, XTYPE_XBOX },
- 	{ 0x046d, 0xca8a, "Logitech Precision Vibration Feedback Wheel", 0, XTYPE_XBOX },
- 	{ 0x046d, 0xcaa3, "Logitech DriveFx Racing Wheel", 0, XTYPE_XBOX360 },
-+	{ 0x0502, 0x1305, "Acer NGR200", 0, XTYPE_XBOX360 },
- 	{ 0x056e, 0x2004, "Elecom JC-U3613M", 0, XTYPE_XBOX360 },
- 	{ 0x05fd, 0x1007, "Mad Catz Controller (unverified)", 0, XTYPE_XBOX },
- 	{ 0x05fd, 0x107a, "InterAct 'PowerPad Pro' X-Box pad (Germany)", 0, XTYPE_XBOX },
- 	{ 0x05fe, 0x3030, "Chic Controller", 0, XTYPE_XBOX },
- 	{ 0x05fe, 0x3031, "Chic Controller", 0, XTYPE_XBOX },
--	{ 0x0502, 0x1305, "Acer NGR200", 0, XTYPE_XBOX },
- 	{ 0x062a, 0x0020, "Logic3 Xbox GamePad", 0, XTYPE_XBOX },
- 	{ 0x062a, 0x0033, "Competition Pro Steering Wheel", 0, XTYPE_XBOX },
- 	{ 0x06a3, 0x0200, "Saitek Racing Wheel", 0, XTYPE_XBOX },
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -1014,7 +1014,7 @@ static unsigned int dma_handle_tx(struct
+ 			__func__);
+ 		return 0;
+ 	}
+-	dma_sync_sg_for_device(port->dev, priv->sg_tx_p, nent, DMA_TO_DEVICE);
++	dma_sync_sg_for_device(port->dev, priv->sg_tx_p, num, DMA_TO_DEVICE);
+ 	priv->desc_tx = desc;
+ 	desc->callback = pch_dma_tx_complete;
+ 	desc->callback_param = priv;
 
 
