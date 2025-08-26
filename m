@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9615F284B5B;
-	Tue, 26 Aug 2025 11:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213931FECAB;
+	Tue, 26 Aug 2025 11:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208569; cv=none; b=CdZsfu7aOZTs/OaVgJNZm+fNJ7xXA9D/4s+zzf6n6VRAMFYUNpkI6FkEOznQfzauE7/1iWjx2eZPqpb2ZCSiBE/qHwT3C9sY+mssE0cTgLOtHZCvlwlaTFMtPpileRQIL4GbVACWqJRW3o9KOHIrOzcW8gxYvDC9WcxvFgo86p4=
+	t=1756208572; cv=none; b=QnEmOl3/BDuk1vnKS1SgiESdwO+eFp6ztZ23pH+1H2Uf+hSTedytm1VsKVSOSGh04jhvsp/JzVClunrxoN33tCPsTG3pHrBw3hWhpaY62qzqIb6KDfIVN56pCB76VxnJuZgtBOpRMlxqcbocdO7LQcy0ctMDxIihCGfUrveJREw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208569; c=relaxed/simple;
-	bh=TbTZtA8AjrTp7ucGMuN/oi9v/115u1Df6QYuTCkmmaA=;
+	s=arc-20240116; t=1756208572; c=relaxed/simple;
+	bh=vDfJWoZUrGDRYz/mCLoXR2khibwuGmA9Ex6iNCHEjdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ic1VsVUc8aLr7dOnrbYdLlymyiNFkI+iOwSVRPJInEHa2deti94SFNn2BtOkSlRO+psrXnv29OK4OnzQbsZCMDLsYEaFE51l9y3tTlbE+xHk6nMPQklsgsnjLJAhXhRgefWimgRWzkfVYHGhW9xdgrzVbjiU8El/HMQFxYGjbVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcnMT47t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSIy3X6wkLB2B9EWDU4KWoxJ4kUaiSNkER7aupZ9MIQt9ttZXh+OH7T3ZH6VkvPkcbj9FBTYN0qS9WYZK/UrVfRGmcBtteah+aUy7yD2XiNnWBmaS/ZRsqfk0TUi6GlWysDAg+r50YzAFRv6ReB+rVB/KE4T6rHQFFQzJmaIdyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r61+70FR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcnMT47t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21690C4CEF1;
-	Tue, 26 Aug 2025 11:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r61+70FR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C4FC4CEF1;
+	Tue, 26 Aug 2025 11:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208569;
-	bh=TbTZtA8AjrTp7ucGMuN/oi9v/115u1Df6QYuTCkmmaA=;
+	s=korg; t=1756208572;
+	bh=vDfJWoZUrGDRYz/mCLoXR2khibwuGmA9Ex6iNCHEjdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcnMT47tTDJRKiv3e+J4wJAFmdTcLpLc2FvYKOrkbLcgLwnuvDKcC+dygJlMSV5b0
-	 i0gStO/8mx6N5j0YPoiXUizLzkjOytynVXkH6rmzXAvlZso8lcAM2G/jzOURf8HgNK
-	 4JVPhRERm2hH/XjzkNuy4JywZLq230Mm+dZDuRcY=
+	b=r61+70FRmK9oS0N0Gt1lwSVPAIQ18EjTNMM7mn0dp63+XtUS7/qpXYbcssbk8LOc2
+	 Sau4OiUydHlxzI09K9C0Wiiqjpq3tinNtZfiPQ2vIY1NSh5UgN57AetEpSQ5XkE4Xu
+	 Hf7gPOQC52/zg3ZJ+Cal+ZS4z9CapGmf5rtJ/VHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 161/322] sched_ext: initialize built-in idle state before ops.init()
-Date: Tue, 26 Aug 2025 13:09:36 +0200
-Message-ID: <20250826110919.799414880@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 162/322] Revert "can: ti_hecc: fix -Woverflow compiler warning"
+Date: Tue, 26 Aug 2025 13:09:37 +0200
+Message-ID: <20250826110919.824243796@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,82 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit f0c6eab5e45c529f449fbc595873719e00de6d79 upstream.
+This reverts commit 1da38b70d90f8529c060dd380d0c18e6d9595463 which is
+commit 7cae4d04717b002cffe41169da3f239c845a0723 upstream.
 
-A BPF scheduler may want to use the built-in idle cpumasks in ops.init()
-before the scheduler is fully initialized, either directly or through a
-BPF timer for example.
-
-However, this would result in an error, since the idle state has not
-been properly initialized yet.
-
-This can be easily verified by modifying scx_simple to call
-scx_bpf_get_idle_cpumask() in ops.init():
-
-$ sudo scx_simple
-
-DEBUG DUMP
-===========================================================================
-
-scx_simple[121] triggered exit kind 1024:
-  runtime error (built-in idle tracking is disabled)
-...
-
-Fix this by properly initializing the idle state before ops.init() is
-called. With this change applied:
-
-$ sudo scx_simple
-local=2 global=0
-local=19 global=11
-local=23 global=11
-...
-
-Fixes: d73249f88743d ("sched_ext: idle: Make idle static keys private")
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ Backport to 6.12:
-  - Original commit doesn't apply cleanly to 6.12 since d73249f88743d is
-    not present.
-  - This backport applies the same logical fix to prevent BPF scheduler
-    failures while accessing idle cpumasks from ops.init(). ]
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/63e25fdb-095a-40eb-b341-75781e71ea95@roeck-us.net
+Cc: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/can/ti_hecc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5220,6 +5220,13 @@ static int scx_ops_enable(struct sched_e
- 	for_each_possible_cpu(cpu)
- 		cpu_rq(cpu)->scx.cpuperf_target = SCX_CPUPERF_ONE;
+--- a/drivers/net/can/ti_hecc.c
++++ b/drivers/net/can/ti_hecc.c
+@@ -383,7 +383,7 @@ static void ti_hecc_start(struct net_dev
+ 	 * overflows instead of the hardware silently dropping the
+ 	 * messages.
+ 	 */
+-	mbx_mask = ~BIT_U32(HECC_RX_LAST_MBOX);
++	mbx_mask = ~BIT(HECC_RX_LAST_MBOX);
+ 	hecc_write(priv, HECC_CANOPC, mbx_mask);
  
-+	if (!ops->update_idle || (ops->flags & SCX_OPS_KEEP_BUILTIN_IDLE)) {
-+		reset_idle_masks();
-+		static_branch_enable(&scx_builtin_idle_enabled);
-+	} else {
-+		static_branch_disable(&scx_builtin_idle_enabled);
-+	}
-+
- 	/*
- 	 * Keep CPUs stable during enable so that the BPF scheduler can track
- 	 * online CPUs by watching ->on/offline_cpu() after ->init().
-@@ -5287,13 +5294,6 @@ static int scx_ops_enable(struct sched_e
- 	if (scx_ops.cpu_acquire || scx_ops.cpu_release)
- 		static_branch_enable(&scx_ops_cpu_preempt);
- 
--	if (!ops->update_idle || (ops->flags & SCX_OPS_KEEP_BUILTIN_IDLE)) {
--		reset_idle_masks();
--		static_branch_enable(&scx_builtin_idle_enabled);
--	} else {
--		static_branch_disable(&scx_builtin_idle_enabled);
--	}
--
- 	/*
- 	 * Lock out forks, cgroup on/offlining and moves before opening the
- 	 * floodgate so that they don't wander into the operations prematurely.
+ 	/* Enable interrupts */
 
 
