@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23752BE653;
-	Tue, 26 Aug 2025 13:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1572124A066;
+	Tue, 26 Aug 2025 13:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214543; cv=none; b=bTnXdjiOqTXohH2xXQ761YycoLdIs296b2iBJbfgrr6d+0muLBRSvmuZ9uwBG2iBdDnMYh8DYSHoJSSd284OUMKff54jw1Q4Sr56LJNvb8ayesRGL6LnIURTSPIY5lcDkMXnm9CyBA+AZs25v3TZqmM+lwanII+hYKODFOwdNj0=
+	t=1756214546; cv=none; b=Je/Ph2OHn3VmspzBB5TKiDBDS92x6Ln59iM7bTAGIWQIo8Av/JKzfolQZSjwaVOyfmQfR3D5P4WPPe7aV5S3vvSdfSniYcZgvnbvA8O2Lq5VFNL2aluhZOeND+6sC2ZlnWbXOn0+DULaTWtHE6PkpYMXO9GZDG2Gz2EDgzjbOn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214543; c=relaxed/simple;
-	bh=BR8DHIVy1BXgng6Hienw4W1Ps/VaKLK9EI0JuDuMVtA=;
+	s=arc-20240116; t=1756214546; c=relaxed/simple;
+	bh=9UelaFZU3PYmhUZ00wmXGZZGRaVfmxzGMRJTbET/IWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUboO6Aycy3gmtepCCcMtgYaaM3WWvNYrH3+GSrekyWjqlF6YGePb275gHfiXKUvrFHCU7QWtTC6NvFJxSnJwqSYk44xDhhCGtcVStC2XkZsRlg6ap3ffylfZrJ44/7vLQNA2ci8GhyM24i4+18QOwcFIXPkVkWYPBNhU4Ly76A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIJDEECG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PuDo7k2UBvezgKCLiIn/mT+G6lNMiAxdk6LzgLoz+5gxlBJgr/85r2EaH+svHU3w1Q/eTgnH7Utf0s0eqLj2T63QApu8zNgyd7m/+JbyC8QPBtfG5/aKZ8xBj/X9hmuv1Xu3IJ5KO3riE2ufN3bpmNH4CBIX4x2YRs65uvngf3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fx5rd0q5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIJDEECG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54CAC4CEF1;
-	Tue, 26 Aug 2025 13:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fx5rd0q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB05C113CF;
+	Tue, 26 Aug 2025 13:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214543;
-	bh=BR8DHIVy1BXgng6Hienw4W1Ps/VaKLK9EI0JuDuMVtA=;
+	s=korg; t=1756214546;
+	bh=9UelaFZU3PYmhUZ00wmXGZZGRaVfmxzGMRJTbET/IWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIJDEECGRZtE4qFVbVU6WzzVsDrFf32AqSv3aJVQRUk6+H2oWBX7SPBR9VGlA/9kg
-	 5rtgbMv3uE+xV7EnpHNxULWxs4a8fM/30AYkh2trA5qoLbkuXV40bPnm3xkLk0DWpR
-	 oz2KI6VwbLQFPsBIWa5a9xjrvxDEGIt8Ulb7fO60=
+	b=fx5rd0q5K4Pa2Dg4Fs2jIsm63xnwTCvbAzmLCzoo+zI4fj2ozOw4JsLdnowRpUNQ8
+	 jgHDGj2fDoIrJM0CtfSpTTZFYZ+jYnkTSXTP2gcgyYIRFYPBOFO6gp7BH6UI4VMuO9
+	 kBkxRgO6ccWFJ1J5/10Su85XQUhWL3ZV5vs9xms0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Zhiqi Song <songzhiqi1@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/482] powerpc: floppy: Add missing checks after DMA map
-Date: Tue, 26 Aug 2025 13:06:43 +0200
-Message-ID: <20250826110934.523652241@linuxfoundation.org>
+Subject: [PATCH 6.1 177/482] crypto: hisilicon/hpre - fix dma unmap sequence
+Date: Tue, 26 Aug 2025 13:07:10 +0200
+Message-ID: <20250826110935.180917788@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,39 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Zhiqi Song <songzhiqi1@huawei.com>
 
-[ Upstream commit cf183c1730f2634245da35e9b5d53381b787d112 ]
+[ Upstream commit 982fd1a74de63c388c060e4fa6f7fbd088d6d02e ]
 
-The DMA map functions can fail and should be tested for errors.
+Perform DMA unmapping operations before processing data.
+Otherwise, there may be unsynchronized data accessed by
+the CPU when the SWIOTLB is enabled.
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250620075602.12575-1-fourier.thomas@gmail.com
+Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/floppy.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/floppy.h b/arch/powerpc/include/asm/floppy.h
-index f8ce178b43b7..34abf8bea2cc 100644
---- a/arch/powerpc/include/asm/floppy.h
-+++ b/arch/powerpc/include/asm/floppy.h
-@@ -144,9 +144,12 @@ static int hard_dma_setup(char *addr, unsigned long size, int mode, int io)
- 		bus_addr = 0;
- 	}
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index ef02dadd6217..541f5eb76b6e 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1461,11 +1461,13 @@ static void hpre_ecdh_cb(struct hpre_ctx *ctx, void *resp)
+ 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
+ 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
  
--	if (!bus_addr)	/* need to map it */
-+	if (!bus_addr) {	/* need to map it */
- 		bus_addr = dma_map_single(&isa_bridge_pcidev->dev, addr, size,
- 					  dir);
-+		if (dma_mapping_error(&isa_bridge_pcidev->dev, bus_addr))
-+			return -ENOMEM;
-+	}
++	/* Do unmap before data processing */
++	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
++
+ 	p = sg_virt(areq->dst);
+ 	memmove(p, p + ctx->key_sz - curve_sz, curve_sz);
+ 	memmove(p + curve_sz, p + areq->dst_len - curve_sz, curve_sz);
  
- 	/* remember this one as prev */
- 	prev_addr = addr;
+-	hpre_ecdh_hw_data_clr_all(ctx, req, areq->dst, areq->src);
+ 	kpp_request_complete(areq, ret);
+ 
+ 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
+@@ -1769,9 +1771,11 @@ static void hpre_curve25519_cb(struct hpre_ctx *ctx, void *resp)
+ 	if (overtime_thrhld && hpre_is_bd_timeout(req, overtime_thrhld))
+ 		atomic64_inc(&dfx[HPRE_OVER_THRHLD_CNT].value);
+ 
++	/* Do unmap before data processing */
++	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
++
+ 	hpre_key_to_big_end(sg_virt(areq->dst), CURVE25519_KEY_SIZE);
+ 
+-	hpre_curve25519_hw_data_clr_all(ctx, req, areq->dst, areq->src);
+ 	kpp_request_complete(areq, ret);
+ 
+ 	atomic64_inc(&dfx[HPRE_RECV_CNT].value);
 -- 
 2.39.5
 
