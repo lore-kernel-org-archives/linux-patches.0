@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC84283FDF;
-	Tue, 26 Aug 2025 11:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4FC8635C;
+	Tue, 26 Aug 2025 11:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756209005; cv=none; b=iGSY0S5ShGX1Sngqx+1003LM5BzmxtxEJi/2bF95a7cN8YlgwDlHW6McMJQswTZxkKPjzNbP8irKynSvkk/f+76w1oV6KldDcRyAXs3FieWhRJxEdUGj2KYpAcNH2ajIHw3o+j2H6caEKslKsZLE90wdteL3IHxz9y5w7WAk/hg=
+	t=1756209008; cv=none; b=EpXVEqckreVp4eTfjVy+bPJz78m+dKija1H75UEehH6fcwzEYLlub/1VkR1L+XiQvQgq43dBwmAiXR+GGPfd3tPbAsFdtd1rR87E0eiVWbQgfm5X/SWweRhQVQIygsavXI2LvEYzCbeIsI5hxOioW23VEWNPONOMuhwGNmkAV/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756209005; c=relaxed/simple;
-	bh=6i79NmOMURbyX67Z5Ew9T9hibJDVsSdZcsLlh+K4Qwk=;
+	s=arc-20240116; t=1756209008; c=relaxed/simple;
+	bh=TU9OKUFSEgToJboc98V/0Q7VSvPGjY6HyV3SyNZbESU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jaSvs8qIs3qqQqewfxnppZTH5Ojcwl+1P1XOiL2zp4Ir2qnxCRD1xBPcaYBeQClNCIo14mmvQ+wEy8NIdinYg7I3EjP1dpA3RIAnUSo4HZNEI35oh5RQlt4J+S2aKHqj5iLCEKGwC5Nrnmnh8pqdkiJ6WSuoUW6ZWg9bVcClXco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtB9L8A9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uNTWYFwO0wNwL5+OWrEh4eUJUtEXaDVlsKOyELqPdNvzlEwQ4y+SJrCNhTwE3X9BIt9nA2C+z3TjkMoWWwcKkOc4ho6F/BPQVUJJ34ltB/7M1pleSYemzPLn7zqfQgxmcdVljGmrO7r/1AL1+dLAC7BtcC39v6HwQwMPyVlgbqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLw2ApOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtB9L8A9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C472AC4CEF1;
-	Tue, 26 Aug 2025 11:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLw2ApOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ABEC4CEF1;
+	Tue, 26 Aug 2025 11:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756209005;
-	bh=6i79NmOMURbyX67Z5Ew9T9hibJDVsSdZcsLlh+K4Qwk=;
+	s=korg; t=1756209007;
+	bh=TU9OKUFSEgToJboc98V/0Q7VSvPGjY6HyV3SyNZbESU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtB9L8A9ICLw7Cw81tU3vfVYiVLp5ezoFp48nAjijlSO28AzvqpxN3DZKeHUKUVMk
-	 ylBwt5h1jVx4EkSFWV9XOFMl2j9L1IcNR7KRPyrbRFLmeQ/1KbBpCVQ2JiMBWmZDeb
-	 XRaJ8YGglRGOyvYYpcI6FGVg8qkOcjSb6IA8aX3s=
+	b=XLw2ApOXW5vkhvE4Gitr97hL42q8dknxWNbux8GpIfV0YUhCOcRs1ldZZs8Y/ZX+f
+	 xw6hpi3NmmwBmD4BkhLFmgMvDxDm7oxpERE3XmUVeuSHCXBN42vDfykO7fBvQ5sCLq
+	 qaUMygrYj7F3DHrZ/2xDKfaNSkdnv8jjQnwOXcyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
+	Oren Sidi <osidi@nvidia.com>,
+	Alex Lazar <alazar@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 314/322] net/mlx5: Relocate function declarations from port.h to mlx5_core.h
-Date: Tue, 26 Aug 2025 13:12:09 +0200
-Message-ID: <20250826110923.644376654@linuxfoundation.org>
+Subject: [PATCH 6.12 315/322] net/mlx5: Add IFC bits and enums for buf_ownership
+Date: Tue, 26 Aug 2025 13:12:10 +0200
+Message-ID: <20250826110923.667704908@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -53,417 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Oren Sidi <osidi@nvidia.com>
 
-[ Upstream commit a2f61f1db85532e72fb8a3af51b06df94bb82912 ]
+[ Upstream commit 6f09ee0b583cad4f2b6a82842c26235bee3d5c2e ]
 
-The port header is a general file under include, yet it
-contains declarations for functions that are either not
-exported or exported but not used outside the mlx5_core
-driver.
+Extend structure layouts and defines buf_ownership.
+buf_ownership indicates whether the buffer is managed by SW or FW.
 
-To enhance code organization, we move these declarations
-to mlx5_core.h, where they are more appropriately scoped.
-
-This refactor removes unnecessary exported symbols and
-prevents unexported functions from being inadvertently
-referenced outside of the mlx5_core driver.
-
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Oren Sidi <osidi@nvidia.com>
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250304160620.417580-2-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/1752734895-257735-3-git-send-email-tariqt@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: 451d2849ea66 ("net/mlx5e: Query FW for buffer ownership")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/mlx5_core.h   | 85 +++++++++++++++++++
- .../net/ethernet/mellanox/mlx5/core/port.c    | 20 -----
- include/linux/mlx5/port.h                     | 85 +------------------
- 3 files changed, 86 insertions(+), 104 deletions(-)
+ include/linux/mlx5/mlx5_ifc.h | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-index 62c770b0eaa8..52c9a196728d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-@@ -114,6 +114,21 @@ struct mlx5_cmd_alias_obj_create_attr {
- 	u8 access_key[ACCESS_KEY_LEN];
+diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
+index 512e25c416ae..2b1a816e4d59 100644
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -10358,8 +10358,16 @@ struct mlx5_ifc_pifr_reg_bits {
+ 	u8         port_filter_update_en[8][0x20];
  };
  
-+struct mlx5_port_eth_proto {
-+	u32 cap;
-+	u32 admin;
-+	u32 oper;
++enum {
++	MLX5_BUF_OWNERSHIP_UNKNOWN	= 0x0,
++	MLX5_BUF_OWNERSHIP_FW_OWNED	= 0x1,
++	MLX5_BUF_OWNERSHIP_SW_OWNED	= 0x2,
 +};
 +
-+struct mlx5_module_eeprom_query_params {
-+	u16 size;
-+	u16 offset;
-+	u16 i2c_address;
-+	u32 page;
-+	u32 bank;
-+	u32 module_number;
-+};
-+
- static inline void mlx5_printk(struct mlx5_core_dev *dev, int level, const char *format, ...)
- {
- 	struct device *device = dev->device;
-@@ -278,6 +293,76 @@ int mlx5_set_mtppse(struct mlx5_core_dev *mdev, u8 pin, u8 arm, u8 mode);
- struct mlx5_dm *mlx5_dm_create(struct mlx5_core_dev *dev);
- void mlx5_dm_cleanup(struct mlx5_core_dev *dev);
- 
-+void mlx5_toggle_port_link(struct mlx5_core_dev *dev);
-+int mlx5_set_port_admin_status(struct mlx5_core_dev *dev,
-+			       enum mlx5_port_status status);
-+int mlx5_query_port_admin_status(struct mlx5_core_dev *dev,
-+				 enum mlx5_port_status *status);
-+int mlx5_set_port_beacon(struct mlx5_core_dev *dev, u16 beacon_duration);
-+
-+int mlx5_set_port_mtu(struct mlx5_core_dev *dev, u16 mtu, u8 port);
-+int mlx5_set_port_pause(struct mlx5_core_dev *dev, u32 rx_pause, u32 tx_pause);
-+int mlx5_query_port_pause(struct mlx5_core_dev *dev,
-+			  u32 *rx_pause, u32 *tx_pause);
-+
-+int mlx5_set_port_pfc(struct mlx5_core_dev *dev, u8 pfc_en_tx, u8 pfc_en_rx);
-+int mlx5_query_port_pfc(struct mlx5_core_dev *dev, u8 *pfc_en_tx,
-+			u8 *pfc_en_rx);
-+
-+int mlx5_set_port_stall_watermark(struct mlx5_core_dev *dev,
-+				  u16 stall_critical_watermark,
-+				  u16 stall_minor_watermark);
-+int mlx5_query_port_stall_watermark(struct mlx5_core_dev *dev,
-+				    u16 *stall_critical_watermark,
-+				    u16 *stall_minor_watermark);
-+
-+int mlx5_max_tc(struct mlx5_core_dev *mdev);
-+int mlx5_set_port_prio_tc(struct mlx5_core_dev *mdev, u8 *prio_tc);
-+int mlx5_query_port_prio_tc(struct mlx5_core_dev *mdev,
-+			    u8 prio, u8 *tc);
-+int mlx5_set_port_tc_group(struct mlx5_core_dev *mdev, u8 *tc_group);
-+int mlx5_query_port_tc_group(struct mlx5_core_dev *mdev,
-+			     u8 tc, u8 *tc_group);
-+int mlx5_set_port_tc_bw_alloc(struct mlx5_core_dev *mdev, u8 *tc_bw);
-+int mlx5_query_port_tc_bw_alloc(struct mlx5_core_dev *mdev,
-+				u8 tc, u8 *bw_pct);
-+int mlx5_modify_port_ets_rate_limit(struct mlx5_core_dev *mdev,
-+				    u8 *max_bw_value,
-+				    u8 *max_bw_unit);
-+int mlx5_query_port_ets_rate_limit(struct mlx5_core_dev *mdev,
-+				   u8 *max_bw_value,
-+				   u8 *max_bw_unit);
-+int mlx5_set_port_wol(struct mlx5_core_dev *mdev, u8 wol_mode);
-+int mlx5_query_port_wol(struct mlx5_core_dev *mdev, u8 *wol_mode);
-+
-+int mlx5_query_ports_check(struct mlx5_core_dev *mdev, u32 *out, int outlen);
-+int mlx5_set_ports_check(struct mlx5_core_dev *mdev, u32 *in, int inlen);
-+int mlx5_set_port_fcs(struct mlx5_core_dev *mdev, u8 enable);
-+void mlx5_query_port_fcs(struct mlx5_core_dev *mdev, bool *supported,
-+			 bool *enabled);
-+int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
-+			     u16 offset, u16 size, u8 *data);
-+int
-+mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
-+				 struct mlx5_module_eeprom_query_params *params,
-+				 u8 *data);
-+
-+int mlx5_query_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *out);
-+int mlx5_set_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *in);
-+int mlx5_set_trust_state(struct mlx5_core_dev *mdev, u8 trust_state);
-+int mlx5_query_trust_state(struct mlx5_core_dev *mdev, u8 *trust_state);
-+int mlx5_set_dscp2prio(struct mlx5_core_dev *mdev, u8 dscp, u8 prio);
-+int mlx5_query_dscp2prio(struct mlx5_core_dev *mdev, u8 *dscp2prio);
-+
-+int mlx5_port_query_eth_proto(struct mlx5_core_dev *dev, u8 port, bool ext,
-+			      struct mlx5_port_eth_proto *eproto);
-+bool mlx5_ptys_ext_supported(struct mlx5_core_dev *mdev);
-+u32 mlx5_port_ptys2speed(struct mlx5_core_dev *mdev, u32 eth_proto_oper,
-+			 bool force_legacy);
-+u32 mlx5_port_speed2linkmodes(struct mlx5_core_dev *mdev, u32 speed,
-+			      bool force_legacy);
-+int mlx5_port_max_linkspeed(struct mlx5_core_dev *mdev, u32 *speed);
-+
- #define MLX5_PPS_CAP(mdev) (MLX5_CAP_GEN((mdev), pps) &&		\
- 			    MLX5_CAP_GEN((mdev), pps_modify) &&		\
- 			    MLX5_CAP_MCAM_FEATURE((mdev), mtpps_fs) &&	\
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-index 50931584132b..dee4e44e2274 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-@@ -196,7 +196,6 @@ void mlx5_toggle_port_link(struct mlx5_core_dev *dev)
- 	if (ps == MLX5_PORT_UP)
- 		mlx5_set_port_admin_status(dev, MLX5_PORT_UP);
- }
--EXPORT_SYMBOL_GPL(mlx5_toggle_port_link);
- 
- int mlx5_set_port_admin_status(struct mlx5_core_dev *dev,
- 			       enum mlx5_port_status status)
-@@ -210,7 +209,6 @@ int mlx5_set_port_admin_status(struct mlx5_core_dev *dev,
- 	return mlx5_core_access_reg(dev, in, sizeof(in), out,
- 				    sizeof(out), MLX5_REG_PAOS, 0, 1);
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_admin_status);
- 
- int mlx5_query_port_admin_status(struct mlx5_core_dev *dev,
- 				 enum mlx5_port_status *status)
-@@ -227,7 +225,6 @@ int mlx5_query_port_admin_status(struct mlx5_core_dev *dev,
- 	*status = MLX5_GET(paos_reg, out, admin_status);
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_admin_status);
- 
- static void mlx5_query_port_mtu(struct mlx5_core_dev *dev, u16 *admin_mtu,
- 				u16 *max_mtu, u16 *oper_mtu, u8 port)
-@@ -257,7 +254,6 @@ int mlx5_set_port_mtu(struct mlx5_core_dev *dev, u16 mtu, u8 port)
- 	return mlx5_core_access_reg(dev, in, sizeof(in), out,
- 				   sizeof(out), MLX5_REG_PMTU, 0, 1);
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_mtu);
- 
- void mlx5_query_port_max_mtu(struct mlx5_core_dev *dev, u16 *max_mtu,
- 			     u8 port)
-@@ -447,7 +443,6 @@ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
- 
- 	return mlx5_query_mcia(dev, &query, data);
- }
--EXPORT_SYMBOL_GPL(mlx5_query_module_eeprom);
- 
- int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
- 				     struct mlx5_module_eeprom_query_params *params,
-@@ -467,7 +462,6 @@ int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
- 
- 	return mlx5_query_mcia(dev, params, data);
- }
--EXPORT_SYMBOL_GPL(mlx5_query_module_eeprom_by_page);
- 
- static int mlx5_query_port_pvlc(struct mlx5_core_dev *dev, u32 *pvlc,
- 				int pvlc_size,  u8 local_port)
-@@ -518,7 +512,6 @@ int mlx5_set_port_pause(struct mlx5_core_dev *dev, u32 rx_pause, u32 tx_pause)
- 	return mlx5_core_access_reg(dev, in, sizeof(in), out,
- 				    sizeof(out), MLX5_REG_PFCC, 0, 1);
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_pause);
- 
- int mlx5_query_port_pause(struct mlx5_core_dev *dev,
- 			  u32 *rx_pause, u32 *tx_pause)
-@@ -538,7 +531,6 @@ int mlx5_query_port_pause(struct mlx5_core_dev *dev,
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_pause);
- 
- int mlx5_set_port_stall_watermark(struct mlx5_core_dev *dev,
- 				  u16 stall_critical_watermark,
-@@ -597,7 +589,6 @@ int mlx5_set_port_pfc(struct mlx5_core_dev *dev, u8 pfc_en_tx, u8 pfc_en_rx)
- 	return mlx5_core_access_reg(dev, in, sizeof(in), out,
- 				    sizeof(out), MLX5_REG_PFCC, 0, 1);
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_pfc);
- 
- int mlx5_query_port_pfc(struct mlx5_core_dev *dev, u8 *pfc_en_tx, u8 *pfc_en_rx)
- {
-@@ -616,7 +607,6 @@ int mlx5_query_port_pfc(struct mlx5_core_dev *dev, u8 *pfc_en_tx, u8 *pfc_en_rx)
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_pfc);
- 
- int mlx5_max_tc(struct mlx5_core_dev *mdev)
- {
-@@ -667,7 +657,6 @@ int mlx5_set_port_prio_tc(struct mlx5_core_dev *mdev, u8 *prio_tc)
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_prio_tc);
- 
- int mlx5_query_port_prio_tc(struct mlx5_core_dev *mdev,
- 			    u8 prio, u8 *tc)
-@@ -689,7 +678,6 @@ int mlx5_query_port_prio_tc(struct mlx5_core_dev *mdev,
- 
- 	return err;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_prio_tc);
- 
- static int mlx5_set_port_qetcr_reg(struct mlx5_core_dev *mdev, u32 *in,
- 				   int inlen)
-@@ -728,7 +716,6 @@ int mlx5_set_port_tc_group(struct mlx5_core_dev *mdev, u8 *tc_group)
- 
- 	return mlx5_set_port_qetcr_reg(mdev, in, sizeof(in));
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_tc_group);
- 
- int mlx5_query_port_tc_group(struct mlx5_core_dev *mdev,
- 			     u8 tc, u8 *tc_group)
-@@ -749,7 +736,6 @@ int mlx5_query_port_tc_group(struct mlx5_core_dev *mdev,
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_tc_group);
- 
- int mlx5_set_port_tc_bw_alloc(struct mlx5_core_dev *mdev, u8 *tc_bw)
- {
-@@ -763,7 +749,6 @@ int mlx5_set_port_tc_bw_alloc(struct mlx5_core_dev *mdev, u8 *tc_bw)
- 
- 	return mlx5_set_port_qetcr_reg(mdev, in, sizeof(in));
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_tc_bw_alloc);
- 
- int mlx5_query_port_tc_bw_alloc(struct mlx5_core_dev *mdev,
- 				u8 tc, u8 *bw_pct)
-@@ -784,7 +769,6 @@ int mlx5_query_port_tc_bw_alloc(struct mlx5_core_dev *mdev,
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_tc_bw_alloc);
- 
- int mlx5_modify_port_ets_rate_limit(struct mlx5_core_dev *mdev,
- 				    u8 *max_bw_value,
-@@ -808,7 +792,6 @@ int mlx5_modify_port_ets_rate_limit(struct mlx5_core_dev *mdev,
- 
- 	return mlx5_set_port_qetcr_reg(mdev, in, sizeof(in));
- }
--EXPORT_SYMBOL_GPL(mlx5_modify_port_ets_rate_limit);
- 
- int mlx5_query_port_ets_rate_limit(struct mlx5_core_dev *mdev,
- 				   u8 *max_bw_value,
-@@ -834,7 +817,6 @@ int mlx5_query_port_ets_rate_limit(struct mlx5_core_dev *mdev,
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_ets_rate_limit);
- 
- int mlx5_set_port_wol(struct mlx5_core_dev *mdev, u8 wol_mode)
- {
-@@ -845,7 +827,6 @@ int mlx5_set_port_wol(struct mlx5_core_dev *mdev, u8 wol_mode)
- 	MLX5_SET(set_wol_rol_in, in, wol_mode, wol_mode);
- 	return mlx5_cmd_exec_in(mdev, set_wol_rol, in);
- }
--EXPORT_SYMBOL_GPL(mlx5_set_port_wol);
- 
- int mlx5_query_port_wol(struct mlx5_core_dev *mdev, u8 *wol_mode)
- {
-@@ -860,7 +841,6 @@ int mlx5_query_port_wol(struct mlx5_core_dev *mdev, u8 *wol_mode)
- 
- 	return err;
- }
--EXPORT_SYMBOL_GPL(mlx5_query_port_wol);
- 
- int mlx5_query_ports_check(struct mlx5_core_dev *mdev, u32 *out, int outlen)
- {
-diff --git a/include/linux/mlx5/port.h b/include/linux/mlx5/port.h
-index e68d42b8ce65..e288569225bd 100644
---- a/include/linux/mlx5/port.h
-+++ b/include/linux/mlx5/port.h
-@@ -61,15 +61,6 @@ enum mlx5_an_status {
- #define MLX5_EEPROM_PAGE_LENGTH		256
- #define MLX5_EEPROM_HIGH_PAGE_LENGTH	128
- 
--struct mlx5_module_eeprom_query_params {
--	u16 size;
--	u16 offset;
--	u16 i2c_address;
--	u32 page;
--	u32 bank;
--	u32 module_number;
--};
--
- enum mlx5e_link_mode {
- 	MLX5E_1000BASE_CX_SGMII	 = 0,
- 	MLX5E_1000BASE_KX	 = 1,
-@@ -142,12 +133,6 @@ enum mlx5_ptys_width {
- 	MLX5_PTYS_WIDTH_12X	= 1 << 4,
- };
- 
--struct mlx5_port_eth_proto {
--	u32 cap;
--	u32 admin;
--	u32 oper;
--};
--
- #define MLX5E_PROT_MASK(link_mode) (1U << link_mode)
- #define MLX5_GET_ETH_PROTO(reg, out, ext, field)	\
- 	(ext ? MLX5_GET(reg, out, ext_##field) :	\
-@@ -160,14 +145,7 @@ int mlx5_query_port_ptys(struct mlx5_core_dev *dev, u32 *ptys,
- 
- int mlx5_query_ib_port_oper(struct mlx5_core_dev *dev, u16 *link_width_oper,
- 			    u16 *proto_oper, u8 local_port, u8 plane_index);
--void mlx5_toggle_port_link(struct mlx5_core_dev *dev);
--int mlx5_set_port_admin_status(struct mlx5_core_dev *dev,
--			       enum mlx5_port_status status);
--int mlx5_query_port_admin_status(struct mlx5_core_dev *dev,
--				 enum mlx5_port_status *status);
--int mlx5_set_port_beacon(struct mlx5_core_dev *dev, u16 beacon_duration);
--
--int mlx5_set_port_mtu(struct mlx5_core_dev *dev, u16 mtu, u8 port);
-+
- void mlx5_query_port_max_mtu(struct mlx5_core_dev *dev, u16 *max_mtu, u8 port);
- void mlx5_query_port_oper_mtu(struct mlx5_core_dev *dev, u16 *oper_mtu,
- 			      u8 port);
-@@ -175,65 +153,4 @@ void mlx5_query_port_oper_mtu(struct mlx5_core_dev *dev, u16 *oper_mtu,
- int mlx5_query_port_vl_hw_cap(struct mlx5_core_dev *dev,
- 			      u8 *vl_hw_cap, u8 local_port);
- 
--int mlx5_set_port_pause(struct mlx5_core_dev *dev, u32 rx_pause, u32 tx_pause);
--int mlx5_query_port_pause(struct mlx5_core_dev *dev,
--			  u32 *rx_pause, u32 *tx_pause);
--
--int mlx5_set_port_pfc(struct mlx5_core_dev *dev, u8 pfc_en_tx, u8 pfc_en_rx);
--int mlx5_query_port_pfc(struct mlx5_core_dev *dev, u8 *pfc_en_tx,
--			u8 *pfc_en_rx);
--
--int mlx5_set_port_stall_watermark(struct mlx5_core_dev *dev,
--				  u16 stall_critical_watermark,
--				  u16 stall_minor_watermark);
--int mlx5_query_port_stall_watermark(struct mlx5_core_dev *dev,
--				    u16 *stall_critical_watermark, u16 *stall_minor_watermark);
--
--int mlx5_max_tc(struct mlx5_core_dev *mdev);
--
--int mlx5_set_port_prio_tc(struct mlx5_core_dev *mdev, u8 *prio_tc);
--int mlx5_query_port_prio_tc(struct mlx5_core_dev *mdev,
--			    u8 prio, u8 *tc);
--int mlx5_set_port_tc_group(struct mlx5_core_dev *mdev, u8 *tc_group);
--int mlx5_query_port_tc_group(struct mlx5_core_dev *mdev,
--			     u8 tc, u8 *tc_group);
--int mlx5_set_port_tc_bw_alloc(struct mlx5_core_dev *mdev, u8 *tc_bw);
--int mlx5_query_port_tc_bw_alloc(struct mlx5_core_dev *mdev,
--				u8 tc, u8 *bw_pct);
--int mlx5_modify_port_ets_rate_limit(struct mlx5_core_dev *mdev,
--				    u8 *max_bw_value,
--				    u8 *max_bw_unit);
--int mlx5_query_port_ets_rate_limit(struct mlx5_core_dev *mdev,
--				   u8 *max_bw_value,
--				   u8 *max_bw_unit);
--int mlx5_set_port_wol(struct mlx5_core_dev *mdev, u8 wol_mode);
--int mlx5_query_port_wol(struct mlx5_core_dev *mdev, u8 *wol_mode);
--
--int mlx5_query_ports_check(struct mlx5_core_dev *mdev, u32 *out, int outlen);
--int mlx5_set_ports_check(struct mlx5_core_dev *mdev, u32 *in, int inlen);
--int mlx5_set_port_fcs(struct mlx5_core_dev *mdev, u8 enable);
--void mlx5_query_port_fcs(struct mlx5_core_dev *mdev, bool *supported,
--			 bool *enabled);
--int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
--			     u16 offset, u16 size, u8 *data);
--int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
--				     struct mlx5_module_eeprom_query_params *params, u8 *data);
--
--int mlx5_query_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *out);
--int mlx5_set_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *in);
--
--int mlx5_set_trust_state(struct mlx5_core_dev *mdev, u8 trust_state);
--int mlx5_query_trust_state(struct mlx5_core_dev *mdev, u8 *trust_state);
--int mlx5_set_dscp2prio(struct mlx5_core_dev *mdev, u8 dscp, u8 prio);
--int mlx5_query_dscp2prio(struct mlx5_core_dev *mdev, u8 *dscp2prio);
--
--int mlx5_port_query_eth_proto(struct mlx5_core_dev *dev, u8 port, bool ext,
--			      struct mlx5_port_eth_proto *eproto);
--bool mlx5_ptys_ext_supported(struct mlx5_core_dev *mdev);
--u32 mlx5_port_ptys2speed(struct mlx5_core_dev *mdev, u32 eth_proto_oper,
--			 bool force_legacy);
--u32 mlx5_port_speed2linkmodes(struct mlx5_core_dev *mdev, u32 speed,
--			      bool force_legacy);
--int mlx5_port_max_linkspeed(struct mlx5_core_dev *mdev, u32 *speed);
--
- #endif /* __MLX5_PORT_H__ */
+ struct mlx5_ifc_pfcc_reg_bits {
+-	u8         reserved_at_0[0x8];
++	u8         reserved_at_0[0x4];
++	u8	   buf_ownership[0x2];
++	u8	   reserved_at_6[0x2];
+ 	u8         local_port[0x8];
+ 	u8         reserved_at_10[0xb];
+ 	u8         ppan_mask_n[0x1];
+@@ -10491,7 +10499,9 @@ struct mlx5_ifc_mtutc_reg_bits {
+ struct mlx5_ifc_pcam_enhanced_features_bits {
+ 	u8         reserved_at_0[0x48];
+ 	u8         fec_100G_per_lane_in_pplm[0x1];
+-	u8         reserved_at_49[0x1f];
++	u8         reserved_at_49[0xa];
++	u8	   buffer_ownership[0x1];
++	u8	   resereved_at_54[0x14];
+ 	u8         fec_50G_per_lane_in_pplm[0x1];
+ 	u8         reserved_at_69[0x4];
+ 	u8         rx_icrc_encapsulated_counter[0x1];
 -- 
 2.50.1
 
