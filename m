@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB1834A32E;
-	Tue, 26 Aug 2025 13:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A855D34DCD2;
+	Tue, 26 Aug 2025 13:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216445; cv=none; b=A6Dr5E3xPtZ82hvgm9XfnELxI+4j5b3T1sdAZx6NXChIWOz/Yp9HMcFkIIwCLFZ5JEit++XlLZqIhR+rmORxCqvp0yhE0BcGRNBLFl56wPFhwunVBE5SpCFl/LMUnoO+0VaKMG97gRgLvbEE8bXfmb47zi+al4SfHPHcnRWAHko=
+	t=1756216447; cv=none; b=TDKUYxNWRXIWBCfOEXMrCwxwpWr6dOVzmslCPzZatlB5TSIf62nY3lpu9I5gGhsIq383LzJv13HjXAeofcqk1kqR9J3/xsR+XmnJEDAWhE1yfV5bqM95WrIggvmgtpve7GGf4J/ohktnUoGHhYbDuswTix+hPRLZ3739ibaIhPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216445; c=relaxed/simple;
-	bh=pDtt6UTzCpkWsT1AjM2xI0MWj4YCKzsMb2Gu/gTTGS4=;
+	s=arc-20240116; t=1756216447; c=relaxed/simple;
+	bh=J2RBogaE6ouD23FPWlBQ/fPuvqLJ7l+/nCjPWaCyIDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gtt4JpKDKiXbzbpalRlM2aKwCSUQdbLJriNqTlsDUaKUF2rMPASXTg9Usk1rV9T2R2T6lBzSz6m5zg5OQ0aoRh+mcC22OdFe4xdwtTbX3o1J9TVmzX+Xtq/fh63LFzgue8FCF//ZIAVU3Cs3mX4UKCY5gxNT0scg4xaHTwSfPKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFKOwiUn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UBii2mX5kOhPz8nQUzw0wZrCwe2ZDRHQ3ebeIV9JKgBIIekU/y5lgYu54HGqWdr2RE6eOCpL2I4EPvaj/oIGgMhK9UueWsKNyIbblvMRtZP9D6FcFAKuUIpSfx7Njny6XygpqAxZnU0Cc6aYm+pXRGZ0phHmAEy0+jDkEGah7HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xegq18AG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFKOwiUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EC1C4CEF1;
-	Tue, 26 Aug 2025 13:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xegq18AG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADEEC4CEF1;
+	Tue, 26 Aug 2025 13:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216444;
-	bh=pDtt6UTzCpkWsT1AjM2xI0MWj4YCKzsMb2Gu/gTTGS4=;
+	s=korg; t=1756216447;
+	bh=J2RBogaE6ouD23FPWlBQ/fPuvqLJ7l+/nCjPWaCyIDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFKOwiUn7v5aqG5/nvbbP6xH9195Ug70X7wVSL9MTIRyM5dFEoxPnfzRlPL2GXdVj
-	 kUBTphQdam1ISCoQl2L9QyWVVqX/e+DYaYyraYx0YFBIGNWsWG7CiMUTIWFkVLJF/F
-	 cePPuU0a1SXiNn3B6iW2SoSdkhT5G03JFWlSF39k=
+	b=xegq18AGNpoQsCS54p+k/F6tKdq6dOMUNSgE7wpuyCqo9I+00ca157qOiVw5b6ON4
+	 KVgxrg6N3ZW5iXPjGgGEUe8LWTrG1Y1Kk4nOrle8AMDh9mAwCctejxkPBC8anWlQMr
+	 SE+LReQ7lHa9DSgS+9k9mIDzr5YdXZnzdEjq84+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 414/644] rtc: ds1307: handle oscillator stop flag (OSF) for ds1341
-Date: Tue, 26 Aug 2025 13:08:25 +0200
-Message-ID: <20250826110956.717265704@linuxfoundation.org>
+Subject: [PATCH 5.15 415/644] i3c: dont fail if GETHDRCAP is unsupported
+Date: Tue, 26 Aug 2025 13:08:26 +0200
+Message-ID: <20250826110956.741242618@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,61 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 523923cfd5d622b8f4ba893fdaf29fa6adeb8c3e ]
+[ Upstream commit 447270cdb41b1c8c3621bb14b93a6749f942556e ]
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+'I3C_BCR_HDR_CAP' is still spec v1.0 and has been renamed to 'advanced
+capabilities' in v1.1 onwards. The ST pressure sensor LPS22DF does not
+have HDR, but has the 'advanced cap' bit set. The core still wants to
+get additional information using the CCC 'GETHDRCAP' (or GETCAPS in v1.1
+onwards). Not all controllers support this CCC and will notify the upper
+layers about it. For instantiating the device, we can ignore this
+unsupported CCC as standard communication will work. Without this patch,
+the device will not be instantiated at all.
 
-This change expands the oscillator stop flag (OSF) handling that has
-already been implemented for some chips to the ds1341 chip (DS1341 and
-DS1342 share a datasheet). This handling manages the validity of the RTC
-data in .read_time and .set_time based on the OSF.
-
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-3-git-send-email-meaganlloyd@linux.microsoft.com
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250704204524.6124-1-wsa+renesas@sang-engineering.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/i3c/master.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index 1e621080f666..f8e32f5c37e3 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -273,6 +273,13 @@ static int ds1307_get_time(struct device *dev, struct rtc_time *t)
- 		if (tmp & DS1340_BIT_OSF)
- 			return -EINVAL;
- 		break;
-+	case ds_1341:
-+		ret = regmap_read(ds1307->regmap, DS1337_REG_STATUS, &tmp);
-+		if (ret)
-+			return ret;
-+		if (tmp & DS1337_BIT_OSF)
-+			return -EINVAL;
-+		break;
- 	case ds_1388:
- 		ret = regmap_read(ds1307->regmap, DS1388_REG_FLAG, &tmp);
- 		if (ret)
-@@ -371,6 +378,10 @@ static int ds1307_set_time(struct device *dev, struct rtc_time *t)
- 		regmap_update_bits(ds1307->regmap, DS1340_REG_FLAG,
- 				   DS1340_BIT_OSF, 0);
- 		break;
-+	case ds_1341:
-+		regmap_update_bits(ds1307->regmap, DS1337_REG_STATUS,
-+				   DS1337_BIT_OSF, 0);
-+		break;
- 	case ds_1388:
- 		regmap_update_bits(ds1307->regmap, DS1388_REG_FLAG,
- 				   DS1388_BIT_OSF, 0);
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index ea6556f91302..717b337f9e22 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1262,7 +1262,7 @@ static int i3c_master_retrieve_dev_info(struct i3c_dev_desc *dev)
+ 
+ 	if (dev->info.bcr & I3C_BCR_HDR_CAP) {
+ 		ret = i3c_master_gethdrcap_locked(master, &dev->info);
+-		if (ret)
++		if (ret && ret != -ENOTSUPP)
+ 			return ret;
+ 	}
+ 
 -- 
 2.39.5
 
