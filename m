@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C9626FDBF;
-	Tue, 26 Aug 2025 13:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F97826FDBF;
+	Tue, 26 Aug 2025 13:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215064; cv=none; b=AOZAATTQJSaYh49RYGgldpyUILAzE/47LPJYoi9/0t33D5MoIKb4Z0vS7j2/0pFuupyk1tyFv1zx76zUSRFgzU/k83YlVA2UIYclxAgAFrwpUCSIKU1ihK3SlkbsEVGUUc0IGD6QLrJK4YreYXDi5GwlkrHHp0v94QEXGxzc+N4=
+	t=1756215066; cv=none; b=Ic0e7xKP9CjDDagknKhz0RU2/9Jgufc5dh7DgPPYD0+tpj/qxvTnH4wgZ9gJ8G/nzdnBIL59EXWWUPI4Kdf+ZrMPc4GbaOurbF4dI2qGT4DABxzpt6umsheLj2wsF/0OBIRKsh5rVsXi53btcgGaAmsFLqSP9UW84vXUeM3J4JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215064; c=relaxed/simple;
-	bh=fL/YotxKjVovk4b4b4ce2fbxqJZgEEnxGxqL6IvdTb0=;
+	s=arc-20240116; t=1756215066; c=relaxed/simple;
+	bh=IApXsaxtkh7AmG8c/3UMAWRWHvnjwxin7JzBw8y1KUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVnbr7sWyPDkXkIiRWsEXOuz4OK+YkQJra4Jo1/FiO5UjEQzLgwSCZmFWLzg/+eWWOtf5/+5sc7BFKqmV13DoaADBLVcYAY3VPoqlOmzngF8dEZ+ZAtVk/NIDgbR12CG/yLjiWVAX0MDigXwC+d281J8oj8jBYOVy1vtAOQTDzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJnAjWJW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQ8djlSCKGn1bhC07ofOH+WZUEZPZK1b5nQrhrlKJ6MhGw6/T35+CSRPB3KLlyXd4TRLy/BN5TrC8S8QdurDOze4HlskX5q1wQlGvs9G4CcvEj1dI/iGoqlDqokr8FbUQYt+a8U3RhmGLERwRzHMHNzx5QId7pki+4Zp6F1NdYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hE3XdErH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJnAjWJW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFD1C4CEF1;
-	Tue, 26 Aug 2025 13:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hE3XdErH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE12AC4CEF1;
+	Tue, 26 Aug 2025 13:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215063;
-	bh=fL/YotxKjVovk4b4b4ce2fbxqJZgEEnxGxqL6IvdTb0=;
+	s=korg; t=1756215066;
+	bh=IApXsaxtkh7AmG8c/3UMAWRWHvnjwxin7JzBw8y1KUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJnAjWJWwL4el0LRP0Ry4wJl7C6kcye7YMeGZQExBIacGB2XQe79F4XQ0Imh2Yapv
-	 4Rb+cPVVEajHOxzORPWNvYeGwRD7J98t8kHcFKtKUTUbbtjSjb+T03VUx4a1ql0aHC
-	 SXVNPGzC2rHys01UE0XAWytgx+iPBc8vgj0bQq8Q=
+	b=hE3XdErHWQHc4gvvkc+Ul5guy6eKXugcuPz/4VV5WYMvjiqnehrigTJ1fqEv4RfZ9
+	 m06x7AnJNo0BX9yw8vNm3PuAF7eLnxIDoscsjZXH+tRCChsstd59XsPoRGeYnj9XCh
+	 lRYO/yOcg+ZF0QXg9n6LTEweHuUXtkabcp5r7MoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Li Jun <jun.li@nxp.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 373/482] platform/chrome: cros_ec: Unregister notifier in cros_ec_unregister()
-Date: Tue, 26 Aug 2025 13:10:26 +0200
-Message-ID: <20250826110940.047982546@linuxfoundation.org>
+Subject: [PATCH 6.1 374/482] usb: dwc3: imx8mp: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:10:27 +0200
+Message-ID: <20250826110940.071468743@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,37 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit e2374953461947eee49f69b3e3204ff080ef31b1 ]
+[ Upstream commit 086a0e516f7b3844e6328a5c69e2708b66b0ce18 ]
 
-The blocking notifier is registered in cros_ec_register(); however, it
-isn't unregistered in cros_ec_unregister().
+Make sure to drop the reference to the dwc3 device taken by
+of_find_device_by_node() on probe errors and on driver unbind.
 
-Fix it.
-
-Fixes: 42cd0ab476e2 ("platform/chrome: cros_ec: Query EC protocol version if EC transitions between RO/RW")
-Cc: stable@vger.kernel.org
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://lore.kernel.org/r/20250722120513.234031-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Li Jun <jun.li@nxp.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-2-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/dwc3/dwc3-imx8mp.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/chrome/cros_ec.c
-+++ b/drivers/platform/chrome/cros_ec.c
-@@ -311,6 +311,9 @@ EXPORT_SYMBOL(cros_ec_register);
-  */
- void cros_ec_unregister(struct cros_ec_device *ec_dev)
- {
-+	if (ec_dev->mkbp_event_supported)
-+		blocking_notifier_chain_unregister(&ec_dev->event_notifier,
-+						   &ec_dev->notifier_ready);
- 	platform_device_unregister(ec_dev->pd);
- 	platform_device_unregister(ec_dev->ec);
- 	mutex_destroy(&ec_dev->lock);
+--- a/drivers/usb/dwc3/dwc3-imx8mp.c
++++ b/drivers/usb/dwc3/dwc3-imx8mp.c
+@@ -243,7 +243,7 @@ static int dwc3_imx8mp_probe(struct plat
+ 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
+ 	if (err) {
+ 		dev_err(dev, "failed to request IRQ #%d --> %d\n", irq, err);
+-		goto depopulate;
++		goto put_dwc3;
+ 	}
+ 
+ 	device_set_wakeup_capable(dev, true);
+@@ -251,6 +251,8 @@ static int dwc3_imx8mp_probe(struct plat
+ 
+ 	return 0;
+ 
++put_dwc3:
++	put_device(&dwc3_imx->dwc3->dev);
+ depopulate:
+ 	of_platform_depopulate(dev);
+ err_node_put:
+@@ -271,6 +273,8 @@ static int dwc3_imx8mp_remove(struct pla
+ 	struct dwc3_imx8mp *dwc3_imx = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+ 
++	put_device(&dwc3_imx->dwc3->dev);
++
+ 	pm_runtime_get_sync(dev);
+ 	of_platform_depopulate(dev);
+ 
 
 
