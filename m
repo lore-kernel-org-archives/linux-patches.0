@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070C4227599;
-	Tue, 26 Aug 2025 11:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0995D267386;
+	Tue, 26 Aug 2025 11:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207505; cv=none; b=MLLrE0J86xwqNei4eOj5fwwXANTelAFvlYjpYj62ZDk+QKbk9Md3efotfL8RQKrDQAfcGyECxGoptv8R8s+VKoTosSdX/KXVl/PE78fCyQ2M4AnhaSRSsJPNS5yPgSXQcATwVJLG8lhHb5q95BM/SHJzbOw7mCDJXtyPlAieA28=
+	t=1756207508; cv=none; b=SSFWIYnraruvTEsNuWKMTUe2ne7V2hXVDKr5ZE8FJ80alMOAd0wz2I7CSrIG5C9JEJ3aa3X9z9b30WfsbRoKwtlRv+nxtcxGqaoEP3JoZ2XYhbU235JRVkidYfeBjeuJ6i9DFfApj8gA5q82zg4pV16UsSe2Y7h+bAM7K0s1UqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207505; c=relaxed/simple;
-	bh=N8Su/+aSvA/4WlZO4FV05bvUAUGEscm4iL5qMwnWOa4=;
+	s=arc-20240116; t=1756207508; c=relaxed/simple;
+	bh=XyqpZzIoCQiIr2rW1cKCq5/cZjka5kvzJjnAQXtZ61o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfTkgCybFEOXNX1L2FnnH8qSpBlUYcmBch5/ytl9qhkfufrouVPRg1z++n5oZzEvEVxKVZ8hF879Dc4xSUl4CWB3T1R+HZQIyrPa+VdUh/L2+hnU2dOaOGBzada3aLA+ItUr6g6M7Ho0BpYDTHfpUgx0+f87dFBxDJiKfouFSRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez3V9LfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkszq0GNlRH5wVXYu7tLV+JRMZfrlYjdT/DCkdAFAfIHQW35E/1oIS/tuh+C0JufPY3zb2lFq4Fjl/vqqQ5LqW3XAuT2dLHRTPBMPw99CvzOfGMBlLDPXi3b/+JycmpXlIpyR4akPbEwaK0D95XTK4QXiPOxcCfkMDL5EhNtzKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ok2RrMoK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez3V9LfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE14C4CEF1;
-	Tue, 26 Aug 2025 11:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ok2RrMoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3901EC4CEF1;
+	Tue, 26 Aug 2025 11:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207504;
-	bh=N8Su/+aSvA/4WlZO4FV05bvUAUGEscm4iL5qMwnWOa4=;
+	s=korg; t=1756207507;
+	bh=XyqpZzIoCQiIr2rW1cKCq5/cZjka5kvzJjnAQXtZ61o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ez3V9LfMVcCSgQR+5mXfr2lTbwI2O1ew9IWglCy/QKVDWTSYWJhlBeXciC+JG1B1W
-	 UjRLeeDrBxgRXlhAn26aKuMt3u2IQEQ7B3gXCG2GRtNJrF882PyRfKZbFPlgPLj7Bj
-	 N6bTizM+bVVKMnXP53By+dHAWe31kJ/L6QTpNvEo=
+	b=Ok2RrMoKx7IrnpP2YZ0LpEeP+c6e7m4CE/jCYOyv82nayXz2T9nstn2/X5MvGVFW2
+	 wwazX6Y13jrnsKbmldYwSk9kqyKvVA3XKJSctVYxMBUpWfJ1waIvDrZUZl7eGIFPCG
+	 GBvxvNAmBgPjz8DibDXCFj+c9B9l5g3C8LUDAQYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 207/457] mptcp: disable add_addr retransmission when timeout is 0
-Date: Tue, 26 Aug 2025 13:08:11 +0200
-Message-ID: <20250826110942.480882696@linuxfoundation.org>
+Subject: [PATCH 6.16 208/457] selftests: mptcp: pm: check flush doesnt reset limits
+Date: Tue, 26 Aug 2025 13:08:12 +0200
+Message-ID: <20250826110942.506600733@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,91 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit f5ce0714623cffd00bf2a83e890d09c609b7f50a upstream.
+commit 452690be7de2f91cc0de68cb9e95252875b33503 upstream.
 
-When add_addr_timeout was set to 0, this caused the ADD_ADDR to be
-retransmitted immediately, which looks like a buggy behaviour. Instead,
-interpret 0 as "no retransmissions needed".
+This modification is linked to the parent commit where the received
+ADD_ADDR limit was accidentally reset when the endpoints were flushed.
 
-The documentation is updated to explicitly state that setting the timeout
-to 0 disables retransmission.
+To validate that, the test is now flushing endpoints after having set
+new limits, and before checking them.
 
-Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
+
+Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
 Cc: stable@vger.kernel.org
-Suggested-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-5-521fe9957892@kernel.org
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-3-521fe9957892@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/mptcp-sysctl.rst |    2 ++
- net/mptcp/pm.c                            |   13 ++++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/networking/mptcp-sysctl.rst
-+++ b/Documentation/networking/mptcp-sysctl.rst
-@@ -12,6 +12,8 @@ add_addr_timeout - INTEGER (seconds)
- 	resent to an MPTCP peer that has not acknowledged a previous
- 	ADD_ADDR message.
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -198,6 +198,7 @@ set_limits 1 9 2>/dev/null
+ check "get_limits" "${default_limits}" "subflows above hard limit"
  
-+	Do not retransmit if set to 0.
-+
- 	The default value matches TCP_RTO_MAX. This is a per-namespace
- 	sysctl.
+ set_limits 8 8
++flush_endpoint  ## to make sure it doesn't affect the limits
+ check "get_limits" "$(format_limits 8 8)" "set limits"
  
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -274,6 +274,7 @@ static void mptcp_pm_add_timer(struct ti
- 							      add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
-+	unsigned int timeout;
- 
- 	pr_debug("msk=%p\n", msk);
- 
-@@ -291,6 +292,10 @@ static void mptcp_pm_add_timer(struct ti
- 		goto out;
- 	}
- 
-+	timeout = mptcp_get_add_addr_timeout(sock_net(sk));
-+	if (!timeout)
-+		goto out;
-+
- 	spin_lock_bh(&msk->pm.lock);
- 
- 	if (!mptcp_pm_should_add_signal_addr(msk)) {
-@@ -302,7 +307,7 @@ static void mptcp_pm_add_timer(struct ti
- 
- 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
- 		sk_reset_timer(sk, timer,
--			       jiffies + mptcp_get_add_addr_timeout(sock_net(sk)));
-+			       jiffies + timeout);
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
-@@ -344,6 +349,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 	struct mptcp_pm_add_entry *add_entry = NULL;
- 	struct sock *sk = (struct sock *)msk;
- 	struct net *net = sock_net(sk);
-+	unsigned int timeout;
- 
- 	lockdep_assert_held(&msk->pm.lock);
- 
-@@ -368,8 +374,9 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
- reset_timer:
--	sk_reset_timer(sk, &add_entry->add_timer,
--		       jiffies + mptcp_get_add_addr_timeout(net));
-+	timeout = mptcp_get_add_addr_timeout(net);
-+	if (timeout)
-+		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
- 
- 	return true;
- }
+ flush_endpoint
 
 
