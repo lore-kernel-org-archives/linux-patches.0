@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8423570B9;
-	Tue, 26 Aug 2025 14:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56D734DCFE;
+	Tue, 26 Aug 2025 14:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219409; cv=none; b=epsFn0eZBAx8BfMZ9Dq2vp4IGemY83PNi6rDMscLAG3BeuWL64xWRPJXqhQUfRiJ4YcR3MqUdHIw5Gs8Tot2J2olvQk8VEv7JfAI7IUXJm9RzacZjStR6aVNEP/6XpyG4Yof3/A7JwI14DLkwAHFhD+B3ydOdJXU53MJDHoqBG0=
+	t=1756219411; cv=none; b=JOx6o9KNXDl7itdQc57son7OHmRzyvojuEjiB9R0vyRKTeGy3UzaEGmcq8I9H1WdYyLAR9sb+KQdW5NQngA/bUtF6lz7rRiyYse/Jvif81TtbwTgRUF7lL7OQrSAajRf0xVotlAhL0LQHtuoYYEQsoVcULmjXx80r1vMiSATZlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219409; c=relaxed/simple;
-	bh=Q0VpzMIFFzSWITD716La6SR+tpAPNB83+EO5kylzX2A=;
+	s=arc-20240116; t=1756219411; c=relaxed/simple;
+	bh=42cBsCnOjz+RWQHo0lz81xFmSQmehTRuLLC1HbphiqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKebT4aBg4/+3iGip8VUXmc/kdPHv49dOp0T8lPo60pmtINgzVdbQInFB1lpZ+mEeqYT/ncBDjRBY2UiH5/4QT6Rc/FXSgBu+9Y2KW5WHPvjhuJ2U1V0x3klxJOrcunVNN/+DSRDTVwjp2JIA1qZa0ZBKdC16B1PDHF1sspeL24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8e2wFkK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pubwJ/7zvdIWnMa4aPrZxlsO4jApx550bllPg7PY/6NFAQqQiS/xnYjaPZ2iMcFqT85LAVTsaEEEhlmcD3qZmkqjk1K+TNKMX30M4hNAk4QqxLsw8z4m60JUseazOpV2ChmGtZXFIFm2lqpqLBb4QkUPlkagSqbvKT7krWEh9wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfBrZdH7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8e2wFkK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71ECC113CF;
-	Tue, 26 Aug 2025 14:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfBrZdH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6749BC4CEF1;
+	Tue, 26 Aug 2025 14:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219409;
-	bh=Q0VpzMIFFzSWITD716La6SR+tpAPNB83+EO5kylzX2A=;
+	s=korg; t=1756219411;
+	bh=42cBsCnOjz+RWQHo0lz81xFmSQmehTRuLLC1HbphiqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8e2wFkKqqHMHCfyGYqKZScm5H1jbwtS4PmWyS0+uZFB7lKW4VWWTy/OLbknjSJAj
-	 Ftmu/OzDAIDJfAzP3QQlbyKqyaefH0ro3RqNjh28ZIikH7ek4ELLdteJFcIJSc1ppI
-	 HIP+IuC6uR/D01U/W6HhSAT6eySRpNVMjWkR2t9k=
+	b=KfBrZdH7xSTmA4wr3VelD1ckpa76Y2JviKLWon8MrY4WJgpmvxWHff1zUT7dIEzoo
+	 RQLl73GBUdUYaWdtFqK0PJRX+pIwi7+IhYWHa1kBVsq3m/eDohc49J6gTGVY6UlXuE
+	 XdeUKY0Vz5IfhgF4FU/o7Rxd3IY1KIIrrAzs9NnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>,
+	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 353/403] cdc-acm: fix race between initial clearing halt and open
-Date: Tue, 26 Aug 2025 13:11:19 +0200
-Message-ID: <20250826110916.627524290@linuxfoundation.org>
+Subject: [PATCH 5.4 371/403] media: venus: protect against spurious interrupts during probe
+Date: Tue, 26 Aug 2025 13:11:37 +0200
+Message-ID: <20250826110917.256439537@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,52 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 
-[ Upstream commit 64690a90cd7c6db16d3af8616be1f4bf8d492850 ]
+[ Upstream commit 3200144a2fa4209dc084a19941b9b203b43580f0 ]
 
-On the devices that need their endpoints to get an
-initial clear_halt, this needs to be done before
-the devices can be opened. That means it needs to be
-before the devices are registered.
+Make sure the interrupt handler is initialized before the interrupt is
+registered.
 
-Fixes: 15bf722e6f6c0 ("cdc-acm: Add support of ATOL FPrint fiscal printers")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20250717141259.2345605-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If the IRQ is registered before hfi_create(), it's possible that an
+interrupt fires before the handler setup is complete, leading to a NULL
+dereference.
+
+This error condition has been observed during system boot on Rb3Gen2.
+
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[ kept hfi_isr_thread instead of venus_isr_thread ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/media/platform/qcom/venus/core.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1527,6 +1527,12 @@ skip_countries:
- 	usb_driver_claim_interface(&acm_driver, data_interface, acm);
- 	usb_set_intfdata(data_interface, acm);
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -267,13 +267,13 @@ static int venus_probe(struct platform_d
+ 	mutex_init(&core->lock);
+ 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
  
-+	if (quirks & CLEAR_HALT_CONDITIONS) {
-+		/* errors intentionally ignored */
-+		usb_clear_halt(usb_dev, acm->in);
-+		usb_clear_halt(usb_dev, acm->out);
-+	}
-+
- 	tty_dev = tty_port_register_device(&acm->port, acm_tty_driver, minor,
- 			&control_interface->dev);
- 	if (IS_ERR(tty_dev)) {
-@@ -1534,11 +1540,6 @@ skip_countries:
- 		goto alloc_fail6;
- 	}
+-	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+-					"venus", core);
++	ret = hfi_create(core, &venus_core_ops);
+ 	if (ret)
+ 		return ret;
  
--	if (quirks & CLEAR_HALT_CONDITIONS) {
--		usb_clear_halt(usb_dev, acm->in);
--		usb_clear_halt(usb_dev, acm->out);
--	}
--
- 	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
+-	ret = hfi_create(core, &venus_core_ops);
++	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, hfi_isr_thread,
++					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					"venus", core);
+ 	if (ret)
+ 		return ret;
  
- 	return 0;
 
 
