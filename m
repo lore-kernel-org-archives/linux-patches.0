@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FE7228C9D;
-	Tue, 26 Aug 2025 13:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CECF257859;
+	Tue, 26 Aug 2025 13:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213462; cv=none; b=NbIQuLJci4r67ohrkZI059kUKsAmPn+ZVSj67M5PyKv+Kw7J04H10oRFsyU+iGphF+z1SSNEvQBktmyk9B0cbnv/lQhj/hRgAMGo3sdcB3W/W5y5opvZqcAALZG+z04gha0b0sjbTZ3D6PRlvBK6XzP/mL7Twx6ttOJk6zwyGeg=
+	t=1756213464; cv=none; b=nV9C4x/vN1rwHCI/lKo2P7DbDfzNdlq4mM9ZGAZovaLr4FDEe2UBb3o4JleGTkfqhDAKgX1cIW645+d8/nWiLRdKOtupvhLb+8cr6YQhtAa3Gu+vUhCu4thkfS3k84J0eotjlm2UYOF4DpXAJ8b/J9SnpfvLgN5Ghmejcgo/BSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213462; c=relaxed/simple;
-	bh=6XCM0+mn+HS/v1h94Lka7prg7LkItFW59lXGcNQJVnY=;
+	s=arc-20240116; t=1756213464; c=relaxed/simple;
+	bh=Q/JehDsQ3lNS/LbGVkogKN+3vMS32BbdpfZBQ05APNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ib4Ij5o170WLhVyPf1p5YnDEtbfqjwn7/EPFRi4QxSs5M5Z8KOJlu+5o5fsLZJGKQMVwd6+L59jHaHbZMbsdYIDLFeWs/QCa8yfqZV/kYchw+6p5Gz5Hz4+4zYQDGa1GA+YqeijSxikS4sEzzcxPwhnvjwkpG4jE2zyu4CN7bK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcKUEoFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smvHwEzj6MPZU2s5gO64MvIFRz/W/JHDcEHfHcqOzguz7DSeP0TU7t8OlDpd6GvIx8B1KLQTRe5AqexEhqxJ+fsiHpxLMWyZb4Z84ODrS3N6iW8DUVjuoWE2gOgMKnEoXND8gfAZcWR9w/WqsCX1qu3ottLFwpatGGbUWNQ5JbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8MFX80N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcKUEoFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A27EC4CEF1;
-	Tue, 26 Aug 2025 13:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8MFX80N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB18C113CF;
+	Tue, 26 Aug 2025 13:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213461;
-	bh=6XCM0+mn+HS/v1h94Lka7prg7LkItFW59lXGcNQJVnY=;
+	s=korg; t=1756213464;
+	bh=Q/JehDsQ3lNS/LbGVkogKN+3vMS32BbdpfZBQ05APNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AcKUEoFwTTY2+v/3ZWM6YiFN6YIZvb0HMhcBgUI7kcM0MlVBTsuQjlWhupveNxKFK
-	 EM7vrxtonQIMbDWmxAG5w9+WHHrBAAK0+fCp6sn+CmyNrC+PbgfLbuRgQ4gjT9jtSn
-	 HH9NsREqgFBAbneZHm37Fc10IJ0eooKuKvaV5Uqw=
+	b=u8MFX80NBtzB5CRTPpTlIbgnD5L5SHIT96bGg/ltsDdQ05ErA4eNMpykfJx6AcNEW
+	 Du9LjA8PweY4rRgdhjmNC5AlmxNGr7MXCHmgHgY9ANpx3kOXLpG5APFnAC5VFFpWTT
+	 MOgRwQ+UyZT9t5i1mT96QLR6nkvjlFYhkJkjJ0K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hong Guan <hguan@ti.com>,
-	Bryan Brattlof <bb@ti.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.6 356/587] arm64: dts: ti: k3-am62a7-sk: fix pinmux for main_uart1
-Date: Tue, 26 Aug 2025 13:08:25 +0200
-Message-ID: <20250826111001.968811166@linuxfoundation.org>
+Subject: [PATCH 6.6 357/587] arm64: dts: ti: k3-am62-verdin: Enable pull-ups on I2C buses
+Date: Tue, 26 Aug 2025 13:08:26 +0200
+Message-ID: <20250826111001.996028960@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,38 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hong Guan <hguan@ti.com>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-commit 8e44ac61abaae56fc6eb537a04ed78b458c5b984 upstream.
+commit bdf4252f736cc1d2a8e3e633c70fe6c728f0756e upstream.
 
-main_uart1 reserved for TIFS firmware traces is routed to the
-onboard FT4232 via a FET switch which is connected to pin A21 and
-B21 of the SoC and not E17 and C17. Fix it.
+Enable internal bias pull-ups on the SoC-side I2C buses that do not have
+external pull resistors populated on the SoM. This ensures proper
+default line levels.
 
-Fixes: cf39ff15cc01a ("arm64: dts: ti: k3-am62a7-sk: Describe main_uart1 and wkup_uart")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hong Guan <hguan@ti.com>
-[bb@ti.com: expanded commit message]
-Signed-off-by: Bryan Brattlof <bb@ti.com>
-Link: https://lore.kernel.org/r/20250707-uart-fixes-v1-1-8164147218b0@ti.com
+Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20250528110741.262336-1-ghidoliemanuele@gmail.com
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a7-sk.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-@@ -144,8 +144,8 @@
- 
- 	main_uart1_pins_default: main-uart1-default-pins {
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -448,16 +448,16 @@
+ 	/* Verdin I2C_2_DSI */
+ 	pinctrl_i2c2: main-i2c2-default-pins {
  		pinctrl-single,pins = <
--			AM62AX_IOPAD(0x01e8, PIN_INPUT, 1) /* (C17) I2C1_SCL.UART1_RXD */
--			AM62AX_IOPAD(0x01ec, PIN_OUTPUT, 1) /* (E17) I2C1_SDA.UART1_TXD */
-+			AM62AX_IOPAD(0x01ac, PIN_INPUT, 2) /* (B21) MCASP0_AFSR.UART1_RXD */
-+			AM62AX_IOPAD(0x01b0, PIN_OUTPUT, 2) /* (A21) MCASP0_ACLKR.UART1_TXD */
- 			AM62AX_IOPAD(0x0194, PIN_INPUT, 2) /* (C19) MCASP0_AXR3.UART1_CTSn */
- 			AM62AX_IOPAD(0x0198, PIN_OUTPUT, 2) /* (B19) MCASP0_AXR2.UART1_RTSn */
+-			AM62X_IOPAD(0x00b0, PIN_INPUT, 1) /* (K22) GPMC0_CSn2.I2C2_SCL */ /* SODIMM 55 */
+-			AM62X_IOPAD(0x00b4, PIN_INPUT, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */ /* SODIMM 53 */
++			AM62X_IOPAD(0x00b0, PIN_INPUT_PULLUP, 1) /* (K22) GPMC0_CSn2.I2C2_SCL */ /* SODIMM 55 */
++			AM62X_IOPAD(0x00b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */ /* SODIMM 53 */
  		>;
+ 	};
+ 
+ 	/* Verdin I2C_4_CSI */
+ 	pinctrl_i2c3: main-i2c3-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x01d0, PIN_INPUT, 2) /* (A15) UART0_CTSn.I2C3_SCL */ /* SODIMM 95 */
+-			AM62X_IOPAD(0x01d4, PIN_INPUT, 2) /* (B15) UART0_RTSn.I2C3_SDA */ /* SODIMM 93 */
++			AM62X_IOPAD(0x01d0, PIN_INPUT_PULLUP, 2) /* (A15) UART0_CTSn.I2C3_SCL */ /* SODIMM 95 */
++			AM62X_IOPAD(0x01d4, PIN_INPUT_PULLUP, 2) /* (B15) UART0_RTSn.I2C3_SDA */ /* SODIMM 93 */
+ 		>;
+ 	};
+ 
+@@ -729,8 +729,8 @@
+ 	/* Verdin I2C_3_HDMI */
+ 	pinctrl_mcu_i2c0: mcu-i2c0-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62X_MCU_IOPAD(0x0044, PIN_INPUT, 0) /*  (A8) MCU_I2C0_SCL */ /* SODIMM 59 */
+-			AM62X_MCU_IOPAD(0x0048, PIN_INPUT, 0) /* (D10) MCU_I2C0_SDA */ /* SODIMM 57 */
++			AM62X_MCU_IOPAD(0x0044, PIN_INPUT_PULLUP, 0) /*  (A8) MCU_I2C0_SCL */ /* SODIMM 59 */
++			AM62X_MCU_IOPAD(0x0048, PIN_INPUT_PULLUP, 0) /* (D10) MCU_I2C0_SDA */ /* SODIMM 57 */
+ 		>;
+ 	};
+ 
 
 
