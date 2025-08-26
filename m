@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23D33375DC;
-	Tue, 26 Aug 2025 11:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3557D341AD9;
+	Tue, 26 Aug 2025 11:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208663; cv=none; b=RVgAseXgPDEoL0v2COLf5BAFnGu89YH+GM0R1UhLkNz3Hh2DPJsOkJcz6XGc5KVAMMW5kAV3VCxmhKpKB9Tdbxd0u61qXPOBJQwnAaHSL8MBHWe4N2loXTKfi1hj+7Jx6s0q8zdq9t49EEQDtsf8gtGuWmZUZQwT7ukdnI2Z3MQ=
+	t=1756208666; cv=none; b=G3M7wQ9FWoPQYRcqDKUQ/Lf0LAlAZzm0E8ARl2qylrjmx1ogPzIFvt680GqyEAsOUxQ+Qi9ZBCeTLjB5YJUH1aekyMn+OsDIs7SCGSefJE5IMd7Cl2A+ha3PAa+2/WUEKbU4seOlF6dz8zjyrk/W99n0dqKLhIwy/6775l+Samo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208663; c=relaxed/simple;
-	bh=na68LtGyms7k2daci8BylHlg0hS7d0HkQMiPHoLMVbg=;
+	s=arc-20240116; t=1756208666; c=relaxed/simple;
+	bh=C8lzl70f0ZPi8eVStHUP/FHx6Q5KwgTvps/MOjf9nvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8YhaxSC3PxVSRJNrgCsMHOhHCjAD3HuutP0NWa9k/GLCUrUzRKOlejagfaMF8dnlb4GxUHE/L6pziEQcnoUlaEXbIlJP7ARoYluqP5DtaTQ/D1mqfT+vUxyPAJ1cKepI/j6e2TMrtcPuL625OI8zo947Uor4HkQpgObpvRIwsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocqfNqgO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQTN8MssSe4luZSbkQTchlOo4TB7MjjVUyRVuni2FHoJXFShJnXappTH2PoZypS9nsMkxne9SbZ1CzPxaFo6AjFNKOdKz9aDbeHIRjVToZclSlXI5yBBdVAWAOS9o69Lt5Z99EG66itp6m6Px5WEFcPNYU67yxsd7EOPg7Z//rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrUDvePn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocqfNqgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171D7C4CEF1;
-	Tue, 26 Aug 2025 11:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrUDvePn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8296DC4CEF4;
+	Tue, 26 Aug 2025 11:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208663;
-	bh=na68LtGyms7k2daci8BylHlg0hS7d0HkQMiPHoLMVbg=;
+	s=korg; t=1756208665;
+	bh=C8lzl70f0ZPi8eVStHUP/FHx6Q5KwgTvps/MOjf9nvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocqfNqgOqW55+gIMT34cDTdnEoEE5Jp8JuQ6wLUohHxVVQVTyQJah2omoZr3qPZLY
-	 M0FPa1UWUNdZly7a3cXCK2O4dtm8km2oSe/PCrxQaPRbMBSUaL7WimusahJjCaY1mu
-	 dk9LyiIHeoIfgjZV/7sQrVi43LazqiEB+Hoi2lIM=
+	b=VrUDvePnGwtMy9P7uFUkIqVxUWneH18e8OBbBkcpszIF3GFF+FKZFjoAN6AszctLb
+	 Kc4VHIhvDHWCe1PLvb8oa2BoO4VzDlK5d+iSyQbPOGr3314L98Gaq3IXj3S+xBJ9gR
+	 pFtDVJSSC1AcvXZp63ozY1fgv+3+zKIkI7nTYrQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/322] iio: adc: ad7173: fix setting ODR in probe
-Date: Tue, 26 Aug 2025 13:10:12 +0200
-Message-ID: <20250826110920.732181215@linuxfoundation.org>
+Subject: [PATCH 6.12 198/322] scsi: mpi3mr: Drop unnecessary volatile from __iomem pointers
+Date: Tue, 26 Aug 2025 13:10:13 +0200
+Message-ID: <20250826110920.756093437@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,49 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 6fa908abd19cc35c205f343b79c67ff38dbc9b76 ]
+[ Upstream commit 6853885b21cb1d7157cc14c9d30cc17141565bae ]
 
-Fix the setting of the ODR register value in the probe function for
-AD7177. The AD7177 chip has a different ODR value after reset than the
-other chips (0x7 vs. 0x0) and 0 is a reserved value on that chip.
+The volatile qualifier is redundant for __iomem pointers.
 
-The driver already has this information available in odr_start_value
-and uses it when checking valid values when writing to the
-sampling_frequency attribute, but failed to set the correct initial
-value in the probe function.
+Cleaned up usage in mpi3mr_writeq() and sysif_regs pointer as per
+Upstream compliance.
 
-Fixes: 37ae8381ccda ("iio: adc: ad7173: add support for additional models")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250710-iio-adc-ad7173-fix-setting-odr-in-probe-v1-1-78a100fec998@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ Adjust context ]
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250627194539.48851-3-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: c91e140c82eb ("scsi: mpi3mr: Serialize admin queue BAR writes on 32-bit systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7173.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/mpi3mr/mpi3mr.h    |    2 +-
+ drivers/scsi/mpi3mr/mpi3mr_fw.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/adc/ad7173.c
-+++ b/drivers/iio/adc/ad7173.c
-@@ -1243,6 +1243,7 @@ static int ad7173_fw_parse_channel_confi
- 		chan_st_priv->cfg.bipolar = false;
- 		chan_st_priv->cfg.input_buf = st->info->has_input_buf;
- 		chan_st_priv->cfg.ref_sel = AD7173_SETUP_REF_SEL_INT_REF;
-+		chan_st_priv->cfg.odr = st->info->odr_start_value;
- 		st->adc_mode |= AD7173_ADC_MODE_REF_EN;
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -1175,7 +1175,7 @@ struct mpi3mr_ioc {
+ 	char name[MPI3MR_NAME_LENGTH];
+ 	char driver_name[MPI3MR_NAME_LENGTH];
  
- 		chan_index++;
-@@ -1307,7 +1308,7 @@ static int ad7173_fw_parse_channel_confi
- 		chan->channel = ain[0];
- 		chan_st_priv->chan_reg = chan_index;
- 		chan_st_priv->cfg.input_buf = st->info->has_input_buf;
--		chan_st_priv->cfg.odr = 0;
-+		chan_st_priv->cfg.odr = st->info->odr_start_value;
+-	volatile struct mpi3_sysif_registers __iomem *sysif_regs;
++	struct mpi3_sysif_registers __iomem *sysif_regs;
+ 	resource_size_t sysif_regs_phys;
+ 	int bars;
+ 	u64 dma_mask;
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -23,12 +23,12 @@ module_param(poll_queues, int, 0444);
+ MODULE_PARM_DESC(poll_queues, "Number of queues for io_uring poll mode. (Range 1 - 126)");
  
- 		chan_st_priv->cfg.bipolar = fwnode_property_read_bool(child, "bipolar");
- 		if (chan_st_priv->cfg.bipolar)
+ #if defined(writeq) && defined(CONFIG_64BIT)
+-static inline void mpi3mr_writeq(__u64 b, volatile void __iomem *addr)
++static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
+ {
+ 	writeq(b, addr);
+ }
+ #else
+-static inline void mpi3mr_writeq(__u64 b, volatile void __iomem *addr)
++static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
+ {
+ 	__u64 data_out = b;
+ 
 
 
