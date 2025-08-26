@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B0A199935;
-	Tue, 26 Aug 2025 11:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50BC31CA74;
+	Tue, 26 Aug 2025 11:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208623; cv=none; b=WLMD6VtZDMiPIwSHKNG2wLqt2ALoXqWfQMV51mfDsVGoPHVXIyfwtVvu3MolQWyNkaMiqirkkSo6/b82ZXmUt1SDMVuA8pb9L6VbpxgXd/j+48iNEUVsJvanZ+Q7TiedfdTfcKe4bFZEN25TH3MTenfyCjNx9e9UVCZPD9XiQJA=
+	t=1756208625; cv=none; b=T/FUE/8mLkxUfKX4TRw1lohCjsut8oskx1tZnW6ASodh0mD1EKz0y8o5lhG8XeecPJ8pdYtj1U/0raXQRsh/fM9ojx0tvBl9envB2Tf5/CVzJK+no/aL0ECSFH906vzIR4UEyNTu3jJiVymuOXeZjMjo1HFqh61XzIpLQGb9Gh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208623; c=relaxed/simple;
-	bh=nYC8nL4sNFI2sP5w7c03ZEAUxSp3C2z9XTaEMptK+VI=;
+	s=arc-20240116; t=1756208625; c=relaxed/simple;
+	bh=PU4Qc6TF96wfmcouoa/a9gEIhdJYIQLvsVz0PTttNUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nry5LKDhwV+zsQU3jtV0Lz2yb6trRk5uVRsUOWgmcj96GeLkJWzC/gvMDj9zDxnbMwhzbbGGMOiVAAn0zG3yZ2jTnPwBDd+EjN8q6LRfpopLQOegK+t+kmnDoZV2vnRa1+rZ88x7rMMmKGbBgdfBYSFAUJGXRdDLe+5h3IWaFXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KHygSOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqYaM26IPxWIMiS3eZA+8v7HVacaM1YcwRb+TA2hk01NbX0m6q+5gTHPOAJIguksc/tMlIXCjsoaiEZtiM2wlW9yQlDl56XE8UDo74t1YAVNaJNuUV9QhBs8E4vGCxvfomgf6043ySwaeurl1V1Bs9NHwQRqMuJrciRyIFL9t9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMKe0ben; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KHygSOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D073C4CEF1;
-	Tue, 26 Aug 2025 11:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMKe0ben"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110CEC4CEF1;
+	Tue, 26 Aug 2025 11:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208622;
-	bh=nYC8nL4sNFI2sP5w7c03ZEAUxSp3C2z9XTaEMptK+VI=;
+	s=korg; t=1756208625;
+	bh=PU4Qc6TF96wfmcouoa/a9gEIhdJYIQLvsVz0PTttNUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KHygSOIvCtygfo/AG21UzDg3F2KPLlibysx/m6QnTmnyBcFpR9iqJxKRsu4ot7vh
-	 f/6XPRX38HMDEET/if3MjBmONb7eOzhF6uVG/88Ts+n4jbq90mpENbcK56Hgsp0JWF
-	 IxXCJDx5opOT5LVDTSk8p4tkizJTrGIKaPwTqCFw=
+	b=QMKe0ben1mwFZFQmrN4u9i8TGBqEQs1CaFD0ketwrIrJLMEWObklvJyykqwZJj6Sf
+	 hd0iTivwzFpQBT9LF35vz5MLnMHUJPmCiIJmePyBHUoqTMsv3SdPFspnhuvRqk4uLL
+	 eNHzZQtrem7BF7d7Nh5GWsydwkkfDn6X4M1cuJnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 6.12 183/322] drm/amd/display: Fix fractional fb divider in set_pixel_clock_v3
-Date: Tue, 26 Aug 2025 13:09:58 +0200
-Message-ID: <20250826110920.384444661@linuxfoundation.org>
+	"Sun peng (Leo) Li" <sunpeng.li@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.12 184/322] drm/amd/display: Fix Xorg desktop unresponsive on Replay panel
+Date: Tue, 26 Aug 2025 13:09:59 +0200
+Message-ID: <20250826110920.409912079@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -46,57 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-commit 10507478468f165ea681605d133991ed05cdff62 upstream.
+commit 66af73a1c319336694a8610fe4c2943f7b33066c upstream.
 
-For later VBIOS versions, the fractional feedback divider is
-calculated as the remainder of dividing the feedback divider by
-a factor, which is set to 1000000. For reference, see:
-- calculate_fb_and_fractional_fb_divider
-- calc_pll_max_vco_construct
+[WHY & HOW]
+IPS & self-fresh feature can cause vblank counter resets between
+vblank disable and enable.
+It may cause system stuck due to wait the vblank counter.
 
-However, in case of old VBIOS versions that have
-set_pixel_clock_v3, they only have 1 byte available for the
-fractional feedback divider, and it's expected to be set to the
-remainder from dividing the feedback divider by 10.
-For reference see the legacy display code:
-- amdgpu_pll_compute
-- amdgpu_atombios_crtc_program_pll
+Call the drm_crtc_vblank_restore() during vblank enable to estimate
+missed vblanks by using timestamps and update the vblank counter in
+DRM.
 
-This commit fixes set_pixel_clock_v3 by dividing the fractional
-feedback divider passed to the function by 100000.
+It can make the vblank counter increase smoothly and resolve this issue.
 
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 027e7acc7e17802ebf28e1edb88a404836ad50d6)
+(cherry picked from commit 34d66bc7ff10e146a4cec76cf286979740a10954)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/command_table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   19 +++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/command_table.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/command_table.c
-@@ -993,7 +993,7 @@ static enum bp_result set_pixel_clock_v3
- 	allocation.sPCLKInput.usFbDiv =
- 			cpu_to_le16((uint16_t)bp_params->feedback_divider);
- 	allocation.sPCLKInput.ucFracFbDiv =
--			(uint8_t)bp_params->fractional_feedback_divider;
-+			(uint8_t)(bp_params->fractional_feedback_divider / 100000);
- 	allocation.sPCLKInput.ucPostDiv =
- 			(uint8_t)bp_params->pixel_clock_post_divider;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -302,6 +302,25 @@ static inline int amdgpu_dm_crtc_set_vbl
+ 	irq_type = amdgpu_display_crtc_idx_to_irq_type(adev, acrtc->crtc_id);
  
+ 	if (enable) {
++		struct dc *dc = adev->dm.dc;
++		struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
++		struct psr_settings *psr = &acrtc_state->stream->link->psr_settings;
++		struct replay_settings *pr = &acrtc_state->stream->link->replay_settings;
++		bool sr_supported = (psr->psr_version != DC_PSR_VERSION_UNSUPPORTED) ||
++								pr->config.replay_supported;
++
++		/*
++		 * IPS & self-refresh feature can cause vblank counter resets between
++		 * vblank disable and enable.
++		 * It may cause system stuck due to waiting for the vblank counter.
++		 * Call this function to estimate missed vblanks by using timestamps and
++		 * update the vblank counter in DRM.
++		 */
++		if (dc->caps.ips_support &&
++			dc->config.disable_ips != DMUB_IPS_DISABLE_ALL &&
++			sr_supported && vblank->config.disable_immediate)
++			drm_crtc_vblank_restore(crtc);
++
+ 		/* vblank irq on -> Only need vupdate irq in vrr mode */
+ 		if (amdgpu_dm_crtc_vrr_active(acrtc_state))
+ 			rc = amdgpu_dm_crtc_set_vupdate_irq(crtc, true);
 
 
