@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46EA35691F;
-	Tue, 26 Aug 2025 14:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8619E352084;
+	Tue, 26 Aug 2025 14:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219198; cv=none; b=hc2RYo7Oi8tgMPok/ul5wOvjo6c++Z+MH23svXmwrPrcz391Ssd9N8cP875nMcraDwy0v5ubgJkDtzeCaavg9mdzC9vNeNHJxSXd9HtHhlFgnG8yxGXwqRAl2PAAkkytUEunQOBQARu/40jUpGktAc221k3S7G5/MG7MiONip6k=
+	t=1756219201; cv=none; b=K/XGOd7zwlQgXaud37XGAQQrfmiWuDtFduiMbRCBPYZojdn5rC3ylkSKyB0LGcGk85n6OConebnkesoJDBvg0pXIxP8cWXtoyCq7t+XdWdF1JwAsmbZDkapXP3h8nb1KGrRuxIxF0N4D4Hrz+/hx6tV/MRSzp5HKBopSruan7Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219198; c=relaxed/simple;
-	bh=8Vbl6+KyOSqg/rvZlT/a9L8UPZWERrmzGLEIrmpxLv0=;
+	s=arc-20240116; t=1756219201; c=relaxed/simple;
+	bh=jENMh6HQy0YUNH89xi7AjnQUagcseXZuokXG97BUJYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KylNNy0f+wiz/zoF8W/yJCEmhD0GTzGZ0SLj+GCXYnMjAXOOf3uhGJp5o8xJemXzxxjV/5npewRL9ehZt3wRK5/rOB4qWtEJoP2us6HSQC92IYWv9NkHWIiasvE4T0WL3s6JHA/dUyuuHD4sN7iZTh1EiLXoFyYkPaRfxWRI7bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuMziX8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NaYD7Jey5QkY2c+vbUP6as4rxICzuSgqre0h2S6V/IaxexTCZ8F4ufzZm1wTB4wMAQVVOMjoTbDH1oxHGSDTUNx6sUffo6ShmkYvqlK5+5I8eET3RpP0kBFzp+zVUGe/UXEMqQq5ZU82uAZlT4T8PGRlGqjMF59nZ9o+KZTob/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0cXHJuy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuMziX8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67204C4CEF1;
-	Tue, 26 Aug 2025 14:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0cXHJuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F9EC4CEF1;
+	Tue, 26 Aug 2025 14:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219198;
-	bh=8Vbl6+KyOSqg/rvZlT/a9L8UPZWERrmzGLEIrmpxLv0=;
+	s=korg; t=1756219201;
+	bh=jENMh6HQy0YUNH89xi7AjnQUagcseXZuokXG97BUJYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuMziX8YZf+PzF1eqU78EvV8XFokJ/4F2Pf0ANwfctPPi+t1o+cUuFao5YAXlRgI+
-	 hdPGAVZ8yroAdpZvs/zIc6HKV8lYB1C+Lnmy7tJOPBajiZ4zoAfKk7ZPXUKPCYbCuw
-	 r7ua/bkhpbvfAX35k2nxUn+z7jnhpbL8vqgSXeMM=
+	b=K0cXHJuyNFyBl73Rz1dg9qlyKGykdc3kj431MhHa+xtkhPvyvo3t54/+Ib82hCeIZ
+	 CwQdKSHaqm1aSTA9DQM93vCCsbdjh02uzvCfXs6NUTMi+Um0b3EPRwgAzzdSXGVq3k
+	 uhPmzW+C0KwfQsepWgzzurlvft5MfJmgAWDFYsM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 250/403] media: usb: hdpvr: disable zero-length read messages
-Date: Tue, 26 Aug 2025 13:09:36 +0200
-Message-ID: <20250826110913.724600814@linuxfoundation.org>
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 5.4 284/403] m68k: Fix lost column on framebuffer debug console
+Date: Tue, 26 Aug 2025 13:10:10 +0200
+Message-ID: <20250826110914.659371245@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,46 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit b5ae5a79825ba8037b0be3ef677a24de8c063abf ]
+commit 210a1ce8ed4391b64a888b3fb4b5611a13f5ccc7 upstream.
 
-This driver passes the length of an i2c_msg directly to
-usb_control_msg(). If the message is now a read and of length 0, it
-violates the USB protocol and a warning will be printed. Enable the
-I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
-read messages altogether.
+Move the cursor position rightward after rendering the character,
+not before. This avoids complications that arise when the recursive
+console_putc call has to wrap the line and/or scroll the display.
+This also fixes the linewrap bug that crops off the rightmost column.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When the cursor is at the bottom of the display, a linefeed will not
+move the cursor position further downward. Instead, the display scrolls
+upward. Avoid the repeated add/subtract sequence by way of a single
+subtraction at the initialization of console_struct_num_rows.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/9d4e8c68a456d5f2bc254ac6f87a472d066ebd5e.1743115195.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hdpvr/hdpvr-i2c.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/m68k/kernel/head.S |   31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/usb/hdpvr/hdpvr-i2c.c b/drivers/media/usb/hdpvr/hdpvr-i2c.c
-index 785c8508a46e..e6a190fe0e87 100644
---- a/drivers/media/usb/hdpvr/hdpvr-i2c.c
-+++ b/drivers/media/usb/hdpvr/hdpvr-i2c.c
-@@ -165,10 +165,16 @@ static const struct i2c_algorithm hdpvr_algo = {
- 	.functionality = hdpvr_functionality,
- };
+--- a/arch/m68k/kernel/head.S
++++ b/arch/m68k/kernel/head.S
+@@ -3379,6 +3379,7 @@ L(console_clear_loop):
  
-+/* prevent invalid 0-length usb_control_msg */
-+static const struct i2c_adapter_quirks hdpvr_quirks = {
-+	.flags = I2C_AQ_NO_ZERO_LEN_READ,
-+};
+ 	movel	%d4,%d1				/* screen height in pixels */
+ 	divul	%a0@(FONT_DESC_HEIGHT),%d1	/* d1 = max num rows */
++	subql	#1,%d1				/* row range is 0 to num - 1 */
+ 
+ 	movel	%d0,%a2@(Lconsole_struct_num_columns)
+ 	movel	%d1,%a2@(Lconsole_struct_num_rows)
+@@ -3525,15 +3526,14 @@ func_start	console_putc,%a0/%a1/%d0-%d7
+ 	cmpib	#10,%d7
+ 	jne	L(console_not_lf)
+ 	movel	%a0@(Lconsole_struct_cur_row),%d0
+-	addil	#1,%d0
+-	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	movel	%a0@(Lconsole_struct_num_rows),%d1
+ 	cmpl	%d1,%d0
+ 	jcs	1f
+-	subil	#1,%d0
+-	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	console_scroll
++	jra	L(console_exit)
+ 1:
++	addql	#1,%d0
++	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	jra	L(console_exit)
+ 
+ L(console_not_lf):
+@@ -3560,12 +3560,6 @@ L(console_not_cr):
+  */
+ L(console_not_home):
+ 	movel	%a0@(Lconsole_struct_cur_column),%d0
+-	addql	#1,%a0@(Lconsole_struct_cur_column)
+-	movel	%a0@(Lconsole_struct_num_columns),%d1
+-	cmpl	%d1,%d0
+-	jcs	1f
+-	console_putc	#'\n'	/* recursion is OK! */
+-1:
+ 	movel	%a0@(Lconsole_struct_cur_row),%d1
+ 
+ 	/*
+@@ -3612,6 +3606,23 @@ L(console_do_font_scanline):
+ 	addq	#1,%d1
+ 	dbra	%d7,L(console_read_char_scanline)
+ 
++	/*
++	 *	Register usage in the code below:
++	 *	a0 = pointer to console globals
++	 *	d0 = cursor column
++	 *	d1 = cursor column limit
++	 */
 +
- static const struct i2c_adapter hdpvr_i2c_adapter_template = {
- 	.name   = "Hauppauge HD PVR I2C",
- 	.owner  = THIS_MODULE,
- 	.algo   = &hdpvr_algo,
-+	.quirks = &hdpvr_quirks,
- };
++	lea	%pc@(L(console_globals)),%a0
++
++	movel	%a0@(Lconsole_struct_cur_column),%d0
++	addql	#1,%d0
++	movel	%d0,%a0@(Lconsole_struct_cur_column)	/* Update cursor pos */
++	movel	%a0@(Lconsole_struct_num_columns),%d1
++	cmpl	%d1,%d0
++	jcs	L(console_exit)
++	console_putc	#'\n'		/* Line wrap using tail recursion */
++
+ L(console_exit):
+ func_return	console_putc
  
- static int hdpvr_activate_ir(struct hdpvr_device *dev)
--- 
-2.39.5
-
 
 
