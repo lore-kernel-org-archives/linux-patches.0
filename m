@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCC2239573;
-	Tue, 26 Aug 2025 11:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6429117332C;
+	Tue, 26 Aug 2025 11:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207481; cv=none; b=uUqeOQBqT74J9Q7ZImDdckFp6h+L1FmUFOZOwPpXDcVtA1N1H/WxK9Qai8QR3SVdQIqbHQmLUeltAn1lA1yd2cwtFMU4sz1i7cQSBa/h54Hclfd4ztp3uku5YqXNnbEKLA54r8BMUStcC+HW4c/GsJMz09Q3yjlrFy456RwSoQY=
+	t=1756207484; cv=none; b=dCq+AdT7arVJfwxT3Z722JOsj9HCNV5Uek3rJqf/rVYw3GPl8fsIHIoN41IFm52fjf4GiHroYK8cTm9pjBZuFZd/R4Roo5WrFXrdmWIGYkkJpShRPNSonHLQXCkiDqribZXVJpeRvJdXC5+IOlOys728YrE28BUxzYEEpgLspZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207481; c=relaxed/simple;
-	bh=6l0MODiAOElRR1q4aiiL1XmQZNI/khEBCKT6Bt2p7G0=;
+	s=arc-20240116; t=1756207484; c=relaxed/simple;
+	bh=qihUaS04Kp0Z/0myL/UrEaXMzU1B6dLu84UcX9mfE2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EN6BclC4I+4vpKTUZafnzsPdOHAXZL/BbjfH2mPtMFjTUNm1uTvxhj1N3BtpuQy97/uhHaO09/lZxS1y5mrwS1827QdYOWWbnjgtBuZ3ON+eXB1LVEK3DIMhMizHFkRBMMLHh0hG1Qz94M+/sv4O5TRH68C5p1v8yx8jxlSTvAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWxmhqHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+rJrg6S9rAxZebdUfr41mdDQdOtfUiI0aAE87gNe4vV/+Ok/TOWyxlCC20CWut4/C3Fes4VhaxFrcBlwkkkdSI2gbxIS8Vw9OXok0z5r01lBW35wQBVr5yTqAOYJ0EC0k6S+8qWxNsmVkQWUdaVAutVFam2Jhb3xt3HpVoLt+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuL5VKUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWxmhqHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5D2C116D0;
-	Tue, 26 Aug 2025 11:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuL5VKUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA585C4CEF1;
+	Tue, 26 Aug 2025 11:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207481;
-	bh=6l0MODiAOElRR1q4aiiL1XmQZNI/khEBCKT6Bt2p7G0=;
+	s=korg; t=1756207484;
+	bh=qihUaS04Kp0Z/0myL/UrEaXMzU1B6dLu84UcX9mfE2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FWxmhqHEb1Izmvwnyj84PH9FBFCjIrLbAzj6MZhRH1TLIEoczNsX+N9JAPd8IMiMO
-	 uNYwtIt5Vfar4NX1+MTgmW/SHQ7e8n9Tqtg9negUtJ+44tVGFAcgfGW2UyvJxjz7cf
-	 4x+TLUKVBk0JqcMr2chYskCH7qiwbxxY2wzIDyCM=
+	b=zuL5VKUjBc1rINqijYWGUfPnywsXkqrZck0s0NemocMwtofdiJJlKOaSPBxlPHFbE
+	 7lvBloUdoMwWhecN6Tlx84E+NG1TnYR9pUShDIKQIr7LYD4FUTmQGfVSeGxH9+4+k9
+	 rTqYklNBzqgPYpErrmZpWC7LfQTivKt0u8Hdp4SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 181/457] drm/amdgpu: update mmhub 3.0.1 client id mappings
-Date: Tue, 26 Aug 2025 13:07:45 +0200
-Message-ID: <20250826110941.848450601@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.16 199/457] ipv6: sr: Fix MAC comparison to be constant-time
+Date: Tue, 26 Aug 2025 13:08:03 +0200
+Message-ID: <20250826110942.286051347@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,96 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 0bae62cc989fa99ac9cb564eb573aad916d1eb61 upstream.
+commit a458b2902115b26a25d67393b12ddd57d1216aaa upstream.
 
-Update the client id mapping so the correct clients
-get printed when there is a mmhub page fault.
+To prevent timing attacks, MACs need to be compared in constant time.
+Use the appropriate helper function for this.
 
-Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2a2681eda73b99a2c1ee8cdb006099ea5d0c2505)
+Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20250818202724.15713-1-ebiggers@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c |   57 ++++++++++++++++--------------
- 1 file changed, 32 insertions(+), 25 deletions(-)
+ net/ipv6/seg6_hmac.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-@@ -36,40 +36,47 @@
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -35,6 +35,7 @@
+ #include <net/xfrm.h>
  
- static const char *mmhub_client_ids_v3_0_1[][2] = {
- 	[0][0] = "VMC",
-+	[1][0] = "ISPXT",
-+	[2][0] = "ISPIXT",
- 	[4][0] = "DCEDMC",
- 	[5][0] = "DCEVGA",
- 	[6][0] = "MP0",
- 	[7][0] = "MP1",
--	[8][0] = "MPIO",
--	[16][0] = "HDP",
--	[17][0] = "LSDMA",
--	[18][0] = "JPEG",
--	[19][0] = "VCNU0",
--	[21][0] = "VSCH",
--	[22][0] = "VCNU1",
--	[23][0] = "VCN1",
--	[32+20][0] = "VCN0",
--	[2][1] = "DBGUNBIO",
-+	[8][0] = "MPM",
-+	[12][0] = "ISPTNR",
-+	[14][0] = "ISPCRD0",
-+	[15][0] = "ISPCRD1",
-+	[16][0] = "ISPCRD2",
-+	[22][0] = "HDP",
-+	[23][0] = "LSDMA",
-+	[24][0] = "JPEG",
-+	[27][0] = "VSCH",
-+	[28][0] = "VCNU",
-+	[29][0] = "VCN",
-+	[1][1] = "ISPXT",
-+	[2][1] = "ISPIXT",
- 	[3][1] = "DCEDWB",
- 	[4][1] = "DCEDMC",
- 	[5][1] = "DCEVGA",
- 	[6][1] = "MP0",
- 	[7][1] = "MP1",
--	[8][1] = "MPIO",
--	[10][1] = "DBGU0",
--	[11][1] = "DBGU1",
--	[12][1] = "DBGU2",
--	[13][1] = "DBGU3",
--	[14][1] = "XDP",
--	[15][1] = "OSSSYS",
--	[16][1] = "HDP",
--	[17][1] = "LSDMA",
--	[18][1] = "JPEG",
--	[19][1] = "VCNU0",
--	[20][1] = "VCN0",
--	[21][1] = "VSCH",
--	[22][1] = "VCNU1",
--	[23][1] = "VCN1",
-+	[8][1] = "MPM",
-+	[10][1] = "ISPMWR0",
-+	[11][1] = "ISPMWR1",
-+	[12][1] = "ISPTNR",
-+	[13][1] = "ISPSWR",
-+	[14][1] = "ISPCWR0",
-+	[15][1] = "ISPCWR1",
-+	[16][1] = "ISPCWR2",
-+	[17][1] = "ISPCWR3",
-+	[18][1] = "XDP",
-+	[21][1] = "OSSSYS",
-+	[22][1] = "HDP",
-+	[23][1] = "LSDMA",
-+	[24][1] = "JPEG",
-+	[27][1] = "VSCH",
-+	[28][1] = "VCNU",
-+	[29][1] = "VCN",
- };
+ #include <crypto/hash.h>
++#include <crypto/utils.h>
+ #include <net/seg6.h>
+ #include <net/genetlink.h>
+ #include <net/seg6_hmac.h>
+@@ -280,7 +281,7 @@ bool seg6_hmac_validate_skb(struct sk_bu
+ 	if (seg6_hmac_compute(hinfo, srh, &ipv6_hdr(skb)->saddr, hmac_output))
+ 		return false;
  
- static uint32_t mmhub_v3_0_1_get_invalidate_req(unsigned int vmid,
+-	if (memcmp(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN) != 0)
++	if (crypto_memneq(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN))
+ 		return false;
+ 
+ 	return true;
 
 
