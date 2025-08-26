@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453FF34F498;
-	Tue, 26 Aug 2025 14:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0576350D43;
+	Tue, 26 Aug 2025 14:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218615; cv=none; b=JKEQ2xXPFPmD1PtqrX5qfP47AVCYZwGImXtimAUhv73F3Z2QoW9GeUUe67BCSydgtZnJW6gqCIaani7YIYZYUAsSJ2qMZFVLxDMGliz8JOioULZLlXsgXsMN2lWe1NTQiyFEqEdYNCown4grvtETUjyl95QIq/7EXa0wlWb1ZIM=
+	t=1756218618; cv=none; b=HPSM4OTdxIOut4DAUXMzHcZtUkjHiZZ7sOeDAS3t9WReIqErWnwj1TkgV93DAfhs6XjGIwKRK882SUCZM56jv0OeW6CJ7253TIRtEIkg2HP+W3ffBbXBRYBBLwGsD1C4n7CYA42TsaVULJOHbDtbDVhFp64OUGsXEU2IYu9iB04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218615; c=relaxed/simple;
-	bh=QFssTEfa78om6eXwr5NLJYM/2EMR5iUgr50fgFv+D9o=;
+	s=arc-20240116; t=1756218618; c=relaxed/simple;
+	bh=KGPmO0qwnGpKxoFtPHg/N4J1ICHgWc6aFGZ82Tx7r9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Smi55R1kmnWWgcEEnFnNtOOqhCHWhRYgA/d/xZFDGS0yfmor3AqPFDhRCiAogHtK9HfzVd/Hf5RJk+PJQeVSlvjfI4CHjHBaYybpUeh/25MawO0enoimmNBJbuMZNI7s1NCjkT9eJ4YGdP+1WuWYzZ6aI52gXi386zYsHLsJOPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2waD9/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oFsDvPNxhOjMhILbgBs78DJy7JpaJC953+s4jPK0KLbxjj0YdYu05A5extPKpkQUBtAZIG1AwRzV82I0aB9oLL1Mz1M0jW8x+LKeLuDgYT1nizD7oxQhHuZBkE+kbjifb5gaC0HcIZyG0Box+s/0HWsknA0BagoZOMg5u+24qCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFz7XTBp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2waD9/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACDBC4CEF1;
-	Tue, 26 Aug 2025 14:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFz7XTBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B0AC113CF;
+	Tue, 26 Aug 2025 14:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218615;
-	bh=QFssTEfa78om6eXwr5NLJYM/2EMR5iUgr50fgFv+D9o=;
+	s=korg; t=1756218617;
+	bh=KGPmO0qwnGpKxoFtPHg/N4J1ICHgWc6aFGZ82Tx7r9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2waD9/Q/+uY2hoUvF2VvTvWhq3j+gX3vM4UtOPP9QPtDP1Wda+VwiE2V4a3If2sJ
-	 vj0yIPPEiFOiKfgiFs5dboba0N6ex57DtHMqdfiMV1PVad5I1AubYQU9okZPuNXonR
-	 ySJnfi4KxQR1dB8EhRxnQy/reCgW5HivM5oeEntw=
+	b=vFz7XTBp0CtcTrJ9o091aBQcbZrsBkHx8x9TiUXOni0gvlgjAdx6WBbpJBlQqsAFs
+	 g8Qmo+asGxOK1rlDWOdah/xVLI3K/CEpbZEhAV7xMdSVmm5wzXxxAU5ejDcuxAYaBV
+	 FGjCRR5RWSmTCQT6AfR8gVLtVfu9/z2DG6E7VCjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/403] usb: chipidea: introduce CI_HDRC_CONTROLLER_VBUS_EVENT glue layer use
-Date: Tue, 26 Aug 2025 13:06:33 +0200
-Message-ID: <20250826110908.010073235@linuxfoundation.org>
+Subject: [PATCH 5.4 068/403] usb: chipidea: add USB PHY event
+Date: Tue, 26 Aug 2025 13:06:34 +0200
+Message-ID: <20250826110908.055549062@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,63 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chen <peter.chen@nxp.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit d755cdb1b9d7e1b645e176b97eb137194bbe8cf9 ]
+[ Upstream commit b7a62611fab72e585c729a7fcf666aa9c4144214 ]
 
-Some vendors glue layer need to handle some events for vbus, eg,
-some i.mx platforms (imx7d, imx8mm, imx8mn, etc) needs vbus event
-to handle charger detection, its charger detection is finished at
-glue layer code, but not at USB PHY driver.
+Add USB PHY event for below situation:
+- usb role changed
+- vbus connect
+- vbus disconnect
+- gadget driver is enumerated
 
-Signed-off-by: Peter Chen <peter.chen@nxp.com>
-Stable-dep-of: b7a62611fab7 ("usb: chipidea: add USB PHY event")
+USB PHY driver can get the last event after above situation occurs
+and deal with different situations.
+
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20230627110353.1879477-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/udc.c   | 7 ++++++-
- include/linux/usb/chipidea.h | 1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/chipidea/ci.h  | 18 ++++++++++++++++--
+ drivers/usb/chipidea/udc.c | 10 ++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/usb/chipidea/ci.h b/drivers/usb/chipidea/ci.h
+index ff61f88fc867..3a22bc727bb9 100644
+--- a/drivers/usb/chipidea/ci.h
++++ b/drivers/usb/chipidea/ci.h
+@@ -277,8 +277,19 @@ static inline int ci_role_start(struct ci_hdrc *ci, enum ci_role role)
+ 		return -ENXIO;
+ 
+ 	ret = ci->roles[role]->start(ci);
+-	if (!ret)
+-		ci->role = role;
++	if (ret)
++		return ret;
++
++	ci->role = role;
++
++	if (ci->usb_phy) {
++		if (role == CI_ROLE_HOST)
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_ID);
++		else
++			/* in device mode but vbus is invalid*/
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
++	}
++
+ 	return ret;
+ }
+ 
+@@ -292,6 +303,9 @@ static inline void ci_role_stop(struct ci_hdrc *ci)
+ 	ci->role = CI_ROLE_END;
+ 
+ 	ci->roles[role]->stop(ci);
++
++	if (ci->usb_phy)
++		usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
+ }
+ 
+ static inline enum usb_role ci_role_to_usb_role(struct ci_hdrc *ci)
 diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-index 9212c3842a1b..dfae454ca9ba 100644
+index dfae454ca9ba..19a9a4b83346 100644
 --- a/drivers/usb/chipidea/udc.c
 +++ b/drivers/usb/chipidea/udc.c
-@@ -1569,6 +1569,7 @@ static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
- {
- 	struct ci_hdrc *ci = container_of(_gadget, struct ci_hdrc, gadget);
- 	unsigned long flags;
-+	int ret = 0;
+@@ -1583,6 +1583,13 @@ static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
+ 		ret = ci->platdata->notify_event(ci,
+ 				CI_HDRC_CONTROLLER_VBUS_EVENT);
  
- 	spin_lock_irqsave(&ci->lock, flags);
- 	ci->vbus_active = is_active;
-@@ -1578,10 +1579,14 @@ static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
- 		usb_phy_set_charger_state(ci->usb_phy, is_active ?
- 			USB_CHARGER_PRESENT : USB_CHARGER_ABSENT);
- 
-+	if (ci->platdata->notify_event)
-+		ret = ci->platdata->notify_event(ci,
-+				CI_HDRC_CONTROLLER_VBUS_EVENT);
++	if (ci->usb_phy) {
++		if (is_active)
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_VBUS);
++		else
++			usb_phy_set_event(ci->usb_phy, USB_EVENT_NONE);
++	}
 +
  	if (ci->driver)
  		ci_hdrc_gadget_connect(_gadget, is_active);
  
--	return 0;
-+	return ret;
- }
- 
- static int ci_udc_wakeup(struct usb_gadget *_gadget)
-diff --git a/include/linux/usb/chipidea.h b/include/linux/usb/chipidea.h
-index edd89b7c8f18..54167a2d28ea 100644
---- a/include/linux/usb/chipidea.h
-+++ b/include/linux/usb/chipidea.h
-@@ -67,6 +67,7 @@ struct ci_hdrc_platform_data {
- #define CI_HDRC_CONTROLLER_STOPPED_EVENT	1
- #define CI_HDRC_IMX_HSIC_ACTIVE_EVENT		2
- #define CI_HDRC_IMX_HSIC_SUSPEND_EVENT		3
-+#define CI_HDRC_CONTROLLER_VBUS_EVENT		4
- 	int	(*notify_event) (struct ci_hdrc *ci, unsigned event);
- 	struct regulator	*reg_vbus;
- 	struct usb_otg_caps	ci_otg_caps;
+@@ -1898,6 +1905,9 @@ static irqreturn_t udc_irq(struct ci_hdrc *ci)
+ 		if (USBi_PCI & intr) {
+ 			ci->gadget.speed = hw_port_is_high_speed(ci) ?
+ 				USB_SPEED_HIGH : USB_SPEED_FULL;
++			if (ci->usb_phy)
++				usb_phy_set_event(ci->usb_phy,
++					USB_EVENT_ENUMERATED);
+ 			if (ci->suspended) {
+ 				if (ci->driver->resume) {
+ 					spin_unlock(&ci->lock);
 -- 
 2.39.5
 
