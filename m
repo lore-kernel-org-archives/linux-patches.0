@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45159340D95;
-	Tue, 26 Aug 2025 14:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223CA35335B;
+	Tue, 26 Aug 2025 14:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218923; cv=none; b=lCeKRFFtLTB+s+q90EPCdtHVhaRH85XJfaPZdBvgXW59BON0YsiD8Gj9NJXrL48mDfttVaHvPLf4AnDJBEjNUZ4yxjntK5/+ZtzX2nabp1U2rYIz5jSmi+h7h+Z97ClAIueKRijuTAGmHLYlnwJVxwYBUdHYlztUdFnAZAjbgsM=
+	t=1756218926; cv=none; b=L12uyUtcfkOD5CgbMpby+IBTM87GvWPJy6bIQgDcAk+T/CpEBGiTUPrmSI5qJyzdZBKaGvYZkl50QR7lhtdhln6bJitjfbZLL8iD2dTV544NUPSucrItzOg32gK9Dw5l1gquUXhBxAyQGee2wBhjS6wP6OdymNmEbVIstIrzYEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218923; c=relaxed/simple;
-	bh=OpuqXS3shJHNDG57Wg9Ctu4nUQkpQJrZpJtAYbdqkmk=;
+	s=arc-20240116; t=1756218926; c=relaxed/simple;
+	bh=/+DrbinamiedXzwnRHAfn6Wt/YnG38r8NpDpqhN5HA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYg6TFw8lBzl1bhEDeJ/RKFdEo9R5vluzdBUWuefJBLEMX6MccXysHY1UhcjXGl1/tPLTHNflrMCMhE1IUE6ayB5/ef2LJ3+qbHF7KE2PziMCJx1qF5HKU2qAaxqeb6lPAFbMeQp9KxFfD/4yom+Oc2dPE7hjPDj62gdX87eMdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsurrsYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJGgJrlcErrRqLzpjndN1OqXBL1y7Ul4+oZKX+BNYMY5fkAe/wpbDH0TcYtrfuvhLsbpHxSWXaAXnRE35g4fVuNnPpvDpJ5puUywYv5Zwtr0LtZjPUsln7EQAVjTVdAl2wr+X4NGnrqnRoF4S5+CqOGGBcnhUunmlYhVM6Q3Nho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLrzm4YY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsurrsYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1FBC4CEF1;
-	Tue, 26 Aug 2025 14:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLrzm4YY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B98C4CEF1;
+	Tue, 26 Aug 2025 14:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218923;
-	bh=OpuqXS3shJHNDG57Wg9Ctu4nUQkpQJrZpJtAYbdqkmk=;
+	s=korg; t=1756218925;
+	bh=/+DrbinamiedXzwnRHAfn6Wt/YnG38r8NpDpqhN5HA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsurrsYxu6Eldmkqvv7MqemCqDDWfE4MDDYGdfAdVVaGFDdVCf8g5NswZF6oIRWKJ
-	 +hllxRwyKvGWv/dioV4u/Tc+aneqHaWWcNk3Bqat6SI5knscjhlfm0wlWLCLDq0IJG
-	 xbJ71yZPzDO0MhUUcMMIobnzpLlKt16KQOZcBi6E=
+	b=uLrzm4YYhJCpuWIkrbKhl8J7lm2IyYl4/WUqjwkA6a3jklaeUp75wdWUrzGqkPMmI
+	 B14EPyIaBL6j+wF6xpA1qiq9+SN1IuYqCWvVOVp0YEcBONT9e6ZrZuWnerhGaUXrbJ
+	 lsBzE1h+YKzLPqkWEh+wV+rJk634LFPNpbSU+ni4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.4 154/403] MIPS: mm: tlb-r4k: Uniquify TLB entries on init
-Date: Tue, 26 Aug 2025 13:08:00 +0200
-Message-ID: <20250826110911.134465967@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tao Xue <xuetao09@huawei.com>
+Subject: [PATCH 5.4 155/403] usb: gadget : fix use-after-free in composite_dev_cleanup()
+Date: Tue, 26 Aug 2025 13:08:01 +0200
+Message-ID: <20250826110911.162542281@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,98 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Tao Xue <xuetao09@huawei.com>
 
-commit 35ad7e181541aa5757f9f316768d3e64403ec843 upstream.
+commit 151c0aa896c47a4459e07fee7d4843f44c1bb18e upstream.
 
-Hardware or bootloader will initialize TLB entries to any value, which
-may collide with kernel's UNIQUE_ENTRYHI value. On MIPS microAptiv/M5150
-family of cores this will trigger machine check exception and cause boot
-failure. On M5150 simulation this could happen 7 times out of 1000 boots.
+1. In func configfs_composite_bind() -> composite_os_desc_req_prepare():
+if kmalloc fails, the pointer cdev->os_desc_req will be freed but not
+set to NULL. Then it will return a failure to the upper-level function.
+2. in func configfs_composite_bind() -> composite_dev_cleanup():
+it will checks whether cdev->os_desc_req is NULL. If it is not NULL, it
+will attempt to use it.This will lead to a use-after-free issue.
 
-Replace local_flush_tlb_all() with r4k_tlb_uniquify() which probes each
-TLB ENTRIHI unique value for collisions before it's written, and in case
-of collision try a different ASID.
+BUG: KASAN: use-after-free in composite_dev_cleanup+0xf4/0x2c0
+Read of size 8 at addr 0000004827837a00 by task init/1
 
-Cc: stable@kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+CPU: 10 PID: 1 Comm: init Tainted: G           O      5.10.97-oh #1
+ kasan_report+0x188/0x1cc
+ __asan_load8+0xb4/0xbc
+ composite_dev_cleanup+0xf4/0x2c0
+ configfs_composite_bind+0x210/0x7ac
+ udc_bind_to_driver+0xb4/0x1ec
+ usb_gadget_probe_driver+0xec/0x21c
+ gadget_dev_desc_UDC_store+0x264/0x27c
+
+Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tao Xue <xuetao09@huawei.com>
+Link: https://lore.kernel.org/r/20250721093908.14967-1-xuetao09@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |   56 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/composite.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -497,6 +497,60 @@ static int __init set_ntlb(char *str)
- 
- __setup("ntlb=", set_ntlb);
- 
-+/* Initialise all TLB entries with unique values */
-+static void r4k_tlb_uniquify(void)
-+{
-+	int entry = num_wired_entries();
-+
-+	htw_stop();
-+	write_c0_entrylo0(0);
-+	write_c0_entrylo1(0);
-+
-+	while (entry < current_cpu_data.tlbsize) {
-+		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
-+		unsigned long asid = 0;
-+		int idx;
-+
-+		/* Skip wired MMID to make ginvt_mmid work */
-+		if (cpu_has_mmid)
-+			asid = MMID_KERNEL_WIRED + 1;
-+
-+		/* Check for match before using UNIQUE_ENTRYHI */
-+		do {
-+			if (cpu_has_mmid) {
-+				write_c0_memorymapid(asid);
-+				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
-+			} else {
-+				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
-+			}
-+			mtc0_tlbw_hazard();
-+			tlb_probe();
-+			tlb_probe_hazard();
-+			idx = read_c0_index();
-+			/* No match or match is on current entry */
-+			if (idx < 0 || idx == entry)
-+				break;
-+			/*
-+			 * If we hit a match, we need to try again with
-+			 * a different ASID.
-+			 */
-+			asid++;
-+		} while (asid < asid_mask);
-+
-+		if (idx >= 0 && idx != entry)
-+			panic("Unable to uniquify TLB entry %d", idx);
-+
-+		write_c0_index(entry);
-+		mtc0_tlbw_hazard();
-+		tlb_write_indexed();
-+		entry++;
-+	}
-+
-+	tlbw_use_hazard();
-+	htw_start();
-+	flush_micro_tlb();
-+}
-+
- /*
-  * Configure TLB (for init or after a CPU has been powered off).
-  */
-@@ -536,7 +590,7 @@ static void r4k_tlb_configure(void)
- 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
- 
- 	/* From this point on the ARC firmware is dead.	 */
--	local_flush_tlb_all();
-+	r4k_tlb_uniquify();
- 
- 	/* Did I tell you that ARC SUCKS?  */
- }
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2241,6 +2241,11 @@ int composite_os_desc_req_prepare(struct
+ 	if (!cdev->os_desc_req->buf) {
+ 		ret = -ENOMEM;
+ 		usb_ep_free_request(ep0, cdev->os_desc_req);
++		/*
++		 * Set os_desc_req to NULL so that composite_dev_cleanup()
++		 * will not try to free it again.
++		 */
++		cdev->os_desc_req = NULL;
+ 		goto end;
+ 	}
+ 	cdev->os_desc_req->context = cdev;
 
 
