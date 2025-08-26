@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF04356905;
-	Tue, 26 Aug 2025 14:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF5C350D46;
+	Tue, 26 Aug 2025 14:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218830; cv=none; b=UbHxy5NYqviGz3si967nZPEJneeWICgcKNQaFqzOOf5fvszbDvFXNQ9V2TctGJRRHdpaw6r4S5CfolJFoh9CVYnPXT/XtfnMxt4BLwwSaIcMU1YZzPMH1P7f/siESZ2WZ2+ATX8rNMrMBkktyF8N+6RnIYivOrLmbzuirxP6GO8=
+	t=1756218832; cv=none; b=bdxq44IZN9A+99mB3ksBsRx9g/Yd2/2qXMxy72dXFZVvUfHSKZBT/JWJQ8ZcpL4ZG65Zn+Bu0WFUXzgZv8x33qehRicCDcPf6DXNgqJqwkFd0OCSdDERPXat7ycevlcTq+Sz2eHWKEN2ZXPgzhEVYn5mr0cSRxjNARA5iT/nwR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218830; c=relaxed/simple;
-	bh=BG+8WucidtYCtkc3Cuh8Bg3dm3sDhgumpJ4BO1ITy8A=;
+	s=arc-20240116; t=1756218832; c=relaxed/simple;
+	bh=tLaCkFAwmEruqqkprHyQqcI6rmm53XbP/DeDDmPdDAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyzUFK4H8l2kTAMnjjqjA1knbBqsvOIgRJjd5wcdlG9TSSXitZtjw6zTtgORt459X+YYBWplgYkE2r6QuqXUeGn40xZSRS7zKHLynf7aP2Kj/hEp5pzx3Uc7uBCzkGvWxwGRTpf03zH8d/F8hHNGXWXL/VaGIKW5hjlDUh4JU8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3CniW4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=da79HVFP1V2TOFxdWfSJMlzGJjvW3BRCfNKIC3V86e+v+HdMdGj4eZAkhXUdYZWgt9CGGsMOrO6ybFSYVcOwCEJvBNnLBVb0pu3zQ5N5SZPHDLbLTnlWakiwyayZrfJtXek5gKHKXc55Pkc2+jt77AJQ7xyhVIcmwSJCnCrYxd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2eecDgu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3CniW4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B5BC4CEF1;
-	Tue, 26 Aug 2025 14:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2eecDgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50288C113CF;
+	Tue, 26 Aug 2025 14:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218830;
-	bh=BG+8WucidtYCtkc3Cuh8Bg3dm3sDhgumpJ4BO1ITy8A=;
+	s=korg; t=1756218832;
+	bh=tLaCkFAwmEruqqkprHyQqcI6rmm53XbP/DeDDmPdDAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3CniW4pNq5Wb44DuAUcJyt4Ywpplg+0i8yFMy25/ayh8UqtBNzupPH7/Bbv46jwM
-	 lK/ojBhvMwiqginARd9JSeko5okOazPZBFm7jKGD1ZzagV43/zG4jSwoIdWN+Wdpaz
-	 HLlat67DUH5Mfoyo5eFsThECpiWkitLT1VMVVC6Y=
+	b=y2eecDguI7xJmJA+FYcBhr1qm/0qHP015PmCHLAn+jxgV73XiPeiW2HTlTV6EPQFI
+	 WjEevOsIglLNW8t8XZu+fMz52VH4HC/7VGGDlzEweRAQE6N8ksc1Tr6kR8KtcnYHGu
+	 FW4Lemld9SQS+gmijlklPMD/g8l/61NnHkC2ec3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 118/403] hwrng: mtk - handle devm_pm_runtime_enable errors
-Date: Tue, 26 Aug 2025 13:07:24 +0200
-Message-ID: <20250826110909.994509299@linuxfoundation.org>
+Subject: [PATCH 5.4 119/403] crypto: img-hash - Fix dma_unmap_sg() nents value
+Date: Tue, 26 Aug 2025 13:07:25 +0200
+Message-ID: <20250826110910.024325687@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,36 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 522a242a18adc5c63a24836715dbeec4dc3faee1 ]
+[ Upstream commit 34b283636181ce02c52633551f594fec9876bec7 ]
 
-Although unlikely, devm_pm_runtime_enable() call might fail, so handle
-the return value.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 78cb66caa6ab ("hwrng: mtk - Use devm_pm_runtime_enable")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/mtk-rng.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/img-hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/hw_random/mtk-rng.c b/drivers/char/hw_random/mtk-rng.c
-index 6c21eb749b51..f5325fe4f1de 100644
---- a/drivers/char/hw_random/mtk-rng.c
-+++ b/drivers/char/hw_random/mtk-rng.c
-@@ -149,7 +149,9 @@ static int mtk_rng_probe(struct platform_device *pdev)
- 	dev_set_drvdata(&pdev->dev, priv);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_use_autosuspend(&pdev->dev);
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
+index 17cc44f14e5c..b5fd15e0c050 100644
+--- a/drivers/crypto/img-hash.c
++++ b/drivers/crypto/img-hash.c
+@@ -434,7 +434,7 @@ static int img_hash_write_via_dma_stop(struct img_hash_dev *hdev)
+ 	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
  
- 	dev_info(&pdev->dev, "registered RNG driver\n");
+ 	if (ctx->flags & DRIVER_FLAGS_SG)
+-		dma_unmap_sg(hdev->dev, ctx->sg, ctx->dma_ct, DMA_TO_DEVICE);
++		dma_unmap_sg(hdev->dev, ctx->sg, 1, DMA_TO_DEVICE);
  
+ 	return 0;
+ }
 -- 
 2.39.5
 
