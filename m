@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD671E519;
-	Tue, 26 Aug 2025 13:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE57239E8B;
+	Tue, 26 Aug 2025 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216035; cv=none; b=lCHH0WfjTzEhD5wHHaw95B1lQ6rjgmTjwljSgey0iaU4iIEZVmu6qv2esQqZSStBySpSGcYOVd1mrpqSMo5PBoOv8RD1GeS+m8DKC1HmaMtSGcnMn6lcQ6yutOUHpnEGFuigZMAbxLxYfAHVW66glfwdhVn2nw1MjxPuIcpQ/yo=
+	t=1756216037; cv=none; b=IGiSi4jTXMh+DJZumefVJX1+1T2T9tSrlcAf8wpmNRbnPh5lUO5ExGmWt4KxJ/O1/Gt2XzYBC3TvVr4YYL+gfpZ4Ldcv7H1JIFnBNBtqgOlSg9Fmut+z0UvODz3eq6XWNnxCmRaRM8TJJNMiorK5gUV5vUygPgNe2J7I4rEEKok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216035; c=relaxed/simple;
-	bh=l+rabo6rIOo1Svq0ircHut7M3zCAhBd9pMOU/tt+lEc=;
+	s=arc-20240116; t=1756216037; c=relaxed/simple;
+	bh=YijJo4Dhjr9uKhf9RidH5gehdTxnDIwTa7L2LjZsaSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBl9j1QoUez97WHrfIc7w45b/YCpo3Tqh8EoM5/rdwf/3mjtUwse+wGbO+bgOU6ME8cHDfIHo9NgdTM3LkWtdrUuHR6ROnBbWLv3gU3THfh9bd+0OWuOA5gEYK06Y/BKlbusUC5Td22zP4pwma/UKyoE/Saw4MW6AyQIuXJl17c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiJ8ByYC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxmwPt1Eos1lHBi3uSt+nFCoW8YJZ9bM/Cfpv5vGS1X1xTANVnZrrHHZvYVZqigxpnd+YtYJWp0aI8s9OnMiFWjZnMsSOJEWlEeRCyOnQUBG7Dcclsv40CId8wzqlysWTCO8VHb+yb/D6b3JkFPE/pHxhDZgVqyUFFqjyhf6lLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAD3b7S1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiJ8ByYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7E2C4CEF1;
-	Tue, 26 Aug 2025 13:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAD3b7S1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBE3C4CEF1;
+	Tue, 26 Aug 2025 13:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216034;
-	bh=l+rabo6rIOo1Svq0ircHut7M3zCAhBd9pMOU/tt+lEc=;
+	s=korg; t=1756216037;
+	bh=YijJo4Dhjr9uKhf9RidH5gehdTxnDIwTa7L2LjZsaSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiJ8ByYCL2wPejI8S0N25GkGFr5CjnCGSdmCMaeuwmK02oMZhIg1kWzZ1NFhFlphB
-	 1rCCHfsm1gbxy6k+JZNEntO+QSECwF8QLiyV95F7m4kcxwsIA7k3f2rC5ciUf7fqDt
-	 EJMfliYNemM2z5SUy1z+q4eLw2W2yz/9CftEQASU=
+	b=FAD3b7S1eEzZWuWgf5uzhTCs87LU4ujTBtLrG2AwoANpwnoRc23fK6neG0i2kVjVf
+	 x9RMHI31dI4cNwAegFWZ0UI/p418I4g3+5IxFceNDNbzLRGzDp2YwuM0IIV8ts4xMF
+	 +MERC7HYKTBW54fBSq27DGN+fqfWZwSo9nxMD5Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 258/644] io_uring: dont use int for ABI
-Date: Tue, 26 Aug 2025 13:05:49 +0200
-Message-ID: <20250826110952.774324625@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Youngjun Lee <yjjuny.lee@samsung.com>
+Subject: [PATCH 5.15 259/644] ALSA: usb-audio: Validate UAC3 power domain descriptors, too
+Date: Tue, 26 Aug 2025 13:05:50 +0200
+Message-ID: <20250826110952.796459752@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,35 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit cf73d9970ea4f8cace5d8f02d2565a2723003112 upstream.
+commit d832ccbc301fbd9e5a1d691bdcf461cdb514595f upstream.
 
-__kernel_rwf_t is defined as int, the actual size of which is
-implementation defined. It won't go well if some compiler / archs
-ever defines it as i64, so replace it with __u32, hoping that
-there is no one using i16 for it.
+UAC3 power domain descriptors need to be verified with its variable
+bLength for avoiding the unexpected OOB accesses by malicious
+firmware, too.
 
-Cc: stable@vger.kernel.org
-Fixes: 2b188cc1bb857 ("Add io_uring IO interface")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/47c666c4ee1df2018863af3a2028af18feef11ed.1751412511.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9a2fe9b801f5 ("ALSA: usb: initial USB Audio Device Class 3.0 support")
+Reported-and-tested-by: Youngjun Lee <yjjuny.lee@samsung.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250814081245.8902-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/io_uring.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/validate.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/include/uapi/linux/io_uring.h
-+++ b/include/uapi/linux/io_uring.h
-@@ -29,7 +29,7 @@ struct io_uring_sqe {
- 	};
- 	__u32	len;		/* buffer size or number of iovecs */
- 	union {
--		__kernel_rwf_t	rw_flags;
-+		__u32		rw_flags;
- 		__u32		fsync_flags;
- 		__u16		poll_events;	/* compatibility */
- 		__u32		poll32_events;	/* word-reversed for BE */
+--- a/sound/usb/validate.c
++++ b/sound/usb/validate.c
+@@ -221,6 +221,17 @@ static bool validate_uac3_feature_unit(c
+ 	return d->bLength >= sizeof(*d) + 4 + 2;
+ }
+ 
++static bool validate_uac3_power_domain_unit(const void *p,
++					    const struct usb_desc_validator *v)
++{
++	const struct uac3_power_domain_descriptor *d = p;
++
++	if (d->bLength < sizeof(*d))
++		return false;
++	/* baEntities[] + wPDomainDescrStr */
++	return d->bLength >= sizeof(*d) + d->bNrEntities + 2;
++}
++
+ static bool validate_midi_out_jack(const void *p,
+ 				   const struct usb_desc_validator *v)
+ {
+@@ -285,6 +296,7 @@ static const struct usb_desc_validator a
+ 	      struct uac3_clock_multiplier_descriptor),
+ 	/* UAC_VERSION_3, UAC3_SAMPLE_RATE_CONVERTER: not implemented yet */
+ 	/* UAC_VERSION_3, UAC3_CONNECTORS: not implemented yet */
++	FUNC(UAC_VERSION_3, UAC3_POWER_DOMAIN, validate_uac3_power_domain_unit),
+ 	{ } /* terminator */
+ };
+ 
 
 
