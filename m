@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F0512CDA5;
-	Tue, 26 Aug 2025 13:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD23B2343BE;
+	Tue, 26 Aug 2025 13:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213482; cv=none; b=UgJSfct9H2YbsaCWUM3uF1I7MDohZupnngjlnlEpY3ke0IlAoMq4dOasVgvt7bCTN/PgqVThOUrPBO1O3HyGnw/LboIaYRbMrz+DCXO3QYGAqe54FOE5Gab97fUYsAZZ9Cj/wzkT/rD/mlwixg4h/Uy1o2ZPm3T6UTBZlVxilwM=
+	t=1756213485; cv=none; b=M6byJiGVwcEftNylFdMljB3wXkAwuN2LvwFqMSPcjqPe0I7//Q3YtWF10SIrVpi6QjYlh+uy33PvERWoVUI9MO1W90hLpeStQVeekoYjf+vzLvW/JABOJOo2+fkNXtHkylcudZvACd+CupahyYBOLDAU985sqt11Pt2FJLR/0So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213482; c=relaxed/simple;
-	bh=5r8O9drpLpjlnMcHwqpQ/ZgVYWdI6Bv9XqyVYcA3jHU=;
+	s=arc-20240116; t=1756213485; c=relaxed/simple;
+	bh=L5gauHmrwefeCo69UcslEVolFx64XcctR15PC0a54eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+FNnLvqxV3ZE+RTYzKSGjD8bwliA0819H91bttLqSifas7vBdGdAxdbppiccbfSHdxm5K+CAtKZ8SRTGAjMJ0agIgcZmhDNLTsLKuCkpETN8AvM4hF/sy4w+4h+SVglXqjuDGAUtuTYt2C60EPeyVo38MYaEB2Wl8qwKcGB+5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ydif7BlF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qYWDSCGj7sCyyOky0aoY0LhrlM/wNOTZRLfHTf/oX78TN7resv5lKSm9TH9cqrOpVE5XMj8U7DMdm1ZYn20VtgzKlB0XV1QJFozFe/BZ08VMBq5U8LsFF8TWypXiRU0M3yjAn4Vx3DbHqtrVxNRfiud0twqTfH7puj+4ean4WKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rfwvihgl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ydif7BlF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B12FC4CEF1;
-	Tue, 26 Aug 2025 13:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rfwvihgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5F3C4CEF1;
+	Tue, 26 Aug 2025 13:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213482;
-	bh=5r8O9drpLpjlnMcHwqpQ/ZgVYWdI6Bv9XqyVYcA3jHU=;
+	s=korg; t=1756213485;
+	bh=L5gauHmrwefeCo69UcslEVolFx64XcctR15PC0a54eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ydif7BlFvd3rt0ZzeBwgw9jNAm2nssLG/EacE4SKuammGkq27v+llnSfB8DqWmuR/
-	 TMLUwUrES2A4I4tOXzOzbW7Vs7JdPr8xrZOV/zTlH7RpN27tNemmewDk2rt+cyBJ5g
-	 DjwY6MSQc+C1SxGBYb+315yY+ECZHWyiTYq84Kco=
+	b=Rfwvihgl+Pj3MDCH/ki5VdKKTQup5BUcAD9BGo6kuN8yGsRixF3WmWDnJyMcYZtVK
+	 jdLA/78z4f2vU7QPeD+57ePVsKS3yKOXeEVAR6JmpgK6GfZeDqiXkPqyzZhSHbAhjS
+	 jthZPxruksVKOOxxDZa3hM/GD0jdqJwnJrFF2su4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: [PATCH 6.6 337/587] bus: mhi: host: Fix endianness of BHI vector table
-Date: Tue, 26 Aug 2025 13:08:06 +0200
-Message-ID: <20250826111001.490962984@linuxfoundation.org>
+	Igor Pylypiv <ipylypiv@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.6 364/587] ata: libata-scsi: Fix CDL control
+Date: Tue, 26 Aug 2025 13:08:33 +0200
+Message-ID: <20250826111002.168954265@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,79 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-commit f471578e8b1a90623674433a01a8845110bc76ce upstream.
+commit 58768b0563916ddcb73d8ed26ede664915f8df31 upstream.
 
-On big endian platform like PowerPC, the MHI bus (which is little endian)
-does not start properly. The following example shows the error messages by
-using QCN9274 WLAN device with ath12k driver:
+Delete extra checks for the ATA_DFLAG_CDL_ENABLED flag that prevent
+SET FEATURES command from being issued to a drive when NCQ commands
+are active.
 
-    ath12k_pci 0001:01:00.0: BAR 0: assigned [mem 0xc00000000-0xc001fffff 64bit]
-    ath12k_pci 0001:01:00.0: MSI vectors: 1
-    ath12k_pci 0001:01:00.0: Hardware name: qcn9274 hw2.0
-    ath12k_pci 0001:01:00.0: failed to set mhi state: POWER_ON(2)
-    ath12k_pci 0001:01:00.0: failed to start mhi: -110
-    ath12k_pci 0001:01:00.0: failed to power up :-110
-    ath12k_pci 0001:01:00.0: failed to create soc core: -110
-    ath12k_pci 0001:01:00.0: failed to init core: -110
-    ath12k_pci: probe of 0001:01:00.0 failed with error -110
+ata_mselect_control_ata_feature() sets / clears the ATA_DFLAG_CDL_ENABLED
+flag during the translation of MODE SELECT to SET FEATURES. If SET FEATURES
+gets deferred due to outstanding NCQ commands, the original MODE SELECT
+command will be re-queued. When the re-queued MODE SELECT goes through
+the ata_mselect_control_ata_feature() translation again, SET FEATURES
+will not be issued because ATA_DFLAG_CDL_ENABLED has been already set or
+cleared by the initial translation of MODE SELECT.
 
-The issue seems to be with the incorrect DMA address/size used for
-transferring the firmware image over BHI. So fix it by converting the DMA
-address and size of the BHI vector table to little endian format before
-sending them to the device.
+The ATA_DFLAG_CDL_ENABLED checks in ata_mselect_control_ata_feature()
+are safe to remove because scsi_cdl_enable() implements a similar logic
+that avoids enabling CDL if it has been enabled already.
 
-Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
-Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
-[mani: added stable tag and reworded commit message]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Fixes: 17e897a45675 ("ata: libata-scsi: Improve CDL control")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250519145837.958153-1-alexander.wilhelm@westermo.com
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/boot.c     |    8 ++++----
- drivers/bus/mhi/host/internal.h |    4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/ata/libata-scsi.c |   11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -31,8 +31,8 @@ int mhi_rddm_prepare(struct mhi_controll
- 	int ret;
- 
- 	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
--		bhi_vec->dma_addr = mhi_buf->dma_addr;
--		bhi_vec->size = mhi_buf->len;
-+		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
-+		bhi_vec->size = cpu_to_le64(mhi_buf->len);
- 	}
- 
- 	dev_dbg(dev, "BHIe programming for RDDM\n");
-@@ -375,8 +375,8 @@ static void mhi_firmware_copy(struct mhi
- 	while (remainder) {
- 		to_cpy = min(remainder, mhi_buf->len);
- 		memcpy(mhi_buf->buf, buf, to_cpy);
--		bhi_vec->dma_addr = mhi_buf->dma_addr;
--		bhi_vec->size = to_cpy;
-+		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
-+		bhi_vec->size = cpu_to_le64(to_cpy);
- 
- 		buf += to_cpy;
- 		remainder -= to_cpy;
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -31,8 +31,8 @@ struct mhi_ctxt {
- };
- 
- struct bhi_vec_entry {
--	u64 dma_addr;
--	u64 size;
-+	__le64 dma_addr;
-+	__le64 size;
- };
- 
- enum mhi_ch_state_type {
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -3782,21 +3782,16 @@ static int ata_mselect_control_ata_featu
+ 	/* Check cdl_ctrl */
+ 	switch (buf[0] & 0x03) {
+ 	case 0:
+-		/* Disable CDL if it is enabled */
+-		if (!(dev->flags & ATA_DFLAG_CDL_ENABLED))
+-			return 0;
++		/* Disable CDL */
+ 		ata_dev_dbg(dev, "Disabling CDL\n");
+ 		cdl_action = 0;
+ 		dev->flags &= ~ATA_DFLAG_CDL_ENABLED;
+ 		break;
+ 	case 0x02:
+ 		/*
+-		 * Enable CDL if not already enabled. Since this is mutually
+-		 * exclusive with NCQ priority, allow this only if NCQ priority
+-		 * is disabled.
++		 * Enable CDL. Since CDL is mutually exclusive with NCQ
++		 * priority, allow this only if NCQ priority is disabled.
+ 		 */
+-		if (dev->flags & ATA_DFLAG_CDL_ENABLED)
+-			return 0;
+ 		if (dev->flags & ATA_DFLAG_NCQ_PRIO_ENABLED) {
+ 			ata_dev_err(dev,
+ 				"NCQ priority must be disabled to enable CDL\n");
 
 
