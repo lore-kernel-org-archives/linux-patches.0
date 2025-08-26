@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4AA2AE68;
-	Tue, 26 Aug 2025 14:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384BF299A94;
+	Tue, 26 Aug 2025 14:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217666; cv=none; b=uhrg4ttn0Z65WwaxLHAKkdIzzEb/pd88i+xPzCqZaZciB5WekttyMZS64o3/XphZaUGkcMkYFV/aDO2RWfejh8rN76a6+RgwQA2WqOBVnRlTzO10MzTgzw8Y7fxdptNlLiEG8d33/gFxG7ffb114Wpv8giqDhKKaff67hwsBTo8=
+	t=1756217669; cv=none; b=dsw/4UyllP7+qHexGRDjmb/ObLi45ZgqZW5LYCyQUnp5EAXLlAAUTxfHjGAfFvRjIo2RPgEYgR4g4xatydXELocdOd8y3WUTduCAq+WrJaVz8pHBQdL7v4gPkU4OrpX9npfRqbTetM0lYnSwp0uh89BAoq2qzkOihNGV8hlVsIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217666; c=relaxed/simple;
-	bh=pu7/bk5ktm2PQxfuYE9H8koFKRfdP4nEOHmiS6ObiMo=;
+	s=arc-20240116; t=1756217669; c=relaxed/simple;
+	bh=xBf2r3cZqZLQTw0+l1s0COfgz2tLDngl/7FsCdVj0vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KaxzCNG7r/HJk1GXN0RjjnGfohScLCgeskdzydyKugSu44RTjmykPKbndxxfDg2srq2BuWkzioWhh3Lm+V6unhFD64os6J3KOMCZ3u9V71T2Q7g6YvjA5lPIZVfv4KF2hhi83avtja+Ec/YEQCXdqGIEQUoMA0yUED+RswEtAoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhEswRoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFkXGvVpiOMCV/OsT4FCQwsAnOUbg44FFElBvwDWN9RI4fx/wej0BAcqM1AwtITTu+S7++uF2Ms+g3gMmU5O5EZ716+rXnbOhAKBYd7uGGs11qQmOjiHPsZzG1hrp8OM6vjGwPghPRqfYs8TNZ+2utbIVNAger85qX+0TgsSA5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRnGdg13; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhEswRoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E55C4CEF1;
-	Tue, 26 Aug 2025 14:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRnGdg13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF848C113CF;
+	Tue, 26 Aug 2025 14:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217666;
-	bh=pu7/bk5ktm2PQxfuYE9H8koFKRfdP4nEOHmiS6ObiMo=;
+	s=korg; t=1756217669;
+	bh=xBf2r3cZqZLQTw0+l1s0COfgz2tLDngl/7FsCdVj0vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhEswRoZvk+FCd4dpQxi6AAy2N9figomAUc9qeqg9q99GXUQ+ccTAGluzqMQMFFu6
-	 O224yEZ8htQEn9gaVv3fvbH3jYCjFjruy5ETG+6WTWddjBlTwxPjCFTsrWFb/O7uYT
-	 2CzBgTthcBslgzs13L5oUQCq2auZG4iVCVnMghRY=
+	b=LRnGdg13klg5SozK53OEwv5dgmfAI+6aGGH6fDBx5Tdi2PdLgpWIAY8FfDVNwGsMe
+	 3OfFjIZ/3KMxNn4/NVHFWf3CA7zDm7InXXJMAie6sIhPlRwKQTvtCbQ2f2zpG0SY9D
+	 QWwyJXgmIvWCmX5AIv1bi9it5v+QV47J1lraNuBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/523] cpufreq: Exit governor when failed to start old governor
-Date: Tue, 26 Aug 2025 13:07:19 +0200
-Message-ID: <20250826110930.103802562@linuxfoundation.org>
+	Jiayi Li <lijiayi@kylinos.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 203/523] ACPI: processor: perflib: Fix initial _PPC limit application
+Date: Tue, 26 Aug 2025 13:06:53 +0200
+Message-ID: <20250826110929.453637438@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,43 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Jiayi Li <lijiayi@kylinos.cn>
 
-[ Upstream commit 0ae204405095abfbc2d694ee0fbb49bcbbe55c57 ]
+commit d33bd88ac0ebb49e7f7c8f29a8c7ee9eae85d765 upstream.
 
-Detect the result of starting old governor in cpufreq_set_policy(). If it
-fails, exit the governor and clear policy->governor.
+If the BIOS sets a _PPC frequency limit upfront, it will fail to take
+effect due to a call ordering issue.  Namely, freq_qos_update_request()
+is called before freq_qos_add_request() for the given request causing
+the constraint update to be ignored.  The call sequence in question is
+as follows:
 
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20250709104145.2348017-5-zhenglifeng1@huawei.com
+cpufreq_policy_online()
+  acpi_cpufreq_cpu_init()
+    acpi_processor_register_performance()
+      acpi_processor_get_performance_info()
+        acpi_processor_get_platform_limit()
+         freq_qos_update_request(&perflib_req) <- inactive QoS request
+  blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
+                               CPUFREQ_CREATE_POLICY)
+    acpi_processor_notifier()
+      acpi_processor_ppc_init()
+        freq_qos_add_request(&perflib_req) <- QoS request activation
+
+Address this by adding an acpi_processor_get_platform_limit() call
+to acpi_processor_ppc_init(), after the perflib_req activation via
+freq_qos_add_request(), which causes the initial _PPC limit to be
+picked up as appropriate.  However, also ensure that the _PPC limit
+will not be picked up in the cases when the cpufreq driver does not
+call acpi_processor_register_performance() by adding a pr->performance
+check to the related_cpus loop in acpi_processor_ppc_init().
+
+Fixes: d15ce412737a ("ACPI: cpufreq: Switch to QoS requests instead of cpufreq notifier")
+Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Link: https://patch.msgid.link/20250721032606.3459369-1-lijiayi@kylinos.cn
+[ rjw: Consolidate pr-related checks in acpi_processor_ppc_init() ]
+[ rjw: Subject and changelog adjustments ]
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 2d8b39a62a5d ACPI: processor: Avoid NULL pointer dereferences at init time
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: 3000ce3c52f8 cpufreq: Use per-policy frequency QoS
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+: a1bb46c36ce3 ACPI: processor: Add QoS requests for all CPUs
+Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/acpi/processor_perflib.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index d1277f98d1fd..149ba2e39a96 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2545,10 +2545,12 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
- 	pr_debug("starting governor %s failed\n", policy->governor->name);
- 	if (old_gov) {
- 		policy->governor = old_gov;
--		if (cpufreq_init_governor(policy))
-+		if (cpufreq_init_governor(policy)) {
- 			policy->governor = NULL;
--		else
--			cpufreq_start_governor(policy);
-+		} else if (cpufreq_start_governor(policy)) {
-+			cpufreq_exit_governor(policy);
-+			policy->governor = NULL;
-+		}
- 	}
+--- a/drivers/acpi/processor_perflib.c
++++ b/drivers/acpi/processor_perflib.c
+@@ -176,11 +176,14 @@ void acpi_processor_ppc_init(struct cpuf
+ {
+ 	unsigned int cpu;
  
- 	return ret;
--- 
-2.39.5
-
++	if (ignore_ppc == 1)
++		return;
++
+ 	for_each_cpu(cpu, policy->related_cpus) {
+ 		struct acpi_processor *pr = per_cpu(processors, cpu);
+ 		int ret;
+ 
+-		if (!pr)
++		if (!pr || !pr->performance)
+ 			continue;
+ 
+ 		/*
+@@ -196,6 +199,11 @@ void acpi_processor_ppc_init(struct cpuf
+ 		if (ret < 0)
+ 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
+ 			       cpu, ret);
++
++		ret = acpi_processor_get_platform_limit(pr);
++		if (ret)
++			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
++			       cpu, ret);
+ 	}
+ }
+ 
 
 
