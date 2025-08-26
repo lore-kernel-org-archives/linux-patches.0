@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7BF286881;
-	Tue, 26 Aug 2025 13:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3069534F48B;
+	Tue, 26 Aug 2025 13:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216502; cv=none; b=RJvc0845UI6MFDbpgInxKTh3bWzraS5kHEND/fD5cIBMls3FYhNj59cWSWVLD/abJP42tpDH+6ALmkNlP9HDUpl9NvK7yPMB1hHW4FD8aealI5HT0rzKzjWIuqGHFr8NMqVwQArqptGoWaGamgqpQrx7knpCtJIRQEBk7vX1yXE=
+	t=1756216505; cv=none; b=pwiKFdQ8kM7PhKsdHIalLLlKSC5YKemkyzD4mdEIt/tw46abHzJ1PIIBgH5UyuYYPR/IaBGi4yH/hYb+fLqy/CrinqP4Cu3pFRZYxmeJCMRaOyIIkBzkuRCYi9oXgAHtdufbXN6WKdvlXtv/ZPwNfQvMR74KhC53BU29nRTDzR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216502; c=relaxed/simple;
-	bh=3VQw0lpWOOXTnJ5wlddqAghD0pX3ZOfN4pfDh3cKvxk=;
+	s=arc-20240116; t=1756216505; c=relaxed/simple;
+	bh=4w6til42xhyOMiEj6ix+K5dP9il8X0T9bkWOtuf1snI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pv+94CueCzLTG/wVed3jrJmtYryBb3Dfse9V8pYVD1pvTgMqNXKdZmdE4QWoGu9S96+qX6x9PxPMzClPUBBinluTKoBCbZ9zwvSJscqcKoY8vMo0xzBmsnrAqXQrPhymoY7FVeDGUAO62A3z9BQ6HSZ+HQ6jwFH7nSfeeMlEJ5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puR+IZch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPZS59vmtnZpYbn48/K20NGWUCFUtGtJ5HgeLk06ceGiu2lhnwuwRpRZOsZ2wZMcqHtKkhM5zDynm/TZob6/KRJoD0s2APfPjONch87gA6BF65WduclpQLJ9ijVUCi9ieNWqFmF5w+9eQv95Mbj9SiuW8o2hSx2PaVNYU6SY1LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9XWYsCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puR+IZch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F646C4CEF1;
-	Tue, 26 Aug 2025 13:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9XWYsCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B85C4CEF1;
+	Tue, 26 Aug 2025 13:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216502;
-	bh=3VQw0lpWOOXTnJ5wlddqAghD0pX3ZOfN4pfDh3cKvxk=;
+	s=korg; t=1756216505;
+	bh=4w6til42xhyOMiEj6ix+K5dP9il8X0T9bkWOtuf1snI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puR+IZchd89RNVekX2/VFkXgDfjwnaCHEIV6G7/y6T5fe1oahSpF3YzntNB06B1D/
-	 rBSYWLqBsgH+2ZII/Ng2xo0uDzxIqsPh+prGuxLLcEiMnJUaad4/jol0yfnpY5jS5W
-	 Torz1us0UNlQQaq/ygxNDUxAXU3Try7sqUhkWZMM=
+	b=H9XWYsCq8g3WMFYBtHKRgzU0qW+JpUW/68MQY4dOU998xeP9kcaK7jvlB2sdNMFZe
+	 9easAixH0qd9Fsh+YN38ibhategEmfKXcxiUsbyhZd9n+6WjqiqJ4bjBreNHtIfKzh
+	 22/CFL7xLbSz7JvnT6nsU9WE/GQgD5oq703sK4k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Adolfsson <johan.adolfsson@axis.com>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	"Yury Norov [NVIDIA]" <yury.norov@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 398/644] leds: leds-lp50xx: Handle reg to get correct multi_index
-Date: Tue, 26 Aug 2025 13:08:09 +0200
-Message-ID: <20250826110956.313243168@linuxfoundation.org>
+Subject: [PATCH 5.15 399/644] RDMA: hfi1: fix possible divide-by-zero in find_hw_thread_mask()
+Date: Tue, 26 Aug 2025 13:08:10 +0200
+Message-ID: <20250826110956.339946674@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,66 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Adolfsson <johan.adolfsson@axis.com>
+From: Yury Norov [NVIDIA] <yury.norov@gmail.com>
 
-[ Upstream commit 2e84a5e5374232e6f356ce5c079a5658d7e4af2c ]
+[ Upstream commit 59f7d2138591ef8f0e4e4ab5f1ab674e8181ad3a ]
 
-mc_subled used for multi_index needs well defined array indexes,
-to guarantee the desired result, use reg for that.
+The function divides number of online CPUs by num_core_siblings, and
+later checks the divider by zero. This implies a possibility to get
+and divide-by-zero runtime error. Fix it by moving the check prior to
+division. This also helps to save one indentation level.
 
-If devicetree child nodes is processed in random or reverse order
-you may end up with multi_index "blue green red" instead of the expected
-"red green blue".
-If user space apps uses multi_index to deduce how to control the leds
-they would most likely be broken without this patch if devicetree
-processing is reversed (which it appears to be).
-
-arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-fuji.dts has reg set
-but I don't see how it can have worked without this change.
-
-If reg is not set, an error is returned,
-If reg is out of range, an error is returned.
-reg within led child nodes starts with 0, to map to the iout in each bank.
-
-Signed-off-by: Johan Adolfsson <johan.adolfsson@axis.com>
-Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Link: https://lore.kernel.org/r/20250617-led-fix-v7-1-cdbe8efc88fa@axis.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Yury Norov [NVIDIA] <yury.norov@gmail.com>
+Link: https://patch.msgid.link/20250604193947.11834-3-yury.norov@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-lp50xx.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/affinity.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/leds/leds-lp50xx.c b/drivers/leds/leds-lp50xx.c
-index 401df1e2e05d..a2748e467451 100644
---- a/drivers/leds/leds-lp50xx.c
-+++ b/drivers/leds/leds-lp50xx.c
-@@ -487,6 +487,7 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
- 		}
+diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
+index 4c403d9e90cb..2b17acbb3569 100644
+--- a/drivers/infiniband/hw/hfi1/affinity.c
++++ b/drivers/infiniband/hw/hfi1/affinity.c
+@@ -967,31 +967,35 @@ static void find_hw_thread_mask(uint hw_thread_no, cpumask_var_t hw_thread_mask,
+ 				struct hfi1_affinity_node_list *affinity)
+ {
+ 	int possible, curr_cpu, i;
+-	uint num_cores_per_socket = node_affinity.num_online_cpus /
++	uint num_cores_per_socket;
++
++	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
++
++	if (affinity->num_core_siblings == 0)
++		return;
++
++	num_cores_per_socket = node_affinity.num_online_cpus /
+ 					affinity->num_core_siblings /
+ 						node_affinity.num_online_nodes;
  
- 		fwnode_for_each_child_node(child, led_node) {
-+			int multi_index;
- 			ret = fwnode_property_read_u32(led_node, "color",
- 						       &color_id);
- 			if (ret) {
-@@ -494,8 +495,16 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
- 				dev_err(priv->dev, "Cannot read color\n");
- 				goto child_out;
- 			}
-+			ret = fwnode_property_read_u32(led_node, "reg", &multi_index);
-+			if (ret != 0) {
-+				dev_err(priv->dev, "reg must be set\n");
-+				return -EINVAL;
-+			} else if (multi_index >= LP50XX_LEDS_PER_MODULE) {
-+				dev_err(priv->dev, "reg %i out of range\n", multi_index);
-+				return -EINVAL;
-+			}
+-	cpumask_copy(hw_thread_mask, &affinity->proc.mask);
+-	if (affinity->num_core_siblings > 0) {
+-		/* Removing other siblings not needed for now */
+-		possible = cpumask_weight(hw_thread_mask);
+-		curr_cpu = cpumask_first(hw_thread_mask);
+-		for (i = 0;
+-		     i < num_cores_per_socket * node_affinity.num_online_nodes;
+-		     i++)
+-			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+-
+-		for (; i < possible; i++) {
+-			cpumask_clear_cpu(curr_cpu, hw_thread_mask);
+-			curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+-		}
++	/* Removing other siblings not needed for now */
++	possible = cpumask_weight(hw_thread_mask);
++	curr_cpu = cpumask_first(hw_thread_mask);
++	for (i = 0;
++	     i < num_cores_per_socket * node_affinity.num_online_nodes;
++	     i++)
++		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
  
--			mc_led_info[num_colors].color_index = color_id;
-+			mc_led_info[multi_index].color_index = color_id;
- 			num_colors++;
- 		}
+-		/* Identifying correct HW threads within physical cores */
+-		cpumask_shift_left(hw_thread_mask, hw_thread_mask,
+-				   num_cores_per_socket *
+-				   node_affinity.num_online_nodes *
+-				   hw_thread_no);
++	for (; i < possible; i++) {
++		cpumask_clear_cpu(curr_cpu, hw_thread_mask);
++		curr_cpu = cpumask_next(curr_cpu, hw_thread_mask);
+ 	}
++
++	/* Identifying correct HW threads within physical cores */
++	cpumask_shift_left(hw_thread_mask, hw_thread_mask,
++			   num_cores_per_socket *
++			   node_affinity.num_online_nodes *
++			   hw_thread_no);
+ }
  
+ int hfi1_get_proc_affinity(int node)
 -- 
 2.39.5
 
