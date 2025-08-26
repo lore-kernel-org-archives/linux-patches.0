@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B3213FD86;
-	Tue, 26 Aug 2025 13:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0112C2AD04;
+	Tue, 26 Aug 2025 13:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215504; cv=none; b=LItufnj/uyS9CWgH7WUPARstae4t4Dcly83zqYOWa5sIKPDTWwF2MRblCqWE2LO4qZv8hR9ybe3FQ0C2+1FO5hWZqeNr8LBUM2xF/jUDTdmSEd9TZ3gwDdlvhBE/q3YKq55LOC9ew+iCj6qFAMO54l/UVhHsuHNLH+w9wY+rYnk=
+	t=1756215507; cv=none; b=J0aAq1vPoMttGoIBRFmH1WXFJCNo5DQMumG3L3SoTJfps1UaZQdkOX54ky7rcIF3YI/jLR8dCxbvfsAsQFR7RzYKBy4K7um86s88QJ0n/62sXdAIGBUFOIqLPYOkzsL4suLe+G1mPxZI0r7+nhFoiRvk8q7ByAXyvya8kwB7xkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215504; c=relaxed/simple;
-	bh=hPR40qDZ1PFzUKCbwgq6CHm95tbepHI+/in1xfQmT0E=;
+	s=arc-20240116; t=1756215507; c=relaxed/simple;
+	bh=EsaRH8Rw/r9i2faLtM6BloslFY/qh9DhXjGOTBIwi7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ep25S4ItEb7emwU5rqXX+ZxrMymgUgiJQq+qd90KpdxWrGhACHgykv2sqFL27wz7vWM8QU8f6W0SSlcwrn15dDshFbQNDQRgeHL5CpiKCn+mtSpDkldwyHzxxVodBrBgu1fhM12pKwMVfruFzWEWOEniRC5tj9t1QgQ8qjQqCOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7OIKkUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gMqw6KyTK6o/MDB+6fNmgB/PI61mYMFHhqf0gKvPwmodIbO1hHYWbXE2JKV9HY22GWkYHxccrfSigvAh1pyZfpgjSWet45NiGMSN2/xFkX8oeOMykNEKg6HSQ08fImi+Wv54d2V8w4fIF2w/eBa5EJYmZp/I2F/jAoB3nKFmVKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eruq5oX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7OIKkUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8D8C4CEF1;
-	Tue, 26 Aug 2025 13:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eruq5oX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87197C4CEF1;
+	Tue, 26 Aug 2025 13:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215504;
-	bh=hPR40qDZ1PFzUKCbwgq6CHm95tbepHI+/in1xfQmT0E=;
+	s=korg; t=1756215506;
+	bh=EsaRH8Rw/r9i2faLtM6BloslFY/qh9DhXjGOTBIwi7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U7OIKkUxaJpL7ftBocJCMR0cSik2eAtNDF8+AG+JZJah98fhwEBEzYN8jDsKAcZPo
-	 iy3dOp8eeja4XskHE2Z7vugsHkzR5W5XcajQ5lLEd1JaJLiy4ofHFFz+PVjnhhp4Z8
-	 X/1iriZFFNg6u4wJRujBgVFLQBkGIV10WcAcJNN4=
+	b=2eruq5oXpGWGsfS+68U3En376NhPWfnn90CEVbB4GNsntlcuWbO4312+6iUOblxAG
+	 1ggPMnXmXItTUOv2MbkOqKWk5oW/2Xy1UmXtjPoFDpK7DEegxeyoEc84RKePRNdIkM
+	 lhbPASugIgsPt3xg/qaR+HLH8hDsTK5VkmbmJCuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Huang <Joseph.Huang@garmin.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/644] net: bridge: Do not offload IGMP/MLD messages
-Date: Tue, 26 Aug 2025 13:02:28 +0200
-Message-ID: <20250826110947.915505619@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 028/644] iio: adc: stm32-adc: Fix race in installing chained IRQ handler
+Date: Tue, 26 Aug 2025 13:01:59 +0200
+Message-ID: <20250826110947.203822123@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,64 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joseph Huang <Joseph.Huang@garmin.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 683dc24da8bf199bb7446e445ad7f801c79a550e ]
+commit e8ad595064f6ebd5d2d1a5d5d7ebe0efce623091 upstream.
 
-Do not offload IGMP/MLD messages as it could lead to IGMP/MLD Reports
-being unintentionally flooded to Hosts. Instead, let the bridge decide
-where to send these IGMP/MLD messages.
+Fix a race where a pending interrupt could be received and the handler
+called before the handler's data has been setup, by converting to
+irq_set_chained_handler_and_data().
 
-Consider the case where the local host is sending out reports in response
-to a remote querier like the following:
-
-       mcast-listener-process (IP_ADD_MEMBERSHIP)
-          \
-          br0
-         /   \
-      swp1   swp2
-        |     |
-  QUERIER     SOME-OTHER-HOST
-
-In the above setup, br0 will want to br_forward() reports for
-mcast-listener-process's group(s) via swp1 to QUERIER; but since the
-source hwdom is 0, the report is eligible for tx offloading, and is
-flooded by hardware to both swp1 and swp2, reaching SOME-OTHER-HOST as
-well. (Example and illustration provided by Tobias.)
-
-Fixes: 472111920f1c ("net: bridge: switchdev: allow the TX data plane forwarding to be offloaded")
-Signed-off-by: Joseph Huang <Joseph.Huang@garmin.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250716153551.1830255-1-Joseph.Huang@garmin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1add69880240 ("iio: adc: Add support for STM32 ADC core")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Tested-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Reviewed-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://patch.msgid.link/20250515083101.3811350-1-nichen@iscas.ac.cn
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_switchdev.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/stm32-adc-core.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
-index 6bf518d78f029..44ae2068045b1 100644
---- a/net/bridge/br_switchdev.c
-+++ b/net/bridge/br_switchdev.c
-@@ -16,6 +16,9 @@ static bool nbp_switchdev_can_offload_tx_fwd(const struct net_bridge_port *p,
- 	if (!static_branch_unlikely(&br_switchdev_tx_fwd_offload))
- 		return false;
+--- a/drivers/iio/adc/stm32-adc-core.c
++++ b/drivers/iio/adc/stm32-adc-core.c
+@@ -410,10 +410,9 @@ static int stm32_adc_irq_probe(struct pl
+ 		return -ENOMEM;
+ 	}
  
-+	if (br_multicast_igmp_type(skb))
-+		return false;
-+
- 	return (p->flags & BR_TX_FWD_OFFLOAD) &&
- 	       (p->hwdom != BR_INPUT_SKB_CB(skb)->src_hwdom);
+-	for (i = 0; i < priv->cfg->num_irqs; i++) {
+-		irq_set_chained_handler(priv->irq[i], stm32_adc_irq_handler);
+-		irq_set_handler_data(priv->irq[i], priv);
+-	}
++	for (i = 0; i < priv->cfg->num_irqs; i++)
++		irq_set_chained_handler_and_data(priv->irq[i],
++						 stm32_adc_irq_handler, priv);
+ 
+ 	return 0;
  }
--- 
-2.39.5
-
 
 
