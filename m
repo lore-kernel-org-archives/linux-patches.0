@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D9421ADA7;
-	Tue, 26 Aug 2025 11:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9595129BDAE;
+	Tue, 26 Aug 2025 11:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207642; cv=none; b=mJdPVhY+ogMAC0evVLb4d/MlQnQanLdd8t6OKk9LMw93rfyliAyV2McIY+0QlEibbAp/CYGWAa5siJN94vtbOsVFgoJdqjmx8AocwqsINi2YpXM62zQFxUlXr+en1Q3cVUMroH9spVB6AxYPcEtHJK9tcXJ3m278wtTr7+cUb1o=
+	t=1756207644; cv=none; b=R/yaOnasvoKLKQKjtQksT3xuSfOb5c198uPmCddip82iSB7jNlCYjc/6pSq00jAbfOw5L1MPOS5IzaalCA9fbrDIfaL2XD4hR4YLPYWsM7H8sClfmPO7RLZKDcU9krR6aj5hkss0O5DbCIRzFYEjODZ6aQ62Nm8Q/JkhLabldLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207642; c=relaxed/simple;
-	bh=aQS+CCxiQMjKRZ96ND11U5BQlhrXnLTRfYeQ0HjE+ug=;
+	s=arc-20240116; t=1756207644; c=relaxed/simple;
+	bh=ZuUxwr2w6NSfWFPZ1Jd8YQ7FHIbPfm2+xzMKdgQazEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDNJR4zUBQpoDSOpjjKoEGYMwxj/CAKgYCF4aieFPGAxbLPPGCpAesvSlvuVbXkDYasvcW1GhTM1Fyo++6lREBdPQiDgxafjrOHPmtYNhU49GvYmQMtvXs6H2pTm5iNrMNcKQlsfgzCnjPisuDcB9AefPcb7prp6QaHnEaZJVDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJKycCIX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=neIohfO6hylSkB20NYR54R/Y/qfMgLHY7HdP8qy9UypW1R3Q+xhtxFWbAlECgttcl5tkiYCCS6mpMhK7sFjC7+alxvqNqNN14efZbtn4T8J+tkaOaqhdZ2HF5SDt4WjLK0lY2fgVRBFJk20EoCIGWYUlNiATj8l9tg/bFM37m2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcJNupjZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJKycCIX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23B3C4CEF1;
-	Tue, 26 Aug 2025 11:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcJNupjZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E24FC4CEF1;
+	Tue, 26 Aug 2025 11:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207642;
-	bh=aQS+CCxiQMjKRZ96ND11U5BQlhrXnLTRfYeQ0HjE+ug=;
+	s=korg; t=1756207644;
+	bh=ZuUxwr2w6NSfWFPZ1Jd8YQ7FHIbPfm2+xzMKdgQazEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJKycCIX/Su0FReDSKgZZOS1gqZTD5hnZdKUMN3g2eX9bJCTdVOOQyWVPR2CtjO+q
-	 p2VjkKRJELT8vJUjsyEL7Q80cFA5lIalxHx9GxuR9emS1Na3e0nIphS2KTCiiLP32x
-	 dZuKpiMUuVpoDpHeWiKtt0+oECCbxKuTpj0Iy2Bk=
+	b=wcJNupjZGTTXDn9v7epRSfjmI7T1Ymp/yymYQZqs72n+Knf8Gh8LPlTmcnZme5yXW
+	 n6ZVxkMCb5TBgAERv2HYJK4tM5RoBZIhcUxc6UJkBsh2QjuneOeygRPVEZsu+JB4cy
+	 QivBzSOXCB5C4yUWYeEMAzijS1UcqTiZ8LECFKFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mika Kahola <mika.kahola@intel.com>,
 	Imre Deak <imre.deak@intel.com>,
 	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.16 262/457] drm/i915/icl+/tc: Cache the max lane count value
-Date: Tue, 26 Aug 2025 13:09:06 +0200
-Message-ID: <20250826110943.852759769@linuxfoundation.org>
+Subject: [PATCH 6.16 263/457] drm/i915/lnl+/tc: Fix max lane count HW readout
+Date: Tue, 26 Aug 2025 13:09:07 +0200
+Message-ID: <20250826110943.877917151@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -55,188 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-commit 5fd35236546abe780eaadb7561e09953719d4fc3 upstream.
+commit c87514a0bb0a64507412a2d98264060dc0c1562a upstream.
 
-The PHY's pin assignment value in the TCSS_DDI_STATUS register - as set
-by the HW/FW based on the connected DP-alt sink's TypeC/PD pin
-assignment negotiation - gets cleared by the HW/FW on LNL+ as soon as
-the sink gets disconnected, even if the PHY ownership got acquired
-already by the driver (and hence the PHY itself is still connected and
-used by the display). This is similar to how the PHY Ready flag gets
-cleared on LNL+ in the same register.
+On LNL+ for a disconnected sink the pin assignment value gets cleared by
+the HW/FW as soon as the sink gets disconnected, even if the PHY
+ownership got acquired already by the BIOS/driver (and hence the PHY
+itself is still connected and used by the display). During HW readout
+this can result in detecting the PHY's max lane count as 0 - matching
+the above cleared aka NONE pin assignment HW state. For a connected PHY
+the driver in general (outside of intel_tc.c) expects the max lane count
+value to be valid for the video mode enabled on the corresponding output
+(1, 2 or 4). Ensure this by setting the max lane count to 4 in this
+case. Note, that it doesn't matter if this lane count happened to be
+more than the max lane count with which the PHY got connected and
+enabled, since the only thing the driver can do with such an output -
+where the DP-alt sink is disconnected - is to disable the output.
 
-To be able to query the max lane count value on LNL+ - which is based on
-the above pin assignment - at all times even after the sink gets
-disconnected, the max lane count must be determined and cached during
-the PHY's HW readout and connect sequences. Do that here, leaving the
-actual use of the cached value to a follow-up change.
-
-v2: Don't read out the pin configuration if the PHY is disconnected.
+v2: Rebased on change reading out the pin configuration only if the PHY
+    is connected.
 
 Cc: stable@vger.kernel.org # v6.8+
 Reported-by: Charlton Lin <charlton.lin@intel.com>
 Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
 Reviewed-by: Mika Kahola <mika.kahola@intel.com>
 Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250811080152.906216-3-imre.deak@intel.com
-(cherry picked from commit 3e32438fc406761f81b1928d210b3d2a5e7501a0)
+Link: https://lore.kernel.org/r/20250811080152.906216-4-imre.deak@intel.com
+(cherry picked from commit 33cf70bc0fe760224f892bc1854a33665f27d482)
 Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_tc.c |   57 ++++++++++++++++++++++++++------
- 1 file changed, 48 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/display/intel_tc.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 --- a/drivers/gpu/drm/i915/display/intel_tc.c
 +++ b/drivers/gpu/drm/i915/display/intel_tc.c
-@@ -65,6 +65,7 @@ struct intel_tc_port {
- 	enum tc_port_mode init_mode;
- 	enum phy_fia phy_fia;
- 	u8 phy_fia_idx;
-+	u8 max_lane_count;
- };
+@@ -22,6 +22,7 @@
+ #include "intel_modeset_lock.h"
+ #include "intel_tc.h"
  
- static enum intel_display_power_domain
-@@ -364,12 +365,12 @@ static int intel_tc_port_get_max_lane_co
- 	}
- }
++#define DP_PIN_ASSIGNMENT_NONE	0x0
+ #define DP_PIN_ASSIGNMENT_C	0x3
+ #define DP_PIN_ASSIGNMENT_D	0x4
+ #define DP_PIN_ASSIGNMENT_E	0x5
+@@ -307,6 +308,8 @@ static int lnl_tc_port_get_max_lane_coun
+ 		REG_FIELD_GET(TCSS_DDI_STATUS_PIN_ASSIGNMENT_MASK, val);
  
--int intel_tc_port_max_lane_count(struct intel_digital_port *dig_port)
-+static int get_max_lane_count(struct intel_tc_port *tc)
- {
--	struct intel_display *display = to_intel_display(dig_port);
--	struct intel_tc_port *tc = to_tc_port(dig_port);
-+	struct intel_display *display = to_intel_display(tc->dig_port);
-+	struct intel_digital_port *dig_port = tc->dig_port;
- 
--	if (!intel_encoder_is_tc(&dig_port->base) || tc->mode != TC_PORT_DP_ALT)
-+	if (tc->mode != TC_PORT_DP_ALT)
- 		return 4;
- 
- 	assert_tc_cold_blocked(tc);
-@@ -383,6 +384,21 @@ int intel_tc_port_max_lane_count(struct
- 	return intel_tc_port_get_max_lane_count(dig_port);
- }
- 
-+static void read_pin_configuration(struct intel_tc_port *tc)
-+{
-+	tc->max_lane_count = get_max_lane_count(tc);
-+}
-+
-+int intel_tc_port_max_lane_count(struct intel_digital_port *dig_port)
-+{
-+	struct intel_tc_port *tc = to_tc_port(dig_port);
-+
-+	if (!intel_encoder_is_tc(&dig_port->base))
-+		return 4;
-+
-+	return get_max_lane_count(tc);
-+}
-+
- void intel_tc_port_set_fia_lane_count(struct intel_digital_port *dig_port,
- 				      int required_lanes)
- {
-@@ -595,9 +611,12 @@ static void icl_tc_phy_get_hw_state(stru
- 	tc_cold_wref = __tc_cold_block(tc, &domain);
- 
- 	tc->mode = tc_phy_get_current_mode(tc);
--	if (tc->mode != TC_PORT_DISCONNECTED)
-+	if (tc->mode != TC_PORT_DISCONNECTED) {
+ 	switch (pin_assignment) {
++	case DP_PIN_ASSIGNMENT_NONE:
++		return 0;
+ 	default:
+ 		MISSING_CASE(pin_assignment);
+ 		fallthrough;
+@@ -1158,6 +1161,12 @@ static void xelpdp_tc_phy_get_hw_state(s
  		tc->lock_wakeref = tc_cold_block(tc);
  
-+		read_pin_configuration(tc);
-+	}
-+
- 	__tc_cold_unblock(tc, domain, tc_cold_wref);
- }
- 
-@@ -655,8 +674,11 @@ static bool icl_tc_phy_connect(struct in
- 
- 	tc->lock_wakeref = tc_cold_block(tc);
- 
--	if (tc->mode == TC_PORT_TBT_ALT)
-+	if (tc->mode == TC_PORT_TBT_ALT) {
-+		read_pin_configuration(tc);
-+
- 		return true;
-+	}
- 
- 	if ((!tc_phy_is_ready(tc) ||
- 	     !icl_tc_phy_take_ownership(tc, true)) &&
-@@ -667,6 +689,7 @@ static bool icl_tc_phy_connect(struct in
- 		goto out_unblock_tc_cold;
+ 		read_pin_configuration(tc);
++		/*
++		 * Set a valid lane count value for a DP-alt sink which got
++		 * disconnected. The driver can only disable the output on this PHY.
++		 */
++		if (tc->max_lane_count == 0)
++			tc->max_lane_count = 4;
  	}
  
-+	read_pin_configuration(tc);
- 
- 	if (!tc_phy_verify_legacy_or_dp_alt_mode(tc, required_lanes))
- 		goto out_release_phy;
-@@ -857,9 +880,12 @@ static void adlp_tc_phy_get_hw_state(str
- 	port_wakeref = intel_display_power_get(display, port_power_domain);
- 
- 	tc->mode = tc_phy_get_current_mode(tc);
--	if (tc->mode != TC_PORT_DISCONNECTED)
-+	if (tc->mode != TC_PORT_DISCONNECTED) {
- 		tc->lock_wakeref = tc_cold_block(tc);
- 
-+		read_pin_configuration(tc);
-+	}
-+
- 	intel_display_power_put(display, port_power_domain, port_wakeref);
- }
- 
-@@ -872,6 +898,9 @@ static bool adlp_tc_phy_connect(struct i
- 
- 	if (tc->mode == TC_PORT_TBT_ALT) {
- 		tc->lock_wakeref = tc_cold_block(tc);
-+
-+		read_pin_configuration(tc);
-+
- 		return true;
- 	}
- 
-@@ -893,6 +922,8 @@ static bool adlp_tc_phy_connect(struct i
- 
- 	tc->lock_wakeref = tc_cold_block(tc);
- 
-+	read_pin_configuration(tc);
-+
- 	if (!tc_phy_verify_legacy_or_dp_alt_mode(tc, required_lanes))
- 		goto out_unblock_tc_cold;
- 
-@@ -1123,9 +1154,12 @@ static void xelpdp_tc_phy_get_hw_state(s
- 	tc_cold_wref = __tc_cold_block(tc, &domain);
- 
- 	tc->mode = tc_phy_get_current_mode(tc);
--	if (tc->mode != TC_PORT_DISCONNECTED)
-+	if (tc->mode != TC_PORT_DISCONNECTED) {
- 		tc->lock_wakeref = tc_cold_block(tc);
- 
-+		read_pin_configuration(tc);
-+	}
-+
  	drm_WARN_ON(display->drm,
- 		    (tc->mode == TC_PORT_DP_ALT || tc->mode == TC_PORT_LEGACY) &&
- 		    !xelpdp_tc_phy_tcss_power_is_enabled(tc));
-@@ -1137,14 +1171,19 @@ static bool xelpdp_tc_phy_connect(struct
- {
- 	tc->lock_wakeref = tc_cold_block(tc);
- 
--	if (tc->mode == TC_PORT_TBT_ALT)
-+	if (tc->mode == TC_PORT_TBT_ALT) {
-+		read_pin_configuration(tc);
-+
- 		return true;
-+	}
- 
- 	if (!xelpdp_tc_phy_enable_tcss_power(tc, true))
- 		goto out_unblock_tccold;
- 
- 	xelpdp_tc_phy_take_ownership(tc, true);
- 
-+	read_pin_configuration(tc);
-+
- 	if (!tc_phy_verify_legacy_or_dp_alt_mode(tc, required_lanes))
- 		goto out_release_phy;
- 
 
 
