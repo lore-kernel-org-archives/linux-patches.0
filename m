@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1159D299959;
-	Tue, 26 Aug 2025 11:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F1521D00E;
+	Tue, 26 Aug 2025 11:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207420; cv=none; b=WHUT4c5hFFJE3+Vyz+P6Hpdpx6DzabkCQHLB9u8yDDR4btO3bV+j5IRTKQTcFkBV2q5McEvW/F7Bd8VsRmdsQA6u984b2JOGXHv7feZaxSw/ks1BWbHjGTDx8RDQzHpGDFx3zU9M78Tm0nrM2uzdSUg9mrRP1imlFkJXFwuhrpI=
+	t=1756207422; cv=none; b=Ins07h32tibQfXhKnceUBCGkXAaQgU8yeVKLSxq9Qv6pfgN3Ji/nSekLEsD9n06TgNbp6TET2+ojWaVLi6xSGIOvUF8EKmieqSTbTSdtjU+kHC3JTK2pdSVood3BHZXoLRzNNjx8jOzxuq4y+lDKHgA/rKAxy755wqSpRjPpPtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207420; c=relaxed/simple;
-	bh=iyw9OrQggBBfACmmVqfpwkp5ehxGBEC6jqGcnqVTfkk=;
+	s=arc-20240116; t=1756207422; c=relaxed/simple;
+	bh=7vnk67w4RqUh68D3mb7skYG0Lg9cIfJSNQFjsWs8p70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyw+jZEl05drd+rPJ8+Ha0vjq2PY712r5nYcoMDZR8EU7W9IrBaC2NB7QWAJFYwHK6PoH9dm+eBucTsTNSluij6ZRuUUsKlogmezPas4u0rcKPII4Fnd1GPOkN6qIrQVkL2DvcDHUzYf2gxpyuYfh7+m7MYsmCrdqpY44Ojn/uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=046LIpRA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LmkTedi8asRGU+fi8lClYK2izeBjYZKGf/zyVbMfxCiqCknLkSXbKA9/W/YF0AEMVEfjDzAgxDByvmKN2tbrt0Q0PVBdRHBEc6PyLg8PnNjnu4l7FtawdBNKzYG2zP2612LYNwNh6IWF0DdPbKGk59YBcqmfZPGT7l3faE0zv3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6xIGlcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="046LIpRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2DEC116B1;
-	Tue, 26 Aug 2025 11:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6xIGlcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11073C4CEF1;
+	Tue, 26 Aug 2025 11:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207419;
-	bh=iyw9OrQggBBfACmmVqfpwkp5ehxGBEC6jqGcnqVTfkk=;
+	s=korg; t=1756207422;
+	bh=7vnk67w4RqUh68D3mb7skYG0Lg9cIfJSNQFjsWs8p70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=046LIpRAfuextBE0rmkg8rUEgw2I3fSbGPy1G9UgxYS5VektxvN60Ont9E8uX90RA
-	 n4roaOx9fgRHlhbCZ8DPSiwl55dXrU+cFNrPQRFRpCVkYVwQyeMJIWF+FbKHwi+7+h
-	 PoisSR4ZGID2fAhse+BoCRPCL5pzsJ95ygIM2qu8=
+	b=W6xIGlcGYo52eLjMRzsIdbAcyUalUrkZ5AqEjfzsk17vs4vST+2jsrm/vtvy7ql/D
+	 ujT8bDHhycrw+4zAWhQ8IkU/tb5Dxz6oGAzDlwV1RhYfa/6sP3OMjyfHD7heTAYGch
+	 R/kldRT+SHvvYy3qg+wuzt1x+dzMHZf3ufcMDbfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 174/457] drm/amdgpu: add missing vram lost check for LEGACY RESET
-Date: Tue, 26 Aug 2025 13:07:38 +0200
-Message-ID: <20250826110941.675045615@linuxfoundation.org>
+	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.16 148/457] media: venus: hfi: explicitly release IRQ during teardown
+Date: Tue, 26 Aug 2025 13:07:12 +0200
+Message-ID: <20250826110941.029914999@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,31 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
 
-commit 81699fe81b0be287fb28b6210324db48e8458d9f upstream.
+commit 640803003cd903cea73dc6a86bf6963e238e2b3f upstream.
 
-Legacy resets reset the memory controllers so VRAM contents
-may be unreliable after reset.
+Ensure the IRQ is disabled - and all pending handlers completed - before
+dismantling the interrupt routing and clearing related pointers.
 
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit aae94897b6661a2a4b1de2d328090fc388b3e0af)
+This prevents any possibility of the interrupt triggering after the
+handler context has been invalidated.
+
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
 Cc: stable@vger.kernel.org
+Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    1 +
+ drivers/media/platform/qcom/venus/hfi_venus.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3234,6 +3234,7 @@ static bool amdgpu_device_check_vram_los
- 	 * always assumed to be lost.
- 	 */
- 	switch (amdgpu_asic_reset_method(adev)) {
-+	case AMD_RESET_METHOD_LEGACY:
- 	case AMD_RESET_METHOD_LINK:
- 	case AMD_RESET_METHOD_BACO:
- 	case AMD_RESET_METHOD_MODE1:
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -1682,6 +1682,7 @@ void venus_hfi_destroy(struct venus_core
+ 	venus_interface_queues_release(hdev);
+ 	mutex_destroy(&hdev->lock);
+ 	kfree(hdev);
++	disable_irq(core->irq);
+ 	core->ops = NULL;
+ }
+ 
 
 
