@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA6D187554;
-	Tue, 26 Aug 2025 13:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C55B187554;
+	Tue, 26 Aug 2025 13:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214599; cv=none; b=PZvjJyrQt6AhoRfreHYyH4XClLgvgWsBSA9McAYiUMC6d2x6ZT0EKJxq6L8zDIKOOx1fVPxF5U5p5G/o7ZVj5OJtrFWx6eY6iqcBUM7+DQcWgQKU17P8j/UbMP2qHl9/3m919VZNXh8ND1m8T+FHgd3KGnRbjvqtI8XYqZKJGG8=
+	t=1756214601; cv=none; b=g676haZKOtNitTHcCvKI43NJdvrVOz9t9R78C/oNxKHTBPr/t/SojgZhhjeBHEvQHN+PKWlRzYIid6ezZvz+vefHumwIb6K1nFHA2xLkcm39hyMbeNDIqCHxMeg2ZMWY2Lwe2AEsYVxcL+cypGAsA9WWI1TZU/HO/8kzPK4VguE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214599; c=relaxed/simple;
-	bh=1mg3Kcr+eQ1vYD0MwBtpfSEp+z8LbLtRGxJJJeM179Q=;
+	s=arc-20240116; t=1756214601; c=relaxed/simple;
+	bh=xwPxjvyvoVwpoXIU7uJKkWPsCY+CrF0f/0NAkhjeiME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iz0j3kHkPzxiRo75eqJVmFZ6ATyAQjDwIhqczMpCIId3WwzMonb5q9yaBx0muTY/MUjNtlBcz5SNG9ug3yhZFpybHA07VUVetoqWzhAucpcmfDMQzjgsdTQCb/aPAgQ0UhDrq6Q3QqxhJVXRnyWwEmpQUIFXZwxm+swl1acB/9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoWW9NyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CiIMFOT2Da6ei0l/sJ8ArRPZ2y5jR7glVS3+zLKCzmA72UFkg2zklR7C98rb7msBIoNnoryFj1612qOVLasw2TpzeqLPgvX/2WaTghqntXx5xDymqEhiG8PwMSixdADhddiphG/L3DtrPKqAZlMh/ABCIml80vgusjlkP3u52E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BR4GJjNR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoWW9NyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875A6C4CEF1;
-	Tue, 26 Aug 2025 13:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BR4GJjNR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6A9C4CEF1;
+	Tue, 26 Aug 2025 13:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214598;
-	bh=1mg3Kcr+eQ1vYD0MwBtpfSEp+z8LbLtRGxJJJeM179Q=;
+	s=korg; t=1756214601;
+	bh=xwPxjvyvoVwpoXIU7uJKkWPsCY+CrF0f/0NAkhjeiME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RoWW9NyNwuFchTNPUacVU0zO86VMlAe0azQcrQu/exK7iB/LX7i6SDSSj+63kyf/N
-	 wUDGXj70fsIjhu+av+GZsPGHMcLdJropbz348l+baSb/m1PxdJpSYTfmJyPX+j43ft
-	 7lcrR1lJXXQ8QJIBxUr4djxhRyA1QBu/Vufd94b0=
+	b=BR4GJjNREN/7Ij7qdkfeim3GeagTHCHJQZDB8CQFYcdNC8jkNceWZxarV0vr9ErZA
+	 lwt4DgHFsQJTUDf5jww8qhLo9xLbHQNCHkKK7uCg0HEerODWtwOrfc2tP4nj97M0Bg
+	 REwyBxHqzacS4Ud6cNT20giVUDJuQ8EdUMWqVLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheick Traore <cheick.traore@foss.st.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Florin Leotescu <florin.leotescu@nxp.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/482] pinctrl: stm32: Manage irq affinity settings
-Date: Tue, 26 Aug 2025 13:07:32 +0200
-Message-ID: <20250826110935.710652121@linuxfoundation.org>
+Subject: [PATCH 6.1 182/482] hwmon: (emc2305) Set initial PWM minimum value during probe based on thermal state
+Date: Tue, 26 Aug 2025 13:07:15 +0200
+Message-ID: <20250826110935.302267036@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,37 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheick Traore <cheick.traore@foss.st.com>
+From: Florin Leotescu <florin.leotescu@nxp.com>
 
-[ Upstream commit 4c5cc2f65386e22166ce006efe515c667aa075e4 ]
+[ Upstream commit 0429415a084a15466e87d504e8c2a502488184a5 ]
 
-Trying to set the affinity of the interrupts associated to stm32
-pinctrl results in a write error.
+Prevent the PWM value from being set to minimum when thermal zone
+temperature exceeds any trip point during driver probe. Otherwise, the
+PWM fan speed will remains at minimum speed and not respond to
+temperature changes.
 
-Fill struct irq_chip::irq_set_affinity to use the default helper
-function.
-
-Signed-off-by: Cheick Traore <cheick.traore@foss.st.com>
-Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Link: https://lore.kernel.org/20250610143042.295376-3-antonio.borneo@foss.st.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Florin Leotescu <florin.leotescu@nxp.com>
+Link: https://lore.kernel.org/r/20250603113125.3175103-5-florin.leotescu@oss.nxp.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/emc2305.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 4a3f5f5b966d..661eb0c1f797 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -417,6 +417,7 @@ static struct irq_chip stm32_gpio_irq_chip = {
- 	.irq_set_wake	= irq_chip_set_wake_parent,
- 	.irq_request_resources = stm32_gpio_irq_request_resources,
- 	.irq_release_resources = stm32_gpio_irq_release_resources,
-+	.irq_set_affinity = IS_ENABLED(CONFIG_SMP) ? irq_chip_set_affinity_parent : NULL,
- };
- 
- static int stm32_gpio_domain_translate(struct irq_domain *d,
+diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
+index e42ae43f3de4..286582e99c28 100644
+--- a/drivers/hwmon/emc2305.c
++++ b/drivers/hwmon/emc2305.c
+@@ -301,6 +301,12 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
+ 		dev_err(dev, "Failed to register cooling device %s\n", emc2305_fan_name[idx]);
+ 		return PTR_ERR(data->cdev_data[cdev_idx].cdev);
+ 	}
++
++	if (data->cdev_data[cdev_idx].cur_state > 0)
++		/* Update pwm when temperature is above trips */
++		pwm = EMC2305_PWM_STATE2DUTY(data->cdev_data[cdev_idx].cur_state,
++					     data->max_state, EMC2305_FAN_MAX);
++
+ 	/* Set minimal PWM speed. */
+ 	if (data->pwm_separate) {
+ 		ret = emc2305_set_pwm(dev, pwm, cdev_idx);
+@@ -314,10 +320,10 @@ static int emc2305_set_single_tz(struct device *dev, int idx)
+ 		}
+ 	}
+ 	data->cdev_data[cdev_idx].cur_state =
+-		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
++		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
+ 				       EMC2305_FAN_MAX);
+ 	data->cdev_data[cdev_idx].last_hwmon_state =
+-		EMC2305_PWM_DUTY2STATE(data->pwm_min[cdev_idx], data->max_state,
++		EMC2305_PWM_DUTY2STATE(pwm, data->max_state,
+ 				       EMC2305_FAN_MAX);
+ 	return 0;
+ }
 -- 
 2.39.5
 
