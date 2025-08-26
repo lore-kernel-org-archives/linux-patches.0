@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6022165F13;
-	Tue, 26 Aug 2025 12:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9981A5BBC;
+	Tue, 26 Aug 2025 12:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213024; cv=none; b=M388XD/Dl13r/Sc8V3zDCvejAaeJSMcyojhyNWuUDqvydt4M25VeleAqQTwftpuCqj0l1gaDL6sAaYF3+cL9BShnsFqHTyk6TevBux4Klymc78uJqkUXsy5C4JZjSKcAENBbHtiOoVl7zmEzew+N6EatLKw2Jta0Npu/y/IqtdE=
+	t=1756213027; cv=none; b=EF+jpesSsfqLHTCP+Jkq9dcacaNrftM2Ee1b6oRwLNZCBpIMHb4ncWN/jnkAI+bXUDidhouy/4It3WvNpEGU5Tcuwe1EdrtWWydFABoL3K58fkUN6YDtuQUBrijttDyu/Nx2yH2CX12AEiiOD7T0jV3dsJoVKQuHtxZmFalZh8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213024; c=relaxed/simple;
-	bh=Ri+xdoM7QXVBmQMHJfwdUgw5e+EEtokO1y2tL5WVpVo=;
+	s=arc-20240116; t=1756213027; c=relaxed/simple;
+	bh=ObzE/I6lJUafSMJGOpSPwxkVzaap2HgmWbdCdcICxx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QtQ4osuhVFAK7mweq54gc9b+6OpGmW4cPbDDEfOsuWYhB7CkF/Eg565eRfMFmESXtaVHOO7Cq4FAPKeOXLyjG1b2hPMwhzfF9pHnXshJLb6LEMa+En/7SiW5kzN0wmyhUcv6Ix9E1mzo+nIy1dzIPZmJhpZfLwYvmE3qv0GsB1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSuFe0It; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kf/8+v94LZG7BYSO2tHdLizPjWlWt4xb0S500brQ0yJm+gH9PR0Q2svaVhRKrAqCKlDWmWNLP0HkxSeUXZXqs3VavEAPtc896AqMn4Pzol+pb90EkbhmEdTBj/YHiBjbtVUENlRaHB1lOSUt4LZ84pYp1xYrvKxO/EQ7PixelgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJSMtr39; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSuFe0It"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D0AC4CEF1;
-	Tue, 26 Aug 2025 12:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJSMtr39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3965C4CEF1;
+	Tue, 26 Aug 2025 12:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213024;
-	bh=Ri+xdoM7QXVBmQMHJfwdUgw5e+EEtokO1y2tL5WVpVo=;
+	s=korg; t=1756213027;
+	bh=ObzE/I6lJUafSMJGOpSPwxkVzaap2HgmWbdCdcICxx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSuFe0ItYiKCvWh5xp2Z+FbbpMpx2GRU81TaH27GMIRi8W+HCt8hgOeHcw69whmnm
-	 5b9wEiyL8+17/3M8rzSTvHiGofnXEdO3p/fYhHjvXk67JHqMvAeVYq8pzUrTB0PxBM
-	 EBK3rtGn5ctHNsvViD3FXqyv3py7GdTXNJncdqX8=
+	b=KJSMtr39oRn4b+Zp4zMNizUPcYVUuXFmlcfJPzlqw0wVfPaeTI1sNPTWyMKNZvk80
+	 f/zEnGugIkv++TKKQ/fz4KzZHv1Cc0imTAAcXnapA3bM195XIPNHZZyYwmUXnTduZR
+	 +qUhU4wyoGazqjdtmU2jrYBp62iTdP37Dv3JNn14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/587] wifi: iwlwifi: mvm: fix scan request validation
-Date: Tue, 26 Aug 2025 13:05:11 +0200
-Message-ID: <20250826110957.068002537@linuxfoundation.org>
+Subject: [PATCH 6.6 163/587] s390/stp: Remove udelay from stp_sync_clock()
+Date: Tue, 26 Aug 2025 13:05:12 +0200
+Message-ID: <20250826110957.092116800@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 7c2f3ec7707188d8d5269ae2dce97d7be3e9f261 ]
+[ Upstream commit b367017cdac21781a74eff4e208d3d38e1f38d3f ]
 
-The scan request validation function uses bitwise and instead
-of logical and. Fix it.
+When an stp sync check is handled on a system with multiple
+cpus each cpu gets a machine check but only the first one
+actually handles the sync operation. All other CPUs spin
+waiting for the first one to finish with a short udelay().
+But udelay can't be used here as the first CPU modifies tod_clock_base
+before performing the sync op. During this timeframe
+get_tod_clock_monotonic() might return a non-monotonic time.
 
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709230308.3fbc1f27871b.I7a8ee91f463c1a2d9d8561c8232e196885d02c43@changeid
+The time spent waiting should be very short and udelay is a busy loop
+anyways, therefore simply remove the udelay.
+
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 2 +-
+ arch/s390/kernel/time.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index cc866401aad0..8b22779e5b3e 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -828,7 +828,7 @@ static inline bool iwl_mvm_scan_fits(struct iwl_mvm *mvm, int n_ssids,
- 				     int n_channels)
- {
- 	return ((n_ssids <= PROBE_OPTION_MAX) &&
--		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &
-+		(n_channels <= mvm->fw->ucode_capa.n_scan_channels) &&
- 		(ies->common_ie_len +
- 		 ies->len[NL80211_BAND_2GHZ] + ies->len[NL80211_BAND_5GHZ] +
- 		 ies->len[NL80211_BAND_6GHZ] <=
+diff --git a/arch/s390/kernel/time.c b/arch/s390/kernel/time.c
+index d34d3548c046..086d3e3ffdea 100644
+--- a/arch/s390/kernel/time.c
++++ b/arch/s390/kernel/time.c
+@@ -579,7 +579,7 @@ static int stp_sync_clock(void *data)
+ 		atomic_dec(&sync->cpus);
+ 		/* Wait for in_sync to be set. */
+ 		while (READ_ONCE(sync->in_sync) == 0)
+-			__udelay(1);
++			;
+ 	}
+ 	if (sync->in_sync != 1)
+ 		/* Didn't work. Clear per-cpu in sync bit again. */
 -- 
 2.39.5
 
