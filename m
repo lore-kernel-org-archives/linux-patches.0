@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B59341AA6;
-	Tue, 26 Aug 2025 14:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F460352096;
+	Tue, 26 Aug 2025 14:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216840; cv=none; b=p0bXX5hIhqy3kuGB0y/Hj2zzOpm7Cqrfl4yuN9EhEs9JjAkIMemJSqBOBY0yFD/+NCpfsIRXPfQfzueGuqX6SwCxUB4HCa/24RkYsTNusbkSf8jED6waF292V9ZkXNxjJhiHaNUac8hSb7yPdYPNjn3DLohsVevQgckn/D0G8mM=
+	t=1756216842; cv=none; b=ifZUVAxnJ32/0DKhckD/cIsgez9EtFmoYtrhEpc/BYzU8Aik1tcA4OfSuLgA909Bl5RbLny4wlnHxVfU6CHAJhSwP0dHUrYrw87V41biNp+DOJ5OZ2STn1pwXf7R6Tvsdf78ZrNL8pvq8lqY5G8+oXIsi+QlSHD2fXUl9BL4YSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216840; c=relaxed/simple;
-	bh=cAJJD+92JDX9g7h2XuV1UlXOWd0g4BSAApN/orSYklA=;
+	s=arc-20240116; t=1756216842; c=relaxed/simple;
+	bh=SHFGwEaY2gdCOsq3D0O3M5LxsO0sdcjlNBU9lxmD4ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dyi2r94oKaSHQ9X+De/GPpGt33ANDHjsuH2sgM0yxqTtRv0/+Dekz+ubQUZ0/yRu/ogUqxPenACyE/l8aPeTUjD/O7ZM+bK6vIwwmmqfrdooZXxwTRz8yhTKSgemSk0DcDQDYOsvM+eS0y2BRSYEIFhir5lzS7WHtWbUeajP5OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RE6NeXAl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ya+oFzQoTihjo/ML6OOONogfvd1Kp0OA/ghWvFBllhseQAFUSq9wazPFEbzF0CUPnQNJaFnhGHFoVg364dtwQ7GoC/LwBmFtrdVvHtrHSZvN7Ofp2a/dhZ1tu0qT6aozM4dvQMx0Y0AD1EhZAAIkR4QvruZX0cT0Vb9N+hLMQFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meLMyd9S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RE6NeXAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA88C4CEF1;
-	Tue, 26 Aug 2025 14:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meLMyd9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256C7C4CEF1;
+	Tue, 26 Aug 2025 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216840;
-	bh=cAJJD+92JDX9g7h2XuV1UlXOWd0g4BSAApN/orSYklA=;
+	s=korg; t=1756216842;
+	bh=SHFGwEaY2gdCOsq3D0O3M5LxsO0sdcjlNBU9lxmD4ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RE6NeXAlW4IXz1VpDg7dSwqk4fZoE81JUJLNx2CBsOr69x1cpswKagQYKmnVtsvCc
-	 HteyKIJ60kVmyNe10YZPrAHgxGNXT6XxWYLGfhCLvmPGrLgti35guLunTYqE3vS77y
-	 kt3a8e6BKw9Itp65EpOZvghh8jxpxuFnQ/RFVo7Y=
+	b=meLMyd9StUYHMaj7OyDu/9MsqxyV3hnGhG7qLL5DppcEs6EuEUhxgt55P/D8sOTP7
+	 6G0WC/PZxQilDRSCDvm3aokQRn5eQG6TMVfQWvTBiSc8txbxV79fu/2aowUGQAEWsS
+	 g3wUqwPwLheh8cc/TUxKy8O8RAz/d5erNAIBJBpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 562/644] scsi: ufs: ufs-pci: Fix default runtime and system PM levels
-Date: Tue, 26 Aug 2025 13:10:53 +0200
-Message-ID: <20250826111000.456649377@linuxfoundation.org>
+	Li Jun <jun.li@nxp.com>,
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 536/644] usb: dwc3: imx8mp: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:10:27 +0200
+Message-ID: <20250826110959.797233447@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,63 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 6de7435e6b81fe52c0ab4c7e181f6b5decd18eb1 upstream.
+[ Upstream commit 086a0e516f7b3844e6328a5c69e2708b66b0ce18 ]
 
-Intel MTL-like host controllers support auto-hibernate.  Using
-auto-hibernate with manual (driver initiated) hibernate produces more
-complex operation.  For example, the host controller will have to exit
-auto-hibernate simply to allow the driver to enter hibernate state
-manually.  That is not recommended.
+Make sure to drop the reference to the dwc3 device taken by
+of_find_device_by_node() on probe errors and on driver unbind.
 
-The default rpm_lvl and spm_lvl is 3, which includes manual hibernate.
-
-Change the default values to 2, which does not.
-
-Note, to be simpler to backport to stable kernels, utilize the UFS PCI
-driver's ->late_init() call back.  Recent commits have made it possible
-to set up a controller-specific default in the regular ->init() call
-back, but not all stable kernels have those changes.
-
-Fixes: 4049f7acef3e ("scsi: ufs: ufs-pci: Add support for Intel MTL")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250723165856.145750-3-adrian.hunter@intel.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Li Jun <jun.li@nxp.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-2-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ufs/ufshcd-pci.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-imx8mp.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/ufs/ufshcd-pci.c
-+++ b/drivers/scsi/ufs/ufshcd-pci.c
-@@ -454,10 +454,23 @@ static int ufs_intel_adl_init(struct ufs
- 	return ufs_intel_common_init(hba);
- }
+--- a/drivers/usb/dwc3/dwc3-imx8mp.c
++++ b/drivers/usb/dwc3/dwc3-imx8mp.c
+@@ -183,7 +183,7 @@ static int dwc3_imx8mp_probe(struct plat
+ 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
+ 	if (err) {
+ 		dev_err(dev, "failed to request IRQ #%d --> %d\n", irq, err);
+-		goto depopulate;
++		goto put_dwc3;
+ 	}
  
-+static void ufs_intel_mtl_late_init(struct ufs_hba *hba)
-+{
-+	hba->rpm_lvl = UFS_PM_LVL_2;
-+	hba->spm_lvl = UFS_PM_LVL_2;
-+}
-+
- static int ufs_intel_mtl_init(struct ufs_hba *hba)
- {
-+	struct ufs_host *ufs_host;
-+	int err;
-+
- 	hba->caps |= UFSHCD_CAP_CRYPTO | UFSHCD_CAP_WB_EN;
--	return ufs_intel_common_init(hba);
-+	err = ufs_intel_common_init(hba);
-+	/* Get variant after it is set in ufs_intel_common_init() */
-+	ufs_host = ufshcd_get_variant(hba);
-+	ufs_host->late_init = ufs_intel_mtl_late_init;
-+	return err;
- }
+ 	device_set_wakeup_capable(dev, true);
+@@ -191,6 +191,8 @@ static int dwc3_imx8mp_probe(struct plat
  
- static struct ufs_hba_variant_ops ufs_intel_cnl_hba_vops = {
+ 	return 0;
+ 
++put_dwc3:
++	put_device(&dwc3_imx->dwc3->dev);
+ depopulate:
+ 	of_platform_depopulate(dev);
+ err_node_put:
+@@ -211,6 +213,8 @@ static int dwc3_imx8mp_remove(struct pla
+ 	struct dwc3_imx8mp *dwc3_imx = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+ 
++	put_device(&dwc3_imx->dwc3->dev);
++
+ 	pm_runtime_get_sync(dev);
+ 	of_platform_depopulate(dev);
+ 
 
 
