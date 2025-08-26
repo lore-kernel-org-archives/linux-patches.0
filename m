@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946351DE8BE;
-	Tue, 26 Aug 2025 14:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840A9343D63;
+	Tue, 26 Aug 2025 14:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217263; cv=none; b=YEsEPh0dpfXi2yxyFqXqb80PEB71gWCeu70/u6tkURRdg/OH3ePqysgbV3BG7EfqaRoDbJj7uyoDyullgMbykzMslYMiV8dM2TspW336it4xVOrhJ8wpRH2kN1assi8eqPKd4km7IaHLsEIlC5qtS76Q7D4x6P48mxsvb1XrWGY=
+	t=1756217266; cv=none; b=KlaiBlanw+fva5Q6JRQgQaFEJvMQCz+IXrHCYANoeBD0GbTLCBhf57GcZhwhm63hwcxuc2KP/lsfQpt+skIQvyb3oZbA3hL/k6wm4/AayijcK6N4dshhOVMXXLfPhLFotNXZ24KU+oMiybCd+CxGvLO5QYj0V2jiIAlDHe6BWfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217263; c=relaxed/simple;
-	bh=sUSbm7EiiEPhqp5NxMXnUXhZOI69IEGzEwhoT9vnLH4=;
+	s=arc-20240116; t=1756217266; c=relaxed/simple;
+	bh=GAzUYi3HOpu1X6Hyeh70oMk1L5/t0tJqcieAouwoP2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=otVuHR+O5jNzXLeMS/JJCNWA6JDup8uVOv4U2zb1J/If5Pkef/3da1lXaobKEZ2q31HP9pouph9F3SI3XtpA082D7/OfYfo3QH7YqZkydqB3ZpcV8cU4ISnG4P5mms0tDmVNvJfrgtvGtHRbrWsNrER8FIRO3sCZuJsM9LJDTUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7cYmAXy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LnkyEVvU8W0ih2h/XZnetyoAtelgZm4lVsF7Wfg70Se7qw9UnoiHXQD8Q45zUj/Tm8dUBmC9c2y6N3FjqVGvcLY+9RmLrQO097P4vEjkSUI7V2kNCBkZpj3NoyOo+WAE5rZiJ2sFDcWqG5itBAuWXqBy5xewY1xG0O8CvD/BNfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ2a6A2R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7cYmAXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242E8C4CEF1;
-	Tue, 26 Aug 2025 14:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ2a6A2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CECC113D0;
+	Tue, 26 Aug 2025 14:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217263;
-	bh=sUSbm7EiiEPhqp5NxMXnUXhZOI69IEGzEwhoT9vnLH4=;
+	s=korg; t=1756217266;
+	bh=GAzUYi3HOpu1X6Hyeh70oMk1L5/t0tJqcieAouwoP2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7cYmAXycekDkETMhB1Qz1KMYsEKW8Jr/SZSGGZLUnsBLOiY7xgPLF1mjJLEQDsor
-	 BZqQD8zs56l1aEQ1g63y8gC3duzBDWvT9gMO6fuRMB9BTjQiHJJjcLDWSCpHLd/Lc8
-	 CsYYS9Opjd0ORdY38sJ5AexR1gLN6EW3PhHlrzLo=
+	b=hQ2a6A2R+9HiS63gJWBxnBCAhab1+9kmESNOOjbv+/5MUg+dlIVdTtG6Me5n31TQr
+	 igmY3p1vegE7HEejejU4My9X8hpNmHOQXD3KZ1qEzIRiIFxES/qd+rUI4A7kD/KUCw
+	 XuWNr6vxDxPsppDdOCMmaehoKIH7UMyEBBq7kxXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com,
-	Yangtao Li <frank.li@vivo.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	=?UTF-8?q?Giedrius=20Trainavi=C4=8Dius?= <giedrius@blokas.io>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/523] hfsplus: remove mutex_lock check in hfsplus_free_extents
-Date: Tue, 26 Aug 2025 13:04:48 +0200
-Message-ID: <20250826110926.491082695@linuxfoundation.org>
+Subject: [PATCH 5.10 079/523] ASoC: soc-dai: tidyup return value of snd_soc_xlate_tdm_slot_mask()
+Date: Tue, 26 Aug 2025 13:04:49 +0200
+Message-ID: <20250826110926.515355919@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -46,98 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit fcb96956c921f1aae7e7b477f2435c56f77a31b4 ]
+[ Upstream commit f4c77d5af0a9cd0ee22617baa8b49d0e151fbda7 ]
 
-Syzbot reported an issue in hfsplus filesystem:
+commit 7f1186a8d738661 ("ASoC: soc-dai: check return value at
+snd_soc_dai_set_tdm_slot()") checks return value of
+xlate_tdm_slot_mask() (A1)(A2).
 
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 4400 at fs/hfsplus/extents.c:346
-	hfsplus_free_extents+0x700/0xad0
-Call Trace:
-<TASK>
-hfsplus_file_truncate+0x768/0xbb0 fs/hfsplus/extents.c:606
-hfsplus_write_begin+0xc2/0xd0 fs/hfsplus/inode.c:56
-cont_expand_zero fs/buffer.c:2383 [inline]
-cont_write_begin+0x2cf/0x860 fs/buffer.c:2446
-hfsplus_write_begin+0x86/0xd0 fs/hfsplus/inode.c:52
-generic_cont_expand_simple+0x151/0x250 fs/buffer.c:2347
-hfsplus_setattr+0x168/0x280 fs/hfsplus/inode.c:263
-notify_change+0xe38/0x10f0 fs/attr.c:420
-do_truncate+0x1fb/0x2e0 fs/open.c:65
-do_sys_ftruncate+0x2eb/0x380 fs/open.c:193
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+	/*
+	 * ...
+(Y)	 * TDM mode can be disabled by passing 0 for @slots. In this case @tx_mask,
+	 * @rx_mask and @slot_width will be ignored.
+	 * ...
+	 */
+	int snd_soc_dai_set_tdm_slot(...)
+	{
+		...
+		if (...)
+(A1)			ret = dai->driver->ops->xlate_tdm_slot_mask(...);
+		else
+(A2)			ret = snd_soc_xlate_tdm_slot_mask(...);
+		if (ret)
+			goto err;
+		...
+	}
 
-To avoid deadlock, Commit 31651c607151 ("hfsplus: avoid deadlock
-on file truncation") unlock extree before hfsplus_free_extents(),
-and add check wheather extree is locked in hfsplus_free_extents().
+snd_soc_xlate_tdm_slot_mask() (A2) will return -EINVAL if slots was 0 (X),
+but snd_soc_dai_set_tdm_slot() allow to use it (Y).
 
-However, when operations such as hfsplus_file_release,
-hfsplus_setattr, hfsplus_unlink, and hfsplus_get_block are executed
-concurrently in different files, it is very likely to trigger the
-WARN_ON, which will lead syzbot and xfstest to consider it as an
-abnormality.
+(A)	static int snd_soc_xlate_tdm_slot_mask(...)
+	{
+		...
+		if (!slots)
+(X)			return -EINVAL;
+		...
+	}
 
-The comment above this warning also describes one of the easy
-triggering situations, which can easily trigger and cause
-xfstest&syzbot to report errors.
+Call xlate_tdm_slot_mask() only if slots was non zero.
 
-[task A]			[task B]
-->hfsplus_file_release
-  ->hfsplus_file_truncate
-    ->hfs_find_init
-      ->mutex_lock
-    ->mutex_unlock
-				->hfsplus_write_begin
-				  ->hfsplus_get_block
-				    ->hfsplus_file_extend
-				      ->hfsplus_ext_read_extent
-				        ->hfs_find_init
-					  ->mutex_lock
-    ->hfsplus_free_extents
-      WARN_ON(mutex_is_locked) !!!
-
-Several threads could try to lock the shared extents tree.
-And warning can be triggered in one thread when another thread
-has locked the tree. This is the wrong behavior of the code and
-we need to remove the warning.
-
-Fixes: 31651c607151f ("hfsplus: avoid deadlock on file truncation")
-Reported-by: syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/00000000000057fa4605ef101c4c@google.com/
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20250529061807.2213498-1-frank.li@vivo.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reported-by: Giedrius Trainavičius <giedrius@blokas.io>
+Closes: https://lore.kernel.org/r/CAMONXLtSL7iKyvH6w=CzPTxQdBECf++hn8RKL6Y4=M_ou2YHow@mail.gmail.com
+Fixes: 7f1186a8d738661 ("ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()")
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/8734cdfx59.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/extents.c | 3 ---
- 1 file changed, 3 deletions(-)
+ sound/soc/soc-dai.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
-index c95a2f0ed4a7..fad1c250f150 100644
---- a/fs/hfsplus/extents.c
-+++ b/fs/hfsplus/extents.c
-@@ -342,9 +342,6 @@ static int hfsplus_free_extents(struct super_block *sb,
- 	int i;
- 	int err = 0;
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index f9aba413e495..e2db2ad219b8 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -206,13 +206,15 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+ {
+ 	int ret = -ENOTSUPP;
  
--	/* Mapping the allocation file may lock the extent tree */
--	WARN_ON(mutex_is_locked(&HFSPLUS_SB(sb)->ext_tree->tree_lock));
--
- 	hfsplus_dump_extent(extent);
- 	for (i = 0; i < 8; extent++, i++) {
- 		count = be32_to_cpu(extent->block_count);
+-	if (dai->driver->ops &&
+-	    dai->driver->ops->xlate_tdm_slot_mask)
+-		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+-	else
+-		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
+-	if (ret)
+-		goto err;
++	if (slots) {
++		if (dai->driver->ops &&
++		    dai->driver->ops->xlate_tdm_slot_mask)
++			ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		else
++			ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
++		if (ret)
++			goto err;
++	}
+ 
+ 	dai->tx_mask = tx_mask;
+ 	dai->rx_mask = rx_mask;
 -- 
 2.39.5
 
