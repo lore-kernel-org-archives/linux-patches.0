@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791341DB127;
-	Tue, 26 Aug 2025 13:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400E51DAC95;
+	Tue, 26 Aug 2025 13:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214706; cv=none; b=taCVwSuy/jAt/IzV3TzyOzIMt3axCIwffss7UQLQ71Ub7gX6vIxHuaM1gUZxmsvp6rXNLeVAS0cR7+lsIfonW/COaeSU30R+rFZ10YALKihOOZ3Tdm3+aEYq/08jnRnTCvHnBOn9kewqWIg24xGIRYE9QaEvz7iiPTWmaB0fUoU=
+	t=1756214709; cv=none; b=rdNl2vMiH0knv/Y4M36hcsYzxzyX8F1VtTUEDrrktER1vtEAoRAQtFBPx5FK7iQnoMYm3inNC2tRa646mVy6ZUQqRWsGdGnPhSghu4MdhgKCRysUt7k3ht5XedxWcXFyRsuQPxu+7alknx0+zJelH+8kuXAg7l4ji969pr5tsr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214706; c=relaxed/simple;
-	bh=8b/d9nWM8i+B1ad1cGAIMbOme6l8B1NiStR47dAQdc8=;
+	s=arc-20240116; t=1756214709; c=relaxed/simple;
+	bh=SbpPKvf2VuYbt+YkYLpW828MuAsNjO1tTsjm6cRpRXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZllL6ioGBEN4JcTjkw6NQvM3ptZJ4TosumSPzrdzAAsR0gJyX6PmZvvuLEJHx2+AWR4mS+rfDiJQaCar8vMEgI9DlZDwx4UV6TYWAThZp04+x7siyZMmfBQ3IobnYhirCCxUj3B+fpcNQ2hJxVjmVW284HxKUVR84OP20EX4Ro0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGAPQmze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=frcrmGVhoVxGTr6G6bTRY5HsNzPquhE5K82yBu3fM7eVQpHJZbitGPFQMeRyXsjJWwTQYr97kqfWPy89eo3tZSXPaG6eC6m0/iHEk1VNkJAQt5yEhYkSBk0s0beFhIetuLvpDd6sPJyn0rwKuE0QvlbIDwD8GBjuwuSyv9Wb5gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/1E66BL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGAPQmze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F3FC4CEF1;
-	Tue, 26 Aug 2025 13:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/1E66BL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B375DC4CEF1;
+	Tue, 26 Aug 2025 13:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214706;
-	bh=8b/d9nWM8i+B1ad1cGAIMbOme6l8B1NiStR47dAQdc8=;
+	s=korg; t=1756214709;
+	bh=SbpPKvf2VuYbt+YkYLpW828MuAsNjO1tTsjm6cRpRXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGAPQmzetK7oBjd58ADsNWQ4wtuk0dp0Lcg3sF0YYO/LbV3FihdTGiR1zIObM+X5t
-	 hPDpVbMH1h+3uwrJWXNrnCKUxKd4qQUtRZQ5ruXky5mt8jU38no2wBeLr0InGo91K8
-	 KoK2ZnekWM9aj9SNid4j1UN/52hbh0ufWKPKQG5E=
+	b=v/1E66BLFRQnA1xRmFO8Esp3EhA+mq7J6QSBKc2FalNRBc4rNDG6AZgwTlwGGhXp/
+	 KPUNHzBwrooKvLB0F0FqWRfsGH7WTHZWHNUIbQwABaYErYQWnXrk5iLYjuYMiRpOl0
+	 Z2wV7GVZwh5+X4zmvF3a+rmsn3ssuvDIBLYpSTGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/482] scsi: lpfc: Remove redundant assignment to avoid memory leak
-Date: Tue, 26 Aug 2025 13:08:11 +0200
-Message-ID: <20250826110936.652324833@linuxfoundation.org>
+Subject: [PATCH 6.1 239/482] ASoC: soc-dai.c: add missing flag check at snd_soc_pcm_dai_probe()
+Date: Tue, 26 Aug 2025 13:08:12 +0200
+Message-ID: <20250826110936.677168162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,35 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit eea6cafb5890db488fce1c69d05464214616d800 ]
+[ Upstream commit 5c5a7521e9364a40fe2c1b67ab79991e3e9085df ]
 
-Remove the redundant assignment if kzalloc() succeeds to avoid memory
-leak.
+dai->probed is used at snd_soc_pcm_dai_probe/remove(),
+and used to call real remove() function only when it was probed.
 
-Fixes: bd2cdd5e400f ("scsi: lpfc: NVME Initiator: Add debugfs support")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20250801185202.42631-1-jiashengjiangcool@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+	int snd_soc_pcm_dai_probe(...)
+	{
+		...
+		for_each_rtd_dais(rtd, i, dai) {
+			...
+
+			if (dai->driver->probe) {
+(A)				int ret = dai->driver->probe(dai);
+
+				if (ret < 0)
+					return soc_dai_ret(dai, ret);
+			}
+
+=>			dai->probed = 1;
+		}
+		...
+	}
+
+	int snd_soc_pcm_dai_remove(...)
+	{
+		...
+		for_each_rtd_dais(rtd, i, dai) {
+			...
+=>			if (dai->probed &&
+			    ...) {
+				...
+			}
+
+=>			dai->probed = 0;
+		}
+		...
+	}
+
+But on probe() case, we need to check dai->probed before calling
+real probe() function at (A), otherwise real probe() might be called
+multi times (but real remove() will be called only once).
+This patch checks it at probe().
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87wn3u64e6.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0e270f32975f ("ASoC: fsl_sai: replace regmap_write with regmap_update_bits")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_debugfs.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/soc-dai.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
-index 250d423710ca..f149753e62ec 100644
---- a/drivers/scsi/lpfc/lpfc_debugfs.c
-+++ b/drivers/scsi/lpfc/lpfc_debugfs.c
-@@ -6287,7 +6287,6 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
- 			}
- 			phba->nvmeio_trc_on = 1;
- 			phba->nvmeio_trc_output_idx = 0;
--			phba->nvmeio_trc = NULL;
- 		} else {
- nvmeio_off:
- 			phba->nvmeio_trc_size = 0;
+diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
+index ba8a99124869..5eac6a7559c7 100644
+--- a/sound/soc/soc-dai.c
++++ b/sound/soc/soc-dai.c
+@@ -548,6 +548,9 @@ int snd_soc_pcm_dai_probe(struct snd_soc_pcm_runtime *rtd, int order)
+ 		if (dai->driver->probe_order != order)
+ 			continue;
+ 
++		if (dai->probed)
++			continue;
++
+ 		if (dai->driver->probe) {
+ 			int ret = dai->driver->probe(dai);
+ 
 -- 
 2.50.1
 
