@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5216260586;
-	Tue, 26 Aug 2025 14:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6C0352081;
+	Tue, 26 Aug 2025 14:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219445; cv=none; b=tAXNABwByluaPG9RVPVn+eWLzS6LuX6crTp0/uxietUeP6aLvuEnQm5eNPwWaZqfpGKwjVRTtW71wqu3Uy4pFTLp2HT+cEeOoOdQ3wBJR1DgdQBTlK1Ecy5GAokR+T70DWjU5i7+xm0Wvael+7nXYBAAS8UIYwRpE2mIZHGNtSI=
+	t=1756219448; cv=none; b=Wp9Ofcl+kMGp/0b+UnL9/WqCVxITpnhXSeewPMlJ1xFJBJ1M/DfhuAuzuU7HeaNrcQW3zCJrUORslCBFIzSbyAgcEyPaJvpXb2M6cZ4nEUaeahQ4n0VqFo9anXuQplS0aZBr+9hiTSng15X1M7BI+1s298q1wRbklgxg9NK1MLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219445; c=relaxed/simple;
-	bh=KGjXnGspEwswb2xyNCdnd5DpH/aYPy4Pkj+RMv9aYY0=;
+	s=arc-20240116; t=1756219448; c=relaxed/simple;
+	bh=E+DDqpL4NImO2NKgx+JNXq9Y0i2oOaCGkVzVZkgIlDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTngloBhFcwwl4dC5oWPBLxzfYgnDT3oI3j+MY99jLvT8u+oCtJfmtb/y/JC+WmLHIlOY2lPn2vPNkgK2ThlRbXikd/a2Ber2omjYSmOtF8nNVgWGFuGBJStbi9xSWSqMT2enMXj4qUUC1+9feeQeOtp7CBMcX0PLduEoxvflfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ya48iZ96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSSj3b9Vo3yxeoVSotWm2GcPklntMH9aBckl0wwupxqU0l3FTzqDLHPsfSmlbcDqYGtCxLrm5IzJTgMv+u1XsnWjtWznrMF86QGu7KBw6U//D4md+S2v1W5+0Po54vEjib7kmtBVn5iwuCmKfKKSeIbjnLnTviRx57otEATF0s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eu/BH0Cu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ya48iZ96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435C3C4CEF1;
-	Tue, 26 Aug 2025 14:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eu/BH0Cu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD04C4CEF1;
+	Tue, 26 Aug 2025 14:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219445;
-	bh=KGjXnGspEwswb2xyNCdnd5DpH/aYPy4Pkj+RMv9aYY0=;
+	s=korg; t=1756219448;
+	bh=E+DDqpL4NImO2NKgx+JNXq9Y0i2oOaCGkVzVZkgIlDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ya48iZ961SYY5xFjzuYUS+LT0RgC+30VqXGVA6SnNNzy6ZyI+pHpof+VUA1NEk+/T
-	 867+jUjRZhhp8QxeMT30suLH3IxjeM+ShIbiDR726zI3oPmTxOZXPAF46iNxvHNPtE
-	 Tl4nkTWUvpsxFSej5mZSfJ2UHMScPffOTpn9i7mA=
+	b=Eu/BH0CuVKWu/EjOz0IKshg43Oj09799u7mcqDJl5Jsmy4UOAeJW8IRbQyJnynMnO
+	 aRwoUABEAvXG3Tr77ZDoPdFELiwvfdaTgyT6OKTswxSqBiwV6JPLXm5aiS8RlOW9EV
+	 +LUarnYnkI+P34B25wfCVQ9zg6CJmGJHBAnNyTvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@mellanox.com>,
-	Jiri Pirko <jiri@mellanox.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Shubham Kulkarni <skulkarni@mvista.com>
-Subject: [PATCH 5.4 383/403] net: sched: extract bstats update code into function
-Date: Tue, 26 Aug 2025 13:11:49 +0200
-Message-ID: <20250826110917.598400661@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 355/403] NFSv4: Fix nfs4_bitmap_copy_adjust()
+Date: Tue, 26 Aug 2025 13:11:21 +0200
+Message-ID: <20250826110916.683270446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,114 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@mellanox.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5e1ad95b630e652d3467d1fd1f0b5e5ea2c441e2 ]
+[ Upstream commit a71029b86752e8d40301af235a6bbf4896cc1402 ]
 
-Extract common code that increments cpu_bstats counter into standalone act
-API function. Change hardware offloaded actions that use percpu counter
-allocation to use the new function instead of incrementing cpu_bstats
-directly.
+Don't remove flags from the set retrieved from the cache_validity.
+We do want to retrieve all attributes that are listed as being
+invalid, whether or not there is a delegation set.
 
-This commit doesn't change functionality.
-
-Signed-off-by: Vlad Buslov <vladbu@mellanox.com>
-Acked-by: Jiri Pirko <jiri@mellanox.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
-Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a new filesystem")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/act_api.h      |    7 +++++++
- net/sched/act_csum.c       |    2 +-
- net/sched/act_ct.c         |    2 +-
- net/sched/act_gact.c       |    2 +-
- net/sched/act_mirred.c     |    2 +-
- net/sched/act_tunnel_key.c |    2 +-
- net/sched/act_vlan.c       |    2 +-
- 7 files changed, 13 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4proc.c |   33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
---- a/include/net/act_api.h
-+++ b/include/net/act_api.h
-@@ -186,6 +186,13 @@ int tcf_action_dump(struct sk_buff *skb,
- 		    int ref);
- int tcf_action_dump_old(struct sk_buff *skb, struct tc_action *a, int, int);
- int tcf_action_dump_1(struct sk_buff *skb, struct tc_action *a, int, int);
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -282,7 +282,7 @@ const u32 nfs4_fs_locations_bitmap[3] =
+ };
+ 
+ static void nfs4_bitmap_copy_adjust(__u32 *dst, const __u32 *src,
+-		struct inode *inode)
++				    struct inode *inode, unsigned long flags)
+ {
+ 	unsigned long cache_validity;
+ 
+@@ -290,22 +290,19 @@ static void nfs4_bitmap_copy_adjust(__u3
+ 	if (!inode || !nfs4_have_delegation(inode, FMODE_READ))
+ 		return;
+ 
+-	cache_validity = READ_ONCE(NFS_I(inode)->cache_validity);
+-	if (!(cache_validity & NFS_INO_REVAL_FORCED))
+-		cache_validity &= ~(NFS_INO_INVALID_CHANGE
+-				| NFS_INO_INVALID_SIZE);
++	cache_validity = READ_ONCE(NFS_I(inode)->cache_validity) | flags;
+ 
++	/* Remove the attributes over which we have full control */
++	dst[1] &= ~FATTR4_WORD1_RAWDEV;
+ 	if (!(cache_validity & NFS_INO_INVALID_SIZE))
+ 		dst[0] &= ~FATTR4_WORD0_SIZE;
+ 
+ 	if (!(cache_validity & NFS_INO_INVALID_CHANGE))
+ 		dst[0] &= ~FATTR4_WORD0_CHANGE;
+-}
+ 
+-static void nfs4_bitmap_copy_adjust_setattr(__u32 *dst,
+-		const __u32 *src, struct inode *inode)
+-{
+-	nfs4_bitmap_copy_adjust(dst, src, inode);
++	if (!(cache_validity & NFS_INO_INVALID_OTHER))
++		dst[1] &= ~(FATTR4_WORD1_MODE | FATTR4_WORD1_OWNER |
++			    FATTR4_WORD1_OWNER_GROUP);
+ }
+ 
+ static void nfs4_setup_readdir(u64 cookie, __be32 *verifier, struct dentry *dentry,
+@@ -3333,12 +3330,15 @@ static int nfs4_do_setattr(struct inode
+ 		.inode = inode,
+ 		.stateid = &arg.stateid,
+ 	};
++	unsigned long adjust_flags = NFS_INO_INVALID_CHANGE;
+ 	int err;
+ 
++	if (sattr->ia_valid & (ATTR_MODE|ATTR_UID|ATTR_GID))
++		adjust_flags |= NFS_INO_INVALID_OTHER;
 +
-+static inline void tcf_action_update_bstats(struct tc_action *a,
-+					    struct sk_buff *skb)
-+{
-+	bstats_cpu_update(this_cpu_ptr(a->cpu_bstats), skb);
-+}
-+
- void tcf_action_update_stats(struct tc_action *a, u64 bytes, u32 packets,
- 			     bool drop, bool hw);
- int tcf_action_copy_stats(struct sk_buff *, struct tc_action *, int);
---- a/net/sched/act_csum.c
-+++ b/net/sched/act_csum.c
-@@ -577,7 +577,7 @@ static int tcf_csum_act(struct sk_buff *
- 	params = rcu_dereference_bh(p->params);
+ 	do {
+-		nfs4_bitmap_copy_adjust_setattr(bitmask,
+-				nfs4_bitmask(server, olabel),
+-				inode);
++		nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, olabel),
++					inode, adjust_flags);
  
- 	tcf_lastuse_update(&p->tcf_tm);
--	bstats_cpu_update(this_cpu_ptr(p->common.cpu_bstats), skb);
-+	tcf_action_update_bstats(&p->common, skb);
+ 		err = _nfs4_do_setattr(inode, &arg, &res, cred, ctx);
+ 		switch (err) {
+@@ -4143,8 +4143,7 @@ static int _nfs4_proc_getattr(struct nfs
+ 		.rpc_resp = &res,
+ 	};
  
- 	action = READ_ONCE(p->tcf_action);
- 	if (unlikely(action == TC_ACT_SHOT))
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -482,7 +482,7 @@ out_push:
- 	skb_push_rcsum(skb, nh_ofs);
- 
- out:
--	bstats_cpu_update(this_cpu_ptr(a->cpu_bstats), skb);
-+	tcf_action_update_bstats(&c->common, skb);
- 	return retval;
- 
- drop:
---- a/net/sched/act_gact.c
-+++ b/net/sched/act_gact.c
-@@ -159,7 +159,7 @@ static int tcf_gact_act(struct sk_buff *
- 		action = gact_rand[ptype](gact);
- 	}
- #endif
--	bstats_cpu_update(this_cpu_ptr(gact->common.cpu_bstats), skb);
-+	tcf_action_update_bstats(&gact->common, skb);
- 	if (action == TC_ACT_SHOT)
- 		qstats_drop_inc(this_cpu_ptr(gact->common.cpu_qstats));
- 
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -233,7 +233,7 @@ static int tcf_mirred_act(struct sk_buff
+-	nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, label), inode);
+-
++	nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, label), inode, 0);
+ 	nfs_fattr_init(fattr);
+ 	return nfs4_call_sync(server->client, server, &msg, &args.seq_args, &res.seq_res, 0);
+ }
+@@ -4732,8 +4731,8 @@ static int _nfs4_proc_link(struct inode
  	}
  
- 	tcf_lastuse_update(&m->tcf_tm);
--	bstats_cpu_update(this_cpu_ptr(m->common.cpu_bstats), skb);
-+	tcf_action_update_bstats(&m->common, skb);
- 
- 	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
- 	m_eaction = READ_ONCE(m->tcfm_eaction);
---- a/net/sched/act_tunnel_key.c
-+++ b/net/sched/act_tunnel_key.c
-@@ -31,7 +31,7 @@ static int tunnel_key_act(struct sk_buff
- 	params = rcu_dereference_bh(t->params);
- 
- 	tcf_lastuse_update(&t->tcf_tm);
--	bstats_cpu_update(this_cpu_ptr(t->common.cpu_bstats), skb);
-+	tcf_action_update_bstats(&t->common, skb);
- 	action = READ_ONCE(t->tcf_action);
- 
- 	switch (params->tcft_action) {
---- a/net/sched/act_vlan.c
-+++ b/net/sched/act_vlan.c
-@@ -29,7 +29,7 @@ static int tcf_vlan_act(struct sk_buff *
- 	u16 tci;
- 
- 	tcf_lastuse_update(&v->tcf_tm);
--	bstats_cpu_update(this_cpu_ptr(v->common.cpu_bstats), skb);
-+	tcf_action_update_bstats(&v->common, skb);
- 
- 	/* Ensure 'data' points at mac_header prior calling vlan manipulating
- 	 * functions.
+ 	nfs4_inode_make_writeable(inode);
+-	nfs4_bitmap_copy_adjust_setattr(bitmask, nfs4_bitmask(server, res.label), inode);
+-
++	nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, res.label), inode,
++				NFS_INO_INVALID_CHANGE);
+ 	status = nfs4_call_sync(server->client, server, &msg, &arg.seq_args, &res.seq_res, 1);
+ 	if (!status) {
+ 		update_changeattr(dir, &res.cinfo, res.fattr->time_start, 0);
 
 
