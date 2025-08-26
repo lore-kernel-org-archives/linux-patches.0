@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61648139579;
-	Tue, 26 Aug 2025 13:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B853AD4B;
+	Tue, 26 Aug 2025 13:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214575; cv=none; b=eTiEh1dArPnxjXibNT7Af4XSiWjCKWbm6+QSUA2720dyMSXbcnbAS31dHnmi7ogNry4sG4uZO0ZStXlsCaJQ8VyKZcg8PbGBgyiadA38ZlTVAiahBYZdwGExyjizatWzBCUNNHfxRKfDUF72LR/YPQ7wXEN+eF6s1cw+NHZPFlU=
+	t=1756214578; cv=none; b=BAV1tBnxbXgRfj2OuWP9IU7RpLGKc5DvRUFgcAMIHVIaXGpGhhFs7YyOAzdlgj2u/YVfYtNJ6ZyYIXTbscrNZ99QOKUIZqk3FwOqIHiRbHZWND+Z6rixzTYHR4GJw8lnFWu4esfiwgBmmEpeLjHqC9uwONB1d4IO+okKfOzb/6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214575; c=relaxed/simple;
-	bh=n7r/3xhODj4OpJAjeCqpG1dd61GVD8CM/cfOeOGvFCg=;
+	s=arc-20240116; t=1756214578; c=relaxed/simple;
+	bh=ZsvwhIn0M9QiUeH/Ia1IRS/Z3o2vUpyisr2Ay9yJeY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+vszLoZRvszlthmwv3hq19NFNVt9Rqol/hHo2rjHHHl9IAzPazeadsHK2n+pXi2LIqWXyO5ETn7PGKjoRrjLAVmMYpKfVix1vx/qWMr50TCWWqWAlH/5kIQTeIG3Hq5W2PjtqDUx74Fap4avtyC1sSqLE/148oTphe3DVGI4E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SR1AVUik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bLBh/2Az+M8DqaQO3tmS0n0JI+gpSi6e8avyNRrMloC5i5vWDLWKnfysy9qJIp2uCsDOSD5VB9FXfdDJNykPUD/4xALWRHPYfyJthpOrHXvd+QFriUoEM4EHhl9yGDGxZRkfUEkHP1WogA+1X7+T4bAnom8J3dA1QrIyxhFg5zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uROjd0qf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SR1AVUik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFB3C113CF;
-	Tue, 26 Aug 2025 13:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uROjd0qf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3794FC4CEF1;
+	Tue, 26 Aug 2025 13:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214574;
-	bh=n7r/3xhODj4OpJAjeCqpG1dd61GVD8CM/cfOeOGvFCg=;
+	s=korg; t=1756214577;
+	bh=ZsvwhIn0M9QiUeH/Ia1IRS/Z3o2vUpyisr2Ay9yJeY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SR1AVUikMOA9CRxJy8v+M1oyT4ogyR6+uR2yd4cC55lWrl730sOeymSBZHXjqMbJ8
-	 Mv9igL+8NObCkkEC1nNq8dRO/HPUIwNVn7KwGK8v7dOXZpop/1DWzjczG7J4mvO/oj
-	 9zjoRf/9szkD+Kvc0hV2Yd4Yf9rW1ZluXNAeI2Io=
+	b=uROjd0qfXewTQ5VgiazbG3IV9M7GlqqNxSx49FQ0ogKpGOQbpIfwUBVEm35OLun9k
+	 XIiYTsaWrdxeFE9yvPew40XPZA5DMUMVq+3IMGkeG2RebuksOEerttcXMLvH9e1DF4
+	 Cc9vPwfK/lPHNGXzZ1AnqFvFh0eyyBPOe3zwL8wU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/482] MIPS: lantiq: falcon: sysctrl: fix request memory check logic
-Date: Tue, 26 Aug 2025 13:07:23 +0200
-Message-ID: <20250826110935.499534923@linuxfoundation.org>
+Subject: [PATCH 6.1 191/482] media: v4l2-common: Reduce warnings about missing V4L2_CID_LINK_FREQ control
+Date: Tue, 26 Aug 2025 13:07:24 +0200
+Message-ID: <20250826110935.523039703@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -45,78 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 9c9a7ff9882fc6ba7d2f4050697e8bb80383e8dc ]
+[ Upstream commit 5a0abb8909b9dcf347fce1d201ac6686ac33fd64 ]
 
-request_mem_region() will return NULL instead of error code
-when the memory request fails. Therefore, we should check if
-the return value is non-zero instead of less than zero. In
-this way, this patch also fixes the build warnings:
+When operating a pipeline with a missing V4L2_CID_LINK_FREQ control this
+two line warning is printed each time the pipeline is started. Reduce
+this excessive logging by only warning once for the missing control.
 
-arch/mips/lantiq/falcon/sysctrl.c:214:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  214 |                                 res_status.name) < 0) ||
-      |                                                  ^
-arch/mips/lantiq/falcon/sysctrl.c:216:47: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  216 |                                 res_ebu.name) < 0) ||
-      |                                               ^
-arch/mips/lantiq/falcon/sysctrl.c:219:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  219 |                                 res_sys[0].name) < 0) ||
-      |                                                  ^
-arch/mips/lantiq/falcon/sysctrl.c:222:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  222 |                                 res_sys[1].name) < 0) ||
-      |                                                  ^
-arch/mips/lantiq/falcon/sysctrl.c:225:50: error: ordered comparison of pointer with integer zero [-Werror=extra]
-  225 |                                 res_sys[2].name) < 0))
-      |
-
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/lantiq/falcon/sysctrl.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/media/v4l2-core/v4l2-common.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/mips/lantiq/falcon/sysctrl.c b/arch/mips/lantiq/falcon/sysctrl.c
-index 1187729d8cbb..357543996ee6 100644
---- a/arch/mips/lantiq/falcon/sysctrl.c
-+++ b/arch/mips/lantiq/falcon/sysctrl.c
-@@ -214,19 +214,16 @@ void __init ltq_soc_init(void)
- 	of_node_put(np_syseth);
- 	of_node_put(np_sysgpe);
+diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
+index 40f56e044640..1c8d36684809 100644
+--- a/drivers/media/v4l2-core/v4l2-common.c
++++ b/drivers/media/v4l2-core/v4l2-common.c
+@@ -475,10 +475,10 @@ s64 v4l2_get_link_freq(struct v4l2_ctrl_handler *handler, unsigned int mul,
  
--	if ((request_mem_region(res_status.start, resource_size(&res_status),
--				res_status.name) < 0) ||
--		(request_mem_region(res_ebu.start, resource_size(&res_ebu),
--				res_ebu.name) < 0) ||
--		(request_mem_region(res_sys[0].start,
--				resource_size(&res_sys[0]),
--				res_sys[0].name) < 0) ||
--		(request_mem_region(res_sys[1].start,
--				resource_size(&res_sys[1]),
--				res_sys[1].name) < 0) ||
--		(request_mem_region(res_sys[2].start,
--				resource_size(&res_sys[2]),
--				res_sys[2].name) < 0))
-+	if ((!request_mem_region(res_status.start, resource_size(&res_status),
-+				 res_status.name)) ||
-+	    (!request_mem_region(res_ebu.start, resource_size(&res_ebu),
-+				 res_ebu.name)) ||
-+	    (!request_mem_region(res_sys[0].start, resource_size(&res_sys[0]),
-+				 res_sys[0].name)) ||
-+	    (!request_mem_region(res_sys[1].start, resource_size(&res_sys[1]),
-+				 res_sys[1].name)) ||
-+	    (!request_mem_region(res_sys[2].start, resource_size(&res_sys[2]),
-+				 res_sys[2].name)))
- 		pr_err("Failed to request core resources");
+ 		freq = div_u64(v4l2_ctrl_g_ctrl_int64(ctrl) * mul, div);
  
- 	status_membase = ioremap(res_status.start,
+-		pr_warn("%s: Link frequency estimated using pixel rate: result might be inaccurate\n",
+-			__func__);
+-		pr_warn("%s: Consider implementing support for V4L2_CID_LINK_FREQ in the transmitter driver\n",
+-			__func__);
++		pr_warn_once("%s: Link frequency estimated using pixel rate: result might be inaccurate\n",
++			     __func__);
++		pr_warn_once("%s: Consider implementing support for V4L2_CID_LINK_FREQ in the transmitter driver\n",
++			     __func__);
+ 	}
+ 
+ 	return freq > 0 ? freq : -EINVAL;
 -- 
 2.39.5
 
