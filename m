@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9AC352095;
-	Tue, 26 Aug 2025 13:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D5E35207E;
+	Tue, 26 Aug 2025 13:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216742; cv=none; b=CP2kYdqGqBCCANiq3q4zNmfG5DVbY0S31tX0xwpszgzb2q5W3vxcoGXEX7L7hHZt962pftPTvM4v1JJlxnkUxrG2ATwjNGOP9ebk0cSQbSSsi87U4HqUWJqLwScYTMhWYruhNcxdif0or3tIgNMKjyQulG9fZaASj0StNOhbpnk=
+	t=1756216745; cv=none; b=SWZrDCMwI63oR2a7rcaGPVZqUG00F2DyhlXgVTkzD8O35CqqNnigTytiF3ajLKUXQ3qZAxKg0jz2M/NIq6uFeWetwH3rYuITXnZEVPJbki1+zcy3W7IIX5CH14FAAKANwlyfZdJyff8UABFW7DozjCWIM8Rha4eOLE3XXfi1wUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216742; c=relaxed/simple;
-	bh=2+6A7VOqx49AaB7bzP76kAJ4Cj40Q1v9LpH6ynDWUDE=;
+	s=arc-20240116; t=1756216745; c=relaxed/simple;
+	bh=35g0kmVNhCtnmTD50ewyr74OeeSd8LCqplQNxZho1ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pkmHDVNL7LYv9A6fN4jvfwG02C21mvBrLWkoQEmXe+Hrl7t8Y8I8sq3cnQyKCf1tYRFG2J+t/wVJS8zVdn7+3HlF1PMTg2g6lsjJzXF7oLnxVtutobDP7Tyu2pmQyfvVyCBC6gn3PzvJ6rMWLHsJOYxNJwFtFfFAmQpiLt7R5oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCFA7Umb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTm/2jGj3aOqb18+PD4shtXm19ZQcs2HVSbTfLAkpZO5Qe545o/i7/iSEAWB6/KCnBOtY5vMswcm+GadJrtjL/kVsJzGkZ28wpcX9mD8S+beedeWZdV3ezngwz6AOFsGUiHOv2xZ4x8XFKfNX9jPd9am+WccUuIFowU9h1RYSuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhAfPgvh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCFA7Umb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D18AC113D0;
-	Tue, 26 Aug 2025 13:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhAfPgvh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A06C4CEF1;
+	Tue, 26 Aug 2025 13:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216742;
-	bh=2+6A7VOqx49AaB7bzP76kAJ4Cj40Q1v9LpH6ynDWUDE=;
+	s=korg; t=1756216745;
+	bh=35g0kmVNhCtnmTD50ewyr74OeeSd8LCqplQNxZho1ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCFA7UmbT6YcSqjpfIUNu9IXMuYBUw+FoYpl/mDa1eEO6pFdPhXekabkCjsbaPjiS
-	 g/rV8I67Bia1PQCSkqsC5uL939o9Sxp2ekkdN5TxAQvtCZpUwT/O1f5jJRXqVjCVT7
-	 tj2ZFCTnfG0IsPTSjBmdVOqqV/p8zclwIUtSg+fw=
+	b=xhAfPgvhM0TR7ILhguga1XsSVwgKawqHmQ0pby/S9fW28Cy1sOi8DKR1njyyhAVCY
+	 5ldFVXMrko1CTZYM+uOESg8T9kxfvrrv7S+1ob4zUwhZwxjgDCGAekLsWq4+5r5X9r
+	 EWpAkxBVP+u9RTs2fBy9uY/eVIh33s+7XJzJCvmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Bigonville <bigon@bigon.be>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 526/644] PCI/ACPI: Fix runtime PM ref imbalance on Hot-Plug Capable ports
-Date: Tue, 26 Aug 2025 13:10:17 +0200
-Message-ID: <20250826110959.543958468@linuxfoundation.org>
+Subject: [PATCH 5.15 527/644] block: Make REQ_OP_ZONE_FINISH a write operation
+Date: Tue, 26 Aug 2025 13:10:18 +0200
+Message-ID: <20250826110959.570882329@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -54,138 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 6cff20ce3b92ffbf2fc5eb9e5a030b3672aa414a ]
+[ Upstream commit 3f66ccbaaef3a0c5bd844eab04e3207b4061c546 ]
 
-pci_bridge_d3_possible() is called from both pcie_portdrv_probe() and
-pcie_portdrv_remove() to determine whether runtime power management shall
-be enabled (on probe) or disabled (on remove) on a PCIe port.
+REQ_OP_ZONE_FINISH is defined as "12", which makes
+op_is_write(REQ_OP_ZONE_FINISH) return false, despite the fact that a
+zone finish operation is an operation that modifies a zone (transition
+it to full) and so should be considered as a write operation (albeit
+one that does not transfer any data to the device).
 
-The underlying assumption is that pci_bridge_d3_possible() always returns
-the same value, else a runtime PM reference imbalance would occur.  That
-assumption is not given if the PCIe port is inaccessible on remove due to
-hot-unplug:  pci_bridge_d3_possible() calls pciehp_is_native(), which
-accesses Config Space to determine whether the port is Hot-Plug Capable.
-An inaccessible port returns "all ones", which is converted to "all
-zeroes" by pcie_capability_read_dword().  Hence the port no longer seems
-Hot-Plug Capable on remove even though it was on probe.
+Fix this by redefining REQ_OP_ZONE_FINISH to be an odd number (13), and
+redefine REQ_OP_ZONE_RESET and REQ_OP_ZONE_RESET_ALL using sequential
+odd numbers from that new value.
 
-The resulting runtime PM ref imbalance causes warning messages such as:
-
-  pcieport 0000:02:04.0: Runtime PM usage count underflow!
-
-Avoid the Config Space access (and thus the runtime PM ref imbalance) by
-caching the Hot-Plug Capable bit in struct pci_dev.
-
-The struct already contains an "is_hotplug_bridge" flag, which however is
-not only set on Hot-Plug Capable PCIe ports, but also Conventional PCI
-Hot-Plug bridges and ACPI slots.  The flag identifies bridges which are
-allocated additional MMIO and bus number resources to allow for hierarchy
-expansion.
-
-The kernel is somewhat sloppily using "is_hotplug_bridge" in a number of
-places to identify Hot-Plug Capable PCIe ports, even though the flag
-encompasses other devices.  Subsequent commits replace these occurrences
-with the new flag to clearly delineate Hot-Plug Capable PCIe ports from
-other kinds of hotplug bridges.
-
-Document the existing "is_hotplug_bridge" and the new "is_pciehp" flag
-and document the (non-obvious) requirement that pci_bridge_d3_possible()
-always returns the same value across the entire lifetime of a bridge,
-including its hot-removal.
-
-Fixes: 5352a44a561d ("PCI: pciehp: Make pciehp_is_native() stricter")
-Reported-by: Laurent Bigonville <bigon@bigon.be>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220216
-Reported-by: Mario Limonciello <mario.limonciello@amd.com>
-Closes: https://lore.kernel.org/r/20250609020223.269407-3-superm1@kernel.org/
-Link: https://lore.kernel.org/all/20250620025535.3425049-3-superm1@kernel.org/T/#u
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Cc: stable@vger.kernel.org # v4.18+
-Link: https://patch.msgid.link/fe5dcc3b2e62ee1df7905d746bde161eb1b3291c.1752390101.git.lukas@wunner.de
-[ changed "recent enough PCIe ports" comment to "some PCIe ports" ]
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250625093327.548866-2-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ More renumbering... ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-acpi.c |    4 +---
- drivers/pci/pci.c      |    8 ++++++--
- drivers/pci/probe.c    |    2 +-
- include/linux/pci.h    |   10 +++++++++-
- 4 files changed, 17 insertions(+), 7 deletions(-)
+ include/linux/blk_types.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -792,13 +792,11 @@ int pci_acpi_program_hp_params(struct pc
- bool pciehp_is_native(struct pci_dev *bridge)
- {
- 	const struct pci_host_bridge *host;
--	u32 slot_cap;
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -341,13 +341,13 @@ enum req_opf {
+ 	/* Close a zone */
+ 	REQ_OP_ZONE_CLOSE	= 11,
+ 	/* Transition a zone to full */
+-	REQ_OP_ZONE_FINISH	= 12,
++	REQ_OP_ZONE_FINISH	= 13,
+ 	/* write data at the current zone write pointer */
+-	REQ_OP_ZONE_APPEND	= 13,
++	REQ_OP_ZONE_APPEND	= 15,
+ 	/* reset a zone write pointer */
+-	REQ_OP_ZONE_RESET	= 15,
++	REQ_OP_ZONE_RESET	= 17,
+ 	/* reset all the zone present on the device */
+-	REQ_OP_ZONE_RESET_ALL	= 17,
++	REQ_OP_ZONE_RESET_ALL	= 19,
  
- 	if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
- 		return false;
- 
--	pcie_capability_read_dword(bridge, PCI_EXP_SLTCAP, &slot_cap);
--	if (!(slot_cap & PCI_EXP_SLTCAP_HPC))
-+	if (!bridge->is_pciehp)
- 		return false;
- 
- 	if (pcie_ports_native)
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -2921,8 +2921,12 @@ static const struct dmi_system_id bridge
-  * pci_bridge_d3_possible - Is it possible to put the bridge into D3
-  * @bridge: Bridge to check
-  *
-- * This function checks if it is possible to move the bridge to D3.
-- * Currently we only allow D3 for recent enough PCIe ports and Thunderbolt.
-+ * Currently we only allow D3 for some PCIe ports and for Thunderbolt.
-+ *
-+ * Return: Whether it is possible to move the bridge to D3.
-+ *
-+ * The return value is guaranteed to be constant across the entire lifetime
-+ * of the bridge, including its hot-removal.
-  */
- bool pci_bridge_d3_possible(struct pci_dev *bridge)
- {
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -1590,7 +1590,7 @@ void set_pcie_hotplug_bridge(struct pci_
- 
- 	pcie_capability_read_dword(pdev, PCI_EXP_SLTCAP, &reg32);
- 	if (reg32 & PCI_EXP_SLTCAP_HPC)
--		pdev->is_hotplug_bridge = 1;
-+		pdev->is_hotplug_bridge = pdev->is_pciehp = 1;
- }
- 
- static void set_pcie_thunderbolt(struct pci_dev *dev)
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -317,7 +317,14 @@ struct pci_sriov;
- struct pci_p2pdma;
- struct rcec_ea;
- 
--/* The pci_dev structure describes PCI devices */
-+/* struct pci_dev - describes a PCI device
-+ *
-+ * @is_hotplug_bridge:	Hotplug bridge of any kind (e.g. PCIe Hot-Plug Capable,
-+ *			Conventional PCI Hot-Plug, ACPI slot).
-+ *			Such bridges are allocated additional MMIO and bus
-+ *			number resources to allow for hierarchy expansion.
-+ * @is_pciehp:		PCIe Hot-Plug Capable bridge.
-+ */
- struct pci_dev {
- 	struct list_head bus_list;	/* Node in per-bus list */
- 	struct pci_bus	*bus;		/* Bus this device is on */
-@@ -440,6 +447,7 @@ struct pci_dev {
- 	unsigned int	is_physfn:1;
- 	unsigned int	is_virtfn:1;
- 	unsigned int	is_hotplug_bridge:1;
-+	unsigned int	is_pciehp:1;
- 	unsigned int	shpc_managed:1;		/* SHPC owned by shpchp */
- 	unsigned int	is_thunderbolt:1;	/* Thunderbolt controller */
- 	/*
+ 	/* Driver private requests */
+ 	REQ_OP_DRV_IN		= 34,
 
 
