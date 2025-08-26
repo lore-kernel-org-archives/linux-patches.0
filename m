@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F20352FC1;
-	Tue, 26 Aug 2025 14:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBE0352FD5;
+	Tue, 26 Aug 2025 14:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218084; cv=none; b=QiQzhmqTFjuugS+Buq6EDIwKhdrDpa5AdzdP+Z6l5a+uGrMBDNqEDs+2ASESfIXak4CiD9Y532FHf1YxnnbKzDNpTisWPgKYgXGHZcO3O17SamMjy97aS86J5e+Cy/Ziua1KdQU6H2trmGbL/1fA49RrnlbX/uUJcHOWZ/YXn2A=
+	t=1756218085; cv=none; b=LJL3NcC9WlQX9jkVUL/h8RAjWOf/1oMCsOrQMKdsEFj1ZP60vIayY4hlMHnzc1oUYUU07ijtatyLXQ+Cf7C7EBbuO0KAeiYQ0RCLeujZWnF9S/7nth8bCsgsMC0bgWiQDPqtvx3MRGIiIydMGRggtwxZ36FLlrdrAVDrgrfAoSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218084; c=relaxed/simple;
-	bh=qXR8XAuHfgrP1IAXewDzkNYGZj9fPLFk+fIjU7bmOJs=;
+	s=arc-20240116; t=1756218085; c=relaxed/simple;
+	bh=iTFKLE3xM6srJfUugvouxTAlVTWi+930StxY7YDF6Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pS0N9ofP5MjM9Zpadg4ck8fX29mXmL8cUlG6Wo45o7MdLIxZT5XNAxDfM6b3VRx/m3uEhC8Ffz7j2vV8SOrR0s7mkGp5wU6nKDy0kRjooDRjEHy8x5RIYuubIDWvSb6AchsMFJ3O5lAlAtblL/67OpSnUAhnGaLgYM2U/LxvdNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSaWHj9A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cKMVZ98ZB/08CkLAEjjDPpBeBpiYkkO8l0gGfYd+jptmC+FrOPHNLNbmAYFLuOGWQpgoYCcvPcXbk7k0NPRMUNhxvbwdODwrrHVDf4VlXPPYBK/H4+X/inO6LZ6N5JwfIlUiQZ81qMU0kOzwcdYknBe7GeaILeE3v4+Ogh0Dm6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUeoGLHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSaWHj9A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B29C16AAE;
-	Tue, 26 Aug 2025 14:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUeoGLHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02280C19423;
+	Tue, 26 Aug 2025 14:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218082;
-	bh=qXR8XAuHfgrP1IAXewDzkNYGZj9fPLFk+fIjU7bmOJs=;
+	s=korg; t=1756218085;
+	bh=iTFKLE3xM6srJfUugvouxTAlVTWi+930StxY7YDF6Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSaWHj9AhIZpKZ+EeLPByx+AnifKvG4TiU9khT20tB2P9xTtlV1Z3RiTrXDHxCvX7
-	 JJ1k+olc7IGtZWWA3rhm7T+IhDP0or/0NpGnm6XuuZrtMEoVm9HiHDV5FZ8yzc89Y+
-	 RTg5lDAV7UGjYEaBrgNYULgDiMKrj7NjOlAdoPDY=
+	b=eUeoGLHCk7jBDfgGqEW1ac1oPJmr2wVPeY2IFqeaEVa1v+jSoryqPPw2Z/DaPHAp8
+	 2KrsBZx+GAVSeDgV5Fl7hck8llzzRuJ01SPaHRSz5K1r1fI5Vzvv+92rf8p65PBsmJ
+	 RuvUrw+c+h8X8PjsfgGCkoyTFAyfL5Iv6dXpr6F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerrard Tai <gerrard.tai@starlabs.sg>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 5.10 387/523] sch_drr: make drr_qlen_notify() idempotent
-Date: Tue, 26 Aug 2025 13:09:57 +0200
-Message-ID: <20250826110934.004343773@linuxfoundation.org>
+	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 5.10 370/523] pwm: imx-tpm: Reset counter if CMOD is 0
+Date: Tue, 26 Aug 2025 13:09:40 +0200
+Message-ID: <20250826110933.593605600@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -48,72 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
 
-commit df008598b3a00be02a8051fde89ca0fbc416bd55 upstream.
+commit 65c6f742ab14ab1a2679fba72b82dcc0289d96f1 upstream.
 
-drr_qlen_notify() always deletes the DRR class from its active list
-with list_del(), therefore, it is not idempotent and not friendly
-to its callers, like fq_codel_dequeue().
+As per the i.MX93 TRM, section 67.3.2.1 "MOD register update", the value
+of the TPM counter does NOT get updated when writing MOD.MOD unless
+SC.CMOD != 0. Therefore, with the current code, assuming the following
+sequence:
 
-Let's make it idempotent to ease qdisc_tree_reduce_backlog() callers'
-life. Also change other list_del()'s to list_del_init() just to be
-extra safe.
+	1) pwm_disable()
+	2) pwm_apply_might_sleep() /* period is changed here */
+	3) pwm_enable()
 
-Reported-by: Gerrard Tai <gerrard.tai@starlabs.sg>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250403211033.166059-3-xiyou.wangcong@gmail.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+and assuming only one channel is active, if CNT.COUNT is higher than the
+MOD.MOD value written during the pwm_apply_might_sleep() call then, when
+re-enabling the PWM during pwm_enable(), the counter will end up resetting
+after UINT32_MAX - CNT.COUNT + MOD.MOD cycles instead of MOD.MOD cycles as
+normally expected.
+
+Fix this problem by forcing a reset of the TPM counter before MOD.MOD is
+written.
+
+Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+Link: https://lore.kernel.org/r/20250728194144.22884-1-laurentiumihalcea111@gmail.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_drr.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pwm/pwm-imx-tpm.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/net/sched/sch_drr.c
-+++ b/net/sched/sch_drr.c
-@@ -111,6 +111,7 @@ static int drr_change_class(struct Qdisc
- 	if (cl == NULL)
- 		return -ENOBUFS;
+--- a/drivers/pwm/pwm-imx-tpm.c
++++ b/drivers/pwm/pwm-imx-tpm.c
+@@ -203,6 +203,15 @@ static int pwm_imx_tpm_apply_hw(struct p
+ 		writel(val, tpm->base + PWM_IMX_TPM_SC);
  
-+	INIT_LIST_HEAD(&cl->alist);
- 	cl->common.classid = classid;
- 	cl->quantum	   = quantum;
- 	cl->qdisc	   = qdisc_create_dflt(sch->dev_queue,
-@@ -234,7 +235,7 @@ static void drr_qlen_notify(struct Qdisc
- {
- 	struct drr_class *cl = (struct drr_class *)arg;
- 
--	list_del(&cl->alist);
-+	list_del_init(&cl->alist);
- }
- 
- static int drr_dump_class(struct Qdisc *sch, unsigned long arg,
-@@ -401,7 +402,7 @@ static struct sk_buff *drr_dequeue(struc
- 			if (unlikely(skb == NULL))
- 				goto out;
- 			if (cl->qdisc->q.qlen == 0)
--				list_del(&cl->alist);
-+				list_del_init(&cl->alist);
- 
- 			bstats_update(&cl->bstats, skb);
- 			qdisc_bstats_update(sch, skb);
-@@ -442,7 +443,7 @@ static void drr_reset_qdisc(struct Qdisc
- 	for (i = 0; i < q->clhash.hashsize; i++) {
- 		hlist_for_each_entry(cl, &q->clhash.hash[i], common.hnode) {
- 			if (cl->qdisc->q.qlen)
--				list_del(&cl->alist);
-+				list_del_init(&cl->alist);
- 			qdisc_reset(cl->qdisc);
- 		}
- 	}
+ 		/*
++		 * if the counter is disabled (CMOD == 0), programming the new
++		 * period length (MOD) will not reset the counter (CNT). If
++		 * CNT.COUNT happens to be bigger than the new MOD value then
++		 * the counter will end up being reset way too late. Therefore,
++		 * manually reset it to 0.
++		 */
++		if (!cmod)
++			writel(0x0, tpm->base + PWM_IMX_TPM_CNT);
++		/*
+ 		 * set period count:
+ 		 * if the PWM is disabled (CMOD[1:0] = 2b00), then MOD register
+ 		 * is updated when MOD register is written.
 
 
