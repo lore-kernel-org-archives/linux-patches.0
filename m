@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F1521D00E;
-	Tue, 26 Aug 2025 11:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2405129BDBA;
+	Tue, 26 Aug 2025 11:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207422; cv=none; b=Ins07h32tibQfXhKnceUBCGkXAaQgU8yeVKLSxq9Qv6pfgN3Ji/nSekLEsD9n06TgNbp6TET2+ojWaVLi6xSGIOvUF8EKmieqSTbTSdtjU+kHC3JTK2pdSVood3BHZXoLRzNNjx8jOzxuq4y+lDKHgA/rKAxy755wqSpRjPpPtk=
+	t=1756207425; cv=none; b=qbh0xouSGj+sTVtfxP7PEVo3TLuD7RX75aGjb8rWkj81XmTPoevhEC2gaiLMP7Ddst3TWsJJFx3pfaeGVdbb4/avjA9uiByFEnrI15vNba3vsg+gGc0qgCFLft1oJ9npR/FlgZuxbA71k7z/AjHPygC9vt5GFRsWja48Seihny0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207422; c=relaxed/simple;
-	bh=7vnk67w4RqUh68D3mb7skYG0Lg9cIfJSNQFjsWs8p70=;
+	s=arc-20240116; t=1756207425; c=relaxed/simple;
+	bh=RihBWG0/zt9k0l2WAfJGIA/03FvpdStVvi/Kqe6HXZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmkTedi8asRGU+fi8lClYK2izeBjYZKGf/zyVbMfxCiqCknLkSXbKA9/W/YF0AEMVEfjDzAgxDByvmKN2tbrt0Q0PVBdRHBEc6PyLg8PnNjnu4l7FtawdBNKzYG2zP2612LYNwNh6IWF0DdPbKGk59YBcqmfZPGT7l3faE0zv3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6xIGlcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L5vG4sYFc4Oc6Yy1LsgTgefD2YJTc5STnGIEheUIqdTC3OliKdyP0oz4CMUOqkMzhPrEPeXkS8j1HuClKC3pjWlwVc+eTGqYp80PlKO+2f2IBlm9IZDjopRyZZduUYUM+JEoO/2641FXjMFX5yoWB3UzH50jKzo3EEAg+f2DAHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNvIOQYR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6xIGlcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11073C4CEF1;
-	Tue, 26 Aug 2025 11:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNvIOQYR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1CBC113CF;
+	Tue, 26 Aug 2025 11:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207422;
-	bh=7vnk67w4RqUh68D3mb7skYG0Lg9cIfJSNQFjsWs8p70=;
+	s=korg; t=1756207425;
+	bh=RihBWG0/zt9k0l2WAfJGIA/03FvpdStVvi/Kqe6HXZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6xIGlcGYo52eLjMRzsIdbAcyUalUrkZ5AqEjfzsk17vs4vST+2jsrm/vtvy7ql/D
-	 ujT8bDHhycrw+4zAWhQ8IkU/tb5Dxz6oGAzDlwV1RhYfa/6sP3OMjyfHD7heTAYGch
-	 R/kldRT+SHvvYy3qg+wuzt1x+dzMHZf3ufcMDbfU=
+	b=FNvIOQYRzND6NEbXKbwcGQTZxw8a1ZpqLFGUxF3o1q3MTqY57Wnzb1/sSgI4nsfBn
+	 JmNR4/tuXQoEVF2vT62iBtVePjAojDpXpogxD0XfmJBaRKFmPytjtpUadhllrlzRjh
+	 IQvad1hTJTDeFJUKMYFK4rq8HoVhafpUUGGh5ZiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.16 148/457] media: venus: hfi: explicitly release IRQ during teardown
-Date: Tue, 26 Aug 2025 13:07:12 +0200
-Message-ID: <20250826110941.029914999@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Gang Ba <Gang.Ba@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.16 175/457] drm/amdgpu: Avoid extra evict-restore process.
+Date: Tue, 26 Aug 2025 13:07:39 +0200
+Message-ID: <20250826110941.700021595@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -47,44 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+From: Gang Ba <Gang.Ba@amd.com>
 
-commit 640803003cd903cea73dc6a86bf6963e238e2b3f upstream.
+commit 1f02f2044bda1db1fd995bc35961ab075fa7b5a2 upstream.
 
-Ensure the IRQ is disabled - and all pending handlers completed - before
-dismantling the interrupt routing and clearing related pointers.
+If vm belongs to another process, this is fclose after fork,
+wait may enable signaling KFD eviction fence and cause parent process queue evicted.
 
-This prevents any possibility of the interrupt triggering after the
-handler context has been invalidated.
+[677852.634569]  amdkfd_fence_enable_signaling+0x56/0x70 [amdgpu]
+[677852.634814]  __dma_fence_enable_signaling+0x3e/0xe0
+[677852.634820]  dma_fence_wait_timeout+0x3a/0x140
+[677852.634825]  amddma_resv_wait_timeout+0x7f/0xf0 [amdkcl]
+[677852.634831]  amdgpu_vm_wait_idle+0x2d/0x60 [amdgpu]
+[677852.635026]  amdgpu_flush+0x34/0x50 [amdgpu]
+[677852.635208]  filp_flush+0x38/0x90
+[677852.635213]  filp_close+0x14/0x30
+[677852.635216]  do_close_on_exec+0xdd/0x130
+[677852.635221]  begin_new_exec+0x1da/0x490
+[677852.635225]  load_elf_binary+0x307/0xea0
+[677852.635231]  ? srso_alias_return_thunk+0x5/0xfbef5
+[677852.635235]  ? ima_bprm_check+0xa2/0xd0
+[677852.635240]  search_binary_handler+0xda/0x260
+[677852.635245]  exec_binprm+0x58/0x1a0
+[677852.635249]  bprm_execve.part.0+0x16f/0x210
+[677852.635254]  bprm_execve+0x45/0x80
+[677852.635257]  do_execveat_common.isra.0+0x190/0x200
 
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Gang Ba <Gang.Ba@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -1682,6 +1682,7 @@ void venus_hfi_destroy(struct venus_core
- 	venus_interface_queues_release(hdev);
- 	mutex_destroy(&hdev->lock);
- 	kfree(hdev);
-+	disable_irq(core->irq);
- 	core->ops = NULL;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2409,13 +2409,11 @@ void amdgpu_vm_adjust_size(struct amdgpu
+  */
+ long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout)
+ {
+-	timeout = dma_resv_wait_timeout(vm->root.bo->tbo.base.resv,
+-					DMA_RESV_USAGE_BOOKKEEP,
+-					true, timeout);
++	timeout = drm_sched_entity_flush(&vm->immediate, timeout);
+ 	if (timeout <= 0)
+ 		return timeout;
+ 
+-	return dma_fence_wait_timeout(vm->last_unlocked, true, timeout);
++	return drm_sched_entity_flush(&vm->delayed, timeout);
  }
  
+ static void amdgpu_vm_destroy_task_info(struct kref *kref)
 
 
