@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285D1327790;
-	Tue, 26 Aug 2025 11:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859A22F9982;
+	Tue, 26 Aug 2025 11:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207060; cv=none; b=TxubI7qUF6Pmsv6++Tk2dEND+6MEaWnIyjRQ6iAv4iLeXYX8zryc29Jp/Q02imyo54GQRlKtAsAEL2NeRGfiA2i5//TpKRzIvZ7KENxpJlfYl896zBX+tWHx7fEupszzzl8IjqvgUKFG9+maOYm1lW6aAjjyXtVDMf7VaVqcaM0=
+	t=1756207062; cv=none; b=K6HcgoPzGxRJRO9yGggdfJfZOY5za1irx6aAm7CvwRaOKKE5kyN+MuYDonJaN4eCZKMYk2SbgOqNkMnuG72vopyw1iQYr4UVrYldnH6IM+iZ5v6vF+yyajF1uTFW4f+yQtXnG68fUnGtHoRYx/AsWuObLNhOxxGN9csIYUl2AA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207060; c=relaxed/simple;
-	bh=jI1/9AWKRgq/FWt0lOMByFMxrS3hru/Qcc0xdbWSzi0=;
+	s=arc-20240116; t=1756207062; c=relaxed/simple;
+	bh=6q/TKRakhhD3RQKdPDwX4BCMX+RSW7f0di/MuVzpY+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AALnr2ijpI0186JHTkrwChlGiNGOu9KNtIReoGdS+OO3KOX2KCNUA4ZSrof90jPJ7+jnwi8AmUxEHCKV8w1m1TOePAbL82cs19fSa5Pv0dcyLEmYM8WjsExIaxdBQ7zy5WtpzkQjbj3Rq1w4gn98Kgtyu4FyHY+xbOAO8cvMJ8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnXhEMxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0sDZYQLzypgiDY0+cjC0FTsKdhfUTKT1YmubmuIw/Iprl8abxR0BkTRuiX+Lmdi+6ytJt4rM//Wy6xaGy198j4eLa7NU5pXIUgfC9rDNsWKAe8G0cmXx9tzvmcwui/ZmYKLsbnj/2TYuGqzBMuAWFixPJkqO6bU2VoGobayI98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLHs2YQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnXhEMxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC3CC4CEF4;
-	Tue, 26 Aug 2025 11:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLHs2YQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E80CC4CEF4;
+	Tue, 26 Aug 2025 11:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207060;
-	bh=jI1/9AWKRgq/FWt0lOMByFMxrS3hru/Qcc0xdbWSzi0=;
+	s=korg; t=1756207062;
+	bh=6q/TKRakhhD3RQKdPDwX4BCMX+RSW7f0di/MuVzpY+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnXhEMxLahH0VLOwVbcW8Q7URHXLLtUTleybi+o+hsWZ5q4Jzw7eCOqrkWvyFiym8
-	 /Vnmf6xL0UZA/82LwoDjmYg4uvaEar8aq+HQRKSTYnG7y5iqUFxBf5+yeyNYUkiWoc
-	 zGoCRl5GefYyGThQeu/mVckxPsZBE+U+qxSKp5Zg=
+	b=ZLHs2YQ2ppCO7RHa8r/T2lmB2s1POayhEAs5plg+1TDV1gv6pmghrspc8m7UG+GY+
+	 hamDl6cfAkHVUaThIYwu4RuvNqDI9zdIiMguRSBz+nIyrJHemw4OiOuiOq0U3Ki1jB
+	 W8zD4Fk6EzCQ8bbPxImQMkqklLjukfNzvohX9Zi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.16 035/457] ksmbd: extend the connection limiting mechanism to support IPv6
-Date: Tue, 26 Aug 2025 13:05:19 +0200
-Message-ID: <20250826110938.210437673@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.16 036/457] tracing: fprobe-event: Sanitize wildcard for fprobe event name
+Date: Tue, 26 Aug 2025 13:05:20 +0200
+Message-ID: <20250826110938.237136264@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,93 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c0d41112f1a5828c194b59cca953114bc3776ef2 upstream.
+commit ec879e1a0be8007aa232ffedcf6a6445dfc1a3d7 upstream.
 
-Update the connection tracking logic to handle both IPv4 and IPv6
-address families.
+Fprobe event accepts wildcards for the target functions, but unless user
+specifies its event name, it makes an event with the wildcards.
 
+  /sys/kernel/tracing # echo 'f mutex*' >> dynamic_events
+  /sys/kernel/tracing # cat dynamic_events
+  f:fprobes/mutex*__entry mutex*
+  /sys/kernel/tracing # ls events/fprobes/
+  enable         filter         mutex*__entry
+
+To fix this, replace the wildcard ('*') with an underscore.
+
+Link: https://lore.kernel.org/all/175535345114.282990.12294108192847938710.stgit@devnote2/
+
+Fixes: 334e5519c375 ("tracing/probes: Add fprobe events for tracing function entry and exit.")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: e6bb91939740 ("ksmbd: limit repeated connections from clients with the same IP")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.h    |    7 ++++++-
- fs/smb/server/transport_tcp.c |   26 +++++++++++++++++++++++---
- 2 files changed, 29 insertions(+), 4 deletions(-)
+ kernel/trace/trace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -46,7 +46,12 @@ struct ksmbd_conn {
- 	struct mutex			srv_mutex;
- 	int				status;
- 	unsigned int			cli_cap;
--	__be32				inet_addr;
-+	union {
-+		__be32			inet_addr;
-+#if IS_ENABLED(CONFIG_IPV6)
-+		u8			inet6_addr[16];
-+#endif
-+	};
- 	char				*request_buf;
- 	struct ksmbd_transport		*transport;
- 	struct nls_table		*local_nls;
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -87,7 +87,14 @@ static struct tcp_transport *alloc_trans
- 		return NULL;
- 	}
- 
-+#if IS_ENABLED(CONFIG_IPV6)
-+	if (client_sk->sk->sk_family == AF_INET6)
-+		memcpy(&conn->inet6_addr, &client_sk->sk->sk_v6_daddr, 16);
-+	else
-+		conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
-+#else
- 	conn->inet_addr = inet_sk(client_sk->sk)->inet_daddr;
-+#endif
- 	conn->transport = KSMBD_TRANS(t);
- 	KSMBD_TRANS(t)->conn = conn;
- 	KSMBD_TRANS(t)->ops = &ksmbd_tcp_transport_ops;
-@@ -231,7 +238,6 @@ static int ksmbd_kthread_fn(void *p)
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -2204,7 +2204,7 @@ static inline bool is_good_system_name(c
+ static inline void sanitize_event_name(char *name)
  {
- 	struct socket *client_sk = NULL;
- 	struct interface *iface = (struct interface *)p;
--	struct inet_sock *csk_inet;
- 	struct ksmbd_conn *conn;
- 	int ret;
+ 	while (*name++ != '\0')
+-		if (*name == ':' || *name == '.')
++		if (*name == ':' || *name == '.' || *name == '*')
+ 			*name = '_';
+ }
  
-@@ -254,13 +260,27 @@ static int ksmbd_kthread_fn(void *p)
- 		/*
- 		 * Limits repeated connections from clients with the same IP.
- 		 */
--		csk_inet = inet_sk(client_sk->sk);
- 		down_read(&conn_list_lock);
- 		list_for_each_entry(conn, &conn_list, conns_list)
--			if (csk_inet->inet_daddr == conn->inet_addr) {
-+#if IS_ENABLED(CONFIG_IPV6)
-+			if (client_sk->sk->sk_family == AF_INET6) {
-+				if (memcmp(&client_sk->sk->sk_v6_daddr,
-+					   &conn->inet6_addr, 16) == 0) {
-+					ret = -EAGAIN;
-+					break;
-+				}
-+			} else if (inet_sk(client_sk->sk)->inet_daddr ==
-+				 conn->inet_addr) {
- 				ret = -EAGAIN;
- 				break;
- 			}
-+#else
-+			if (inet_sk(client_sk->sk)->inet_daddr ==
-+			    conn->inet_addr) {
-+				ret = -EAGAIN;
-+				break;
-+			}
-+#endif
- 		up_read(&conn_list_lock);
- 		if (ret == -EAGAIN)
- 			continue;
 
 
