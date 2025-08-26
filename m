@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5EC352087;
-	Tue, 26 Aug 2025 14:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DFE343D63;
+	Tue, 26 Aug 2025 14:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218128; cv=none; b=LiIF4+MTy2GkXiE+BTseY6ih1Si7ehlvu7nFpXTM70k1w6pj3CwMTCUAR9RzCD8pozChFQCxzbr8itooeysiZ3YBRBmaH95D6W9ZrKXQwCCQq4GehCfNNK0pyq2FCK57fGfiFPjuM9KkxmEwPVMKU4vyX2Bm1AiOILD7aYZ7+pY=
+	t=1756218130; cv=none; b=QW0gWVn70yIKU59OhyR+vSbiXXcd/xRaeLlIcCgcguQPWg1IbXU4S4silKPNEjTYEzAQbcUJ0HJpJfGP0HatAu+avl5oIvdbvtEqqzw/v4PfKb8q3k7+jSkwIWnRZfdgbVfBqEjiZOllIJbycx64FFeqCb8YmJTD5x9PGCQfgWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218128; c=relaxed/simple;
-	bh=TIioFO/Pv/U1feqgaSu3j3AmzntXSf0WdudFj0N77Fg=;
+	s=arc-20240116; t=1756218130; c=relaxed/simple;
+	bh=yc88o5phPGItJ9NYUPDo8iNzgGEbvDOjgVj3W0j1ZVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lo88+yRwsjuik0GNfRcfC8/YLKOZaea4fLWIg+JBkUnpOEl6lBEmn9aVGvK6rrzPZZHuKYBdziOIxWUGFpnUjRvQ/SHHkWeV2AHwLvn0mmnueXVTKgVCLOILN8DSTyKKbe8W9gAk7iIWkO0oOozgH70sz1iNSsL1LqnCXYzQHcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbQPpL+1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRweVUMrKbh/H/zbH8DI8dRYDNvzmL2CdNlJ+Iopv1VqNYPwi8n3do9LpbEBAzVEr7xYfrlWYSXCv9PCh57uZlBW33WwyMAnNuvF5FWzXZetxH0IoDAYlDa8xQOVQY6EpIniIxd1fu06XWljS3o4moUijBYFMixA3ucYphzOscM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeyRKodC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbQPpL+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656FCC4CEF1;
-	Tue, 26 Aug 2025 14:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeyRKodC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8EDC116B1;
+	Tue, 26 Aug 2025 14:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218127;
-	bh=TIioFO/Pv/U1feqgaSu3j3AmzntXSf0WdudFj0N77Fg=;
+	s=korg; t=1756218130;
+	bh=yc88o5phPGItJ9NYUPDo8iNzgGEbvDOjgVj3W0j1ZVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbQPpL+1cI0+IhLsVyWt6ihnRGc8N/PG1Oz80uhhwAJddYGFuwsg2hJ2IWMtKBqD7
-	 yXR/dTMZ8ZiP1p7TfcIP5UrRvTyvCLQpSE6LtSNSEmW32gKrMZEB9RCVjq7m7bAU1u
-	 97BcXhzyF2C3nD7RSPXkfDoWaXsvXIUlVqmrjVMg=
+	b=aeyRKodCCS48QKujLLQMyMWm55/p2iKwVUgODAzMQrcnj9eAo2d4vdYAiT8rbOFpy
+	 HEqh3yiPzIetconygJWdhfR2de/BxBniLBWUiN7/9mSGuU8v/sR7tNDMfAPlyIfnJi
+	 IfVODv3f/iYEkWWdf2/uvHTQKNC2oIWncAi1LjHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.10 372/523] mtd: rawnand: fsmc: Add missing check after DMA map
-Date: Tue, 26 Aug 2025 13:09:42 +0200
-Message-ID: <20250826110933.642820950@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 5.10 373/523] PCI: endpoint: Fix configfs group list head handling
+Date: Tue, 26 Aug 2025 13:09:43 +0200
+Message-ID: <20250826110933.666425978@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,33 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 6c4dab38431fee3d39a841d66ba6f2890b31b005 upstream.
+commit d79123d79a8154b4318529b7b2ff7e15806f480b upstream.
 
-The DMA map functions can fail and should be tested for errors.
+Doing a list_del() on the epf_group field of struct pci_epf_driver in
+pci_epf_remove_cfs() is not correct as this field is a list head, not
+a list entry. This list_del() call triggers a KASAN warning when an
+endpoint function driver which has a configfs attribute group is torn
+down:
 
-Fixes: 4774fb0a48aa ("mtd: nand/fsmc: Add DMA support")
+==================================================================
+BUG: KASAN: slab-use-after-free in pci_epf_remove_cfs+0x17c/0x198
+Write of size 8 at addr ffff00010f4a0d80 by task rmmod/319
+
+CPU: 3 UID: 0 PID: 319 Comm: rmmod Not tainted 6.16.0-rc2 #1 NONE
+Hardware name: Radxa ROCK 5B (DT)
+Call trace:
+show_stack+0x2c/0x84 (C)
+dump_stack_lvl+0x70/0x98
+print_report+0x17c/0x538
+kasan_report+0xb8/0x190
+__asan_report_store8_noabort+0x20/0x2c
+pci_epf_remove_cfs+0x17c/0x198
+pci_epf_unregister_driver+0x18/0x30
+nvmet_pci_epf_cleanup_module+0x24/0x30 [nvmet_pci_epf]
+__arm64_sys_delete_module+0x264/0x424
+invoke_syscall+0x70/0x260
+el0_svc_common.constprop.0+0xac/0x230
+do_el0_svc+0x40/0x58
+el0_svc+0x48/0xdc
+el0t_64_sync_handler+0x10c/0x138
+el0t_64_sync+0x198/0x19c
+...
+
+Remove this incorrect list_del() call from pci_epf_remove_cfs().
+
+Fixes: ef1433f717a2 ("PCI: endpoint: Create configfs entry for each pci_epf_device_id table entry")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20250702065806.20983-2-fourier.thomas%40gmail.com
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20250624114544.342159-2-dlemoal@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/fsmc_nand.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/endpoint/pci-epf-core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/fsmc_nand.c
-+++ b/drivers/mtd/nand/raw/fsmc_nand.c
-@@ -492,6 +492,8 @@ static int dma_xfer(struct fsmc_nand_dat
+--- a/drivers/pci/endpoint/pci-epf-core.c
++++ b/drivers/pci/endpoint/pci-epf-core.c
+@@ -147,7 +147,6 @@ static void pci_epf_remove_cfs(struct pc
+ 	mutex_lock(&pci_epf_mutex);
+ 	list_for_each_entry_safe(group, tmp, &driver->epf_group, group_entry)
+ 		pci_ep_cfs_remove_epf_group(group);
+-	list_del(&driver->epf_group);
+ 	mutex_unlock(&pci_epf_mutex);
+ }
  
- 	dma_dev = chan->device;
- 	dma_addr = dma_map_single(dma_dev->dev, buffer, len, direction);
-+	if (dma_mapping_error(dma_dev->dev, dma_addr))
-+		return -EINVAL;
- 
- 	if (direction == DMA_TO_DEVICE) {
- 		dma_src = dma_addr;
 
 
