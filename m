@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D56350D75;
-	Tue, 26 Aug 2025 14:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74BB350D44;
+	Tue, 26 Aug 2025 14:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217240; cv=none; b=sjn/E05k42ZiRLlJ9JxOyHysGP05WoHK4sDgJZXhEK4EMCspsGDqRihy2BzHgf3JUQNgV6lo07HiSOASXdnnvun6Yce1QdBvdaW5Xo+UUVezjjWaGRvMHJzRa50ucOXcMWE7g4eteIq2KfEdP4p+3txu4ynzsmyNMkbFbjXomew=
+	t=1756217242; cv=none; b=VB9wCMswBo3aux8AYbmNHiRzjhPnON+7dWzn7JToNU3KnxfsIxdCxhLEMpHGlfZyvoeBu9qc23b8fryKVM3Dd17nLJFlnxq9i2Zoxeq9d5AbGNxc2r9SB1ujFWUg/a1cU4zXNpKoHW5aSGsrvRu4KNcyuqZNXa4wJZaiv+TALOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217240; c=relaxed/simple;
-	bh=Er7byKv4ybw2J3KxfrRmXATo2yc3t8fYdc6jMrQfjTU=;
+	s=arc-20240116; t=1756217242; c=relaxed/simple;
+	bh=vmqw3atvq1qxEMI/G1qsaF7kUlKA6vJBgmu/mnlqCQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rod0JAtgqykLggbFMALyFVcPMt/I3l9lBZGC6bHFHgdJ220i9VSyabFCbUxdaSfHS4Yvlx9XBBoANwPFdsSPQoDnTNaaljxKT5/oBWLzOBYfb//WmAPRVyLL18q6rdGnoo/yU6AExjjF6yZ46NLXdr76N7ksGmRXSyxk4ECzp6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8ZZhrtv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQdjq4ewkX2NqbGFtuTiBFoSxcY/OUkKIgRicnylQEyvlLcKH+PAOapKFOmymdKG5Cfr/VEFM8YI28zZRJD5EXb9hk88wcNmLu5hUG8MxSv/zDnhTQZNODoye8OQQVC7V/+8A3MEumyUP0gyi5B5nQ0rhEL3bmVybjYAn2mjZys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXdEAoPv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8ZZhrtv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B70EC4CEF1;
-	Tue, 26 Aug 2025 14:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXdEAoPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097E2C113CF;
+	Tue, 26 Aug 2025 14:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217239;
-	bh=Er7byKv4ybw2J3KxfrRmXATo2yc3t8fYdc6jMrQfjTU=;
+	s=korg; t=1756217242;
+	bh=vmqw3atvq1qxEMI/G1qsaF7kUlKA6vJBgmu/mnlqCQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8ZZhrtvLMTdH4uhMcagTys23cTPRnPzCRicQjojeaxWiKXSe1mkIdV4erINgPNMx
-	 n6sY0neh0Nhluo3BNDIqHwtIllmCKqekmNgx/mCs2ams8HBSqMazR+xTwSNVDQdVl+
-	 3Hp3dkxEf3ynoLeGpqTm/QnY+DQPO0yM8Wkvx81s=
+	b=FXdEAoPvR8S/zJY297aWTtJ7u5uZijdg3+5YgX1L/gjxrSWKtkXNBz2aQqZL2UKXj
+	 N1RR/RPoKi3CAOW7zHYGjHzud5V2In6xweTlHtdIxB9VhXQxWtia2Q9fc7o5sk/A94
+	 Ik+xYpo9BqGIlIufyDs4xtvy3wRFBqxV32r8ljKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3bbbade4e1a7ab45ca3b@syzkaller.appspotmail.com,
-	Marius Zachmann <mail@mariuszachmann.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	syzbot+3f89ec3d1d0842e95d50@syzkaller.appspotmail.com,
+	Oliver Neukum <oneukum@suse.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/523] hwmon: (corsair-cpro) Validate the size of the received input buffer
-Date: Tue, 26 Aug 2025 13:04:07 +0200
-Message-ID: <20250826110925.514663904@linuxfoundation.org>
+Subject: [PATCH 5.10 038/523] usb: net: sierra: check for no status endpoint
+Date: Tue, 26 Aug 2025 13:04:08 +0200
+Message-ID: <20250826110925.538084012@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,54 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marius Zachmann <mail@mariuszachmann.de>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 495a4f0dce9c8c4478c242209748f1ee9e4d5820 ]
+[ Upstream commit 4c4ca3c46167518f8534ed70f6e3b4bf86c4d158 ]
 
-Add buffer_recv_size to store the size of the received bytes.
-Validate buffer_recv_size in send_usb_cmd().
+The driver checks for having three endpoints and
+having bulk in and out endpoints, but not that
+the third endpoint is interrupt input.
+Rectify the omission.
 
-Reported-by: syzbot+3bbbade4e1a7ab45ca3b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-hwmon/61233ba1-e5ad-4d7a-ba31-3b5d0adcffcc@roeck-us.net
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
-Signed-off-by: Marius Zachmann <mail@mariuszachmann.de>
-Link: https://lore.kernel.org/r/20250619132817.39764-5-mail@mariuszachmann.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: syzbot+3f89ec3d1d0842e95d50@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/686d5a9f.050a0220.1ffab7.0017.GAE@google.com/
+Tested-by: syzbot+3f89ec3d1d0842e95d50@syzkaller.appspotmail.com
+Fixes: eb4fd8cd355c8 ("net/usb: add sierra_net.c driver")
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20250714111326.258378-1-oneukum@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/sierra_net.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 05df31cab2e52..074f812332e89 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -84,6 +84,7 @@ struct ccp_device {
- 	struct mutex mutex; /* whenever buffer is used, lock before send_usb_cmd */
- 	u8 *cmd_buffer;
- 	u8 *buffer;
-+	int buffer_recv_size; /* number of received bytes in buffer */
- 	int target[6];
- 	DECLARE_BITMAP(temp_cnct, NUM_TEMP_SENSORS);
- 	DECLARE_BITMAP(fan_cnct, NUM_FANS);
-@@ -139,6 +140,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	if (!t)
- 		return -ETIMEDOUT;
- 
-+	if (ccp->buffer_recv_size != IN_BUFFER_SIZE)
-+		return -EPROTO;
-+
- 	return ccp_get_errno(ccp);
- }
- 
-@@ -150,6 +154,7 @@ static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	spin_lock(&ccp->wait_input_report_lock);
- 	if (!completion_done(&ccp->wait_input_report)) {
- 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
-+		ccp->buffer_recv_size = size;
- 		complete_all(&ccp->wait_input_report);
+diff --git a/drivers/net/usb/sierra_net.c b/drivers/net/usb/sierra_net.c
+index 777f672f288cb..cfc519bc45451 100644
+--- a/drivers/net/usb/sierra_net.c
++++ b/drivers/net/usb/sierra_net.c
+@@ -689,6 +689,10 @@ static int sierra_net_bind(struct usbnet *dev, struct usb_interface *intf)
+ 			status);
+ 		return -ENODEV;
  	}
- 	spin_unlock(&ccp->wait_input_report_lock);
++	if (!dev->status) {
++		dev_err(&dev->udev->dev, "No status endpoint found");
++		return -ENODEV;
++	}
+ 	/* Initialize sierra private data */
+ 	priv = kzalloc(sizeof *priv, GFP_KERNEL);
+ 	if (!priv)
 -- 
 2.39.5
 
