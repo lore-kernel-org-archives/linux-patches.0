@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1E2393DD1;
-	Tue, 26 Aug 2025 11:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B772D6E6B;
+	Tue, 26 Aug 2025 11:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208686; cv=none; b=rjQYAgLH+0hyplbMZp4MqhbYT6QzgmNap/XzXeeRGOMzczbzm/h2SIRbypccL1IgGjTZNIhiN6IhcZfqhA9Z82M639HgVnRqNjiU6JRygo8r6pQP7RYug4CSgN4AXTMahTySkJM0sjZpkzNVmDuFYiwb9G9Oen46TrJfXF9ZW10=
+	t=1756208689; cv=none; b=M6uWmGsMq0LmBfVY6UhNUvpl5mol2HSwX2npfVWmJXMukNtxfZTpI4UwMTSGVIGx8ORfIp7qMPRu6AVN0sLj4zEv7UcM3VgeuehfFtDzSRZj2cpNhF0fQV48+cOID6UXlnOcz5/ziInA/GFYWhVqHfycsjmITna3cuYvndmpHNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208686; c=relaxed/simple;
-	bh=r3cbHMHF3qI40Wt4xXnDivznqUXbW9jNOD+OlZuUlQo=;
+	s=arc-20240116; t=1756208689; c=relaxed/simple;
+	bh=Q6OD8UPmnpob6nH7B56kjcz4yM8+IG4Ym5eRiAFPFtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMHKpKL8OSZO6o6697U4qffGTKHApG5YimSAMZ2VBXkUQXkhUephb33sisCTmaSjZdeFdOHrAE/1dyarSDGO/BPrNSiFql+g2F1k3GPmpiFgH+4GvxGNBYhR0Pi1w7jYda6QE9if5tHcBZiNhNWkHUQpa9c0Vehj7gF/aI6TBmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJDpqTLi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O6BP+ZMYn1KlmEs792+9v5CWs9mrIRLhUhYMYNRmtWJKiP55sj0qjYommMoHLBmt5oXAWzbzb6fQy3/v7GNlZCuS+h/HUMQaAKo7M53PLZ1LOWPPjo+i4qWruAI63jkfm/owMm01/EXRPB16aS+JA545YzHO0m9tCmncJrnLfSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x56kWhRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJDpqTLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20559C116B1;
-	Tue, 26 Aug 2025 11:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x56kWhRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F95DC4CEF1;
+	Tue, 26 Aug 2025 11:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208686;
-	bh=r3cbHMHF3qI40Wt4xXnDivznqUXbW9jNOD+OlZuUlQo=;
+	s=korg; t=1756208688;
+	bh=Q6OD8UPmnpob6nH7B56kjcz4yM8+IG4Ym5eRiAFPFtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJDpqTLiBzx1YVGk8UkRgjlq1TsaFD6P/M/W3ZIRTLLcnwh9ub8dVwiKbHBNF5Ay0
-	 xH0Id3IJ0Vvys/e0vUCLchBwY/Z70N6EuaOvg5VBaS17R7exk/uA6Z48nDNf6rg/cW
-	 5wKaeSpCE2Vqf/I5gUz9rF19uLHl7zSJeNM5gjrg=
+	b=x56kWhRs3NtrAXUcvuzZbV5W7oN9+AS62IHKAldurJsbl/KIUIgVryS41O90eNgZA
+	 8BqIrwCpdWHxFH9xfNzrC8TpyC5VN36JceZUoZuVq+X4gZktozhK3aIMukL/XmG7dy
+	 YhmGeo/289woBJTGgAqrHyeCZ4J/zlYY7tmOCNhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>
-Subject: [PATCH 6.12 176/322] s390/sclp: Fix SCCB present check
-Date: Tue, 26 Aug 2025 13:09:51 +0200
-Message-ID: <20250826110920.206948182@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 177/322] platform/x86/intel-uncore-freq: Check write blocked for ELC
+Date: Tue, 26 Aug 2025 13:09:52 +0200
+Message-ID: <20250826110920.232712278@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -44,71 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit 430fa71027b6ac9bb0ce5532b8d0676777d4219a upstream.
+commit dff6f36878799a5ffabd15336ce993dc737374dc upstream.
 
-Tracing code called by the SCLP interrupt handler contains early exits
-if the SCCB address associated with an interrupt is NULL. This check is
-performed after physical to virtual address translation.
+Add the missing write_blocked check for updating sysfs related to uncore
+efficiency latency control (ELC). If write operation is blocked return
+error.
 
-If the kernel identity mapping does not start at address zero, the
-resulting virtual address is never zero, so that the NULL checks won't
-work. Subsequently this may result in incorrect accesses to the first
-page of the identity mapping.
-
-Fix this by introducing a function that handles the NULL case before
-address translation.
-
-Fixes: ada1da31ce34 ("s390/sclp: sort out physical vs virtual pointers usage")
+Fixes: bb516dc79c4a ("platform/x86/intel-uncore-freq: Add support for efficiency latency control")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250727210513.2898630-1-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/char/sclp.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/s390/char/sclp.c
-+++ b/drivers/s390/char/sclp.c
-@@ -76,6 +76,13 @@ unsigned long sclp_console_full;
- /* The currently active SCLP command word. */
- static sclp_cmdw_t active_cmd;
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-tpmi.c
+@@ -189,9 +189,14 @@ static int uncore_read_control_freq(stru
+ static int write_eff_lat_ctrl(struct uncore_data *data, unsigned int val, enum uncore_index index)
+ {
+ 	struct tpmi_uncore_cluster_info *cluster_info;
++	struct tpmi_uncore_struct *uncore_root;
+ 	u64 control;
  
-+static inline struct sccb_header *sclpint_to_sccb(u32 sccb_int)
-+{
-+	if (sccb_int)
-+		return __va(sccb_int);
-+	return NULL;
-+}
+ 	cluster_info = container_of(data, struct tpmi_uncore_cluster_info, uncore_data);
++	uncore_root = cluster_info->uncore_root;
 +
- static inline void sclp_trace(int prio, char *id, u32 a, u64 b, bool err)
- {
- 	struct sclp_trace_entry e;
-@@ -619,7 +626,7 @@ __sclp_find_req(u32 sccb)
++	if (uncore_root->write_blocked)
++		return -EPERM;
  
- static bool ok_response(u32 sccb_int, sclp_cmdw_t cmd)
- {
--	struct sccb_header *sccb = (struct sccb_header *)__va(sccb_int);
-+	struct sccb_header *sccb = sclpint_to_sccb(sccb_int);
- 	struct evbuf_header *evbuf;
- 	u16 response;
- 
-@@ -658,7 +665,7 @@ static void sclp_interrupt_handler(struc
- 
- 	/* INT: Interrupt received (a=intparm, b=cmd) */
- 	sclp_trace_sccb(0, "INT", param32, active_cmd, active_cmd,
--			(struct sccb_header *)__va(finished_sccb),
-+			sclpint_to_sccb(finished_sccb),
- 			!ok_response(finished_sccb, active_cmd));
- 
- 	if (finished_sccb) {
+ 	if (cluster_info->root_domain)
+ 		return -ENODATA;
 
 
