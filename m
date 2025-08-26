@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2152BEC34;
-	Tue, 26 Aug 2025 11:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7567E312806;
+	Tue, 26 Aug 2025 11:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208181; cv=none; b=CuxynZwpQ2Lr4HG9EzmEGP6EpM3OzN6gm/BQFIsDASrtB0Ej2N/U0BQzxo1tEgNXXwdaWeYBH1VNyoKsyA322owT2MBqO65SiwOhTTSpLMOz+DT3ZJ8Yy0nVhPeOnysOmoDxJuUYt2sypmFhNBwurvUU3qWs5U2A2ol0xTGdKZA=
+	t=1756208184; cv=none; b=i4e4n8kUhjtSw6MpKUhqmow3u3k06APnp15NAy6I9rxSskTlCwbP0/f33is+nNcDQgzFtWCf2v+uYXV74rzTB94sGTfb8KP2BHuHV3tPGvGW2sYiERuLFY9tClFbMVCGqblAfW+lU3N9e2Ns4qhPwfy10pA79eHwkrS4ZEwCwg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208181; c=relaxed/simple;
-	bh=cbvH9394EeSeNJ8GAlyPrHHsB8M86vjvveRmIU6TidI=;
+	s=arc-20240116; t=1756208184; c=relaxed/simple;
+	bh=f5oyNIz+7buTSF4e/h67cA1MlqHZirNkBKV+4xNwAxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQ/z+QToSoy41sKDkgbNIFrfvFe3TxczUEo7kv9sWaYSV+nHSVwLE+Ya8Z9tbxfg3d9R8Bu56T0GOWN/T0kPFFQ+dErjrKN1irnkQ77Kz5aoZ5Q/G+nGuv7S8RXrrREdeQCnYbst+Q/WRCmmcFnpKsOm/4T6aXWcZdUJ0Ylj85U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W3ogkN8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDKFRFc/mwy4AcyBIFu3HngRpaRGS8se0VsXBpLjWkT4KyyJ0sU0fnu+8k2lUO5GrmAQLoFKr7beVaqi+PXgo219sYTm2mbkZ7zodNHhYgl+4mqyknLGLbjAGh4034VKgErnQiPSqAlScU2zAUUMzjgT1ugr0bP18BxWZgctvnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pHThVif; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W3ogkN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22994C4CEF1;
-	Tue, 26 Aug 2025 11:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pHThVif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FA2C4CEF1;
+	Tue, 26 Aug 2025 11:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208181;
-	bh=cbvH9394EeSeNJ8GAlyPrHHsB8M86vjvveRmIU6TidI=;
+	s=korg; t=1756208184;
+	bh=f5oyNIz+7buTSF4e/h67cA1MlqHZirNkBKV+4xNwAxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0W3ogkN8GPCxtBKBSAxr1fm8m5JH77OvM+dT3zXSreipE2HdamizPrvZBSVCfYIDg
-	 OE84ahdJJVzYiLzmv6WOdtqq8lw4dfEBqzdjWc67cAzwftyD3JJcoH3JnB7rHiSDXp
-	 4MzqrP/JFuZdaPizwreq7UYMdVSUvGIyRzMxbAA8=
+	b=2pHThVifewgwboqX8psV2YZ6rGz1qi7T8Lub4GomwPednOutUwZl2ryeMNATL5/Fm
+	 D69pYxBYNWdTFF6+7q1ksJATou7lCZ0gTWU0f61ZKfuVhh4BAfqu66AC1Cf37lG+l6
+	 jo3czKdpu8PD8xrOn6VLWba5xwffRPZfaXnDlWjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 013/322] usb: dwc3: imx8mp: fix device leak at unbind
-Date: Tue, 26 Aug 2025 13:07:08 +0200
-Message-ID: <20250826110915.563942257@linuxfoundation.org>
+	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH 6.12 014/322] bus: mhi: host: Fix endianness of BHI vector table
+Date: Tue, 26 Aug 2025 13:07:09 +0200
+Message-ID: <20250826110915.592657605@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -50,54 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
 
-commit 086a0e516f7b3844e6328a5c69e2708b66b0ce18 upstream.
+commit f471578e8b1a90623674433a01a8845110bc76ce upstream.
 
-Make sure to drop the reference to the dwc3 device taken by
-of_find_device_by_node() on probe errors and on driver unbind.
+On big endian platform like PowerPC, the MHI bus (which is little endian)
+does not start properly. The following example shows the error messages by
+using QCN9274 WLAN device with ath12k driver:
 
-Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
-Cc: stable@vger.kernel.org	# 5.12
-Cc: Li Jun <jun.li@nxp.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20250724091910.21092-2-johan@kernel.org
+    ath12k_pci 0001:01:00.0: BAR 0: assigned [mem 0xc00000000-0xc001fffff 64bit]
+    ath12k_pci 0001:01:00.0: MSI vectors: 1
+    ath12k_pci 0001:01:00.0: Hardware name: qcn9274 hw2.0
+    ath12k_pci 0001:01:00.0: failed to set mhi state: POWER_ON(2)
+    ath12k_pci 0001:01:00.0: failed to start mhi: -110
+    ath12k_pci 0001:01:00.0: failed to power up :-110
+    ath12k_pci 0001:01:00.0: failed to create soc core: -110
+    ath12k_pci 0001:01:00.0: failed to init core: -110
+    ath12k_pci: probe of 0001:01:00.0 failed with error -110
+
+The issue seems to be with the incorrect DMA address/size used for
+transferring the firmware image over BHI. So fix it by converting the DMA
+address and size of the BHI vector table to little endian format before
+sending them to the device.
+
+Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+[mani: added stable tag and reworded commit message]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250519145837.958153-1-alexander.wilhelm@westermo.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-imx8mp.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/host/boot.c     |    8 ++++----
+ drivers/bus/mhi/host/internal.h |    4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-imx8mp.c
-+++ b/drivers/usb/dwc3/dwc3-imx8mp.c
-@@ -244,7 +244,7 @@ static int dwc3_imx8mp_probe(struct plat
- 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
- 	if (err) {
- 		dev_err(dev, "failed to request IRQ #%d --> %d\n", irq, err);
--		goto depopulate;
-+		goto put_dwc3;
+--- a/drivers/bus/mhi/host/boot.c
++++ b/drivers/bus/mhi/host/boot.c
+@@ -31,8 +31,8 @@ int mhi_rddm_prepare(struct mhi_controll
+ 	int ret;
+ 
+ 	for (i = 0; i < img_info->entries - 1; i++, mhi_buf++, bhi_vec++) {
+-		bhi_vec->dma_addr = mhi_buf->dma_addr;
+-		bhi_vec->size = mhi_buf->len;
++		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
++		bhi_vec->size = cpu_to_le64(mhi_buf->len);
  	}
  
- 	device_set_wakeup_capable(dev, true);
-@@ -252,6 +252,8 @@ static int dwc3_imx8mp_probe(struct plat
+ 	dev_dbg(dev, "BHIe programming for RDDM\n");
+@@ -375,8 +375,8 @@ static void mhi_firmware_copy(struct mhi
+ 	while (remainder) {
+ 		to_cpy = min(remainder, mhi_buf->len);
+ 		memcpy(mhi_buf->buf, buf, to_cpy);
+-		bhi_vec->dma_addr = mhi_buf->dma_addr;
+-		bhi_vec->size = to_cpy;
++		bhi_vec->dma_addr = cpu_to_le64(mhi_buf->dma_addr);
++		bhi_vec->size = cpu_to_le64(to_cpy);
  
- 	return 0;
+ 		buf += to_cpy;
+ 		remainder -= to_cpy;
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -25,8 +25,8 @@ struct mhi_ctxt {
+ };
  
-+put_dwc3:
-+	put_device(&dwc3_imx->dwc3->dev);
- depopulate:
- 	of_platform_depopulate(dev);
- remove_swnode:
-@@ -265,8 +267,11 @@ disable_rpm:
+ struct bhi_vec_entry {
+-	u64 dma_addr;
+-	u64 size;
++	__le64 dma_addr;
++	__le64 size;
+ };
  
- static void dwc3_imx8mp_remove(struct platform_device *pdev)
- {
-+	struct dwc3_imx8mp *dwc3_imx = platform_get_drvdata(pdev);
- 	struct device *dev = &pdev->dev;
- 
-+	put_device(&dwc3_imx->dwc3->dev);
-+
- 	pm_runtime_get_sync(dev);
- 	of_platform_depopulate(dev);
- 	device_remove_software_node(dev);
+ enum mhi_ch_state_type {
 
 
