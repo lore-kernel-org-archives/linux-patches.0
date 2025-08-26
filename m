@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC4A2820B1;
-	Tue, 26 Aug 2025 11:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E886343D6C;
+	Tue, 26 Aug 2025 11:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207864; cv=none; b=NnO4PyF/3hyoN7sQQcCbH04bSWxNEdhEDrzxG9GTp+Rc02pxX0YhcAz1KBHTqDmzsRrO+JwtmGyEc0aMuYk5djnolmV7FzGsL2VUSHGQhMi6nekHXOQ4RHsuOSiTcafQrjvi4NOID+WH9y6oKgrlRCVXPP3+H/To9jUsBScgBOg=
+	t=1756207867; cv=none; b=gQD3y83lg8sGtGcrZaVbPfODuSEDljfINLdrsNaas/+azPPlQL2c07WFDxVZjrvZUZdb9hAksSN5rIWgCZjN9UfHXX71TwId2LYPkHp9tEmvlprljhmloiC52+K+KfndXpXxjinwM2FTSLrl+xVDYZEx8mepRpGvivZEIcXlZ5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207864; c=relaxed/simple;
-	bh=+MSoshW/AjdvTlwcYzkKmQFZpZzyw/pXPzZAQTE8lSI=;
+	s=arc-20240116; t=1756207867; c=relaxed/simple;
+	bh=v37KcDls1HGYEofFHjNCBuOqW9BBmZoyd/I+qu1IZBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/Mg7nEmT/Ag9m4XV2XC3axZVd0xUSKuOYsmLTlPPl2tvnIHcV4xzE1lJKHPRLKfk7oO/oQv9sXOBr+gcX+trlrM9tv/GG/v6GlgdhqmN+uErzHxsdDu7Mei8o6fZqkBLKrKgk2FtOnpccyF4uAXDDxP/zdDvsdY4YMbUglJTDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKBDP0OT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgUTY4sWoANmE40Mg2ijii7i8V9N8D+JyjHbHTFm7cDNkLipB9qSvRCZOmYLkZO831w/3yfi/WzpxolKb2idrCmGvSbaDhSIFvNHS7xpM2+e3ynxgQKR6RO6iC6aXOU5LcgGvgZoUWu+GrCrLGHQsXfdnnlP31vUtNmFUCig6Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chbAHIYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKBDP0OT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29233C4CEF1;
-	Tue, 26 Aug 2025 11:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chbAHIYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9108EC4CEF1;
+	Tue, 26 Aug 2025 11:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207864;
-	bh=+MSoshW/AjdvTlwcYzkKmQFZpZzyw/pXPzZAQTE8lSI=;
+	s=korg; t=1756207866;
+	bh=v37KcDls1HGYEofFHjNCBuOqW9BBmZoyd/I+qu1IZBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKBDP0OTB8O9pUSGUZWMKGGvY6PNRTJOjrUp/qvvG+szvAO7Nf64amKE7v9OH9Uyn
-	 7pZsmz+AJv/435vCWvBEo2F3V63f+zGNkwRDqsT9/eNmCwR3OCpVdHKj1W02Ui1VJq
-	 71YRUjb5yxUnCClVajLhZCCcl4fsNLZk+xcH7o18=
+	b=chbAHIYmcOmmLujrLdoowpZHpYuObEyAcM7O4nbdjEOmsGuKNBmUOqpYRJWQErDCy
+	 bDtRFeArH0RImW2y7EuRuhP536EGbv4mjT/7hAkFR4gDkkjFYzUHwM/Sx/nF96/No3
+	 zpH/ZoOzVkFda4KlM8qbMpQKkFMPSIaTCvcvanG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Fanhua Li <lifanhua5@huawei.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 345/457] drm/nouveau/nvif: Fix potential memory leak in nvif_vmm_ctor().
-Date: Tue, 26 Aug 2025 13:10:29 +0200
-Message-ID: <20250826110945.855831696@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Thorsten Blum <thorsten.blum@linux.dev>
+Subject: [PATCH 6.16 317/457] usb: storage: realtek_cr: Use correct byte order for bcs->Residue
+Date: Tue, 26 Aug 2025 13:10:01 +0200
+Message-ID: <20250826110945.189720096@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fanhua Li <lifanhua5@huawei.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit bb8aeaa3191b617c6faf8ae937252e059673b7ea ]
+commit 98da66a70ad2396e5a508c4245367797ebc052ce upstream.
 
-When the nvif_vmm_type is invalid, we will return error directly
-without freeing the args in nvif_vmm_ctor(), which leading a memory
-leak. Fix it by setting the ret -EINVAL and goto done.
+Since 'bcs->Residue' has the data type '__le32', convert it to the
+correct byte order of the CPU using this driver when assigning it to
+the local variable 'residue'.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202312040659.4pJpMafN-lkp@intel.com/
-Fixes: 6b252cf42281 ("drm/nouveau: nvkm/vmm: implement raw ops to manage uvmm")
-Signed-off-by: Fanhua Li <lifanhua5@huawei.com>
-Link: https://lore.kernel.org/r/20250728115027.50878-1-lifanhua5@huawei.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 50a6cb932d5c ("USB: usb_storage: add ums-realtek driver")
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://lore.kernel.org/r/20250813145247.184717-3-thorsten.blum@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvif/vmm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/storage/realtek_cr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvif/vmm.c b/drivers/gpu/drm/nouveau/nvif/vmm.c
-index 99296f03371a..07c1ebc2a941 100644
---- a/drivers/gpu/drm/nouveau/nvif/vmm.c
-+++ b/drivers/gpu/drm/nouveau/nvif/vmm.c
-@@ -219,7 +219,8 @@ nvif_vmm_ctor(struct nvif_mmu *mmu, const char *name, s32 oclass,
- 	case RAW: args->type = NVIF_VMM_V0_TYPE_RAW; break;
- 	default:
- 		WARN_ON(1);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto done;
+--- a/drivers/usb/storage/realtek_cr.c
++++ b/drivers/usb/storage/realtek_cr.c
+@@ -252,7 +252,7 @@ static int rts51x_bulk_transport(struct
+ 		return USB_STOR_TRANSPORT_ERROR;
  	}
  
- 	memcpy(args->data, argv, argc);
--- 
-2.50.1
-
+-	residue = bcs->Residue;
++	residue = le32_to_cpu(bcs->Residue);
+ 	if (bcs->Tag != us->tag)
+ 		return USB_STOR_TRANSPORT_ERROR;
+ 
 
 
