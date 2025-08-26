@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4FD350845;
-	Tue, 26 Aug 2025 13:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBD4350D47;
+	Tue, 26 Aug 2025 13:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216166; cv=none; b=eM201HoksGaBlG6IirGBjh3ipZz5zeP2mLTN1O8UAdM8gd6gA+R9GUR+K80MZTixXuVSYGjA1O9ddYLsGWGJTiysXH+v+6LN/jM1jW0+fj0r9HMNyxAOThDSis81ctTXVC2Vf+rcASfOdi/ns6a5MWyXX8ps+29/h+5jl0A6f30=
+	t=1756216168; cv=none; b=VX7htjKugCjJRY9525hyoCbe68+Fd5Jf6KriRsYbIEUavnFZ3RKjZIy5ewqCH1nHRbv1bXBANAefm/Q+BI5JXGWx4cAELb2FTDGeyYo6cjJ2hvuxKb3gy7odNivMPRfJrvWOw0osjqmYhTrtDIbN0c4FotBK7OrL1j2wumUzzx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216166; c=relaxed/simple;
-	bh=jjGHPavrJwnvc16l0z01zzM827+TbDt3fpfkxJOhJx4=;
+	s=arc-20240116; t=1756216168; c=relaxed/simple;
+	bh=BRPYqSg5XzxkxwoXrHT8aOpEHcmJU/tYihz97jxjBuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KL3VrxOfL440p7Iie+3fY5+AHmULWsmUffeOtoD+odhir2vtQuTg/xfxmie7UhSU9dAgxGqk7H8gqwNv87ACWr3lX/Sf+86mGKvAGc2wnWyT926YCvon5Y5bZz560OlyYY0j0ibB6b1gHnXGSXI9Nyx00N+T5TKgvTUpPAR/B5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsVkJjq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GaS/X8MN/h3aPIN00dgmcklTbaa+C+78EVaqKOnpuIeBCEVF//oYdrthI5bFalXHVug05y3c+nq3BBk9WX7C+OZ9EWH5WhjMWuNabslYFng0LgT6t+Cj8KVEcAd8Fkg6+KuX8IPlhRttFtghQacOm3jyofekX1av74mzNhmcpKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaG4Axbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsVkJjq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66512C4CEF1;
-	Tue, 26 Aug 2025 13:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaG4Axbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE94C4CEF1;
+	Tue, 26 Aug 2025 13:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216165;
-	bh=jjGHPavrJwnvc16l0z01zzM827+TbDt3fpfkxJOhJx4=;
+	s=korg; t=1756216168;
+	bh=BRPYqSg5XzxkxwoXrHT8aOpEHcmJU/tYihz97jxjBuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsVkJjq3F7QL6t45zMJlY+ejt6f2/Yd3S12HpmHIT5n/z5lhzjz1LuvZHwkbBZCv6
-	 MhcAwYyqlpJchvI3tE2DWWoGhq3O48pwE4eqohrKaw7S441ACsxfjXE/w2uJwc3NsJ
-	 Nskicx/bAWlXZYHyil59V+3DDEO0hXuiK1IV//0s=
+	b=QaG4AxbevkCcMK9m1nUoi2X+8uqqW1oP0WBZird6tXKnLNiS6BZ/+4ZDwUI+IuLPG
+	 OmcvG0q7c+bV7fnTZ/DaXOmCl7NFoy7Y6StcTf85r8nCNLgbqs+nCopSbudNNSda7f
+	 8rhEz/jQljLIyu4LRw2D3nOQ3CbUtVc8JwIkajPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 310/644] gpio: tps65912: check the return value of regmap_update_bits()
-Date: Tue, 26 Aug 2025 13:06:41 +0200
-Message-ID: <20250826110954.066117648@linuxfoundation.org>
+Subject: [PATCH 5.15 311/644] ARM: tegra: Use I/O memcpy to write to IRAM
+Date: Tue, 26 Aug 2025 13:06:42 +0200
+Message-ID: <20250826110954.090872496@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,40 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit a0b2a6bbff8c26aafdecd320f38f52c341d5cafa ]
+[ Upstream commit 398e67e0f5ae04b29bcc9cbf342e339fe9d3f6f1 ]
 
-regmap_update_bits() can fail, check its return value like we do
-elsewhere in the driver.
+Kasan crashes the kernel trying to check boundaries when using the
+normal memcpy.
 
-Link: https://lore.kernel.org/r/20250707-gpiochip-set-rv-gpio-round4-v1-2-35668aaaf6d2@linaro.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://lore.kernel.org/r/20250522-mach-tegra-kasan-v1-1-419041b8addb@gmail.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-tps65912.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/arm/mach-tegra/reset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-tps65912.c b/drivers/gpio/gpio-tps65912.c
-index fab771cb6a87..bac757c191c2 100644
---- a/drivers/gpio/gpio-tps65912.c
-+++ b/drivers/gpio/gpio-tps65912.c
-@@ -49,10 +49,13 @@ static int tps65912_gpio_direction_output(struct gpio_chip *gc,
- 					  unsigned offset, int value)
- {
- 	struct tps65912_gpio *gpio = gpiochip_get_data(gc);
-+	int ret;
+diff --git a/arch/arm/mach-tegra/reset.c b/arch/arm/mach-tegra/reset.c
+index d5c805adf7a8..ea706fac6358 100644
+--- a/arch/arm/mach-tegra/reset.c
++++ b/arch/arm/mach-tegra/reset.c
+@@ -63,7 +63,7 @@ static void __init tegra_cpu_reset_handler_enable(void)
+ 	BUG_ON(is_enabled);
+ 	BUG_ON(tegra_cpu_reset_handler_size > TEGRA_IRAM_RESET_HANDLER_SIZE);
  
- 	/* Set the initial value */
--	regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
--			   GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
-+	ret = regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
-+				 GPIO_SET_MASK, value ? GPIO_SET_MASK : 0);
-+	if (ret)
-+		return ret;
+-	memcpy(iram_base, (void *)__tegra_cpu_reset_handler_start,
++	memcpy_toio(iram_base, (void *)__tegra_cpu_reset_handler_start,
+ 			tegra_cpu_reset_handler_size);
  
- 	return regmap_update_bits(gpio->tps->regmap, TPS65912_GPIO1 + offset,
- 				  GPIO_CFG_MASK, GPIO_CFG_MASK);
+ 	err = call_firmware_op(set_cpu_boot_addr, 0, reset_address);
 -- 
 2.39.5
 
