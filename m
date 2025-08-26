@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6DE17332C;
-	Tue, 26 Aug 2025 11:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BF32BF3E2;
+	Tue, 26 Aug 2025 11:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208211; cv=none; b=K4JXuQ7KjXI5vIaw6z22NHNlpImwJtnefNdItCPGxcx0J2m9csU2fL1RPkADxutx7qrFkoH7+tuEBc1Ai2g0ddAvEd0KbKGyw6dKfMzQ6R5IJFO4lUO1BACXr6IWr1GoXyRzYCjGZg4+NC0UbIm3QIksdD8wH9HQ4llbS9d/BPs=
+	t=1756208213; cv=none; b=bkFZQIBgg/2Hq+adyKNeIJbRtrtrMubarrzKD6dWRpbtEo4ZnYqppin5NYVVcB4i2cWQcttANiun6P4zX5pH3BZ8fg1WOsEybpMQtndDC/LNM4dnKlc8HaGyIakGu5fMaHsqbghdEO4wXR+LyvWZeXLi3IISOdO8ES6g60ndh4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208211; c=relaxed/simple;
-	bh=0FeNekxoWJd+Uu4r+qnsaJO5cq8RHlWBoDR6L+myYLE=;
+	s=arc-20240116; t=1756208213; c=relaxed/simple;
+	bh=2hxcptxdqQq9OUwvWZzv/bjzRPeFpNbVqH6sjWZ0qok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6epWw3x9cIQf5mrL9zYRIgIrIByLUGbXONmo1cw0Xb6aXUNzyoFoAZt3mYj8kv9rDoRa6LZ1CbGVFDQuarphMrzZY46MlYXQXzAf3WC1EiFn2xO8sj8i7gIRgKFDO1yYAe+Vo4inIbHNNG41bStZ83Vq247RRVRyV2nVLydI/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKhoViRl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvJzJgdXFbpFQb8rV5viXb+zph3mJcdDGKjbp6v/97QnOQmYf5B4CQfQVkJrOe0Ndm+mVv7SzzMrvkPmGMMNIGppjyYvkDi19FTPfAHS22Q4ITKlEOeRnSOuyD/Vs8YUBAxr5ESg9kcwn991e1l+Iu4AudscXh5sFNtJYR90o7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxd/TIGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKhoViRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2C4C4CEF1;
-	Tue, 26 Aug 2025 11:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxd/TIGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8CCC4CEF1;
+	Tue, 26 Aug 2025 11:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208210;
-	bh=0FeNekxoWJd+Uu4r+qnsaJO5cq8RHlWBoDR6L+myYLE=;
+	s=korg; t=1756208213;
+	bh=2hxcptxdqQq9OUwvWZzv/bjzRPeFpNbVqH6sjWZ0qok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKhoViRlHe/6WmC6eGM0U2ENmkUsMNqWKgg3ny5ZGIeE8WWESjAk7ME32L2RIUNWg
-	 tBNJ+bTjBuh7vGN7TD2/orwMMCtPNzU5Z/5mJ8mi5fqPrQD97oUEgGGVeH/B683o/m
-	 9tWIuJ/+9sKFvsjdbX48ftDV1cMokWUSEs046vJw=
+	b=pxd/TIGVCx0SqmqeSzvYCJP2FoejmkQq1zrojY8snQwb4eDxy228VUCoay/BQsOqm
+	 +QcE0Xfz6cFc6/uQNiBmMKmG94EMThAOMleQuasDff+SOVT403aiGM4W+aFQ3Jdynf
+	 kQdWKrGi436g8rBPgLpmmlvGw6lKWbYmm9DQOi/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bharat Bhushan <bbhushan2@marvell.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 023/322] crypto: octeontx2 - Fix address alignment on CN10K A0/A1 and OcteonTX2
-Date: Tue, 26 Aug 2025 13:07:18 +0200
-Message-ID: <20250826110915.856415913@linuxfoundation.org>
+Subject: [PATCH 6.12 024/322] crypto: octeontx2 - Fix address alignment on CN10KB and CN10KA-B0
+Date: Tue, 26 Aug 2025 13:07:19 +0200
+Message-ID: <20250826110915.889247465@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Bharat Bhushan <bbhushan2@marvell.com>
 
-commit 2e13163b43e6bb861182ea999a80dd1d893c0cbf upstream.
+commit a091a58b8a1eba2f243b0c05bcc82bdc2a4a338d upstream.
 
 octeontx2 crypto driver allocates memory using kmalloc/kzalloc,
 and uses this memory for dma (does dma_map_single()). It assumes
@@ -69,46 +69,36 @@ Memory allocated are used for following purpose:
 This patch ensures all addresses are aligned as mentioned above.
 
 Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
-Cc: <stable@vger.kernel.org> # v6.5+
+Cc: <stable@vger.kernel.org> # v6.8+
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/marvell/octeontx2/otx2_cpt_reqmgr.h |   66 ++++++++++++++++-----
- 1 file changed, 51 insertions(+), 15 deletions(-)
+ drivers/crypto/marvell/octeontx2/otx2_cpt_reqmgr.h |   61 +++++++++++++++------
+ 1 file changed, 45 insertions(+), 16 deletions(-)
 
 --- a/drivers/crypto/marvell/octeontx2/otx2_cpt_reqmgr.h
 +++ b/drivers/crypto/marvell/octeontx2/otx2_cpt_reqmgr.h
-@@ -34,6 +34,9 @@
- #define SG_COMP_2    2
- #define SG_COMP_1    1
- 
-+#define OTX2_CPT_DPTR_RPTR_ALIGN	8
-+#define OTX2_CPT_RES_ADDR_ALIGN		32
-+
- union otx2_cpt_opcode {
- 	u16 flags;
- 	struct {
-@@ -417,10 +420,9 @@ static inline struct otx2_cpt_inst_info
- otx2_sg_info_create(struct pci_dev *pdev, struct otx2_cpt_req_info *req,
- 		    gfp_t gfp)
+@@ -350,22 +350,48 @@ static inline struct otx2_cpt_inst_info
+ cn10k_sgv2_info_create(struct pci_dev *pdev, struct otx2_cpt_req_info *req,
+ 		       gfp_t gfp)
  {
+-	u32 dlen = 0, g_len, sg_len, info_len;
 -	int align = OTX2_CPT_DMA_MINALIGN;
++	u32 dlen = 0, g_len, s_len, sg_len, info_len;
  	struct otx2_cpt_inst_info *info;
--	u32 dlen, align_dlen, info_len;
 -	u16 g_sz_bytes, s_sz_bytes;
-+	u32 dlen, info_len;
-+	u16 g_len, s_len;
  	u32 total_mem_len;
+ 	int i;
  
- 	if (unlikely(req->in_cnt > OTX2_CPT_MAX_SG_IN_CNT ||
-@@ -429,22 +431,54 @@ otx2_sg_info_create(struct pci_dev *pdev
- 		return NULL;
- 	}
- 
--	g_sz_bytes = ((req->in_cnt + 3) / 4) *
--		      sizeof(struct otx2_cpt_sglist_component);
--	s_sz_bytes = ((req->out_cnt + 3) / 4) *
--		      sizeof(struct otx2_cpt_sglist_component);
+-	g_sz_bytes = ((req->in_cnt + 2) / 3) *
+-		      sizeof(struct cn10kb_cpt_sglist_component);
+-	s_sz_bytes = ((req->out_cnt + 2) / 3) *
+-		      sizeof(struct cn10kb_cpt_sglist_component);
+-
+-	g_len = ALIGN(g_sz_bytes, align);
+-	sg_len = ALIGN(g_len + s_sz_bytes, align);
+-	info_len = ALIGN(sizeof(*info), align);
+-	total_mem_len = sg_len + info_len + sizeof(union otx2_cpt_res_s);
 +	/* Allocate memory to meet below alignment requirement:
 +	 *  ------------------------------------
 +	 * |    struct otx2_cpt_inst_info       |
@@ -116,8 +106,6 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	 * |    --------------------------------|
 +	 * |   | padding for ARCH_DMA_MINALIGN  |
 +	 * |   | alignment                      |
-+	 * |------------------------------------|
-+	 * |    SG List Header of 8 Byte        |
 +	 * |------------------------------------|
 +	 * |    SG List Gather/Input memory     |
 +	 * |    Length = multiple of 32Bytes    |
@@ -133,56 +121,52 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	 * |    Alignment = 32Byte              |
 +	 *  ------------------------------------
 +	 */
- 
--	dlen = g_sz_bytes + s_sz_bytes + SG_LIST_HDR_SIZE;
--	align_dlen = ALIGN(dlen, align);
--	info_len = ALIGN(sizeof(*info), align);
--	total_mem_len = align_dlen + info_len + sizeof(union otx2_cpt_res_s);
++
 +	info_len = sizeof(*info);
 +
-+	g_len = ((req->in_cnt + 3) / 4) *
-+		 sizeof(struct otx2_cpt_sglist_component);
-+	s_len = ((req->out_cnt + 3) / 4) *
-+		 sizeof(struct otx2_cpt_sglist_component);
-+
-+	dlen = g_len + s_len + SG_LIST_HDR_SIZE;
++	g_len = ((req->in_cnt + 2) / 3) *
++		 sizeof(struct cn10kb_cpt_sglist_component);
++	s_len = ((req->out_cnt + 2) / 3) *
++		 sizeof(struct cn10kb_cpt_sglist_component);
++	sg_len = g_len + s_len;
 +
 +	/* Allocate extra memory for SG and response address alignment */
 +	total_mem_len = ALIGN(info_len, OTX2_CPT_DPTR_RPTR_ALIGN);
 +	total_mem_len += (ARCH_DMA_MINALIGN - 1) &
 +			  ~(OTX2_CPT_DPTR_RPTR_ALIGN - 1);
-+	total_mem_len += ALIGN(dlen, OTX2_CPT_RES_ADDR_ALIGN);
++	total_mem_len += ALIGN(sg_len, OTX2_CPT_RES_ADDR_ALIGN);
 +	total_mem_len += sizeof(union otx2_cpt_res_s);
  
  	info = kzalloc(total_mem_len, gfp);
  	if (unlikely(!info))
- 		return NULL;
+@@ -375,7 +401,8 @@ cn10k_sgv2_info_create(struct pci_dev *p
+ 		dlen += req->in[i].size;
  
  	info->dlen = dlen;
 -	info->in_buffer = (u8 *)info + info_len;
 +	info->in_buffer = PTR_ALIGN((u8 *)info + info_len, ARCH_DMA_MINALIGN);
-+	info->out_buffer = info->in_buffer + SG_LIST_HDR_SIZE + g_len;
++	info->out_buffer = info->in_buffer + g_len;
+ 	info->gthr_sz = req->in_cnt;
+ 	info->sctr_sz = req->out_cnt;
  
- 	((u16 *)info->in_buffer)[0] = req->out_cnt;
- 	((u16 *)info->in_buffer)[1] = req->in_cnt;
-@@ -460,7 +494,7 @@ otx2_sg_info_create(struct pci_dev *pdev
+@@ -387,7 +414,7 @@ cn10k_sgv2_info_create(struct pci_dev *p
  	}
  
- 	if (setup_sgio_components(pdev, req->out, req->out_cnt,
--				  &info->in_buffer[8 + g_sz_bytes])) {
-+				  info->out_buffer)) {
+ 	if (sgv2io_components_setup(pdev, req->out, req->out_cnt,
+-				    &info->in_buffer[g_len])) {
++				    info->out_buffer)) {
  		dev_err(&pdev->dev, "Failed to setup scatter list\n");
  		goto destroy_info;
  	}
-@@ -476,8 +510,10 @@ otx2_sg_info_create(struct pci_dev *pdev
+@@ -404,8 +431,10 @@ cn10k_sgv2_info_create(struct pci_dev *p
  	 * Get buffer for union otx2_cpt_res_s response
  	 * structure and its physical address
  	 */
--	info->completion_addr = info->in_buffer + align_dlen;
--	info->comp_baddr = info->dptr_baddr + align_dlen;
-+	info->completion_addr = PTR_ALIGN((info->in_buffer + dlen),
+-	info->completion_addr = info->in_buffer + sg_len;
+-	info->comp_baddr = info->dptr_baddr + sg_len;
++	info->completion_addr = PTR_ALIGN((info->in_buffer + sg_len),
 +					  OTX2_CPT_RES_ADDR_ALIGN);
-+	info->comp_baddr = ALIGN((info->dptr_baddr + dlen),
++	info->comp_baddr = ALIGN((info->dptr_baddr + sg_len),
 +				 OTX2_CPT_RES_ADDR_ALIGN);
  
  	return info;
