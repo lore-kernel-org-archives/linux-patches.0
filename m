@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A16C27A917;
-	Tue, 26 Aug 2025 11:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1280824169F;
+	Tue, 26 Aug 2025 11:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207175; cv=none; b=e3mF4EeBQAY1kLWd9MyjPvxWf2dCtIrFXwW6MmxjPl4amdgIe8njwF6k+LeYS+OUQy2yBMti8j2vUzxKZUEt7EDwIq941fDpGouajpWDas4v0cSNf4nFL7Gjwy1UcpVBIstA6nUZg9Y8seNhuEUj8k6zMJoIDc7g2xoI4KG4XhQ=
+	t=1756207178; cv=none; b=iva+hVto70xtovIeY3krNd/7VWZ+58iJbqEL0a8aoarxxoGLvnSrLpnFFo6pl2+vACIHIy/uOceb/F/9M9Jk1adRJNiplTdhObwQWz3VefPGVjFPWgaj8aC+YI6sp4uGroIin/id+U22lbAYZEdH6ggF3tSfiqIU98tS7bPeBg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207175; c=relaxed/simple;
-	bh=EXnXvDUul4Z6rkJqOHCZAfW8I1c5MKfKm9ZwJ86HJ/A=;
+	s=arc-20240116; t=1756207178; c=relaxed/simple;
+	bh=t+YkyduaWDLAEGxrrM8Wnn5Th3MWqFAyw4rm8UC/YIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBw2ZsMR4CH4pvMSsCdUDIPEkOrwhPk++uPhfqJPmVHP70ZCIwLSlUEt63vI4V6mYmwDyr/8zySh42MYe2XZhVTITqnbS+7Wuz2anJsNAEnqbVZsfvJfQOiYZ8LDZMnbergJkhpRH2wjJ9ZlUYc7HIkfOKSnGyQcn4uUXtO/ERw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDoKpcLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m185c6LxaUKK975q/m55wCGnsCJq6MElM3RPaTJNLHxf1wwzOQ8bjKlxNZndSUtZAjF2D/gSqSxVkM1l/GJwoOxmIe4yNPvy1fUfqgtkVePincXKxh+R0+jc6tXx6f4L+z2/CAu21Z5XJT5uZtCtG5PScdI0jrlhQ/SZHxOhuTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8XMLaOa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDoKpcLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1535C4CEF1;
-	Tue, 26 Aug 2025 11:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8XMLaOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAADC4CEF1;
+	Tue, 26 Aug 2025 11:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207175;
-	bh=EXnXvDUul4Z6rkJqOHCZAfW8I1c5MKfKm9ZwJ86HJ/A=;
+	s=korg; t=1756207177;
+	bh=t+YkyduaWDLAEGxrrM8Wnn5Th3MWqFAyw4rm8UC/YIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDoKpcLDH6edMJXeK/VivUnaYd6HYUxCCKKLZAzRA51JSYxZlrW3O5LYsVDVxUHxU
-	 G5OfOrELzb5oDeUKajqK6+HU2v4pqLBTaH6fklm6uvNa6uwPrFMxAZxEeAdl21hnIj
-	 scgoKhPwTkV/adDURAQjBsPGzHO5lbqRcSbixwTc=
+	b=M8XMLaOawo8pvP+DVRn7n7ZXAOjmDHl+XGudd496gXSAoDQBBNgL1BB+8CBsd9rYw
+	 AStq0mSuDfo6n6mHOlVHLxAA0pw59INOQIqVKHBFiQbfzhFFsi1m9WYLptHhhG0qTa
+	 oUr9IcLxFaxY7Au1h2plHX3qgTIIh7GdtOAyEt2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Chan <towinchenmi@gmail.com>,
-	Sven Peter <sven@kernel.org>
-Subject: [PATCH 6.16 048/457] arm64: dts: apple: t8012-j132: Include touchbar framebuffer node
-Date: Tue, 26 Aug 2025 13:05:32 +0200
-Message-ID: <20250826110938.536937954@linuxfoundation.org>
+	Judith Mendez <jm@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 6.16 049/457] arm64: dts: ti: k3-am62-main: Remove eMMC High Speed DDR support
+Date: Tue, 26 Aug 2025 13:05:33 +0200
+Message-ID: <20250826110938.561425824@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,38 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Chan <towinchenmi@gmail.com>
+From: Judith Mendez <jm@ti.com>
 
-commit ef68a0e1087882850628000f28078e1c4df917ee upstream.
+commit 265f70af805f33a0dfc90f50cc0f116f702c3811 upstream.
 
-Apple T2 MacBookPro15,2 (j132) has a touchbar so include the framebuffer
-node.
+For eMMC, High Speed DDR mode is not supported [0], so remove
+mmc-ddr-1_8v flag which adds the capability.
 
+[0] https://www.ti.com/lit/gpn/am625
+
+Fixes: c37c58fdeb8a ("arm64: dts: ti: k3-am62: Add more peripheral nodes")
 Cc: stable@vger.kernel.org
-Fixes: 4efbcb623e9bc ("arm64: dts: apple: Add T2 devices")
-Signed-off-by: Nick Chan <towinchenmi@gmail.com>
-Link: https://lore.kernel.org/stable/20250620-j132-fb-v1-1-bc6937baf0b9%40gmail.com
-Link: https://lore.kernel.org/r/20250620-j132-fb-v2-1-65f100182085@gmail.com
-Signed-off-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Judith Mendez <jm@ti.com>
+Link: https://lore.kernel.org/r/20250707191250.3953990-1-jm@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/apple/t8012-j132.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/ti/k3-am62-main.dtsi |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t8012-j132.dts b/arch/arm64/boot/dts/apple/t8012-j132.dts
-index 778a69be18dd..7dcac51703ff 100644
---- a/arch/arm64/boot/dts/apple/t8012-j132.dts
-+++ b/arch/arm64/boot/dts/apple/t8012-j132.dts
-@@ -7,6 +7,7 @@
- /dts-v1/;
- 
- #include "t8012-jxxx.dtsi"
-+#include "t8012-touchbar.dtsi"
- 
- / {
- 	model = "Apple T2 MacBookPro15,2 (j132)";
--- 
-2.50.1
-
+--- a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+@@ -553,7 +553,6 @@
+ 		clocks = <&k3_clks 57 5>, <&k3_clks 57 6>;
+ 		clock-names = "clk_ahb", "clk_xin";
+ 		bus-width = <8>;
+-		mmc-ddr-1_8v;
+ 		mmc-hs200-1_8v;
+ 		ti,clkbuf-sel = <0x7>;
+ 		ti,otap-del-sel-legacy = <0x0>;
 
 
