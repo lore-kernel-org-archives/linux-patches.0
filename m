@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F662BAF7;
-	Tue, 26 Aug 2025 13:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F071494D9;
+	Tue, 26 Aug 2025 13:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213307; cv=none; b=FoMdze1qabp2+l6M7nBpHuCMGFf4CrGOTbWn6aCv1ceW1GcV5n75ClIbIIXioPWR+Whkyk/7DaisreBTFBCfEgvbCkkoy/mvlJ2Fa2Jyb+LTdfxYoNLFOlYG5DoOfiz24RwPHTiuXaipA1Bw/XFREQh0jNi+CKh6zJihX0wiVNw=
+	t=1756213309; cv=none; b=JN5Sm5IXpPleeZGHtj1hikuHBT8YZz5mYYse0SX5Ul57xwDpOxjbYQdP4vPnklW3UGPp1HLAm3SyHmM0vFF41/cuv3TX/zyyDpnm3oDjYIY3THPimFSL900mSZIiqJUt/SZjA7L4chRphWZF8GIFcblDBD8is0F1QoS9cO2Vnao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213307; c=relaxed/simple;
-	bh=3HE1bemLJjow/1tQzNFqWl3RghntReju/bNjSNIAVZk=;
+	s=arc-20240116; t=1756213309; c=relaxed/simple;
+	bh=q1KmHII3Wr9UMy7UAG9wotlqfcR3/8YJG95SwviRQ0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhinrG3vq+V7l7uZ6X/U4qKVezReuDQr81oiE0lYuG5MeZmc4VcIHKYlXKMYGjzUo/Z4gxToEDz07EndwX6axeH8o5uenGONyUp+LvULfcDtVjOBBoFzZFYwXoNid5nzPRPE2gFP+HTMjJYZUfSSkFG8i72NrAqCqNl3JGQDkwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKoiadKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcqVJvhkuvFLmx3OHTu7coWI9/ejmZh7FJMah38GfOcd55ai+QK7oO8kFheBCc5N6eS3UtJLZpwLFccUDwZrhBvrj5Mc50XOcZ8WLNdf+RmWzqzgZ+HA3TVyMf1Vn/FVqpEV9h7+cCDQ+XrSE6/e4ZTZNpzF/pzz7bRrM+BxCio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vShtZB8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKoiadKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77316C4CEF1;
-	Tue, 26 Aug 2025 13:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vShtZB8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2296CC4CEF1;
+	Tue, 26 Aug 2025 13:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213306;
-	bh=3HE1bemLJjow/1tQzNFqWl3RghntReju/bNjSNIAVZk=;
+	s=korg; t=1756213309;
+	bh=q1KmHII3Wr9UMy7UAG9wotlqfcR3/8YJG95SwviRQ0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKoiadKyCmEUjuXFzrll1FkDG0J0eE0z7/piM2El/R46r5PSZYpkeGm7YrfK8c0qC
-	 pu6PKnl7JMpc0Ib7Zjs/4KWUrrpTdGOZD2NBMatpFlfEjSqwGTK4MZYaPB99Lf5hBy
-	 3WwwayjLFUdxlmuCmw+8OZaFk9rwDWFnjdwd8GsQ=
+	b=vShtZB8S7P+5TktxnedqqH8smWMDR0BdJEcv3LffwHHxdSxILIxQ9TZgaU8OeghNf
+	 jjsndXblaoIQhjQCApALCwkbEgNai+Sfr/hMnz8QW6tdpIBnO+KoAuddajhy0ZPqvC
+	 LYfHtm5TNGGJD5O2vNm+aXIqULh2EUAG7/luRbQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 291/587] pNFS: Handle RPC size limit for layoutcommits
-Date: Tue, 26 Aug 2025 13:07:20 +0200
-Message-ID: <20250826111000.330553400@linuxfoundation.org>
+	syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com,
+	Yi Liu <yi.l.liu@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.6 300/587] iommufd: Prevent ALIGN() overflow
+Date: Tue, 26 Aug 2025 13:07:29 +0200
+Message-ID: <20250826111000.556566735@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,67 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit d897d81671bc4615c80f4f3bd5e6b218f59df50c ]
+commit b42497e3c0e74db061eafad41c0cd7243c46436b upstream.
 
-When there are too many block extents for a layoutcommit, they may not
-all fit into the maximum-sized RPC. This patch allows the generic pnfs
-code to properly handle -ENOSPC returned by the block/scsi layout driver
-and trigger additional layoutcommits if necessary.
+When allocating IOVA the candidate range gets aligned to the target
+alignment. If the range is close to ULONG_MAX then the ALIGN() can
+wrap resulting in a corrupted iova.
 
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250630183537.196479-5-sergeybashirov@gmail.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Open code the ALIGN() using get_add_overflow() to prevent this.
+This simplifies the checks as we don't need to check for length earlier
+either.
+
+Consolidate the two copies of this code under a single helper.
+
+This bug would allow userspace to create a mapping that overlaps with some
+other mapping or a reserved range.
+
+Cc: stable@vger.kernel.org
+Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
+Reported-by: syzbot+c2f65e2801743ca64e08@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/685af644.a00a0220.2e5631.0094.GAE@google.com
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Link: https://patch.msgid.link/all/1-v1-7b4a16fc390b+10f4-iommufd_alloc_overflow_jgg@nvidia.com/
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/iommu/iommufd/io_pagetable.c |   41 +++++++++++++++++++++--------------
+ 1 file changed, 25 insertions(+), 16 deletions(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 79d1ffdcbebd..b40c20bd364b 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -3216,6 +3216,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	struct nfs_inode *nfsi = NFS_I(inode);
- 	loff_t end_pos;
- 	int status;
-+	bool mark_as_dirty = false;
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -69,36 +69,45 @@ struct iopt_area *iopt_area_contig_next(
+ 	return iter->area;
+ }
  
- 	if (!pnfs_layoutcommit_outstanding(inode))
- 		return 0;
-@@ -3267,19 +3268,23 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	if (ld->prepare_layoutcommit) {
- 		status = ld->prepare_layoutcommit(&data->args);
- 		if (status) {
--			put_cred(data->cred);
-+			if (status != -ENOSPC)
-+				put_cred(data->cred);
- 			spin_lock(&inode->i_lock);
- 			set_bit(NFS_INO_LAYOUTCOMMIT, &nfsi->flags);
- 			if (end_pos > nfsi->layout->plh_lwb)
- 				nfsi->layout->plh_lwb = end_pos;
--			goto out_unlock;
-+			if (status != -ENOSPC)
-+				goto out_unlock;
-+			spin_unlock(&inode->i_lock);
-+			mark_as_dirty = true;
- 		}
- 	}
+-static bool __alloc_iova_check_hole(struct interval_tree_double_span_iter *span,
+-				    unsigned long length,
+-				    unsigned long iova_alignment,
+-				    unsigned long page_offset)
++static bool __alloc_iova_check_range(unsigned long *start, unsigned long last,
++				     unsigned long length,
++				     unsigned long iova_alignment,
++				     unsigned long page_offset)
+ {
+-	if (span->is_used || span->last_hole - span->start_hole < length - 1)
++	unsigned long aligned_start;
++
++	/* ALIGN_UP() */
++	if (check_add_overflow(*start, iova_alignment - 1, &aligned_start))
+ 		return false;
++	aligned_start &= ~(iova_alignment - 1);
++	aligned_start |= page_offset;
  
+-	span->start_hole = ALIGN(span->start_hole, iova_alignment) |
+-			   page_offset;
+-	if (span->start_hole > span->last_hole ||
+-	    span->last_hole - span->start_hole < length - 1)
++	if (aligned_start >= last || last - aligned_start < length - 1)
+ 		return false;
++	*start = aligned_start;
+ 	return true;
+ }
  
- 	status = nfs4_proc_layoutcommit(data, sync);
- out:
--	if (status)
-+	if (status || mark_as_dirty)
- 		mark_inode_dirty_sync(inode);
- 	dprintk("<-- %s status %d\n", __func__, status);
- 	return status;
--- 
-2.39.5
-
+-static bool __alloc_iova_check_used(struct interval_tree_span_iter *span,
++static bool __alloc_iova_check_hole(struct interval_tree_double_span_iter *span,
+ 				    unsigned long length,
+ 				    unsigned long iova_alignment,
+ 				    unsigned long page_offset)
+ {
+-	if (span->is_hole || span->last_used - span->start_used < length - 1)
++	if (span->is_used)
+ 		return false;
++	return __alloc_iova_check_range(&span->start_hole, span->last_hole,
++					length, iova_alignment, page_offset);
++}
+ 
+-	span->start_used = ALIGN(span->start_used, iova_alignment) |
+-			   page_offset;
+-	if (span->start_used > span->last_used ||
+-	    span->last_used - span->start_used < length - 1)
++static bool __alloc_iova_check_used(struct interval_tree_span_iter *span,
++				    unsigned long length,
++				    unsigned long iova_alignment,
++				    unsigned long page_offset)
++{
++	if (span->is_hole)
+ 		return false;
+-	return true;
++	return __alloc_iova_check_range(&span->start_used, span->last_used,
++					length, iova_alignment, page_offset);
+ }
+ 
+ /*
 
 
