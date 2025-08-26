@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B0D2676E9;
-	Tue, 26 Aug 2025 14:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777EE2AE68;
+	Tue, 26 Aug 2025 14:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219292; cv=none; b=QD4bcTNojHn15fpzLTxtqE8tKZwxwIWrPvkOgugBiXXYHI4qdOQiKfjWSm8Ll0KYIwOtZU7VYR7Oq3y25NwVnzwpCGcOeo0gRK4Tg4gjbJ5Z4wTWgpVV3ZvPwwjERBjGjpzLXlTQMHzczUJgeU7QlnFTQYboic+7McJp31KMmvg=
+	t=1756219294; cv=none; b=UNxQOx96WqFyUjZKypgLO9iikZ4nrnLQbIWGO1zNUZgaEExOGKpODXcoYBizo6J4g+EeUG2G2TNmLcoz6KDbNU0FaFURDNkejVl5FPMpnDoBr2RjV9EEvbL2kUWMZ7mgSEvlsTzQU6TE+y1Un1A6M4bAdwpFGdho0hcCI0AwU38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219292; c=relaxed/simple;
-	bh=aNhxgSlW++X2WkvN69UMtUu8Ht027kYcjQmiZewwAZM=;
+	s=arc-20240116; t=1756219294; c=relaxed/simple;
+	bh=4yA9JNC+fUicaPcbh1feMTMCLXzAYJSzldel2PsxSyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIV969BYjQ91EjqEQ/lFcyu+y/xU/BBft4sBhDIC9OGsNaRpYY2Cp73Q6LvUWz4Qx9ORfA2cFxiGj5u5SaEbxgQsD+IJ7/Xk8aCMtJEvotzWTSydzKD7Y3kpWQ0iaRl1Oj1MlY56L1O/UjE5qCJt4B00q6NoYGO0tNzYXLqz4OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10gxDlXB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O3ymwAwVwhhJGEf3NcFcKyFzDGxIz+GWGbI/p/wmGmBu/zHi4+wy04ysFIhnfEbnpjUdp7mhYoTiNkI9Qh34e7NNPRlHkv6t/fiMA+f3cPRfeWPEBTdj+0UohbhsYz1JZRZc1TXqXzMcjQFncyx9JqNmgjja3D00oPc8t+oTi0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFhkMyw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10gxDlXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B26C4CEF1;
-	Tue, 26 Aug 2025 14:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFhkMyw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A135C4CEF1;
+	Tue, 26 Aug 2025 14:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219291;
-	bh=aNhxgSlW++X2WkvN69UMtUu8Ht027kYcjQmiZewwAZM=;
+	s=korg; t=1756219294;
+	bh=4yA9JNC+fUicaPcbh1feMTMCLXzAYJSzldel2PsxSyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10gxDlXBNy9wyB1Qb1TmTS+6cETVXJ2Wygz1Cu3uySO982oFa/R+eOdkQSqZ6S4X6
-	 +pufgAr417xWgmKFepCtgYlYM3ed/0EWLghdzIuIEWyigYJSvppG2wUSYoKTi60Geo
-	 xBM4MsK3zF2w7gcDRKYJiFv9hY+OqwOvYhJ2GCZ4=
+	b=VFhkMyw+vM69CCFeHCU1q1WNtWqcuJyB5Q7Rj9ULftcmPcJKNINdwMWTaKRUqlXsd
+	 IWLScAH/gbVyZTE3TlKrLuSo7pUSpNMqqnDtQ772uYtTihY5VWK7whvtriW/vKtzwy
+	 En+Afa1fv658Rs2iEDGKh9KbMQRQUB9KjzLBAf9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Li <limiao@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.4 318/403] usb: quirks: Add DELAY_INIT quick for another SanDisk 3.2Gen1 Flash Drive
-Date: Tue, 26 Aug 2025 13:10:44 +0200
-Message-ID: <20250826110915.597399287@linuxfoundation.org>
+	Tom Rini <trini@konsulko.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.4 327/403] kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
+Date: Tue, 26 Aug 2025 13:10:53 +0200
+Message-ID: <20250826110915.856476186@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -50,31 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Li <limiao@kylinos.cn>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit e664036cf36480414936cd91f4cfa2179a3d8367 upstream.
+commit feb843a469fb0ab00d2d23cfb9bcc379791011bb upstream.
 
-Another SanDisk 3.2Gen1 Flash Drive also need DELAY_INIT quick,
-or it will randomly work incorrectly on Huawei hisi platforms
-when doing reboot test.
+When preprocessing arch/*/kernel/vmlinux.lds.S, the target triple is
+not passed to $(CPP) because we add it only to KBUILD_{C,A}FLAGS.
 
-Signed-off-by: Miao Li <limiao@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250801082728.469406-1-limiao870622@163.com
+As a result, the linker script is preprocessed with predefined macros
+for the build host instead of the target.
+
+Assuming you use an x86 build machine, compare the following:
+
+ $ clang -dM -E -x c /dev/null
+ $ clang -dM -E -x c /dev/null -target aarch64-linux-gnu
+
+There is no actual problem presumably because our linker scripts do not
+rely on such predefined macros, but it is better to define correct ones.
+
+Move $(CLANG_FLAGS) to KBUILD_CPPFLAGS, so that all *.c, *.S, *.lds.S
+will be processed with the proper target triple.
+
+[Note]
+After the patch submission, we got an actual problem that needs this
+commit. (CBL issue 1859)
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1859
+Reported-by: Tom Rini <trini@konsulko.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ Makefile |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -368,6 +368,7 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0781, 0x5591), .driver_info = USB_QUIRK_NO_LPM },
+--- a/Makefile
++++ b/Makefile
+@@ -568,8 +568,7 @@ ifneq ($(LLVM_IAS),1)
+ CLANG_FLAGS	+= -no-integrated-as
+ endif
+ CLANG_FLAGS	+= -Werror=unknown-warning-option
+-KBUILD_CFLAGS	+= $(CLANG_FLAGS)
+-KBUILD_AFLAGS	+= $(CLANG_FLAGS)
++KBUILD_CPPFLAGS	+= $(CLANG_FLAGS)
+ export CLANG_FLAGS
+ endif
  
- 	/* SanDisk Corp. SanDisk 3.2Gen1 */
-+	{ USB_DEVICE(0x0781, 0x5596), .driver_info = USB_QUIRK_DELAY_INIT },
- 	{ USB_DEVICE(0x0781, 0x55a3), .driver_info = USB_QUIRK_DELAY_INIT },
- 
- 	/* SanDisk Extreme 55AE */
 
 
