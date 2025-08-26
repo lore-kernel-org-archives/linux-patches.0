@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA172F7473;
-	Tue, 26 Aug 2025 13:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CBD2857D2;
+	Tue, 26 Aug 2025 13:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215180; cv=none; b=EkGSGnsFdr/Olh9bY2dOJnyNRr4xQEwqUYzVvIQbHRvUwp+lbVn/7WS2KP9QnhifbUQalsJvF+SvMtzY/yR4+HoLLmqDr6Myabe9pouFCdWlnCG5Loct2vVEXlwVgJCrLiYqY2J7hGQbuW90ZFkp+yrEkKnk2DM6Q0baVsYRXe0=
+	t=1756215183; cv=none; b=ZELX8AhEF3iC6OooFZJ6eV3VLkeMASjmU42HsHCbi9OzKcV5hnbxPGLuat4J9O+mvlVNiZ9V3K/oeIIaZvWBB4c4/j/c65Zyjw/BkZwBqAGLp9ZeiIQZeXPtVmVuKRDNo+2iGcvEj5MbDgCQxlIEe9Tnvqt1InkNYDPMRdz22PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215180; c=relaxed/simple;
-	bh=hm1Za5kihxgIplaBHpyvlW/OFfitumwnlUdiEeBvvw4=;
+	s=arc-20240116; t=1756215183; c=relaxed/simple;
+	bh=qNqRvr8RIPU5rhTgUx9vPJrPrxbzGOyoLfoMqY6J29I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvsG/7yxdX4jOkREcTW62i2yJVdy6ItgaA9edO4DvK6f3D7HuemVLNGuAZ1rE3LSSwMS9IZxZqtNcpyOIvRQFsgX1QAEtrQkvy0CfyPZXQEl4SziBngvI2nsy6XsSvNy/SadCshmwakbfXYKoom7HkA9JAUTS911GNbIzwB0XpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWyRvaoB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mUIdU/O5jOiLCIMsDJymadx9TUJ35dF1jps42glwmiXjET6ejKWGOkAKMbgpcSrxe7E9dvfPXEywszTNkAd0MN3HmLRKpoJ6p1zOTKYvgJApBRMTFJplbs4VklKft0GppkJuhB7YzkTi2o7Vn60MjOWXlPw/YAQ+458nB401f8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omNcuLla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWyRvaoB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263CBC4CEF1;
-	Tue, 26 Aug 2025 13:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omNcuLla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0FDC4CEF1;
+	Tue, 26 Aug 2025 13:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215180;
-	bh=hm1Za5kihxgIplaBHpyvlW/OFfitumwnlUdiEeBvvw4=;
+	s=korg; t=1756215183;
+	bh=qNqRvr8RIPU5rhTgUx9vPJrPrxbzGOyoLfoMqY6J29I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWyRvaoBj5j8cNmx3gxhjodSXiqMljwhWIYIhQFoyL8upw1i8t+7RcmYiBA31sQYZ
-	 Xrpbf8dT+TEPwoxmlvOFr34CvGOuAm7BX9IHjjR1WxFcw9e/yAmSsPDOjb1UnaBQZV
-	 A4sfVnyWBX9JeMN/8yct+HqGuyDDmMK7/yjfXERk=
+	b=omNcuLlaZis/Ma179Hnvkhp/YAKWpq1JprNRhXesnxUKkagKM5rpdaBinm3ineDa2
+	 t4iddkVDesevcvDdiw9kHIZhrDqZxvbESbUnx4SLlCEaHheo20CPZw7BFhIkPsrpvx
+	 n1v55558l79rsYFXilwdNKSGIPhQd5sD+BpTrKnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Jann Horn <jannh@google.com>,
-	Julian Orth <ju.orth@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 6.1 387/482] selftests/memfd: add test for mapping write-sealed memfd read-only
-Date: Tue, 26 Aug 2025 13:10:40 +0200
-Message-ID: <20250826110940.389415936@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sumanth Gavini <sumanth.gavini@yahoo.com>
+Subject: [PATCH 6.1 388/482] Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync
+Date: Tue, 26 Aug 2025 13:10:41 +0200
+Message-ID: <20250826110940.414210365@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -57,95 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Sumanth Gavini <sumanth.gavini@yahoo.com>
 
-[ Upstream commit ea0916e01d0b0f2cce1369ac1494239a79827270 ]
+commit 5af1f84ed13a416297ab9ced7537f4d5ae7f329a upstream.
 
-Now we have reinstated the ability to map F_SEAL_WRITE mappings read-only,
-assert that we are able to do this in a test to ensure that we do not
-regress this again.
+Connections may be cleanup while waiting for the commands to complete so
+this attempts to check if the connection handle remains valid in case of
+errors that would lead to call hci_conn_failed:
 
-Link: https://lkml.kernel.org/r/a6377ec470b14c0539b4600cf8fa24bf2e4858ae.1732804776.git.lorenzo.stoakes@oracle.com
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Julian Orth <ju.orth@gmail.com>
-Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+BUG: KASAN: slab-use-after-free in hci_conn_failed+0x1f/0x160
+Read of size 8 at addr ffff888001376958 by task kworker/u3:0/52
+
+CPU: 0 PID: 52 Comm: kworker/u3:0 Not tainted
+6.5.0-rc1-00527-g2dfe76d58d3a #5615
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+1.16.2-1.fc38 04/01/2014
+Workqueue: hci0 hci_cmd_sync_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x1d/0x70
+ print_report+0xce/0x620
+ ? __virt_addr_valid+0xd4/0x150
+ ? hci_conn_failed+0x1f/0x160
+ kasan_report+0xd1/0x100
+ ? hci_conn_failed+0x1f/0x160
+ hci_conn_failed+0x1f/0x160
+ hci_abort_conn_sync+0x237/0x360
+
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sumanth Gavini <sumanth.gavini@yahoo.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/memfd/memfd_test.c |   43 +++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ net/bluetooth/hci_sync.c |   43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -186,6 +186,24 @@ static void *mfd_assert_mmap_shared(int
- 	return p;
- }
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5525,31 +5525,46 @@ static int hci_reject_conn_sync(struct h
  
-+static void *mfd_assert_mmap_read_shared(int fd)
-+{
-+	void *p;
-+
-+	p = mmap(NULL,
-+		 mfd_def_size,
-+		 PROT_READ,
-+		 MAP_SHARED,
-+		 fd,
-+		 0);
-+	if (p == MAP_FAILED) {
-+		printf("mmap() failed: %m\n");
-+		abort();
+ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ {
+-	int err;
++	int err = 0;
++	u16 handle = conn->handle;
+ 
+ 	switch (conn->state) {
+ 	case BT_CONNECTED:
+ 	case BT_CONFIG:
+-		return hci_disconnect_sync(hdev, conn, reason);
++		err = hci_disconnect_sync(hdev, conn, reason);
++		break;
+ 	case BT_CONNECT:
+ 		err = hci_connect_cancel_sync(hdev, conn);
+-		/* Cleanup hci_conn object if it cannot be cancelled as it
+-		 * likelly means the controller and host stack are out of sync.
+-		 */
+-		if (err) {
+-			hci_dev_lock(hdev);
+-			hci_conn_failed(conn, err);
+-			hci_dev_unlock(hdev);
+-		}
+-		return err;
++		break;
+ 	case BT_CONNECT2:
+-		return hci_reject_conn_sync(hdev, conn, reason);
++		err = hci_reject_conn_sync(hdev, conn, reason);
++		break;
+ 	default:
+ 		conn->state = BT_CLOSED;
+-		break;
++		return 0;
 +	}
 +
-+	return p;
-+}
++	/* Cleanup hci_conn object if it cannot be cancelled as it
++	 * likelly means the controller and host stack are out of sync
++	 * or in case of LE it was still scanning so it can be cleanup
++	 * safely.
++	 */
++	if (err) {
++		struct hci_conn *c;
 +
- static void *mfd_assert_mmap_private(int fd)
- {
- 	void *p;
-@@ -802,6 +820,30 @@ static void test_seal_future_write(void)
- 	close(fd);
++		/* Check if the connection hasn't been cleanup while waiting
++		 * commands to complete.
++		 */
++		c = hci_conn_hash_lookup_handle(hdev, handle);
++		if (!c || c != conn)
++			return 0;
++
++		hci_dev_lock(hdev);
++		hci_conn_failed(conn, err);
++		hci_dev_unlock(hdev);
+ 	}
+ 
+-	return 0;
++	return err;
  }
  
-+static void test_seal_write_map_read_shared(void)
-+{
-+	int fd;
-+	void *p;
-+
-+	printf("%s SEAL-WRITE-MAP-READ\n", memfd_str);
-+
-+	fd = mfd_assert_new("kern_memfd_seal_write_map_read",
-+			    mfd_def_size,
-+			    MFD_CLOEXEC | MFD_ALLOW_SEALING);
-+
-+	mfd_assert_add_seals(fd, F_SEAL_WRITE);
-+	mfd_assert_has_seals(fd, F_SEAL_WRITE);
-+
-+	p = mfd_assert_mmap_read_shared(fd);
-+
-+	mfd_assert_read(fd);
-+	mfd_assert_read_shared(fd);
-+	mfd_fail_write(fd);
-+
-+	munmap(p, mfd_def_size);
-+	close(fd);
-+}
-+
- /*
-  * Test SEAL_SHRINK
-  * Test whether SEAL_SHRINK actually prevents shrinking
-@@ -1056,6 +1098,7 @@ int main(int argc, char **argv)
- 
- 	test_seal_write();
- 	test_seal_future_write();
-+	test_seal_write_map_read_shared();
- 	test_seal_shrink();
- 	test_seal_grow();
- 	test_seal_resize();
+ static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
 
 
