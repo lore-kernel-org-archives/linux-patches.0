@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04182284B5B;
-	Tue, 26 Aug 2025 11:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E0F17332C;
+	Tue, 26 Aug 2025 11:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207538; cv=none; b=ttQUf8Jgvj+7KSkLlFEDuWjDy6+GmLC4Y9x75VLz8QfVE26R18R7xfvqt7v0BhYRAatgR6IBdXDSNIqAwOeXx53LnfzeqcEA/xICP9oZo3L7WwIte700rVeSGdDDyVhhrotLrhrheV2uG50xEiGFX+O/Xxfl/JzVQn0oR4Tllms=
+	t=1756207540; cv=none; b=R6u9ukq8vQLEFmJ1omAbdfVHMkBjVs+65bR3nA/Jvd7fhT6EbQKUT9nJAy0u6ywdM6+nVFL6R9PPNsgCENO2k30OQ5h29pOgwSNNpeFGggvMhuN4u4pPYDd3eJQzn1GDJbRztezAGC/ZzEjWlbUeV4L2vhX7wU1mDFqTzVeHMrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207538; c=relaxed/simple;
-	bh=4uKiYWlPC38QxqEWgqGgFdtj50/4R5sYIDMvgBnShwM=;
+	s=arc-20240116; t=1756207540; c=relaxed/simple;
+	bh=t4lzVz4WuJBNiDjFP+HlD9XtZS57a0X4rOTKau76KYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DKz/tKUD5E9H67TUdiVwV/mf455qCew0K1tLbLV9g4Lp5yvHJk3NXe3vJNpC0KBP5B69XRuuQO/cSEqlGW8gK150EOcqqJ5KpWZlImhVABurlyKmd4054cOAfwzW3YFliimu9A8KBDNw+Iau58/hfabQNCQs/pIVqX84N2GZPKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zrkzw515; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpc7ut8wMcTai/jv6xHH+HU+pdZplVZyKax9nVWubH/TDZU3S0eG1fOkLR3EMFW26A/g4tueNXbKc9FVQuWzEs373vcR3xgsDrpbK00qqxy2WglkRaO5jlEL3aWkkKY8EwbbmRv4SqG/dMsAcE0cjEd/pyH4iBkeemq/FQtfA+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cN2MYphr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zrkzw515"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7E3C4CEF1;
-	Tue, 26 Aug 2025 11:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cN2MYphr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07895C4CEF1;
+	Tue, 26 Aug 2025 11:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207537;
-	bh=4uKiYWlPC38QxqEWgqGgFdtj50/4R5sYIDMvgBnShwM=;
+	s=korg; t=1756207540;
+	bh=t4lzVz4WuJBNiDjFP+HlD9XtZS57a0X4rOTKau76KYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zrkzw515fUDbXxs+CNpofnqQMN4UEZtDCBY4/d+aaANjlto9j0dGrWRH2gv5iwp1j
-	 GJx+gGnuw67mTYdXLzqeUb5DHZz4CColiXbRuoH0LoYgT4lQTc3jvTFiAydBKvLVLO
-	 B1vGvi3wzbL7RPqBDqwKjvT+NeIaviKKqKUapgvM=
+	b=cN2MYphrWwHo9Vvf/3qZWtRT2oa/P8hBJAJiyusjlUX5luAmlCe/w9WUgmekTzhIC
+	 cCxMfZzpzdxjcLmph5PVmyy+L+VVUEetAnOdpEjJlDzWieME4w35MT3IKma75MaUiC
+	 KNa8oJWQbOmxeG/LscdaEFwOc2o9TgfiL7n4qbJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 179/457] drm/amdgpu: track whether a queue is a kernel queue in amdgpu_mqd_prop
-Date: Tue, 26 Aug 2025 13:07:43 +0200
-Message-ID: <20250826110941.799883817@linuxfoundation.org>
+	Daniel Vacek <neelx@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 214/457] btrfs: abort transaction on unexpected eb generation at btrfs_copy_root()
+Date: Tue, 26 Aug 2025 13:08:18 +0200
+Message-ID: <20250826110942.653075162@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -45,49 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 284d4dfe850e665f0e7d4dfaf4d3d3da76d11fb0 upstream.
+[ Upstream commit 33e8f24b52d2796b8cfb28c19a1a7dd6476323a8 ]
 
-Used to to set the MQD appropriately for each queue type.
-Kernel queues have additional privileges.
+If we find an unexpected generation for the extent buffer we are cloning
+at btrfs_copy_root(), we just WARN_ON() and don't error out and abort the
+transaction, meaning we allow to persist metadata with an unexpected
+generation. Instead of warning only, abort the transaction and return
+-EUCLEAN.
 
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.16.x
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Daniel Vacek <neelx@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h      |    1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |    1 +
- 2 files changed, 2 insertions(+)
+ fs/btrfs/ctree.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -886,6 +886,7 @@ struct amdgpu_mqd_prop {
- 	uint64_t csa_addr;
- 	uint64_t fence_address;
- 	bool tmz_queue;
-+	bool kernel_queue;
- };
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -283,7 +283,14 @@ int btrfs_copy_root(struct btrfs_trans_h
  
- struct amdgpu_mqd {
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -687,6 +687,7 @@ static void amdgpu_ring_to_mqd_prop(stru
- 	prop->eop_gpu_addr = ring->eop_gpu_addr;
- 	prop->use_doorbell = ring->use_doorbell;
- 	prop->doorbell_index = ring->doorbell_index;
-+	prop->kernel_queue = true;
+ 	write_extent_buffer_fsid(cow, fs_info->fs_devices->metadata_uuid);
  
- 	/* map_queues packet doesn't need activate the queue,
- 	 * so only kiq need set this field.
+-	WARN_ON(btrfs_header_generation(buf) > trans->transid);
++	if (unlikely(btrfs_header_generation(buf) > trans->transid)) {
++		btrfs_tree_unlock(cow);
++		free_extent_buffer(cow);
++		ret = -EUCLEAN;
++		btrfs_abort_transaction(trans, ret);
++		return ret;
++	}
++
+ 	if (new_root_objectid == BTRFS_TREE_RELOC_OBJECTID)
+ 		ret = btrfs_inc_ref(trans, root, cow, 1);
+ 	else
 
 
