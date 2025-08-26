@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C57128816;
-	Tue, 26 Aug 2025 12:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4EE165F13;
+	Tue, 26 Aug 2025 12:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212601; cv=none; b=kF3EP/mjCQZH+KFJZhflP7Bvg1z6+7fmBsu0oMF0jmemyK6bPJw9XoQRaLXz0YE1kLzpUOQ9hdf+tt3vIhbd+58mDJJiRBmP3lk+D/+2VhO5g25b38F0hAC5JZGFoV2Gy3GtxnzuPnDB2kmGujIf+rMN6qqXIqLKy6j81zdJWW8=
+	t=1756212604; cv=none; b=lFD5iSrC46mdbpQYByD5Ijp8qDeuauUkaQD74KCaGHl8KXiKpA6BL+m5kBwVjikhziii+wI6U+TlCdoHERS2NIsr9z3vWzhxRIk/auWE/SVKzseznQLLhy0oPFDK6mykoEyhyIO3p50dWFxv4Y9JE07CY5pRlwWsSfvQZ+Nh0pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212601; c=relaxed/simple;
-	bh=avrj+QOJu0OCm3tOrkSt3ZpHxVlv3spHXXI8I2h0d0k=;
+	s=arc-20240116; t=1756212604; c=relaxed/simple;
+	bh=RVjeMFhNS54MmlprCIADutXu02Zp659cBE7F14cRVdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTsOw+k1xkBzZzoMCUb1c42qDioqiepbNd0SPH9rlGdjnsGiKsTgTIHQDMo/Nd63y1qjB1AVTNeIh6jtSYtShtxXqK4ArQZcKMGjJxdvN9pJwxwRGniHAJQV5aa/5xYsB1gT92d+mIFWl3qzxvZc4106WDTjVGIc6xWwfSUCKxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8zrQdr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gw/bQ1h+DY88TdQxRzfBBRmEfdx7FEET0Jzu5Bo4+DXV/WLdn5MnpYQZ1xrHcCi0ijB9E3/ZR03pGMQNP60vR8ofWsU2ICvUTKNBXrZ95H9ulPYOfIRLzQGfbVZn9RVUyPbHcxA2Z4ulD6YjbWcImx4+dA2GhCkZZFTPrhYEjDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsDXO6VT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8zrQdr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A92C4CEF1;
-	Tue, 26 Aug 2025 12:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsDXO6VT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6977C113CF;
+	Tue, 26 Aug 2025 12:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212601;
-	bh=avrj+QOJu0OCm3tOrkSt3ZpHxVlv3spHXXI8I2h0d0k=;
+	s=korg; t=1756212604;
+	bh=RVjeMFhNS54MmlprCIADutXu02Zp659cBE7F14cRVdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8zrQdr3Yd8WpSxpXw1Ezx72tKbJecsrNPByINUCx9doEae04JI23IsVSxsxR43SW
-	 vpPXt4xl1A9hPPDhkgVLR+6AZF13GKjH4cDD2U2b+XWdAvooFqdyPQJ93soUDbZvfl
-	 MVS5h8sIuutWJJcemE0/M1f/uUelFU+Naf/qd5P8=
+	b=EsDXO6VTmX7oYH5TdV8UmNpTMyWo0Rilr/Thv0+mk+b+nHr9dj19jw/yd8MvZE3O0
+	 w/Jdiri/c6YmJeMh88D21NiLLtjk/eSmdB/rY1LHy85++Hu1Dft1kQ9FX01809msqL
+	 KeOvprKKGYs2tvroAZ5jMSAw1gR0obrnGpaQx9PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 032/587] ACPI: processor: perflib: Move problematic pr->performance check
-Date: Tue, 26 Aug 2025 13:03:01 +0200
-Message-ID: <20250826110953.771145063@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 033/587] smb: client: let send_done() cleanup before calling smbd_disconnect_rdma_connection()
+Date: Tue, 26 Aug 2025 13:03:02 +0200
+Message-ID: <20250826110953.795551845@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -49,55 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit d405ec23df13e6df599f5bd965a55d13420366b8 upstream.
+commit 5349ae5e05fa37409fd48a1eb483b199c32c889b upstream.
 
-Commit d33bd88ac0eb ("ACPI: processor: perflib: Fix initial _PPC limit
-application") added a pr->performance check that prevents the frequency
-QoS request from being added when the given processor has no performance
-object.  Unfortunately, this causes a WARN() in freq_qos_remove_request()
-to trigger on an attempt to take the given CPU offline later because the
-frequency QoS object has not been added for it due to the missing
-performance object.
+We should call ib_dma_unmap_single() and mempool_free() before calling
+smbd_disconnect_rdma_connection().
 
-Address this by moving the pr->performance check before calling
-acpi_processor_get_platform_limit() so it only prevents a limit from
-being set for the CPU if the performance object is not present.  This
-way, the frequency QoS request is added as it was before the above
-commit and it is present all the time along with the CPU's cpufreq
-policy regardless of whether or not the CPU is online.
+And smbd_disconnect_rdma_connection() needs to be the last function to
+call as all other state might already be gone after it returns.
 
-Fixes: d33bd88ac0eb ("ACPI: processor: perflib: Fix initial _PPC limit application")
-Tested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2801421.mvXUDI8C0e@rafael.j.wysocki
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/processor_perflib.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/smbdirect.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/acpi/processor_perflib.c
-+++ b/drivers/acpi/processor_perflib.c
-@@ -181,7 +181,7 @@ void acpi_processor_ppc_init(struct cpuf
- 		struct acpi_processor *pr = per_cpu(processors, cpu);
- 		int ret;
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -282,18 +282,20 @@ static void send_done(struct ib_cq *cq,
+ 	log_rdma_send(INFO, "smbd_request 0x%p completed wc->status=%d\n",
+ 		request, wc->status);
  
--		if (!pr || !pr->performance)
-+		if (!pr)
- 			continue;
+-	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_SEND) {
+-		log_rdma_send(ERR, "wc->status=%d wc->opcode=%d\n",
+-			wc->status, wc->opcode);
+-		smbd_disconnect_rdma_connection(request->info);
+-	}
+-
+ 	for (i = 0; i < request->num_sge; i++)
+ 		ib_dma_unmap_single(sc->ib.dev,
+ 			request->sge[i].addr,
+ 			request->sge[i].length,
+ 			DMA_TO_DEVICE);
  
- 		/*
-@@ -198,6 +198,9 @@ void acpi_processor_ppc_init(struct cpuf
- 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
- 			       cpu, ret);
- 
-+		if (!pr->performance)
-+			continue;
++	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_SEND) {
++		log_rdma_send(ERR, "wc->status=%d wc->opcode=%d\n",
++			wc->status, wc->opcode);
++		mempool_free(request, info->request_mempool);
++		smbd_disconnect_rdma_connection(info);
++		return;
++	}
 +
- 		ret = acpi_processor_get_platform_limit(pr);
- 		if (ret)
- 			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
+ 	if (atomic_dec_and_test(&request->info->send_pending))
+ 		wake_up(&request->info->wait_send_pending);
+ 
 
 
