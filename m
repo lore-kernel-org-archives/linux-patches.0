@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D75749C;
-	Tue, 26 Aug 2025 11:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9963B200112;
+	Tue, 26 Aug 2025 11:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208906; cv=none; b=YmiVnhVRtShmBzruaRBfX3+yiPU6boUOPW8tt3t8/yKAlColvhUUpcahOP4gAG7PN/A8ei9/xGtQl+lB2LrhUNM7kP8eKJEhwNRHNWDB8meF1u+if5ffz2jWponBhpIOYu9XJ6gDSgJUlR6gLIoZd3Ehr4a0GM0N3Xca/5yprQ4=
+	t=1756208908; cv=none; b=sjHwadYPwY/WPOS/33SDPNb8Bgu+4nB4ODATg7zCPB2j7j3RVxUs54aH+d3Cb/Pj9kmcld+4PVNGjDOE60NFQsG6fGNcYiqh/hkQkpqIuwOZ7NPTgpWfkGiTHxr91LjrvC7GkqD1VYCM2nw1RS0iS9GUTPBYqaFUzmKy3ry0MT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208906; c=relaxed/simple;
-	bh=KYXxTBks21uVp+5VKoCrsKW9rE2DCNVDR0uVo+Qd38U=;
+	s=arc-20240116; t=1756208908; c=relaxed/simple;
+	bh=/VnG7mvalEkmzMb4sy8CgTgjVNABZFFWdCL4ojGUQcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ls2nZmRJ9luZkNbedBMNQsw/1txXLB8xf+2hmTpgK35f2R91/5LaHsnITR2FQ5R6TnyBOnb4u1P9/Q0RdsE1RGgzZeAIIRXmSFzUlzCMEkzng6QRCzD1ADR5W7hUWW2EuGsABafgqZH4z1hIv7nzKyBRsHEqz8Kx2W2QCwMsW2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5QuxSi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Md+E22rdvpwKDniKHDQbJrUXBP7mxNFHfGRQuhZnoq6a9FRx+uz8zDPtDpGmTZmhSbv7/HiwaXl2wPuC6gN41xLNW/GiJuJnMs9RMgWPLRncangsHIPKOtRx3jDMZI02pEEsuwoP9jruR81hxgKWNMeJYlf/muxJ/lLQD2Ldv9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0FIp0w3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5QuxSi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FFCC4CEF4;
-	Tue, 26 Aug 2025 11:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0FIp0w3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2625DC4CEF1;
+	Tue, 26 Aug 2025 11:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208905;
-	bh=KYXxTBks21uVp+5VKoCrsKW9rE2DCNVDR0uVo+Qd38U=;
+	s=korg; t=1756208908;
+	bh=/VnG7mvalEkmzMb4sy8CgTgjVNABZFFWdCL4ojGUQcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5QuxSi5TKsA4yPjZcIG3mkcCX6Yr1mRamZ5hBlDVxFJyL/ZQy1xr/xfTbYetQAaw
-	 U3dFMaZBOyIRC46FAiz43Oup9iY2AYbY7MDmVAnExVU3TCot6C1n0/cgKYcS1oWnXJ
-	 wtoc01vsc3ltaZiwppsatdvqfWDQScDSm3RXT9MA=
+	b=y0FIp0w3tltjzT79APaOqSyzy4Z0HPZltMNqWGuRy7W6+Hl7RmLWjYB+TRngozPxV
+	 tzicbHFBiFbqox8ZBl9jyvucjLr8/rRpj75DQn6v1PuAnsR2wae1kNZPXAdZ1azWJn
+	 TJ4CkVXg3XEYfmbndj5+jm9jy/oznM/EQYobpu6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Justin Lai <justinlai0215@realtek.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 291/322] ipv6: sr: validate HMAC algorithm ID in seg6_hmac_info_add
-Date: Tue, 26 Aug 2025 13:11:46 +0200
-Message-ID: <20250826110923.094171042@linuxfoundation.org>
+Subject: [PATCH 6.12 274/322] rtase: Fix Rx descriptor CRC error bit definition
+Date: Tue, 26 Aug 2025 13:11:29 +0200
+Message-ID: <20250826110922.690764691@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,40 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Justin Lai <justinlai0215@realtek.com>
 
-[ Upstream commit 84967deee9d9870b15bc4c3acb50f1d401807902 ]
+[ Upstream commit 065c31f2c6915b38f45b1c817b31f41f62eaa774 ]
 
-The seg6_genl_sethmac() directly uses the algorithm ID provided by the
-userspace without verifying whether it is an HMAC algorithm supported
-by the system.
-If an unsupported HMAC algorithm ID is configured, packets using SRv6 HMAC
-will be dropped during encapsulation or decapsulation.
+The CRC error bit is located at bit 17 in the Rx descriptor, but the
+driver was incorrectly using bit 16. Fix it.
 
-Fixes: 4f4853dc1c9c ("ipv6: sr: implement API to control SR HMAC structure")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250815063845.85426-1-heminhong@kylinos.cn
+Fixes: a36e9f5cfe9e ("rtase: Add support for a pci table in this module")
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
+Link: https://patch.msgid.link/20250813071631.7566-1-justinlai0215@realtek.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_hmac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/realtek/rtase/rtase.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index e955008e732b..5d21a74c1165 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -296,6 +296,9 @@ int seg6_hmac_info_add(struct net *net, u32 key, struct seg6_hmac_info *hinfo)
- 	struct seg6_pernet_data *sdata = seg6_pernet(net);
- 	int err;
- 
-+	if (!__hmac_get_algo(hinfo->alg_id))
-+		return -EINVAL;
-+
- 	err = rhashtable_lookup_insert_fast(&sdata->hmac_infos, &hinfo->node,
- 					    rht_params);
- 
+diff --git a/drivers/net/ethernet/realtek/rtase/rtase.h b/drivers/net/ethernet/realtek/rtase/rtase.h
+index 4a4434869b10..b3310e342ccf 100644
+--- a/drivers/net/ethernet/realtek/rtase/rtase.h
++++ b/drivers/net/ethernet/realtek/rtase/rtase.h
+@@ -239,7 +239,7 @@ union rtase_rx_desc {
+ #define RTASE_RX_RES        BIT(20)
+ #define RTASE_RX_RUNT       BIT(19)
+ #define RTASE_RX_RWT        BIT(18)
+-#define RTASE_RX_CRC        BIT(16)
++#define RTASE_RX_CRC        BIT(17)
+ #define RTASE_RX_V6F        BIT(31)
+ #define RTASE_RX_V4F        BIT(30)
+ #define RTASE_RX_UDPT       BIT(29)
 -- 
 2.50.1
 
