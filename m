@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC70139579;
-	Tue, 26 Aug 2025 13:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B9C24169D;
+	Tue, 26 Aug 2025 13:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214717; cv=none; b=sbN7PAx/Ps1AlJzZmZvUDFFJ15LuKeP+4XqzUSlnV3222TFeA8dWiJOcRbp7uJgLiXlIfzidx/f0l07FnDTn/E3Nbj+TWe89kUcksPTcOQD3509PRS17+HuXFSpuJTJwuNAEb/79Ohb10cGHlUxP3f9otY9tyQmpvt9uRHWrHTY=
+	t=1756214719; cv=none; b=e1BXoM32YjdfMcoHmjk21KusOlNO/+q1SNQIYLjMGn2hwBCt6tAC/2KW8Z3qbcBamP4Xc2ezS5LXeA+BLhwR/wT96PzyJp9GhF6fKUTRkIeEH6Sczc0WlYl3gri11G9aC4+ApzxkR5s1wlH6imOJfN5S2msCIVtZ0/83SD9Erg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214717; c=relaxed/simple;
-	bh=JJCKzPF7cAs7jjfuq49Aupt8iNChrsuSPP5BQk22SXg=;
+	s=arc-20240116; t=1756214719; c=relaxed/simple;
+	bh=QQ756njNW3e8UW5QrT30rjoktgxvFXk0PMkVa/ZhtlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcJbchQJ5TTLBhbfPocAMQNELkgrfahhZaP9wsL8GokjDah9bOzY/fglV7KLQQczMLQKO7D3uOk3osdJmyKWc5egcqw4jHP84/1ZNnXrBGtpGfpgzDEk3abpuT5f/IjuWsfiTuYEN1xLkDFjhJPgPEo7ORA025H22VsHcc2Ci5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYGqKWH5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+QVbu8RrNbRa/ujOm0llgjgUEYVv1rboKsp2qbkmG5fMY8qvb+Hj71hwmTJj0fHnu0OISaN+oBjFTlP4W+utxzFqNZpWtIRRULz1aL5jwwx7WTbjTzL+GQABGiNPnXWQDaWvMi6YSexGvRd80R6RBD7MLTB+6+SaXY9ZO5u3Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3iE4qC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYGqKWH5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB92C4CEF1;
-	Tue, 26 Aug 2025 13:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3iE4qC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574F7C4CEF1;
+	Tue, 26 Aug 2025 13:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214717;
-	bh=JJCKzPF7cAs7jjfuq49Aupt8iNChrsuSPP5BQk22SXg=;
+	s=korg; t=1756214719;
+	bh=QQ756njNW3e8UW5QrT30rjoktgxvFXk0PMkVa/ZhtlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYGqKWH5guGUCdvFpMOKELaYPETxDSHj21qMifKWGQVj8Cx0d3lhNhSXFjZhsKFk1
-	 3Im/ocGzy3LjGb6rZ5+P+/48cdezEB9Gjgu+sGCqgWAMQZbEXPZ+T3T8pSXNMlN1Io
-	 krF1Eqf3shXvoMTebn1nQE8sjY9ZDcwZEtaIVRtc=
+	b=v3iE4qC0TZ7Mez0CSrlFxPcCnUdmluHYdJWsfdX55hzMwwratI2IycM/V+rGAp+pX
+	 H2QHALeuzVe7mrTG2hQ8E80/CA5eeGmq/oSWxcDqmmZI+kccSIgFSW9PqDyUheoGtx
+	 eQJH+opsTda0i4pHkr18MAJzupUh5GKm3157hVZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jack Xiao <Jack.Xiao@amd.com>,
+	Likun Gao <Likun.Gao@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 242/482] ASoC: fsl_sai: replace regmap_write with regmap_update_bits
-Date: Tue, 26 Aug 2025 13:08:15 +0200
-Message-ID: <20250826110936.749383663@linuxfoundation.org>
+Subject: [PATCH 6.1 243/482] drm/amdgpu: fix incorrect vm flags to map bo
+Date: Tue, 26 Aug 2025 13:08:16 +0200
+Message-ID: <20250826110936.773439691@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,73 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Jack Xiao <Jack.Xiao@amd.com>
 
-[ Upstream commit 0e270f32975fd21874185ba53653630dd40bf560 ]
+[ Upstream commit 040bc6d0e0e9c814c9c663f6f1544ebaff6824a8 ]
 
-Use the regmap_write() for software reset in fsl_sai_config_disable would
-cause the FSL_SAI_CSR_BCE bit to be cleared. Refer to
-commit 197c53c8ecb34 ("ASoC: fsl_sai: Don't disable bitclock for i.MX8MP")
-FSL_SAI_CSR_BCE should not be cleared. So need to use regmap_update_bits()
-instead of regmap_write() for these bit operations.
+It should use vm flags instead of pte flags
+to specify bo vm attributes.
 
-Fixes: dc78f7e59169d ("ASoC: fsl_sai: Force a software reset when starting in consumer mode")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250807020318.2143219-1-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7946340fa389 ("drm/amdgpu: Move csa related code to separate file")
+Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
+Reviewed-by: Likun Gao <Likun.Gao@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b08425fa77ad2f305fe57a33dceb456be03b653f)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_sai.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
-index 33d01a5e9b31..e622c8375a46 100644
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -768,9 +768,9 @@ static void fsl_sai_config_disable(struct fsl_sai *sai, int dir)
- 	 * are running concurrently.
- 	 */
- 	/* Software Reset */
--	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
-+	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
- 	/* Clear SR bit to finish the reset */
--	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
-+	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR, 0);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+index c6d4d41c4393..35e635c833f0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+@@ -93,8 +93,8 @@ int amdgpu_map_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 	}
  
- static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
-@@ -889,11 +889,11 @@ static int fsl_sai_dai_probe(struct snd_soc_dai *cpu_dai)
- 	unsigned int ofs = sai->soc_data->reg_offset;
+ 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
+-			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
+-			     AMDGPU_PTE_EXECUTABLE);
++			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
++			     AMDGPU_VM_PAGE_EXECUTABLE);
  
- 	/* Software Reset for both Tx and Rx */
--	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR);
--	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR);
-+	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
-+	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
- 	/* Clear SR bit to finish the reset */
--	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), 0);
--	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), 0);
-+	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, 0);
-+	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, 0);
- 
- 	regmap_update_bits(sai->regmap, FSL_SAI_TCR1(ofs),
- 			   FSL_SAI_CR1_RFW_MASK(sai->soc_data->fifo_depth),
-@@ -1694,11 +1694,11 @@ static int fsl_sai_runtime_resume(struct device *dev)
- 
- 	regcache_cache_only(sai->regmap, false);
- 	regcache_mark_dirty(sai->regmap);
--	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR);
--	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR);
-+	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
-+	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
- 	usleep_range(1000, 2000);
--	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), 0);
--	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), 0);
-+	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, 0);
-+	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, 0);
- 
- 	ret = regcache_sync(sai->regmap);
- 	if (ret)
+ 	if (r) {
+ 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
 -- 
 2.50.1
 
