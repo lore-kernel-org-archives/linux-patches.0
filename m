@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC50224B09;
-	Tue, 26 Aug 2025 13:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93986279788;
+	Tue, 26 Aug 2025 13:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215202; cv=none; b=RXlKC25573nliMsRW6whqnMHd39MAa2Wdx7NBT1/U0QCgiMD9IMEefburrgONwrF+GWpvAOv9nbKvy8d+i38uqnaYJ+7A+rjxvZokMhszXbdK19Dd1WclgH8R4DPz176kmDuj0HodPzJfzs6SDYQ6glf9oHqfZIwfmaGkUzj1JQ=
+	t=1756215204; cv=none; b=EJFHVZtE440b9neHy7lJiE4tc5Ao0PhP2rTod8gdE6xumRGisUy+yoc2b0+OYdBqHVwuQLnm8XNZItwZOL2Mi+Y05apmaBpBsmrY9FjEpJbNSMgTzN8dA6ML2hREM3qidueMrRE7L2clTbJshicQ3APxGced3m70ydi+zuftQwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215202; c=relaxed/simple;
-	bh=NwNPQUlewldiqjQXkyOvDQ7VwfXfRiACkNiBRrrgufw=;
+	s=arc-20240116; t=1756215204; c=relaxed/simple;
+	bh=/16hrxrdTpnygDZb4EXxOhzUQMDB3BjkmQphy8fbfN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAKyMF1KTw4noMKr2PzNCRzHyQV+XNPNUyQXX0Q/NIr0XJ77I/XOsCISF3jQRbFL9GhcL6zfn9/v8mOsuN63nUIej1gTBqNR9+2DXAKklvyK/B7epOPoNNdmlCcANJEYjDgIdX2G85eE/YfqqCGlnaC8/0M9xkj3jyHdNkg9rtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxR3+Tkf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSFY68vfjfWyonXl0229Xthp2S/65KPKz6t37S2TMcSE6NKVIkuwQz8znp2XPUAp6/cmNneiMbdUD7TLmGPwPBRMz6mP4Lj9LFDqlTLjdtt6pu0RvtSTtwYPwzcQTtIIsipSFrgpj857tv6rR56lZN6lZ1LS+plmG0+6UFZBQo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+eYysWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxR3+Tkf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B13C4CEF1;
-	Tue, 26 Aug 2025 13:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+eYysWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229AFC4CEF1;
+	Tue, 26 Aug 2025 13:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215201;
-	bh=NwNPQUlewldiqjQXkyOvDQ7VwfXfRiACkNiBRrrgufw=;
+	s=korg; t=1756215204;
+	bh=/16hrxrdTpnygDZb4EXxOhzUQMDB3BjkmQphy8fbfN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxR3+TkfBFraWGpr2HvdeZeIWcjVmiWwCkC9jBLzVKLVuXRgRpIG8J6wOuFR6e4Ep
-	 9XAioazNZ+mpKStWCoKySgqzfx5c7A8GOP7JxhUAYeS3/j7NOCakryw+4nr5N7rcl/
-	 Z3/tBYA2FKj+L4SuYPTUwJPUgDUFosJ/bpjh9Dtc=
+	b=W+eYysWVgEsP7+pLS8ojNXo+rQTVB0DudoLfWKUDY0mia4A8wTiAKN/7upcvIRD0Q
+	 WLUdjeouN7/zaBgMhwOh5FIHnkSG9tebPx0yzv+8j9QaWbXbQeXKTCwtoR7+1+zP/l
+	 o373uspnEykvrQUi+nk82i3ILG4VKAQUFPoWcUYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 426/482] ext4: preserve SB_I_VERSION on remount
-Date: Tue, 26 Aug 2025 13:11:19 +0200
-Message-ID: <20250826110941.353282496@linuxfoundation.org>
+Subject: [PATCH 6.1 427/482] scsi: mpi3mr: Drop unnecessary volatile from __iomem pointers
+Date: Tue, 26 Aug 2025 13:11:20 +0200
+Message-ID: <20250826110941.379285590@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,57 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit f2326fd14a224e4cccbab89e14c52279ff79b7ec ]
+[ Upstream commit 6853885b21cb1d7157cc14c9d30cc17141565bae ]
 
-IMA testing revealed that after an ext4 remount, file accesses triggered
-full measurements even without modifications, instead of skipping as
-expected when i_version is unchanged.
+The volatile qualifier is redundant for __iomem pointers.
 
-Debugging showed `SB_I_VERSION` was cleared in reconfigure_super() during
-remount due to commit 1ff20307393e ("ext4: unconditionally enable the
-i_version counter") removing the fix from commit 960e0ab63b2e ("ext4: fix
-i_version handling on remount").
+Cleaned up usage in mpi3mr_writeq() and sysif_regs pointer as per
+Upstream compliance.
 
-To rectify this, `SB_I_VERSION` is always set for `fc->sb_flags` in
-ext4_init_fs_context(), instead of `sb->s_flags` in __ext4_fill_super(),
-ensuring it persists across all mounts.
-
-Cc: stable@kernel.org
-Fixes: 1ff20307393e ("ext4: unconditionally enable the i_version counter")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250703073903.6952-2-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-[ Adjust context ]
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250627194539.48851-3-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: c91e140c82eb ("scsi: mpi3mr: Serialize admin queue BAR writes on 32-bit systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr.h    |    2 +-
+ drivers/scsi/mpi3mr/mpi3mr_fw.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1937,6 +1937,9 @@ int ext4_init_fs_context(struct fs_conte
- 	fc->fs_private = ctx;
- 	fc->ops = &ext4_context_ops;
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -1035,7 +1035,7 @@ struct mpi3mr_ioc {
+ 	char name[MPI3MR_NAME_LENGTH];
+ 	char driver_name[MPI3MR_NAME_LENGTH];
  
-+	/* i_version is always enabled now */
-+	fc->sb_flags |= SB_I_VERSION;
-+
- 	return 0;
+-	volatile struct mpi3_sysif_registers __iomem *sysif_regs;
++	struct mpi3_sysif_registers __iomem *sysif_regs;
+ 	resource_size_t sysif_regs_phys;
+ 	int bars;
+ 	u64 dma_mask;
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -23,12 +23,12 @@ module_param(poll_queues, int, 0444);
+ MODULE_PARM_DESC(poll_queues, "Number of queues for io_uring poll mode. (Range 1 - 126)");
+ 
+ #if defined(writeq) && defined(CONFIG_64BIT)
+-static inline void mpi3mr_writeq(__u64 b, volatile void __iomem *addr)
++static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
+ {
+ 	writeq(b, addr);
  }
- 
-@@ -5113,9 +5116,6 @@ static int __ext4_fill_super(struct fs_c
- 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
- 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
- 
--	/* i_version is always enabled now */
--	sb->s_flags |= SB_I_VERSION;
--
- 	if (ext4_check_feature_compatibility(sb, es, silent))
- 		goto failed_mount;
+ #else
+-static inline void mpi3mr_writeq(__u64 b, volatile void __iomem *addr)
++static inline void mpi3mr_writeq(__u64 b, void __iomem *addr)
+ {
+ 	__u64 data_out = b;
  
 
 
