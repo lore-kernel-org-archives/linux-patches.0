@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA98352FFA;
-	Tue, 26 Aug 2025 14:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A97296BDF;
+	Tue, 26 Aug 2025 14:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219250; cv=none; b=JSRf7YVNgIarq2g+oRu6UeePQrWajGFGAraWFudPjoFL3AoKNd6w+Mz60yQvbo6wVN2u5BDE80vS/JefsRaxNrCFVoVWeNgafO/AgZqan00kJ0/sT3NurRb0aKO/+LiRjln33locphiusDECiaI+4s8OGOdbAASHZLsKhHNCpqA=
+	t=1756219253; cv=none; b=MUCUozdDO+R+cUzdLsl63gicLwJg9ndfEWQXSG1eH3kukKknJhHYodafPVi8BWTCVsSdboDB+f72FlrQd+xXN7rzlxo9gw8ij0ye/HNg54aGUUL1Ay4suEUvf5UDiSHNe/0rJokozeuFI+7hWjATiMcSfhduNz7pckblxlpddMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219250; c=relaxed/simple;
-	bh=vgh9YIG3os+hu450ms3ZcZVZq4gS0zxwOOoqpOohh/A=;
+	s=arc-20240116; t=1756219253; c=relaxed/simple;
+	bh=9PbTSgEYl4UW1EpvGq/727Cd2qAIrVnoLGHwe4fsaGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eOMqsCsI52aCVCm0JarrRsks34F7+naeYqdtiedFyw34bc7r3LKswwmmkhw9U6MiwK9ojaqrvToHikUrBIcm3tnZkFO1TAEctE6pmYEo7/JqObDnB8C0bsyRyaJC2WHFD37qDDilwVuHqeLL3j4EhR1EUSlBX+3Xddkw0vhpJAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=II7pyUej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=We8IvaAEABL6jFh5aAgcsob4/YFMHcdHtwzyBq+pyQbW7CXQjJRtAH/DQ5zvWU1LLqf+4yb7g2C+rvAuE6fomTyL6A73xRqg/BUpE0pMbo8jBlLd6LOOfPuDve/2N9vwaOqkb9VD6yt3+vWJ7q6yb8XHRRaxqfTOxPrgAsWF/xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+na9AJI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="II7pyUej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460E7C113CF;
-	Tue, 26 Aug 2025 14:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+na9AJI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB947C4CEF1;
+	Tue, 26 Aug 2025 14:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219250;
-	bh=vgh9YIG3os+hu450ms3ZcZVZq4gS0zxwOOoqpOohh/A=;
+	s=korg; t=1756219253;
+	bh=9PbTSgEYl4UW1EpvGq/727Cd2qAIrVnoLGHwe4fsaGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=II7pyUejc7x5l7Wjt+mAdDEmmqxIU4on5KNWrlQ4FT/SLGnzIYHZ3/YbMUE3k3KNG
-	 AK+elR/8fO1egFDjwIhOxTud0P4ojG3hHGQex7m+iDf+Krkdt8+Nal6YUO5QYGiakm
-	 qHBT2KQ9I6y0lf2dRQaNB8yxXMZoSJOgO94detpg=
+	b=N+na9AJIUhKBXYDcuKKpre1kLz/eXk0Ao1EfduWEXL+bCIFle4IOGQ9YZ4tybX1XY
+	 oJwr/18u4dGJd0liJxk0TdVz8IDkfq3omQlmMVdL3mwRxr0S3i+eBQoLRNleLohH+1
+	 4wy43+UDQGSo0FlWuQnpqb5xH+5kSLHBhEk1DGcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Rodrigo Siqueira <siqueira@igalia.com>,
 	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 5.4 310/403] drm/amd/display: Fix fractional fb divider in set_pixel_clock_v3
-Date: Tue, 26 Aug 2025 13:10:36 +0200
-Message-ID: <20250826110915.374789910@linuxfoundation.org>
+Subject: [PATCH 5.4 311/403] drm/amd/display: Find first CRTC and its line time in dce110_fill_display_configs
+Date: Tue, 26 Aug 2025 13:10:37 +0200
+Message-ID: <20250826110915.407480246@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -55,48 +55,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 10507478468f165ea681605d133991ed05cdff62 upstream.
+commit 669f73a26f6112eedbadac53a2f2707ac6d0b9c8 upstream.
 
-For later VBIOS versions, the fractional feedback divider is
-calculated as the remainder of dividing the feedback divider by
-a factor, which is set to 1000000. For reference, see:
-- calculate_fb_and_fractional_fb_divider
-- calc_pll_max_vco_construct
+dce110_fill_display_configs is shared between DCE 6-11, and
+finding the first CRTC and its line time is relevant to DCE 6 too.
+Move the code to find it from DCE 11 specific code.
 
-However, in case of old VBIOS versions that have
-set_pixel_clock_v3, they only have 1 byte available for the
-fractional feedback divider, and it's expected to be set to the
-remainder from dividing the feedback divider by 10.
-For reference see the legacy display code:
-- amdgpu_pll_compute
-- amdgpu_atombios_crtc_program_pll
-
-This commit fixes set_pixel_clock_v3 by dividing the fractional
-feedback divider passed to the function by 100000.
-
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
 Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 027e7acc7e17802ebf28e1edb88a404836ad50d6)
+(cherry picked from commit 4ab09785f8d5d03df052827af073d5c508ff5f63)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/command_table.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |   30 ++++++----
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/command_table.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/command_table.c
-@@ -992,7 +992,7 @@ static enum bp_result set_pixel_clock_v3
- 	allocation.sPCLKInput.usFbDiv =
- 			cpu_to_le16((uint16_t)bp_params->feedback_divider);
- 	allocation.sPCLKInput.ucFracFbDiv =
--			(uint8_t)bp_params->fractional_feedback_divider;
-+			(uint8_t)(bp_params->fractional_feedback_divider / 100000);
- 	allocation.sPCLKInput.ucPostDiv =
- 			(uint8_t)bp_params->pixel_clock_post_divider;
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
+@@ -120,9 +120,12 @@ void dce110_fill_display_configs(
+ 	const struct dc_state *context,
+ 	struct dm_pp_display_configuration *pp_display_cfg)
+ {
++	struct dc *dc = context->clk_mgr->ctx->dc;
+ 	int j;
+ 	int num_cfgs = 0;
  
++	pp_display_cfg->crtc_index = dc->res_pool->res_cap->num_timing_generator;
++
+ 	for (j = 0; j < context->stream_count; j++) {
+ 		int k;
+ 
+@@ -164,6 +167,23 @@ void dce110_fill_display_configs(
+ 		cfg->v_refresh /= stream->timing.h_total;
+ 		cfg->v_refresh = (cfg->v_refresh + stream->timing.v_total / 2)
+ 							/ stream->timing.v_total;
++
++		/* Find first CRTC index and calculate its line time.
++		 * This is necessary for DPM on SI GPUs.
++		 */
++		if (cfg->pipe_idx < pp_display_cfg->crtc_index) {
++			const struct dc_crtc_timing *timing =
++				&context->streams[0]->timing;
++
++			pp_display_cfg->crtc_index = cfg->pipe_idx;
++			pp_display_cfg->line_time_in_us =
++				timing->h_total * 10000 / timing->pix_clk_100hz;
++		}
++	}
++
++	if (!num_cfgs) {
++		pp_display_cfg->crtc_index = 0;
++		pp_display_cfg->line_time_in_us = 0;
+ 	}
+ 
+ 	pp_display_cfg->display_count = num_cfgs;
+@@ -231,16 +251,6 @@ void dce11_pplib_apply_display_requireme
+ 
+ 	dce110_fill_display_configs(context, pp_display_cfg);
+ 
+-	/* TODO: is this still applicable?*/
+-	if (pp_display_cfg->display_count == 1) {
+-		const struct dc_crtc_timing *timing =
+-			&context->streams[0]->timing;
+-
+-		pp_display_cfg->crtc_index =
+-			pp_display_cfg->disp_configs[0].pipe_idx;
+-		pp_display_cfg->line_time_in_us = timing->h_total * 10000 / timing->pix_clk_100hz;
+-	}
+-
+ 	if (memcmp(&dc->current_state->pp_display_cfg, pp_display_cfg, sizeof(*pp_display_cfg)) !=  0)
+ 		dm_pp_apply_display_requirements(dc->ctx, pp_display_cfg);
+ }
 
 
