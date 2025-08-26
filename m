@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202DD1A256B;
-	Tue, 26 Aug 2025 13:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2469DF49;
+	Tue, 26 Aug 2025 13:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213536; cv=none; b=XJMC1iZ8elHoWBooaxxpKiDjY2ICM/G4ZbR3af7S47dtIJvyzkQ5Q39VBlsVNlpOUGeoljJ/lMDqd9XspiZ0wAjPTQ5yPUgAOkrUvRjtjmep681uSXLFXjws8xVBi3UXsLZSld25Q1DXVf7WlFWrDJSOT2MDBS8JbktlKKsyUIc=
+	t=1756213539; cv=none; b=aG2Ll6lrRY35sRBStIrBE3hrMLmUeoP4bCvukANUgvWSZGmWZVVH2hKdv0Wi0M8Uh5RkqZA4g0Al/qwVndmHbnyAR0u6hHfC3x9FMtxenGO0xlNmX+B9TN5X7g5pFTMqreVzsUVfHyFqnGx0ult74Jq9j2zbF/o066WkuCStaec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213536; c=relaxed/simple;
-	bh=nQgg/JdPBvFf3Eu97PJ8JbQoCgE66rQz+emjok7hcls=;
+	s=arc-20240116; t=1756213539; c=relaxed/simple;
+	bh=DHTm4LDJ2HJG4PWLL2pkFpVpiXw/ehTThQh29z0putc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T83zQ7I1WK3xAp/7XJGp0Z6Xp5KRwKT/IAH5rYBrIzdJqP2bvCOs53laDf+GhZsdN7MJQ28Jtf4YuAUuo0Zzl1dBF8It11CJIC8QYKK1SRdOd+w1BcjewJOS6hqBU9JrfoUssJDynfqRniEKMXlCa74gqE4qahnXm0vaYzg5qHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fi/Di8Q/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y//VK7m4LE2jEeYQK43UJxD5Ms0CO+mLzWZZgCuKtyYkPDLi8YSK74I5X2jCGMVLmQnlUudJXu+93GbB3jpSVb7x9Iv4VPUOAOX4m6Ps8MsQSwPwsU8MPLgVl8BiZBkGAQJNXgID42Zn/n9f7EJge9gM0roQNoCZ+n/jgt/DNlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BW3gAvHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fi/Di8Q/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9E7C116B1;
-	Tue, 26 Aug 2025 13:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BW3gAvHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55819C4CEF1;
+	Tue, 26 Aug 2025 13:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213536;
-	bh=nQgg/JdPBvFf3Eu97PJ8JbQoCgE66rQz+emjok7hcls=;
+	s=korg; t=1756213538;
+	bh=DHTm4LDJ2HJG4PWLL2pkFpVpiXw/ehTThQh29z0putc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fi/Di8Q/rZUwn0yQ5af48NYg4eI56IcKuLTAa7h/If3SC2XvSxk0UWXEuzS5rJwy6
-	 AST90uWRfYVT0xwNG34BBERSdbQEHM6ksoGdbVWFX4Ad5EPQEhYpYYzIAFCPSBJBeK
-	 dGRs9oqx8GKu3VUQOMsrrVFw8HedHpAyZg0UvCkc=
+	b=BW3gAvHMXrXuOwkffnGaIiqAoWgBCrsbMeohJokU6Colha/FlX3nZeaHLVTryPZUf
+	 3L/6PaZNZNBdehNQswQeNnxC+xrw69+ufE1izcIAs1B2Y3mx6kIrkvZXqvm3WC+vlg
+	 pyZ+4CVcsBGL0LFfj8n/UGsuL2GPkZVOPWmVdnIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 385/587] PCI: endpoint: Fix configfs group removal on driver teardown
-Date: Tue, 26 Aug 2025 13:08:54 +0200
-Message-ID: <20250826111002.705957896@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH 6.6 386/587] vsock/virtio: Validate length in packet header before skb_put()
+Date: Tue, 26 Aug 2025 13:08:55 +0200
+Message-ID: <20250826111002.732328216@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,53 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Will Deacon <will@kernel.org>
 
-commit 910bdb8197f9322790c738bb32feaa11dba26909 upstream.
+commit 0dab92484474587b82e8e0455839eaf5ac7bf894 upstream.
 
-An endpoint driver configfs attributes group is added to the
-epf_group list of struct pci_epf_driver by pci_epf_add_cfs() but an
-added group is not removed from this list when the attribute group is
-unregistered with pci_ep_cfs_remove_epf_group().
+When receiving a vsock packet in the guest, only the virtqueue buffer
+size is validated prior to virtio_vsock_skb_rx_put(). Unfortunately,
+virtio_vsock_skb_rx_put() uses the length from the packet header as the
+length argument to skb_put(), potentially resulting in SKB overflow if
+the host has gone wonky.
 
-Add the missing list_del() call in pci_ep_cfs_remove_epf_group()
-to correctly remove the attribute group from the driver list.
+Validate the length as advertised by the packet header before calling
+virtio_vsock_skb_rx_put().
 
-With this change, once the loop over all attribute groups in
-pci_epf_remove_cfs() completes, the driver epf_group list should be
-empty. Add a WARN_ON() to make sure of that.
-
-Fixes: ef1433f717a2 ("PCI: endpoint: Create configfs entry for each pci_epf_device_id table entry")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250624114544.342159-3-dlemoal@kernel.org
+Cc: <stable@vger.kernel.org>
+Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
+Signed-off-by: Will Deacon <will@kernel.org>
+Message-Id: <20250717090116.11987-3-will@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-ep-cfs.c   |    1 +
- drivers/pci/endpoint/pci-epf-core.c |    1 +
- 2 files changed, 2 insertions(+)
+ net/vmw_vsock/virtio_transport.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/endpoint/pci-ep-cfs.c
-+++ b/drivers/pci/endpoint/pci-ep-cfs.c
-@@ -683,6 +683,7 @@ void pci_ep_cfs_remove_epf_group(struct
- 	if (IS_ERR_OR_NULL(group))
- 		return;
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -497,8 +497,9 @@ static void virtio_transport_rx_work(str
+ 	do {
+ 		virtqueue_disable_cb(vq);
+ 		for (;;) {
++			unsigned int len, payload_len;
++			struct virtio_vsock_hdr *hdr;
+ 			struct sk_buff *skb;
+-			unsigned int len;
  
-+	list_del(&group->group_entry);
- 	configfs_unregister_default_group(group);
- }
- EXPORT_SYMBOL(pci_ep_cfs_remove_epf_group);
---- a/drivers/pci/endpoint/pci-epf-core.c
-+++ b/drivers/pci/endpoint/pci-epf-core.c
-@@ -311,6 +311,7 @@ static void pci_epf_remove_cfs(struct pc
- 	mutex_lock(&pci_epf_mutex);
- 	list_for_each_entry_safe(group, tmp, &driver->epf_group, group_entry)
- 		pci_ep_cfs_remove_epf_group(group);
-+	WARN_ON(!list_empty(&driver->epf_group));
- 	mutex_unlock(&pci_epf_mutex);
- }
+ 			if (!virtio_transport_more_replies(vsock)) {
+ 				/* Stop rx until the device processes already
+@@ -515,11 +516,18 @@ static void virtio_transport_rx_work(str
+ 			vsock->rx_buf_nr--;
  
+ 			/* Drop short/long packets */
+-			if (unlikely(len < sizeof(struct virtio_vsock_hdr) ||
++			if (unlikely(len < sizeof(*hdr) ||
+ 				     len > virtio_vsock_skb_len(skb))) {
+ 				kfree_skb(skb);
+ 				continue;
+ 			}
++
++			hdr = virtio_vsock_hdr(skb);
++			payload_len = le32_to_cpu(hdr->len);
++			if (unlikely(payload_len > len - sizeof(*hdr))) {
++				kfree_skb(skb);
++				continue;
++			}
+ 
+ 			virtio_vsock_skb_rx_put(skb);
+ 			virtio_transport_deliver_tap_pkt(skb);
 
 
