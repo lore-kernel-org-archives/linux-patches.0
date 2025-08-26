@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F7265CCD;
-	Tue, 26 Aug 2025 13:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F97024DD11;
+	Tue, 26 Aug 2025 13:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215306; cv=none; b=ANJZnyQt1bVSrJmG/lwYkcmynKc3+5b8/gEm6VOHu0foDmLYRAazlrrVxQcsaIVzxaNkFNC7EPs61TzPIwyvyV1G26quVNsCODTE05tWvkbiJygJkuVu82Ydt7uq8X58bqVycnFRd8McU20lBK0Tl4lR+TS9iYVMimhXuEBxVKQ=
+	t=1756215309; cv=none; b=BWuAp84rE4f1Ox68Prc2C+dT5MwzkBGoQyqLcRxL6ERKqXEa9mr5Tc24RHJmkP8wDuLs8fkki1bKn6JGV98BAZD5t6DU1Ndobpvlp8w/Uu0sURTXF0bwlvXDERKlTKx2sMOTs/FYj/fG4ljSy9BrDAvTKiS08J1iZ5nMC17PEhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215306; c=relaxed/simple;
-	bh=GvVn8jBnYHzTYeusE7syH6v6hi1+U3QzOE1hiLEMTSA=;
+	s=arc-20240116; t=1756215309; c=relaxed/simple;
+	bh=XWrd09b3IT0SUuvConxwuGvhRDWRdUFQDXH7V+LOFco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CD9IRzl4Mys40nTqDTSe6/ykmQO+0Rf4uuJyYtoqQPaSfzYQRgkXZ3S0ZaJSXB5KIiuBAcRhsNdhJgtcNiM6GI3qAvNeyIZbOl1q9qp+pIQ11jNFUkHMQ55dnFFYH5wFrltpgaCXoad1qJmqMQzmtSkbdAfqs+Qli/HLo1RKqJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoicpSp5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s/Ka6CMauNL511/3WC8S001jFeQQbRX8aguZQtFEfzEbyY4m/Z4aDUYl3xT1OdPd0XRMZaZdhAfQdfg7lfskufAFpnd0gNzuJl8Qb938bB6TYh4PCOoAWmRxprn7PGxGnORaemVi2Bfk3YDvEoi6vvkrWXlhaqLjAiTPZlMOznE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JodzKsW/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoicpSp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51639C4CEF1;
-	Tue, 26 Aug 2025 13:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JodzKsW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2670C4CEF1;
+	Tue, 26 Aug 2025 13:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215306;
-	bh=GvVn8jBnYHzTYeusE7syH6v6hi1+U3QzOE1hiLEMTSA=;
+	s=korg; t=1756215309;
+	bh=XWrd09b3IT0SUuvConxwuGvhRDWRdUFQDXH7V+LOFco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoicpSp5ZsWRDTUP5sLR0D0UQv9W55CiN2pvmLpm4pH83VKWjmB4LTCVZe3UYfUSI
-	 GqeEw/eoIDcFEZ14WHoWpBE82IGWUunfIa/lGlSXuobcuX8U5yxkFV5ZCiysWwwyjZ
-	 hIO5tG5MM8xtSO97mtsS1bbkA//JY3CQSrKm65gY=
+	b=JodzKsW/WtLps+2MCjugjWCrFghcexjukXcZCFzgotXbiLGojgEnTm+tGM2oO9yHV
+	 +ddaI5yQ/wdiT8E02Ne7ybulL4INJd9B6taxauECLMVHuluYE5aO/gYvTxLqZFgLE1
+	 V7bCO8nf0UqUrY3cDGRIhHestlO3v8USBiIqW37Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianhao Zhao <tizhao@redhat.com>,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Jakub Ramaseuski <jramaseu@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Minhong He <heminhong@kylinos.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 465/482] net: gso: Forbid IPv6 TSO with extensions on devices with only IPV6_CSUM
-Date: Tue, 26 Aug 2025 13:11:58 +0200
-Message-ID: <20250826110942.309533446@linuxfoundation.org>
+Subject: [PATCH 6.1 466/482] ipv6: sr: validate HMAC algorithm ID in seg6_hmac_info_add
+Date: Tue, 26 Aug 2025 13:11:59 +0200
+Message-ID: <20250826110942.333915028@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -55,107 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Ramaseuski <jramaseu@redhat.com>
+From: Minhong He <heminhong@kylinos.cn>
 
-[ Upstream commit 864e3396976ef41de6cc7bc366276bf4e084fff2 ]
+[ Upstream commit 84967deee9d9870b15bc4c3acb50f1d401807902 ]
 
-When performing Generic Segmentation Offload (GSO) on an IPv6 packet that
-contains extension headers, the kernel incorrectly requests checksum offload
-if the egress device only advertises NETIF_F_IPV6_CSUM feature, which has
-a strict contract: it supports checksum offload only for plain TCP or UDP
-over IPv6 and explicitly does not support packets with extension headers.
-The current GSO logic violates this contract by failing to disable the feature
-for packets with extension headers, such as those used in GREoIPv6 tunnels.
+The seg6_genl_sethmac() directly uses the algorithm ID provided by the
+userspace without verifying whether it is an HMAC algorithm supported
+by the system.
+If an unsupported HMAC algorithm ID is configured, packets using SRv6 HMAC
+will be dropped during encapsulation or decapsulation.
 
-This violation results in the device being asked to perform an operation
-it cannot support, leading to a `skb_warn_bad_offload` warning and a collapse
-of network throughput. While device TSO/USO is correctly bypassed in favor
-of software GSO for these packets, the GSO stack must be explicitly told not
-to request checksum offload.
-
-Mask NETIF_F_IPV6_CSUM, NETIF_F_TSO6 and NETIF_F_GSO_UDP_L4
-in gso_features_check if the IPv6 header contains extension headers to compute
-checksum in software.
-
-The exception is a BIG TCP extension, which, as stated in commit
-68e068cabd2c6c53 ("net: reenable NETIF_F_IPV6_CSUM offload for BIG TCP packets"):
-"The feature is only enabled on devices that support BIG TCP TSO.
-The header is only present for PF_PACKET taps like tcpdump,
-and not transmitted by physical devices."
-
-kernel log output (truncated):
-WARNING: CPU: 1 PID: 5273 at net/core/dev.c:3535 skb_warn_bad_offload+0x81/0x140
-...
-Call Trace:
- <TASK>
- skb_checksum_help+0x12a/0x1f0
- validate_xmit_skb+0x1a3/0x2d0
- validate_xmit_skb_list+0x4f/0x80
- sch_direct_xmit+0x1a2/0x380
- __dev_xmit_skb+0x242/0x670
- __dev_queue_xmit+0x3fc/0x7f0
- ip6_finish_output2+0x25e/0x5d0
- ip6_finish_output+0x1fc/0x3f0
- ip6_tnl_xmit+0x608/0xc00 [ip6_tunnel]
- ip6gre_tunnel_xmit+0x1c0/0x390 [ip6_gre]
- dev_hard_start_xmit+0x63/0x1c0
- __dev_queue_xmit+0x6d0/0x7f0
- ip6_finish_output2+0x214/0x5d0
- ip6_finish_output+0x1fc/0x3f0
- ip6_xmit+0x2ca/0x6f0
- ip6_finish_output+0x1fc/0x3f0
- ip6_xmit+0x2ca/0x6f0
- inet6_csk_xmit+0xeb/0x150
- __tcp_transmit_skb+0x555/0xa80
- tcp_write_xmit+0x32a/0xe90
- tcp_sendmsg_locked+0x437/0x1110
- tcp_sendmsg+0x2f/0x50
-...
-skb linear:   00000000: e4 3d 1a 7d ec 30 e4 3d 1a 7e 5d 90 86 dd 60 0e
-skb linear:   00000010: 00 0a 1b 34 3c 40 20 11 00 00 00 00 00 00 00 00
-skb linear:   00000020: 00 00 00 00 00 12 20 11 00 00 00 00 00 00 00 00
-skb linear:   00000030: 00 00 00 00 00 11 2f 00 04 01 04 01 01 00 00 00
-skb linear:   00000040: 86 dd 60 0e 00 0a 1b 00 06 40 20 23 00 00 00 00
-skb linear:   00000050: 00 00 00 00 00 00 00 00 00 12 20 23 00 00 00 00
-skb linear:   00000060: 00 00 00 00 00 00 00 00 00 11 bf 96 14 51 13 f9
-skb linear:   00000070: ae 27 a0 a8 2b e3 80 18 00 40 5b 6f 00 00 01 01
-skb linear:   00000080: 08 0a 42 d4 50 d5 4b 70 f8 1a
-
-Fixes: 04c20a9356f283da ("net: skip offload for NETIF_F_IPV6_CSUM if ipv6 header contains extension")
-Reported-by: Tianhao Zhao <tizhao@redhat.com>
-Suggested-by: Michal Schmidt <mschmidt@redhat.com>
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Jakub Ramaseuski <jramaseu@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250814105119.1525687-1-jramaseu@redhat.com
+Fixes: 4f4853dc1c9c ("ipv6: sr: implement API to control SR HMAC structure")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250815063845.85426-1-heminhong@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/ipv6/seg6_hmac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 212a909b4840..114fc8bc37f8 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3610,6 +3610,18 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 			features &= ~NETIF_F_TSO_MANGLEID;
- 	}
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index dd7406a9380f..b90c286d77ed 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -294,6 +294,9 @@ int seg6_hmac_info_add(struct net *net, u32 key, struct seg6_hmac_info *hinfo)
+ 	struct seg6_pernet_data *sdata = seg6_pernet(net);
+ 	int err;
  
-+	/* NETIF_F_IPV6_CSUM does not support IPv6 extension headers,
-+	 * so neither does TSO that depends on it.
-+	 */
-+	if (features & NETIF_F_IPV6_CSUM &&
-+	    (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
-+	     (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
-+	      vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
-+	    skb_transport_header_was_set(skb) &&
-+	    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
-+	    !ipv6_has_hopopt_jumbo(skb))
-+		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
++	if (!__hmac_get_algo(hinfo->alg_id))
++		return -EINVAL;
 +
- 	return features;
- }
+ 	err = rhashtable_lookup_insert_fast(&sdata->hmac_infos, &hinfo->node,
+ 					    rht_params);
  
 -- 
 2.50.1
