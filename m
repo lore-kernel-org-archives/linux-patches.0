@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614A334DCED;
-	Tue, 26 Aug 2025 14:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB2528314A;
+	Tue, 26 Aug 2025 14:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218002; cv=none; b=SrD22uNWcNzNVTKPE6mhCFLhekfnHaPKsHEF16oVbmosSP70giYaoThYtjnMcrKI0LHpiPyCwL8cnmdLp1+iVMTtMj57rN7bJO0NEuSMIEqXZDNNjdkz9Bt4mNF9td/VVtWi5VRrpG10azPeS54y/eifH8Ka3A735VqvOSWbLX4=
+	t=1756218005; cv=none; b=tyFTZyzc+aG3PGe7K+xVes8ETwW6c0yaB4rIi1aR14yBdA34J+pJ8+oNkbIHEViwbh6G+uep+Jhut3zvWu6gp7VWqmcYU1k20bptq9+ceC4QnTIhuZ3P+PETGHbhPhXDeJmXl0tLExoJBVYIzDE8kiT85RHNzb0olKHVHS6mfaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218002; c=relaxed/simple;
-	bh=rEqgJ3pncP/8R7LeOyhqtwd/hNlXQ5jSl1hF/Y2Vo5g=;
+	s=arc-20240116; t=1756218005; c=relaxed/simple;
+	bh=SSNdB0hJlgHoucLN2/EGWH5nW8rG3fVmMN7+QYOYi04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7P5QGJyKlUvBi26sEmAjaELFY3z2alJmW5k3PNXTOvmHGJwR1h+RbOrIUpon5O0rO2FE04HYsyvNoSq0dCtPXJvhwo4/JhyUYmZ9ZKBjo1zW3DBGGFZTzw3RsdzyLuuvyaqZLpCZHrF0M/zPES1iww0X1RcVAtx1arNG4E15uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeuBosOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rocr8SJjmQn6SYV96AHS2oC1x/y8YWZXwLgqP116ebo4ARMywzgKGPfCD5nUJi/9PKdemKvKCr7tKOCTelCyuLZosZrA637uQ7BlXNTldN1hJHqihO8SO/MetNvVbKIXBeFCvYZsH2fHtr+KGXqCy1eyJyzKdDsscOmOiykV3DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLeSss5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeuBosOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6154C4CEF1;
-	Tue, 26 Aug 2025 14:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLeSss5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84152C4CEF1;
+	Tue, 26 Aug 2025 14:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218002;
-	bh=rEqgJ3pncP/8R7LeOyhqtwd/hNlXQ5jSl1hF/Y2Vo5g=;
+	s=korg; t=1756218004;
+	bh=SSNdB0hJlgHoucLN2/EGWH5nW8rG3fVmMN7+QYOYi04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YeuBosOIpZ5t4H5L+ZUb9+Kcj98oJxFHxDyZx/l6sCc9wYxfQPcXMCAzMGgAP8HQh
-	 x58Ig7aLaYjtBAW3ZdONYfcjVq73WUbz7Cl3K1BL9lUCUBxXke2XS6YIZm23Yu2xeh
-	 84PGIVnZG6mg+hEJm2uqvhzEZIiqkN50ULWjgyNw=
+	b=dLeSss5hymwKXH73zfe+a7FunS7zGB1B7/8Ac71TK7Zvro/a/5GiG6lyVJW6Q2LTj
+	 dos47ifSFNzMbJFSNQ4daJ9gZ8sLMphoKKC0Erwb1vn1qj8U/69Qg2ZdRBmMLlMIMu
+	 p7jtKGWJzy1/lwMTFI4/9DKPGxEWraXZx7vD/cho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 356/523] usb: gadget: udc: renesas_usb3: fix device leak at unbind
-Date: Tue, 26 Aug 2025 13:09:26 +0200
-Message-ID: <20250826110933.248072756@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Subject: [PATCH 5.10 357/523] usb: dwc3: meson-g12a: fix device leaks at unbind
+Date: Tue, 26 Aug 2025 13:09:27 +0200
+Message-ID: <20250826110933.273791762@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,30 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 868837b0a94c6b1b1fdbc04d3ba218ca83432393 upstream.
+commit 93b400f4951404d040197943a25d6fef9f8ccabb upstream.
 
-Make sure to drop the reference to the companion device taken during
-probe when the driver is unbound.
+Make sure to drop the references taken to the child devices by
+of_find_device_by_node() during probe on driver unbind.
 
-Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Fixes: c99993376f72 ("usb: dwc3: Add Amlogic G12A DWC3 glue")
+Cc: stable@vger.kernel.org	# 5.2
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20250724091910.21092-4-johan@kernel.org
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20250724091910.21092-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/renesas_usb3.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/dwc3-meson-g12a.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/gadget/udc/renesas_usb3.c
-+++ b/drivers/usb/gadget/udc/renesas_usb3.c
-@@ -2566,6 +2566,7 @@ static int renesas_usb3_remove(struct pl
- 	struct renesas_usb3 *usb3 = platform_get_drvdata(pdev);
+--- a/drivers/usb/dwc3/dwc3-meson-g12a.c
++++ b/drivers/usb/dwc3/dwc3-meson-g12a.c
+@@ -844,6 +844,9 @@ static int dwc3_meson_g12a_remove(struct
+ 	if (priv->drvdata->otg_switch_supported)
+ 		usb_role_switch_unregister(priv->role_switch);
  
- 	debugfs_remove_recursive(usb3->dentry);
-+	put_device(usb3->host_dev);
- 	device_remove_file(&pdev->dev, &dev_attr_role);
++	put_device(priv->switch_desc.udc);
++	put_device(priv->switch_desc.usb2_port);
++
+ 	of_platform_depopulate(dev);
  
- 	cancel_work_sync(&usb3->role_work);
+ 	for (i = 0 ; i < PHY_COUNT ; ++i) {
 
 
