@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C864D1E519;
-	Tue, 26 Aug 2025 13:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7662D1E519;
+	Tue, 26 Aug 2025 13:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216357; cv=none; b=A/wHcnQdvSd/5e5eNbanA2TRhtr63a9XtTVlHWhjX7KTJQJk/L3TdwIEa3CPUfZ9vg0iu4q1kIQH4w4qkXBGYK35FyDTpM9ObHmLnHHLAKjUCTu5kkEYI6H2uv3rL2l41GSZkvsD9u7Gy2EV0TeVCyEXn0NATKMIyunmTweCDY4=
+	t=1756216358; cv=none; b=hmn/9F19hwSoPo79rO3lKd9vrBvF34c6deQhN0/hK5z0J76LNrmpjrKY40fR5Zsnq75xnfdSNvhT4//3tm3EWOenhX69Z+4EhIVFGxaRnLNq9t6XwamvyGiRgF/30DHn/wGBMjzjh3oan829wUDwxEeBXrgT2BpkvSjhBpBv564=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216357; c=relaxed/simple;
-	bh=rCvU0wuEuaE7QPNS5jxnQNj9tx6ezM+i+ir55MCxKTk=;
+	s=arc-20240116; t=1756216358; c=relaxed/simple;
+	bh=axI1bPstp7dc6JoiM5aI0MRHgKyJhwSVDWYbA9LK4HE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mXjVF06QSMNCOhOJ7IbjxuvkKE4141nhq6FqE3DLnFCsUT6b815Jf8rhjtshVAe+5aZ3I7hFRmsTU6aWHHwboR8U33VNSB3JspUfdCUwHmT0ahpe7cSwLanD9npduZtOcmgvSwwJ3Q8O2PP6sbuFXiYdgRtEmsubiRbKpT9il7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7iDzbD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ItZqvnuTj1rbKtVHuKlmVuiY4+vn+x5+/9z68kUnW9jDyBEQ2q+zEZRNlHE1HaWpxCsYfTeisz4rmUUuX7jY+RuQ5Yqit1bPvPTVkStlpRQ504TCGG3TNkQKKYrrASTHSaiFrL+yvh88vTKo6fP+KflA4d2qUXZa1haFjNTXZcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNviLiVj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7iDzbD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A194C113CF;
-	Tue, 26 Aug 2025 13:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNviLiVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA25BC4CEF1;
+	Tue, 26 Aug 2025 13:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216357;
-	bh=rCvU0wuEuaE7QPNS5jxnQNj9tx6ezM+i+ir55MCxKTk=;
+	s=korg; t=1756216355;
+	bh=axI1bPstp7dc6JoiM5aI0MRHgKyJhwSVDWYbA9LK4HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7iDzbD38gJCvQIaBR65ZptiWifw0a4X9+qTBcQYZb5ukDk06lWxgC1i5iI6M9WnV
-	 LoStHEZq39S+SLmVPFkkjGVo5HUwII1Mm6YCuxRWALv3FllC5oM06f4y/pg3ptI+HJ
-	 jMtJBIsCigK7sObfGhMeWRo6FYHhZuCLkknb0hnE=
+	b=JNviLiVjbk2P4DqgoAA7BzVGDegIXUKemSV23MRKZues+6fhVP/V9FSGyLSdp3Ixh
+	 1K8IwHkkDxRmIGHwf7ewIaaAXyRWTuny7XxPhtPvA9KbkTsIkG6iXYsFh4bDV9XIDS
+	 q0UAG4Nd+BGuPaRsTZHWVxdbzamSuDKUPQSRP9WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 380/644] drm/ttm: Respect the shrinker core free target
-Date: Tue, 26 Aug 2025 13:07:51 +0200
-Message-ID: <20250826110955.844315504@linuxfoundation.org>
+Subject: [PATCH 5.15 379/644] uapi: in6: restore visibility of most IPv6 socket options
+Date: Tue, 26 Aug 2025 13:07:50 +0200
+Message-ID: <20250826110955.818689978@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -54,71 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit eac21f8ebeb4f84d703cf41dc3f81d16fa9dc00a ]
+[ Upstream commit 31557b3487b349464daf42bc4366153743c1e727 ]
 
-Currently the TTM shrinker aborts shrinking as soon as it frees pages from
-any of the page order pools and by doing so it can fail to respect the
-freeing target which was configured by the shrinker core.
+A decade ago commit 6d08acd2d32e ("in6: fix conflict with glibc")
+hid the definitions of IPV6 options, because GCC was complaining
+about duplicates. The commit did not list the warnings seen, but
+trying to recreate them now I think they are (building iproute2):
 
-We use the wording "can fail" because the number of freed pages will
-depend on the presence of pages in the pools and the order of the pools on
-the LRU list. For example if there are no free pages in the high order
-pools the shrinker core may require multiple passes over the TTM shrinker
-before it will free the default target of 128 pages (assuming there are
-free pages in the low order pools). This inefficiency can be compounded by
-the pool LRU where multiple further calls into the TTM shrinker are
-required to end up looking at the pool with pages.
+In file included from ./include/uapi/rdma/rdma_user_cm.h:39,
+                 from rdma.h:16,
+                 from res.h:9,
+                 from res-ctx.c:7:
+../include/uapi/linux/in6.h:171:9: warning: ‘IPV6_ADD_MEMBERSHIP’ redefined
+  171 | #define IPV6_ADD_MEMBERSHIP     20
+      |         ^~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/netinet/in.h:37,
+                 from rdma.h:13:
+/usr/include/bits/in.h:233:10: note: this is the location of the previous definition
+  233 | # define IPV6_ADD_MEMBERSHIP    IPV6_JOIN_GROUP
+      |          ^~~~~~~~~~~~~~~~~~~
+../include/uapi/linux/in6.h:172:9: warning: ‘IPV6_DROP_MEMBERSHIP’ redefined
+  172 | #define IPV6_DROP_MEMBERSHIP    21
+      |         ^~~~~~~~~~~~~~~~~~~~
+/usr/include/bits/in.h:234:10: note: this is the location of the previous definition
+  234 | # define IPV6_DROP_MEMBERSHIP   IPV6_LEAVE_GROUP
+      |          ^~~~~~~~~~~~~~~~~~~~
 
-Improve this by never freeing less than the shrinker core has requested.
+Compilers don't complain about redefinition if the defines
+are identical, but here we have the kernel using the literal
+value, and glibc using an indirection (defining to a name
+of another define, with the same numerical value).
 
-At the same time we start reporting the number of scanned pages (freed in
-this case), which prevents the core shrinker from giving up on the TTM
-shrinker too soon and moving on.
+Problem is, the commit in question hid all the IPV6 socket
+options, and glibc has a pretty sparse list. For instance
+it lacks Flow Label related options. Willem called this out
+in commit 3fb321fde22d ("selftests/net: ipv6 flowlabel"):
 
-v2:
- * Simplify loop logic. (Christian)
- * Improve commit message.
+  /* uapi/glibc weirdness may leave this undefined */
+  #ifndef IPV6_FLOWINFO
+  #define IPV6_FLOWINFO 11
+  #endif
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20250603112750.34997-2-tvrtko.ursulin@igalia.com
+More interestingly some applications (socat) use
+a #ifdef IPV6_FLOWINFO to gate compilation of thier
+rudimentary flow label support. (For added confusion
+socat misspells it as IPV4_FLOWINFO in some places.)
+
+Hide only the two defines we know glibc has a problem
+with. If we discover more warnings we can hide more
+but we should avoid covering the entire block of
+defines for "IPV6 socket options".
+
+Link: https://patch.msgid.link/20250609143933.1654417-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/uapi/linux/in6.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
-index 346db24719f9..69968b3cb73d 100644
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -588,7 +588,6 @@ void ttm_pool_fini(struct ttm_pool *pool)
- 	}
- }
+diff --git a/include/uapi/linux/in6.h b/include/uapi/linux/in6.h
+index ff8d21f9e95b..5a47339ef7d7 100644
+--- a/include/uapi/linux/in6.h
++++ b/include/uapi/linux/in6.h
+@@ -152,7 +152,6 @@ struct in6_flowlabel_req {
+ /*
+  *	IPV6 socket options
+  */
+-#if __UAPI_DEF_IPV6_OPTIONS
+ #define IPV6_ADDRFORM		1
+ #define IPV6_2292PKTINFO	2
+ #define IPV6_2292HOPOPTS	3
+@@ -169,8 +168,10 @@ struct in6_flowlabel_req {
+ #define IPV6_MULTICAST_IF	17
+ #define IPV6_MULTICAST_HOPS	18
+ #define IPV6_MULTICAST_LOOP	19
++#if __UAPI_DEF_IPV6_OPTIONS
+ #define IPV6_ADD_MEMBERSHIP	20
+ #define IPV6_DROP_MEMBERSHIP	21
++#endif
+ #define IPV6_ROUTER_ALERT	22
+ #define IPV6_MTU_DISCOVER	23
+ #define IPV6_MTU		24
+@@ -203,7 +204,6 @@ struct in6_flowlabel_req {
+ #define IPV6_IPSEC_POLICY	34
+ #define IPV6_XFRM_POLICY	35
+ #define IPV6_HDRINCL		36
+-#endif
  
--/* As long as pages are available make sure to release at least one */
- static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
- 					    struct shrink_control *sc)
- {
-@@ -596,9 +595,12 @@ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
- 
- 	do
- 		num_freed += ttm_pool_shrink();
--	while (!num_freed && atomic_long_read(&allocated_pages));
-+	while (num_freed < sc->nr_to_scan &&
-+	       atomic_long_read(&allocated_pages));
- 
--	return num_freed;
-+	sc->nr_scanned = num_freed;
-+
-+	return num_freed ?: SHRINK_STOP;
- }
- 
- /* Return the number of pages available or SHRINK_EMPTY if we have none */
+ /*
+  * Multicast:
 -- 
 2.39.5
 
