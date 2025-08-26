@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D811A256B;
-	Tue, 26 Aug 2025 13:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3291823D294;
+	Tue, 26 Aug 2025 13:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213604; cv=none; b=kXU8Q5EwoLbIlWixQlxVTBBFHg0dHlWtTsWslNjl0G0iSqzNJJUq1m7j1pDVpzG6uUndIxnv3rqvzoys6s+QoHQXFkcr+1sBB2/vkAd62xe/iBAMCMKy6cGEJTcj8srrmd844hdaBgk2VNuQbBpCRE/u+DIRKws8VGKWdW9cMbk=
+	t=1756213607; cv=none; b=ja4kJd/svV+JfzhbR2M6sKF+mHt8RdZF1aZba6QUtx8rBzi4krmscq1jELQ9+DN6haHviH0Cz2IVGDUpo9Gh6pRh4N1g9VSNC7/5ADYlR13Ohbfn+wrl83CPwqIUs8FKwTulCA+NcSwcdmDiT+7TdcvpBqCYKrZ1N5V+1OXir18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213604; c=relaxed/simple;
-	bh=ccR1cDPx7gUJlaq1V9OvB7OE17aEe9YPQeb6k8Ezo04=;
+	s=arc-20240116; t=1756213607; c=relaxed/simple;
+	bh=1levFNngVgwxV6kQvYwY9bVjsF7YkL5A/EwRy4CxH00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eW1xQ0f1I+J8paIrWKAEKSk2CxN4E6axAjLwHz1uWLtlMTV5SwsR4zhpuSlYJBk2qFlPnqKUUWM5/Wbdk+sG3lynrP4Ok4cIJxLKO9K60lSw1OkHZhbfGeVoHV7/Lb5Oym/fe3OZp1EczsUhQnfGy8OTuUaEyhqScQwq2yq9Bxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwLaBkXH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DpUpbo1XBpXFlTx88wGC6WIptatTiZun3EOTwaeB2LkUGpbdnngWJsF6NemFloEOq0JJARjPUouZjzVZcr4UBaPblL0Al51qeCNS5fxXW/ZJz1inX2XT4DD8eJ0Nm72XjSZJizM5vMl4o7lzGnjDn6m6d4HRI/xMQdXfltcM/HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvDOowap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwLaBkXH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A81C4CEF1;
-	Tue, 26 Aug 2025 13:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvDOowap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7856C4CEF1;
+	Tue, 26 Aug 2025 13:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213604;
-	bh=ccR1cDPx7gUJlaq1V9OvB7OE17aEe9YPQeb6k8Ezo04=;
+	s=korg; t=1756213607;
+	bh=1levFNngVgwxV6kQvYwY9bVjsF7YkL5A/EwRy4CxH00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwLaBkXHQX8VX2XHrG1LqXKnbGB03HEZwnRjy3cdNMGk/YLtL/jd+jROeSkSpaS5C
-	 XrD36Tmp9RvQEqCXkX8glemnyFqd1aCU/mhaiG5hujEqCTa8ErFF4pFPxzOXVpwxQS
-	 WGpp6aWtR7lgvgEpo4vmu3Owklp2QZyT3DlxsUE4=
+	b=VvDOowapvad0oxNbraK+DzguAgT2ovH/J4FPnaXvp3dYCBNzS5DdDKfZgz1ZHKtOk
+	 bJY53QGwupLOUoKLxfeoE+mNXBFDJgs59Iv76LjbMaI9c+xmNkwsGaLh0s7CxtaeaQ
+	 dbA8sdOUZoRCmDFyNNoNUfdo4ctA1h39dsP2pzWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 409/587] media: ov2659: Fix memory leaks in ov2659_probe()
-Date: Tue, 26 Aug 2025 13:09:18 +0200
-Message-ID: <20250826111003.335173047@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.6 378/587] pwm: mediatek: Fix duty and period setting
+Date: Tue, 26 Aug 2025 13:08:47 +0200
+Message-ID: <20250826111002.522155930@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -45,48 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 76142b137b968d47b35cdd8d1dc924677d319c8b upstream.
+commit f21d136caf8171f94159d975ea4620c164431bd9 upstream.
 
-ov2659_probe() doesn't properly free control handler resources in failure
-paths, causing memory leaks. Add v4l2_ctrl_handler_free() to prevent these
-memory leaks and reorder the ctrl_handler assignment for better code flow.
+The period generated by the hardware is
 
-Fixes: c4c0283ab3cd ("[media] media: i2c: add support for omnivision's ov2659 sensor")
+	(PWMDWIDTH + 1) << CLKDIV) / freq
+
+according to my tests with a signal analyser and also the documentation.
+
+The current algorithm doesn't consider the `+ 1` part and so configures
+slightly too high periods. The same issue exists for the duty cycle
+setting. So subtract 1 from both the register values for period and
+duty cycle. If period is 0, bail out, if duty_cycle is 0, just disable
+the PWM which results in a constant low output.
+
+Fixes: caf065f8fd58 ("pwm: Add MediaTek PWM support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/6d1fa87a76f8020bfe3171529b8e19baffceab10.1753717973.git.u.kleine-koenig@baylibre.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov2659.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-mediatek.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
---- a/drivers/media/i2c/ov2659.c
-+++ b/drivers/media/i2c/ov2659.c
-@@ -1479,14 +1479,15 @@ static int ov2659_probe(struct i2c_clien
- 				     V4L2_CID_TEST_PATTERN,
- 				     ARRAY_SIZE(ov2659_test_pattern_menu) - 1,
- 				     0, 0, ov2659_test_pattern_menu);
--	ov2659->sd.ctrl_handler = &ov2659->ctrls;
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -167,7 +167,10 @@ static int pwm_mediatek_config(struct pw
+ 	do_div(resolution, clk_rate);
  
- 	if (ov2659->ctrls.error) {
- 		dev_err(&client->dev, "%s: control initialization error %d\n",
- 			__func__, ov2659->ctrls.error);
-+		v4l2_ctrl_handler_free(&ov2659->ctrls);
- 		return  ov2659->ctrls.error;
+ 	cnt_period = DIV_ROUND_CLOSEST_ULL((u64)period_ns * 1000, resolution);
+-	while (cnt_period > 8191) {
++	if (!cnt_period)
++		return -EINVAL;
++
++	while (cnt_period > 8192) {
+ 		resolution *= 2;
+ 		clkdiv++;
+ 		cnt_period = DIV_ROUND_CLOSEST_ULL((u64)period_ns * 1000,
+@@ -190,9 +193,16 @@ static int pwm_mediatek_config(struct pw
  	}
  
-+	ov2659->sd.ctrl_handler = &ov2659->ctrls;
- 	sd = &ov2659->sd;
- 	client->flags |= I2C_CLIENT_SCCB;
- #ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
+ 	cnt_duty = DIV_ROUND_CLOSEST_ULL((u64)duty_ns * 1000, resolution);
++
+ 	pwm_mediatek_writel(pc, pwm->hwpwm, PWMCON, BIT(15) | clkdiv);
+-	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period);
+-	pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty);
++	pwm_mediatek_writel(pc, pwm->hwpwm, reg_width, cnt_period - 1);
++
++	if (cnt_duty) {
++		pwm_mediatek_writel(pc, pwm->hwpwm, reg_thres, cnt_duty - 1);
++		pwm_mediatek_enable(chip, pwm);
++	} else {
++		pwm_mediatek_disable(chip, pwm);
++	}
+ 
+ out:
+ 	pwm_mediatek_clk_disable(chip, pwm);
+@@ -221,11 +231,8 @@ static int pwm_mediatek_apply(struct pwm
+ 	if (err)
+ 		return err;
+ 
+-	if (!pwm->state.enabled) {
++	if (!pwm->state.enabled)
+ 		err = pwm_mediatek_clk_enable(chip, pwm);
+-		if (!err)
+-			pwm_mediatek_enable(chip, pwm);
+-	}
+ 
+ 	return err;
+ }
 
 
