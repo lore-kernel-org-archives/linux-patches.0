@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B2239573;
-	Tue, 26 Aug 2025 11:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA44C2BE653;
+	Tue, 26 Aug 2025 11:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207632; cv=none; b=lbjDEsOWHYEwQXxSXfv8IVAVM9p6cHYOeDoDaLVee+J6IdYBrtKIPO+vhnEnnMoDq0oK8tU2CkhOmKY6E14Nfvj+ePGs30plUpvbClohnGR3lG+w6D0xfqycCYXIf7pX/5fWL+Dtk1Mwil40Tr2zkRGzeNFPweRS8XruWo0r/Sw=
+	t=1756207634; cv=none; b=pCzL1MU/k32Rok17d9KmJKRM/nJB++VE8Qx6pqb+xmKH0+tjnhchIj9+d7EUeMUa+WwVonQ6uxuVVfl5DaPJadXNfMwi6kpUZXHBrhcfqQlXSK6K5MpO+vmhRu3oNXIVbGJtQiaFvO6Kg8kOpXadbA4jbi+0HU6XGeEzcLN6VNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207632; c=relaxed/simple;
-	bh=fTUQ8rTpVCgDoqFSX+TZnux322Rubg0X5CtwayIzPCg=;
+	s=arc-20240116; t=1756207634; c=relaxed/simple;
+	bh=F8N0boz53m4NEFlwktTJZDORu3e189P9f4Zk8t0ZHyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ierij/GeBJPOQ6rCLK4S8icPUij5ZPxZRSkydEVFT1HPZnTdGvxxjr5BrVjruFjL2ftx46+zXLfccSy64Fl48++Cj5lRFJL6iw3/PeP1DEDylH+LRYNcHez5lmoFeV3dR4iLgoyUJVYKjwmLBY0XF1vH3y5cTdweDluEHxXydrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ov68a1Hy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VItyhJiBvsaZgJW0i1kc9yMif6YyzpfUhcVNYmR855q0rq/rnowCMkKonIhdJoopYDN8TJ4zDomiLApErZodwu8WVMaKta/l/utnEeCojPrPpVIk/mh10eXdOPNyg7wrm/VVb/y+xT3NfdYrvpKdqmXYlxS4hcV1fjUKOWGXiDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzqeVSwa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ov68a1Hy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A53FC4CEF1;
-	Tue, 26 Aug 2025 11:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzqeVSwa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5AAC4CEF1;
+	Tue, 26 Aug 2025 11:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207631;
-	bh=fTUQ8rTpVCgDoqFSX+TZnux322Rubg0X5CtwayIzPCg=;
+	s=korg; t=1756207634;
+	bh=F8N0boz53m4NEFlwktTJZDORu3e189P9f4Zk8t0ZHyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ov68a1HygYXg/T0EM0rC5bFtJNgWqASE2ah0/x4qp+ak2zFaAv/5UNnLC8rnhRCZf
-	 4iS5zAyp+cqa+Sm+gr/mknjJMDTrLulW2bYso5HcAWLb6QP6to6j51zoIBLqnWYLN5
-	 0dD5KS/fiMGmeNA2JlLXGqCjL/E2NXpYGwYyD61w=
+	b=RzqeVSwaDh/McubqPcCfPfZKgyCTQw10Enh2ChKnOUxCBDkGCjNgZsa8a8bkWZJKT
+	 /ZT9QJcN5ePoyLfSjpImH2X/VSm16g4obr8KhUI3z03H6IxnvT2VrP5j4MST1UMAue
+	 MLbDVygvV3oHZlHC1Umy4E3Hyp61/vmEqrq8Zqgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.16 258/457] drm/i915: silence rpm wakeref asserts on GEN11_GU_MISC_IIR access
-Date: Tue, 26 Aug 2025 13:09:02 +0200
-Message-ID: <20250826110943.731761159@linuxfoundation.org>
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Zhi Wang <zhiw@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.16 259/457] drm/nouveau/gsp: fix mismatched alloc/free for kvmalloc()
+Date: Tue, 26 Aug 2025 13:09:03 +0200
+Message-ID: <20250826110943.755505792@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -47,53 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit ff646d033783068cc5b38924873cab4a536b17c1 upstream.
+commit 989fe6771266bdb82a815d78802c5aa7c918fdfd upstream.
 
-Commit 8d9908e8fe9c ("drm/i915/display: remove small micro-optimizations
-in irq handling") not only removed the optimizations, it also enabled
-wakeref asserts for the GEN11_GU_MISC_IIR access. Silence the asserts by
-wrapping the access inside intel_display_rpm_assert_{block,unblock}().
+Replace kfree() with kvfree() for memory allocated by kvmalloc().
 
-Reported-by: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Closes: https://lore.kernel.org/r/aG0tWkfmxWtxl_xc@zx2c4.com
-Fixes: 8d9908e8fe9c ("drm/i915/display: remove small micro-optimizations in irq handling")
-Cc: stable@vger.kernel.org # v6.13+
-Suggested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-Link: https://lore.kernel.org/r/20250805115656.832235-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit cbd3baeffbc08052ce7dc53f11bf5524b4411056)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Compile-tested only.
+
+Cc: stable@vger.kernel.org
+Fixes: 8a8b1ec5261f ("drm/nouveau/gsp: split rpc handling out on its own")
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Timur Tabi <ttabi@nvidia.com>
+Acked-by: Zhi Wang <zhiw@nvidia.com>
+Link: https://lore.kernel.org/r/20250813125412.96178-1-rongqianfeng@vivo.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_irq.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_irq.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_irq.c
-@@ -1492,10 +1492,14 @@ u32 gen11_gu_misc_irq_ack(struct intel_d
- 	if (!(master_ctl & GEN11_GU_MISC_IRQ))
- 		return 0;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
+index 9d06ff722fea..0dc4782df8c0 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
+@@ -325,7 +325,7 @@ r535_gsp_msgq_recv(struct nvkm_gsp *gsp, u32 gsp_rpc_len, int *retries)
  
-+	intel_display_rpm_assert_block(display);
-+
- 	iir = intel_de_read(display, GEN11_GU_MISC_IIR);
- 	if (likely(iir))
- 		intel_de_write(display, GEN11_GU_MISC_IIR, iir);
+ 		rpc = r535_gsp_msgq_peek(gsp, sizeof(*rpc), info.retries);
+ 		if (IS_ERR_OR_NULL(rpc)) {
+-			kfree(buf);
++			kvfree(buf);
+ 			return rpc;
+ 		}
  
-+	intel_display_rpm_assert_unblock(display);
-+
- 	return iir;
- }
+@@ -334,7 +334,7 @@ r535_gsp_msgq_recv(struct nvkm_gsp *gsp, u32 gsp_rpc_len, int *retries)
  
+ 		rpc = r535_gsp_msgq_recv_one_elem(gsp, &info);
+ 		if (IS_ERR_OR_NULL(rpc)) {
+-			kfree(buf);
++			kvfree(buf);
+ 			return rpc;
+ 		}
+ 
+-- 
+2.50.1
+
 
 
