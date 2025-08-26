@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC7121A420;
-	Tue, 26 Aug 2025 13:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20D729BD83;
+	Tue, 26 Aug 2025 13:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215107; cv=none; b=ZPsbPvzrtxe9trjnpttYorgGuJI1eW8YSOHV6J5QYGawPsrADIOpBarw3iR35oBwROlIRvA9XKfsAe7sIXK5RbPz7WpsJ9u6+dNhxgH7jXjIdWjAm9cIMmtntCtbALG+j2p8uGfmsCsGweSTjiXtLDbBPWTsAE8xBkQn5OTBpbA=
+	t=1756215109; cv=none; b=NCtr7PvvRIjL8DapDEekwvsbk4UZkA9o71B4tK0UlnbFOQ+J1kGn5JBSUnv3b8c+cybFmZVyImaoGltXt4ykPerMJgvhz71oFKVGKqq9auqMYOWAobtF6OvqA18A0FSMEqamNjKA0ZPoLy1exN+BGgApeDKdpnX+1IuZUuDnjqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215107; c=relaxed/simple;
-	bh=JUvbNoJE8VZJOg8gMPmrsOEiRo7jFRKPadZIVTOSaX4=;
+	s=arc-20240116; t=1756215109; c=relaxed/simple;
+	bh=RhrKA4yI9Uw5TfRvUS/CDMAeBEu6VGLXSYNVc2c568g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSV6Nn3umbC3T9jO3AULnN8bE8BbBdx5oXKlovKiRn1b8d9isicIM+oNENIdmYy3Xr7RXcZCdlXlMTKYy0q3xFaThucv6AbJofgY+9S5lb9vBgxjtltEbzx2zlpuIMzdsFq+SdTYoC+1qm0p/4woO43OcpeJrKNBWnRyh34wC1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+S8w4lj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HhJUSxlIHv2iY5PnSCJXAxWtQGvQ3Cl9arrH4XdX5c0TuqoCAbrnAoR3dBKDmj9zbKVTQVDYbjd489hzrgrwNEAkwfu8ibHp+9q4TSE6KSgNohQEpwIYpD6ERiX6YXVkwhGiW6Je9J5wWvGBVOAX0cEsea2HVyyqXDyw+H4+1uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5TczaMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+S8w4lj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B23EC4CEF1;
-	Tue, 26 Aug 2025 13:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5TczaMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F02C4CEF1;
+	Tue, 26 Aug 2025 13:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215106;
-	bh=JUvbNoJE8VZJOg8gMPmrsOEiRo7jFRKPadZIVTOSaX4=;
+	s=korg; t=1756215109;
+	bh=RhrKA4yI9Uw5TfRvUS/CDMAeBEu6VGLXSYNVc2c568g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+S8w4ljoTrz1PsO6MxtuebDiKPRfOvb81xsI5L8D/sVqRgYuZE4ZBoXfL3GH1Usl
-	 pM8v17LdnOV12WduaxbE6vqpEU8wKHUCUq53xa9GRrjebqlQNV6jqlrnbBvBb7uaPg
-	 g1h8gyMaMN/otnzG8s9KxG31gf1mzG9AsuwRmidQ=
+	b=K5TczaMnhoBUHbTWKNP0VvpxjB8+t2kEXnKkyIXcQCDHGDYPbtDhdbhhwQbpH2Jzc
+	 Ba2SS365rZOJqC/iPybVy4c/EOZTOU8YtW/+t3vXgHKeFXFb3oy4LoX5ArpDG7fGWv
+	 BDO1vAYVLHyCGs95kNNOi5Tq/6kNU/fUFbmVFddg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	KernelCI bot <bot@kernelci.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 359/482] usb: typec: fusb302: cache PD RX state
-Date: Tue, 26 Aug 2025 13:10:12 +0200
-Message-ID: <20250826110939.704498031@linuxfoundation.org>
+Subject: [PATCH 6.1 350/482] ARM: 9448/1: Use an absolute path to unified.h in KBUILD_AFLAGS
+Date: Tue, 26 Aug 2025 13:10:03 +0200
+Message-ID: <20250826110939.479654803@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,95 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 1e61f6ab08786d66a11cfc51e13d6f08a6b06c56 ]
+[ Upstream commit 87c4e1459e80bf65066f864c762ef4dc932fad4b ]
 
-This patch fixes a race condition communication error, which ends up in
-PD hard resets when losing the race. Some systems, like the Radxa ROCK
-5B are powered through USB-C without any backup power source and use a
-FUSB302 chip to do the PD negotiation. This means it is quite important
-to avoid hard resets, since that effectively kills the system's
-power-supply.
+After commit d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper
+flags and language target"), which updated as-instr to use the
+'assembler-with-cpp' language option, the Kbuild version of as-instr
+always fails internally for arch/arm with
 
-I've found the following race condition while debugging unplanned power
-loss during booting the board every now and then:
+  <command-line>: fatal error: asm/unified.h: No such file or directory
+  compilation terminated.
 
-1. lots of TCPM/FUSB302/PD initialization stuff
-2. TCPM ends up in SNK_WAIT_CAPABILITIES (tcpm_set_pd_rx is enabled here)
-3. the remote PD source does not send anything, so TCPM does a SOFT RESET
-4. TCPM ends up in SNK_WAIT_CAPABILITIES for the second time
-   (tcpm_set_pd_rx is enabled again, even though it is still on)
+because '-include' flags are now taken into account by the compiler
+driver and as-instr does not have '$(LINUXINCLUDE)', so unified.h is not
+found.
 
-At this point I've seen broken CRC good messages being send by the
-FUSB302 with a logic analyzer sniffing the CC lines. Also it looks like
-messages are being lost and things generally going haywire with one of
-the two sides doing a hard reset once a broken CRC good message was send
-to the bus.
+This went unnoticed at the time of the Kbuild change because the last
+use of as-instr in Kbuild that arch/arm could reach was removed in 5.7
+by commit 541ad0150ca4 ("arm: Remove 32bit KVM host support") but a
+stable backport of the Kbuild change to before that point exposed this
+potential issue if one were to be reintroduced.
 
-I think the system is running into a race condition, that the FIFOs are
-being cleared and/or the automatic good CRC message generation flag is
-being updated while a message is already arriving.
+Follow the general pattern of '-include' paths throughout the tree and
+make unified.h absolute using '$(srctree)' to ensure KBUILD_AFLAGS can
+be used independently.
 
-Let's avoid this by caching the PD RX enabled state, as we have already
-processed anything in the FIFOs and are in a good state. As a side
-effect that this also optimizes I2C bus usage :)
+Closes: https://lore.kernel.org/CACo-S-1qbCX4WAVFA63dWfHtrRHZBTyyr2js8Lx=Az03XHTTHg@mail.gmail.com/
 
-As far as I can tell the problem theoretically also exists when TCPM
-enters SNK_WAIT_CAPABILITIES the first time, but I believe this is less
-critical for the following reason:
-
-On devices like the ROCK 5B, which are powered through a TCPM backed
-USB-C port, the bootloader must have done some prior PD communication
-(initial communication must happen within 5 seconds after plugging the
-USB-C plug). This means the first time the kernel TCPM state machine
-reaches SNK_WAIT_CAPABILITIES, the remote side is not sending messages
-actively. On other devices a hard reset simply adds some extra delay and
-things should be good afterwards.
-
-Fixes: c034a43e72dda ("staging: typec: Fairchild FUSB302 Type-c chip driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250704-fusb302-race-condition-fix-v1-1-239012c0e27a@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Adjust context ]
+Cc: stable@vger.kernel.org
+Fixes: d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper flags and language target")
+Reported-by: KernelCI bot <bot@kernelci.org>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+[ adapted to missing -Wa ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/fusb302.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/fusb302.c
-+++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -103,6 +103,7 @@ struct fusb302_chip {
- 	bool vconn_on;
- 	bool vbus_on;
- 	bool charge_on;
-+	bool pd_rx_on;
- 	bool vbus_present;
- 	enum typec_cc_polarity cc_polarity;
- 	enum typec_cc_status cc1;
-@@ -841,6 +842,11 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 	int ret = 0;
+--- a/arch/arm/Makefile
++++ b/arch/arm/Makefile
+@@ -133,7 +133,7 @@ endif
  
- 	mutex_lock(&chip->lock);
-+	if (chip->pd_rx_on == on) {
-+		fusb302_log(chip, "pd is already %s", str_on_off(on));
-+		goto done;
-+	}
-+
- 	ret = fusb302_pd_rx_flush(chip);
- 	if (ret < 0) {
- 		fusb302_log(chip, "cannot flush pd rx buffer, ret=%d", ret);
-@@ -863,6 +869,8 @@ static int tcpm_set_pd_rx(struct tcpc_de
- 			    on ? "on" : "off", ret);
- 		goto done;
- 	}
-+
-+	chip->pd_rx_on = on;
- 	fusb302_log(chip, "pd := %s", on ? "on" : "off");
- done:
- 	mutex_unlock(&chip->lock);
+ # Need -Uarm for gcc < 3.x
+ KBUILD_CFLAGS	+=$(CFLAGS_ABI) $(CFLAGS_ISA) $(arch-y) $(tune-y) $(call cc-option,-mshort-load-bytes,$(call cc-option,-malignment-traps,)) -msoft-float -Uarm
+-KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) $(arch-y) $(tune-y) -include asm/unified.h -msoft-float
++KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) $(arch-y) $(tune-y) -include $(srctree)/arch/arm/include/asm/unified.h -msoft-float
+ 
+ CHECKFLAGS	+= -D__arm__
+ 
 
 
