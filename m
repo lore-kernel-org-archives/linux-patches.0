@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1E1350D4C;
-	Tue, 26 Aug 2025 13:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67626350820;
+	Tue, 26 Aug 2025 13:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216391; cv=none; b=gWJ7YUSapZ4L6LkMtUsiWIgjI4U2Z+sjNsk8awxykvXXo3XgWb5BhAD8r9f0ppqJkemsKpOl+2HJ676iSNc62Qx8hrdi4lvKydYIeWeAv2wW1A15jSqY5TUjw46EU2ErrAqY0eUzF+8rC78PtvUQ3DLLk9aVwBWejU4oLbldfRs=
+	t=1756216394; cv=none; b=qhzSXWicKHWA5iN6QivarFBzGVhiBIYY9vDViqRZNrWbc6vqqhBNxfYIAHxlxn6U076snSV//i7IIGZjgVeVToOGUFPAZn/T6ypEpPQ60elTFpXB0DDkBfnKfO7mZF3XKYQj/UNG551cQdAr9+GAOCmuPqTNpFt7YSM+tOZkXRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216391; c=relaxed/simple;
-	bh=tgefX0eQH97VBRlET0FKOoZRukQiRYV2OtWuSmrcIiQ=;
+	s=arc-20240116; t=1756216394; c=relaxed/simple;
+	bh=vYCvYM6KMa3Uw/kbhgHZ6ty6khDEjT7RN79eAzQmgFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SD3mp97I4m7UggokiuzBwlf2VmXruxfjuZjfTZQ91vxqgl5cZ2RNNXDELzmCYPpAGLGw9ldhn+9iTapQYciqyl61x839gTHQX56l5vh8RDR3T994nzgyrGtX0RkTI9fX5IWVLd8R5JJyoe+tM48BeqUqDTaay2X3zI2um09THUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trlSsKIM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxaYrEGXWMLbFzStg686aiPBWnP7Xng0LQzck+HW8aMWJszBWYz6ku9MKyxbTuGMQBHvIVrD6Cc8pYB9gCwgO7iQXuRFrj7GnUsmeDAUhvRZF7740iXWQUtAwFICtXnD3eHDqLLmDe/i8TAvGPd4/KPwCHz9qWVrmVt9Y+x3veU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txnm0KcB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trlSsKIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE9DC4CEF1;
-	Tue, 26 Aug 2025 13:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txnm0KcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3F5C4CEF1;
+	Tue, 26 Aug 2025 13:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216391;
-	bh=tgefX0eQH97VBRlET0FKOoZRukQiRYV2OtWuSmrcIiQ=;
+	s=korg; t=1756216394;
+	bh=vYCvYM6KMa3Uw/kbhgHZ6ty6khDEjT7RN79eAzQmgFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trlSsKIMnnjfiZv5C7b2P1sSF0+ZRGNBGA+YtARO1tP1plnhc9BRXe+JzvAUAcz3U
-	 2IXLWqpvJlxccrOyxJTi76MWDi61wJAullpZn9VSyqICnu4FlotOgqxtiRkv8UqHPv
-	 9w20Q0BuyZMasnPXeIECpp7gyXq4//oPSQWVSisg=
+	b=Txnm0KcBUQMutUHfqdvIZuqrlMJ9R0ipG7JbghcDIHQ0kirzojjPTsVXTpkJj1qyX
+	 htEM4L7EBcqVKiZBokoR7Pgks/lMnzuWruoWKA31RLkWnuCLQfj8E0antLElC9XkZu
+	 86I638DBdjc98L7z+H3jPWu8CHJ0sL8h5M+yy5G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 350/644] net: thunderx: Fix format-truncation warning in bgx_acpi_match_id()
-Date: Tue, 26 Aug 2025 13:07:21 +0200
-Message-ID: <20250826110955.071098347@linuxfoundation.org>
+Subject: [PATCH 5.15 351/644] sched/deadline: Fix accounting after global limits change
+Date: Tue, 26 Aug 2025 13:07:22 +0200
+Message-ID: <20250826110955.096261203@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,68 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit 53d20606c40678d425cc03f0978c614dca51f25e ]
+[ Upstream commit 440989c10f4e32620e9e2717ca52c3ed7ae11048 ]
 
-The buffer bgx_sel used in snprintf() was too small to safely hold
-the formatted string "BGX%d" for all valid bgx_id values. This caused
-a -Wformat-truncation warning with `Werror` enabled during build.
+A global limits change (sched_rt_handler() logic) currently leaves stale
+and/or incorrect values in variables related to accounting (e.g.
+extra_bw).
 
-Increase the buffer size from 5 to 7 and use `sizeof(bgx_sel)` in
-snprintf() to ensure safety and suppress the warning.
+Properly clean up per runqueue variables before implementing the change
+and rebuild scheduling domains (so that accounting is also properly
+restored) after such a change is complete.
 
-Build warning:
-  CC      drivers/net/ethernet/cavium/thunder/thunder_bgx.o
-  drivers/net/ethernet/cavium/thunder/thunder_bgx.c: In function
-‘bgx_acpi_match_id’:
-  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:27: error: ‘%d’
-directive output may be truncated writing between 1 and 3 bytes into a
-region of size 2 [-Werror=format-truncation=]
-    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
-                             ^~
-  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:23: note:
-directive argument in the range [0, 255]
-    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
-                         ^~~~~~~
-  drivers/net/ethernet/cavium/thunder/thunder_bgx.c:1434:2: note:
-‘snprintf’ output between 5 and 7 bytes into a destination of size 5
-    snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
-
-compiler warning due to insufficient snprintf buffer size.
-
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250711140532.2463602-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk> # nuc & rock5b
+Link: https://lore.kernel.org/r/20250627115118.438797-4-juri.lelli@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/deadline.c | 4 +++-
+ kernel/sched/rt.c       | 6 ++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
-index daaffae1a89f..1831066c7647 100644
---- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
-+++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
-@@ -1427,9 +1427,9 @@ static acpi_status bgx_acpi_match_id(acpi_handle handle, u32 lvl,
- {
- 	struct acpi_buffer string = { ACPI_ALLOCATE_BUFFER, NULL };
- 	struct bgx *bgx = context;
--	char bgx_sel[5];
-+	char bgx_sel[7];
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 66eb68c59f0b..708c3960bd06 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2661,6 +2661,9 @@ void sched_dl_do_global(void)
+ 	if (global_rt_runtime() != RUNTIME_INF)
+ 		new_bw = to_ratio(global_rt_period(), global_rt_runtime());
  
--	snprintf(bgx_sel, 5, "BGX%d", bgx->bgx_id);
-+	snprintf(bgx_sel, sizeof(bgx_sel), "BGX%d", bgx->bgx_id);
- 	if (ACPI_FAILURE(acpi_get_name(handle, ACPI_SINGLE_NAME, &string))) {
- 		pr_warn("Invalid link device\n");
- 		return AE_OK;
++	for_each_possible_cpu(cpu)
++		init_dl_rq_bw_ratio(&cpu_rq(cpu)->dl);
++
+ 	for_each_possible_cpu(cpu) {
+ 		rcu_read_lock_sched();
+ 
+@@ -2676,7 +2679,6 @@ void sched_dl_do_global(void)
+ 		raw_spin_unlock_irqrestore(&dl_b->lock, flags);
+ 
+ 		rcu_read_unlock_sched();
+-		init_dl_rq_bw_ratio(&cpu_rq(cpu)->dl);
+ 	}
+ }
+ 
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 5fc99dce5145..9720b3c19ab9 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2861,6 +2861,12 @@ int sched_rt_handler(struct ctl_table *table, int write, void *buffer,
+ 	}
+ 	mutex_unlock(&mutex);
+ 
++	/*
++	 * After changing maximum available bandwidth for DEADLINE, we need to
++	 * recompute per root domain and per cpus variables accordingly.
++	 */
++	rebuild_sched_domains();
++
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
