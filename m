@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8DB187554;
-	Tue, 26 Aug 2025 13:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427F8AD4B;
+	Tue, 26 Aug 2025 13:20:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214440; cv=none; b=FketmDb7XtNJ2drEBBzwCcA+m3chjJ6Z0vP+RA2thy6AAZ5nfEPRUUe5m8WvbB6Dc8ml37PosGhqPblgf7wY0guam8E8gJoHw9w8KZv0JnT8j6QkGttPvfTKbfXcBHxT/61E14DoGMnGbEEb5PcFApB2TT/ASjcFmy0qzDV1QJ0=
+	t=1756214443; cv=none; b=bYC8IrAl8cEZs5XyquheCzL/OPaPJ9M3/A0kwMcxaRPFtGuqWadbVZYwDqyB/BZ/tuvJDxfUVAoUcRELKfMaEoSvaKOfPlfEFJqbdcgKCJhTAoSOwuP5Zmik6zj+WPYUkBwfkNOAaEhntjud2pGmJX4Zj7kUbJu6tOfBfDbxeak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214440; c=relaxed/simple;
-	bh=DXqboIZKXZ42CGARzccnAhpFGIKrXnremqSDac6qvzU=;
+	s=arc-20240116; t=1756214443; c=relaxed/simple;
+	bh=hCiMe5XgobARM+Q/Vb3qN0MsTLH+Ll6cVEa9P9zYUHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CISRNpy6nAk0DD5UxzlIIJwxYhCvaNz7E8l289Ni4qUQaWn9Iw5VSjz1DG0n94fvZTSB2cVPXypBXeLVCzsW+ymsHvecz6LAL2Gsf9XOQugd5ru/g8HM+jdIZjOqxNE8n34+8FjcaivXjDmJrR+wk9IikPC4tzeeMFynA5D8NGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6yrKxf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ru3z9ljFqu+AmP1ePrQPOHEdZWByNc4xcU7GaW3miy8pNlGzock/Kc26wHjFBI5azX0z83ksaLj/5dvHCuQWEQzi1ILBdj0W53r9qMolH1krOV1CNsupSOp2Ibe6TwaaXPabhAc7LTTmw8UCw/Z6+x1OYwGGusuWo2qtMBD1pDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjcUkqKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6yrKxf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEE7C4CEF1;
-	Tue, 26 Aug 2025 13:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjcUkqKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F62AC4CEF1;
+	Tue, 26 Aug 2025 13:20:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214440;
-	bh=DXqboIZKXZ42CGARzccnAhpFGIKrXnremqSDac6qvzU=;
+	s=korg; t=1756214443;
+	bh=hCiMe5XgobARM+Q/Vb3qN0MsTLH+Ll6cVEa9P9zYUHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6yrKxf9aBaWcF93PT0d833PeAtf0XJcEWXOwi4E1dA6C1FzHCPprHHX5E7ExB09Z
-	 8orgUZO6nc88P0kDfIVmgBMXC67N74dUBzhcdXOJbv+nIwRNG3oBeih4UyPDxcL/ah
-	 YSl9z8qOPU2GOsQycuuefT2TnQmGXOWdjeFIBowo=
+	b=HjcUkqKMo3j+xby+ewlckZYBqifQmVQXY4Bnp3HZLJUe/bbwfJZ3KuZ068knZBqyF
+	 SsfFCcO8Otcw2QBjvwyndCK8vWcLK0+5NoCNlP9OCrGh+GS5OUAvIA5WstQRuPc4lG
+	 YJvtyyjL9XYG3i1lKiAbOLyTh+G5a+6s/gVFGVnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/482] wifi: rtw89: Disable deep power saving for USB/SDIO
-Date: Tue, 26 Aug 2025 13:06:31 +0200
-Message-ID: <20250826110934.229854994@linuxfoundation.org>
+Subject: [PATCH 6.1 139/482] kselftest/arm64: Specify SVE data when testing VL set in sve-ptrace
+Date: Tue, 26 Aug 2025 13:06:32 +0200
+Message-ID: <20250826110934.253126855@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,37 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit a3b871a0f7c083c2a632a31da8bc3de554ae8550 ]
+[ Upstream commit 9e8ebfe677f9101bbfe1f75d548a5aec581e8213 ]
 
-Disable deep power saving for USB and SDIO because rtw89_mac_send_rpwm()
-is called in atomic context and accessing hardware registers results in
-"scheduling while atomic" errors.
+Since f916dd32a943 ("arm64/fpsimd: ptrace: Mandate SVE payload for
+streaming-mode state") we reject attempts to write to the streaming mode
+regset even if there is no register data supplied, causing the tests for
+setting vector lengths and setting SVE_VL_INHERIT in sve-ptrace to
+spuriously fail. Set the flag to avoid the issue, we still support not
+supplying register data.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/0f49eceb-0de0-47e2-ba36-3c6a0dddd17d@gmail.com
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250609-kselftest-arm64-ssve-fixups-v2-3-998fcfa6f240@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/arm64/fp/sve-ptrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 9e4a02a322ff..ff3a31bf3a87 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1721,6 +1721,9 @@ static enum rtw89_ps_mode rtw89_update_ps_mode(struct rtw89_dev *rtwdev)
- {
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
- 
-+	if (rtwdev->hci.type != RTW89_HCI_TYPE_PCIE)
-+		return RTW89_PS_MODE_NONE;
-+
- 	if (rtw89_disable_ps_mode || !chip->ps_mode_supported ||
- 	    RTW89_CHK_FW_FEATURE(NO_DEEP_PS, &rtwdev->fw))
- 		return RTW89_PS_MODE_NONE;
+diff --git a/tools/testing/selftests/arm64/fp/sve-ptrace.c b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+index 91dd31629ffe..9f5461cd5b8f 100644
+--- a/tools/testing/selftests/arm64/fp/sve-ptrace.c
++++ b/tools/testing/selftests/arm64/fp/sve-ptrace.c
+@@ -158,7 +158,7 @@ static void ptrace_set_get_inherit(pid_t child, const struct vec_type *type)
+ 	memset(&sve, 0, sizeof(sve));
+ 	sve.size = sizeof(sve);
+ 	sve.vl = sve_vl_from_vq(SVE_VQ_MIN);
+-	sve.flags = SVE_PT_VL_INHERIT;
++	sve.flags = SVE_PT_VL_INHERIT | SVE_PT_REGS_SVE;
+ 	ret = set_sve(child, type, &sve);
+ 	if (ret != 0) {
+ 		ksft_test_result_fail("Failed to set %s SVE_PT_VL_INHERIT\n",
+@@ -223,6 +223,7 @@ static void ptrace_set_get_vl(pid_t child, const struct vec_type *type,
+ 	/* Set the VL by doing a set with no register payload */
+ 	memset(&sve, 0, sizeof(sve));
+ 	sve.size = sizeof(sve);
++	sve.flags = SVE_PT_REGS_SVE;
+ 	sve.vl = vl;
+ 	ret = set_sve(child, type, &sve);
+ 	if (ret != 0) {
 -- 
 2.39.5
 
