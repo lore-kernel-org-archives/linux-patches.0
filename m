@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2662E267D;
-	Tue, 26 Aug 2025 11:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C74C2820B1;
+	Tue, 26 Aug 2025 11:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208136; cv=none; b=ZmrE+rRdminA6F6QQ4bNNfYLGz2J1Tco9f+J6yYTqu0HPpM7lK+N5pIEj/MfjV+Kb4zr2KIGHbcipmTIJEFJHstA1VwBiemdAsS7x1IjsbKtk4FNlSeFtauJKzrLdApr+VMKfb8G3V0Z8ww6vUT0aBNK01XxAFURN8BFV1pxX/w=
+	t=1756208139; cv=none; b=C19wQj92md+MXlJv2OnNG+A6WNpcqUs9OA00jAgDsReQFlDj1QF57gEue9D4UCAHnIoOnSnS+PSLq4veIMFkTc8jJRiBrZoAda9/ULvDV6IhFh0o7itscntRg1lzYjcGNCTrncKwwPCDQYsi1oks6xJwvrL/48LTayHuiA2zFmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208136; c=relaxed/simple;
-	bh=0gpWJfKG4V8DCOhfTbIYXyp/MG3C9nc0S4lotQ2lrbo=;
+	s=arc-20240116; t=1756208139; c=relaxed/simple;
+	bh=9/M2EfChW2T23diUXgoUtramwi86hpeMSO4POvk89t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJl9tC27PL0++H6bGt5bSf1E+THDoR0LTAiFywsiCYupKxCwwS2BSbKQYf60hKywms8JnZMkyvZNsc5WshKzvZXuZmOo7gnBl+UH8ndDjzx2pe/ed2uYH82HdZ7LsRUF6XNLgeRaec4XQYF9MFSRgkje6rYFhBG8Fd9IW6uoGZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RutMwOQB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlBXijoKGN9XY4YKvOd/Ob/W0UM+5qV7ddf21ikRq6gmInB908n/biQIk2BLH32b9Rg6q+h2CkUdotIzJTZrwc+d76ky9Et2KWmvRZ1Kq2RbLdcweDgfxUB6arKFrKJ0EuQgZUc08yBsE8ntk9tD4K22bAQrZjnM8FjT7WKQhxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LE7vNErP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RutMwOQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3C9C4CEF1;
-	Tue, 26 Aug 2025 11:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LE7vNErP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F119CC4CEF1;
+	Tue, 26 Aug 2025 11:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208136;
-	bh=0gpWJfKG4V8DCOhfTbIYXyp/MG3C9nc0S4lotQ2lrbo=;
+	s=korg; t=1756208139;
+	bh=9/M2EfChW2T23diUXgoUtramwi86hpeMSO4POvk89t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RutMwOQB+ampU4lS33lxEPNKcDZksBp2vdzJzXUTmjMbZhnV4wZvqscCdcsmsy9jQ
-	 CfsU8GgKFO3j+/7OTOyjEe4duEku0AZY5WWjUx7Rv8DLY0/5pAkpXBq38N/e/w040E
-	 X0Z2h4LNMT0qWrlTPO23bMbOifRrR+RjOC07fWqE=
+	b=LE7vNErPmKeUT35jmFNTLH8LTXFd3AqckCIDoDHc4/I5BD82HDHIbkwtrVvoS39mq
+	 s5GJQzKLiifcGLN/N5mV7yUEA8Nbs+LTTd7RIsHaL5AJ/DpFtnsqrEW4WRFl9MWnsY
+	 iBlufVqRS+jnhWwR6lW9DPmqphmRVUo0SEkp9uNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Parthiban Veerasooran <parthiban.veerasooran@microchip.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 421/457] microchip: lan865x: fix missing Timer Increment config for Rev.B0/B1
-Date: Tue, 26 Aug 2025 13:11:45 +0200
-Message-ID: <20250826110947.697811153@linuxfoundation.org>
+Subject: [PATCH 6.16 422/457] objtool/LoongArch: Get table size correctly if LTO is enabled
+Date: Tue, 26 Aug 2025 13:11:46 +0200
+Message-ID: <20250826110947.722432738@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,68 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 2cd58fec912acec273cb155911ab8f06ddbb131a ]
+[ Upstream commit a47bc954cf0eb51f2828e1607d169d487df7f11f ]
 
-Fix missing configuration for LAN865x silicon revisions B0 and B1 as per
-Microchip Application Note AN1760 (Rev F, June 2024).
+When compiling with LLVM and CONFIG_LTO_CLANG is set, there exist many
+objtool warnings "sibling call from callable instruction with modified
+stack frame".
 
-The Timer Increment register was not being set, which is required for
-accurate timestamping. As per the application note, configure the MAC to
-set timestamping at the end of the Start of Frame Delimiter (SFD), and
-set the Timer Increment register to 40 ns (corresponding to a 25 MHz
-internal clock).
+For this special case, the related object file shows that there is no
+generated relocation section '.rela.discard.tablejump_annotate' for the
+table jump instruction jirl, thus objtool can not know that what is the
+actual destination address.
 
-Link: https://www.microchip.com/en-us/application-notes/an1760
+It needs to do something on the LLVM side to make sure that there is the
+relocation section '.rela.discard.tablejump_annotate' if LTO is enabled,
+but in order to maintain compatibility for the current LLVM compiler,
+this can be done in the kernel Makefile for now. Ensure it is aware of
+linker with LTO, '--loongarch-annotate-tablejump' needs to be passed via
+'-mllvm' to ld.lld.
 
-Fixes: 5cd2340cb6a3 ("microchip: lan865x: add driver support for Microchip's LAN865X MAC-PHY")
-Signed-off-by: Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250818060514.52795-3-parthiban.veerasooran@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Before doing the above changes, it should handle the special case of the
+relocation section '.rela.discard.tablejump_annotate' to get the correct
+table size first, otherwise there are many objtool warnings and errors
+if LTO is enabled.
+
+There are many different rodata for each function if LTO is enabled, it
+is necessary to enhance get_rodata_table_size_by_table_annotate().
+
+Fixes: b95f852d3af2 ("objtool/LoongArch: Add support for switch table")
+Closes: https://lore.kernel.org/loongarch/20250731175655.GA1455142@ax162/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/lan865x/lan865x.c  | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ tools/objtool/arch/loongarch/special.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan865x/lan865x.c b/drivers/net/ethernet/microchip/lan865x/lan865x.c
-index d03f5a8de58d..84c41f193561 100644
---- a/drivers/net/ethernet/microchip/lan865x/lan865x.c
-+++ b/drivers/net/ethernet/microchip/lan865x/lan865x.c
-@@ -32,6 +32,10 @@
- /* MAC Specific Addr 1 Top Reg */
- #define LAN865X_REG_MAC_H_SADDR1	0x00010023
+diff --git a/tools/objtool/arch/loongarch/special.c b/tools/objtool/arch/loongarch/special.c
+index e39f86d97002..a80b75f7b061 100644
+--- a/tools/objtool/arch/loongarch/special.c
++++ b/tools/objtool/arch/loongarch/special.c
+@@ -27,6 +27,7 @@ static void get_rodata_table_size_by_table_annotate(struct objtool_file *file,
+ 	struct table_info *next_table;
+ 	unsigned long tmp_insn_offset;
+ 	unsigned long tmp_rodata_offset;
++	bool is_valid_list = false;
  
-+/* MAC TSU Timer Increment Register */
-+#define LAN865X_REG_MAC_TSU_TIMER_INCR		0x00010077
-+#define MAC_TSU_TIMER_INCR_COUNT_NANOSECONDS	0x0028
+ 	rsec = find_section_by_name(file->elf, ".rela.discard.tablejump_annotate");
+ 	if (!rsec)
+@@ -35,6 +36,12 @@ static void get_rodata_table_size_by_table_annotate(struct objtool_file *file,
+ 	INIT_LIST_HEAD(&table_list);
+ 
+ 	for_each_reloc(rsec, reloc) {
++		if (reloc->sym->sec->rodata)
++			continue;
 +
- struct lan865x_priv {
- 	struct work_struct multicast_work;
- 	struct net_device *netdev;
-@@ -346,6 +350,21 @@ static int lan865x_probe(struct spi_device *spi)
- 		goto free_netdev;
++		if (strcmp(insn->sec->name, reloc->sym->sec->name))
++			continue;
++
+ 		orig_table = malloc(sizeof(struct table_info));
+ 		if (!orig_table) {
+ 			WARN("malloc failed");
+@@ -49,6 +56,22 @@ static void get_rodata_table_size_by_table_annotate(struct objtool_file *file,
+ 
+ 		if (reloc_idx(reloc) + 1 == sec_num_entries(rsec))
+ 			break;
++
++		if (strcmp(insn->sec->name, (reloc + 1)->sym->sec->name)) {
++			list_for_each_entry(orig_table, &table_list, jump_info) {
++				if (orig_table->insn_offset == insn->offset) {
++					is_valid_list = true;
++					break;
++				}
++			}
++
++			if (!is_valid_list) {
++				list_del_init(&table_list);
++				continue;
++			}
++
++			break;
++		}
  	}
  
-+	/* LAN865x Rev.B0/B1 configuration parameters from AN1760
-+	 * As per the Configuration Application Note AN1760 published in the
-+	 * link, https://www.microchip.com/en-us/application-notes/an1760
-+	 * Revision F (DS60001760G - June 2024), configure the MAC to set time
-+	 * stamping at the end of the Start of Frame Delimiter (SFD) and set the
-+	 * Timer Increment reg to 40 ns to be used as a 25 MHz internal clock.
-+	 */
-+	ret = oa_tc6_write_register(priv->tc6, LAN865X_REG_MAC_TSU_TIMER_INCR,
-+				    MAC_TSU_TIMER_INCR_COUNT_NANOSECONDS);
-+	if (ret) {
-+		dev_err(&spi->dev, "Failed to config TSU Timer Incr reg: %d\n",
-+			ret);
-+		goto oa_tc6_exit;
-+	}
-+
- 	/* As per the point s3 in the below errata, SPI receive Ethernet frame
- 	 * transfer may halt when starting the next frame in the same data block
- 	 * (chunk) as the end of a previous frame. The RFA field should be
+ 	list_for_each_entry(orig_table, &table_list, jump_info) {
 -- 
 2.50.1
 
