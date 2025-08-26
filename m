@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635CE35207B;
-	Tue, 26 Aug 2025 14:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E72935207F;
+	Tue, 26 Aug 2025 14:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217057; cv=none; b=HWhz9Ko2KNfIhSZTQYOwLr0rx7nBHqXjO2B4fgkcVrK6qP4jEwQ7XBZ56UkXUHAacyStZ/LWOi6oHZdKI0UeYAW0yiHsfASFaKkdfcnezcTHuDU6ylAEhQJNwBblUx2fQWnW69x+LWkYKp84f+B9uJD22FN/nRi7grKHG6NzEQE=
+	t=1756217060; cv=none; b=IQ6LVRyKc13hUKCgyWFVSou+UfC5RGhqtSYcM9oZM7VfpooW3uUFoSp0UclJoMC0fUgDWjFBsewj641vD3ZGRI7yokgkq72ztrBLPNZ6lDkBp5UtXDOVG8Hi695/pJaSY1IisesKbLNuxUaEIoOnJLITBNOJ4ZmUoqeu1DZ37/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217057; c=relaxed/simple;
-	bh=2r5VulRMlhWKBXOgKfJkfq/lPIhz1J5O0TAPKsUJKS4=;
+	s=arc-20240116; t=1756217060; c=relaxed/simple;
+	bh=ERxh9k1FfPJbP/URNUx94Idt40kDjD2z6tBeQfA3VLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UznP9TQUGI3+FtCcBG43qqlzuRNX1ySLxyzQEb+cAW1euFyoS1eGX9xYT5js0NYHKK9MH3Wxqa4fM0ySeZBHZ6P60GkiW/1Yng/2Oyxg4t9+g24PPt/8emzR7bB4g34r18lkImz4pdzoDBIqFApQL7j/jd58mC3ae/8e6aSmL8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwwZRqTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TlzXNcssliI0YjdllY9w0jmRDlqtQcgYKAg5FL8a+3X2ilthL1fB7AT3omCqMzV1hj9SOnn0nUp4BLs2z7Nt+xspss2wdsdUmkp0ktWG5d4bMZi7au4NyNBsgJdWxvy1Y4NY3LB5aLhi20tD3adYNB9WmV33Teustk2VZp22XLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLfyVKWt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwwZRqTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED72C4CEF1;
-	Tue, 26 Aug 2025 14:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLfyVKWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB640C4CEF1;
+	Tue, 26 Aug 2025 14:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217057;
-	bh=2r5VulRMlhWKBXOgKfJkfq/lPIhz1J5O0TAPKsUJKS4=;
+	s=korg; t=1756217060;
+	bh=ERxh9k1FfPJbP/URNUx94Idt40kDjD2z6tBeQfA3VLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gwwZRqTi+YlAC5G0vm6LtFxJZya72XxCQ2/KxQFLI3UPUjIou4F42ppoXhoNGqML4
-	 PO11fkJKc5g1S0dN54Sj64lF07mYGiE89r9eHLtZNVMsXJCRPhfQ6zifPRMl+MfPT8
-	 0K/4mAqRp5/hNKiHgmgvzQV85xmlf5wmqeAIK8Ys=
+	b=RLfyVKWt4x8Gp8l4+1ENwRq5ymNbbVBlDBhEx84ZHLv/H7//cIbkfa11v3RVlei+f
+	 xCVtGuf1O+ciNatw0OW2phc0B0w3BZDwAon8DggXjH9UnL+3ASKRg+W2qtMYHXY2Kj
+	 HLFcJgWlnYcKqror22JkC4L6/1rDcYnC6MAp8Hvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Priya Singh <priyax.singh@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 635/644] ixgbe: xsk: resolve the negative overflow of budget in ixgbe_xmit_zc
-Date: Tue, 26 Aug 2025 13:12:06 +0200
-Message-ID: <20250826111002.296047492@linuxfoundation.org>
+	Mikhail Lobanov <m.lobanov@rosa.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Hanne-Lotta=20M=C3=A4enp=C3=A4=C3=A4?= <hannelotta@gmail.com>
+Subject: [PATCH 5.15 644/644] wifi: mac80211: check basic rates validity in sta_link_apply_parameters
+Date: Tue, 26 Aug 2025 13:12:15 +0200
+Message-ID: <20250826111002.523760019@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,80 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Mikhail Lobanov <m.lobanov@rosa.ru>
 
-[ Upstream commit 4d4d9ef9dfee877d494e5418f68a1016ef08cad6 ]
+commit 16ee3ea8faef8ff042acc15867a6c458c573de61 upstream.
 
-Resolve the budget negative overflow which leads to returning true in
-ixgbe_xmit_zc even when the budget of descs are thoroughly consumed.
+When userspace sets supported rates for a new station via
+NL80211_CMD_NEW_STATION, it might send a list that's empty
+or contains only invalid values. Currently, we process these
+values in sta_link_apply_parameters() without checking the result of
+ieee80211_parse_bitrates(), which can lead to an empty rates bitmap.
 
-Before this patch, when the budget is decreased to zero and finishes
-sending the last allowed desc in ixgbe_xmit_zc, it will always turn back
-and enter into the while() statement to see if it should keep processing
-packets, but in the meantime it unexpectedly decreases the value again to
-'unsigned int (0--)', namely, UINT_MAX. Finally, the ixgbe_xmit_zc returns
-true, showing 'we complete cleaning the budget'. That also means
-'clean_complete = true' in ixgbe_poll.
+A similar issue was addressed for NL80211_CMD_SET_BSS in commit
+ce04abc3fcc6 ("wifi: mac80211: check basic rates validity").
+This patch applies the same approach in sta_link_apply_parameters()
+for NL80211_CMD_NEW_STATION, ensuring there is at least one valid
+rate by inspecting the result of ieee80211_parse_bitrates().
 
-The true theory behind this is if that budget number of descs are consumed,
-it implies that we might have more descs to be done. So we should return
-false in ixgbe_xmit_zc to tell napi poll to find another chance to start
-polling to handle the rest of descs. On the contrary, returning true here
-means job done and we know we finish all the possible descs this time and
-we don't intend to start a new napi poll.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-It is apparently against our expectations. Please also see how
-ixgbe_clean_tx_irq() handles the problem: it uses do..while() statement
-to make sure the budget can be decreased to zero at most and the negative
-overflow never happens.
-
-The patch adds 'likely' because we rarely would not hit the loop condition
-since the standard budget is 256.
-
-Fixes: 8221c5eba8c1 ("ixgbe: add AF_XDP zero-copy Tx support")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Priya Singh <priyax.singh@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20250819222000.3504873-4-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b95eb7f0eee4 ("wifi: cfg80211/mac80211: separate link params from station params")
+Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
+Link: https://patch.msgid.link/20250317103139.17625-1-m.lobanov@rosa.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ Summary of conflict resolutions:
+  - Function ieee80211_parse_bitrates() takes channel width as its
+    first parameter in mainline kernel version. In v5.15 the function
+    takes the whole chandef struct as its first parameter.
+  - The same function takes link station parameters as its last
+    parameter, and in v5.15 they are in a struct called sta,
+    instead of a struct called link_sta. ]
+Signed-off-by: Hanne-Lotta Mäenpää <hannelotta@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mac80211/cfg.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-index b399b9c14717..9a789a419166 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
-@@ -392,7 +392,7 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
- 	dma_addr_t dma;
- 	u32 cmd_type;
- 
--	while (budget-- > 0) {
-+	while (likely(budget)) {
- 		if (unlikely(!ixgbe_desc_unused(xdp_ring))) {
- 			work_done = false;
- 			break;
-@@ -427,6 +427,8 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
- 		xdp_ring->next_to_use++;
- 		if (xdp_ring->next_to_use == xdp_ring->count)
- 			xdp_ring->next_to_use = 0;
-+
-+		budget--;
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1658,12 +1658,13 @@ static int sta_apply_parameters(struct i
+ 			return ret;
  	}
  
- 	if (tx_desc) {
--- 
-2.50.1
-
+-	if (params->supported_rates && params->supported_rates_len) {
+-		ieee80211_parse_bitrates(&sdata->vif.bss_conf.chandef,
+-					 sband, params->supported_rates,
+-					 params->supported_rates_len,
+-					 &sta->sta.supp_rates[sband->band]);
+-	}
++	if (params->supported_rates &&
++	    params->supported_rates_len &&
++	    !ieee80211_parse_bitrates(&sdata->vif.bss_conf.chandef,
++				      sband, params->supported_rates,
++				      params->supported_rates_len,
++				      &sta->sta.supp_rates[sband->band]))
++		return -EINVAL;
+ 
+ 	if (params->ht_capa)
+ 		ieee80211_ht_cap_ie_to_sta_ht_cap(sdata, sband,
 
 
