@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AB922A4E5;
-	Tue, 26 Aug 2025 13:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7A22A4E5;
+	Tue, 26 Aug 2025 13:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213520; cv=none; b=nW8xwELL+g+B4S0//YG0ia566wPLG5kVz4eM9PEkcC4vhqo4XMdaJFM4cx7vtp1C1NBhtLZheTMdVwlPtk06oNGovxku7rLP62XbBsCyPX9rcla5JUPKrMD8sU/pzonjBXVcXfA3h4nB5SpgcIa5lAScMwqvHPaOl2UYFp0uViQ=
+	t=1756213523; cv=none; b=jPLJjUf6It3Tjxn7awW/NkeFEkjHOqv8HNt2X2tDcM29suA64a7L46LkGbJxOr9dxcTdRhTb76uBG5xaXyWoPOWhbcS/1tbC1pdC7npq3pSa2Zj7bPf3FXWW4Z+6TCdUkxJ2CM5rXa4nS2Xkwf7LxHlWNWOpBgbeG2HJ8cyurgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213520; c=relaxed/simple;
-	bh=8LKSr9rVqSRCyUzc8h0mbi/4tS8cktiFf47tlRCZc0I=;
+	s=arc-20240116; t=1756213523; c=relaxed/simple;
+	bh=aQN8c0l4/RS7SWsFuEPLuPJKnoKYky4NNJQDc5xNkkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbzUgUgBqnRVK7AYuXu8LpF34QA/3tPQH1vNtGx9Mv2UehKPCGATAaYWzhHeWJA3kh0FPmpt2IvijqFEwbwYYSF81px994qcywXowFCfeRoZ/Pba8cU+Bv6JiSimDffmuekEvwWqply+fmRy2qwOFXh24VsumxGwH/gnHaPNYU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lP/VVk8G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dkrDCZkEAT0FCLZgb4Z70sL9vrVvcyvtGQ3wcOITZNLzq08DIfEk0r3nyte/E/A7KZ3hE+SawJLwTieABz7xXWBbvn0FSoHiUhSPv8+kogxmVFXPVCEXmbibAJgpRhlj0E6nMmBYRE2hTScV13OF7ij94oEsb8w3lz7QvhvrSIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lYEaegt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lP/VVk8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52F1C4CEF1;
-	Tue, 26 Aug 2025 13:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lYEaegt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72852C113CF;
+	Tue, 26 Aug 2025 13:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213520;
-	bh=8LKSr9rVqSRCyUzc8h0mbi/4tS8cktiFf47tlRCZc0I=;
+	s=korg; t=1756213522;
+	bh=aQN8c0l4/RS7SWsFuEPLuPJKnoKYky4NNJQDc5xNkkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lP/VVk8G9y6QliaMMtwVVqnHUAWR4ouMIje3W/iPSKJ1cPROpNGe645L4BJpMt6dl
-	 X5DevXZ3tNSkDCsr8QQGbeYa0vtu/t9c9IWjLsXcii/Em/q9XFb+ntlpSMO8AuNIzV
-	 8leTU4apYx2bnte7hZKiA472DkF2cTtQyOCqAEG0=
+	b=2lYEaegtf9/rEvqBlBdYPoa9CGaOTxvA6QFHVc2U7yEmKkhNEttD5WJJ8XH5bXd5Q
+	 fQ7KtL2prnsqBk3FuUYZ6tkTWV3nxHLFgrl5LXXRJ6pMmBm1p0CfY8cbWb5+M8vLcu
+	 Nc+H0Whf/FihOvYvhhUBpedV11dqGvuD7NV3bZiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.6 341/587] lib/crypto: mips/chacha: Fix clang build and remove unneeded byteswap
-Date: Tue, 26 Aug 2025 13:08:10 +0200
-Message-ID: <20250826111001.591031989@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 342/587] crypto: qat - lower priority for skcipher and aead algorithms
+Date: Tue, 26 Aug 2025 13:08:11 +0200
+Message-ID: <20250826111001.615416150@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,104 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 22375adaa0d9fbba9646c8e2b099c6e87c97bfae upstream.
+commit 8024774190a5ef2af2c5846f60a50b23e0980a32 upstream.
 
-The MIPS32r2 ChaCha code has never been buildable with the clang
-assembler.  First, clang doesn't support the 'rotl' pseudo-instruction:
+Most kernel applications utilizing the crypto API operate synchronously
+and on small buffer sizes, therefore do not benefit from QAT acceleration.
 
-    error: unknown instruction, did you mean: rol, rotr?
+Reduce the priority of QAT implementations for both skcipher and aead
+algorithms, allowing more suitable alternatives to be selected by default.
 
-Second, clang requires that both operands of the 'wsbh' instruction be
-explicitly given:
-
-    error: too few operands for instruction
-
-To fix this, align the code with the real instruction set by (1) using
-the real instruction 'rotr' instead of the nonstandard pseudo-
-instruction 'rotl', and (2) explicitly giving both operands to 'wsbh'.
-
-To make removing the use of 'rotl' a bit easier, also remove the
-unnecessary special-casing for big endian CPUs at
-.Lchacha_mips_xor_bytes.  The tail handling is actually
-endian-independent since it processes one byte at a time.  On big endian
-CPUs the old code byte-swapped SAVED_X, then iterated through it in
-reverse order.  But the byteswap and reverse iteration canceled out.
-
-Tested with chacha20poly1305-selftest in QEMU using "-M malta" with both
-little endian and big endian mips32r2 kernels.
-
-Fixes: 49aa7c00eddf ("crypto: mips/chacha - import 32r2 ChaCha code from Zinc")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Link: https://lore.kernel.org/all/20250613012357.GA3603104@google.com/
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202505080409.EujEBwA0-lkp@intel.com/
-Link: https://lore.kernel.org/r/20250619225535.679301-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/crypto/chacha-core.S |   20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/crypto/intel/qat/qat_common/qat_algs.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/mips/crypto/chacha-core.S
-+++ b/arch/mips/crypto/chacha-core.S
-@@ -55,17 +55,13 @@
- #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
- #define MSB 0
- #define LSB 3
--#define ROTx rotl
--#define ROTR(n) rotr n, 24
- #define	CPU_TO_LE32(n) \
--	wsbh	n; \
-+	wsbh	n, n; \
- 	rotr	n, 16;
- #else
- #define MSB 3
- #define LSB 0
--#define ROTx rotr
- #define CPU_TO_LE32(n)
--#define ROTR(n)
- #endif
- 
- #define FOR_EACH_WORD(x) \
-@@ -192,10 +188,10 @@ CONCAT3(.Lchacha_mips_xor_aligned_, PLUS
- 	xor	X(W), X(B); \
- 	xor	X(Y), X(C); \
- 	xor	X(Z), X(D); \
--	rotl	X(V), S;    \
--	rotl	X(W), S;    \
--	rotl	X(Y), S;    \
--	rotl	X(Z), S;
-+	rotr	X(V), 32 - S; \
-+	rotr	X(W), 32 - S; \
-+	rotr	X(Y), 32 - S; \
-+	rotr	X(Z), 32 - S;
- 
- .text
- .set	reorder
-@@ -372,21 +368,19 @@ chacha_crypt_arch:
- 	/* First byte */
- 	lbu	T1, 0(IN)
- 	addiu	$at, BYTES, 1
--	CPU_TO_LE32(SAVED_X)
--	ROTR(SAVED_X)
- 	xor	T1, SAVED_X
- 	sb	T1, 0(OUT)
- 	beqz	$at, .Lchacha_mips_xor_done
- 	/* Second byte */
- 	lbu	T1, 1(IN)
- 	addiu	$at, BYTES, 2
--	ROTx	SAVED_X, 8
-+	rotr	SAVED_X, 8
- 	xor	T1, SAVED_X
- 	sb	T1, 1(OUT)
- 	beqz	$at, .Lchacha_mips_xor_done
- 	/* Third byte */
- 	lbu	T1, 2(IN)
--	ROTx	SAVED_X, 8
-+	rotr	SAVED_X, 8
- 	xor	T1, SAVED_X
- 	sb	T1, 2(OUT)
- 	b	.Lchacha_mips_xor_done
+--- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+@@ -1277,7 +1277,7 @@ static struct aead_alg qat_aeads[] = { {
+ 	.base = {
+ 		.cra_name = "authenc(hmac(sha1),cbc(aes))",
+ 		.cra_driver_name = "qat_aes_cbc_hmac_sha1",
+-		.cra_priority = 4001,
++		.cra_priority = 100,
+ 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 		.cra_blocksize = AES_BLOCK_SIZE,
+ 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
+@@ -1294,7 +1294,7 @@ static struct aead_alg qat_aeads[] = { {
+ 	.base = {
+ 		.cra_name = "authenc(hmac(sha256),cbc(aes))",
+ 		.cra_driver_name = "qat_aes_cbc_hmac_sha256",
+-		.cra_priority = 4001,
++		.cra_priority = 100,
+ 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 		.cra_blocksize = AES_BLOCK_SIZE,
+ 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
+@@ -1311,7 +1311,7 @@ static struct aead_alg qat_aeads[] = { {
+ 	.base = {
+ 		.cra_name = "authenc(hmac(sha512),cbc(aes))",
+ 		.cra_driver_name = "qat_aes_cbc_hmac_sha512",
+-		.cra_priority = 4001,
++		.cra_priority = 100,
+ 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 		.cra_blocksize = AES_BLOCK_SIZE,
+ 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
+@@ -1329,7 +1329,7 @@ static struct aead_alg qat_aeads[] = { {
+ static struct skcipher_alg qat_skciphers[] = { {
+ 	.base.cra_name = "cbc(aes)",
+ 	.base.cra_driver_name = "qat_aes_cbc",
+-	.base.cra_priority = 4001,
++	.base.cra_priority = 100,
+ 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 	.base.cra_blocksize = AES_BLOCK_SIZE,
+ 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
+@@ -1347,7 +1347,7 @@ static struct skcipher_alg qat_skciphers
+ }, {
+ 	.base.cra_name = "ctr(aes)",
+ 	.base.cra_driver_name = "qat_aes_ctr",
+-	.base.cra_priority = 4001,
++	.base.cra_priority = 100,
+ 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 	.base.cra_blocksize = 1,
+ 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
+@@ -1365,7 +1365,7 @@ static struct skcipher_alg qat_skciphers
+ }, {
+ 	.base.cra_name = "xts(aes)",
+ 	.base.cra_driver_name = "qat_aes_xts",
+-	.base.cra_priority = 4001,
++	.base.cra_priority = 100,
+ 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK |
+ 			  CRYPTO_ALG_ALLOCATES_MEMORY,
+ 	.base.cra_blocksize = AES_BLOCK_SIZE,
 
 
