@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AF235A2B2;
-	Tue, 26 Aug 2025 14:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B6D352081;
+	Tue, 26 Aug 2025 14:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218882; cv=none; b=ZoJZVSAcDZCu3Q88+D15YRgspe3XqkRZIQBB7fwW6mu6xawKjJY6D/L7/HLWLXiiYqFXz71YpLC5bYzxkdnPusGUsd1ASfGOmft/ntUURFmR8+FJH+/rW/MgcMHg3U9SETvl+hDcD14TDgcTIrNUHsG29LBO10AHv3RGtWCn8h0=
+	t=1756218886; cv=none; b=FnjiNxxxtL5FsmYaVZ/+FviKqHh/iTOf47PW9RMx5383jUIPYe1S1pxmqbPO6WwObu6+MMLaFetCDMZ3e5T06x0TQb31e5IjJHfZW2zBTcHDDu5EvMN3z+PcQE7BFLn9vuGB93LcDwXMrGEVYBaSOgRFwhAwvyWe/CH7s+sx0BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218882; c=relaxed/simple;
-	bh=cRAjslaXH2ZbUQspTXU76SN8AQNcGyv6IBVr7Mm5hUA=;
+	s=arc-20240116; t=1756218886; c=relaxed/simple;
+	bh=MKs9wAoj/1+TXkl25NOt+OpbZFDCegVNkEmeGkC+pOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfbF/jc3+mDcExgcCwKxizgvxpOuzvo8tNz5LagGb6YJb+GX6ywtuqk6K/fB4wGXK/KKMWgGFi0//dCItyhsciGop7OYccSQZCXo021XqTkZnW/BBrxXZWJZ2DtpIgoi3vB3ZNe2EwvLeMa2lkzl8jGf7qTqT6lSGX9YyNUsTqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbKTKUly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKgGnoAwFTWfJchonhLhyI+St6U6ah1TaK35cV4CSmTxPbpVzArLwI4iyuMDHqmofyLiTtLXPb6JkhtxWqvPV5xLP/DB4IKPVHbmcJ0RD8xafR9PVfZK6OtmNYYne6nRsLYU0oQKJGM5xhZOg9EIWQjVUbw2lLKBkpO8CfUzm5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAAdPe24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbKTKUly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EE3C4CEF1;
-	Tue, 26 Aug 2025 14:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAAdPe24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DF0C4CEF1;
+	Tue, 26 Aug 2025 14:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218881;
-	bh=cRAjslaXH2ZbUQspTXU76SN8AQNcGyv6IBVr7Mm5hUA=;
+	s=korg; t=1756218884;
+	bh=MKs9wAoj/1+TXkl25NOt+OpbZFDCegVNkEmeGkC+pOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbKTKUlyt5Jghee1TD/dwIFzytOFacp09XA86sV5e70VwtKw/ITZsf1Y7hGt+GVBx
-	 aS5oT8vzOwKN0x6w3Tf6Il80dNOwW4nmzMbQ+mIG/PX+nKIBUhbZMZAMRyzFR1r+NU
-	 3MWk2N1DN+i8HSD0n1hUQUP97KovKiodwk0fMblE=
+	b=SAAdPe24n7zNHEWa84FgnoVaju/qveXIJmoI5Eh6TUH3JbFBMdV4LEuxe76HvKAPe
+	 f3MF1zO29uh8B7hxV8d0zZkGic9VZ/Jglj75/wWT+9zjC/cwhTN2sCQZfnM/Tv2JyP
+	 gfi2qtJ3dJdDR+kCNoVXxP8jlhWVVkgDeBWNSp/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,
+	syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 169/403] netfilter: ctnetlink: fix refcount leak on table dump
-Date: Tue, 26 Aug 2025 13:08:15 +0200
-Message-ID: <20250826110911.562781905@linuxfoundation.org>
+Subject: [PATCH 5.4 170/403] sctp: linearize cloned gso packets in sctp_rcv
+Date: Tue, 26 Aug 2025 13:08:16 +0200
+Message-ID: <20250826110911.590725880@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,126 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit de788b2e6227462b6dcd0e07474e72c089008f74 ]
+[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
 
-There is a reference count leak in ctnetlink_dump_table():
-      if (res < 0) {
-                nf_conntrack_get(&ct->ct_general); // HERE
-                cb->args[1] = (unsigned long)ct;
-                ...
+A cloned head skb still shares these frag skbs in fraglist with the
+original head skb. It's not safe to access these frag skbs.
 
-While its very unlikely, its possible that ct == last.
-If this happens, then the refcount of ct was already incremented.
-This 2nd increment is never undone.
+syzbot reported two use-of-uninitialized-memory bugs caused by this:
 
-This prevents the conntrack object from being released, which in turn
-keeps prevents cnet->count from dropping back to 0.
+  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
+   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
+   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
+   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
+   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
+   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
+   __release_sock+0x1da/0x330 net/core/sock.c:3106
+   release_sock+0x6b/0x250 net/core/sock.c:3660
+   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
+   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
+   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
+   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
+   sock_sendmsg_nosec net/socket.c:718 [inline]
 
-This will then block the netns dismantle (or conntrack rmmod) as
-nf_conntrack_cleanup_net_list() will wait forever.
+and
 
-This can be reproduced by running conntrack_resize.sh selftest in a loop.
-It takes ~20 minutes for me on a preemptible kernel on average before
-I see a runaway kworker spinning in nf_conntrack_cleanup_net_list.
+  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
+   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
+   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
+   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
+   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
+   __release_sock+0x1d3/0x330 net/core/sock.c:3213
+   release_sock+0x6b/0x270 net/core/sock.c:3767
+   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
+   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
+   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
+   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
+   sock_sendmsg_nosec net/socket.c:712 [inline]
 
-One fix would to change this to:
-        if (res < 0) {
-		if (ct != last)
-	                nf_conntrack_get(&ct->ct_general);
+This patch fixes it by linearizing cloned gso packets in sctp_rcv().
 
-But this reference counting isn't needed in the first place.
-We can just store a cookie value instead.
-
-A followup patch will do the same for ctnetlink_exp_dump_table,
-it looks to me as if this has the same problem and like
-ctnetlink_dump_table, we only need a 'skip hint', not the actual
-object so we can apply the same cookie strategy there as well.
-
-Fixes: d205dc40798d ("[NETFILTER]: ctnetlink: fix deadlock in table dumping")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 90017accff61 ("sctp: Add GSO support")
+Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
+Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ net/sctp/input.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index eeb000e41ad7..5d6f9b375c0f 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -808,8 +808,6 @@ ctnetlink_conntrack_event(unsigned int events, struct nf_ct_event *item)
+diff --git a/net/sctp/input.c b/net/sctp/input.c
+index b1d3e342ac83..9013257cf3df 100644
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -114,7 +114,7 @@ int sctp_rcv(struct sk_buff *skb)
+ 	 * it's better to just linearize it otherwise crc computing
+ 	 * takes longer.
+ 	 */
+-	if ((!is_gso && skb_linearize(skb)) ||
++	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
+ 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
+ 		goto discard_it;
  
- static int ctnetlink_done(struct netlink_callback *cb)
- {
--	if (cb->args[1])
--		nf_ct_put((struct nf_conn *)cb->args[1]);
- 	kfree(cb->data);
- 	return 0;
- }
-@@ -890,18 +888,25 @@ static int ctnetlink_filter_match(struct nf_conn *ct, void *data)
- 	return 0;
- }
- 
-+static unsigned long ctnetlink_get_id(const struct nf_conn *ct)
-+{
-+	unsigned long id = nf_ct_get_id(ct);
-+
-+	return id ? id : 1;
-+}
-+
- static int
- ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	struct net *net = sock_net(skb->sk);
--	struct nf_conn *ct, *last;
-+	unsigned long last_id = cb->args[1];
- 	struct nf_conntrack_tuple_hash *h;
- 	struct hlist_nulls_node *n;
- 	struct nf_conn *nf_ct_evict[8];
-+	struct nf_conn *ct;
- 	int res, i;
- 	spinlock_t *lockp;
- 
--	last = (struct nf_conn *)cb->args[1];
- 	i = 0;
- 
- 	local_bh_disable();
-@@ -936,7 +941,7 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 				continue;
- 
- 			if (cb->args[1]) {
--				if (ct != last)
-+				if (ctnetlink_get_id(ct) != last_id)
- 					continue;
- 				cb->args[1] = 0;
- 			}
-@@ -951,8 +956,7 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 					    ct);
- 			rcu_read_unlock();
- 			if (res < 0) {
--				nf_conntrack_get(&ct->ct_general);
--				cb->args[1] = (unsigned long)ct;
-+				cb->args[1] = ctnetlink_get_id(ct);
- 				spin_unlock(lockp);
- 				goto out;
- 			}
-@@ -965,12 +969,10 @@ ctnetlink_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- out:
- 	local_bh_enable();
--	if (last) {
-+	if (last_id) {
- 		/* nf ct hash resize happened, now clear the leftover. */
--		if ((struct nf_conn *)cb->args[1] == last)
-+		if (cb->args[1] == last_id)
- 			cb->args[1] = 0;
--
--		nf_ct_put(last);
- 	}
- 
- 	while (i) {
 -- 
 2.50.1
 
