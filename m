@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616A829D291;
-	Tue, 26 Aug 2025 13:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F27C29D291;
+	Tue, 26 Aug 2025 13:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215831; cv=none; b=mqkSU1Wzi46NqbcuyNW3FsrXc71wyw5RoQeclUcl1Ww1rf0eZELbKiOa54UEZqmVoNMkNFpwjR4aSrj/j0B6bmNlWZaPwN8UgNRBwRbeMdMLj9Dn1MUzZS/0cANVE9943VlqTfWclHFhAsSAVfhk+UTmn6sVVIejja7zzEeqP+0=
+	t=1756215835; cv=none; b=TQvjnsjba0nay9FMNnqhnK88iRmcWlzf3l/PF5mzsbQkLUY+l7rU/vRJo7qpFj3AtNlxTI9pMOxx0mpjm/6YPjwPOOKpR7XcDNFKp+SqXKRwyOF4T0N4+PO1gv2UxVgjbbeiymnfcQHaYToKXwYkzwgMz0IlrBU3X7MavYMUTok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215831; c=relaxed/simple;
-	bh=g79q34uAc3yD0fWz592m/yZ1K4BP+IPLzOvtPkSYMDg=;
+	s=arc-20240116; t=1756215835; c=relaxed/simple;
+	bh=YMNP+I3SUFl8QKi1NnjPbwIcWnXnrja2h+eBUaQ+wJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKr7xYZmBeWPh/d4RX0tglPTvrEuTogIL3ZmfQ+5XJr+8TLcjdPZ6wtUZw1CJnmAMLGDBAuzNnVZvAkssfS/y578mz/0sxa8ERjltItKM32VAx3fdcnpifUcZYaHdcdekK8wzt1g40lT+y7ZBVTvxtp3wTDU7rOBrPpVEAjBt3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtAEIIkh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y06JXchUXrtgN099ttMIZkbpvJ/z1E33TVnUjSuwDLWCSRyI19zId6C6BjkhtoyXnIWBOuEtqs7ZEemn0DBhGdufcD5bmggwWuRyE6USUx4d9rUgoaw87SYAFomkSzy3rFF7sSwSEbVAr5qDudpmbVXJXem3SAeTWvX6V140qv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioKkqSxZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtAEIIkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6366C4CEF1;
-	Tue, 26 Aug 2025 13:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioKkqSxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9279AC4CEF1;
+	Tue, 26 Aug 2025 13:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215831;
-	bh=g79q34uAc3yD0fWz592m/yZ1K4BP+IPLzOvtPkSYMDg=;
+	s=korg; t=1756215833;
+	bh=YMNP+I3SUFl8QKi1NnjPbwIcWnXnrja2h+eBUaQ+wJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtAEIIkhDVerCxAHZpfdBnk8e9YBBSh+TecPwbAkyKcnocjzQCkqq3KWYWw9mXwh1
-	 gGtbkxZbhz5lZwNKaaNLlE60c3IWmf/vR/BhW8CPMjL0zgKlNwXUzaJ/WIsQSAxUr1
-	 wcLxejROXg3/n40Whqj0PYBKreqwuyMAjRhUgW6k=
+	b=ioKkqSxZSpxWNDgRfPXjoQ169tmQtqgrqWmD0mPe9rVEfFs0By0OHJPaIMFMV3TM9
+	 AP7RKGGR+ibUspd+cJ6MG/Vl+zAAKKpphDSfz4JuTS14Z/lRcC8cF2uOU2NJdpGbVB
+	 06nDQYiYgw/YPVII7sDDcd7nVqMI9Rqt6RRJcOMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 182/644] clk: sunxi-ng: v3s: Fix de clock definition
-Date: Tue, 26 Aug 2025 13:04:33 +0200
-Message-ID: <20250826110950.975473263@linuxfoundation.org>
+Subject: [PATCH 5.15 183/644] scsi: ibmvscsi_tgt: Fix dma_unmap_sg() nents value
+Date: Tue, 26 Aug 2025 13:04:34 +0200
+Message-ID: <20250826110950.998635663@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,42 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit e8ab346f9907a1a3aa2f0e5decf849925c06ae2e ]
+[ Upstream commit 023a293b9cd0bb86a9b50cd7688a3d9d266826db ]
 
-The de clock is marked with CLK_SET_RATE_PARENT, which is really not
-necessary (as confirmed from experimentation) and significantly
-restricts flexibility for other clocks using the same parent.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-In addition the source selection (parent) field is marked as using
-2 bits, when it the documentation reports that it uses 3.
-
-Fix both issues in the de clock definition.
-
-Fixes: d0f11d14b0bc ("clk: sunxi-ng: add support for V3s CCU")
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Link: https://patch.msgid.link/20250704154008.3463257-1-paulk@sys-base.io
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: 88a678bbc34c ("ibmvscsis: Initial commit of IBM VSCSI Tgt Driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://lore.kernel.org/r/20250630111803.94389-2-fourier.thomas@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun8i-v3s.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/scsi/ibmvscsi_tgt/libsrp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c b/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
-index ce150f83ab54..2501de774874 100644
---- a/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun8i-v3s.c
-@@ -345,8 +345,7 @@ static SUNXI_CCU_GATE(dram_ohci_clk,	"dram-ohci",	"dram",
+diff --git a/drivers/scsi/ibmvscsi_tgt/libsrp.c b/drivers/scsi/ibmvscsi_tgt/libsrp.c
+index 8a0e28aec928..0ecad398ed3d 100644
+--- a/drivers/scsi/ibmvscsi_tgt/libsrp.c
++++ b/drivers/scsi/ibmvscsi_tgt/libsrp.c
+@@ -184,7 +184,8 @@ static int srp_direct_data(struct ibmvscsis_cmd *cmd, struct srp_direct_buf *md,
+ 	err = rdma_io(cmd, sg, nsg, md, 1, dir, len);
  
- static const char * const de_parents[] = { "pll-video", "pll-periph0" };
- static SUNXI_CCU_M_WITH_MUX_GATE(de_clk, "de", de_parents,
--				 0x104, 0, 4, 24, 2, BIT(31),
--				 CLK_SET_RATE_PARENT);
-+				 0x104, 0, 4, 24, 3, BIT(31), 0);
+ 	if (dma_map)
+-		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
++		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
++			     DMA_BIDIRECTIONAL);
  
- static const char * const tcon_parents[] = { "pll-video" };
- static SUNXI_CCU_M_WITH_MUX_GATE(tcon_clk, "tcon", tcon_parents,
+ 	return err;
+ }
+@@ -256,7 +257,8 @@ static int srp_indirect_data(struct ibmvscsis_cmd *cmd, struct srp_cmd *srp_cmd,
+ 	err = rdma_io(cmd, sg, nsg, md, nmd, dir, len);
+ 
+ 	if (dma_map)
+-		dma_unmap_sg(iue->target->dev, sg, nsg, DMA_BIDIRECTIONAL);
++		dma_unmap_sg(iue->target->dev, sg, cmd->se_cmd.t_data_nents,
++			     DMA_BIDIRECTIONAL);
+ 
+ free_mem:
+ 	if (token && dma_map) {
 -- 
 2.39.5
 
