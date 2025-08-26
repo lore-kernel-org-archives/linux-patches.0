@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E5C306D3F;
-	Tue, 26 Aug 2025 14:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95721342CA7;
+	Tue, 26 Aug 2025 14:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217913; cv=none; b=O1IR+SsEWq90tzouDpKIdAyBE13LCYLtL5XDJT3RRai0i+iNjhQQrysLQmDKq1sLIERzL5Z0I3xIMJbf6/3TIEEaoOQNPPcebRbl1tdKGreH6zPY6bGjBlvx/sioU2HFtEvB6449p9K12b7XCvB0i4Lc8CrNKcwpwyMWOpq4Exg=
+	t=1756217915; cv=none; b=YX9Bml9YUk6b9rq7xWM19oDp3CIUZFoCV4+/KUMgoQy0wUUGzbAhUqKwaSBTJscQw20M4XpZW4qPE+eBZVoP7bJ6Z/4p04Tmm003lFRvhTXNgRCsr8ZWkovYN6Xn0CqVwLV8OMARdzrn5RA9gKX21cMQ3WfdU0rNs/HFgaBzU+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217913; c=relaxed/simple;
-	bh=7VbbnCfHx/ebJ285bsf2oKz7Awvy2IC2wuCVFbCNl9o=;
+	s=arc-20240116; t=1756217915; c=relaxed/simple;
+	bh=MR4UEOg9lcoNSGw14i9YSujPtN1gTZCkO8FDQ2mZTSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PH6Z5WnCznuGB2jXv45Cj2ZLC0lR0yEzsc/astMpm5CAiJWAbETPG68QYNvVeI749/vdqYCRRabXy34amPwm7b/TeYG2O6pbYbrk0E1jlkU4vjlehD9ejpxvh5JKA/XVaZBltgGV5gWMog9GLgQfD6+xGaSyaDVnU8yP95ces5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mezh5PyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tmYQJfmf3m8eCJhyyCmq3XeWB/HTM+nuhA/gXgpfXFyPrBNf7v6+Btpi7czb3WCzxTOx8mbNALtSNWfhXS/ZDCKaGTsWvWRmxUeP6+YzbwgtiL2xuGB5Y2zDloTIa1ywa+S1fqcuKkA56MSBXbGeL6ZsZUbUga/NRtbhsASXJBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8KsOYDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mezh5PyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9581FC4CEF1;
-	Tue, 26 Aug 2025 14:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8KsOYDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F41C4CEF1;
+	Tue, 26 Aug 2025 14:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217912;
-	bh=7VbbnCfHx/ebJ285bsf2oKz7Awvy2IC2wuCVFbCNl9o=;
+	s=korg; t=1756217915;
+	bh=MR4UEOg9lcoNSGw14i9YSujPtN1gTZCkO8FDQ2mZTSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mezh5PyZUqKVMQLzCqwBbP5Oqi4GAhcDBebFLrdxBYE3K+u+/yxJnGdcJlfQijAQC
-	 y9TirWF4nco0oxpdGagVWoZ4sAP7uezEFCFwucLlPhES9DmsLmql1CbH+pu1H9Wjte
-	 zrfedNgYY42XuK0lNfBlaIacFi1GGLJlOo1oQuZE=
+	b=E8KsOYDwhGV6VmaaixSQb35dYbPw5BV0Jt6B+HRnsumJxJo1JYhWldJMvMu+tRSjg
+	 O59HwfWGmTl8+/f8A1DZUQGz1d8G+ojw8ZHy2tuPYHG5O5cOhxxPdU8i6SSX+6ITSg
+	 Bwpy6VVkCwB67se70N3GwtLfuYPAdjboA9c6dXOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shankari Anand <shankari.ak0208@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Nicolas Schier <n.schier@avm.de>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 322/523] kconfig: nconf: Ensure null termination where strncpy is used
-Date: Tue, 26 Aug 2025 13:08:52 +0200
-Message-ID: <20250826110932.408940094@linuxfoundation.org>
+Subject: [PATCH 5.10 323/523] scsi: Fix sas_user_scan() to handle wildcard and multi-channel scans
+Date: Tue, 26 Aug 2025 13:08:53 +0200
+Message-ID: <20250826110932.435249951@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,53 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shankari Anand <shankari.ak0208@gmail.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit f468992936894c9ce3b1659cf38c230d33b77a16 ]
+[ Upstream commit 37c4e72b0651e7697eb338cd1fb09feef472cc1a ]
 
-strncpy() does not guarantee null-termination if the source string is
-longer than the destination buffer.
+sas_user_scan() did not fully process wildcard channel scans
+(SCAN_WILD_CARD) when a transport-specific user_scan() callback was
+present. Only channel 0 would be scanned via user_scan(), while the
+remaining channels were skipped, potentially missing devices.
 
-Ensure the buffer is explicitly null-terminated to prevent potential
-string overflows or undefined behavior.
+user_scan() invokes updated sas_user_scan() for channel 0, and if
+successful, iteratively scans remaining channels (1 to
+shost->max_channel) via scsi_scan_host_selected().  This ensures complete
+wildcard scanning without affecting transport-specific scanning behavior.
 
-Signed-off-by: Shankari Anand <shankari.ak0208@gmail.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Nicolas Schier <n.schier@avm.de>
-Acked-by: Nicolas Schier <n.schier@avm.de>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20250624061649.17990-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/nconf.c     | 2 ++
- scripts/kconfig/nconf.gui.c | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/scsi/scsi_scan.c          |  2 +-
+ drivers/scsi/scsi_transport_sas.c | 60 ++++++++++++++++++++++++-------
+ 2 files changed, 49 insertions(+), 13 deletions(-)
 
-diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
-index af814b39b876..cdbd60a3ae16 100644
---- a/scripts/kconfig/nconf.c
-+++ b/scripts/kconfig/nconf.c
-@@ -581,6 +581,8 @@ static void item_add_str(const char *fmt, ...)
- 		tmp_str,
- 		sizeof(k_menu_items[index].str));
+diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
+index e8703b043805..1dea44c1c568 100644
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -1686,7 +1686,7 @@ int scsi_scan_host_selected(struct Scsi_Host *shost, unsigned int channel,
  
-+	k_menu_items[index].str[sizeof(k_menu_items[index].str) - 1] = '\0';
+ 	return 0;
+ }
+-
++EXPORT_SYMBOL(scsi_scan_host_selected);
+ static void scsi_sysfs_add_devices(struct Scsi_Host *shost)
+ {
+ 	struct scsi_device *sdev;
+diff --git a/drivers/scsi/scsi_transport_sas.c b/drivers/scsi/scsi_transport_sas.c
+index c6256fdc24b1..1eb58f8765e2 100644
+--- a/drivers/scsi/scsi_transport_sas.c
++++ b/drivers/scsi/scsi_transport_sas.c
+@@ -41,6 +41,8 @@
+ #include <scsi/scsi_transport_sas.h>
+ 
+ #include "scsi_sas_internal.h"
++#include "scsi_priv.h"
 +
- 	free_item(curses_menu_items[index]);
- 	curses_menu_items[index] = new_item(
- 			k_menu_items[index].str,
-diff --git a/scripts/kconfig/nconf.gui.c b/scripts/kconfig/nconf.gui.c
-index 77f525a8617c..8b3e9bc893a7 100644
---- a/scripts/kconfig/nconf.gui.c
-+++ b/scripts/kconfig/nconf.gui.c
-@@ -398,6 +398,7 @@ int dialog_inputbox(WINDOW *main_window,
- 	x = (columns-win_cols)/2;
+ struct sas_host_attrs {
+ 	struct list_head rphy_list;
+ 	struct mutex lock;
+@@ -1652,32 +1654,66 @@ int scsi_is_sas_rphy(const struct device *dev)
+ }
+ EXPORT_SYMBOL(scsi_is_sas_rphy);
  
- 	strncpy(result, init, *result_len);
-+	result[*result_len - 1] = '\0';
+-
+-/*
+- * SCSI scan helper
+- */
+-
+-static int sas_user_scan(struct Scsi_Host *shost, uint channel,
+-		uint id, u64 lun)
++static void scan_channel_zero(struct Scsi_Host *shost, uint id, u64 lun)
+ {
+ 	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
+ 	struct sas_rphy *rphy;
  
- 	/* create the windows */
- 	win = newwin(win_lines, win_cols, y, x);
+-	mutex_lock(&sas_host->lock);
+ 	list_for_each_entry(rphy, &sas_host->rphy_list, list) {
+ 		if (rphy->identify.device_type != SAS_END_DEVICE ||
+ 		    rphy->scsi_target_id == -1)
+ 			continue;
+ 
+-		if ((channel == SCAN_WILD_CARD || channel == 0) &&
+-		    (id == SCAN_WILD_CARD || id == rphy->scsi_target_id)) {
++		if (id == SCAN_WILD_CARD || id == rphy->scsi_target_id) {
+ 			scsi_scan_target(&rphy->dev, 0, rphy->scsi_target_id,
+ 					 lun, SCSI_SCAN_MANUAL);
+ 		}
+ 	}
+-	mutex_unlock(&sas_host->lock);
++}
+ 
+-	return 0;
++/*
++ * SCSI scan helper
++ */
++
++static int sas_user_scan(struct Scsi_Host *shost, uint channel,
++		uint id, u64 lun)
++{
++	struct sas_host_attrs *sas_host = to_sas_host_attrs(shost);
++	int res = 0;
++	int i;
++
++	switch (channel) {
++	case 0:
++		mutex_lock(&sas_host->lock);
++		scan_channel_zero(shost, id, lun);
++		mutex_unlock(&sas_host->lock);
++		break;
++
++	case SCAN_WILD_CARD:
++		mutex_lock(&sas_host->lock);
++		scan_channel_zero(shost, id, lun);
++		mutex_unlock(&sas_host->lock);
++
++		for (i = 1; i <= shost->max_channel; i++) {
++			res = scsi_scan_host_selected(shost, i, id, lun,
++						      SCSI_SCAN_MANUAL);
++			if (res)
++				goto exit_scan;
++		}
++		break;
++
++	default:
++		if (channel < shost->max_channel) {
++			res = scsi_scan_host_selected(shost, channel, id, lun,
++						      SCSI_SCAN_MANUAL);
++		} else {
++			res = -EINVAL;
++		}
++		break;
++	}
++
++exit_scan:
++	return res;
+ }
+ 
+ 
 -- 
 2.39.5
 
