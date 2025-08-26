@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B327356906;
-	Tue, 26 Aug 2025 14:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FB6356906;
+	Tue, 26 Aug 2025 14:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218812; cv=none; b=KG8TScMpywLxxqBOdUO2hFtWuhNh4JFF0F59xkkbOi/3B4onuBUEdEgj0Zl2G5/DmnxQvNLpr2gl6wMrHWdwWJ/6oE40eDEol15iNFnwlNhA1mECnyer+fGiFIeREf7kCZr/6hBcpsjU4WKy7aSdw7oAat8UGtyhahy+6L6SzPQ=
+	t=1756218814; cv=none; b=hDlcS+v804Rz/8CpRMdEPLYSf1qNrTAdndi3YSeA4ueTJr5RyVjDObKEoCu+5FyjA9yY/PcAhON3ZbT8Z/6yRvnsb8KteIEapW03YSfTdB93sboxXLozMC8qfBxxYhU9iACaKQGtYB48WD+E3OpazYc8VqRnp3P51R5yn9WAPKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218812; c=relaxed/simple;
-	bh=mzIR4N/pvl8NuhoT8iAm6ZJRrDMrjeXz8bLqHivyba8=;
+	s=arc-20240116; t=1756218814; c=relaxed/simple;
+	bh=aM8y7Oqj4IvP6SVlkctvqUu8rPRfTaPqt+ZYShTyNVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvcChyaURpb1wChFUCGJgS8DixkxfJ5WiZgoNtfGmD0ieeQTV6BoqZuyB+MzkZ3T5KeXivord+PkHcMQzZq4/lEkX5YLTeVew/5Hfsr06f+1eaQMEqhKLgZfnIRszN/qCHhU1j/+B+qzRwRGBDiNch2bqn78B7N07fD+xfMCl/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XK7j2zJd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbFqHOopNRDXTSbGbkv0VbRRqbFDAIYDTOHYC4tcUzj1DxJVsCg2mP54AYuvoo53hhTRX++klX0DfR495kv32xvRaF05Ecbc8/J0jCCkZ6SUU3lbUiGku2TpcVcRi4GgFHsIbASN0xI9MUU897iPrysranhv9ldN+SYgB7o6RJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsK/k1W8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XK7j2zJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9163C4CEF1;
-	Tue, 26 Aug 2025 14:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsK/k1W8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A168C4CEF1;
+	Tue, 26 Aug 2025 14:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218812;
-	bh=mzIR4N/pvl8NuhoT8iAm6ZJRrDMrjeXz8bLqHivyba8=;
+	s=korg; t=1756218814;
+	bh=aM8y7Oqj4IvP6SVlkctvqUu8rPRfTaPqt+ZYShTyNVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XK7j2zJdVkgmdwv27kI3YL31glwpCnLrqd0FCHSOQGRenX4Qnxj1zwpZCJGN4rqcc
-	 2qqOBBHlsPnQauXZ2kV6bSeZo7hjWleSzor4TZm6HELLULe/m+7Q4A7T0GSXpY2kLj
-	 efI4jWquw3Tp8oZm6lznDh9vyvPzZoYXhmNSdk2I=
+	b=jsK/k1W8Aetqh2TIMHJ7aF8jG+1/n0PMJyJ0ZbK/ASx1gkRgUdUU0zXARXARhRt4a
+	 50XgeF2ao+zDyRBP89wFttfPr1LW5rcdK2rsKwed2l7y7ok2gLwA53kvlPU/rrogjm
+	 F6nCsVZfvF7aYeUM1Wy4BhQ7PDBJ//DbHEGXWwns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com,
+	syzbot+af43e647fd835acc02df@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
 	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 142/403] pptp: ensure minimal skb length in pptp_xmit()
-Date: Tue, 26 Aug 2025 13:07:48 +0200
-Message-ID: <20250826110910.683150903@linuxfoundation.org>
+Subject: [PATCH 5.4 143/403] ipv6: reject malicious packets in ipv6_gso_segment()
+Date: Tue, 26 Aug 2025 13:07:49 +0200
+Message-ID: <20250826110910.710721585@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -55,88 +56,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit de9c4861fb42f0cd72da844c3c34f692d5895b7b ]
+[ Upstream commit d45cf1e7d7180256e17c9ce88e32e8061a7887fe ]
 
-Commit aabc6596ffb3 ("net: ppp: Add bound checking for skb data
-on ppp_sync_txmung") fixed ppp_sync_txmunge()
+syzbot was able to craft a packet with very long IPv6 extension headers
+leading to an overflow of skb->transport_header.
 
-We need a similar fix in pptp_xmit(), otherwise we might
-read uninit data as reported by syzbot.
+This 16bit field has a limited range.
 
-BUG: KMSAN: uninit-value in pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
-  pptp_xmit+0xc34/0x2720 drivers/net/ppp/pptp.c:193
-  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2290 [inline]
-  ppp_input+0x1d6/0xe60 drivers/net/ppp/ppp_generic.c:2314
-  pppoe_rcv_core+0x1e8/0x760 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
-  __release_sock+0x1d3/0x330 net/core/sock.c:3213
-  release_sock+0x6b/0x270 net/core/sock.c:3767
-  pppoe_sendmsg+0x15d/0xcb0 drivers/net/ppp/pppoe.c:904
-  sock_sendmsg_nosec net/socket.c:712 [inline]
-  __sock_sendmsg+0x330/0x3d0 net/socket.c:727
-  ____sys_sendmsg+0x893/0xd80 net/socket.c:2566
-  ___sys_sendmsg+0x271/0x3b0 net/socket.c:2620
-  __sys_sendmmsg+0x2d9/0x7c0 net/socket.c:2709
+Add skb_reset_transport_header_careful() helper and use it
+from ipv6_gso_segment()
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+afad90ffc8645324afe5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68887d86.a00a0220.b12ec.00cd.GAE@google.com/T/#u
+WARNING: CPU: 0 PID: 5871 at ./include/linux/skbuff.h:3032 skb_reset_transport_header include/linux/skbuff.h:3032 [inline]
+WARNING: CPU: 0 PID: 5871 at ./include/linux/skbuff.h:3032 ipv6_gso_segment+0x15e2/0x21e0 net/ipv6/ip6_offload.c:151
+Modules linked in:
+CPU: 0 UID: 0 PID: 5871 Comm: syz-executor211 Not tainted 6.16.0-rc6-syzkaller-g7abc678e3084 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+ RIP: 0010:skb_reset_transport_header include/linux/skbuff.h:3032 [inline]
+ RIP: 0010:ipv6_gso_segment+0x15e2/0x21e0 net/ipv6/ip6_offload.c:151
+Call Trace:
+ <TASK>
+  skb_mac_gso_segment+0x31c/0x640 net/core/gso.c:53
+  nsh_gso_segment+0x54a/0xe10 net/nsh/nsh.c:110
+  skb_mac_gso_segment+0x31c/0x640 net/core/gso.c:53
+  __skb_gso_segment+0x342/0x510 net/core/gso.c:124
+  skb_gso_segment include/net/gso.h:83 [inline]
+  validate_xmit_skb+0x857/0x11b0 net/core/dev.c:3950
+  validate_xmit_skb_list+0x84/0x120 net/core/dev.c:4000
+  sch_direct_xmit+0xd3/0x4b0 net/sched/sch_generic.c:329
+  __dev_xmit_skb net/core/dev.c:4102 [inline]
+  __dev_queue_xmit+0x17b6/0x3a70 net/core/dev.c:4679
+
+Fixes: d1da932ed4ec ("ipv6: Separate ipv6 offload support")
+Reported-by: syzbot+af43e647fd835acc02df@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/688a1a05.050a0220.5d226.0008.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Link: https://patch.msgid.link/20250729080207.1863408-1-edumazet@google.com
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250730131738.3385939-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pptp.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ include/linux/skbuff.h | 23 +++++++++++++++++++++++
+ net/ipv6/ip6_offload.c |  4 +++-
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index e1fabb3e3246..5e2f4702aa2b 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -141,9 +141,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	int len;
- 	unsigned char *data;
- 	__u32 seq_recv;
--
--
--	struct rtable *rt;
-+	struct rtable *rt = NULL;
- 	struct net_device *tdev;
- 	struct iphdr  *iph;
- 	int    max_headroom;
-@@ -165,16 +163,20 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 
- 	if (skb_headroom(skb) < max_headroom || skb_cloned(skb) || skb_shared(skb)) {
- 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
--		if (!new_skb) {
--			ip_rt_put(rt);
-+
-+		if (!new_skb)
- 			goto tx_error;
--		}
-+
- 		if (skb->sk)
- 			skb_set_owner_w(new_skb, skb->sk);
- 		consume_skb(skb);
- 		skb = new_skb;
- 	}
- 
-+	/* Ensure we can safely access protocol field and LCP code */
-+	if (!pskb_may_pull(skb, 3))
-+		goto tx_error;
-+
- 	data = skb->data;
- 	islcp = ((data[0] << 8) + data[1]) == PPP_LCP && 1 <= data[2] && data[2] <= 7;
- 
-@@ -248,6 +250,7 @@ static int pptp_xmit(struct ppp_channel *chan, struct sk_buff *skb)
- 	return 1;
- 
- tx_error:
-+	ip_rt_put(rt);
- 	kfree_skb(skb);
- 	return 1;
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 4edce28fb454..d9abd9e6833e 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -2493,6 +2493,29 @@ static inline void skb_reset_transport_header(struct sk_buff *skb)
+ 	skb->transport_header = skb->data - skb->head;
  }
+ 
++/**
++ * skb_reset_transport_header_careful - conditionally reset transport header
++ * @skb: buffer to alter
++ *
++ * Hardened version of skb_reset_transport_header().
++ *
++ * Returns: true if the operation was a success.
++ */
++static inline bool __must_check
++skb_reset_transport_header_careful(struct sk_buff *skb)
++{
++	long offset = skb->data - skb->head;
++
++	if (unlikely(offset != (typeof(skb->transport_header))offset))
++		return false;
++
++	if (unlikely(offset == (typeof(skb->transport_header))~0U))
++		return false;
++
++	skb->transport_header = offset;
++	return true;
++}
++
+ static inline void skb_set_transport_header(struct sk_buff *skb,
+ 					    const int offset)
+ {
+diff --git a/net/ipv6/ip6_offload.c b/net/ipv6/ip6_offload.c
+index b7b4ba68f3a2..0d9d11902b1b 100644
+--- a/net/ipv6/ip6_offload.c
++++ b/net/ipv6/ip6_offload.c
+@@ -109,7 +109,9 @@ static struct sk_buff *ipv6_gso_segment(struct sk_buff *skb,
+ 
+ 	ops = rcu_dereference(inet6_offloads[proto]);
+ 	if (likely(ops && ops->callbacks.gso_segment)) {
+-		skb_reset_transport_header(skb);
++		if (!skb_reset_transport_header_careful(skb))
++			goto out;
++
+ 		segs = ops->callbacks.gso_segment(skb, features);
+ 		if (!segs)
+ 			skb->network_header = skb_mac_header(skb) + nhoff - skb->head;
 -- 
 2.39.5
 
