@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431F81F1518;
-	Tue, 26 Aug 2025 12:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2F212CDA5;
+	Tue, 26 Aug 2025 12:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212654; cv=none; b=WFi6uVVPS9x3e5SrI6pU4CRhOiInJmCHtpGNRuv0k/D6AkoUGAuXu9UqSIXgnNRrP45bXf9kFfqFbaPbJVo8Jhr7vjtRJRF5sFf55Sj8d2vWaXqaZK01WQxtzb3293Hp9YUDzMCuURH/nSunvwZsiQsZgtV8J+Y+gOY4/rJ12Vo=
+	t=1756212656; cv=none; b=AH3bcdLGyjSm2iJRiACDdyOzalh/I5m4pnq0YjclOAC7VueRUGMAf/xYqjKxMuAMfajy+pwN+S1JRfm+4mUWKSR9DJasQwrEtoqJw0L0DEr+c2eY8xLaNeRB4Lm8es+GzGf6Okm6aojXJhYgDIyMHuz+ImCYsIbJGSvh6axigik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212654; c=relaxed/simple;
-	bh=nNMuxw9Bc7hblqowVqYJnc+DcNAbB5VlLbXYIi882Vw=;
+	s=arc-20240116; t=1756212656; c=relaxed/simple;
+	bh=nQEITT8/AdXw+8BZuM1jrZyLiTwzgVfLkub2CEL77MM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OaGYVVRKBWAB4kYKofEOgNF4L7muXx6B9Zt6GmtotkEw4Qx2O+MytJIckUrXqcNPKJG71orWGMPt7OtWOuuPmBWGAIoA1rwgVH1C2SiXrQ3tLlv6eL3FBFrGJ17ZVafbwy3OgK8Kl9WBBWjGSUBch820IuoFfqi2BnwrY8k6b5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJoo7+Jp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzJ3zvpMO9CRGyqcnuHseDreA3dwtx8aFsPbmrwaBlH10E5a5Lqm8WPA7Uw8cegAXVLGysJHnd+mR0JJ9u1gikJEs5zISBS0r+VBeo4fG/KPd28KwTR8dCr8sQRQUi22B2w6g8iZl93LgxyofBQtSKo3WnQ1h8iB/MI9RlWKRSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKGC9gzn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJoo7+Jp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB7AC4CEF4;
-	Tue, 26 Aug 2025 12:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKGC9gzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF93C113CF;
+	Tue, 26 Aug 2025 12:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212654;
-	bh=nNMuxw9Bc7hblqowVqYJnc+DcNAbB5VlLbXYIi882Vw=;
+	s=korg; t=1756212656;
+	bh=nQEITT8/AdXw+8BZuM1jrZyLiTwzgVfLkub2CEL77MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJoo7+Jp7T/gbGZFvMHAndnAoe8roG23qjG9X9TWvjcJ342wp4Yi2EnjcI0UX64CK
-	 f56U66dfjxVo+tWB0s8V7+SF3W6dLJckTBkhtNsk2xIaZ1gPt6iW470emuFT7JKcSy
-	 9h03o9yjlEGSCdUi0waXQbpmDjBbBuY+71aWml7M=
+	b=aKGC9gznck2j5E8dQ4EYKEdYBD+ieHQ/XEJksvkgiz57aGQUCyjIwHwzARz2u1kLk
+	 bWgH0D0xc8KMDHLF+fyNiMQVCQ4w0FuuN0d+UvBPMiYoJXCSooJVNwCvnS4Z9OTXIK
+	 ql0LS45j4HW7ZNZ1fCOf3ALhWTB0+1MMiawFrn0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.6 024/587] NFS: Fix the setting of capabilities when automounting a new filesystem
-Date: Tue, 26 Aug 2025 13:02:53 +0200
-Message-ID: <20250826110953.569198008@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 051/587] KVM: nVMX: Check vmcs12->guest_ia32_debugctl on nested VM-Enter
+Date: Tue, 26 Aug 2025 13:03:20 +0200
+Message-ID: <20250826110954.241591364@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,164 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-commit b01f21cacde9f2878492cf318fee61bf4ccad323 upstream.
+[ Upstream commit 095686e6fcb4150f0a55b1a25987fad3d8af58d6 ]
 
-Capabilities cannot be inherited when we cross into a new filesystem.
-They need to be reset to the minimal defaults, and then probed for
-again.
+Add a consistency check for L2's guest_ia32_debugctl, as KVM only supports
+a subset of hardware functionality, i.e. KVM can't rely on hardware to
+detect illegal/unsupported values.  Failure to check the vmcs12 value
+would allow the guest to load any harware-supported value while running L2.
 
-Fixes: 54ceac451598 ("NFS: Share NFS superblocks per-protocol per-server per-FSID")
+Take care to exempt BTF and LBR from the validity check in order to match
+KVM's behavior for writes via WRMSR, but without clobbering vmcs12.  Even
+if VM_EXIT_SAVE_DEBUG_CONTROLS is set in vmcs12, L1 can reasonably expect
+that vmcs12->guest_ia32_debugctl will not be modified if writes to the MSR
+are being intercepted.
+
+Arguably, KVM _should_ update vmcs12 if VM_EXIT_SAVE_DEBUG_CONTROLS is set
+*and* writes to MSR_IA32_DEBUGCTLMSR are not being intercepted by L1, but
+that would incur non-trivial complexity and wouldn't change the fact that
+KVM's handling of DEBUGCTL is blatantly broken.  I.e. the extra complexity
+is not worth carrying.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20250610232010.162191-7-seanjc@google.com
+Stable-dep-of: 7d0cce6cbe71 ("KVM: VMX: Wrap all accesses to IA32_DEBUGCTL with getter/setter APIs")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c     |   44 ++++++++++++++++++++++++++++++++++++++++++--
- fs/nfs/internal.h   |    2 +-
- fs/nfs/nfs4client.c |   20 +-------------------
- fs/nfs/nfs4proc.c   |    2 +-
- 4 files changed, 45 insertions(+), 23 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 12 ++++++++++--
+ arch/x86/kvm/vmx/vmx.c    |  5 ++---
+ arch/x86/kvm/vmx/vmx.h    |  3 +++
+ 3 files changed, 15 insertions(+), 5 deletions(-)
 
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -668,6 +668,44 @@ struct nfs_client *nfs_init_client(struc
- }
- EXPORT_SYMBOL_GPL(nfs_init_client);
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index fdf7503491f9..10236ecdad95 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -2564,7 +2564,8 @@ static int prepare_vmcs02(struct kvm_vcpu *vcpu, struct vmcs12 *vmcs12,
+ 	if (vmx->nested.nested_run_pending &&
+ 	    (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_DEBUG_CONTROLS)) {
+ 		kvm_set_dr(vcpu, 7, vmcs12->guest_dr7);
+-		vmcs_write64(GUEST_IA32_DEBUGCTL, vmcs12->guest_ia32_debugctl);
++		vmcs_write64(GUEST_IA32_DEBUGCTL, vmcs12->guest_ia32_debugctl &
++						  vmx_get_supported_debugctl(vcpu, false));
+ 	} else {
+ 		kvm_set_dr(vcpu, 7, vcpu->arch.dr7);
+ 		vmcs_write64(GUEST_IA32_DEBUGCTL, vmx->nested.pre_vmenter_debugctl);
+@@ -3045,7 +3046,8 @@ static int nested_vmx_check_guest_state(struct kvm_vcpu *vcpu,
+ 		return -EINVAL;
  
-+static void nfs4_server_set_init_caps(struct nfs_server *server)
-+{
-+#if IS_ENABLED(CONFIG_NFS_V4)
-+	/* Set the basic capabilities */
-+	server->caps = server->nfs_client->cl_mvops->init_caps;
-+	if (server->flags & NFS_MOUNT_NORDIRPLUS)
-+		server->caps &= ~NFS_CAP_READDIRPLUS;
-+	if (server->nfs_client->cl_proto == XPRT_TRANSPORT_RDMA)
-+		server->caps &= ~NFS_CAP_READ_PLUS;
-+
+ 	if ((vmcs12->vm_entry_controls & VM_ENTRY_LOAD_DEBUG_CONTROLS) &&
+-	    CC(!kvm_dr7_valid(vmcs12->guest_dr7)))
++	    (CC(!kvm_dr7_valid(vmcs12->guest_dr7)) ||
++	     CC(!vmx_is_valid_debugctl(vcpu, vmcs12->guest_ia32_debugctl, false))))
+ 		return -EINVAL;
+ 
+ 	if ((vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_PAT) &&
+@@ -4435,6 +4437,12 @@ static void sync_vmcs02_to_vmcs12(struct kvm_vcpu *vcpu, struct vmcs12 *vmcs12)
+ 		(vmcs12->vm_entry_controls & ~VM_ENTRY_IA32E_MODE) |
+ 		(vm_entry_controls_get(to_vmx(vcpu)) & VM_ENTRY_IA32E_MODE);
+ 
 +	/*
-+	 * Don't use NFS uid/gid mapping if we're using AUTH_SYS or lower
-+	 * authentication.
++	 * Note!  Save DR7, but intentionally don't grab DEBUGCTL from vmcs02.
++	 * Writes to DEBUGCTL that aren't intercepted by L1 are immediately
++	 * propagated to vmcs12 (see vmx_set_msr()), as the value loaded into
++	 * vmcs02 doesn't strictly track vmcs12.
 +	 */
-+	if (nfs4_disable_idmapping &&
-+	    server->client->cl_auth->au_flavor == RPC_AUTH_UNIX)
-+		server->caps |= NFS_CAP_UIDGID_NOMAP;
-+#endif
-+}
-+
-+void nfs_server_set_init_caps(struct nfs_server *server)
-+{
-+	switch (server->nfs_client->rpc_ops->version) {
-+	case 2:
-+		server->caps = NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
-+		break;
-+	case 3:
-+		server->caps = NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
-+		if (!(server->flags & NFS_MOUNT_NORDIRPLUS))
-+			server->caps |= NFS_CAP_READDIRPLUS;
-+		break;
-+	default:
-+		nfs4_server_set_init_caps(server);
-+		break;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(nfs_server_set_init_caps);
+ 	if (vmcs12->vm_exit_controls & VM_EXIT_SAVE_DEBUG_CONTROLS)
+ 		kvm_get_dr(vcpu, 7, (unsigned long *)&vmcs12->guest_dr7);
+ 
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index aaa767ed170e..32f1a38a1010 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -2149,7 +2149,7 @@ static u64 nested_vmx_truncate_sysenter_addr(struct kvm_vcpu *vcpu,
+ 	return (unsigned long)data;
+ }
+ 
+-static u64 vmx_get_supported_debugctl(struct kvm_vcpu *vcpu, bool host_initiated)
++u64 vmx_get_supported_debugctl(struct kvm_vcpu *vcpu, bool host_initiated)
+ {
+ 	u64 debugctl = 0;
+ 
+@@ -2168,8 +2168,7 @@ static u64 vmx_get_supported_debugctl(struct kvm_vcpu *vcpu, bool host_initiated
+ 	return debugctl;
+ }
+ 
+-static bool vmx_is_valid_debugctl(struct kvm_vcpu *vcpu, u64 data,
+-				  bool host_initiated)
++bool vmx_is_valid_debugctl(struct kvm_vcpu *vcpu, u64 data, bool host_initiated)
+ {
+ 	u64 invalid;
+ 
+diff --git a/arch/x86/kvm/vmx/vmx.h b/arch/x86/kvm/vmx/vmx.h
+index 50d32d830890..5816fdd2dfa8 100644
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -429,6 +429,9 @@ static inline void vmx_set_intercept_for_msr(struct kvm_vcpu *vcpu, u32 msr,
+ 
+ void vmx_update_cpu_dirty_logging(struct kvm_vcpu *vcpu);
+ 
++u64 vmx_get_supported_debugctl(struct kvm_vcpu *vcpu, bool host_initiated);
++bool vmx_is_valid_debugctl(struct kvm_vcpu *vcpu, u64 data, bool host_initiated);
 +
  /*
-  * Create a version 2 or 3 client
-  */
-@@ -709,7 +747,6 @@ static int nfs_init_server(struct nfs_se
- 	/* Initialise the client representation from the mount data */
- 	server->flags = ctx->flags;
- 	server->options = ctx->options;
--	server->caps |= NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS;
- 
- 	switch (clp->rpc_ops->version) {
- 	case 2:
-@@ -745,6 +782,8 @@ static int nfs_init_server(struct nfs_se
- 	if (error < 0)
- 		goto error;
- 
-+	nfs_server_set_init_caps(server);
-+
- 	/* Preserve the values of mount_server-related mount options */
- 	if (ctx->mount_server.addrlen) {
- 		memcpy(&server->mountd_address, &ctx->mount_server.address,
-@@ -919,7 +958,6 @@ void nfs_server_copy_userdata(struct nfs
- 	target->acregmax = source->acregmax;
- 	target->acdirmin = source->acdirmin;
- 	target->acdirmax = source->acdirmax;
--	target->caps = source->caps;
- 	target->options = source->options;
- 	target->auth_info = source->auth_info;
- 	target->port = source->port;
-@@ -1145,6 +1183,8 @@ struct nfs_server *nfs_clone_server(stru
- 	if (error < 0)
- 		goto out_free_server;
- 
-+	nfs_server_set_init_caps(server);
-+
- 	/* probe the filesystem info for this server filesystem */
- 	error = nfs_probe_server(server, fh);
- 	if (error < 0)
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -223,7 +223,7 @@ extern struct nfs_client *
- nfs4_find_client_sessionid(struct net *, const struct sockaddr *,
- 				struct nfs4_sessionid *, u32);
- extern struct nfs_server *nfs_create_server(struct fs_context *);
--extern void nfs4_server_set_init_caps(struct nfs_server *);
-+extern void nfs_server_set_init_caps(struct nfs_server *);
- extern struct nfs_server *nfs4_create_server(struct fs_context *);
- extern struct nfs_server *nfs4_create_referral_server(struct fs_context *);
- extern int nfs4_update_server(struct nfs_server *server, const char *hostname,
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -1079,24 +1079,6 @@ static void nfs4_session_limit_xasize(st
- #endif
- }
- 
--void nfs4_server_set_init_caps(struct nfs_server *server)
--{
--	/* Set the basic capabilities */
--	server->caps |= server->nfs_client->cl_mvops->init_caps;
--	if (server->flags & NFS_MOUNT_NORDIRPLUS)
--			server->caps &= ~NFS_CAP_READDIRPLUS;
--	if (server->nfs_client->cl_proto == XPRT_TRANSPORT_RDMA)
--		server->caps &= ~NFS_CAP_READ_PLUS;
--
--	/*
--	 * Don't use NFS uid/gid mapping if we're using AUTH_SYS or lower
--	 * authentication.
--	 */
--	if (nfs4_disable_idmapping &&
--			server->client->cl_auth->au_flavor == RPC_AUTH_UNIX)
--		server->caps |= NFS_CAP_UIDGID_NOMAP;
--}
--
- static int nfs4_server_common_setup(struct nfs_server *server,
- 		struct nfs_fh *mntfh, bool auth_probe)
- {
-@@ -1111,7 +1093,7 @@ static int nfs4_server_common_setup(stru
- 	if (error < 0)
- 		goto out;
- 
--	nfs4_server_set_init_caps(server);
-+	nfs_server_set_init_caps(server);
- 
- 	/* Probe the root fh to retrieve its FSID and filehandle */
- 	error = nfs4_get_rootfh(server, mntfh, auth_probe);
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -3951,7 +3951,7 @@ int nfs4_server_capabilities(struct nfs_
- 	};
- 	int err;
- 
--	nfs4_server_set_init_caps(server);
-+	nfs_server_set_init_caps(server);
- 	do {
- 		err = nfs4_handle_exception(server,
- 				_nfs4_server_capabilities(server, fhandle),
+  * Note, early Intel manuals have the write-low and read-high bitmap offsets
+  * the wrong way round.  The bitmaps control MSRs 0x00000000-0x00001fff and
+-- 
+2.50.1
+
 
 
