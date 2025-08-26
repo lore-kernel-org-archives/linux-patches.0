@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A002FBF0;
-	Tue, 26 Aug 2025 13:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79ADFBF0;
+	Tue, 26 Aug 2025 13:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214061; cv=none; b=ua+1QCt8zxq7kNUTWwVkXil7OQJ9HAc4lh4y29iTH9Je05+/oEZev7E1ZcQws/37rmpvMFYUlSZrDNiWGqJOcB7YQPtrIRDnOx8cczPImbO8t+c31rea/yL9jOfufHICvDbM3BCRadJx3g4WvMhfdSdnBnwVueN/9ArhqZlSUu4=
+	t=1756214064; cv=none; b=DeAQxKMBK2fVvWR7f3rggMVqsYTOyNv0snHx90zw3i8qnSX6NBlEQg6ZuNPLmOu3ZTvxe6PoQganJ1X9sAY2x1tUG46EfZ7wWOCWs68IsPiou1T1/b3fjKc4BdGDnnZibCVbSMrQ3aRcVXUafhycnDFvHWOuRas3XIfk086Qaqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214061; c=relaxed/simple;
-	bh=iz+TOzIs+SgoO98dcDiw8J436hWZggtmCeil8cSGcrU=;
+	s=arc-20240116; t=1756214064; c=relaxed/simple;
+	bh=uxYB0vHT0VYPqXmT99aNuxfJCQXwcbWDfgcuDz5ZZzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxHCcYlBZdVFLCmgASNDwudMxBJwcbG/qjFd5TJeZrgLyfxe674WI3fYLaq0Dlma1aKPcLHDmwFdDvFrzrKGHlE1E8PjD1PLXLl30hVBpQ365zmgbp/uRJ51XQwxIQjGKvknV3Tk4P4KdA87sdXoEvGbmJWhVQ9jU2sd+kwx2s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KkLizAy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEA2pE1blgU3VJ2XLn+mZF5cYr3b4XIV9eTn/JL3GrgizBrVeUIMQOj7IZ4rAyxGlwy2n2ibSXK91wLywrjYUcxMx95S3h9lwIAaMILSjgwRu5lzFP9JG7UYGc/pQrb3yQWJ3bh27z7MMAvvfTJ4OPGt4xAemSvS3kVZEe26nqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsIeKdhL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KkLizAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E77C4CEF1;
-	Tue, 26 Aug 2025 13:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsIeKdhL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E21C4CEF1;
+	Tue, 26 Aug 2025 13:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214060;
-	bh=iz+TOzIs+SgoO98dcDiw8J436hWZggtmCeil8cSGcrU=;
+	s=korg; t=1756214063;
+	bh=uxYB0vHT0VYPqXmT99aNuxfJCQXwcbWDfgcuDz5ZZzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1KkLizAyQZyz8oRjjRvTa+PxCxQLstYlVKl4v0d0mQS5JKZ1BNH//olJJ/fbEin4l
-	 +YfVJXwst0fHaoNpBdN7CI6WjXMCuZzAp1cxETwtO2sy43xTzrzcjEB8VazShBkpY2
-	 ZkKUIo3lxis/JbDaApY2QbNuLyR13jwUKDl/3ENI=
+	b=vsIeKdhLgyxcM1AhFDPn1IadK77oB7QH5tMuU5IKo9Kt+NKU9M6JXz6HndRE1CR7G
+	 NBWJ4mRaj8F0IQaT8zWYsojyRjegxes5QvK1sRlmtCVmpiTsSCfqgxkr79ifb6IfKd
+	 tYel+McqlL46TJ2SzCdxfwV3ko7fA20c0BRab4QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Boshi Yu <boshiyu@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 551/587] iosys-map: Fix undefined behavior in iosys_map_clear()
-Date: Tue, 26 Aug 2025 13:11:40 +0200
-Message-ID: <20250826111007.038542880@linuxfoundation.org>
+Subject: [PATCH 6.6 552/587] RDMA/erdma: Fix ignored return value of init_kernel_qp
+Date: Tue, 26 Aug 2025 13:11:41 +0200
+Message-ID: <20250826111007.065964860@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,53 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Boshi Yu <boshiyu@linux.alibaba.com>
 
-[ Upstream commit 5634c8cb298a7146b4e38873473e280b50e27a2c ]
+[ Upstream commit d5c74713f0117d07f91eb48b10bc2ad44e23c9b9 ]
 
-The current iosys_map_clear() implementation reads the potentially
-uninitialized 'is_iomem' boolean field to decide which union member
-to clear. This causes undefined behavior when called on uninitialized
-structures, as 'is_iomem' may contain garbage values like 0xFF.
+The init_kernel_qp interface may fail. Check its return value and free
+related resources properly when it does.
 
-UBSAN detects this as:
-    UBSAN: invalid-load in include/linux/iosys-map.h:267
-    load of value 255 is not a valid value for type '_Bool'
-
-Fix by unconditionally clearing the entire structure with memset(),
-eliminating the need to read uninitialized data and ensuring all
-fields are set to known good values.
-
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14639
-Fixes: 01fd30da0474 ("dma-buf: Add struct dma-buf-map for storing struct dma_buf.vaddr_ptr")
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250718105051.2709487-1-nitin.r.gote@intel.com
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
+Signed-off-by: Boshi Yu <boshiyu@linux.alibaba.com>
+Link: https://patch.msgid.link/20250725055410.67520-3-boshiyu@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/iosys-map.h | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/iosys-map.h b/include/linux/iosys-map.h
-index cb71aa616bd3..631d58d0b838 100644
---- a/include/linux/iosys-map.h
-+++ b/include/linux/iosys-map.h
-@@ -264,12 +264,7 @@ static inline bool iosys_map_is_set(const struct iosys_map *map)
-  */
- static inline void iosys_map_clear(struct iosys_map *map)
- {
--	if (map->is_iomem) {
--		map->vaddr_iomem = NULL;
--		map->is_iomem = false;
--	} else {
--		map->vaddr = NULL;
--	}
-+	memset(map, 0, sizeof(*map));
- }
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index 29ad2f5ffabe..e990690d8b3c 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -979,7 +979,9 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		if (ret)
+ 			goto err_out_cmd;
+ 	} else {
+-		init_kernel_qp(dev, qp, attrs);
++		ret = init_kernel_qp(dev, qp, attrs);
++		if (ret)
++			goto err_out_xa;
+ 	}
  
- /**
+ 	qp->attrs.max_send_sge = attrs->cap.max_send_sge;
 -- 
 2.50.1
 
