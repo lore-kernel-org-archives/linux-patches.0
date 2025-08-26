@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C68244667;
-	Tue, 26 Aug 2025 13:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AE08635D;
+	Tue, 26 Aug 2025 13:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214580; cv=none; b=q5WVWkD9BSdicQD4HaK8+OfTtawSbcxDKiNYEL78nzZ+14FjBu+r4x9NjbujS2jJI82tW6Paghn6A9GEDBSfhumhuZOlNV/R1yguQ1/mH/sZWRAjJZ9R4DQ/d2AXWnREgBi82YphuqKPI6iG6A+hJMdxt0aN+v00zgNrjpDQU+0=
+	t=1756214583; cv=none; b=XUJ5ZVGM9VA8BbhRL1D7SPSeclAejLEBJxzETF7wlf3aAmSjE6WzlhY+VvdTzGoE/QM8z7ed8ZmstKm7ZOnzhWrF6K/wF+uG2/TQoCC+au0JHKkPFGQyGekcyhMzTmBhgbID6zGlfbL0oKPj3h9UZOibPA4PKPXAcgyzBga0zVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214580; c=relaxed/simple;
-	bh=n64Qwo/hJ2GoiKn5Gq9Zm0NrqOs12os5SlMoAObqUZc=;
+	s=arc-20240116; t=1756214583; c=relaxed/simple;
+	bh=ccjjb+h39qGgZDo9fg+Veogoid87Drp5ELwmcaowrKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4dRIKysUzjH7/kmoGa69zHt4u415ZHySfjzFSWlGKJiUn1tsWvoqmJTIDHASAG9a1OmiemfnSOFPhnn06KkzsH8/AlS8TmZuDVqlCsoEqnoKILbsSZKA9fGekMSzVFlFYLBfO+YkEcRItnjVftBq8sBXbSH5Ki1fxS2FgYLzDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9kbv7py; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KauYLgs7OLURat1U2hckw9488m6P6tavHw5iOGXA9WXEGDhU+Sr8aU86fhfk1F8iX8cCY3kyLv0ghHCNQS+KZPKjQg4VyHY8eKLKCI7uMBGN0FPEWjPvq+ROb5haKVkQz8MYPS+iEJyycf2ACgSCunCTNFHE5pkxuanAZJkJhmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/Tsw8IC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9kbv7py"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B6BC4CEF1;
-	Tue, 26 Aug 2025 13:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/Tsw8IC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A653C113CF;
+	Tue, 26 Aug 2025 13:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214580;
-	bh=n64Qwo/hJ2GoiKn5Gq9Zm0NrqOs12os5SlMoAObqUZc=;
+	s=korg; t=1756214582;
+	bh=ccjjb+h39qGgZDo9fg+Veogoid87Drp5ELwmcaowrKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9kbv7pyETH1v+dnvdQCxQM0DxR6Kihx3SdYN1xTD3iQ+3UlMDYIoky5gQzF81JQv
-	 8lGYlXsNGMo5/F+uDz3sWF7kmzHtvgMak53VMRFbbgILreWAu6hlhF8741vHIs8tAj
-	 8vIASVOuJuD4fLrzMdrfR3bZaNCpK0kOLfaRfkFE=
+	b=d/Tsw8ICIVCcCswme+Ldv0FdUD6SEaLdeH65Gt/5ruym5YyS4OgyF1QEnDZy6jhel
+	 8MS1Bxkyp0rgI0FBeyvT/CLDhgfI3xo3/WpcunspXb/yWUZiF8OCLj3HpylYrAzZ+V
+	 NxtsiQvALCdcrKsKq7oxIEbupP8qU4JZd2ZKxggE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Adolfsson <johan.adolfsson@axis.com>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/482] leds: leds-lp50xx: Handle reg to get correct multi_index
-Date: Tue, 26 Aug 2025 13:07:25 +0200
-Message-ID: <20250826110935.546325070@linuxfoundation.org>
+Subject: [PATCH 6.1 193/482] dmaengine: stm32-dma: configure next sg only if there are more than 2 sgs
+Date: Tue, 26 Aug 2025 13:07:26 +0200
+Message-ID: <20250826110935.569150361@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,66 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Adolfsson <johan.adolfsson@axis.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 2e84a5e5374232e6f356ce5c079a5658d7e4af2c ]
+[ Upstream commit e19bdbaa31082b43dab1d936e20efcebc30aa73d ]
 
-mc_subled used for multi_index needs well defined array indexes,
-to guarantee the desired result, use reg for that.
+DMA operates in Double Buffer Mode (DBM) when the transfer is cyclic and
+there are at least two periods.
+When DBM is enabled, the DMA toggles between two memory targets (SxM0AR and
+SxM1AR), indicated by the SxSCR.CT bit (Current Target).
+There is no need to update the next memory address if two periods are
+configured, as SxM0AR and SxM1AR are already properly set up before the
+transfer begins in the stm32_dma_start_transfer() function.
+This avoids unnecessary updates to SxM0AR/SxM1AR, thereby preventing
+potential Transfer Errors. Specifically, when the channel is enabled,
+SxM0AR and SxM1AR can only be written if SxSCR.CT=1 and SxSCR.CT=0,
+respectively. Otherwise, a Transfer Error interrupt is triggered, and the
+stream is automatically disabled.
 
-If devicetree child nodes is processed in random or reverse order
-you may end up with multi_index "blue green red" instead of the expected
-"red green blue".
-If user space apps uses multi_index to deduce how to control the leds
-they would most likely be broken without this patch if devicetree
-processing is reversed (which it appears to be).
-
-arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-fuji.dts has reg set
-but I don't see how it can have worked without this change.
-
-If reg is not set, an error is returned,
-If reg is out of range, an error is returned.
-reg within led child nodes starts with 0, to map to the iout in each bank.
-
-Signed-off-by: Johan Adolfsson <johan.adolfsson@axis.com>
-Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Link: https://lore.kernel.org/r/20250617-led-fix-v7-1-cdbe8efc88fa@axis.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://lore.kernel.org/r/20250624-stm32_dma_dbm_fix-v1-1-337c40d6c93e@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-lp50xx.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/dma/stm32-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/leds-lp50xx.c b/drivers/leds/leds-lp50xx.c
-index 28d6b39fa72d..cda62e3d3a3a 100644
---- a/drivers/leds/leds-lp50xx.c
-+++ b/drivers/leds/leds-lp50xx.c
-@@ -486,6 +486,7 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
- 		}
- 
- 		fwnode_for_each_child_node(child, led_node) {
-+			int multi_index;
- 			ret = fwnode_property_read_u32(led_node, "color",
- 						       &color_id);
- 			if (ret) {
-@@ -493,8 +494,16 @@ static int lp50xx_probe_dt(struct lp50xx *priv)
- 				dev_err(priv->dev, "Cannot read color\n");
- 				goto child_out;
- 			}
-+			ret = fwnode_property_read_u32(led_node, "reg", &multi_index);
-+			if (ret != 0) {
-+				dev_err(priv->dev, "reg must be set\n");
-+				return -EINVAL;
-+			} else if (multi_index >= LP50XX_LEDS_PER_MODULE) {
-+				dev_err(priv->dev, "reg %i out of range\n", multi_index);
-+				return -EINVAL;
-+			}
- 
--			mc_led_info[num_colors].color_index = color_id;
-+			mc_led_info[multi_index].color_index = color_id;
- 			num_colors++;
- 		}
- 
+diff --git a/drivers/dma/stm32-dma.c b/drivers/dma/stm32-dma.c
+index 7abcd7f2848e..34a906e4b1ff 100644
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -745,7 +745,7 @@ static void stm32_dma_handle_chan_done(struct stm32_dma_chan *chan, u32 scr)
+ 		/* cyclic while CIRC/DBM disable => post resume reconfiguration needed */
+ 		if (!(scr & (STM32_DMA_SCR_CIRC | STM32_DMA_SCR_DBM)))
+ 			stm32_dma_post_resume_reconfigure(chan);
+-		else if (scr & STM32_DMA_SCR_DBM)
++		else if (scr & STM32_DMA_SCR_DBM && chan->desc->num_sgs > 2)
+ 			stm32_dma_configure_next_sg(chan);
+ 	} else {
+ 		chan->busy = false;
 -- 
 2.39.5
 
