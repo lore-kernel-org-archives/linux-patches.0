@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C435FC31;
-	Tue, 26 Aug 2025 14:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF2335E4CE;
+	Tue, 26 Aug 2025 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219331; cv=none; b=nfwTH7l67Gh0tVA1JCGj1KSepkHhlckTdFG/VkJYWUnxePl1KG6ciIDbzTVt8Wi6lmb5o6JeqhZ8FqHDdrV15uHL+UqBMZH9mgE0JInCAf5ipQWU4YVKx0r8T0Rlzshfz9nQ2DSA5xuVuitLOyHOV90TlTT7lnhB5tN0vG5GAWU=
+	t=1756219334; cv=none; b=d+H3U0UrlAEOn54eVAJcPt3px6xuS5ng9CmoozEuZ47A86v+UCjyLc1xFipJA4NOZcH4v5M7JbFJ7Xsxmd0kIxMC4neko8rU9Dn591BTybD//QIOjQ445f2CedutcVMzA4URuHQ6eKuVWZDlrLxtBp4yeBElp65sKOKjgnGJXyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219331; c=relaxed/simple;
-	bh=cwp4w3lBxG0JTMhkQpmaDsRl3TrXS1QWypZ2UBc6S0Q=;
+	s=arc-20240116; t=1756219334; c=relaxed/simple;
+	bh=t/H+P/jlFO6/1yK+LmmXQYDB4K9ipTVvyV9XEt/0I0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfQiUR/v8O/qAktghp65/YOlkMlMZmgi0lIKAxIUTQRP5zQ+Oe4dsHNO+3BwF4+yoIG798f2ikul9MIbajGNNnQMpLSBejSBLywHQf1HKtYxWNqgtzfFMU6xgCypUKNcf4kJFPWGorYngn8a1UsTQH/AshMZOdd2/EjumiZA8D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlolKGt2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bi9+Nb6XD754UXEmcq0Kz0MBUcwplFcFbRHvtn6Lq1jIApCWRZi3Qx4uMbTeN448xjcJMb8PiYPXSOQrLHN0KWkgYtG4ecH4EIBtxvxYof6KM3Pox/f48rp7hrtzIUT8ALBtoNA9/lLjdNHMaWL6uIzChLrnrty98uae2GG29JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzEyd103; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlolKGt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D113FC113CF;
-	Tue, 26 Aug 2025 14:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzEyd103"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9D8C4CEF1;
+	Tue, 26 Aug 2025 14:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219331;
-	bh=cwp4w3lBxG0JTMhkQpmaDsRl3TrXS1QWypZ2UBc6S0Q=;
+	s=korg; t=1756219333;
+	bh=t/H+P/jlFO6/1yK+LmmXQYDB4K9ipTVvyV9XEt/0I0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlolKGt2/pM3YiRMEoMqKbEEvE/kULIUKqbVogDqSNRllf0czKzqc0deWjgAV1mLL
-	 BrUHGpgQzLHkP1E08WZt1RzdpmHvqlaWeVF3A402glDUQYrqBKCWVyRhAzk95A3Kch
-	 FYUlgWuprJ50zmL5nAEl09S2qJFy7DKJhs3UgXYs=
+	b=DzEyd1030d59Do1pLlQ3ocwayLID66jLb9N+NeyeAZ7JsuoSfsLAS5z+TQUPo2Z3O
+	 11H9sShhOEjhnmgjn1JT6wcmCcL2B8rnyLuOLNXN6G+gOidUZebSeCmnBnIuESsbDr
+	 Fmvp4kUtWW90u4GMMvvPUcWhPZw+n4v4DgrPtMf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 340/403] iio: hid-sensor-prox: Fix incorrect OFFSET calculation
-Date: Tue, 26 Aug 2025 13:11:06 +0200
-Message-ID: <20250826110916.251339479@linuxfoundation.org>
+Subject: [PATCH 5.4 341/403] x86/mce/amd: Add default names for MCA banks and blocks
+Date: Tue, 26 Aug 2025 13:11:07 +0200
+Message-ID: <20250826110916.278570524@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,39 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit 79dabbd505210e41c88060806c92c052496dd61c ]
+[ Upstream commit d66e1e90b16055d2f0ee76e5384e3f119c3c2773 ]
 
-The OFFSET calculation in the prox_read_raw() was incorrectly using the
-unit exponent, which is intended for SCALE calculations.
+Ensure that sysfs init doesn't fail for new/unrecognized bank types or if
+a bank has additional blocks available.
 
-Remove the incorrect OFFSET calculation and set it to a fixed value of 0.
+Most MCA banks have a single thresholding block, so the block takes the same
+name as the bank.
 
+Unified Memory Controllers (UMCs) are a special case where there are two
+blocks and each has a unique name.
+
+However, the microarchitecture allows for five blocks. Any new MCA bank types
+with more than one block will be missing names for the extra blocks. The MCE
+sysfs will fail to initialize in this case.
+
+Fixes: 87a6d4091bd7 ("x86/mce/AMD: Update sysfs bank names for SMCA systems")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: stable@vger.kernel.org
-Fixes: 39a3a0138f61 ("iio: hid-sensors: Added Proximity Sensor Driver")
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20250331055022.1149736-4-lixu.zhang@intel.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ adapted prox_attr array access to single structure member access ]
+Link: https://lore.kernel.org/20250624-wip-mca-updates-v4-3-236dd74f645f@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/hid-sensor-prox.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/kernel/cpu/mce/amd.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/light/hid-sensor-prox.c
-+++ b/drivers/iio/light/hid-sensor-prox.c
-@@ -103,8 +103,7 @@ static int prox_read_raw(struct iio_dev
- 		ret_type = prox_state->scale_precision;
- 		break;
- 	case IIO_CHAN_INFO_OFFSET:
--		*val = hid_sensor_convert_exponent(
--				prox_state->prox_attr.unit_expo);
-+		*val = 0;
- 		ret_type = IIO_VAL_INT;
- 		break;
- 	case IIO_CHAN_INFO_SAMP_FREQ:
+--- a/arch/x86/kernel/cpu/mce/amd.c
++++ b/arch/x86/kernel/cpu/mce/amd.c
+@@ -1180,13 +1180,20 @@ static const char *get_name(unsigned int
+ 	}
+ 
+ 	bank_type = smca_get_bank_type(bank);
+-	if (bank_type >= N_SMCA_BANK_TYPES)
+-		return NULL;
+ 
+ 	if (b && bank_type == SMCA_UMC) {
+ 		if (b->block < ARRAY_SIZE(smca_umc_block_names))
+ 			return smca_umc_block_names[b->block];
+-		return NULL;
++	}
++
++	if (b && b->block) {
++		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_block_%u", b->block);
++		return buf_mcatype;
++	}
++
++	if (bank_type >= N_SMCA_BANK_TYPES) {
++		snprintf(buf_mcatype, MAX_MCATYPE_NAME_LEN, "th_bank_%u", bank);
++		return buf_mcatype;
+ 	}
+ 
+ 	if (smca_banks[bank].hwid->count == 1)
 
 
