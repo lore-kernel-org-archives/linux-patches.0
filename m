@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78AF352077;
-	Tue, 26 Aug 2025 14:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F49F2367D9;
+	Tue, 26 Aug 2025 14:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219172; cv=none; b=ZzGEl7kojT1DW0Gxszz7ecJVQ3gGd1y8uzTljNZu+Mw05rM9uy+eSLtKtK43pRk98G5Dset+esqWGqegPaNX5TAnZSSHlWCX40fYRjwoAiABh5nxZRcmxZX/GPnsALp7U8E97CbpWJe9LuLXxfF/OGuaehyUv6FOYqbxJ304VRs=
+	t=1756219175; cv=none; b=E/tJTUnRVKln2EcdeNvF3gKohsBBmI+EPqBqW+5oR9yeaxllXyBHedXrUuSeXUXcKoHsQzO0XyF70ojNoGkspMdGM1yGdBrWWyTrXGRZEt2//FnP09dtS+yhiJxCmIYv3HFxxBjILLoHvE2IvoXGAN+CH8gcaXw4McWMD7rCzXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219172; c=relaxed/simple;
-	bh=j9FMROHGHB6iX2yAnLkcjepXW4Mx8E1JAb2nNjZ8QbM=;
+	s=arc-20240116; t=1756219175; c=relaxed/simple;
+	bh=c6qfqw6q6ATNj7aUMW1VNF3kQm6gOgu6bKwbY6QqxsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCN5PzrV94O5eEstAtwOuBcI0yDOumFy0Teso62JZBpp9JPnzjoDn1JmO+iK3MaTTncxoGT6YKCKVu0rfX3hF6EzIo5r08PsZ77RvjpKPv6nwZWpTVrUNXt8KXEDIxSLaOFvPGRhmIRBD98YXObMmLxmfiBAwDMZxPzmv9SUd1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7tnoob1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0oZglL3LU7ePwIEjhIPchL26U8eFP81u0dtCKaSAhQmSohj94K68Q1unURJ5hdopPlX91bhdPDLGvV5n8bID72ezZOldpPr/3pLUFfSvDX8UAg638c82m2D3utK/9l9+Tx9HrOYpVkx2tH/IWTlYdx409qg+GGJGhWyUd/NqjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKAvZsl7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7tnoob1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BC2C4CEF1;
-	Tue, 26 Aug 2025 14:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKAvZsl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C696EC113CF;
+	Tue, 26 Aug 2025 14:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219172;
-	bh=j9FMROHGHB6iX2yAnLkcjepXW4Mx8E1JAb2nNjZ8QbM=;
+	s=korg; t=1756219175;
+	bh=c6qfqw6q6ATNj7aUMW1VNF3kQm6gOgu6bKwbY6QqxsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q7tnoob1HGMdQVNbpQMW80IurpO/x1pLUEP86UEkH2Tx0esCf6p2GTQz8Lo+gq+5B
-	 dF+BaSwO7L3glyuveVQn6H+EINuhJVA/2uC07Ustf4Q7dvadDOuOlVwJQQxaqNVdKY
-	 oIylBNTX9IUmEtNW2uVuOWuE9DI8drFbnUIbI4aM=
+	b=ZKAvZsl7qMECKFZDReh9BEscckI83k8smCLgj2E4i61c70Ei7rZjjkmEpQDKfDrJ0
+	 a7WEeN1uSy+6hRoDc5JViPsWQBeNmoSiozAvwhRESMljRsNR2LBetUFLmURqM3ICHv
+	 cXuBdspBNahvhGvjd7fkNcnk/lUahLu5RwbOGt1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chenchangcheng <chenchangcheng@kylinos.cn>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Youngjun Lee <yjjuny.lee@samsung.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 253/403] media: uvcvideo: Fix bandwidth issue for Alcor camera
-Date: Tue, 26 Aug 2025 13:09:39 +0200
-Message-ID: <20250826110913.811142208@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.4 280/403] media: uvcvideo: Fix 1-byte out-of-bounds read in uvc_parse_format()
+Date: Tue, 26 Aug 2025 13:10:06 +0200
+Message-ID: <20250826110914.541597757@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,52 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chenchangcheng <chenchangcheng@kylinos.cn>
+From: Youngjun Lee <yjjuny.lee@samsung.com>
 
-[ Upstream commit 9764401bf6f8a20eb11c2e78470f20fee91a9ea7 ]
+commit 782b6a718651eda3478b1824b37a8b3185d2740c upstream.
 
-Some broken device return wrong dwMaxPayloadTransferSize fields as
-follows:
+The buffer length check before calling uvc_parse_format() only ensured
+that the buffer has at least 3 bytes (buflen > 2), buf the function
+accesses buffer[3], requiring at least 4 bytes.
 
-[  218.632537] uvcvideo: Device requested 2752512 B/frame bandwidth.
-[  218.632598] uvcvideo: No fast enough alt setting for requested bandwidth.
+This can lead to an out-of-bounds read if the buffer has exactly 3 bytes.
 
-When dwMaxPayloadTransferSize is greater than maxpsize, it will prevent
-the camera from starting. So use the bandwidth of maxpsize.
+Fix it by checking that the buffer has at least 4 bytes in
+uvc_parse_format().
 
-Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Youngjun Lee <yjjuny.lee@samsung.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250510061803.811433-1-ccc194101@163.com
+Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250610124107.37360-1-yjjuny.lee@samsung.com
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index e62afdee20db..d1510c1230d9 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -228,6 +228,15 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -452,6 +452,9 @@ static int uvc_parse_format(struct uvc_d
+ 	unsigned int i, n;
+ 	u8 ftype;
  
- 		ctrl->dwMaxPayloadTransferSize = bandwidth;
- 	}
++	if (buflen < 4)
++		return -EINVAL;
 +
-+	if (stream->intf->num_altsetting > 1 &&
-+	    ctrl->dwMaxPayloadTransferSize > stream->maxpsize) {
-+		dev_warn_ratelimited(&stream->intf->dev,
-+				     "UVC non compliance: the max payload transmission size (%u) exceeds the size of the ep max packet (%u). Using the max size.\n",
-+				     ctrl->dwMaxPayloadTransferSize,
-+				     stream->maxpsize);
-+		ctrl->dwMaxPayloadTransferSize = stream->maxpsize;
-+	}
- }
+ 	format->type = buffer[2];
+ 	format->index = buffer[3];
  
- static size_t uvc_video_ctrl_size(struct uvc_streaming *stream)
--- 
-2.39.5
-
 
 
