@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7A22A4E5;
-	Tue, 26 Aug 2025 13:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8737D246333;
+	Tue, 26 Aug 2025 13:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213523; cv=none; b=jPLJjUf6It3Tjxn7awW/NkeFEkjHOqv8HNt2X2tDcM29suA64a7L46LkGbJxOr9dxcTdRhTb76uBG5xaXyWoPOWhbcS/1tbC1pdC7npq3pSa2Zj7bPf3FXWW4Z+6TCdUkxJ2CM5rXa4nS2Xkwf7LxHlWNWOpBgbeG2HJ8cyurgI=
+	t=1756213525; cv=none; b=TCiQbOCheEtY7yXw/HzK0u60d2JxXVEHivqhP0+v/VKpengowf/PrjuuTOSCPU2CRSXhqUpCiG2c4Akipp1mrsmdCd0kcjqO4+dcXaQv524QCNRnX5n+iTN+bmecXZqjaEf6lahh8T5RxO5szVjXOYPSMKR27t94663eh8NPEwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213523; c=relaxed/simple;
-	bh=aQN8c0l4/RS7SWsFuEPLuPJKnoKYky4NNJQDc5xNkkE=;
+	s=arc-20240116; t=1756213525; c=relaxed/simple;
+	bh=IIYbwUyRrluSIsDnICo2Up4wF7Pgl3US9sOQZajsTHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkrDCZkEAT0FCLZgb4Z70sL9vrVvcyvtGQ3wcOITZNLzq08DIfEk0r3nyte/E/A7KZ3hE+SawJLwTieABz7xXWBbvn0FSoHiUhSPv8+kogxmVFXPVCEXmbibAJgpRhlj0E6nMmBYRE2hTScV13OF7ij94oEsb8w3lz7QvhvrSIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lYEaegt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JV0p8nDVeIBhY+kECGgGuhoOBAjEXsckqLhujg/8PjfuPXqpnoab05c5nCoKrrAjn5pwt24lluP33VFhuJEvlYgtNarxfJThQetrG2RLU6r1bltFHDcgEJJD+x4PmR20Ya8wt4QeqJekkC6U1a+6G6ljAJbJLqkchthtQdyeDuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6yO2YVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lYEaegt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72852C113CF;
-	Tue, 26 Aug 2025 13:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6yO2YVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E69C4CEF1;
+	Tue, 26 Aug 2025 13:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213522;
-	bh=aQN8c0l4/RS7SWsFuEPLuPJKnoKYky4NNJQDc5xNkkE=;
+	s=korg; t=1756213525;
+	bh=IIYbwUyRrluSIsDnICo2Up4wF7Pgl3US9sOQZajsTHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lYEaegtf9/rEvqBlBdYPoa9CGaOTxvA6QFHVc2U7yEmKkhNEttD5WJJ8XH5bXd5Q
-	 fQ7KtL2prnsqBk3FuUYZ6tkTWV3nxHLFgrl5LXXRJ6pMmBm1p0CfY8cbWb5+M8vLcu
-	 Nc+H0Whf/FihOvYvhhUBpedV11dqGvuD7NV3bZiE=
+	b=X6yO2YVB1XRggT1nSMk8XXTlop76JlqDtproZ/Kh5IDvdo8bB98CWud3YGi5iDQ1P
+	 cKgAfZbSgioYp0avk1/ppl6FJq0XnRKDO39li9UpC+8Zw+z0+XI1s4ZNR+x8Ni+0Xy
+	 eq9YRfrFvBQLCLrOLQB8tiEXMk7E8pQM71KyQ4Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Eric Biggers <ebiggers@kernel.org>,
+	Ahsan Atta <ahsan.atta@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 342/587] crypto: qat - lower priority for skcipher and aead algorithms
-Date: Tue, 26 Aug 2025 13:08:11 +0200
-Message-ID: <20250826111001.615416150@linuxfoundation.org>
+Subject: [PATCH 6.6 343/587] crypto: qat - flush misc workqueue during device shutdown
+Date: Tue, 26 Aug 2025 13:08:12 +0200
+Message-ID: <20250826111001.640801116@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,79 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 8024774190a5ef2af2c5846f60a50b23e0980a32 upstream.
+commit 3d4df408ba9bad2b205c7fb8afc1836a6a4ca88a upstream.
 
-Most kernel applications utilizing the crypto API operate synchronously
-and on small buffer sizes, therefore do not benefit from QAT acceleration.
+Repeated loading and unloading of a device specific QAT driver, for
+example qat_4xxx, in a tight loop can lead to a crash due to a
+use-after-free scenario. This occurs when a power management (PM)
+interrupt triggers just before the device-specific driver (e.g.,
+qat_4xxx.ko) is unloaded, while the core driver (intel_qat.ko) remains
+loaded.
 
-Reduce the priority of QAT implementations for both skcipher and aead
-algorithms, allowing more suitable alternatives to be selected by default.
+Since the driver uses a shared workqueue (`qat_misc_wq`) across all
+devices and owned by intel_qat.ko, a deferred routine from the
+device-specific driver may still be pending in the queue. If this
+routine executes after the driver is unloaded, it can dereference freed
+memory, resulting in a page fault and kernel crash like the following:
 
+    BUG: unable to handle page fault for address: ffa000002e50a01c
+    #PF: supervisor read access in kernel mode
+    RIP: 0010:pm_bh_handler+0x1d2/0x250 [intel_qat]
+    Call Trace:
+      pm_bh_handler+0x1d2/0x250 [intel_qat]
+      process_one_work+0x171/0x340
+      worker_thread+0x277/0x3a0
+      kthread+0xf0/0x120
+      ret_from_fork+0x2d/0x50
+
+To prevent this, flush the misc workqueue during device shutdown to
+ensure that all pending work items are completed before the driver is
+unloaded.
+
+Note: This approach may slightly increase shutdown latency if the
+workqueue contains jobs from other devices, but it ensures correctness
+and stability.
+
+Fixes: e5745f34113b ("crypto: qat - enable power management for QAT GEN4")
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Link: https://lore.kernel.org/all/20250613012357.GA3603104@google.com/
 Cc: stable@vger.kernel.org
-Acked-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_algs.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_common_drv.h |    1 +
+ drivers/crypto/intel/qat/qat_common/adf_init.c       |    1 +
+ drivers/crypto/intel/qat/qat_common/adf_isr.c        |    5 +++++
+ 3 files changed, 7 insertions(+)
 
---- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
-@@ -1277,7 +1277,7 @@ static struct aead_alg qat_aeads[] = { {
- 	.base = {
- 		.cra_name = "authenc(hmac(sha1),cbc(aes))",
- 		.cra_driver_name = "qat_aes_cbc_hmac_sha1",
--		.cra_priority = 4001,
-+		.cra_priority = 100,
- 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 		.cra_blocksize = AES_BLOCK_SIZE,
- 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
-@@ -1294,7 +1294,7 @@ static struct aead_alg qat_aeads[] = { {
- 	.base = {
- 		.cra_name = "authenc(hmac(sha256),cbc(aes))",
- 		.cra_driver_name = "qat_aes_cbc_hmac_sha256",
--		.cra_priority = 4001,
-+		.cra_priority = 100,
- 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 		.cra_blocksize = AES_BLOCK_SIZE,
- 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
-@@ -1311,7 +1311,7 @@ static struct aead_alg qat_aeads[] = { {
- 	.base = {
- 		.cra_name = "authenc(hmac(sha512),cbc(aes))",
- 		.cra_driver_name = "qat_aes_cbc_hmac_sha512",
--		.cra_priority = 4001,
-+		.cra_priority = 100,
- 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 		.cra_blocksize = AES_BLOCK_SIZE,
- 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
-@@ -1329,7 +1329,7 @@ static struct aead_alg qat_aeads[] = { {
- static struct skcipher_alg qat_skciphers[] = { {
- 	.base.cra_name = "cbc(aes)",
- 	.base.cra_driver_name = "qat_aes_cbc",
--	.base.cra_priority = 4001,
-+	.base.cra_priority = 100,
- 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 	.base.cra_blocksize = AES_BLOCK_SIZE,
- 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
-@@ -1347,7 +1347,7 @@ static struct skcipher_alg qat_skciphers
- }, {
- 	.base.cra_name = "ctr(aes)",
- 	.base.cra_driver_name = "qat_aes_ctr",
--	.base.cra_priority = 4001,
-+	.base.cra_priority = 100,
- 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
- 	.base.cra_blocksize = 1,
- 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
-@@ -1365,7 +1365,7 @@ static struct skcipher_alg qat_skciphers
- }, {
- 	.base.cra_name = "xts(aes)",
- 	.base.cra_driver_name = "qat_aes_xts",
--	.base.cra_priority = 4001,
-+	.base.cra_priority = 100,
- 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK |
- 			  CRYPTO_ALG_ALLOCATES_MEMORY,
- 	.base.cra_blocksize = AES_BLOCK_SIZE,
+--- a/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_common_drv.h
+@@ -193,6 +193,7 @@ void adf_exit_misc_wq(void);
+ bool adf_misc_wq_queue_work(struct work_struct *work);
+ bool adf_misc_wq_queue_delayed_work(struct delayed_work *work,
+ 				    unsigned long delay);
++void adf_misc_wq_flush(void);
+ #if defined(CONFIG_PCI_IOV)
+ int adf_sriov_configure(struct pci_dev *pdev, int numvfs);
+ void adf_disable_sriov(struct adf_accel_dev *accel_dev);
+--- a/drivers/crypto/intel/qat/qat_common/adf_init.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
+@@ -381,6 +381,7 @@ static void adf_dev_shutdown(struct adf_
+ 		hw_data->exit_admin_comms(accel_dev);
+ 
+ 	adf_cleanup_etr_data(accel_dev);
++	adf_misc_wq_flush();
+ 	adf_dev_restore(accel_dev);
+ }
+ 
+--- a/drivers/crypto/intel/qat/qat_common/adf_isr.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_isr.c
+@@ -386,3 +386,8 @@ bool adf_misc_wq_queue_delayed_work(stru
+ {
+ 	return queue_delayed_work(adf_misc_wq, work, delay);
+ }
++
++void adf_misc_wq_flush(void)
++{
++	flush_workqueue(adf_misc_wq);
++}
 
 
