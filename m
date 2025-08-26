@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD29272605;
-	Tue, 26 Aug 2025 13:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8D872605;
+	Tue, 26 Aug 2025 13:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214754; cv=none; b=UTXnq6IvKepq1qp3PlShomN4D9EoTG0HV+YYBKPVH9MdmLvhN+DRn2O945dA2yWccGuWhJG4ATfPnQ/7c+j2ApJx3D66Cc1pzX1J1QQzAuNB+lFGDzg94eix1CuaeU2zRVtoSQBVujO2C+xyb0nmJ02eHQA9OHcLObArpZ9YeDg=
+	t=1756214756; cv=none; b=U+MyD5fim+BpsFB97eITOExMBjtXUJkoVLL7/wMioCE7yUi51GdecqQjk3lQGzfK80jOz4L4GU3rLbXcrjBcwgobgqTpDGf1A4xV6BbOk5U81vbsgEUPIgrDKehzXUzdBRgzWVTqJhC0WBgf4HDeyjTvqbtLpB062BbAJxzBvAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214754; c=relaxed/simple;
-	bh=1Zbg4vcA/BXw6PDbQr8jpOaLmv0WKXhp53sbSIuF9lo=;
+	s=arc-20240116; t=1756214756; c=relaxed/simple;
+	bh=mI+Rk7x6DOXQcazb1R9L48j03yqxKR/unri6rkDnvXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNem0OaQ2EIoJA7WF5cuH9wNmvhucdx2KUxiIeF/QV+quQs4jeBwuRM+RElRbf/wRhp9i2fJx/Kyw2xuaPPSjTQSSyijlEWyKuhRzMUZrSzIysnvJ3ENf62k3Ci8YkX9SUkZFNPrn1HhZR5rqLt7+cXl985LMkMo3fieCL/ekYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6Ocn01F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bki7xxA2YiKPTa/hB7eV8mmZ4+fb1BOtgSkjy7W5RxMfMGR20btpRz4zRbEfFqe779n/J+2FfsIQqYw4k2Zgg2BYe2zEE0QhdTPRUbLZk+0yyXuGnZhIuFEUF63G70/iMJbXy9yaBiSf6nIMKyIo9mZdTlxQ8UQ52duu7OtNTfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4iyAOmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6Ocn01F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EFBCC116B1;
-	Tue, 26 Aug 2025 13:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4iyAOmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0175FC4CEF1;
+	Tue, 26 Aug 2025 13:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214753;
-	bh=1Zbg4vcA/BXw6PDbQr8jpOaLmv0WKXhp53sbSIuF9lo=;
+	s=korg; t=1756214756;
+	bh=mI+Rk7x6DOXQcazb1R9L48j03yqxKR/unri6rkDnvXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6Ocn01FcXEpZECPyX+S1jizdgcbb/1BuPuQm8uctg/Jap/U83xpTxUo2dY7AKDdp
-	 1xRRZQ7DJcPi9UVUqY0Nk3rVY39XrmlM7UbDNcBhOzO///X+oter15rutqpn3+JlgP
-	 LlkE7aw8Nzd25G6o2MorITMvIX+MKkV1VtdMkQ44=
+	b=c4iyAOmddjl+2pGlfrp5UEUYXEbVHWSQDSZ74g7qqRO5pXThG1KQINfywgwbAAY4C
+	 67S+NI8qTUFMZv8f2HnaFLF2ZtSuwfMcR4doYgwaVosZIFQapRTcVV/p9H1QwmtJVR
+	 hlOVnEVgp9SusOvihA/8x/7KQQaNa1AN3GPOXAYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzbot+01523a0ae5600aef5895@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 249/482] comedi: fix race between polling and detaching
-Date: Tue, 26 Aug 2025 13:08:22 +0200
-Message-ID: <20250826110936.919610919@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 258/482] hv_netvsc: Fix panic during namespace deletion with VF
+Date: Tue, 26 Aug 2025 13:08:31 +0200
+Message-ID: <20250826110937.141869045@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,157 +50,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit 35b6fc51c666fc96355be5cd633ed0fe4ccf68b2 upstream.
+commit 33caa208dba6fa639e8a92fd0c8320b652e5550c upstream.
 
-syzbot reports a use-after-free in comedi in the below link, which is
-due to comedi gladly removing the allocated async area even though poll
-requests are still active on the wait_queue_head inside of it. This can
-cause a use-after-free when the poll entries are later triggered or
-removed, as the memory for the wait_queue_head has been freed.  We need
-to check there are no tasks queued on any of the subdevices' wait queues
-before allowing the device to be detached by the `COMEDI_DEVCONFIG`
-ioctl.
+The existing code move the VF NIC to new namespace when NETDEV_REGISTER is
+received on netvsc NIC. During deletion of the namespace,
+default_device_exit_batch() >> default_device_exit_net() is called. When
+netvsc NIC is moved back and registered to the default namespace, it
+automatically brings VF NIC back to the default namespace. This will cause
+the default_device_exit_net() >> for_each_netdev_safe loop unable to detect
+the list end, and hit NULL ptr:
 
-Tasks will read-lock `dev->attach_lock` before adding themselves to the
-subdevice wait queue, so fix the problem in the `COMEDI_DEVCONFIG` ioctl
-handler by write-locking `dev->attach_lock` before checking that all of
-the subdevices are safe to be deleted.  This includes testing for any
-sleepers on the subdevices' wait queues.  It remains locked until the
-device has been detached.  This requires the `comedi_device_detach()`
-function to be refactored slightly, moving the bulk of it into new
-function `comedi_device_detach_locked()`.
+[  231.449420] mana 7870:00:00.0 enP30832s1: Moved VF to namespace with: eth0
+[  231.449656] BUG: kernel NULL pointer dereference, address: 0000000000000010
+[  231.450246] #PF: supervisor read access in kernel mode
+[  231.450579] #PF: error_code(0x0000) - not-present page
+[  231.450916] PGD 17b8a8067 P4D 0
+[  231.451163] Oops: Oops: 0000 [#1] SMP NOPTI
+[  231.451450] CPU: 82 UID: 0 PID: 1394 Comm: kworker/u768:1 Not tainted 6.16.0-rc4+ #3 VOLUNTARY
+[  231.452042] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/21/2024
+[  231.452692] Workqueue: netns cleanup_net
+[  231.452947] RIP: 0010:default_device_exit_batch+0x16c/0x3f0
+[  231.453326] Code: c0 0c f5 b3 e8 d5 db fe ff 48 85 c0 74 15 48 c7 c2 f8 fd ca b2 be 10 00 00 00 48 8d 7d c0 e8 7b 77 25 00 49 8b 86 28 01 00 00 <48> 8b 50 10 4c 8b 2a 4c 8d 62 f0 49 83 ed 10 4c 39 e0 0f 84 d6 00
+[  231.454294] RSP: 0018:ff75fc7c9bf9fd00 EFLAGS: 00010246
+[  231.454610] RAX: 0000000000000000 RBX: 0000000000000002 RCX: 61c8864680b583eb
+[  231.455094] RDX: ff1fa9f71462d800 RSI: ff75fc7c9bf9fd38 RDI: 0000000030766564
+[  231.455686] RBP: ff75fc7c9bf9fd78 R08: 0000000000000000 R09: 0000000000000000
+[  231.456126] R10: 0000000000000001 R11: 0000000000000004 R12: ff1fa9f70088e340
+[  231.456621] R13: ff1fa9f70088e340 R14: ffffffffb3f50c20 R15: ff1fa9f7103e6340
+[  231.457161] FS:  0000000000000000(0000) GS:ff1faa6783a08000(0000) knlGS:0000000000000000
+[  231.457707] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  231.458031] CR2: 0000000000000010 CR3: 0000000179ab2006 CR4: 0000000000b73ef0
+[  231.458434] Call Trace:
+[  231.458600]  <TASK>
+[  231.458777]  ops_undo_list+0x100/0x220
+[  231.459015]  cleanup_net+0x1b8/0x300
+[  231.459285]  process_one_work+0x184/0x340
 
-Note that the refactor of `comedi_device_detach()` results in
-`comedi_device_cancel_all()` now being called while `dev->attach_lock`
-is write-locked, which wasn't the case previously, but that does not
-matter.
+To fix it, move the ns change to a workqueue, and take rtnl_lock to avoid
+changing the netdev list when default_device_exit_net() is using it.
 
-Thanks to Jens Axboe for diagnosing the problem and co-developing this
-patch.
-
-Cc: stable <stable@kernel.org>
-Fixes: 2f3fdcd7ce93 ("staging: comedi: add rw_semaphore to protect against device detachment")
-Link: https://lore.kernel.org/all/687bd5fe.a70a0220.693ce.0091.GAE@google.com/
-Reported-by: syzbot+01523a0ae5600aef5895@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=01523a0ae5600aef5895
-Co-developed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Tested-by: Jens Axboe <axboe@kernel.dk>
-Link: https://lore.kernel.org/r/20250722155316.27432-1-abbotti@mev.co.uk
+Cc: stable@vger.kernel.org
+Fixes: 4c262801ea60 ("hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event")
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://patch.msgid.link/1754511711-11188-1-git-send-email-haiyangz@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c     |   33 +++++++++++++++++++++++++--------
- drivers/comedi/comedi_internal.h |    1 +
- drivers/comedi/drivers.c         |   13 ++++++++++---
- 3 files changed, 36 insertions(+), 11 deletions(-)
+ drivers/net/hyperv/hyperv_net.h |    3 +++
+ drivers/net/hyperv/netvsc_drv.c |   29 ++++++++++++++++++++++++++++-
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -783,6 +783,7 @@ static int is_device_busy(struct comedi_
- 	struct comedi_subdevice *s;
- 	int i;
+--- a/drivers/net/hyperv/hyperv_net.h
++++ b/drivers/net/hyperv/hyperv_net.h
+@@ -1057,6 +1057,7 @@ struct net_device_context {
+ 	struct net_device __rcu *vf_netdev;
+ 	struct netvsc_vf_pcpu_stats __percpu *vf_stats;
+ 	struct delayed_work vf_takeover;
++	struct delayed_work vfns_work;
  
-+	lockdep_assert_held_write(&dev->attach_lock);
- 	lockdep_assert_held(&dev->mutex);
- 	if (!dev->attached)
- 		return 0;
-@@ -791,7 +792,16 @@ static int is_device_busy(struct comedi_
- 		s = &dev->subdevices[i];
- 		if (s->busy)
- 			return 1;
--		if (s->async && comedi_buf_is_mmapped(s))
-+		if (!s->async)
-+			continue;
-+		if (comedi_buf_is_mmapped(s))
-+			return 1;
-+		/*
-+		 * There may be tasks still waiting on the subdevice's wait
-+		 * queue, although they should already be about to be removed
-+		 * from it since the subdevice has no active async command.
-+		 */
-+		if (wq_has_sleeper(&s->async->wait_head))
- 			return 1;
- 	}
+ 	/* 1: allocated, serial number is valid. 0: not allocated */
+ 	u32 vf_alloc;
+@@ -1071,6 +1072,8 @@ struct net_device_context {
+ 	struct netvsc_device_info *saved_netvsc_dev_info;
+ };
  
-@@ -821,15 +831,22 @@ static int do_devconfig_ioctl(struct com
- 		return -EPERM;
- 
- 	if (!arg) {
--		if (is_device_busy(dev))
--			return -EBUSY;
--		if (dev->attached) {
--			struct module *driver_module = dev->driver->module;
-+		int rc = 0;
- 
--			comedi_device_detach(dev);
--			module_put(driver_module);
-+		if (dev->attached) {
-+			down_write(&dev->attach_lock);
-+			if (is_device_busy(dev)) {
-+				rc = -EBUSY;
-+			} else {
-+				struct module *driver_module =
-+					dev->driver->module;
++void netvsc_vfns_work(struct work_struct *w);
 +
-+				comedi_device_detach_locked(dev);
-+				module_put(driver_module);
-+			}
-+			up_write(&dev->attach_lock);
- 		}
--		return 0;
-+		return rc;
+ /* Azure hosts don't support non-TCP port numbers in hashing for fragmented
+  * packets. We can use ethtool to change UDP hash level when necessary.
+  */
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2508,6 +2508,7 @@ static int netvsc_probe(struct hv_device
+ 	spin_lock_init(&net_device_ctx->lock);
+ 	INIT_LIST_HEAD(&net_device_ctx->reconfig_events);
+ 	INIT_DELAYED_WORK(&net_device_ctx->vf_takeover, netvsc_vf_setup);
++	INIT_DELAYED_WORK(&net_device_ctx->vfns_work, netvsc_vfns_work);
+ 
+ 	net_device_ctx->vf_stats
+ 		= netdev_alloc_pcpu_stats(struct netvsc_vf_pcpu_stats);
+@@ -2647,6 +2648,8 @@ static int netvsc_remove(struct hv_devic
+ 	cancel_delayed_work_sync(&ndev_ctx->dwork);
+ 
+ 	rtnl_lock();
++	cancel_delayed_work_sync(&ndev_ctx->vfns_work);
++
+ 	nvdev = rtnl_dereference(ndev_ctx->nvdev);
+ 	if (nvdev) {
+ 		cancel_work_sync(&nvdev->subchan_work);
+@@ -2689,6 +2692,7 @@ static int netvsc_suspend(struct hv_devi
+ 	cancel_delayed_work_sync(&ndev_ctx->dwork);
+ 
+ 	rtnl_lock();
++	cancel_delayed_work_sync(&ndev_ctx->vfns_work);
+ 
+ 	nvdev = rtnl_dereference(ndev_ctx->nvdev);
+ 	if (nvdev == NULL) {
+@@ -2782,6 +2786,27 @@ static void netvsc_event_set_vf_ns(struc
  	}
- 
- 	if (copy_from_user(&it, arg, sizeof(it)))
---- a/drivers/comedi/comedi_internal.h
-+++ b/drivers/comedi/comedi_internal.h
-@@ -50,6 +50,7 @@ extern struct mutex comedi_drivers_list_
- int insn_inval(struct comedi_device *dev, struct comedi_subdevice *s,
- 	       struct comedi_insn *insn, unsigned int *data);
- 
-+void comedi_device_detach_locked(struct comedi_device *dev);
- void comedi_device_detach(struct comedi_device *dev);
- int comedi_device_attach(struct comedi_device *dev,
- 			 struct comedi_devconfig *it);
---- a/drivers/comedi/drivers.c
-+++ b/drivers/comedi/drivers.c
-@@ -158,7 +158,7 @@ static void comedi_device_detach_cleanup
- 	int i;
- 	struct comedi_subdevice *s;
- 
--	lockdep_assert_held(&dev->attach_lock);
-+	lockdep_assert_held_write(&dev->attach_lock);
- 	lockdep_assert_held(&dev->mutex);
- 	if (dev->subdevices) {
- 		for (i = 0; i < dev->n_subdevices; i++) {
-@@ -195,16 +195,23 @@ static void comedi_device_detach_cleanup
- 	comedi_clear_hw_dev(dev);
  }
  
--void comedi_device_detach(struct comedi_device *dev)
-+void comedi_device_detach_locked(struct comedi_device *dev)
- {
-+	lockdep_assert_held_write(&dev->attach_lock);
- 	lockdep_assert_held(&dev->mutex);
- 	comedi_device_cancel_all(dev);
--	down_write(&dev->attach_lock);
- 	dev->attached = false;
- 	dev->detach_count++;
- 	if (dev->driver)
- 		dev->driver->detach(dev);
- 	comedi_device_detach_cleanup(dev);
++void netvsc_vfns_work(struct work_struct *w)
++{
++	struct net_device_context *ndev_ctx =
++		container_of(w, struct net_device_context, vfns_work.work);
++	struct net_device *ndev;
++
++	if (!rtnl_trylock()) {
++		schedule_delayed_work(&ndev_ctx->vfns_work, 1);
++		return;
++	}
++
++	ndev = hv_get_drvdata(ndev_ctx->device_ctx);
++	if (!ndev)
++		goto out;
++
++	netvsc_event_set_vf_ns(ndev);
++
++out:
++	rtnl_unlock();
 +}
 +
-+void comedi_device_detach(struct comedi_device *dev)
-+{
-+	lockdep_assert_held(&dev->mutex);
-+	down_write(&dev->attach_lock);
-+	comedi_device_detach_locked(dev);
- 	up_write(&dev->attach_lock);
- }
+ /*
+  * On Hyper-V, every VF interface is matched with a corresponding
+  * synthetic interface. The synthetic interface is presented first
+@@ -2792,10 +2817,12 @@ static int netvsc_netdev_event(struct no
+ 			       unsigned long event, void *ptr)
+ {
+ 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
++	struct net_device_context *ndev_ctx;
+ 	int ret = 0;
+ 
+ 	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
+-		netvsc_event_set_vf_ns(event_dev);
++		ndev_ctx = netdev_priv(event_dev);
++		schedule_delayed_work(&ndev_ctx->vfns_work, 0);
+ 		return NOTIFY_DONE;
+ 	}
  
 
 
