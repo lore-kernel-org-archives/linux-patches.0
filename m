@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E54834166C;
-	Tue, 26 Aug 2025 14:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710EB342CA7;
+	Tue, 26 Aug 2025 14:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217292; cv=none; b=GcW5SozJ6b24D+vn4BLyc57Tg0QivexeYOT8XY8bL2iyLUMzvCWWV+YEDmv9lewWG/69gJ7k7XlbsZpKaPqxzksWsibbeGtamTY4pssTQSL1MZFpC+d9gbFB4g5FKr++7HUuKQ+4p6cz/z/Gsa2xkKn07t8FLFMWZiHgI9Ik9Jk=
+	t=1756217295; cv=none; b=c2AMsV8alXGPwVYvUBMuVsG3qWkWUOlzMATpq2MiaKDHgAy6Mp2wrT/yqaX2ArenhSDFjRbuvLaWxg1SAt0aBcRQCKZqgiV4D9jwmKPijbN0zisk2v7nBiCYpprnJXp1IWRnW9nfQ9rlss1U0X3tpcFR0504YpZSQp4QDS00Mpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217292; c=relaxed/simple;
-	bh=8kZGdpjzPVk4n6W0fWvYpm0tdRmqYeyfB2mPH3aS35c=;
+	s=arc-20240116; t=1756217295; c=relaxed/simple;
+	bh=hvtYllONwQsXFsEWln5gQUvtOSQZaaMw/vWdY61SVys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYIhVgd129Gl7XeQN9PuV3vCI9SrKVI0n1Shs0zsR/mkvSktMlSnx5IxZvvgKe3nOHfIpIq31EMbLbf7+iaBGmJFWy/WNBcp4YkIG1kVFNtf+PU1BvkUfjTmOyo8MfpIliMDz3qnVHQaE1jV6uoWK5GZc6fO7yvRQZGzcshxy0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpvMHmwO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uz2/kbBt4VjL+upQ3a4j1QDJTkOkMj9ztSkU18Bt7ynnkJT/n2xHkrebNWrPodVfDPiRrHQi+/702c/3chzgGrY8Ol3XW3gtNA4lN5x/MoA9lIus5cKQKQt9lxQg0gE7brmgwK9KRVPixQ/CIEJ62KkysqKDU7AGF2EIt5jzoT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbssmULo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpvMHmwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20194C4CEF1;
-	Tue, 26 Aug 2025 14:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbssmULo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B60C113CF;
+	Tue, 26 Aug 2025 14:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217292;
-	bh=8kZGdpjzPVk4n6W0fWvYpm0tdRmqYeyfB2mPH3aS35c=;
+	s=korg; t=1756217295;
+	bh=hvtYllONwQsXFsEWln5gQUvtOSQZaaMw/vWdY61SVys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpvMHmwOeBX43FnqgteJiEPkjP1JmvuL2NhirCm5yDP4y3jXKpHNjLwGS2+B5hJbQ
-	 QOetunkbZfm8zz5tg84IMUE1gp28O+P4AdQ8/Z5GPkGnH/E7urZXRvvGCIWjEGDCVo
-	 6W50JSYkUDM1ssiTnPKJLiTShrzLTR8C2narg0bA=
+	b=NbssmULooh+F5Q7SboxVheo7rGaimGuzD6xqPOCmtE72lt2varNFLk8Iuj+kHJ1Jo
+	 189r71lqF+0l9sx2QdOusqzzFBALjFhOPnMYl4ZSYVTb0wKJI+RETApXfu7maVOkyf
+	 W0vVFKLAe9pcYL5jM3Ni7KMXWoI327av4zTZRyaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/523] arm64: dts: imx8mm-beacon: Fix HS400 USDHC clock speed
-Date: Tue, 26 Aug 2025 13:04:58 +0200
-Message-ID: <20250826110926.724050434@linuxfoundation.org>
+Subject: [PATCH 5.10 089/523] cpufreq: Initialize cpufreq-based frequency-invariance later
+Date: Tue, 26 Aug 2025 13:04:59 +0200
+Message-ID: <20250826110926.747222425@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,39 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Lifeng Zheng <zhenglifeng1@huawei.com>
 
-[ Upstream commit f83f69097a302ed2a2775975ddcf12e6a5ac6ec3 ]
+[ Upstream commit 2a6c727387062a2ea79eb6cf5004820cb1b0afe2 ]
 
-The reference manual for the i.MX8MM states the clock rate in
-MMC mode is 1/2 of the input clock, therefore to properly run
-at HS400 rates, the input clock must be 400MHz to operate at
-200MHz.  Currently the clock is set to 200MHz which is half the
-rate it should be, so the throughput is half of what it should be
-for HS400 operation.
+The cpufreq-based invariance is enabled in cpufreq_register_driver(),
+but never disabled after registration fails. Move the invariance
+initialization to where all other initializations have been successfully
+done to solve this problem.
 
-Fixes: 593816fa2f35 ("arm64: dts: imx: Add Beacon i.MX8m-Mini development kit")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 874f63531064 ("cpufreq: report whether cpufreq supports Frequency Invariance (FI)")
+Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20250709104145.2348017-2-zhenglifeng1@huawei.com
+[ rjw: New subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/cpufreq.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-index 34b2e862b708..f97e8a8fd16f 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-som.dtsi
-@@ -246,6 +246,8 @@ &usdhc3 {
- 	pinctrl-0 = <&pinctrl_usdhc3>;
- 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>;
- 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>;
-+	assigned-clocks = <&clk IMX8MM_CLK_USDHC3>;
-+	assigned-clock-rates = <400000000>;
- 	bus-width = <8>;
- 	non-removable;
- 	status = "okay";
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 6294e10657b4..6e03526ee759 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2780,15 +2780,6 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	cpufreq_driver = driver_data;
+ 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
+ 
+-	/*
+-	 * Mark support for the scheduler's frequency invariance engine for
+-	 * drivers that implement target(), target_index() or fast_switch().
+-	 */
+-	if (!cpufreq_driver->setpolicy) {
+-		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
+-		pr_debug("supports frequency invariance");
+-	}
+-
+ 	if (driver_data->setpolicy)
+ 		driver_data->flags |= CPUFREQ_CONST_LOOPS;
+ 
+@@ -2820,6 +2811,15 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	hp_online = ret;
+ 	ret = 0;
+ 
++	/*
++	 * Mark support for the scheduler's frequency invariance engine for
++	 * drivers that implement target(), target_index() or fast_switch().
++	 */
++	if (!cpufreq_driver->setpolicy) {
++		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
++		pr_debug("supports frequency invariance");
++	}
++
+ 	pr_debug("driver %s up and running\n", driver_data->name);
+ 	goto out;
+ 
 -- 
 2.39.5
 
