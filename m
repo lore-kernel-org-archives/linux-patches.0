@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9789433EAF9;
-	Tue, 26 Aug 2025 13:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE2A33A015;
+	Tue, 26 Aug 2025 13:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214197; cv=none; b=dW6817wAE4DKikrsniG0JKp0bs671UAJQ44zy4K7NfTABjeEyD+a0HBS6VZ9VvRuSTOOxbKNdmX8ejwWPJcTJOQGQQwGN0fmtNgbTZ0m39PbWzJfZ6iSvb7gQC7RN6EDJFXUKGeD3CP8bM5v4kGNlIxYKF90eKRMUbjKf47a8T4=
+	t=1756214200; cv=none; b=ZfnZnM84HHHnuHweN3tACcg+u4Ixzrnqa5Vsiq7FjNx73NlPFnfchn8JIf0OcOvuXnso5KDiHaNBXFlR3FlP/uUQUIhT0i/PN1GIGbveVEvInHeFva5PEKkXSmDxXWSIrbJ409VvLabEK3hSl3rGIDplXuPAzhCzNxWIAifQSYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214197; c=relaxed/simple;
-	bh=UFpw/8AlgxjhfZIrFwbUBRUY07q4QIv1XZ/jtoCbll0=;
+	s=arc-20240116; t=1756214200; c=relaxed/simple;
+	bh=Ri7Yi+owbYkqp4Cq/NfRZuRWWj8kN2T18dVtye6UHb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezw3TEF3bV9Z82XjuYWyMn7WckTj6FQTf2cj0cuW1xYPt++bx6gLA3KHvxghlcDVKjCztSPB3A0Ik6EA0RDyTZJ9GHeWMluppqTy/s4jRqcMtfzAjbwT58keIRoNB39kLbcLENmpjlGIquwWaKoDF4oQZIqsextNk/66oiG+og0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGxLaVEA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YLW2NQ89MPSF+KmCaIbROILMJWUR9EhJO2VbciXFxHCxQGThIZaGY2/Iu2pYR2o6IRLDOYcfkLil0km88Xyd6wxuAURBgYAd9LmsUa/JE1MNEc5Avzexym+TWg46QJADRuHaa2K/EDBgHbvhDI/gKnS8+0R0cKInhbbFKKFoFkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK6KUWp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGxLaVEA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2651AC4CEF1;
-	Tue, 26 Aug 2025 13:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK6KUWp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61BCC4CEF1;
+	Tue, 26 Aug 2025 13:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214197;
-	bh=UFpw/8AlgxjhfZIrFwbUBRUY07q4QIv1XZ/jtoCbll0=;
+	s=korg; t=1756214200;
+	bh=Ri7Yi+owbYkqp4Cq/NfRZuRWWj8kN2T18dVtye6UHb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGxLaVEA8pABKKhT+ZJOP7Lan5IgYMoBLhDlPwzHyEEmVlZal5rapCQZr0ASavZwt
-	 U5FHa0BWX9eskO4giiGrMCZXg9vqbopPa3QYRJlYF0ppJ9uPSdUWfw0alQoR3c7TbR
-	 ntaYz0rW0WPYKC/KfdKBI0sVYV2QQ/1Hv26esrrE=
+	b=xK6KUWp3S6T5Mz17sUDlC051s2tV2qhx03fTZxlOwP+MKJGCDioM1ycouxerCQrlm
+	 PYj4+rPdcqe2YTCcLMpHWeLJSdm5gYh2hDa49KSCebH0ZE6DMd45WL2PujHuBPTrsx
+	 yf3zmevOKe9MTDYtFYLbIbg2lQbBCS70Jxx3++ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 015/482] net: usb: asix_devices: add phy_mask for ax88772 mdio bus
-Date: Tue, 26 Aug 2025 13:04:28 +0200
-Message-ID: <20250826110931.163697386@linuxfoundation.org>
+	lei lu <llfamsec@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 016/482] nfsd: handle get_client_locked() failure in nfsd4_setclientid_confirm()
+Date: Tue, 26 Aug 2025 13:04:29 +0200
+Message-ID: <20250826110931.189000359@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,42 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 4faff70959d51078f9ee8372f8cff0d7045e4114 upstream.
+commit 908e4ead7f757504d8b345452730636e298cbf68 upstream.
 
-Without setting phy_mask for ax88772 mdio bus, current driver may create
-at most 32 mdio phy devices with phy address range from 0x00 ~ 0x1f.
-DLink DUB-E100 H/W Ver B1 is such a device. However, only one main phy
-device will bind to net phy driver. This is creating issue during system
-suspend/resume since phy_polling_mode() in phy_state_machine() will
-directly deference member of phydev->drv for non-main phy devices. Then
-NULL pointer dereference issue will occur. Due to only external phy or
-internal phy is necessary, add phy_mask for ax88772 mdio bus to workarnoud
-the issue.
+Lei Lu recently reported that nfsd4_setclientid_confirm() did not check
+the return value from get_client_locked(). a SETCLIENTID_CONFIRM could
+race with a confirmed client expiring and fail to get a reference. That
+could later lead to a UAF.
 
-Closes: https://lore.kernel.org/netdev/20250806082931.3289134-1-xu.yang_2@nxp.com
-Fixes: e532a096be0e ("net: usb: asix: ax88772: add phylib support")
+Fix this by getting a reference early in the case where there is an
+extant confirmed client. If that fails then treat it as if there were no
+confirmed client found at all.
+
+In the case where the unconfirmed client is expiring, just fail and
+return the result from get_client_locked().
+
+Reported-by: lei lu <llfamsec@gmail.com>
+Closes: https://lore.kernel.org/linux-nfs/CAEBF3_b=UvqzNKdnfD_52L05Mqrqui9vZ2eFamgAbV0WG+FNWQ@mail.gmail.com/
+Fixes: d20c11d86d8f ("nfsd: Protect session creation and client confirm using client_lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250811092931.860333-1-xu.yang_2@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix_devices.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4state.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -676,6 +676,7 @@ static int ax88772_init_mdio(struct usbn
- 	priv->mdio->read = &asix_mdio_bus_read;
- 	priv->mdio->write = &asix_mdio_bus_write;
- 	priv->mdio->name = "Asix MDIO Bus";
-+	priv->mdio->phy_mask = ~(BIT(priv->phy_addr) | BIT(AX_EMBD_PHY_ADDR));
- 	/* mii bus name is usb-<usb bus number>-<usb device number> */
- 	snprintf(priv->mdio->id, MII_BUS_ID_SIZE, "usb-%03d:%03d",
- 		 dev->udev->bus->busnum, dev->udev->devnum);
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4285,10 +4285,16 @@ nfsd4_setclientid_confirm(struct svc_rqs
+ 	}
+ 	status = nfs_ok;
+ 	if (conf) {
+-		old = unconf;
+-		unhash_client_locked(old);
+-		nfsd4_change_callback(conf, &unconf->cl_cb_conn);
+-	} else {
++		if (get_client_locked(conf) == nfs_ok) {
++			old = unconf;
++			unhash_client_locked(old);
++			nfsd4_change_callback(conf, &unconf->cl_cb_conn);
++		} else {
++			conf = NULL;
++		}
++	}
++
++	if (!conf) {
+ 		old = find_confirmed_client_by_name(&unconf->cl_name, nn);
+ 		if (old) {
+ 			status = nfserr_clid_inuse;
+@@ -4305,10 +4311,14 @@ nfsd4_setclientid_confirm(struct svc_rqs
+ 			}
+ 			trace_nfsd_clid_replaced(&old->cl_clientid);
+ 		}
++		status = get_client_locked(unconf);
++		if (status != nfs_ok) {
++			old = NULL;
++			goto out;
++		}
+ 		move_to_confirmed(unconf);
+ 		conf = unconf;
+ 	}
+-	get_client_locked(conf);
+ 	spin_unlock(&nn->client_lock);
+ 	if (conf == unconf)
+ 		fsnotify_dentry(conf->cl_nfsd_info_dentry, FS_MODIFY);
 
 
