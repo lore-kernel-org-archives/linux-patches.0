@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA5214883F;
-	Tue, 26 Aug 2025 12:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A8B187554;
+	Tue, 26 Aug 2025 12:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212946; cv=none; b=FsAw+SRr2EP31iuv3/yU+qjUyDI3pn9H1q9Qp1awPpFVoKdLGthxDs6XlchfBAGB4AoakvM/f1897CBJqANRZm80lh4D+bJ2rkMpSNdf7krtevJ/X37TJzmyKFCjZsAmiERK5/pObr+2S8bHYr4R1A9EeJZQfSrqlCN3JhM3cDI=
+	t=1756212948; cv=none; b=KaMs06EZZ3iYZozYVQe9WAZryay8VhjzXdB8/wSZ1E2TI+ztm2mBs5C/GAXh/MxKBN2TYJXcpqi4N7qbmgffFGXamW8bkUfYZtrVDa9nzUfKwBesDuWD/0srzDMNYqGQ5U/1oprqcol7y3jDpEy3j7Ca+zJC6K8nia7QuGio56I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212946; c=relaxed/simple;
-	bh=ZivF05qv0kSCQUL9ptJeUfJhQKBYkfqn0BTUfGpJLkI=;
+	s=arc-20240116; t=1756212948; c=relaxed/simple;
+	bh=Q5/ePj+AwP+l9BogPF834PwAU2VqXP7pSYbXskGN+9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBCL9jqQt2hOMkxROh+KOc9KmJsHBnmvjk4fARfytSTURzFePFRdpV+tppKF1r0x1ahSFCFaEdT4Cj7Ki5RKXGdFDlTqZKnfl1XH/GuYYpqNv8AXMqdIN2ChwAbfVGfeRTChtZFXGHLqglBgAmOLIPjCZNdlllIM2m6lBZuGKtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERNcY5wu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7LjXEFiMRzBIS3fTi4PcfoM+AT8I8CubmraCLFc81B3W9CqwlE2WLUamGqb9tbKvbxDWlqfgIntFS4KeKQwUtLhe4g41oEIFHemyBQW5FK3x/9HcgZx3HrRanw/xdqYVv8GsfZ6fZJNVZ/gwDv6/uTqm97T53meuy/2TghstzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmlmXAYU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERNcY5wu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1959C4CEF1;
-	Tue, 26 Aug 2025 12:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmlmXAYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C4BC4CEF1;
+	Tue, 26 Aug 2025 12:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212946;
-	bh=ZivF05qv0kSCQUL9ptJeUfJhQKBYkfqn0BTUfGpJLkI=;
+	s=korg; t=1756212948;
+	bh=Q5/ePj+AwP+l9BogPF834PwAU2VqXP7pSYbXskGN+9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERNcY5wuj3ddae7qcPBf6W8GJN6ud16j8LXeDC3RNsKmRBOUt3yb603coMjyQbLYP
-	 atWWL+zpefysRaZQIEjbHOymsBcBbfBEhwIzh+gE4RSKKRy9VCXYwve88XnZFxL+ku
-	 vWI2cq2fyGcxPEop+PfFXYWcaY/RQcVaZSvrbMzY=
+	b=rmlmXAYUhHAkKzu39+jzz8BUcZBxVcPuSSE6dYvR8yfSiGK2Iw2J5UbeRmIHrEVTM
+	 CqGSI+IxzPlZwpwzDex7UII7hmxBg7dWNdcbknv9TxBcBhgCExRyaG7ll0Uo1IsFpU
+	 0W5Yu4kM/rtw3iiUVEO8xS3j0aMidr/D3c+tLxQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chris Mason <clm@fb.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/587] wifi: cfg80211: Fix interface type validation
-Date: Tue, 26 Aug 2025 13:05:04 +0200
-Message-ID: <20250826110956.890862201@linuxfoundation.org>
+Subject: [PATCH 6.6 164/587] sched/fair: Bump sd->max_newidle_lb_cost when newidle balance fails
+Date: Tue, 26 Aug 2025 13:05:13 +0200
+Message-ID: <20250826110957.116965115@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,34 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Chris Mason <clm@fb.com>
 
-[ Upstream commit 14450be2332a49445106403492a367412b8c23f4 ]
+[ Upstream commit 155213a2aed42c85361bf4f5c817f5cb68951c3b ]
 
-Fix a condition that verified valid values of interface types.
+schbench (https://github.com/masoncl/schbench.git) is showing a
+regression from previous production kernels that bisected down to:
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250709233537.7ad199ca5939.I0ac1ff74798bf59a87a57f2e18f2153c308b119b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+sched/fair: Remove sysctl_sched_migration_cost condition (c5b0a7eefc)
+
+The schbench command line was:
+
+schbench -L -m 4 -M auto -t 256 -n 0 -r 0 -s 0
+
+This creates 4 message threads pinned to CPUs 0-3, and 256x4 worker
+threads spread across the rest of the CPUs.  Neither the worker threads
+or the message threads do any work, they just wake each other up and go
+back to sleep as soon as possible.
+
+The end result is the first 4 CPUs are pegged waking up those 1024
+workers, and the rest of the CPUs are constantly banging in and out of
+idle.  If I take a v6.9 Linus kernel and revert that one commit,
+performance goes from 3.4M RPS to 5.4M RPS.
+
+schedstat shows there are ~100x  more new idle balance operations, and
+profiling shows the worker threads are spending ~20% of their CPU time
+on new idle balance.  schedstats also shows that almost all of these new
+idle balance attemps are failing to find busy groups.
+
+The fix used here is to crank up the cost of the newidle balance whenever it
+fails.  Since we don't want sd->max_newidle_lb_cost to grow out of
+control, this also changes update_newidle_cost() to use
+sysctl_sched_migration_cost as the upper limit on max_newidle_lb_cost.
+
+Signed-off-by: Chris Mason <clm@fb.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20250626144017.1510594-2-clm@fb.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 2fb3151ea7c9..5b3a63c377d6 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -559,7 +559,7 @@ ieee80211_get_sband_iftype_data(const struct ieee80211_supported_band *sband,
- {
- 	int i;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 6ce3028e6e85..1cf43e91ae9d 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -11697,8 +11697,14 @@ static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
+ 		/*
+ 		 * Track max cost of a domain to make sure to not delay the
+ 		 * next wakeup on the CPU.
++		 *
++		 * sched_balance_newidle() bumps the cost whenever newidle
++		 * balance fails, and we don't want things to grow out of
++		 * control.  Use the sysctl_sched_migration_cost as the upper
++		 * limit, plus a litle extra to avoid off by ones.
+ 		 */
+-		sd->max_newidle_lb_cost = cost;
++		sd->max_newidle_lb_cost =
++			min(cost, sysctl_sched_migration_cost + 200);
+ 		sd->last_decay_max_lb_cost = jiffies;
+ 	} else if (time_after(jiffies, sd->last_decay_max_lb_cost + HZ)) {
+ 		/*
+@@ -12384,10 +12390,17 @@ static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
  
--	if (WARN_ON(iftype >= NL80211_IFTYPE_MAX))
-+	if (WARN_ON(iftype >= NUM_NL80211_IFTYPES))
- 		return NULL;
+ 			t1 = sched_clock_cpu(this_cpu);
+ 			domain_cost = t1 - t0;
+-			update_newidle_cost(sd, domain_cost);
+-
+ 			curr_cost += domain_cost;
+ 			t0 = t1;
++
++			/*
++			 * Failing newidle means it is not effective;
++			 * bump the cost so we end up doing less of it.
++			 */
++			if (!pulled_task)
++				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
++
++			update_newidle_cost(sd, domain_cost);
+ 		}
  
- 	if (iftype == NL80211_IFTYPE_AP_VLAN)
+ 		/*
 -- 
 2.39.5
 
