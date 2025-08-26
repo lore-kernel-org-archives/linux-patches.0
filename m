@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82072A1BF;
-	Tue, 26 Aug 2025 14:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6523A34F495;
+	Tue, 26 Aug 2025 14:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218630; cv=none; b=FhbuzlX4rckDeIU6iytkkWxHhHEmvip8N8Q6WR+wkNwr3GPMrUT8rTU6sz8yKbMiuR+sVnCMKLe5DwqsmO9ZWF6j2kJb0ShwTkXjqPKlpwVuyR4er/C5KbN1NG3JDGdtUz4LFsOBDbItLrza0CghfZB/JC/eoteMxnBe2pD3L3E=
+	t=1756218633; cv=none; b=F6EiGb5kdwk40SZq9p8CKNGeBTLk5IeGMatlvKS375TP2EqFTVqoawcFOosHvqt3ZgH148l5pNhQ6blAGVFTZwTYmxyRS4si0QwW2CPzbR5fE1BY/x+tB9yUWxqZ4xLeNLlFRjKNN2eJMaZzgBI77uTzbKNBS7JilEq6TLfWCws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218630; c=relaxed/simple;
-	bh=1NDztVOZ/+AID/QDitPL9Cuj+kkBO+LOekPd8yFz/jY=;
+	s=arc-20240116; t=1756218633; c=relaxed/simple;
+	bh=+EKYlxVaUaYcET/vOiqAthkRl8FRIbTcfshEHuqCvR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nsfjz2+IKN+3902/EJ1q02BJhOx602jx2pm3CS/iiaxs7mVqlcT6pB/R7I8XbIhfXN8PDsEmRITtde6+oZtbv9eRMvDhJ3qmM/VVtODQ9PwLY1elurv5gjjSCCRbeGSx6sUJTUizCxFkyDxIkvkNc/VGtgZqxSfjUcUPyuYPzvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B14OukTG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aN7KK/i+WePsERjb7Sbv4TGdcFbFDTgVQuVvXfve7962aoCGePTNnuROYGMBburtnbw6gfv13yudTUjgVJ+BvukllzVhopRlPqvJItE+LULbefOo62Usts4t2yFVaiaBXvdskHrCLLnVzlXV7FeuWfxUouimsayzCXpVvvaSmwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTnRmn3a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B14OukTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B5BC4CEF1;
-	Tue, 26 Aug 2025 14:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTnRmn3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE95C4CEF1;
+	Tue, 26 Aug 2025 14:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218630;
-	bh=1NDztVOZ/+AID/QDitPL9Cuj+kkBO+LOekPd8yFz/jY=;
+	s=korg; t=1756218633;
+	bh=+EKYlxVaUaYcET/vOiqAthkRl8FRIbTcfshEHuqCvR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B14OukTGVDoMa4B8NIv1bmq3vzs7YI0IelsEmimLagJ4ojS8dTu2w6F/JO1phjwqx
-	 gkVmnW+TidgoGzEyIOcBccIUylQe1qxKv7AnKnee7+Ox2jOg6QIKYguJwUnweHNpHB
-	 ZD6gRzI50V5otfJJ84/Nxg4Kb74xRAzR1RxOxvX0=
+	b=oTnRmn3a0at2v3YNT+YMrwCzyFVn2MW5GERjKazSygBmtmEbKhP7Jt1JqpkuLLy+2
+	 +lFEVgQ7fpGhaP8/AN6aHBvOHeyPEtgYxs4y9PZnybVM0U5WXsKSGrtBOFuBsrF+NE
+	 hCb5pwraKMReKhag9sZ7fSYpKHWmgBNDOu2k6Nr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/403] ASoC: ops: dynamically allocate struct snd_ctl_elem_value
-Date: Tue, 26 Aug 2025 13:06:39 +0200
-Message-ID: <20250826110908.386178926@linuxfoundation.org>
+Subject: [PATCH 5.4 074/403] ARM: dts: vfxxx: Correctly use two tuples for timer address
+Date: Tue, 26 Aug 2025 13:06:40 +0200
+Message-ID: <20250826110908.439078561@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,77 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 7e10d7242ea8a5947878880b912ffa5806520705 ]
+[ Upstream commit f3440dcf8b994197c968fbafe047ce27eed226e8 ]
 
-This structure is really too larget to be allocated on the stack:
+Address and size-cells are 1 and the ftm timer node takes two address
+spaces in "reg" property, so this should be in two <> tuples.  Change
+has no functional impact, but original code is confusing/less readable.
 
-sound/soc/soc-ops.c:435:5: error: stack frame size (1296) exceeds limit (1280) in 'snd_soc_limit_volume' [-Werror,-Wframe-larger-than]
-
-Change the function to dynamically allocate it instead.
-
-There is probably a better way to do it since only two integer fields
-inside of that structure are actually used, but this is the simplest
-rework for the moment.
-
-Fixes: 783db6851c18 ("ASoC: ops: Enforce platform maximum on initial value")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20250610093057.2643233-1-arnd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 07513e1330a9 ("ARM: dts: vf610: Add Freescale FlexTimer Module timer node.")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ops.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ arch/arm/boot/dts/vfxxx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
-index a3b1f1c064dd..02e4f336b524 100644
---- a/sound/soc/soc-ops.c
-+++ b/sound/soc/soc-ops.c
-@@ -638,28 +638,32 @@ EXPORT_SYMBOL_GPL(snd_soc_get_volsw_range);
- static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
- {
- 	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
--	struct snd_ctl_elem_value uctl;
-+	struct snd_ctl_elem_value *uctl;
- 	int ret;
+diff --git a/arch/arm/boot/dts/vfxxx.dtsi b/arch/arm/boot/dts/vfxxx.dtsi
+index fa248066d9d9..3679922bbabc 100644
+--- a/arch/arm/boot/dts/vfxxx.dtsi
++++ b/arch/arm/boot/dts/vfxxx.dtsi
+@@ -617,7 +617,7 @@ usbmisc1: usb@400b4800 {
  
- 	if (!mc->platform_max)
- 		return 0;
- 
--	ret = kctl->get(kctl, &uctl);
-+	uctl = kzalloc(sizeof(*uctl), GFP_KERNEL);
-+	if (!uctl)
-+		return -ENOMEM;
-+
-+	ret = kctl->get(kctl, uctl);
- 	if (ret < 0)
--		return ret;
-+		goto out;
- 
--	if (uctl.value.integer.value[0] > mc->platform_max)
--		uctl.value.integer.value[0] = mc->platform_max;
-+	if (uctl->value.integer.value[0] > mc->platform_max)
-+		uctl->value.integer.value[0] = mc->platform_max;
- 
- 	if (snd_soc_volsw_is_stereo(mc) &&
--	    uctl.value.integer.value[1] > mc->platform_max)
--		uctl.value.integer.value[1] = mc->platform_max;
-+	    uctl->value.integer.value[1] > mc->platform_max)
-+		uctl->value.integer.value[1] = mc->platform_max;
- 
--	ret = kctl->put(kctl, &uctl);
--	if (ret < 0)
--		return ret;
-+	ret = kctl->put(kctl, uctl);
- 
--	return 0;
-+out:
-+	kfree(uctl);
-+	return ret;
- }
- 
- /**
+ 			ftm: ftm@400b8000 {
+ 				compatible = "fsl,ftm-timer";
+-				reg = <0x400b8000 0x1000 0x400b9000 0x1000>;
++				reg = <0x400b8000 0x1000>, <0x400b9000 0x1000>;
+ 				interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
+ 				clock-names = "ftm-evt", "ftm-src",
+ 					"ftm-evt-counter-en", "ftm-src-counter-en";
 -- 
 2.39.5
 
