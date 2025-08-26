@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AD2259CB2;
-	Tue, 26 Aug 2025 13:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8E218F2FC;
+	Tue, 26 Aug 2025 13:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213710; cv=none; b=h7ea5UC0Sl8MHiivs05UuUJPJ86U9WJGTRzhqXd1RxLKmuB0EZHP2MumTIFfqVA5bQgEoAq7tc2bg6SxgBFQaHZn/3Q2R0IoW5+062PzNZFZiMMhshEIJYJBkfFn9oP+AT44a7n45TdtFDHKigE3vGOdLvLsM86M5JpFYTskjwM=
+	t=1756213713; cv=none; b=myab8YdwBveC296E8HrLh4+3vq8WZEM42cVIrMeW6fe5mYXJn7mOTWzmDr6UsWRxtup37dlHzEH/xLU8dq5r8po+kJ3Dz7HtehSgR/Z8oqXskyoO/OQM6PbjFfCp9jy64uiwShccMtH2XdSs5TMOpG5y+c6wS9d+QsLSodEq0sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213710; c=relaxed/simple;
-	bh=kw0lDCbeZJvHXycC4f3qgWGXhocZip2TE9MSQC7AjNk=;
+	s=arc-20240116; t=1756213713; c=relaxed/simple;
+	bh=jfPdBYrQkkZ5/a/O3BkbtwZczuPeTiyUxG+BwtH6CEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8f2Cymi3HFo4DsU64XFegsnXonmAAWdDuZsKsEnb+FR8QCSh0u5cReeUTY9POE+JX8kjVt/iP+6HkRRpJDNrPoLKjwM4pqbAXsko7K9BlGT9Yd9PMSGIfOhgN0bGnGA0kjc6OECbnbyimYPwPtvk/w7/OCH/vTAKembl80y26s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJ5+aw2Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r7beguCOIKaTU5VDhRn6ZbLZhks7RphDN3yFkRZj0e+pyNzU6wOFyBYphVRtrMi/VeJga3IqKihseO+Bdh1omQln9XT3AiHtMVEbF+pCb9so38Rc4sNhJ8/tWNuOm/FqnigIrpbQkd/OY+VUeuqLRlj6+T++svrSGqL2pzi4dao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X17dfBQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJ5+aw2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA528C4CEF1;
-	Tue, 26 Aug 2025 13:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X17dfBQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1B8C4CEF1;
+	Tue, 26 Aug 2025 13:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213710;
-	bh=kw0lDCbeZJvHXycC4f3qgWGXhocZip2TE9MSQC7AjNk=;
+	s=korg; t=1756213712;
+	bh=jfPdBYrQkkZ5/a/O3BkbtwZczuPeTiyUxG+BwtH6CEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJ5+aw2QkVpA0FlvRrmKr7MH+tXqFklsVA+M1Mi+cl7XC5X6vb+3uw/NRZeyUKyvW
-	 YP4RQwvr1K4u2QQifuTVDRxzF2moBewDBe7tXTM87e1s4dhWJzKbB1fC7hFqmhEkMx
-	 /NpnP6+kzzOQGc7agg8yKuTqATxeXeaITLAQdNYQ=
+	b=X17dfBQ2Lh9gHq1aMSW6VVnDo7WMCFrO9Ccs1FZKAh1RilU+wq+88TccTllrmZHhJ
+	 fH8VJXrSE70ywJR+xNOcrCFQTDj20UXI1jHQqGEAKcPc6US5pTSoDEAWBRoH6e5f18
+	 uhNwv2o2ndlCeE4JnG3UCGXhS7wxZ8dGKeLsgqd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 410/587] media: ivsc: Fix crash at shutdown due to missing mei_cldev_disable() calls
-Date: Tue, 26 Aug 2025 13:09:19 +0200
-Message-ID: <20250826111003.359696391@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 444/587] btrfs: dont ignore inode missing when replaying log tree
+Date: Tue, 26 Aug 2025 13:09:53 +0200
+Message-ID: <20250826111004.250775573@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,82 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 0c92c49fc688cfadacc47ae99b06a31237702e9e upstream.
+[ Upstream commit 7ebf381a69421a88265d3c49cd0f007ba7336c9d ]
 
-Both the ACE and CSI driver are missing a mei_cldev_disable() call in
-their remove() function.
+During log replay, at add_inode_ref(), we return -ENOENT if our current
+inode isn't found on the subvolume tree or if a parent directory isn't
+found. The error comes from btrfs_iget_logging() <- btrfs_iget() <-
+btrfs_read_locked_inode().
 
-This causes the mei_cl client to stay part of the mei_device->file_list
-list even though its memory is freed by mei_cl_bus_dev_release() calling
-kfree(cldev->cl).
+The single caller of add_inode_ref(), replay_one_buffer(), ignores an
+-ENOENT error because it expects that error to mean only that a parent
+directory wasn't found and that is ok.
 
-This leads to a use-after-free when mei_vsc_remove() runs mei_stop()
-which first removes all mei bus devices calling mei_ace_remove() and
-mei_csi_remove() followed by mei_cl_bus_dev_release() and then calls
-mei_cl_all_disconnect() which walks over mei_device->file_list dereferecing
-the just freed cldev->cl.
+Before commit 5f61b961599a ("btrfs: fix inode lookup error handling during
+log replay") we were converting any error when getting a parent directory
+to -ENOENT and any error when getting the current inode to -EIO, so our
+caller would fail log replay in case we can't find the current inode.
+After that commit however in case the current inode is not found we return
+-ENOENT to the caller and therefore it ignores the critical fact that the
+current inode was not found in the subvolume tree.
 
-And mei_vsc_remove() it self is run at shutdown because of the
-platform_device_unregister(tp->pdev) in vsc_tp_shutdown()
+Fix this by converting -ENOENT to 0 when we don't find a parent directory,
+returning -ENOENT when we don't find the current inode and making the
+caller, replay_one_buffer(), not ignore -ENOENT anymore.
 
-When building a kernel with KASAN this leads to the following KASAN report:
-
-[ 106.634504] ==================================================================
-[ 106.634623] BUG: KASAN: slab-use-after-free in mei_cl_set_disconnected (drivers/misc/mei/client.c:783) mei
-[ 106.634683] Read of size 4 at addr ffff88819cb62018 by task systemd-shutdow/1
-[ 106.634729]
-[ 106.634767] Tainted: [E]=UNSIGNED_MODULE
-[ 106.634770] Hardware name: Dell Inc. XPS 16 9640/09CK4V, BIOS 1.12.0 02/10/2025
-[ 106.634773] Call Trace:
-[ 106.634777]  <TASK>
-...
-[ 106.634871] kasan_report (mm/kasan/report.c:221 mm/kasan/report.c:636)
-[ 106.634901] mei_cl_set_disconnected (drivers/misc/mei/client.c:783) mei
-[ 106.634921] mei_cl_all_disconnect (drivers/misc/mei/client.c:2165 (discriminator 4)) mei
-[ 106.634941] mei_reset (drivers/misc/mei/init.c:163) mei
-...
-[ 106.635042] mei_stop (drivers/misc/mei/init.c:348) mei
-[ 106.635062] mei_vsc_remove (drivers/misc/mei/mei_dev.h:784 drivers/misc/mei/platform-vsc.c:393) mei_vsc
-[ 106.635066] platform_remove (drivers/base/platform.c:1424)
-
-Add the missing mei_cldev_disable() calls so that the mei_cl gets removed
-from mei_device->file_list before it is freed to fix this.
-
-Fixes: 78876f71b3e9 ("media: pci: intel: ivsc: Add ACE submodule")
-Fixes: 29006e196a56 ("media: pci: intel: ivsc: Add CSI submodule")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 5f61b961599a ("btrfs: fix inode lookup error handling during log replay")
+CC: stable@vger.kernel.org # 6.16
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ adapted btrfs_inode pointer usage to older inode API ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ivsc/mei_ace.c |    2 ++
- drivers/media/pci/intel/ivsc/mei_csi.c |    2 ++
- 2 files changed, 4 insertions(+)
+ fs/btrfs/tree-log.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/intel/ivsc/mei_ace.c
-+++ b/drivers/media/pci/intel/ivsc/mei_ace.c
-@@ -528,6 +528,8 @@ static void mei_ace_remove(struct mei_cl
- 
- 	ace_set_camera_owner(ace, ACE_CAMERA_IVSC);
- 
-+	mei_cldev_disable(cldev);
-+
- 	mutex_destroy(&ace->lock);
- }
- 
---- a/drivers/media/pci/intel/ivsc/mei_csi.c
-+++ b/drivers/media/pci/intel/ivsc/mei_csi.c
-@@ -807,6 +807,8 @@ static void mei_csi_remove(struct mei_cl
- 
- 	pm_runtime_disable(&cldev->dev);
- 
-+	mei_cldev_disable(cldev);
-+
- 	mutex_destroy(&csi->lock);
- }
- 
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1422,6 +1422,8 @@ static noinline int add_inode_ref(struct
+ 		btrfs_dir = btrfs_iget_logging(parent_objectid, root);
+ 		if (IS_ERR(btrfs_dir)) {
+ 			ret = PTR_ERR(btrfs_dir);
++			if (ret == -ENOENT)
++				ret = 0;
+ 			dir = NULL;
+ 			goto out;
+ 		}
+@@ -1455,6 +1457,15 @@ static noinline int add_inode_ref(struct
+ 				if (IS_ERR(btrfs_dir)) {
+ 					ret = PTR_ERR(btrfs_dir);
+ 					dir = NULL;
++					/*
++					 * A new parent dir may have not been
++					 * logged and not exist in the subvolume
++					 * tree, see the comment above before
++					 * the loop when getting the first
++					 * parent dir.
++					 */
++					if (ret == -ENOENT)
++						ret = 0;
+ 					goto out;
+ 				}
+ 				dir = &btrfs_dir->vfs_inode;
+@@ -2623,9 +2634,8 @@ static int replay_one_buffer(struct btrf
+ 			   key.type == BTRFS_INODE_EXTREF_KEY) {
+ 			ret = add_inode_ref(wc->trans, root, log, path,
+ 					    eb, i, &key);
+-			if (ret && ret != -ENOENT)
++			if (ret)
+ 				break;
+-			ret = 0;
+ 		} else if (key.type == BTRFS_EXTENT_DATA_KEY) {
+ 			ret = replay_one_extent(wc->trans, root, path,
+ 						eb, i, &key);
 
 
