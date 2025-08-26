@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F8222370D;
-	Tue, 26 Aug 2025 14:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC263350D75;
+	Tue, 26 Aug 2025 14:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219318; cv=none; b=IXC2XnlImhAbOA9RPVPgwlRDUFDofcI5LL+sd2928At1dus7K3hvRUN+w6iLhuorZqZiAA00DimuZ4XFETtBjx8jn4Jw7BUKfdUYa7DqwBqVQgLKdDV3UG7G2CvfBjHlrqejcb+iJDRA3T3bximvrlgdyvnvenruyW06bqzjM7E=
+	t=1756219320; cv=none; b=kvccIa4/t9y7wIHlOkYiq2+iGZCnHduZBuKx5rQ4l8e9pTzvKJ04OF9pkQrKNDd8YuayxZpct77IfLFiO09khXUAXJ8lw8gAu/pZVkdV79Bagb0hBoEH7awXulUbh/v6ZW2fipNqIV9zugUMMqLTAUBiY7Gb7OlHWXEpTdXMBG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219318; c=relaxed/simple;
-	bh=pj/Dz0oQyoq/OR4JaKgefxnDxLlBJKdH2850pDspp4Q=;
+	s=arc-20240116; t=1756219320; c=relaxed/simple;
+	bh=hpDYuBygdIJZjsNipRWlnFBXSvuCelLzJ1UsZreDKbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CuU9RkQHzyGDCKraxQbY2JPWbmLt42x9zqetp9nBr17GGCRK754z0z9wH1r+RWjzkkJtCqtonqA66Gif8iKqGKU/DW+4WP0fbr5YBy047PynUU/YfrBlKoODOKRkowJFMSAKkWFCtG8hF11EzSj7QLO8L726pMGvotAtWXbi92M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZWyQSu7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FbBP+k+5iPqeqT6NmvTYWR4qDIdFbmyDMNzps1yn32hFxhVu/yRiwDZLVIRTyKoOGYPVjtX5kDbY/l01keCTEfQLfXeNpCqdddBVYVsYEYyLM6suujKFkaWDOdcloHQ6XD7VrQFS59PSC0pZ6AAgiZ5s4ZJDvCiySpvRCT4C7tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuOM8Qde; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZWyQSu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868C8C4CEF1;
-	Tue, 26 Aug 2025 14:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuOM8Qde"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E84C4CEF1;
+	Tue, 26 Aug 2025 14:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219317;
-	bh=pj/Dz0oQyoq/OR4JaKgefxnDxLlBJKdH2850pDspp4Q=;
+	s=korg; t=1756219320;
+	bh=hpDYuBygdIJZjsNipRWlnFBXSvuCelLzJ1UsZreDKbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZWyQSu7q+C7CqxVwZ1mVy+shGnYSNmLSotOXmyDsxOolRGv7upILqoe1kuydq8fh
-	 mJBiz5M6IH8I5Z+sp5N4kXQtKmBmv1rn+RxUtH+CtDovvwE87ZZyv65zSaBYxCv8QP
-	 tCdPxPt1DrgJVPMSJmHp9syM0pk6Kza8imM4nYdI=
+	b=JuOM8QdeByOcH2ziSeLDrbZ0Yh6MoFSKNrtw53ONC3p16cHmiYij19iUW7zwzTz0M
+	 4j8giotwVOjIwTXs1/5HbLgq1o0WBK3She68qkH9W+/cEuJ/nGpfjI6PIau9jNFLjC
+	 bovxDgiT2tfQpltdgYYbpSpkZNaIBxpIlRzGNlsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin.Cao" <lincao12@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Philipp Stanner <phasta@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 336/403] drm/sched: Remove optimization that causes hang when killing dependent jobs
-Date: Tue, 26 Aug 2025 13:11:02 +0200
-Message-ID: <20250826110916.129245168@linuxfoundation.org>
+	Mael GUERIN <mael.guerin@murena.io>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.4 319/403] USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera
+Date: Tue, 26 Aug 2025 13:10:45 +0200
+Message-ID: <20250826110915.624294119@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,82 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Lin.Cao" <lincao12@amd.com>
+From: Mael GUERIN <mael.guerin@murena.io>
 
-[ Upstream commit 15f77764e90a713ee3916ca424757688e4f565b9 ]
+commit 6ca8af3c8fb584f3424a827f554ff74f898c27cd upstream.
 
-When application A submits jobs and application B submits a job with a
-dependency on A's fence, the normal flow wakes up the scheduler after
-processing each job. However, the optimization in
-drm_sched_entity_add_dependency_cb() uses a callback that only clears
-dependencies without waking up the scheduler.
+Add the US_FL_BULK_IGNORE_TAG quirk for Novatek NTK96550-based camera
+to fix USB resets after sending SCSI vendor commands due to CBW and
+CSW tags difference, leading to undesired slowness while communicating
+with the device.
 
-When application A is killed before its jobs can run, the callback gets
-triggered but only clears the dependency without waking up the scheduler,
-causing the scheduler to enter sleep state and application B to hang.
+Please find below the copy of /sys/kernel/debug/usb/devices with my
+device plugged in (listed as TechSys USB mass storage here, the
+underlying chipset being the Novatek NTK96550-based camera):
 
-Remove the optimization by deleting drm_sched_entity_clear_dep() and its
-usage, ensuring the scheduler is always woken up when dependencies are
-cleared.
+T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0603 ProdID=8611 Rev= 0.01
+S:  Manufacturer=TechSys
+S:  Product=USB Mass Storage
+S:  SerialNumber=966110000000100
+C:* #Ifs= 1 Cfg#= 1 Atr=c0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: 777dbd458c89 ("drm/amdgpu: drop a dummy wakeup scheduler")
-Cc: stable@vger.kernel.org # v4.6+
-Signed-off-by: Lin.Cao <lincao12@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20250717084453.921097-1-lincao12@amd.com
-[ adjusted context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Mael GUERIN <mael.guerin@murena.io>
+Cc: stable <stable@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250806164406.43450-1-mael.guerin@murena.io
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |   23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -328,19 +328,6 @@ void drm_sched_entity_destroy(struct drm
- EXPORT_SYMBOL(drm_sched_entity_destroy);
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -934,6 +934,13 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_SANE_SENSE ),
  
- /**
-- * drm_sched_entity_clear_dep - callback to clear the entities dependency
-- */
--static void drm_sched_entity_clear_dep(struct dma_fence *f,
--				       struct dma_fence_cb *cb)
--{
--	struct drm_sched_entity *entity =
--		container_of(cb, struct drm_sched_entity, cb);
--
--	entity->dependency = NULL;
--	dma_fence_put(f);
--}
--
--/**
-  * drm_sched_entity_clear_dep - callback to clear the entities dependency and
-  * wake up scheduler
-  */
-@@ -350,7 +337,8 @@ static void drm_sched_entity_wakeup(stru
- 	struct drm_sched_entity *entity =
- 		container_of(cb, struct drm_sched_entity, cb);
- 
--	drm_sched_entity_clear_dep(f, cb);
-+	entity->dependency = NULL;
-+	dma_fence_put(f);
- 	drm_sched_wakeup(entity->rq->sched);
- }
- 
-@@ -426,13 +414,6 @@ static bool drm_sched_entity_add_depende
- 		fence = dma_fence_get(&s_fence->scheduled);
- 		dma_fence_put(entity->dependency);
- 		entity->dependency = fence;
--		if (!dma_fence_add_callback(fence, &entity->cb,
--					    drm_sched_entity_clear_dep))
--			return true;
--
--		/* Ignore it when it is already scheduled */
--		dma_fence_put(fence);
--		return false;
- 	}
- 
- 	if (!dma_fence_add_callback(entity->dependency, &entity->cb,
++/* Added by Maël GUERIN <mael.guerin@murena.io> */
++UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
++		"Novatek",
++		"NTK96550-based camera",
++		USB_SC_SCSI, USB_PR_BULK, NULL,
++		US_FL_BULK_IGNORE_TAG ),
++
+ /*
+  * Reported by Hanno Boeck <hanno@gmx.de>
+  * Taken from the Lycoris Kernel
 
 
