@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DA02264A3;
-	Tue, 26 Aug 2025 11:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F97630AAC2;
+	Tue, 26 Aug 2025 11:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207052; cv=none; b=TiYoEPsj2i/KUjbQ+n7r/nDeXdQtgnL6unKrf5wTMG0NpPJQYpJyD678mm8rNEidtK/rUvBH7GvtEqhO33TOkVqanY6QzIR8gQ7I2LcB69j2xi7LdzYaup6QOM/SJwyMCCFQnlSwNKjZpoo9NdvwOA1aQ/s/9i6RASThyu6+9rg=
+	t=1756207055; cv=none; b=oZpBAXomMQXQLq+aUHLh7nFDtX6cWbE3xI4ev9SULFLDhDBDRkzRqTvdfW2wk8yuiHsfRiMbwWVzGsibTq+sEziuEdUBhus/x0V7h8/HxOwyCcsCNw+t1ned7trJpBOI8gQBAWfDX6MKSAWJRnBrsp+uDpYqYAiZo8v2+C3LIFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207052; c=relaxed/simple;
-	bh=kRMhd/EPPFSdVvvp4QWnGLdTNgrddedEk7A03524TgY=;
+	s=arc-20240116; t=1756207055; c=relaxed/simple;
+	bh=UIXsB9BlqXGY+iWVAQfky1/Pv/FIt//WleA8E+wyO3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzxWqlEshsvz/GOkluRSpa/tBaxOhpaCDl6OLB0rJ35wJPMZW709mL++D0ly44Ve0W8RhkALV9AZY4H/5u/qAcf5UIkx7kE0tbhHJbNW9rF+s1P8MYyOLGQ13zQh/XmffEXJBwd9xLl1PqSK+OYmqfbKm5fHBpAjzt1cqnyf0bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxjNnXFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiJ2cENKGypmLCxZFQEd1ajGsv4NeBBncZgsIQFoqcN43+CFe+DQaSSOjv5en3xBaW5mAcTzjtS/7k4+yTZ+fchnyohPu+9NBvYPahqkzZPLXjKnvTIThOE6WblD7LK4aeSqZPwMksEFVtdxIx7xYTcJq6EQq9icQTVeRPweYQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bh+GwSsT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxjNnXFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3594DC113CF;
-	Tue, 26 Aug 2025 11:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bh+GwSsT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE72C113CF;
+	Tue, 26 Aug 2025 11:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207052;
-	bh=kRMhd/EPPFSdVvvp4QWnGLdTNgrddedEk7A03524TgY=;
+	s=korg; t=1756207055;
+	bh=UIXsB9BlqXGY+iWVAQfky1/Pv/FIt//WleA8E+wyO3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxjNnXFzJdMAyqX1GmRXAyg4gfiusKtUJJsEikNTGGRJqAhigtgM30XnFGLxYRQJx
-	 V5EYM1gZakUvQ+cPNEcRrIXC4x43RP9Imf9CtXxx6L1di27F0Q+s1DcMecAIaqSv+4
-	 84wNzptt/bvzwnXzB8AGDsUrDZF99YBqQFQWr46s=
+	b=bh+GwSsT6cokYCEtAKUidmTbHYQQNgRFj87C/ypod6Qwg7+/xOTMDPDNQm835O+TI
+	 OFrzug0GPwO/lfHyTGYotCvvM/V+c6sMg+ZhTzL0SLoMJ8NmWZvjcEYYIAkg79hZLH
+	 GwakVnK50pLfnzp2F7SmeRN8dev+KoU/B5cUcRJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.16 032/457] crypto: hash - Increase HASH_MAX_DESCSIZE for hmac(sha3-224-s390)
-Date: Tue, 26 Aug 2025 13:05:16 +0200
-Message-ID: <20250826110938.132866111@linuxfoundation.org>
+	Jari Ruusu <jariruusu@protonmail.com>,
+	Yi Yang <yiyang13@huawei.com>,
+	GONG Ruiqi <gongruiqi1@huawei.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.16 033/457] Revert "vgacon: Add check for vc_origin address range in vgacon_scroll()"
+Date: Tue, 26 Aug 2025 13:05:17 +0200
+Message-ID: <20250826110938.157574577@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Helge Deller <deller@gmx.de>
 
-commit 9d9b193ed73a65ec47cf1fd39925b09da8216461 upstream.
+commit e4fc307d8e24f122402907ebf585248cad52841d upstream.
 
-The value of HASH_MAX_DESCSIZE is off by one for hmac(sha3-224-s390).
-Fix this so that hmac(sha3-224-s390) can be registered.
+This reverts commit 864f9963ec6b4b76d104d595ba28110b87158003.
 
-Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Reported-by: Eric Biggers <ebiggers@kernel.org>
-Fixes: 6f90ba706551 ("crypto: s390/sha3 - Use API partial block handling")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The patch is wrong as it checks vc_origin against vc_screenbuf,
+while in text mode it should compare against vga_vram_base.
+
+As such it broke VGA text scrolling, which can be reproduced like this:
+(1) boot a kernel that is configured to use text mode VGA-console
+(2) type commands:  ls -l /usr/bin | less -S
+(3) scroll up/down with cursor-down/up keys
+
+Reported-by: Jari Ruusu <jariruusu@protonmail.com>
+Cc: stable@vger.kernel.org
+Cc: Yi Yang <yiyang13@huawei.com>
+Cc: GONG Ruiqi <gongruiqi1@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/crypto/hash.h | 2 +-
+ drivers/video/console/vgacon.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/crypto/hash.h b/include/crypto/hash.h
-index 6f6b9de12cd3..ed63b904837d 100644
---- a/include/crypto/hash.h
-+++ b/include/crypto/hash.h
-@@ -184,7 +184,7 @@ struct shash_desc {
-  * Worst case is hmac(sha3-224-s390).  Its context is a nested 'shash_desc'
-  * containing a 'struct s390_sha_ctx'.
-  */
--#define HASH_MAX_DESCSIZE	(sizeof(struct shash_desc) + 360)
-+#define HASH_MAX_DESCSIZE	(sizeof(struct shash_desc) + 361)
- #define MAX_SYNC_HASH_REQSIZE	(sizeof(struct ahash_request) + \
- 				 HASH_MAX_DESCSIZE)
- 
--- 
-2.50.1
-
+--- a/drivers/video/console/vgacon.c
++++ b/drivers/video/console/vgacon.c
+@@ -1168,7 +1168,7 @@ static bool vgacon_scroll(struct vc_data
+ 				     c->vc_screenbuf_size - delta);
+ 			c->vc_origin = vga_vram_end - c->vc_screenbuf_size;
+ 			vga_rolled_over = 0;
+-		} else if (oldo - delta >= (unsigned long)c->vc_screenbuf)
++		} else
+ 			c->vc_origin -= delta;
+ 		c->vc_scr_end = c->vc_origin + c->vc_screenbuf_size;
+ 		scr_memsetw((u16 *) (c->vc_origin), c->vc_video_erase_char,
 
 
