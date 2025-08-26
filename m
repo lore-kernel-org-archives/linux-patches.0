@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366EB352087;
-	Tue, 26 Aug 2025 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC19352067;
+	Tue, 26 Aug 2025 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218665; cv=none; b=gkXWE3laDs6IuMxAAhRsVFPUdH6M3Ma2Zj8NzTyoeuepwd+Eql8WxGpU+8h0BMm3l0fvRUiTxecZxkC12weONJicPPEuZPEUGVMciMkhQGay0hKLVPFswiLQ1IffaQqIvIC8Q4acnEe0TVdMqT6CkxiVKYDEYVjTX3VcKjglbvY=
+	t=1756218669; cv=none; b=oEVi8IM1UuRXAoi5QYJuotX53UdQ75KPp+vEfFv++Qod9HZUgjFteGrN3PwJlOn1DdgB1QMvNc3/lyrAwo+HRWTtBNp3cTIRfzYTXHdhYFJ/r3yTGZVzSO+CSE4Uk9dji8+dFH84Eejk3/TL01XBPfWU1UqEzAWxCLMQ0hacvvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218665; c=relaxed/simple;
-	bh=PmUPmxSnDt8zgYT3O1q93Ut9546oJJKLcjT1iKSMrk0=;
+	s=arc-20240116; t=1756218669; c=relaxed/simple;
+	bh=jThZW1uIec8lWE3MNU2EjD0hPZlrfllCZoUjT17vLR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfW358xof01yZD4+px2ZFPnjJUPPqRd69NaeOvAJO6Q1y2qRWS5pEXYUHTW6pMb9lvMTluguUUkRXya8vKds68nZm7vX0y7qUtuW3RsJuG2plr5UHm2w/4Qqv2i3EmultwkD/V7IHYFVDlm3FzVmbZoeyBeq2zSjoWaEe3jMBaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2g9h1ZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZM0XZE4zmkieNk3hExuElvxmCYitON5Pt+r/juKlw5fpSQuBLl5D7cfVNUMhJtJHWyuxUenUb4WMu6cmCr0l1fUuxMGXMREksStQ4tjjY8jI+3CpSN54mcDxzVp7Xi3JGK9ZMsRpb5sCMPC9T9PbLmXeqTAY2vakgWf8+Q4vGvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1GLOL4r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2g9h1ZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90677C4CEF1;
-	Tue, 26 Aug 2025 14:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1GLOL4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD1BC4CEF1;
+	Tue, 26 Aug 2025 14:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218665;
-	bh=PmUPmxSnDt8zgYT3O1q93Ut9546oJJKLcjT1iKSMrk0=;
+	s=korg; t=1756218668;
+	bh=jThZW1uIec8lWE3MNU2EjD0hPZlrfllCZoUjT17vLR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2g9h1ZUMBwJ346kvfiBUuRmBoESaTfK2/ZLv03iJxPG9+ThnOx/nY63TOi1mhZyf
-	 ujIqQKFmteLx4hpobrKO1HIna+XIOfVCHCJCumE48jNRL82cZAn5TvU3uv9aCh6ctk
-	 PnJ0vbU74cGRFm2jdfvuUL1Oie5dRIMaeIO7git8=
+	b=s1GLOL4rLUU26eNrxGA+MM7iPxmaOFOeFBfB5qT+5QHTJnAwqmys6H2RkMKrkSax2
+	 SnfmdIXAejAMMuaEDPk8zlRDNauQHLLT/21asZ91uOCFEQ/b/lkKXVLMGpinWBrqu8
+	 1JBZ4NSBiqMYZr3GMzMiIFn5sGFAjtrdeHl4AKFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.4 055/403] usb: hub: Fix flushing and scheduling of delayed work that tunes runtime pm
-Date: Tue, 26 Aug 2025 13:06:21 +0200
-Message-ID: <20250826110907.387888110@linuxfoundation.org>
+	Zeal Robot <zealci@zte.com.cn>,
+	Minghao Chi <chi.minghao@zte.com.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Shubham Kulkarni <skulkarni@mvista.com>
+Subject: [PATCH 5.4 046/403] power: supply: bq24190_charger: using pm_runtime_resume_and_get instead of pm_runtime_get_sync
+Date: Tue, 26 Aug 2025 13:06:12 +0200
+Message-ID: <20250826110907.106060195@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,64 +52,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Minghao Chi <chi.minghao@zte.com.cn>
 
-commit a49e1e2e785fb3621f2d748581881b23a364998a upstream.
+[ Upstream commit d96a89407e5f682d1cb22569d91784506c784863 ]
 
-Delayed work to prevent USB3 hubs from runtime-suspending immediately
-after resume was added in commit 8f5b7e2bec1c ("usb: hub: fix detection
-of high tier USB3 devices behind suspended hubs").
+Using pm_runtime_resume_and_get is more appropriate
+for simplifing code
 
-This delayed work needs be flushed if system suspends, or hub needs to
-be quiesced for other reasons right after resume. Not flushing it
-triggered issues on QC SC8280XP CRD board during suspend/resume testing.
-
-Fix it by flushing the delayed resume work in hub_quiesce()
-
-The delayed work item that allow hub runtime suspend is also scheduled
-just before calling autopm get. Alan pointed out there is a small risk
-that work is run before autopm get, which would call autopm put before
-get, and mess up the runtime pm usage order.
-Swap the order of work sheduling and calling autopm get to solve this.
-
-Cc: stable <stable@kernel.org>
-Fixes: 8f5b7e2bec1c ("usb: hub: fix detection of high tier USB3 devices behind suspended hubs")
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-usb/acaaa928-832c-48ca-b0ea-d202d5cd3d6c@oss.qualcomm.com
-Reported-by: Alan Stern <stern@rowland.harvard.edu>
-Closes: https://lore.kernel.org/linux-usb/c73fbead-66d7-497a-8fa1-75ea4761090a@rowland.harvard.edu
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250626130102.3639861-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Minghao Chi <chi.minghao@zte.com.cn>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[ skulkarni: Minor changes in hunk #3/12 wrt the mainline commit ]
+Stable-dep-of: 47c29d692129 ("power: supply: bq24190: Fix use after free bug in bq24190_remove due to race condition")
+Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq24190_charger.c |   63 +++++++++++----------------------
+ 1 file changed, 21 insertions(+), 42 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -1315,11 +1315,12 @@ static void hub_activate(struct usb_hub
+--- a/drivers/power/supply/bq24190_charger.c
++++ b/drivers/power/supply/bq24190_charger.c
+@@ -448,11 +448,9 @@ static ssize_t bq24190_sysfs_show(struct
+ 	if (!info)
+ 		return -EINVAL;
  
- 	if (type == HUB_RESUME && hub_is_superspeed(hub->hdev)) {
- 		/* give usb3 downstream links training time after hub resume */
-+		usb_autopm_get_interface_no_resume(
-+			to_usb_interface(hub->intfdev));
-+
- 		INIT_DELAYED_WORK(&hub->init_work, hub_post_resume);
- 		queue_delayed_work(system_power_efficient_wq, &hub->init_work,
- 				   msecs_to_jiffies(USB_SS_PORT_U0_WAKE_TIME));
--		usb_autopm_get_interface_no_resume(
--			to_usb_interface(hub->intfdev));
- 		return;
+-	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	ret = bq24190_read_mask(bdi, info->reg, info->mask, info->shift, &v);
+ 	if (ret)
+@@ -483,11 +481,9 @@ static ssize_t bq24190_sysfs_store(struc
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	ret = bq24190_write_mask(bdi, info->reg, info->mask, info->shift, v);
+ 	if (ret)
+@@ -506,10 +502,9 @@ static int bq24190_set_charge_mode(struc
+ 	struct bq24190_dev_info *bdi = rdev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = pm_runtime_get_sync(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
+ 	if (ret < 0) {
+ 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", ret);
+-		pm_runtime_put_noidle(bdi->dev);
+ 		return ret;
  	}
  
-@@ -1373,6 +1374,7 @@ static void hub_quiesce(struct usb_hub *
+@@ -539,10 +534,9 @@ static int bq24190_vbus_is_enabled(struc
+ 	int ret;
+ 	u8 val;
  
- 	/* Stop hub_wq and related activity */
- 	del_timer_sync(&hub->irq_urb_retry);
-+	flush_delayed_work(&hub->init_work);
- 	usb_kill_urb(hub->urb);
- 	if (hub->has_indicators)
- 		cancel_delayed_work_sync(&hub->leds);
+-	ret = pm_runtime_get_sync(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
+ 	if (ret < 0) {
+ 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", ret);
+-		pm_runtime_put_noidle(bdi->dev);
+ 		return ret;
+ 	}
+ 
+@@ -1083,11 +1077,9 @@ static int bq24190_charger_get_property(
+ 
+ 	dev_dbg(bdi->dev, "prop: %d\n", psp);
+ 
+-	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_CHARGE_TYPE:
+@@ -1157,11 +1149,9 @@ static int bq24190_charger_set_property(
+ 
+ 	dev_dbg(bdi->dev, "prop: %d\n", psp);
+ 
+-	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_ONLINE:
+@@ -1431,11 +1421,9 @@ static int bq24190_battery_get_property(
+ 	dev_warn(bdi->dev, "warning: /sys/class/power_supply/bq24190-battery is deprecated\n");
+ 	dev_dbg(bdi->dev, "prop: %d\n", psp);
+ 
+-	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_STATUS:
+@@ -1479,11 +1467,9 @@ static int bq24190_battery_set_property(
+ 	dev_warn(bdi->dev, "warning: /sys/class/power_supply/bq24190-battery is deprecated\n");
+ 	dev_dbg(bdi->dev, "prop: %d\n", psp);
+ 
+-	ret = pm_runtime_get_sync(bdi->dev);
+-	if (ret < 0) {
+-		pm_runtime_put_noidle(bdi->dev);
++	ret = pm_runtime_resume_and_get(bdi->dev);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_ONLINE:
+@@ -1637,10 +1623,9 @@ static irqreturn_t bq24190_irq_handler_t
+ 	int error;
+ 
+ 	bdi->irq_event = true;
+-	error = pm_runtime_get_sync(bdi->dev);
++	error = pm_runtime_resume_and_get(bdi->dev);
+ 	if (error < 0) {
+ 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
+-		pm_runtime_put_noidle(bdi->dev);
+ 		return IRQ_NONE;
+ 	}
+ 	bq24190_check_status(bdi);
+@@ -1860,11 +1845,9 @@ static int bq24190_remove(struct i2c_cli
+ 	struct bq24190_dev_info *bdi = i2c_get_clientdata(client);
+ 	int error;
+ 
+-	error = pm_runtime_get_sync(bdi->dev);
+-	if (error < 0) {
++	error = pm_runtime_resume_and_get(bdi->dev);
++	if (error < 0)
+ 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
+-		pm_runtime_put_noidle(bdi->dev);
+-	}
+ 
+ 	bq24190_register_reset(bdi);
+ 	if (bdi->battery)
+@@ -1913,11 +1896,9 @@ static __maybe_unused int bq24190_pm_sus
+ 	struct bq24190_dev_info *bdi = i2c_get_clientdata(client);
+ 	int error;
+ 
+-	error = pm_runtime_get_sync(bdi->dev);
+-	if (error < 0) {
++	error = pm_runtime_resume_and_get(bdi->dev);
++	if (error < 0)
+ 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
+-		pm_runtime_put_noidle(bdi->dev);
+-	}
+ 
+ 	bq24190_register_reset(bdi);
+ 
+@@ -1938,11 +1919,9 @@ static __maybe_unused int bq24190_pm_res
+ 	bdi->f_reg = 0;
+ 	bdi->ss_reg = BQ24190_REG_SS_VBUS_STAT_MASK; /* impossible state */
+ 
+-	error = pm_runtime_get_sync(bdi->dev);
+-	if (error < 0) {
++	error = pm_runtime_resume_and_get(bdi->dev);
++	if (error < 0)
+ 		dev_warn(bdi->dev, "pm_runtime_get failed: %i\n", error);
+-		pm_runtime_put_noidle(bdi->dev);
+-	}
+ 
+ 	bq24190_register_reset(bdi);
+ 	bq24190_set_config(bdi);
 
 
