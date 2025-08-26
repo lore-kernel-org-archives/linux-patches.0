@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82C6139579;
-	Tue, 26 Aug 2025 13:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B3B13FD86;
+	Tue, 26 Aug 2025 13:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214570; cv=none; b=lnlNpc6Tfgxh9uwE4NONeI4tUDS81wct0T4kPSboSNI7TLjPPqNgEDJhuMfMdoURitHonT8MRlMmboHdljE7yyO6UmTIhFLQ146R0E2kPQ7pr+upSA1f5kYCiyzEq4RB0+R42dBmJInoxT8JBwMEr3FNs/070dshQqwY07LOruI=
+	t=1756214573; cv=none; b=PKr5lmRsPKiPKmi5rjMJ2aMpCarOgHrBYO4MEEOoPmtZ4rOwOUK2bPmGfZf5Fmd/laG8mynMx898/U63aVK/V3PyBnNRm03DfwQF3w/GWGjQ1FEFOo7s8FL7N1hubt+/IwqcGkMZGFuXiPowvl1Tjeb6Rd1BbZFWg3XuyDhqjTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214570; c=relaxed/simple;
-	bh=fqqbbv1tQ2Bs3vAz3bn6YnHtQnHIpAJDKS8U+T5blFk=;
+	s=arc-20240116; t=1756214573; c=relaxed/simple;
+	bh=ebvj+sHX5hNliWFjqpRc2yW0r/dtK4hA23EoN0fVT8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rsVMWDyqm02q8SGYJPTJtaMbsPhHNxt7upxk+No0xcsvR/Y583q72xwiKM3rDNhp3DwH8NDbJHQrnhff52o6sDVo3Bhfx4xuuZskVQM74rm2OXmRbptEiubWG5F4XJceFbmVLsBydT1TCwKfGFyNhm3doUYxsmLauumIHOpKolY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jF8igRkS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTR9bFNKBtxW9TDYQhRrqf79y4oH0ynIPoFV9LiBrgdcdAJCU3A19FF/wctY7Xa/le3O23J+Cy8BSk4s83yW8BEgrl3zjQm7jaCmwSkz0HljcsbWY55OKKQjauom92iMJO6eWGW/7Ia6poQZivioEhqe6486PTWG5/1FHDENso0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0A4gQjyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jF8igRkS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEAAC4CEF1;
-	Tue, 26 Aug 2025 13:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0A4gQjyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E533C4CEF1;
+	Tue, 26 Aug 2025 13:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214569;
-	bh=fqqbbv1tQ2Bs3vAz3bn6YnHtQnHIpAJDKS8U+T5blFk=;
+	s=korg; t=1756214572;
+	bh=ebvj+sHX5hNliWFjqpRc2yW0r/dtK4hA23EoN0fVT8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jF8igRkSbobgJC6xmHqPtikLYx0lh/Q/Ijh5h29zafKB+HXqfZex8j1oorxqs71vt
-	 l0cZu1Y5CSbVUB3OP6h33eqvs6FwWeJuZCgI8Yr3tRQZfbcDa+2yZAdsKXfhMkgqEL
-	 Vl80IWDVPUVo1kTSiZNI6zMxvsoZyhOdh+NJRU6s=
+	b=0A4gQjyWm3xbjViG8HiutWBMla/7hxMWBJUNOIl70i0L32nZFG+ZJ3nzJg3K/0ITB
+	 NuvYyo2OQBGubtaTBwbGp7iKf06YSGVxkUkunH7FJmRO8XMr4YdQwHmtgGAV210dhO
+	 vjGqa5CtrMXDifLRoLbOzIC4qyLU+7z2k2BS/r/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Wen Chen <Wen.Chen3@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/482] drm/amd/display: Fix failed to blank crtc!
-Date: Tue, 26 Aug 2025 13:06:40 +0200
-Message-ID: <20250826110934.450685477@linuxfoundation.org>
+Subject: [PATCH 6.1 181/482] watchdog: dw_wdt: Fix default timeout
+Date: Tue, 26 Aug 2025 13:07:14 +0200
+Message-ID: <20250826110935.278168448@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -48,50 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wen Chen <Wen.Chen3@amd.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 01f60348d8fb6b3fbcdfc7bdde5d669f95b009a4 ]
+[ Upstream commit ac3dbb91e0167d017f44701dd51c1efe30d0c256 ]
 
-[why]
-DCN35 is having “DC: failed to blank crtc!” when running HPO
-test cases. It's caused by not having sufficient udelay time.
+The Synopsys Watchdog driver sets the default timeout to 30 seconds,
+but on some devices this is not a valid timeout. E.g. on RK3588 the
+actual timeout being used is 44 seconds instead.
 
-[how]
-Replace the old wait_for_blank_complete function with fsleep function to
-sleep just until the next frame should come up. This way it doesn't poll
-in case the pixel clock or other clock was bugged or until vactive and
-the vblank are hit again.
+Once the watchdog is started the value is updated accordingly, but
+it would be better to expose a sensible timeout to userspace without
+the need to first start the watchdog.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Wen Chen <Wen.Chen3@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20250717-dw-wdt-fix-initial-timeout-v1-1-86dc864d48dd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/dw_wdt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index d8cf5f20ef3b..d252d10c8134 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -757,7 +757,7 @@ enum dc_status dcn20_enable_stream_timing(
- 		return DC_ERROR_UNEXPECTED;
+diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
+index 61af5d1332ac..e3e09dc38c65 100644
+--- a/drivers/watchdog/dw_wdt.c
++++ b/drivers/watchdog/dw_wdt.c
+@@ -658,6 +658,8 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+ 	} else {
+ 		wdd->timeout = DW_WDT_DEFAULT_SECONDS;
+ 		watchdog_init_timeout(wdd, 0, dev);
++		/* Limit timeout value to hardware constraints. */
++		dw_wdt_set_timeout(wdd, wdd->timeout);
  	}
  
--	hws->funcs.wait_for_blank_complete(pipe_ctx->stream_res.opp);
-+	fsleep(stream->timing.v_total * (stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz));
- 
- 	params.vertical_total_min = stream->adjust.v_total_min;
- 	params.vertical_total_max = stream->adjust.v_total_max;
+ 	platform_set_drvdata(pdev, dw_wdt);
 -- 
 2.39.5
 
