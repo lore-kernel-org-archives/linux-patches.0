@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0021D3376BE;
-	Tue, 26 Aug 2025 13:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915DB3376A5;
+	Tue, 26 Aug 2025 13:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215813; cv=none; b=OFwOlh0WryBMSaSFX9ZX+Z8k0nAS1SSPbbkx7UNLgofdbwA6pYVj9QKERKyBF66V5Uh89sFp2xYhO33K29oikNP5DKnVNuuy/OhzAty5nPj9/l4oyEowmoB0Lps4Cnpxog3KuiAj3xrRDLKYxixuDbJSEYgHC4V3TmdIGTqjZSI=
+	t=1756215815; cv=none; b=g/13Nf+zmUhayoOu3O+HaYwMSp/qNzHCHaqBp1Q/n8r6QWs4vhCNeWHhU5EPfNWeovvSi9NBdmH4C3Z/ZDVvGEoQXCHE7ZYM53lM/As3GQX0s4jN3bN3RyrEcHeVyzuxJl5S60YvNSzM/zQHrltC+beUSk8uW7CIBsOQLSoUZyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215813; c=relaxed/simple;
-	bh=ho8KNqDjod76FrQ5MHMWI+QKskQ+qpt6qkAXK0/u84c=;
+	s=arc-20240116; t=1756215815; c=relaxed/simple;
+	bh=lwMN57oOtWMFEeag5pbs7heaI1U+NUCfhRb8K1RCpHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2DDiqxECHmp0y/GOuf32P29qyyPUzHMhqe921h3kUw299tM9Oq+G8VHBhT93HfKlzsQm9EQ82sKemP8pdJ7QzWUh0Q584w6AJDZyHda9sRz3kMsJc++FqH0VheOvBe7Gyvreh1cDz6BLu16/QATULNAXr2K6x+qd5EF/dJO2uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrWgCyHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzVe2Sh/tP46pplGfyzzraTDzMld6jgH8tfKulzhbl3LmE20T5TH70Ce7acj+7wzriULGOgSZ+F91cVFOAwtXBnK8VqSRLso0afir4MZ6u++reJX3tjCKuDpbMXoTv/3tKXJ+/e7uWSeXZY/aJwLsP3Ov4YuAcfZtmtdR3KA1ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIEnuGm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrWgCyHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823A8C4CEF1;
-	Tue, 26 Aug 2025 13:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIEnuGm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C84C4CEF1;
+	Tue, 26 Aug 2025 13:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215812;
-	bh=ho8KNqDjod76FrQ5MHMWI+QKskQ+qpt6qkAXK0/u84c=;
+	s=korg; t=1756215815;
+	bh=lwMN57oOtWMFEeag5pbs7heaI1U+NUCfhRb8K1RCpHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrWgCyHAwS4660yMuxrHZZ4bUfJS69PHS+hXhkHUbvLVeC7aBjQGaao6ItfmJ0tnL
-	 AaSj58tBNsmuV8wicuPH0/tRA/VMsWCNi6CG3DYCIJq43opCb4B+aojO49tf+kNkOI
-	 mTp5EKfmH1hmr22XeDmy/tOlhYFpVs2eH9nEfi3U=
+	b=rIEnuGm5eYiYk73Fs0xRwPgYbEXWjwZQImmjRjXbR00QpOFhRbvmV9UMIHfdHPPBo
+	 2TjIUuDHqtGmP418V+OrrPrJ14nU0P85aLs8Q2em758/R21/4D6ObpPWV2ZEYYi910
+	 32ek0h4TSYLQC7CCZB/si37tyR5z5KpzbKMywbVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 176/644] perf sched: Fix memory leaks for evsel->priv in timehist
-Date: Tue, 26 Aug 2025 13:04:27 +0200
-Message-ID: <20250826110950.830693048@linuxfoundation.org>
+Subject: [PATCH 5.15 177/644] crypto: inside-secure - Fix `dma_unmap_sg()` nents value
+Date: Tue, 26 Aug 2025 13:04:28 +0200
+Message-ID: <20250826110950.856186425@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,99 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 117e5c33b1c44037af016d77ce6c0b086d55535f ]
+[ Upstream commit cb7fa6b6fc71e0c801e271aa498e2f19e6df2931 ]
 
-It uses evsel->priv to save per-cpu timing information.  It should be
-freed when the evsel is released.
+The `dma_unmap_sg()` functions should be called with the same nents as the
+`dma_map_sg()`, not the value the map function returned.
 
-Add the priv destructor for evsel same as thread to handle that.
-
-Fixes: 49394a2a24c78ce0 ("perf sched timehist: Introduce timehist command")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250703014942.1369397-6-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: c957f8b3e2e5 ("crypto: inside-secure - avoid unmapping DMA memory that was not mapped")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 12 ++++++++++++
- tools/perf/util/evsel.c    | 11 +++++++++++
- tools/perf/util/evsel.h    |  2 ++
- 3 files changed, 25 insertions(+)
+ drivers/crypto/inside-secure/safexcel_hash.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 19e96141e7b4..95a549fdabe0 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -1902,6 +1902,16 @@ static u64 evsel__get_time(struct evsel *evsel, u32 cpu)
- 	return r->last_time[cpu];
- }
+diff --git a/drivers/crypto/inside-secure/safexcel_hash.c b/drivers/crypto/inside-secure/safexcel_hash.c
+index 2124416742f8..de0a093d8f50 100644
+--- a/drivers/crypto/inside-secure/safexcel_hash.c
++++ b/drivers/crypto/inside-secure/safexcel_hash.c
+@@ -249,7 +249,9 @@ static int safexcel_handle_req_result(struct safexcel_crypto_priv *priv,
+ 	safexcel_complete(priv, ring);
  
-+static void timehist__evsel_priv_destructor(void *priv)
-+{
-+	struct evsel_runtime *r = priv;
-+
-+	if (r) {
-+		free(r->last_time);
-+		free(r);
-+	}
-+}
-+
- static int comm_width = 30;
+ 	if (sreq->nents) {
+-		dma_unmap_sg(priv->dev, areq->src, sreq->nents, DMA_TO_DEVICE);
++		dma_unmap_sg(priv->dev, areq->src,
++			     sg_nents_for_len(areq->src, areq->nbytes),
++			     DMA_TO_DEVICE);
+ 		sreq->nents = 0;
+ 	}
  
- static char *timehist_get_commstr(struct thread *thread)
-@@ -3039,6 +3049,8 @@ static int perf_sched__timehist(struct perf_sched *sched)
- 
- 	setup_pager();
- 
-+	evsel__set_priv_destructor(timehist__evsel_priv_destructor);
-+
- 	/* prefer sched_waking if it is captured */
- 	if (evlist__find_tracepoint_by_name(session->evlist, "sched:sched_waking"))
- 		handlers[1].handler = timehist_sched_wakeup_ignore;
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index c19a583ca9f6..f14c83e6829a 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -1416,6 +1416,15 @@ static void evsel__free_config_terms(struct evsel *evsel)
- 	free_config_terms(&evsel->config_terms);
- }
- 
-+static void (*evsel__priv_destructor)(void *priv);
-+
-+void evsel__set_priv_destructor(void (*destructor)(void *priv))
-+{
-+	assert(evsel__priv_destructor == NULL);
-+
-+	evsel__priv_destructor = destructor;
-+}
-+
- void evsel__exit(struct evsel *evsel)
- {
- 	assert(list_empty(&evsel->core.node));
-@@ -1436,6 +1445,8 @@ void evsel__exit(struct evsel *evsel)
- 	hashmap__free(evsel->per_pkg_mask);
- 	evsel->per_pkg_mask = NULL;
- 	zfree(&evsel->metric_events);
-+	if (evsel__priv_destructor)
-+		evsel__priv_destructor(evsel->priv);
- 	perf_evsel__object.fini(evsel);
- }
- 
-diff --git a/tools/perf/util/evsel.h b/tools/perf/util/evsel.h
-index 0492cafac443..d39d8aab3769 100644
---- a/tools/perf/util/evsel.h
-+++ b/tools/perf/util/evsel.h
-@@ -231,6 +231,8 @@ void evsel__init(struct evsel *evsel, struct perf_event_attr *attr, int idx);
- void evsel__exit(struct evsel *evsel);
- void evsel__delete(struct evsel *evsel);
- 
-+void evsel__set_priv_destructor(void (*destructor)(void *priv));
-+
- struct callchain_param;
- 
- void evsel__config(struct evsel *evsel, struct record_opts *opts,
+@@ -497,7 +499,9 @@ static int safexcel_ahash_send_req(struct crypto_async_request *async, int ring,
+ 			 DMA_FROM_DEVICE);
+ unmap_sg:
+ 	if (req->nents) {
+-		dma_unmap_sg(priv->dev, areq->src, req->nents, DMA_TO_DEVICE);
++		dma_unmap_sg(priv->dev, areq->src,
++			     sg_nents_for_len(areq->src, areq->nbytes),
++			     DMA_TO_DEVICE);
+ 		req->nents = 0;
+ 	}
+ cdesc_rollback:
 -- 
 2.39.5
 
