@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEF521D00E;
-	Tue, 26 Aug 2025 11:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC0A20B7EE;
+	Tue, 26 Aug 2025 11:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207022; cv=none; b=o78SaxvI/lfv+c8glQmMh33bNYQjTFHcYPOp11TZw062WpB7S2QLkAxyQVvO9OhMi5jSRhtysQFkN2y4SVq078dQuybIHKjPOX1nZQfC70GFrYXsyYVB44Iff0L1qddcQT7NWfLxKCar4u5srwNbfsXJ3YcfIdVLOy0yNmTOsv4=
+	t=1756207025; cv=none; b=S4P0wpkaJZJVyLXWUaZUIdE6Wj3y9oVXRZMsd/DoW+gB36iK6IPqIoxafPd3aVwGfoGlmFsAZ8Ng+u2vkGP9fNyBv1UIh2Dxtllf9pvGzStXNIpy1vazWJIRky7QVrucyzoWK363Wm58DcOPNl6oS4vufsyYIXmtWg81LUCD2Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207022; c=relaxed/simple;
-	bh=zUNTarj+BI9ZrqyT/VKzKwtTtmEdEj+FwWy4C10ER6I=;
+	s=arc-20240116; t=1756207025; c=relaxed/simple;
+	bh=6Dsu5ZXvhA77KSqqrU9G4x48OcyUofydbqn2Ho0YiLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDPp7MJ3TDRM9xw2MkjYrc3STeSiUJei2ryuq8E5QLPE0xPKLcoX274cxmDbD1Gfr9h4xgQoo/pCdu/MwCs0Yxj6i9xIqdoISATHbnPycrg7SF5+PPc6iNQfJh6G4/TuIij8urxM3yvuzL/sIwNJmboRg1D7SL8eNuZm5ZZg0HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGT7G/op; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJmxR5QgHSu/oQ2iyuhTBVxpX0RKnrUFIVMa+Y3H+P2Sbz2MacLWExzvzDb3LSC4TWnRDD1QWMOGwExvr6VYq8GVCFahdLbzLhQFLsSfY45Qx4nxzoO6/BDPXx2F65BsTbGK5Ws5njL0p7eEpHOhpsit/yaZo5mCl1h8LMn+Sjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPQyS8nF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGT7G/op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4542C4CEF1;
-	Tue, 26 Aug 2025 11:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPQyS8nF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45641C4CEF1;
+	Tue, 26 Aug 2025 11:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207022;
-	bh=zUNTarj+BI9ZrqyT/VKzKwtTtmEdEj+FwWy4C10ER6I=;
+	s=korg; t=1756207024;
+	bh=6Dsu5ZXvhA77KSqqrU9G4x48OcyUofydbqn2Ho0YiLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGT7G/op65p4aGTNWysC6YhvScpBFJ+dJweVWk8ogkzocN0LABgzB0vqcJ0SC6lXB
-	 gtRdj2mXLMsQ+/2WKy/Os4Opb8uVmnXJhb69tNaiDg34TTVw0HXIzWp93yvrTkXa4y
-	 Yb8hVtTOmjRkOY5FRnXexMErldZWg+Fhv1U+3uLA=
+	b=hPQyS8nF4TmbQFkKnLktA5oDvObAP3XJrKIiEWysnBR94a5VtW6as2pkwkqMGFVwG
+	 U+uOUnLkIIrm3OgD+7T7Ui3QodU0nHAy/zdNLUTYHSP5FEEYqDoy1852flkqAOuemv
+	 7fV1Tv0b5zK4BwakEOCq+FG0tyJPsOJaXLEbA8Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.16 021/457] lib/crypto: arm/poly1305: Fix register corruption in no-SIMD contexts
-Date: Tue, 26 Aug 2025 13:05:05 +0200
-Message-ID: <20250826110937.856305868@linuxfoundation.org>
+Subject: [PATCH 6.16 022/457] lib/crypto: arm64/poly1305: Fix register corruption in no-SIMD contexts
+Date: Tue, 26 Aug 2025 13:05:06 +0200
+Message-ID: <20250826110937.880487652@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,10 +52,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 52c3e242f4d0043186b70d65460ba1767f27494a upstream.
+commit eec76ea5a7213c48529a46eed1b343e5cee3aaab upstream.
 
-Restore the SIMD usability check that was removed by commit 773426f4771b
-("crypto: arm/poly1305 - Add block-only interface").
+Restore the SIMD usability check that was removed by commit a59e5468a921
+("crypto: arm64/poly1305 - Add block-only interface").
 
 This safety check is cheap and is well worth eliminating a footgun.
 While the Poly1305 functions should not be called when SIMD registers
@@ -66,18 +66,18 @@ MACs.  Fixing this is also needed for poly1305_kunit to pass.
 Just use may_use_simd() instead of the original crypto_simd_usable(),
 since poly1305_kunit won't rely on crypto_simd_disabled_for_test.
 
-Fixes: 773426f4771b ("crypto: arm/poly1305 - Add block-only interface")
+Fixes: a59e5468a921 ("crypto: arm64/poly1305 - Add block-only interface")
 Cc: stable@vger.kernel.org
 Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250706231100.176113-3-ebiggers@kernel.org
+Link: https://lore.kernel.org/r/20250706231100.176113-4-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/lib/crypto/poly1305-glue.c |    3 ++-
+ arch/arm64/lib/crypto/poly1305-glue.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm/lib/crypto/poly1305-glue.c
-+++ b/arch/arm/lib/crypto/poly1305-glue.c
+--- a/arch/arm64/lib/crypto/poly1305-glue.c
++++ b/arch/arm64/lib/crypto/poly1305-glue.c
 @@ -7,6 +7,7 @@
  
  #include <asm/hwcap.h>
@@ -86,12 +86,12 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  #include <crypto/internal/poly1305.h>
  #include <linux/cpufeature.h>
  #include <linux/jump_label.h>
-@@ -39,7 +40,7 @@ void poly1305_blocks_arch(struct poly130
+@@ -33,7 +34,7 @@ void poly1305_blocks_arch(struct poly130
+ 			  unsigned int len, u32 padbit)
  {
  	len = round_down(len, POLY1305_BLOCK_SIZE);
- 	if (IS_ENABLED(CONFIG_KERNEL_MODE_NEON) &&
--	    static_branch_likely(&have_neon)) {
-+	    static_branch_likely(&have_neon) && likely(may_use_simd())) {
+-	if (static_branch_likely(&have_neon)) {
++	if (static_branch_likely(&have_neon) && likely(may_use_simd())) {
  		do {
  			unsigned int todo = min_t(unsigned int, len, SZ_4K);
  
