@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3702BE653;
-	Tue, 26 Aug 2025 13:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ADE1ADFFE;
+	Tue, 26 Aug 2025 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215223; cv=none; b=IiECGs5Alb16KV7CDg6y2UYP8HPxESMXfm+z219HDH/eOpyhXNpSDWSvYoN0bhaYUD14MHz4RQr61Osb7ld+Q6eFpHQgHLBl9jgK994p3RnkkJ/Edrf86OguCSpR+dF6DNdmx3UlBt+uWLPePPescg5REv9G5OkHu1Kch+9VB5A=
+	t=1756215225; cv=none; b=diqD54natp+BxMVgF428ynZyGITnKgKp/a67P+Pl1L1sj63riIej0Xyvedblu+pQfCMprG0G5H844bgz5ZIKqyU6Gf68QZgobdoBg3BQpHroaaXghkdr3gtveYU9AO7asCp9AF5ON5XxJlvlDtDCkcJpjYwPQf7ICjSa2VYlX9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215223; c=relaxed/simple;
-	bh=n6nQzqVQm6/c/EZtEkxR7S/7a2Asee8ybAD6f6M07pM=;
+	s=arc-20240116; t=1756215225; c=relaxed/simple;
+	bh=BnLjIobkcfxYaGyFq6uGY5v5ne9BmvKIK31gvrjJ+TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iImy+XWv+ZjpCrIzgkzrLORd1LdhOnwCT2bQz9+OJ2ThOtbVpoSPigLXe4wFwzPrQlLWju+0xZrQpuP+aalWQClcvmFBJtLKO9WfNFD7WBUi1+ur6WxjLFWDcn/OujFNoClPZQD8qq6kaQgVEvz1Zv4bE41bELA//dj5Q6Znrno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bN8xT0Ua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=llyakRg6Xa+jsgVKJxw0BxvwmkF9zLloQor5SVBGIvPZCfmTMXFCvGNX7CwyF2E2a2vISNWE/QgsCv+0hSvc4CbGtKiAy8Eb5VU7TBvrTprpiWxW7cpV+zfukt+65rr0CmfyrG/gpSslVheTcfmpQJBqc5Z8mrrWxY26fKW4j10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdZjKHnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bN8xT0Ua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA5EC113D0;
-	Tue, 26 Aug 2025 13:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdZjKHnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558ADC4CEF1;
+	Tue, 26 Aug 2025 13:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215223;
-	bh=n6nQzqVQm6/c/EZtEkxR7S/7a2Asee8ybAD6f6M07pM=;
+	s=korg; t=1756215225;
+	bh=BnLjIobkcfxYaGyFq6uGY5v5ne9BmvKIK31gvrjJ+TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bN8xT0UaAFT/ZuCxZUUmPWZhqXVFAElRcCKU87CH3n/4/jjGTgcKqg85vYFPz5lWi
-	 ySnsoPnZoI44rvrUrefLiSCOgLAUeyfDC0Ac45l5TWaWBy4wUH+6PR9F6tVjsEGmM3
-	 8knsCQZRQN/Xv2vGIz578cyzCGS8tf9QZBIDw5JI=
+	b=WdZjKHnrRuXEC6lqDTP/SFG6YgJjuAvRBGMuZMWPMEo8icKY6eLU2yEI/xx2/0Nmm
+	 7pBLMIYv9BVJ4hr8WjwAXQm20rPfCCoGN0TW1JVfNNM2ZQh6aO8t6c8eINPAKxdHze
+	 UuD6VktGAniYe2iZwiM3F14SqSzN2dAQCkR1ZzgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 434/482] f2fs: fix to avoid out-of-boundary access in dnode page
-Date: Tue, 26 Aug 2025 13:11:27 +0200
-Message-ID: <20250826110941.551846097@linuxfoundation.org>
+Subject: [PATCH 6.1 435/482] mptcp: disable add_addr retransmission when timeout is 0
+Date: Tue, 26 Aug 2025 13:11:28 +0200
+Message-ID: <20250826110941.577071436@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,72 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 77de19b6867f2740cdcb6c9c7e50d522b47847a4 ]
+[ Upstream commit f5ce0714623cffd00bf2a83e890d09c609b7f50a ]
 
-As Jiaming Zhang reported:
+When add_addr_timeout was set to 0, this caused the ADD_ADDR to be
+retransmitted immediately, which looks like a buggy behaviour. Instead,
+interpret 0 as "no retransmissions needed".
 
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x1c1/0x2a0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x17e/0x800 mm/kasan/report.c:480
- kasan_report+0x147/0x180 mm/kasan/report.c:593
- data_blkaddr fs/f2fs/f2fs.h:3053 [inline]
- f2fs_data_blkaddr fs/f2fs/f2fs.h:3058 [inline]
- f2fs_get_dnode_of_data+0x1a09/0x1c40 fs/f2fs/node.c:855
- f2fs_reserve_block+0x53/0x310 fs/f2fs/data.c:1195
- prepare_write_begin fs/f2fs/data.c:3395 [inline]
- f2fs_write_begin+0xf39/0x2190 fs/f2fs/data.c:3594
- generic_perform_write+0x2c7/0x910 mm/filemap.c:4112
- f2fs_buffered_write_iter fs/f2fs/file.c:4988 [inline]
- f2fs_file_write_iter+0x1ec8/0x2410 fs/f2fs/file.c:5216
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x546/0xa90 fs/read_write.c:686
- ksys_write+0x149/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xf3/0x3d0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The documentation is updated to explicitly state that setting the timeout
+to 0 disables retransmission.
 
-The root cause is in the corrupted image, there is a dnode has the same
-node id w/ its inode, so during f2fs_get_dnode_of_data(), it tries to
-access block address in dnode at offset 934, however it parses the dnode
-as inode node, so that get_dnode_addr() returns 360, then it tries to
-access page address from 360 + 934 * 4 = 4096 w/ 4 bytes.
-
-To fix this issue, let's add sanity check for node id of all direct nodes
-during f2fs_get_dnode_of_data().
-
-Cc: stable@kernel.org
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Closes: https://groups.google.com/g/syzkaller/c/-ZnaaOOfO3M
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
+Cc: stable@vger.kernel.org
+Suggested-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-5-521fe9957892@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Apply to net/mptcp/pm_netlink.c , structural changes in mptcp_pm_alloc_anno_list ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/node.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ Documentation/networking/mptcp-sysctl.rst |    2 ++
+ net/mptcp/pm_netlink.c                    |   18 ++++++++++++------
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -797,6 +797,16 @@ int f2fs_get_dnode_of_data(struct dnode_
- 	for (i = 1; i <= level; i++) {
- 		bool done = false;
+--- a/Documentation/networking/mptcp-sysctl.rst
++++ b/Documentation/networking/mptcp-sysctl.rst
+@@ -20,6 +20,8 @@ add_addr_timeout - INTEGER (seconds)
+ 	resent to an MPTCP peer that has not acknowledged a previous
+ 	ADD_ADDR message.
  
-+		if (nids[i] && nids[i] == dn->inode->i_ino) {
-+			err = -EFSCORRUPTED;
-+			f2fs_err(sbi,
-+				"inode mapping table is corrupted, run fsck to fix it, "
-+				"ino:%lu, nid:%u, level:%d, offset:%d",
-+				dn->inode->i_ino, nids[i], level, offset[level]);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			goto release_pages;
-+		}
++	Do not retransmit if set to 0.
 +
- 		if (!nids[i] && mode == ALLOC_NODE) {
- 			/* alloc new node */
- 			if (!f2fs_alloc_nid(sbi, &(nids[i]))) {
+ 	The default value matches TCP_RTO_MAX. This is a per-namespace
+ 	sysctl.
+ 
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -304,6 +304,7 @@ static void mptcp_pm_add_timer(struct ti
+ 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
+ 	struct mptcp_sock *msk = entry->sock;
+ 	struct sock *sk = (struct sock *)msk;
++	unsigned int timeout;
+ 
+ 	pr_debug("msk=%p\n", msk);
+ 
+@@ -321,6 +322,10 @@ static void mptcp_pm_add_timer(struct ti
+ 		goto out;
+ 	}
+ 
++	timeout = mptcp_get_add_addr_timeout(sock_net(sk));
++	if (!timeout)
++		goto out;
++
+ 	spin_lock_bh(&msk->pm.lock);
+ 
+ 	if (!mptcp_pm_should_add_signal_addr(msk)) {
+@@ -332,7 +337,7 @@ static void mptcp_pm_add_timer(struct ti
+ 
+ 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
+ 		sk_reset_timer(sk, timer,
+-			       jiffies + mptcp_get_add_addr_timeout(sock_net(sk)));
++			       jiffies + timeout);
+ 
+ 	spin_unlock_bh(&msk->pm.lock);
+ 
+@@ -374,6 +379,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 	struct mptcp_pm_add_entry *add_entry = NULL;
+ 	struct sock *sk = (struct sock *)msk;
+ 	struct net *net = sock_net(sk);
++	unsigned int timeout;
+ 
+ 	lockdep_assert_held(&msk->pm.lock);
+ 
+@@ -383,9 +389,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
+ 			return false;
+ 
+-		sk_reset_timer(sk, &add_entry->add_timer,
+-			       jiffies + mptcp_get_add_addr_timeout(net));
+-		return true;
++		goto reset_timer;
+ 	}
+ 
+ 	add_entry = kmalloc(sizeof(*add_entry), GFP_ATOMIC);
+@@ -399,8 +403,10 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 	add_entry->retrans_times = 0;
+ 
+ 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
+-	sk_reset_timer(sk, &add_entry->add_timer,
+-		       jiffies + mptcp_get_add_addr_timeout(net));
++reset_timer:
++	timeout = mptcp_get_add_addr_timeout(net);
++	if (timeout)
++		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
+ 
+ 	return true;
+ }
 
 
