@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6192934DCC1;
-	Tue, 26 Aug 2025 14:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0512E350820;
+	Tue, 26 Aug 2025 14:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218607; cv=none; b=NuQMpdEAurGi5fNCdO7eHjb3HwEc3Hxg+Qv2k9BVftsZXDtbq0ahQ1ro+sIjNo9KWm5AqFNrFiRSyEUpQRih0x4zUwkaaT5PDm9gla+kfto6zGeScq/sDzqLJcktX7Pobi/Q4rzXSf7V3yV1EbOTWNHfMtlPCUKyS+qbWiLu9Kw=
+	t=1756218610; cv=none; b=Gvk4L94j3i9SNXbPEy6lTw6lkwUEFf65lpChHuzfx54+WIUDGxMS4OkEdIG3QBHWVmrjaas/1CYdxIFaR1qiNBRygH9gKqtGUytQVswFCeaTbzmFWKVhHrSVx088Pj2IZZDpSa9p/wT5GFOzLd2i+IFVGfp5ouyFBww7H4i7s3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218607; c=relaxed/simple;
-	bh=K4epvN9WHQNwwGp9/Sl4MA92mBW+hmNADKCKDjh2uJU=;
+	s=arc-20240116; t=1756218610; c=relaxed/simple;
+	bh=tYEIdt20QfEiiGiAFhU/BLBT2FTDct3BccqREfKJUMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nge6GSxsx6qJ+TCJx64p6u0jA7JKZvjiPdw+dJRUX682+/3hcRqVyOFbQATfM8RcAQGecs0kOms3dfGEqpVbT6s8th9xOW8+Ogyg3TFW+wQJvQ4trT+qvfPfAraGEBMOMwU/PVuJOT6PIBg97DHPGCFKRCFAJTVM+8ja15IPSEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ad2Ne+KY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gZtZ5Jrb9+YCWyGl+qDvoB3LevizJYrVTHDXnoOL3ZyqfV+nxPM3FpTGDS34H4zl5q+Z9jKXoRm9egyxoJ85jtFBOp2SZFyLU0zOLO4PUHA8536YkFF/fZjfL2cOMh1vQXIej+ccThzx1T+QECd5yIbMeQaw1aJNutqEZsqXKA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezHCna2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ad2Ne+KY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3E3C4CEF1;
-	Tue, 26 Aug 2025 14:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezHCna2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE96C4CEF1;
+	Tue, 26 Aug 2025 14:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218607;
-	bh=K4epvN9WHQNwwGp9/Sl4MA92mBW+hmNADKCKDjh2uJU=;
+	s=korg; t=1756218609;
+	bh=tYEIdt20QfEiiGiAFhU/BLBT2FTDct3BccqREfKJUMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ad2Ne+KYGPrH6g7Jk5S6fyLNLpJxXtrsAAAGjyhPXS6icX1Punqjj8ywXV7owPF5Z
-	 1YQb1BPTk0MzBPyq12eBQLm2IzhAf4A51P20Mh6NywaSpDqwLShbRgGcUMeVnHP1RU
-	 k03h6AYZhzqmYFizN/lzshTpswNv6pub+vi22Ym0=
+	b=ezHCna2QFW//tsh+/Vdbzx4ar3jfPMVHGwpu1tuZOeIM6AqKbSNoXGGkC1fdWKbnO
+	 QMmu+XPhXki47wTdbeuZB+uOox0ByjVsnWBv2HfJWNvO40UmQvQBCYN0jTmmqdYdVI
+	 Jdk29GvO3JxnMRvJgK4OQbu+T5Q+pDi8Cm12p640=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@nxp.com>,
-	Jun Li <jun.li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 065/403] usb: chipidea: udc: add new API ci_hdrc_gadget_connect
-Date: Tue, 26 Aug 2025 13:06:31 +0200
-Message-ID: <20250826110907.874786249@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.4 048/403] net_sched: sch_sfq: annotate data-races around q->perturb_period
+Date: Tue, 26 Aug 2025 13:06:14 +0200
+Message-ID: <20250826110907.168969231@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,114 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chen <peter.chen@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d16ab536aad208421c5ed32cdcb01b5ab6aa1f19 ]
+[ Upstream commit a17ef9e6c2c1cf0fc6cd6ca6a9ce525c67d1da7f ]
 
-This API is used enable device function, it is called at below
-situations:
-- VBUS is connected during boots up
-- Hot plug occurs during runtime
+sfq_perturbation() reads q->perturb_period locklessly.
+Add annotations to fix potential issues.
 
-Signed-off-by: Peter Chen <peter.chen@nxp.com>
-Signed-off-by: Jun Li <jun.li@nxp.com>
-Stable-dep-of: b7a62611fab7 ("usb: chipidea: add USB PHY event")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240430180015.3111398-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Harshit: Backport to 5.4.y, conflicts resolved due to missing commit:
+  d636fc5dd692 ("net: sched: add rcu annotations around
+  qdisc->qdisc_sleeping")in 5.4.y ]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/udc.c | 63 +++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 31 deletions(-)
+ net/sched/sch_sfq.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-index a6ce6b89b271..e9ef6271e20d 100644
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -1533,6 +1533,33 @@ static const struct usb_ep_ops usb_ep_ops = {
- /******************************************************************************
-  * GADGET block
-  *****************************************************************************/
-+/**
-+ * ci_hdrc_gadget_connect: caller makes sure gadget driver is binded
-+ */
-+static void ci_hdrc_gadget_connect(struct usb_gadget *_gadget, int is_active)
-+{
-+	struct ci_hdrc *ci = container_of(_gadget, struct ci_hdrc, gadget);
-+
-+	if (is_active) {
-+		pm_runtime_get_sync(&_gadget->dev);
-+		hw_device_reset(ci);
-+		hw_device_state(ci, ci->ep0out->qh.dma);
-+		usb_gadget_set_state(_gadget, USB_STATE_POWERED);
-+		usb_udc_vbus_handler(_gadget, true);
-+	} else {
-+		usb_udc_vbus_handler(_gadget, false);
-+		if (ci->driver)
-+			ci->driver->disconnect(&ci->gadget);
-+		hw_device_state(ci, 0);
-+		if (ci->platdata->notify_event)
-+			ci->platdata->notify_event(ci,
-+			CI_HDRC_CONTROLLER_STOPPED_EVENT);
-+		_gadget_stop_activity(&ci->gadget);
-+		pm_runtime_put_sync(&_gadget->dev);
-+		usb_gadget_set_state(_gadget, USB_STATE_NOTATTACHED);
-+	}
-+}
-+
- static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
- {
- 	struct ci_hdrc *ci = container_of(_gadget, struct ci_hdrc, gadget);
-@@ -1549,26 +1576,8 @@ static int ci_udc_vbus_session(struct usb_gadget *_gadget, int is_active)
- 		usb_phy_set_charger_state(ci->usb_phy, is_active ?
- 			USB_CHARGER_PRESENT : USB_CHARGER_ABSENT);
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -611,6 +611,7 @@ static void sfq_perturbation(struct time
+ 	struct Qdisc *sch = q->sch;
+ 	spinlock_t *root_lock = qdisc_lock(qdisc_root_sleeping(sch));
+ 	siphash_key_t nkey;
++	int period;
  
--	if (gadget_ready) {
--		if (is_active) {
--			pm_runtime_get_sync(&_gadget->dev);
--			hw_device_reset(ci);
--			hw_device_state(ci, ci->ep0out->qh.dma);
--			usb_gadget_set_state(_gadget, USB_STATE_POWERED);
--			usb_udc_vbus_handler(_gadget, true);
--		} else {
--			usb_udc_vbus_handler(_gadget, false);
--			if (ci->driver)
--				ci->driver->disconnect(&ci->gadget);
--			hw_device_state(ci, 0);
--			if (ci->platdata->notify_event)
--				ci->platdata->notify_event(ci,
--				CI_HDRC_CONTROLLER_STOPPED_EVENT);
--			_gadget_stop_activity(&ci->gadget);
--			pm_runtime_put_sync(&_gadget->dev);
--			usb_gadget_set_state(_gadget, USB_STATE_NOTATTACHED);
--		}
--	}
-+	if (gadget_ready)
-+		ci_hdrc_gadget_connect(_gadget, is_active);
+ 	get_random_bytes(&nkey, sizeof(nkey));
+ 	spin_lock(root_lock);
+@@ -619,8 +620,12 @@ static void sfq_perturbation(struct time
+ 		sfq_rehash(sch);
+ 	spin_unlock(root_lock);
  
- 	return 0;
+-	if (q->perturb_period)
+-		mod_timer(&q->perturb_timer, jiffies + q->perturb_period);
++	/* q->perturb_period can change under us from
++	 * sfq_change() and sfq_destroy().
++	 */
++	period = READ_ONCE(q->perturb_period);
++	if (period)
++		mod_timer(&q->perturb_timer, jiffies + period);
  }
-@@ -1794,18 +1803,10 @@ static int ci_udc_start(struct usb_gadget *gadget,
- 		return retval;
+ 
+ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
+@@ -662,7 +667,7 @@ static int sfq_change(struct Qdisc *sch,
+ 		q->quantum = ctl->quantum;
+ 		q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
  	}
+-	q->perturb_period = ctl->perturb_period * HZ;
++	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
+ 	if (ctl->flows)
+ 		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
+@@ -724,7 +729,7 @@ static void sfq_destroy(struct Qdisc *sc
+ 	struct sfq_sched_data *q = qdisc_priv(sch);
  
--	pm_runtime_get_sync(&ci->gadget.dev);
--	if (ci->vbus_active) {
--		hw_device_reset(ci);
--	} else {
-+	if (ci->vbus_active)
-+		ci_hdrc_gadget_connect(gadget, 1);
-+	else
- 		usb_udc_vbus_handler(&ci->gadget, false);
--		pm_runtime_put_sync(&ci->gadget.dev);
--		return retval;
--	}
--
--	retval = hw_device_state(ci, ci->ep0out->qh.dma);
--	if (retval)
--		pm_runtime_put_sync(&ci->gadget.dev);
- 
- 	return retval;
- }
--- 
-2.39.5
-
+ 	tcf_block_put(q->block);
+-	q->perturb_period = 0;
++	WRITE_ONCE(q->perturb_period, 0);
+ 	del_timer_sync(&q->perturb_timer);
+ 	sfq_free(q->ht);
+ 	sfq_free(q->slots);
 
 
