@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5A6306D3F;
-	Tue, 26 Aug 2025 14:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27D02BE058;
+	Tue, 26 Aug 2025 14:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217276; cv=none; b=NbJn9FCllR01OQPTOe7efiR2RTyxmDqxp4XU4Ty++Y2xg88y3R5sdEosTxQ8V3E3w/lpwDRo0MoyySbGQMNFVC1KTPMFY9vHRgGI/IMvk5oNBdAtB5kk4OEUYRKDQxzocYHmvAbM7e6ppgOm3wF2EKiMhnwwbkot1dK2gZ4Papw=
+	t=1756217279; cv=none; b=GzULSxugOrF9EgnYnkcALPW+hpWi9MZM/k2b6wrRP2DiUQfjEid8B9MjHCSuAPxcUDaho/8tulfMPprSWpvWqUp3PGoDQpFcY1AEwsHVDUL6fAFFjMTJqI1h0b5E5MVtWJ0fe6xLZVHyXZj/ddkjFpeVpr25ZobkLuQzng7Fwh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217276; c=relaxed/simple;
-	bh=Ei84zOudAJlk2yxA4KUArfKlIeQinhICnYKnpZH4zLM=;
+	s=arc-20240116; t=1756217279; c=relaxed/simple;
+	bh=xE3qvhymuQnaeQ7rPqnGqCt73bX1lBY5G1zfSjylw50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0Unuiilmt3N0mQ4wZc7FhaDQHkB1iKA3NYzP7PUErA3WFXiEIbdeDgiA29ybD0BM13dAjG5CYR2TZ8Cxj/KkeUcGv48QDqKHPUDc0n5d5kXFQ9cB1Lr/FY14N15tv9m6seH1ERSJ+9HIFkCzt0jVu1aJZikwVkq/riB3t+z7W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyUEkZCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9sxLIbHHPV6qVlkpDOWHQwXptSb1fXp43h18kwTptv6TUxiLk9jtJo7/8guYvH10DX2AgyVOtRtJdrtT8x/LIhJeEHI0UjRZzy/Z3C/4uxzdn9QIYwa+SNJo4/fPqDjMKSDfSLiG6nu0CB6t8pUuIF6SliWqin8hn6IKaBNTQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCHY68j6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyUEkZCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F90C4CEF1;
-	Tue, 26 Aug 2025 14:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCHY68j6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB492C4CEF1;
+	Tue, 26 Aug 2025 14:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217276;
-	bh=Ei84zOudAJlk2yxA4KUArfKlIeQinhICnYKnpZH4zLM=;
+	s=korg; t=1756217279;
+	bh=xE3qvhymuQnaeQ7rPqnGqCt73bX1lBY5G1zfSjylw50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WyUEkZCMokcR07vwEEWAlhcsdNrufE0Mac24xPUZOL7EDSK7gVxfJ3yX/ND12WSkv
-	 LVzCmVntEfGpWg8XS1gO1owSdDTUMAfG+5GDX0pgONPX4CvqKas8eqJywBXIIbk6Ez
-	 XVV2iEIKczqIUzMRURLW/9idwKq64UBRoXK1sgN8=
+	b=DCHY68j6oz8bbd+HznrtYL/HLx0gnz5Eh27yrfYTUAwtDftpc7rYLYX5AnDREK1et
+	 GRYatUJ2hSxrVafCLXbPG7nxiZtYxCcxNh5gEgt9wcfk5mmpLqVhhdYnY7g4Rbo8m6
+	 Wk6GiS5oK4L0uHWaKWchT/VnAKQK0KwLKV3nwuO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9b9124ae9b12d5af5d95@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 083/523] vmci: Prevent the dispatching of uninitialized payloads
-Date: Tue, 26 Aug 2025 13:04:53 +0200
-Message-ID: <20250826110926.607712980@linuxfoundation.org>
+	Jacek Kowalski <jacek@jacekk.info>,
+	Simon Horman <horms@kernel.org>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.10 066/523] e1000e: disregard NVM checksum on tgp when valid checksum bit is not set
+Date: Tue, 26 Aug 2025 13:04:36 +0200
+Message-ID: <20250826110926.205998142@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,49 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Jacek Kowalski <jacek@jacekk.info>
 
-[ Upstream commit bfb4cf9fb97e4063f0aa62e9e398025fb6625031 ]
+commit 536fd741c7ac907d63166cdae1081b1febfab613 upstream.
 
-The reproducer executes the host's unlocked_ioctl call in two different
-tasks. When init_context fails, the struct vmci_event_ctx is not fully
-initialized when executing vmci_datagram_dispatch() to send events to all
-vm contexts. This affects the datagram taken from the datagram queue of
-its context by another task, because the datagram payload is not initialized
-according to the size payload_size, which causes the kernel data to leak
-to the user space.
+As described by Vitaly Lifshits:
 
-Before dispatching the datagram, and before setting the payload content,
-explicitly set the payload content to 0 to avoid data leakage caused by
-incomplete payload initialization.
+> Starting from Tiger Lake, LAN NVM is locked for writes by SW, so the
+> driver cannot perform checksum validation and correction. This means
+> that all NVM images must leave the factory with correct checksum and
+> checksum valid bit set. Since Tiger Lake devices were the first to have
+> this lock, some systems in the field did not meet this requirement.
+> Therefore, for these transitional devices we skip checksum update and
+> verification, if the valid bit is not set.
 
-Fixes: 28d6692cd8fb ("VMCI: context implementation.")
-Reported-by: syzbot+9b9124ae9b12d5af5d95@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9b9124ae9b12d5af5d95
-Tested-by: syzbot+9b9124ae9b12d5af5d95@syzkaller.appspotmail.com
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Link: https://lore.kernel.org/r/20250627055214.2967129-1-lizhi.xu@windriver.com
+Signed-off-by: Jacek Kowalski <jacek@jacekk.info>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Fixes: 4051f68318ca9 ("e1000e: Do not take care about recovery NVM checksum")
+Cc: stable@vger.kernel.org
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_context.c | 2 ++
+ drivers/net/ethernet/intel/e1000e/ich8lan.c |    2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_context.c b/drivers/misc/vmw_vmci/vmci_context.c
-index 26ff49fdf0f7..ccadbc0d8f7d 100644
---- a/drivers/misc/vmw_vmci/vmci_context.c
-+++ b/drivers/misc/vmw_vmci/vmci_context.c
-@@ -251,6 +251,8 @@ static int ctx_fire_notification(u32 context_id, u32 priv_flags)
- 		ev.msg.hdr.src = vmci_make_handle(VMCI_HYPERVISOR_CONTEXT_ID,
- 						  VMCI_CONTEXT_RESOURCE_ID);
- 		ev.msg.hdr.payload_size = sizeof(ev) - sizeof(ev.msg.hdr);
-+		memset((char*)&ev.msg.hdr + sizeof(ev.msg.hdr), 0,
-+			ev.msg.hdr.payload_size);
- 		ev.msg.event_data.event = VMCI_EVENT_CTX_REMOVED;
- 		ev.payload.context_id = context_id;
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+@@ -4144,6 +4144,8 @@ static s32 e1000_validate_nvm_checksum_i
+ 			ret_val = e1000e_update_nvm_checksum(hw);
+ 			if (ret_val)
+ 				return ret_val;
++		} else if (hw->mac.type == e1000_pch_tgp) {
++			return 0;
+ 		}
+ 	}
  
--- 
-2.39.5
-
 
 
