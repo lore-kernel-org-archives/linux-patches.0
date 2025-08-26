@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2405129BDBA;
-	Tue, 26 Aug 2025 11:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FD5267386;
+	Tue, 26 Aug 2025 11:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207425; cv=none; b=qbh0xouSGj+sTVtfxP7PEVo3TLuD7RX75aGjb8rWkj81XmTPoevhEC2gaiLMP7Ddst3TWsJJFx3pfaeGVdbb4/avjA9uiByFEnrI15vNba3vsg+gGc0qgCFLft1oJ9npR/FlgZuxbA71k7z/AjHPygC9vt5GFRsWja48Seihny0=
+	t=1756207427; cv=none; b=U6FdKOQcoIWtmmqm88cdRVqp9wG+eIDX1PfFsbKEAREm9ZFYJOGPzk2G1ZeVDnthh0M5Woy7yt9qWFpIxp8bT+mSHpErzWg21fYYRpbwvG6MpZMkdW0aPufikNQCxGgQolBNqiFwZmtuyplkst9onCsWYZAzXVYYQ/QWrIb0G7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207425; c=relaxed/simple;
-	bh=RihBWG0/zt9k0l2WAfJGIA/03FvpdStVvi/Kqe6HXZo=;
+	s=arc-20240116; t=1756207427; c=relaxed/simple;
+	bh=sbHX/Ciz356FO0hX6Q3zAFg4R0Z3lueIJM/o+sjL+d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L5vG4sYFc4Oc6Yy1LsgTgefD2YJTc5STnGIEheUIqdTC3OliKdyP0oz4CMUOqkMzhPrEPeXkS8j1HuClKC3pjWlwVc+eTGqYp80PlKO+2f2IBlm9IZDjopRyZZduUYUM+JEoO/2641FXjMFX5yoWB3UzH50jKzo3EEAg+f2DAHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNvIOQYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OISoDWg6MaUAy8ROwub1kd9uHVhaaoMAWmys1eMAVFVQi2iwKU+iY1njMDpdZa9zGGtYl4xrHRzXWdn+z0Km0yMS1c8RuYPXNfm2vLp9JJKeHKQ8x+NEte8neGU8AR6y4uu3B3Ae5+MAXYvtK0lmqQRbeBu+0JE8CdE/0wpxgY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x50gQEUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNvIOQYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1CBC113CF;
-	Tue, 26 Aug 2025 11:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x50gQEUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E83C4CEF4;
+	Tue, 26 Aug 2025 11:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207425;
-	bh=RihBWG0/zt9k0l2WAfJGIA/03FvpdStVvi/Kqe6HXZo=;
+	s=korg; t=1756207427;
+	bh=sbHX/Ciz356FO0hX6Q3zAFg4R0Z3lueIJM/o+sjL+d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNvIOQYRzND6NEbXKbwcGQTZxw8a1ZpqLFGUxF3o1q3MTqY57Wnzb1/sSgI4nsfBn
-	 JmNR4/tuXQoEVF2vT62iBtVePjAojDpXpogxD0XfmJBaRKFmPytjtpUadhllrlzRjh
-	 IQvad1hTJTDeFJUKMYFK4rq8HoVhafpUUGGh5ZiM=
+	b=x50gQEUs+rWrtGL7i8JlImn7F2XimVf2qdOs9eLH/GUHry+MUkPRlw5rXLd1DDGSI
+	 cxJ2HKW49XxmA2CTK9j4UvU8lJghmfmZA+xcklH/bV06oMIib09V6N7buTigpmLOWY
+	 lrKWWX09HyCR0gpVLBNWTJi6GfU39Z8AlLoTIUTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Gang Ba <Gang.Ba@amd.com>,
+	Peter Shkenev <mustela@erminea.space>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 175/457] drm/amdgpu: Avoid extra evict-restore process.
-Date: Tue, 26 Aug 2025 13:07:39 +0200
-Message-ID: <20250826110941.700021595@linuxfoundation.org>
+Subject: [PATCH 6.16 176/457] drm/amdgpu: check if hubbub is NULL in debugfs/amdgpu_dm_capabilities
+Date: Tue, 26 Aug 2025 13:07:40 +0200
+Message-ID: <20250826110941.724502613@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -45,66 +44,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gang Ba <Gang.Ba@amd.com>
+From: Peter Shkenev <mustela@erminea.space>
 
-commit 1f02f2044bda1db1fd995bc35961ab075fa7b5a2 upstream.
+commit b4a69f7f29c8a459ad6b4d8a8b72450f1d9fd288 upstream.
 
-If vm belongs to another process, this is fclose after fork,
-wait may enable signaling KFD eviction fence and cause parent process queue evicted.
+HUBBUB structure is not initialized on DCE hardware, so check if it is NULL
+to avoid null dereference while accessing amdgpu_dm_capabilities file in
+debugfs.
 
-[677852.634569]  amdkfd_fence_enable_signaling+0x56/0x70 [amdgpu]
-[677852.634814]  __dma_fence_enable_signaling+0x3e/0xe0
-[677852.634820]  dma_fence_wait_timeout+0x3a/0x140
-[677852.634825]  amddma_resv_wait_timeout+0x7f/0xf0 [amdkcl]
-[677852.634831]  amdgpu_vm_wait_idle+0x2d/0x60 [amdgpu]
-[677852.635026]  amdgpu_flush+0x34/0x50 [amdgpu]
-[677852.635208]  filp_flush+0x38/0x90
-[677852.635213]  filp_close+0x14/0x30
-[677852.635216]  do_close_on_exec+0xdd/0x130
-[677852.635221]  begin_new_exec+0x1da/0x490
-[677852.635225]  load_elf_binary+0x307/0xea0
-[677852.635231]  ? srso_alias_return_thunk+0x5/0xfbef5
-[677852.635235]  ? ima_bprm_check+0xa2/0xd0
-[677852.635240]  search_binary_handler+0xda/0x260
-[677852.635245]  exec_binprm+0x58/0x1a0
-[677852.635249]  bprm_execve.part.0+0x16f/0x210
-[677852.635254]  bprm_execve+0x45/0x80
-[677852.635257]  do_execveat_common.isra.0+0x190/0x200
-
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Gang Ba <Gang.Ba@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Peter Shkenev <mustela@erminea.space>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2409,13 +2409,11 @@ void amdgpu_vm_adjust_size(struct amdgpu
-  */
- long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout)
- {
--	timeout = dma_resv_wait_timeout(vm->root.bo->tbo.base.resv,
--					DMA_RESV_USAGE_BOOKKEEP,
--					true, timeout);
-+	timeout = drm_sched_entity_flush(&vm->immediate, timeout);
- 	if (timeout <= 0)
- 		return timeout;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -3988,7 +3988,7 @@ static int capabilities_show(struct seq_
  
--	return dma_fence_wait_timeout(vm->last_unlocked, true, timeout);
-+	return drm_sched_entity_flush(&vm->delayed, timeout);
- }
+ 	struct hubbub *hubbub = dc->res_pool->hubbub;
  
- static void amdgpu_vm_destroy_task_info(struct kref *kref)
+-	if (hubbub->funcs->get_mall_en)
++	if (hubbub && hubbub->funcs->get_mall_en)
+ 		hubbub->funcs->get_mall_en(hubbub, &mall_in_use);
+ 
+ 	if (dc->cap_funcs.get_subvp_en)
 
 
