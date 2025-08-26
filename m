@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE57352FD9;
-	Tue, 26 Aug 2025 14:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF42AE7F;
+	Tue, 26 Aug 2025 14:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219365; cv=none; b=qVriv3QPwaTFrLYqS315kBBlsZyD5fI5sJcDBK3urrkwekelVvAcTcrTmBKu6BRV9KypgK68tGkGT5k2+ofsYYEzXU1YpODnPeGzBQ0AUsFSpgzkovTZFxlDIFdY0Vm1cV+/uyA7Zach/7zlyO9MQmaRZAXhpLWz/i4o7LZtgrs=
+	t=1756219368; cv=none; b=QqPI3nxsRfZmLrnz6hoocyYeao8UWB/0GOP8ZOAiLvVOscEpfPxCBoJe43F5KEfo3rOn4C4C5+AzRYdC5GjjCGFJNDfFF4nxi2us9koiBJG/X5S4GM2XaggJ9xGOjWd9uSpVIrRzY1ZR5yuIhWNqhK93D1njxGNCJHRf9+bjiZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219365; c=relaxed/simple;
-	bh=CuN9qOBnc7QYMQNlXIymgoXZdIs1H7cXHnl/sqtqSCk=;
+	s=arc-20240116; t=1756219368; c=relaxed/simple;
+	bh=gzwpI30xlvKfkC4UIrN2+yfmzUi+bkMLxtkOaLzezZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/TTXBQ+yVomdOTxNRS3+huFxfmY7P/kpWoSrXVl0M3wi12GkIYz5Lgvo/gvcS4+P1p6N6ka1uh0yUJvmHfebJq1JQ82NIwjMorQOZa/iah9jWKTTr3Jm4b7zt9iidoLrJJAROsUAZA3KXelbqxhVv/93lM7ng9WuF1fDUVRD+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKWEI6Vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjMEk4vuR6j1l2OZn1+I0xk4VV2bSmP71/spdTQxu2KOZQrYYBTn3koPf7qSaS0T/bb8I61F2+uEbtjtfYRhcdOZm71l/WwreTiybHHFtX+ryOTOAmT31koc0HlqCw9ujf2pmn6DW0DXb/lqn60I+/3KI/22fG9djqqyeA3sG+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/rxbOTT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKWEI6Vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D75BC4CEF1;
-	Tue, 26 Aug 2025 14:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/rxbOTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE66C4CEF1;
+	Tue, 26 Aug 2025 14:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219364;
-	bh=CuN9qOBnc7QYMQNlXIymgoXZdIs1H7cXHnl/sqtqSCk=;
+	s=korg; t=1756219367;
+	bh=gzwpI30xlvKfkC4UIrN2+yfmzUi+bkMLxtkOaLzezZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKWEI6VlU+krwluS54c/4zaO+MS43Wg5lsv2KfX0Vjo/H/atJ02kDv45KPDH7BmWB
-	 Fa1R/sz5+OZMbMxmpdoO3pHSY75nP+tvCibFPJ2qsar6wx9jEo1VQmf7copJIxBStJ
-	 GnT/S/+wglySvt7MV3xibMVxoHjQER42vG1i2QDg=
+	b=N/rxbOTTJLaVyVzWUzzpBkkbOi1Y0WC6vLRM0Iq0WaMFe5PUFGh3vxPtHuEaet5h2
+	 uVKWM9YgG89XkFEMRQRYriEZSarWY5Z37/l7dnWfykW5Qgk113FcEi8Gb4oI17f0bq
+	 +UMj2YSPfrfOg87KdVFWE319kF3x5/a7t5uLrsDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.4 322/403] usb: dwc3: Ignore late xferNotReady event to prevent halt timeout
-Date: Tue, 26 Aug 2025 13:10:48 +0200
-Message-ID: <20250826110915.706905731@linuxfoundation.org>
+	KernelCI bot <bot@kernelci.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 5.4 323/403] ARM: 9448/1: Use an absolute path to unified.h in KBUILD_AFLAGS
+Date: Tue, 26 Aug 2025 13:10:49 +0200
+Message-ID: <20250826110915.734392377@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,46 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 58577118cc7cec9eb7c1836bf88f865ff2c5e3a3 upstream.
+commit 87c4e1459e80bf65066f864c762ef4dc932fad4b upstream.
 
-During a device-initiated disconnect, the End Transfer command resets
-the event filter, allowing a new xferNotReady event to be generated
-before the controller is fully halted. Processing this late event
-incorrectly triggers a Start Transfer, which prevents the controller
-from halting and results in a DSTS.DEVCTLHLT bit polling timeout.
+After commit d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper
+flags and language target"), which updated as-instr to use the
+'assembler-with-cpp' language option, the Kbuild version of as-instr
+always fails internally for arch/arm with
 
-Ignore the late xferNotReady event if the controller is already in a
-disconnected state.
+  <command-line>: fatal error: asm/unified.h: No such file or directory
+  compilation terminated.
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250807090700.2397190-1-khtsai@google.com
+because '-include' flags are now taken into account by the compiler
+driver and as-instr does not have '$(LINUXINCLUDE)', so unified.h is not
+found.
+
+This went unnoticed at the time of the Kbuild change because the last
+use of as-instr in Kbuild that arch/arm could reach was removed in 5.7
+by commit 541ad0150ca4 ("arm: Remove 32bit KVM host support") but a
+stable backport of the Kbuild change to before that point exposed this
+potential issue if one were to be reintroduced.
+
+Follow the general pattern of '-include' paths throughout the tree and
+make unified.h absolute using '$(srctree)' to ensure KBUILD_AFLAGS can
+be used independently.
+
+Closes: https://lore.kernel.org/CACo-S-1qbCX4WAVFA63dWfHtrRHZBTyyr2js8Lx=Az03XHTTHg@mail.gmail.com/
+
+Cc: stable@vger.kernel.org
+Fixes: d5c8d6e0fa61 ("kbuild: Update assembler calls to use proper flags and language target")
+Reported-by: KernelCI bot <bot@kernelci.org>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+[nathan: Fix conflicts]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2937,6 +2937,15 @@ static void dwc3_gadget_endpoint_transfe
- static void dwc3_gadget_endpoint_transfer_not_ready(struct dwc3_ep *dep,
- 		const struct dwc3_event_depevt *event)
- {
-+	/*
-+	 * During a device-initiated disconnect, a late xferNotReady event can
-+	 * be generated after the End Transfer command resets the event filter,
-+	 * but before the controller is halted. Ignore it to prevent a new
-+	 * transfer from starting.
-+	 */
-+	if (!dep->dwc->connected)
-+		return;
-+
- 	dwc3_gadget_endpoint_frame_from_event(dep, event);
- 	(void) __dwc3_gadget_start_isoc(dep);
- }
+--- a/arch/arm/Makefile
++++ b/arch/arm/Makefile
+@@ -136,7 +136,7 @@ endif
+ 
+ # Need -Uarm for gcc < 3.x
+ KBUILD_CFLAGS	+=$(CFLAGS_ABI) $(CFLAGS_ISA) $(arch-y) $(tune-y) $(call cc-option,-mshort-load-bytes,$(call cc-option,-malignment-traps,)) -msoft-float -Uarm
+-KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) $(arch-y) $(tune-y) -include asm/unified.h -msoft-float
++KBUILD_AFLAGS	+=$(CFLAGS_ABI) $(AFLAGS_ISA) $(arch-y) $(tune-y) -include $(srctree)/arch/arm/include/asm/unified.h -msoft-float
+ 
+ CHECKFLAGS	+= -D__arm__
+ 
 
 
