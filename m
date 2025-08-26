@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56F33431FE;
-	Tue, 26 Aug 2025 13:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE7828FD;
+	Tue, 26 Aug 2025 13:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214387; cv=none; b=PKJ/d6jgnZ7Zc+M8O3bqeGv7dFzHNewh8Q7l4ROhkzYT1+elFl+TW3EjWl7xm7Wo0hVJIgDUUz48KDZKPfPFtYa1JbCZZf3Rgj2QTyr19TPJSOhymO+BC/8gcYy6EaJZZXsH7wtwv+RBBRSz8DCbCrpEBhZPXBvFaiSCZe+9mUo=
+	t=1756214390; cv=none; b=r4a375+wRVLnxJPT0FEbK7WHJUzc4bEho3X2Zyg5NJxRV7HMeuA0HrmHwFHwWGj8NnWsw5juYAeaPnD6B3WxbF4YMfPg8pzBslS7UuNo00wDqT+7oMp5YjIq/HjtHAOeNcjvkRe/o6VyEUSFXU7UiKLS23/gkMpeMEXu/V0Y8QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214387; c=relaxed/simple;
-	bh=2D6QSr4o0o3rKeU/M/mvqghnBrnEklTrYCoxEr0vC/I=;
+	s=arc-20240116; t=1756214390; c=relaxed/simple;
+	bh=zLivDoERfX4JA+yfMKxnR0IXoQkYO/k5B6vW82HXzi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyBhzZfl168WPOrzQ/C0lwbEfPA5+8dT2V5YodQ1eHNQUJG9qZdkcfFGqVQB5eWD+CAA881Cvj5ZNFuMPir3tco+BwPgl24MvG57d8KPmqDrY4oA+bivkiWmcIInmriz48nXApY/1Lfkqsht/70u9rNTCL9XZNPXo/8FzVkG208=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0TpE5in; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVVAascohclYY69zg+mhsS2Ifo/KcOlsvUMpIapLwv6tlIXykemAyqoZizqotvI1ByajaRu6fI8VbhlNxNlA+d58kl/q0CCNDBQCZ+iTHJtBN6dYHD4/mPW9joZz9XQYKsjiuv1lIuQbup/3jHjQZ6MgDLkt99Ji21OdD2w+1rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgGxvAZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0TpE5in"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021C6C4CEF1;
-	Tue, 26 Aug 2025 13:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgGxvAZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB84C4CEF1;
+	Tue, 26 Aug 2025 13:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214387;
-	bh=2D6QSr4o0o3rKeU/M/mvqghnBrnEklTrYCoxEr0vC/I=;
+	s=korg; t=1756214390;
+	bh=zLivDoERfX4JA+yfMKxnR0IXoQkYO/k5B6vW82HXzi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0TpE5inhwhvpKwYJeleEgKddIWw9QVl61biGTJ3V1zeE9amYhBwo2xZ4MKWavZni
-	 Zc18VzPiWCTSGL26LPSWlxGyVkQ/4UQ6qPLILXcK+3KrqhmV9Gy8as1Pl9tlMWoV8+
-	 ccA9m/oEODRWoedC/AzFJuyXvpZfRvKtwVQo8nDQ=
+	b=UgGxvAZ6wH31nhd18Pbmow2jblmGUgu1L+wH9Rj5EpjqvIOjEUm/5+qlY4tFn+69i
+	 llK8nfXQRzlnQyxS94ncYUPuwQaSDKaQaKtmk3Ln3O937COIK27KHyActNTMIriEB2
+	 vKvzwqv7aFESrk1PzY1ObZrzYJUoPjyYiaunUu4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/482] PM: runtime: Clear power.needs_force_resume in pm_runtime_reinit()
-Date: Tue, 26 Aug 2025 13:05:40 +0200
-Message-ID: <20250826110932.979871608@linuxfoundation.org>
+Subject: [PATCH 6.1 088/482] thermal: sysfs: Return ENODATA instead of EAGAIN for reads
+Date: Tue, 26 Aug 2025 13:05:41 +0200
+Message-ID: <20250826110933.003689035@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,39 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 89d9cec3b1e9c49bae9375a2db6dc49bc7468af0 ]
+[ Upstream commit 1a4aabc27e95674837f2e25f4ef340c0469e6203 ]
 
-Clear power.needs_force_resume in pm_runtime_reinit() in case it has
-been set by pm_runtime_force_suspend() invoked from a driver remove
-callback.
+According to POSIX spec, EAGAIN returned by read with O_NONBLOCK set
+means the read would block. Hence, the common implementation in
+nonblocking model will poll the file when the nonblocking read returns
+EAGAIN. However, when the target file is thermal zone, this mechanism
+will totally malfunction because thermal zone doesn't implement sysfs
+notification and thus the poll will never return.
 
-Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
+For example, the read in Golang implemnts such method and sometimes
+hangs at reading some thermal zones via sysfs.
+
+Change to return -ENODATA instead of -EAGAIN to userspace.
+
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://patch.msgid.link/20250620-temp-v3-1-6becc6aeb66c@chromium.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://patch.msgid.link/9495163.CDJkKcVGEf@rjwysocki.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/thermal/thermal_sysfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 313ccb7e7764..61d8ebc2de59 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1753,6 +1753,11 @@ void pm_runtime_reinit(struct device *dev)
- 				pm_runtime_put(dev->parent);
- 		}
- 	}
-+	/*
-+	 * Clear power.needs_force_resume in case it has been set by
-+	 * pm_runtime_force_suspend() invoked from a driver remove callback.
-+	 */
-+	dev->power.needs_force_resume = false;
+diff --git a/drivers/thermal/thermal_sysfs.c b/drivers/thermal/thermal_sysfs.c
+index bd7596125461..7ee89e99acbf 100644
+--- a/drivers/thermal/thermal_sysfs.c
++++ b/drivers/thermal/thermal_sysfs.c
+@@ -39,10 +39,13 @@ temp_show(struct device *dev, struct device_attribute *attr, char *buf)
+ 
+ 	ret = thermal_zone_get_temp(tz, &temperature);
+ 
+-	if (ret)
+-		return ret;
++	if (!ret)
++		return sprintf(buf, "%d\n", temperature);
+ 
+-	return sprintf(buf, "%d\n", temperature);
++	if (ret == -EAGAIN)
++		return -ENODATA;
++
++	return ret;
  }
  
- /**
+ static ssize_t
 -- 
 2.39.5
 
