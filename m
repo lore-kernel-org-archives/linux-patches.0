@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAB0225390;
-	Tue, 26 Aug 2025 14:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9611DE8BE;
+	Tue, 26 Aug 2025 14:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216987; cv=none; b=pv2y8nTPpQkNq+p2hJcfdMZ2HC9Vd0HLPJ9Tx9+uQ0Xk0FuP0frIF96UAGL1+fH2TuwGjGEqwUV3+6CB+sVSEeU1hwvgE4LjBC8jW2iH6zLbCKy4LgYXqz4YHXKpsQs4aVpofFs/AFnkXPQdhW8QOWTJGsN15in3h715Nrvw658=
+	t=1756216990; cv=none; b=EsOb2k0kio/qGSLQpyj8LnctwGvSj5rpFzt5aayrCSVQucLlaDBb1FL+rh9OFHHXmx9LulQnWw7+jRz4BKwK3nFX4Wr1ejAm4KedfmLpiCfIsKfJzwMGM+Y4lUNTL8Lh/9tGErGS/Bxkqt9swjEMyZhsjdqei6cFNURpui4BuXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216987; c=relaxed/simple;
-	bh=dzg+QoJDBBTvZep2bZxf3eBw+QdzvPLzGRiBuXSTYJU=;
+	s=arc-20240116; t=1756216990; c=relaxed/simple;
+	bh=BxQBnPvBDPQH5IKGCJ8iomiCeb4XWfCoU+GHhuSPGIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbLpFJKQh+/dptsveS57vRQPlz9cj+ZYyLZOxVfova+SaFBLk+NxeMBmJbLWTJGxapXjiZlcY51GpkQhNbPFTtDTYCKMTTXyuV/bLaXhb1+xCIBrl38BU1oR1kWWqOSlrCmLIKbmvIVdslnQSkox4Rn/Mo2XJInazs7w1Y85pdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtKgO4To; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rMRF7JGP4z30t4NDHRh/CA/mDC7TGEDPDaOP/W0bE05ktKA8gwYVcaASEOlhw7f0U+UTMuv/Oit+WbX67IDGNazEhDI4iGCKGzyHKq4NdbaN7JnCgnKOWxUrFz3LZthIzHfofKd8z0KHO2fqm0RFGf6McDQFRUwlNqm2YpPjjOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/k3H1Qi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtKgO4To"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317ECC4CEF1;
-	Tue, 26 Aug 2025 14:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/k3H1Qi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF22C4CEF1;
+	Tue, 26 Aug 2025 14:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216987;
-	bh=dzg+QoJDBBTvZep2bZxf3eBw+QdzvPLzGRiBuXSTYJU=;
+	s=korg; t=1756216990;
+	bh=BxQBnPvBDPQH5IKGCJ8iomiCeb4XWfCoU+GHhuSPGIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtKgO4TofDTb/7yC562GLg/O2yCyGSz0jh6iLCe8EtsXdSCAClsmVhzNg7EhDb3lj
-	 15z6/cBQdecAE2iTz8WLJMc/3ZALUjAdJNUvRuXkeuZquXBBxS8a0uObzwKTUGfO7X
-	 k7UhXBDspbqGsPrQMSiGuLLgc3ZDqzPVqYiO9K7I=
+	b=S/k3H1QibKxViDFPE33nOpad/2Ma9bwLQpDrBaZN5FxJM1iBJINPM+8sSWfjMPVNt
+	 5YjegpmUNSAXxB2os7go5u4Cm/N+Vfyx/z+BCmOEinqxNHZSN/O9i9h5Io7/igRKT3
+	 49b3JISIxbIu1GDS10i4MJEKN0G4R3TV4nYmWdgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 617/644] iio: light: as73211: Ensure buffer holes are zeroed
-Date: Tue, 26 Aug 2025 13:11:48 +0200
-Message-ID: <20250826111001.843552123@linuxfoundation.org>
+Subject: [PATCH 5.15 618/644] mm/memory-failure: fix infinite UCE for VM_PFNMAP pfn
+Date: Tue, 26 Aug 2025 13:11:49 +0200
+Message-ID: <20250826111001.869802737@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,36 +59,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 433b99e922943efdfd62b9a8e3ad1604838181f2 ]
+[ Upstream commit 2e6053fea379806269c4f7f5e36b523c9c0fb35c ]
 
-Given that the buffer is copied to a kfifo that ultimately user space
-can read, ensure we zero it.
+When memory_failure() is called for a already hwpoisoned pfn,
+kill_accessing_process() will be called to kill current task.  However, if
+the vma of the accessing vaddr is VM_PFNMAP, walk_page_range() will skip
+the vma in walk_page_test() and return 0.
 
-Fixes: 403e5586b52e ("iio: light: as73211: New driver")
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://patch.msgid.link/20250802164436.515988-2-jic23@kernel.org
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Before commit aaf99ac2ceb7 ("mm/hwpoison: do not send SIGBUS to processes
+with recovered clean pages"), kill_accessing_process() will return EFAULT.
+For x86, the current task will be killed in kill_me_maybe().
+
+However, after this commit, kill_accessing_process() simplies return 0,
+that means UCE is handled properly, but it doesn't actually.  In such
+case, the user task will trigger UCE infinitely.
+
+To fix it, add .test_walk callback for hwpoison_walk_ops to scan all vmas.
+
+Link: https://lkml.kernel.org/r/20250815073209.1984582-1-tujinjiang@huawei.com
+Fixes: aaf99ac2ceb7 ("mm/hwpoison: do not send SIGBUS to processes with recovered clean pages")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Jane Chu <jane.chu@oracle.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 [ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/as73211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory-failure.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/iio/light/as73211.c
-+++ b/drivers/iio/light/as73211.c
-@@ -573,7 +573,7 @@ static irqreturn_t as73211_trigger_handl
- 	struct {
- 		__le16 chan[4];
- 		s64 ts __aligned(8);
--	} scan;
-+	} scan = { };
- 	int data_result, ret;
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -674,9 +674,17 @@ static int hwpoison_hugetlb_range(pte_t
+ #define hwpoison_hugetlb_range	NULL
+ #endif
  
- 	mutex_lock(&data->mutex);
++static int hwpoison_test_walk(unsigned long start, unsigned long end,
++			     struct mm_walk *walk)
++{
++	/* We also want to consider pages mapped into VM_PFNMAP. */
++	return 0;
++}
++
+ static struct mm_walk_ops hwp_walk_ops = {
+ 	.pmd_entry = hwpoison_pte_range,
+ 	.hugetlb_entry = hwpoison_hugetlb_range,
++	.test_walk = hwpoison_test_walk,
+ };
+ 
+ /*
 
 
