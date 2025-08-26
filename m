@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B8F29CB32;
-	Tue, 26 Aug 2025 11:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADD7321459;
+	Tue, 26 Aug 2025 11:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207208; cv=none; b=qgw74OKzDes93FGWTIrLvUQ/QiCpj4ejhEPCfjhw6iU+sSrzPhmw4Nj/LQRk3biamcrJd9KpcG1lLAsP6WvAbyWKl0Gl52/y8kd5QnXgsOr2aOCa/P1ErZ25dJF06nOmIw4JQ8eJGUFnDsTIA6Ei5mrcwoF6Muiss8gLFY9Cb0w=
+	t=1756207211; cv=none; b=fmXFiV7H4ouuz3kmTehLEIUbbm5o3zz7r6v+t/REn7PawIxkesbZhs47GbtnWMx5EwRgtENRVD4rENuEpslWYSGPHzv2bsC2eBoZUw+9rlbU8bai8FDjj+XCKdyC/ddlvzTXDcLPlvgJiI49sB1zI6pZeRNV69JuctmCWD08Dos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207208; c=relaxed/simple;
-	bh=3KhNv339V30gP3z58/gs49840k+JoTz9/itbaXbOk4c=;
+	s=arc-20240116; t=1756207211; c=relaxed/simple;
+	bh=H0VKSfbs/N2PQdPsVE0OmRMob9ft5ggO8PUx+wnoiVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9F8+BVQ2ipfBvFnE00ursHayyv6ZH5uxmmcJ9Bj7UX9ztARk99UHrY2Mvu8ISn2z92hizjnRDrSB285z1eJZC0vlLff0KKRrGiyl6FrfX+i26j9fNQIrRVmhB6kgWMcu9aLPw1BgnVMqPP9CswbabJD9oeCfh2Ns0dHt6WtPXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7IrDTWZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gw4sPiuf1an8HW46b5qJApct0RMQaqFE7X5Vqv9eEerBtpjMPXWk098PDFn3OiDrEZBTOaphCtBv+b22UdnHoqVdX7OuhoJQtrjsMR8Yslu7l6e5MhOBZC8Cg1h5pn4xTBgqsP0qenDPhEfACMb9G89uVZUmR5LNmIMPeiCgcJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySa5ycc3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7IrDTWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE27C4CEF4;
-	Tue, 26 Aug 2025 11:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySa5ycc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0503AC4CEF1;
+	Tue, 26 Aug 2025 11:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207208;
-	bh=3KhNv339V30gP3z58/gs49840k+JoTz9/itbaXbOk4c=;
+	s=korg; t=1756207211;
+	bh=H0VKSfbs/N2PQdPsVE0OmRMob9ft5ggO8PUx+wnoiVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7IrDTWZMlVikTi5JQV5ninps6Aps2l9tdv14+3gV5EyFlR9I5P6jQ550HU8Dt73t
-	 nDXkwmSe7u8sQtjO0tXmng3E+bWlWZHj3+WwGdwFe3c0aWZGfi9R7IlQ9dzM2T+kTX
-	 3qBq7NKT0nPp4eYGgJSLGB22sn7rVhOGfYJEbLdo=
+	b=ySa5ycc319+D9GDNPknAj17tjQqlWZ+qCGaI5CpfceBATqesSat/KPcK3FLIVu65Z
+	 rVbWRCI2FdW0M5qXdf1/+RPRCEkvaaJ5ChnilxO6ujD9Tyq9EUHnZ841+bURdReWg1
+	 bGXoKuwag051GeynrkLxqCCno+pQZT2Cn858qpi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Fourier <fourier.thomas@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.16 093/457] mtd: rawnand: fsmc: Add missing check after DMA map
-Date: Tue, 26 Aug 2025 13:06:17 +0200
-Message-ID: <20250826110939.676766065@linuxfoundation.org>
+Subject: [PATCH 6.16 094/457] mtd: rawnand: renesas: Add missing check after DMA map
+Date: Tue, 26 Aug 2025 13:06:18 +0200
+Message-ID: <20250826110939.701271599@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,31 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 6c4dab38431fee3d39a841d66ba6f2890b31b005 upstream.
+commit 79e441ee47949376e3bc20f085cf017b70523d0f upstream.
 
 The DMA map functions can fail and should be tested for errors.
 
-Fixes: 4774fb0a48aa ("mtd: nand/fsmc: Add DMA support")
+Fixes: d8701fe890ec ("mtd: rawnand: renesas: Add new NAND controller driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20250702065806.20983-2-fourier.thomas%40gmail.com
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/fsmc_nand.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/nand/raw/renesas-nand-controller.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/mtd/nand/raw/fsmc_nand.c
-+++ b/drivers/mtd/nand/raw/fsmc_nand.c
-@@ -503,6 +503,8 @@ static int dma_xfer(struct fsmc_nand_dat
- 
- 	dma_dev = chan->device;
- 	dma_addr = dma_map_single(dma_dev->dev, buffer, len, direction);
-+	if (dma_mapping_error(dma_dev->dev, dma_addr))
-+		return -EINVAL;
- 
- 	if (direction == DMA_TO_DEVICE) {
- 		dma_src = dma_addr;
+--- a/drivers/mtd/nand/raw/renesas-nand-controller.c
++++ b/drivers/mtd/nand/raw/renesas-nand-controller.c
+@@ -426,6 +426,9 @@ static int rnandc_read_page_hw_ecc(struc
+ 	/* Configure DMA */
+ 	dma_addr = dma_map_single(rnandc->dev, rnandc->buf, mtd->writesize,
+ 				  DMA_FROM_DEVICE);
++	if (dma_mapping_error(rnandc->dev, dma_addr))
++		return -ENOMEM;
++
+ 	writel(dma_addr, rnandc->regs + DMA_ADDR_LOW_REG);
+ 	writel(mtd->writesize, rnandc->regs + DMA_CNT_REG);
+ 	writel(DMA_TLVL_MAX, rnandc->regs + DMA_TLVL_REG);
+@@ -606,6 +609,9 @@ static int rnandc_write_page_hw_ecc(stru
+ 	/* Configure DMA */
+ 	dma_addr = dma_map_single(rnandc->dev, (void *)rnandc->buf, mtd->writesize,
+ 				  DMA_TO_DEVICE);
++	if (dma_mapping_error(rnandc->dev, dma_addr))
++		return -ENOMEM;
++
+ 	writel(dma_addr, rnandc->regs + DMA_ADDR_LOW_REG);
+ 	writel(mtd->writesize, rnandc->regs + DMA_CNT_REG);
+ 	writel(DMA_TLVL_MAX, rnandc->regs + DMA_TLVL_REG);
 
 
