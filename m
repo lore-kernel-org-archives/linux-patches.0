@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9478835209D;
-	Tue, 26 Aug 2025 14:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8116352FF2;
+	Tue, 26 Aug 2025 14:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219050; cv=none; b=bWF/BvN1ZVAoxmWmlIDQ7MvmoodZiKnUqZ4wESrWAp2yDG/pTDUg74ReCnQkSv04U0wwWiakpuC0oastrHX4nzQqRyyurL0oC8g2HSpBwe5IC4N5iS/kdKiZUTN2jSiWpARqAt/QV6YqMHo9QfdmtVp1yKXLSxwAqhSFxuBDv7c=
+	t=1756219053; cv=none; b=WRGv8sKCqPVhe/F2MtNUyxzMgUWomoQwCuc+uvdQH7KuQ66ZcRGaBo0vJ7ByGdtuMMnI6dWl0Mls42TiDITQY8rXVROvqFjgRgCuiWkr+B5xxRbFrI85QLSVeDVkWWgYBQEdBdz0/GjeHUKsD3zy7i9u5XL8AZuyrkWNV8/petk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219050; c=relaxed/simple;
-	bh=UUH84azPrOBw8yMfH3P6owR9ZG4Bx/bsv/K5C58aPv8=;
+	s=arc-20240116; t=1756219053; c=relaxed/simple;
+	bh=QJKpUPyt97u/gLOv76JAdgP9BELmb22NBJRsMaPGNcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL8VgN8hFSVgvrWaY3rkndx/OuiB/qOSIAiDqORLqVarEOMHzUcHOXLlSf1G7I8xb2Lr+iE/nL7XqU54Hsd8vuSlpgEF7ODTOKb2YIzPHznnX/AJB4UJnP8jXUgsUIaHC3qEI7bPAUgkHlxf/TDRpT/bBDOCivrtgsC6mUkULlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEdsO7e2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qChB+EuIhVoRpu6gQziqOxNjl+yARlaiVCExUYhmtc8oCEMOF68PDWv6TF+pcVqkXpvBt+wnjM7cvWY8j5+U1d+FGDiNP0Umng4gRGlM+KE8GDjlDocEXeJSP3lbiXeAGApUg5L9Im+Bo3VlkDg2icR/RWLZ23lWLiGY7RNUpjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P82hU8Ht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEdsO7e2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9D2C4CEF1;
-	Tue, 26 Aug 2025 14:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P82hU8Ht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769EAC4CEF1;
+	Tue, 26 Aug 2025 14:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219050;
-	bh=UUH84azPrOBw8yMfH3P6owR9ZG4Bx/bsv/K5C58aPv8=;
+	s=korg; t=1756219052;
+	bh=QJKpUPyt97u/gLOv76JAdgP9BELmb22NBJRsMaPGNcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEdsO7e2I2VSOMsxc9WkFphw5mBn4vvBuZSXRXqMRE/afrc61/MmxFPeddYLn2H6n
-	 VcA7FLsPTILSh4T4Yi2hqLy20sg7vPjDM/mRktQQ/c3zTDybsH9Vv3RkIk0+ZASZLm
-	 RI3GRw3k9iB+f2Kw8daynqiqbhPbWjACNgV7V7J0=
+	b=P82hU8Ht0QfFZf19/YRxrBAgLn4EfHLMXwgjdUGaB7dagjuaaGym4+KBEKcfGVnWr
+	 4wdgfA7EkGbYv5yHKJORguFm64WpVHFO0U8aCfE1E3wLBh/ld73VFbNUptYDdnXxPd
+	 ZLUmbhLWag5YZhrCl6xDMmRfGiTWYCWTb3igX8jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Showrya M N <showrya@chelsio.com>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
-	Chris Leech <cleech@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 234/403] scsi: libiscsi: Initialize iscsi_conn->dd_data only if memory is allocated
-Date: Tue, 26 Aug 2025 13:09:20 +0200
-Message-ID: <20250826110913.292404193@linuxfoundation.org>
+Subject: [PATCH 5.4 235/403] fs/orangefs: use snprintf() instead of sprintf()
+Date: Tue, 26 Aug 2025 13:09:21 +0200
+Message-ID: <20250826110913.324394362@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Showrya M N <showrya@chelsio.com>
+From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
 
-[ Upstream commit 3ea3a256ed81f95ab0f3281a0e234b01a9cae605 ]
+[ Upstream commit cdfa1304657d6f23be8fd2bb0516380a3c89034e ]
 
-In case of an ib_fast_reg_mr allocation failure during iSER setup, the
-machine hits a panic because iscsi_conn->dd_data is initialized
-unconditionally, even when no memory is allocated (dd_size == 0).  This
-leads invalid pointer dereference during connection teardown.
+sprintf() is discouraged for use with bounded destination buffers
+as it does not prevent buffer overflows when the formatted output
+exceeds the destination buffer size. snprintf() is a safer
+alternative as it limits the number of bytes written and ensures
+NUL-termination.
 
-Fix by setting iscsi_conn->dd_data only if memory is actually allocated.
+Replace sprintf() with snprintf() for copying the debug string
+into a temporary buffer, using ORANGEFS_MAX_DEBUG_STRING_LEN as
+the maximum size to ensure safe formatting and prevent memory
+corruption in edge cases.
 
-Panic trace:
-------------
- iser: iser_create_fastreg_desc: Failed to allocate ib_fast_reg_mr err=-12
- iser: iser_alloc_rx_descriptors: failed allocating rx descriptors / data buffers
- BUG: unable to handle page fault for address: fffffffffffffff8
- RIP: 0010:swake_up_locked.part.5+0xa/0x40
- Call Trace:
-  complete+0x31/0x40
-  iscsi_iser_conn_stop+0x88/0xb0 [ib_iser]
-  iscsi_stop_conn+0x66/0xc0 [scsi_transport_iscsi]
-  iscsi_if_stop_conn+0x14a/0x150 [scsi_transport_iscsi]
-  iscsi_if_rx+0x1135/0x1834 [scsi_transport_iscsi]
-  ? netlink_lookup+0x12f/0x1b0
-  ? netlink_deliver_tap+0x2c/0x200
-  netlink_unicast+0x1ab/0x280
-  netlink_sendmsg+0x257/0x4f0
-  ? _copy_from_user+0x29/0x60
-  sock_sendmsg+0x5f/0x70
+EDIT: After this patch sat on linux-next for a few days, Dan
+Carpenter saw it and suggested that I use scnprintf instead of
+snprintf. I made the change and retested.
 
-Signed-off-by: Showrya M N <showrya@chelsio.com>
-Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
-Link: https://lore.kernel.org/r/20250627112329.19763-1-showrya@chelsio.com
-Reviewed-by: Chris Leech <cleech@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libiscsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/orangefs/orangefs-debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
-index f3cee64c6d12..9b94218ff04c 100644
---- a/drivers/scsi/libiscsi.c
-+++ b/drivers/scsi/libiscsi.c
-@@ -2893,7 +2893,8 @@ iscsi_conn_setup(struct iscsi_cls_session *cls_session, int dd_size,
- 	conn = cls_conn->dd_data;
- 	memset(conn, 0, sizeof(*conn) + dd_size);
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index b57140ebfad0..cd4bfd92ebd6 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -354,7 +354,7 @@ static ssize_t orangefs_debug_read(struct file *file,
+ 		goto out;
  
--	conn->dd_data = cls_conn->dd_data + sizeof(*conn);
-+	if (dd_size)
-+		conn->dd_data = cls_conn->dd_data + sizeof(*conn);
- 	conn->session = session;
- 	conn->cls_conn = cls_conn;
- 	conn->c_stage = ISCSI_CONN_INITIAL_STAGE;
+ 	mutex_lock(&orangefs_debug_lock);
+-	sprintf_ret = sprintf(buf, "%s", (char *)file->private_data);
++	sprintf_ret = scnprintf(buf, ORANGEFS_MAX_DEBUG_STRING_LEN, "%s", (char *)file->private_data);
+ 	mutex_unlock(&orangefs_debug_lock);
+ 
+ 	read_ret = simple_read_from_buffer(ubuf, count, ppos, buf, sprintf_ret);
 -- 
 2.39.5
 
