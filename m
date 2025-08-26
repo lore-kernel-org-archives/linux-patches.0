@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BC9350D46;
-	Tue, 26 Aug 2025 14:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871F1341650;
+	Tue, 26 Aug 2025 14:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218279; cv=none; b=lWeQAvQUEKuvEwoMdeqOIUyFbFaY++v4eCZ3jhTHmzELSyHXtqR0Cy+xx68I513Ya5gQx13EVhc5yPhK9Z+KcnwIc7Or4RcOVMM4B8+YaLSaHyiKjUdPQ118FECI9262wGSPmt4OpxNknDHYK6xdfzIXPWHxIEFK44+bo2dLRk0=
+	t=1756218281; cv=none; b=IAQ8QkS7dN3wnnXuaSoyuxaRhZ8HHPn0IadRQHL0bXmAQ2p7qyeV1doOhO9besZ6Fepnnk907WJ9dGQjT2Z7WLfiBcmVPjQFuERZEF2lkiaWz4yIL7A6mLiJX7FsqSEyJrT9hh9DRhk925RFp+3fnSAYf0aEkKo1R/WMsVsC+tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218279; c=relaxed/simple;
-	bh=W2Dm5IF1SUk8PTmpbpE4t/7MvnIZniro4T3DOvNfRIg=;
+	s=arc-20240116; t=1756218281; c=relaxed/simple;
+	bh=1/y4h7qGuIrI3AsjSIxVkC6MHxYQCxVUSXCE/lnVO3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1TcCqz0tdnzLCzwB779FHFC+FXDjD/B5k2RdQCh7nWmFTmb8f9NAJMBoPzLc7jjexGsTlN+M915kfSKXoCNqV8maysMHKYwNJBdSotdF2HNqVXFdCN1d0tUjRpPG4CorekJzCLqNmnae4dDmFg8cHVGeEd/QvELuy11TCFtDOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxsjku2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ExPyWEIlMe73fhkyDwchYsh7WpMztqltNUyvTb5RECp5Y/eSwiSVEP7xLL+JCl2iia6u+oT1XGt0DojOHA6OHblZRGHbdMwHa4IUB6+htGfUbi1IRG0sNUomv/xJinvEsOj8RVuhsZKtxuSz0LcxwQPH5eX6S9ktNz3Rc2wApu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYyWJPIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxsjku2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B51C4CEF1;
-	Tue, 26 Aug 2025 14:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYyWJPIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5716C4CEF1;
+	Tue, 26 Aug 2025 14:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218278;
-	bh=W2Dm5IF1SUk8PTmpbpE4t/7MvnIZniro4T3DOvNfRIg=;
+	s=korg; t=1756218281;
+	bh=1/y4h7qGuIrI3AsjSIxVkC6MHxYQCxVUSXCE/lnVO3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxsjku2WEMchxH/moXamxIPiGUYM8eqF4eYMOYUfs3yyjlvcGgoBJv2+IA1JYdSTl
-	 cBzSyX8nt9DBTc0rvFJcIzNsgzO/ouWWi+sd1RHONzXiw9XL5qotAS9NvXl1o8jRJ7
-	 FZDdckOEHvIpp78CkSaKVgxtClNZV+1MXg87Qh3A=
+	b=zYyWJPIjWA6arxkgUqjT3BbvSxDIXo1+YJ3czYe0OkprRK+QiyFI1Nf8ZzSnAyc44
+	 gEw6RkmcswyQB7nisOALmZ3oJW4kn4hzMgZUBvXMZqTZ6PoQ3Mvmb7ir9H1gNT+muL
+	 Ebt0wIlDWMfXircvLF8k6K7B10wMbYrxe9ABrk0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Shuang <shuali@redhat.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 461/523] net/sched: ets: use old nbands while purging unused classes
-Date: Tue, 26 Aug 2025 13:11:11 +0200
-Message-ID: <20250826110935.817311777@linuxfoundation.org>
+Subject: [PATCH 5.10 462/523] mm/ptdump: take the memory hotplug lock inside ptdump_walk_pgd()
+Date: Tue, 26 Aug 2025 13:11:12 +0200
+Message-ID: <20250826110935.842048314@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,116 +64,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 87c6efc5ce9c126ae4a781bc04504b83780e3650 ]
+[ Upstream commit 59305202c67fea50378dcad0cc199dbc13a0e99a ]
 
-Shuang reported sch_ets test-case [1] crashing in ets_class_qlen_notify()
-after recent changes from Lion [2]. The problem is: in ets_qdisc_change()
-we purge unused DWRR queues; the value of 'q->nbands' is the new one, and
-the cleanup should be done with the old one. The problem is here since my
-first attempts to fix ets_qdisc_change(), but it surfaced again after the
-recent qdisc len accounting fixes. Fix it purging idle DWRR queues before
-assigning a new value of 'q->nbands', so that all purge operations find a
-consistent configuration:
+Memory hot remove unmaps and tears down various kernel page table regions
+as required.  The ptdump code can race with concurrent modifications of
+the kernel page tables.  When leaf entries are modified concurrently, the
+dump code may log stale or inconsistent information for a VA range, but
+this is otherwise not harmful.
 
- - old 'q->nbands' because it's needed by ets_class_find()
- - old 'q->nstrict' because it's needed by ets_class_is_strict()
+But when intermediate levels of kernel page table are freed, the dump code
+will continue to use memory that has been freed and potentially
+reallocated for another purpose.  In such cases, the ptdump code may
+dereference bogus addresses, leading to a number of potential problems.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP NOPTI
- CPU: 62 UID: 0 PID: 39457 Comm: tc Kdump: loaded Not tainted 6.12.0-116.el10.x86_64 #1 PREEMPT(voluntary)
- Hardware name: Dell Inc. PowerEdge R640/06DKY5, BIOS 2.12.2 07/09/2021
- RIP: 0010:__list_del_entry_valid_or_report+0x4/0x80
- Code: ff 4c 39 c7 0f 84 39 19 8e ff b8 01 00 00 00 c3 cc cc cc cc 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa <48> 8b 17 48 8b 4f 08 48 85 d2 0f 84 56 19 8e ff 48 85 c9 0f 84 ab
- RSP: 0018:ffffba186009f400 EFLAGS: 00010202
- RAX: 00000000000000d6 RBX: 0000000000000000 RCX: 0000000000000004
- RDX: ffff9f0fa29b69c0 RSI: 0000000000000000 RDI: 0000000000000000
- RBP: ffffffffc12c2400 R08: 0000000000000008 R09: 0000000000000004
- R10: ffffffffffffffff R11: 0000000000000004 R12: 0000000000000000
- R13: ffff9f0f8cfe0000 R14: 0000000000100005 R15: 0000000000000000
- FS:  00007f2154f37480(0000) GS:ffff9f269c1c0000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000001530be001 CR4: 00000000007726f0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ets_class_qlen_notify+0x65/0x90 [sch_ets]
-  qdisc_tree_reduce_backlog+0x74/0x110
-  ets_qdisc_change+0x630/0xa40 [sch_ets]
-  __tc_modify_qdisc.constprop.0+0x216/0x7f0
-  tc_modify_qdisc+0x7c/0x120
-  rtnetlink_rcv_msg+0x145/0x3f0
-  netlink_rcv_skb+0x53/0x100
-  netlink_unicast+0x245/0x390
-  netlink_sendmsg+0x21b/0x470
-  ____sys_sendmsg+0x39d/0x3d0
-  ___sys_sendmsg+0x9a/0xe0
-  __sys_sendmsg+0x7a/0xd0
-  do_syscall_64+0x7d/0x160
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- RIP: 0033:0x7f2155114084
- Code: 89 02 b8 ff ff ff ff eb bb 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 80 3d 25 f0 0c 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 48 83 ec 28 89 54 24 1c 48 89
- RSP: 002b:00007fff1fd7a988 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 0000560ec063e5e0 RCX: 00007f2155114084
- RDX: 0000000000000000 RSI: 00007fff1fd7a9f0 RDI: 0000000000000003
- RBP: 00007fff1fd7aa60 R08: 0000000000000010 R09: 000000000000003f
- R10: 0000560ee9b3a010 R11: 0000000000000202 R12: 00007fff1fd7aae0
- R13: 000000006891ccde R14: 0000560ec063e5e0 R15: 00007fff1fd7aad0
-  </TASK>
+To avoid the above mentioned race condition, platforms such as arm64,
+riscv and s390 take memory hotplug lock, while dumping kernel page table
+via the sysfs interface /sys/kernel/debug/kernel_page_tables.
 
- [1] https://lore.kernel.org/netdev/e08c7f4a6882f260011909a868311c6e9b54f3e4.1639153474.git.dcaratti@redhat.com/
- [2] https://lore.kernel.org/netdev/d912cbd7-193b-4269-9857-525bee8bbb6a@gmail.com/
+Similar race condition exists while checking for pages that might have
+been marked W+X via /sys/kernel/debug/kernel_page_tables/check_wx_pages
+which in turn calls ptdump_check_wx().  Instead of solving this race
+condition again, let's just move the memory hotplug lock inside generic
+ptdump_check_wx() which will benefit both the scenarios.
 
-Cc: stable@vger.kernel.org
-Fixes: 103406b38c60 ("net/sched: Always pass notifications when child class becomes empty")
-Fixes: c062f2a0b04d ("net/sched: sch_ets: don't remove idle classes from the round-robin list")
-Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
-Reported-by: Li Shuang <shuali@redhat.com>
-Closes: https://issues.redhat.com/browse/RHEL-108026
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Co-developed-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/7928ff6d17db47a2ae7cc205c44777b1f1950545.1755016081.git.dcaratti@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Drop get_online_mems() and put_online_mems() combination from all existing
+platform ptdump code paths.
+
+Link: https://lkml.kernel.org/r/20250620052427.2092093-1-anshuman.khandual@arm.com
+Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>	[s390]
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_ets.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm64/mm/ptdump_debugfs.c |    3 ---
+ arch/s390/mm/dump_pagetables.c |    2 --
+ mm/ptdump.c                    |    2 ++
+ 3 files changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -664,6 +664,12 @@ static int ets_qdisc_change(struct Qdisc
+--- a/arch/arm64/mm/ptdump_debugfs.c
++++ b/arch/arm64/mm/ptdump_debugfs.c
+@@ -1,6 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/debugfs.h>
+-#include <linux/memory_hotplug.h>
+ #include <linux/seq_file.h>
  
- 	sch_tree_lock(sch);
+ #include <asm/ptdump.h>
+@@ -9,9 +8,7 @@ static int ptdump_show(struct seq_file *
+ {
+ 	struct ptdump_info *info = m->private;
  
-+	for (i = nbands; i < oldbands; i++) {
-+		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
-+			list_del_init(&q->classes[i].alist);
-+		qdisc_purge_queue(q->classes[i].qdisc);
-+	}
-+
- 	WRITE_ONCE(q->nbands, nbands);
- 	for (i = nstrict; i < q->nstrict; i++) {
- 		if (q->classes[i].qdisc->q.qlen) {
-@@ -671,11 +677,6 @@ static int ets_qdisc_change(struct Qdisc
- 			q->classes[i].deficit = quanta[i];
- 		}
+-	get_online_mems();
+ 	ptdump_walk(m, info);
+-	put_online_mems();
+ 	return 0;
+ }
+ DEFINE_SHOW_ATTRIBUTE(ptdump);
+--- a/arch/s390/mm/dump_pagetables.c
++++ b/arch/s390/mm/dump_pagetables.c
+@@ -218,11 +218,9 @@ static int ptdump_show(struct seq_file *
+ 		.marker = address_markers,
+ 	};
+ 
+-	get_online_mems();
+ 	mutex_lock(&cpa_mutex);
+ 	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
+ 	mutex_unlock(&cpa_mutex);
+-	put_online_mems();
+ 	return 0;
+ }
+ DEFINE_SHOW_ATTRIBUTE(ptdump);
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -141,6 +141,7 @@ void ptdump_walk_pgd(struct ptdump_state
+ {
+ 	const struct ptdump_range *range = st->range;
+ 
++	get_online_mems();
+ 	mmap_write_lock(mm);
+ 	while (range->start != range->end) {
+ 		walk_page_range_novma(mm, range->start, range->end,
+@@ -148,6 +149,7 @@ void ptdump_walk_pgd(struct ptdump_state
+ 		range++;
  	}
--	for (i = q->nbands; i < oldbands; i++) {
--		if (i >= q->nstrict && q->classes[i].qdisc->q.qlen)
--			list_del_init(&q->classes[i].alist);
--		qdisc_purge_queue(q->classes[i].qdisc);
--	}
- 	WRITE_ONCE(q->nstrict, nstrict);
- 	memcpy(q->prio2band, priomap, sizeof(priomap));
+ 	mmap_write_unlock(mm);
++	put_online_mems();
  
+ 	/* Flush out the last page */
+ 	st->note_page(st, 0, -1, 0);
 
 
