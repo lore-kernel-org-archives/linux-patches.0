@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A3529D26A;
-	Tue, 26 Aug 2025 11:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E764929D26A;
+	Tue, 26 Aug 2025 11:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207551; cv=none; b=BHbOySemCCwP7V8hjTxYO3gfy1qEtjSSO6CI5BVjYiLIBbOiXf5n7lIoNx/atv6Iss/li5dpIneWJ+ci66ovxg1BfxdlDl+nMawabYWGNJL1YsAODqt9rM2Zu3TVP2c4JCC+lXyOtPf4fj8uBf1xOKGtzm9QJBGkiVoNIjonv0g=
+	t=1756207554; cv=none; b=QJpaCfw8PKwN0AuL8BUY4luAyKoW86qi13EISJfdOGzcCS051IqEow8TqewRWLhm+rslhFolYTgSEYR2fLhMmVzqAFfhHX55ZvoAtSJOo9uk7mAnUrRl2soWVzV119GQQaJpeVUs3ntKvhFXWiRW6MOLjz6uMY8A0fh6GsWp9Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207551; c=relaxed/simple;
-	bh=aumXUG9buTLTmTHZXXsDMeubGWn77lJiN6Nds7lTb8g=;
+	s=arc-20240116; t=1756207554; c=relaxed/simple;
+	bh=rY7X5ipx0rrIIxH5otQ04ryP3+q/u7tO/3Eb97YmKec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/VLE6TzQCRlF08gbfS0s8WXQ7fkGJ7fIlBmANuoWRFO1SoRncfUUcPoWSVIRpjz8BKrQpqWb7/AQsM+GU35K5kaUo7vbltQzT1EjDGpLnGQxzSf50e/iy+5aPw2mtd+4ve52CQyFLFeUwJ5V460hgeytMLYbqVokaQPDckP7SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlNhkSzV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z38lphfpBZanGofk2RZdUK1tZF86a8R2HLdt9Xm6i5i0EFA9x/vHRBtYPLt39ajulK2wr0jjd+H2LajyA2j29dWg5tOgVFQeChxqCEtvnLc75MWAFRP4jlB1HbO8TdpBgPbUZpQ/uui3Xn/g3k7F7CLB5pBYuPTvWzp8mODDOsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uW5+4BW/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlNhkSzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A78CC4CEF1;
-	Tue, 26 Aug 2025 11:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uW5+4BW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E40C4CEF4;
+	Tue, 26 Aug 2025 11:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207550;
-	bh=aumXUG9buTLTmTHZXXsDMeubGWn77lJiN6Nds7lTb8g=;
+	s=korg; t=1756207553;
+	bh=rY7X5ipx0rrIIxH5otQ04ryP3+q/u7tO/3Eb97YmKec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlNhkSzVbFo+orylDPk5JCNGrPVFPDET6426nIdJqT5zlq+AbQekecv53lOAsinCp
-	 7BsRBTi5DGIfMHuegZJ3FZKwVHsFeNm7YM5MT6ZgPvjik6tSsVvYMZzOXxSkllGOsr
-	 qul6ezxNH3Hv/YUBXCsklFL1lYdcUxXXZJoBHMHo=
+	b=uW5+4BW/h2cH6o5Rn+bdokchgU+l0JeQpH60ofY6O33/pbB94+QAZOfS6zZwBsCis
+	 6TubcKTCYGaa/MkZqhsvpJKHWVmiIQFORKkXwzyRpubkjp/I3Nn+XlZ9Afav2mRaIK
+	 h4a+uHOJ1Ib20LcxITjdZLMmsMzDfD4xvb85jIUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Huang <mmpgouride@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 226/457] xfs: Remove unused label in xfs_dax_notify_dev_failure
-Date: Tue, 26 Aug 2025 13:08:30 +0200
-Message-ID: <20250826110942.955211569@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Bo Liu (OpenAnolis)" <liubo03@inspur.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.16 227/457] erofs: fix build error with CONFIG_EROFS_FS_ZIP_ACCEL=y
+Date: Tue, 26 Aug 2025 13:08:31 +0200
+Message-ID: <20250826110942.979957086@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,29 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Huang <mmpgouride@gmail.com>
+From: Bo Liu (OpenAnolis) <liubo03@inspur.com>
 
-[ Upstream commit 8c10b04f9fc1760cb79068073686d8866e59d40f ]
+commit 5e0bf36fd156b8d9b09f8481ee6daa6cdba1b064 upstream.
 
-Fixes: e967dc40d501 ("xfs: return the allocated transaction from xfs_trans_alloc_empty")
-Signed-off-by: Alan Huang <mmpgouride@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+fix build err:
+ ld.lld: error: undefined symbol: crypto_req_done
+   referenced by decompressor_crypto.c
+       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
+   referenced by decompressor_crypto.c
+       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
+
+ ld.lld: error: undefined symbol: crypto_acomp_decompress
+   referenced by decompressor_crypto.c
+       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_decompress) in archive vmlinux.a
+
+ ld.lld: error: undefined symbol: crypto_alloc_acomp
+   referenced by decompressor_crypto.c
+       fs/erofs/decompressor_crypto.o:(z_erofs_crypto_enable_engine) in archive vmlinux.a
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507161032.QholMPtn-lkp@intel.com/
+Fixes: b4a29efc5146 ("erofs: support DEFLATE decompression by using Intel QAT")
+Signed-off-by: Bo Liu (OpenAnolis) <liubo03@inspur.com>
+Link: https://lore.kernel.org/r/20250718033039.3609-1-liubo03@inspur.com
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_notify_failure.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/erofs/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/xfs_notify_failure.c
-+++ b/fs/xfs/xfs_notify_failure.c
-@@ -350,7 +350,6 @@ xfs_dax_notify_dev_failure(
- 			error = -EFSCORRUPTED;
- 	}
- 
--out:
- 	/* Thaw the fs if it has been frozen before. */
- 	if (mf_flags & MF_MEM_PRE_REMOVE)
- 		xfs_dax_notify_failure_thaw(mp, kernel_frozen);
+--- a/fs/erofs/Kconfig
++++ b/fs/erofs/Kconfig
+@@ -147,6 +147,8 @@ config EROFS_FS_ZIP_ZSTD
+ config EROFS_FS_ZIP_ACCEL
+ 	bool "EROFS hardware decompression support"
+ 	depends on EROFS_FS_ZIP
++	select CRYPTO
++	select CRYPTO_DEFLATE
+ 	help
+ 	  Saying Y here includes hardware accelerator support for reading
+ 	  EROFS file systems containing compressed data.  It gives better
 
 
