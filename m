@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6980C2BF019;
-	Tue, 26 Aug 2025 13:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFCD24466D;
+	Tue, 26 Aug 2025 13:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215786; cv=none; b=WP2JTWGiFh4iUCKl+6cDKKj9rLwGFD2ubmSDN2U6rADuo8oQ5HsGSOd4vrPMOZcS6Wp/NyMLQO7YEdXmwDTnIXxcrSssJ2QfdrSfVW9y+ScT6gd/+M5Y7VpGtuofF6Rngb5HQFNyQ78lITsCbuOknGLdIMiLB1qCnMqLCfH8VU8=
+	t=1756215789; cv=none; b=kHAo/ppPXUvDOYF2U/VoDSQPV25t37O4sZ7ybkIFtSOYGPOYoifCwgOPVOtVtT2/I4EgiCmp43hfPwWwP1f6L1NPPtuQC5Qhy8iUszuGr4unaB+QEFlPCnAPFcFSzBwymS799y1HMUrlzephU2qoKi1JYui7l8HbJECglVZsQ9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215786; c=relaxed/simple;
-	bh=aSDGq+BuK9R8JbNM/JB7o8U8Z5PjuWxxqhZb9BIorLQ=;
+	s=arc-20240116; t=1756215789; c=relaxed/simple;
+	bh=74oJR5zL0JTQyCd5cKVgBCKXpl03b7PkQmBKQTcZ0x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAZ/ZOT2McaQI/pED4WBVYxKyRFJYjDaC6CPo+RiGr4DMin4wrqJUqQQlGnBZCganrb2Joeaq8sW+0YirHJjC9I6rJv0RWrVboqnWG5Kyv4eVNiaXN8ZFyekcwUTvM38bXMuxHnRz2Dkf9zmpO45bwhJMb/kzAmmXUR6WMjufMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWsayKqS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NItT58xhuMrI4Q54cu6pNkBY3HoWLuF/S2fTTpT9T2GF5QtRyMREnSx/gihxbTaRCZIzOVAUg6+fC1eZLyPE/ynG96hJ+A1SGjx5NwntFj4AC0iYq5mGZMBnVLJNEiUk0b/xDH8zoEOOReJ5cLve6D+FN/LQ6VUigAmystmAwdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAwPtJ6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWsayKqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFE2C4CEF1;
-	Tue, 26 Aug 2025 13:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAwPtJ6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D82DC4CEF1;
+	Tue, 26 Aug 2025 13:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215786;
-	bh=aSDGq+BuK9R8JbNM/JB7o8U8Z5PjuWxxqhZb9BIorLQ=;
+	s=korg; t=1756215789;
+	bh=74oJR5zL0JTQyCd5cKVgBCKXpl03b7PkQmBKQTcZ0x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qWsayKqSv+dUYjt1vfoLfTeSPvMDTA2QMD0JAxbwqvfAwtddSA3quPolZ3jhkgLSc
-	 /NVgb3KeBxWAmYkvH2SvWSSYDBt0S5dQcGs4uDq8PMo3919jvF14zWQlZBvPAvias+
-	 Ic88WJNbcmGJ08GLJMv5Yw/a6njq2kN73ZsOW3e4=
+	b=zAwPtJ6DYrx1xqKePzVS71koyWZJh4hQgVlXihlu8pfWov4pfk42gzPOToU2Yj1rI
+	 Qa9Om/DAc8ZWaFOudhDr96zYid/c/+fEgnqQYPkveCASDp4GLEn1tfF5Vl9d57xCaO
+	 pdgqaCf0dvrPFWX6HJ8r3LuL2qfkgjTDO8JGSkfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Annette Kobou <annette.kobou@kontron.de>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 125/644] ARM: dts: imx6ul-kontron-bl-common: Fix RTS polarity for RS485 interface
-Date: Tue, 26 Aug 2025 13:03:36 +0200
-Message-ID: <20250826110949.615361567@linuxfoundation.org>
+Subject: [PATCH 5.15 159/644] wifi: brcmfmac: fix P2P discovery failure in P2P peer due to missing P2P IE
+Date: Tue, 26 Aug 2025 13:04:10 +0200
+Message-ID: <20250826110950.417024467@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,35 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Annette Kobou <annette.kobou@kontron.de>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-[ Upstream commit 47ef5256124fb939d8157b13ca048c902435cf23 ]
+[ Upstream commit 579bf8037b70b644a674c126a32bbb2212cf5c21 ]
 
-The polarity of the DE signal of the transceiver is active-high for
-sending. Therefore rs485-rts-active-low is wrong and needs to be
-removed to make RS485 transmissions work.
+After commit bd99a3013bdc ("brcmfmac: move configuration of probe request
+IEs"), the probe request MGMT IE addition operation brcmf_vif_set_mgmt_ie()
+got moved from the brcmf_p2p_scan_prep() to the brcmf_cfg80211_scan().
 
-Signed-off-by: Annette Kobou <annette.kobou@kontron.de>
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Fixes: 1ea4b76cdfde ("ARM: dts: imx6ul-kontron-n6310: Add Kontron i.MX6UL N6310 SoM and boards")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Because of this, as part of the scan request handler for the P2P Discovery,
+vif struct used for adding the Probe Request P2P IE in firmware got changed
+from the P2PAPI_BSSCFG_DEVICE vif to P2PAPI_BSSCFG_PRIMARY vif incorrectly.
+So the firmware stopped adding P2P IE to the outgoing P2P Discovery probe
+requests frames and the other P2P peers were unable to discover this device
+causing a regression on the P2P feature.
+
+To fix this, while setting the P2P IE in firmware, properly use the vif of
+the P2P discovery wdev on which the driver received the P2P scan request.
+This is done by not changing the vif pointer, until brcmf_vif_set_mgmt_ie()
+is completed.
+
+Fixes: bd99a3013bdc ("brcmfmac: move configuration of probe request IEs")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250626050706.7271-1-gokulkumar.sivakumar@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ul-kontron-n6x1x-s.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c   | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6ul-kontron-n6x1x-s.dtsi b/arch/arm/boot/dts/imx6ul-kontron-n6x1x-s.dtsi
-index 770f59b23102..44477206ba0f 100644
---- a/arch/arm/boot/dts/imx6ul-kontron-n6x1x-s.dtsi
-+++ b/arch/arm/boot/dts/imx6ul-kontron-n6x1x-s.dtsi
-@@ -170,7 +170,6 @@ &uart2 {
- 	pinctrl-0 = <&pinctrl_uart2>;
- 	linux,rs485-enabled-at-boot-time;
- 	rs485-rx-during-tx;
--	rs485-rts-active-low;
- 	uart-has-rtscts;
- 	status = "okay";
- };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 1c95e8f75916..ebd2db226488 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1199,10 +1199,6 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
+ 		return -EAGAIN;
+ 	}
+ 
+-	/* If scan req comes for p2p0, send it over primary I/F */
+-	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
+-		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+-
+ 	brcmf_dbg(SCAN, "START ESCAN\n");
+ 
+ 	cfg->scan_request = request;
+@@ -1218,6 +1214,10 @@ brcmf_cfg80211_scan(struct wiphy *wiphy, struct cfg80211_scan_request *request)
+ 	if (err)
+ 		goto scan_out;
+ 
++	/* If scan req comes for p2p0, send it over primary I/F */
++	if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif)
++		vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
++
+ 	err = brcmf_do_escan(vif->ifp, request);
+ 	if (err)
+ 		goto scan_out;
 -- 
 2.39.5
 
