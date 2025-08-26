@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD552BEC34;
-	Tue, 26 Aug 2025 11:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5324229D26A;
+	Tue, 26 Aug 2025 11:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207582; cv=none; b=gj3XN9S8uNQon2hsKaI6O4gaOaea4Ijc8oUealFoYh2gSmvLzok9Yk7BbTjjpzy2+5QvOtTsKTftrk0lFjU0hILOif/klSKKvTReoYjenhgz3I4AoTyv0f4Gm/fwMfJYTyBl3k7n/cBKN8lcUnZn/B35ON4Ftv7vaI+QKkcayJo=
+	t=1756207584; cv=none; b=qlBkz6mm/xb9MUL6sUBl3seK7837TsNL08SFJBUiTedROAJV4N06JJNvgOR3LfyrlsLFU+GIXaES1iTJQEt4KVmcMDe9lILmFlKxAU8Q1U0uTxTMCNSJYeXaqEgKsvPLOUSjiYVtbMKeFESx1l8DdjA3QcDjQVkE+4avqF6bk9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207582; c=relaxed/simple;
-	bh=p6Vl2qw9JchiluDQWoO66G+jgQWucUJmEQHBVEv/2TQ=;
+	s=arc-20240116; t=1756207584; c=relaxed/simple;
+	bh=Cj0otSMwcpmLokhjG9KYRFKQBeJBKwGp8Z11+7Ai+IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAofNhZkRCQaIf1NTwKOznmcBomKd4pvfU9rdKjVOE+A97/4fQEn5wngCPv7s1t+KopdsnKCSWBjbna1RYRmvVHlRk7r11MrdLUFa4xAUJSrk4U8f+c6PV+xVc2IlvxTC1ljn4Sra9qCqFnFWhzE4vemo2ybxWaidDZJTe/Tfew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6r0NbPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JF+J8nH0ZMOhMt4OYsM5t/YYIpG5eb9LdCazmr5YWiy9tIOKehd1PtJlI22VI2f8uhP+k5py+SLS9ZH/KomPGpFFyEzbdcvAcLfUzfFLi1kKeltwPzt925Qdbap4GHKt0W1MuZe37GoGoCXxwX9zKai9Pvbg7FRmk0OGzpXhcbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+0ylaFR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6r0NbPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8C7C4CEF1;
-	Tue, 26 Aug 2025 11:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+0ylaFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF91C4CEF1;
+	Tue, 26 Aug 2025 11:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207581;
-	bh=p6Vl2qw9JchiluDQWoO66G+jgQWucUJmEQHBVEv/2TQ=;
+	s=korg; t=1756207584;
+	bh=Cj0otSMwcpmLokhjG9KYRFKQBeJBKwGp8Z11+7Ai+IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6r0NbPiz/qVAsxlvRr0YT4rzxbSQDlvOyHa5Rgns+U3EtZf8jw7kkMT2YqjZA63t
-	 lUmg/CbKcFD+feavFlVlepFPG+b830Et78soxtFIxaJgfkuPQbDj6OO0WOodUGrNBg
-	 qoiIJZztuPsQ+u0OkZIxi920tpSbS9EubFDqfehc=
+	b=q+0ylaFRts2XIGlnaGs2O4ALLE6DT20qDLhqr94NzemAVlHI2/UEPUDr1rm3TztcL
+	 maJ+BcX5eI4ynqGBxJh5uH3lPgOGcJfJ4TDYPgDico0Za35QTqtri0hjBK1qKhQI77
+	 jKkI3VoWLfHBngbyXD1FIiFfKF1r24A5Zx98x4OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Alexander Graf <graf@amazon.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Baoquan He <bhe@redhat.com>,
@@ -37,11 +38,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Vasilevsky <dave@vasilevsky.ca>,
 	Eric Biggers <ebiggers@google.com>,
 	Kees Cook <kees@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 237/457] kho: init new_physxa->phys_bits to fix lockdep
-Date: Tue, 26 Aug 2025 13:08:41 +0200
-Message-ID: <20250826110943.231792760@linuxfoundation.org>
+Subject: [PATCH 6.16 238/457] kho: mm: dont allow deferred struct page with KHO
+Date: Tue, 26 Aug 2025 13:08:42 +0200
+Message-ID: <20250826110943.258052767@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -62,49 +62,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Pasha Tatashin <pasha.tatashin@soleen.com>
 
-commit 63b17b653df30e90f95338083cb44c35d64bcae4 upstream.
+commit 8b66ed2c3f42cc462e05704af6b94e6a7bad2f5e upstream.
 
-Patch series "Several KHO Hotfixes".
+KHO uses struct pages for the preserved memory early in boot, however,
+with deferred struct page initialization, only a small portion of memory
+has properly initialized struct pages.
 
-Three unrelated fixes for Kexec Handover.
+This problem was detected where vmemmap is poisoned, and illegal flag
+combinations are detected.
 
+Don't allow them to be enabled together, and later we will have to teach
+KHO to work properly with deferred struct page init kernel feature.
 
-This patch (of 3):
-
-Lockdep shows the following warning:
-
-INFO: trying to register non-static key.  The code is fine but needs
-lockdep annotation, or maybe you didn't initialize this object before use?
-turning off the locking correctness validator.
-
-[<ffffffff810133a6>] dump_stack_lvl+0x66/0xa0
-[<ffffffff8136012c>] assign_lock_key+0x10c/0x120
-[<ffffffff81358bb4>] register_lock_class+0xf4/0x2f0
-[<ffffffff813597ff>] __lock_acquire+0x7f/0x2c40
-[<ffffffff81360cb0>] ? __pfx_hlock_conflict+0x10/0x10
-[<ffffffff811707be>] ? native_flush_tlb_global+0x8e/0xa0
-[<ffffffff8117096e>] ? __flush_tlb_all+0x4e/0xa0
-[<ffffffff81172fc2>] ? __kernel_map_pages+0x112/0x140
-[<ffffffff813ec327>] ? xa_load_or_alloc+0x67/0xe0
-[<ffffffff81359556>] lock_acquire+0xe6/0x280
-[<ffffffff813ec327>] ? xa_load_or_alloc+0x67/0xe0
-[<ffffffff8100b9e0>] _raw_spin_lock+0x30/0x40
-[<ffffffff813ec327>] ? xa_load_or_alloc+0x67/0xe0
-[<ffffffff813ec327>] xa_load_or_alloc+0x67/0xe0
-[<ffffffff813eb4c0>] kho_preserve_folio+0x90/0x100
-[<ffffffff813ebb7f>] __kho_finalize+0xcf/0x400
-[<ffffffff813ebef4>] kho_finalize+0x34/0x70
-
-This is becase xa has its own lock, that is not initialized in
-xa_load_or_alloc.
-
-Modifiy __kho_preserve_order(), to properly call
-xa_init(&new_physxa->phys_bits);
-
-Link: https://lkml.kernel.org/r/20250808201804.772010-2-pasha.tatashin@soleen.com
-Fixes: fc33e4b44b27 ("kexec: enable KHO support for memory preservation")
+Link: https://lkml.kernel.org/r/20250808201804.772010-3-pasha.tatashin@soleen.com
+Fixes: 4e1d010e3bda ("kexec: add config option for KHO")
 Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Pratyush Yadav <pratyush@kernel.org>
 Cc: Alexander Graf <graf@amazon.com>
 Cc: Arnd Bergmann <arnd@arndb.de>
 Cc: Baoquan He <bhe@redhat.com>
@@ -113,57 +87,25 @@ Cc: Coiby Xu <coxu@redhat.com>
 Cc: Dave Vasilevsky <dave@vasilevsky.ca>
 Cc: Eric Biggers <ebiggers@google.com>
 Cc: Kees Cook <kees@kernel.org>
-Cc: Pratyush Yadav <pratyush@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kexec_handover.c | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ kernel/Kconfig.kexec | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/kexec_handover.c b/kernel/kexec_handover.c
-index e49743ae52c5..65145972d6d6 100644
---- a/kernel/kexec_handover.c
-+++ b/kernel/kexec_handover.c
-@@ -144,14 +144,34 @@ static int __kho_preserve_order(struct kho_mem_track *track, unsigned long pfn,
- 				unsigned int order)
- {
- 	struct kho_mem_phys_bits *bits;
--	struct kho_mem_phys *physxa;
-+	struct kho_mem_phys *physxa, *new_physxa;
- 	const unsigned long pfn_high = pfn >> order;
- 
- 	might_sleep();
- 
--	physxa = xa_load_or_alloc(&track->orders, order, sizeof(*physxa));
--	if (IS_ERR(physxa))
--		return PTR_ERR(physxa);
-+	physxa = xa_load(&track->orders, order);
-+	if (!physxa) {
-+		int err;
-+
-+		new_physxa = kzalloc(sizeof(*physxa), GFP_KERNEL);
-+		if (!new_physxa)
-+			return -ENOMEM;
-+
-+		xa_init(&new_physxa->phys_bits);
-+		physxa = xa_cmpxchg(&track->orders, order, NULL, new_physxa,
-+				    GFP_KERNEL);
-+
-+		err = xa_err(physxa);
-+		if (err || physxa) {
-+			xa_destroy(&new_physxa->phys_bits);
-+			kfree(new_physxa);
-+
-+			if (err)
-+				return err;
-+		} else {
-+			physxa = new_physxa;
-+		}
-+	}
- 
- 	bits = xa_load_or_alloc(&physxa->phys_bits, pfn_high / PRESERVE_BITS,
- 				sizeof(*bits));
+diff --git a/kernel/Kconfig.kexec b/kernel/Kconfig.kexec
+index 2ee603a98813..1224dd937df0 100644
+--- a/kernel/Kconfig.kexec
++++ b/kernel/Kconfig.kexec
+@@ -97,6 +97,7 @@ config KEXEC_JUMP
+ config KEXEC_HANDOVER
+ 	bool "kexec handover"
+ 	depends on ARCH_SUPPORTS_KEXEC_HANDOVER && ARCH_SUPPORTS_KEXEC_FILE
++	depends on !DEFERRED_STRUCT_PAGE_INIT
+ 	select MEMBLOCK_KHO_SCRATCH
+ 	select KEXEC_FILE
+ 	select DEBUG_FS
 -- 
 2.50.1
 
