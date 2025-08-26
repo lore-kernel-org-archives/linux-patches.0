@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CEF221DA5;
-	Tue, 26 Aug 2025 12:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5199A246790;
+	Tue, 26 Aug 2025 12:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212956; cv=none; b=hwljgXvPuToa/LYlz62UiMW/kIbPwCn/zZxV+jw4RGFfaClCBREPVXXN28rG9rhhPiFDSSkNvyeiLbF3b+iPfzYx7/wzn6eL7NVi/ToPNZ6c2ex9nmcnqF2y7fDbYzauzb9T5+sGvbDrFFs89kmeZve5fH1lrQPqO0zI3DcCZGo=
+	t=1756212959; cv=none; b=bkQrQO6pY7iaI/W+p2HczjEoK6Y5FxGJPTdCtGvBQTq3Oe346884asGTuJeIpqtT3fs9WqPnGTb32NL7sdWdFvtPdBOXbv7b1mG/CIe58RBfzgcGo+YEyMO/7gYqzqKfBmgeYf76m1/y4Woj0aYP9rHqXHhS50MjC9wl3/x3kng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212956; c=relaxed/simple;
-	bh=pkBLlfIg+/Zo4Dx5LU3Sh+NfodsgUPL8/vFz5ajqyhc=;
+	s=arc-20240116; t=1756212959; c=relaxed/simple;
+	bh=b8gYumdyEqvnYvcB5SkCz5KNjzsbqBBZuUxeS56LyTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyGYtk3wrOl9EvzQ5Q7XoQwHZjhrPbAPERi9SpMgvQUy6XUT1hT/NOwPYo8aENK366IymPb6BdYA0qs5CHXoogMzZ/zlGrgVYIaO1vSHujDds2R44yiQUBcfRRMj2HwWpzGDTzIaTdVMPwASb/Pb5MGa9/1nHH+rlUsmfm5bZSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuZC11gk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bWY84KrBsWI3bTHee08rvC8tRzTRbDyR572d+x0oZxayFVEG0oQBCHdNDlmxjPRU3ibNqgN8dXJ3bGyEkloLcdXWfLZSpNccvN2NI/0aD9t/BflG9ZdaJIJwONp6jcfanUbvfvK379zSOdTKvo5V1S+5JgFUNh6tYFbopmFTgZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX8kxKFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuZC11gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6EEC19421;
-	Tue, 26 Aug 2025 12:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX8kxKFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF82AC116B1;
+	Tue, 26 Aug 2025 12:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212956;
-	bh=pkBLlfIg+/Zo4Dx5LU3Sh+NfodsgUPL8/vFz5ajqyhc=;
+	s=korg; t=1756212959;
+	bh=b8gYumdyEqvnYvcB5SkCz5KNjzsbqBBZuUxeS56LyTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuZC11gk8Wnc8Pk/nBlLCEWEXDrjxxcg3rL2CQa7Fp3X5CzDefbQ/vg0tVH1VA77E
-	 XOjYT5/NrR99xL6ZwgTJCQdDE2On1yx5ya7UJH9qADcJL064RUCKQRmlA7Tw+pVr4w
-	 f8PoWQw6uOkuUkDIAFYgB5wkLwAfSRfOXCNlKYD8=
+	b=qX8kxKFQTXhWyF3EMLAq8+Zzxowinx8XRzpKJSrl2gwFzFtPeOKWxOdUd+lAZipQi
+	 +PHJbNgKBXHmI3rogUqm6w2IG/ah10QMPjL0+T4pzAifkO2K3iZlPRas6cOvWkGhpZ
+	 pAPleaGCYtNMmvVWDfQWu4Q9YIDa6Q5EAVNUiJzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hari Chandrakanthan <quic_haric@quicinc.com>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/587] ipv6: mcast: Check inet6_dev->dead under idev->mc_lock in __ipv6_dev_mc_inc().
-Date: Tue, 26 Aug 2025 13:05:16 +0200
-Message-ID: <20250826110957.193865882@linuxfoundation.org>
+Subject: [PATCH 6.6 168/587] wifi: mac80211: fix rx link assignment for non-MLO stations
+Date: Tue, 26 Aug 2025 13:05:17 +0200
+Message-ID: <20250826110957.219280011@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,115 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Hari Chandrakanthan <quic_haric@quicinc.com>
 
-[ Upstream commit dbd40f318cf2f59759bd170c401adc20ba360a3e ]
+[ Upstream commit cc2b722132893164bcb3cee4f08ed056e126eb6c ]
 
-Since commit 63ed8de4be81 ("mld: add mc_lock for protecting
-per-interface mld data"), every multicast resource is protected
-by inet6_dev->mc_lock.
+Currently, ieee80211_rx_data_set_sta() does not correctly handle the
+case where the interface supports multiple links (MLO), but the station
+does not (non-MLO). This can lead to incorrect link assignment or
+unexpected warnings when accessing link information.
 
-RTNL is unnecessary in terms of protection but still needed for
-synchronisation between addrconf_ifdown() and __ipv6_dev_mc_inc().
+Hence, add a fix to check if the station lacks valid link support and
+use its default link ID for rx->link assignment. If the station
+unexpectedly has valid links, fall back to the default link.
 
-Once we removed RTNL, there would be a race below, where we could
-add a multicast address to a dead inet6_dev.
+This ensures correct link association and prevents potential issues
+in mixed MLO/non-MLO environments.
 
-  CPU1                            CPU2
-  ====                            ====
-  addrconf_ifdown()               __ipv6_dev_mc_inc()
-                                    if (idev->dead) <-- false
-    dead = true                       return -ENODEV;
-    ipv6_mc_destroy_dev() / ipv6_mc_down()
-      mutex_lock(&idev->mc_lock)
-      ...
-      mutex_unlock(&idev->mc_lock)
-                                    mutex_lock(&idev->mc_lock)
-                                    ...
-                                    mutex_unlock(&idev->mc_lock)
-
-The race window can be easily closed by checking inet6_dev->dead
-under inet6_dev->mc_lock in __ipv6_dev_mc_inc() as addrconf_ifdown()
-will acquire it after marking inet6_dev dead.
-
-Let's check inet6_dev->dead under mc_lock in __ipv6_dev_mc_inc().
-
-Note that now __ipv6_dev_mc_inc() no longer depends on RTNL and
-we can remove ASSERT_RTNL() there and the RTNL comment above
-addrconf_join_solict().
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250702230210.3115355-4-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Link: https://patch.msgid.link/20250630084119.3583593-1-quic_sarishar@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c |  7 +++----
- net/ipv6/mcast.c    | 11 +++++------
- 2 files changed, 8 insertions(+), 10 deletions(-)
+ net/mac80211/rx.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index f6188bd9f55b..1c3b0ba289fb 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2193,13 +2193,12 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 	in6_ifa_put(ifp);
- }
- 
--/* Join to solicited addr multicast group.
-- * caller must hold RTNL */
-+/* Join to solicited addr multicast group. */
- void addrconf_join_solict(struct net_device *dev, const struct in6_addr *addr)
- {
- 	struct in6_addr maddr;
- 
--	if (dev->flags&(IFF_LOOPBACK|IFF_NOARP))
-+	if (READ_ONCE(dev->flags) & (IFF_LOOPBACK | IFF_NOARP))
- 		return;
- 
- 	addrconf_addr_solict_mult(addr, &maddr);
-@@ -3834,7 +3833,7 @@ static int addrconf_ifdown(struct net_device *dev, bool unregister)
- 	 *	   Do not dev_put!
- 	 */
- 	if (unregister) {
--		idev->dead = 1;
-+		WRITE_ONCE(idev->dead, 1);
- 
- 		/* protected by rtnl_lock */
- 		RCU_INIT_POINTER(dev->ip6_ptr, NULL);
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index e153dac47a53..160b452f75e7 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -906,23 +906,22 @@ static struct ifmcaddr6 *mca_alloc(struct inet6_dev *idev,
- static int __ipv6_dev_mc_inc(struct net_device *dev,
- 			     const struct in6_addr *addr, unsigned int mode)
- {
--	struct ifmcaddr6 *mc;
- 	struct inet6_dev *idev;
--
--	ASSERT_RTNL();
-+	struct ifmcaddr6 *mc;
- 
- 	/* we need to take a reference on idev */
- 	idev = in6_dev_get(dev);
--
- 	if (!idev)
- 		return -EINVAL;
- 
--	if (idev->dead) {
-+	mutex_lock(&idev->mc_lock);
-+
-+	if (READ_ONCE(idev->dead)) {
-+		mutex_unlock(&idev->mc_lock);
- 		in6_dev_put(idev);
- 		return -ENODEV;
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 58665b6ae635..210337ef23cf 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4221,10 +4221,16 @@ static bool ieee80211_rx_data_set_sta(struct ieee80211_rx_data *rx,
+ 		rx->link_sta = NULL;
  	}
  
--	mutex_lock(&idev->mc_lock);
- 	for_each_mc_mclock(idev, mc) {
- 		if (ipv6_addr_equal(&mc->mca_addr, addr)) {
- 			mc->mca_users++;
+-	if (link_id < 0)
+-		rx->link = &rx->sdata->deflink;
+-	else if (!ieee80211_rx_data_set_link(rx, link_id))
++	if (link_id < 0) {
++		if (ieee80211_vif_is_mld(&rx->sdata->vif) &&
++		    sta && !sta->sta.valid_links)
++			rx->link =
++				rcu_dereference(rx->sdata->link[sta->deflink.link_id]);
++		else
++			rx->link = &rx->sdata->deflink;
++	} else if (!ieee80211_rx_data_set_link(rx, link_id)) {
+ 		return false;
++	}
+ 
+ 	return true;
+ }
 -- 
 2.39.5
 
