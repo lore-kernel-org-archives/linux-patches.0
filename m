@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4F2321456;
-	Tue, 26 Aug 2025 11:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E514018DF9D;
+	Tue, 26 Aug 2025 11:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208126; cv=none; b=En3n3ybCABKctGjyiClU34xQ4LhKhxEdKUviDIYbAVvKB5+LXlPsrnl+oFvZSdeHSIXRQaxURPHDsBCeWx86EMguEkAVYi4OJE2kAnMWXT0B+g2MradFQzbEqFRmee7SZhX4U4PxqDlssuNAS0AwaxZmAgc+1AKuD8WRY/zneTo=
+	t=1756208129; cv=none; b=AchDn36fTf3FKp8ZX2BegukCiDWCoi9Oq+Qp1zFwKo9pUIpjMYE8UVl2O8zIPpRvlFibhObVMOZwhhkcR2Gaxk0xPldMWJgIcPgkArXFaZl4UdOckW9siBwmjUGMpvPZC60iL2D1lhHciob4tIcmagstGGMoKHvv49wAEYQcobs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208126; c=relaxed/simple;
-	bh=nGZ8NF27N/MVGdWC5NVZquEixrF4k2E3PFcsA7fqRys=;
+	s=arc-20240116; t=1756208129; c=relaxed/simple;
+	bh=nCKCqbQi7CRA5+zGANzmbc+UoQf8zY3z700bL0ec8us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2Oa7a5Pb6ALkCS8E82SuNfkwqiBnIk2OKQk+vVn3V1AwojDlm4zoTI8EMDNma4fWltNCDSjYodW/lysotzjgKyR8JmleRuDI9kxMFJS0oTkh7lti2bU7oJtYlvrGjjnj412AHayq2F/sWLXUlBYmGAUj3qaXUP1x6/v1Su0N68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qyxOmVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+U4a8EbRz8ur65+jgu9eYhHaWFuQa9Yyj/GrWfLzUnL3ohVggoRStHVb5p7GQ9CmZLFlRgnNJnFeevDck1hI4bmLG6NwtxPChi/w0qa268frjPsALcfjvrcZQKf7wui3OP1uXvHm1zMS06Hd1D0eCzTQefwQtntLYdW07x/S8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw8q5CX0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qyxOmVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30FFC4CEF1;
-	Tue, 26 Aug 2025 11:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw8q5CX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75691C116B1;
+	Tue, 26 Aug 2025 11:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208126;
-	bh=nGZ8NF27N/MVGdWC5NVZquEixrF4k2E3PFcsA7fqRys=;
+	s=korg; t=1756208128;
+	bh=nCKCqbQi7CRA5+zGANzmbc+UoQf8zY3z700bL0ec8us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1qyxOmVGpxPWqMwh4HnenoURh/9oED84dznO+/hqQOkWUZPkbI051x9HzTIab0BKg
-	 xcFsTpxlEMQKdGBCfsG0XW1EoSLyejpB1YT89Xl7hqrsfH807IhdqO9heOMuPoNLHs
-	 qqahc98hF8HJtRdM1FD2cGZ1X/2JP6HQh9Z3oDx4=
+	b=Rw8q5CX0cNqdsjeTNbXvmZI9KTmC8xyXHclcI2KOuKXRSwF5+2WotK/ZbT7+xjAnJ
+	 iDyBhk16dXBQZTfShVIyc6L+56MfqKeBgb34t25JeT1URVMfy5KwBWDDpzFzd1Ud5N
+	 dJDGFm0HusR5wLMsewRFy9MyngGilfWbrLiNdUeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Alex Vesker <valex@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 446/457] block: avoid cpu_hotplug_lock depedency on freeze_lock
-Date: Tue, 26 Aug 2025 13:12:10 +0200
-Message-ID: <20250826110948.308981499@linuxfoundation.org>
+Subject: [PATCH 6.16 418/457] net/mlx5: HWS, Fix table creation UID
+Date: Tue, 26 Aug 2025 13:11:42 +0200
+Message-ID: <20250826110947.623737375@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -54,241 +53,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Alex Vesker <valex@nvidia.com>
 
-[ Upstream commit 370ac285f23aecae40600851fb4a1a9e75e50973 ]
+[ Upstream commit 8a51507320ebddaab32610199774f69cd7d53e78 ]
 
-A recent lockdep[1] splat observed while running blktest block/005
-reveals a potential deadlock caused by the cpu_hotplug_lock dependency
-on ->freeze_lock. This dependency was introduced by commit 033b667a823e
-("block: blk-rq-qos: guard rq-qos helpers by static key").
+During table creation, caller passes a UID using ft_attr. The UID
+value was ignored, which leads to problems when the caller sets the
+UID to a non-zero value, such as SHARED_RESOURCE_UID (0xffff) - the
+internal FT objects will be created with UID=0.
 
-That change added a static key to avoid fetching q->rq_qos when
-neither blk-wbt nor blk-iolatency is configured. The static key
-dynamically patches kernel text to a NOP when disabled, eliminating
-overhead of fetching q->rq_qos in the I/O hot path. However, enabling
-a static key at runtime requires acquiring both cpu_hotplug_lock and
-jump_label_mutex. When this happens after the queue has already been
-frozen (i.e., while holding ->freeze_lock), it creates a locking
-dependency from cpu_hotplug_lock to ->freeze_lock, which leads to a
-potential deadlock reported by lockdep [1].
-
-To resolve this, replace the static key mechanism with q->queue_flags:
-QUEUE_FLAG_QOS_ENABLED. This flag is evaluated in the fast path before
-accessing q->rq_qos. If the flag is set, we proceed to fetch q->rq_qos;
-otherwise, the access is skipped.
-
-Since q->queue_flags is commonly accessed in IO hotpath and resides in
-the first cacheline of struct request_queue, checking it imposes minimal
-overhead while eliminating the deadlock risk.
-
-This change avoids the lockdep splat without introducing performance
-regressions.
-
-[1] https://lore.kernel.org/linux-block/4fdm37so3o4xricdgfosgmohn63aa7wj3ua4e5vpihoamwg3ui@fq42f5q5t5ic/
-
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/linux-block/4fdm37so3o4xricdgfosgmohn63aa7wj3ua4e5vpihoamwg3ui@fq42f5q5t5ic/
-Fixes: 033b667a823e ("block: blk-rq-qos: guard rq-qos helpers by static key")
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250814082612.500845-4-nilay@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0869701cba3d ("net/mlx5: HWS, added FW commands handling")
+Signed-off-by: Alex Vesker <valex@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250817202323.308604-7-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-debugfs.c |  1 +
- block/blk-rq-qos.c     |  9 ++++---
- block/blk-rq-qos.h     | 54 ++++++++++++++++++++++++------------------
- include/linux/blkdev.h |  1 +
- 4 files changed, 37 insertions(+), 28 deletions(-)
+ .../ethernet/mellanox/mlx5/core/steering/hws/cmd.c  |  1 +
+ .../ethernet/mellanox/mlx5/core/steering/hws/cmd.h  |  1 +
+ .../mellanox/mlx5/core/steering/hws/fs_hws.c        |  1 +
+ .../mellanox/mlx5/core/steering/hws/matcher.c       |  5 ++++-
+ .../mellanox/mlx5/core/steering/hws/mlx5hws.h       |  1 +
+ .../mellanox/mlx5/core/steering/hws/table.c         | 13 ++++++++++---
+ .../mellanox/mlx5/core/steering/hws/table.h         |  3 ++-
+ 7 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index 29b3540dd180..bdcb27ab5606 100644
---- a/block/blk-mq-debugfs.c
-+++ b/block/blk-mq-debugfs.c
-@@ -95,6 +95,7 @@ static const char *const blk_queue_flag_name[] = {
- 	QUEUE_FLAG_NAME(SQ_SCHED),
- 	QUEUE_FLAG_NAME(DISABLE_WBT_DEF),
- 	QUEUE_FLAG_NAME(NO_ELV_SWITCH),
-+	QUEUE_FLAG_NAME(QOS_ENABLED),
- };
- #undef QUEUE_FLAG_NAME
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c
+index 9c83753e4592..0bdcab2e5cf3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.c
+@@ -55,6 +55,7 @@ int mlx5hws_cmd_flow_table_create(struct mlx5_core_dev *mdev,
  
-diff --git a/block/blk-rq-qos.c b/block/blk-rq-qos.c
-index b1e24bb85ad2..654478dfbc20 100644
---- a/block/blk-rq-qos.c
-+++ b/block/blk-rq-qos.c
-@@ -2,8 +2,6 @@
+ 	MLX5_SET(create_flow_table_in, in, opcode, MLX5_CMD_OP_CREATE_FLOW_TABLE);
+ 	MLX5_SET(create_flow_table_in, in, table_type, ft_attr->type);
++	MLX5_SET(create_flow_table_in, in, uid, ft_attr->uid);
  
- #include "blk-rq-qos.h"
+ 	ft_ctx = MLX5_ADDR_OF(create_flow_table_in, in, flow_table_context);
+ 	MLX5_SET(flow_table_context, ft_ctx, level, ft_attr->level);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h
+index fa6bff210266..122ccc671628 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/cmd.h
+@@ -36,6 +36,7 @@ struct mlx5hws_cmd_set_fte_attr {
+ struct mlx5hws_cmd_ft_create_attr {
+ 	u8 type;
+ 	u8 level;
++	u16 uid;
+ 	bool rtc_valid;
+ 	bool decap_en;
+ 	bool reformat_en;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+index bf4643d0ce17..47e3947e7b51 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+@@ -267,6 +267,7 @@ static int mlx5_cmd_hws_create_flow_table(struct mlx5_flow_root_namespace *ns,
  
--__read_mostly DEFINE_STATIC_KEY_FALSE(block_rq_qos);
--
- /*
-  * Increment 'v', if 'v' is below 'below'. Returns true if we succeeded,
-  * false if 'v' + 1 would be bigger than 'below'.
-@@ -319,8 +317,8 @@ void rq_qos_exit(struct request_queue *q)
- 		struct rq_qos *rqos = q->rq_qos;
- 		q->rq_qos = rqos->next;
- 		rqos->ops->exit(rqos);
--		static_branch_dec(&block_rq_qos);
- 	}
-+	blk_queue_flag_clear(QUEUE_FLAG_QOS_ENABLED, q);
- 	mutex_unlock(&q->rq_qos_mutex);
- }
+ 	tbl_attr.type = MLX5HWS_TABLE_TYPE_FDB;
+ 	tbl_attr.level = ft_attr->level;
++	tbl_attr.uid = ft_attr->uid;
+ 	tbl = mlx5hws_table_create(ctx, &tbl_attr);
+ 	if (!tbl) {
+ 		mlx5_core_err(ns->dev, "Failed creating hws flow_table\n");
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
+index ce28ee1c0e41..6000f2c641e0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
+@@ -85,6 +85,7 @@ static int hws_matcher_create_end_ft_isolated(struct mlx5hws_matcher *matcher)
  
-@@ -346,7 +344,7 @@ int rq_qos_add(struct rq_qos *rqos, struct gendisk *disk, enum rq_qos_id id,
- 		goto ebusy;
- 	rqos->next = q->rq_qos;
- 	q->rq_qos = rqos;
--	static_branch_inc(&block_rq_qos);
-+	blk_queue_flag_set(QUEUE_FLAG_QOS_ENABLED, q);
+ 	ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev,
+ 					      tbl,
++					      0,
+ 					      &matcher->end_ft_id);
+ 	if (ret) {
+ 		mlx5hws_err(tbl->ctx, "Isolated matcher: failed to create end flow table\n");
+@@ -112,7 +113,9 @@ static int hws_matcher_create_end_ft(struct mlx5hws_matcher *matcher)
+ 	if (mlx5hws_matcher_is_isolated(matcher))
+ 		ret = hws_matcher_create_end_ft_isolated(matcher);
+ 	else
+-		ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev, tbl,
++		ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev,
++						      tbl,
++						      0,
+ 						      &matcher->end_ft_id);
  
- 	blk_mq_unfreeze_queue(q, memflags);
- 
-@@ -374,10 +372,11 @@ void rq_qos_del(struct rq_qos *rqos)
- 	for (cur = &q->rq_qos; *cur; cur = &(*cur)->next) {
- 		if (*cur == rqos) {
- 			*cur = rqos->next;
--			static_branch_dec(&block_rq_qos);
- 			break;
- 		}
- 	}
-+	if (!q->rq_qos)
-+		blk_queue_flag_clear(QUEUE_FLAG_QOS_ENABLED, q);
- 	blk_mq_unfreeze_queue(q, memflags);
- 
- 	mutex_lock(&q->debugfs_mutex);
-diff --git a/block/blk-rq-qos.h b/block/blk-rq-qos.h
-index 28125fc49eff..1fe22000a379 100644
---- a/block/blk-rq-qos.h
-+++ b/block/blk-rq-qos.h
-@@ -12,7 +12,6 @@
- #include "blk-mq-debugfs.h"
- 
- struct blk_mq_debugfs_attr;
--extern struct static_key_false block_rq_qos;
- 
- enum rq_qos_id {
- 	RQ_QOS_WBT,
-@@ -113,49 +112,55 @@ void __rq_qos_queue_depth_changed(struct rq_qos *rqos);
- 
- static inline void rq_qos_cleanup(struct request_queue *q, struct bio *bio)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos)
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos)
- 		__rq_qos_cleanup(q->rq_qos, bio);
- }
- 
- static inline void rq_qos_done(struct request_queue *q, struct request *rq)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos &&
--	    !blk_rq_is_passthrough(rq))
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos && !blk_rq_is_passthrough(rq))
- 		__rq_qos_done(q->rq_qos, rq);
- }
- 
- static inline void rq_qos_issue(struct request_queue *q, struct request *rq)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos)
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos)
- 		__rq_qos_issue(q->rq_qos, rq);
- }
- 
- static inline void rq_qos_requeue(struct request_queue *q, struct request *rq)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos)
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos)
- 		__rq_qos_requeue(q->rq_qos, rq);
- }
- 
- static inline void rq_qos_done_bio(struct bio *bio)
- {
--	if (static_branch_unlikely(&block_rq_qos) &&
--	    bio->bi_bdev && (bio_flagged(bio, BIO_QOS_THROTTLED) ||
--			     bio_flagged(bio, BIO_QOS_MERGED))) {
--		struct request_queue *q = bdev_get_queue(bio->bi_bdev);
--
--		/*
--		 * If a bio has BIO_QOS_xxx set, it implicitly implies that
--		 * q->rq_qos is present. So, we skip re-checking q->rq_qos
--		 * here as an extra optimization and directly call
--		 * __rq_qos_done_bio().
--		 */
--		__rq_qos_done_bio(q->rq_qos, bio);
--	}
-+	struct request_queue *q;
-+
-+	if (!bio->bi_bdev || (!bio_flagged(bio, BIO_QOS_THROTTLED) &&
-+			     !bio_flagged(bio, BIO_QOS_MERGED)))
-+		return;
-+
-+	q = bdev_get_queue(bio->bi_bdev);
-+
-+	/*
-+	 * If a bio has BIO_QOS_xxx set, it implicitly implies that
-+	 * q->rq_qos is present. So, we skip re-checking q->rq_qos
-+	 * here as an extra optimization and directly call
-+	 * __rq_qos_done_bio().
-+	 */
-+	__rq_qos_done_bio(q->rq_qos, bio);
- }
- 
- static inline void rq_qos_throttle(struct request_queue *q, struct bio *bio)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos) {
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos) {
- 		bio_set_flag(bio, BIO_QOS_THROTTLED);
- 		__rq_qos_throttle(q->rq_qos, bio);
- 	}
-@@ -164,14 +169,16 @@ static inline void rq_qos_throttle(struct request_queue *q, struct bio *bio)
- static inline void rq_qos_track(struct request_queue *q, struct request *rq,
- 				struct bio *bio)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos)
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos)
- 		__rq_qos_track(q->rq_qos, rq, bio);
- }
- 
- static inline void rq_qos_merge(struct request_queue *q, struct request *rq,
- 				struct bio *bio)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos) {
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos) {
- 		bio_set_flag(bio, BIO_QOS_MERGED);
- 		__rq_qos_merge(q->rq_qos, rq, bio);
- 	}
-@@ -179,7 +186,8 @@ static inline void rq_qos_merge(struct request_queue *q, struct request *rq,
- 
- static inline void rq_qos_queue_depth_changed(struct request_queue *q)
- {
--	if (static_branch_unlikely(&block_rq_qos) && q->rq_qos)
-+	if (unlikely(test_bit(QUEUE_FLAG_QOS_ENABLED, &q->queue_flags)) &&
-+			q->rq_qos)
- 		__rq_qos_queue_depth_changed(q->rq_qos);
- }
- 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 620345ce3aaa..3921188c9e13 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -652,6 +652,7 @@ enum {
- 	QUEUE_FLAG_SQ_SCHED,		/* single queue style io dispatch */
- 	QUEUE_FLAG_DISABLE_WBT_DEF,	/* for sched to disable/enable wbt */
- 	QUEUE_FLAG_NO_ELV_SWITCH,	/* can't switch elevator any more */
-+	QUEUE_FLAG_QOS_ENABLED,		/* qos is enabled */
- 	QUEUE_FLAG_MAX
+ 	if (ret) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
+index d8ac6c196211..a2fe2f9e832d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
+@@ -75,6 +75,7 @@ struct mlx5hws_context_attr {
+ struct mlx5hws_table_attr {
+ 	enum mlx5hws_table_type type;
+ 	u32 level;
++	u16 uid;
  };
  
+ enum mlx5hws_matcher_flow_src {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
+index 568f691733f3..6113383ae47b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.c
+@@ -9,6 +9,7 @@ u32 mlx5hws_table_get_id(struct mlx5hws_table *tbl)
+ }
+ 
+ static void hws_table_init_next_ft_attr(struct mlx5hws_table *tbl,
++					u16 uid,
+ 					struct mlx5hws_cmd_ft_create_attr *ft_attr)
+ {
+ 	ft_attr->type = tbl->fw_ft_type;
+@@ -16,7 +17,9 @@ static void hws_table_init_next_ft_attr(struct mlx5hws_table *tbl,
+ 		ft_attr->level = tbl->ctx->caps->fdb_ft.max_level - 1;
+ 	else
+ 		ft_attr->level = tbl->ctx->caps->nic_ft.max_level - 1;
++
+ 	ft_attr->rtc_valid = true;
++	ft_attr->uid = uid;
+ }
+ 
+ static void hws_table_set_cap_attr(struct mlx5hws_table *tbl,
+@@ -119,12 +122,12 @@ static int hws_table_connect_to_default_miss_tbl(struct mlx5hws_table *tbl, u32
+ 
+ int mlx5hws_table_create_default_ft(struct mlx5_core_dev *mdev,
+ 				    struct mlx5hws_table *tbl,
+-				    u32 *ft_id)
++				    u16 uid, u32 *ft_id)
+ {
+ 	struct mlx5hws_cmd_ft_create_attr ft_attr = {0};
+ 	int ret;
+ 
+-	hws_table_init_next_ft_attr(tbl, &ft_attr);
++	hws_table_init_next_ft_attr(tbl, uid, &ft_attr);
+ 	hws_table_set_cap_attr(tbl, &ft_attr);
+ 
+ 	ret = mlx5hws_cmd_flow_table_create(mdev, &ft_attr, ft_id);
+@@ -189,7 +192,10 @@ static int hws_table_init(struct mlx5hws_table *tbl)
+ 	}
+ 
+ 	mutex_lock(&ctx->ctrl_lock);
+-	ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev, tbl, &tbl->ft_id);
++	ret = mlx5hws_table_create_default_ft(tbl->ctx->mdev,
++					      tbl,
++					      tbl->uid,
++					      &tbl->ft_id);
+ 	if (ret) {
+ 		mlx5hws_err(tbl->ctx, "Failed to create flow table object\n");
+ 		mutex_unlock(&ctx->ctrl_lock);
+@@ -239,6 +245,7 @@ struct mlx5hws_table *mlx5hws_table_create(struct mlx5hws_context *ctx,
+ 	tbl->ctx = ctx;
+ 	tbl->type = attr->type;
+ 	tbl->level = attr->level;
++	tbl->uid = attr->uid;
+ 
+ 	ret = hws_table_init(tbl);
+ 	if (ret) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h
+index 0400cce0c317..1246f9bd8422 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/table.h
+@@ -18,6 +18,7 @@ struct mlx5hws_table {
+ 	enum mlx5hws_table_type type;
+ 	u32 fw_ft_type;
+ 	u32 level;
++	u16 uid;
+ 	struct list_head matchers_list;
+ 	struct list_head tbl_list_node;
+ 	struct mlx5hws_default_miss default_miss;
+@@ -47,7 +48,7 @@ u32 mlx5hws_table_get_res_fw_ft_type(enum mlx5hws_table_type tbl_type,
+ 
+ int mlx5hws_table_create_default_ft(struct mlx5_core_dev *mdev,
+ 				    struct mlx5hws_table *tbl,
+-				    u32 *ft_id);
++				    u16 uid, u32 *ft_id);
+ 
+ void mlx5hws_table_destroy_default_ft(struct mlx5hws_table *tbl,
+ 				      u32 ft_id);
 -- 
 2.50.1
 
