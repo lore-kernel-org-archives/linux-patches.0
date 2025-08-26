@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADFE341659;
-	Tue, 26 Aug 2025 11:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF136322C98;
+	Tue, 26 Aug 2025 11:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208018; cv=none; b=VlIQ/chtgER0IORA6YZ/sKZi76Qv9Up5Okk1LFkPh2fdo6D3LhsTAqy5K4rQT8cWPSDvKuzHLz+8IVVhpeCmCftceOouuScoMJX3EEAqmqI8GWDFRZP6XUXUJ+KRySjKTxymd1ppuoK44Iq0EunkqLj5SV5zlo5nR4712wYfYfk=
+	t=1756208019; cv=none; b=dWX+66VY9cl24WTvvwYSnhZM88pLAQpQhCGvCzV8uVAMMOOTAQUu/Hb96wXAhtK5K6TJ8at3IR3wp0Y7SJEAEVOvtegDEaTmRQiegu5RnZcr9PmTGJiozUifqCCaeDlYeWnLiyx9tKSN6RxMrw4LtQhiA9OdX7dPyT1gHORhTUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208018; c=relaxed/simple;
-	bh=Yw7erqmMwLDTaDWdYm5Lt/6FWmswBUWZUkvFMu9BSsg=;
+	s=arc-20240116; t=1756208019; c=relaxed/simple;
+	bh=2OA0pG4hHI0IHwOM8iUlmTVqpp/++cUn+LDJBnpNJmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=to1MNuOOlHj7ssLt3QtZlQbTK6hSUPkND0FQ60aOy91mtPrlVWWSEcBwY1Qaosx26+ulTf9R0yVx86FjHFtPV6+kksMjcfy/xHJ8bfp12COTq5VAZiEoTw52QrjJYt5lY6Z7xjZtZ4eAdDmziFs0+pbhA7SY09JdQrHssYCTfT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFwU6K+l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ijx1C/dOvAWuf5qY8ZAXtlitRto6na8HovJQloyGKwpdl4+FBhiPX1yrLam1HRj+Zj8tGh+bORpk8E5tOV0w5JXCZ2KXRDVBboD5mjk31NsEOMhvzm5cbVoVaWU1yiESyuBjC/nia5O2dfHVrPGb5qIqTfhQ29M6ThpkOhXJo/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCSm1QQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFwU6K+l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A7BC4CEF4;
-	Tue, 26 Aug 2025 11:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCSm1QQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA066C4CEF1;
+	Tue, 26 Aug 2025 11:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208015;
-	bh=Yw7erqmMwLDTaDWdYm5Lt/6FWmswBUWZUkvFMu9BSsg=;
+	s=korg; t=1756208018;
+	bh=2OA0pG4hHI0IHwOM8iUlmTVqpp/++cUn+LDJBnpNJmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFwU6K+lI5n1HQrttZg1fEA0K6OoF0icJdgxOmWxa9IjS35nnESJuQ3TOVqhCWClO
-	 a48H44iWSLt0HN+0zx3Q5+wHigZ8ZIqId7OKUcHUxkTmBG3nhJxHY7NXMkKqvyxIjS
-	 IVgTOt/yPpkXVZDs3yiSS4M2jlfWD3jwclX0pfEg=
+	b=lCSm1QQ69Wd395H0uldz9GxQ23zLJ1F3Kbl4IzRBJYbktakIT5eXhZd1tsDFF2XMI
+	 hiI3VAFwN9euQg9vusoehMeaoNGRMw2sDlwkRiJTWAhxDwWkthY0VgM/qdr+O+diEb
+	 y+MsaPBaWz0VCFe529bOjQIyK6ASwB5RPUuwT9So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qingfang Deng <dqfext@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 405/457] net: ethernet: mtk_ppe: add RCU lock around dev_fill_forward_path
-Date: Tue, 26 Aug 2025 13:11:29 +0200
-Message-ID: <20250826110947.304291685@linuxfoundation.org>
+Subject: [PATCH 6.16 406/457] ppp: fix race conditions in ppp_fill_forward_path
+Date: Tue, 26 Aug 2025 13:11:30 +0200
+Message-ID: <20250826110947.328385958@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,33 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 62c30c544359aa18b8fb2734166467a07d435c2d ]
+[ Upstream commit 0417adf367a0af11adf7ace849af4638cfb573f7 ]
 
-Ensure ndo_fill_forward_path() is called with RCU lock held.
+ppp_fill_forward_path() has two race conditions:
 
-Fixes: 2830e314778d ("net: ethernet: mtk-ppe: fix traffic offload with bridged wlan")
+1. The ppp->channels list can change between list_empty() and
+   list_first_entry(), as ppp_lock() is not held. If the only channel
+   is deleted in ppp_disconnect_channel(), list_first_entry() may
+   access an empty head or a freed entry, and trigger a panic.
+
+2. pch->chan can be NULL. When ppp_unregister_channel() is called,
+   pch->chan is set to NULL before pch is removed from ppp->channels.
+
+Fix these by using a lockless RCU approach:
+- Use list_first_or_null_rcu() to safely test and access the first list
+  entry.
+- Convert list modifications on ppp->channels to their RCU variants and
+  add synchronize_net() after removal.
+- Check for a NULL pch->chan before dereferencing it.
+
+Fixes: f6efc675c9dd ("net: ppp: resolve forwarding path for bridge pppoe devices")
 Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20250814012559.3705-1-dqfext@gmail.com
+Link: https://patch.msgid.link/20250814012559.3705-2-dqfext@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_ppe_offload.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-index c855fb799ce1..e9bd32741983 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe_offload.c
-@@ -101,7 +101,9 @@ mtk_flow_get_wdma_info(struct net_device *dev, const u8 *addr, struct mtk_wdma_i
- 	if (!IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED))
- 		return -1;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index def84e87e05b..5e7672d2022c 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -33,6 +33,7 @@
+ #include <linux/ppp_channel.h>
+ #include <linux/ppp-comp.h>
+ #include <linux/skbuff.h>
++#include <linux/rculist.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/if_arp.h>
+ #include <linux/ip.h>
+@@ -1612,11 +1613,14 @@ static int ppp_fill_forward_path(struct net_device_path_ctx *ctx,
+ 	if (ppp->flags & SC_MULTILINK)
+ 		return -EOPNOTSUPP;
  
-+	rcu_read_lock();
- 	err = dev_fill_forward_path(dev, addr, &stack);
-+	rcu_read_unlock();
- 	if (err)
- 		return err;
+-	if (list_empty(&ppp->channels))
++	pch = list_first_or_null_rcu(&ppp->channels, struct channel, clist);
++	if (!pch)
++		return -ENODEV;
++
++	chan = READ_ONCE(pch->chan);
++	if (!chan)
+ 		return -ENODEV;
  
+-	pch = list_first_entry(&ppp->channels, struct channel, clist);
+-	chan = pch->chan;
+ 	if (!chan->ops->fill_forward_path)
+ 		return -EOPNOTSUPP;
+ 
+@@ -2999,7 +3003,7 @@ ppp_unregister_channel(struct ppp_channel *chan)
+ 	 */
+ 	down_write(&pch->chan_sem);
+ 	spin_lock_bh(&pch->downl);
+-	pch->chan = NULL;
++	WRITE_ONCE(pch->chan, NULL);
+ 	spin_unlock_bh(&pch->downl);
+ 	up_write(&pch->chan_sem);
+ 	ppp_disconnect_channel(pch);
+@@ -3509,7 +3513,7 @@ ppp_connect_channel(struct channel *pch, int unit)
+ 	hdrlen = pch->file.hdrlen + 2;	/* for protocol bytes */
+ 	if (hdrlen > ppp->dev->hard_header_len)
+ 		ppp->dev->hard_header_len = hdrlen;
+-	list_add_tail(&pch->clist, &ppp->channels);
++	list_add_tail_rcu(&pch->clist, &ppp->channels);
+ 	++ppp->n_channels;
+ 	pch->ppp = ppp;
+ 	refcount_inc(&ppp->file.refcnt);
+@@ -3539,10 +3543,11 @@ ppp_disconnect_channel(struct channel *pch)
+ 	if (ppp) {
+ 		/* remove it from the ppp unit's list */
+ 		ppp_lock(ppp);
+-		list_del(&pch->clist);
++		list_del_rcu(&pch->clist);
+ 		if (--ppp->n_channels == 0)
+ 			wake_up_interruptible(&ppp->file.rwait);
+ 		ppp_unlock(ppp);
++		synchronize_net();
+ 		if (refcount_dec_and_test(&ppp->file.refcnt))
+ 			ppp_destroy_interface(ppp);
+ 		err = 0;
 -- 
 2.50.1
 
