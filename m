@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B632FDC44;
-	Tue, 26 Aug 2025 14:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F2A350831;
+	Tue, 26 Aug 2025 14:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218759; cv=none; b=ewNQL0rHgS5gDmRhbZtb6jmgvU+0ofT4QXx5Ed/t7zccb6+yVtotQCalOpMuLJfD+PRLAEEy8Qc1sZBZP/znT5kJjCg2aDIqgnI52xlesb0cev1JY7+6WuyR2paE1xfGb+X/GFI2R2Yti5K+ixAajGcpkqeJn7EMRJLfokdPhIg=
+	t=1756218762; cv=none; b=gO4BZy098XSA2Vd0kUQtf+88wdkBFZUzsOYVFq7/g8+FKkqVBBraQF2yTo1+JCcCZzTkqVE3rv1Tul5ZIKavQHyt5d8CVlsubxHDevvq1hYVRGRtYwPr4R+/C7vGRU+rp45hkKe2S1OQUeLyB3O5VlxyY/TcrGZQsVVM5wNfhSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218759; c=relaxed/simple;
-	bh=8wk8llX61pCpUN+jW9Fq1lhk4DefMDj2gs6EOyU2wCQ=;
+	s=arc-20240116; t=1756218762; c=relaxed/simple;
+	bh=6CXU9kxrvhi4N0ZrBWWjfjkYNDguOxuCGA2Kd0zlhE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjdXaGgxhEiV7r7PBDmAwk9uFhypI9bkmXrDdbbCSfNaWIFcFbSJr89HhFp7SmHeUgVdAzTFhVUyhQDcjqr9qMZaKL0PT81t3kyxn/3yUVSN8n5od8xvxmUSjSQmEDTQEF2sYUTGC2qzajy47sq8Of6TOicMIU6lt49UCS6Ohco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPNXxOFo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rjCEqI5j2Z9ui5V/wtZZxxoyXHL8AoudTjA6yII/Vp1NlUMQOak7p7pa5HU9O1Jvam/GMeOkGOHArm5sxp1qQKKMiNhxLiAlSVxqPePmb2k/XDt4zk3dpjXD63UFzomJEjDHyQk/lGmmllCBN4wSJjmaDuaOKuokMitDE4sS1gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlcIiZi8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPNXxOFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351DEC4CEF1;
-	Tue, 26 Aug 2025 14:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlcIiZi8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E49C4CEF1;
+	Tue, 26 Aug 2025 14:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218759;
-	bh=8wk8llX61pCpUN+jW9Fq1lhk4DefMDj2gs6EOyU2wCQ=;
+	s=korg; t=1756218762;
+	bh=6CXU9kxrvhi4N0ZrBWWjfjkYNDguOxuCGA2Kd0zlhE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPNXxOFoTSV02u7HUpq/AA8ehrsvCm73nP+3NnoIj7kCdBvQgjoObNgDKSE+cNIrR
-	 72U9AKUVjqZQepKh4Y+TZdPNgY3pgU+t5yuV8VrYzPkuOqbVRa76hkwxkqO1RX+jAW
-	 jOL2vn3y0zDgexjun7ayvgcrSbhgw/IDfFoLlh6Q=
+	b=FlcIiZi8biZT8+BbCIS5yccPL8u8hQHXU/8vfAbzrWsMlTW15/spRmGWXPGwO9TwL
+	 OioywaTARSY1GYRjuJ+T+rFwpQC6d3nLSOivBqxdCMllN1FZGgB0PT61BrDcc7ucDZ
+	 XpqpQRCzTEzHjiMK7E8dKN7iZmxef7Nu5hpalUKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/403] scsi: mvsas: Fix dma_unmap_sg() nents value
-Date: Tue, 26 Aug 2025 13:07:21 +0200
-Message-ID: <20250826110909.909402940@linuxfoundation.org>
+Subject: [PATCH 5.4 124/403] crypto: qat - fix seq_file position update in adf_ring_next()
+Date: Tue, 26 Aug 2025 13:07:30 +0200
+Message-ID: <20250826110910.163207863@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,44 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 0141618727bc929fe868153d21797f10ce5bef3f ]
+[ Upstream commit 6908c5f4f066a0412c3d9a6f543a09fa7d87824b ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+The `adf_ring_next()` function in the QAT debug transport interface
+fails to correctly update the position index when reaching the end of
+the ring elements. This triggers the following kernel warning when
+reading ring files, such as
+/sys/kernel/debug/qat_c6xx_<D:B:D:F>/transport/bank_00/ring_00:
 
-Fixes: b5762948263d ("[SCSI] mvsas: Add Marvell 6440 SAS/SATA driver")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://lore.kernel.org/r/20250627134822.234813-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+   [27725.022965] seq_file: buggy .next function adf_ring_next [intel_qat] did not update position index
+
+Ensure that the `*pos` index is incremented before returning NULL when
+after the last element in the ring is found, satisfying the seq_file API
+requirements and preventing the warning.
+
+Fixes: a672a9dc872e ("crypto: qat - Intel(R) QAT transport code")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mvsas/mv_sas.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/qat/qat_common/adf_transport_debug.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mvsas/mv_sas.c b/drivers/scsi/mvsas/mv_sas.c
-index 3e0b8ebe257f..68caeaf9e636 100644
---- a/drivers/scsi/mvsas/mv_sas.c
-+++ b/drivers/scsi/mvsas/mv_sas.c
-@@ -831,7 +831,7 @@ static int mvs_task_prep(struct sas_task *task, struct mvs_info *mvi, int is_tmf
- 	dev_printk(KERN_ERR, mvi->dev, "mvsas prep failed[%d]!\n", rc);
- 	if (!sas_protocol_ata(task->task_proto))
- 		if (n_elem)
--			dma_unmap_sg(mvi->dev, task->scatter, n_elem,
-+			dma_unmap_sg(mvi->dev, task->scatter, task->num_scatter,
- 				     task->data_dir);
- prep_out:
- 	return rc;
-@@ -882,7 +882,7 @@ static void mvs_slot_task_free(struct mvs_info *mvi, struct sas_task *task,
- 	if (!sas_protocol_ata(task->task_proto))
- 		if (slot->n_elem)
- 			dma_unmap_sg(mvi->dev, task->scatter,
--				     slot->n_elem, task->data_dir);
-+				     task->num_scatter, task->data_dir);
+diff --git a/drivers/crypto/qat/qat_common/adf_transport_debug.c b/drivers/crypto/qat/qat_common/adf_transport_debug.c
+index e794e9d97b2c..9303d6318207 100644
+--- a/drivers/crypto/qat/qat_common/adf_transport_debug.c
++++ b/drivers/crypto/qat/qat_common/adf_transport_debug.c
+@@ -75,8 +75,10 @@ static void *adf_ring_next(struct seq_file *sfile, void *v, loff_t *pos)
+ 	struct adf_etr_ring_data *ring = sfile->private;
  
- 	switch (task->task_proto) {
- 	case SAS_PROTOCOL_SMP:
+ 	if (*pos >= (ADF_SIZE_TO_RING_SIZE_IN_BYTES(ring->ring_size) /
+-		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size)))
++		     ADF_MSG_SIZE_TO_BYTES(ring->msg_size))) {
++		(*pos)++;
+ 		return NULL;
++	}
+ 
+ 	return ring->base_addr +
+ 		(ADF_MSG_SIZE_TO_BYTES(ring->msg_size) * (*pos)++);
 -- 
 2.39.5
 
