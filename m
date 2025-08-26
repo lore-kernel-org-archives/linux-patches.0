@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F2935083A;
-	Tue, 26 Aug 2025 14:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C6350831;
+	Tue, 26 Aug 2025 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217609; cv=none; b=Vraqoo6x63v8PCkRb0sqB6fJS+DTfHO1milctgFwnXtbn6rppI7Bf6IwthHX0ubOodpxGQdpoh/J2EujWP+Y6F1N+5LbYcHU3fd+ipc8dVpMvWrCuFWaaq+TMzi0FIKiQVsuEFsuCYXczCtqnB2232lmnVgWV67tiEz0YHu2Hjs=
+	t=1756217611; cv=none; b=jzavssGfFKI70ngsLL+58jjRAMoaIwl08lgpWtoGaovhyyXcwCes83YSQ8Pu7SxIbiyX4C56fEjABuYYqkzaQ4NMweSX+gqLEuuxBpekRe41AO/5u7ARCXB2v+LOAdtiDd1h7gJQEYOxF/GFnNE3Uif6+iKttnvnm7o0cHMmwUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217609; c=relaxed/simple;
-	bh=iLkbSHu866m4mvAOCnvvwvGKzubsubsSAnTgzo4NHyM=;
+	s=arc-20240116; t=1756217611; c=relaxed/simple;
+	bh=u4jfQ6x1qBa6MLkZM1WjAEd2lBGc+aJ6Wp5Ap5SIb0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8u6vGn2aWh490z1Q55JRyAJko18E4Xtr8thmjCpSEUwHeQutIOuSLpnfzepJRcYzQH1RphmCSlynih9+k8a2pL6PejKp3CVh3O9Y09t1e5AKRBrkFg6NqA7ODRFwpVu0DgIyVPEUfC6EqxH7/fGd6QdznTK5XPsUWZV3A1ITqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeTua7he; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6TGO/DA2aKuI8b5+TsMpGfNtBo+eQrzZ+OuFuQPD4jGwrFB4ktjIjXT+aOnERFZl8HXctM9lrYLBj8OVKWO4FGpM2n4V6nV6OPAgPrYPR76Kcdei38B8sEJZv2jyHO8nMoVhbG+eXrrM3IUIDFveykhSMZXmwzeoQ4q+2qePCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onaclEX1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeTua7he"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2775C4CEF1;
-	Tue, 26 Aug 2025 14:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onaclEX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C0EC4CEF1;
+	Tue, 26 Aug 2025 14:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217609;
-	bh=iLkbSHu866m4mvAOCnvvwvGKzubsubsSAnTgzo4NHyM=;
+	s=korg; t=1756217611;
+	bh=u4jfQ6x1qBa6MLkZM1WjAEd2lBGc+aJ6Wp5Ap5SIb0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeTua7he08WQByvOa5giEdvPcBlYJYnz0SGlcXRcnGqbmNuQhVR7z1R+LemghiMTk
-	 ANk2w5Odxwi1cW2gkknrEGfzwq1hPIy0kLGi8tJ8KMzPJnaW81S0DpdA2KXLNXlLDN
-	 NouZZLWcP5vlW4Mg0KyKWnvYSCCoS0jEPaR3rxmw=
+	b=onaclEX1rj6xE6lRasNjOoLtWi/pJzxDFKlm+9rqh6lUSeerGgQeuEAKnIIkk3fJh
+	 8KLYqRUdy2wEw0njqfl5gE7/WP4ouh/ELsPQzsFAZOu3O46yYyLksfeq9AhPho67Cs
+	 G8CZ88OBlmLRwFRE4H5lnWIBVjlMFxNqcgrxwV7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/523] PCI: pnv_php: Fix surprise plug detection and recovery
-Date: Tue, 26 Aug 2025 13:06:16 +0200
-Message-ID: <20250826110928.563787453@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.10 201/523] fs: Prevent file descriptor table allocations exceeding INT_MAX
+Date: Tue, 26 Aug 2025 13:06:51 +0200
+Message-ID: <20250826110929.406125386@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,214 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Sasha Levin <sashal@kernel.org>
 
-[ Upstream commit a2a2a6fc2469524caa713036297c542746d148dc ]
+commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
 
-The existing PowerNV hotplug code did not handle surprise plug events
-correctly, leading to a complete failure of the hotplug system after device
-removal and a required reboot to detect new devices.
+When sysctl_nr_open is set to a very high value (for example, 1073741816
+as set by systemd), processes attempting to use file descriptors near
+the limit can trigger massive memory allocation attempts that exceed
+INT_MAX, resulting in a WARNING in mm/slub.c:
 
-This comes down to two issues:
+  WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
 
- 1) When a device is surprise removed, often the bridge upstream
-    port will cause a PE freeze on the PHB.  If this freeze is not
-    cleared, the MSI interrupts from the bridge hotplug notification
-    logic will not be received by the kernel, stalling all plug events
-    on all slots associated with the PE.
+This happens because kvmalloc_array() and kvmalloc() check if the
+requested size exceeds INT_MAX and emit a warning when the allocation is
+not flagged with __GFP_NOWARN.
 
- 2) When a device is removed from a slot, regardless of surprise or
-    programmatic removal, the associated PHB/PE ls left frozen.
-    If this freeze is not cleared via a fundamental reset, skiboot
-    is unable to clear the freeze and cannot retrain / rescan the
-    slot.  This also requires a reboot to clear the freeze and redetect
-    the device in the slot.
+Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
+process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
+- File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
+- Multiple bitmaps: ~400MB
+- Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
 
-Issue the appropriate unfreeze and rescan commands on hotplug events,
-and don't oops on hotplug if pci_bus_to_OF_node() returns NULL.
+Reproducer:
+1. Set /proc/sys/fs/nr_open to 1073741816:
+   # echo 1073741816 > /proc/sys/fs/nr_open
 
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-[bhelgaas: tidy comments]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/171044224.1359864.1752615546988.JavaMail.zimbra@raptorengineeringinc.com
+2. Run a program that uses a high file descriptor:
+   #include <unistd.h>
+   #include <sys/resource.h>
+
+   int main() {
+       struct rlimit rlim = {1073741824, 1073741824};
+       setrlimit(RLIMIT_NOFILE, &rlim);
+       dup2(2, 1073741880);  // Triggers the warning
+       return 0;
+   }
+
+3. Observe WARNING in dmesg at mm/slub.c:5027
+
+systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
+maximum possible value. The rationale was that systems with memory
+control groups (memcg) no longer need separate file descriptor limits
+since memory is properly accounted. However, this change overlooked
+that:
+
+1. The kernel's allocation functions still enforce INT_MAX as a maximum
+   size regardless of memcg accounting
+2. Programs and tests that legitimately test file descriptor limits can
+   inadvertently trigger massive allocations
+3. The resulting allocations (>8GB) are impractical and will always fail
+
+systemd's algorithm starts with INT_MAX and keeps halving the value
+until the kernel accepts it. On most systems, this results in nr_open
+being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
+descriptors.
+
+While processes rarely use file descriptors near this limit in normal
+operation, certain selftests (like
+tools/testing/selftests/core/unshare_test.c) and programs that test file
+descriptor limits can trigger this issue.
+
+Fix this by adding a check in alloc_fdtable() to ensure the requested
+allocation size does not exceed INT_MAX. This causes the operation to
+fail with -EMFILE instead of triggering a kernel warning and avoids the
+impractical >8GB memory allocation request.
+
+Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/pci-hotplug.c |   3 +
- drivers/pci/hotplug/pnv_php.c     | 110 +++++++++++++++++++++++++++++-
- 2 files changed, 110 insertions(+), 3 deletions(-)
+ fs/file.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/powerpc/kernel/pci-hotplug.c b/arch/powerpc/kernel/pci-hotplug.c
-index 2fc12198ec07..62de678f9f50 100644
---- a/arch/powerpc/kernel/pci-hotplug.c
-+++ b/arch/powerpc/kernel/pci-hotplug.c
-@@ -110,6 +110,9 @@ void pci_hp_add_devices(struct pci_bus *bus)
- 	struct pci_controller *phb;
- 	struct device_node *dn = pci_bus_to_OF_node(bus);
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -126,6 +126,21 @@ static struct fdtable * alloc_fdtable(un
+ 	if (unlikely(nr > sysctl_nr_open))
+ 		nr = ((sysctl_nr_open - 1) | (BITS_PER_LONG - 1)) + 1;
  
-+	if (!dn)
-+		return;
-+
- 	phb = pci_bus_to_host(bus);
- 
- 	mode = PCI_PROBE_NORMAL;
-diff --git a/drivers/pci/hotplug/pnv_php.c b/drivers/pci/hotplug/pnv_php.c
-index 7fa92cb51451..03c4d0d7f9b1 100644
---- a/drivers/pci/hotplug/pnv_php.c
-+++ b/drivers/pci/hotplug/pnv_php.c
-@@ -4,11 +4,13 @@
-  *
-  * Copyright Gavin Shan, IBM Corporation 2016.
-  * Copyright (C) 2025 Raptor Engineering, LLC
-+ * Copyright (C) 2025 Raptor Computing Systems, LLC
-  */
- 
- #include <linux/libfdt.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-+#include <linux/delay.h>
- #include <linux/pci_hotplug.h>
- 
- #include <asm/opal.h>
-@@ -467,6 +469,61 @@ static int pnv_php_set_attention_state(struct hotplug_slot *slot, u8 state)
- 	return 0;
- }
- 
-+static int pnv_php_activate_slot(struct pnv_php_slot *php_slot,
-+				 struct hotplug_slot *slot)
-+{
-+	int ret, i;
-+
 +	/*
-+	 * Issue initial slot activation command to firmware
++	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
++	 * and kvmalloc() will warn if the allocation size is greater than
++	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
 +	 *
-+	 * Firmware will power slot on, attempt to train the link, and
-+	 * discover any downstream devices. If this process fails, firmware
-+	 * will return an error code and an invalid device tree. Failure
-+	 * can be caused for multiple reasons, including a faulty
-+	 * downstream device, poor connection to the downstream device, or
-+	 * a previously latched PHB fence.  On failure, issue fundamental
-+	 * reset up to three times before aborting.
++	 * This can happen when sysctl_nr_open is set to a very high value and
++	 * a process tries to use a file descriptor near that limit. For example,
++	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
++	 * systemd typically sets it to - then trying to use a file descriptor
++	 * close to that value will require allocating a file descriptor table
++	 * that exceeds 8GB in size.
 +	 */
-+	ret = pnv_php_set_slot_power_state(slot, OPAL_PCI_SLOT_POWER_ON);
-+	if (ret) {
-+		SLOT_WARN(
-+			php_slot,
-+			"PCI slot activation failed with error code %d, possible frozen PHB",
-+			ret);
-+		SLOT_WARN(
-+			php_slot,
-+			"Attempting complete PHB reset before retrying slot activation\n");
-+		for (i = 0; i < 3; i++) {
-+			/*
-+			 * Slot activation failed, PHB may be fenced from a
-+			 * prior device failure.
-+			 *
-+			 * Use the OPAL fundamental reset call to both try a
-+			 * device reset and clear any potentially active PHB
-+			 * fence / freeze.
-+			 */
-+			SLOT_WARN(php_slot, "Try %d...\n", i + 1);
-+			pci_set_pcie_reset_state(php_slot->pdev,
-+						 pcie_warm_reset);
-+			msleep(250);
-+			pci_set_pcie_reset_state(php_slot->pdev,
-+						 pcie_deassert_reset);
++	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
++		return ERR_PTR(-EMFILE);
 +
-+			ret = pnv_php_set_slot_power_state(
-+				slot, OPAL_PCI_SLOT_POWER_ON);
-+			if (!ret)
-+				break;
-+		}
-+
-+		if (i >= 3)
-+			SLOT_WARN(php_slot,
-+				  "Failed to bring slot online, aborting!\n");
-+	}
-+
-+	return ret;
-+}
-+
- static int pnv_php_enable(struct pnv_php_slot *php_slot, bool rescan)
- {
- 	struct hotplug_slot *slot = &php_slot->slot;
-@@ -529,7 +586,7 @@ static int pnv_php_enable(struct pnv_php_slot *php_slot, bool rescan)
- 		goto scan;
- 
- 	/* Power is off, turn it on and then scan the slot */
--	ret = pnv_php_set_slot_power_state(slot, OPAL_PCI_SLOT_POWER_ON);
-+	ret = pnv_php_activate_slot(php_slot, slot);
- 	if (ret)
- 		return ret;
- 
-@@ -836,16 +893,63 @@ static int pnv_php_enable_msix(struct pnv_php_slot *php_slot)
- 	return entry.vector;
- }
- 
-+static void
-+pnv_php_detect_clear_suprise_removal_freeze(struct pnv_php_slot *php_slot)
-+{
-+	struct pci_dev *pdev = php_slot->pdev;
-+	struct eeh_dev *edev;
-+	struct eeh_pe *pe;
-+	int i, rc;
-+
-+	/*
-+	 * When a device is surprise removed from a downstream bridge slot,
-+	 * the upstream bridge port can still end up frozen due to related EEH
-+	 * events, which will in turn block the MSI interrupts for slot hotplug
-+	 * detection.
-+	 *
-+	 * Detect and thaw any frozen upstream PE after slot deactivation.
-+	 */
-+	edev = pci_dev_to_eeh_dev(pdev);
-+	pe = edev ? edev->pe : NULL;
-+	rc = eeh_pe_get_state(pe);
-+	if ((rc == -ENODEV) || (rc == -ENOENT)) {
-+		SLOT_WARN(
-+			php_slot,
-+			"Upstream bridge PE state unknown, hotplug detect may fail\n");
-+	} else {
-+		if (pe->state & EEH_PE_ISOLATED) {
-+			SLOT_WARN(
-+				php_slot,
-+				"Upstream bridge PE %02x frozen, thawing...\n",
-+				pe->addr);
-+			for (i = 0; i < 3; i++)
-+				if (!eeh_unfreeze_pe(pe))
-+					break;
-+			if (i >= 3)
-+				SLOT_WARN(
-+					php_slot,
-+					"Unable to thaw PE %02x, hotplug detect will fail!\n",
-+					pe->addr);
-+			else
-+				SLOT_WARN(php_slot,
-+					  "PE %02x thawed successfully\n",
-+					  pe->addr);
-+		}
-+	}
-+}
-+
- static void pnv_php_event_handler(struct work_struct *work)
- {
- 	struct pnv_php_event *event =
- 		container_of(work, struct pnv_php_event, work);
- 	struct pnv_php_slot *php_slot = event->php_slot;
- 
--	if (event->added)
-+	if (event->added) {
- 		pnv_php_enable_slot(&php_slot->slot);
--	else
-+	} else {
- 		pnv_php_disable_slot(&php_slot->slot);
-+		pnv_php_detect_clear_suprise_removal_freeze(php_slot);
-+	}
- 
- 	kfree(event);
- }
--- 
-2.39.5
-
+ 	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
+ 	if (!fdt)
+ 		goto out;
 
 
