@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4B428314A;
-	Tue, 26 Aug 2025 14:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347F1350820;
+	Tue, 26 Aug 2025 14:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217994; cv=none; b=hn7s5OLsgRQdV0oG5wuDS4Mi3jsmN8W6dkhC8wdMWroqdP4OFQk6kfom5p8BJaBp5XKAHTusXzVNahd8rRYiYeLzdb2sz6UVrLfvmnuk6vVWFCFEQ4mLbwCq0tJpv2VRewrB583H7UFaYp6NL/QOImKwSlkVYHA+LinPwsQI76U=
+	t=1756217997; cv=none; b=Ai9GDtr1IxlV92hN4hNh/Qk8p4xuIxBghdMrP4mGHCN+eDpdshitOlNAZq3EZYt5BOm3u2atXzQJEO1LEvZ1tZ7xduSOv7q/eKjV7mtjo+1kmIuNy7gUUcpiUeMY1yza65mPZY0hNW6vzA3uOEUrwvStveVfGJpHD5NvTkLWgtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217994; c=relaxed/simple;
-	bh=X1rtFOH7UtncBcIWvh9FPPbFk+SnBfBBgYe6oNgjzog=;
+	s=arc-20240116; t=1756217997; c=relaxed/simple;
+	bh=caFMaOi381tAsVXTaQFoJ243pxZgvVDM6ilFOhc05WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6vtBhm9HCiXplSwqnHy7v2bncy3Dy/ECEB4oDFPbcyaAUSnIipTFBJRg6Rr04XfIXzf0dXLZUus+1I/+xjud24oHWP3yx/jwdfyKpf0288d0JtLa3ZQxiC6y4EAvIn/WmAnEzmaxYpj2ipVqPl06GA3Dzm9yJXOg2QBP+Ngmo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/mgvnvC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mP7+TK8ZYTBvgThBrG/WzTPTCAgsLMNdqFnk08LrFAWk8b0Z1KKZz1f9Zx3MVG0J/j1Dig6O97Hc1qApvZ4jAJa7Q24443N+E7xCi6dY5nx6hMno7vvyOjvcTWJIUmpnIGgs5bpCvnx55I2cdmnxa6L876g52jVrP6GqhUGcDaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1KqeEDP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/mgvnvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0548FC113CF;
-	Tue, 26 Aug 2025 14:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1KqeEDP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12C9C4CEF1;
+	Tue, 26 Aug 2025 14:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217994;
-	bh=X1rtFOH7UtncBcIWvh9FPPbFk+SnBfBBgYe6oNgjzog=;
+	s=korg; t=1756217997;
+	bh=caFMaOi381tAsVXTaQFoJ243pxZgvVDM6ilFOhc05WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/mgvnvCaDzzh+UU01FH78OyJhrWm8ynmQddb5HpR770JpLTs0PAOWNtPl4vHbfcH
-	 SmL6xUw5UIbStRRDCCMEs660C8twkcW7SIFDSjTYge7Cwb3quQnMChTEfDi4Mkh5QI
-	 qtb5DcztF8fzjBl0rWq8AYX0Fh0P/iQSCWEgl4gY=
+	b=g1KqeEDPfq+atRSMx/lsRoZRTMiMPOCbJz26pa9+uQfdZ2EIE6+fCU+XoTOjKVQxa
+	 5SFI9fqquWLv+sMZTMfWR1pb3m6Qj09IHRDiaRZECouX/1k8I8PWM4laGThdWNjvDn
+	 ObeMgJpAPXYztq/16PBvF5uAIRpafhBYxUfjLNQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meagan Lloyd <meaganlloyd@linux.microsoft.com>,
-	Tyler Hicks <code@tyhicks.com>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 336/523] rtc: ds1307: remove clear of oscillator stop flag (OSF) in probe
-Date: Tue, 26 Aug 2025 13:09:06 +0200
-Message-ID: <20250826110932.761994007@linuxfoundation.org>
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 5.10 354/523] m68k: Fix lost column on framebuffer debug console
+Date: Tue, 26 Aug 2025 13:09:24 +0200
+Message-ID: <20250826110933.200520836@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,52 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 48458654659c9c2e149c211d86637f1592470da5 ]
+commit 210a1ce8ed4391b64a888b3fb4b5611a13f5ccc7 upstream.
 
-In using CONFIG_RTC_HCTOSYS, rtc_hctosys() will sync the RTC time to the
-kernel time as long as rtc_read_time() succeeds. In some power loss
-situations, our supercapacitor-backed DS1342 RTC comes up with either an
-unpredictable future time or the default 01/01/00 from the datasheet.
-The oscillator stop flag (OSF) is set in these scenarios due to the
-power loss and can be used to determine the validity of the RTC data.
+Move the cursor position rightward after rendering the character,
+not before. This avoids complications that arise when the recursive
+console_putc call has to wrap the line and/or scroll the display.
+This also fixes the linewrap bug that crops off the rightmost column.
 
-Some chip types in the ds1307 driver already have OSF handling to
-determine whether .read_time provides valid RTC data or returns -EINVAL.
+When the cursor is at the bottom of the display, a linefeed will not
+move the cursor position further downward. Instead, the display scrolls
+upward. Avoid the repeated add/subtract sequence by way of a single
+subtraction at the initialization of console_struct_num_rows.
 
-This change removes the clear of the OSF in .probe as the OSF needs to
-be preserved to expand the OSF handling to the ds1341 chip type (note
-that DS1341 and DS1342 share a datasheet).
-
-Signed-off-by: Meagan Lloyd <meaganlloyd@linux.microsoft.com>
-Reviewed-by: Tyler Hicks <code@tyhicks.com>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/1749665656-30108-2-git-send-email-meaganlloyd@linux.microsoft.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/9d4e8c68a456d5f2bc254ac6f87a472d066ebd5e.1743115195.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ds1307.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/m68k/kernel/head.S |   31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index a60362c69d87..ecfd6c27ba54 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -1881,10 +1881,8 @@ static int ds1307_probe(struct i2c_client *client,
- 		regmap_write(ds1307->regmap, DS1337_REG_CONTROL,
- 			     regs[0]);
+--- a/arch/m68k/kernel/head.S
++++ b/arch/m68k/kernel/head.S
+@@ -3379,6 +3379,7 @@ L(console_clear_loop):
  
--		/* oscillator fault?  clear flag, and warn */
-+		/* oscillator fault? warn */
- 		if (regs[1] & DS1337_BIT_OSF) {
--			regmap_write(ds1307->regmap, DS1337_REG_STATUS,
--				     regs[1] & ~DS1337_BIT_OSF);
- 			dev_warn(ds1307->dev, "SET TIME!\n");
- 		}
- 		break;
--- 
-2.39.5
-
+ 	movel	%d4,%d1				/* screen height in pixels */
+ 	divul	%a0@(FONT_DESC_HEIGHT),%d1	/* d1 = max num rows */
++	subql	#1,%d1				/* row range is 0 to num - 1 */
+ 
+ 	movel	%d0,%a2@(Lconsole_struct_num_columns)
+ 	movel	%d1,%a2@(Lconsole_struct_num_rows)
+@@ -3525,15 +3526,14 @@ func_start	console_putc,%a0/%a1/%d0-%d7
+ 	cmpib	#10,%d7
+ 	jne	L(console_not_lf)
+ 	movel	%a0@(Lconsole_struct_cur_row),%d0
+-	addil	#1,%d0
+-	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	movel	%a0@(Lconsole_struct_num_rows),%d1
+ 	cmpl	%d1,%d0
+ 	jcs	1f
+-	subil	#1,%d0
+-	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	console_scroll
++	jra	L(console_exit)
+ 1:
++	addql	#1,%d0
++	movel	%d0,%a0@(Lconsole_struct_cur_row)
+ 	jra	L(console_exit)
+ 
+ L(console_not_lf):
+@@ -3560,12 +3560,6 @@ L(console_not_cr):
+  */
+ L(console_not_home):
+ 	movel	%a0@(Lconsole_struct_cur_column),%d0
+-	addql	#1,%a0@(Lconsole_struct_cur_column)
+-	movel	%a0@(Lconsole_struct_num_columns),%d1
+-	cmpl	%d1,%d0
+-	jcs	1f
+-	console_putc	#'\n'	/* recursion is OK! */
+-1:
+ 	movel	%a0@(Lconsole_struct_cur_row),%d1
+ 
+ 	/*
+@@ -3612,6 +3606,23 @@ L(console_do_font_scanline):
+ 	addq	#1,%d1
+ 	dbra	%d7,L(console_read_char_scanline)
+ 
++	/*
++	 *	Register usage in the code below:
++	 *	a0 = pointer to console globals
++	 *	d0 = cursor column
++	 *	d1 = cursor column limit
++	 */
++
++	lea	%pc@(L(console_globals)),%a0
++
++	movel	%a0@(Lconsole_struct_cur_column),%d0
++	addql	#1,%d0
++	movel	%d0,%a0@(Lconsole_struct_cur_column)	/* Update cursor pos */
++	movel	%a0@(Lconsole_struct_num_columns),%d1
++	cmpl	%d1,%d0
++	jcs	L(console_exit)
++	console_putc	#'\n'		/* Line wrap using tail recursion */
++
+ L(console_exit):
+ func_return	console_putc
+ 
 
 
