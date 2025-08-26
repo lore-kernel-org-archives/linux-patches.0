@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2285393DD1;
-	Tue, 26 Aug 2025 11:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8D7393DD1;
+	Tue, 26 Aug 2025 11:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208697; cv=none; b=n54mFQqv+WaGMIXwzdMt2FDDVhaIbFzbBmGEg9X5PyuejVdcxrSxiMFwx3YgrK81N7nZ/VJoTd7Y216oGA6N5ciMEWSl936G14DjyW7M3WTX33+qNah1tdxyGiUxEHN9ke1hvj3f49vIjpE4E6xYYB6cAQ98umgs+N6tEswaJIo=
+	t=1756208699; cv=none; b=YnGq93TvmbMV+4+0G1Sxiis/YYYTnx2CbcA78dWNRLYiT68kMZ/YGmDASPOW3z8H+p5Lg3FAAh6kIeCA7jJqkfZNEeUwqqFF9jPCOha/xnAr8TdEIlyylKlOfdXt3+aDG+nAAfuD/sfUC+inNOMZV6n0T95FKrRlj5s56wXORiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208697; c=relaxed/simple;
-	bh=Fx5P26p2+ZLxg6A2PpmPuQqJbkCnJV5rhCWwnE3+00w=;
+	s=arc-20240116; t=1756208699; c=relaxed/simple;
+	bh=gP3GJgvwMM1tyQNcKNqmElsYgz+kLiaSyt4JXc2RA74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFhm7WUzT2o1MoUTTM8owIDTMQD84SMKL0fAneOhi60Hcru92RoEk7QjQaaL/5WcDBI/1GnD7wVinVd62n5zrVDy2MTbCSJpoV40Cus/W1EiS6RnfVAkIk2x6tA+v/7DIgaJJNpqOtgdXfWzQLWap4GsOj7nMRNCnWzJmundMvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw6bhi8g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vAHZvj5OThQzBHD30EcVNkzIRjRH0bbWLA2Fv/eiO9JTjVc6vwaK6ER0dqIRnzIINRPISGW1UsumkhSz2NM/v4jBU/Run2gUG8OvWXlZt0mNVY1U2eCCjbQlMCRfiolnYgDInZUS4J0KoWYh6SkLX3ctRlVoLjr/QZph5lwX3xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvJd1v9f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw6bhi8g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E89C4CEF1;
-	Tue, 26 Aug 2025 11:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvJd1v9f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E706AC4CEF1;
+	Tue, 26 Aug 2025 11:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208696;
-	bh=Fx5P26p2+ZLxg6A2PpmPuQqJbkCnJV5rhCWwnE3+00w=;
+	s=korg; t=1756208699;
+	bh=gP3GJgvwMM1tyQNcKNqmElsYgz+kLiaSyt4JXc2RA74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rw6bhi8ga1qpG+RAMMnx0WyPdjVJ1jbgAJ/W8y0Ojtyj/k9iSs7s/8SlaScsfT7TF
-	 kKzbEGscmImVhq+Bh7ZRStMWQOY5NZ89AlNq0BLh2yltBM0Ki2PUQKgKZmvBnRNnlm
-	 l6Kcg4JLwVbLbo4FwuRDmxSTKa3MdsqF9Tz2Hm/I=
+	b=qvJd1v9fi1WCYV48O2Osz8Shy7zzpjJH65mDN0WC+hVLo//3N9xsTCVMrUZH5KFbR
+	 jDw1R5RPwF8tOfoPVtrbnX5eBiu+7o1L7hMdP0T6mgXstf9PVo+9bNwrQxsyU3NJ+x
+	 EK8Pug4Gl6mjj1TzoB5JA1DhciD0G0qSDEdKUUnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 180/322] drm/amdgpu/swm14: Update power limit logic
-Date: Tue, 26 Aug 2025 13:09:55 +0200
-Message-ID: <20250826110920.309253665@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Scott GUO <scottzhguo@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 171/322] squashfs: fix memory leak in squashfs_fill_super
+Date: Tue, 26 Aug 2025 13:09:46 +0200
+Message-ID: <20250826110920.075331258@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,72 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-commit 79e25cd06e85105c75701ef1773c6c64bb304091 upstream.
+commit b64700d41bdc4e9f82f1346c15a3678ebb91a89c upstream.
 
-Take into account the limits from the vbios.  Ported
-from the SMU13 code.
+If sb_min_blocksize returns 0, squashfs_fill_super exits without freeing
+allocated memory (sb->s_fs_info).
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4352
-Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 203cc7f1dd86f2c8de5c3c6182f19adac7c9c206)
-Cc: stable@vger.kernel.org
+Fix this by moving the call to sb_min_blocksize to before memory is
+allocated.
+
+Link: https://lkml.kernel.org/r/20250811223740.110392-1-phillip@squashfs.org.uk
+Fixes: 734aa85390ea ("Squashfs: check return result of sb_min_blocksize")
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: Scott GUO <scottzhguo@tencent.com>
+Closes: https://lore.kernel.org/all/20250811061921.3807353-1-scott_gzh@163.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   30 +++++++++++++++----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ fs/squashfs/super.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -1668,9 +1668,11 @@ static int smu_v14_0_2_get_power_limit(s
- 				       uint32_t *min_power_limit)
- {
- 	struct smu_table_context *table_context = &smu->smu_table;
-+	struct smu_14_0_2_powerplay_table *powerplay_table =
-+		table_context->power_play_table;
- 	PPTable_t *pptable = table_context->driver_pptable;
- 	CustomSkuTable_t *skutable = &pptable->CustomSkuTable;
--	uint32_t power_limit;
-+	uint32_t power_limit, od_percent_upper = 0, od_percent_lower = 0;
- 	uint32_t msg_limit = pptable->SkuTable.MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
+--- a/fs/squashfs/super.c
++++ b/fs/squashfs/super.c
+@@ -187,10 +187,15 @@ static int squashfs_fill_super(struct su
+ 	unsigned short flags;
+ 	unsigned int fragments;
+ 	u64 lookup_table_start, xattr_id_table_start, next_table;
+-	int err;
++	int err, devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
  
- 	if (smu_v14_0_get_current_power_limit(smu, &power_limit))
-@@ -1683,11 +1685,29 @@ static int smu_v14_0_2_get_power_limit(s
- 	if (default_power_limit)
- 		*default_power_limit = power_limit;
+ 	TRACE("Entered squashfs_fill_superblock\n");
  
--	if (max_power_limit)
--		*max_power_limit = msg_limit;
-+	if (powerplay_table) {
-+		if (smu->od_enabled &&
-+		    smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
-+			od_percent_upper = pptable->SkuTable.OverDriveLimitsBasicMax.Ppt;
-+			od_percent_lower = pptable->SkuTable.OverDriveLimitsBasicMin.Ppt;
-+		} else if (smu_v14_0_2_is_od_feature_supported(smu, PP_OD_FEATURE_PPT_BIT)) {
-+			od_percent_upper = 0;
-+			od_percent_lower = pptable->SkuTable.OverDriveLimitsBasicMin.Ppt;
-+		}
-+	}
- 
--	if (min_power_limit)
--		*min_power_limit = 0;
-+	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
-+					od_percent_upper, od_percent_lower, power_limit);
-+
-+	if (max_power_limit) {
-+		*max_power_limit = msg_limit * (100 + od_percent_upper);
-+		*max_power_limit /= 100;
++	if (!devblksize) {
++		errorf(fc, "squashfs: unable to set blocksize\n");
++		return -EINVAL;
 +	}
 +
-+	if (min_power_limit) {
-+		*min_power_limit = power_limit * (100 + od_percent_lower);
-+		*min_power_limit /= 100;
-+	}
+ 	sb->s_fs_info = kzalloc(sizeof(*msblk), GFP_KERNEL);
+ 	if (sb->s_fs_info == NULL) {
+ 		ERROR("Failed to allocate squashfs_sb_info\n");
+@@ -201,12 +206,7 @@ static int squashfs_fill_super(struct su
  
- 	return 0;
- }
+ 	msblk->panic_on_errors = (opts->errors == Opt_errors_panic);
+ 
+-	msblk->devblksize = sb_min_blocksize(sb, SQUASHFS_DEVBLK_SIZE);
+-	if (!msblk->devblksize) {
+-		errorf(fc, "squashfs: unable to set blocksize\n");
+-		return -EINVAL;
+-	}
+-
++	msblk->devblksize = devblksize;
+ 	msblk->devblksize_log2 = ffz(~msblk->devblksize);
+ 
+ 	mutex_init(&msblk->meta_index_mutex);
 
 
