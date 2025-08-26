@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C14338F54;
-	Tue, 26 Aug 2025 11:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33976267386;
+	Tue, 26 Aug 2025 11:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208270; cv=none; b=dQ9EEK68UMKG88RCh5OoZuUKtOWtXIOJ7KWv8qGLj9holqqP828u1IRp9A2YR78yyW+jl5+ZGENqe5U8icZk9IoC/R8JukcUpmZbXWiEBTKz7h33rlfxQT+RrUDhRbFlQh0Dht7AwcR5M5pEzLESGDK7O+m5VFBwnP/39Wcnt9I=
+	t=1756208272; cv=none; b=ukhmMXH38dgJF7LD6oW+Lie0aDf2FZ/+fy7c2xxXP8HQtYkrFgrxrrhRoKtWjU4XyPyEZC50FnLLT/ryN9zw+zkLvsxenqwInKIR2S7tbWmN7q4zcwz19XdBjTM9FWnURfstaosNJP1WnyqpLkqG2aDwzfr8xSr7YTyTt4B6J5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208270; c=relaxed/simple;
-	bh=feC+uPoT9tpxCojU0ahGcMMp59zeLUNg+JDEPcCa1dM=;
+	s=arc-20240116; t=1756208272; c=relaxed/simple;
+	bh=iHb8W5X+qlpMbJ39YeJTBxM7lS41xNLsM8GrH5+cbUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFB5GplDLZnYzsOh2p52pxpomrhQsDbvT9aoqNvwjK7wagpmQnn70jVT0WakI1Xw+QwgHR2+1hLgp+VO3Krkeosrqxj4mk56LSXIdKNn2MVumCWJEOUKtgkHQnFRl/CGxZR36kEtv2ruSjr5rdVuMCw5excO2HzgaxLnTYyolec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLp2XLoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lMF6zVGM+YW3tc25RvapUz+L4D09Oko7AZswmxPMnDBQ0fGcICNvyeugoJ9rWLnzM2hKL/b5DFcNHc3HPzJk4zgDrIxE12lqQGECJqUugdQBED3hxZigUExbKmFVV6/DahjYyp8zFHsGxgFLIgAB0KmJgWBLpTuizN2rDF51QbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIimbmZl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLp2XLoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB81C4CEF1;
-	Tue, 26 Aug 2025 11:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIimbmZl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAC8C4CEF1;
+	Tue, 26 Aug 2025 11:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208269;
-	bh=feC+uPoT9tpxCojU0ahGcMMp59zeLUNg+JDEPcCa1dM=;
+	s=korg; t=1756208272;
+	bh=iHb8W5X+qlpMbJ39YeJTBxM7lS41xNLsM8GrH5+cbUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLp2XLoVy9htKYNnmnb3E9Q+X5oTwrPP/gCW21eixe6B2GtHFdbxVMUTd8x7WyB9e
-	 k/upylQNmZUwEvY5eLMtkn3ychVmZX7VoOkmgVEcoKL9mORYo34/jHdcIJ0DR9b43H
-	 lH53YU7TR0bSTvEMpDFYQFh/BYHZdxlkkCZSUeys=
+	b=uIimbmZlDRYBe4CaFCUNUYODPpMT3/EvQkw5UBfTzhaSBUXq7k5QKUTW1tHCYatnH
+	 uEPbzLdfxmsXL8zBAAU86KqTUmIrkZ5TotEZdW/sAwZun7ehVjUGx8uUk8cjcWlvIZ
+	 VNLf4RrQMqAClv3wxpTu1Q8FltYXXyA0VeLwlvzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Peter Wang <peter.wang@mediatek.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 047/322] scsi: dt-bindings: mediatek,ufs: Add ufs-disable-mcq flag for UFS host
-Date: Tue, 26 Aug 2025 13:07:42 +0200
-Message-ID: <20250826110916.555233345@linuxfoundation.org>
+Subject: [PATCH 6.12 048/322] scsi: ufs: exynos: Fix programming of HCI_UTRL_NEXUS_TYPE
+Date: Tue, 26 Aug 2025 13:07:43 +0200
+Message-ID: <20250826110916.582117027@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -46,51 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-commit 794ff7a0a6e76af93c5ec09a49b86fe73373ca59 upstream.
+commit 01aad16c2257ab8ff33b152b972c9f2e1af47912 upstream.
 
-Add the 'mediatek,ufs-disable-mcq' property to the UFS device-tree
-bindings. This flag corresponds to the UFS_MTK_CAP_DISABLE_MCQ host
-capability recently introduced in the UFS host driver, allowing it to
-disable the Multiple Circular Queue (MCQ) feature when present.  The
-binding schema has also been updated to resolve DTBS check errors.
+On Google gs101, the number of UTP transfer request slots (nutrs) is 32,
+and in this case the driver ends up programming the UTRL_NEXUS_TYPE
+incorrectly as 0.
 
+This is because the left hand side of the shift is 1, which is of type
+int, i.e. 31 bits wide. Shifting by more than that width results in
+undefined behaviour.
+
+Fix this by switching to the BIT() macro, which applies correct type
+casting as required. This ensures the correct value is written to
+UTRL_NEXUS_TYPE (0xffffffff on gs101), and it also fixes a UBSAN shift
+warning:
+
+    UBSAN: shift-out-of-bounds in drivers/ufs/host/ufs-exynos.c:1113:21
+    shift exponent 32 is too large for 32-bit type 'int'
+
+For consistency, apply the same change to the nutmrs / UTMRL_NEXUS_TYPE
+write.
+
+Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
 Cc: stable@vger.kernel.org
-Fixes: 46bd3e31d74b ("scsi: ufs: mediatek: Add UFS_MTK_CAP_DISABLE_MCQ")
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Link: https://lore.kernel.org/r/20250722085721.2062657-2-macpaul.lin@mediatek.com
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250707-ufs-exynos-shift-v1-1-1418e161ae40@linaro.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ufs/host/ufs-exynos.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-index 32fd535a514a..20f341d25ebc 100644
---- a/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/mediatek,ufs.yaml
-@@ -33,6 +33,10 @@ properties:
+--- a/drivers/ufs/host/ufs-exynos.c
++++ b/drivers/ufs/host/ufs-exynos.c
+@@ -1078,8 +1078,8 @@ static int exynos_ufs_post_link(struct u
+ 	hci_writel(ufs, val, HCI_TXPRDT_ENTRY_SIZE);
  
-   vcc-supply: true
+ 	hci_writel(ufs, ilog2(DATA_UNIT_SIZE), HCI_RXPRDT_ENTRY_SIZE);
+-	hci_writel(ufs, (1 << hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
+-	hci_writel(ufs, (1 << hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
++	hci_writel(ufs, BIT(hba->nutrs) - 1, HCI_UTRL_NEXUS_TYPE);
++	hci_writel(ufs, BIT(hba->nutmrs) - 1, HCI_UTMRL_NEXUS_TYPE);
+ 	hci_writel(ufs, 0xf, HCI_AXIDMA_RWDATA_BURST_LEN);
  
-+  mediatek,ufs-disable-mcq:
-+    $ref: /schemas/types.yaml#/definitions/flag
-+    description: The mask to disable MCQ (Multi-Circular Queue) for UFS host.
-+
- required:
-   - compatible
-   - clocks
--- 
-2.50.1
-
+ 	if (ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB)
 
 
