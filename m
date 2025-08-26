@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929922AD04;
-	Tue, 26 Aug 2025 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A826B747;
+	Tue, 26 Aug 2025 13:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215075; cv=none; b=b/H4pKHZ4U7QoHOiKGbXyM27tU+Amxb6k207I7NkusEOC3ag+dIt9vBmTngzn1JsNUWrN/yjzxTShvNFEFb7tDnKBoZx/1ElzXO5DLfFEYpnmkH5HmccTnnJVfSOQ6VswpGbKAPMd/eDJMmzHP37O3FY/XHj9/i0XZFcAdY8RnY=
+	t=1756215077; cv=none; b=sK8v+vHkgl+i1PgGh5xk1YrylQv6i+sL+WT6UHXD7fTI6RIsw1hEAZ5Cp35R3PPHWaQdU7rQI9ie/mGHUXCGPquMTv4sbn9CkA+9XVWW/kSeTJsOQtmRm8WYmFP7tB53C0LNrTju92GeT1rLTJK1b4xs6PSY83AotG5u7xf/VhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215075; c=relaxed/simple;
-	bh=JrC58ynnqjIrrpJ8oAjoRZEzWRv5/9kXerUcWlWNLyU=;
+	s=arc-20240116; t=1756215077; c=relaxed/simple;
+	bh=pWnSvxKokleudL3eYbWUeNyibYsbzX/+m//BvnnSfSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVNySjhCvnwzyP0RQq94Bo1GGmBSahP7WZzeZ1Meqh6jZz/G+pLu5u423p1n83HiBDXR/Gp61S+zXzhNmgMsr2GGk6kUNs9dj0+u5d/SA1wSDc+bQ7LF8r1Tp+foGoUPKfWrNj9jhEPB17mdFJAWsyp+HBBbThXPIHgGF4g2t/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+LeCC+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=loJkpLhggZYEoJlt5VyHUe3YCJJJqTK/FmDne4C4b4N7MhW7syXwC2mIrdR1uySD4esNxBTJf4gSddcCE6GMXvCkydiiU6lLTH35AO/3KVesUqMpa6YvdQLAAc0NrQZietuIkgzAeBxj+VcJtJmcg18wEn+B/qiin1qN9hZc9Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3NeKk/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+LeCC+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC00AC116B1;
-	Tue, 26 Aug 2025 13:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3NeKk/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B07C113D0;
+	Tue, 26 Aug 2025 13:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215074;
-	bh=JrC58ynnqjIrrpJ8oAjoRZEzWRv5/9kXerUcWlWNLyU=;
+	s=korg; t=1756215077;
+	bh=pWnSvxKokleudL3eYbWUeNyibYsbzX/+m//BvnnSfSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+LeCC+PEHEHF+V5jC2xcTirihnOhztz0hU4ZOOq4S+tNJxfRaIsIP1b1yUNBgSmo
-	 yh2EB/oaX53EdLW6AZXYBo1noXXR7PdoWLmklxpfz/JAgy2elqKiVM/gTcUTpwpG7V
-	 1u6bCZtVTCnt3jJ1wclMMdYXMwHpJu0J9o1YqUmE=
+	b=Z3NeKk/MYQoWkruhIAu2p45SUZVyHwEnjAigbdzC45Wc1GzirdtiV/uy6+9iCxnoN
+	 tVfP6vRV9TF/SLysXBKfmkDWRWf4niFGCdXPffYI1DqkExLrWbHVySoXdmvhgHPBEc
+	 hgWPoLIkPvQppSmqrmJ3/1c9vP+47kDsTNBsBt/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	William Liu <will@willsroot.io>
-Subject: [PATCH 6.1 377/482] tls: separate no-async decryption request handling from async
-Date: Tue, 26 Aug 2025 13:10:30 +0200
-Message-ID: <20250826110940.144511996@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Tero Kristo <tero.kristo@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ahsan Atta <ahsan.atta@intel.com>
+Subject: [PATCH 6.1 378/482] crypto: qat - fix ring to service map for QAT GEN4
+Date: Tue, 26 Aug 2025 13:10:31 +0200
+Message-ID: <20250826110940.167333371@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,61 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit 41532b785e9d79636b3815a64ddf6a096647d011 upstream.
+commit a238487f7965d102794ed9f8aff0b667cd2ae886 upstream.
 
-If we're not doing async, the handling is much simpler. There's no
-reference counting, we just need to wait for the completion to wake us
-up and return its result.
+The 4xxx drivers hardcode the ring to service mapping. However, when
+additional configurations where added to the driver, the mappings were
+not updated. This implies that an incorrect mapping might be reported
+through pfvf for certain configurations.
 
-We should preferably also use a separate crypto_wait. I'm not seeing a
-UAF as I did in the past, I think aec7961916f3 ("tls: fix race between
-async notify and socket close") took care of it.
+Add an algorithm that computes the correct ring to service mapping based
+on the firmware loaded on the device.
 
-This will make the next fix easier.
-
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/47bde5f649707610eaef9f0d679519966fc31061.1709132643.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ William: The original patch did not apply cleanly due to deletions of
-  non-existent lines in 6.1.y. The UAF the author stopped seeing can still
-  be reproduced on systems without AVX in conjunction with cryptd.
-  Also removed an extraneous statement after a return statement that is
-  adjacent to diff. ]
-Link: https://lore.kernel.org/netdev/he2K1yz_u7bZ-CnYcTSQ4OxuLuHZXN6xZRgp6_ICSWnq8J5FpI_uD1i_1lTSf7WMrYb5ThiX1OR2GTOB2IltgT49Koy7Hhutr4du4KtLvyk=@willsroot.io/
-Signed-off-by: William Liu <will@willsroot.io>
+Fixes: 0cec19c761e5 ("crypto: qat - add support for compression for 4xxx")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Reviewed-by: Tero Kristo <tero.kristo@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[Giovanni: backport to 6.1.y, conflict resolved simplifying the logic
+in the function get_ring_to_svc_map() as the QAT driver in v6.1 supports
+only limited configurations (crypto only and compression).  Differs from
+upstream as the ring to service mapping is hardcoded rather than being
+dynamically computed.]
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Tested-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/crypto/qat/qat_4xxx/adf_4xxx_hw_data.c    |   13 +++++++++++++
+ drivers/crypto/qat/qat_common/adf_accel_devices.h |    1 +
+ drivers/crypto/qat/qat_common/adf_gen4_hw_data.h  |    6 ++++++
+ drivers/crypto/qat/qat_common/adf_init.c          |    3 +++
+ 4 files changed, 23 insertions(+)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -274,9 +274,15 @@ static int tls_do_decryption(struct sock
- 		DEBUG_NET_WARN_ON_ONCE(atomic_read(&ctx->decrypt_pending) < 1);
- 		atomic_inc(&ctx->decrypt_pending);
- 	} else {
-+		DECLARE_CRYPTO_WAIT(wait);
+--- a/drivers/crypto/qat/qat_4xxx/adf_4xxx_hw_data.c
++++ b/drivers/crypto/qat/qat_4xxx/adf_4xxx_hw_data.c
+@@ -297,6 +297,18 @@ static char *uof_get_name(struct adf_acc
+ 	return NULL;
+ }
+ 
++static u16 get_ring_to_svc_map(struct adf_accel_dev *accel_dev)
++{
++	switch (get_service_enabled(accel_dev)) {
++	case SVC_CY:
++		return ADF_GEN4_DEFAULT_RING_TO_SRV_MAP;
++	case SVC_DC:
++		return ADF_GEN4_DEFAULT_RING_TO_SRV_MAP_DC;
++	}
 +
- 		aead_request_set_callback(aead_req,
- 					  CRYPTO_TFM_REQ_MAY_BACKLOG,
--					  crypto_req_done, &ctx->async_wait);
-+					  crypto_req_done, &wait);
-+		ret = crypto_aead_decrypt(aead_req);
-+		if (ret == -EINPROGRESS || ret == -EBUSY)
-+			ret = crypto_wait_req(ret, &wait);
-+		return ret;
++	return 0;
++}
++
+ static u32 uof_get_ae_mask(struct adf_accel_dev *accel_dev, u32 obj_num)
+ {
+ 	switch (get_service_enabled(accel_dev)) {
+@@ -353,6 +365,7 @@ void adf_init_hw_data_4xxx(struct adf_hw
+ 	hw_data->uof_get_ae_mask = uof_get_ae_mask;
+ 	hw_data->set_msix_rttable = set_msix_default_rttable;
+ 	hw_data->set_ssm_wdtimer = adf_gen4_set_ssm_wdtimer;
++	hw_data->get_ring_to_svc_map = get_ring_to_svc_map;
+ 	hw_data->disable_iov = adf_disable_sriov;
+ 	hw_data->ring_pair_reset = adf_gen4_ring_pair_reset;
+ 	hw_data->enable_pm = adf_gen4_enable_pm;
+--- a/drivers/crypto/qat/qat_common/adf_accel_devices.h
++++ b/drivers/crypto/qat/qat_common/adf_accel_devices.h
+@@ -176,6 +176,7 @@ struct adf_hw_device_data {
+ 	void (*get_arb_info)(struct arb_info *arb_csrs_info);
+ 	void (*get_admin_info)(struct admin_info *admin_csrs_info);
+ 	enum dev_sku_info (*get_sku)(struct adf_hw_device_data *self);
++	u16 (*get_ring_to_svc_map)(struct adf_accel_dev *accel_dev);
+ 	int (*alloc_irq)(struct adf_accel_dev *accel_dev);
+ 	void (*free_irq)(struct adf_accel_dev *accel_dev);
+ 	void (*enable_error_correction)(struct adf_accel_dev *accel_dev);
+--- a/drivers/crypto/qat/qat_common/adf_gen4_hw_data.h
++++ b/drivers/crypto/qat/qat_common/adf_gen4_hw_data.h
+@@ -95,6 +95,12 @@ do { \
+ 		   ADF_RING_BUNDLE_SIZE * (bank) + \
+ 		   ADF_RING_CSR_RING_SRV_ARB_EN, (value))
+ 
++#define ADF_GEN4_DEFAULT_RING_TO_SRV_MAP_DC \
++	(COMP << ADF_CFG_SERV_RING_PAIR_0_SHIFT | \
++	 COMP << ADF_CFG_SERV_RING_PAIR_1_SHIFT | \
++	 COMP << ADF_CFG_SERV_RING_PAIR_2_SHIFT | \
++	 COMP << ADF_CFG_SERV_RING_PAIR_3_SHIFT)
++
+ /* Default ring mapping */
+ #define ADF_GEN4_DEFAULT_RING_TO_SRV_MAP \
+ 	(ASYM << ADF_CFG_SERV_RING_PAIR_0_SHIFT | \
+--- a/drivers/crypto/qat/qat_common/adf_init.c
++++ b/drivers/crypto/qat/qat_common/adf_init.c
+@@ -95,6 +95,9 @@ int adf_dev_init(struct adf_accel_dev *a
+ 		return -EFAULT;
  	}
  
- 	ret = crypto_aead_decrypt(aead_req);
-@@ -289,7 +295,6 @@ static int tls_do_decryption(struct sock
- 		/* all completions have run, we're not doing async anymore */
- 		darg->async = false;
- 		return ret;
--		ret = ret ?: -EINPROGRESS;
- 	}
- 
- 	atomic_dec(&ctx->decrypt_pending);
++	if (hw_data->get_ring_to_svc_map)
++		hw_data->ring_to_svc_map = hw_data->get_ring_to_svc_map(accel_dev);
++
+ 	if (adf_ae_init(accel_dev)) {
+ 		dev_err(&GET_DEV(accel_dev),
+ 			"Failed to initialise Acceleration Engine\n");
 
 
