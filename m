@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697E71DE8BE;
-	Tue, 26 Aug 2025 14:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13542374C4;
+	Tue, 26 Aug 2025 14:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217445; cv=none; b=MGZdNPTRKwyCi/tV29czpttH85aq12bqDmkogAUTi/ylujS+dLA6eV7XcP5N02N4JNbV1b67YDQhjcEHtYi5BJ+F1GUQPJje1SDm+YxHTtRN2VOT/GVpDz2IXv/Wc+h0OD/rmvMDK8ZEvAXvQsc6kBM0RU561LYi6ON6hh/d6K0=
+	t=1756217448; cv=none; b=L3YWtccmcC1/Jx1+Q7FK/W5+nvSjUb9RC/PRYll+TOh3G3bsYO61PeSl51qFkOky3at077CMPsVY5Jg1dJZfuKkDZUpguwo1SrIjrA+Zo6dp1d+lTSmRnwZiYMILbEYfx4VJV3sm3zEvQaz3Dgjk39D18tu3EuuGrWTz6z0gxnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217445; c=relaxed/simple;
-	bh=URbDu4VSppy4Jj9AhI471FLY5m+uHxWAp70/FFrS3gA=;
+	s=arc-20240116; t=1756217448; c=relaxed/simple;
+	bh=bM3y/3G5CnOY/5fz7d+xUT/r5z3Wo3FRjqRhzl1EMB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4ggjPM7/L3UXdkvz236fjnoPIkbke4cANbJUpuFYcLL3NIwAIZhcDSxsT79R0aQMtiC3jLwp39g5ipeynH8hgV2eAhDHhVM3WPR7ALxKUNOyA8E+u90H1gNNQpXAcaxk017yU9eQKtWaiGASMcmzR7C4OX1sXHRBH2++mkKue8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8bdzWWd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+071ELW4VTxa/NJyA3Jt84rsdMAWRA9MQG8CPk2iRmiiWJoDMD/hqpXIuK9wmUtz4oy0/eRTXB1zFWBQD5VWy4I1j5kXvaFGsknCvyHf3CN1OgTAZICNHN9QX5bXsK+gV8RGVF8pGdCIjedjCLVJ+wDEXbnBT6tcEk7XlXhRrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCOpvEEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8bdzWWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E9C19421;
-	Tue, 26 Aug 2025 14:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCOpvEEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903CEC4CEF1;
+	Tue, 26 Aug 2025 14:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217445;
-	bh=URbDu4VSppy4Jj9AhI471FLY5m+uHxWAp70/FFrS3gA=;
+	s=korg; t=1756217447;
+	bh=bM3y/3G5CnOY/5fz7d+xUT/r5z3Wo3FRjqRhzl1EMB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8bdzWWdeR3J71MUGg4Zi2ZjYa7k6MbVCjvvAs2EQ6AUm+omLgIC6EbMtdSJF9gBe
-	 q28gGr3utBUAdk94xgyuDp31OLCdfPr0a04eElP3hBrPN9+plkkdBp6mfumKg+DxNI
-	 8GrHPhLd2oBG6G3x+GxCpkjNvKT2DaNBMIHdqDGw=
+	b=jCOpvEEMIjor/6xS5XTrBKeHbSj2opapoDDnBCdRZbvjBnQfolHjhIe19df6ksEE5
+	 LR8KEup1EXnbsjXe1F1V7qu6RxQTzRD3vOJiZvV0IPYrvxZ39BPKj06/+7uN4MMixc
+	 HyIkn+52iTbTZoYa2mUVP+dQqU8NXcx1PRiu/Pzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/523] vhost-scsi: Fix log flooding with target does not exist errors
-Date: Tue, 26 Aug 2025 13:05:56 +0200
-Message-ID: <20250826110928.090187812@linuxfoundation.org>
+Subject: [PATCH 5.10 147/523] bpf: Check flow_dissector ctx accesses are aligned
+Date: Tue, 26 Aug 2025 13:05:57 +0200
+Message-ID: <20250826110928.115234561@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,63 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 69cd720a8a5e9ef0f05ce5dd8c9ea6e018245c82 ]
+[ Upstream commit ead3d7b2b6afa5ee7958620c4329982a7d9c2b78 ]
 
-As part of the normal initiator side scanning the guest's scsi layer
-will loop over all possible targets and send an inquiry. Since the
-max number of targets for virtio-scsi is 256, this can result in 255
-error messages about targets not existing if you only have a single
-target. When there's more than 1 vhost-scsi device each with a single
-target, then you get N * 255 log messages.
+flow_dissector_is_valid_access doesn't check that the context access is
+aligned. As a consequence, an unaligned access within one of the exposed
+field is considered valid and later rejected by
+flow_dissector_convert_ctx_access when we try to convert it.
 
-It looks like the log message was added by accident in:
+The later rejection is problematic because it's reported as a verifier
+bug with a kernel warning and doesn't point to the right instruction in
+verifier logs.
 
-commit 3f8ca2e115e5 ("vhost/scsi: Extract common handling code from
-control queue handler")
-
-when we added common helpers. Then in:
-
-commit 09d7583294aa ("vhost/scsi: Use common handling code in request
-queue handler")
-
-we converted the scsi command processing path to use the new
-helpers so we started to see the extra log messages during scanning.
-
-The patches were just making some code common but added the vq_err
-call and I'm guessing the patch author forgot to enable the vq_err
-call (vq_err is implemented by pr_debug which defaults to off). So
-this patch removes the call since it's expected to hit this path
-during device discovery.
-
-Fixes: 09d7583294aa ("vhost/scsi: Use common handling code in request queue handler")
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20250611210113.10912-1-michael.christie@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
+Reported-by: syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ccac90e482b2a81d74aa
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/cc1b036be484c99be45eddf48bd78cc6f72839b1.1754039605.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/core/filter.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index fcde3752b4f1..6956b4e0b9be 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -927,10 +927,8 @@ vhost_scsi_get_req(struct vhost_virtqueue *vq, struct vhost_scsi_ctx *vc,
- 			/* validated at handler entry */
- 			vs_tpg = vhost_vq_get_backend(vq);
- 			tpg = READ_ONCE(vs_tpg[*vc->target]);
--			if (unlikely(!tpg)) {
--				vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
-+			if (unlikely(!tpg))
- 				goto out;
--			}
- 		}
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 2018001d16bf..076b317c3594 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -8318,6 +8318,9 @@ static bool flow_dissector_is_valid_access(int off, int size,
+ 	if (off < 0 || off >= sizeof(struct __sk_buff))
+ 		return false;
  
- 		if (tpgp)
++	if (off % size != 0)
++		return false;
++
+ 	if (type == BPF_WRITE)
+ 		return false;
+ 
 -- 
 2.39.5
 
