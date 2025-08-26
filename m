@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4AC34DCCB;
-	Tue, 26 Aug 2025 14:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106EE299A94;
+	Tue, 26 Aug 2025 14:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218946; cv=none; b=dgw9Jk+FXIxiI+ET0uDNZOjvMMhQKwALypTB08D7CpO/C/ifqfWoGwTlhKgkhNmYljKvVaA4RkKfEnXbq2AFy9J4XcsH6gAba4CA8l7RQpHVNAeLpqaNCiH5U/Zd+iN59q/zPBuOzkoDNGoPDm/SYAM8swRVBVY5PZKf2cPLBq4=
+	t=1756218949; cv=none; b=l/qkSQoL46IBySjMkIZy5G2ElCd7nrZLETRrUmf4JtGkeCjrX7eW4CAkMCK27dgFqi1epI+wvQyHo0aM+rmmq6xIvcU+N1h+jNHaA7JfSu87t3QcvXG2RGpcVobPNp/CgQwyJZLIImZQWIULeqRd9qafGXU7vcBqCIf/gSGN5iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218946; c=relaxed/simple;
-	bh=zyJUoGb84GuPRm9w6GKNQ3jJtFxW00DAzs4Pl5DFR7Y=;
+	s=arc-20240116; t=1756218949; c=relaxed/simple;
+	bh=QnhewsbJ+9tuNQ07pZlakyStjI0nUb4OWAPXDlZF14g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/bjrpQt25xDqnfd5PzoxTXlU91k7HTL7QgN/vhWAVih6UR5TQ++TE1YiRLVLUpeRP6U3Pm/1WgSyVixoiyMkda7fVtDqXA+fI9V3cZy/MAsaRcmFgU9z2TLAMaveexcIzxRGHu5Ydo6lz6XVq39Va7Qf7fFC8e6yRFituAL/WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlTPDxNz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpDgIq7gzksBg4pDgB+H3mmM21w1l7DHDuhH1J6y8pYvEGmVWdcHLJ2+kWWGb/ZFZOm9IfEdi3BZKIoNtdjbGqu8Ar/hGXnSJpAVcVuxpFronyecIi7QXB3GTDfXN69deBTbLPnGNfgYuTcqIUCCus/xSbrcy4ZyMADlSCbMN90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agZRkiqy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlTPDxNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C96C113CF;
-	Tue, 26 Aug 2025 14:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agZRkiqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E8EC4CEF1;
+	Tue, 26 Aug 2025 14:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218946;
-	bh=zyJUoGb84GuPRm9w6GKNQ3jJtFxW00DAzs4Pl5DFR7Y=;
+	s=korg; t=1756218948;
+	bh=QnhewsbJ+9tuNQ07pZlakyStjI0nUb4OWAPXDlZF14g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlTPDxNzIkPUgNt/QsEXWDrXaARXTcQUc2hab45rP9tbVOYfF77RNHDQMoSzUWpQp
-	 gq311EFVMXrS0ZoRz97H6tBLCcbg36wdiAUVJ9AQIzOl78V9yhZAr5sVfij7j+5Z9r
-	 QkO0cwx1hIeEGO9qEoM1WS3h7YNomuG0DlJL7Gqo=
+	b=agZRkiqyuTQIhKgwfrA4C4EgFNF3JRjDWFV8MpyWxr2VpHQqflPt09sFdKYmILzo5
+	 BNp/kjNnoMYfPb6rK+MkKziE8vxV1laoqsDLDHz0UYYF55MVKrYEbuGb9mfu8t0y9+
+	 9PSU3VpNImsrHBnpYgVleKWHhhVmU2oH1jxImaAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ott <sebott@redhat.com>,
+	Breno Leitao <leitao@debian.org>,
+	Tony Luck <tony.luck@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 195/403] ACPI: processor: fix acpi_object initialization
-Date: Tue, 26 Aug 2025 13:08:41 +0200
-Message-ID: <20250826110912.257478643@linuxfoundation.org>
+Subject: [PATCH 5.4 196/403] ACPI: APEI: GHES: add TAINT_MACHINE_CHECK on GHES panic path
+Date: Tue, 26 Aug 2025 13:08:42 +0200
+Message-ID: <20250826110912.283253668@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,39 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ott <sebott@redhat.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 13edf7539211d8f7d0068ce3ed143005f1da3547 ]
+[ Upstream commit 4734c8b46b901cff2feda8b82abc710b65dc31c1 ]
 
-Initialization of the local acpi_object in acpi_processor_get_info()
-only sets the first 4 bytes to zero and is thus incomplete. This is
-indicated by messages like:
-	acpi ACPI0007:be: Invalid PBLK length [166288104]
+When a GHES (Generic Hardware Error Source) triggers a panic, add the
+TAINT_MACHINE_CHECK taint flag to the kernel. This explicitly marks the
+kernel as tainted due to a machine check event, improving diagnostics
+and post-mortem analysis. The taint is set with LOCKDEP_STILL_OK to
+indicate lockdep remains valid.
 
-Fix this by initializing all 16 bytes of the processor member of that
-union.
+At large scale deployment, this helps to quickly determine panics that
+are coming due to hardware failures.
 
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Link: https://patch.msgid.link/20250703124215.12522-1-sebott@redhat.com
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20250702-add_tain-v1-1-9187b10914b9@debian.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_processor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/apei/ghes.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
-index c8338d627857..9cbf0593da05 100644
---- a/drivers/acpi/acpi_processor.c
-+++ b/drivers/acpi/acpi_processor.c
-@@ -228,7 +228,7 @@ static inline int acpi_processor_hotadd_init(struct acpi_processor *pr)
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 50bed5a70812..d02d7cbab387 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -709,6 +709,8 @@ static void __ghes_panic(struct ghes *ghes,
  
- static int acpi_processor_get_info(struct acpi_device *device)
- {
--	union acpi_object object = { 0 };
-+	union acpi_object object = { .processor = { 0 } };
- 	struct acpi_buffer buffer = { sizeof(union acpi_object), &object };
- 	struct acpi_processor *pr = acpi_driver_data(device);
- 	int device_declaration = 0;
+ 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
+ 
++	add_taint(TAINT_MACHINE_CHECK, LOCKDEP_STILL_OK);
++
+ 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
+ 
+ 	if (!panic_timeout)
 -- 
 2.39.5
 
