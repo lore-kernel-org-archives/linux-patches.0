@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FA02BEC45;
-	Tue, 26 Aug 2025 14:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8A4405F7;
+	Tue, 26 Aug 2025 14:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218413; cv=none; b=i2cFKaYprckFKJXfwrSZwGAh1bs5P0kqOPRX9MQcoHLSNDcJ4fSAv+1stUydtrASIZE1drWSFw295GCVPA740ouCan+9FdIkGqwzV/a3I7yUZyPrBJsmob4wRBPWBirLlUCmN3NV22DIhhThDR6c9xK0AledqLlBoCHqqtnGv0s=
+	t=1756218416; cv=none; b=aolgXimzoX+Q5k8ULld8U+tePg2oFMY/Icq5N7ph7ZiH9QDgsLKbuiWkJl72LnfFUh+KXHS/SWHooaT36YKa4ZlqMnbcMZM18zIsjrJAj3TJmIQ7fbS3/WV+fUmVcm6GA2Jour72+OGV/umW2sgfgxBGqWhZGxfooEoYO2odiSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218413; c=relaxed/simple;
-	bh=peF4RenD7hnA7QnrsmGeMyxfNWfnNDFOPVB88bHrRSw=;
+	s=arc-20240116; t=1756218416; c=relaxed/simple;
+	bh=IPtNJoxykuFBJU6beojYocO9xDABIMIynFuyjDKJ3Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZ2thE9Xn8HXC99R6Sn4eXAsqb32KsIQxME+O6jcb1zvc5WgA2CxMe8f32vnyQIkvU8p8YGGc0bnW+wwOw4AJk6j5I4LyJXcPf/xJSI1G10yB1DyVZ7/Tf+hQy2mOKHjRe4q+blY2CVHpN4ZPoh7FArqoagr0CAvY9OoxmJJ/7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJ9cmvsZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLCstiDMCcibRpul+uVW7bqEPJuqDn7G8q319dQkKDUyCvnvYO0aMsI/2OOCLWTCnB1UDyd8tZDGHy3i4nTCaBe+xmrOZsiJCgkPuVcSKvRsABIjpxI5hwUXeLMO4e6+1qJXRHiDVE2kNxFNbkiWfcaH9wFkq1HrdlBiMCAiZyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aj3TSdXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJ9cmvsZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E4AC4CEF1;
-	Tue, 26 Aug 2025 14:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj3TSdXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F437C4CEF1;
+	Tue, 26 Aug 2025 14:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218413;
-	bh=peF4RenD7hnA7QnrsmGeMyxfNWfnNDFOPVB88bHrRSw=;
+	s=korg; t=1756218415;
+	bh=IPtNJoxykuFBJU6beojYocO9xDABIMIynFuyjDKJ3Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zJ9cmvsZ6Cmje+3SzlzepOMBZHIH13aWdbHJAJw2mhWODQVugwdebRtkNwqsr+wJE
-	 zHgzDZqeuca4C0yHPI49mZXW2iOsC9BPgKgGfDPQN/n0LHWfb5geveRqauxput9mAO
-	 0zE3iT5j8OuPWcTkL01gHsqVQsv6Mu7WFd66nM7s=
+	b=Aj3TSdXMETyFy5Gpo1leTJUiVHCA1FngyGHgIgiwDojctr3i2eOBLlvhH6LNhOOqo
+	 TGt3Ud520VC1eIkB87GFkEz62Oc+PHkArNSuw61YDp3s9QQNGP/MYOAB3rDXoQzSaf
+	 COog/DlEhpFY967a6+cUEkoz0LamtAMDeIJBS3N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Minhong He <heminhong@kylinos.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 513/523] ALSA: usb-audio: Fix size validation in convert_chmap_v3()
-Date: Tue, 26 Aug 2025 13:12:03 +0200
-Message-ID: <20250826110937.092565307@linuxfoundation.org>
+Subject: [PATCH 5.10 514/523] ipv6: sr: validate HMAC algorithm ID in seg6_hmac_info_add
+Date: Tue, 26 Aug 2025 13:12:04 +0200
+Message-ID: <20250826110937.118715266@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,35 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Minhong He <heminhong@kylinos.cn>
 
-[ Upstream commit 89f0addeee3cb2dc49837599330ed9c4612f05b0 ]
+[ Upstream commit 84967deee9d9870b15bc4c3acb50f1d401807902 ]
 
-The "p" pointer is void so sizeof(*p) is 1.  The intent was to check
-sizeof(*cs_desc), which is 3, instead.
+The seg6_genl_sethmac() directly uses the algorithm ID provided by the
+userspace without verifying whether it is an HMAC algorithm supported
+by the system.
+If an unsupported HMAC algorithm ID is configured, packets using SRv6 HMAC
+will be dropped during encapsulation or decapsulation.
 
-Fixes: ecfd41166b72 ("ALSA: usb-audio: Validate UAC3 cluster segment descriptors")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aKL5kftC1qGt6lpv@stanley.mountain
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4f4853dc1c9c ("ipv6: sr: implement API to control SR HMAC structure")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250815063845.85426-1-heminhong@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/seg6_hmac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/usb/stream.c b/sound/usb/stream.c
-index 56c945d8240a..1bdb6a2f5596 100644
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -350,7 +350,7 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
- 		u16 cs_len;
- 		u8 cs_type;
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index 2e2b94ae6355..4a3f7bb027ed 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -294,6 +294,9 @@ int seg6_hmac_info_add(struct net *net, u32 key, struct seg6_hmac_info *hinfo)
+ 	struct seg6_pernet_data *sdata = seg6_pernet(net);
+ 	int err;
  
--		if (len < sizeof(*p))
-+		if (len < sizeof(*cs_desc))
- 			break;
- 		cs_len = le16_to_cpu(cs_desc->wLength);
- 		if (len < cs_len)
++	if (!__hmac_get_algo(hinfo->alg_id))
++		return -EINVAL;
++
+ 	err = rhashtable_lookup_insert_fast(&sdata->hmac_infos, &hinfo->node,
+ 					    rht_params);
+ 
 -- 
 2.50.1
 
