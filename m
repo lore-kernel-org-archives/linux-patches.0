@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9362C17A303;
-	Tue, 26 Aug 2025 12:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D1A1E32DB;
+	Tue, 26 Aug 2025 12:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213074; cv=none; b=RqkPyiTRZECLueWd09PNG9bS8zwywW0JCrDwRP3uXB/URwaIWKxJrSPnbhTNYrjwNQnuRLLxV8bDjvm38VAIg6wXeVeVQLnyS8E/ylHA1SBccvnGsH1C83ojtnCH39dgzaCxazVdbSMTAEXRnkStNkPWT1sbk2YPHtdWDh7xlbU=
+	t=1756213077; cv=none; b=MOGlGVyBwbL6WzFmYJx7nfCCHjZFZoFilQOO/vHWZCH+MnhbfSOzkiX0Oh+ZW3STKmyntSYXmtMAeHpCZv8sgKyQn4XPYwlKJSKzl9Qjnrza7VWgcNDHSN3MSB3TH2UDKLEMf9RMGjHvNbfX1sWWRaLMik3J7Ngm+z2NnJ5Px2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213074; c=relaxed/simple;
-	bh=rJRoroA7T0hbpHaWvS4Vqfe4ozF9LkxUL5h9EFTaV8c=;
+	s=arc-20240116; t=1756213077; c=relaxed/simple;
+	bh=MABcLdAtyfY6dy6btApWEM8+m1p7/nwqzUSuo1foL5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bICVVeet9UDbArGwi+/A+w0KbMwjUcf6kdlXKSeJ2QfhojpD/1UZ17aR+7Iy4SwhIMi41HJC4b34Q2WaInYc2p3tK9estTpUtDkhNSc0XYDADPerz9nEbLRbexr5jQqbswZjM4cN00Tph/zew430GW3qwbUMMxpGoGE+NUyYIAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlGj321e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rda/a510XZMVO7iSdkergogTAM36J0Mc+ssWrqPc/yTn6glh4c71ZTsnbr1lp3370Ur7STQeSdq2zVv0moAx8OoZdCB8ifC17PvjnJDN9JnLv+aILZwwUTD3r3F2j6Wq/R8k0RPsCqdsi2OJJ/k2MwMw0+AGMm6Ye0DWLc0en18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuNWNe7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlGj321e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220E1C4CEF4;
-	Tue, 26 Aug 2025 12:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuNWNe7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFD6C4CEF1;
+	Tue, 26 Aug 2025 12:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213074;
-	bh=rJRoroA7T0hbpHaWvS4Vqfe4ozF9LkxUL5h9EFTaV8c=;
+	s=korg; t=1756213077;
+	bh=MABcLdAtyfY6dy6btApWEM8+m1p7/nwqzUSuo1foL5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlGj321eKoZ/NmR6nk+v4giIaC57hu813+kvh2xj9AVILnIiOk75Dp7Gn0rvR4kwD
-	 lZCVu04UDLoyuvWtyi9F1I44rdby0DijTz+Eg+RTVxi80yb8+vJpgCNo1P+qgU6H+e
-	 Rk3lgCINqV8DKkOwnduZ1RvJXDPXgcQYgpKShwJA=
+	b=DuNWNe7A48AB24J2U0Qef3nnhin+I4hpMCnMPASqREqcF9tjPrdWkXnGwvVtL8auT
+	 gYbgC8tpWxtsmtAFvTO+MKTtMnsHZmyPAX3xX8mymgDPoGHX91b3is/ZnOKR0jIvx9
+	 EIEB0fLFFK9tVs1Dwb8Jxfk+4a6osVVOnqUyizi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/587] drm/amd/display: Avoid trying AUX transactions on disconnected ports
-Date: Tue, 26 Aug 2025 13:06:00 +0200
-Message-ID: <20250826110958.305311045@linuxfoundation.org>
+Subject: [PATCH 6.6 212/587] drm/ttm: Respect the shrinker core free target
+Date: Tue, 26 Aug 2025 13:06:01 +0200
+Message-ID: <20250826110958.330881889@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -47,44 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit deb24e64c8881c462b29e2c69afd9e6669058be5 ]
+[ Upstream commit eac21f8ebeb4f84d703cf41dc3f81d16fa9dc00a ]
 
-[Why & How]
-Observe that we try to access DPCD 0x600h of disconnected DP ports.
-In order not to wasting time on retrying these ports, call
-dpcd_write_rx_power_ctrl() after checking its connection status.
+Currently the TTM shrinker aborts shrinking as soon as it frees pages from
+any of the page order pools and by doing so it can fail to respect the
+freeing target which was configured by the shrinker core.
 
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+We use the wording "can fail" because the number of freed pages will
+depend on the presence of pages in the pools and the order of the pools on
+the LRU list. For example if there are no free pages in the high order
+pools the shrinker core may require multiple passes over the TTM shrinker
+before it will free the default target of 128 pages (assuming there are
+free pages in the low order pools). This inefficiency can be compounded by
+the pool LRU where multiple further calls into the TTM shrinker are
+required to end up looking at the pool with pages.
+
+Improve this by never freeing less than the shrinker core has requested.
+
+At the same time we start reporting the number of scanned pages (freed in
+this case), which prevents the core shrinker from giving up on the TTM
+shrinker too soon and moving on.
+
+v2:
+ * Simplify loop logic. (Christian)
+ * Improve commit message.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20250603112750.34997-2-tvrtko.ursulin@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_pool.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index 9b470812d96a..2ce2d9ff7568 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -137,7 +137,8 @@ void link_blank_dp_stream(struct dc_link *link, bool hw_init)
- 				}
- 		}
- 
--		if ((!link->wa_flags.dp_keep_receiver_powered) || hw_init)
-+		if (((!link->wa_flags.dp_keep_receiver_powered) || hw_init) &&
-+			(link->type != dc_connection_none))
- 			dpcd_write_rx_power_ctrl(link, false);
- 	}
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index 37c08fac7e7d..80ba34cabca3 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -615,7 +615,6 @@ void ttm_pool_fini(struct ttm_pool *pool)
  }
+ EXPORT_SYMBOL(ttm_pool_fini);
+ 
+-/* As long as pages are available make sure to release at least one */
+ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
+ 					    struct shrink_control *sc)
+ {
+@@ -623,9 +622,12 @@ static unsigned long ttm_pool_shrinker_scan(struct shrinker *shrink,
+ 
+ 	do
+ 		num_freed += ttm_pool_shrink();
+-	while (!num_freed && atomic_long_read(&allocated_pages));
++	while (num_freed < sc->nr_to_scan &&
++	       atomic_long_read(&allocated_pages));
+ 
+-	return num_freed;
++	sc->nr_scanned = num_freed;
++
++	return num_freed ?: SHRINK_STOP;
+ }
+ 
+ /* Return the number of pages available or SHRINK_EMPTY if we have none */
 -- 
 2.39.5
 
