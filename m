@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1B0350D62;
-	Tue, 26 Aug 2025 14:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7451DF985;
+	Tue, 26 Aug 2025 14:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217245; cv=none; b=QmTQLikSZ4QHff1XHniQfXwCmSAnA9aBEx8uJo8R+gvvDZiyUFQCq58+WItcwWWhWHx8BpAd6p9sACfcH/a89mukz/yYJFjMHVch1IhbqCCxxq8dnHu5W2zPbiCRXKaTYEsVPRx/MxZAonNlC3wxDjO1FMjpbVt4WRum6n589Lc=
+	t=1756217248; cv=none; b=e23XGyDxb0mIsY0a5iP2qElnfQX5EUHhFs/eUsTp+cKl+2dfz6Q49KHo0nd9xy3nc9e2DDjDbDVYyKuS/S7b92n1Npo0qqeIEfSNcEmw3RIrXrJlKG3zLZHuiZ49ydsxStO8JIzExhluVh7iJemPCb1Du3OlOM/Jotjpyw6ohFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217245; c=relaxed/simple;
-	bh=uckjhJ0yfScQdMp6KGP/Nbgjb3DnWtCJ/vLIhqMhFCs=;
+	s=arc-20240116; t=1756217248; c=relaxed/simple;
+	bh=4ij4clBkrML2URglrU+rXNaycp7YvX5Yie02zK87inA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEb9ednssv0Q1MCIZf1sMWf1Td6WP5kISyRB14hDuNYd/1BlfNYN7ydeHDXBcJFzm7eOjWhQ5jCzuK1ajaHByTxVQ47Xq3lSEQuaenlxjdxNkwocpL0p04G+3OKZ/J8joAxH48i3isNq6kLFULgrJUezTOlheyDlv+qj5Ko1voA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+JVNdKg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tiSyaQC5ycu44VimHXYWZnvUYwki9DrgqyDeC2lcu32keCSvb2NuHgSE+y6vCmwoh6A96PC8rbhbRTtyZVsy2lnmiF9ArPcfrVh/eHwniid5RoQdTkbWS2XjvbUJaxqtesvwfNxuxZFFGNQ0OGNM/3+nzV8/QqvTaalGj+yS0DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTepAsn5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+JVNdKg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00A9C4CEF1;
-	Tue, 26 Aug 2025 14:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTepAsn5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EFAC4CEF1;
+	Tue, 26 Aug 2025 14:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217245;
-	bh=uckjhJ0yfScQdMp6KGP/Nbgjb3DnWtCJ/vLIhqMhFCs=;
+	s=korg; t=1756217247;
+	bh=4ij4clBkrML2URglrU+rXNaycp7YvX5Yie02zK87inA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+JVNdKgD4XpboWbM9azw9dhVNpTy3HSuBSwpXqnYDlekDZyORmB/PqnXvBEWkr53
-	 /HX7h8FAuvNSAbzOvGPt4h/KVsk5GlVgkAnBBNMCKxGyzoqWJZYIS4Uq/2kyyrrcj0
-	 MyPjYcqNBZgQHhx454k3JbfkpQQWGk2lw5iEygUk=
+	b=sTepAsn5XaDBZADRyM4CmxN4ARszCDYqHkT+OcrcHl4CeiDOO/dNCdx5bpigAh1CM
+	 7u6desrYe+4qxOTqM7A93x15GkaFcUVyRQishSpK1qUPHOKoijKGjpakyZJJxRxW5b
+	 itbjCXYnPkd9z/Z0f733TYjFe/FxUHiozNpnyRPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/523] Bluetooth: Fix null-ptr-deref in l2cap_sock_resume_cb()
-Date: Tue, 26 Aug 2025 13:04:09 +0200
-Message-ID: <20250826110925.560640895@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.10 030/523] comedi: das6402: Fix bit shift out of bounds
+Date: Tue, 26 Aug 2025 13:04:00 +0200
+Message-ID: <20250826110925.342583345@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,80 +49,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit a0075accbf0d76c2dad1ad3993d2e944505d99a0 ]
+commit 70f2b28b5243df557f51c054c20058ae207baaac upstream.
 
-syzbot reported null-ptr-deref in l2cap_sock_resume_cb(). [0]
+When checking for a supported IRQ number, the following test is used:
 
-l2cap_sock_resume_cb() has a similar problem that was fixed by commit
-1bff51ea59a9 ("Bluetooth: fix use-after-free error in lock_sock_nested()").
+	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
+	if ((1 << it->options[1]) & 0x8cec) {
 
-Since both l2cap_sock_kill() and l2cap_sock_resume_cb() are executed
-under l2cap_sock_resume_cb(), we can avoid the issue simply by checking
-if chan->data is NULL.
+However, `it->options[i]` is an unchecked `int` value from userspace, so
+the shift amount could be negative or out of bounds.  Fix the test by
+requiring `it->options[1]` to be within bounds before proceeding with
+the original test.  Valid `it->options[1]` values that select the IRQ
+will be in the range [1,15]. The value 0 explicitly disables the use of
+interrupts.
 
-Let's not access to the killed socket in l2cap_sock_resume_cb().
-
-[0]:
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:82 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
-Write of size 8 at addr 0000000000000570 by task kworker/u9:0/52
-
-CPU: 1 UID: 0 PID: 52 Comm: kworker/u9:0 Not tainted 6.16.0-rc4-syzkaller-g7482bb149b9f #0 PREEMPT
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Workqueue: hci0 hci_rx_work
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:501 (C)
- __dump_stack+0x30/0x40 lib/dump_stack.c:94
- dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
- print_report+0x58/0x84 mm/kasan/report.c:524
- kasan_report+0xb0/0x110 mm/kasan/report.c:634
- check_region_inline mm/kasan/generic.c:-1 [inline]
- kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
- __kasan_check_write+0x20/0x30 mm/kasan/shadow.c:37
- instrument_atomic_write include/linux/instrumented.h:82 [inline]
- clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
- l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
- l2cap_security_cfm+0x524/0xea0 net/bluetooth/l2cap_core.c:7357
- hci_auth_cfm include/net/bluetooth/hci_core.h:2092 [inline]
- hci_auth_complete_evt+0x2e8/0xa4c net/bluetooth/hci_event.c:3514
- hci_event_func net/bluetooth/hci_event.c:7511 [inline]
- hci_event_packet+0x650/0xe9c net/bluetooth/hci_event.c:7565
- hci_rx_work+0x320/0xb18 net/bluetooth/hci_core.c:4070
- process_one_work+0x7e8/0x155c kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3321 [inline]
- worker_thread+0x958/0xed8 kernel/workqueue.c:3402
- kthread+0x5fc/0x75c kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
-
-Fixes: d97c899bde33 ("Bluetooth: Introduce L2CAP channel callback for resuming")
-Reported-by: syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/686c12bd.a70a0220.29fe6c.0b13.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 79e5e6addbb1 ("staging: comedi: das6402: rewrite broken driver")
+Cc: stable@vger.kernel.org # 5.13+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250707135737.77448-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/comedi/drivers/das6402.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 49564c61ad4a1..7d7f4ba60a208 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1666,6 +1666,9 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
- {
- 	struct sock *sk = chan->data;
+--- a/drivers/staging/comedi/drivers/das6402.c
++++ b/drivers/staging/comedi/drivers/das6402.c
+@@ -569,7 +569,8 @@ static int das6402_attach(struct comedi_
+ 	das6402_reset(dev);
  
-+	if (!sk)
-+		return;
-+
- 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
- 		sk->sk_state = BT_CONNECTED;
- 		chan->state = BT_CONNECTED;
--- 
-2.39.5
-
+ 	/* IRQs 2,3,5,6,7, 10,11,15 are valid for "enhanced" mode */
+-	if ((1 << it->options[1]) & 0x8cec) {
++	if (it->options[1] > 0 && it->options[1] < 16 &&
++	    (1 << it->options[1]) & 0x8cec) {
+ 		ret = request_irq(it->options[1], das6402_interrupt, 0,
+ 				  dev->board_name, dev);
+ 		if (ret == 0) {
 
 
