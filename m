@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED33C25DB0A;
-	Tue, 26 Aug 2025 14:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BA635CEAE;
+	Tue, 26 Aug 2025 14:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219019; cv=none; b=oneyNQkL3JFPY82UGSKmVwDuHTOzOP3TUcf/Ow3K8CszK7ihHOmNQx7VpAaOrOWawUb/t1k90M+Gcp8GEz1OjOVkxWzxL6NMNqc9WVrC84u/DIS7LxzY9Uk/dpgySD2oUfNkfRNjjXZRGipEe838O6v9LgPgHGGdlu9d6PJVHtk=
+	t=1756219021; cv=none; b=fogbeMmJwXK7sDKETev7OP8SD7wz4zMPD8RPSb53vrn31TeZ7Yns75gbR5DltI0w412WUuwqBK+ufWpN5nsouJamOa7jOEgcx5b+hZeGaHA3O4sC23ytGjdhlD2p3+4Hl1Q2uV4sDrtxgWk4XqdgKUY2OOSChJ+k+FZYoqXCVWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219019; c=relaxed/simple;
-	bh=V00XOKQuvShrlOyg+HawaU64p5mVEkWMC/zBjhYkOFs=;
+	s=arc-20240116; t=1756219021; c=relaxed/simple;
+	bh=oK36NFpHeyxaunZQXEsG4sGoUHw+NWB5E7mowQ8a1HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxJNZtycig5wgAd/xcU++8Qw0Ivj97Zu6HMPsPBZctxIYDaRlmjD5EGMyT9ab+jjy2IbR2N6umpQOHJgMnYXor1uzbM6lGbKqYJ29qFP4Nfbtv6a13qMp4y4YRtt5//KS+e4X7bYzqX12DUAkLEYM3q6zTB12AGlUxZs0OVAn7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjCtX6NM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/96U1eaqTMSQR/9s3+SjRd47TTX+VZlaKpm/dMNRUnkvJAcxWTGx7wWEm91Ez5Bn4gKHB9gYHJyYrNWedQdW0SEoy31gTeiGO3llneU6OA3B7raIFYZpbkEE+l61NsWF1wSwyzEL5nY6PUMfo3NTSibiJe4Lr5786X6UNz9XkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eskpNStI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjCtX6NM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E86C4CEF1;
-	Tue, 26 Aug 2025 14:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eskpNStI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A32C4CEF1;
+	Tue, 26 Aug 2025 14:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219018;
-	bh=V00XOKQuvShrlOyg+HawaU64p5mVEkWMC/zBjhYkOFs=;
+	s=korg; t=1756219021;
+	bh=oK36NFpHeyxaunZQXEsG4sGoUHw+NWB5E7mowQ8a1HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bjCtX6NMnWT4z56v8EMGPEZOVDJ+wdTo/lEwc7khGiNeDspYwvvTVnQP1M3OI9v1U
-	 8CJsvAeqtMnQmc24hNTqcvCofyxbMi1ChyDxORWKbO593VhBaIarbsHjlGybMqd6cd
-	 e+2fG+7cZZThb1UI6g0m4D0f1kjMUKwbCbOdhROM=
+	b=eskpNStIQ1l6x0a2gzxR0pGMsEn9QmI6gF1Rx/ILnVjkfULeSoRsqSFRmK9SqWZXA
+	 OPa7vQfT1uucVresAYnbE+39bJ7luIx8GCdKjqtyySFKgilkEmjKP2Wgl5Him49ymC
+	 6CU3ZeQzEd0KETGsrDK0o6Ji7dWLDEFsIdL0P5bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 190/403] ARM: tegra: Use I/O memcpy to write to IRAM
-Date: Tue, 26 Aug 2025 13:08:36 +0200
-Message-ID: <20250826110912.124599368@linuxfoundation.org>
+Subject: [PATCH 5.4 191/403] selftests: tracing: Use mutex_unlock for testing glob filter
+Date: Tue, 26 Aug 2025 13:08:37 +0200
+Message-ID: <20250826110912.149805031@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,34 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 398e67e0f5ae04b29bcc9cbf342e339fe9d3f6f1 ]
+[ Upstream commit a089bb2822a49b0c5777a8936f82c1f8629231fb ]
 
-Kasan crashes the kernel trying to check boundaries when using the
-normal memcpy.
+Since commit c5b6ababd21a ("locking/mutex: implement
+mutex_trylock_nested") makes mutex_trylock() as an inlined
+function if CONFIG_DEBUG_LOCK_ALLOC=y, we can not use
+mutex_trylock() for testing the glob filter of ftrace.
 
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://lore.kernel.org/r/20250522-mach-tegra-kasan-v1-1-419041b8addb@gmail.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Use mutex_unlock instead.
+
+Link: https://lore.kernel.org/r/175151680309.2149615.9795104805153538717.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-tegra/reset.c | 2 +-
+ .../testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc  | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-tegra/reset.c b/arch/arm/mach-tegra/reset.c
-index 76a65df42d10..dce0cb1fdd6f 100644
---- a/arch/arm/mach-tegra/reset.c
-+++ b/arch/arm/mach-tegra/reset.c
-@@ -63,7 +63,7 @@ static void __init tegra_cpu_reset_handler_enable(void)
- 	BUG_ON(is_enabled);
- 	BUG_ON(tegra_cpu_reset_handler_size > TEGRA_IRAM_RESET_HANDLER_SIZE);
+diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
+index f4e92afab14b..9a7b7c62cbd9 100644
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
+@@ -33,7 +33,7 @@ ftrace_filter_check 'schedule*' '^schedule.*$'
+ ftrace_filter_check '*pin*lock' '.*pin.*lock$'
  
--	memcpy(iram_base, (void *)__tegra_cpu_reset_handler_start,
-+	memcpy_toio(iram_base, (void *)__tegra_cpu_reset_handler_start,
- 			tegra_cpu_reset_handler_size);
+ # filter by start*mid*
+-ftrace_filter_check 'mutex*try*' '^mutex.*try.*'
++ftrace_filter_check 'mutex*unl*' '^mutex.*unl.*'
  
- 	err = call_firmware_op(set_cpu_boot_addr, 0, reset_address);
+ # Advanced full-glob matching feature is recently supported.
+ # Skip the tests if we are sure the kernel does not support it.
 -- 
 2.39.5
 
