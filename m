@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C781FECAB;
-	Tue, 26 Aug 2025 11:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0054832A3C8;
+	Tue, 26 Aug 2025 11:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208731; cv=none; b=Wlq3wHm8s4XUKfiGUP3IUTdVUc6R1f+NJ+Pu7Cfrwo7390LiNj789rcZPEjYi0l/QAS7qK5yaNS/KfP5IXk/HAUScYpnSbg1OhPBGlnnB6yeJcnLfZIJyLCNM928NGtAo3RGh7H0WHrf0r/vV6FxvmzxeKLQDQGi3RUzSOK8ebE=
+	t=1756208734; cv=none; b=OI6mF0SX2TApaO2USD9a4z2js8WgohCKzoKLKvD/xJo0yltJTNPAs9LvhQOAAzlt+JY8e7vOLLmU95hFgR9jitdDWp0rxAgB+XtU8F0COqvv1cNuq5rRbdT/C6YN7xIQq+GNC+B/K7F1r0XUC8YYPD/K6U/8TyuTLS0OvdDvAPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208731; c=relaxed/simple;
-	bh=8K6OLmgV7c79MFjySWlJmFXq8eiob1lzVO942DvXM+I=;
+	s=arc-20240116; t=1756208734; c=relaxed/simple;
+	bh=RBCbvLcMiULKob0ArNtRud9uDqWDDGIlRXZ/L1OAvsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPSoCJlz+3dPVuv/MZZtsrHdF6SWmjPwJZ5kqYJiALFE3qqgbJsC4UkvyXkypl4mUw5JdY0pjJVa9MgxDkL7l9ZvhvT3AWfPuRS4TvsIBroYExE8p4wAw60wFuGEtOc+uOylnQ0mp3CC4nOAASO/LQMZM1tA50Y+f6UnIqW28x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1fA/BW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccyfMrppQgGpXH11ayHhwUzFRloo6GRfAfLbjq6q0VE33o/AJo5wSc7kLgzndaXZ74STTa3fOJx97TGhksYE3T34HGSqHQcR9FXcf+2UDrYM/aXGXsCxrCkEUw58QCAvpPb6w66zRfzY2THwBiPr44r8TO+2RI+ABAFZYY5fv7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtiPnAHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1fA/BW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F122C4CEF4;
-	Tue, 26 Aug 2025 11:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtiPnAHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442AAC4CEF4;
+	Tue, 26 Aug 2025 11:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208730;
-	bh=8K6OLmgV7c79MFjySWlJmFXq8eiob1lzVO942DvXM+I=;
+	s=korg; t=1756208733;
+	bh=RBCbvLcMiULKob0ArNtRud9uDqWDDGIlRXZ/L1OAvsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1fA/BW1Emjl95PzQylvR0mbizFeoF4N+UIZNuWPZ/30OvaQE5uR/QQB8FK46smPt
-	 339rNvI5Jspetc/U0g6jmAa63hu4OZ+xZlNIaGsdz05Gm/SKQ6VtjwDrQHLpopID2p
-	 P7oGuvqQ0Fjk6WNtMz5IdEaMi3X7Dxu20fOA/s0Q=
+	b=LtiPnAHOfb6lMirIJJGr9bB74ErugmbqwycCfCUsDdx6ALL9wuJdB7mBBD348b2GC
+	 Tj2wuZOQsCVkyuuHF8exHkCnleYz3+/CW/Zgf7Kxs163hJdDdpClEkjTW7G0y9M5Nw
+	 BlWwwZ9BLPZFo2qJSgWC1vOIksXr8kxtm4l2tDqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Eric Sandeen <sandeen@redhat.com>,
-	Charalampos Mitrodimas <charmitro@posteo.net>
-Subject: [PATCH 6.12 206/322] debugfs: fix mount options not being applied
-Date: Tue, 26 Aug 2025 13:10:21 +0200
-Message-ID: <20250826110920.956513117@linuxfoundation.org>
+	syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com,
+	syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com,
+	Arnaud Lecomte <contact@arnaud-lcm.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 224/322] comedi: Fix use of uninitialized memory in do_insn_ioctl() and do_insnlist_ioctl()
+Date: Tue, 26 Aug 2025 13:10:39 +0200
+Message-ID: <20250826110921.424034097@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -51,79 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit ba6cc29351b1fa0cb9adce91b88b9f3c3cbe9c46 upstream.
+commit 3cd212e895ca2d58963fdc6422502b10dd3966bb upstream.
 
-Mount options (uid, gid, mode) are silently ignored when debugfs is
-mounted. This is a regression introduced during the conversion to the
-new mount API.
+syzbot reports a KMSAN kernel-infoleak in `do_insn_ioctl()`.  A kernel
+buffer is allocated to hold `insn->n` samples (each of which is an
+`unsigned int`).  For some instruction types, `insn->n` samples are
+copied back to user-space, unless an error code is being returned.  The
+problem is that not all the instruction handlers that need to return
+data to userspace fill in the whole `insn->n` samples, so that there is
+an information leak.  There is a similar syzbot report for
+`do_insnlist_ioctl()`, although it does not have a reproducer for it at
+the time of writing.
 
-When the mount API conversion was done, the parsed options were never
-applied to the superblock when it was reused. As a result, the mount
-options were ignored when debugfs was mounted.
+One culprit is `insn_rw_emulate_bits()` which is used as the handler for
+`INSN_READ` or `INSN_WRITE` instructions for subdevices that do not have
+a specific handler for that instruction, but do have an `INSN_BITS`
+handler.  For `INSN_READ` it only fills in at most 1 sample, so if
+`insn->n` is greater than 1, the remaining `insn->n - 1` samples copied
+to userspace will be uninitialized kernel data.
 
-Fix this by following the same pattern as the tracefs fix in commit
-e4d32142d1de ("tracing: Fix tracefs mount options"). Call
-debugfs_reconfigure() in debugfs_get_tree() to apply the mount options
-to the superblock after it has been created or reused.
+Another culprit is `vm80xx_ai_insn_read()` in the "vm80xx" driver.  It
+never returns an error, even if it fails to fill the buffer.
 
-As an example, with the bug the "mode" mount option is ignored:
+Fix it in `do_insn_ioctl()` and `do_insnlist_ioctl()` by making sure
+that uninitialized parts of the allocated buffer are zeroed before
+handling each instruction.
 
-  $ mount -o mode=0666 -t debugfs debugfs /tmp/debugfs_test
-  $ mount | grep debugfs_test
-  debugfs on /tmp/debugfs_test type debugfs (rw,relatime)
-  $ ls -ld /tmp/debugfs_test
-  drwx------ 25 root root 0 Aug  4 14:16 /tmp/debugfs_test
+Thanks to Arnaud Lecomte for their fix to `do_insn_ioctl()`.  That fix
+replaced the call to `kmalloc_array()` with `kcalloc()`, but it is not
+always necessary to clear the whole buffer.
 
-With the fix applied, it works as expected:
-
-  $ mount -o mode=0666 -t debugfs debugfs /tmp/debugfs_test
-  $ mount | grep debugfs_test
-  debugfs on /tmp/debugfs_test type debugfs (rw,relatime,mode=666)
-  $ ls -ld /tmp/debugfs_test
-  drw-rw-rw- 37 root root 0 Aug  2 17:28 /tmp/debugfs_test
-
-Fixes: a20971c18752 ("vfs: Convert debugfs to use the new mount API")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220406
-Cc: stable <stable@kernel.org>
-Reviewed-by: Eric Sandeen <sandeen@redhat.com>
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Link: https://lore.kernel.org/r/20250816-debugfs-mount-opts-v3-1-d271dad57b5b@posteo.net
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Reported-by: syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a5e45f768aab5892da5d
+Reported-by: syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fb4362a104d45ab09cf9
+Cc: stable <stable@kernel.org> # 5.13+
+Cc: Arnaud Lecomte <contact@arnaud-lcm.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250725125324.80276-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/debugfs/inode.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/comedi/comedi_fops.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/debugfs/inode.c
-+++ b/fs/debugfs/inode.c
-@@ -183,6 +183,9 @@ static int debugfs_reconfigure(struct fs
- 	struct debugfs_fs_info *sb_opts = sb->s_fs_info;
- 	struct debugfs_fs_info *new_opts = fc->s_fs_info;
- 
-+	if (!new_opts)
-+		return 0;
-+
- 	sync_filesystem(sb);
- 
- 	/* structure copy of new mount options to sb */
-@@ -269,10 +272,16 @@ static int debugfs_fill_super(struct sup
- 
- static int debugfs_get_tree(struct fs_context *fc)
- {
-+	int err;
-+
- 	if (!(debugfs_allow & DEBUGFS_ALLOW_API))
- 		return -EPERM;
- 
--	return get_tree_single(fc, debugfs_fill_super);
-+	err = get_tree_single(fc, debugfs_fill_super);
-+	if (err)
-+		return err;
-+
-+	return debugfs_reconfigure(fc);
- }
- 
- static void debugfs_free_fc(struct fs_context *fc)
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -1587,6 +1587,9 @@ static int do_insnlist_ioctl(struct come
+ 				memset(&data[n], 0, (MIN_SAMPLES - n) *
+ 						    sizeof(unsigned int));
+ 			}
++		} else {
++			memset(data, 0, max_t(unsigned int, n, MIN_SAMPLES) *
++					sizeof(unsigned int));
+ 		}
+ 		ret = parse_insn(dev, insns + i, data, file);
+ 		if (ret < 0)
+@@ -1670,6 +1673,8 @@ static int do_insn_ioctl(struct comedi_d
+ 			memset(&data[insn->n], 0,
+ 			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
+ 		}
++	} else {
++		memset(data, 0, n_data * sizeof(unsigned int));
+ 	}
+ 	ret = parse_insn(dev, insn, data, file);
+ 	if (ret < 0)
 
 
