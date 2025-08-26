@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE9E2FAC1C;
-	Tue, 26 Aug 2025 11:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF75284B5B;
+	Tue, 26 Aug 2025 11:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207765; cv=none; b=gDjWtavbRYAtNSZ9RBm3ohPCi2L5Icx+a/q3FZFJ4BNGXBJvfphyluLu/uNqbNa6/ihp0nZk0u7d42cjPUO9FQQ4bdG7Kg7GBtkXcooezFrkxNjcmAzKnnuW0DArpbdCUVOcrEeLHVn/fWfAeXzekAFWS+LlgDlH9hZhnbsMkqo=
+	t=1756207768; cv=none; b=QhPjvmi0nmHzZvD4NTP7uZZ6Wkj0xcq7ncqfov2rf25e3aZWPiT+C1zCpJtg+2GJoPs2TU+cm4pnl3NZbrIbbObEnCMJkV60PP0Nmx3dY/06+UIlltMmoUGR0aUm7WFfpKEIPs2j6sJyMnt4uKqWvNX5lZyc9RNwRBgOSW34RSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207765; c=relaxed/simple;
-	bh=MTOAbDqewJOrgkMyPYqzhr9ufqf4fr+IzTKrDbhKDhU=;
+	s=arc-20240116; t=1756207768; c=relaxed/simple;
+	bh=LPDv9LfLoSwIFi43w66/QJS4jCTYonbZWAi0uDztqlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVkxhGkh4JVS7C+X8IVhbpI0rvsqGUUSfeXt3VeAftXlnlIznCIpuMX9NMbaoaxDOT+TAJ1NiEUgtCC0dLEZn+W1T2HjfvMBxcpyMDqgaQVNwHiyH9+1rpNPCF3hhycMX1+ISWDwUCTcl9lJWIyYmqeXaYgc3z/8XNTpVtwT6mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opfk2/Rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLZvUGUnyIndGLAWPRYyUeTSOwA3VR02GYru722C1/L910Oxp2+DO00gyazQKIhkTJq3sHujNm+XWBUqN3MukUu5rRpIT41zJFtdsXLm4eXZhO/fSAKaV2sSiUp+jT0TFV0G5Brv8tOnSMY5Sd69aBBnG6QzXLuEbV7ryq/Yyhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03kZwv3V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opfk2/Rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA801C4CEF1;
-	Tue, 26 Aug 2025 11:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03kZwv3V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463ADC4CEF1;
+	Tue, 26 Aug 2025 11:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207765;
-	bh=MTOAbDqewJOrgkMyPYqzhr9ufqf4fr+IzTKrDbhKDhU=;
+	s=korg; t=1756207767;
+	bh=LPDv9LfLoSwIFi43w66/QJS4jCTYonbZWAi0uDztqlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opfk2/RjsqclIo1EGCg1KBnHQ9CMYyY7aMOwTDaZC5yBNE0ieaZlmClkDEgQloqGT
-	 rimnluhAO6NwgMhTbgm9pA0L0xM2w0SLlpW2KVyVIw0WE4yQO32lY5nl4SUK1wntFd
-	 fy4sBC/QUfA1mc8G1PU0XSwxAcvnE+gm3SJ6+Y7s=
+	b=03kZwv3V9bExnBlL5x1QRbIUwuWCXKc4qMr18ZNsZ3XexV8fB/S4zMQXEYGmb/UBg
+	 zVtYBS7V9NzOltR4y1DVYLV8OjpE4mJtS4GaXTb06PZWVTUpRdxGaWz7AAT2KvwfE3
+	 bPYuDh8XyWULyiD3QVG7LY6ZwEK5gQLfZGxhtJYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Yunseong Kim <ysk@kzalloc.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 6.16 308/457] kcov, usb: Dont disable interrupts in kcov_remote_start_usb_softirq()
-Date: Tue, 26 Aug 2025 13:09:52 +0200
-Message-ID: <20250826110944.976658825@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>
+Subject: [PATCH 6.16 309/457] cdx: Fix off-by-one error in cdx_rpmsg_probe()
+Date: Tue, 26 Aug 2025 13:09:53 +0200
+Message-ID: <20250826110945.000750462@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,143 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 9528d32873b38281ae105f2f5799e79ae9d086c2 upstream.
+commit 300a0cfe9f375b2843bcb331bcfa7503475ef5dd upstream.
 
-kcov_remote_start_usb_softirq() the begin of urb's completion callback.
-HCDs marked HCD_BH will invoke this function from the softirq and
-in_serving_softirq() will detect this properly.
-Root-HUB (RH) requests will not be delayed to softirq but complete
-immediately in IRQ context.
-This will confuse kcov because in_serving_softirq() will report true if
-the softirq is served after the hardirq and if the softirq got
-interrupted by the hardirq in which currently runs.
+In cdx_rpmsg_probe(), strscpy() is incorrectly called with the length of
+the source string (excluding the NUL terminator) rather than the size of
+the destination buffer. This results in one character less being copied
+from 'cdx_rpmsg_id_table[0].name' to 'chinfo.name'.
 
-This was addressed by simply disabling interrupts in
-kcov_remote_start_usb_softirq() which avoided the interruption by the RH
-while a regular completion callback was invoked.
-This not only changes the behaviour while kconv is enabled but also
-breaks PREEMPT_RT because now sleeping locks can no longer be acquired.
+Use the destination buffer size instead to ensure the name is copied
+correctly.
 
-Revert the previous fix. Address the issue by invoking
-kcov_remote_start_usb() only if the context is just "serving softirqs"
-which is identified by checking in_serving_softirq() and in_hardirq()
-must be false.
-
-Fixes: f85d39dd7ed89 ("kcov, usb: disable interrupts in kcov_remote_start_usb_softirq")
 Cc: stable <stable@kernel.org>
-Reported-by: Yunseong Kim <ysk@kzalloc.com>
-Closes: https://lore.kernel.org/all/20250725201400.1078395-2-ysk@kzalloc.com/
-Tested-by: Yunseong Kim <ysk@kzalloc.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20250811082745.ycJqBXMs@linutronix.de
+Fixes: 2a226927d9b8 ("cdx: add rpmsg communication channel for CDX")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://lore.kernel.org/r/20250806090512.121260-2-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hcd.c |   12 +++++-------
- include/linux/kcov.h   |   47 +++++++++--------------------------------------
- 2 files changed, 14 insertions(+), 45 deletions(-)
+ drivers/cdx/controller/cdx_rpmsg.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -1623,7 +1623,6 @@ static void __usb_hcd_giveback_urb(struc
- 	struct usb_hcd *hcd = bus_to_hcd(urb->dev->bus);
- 	struct usb_anchor *anchor = urb->anchor;
- 	int status = urb->unlinked;
--	unsigned long flags;
+--- a/drivers/cdx/controller/cdx_rpmsg.c
++++ b/drivers/cdx/controller/cdx_rpmsg.c
+@@ -129,8 +129,7 @@ static int cdx_rpmsg_probe(struct rpmsg_
  
- 	urb->hcpriv = NULL;
- 	if (unlikely((urb->transfer_flags & URB_SHORT_NOT_OK) &&
-@@ -1641,14 +1640,13 @@ static void __usb_hcd_giveback_urb(struc
- 	/* pass ownership to the completion handler */
- 	urb->status = status;
- 	/*
--	 * Only collect coverage in the softirq context and disable interrupts
--	 * to avoid scenarios with nested remote coverage collection sections
--	 * that KCOV does not support.
--	 * See the comment next to kcov_remote_start_usb_softirq() for details.
-+	 * This function can be called in task context inside another remote
-+	 * coverage collection section, but kcov doesn't support that kind of
-+	 * recursion yet. Only collect coverage in softirq context for now.
- 	 */
--	flags = kcov_remote_start_usb_softirq((u64)urb->dev->bus->busnum);
-+	kcov_remote_start_usb_softirq((u64)urb->dev->bus->busnum);
- 	urb->complete(urb);
--	kcov_remote_stop_softirq(flags);
-+	kcov_remote_stop_softirq();
+ 	chinfo.src = RPMSG_ADDR_ANY;
+ 	chinfo.dst = rpdev->dst;
+-	strscpy(chinfo.name, cdx_rpmsg_id_table[0].name,
+-		strlen(cdx_rpmsg_id_table[0].name));
++	strscpy(chinfo.name, cdx_rpmsg_id_table[0].name, sizeof(chinfo.name));
  
- 	usb_anchor_resume_wakeups(anchor);
- 	atomic_dec(&urb->use_count);
---- a/include/linux/kcov.h
-+++ b/include/linux/kcov.h
-@@ -57,47 +57,21 @@ static inline void kcov_remote_start_usb
- 
- /*
-  * The softirq flavor of kcov_remote_*() functions is introduced as a temporary
-- * workaround for KCOV's lack of nested remote coverage sections support.
-- *
-- * Adding support is tracked in https://bugzilla.kernel.org/show_bug.cgi?id=210337.
-- *
-- * kcov_remote_start_usb_softirq():
-- *
-- * 1. Only collects coverage when called in the softirq context. This allows
-- *    avoiding nested remote coverage collection sections in the task context.
-- *    For example, USB/IP calls usb_hcd_giveback_urb() in the task context
-- *    within an existing remote coverage collection section. Thus, KCOV should
-- *    not attempt to start collecting coverage within the coverage collection
-- *    section in __usb_hcd_giveback_urb() in this case.
-- *
-- * 2. Disables interrupts for the duration of the coverage collection section.
-- *    This allows avoiding nested remote coverage collection sections in the
-- *    softirq context (a softirq might occur during the execution of a work in
-- *    the BH workqueue, which runs with in_serving_softirq() > 0).
-- *    For example, usb_giveback_urb_bh() runs in the BH workqueue with
-- *    interrupts enabled, so __usb_hcd_giveback_urb() might be interrupted in
-- *    the middle of its remote coverage collection section, and the interrupt
-- *    handler might invoke __usb_hcd_giveback_urb() again.
-+ * work around for kcov's lack of nested remote coverage sections support in
-+ * task context. Adding support for nested sections is tracked in:
-+ * https://bugzilla.kernel.org/show_bug.cgi?id=210337
-  */
- 
--static inline unsigned long kcov_remote_start_usb_softirq(u64 id)
-+static inline void kcov_remote_start_usb_softirq(u64 id)
- {
--	unsigned long flags = 0;
--
--	if (in_serving_softirq()) {
--		local_irq_save(flags);
-+	if (in_serving_softirq() && !in_hardirq())
- 		kcov_remote_start_usb(id);
--	}
--
--	return flags;
- }
- 
--static inline void kcov_remote_stop_softirq(unsigned long flags)
-+static inline void kcov_remote_stop_softirq(void)
- {
--	if (in_serving_softirq()) {
-+	if (in_serving_softirq() && !in_hardirq())
- 		kcov_remote_stop();
--		local_irq_restore(flags);
--	}
- }
- 
- #ifdef CONFIG_64BIT
-@@ -131,11 +105,8 @@ static inline u64 kcov_common_handle(voi
- }
- static inline void kcov_remote_start_common(u64 id) {}
- static inline void kcov_remote_start_usb(u64 id) {}
--static inline unsigned long kcov_remote_start_usb_softirq(u64 id)
--{
--	return 0;
--}
--static inline void kcov_remote_stop_softirq(unsigned long flags) {}
-+static inline void kcov_remote_start_usb_softirq(u64 id) {}
-+static inline void kcov_remote_stop_softirq(void) {}
- 
- #endif /* CONFIG_KCOV */
- #endif /* _LINUX_KCOV_H */
+ 	cdx_mcdi->ept = rpmsg_create_ept(rpdev, cdx_rpmsg_cb, NULL, chinfo);
+ 	if (!cdx_mcdi->ept) {
 
 
