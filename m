@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E1C23315A;
-	Tue, 26 Aug 2025 13:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC284230BF8;
+	Tue, 26 Aug 2025 13:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213457; cv=none; b=JpF8jYXwke8rrj1beh4qbRcqgfv/E2whvq+lLgWGWjJXTUyAP2LlKwJzJLOvEjwk/Ohcg6eZZO/gsZKuwwA9PVdbMTeu4fBRmwW8UbT6UXWD1aYK40p2fTmyQY0AEGoCJd38nH7hrxJNvhTvHb3n3eMVWBJBw0bfCivx5xcPxXM=
+	t=1756213459; cv=none; b=jTQ8FnfBLsE1MdZME1q7i+aPED5/yiWWJNu6dKbEBvbPfIv41EzquQOwKqr2QvLu8FmVSyU6zZ5v3CGN72cFZgXXceXGqdEXoMa/7XAgbahPzEvhmZEIBCwTXPIDEFhAF0yVTkxSiuQgrd1mCZ6aWgwrkYcjsjQJiuH9X39B9eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213457; c=relaxed/simple;
-	bh=T3stmt5J9kfkVW7FPSi/olDD5zFHMinDHTXHQ+TNrdw=;
+	s=arc-20240116; t=1756213459; c=relaxed/simple;
+	bh=PF+sJVv5DSo8klTV+5dFFxWm/aSsnAZMixcGRio5/k4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i87tZ8bL8aomAjj7UwHY8BAHshSDwdNOZ7reE0na+N+N0UW9j3/ltUu2bYRa5XHmwJrF7o5j7lKPFXpSGxP6xpsOFd6qsQ789pC4S+sGryLYs+tSMX60viZs2Ubzs9B7dxK71UW1VzECpOptqpOG4gtHJ8MgPzSPETa3K6TReJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSovgYq8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4EwpNjMaD0a6FF1z6rbchiN8VBRqgINIY+nv8vmyPJLpE7gwFNQo/s7KNd7CUDOPtGH1RLe7ZD2qk8EMxyn3m0hqEwkhyEiRrU7mmoGfy/RLmscbEQxOOYXbfn6IJb6rXJ/gfGYzk3OFcXYYrgJH9ENXK0nW12FC4VoHyLqibo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3yep2LH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSovgYq8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB6DC4CEF1;
-	Tue, 26 Aug 2025 13:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3yep2LH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC3BC4CEF1;
+	Tue, 26 Aug 2025 13:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213456;
-	bh=T3stmt5J9kfkVW7FPSi/olDD5zFHMinDHTXHQ+TNrdw=;
+	s=korg; t=1756213458;
+	bh=PF+sJVv5DSo8klTV+5dFFxWm/aSsnAZMixcGRio5/k4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSovgYq8CWjduiSiBxGTzZRGuJHdyfUyyXpbCQf17uh3+NpeVumpamtOyyIZhjFg+
-	 FlOia4DJvQ2dQwur2eBEzX9nPuJwOYfN2ys8UrGWdm+7DF1xcoknSE8/3ooL/4Q6XC
-	 GixtPP8Owckz7PooliBU0KInxI/d29CHExYqr2FQ=
+	b=D3yep2LHIYCLbhg/gWCuOmPEAdFOkoMOdxH/RpJTVFaF4kWc1QWpj3EftE6MR4kRc
+	 mcNOnDVRkzTfRCi85p1h6iwuSFiCQe+hqVMe5hFQqjS8ZuWzwrzYf3lkBh2jhPTVW0
+	 vz3+92WHwMtLFabPiIwMdnpE+XQ0uAEbAqVBKBF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 354/587] btrfs: zoned: fix write time activation failure for metadata block group
-Date: Tue, 26 Aug 2025 13:08:23 +0200
-Message-ID: <20250826111001.917493613@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 6.6 355/587] arm64: dts: ti: k3-pinctrl: Enable Schmitt Trigger by default
+Date: Tue, 26 Aug 2025 13:08:24 +0200
+Message-ID: <20250826111001.944247225@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,55 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 5c4b93f4c8e5c53574c1a48d66a27a2c68b414af upstream.
+commit 5b272127884bded21576a6ddceca13725a351c63 upstream.
 
-Since commit 13bb483d32ab ("btrfs: zoned: activate metadata block group on
-write time"), we activate a metadata block group at the write time. If the
-zone capacity is small enough, we can allocate the entire region before the
-first write. Then, we hit the btrfs_zoned_bg_is_full() in
-btrfs_zone_activate() and the activation fails.
+Switch Schmitt Trigger functions for PIN_INPUT* macros by default. This is
+HW PoR configuration, the slew rate requirements without ST enabled are
+pretty tough for these devices. We've noticed spurious GPIO interrupts even
+with noise-free edges but not meeting slew rate requirements (3.3E+6 V/s
+for 3.3v LVCMOS).
 
-For a data block group, we activate it at the allocation time and we should
-check the fullness condition in the caller side. Add, a WARN to check the
-fullness condition.
+It's not obvious why one might want to disable the PoR-enabled ST on any
+pin. Just enable it by default. As it's not possible to provide OR-able
+macros to disable the ST, shall anyone require it, provide a set of
+new macros with _NOST suffix.
 
-For a metadata block group, we don't need the fullness check because we
-activate it at the write time. Instead, activating it once it is written
-should be invalid. Catch that with a WARN too.
-
-Fixes: 13bb483d32ab ("btrfs: zoned: activate metadata block group on write time")
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: fe49f2d776f7 ("arm64: dts: ti: Use local header for pinctrl register values")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250701105437.3539924-1-alexander.sverdlin@siemens.com
+[vigneshr@ti.com: Add Fixes tag]
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/ti/k3-pinctrl.h |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1992,10 +1992,15 @@ bool btrfs_zone_activate(struct btrfs_bl
- 		goto out_unlock;
- 	}
+--- a/arch/arm64/boot/dts/ti/k3-pinctrl.h
++++ b/arch/arm64/boot/dts/ti/k3-pinctrl.h
+@@ -8,11 +8,16 @@
+ #ifndef DTS_ARM64_TI_K3_PINCTRL_H
+ #define DTS_ARM64_TI_K3_PINCTRL_H
  
--	/* No space left */
--	if (btrfs_zoned_bg_is_full(block_group)) {
--		ret = false;
--		goto out_unlock;
-+	if (block_group->flags & BTRFS_BLOCK_GROUP_DATA) {
-+		/* The caller should check if the block group is full. */
-+		if (WARN_ON_ONCE(btrfs_zoned_bg_is_full(block_group))) {
-+			ret = false;
-+			goto out_unlock;
-+		}
-+	} else {
-+		/* Since it is already written, it should have been active. */
-+		WARN_ON_ONCE(block_group->meta_write_pointer != block_group->start);
- 	}
++#define ST_EN_SHIFT		(14)
+ #define PULLUDEN_SHIFT		(16)
+ #define PULLTYPESEL_SHIFT	(17)
+ #define RXACTIVE_SHIFT		(18)
+ #define DEBOUNCE_SHIFT		(11)
  
- 	for (i = 0; i < map->num_stripes; i++) {
++/* Schmitt trigger configuration */
++#define ST_DISABLE		(0 << ST_EN_SHIFT)
++#define ST_ENABLE		(1 << ST_EN_SHIFT)
++
+ #define PULL_DISABLE		(1 << PULLUDEN_SHIFT)
+ #define PULL_ENABLE		(0 << PULLUDEN_SHIFT)
+ 
+@@ -26,9 +31,13 @@
+ #define PIN_OUTPUT		(INPUT_DISABLE | PULL_DISABLE)
+ #define PIN_OUTPUT_PULLUP	(INPUT_DISABLE | PULL_UP)
+ #define PIN_OUTPUT_PULLDOWN	(INPUT_DISABLE | PULL_DOWN)
+-#define PIN_INPUT		(INPUT_EN | PULL_DISABLE)
+-#define PIN_INPUT_PULLUP	(INPUT_EN | PULL_UP)
+-#define PIN_INPUT_PULLDOWN	(INPUT_EN | PULL_DOWN)
++#define PIN_INPUT		(INPUT_EN | ST_ENABLE | PULL_DISABLE)
++#define PIN_INPUT_PULLUP	(INPUT_EN | ST_ENABLE | PULL_UP)
++#define PIN_INPUT_PULLDOWN	(INPUT_EN | ST_ENABLE | PULL_DOWN)
++/* Input configurations with Schmitt Trigger disabled */
++#define PIN_INPUT_NOST		(INPUT_EN | PULL_DISABLE)
++#define PIN_INPUT_PULLUP_NOST	(INPUT_EN | PULL_UP)
++#define PIN_INPUT_PULLDOWN_NOST	(INPUT_EN | PULL_DOWN)
+ 
+ #define PIN_DEBOUNCE_DISABLE	(0 << DEBOUNCE_SHIFT)
+ #define PIN_DEBOUNCE_CONF1	(1 << DEBOUNCE_SHIFT)
 
 
