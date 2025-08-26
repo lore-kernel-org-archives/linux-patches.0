@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F3B334717;
-	Tue, 26 Aug 2025 13:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327AB200112;
+	Tue, 26 Aug 2025 13:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215252; cv=none; b=ZCFH6H4A8wp3gm3c+gTzrz62tb0wNKeBit6auwBCJNp/cfQKjig/6Lx9XiHN5AHMen+R0cmijg0g4+w+8ezNg3KusMwdZGwRNucRb9FrSMvEtikkVi3YPVSHnbrg1cVjTijO9kBYNlTc8gR//V0fPbdEb1FsEPejEWICdhe5gvA=
+	t=1756215255; cv=none; b=TmFUcQw3VkfxVtg9y19lm/YGn0109JkgrbNY3MZQFZxv5wiasFDHiMyacjRxanrRPLZzRa1VQMyOxxPxpgiy77n+YMDbl49nZUo0pZjFgXDvay7rLzyvrUV7qilqn1Po37XTXyt9UGmaCyOVVdGsxBQyB7XPAdQMi6AI5QH/JgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215252; c=relaxed/simple;
-	bh=bfDnmWsSETdMDxgFTni/qf35fIzwvEO0eKnkrfOBDe4=;
+	s=arc-20240116; t=1756215255; c=relaxed/simple;
+	bh=hZWkpbXSqqtd1ZlaymV3mqg7+qj9HPFZKxszQZdkAWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZZ9Ii9823a3NDqgXaWKXsQTkYsKy6TWd6UVEKP4RLMwP79BrlpRzZv5kL0erg1r8nwioZ0770AMYQRzsMtw0B2YORAuuW62ui5jWkdG7tlBx3v608Q8J1grhsFS0Wg0rgRDzkExZoVa1z5RcS20g3I6u51EMA887K1pkHB+FrgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIlLOwav; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LZVsHU//p5qdHFNIVJjn9vCYu4MDJkFoDJVcpAk+fJ7MIgsT+awxOMBoGqvNiFe7aSfltX/ynhOxr7wB7aJwJPOcQWL+9RSp7ktVxNXrVDnlhIa/M2vD/lnZMg9l7GiuL1NDfq7NFhIhKpfladt4XPNMq9aBW4c6bVY45tpNuUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmtnJ7vI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIlLOwav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F8BC4CEF1;
-	Tue, 26 Aug 2025 13:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmtnJ7vI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FD8C4CEF1;
+	Tue, 26 Aug 2025 13:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215252;
-	bh=bfDnmWsSETdMDxgFTni/qf35fIzwvEO0eKnkrfOBDe4=;
+	s=korg; t=1756215255;
+	bh=hZWkpbXSqqtd1ZlaymV3mqg7+qj9HPFZKxszQZdkAWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIlLOwavUYJVnUJczlq+UXlCNdj2+nrJhn+V5nDGlXCEit270aLWyerp18joraOow
-	 AU2unO9/Nt7RQg4vOvTyOCc9mT31v/gOZwzuN+BjG5bEZsXLFntlesgfzQdHOfO6jT
-	 kW0+mcwlLUnC5wr4gMa24EP8M9ois+RNDUyIJ4jo=
+	b=hmtnJ7vInoaMfp4F5oatnxmDBfyMOzv2xxZ5hQD0JqNFPN4MUdPba2UI6wYLhWO4z
+	 1sTuAqdDzk/Gg7SuX9SqpEVauYRrTaU2iYufaDlLIvZ6TGCWkYwO6XlQjGiPHdt0YX
+	 CgDugawIARyeyH8vZGCwXHP9vAHqd9iUGr27N4is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosa.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
-	=?UTF-8?q?Hanne-Lotta=20M=C3=A4enp=C3=A4=C3=A4?= <hannelotta@gmail.com>
-Subject: [PATCH 6.1 444/482] wifi: mac80211: check basic rates validity in sta_link_apply_parameters
-Date: Tue, 26 Aug 2025 13:11:37 +0200
-Message-ID: <20250826110941.799148884@linuxfoundation.org>
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Billy Jheng Bing-Jhong <billy@starlabs.sg>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 445/482] tls: fix handling of zero-length records on the rx_list
+Date: Tue, 26 Aug 2025 13:11:38 +0200
+Message-ID: <20250826110941.824560464@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -45,68 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosa.ru>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 16ee3ea8faef8ff042acc15867a6c458c573de61 upstream.
+commit 62708b9452f8eb77513115b17c4f8d1a22ebf843 upstream.
 
-When userspace sets supported rates for a new station via
-NL80211_CMD_NEW_STATION, it might send a list that's empty
-or contains only invalid values. Currently, we process these
-values in sta_link_apply_parameters() without checking the result of
-ieee80211_parse_bitrates(), which can lead to an empty rates bitmap.
+Each recvmsg() call must process either
+ - only contiguous DATA records (any number of them)
+ - one non-DATA record
 
-A similar issue was addressed for NL80211_CMD_SET_BSS in commit
-ce04abc3fcc6 ("wifi: mac80211: check basic rates validity").
-This patch applies the same approach in sta_link_apply_parameters()
-for NL80211_CMD_NEW_STATION, ensuring there is at least one valid
-rate by inspecting the result of ieee80211_parse_bitrates().
+If the next record has different type than what has already been
+processed we break out of the main processing loop. If the record
+has already been decrypted (which may be the case for TLS 1.3 where
+we don't know type until decryption) we queue the pending record
+to the rx_list. Next recvmsg() will pick it up from there.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+Queuing the skb to rx_list after zero-copy decrypt is not possible,
+since in that case we decrypted directly to the user space buffer,
+and we don't have an skb to queue (darg.skb points to the ciphertext
+skb for access to metadata like length).
 
-Fixes: b95eb7f0eee4 ("wifi: cfg80211/mac80211: separate link params from station params")
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosa.ru>
-Link: https://patch.msgid.link/20250317103139.17625-1-m.lobanov@rosa.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Summary of conflict resolutions:
-  - The function ieee80211_parse_bitrates() takes channel width as
-    its first parameter, and the chandef struct has been refactored
-    in kernel version 6.9, in commit
-    6092077ad09ce880c61735c314060f0bd79ae4aa so that the width is
-    contained in chanreq.oper.width. In kernel version 6.1 the
-    width parameter is defined directly in the chandef struct. ]
-Signed-off-by: Hanne-Lotta Mäenpää <hannelotta@gmail.com>
+Only data records are allowed zero-copy, and we break the processing
+loop after each non-data record. So we should never zero-copy and
+then find out that the record type has changed. The corner case
+we missed is when the initial record comes from rx_list, and it's
+zero length.
+
+Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Billy Jheng Bing-Jhong <billy@starlabs.sg>
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20250820021952.143068-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/tls/tls_sw.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1735,12 +1735,12 @@ static int sta_link_apply_parameters(str
- 	}
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1864,6 +1864,9 @@ int decrypt_skb(struct sock *sk, struct
+ 	return tls_decrypt_sg(sk, NULL, sgout, &darg);
+ }
  
- 	if (params->supported_rates &&
--	    params->supported_rates_len) {
--		ieee80211_parse_bitrates(link->conf->chandef.width,
--					 sband, params->supported_rates,
--					 params->supported_rates_len,
--					 &link_sta->pub->supp_rates[sband->band]);
--	}
-+	    params->supported_rates_len &&
-+	    !ieee80211_parse_bitrates(link->conf->chandef.width,
-+				      sband, params->supported_rates,
-+				      params->supported_rates_len,
-+				      &link_sta->pub->supp_rates[sband->band]))
-+		return -EINVAL;
++/* All records returned from a recvmsg() call must have the same type.
++ * 0 is not a valid content type. Use it as "no type reported, yet".
++ */
+ static int tls_record_content_type(struct msghdr *msg, struct tls_msg *tlm,
+ 				   u8 *control)
+ {
+@@ -2107,8 +2110,10 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	if (err < 0)
+ 		goto end;
  
- 	if (params->ht_capa)
- 		ieee80211_ht_cap_ie_to_sta_ht_cap(sdata, sband,
++	/* process_rx_list() will set @control if it processed any records */
+ 	copied = err;
+-	if (len <= copied || (copied && control != TLS_RECORD_TYPE_DATA) || rx_more)
++	if (len <= copied || rx_more ||
++	    (control && control != TLS_RECORD_TYPE_DATA))
+ 		goto end;
+ 
+ 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, len);
 
 
