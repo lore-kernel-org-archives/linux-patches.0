@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB709284B5B;
-	Tue, 26 Aug 2025 11:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9BC33CE88;
+	Tue, 26 Aug 2025 11:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207793; cv=none; b=LKUzmIMIDDAzbR6Cws+0M2dEyN+7xWZ0Shacc6DKfdaDZweW0dtc3t0xv6IKUzv+OAzW60pT2MSzX8edCeXJ8d96bUs0ZWbHJvUNTkw30YxZsWb6VRyn8QxxGlb7zlHi/cL7xL1AzG2meWVz22Df3QdcQJU4TvCMAPyDyASjxdU=
+	t=1756207796; cv=none; b=F5wzGCMonyCt1lk+JQEQVG63KHfhAMOGFyECn/TRGTCLGH4mT4NH384UkSyWCL9ycVZyBqpjYk0GOQeO5whuEb0gVV+C1iuSMmhw36y/T2bQdwsOOeC/QEV0HKZMwgUWP8HrUadk26Y/hUcdo91AsgtkYvFSrCj3ZLQJL98S2c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207793; c=relaxed/simple;
-	bh=LGm/e7DL/VlonKb47/MptNCnerpVllSO5R1NxoYIQAM=;
+	s=arc-20240116; t=1756207796; c=relaxed/simple;
+	bh=Vce4iuGtJkTxMr45g94zfvdyzjmUK9CKF8Bc6Vtikq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVT0BKQpOxYAuOvbHKeAzVbVh55m9b+NyanRdlnrIzizbw3xA1xyo93iWNVt6lF2ScPla/kr+LRzdee4/3lCuD2OOkCwJbolzKDFzFw+hprR6co3zt+/TDclP+e7depNnu5tJrh1HqgtH7U9aZOUPACsqNzX6OfjVE9v149xERk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSFrqWm4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8Q4xCK8U8KNcRTdUOhoREoaS8pOcHc6c72irW6jhSfDckEkdWo19wzUboT61yxcrN4StKfxI8SiSK0lb5wf3f/1cRWrD6sXyb1graNYTulP/D1CQRZraOI4ophJHbdhy9AMecXZKHb0TXgw/zaq+3v5KQtb/KwvMb6IUY2eGvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CH76php/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSFrqWm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5978FC4CEF1;
-	Tue, 26 Aug 2025 11:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CH76php/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF4FC4CEF1;
+	Tue, 26 Aug 2025 11:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207793;
-	bh=LGm/e7DL/VlonKb47/MptNCnerpVllSO5R1NxoYIQAM=;
+	s=korg; t=1756207796;
+	bh=Vce4iuGtJkTxMr45g94zfvdyzjmUK9CKF8Bc6Vtikq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSFrqWm4IO0N4fJ2v/LjtOb7PUw+X0n0nihgTd/qOMcYS31H/S15fCCb9aNXkOFlH
-	 oBmPCLZM/XTEYWoMnlZiPvL7B1uweiJIa4Ua5UM+B8PZzgzUbYAgLb4U/tICethFvr
-	 LTkgRJJP1eJg4ZE9P0OYEf7dnmFb5GODQh+PIyIA=
+	b=CH76php/rAIGz0tjqGubYrK2lDPAV6M/NUbP69yWgklIemmhHfLHAhL/q30ivioFX
+	 3DZ/lDGdDmnvSutKR1EnCTJ2gUfZHkbmmqG5hPmbfMjcZKFLLMaMIoG5fs3s04Wu0g
+	 tAKOS1tSjDZE1r9d9b4UWrfMFSgk13UFTN17kYd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@gmail.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 289/457] use uniform permission checks for all mount propagation changes
-Date: Tue, 26 Aug 2025 13:09:33 +0200
-Message-ID: <20250826110944.527173963@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Benno Lossin <lossin@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 6.16 280/457] rust: faux: fix C header link
+Date: Tue, 26 Aug 2025 13:09:24 +0200
+Message-ID: <20250826110944.299237831@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,101 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit cffd0441872e7f6b1fce5e78fb1c99187a291330 ]
+commit a5ba9ad417254c49ecf06ac5ab36ec4b12ee133f upstream.
 
-do_change_type() and do_set_group() are operating on different
-aspects of the same thing - propagation graph.  The latter
-asks for mounts involved to be mounted in namespace(s) the caller
-has CAP_SYS_ADMIN for.  The former is a mess - originally it
-didn't even check that mount *is* mounted.  That got fixed,
-but the resulting check turns out to be too strict for userland -
-in effect, we check that mount is in our namespace, having already
-checked that we have CAP_SYS_ADMIN there.
+Starting with Rust 1.91.0 (expected 2025-10-30), `rustdoc` has improved
+some false negatives around intra-doc links [1], and it found a broken
+intra-doc link we currently have:
 
-What we really need (in both cases) is
-	* only touch mounts that are mounted.  That's a must-have
-constraint - data corruption happens if it get violated.
-	* don't allow to mess with a namespace unless you already
-have enough permissions to do so (i.e. CAP_SYS_ADMIN in its userns).
+    error: unresolved link to `include/linux/device/faux.h`
+     --> rust/kernel/faux.rs:7:17
+      |
+    7 | //! C header: [`include/linux/device/faux.h`]
+      |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^ no item named `include/linux/device/faux.h` in scope
+      |
+      = help: to escape `[` and `]` characters, add '\' before them like `\[` or `\]`
+      = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+      = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
 
-That's an equivalent of what do_set_group() does; let's extract that
-into a helper (may_change_propagation()) and use it in both
-do_set_group() and do_change_type().
+Our `srctree/` C header links are not intra-doc links, thus they need
+the link destination.
 
-Fixes: 12f147ddd6de "do_change_type(): refuse to operate on unmounted/not ours mounts"
-Acked-by: Andrei Vagin <avagin@gmail.com>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Tested-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thus fix it.
+
+Cc: stable <stable@kernel.org>
+Link: https://github.com/rust-lang/rust/pull/132748 [1]
+Fixes: 78418f300d39 ("rust/kernel: Add faux device bindings")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Benno Lossin <lossin@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20250804171311.1186538-1-ojeda@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+ rust/kernel/faux.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 49d016711469..6b038bf74a3d 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2925,6 +2925,19 @@ static int graft_tree(struct mount *mnt, struct mount *p, struct mountpoint *mp)
- 	return attach_recursive_mnt(mnt, p, mp, 0);
- }
+diff --git a/rust/kernel/faux.rs b/rust/kernel/faux.rs
+index 7a906099993f..7fe2dd197e37 100644
+--- a/rust/kernel/faux.rs
++++ b/rust/kernel/faux.rs
+@@ -4,7 +4,7 @@
+ //!
+ //! This module provides bindings for working with faux devices in kernel modules.
+ //!
+-//! C header: [`include/linux/device/faux.h`]
++//! C header: [`include/linux/device/faux.h`](srctree/include/linux/device/faux.h)
  
-+static int may_change_propagation(const struct mount *m)
-+{
-+        struct mnt_namespace *ns = m->mnt_ns;
-+
-+	 // it must be mounted in some namespace
-+	 if (IS_ERR_OR_NULL(ns))         // is_mounted()
-+		 return -EINVAL;
-+	 // and the caller must be admin in userns of that namespace
-+	 if (!ns_capable(ns->user_ns, CAP_SYS_ADMIN))
-+		 return -EPERM;
-+	 return 0;
-+}
-+
- /*
-  * Sanity check the flags to change_mnt_propagation.
-  */
-@@ -2961,10 +2974,10 @@ static int do_change_type(struct path *path, int ms_flags)
- 		return -EINVAL;
- 
- 	namespace_lock();
--	if (!check_mnt(mnt)) {
--		err = -EINVAL;
-+	err = may_change_propagation(mnt);
-+	if (err)
- 		goto out_unlock;
--	}
-+
- 	if (type == MS_SHARED) {
- 		err = invent_group_ids(mnt, recurse);
- 		if (err)
-@@ -3419,18 +3432,11 @@ static int do_set_group(struct path *from_path, struct path *to_path)
- 
- 	namespace_lock();
- 
--	err = -EINVAL;
--	/* To and From must be mounted */
--	if (!is_mounted(&from->mnt))
--		goto out;
--	if (!is_mounted(&to->mnt))
--		goto out;
--
--	err = -EPERM;
--	/* We should be allowed to modify mount namespaces of both mounts */
--	if (!ns_capable(from->mnt_ns->user_ns, CAP_SYS_ADMIN))
-+	err = may_change_propagation(from);
-+	if (err)
- 		goto out;
--	if (!ns_capable(to->mnt_ns->user_ns, CAP_SYS_ADMIN))
-+	err = may_change_propagation(to);
-+	if (err)
- 		goto out;
- 
- 	err = -EINVAL;
+ use crate::{bindings, device, error::code::*, prelude::*};
+ use core::ptr::{addr_of_mut, null, null_mut, NonNull};
 -- 
 2.50.1
 
