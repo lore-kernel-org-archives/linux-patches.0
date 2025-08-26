@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4818635D;
-	Tue, 26 Aug 2025 13:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CE018DB2A;
+	Tue, 26 Aug 2025 13:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213388; cv=none; b=J3jTFKRHyzmEcKIy0k6SHPqYavOVNkCMI6aHehe4m54+xhEUUChzlIy7VuJNXUxek4phmDE6H0xRa1uKEjAx40lgh8V/aHRepL2z6kF+YwHJix89qA4gjwuyq2EHOi3r8ZG45uvVPEacvPRivKWNdTIE+pSCyJEGVYrVXeGcGkE=
+	t=1756213392; cv=none; b=mvumLjfgjeSz/dhDp7cZQjd8afQQi7xHRU1jHeDz1n52smt21n2Ep6ggZOhOzTMiD5kaOJeqydzbVRdKj84izEkDBTBALSOQdCYKe+4RHfWY9OYuFsqPPxiTTXWMldtO6lr/IrZu8GEcxlNg8JGO/j9vJgvGBB7TX2LA7W0Nlgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213388; c=relaxed/simple;
-	bh=lOyjNKnxOZqZQe+c6CSNzjXzgGMWWvOgzSU/FtNU31g=;
+	s=arc-20240116; t=1756213392; c=relaxed/simple;
+	bh=iJ9Pr95qhKAY9cfW3TnFd0or4iBy3VA0kpxm55Z+7K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trAW+rNN2xHLi5VIUhbngJEzkDNtChq6hzibqHvLWg1RpxVQD7swuMAdyIkcL6oGsGYkIU84tIvMiv6C/jqSu51ApKkEpthiLbUMpFh/E2SpdeAs9pgjEh78z52B2rdt1jeRk8IwCdldhGOjXKx6oBNh6hj2c3a3lO0Us/r0/+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y74/mWNz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOT5rGDnE6fq/mIgwgPcZNRz5JqfJF5LwgBX7XRxbH6iSBKm3P/uJjwCjvM7bjBxEPDTZTXxG+6eAnXU+tspt6iZ/KQnKGJcgAXV+TaezmFhxPrVFXe5MpdfThAp5ZIf40VSJu7FNJG75LhjFr2JYyKvv2O+TH5DsnWwvYoT2WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRp4Ttjb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y74/mWNz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB4FC4CEF1;
-	Tue, 26 Aug 2025 13:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRp4Ttjb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D57C4CEF1;
+	Tue, 26 Aug 2025 13:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213388;
-	bh=lOyjNKnxOZqZQe+c6CSNzjXzgGMWWvOgzSU/FtNU31g=;
+	s=korg; t=1756213391;
+	bh=iJ9Pr95qhKAY9cfW3TnFd0or4iBy3VA0kpxm55Z+7K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y74/mWNzgbhNkOamNkb2oAWoHtaaHyFbB5jJPIFaGYI4UNepxLEk7JSzszimxmBPa
-	 JjbrDAGCB3PnQcAELCa9bFr5IWoERFyWxMEacVdANLuj0vPZNnRIDToXvw7oyUTcQ5
-	 u23TGOOcV1cVCurTBsRksSt23nl5k7XmRROJqDLc=
+	b=iRp4TtjbnYnI+vJOu7icmNFb5tLSmzbbQmhKnp22zqsdZRASZjvmDys5LWd/1qF3t
+	 3gsa8A3c2qoUZnay/jYSSDWCWdWdAHPFCvE/O/3RHsbwUq03KIR6RF3heJmAWEQarL
+	 FC5fDuIvpG1Mtxkt73yk5So1kYZHZlm8esSr+vQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>
-Subject: [PATCH 6.6 328/587] rcu: Fix racy re-initialization of irq_work causing hangs
-Date: Tue, 26 Aug 2025 13:07:57 +0200
-Message-ID: <20250826111001.259284616@linuxfoundation.org>
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	stable <stable@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 329/587] serial: 8250: fix panic due to PSLVERR
+Date: Tue, 26 Aug 2025 13:07:58 +0200
+Message-ID: <20250826111001.283668377@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,104 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Yunhui Cui <cuiyunhui@bytedance.com>
 
-commit 61399e0c5410567ef60cb1cda34cca42903842e3 upstream.
+commit 7f8fdd4dbffc05982b96caf586f77a014b2a9353 upstream.
 
-RCU re-initializes the deferred QS irq work everytime before attempting
-to queue it. However there are situations where the irq work is
-attempted to be queued even though it is already queued. In that case
-re-initializing messes-up with the irq work queue that is about to be
-handled.
+When the PSLVERR_RESP_EN parameter is set to 1, the device generates
+an error response if an attempt is made to read an empty RBR (Receive
+Buffer Register) while the FIFO is enabled.
 
-The chances for that to happen are higher when the architecture doesn't
-support self-IPIs and irq work are then all lazy, such as with the
-following sequence:
+In serial8250_do_startup(), calling serial_port_out(port, UART_LCR,
+UART_LCR_WLEN8) triggers dw8250_check_lcr(), which invokes
+dw8250_force_idle() and serial8250_clear_and_reinit_fifos(). The latter
+function enables the FIFO via serial_out(p, UART_FCR, p->fcr).
+Execution proceeds to the serial_port_in(port, UART_RX).
+This satisfies the PSLVERR trigger condition.
 
-1) rcu_read_unlock() is called when IRQs are disabled and there is a
-   grace period involving blocked tasks on the node. The irq work
-   is then initialized and queued.
+When another CPU (e.g., using printk()) is accessing the UART (UART
+is busy), the current CPU fails the check (value & ~UART_LCR_SPAR) ==
+(lcr & ~UART_LCR_SPAR) in dw8250_check_lcr(), causing it to enter
+dw8250_force_idle().
 
-2) The related tasks are unblocked and the CPU quiescent state
-   is reported. rdp->defer_qs_iw_pending is reset to DEFER_QS_IDLE,
-   allowing the irq work to be requeued in the future (note the previous
-   one hasn't fired yet).
+Put serial_port_out(port, UART_LCR, UART_LCR_WLEN8) under the port->lock
+to fix this issue.
 
-3) A new grace period starts and the node has blocked tasks.
+Panic backtrace:
+[    0.442336] Oops - unknown exception [#1]
+[    0.442343] epc : dw8250_serial_in32+0x1e/0x4a
+[    0.442351]  ra : serial8250_do_startup+0x2c8/0x88e
+...
+[    0.442416] console_on_rootfs+0x26/0x70
 
-4) rcu_read_unlock() is called when IRQs are disabled again. The irq work
-   is re-initialized (but it's queued! and its node is cleared) and
-   requeued. Which means it's requeued to itself.
-
-5) The irq work finally fires with the tick. But since it was requeued
-   to itself, it loops and hangs.
-
-Fix this with initializing the irq work only once before the CPU boots.
-
-Fixes: b41642c87716 ("rcu: Fix rcu_read_unlock() deadloop due to IRQ work")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202508071303.c1134cce-lkp@intel.com
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Fixes: c49436b657d0 ("serial: 8250_dw: Improve unwritable LCR workaround")
+Link: https://lore.kernel.org/all/84cydt5peu.fsf@jogness.linutronix.de/T/
+Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20250723023322.464-2-cuiyunhui@bytedance.com
+[ Applied fix to serial8250_do_startup() instead of serial8250_initialize() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree.c        |    2 ++
- kernel/rcu/tree.h        |    1 +
- kernel/rcu/tree_plugin.h |    8 ++++++--
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_port.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -4427,6 +4427,8 @@ int rcutree_prepare_cpu(unsigned int cpu
- 	rdp->rcu_iw_gp_seq = rdp->gp_seq - 1;
- 	trace_rcu_grace_period(rcu_state.name, rdp->gp_seq, TPS("cpuonl"));
- 	raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
-+
-+	rcu_preempt_deferred_qs_init(rdp);
- 	rcu_spawn_one_boost_kthread(rnp);
- 	rcu_spawn_cpu_nocb_kthread(cpu);
- 	WRITE_ONCE(rcu_state.n_online_cpus, rcu_state.n_online_cpus + 1);
---- a/kernel/rcu/tree.h
-+++ b/kernel/rcu/tree.h
-@@ -463,6 +463,7 @@ static int rcu_print_task_exp_stall(stru
- static void rcu_preempt_check_blocked_tasks(struct rcu_node *rnp);
- static void rcu_flavor_sched_clock_irq(int user);
- static void dump_blkd_tasks(struct rcu_node *rnp, int ncheck);
-+static void rcu_preempt_deferred_qs_init(struct rcu_data *rdp);
- static void rcu_initiate_boost(struct rcu_node *rnp, unsigned long flags);
- static void rcu_preempt_boost_start_gp(struct rcu_node *rnp);
- static bool rcu_is_callbacks_kthread(struct rcu_data *rdp);
---- a/kernel/rcu/tree_plugin.h
-+++ b/kernel/rcu/tree_plugin.h
-@@ -687,8 +687,6 @@ static void rcu_read_unlock_special(stru
- 			    cpu_online(rdp->cpu)) {
- 				// Get scheduler to re-evaluate and call hooks.
- 				// If !IRQ_WORK, FQS scan will eventually IPI.
--				rdp->defer_qs_iw =
--					IRQ_WORK_INIT_HARD(rcu_preempt_deferred_qs_handler);
- 				rdp->defer_qs_iw_pending = DEFER_QS_PENDING;
- 				irq_work_queue_on(&rdp->defer_qs_iw, rdp->cpu);
- 			}
-@@ -828,6 +826,10 @@ dump_blkd_tasks(struct rcu_node *rnp, in
- 	}
- }
- 
-+static void rcu_preempt_deferred_qs_init(struct rcu_data *rdp)
-+{
-+	rdp->defer_qs_iw = IRQ_WORK_INIT_HARD(rcu_preempt_deferred_qs_handler);
-+}
- #else /* #ifdef CONFIG_PREEMPT_RCU */
- 
- /*
-@@ -1027,6 +1029,8 @@ dump_blkd_tasks(struct rcu_node *rnp, in
- 	WARN_ON_ONCE(!list_empty(&rnp->blkd_tasks));
- }
- 
-+static void rcu_preempt_deferred_qs_init(struct rcu_data *rdp) { }
-+
- #endif /* #else #ifdef CONFIG_PREEMPT_RCU */
- 
- /*
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2375,9 +2375,8 @@ int serial8250_do_startup(struct uart_po
+ 	/*
+ 	 * Now, initialize the UART
+ 	 */
+-	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
+-
+ 	spin_lock_irqsave(&port->lock, flags);
++	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
+ 	if (up->port.flags & UPF_FOURPORT) {
+ 		if (!up->port.irq)
+ 			up->port.mctrl |= TIOCM_OUT1;
 
 
