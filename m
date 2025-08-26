@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD51350D7B;
-	Tue, 26 Aug 2025 14:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D6135209D;
+	Tue, 26 Aug 2025 14:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218360; cv=none; b=Rqthgv9v1Fx9A3wxZap91qCQP/fK/Hf+wYkU4vENPsBV7oQZjw79nIelc+G0autwv92mSqEPqxehIqBmohCXfmTXg4XSPn3S8l+WE6dIRcEw/W+w7TzrbeieIiVKtKr4nHbtr/80a7XaTJmkEfxdWzZuThD8qF5oArD/SGKsX5E=
+	t=1756218364; cv=none; b=ayTolsOok6vSckSLi6x3eUorXukD7asbriBtfHt7/swLxVmutk6TQJRtKa/4Qm+yeR3mBn/qAmDzfkihZ5mLUkheHlm/L9LT6+1GAImZaEoVJlOQ131FK1d1+4Zk+j2NTMoJsC7bi9RcEMkXOXabfGkdxdS+U39SJFkF73F+/nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218360; c=relaxed/simple;
-	bh=h1zn6Pkz7HGr2U6EKWtzzXwjWV35L8VCHy4o64ohdBw=;
+	s=arc-20240116; t=1756218364; c=relaxed/simple;
+	bh=IqMzwS71x1NQRI+nGlbmmmN/jPmznvvD9sm/wpQ4j6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuGvL7VPx8Nn/g9j8SeAtgNfAjlzfirVebAQvvQhp/1F5DqHOXwjDL1XeXBCUAlO68tOCBWs2ySwvw0nNOLAsju/n8YfyS7Jr4h1C96Dqxy45jvPxJgagGLAB0PPMA5XXYy+JwGUDM1BW8C697DhK+9tA6kdL/3M1137LRLGxYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o42/Ftw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UFRhy/pTBj0w8eSL6WxI1mJGyTXd5jPau5v7KegrH6lEP/OfHuotq0g3qDOrr7R/6ZNhofXagYRJivbRQo3EGMHXZcQgt+6plkm0DPWd61rKBmJ/OiqNxOlyr28D14QhroNajVQiFSbTA++fcf4hTHff+vmoLMvZ5myBme8NX3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zK9CdFeO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o42/Ftw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF5EC4CEF1;
-	Tue, 26 Aug 2025 14:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zK9CdFeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59183C4CEF1;
+	Tue, 26 Aug 2025 14:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218360;
-	bh=h1zn6Pkz7HGr2U6EKWtzzXwjWV35L8VCHy4o64ohdBw=;
+	s=korg; t=1756218363;
+	bh=IqMzwS71x1NQRI+nGlbmmmN/jPmznvvD9sm/wpQ4j6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0o42/Ftw/P1wzVFT8va3LocNklYVuzCnIapSml2ENZ/mFYx+fu5LXxA8hJczfWQCz
-	 k1u4AS5xGrTV7d2Aob9He4bZKh2hntYXn0zWqQ1pXd65fKvwLhInBeimSSh8c3CG2c
-	 IBI34t5mM8dHqDUhFZ7FfUqdWoNDP4NS3/HTNLLA=
+	b=zK9CdFeO7pDsaX1vc2RQmhfNTRIzW0b6zXm754WL7JnfVRkLksL+QXfk2SnVS3gLh
+	 lZv0Gh6M/80wCDLUz/ZJHVJWK3xGc0dc8QL4JO4G4rullW9FQjG8DZNMAfTcuhnMkE
+	 chajPqN9I9TpI8bN6gf19Ixs5EmI7LI+H4GWlM5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 492/523] media: venus: vdec: Clamp param smaller than 1fps and bigger than 240.
-Date: Tue, 26 Aug 2025 13:11:42 +0200
-Message-ID: <20250826110936.581119772@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 5.10 493/523] uio_hv_generic: Fix another memory leak in error handling paths
+Date: Tue, 26 Aug 2025 13:11:43 +0200
+Message-ID: <20250826110936.605246904@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,60 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 377dc500d253f0b26732b2cb062e89668aef890a ]
+commit 0b0226be3a52dadd965644bc52a807961c2c26df upstream.
 
-The driver uses "whole" fps in all its calculations (e.g. in
-load_per_instance()). Those calculation expect an fps bigger than 1, and
-not big enough to overflow.
+Memory allocated by 'vmbus_alloc_ring()' at the beginning of the probe
+function is never freed in the error handling path.
 
-Clamp the value if the user provides a param that will result in an invalid
-fps.
+Add the missing 'vmbus_free_ring()' call.
 
-Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
-Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
-Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
-Cc: stable@vger.kernel.org
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5615-rb5
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-[bod: Change "parm" to "param"]
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note that it is already freed in the .remove function.
+
+Fixes: cdfa835c6e5e ("uio_hv_generic: defer opening vmbus until first use")
+Cc: stable <stable@vger.kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/0d86027b8eeed8e6360bc3d52bcdb328ff9bdca1.1620544055.git.christophe.jaillet@wanadoo.fr
+[Shivani: Modified to apply on 5.10.y]
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/core.h |    2 ++
- drivers/media/platform/qcom/venus/vdec.c |    5 ++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
-
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -25,6 +25,8 @@
- #define VIDC_VCODEC_CLKS_NUM_MAX	2
- #define VIDC_PMDOMAINS_NUM_MAX		3
+ drivers/uio/uio_hv_generic.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -306,7 +306,7 @@ hv_uio_probe(struct hv_device *dev,
+ 	pdata->recv_buf = vzalloc(RECV_BUFFER_SIZE);
+ 	if (pdata->recv_buf == NULL) {
+ 		ret = -ENOMEM;
+-		goto fail_close;
++		goto fail_free_ring;
+ 	}
  
-+#define VENUS_MAX_FPS			240
-+
- extern int venus_fw_debug;
+ 	ret = vmbus_establish_gpadl(channel, pdata->recv_buf,
+@@ -366,6 +366,8 @@ hv_uio_probe(struct hv_device *dev,
  
- struct freq_tbl {
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -427,11 +427,10 @@ static int vdec_s_parm(struct file *file
- 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
- 	do_div(us_per_frame, timeperframe->denominator);
+ fail_close:
+ 	hv_uio_cleanup(dev, pdata);
++fail_free_ring:
++	vmbus_free_ring(dev->channel);
  
--	if (!us_per_frame)
--		return -EINVAL;
--
-+	us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
- 	fps = (u64)USEC_PER_SEC;
- 	do_div(fps, us_per_frame);
-+	fps = min(VENUS_MAX_FPS, fps);
- 
- 	inst->fps = fps;
- 	inst->timeperframe = *timeperframe;
+ 	return ret;
+ }
 
 
