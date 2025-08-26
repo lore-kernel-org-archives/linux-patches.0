@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D387D246790;
-	Tue, 26 Aug 2025 13:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1979112CDA5;
+	Tue, 26 Aug 2025 13:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213748; cv=none; b=K51lUTAOH3I9SmiZsFntsZ0cTdVpTDbqtF/A7JJjHfiQIn7rd0OXSc8rU7G3n+DkKryvUqU87xZoZFSWTT0+e4wHzDSxdr/jGPrLY1BT91AAwQIbvwjPKRWS2Y1dl1T9Qclvt4qxWctcjxF2uHQGpO2+zbaK566R5lc7OpK9g14=
+	t=1756213750; cv=none; b=WcyruZ2KD/Nz9BdH58FhRMWlK28hSTNtm0WyIHGFmKl5YfCA6n74K1uMCsr9nOQfCLnxDsVTBb3DUBPnO1zvzpgNVZkGQbruCrj5iu8cmIevsyA9l/0hoCE5ldn7iy7Hw/V+Fx2b0hPOL6CbpQ1PMcmPcajQUd5TbF8crzqiZOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213748; c=relaxed/simple;
-	bh=Yc01BcGpTTx95SftQKnWxGXeJLnekvUkyMM+GxE90a4=;
+	s=arc-20240116; t=1756213750; c=relaxed/simple;
+	bh=PgqtDdK7aMxS2BD2vgSZT4tEqLlLG6MOwxY3dP5R8Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrm7YPB2GGqYWu5+wSyHkrue0sTRdUgP2btr/eEyxLiCz7XhgqNEvVGyMg6Mx+hIYwniJgytKnxSavca7HMxwwsbWq9t0sJAiQk/KTwOY1d641jwdNkibVehFvJd2DmU92nStwIjQzOee0TyWYFx6zGvQQ1EH9KLBeI6CKe8q6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+fdK+Vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khrWvJ8fkLfDeCtqzzSAWEq9orchEQQPi97sKqeiaPvC5FeMsPACo8cFOnBaXuKsyQYEagAGaYOwhjU3+wLv+xLTeFyT9AknhgzhgLRKBrJpwxhZPFIf/1x89fbnfWAFOVVUvFwifIWwujYRHeyqAxaFV88fDaQDtVCVmPYaJ8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjE0g2he; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+fdK+Vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D747FC116D0;
-	Tue, 26 Aug 2025 13:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjE0g2he"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E961C4CEF1;
+	Tue, 26 Aug 2025 13:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213747;
-	bh=Yc01BcGpTTx95SftQKnWxGXeJLnekvUkyMM+GxE90a4=;
+	s=korg; t=1756213750;
+	bh=PgqtDdK7aMxS2BD2vgSZT4tEqLlLG6MOwxY3dP5R8Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+fdK+VlahkolvRF72OPA6Iuso7cKw1YSnAdf4RDBDZ15dbngU+jHNDCuX2V8ixkq
-	 iqpVMP4VIjSSjmyKlWJ/U5OkzGfuozLmEIhoxHKJ3pT64hpT1D5TAwA8blEgTFkB+f
-	 ddZkWNe/o9x+9PfCYyX/m8NH+QKsYfDiW9EixssY=
+	b=tjE0g2helZvma00t+sH3RXALdDmXGp4iJ97MHAACr9PRuikBW/oaus4eXiiLSVuAj
+	 cuyGlwFXDtMjy5MFzOl+OMmfRUqUK7uwwhUrfcYPhUhH2ZAVtjM9cVfBPPuUEEInoE
+	 XoCXy6Lc9qJBaXwYz0XoqGeZGmlif+43c+Vdpro4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Li Jun <jun.li@nxp.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 464/587] mm/ptdump: take the memory hotplug lock inside ptdump_walk_pgd()
-Date: Tue, 26 Aug 2025 13:10:13 +0200
-Message-ID: <20250826111004.784116141@linuxfoundation.org>
+Subject: [PATCH 6.6 465/587] usb: dwc3: imx8mp: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:10:14 +0200
+Message-ID: <20250826111004.812748991@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -64,111 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 59305202c67fea50378dcad0cc199dbc13a0e99a upstream.
+[ Upstream commit 086a0e516f7b3844e6328a5c69e2708b66b0ce18 ]
 
-Memory hot remove unmaps and tears down various kernel page table regions
-as required.  The ptdump code can race with concurrent modifications of
-the kernel page tables.  When leaf entries are modified concurrently, the
-dump code may log stale or inconsistent information for a VA range, but
-this is otherwise not harmful.
+Make sure to drop the reference to the dwc3 device taken by
+of_find_device_by_node() on probe errors and on driver unbind.
 
-But when intermediate levels of kernel page table are freed, the dump code
-will continue to use memory that has been freed and potentially
-reallocated for another purpose.  In such cases, the ptdump code may
-dereference bogus addresses, leading to a number of potential problems.
-
-To avoid the above mentioned race condition, platforms such as arm64,
-riscv and s390 take memory hotplug lock, while dumping kernel page table
-via the sysfs interface /sys/kernel/debug/kernel_page_tables.
-
-Similar race condition exists while checking for pages that might have
-been marked W+X via /sys/kernel/debug/kernel_page_tables/check_wx_pages
-which in turn calls ptdump_check_wx().  Instead of solving this race
-condition again, let's just move the memory hotplug lock inside generic
-ptdump_check_wx() which will benefit both the scenarios.
-
-Drop get_online_mems() and put_online_mems() combination from all existing
-platform ptdump code paths.
-
-Link: https://lkml.kernel.org/r/20250620052427.2092093-1-anshuman.khandual@arm.com
-Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>	[s390]
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Li Jun <jun.li@nxp.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-2-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/ptdump_debugfs.c |    3 ---
- arch/s390/mm/dump_pagetables.c |    2 --
- mm/ptdump.c                    |    2 ++
- 3 files changed, 2 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/dwc3-imx8mp.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/mm/ptdump_debugfs.c
-+++ b/arch/arm64/mm/ptdump_debugfs.c
-@@ -1,6 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/debugfs.h>
--#include <linux/memory_hotplug.h>
- #include <linux/seq_file.h>
- 
- #include <asm/ptdump.h>
-@@ -9,9 +8,7 @@ static int ptdump_show(struct seq_file *
- {
- 	struct ptdump_info *info = m->private;
- 
--	get_online_mems();
- 	ptdump_walk(m, info);
--	put_online_mems();
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(ptdump);
---- a/arch/s390/mm/dump_pagetables.c
-+++ b/arch/s390/mm/dump_pagetables.c
-@@ -249,11 +249,9 @@ static int ptdump_show(struct seq_file *
- 		.marker = address_markers,
- 	};
- 
--	get_online_mems();
- 	mutex_lock(&cpa_mutex);
- 	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
- 	mutex_unlock(&cpa_mutex);
--	put_online_mems();
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(ptdump);
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -152,6 +152,7 @@ void ptdump_walk_pgd(struct ptdump_state
- {
- 	const struct ptdump_range *range = st->range;
- 
-+	get_online_mems();
- 	mmap_write_lock(mm);
- 	while (range->start != range->end) {
- 		walk_page_range_novma(mm, range->start, range->end,
-@@ -159,6 +160,7 @@ void ptdump_walk_pgd(struct ptdump_state
- 		range++;
+--- a/drivers/usb/dwc3/dwc3-imx8mp.c
++++ b/drivers/usb/dwc3/dwc3-imx8mp.c
+@@ -244,7 +244,7 @@ static int dwc3_imx8mp_probe(struct plat
+ 					IRQF_ONESHOT, dev_name(dev), dwc3_imx);
+ 	if (err) {
+ 		dev_err(dev, "failed to request IRQ #%d --> %d\n", irq, err);
+-		goto depopulate;
++		goto put_dwc3;
  	}
- 	mmap_write_unlock(mm);
-+	put_online_mems();
  
- 	/* Flush out the last page */
- 	st->note_page(st, 0, -1, 0);
+ 	device_set_wakeup_capable(dev, true);
+@@ -252,6 +252,8 @@ static int dwc3_imx8mp_probe(struct plat
+ 
+ 	return 0;
+ 
++put_dwc3:
++	put_device(&dwc3_imx->dwc3->dev);
+ depopulate:
+ 	of_platform_depopulate(dev);
+ err_node_put:
+@@ -272,6 +274,8 @@ static void dwc3_imx8mp_remove(struct pl
+ 	struct dwc3_imx8mp *dwc3_imx = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+ 
++	put_device(&dwc3_imx->dwc3->dev);
++
+ 	pm_runtime_get_sync(dev);
+ 	of_platform_depopulate(dev);
+ 
 
 
