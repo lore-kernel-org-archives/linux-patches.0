@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ECA2192F2;
-	Tue, 26 Aug 2025 14:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9771F4C90;
+	Tue, 26 Aug 2025 14:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218442; cv=none; b=nuI4tOzxASmLhNLuPSCMJxYJ5WeY3ewLsI2fSypRDxreyUjTKj8ZlAuRjF2Saywh13MB9RmD2KYHbRPc+z/G290KdqBQmTg4tHxdhTjOulV7gEpDsZaiJn08RuQ/i+MMcycagcDMuJd+zIEvdegrQfYEcbp5ZQTELYZ2CyfdL64=
+	t=1756218444; cv=none; b=MsETalm72BxmLGTt8TFGjNmbHbyA+K01wryd+lbHRLCq8JQx66xvVvfTjRnaAQqSrcmcZ1kml1oq+1HNf8OzrXM6+7BWgHEJEzM4Qey4BLqkpPZViMRRTDX/lvglsBXU2iYhuhxyDyfiQL1He4bzrhu9SBMLZ1bA/axyudDheJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218442; c=relaxed/simple;
-	bh=nCRFBH3vu1h2sIn+8ofInNmtnhrItilCaMiJ9lIE92I=;
+	s=arc-20240116; t=1756218444; c=relaxed/simple;
+	bh=0k8419SR4O6MmqJ0w2IozfTk/gJT71LuvuEEGnd4EuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgVx2tBb1g3VZyy8NEsbNeGyoNThUw1VLeKrPXIlcbo/FuU8dNuHcCoCCDV3AdowvDmcoZCOc4Q4HoKvrSluSLcVO5B6QFYIrscn8M12sY36KkERl6UIysFhkHko/zTWyZCe+uMlGsQKNCQzzU7wAZPE8ZGJ2e9CSAyh7a1G6Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0YSskjn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lBwKCe4/IqC0Z+3IFOzaBLCa0soipx/x2O05Vya3NdJnE7B64nQ0JUqwbf9+PTB4LWI8GmQ4l3YVWi9KH7FnGVTABE1WZaAdcEKi35KX4sYaq6lYjU6I/3zB1pA5jp8PzI/9hxm+Jzf05oGsG1xaI/EltZYI0qDrtlJ3KPILw/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbJhDhyq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0YSskjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F1DC4CEF1;
-	Tue, 26 Aug 2025 14:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbJhDhyq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2ADC4CEF1;
+	Tue, 26 Aug 2025 14:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218442;
-	bh=nCRFBH3vu1h2sIn+8ofInNmtnhrItilCaMiJ9lIE92I=;
+	s=korg; t=1756218444;
+	bh=0k8419SR4O6MmqJ0w2IozfTk/gJT71LuvuEEGnd4EuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D0YSskjnTYziRMBV/hdcGyoa2HQrVwplv0ImksQ4zlJVHUZ8p0oiMwb+ny1nSAx7k
-	 XFoykGm6Hf7w/0VnnRWVry71n8mLloqOIGa9rZHyRAOQ9KTq6cJW8v88zWRXLd//1V
-	 A/GI6R52Bqk7zPihd0Ytq9jR1nGr0stoKh8IrFeo=
+	b=UbJhDhyqKwhU9OryQZip/tGgpms6G2Dcs7XZO8qCAD+a2cTrTBrNw6jBLALt2blEI
+	 lGHBIdZsnpGknfz50BZtUm30ViaH9qgsqaNfha7wu66NOqGaiWNQ8k9inyFAGZ3gSC
+	 4CciDhkJ665XitJSMiro6th5aw0ev02fX1oyLxOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 523/523] netfilter: nf_reject: dont leak dst refcount for loopback packets
-Date: Tue, 26 Aug 2025 13:12:13 +0200
-Message-ID: <20250826110937.339124694@linuxfoundation.org>
+Subject: [PATCH 5.10 505/523] tracing: Limit access to parser->buffer when trace_get_user failed
+Date: Tue, 26 Aug 2025 13:11:55 +0200
+Message-ID: <20250826110936.898075214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,88 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 91a79b792204313153e1bdbbe5acbfc28903b3a5 ]
+[ Upstream commit 6a909ea83f226803ea0e718f6e88613df9234d58 ]
 
-recent patches to add a WARN() when replacing skb dst entry found an
-old bug:
+When the length of the string written to set_ftrace_filter exceeds
+FTRACE_BUFF_MAX, the following KASAN alarm will be triggered:
 
-WARNING: include/linux/skbuff.h:1165 skb_dst_check_unset include/linux/skbuff.h:1164 [inline]
-WARNING: include/linux/skbuff.h:1165 skb_dst_set include/linux/skbuff.h:1210 [inline]
-WARNING: include/linux/skbuff.h:1165 nf_reject_fill_skb_dst+0x2a4/0x330 net/ipv4/netfilter/nf_reject_ipv4.c:234
-[..]
-Call Trace:
- nf_send_unreach+0x17b/0x6e0 net/ipv4/netfilter/nf_reject_ipv4.c:325
- nft_reject_inet_eval+0x4bc/0x690 net/netfilter/nft_reject_inet.c:27
- expr_call_ops_eval net/netfilter/nf_tables_core.c:237 [inline]
- ..
+BUG: KASAN: slab-out-of-bounds in strsep+0x18c/0x1b0
+Read of size 1 at addr ffff0000d00bd5ba by task ash/165
 
-This is because blamed commit forgot about loopback packets.
-Such packets already have a dst_entry attached, even at PRE_ROUTING stage.
+CPU: 1 UID: 0 PID: 165 Comm: ash Not tainted 6.16.0-g6bcdbd62bd56-dirty
+Hardware name: linux,dummy-virt (DT)
+Call trace:
+ show_stack+0x34/0x50 (C)
+ dump_stack_lvl+0xa0/0x158
+ print_address_description.constprop.0+0x88/0x398
+ print_report+0xb0/0x280
+ kasan_report+0xa4/0xf0
+ __asan_report_load1_noabort+0x20/0x30
+ strsep+0x18c/0x1b0
+ ftrace_process_regex.isra.0+0x100/0x2d8
+ ftrace_regex_release+0x484/0x618
+ __fput+0x364/0xa58
+ ____fput+0x28/0x40
+ task_work_run+0x154/0x278
+ do_notify_resume+0x1f0/0x220
+ el0_svc+0xec/0xf0
+ el0t_64_sync_handler+0xa0/0xe8
+ el0t_64_sync+0x1ac/0x1b0
 
-Instead of checking hook just check if the skb already has a route
-attached to it.
+The reason is that trace_get_user will fail when processing a string
+longer than FTRACE_BUFF_MAX, but not set the end of parser->buffer to 0.
+Then an OOB access will be triggered in ftrace_regex_release->
+ftrace_process_regex->strsep->strpbrk. We can solve this problem by
+limiting access to parser->buffer when trace_get_user failed.
 
-Fixes: f53b9b0bdc59 ("netfilter: introduce support for reject at prerouting stage")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20250820123707.10671-1-fw@strlen.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20250813040232.1344527-1-pulehui@huaweicloud.com
+Fixes: 8c9af478c06b ("ftrace: Handle commands when closing set_ftrace_filter file")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 6 ++----
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 ++---
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ kernel/trace/trace.c |   18 ++++++++++++------
+ kernel/trace/trace.h |    8 +++++++-
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index d232e0251142..e89a4cbd9f5d 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -125,8 +125,7 @@ void nf_send_reset(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (!oth)
- 		return;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1613,7 +1613,7 @@ int trace_get_user(struct trace_parser *
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(oldskb) < 0)
-+	if (!skb_dst(oldskb) && nf_reject_fill_skb_dst(oldskb) < 0)
- 		return;
+ 	ret = get_user(ch, ubuf++);
+ 	if (ret)
+-		return ret;
++		goto fail;
  
- 	if (skb_rtable(oldskb)->rt_flags & (RTCF_BROADCAST | RTCF_MULTICAST))
-@@ -194,8 +193,7 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (iph->frag_off & htons(IP_OFFSET))
- 		return;
+ 	read++;
+ 	cnt--;
+@@ -1627,7 +1627,7 @@ int trace_get_user(struct trace_parser *
+ 		while (cnt && isspace(ch)) {
+ 			ret = get_user(ch, ubuf++);
+ 			if (ret)
+-				return ret;
++				goto fail;
+ 			read++;
+ 			cnt--;
+ 		}
+@@ -1645,12 +1645,14 @@ int trace_get_user(struct trace_parser *
+ 	while (cnt && !isspace(ch) && ch) {
+ 		if (parser->idx < parser->size - 1)
+ 			parser->buffer[parser->idx++] = ch;
+-		else
+-			return -EINVAL;
++		else {
++			ret = -EINVAL;
++			goto fail;
++		}
  
--	if ((hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) &&
--	    nf_reject_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
+ 		ret = get_user(ch, ubuf++);
+ 		if (ret)
+-			return ret;
++			goto fail;
+ 		read++;
+ 		cnt--;
+ 	}
+@@ -1665,11 +1667,15 @@ int trace_get_user(struct trace_parser *
+ 		/* Make sure the parsed string always terminates with '\0'. */
+ 		parser->buffer[parser->idx] = 0;
+ 	} else {
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto fail;
+ 	}
  
- 	if (skb_csum_unnecessary(skb_in) || !nf_reject_verify_csum(proto)) {
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index b396559f68b4..5384b73e318e 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -161,7 +161,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	fl6.fl6_sport = otcph->dest;
- 	fl6.fl6_dport = otcph->source;
+ 	*ppos += read;
+ 	return read;
++fail:
++	trace_parser_fail(parser);
++	return ret;
+ }
  
--	if (hook == NF_INET_PRE_ROUTING || hook == NF_INET_INGRESS) {
-+	if (!skb_dst(oldskb)) {
- 		nf_ip6_route(net, &dst, flowi6_to_flowi(&fl6), false);
- 		if (!dst)
- 			return;
-@@ -259,8 +259,7 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
+ /* TODO add a seq_buf_to_buffer() */
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -1269,6 +1269,7 @@ bool ftrace_event_is_function(struct tra
+  */
+ struct trace_parser {
+ 	bool		cont;
++	bool		fail;
+ 	char		*buffer;
+ 	unsigned	idx;
+ 	unsigned	size;
+@@ -1276,7 +1277,7 @@ struct trace_parser {
  
--	if ((hooknum == NF_INET_PRE_ROUTING || hooknum == NF_INET_INGRESS) &&
--	    nf_reject6_fill_skb_dst(skb_in) < 0)
-+	if (!skb_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
+ static inline bool trace_parser_loaded(struct trace_parser *parser)
+ {
+-	return (parser->idx != 0);
++	return !parser->fail && parser->idx != 0;
+ }
  
- 	icmpv6_send(skb_in, ICMPV6_DEST_UNREACH, code, 0);
--- 
-2.50.1
-
+ static inline bool trace_parser_cont(struct trace_parser *parser)
+@@ -1290,6 +1291,11 @@ static inline void trace_parser_clear(st
+ 	parser->idx = 0;
+ }
+ 
++static inline void trace_parser_fail(struct trace_parser *parser)
++{
++	parser->fail = true;
++}
++
+ extern int trace_parser_get_init(struct trace_parser *parser, int size);
+ extern void trace_parser_put(struct trace_parser *parser);
+ extern int trace_get_user(struct trace_parser *parser, const char __user *ubuf,
 
 
