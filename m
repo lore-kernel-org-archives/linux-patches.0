@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EA92B9A7;
-	Tue, 26 Aug 2025 13:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E99258A;
+	Tue, 26 Aug 2025 13:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216565; cv=none; b=ZdIWewrVGJt+wJJ+d9HkO4UlyBOCFBsKSye3e9kEox31Ixc+Whi+5GAPW8+xpTcpkienq82bFtX3dfwKAuntVrVXEcGdSrkXLfUvQNhYMqUomh4/ITt6MWYvhyF+AsOCum6zSKz6dmBX6DqRRJb+6XsusAENbWO0o3mieffZLMY=
+	t=1756216567; cv=none; b=lFZWICbk6Y9xXAhhLXY3p2C5Uks5xZxoEHbxLfqGFkHqTFEXRlpKvLj9tCKtnuZDU7CA54JDDp4HN/oQ5gEwKabgwcWzHBWA2yD4LWfoom41Swa88njg8wAw84eiuk+ecI6m8AojzVuAv/ATcrEYEZAxhmrSNOgRteUVO4AyiRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216565; c=relaxed/simple;
-	bh=SGa3t0zravuyuNWJdoLsvGSBx5OaM1JYOwvTwxTYVVU=;
+	s=arc-20240116; t=1756216567; c=relaxed/simple;
+	bh=XUJiGw547g99jls8YjxGCMveVyo4nJukrDENJbo2Rx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7s4XskPpZ1IWjvjGL0HxhCAzNBwS1VrDn+jAefMsUF64Cdx+371kkv1Oem/Hn0ypxgKOmwm0hY8Ty0+3+3NsaFi8vpB7PEHd0snqI+Bz5TjX3QqXyOCXafm9U5k96EoUVGujKTH6xuoRwhjhxl0EJj6z6WjrBq05Sn6tHP33e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3wKWXtn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MRPQ2op+e+BxiOzKe3AuwPFslkBYNEpHCwIPX9vIZezx7pIlVyFg6RdzuTfHC9dFHTpJ3bczoACzc9D7TkiHbvsR+PbOLlPoS+BAK1J20cSR3IHplnGCqOSH8ONs+AH2K+7DyZq7uXT5k1cwmCWmrfzX1qQPSfpKu1ojOQKDJTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKyyxlDr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3wKWXtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40853C4CEF1;
-	Tue, 26 Aug 2025 13:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKyyxlDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB593C4CEF1;
+	Tue, 26 Aug 2025 13:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216564;
-	bh=SGa3t0zravuyuNWJdoLsvGSBx5OaM1JYOwvTwxTYVVU=;
+	s=korg; t=1756216567;
+	bh=XUJiGw547g99jls8YjxGCMveVyo4nJukrDENJbo2Rx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3wKWXtn/Fcm70fH+pid1lper8RkviXM1ffpsRa/SRsP7wO9daY7u6txw5fwwt005
-	 ohZ7Ih6fbeiXY5F1eyiqPKOCBmLNQuKd/5BAeCfc11KcTnaUKixji2T2rqfGPpdF3F
-	 kEsNXT9e60ix8e2d8f7RZDwZKsU1lKOwOCKbn+3s=
+	b=iKyyxlDrdmd7wkAMy/qYRq/Qv2EpEsUTPDSpNi65tuLYugs88fWHb4sX0LXj585vN
+	 6dQD8XSCzDb/GuqpT17Mi/dBV+rpTXzl+wgYzAgQ/KsHXD6bGboPxFM8JTRVBnVmH0
+	 J+Tql1GZlaoEikuzIF8k+faDxAWXRnj3bKxf0DCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 5.15 458/644] m68k: Fix lost column on framebuffer debug console
-Date: Tue, 26 Aug 2025 13:09:09 +0200
-Message-ID: <20250826110957.824822462@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.15 459/644] usb: atm: cxacru: Merge cxacru_upload_firmware() into cxacru_heavy_init()
+Date: Tue, 26 Aug 2025 13:09:10 +0200
+Message-ID: <20250826110957.849365692@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,97 +49,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 210a1ce8ed4391b64a888b3fb4b5611a13f5ccc7 upstream.
+commit 8d1b02e5d7e3a6d2acffb1f4c094678fda9e3456 upstream.
 
-Move the cursor position rightward after rendering the character,
-not before. This avoids complications that arise when the recursive
-console_putc call has to wrap the line and/or scroll the display.
-This also fixes the linewrap bug that crops off the rightmost column.
+After a recent change in clang to expose uninitialized warnings from
+const variables [1], there is a warning in cxacru_heavy_init():
 
-When the cursor is at the bottom of the display, a linefeed will not
-move the cursor position further downward. Instead, the display scrolls
-upward. Avoid the repeated add/subtract sequence by way of a single
-subtraction at the initialization of console_struct_num_rows.
+  drivers/usb/atm/cxacru.c:1104:6: error: variable 'bp' is used uninitialized whenever 'if' condition is false [-Werror,-Wsometimes-uninitialized]
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1113:39: note: uninitialized use occurs here
+   1113 |         cxacru_upload_firmware(instance, fw, bp);
+        |                                              ^~
+  drivers/usb/atm/cxacru.c:1104:2: note: remove the 'if' if its condition is always true
+   1104 |         if (instance->modem_type->boot_rom_patch) {
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/usb/atm/cxacru.c:1095:32: note: initialize the variable 'bp' to silence this warning
+   1095 |         const struct firmware *fw, *bp;
+        |                                       ^
+        |                                        = NULL
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+While the warning is technically correct that bp is conditionally passed
+uninitialized to cxacru_upload_firmware(), it is ultimately a false
+positive warning on the uninitialized use of bp because the same
+condition that initializes bp, instance->modem_type->boot_rom_patch, is
+the same one that gates the use of bp within cxacru_upload_firmware().
+As this warning occurs in clang's frontend before inlining occurs, it
+cannot know that these conditions are indentical to avoid the warning.
+
+Manually inline cxacru_upload_firmware() into cxacru_heavy_init(), as
+that is its only callsite, so that clang can see that bp is initialized
+and used under the same condition, clearing up the warning without any
+functional changes to the code (LLVM was already doing this inlining
+later).
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/9d4e8c68a456d5f2bc254ac6f87a472d066ebd5e.1743115195.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2102
+Link: https://github.com/llvm/llvm-project/commit/2464313eef01c5b1edf0eccf57a32cdee01472c7 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250722-usb-cxacru-fix-clang-21-uninit-warning-v2-1-6708a18decd2@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/kernel/head.S |   31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ drivers/usb/atm/cxacru.c |  106 +++++++++++++++++++++--------------------------
+ 1 file changed, 49 insertions(+), 57 deletions(-)
 
---- a/arch/m68k/kernel/head.S
-+++ b/arch/m68k/kernel/head.S
-@@ -3379,6 +3379,7 @@ L(console_clear_loop):
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -980,25 +980,60 @@ cleanup:
+ 	return ret;
+ }
  
- 	movel	%d4,%d1				/* screen height in pixels */
- 	divul	%a0@(FONT_DESC_HEIGHT),%d1	/* d1 = max num rows */
-+	subql	#1,%d1				/* row range is 0 to num - 1 */
- 
- 	movel	%d0,%a2@(Lconsole_struct_num_columns)
- 	movel	%d1,%a2@(Lconsole_struct_num_rows)
-@@ -3525,15 +3526,14 @@ func_start	console_putc,%a0/%a1/%d0-%d7
- 	cmpib	#10,%d7
- 	jne	L(console_not_lf)
- 	movel	%a0@(Lconsole_struct_cur_row),%d0
--	addil	#1,%d0
--	movel	%d0,%a0@(Lconsole_struct_cur_row)
- 	movel	%a0@(Lconsole_struct_num_rows),%d1
- 	cmpl	%d1,%d0
- 	jcs	1f
--	subil	#1,%d0
--	movel	%d0,%a0@(Lconsole_struct_cur_row)
- 	console_scroll
-+	jra	L(console_exit)
- 1:
-+	addql	#1,%d0
-+	movel	%d0,%a0@(Lconsole_struct_cur_row)
- 	jra	L(console_exit)
- 
- L(console_not_lf):
-@@ -3560,12 +3560,6 @@ L(console_not_cr):
-  */
- L(console_not_home):
- 	movel	%a0@(Lconsole_struct_cur_column),%d0
--	addql	#1,%a0@(Lconsole_struct_cur_column)
--	movel	%a0@(Lconsole_struct_num_columns),%d1
--	cmpl	%d1,%d0
--	jcs	1f
--	console_putc	#'\n'	/* recursion is OK! */
--1:
- 	movel	%a0@(Lconsole_struct_cur_row),%d1
- 
- 	/*
-@@ -3612,6 +3606,23 @@ L(console_do_font_scanline):
- 	addq	#1,%d1
- 	dbra	%d7,L(console_read_char_scanline)
- 
-+	/*
-+	 *	Register usage in the code below:
-+	 *	a0 = pointer to console globals
-+	 *	d0 = cursor column
-+	 *	d1 = cursor column limit
-+	 */
+-static void cxacru_upload_firmware(struct cxacru_data *instance,
+-				   const struct firmware *fw,
+-				   const struct firmware *bp)
 +
-+	lea	%pc@(L(console_globals)),%a0
++static int cxacru_find_firmware(struct cxacru_data *instance,
++				char *phase, const struct firmware **fw_p)
+ {
+-	int ret;
++	struct usbatm_data *usbatm = instance->usbatm;
++	struct device *dev = &usbatm->usb_intf->dev;
++	char buf[16];
 +
-+	movel	%a0@(Lconsole_struct_cur_column),%d0
-+	addql	#1,%d0
-+	movel	%d0,%a0@(Lconsole_struct_cur_column)	/* Update cursor pos */
-+	movel	%a0@(Lconsole_struct_num_columns),%d1
-+	cmpl	%d1,%d0
-+	jcs	L(console_exit)
-+	console_putc	#'\n'		/* Line wrap using tail recursion */
++	sprintf(buf, "cxacru-%s.bin", phase);
++	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
 +
- L(console_exit):
- func_return	console_putc
++	if (request_firmware(fw_p, buf, dev)) {
++		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
++		return -ENOENT;
++	}
++
++	usb_info(usbatm, "found firmware %s\n", buf);
++
++	return 0;
++}
++
++static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
++			     struct usb_interface *usb_intf)
++{
++	const struct firmware *fw, *bp;
++	struct cxacru_data *instance = usbatm_instance->driver_data;
+ 	struct usbatm_data *usbatm = instance->usbatm;
+ 	struct usb_device *usb_dev = usbatm->usb_dev;
+ 	__le16 signature[] = { usb_dev->descriptor.idVendor,
+ 			       usb_dev->descriptor.idProduct };
+ 	__le32 val;
++	int ret;
++
++	ret = cxacru_find_firmware(instance, "fw", &fw);
++	if (ret) {
++		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
++		return ret;
++	}
  
+-	usb_dbg(usbatm, "%s\n", __func__);
++	if (instance->modem_type->boot_rom_patch) {
++		ret = cxacru_find_firmware(instance, "bp", &bp);
++		if (ret) {
++			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
++			release_firmware(fw);
++			return ret;
++		}
++	}
+ 
+ 	/* FirmwarePllFClkValue */
+ 	val = cpu_to_le32(instance->modem_type->pll_f_clk);
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLFCLK_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "FirmwarePllFClkValue failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* FirmwarePllBClkValue */
+@@ -1006,7 +1041,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, PLLBCLK_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "FirmwarePllBClkValue failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Enable SDRAM */
+@@ -1014,7 +1049,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SDRAMEN_ADDR, (u8 *) &val, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "Enable SDRAM failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Firmware */
+@@ -1022,7 +1057,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, FW_ADDR, fw->data, fw->size);
+ 	if (ret) {
+ 		usb_err(usbatm, "Firmware upload failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Boot ROM patch */
+@@ -1031,7 +1066,7 @@ static void cxacru_upload_firmware(struc
+ 		ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, BR_ADDR, bp->data, bp->size);
+ 		if (ret) {
+ 			usb_err(usbatm, "Boot ROM patching failed: %d\n", ret);
+-			return;
++			goto done;
+ 		}
+ 	}
+ 
+@@ -1039,7 +1074,7 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_fw(usb_dev, FW_WRITE_MEM, 0x2, 0x0, SIG_ADDR, (u8 *) signature, 4);
+ 	if (ret) {
+ 		usb_err(usbatm, "Signature storing failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	usb_info(usbatm, "starting device\n");
+@@ -1051,7 +1086,7 @@ static void cxacru_upload_firmware(struc
+ 	}
+ 	if (ret) {
+ 		usb_err(usbatm, "Passing control to firmware failed: %d\n", ret);
+-		return;
++		goto done;
+ 	}
+ 
+ 	/* Delay to allow firmware to start up. */
+@@ -1065,53 +1100,10 @@ static void cxacru_upload_firmware(struc
+ 	ret = cxacru_cm(instance, CM_REQUEST_CARD_GET_STATUS, NULL, 0, NULL, 0);
+ 	if (ret < 0) {
+ 		usb_err(usbatm, "modem failed to initialize: %d\n", ret);
+-		return;
+-	}
+-}
+-
+-static int cxacru_find_firmware(struct cxacru_data *instance,
+-				char *phase, const struct firmware **fw_p)
+-{
+-	struct usbatm_data *usbatm = instance->usbatm;
+-	struct device *dev = &usbatm->usb_intf->dev;
+-	char buf[16];
+-
+-	sprintf(buf, "cxacru-%s.bin", phase);
+-	usb_dbg(usbatm, "cxacru_find_firmware: looking for %s\n", buf);
+-
+-	if (request_firmware(fw_p, buf, dev)) {
+-		usb_dbg(usbatm, "no stage %s firmware found\n", phase);
+-		return -ENOENT;
++		goto done;
+ 	}
+ 
+-	usb_info(usbatm, "found firmware %s\n", buf);
+-
+-	return 0;
+-}
+-
+-static int cxacru_heavy_init(struct usbatm_data *usbatm_instance,
+-			     struct usb_interface *usb_intf)
+-{
+-	const struct firmware *fw, *bp;
+-	struct cxacru_data *instance = usbatm_instance->driver_data;
+-	int ret = cxacru_find_firmware(instance, "fw", &fw);
+-
+-	if (ret) {
+-		usb_warn(usbatm_instance, "firmware (cxacru-fw.bin) unavailable (system misconfigured?)\n");
+-		return ret;
+-	}
+-
+-	if (instance->modem_type->boot_rom_patch) {
+-		ret = cxacru_find_firmware(instance, "bp", &bp);
+-		if (ret) {
+-			usb_warn(usbatm_instance, "boot ROM patch (cxacru-bp.bin) unavailable (system misconfigured?)\n");
+-			release_firmware(fw);
+-			return ret;
+-		}
+-	}
+-
+-	cxacru_upload_firmware(instance, fw, bp);
+-
++done:
+ 	if (instance->modem_type->boot_rom_patch)
+ 		release_firmware(bp);
+ 	release_firmware(fw);
 
 
