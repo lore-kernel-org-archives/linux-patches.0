@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125A134AB0C;
-	Tue, 26 Aug 2025 13:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E93334AB1A;
+	Tue, 26 Aug 2025 13:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216027; cv=none; b=bTy8ZlNYMFOA77ncwoBQX8QEaT7LIppXagRQrKkF+Y1kHc3jSoSK505uvcVmNylWZhmhzMXRSuxRLwKgpiFhg0yI7oXThl/q0k0maLRy8E+q/CT/wOQ8Y4krJQyxOoWy0FS25Wdge1vDUxHnBWp3Fh1eoRDMddCl7Gxr3Tu28FM=
+	t=1756216029; cv=none; b=EvqaUkACBb1RSZB46ct0zj+HFqzxryI7sRGdcnMlkNtv8UNlN4/g8jaPkPSzR+IkQtr9I2/yy84THIqYyXFwEZ3jAAJTzxt2WxT0IUksCArLJZE29q5+NhbWtkJys2OteWppq/douRLkXGlsZWBXt+wM8Lt72nxKPwiV8972BJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216027; c=relaxed/simple;
-	bh=HAjiWDkJU2DVOJh3Pwf+AACOHaiEa3vRgflXi8Ysyyg=;
+	s=arc-20240116; t=1756216029; c=relaxed/simple;
+	bh=DCGXnjKUhelud1dQc0dDNAp5elm9QF/qKrI03VznD4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIPctDOaUdCC3yferWfEjlqGXaU9LFDXGQRRhv4KMdaniM7QAgFFTzhFDLthi+9s04sBjMUA/cPhHxU9evwvd3XOYxpTl2D65txdwh/iCZpZRYIm1gQGG9FMHyIZsjhcIAsHCWerHzURoKqpNAj0NYrEilYmUrC9/fqgavUSY1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEWsv2Rg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDQnA5H6qV9hqBI1MCxfPtdPKJ/vKLNdBEGcwgIx670HFUobt4/SAeZZ5YYLQJ+VRSE832l505Lod2TlKRwmisgmh8y06wAe9sXgCda439JfNJjdOi23ckir4WN3ptuyGruT1h5Ajb8FNujhnA3VDfY24mN2Ot9XFaRTbG9riEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AczwIe03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEWsv2Rg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7DAC4CEF1;
-	Tue, 26 Aug 2025 13:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AczwIe03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8EDC4CEF1;
+	Tue, 26 Aug 2025 13:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216026;
-	bh=HAjiWDkJU2DVOJh3Pwf+AACOHaiEa3vRgflXi8Ysyyg=;
+	s=korg; t=1756216029;
+	bh=DCGXnjKUhelud1dQc0dDNAp5elm9QF/qKrI03VznD4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEWsv2RgXCvvAdC8htMING1vsiwoMDC1ltPnnOHdIJ/K7gnK2qg466bw/TIjhyG/U
-	 17//dwm7U3EyGzFFl95PrZ48K/gjmQcWYfS1H1cVhjJQIFRSoNlfhtVjiebR36T0Ig
-	 W05PBvQBKFBKKDVIldr0kSK3CqpJJMcRydorRRaA=
+	b=AczwIe03Vs7dnX9YKK/UC9OeUwtkNDYGYPfXhqS2m54m39lc/4wFtrFvwuyPb5Llw
+	 5DBmSUKKQCUqlg7FFvbaCjAtquC+YrmNE+CrBLF0jPxd7qffaNPvVH5e2RAOx2mvg5
+	 bXpbQT8gBKl2LXsJZRgo1zcCBV7txoWXsOHHiL70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nborisov@suse.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/644] XArray: Add calls to might_alloc()
-Date: Tue, 26 Aug 2025 13:05:20 +0200
-Message-ID: <20250826110952.089712134@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Bill Wendling <morbo@google.com>,
+	Jerome Glisse <jglisse@redhat.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 256/644] mm/hmm: move pmd_to_hmm_pfn_flags() to the respective #ifdeffery
+Date: Tue, 26 Aug 2025 13:05:47 +0200
+Message-ID: <20250826110952.726120849@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,159 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1dd685c414a7b9fdb3d23aca3aedae84f0b998ae ]
+commit 188cb385bbf04d486df3e52f28c47b3961f5f0c0 upstream.
 
-Catch bogus GFP flags deterministically, instead of occasionally
-when we actually have to allocate memory.
+When pmd_to_hmm_pfn_flags() is unused, it prevents kernel builds with
+clang, `make W=1` and CONFIG_TRANSPARENT_HUGEPAGE=n:
 
-Reported-by: Nikolay Borisov <nborisov@suse.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Stable-dep-of: 99765233ab42 ("NFS: Fixup allocation flags for nfsiod's __GFP_NORETRY")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  mm/hmm.c:186:29: warning: unused function 'pmd_to_hmm_pfn_flags' [-Wunused-function]
+
+Fix this by moving the function to the respective existing ifdeffery
+for its the only user.
+
+See also:
+
+  6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
+
+Link: https://lkml.kernel.org/r/20250710082403.664093-1-andriy.shevchenko@linux.intel.com
+Fixes: 992de9a8b751 ("mm/hmm: allow to mirror vma of a file on a DAX backed filesystem")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Jerome Glisse <jglisse@redhat.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/xarray.h         | 15 +++++++++++++++
- tools/include/linux/sched/mm.h |  2 ++
- 2 files changed, 17 insertions(+)
+ mm/hmm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/xarray.h b/include/linux/xarray.h
-index a91e3d90df8a..549f222a2a6f 100644
---- a/include/linux/xarray.h
-+++ b/include/linux/xarray.h
-@@ -15,6 +15,7 @@
- #include <linux/kconfig.h>
- #include <linux/kernel.h>
- #include <linux/rcupdate.h>
-+#include <linux/sched/mm.h>
- #include <linux/spinlock.h>
- #include <linux/types.h>
+--- a/mm/hmm.c
++++ b/mm/hmm.c
+@@ -173,6 +173,7 @@ static inline unsigned long hmm_pfn_flag
+ 	return order << HMM_PFN_ORDER_SHIFT;
+ }
  
-@@ -585,6 +586,7 @@ static inline void *xa_store_bh(struct xarray *xa, unsigned long index,
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static inline unsigned long pmd_to_hmm_pfn_flags(struct hmm_range *range,
+ 						 pmd_t pmd)
  {
- 	void *curr;
+@@ -183,7 +184,6 @@ static inline unsigned long pmd_to_hmm_p
+ 	       hmm_pfn_flags_order(PMD_SHIFT - PAGE_SHIFT);
+ }
  
-+	might_alloc(gfp);
- 	xa_lock_bh(xa);
- 	curr = __xa_store(xa, index, entry, gfp);
- 	xa_unlock_bh(xa);
-@@ -611,6 +613,7 @@ static inline void *xa_store_irq(struct xarray *xa, unsigned long index,
- {
- 	void *curr;
- 
-+	might_alloc(gfp);
- 	xa_lock_irq(xa);
- 	curr = __xa_store(xa, index, entry, gfp);
- 	xa_unlock_irq(xa);
-@@ -686,6 +689,7 @@ static inline void *xa_cmpxchg(struct xarray *xa, unsigned long index,
- {
- 	void *curr;
- 
-+	might_alloc(gfp);
- 	xa_lock(xa);
- 	curr = __xa_cmpxchg(xa, index, old, entry, gfp);
- 	xa_unlock(xa);
-@@ -713,6 +717,7 @@ static inline void *xa_cmpxchg_bh(struct xarray *xa, unsigned long index,
- {
- 	void *curr;
- 
-+	might_alloc(gfp);
- 	xa_lock_bh(xa);
- 	curr = __xa_cmpxchg(xa, index, old, entry, gfp);
- 	xa_unlock_bh(xa);
-@@ -740,6 +745,7 @@ static inline void *xa_cmpxchg_irq(struct xarray *xa, unsigned long index,
- {
- 	void *curr;
- 
-+	might_alloc(gfp);
- 	xa_lock_irq(xa);
- 	curr = __xa_cmpxchg(xa, index, old, entry, gfp);
- 	xa_unlock_irq(xa);
-@@ -769,6 +775,7 @@ static inline int __must_check xa_insert(struct xarray *xa,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock(xa);
- 	err = __xa_insert(xa, index, entry, gfp);
- 	xa_unlock(xa);
-@@ -798,6 +805,7 @@ static inline int __must_check xa_insert_bh(struct xarray *xa,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock_bh(xa);
- 	err = __xa_insert(xa, index, entry, gfp);
- 	xa_unlock_bh(xa);
-@@ -827,6 +835,7 @@ static inline int __must_check xa_insert_irq(struct xarray *xa,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock_irq(xa);
- 	err = __xa_insert(xa, index, entry, gfp);
- 	xa_unlock_irq(xa);
-@@ -856,6 +865,7 @@ static inline __must_check int xa_alloc(struct xarray *xa, u32 *id,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock(xa);
- 	err = __xa_alloc(xa, id, entry, limit, gfp);
- 	xa_unlock(xa);
-@@ -885,6 +895,7 @@ static inline int __must_check xa_alloc_bh(struct xarray *xa, u32 *id,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock_bh(xa);
- 	err = __xa_alloc(xa, id, entry, limit, gfp);
- 	xa_unlock_bh(xa);
-@@ -914,6 +925,7 @@ static inline int __must_check xa_alloc_irq(struct xarray *xa, u32 *id,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock_irq(xa);
- 	err = __xa_alloc(xa, id, entry, limit, gfp);
- 	xa_unlock_irq(xa);
-@@ -947,6 +959,7 @@ static inline int xa_alloc_cyclic(struct xarray *xa, u32 *id, void *entry,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock(xa);
- 	err = __xa_alloc_cyclic(xa, id, entry, limit, next, gfp);
- 	xa_unlock(xa);
-@@ -980,6 +993,7 @@ static inline int xa_alloc_cyclic_bh(struct xarray *xa, u32 *id, void *entry,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock_bh(xa);
- 	err = __xa_alloc_cyclic(xa, id, entry, limit, next, gfp);
- 	xa_unlock_bh(xa);
-@@ -1013,6 +1027,7 @@ static inline int xa_alloc_cyclic_irq(struct xarray *xa, u32 *id, void *entry,
- {
- 	int err;
- 
-+	might_alloc(gfp);
- 	xa_lock_irq(xa);
- 	err = __xa_alloc_cyclic(xa, id, entry, limit, next, gfp);
- 	xa_unlock_irq(xa);
-diff --git a/tools/include/linux/sched/mm.h b/tools/include/linux/sched/mm.h
-index c8d9f19c1f35..967294b8edcf 100644
---- a/tools/include/linux/sched/mm.h
-+++ b/tools/include/linux/sched/mm.h
-@@ -1,4 +1,6 @@
- #ifndef _TOOLS_PERF_LINUX_SCHED_MM_H
- #define _TOOLS_PERF_LINUX_SCHED_MM_H
- 
-+#define might_alloc(gfp)	do { } while (0)
-+
- #endif  /* _TOOLS_PERF_LINUX_SCHED_MM_H */
--- 
-2.39.5
-
+-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ static int hmm_vma_handle_pmd(struct mm_walk *walk, unsigned long addr,
+ 			      unsigned long end, unsigned long hmm_pfns[],
+ 			      pmd_t pmd)
 
 
