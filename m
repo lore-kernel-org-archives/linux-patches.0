@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3F51F1534;
-	Tue, 26 Aug 2025 12:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296921E51E1;
+	Tue, 26 Aug 2025 12:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213011; cv=none; b=KdJBoD6j/xPHnianRg7Uu2P6o8yidLS8hrOB9vuMVCOHOnA2Y3Avw4uJO5Vb4WOhU7m3iSexnKZbBT4/i7YNFuw1BepmkeVfKyLaWVYZ1rhSW2kdWO7XwDVo3kTl9KA4oK7QVMtIGfq8OCQFYT1SkjFDZZTagN/6xZeE/tpFryA=
+	t=1756213014; cv=none; b=pLOGHBihXEWW5mXUFBlrSt6WzaRGSqsmxuD7XYIegtjRZxIScYH5WKfgkwn6ZdiqMJTIxdJul1QelrLyaDbkhBuPL6dScw/dVBV6i5h09d5REtXE/3DEHm8izdEjeaFuqF9ArPTEAVArFvee2WdCG2TqLyFlH36AexQlyJYRmBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213011; c=relaxed/simple;
-	bh=EbPS1fczFAqZscfSbt9v4jh1T/otaUSpo0zGKIR/ENI=;
+	s=arc-20240116; t=1756213014; c=relaxed/simple;
+	bh=7Xs6hza05cEWjxsHnGRj6A8rXhuXWW83+Z9zeRrqEmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgQO3Z7sDFkl0xNRteDf4njRsDwdjAX6HAtYrtUMgJ7l7iW4ovN7W291j6YGwS8yChI9UxtYKnfqHR4dwpPK1faFUx78NBweR6RfUnh42SMkdxIhohgmKi2UUGlNaZr8ROtMKMxXTgS3h757USAyrddgEb+sZlyMYagqfLyb4HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkmgAiYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzOf1aPlyj0Oj0vnAiSzRHOZR5z3fJUSkc77NwWFt4tq3QJLy2ygM1/loHfmwwx/Zjsly5wllvm6TUskdsGDanhrjmX/jjVsgXImGR7uOQNeZY2d1xcig4ndCn4ERShs1tnsCqiZAUk2W2AOjhP0OHjdXpld8aF1ih74xaC0COA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ml3S06ei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkmgAiYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CAEC116B1;
-	Tue, 26 Aug 2025 12:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ml3S06ei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE74C113CF;
+	Tue, 26 Aug 2025 12:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213011;
-	bh=EbPS1fczFAqZscfSbt9v4jh1T/otaUSpo0zGKIR/ENI=;
+	s=korg; t=1756213014;
+	bh=7Xs6hza05cEWjxsHnGRj6A8rXhuXWW83+Z9zeRrqEmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkmgAiYlKxjyRjTiV7m0+lfJ6RkGedHm6o/sz37rrxRYzLSyUnogVw5VY5XV+5wQJ
-	 Ooa+J4wWYuXZOtyVfJCaR6aMOEsmAIB/7CkDyHHsD8XOclowemS9MPRvfT96axgdNv
-	 dFTv/nlo2R4pkaqdpZq+4d7hE7elqlCruVEPL8kQ=
+	b=ml3S06ei63P9Zmd08X2gQCXTARGNuOncNRRTVVLMowirkYel9+I+mt4sw2JDNNSD4
+	 kChrcyw1Bor3eDhUmtbypfWbHlVqzq4jV3hSBjkwkTSCz4gDMj/6/VGJVYGl4SBlgD
+	 8Xn7DoU+2T+7zSsw1x0oznou5MhQtpWuISCrgBek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 186/587] wifi: ath12k: Enable REO queue lookup table feature on QCN9274 hw2.0
-Date: Tue, 26 Aug 2025 13:05:35 +0200
-Message-ID: <20250826110957.674015804@linuxfoundation.org>
+Subject: [PATCH 6.6 158/587] net: phy: micrel: Add ksz9131_resume()
+Date: Tue, 26 Aug 2025 13:05:07 +0200
+Message-ID: <20250826110956.968003369@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,41 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit b79742b84e16e41c4a09f3126436f39f36e75c06 ]
+[ Upstream commit f25a7eaa897f21396e99f90809af82ca553c9d14 ]
 
-The commit 89ac53e96217 ("wifi: ath12k: Enable REO queue lookup table
-feature on QCN9274") originally intended to enable the reoq_lut_support
-hardware parameter flag for both QCN9274 hw1.0 and hw2.0. However,
-it enabled it only for QCN9274 hw1.0.
+The Renesas RZ/G3E SMARC EVK uses KSZ9131RNXC phy. On deep power state,
+PHY loses the power and on wakeup the rgmii delays are not reconfigured
+causing it to fail.
 
-Hence, enable REO queue lookup table feature on QCN9274 hw2.0.
+Replace the callback kszphy_resume()->ksz9131_resume() for reconfiguring
+the rgmii_delay when it exits from PM suspend state.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250609-qcn9274-reoq-v1-1-a92c91abc9b9@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250711054029.48536-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/hw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/micrel.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/hw.c b/drivers/net/wireless/ath/ath12k/hw.c
-index dafd7c34d746..97ed179be228 100644
---- a/drivers/net/wireless/ath/ath12k/hw.c
-+++ b/drivers/net/wireless/ath/ath12k/hw.c
-@@ -1002,7 +1002,7 @@ static const struct ath12k_hw_params ath12k_hw_params[] = {
- 		.download_calib = true,
- 		.supports_suspend = false,
- 		.tcl_ring_retry = true,
--		.reoq_lut_support = false,
-+		.reoq_lut_support = true,
- 		.supports_shadow_regs = false,
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index d4017c442201..6a114883ed8c 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -4722,6 +4722,14 @@ static int lan8841_suspend(struct phy_device *phydev)
+ 	return genphy_suspend(phydev);
+ }
  
- 		.hal_desc_sz = sizeof(struct hal_rx_desc_qcn9274),
++static int ksz9131_resume(struct phy_device *phydev)
++{
++	if (phydev->suspended && phy_interface_is_rgmii(phydev))
++		ksz9131_config_rgmii_delay(phydev);
++
++	return kszphy_resume(phydev);
++}
++
+ static struct phy_driver ksphy_driver[] = {
+ {
+ 	.phy_id		= PHY_ID_KS8737,
+@@ -4968,7 +4976,7 @@ static struct phy_driver ksphy_driver[] = {
+ 	.get_strings	= kszphy_get_strings,
+ 	.get_stats	= kszphy_get_stats,
+ 	.suspend	= kszphy_suspend,
+-	.resume		= kszphy_resume,
++	.resume		= ksz9131_resume,
+ 	.cable_test_start	= ksz9x31_cable_test_start,
+ 	.cable_test_get_status	= ksz9x31_cable_test_get_status,
+ 	.get_features	= ksz9477_get_features,
 -- 
 2.39.5
 
