@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A38C1C54A9;
-	Tue, 26 Aug 2025 12:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9362C17A303;
+	Tue, 26 Aug 2025 12:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213072; cv=none; b=I2ql74wP7g/5Bchm6Yg1XjpR/8EFFavUdDTwn90PHyeq9tfRHl4TiDcYWczEnqLDnAcbyA/+lKzwzTJKZORoRfBrxywhcgSDgXyCfZS57TdbAGreOaN1/Et7vbEMf/0l0spVZDFYuP2/Lsrtm/VTqHWOhlbGfe1AVy8fsMHB7G4=
+	t=1756213074; cv=none; b=RqkPyiTRZECLueWd09PNG9bS8zwywW0JCrDwRP3uXB/URwaIWKxJrSPnbhTNYrjwNQnuRLLxV8bDjvm38VAIg6wXeVeVQLnyS8E/ylHA1SBccvnGsH1C83ojtnCH39dgzaCxazVdbSMTAEXRnkStNkPWT1sbk2YPHtdWDh7xlbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213072; c=relaxed/simple;
-	bh=hOkVl3HO0QM8p+sQ6QA1vaU0spbDdcnc7dua39ZNEWQ=;
+	s=arc-20240116; t=1756213074; c=relaxed/simple;
+	bh=rJRoroA7T0hbpHaWvS4Vqfe4ozF9LkxUL5h9EFTaV8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGG4tUUZVBKHi5MRZiep+aUlsGLrS/WK2k/yxIhbhij31BKttXo7JDZVTUz2f3p24eFputm+OhyhdqOYRHrU5Tnh6PYbT+eDnGM8a+afSEiSsL3wHvMntdLIPUUy1D91IHr2h17Ri/HcakPlsIvpC4cW2Hy4aCYBFPekEiRc+aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mt+7tXHv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bICVVeet9UDbArGwi+/A+w0KbMwjUcf6kdlXKSeJ2QfhojpD/1UZ17aR+7Iy4SwhIMi41HJC4b34Q2WaInYc2p3tK9estTpUtDkhNSc0XYDADPerz9nEbLRbexr5jQqbswZjM4cN00Tph/zew430GW3qwbUMMxpGoGE+NUyYIAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlGj321e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mt+7tXHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814F0C4CEF1;
-	Tue, 26 Aug 2025 12:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlGj321e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220E1C4CEF4;
+	Tue, 26 Aug 2025 12:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213071;
-	bh=hOkVl3HO0QM8p+sQ6QA1vaU0spbDdcnc7dua39ZNEWQ=;
+	s=korg; t=1756213074;
+	bh=rJRoroA7T0hbpHaWvS4Vqfe4ozF9LkxUL5h9EFTaV8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mt+7tXHv9I23kIV4PkRdh8CNMCo3a0jcF4VLjYJTneplXaFV5iTHIB71K0ns1jc5Y
-	 FN2Ic9vlAIeBdu6zqjH7YqHpbUvYkUdC/wxaWY1oBt6s9he/OmcocjBG9puVZUTCWQ
-	 7xrYwkNhJr230FKHvSeXBE/1rbwhCZkKF9U+O9aw=
+	b=TlGj321eKoZ/NmR6nk+v4giIaC57hu813+kvh2xj9AVILnIiOk75Dp7Gn0rvR4kwD
+	 lZCVu04UDLoyuvWtyi9F1I44rdby0DijTz+Eg+RTVxi80yb8+vJpgCNo1P+qgU6H+e
+	 Rk3lgCINqV8DKkOwnduZ1RvJXDPXgcQYgpKShwJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 210/587] selftests/bpf: Fix a user_ringbuf failure with arm64 64KB page size
-Date: Tue, 26 Aug 2025 13:05:59 +0200
-Message-ID: <20250826110958.279756911@linuxfoundation.org>
+Subject: [PATCH 6.6 211/587] drm/amd/display: Avoid trying AUX transactions on disconnected ports
+Date: Tue, 26 Aug 2025 13:06:00 +0200
+Message-ID: <20250826110958.305311045@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,57 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit bbc7bd658ddc662083639b9e9a280b90225ecd9a ]
+[ Upstream commit deb24e64c8881c462b29e2c69afd9e6669058be5 ]
 
-The ringbuf max_entries must be PAGE_ALIGNED. See kernel function
-ringbuf_map_alloc(). So for arm64 64KB page size, adjust max_entries
-properly.
+[Why & How]
+Observe that we try to access DPCD 0x600h of disconnected DP ports.
+In order not to wasting time on retrying these ports, call
+dpcd_write_rx_power_ctrl() after checking its connection status.
 
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20250607013626.1553001-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/user_ringbuf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-index dfff6feac12c..7e9a508c1571 100644
---- a/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-@@ -21,8 +21,7 @@
- #include "../progs/test_user_ringbuf.h"
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 9b470812d96a..2ce2d9ff7568 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -137,7 +137,8 @@ void link_blank_dp_stream(struct dc_link *link, bool hw_init)
+ 				}
+ 		}
  
- static const long c_sample_size = sizeof(struct sample) + BPF_RINGBUF_HDR_SZ;
--static const long c_ringbuf_size = 1 << 12; /* 1 small page */
--static const long c_max_entries = c_ringbuf_size / c_sample_size;
-+static long c_ringbuf_size, c_max_entries;
- 
- static void drain_current_samples(void)
- {
-@@ -424,7 +423,9 @@ static void test_user_ringbuf_loop(void)
- 	uint32_t remaining_samples = total_samples;
- 	int err;
- 
--	BUILD_BUG_ON(total_samples <= c_max_entries);
-+	if (!ASSERT_LT(c_max_entries, total_samples, "compare_c_max_entries"))
-+		return;
-+
- 	err = load_skel_create_user_ringbuf(&skel, &ringbuf);
- 	if (err)
- 		return;
-@@ -686,6 +687,9 @@ void test_user_ringbuf(void)
- {
- 	int i;
- 
-+	c_ringbuf_size = getpagesize(); /* 1 page */
-+	c_max_entries = c_ringbuf_size / c_sample_size;
-+
- 	for (i = 0; i < ARRAY_SIZE(success_tests); i++) {
- 		if (!test__start_subtest(success_tests[i].test_name))
- 			continue;
+-		if ((!link->wa_flags.dp_keep_receiver_powered) || hw_init)
++		if (((!link->wa_flags.dp_keep_receiver_powered) || hw_init) &&
++			(link->type != dc_connection_none))
+ 			dpcd_write_rx_power_ctrl(link, false);
+ 	}
+ }
 -- 
 2.39.5
 
