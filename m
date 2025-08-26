@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A787D2BEFF0;
-	Tue, 26 Aug 2025 11:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD7B33CE96;
+	Tue, 26 Aug 2025 11:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207180; cv=none; b=h0Zkf696ZSmLQLOP/WxKKLC5zzzVO0IJoN0WHtbIougxW3kQynoa2hwwDBUTMzW/BcBJA4qgZcxum3TBvJmM2jUiXIiOwG3ZgmslR+GDTkELOoLIGCXChSL3Tx2C6m+cL0DFT/i6WdIxY0Xi+cqFTzD0spFUDtrW43eZ32kJWXo=
+	t=1756207183; cv=none; b=fhM6AdS0GVFwQpzLlrk93JBXspxQB5yaQpdgdp5tBWw9mnfS2K7Yo7O/nz+CL0wjLXNM92V+8uZTbZNnVHkAIpZma6V1szzoBKbMQrojAIqaPLxPnBFc4rIFfnqgtDD+cqguABJDsfXtiJO1vsSRHAtfu4S4C9/sZ45XXlf8ASc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207180; c=relaxed/simple;
-	bh=+te3wUcVN1xl0NNHoFl95s6dH7J/kfmCOlcbvHLz500=;
+	s=arc-20240116; t=1756207183; c=relaxed/simple;
+	bh=/oFWBYRPJJzc2UuOBtItuHHi7XHIIaglcUqZ9h/DLrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLC3iWHMfsVb23JW++M5CmOp5ftSlYmHXlMJACE0Q8b9zFRMLpikdc48u5UCi73GBeOgbYg+whLmURTrCs7xkCXJ4Jg8RlpSLc9weI6SWBxdGswi4bh/7OaFL1m5VA3cLgyMjko1vGZqZ/gWUBxYwa3Rs16TOkoEhZXsyY9sh8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAXCuQds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DcT6+U26M8lwtnrTBIfpJOJx4PukLXlw1iqHDBMm/KC8mFBz+Ss1XM4TDg8fGfh3yagpGJBHP0TLmRHXPQhYX6O8UedmEcmfUGqdK9EMl2dcxK2JrGBayremkwxaJAP2S3nDsUlr6uOFgY0gdzNKR80FbT72jb6syMjqsHBCwgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmEAKCup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAXCuQds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DE3C4CEF1;
-	Tue, 26 Aug 2025 11:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmEAKCup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB2EC4CEF1;
+	Tue, 26 Aug 2025 11:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207180;
-	bh=+te3wUcVN1xl0NNHoFl95s6dH7J/kfmCOlcbvHLz500=;
+	s=korg; t=1756207183;
+	bh=/oFWBYRPJJzc2UuOBtItuHHi7XHIIaglcUqZ9h/DLrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WAXCuQdsqAREAJ1HNr9cKY9sOrfJHhImZRRE0nA1Vt5A6JxdBJUrxemP8cncAMG0+
-	 CUZC57MoDDmApKxegsFznljqwUfiHcexoFaB4LGzadNupTAy1Mknaap1i14oZlBcg7
-	 BtqN4xXD9hO/no/lNY6S3moTaapCjgqmMTF4WlgI=
+	b=zmEAKCupRQg7VQQd4sc3fW88q3Ue9zQNAPoItVYlZ+3l1NN8GWBxMdsyRkjzlpP8t
+	 VlKdys3+okEWKzJ0pIKApJgvXPnH0uVyTRTNyxOxv5OaYTw9Wm3h58EgSlO7VgsKLz
+	 C90A5oabTGwg2saLPckvhD+4goXBSM6anVKZXwMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.16 050/457] arm64: dts: exynos7870-j6lte: reduce memory ranges to base amount
-Date: Tue, 26 Aug 2025 13:05:34 +0200
-Message-ID: <20250826110938.586086480@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 6.16 051/457] arm64: dts: ti: k3-pinctrl: Enable Schmitt Trigger by default
+Date: Tue, 26 Aug 2025 13:05:35 +0200
+Message-ID: <20250826110938.612511026@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,44 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 49a27c6c392dec46c826ee586f7ec8973acaeed7 upstream.
+commit 5b272127884bded21576a6ddceca13725a351c63 upstream.
 
-The device is available in multiple variants with differing RAM
-capacities. The memory range defined in the 0x80000000 bank exceeds the
-address range of the memory controller, which eventually leads to ARM
-SError crashes. Reduce the bank size to a value which is available to
-all devices.
+Switch Schmitt Trigger functions for PIN_INPUT* macros by default. This is
+HW PoR configuration, the slew rate requirements without ST enabled are
+pretty tough for these devices. We've noticed spurious GPIO interrupts even
+with noise-free edges but not meeting slew rate requirements (3.3E+6 V/s
+for 3.3v LVCMOS).
 
-The bootloader must be responsible for identifying the RAM capacity and
-editing the memory node accordingly.
+It's not obvious why one might want to disable the PoR-enabled ST on any
+pin. Just enable it by default. As it's not possible to provide OR-able
+macros to disable the ST, shall anyone require it, provide a set of
+new macros with _NOST suffix.
 
-Fixes: d6f3a7f91fdb ("arm64: dts: exynos: add initial devicetree support for exynos7870")
-Cc: stable@vger.kernel.org # v6.16
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Link: https://lore.kernel.org/r/20250626-exynos7870-dts-fixes-v1-3-349987874d9a@disroot.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: fe49f2d776f7 ("arm64: dts: ti: Use local header for pinctrl register values")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20250701105437.3539924-1-alexander.sverdlin@siemens.com
+[vigneshr@ti.com: Add Fixes tag]
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/exynos/exynos7870-j6lte.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-pinctrl.h |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/exynos/exynos7870-j6lte.dts b/arch/arm64/boot/dts/exynos/exynos7870-j6lte.dts
-index 61eec1aff32e..b8ce433b93b1 100644
---- a/arch/arm64/boot/dts/exynos/exynos7870-j6lte.dts
-+++ b/arch/arm64/boot/dts/exynos/exynos7870-j6lte.dts
-@@ -89,7 +89,7 @@
- 	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x40000000 0x3d800000>,
--		      <0x0 0x80000000 0x7d800000>;
-+		      <0x0 0x80000000 0x40000000>;
- 	};
+--- a/arch/arm64/boot/dts/ti/k3-pinctrl.h
++++ b/arch/arm64/boot/dts/ti/k3-pinctrl.h
+@@ -8,6 +8,7 @@
+ #ifndef DTS_ARM64_TI_K3_PINCTRL_H
+ #define DTS_ARM64_TI_K3_PINCTRL_H
  
- 	pwrseq_mmc1: pwrseq-mmc1 {
--- 
-2.50.1
-
++#define ST_EN_SHIFT		(14)
+ #define PULLUDEN_SHIFT		(16)
+ #define PULLTYPESEL_SHIFT	(17)
+ #define RXACTIVE_SHIFT		(18)
+@@ -19,6 +20,10 @@
+ #define DS_PULLUD_EN_SHIFT	(27)
+ #define DS_PULLTYPE_SEL_SHIFT	(28)
+ 
++/* Schmitt trigger configuration */
++#define ST_DISABLE		(0 << ST_EN_SHIFT)
++#define ST_ENABLE		(1 << ST_EN_SHIFT)
++
+ #define PULL_DISABLE		(1 << PULLUDEN_SHIFT)
+ #define PULL_ENABLE		(0 << PULLUDEN_SHIFT)
+ 
+@@ -32,9 +37,13 @@
+ #define PIN_OUTPUT		(INPUT_DISABLE | PULL_DISABLE)
+ #define PIN_OUTPUT_PULLUP	(INPUT_DISABLE | PULL_UP)
+ #define PIN_OUTPUT_PULLDOWN	(INPUT_DISABLE | PULL_DOWN)
+-#define PIN_INPUT		(INPUT_EN | PULL_DISABLE)
+-#define PIN_INPUT_PULLUP	(INPUT_EN | PULL_UP)
+-#define PIN_INPUT_PULLDOWN	(INPUT_EN | PULL_DOWN)
++#define PIN_INPUT		(INPUT_EN | ST_ENABLE | PULL_DISABLE)
++#define PIN_INPUT_PULLUP	(INPUT_EN | ST_ENABLE | PULL_UP)
++#define PIN_INPUT_PULLDOWN	(INPUT_EN | ST_ENABLE | PULL_DOWN)
++/* Input configurations with Schmitt Trigger disabled */
++#define PIN_INPUT_NOST		(INPUT_EN | PULL_DISABLE)
++#define PIN_INPUT_PULLUP_NOST	(INPUT_EN | PULL_UP)
++#define PIN_INPUT_PULLDOWN_NOST	(INPUT_EN | PULL_DOWN)
+ 
+ #define PIN_DEBOUNCE_DISABLE	(0 << DEBOUNCE_SHIFT)
+ #define PIN_DEBOUNCE_CONF1	(1 << DEBOUNCE_SHIFT)
 
 
