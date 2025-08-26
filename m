@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2471494D9;
-	Tue, 26 Aug 2025 14:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623AE20DD51;
+	Tue, 26 Aug 2025 14:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218772; cv=none; b=ltyXQVgyu9/vohJB46AlPp0g54qs+QOXtIQBDju9NUd8rvKkAyRA3p5o8QoJHKF0YiA1Qc9iHaFzZ8rcEb4YlHUqH3xWDugBBLHaGrgspU7LapP1aduf2cvdxm4LyC2VZrlwvl82n3xNax8oZMFpHTmrZpVNmit9EHyITjA1uNc=
+	t=1756218775; cv=none; b=m2HhXmlEqFdw5chCxcj6kV1qjR5AvC2amGEV7HcurAHPWsSIU4LD8Y0bF8Uq8DLQ16c2VpD8zzkIMNI6JmD8p5vPuc+hk84JdUemE6l7BWy/cpnBHd31zHaigBau7J56kELcLkX0RKKZiKsKVdXQN0t6c3rnuuIQ+qybTuwhpV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218772; c=relaxed/simple;
-	bh=3fiiuEFcVzpPNebpTYkrFNrqz5VoWiEIqQUKTOKMZ/0=;
+	s=arc-20240116; t=1756218775; c=relaxed/simple;
+	bh=pipHSf7fOpqIUnBmCE+gVf3qKiDEUmqAUO7roc6Wqxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aymCAuxqQu8q1mHEZQxmqPLCXp2jmjFpdvDUuf5dW9RGwOcToUsMPZTBlussyTeqyFVDnltrDqkqPx8F+7p77IyOytAjjSjXxqOzjkStfRMgWqeAk1002jeCKQGHhQ+5w5zjisAOAgifErWn9OpVNxPnradeEEMzbHXslJUTakc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMmMOA4B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TEUnNxwyZABP3gLmsQ1fss6rgJfGs/hpSIAM6KLEuXw+BqfGxpuvHb+dkfhYSEOdliAuUKQqlEknuhXTu7scqGjGgQoyrUSDq7GUwx+gnV54aCIc2BTbCmkOuFwSDb0lC2M6JEzWtqbciKJu6iJlmPWZeLqpexxK7UdrCbhfOhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txJAPT8N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMmMOA4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57582C4CEF1;
-	Tue, 26 Aug 2025 14:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txJAPT8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8489C4CEF1;
+	Tue, 26 Aug 2025 14:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218772;
-	bh=3fiiuEFcVzpPNebpTYkrFNrqz5VoWiEIqQUKTOKMZ/0=;
+	s=korg; t=1756218775;
+	bh=pipHSf7fOpqIUnBmCE+gVf3qKiDEUmqAUO7roc6Wqxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMmMOA4B5bIQ9m1Pc4sYTMzvRBJKhSc2OllRJ767PjtitexCkB4NfOa/lkVJomGVo
-	 eszwdLFHwVQoFhm4bmhrC2T3bj2vM+vlXkup+i49O5vSvGvdJ/fI7odKzpn6Vuy0Jp
-	 Iel4ljTS3uoHXOZAGfXwJA13b2d0fUVkpvahUUE8=
+	b=txJAPT8NFInxIMrlweq/FUdTiRwEAWGkFzSQbmA5xytEhfrCyRyzJUROuw39rfOWJ
+	 McgTDJu5dqr+GxczxbGs5KHSbDe0DPiIruTcGf20p+1aBTbg40dOuoz/mUeuteznZq
+	 mt0O1Ps020rtChXHX/1HOZWwzYRDQVIYuCJ5MDsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zixun LI <admin@hifiphile.com>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/403] mtd: rawnand: atmel: set pmecc data setup time
-Date: Tue, 26 Aug 2025 13:07:34 +0200
-Message-ID: <20250826110910.276148401@linuxfoundation.org>
+Subject: [PATCH 5.4 129/403] bpf: Check flow_dissector ctx accesses are aligned
+Date: Tue, 26 Aug 2025 13:07:35 +0200
+Message-ID: <20250826110910.304043212@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,55 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit f552a7c7e0a14215cb8a6fd89e60fa3932a74786 ]
+[ Upstream commit ead3d7b2b6afa5ee7958620c4329982a7d9c2b78 ]
 
-Setup the pmecc data setup time as 3 clock cycles for 133MHz as recommended
-by the datasheet.
+flow_dissector_is_valid_access doesn't check that the context access is
+aligned. As a consequence, an unaligned access within one of the exposed
+field is considered valid and later rejected by
+flow_dissector_convert_ctx_access when we try to convert it.
 
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-Reported-by: Zixun LI <admin@hifiphile.com>
-Closes: https://lore.kernel.org/all/c015bb20-6a57-4f63-8102-34b3d83e0f5b@microchip.com
-Suggested-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Signed-off-by: Balamanikandan Gunasundar <balamanikandan.gunasundar@microchip.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+The later rejection is problematic because it's reported as a verifier
+bug with a kernel warning and doesn't point to the right instruction in
+verifier logs.
+
+Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
+Reported-by: syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ccac90e482b2a81d74aa
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/cc1b036be484c99be45eddf48bd78cc6f72839b1.1754039605.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/filter.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
-index d1ed5878b3b1..28ed65dd3d43 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -143,6 +143,7 @@ struct atmel_pmecc_caps {
- 	int nstrengths;
- 	int el_offset;
- 	bool correct_erased_chunks;
-+	bool clk_ctrl;
- };
+diff --git a/net/core/filter.c b/net/core/filter.c
+index e6ec6f013ec0..fd18497977bd 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7282,6 +7282,9 @@ static bool flow_dissector_is_valid_access(int off, int size,
+ 	if (off < 0 || off >= sizeof(struct __sk_buff))
+ 		return false;
  
- struct atmel_pmecc {
-@@ -846,6 +847,10 @@ static struct atmel_pmecc *atmel_pmecc_create(struct platform_device *pdev,
- 	if (IS_ERR(pmecc->regs.errloc))
- 		return ERR_CAST(pmecc->regs.errloc);
- 
-+	/* pmecc data setup time */
-+	if (caps->clk_ctrl)
-+		writel(PMECC_CLK_133MHZ, pmecc->regs.base + ATMEL_PMECC_CLK);
++	if (off % size != 0)
++		return false;
 +
- 	/* Disable all interrupts before registering the PMECC handler. */
- 	writel(0xffffffff, pmecc->regs.base + ATMEL_PMECC_IDR);
- 	atmel_pmecc_reset(pmecc);
-@@ -899,6 +904,7 @@ static struct atmel_pmecc_caps at91sam9g45_caps = {
- 	.strengths = atmel_pmecc_strengths,
- 	.nstrengths = 5,
- 	.el_offset = 0x8c,
-+	.clk_ctrl = true,
- };
+ 	if (type == BPF_WRITE)
+ 		return false;
  
- static struct atmel_pmecc_caps sama5d4_caps = {
 -- 
 2.39.5
 
