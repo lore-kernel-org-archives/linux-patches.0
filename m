@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770EF2F83C1;
-	Tue, 26 Aug 2025 11:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307A1299959;
+	Tue, 26 Aug 2025 11:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207239; cv=none; b=tfg3tUU0xBjz0Z1DiraUDxcDxGlC0Oo0aqT2bpTKTn3XPHzwckXwrZ/ccXWExF91NULeZpXnlaNnBob8mYf11iB+xoFnIKMMMDXQMJf8RGt5XhgTRaVW4dUm0bCuMhMojYtmtUsPszXUNjqxDpl50eA9qG4aNCKLZTU5ntHyqQA=
+	t=1756207242; cv=none; b=E/Kkdx7tCzVCX/rqxwdZXDWAoZ77BcTXGv/uJw91+o8QrMYC0Mki2S2d9kT/39QkuwCOxzEbHrBo4LisJgE3XVd0K5Vw4b50ELInKej+9lbkgZyWZqFvR5uB7UhEqcheSZ3BEJZ5HEFleRxKIV7JfyQbYa1blmwafECpzlekR6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207239; c=relaxed/simple;
-	bh=Qu37dA89Z1rTLHkH11U4P5sJro6VkYjjUWnBV6Q2qz4=;
+	s=arc-20240116; t=1756207242; c=relaxed/simple;
+	bh=O86CINMT6IcAx3oHREfSL0FNfc/OR8ehgAl9LaXoc28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvCpyg4XdqJS5FvWLAckanK+hjtfHm35t5ciGHE4T2HPgDJ9JSCGHwe4dDIMxsBbdcu78B2opGmqhiTzPvaQVkFMcVNi9LzLATyXKEjP129jT7IrCDuzw6osTnP7DEil/8V10fBXz0hiJ8pVnHmV7kmyMbsskxL9i+5KgH4zb7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKh9cm10; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOpVUmTayrTqupusC87ly6aKsNbYlzC0LZVw0kuogdzhbVNNltIKT+7tScRG202D5sHW9fp55TJ2QmTYMU0V1WnVukC7UxgU5bVItRAOXOI9vnUHoilKVHiMzicjwe82sQ5ruGGepXMj8QgXKTxkqfINxmYHPQLHYE80XWB4K/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W1hb/YS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKh9cm10"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08831C4CEF1;
-	Tue, 26 Aug 2025 11:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W1hb/YS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5CDC4CEF1;
+	Tue, 26 Aug 2025 11:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207239;
-	bh=Qu37dA89Z1rTLHkH11U4P5sJro6VkYjjUWnBV6Q2qz4=;
+	s=korg; t=1756207241;
+	bh=O86CINMT6IcAx3oHREfSL0FNfc/OR8ehgAl9LaXoc28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kKh9cm10lhglU2xFwHzHD277uyC6Wqb9/MWMVDdm66AiIu0FgtH4ta3564p1Jh+Tc
-	 tl/GQxdLzXK2A13WGflgK+5evQHRGVyb1oY09h41cLHlCNXjO27Ln3pEl53b5kyfXF
-	 LnXlnOTmpkWc074SU7pklrEaJ3I5rCnrg4R+Xt3g=
+	b=0W1hb/YSi74uKI/AJ44/o2NQHKiSACU+BZxZ2Ik5JsJeCG9M82chzAvzWpL1K5hf+
+	 06vq+NZuARCUizq+aDBCCt7gw85IRkzudyKTYbPLifFQ/PH4bzgFGL0iwDB7l4908Q
+	 TCPTNkLmFalPWe/zU9R9iVC6piSLDRrnRFZ7DLdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.16 104/457] PCI: imx6: Delay link start until configfs start written
-Date: Tue, 26 Aug 2025 13:06:28 +0200
-Message-ID: <20250826110939.946909758@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH 6.16 105/457] vsock/virtio: Validate length in packet header before skb_put()
+Date: Tue, 26 Aug 2025 13:06:29 +0200
+Message-ID: <20250826110939.970196259@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,44 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Will Deacon <will@kernel.org>
 
-commit 2e6ea70690ddd1ffa422423fd0d4523e4dfe4b62 upstream.
+commit 0dab92484474587b82e8e0455839eaf5ac7bf894 upstream.
 
-According to Documentation/PCI/endpoint/pci-endpoint-cfs.rst, the Endpoint
-controller (EPC) should only start the link when userspace writes '1' to
-the '/sys/kernel/config/pci_ep/controllers/<EPC>/start' attribute, which
-ultimately results in calling imx_pcie_start_link() via
-pci_epc_start_store().
+When receiving a vsock packet in the guest, only the virtqueue buffer
+size is validated prior to virtio_vsock_skb_rx_put(). Unfortunately,
+virtio_vsock_skb_rx_put() uses the length from the packet header as the
+length argument to skb_put(), potentially resulting in SKB overflow if
+the host has gone wonky.
 
-To align with the documented behavior, do not start the link automatically
-when adding the EP controller.
+Validate the length as advertised by the packet header before calling
+virtio_vsock_skb_rx_put().
 
-Fixes: 75c2f26da03f ("PCI: imx6: Add i.MX PCIe EP mode support")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: reworded commit subject and description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250709033722.2924372-3-hongxing.zhu@nxp.com
+Cc: <stable@vger.kernel.org>
+Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
+Signed-off-by: Will Deacon <will@kernel.org>
+Message-Id: <20250717090116.11987-3-will@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    3 ---
- 1 file changed, 3 deletions(-)
+ net/vmw_vsock/virtio_transport.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1468,9 +1468,6 @@ static int imx_add_pcie_ep(struct imx_pc
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -624,8 +624,9 @@ static void virtio_transport_rx_work(str
+ 	do {
+ 		virtqueue_disable_cb(vq);
+ 		for (;;) {
++			unsigned int len, payload_len;
++			struct virtio_vsock_hdr *hdr;
+ 			struct sk_buff *skb;
+-			unsigned int len;
  
- 	pci_epc_init_notify(ep->epc);
+ 			if (!virtio_transport_more_replies(vsock)) {
+ 				/* Stop rx until the device processes already
+@@ -642,11 +643,18 @@ static void virtio_transport_rx_work(str
+ 			vsock->rx_buf_nr--;
  
--	/* Start LTSSM. */
--	imx_pcie_ltssm_enable(dev);
--
- 	return 0;
- }
+ 			/* Drop short/long packets */
+-			if (unlikely(len < sizeof(struct virtio_vsock_hdr) ||
++			if (unlikely(len < sizeof(*hdr) ||
+ 				     len > virtio_vsock_skb_len(skb))) {
+ 				kfree_skb(skb);
+ 				continue;
+ 			}
++
++			hdr = virtio_vsock_hdr(skb);
++			payload_len = le32_to_cpu(hdr->len);
++			if (unlikely(payload_len > len - sizeof(*hdr))) {
++				kfree_skb(skb);
++				continue;
++			}
  
+ 			virtio_vsock_skb_rx_put(skb);
+ 			virtio_transport_deliver_tap_pkt(skb);
 
 
