@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489173376BD;
-	Tue, 26 Aug 2025 14:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4F635A2B2;
+	Tue, 26 Aug 2025 14:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219084; cv=none; b=gSujKlIWzGmhmMzlXr1DUPie0/1YpoMr5zvnUh01yzpDecKeS2gjJqsOyZkU64wbKf0kpzeN/3BXgOHloYcoFcrwX+eoiNBGk0jD6Y1PNZNTRCSOgIlW3H07KJmNrpcCNpFZ0ee5BL9jndyLIMYKz3L09H6mBbFHyRbzFZnJPPk=
+	t=1756219086; cv=none; b=MT0Ot5sZnoN5ifjLVQxu4dqyewOUaMRPqI4Dptm43EOdjBBVOM1YtlCM+sf5NtqfsxbZZTiLhSc06zkkWYpiYr02RkmK44rOB4fq9j7SLq0FDnnA3Eied6yUPOQffFOkTmyqjJHyBEdfI98y4KJHVtHX36ZSrkQYIM1UqJwRLDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219084; c=relaxed/simple;
-	bh=gcs6w5CRg7vjBIg2RgGqcmxAH+v2Trj15jLxYikUG1A=;
+	s=arc-20240116; t=1756219086; c=relaxed/simple;
+	bh=Ub+W8vgQctU/F9Tfi1eeIEJR2BwF/MtEFOZvVIO1qwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKh7RDpkwv0oGXq2npUFuhEuZCUCgPzjctMJjs8bA2tQSpNMbWjsUO+tv8ttD9r2faaGtLzPQ4g9H3KLxl/3Lr1G12xyUI+2HHlw+D32PBFmKTs78Ie6mskLUAqf/aLawf86Wa2GAVwdPVgvzrDDtCDjJkbh2mdfzKpQGmgBOlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLm7FBKf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7u7XK7F5JkTQB/J5Mtgv0Q4jr4zq6A1TYATy26oomcyuvNyHPpiEyEa/nzwN/QndxsemcMJxbll7m2Q1t9sue6M2uU4fgdT1VPoRNlbtcMBqTNV2Quwhe0ixiiUUWa5tvoAJQmgGQdXCAZ/28i1vXqNd064wbqdGOHmw2jnjdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrgxAMue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLm7FBKf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4B9C4CEF1;
-	Tue, 26 Aug 2025 14:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrgxAMue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1E4C113CF;
+	Tue, 26 Aug 2025 14:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219083;
-	bh=gcs6w5CRg7vjBIg2RgGqcmxAH+v2Trj15jLxYikUG1A=;
+	s=korg; t=1756219086;
+	bh=Ub+W8vgQctU/F9Tfi1eeIEJR2BwF/MtEFOZvVIO1qwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLm7FBKfHEunEtmKCJ6T2uy1Df7ooCp9yMfBcGKb19CFYjGWBfBJFPzWjy3nahM4B
-	 +GDm5tbKKVOa895hwKduINSm+A3UTyq1e2QEo3GGMu9pjDwbS9NSSp3SgOdj1X9aE1
-	 xbnQ1S+r1qnjvZj77vzaP/4qbXBCKi9xRrGJlvoQ=
+	b=lrgxAMue30J/tVMR2WbjhxWpNrF0/jjsWr9QSvI0iuejbMvYXTihkefmgyZV10Abc
+	 xsOTJzIVzvWXblIgUXU6nk1p1OcQrI1n2lHbqrwsm0FeOOvIoG9ykzl/WphOQWio0/
+	 YZr/0KLAz2E1Klajt95bASYUjR1KSTOcu8vHu9sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cheick Traore <cheick.traore@foss.st.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 219/403] net: fec: allow disable coalescing
-Date: Tue, 26 Aug 2025 13:09:05 +0200
-Message-ID: <20250826110912.884873322@linuxfoundation.org>
+Subject: [PATCH 5.4 246/403] pinctrl: stm32: Manage irq affinity settings
+Date: Tue, 26 Aug 2025 13:09:32 +0200
+Message-ID: <20250826110913.621034668@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,78 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Rebmann <jre@pengutronix.de>
+From: Cheick Traore <cheick.traore@foss.st.com>
 
-[ Upstream commit b7ad21258f9e9a7f58b19595d5ceed2cde3bed68 ]
+[ Upstream commit 4c5cc2f65386e22166ce006efe515c667aa075e4 ]
 
-In the current implementation, IP coalescing is always enabled and
-cannot be disabled.
+Trying to set the affinity of the interrupts associated to stm32
+pinctrl results in a write error.
 
-As setting maximum frames to 0 or 1, or setting delay to zero implies
-immediate delivery of single packets/IRQs, disable coalescing in
-hardware in these cases.
+Fill struct irq_chip::irq_set_affinity to use the default helper
+function.
 
-This also guarantees that coalescing is never enabled with ICFT or ICTT
-set to zero, a configuration that could lead to unpredictable behaviour
-according to i.MX8MP reference manual.
-
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20250626-fec_deactivate_coalescing-v2-1-0b217f2e80da@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cheick Traore <cheick.traore@foss.st.com>
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Link: https://lore.kernel.org/20250610143042.295376-3-antonio.borneo@foss.st.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 34 +++++++++++------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index fd7c504b44f2..f8a096633280 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -2590,27 +2590,25 @@ static int fec_enet_us_to_itr_clock(struct net_device *ndev, int us)
- static void fec_enet_itr_coal_set(struct net_device *ndev)
- {
- 	struct fec_enet_private *fep = netdev_priv(ndev);
--	int rx_itr, tx_itr;
-+	u32 rx_itr = 0, tx_itr = 0;
-+	int rx_ictt, tx_ictt;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 10595b43360b..2a9c2d94eb55 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -340,6 +340,7 @@ static struct irq_chip stm32_gpio_irq_chip = {
+ 	.irq_set_wake	= irq_chip_set_wake_parent,
+ 	.irq_request_resources = stm32_gpio_irq_request_resources,
+ 	.irq_release_resources = stm32_gpio_irq_release_resources,
++	.irq_set_affinity = IS_ENABLED(CONFIG_SMP) ? irq_chip_set_affinity_parent : NULL,
+ };
  
--	/* Must be greater than zero to avoid unpredictable behavior */
--	if (!fep->rx_time_itr || !fep->rx_pkts_itr ||
--	    !fep->tx_time_itr || !fep->tx_pkts_itr)
--		return;
--
--	/* Select enet system clock as Interrupt Coalescing
--	 * timer Clock Source
--	 */
--	rx_itr = FEC_ITR_CLK_SEL;
--	tx_itr = FEC_ITR_CLK_SEL;
-+	rx_ictt = fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr);
-+	tx_ictt = fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr);
- 
--	/* set ICFT and ICTT */
--	rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
--	rx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr));
--	tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
--	tx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr));
-+	if (rx_ictt > 0 && fep->rx_pkts_itr > 1) {
-+		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
-+		rx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
-+		rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
-+		rx_itr |= FEC_ITR_ICTT(rx_ictt);
-+	}
- 
--	rx_itr |= FEC_ITR_EN;
--	tx_itr |= FEC_ITR_EN;
-+	if (tx_ictt > 0 && fep->tx_pkts_itr > 1) {
-+		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
-+		tx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
-+		tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
-+		tx_itr |= FEC_ITR_ICTT(tx_ictt);
-+	}
- 
- 	writel(tx_itr, fep->hwp + FEC_TXIC0);
- 	writel(rx_itr, fep->hwp + FEC_RXIC0);
+ static int stm32_gpio_domain_translate(struct irq_domain *d,
 -- 
 2.39.5
 
