@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4960234166C;
-	Tue, 26 Aug 2025 13:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE08034AB1A;
+	Tue, 26 Aug 2025 13:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216410; cv=none; b=kzu4cDokqY9XSgjmfLJAE9+rfx8x+Lt0y+/FSOcjLloOG75w0WYGPdklbeA1PhmUibFfJlEZ464ddvHEcndOYABNsfdiGexuEmAMyoRhNYSNsqYTrpKDfwJFQAX4hsvQkmP+Pr2NCYaalED9oMyxwDLGs0+JWck37+X/GoWB/Pc=
+	t=1756216413; cv=none; b=VezpPzMtBi+XPZ11gZMIt7F0JhDRfMhwKoCZpPDRU2ogGHuzzq8l3AuZLgggW2OVoavk/L8MU9iaLHduXG/FE5OYv4bOo2ns/LRYB8yYbVrqfOsaOMjO299zLJgojIhY3btDJ6d7BJ2RUcmuAgMV/nlLYwwZzs6zq5R85vkWA6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216410; c=relaxed/simple;
-	bh=Zw3R4+0VR5QUyR/bB/lt18PHi+o97+8MGXQyt9Ynr5s=;
+	s=arc-20240116; t=1756216413; c=relaxed/simple;
+	bh=AThf7cOXpP1RPyvf8P7T7Z1d4Xeao3vhROfzpC0cZ0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnJRI4ybuF7B4f+ndQuGBsdtxGPyaybvxAvJkBTo/8HmIm2ju2G3xn8qDO3RbU3P2Za70/oXuLO1x24OAjvxGHnIifmnfo+a12q0aKoE6eh6A2rzbwQpPh54oqTemfeSC1E+uw1BvA33PPrLZZaGk70lnMesXuYiTgciryLdSMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0I3UIDx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5a33e3AbWhtsUMeRgMKwoRkzbKdoN3uOe0zdtFqTkXb5rgkkwlAh5tgqvYvTPGLR8aSSeFWbwhecFbDDBLiOxVt4vTnDvm5CnIvMnH5nuklNvA86R7ds0mRNC1yl+ZklKK0diOfebOLqGISrcSHSh0HWcDCD6RZ10SX6Ah4caM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0jWEkt5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0I3UIDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B16C4CEF1;
-	Tue, 26 Aug 2025 13:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0jWEkt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B89CC4CEF1;
+	Tue, 26 Aug 2025 13:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216410;
-	bh=Zw3R4+0VR5QUyR/bB/lt18PHi+o97+8MGXQyt9Ynr5s=;
+	s=korg; t=1756216412;
+	bh=AThf7cOXpP1RPyvf8P7T7Z1d4Xeao3vhROfzpC0cZ0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0I3UIDxKK1RNj9fe9uNZXFDYJE+cMNMb7wcJ9/uHnAyxtagC1MDIRgXEoGU7AQNN
-	 Zi0TndRA3OkmcObsk3WqK7MmxSz7l7j5p2W5IdVnqcIsHtcxY++VXoddswUoSP29f/
-	 s/ltm/zTlspzLtwyBO8iZhffuch+9qX+DrWUNG4w=
+	b=u0jWEkt5xUvQYI8LjVu8oUKol5orIc/BOdoeNHqQGl0ISfXC65AY+2y3km89ZOPv8
+	 5w6lhlGX+ZZFaosCAkql9SKF67ozoGGvN14H8V1qfDR7YwrIvRNxmAxE7uA4kBfNuI
+	 IFZ7MOITgmrQpnHeUnPhgtS5FBaFKeqDJ3iJFT5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Cheick Traore <cheick.traore@foss.st.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 402/644] scsi: mpt3sas: Correctly handle ATA device errors
-Date: Tue, 26 Aug 2025 13:08:13 +0200
-Message-ID: <20250826110956.413916154@linuxfoundation.org>
+Subject: [PATCH 5.15 403/644] pinctrl: stm32: Manage irq affinity settings
+Date: Tue, 26 Aug 2025 13:08:14 +0200
+Message-ID: <20250826110956.438581574@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,83 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Cheick Traore <cheick.traore@foss.st.com>
 
-[ Upstream commit 15592a11d5a5c8411ac8494ec49736b658f6fbff ]
+[ Upstream commit 4c5cc2f65386e22166ce006efe515c667aa075e4 ]
 
-With the ATA error model, an NCQ command failure always triggers an abort
-(termination) of all NCQ commands queued on the device. In such case, the
-SAT or the host must handle the failed command according to the command
-sense data and immediately retry all other NCQ commands that were aborted
-due to the failed NCQ command.
+Trying to set the affinity of the interrupts associated to stm32
+pinctrl results in a write error.
 
-For SAS HBAs controlled by the mpt3sas driver, NCQ command aborts are not
-handled by the HBA SAT and sent back to the host, with an ioc log
-information equal to 0x31080000 (IOC_LOGINFO_PREFIX_PL with the PL code
-PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR). The function
-_scsih_io_done() always forces a retry of commands terminated with the
-status MPI2_IOCSTATUS_SCSI_IOC_TERMINATED using the SCSI result
-DID_SOFT_ERROR, regardless of the log_info for the command.  This
-correctly forces the retry of collateral NCQ abort commands, but with the
-retry counter for the command being incremented. If a command to an ATA
-device is subject to too many retries due to other NCQ commands failing
-(e.g. read commands trying to access unreadable sectors), the collateral
-NCQ abort commands may be terminated with an error as they run out of
-retries. This violates the SAT specification and causes hard-to-debug
-command errors.
+Fill struct irq_chip::irq_set_affinity to use the default helper
+function.
 
-Solve this issue by modifying the handling of the
-MPI2_IOCSTATUS_SCSI_IOC_TERMINATED status to check if a command is for an
-ATA device and if the command loginfo indicates an NCQ collateral
-abort. If that is the case, force the command retry using the SCSI result
-DID_IMM_RETRY to avoid incrementing the command retry count.
-
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250606052747.742998-3-dlemoal@kernel.org
-Tested-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Cheick Traore <cheick.traore@foss.st.com>
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Link: https://lore.kernel.org/20250610143042.295376-3-antonio.borneo@foss.st.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-index 055929021818..0066a99587d9 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -197,6 +197,14 @@ struct sense_info {
- #define MPT3SAS_PORT_ENABLE_COMPLETE (0xFFFD)
- #define MPT3SAS_ABRT_TASK_SET (0xFFFE)
- #define MPT3SAS_REMOVE_UNRESPONDING_DEVICES (0xFFFF)
-+
-+/*
-+ * SAS Log info code for a NCQ collateral abort after an NCQ error:
-+ * IOC_LOGINFO_PREFIX_PL | PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR
-+ * See: drivers/message/fusion/lsi/mpi_log_sas.h
-+ */
-+#define IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR	0x31080000
-+
- /**
-  * struct fw_event_work - firmware event struct
-  * @list: link list framework
-@@ -5812,6 +5820,17 @@ _scsih_io_done(struct MPT3SAS_ADAPTER *ioc, u16 smid, u8 msix_index, u32 reply)
- 			scmd->result = DID_TRANSPORT_DISRUPTED << 16;
- 			goto out;
- 		}
-+		if (log_info == IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR) {
-+			/*
-+			 * This is a ATA NCQ command aborted due to another NCQ
-+			 * command failure. We must retry this command
-+			 * immediately but without incrementing its retry
-+			 * counter.
-+			 */
-+			WARN_ON_ONCE(xfer_cnt != 0);
-+			scmd->result = DID_IMM_RETRY << 16;
-+			break;
-+		}
- 		if (log_info == 0x31110630) {
- 			if (scmd->retries > 2) {
- 				scmd->result = DID_NO_CONNECT << 16;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index abb12a5c3c32..821ec5a97551 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -412,6 +412,7 @@ static struct irq_chip stm32_gpio_irq_chip = {
+ 	.irq_set_wake	= irq_chip_set_wake_parent,
+ 	.irq_request_resources = stm32_gpio_irq_request_resources,
+ 	.irq_release_resources = stm32_gpio_irq_release_resources,
++	.irq_set_affinity = IS_ENABLED(CONFIG_SMP) ? irq_chip_set_affinity_parent : NULL,
+ };
+ 
+ static int stm32_gpio_domain_translate(struct irq_domain *d,
 -- 
 2.39.5
 
