@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776CC352FC1;
-	Tue, 26 Aug 2025 14:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616243568F3;
+	Tue, 26 Aug 2025 14:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218915; cv=none; b=DfXZP7mwQkrBjUsQXw6tr+SD1u/UKv5P7Mq2VA0Q+yq3ir/PI/OqJrhUipmBCcfSTW+s4U6Q97WoPnK3MXKco1wwCl2UcS3yTpCsPwcBhZ4ElkWC6z6xXe3LQPHr3+pSlyDUxHKypxlSy/IqXTZvf8jMfjbFN6EmNTz9B/cp3Zo=
+	t=1756218920; cv=none; b=WfJfwZhgnz3rL04QDUH7ao0DVmDAyrS/8VtJuyVthjGUwbmtfB7Y8EpNh1oBh4f5zLiHmVMgS/Uu2rN5/9ROCE0uUI9Azm1KrWRsDEAimuaGFcrt75d01mIXggMdpVHzqmSAjH4V213JrCZru4U08VvfIRg2O3Ib4GWLazfC3R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218915; c=relaxed/simple;
-	bh=ovANF/QBNICfu8bxXWYQmUF1zs4yyda4lwAHyzHx7KQ=;
+	s=arc-20240116; t=1756218920; c=relaxed/simple;
+	bh=kEV67ClEMn5EfBRA2DJ4DWWpEKIOnA2YUuNgTHeA5Ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Se/w6dySVbxzFZZMfwJvZjmIORUNnNM3Ux1J5CsN8x1BXe45VBFhC5YVHQUTB+MBOwVYo0HwGMVDfAt9TQXL+SHDL7ZsGZLgddLy11iuBpTd++ofXB188OCVM4mKNSlQOpm6H5nFUvgZ3LmhA+11LL6RbzuYeCXTC2z1lfJGSNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFLRLR7h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1PH0RnjPb/tmYoaNt76yn/QtKLeDRSHvuXUfZSWHDVgCB/QALMWoO2/Er/aexTDPUzfGhCp6oEu60YSwEwe2GIMEfaKUHQzRXs2hnKVFLZOibqrZGzt+ImEOn/nszxWw8IloA9ndgeOlg5K0QGhjw07a259zgRaDDaS+3WcQjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxYdLzhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFLRLR7h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D153C4CEF1;
-	Tue, 26 Aug 2025 14:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxYdLzhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CECC4CEF1;
+	Tue, 26 Aug 2025 14:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218915;
-	bh=ovANF/QBNICfu8bxXWYQmUF1zs4yyda4lwAHyzHx7KQ=;
+	s=korg; t=1756218917;
+	bh=kEV67ClEMn5EfBRA2DJ4DWWpEKIOnA2YUuNgTHeA5Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFLRLR7hfT4SZIEjm6i9F83FmNGLhoEpaqjquAi6EkeDab4V2SjE3NuT0iHV1D4d3
-	 snegz6qrAF27kjRc/yl0Do0SclK04qAZ78s8RTESbvMgnFT+wPpkSlzYfetPy6EqJy
-	 ER/7Iv18iYd5u5YASLzkji8h9KEETgg9PFT0PX+Y=
+	b=yxYdLzhATn0EIid8RZLbQjvHlx5VfKd0nY3o0oQGM0R3RPujfOQQy6CnTm0uy7iSw
+	 //KQZ6jvCj5wbxTR2WGlD8X2Q8QntPuxR+F5S+Mi0xIWrarFowRiiVJpFQTLwXdPuf
+	 WLGODLOJ7LNyCjf4YPRyYk01A2QztmEBo1R3FT4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Prashant Malani <pmalani@google.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 181/403] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
-Date: Tue, 26 Aug 2025 13:08:27 +0200
-Message-ID: <20250826110911.883053063@linuxfoundation.org>
+	Budimir Markovic <markovicbudimir@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 152/403] vsock: Do not allow binding to VMADDR_PORT_ANY
+Date: Tue, 26 Aug 2025 13:07:58 +0200
+Message-ID: <20250826110911.080522737@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,51 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashant Malani <pmalani@google.com>
+From: Budimir Markovic <markovicbudimir@gmail.com>
 
-[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
+commit aba0c94f61ec05315fa7815d21aefa4c87f6a9f4 upstream.
 
-AMU counters on certain CPPC-based platforms tend to yield inaccurate
-delivered performance measurements on systems that are idle/mostly idle.
-This results in an inaccurate frequency being stored by cpufreq in its
-policy structure when the CPU is brought online. [1]
+It is possible for a vsock to autobind to VMADDR_PORT_ANY. This can
+cause a use-after-free when a connection is made to the bound socket.
+The socket returned by accept() also has port VMADDR_PORT_ANY but is not
+on the list of unbound sockets. Binding it will result in an extra
+refcount decrement similar to the one fixed in fcdd2242c023 (vsock: Keep
+the binding until socket destruction).
 
-Consequently, if the userspace governor tries to set the frequency to a
-new value, there is a possibility that it would be the erroneous value
-stored earlier. In such a scenario, cpufreq would assume that the
-requested frequency has already been set and return early, resulting in
-the correct/new frequency request never making it to the hardware.
+Modify the check in __vsock_bind_connectible() to also prevent binding
+to VMADDR_PORT_ANY.
 
-Since the operating frequency is liable to this sort of inconsistency,
-mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
-invoked when a target frequency update is requested.
-
-Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
-Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Prashant Malani <pmalani@google.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
+Signed-off-by: Budimir Markovic <markovicbudimir@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250807041811.678-1-markovicbudimir@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index 8910fd1ae3c6..c85b01aa801d 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -407,7 +407,7 @@ static unsigned int cppc_cpufreq_get_rate(unsigned int cpunum)
- }
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -487,7 +487,8 @@ static int __vsock_bind_stream(struct vs
+ 		unsigned int i;
  
- static struct cpufreq_driver cppc_cpufreq_driver = {
--	.flags = CPUFREQ_CONST_LOOPS,
-+	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
- 	.verify = cppc_verify_policy,
- 	.target = cppc_cpufreq_set_target,
- 	.get = cppc_cpufreq_get_rate,
--- 
-2.39.5
-
+ 		for (i = 0; i < MAX_PORT_RETRIES; i++) {
+-			if (port <= LAST_RESERVED_PORT)
++			if (port == VMADDR_PORT_ANY ||
++			    port <= LAST_RESERVED_PORT)
+ 				port = LAST_RESERVED_PORT + 1;
+ 
+ 			new_addr.svm_port = port++;
 
 
