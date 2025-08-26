@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BBF225390;
-	Tue, 26 Aug 2025 13:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6C8221290;
+	Tue, 26 Aug 2025 13:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215653; cv=none; b=PvZx3aQsq7wJ7DzZKh0lI+Js1jh+RQE+ynr12GbZiJd7yX3ccsdl1ATtIEmM13sfYM4kzJjd2yWvzIPY7ACadt/fv5H3CHD9PWFkdXuBjWgyg77x2swPwbySoMRP75wfCRTBhecrWdF243u2TXFPNZ1Azp5WBdYAFXWTDYzX1qs=
+	t=1756215655; cv=none; b=D08nbOKjd6vbSOOSQj6MSsYZXra095+b/EMZoa3GdTU9i4XqN4yiQEBCtX4tfRHGA2E93eULQlversqdKDwCoTYr/5oZsNSJ8gpIGnMYQr4G55C57pgr9Ml5023flQmKIEkiilQiNoE74NZdp/LBAsFP6VOzV5i1+1VudyKfnLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215653; c=relaxed/simple;
-	bh=/hG0C74Nlq9FgFEP4fcdTcFhTS/XTIdtlHmSNbSNFKo=;
+	s=arc-20240116; t=1756215655; c=relaxed/simple;
+	bh=28DhgTSq6/vnU/1cOwTvRZahJDKwkdMTsP9jnU9uvPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FgFTlHfN8SIS/6FGZo/KJSCXc2IjEFeqNAYrfVOMdMMslAI6j0XRORJ/7wjdmoO/14uJj7Otw03LVtdTckqOVbIXFIPechLO/D1hFc3U5/DxRIqODkQGG9JfvmKxNcyUeD5WZ42mw0VD2ujKsn3FEdxBaT+EMBCqQcrfFXjlSCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPfUNyyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXdwIZJs9Qg7+UxttN+2F1FSZ/Hklk36/xcgxSNEC9vepLHX0PAXIxtK7zogWcGXsbRUCWQGJakNlD6lQjIGVC6pn194OXFVBHYIVT57szgwQBW43sm7r9VneA2XuXJW0Qanp8qKf8BKzpZO+8oDQLWQ/rjgEY298tHOgiSSogc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxWT6Ttd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPfUNyyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3C5C4CEF1;
-	Tue, 26 Aug 2025 13:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxWT6Ttd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232B7C4CEF1;
+	Tue, 26 Aug 2025 13:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215653;
-	bh=/hG0C74Nlq9FgFEP4fcdTcFhTS/XTIdtlHmSNbSNFKo=;
+	s=korg; t=1756215655;
+	bh=28DhgTSq6/vnU/1cOwTvRZahJDKwkdMTsP9jnU9uvPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPfUNyynwLqIt5AacCh0JWkgHRDmGZ5cLsfDLMidfPYlnlFR4BOV1KKKDuzY4VnXc
-	 BmozRx9k79wAuWbb7GbZMTKGBV2CYgFLSltNmExAhoQrPZXuSiF4Hf5+l9eLrurQoV
-	 vOjc0po+lrPMqBNzJOwp264ReBdNpG14o3Yb6f00=
+	b=BxWT6TtdnpKItQlibejSTcgQStdg9eFRnFNanSZNMApzN+amG+UhAC+Y01gBDIcvX
+	 Qw9LAIz3MiMKUGGdOE4f2vjxcnFEanFH2fxprEHZm2NvOg+/VSk4OA06hvca3xywh7
+	 5gaNi5Xcdjxf8YS60cfhYcISs6jiFOhH7xMKYguU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Giedrius=20Trainavi=C4=8Dius?= <giedrius@blokas.io>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/644] ASoC: soc-dai: tidyup return value of snd_soc_xlate_tdm_slot_mask()
-Date: Tue, 26 Aug 2025 13:03:25 +0200
-Message-ID: <20250826110949.352368609@linuxfoundation.org>
+Subject: [PATCH 5.15 115/644] ASoC: ops: dynamically allocate struct snd_ctl_elem_value
+Date: Tue, 26 Aug 2025 13:03:26 +0200
+Message-ID: <20250826110949.377025631@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -46,90 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f4c77d5af0a9cd0ee22617baa8b49d0e151fbda7 ]
+[ Upstream commit 7e10d7242ea8a5947878880b912ffa5806520705 ]
 
-commit 7f1186a8d738661 ("ASoC: soc-dai: check return value at
-snd_soc_dai_set_tdm_slot()") checks return value of
-xlate_tdm_slot_mask() (A1)(A2).
+This structure is really too larget to be allocated on the stack:
 
-	/*
-	 * ...
-(Y)	 * TDM mode can be disabled by passing 0 for @slots. In this case @tx_mask,
-	 * @rx_mask and @slot_width will be ignored.
-	 * ...
-	 */
-	int snd_soc_dai_set_tdm_slot(...)
-	{
-		...
-		if (...)
-(A1)			ret = dai->driver->ops->xlate_tdm_slot_mask(...);
-		else
-(A2)			ret = snd_soc_xlate_tdm_slot_mask(...);
-		if (ret)
-			goto err;
-		...
-	}
+sound/soc/soc-ops.c:435:5: error: stack frame size (1296) exceeds limit (1280) in 'snd_soc_limit_volume' [-Werror,-Wframe-larger-than]
 
-snd_soc_xlate_tdm_slot_mask() (A2) will return -EINVAL if slots was 0 (X),
-but snd_soc_dai_set_tdm_slot() allow to use it (Y).
+Change the function to dynamically allocate it instead.
 
-(A)	static int snd_soc_xlate_tdm_slot_mask(...)
-	{
-		...
-		if (!slots)
-(X)			return -EINVAL;
-		...
-	}
+There is probably a better way to do it since only two integer fields
+inside of that structure are actually used, but this is the simplest
+rework for the moment.
 
-Call xlate_tdm_slot_mask() only if slots was non zero.
-
-Reported-by: Giedrius Trainavičius <giedrius@blokas.io>
-Closes: https://lore.kernel.org/r/CAMONXLtSL7iKyvH6w=CzPTxQdBECf++hn8RKL6Y4=M_ou2YHow@mail.gmail.com
-Fixes: 7f1186a8d738661 ("ASoC: soc-dai: check return value at snd_soc_dai_set_tdm_slot()")
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/8734cdfx59.wl-kuninori.morimoto.gx@renesas.com
+Fixes: 783db6851c18 ("ASoC: ops: Enforce platform maximum on initial value")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20250610093057.2643233-1-arnd@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dai.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ sound/soc/soc-ops.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
-index 05a9404544de..8165f5537043 100644
---- a/sound/soc/soc-dai.c
-+++ b/sound/soc/soc-dai.c
-@@ -269,13 +269,15 @@ int snd_soc_dai_set_tdm_slot(struct snd_soc_dai *dai,
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 9eb4181c6697..7cb3a3f9d3ae 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -624,28 +624,32 @@ EXPORT_SYMBOL_GPL(snd_soc_get_volsw_range);
+ static int snd_soc_clip_to_platform_max(struct snd_kcontrol *kctl)
  {
- 	int ret = -ENOTSUPP;
+ 	struct soc_mixer_control *mc = (struct soc_mixer_control *)kctl->private_value;
+-	struct snd_ctl_elem_value uctl;
++	struct snd_ctl_elem_value *uctl;
+ 	int ret;
  
--	if (dai->driver->ops &&
--	    dai->driver->ops->xlate_tdm_slot_mask)
--		ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
--	else
--		ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
--	if (ret)
--		goto err;
-+	if (slots) {
-+		if (dai->driver->ops &&
-+		    dai->driver->ops->xlate_tdm_slot_mask)
-+			ret = dai->driver->ops->xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
-+		else
-+			ret = snd_soc_xlate_tdm_slot_mask(slots, &tx_mask, &rx_mask);
-+		if (ret)
-+			goto err;
-+	}
+ 	if (!mc->platform_max)
+ 		return 0;
  
- 	dai->tx_mask = tx_mask;
- 	dai->rx_mask = rx_mask;
+-	ret = kctl->get(kctl, &uctl);
++	uctl = kzalloc(sizeof(*uctl), GFP_KERNEL);
++	if (!uctl)
++		return -ENOMEM;
++
++	ret = kctl->get(kctl, uctl);
+ 	if (ret < 0)
+-		return ret;
++		goto out;
+ 
+-	if (uctl.value.integer.value[0] > mc->platform_max)
+-		uctl.value.integer.value[0] = mc->platform_max;
++	if (uctl->value.integer.value[0] > mc->platform_max)
++		uctl->value.integer.value[0] = mc->platform_max;
+ 
+ 	if (snd_soc_volsw_is_stereo(mc) &&
+-	    uctl.value.integer.value[1] > mc->platform_max)
+-		uctl.value.integer.value[1] = mc->platform_max;
++	    uctl->value.integer.value[1] > mc->platform_max)
++		uctl->value.integer.value[1] = mc->platform_max;
+ 
+-	ret = kctl->put(kctl, &uctl);
+-	if (ret < 0)
+-		return ret;
++	ret = kctl->put(kctl, uctl);
+ 
+-	return 0;
++out:
++	kfree(uctl);
++	return ret;
+ }
+ 
+ /**
 -- 
 2.39.5
 
