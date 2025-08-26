@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2D034A32D;
-	Tue, 26 Aug 2025 14:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635CE35207B;
+	Tue, 26 Aug 2025 14:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217054; cv=none; b=fYp/IvEX6xlp8I44nAEiAx20kBjyCMqXL9pXDbNJwf9bOZrnbSxIXlbdZb3daFbMpSzbCzkjWXrzZMX8EB0qsM3BZ9ETPnsNq4W70qUS7qHSIfpVba375UvSHKiMfTAoWanM07OZeHes91rcToARGHnZZ4gmD4i8vIinnABjh9M=
+	t=1756217057; cv=none; b=HWhz9Ko2KNfIhSZTQYOwLr0rx7nBHqXjO2B4fgkcVrK6qP4jEwQ7XBZ56UkXUHAacyStZ/LWOi6oHZdKI0UeYAW0yiHsfASFaKkdfcnezcTHuDU6ylAEhQJNwBblUx2fQWnW69x+LWkYKp84f+B9uJD22FN/nRi7grKHG6NzEQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217054; c=relaxed/simple;
-	bh=xVQqc7a0Nhyr/AxlYeBNtH09zNWh1q5C2LJ6eAWAzv8=;
+	s=arc-20240116; t=1756217057; c=relaxed/simple;
+	bh=2r5VulRMlhWKBXOgKfJkfq/lPIhz1J5O0TAPKsUJKS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwhqzlQzg6oeX+tGCNOXVnVxnmO2O9ApJoshKgqKIk3PIBZULSEjs4GIqCtZp2fyFJo1h4WGxUZbRxOFBBTn59tihf1Kl9i5hO4PySIPOI9HahSHzsV2YN+R1UzjJvn2ZUBA3o6GNHuvQ5BpeRmJkUfSH7bXP5z80gZev83FuWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqfV+Q1d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UznP9TQUGI3+FtCcBG43qqlzuRNX1ySLxyzQEb+cAW1euFyoS1eGX9xYT5js0NYHKK9MH3Wxqa4fM0ySeZBHZ6P60GkiW/1Yng/2Oyxg4t9+g24PPt/8emzR7bB4g34r18lkImz4pdzoDBIqFApQL7j/jd58mC3ae/8e6aSmL8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwwZRqTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqfV+Q1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526B6C4CEF1;
-	Tue, 26 Aug 2025 14:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwwZRqTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED72C4CEF1;
+	Tue, 26 Aug 2025 14:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217054;
-	bh=xVQqc7a0Nhyr/AxlYeBNtH09zNWh1q5C2LJ6eAWAzv8=;
+	s=korg; t=1756217057;
+	bh=2r5VulRMlhWKBXOgKfJkfq/lPIhz1J5O0TAPKsUJKS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqfV+Q1d04y1KvbTUeBDUUA5nHO8XHtWBNFvfu+eozrny/mwtsDGQr3CU1/DrkR02
-	 9HuMqB9tnqrkWXYntaSXTsIvTButUqT24BkNSDM8u9Sqj9qc+v2XJNTANKrKJOMvWN
-	 /UosYRWK+b5IM3oRx3LDNY/IInbCSTvRt1iTlwMs=
+	b=gwwZRqTi+YlAC5G0vm6LtFxJZya72XxCQ2/KxQFLI3UPUjIou4F42ppoXhoNGqML4
+	 PO11fkJKc5g1S0dN54Sj64lF07mYGiE89r9eHLtZNVMsXJCRPhfQ6zifPRMl+MfPT8
+	 0K/4mAqRp5/hNKiHgmgvzQV85xmlf5wmqeAIK8Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Marco Elver <elver@google.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.15 601/644] asm-generic: Add memory barrier dma_mb()
-Date: Tue, 26 Aug 2025 13:11:32 +0200
-Message-ID: <20250826111001.440298952@linuxfoundation.org>
+	Jason Xing <kernelxing@tencent.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Priya Singh <priyax.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 635/644] ixgbe: xsk: resolve the negative overflow of budget in ixgbe_xmit_zc
+Date: Tue, 26 Aug 2025 13:12:06 +0200
+Message-ID: <20250826111002.296047492@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,78 +56,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit ed59dfd9509d172e4920994ed9cbebf93b0050cc ]
+[ Upstream commit 4d4d9ef9dfee877d494e5418f68a1016ef08cad6 ]
 
-The memory barrier dma_mb() is introduced by commit a76a37777f2c
-("iommu/arm-smmu-v3: Ensure queue is read after updating prod pointer"),
-which is used to ensure that prior (both reads and writes) accesses
-to memory by a CPU are ordered w.r.t. a subsequent MMIO write.
+Resolve the budget negative overflow which leads to returning true in
+ixgbe_xmit_zc even when the budget of descs are thoroughly consumed.
 
-Reviewed-by: Arnd Bergmann <arnd@arndb.de> # for asm-generic
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Marco Elver <elver@google.com>
-Link: https://lore.kernel.org/r/20220523113126.171714-2-wangkefeng.wang@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: aa6956150f82 ("wifi: ath11k: fix dest ring-buffer corruption when ring is full")
+Before this patch, when the budget is decreased to zero and finishes
+sending the last allowed desc in ixgbe_xmit_zc, it will always turn back
+and enter into the while() statement to see if it should keep processing
+packets, but in the meantime it unexpectedly decreases the value again to
+'unsigned int (0--)', namely, UINT_MAX. Finally, the ixgbe_xmit_zc returns
+true, showing 'we complete cleaning the budget'. That also means
+'clean_complete = true' in ixgbe_poll.
+
+The true theory behind this is if that budget number of descs are consumed,
+it implies that we might have more descs to be done. So we should return
+false in ixgbe_xmit_zc to tell napi poll to find another chance to start
+polling to handle the rest of descs. On the contrary, returning true here
+means job done and we know we finish all the possible descs this time and
+we don't intend to start a new napi poll.
+
+It is apparently against our expectations. Please also see how
+ixgbe_clean_tx_irq() handles the problem: it uses do..while() statement
+to make sure the budget can be decreased to zero at most and the negative
+overflow never happens.
+
+The patch adds 'likely' because we rarely would not hit the loop condition
+since the standard budget is 256.
+
+Fixes: 8221c5eba8c1 ("ixgbe: add AF_XDP zero-copy Tx support")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Priya Singh <priyax.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20250819222000.3504873-4-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/memory-barriers.txt |   11 ++++++-----
- include/asm-generic/barrier.h     |    8 ++++++++
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/Documentation/memory-barriers.txt
-+++ b/Documentation/memory-barriers.txt
-@@ -1894,6 +1894,7 @@ There are some more advanced barrier fun
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
+index b399b9c14717..9a789a419166 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_xsk.c
+@@ -392,7 +392,7 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
+ 	dma_addr_t dma;
+ 	u32 cmd_type;
  
-  (*) dma_wmb();
-  (*) dma_rmb();
-+ (*) dma_mb();
- 
-      These are for use with consistent memory to guarantee the ordering
-      of writes or reads of shared memory accessible to both the CPU and a
-@@ -1925,11 +1926,11 @@ There are some more advanced barrier fun
-      The dma_rmb() allows us guarantee the device has released ownership
-      before we read the data from the descriptor, and the dma_wmb() allows
-      us to guarantee the data is written to the descriptor before the device
--     can see it now has ownership.  Note that, when using writel(), a prior
--     wmb() is not needed to guarantee that the cache coherent memory writes
--     have completed before writing to the MMIO region.  The cheaper
--     writel_relaxed() does not provide this guarantee and must not be used
--     here.
-+     can see it now has ownership.  The dma_mb() implies both a dma_rmb() and
-+     a dma_wmb().  Note that, when using writel(), a prior wmb() is not needed
-+     to guarantee that the cache coherent memory writes have completed before
-+     writing to the MMIO region.  The cheaper writel_relaxed() does not provide
-+     this guarantee and must not be used here.
- 
-      See the subsection "Kernel I/O barrier effects" for more information on
-      relaxed I/O accessors and the Documentation/core-api/dma-api.rst file for
---- a/include/asm-generic/barrier.h
-+++ b/include/asm-generic/barrier.h
-@@ -37,6 +37,10 @@
- #define wmb()	do { kcsan_wmb(); __wmb(); } while (0)
- #endif
- 
-+#ifdef __dma_mb
-+#define dma_mb()	do { kcsan_mb(); __dma_mb(); } while (0)
-+#endif
+-	while (budget-- > 0) {
++	while (likely(budget)) {
+ 		if (unlikely(!ixgbe_desc_unused(xdp_ring))) {
+ 			work_done = false;
+ 			break;
+@@ -427,6 +427,8 @@ static bool ixgbe_xmit_zc(struct ixgbe_ring *xdp_ring, unsigned int budget)
+ 		xdp_ring->next_to_use++;
+ 		if (xdp_ring->next_to_use == xdp_ring->count)
+ 			xdp_ring->next_to_use = 0;
 +
- #ifdef __dma_rmb
- #define dma_rmb()	do { kcsan_rmb(); __dma_rmb(); } while (0)
- #endif
-@@ -64,6 +68,10 @@
- #define wmb()	mb()
- #endif
++		budget--;
+ 	}
  
-+#ifndef dma_mb
-+#define dma_mb()	mb()
-+#endif
-+
- #ifndef dma_rmb
- #define dma_rmb()	rmb()
- #endif
+ 	if (tx_desc) {
+-- 
+2.50.1
+
 
 
