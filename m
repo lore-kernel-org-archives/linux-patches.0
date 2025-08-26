@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD8F227EA8;
-	Tue, 26 Aug 2025 13:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47B22139C9;
+	Tue, 26 Aug 2025 13:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215671; cv=none; b=s9XNIyZaJZNQB1cBxXblCdjicyPWjBa7JyJmgbreZMZZhVC5z5BhupMNSdMwPaWWtptBHlD1D4vNpVzWvKoJXvQDOnsUtk2x9QMc75Uy0E36A3C7knoAudm682f2R49Sn4dQyzkZJc9z7klzOJLmVzooWjFHM9Z2QVXI1V49WKs=
+	t=1756215673; cv=none; b=mLs8nJ5D9nZftBMkBJIm+c423Ax1ED5XuSVTy3gerfT2UQtfbWW3ASVATx1qBXuDfz/hdDsyeIAftPdt55R5al6AXjBjSwHGbFmTeP77R2Idjl+/4REabpmxCsBnnEg3AuVpybqQOoq4zF1nrmFQjrGEp7ITkm28qLdnoCpLlMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215671; c=relaxed/simple;
-	bh=fgNp2QcUav5iuY/oiLD3nmC+apwCHLYi9vAaTBzxs14=;
+	s=arc-20240116; t=1756215673; c=relaxed/simple;
+	bh=b1CPYhPjK8pO0sqLGRNO5ZMtiE/BpI2TPOuOn+bZWDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmK6BkgqPSvRE1VZltC2B1MYOT7aSoEBOC4fQgNjkq24LXPd63WhK9JviCdHSek8sQwCdPS19g1yTZQm1WD8vGA8sMlVpZh0cqU2MExW7E1kwZxpWcMefJPStQvU/k3H89uFHazDP8ms/owXgmcsR89ZplJbVGFiv8FtdDIFplA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yfhvi0oY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BZeoRfkwIJLB5gzR8XZc8ERQIJnb5QHMEeP9tCNO4IeJ+Y+3IJwYRmLQS8vP6youDpp6J5NmSyb5KyOSvgTYMCfcxTbK/TaiI2pY7pj7rR6KY6utKBi5GhsweGdjR8yIBbnf+XGfE0pvWFwDs8Qk9pemVHBq0xcJPsXc/6Js3SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxbF6SlH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yfhvi0oY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AD0C113D0;
-	Tue, 26 Aug 2025 13:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxbF6SlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5659CC113D0;
+	Tue, 26 Aug 2025 13:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215671;
-	bh=fgNp2QcUav5iuY/oiLD3nmC+apwCHLYi9vAaTBzxs14=;
+	s=korg; t=1756215673;
+	bh=b1CPYhPjK8pO0sqLGRNO5ZMtiE/BpI2TPOuOn+bZWDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yfhvi0oYyoTQSeZ+WVmGL1j8xHL6aNkUOrEqfGwRFrUVT+DowYb+l4qTg8WjiOaHL
-	 fpq8wlhW6D6ZyD3Zz9rDukabDsq59smEx5SdAagHYrR5Iw55XqTafSyZaU3DveG6KS
-	 8L3yzwlWuQCr5eiCfdhB7BueJarpsvbB6QLRPNN4=
+	b=yxbF6SlHx8TuP1YU+0rxP21pq5Asy0TFk+C2vZBGne7R+C7Xpc3IWVNkmZmMQP2/p
+	 DmvdHdFKeq/+xFwN7LXHcXK9UibE0r+aOmYrtaes0YjxB7QNlV+Nqm3g2O9IfFbTDd
+	 2hxtbuyiMu3lDPLnPdWVBHCIseET1QL6a58b8a8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 094/644] dpaa2-switch: Fix device reference count leak in MAC endpoint handling
-Date: Tue, 26 Aug 2025 13:03:05 +0200
-Message-ID: <20250826110948.833715073@linuxfoundation.org>
+	Denis OSTERLAND-HEIM <denis.osterland@diehl.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 121/644] pps: fix poll support
+Date: Tue, 26 Aug 2025 13:03:32 +0200
+Message-ID: <20250826110949.518277935@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,68 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
 
-commit 96e056ffba912ef18a72177f71956a5b347b5177 upstream.
+[ Upstream commit 12c409aa1ec2592280a2ddcc66ff8f3c7f7bb171 ]
 
-The fsl_mc_get_endpoint() function uses device_find_child() for
-localization, which implicitly calls get_device() to increment the
-device's reference count before returning the pointer. However, the
-caller dpaa2_switch_port_connect_mac() fails to properly release this
-reference in multiple scenarios. We should call put_device() to
-decrement reference count properly.
+Because pps_cdev_poll() returns unconditionally EPOLLIN,
+a user space program that calls select/poll get always an immediate data
+ready-to-read response. As a result the intended use to wait until next
+data becomes ready does not work.
 
-As comment of device_find_child() says, 'NOTE: you will need to drop
-the reference with put_device() after use'.
+User space snippet:
 
-Found by code review.
+    struct pollfd pollfd = {
+      .fd = open("/dev/pps0", O_RDONLY),
+      .events = POLLIN|POLLERR,
+      .revents = 0 };
+    while(1) {
+      poll(&pollfd, 1, 2000/*ms*/); // returns immediate, but should wait
+      if(revents & EPOLLIN) { // always true
+        struct pps_fdata fdata;
+        memset(&fdata, 0, sizeof(memdata));
+        ioctl(PPS_FETCH, &fdata); // currently fetches data at max speed
+      }
+    }
 
-Cc: stable@vger.kernel.org
-Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250717022309.3339976-3-make24@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Lets remember the last fetch event counter and compare this value
+in pps_cdev_poll() with most recent event counter
+and return 0 if they are equal.
+
+Signed-off-by: Denis OSTERLAND-HEIM <denis.osterland@diehl.com>
+Co-developed-by: Rodolfo Giometti <giometti@enneenne.com>
+Signed-off-by: Rodolfo Giometti <giometti@enneenne.com>
+Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
+Link: https://lore.kernel.org/all/f6bed779-6d59-4f0f-8a59-b6312bd83b4e@enneenne.com/
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://lore.kernel.org/r/c3c50ad1eb19ef553eca8a57c17f4c006413ab70.camel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/pps/pps.c          | 11 +++++++++--
+ include/linux/pps_kernel.h |  1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -1435,12 +1435,19 @@ static int dpaa2_switch_port_connect_mac
- 	if (PTR_ERR(dpmac_dev) == -EPROBE_DEFER)
- 		return PTR_ERR(dpmac_dev);
+diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
+index 2d008e0d116a..ea966fc67d28 100644
+--- a/drivers/pps/pps.c
++++ b/drivers/pps/pps.c
+@@ -41,6 +41,9 @@ static __poll_t pps_cdev_poll(struct file *file, poll_table *wait)
  
--	if (IS_ERR(dpmac_dev) || dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type)
-+	if (IS_ERR(dpmac_dev))
- 		return 0;
+ 	poll_wait(file, &pps->queue, wait);
  
-+	if (dpmac_dev->dev.type != &fsl_mc_bus_dpmac_type) {
-+		err = 0;
-+		goto out_put_device;
-+	}
++	if (pps->last_fetched_ev == pps->last_ev)
++		return 0;
 +
- 	mac = kzalloc(sizeof(*mac), GFP_KERNEL);
--	if (!mac)
--		return -ENOMEM;
-+	if (!mac) {
-+		err = -ENOMEM;
-+		goto out_put_device;
-+	}
- 
- 	mac->mc_dev = dpmac_dev;
- 	mac->mc_io = port_priv->ethsw_data->mc_io;
-@@ -1468,6 +1475,8 @@ err_close_mac:
- 	port_priv->mac = NULL;
- err_free_mac:
- 	kfree(mac);
-+out_put_device:
-+	put_device(&dpmac_dev->dev);
- 	return err;
+ 	return EPOLLIN | EPOLLRDNORM;
  }
  
+@@ -186,9 +189,11 @@ static long pps_cdev_ioctl(struct file *file,
+ 		if (err)
+ 			return err;
+ 
+-		/* Return the fetched timestamp */
++		/* Return the fetched timestamp and save last fetched event  */
+ 		spin_lock_irq(&pps->lock);
+ 
++		pps->last_fetched_ev = pps->last_ev;
++
+ 		fdata.info.assert_sequence = pps->assert_sequence;
+ 		fdata.info.clear_sequence = pps->clear_sequence;
+ 		fdata.info.assert_tu = pps->assert_tu;
+@@ -272,9 +277,11 @@ static long pps_cdev_compat_ioctl(struct file *file,
+ 		if (err)
+ 			return err;
+ 
+-		/* Return the fetched timestamp */
++		/* Return the fetched timestamp and save last fetched event  */
+ 		spin_lock_irq(&pps->lock);
+ 
++		pps->last_fetched_ev = pps->last_ev;
++
+ 		compat.info.assert_sequence = pps->assert_sequence;
+ 		compat.info.clear_sequence = pps->clear_sequence;
+ 		compat.info.current_mode = pps->current_mode;
+diff --git a/include/linux/pps_kernel.h b/include/linux/pps_kernel.h
+index c7abce28ed29..aab0aebb529e 100644
+--- a/include/linux/pps_kernel.h
++++ b/include/linux/pps_kernel.h
+@@ -52,6 +52,7 @@ struct pps_device {
+ 	int current_mode;			/* PPS mode at event time */
+ 
+ 	unsigned int last_ev;			/* last PPS event id */
++	unsigned int last_fetched_ev;		/* last fetched PPS event id */
+ 	wait_queue_head_t queue;		/* PPS event queue */
+ 
+ 	unsigned int id;			/* PPS source unique ID */
+-- 
+2.39.5
+
 
 
