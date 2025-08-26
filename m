@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D5156F4A;
-	Tue, 26 Aug 2025 13:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CAE1F4CA9;
+	Tue, 26 Aug 2025 13:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215549; cv=none; b=FUyMF+WwjKlf79xaSeeQ75KG8KKco1zb+eAainHN5vgeeUiZJK24Ct9g0x4lILmfspwhdX4D7CGEKW3yEfgQkCyWlOnrxbAexj5O/sXNGwHgqFj/kWvbz9QxkbYs/CsK/C44UpYSHy1lVSfCnu9ZNPBDE6MbnNFj+tVWoGvAMI8=
+	t=1756215551; cv=none; b=KCbBAEDAQVRBRgpvwsOREgoDavs6KK5BzJUVX4Uga0k4OugHpErJUEB4vy8kHpzxfglfT6WH+hXxZT4sFFSnem/wHJMEqhlJjQAAKTMNh5zy0HeuaTS3Kn8dPCrcSHkkNxpHnrLzZzcYHAfl9he+HkKsl83AxMCc2jSR5WgW5Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215549; c=relaxed/simple;
-	bh=b9ZhaSOeYleKZ5VPKr50sW8wSLC9IqGw5kAtp0HBOcY=;
+	s=arc-20240116; t=1756215551; c=relaxed/simple;
+	bh=Paxnv7urBg5z0omzGOFdWitgaCWH8KP3AZJhZKZz60U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stvHMW0rZ6drvNXH+XjwiGjgPBIwDsMsTEjQmDcYKmHqh6ARE/aF6uhfgKKHyTUv+1N50rbsVmkd1pR90ewfpSJAfE4LDR6SjJUdIK845q6l/m/I9lZBFjIdt4sFEprZedx20iwCnmbC2Bo77BW2Qgq19NWYyWd2wjHJFLobGN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkJdNDAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOUKvD4gEsH89ycXMA1jrBSF3zik8w6X6Fp+wy4CHd/CRa5v8h8Cq783r7VOYsgW1avXrNVNEgsFdRn9yA5eq+VAMr1WDvAqD9/AOino5KZYA7EWADr7EXE8J7ifMjbWEO/BS03vHpNl8DJ+bYRSQAxB8iLM6tLsU/ORbeXL7kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8fOxl1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkJdNDAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D19C116B1;
-	Tue, 26 Aug 2025 13:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8fOxl1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BE3C4CEF1;
+	Tue, 26 Aug 2025 13:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215548;
-	bh=b9ZhaSOeYleKZ5VPKr50sW8wSLC9IqGw5kAtp0HBOcY=;
+	s=korg; t=1756215551;
+	bh=Paxnv7urBg5z0omzGOFdWitgaCWH8KP3AZJhZKZz60U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nkJdNDAe68e6SK8NFnDkkGeAfwo5zjJqh8ViSGQCiKWiATGFZl+bk20nVMjaf0iB8
-	 goZ6HKmhsjGCo8fIwwqaHqfvh8PPjorJ6iCIJwPBWeENQsM2VHF5DlgQlrBUeCybB6
-	 IYNAkv8NUinf9Xof1ZXdzC9mvDebZG6qoZHTtiN4=
+	b=J8fOxl1y7j4EmUD6IpPoSl6L07MjFWXdLp4mzZxCuSg1J3oQN1VR6q2Jwxy1oWV0Z
+	 cULEv1IyLjPBYED3g7bqeqoH12dyLQ5DvXRJ7c8tGHmA0jYeifQ1pYgc/p5fYn4u1x
+	 0rbjLGs5lfS9Wivo/Y8B/ufduUBpysoXKqGxJyLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Gatien Chevallier <gatien.chevallier@foss.st.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Alessandro Carminati <acarmina@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/644] Input: gpio-keys - fix a sleep while atomic with PREEMPT_RT
-Date: Tue, 26 Aug 2025 13:02:47 +0200
-Message-ID: <20250826110948.381952222@linuxfoundation.org>
+Subject: [PATCH 5.15 077/644] regulator: core: fix NULL dereference on unbind due to stale coupling data
+Date: Tue, 26 Aug 2025 13:02:48 +0200
+Message-ID: <20250826110948.405971033@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,68 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-commit f4a8f561d08e39f7833d4a278ebfb12a41eef15f upstream.
+[ Upstream commit ca46946a482238b0cdea459fb82fc837fb36260e ]
 
-When enabling PREEMPT_RT, the gpio_keys_irq_timer() callback runs in
-hard irq context, but the input_event() takes a spin_lock, which isn't
-allowed there as it is converted to a rt_spin_lock().
+Failing to reset coupling_desc.n_coupled after freeing coupled_rdevs can
+lead to NULL pointer dereference when regulators are accessed post-unbind.
 
-[ 4054.289999] BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-[ 4054.290028] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 0, name: swapper/0
-...
-[ 4054.290195]  __might_resched+0x13c/0x1f4
-[ 4054.290209]  rt_spin_lock+0x54/0x11c
-[ 4054.290219]  input_event+0x48/0x80
-[ 4054.290230]  gpio_keys_irq_timer+0x4c/0x78
-[ 4054.290243]  __hrtimer_run_queues+0x1a4/0x438
-[ 4054.290257]  hrtimer_interrupt+0xe4/0x240
-[ 4054.290269]  arch_timer_handler_phys+0x2c/0x44
-[ 4054.290283]  handle_percpu_devid_irq+0x8c/0x14c
-[ 4054.290297]  handle_irq_desc+0x40/0x58
-[ 4054.290307]  generic_handle_domain_irq+0x1c/0x28
-[ 4054.290316]  gic_handle_irq+0x44/0xcc
+This can happen during runtime PM or other regulator operations that rely
+on coupling metadata.
 
-Considering the gpio_keys_irq_isr() can run in any context, e.g. it can
-be threaded, it seems there's no point in requesting the timer isr to
-run in hard irq context.
+For example, on ridesx4, unbinding the 'reg-dummy' platform device triggers
+a panic in regulator_lock_recursive() due to stale coupling state.
 
-Relax the hrtimer not to use the hard context.
+Ensure n_coupled is set to 0 to prevent access to invalid pointers.
 
-Fixes: 019002f20cb5 ("Input: gpio-keys - use hrtimer for release timer")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Signed-off-by: Gatien Chevallier <gatien.chevallier@foss.st.com>
-Link: https://lore.kernel.org/r/20250528-gpio_keys_preempt_rt-v2-1-3fc55a9c3619@foss.st.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ adjusted context ]
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Link: https://patch.msgid.link/20250626083809.314842-1-acarmina@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/gpio_keys.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/keyboard/gpio_keys.c
-+++ b/drivers/input/keyboard/gpio_keys.c
-@@ -493,7 +493,7 @@ static irqreturn_t gpio_keys_irq_isr(int
- 	if (bdata->release_delay)
- 		hrtimer_start(&bdata->release_timer,
- 			      ms_to_ktime(bdata->release_delay),
--			      HRTIMER_MODE_REL_HARD);
-+			      HRTIMER_MODE_REL);
- out:
- 	spin_unlock_irqrestore(&bdata->lock, flags);
- 	return IRQ_HANDLED;
-@@ -633,7 +633,7 @@ static int gpio_keys_setup_key(struct pl
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 18f13b9601b5b..ed5d58baa1f75 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5359,6 +5359,7 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+ 				 ERR_PTR(err));
+ 	}
  
- 		bdata->release_delay = button->debounce_interval;
- 		hrtimer_init(&bdata->release_timer,
--			     CLOCK_REALTIME, HRTIMER_MODE_REL_HARD);
-+			     CLOCK_REALTIME, HRTIMER_MODE_REL);
- 		bdata->release_timer.function = gpio_keys_irq_timer;
- 
- 		isr = gpio_keys_irq_isr;
++	rdev->coupling_desc.n_coupled = 0;
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	rdev->coupling_desc.coupled_rdevs = NULL;
+ }
+-- 
+2.39.5
+
 
 
