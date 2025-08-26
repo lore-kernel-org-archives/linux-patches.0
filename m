@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E5E3570A2;
-	Tue, 26 Aug 2025 14:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E612D35A281;
+	Tue, 26 Aug 2025 14:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218320; cv=none; b=CxbufMeNvtdmAt56WcQtF4iph6l4rmEKEHnCm1whaY64AxmPsfey3fqY4Wmapcqb1RJY2oQHg3GN2Jfs790HpYEsmHlx+xMIG10HDu99JZUHqnXaGkjA3EnBliAc+dryGcMa7fcnsHzITIg4xorGAEQOuOePbF134F4UUuyT19g=
+	t=1756218323; cv=none; b=VD27vwGFr8k2alBWELsvGf3dej1AhGZmuCNbBhmbt7NW8/CCVA/+Sl1kcypS8+qsMvZbindET6ah1tREgeB+qOcXpHBnJt7BCLapl3adms5oFCoCfTmd1XAUKDiZMx9H5cigXFuIlgfDlod3I2q7+xevuMhNKrUIK4q8cbo0IhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218320; c=relaxed/simple;
-	bh=ueGbey6dsvTYAELy8mGO3x1zi7p24jrdSGXbL6Tsox0=;
+	s=arc-20240116; t=1756218323; c=relaxed/simple;
+	bh=TQbOCuB4338I/a72sbfPNWAxUtH3PhfaOnN36mUfCds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPhc6DKrzOdsMhvcZUDRuRh/1Q4kYNyUG/1f/++GL3G9g3h6PjIMpxm2zBTDnhWZ4jIOEdDPT1ykNRTWAOhEjJYKj8lt42zZ4xSL71OZ6+I2BwfRplqIHd3EFKtJpAhyS1yhJzGtB5ntNUcZHACyhg1LniUE3tAWaSrckMSGMwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gdsk6Le5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGqI0kTsFW6w7rX9AJqDYewv6UX/B0Vxbf1MXQ0+3tdN6eGv2IWTlrGyvs4Mtuc3QcnXnvphdz51/qIcDmJ0cxkrhSAQ9qBnVtEeSWIijypmZ/ETggRJL193z5ce0cVVSbGfCrt74Q/7KWBx/g2MlbGVlyuFQHPILgbiQcoQmaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WitZCS6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gdsk6Le5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D73C4CEF1;
-	Tue, 26 Aug 2025 14:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WitZCS6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7908BC113D0;
+	Tue, 26 Aug 2025 14:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218320;
-	bh=ueGbey6dsvTYAELy8mGO3x1zi7p24jrdSGXbL6Tsox0=;
+	s=korg; t=1756218322;
+	bh=TQbOCuB4338I/a72sbfPNWAxUtH3PhfaOnN36mUfCds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gdsk6Le5KjF4Hvm03L3LxEhsTrjuKU+5Vcth5PBuP8EiNLDVyq21wNkGPG3qsKenk
-	 1Bb1JpK3LduBClU+IBWiLz0qb4FYiG8ZgTRlRdLZioXa4KuUwfW9rX7ibn2+qHpQpN
-	 7CRHSr/zc/WnP607ozUsVTyJj0y26nvJD2y0QpTY=
+	b=WitZCS6fOaqhjCZGu69QLnzirG34nDXqRhOmDDe9V9lwktnoifGWED45PlMiDGXbB
+	 we/BPA7MbHOuw4WAUr7Y+Kz1oz8AZaXwv5n/D0tvP7P3YUxtL9XcqNifBtoukD+nCp
+	 bZO8p9fuIy7CuE9Ya2/tDjq1hMJO2VD+eIrrnuh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Marco Elver <elver@google.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 470/523] minmax: add umin(a, b) and umax(a, b)
-Date: Tue, 26 Aug 2025 13:11:20 +0200
-Message-ID: <20250826110936.036541711@linuxfoundation.org>
+Subject: [PATCH 5.10 479/523] locking/barriers, kcsan: Support generic instrumentation
+Date: Tue, 26 Aug 2025 13:11:29 +0200
+Message-ID: <20250826110936.260418982@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -56,138 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <David.Laight@ACULAB.COM>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 80fcac55385ccb710d33a20dc1caaef29bd5a921 ]
+[ Upstream commit 2505a51ac6f249956735e0a369e2404f96eebef0 ]
 
-Patch series "minmax: Relax type checks in min() and max()", v4.
+Thus far only smp_*() barriers had been defined by asm-generic/barrier.h
+based on __smp_*() barriers, because the !SMP case is usually generic.
 
-The min() (etc) functions in minmax.h require that the arguments have
-exactly the same types.
+With the introduction of instrumentation, it also makes sense to have
+asm-generic/barrier.h assist in the definition of instrumented versions
+of mb(), rmb(), wmb(), dma_rmb(), and dma_wmb().
 
-However when the type check fails, rather than look at the types and fix
-the type of a variable/constant, everyone seems to jump on min_t().  In
-reality min_t() ought to be rare - when something unusual is being done,
-not normality.
+Because there is no requirement to distinguish the !SMP case, the
+definition can be simpler: we can avoid also providing fallbacks for the
+__ prefixed cases, and only check if `defined(__<barrier>)`, to finally
+define the KCSAN-instrumented versions.
 
-The orginal min() (added in 2.4.9) replaced several inline functions and
-included the type - so matched the implicit casting of the function call.
-This was renamed min_t() in 2.4.10 and the current min() added.  There is
-no actual indication that the conversion of negatve values to large
-unsigned values has ever been an actual problem.
+This also allows for the compiler to complain if an architecture
+accidentally defines both the normal and __ prefixed variant.
 
-A quick grep shows 5734 min() and 4597 min_t().  Having the casts on
-almost half of the calls shows that something is clearly wrong.
-
-If the wrong type is picked (and it is far too easy to pick the type of
-the result instead of the larger input) then significant bits can get
-discarded.
-
-Pretty much the worst example is in the derived clamp_val(), consider:
-        unsigned char x = 200u;
-        y = clamp_val(x, 10u, 300u);
-
-I also suspect that many of the min_t(u16, ...) are actually wrong.  For
-example copy_data() in printk_ringbuffer.c contains:
-
-        data_size = min_t(u16, buf_size, len);
-
-Here buf_size is 'unsigned int' and len 'u16', pass a 64k buffer (can you
-prove that doesn't happen?) and no data is returned.  Apparantly it did -
-and has since been fixed.
-
-The only reason that most of the min_t() are 'fine' is that pretty much
-all the values in the kernel are between 0 and INT_MAX.
-
-Patch 1 adds umin(), this uses integer promotions to convert both
-arguments to 'unsigned long long'.  It can be used to compare a signed
-type that is known to contain a non-negative value with an unsigned type.
-The compiler typically optimises it all away.  Added first so that it can
-be referred to in patch 2.
-
-Patch 2 replaces the 'same type' check with a 'same signedness' one.  This
-makes min(unsigned_int_var, sizeof()) be ok.  The error message is also
-improved and will contain the expanded form of both arguments (useful for
-seeing how constants are defined).
-
-Patch 3 just fixes some whitespace.
-
-Patch 4 allows comparisons of 'unsigned char' and 'unsigned short' to
-signed types.  The integer promotion rules convert them both to 'signed
-int' prior to the comparison so they can never cause a negative value be
-converted to a large positive one.
-
-Patch 5 (rewritted for v4) allows comparisons of unsigned values against
-non-negative constant integer expressions.  This makes
-min(unsigned_int_var, 4) be ok.
-
-The only common case that is still errored is the comparison of signed
-values against unsigned constant integer expressions below __INT_MAX__.
-Typcally min(int_val, sizeof (foo)), the real fix for this is casting the
-constant: min(int_var, (int)sizeof (foo)).
-
-With all the patches applied pretty much all the min_t() could be replaced
-by min(), and most of the rest by umin().  However they all need careful
-inspection due to code like:
-
-        sz = min_t(unsigned char, sz - 1, LIM - 1) + 1;
-
-which converts 0 to LIM.
-
-This patch (of 6):
-
-umin() and umax() can be used when min()/max() errors a signed v unsigned
-compare when the signed value is known to be non-negative.
-
-Unlike min_t(some_unsigned_type, a, b) umin() will never mask off high
-bits if an inappropriate type is selected.
-
-The '+ 0u + 0ul + 0ull' may look strange.
-The '+ 0u' is needed for 'signed int' on 64bit systems.
-The '+ 0ul' is needed for 'signed long' on 32bit systems.
-The '+ 0ull' is needed for 'signed long long'.
-
-Link: https://lkml.kernel.org/r/b97faef60ad24922b530241c5d7c933c@AcuMS.aculab.com
-Link: https://lkml.kernel.org/r/41d93ca827a248698ec64bf57e0c05a5@AcuMS.aculab.com
-Signed-off-by: David Laight <david.laight@aculab.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 02c7f7219ac0 ("ext4: fix hole length calculation overflow in non-extent inodes")
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: aa6956150f82 ("wifi: ath11k: fix dest ring-buffer corruption when ring is full")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ include/asm-generic/barrier.h |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/include/linux/minmax.h
-+++ b/include/linux/minmax.h
-@@ -52,6 +52,23 @@
- #define max(x, y)	__careful_cmp(x, y, >)
+--- a/include/asm-generic/barrier.h
++++ b/include/asm-generic/barrier.h
+@@ -21,6 +21,31 @@
+ #endif
  
- /**
-+ * umin - return minimum of two non-negative values
-+ *   Signed types are zero extended to match a larger unsigned type.
-+ * @x: first value
-+ * @y: second value
+ /*
++ * Architectures that want generic instrumentation can define __ prefixed
++ * variants of all barriers.
 + */
-+#define umin(x, y)	\
-+	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, <)
 +
-+/**
-+ * umax - return maximum of two non-negative values
-+ * @x: first value
-+ * @y: second value
-+ */
-+#define umax(x, y)	\
-+	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, >)
++#ifdef __mb
++#define mb()	do { kcsan_mb(); __mb(); } while (0)
++#endif
 +
-+/**
-  * min3 - return minimum of three values
-  * @x: first value
-  * @y: second value
++#ifdef __rmb
++#define rmb()	do { kcsan_rmb(); __rmb(); } while (0)
++#endif
++
++#ifdef __wmb
++#define wmb()	do { kcsan_wmb(); __wmb(); } while (0)
++#endif
++
++#ifdef __dma_rmb
++#define dma_rmb()	do { kcsan_rmb(); __dma_rmb(); } while (0)
++#endif
++
++#ifdef __dma_wmb
++#define dma_wmb()	do { kcsan_wmb(); __dma_wmb(); } while (0)
++#endif
++
++/*
+  * Force strict CPU ordering. And yes, this is required on UP too when we're
+  * talking to devices.
+  *
 
 
