@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F7D2A1BF;
-	Tue, 26 Aug 2025 14:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2469F1DF75A;
+	Tue, 26 Aug 2025 14:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217709; cv=none; b=ENzT81GVo/J4r4CQgDci9FXwwIQnuqlsqr92LwJjHbvAYfIkh53GfuTwCO5mkhB8GR8U0bkkWCDsYNgvs6RFT3qxKtWKSKdnNhDolILHYSl1CKxv/ohOmYxhTaspxeP0YQEUUN/6uTlIZw6YgW+pj+ufTLTRj3EJ5FIKs4sxlq0=
+	t=1756217712; cv=none; b=UjvqyrpafPY1e1XfYjo4YFJishTueVh+D2RZ06+2eefT7+3BEr1cCAidM5ceVFtFnjifuvYhIwOw/jNP8yH2002/ggdIDB0Y9J+0ELzBCoZb2jySO3C4mBL8LbNY6/4rN97sdKUzX/sgXq1YawT+KZdkdsii9+lQXkmKltnRj6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217709; c=relaxed/simple;
-	bh=ambn1atNnR4yWBbgz0lyPUfP/9sNTEdAoiAfOb4LTbg=;
+	s=arc-20240116; t=1756217712; c=relaxed/simple;
+	bh=0nuN1pAq0yoExnyZORslmkoSI/a/3sSzsA51GHRM4IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXvmh9rzQ/DAv6/EguaxHOFzytVEJkJtFAQG/fG25V3KF2KzcOFpyb5GwxvHHTExOcttiFzsemznaOVVgbjSmCAqFOma81OzDJqI5kGMjG4GXHAS+VDH4il6WqBWUNwtuQPRplaMoATknEhZLAKa2xGwdfQioAnbzzi09QZE5PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TebL0818; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qF50Z3dzyvBBsAjmCBs32UP1XvTINkFHPpPwusFQmfD0Tnrui1vMe4MfRnMnMYxLUfhlbwEsHpNlX3BCUmmhWfrsxo9iv8fV/9YmTAv8dIruGNyUgN3BzE76EwkF4wN3CC5dfGYafezxnDH7xSAKhF+wXEHjfEEuOGcOwudgiJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tytpdjY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TebL0818"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AF4C113CF;
-	Tue, 26 Aug 2025 14:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tytpdjY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EDDC4CEF1;
+	Tue, 26 Aug 2025 14:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217709;
-	bh=ambn1atNnR4yWBbgz0lyPUfP/9sNTEdAoiAfOb4LTbg=;
+	s=korg; t=1756217712;
+	bh=0nuN1pAq0yoExnyZORslmkoSI/a/3sSzsA51GHRM4IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TebL0818poSHhu0Ewq1b7GsITRcw59al2ncgzBMUOqGm0LkcO9Kw4xSQ2lDhGlGlP
-	 moa66WOq+u/xNQoHRQQBpQvVMRy59CqPwzhQ01GTQKnQnNPf3+9V9NshGFGv2mplW5
-	 /oEqNyQd3Pr32Andlz2o5iPUPriCLuBCBd8fZfN0=
+	b=tytpdjY3wwLUNYYorZ2wUucZghGdcR2GQQFWuJTizuBbgF8wHLHHX3sp85ZAnbAan
+	 W88g/PWkKnSYUcUsCuiE5W1ntWK1O9KdYL6jW9GT7MFdFWXTWOd6NK9FY+ZUO+uoiC
+	 L6KIvJnRodn436y1XrbcqtBNxf8vyO0u8y5O5ngg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/523] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
-Date: Tue, 26 Aug 2025 13:07:36 +0200
-Message-ID: <20250826110930.503253411@linuxfoundation.org>
+Subject: [PATCH 5.10 247/523] ASoC: core: Check for rtd == NULL in snd_soc_remove_pcm_runtime()
+Date: Tue, 26 Aug 2025 13:07:37 +0200
+Message-ID: <20250826110930.528045221@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,35 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
+[ Upstream commit 2d91cb261cac6d885954b8f5da28b5c176c18131 ]
 
-code mistakenly used a hardcoded index (codec[1]) instead of
-iterating, over the codec array using the loop variable i.
-Use codec[i] instead of codec[1] to match the loop iteration.
+snd_soc_remove_pcm_runtime() might be called with rtd == NULL which will
+leads to null pointer dereference.
+This was reproduced with topology loading and marking a link as ignore
+due to missing hardware component on the system.
+On module removal the soc_tplg_remove_link() would call
+snd_soc_remove_pcm_runtime() with rtd == NULL since the link was ignored,
+no runtime was created.
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20250619084222.559-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/intel8x0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
-index 3707dc27324d..324d9df7f111 100644
---- a/sound/pci/intel8x0.c
-+++ b/sound/pci/intel8x0.c
-@@ -2270,7 +2270,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
- 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
- 			for (i = 1; i < 4; i++) {
- 				if (pcm->r[0].codec[i]) {
--					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
-+					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
- 					break;
- 				}
- 			}
+diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
+index e9da95ebccc8..1120d669fe2e 100644
+--- a/sound/soc/soc-core.c
++++ b/sound/soc/soc-core.c
+@@ -958,6 +958,9 @@ static int soc_dai_link_sanity_check(struct snd_soc_card *card,
+ void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
+ 				struct snd_soc_pcm_runtime *rtd)
+ {
++	if (!rtd)
++		return;
++
+ 	lockdep_assert_held(&client_mutex);
+ 
+ 	/* release machine specific resources */
 -- 
 2.39.5
 
