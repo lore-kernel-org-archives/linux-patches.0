@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709531C4609;
-	Tue, 26 Aug 2025 13:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190901AB52D;
+	Tue, 26 Aug 2025 13:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213859; cv=none; b=fcWLVC7KXUX33zIkkMf/Ki6a5QfdZS5eq6i2GT2ajxUv4Tl1PLWjs4bHlU9mdMKAiJHvGEnFoMWbOcSIol45tsi+kJrbe6bzIoTjdYcVsiVUU2jvQvtOuFr3HAY3HBU05FlOGiI16fmUIvFcgnbmzpKuCJ9rOvc2lC8KdMzeA/A=
+	t=1756213862; cv=none; b=V+WubK9ryoG+AskMx1N8SHdqY0bt+kddGxw8+13brevjwzyPaBTPw8r7J+CVD5DF4I77L20QLaYU1eGtikb+Ro97u7CqUXR5PiC+Bki2W2WhqrJqQA4V6sNG/YYpbgdENInqVEl4cAk0qodSU+E6QEKiwGYxiPX88+IjEJFDnkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213859; c=relaxed/simple;
-	bh=KOJfHWuDx3cmHxdt4+va6sDzU4f/KSi/nIrsQYy0+RI=;
+	s=arc-20240116; t=1756213862; c=relaxed/simple;
+	bh=oUE6b4SuRP2WmIUSpyJ3ojy1mPa8ayyoLz1vMXm0+Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU0U3mwxqlPSoUhyrxmtZarkjo1TSOloN4tTr/bLoMQXXNdXCOoMETdQ5a/PNTJ0vdeDMwusVkXC/2wK4ZLFeK/4x6eshZPJeATeYe1nNYJRg2odtCZ6TX0PBalYUUosy4mb9hKB2LpXY95xxBQN2Y4btJdC4p/HFr7gqu4cb9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAJMrNQl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pM6OKrH2ke+17Avf2THNfPOdiIkyF0EvVyKEZr5pn6K/KV4iXk2EJJRaInhdNt/QXtld4FrenKh++CFiQ3tu0jUf9B4rIQEMHu/Ld2RvYi/Z07oJzAJ27XsZbgFReKfAIRWngIVjm15zZEv13oMNw6fHinyNsemGIEQrbkF3fV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLtk1tbC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAJMrNQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027B5C4CEF1;
-	Tue, 26 Aug 2025 13:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLtk1tbC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E108C4CEF1;
+	Tue, 26 Aug 2025 13:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213859;
-	bh=KOJfHWuDx3cmHxdt4+va6sDzU4f/KSi/nIrsQYy0+RI=;
+	s=korg; t=1756213862;
+	bh=oUE6b4SuRP2WmIUSpyJ3ojy1mPa8ayyoLz1vMXm0+Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAJMrNQl76oekNKTVn7ZOZWPFJWpi09/3ctyG8Ae36M2AT5YP0q+2+2LOD8V+OtJB
-	 VIWb5dcIzjIWIMGu4d9Y93rBT4/5V60QbG/UCglpAM4/dGwmZ+/rrHrKRCXlVWV6Z+
-	 sd1jt4ctXHWbg71uHa34UPBpFHbkxuuNh9P2IG/s=
+	b=vLtk1tbCPLwi11PgJ5QW0DKe4l1wAE+4PVxYwBjunYt7PngjpQF9kDhb4SOpY5JI0
+	 U+9UI9rGu+qng9/Pn17bKUKajQ/kWCMpHRvWIxfCnUTo5v3nUEeaKcafvHCF0CP0Mj
+	 iQcHN4n65nQo+ZsVdw5Qx24kQf+PRhZ3UO4skEE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 506/587] mptcp: disable add_addr retransmission when timeout is 0
-Date: Tue, 26 Aug 2025 13:10:55 +0200
-Message-ID: <20250826111005.858652260@linuxfoundation.org>
+	Jiayi Li <lijiayi@kylinos.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 480/587] memstick: Fix deadlock by moving removing flag earlier
+Date: Tue, 26 Aug 2025 13:10:29 +0200
+Message-ID: <20250826111005.183090433@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,95 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Jiayi Li <lijiayi@kylinos.cn>
 
-commit f5ce0714623cffd00bf2a83e890d09c609b7f50a upstream.
+commit 99d7ab8db9d8230b243f5ed20ba0229e54cc0dfa upstream.
 
-When add_addr_timeout was set to 0, this caused the ADD_ADDR to be
-retransmitted immediately, which looks like a buggy behaviour. Instead,
-interpret 0 as "no retransmissions needed".
+The existing memstick core patch: commit 62c59a8786e6 ("memstick: Skip
+allocating card when removing host") sets host->removing in
+memstick_remove_host(),but still exists a critical time window where
+memstick_check can run after host->eject is set but before removing is set.
 
-The documentation is updated to explicitly state that setting the timeout
-to 0 disables retransmission.
+In the rtsx_usb_ms driver, the problematic sequence is:
 
-Fixes: 93f323b9cccc ("mptcp: add a new sysctl add_addr_timeout")
+rtsx_usb_ms_drv_remove:          memstick_check:
+  host->eject = true
+  cancel_work_sync(handle_req)     if(!host->removing)
+  ...                              memstick_alloc_card()
+                                     memstick_set_rw_addr()
+                                       memstick_new_req()
+                                         rtsx_usb_ms_request()
+                                           if(!host->eject)
+                                           skip schedule_work
+                                       wait_for_completion()
+  memstick_remove_host:                [blocks indefinitely]
+    host->removing = true
+    flush_workqueue()
+    [block]
+
+1. rtsx_usb_ms_drv_remove sets host->eject = true
+2. cancel_work_sync(&host->handle_req) runs
+3. memstick_check work may be executed here <-- danger window
+4. memstick_remove_host sets removing = 1
+
+During this window (step 3), memstick_check calls memstick_alloc_card,
+which may indefinitely waiting for mrq_complete completion that will
+never occur because rtsx_usb_ms_request sees eject=true and skips
+scheduling work, memstick_set_rw_addr waits forever for completion.
+
+This causes a deadlock when memstick_remove_host tries to flush_workqueue,
+waiting for memstick_check to complete, while memstick_check is blocked
+waiting for mrq_complete completion.
+
+Fix this by setting removing=true at the start of rtsx_usb_ms_drv_remove,
+before any work cancellation. This ensures memstick_check will see the
+removing flag immediately and exit early, avoiding the deadlock.
+
+Fixes: 62c59a8786e6 ("memstick: Skip allocating card when removing host")
+Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
 Cc: stable@vger.kernel.org
-Suggested-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250815-net-mptcp-misc-fixes-6-17-rc2-v1-5-521fe9957892@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Before commit e4c28e3d5c09 ("mptcp: pm: move generic PM helpers to
-  pm.c"), mptcp_pm_alloc_anno_list() was in pm_netlink.c. The same patch
-  can be applied there without conflicts. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20250804013604.1311218-1-lijiayi@kylinos.cn
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/mptcp-sysctl.rst |    2 ++
- net/mptcp/pm_netlink.c                    |   13 ++++++++++---
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/memstick/core/memstick.c    |    1 -
+ drivers/memstick/host/rtsx_usb_ms.c |    1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/networking/mptcp-sysctl.rst
-+++ b/Documentation/networking/mptcp-sysctl.rst
-@@ -20,6 +20,8 @@ add_addr_timeout - INTEGER (seconds)
- 	resent to an MPTCP peer that has not acknowledged a previous
- 	ADD_ADDR message.
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -548,7 +548,6 @@ EXPORT_SYMBOL(memstick_add_host);
+  */
+ void memstick_remove_host(struct memstick_host *host)
+ {
+-	host->removing = 1;
+ 	flush_workqueue(workqueue);
+ 	mutex_lock(&host->lock);
+ 	if (host->card)
+--- a/drivers/memstick/host/rtsx_usb_ms.c
++++ b/drivers/memstick/host/rtsx_usb_ms.c
+@@ -812,6 +812,7 @@ static int rtsx_usb_ms_drv_remove(struct
+ 	int err;
  
-+	Do not retransmit if set to 0.
-+
- 	The default value matches TCP_RTO_MAX. This is a per-namespace
- 	sysctl.
+ 	host->eject = true;
++	msh->removing = true;
+ 	cancel_work_sync(&host->handle_req);
+ 	cancel_delayed_work_sync(&host->poll_card);
  
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -294,6 +294,7 @@ static void mptcp_pm_add_timer(struct ti
- 	struct mptcp_pm_add_entry *entry = from_timer(entry, timer, add_timer);
- 	struct mptcp_sock *msk = entry->sock;
- 	struct sock *sk = (struct sock *)msk;
-+	unsigned int timeout;
- 
- 	pr_debug("msk=%p\n", msk);
- 
-@@ -311,6 +312,10 @@ static void mptcp_pm_add_timer(struct ti
- 		goto out;
- 	}
- 
-+	timeout = mptcp_get_add_addr_timeout(sock_net(sk));
-+	if (!timeout)
-+		goto out;
-+
- 	spin_lock_bh(&msk->pm.lock);
- 
- 	if (!mptcp_pm_should_add_signal_addr(msk)) {
-@@ -322,7 +327,7 @@ static void mptcp_pm_add_timer(struct ti
- 
- 	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX)
- 		sk_reset_timer(sk, timer,
--			       jiffies + mptcp_get_add_addr_timeout(sock_net(sk)));
-+			       jiffies + timeout);
- 
- 	spin_unlock_bh(&msk->pm.lock);
- 
-@@ -364,6 +369,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 	struct mptcp_pm_add_entry *add_entry = NULL;
- 	struct sock *sk = (struct sock *)msk;
- 	struct net *net = sock_net(sk);
-+	unsigned int timeout;
- 
- 	lockdep_assert_held(&msk->pm.lock);
- 
-@@ -388,8 +394,9 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 
- 	timer_setup(&add_entry->add_timer, mptcp_pm_add_timer, 0);
- reset_timer:
--	sk_reset_timer(sk, &add_entry->add_timer,
--		       jiffies + mptcp_get_add_addr_timeout(net));
-+	timeout = mptcp_get_add_addr_timeout(net);
-+	if (timeout)
-+		sk_reset_timer(sk, &add_entry->add_timer, jiffies + timeout);
- 
- 	return true;
- }
 
 
