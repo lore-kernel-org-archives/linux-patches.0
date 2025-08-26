@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E669307AF5;
-	Tue, 26 Aug 2025 13:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC88F393DF2;
+	Tue, 26 Aug 2025 13:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215478; cv=none; b=mMSlOepcb4D2yVhB1IhtE/4wU7iXtW9zdSTN8w00SjN+/QipfLYE026j+I7SlRBRC6QghIQgPpAXtPtm4mOCQGQvwar5bUBwkZCMxjr6OBmNKG5rIHuqb9KxcfZhtRG1MyDwuXPszEA2ipWuJ5T7yQUFzhuxsmoRIqj1aeh+Qec=
+	t=1756215480; cv=none; b=U++k+qICwcPJj/HlOeCiOom1AfWun3fx4BDRI0CVoZ88/mo68jA+5EkOVP6C6dTAIYvVmyUfogJaTGIxENJiYEbAG3tm29gQZM3aXSnLzpmxAStceVFSzpJ0wyeW7gTfRbvZgvXengFVWveNxGU520lCOP514qw0JXvB8MxML/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215478; c=relaxed/simple;
-	bh=tPr0ZWWTZOtPCFKHZUbVQc2+gzpwrvo/a/hPHSi0nrQ=;
+	s=arc-20240116; t=1756215480; c=relaxed/simple;
+	bh=34lEjL9qBn3Okz7fdZ27pDyabSAwhaOJXr272cZRVng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BMdOUI5lhz4QoXvihrwN/CCab/UBuO2O/nVRRAdjSvxveN20IgdXKHk05FgLTTWyUTsUpTfbjSbRN35mR/vum5Zs4vnWweGOWjRHgZ+J5RosuaL1+AaJ45BrGElrVwfgLVDoJtS+/PAUjiqCHHHJ66pO5w1tYPMfeoXhcmN1g9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLctZ4CE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dKeNMPI6snwrUd6ryfKhjte2T2UcEyrPSpj2FuxO9WIR+yGtXOErVZlR7FRyQ9zgIjUNsQBxzDh8/q8Er1sN6YdaJBuK1gH10V7K7PfmmfLxai9d3BLVrjdj7Kn6wuleL3aMVqydGWQdNxW3wMMK6uFa9+5HgR6pB1j770N1SuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRwjvhGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLctZ4CE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A8DC4CEF1;
-	Tue, 26 Aug 2025 13:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRwjvhGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E804C4CEF1;
+	Tue, 26 Aug 2025 13:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215477;
-	bh=tPr0ZWWTZOtPCFKHZUbVQc2+gzpwrvo/a/hPHSi0nrQ=;
+	s=korg; t=1756215480;
+	bh=34lEjL9qBn3Okz7fdZ27pDyabSAwhaOJXr272cZRVng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLctZ4CEv2HfJYZ9ukCxFfJ5/MFOHGF2l/BAl+0dYvwVGFuF9TwC8/q0rRn6RAi6r
-	 0t+oPsrZrJLWe7onsydlneGelrLjzH31a0mmbc1W3MOg1Q5eyY9sRuLIfULTgeDICp
-	 vvu21mpogD7TiIbPltDqnUbEh+r/dq69FkV+Q4wY=
+	b=dRwjvhGAxxNsm2w4AggyEWa9BGQ8wX1lvR2RvnyxRiD76NEk0WN7i70nuf6hXqdcD
+	 mQty3TxfiNv+vLsI3yQ9eFM+hXmhQS3MmB70L1thVk5qgXDSn1sfSm+atHFCuLIxKs
+	 Yvy0J+YqhSYsF2kUTKo2DASTH0ba6cyxG7U5Wd4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/644] Bluetooth: Fix null-ptr-deref in l2cap_sock_resume_cb()
-Date: Tue, 26 Aug 2025 13:02:19 +0200
-Message-ID: <20250826110947.695098107@linuxfoundation.org>
+Subject: [PATCH 5.15 049/644] Bluetooth: SMP: If an unallowed command is received consider it a failure
+Date: Tue, 26 Aug 2025 13:02:20 +0200
+Message-ID: <20250826110947.719449354@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,78 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit a0075accbf0d76c2dad1ad3993d2e944505d99a0 ]
+[ Upstream commit fe4840df0bdf341f376885271b7680764fe6b34e ]
 
-syzbot reported null-ptr-deref in l2cap_sock_resume_cb(). [0]
+If a command is received while a bonding is ongoing consider it a
+pairing failure so the session is cleanup properly and the device is
+disconnected immediately instead of continuing with other commands that
+may result in the session to get stuck without ever completing such as
+the case bellow:
 
-l2cap_sock_resume_cb() has a similar problem that was fixed by commit
-1bff51ea59a9 ("Bluetooth: fix use-after-free error in lock_sock_nested()").
+> ACL Data RX: Handle 2048 flags 0x02 dlen 21
+      SMP: Identity Information (0x08) len 16
+        Identity resolving key[16]: d7e08edef97d3e62cd2331f82d8073b0
+> ACL Data RX: Handle 2048 flags 0x02 dlen 21
+      SMP: Signing Information (0x0a) len 16
+        Signature key[16]: 1716c536f94e843a9aea8b13ffde477d
+Bluetooth: hci0: unexpected SMP command 0x0a from XX:XX:XX:XX:XX:XX
+> ACL Data RX: Handle 2048 flags 0x02 dlen 12
+      SMP: Identity Address Information (0x09) len 7
+        Address: XX:XX:XX:XX:XX:XX (Intel Corporate)
 
-Since both l2cap_sock_kill() and l2cap_sock_resume_cb() are executed
-under l2cap_sock_resume_cb(), we can avoid the issue simply by checking
-if chan->data is NULL.
+While accourding to core spec 6.1 the expected order is always BD_ADDR
+first first then CSRK:
 
-Let's not access to the killed socket in l2cap_sock_resume_cb().
+When using LE legacy pairing, the keys shall be distributed in the
+following order:
 
-[0]:
-BUG: KASAN: null-ptr-deref in instrument_atomic_write include/linux/instrumented.h:82 [inline]
-BUG: KASAN: null-ptr-deref in clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
-BUG: KASAN: null-ptr-deref in l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
-Write of size 8 at addr 0000000000000570 by task kworker/u9:0/52
+    LTK by the Peripheral
 
-CPU: 1 UID: 0 PID: 52 Comm: kworker/u9:0 Not tainted 6.16.0-rc4-syzkaller-g7482bb149b9f #0 PREEMPT
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
-Workqueue: hci0 hci_rx_work
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:501 (C)
- __dump_stack+0x30/0x40 lib/dump_stack.c:94
- dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
- print_report+0x58/0x84 mm/kasan/report.c:524
- kasan_report+0xb0/0x110 mm/kasan/report.c:634
- check_region_inline mm/kasan/generic.c:-1 [inline]
- kasan_check_range+0x264/0x2a4 mm/kasan/generic.c:189
- __kasan_check_write+0x20/0x30 mm/kasan/shadow.c:37
- instrument_atomic_write include/linux/instrumented.h:82 [inline]
- clear_bit include/asm-generic/bitops/instrumented-atomic.h:41 [inline]
- l2cap_sock_resume_cb+0xb4/0x17c net/bluetooth/l2cap_sock.c:1711
- l2cap_security_cfm+0x524/0xea0 net/bluetooth/l2cap_core.c:7357
- hci_auth_cfm include/net/bluetooth/hci_core.h:2092 [inline]
- hci_auth_complete_evt+0x2e8/0xa4c net/bluetooth/hci_event.c:3514
- hci_event_func net/bluetooth/hci_event.c:7511 [inline]
- hci_event_packet+0x650/0xe9c net/bluetooth/hci_event.c:7565
- hci_rx_work+0x320/0xb18 net/bluetooth/hci_core.c:4070
- process_one_work+0x7e8/0x155c kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3321 [inline]
- worker_thread+0x958/0xed8 kernel/workqueue.c:3402
- kthread+0x5fc/0x75c kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
+    EDIV and Rand by the Peripheral
 
-Fixes: d97c899bde33 ("Bluetooth: Introduce L2CAP channel callback for resuming")
-Reported-by: syzbot+e4d73b165c3892852d22@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/686c12bd.a70a0220.29fe6c.0b13.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+    IRK by the Peripheral
+
+    BD_ADDR by the Peripheral
+
+    CSRK by the Peripheral
+
+    LTK by the Central
+
+    EDIV and Rand by the Central
+
+    IRK by the Central
+
+    BD_ADDR by the Central
+
+    CSRK by the Central
+
+When using LE Secure Connections, the keys shall be distributed in the
+following order:
+
+    IRK by the Peripheral
+
+    BD_ADDR by the Peripheral
+
+    CSRK by the Peripheral
+
+    IRK by the Central
+
+    BD_ADDR by the Central
+
+    CSRK by the Central
+
+According to the Core 6.1 for commands used for key distribution "Key
+Rejected" can be used:
+
+  '3.6.1. Key distribution and generation
+
+  A device may reject a distributed key by sending the Pairing Failed command
+  with the reason set to "Key Rejected".
+
+Fixes: b28b4943660f ("Bluetooth: Add strict checks for allowed SMP PDUs")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/smp.c | 19 ++++++++++++++++++-
+ net/bluetooth/smp.h |  1 +
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 441dedd8277f5..b2719f1b8adff 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1678,6 +1678,9 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
- {
- 	struct sock *sk = chan->data;
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 724dc901eaf27..0f4e92c4dc94a 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2971,8 +2971,25 @@ static int smp_sig_channel(struct l2cap_chan *chan, struct sk_buff *skb)
+ 	if (code > SMP_CMD_MAX)
+ 		goto drop;
  
-+	if (!sk)
-+		return;
-+
- 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
- 		sk->sk_state = BT_CONNECTED;
- 		chan->state = BT_CONNECTED;
+-	if (smp && !test_and_clear_bit(code, &smp->allow_cmd))
++	if (smp && !test_and_clear_bit(code, &smp->allow_cmd)) {
++		/* If there is a context and the command is not allowed consider
++		 * it a failure so the session is cleanup properly.
++		 */
++		switch (code) {
++		case SMP_CMD_IDENT_INFO:
++		case SMP_CMD_IDENT_ADDR_INFO:
++		case SMP_CMD_SIGN_INFO:
++			/* 3.6.1. Key distribution and generation
++			 *
++			 * A device may reject a distributed key by sending the
++			 * Pairing Failed command with the reason set to
++			 * "Key Rejected".
++			 */
++			smp_failure(conn, SMP_KEY_REJECTED);
++			break;
++		}
+ 		goto drop;
++	}
+ 
+ 	/* If we don't have a context the only allowed commands are
+ 	 * pairing request and security request.
+diff --git a/net/bluetooth/smp.h b/net/bluetooth/smp.h
+index 87a59ec2c9f02..c5da53dfab04f 100644
+--- a/net/bluetooth/smp.h
++++ b/net/bluetooth/smp.h
+@@ -138,6 +138,7 @@ struct smp_cmd_keypress_notify {
+ #define SMP_NUMERIC_COMP_FAILED		0x0c
+ #define SMP_BREDR_PAIRING_IN_PROGRESS	0x0d
+ #define SMP_CROSS_TRANSP_NOT_ALLOWED	0x0e
++#define SMP_KEY_REJECTED		0x0f
+ 
+ #define SMP_MIN_ENC_KEY_SIZE		7
+ #define SMP_MAX_ENC_KEY_SIZE		16
 -- 
 2.39.5
 
