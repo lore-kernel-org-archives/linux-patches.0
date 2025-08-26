@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87624301486;
-	Tue, 26 Aug 2025 11:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B15029D26A;
+	Tue, 26 Aug 2025 11:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208097; cv=none; b=KRWuTRIa56OcaLQMgK6CLJA/ZHYZEUB/lSeyAJ1kErtVdfmMa+CdCU9N/3QPEzYswPkmjWSmXnMlwAInMaJSNUpZsAMKsZytwkuEKFGEleFE2CuyQ0yb43JW/SSElFJdEH1WlOc9HXSN8SCDuohWFgtIifhioGseAioRWMffsJ0=
+	t=1756208100; cv=none; b=T11evb+ZIZfOidpWQeYzFzpLxeMDRuuH5LlIoltVqzE3x+l7lJGIqoMMraCbQKSgjXFAMfKUVHLcFtfFVbrIPqNvRk2kPvGYPDqUOaVrN2Dr2iQsQ00pdKMdz5axwe9Qfw2QcMD8yvQw9GPfcQCiku9+3gr0HVUJfy4JvrLzL1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208097; c=relaxed/simple;
-	bh=iF5mqqMdo3J6gJ7BfvYlhrgE5ufTJ9rVfthM+gBd8DU=;
+	s=arc-20240116; t=1756208100; c=relaxed/simple;
+	bh=erKXwtYIfcHKQT9a/fwGqiE039zHplkJ3fOm5RR49/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=daMNZixj5QavKvkabMF4dQ/t+PShYwHhhLudnHKrOBDXxuX61T3rff8QqdseFcye+xoNtJ9Ltw+lrOPdy5F0ltR9LoTc3MdPpH1HHA64bDGAyqLNNrBd5S2E65Lwm+zcvMwZJdSh9+ilndgIbJqKE6v54pmHkco8hJTkRGlAaG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kN1eo6f9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PrC9j3tMPUq1yfCwREiFr17CLBgzy7SGZKPWimF3LdJgdtElPwK7ci7k2O8I5L6SpxAlkywSU7xAD50FghIyd+w9Gez5V89mWVrKNNFsQt+Q0W+NeAKEDKyft8zrf+1MaWFDfJMly+GVDYsaA9mTycOTkyaUPa3u60orHHdTRs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEvepcUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN1eo6f9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21625C4CEF1;
-	Tue, 26 Aug 2025 11:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEvepcUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1787C4CEF1;
+	Tue, 26 Aug 2025 11:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208097;
-	bh=iF5mqqMdo3J6gJ7BfvYlhrgE5ufTJ9rVfthM+gBd8DU=;
+	s=korg; t=1756208100;
+	bh=erKXwtYIfcHKQT9a/fwGqiE039zHplkJ3fOm5RR49/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kN1eo6f9epQyNYGfwcbVZP5w+zWq6gf7It1n4HHvasZGmR2iRkud/nGki3mlxY2Wx
-	 C2kwgKLjteVzBagjnrLYOKT0a1ZGGT89J9rlzoUGk5A6veFMBlVxj01SC4XGhKRpJP
-	 kTBMpjdLpnJqLOGwrQWAuIZw81rFhZ4wdveqPkik=
+	b=DEvepcURItEnwgZOKJkFKR0hH+8pfz8n4PSRqJXogD9e84ITGt9eNXIWx28k2SimQ
+	 xhFliIL8643g6WTrni5MGkAFoTEKgqCc5dKj1uobaPBAa54ohWFtvtcK1SAqaL/8dQ
+	 ooZYPaXbpmoeEPasF4VshJaZ7xz2ZMzRYb1AzjFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dewei Meng <mengdewei@cqsoftware.com.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 436/457] ALSA: timer: fix ida_free call while not allocated
-Date: Tue, 26 Aug 2025 13:12:00 +0200
-Message-ID: <20250826110948.063166851@linuxfoundation.org>
+Subject: [PATCH 6.16 437/457] bonding: update LACP activity flag after setting lacp_active
+Date: Tue, 26 Aug 2025 13:12:01 +0200
+Message-ID: <20250826110948.087954458@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,81 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dewei Meng <mengdewei@cqsoftware.com.cn>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 5003a65790ed66be882d1987cc2ca86af0de3db1 ]
+[ Upstream commit b64d035f77b1f02ab449393342264b44950a75ae ]
 
-In the snd_utimer_create() function, if the kasprintf() function return
-NULL, snd_utimer_put_id() will be called, finally use ida_free()
-to free the unallocated id 0.
+The port's actor_oper_port_state activity flag should be updated immediately
+after changing the lacp_active option to reflect the current mode correctly.
 
-the syzkaller reported the following information:
-  ------------[ cut here ]------------
-  ida_free called for id=0 which is not allocated.
-  WARNING: CPU: 1 PID: 1286 at lib/idr.c:592 ida_free+0x1fd/0x2f0 lib/idr.c:592
-  Modules linked in:
-  CPU: 1 UID: 0 PID: 1286 Comm: syz-executor164 Not tainted 6.15.8 #3 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.fc42 04/01/2014
-  RIP: 0010:ida_free+0x1fd/0x2f0 lib/idr.c:592
-  Code: f8 fc 41 83 fc 3e 76 69 e8 70 b2 f8 (...)
-  RSP: 0018:ffffc900007f79c8 EFLAGS: 00010282
-  RAX: 0000000000000000 RBX: 1ffff920000fef3b RCX: ffffffff872176a5
-  RDX: ffff88800369d200 RSI: 0000000000000000 RDI: ffff88800369d200
-  RBP: 0000000000000000 R08: ffffffff87ba60a5 R09: 0000000000000000
-  R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
-  R13: 0000000000000002 R14: 0000000000000000 R15: 0000000000000000
-  FS:  00007f6f1abc1740(0000) GS:ffff8880d76a0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f6f1ad7a784 CR3: 000000007a6e2000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   snd_utimer_put_id sound/core/timer.c:2043 [inline] [snd_timer]
-   snd_utimer_create+0x59b/0x6a0 sound/core/timer.c:2184 [snd_timer]
-   snd_utimer_ioctl_create sound/core/timer.c:2202 [inline] [snd_timer]
-   __snd_timer_user_ioctl.isra.0+0x724/0x1340 sound/core/timer.c:2287 [snd_timer]
-   snd_timer_user_ioctl+0x75/0xc0 sound/core/timer.c:2298 [snd_timer]
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:907 [inline]
-   __se_sys_ioctl fs/ioctl.c:893 [inline]
-   __x64_sys_ioctl+0x198/0x200 fs/ioctl.c:893
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x7b/0x160 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [...]
-
-The utimer->id should be set properly before the kasprintf() function,
-ensures the snd_utimer_put_id() function will free the allocated id.
-
-Fixes: 37745918e0e75 ("ALSA: timer: Introduce virtual userspace-driven timers")
-Signed-off-by: Dewei Meng <mengdewei@cqsoftware.com.cn>
-Link: https://patch.msgid.link/20250821014317.40786-1-mengdewei@cqsoftware.com.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3a755cd8b7c6 ("bonding: add new option lacp_active")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20250815062000.22220-2-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/timer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/bonding/bond_3ad.c     | 25 +++++++++++++++++++++++++
+ drivers/net/bonding/bond_options.c |  1 +
+ include/net/bond_3ad.h             |  1 +
+ 3 files changed, 27 insertions(+)
 
-diff --git a/sound/core/timer.c b/sound/core/timer.c
-index 8072183c33d3..a352247519be 100644
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -2139,14 +2139,14 @@ static int snd_utimer_create(struct snd_timer_uinfo *utimer_info,
- 		goto err_take_id;
- 	}
+diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
+index c6807e473ab7..a51305423d28 100644
+--- a/drivers/net/bonding/bond_3ad.c
++++ b/drivers/net/bonding/bond_3ad.c
+@@ -2869,6 +2869,31 @@ void bond_3ad_update_lacp_rate(struct bonding *bond)
+ 	spin_unlock_bh(&bond->mode_lock);
+ }
  
-+	utimer->id = utimer_id;
++/**
++ * bond_3ad_update_lacp_active - change the lacp active
++ * @bond: bonding struct
++ *
++ * Update actor_oper_port_state when lacp_active is modified.
++ */
++void bond_3ad_update_lacp_active(struct bonding *bond)
++{
++	struct port *port = NULL;
++	struct list_head *iter;
++	struct slave *slave;
++	int lacp_active;
 +
- 	utimer->name = kasprintf(GFP_KERNEL, "snd-utimer%d", utimer_id);
- 	if (!utimer->name) {
- 		err = -ENOMEM;
- 		goto err_get_name;
- 	}
++	lacp_active = bond->params.lacp_active;
++	spin_lock_bh(&bond->mode_lock);
++	bond_for_each_slave(bond, slave, iter) {
++		port = &(SLAVE_AD_INFO(slave)->port);
++		if (lacp_active)
++			port->actor_oper_port_state |= LACP_STATE_LACP_ACTIVITY;
++		else
++			port->actor_oper_port_state &= ~LACP_STATE_LACP_ACTIVITY;
++	}
++	spin_unlock_bh(&bond->mode_lock);
++}
++
+ size_t bond_3ad_stats_size(void)
+ {
+ 	return nla_total_size_64bit(sizeof(u64)) + /* BOND_3AD_STAT_LACPDU_RX */
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index 91893c29b899..28c53f1b1382 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -1637,6 +1637,7 @@ static int bond_option_lacp_active_set(struct bonding *bond,
+ 	netdev_dbg(bond->dev, "Setting LACP active to %s (%llu)\n",
+ 		   newval->string, newval->value);
+ 	bond->params.lacp_active = newval->value;
++	bond_3ad_update_lacp_active(bond);
  
--	utimer->id = utimer_id;
--
- 	tid.dev_sclass = SNDRV_TIMER_SCLASS_APPLICATION;
- 	tid.dev_class = SNDRV_TIMER_CLASS_GLOBAL;
- 	tid.card = -1;
+ 	return 0;
+ }
+diff --git a/include/net/bond_3ad.h b/include/net/bond_3ad.h
+index 2053cd8e788a..dba369a2cf27 100644
+--- a/include/net/bond_3ad.h
++++ b/include/net/bond_3ad.h
+@@ -307,6 +307,7 @@ int bond_3ad_lacpdu_recv(const struct sk_buff *skb, struct bonding *bond,
+ 			 struct slave *slave);
+ int bond_3ad_set_carrier(struct bonding *bond);
+ void bond_3ad_update_lacp_rate(struct bonding *bond);
++void bond_3ad_update_lacp_active(struct bonding *bond);
+ void bond_3ad_update_ad_actor_settings(struct bonding *bond);
+ int bond_3ad_stats_fill(struct sk_buff *skb, struct bond_3ad_stats *stats);
+ size_t bond_3ad_stats_size(void);
 -- 
 2.50.1
 
