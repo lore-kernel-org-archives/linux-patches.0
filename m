@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5787393DF2;
-	Tue, 26 Aug 2025 13:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250D628FD;
+	Tue, 26 Aug 2025 13:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214609; cv=none; b=fBzt0CWEdjggGz8hLIO/tbVoQ63wIAPJmJgD+j12wwUb+iR3cBocC8rIBQ4B9er8QMtEXaPqwomV0xp6pWweqTrnokcykBFjD8GaLjZ2hRcIM2vAhs2gbiObHDJMFtMQNkIzABNUNE3Mkt9JYARaPXEN6T4j3vrVdEdrMuAM+Zw=
+	t=1756214612; cv=none; b=WQfmJpFwsWtn3SJqHDty2TF7d1uoyLgiomIGxRIRHlBAwHX6BRLuGdcNfPc3qDRmaUpaExt5m2wLxezdRoAx/S/ygejKA3fkR3pc8XuC8Wakt825kGXXPAtPl2pGoenHQQGa8GW5XwS0JTQwoMAcYpOeMzb6Y5m9BhGakLpvMiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214609; c=relaxed/simple;
-	bh=rZRjRGqdwoIV5o/FrvCZ+Vv4LkHC7LNv9e5oTdDXnjY=;
+	s=arc-20240116; t=1756214612; c=relaxed/simple;
+	bh=it1E0wnhqoXT4MYn9zZAMX2HDOh0ANsgNK8riaz4sZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9T7K8cS6SP/1Y3FVpuqtiM9JtziLQduYZIVbav+9H+U6f7N8PVZA/n2KipQwTZINhxyQcQ9rCj16Ia/+iL8nfGHB8rlceB+ikBiRy64NZ/alSAR9+4UOc7pTT11N7EuPnaXQJ4eyJJcUFN8lyQCMgHmpcjuEwglwveGmWgxEXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4Ugd+rR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BaVROhyW29RWj94K0ALPnM12/kue7nHpUYuP+/YSRRlIP9wi1vBrC78C45+8I6DCsOzck45AOpJ79pFjtwX+utbwqjR7vOYKdv/4aud1mb8wG/sCU+N7mPI5Wls1YV4/7dIy8ACQPe8bLeKj//SmRKMT5o5UEn61aScf67HnGo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uus6FkV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4Ugd+rR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018ABC4CEF1;
-	Tue, 26 Aug 2025 13:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uus6FkV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB92BC4CEF1;
+	Tue, 26 Aug 2025 13:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214609;
-	bh=rZRjRGqdwoIV5o/FrvCZ+Vv4LkHC7LNv9e5oTdDXnjY=;
+	s=korg; t=1756214612;
+	bh=it1E0wnhqoXT4MYn9zZAMX2HDOh0ANsgNK8riaz4sZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4Ugd+rRWAVI7ohjvhBG+CMlngJ7u72x3odVij0Gpg7KRbtksHC2vmwXJdmYAg7vP
-	 do8ntetfN+xjgkKkb09KpF6K9+t8tmrslveC1WUdd8sTIJHmKS2Bc41PWxhH9DBRI1
-	 1NpKkhl803kqu/KIJZ1v1mDx0A9uG1Lb1FnhEkEk=
+	b=uus6FkV3jBc2ketSWFAvQ2fdEaAl7CHhdI7rD6VFOqj4+PbINT6cMsJ6uUeL6B2Cd
+	 hvuBniDacKpUEQd7Wiu/+KEVaSqbJ0Cveu1qxoc42QwG9E0JyAUqfy9S+vTr5lV2cR
+	 FEPGFPL/54XJv7Mr8djqMaMLEcZeMYqwi9Trug7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/482] media: tc358743: Increase FIFO trigger level to 374
-Date: Tue, 26 Aug 2025 13:07:35 +0200
-Message-ID: <20250826110935.780146101@linuxfoundation.org>
+Subject: [PATCH 6.1 203/482] media: usb: hdpvr: disable zero-length read messages
+Date: Tue, 26 Aug 2025 13:07:36 +0200
+Message-ID: <20250826110935.803215441@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,56 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 86addd25314a1e77dbdcfddfeed0bab2f27da0e2 ]
+[ Upstream commit b5ae5a79825ba8037b0be3ef677a24de8c063abf ]
 
-The existing fixed value of 16 worked for UYVY 720P60 over
-2 lanes at 594MHz, or UYVY 1080P60 over 4 lanes. (RGB888
-1080P60 needs 6 lanes at 594MHz).
-It doesn't allow for lower resolutions to work as the FIFO
-underflows.
+This driver passes the length of an i2c_msg directly to
+usb_control_msg(). If the message is now a read and of length 0, it
+violates the USB protocol and a warning will be printed. Enable the
+I2C_AQ_NO_ZERO_LEN_READ quirk for this adapter thus forbidding 0-length
+read messages altogether.
 
-374 is required for 1080P24 or 1080P30 UYVY over 2 lanes @
-972Mbit/s, but >374 means that the FIFO underflows on 1080P50
-UYVY over 2 lanes @ 972Mbit/s.
-
-Whilst it would be nice to compute it, the required information
-isn't published by Toshiba.
-
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358743.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/media/usb/hdpvr/hdpvr-i2c.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
-index 0f9fd9cb77b3..d13e8f19278f 100644
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -1939,8 +1939,19 @@ static int tc358743_probe_of(struct tc358743_state *state)
- 	state->pdata.refclk_hz = clk_get_rate(refclk);
- 	state->pdata.ddc5v_delay = DDC5V_DELAY_100_MS;
- 	state->pdata.enable_hdcp = false;
--	/* A FIFO level of 16 should be enough for 2-lane 720p60 at 594 MHz. */
--	state->pdata.fifo_level = 16;
-+	/*
-+	 * Ideally the FIFO trigger level should be set based on the input and
-+	 * output data rates, but the calculations required are buried in
-+	 * Toshiba's register settings spreadsheet.
-+	 * A value of 16 works with a 594Mbps data rate for 720p60 (using 2
-+	 * lanes) and 1080p60 (using 4 lanes), but fails when the data rate
-+	 * is increased, or a lower pixel clock is used that result in CSI
-+	 * reading out faster than the data is arriving.
-+	 *
-+	 * A value of 374 works with both those modes at 594Mbps, and with most
-+	 * modes on 972Mbps.
-+	 */
-+	state->pdata.fifo_level = 374;
- 	/*
- 	 * The PLL input clock is obtained by dividing refclk by pll_prd.
- 	 * It must be between 6 MHz and 40 MHz, lower frequency is better.
+diff --git a/drivers/media/usb/hdpvr/hdpvr-i2c.c b/drivers/media/usb/hdpvr/hdpvr-i2c.c
+index 070559b01b01..54956a8ff15e 100644
+--- a/drivers/media/usb/hdpvr/hdpvr-i2c.c
++++ b/drivers/media/usb/hdpvr/hdpvr-i2c.c
+@@ -165,10 +165,16 @@ static const struct i2c_algorithm hdpvr_algo = {
+ 	.functionality = hdpvr_functionality,
+ };
+ 
++/* prevent invalid 0-length usb_control_msg */
++static const struct i2c_adapter_quirks hdpvr_quirks = {
++	.flags = I2C_AQ_NO_ZERO_LEN_READ,
++};
++
+ static const struct i2c_adapter hdpvr_i2c_adapter_template = {
+ 	.name   = "Hauppauge HD PVR I2C",
+ 	.owner  = THIS_MODULE,
+ 	.algo   = &hdpvr_algo,
++	.quirks = &hdpvr_quirks,
+ };
+ 
+ static int hdpvr_activate_ir(struct hdpvr_device *dev)
 -- 
 2.39.5
 
