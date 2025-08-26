@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E419334DCCA;
-	Tue, 26 Aug 2025 13:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAFF34A338;
+	Tue, 26 Aug 2025 13:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216638; cv=none; b=G4Afpbd7RykwjD4VYC6AvaS2j0v5yE9NKqGYM4ze7oaEm9kIXFOD+EX6Kzl1JWLtQWgNx5ywmNEx1gEfvnZhTHpBzHVEIbpXH6fIw7JJB9od/F/0pWUDHUAVU2C7XEi8fqE4ue6XyAKD79MTy9aPdb5mB7QQaI6d/bm7o5kmSlk=
+	t=1756216640; cv=none; b=exf7du/59LS5+m0Kv123Rty3P0n1sJTDmHGEJPA9oFmGhHv5Aj0ISqFyHa5TeugQVAQNdfXWEV7ymYBKIeu7t1V5eXVHLlz8jIcPxSymOUTthJJf3muFWyGyF+kWu55DqEsl6TIzYiWg6TDv2IKWzWj2IftVEAQ0rrrqcrG5AbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216638; c=relaxed/simple;
-	bh=3wCi7UugKmw36M0cn2U+8cX7KFnBjW6Ikvqc+ic6gn0=;
+	s=arc-20240116; t=1756216640; c=relaxed/simple;
+	bh=NcqErEcuzN4l0Gv4IOENpPRR89qSStNZFXQ5yD9BZgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjLv7Q1THC1TSAaQT8OxuA7iIDK07lLDvaM8vGPc1hebcqfuVdR1yKJZCaF0JvVslSIG7prFiITe+JB7yxnIoa7zWcfsaRvcyYpL+qRGWWyMMMsX7h8JDOj4XLhwYUFFziR/oroJUYkqgzCv5GAETtKe3NGYuRea94zVYFG5UTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E03bXb39; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L00PmHgF8m8v8ao8eT9OjdfqjsjXSnOxh0bUw2CB82gh+l1ZVg/ElD4/CguFv3IHpIQHn9ONt0YksqcESN6/XQe/bhwI5Cs1w8Gcg6N+OCqr6imt0RgwhB5yWTAee/jSH81sQ4sclcGphhMVN84O4WV8OyOKWgYO3KfFqqE4qRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7WzoYR2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E03bXb39"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775F6C4CEF1;
-	Tue, 26 Aug 2025 13:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7WzoYR2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9B8C4CEF1;
+	Tue, 26 Aug 2025 13:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216637;
-	bh=3wCi7UugKmw36M0cn2U+8cX7KFnBjW6Ikvqc+ic6gn0=;
+	s=korg; t=1756216640;
+	bh=NcqErEcuzN4l0Gv4IOENpPRR89qSStNZFXQ5yD9BZgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E03bXb39Nm79ea9fE5KbT3fH40tv3d8LEDq5mUbpjiiVVr/EUYADH3EZiKZGgph3P
-	 WLIISAsscqyywsM9thaSX/SQP7KniobZ6PTVKhzN/4mkTxvhzmMPjkPqP6B07VnhPD
-	 FnkXLsXWNOFuXs+sVAp02t4Nk9EL4sLMFse99diU=
+	b=x7WzoYR2mQ1nxCjtP/AKKlAIZ2flePwqsdNuHvr00chabwn4NiZ7icpBUVAbVqzVZ
+	 Nsy+n+WFXJ9edFvCgincaQge7QNtlqbGKz4Q5xOWDdz2FBeZulkODHgh6POfSLIDkc
+	 TM9/5eM6SL3iyRn5DBp3Wwhw9c1zcuzaDtnktNHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 5.15 486/644] media: gspca: Add bounds checking to firmware parser
-Date: Tue, 26 Aug 2025 13:09:37 +0200
-Message-ID: <20250826110958.533596320@linuxfoundation.org>
+Subject: [PATCH 5.15 487/644] media: hi556: correct the test pattern configuration
+Date: Tue, 26 Aug 2025 13:09:38 +0200
+Message-ID: <20250826110958.559644854@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,56 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bingbu Cao <bingbu.cao@intel.com>
 
-commit aef89c0b2417da79cb2062a95476288f9f203ab0 upstream.
+commit 020f602b068c9ce18d5056d02c8302199377d98d upstream.
 
-This sd_init() function reads the firmware.  The firmware data holds a
-series of records and the function reads each record and sends the data
-to the device.  The request_ihex_firmware() function
-calls ihex_validate_fw() which ensures that the total length of all the
-records won't read out of bounds of the fw->data[].
+Hynix hi556 support 8 test pattern modes:
+hi556_test_pattern_menu[] = {
+{
+	"Disabled",
+	"Solid Colour",
+	"100% Colour Bars",
+	"Fade To Grey Colour Bars",
+	"PN9",
+	"Gradient Horizontal",
+	"Gradient Vertical",
+	"Check Board",
+	"Slant Pattern",
+}
 
-However, a potential issue is if there is a single very large
-record (larger than PAGE_SIZE) and that would result in memory
-corruption.  Generally we trust the firmware, but it's always better to
-double check.
+The test pattern is set by a 8-bit register according to the
+specification.
++--------+-------------------------------+
+| BIT[0] |  Solid color                  |
++--------+-------------------------------+
+| BIT[1] |  Color bar                    |
++--------+-------------------------------+
+| BIT[2] |  Fade to grey color bar       |
++--------+-------------------------------+
+| BIT[3] |  PN9                          |
++--------+-------------------------------+
+| BIT[4] |  Gradient horizontal          |
++--------+-------------------------------+
+| BIT[5] |  Gradient vertical            |
++--------+-------------------------------+
+| BIT[6] |  Check board                  |
++--------+-------------------------------+
+| BIT[7] |  Slant pattern                |
++--------+-------------------------------+
+Based on function above, current test pattern programming is wrong.
+This patch fixes it by 'BIT(pattern - 1)'. If pattern is 0, driver
+will disable the test pattern generation and set the pattern to 0.
 
-Fixes: 49b61ec9b5af ("[media] gspca: Add new vicam subdriver")
+Fixes: e62138403a84 ("media: hi556: Add support for Hi-556 sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/vicam.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/i2c/hi556.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/drivers/media/usb/gspca/vicam.c
-+++ b/drivers/media/usb/gspca/vicam.c
-@@ -227,6 +227,7 @@ static int sd_init(struct gspca_dev *gsp
- 	const struct ihex_binrec *rec;
- 	const struct firmware *fw;
- 	u8 *firmware_buf;
-+	int len;
+--- a/drivers/media/i2c/hi556.c
++++ b/drivers/media/i2c/hi556.c
+@@ -602,21 +602,23 @@ static int hi556_test_pattern(struct hi5
+ 	int ret;
+ 	u32 val;
  
- 	ret = request_ihex_firmware(&fw, VICAM_FIRMWARE,
- 				    &gspca_dev->dev->dev);
-@@ -241,9 +242,14 @@ static int sd_init(struct gspca_dev *gsp
- 		goto exit;
- 	}
- 	for (rec = (void *)fw->data; rec; rec = ihex_next_binrec(rec)) {
--		memcpy(firmware_buf, rec->data, be16_to_cpu(rec->len));
-+		len = be16_to_cpu(rec->len);
-+		if (len > PAGE_SIZE) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		memcpy(firmware_buf, rec->data, len);
- 		ret = vicam_control_msg(gspca_dev, 0xff, 0, 0, firmware_buf,
--					be16_to_cpu(rec->len));
-+					len);
- 		if (ret < 0)
- 			break;
- 	}
+-	if (pattern) {
+-		ret = hi556_read_reg(hi556, HI556_REG_ISP,
+-				     HI556_REG_VALUE_08BIT, &val);
+-		if (ret)
+-			return ret;
+-
+-		ret = hi556_write_reg(hi556, HI556_REG_ISP,
+-				      HI556_REG_VALUE_08BIT,
+-				      val | HI556_REG_ISP_TPG_EN);
+-		if (ret)
+-			return ret;
+-	}
++	ret = hi556_read_reg(hi556, HI556_REG_ISP,
++			     HI556_REG_VALUE_08BIT, &val);
++	if (ret)
++		return ret;
++
++	val = pattern ? (val | HI556_REG_ISP_TPG_EN) :
++		(val & ~HI556_REG_ISP_TPG_EN);
++
++	ret = hi556_write_reg(hi556, HI556_REG_ISP,
++			      HI556_REG_VALUE_08BIT, val);
++	if (ret)
++		return ret;
++
++	val = pattern ? BIT(pattern - 1) : 0;
+ 
+ 	return hi556_write_reg(hi556, HI556_REG_TEST_PATTERN,
+-			       HI556_REG_VALUE_08BIT, pattern);
++			       HI556_REG_VALUE_08BIT, val);
+ }
+ 
+ static int hi556_set_ctrl(struct v4l2_ctrl *ctrl)
 
 
