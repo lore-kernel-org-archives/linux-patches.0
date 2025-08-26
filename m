@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6052E6106;
-	Tue, 26 Aug 2025 13:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929922AD04;
+	Tue, 26 Aug 2025 13:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215071; cv=none; b=MsK75dkhhRbEkWujphhPgE5Pv3HTmbedP04NOPVhIBYuXav3KMVJhTTvrUD87ESFrrc/G5suIt4TNMgJc45Y5ZNWKQo7NW6MFSHOAxPBk6o70SbpejPNWRLNz+pA2XY50SWnNmKm59Aa2kAfii6kNWFFrwRCs7A/Eua3Pznmyw4=
+	t=1756215075; cv=none; b=b/H4pKHZ4U7QoHOiKGbXyM27tU+Amxb6k207I7NkusEOC3ag+dIt9vBmTngzn1JsNUWrN/yjzxTShvNFEFb7tDnKBoZx/1ElzXO5DLfFEYpnmkH5HmccTnnJVfSOQ6VswpGbKAPMd/eDJMmzHP37O3FY/XHj9/i0XZFcAdY8RnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215071; c=relaxed/simple;
-	bh=M/Q3NLdRTUTvSl3J86WcLxZaxl7y1KBAoPyx7r1/q80=;
+	s=arc-20240116; t=1756215075; c=relaxed/simple;
+	bh=JrC58ynnqjIrrpJ8oAjoRZEzWRv5/9kXerUcWlWNLyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTUF4FTZMZBVUrS4akp4IFJqFSdf2YdpRHFZEr/R6Ec/DMEo5KNrotwWE4y150cMk5A0025eB/uA9bDcSTbI/01jgDCMXRJlYDkArHZjA7OECS9r9fW8L026gshqw0BVh/+4P9f4eAB+g3D7Mpchm0UOL4JjC0UVV85nZ/kMqdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLF7g/Fu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVNySjhCvnwzyP0RQq94Bo1GGmBSahP7WZzeZ1Meqh6jZz/G+pLu5u423p1n83HiBDXR/Gp61S+zXzhNmgMsr2GGk6kUNs9dj0+u5d/SA1wSDc+bQ7LF8r1Tp+foGoUPKfWrNj9jhEPB17mdFJAWsyp+HBBbThXPIHgGF4g2t/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+LeCC+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLF7g/Fu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE57C113CF;
-	Tue, 26 Aug 2025 13:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+LeCC+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC00AC116B1;
+	Tue, 26 Aug 2025 13:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215071;
-	bh=M/Q3NLdRTUTvSl3J86WcLxZaxl7y1KBAoPyx7r1/q80=;
+	s=korg; t=1756215074;
+	bh=JrC58ynnqjIrrpJ8oAjoRZEzWRv5/9kXerUcWlWNLyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLF7g/FuT+7LrCN7eKwlRUfj0z2evsE29YH4TBookDw7RPYL0q/b3dTRN/VBFithF
-	 G4ZF8WCL9r/P318lyH3COBqdRWeVnfG/Res6IWmzGEdh64XsJLrX5fnY39IjMZkDcW
-	 b8E8vXiSToTeva3ymSbrdMZa0XclxYwMyWt4fefg=
+	b=D+LeCC+PEHEHF+V5jC2xcTirihnOhztz0hU4ZOOq4S+tNJxfRaIsIP1b1yUNBgSmo
+	 yh2EB/oaX53EdLW6AZXYBo1noXXR7PdoWLmklxpfz/JAgy2elqKiVM/gTcUTpwpG7V
+	 1u6bCZtVTCnt3jJ1wclMMdYXMwHpJu0J9o1YqUmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 376/482] btrfs: populate otime when logging an inode item
-Date: Tue, 26 Aug 2025 13:10:29 +0200
-Message-ID: <20250826110940.118855535@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	William Liu <will@willsroot.io>
+Subject: [PATCH 6.1 377/482] tls: separate no-async decryption request handling from async
+Date: Tue, 26 Aug 2025 13:10:30 +0200
+Message-ID: <20250826110940.144511996@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,113 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 1ef94169db0958d6de39f9ea6e063ce887342e2d ]
+commit 41532b785e9d79636b3815a64ddf6a096647d011 upstream.
 
-[TEST FAILURE WITH EXPERIMENTAL FEATURES]
-When running test case generic/508, the test case will fail with the new
-btrfs shutdown support:
+If we're not doing async, the handling is much simpler. There's no
+reference counting, we just need to wait for the completion to wake us
+up and return its result.
 
-generic/508       - output mismatch (see /home/adam/xfstests/results//generic/508.out.bad)
-#    --- tests/generic/508.out	2022-05-11 11:25:30.806666664 +0930
-#    +++ /home/adam/xfstests/results//generic/508.out.bad	2025-07-02 14:53:22.401824212 +0930
-#    @@ -1,2 +1,6 @@
-#     QA output created by 508
-#     Silence is golden
-#    +Before:
-#    +After : stat.btime = Thu Jan  1 09:30:00 1970
-#    +Before:
-#    +After : stat.btime = Wed Jul  2 14:53:22 2025
-#    ...
-#    (Run 'diff -u /home/adam/xfstests/tests/generic/508.out /home/adam/xfstests/results//generic/508.out.bad'  to see the entire diff)
-Ran: generic/508
-Failures: generic/508
-Failed 1 of 1 tests
+We should preferably also use a separate crypto_wait. I'm not seeing a
+UAF as I did in the past, I think aec7961916f3 ("tls: fix race between
+async notify and socket close") took care of it.
 
-Please note that the test case requires shutdown support, thus the test
-case will be skipped using the current upstream kernel, as it doesn't
-have shutdown ioctl support.
+This will make the next fix easier.
 
-[CAUSE]
-The direct cause the 0 time stamp in the log tree:
-
-leaf 30507008 items 2 free space 16057 generation 9 owner TREE_LOG
-leaf 30507008 flags 0x1(WRITTEN) backref revision 1
-checksum stored e522548d
-checksum calced e522548d
-fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
-chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
-	item 0 key (257 INODE_ITEM 0) itemoff 16123 itemsize 160
-		generation 9 transid 9 size 0 nbytes 0
-		block group 0 mode 100644 links 1 uid 0 gid 0 rdev 0
-		sequence 1 flags 0x0(none)
-		atime 1751432947.492000000 (2025-07-02 14:39:07)
-		ctime 1751432947.492000000 (2025-07-02 14:39:07)
-		mtime 1751432947.492000000 (2025-07-02 14:39:07)
-		otime 0.0 (1970-01-01 09:30:00) <<<
-
-But the old fs tree has all the correct time stamp:
-
-btrfs-progs v6.12
-fs tree key (FS_TREE ROOT_ITEM 0)
-leaf 30425088 items 2 free space 16061 generation 5 owner FS_TREE
-leaf 30425088 flags 0x1(WRITTEN) backref revision 1
-checksum stored 48f6c57e
-checksum calced 48f6c57e
-fs uuid 57d45451-481e-43e4-aa93-289ad707a3a0
-chunk uuid d52bd3fd-5163-4337-98a7-7986993ad398
-	item 0 key (256 INODE_ITEM 0) itemoff 16123 itemsize 160
-		generation 3 transid 0 size 0 nbytes 16384
-		block group 0 mode 40755 links 1 uid 0 gid 0 rdev 0
-		sequence 0 flags 0x0(none)
-		atime 1751432947.0 (2025-07-02 14:39:07)
-		ctime 1751432947.0 (2025-07-02 14:39:07)
-		mtime 1751432947.0 (2025-07-02 14:39:07)
-		otime 1751432947.0 (2025-07-02 14:39:07) <<<
-
-The root cause is that fill_inode_item() in tree-log.c is only
-populating a/c/m time, not the otime (or btime in statx output).
-
-Part of the reason is that, the vfs inode only has a/c/m time, no native
-btime support yet.
-
-[FIX]
-Thankfully btrfs has its otime stored in btrfs_inode::i_otime_sec and
-btrfs_inode::i_otime_nsec.
-
-So what we really need is just fill the otime time stamp in
-fill_inode_item() of tree-log.c
-
-There is another fill_inode_item() in inode.c, which is doing the proper
-otime population.
-
-Fixes: 94edf4ae43a5 ("Btrfs: don't bother committing delayed inode updates when fsyncing")
-CC: stable@vger.kernel.org
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ timespec changes in older tree ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/47bde5f649707610eaef9f0d679519966fc31061.1709132643.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ William: The original patch did not apply cleanly due to deletions of
+  non-existent lines in 6.1.y. The UAF the author stopped seeing can still
+  be reproduced on systems without AVX in conjunction with cryptd.
+  Also removed an extraneous statement after a return statement that is
+  adjacent to diff. ]
+Link: https://lore.kernel.org/netdev/he2K1yz_u7bZ-CnYcTSQ4OxuLuHZXN6xZRgp6_ICSWnq8J5FpI_uD1i_1lTSf7WMrYb5ThiX1OR2GTOB2IltgT49Koy7Hhutr4du4KtLvyk=@willsroot.io/
+Signed-off-by: William Liu <will@willsroot.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/tls/tls_sw.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -4210,6 +4210,11 @@ static void fill_inode_item(struct btrfs
- 	btrfs_set_token_timespec_nsec(&token, &item->ctime,
- 				      inode->i_ctime.tv_nsec);
- 
-+	btrfs_set_token_timespec_sec(&token, &item->otime,
-+				     BTRFS_I(inode)->i_otime.tv_sec);
-+	btrfs_set_token_timespec_nsec(&token, &item->otime,
-+				      BTRFS_I(inode)->i_otime.tv_nsec);
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -274,9 +274,15 @@ static int tls_do_decryption(struct sock
+ 		DEBUG_NET_WARN_ON_ONCE(atomic_read(&ctx->decrypt_pending) < 1);
+ 		atomic_inc(&ctx->decrypt_pending);
+ 	} else {
++		DECLARE_CRYPTO_WAIT(wait);
 +
- 	/*
- 	 * We do not need to set the nbytes field, in fact during a fast fsync
- 	 * its value may not even be correct, since a fast fsync does not wait
+ 		aead_request_set_callback(aead_req,
+ 					  CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					  crypto_req_done, &ctx->async_wait);
++					  crypto_req_done, &wait);
++		ret = crypto_aead_decrypt(aead_req);
++		if (ret == -EINPROGRESS || ret == -EBUSY)
++			ret = crypto_wait_req(ret, &wait);
++		return ret;
+ 	}
+ 
+ 	ret = crypto_aead_decrypt(aead_req);
+@@ -289,7 +295,6 @@ static int tls_do_decryption(struct sock
+ 		/* all completions have run, we're not doing async anymore */
+ 		darg->async = false;
+ 		return ret;
+-		ret = ret ?: -EINPROGRESS;
+ 	}
+ 
+ 	atomic_dec(&ctx->decrypt_pending);
 
 
