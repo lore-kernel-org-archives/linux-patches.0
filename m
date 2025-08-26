@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F0B238C0B;
-	Tue, 26 Aug 2025 13:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D811A256B;
+	Tue, 26 Aug 2025 13:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213602; cv=none; b=fIIcBnRKiuZQoa6QkCfVO69lq5n9MSp9gJXo0RqzoAFxuqA6VvE2AhuctA8Zzw0haGhkPcGMevBcd0WkNHOFRdJ2BCNk488IlBJyR289RzhjNYCYJFhW5idma1/UDL3uCPfuR05xN0HLRp5eBcqBWXhC+SnHysBQjd1ibeBNQEg=
+	t=1756213604; cv=none; b=kXU8Q5EwoLbIlWixQlxVTBBFHg0dHlWtTsWslNjl0G0iSqzNJJUq1m7j1pDVpzG6uUndIxnv3rqvzoys6s+QoHQXFkcr+1sBB2/vkAd62xe/iBAMCMKy6cGEJTcj8srrmd844hdaBgk2VNuQbBpCRE/u+DIRKws8VGKWdW9cMbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213602; c=relaxed/simple;
-	bh=A4JH7ru4QuVWq+Ye4aeqKpPPZmKzBRoswaj8ITBe6B8=;
+	s=arc-20240116; t=1756213604; c=relaxed/simple;
+	bh=ccR1cDPx7gUJlaq1V9OvB7OE17aEe9YPQeb6k8Ezo04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uldA+fNeKZ08Fe3iKW3rCdEfiSYA0wlDzyf8gD33eu5f+dR2iL0Jw6oFquuQfu2xBjemBmUdbS6NCSssgnPbyJR0Ane4/OtC29aHSdXRoNYwpMUXhTaLYDYrnezzRfOd45bxV2n1OYcv1Sjli2o662n/ir3oihDAWsnxbWAL1xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6m/SUxA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eW1xQ0f1I+J8paIrWKAEKSk2CxN4E6axAjLwHz1uWLtlMTV5SwsR4zhpuSlYJBk2qFlPnqKUUWM5/Wbdk+sG3lynrP4Ok4cIJxLKO9K60lSw1OkHZhbfGeVoHV7/Lb5Oym/fe3OZp1EczsUhQnfGy8OTuUaEyhqScQwq2yq9Bxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwLaBkXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6m/SUxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5EBC4CEF1;
-	Tue, 26 Aug 2025 13:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwLaBkXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A81C4CEF1;
+	Tue, 26 Aug 2025 13:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213601;
-	bh=A4JH7ru4QuVWq+Ye4aeqKpPPZmKzBRoswaj8ITBe6B8=;
+	s=korg; t=1756213604;
+	bh=ccR1cDPx7gUJlaq1V9OvB7OE17aEe9YPQeb6k8Ezo04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6m/SUxA/wj5f3R769OcLqCSOBk52Tt/vMX9SF8+PNtKbESQoqNYmIknN5gtU2MfS
-	 rWiyyyZWVhpwvL+8xU3nYiDBnDhlg3un4nSCBPrldE2vYX9IS+wNYiwg9RPnaHujLs
-	 cBsK+n2VCXWXOPVc4bYTOh7/cNf3DO3Gsu5uUbHE=
+	b=IwLaBkXHQX8VX2XHrG1LqXKnbGB03HEZwnRjy3cdNMGk/YLtL/jd+jROeSkSpaS5C
+	 XrD36Tmp9RvQEqCXkX8glemnyFqd1aCU/mhaiG5hujEqCTa8ErFF4pFPxzOXVpwxQS
+	 WGpp6aWtR7lgvgEpo4vmu3Owklp2QZyT3DlxsUE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.6 408/587] media: rainshadow-cec: fix TOCTOU race condition in rain_interrupt()
-Date: Tue, 26 Aug 2025 13:09:17 +0200
-Message-ID: <20250826111003.308108279@linuxfoundation.org>
+Subject: [PATCH 6.6 409/587] media: ov2659: Fix memory leaks in ov2659_probe()
+Date: Tue, 26 Aug 2025 13:09:18 +0200
+Message-ID: <20250826111003.335173047@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,54 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-commit 7af160aea26c7dc9e6734d19306128cce156ec40 upstream.
+commit 76142b137b968d47b35cdd8d1dc924677d319c8b upstream.
 
-In the interrupt handler rain_interrupt(), the buffer full check on
-rain->buf_len is performed before acquiring rain->buf_lock. This
-creates a Time-of-Check to Time-of-Use (TOCTOU) race condition, as
-rain->buf_len is concurrently accessed and modified in the work
-handler rain_irq_work_handler() under the same lock.
+ov2659_probe() doesn't properly free control handler resources in failure
+paths, causing memory leaks. Add v4l2_ctrl_handler_free() to prevent these
+memory leaks and reorder the ctrl_handler assignment for better code flow.
 
-Multiple interrupt invocations can race, with each reading buf_len
-before it becomes full and then proceeding. This can lead to both
-interrupts attempting to write to the buffer, incrementing buf_len
-beyond its capacity (DATA_SIZE) and causing a buffer overflow.
-
-Fix this bug by moving the spin_lock() to before the buffer full
-check. This ensures that the check and the subsequent buffer modification
-are performed atomically, preventing the race condition. An corresponding
-spin_unlock() is added to the overflow path to correctly release the
-lock.
-
-This possible bug was found by an experimental static analysis tool
-developed by our team.
-
-Fixes: 0f314f6c2e77 ("[media] rainshadow-cec: new RainShadow Tech HDMI CEC driver")
+Fixes: c4c0283ab3cd ("[media] media: i2c: add support for omnivision's ov2659 sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/usb/rainshadow/rainshadow-cec.c |    3 ++-
+ drivers/media/i2c/ov2659.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/cec/usb/rainshadow/rainshadow-cec.c
-+++ b/drivers/media/cec/usb/rainshadow/rainshadow-cec.c
-@@ -171,11 +171,12 @@ static irqreturn_t rain_interrupt(struct
- {
- 	struct rain *rain = serio_get_drvdata(serio);
+--- a/drivers/media/i2c/ov2659.c
++++ b/drivers/media/i2c/ov2659.c
+@@ -1479,14 +1479,15 @@ static int ov2659_probe(struct i2c_clien
+ 				     V4L2_CID_TEST_PATTERN,
+ 				     ARRAY_SIZE(ov2659_test_pattern_menu) - 1,
+ 				     0, 0, ov2659_test_pattern_menu);
+-	ov2659->sd.ctrl_handler = &ov2659->ctrls;
  
-+	spin_lock(&rain->buf_lock);
- 	if (rain->buf_len == DATA_SIZE) {
-+		spin_unlock(&rain->buf_lock);
- 		dev_warn_once(rain->dev, "buffer overflow\n");
- 		return IRQ_HANDLED;
+ 	if (ov2659->ctrls.error) {
+ 		dev_err(&client->dev, "%s: control initialization error %d\n",
+ 			__func__, ov2659->ctrls.error);
++		v4l2_ctrl_handler_free(&ov2659->ctrls);
+ 		return  ov2659->ctrls.error;
  	}
--	spin_lock(&rain->buf_lock);
- 	rain->buf_len++;
- 	rain->buf[rain->buf_wr_idx] = data;
- 	rain->buf_wr_idx = (rain->buf_wr_idx + 1) & 0xff;
+ 
++	ov2659->sd.ctrl_handler = &ov2659->ctrls;
+ 	sd = &ov2659->sd;
+ 	client->flags |= I2C_CLIENT_SCCB;
+ #ifdef CONFIG_VIDEO_V4L2_SUBDEV_API
 
 
