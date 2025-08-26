@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA132F83BA;
-	Tue, 26 Aug 2025 14:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5475510E0;
+	Tue, 26 Aug 2025 14:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218198; cv=none; b=mvJ6wzCNOMalxjrSADEtXsE/Rju0x/IqzoymLyqzbZ+9cqC8JFKYnyrw4BVAZ3plWC5+zRKYXeIMSH0Hjh5SYHiqX9Os926J69WEfiKMCLMIQcgxFtRNmHNgOggDRoeg813E8dcgu7+h+P6z2EnAoCsj4fpEcHUVL9HYep9lw9U=
+	t=1756218201; cv=none; b=VQ+if90rKWDd049LGILaCS3gFRnyS5rYu49OuhUvCsh5G++8j0cztzBpAB1wQP871WO2Y1u3wO9GQ5IP2nEENoI+V/bbi7x++XA4YzhGEtfUDJc1QJCYBWIYDbVXLxPQew+NdWWURfXS4YqJn7DHTbkZnAx0K75rWmVxeagn0WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218198; c=relaxed/simple;
-	bh=0jdoZmxgPsPaJiVcqkbLb5Qo1q1KqScL5mI8d0CSQCU=;
+	s=arc-20240116; t=1756218201; c=relaxed/simple;
+	bh=XjiNVeXq+CNH4Mjw8Atk3RQjxTBQTNDNXuTq09ccxkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7EywpLFgW3ltn72LNbKkrlKaZcKTU24yGldi5aJ7lKqFkYgw2T2wBDOQu10kyhpoTD2W5n8jKW9oG/MKAC3h6QlT8Rdw94Tsub17TeJr/w6Ms3YwVxxBfWRMwo9sFiPhVTQrpD093r8dChSaCs0NtoiHO3J1zeOiTea49ZojbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1o3rVhA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsYcU5M1zdTEleQenAwX7VlraXiFlrBsp7Y9dmEvLVZrGW98+EsSgAl7X0UM77hTTnEqsf9vlgWx7Q/hY3HxVQA7B0AjcLPakfyedCCUdHM3MxG6QTWdHqovwqbFG/OBmNfjmfF9ys5QZy0ds9HxWkeGykjb8sVSeCJT1nJ6hRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFc5+n81; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1o3rVhA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0A8C4CEF1;
-	Tue, 26 Aug 2025 14:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFc5+n81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF46C4CEF1;
+	Tue, 26 Aug 2025 14:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218198;
-	bh=0jdoZmxgPsPaJiVcqkbLb5Qo1q1KqScL5mI8d0CSQCU=;
+	s=korg; t=1756218201;
+	bh=XjiNVeXq+CNH4Mjw8Atk3RQjxTBQTNDNXuTq09ccxkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1o3rVhADLIeBrwQIPOoko9+WVdKiOLMVurRj8yNpNXPE3YM0rMMHb0pl+nyUCQB5
-	 2j3rDG4D6v7dTB9Yq5d4EXa84MXCM8oHXWZytG/qsX5BmQnnri63rAQgdSWjGtYyML
-	 KoJsAprbNG8CxoofBNxkXn4kRUhzTGYk0/G+0BnM=
+	b=HFc5+n818Hb/ygBBWl2oa5D890Sl+KwNZ8YmBPwN2XsJWn+4qEinqo7CYCJ+tikBU
+	 6hsLgn8yvK2Q2bFh/xIn9WZIOzHVJRS3ahA+qR8KE5fD724fBGkIFP1YnM30TT3yme
+	 5PjeE+jA5R4uYAj67l6Udm+pJ7kJoasOrDto41LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ernberg <john.ernberg@actia.se>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable <stable@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 430/523] net: usbnet: Avoid potential RCU stall on LINK_CHANGE event
-Date: Tue, 26 Aug 2025 13:10:40 +0200
-Message-ID: <20250826110935.062155899@linuxfoundation.org>
+Subject: [PATCH 5.10 431/523] usb: typec: fusb302: cache PD RX state
+Date: Tue, 26 Aug 2025 13:10:41 +0200
+Message-ID: <20250826110935.087262723@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,122 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ernberg <john.ernberg@actia.se>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 0d9cfc9b8cb17dbc29a98792d36ec39a1cf1395f ]
+[ Upstream commit 1e61f6ab08786d66a11cfc51e13d6f08a6b06c56 ]
 
-The Gemalto Cinterion PLS83-W modem (cdc_ether) is emitting confusing link
-up and down events when the WWAN interface is activated on the modem-side.
+This patch fixes a race condition communication error, which ends up in
+PD hard resets when losing the race. Some systems, like the Radxa ROCK
+5B are powered through USB-C without any backup power source and use a
+FUSB302 chip to do the PD negotiation. This means it is quite important
+to avoid hard resets, since that effectively kills the system's
+power-supply.
 
-Interrupt URBs will in consecutive polls grab:
-* Link Connected
-* Link Disconnected
-* Link Connected
+I've found the following race condition while debugging unplanned power
+loss during booting the board every now and then:
 
-Where the last Connected is then a stable link state.
+1. lots of TCPM/FUSB302/PD initialization stuff
+2. TCPM ends up in SNK_WAIT_CAPABILITIES (tcpm_set_pd_rx is enabled here)
+3. the remote PD source does not send anything, so TCPM does a SOFT RESET
+4. TCPM ends up in SNK_WAIT_CAPABILITIES for the second time
+   (tcpm_set_pd_rx is enabled again, even though it is still on)
 
-When the system is under load this may cause the unlink_urbs() work in
-__handle_link_change() to not complete before the next usbnet_link_change()
-call turns the carrier on again, allowing rx_submit() to queue new SKBs.
+At this point I've seen broken CRC good messages being send by the
+FUSB302 with a logic analyzer sniffing the CC lines. Also it looks like
+messages are being lost and things generally going haywire with one of
+the two sides doing a hard reset once a broken CRC good message was send
+to the bus.
 
-In that event the URB queue is filled faster than it can drain, ending up
-in a RCU stall:
+I think the system is running into a race condition, that the FIFOs are
+being cleared and/or the automatic good CRC message generation flag is
+being updated while a message is already arriving.
 
-    rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 0-.... } 33108 jiffies s: 201 root: 0x1/.
-    rcu: blocking rcu_node structures (internal RCU debug):
-    Sending NMI from CPU 1 to CPUs 0:
-    NMI backtrace for cpu 0
+Let's avoid this by caching the PD RX enabled state, as we have already
+processed anything in the FIFOs and are in a good state. As a side
+effect that this also optimizes I2C bus usage :)
 
-    Call trace:
-     arch_local_irq_enable+0x4/0x8
-     local_bh_enable+0x18/0x20
-     __netdev_alloc_skb+0x18c/0x1cc
-     rx_submit+0x68/0x1f8 [usbnet]
-     rx_alloc_submit+0x4c/0x74 [usbnet]
-     usbnet_bh+0x1d8/0x218 [usbnet]
-     usbnet_bh_tasklet+0x10/0x18 [usbnet]
-     tasklet_action_common+0xa8/0x110
-     tasklet_action+0x2c/0x34
-     handle_softirqs+0x2cc/0x3a0
-     __do_softirq+0x10/0x18
-     ____do_softirq+0xc/0x14
-     call_on_irq_stack+0x24/0x34
-     do_softirq_own_stack+0x18/0x20
-     __irq_exit_rcu+0xa8/0xb8
-     irq_exit_rcu+0xc/0x30
-     el1_interrupt+0x34/0x48
-     el1h_64_irq_handler+0x14/0x1c
-     el1h_64_irq+0x68/0x6c
-     _raw_spin_unlock_irqrestore+0x38/0x48
-     xhci_urb_dequeue+0x1ac/0x45c [xhci_hcd]
-     unlink1+0xd4/0xdc [usbcore]
-     usb_hcd_unlink_urb+0x70/0xb0 [usbcore]
-     usb_unlink_urb+0x24/0x44 [usbcore]
-     unlink_urbs.constprop.0.isra.0+0x64/0xa8 [usbnet]
-     __handle_link_change+0x34/0x70 [usbnet]
-     usbnet_deferred_kevent+0x1c0/0x320 [usbnet]
-     process_scheduled_works+0x2d0/0x48c
-     worker_thread+0x150/0x1dc
-     kthread+0xd8/0xe8
-     ret_from_fork+0x10/0x20
+As far as I can tell the problem theoretically also exists when TCPM
+enters SNK_WAIT_CAPABILITIES the first time, but I believe this is less
+critical for the following reason:
 
-Get around the problem by delaying the carrier on to the scheduled work.
+On devices like the ROCK 5B, which are powered through a TCPM backed
+USB-C port, the bootloader must have done some prior PD communication
+(initial communication must happen within 5 seconds after plugging the
+USB-C plug). This means the first time the kernel TCPM state machine
+reaches SNK_WAIT_CAPABILITIES, the remote side is not sending messages
+actively. On other devices a hard reset simply adds some extra delay and
+things should be good afterwards.
 
-This needs a new flag to keep track of the necessary action.
-
-The carrier ok check cannot be removed as it remains required for the
-LINK_RESET event flow.
-
-Fixes: 4b49f58fff00 ("usbnet: handle link change")
-Cc: stable@vger.kernel.org
-Signed-off-by: John Ernberg <john.ernberg@actia.se>
-Link: https://patch.msgid.link/20250723102526.1305339-1-john.ernberg@actia.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adjust context in header ]
+Fixes: c034a43e72dda ("staging: typec: Fairchild FUSB302 Type-c chip driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250704-fusb302-race-condition-fix-v1-1-239012c0e27a@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ replaced str_on_off(on) with ternary operator ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c   |   11 ++++++++---
- include/linux/usb/usbnet.h |    1 +
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ drivers/usb/typec/tcpm/fusb302.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1080,6 +1080,9 @@ static void __handle_link_change(struct
- 		 * tx queue is stopped by netcore after link becomes off
- 		 */
- 	} else {
-+		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
-+			netif_carrier_on(dev->net);
-+
- 		/* submitting URBs for reading packets */
- 		tasklet_schedule(&dev->bh);
- 	}
-@@ -1960,10 +1963,12 @@ EXPORT_SYMBOL(usbnet_manage_power);
- void usbnet_link_change(struct usbnet *dev, bool link, bool need_reset)
- {
- 	/* update link after link is reseted */
--	if (link && !need_reset)
--		netif_carrier_on(dev->net);
--	else
-+	if (link && !need_reset) {
-+		set_bit(EVENT_LINK_CARRIER_ON, &dev->flags);
-+	} else {
-+		clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags);
- 		netif_carrier_off(dev->net);
-+	}
+--- a/drivers/usb/typec/tcpm/fusb302.c
++++ b/drivers/usb/typec/tcpm/fusb302.c
+@@ -103,6 +103,7 @@ struct fusb302_chip {
+ 	bool vconn_on;
+ 	bool vbus_on;
+ 	bool charge_on;
++	bool pd_rx_on;
+ 	bool vbus_present;
+ 	enum typec_cc_polarity cc_polarity;
+ 	enum typec_cc_status cc1;
+@@ -841,6 +842,11 @@ static int tcpm_set_pd_rx(struct tcpc_de
+ 	int ret = 0;
  
- 	if (need_reset && link)
- 		usbnet_defer_kevent(dev, EVENT_LINK_RESET);
---- a/include/linux/usb/usbnet.h
-+++ b/include/linux/usb/usbnet.h
-@@ -83,6 +83,7 @@ struct usbnet {
- #		define EVENT_LINK_CHANGE	11
- #		define EVENT_SET_RX_MODE	12
- #		define EVENT_NO_IP_ALIGN	13
-+#		define EVENT_LINK_CARRIER_ON	14
- 	u32			rx_speed;	/* in bps - NOT Mbps */
- 	u32			tx_speed;	/* in bps - NOT Mbps */
- };
+ 	mutex_lock(&chip->lock);
++	if (chip->pd_rx_on == on) {
++		fusb302_log(chip, "pd is already %s", on ? "on" : "off");
++		goto done;
++	}
++
+ 	ret = fusb302_pd_rx_flush(chip);
+ 	if (ret < 0) {
+ 		fusb302_log(chip, "cannot flush pd rx buffer, ret=%d", ret);
+@@ -863,6 +869,8 @@ static int tcpm_set_pd_rx(struct tcpc_de
+ 			    on ? "on" : "off", ret);
+ 		goto done;
+ 	}
++
++	chip->pd_rx_on = on;
+ 	fusb302_log(chip, "pd := %s", on ? "on" : "off");
+ done:
+ 	mutex_unlock(&chip->lock);
 
 
