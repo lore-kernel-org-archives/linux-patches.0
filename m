@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0C635691C;
-	Tue, 26 Aug 2025 14:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3063570BB;
+	Tue, 26 Aug 2025 14:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219034; cv=none; b=FV0EVQFlGQYLmL6h6zVIMeqXpaY3OyDJf29aISfBX5cW8DZfPEPtKzAdMLWna9oD7KE/ljxEHi8yEXEkHen3IzlB7y8nI3LWC64Cs0nHSJuUMZA/In5T43/DMsRT3A08szjCO/uEyd8+7G7rlf0BcZLsyjKJUL1KZ91yFSUAZLQ=
+	t=1756219037; cv=none; b=XxZChbXvU5prg8NlIqDHKFZer+L2lgOPvCjElevbYYNBm5w5tB0rOu0vKT8FtOAj/8PFExEJjUPCp6PMvyd+Ekm4O+o2RlGeJQ66ZQnPV9ZSRjO1nIaNyZsa+MGgKgAXwBaLNSBT64d6FQjZNFnqfcJthqVRKLl08pLh3toT99k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219034; c=relaxed/simple;
-	bh=bUkqGbqgu31oWPCww9l0G+6WpZSBsvSfTQqI8iFbIgA=;
+	s=arc-20240116; t=1756219037; c=relaxed/simple;
+	bh=+bDslmM1+1P4UhHL6Uly57GpQriD1py/ROA2orCMDVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRcAFol6CiCKgCshYbJ3yVVuBrtICluHrX4rGDSrDY2xHtTso7Gi8EoTrQhZ38X0yYySms464XSWWbD8vV6+PZTQyMTuv13VEbmSAb920QAcsLllMyCmkMkeuKfwCDec26KBWcj2amv1yLfS8rGPug66wUSYCLSqIG/gnxDLFBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgBJdJYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O3kJdkpPhkWxzZ7P8TaDTRDriFMI0JZY6pqJcNV7Es+gmKw2Wy7409kcd96W+H0DObzgJDgvhUriZTyK2PnYLwsYxRvx2EUyzS5VXa0OXWlFRWlATPIH265gcNWm669a4At2LmLSz+Gpu/0wuT5z4mk3EVbR06TXDJzs9Krrf3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kD5AaVeK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgBJdJYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285AEC4CEF1;
-	Tue, 26 Aug 2025 14:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kD5AaVeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED99C4CEF1;
+	Tue, 26 Aug 2025 14:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219034;
-	bh=bUkqGbqgu31oWPCww9l0G+6WpZSBsvSfTQqI8iFbIgA=;
+	s=korg; t=1756219037;
+	bh=+bDslmM1+1P4UhHL6Uly57GpQriD1py/ROA2orCMDVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgBJdJYqo9emJDr6RjtBJCyxpBRi8ym7Z4I9b9yAtuyoUX0YvhVLhK0CCDVM1JlLt
-	 iw/6JzHWmTYsUU8XxY3+LzYlIQINQUV5loloqOLY3Sr5Sp3g1bu8AsdlkNxEi/fl8R
-	 7LpPnvA+mLlj5ClOVoFpvHTj91/cNnQx//UQYkhs=
+	b=kD5AaVeKjMzjPzQ7qZDrJJsJwcknGYxEGC0hoyrq6/lCaF1yg9OGRPmq8U8erBLTI
+	 06uef5fi+qKSkP0MEymHiooi4TTfRMlRR6vn6v/XP3NWZLnGj3RX9waHI4oP/9EjuX
+	 zl5Ves/vH7cqrewnbQCYKbh+bL0dutADNPr5IUE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>,
-	Paul Fertser <fercerpav@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 228/403] net: ncsi: Fix buffer overflow in fetching version id
-Date: Tue, 26 Aug 2025 13:09:14 +0200
-Message-ID: <20250826110913.126811457@linuxfoundation.org>
+Subject: [PATCH 5.4 229/403] uapi: in6: restore visibility of most IPv6 socket options
+Date: Tue, 26 Aug 2025 13:09:15 +0200
+Message-ID: <20250826110913.153737868@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -46,56 +44,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8e16170ae972c7fed132bc928914a2ffb94690fc ]
+[ Upstream commit 31557b3487b349464daf42bc4366153743c1e727 ]
 
-In NC-SI spec v1.2 section 8.4.44.2, the firmware name doesn't
-need to be null terminated while its size occupies the full size
-of the field. Fix the buffer overflow issue by adding one
-additional byte for null terminator.
+A decade ago commit 6d08acd2d32e ("in6: fix conflict with glibc")
+hid the definitions of IPV6 options, because GCC was complaining
+about duplicates. The commit did not list the warnings seen, but
+trying to recreate them now I think they are (building iproute2):
 
-Signed-off-by: Hari Kalavakunta <kalavakunta.hari.prasad@gmail.com>
-Reviewed-by: Paul Fertser <fercerpav@gmail.com>
-Link: https://patch.msgid.link/20250610193338.1368-1-kalavakunta.hari.prasad@gmail.com
+In file included from ./include/uapi/rdma/rdma_user_cm.h:39,
+                 from rdma.h:16,
+                 from res.h:9,
+                 from res-ctx.c:7:
+../include/uapi/linux/in6.h:171:9: warning: ‘IPV6_ADD_MEMBERSHIP’ redefined
+  171 | #define IPV6_ADD_MEMBERSHIP     20
+      |         ^~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/netinet/in.h:37,
+                 from rdma.h:13:
+/usr/include/bits/in.h:233:10: note: this is the location of the previous definition
+  233 | # define IPV6_ADD_MEMBERSHIP    IPV6_JOIN_GROUP
+      |          ^~~~~~~~~~~~~~~~~~~
+../include/uapi/linux/in6.h:172:9: warning: ‘IPV6_DROP_MEMBERSHIP’ redefined
+  172 | #define IPV6_DROP_MEMBERSHIP    21
+      |         ^~~~~~~~~~~~~~~~~~~~
+/usr/include/bits/in.h:234:10: note: this is the location of the previous definition
+  234 | # define IPV6_DROP_MEMBERSHIP   IPV6_LEAVE_GROUP
+      |          ^~~~~~~~~~~~~~~~~~~~
+
+Compilers don't complain about redefinition if the defines
+are identical, but here we have the kernel using the literal
+value, and glibc using an indirection (defining to a name
+of another define, with the same numerical value).
+
+Problem is, the commit in question hid all the IPV6 socket
+options, and glibc has a pretty sparse list. For instance
+it lacks Flow Label related options. Willem called this out
+in commit 3fb321fde22d ("selftests/net: ipv6 flowlabel"):
+
+  /* uapi/glibc weirdness may leave this undefined */
+  #ifndef IPV6_FLOWINFO
+  #define IPV6_FLOWINFO 11
+  #endif
+
+More interestingly some applications (socat) use
+a #ifdef IPV6_FLOWINFO to gate compilation of thier
+rudimentary flow label support. (For added confusion
+socat misspells it as IPV4_FLOWINFO in some places.)
+
+Hide only the two defines we know glibc has a problem
+with. If we discover more warnings we can hide more
+but we should avoid covering the entire block of
+defines for "IPV6 socket options".
+
+Link: https://patch.msgid.link/20250609143933.1654417-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/internal.h | 2 +-
- net/ncsi/ncsi-rsp.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ include/uapi/linux/in6.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index b723452768d4..67d5ee4dbc2a 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -86,7 +86,7 @@ struct ncsi_channel_version {
- 	u8   update;		/* NCSI version update */
- 	char alpha1;		/* NCSI version alpha1 */
- 	char alpha2;		/* NCSI version alpha2 */
--	u8  fw_name[12];	/* Firmware name string                */
-+	u8  fw_name[12 + 1];	/* Firmware name string                */
- 	u32 fw_version;		/* Firmware version                   */
- 	u16 pci_ids[4];		/* PCI identification                 */
- 	u32 mf_id;		/* Manufacture ID                     */
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index b7d311f97905..41e4ed80f29a 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -782,6 +782,7 @@ static int ncsi_rsp_handler_gvi(struct ncsi_request *nr)
- 	ncv->alpha1 = rsp->alpha1;
- 	ncv->alpha2 = rsp->alpha2;
- 	memcpy(ncv->fw_name, rsp->fw_name, 12);
-+	ncv->fw_name[12] = '\0';
- 	ncv->fw_version = ntohl(rsp->fw_version);
- 	for (i = 0; i < ARRAY_SIZE(ncv->pci_ids); i++)
- 		ncv->pci_ids[i] = ntohs(rsp->pci_ids[i]);
+diff --git a/include/uapi/linux/in6.h b/include/uapi/linux/in6.h
+index 9f2273a08356..acd32dc630c3 100644
+--- a/include/uapi/linux/in6.h
++++ b/include/uapi/linux/in6.h
+@@ -151,7 +151,6 @@ struct in6_flowlabel_req {
+ /*
+  *	IPV6 socket options
+  */
+-#if __UAPI_DEF_IPV6_OPTIONS
+ #define IPV6_ADDRFORM		1
+ #define IPV6_2292PKTINFO	2
+ #define IPV6_2292HOPOPTS	3
+@@ -168,8 +167,10 @@ struct in6_flowlabel_req {
+ #define IPV6_MULTICAST_IF	17
+ #define IPV6_MULTICAST_HOPS	18
+ #define IPV6_MULTICAST_LOOP	19
++#if __UAPI_DEF_IPV6_OPTIONS
+ #define IPV6_ADD_MEMBERSHIP	20
+ #define IPV6_DROP_MEMBERSHIP	21
++#endif
+ #define IPV6_ROUTER_ALERT	22
+ #define IPV6_MTU_DISCOVER	23
+ #define IPV6_MTU		24
+@@ -201,7 +202,6 @@ struct in6_flowlabel_req {
+ #define IPV6_IPSEC_POLICY	34
+ #define IPV6_XFRM_POLICY	35
+ #define IPV6_HDRINCL		36
+-#endif
+ 
+ /*
+  * Multicast:
 -- 
 2.39.5
 
