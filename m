@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8619E352084;
-	Tue, 26 Aug 2025 14:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DD935CEA3;
+	Tue, 26 Aug 2025 14:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219201; cv=none; b=K/XGOd7zwlQgXaud37XGAQQrfmiWuDtFduiMbRCBPYZojdn5rC3ylkSKyB0LGcGk85n6OConebnkesoJDBvg0pXIxP8cWXtoyCq7t+XdWdF1JwAsmbZDkapXP3h8nb1KGrRuxIxF0N4D4Hrz+/hx6tV/MRSzp5HKBopSruan7Ck=
+	t=1756219204; cv=none; b=d9ekPvVdhlA/dI4osy0VpYhmG6kzq0JOqBbXzcmQui8+/qePxW4O09UYt9c3ze55SuRLy0CGJnOOFJD7ixmFEI7+2IWkF0kJBsHErMkZGLx3YrTMx1HZRMolRpFDiVTZDJGC9RIqph59hDmAAmCslxsvfqShnRU7eARQRP+vhYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219201; c=relaxed/simple;
-	bh=jENMh6HQy0YUNH89xi7AjnQUagcseXZuokXG97BUJYg=;
+	s=arc-20240116; t=1756219204; c=relaxed/simple;
+	bh=62Fx0h58kHNTd2l9LbmDPR0Rtg9k/GUdDBoP64OSkAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaYD7Jey5QkY2c+vbUP6as4rxICzuSgqre0h2S6V/IaxexTCZ8F4ufzZm1wTB4wMAQVVOMjoTbDH1oxHGSDTUNx6sUffo6ShmkYvqlK5+5I8eET3RpP0kBFzp+zVUGe/UXEMqQq5ZU82uAZlT4T8PGRlGqjMF59nZ9o+KZTob/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0cXHJuy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Co5vhMObQmCy+gTJfdhEFIDAJkTIzqdBv2FjqjbY0vaKJhT5hSRtqMN++KMwfwLRvCHVXV3X+w6Ba1TBGrvgza8kbGXfk0CTrOdUajwy9Xr0Hk4KCKQEEsvNKdHAJymkivoapnNNBxSIBvoTe17w46P8S+3tNbTp+QDUv7RpPfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agyEM6S7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0cXHJuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F9EC4CEF1;
-	Tue, 26 Aug 2025 14:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agyEM6S7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7CB4C113D0;
+	Tue, 26 Aug 2025 14:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219201;
-	bh=jENMh6HQy0YUNH89xi7AjnQUagcseXZuokXG97BUJYg=;
+	s=korg; t=1756219204;
+	bh=62Fx0h58kHNTd2l9LbmDPR0Rtg9k/GUdDBoP64OSkAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0cXHJuyNFyBl73Rz1dg9qlyKGykdc3kj431MhHa+xtkhPvyvo3t54/+Ib82hCeIZ
-	 CwQdKSHaqm1aSTA9DQM93vCCsbdjh02uzvCfXs6NUTMi+Um0b3EPRwgAzzdSXGVq3k
-	 uhPmzW+C0KwfQsepWgzzurlvft5MfJmgAWDFYsM8=
+	b=agyEM6S7O7t7ziqHCggAjP+GwptbHjrJWk9+3P+7Q6mnFDCE2iNOKNZmT+6zUcH3L
+	 rM8phOhmG+ngTM9Bdw1uCedLa6aeivlhKvKlxBY/qLEpAQoQGhgVpdvAcwJB0LsGEq
+	 r4il1kEmGulwlfFPfLPS058/UryOx7qdOaZ18mPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 5.4 284/403] m68k: Fix lost column on framebuffer debug console
-Date: Tue, 26 Aug 2025 13:10:10 +0200
-Message-ID: <20250826110914.659371245@linuxfoundation.org>
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 293/403] ext4: fix reserved gdt blocks handling in fsmap
+Date: Tue, 26 Aug 2025 13:10:19 +0200
+Message-ID: <20250826110914.903683802@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,97 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit 210a1ce8ed4391b64a888b3fb4b5611a13f5ccc7 upstream.
+commit 3ffbdd1f1165f1b2d6a94d1b1aabef57120deaf7 upstream.
 
-Move the cursor position rightward after rendering the character,
-not before. This avoids complications that arise when the recursive
-console_putc call has to wrap the line and/or scroll the display.
-This also fixes the linewrap bug that crops off the rightmost column.
+In some cases like small FSes with no meta_bg and where the resize
+doesn't need extra gdt blocks as it can fit in the current one,
+s_reserved_gdt_blocks is set as 0, which causes fsmap to emit a 0
+length entry, which is incorrect.
 
-When the cursor is at the bottom of the display, a linefeed will not
-move the cursor position further downward. Instead, the display scrolls
-upward. Avoid the repeated add/subtract sequence by way of a single
-subtraction at the initialization of console_struct_num_rows.
+  $ mkfs.ext4 -b 65536 -O bigalloc /dev/sda 5G
+  $ mount /dev/sda /mnt/scratch
+  $ xfs_io -c "fsmap -d" /mnt/scartch
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/9d4e8c68a456d5f2bc254ac6f87a472d066ebd5e.1743115195.git.fthain@linux-m68k.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+        0: 253:48 [0..127]: static fs metadata 128
+        1: 253:48 [128..255]: special 102:1 128
+        2: 253:48 [256..255]: special 102:2 0     <---- 0 len entry
+        3: 253:48 [256..383]: special 102:3 128
+
+Fix this by adding a check for this case.
+
+Cc: stable@kernel.org
+Fixes: 0c9ec4beecac ("ext4: support GETFSMAP ioctls")
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/08781b796453a5770112aa96ad14c864fbf31935.1754377641.git.ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/kernel/head.S |   31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ fs/ext4/fsmap.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/m68k/kernel/head.S
-+++ b/arch/m68k/kernel/head.S
-@@ -3379,6 +3379,7 @@ L(console_clear_loop):
- 
- 	movel	%d4,%d1				/* screen height in pixels */
- 	divul	%a0@(FONT_DESC_HEIGHT),%d1	/* d1 = max num rows */
-+	subql	#1,%d1				/* row range is 0 to num - 1 */
- 
- 	movel	%d0,%a2@(Lconsole_struct_num_columns)
- 	movel	%d1,%a2@(Lconsole_struct_num_rows)
-@@ -3525,15 +3526,14 @@ func_start	console_putc,%a0/%a1/%d0-%d7
- 	cmpib	#10,%d7
- 	jne	L(console_not_lf)
- 	movel	%a0@(Lconsole_struct_cur_row),%d0
--	addil	#1,%d0
--	movel	%d0,%a0@(Lconsole_struct_cur_row)
- 	movel	%a0@(Lconsole_struct_num_rows),%d1
- 	cmpl	%d1,%d0
- 	jcs	1f
--	subil	#1,%d0
--	movel	%d0,%a0@(Lconsole_struct_cur_row)
- 	console_scroll
-+	jra	L(console_exit)
- 1:
-+	addql	#1,%d0
-+	movel	%d0,%a0@(Lconsole_struct_cur_row)
- 	jra	L(console_exit)
- 
- L(console_not_lf):
-@@ -3560,12 +3560,6 @@ L(console_not_cr):
-  */
- L(console_not_home):
- 	movel	%a0@(Lconsole_struct_cur_column),%d0
--	addql	#1,%a0@(Lconsole_struct_cur_column)
--	movel	%a0@(Lconsole_struct_num_columns),%d1
--	cmpl	%d1,%d0
--	jcs	1f
--	console_putc	#'\n'	/* recursion is OK! */
--1:
- 	movel	%a0@(Lconsole_struct_cur_row),%d1
- 
- 	/*
-@@ -3612,6 +3606,23 @@ L(console_do_font_scanline):
- 	addq	#1,%d1
- 	dbra	%d7,L(console_read_char_scanline)
- 
-+	/*
-+	 *	Register usage in the code below:
-+	 *	a0 = pointer to console globals
-+	 *	d0 = cursor column
-+	 *	d1 = cursor column limit
-+	 */
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -393,6 +393,14 @@ static unsigned int ext4_getfsmap_find_s
+ 	/* Reserved GDT blocks */
+ 	if (!ext4_has_feature_meta_bg(sb) || metagroup < first_meta_bg) {
+ 		len = le16_to_cpu(sbi->s_es->s_reserved_gdt_blocks);
 +
-+	lea	%pc@(L(console_globals)),%a0
++		/*
++		 * mkfs.ext4 can set s_reserved_gdt_blocks as 0 in some cases,
++		 * check for that.
++		 */
++		if (!len)
++			return 0;
 +
-+	movel	%a0@(Lconsole_struct_cur_column),%d0
-+	addql	#1,%d0
-+	movel	%d0,%a0@(Lconsole_struct_cur_column)	/* Update cursor pos */
-+	movel	%a0@(Lconsole_struct_num_columns),%d1
-+	cmpl	%d1,%d0
-+	jcs	L(console_exit)
-+	console_putc	#'\n'		/* Line wrap using tail recursion */
-+
- L(console_exit):
- func_return	console_putc
- 
+ 		error = ext4_getfsmap_fill(meta_list, fsb, len,
+ 					   EXT4_FMR_OWN_RESV_GDT);
+ 		if (error)
 
 
