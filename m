@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4F02E6106;
-	Tue, 26 Aug 2025 13:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473BA2D060B;
+	Tue, 26 Aug 2025 13:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215779; cv=none; b=CZT48Y5Yg5vYJPNpUsy2e+Ak721Qlllx2FzelTwOguEs1ZCyd1g+z+bRyAPu08Hs+eXXvLLRzWyvbRMMfuz5C38kb5bgfHonqaHggMokKe3Zkd8WpcK6hajKsRwKxTGDCBoLy9VX+FaQuhqqu2UQZrOKnh9AfLbnDsoakdIdu5k=
+	t=1756215781; cv=none; b=FerA7a+Ce7JJ+D/D8Fa2SaeoEPcNxXPHcm5kZQDLhBUQ2s3TJhj/Y5dWc+Ygl8+1+MYaGGP1W/wXen/MjA0e346O3d5FRglV+aMAFXPqpsdnqIjGlBg2KBBeyplgK9sedry5O1KTc/+WFVJTh3XZGxks00wnwkDC/JE1xZyfAuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215779; c=relaxed/simple;
-	bh=q3aD0/ScnHhsmsbNy1z9F3CyV9HUD9C/v8b6txAfP3c=;
+	s=arc-20240116; t=1756215781; c=relaxed/simple;
+	bh=Io9msalZ7gOlrwWhnA8lQhrlJ7HjxFoyFx/DVLFBaO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYeCGWxSUcfPPihNcYi7ar/groeQ710e5UAILjS1iVWzrkx7oLXWon0fjCV5KYKB4kH6T55QLVr1ytom+0yuPnTdQNHDO+372x9dXj6JYaMb9wLJAyP76udU+R6+qWfQZiz3/3Bp7kC1bNVsxu0GylzWk5jmV2pIWl5iRcKQ6QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qh3dcHp6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UJs7SbQYpymdMi3fWIme01f+usXasCRMn2zGWTdo7sp3V7q67NZM2qkUD51liH+9hvwU4tAYg7x4n/rpPTkFeGmnn7qxI7IU6Vj16n28HBzuRnaMhHIb4LlkQ2nrLbPIxpgKAN1WAW7aNeOy7VfZrMjD/vnH/K3Pr0XuX2JBfnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CD6myMvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qh3dcHp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEC9C113CF;
-	Tue, 26 Aug 2025 13:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CD6myMvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3217C4CEF1;
+	Tue, 26 Aug 2025 13:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215778;
-	bh=q3aD0/ScnHhsmsbNy1z9F3CyV9HUD9C/v8b6txAfP3c=;
+	s=korg; t=1756215781;
+	bh=Io9msalZ7gOlrwWhnA8lQhrlJ7HjxFoyFx/DVLFBaO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qh3dcHp61j7IEhODEnGNCTL5jZCgGJJi0JJxudty4hebOFJ0+K72g48eSaF0Qx7wF
-	 ZXlDK02xN+EmJ/YNwyndw0Xt8mYyQyjBxOQgCvGY9h+t1B+Mb7Hi/CBMfzmSr6rs69
-	 Ai0sTlfoYU61ymIydPjjB6JhW2WIq4aDOgwAKOII=
+	b=CD6myMvvq8NRrFxFDFlYdff51Xa/79xVEJ1U/Pshlhz1aa9Ychyksh3Qq0WZrg8PH
+	 dvBbALYLF/WllvRjQ2L00wngrMXrxULlpDtQjTVCQKMIhdNE0D80GabuConaPpT56/
+	 YWOof2V0ZTGBCBZcbqhcmuwpgXg//cF2dxLSEB40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brahmajit Das <listout@listout.xyz>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/644] samples: mei: Fix building on musl libc
-Date: Tue, 26 Aug 2025 13:03:43 +0200
-Message-ID: <20250826110949.778522672@linuxfoundation.org>
+Subject: [PATCH 5.15 133/644] staging: nvec: Fix incorrect null termination of battery manufacturer
+Date: Tue, 26 Aug 2025 13:03:44 +0200
+Message-ID: <20250826110949.803051222@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,73 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 239df3e4b4752524e7c0fb3417c218d8063654b4 ]
+[ Upstream commit a8934352ba01081c51d2df428e9d540aae0e88b5 ]
 
-The header bits/wordsize.h is glibc specific and on building on musl
-with allyesconfig results in
+The battery manufacturer string was incorrectly null terminated using
+bat_model instead of bat_manu. This could result in an unintended
+write to the wrong field and potentially incorrect behavior.
 
-samples/mei/mei-amt-version.c:77:10: fatal error: bits/wordsize.h: No such file or directory
-   77 | #include <bits/wordsize.h>
-      |          ^~~~~~~~~~~~~~~~~
+fixe the issue by correctly null terminating the bat_manu string.
 
-mei-amt-version.c build file without bits/wordsize.h on musl and glibc.
-
-However on musl we get the follwing error without sys/time.h
-
-samples/mei/mei-amt-version.c: In function 'mei_recv_msg':
-samples/mei/mei-amt-version.c:159:24: error: storage size of 'tv' isn't known
-  159 |         struct timeval tv;
-      |                        ^~
-samples/mei/mei-amt-version.c:160:9: error: unknown type name 'fd_set'
-  160 |         fd_set set;
-      |         ^~~~~~
-samples/mei/mei-amt-version.c:168:9: error: implicit declaration of function 'FD_ZERO' [-Wimplicit-function-declaration]
-  168 |         FD_ZERO(&set);
-      |         ^~~~~~~
-samples/mei/mei-amt-version.c:169:9: error: implicit declaration of function 'FD_SET'; did you mean 'L_SET'? [-Wimplicit-function-declaration]
-  169 |         FD_SET(me->fd, &set);
-      |         ^~~~~~
-      |         L_SET
-samples/mei/mei-amt-version.c:170:14: error: implicit declaration of function 'select' [-Wimplicit-function-declaration]
-  170 |         rc = select(me->fd + 1, &set, NULL, NULL, &tv);
-      |              ^~~~~~
-samples/mei/mei-amt-version.c:171:23: error: implicit declaration of function 'FD_ISSET' [-Wimplicit-function-declaration]
-  171 |         if (rc > 0 && FD_ISSET(me->fd, &set)) {
-      |                       ^~~~~~~~
-samples/mei/mei-amt-version.c:159:24: warning: unused variable 'tv' [-Wunused-variable]
-  159 |         struct timeval tv;
-      |                        ^~
-
-Hence the the file has been included.
-
-Fixes: c52827cc4ddf ("staging/mei: add mei user space example")
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Link: https://lore.kernel.org/r/20250702135955.24955-1-listout@listout.xyz
+Fixes: 32890b983086 ("Staging: initial version of the nvec driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250719080755.3954373-1-alok.a.tiwari@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/mei/mei-amt-version.c | 2 +-
+ drivers/staging/nvec/nvec_power.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/samples/mei/mei-amt-version.c b/samples/mei/mei-amt-version.c
-index 867debd3b912..1d7254bcb44c 100644
---- a/samples/mei/mei-amt-version.c
-+++ b/samples/mei/mei-amt-version.c
-@@ -69,11 +69,11 @@
- #include <string.h>
- #include <fcntl.h>
- #include <sys/ioctl.h>
-+#include <sys/time.h>
- #include <unistd.h>
- #include <errno.h>
- #include <stdint.h>
- #include <stdbool.h>
--#include <bits/wordsize.h>
- #include <linux/mei.h>
- 
- /*****************************************************************************
+diff --git a/drivers/staging/nvec/nvec_power.c b/drivers/staging/nvec/nvec_power.c
+index b1ef196e1cfe..622d99ea9555 100644
+--- a/drivers/staging/nvec/nvec_power.c
++++ b/drivers/staging/nvec/nvec_power.c
+@@ -194,7 +194,7 @@ static int nvec_power_bat_notifier(struct notifier_block *nb,
+ 		break;
+ 	case MANUFACTURER:
+ 		memcpy(power->bat_manu, &res->plc, res->length - 2);
+-		power->bat_model[res->length - 2] = '\0';
++		power->bat_manu[res->length - 2] = '\0';
+ 		break;
+ 	case MODEL:
+ 		memcpy(power->bat_model, &res->plc, res->length - 2);
 -- 
 2.39.5
 
