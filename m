@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726693376BD;
-	Tue, 26 Aug 2025 14:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489173376BD;
+	Tue, 26 Aug 2025 14:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219081; cv=none; b=eUIao2FZ+TTydVmxKmH3pffvknHUraX35K2Xnj5b1Sv5PwQTU7nN/EWDI+vb9nmFT/2BMt0xcghrqEjb9EshCCveCixGgxROh0JWEJgdgU8Tmqne7HXTCoE9v1/PbISo61RDqjRsYPQMR7QIC5qWNr7JZSolHIsq4T+Uqslfim8=
+	t=1756219084; cv=none; b=gSujKlIWzGmhmMzlXr1DUPie0/1YpoMr5zvnUh01yzpDecKeS2gjJqsOyZkU64wbKf0kpzeN/3BXgOHloYcoFcrwX+eoiNBGk0jD6Y1PNZNTRCSOgIlW3H07KJmNrpcCNpFZ0ee5BL9jndyLIMYKz3L09H6mBbFHyRbzFZnJPPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219081; c=relaxed/simple;
-	bh=SrmeVdc8AJtixVy/9cJj3IG2aDaV54woa+x6tt1sKBA=;
+	s=arc-20240116; t=1756219084; c=relaxed/simple;
+	bh=gcs6w5CRg7vjBIg2RgGqcmxAH+v2Trj15jLxYikUG1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGCCT6/XrEIgDpz3MVvNv0Eh8C4P7QWOnWBRKpI7TsHkoxcmBlq9+xXbJ4AIqF14sMgzIwtSaZtZCWnBMlEgP2Edv/aJ/62fQhkAFo1+F+ZPlprpig+NFnM0Tj2Sh3aMwjJzcQlTrIKiRji17u8DVOK+s8vXddPlpNqZ7eG1OO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8e+DVhv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KKh7RDpkwv0oGXq2npUFuhEuZCUCgPzjctMJjs8bA2tQSpNMbWjsUO+tv8ttD9r2faaGtLzPQ4g9H3KLxl/3Lr1G12xyUI+2HHlw+D32PBFmKTs78Ie6mskLUAqf/aLawf86Wa2GAVwdPVgvzrDDtCDjJkbh2mdfzKpQGmgBOlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLm7FBKf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8e+DVhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA30C4CEF1;
-	Tue, 26 Aug 2025 14:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLm7FBKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4B9C4CEF1;
+	Tue, 26 Aug 2025 14:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219081;
-	bh=SrmeVdc8AJtixVy/9cJj3IG2aDaV54woa+x6tt1sKBA=;
+	s=korg; t=1756219083;
+	bh=gcs6w5CRg7vjBIg2RgGqcmxAH+v2Trj15jLxYikUG1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8e+DVhvmW+VOOdePVGRVbO+FzyxLSg7HaH1ug5tLc6YLlVJWiLxGBS9FdY1sA+jT
-	 KjqUJDgquhp0yTBMWyfUN8OVD0qbGrflLAwN8ndeWEruGtu1HAmrg/3DdFefBvpEZj
-	 Jt6Hx1B/qJH72n7R8PCgJJzSzrP2gHi1xLifKMK0=
+	b=TLm7FBKfHEunEtmKCJ6T2uy1Df7ooCp9yMfBcGKb19CFYjGWBfBJFPzWjy3nahM4B
+	 +GDm5tbKKVOa895hwKduINSm+A3UTyq1e2QEo3GGMu9pjDwbS9NSSp3SgOdj1X9aE1
+	 xbnQ1S+r1qnjvZj77vzaP/4qbXBCKi9xRrGJlvoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 245/403] scsi: mpt3sas: Correctly handle ATA device errors
-Date: Tue, 26 Aug 2025 13:09:31 +0200
-Message-ID: <20250826110913.594320617@linuxfoundation.org>
+Subject: [PATCH 5.4 219/403] net: fec: allow disable coalescing
+Date: Tue, 26 Aug 2025 13:09:05 +0200
+Message-ID: <20250826110912.884873322@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,83 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Jonas Rebmann <jre@pengutronix.de>
 
-[ Upstream commit 15592a11d5a5c8411ac8494ec49736b658f6fbff ]
+[ Upstream commit b7ad21258f9e9a7f58b19595d5ceed2cde3bed68 ]
 
-With the ATA error model, an NCQ command failure always triggers an abort
-(termination) of all NCQ commands queued on the device. In such case, the
-SAT or the host must handle the failed command according to the command
-sense data and immediately retry all other NCQ commands that were aborted
-due to the failed NCQ command.
+In the current implementation, IP coalescing is always enabled and
+cannot be disabled.
 
-For SAS HBAs controlled by the mpt3sas driver, NCQ command aborts are not
-handled by the HBA SAT and sent back to the host, with an ioc log
-information equal to 0x31080000 (IOC_LOGINFO_PREFIX_PL with the PL code
-PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR). The function
-_scsih_io_done() always forces a retry of commands terminated with the
-status MPI2_IOCSTATUS_SCSI_IOC_TERMINATED using the SCSI result
-DID_SOFT_ERROR, regardless of the log_info for the command.  This
-correctly forces the retry of collateral NCQ abort commands, but with the
-retry counter for the command being incremented. If a command to an ATA
-device is subject to too many retries due to other NCQ commands failing
-(e.g. read commands trying to access unreadable sectors), the collateral
-NCQ abort commands may be terminated with an error as they run out of
-retries. This violates the SAT specification and causes hard-to-debug
-command errors.
+As setting maximum frames to 0 or 1, or setting delay to zero implies
+immediate delivery of single packets/IRQs, disable coalescing in
+hardware in these cases.
 
-Solve this issue by modifying the handling of the
-MPI2_IOCSTATUS_SCSI_IOC_TERMINATED status to check if a command is for an
-ATA device and if the command loginfo indicates an NCQ collateral
-abort. If that is the case, force the command retry using the SCSI result
-DID_IMM_RETRY to avoid incrementing the command retry count.
+This also guarantees that coalescing is never enabled with ICFT or ICTT
+set to zero, a configuration that could lead to unpredictable behaviour
+according to i.MX8MP reference manual.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250606052747.742998-3-dlemoal@kernel.org
-Tested-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250626-fec_deactivate_coalescing-v2-1-0b217f2e80da@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 34 +++++++++++------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_scsih.c b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-index 4731e464dfb9..3169b37a88b3 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -181,6 +181,14 @@ struct sense_info {
- #define MPT3SAS_PORT_ENABLE_COMPLETE (0xFFFD)
- #define MPT3SAS_ABRT_TASK_SET (0xFFFE)
- #define MPT3SAS_REMOVE_UNRESPONDING_DEVICES (0xFFFF)
-+
-+/*
-+ * SAS Log info code for a NCQ collateral abort after an NCQ error:
-+ * IOC_LOGINFO_PREFIX_PL | PL_LOGINFO_CODE_SATA_NCQ_FAIL_ALL_CMDS_AFTR_ERR
-+ * See: drivers/message/fusion/lsi/mpi_log_sas.h
-+ */
-+#define IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR	0x31080000
-+
- /**
-  * struct fw_event_work - firmware event struct
-  * @list: link list framework
-@@ -5327,6 +5335,17 @@ _scsih_io_done(struct MPT3SAS_ADAPTER *ioc, u16 smid, u8 msix_index, u32 reply)
- 			scmd->result = DID_TRANSPORT_DISRUPTED << 16;
- 			goto out;
- 		}
-+		if (log_info == IOC_LOGINFO_SATA_NCQ_FAIL_AFTER_ERR) {
-+			/*
-+			 * This is a ATA NCQ command aborted due to another NCQ
-+			 * command failure. We must retry this command
-+			 * immediately but without incrementing its retry
-+			 * counter.
-+			 */
-+			WARN_ON_ONCE(xfer_cnt != 0);
-+			scmd->result = DID_IMM_RETRY << 16;
-+			break;
-+		}
- 		if (log_info == 0x31110630) {
- 			if (scmd->retries > 2) {
- 				scmd->result = DID_NO_CONNECT << 16;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index fd7c504b44f2..f8a096633280 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -2590,27 +2590,25 @@ static int fec_enet_us_to_itr_clock(struct net_device *ndev, int us)
+ static void fec_enet_itr_coal_set(struct net_device *ndev)
+ {
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+-	int rx_itr, tx_itr;
++	u32 rx_itr = 0, tx_itr = 0;
++	int rx_ictt, tx_ictt;
+ 
+-	/* Must be greater than zero to avoid unpredictable behavior */
+-	if (!fep->rx_time_itr || !fep->rx_pkts_itr ||
+-	    !fep->tx_time_itr || !fep->tx_pkts_itr)
+-		return;
+-
+-	/* Select enet system clock as Interrupt Coalescing
+-	 * timer Clock Source
+-	 */
+-	rx_itr = FEC_ITR_CLK_SEL;
+-	tx_itr = FEC_ITR_CLK_SEL;
++	rx_ictt = fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr);
++	tx_ictt = fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr);
+ 
+-	/* set ICFT and ICTT */
+-	rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
+-	rx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->rx_time_itr));
+-	tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
+-	tx_itr |= FEC_ITR_ICTT(fec_enet_us_to_itr_clock(ndev, fep->tx_time_itr));
++	if (rx_ictt > 0 && fep->rx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		rx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		rx_itr |= FEC_ITR_ICFT(fep->rx_pkts_itr);
++		rx_itr |= FEC_ITR_ICTT(rx_ictt);
++	}
+ 
+-	rx_itr |= FEC_ITR_EN;
+-	tx_itr |= FEC_ITR_EN;
++	if (tx_ictt > 0 && fep->tx_pkts_itr > 1) {
++		/* Enable with enet system clock as Interrupt Coalescing timer Clock Source */
++		tx_itr = FEC_ITR_EN | FEC_ITR_CLK_SEL;
++		tx_itr |= FEC_ITR_ICFT(fep->tx_pkts_itr);
++		tx_itr |= FEC_ITR_ICTT(tx_ictt);
++	}
+ 
+ 	writel(tx_itr, fep->hwp + FEC_TXIC0);
+ 	writel(rx_itr, fep->hwp + FEC_RXIC0);
 -- 
 2.39.5
 
