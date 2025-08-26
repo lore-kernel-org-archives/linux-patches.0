@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4D61EF39E;
-	Tue, 26 Aug 2025 13:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E102E2AD04;
+	Tue, 26 Aug 2025 13:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215231; cv=none; b=G1nC/kDlgdm6idzocwuJvKD6nEnPQj9xLHyEkYamcM0F/ZEfG962JeqspsuTZyKvy9GaoB5K58XCJ/7L53v4wfc/YXbmhQBvirafuQzSkMu/6/kE8aKApw4Yb4hH4pc4J7g27GJpIelq7e5xNcs5S38une1l2LYIbWDnryjbhvA=
+	t=1756215234; cv=none; b=D39NXb/znqc/XUuzhUFX4xP9uh8m5OyugssCIaT/O2hqvEdli8IUpZhV5V2VpvQDOJweMTdop0PPVRfq4EIOy5fwph0EU6DvHLRHz0aujeSBB6VthO2mRqCHIqLhhlR2Pg4YfviWMsfsSvToMq+UGqTXA9ALGfEY4jlPSQL8+NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215231; c=relaxed/simple;
-	bh=C2CxFTc+T5YcAYW/hztnpk6cVB78xZ1horICN2KAh6U=;
+	s=arc-20240116; t=1756215234; c=relaxed/simple;
+	bh=c6UuT36KxkfWi4OInFIi9DjBvn5I0w0K3hdV/mawW6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZHtDgFVVWkf+/Mf8xJT9LvwL1EepsoAf+EGH6Fcyj+Zxu9SLNKNHXoSnYCmT8MeIB9UvWjEMgrHRIQZogn3KUEcahxfnM712/MSnLEZqR99gaby0oX0oBYVcvuLU/l8E7LYbD+J+dvjwtcf3g24gW1tz+jaXSCx/AY6Ez0n5Gxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OK7qG3Wk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QBnciwWU54NxudDmWy+iI6woRKwaunk5BbwAuUloX/A5CfjIL25DGQSAKwatUx999khgdwrVKBCSiC6B4UafBAISlV4C5eupxdlz7PfJowU4tViWrP94HPD4rngjrlf3csCPSV27COBBS3QQO3rr6/wrTtIPlucBwZZC/UrBhV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBkLHbZs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OK7qG3Wk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1508C4CEF1;
-	Tue, 26 Aug 2025 13:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBkLHbZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAFFC16AAE;
+	Tue, 26 Aug 2025 13:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215231;
-	bh=C2CxFTc+T5YcAYW/hztnpk6cVB78xZ1horICN2KAh6U=;
+	s=korg; t=1756215233;
+	bh=c6UuT36KxkfWi4OInFIi9DjBvn5I0w0K3hdV/mawW6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OK7qG3WkOodlD7fcv6STF+3HRDpxKIwqLLkBRhPYVb1s0Fm0l9sPKw+leDXvHcee3
-	 DOwiawqMCkYwtmFRlk8wHJhCGjjWD2RPHb0l3MZ1820y76e0V1GFiRchZlXCajPoM0
-	 ZPIOGvnrRoKulxNORKvH9d4BEOUs3t+nR8l881hs=
+	b=gBkLHbZsdcSgnE+WZd/kmAfoIKxOW3RFw7+S4/n62pnXj4GsIymaoRfCCJ8BXD8ug
+	 lcsWkMD+PD7W8WR23rC7YLRl7pW3plr857TFLR7ZPLQdWoP7reEjlvtBhtjrizM382
+	 YtXwhR3hheeER5X8eyF0qeqHM5zd52hDp4/qYcgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 436/482] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
-Date: Tue, 26 Aug 2025 13:11:29 +0200
-Message-ID: <20250826110941.601617887@linuxfoundation.org>
+Subject: [PATCH 6.1 437/482] mmc: sdhci-pci-gli: Use PCI AER definitions, not hard-coded values
+Date: Tue, 26 Aug 2025 13:11:30 +0200
+Message-ID: <20250826110941.626731396@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -47,53 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ]
+[ Upstream commit 951b7ccc54591ba48755b5e0c7fc8b9623a64640 ]
 
-Reading DPCD registers has side-effects in general. In particular
-accessing registers outside of the link training register range
-(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
-forbidden by the DP v2.1 Standard, see
+015c9cbcf0ad ("mmc: sdhci-pci-gli: GL9750: Mask the replay timer timeout of
+AER") added PCI_GLI_9750_CORRERR_MASK, the offset of the AER Capability in
+config space, and PCI_GLI_9750_CORRERR_MASK_REPLAY_TIMER_TIMEOUT, the
+Replay Timer Timeout bit in the AER Correctable Error Status register.
 
-3.6.5.1 DPTX AUX Transaction Handling Mandates
-3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
+Use pci_find_ext_capability() to locate the AER Capability and use the
+existing PCI_ERR_COR_REP_TIMER definition to mask the bit.
 
-Based on my tests, accessing the DPCD_REV register during the link
-training of an UHBR TBT DP tunnel sink leads to link training failures.
+This removes a little bit of unnecessarily device-specific code and makes
+AER-related things more greppable.
 
-Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
-DPCD register access quirk.
-
-Cc: <stable@vger.kernel.org>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20240327214831.1544595-2-helgaas@kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-gli.c |   12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -663,7 +663,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
- 	 * monitor doesn't power down exactly after the throw away read.
- 	 */
- 	if (!aux->is_remote) {
--		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
-+		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
- 		if (ret < 0)
- 			return ret;
- 	}
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -27,8 +27,6 @@
+ #define PCI_GLI_9750_PM_CTRL	0xFC
+ #define   PCI_GLI_9750_PM_STATE	  GENMASK(1, 0)
+ 
+-#define PCI_GLI_9750_CORRERR_MASK				0x214
+-#define   PCI_GLI_9750_CORRERR_MASK_REPLAY_TIMER_TIMEOUT	  BIT(12)
+ 
+ #define SDHCI_GLI_9750_CFG2          0x848
+ #define   SDHCI_GLI_9750_CFG2_L1DLY    GENMASK(28, 24)
+@@ -154,8 +152,6 @@
+ #define PCI_GLI_9755_PM_CTRL     0xFC
+ #define   PCI_GLI_9755_PM_STATE    GENMASK(1, 0)
+ 
+-#define PCI_GLI_9755_CORRERR_MASK				0x214
+-#define   PCI_GLI_9755_CORRERR_MASK_REPLAY_TIMER_TIMEOUT	  BIT(12)
+ 
+ #define GLI_MAX_TUNING_LOOP 40
+ 
+@@ -501,9 +497,7 @@ static void gl9750_hw_setting(struct sdh
+ 	pci_write_config_dword(pdev, PCI_GLI_9750_PM_CTRL, value);
+ 
+ 	/* mask the replay timer timeout of AER */
+-	pci_read_config_dword(pdev, PCI_GLI_9750_CORRERR_MASK, &value);
+-	value |= PCI_GLI_9750_CORRERR_MASK_REPLAY_TIMER_TIMEOUT;
+-	pci_write_config_dword(pdev, PCI_GLI_9750_CORRERR_MASK, value);
++	sdhci_gli_mask_replay_timer_timeout(pdev);
+ 
+ 	gl9750_wt_off(host);
+ }
+@@ -715,9 +709,7 @@ static void gl9755_hw_setting(struct sdh
+ 	pci_write_config_dword(pdev, PCI_GLI_9755_PM_CTRL, value);
+ 
+ 	/* mask the replay timer timeout of AER */
+-	pci_read_config_dword(pdev, PCI_GLI_9755_CORRERR_MASK, &value);
+-	value |= PCI_GLI_9755_CORRERR_MASK_REPLAY_TIMER_TIMEOUT;
+-	pci_write_config_dword(pdev, PCI_GLI_9755_CORRERR_MASK, value);
++	sdhci_gli_mask_replay_timer_timeout(pdev);
+ 
+ 	gl9755_wt_off(pdev);
+ }
 
 
