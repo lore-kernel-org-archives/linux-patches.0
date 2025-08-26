@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D1A35082F;
-	Tue, 26 Aug 2025 14:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5AC341651;
+	Tue, 26 Aug 2025 14:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217232; cv=none; b=igY7pZQvpdQIarwuTXBMGIyf9nth7n9VcjkM2yLpr9rcQD7F5pzV8UF3jDCVFS7t0yvr6m2c4N6Ns7rZjWi3oq2m1tufURXErG+lZZh1a/yyEd1V0Sp+ckGV6duZDW5dSSUeClwMoXsikQ7oqTLTDFwK0IO9sjtRwIdUjebw8MU=
+	t=1756217234; cv=none; b=Im+OxdvbW46AkXxemBIo7aBr0xasVGbQe17C9czBwFqyzCq+OXld64jyVZWhVPJeXIlikxy+yurZB9QMU/F1oqKnaa56fTBMIh2r2OmywDmwR8VZ/UIjDmYSYpBdYoQk7rcCEdsvNvDHQuDFzLwmYwznxhp15wC5z3bYrlGfHw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217232; c=relaxed/simple;
-	bh=Y6bKuuyNiSeOpOgiG0RxfcJx7Vu4CFyyzp4sLKl8x70=;
+	s=arc-20240116; t=1756217234; c=relaxed/simple;
+	bh=eoPLuSfPTQH2EdprkDWpTiphsH23Gp0M4mYH1Vjjexo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xb+bBuXV/f8Qi+ucB/aKwOK7Dd6wXDyJ+C3XtBRlGXrR4aI4L5enUNdb5z7MRQkWKwcdfRhTR+EulVj3FCgjrQ2U5jWDacHGInJICg9RODwBswrrrrhS/71I+OOGfW5/WvUlRvCJqi9ey4tpqOAO4ICS2MbvXyTCbuom6RPgZaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8e9FZbE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXRUrIGmZC86WUSTurlJmdyZo00AXr2+ogXAgbZq4aVhprMjQ6HUR5NK7g+QV5sifNeoLYAO6F3Q3lQ1yLdz3yInMbQKNsnZaeJqz1Wqcusn8Jt8aqZ3eBSMm1V+A/7SPbIbYFfP9zVNG8YiOKEtTs5+KIcYZlmjW55qjfgn+4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBmp17+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8e9FZbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1506C113D0;
-	Tue, 26 Aug 2025 14:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBmp17+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BEBC4CEF1;
+	Tue, 26 Aug 2025 14:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217232;
-	bh=Y6bKuuyNiSeOpOgiG0RxfcJx7Vu4CFyyzp4sLKl8x70=;
+	s=korg; t=1756217234;
+	bh=eoPLuSfPTQH2EdprkDWpTiphsH23Gp0M4mYH1Vjjexo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8e9FZbEx+Y2D0hzctzLp3UzL2i3QmnLJ24s7u9uIbfZAn3p3F0f4LgX1KsLFZTF+
-	 23RuGBckY5sKnzb4k43EDxRXTdpPvTacu7ZAnlV0tX5HdCN6o6nQ55ottwcJor08mZ
-	 CsqqbxP51wsKa/JE1vRnhhgp5sEYOxkRweRrt9Ig=
+	b=yBmp17+Z0Ke8KjylvwWeFe0PjgD6wIO+MoKnArzjaFVClCS/9nWJVzPfaY/1hytLx
+	 BEx69SjySnMcaZqArIL61R+QIhWjJhAhb3cTvoZv5Ef+m2HXECm2TyhZBcLwRCOBVD
+	 1AfkVxsfEjpWn7gq86AwAI+UfcCZWxX7cgr9HHuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/523] net: emaclite: Fix missing pointer increment in aligned_read()
-Date: Tue, 26 Aug 2025 13:04:04 +0200
-Message-ID: <20250826110925.443765110@linuxfoundation.org>
+Subject: [PATCH 5.10 035/523] net/sched: sch_qfq: Fix race condition on qfq_aggregate
+Date: Tue, 26 Aug 2025 13:04:05 +0200
+Message-ID: <20250826110925.466617960@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,38 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 7727ec1523d7973defa1dff8f9c0aad288d04008 ]
+[ Upstream commit 5e28d5a3f774f118896aec17a3a20a9c5c9dfc64 ]
 
-Add missing post-increment operators for byte pointers in the
-loop that copies remaining bytes in xemaclite_aligned_read().
-Without the increment, the same byte was written repeatedly
-to the destination.
-This update aligns with xemaclite_aligned_write()
+A race condition can occur when 'agg' is modified in qfq_change_agg
+(called during qfq_enqueue) while other threads access it
+concurrently. For example, qfq_dump_class may trigger a NULL
+dereference, and qfq_delete_class may cause a use-after-free.
 
-Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250710173849.2381003-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch addresses the issue by:
+
+1. Moved qfq_destroy_class into the critical section.
+
+2. Added sch_tree_lock protection to qfq_dump_class and
+qfq_dump_class_stats.
+
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_qfq.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-index 02b95afe25066..c8bd4880b609d 100644
---- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-@@ -293,7 +293,7 @@ static void xemaclite_aligned_read(u32 *src_ptr, u8 *dest_ptr,
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 1ee15db5fcc8c..e412340f639d2 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -414,7 +414,7 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	bool existing = false;
+ 	struct nlattr *tb[TCA_QFQ_MAX + 1];
+ 	struct qfq_aggregate *new_agg = NULL;
+-	u32 weight, lmax, inv_w;
++	u32 weight, lmax, inv_w, old_weight, old_lmax;
+ 	int err;
+ 	int delta_w;
  
- 		/* Read the remaining data */
- 		for (; length > 0; length--)
--			*to_u8_ptr = *from_u8_ptr;
-+			*to_u8_ptr++ = *from_u8_ptr++;
- 	}
+@@ -448,12 +448,16 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	inv_w = ONE_FP / weight;
+ 	weight = ONE_FP / inv_w;
+ 
+-	if (cl != NULL &&
+-	    lmax == cl->agg->lmax &&
+-	    weight == cl->agg->class_weight)
+-		return 0; /* nothing to change */
++	if (cl != NULL) {
++		sch_tree_lock(sch);
++		old_weight = cl->agg->class_weight;
++		old_lmax   = cl->agg->lmax;
++		sch_tree_unlock(sch);
++		if (lmax == old_lmax && weight == old_weight)
++			return 0; /* nothing to change */
++	}
+ 
+-	delta_w = weight - (cl ? cl->agg->class_weight : 0);
++	delta_w = weight - (cl ? old_weight : 0);
+ 
+ 	if (q->wsum + delta_w > QFQ_MAX_WSUM) {
+ 		pr_notice("qfq: total weight out of range (%d + %u)\n",
+@@ -554,10 +558,10 @@ static int qfq_delete_class(struct Qdisc *sch, unsigned long arg)
+ 
+ 	qdisc_purge_queue(cl->qdisc);
+ 	qdisc_class_hash_remove(&q->clhash, &cl->common);
++	qfq_destroy_class(sch, cl);
+ 
+ 	sch_tree_unlock(sch);
+ 
+-	qfq_destroy_class(sch, cl);
+ 	return 0;
  }
  
+@@ -624,6 +628,7 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+ {
+ 	struct qfq_class *cl = (struct qfq_class *)arg;
+ 	struct nlattr *nest;
++	u32 class_weight, lmax;
+ 
+ 	tcm->tcm_parent	= TC_H_ROOT;
+ 	tcm->tcm_handle	= cl->common.classid;
+@@ -632,8 +637,13 @@ static int qfq_dump_class(struct Qdisc *sch, unsigned long arg,
+ 	nest = nla_nest_start_noflag(skb, TCA_OPTIONS);
+ 	if (nest == NULL)
+ 		goto nla_put_failure;
+-	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, cl->agg->class_weight) ||
+-	    nla_put_u32(skb, TCA_QFQ_LMAX, cl->agg->lmax))
++
++	sch_tree_lock(sch);
++	class_weight	= cl->agg->class_weight;
++	lmax		= cl->agg->lmax;
++	sch_tree_unlock(sch);
++	if (nla_put_u32(skb, TCA_QFQ_WEIGHT, class_weight) ||
++	    nla_put_u32(skb, TCA_QFQ_LMAX, lmax))
+ 		goto nla_put_failure;
+ 	return nla_nest_end(skb, nest);
+ 
+@@ -650,8 +660,10 @@ static int qfq_dump_class_stats(struct Qdisc *sch, unsigned long arg,
+ 
+ 	memset(&xstats, 0, sizeof(xstats));
+ 
++	sch_tree_lock(sch);
+ 	xstats.weight = cl->agg->class_weight;
+ 	xstats.lmax = cl->agg->lmax;
++	sch_tree_unlock(sch);
+ 
+ 	if (gnet_stats_copy_basic(qdisc_root_sleeping_running(sch),
+ 				  d, NULL, &cl->bstats) < 0 ||
 -- 
 2.39.5
 
