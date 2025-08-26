@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE87350D4F;
-	Tue, 26 Aug 2025 14:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FEA2C0F60;
+	Tue, 26 Aug 2025 14:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218023; cv=none; b=Bi5gUFKIQMXgDn7KWTCUVGpzWWmsvMijXdWl68egAuC9q1jEiTnQ2eOS8GuZdMiUdKAEPBx79LXKoljCiqmXn1DYkbo2iKxJ9TZbXESgX+NCF1OkGbdfVnijcSHARYjCKmsyrpOS8K7jZ/OI3B/ofFm6NC4IFwpIAMN66f6yf2s=
+	t=1756218026; cv=none; b=RIqjfEnTVEEgvXn0ABFI4lOT5rYGkCZHKFJQ8jbUgRRXxNi0cC4KSYuYClb1bbSqvBJMhk8JcVOyf2zytAkmcrIm2XQRiggDstKjbKo5RiSH48dOnNBqrR+7a3FBIItH6jnRvEwukQc/yUwAofF/rMzGcM0gM6STkMWusPqA2nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218023; c=relaxed/simple;
-	bh=2pBV91OsSskO4r7RMmUwZZcvj4LjC/BEtL7Ek4gmWNg=;
+	s=arc-20240116; t=1756218026; c=relaxed/simple;
+	bh=l7fCiQqsyXUj0lQfihHBH0T5ww2uvHt+UnW0MpRUco4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kIhld97ZIv6Uq94TuDdaIIPrI3oBYDOVfFhfZ0xD7Bxw55Am785J9/v5L+u0usrJt6El/SP4Q+0OLNwTfzWdltqrTXE4XnrMU+9RR0cBXJzZkwT/0LFhEFlIf+RS1ekVIEWEXvKSD3H07UTRbkGVqbUUTm2p2j4tsyPc+Tfh+zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WuDgDDz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSSNkt5EM0qNPi5Aby42qyGqa841riw7SjZPT+8n8URw/xN1jFWD+gCAS5lC8cJ6NIm3A/zQ+mXFV3F+8OCogyWucrKGxCHIHdk4A3FYeb+Evwv6dXRdb40kStT0dPOXxX49VUmZ4TPrw9XkmRe2AW7G8Pf98Nqs8eXFkMyBW/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0P1NMj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WuDgDDz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05EEC4CEF1;
-	Tue, 26 Aug 2025 14:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0P1NMj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F42C4CEF1;
+	Tue, 26 Aug 2025 14:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218023;
-	bh=2pBV91OsSskO4r7RMmUwZZcvj4LjC/BEtL7Ek4gmWNg=;
+	s=korg; t=1756218025;
+	bh=l7fCiQqsyXUj0lQfihHBH0T5ww2uvHt+UnW0MpRUco4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2WuDgDDzx4T5xRcOVv7ygg9h74hqd7CaWvwbFQ5EYJEwyWH6VaFTG8j34IMmk4VD1
-	 gQeIqFKquGEwrO/fMY7oH8Publx3K+6acATVZbWJlgfYt88r4Ff6OTGpG+Wr+P99fv
-	 GBKfP4LeXNKQ88XCFWemXqm/W2CaQMsgzmZ0HuZI=
+	b=V0P1NMj9SP05LSdVCs2LqvATgj6poyHTgBjSC7mWckUnDD+QQ2QZc3z2rlQn3sm0E
+	 CSEkRps/1jR/fIhoFHloRHISWJqHt9fELC3pnAaQywfECBUwev6UjRYv2t5r/O/ijt
+	 J1Fb7BgVzQ/QZd0C10nXpUcplKQ4KFw64guCTRdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 337/523] scsi: lpfc: Remove redundant assignment to avoid memory leak
-Date: Tue, 26 Aug 2025 13:09:07 +0200
-Message-ID: <20250826110932.784774793@linuxfoundation.org>
+	stable@kernel.org,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 364/523] ext4: fix fsmap end of range reporting with bigalloc
+Date: Tue, 26 Aug 2025 13:09:34 +0200
+Message-ID: <20250826110933.448617264@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,37 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-[ Upstream commit eea6cafb5890db488fce1c69d05464214616d800 ]
+commit bae76c035bf0852844151e68098c9b7cd63ef238 upstream.
 
-Remove the redundant assignment if kzalloc() succeeds to avoid memory
-leak.
+With bigalloc enabled, the logic to report last extent has a bug since
+we try to use cluster units instead of block units. This can cause an
+issue where extra incorrect entries might be returned back to the
+user. This was flagged by generic/365 with 64k bs and -O bigalloc.
 
-Fixes: bd2cdd5e400f ("scsi: lpfc: NVME Initiator: Add debugfs support")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20250801185202.42631-1-jiashengjiangcool@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+** Details of issue **
+
+The issue was noticed on 5G 64k blocksize FS with -O bigalloc which has
+only 1 bg.
+
+$ xfs_io -c "fsmap -d" /mnt/scratch
+
+  0: 253:48 [0..127]: static fs metadata 128   /* sb */
+  1: 253:48 [128..255]: special 102:1 128   /* gdt */
+  3: 253:48 [256..383]: special 102:3 128   /* block bitmap */
+  4: 253:48 [384..2303]: unknown 1920       /* flex bg empty space */
+  5: 253:48 [2304..2431]: special 102:4 128   /* inode bitmap */
+  6: 253:48 [2432..4351]: unknown 1920      /* flex bg empty space */
+  7: 253:48 [4352..6911]: inodes 2560
+  8: 253:48 [6912..538623]: unknown 531712
+  9: 253:48 [538624..10485759]: free space 9947136
+
+The issue can be seen with:
+
+$ xfs_io -c "fsmap -d 0 3" /mnt/scratch
+
+  0: 253:48 [0..127]: static fs metadata 128
+  1: 253:48 [384..2047]: unknown 1664
+
+Only the first entry was expected to be returned but we get 2. This is
+because:
+
+ext4_getfsmap_datadev()
+  first_cluster, last_cluster = 0
+  ...
+  info->gfi_last = true;
+  ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1, 0, info);
+    fsb = C2B(1) = 16
+    fslen = 0
+    ...
+    /* Merge in any relevant extents from the meta_list */
+    list_for_each_entry_safe(p, tmp, &info->gfi_meta_list, fmr_list) {
+      ...
+      // since fsb = 16, considers all metadata which starts before 16 blockno
+      iter 1: error = ext4_getfsmap_helper(sb, info, p);  // p = sb (0,1), nop
+        info->gfi_next_fsblk = 1
+      iter 2: error = ext4_getfsmap_helper(sb, info, p);  // p = gdt (1,2), nop
+        info->gfi_next_fsblk = 2
+      iter 3: error = ext4_getfsmap_helper(sb, info, p);  // p = blk bitmap (2,3), nop
+        info->gfi_next_fsblk = 3
+      iter 4: error = ext4_getfsmap_helper(sb, info, p);  // p = ino bitmap (18,19)
+        if (rec_blk > info->gfi_next_fsblk) { // (18 > 3)
+          // emits an extra entry ** BUG **
+        }
+    }
+
+Fix this by directly calling ext4_getfsmap_datadev() with a dummy
+record that has fmr_physical set to (end_fsb + 1) instead of
+last_cluster + 1. By using the block instead of cluster we get the
+correct behavior.
+
+Replacing ext4_getfsmap_datadev_helper() with ext4_getfsmap_helper()
+is okay since the gfi_lastfree and metadata checks in
+ext4_getfsmap_datadev_helper() are anyways redundant when we only want
+to emit the last allocated block of the range, as we have already
+taken care of emitting metadata and any last free blocks.
+
+Cc: stable@kernel.org
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Fixes: 4a622e4d477b ("ext4: fix FS_IOC_GETFSMAP handling")
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/e7472c8535c9c5ec10f425f495366864ea12c9da.1754377641.git.ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_debugfs.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/ext4/fsmap.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
-index f91eee01ce95..c3e77db18945 100644
---- a/drivers/scsi/lpfc/lpfc_debugfs.c
-+++ b/drivers/scsi/lpfc/lpfc_debugfs.c
-@@ -6104,7 +6104,6 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
- 			}
- 			phba->nvmeio_trc_on = 1;
- 			phba->nvmeio_trc_output_idx = 0;
--			phba->nvmeio_trc = NULL;
- 		} else {
- nvmeio_off:
- 			phba->nvmeio_trc_size = 0;
--- 
-2.50.1
-
+--- a/fs/ext4/fsmap.c
++++ b/fs/ext4/fsmap.c
+@@ -526,6 +526,7 @@ static int ext4_getfsmap_datadev(struct
+ 	ext4_group_t end_ag;
+ 	ext4_grpblk_t first_cluster;
+ 	ext4_grpblk_t last_cluster;
++	struct ext4_fsmap irec;
+ 	int error = 0;
+ 
+ 	bofs = le32_to_cpu(sbi->s_es->s_first_data_block);
+@@ -609,10 +610,18 @@ static int ext4_getfsmap_datadev(struct
+ 			goto err;
+ 	}
+ 
+-	/* Report any gaps at the end of the bg */
++	/*
++	 * The dummy record below will cause ext4_getfsmap_helper() to report
++	 * any allocated blocks at the end of the range.
++	 */
++	irec.fmr_device = 0;
++	irec.fmr_physical = end_fsb + 1;
++	irec.fmr_length = 0;
++	irec.fmr_owner = EXT4_FMR_OWN_FREE;
++	irec.fmr_flags = 0;
++
+ 	info->gfi_last = true;
+-	error = ext4_getfsmap_datadev_helper(sb, end_ag, last_cluster + 1,
+-					     0, info);
++	error = ext4_getfsmap_helper(sb, info, &irec);
+ 	if (error)
+ 		goto err;
+ 
 
 
