@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAB426B747;
-	Tue, 26 Aug 2025 13:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104C428750C;
+	Tue, 26 Aug 2025 13:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215852; cv=none; b=H792+GEjt5kzx/vnICg5zB8gUmELCYbixTnoqwiSRicPH0YY/qWAlnWeK87Y3z4FFNE6WHI3f4NQz4FUL2ev7dktvQeCeD9cstuM1VPDc2gU3UpzDtaeAnWNVWTLDK0wK4W1otMn8rUqfKQMJaQSknuxDHE++mzS/ytS1CyuWDI=
+	t=1756215858; cv=none; b=iB+e8WgrMkMiH8pnD51zstpCC50eS6tkG6QtmHe4CA1Ur3DcnlDB/q6CTN2N3CriA6DRIWICPrERHxQG93/qBgIROXKT81A1u8s/cLVKIbBvnjLYVlt9L8Obt5na6z2IWQlWufmIiD5aoCMMUt/chX+K/IcV3SWweksA7JqQhKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215852; c=relaxed/simple;
-	bh=1RCSKR4Zd33H7VU5reTCuJwc62bnbvbNnQrneh8ucd4=;
+	s=arc-20240116; t=1756215858; c=relaxed/simple;
+	bh=gtwvHLRCl40tNK4yA4s5JLsbKxqCn0X92VARz/PUYek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBIXmm7osbms4PRwscJc6seiHhnbhiR/JLjdQzWxcdf631hMC+Xv2ZOCnVemvaDnXSr1lq9/j6/iIGJCmxs9KTFLovvbDbzbXAtXffvnFtwX3bWhapzuZZbd8QOjMr4x1g5SqYyoqAIegF83GLe/ixCQEjUkdeggl324aB0VGgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+6XQemY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CfdZ7LH1+7YLhQ6JldldP1K/kuyXBA1LQauibn8wfV7wmdLmAMrBr8GK0NcOL7zC78lfDV0uleEbaQbNP5Cu2qi77HPHQ3C8P09lY8RrfZdGX+xi2u0UVfkgBKMSiqcp/BMB9rfYtOjJPpJ+ZkxLBFNaeCYeOB4rGKb3xsPgpPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPl36mvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+6XQemY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4E6C4CEF1;
-	Tue, 26 Aug 2025 13:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPl36mvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FBFC113CF;
+	Tue, 26 Aug 2025 13:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215852;
-	bh=1RCSKR4Zd33H7VU5reTCuJwc62bnbvbNnQrneh8ucd4=;
+	s=korg; t=1756215857;
+	bh=gtwvHLRCl40tNK4yA4s5JLsbKxqCn0X92VARz/PUYek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+6XQemYvk/CPhQg63TkxYtc7WwSZwS10qJkRJhvlwLxfobabDTbDf55NUa35Mt0A
-	 EY03ioWdKquOOcldF8YlbJ82eUdcy75j/x/UJBCKTzGJi8kgmxcKVqxjw7WyaXOgr+
-	 SxcGcn77DS8iOQ6/1IbbBplhB1XUJQG2b9pcBGuY=
+	b=WPl36mvwQJVxVMGZXCg5tMyXQ4CrDe7uBKLp/WM7B5NfQBT33DUao7nWF0yLsdsL2
+	 IW2x7BPbSiOs5bJAmwPMBnlPnp84cNoeoigDswvaVXr/wnuo3TK3VxMwch42Y9yj4t
+	 G6WPX8JGCDfZMK+9aWLZT/sFlPF9BPgqqYmzXYHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 189/644] crypto: img-hash - Fix dma_unmap_sg() nents value
-Date: Tue, 26 Aug 2025 13:04:40 +0200
-Message-ID: <20250826110951.141404213@linuxfoundation.org>
+Subject: [PATCH 5.15 191/644] PCI: endpoint: pci-epf-vntb: Fix the incorrect usage of __iomem attribute
+Date: Tue, 26 Aug 2025 13:04:42 +0200
+Message-ID: <20250826110951.189441286@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,34 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Manivannan Sadhasivam <mani@kernel.org>
 
-[ Upstream commit 34b283636181ce02c52633551f594fec9876bec7 ]
+[ Upstream commit 61ae7f8694fb4b57a8c02a1a8d2b601806afc999 ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+__iomem attribute is supposed to be used only with variables holding the
+MMIO pointer. But here, 'mw_addr' variable is just holding a 'void *'
+returned by pci_epf_alloc_space(). So annotating it with __iomem is clearly
+wrong. Hence, drop the attribute.
 
-Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This also fixes the below sparse warning:
+
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17: warning: incorrect type in assignment (different address spaces)
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17:    expected void [noderef] __iomem *mw_addr
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:524:17:    got void *
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21: warning: incorrect type in assignment (different address spaces)
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21:    expected unsigned int [usertype] *epf_db
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:530:21:    got void [noderef] __iomem *mw_addr
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38: warning: incorrect type in argument 2 (different address spaces)
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38:    expected void *addr
+  drivers/pci/endpoint/functions/pci-epf-vntb.c:542:38:    got void [noderef] __iomem *mw_addr
+
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250709125022.22524-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/img-hash.c | 2 +-
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
-index 34b41cbcfa8d..28b75632d1d1 100644
---- a/drivers/crypto/img-hash.c
-+++ b/drivers/crypto/img-hash.c
-@@ -436,7 +436,7 @@ static int img_hash_write_via_dma_stop(struct img_hash_dev *hdev)
- 	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 5cc0d2014ed8..45530bca50fb 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -520,7 +520,7 @@ static int epf_ntb_db_bar_init(struct epf_ntb *ntb)
+ 	struct device *dev = &ntb->epf->dev;
+ 	int ret;
+ 	struct pci_epf_bar *epf_bar;
+-	void __iomem *mw_addr;
++	void *mw_addr;
+ 	enum pci_barno barno;
+ 	size_t size = 4 * ntb->db_count;
  
- 	if (ctx->flags & DRIVER_FLAGS_SG)
--		dma_unmap_sg(hdev->dev, ctx->sg, ctx->dma_ct, DMA_TO_DEVICE);
-+		dma_unmap_sg(hdev->dev, ctx->sg, 1, DMA_TO_DEVICE);
- 
- 	return 0;
- }
 -- 
 2.39.5
 
