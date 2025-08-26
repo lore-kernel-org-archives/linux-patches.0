@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F165D1E480;
-	Tue, 26 Aug 2025 13:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954BD27EFE7;
+	Tue, 26 Aug 2025 13:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215742; cv=none; b=fVa1Fdu9l3zv4VRPs62BDniBZLlqB5Hf1OAAswaX0TrIW1G3n9zyzVWEmLnoSRKdZMMGMpEl+PYKyyo691pMwqzKDu931hHN0HxdgUw4CTs7D5m7d/MmIGqcI3BFbEx2S9b0G69elC82dbRzHyczIQTR0hA38aVp5W0kPw/H4JM=
+	t=1756215744; cv=none; b=kTX06lMWlhMUFXaOdRZOTA4E854XlbAQ0Ce+9sk9BbGNn/3vX/SXBtdrzxPEd2/FW7mwkfGKTC4eGB6JkvcQTj89q04IZUoiYDvIX1BAK0LTT/7YnvUxKFLeTrXX2FioKAfJxpxFRhmLWB/xFjp0IFGV7k6RtlDPKKvmjweewOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215742; c=relaxed/simple;
-	bh=n+OGKPyRX84VxHVyItmUCXUoFZ9FoqgCBjpSi0VbX04=;
+	s=arc-20240116; t=1756215744; c=relaxed/simple;
+	bh=jUgHxUKwtL/wDA+u9Rh+d9EUqBhVy5Zmdtlga3hdPtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqPImFnRVy9toW6p89pSDbmV9+Pft9MFrQuLyJE3ExYzkvW/ZRlPSCO5OnKGRalHA7v+QrLqU3RtOKNwrBN3Kxyh2Tc7lWjWlgiNHjwVc+GobhU7G+OenJC1vmh9o+R7/zoY/TtNUsydxRK9Iafvcf61BmkEN10my+IZ6NXFY58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IBtuiO+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JLMksptaiPIJ1zRhUaMU5j4C7q3L+1j1SYGJjDfKRE2UEht2INpVHpmUXINpLlE2Olgt8+EK9eSnHCgKbj80amjGQbG2nys8c9QnkuBU4kORj/VCGBAwT1GbeHWPRZqPjMFHmdvRJR23jtNw+kBppRNWoshMa6N/DmEVdQCVVmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YW3lDOWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IBtuiO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABB3C113CF;
-	Tue, 26 Aug 2025 13:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW3lDOWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28783C4CEF1;
+	Tue, 26 Aug 2025 13:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215741;
-	bh=n+OGKPyRX84VxHVyItmUCXUoFZ9FoqgCBjpSi0VbX04=;
+	s=korg; t=1756215744;
+	bh=jUgHxUKwtL/wDA+u9Rh+d9EUqBhVy5Zmdtlga3hdPtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2IBtuiO+WEwIwuhhzzIk5IfcpuA4NfpYWuL2n8Te2W9CC9r5ZAFYVHaU1DJdhzbzS
-	 81bJTlDugxN7H3+N5fRjrr2Jv4ayrk15Zxd2B2jDIqpUnw05jWS88e48MQ0ch2niLJ
-	 LGVoo8eYN4TYzlHZt6rldnd7X7AgIvaA+osRY13M=
+	b=YW3lDOWOM8c+XVQ4yiRjIXQPrdcAWfrpNJbFdGwmeieTEwnvjNg9wYg6MWVIHB/1q
+	 bZXlZKujTi776RqNKg0KL/wf6FgWqJ0uXJosqaoYRrD5CEldskMXsnjSXFRiAgGeMd
+	 oGYAgnTAtKv02yGOJPso9zp0wgEZ3sm0EQUmO/f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Johan Korsnes <johan.korsnes@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 148/644] netfilter: nf_tables: adjust lockdep assertions handling
-Date: Tue, 26 Aug 2025 13:03:59 +0200
-Message-ID: <20250826110950.152950822@linuxfoundation.org>
+Subject: [PATCH 5.15 149/644] arch: powerpc: defconfig: Drop obsolete CONFIG_NET_CLS_TCINDEX
+Date: Tue, 26 Aug 2025 13:04:00 +0200
+Message-ID: <20250826110950.176829160@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,49 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Johan Korsnes <johan.korsnes@gmail.com>
 
-[ Upstream commit 8df1b40de76979bb8e975201d07b71103d5de820 ]
+[ Upstream commit 75cd37c5f28b85979fd5a65174013010f6b78f27 ]
 
-It's needed to check the return value of lockdep_commit_lock_is_held(),
-otherwise there's no point in this assertion as it doesn't print any
-debug information on itself.
+This option was removed from the Kconfig in commit
+8c710f75256b ("net/sched: Retire tcindex classifier") but it was not
+removed from the defconfigs.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
-
-Fixes: b04df3da1b5c ("netfilter: nf_tables: do not defer rule destruction via call_rcu")
-Reported-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8c710f75256b ("net/sched: Retire tcindex classifier")
+Signed-off-by: Johan Korsnes <johan.korsnes@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250323191116.113482-1-johan.korsnes@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/configs/ppc6xx_defconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a1f60f275814..33d03340d9fc 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3443,7 +3443,7 @@ void nf_tables_rule_destroy(const struct nft_ctx *ctx, struct nft_rule *rule)
- /* can only be used if rule is no longer visible to dumps */
- static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *rule)
- {
--	lockdep_commit_lock_is_held(ctx->net);
-+	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
- 
- 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
- 	nf_tables_rule_destroy(ctx, rule);
-@@ -5180,7 +5180,7 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
--	lockdep_commit_lock_is_held(ctx->net);
-+	WARN_ON_ONCE(!lockdep_commit_lock_is_held(ctx->net));
- 
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE_ERROR:
+diff --git a/arch/powerpc/configs/ppc6xx_defconfig b/arch/powerpc/configs/ppc6xx_defconfig
+index 7f7e7add44e7..cdaf8469d484 100644
+--- a/arch/powerpc/configs/ppc6xx_defconfig
++++ b/arch/powerpc/configs/ppc6xx_defconfig
+@@ -263,7 +263,6 @@ CONFIG_NET_SCH_DSMARK=m
+ CONFIG_NET_SCH_NETEM=m
+ CONFIG_NET_SCH_INGRESS=m
+ CONFIG_NET_CLS_BASIC=m
+-CONFIG_NET_CLS_TCINDEX=m
+ CONFIG_NET_CLS_ROUTE4=m
+ CONFIG_NET_CLS_FW=m
+ CONFIG_NET_CLS_U32=m
 -- 
 2.39.5
 
