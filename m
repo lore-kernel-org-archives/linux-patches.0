@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEA934AB0D;
-	Tue, 26 Aug 2025 14:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FF828314A;
+	Tue, 26 Aug 2025 14:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217348; cv=none; b=Q3xwhBqpMiyyIShVQ5yJGrmwdR4UXAqvsmQAGic2DUg33pNbqz1AAgbGcD0sJA0in/Z4bYTX4ARv5t5mRfic05Qyhn9pXbi6oeMiUujDvkC0tzhEba4HV2inRgn3W6Vy9feHa7BbS7mbztBWoRbSmlBsIcSRDyxv2rVP1Z6i4PA=
+	t=1756217351; cv=none; b=rlYKOMK+8pPZYEhjzr+zHYr+M+tQ0zipjKG81/6IE6LSBJrTnQbDhLHgmbNF1GmtiGBEgnEf8UnwRDz3DGJTWYYmcaqi2Y+yy9HXAg/Kw0SsqJoMqVrbSLWUaGRZZNXUmejjCK1ZDY8BFzDT96Nkx+L+PPrg+Mak/15M5rwdBwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217348; c=relaxed/simple;
-	bh=rjP+RyjvnwXvzARTuKy0y42NKA5hXM1isyWTOCcjsr0=;
+	s=arc-20240116; t=1756217351; c=relaxed/simple;
+	bh=GOp7LLBn1qOmXLU4Ett6weoCZnjkWf1Xleva05YXOHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRd78EYj61rCWN7F/WZmvCyrtyZlwDF9CsMatStiSKiLwuyq8uwuEWg4zRjOnzYdfyIHsmnldnjhdymNRs5pN9xAKiAzV10Icu2YzUHyBQUkBSY504PYDOKcUtmtJPfJXTTyTVNpoXK8Zzw0WbVii7MSmeIiYt5dK1C9os4GqLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8GqkA/F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQY8MCNEOMdd2Mp7fjIB7RFkRYuMt3bcAZh0XOIw5YSoU3rt24HAAnREE0uBP1UmcdbCvXgws8PBMvJ9A0tiITCk3VXcNDOxkxrgUQI9Y/96Goj1ORfkEHvbJevEble92CtZIE52rlCVw4427trFjERkHpmcExuN9y3ibH9jM0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwM4dvLO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8GqkA/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E932C113D0;
-	Tue, 26 Aug 2025 14:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwM4dvLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B074AC113CF;
+	Tue, 26 Aug 2025 14:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217348;
-	bh=rjP+RyjvnwXvzARTuKy0y42NKA5hXM1isyWTOCcjsr0=;
+	s=korg; t=1756217351;
+	bh=GOp7LLBn1qOmXLU4Ett6weoCZnjkWf1Xleva05YXOHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8GqkA/FiHwARemUgOOnyYgibJzPPn8KPsjRgZjgxBsiqZqrnbIjaIYf1567csNZq
-	 c8w6AXolXkBdFrFxfriOCDVhKqLbD6J5ZqsUsN1c+QBURZ9oggnWibsQ0RDMiSco+D
-	 nczlwkg7KHuRJh23C6afpmo2egmH2hJlzGvF/nVY=
+	b=FwM4dvLOItsRIAMvPpL2+p3cW3m3nz9vP0g1UUzuVt80cWyruDHlzN3IO6UAUTNl+
+	 yEL36hO29vQZ/bMzO2VVBS+AGdWpJjjVWFtrN6uSSB6r5gsRZIO/OO9ihmYrOUhRUQ
+	 MBPKmoHN7Vbi2Y6z+6Jm1VwH+8mUD07XqwX2J3Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaistra <martin.kaistra@linutronix.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/523] wifi: rtl8xxxu: Fix RX skb size for aggregation disabled
-Date: Tue, 26 Aug 2025 13:05:20 +0200
-Message-ID: <20250826110927.242783600@linuxfoundation.org>
+Subject: [PATCH 5.10 111/523] mwl8k: Add missing check after DMA map
+Date: Tue, 26 Aug 2025 13:05:21 +0200
+Message-ID: <20250826110927.264993100@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaistra <martin.kaistra@linutronix.de>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit d76a1abcf57734d2bcd4a7ec051617edd4513d7f ]
+[ Upstream commit 50459501b9a212dbe7a673727589ee105a8a9954 ]
 
-Commit 1e5b3b3fe9e0 ("rtl8xxxu: Adjust RX skb size to include space for
-phystats") increased the skb size when aggregation is enabled but decreased
-it for the aggregation disabled case.
+The DMA map functions can fail and should be tested for errors.
+If the mapping fails, unmap and return an error.
 
-As a result, if a frame near the maximum size is received,
-rtl8xxxu_rx_complete() is called with status -EOVERFLOW and then the
-driver starts to malfunction and no further communication is possible.
-
-Restore the skb size in the aggregation disabled case.
-
-Fixes: 1e5b3b3fe9e0 ("rtl8xxxu: Adjust RX skb size to include space for phystats")
-Signed-off-by: Martin Kaistra <martin.kaistra@linutronix.de>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250709121522.1992366-1-martin.kaistra@linutronix.de
+Fixes: 788838ebe8a4 ("mwl8k: use pci_unmap_addr{,set}() to keep track of unmap addresses on rx")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20250709111339.25360-2-fourier.thomas@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwl8k.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 5b27c22e7e58..7cf2693619c9 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -5794,7 +5794,7 @@ static int rtl8xxxu_submit_rx_urb(struct rtl8xxxu_priv *priv,
- 		skb_size = fops->rx_agg_buf_size;
- 		skb_size += (rx_desc_sz + sizeof(struct rtl8723au_phy_stats));
- 	} else {
--		skb_size = IEEE80211_MAX_FRAME_LEN;
-+		skb_size = IEEE80211_MAX_FRAME_LEN + rx_desc_sz;
- 	}
+diff --git a/drivers/net/wireless/marvell/mwl8k.c b/drivers/net/wireless/marvell/mwl8k.c
+index dd72e9f8b407..194087e6a764 100644
+--- a/drivers/net/wireless/marvell/mwl8k.c
++++ b/drivers/net/wireless/marvell/mwl8k.c
+@@ -1220,6 +1220,10 @@ static int rxq_refill(struct ieee80211_hw *hw, int index, int limit)
  
- 	skb = __netdev_alloc_skb(NULL, skb_size, GFP_KERNEL);
+ 		addr = pci_map_single(priv->pdev, skb->data,
+ 				      MWL8K_RX_MAXSZ, DMA_FROM_DEVICE);
++		if (dma_mapping_error(&priv->pdev->dev, addr)) {
++			kfree_skb(skb);
++			break;
++		}
+ 
+ 		rxq->rxd_count++;
+ 		rx = rxq->tail++;
 -- 
 2.39.5
 
