@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0546F352FDA;
-	Tue, 26 Aug 2025 13:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165FB352FF7;
+	Tue, 26 Aug 2025 13:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216732; cv=none; b=YjF05Bk/4FBnHERgW3C8fHn3E5b38GL/5e/K4IlgeTTSNN6qSjN4RO7+QHNIJ/5Y4QgUT6bwN+jJOwhtjjSiV3z/YiDTfprNyRRmMqdEVZopWHJdWeQ4ypAIEvLOxl3uwA+UABvzlWLz448cBlnJ5BCn7ykHpc1VvXKeQxuTNZA=
+	t=1756216735; cv=none; b=BBOr/LEkQJ5TXOLOvlf6FNmhrzIy2O8zPGBYcFPLqb8TFMMn6nvM4CZKsgbSvdZOztujavGtf++Lsxoc8qBuRcR1jM8SrxM4HQW7xL0LKKy5+/6RN8AGeU7vkLdNLLSaX7A77+EBenPz4RnwabYlgoffplvlD4IcvOyQ+RNL3AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216732; c=relaxed/simple;
-	bh=xj+DslBOyUXcb67xey68SjwVSzdIfAK/gye6UvFBfIQ=;
+	s=arc-20240116; t=1756216735; c=relaxed/simple;
+	bh=douXv3ssvUooykMqByIrU+XbIX2G8C6oNsjPDtEhKVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMp8dEHJUCoNBFxTJnTBYsQpD/u6OuSZPXPoO18puXJ/TFVXL4AF9fRUgi8rAkY0a3g6k/qv6SyAAiVF0jf9R9XUgQLlnIxn5fLrC3R5LLPDONSFNpH8e+zkoWU+p3CBAlGgSSy2P/UZYAu6ScUd6mucYTtKrIKitAyettz9N60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNmbQFPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ViWHY5VRubLzsaGOBZAMbyLKVr5M4YUDH0cz36OnpRCLmaUNBGgXcHV/b/5kBO8p9xNk04tHCxmlHLIg18zA1QPAv9EUUDOqN/x3A7z1fzvP1XRzkZB5efmA4BG99hJJ+bzUskdaPE1bc4YDqRjOvtS6H4mlHa0VUhNzDfh6dMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaDNjZFM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNmbQFPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4CEC4CEF1;
-	Tue, 26 Aug 2025 13:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaDNjZFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DFFC4CEF1;
+	Tue, 26 Aug 2025 13:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216731;
-	bh=xj+DslBOyUXcb67xey68SjwVSzdIfAK/gye6UvFBfIQ=;
+	s=korg; t=1756216734;
+	bh=douXv3ssvUooykMqByIrU+XbIX2G8C6oNsjPDtEhKVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNmbQFPKt7VJUmV+UXIx56bNE+/DxzFvb2Z5jzo62WlzHo7D10Fsd6OTTkpB3keWu
-	 d3g6cbFd9YNcyc3HWHhufYNVH3vM44gVp4qIqN5HgR5jI+wCgTy6ldvSIJfFA8D9E2
-	 0YpJSNP+nn9FPQ3w7xq1HvJNUy/6jjxHoNfmba3A=
+	b=YaDNjZFMVtQAYsxL4kkTUxcBVKykz4VypL+w1F9glMl3muHpUHUOzkyYeFBRJy1Rm
+	 h38zNq62N9SUUdiIRCni73ploTEg7U/BGERcGcngIhOTkUUwXcFsmSPFzIWRM54ECg
+	 AC8uemZ0Xzflg1bUyAiyEjsQ2v0vdwx40a6BsS0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 522/644] ALSA: scarlett2: Add retry on -EPROTO from scarlett2_usb_tx()
-Date: Tue, 26 Aug 2025 13:10:13 +0200
-Message-ID: <20250826110959.444442166@linuxfoundation.org>
+Subject: [PATCH 5.15 523/644] smb: server: Fix extension string in ksmbd_extract_shortname()
+Date: Tue, 26 Aug 2025 13:10:14 +0200
+Message-ID: <20250826110959.470251450@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,69 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Geoffrey D. Bennett" <g@b4.vu>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 8a15ca0ca51399b652b1bbb23b590b220cf03d62 ]
+[ Upstream commit 8e7d178d06e8937454b6d2f2811fa6a15656a214 ]
 
-During communication with Focusrite Scarlett Gen 2/3/4 USB audio
-interfaces, -EPROTO is sometimes returned from scarlett2_usb_tx(),
-snd_usb_ctl_msg() which can cause initialisation and control
-operations to fail intermittently.
+In ksmbd_extract_shortname(), strscpy() is incorrectly called with the
+length of the source string (excluding the NUL terminator) rather than
+the size of the destination buffer. This results in "__" being copied
+to 'extension' rather than "___" (two underscores instead of three).
 
-This patch adds up to 5 retries in scarlett2_usb(), with a delay
-starting at 5ms and doubling each time. This follows the same approach
-as the fix for usb_set_interface() in endpoint.c (commit f406005e162b
-("ALSA: usb-audio: Add retry on -EPROTO from usb_set_interface()")),
-which resolved similar -EPROTO issues during device initialisation,
-and is the same approach as in fcp.c:fcp_usb().
+Use the destination buffer size instead to ensure that the string "___"
+(three underscores) is copied correctly.
 
-Fixes: 9e4d5c1be21f ("ALSA: usb-audio: Scarlett Gen 2 mixer interface")
-Closes: https://github.com/geoffreybennett/linux-fcp/issues/41
 Cc: stable@vger.kernel.org
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://patch.msgid.link/aIdDO6ld50WQwNim@m.b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ Applied patch to the older file name mixer_scarlett_gen2.c instead of mixer_scarlett2.c. ]
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett_gen2.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ksmbd/smb_common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/mixer_scarlett_gen2.c
-+++ b/sound/usb/mixer_scarlett_gen2.c
-@@ -125,6 +125,7 @@
- #include <linux/slab.h>
- #include <linux/usb.h>
- #include <linux/moduleparam.h>
-+#include <linux/delay.h>
+--- a/fs/ksmbd/smb_common.c
++++ b/fs/ksmbd/smb_common.c
+@@ -508,7 +508,7 @@ int ksmbd_extract_shortname(struct ksmbd
  
- #include <sound/control.h>
- #include <sound/tlv.h>
-@@ -1064,6 +1065,8 @@ static int scarlett2_usb(
- 	u16 req_buf_size = sizeof(struct scarlett2_usb_packet) + req_size;
- 	u16 resp_buf_size = sizeof(struct scarlett2_usb_packet) + resp_size;
- 	struct scarlett2_usb_packet *req, *resp = NULL;
-+	int retries = 0;
-+	const int max_retries = 5;
- 	int err;
- 
- 	req = kmalloc(req_buf_size, GFP_KERNEL);
-@@ -1087,10 +1090,15 @@ static int scarlett2_usb(
- 	if (req_size)
- 		memcpy(req->data, req_data, req_size);
- 
-+retry:
- 	err = scarlett2_usb_tx(dev, private->bInterfaceNumber,
- 			       req, req_buf_size);
- 
- 	if (err != req_buf_size) {
-+		if (err == -EPROTO && ++retries <= max_retries) {
-+			msleep(5 * (1 << (retries - 1)));
-+			goto retry;
-+		}
- 		usb_audio_err(
- 			mixer->chip,
- 			"Scarlett Gen 2/3 USB request result cmd %x was %d\n",
+ 	p = strrchr(longname, '.');
+ 	if (p == longname) { /*name starts with a dot*/
+-		strscpy(extension, "___", strlen("___"));
++		strscpy(extension, "___", sizeof(extension));
+ 	} else {
+ 		if (p) {
+ 			p++;
 
 
