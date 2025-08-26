@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FFA2D6E6B;
-	Tue, 26 Aug 2025 11:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7198831CA7C;
+	Tue, 26 Aug 2025 11:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208786; cv=none; b=CrRnZMG9760pbWMl713iq1ZYCiY5Ze3di63yhKsBYEPH657KfOgURngle5/mmQOXFCED9JV0GZLnsRVJWeXjKO0q2xYDS8huhrXBGe9u2iDb+74GyhxUCLMs4G2x6wVzHJy2RYx6jIH2b7x8jfxVSHv/QsFAwQzVspi1IiA0RP8=
+	t=1756208788; cv=none; b=b+3MT06d2CAAoLSsMrnzbbOajHVHS/zhR6LsJBR9jN637065zHzzSinVQNSm1YcTDizF2SiYUtcbfay/ft9tNEPXI4RQnITO68W/uXfqwRBq6mQ6atE1aPEzlIg/X1TE/iB6hEN53fqLXlLizI5+80FbL4kLrGnoSesI1h/tuP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208786; c=relaxed/simple;
-	bh=3MoOhj7RQlsVKPJgK1JNLRdW9XZ2ZhnfSdm/6SAFzgw=;
+	s=arc-20240116; t=1756208788; c=relaxed/simple;
+	bh=6yvxxPjL32KMwrfsYjmW3ILnfm5rLnDcxFjGwYFYBp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rw+tAnabLjrW/OiigyjncyePhCjBF5qmxnckTu4O6SNnnlterVBV3olOKEStmLfTH43mtFZkh83VSCERUjeFarvObgdqE84D0jhYrNoURMvBpT/gbJr15FMXwygOzx8rRKCzFjrlZQdt3eJlOR3dGypO8mVuT4iNE34Ut55cIKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thrCMLWu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u1sZPBie8K/ofRNXy70PrvsrBmafDR2qivJxExTr3KhAFJQhsiUr5W+A57x6W42T9ZDJyooRSU9IMOxvXo0A2TPqBc4kqvdL9s7OLFBep9d0oqBZ1hPjtncnE4kQGKQB8hNw2BQR/iangHEUstWh7d3QzXVOxvl5B0B5iZEocbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYbUXm+3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thrCMLWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6E2C4CEF1;
-	Tue, 26 Aug 2025 11:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYbUXm+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CF2C4CEF1;
+	Tue, 26 Aug 2025 11:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208785;
-	bh=3MoOhj7RQlsVKPJgK1JNLRdW9XZ2ZhnfSdm/6SAFzgw=;
+	s=korg; t=1756208788;
+	bh=6yvxxPjL32KMwrfsYjmW3ILnfm5rLnDcxFjGwYFYBp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=thrCMLWul0ht2uTM5VNZmf/W+AStywoMUa8tfUWfQxMHJJ7cGNTAVrQiHvJvToMuO
-	 WneNncMijV9uh5V3JXZozEYxBPdxN/nHyiGGsdleXAEumI9BYxGCP19I5fOPHyiNfp
-	 ESXXz+QRQm/F6TNNsMNAhgUI0fqGnXbhcXY9M+eE=
+	b=WYbUXm+31zvp/P+aUoGjS5ZzzuYEmilZNZF3SyDf4r41E3AWOjaXYtSQpJnVIdU+7
+	 KibotPcU5i479TB5ixn/1/gAtzZTwUTdA10nk20f00UIPCopLuZDH0FtPu6PLjAret
+	 tG94MLy+cxYwt8gb8AeXatCDmln2zhAqQ6TqOA3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Judith Mendez <jm@ti.com>,
-	Andrew Davis <afd@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Moteen Shah <m-shah@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/322] mmc: sdhci_am654: Disable HS400 for AM62P SR1.0 and SR1.1
-Date: Tue, 26 Aug 2025 13:10:28 +0200
-Message-ID: <20250826110921.134879324@linuxfoundation.org>
+Subject: [PATCH 6.12 204/322] arm64: dts: ti: k3-am6*: Remove disable-wp for eMMC
+Date: Tue, 26 Aug 2025 13:10:19 +0200
+Message-ID: <20250826110920.906860313@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -55,81 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Judith Mendez <jm@ti.com>
 
-commit d2d7a96b29ea6ab093973a1a37d26126db70c79f upstream.
+[ Upstream commit ef839ba8142f14513ba396a033110526b7008096 ]
 
-This adds SDHCI_AM654_QUIRK_DISABLE_HS400 quirk which shall be used
-to disable HS400 support. AM62P SR1.0 and SR1.1 do not support HS400
-due to errata i2458 [0] so disable HS400 for these SoC revisions.
+Remove disable-wp flag for eMMC nodes since this flag is
+only applicable to SD according to the binding doc
+(mmc/mmc-controller-common.yaml).
 
-[0] https://www.ti.com/lit/er/sprz574a/sprz574a.pdf
-Fixes: 37f28165518f ("arm64: dts: ti: k3-am62p: Add ITAP/OTAP values for MMC")
-Cc: stable@vger.kernel.org
+For eMMC, this flag should be ignored but lets remove
+anyways to cleanup sdhci nodes.
+
 Signed-off-by: Judith Mendez <jm@ti.com>
-Reviewed-by: Andrew Davis <afd@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20250820193047.4064142-1-jm@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-[ adapted quirk bit assignment from BIT(2) to BIT(1) ]
+Reviewed-by: Moteen Shah <m-shah@ti.com>
+Link: https://lore.kernel.org/r/20250429151454.4160506-4-jm@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: a0b8da04153e ("arm64: dts: ti: k3-am62*: Move eMMC pinmux to top level board file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi               |    1 -
+ arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts                |    1 -
+ arch/arm64/boot/dts/ti/k3-am62a-phycore-som.dtsi              |    1 -
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts                       |    1 -
+ arch/arm64/boot/dts/ti/k3-am62p5-sk.dts                       |    1 -
+ arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi                |    1 -
+ arch/arm64/boot/dts/ti/k3-am642-evm.dts                       |    1 -
+ arch/arm64/boot/dts/ti/k3-am654-base-board.dts                |    1 -
+ arch/arm64/boot/dts/ti/k3-am6548-iot2050-advanced-common.dtsi |    1 -
+ arch/arm64/boot/dts/ti/k3-am69-sk.dts                         |    1 -
+ 10 files changed, 10 deletions(-)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -155,6 +155,7 @@ struct sdhci_am654_data {
- 	u32 tuning_loop;
- 
- #define SDHCI_AM654_QUIRK_FORCE_CDTEST BIT(0)
-+#define SDHCI_AM654_QUIRK_DISABLE_HS400 BIT(1)
+--- a/arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-phycore-som.dtsi
+@@ -317,7 +317,6 @@
+ &sdhci0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_mmc0_pins_default>;
+-	disable-wp;
+ 	non-removable;
+ 	status = "okay";
+ };
+--- a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
++++ b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
+@@ -821,7 +821,6 @@
+ 	non-removable;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&emmc_pins_default>;
+-	disable-wp;
+ 	status = "okay";
  };
  
- struct window {
-@@ -734,6 +735,7 @@ static int sdhci_am654_init(struct sdhci
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_am654_data *sdhci_am654 = sdhci_pltfm_priv(pltfm_host);
-+	struct device *dev = mmc_dev(host->mmc);
- 	u32 ctl_cfg_2 = 0;
- 	u32 mask;
- 	u32 val;
-@@ -789,6 +791,12 @@ static int sdhci_am654_init(struct sdhci
- 	if (ret)
- 		goto err_cleanup_host;
+--- a/arch/arm64/boot/dts/ti/k3-am62a-phycore-som.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62a-phycore-som.dtsi
+@@ -324,7 +324,6 @@
+ &sdhci0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_mmc0_pins_default>;
+-	disable-wp;
+ 	non-removable;
+ 	status = "okay";
+ };
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -603,7 +603,6 @@
+ 	non-removable;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_mmc0_pins_default>;
+-	disable-wp;
+ 	bootph-all;
+ };
  
-+	if (sdhci_am654->quirks & SDHCI_AM654_QUIRK_DISABLE_HS400 &&
-+	    host->mmc->caps2 & (MMC_CAP2_HS400 | MMC_CAP2_HS400_ES)) {
-+		dev_info(dev, "HS400 mode not supported on this silicon revision, disabling it\n");
-+		host->mmc->caps2 &= ~(MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
-+	}
-+
- 	ret = __sdhci_add_host(host);
- 	if (ret)
- 		goto err_cleanup_host;
-@@ -852,6 +860,12 @@ static int sdhci_am654_get_of_property(s
- 	return 0;
- }
+--- a/arch/arm64/boot/dts/ti/k3-am62p5-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62p5-sk.dts
+@@ -446,7 +446,6 @@
+ 	status = "okay";
+ 	non-removable;
+ 	ti,driver-strength-ohm = <50>;
+-	disable-wp;
+ 	bootph-all;
+ };
  
-+static const struct soc_device_attribute sdhci_am654_descope_hs400[] = {
-+	{ .family = "AM62PX", .revision = "SR1.0" },
-+	{ .family = "AM62PX", .revision = "SR1.1" },
-+	{ /* sentinel */ }
-+};
-+
- static const struct of_device_id sdhci_am654_of_match[] = {
- 	{
- 		.compatible = "ti,am654-sdhci-5.1",
-@@ -943,6 +957,10 @@ static int sdhci_am654_probe(struct plat
- 		goto err_pltfm_free;
- 	}
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+@@ -419,7 +419,6 @@
+ 	non-removable;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_mmc0_pins_default>;
+-	disable-wp;
+ };
  
-+	soc = soc_device_match(sdhci_am654_descope_hs400);
-+	if (soc)
-+		sdhci_am654->quirks |= SDHCI_AM654_QUIRK_DISABLE_HS400;
-+
- 	host->mmc_host_ops.execute_tuning = sdhci_am654_execute_tuning;
+ &sdhci1 {
+--- a/arch/arm64/boot/dts/ti/k3-am642-evm.dts
++++ b/arch/arm64/boot/dts/ti/k3-am642-evm.dts
+@@ -584,7 +584,6 @@
+ 	status = "okay";
+ 	non-removable;
+ 	ti,driver-strength-ohm = <50>;
+-	disable-wp;
+ 	bootph-all;
+ };
  
- 	pm_runtime_get_noresume(dev);
+--- a/arch/arm64/boot/dts/ti/k3-am654-base-board.dts
++++ b/arch/arm64/boot/dts/ti/k3-am654-base-board.dts
+@@ -456,7 +456,6 @@
+ 	bus-width = <8>;
+ 	non-removable;
+ 	ti,driver-strength-ohm = <50>;
+-	disable-wp;
+ };
+ 
+ /*
+--- a/arch/arm64/boot/dts/ti/k3-am6548-iot2050-advanced-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am6548-iot2050-advanced-common.dtsi
+@@ -50,5 +50,4 @@
+ 	bus-width = <8>;
+ 	non-removable;
+ 	ti,driver-strength-ohm = <50>;
+-	disable-wp;
+ };
+--- a/arch/arm64/boot/dts/ti/k3-am69-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
+@@ -926,7 +926,6 @@
+ 	status = "okay";
+ 	non-removable;
+ 	ti,driver-strength-ohm = <50>;
+-	disable-wp;
+ };
+ 
+ &main_sdhci1 {
 
 
