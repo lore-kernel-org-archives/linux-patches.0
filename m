@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77F13451AA;
-	Tue, 26 Aug 2025 13:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1D01E51E1;
+	Tue, 26 Aug 2025 13:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215024; cv=none; b=CUD5oBtiWXHbFQT5U4L2zj1Bd8xo0RMTTNFYcCqIaC+8wAhjNbn8Lnfi4TsrSR+H2fQMu8efFjtKI0l+m8xL/z+aM16ot3OYNy21YUMH+5g5ac0qZTrcVyqZZKObVrP0GGbAALp30qAS4ErpTP8kMJFucRZiBRYRPreCqWgF6vM=
+	t=1756215027; cv=none; b=FkZSGt/fJ633yGZUjBsnSKArfNIyHOPPpcZvVacM2gzrq4JkyJmb0P9v3VH/1W2U5SNXGEwsxWT5YFRA16WAfgFa8iV1QflXI7xgmeIT81Puzi8ElmS/QRyWobeaPzJAgYxRwlZxL+4EYRzLXF6aJlilmDCesLn/D0CY4ErNaRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215024; c=relaxed/simple;
-	bh=8ykNdPX8Et02rA71+nPrpINz62Qydx6OzNP+XPrJZB0=;
+	s=arc-20240116; t=1756215027; c=relaxed/simple;
+	bh=WqMHTivZSxWb+fL+jN+VBGSGBXQSZhmX/ELPBYXg49s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebnX9Yp5kn3H9lbgOZyzxxzEa/PqyZdvohgHBuCIoi6dLVwS+On6wNQyBESOwpw4/INZkQDMehQlDUzhKHBxPXHzWHweVu6aRdnLinsIndzLGKcLl1DqFh6B6pE/ePNDAf92GvRIhpqlNHzpSfG7Es6BXB3ZtfZaoZKh4P5Im/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQqR6ADx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sp/Wzd6VqRRxUO16kCfPll2pSoHTME0bfBCMiz9OI3wzoM/kGzfb+24EaVek9nrPQB6/9h4O9ThqsfLIlU4fFc061URxUW8Rw2ifdLFtxIbhH6fF3u9iab1LTnccjDIMGCYSZCq2TMbojRw2fyARe2oiBGnvZTRasqXcHD02ggE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQMT3RbW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQqR6ADx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A53C4CEF1;
-	Tue, 26 Aug 2025 13:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQMT3RbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B40C4CEF1;
+	Tue, 26 Aug 2025 13:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215024;
-	bh=8ykNdPX8Et02rA71+nPrpINz62Qydx6OzNP+XPrJZB0=;
+	s=korg; t=1756215027;
+	bh=WqMHTivZSxWb+fL+jN+VBGSGBXQSZhmX/ELPBYXg49s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQqR6ADx1EJMno0UgfXZVTchZpofxknvZ5S+N4u/2+JjJkeODT0DDhPrpqCTFNvVD
-	 Jisfo5ILu4bCZjQ8GVw/z5zmjrhMSJb1h2vfKyJ2vsUTxfXx8Fas4fUZSbZiIp/q7/
-	 ENArm1MmOAHlweAAurznI8+bPdQF2peTde4WlOgo=
+	b=YQMT3RbWjKnP9mA3R84CvJUGLiBe+3g6HcyY7VwL4ZoLdSUUkMyoXrebMXYx41hBe
+	 tKvXYyBKPozS1ezmWJ/HRtbVaUAFk6uwprQEf/50ilht6vpKaZsA1j6FRni8umiSE/
+	 Hf8Ns9NT4e2p+2z8uSoBoOEqkyVkAfrrpGddgAUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Cristian Prundeanu <cpru@amazon.com>,
-	Will Deacon <will@kernel.org>,
+	cen zhang <zzzccc427@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 351/482] arm64/entry: Mask DAIF in cpu_switch_to(), call_on_irq_stack()
-Date: Tue, 26 Aug 2025 13:10:04 +0200
-Message-ID: <20250826110939.506914710@linuxfoundation.org>
+Subject: [PATCH 6.1 360/482] btrfs: qgroup: fix race between quota disable and quota rescan ioctl
+Date: Tue, 26 Aug 2025 13:10:13 +0200
+Message-ID: <20250826110939.728910970@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,112 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit d42e6c20de6192f8e4ab4cf10be8c694ef27e8cb ]
+[ Upstream commit e1249667750399a48cafcf5945761d39fa584edf ]
 
-`cpu_switch_to()` and `call_on_irq_stack()` manipulate SP to change
-to different stacks along with the Shadow Call Stack if it is enabled.
-Those two stack changes cannot be done atomically and both functions
-can be interrupted by SErrors or Debug Exceptions which, though unlikely,
-is very much broken : if interrupted, we can end up with mismatched stacks
-and Shadow Call Stack leading to clobbered stacks.
+There's a race between a task disabling quotas and another running the
+rescan ioctl that can result in a use-after-free of qgroup records from
+the fs_info->qgroup_tree rbtree.
 
-In `cpu_switch_to()`, it can happen when SP_EL0 points to the new task,
-but x18 stills points to the old task's SCS. When the interrupt handler
-tries to save the task's SCS pointer, it will save the old task
-SCS pointer (x18) into the new task struct (pointed to by SP_EL0),
-clobbering it.
+This happens as follows:
 
-In `call_on_irq_stack()`, it can happen when switching from the task stack
-to the IRQ stack and when switching back. In both cases, we can be
-interrupted when the SCS pointer points to the IRQ SCS, but SP points to
-the task stack. The nested interrupt handler pushes its return addresses
-on the IRQ SCS. It then detects that SP points to the task stack,
-calls `call_on_irq_stack()` and clobbers the task SCS pointer with
-the IRQ SCS pointer, which it will also use !
+1) Task A enters btrfs_ioctl_quota_rescan() -> btrfs_qgroup_rescan();
 
-This leads to tasks returning to addresses on the wrong SCS,
-or even on the IRQ SCS, triggering kernel panics via CONFIG_VMAP_STACK
-or FPAC if enabled.
+2) Task B enters btrfs_quota_disable() and calls
+   btrfs_qgroup_wait_for_completion(), which does nothing because at that
+   point fs_info->qgroup_rescan_running is false (it wasn't set yet by
+   task A);
 
-This is possible on a default config, but unlikely.
-However, when enabling CONFIG_ARM64_PSEUDO_NMI, DAIF is unmasked and
-instead the GIC is responsible for filtering what interrupts the CPU
-should receive based on priority.
-Given the goal of emulating NMIs, pseudo-NMIs can be received by the CPU
-even in `cpu_switch_to()` and `call_on_irq_stack()`, possibly *very*
-frequently depending on the system configuration and workload, leading
-to unpredictable kernel panics.
+3) Task B calls btrfs_free_qgroup_config() which starts freeing qgroups
+   from fs_info->qgroup_tree without taking the lock fs_info->qgroup_lock;
 
-Completely mask DAIF in `cpu_switch_to()` and restore it when returning.
-Do the same in `call_on_irq_stack()`, but restore and mask around
-the branch.
-Mask DAIF even if CONFIG_SHADOW_CALL_STACK is not enabled for consistency
-of behaviour between all configurations.
+4) Task A enters qgroup_rescan_zero_tracking() which starts iterating
+   the fs_info->qgroup_tree tree while holding fs_info->qgroup_lock,
+   but task B is freeing qgroup records from that tree without holding
+   the lock, resulting in a use-after-free.
 
-Introduce and use an assembly macro for saving and masking DAIF,
-as the existing one saves but only masks IF.
+Fix this by taking fs_info->qgroup_lock at btrfs_free_qgroup_config().
+Also at btrfs_qgroup_rescan() don't start the rescan worker if quotas
+were already disabled.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Reported-by: Cristian Prundeanu <cpru@amazon.com>
-Fixes: 59b37fe52f49 ("arm64: Stash shadow stack pointer in the task struct on interrupt")
-Tested-by: Cristian Prundeanu <cpru@amazon.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20250718142814.133329-1-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[ removed duplicate save_and_disable_daif macro ]
+Reported-by: cen zhang <zzzccc427@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CAFRLqsV+cMDETFuzqdKSHk_FDm6tneea45krsHqPD6B3FetLpQ@mail.gmail.com/
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ Check for BTRFS_FS_QUOTA_ENABLED, instead of btrfs_qgroup_full_accounting() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/entry.S |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/qgroup.c |   31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/kernel/entry.S
-+++ b/arch/arm64/kernel/entry.S
-@@ -827,6 +827,7 @@ SYM_CODE_END(__bp_harden_el1_vectors)
-  *
-  */
- SYM_FUNC_START(cpu_switch_to)
-+	save_and_disable_daif x11
- 	mov	x10, #THREAD_CPU_CONTEXT
- 	add	x8, x0, x10
- 	mov	x9, sp
-@@ -850,6 +851,7 @@ SYM_FUNC_START(cpu_switch_to)
- 	ptrauth_keys_install_kernel x1, x8, x9, x10
- 	scs_save x0
- 	scs_load_current
-+	restore_irq x11
- 	ret
- SYM_FUNC_END(cpu_switch_to)
- NOKPROBE(cpu_switch_to)
-@@ -876,6 +878,7 @@ NOKPROBE(ret_from_fork)
-  * Calls func(regs) using this CPU's irq stack and shadow irq stack.
-  */
- SYM_FUNC_START(call_on_irq_stack)
-+	save_and_disable_daif x9
- #ifdef CONFIG_SHADOW_CALL_STACK
- 	get_current_task x16
- 	scs_save x16
-@@ -890,8 +893,10 @@ SYM_FUNC_START(call_on_irq_stack)
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -573,22 +573,30 @@ bool btrfs_check_quota_leak(struct btrfs
  
- 	/* Move to the new stack and call the function there */
- 	add	sp, x16, #IRQ_STACK_SIZE
-+	restore_irq x9
- 	blr	x1
+ /*
+  * This is called from close_ctree() or open_ctree() or btrfs_quota_disable(),
+- * first two are in single-threaded paths.And for the third one, we have set
+- * quota_root to be null with qgroup_lock held before, so it is safe to clean
+- * up the in-memory structures without qgroup_lock held.
++ * first two are in single-threaded paths.
+  */
+ void btrfs_free_qgroup_config(struct btrfs_fs_info *fs_info)
+ {
+ 	struct rb_node *n;
+ 	struct btrfs_qgroup *qgroup;
  
-+	save_and_disable_daif x9
++	/*
++	 * btrfs_quota_disable() can be called concurrently with
++	 * btrfs_qgroup_rescan() -> qgroup_rescan_zero_tracking(), so take the
++	 * lock.
++	 */
++	spin_lock(&fs_info->qgroup_lock);
+ 	while ((n = rb_first(&fs_info->qgroup_tree))) {
+ 		qgroup = rb_entry(n, struct btrfs_qgroup, node);
+ 		rb_erase(n, &fs_info->qgroup_tree);
+ 		__del_qgroup_rb(fs_info, qgroup);
++		spin_unlock(&fs_info->qgroup_lock);
+ 		btrfs_sysfs_del_one_qgroup(fs_info, qgroup);
+ 		kfree(qgroup);
++		spin_lock(&fs_info->qgroup_lock);
+ 	}
++	spin_unlock(&fs_info->qgroup_lock);
++
  	/*
- 	 * Restore the SP from the FP, and restore the FP and LR from the frame
- 	 * record.
-@@ -899,6 +904,7 @@ SYM_FUNC_START(call_on_irq_stack)
- 	mov	sp, x29
- 	ldp	x29, x30, [sp], #16
- 	scs_load_current
-+	restore_irq x9
- 	ret
- SYM_FUNC_END(call_on_irq_stack)
- NOKPROBE(call_on_irq_stack)
+ 	 * We call btrfs_free_qgroup_config() when unmounting
+ 	 * filesystem and disabling quota, so we set qgroup_ulist
+@@ -3597,12 +3605,21 @@ btrfs_qgroup_rescan(struct btrfs_fs_info
+ 	qgroup_rescan_zero_tracking(fs_info);
+ 
+ 	mutex_lock(&fs_info->qgroup_rescan_lock);
+-	fs_info->qgroup_rescan_running = true;
+-	btrfs_queue_work(fs_info->qgroup_rescan_workers,
+-			 &fs_info->qgroup_rescan_work);
++	/*
++	 * The rescan worker is only for full accounting qgroups, check if it's
++	 * enabled as it is pointless to queue it otherwise. A concurrent quota
++	 * disable may also have just cleared BTRFS_FS_QUOTA_ENABLED.
++	 */
++	if (test_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags)) {
++		fs_info->qgroup_rescan_running = true;
++		btrfs_queue_work(fs_info->qgroup_rescan_workers,
++				 &fs_info->qgroup_rescan_work);
++	} else {
++		ret = -ENOTCONN;
++	}
+ 	mutex_unlock(&fs_info->qgroup_rescan_lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int btrfs_qgroup_wait_for_completion(struct btrfs_fs_info *fs_info,
 
 
