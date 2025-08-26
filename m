@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E93334AB1A;
-	Tue, 26 Aug 2025 13:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C7D239E8B;
+	Tue, 26 Aug 2025 13:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216029; cv=none; b=EvqaUkACBb1RSZB46ct0zj+HFqzxryI7sRGdcnMlkNtv8UNlN4/g8jaPkPSzR+IkQtr9I2/yy84THIqYyXFwEZ3jAAJTzxt2WxT0IUksCArLJZE29q5+NhbWtkJys2OteWppq/douRLkXGlsZWBXt+wM8Lt72nxKPwiV8972BJE=
+	t=1756216032; cv=none; b=WLzKopum2u51xAkbDv3B0Ux4JWww/HAKP3rvtRBcFizWnAV6Gv9nPWmJZYr4w4Nmdmo6kFq/cMHm36kF8RSQZVMBZNakO1xR6jkBrmDjxzUnpWcYpzZYHGEjAHyYtAa0efGaeiLvYog8TtDBd8UUycA1Ep7o7NNJz9V6A/dfVoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216029; c=relaxed/simple;
-	bh=DCGXnjKUhelud1dQc0dDNAp5elm9QF/qKrI03VznD4o=;
+	s=arc-20240116; t=1756216032; c=relaxed/simple;
+	bh=QR6kZw5WkDTCFFZUSQBu5b8NyLVeCc0w7vwb5KCF8AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDQnA5H6qV9hqBI1MCxfPtdPKJ/vKLNdBEGcwgIx670HFUobt4/SAeZZ5YYLQJ+VRSE832l505Lod2TlKRwmisgmh8y06wAe9sXgCda439JfNJjdOi23ckir4WN3ptuyGruT1h5Ajb8FNujhnA3VDfY24mN2Ot9XFaRTbG9riEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AczwIe03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FNgN3rkMVg6Kf3KsXx2OHr6tDxAWSXIx8Ku9K8G13TwrcYQMjE5L1zq3fjfuRDeuxgKNoLEu47mSPx0r79D3yLwzN7HHJqs0eszvQ6OucWkFLUAkSyKa1bGsur69dKNpCtXFs1FY5a59tj48l2YUb4vCBcSisNmNlLEtCwHdLDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDSFLxko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AczwIe03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8EDC4CEF1;
-	Tue, 26 Aug 2025 13:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDSFLxko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C12C4CEF1;
+	Tue, 26 Aug 2025 13:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216029;
-	bh=DCGXnjKUhelud1dQc0dDNAp5elm9QF/qKrI03VznD4o=;
+	s=korg; t=1756216032;
+	bh=QR6kZw5WkDTCFFZUSQBu5b8NyLVeCc0w7vwb5KCF8AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AczwIe03Vs7dnX9YKK/UC9OeUwtkNDYGYPfXhqS2m54m39lc/4wFtrFvwuyPb5Llw
-	 5DBmSUKKQCUqlg7FFvbaCjAtquC+YrmNE+CrBLF0jPxd7qffaNPvVH5e2RAOx2mvg5
-	 bXpbQT8gBKl2LXsJZRgo1zcCBV7txoWXsOHHiL70=
+	b=FDSFLxkoCHdXzieZDOfxC0y94N5Pugg/Fq1/onCfSabmq2CQJxJ06+RABXx49rqLh
+	 v3XvqWUBxXJs40Ur+WeOChKHXS4B0aGrvEf/ZgJU+lcMcOGYfQIrzBorLqD7d0Z6LC
+	 JQ0+CHXFPZcVbTDvbMrjN4/aJpHgyrOKc6fRqS2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Bill Wendling <morbo@google.com>,
-	Jerome Glisse <jglisse@redhat.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 256/644] mm/hmm: move pmd_to_hmm_pfn_flags() to the respective #ifdeffery
-Date: Tue, 26 Aug 2025 13:05:47 +0200
-Message-ID: <20250826110952.726120849@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tao Xue <xuetao09@huawei.com>
+Subject: [PATCH 5.15 257/644] usb: gadget : fix use-after-free in composite_dev_cleanup()
+Date: Tue, 26 Aug 2025 13:05:48 +0200
+Message-ID: <20250826110952.751210295@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -56,56 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Tao Xue <xuetao09@huawei.com>
 
-commit 188cb385bbf04d486df3e52f28c47b3961f5f0c0 upstream.
+commit 151c0aa896c47a4459e07fee7d4843f44c1bb18e upstream.
 
-When pmd_to_hmm_pfn_flags() is unused, it prevents kernel builds with
-clang, `make W=1` and CONFIG_TRANSPARENT_HUGEPAGE=n:
+1. In func configfs_composite_bind() -> composite_os_desc_req_prepare():
+if kmalloc fails, the pointer cdev->os_desc_req will be freed but not
+set to NULL. Then it will return a failure to the upper-level function.
+2. in func configfs_composite_bind() -> composite_dev_cleanup():
+it will checks whether cdev->os_desc_req is NULL. If it is not NULL, it
+will attempt to use it.This will lead to a use-after-free issue.
 
-  mm/hmm.c:186:29: warning: unused function 'pmd_to_hmm_pfn_flags' [-Wunused-function]
+BUG: KASAN: use-after-free in composite_dev_cleanup+0xf4/0x2c0
+Read of size 8 at addr 0000004827837a00 by task init/1
 
-Fix this by moving the function to the respective existing ifdeffery
-for its the only user.
+CPU: 10 PID: 1 Comm: init Tainted: G           O      5.10.97-oh #1
+ kasan_report+0x188/0x1cc
+ __asan_load8+0xb4/0xbc
+ composite_dev_cleanup+0xf4/0x2c0
+ configfs_composite_bind+0x210/0x7ac
+ udc_bind_to_driver+0xb4/0x1ec
+ usb_gadget_probe_driver+0xec/0x21c
+ gadget_dev_desc_UDC_store+0x264/0x27c
 
-See also:
-
-  6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
-
-Link: https://lkml.kernel.org/r/20250710082403.664093-1-andriy.shevchenko@linux.intel.com
-Fixes: 992de9a8b751 ("mm/hmm: allow to mirror vma of a file on a DAX backed filesystem")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 37a3a533429e ("usb: gadget: OS Feature Descriptors support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tao Xue <xuetao09@huawei.com>
+Link: https://lore.kernel.org/r/20250721093908.14967-1-xuetao09@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hmm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/composite.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/mm/hmm.c
-+++ b/mm/hmm.c
-@@ -173,6 +173,7 @@ static inline unsigned long hmm_pfn_flag
- 	return order << HMM_PFN_ORDER_SHIFT;
- }
- 
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- static inline unsigned long pmd_to_hmm_pfn_flags(struct hmm_range *range,
- 						 pmd_t pmd)
- {
-@@ -183,7 +184,6 @@ static inline unsigned long pmd_to_hmm_p
- 	       hmm_pfn_flags_order(PMD_SHIFT - PAGE_SHIFT);
- }
- 
--#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- static int hmm_vma_handle_pmd(struct mm_walk *walk, unsigned long addr,
- 			      unsigned long end, unsigned long hmm_pfns[],
- 			      pmd_t pmd)
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2351,6 +2351,11 @@ int composite_os_desc_req_prepare(struct
+ 	if (!cdev->os_desc_req->buf) {
+ 		ret = -ENOMEM;
+ 		usb_ep_free_request(ep0, cdev->os_desc_req);
++		/*
++		 * Set os_desc_req to NULL so that composite_dev_cleanup()
++		 * will not try to free it again.
++		 */
++		cdev->os_desc_req = NULL;
+ 		goto end;
+ 	}
+ 	cdev->os_desc_req->context = cdev;
 
 
