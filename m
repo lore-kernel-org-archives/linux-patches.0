@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2F12E88B7;
-	Tue, 26 Aug 2025 14:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFCF481CD;
+	Tue, 26 Aug 2025 14:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218346; cv=none; b=ipeFfJvuQ4wpWb0secKoDz1ZhBqwzuw2VnWmhK4BoRqRFTIrpwbh6f0+4RCAMdmdjhuLyluZZdrKKEpZ11ccDK1ztofWyi6OufTze6BajlpRdIHRG6tT0HUAWA1C+JhLrSBSUmBgPFaIqHsjYAwTLRVC6tPp2jQL1aTRvRk3Nl0=
+	t=1756218349; cv=none; b=WZ0Mzp91oEGFWzl82ije9IV46tUMnIcjsadMKOirnEJJCYxzs3VXixQwehchCx+nk1vNZSodUxQeTyOv4MwP3oo61UzES259ONVHtUg7EC3xqbt8bws1fzTCbEPG+pIdNWEvljkU/DxYdNDt66bFjqjuLY8WolKeSggNAa97T/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218346; c=relaxed/simple;
-	bh=IyoCQXwMvhc4hdhjaJS3ebmhXqyfYTCQ3KkuUospKpU=;
+	s=arc-20240116; t=1756218349; c=relaxed/simple;
+	bh=5MYBS6lERCYax/NMaAge1cLyO1L8NHgu/9tsCp8ApfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ouzEhfvj50rY5L2J1U+MiZ1dvfAf4mCm+sxdXb7UU1LxqSlQjYSQX8xmCq7weUaTi4xyKspTbdpnsqNNX+YjK68P9C5yrXgmLk3KqhuYWMXM+j6y8x9dBJ5A8RlHOONWthG2k3rI0vwN2Fs2Bs1ka2tBpTWWs5LO8FC32b9GizI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DiKxQZn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gd83KFYdkgCX4qDRTdtD+InUqh7KcAFC2+ys+GR6ZXGkqV7G0Rpwkt0q9QWBtc8gI+k/SSAH/Gf3zbiYq2GQQhqF6X5D+KmTOntPmbcX3TP+Qn+fO9ssnKDe394XViKkte46SUxKihXbVvJvAVDA1taifg+xmSUWQbvmPWyPQek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CD/wX3UL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DiKxQZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3008C4CEF1;
-	Tue, 26 Aug 2025 14:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CD/wX3UL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950D0C4CEF1;
+	Tue, 26 Aug 2025 14:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218346;
-	bh=IyoCQXwMvhc4hdhjaJS3ebmhXqyfYTCQ3KkuUospKpU=;
+	s=korg; t=1756218348;
+	bh=5MYBS6lERCYax/NMaAge1cLyO1L8NHgu/9tsCp8ApfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0DiKxQZn06mBOB45Y0bYdm5Sm7/hnmcGl0q7MgRVT8hilgA0CbxV+nE0IqPA5pWhd
-	 wqciciShvc24gvnVhq7QuAW9QhWkZaDDucFhLnXzuLXjCCCDwJ7uOxBZH1dYg9LhvN
-	 TxqfKn5Q+UZ4589RbI8lagInllLkk0cd59WErdfs=
+	b=CD/wX3ULNHNSVGu3Y7Yk6ArUQtvq2Y1t6qcPtSYQDGY4o0FvLOBt4xFCn96y5oqzF
+	 gGlxnSCFNfbJ82+wjRcJgggJjUXMKixzK7qzfYa9Dl/qYBpQXBOX7jxC1Jj02DgDTO
+	 +X1N2Yon910nhiQ8sec1pFls4teNG2xqCSyKw09Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
+	stable@kernel.org,
+	Qu Wenruo <wqu@suse.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 488/523] drm/amd/display: Dont overclock DCE 6 by 15%
-Date: Tue, 26 Aug 2025 13:11:38 +0200
-Message-ID: <20250826110936.482958738@linuxfoundation.org>
+Subject: [PATCH 5.10 471/523] ext4: fix hole length calculation overflow in non-extent inodes
+Date: Tue, 26 Aug 2025 13:11:21 +0200
+Message-ID: <20250826110936.061242942@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -47,59 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit cb7b7ae53b557d168b4af5cd8549f3eff920bfb5 ]
+[ Upstream commit 02c7f7219ac0e2277b3379a3a0e9841ef464b6d4 ]
 
-The extra 15% clock was added as a workaround for a Polaris issue
-which uses DCE 11, and should not have been used on DCE 6 which
-is already hardcoded to the highest possible display clock.
-Unfortunately, the extra 15% was mistakenly copied and kept
-even on code paths which don't affect Polaris.
+In a filesystem with a block size larger than 4KB, the hole length
+calculation for a non-extent inode in ext4_ind_map_blocks() can easily
+exceed INT_MAX. Then it could return a zero length hole and trigger the
+following waring and infinite in the iomap infrastructure.
 
-This commit fixes that and also adds a check to make sure
-not to exceed the maximum DCE 6 display clock.
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 434101 at fs/iomap/iter.c:34 iomap_iter_done+0x148/0x190
+  CPU: 3 UID: 0 PID: 434101 Comm: fsstress Not tainted 6.16.0-rc7+ #128 PREEMPT(voluntary)
+  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
+  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : iomap_iter_done+0x148/0x190
+  lr : iomap_iter+0x174/0x230
+  sp : ffff8000880af740
+  x29: ffff8000880af740 x28: ffff0000db8e6840 x27: 0000000000000000
+  x26: 0000000000000000 x25: ffff8000880af830 x24: 0000004000000000
+  x23: 0000000000000002 x22: 000001bfdbfa8000 x21: ffffa6a41c002e48
+  x20: 0000000000000001 x19: ffff8000880af808 x18: 0000000000000000
+  x17: 0000000000000000 x16: ffffa6a495ee6cd0 x15: 0000000000000000
+  x14: 00000000000003d4 x13: 00000000fa83b2da x12: 0000b236fc95f18c
+  x11: ffffa6a4978b9c08 x10: 0000000000001da0 x9 : ffffa6a41c1a2a44
+  x8 : ffff8000880af5c8 x7 : 0000000001000000 x6 : 0000000000000000
+  x5 : 0000000000000004 x4 : 000001bfdbfa8000 x3 : 0000000000000000
+  x2 : 0000000000000000 x1 : 0000004004030000 x0 : 0000000000000000
+  Call trace:
+   iomap_iter_done+0x148/0x190 (P)
+   iomap_iter+0x174/0x230
+   iomap_fiemap+0x154/0x1d8
+   ext4_fiemap+0x110/0x140 [ext4]
+   do_vfs_ioctl+0x4b8/0xbc0
+   __arm64_sys_ioctl+0x8c/0x120
+   invoke_syscall+0x6c/0x100
+   el0_svc_common.constprop.0+0x48/0xf0
+   do_el0_svc+0x24/0x38
+   el0_svc+0x38/0x120
+   el0t_64_sync_handler+0x10c/0x138
+   el0t_64_sync+0x198/0x1a0
+  ---[ end trace 0000000000000000 ]---
 
-Fixes: 8cd61c313d8b ("drm/amd/display: Raise dispclk value for Polaris")
-Fixes: dc88b4a684d2 ("drm/amd/display: make clk mgr soc specific")
-Fixes: 3ecb3b794e2c ("drm/amd/display: dc/clk_mgr: add support for SI parts (v2)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 427980c1cbd22bb256b9385f5ce73c0937562408)
-Cc: stable@vger.kernel.org
-[ `MIN` => `min` ]
+Cc: stable@kernel.org
+Fixes: facab4d9711e ("ext4: return hole from ext4_map_blocks()")
+Reported-by: Qu Wenruo <wqu@suse.com>
+Closes: https://lore.kernel.org/linux-ext4/9b650a52-9672-4604-a765-bb6be55d1e4a@gmx.com/
+Tested-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20250811064532.1788289-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/ext4/indirect.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce60/dce60_clk_mgr.c
-@@ -112,11 +112,9 @@ static void dce60_update_clocks(struct c
- {
- 	struct clk_mgr_internal *clk_mgr_dce = TO_CLK_MGR_INTERNAL(clk_mgr_base);
- 	struct dm_pp_power_level_change_request level_change_req;
--	int patched_disp_clk = context->bw_ctx.bw.dce.dispclk_khz;
--
--	/*TODO: W/A for dal3 linux, investigate why this works */
--	if (!clk_mgr_dce->dfs_bypass_active)
--		patched_disp_clk = patched_disp_clk * 115 / 100;
-+	const int max_disp_clk =
-+		clk_mgr_dce->max_clks_by_state[DM_PP_CLOCKS_STATE_PERFORMANCE].display_clk_khz;
-+	int patched_disp_clk = min(max_disp_clk, context->bw_ctx.bw.dce.dispclk_khz);
+--- a/fs/ext4/indirect.c
++++ b/fs/ext4/indirect.c
+@@ -537,7 +537,7 @@ int ext4_ind_map_blocks(handle_t *handle
+ 	int indirect_blks;
+ 	int blocks_to_boundary = 0;
+ 	int depth;
+-	int count = 0;
++	u64 count = 0;
+ 	ext4_fsblk_t first_block = 0;
  
- 	level_change_req.power_level = dce_get_required_clocks_state(clk_mgr_base, context);
- 	/* get max clock state from PPLIB */
+ 	trace_ext4_ind_map_blocks_enter(inode, map->m_lblk, map->m_len, flags);
+@@ -586,7 +586,7 @@ int ext4_ind_map_blocks(handle_t *handle
+ 		count++;
+ 		/* Fill in size of a hole we found */
+ 		map->m_pblk = 0;
+-		map->m_len = min_t(unsigned int, map->m_len, count);
++		map->m_len = umin(map->m_len, count);
+ 		goto cleanup;
+ 	}
+ 
 
 
