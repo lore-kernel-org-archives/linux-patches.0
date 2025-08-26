@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC35031CA74;
-	Tue, 26 Aug 2025 13:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD4834AAE8;
+	Tue, 26 Aug 2025 13:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214120; cv=none; b=VIIIZrgo1/3gegzoa9UJ4pflBNemVicm9hZYVPbQOI9vNenMVXA8k3kYGS2PR2NHslm5MBAODY3EOJn1xn23H6xOGQQ0kbd4Dk4BF7/JnUBqxiLt4P1bAELMSFZtwo7IL2tG+RHf5d2OG3mD7S4UrLRNNv8Cc03whttdlW0V4kI=
+	t=1756214123; cv=none; b=Q7wGLUsDz9POEgQgiJ5WH+ajdXO4CsYoBnwrzCBykoc1APfXTXx7uDaLL6uaACar03AGr5vCkon7bRjU/mTftGJ8pZEDA8P/kzqR5Q1tncYGjhQArLoGGs1NCF5n0vE4C0/hIJM+RjJpysoo9Zhfx/G6l07p3Fogs5BjkF+L56w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214120; c=relaxed/simple;
-	bh=5iNOsHiMLDC6iUfv90ahvQLQkS+hEIYR/RdzGgysa6E=;
+	s=arc-20240116; t=1756214123; c=relaxed/simple;
+	bh=uZUG65esQhKKnYsQ+8tGwQ3PvYrtm9YMsRTu+Bcppz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdzpRRZvHkl6WrTkOTCz9en0r3M+4s4Ohs6uuGjVgbxm/JgCDxhcHazx/jk+2g4XeCl5U9S5lcW+N+TT6jyEKSHsqF07G8HhiN8Tf6UDKpjFGE1SUn5ocXGKHTu/NP2Zxzu7lVU8gAnrQ/f85EX8OHYoTSP2MGUnPbn6GNMmVNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB7spUzJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlSgpwMCeBmgFKzpgsSgBF4s5MhzfV4WJtuC8eJJVY3W1DMFFsPTiRh36NoN9h/YQfwMKneYxJ5VUdyErnwZjK9S4N8XaGydlFUe/1/yWsePQmFmYFzULwzH2fWX4WiszQ1kv+OCIEv9yAyEiSA3svpZ6mIUlgjEZwARbYVuEfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQp2LknL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB7spUzJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB1EC4CEF1;
-	Tue, 26 Aug 2025 13:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQp2LknL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE61C4CEF1;
+	Tue, 26 Aug 2025 13:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214120;
-	bh=5iNOsHiMLDC6iUfv90ahvQLQkS+hEIYR/RdzGgysa6E=;
+	s=korg; t=1756214123;
+	bh=uZUG65esQhKKnYsQ+8tGwQ3PvYrtm9YMsRTu+Bcppz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YB7spUzJpYv9IKMhW5w1pHjelqn7KQF4/A6fnHzi81NaR5v7CTP3MleBicdJtxHa6
-	 KoPA19s1Hr0taz9X0xhhgCDbdu0pzUpeZ4EnrLTzLAb3+RDQPYwPJGwQ5fHc+ULIHr
-	 Pzn6nV/Nn83FyIGiDBp7U2timJhx6XyEIdu+QglE=
+	b=CQp2LknLRyd/x/xob7kJFtwVT0d2vo9YLUYJ2Qo+LaTLwmRtTawoeSmAq1ZT6I33T
+	 cnK+RYd1aE+A/w42cUeJjArPiK8lUfa907HSXVB/XscLQgcimmgJEVOovLtFQnn/yt
+	 xtLWeBtPF2SY0hPo5aBJ7Cl7JMyffBW7yXN6P6GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Larysch <fl@n621.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 011/482] net: phy: micrel: fix KSZ8081/KSZ8091 cable test
-Date: Tue, 26 Aug 2025 13:04:24 +0200
-Message-ID: <20250826110931.062651198@linuxfoundation.org>
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Haoran Jiang <jianghaoran@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 020/482] LoongArch: BPF: Fix jump offset calculation in tailcall
+Date: Tue, 26 Aug 2025 13:04:33 +0200
+Message-ID: <20250826110931.288673442@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,43 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Larysch <fl@n621.de>
+From: Haoran Jiang <jianghaoran@kylinos.cn>
 
-commit 49db61c27c4bbd24364086dc0892bd3e14c1502e upstream.
+commit cd39d9e6b7e4c58fa77783e7aedf7ada51d02ea3 upstream.
 
-Commit 21b688dabecb ("net: phy: micrel: Cable Diag feature for lan8814
-phy") introduced cable_test support for the LAN8814 that reuses parts of
-the KSZ886x logic and introduced the cable_diag_reg and pair_mask
-parameters to account for differences between those chips.
+The extra pass of bpf_int_jit_compile() skips JIT context initialization
+which essentially skips offset calculation leaving out_offset = -1, so
+the jmp_offset in emit_bpf_tail_call is calculated by
 
-However, it did not update the ksz8081_type struct, so those members are
-now 0, causing no pairs to be tested in ksz886x_cable_test_get_status
-and ksz886x_cable_test_wait_for_completion to poll the wrong register
-for the affected PHYs (Basic Control/Reset, which is 0 in normal
-operation) and exit immediately.
+"#define jmp_offset (out_offset - (cur_offset))"
 
-Fix this by setting both struct members accordingly.
+is a negative number, which is wrong. The final generated assembly are
+as follow.
 
-Fixes: 21b688dabecb ("net: phy: micrel: Cable Diag feature for lan8814 phy")
+54:	bgeu        	$a2, $t1, -8	    # 0x0000004c
+58:	addi.d      	$a6, $s5, -1
+5c:	bltz        	$a6, -16	    # 0x0000004c
+60:	alsl.d      	$t2, $a2, $a1, 0x3
+64:	ld.d        	$t2, $t2, 264
+68:	beq         	$t2, $zero, -28	    # 0x0000004c
+
+Before apply this patch, the follow test case will reveal soft lock issues.
+
+cd tools/testing/selftests/bpf/
+./test_progs --allow=tailcalls/tailcall_bpf2bpf_1
+
+dmesg:
+watchdog: BUG: soft lockup - CPU#2 stuck for 26s! [test_progs:25056]
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Larysch <fl@n621.de>
-Link: https://patch.msgid.link/20250723222250.13960-1-fl@n621.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Reviewed-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/micrel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/net/bpf_jit.c |   21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -356,6 +356,8 @@ static const struct kszphy_type ksz8051_
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -201,11 +201,9 @@ bool bpf_jit_supports_kfunc_call(void)
+ 	return true;
+ }
  
- static const struct kszphy_type ksz8081_type = {
- 	.led_mode_reg		= MII_KSZPHY_CTRL_2,
-+	.cable_diag_reg		= KSZ8081_LMD,
-+	.pair_mask		= KSZPHY_WIRE_PAIR_MASK,
- 	.has_broadcast_disable	= true,
- 	.has_nand_tree_disable	= true,
- 	.has_rmii_ref_clk_sel	= true,
+-/* initialized on the first pass of build_body() */
+-static int out_offset = -1;
+-static int emit_bpf_tail_call(struct jit_ctx *ctx)
++static int emit_bpf_tail_call(struct jit_ctx *ctx, int insn)
+ {
+-	int off;
++	int off, tc_ninsn = 0;
+ 	u8 tcc = tail_call_reg(ctx);
+ 	u8 a1 = LOONGARCH_GPR_A1;
+ 	u8 a2 = LOONGARCH_GPR_A2;
+@@ -215,7 +213,7 @@ static int emit_bpf_tail_call(struct jit
+ 	const int idx0 = ctx->idx;
+ 
+ #define cur_offset (ctx->idx - idx0)
+-#define jmp_offset (out_offset - (cur_offset))
++#define jmp_offset (tc_ninsn - (cur_offset))
+ 
+ 	/*
+ 	 * a0: &ctx
+@@ -225,6 +223,7 @@ static int emit_bpf_tail_call(struct jit
+ 	 * if (index >= array->map.max_entries)
+ 	 *	 goto out;
+ 	 */
++	tc_ninsn = insn ? ctx->offset[insn+1] - ctx->offset[insn] : ctx->offset[0];
+ 	off = offsetof(struct bpf_array, map.max_entries);
+ 	emit_insn(ctx, ldwu, t1, a1, off);
+ 	/* bgeu $a2, $t1, jmp_offset */
+@@ -256,15 +255,6 @@ static int emit_bpf_tail_call(struct jit
+ 	emit_insn(ctx, ldd, t3, t2, off);
+ 	__build_epilogue(ctx, true);
+ 
+-	/* out: */
+-	if (out_offset == -1)
+-		out_offset = cur_offset;
+-	if (cur_offset != out_offset) {
+-		pr_err_once("tail_call out_offset = %d, expected %d!\n",
+-			    cur_offset, out_offset);
+-		return -1;
+-	}
+-
+ 	return 0;
+ 
+ toofar:
+@@ -789,7 +779,7 @@ static int build_insn(const struct bpf_i
+ 	/* tail call */
+ 	case BPF_JMP | BPF_TAIL_CALL:
+ 		mark_tail_call(ctx);
+-		if (emit_bpf_tail_call(ctx) < 0)
++		if (emit_bpf_tail_call(ctx, i) < 0)
+ 			return -EINVAL;
+ 		break;
+ 
+@@ -1170,7 +1160,6 @@ out:
+ 	if (tmp_blinded)
+ 		bpf_jit_prog_release_other(prog, prog == orig_prog ? tmp : orig_prog);
+ 
+-	out_offset = -1;
+ 
+ 	return prog;
+ }
 
 
