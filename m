@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6168338F32;
-	Tue, 26 Aug 2025 13:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A230F34166A;
+	Tue, 26 Aug 2025 13:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214144; cv=none; b=qGg+xwDJnSVBPoJrtbiEWLadKxi7G6af5quvHy0yzK5hPXbxajXndWKijy5MakeVcSvpGxJkToycL0QFKlzI399Fh26V5zR8yrWyYM66Kn9fLAuycc93uw0qk04zhd33Zn/wwmRInYDRY1X8SO7PZupNIQEkWQXlpXOsEnBBVLc=
+	t=1756214147; cv=none; b=ZUUiyCForJkE7fi9QjxBrjYaxK9txwndZeAZzKf6/LKqmJp53zyQ4PtODRhpsZ6VHr3SSzNjS9veTW/W8dzzT8L92QTfMVcqaCyYty2CVpnm5BLi2melnKgbRLxYM6gQGTnKE1TjcfRjW2sxak0D3EOUV+A3iNSANRPZVV0pd98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214144; c=relaxed/simple;
-	bh=UC77DIMbwOw/2H+LIL5A3LisSUX1BvusHrVeV7tQNik=;
+	s=arc-20240116; t=1756214147; c=relaxed/simple;
+	bh=dL2aNfFTZHuNMh+vDrMdVbKs8WQJpz2ONyqxvLgMozs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhjpcRVtVGYzra9u3G0crj+GgtPXPfwZnb22MbAbWxXUut1s304N5Yw/S2H+8NGh0O016Q3i7GqqYQWUCltihkm0wOwkwJuzUStdGt2mVE98tfVJHVg8HL6ikvH0MHB2Vmbv3dc/AHnmcngxQO1kQsv5ODjPwPM3ENEWZ9Fdp+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYLpglAW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdhMpc8CEYQzKjxhTXcXMyPK26/bifiPzKq7+PilVbb0pIzGMMiN/EWtTo/hfw8wursxIbnKkk+M8DbmdAzfrCZvwi6Aa3l5y7I8lenPH9djW++uHbRjE49lwDZ9NFylyNg8OMyULnwYOPwLfaHUKT4Dsuq7BAoIyNNLnpe876Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDHlFYC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYLpglAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BB7C4CEF1;
-	Tue, 26 Aug 2025 13:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDHlFYC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A3EC4CEF1;
+	Tue, 26 Aug 2025 13:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214144;
-	bh=UC77DIMbwOw/2H+LIL5A3LisSUX1BvusHrVeV7tQNik=;
+	s=korg; t=1756214147;
+	bh=dL2aNfFTZHuNMh+vDrMdVbKs8WQJpz2ONyqxvLgMozs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYLpglAWj8Jd/o5zAuGnS6VeWS3YmOCWPwPRICWzaWS5X88os5wDqUiduH5xGCojS
-	 QKil/WFBMiiJrO4zA+3LJH924CavH/qLzjAujqXdqUw6cvVjpso/D4oqgrkJfbkpoU
-	 bTA33easVq7NQvyBRmnZXWiUwx8n7pLpP+Hx4uE4=
+	b=WDHlFYC3ZOdAfk6bdspLg9CMoNRo6zikz9RFJye3WCWLFOiPCfIN9uF+99HBrzvp+
+	 Y2jylkr/pO/OJ3Y55ZBjhQXdUzlY1r0k98EHg4ViwmNOJK4RLIjSaVT9MQ8rqXWPRH
+	 3GFlwHiEGHDWdqZKelqaXFgQQ/tKlEbipQDVprGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Chao Gao <chao.gao@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/482] KVM: x86: Re-split x2APIC ICR into ICR+ICR2 for AMD (x2AVIC)
-Date: Tue, 26 Aug 2025 13:04:41 +0200
-Message-ID: <20250826110931.497374924@linuxfoundation.org>
+Subject: [PATCH 6.1 029/482] KVM: x86: Plumb in the vCPU to kvm_x86_ops.hwapic_isr_update()
+Date: Tue, 26 Aug 2025 13:04:42 +0200
+Message-ID: <20250826110931.523484074@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -54,158 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 73b42dc69be8564d4951a14d00f827929fe5ef79 ]
+[ Upstream commit 76bce9f10162cd4b36ac0b7889649b22baf70ebd ]
 
-Re-introduce the "split" x2APIC ICR storage that KVM used prior to Intel's
-IPI virtualization support, but only for AMD.  While not stated anywhere
-in the APM, despite stating the ICR is a single 64-bit register, AMD CPUs
-store the 64-bit ICR as two separate 32-bit values in ICR and ICR2.  When
-IPI virtualization (IPIv on Intel, all AVIC flavors on AMD) is enabled,
-KVM needs to match CPU behavior as some ICR ICR writes will be handled by
-the CPU, not by KVM.
+Pass the target vCPU to the hwapic_isr_update() vendor hook so that VMX
+can defer the update until after nested VM-Exit if an EOI for L1's vAPIC
+occurs while L2 is active.
 
-Add a kvm_x86_ops knob to control the underlying format used by the CPU to
-store the x2APIC ICR, and tune it to AMD vs. Intel regardless of whether
-or not x2AVIC is enabled.  If KVM is handling all ICR writes, the storage
-format for x2APIC mode doesn't matter, and having the behavior follow AMD
-versus Intel will provide better test coverage and ease debugging.
+Note, commit d39850f57d21 ("KVM: x86: Drop @vcpu parameter from
+kvm_x86_ops.hwapic_isr_update()") removed the parameter with the
+justification that doing so "allows for a decent amount of (future)
+cleanup in the APIC code", but it's not at all clear what cleanup was
+intended, or if it was ever realized.
 
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+No functional change intended.
+
 Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Link: https://lore.kernel.org/r/20240719235107.3023592-4-seanjc@google.com
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Tested-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20241128000010.4051275-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[sean: resolve minor syntatic conflicts]
+[sean: account for lack of kvm_x86_call(), drop vmx/x86_ops.h change]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h |  2 ++
- arch/x86/kvm/lapic.c            | 42 +++++++++++++++++++++++----------
- arch/x86/kvm/svm/svm.c          |  2 ++
- arch/x86/kvm/vmx/vmx.c          |  2 ++
- 4 files changed, 36 insertions(+), 12 deletions(-)
+ arch/x86/include/asm/kvm_host.h | 2 +-
+ arch/x86/kvm/lapic.c            | 8 ++++----
+ arch/x86/kvm/vmx/vmx.c          | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index eb06c2f68314..17b4e61a52b9 100644
+index 17b4e61a52b9..6db42ee82032 100644
 --- a/arch/x86/include/asm/kvm_host.h
 +++ b/arch/x86/include/asm/kvm_host.h
-@@ -1547,6 +1547,8 @@ struct kvm_x86_ops {
- 	void (*enable_nmi_window)(struct kvm_vcpu *vcpu);
- 	void (*enable_irq_window)(struct kvm_vcpu *vcpu);
- 	void (*update_cr8_intercept)(struct kvm_vcpu *vcpu, int tpr, int irr);
-+
-+	const bool x2apic_icr_is_split;
+@@ -1552,7 +1552,7 @@ struct kvm_x86_ops {
  	bool (*check_apicv_inhibit_reasons)(enum kvm_apicv_inhibit reason);
  	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
  	void (*hwapic_irr_update)(struct kvm_vcpu *vcpu, int max_irr);
+-	void (*hwapic_isr_update)(int isr);
++	void (*hwapic_isr_update)(struct kvm_vcpu *vcpu, int isr);
+ 	bool (*guest_apic_has_interrupt)(struct kvm_vcpu *vcpu);
+ 	void (*load_eoi_exitmap)(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
+ 	void (*set_virtual_apic_mode)(struct kvm_vcpu *vcpu);
 diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
-index 7f57dce5c828..42eec987ac3d 100644
+index 42eec987ac3d..3d65d6a023c9 100644
 --- a/arch/x86/kvm/lapic.c
 +++ b/arch/x86/kvm/lapic.c
-@@ -2315,11 +2315,25 @@ int kvm_x2apic_icr_write(struct kvm_lapic *apic, u64 data)
- 	data &= ~APIC_ICR_BUSY;
- 
- 	kvm_apic_send_ipi(apic, (u32)data, (u32)(data >> 32));
--	kvm_lapic_set_reg64(apic, APIC_ICR, data);
-+	if (kvm_x86_ops.x2apic_icr_is_split) {
-+		kvm_lapic_set_reg(apic, APIC_ICR, data);
-+		kvm_lapic_set_reg(apic, APIC_ICR2, data >> 32);
-+	} else {
-+		kvm_lapic_set_reg64(apic, APIC_ICR, data);
-+	}
- 	trace_kvm_apic_write(APIC_ICR, data);
- 	return 0;
- }
- 
-+static u64 kvm_x2apic_icr_read(struct kvm_lapic *apic)
-+{
-+	if (kvm_x86_ops.x2apic_icr_is_split)
-+		return (u64)kvm_lapic_get_reg(apic, APIC_ICR) |
-+		       (u64)kvm_lapic_get_reg(apic, APIC_ICR2) << 32;
-+
-+	return kvm_lapic_get_reg64(apic, APIC_ICR);
-+}
-+
- /* emulate APIC access in a trap manner */
- void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
- {
-@@ -2337,7 +2351,7 @@ void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
- 	 * maybe-unecessary write, and both are in the noise anyways.
+@@ -587,7 +587,7 @@ static inline void apic_set_isr(int vec, struct kvm_lapic *apic)
+ 	 * just set SVI.
  	 */
- 	if (apic_x2apic_mode(apic) && offset == APIC_ICR)
--		WARN_ON_ONCE(kvm_x2apic_icr_write(apic, kvm_lapic_get_reg64(apic, APIC_ICR)));
-+		WARN_ON_ONCE(kvm_x2apic_icr_write(apic, kvm_x2apic_icr_read(apic)));
- 	else
- 		kvm_lapic_reg_write(apic, offset, kvm_lapic_get_reg(apic, offset));
- }
-@@ -2760,18 +2774,22 @@ static int kvm_apic_state_fixup(struct kvm_vcpu *vcpu,
- 
- 		/*
- 		 * In x2APIC mode, the LDR is fixed and based on the id.  And
--		 * ICR is internally a single 64-bit register, but needs to be
--		 * split to ICR+ICR2 in userspace for backwards compatibility.
-+		 * if the ICR is _not_ split, ICR is internally a single 64-bit
-+		 * register, but needs to be split to ICR+ICR2 in userspace for
-+		 * backwards compatibility.
- 		 */
--		if (set) {
-+		if (set)
- 			*ldr = kvm_apic_calc_x2apic_ldr(*id);
- 
--			icr = __kvm_lapic_get_reg(s->regs, APIC_ICR) |
--			      (u64)__kvm_lapic_get_reg(s->regs, APIC_ICR2) << 32;
--			__kvm_lapic_set_reg64(s->regs, APIC_ICR, icr);
--		} else {
--			icr = __kvm_lapic_get_reg64(s->regs, APIC_ICR);
--			__kvm_lapic_set_reg(s->regs, APIC_ICR2, icr >> 32);
-+		if (!kvm_x86_ops.x2apic_icr_is_split) {
-+			if (set) {
-+				icr = __kvm_lapic_get_reg(s->regs, APIC_ICR) |
-+				      (u64)__kvm_lapic_get_reg(s->regs, APIC_ICR2) << 32;
-+				__kvm_lapic_set_reg64(s->regs, APIC_ICR, icr);
-+			} else {
-+				icr = __kvm_lapic_get_reg64(s->regs, APIC_ICR);
-+				__kvm_lapic_set_reg(s->regs, APIC_ICR2, icr >> 32);
-+			}
- 		}
+ 	if (unlikely(apic->apicv_active))
+-		static_call_cond(kvm_x86_hwapic_isr_update)(vec);
++		static_call_cond(kvm_x86_hwapic_isr_update)(apic->vcpu, vec);
+ 	else {
+ 		++apic->isr_count;
+ 		BUG_ON(apic->isr_count > MAX_APIC_VECTOR);
+@@ -632,7 +632,7 @@ static inline void apic_clear_isr(int vec, struct kvm_lapic *apic)
+ 	 * and must be left alone.
+ 	 */
+ 	if (unlikely(apic->apicv_active))
+-		static_call_cond(kvm_x86_hwapic_isr_update)(apic_find_highest_isr(apic));
++		static_call_cond(kvm_x86_hwapic_isr_update)(apic->vcpu, apic_find_highest_isr(apic));
+ 	else {
+ 		--apic->isr_count;
+ 		BUG_ON(apic->isr_count < 0);
+@@ -2554,7 +2554,7 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
+ 	if (apic->apicv_active) {
+ 		static_call_cond(kvm_x86_apicv_post_state_restore)(vcpu);
+ 		static_call_cond(kvm_x86_hwapic_irr_update)(vcpu, -1);
+-		static_call_cond(kvm_x86_hwapic_isr_update)(-1);
++		static_call_cond(kvm_x86_hwapic_isr_update)(vcpu, -1);
  	}
  
-@@ -2971,7 +2989,7 @@ static int kvm_lapic_msr_read(struct kvm_lapic *apic, u32 reg, u64 *data)
- 	u32 low;
- 
- 	if (reg == APIC_ICR) {
--		*data = kvm_lapic_get_reg64(apic, APIC_ICR);
-+		*data = kvm_x2apic_icr_read(apic);
- 		return 0;
+ 	vcpu->arch.apic_arb_prio = 0;
+@@ -2847,7 +2847,7 @@ int kvm_apic_set_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s)
+ 	if (apic->apicv_active) {
+ 		static_call_cond(kvm_x86_apicv_post_state_restore)(vcpu);
+ 		static_call_cond(kvm_x86_hwapic_irr_update)(vcpu, apic_find_highest_irr(apic));
+-		static_call_cond(kvm_x86_hwapic_isr_update)(apic_find_highest_isr(apic));
++		static_call_cond(kvm_x86_hwapic_isr_update)(vcpu, apic_find_highest_isr(apic));
  	}
- 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index c95a84afc35f..b922f31d1415 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4851,6 +4851,8 @@ static struct kvm_x86_ops svm_x86_ops __initdata = {
- 	.enable_nmi_window = svm_enable_nmi_window,
- 	.enable_irq_window = svm_enable_irq_window,
- 	.update_cr8_intercept = svm_update_cr8_intercept,
-+
-+	.x2apic_icr_is_split = true,
- 	.set_virtual_apic_mode = avic_refresh_virtual_apic_mode,
- 	.refresh_apicv_exec_ctrl = avic_refresh_apicv_exec_ctrl,
- 	.check_apicv_inhibit_reasons = avic_check_apicv_inhibit_reasons,
+ 	kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 	if (ioapic_in_kernel(vcpu->kvm))
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index fbe26b88f731..9a5cb896229f 100644
+index 9a5cb896229f..721ba6ddb121 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8202,6 +8202,8 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
- 	.enable_nmi_window = vmx_enable_nmi_window,
- 	.enable_irq_window = vmx_enable_irq_window,
- 	.update_cr8_intercept = vmx_update_cr8_intercept,
-+
-+	.x2apic_icr_is_split = false,
- 	.set_virtual_apic_mode = vmx_set_virtual_apic_mode,
- 	.set_apic_access_page_addr = vmx_set_apic_access_page_addr,
- 	.refresh_apicv_exec_ctrl = vmx_refresh_apicv_exec_ctrl,
+@@ -6708,7 +6708,7 @@ static void vmx_set_apic_access_page_addr(struct kvm_vcpu *vcpu)
+ 	put_page(page);
+ }
+ 
+-static void vmx_hwapic_isr_update(int max_isr)
++static void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
+ {
+ 	u16 status;
+ 	u8 old;
 -- 
 2.50.1
 
