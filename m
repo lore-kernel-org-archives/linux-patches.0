@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E833321457;
-	Tue, 26 Aug 2025 11:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1363832144B;
+	Tue, 26 Aug 2025 11:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207954; cv=none; b=VkLEeexQPSFJohCM2RdcMjuq5ngelI0KG/+QbpHzaVKRoQf3o7JjHWiaarvtetLH5ZdpvJDBQtAKjXpTflEDZuEOD2BxyhMHJay6L+o9f82+gLKcLPj1m7gbj2JYRVmrL0GfcmUYUYZ4D+IHmirxOxurfvQqd5XHSFqkzBJvEJw=
+	t=1756207959; cv=none; b=B918ZgBWyQH/kxsDCAOVjA+/EVztJerfCVRWAY/4DA49RMYdvBLAziA6BfyLpYV2rKMJt1bd5GSIqIgJ9fJ4kdch6hmGFxkJhTdpcZ9HOENa1E3AYE8Ci63cc6un0qdfTs8OFcUyDYOZhB2JSnicw0jn9pwt7XwLk905rlJRXwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207954; c=relaxed/simple;
-	bh=sninqmlYord2E1/MYzhR+lnMdATjZRuak76Uu862mv8=;
+	s=arc-20240116; t=1756207959; c=relaxed/simple;
+	bh=hINt2RYz1hVIanxuI5wet5r9iqwDzvv59AaIMHlnR54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GEfys57i+AmqchZKs9CSLVHcuz0H3zefNKVqQhudD5HZzJx7hjxKwaWzhXONlstGDj/97/V3mXgxLCZkabZzHhLufsVsr8CPk0Dmz+xOn5fBIrWD0h1fDyIu081zqsBTYYe99Zv5LO2mSmOXXvssVKmqL8GUXrsW4XZDoyKAvV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lua9a1Dv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+pI64PXKp5kbWfEETD9BEr7htHXoTf64q22dAJJqYtWlMtVW4J1dmvU4GoeDjUzAkElBC0IG/ivwXAlUy6cfHyRdosPQ0j7YebpzHTUGd1y9xf1yrePcFbxX3WgDK93Nc/VOSOM2P72kLPq0pbezxzg92hMKGFDkbU01oHPcHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0zWxKpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lua9a1Dv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46132C4CEF1;
-	Tue, 26 Aug 2025 11:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0zWxKpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D2DC4CEF4;
+	Tue, 26 Aug 2025 11:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207953;
-	bh=sninqmlYord2E1/MYzhR+lnMdATjZRuak76Uu862mv8=;
+	s=korg; t=1756207958;
+	bh=hINt2RYz1hVIanxuI5wet5r9iqwDzvv59AaIMHlnR54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lua9a1DvLl6BUH9Lo/UK4bNL4CHDw3q61PiJDCYl94EHc4XGRIeFdGDl4V2wueyDa
-	 TP0XN+bS7hTxTJpsFZ2wKpS1Jf9v9On3uX5ipkiOIhySl3SsNr4w3viQkgJmMfqdXy
-	 oIKvgE8r+FGmDC8YUJ9nKsZf94xAU9gJh/JYuR/Q=
+	b=p0zWxKpX9W+/zDx305vggs3SfsCNXM+ScT1PLBbB5/ZwjTqfuX8VOSpdZ+nT8CmCZ
+	 3U1JS5b860DEg4VnkEPCTkkDHrIwWAHVzP8UObxG0sf5BnUykRBxl+C4W9RUz7TDbF
+	 pagzaTzpQzpy4zylcHzGykEAp/5IAmvnB9xhVT+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 350/457] drm/tests: Fix drm_test_fb_xrgb8888_to_xrgb2101010() on big-endian
-Date: Tue, 26 Aug 2025 13:10:34 +0200
-Message-ID: <20250826110945.973778495@linuxfoundation.org>
+Subject: [PATCH 6.16 352/457] rust: alloc: replace aligned_size() with Kmalloc::aligned_layout()
+Date: Tue, 26 Aug 2025 13:10:36 +0200
+Message-ID: <20250826110946.020935439@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -45,43 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 05663d88fd0b8ee1c54ab2d5fb36f9b6a3ed37f7 ]
+[ Upstream commit fde578c86281f27b182680c7642836a0dbbd0be7 ]
 
-Fix failures on big-endian architectures on tests cases
-single_pixel_source_buffer, single_pixel_clip_rectangle,
-well_known_colors and destination_pitch.
+aligned_size() dates back to when Rust did support kmalloc() only, but
+is now used in ReallocFunc::call() and hence for all allocators.
 
-Fixes: 15bda1f8de5d ("drm/tests: Add calls to drm_fb_blit() on supported format conversion tests")
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20250630090054.353246-2-jose.exposito89@gmail.com
+However, the additional padding applied by aligned_size() is only
+required by the kmalloc() allocator backend.
+
+Hence, replace aligned_size() with Kmalloc::aligned_layout() and use it
+for the affected allocators, i.e. kmalloc() and kvmalloc(), only.
+
+While at it, make Kmalloc::aligned_layout() public, such that Rust
+abstractions, which have to call subsystem specific kmalloc() based
+allocation primitives directly, can make use of it.
+
+Fixes: 8a799831fc63 ("rust: alloc: implement `ReallocFunc`")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20250731154919.4132-2-dakr@kernel.org
+[ Remove `const` from Kmalloc::aligned_layout(). - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_format_helper_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ rust/kernel/alloc/allocator.rs | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_format_helper_test.c b/drivers/gpu/drm/tests/drm_format_helper_test.c
-index 8b62adbd4dfa..e17643c408bf 100644
---- a/drivers/gpu/drm/tests/drm_format_helper_test.c
-+++ b/drivers/gpu/drm/tests/drm_format_helper_test.c
-@@ -1040,6 +1040,7 @@ static void drm_test_fb_xrgb8888_to_xrgb2101010(struct kunit *test)
- 	memset(buf, 0, dst_size);
+diff --git a/rust/kernel/alloc/allocator.rs b/rust/kernel/alloc/allocator.rs
+index aa2dfa9dca4c..2692cf90c948 100644
+--- a/rust/kernel/alloc/allocator.rs
++++ b/rust/kernel/alloc/allocator.rs
+@@ -43,17 +43,6 @@ pub struct Vmalloc;
+ /// For more details see [self].
+ pub struct KVmalloc;
  
- 	drm_fb_xrgb8888_to_xrgb2101010(&dst, dst_pitch, &src, &fb, &params->clip, &fmtcnv_state);
-+	buf = le32buf_to_cpu(test, (__force const __le32 *)buf, dst_size / sizeof(u32));
- 	KUNIT_EXPECT_MEMEQ(test, buf, result->expected, dst_size);
+-/// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
+-fn aligned_size(new_layout: Layout) -> usize {
+-    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
+-    let layout = new_layout.pad_to_align();
+-
+-    // Note that `layout.size()` (after padding) is guaranteed to be a multiple of `layout.align()`
+-    // which together with the slab guarantees means the `krealloc` will return a properly aligned
+-    // object (see comments in `kmalloc()` for more information).
+-    layout.size()
+-}
+-
+ /// # Invariants
+ ///
+ /// One of the following: `krealloc`, `vrealloc`, `kvrealloc`.
+@@ -88,7 +77,7 @@ impl ReallocFunc {
+         old_layout: Layout,
+         flags: Flags,
+     ) -> Result<NonNull<[u8]>, AllocError> {
+-        let size = aligned_size(layout);
++        let size = layout.size();
+         let ptr = match ptr {
+             Some(ptr) => {
+                 if old_layout.size() == 0 {
+@@ -123,6 +112,17 @@ impl ReallocFunc {
+     }
  }
  
++impl Kmalloc {
++    /// Returns a [`Layout`] that makes [`Kmalloc`] fulfill the requested size and alignment of
++    /// `layout`.
++    pub fn aligned_layout(layout: Layout) -> Layout {
++        // Note that `layout.size()` (after padding) is guaranteed to be a multiple of
++        // `layout.align()` which together with the slab guarantees means that `Kmalloc` will return
++        // a properly aligned object (see comments in `kmalloc()` for more information).
++        layout.pad_to_align()
++    }
++}
++
+ // SAFETY: `realloc` delegates to `ReallocFunc::call`, which guarantees that
+ // - memory remains valid until it is explicitly freed,
+ // - passing a pointer to a valid memory allocation is OK,
+@@ -135,6 +135,8 @@ unsafe impl Allocator for Kmalloc {
+         old_layout: Layout,
+         flags: Flags,
+     ) -> Result<NonNull<[u8]>, AllocError> {
++        let layout = Kmalloc::aligned_layout(layout);
++
+         // SAFETY: `ReallocFunc::call` has the same safety requirements as `Allocator::realloc`.
+         unsafe { ReallocFunc::KREALLOC.call(ptr, layout, old_layout, flags) }
+     }
+@@ -176,6 +178,10 @@ unsafe impl Allocator for KVmalloc {
+         old_layout: Layout,
+         flags: Flags,
+     ) -> Result<NonNull<[u8]>, AllocError> {
++        // `KVmalloc` may use the `Kmalloc` backend, hence we have to enforce a `Kmalloc`
++        // compatible layout.
++        let layout = Kmalloc::aligned_layout(layout);
++
+         // TODO: Support alignments larger than PAGE_SIZE.
+         if layout.align() > bindings::PAGE_SIZE {
+             pr_warn!("KVmalloc does not support alignments larger than PAGE_SIZE yet.\n");
 -- 
 2.50.1
 
