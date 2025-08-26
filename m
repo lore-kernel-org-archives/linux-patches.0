@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BB120330;
-	Tue, 26 Aug 2025 11:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7269121D3C0;
+	Tue, 26 Aug 2025 11:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208892; cv=none; b=TUTcwj7T89ahJWplv3Y9buxfH+hXZ0zPpQm44D0C6Fg/eTTccXzcyrxh+iRyC5CEezdLF5xnPnxsddWBTwEX7HjxQG098y7NA+CkQfLXEId59j3p7NPX7JQDMDgtpd0wsN5KwPPpUCUcD0ALhM+XNAjzg/1Zx5ZT1yafwh2wQuo=
+	t=1756208895; cv=none; b=ZUzdlhBBZ4VlBHjJ1F/UCg4LfHBJIk1PG0YT5kQi9adZBXpLyRHMqoftSxxy3fMf0gRLbyxF7OlKz4My89lVPx+PDKKj2rl5pt3RsdH5p+7XpKS3DuhK13cJUVtQY4TYwqQb0T4C+eY6gc3JuWA9pSRZuszIv1ct/nV0dOKdQ58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208892; c=relaxed/simple;
-	bh=Qh/nra2OsacmAPogS8JnlTcet/7GRpDVsSWI5mIpt18=;
+	s=arc-20240116; t=1756208895; c=relaxed/simple;
+	bh=zkwYJgsP9eVvkmog9HQLiL3Oc/wZMouKho8CSMFW8Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZkY/vfKfvorV84gVcOuil5P4jFhHowCUd/7hnP1lNLHGrpTyrIXNOVDKc5DRdXM83lS8S/PmYhQ5kvyXqytqufNh4D+QRlK7ZlfYe5NQYBZIE4kP4M3PzV3D38lRZ/klLvQDnK68D/g1FCL2iMFz7cjWsLK2iuu/15PbBdumJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mq1sdYtc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qODlFbFEtfFfQFFC3ZfGJ8WZ7qoQBkxwDY273SlVwqQGD4uVNcLx8ZaYfs6Rd1+MuRsluFN3IzyZZ5ndnuMB5YCxX+OZ+mZUdvHgre3eiKPdg3yoLlwALY7O590WQhGQzjwT6PV6EAVx5qvUeE6FDWZNRRts3bS04pcRBw9N4eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yp6KyEOe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mq1sdYtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58822C4CEF1;
-	Tue, 26 Aug 2025 11:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yp6KyEOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0448DC4CEF1;
+	Tue, 26 Aug 2025 11:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208892;
-	bh=Qh/nra2OsacmAPogS8JnlTcet/7GRpDVsSWI5mIpt18=;
+	s=korg; t=1756208895;
+	bh=zkwYJgsP9eVvkmog9HQLiL3Oc/wZMouKho8CSMFW8Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mq1sdYtcK0l9I7E7orkt1Kga7jU1j73TfyT1zT5keEpMUZYSJWfYettkbOenV2GvA
-	 9oCZhIadrwn0iRArKBWvqbmvewU911yT1C7cttbbN8ecRaXfjUHqUuufAkC3JCu2CC
-	 flYCQHw8EFMYI+KUsfqgB2xUCh3xHN2ALJdBCFb4=
+	b=yp6KyEOeYyMcqkO+e54GhyIz3Z5fg8fazhGHn3R3/nRjAeAY7ZVAfOimqsGaQ9jH3
+	 84vlxj0LjfUPbRHiSxndCuBHu8RVKPD1hZR6ySbb290mIS6ULOBIdWRQe+2zCzw5aC
+	 xJlMjyF3JF48eSbo1W8piOpAxlA6Yo1UfCLBCbgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baihan Li <libaihan@huawei.com>,
-	Yongbang Shi <shiyongbang@huawei.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/322] drm/hisilicon/hibmc: fix the hibmc loaded failed bug
-Date: Tue, 26 Aug 2025 13:11:41 +0200
-Message-ID: <20250826110922.975760272@linuxfoundation.org>
+Subject: [PATCH 6.12 287/322] ALSA: usb-audio: Fix size validation in convert_chmap_v3()
+Date: Tue, 26 Aug 2025 13:11:42 +0200
+Message-ID: <20250826110922.998713520@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baihan Li <libaihan@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 93a08f856fcc5aaeeecad01f71bef3088588216a ]
+[ Upstream commit 89f0addeee3cb2dc49837599330ed9c4612f05b0 ]
 
-When hibmc loaded failed, the driver use hibmc_unload to free the
-resource, but the mutexes in mode.config are not init, which will
-access an NULL pointer. Just change goto statement to return, because
-hibnc_hw_init() doesn't need to free anything.
+The "p" pointer is void so sizeof(*p) is 1.  The intent was to check
+sizeof(*cs_desc), which is 3, instead.
 
-Fixes: b3df5e65cc03 ("drm/hibmc: Drop drm_vblank_cleanup")
-Signed-off-by: Baihan Li <libaihan@huawei.com>
-Signed-off-by: Yongbang Shi <shiyongbang@huawei.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250813094238.3722345-5-shiyongbang@huawei.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: ecfd41166b72 ("ALSA: usb-audio: Validate UAC3 cluster segment descriptors")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/aKL5kftC1qGt6lpv@stanley.mountain
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/stream.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-index 9f9b19ea0587..1640609cdbc0 100644
---- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-+++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
-@@ -258,13 +258,13 @@ static int hibmc_load(struct drm_device *dev)
+diff --git a/sound/usb/stream.c b/sound/usb/stream.c
+index 1cb52373e70f..db2c9bac00ad 100644
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -349,7 +349,7 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
+ 		u16 cs_len;
+ 		u8 cs_type;
  
- 	ret = hibmc_hw_init(priv);
- 	if (ret)
--		goto err;
-+		return ret;
- 
- 	ret = drmm_vram_helper_init(dev, pci_resource_start(pdev, 0),
- 				    pci_resource_len(pdev, 0));
- 	if (ret) {
- 		drm_err(dev, "Error initializing VRAM MM; %d\n", ret);
--		goto err;
-+		return ret;
- 	}
- 
- 	ret = hibmc_kms_init(priv);
+-		if (len < sizeof(*p))
++		if (len < sizeof(*cs_desc))
+ 			break;
+ 		cs_len = le16_to_cpu(cs_desc->wLength);
+ 		if (len < cs_len)
 -- 
 2.50.1
 
