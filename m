@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4773A137932;
-	Tue, 26 Aug 2025 13:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898DD137932;
+	Tue, 26 Aug 2025 13:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214897; cv=none; b=eF4YoWGa9GUpozqczXTBdKOyNczevdQDj07krQOJv5VH5jDY3k9ipxJQXgtPEKJrBDUPXNoNmKOKTJJmrV92ZRVvasx4AVpJPvA8nGVYJkKkXcKqW2jpNomkaK6H3kisceWYGKhWHDB6o/br3OAc8m3afZKD2+ouFoCLOjFdjn8=
+	t=1756214898; cv=none; b=FCKjo+7RS5gn3Yudp1OHj8MKRkvullT3LpA7Lp+/dx6SxaLnhuXasOUSZdjbnj4SRXf3QpE7Fe7RM8GcFfx0vEG2c6ej5/pFewduz5yBmUABIkVhTsxpyDWAVVilKq+tmbIyxBq5jJRcMGGU6Pz6XG051kfZzDiNN0ax8dnEfdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214897; c=relaxed/simple;
-	bh=WU+seN7EptUzr77fJNcFC9rABVT5/P9kbiRWMDmq6lA=;
+	s=arc-20240116; t=1756214898; c=relaxed/simple;
+	bh=9R5ilH9WdcMs6PfmDKK6OoHe0n8GKcxB0jcyiBw0nXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0sV1B7NJwTWoJTHFWccif/BeIRoAOClId1gZh9gPT/jx5W2ksqh9BhVi8f95++M9i+c1b5Q4rISRfMCJkGlv8pxi8kIiGEiE5zZP2b9AWTah9gbG+jzZ6XmOzRv/5iih95pymlc9fAYWH0l9fvjO4/tkY6rOX68EDG/GVA82F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/FduzZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a8WBbfC7sVoqmh0P7hVUG487YstDTT2fGeHI3G5GYdFWEhZZjP6oPAf5iTwlO0CQ0Xr7r0giBtba6QrElXwZJVwZohWB3qKGyBxfI2hZ5CQcQhibGPMX6CQtWHwAfoo0s0UB9MC+8KgO5oXGovYrlGp4aTh5tk5B+VzfLOnCNUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEQ9n5S6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/FduzZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828DFC4CEF1;
-	Tue, 26 Aug 2025 13:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEQ9n5S6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1945AC113CF;
+	Tue, 26 Aug 2025 13:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214895;
-	bh=WU+seN7EptUzr77fJNcFC9rABVT5/P9kbiRWMDmq6lA=;
+	s=korg; t=1756214898;
+	bh=9R5ilH9WdcMs6PfmDKK6OoHe0n8GKcxB0jcyiBw0nXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/FduzZC5hXzsWC5AClwpQQIB4spixOZiVZDobLF1HNhdXtjphk8uGE1+CxfWQ7Gd
-	 X+EqK1Nq0E8CvnP7c8BIo9T+bi+Vie0aij5/GiJdIcpqhktawn3OIGh/u4E1YYYdJg
-	 TXHFXWYHYoIp3fGtopIRTFvAhI2HVQCb10rXZrQU=
+	b=DEQ9n5S66su16ugaIEWtoxm4a+Pnqnn5UENmUnx2blm9MTrpqw1BLZz7KfTt9ymtA
+	 QRpysBhzPBDzSA2EzUGmAImj1F6apEWj40iaARc2lDZg+xR03l0Wkp+SRJnqib7NTv
+	 ohr/WocXMUoddVOS2c2lBBkJmYUaywKmP6fleUTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.1 310/482] vhost/vsock: Avoid allocating arbitrarily-sized SKBs
-Date: Tue, 26 Aug 2025 13:09:23 +0200
-Message-ID: <20250826110938.459455489@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 311/482] jbd2: prevent softlockup in jbd2_log_do_checkpoint()
+Date: Tue, 26 Aug 2025 13:09:24 +0200
+Message-ID: <20250826110938.483065478@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,53 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 10a886aaed293c4db3417951f396827216299e3d upstream.
+commit 9d98cf4632258720f18265a058e62fde120c0151 upstream.
 
-vhost_vsock_alloc_skb() returns NULL for packets advertising a length
-larger than VIRTIO_VSOCK_MAX_PKT_BUF_SIZE in the packet header. However,
-this is only checked once the SKB has been allocated and, if the length
-in the packet header is zero, the SKB may not be freed immediately.
+Both jbd2_log_do_checkpoint() and jbd2_journal_shrink_checkpoint_list()
+periodically release j_list_lock after processing a batch of buffers to
+avoid long hold times on the j_list_lock. However, since both functions
+contend for j_list_lock, the combined time spent waiting and processing
+can be significant.
 
-Hoist the size check before the SKB allocation so that an iovec larger
-than VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + the header size is rejected
-outright. The subsequent check on the length field in the header can
-then simply check that the allocated SKB is indeed large enough to hold
-the packet.
+jbd2_journal_shrink_checkpoint_list() explicitly calls cond_resched() when
+need_resched() is true to avoid softlockups during prolonged operations.
+But jbd2_log_do_checkpoint() only exits its loop when need_resched() is
+true, relying on potentially sleeping functions like __flush_batch() or
+wait_on_buffer() to trigger rescheduling. If those functions do not sleep,
+the kernel may hit a softlockup.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Message-Id: <20250717090116.11987-2-will@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+watchdog: BUG: soft lockup - CPU#3 stuck for 156s! [kworker/u129:2:373]
+CPU: 3 PID: 373 Comm: kworker/u129:2 Kdump: loaded Not tainted 6.6.0+ #10
+Hardware name: Huawei TaiShan 2280 /BC11SPCD, BIOS 1.27 06/13/2017
+Workqueue: writeback wb_workfn (flush-7:2)
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : native_queued_spin_lock_slowpath+0x358/0x418
+lr : jbd2_log_do_checkpoint+0x31c/0x438 [jbd2]
+Call trace:
+ native_queued_spin_lock_slowpath+0x358/0x418
+ jbd2_log_do_checkpoint+0x31c/0x438 [jbd2]
+ __jbd2_log_wait_for_space+0xfc/0x2f8 [jbd2]
+ add_transaction_credits+0x3bc/0x418 [jbd2]
+ start_this_handle+0xf8/0x560 [jbd2]
+ jbd2__journal_start+0x118/0x228 [jbd2]
+ __ext4_journal_start_sb+0x110/0x188 [ext4]
+ ext4_do_writepages+0x3dc/0x740 [ext4]
+ ext4_writepages+0xa4/0x190 [ext4]
+ do_writepages+0x94/0x228
+ __writeback_single_inode+0x48/0x318
+ writeback_sb_inodes+0x204/0x590
+ __writeback_inodes_wb+0x54/0xf8
+ wb_writeback+0x2cc/0x3d8
+ wb_do_writeback+0x2e0/0x2f8
+ wb_workfn+0x80/0x2a8
+ process_one_work+0x178/0x3e8
+ worker_thread+0x234/0x3b8
+ kthread+0xf0/0x108
+ ret_from_fork+0x10/0x20
+
+So explicitly call cond_resched() in jbd2_log_do_checkpoint() to avoid
+softlockup.
+
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20250812063752.912130-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vsock.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/jbd2/checkpoint.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/vhost/vsock.c
-+++ b/drivers/vhost/vsock.c
-@@ -340,6 +340,9 @@ vhost_vsock_alloc_skb(struct vhost_virtq
- 
- 	len = iov_length(vq->iov, out);
- 
-+	if (len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM)
-+		return NULL;
-+
- 	/* len contains both payload and hdr */
- 	skb = virtio_vsock_alloc_skb(len, GFP_KERNEL);
- 	if (!skb)
-@@ -363,8 +366,7 @@ vhost_vsock_alloc_skb(struct vhost_virtq
- 		return skb;
- 
- 	/* The pkt is too big or the length in the header is invalid */
--	if (payload_len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE ||
--	    payload_len + sizeof(*hdr) > len) {
-+	if (payload_len + sizeof(*hdr) > len) {
- 		kfree_skb(skb);
- 		return NULL;
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -297,6 +297,7 @@ restart:
+ 		retry:
+ 			if (batch_count)
+ 				__flush_batch(journal, &batch_count);
++			cond_resched();
+ 			spin_lock(&journal->j_list_lock);
+ 			goto restart;
  	}
 
 
