@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D597F200112;
-	Tue, 26 Aug 2025 13:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810CF21A420;
+	Tue, 26 Aug 2025 13:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215270; cv=none; b=qZc/OaQcVTvM0E4Slave4gEKRzgvq6kgv0Tgh8J07oq0YanbO2SDqti69nnJF23xM8G5bzlVfjAWlcBQSmB8jpa0lbpB5BdRQxRFsJofmoj+Pkcgkhr+CtyIQXigoFvxiSRfLPZYn36CDVYKCmyysbmW3zHPtScIdN9qs01wjCw=
+	t=1756215273; cv=none; b=uXClj9nASjoALVV8UmV4T3EJ7b/hxW1mfRfvLVEkP95p+dVZss3kvnuqL1bK0PE5CGRzI3MSQz1O/THEk2Kyvr9IrtMS/WEe5keJ8nYU2btxsSnau8eMnrCWDTYqNoZuUAeaVPDToT5XBtajWXTA0ez7dg48VB9J8sPDAsBRoSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215270; c=relaxed/simple;
-	bh=vCF385YApu+OBBn4jkqkrBtTDaGcQJjBlUUdeL6uzSE=;
+	s=arc-20240116; t=1756215273; c=relaxed/simple;
+	bh=LMnbToBiBlmeQ6coijPRaBQl4pkuaz38GyCNtxBsbhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2dVMG9R20Wl4ucalYGyVYSdXmy3VL9eGpu9IdNj2B8lE8bQoD1gGEZhmSzPbqV0u0/kUf65hP/1JwHdolgIaPmBsKJxEX1lSJ7SIyF1vfQMTt7Cil+QS42bTv+XvfRlL3pW4icp/JZZ1ipfC+5wr8o68tkFlhUzbBT1I8axcQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAQLpXdu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=II/ACEMTDF7xxBYgfqYZAYwb06J4JSUvDTuwzxYxW52eR3xeT6UeLCGGefRe0zIY231qrpl7JmYY9P9xHnsxlxSSxotgWBRwcMCkAlJxs+H8nGLwQ9jQBtAuDRk2SHq5Mc+zsyIejCHpNud2aOTCk8pNXIuCdJyLk9WOPcV4Yvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkE+lfEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAQLpXdu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9E2C4CEF1;
-	Tue, 26 Aug 2025 13:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkE+lfEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10450C4CEF1;
+	Tue, 26 Aug 2025 13:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215270;
-	bh=vCF385YApu+OBBn4jkqkrBtTDaGcQJjBlUUdeL6uzSE=;
+	s=korg; t=1756215273;
+	bh=LMnbToBiBlmeQ6coijPRaBQl4pkuaz38GyCNtxBsbhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hAQLpXduiWzvqITa32OckeUBe/aTm/4i5d75JbwSmPvqT7kop9dVe9ptGdHWMlM96
-	 xD0yNPGVbB0dhvMeaTSMPiukSIdMIOkEh13QD8JlNNYi9Ro96LPRE/YiMhKh+mzQnv
-	 iynxS9lf32DS+Kok8voLJto8lHu9+CQIfPytEDhU=
+	b=QkE+lfEEkErI4hcX+FaYVRfEh42Ae5VlmTvi8vNZ0VAqW9fcsIHS/x6CPhoQMlcPv
+	 eHiAxjXzQ7oGmWbtnwACXSyaQUkKIPEoZnEtpZCvR59w3JfMMmyCUe89sBnxvBX0v2
+	 dlx2G1FpsZcmXIQ9tAcLBXcmhmtrBOCViu1VqEbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Thorsten Blum <thorsten.blum@linux.dev>
-Subject: [PATCH 6.1 420/482] usb: storage: realtek_cr: Use correct byte order for bcs->Residue
-Date: Tue, 26 Aug 2025 13:11:13 +0200
-Message-ID: <20250826110941.203064655@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 421/482] USB: storage: Ignore driver CD mode for Realtek multi-mode Wi-Fi dongles
+Date: Tue, 26 Aug 2025 13:11:14 +0200
+Message-ID: <20250826110941.227759075@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,35 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Zenm Chen <zenmchen@gmail.com>
 
-commit 98da66a70ad2396e5a508c4245367797ebc052ce upstream.
+commit a3dc32c635bae0ae569f489e00de0e8f015bfc25 upstream.
 
-Since 'bcs->Residue' has the data type '__le32', convert it to the
-correct byte order of the CPU using this driver when assigning it to
-the local variable 'residue'.
+Many Realtek USB Wi-Fi dongles released in recent years have two modes:
+one is driver CD mode which has Windows driver onboard, another one is
+Wi-Fi mode. Add the US_FL_IGNORE_DEVICE quirk for these multi-mode devices.
+Otherwise, usb_modeswitch may fail to switch them to Wi-Fi mode.
+
+Currently there are only two USB IDs known to be used by these multi-mode
+Wi-Fi dongles: 0bda:1a2b and 0bda:a192.
+
+Information about Mercury MW310UH in /sys/kernel/debug/usb/devices.
+T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 12 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=a192 Rev= 2.00
+S:  Manufacturer=Realtek
+S:  Product=DISK
+C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=(none)
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Information about D-Link AX9U rev. A1 in /sys/kernel/debug/usb/devices.
+T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#= 55 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=1a2b Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=DISK
+C:* #Ifs= 1 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=(none)
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
 Cc: stable <stable@kernel.org>
-Fixes: 50a6cb932d5c ("USB: usb_storage: add ums-realtek driver")
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://lore.kernel.org/r/20250813145247.184717-3-thorsten.blum@linux.dev
+Link: https://lore.kernel.org/r/20250813162415.2630-1-zenmchen@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/realtek_cr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/unusual_devs.h |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
---- a/drivers/usb/storage/realtek_cr.c
-+++ b/drivers/usb/storage/realtek_cr.c
-@@ -252,7 +252,7 @@ static int rts51x_bulk_transport(struct
- 		return USB_STOR_TRANSPORT_ERROR;
- 	}
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -1501,6 +1501,28 @@ UNUSUAL_DEV( 0x0bc2, 0x3332, 0x0000, 0x9
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_WP_DETECT ),
  
--	residue = bcs->Residue;
-+	residue = le32_to_cpu(bcs->Residue);
- 	if (bcs->Tag != us->tag)
- 		return USB_STOR_TRANSPORT_ERROR;
- 
++/*
++ * Reported by Zenm Chen <zenmchen@gmail.com>
++ * Ignore driver CD mode, otherwise usb_modeswitch may fail to switch
++ * the device into Wi-Fi mode.
++ */
++UNUSUAL_DEV( 0x0bda, 0x1a2b, 0x0000, 0xffff,
++		"Realtek",
++		"DISK",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_IGNORE_DEVICE ),
++
++/*
++ * Reported by Zenm Chen <zenmchen@gmail.com>
++ * Ignore driver CD mode, otherwise usb_modeswitch may fail to switch
++ * the device into Wi-Fi mode.
++ */
++UNUSUAL_DEV( 0x0bda, 0xa192, 0x0000, 0xffff,
++		"Realtek",
++		"DISK",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_IGNORE_DEVICE ),
++
+ UNUSUAL_DEV(  0x0d49, 0x7310, 0x0000, 0x9999,
+ 		"Maxtor",
+ 		"USB to SATA",
 
 
