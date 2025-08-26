@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B94511187;
-	Tue, 26 Aug 2025 12:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4920450FE;
+	Tue, 26 Aug 2025 12:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212555; cv=none; b=bJr/VMWv7CbHaFwcXO/XfxQlnL98JJN71B/l2ZwboKrjQjUqeZZlVDM01At8rycvdrOsEk4NY4s47qLfVqmZNoBEctFc0NoqMCzN+EHncxvD16eCAR+h7OSpIIveDR4ghCtetNSO10fIFolgUtMCUL1eTU7hb858v8Cc+0lAKBc=
+	t=1756212557; cv=none; b=ddWdVdahJzkQfAdKvy+DDMbKGm8zXU6VR96bCv7mAWtE1x8oLJe8Cm1GS1bqjpJD2kwFuD+4P93s52geWlNEaTEoUE1P6qp4t5Aogska0odh+iuhxNGDxZ6uGVWS1IiB68MN3gKFIsn056dhcvQVcLuyq990Kb/54Hnjwlu4/Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212555; c=relaxed/simple;
-	bh=H/bh5ClxfZmAIDZ/LnEtySpcpB1XnnH5IpSbGwbu6WA=;
+	s=arc-20240116; t=1756212557; c=relaxed/simple;
+	bh=66vVV6fsN3WzX4B23ScKCvEFSwSnorFjvwkWyJ7tm9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iljr242FT1MslHTZQseyX8gh2tv8HsFNjdVu9lKV07ZI1vlCtKmxvlJ4QNhTYAm0gi7ynWRAeHOzde0z7ozhEPwvBDF6mffkI8QmT52tPNb88j/JXOld0Saxwf4+42WDpbVSbqPGCLw4KoWbYk7dn+utvKgkrrMMW0MhTuORZIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/dGgsRe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQ4b/ejh9OkPKpEHfQIzAx1au5KdWvlZJnSVy5FTcqt/B9lI1r2e3Qew7dg64pMNGuJ3QCwrK3uZqDJkOMZh3mhqtp4W2KWybvnt7gUFUW6w0IeOy+HvxsJcw5rRaDrShJqVu4cO6OaO78vEVtEYPViK5x/8j4c9nwJXGSs1XDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edSXWJna; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/dGgsRe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB5BC4CEF1;
-	Tue, 26 Aug 2025 12:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edSXWJna"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2067C4CEF1;
+	Tue, 26 Aug 2025 12:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212553;
-	bh=H/bh5ClxfZmAIDZ/LnEtySpcpB1XnnH5IpSbGwbu6WA=;
+	s=korg; t=1756212556;
+	bh=66vVV6fsN3WzX4B23ScKCvEFSwSnorFjvwkWyJ7tm9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/dGgsRetTieU7Ysyb6KELadG28sySd3OqYJIlEG7UnTOOcI1aJjkBgm4NpPZOJcQ
-	 3gJ7SfRDNYe0wYI/Qby58TcEI/Um+2swhXQCQ6LQRVdRTvcn7Zr9Cdy6nF2MjuXm1+
-	 Nn3vbFVaEXLxjIulwiqM+s9l+vKODrJN35Ii0cRg=
+	b=edSXWJnaoAvIT3J+qm+9Bmw3h6Kh/fYKjpECyMsT6iUg+X1uwZQ9OnGGD+n6A4hYe
+	 IdSbGnXNhM6I1yqDJKzM0lTt7g4E1Onl09t14xxgQe7zFOXg1mk2WzMMlQ+AALrdrg
+	 G4NQo/vgzprSK8AxPgzsOgdnChiWqzFOMeaQcka8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Larysch <fl@n621.de>,
+	Yangbo Lu <yangbo.lu@nxp.com>,
+	Johan Hovold <johan@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 014/587] net: phy: micrel: fix KSZ8081/KSZ8091 cable test
-Date: Tue, 26 Aug 2025 13:02:43 +0200
-Message-ID: <20250826110953.314394159@linuxfoundation.org>
+Subject: [PATCH 6.6 015/587] net: gianfar: fix device leak when querying time stamp info
+Date: Tue, 26 Aug 2025 13:02:44 +0200
+Message-ID: <20250826110953.338734235@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -50,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Larysch <fl@n621.de>
+From: Johan Hovold <johan@kernel.org>
 
-commit 49db61c27c4bbd24364086dc0892bd3e14c1502e upstream.
+commit da717540acd34e5056e3fa35791d50f6b3303f55 upstream.
 
-Commit 21b688dabecb ("net: phy: micrel: Cable Diag feature for lan8814
-phy") introduced cable_test support for the LAN8814 that reuses parts of
-the KSZ886x logic and introduced the cable_diag_reg and pair_mask
-parameters to account for differences between those chips.
+Make sure to drop the reference to the ptp device taken by
+of_find_device_by_node() when querying the time stamping capabilities.
 
-However, it did not update the ksz8081_type struct, so those members are
-now 0, causing no pairs to be tested in ksz886x_cable_test_get_status
-and ksz886x_cable_test_wait_for_completion to poll the wrong register
-for the affected PHYs (Basic Control/Reset, which is 0 in normal
-operation) and exit immediately.
+Note that holding a reference to the ptp device does not prevent its
+driver data from going away.
 
-Fix this by setting both struct members accordingly.
-
-Fixes: 21b688dabecb ("net: phy: micrel: Cable Diag feature for lan8814 phy")
-Cc: stable@vger.kernel.org
-Signed-off-by: Florian Larysch <fl@n621.de>
-Link: https://patch.msgid.link/20250723222250.13960-1-fl@n621.de
+Fixes: 7349a74ea75c ("net: ethernet: gianfar_ethtool: get phc index through drvdata")
+Cc: stable@vger.kernel.org	# 4.18
+Cc: Yangbo Lu <yangbo.lu@nxp.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250725171213.880-4-johan@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/micrel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/freescale/gianfar_ethtool.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -372,6 +372,8 @@ static const struct kszphy_type ksz8051_
+--- a/drivers/net/ethernet/freescale/gianfar_ethtool.c
++++ b/drivers/net/ethernet/freescale/gianfar_ethtool.c
+@@ -1468,8 +1468,10 @@ static int gfar_get_ts_info(struct net_d
+ 	if (ptp_node) {
+ 		ptp_dev = of_find_device_by_node(ptp_node);
+ 		of_node_put(ptp_node);
+-		if (ptp_dev)
++		if (ptp_dev) {
+ 			ptp = platform_get_drvdata(ptp_dev);
++			put_device(&ptp_dev->dev);
++		}
+ 	}
  
- static const struct kszphy_type ksz8081_type = {
- 	.led_mode_reg		= MII_KSZPHY_CTRL_2,
-+	.cable_diag_reg		= KSZ8081_LMD,
-+	.pair_mask		= KSZPHY_WIRE_PAIR_MASK,
- 	.has_broadcast_disable	= true,
- 	.has_nand_tree_disable	= true,
- 	.has_rmii_ref_clk_sel	= true,
+ 	if (ptp)
 
 
