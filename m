@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CD9345752;
-	Tue, 26 Aug 2025 14:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66D134AAE3;
+	Tue, 26 Aug 2025 14:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218169; cv=none; b=WCBrGTxxUpsnl/WywqEPVyofQOKlXFYHGRqUl9Co6R1x16irwg6JihgvuCRZUl5e5syDltL35MU58DRqftD9zDUPhDw4nXP71Iseu+N3g5CuSfMmuoq03ibI7iBXoQG7SoLQbZjIMPAX7yjY4c8BXs6xxFAACoa3q77g6vGvKdI=
+	t=1756218174; cv=none; b=q6mU12X0zN1/tNr8+JYtrHnuiNZHV2PFataqkUMdW63KCJoVieWVol7O4ZaRx/E4LibFxNRIXho8uS3OFaDbJGRpQe02XGHh04+FI6Y4sSskQVVCnkxZydMirJassPEBxy1DZZ9EonL2l68QHY7Z+I2jRCTv256p2X2M/oFqVnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218169; c=relaxed/simple;
-	bh=+3Iu5UJAwPSLWmwzl1SfdC6baWeZdYsFiXriS4VCDIc=;
+	s=arc-20240116; t=1756218174; c=relaxed/simple;
+	bh=mojrcZHKS4W0Qfjk432tMEvhEirtlRgJmXiuRzySs0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aOGDerMH7oy/xzCQDF45Gd4aBWRUdUNNPnK1aOpFmdSa93eENQUrdPowb/KosWm7gmFN98NNn54Kb83+JrX6uL2vDcsUxgiQQjhnE6dHpy96JzWXY9379TOEXC94//heJ04buxeBGMf0bHRs0GbXFDv9/yNygFkWgy0ntwpxPWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEugzV0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iu7+QDd1rfD+1zyYAwCaFI0+Jg6YCiIdH9hlojiCue+qDXbRDdGdzz52EU388NNBU0Vdobrrb5y5vBAuUv+lyRLZhkXQm+vWmVQHzVX6QC+f6FJbjis7f+lg8fVP0Gb8OEHFYwHbHYedXofPVrBfk199kOhhhZMsZ1ioJPwyW0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TodLnJ1m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEugzV0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CA5C116B1;
-	Tue, 26 Aug 2025 14:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TodLnJ1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8337C4CEF1;
+	Tue, 26 Aug 2025 14:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218169;
-	bh=+3Iu5UJAwPSLWmwzl1SfdC6baWeZdYsFiXriS4VCDIc=;
+	s=korg; t=1756218172;
+	bh=mojrcZHKS4W0Qfjk432tMEvhEirtlRgJmXiuRzySs0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEugzV0WbILwXcZUj/dEUZhicFwxbwHntxhcrNEgkVt/Vub8UKchmZlvbhd5Zh6S3
-	 gEDxwca18xlMkWzURgm6EchKx8mVpoY7ntfCPSZJD5H4KmieDNyrcvbY9vAwGr1DsK
-	 1X2SdKFiyvOfO7ka7aLQtSF8aN1Y8DZx9W1apiDM=
+	b=TodLnJ1mzuhbUWQk1BPT3NgowNZjgGKnwf0b3HpU2UBxth+jgTbxMADJS9LhQgFif
+	 O504VJxCU+B4pnazI2dY3rRTwyOC7MXwCOmZxcnEZh1qBriQ0NiWlFHhLI9fyKyRn8
+	 CY2IPaYBCNaLIgqjoVXtWTesmSPYK2tSnDXiokhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 420/523] usb: hub: Dont try to recover devices lost during warm reset.
-Date: Tue, 26 Aug 2025 13:10:30 +0200
-Message-ID: <20250826110934.816588898@linuxfoundation.org>
+Subject: [PATCH 5.10 421/523] smb: client: fix use-after-free in crypt_message when using async crypto
+Date: Tue, 26 Aug 2025 13:10:31 +0200
+Message-ID: <20250826110934.841068411@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -46,95 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 
-[ Upstream commit 2521106fc732b0b75fd3555c689b1ed1d29d273c ]
+[ Upstream commit b220bed63330c0e1733dc06ea8e75d5b9962b6b6 ]
 
-Hub driver warm-resets ports in SS.Inactive or Compliance mode to
-recover a possible connected device. The port reset code correctly
-detects if a connection is lost during reset, but hub driver
-port_event() fails to take this into account in some cases.
-port_event() ends up using stale values and assumes there is a
-connected device, and will try all means to recover it, including
-power-cycling the port.
+The CVE-2024-50047 fix removed asynchronous crypto handling from
+crypt_message(), assuming all crypto operations are synchronous.
+However, when hardware crypto accelerators are used, this can cause
+use-after-free crashes:
 
-Details:
-This case was triggered when xHC host was suspended with DbC (Debug
-Capability) enabled and connected. DbC turns one xHC port into a simple
-usb debug device, allowing debugging a system with an A-to-A USB debug
-cable.
+  crypt_message()
+    // Allocate the creq buffer containing the req
+    creq = smb2_get_aead_req(..., &req);
 
-xhci DbC code disables DbC when xHC is system suspended to D3, and
-enables it back during resume.
-We essentially end up with two hosts connected to each other during
-suspend, and, for a short while during resume, until DbC is enabled back.
-The suspended xHC host notices some activity on the roothub port, but
-can't train the link due to being suspended, so xHC hardware sets a CAS
-(Cold Attach Status) flag for this port to inform xhci host driver that
-the port needs to be warm reset once xHC resumes.
+    // Async encryption returns -EINPROGRESS immediately
+    rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
 
-CAS is xHCI specific, and not part of USB specification, so xhci driver
-tells usb core that the port has a connection and link is in compliance
-mode. Recovery from complinace mode is similar to CAS recovery.
+    // Free creq while async operation is still in progress
+    kvfree_sensitive(creq, ...);
 
-xhci CAS driver support that fakes a compliance mode connection was added
-in commit 8bea2bd37df0 ("usb: Add support for root hub port status CAS")
+Hardware crypto modules often implement async AEAD operations for
+performance. When crypto_aead_encrypt/decrypt() returns -EINPROGRESS,
+the operation completes asynchronously. Without crypto_wait_req(),
+the function immediately frees the request buffer, leading to crashes
+when the driver later accesses the freed memory.
 
-Once xHCI resumes and DbC is enabled back, all activity on the xHC
-roothub host side port disappears. The hub driver will anyway think
-port has a connection and link is in compliance mode, and hub driver
-will try to recover it.
+This results in a use-after-free condition when the hardware crypto
+driver later accesses the freed request structure, leading to kernel
+crashes with NULL pointer dereferences.
 
-The port power-cycle during recovery seems to cause issues to the active
-DbC connection.
+The issue occurs because crypto_alloc_aead() with mask=0 doesn't
+guarantee synchronous operation. Even without CRYPTO_ALG_ASYNC in
+the mask, async implementations can be selected.
 
-Fix this by clearing connect_change flag if hub_port_reset() returns
--ENOTCONN, thus avoiding the whole unnecessary port recovery and
-initialization attempt.
+Fix by restoring the async crypto handling:
+- DECLARE_CRYPTO_WAIT(wait) for completion tracking
+- aead_request_set_callback() for async completion notification
+- crypto_wait_req() to wait for operation completion
 
+This ensures the request buffer isn't freed until the crypto operation
+completes, whether synchronous or asynchronous, while preserving the
+CVE-2024-50047 fix.
+
+Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
+Link: https://lore.kernel.org/all/8b784a13-87b0-4131-9ff9-7a8993538749@huaweicloud.com/
 Cc: stable@vger.kernel.org
-Fixes: 8bea2bd37df0 ("usb: Add support for root hub port status CAS")
-Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250623133947.3144608-1-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/cifs/smb2ops.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -5688,6 +5688,7 @@ static void port_event(struct usb_hub *h
- 	struct usb_device *hdev = hub->hdev;
- 	u16 portstatus, portchange;
- 	int i = 0;
-+	int err;
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -4302,6 +4302,7 @@ crypt_message(struct TCP_Server_Info *se
+ 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
+ 	struct aead_request *req;
+ 	u8 *iv;
++	DECLARE_CRYPTO_WAIT(wait);
+ 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
+ 	void *creq;
  
- 	connect_change = test_bit(port1, hub->change_bits);
- 	clear_bit(port1, hub->event_bits);
-@@ -5780,8 +5781,11 @@ static void port_event(struct usb_hub *h
- 		} else if (!udev || !(portstatus & USB_PORT_STAT_CONNECTION)
- 				|| udev->state == USB_STATE_NOTATTACHED) {
- 			dev_dbg(&port_dev->dev, "do warm reset, port only\n");
--			if (hub_port_reset(hub, port1, NULL,
--					HUB_BH_RESET_TIME, true) < 0)
-+			err = hub_port_reset(hub, port1, NULL,
-+					     HUB_BH_RESET_TIME, true);
-+			if (!udev && err == -ENOTCONN)
-+				connect_change = 0;
-+			else if (err < 0)
- 				hub_port_disable(hub, port1, 1);
- 		} else {
- 			dev_dbg(&port_dev->dev, "do warm reset, full device\n");
+@@ -4350,7 +4351,11 @@ crypt_message(struct TCP_Server_Info *se
+ 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
+ 	aead_request_set_ad(req, assoc_data_len);
+ 
+-	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
++	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
++				  crypto_req_done, &wait);
++
++	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
++				: crypto_aead_decrypt(req), &wait);
+ 
+ 	if (!rc && enc)
+ 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
 
 
