@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A75343D63;
-	Tue, 26 Aug 2025 14:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C933568E7;
+	Tue, 26 Aug 2025 14:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218539; cv=none; b=WhiwWksBsvQWwuxynA0qRevpWL4qVKfwEmhfGO3Xx8OruVBc8jY76mdGZHJXhwjd7qY9V9B8aJ8B/Y/YPoNz6i/yo/hr9rwqa5veHCgBISiwiLCTkmXQfR94H01Wnotpx939MjXwo9IGfwqHH3mjzFjEzJbDpJWkNeIs7otFwTc=
+	t=1756218541; cv=none; b=MtLQT3BHbIwBsDNmSn231psUrBG470Gvlj4YUmKewgebZJdHCKWDUa+TFRg7keboDhded/IxcFNqLFnxusWmtVbWYpSJu59LbiAoZS+5tZg/tt1aprew9mY2qntTkgZYb5OlyjIbhNPE2mh5VHKWmL6vl04aKXNX58dbOfz7FmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218539; c=relaxed/simple;
-	bh=gqyGwD1nRWyRyr1y9tsmQMtLo7MO0ws9YFM5j3ANrhs=;
+	s=arc-20240116; t=1756218541; c=relaxed/simple;
+	bh=vS+ROOjklo/VJNQ3+F7pGYJZ/zyFAknUF2N/gcPZZ5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bn5qzHqd65DHgt/Xm0Ak3v65E9bhTykLg11fvcNAsvHonyPE1mI07r4MVng0WHQo6wHIF1z/NgeHdWXwU9CDrOyyfFQKuX673nzA6PIHqSxuibdpjY9U+k5Jk9kctR+MOSqD9NKqHmpxzug1WoRD90bQ5ClOo5xQ8F0D03s6oRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2OcHVKg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZ/gcIWhhSBl7f3jymw9NTGkCu4S+gmYCxnxYfi/8xn3UbTAFUtQT5ZXnErzP75L4kfSiPWQcfdx5w6Q+cSmoFd2wWpVSAl/5EX10PrtqzBkMEZRchzjaAyolgCdk8OmCa6qGylHLZ4eDlw0NRkvh5EojIy8QkoT+l2bglOeQHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpaklglL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2OcHVKg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C38C4CEF1;
-	Tue, 26 Aug 2025 14:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpaklglL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1AFC4CEF1;
+	Tue, 26 Aug 2025 14:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218538;
-	bh=gqyGwD1nRWyRyr1y9tsmQMtLo7MO0ws9YFM5j3ANrhs=;
+	s=korg; t=1756218541;
+	bh=vS+ROOjklo/VJNQ3+F7pGYJZ/zyFAknUF2N/gcPZZ5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2OcHVKgaSF5tarjF8Q5mDGEoGMRWBIuP/cJdIYVX8c1SnOHVTAZd9jsKNHmW/krz
-	 EFMtq6gd1rIYP5Yv+UmgPUulbdewNlyW8WB+bTXdlm8oanb6BDlMKHaLnBUjJMBpoC
-	 Xao34mBtZ4Q+BOzTjJ45aROL4IxU9Wd7Gf0xDiTM=
+	b=dpaklglLp82WPChR0JFUt/PysolOK0N9CIy1w1bjrrvxW0pkEYHu35diRsQ8D88Bp
+	 WSmICIBh4VRo8YExz3r+kwroGX9e0RrriRzt1S1zsvsO3e8KI6cDMj5K/p5NEpjIPv
+	 7jeELLv6AWzsZnxUwKUcjlKV9AmfvZA3XhZf4of4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a8b046e462915c65b10b@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@idosch.org>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 038/403] net: vlan: fix VLAN 0 refcount imbalance of toggling filtering during runtime
-Date: Tue, 26 Aug 2025 13:06:04 +0200
-Message-ID: <20250826110906.871187994@linuxfoundation.org>
+Subject: [PATCH 5.4 039/403] net/sched: Return NULL when htb_lookup_leaf encounters an empty rbtree
+Date: Tue, 26 Aug 2025 13:06:05 +0200
+Message-ID: <20250826110906.898579547@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -54,203 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: William Liu <will@willsroot.io>
 
-[ Upstream commit 579d4f9ca9a9a605184a9b162355f6ba131f678d ]
+[ Upstream commit 0e1d5d9b5c5966e2e42e298670808590db5ed628 ]
 
-Assuming the "rx-vlan-filter" feature is enabled on a net device, the
-8021q module will automatically add or remove VLAN 0 when the net device
-is put administratively up or down, respectively. There are a couple of
-problems with the above scheme.
+htb_lookup_leaf has a BUG_ON that can trigger with the following:
 
-The first problem is a memory leak that can happen if the "rx-vlan-filter"
-feature is disabled while the device is running:
+tc qdisc del dev lo root
+tc qdisc add dev lo root handle 1: htb default 1
+tc class add dev lo parent 1: classid 1:1 htb rate 64bit
+tc qdisc add dev lo parent 1:1 handle 2: netem
+tc qdisc add dev lo parent 2:1 handle 3: blackhole
+ping -I lo -c1 -W0.001 127.0.0.1
 
- # ip link add bond1 up type bond mode 0
- # ethtool -K bond1 rx-vlan-filter off
- # ip link del dev bond1
+The root cause is the following:
 
-When the device is put administratively down the "rx-vlan-filter"
-feature is disabled, so the 8021q module will not remove VLAN 0 and the
-memory will be leaked [1].
+1. htb_dequeue calls htb_dequeue_tree which calls the dequeue handler on
+   the selected leaf qdisc
+2. netem_dequeue calls enqueue on the child qdisc
+3. blackhole_enqueue drops the packet and returns a value that is not
+   just NET_XMIT_SUCCESS
+4. Because of this, netem_dequeue calls qdisc_tree_reduce_backlog, and
+   since qlen is now 0, it calls htb_qlen_notify -> htb_deactivate ->
+   htb_deactiviate_prios -> htb_remove_class_from_row -> htb_safe_rb_erase
+5. As this is the only class in the selected hprio rbtree,
+   __rb_change_child in __rb_erase_augmented sets the rb_root pointer to
+   NULL
+6. Because blackhole_dequeue returns NULL, netem_dequeue returns NULL,
+   which causes htb_dequeue_tree to call htb_lookup_leaf with the same
+   hprio rbtree, and fail the BUG_ON
 
-Another problem that can happen is that the kernel can automatically
-delete VLAN 0 when the device is put administratively down despite not
-adding it when the device was put administratively up since during that
-time the "rx-vlan-filter" feature was disabled. null-ptr-unref or
-bug_on[2] will be triggered by unregister_vlan_dev() for refcount
-imbalance if toggling filtering during runtime:
+The function graph for this scenario is shown here:
+ 0)               |  htb_enqueue() {
+ 0) + 13.635 us   |    netem_enqueue();
+ 0)   4.719 us    |    htb_activate_prios();
+ 0) # 2249.199 us |  }
+ 0)               |  htb_dequeue() {
+ 0)   2.355 us    |    htb_lookup_leaf();
+ 0)               |    netem_dequeue() {
+ 0) + 11.061 us   |      blackhole_enqueue();
+ 0)               |      qdisc_tree_reduce_backlog() {
+ 0)               |        qdisc_lookup_rcu() {
+ 0)   1.873 us    |          qdisc_match_from_root();
+ 0)   6.292 us    |        }
+ 0)   1.894 us    |        htb_search();
+ 0)               |        htb_qlen_notify() {
+ 0)   2.655 us    |          htb_deactivate_prios();
+ 0)   6.933 us    |        }
+ 0) + 25.227 us   |      }
+ 0)   1.983 us    |      blackhole_dequeue();
+ 0) + 86.553 us   |    }
+ 0) # 2932.761 us |    qdisc_warn_nonwc();
+ 0)               |    htb_lookup_leaf() {
+ 0)               |      BUG_ON();
+ ------------------------------------------
 
-$ ip link add bond0 type bond mode 0
-$ ip link add link bond0 name vlan0 type vlan id 0 protocol 802.1q
-$ ethtool -K bond0 rx-vlan-filter off
-$ ifconfig bond0 up
-$ ethtool -K bond0 rx-vlan-filter on
-$ ifconfig bond0 down
-$ ip link del vlan0
+The full original bug report can be seen here [1].
 
-Root cause is as below:
-step1: add vlan0 for real_dev, such as bond, team.
-register_vlan_dev
-    vlan_vid_add(real_dev,htons(ETH_P_8021Q),0) //refcnt=1
-step2: disable vlan filter feature and enable real_dev
-step3: change filter from 0 to 1
-vlan_device_event
-    vlan_filter_push_vids
-        ndo_vlan_rx_add_vid //No refcnt added to real_dev vlan0
-step4: real_dev down
-vlan_device_event
-    vlan_vid_del(dev, htons(ETH_P_8021Q), 0); //refcnt=0
-        vlan_info_rcu_free //free vlan0
-step5: delete vlan0
-unregister_vlan_dev
-    BUG_ON(!vlan_info); //vlan_info is null
+We can fix this just by returning NULL instead of the BUG_ON,
+as htb_dequeue_tree returns NULL when htb_lookup_leaf returns
+NULL.
 
-Fix both problems by noting in the VLAN info whether VLAN 0 was
-automatically added upon NETDEV_UP and based on that decide whether it
-should be deleted upon NETDEV_DOWN, regardless of the state of the
-"rx-vlan-filter" feature.
+[1] https://lore.kernel.org/netdev/pF5XOOIim0IuEfhI-SOxTgRvNoDwuux7UHKnE_Y5-zVd4wmGvNk2ceHjKb8ORnzw0cGwfmVu42g9dL7XyJLf1NEzaztboTWcm0Ogxuojoeo=@willsroot.io/
 
-[1]
-unreferenced object 0xffff8880068e3100 (size 256):
-  comm "ip", pid 384, jiffies 4296130254
-  hex dump (first 32 bytes):
-    00 20 30 0d 80 88 ff ff 00 00 00 00 00 00 00 00  . 0.............
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 81ce31fa):
-    __kmalloc_cache_noprof+0x2b5/0x340
-    vlan_vid_add+0x434/0x940
-    vlan_device_event.cold+0x75/0xa8
-    notifier_call_chain+0xca/0x150
-    __dev_notify_flags+0xe3/0x250
-    rtnl_configure_link+0x193/0x260
-    rtnl_newlink_create+0x383/0x8e0
-    __rtnl_newlink+0x22c/0xa40
-    rtnl_newlink+0x627/0xb00
-    rtnetlink_rcv_msg+0x6fb/0xb70
-    netlink_rcv_skb+0x11f/0x350
-    netlink_unicast+0x426/0x710
-    netlink_sendmsg+0x75a/0xc20
-    __sock_sendmsg+0xc1/0x150
-    ____sys_sendmsg+0x5aa/0x7b0
-    ___sys_sendmsg+0xfc/0x180
-
-[2]
-kernel BUG at net/8021q/vlan.c:99!
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 0 UID: 0 PID: 382 Comm: ip Not tainted 6.16.0-rc3 #61 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:unregister_vlan_dev (net/8021q/vlan.c:99 (discriminator 1))
-RSP: 0018:ffff88810badf310 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff88810da84000 RCX: ffffffffb47ceb9a
-RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff88810e8b43c8
-RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff6cefe80
-R10: ffffffffb677f407 R11: ffff88810badf3c0 R12: ffff88810e8b4000
-R13: 0000000000000000 R14: ffff88810642a5c0 R15: 000000000000017e
-FS:  00007f1ff68c20c0(0000) GS:ffff888163a24000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f1ff5dad240 CR3: 0000000107e56000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
-rtnl_dellink (net/core/rtnetlink.c:3511 net/core/rtnetlink.c:3553)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:6945)
-netlink_rcv_skb (net/netlink/af_netlink.c:2535)
-netlink_unicast (net/netlink/af_netlink.c:1314 net/netlink/af_netlink.c:1339)
-netlink_sendmsg (net/netlink/af_netlink.c:1883)
-____sys_sendmsg (net/socket.c:712 net/socket.c:727 net/socket.c:2566)
-___sys_sendmsg (net/socket.c:2622)
-__sys_sendmsg (net/socket.c:2652)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-
-Fixes: ad1afb003939 ("vlan_dev: VLAN 0 should be treated as "no vlan tag" (802.1p packet)")
-Reported-by: syzbot+a8b046e462915c65b10b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a8b046e462915c65b10b
-Suggested-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250716034504.2285203-2-dongchenchen2@huawei.com
+Fixes: 512bb43eb542 ("pkt_sched: sch_htb: Optimize WARN_ONs in htb_dequeue_tree() etc.")
+Signed-off-by: William Liu <will@willsroot.io>
+Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
+Link: https://patch.msgid.link/20250717022816.221364-1-will@willsroot.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan.c | 42 +++++++++++++++++++++++++++++++++---------
- net/8021q/vlan.h |  1 +
- 2 files changed, 34 insertions(+), 9 deletions(-)
+ net/sched/sch_htb.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
-index c75fca3eed49e..14244445f944a 100644
---- a/net/8021q/vlan.c
-+++ b/net/8021q/vlan.c
-@@ -354,6 +354,35 @@ static int __vlan_device_event(struct net_device *dev, unsigned long event)
- 	return err;
- }
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -776,7 +776,9 @@ static struct htb_class *htb_lookup_leaf
+ 		u32 *pid;
+ 	} stk[TC_HTB_MAXDEPTH], *sp = stk;
  
-+static void vlan_vid0_add(struct net_device *dev)
-+{
-+	struct vlan_info *vlan_info;
-+	int err;
+-	BUG_ON(!hprio->row.rb_node);
++	if (unlikely(!hprio->row.rb_node))
++		return NULL;
 +
-+	if (!(dev->features & NETIF_F_HW_VLAN_CTAG_FILTER))
-+		return;
-+
-+	pr_info("adding VLAN 0 to HW filter on device %s\n", dev->name);
-+
-+	err = vlan_vid_add(dev, htons(ETH_P_8021Q), 0);
-+	if (err)
-+		return;
-+
-+	vlan_info = rtnl_dereference(dev->vlan_info);
-+	vlan_info->auto_vid0 = true;
-+}
-+
-+static void vlan_vid0_del(struct net_device *dev)
-+{
-+	struct vlan_info *vlan_info = rtnl_dereference(dev->vlan_info);
-+
-+	if (!vlan_info || !vlan_info->auto_vid0)
-+		return;
-+
-+	vlan_info->auto_vid0 = false;
-+	vlan_vid_del(dev, htons(ETH_P_8021Q), 0);
-+}
-+
- static int vlan_device_event(struct notifier_block *unused, unsigned long event,
- 			     void *ptr)
- {
-@@ -375,15 +404,10 @@ static int vlan_device_event(struct notifier_block *unused, unsigned long event,
- 			return notifier_from_errno(err);
- 	}
- 
--	if ((event == NETDEV_UP) &&
--	    (dev->features & NETIF_F_HW_VLAN_CTAG_FILTER)) {
--		pr_info("adding VLAN 0 to HW filter on device %s\n",
--			dev->name);
--		vlan_vid_add(dev, htons(ETH_P_8021Q), 0);
--	}
--	if (event == NETDEV_DOWN &&
--	    (dev->features & NETIF_F_HW_VLAN_CTAG_FILTER))
--		vlan_vid_del(dev, htons(ETH_P_8021Q), 0);
-+	if (event == NETDEV_UP)
-+		vlan_vid0_add(dev);
-+	else if (event == NETDEV_DOWN)
-+		vlan_vid0_del(dev);
- 
- 	vlan_info = rtnl_dereference(dev->vlan_info);
- 	if (!vlan_info)
-diff --git a/net/8021q/vlan.h b/net/8021q/vlan.h
-index 6728d15939295..f0d78018b0d23 100644
---- a/net/8021q/vlan.h
-+++ b/net/8021q/vlan.h
-@@ -33,6 +33,7 @@ struct vlan_info {
- 	struct vlan_group	grp;
- 	struct list_head	vid_list;
- 	unsigned int		nr_vids;
-+	bool			auto_vid0;
- 	struct rcu_head		rcu;
- };
- 
--- 
-2.39.5
-
+ 	sp->root = hprio->row.rb_node;
+ 	sp->pptr = &hprio->ptr;
+ 	sp->pid = &hprio->last_ptr_id;
 
 
