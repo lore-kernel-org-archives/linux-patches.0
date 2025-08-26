@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777EE2AE68;
-	Tue, 26 Aug 2025 14:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F94280CC9;
+	Tue, 26 Aug 2025 14:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219294; cv=none; b=UNxQOx96WqFyUjZKypgLO9iikZ4nrnLQbIWGO1zNUZgaEExOGKpODXcoYBizo6J4g+EeUG2G2TNmLcoz6KDbNU0FaFURDNkejVl5FPMpnDoBr2RjV9EEvbL2kUWMZ7mgSEvlsTzQU6TE+y1Un1A6M4bAdwpFGdho0hcCI0AwU38=
+	t=1756219297; cv=none; b=noK8jFLlRT6X+4ukhd/cKKzX49cYF1ncc3VkLP9oyQ1fnD3rh39tjS7cLxUtpi8dkKt1uDYP09M1/6xCOeGwrIdp8m6hphKMvh0lF4nqvWIh9L6Zi6ZklSImtq582ticTXjjJPoYiNjAiINtu3waQcDypoSr+mUboRRRpp2/D6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219294; c=relaxed/simple;
-	bh=4yA9JNC+fUicaPcbh1feMTMCLXzAYJSzldel2PsxSyU=;
+	s=arc-20240116; t=1756219297; c=relaxed/simple;
+	bh=ZO/QK1a9EvOT5zkinLRjXWeEpGFVcs/lDTMqfO+Rab4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3ymwAwVwhhJGEf3NcFcKyFzDGxIz+GWGbI/p/wmGmBu/zHi4+wy04ysFIhnfEbnpjUdp7mhYoTiNkI9Qh34e7NNPRlHkv6t/fiMA+f3cPRfeWPEBTdj+0UohbhsYz1JZRZc1TXqXzMcjQFncyx9JqNmgjja3D00oPc8t+oTi0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFhkMyw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hyarffEsBPLTVXRM7Qezj3rByqS+rWohEhSAcMMLhuAvf9OckUxsaxWhsQcmCBCyAW+3oh/LVtnS3xBs/TsMEjBaNEKcTXO92h96RWJJUyqvT2mUmTzmTmmBRgwWC8zw4s1lODKAtbDTROVoo6VDcTotwoSui5+4cxoTadt/Z+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vC6ibowQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFhkMyw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A135C4CEF1;
-	Tue, 26 Aug 2025 14:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vC6ibowQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DCCC4CEF1;
+	Tue, 26 Aug 2025 14:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219294;
-	bh=4yA9JNC+fUicaPcbh1feMTMCLXzAYJSzldel2PsxSyU=;
+	s=korg; t=1756219296;
+	bh=ZO/QK1a9EvOT5zkinLRjXWeEpGFVcs/lDTMqfO+Rab4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFhkMyw+vM69CCFeHCU1q1WNtWqcuJyB5Q7Rj9ULftcmPcJKNINdwMWTaKRUqlXsd
-	 IWLScAH/gbVyZTE3TlKrLuSo7pUSpNMqqnDtQ772uYtTihY5VWK7whvtriW/vKtzwy
-	 En+Afa1fv658Rs2iEDGKh9KbMQRQUB9KjzLBAf9o=
+	b=vC6ibowQohNUu5WPKUdaak+A/iERb+7pm9fMJ3A06Pwdck3v4/vWcy6YFPcBJ1ssv
+	 QiQ0NcHVyigR8qTDijAtYMLzVYv2Cq7gGAw8VABbxzCZCJDv8Lbi7lpoNGNO8oLQKY
+	 kYVC0DS0hwUxBSuSW2hbyJ9zAmbvc66gtCArog1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rini <trini@konsulko.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.4 327/403] kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS
-Date: Tue, 26 Aug 2025 13:10:53 +0200
-Message-ID: <20250826110915.856476186@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.4 328/403] kbuild: Add KBUILD_CPPFLAGS to as-option invocation
+Date: Tue, 26 Aug 2025 13:10:54 +0200
+Message-ID: <20250826110915.889248637@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,53 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit feb843a469fb0ab00d2d23cfb9bcc379791011bb upstream.
+commit 43fc0a99906e04792786edf8534d8d58d1e9de0c upstream.
 
-When preprocessing arch/*/kernel/vmlinux.lds.S, the target triple is
-not passed to $(CPP) because we add it only to KBUILD_{C,A}FLAGS.
+After commit feb843a469fb ("kbuild: add $(CLANG_FLAGS) to
+KBUILD_CPPFLAGS"), there is an error while building certain PowerPC
+assembly files with clang:
 
-As a result, the linker script is preprocessed with predefined macros
-for the build host instead of the target.
+  arch/powerpc/lib/copypage_power7.S: Assembler messages:
+  arch/powerpc/lib/copypage_power7.S:34: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:35: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:37: Error: junk at end of line: `0b01000'
+  arch/powerpc/lib/copypage_power7.S:38: Error: junk at end of line: `0b01010'
+  arch/powerpc/lib/copypage_power7.S:40: Error: junk at end of line: `0b01010'
+  clang: error: assembler command failed with exit code 1 (use -v to see invocation)
 
-Assuming you use an x86 build machine, compare the following:
+as-option only uses KBUILD_AFLAGS, so after removing CLANG_FLAGS from
+KBUILD_AFLAGS, there is no more '--target=' or '--prefix=' flags. As a
+result of those missing flags, the host target
+will be tested during as-option calls and likely fail, meaning necessary
+flags may not get added when building assembly files, resulting in
+errors like seen above.
 
- $ clang -dM -E -x c /dev/null
- $ clang -dM -E -x c /dev/null -target aarch64-linux-gnu
+Add KBUILD_CPPFLAGS to as-option invocations to clear up the errors.
+This should have been done in commit d5c8d6e0fa61 ("kbuild: Update
+assembler calls to use proper flags and language target"), which
+switched from using the assembler target to the assembler-with-cpp
+target, so flags that affect preprocessing are passed along in all
+relevant tests. as-option now mirrors cc-option.
 
-There is no actual problem presumably because our linker scripts do not
-rely on such predefined macros, but it is better to define correct ones.
-
-Move $(CLANG_FLAGS) to KBUILD_CPPFLAGS, so that all *.c, *.S, *.lds.S
-will be processed with the proper target triple.
-
-[Note]
-After the patch submission, we got an actual problem that needs this
-commit. (CBL issue 1859)
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1859
-Reported-by: Tom Rini <trini@konsulko.com>
+Fixes: feb843a469fb ("kbuild: add $(CLANG_FLAGS) to KBUILD_CPPFLAGS")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYs=koW9WardsTtora+nMgLR3raHz-LSLr58tgX4T5Mxag@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ scripts/Kbuild.include |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -568,8 +568,7 @@ ifneq ($(LLVM_IAS),1)
- CLANG_FLAGS	+= -no-integrated-as
- endif
- CLANG_FLAGS	+= -Werror=unknown-warning-option
--KBUILD_CFLAGS	+= $(CLANG_FLAGS)
--KBUILD_AFLAGS	+= $(CLANG_FLAGS)
-+KBUILD_CPPFLAGS	+= $(CLANG_FLAGS)
- export CLANG_FLAGS
- endif
+--- a/scripts/Kbuild.include
++++ b/scripts/Kbuild.include
+@@ -102,7 +102,7 @@ try-run = $(shell set -e;		\
+ # Usage: aflags-y += $(call as-option,-Wa$(comma)-isa=foo,)
  
+ as-option = $(call try-run,\
+-	$(CC) -Werror $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
++	$(CC) -Werror $(KBUILD_CPPFLAGS) $(KBUILD_AFLAGS) $(1) -c -x assembler-with-cpp /dev/null -o "$$TMP",$(1),$(2))
+ 
+ # as-instr
+ # Usage: aflags-y += $(call as-instr,instr,option1,option2)
 
 
