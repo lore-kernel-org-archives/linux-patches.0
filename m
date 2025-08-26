@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954BD27EFE7;
-	Tue, 26 Aug 2025 13:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B06F221290;
+	Tue, 26 Aug 2025 13:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215744; cv=none; b=kTX06lMWlhMUFXaOdRZOTA4E854XlbAQ0Ce+9sk9BbGNn/3vX/SXBtdrzxPEd2/FW7mwkfGKTC4eGB6JkvcQTj89q04IZUoiYDvIX1BAK0LTT/7YnvUxKFLeTrXX2FioKAfJxpxFRhmLWB/xFjp0IFGV7k6RtlDPKKvmjweewOA=
+	t=1756215747; cv=none; b=F7LYS5NDxrhPYjE9LDtcwAX+jbeLk/Rn28CFjbDlwlP+/hIQqf611yqYu3zwyJ9JSXBrWQUh8tOf0OUKKWf6UamOAjz3u9VWIl5mOb74MYWLnj2Sr1fucZN3bKSACRJcaZgtzBSF9R3VTeU4r0vixqnDAsu2+ygVUrQDUxZCkIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215744; c=relaxed/simple;
-	bh=jUgHxUKwtL/wDA+u9Rh+d9EUqBhVy5Zmdtlga3hdPtA=;
+	s=arc-20240116; t=1756215747; c=relaxed/simple;
+	bh=PDK6Eo5Kh+t3187ubBDmyW67tp/tpXz5mNuGE7HBp+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLMksptaiPIJ1zRhUaMU5j4C7q3L+1j1SYGJjDfKRE2UEht2INpVHpmUXINpLlE2Olgt8+EK9eSnHCgKbj80amjGQbG2nys8c9QnkuBU4kORj/VCGBAwT1GbeHWPRZqPjMFHmdvRJR23jtNw+kBppRNWoshMa6N/DmEVdQCVVmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YW3lDOWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7pE498tRVb8v9JeP73TS5XOmHsgHEh7kJriIcSzEDTiE/MBxiDP5ilr1KzczVfEEV34R7/Gsw/iv6omwkHGHyXasweZwKz1YAv8mf5Qj51hnwh8A5z6d5qnp5l11DI3NEhym9Rz1/zVu2Gquscv3oiUaguU9qt1oXLqiV/O9PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PO79JOx9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW3lDOWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28783C4CEF1;
-	Tue, 26 Aug 2025 13:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PO79JOx9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B737BC113CF;
+	Tue, 26 Aug 2025 13:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215744;
-	bh=jUgHxUKwtL/wDA+u9Rh+d9EUqBhVy5Zmdtlga3hdPtA=;
+	s=korg; t=1756215747;
+	bh=PDK6Eo5Kh+t3187ubBDmyW67tp/tpXz5mNuGE7HBp+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YW3lDOWOM8c+XVQ4yiRjIXQPrdcAWfrpNJbFdGwmeieTEwnvjNg9wYg6MWVIHB/1q
-	 bZXlZKujTi776RqNKg0KL/wf6FgWqJ0uXJosqaoYRrD5CEldskMXsnjSXFRiAgGeMd
-	 oGYAgnTAtKv02yGOJPso9zp0wgEZ3sm0EQUmO/f8=
+	b=PO79JOx9bbmD2k7jEleKFF29at7GnKkqa2meE6aKU3xJnxrIQIUBHt4Id+xz1xpyS
+	 JIrSYsDv/S7PVSP2EQeNPuENEEGwvtYhB76Y5EEjEN/6NiFt0USfJWN4e0MCiJ3FBH
+	 AHBNSaiHPPsmYsFk6G7dM754Uvklb8PlYFJ9xUYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Korsnes <johan.korsnes@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/644] arch: powerpc: defconfig: Drop obsolete CONFIG_NET_CLS_TCINDEX
-Date: Tue, 26 Aug 2025 13:04:00 +0200
-Message-ID: <20250826110950.176829160@linuxfoundation.org>
+Subject: [PATCH 5.15 150/644] um: rtc: Avoid shadowing err in uml_rtc_start()
+Date: Tue, 26 Aug 2025 13:04:01 +0200
+Message-ID: <20250826110950.201176840@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Korsnes <johan.korsnes@gmail.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 75cd37c5f28b85979fd5a65174013010f6b78f27 ]
+[ Upstream commit 4c916e3b224a02019b3cc3983a15f32bfd9a22df ]
 
-This option was removed from the Kconfig in commit
-8c710f75256b ("net/sched: Retire tcindex classifier") but it was not
-removed from the defconfigs.
+Remove the declaration of 'err' inside the 'if (timetravel)' block,
+as it would otherwise be unavailable outside that block, potentially
+leading to uml_rtc_start() returning an uninitialized value.
 
-Fixes: 8c710f75256b ("net/sched: Retire tcindex classifier")
-Signed-off-by: Johan Korsnes <johan.korsnes@gmail.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250323191116.113482-1-johan.korsnes@gmail.com
+Fixes: dde8b58d5127 ("um: add a pseudo RTC")
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20250708090403.1067440-5-tiwei.bie@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/configs/ppc6xx_defconfig | 1 -
- 1 file changed, 1 deletion(-)
+ arch/um/drivers/rtc_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/configs/ppc6xx_defconfig b/arch/powerpc/configs/ppc6xx_defconfig
-index 7f7e7add44e7..cdaf8469d484 100644
---- a/arch/powerpc/configs/ppc6xx_defconfig
-+++ b/arch/powerpc/configs/ppc6xx_defconfig
-@@ -263,7 +263,6 @@ CONFIG_NET_SCH_DSMARK=m
- CONFIG_NET_SCH_NETEM=m
- CONFIG_NET_SCH_INGRESS=m
- CONFIG_NET_CLS_BASIC=m
--CONFIG_NET_CLS_TCINDEX=m
- CONFIG_NET_CLS_ROUTE4=m
- CONFIG_NET_CLS_FW=m
- CONFIG_NET_CLS_U32=m
+diff --git a/arch/um/drivers/rtc_user.c b/arch/um/drivers/rtc_user.c
+index 7c3cec4c68cf..006a5a164ea9 100644
+--- a/arch/um/drivers/rtc_user.c
++++ b/arch/um/drivers/rtc_user.c
+@@ -28,7 +28,7 @@ int uml_rtc_start(bool timetravel)
+ 	int err;
+ 
+ 	if (timetravel) {
+-		int err = os_pipe(uml_rtc_irq_fds, 1, 1);
++		err = os_pipe(uml_rtc_irq_fds, 1, 1);
+ 		if (err)
+ 			goto fail;
+ 	} else {
 -- 
 2.39.5
 
