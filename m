@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9E311187;
-	Tue, 26 Aug 2025 12:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBA172602;
+	Tue, 26 Aug 2025 12:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212612; cv=none; b=ahN7hTmKZgDI8WgT44gcx2vBhvvxC2WmfoIn2nKs6mfaWB4bz7YSvpTVkJNaVkIbBQkbzYW/5LVgD0sYd23jsgEzyGPejDg6w+E5uu2getdzN1NIcKDceWWIQs2nWr/WFX+/YbUyaHiH4ROTeW9cIpTR84i38emEMw590Hsby7k=
+	t=1756212615; cv=none; b=MQjmRqZXwawbvXXIh79sLOgXJRze2et1s+l6SHkWncUkQWL7/Gj2pSInLYT05Gf7FH3ouoFGegzKN8WyDOBi/tnHuq6UeAVmWw1Pueb7hYFMjM8BnY0w1Msu1mLlQLHBVvXOirZZSYI/otpSM8hozJfg8a96Kq7on2S+wpe9228=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212612; c=relaxed/simple;
-	bh=RzgR4+FXO2o3jIJR9KdxHOJtIn/s9GZUj5EKxvK/urQ=;
+	s=arc-20240116; t=1756212615; c=relaxed/simple;
+	bh=Ta13OrJ0tShf94nQ7FQHW2ByMrbvvtXYuerjIt14YPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhgFpBo68grB2lFN0pp9k8gzpz6fN9QpY8KTDLRjLEE2F6FwZ8jgMiWvbIAf2UFPEVIzFwByHDVY50MOHA3Bwet3GQ1CUApR1D8y4+R6BYiFunuw2tlqur9Bpr78395qpmjAF01lJIN2tVWj0fQrdZzA03UtDEGlZ3dmC0TREHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKRQyNgR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3lwGJmBCwREa7KnqoBt3sbLqjQNGGiLbjagqOU12uMOQsIREylxw7sbFsv++JmFw7QFhUOfq5PtBd4cThyRH1U0sBubEVpJr4B13HXZNFTeb+grBSn6nq51hH/K39oRR97jEZThme76UysNuoXTVZEFvENPzGbYPBipjJvfmcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmSLZNVp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKRQyNgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB59C116D0;
-	Tue, 26 Aug 2025 12:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmSLZNVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FADDC116B1;
+	Tue, 26 Aug 2025 12:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212612;
-	bh=RzgR4+FXO2o3jIJR9KdxHOJtIn/s9GZUj5EKxvK/urQ=;
+	s=korg; t=1756212614;
+	bh=Ta13OrJ0tShf94nQ7FQHW2ByMrbvvtXYuerjIt14YPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKRQyNgRRDkrBRdqf2HsOV0heNBiv1KGqzrP9ksTFfqVyE0lJrUrlEk5995fI9uA2
-	 QkVBa+QOCyPWywucQNmg25qE7Zec7HADxJ9uFXuaUierW5jTdMMzyG7w7HxLr1hLss
-	 mBoyAMKE5em3D7cQdzDCsoMAF0vd3WIPQKZk+J+U=
+	b=fmSLZNVpALYpSNy5L613XkWG3UH2M2+UYt4BPAJ0QyIdGk55DZfdfJtW9pI4afc4W
+	 5nNK6eq5Ssfc32jqwqBIm743jsPR+0WAifhIESI/G1aM8zfVzg+hruf7MbCsoZ26AL
+	 4sT/yA7cUO6qvULNT3k86EZ0OsvwZ4A6pjMENN2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Covelli <doug.covelli@broadcom.com>,
-	Jim Mattson <jmattson@google.com>,
+	Chao Gao <chao.gao@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/587] KVM: SVM: Set RFLAGS.IF=1 in C code, to get VMRUN out of the STI shadow
-Date: Tue, 26 Aug 2025 13:03:05 +0200
-Message-ID: <20250826110953.870349371@linuxfoundation.org>
+Subject: [PATCH 6.6 037/587] KVM: x86: Plumb in the vCPU to kvm_x86_ops.hwapic_isr_update()
+Date: Tue, 26 Aug 2025 13:03:06 +0200
+Message-ID: <20250826110953.893876738@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -54,118 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit be45bc4eff33d9a7dae84a2150f242a91a617402 ]
+[ Upstream commit 76bce9f10162cd4b36ac0b7889649b22baf70ebd ]
 
-Enable/disable local IRQs, i.e. set/clear RFLAGS.IF, in the common
-svm_vcpu_enter_exit() just after/before guest_state_{enter,exit}_irqoff()
-so that VMRUN is not executed in an STI shadow.  AMD CPUs have a quirk
-(some would say "bug"), where the STI shadow bleeds into the guest's
-intr_state field if a #VMEXIT occurs during injection of an event, i.e. if
-the VMRUN doesn't complete before the subsequent #VMEXIT.
+Pass the target vCPU to the hwapic_isr_update() vendor hook so that VMX
+can defer the update until after nested VM-Exit if an EOI for L1's vAPIC
+occurs while L2 is active.
 
-The spurious "interrupts masked" state is relatively benign, as it only
-occurs during event injection and is transient.  Because KVM is already
-injecting an event, the guest can't be in HLT, and if KVM is querying IRQ
-blocking for injection, then KVM would need to force an immediate exit
-anyways since injecting multiple events is impossible.
+Note, commit d39850f57d21 ("KVM: x86: Drop @vcpu parameter from
+kvm_x86_ops.hwapic_isr_update()") removed the parameter with the
+justification that doing so "allows for a decent amount of (future)
+cleanup in the APIC code", but it's not at all clear what cleanup was
+intended, or if it was ever realized.
 
-However, because KVM copies int_state verbatim from vmcb02 to vmcb12, the
-spurious STI shadow is visible to L1 when running a nested VM, which can
-trip sanity checks, e.g. in VMware's VMM.
+No functional change intended.
 
-Hoist the STI+CLI all the way to C code, as the aforementioned calls to
-guest_state_{enter,exit}_irqoff() already inform lockdep that IRQs are
-enabled/disabled, and taking a fault on VMRUN with RFLAGS.IF=1 is already
-possible.  I.e. if there's kernel code that is confused by running with
-RFLAGS.IF=1, then it's already a problem.  In practice, since GIF=0 also
-blocks NMIs, the only change in exposure to non-KVM code (relative to
-surrounding VMRUN with STI+CLI) is exception handling code, and except for
-the kvm_rebooting=1 case, all exception in the core VM-Enter/VM-Exit path
-are fatal.
-
-Use the "raw" variants to enable/disable IRQs to avoid tracing in the
-"no instrumentation" code; the guest state helpers also take care of
-tracing IRQ state.
-
-Oppurtunstically document why KVM needs to do STI in the first place.
-
-Reported-by: Doug Covelli <doug.covelli@broadcom.com>
-Closes: https://lore.kernel.org/all/CADH9ctBs1YPmE4aCfGPNBwA10cA8RuAk2gO7542DjMZgs4uzJQ@mail.gmail.com
-Fixes: f14eec0a3203 ("KVM: SVM: move more vmentry code to assembly")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20250224165442.2338294-2-seanjc@google.com
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Tested-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20241128000010.4051275-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[sean: resolve minor syntatic conflict in __svm_sev_es_vcpu_run()]
+[sean: account for lack of kvm_x86_call(), drop vmx/x86_ops.h change]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c     | 14 ++++++++++++++
- arch/x86/kvm/svm/vmenter.S |  9 +--------
- 2 files changed, 15 insertions(+), 8 deletions(-)
+ arch/x86/include/asm/kvm_host.h | 2 +-
+ arch/x86/kvm/lapic.c            | 8 ++++----
+ arch/x86/kvm/vmx/vmx.c          | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 86c50747e158..abbb84ddfe02 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4170,6 +4170,18 @@ static noinstr void svm_vcpu_enter_exit(struct kvm_vcpu *vcpu, bool spec_ctrl_in
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 5dfb8cc9616e..5fc89d255550 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1657,7 +1657,7 @@ struct kvm_x86_ops {
+ 	bool allow_apicv_in_x2apic_without_x2apic_virtualization;
+ 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
+ 	void (*hwapic_irr_update)(struct kvm_vcpu *vcpu, int max_irr);
+-	void (*hwapic_isr_update)(int isr);
++	void (*hwapic_isr_update)(struct kvm_vcpu *vcpu, int isr);
+ 	bool (*guest_apic_has_interrupt)(struct kvm_vcpu *vcpu);
+ 	void (*load_eoi_exitmap)(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
+ 	void (*set_virtual_apic_mode)(struct kvm_vcpu *vcpu);
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 66c7f2367bb3..cbf85a1ffb74 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -750,7 +750,7 @@ static inline void apic_set_isr(int vec, struct kvm_lapic *apic)
+ 	 * just set SVI.
+ 	 */
+ 	if (unlikely(apic->apicv_active))
+-		static_call_cond(kvm_x86_hwapic_isr_update)(vec);
++		static_call_cond(kvm_x86_hwapic_isr_update)(apic->vcpu, vec);
+ 	else {
+ 		++apic->isr_count;
+ 		BUG_ON(apic->isr_count > MAX_APIC_VECTOR);
+@@ -795,7 +795,7 @@ static inline void apic_clear_isr(int vec, struct kvm_lapic *apic)
+ 	 * and must be left alone.
+ 	 */
+ 	if (unlikely(apic->apicv_active))
+-		static_call_cond(kvm_x86_hwapic_isr_update)(apic_find_highest_isr(apic));
++		static_call_cond(kvm_x86_hwapic_isr_update)(apic->vcpu, apic_find_highest_isr(apic));
+ 	else {
+ 		--apic->isr_count;
+ 		BUG_ON(apic->isr_count < 0);
+@@ -2772,7 +2772,7 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
+ 	if (apic->apicv_active) {
+ 		static_call_cond(kvm_x86_apicv_post_state_restore)(vcpu);
+ 		static_call_cond(kvm_x86_hwapic_irr_update)(vcpu, -1);
+-		static_call_cond(kvm_x86_hwapic_isr_update)(-1);
++		static_call_cond(kvm_x86_hwapic_isr_update)(vcpu, -1);
+ 	}
  
- 	guest_state_enter_irqoff();
- 
-+	/*
-+	 * Set RFLAGS.IF prior to VMRUN, as the host's RFLAGS.IF at the time of
-+	 * VMRUN controls whether or not physical IRQs are masked (KVM always
-+	 * runs with V_INTR_MASKING_MASK).  Toggle RFLAGS.IF here to avoid the
-+	 * temptation to do STI+VMRUN+CLI, as AMD CPUs bleed the STI shadow
-+	 * into guest state if delivery of an event during VMRUN triggers a
-+	 * #VMEXIT, and the guest_state transitions already tell lockdep that
-+	 * IRQs are being enabled/disabled.  Note!  GIF=0 for the entirety of
-+	 * this path, so IRQs aren't actually unmasked while running host code.
-+	 */
-+	raw_local_irq_enable();
-+
- 	amd_clear_divider();
- 
- 	if (sev_es_guest(vcpu->kvm))
-@@ -4177,6 +4189,8 @@ static noinstr void svm_vcpu_enter_exit(struct kvm_vcpu *vcpu, bool spec_ctrl_in
- 	else
- 		__svm_vcpu_run(svm, spec_ctrl_intercepted);
- 
-+	raw_local_irq_disable();
-+
- 	guest_state_exit_irqoff();
+ 	vcpu->arch.apic_arb_prio = 0;
+@@ -3072,7 +3072,7 @@ int kvm_apic_set_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s)
+ 	if (apic->apicv_active) {
+ 		static_call_cond(kvm_x86_apicv_post_state_restore)(vcpu);
+ 		static_call_cond(kvm_x86_hwapic_irr_update)(vcpu, apic_find_highest_irr(apic));
+-		static_call_cond(kvm_x86_hwapic_isr_update)(apic_find_highest_isr(apic));
++		static_call_cond(kvm_x86_hwapic_isr_update)(vcpu, apic_find_highest_isr(apic));
+ 	}
+ 	kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 	if (ioapic_in_kernel(vcpu->kvm))
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index e53620e18925..cde01eb1f5e3 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6834,7 +6834,7 @@ static void vmx_set_apic_access_page_addr(struct kvm_vcpu *vcpu)
+ 	kvm_release_pfn_clean(pfn);
  }
  
-diff --git a/arch/x86/kvm/svm/vmenter.S b/arch/x86/kvm/svm/vmenter.S
-index 56fe34d9397f..81ecb9e1101d 100644
---- a/arch/x86/kvm/svm/vmenter.S
-+++ b/arch/x86/kvm/svm/vmenter.S
-@@ -171,12 +171,8 @@ SYM_FUNC_START(__svm_vcpu_run)
- 	VM_CLEAR_CPU_BUFFERS
- 
- 	/* Enter guest mode */
--	sti
--
- 3:	vmrun %_ASM_AX
- 4:
--	cli
--
- 	/* Pop @svm to RAX while it's the only available register. */
- 	pop %_ASM_AX
- 
-@@ -341,11 +337,8 @@ SYM_FUNC_START(__svm_sev_es_vcpu_run)
- 	VM_CLEAR_CPU_BUFFERS
- 
- 	/* Enter guest mode */
--	sti
--
- 1:	vmrun %_ASM_AX
--
--2:	cli
-+2:
- 
- 	/* Pop @svm to RDI, guest registers have been saved already. */
- 	pop %_ASM_DI
+-static void vmx_hwapic_isr_update(int max_isr)
++static void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
+ {
+ 	u16 status;
+ 	u8 old;
 -- 
 2.50.1
 
