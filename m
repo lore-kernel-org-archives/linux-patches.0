@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61BB2BE7B2;
-	Tue, 26 Aug 2025 11:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC142248A5;
+	Tue, 26 Aug 2025 11:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207346; cv=none; b=WNL/zIWu4WztvKnksDE4C8tZEc8shi1KqCZoroZlObVljbN+6NAYo5MFUgRvM6sirjVWWQV1qBNbZCUcw7XUG6tbE0FFO/YLi9oOcSIgk2VtiTVtA1EdLsO2CaGihioakzUpLdtlaSHDmj2A+YKfjKQzf8/yO8hbLAvy3cmdwFo=
+	t=1756207349; cv=none; b=kzQiOAc0fMPAjkwu7dI5N5pKo7D9LH6EJM8WVEpb4fba+YlFp+4xwYmxNzjv8pUaJdv/Tu6XLAtif3w7rh7ThJbklLq5ZpHL7AXkth48q13qBIW3D1P07vfqiVN1DkEl4sfnyCUp1RTGQWdBIYhuUMSNFPxyB9H5wph9TdIIb0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207346; c=relaxed/simple;
-	bh=VK7DXIujM8EeHtVq3nd+kd9AHXwH5UMkpx1nMnIC3uI=;
+	s=arc-20240116; t=1756207349; c=relaxed/simple;
+	bh=6aiHJrTmLlZLiWmv1r+hfwnJ/YfuuJyCgXja/b7Qr+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oh9sttkHzaGuMHV7dPZjcEvweoiGUrlIDCSqJ9QJ+Y3AgvUhCjMocIvLftIW7AHtzdjbo3ioBuyFK5L4ZoeHilIt0NtfjgkxcljleA2IzISBTs8pCraZ0d4TJw62oxCPscLA0KnZcr98CxbLEg98M87xO7uAzO3MR+UAgMHptCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mS7RLI3O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I60PuwH6QCFbO0GpDUQc8ql8y73iFqtK1QQeXwSMzwwG4wK1WGz3RvU8L0QoOvoOZja+yszNNBdJYqK0NwSmUYYkZYUkXFUy42CmtX5yAji+ItcGKTFfMrbmurUG0harmpeTQR2y+sJ3Ry6QSF3DZ3amJQzTUgIejS9AKWjHuPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K82rCMME; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mS7RLI3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C97C4CEF1;
-	Tue, 26 Aug 2025 11:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K82rCMME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFC0C4CEF1;
+	Tue, 26 Aug 2025 11:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207346;
-	bh=VK7DXIujM8EeHtVq3nd+kd9AHXwH5UMkpx1nMnIC3uI=;
+	s=korg; t=1756207348;
+	bh=6aiHJrTmLlZLiWmv1r+hfwnJ/YfuuJyCgXja/b7Qr+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mS7RLI3OkI3np/ItjIHHGOrFZ5dK3zSHMz5Cbc5BRiFS9PGS2c+vh052wP+nUGgbr
-	 JMMBqcpmzHlciTrB++hyPo+mghIztKBMqcVlILdmrEx/A6BH+ZZ5bfZ2KkPxE8o31e
-	 tbivkClffU+Qz1REI99+pvODFe1YAcDKWV8soBUc=
+	b=K82rCMMEFr9KD3MvTAUubqKZevljpLRQ21C1/8TC8N8jSJvQlSWQ6cF8w7fCeh3kO
+	 eO+AUDjTbGi3oQArr//B3c+Etn2JLSjNKggCreuq6k9KT8XDuFPQGhpl6JaQCXMaf/
+	 qIba2e0zIsxOuYd3uXGJsD+3kx4bSMP99MJwiTBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.16 116/457] kbuild: userprogs: use correct linker when mixing clang and GNU ld
-Date: Tue, 26 Aug 2025 13:06:40 +0200
-Message-ID: <20250826110940.240504334@linuxfoundation.org>
+	Simon Richter <Simon.Richter@hogyros.de>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.16 117/457] Mark xe driver as BROKEN if kernel page size is not 4kB
+Date: Tue, 26 Aug 2025 13:06:41 +0200
+Message-ID: <20250826110940.264514206@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Simon Richter <Simon.Richter@hogyros.de>
 
-commit 936599ca514973d44a766b7376c6bbdc96b6a8cc upstream.
+commit 022906afdf90327bce33d52fb4fb41b6c7d618fb upstream.
 
-The userprogs infrastructure does not expect clang being used with GNU ld
-and in that case uses /usr/bin/ld for linking, not the configured $(LD).
-This fallback is problematic as it will break when cross-compiling.
-Mixing clang and GNU ld is used for example when building for SPARC64,
-as ld.lld is not sufficient; see Documentation/kbuild/llvm.rst.
+This driver, for the time being, assumes that the kernel page size is 4kB,
+so it fails on loong64 and aarch64 with 16kB pages, and ppc64el with 64kB
+pages.
 
-Relax the check around --ld-path so it gets used for all linkers.
-
-Fixes: dfc1b168a8c4 ("kbuild: userprogs: use correct lld when linking through clang")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Simon Richter <Simon.Richter@hogyros.de>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: stable@vger.kernel.org # v6.8+
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://lore.kernel.org/r/20250802024152.3021-1-Simon.Richter@hogyros.de
+(cherry picked from commit 0521a868222ffe636bf202b6e9d29292c1e19c62)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1134,7 +1134,7 @@ KBUILD_USERCFLAGS  += $(filter -m32 -m64
- KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
- 
- # userspace programs are linked via the compiler, use the correct linker
--ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
-+ifdef CONFIG_CC_IS_CLANG
- KBUILD_USERLDFLAGS += --ld-path=$(LD)
- endif
- 
+--- a/drivers/gpu/drm/xe/Kconfig
++++ b/drivers/gpu/drm/xe/Kconfig
+@@ -5,6 +5,7 @@ config DRM_XE
+ 	depends on KUNIT || !KUNIT
+ 	depends on INTEL_VSEC || !INTEL_VSEC
+ 	depends on X86_PLATFORM_DEVICES || !(X86 && ACPI)
++	depends on PAGE_SIZE_4KB || COMPILE_TEST || BROKEN
+ 	select INTERVAL_TREE
+ 	# we need shmfs for the swappable backing store, and in particular
+ 	# the shmem_readpage() which depends upon tmpfs
 
 
