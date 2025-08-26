@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A6E352071;
-	Tue, 26 Aug 2025 14:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A0B352FFC;
+	Tue, 26 Aug 2025 14:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217458; cv=none; b=hdnii6kLPtDEnIFg8JkwiopENktx6rz4YXhdTU8ddplXrR2jN83Ch1771bKt0p2IvU+vPnMEtMuU3qvG7vjvDX/Tj+8F0HmR78VdJuZriqYIBSxVT3wmsYcSD5FJWsmXnRqNmmO4kLG9J864Ye3bpGlQ1/OMU0t1A6UCHk2F5mk=
+	t=1756217461; cv=none; b=fdUj9Emo/ze9/5u4ntmXN8eJ1M8PJI/Uu1Ub3klf9FdX5adgfRG9nuTMFRALeBHHGM2kqwWFPqb6hCMGBxvAcuBOsThmYG71U1yu+H38jNVO67xw0Gr1Kj2vK5yE6UJS8z/DUKthA4OHmGqmreCM9o0accAeetnHUq88cc2xG+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217458; c=relaxed/simple;
-	bh=0cWPbGFxune0xI0353paFKAmBpl5c42HNnXqlr/dPHA=;
+	s=arc-20240116; t=1756217461; c=relaxed/simple;
+	bh=8sX86CUW9zX9W9eR69TYvSwHaxil+miCfX0at+pGo5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERoc/vpDvAy6aWzF1mhH/J7d7Ufj4HtzefOYoSfZI/2BZlG5HPuZrVYIOSweeL4EN8g//dvTi2oAiaL85g66YhTvPpe+R4hUiv5D8J8g8IgFq3XjSgd3dZlud96gU7bp0ziAp/BS+4CTmI9IaTS5j/ha4jdk6LTyAuOXJd57oc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNWFUz7V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Um/TAbBa0B36eoCGOvAb82HjVs8N59v3cr0UrTygOcaaGp9KOXm8L5Ts59Ksp/kbp+VCTl/lSLXGYs+FGtE/ft2zO0gynKCQnTeq0P5TiE8EuMwj7a10GzbV9zFTGNTA2dXjJGAuTigYtLEEDoKBlP9QuFleJok3q2/oRm2zAqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJ3z9qh8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNWFUz7V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3058C113CF;
-	Tue, 26 Aug 2025 14:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ3z9qh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE7DC113CF;
+	Tue, 26 Aug 2025 14:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217458;
-	bh=0cWPbGFxune0xI0353paFKAmBpl5c42HNnXqlr/dPHA=;
+	s=korg; t=1756217461;
+	bh=8sX86CUW9zX9W9eR69TYvSwHaxil+miCfX0at+pGo5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xNWFUz7VY1BLpnQqd6kp0Km8dqaGmuTLl0GVW7/eVmqNLrzpn9Rx212bI2Q4Nnb6W
-	 tOedi1Nm/LzvvwWrkvlkR2YEzfTfuMcj2/aASI9K1yTmYhhv/msljaFl0ALXPYOm77
-	 8J8IfLrlIm9l9rAJaigrE4J8Redr4A6+PFk4C25w=
+	b=CJ3z9qh8YHmOSGPtQwUPMPwZBpz6DQ/ya8LEcMjb8NfnimV2VS3xU1MJt7VA2l2fD
+	 KTp8bMdpZcsKoOStxVS3Icz+cpmjR/nxV4644IAl0r7E0A4jKXYvtDGzR4r8dd9/Op
+	 zxeFWqwviPgu/M/d5GQzvvyelrVVb7zVY1xEnbmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Ovidiu Panait <ovidiu.panait.oss@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 151/523] rtc: hym8563: fix incorrect maximum clock rate handling
-Date: Tue, 26 Aug 2025 13:06:01 +0200
-Message-ID: <20250826110928.209455502@linuxfoundation.org>
+Subject: [PATCH 5.10 134/523] hwrng: mtk - handle devm_pm_runtime_enable errors
+Date: Tue, 26 Aug 2025 13:05:44 +0200
+Message-ID: <20250826110927.808560580@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
 
-[ Upstream commit d0a518eb0a692a2ab8357e844970660c5ea37720 ]
+[ Upstream commit 522a242a18adc5c63a24836715dbeec4dc3faee1 ]
 
-When hym8563_clkout_round_rate() is called with a requested rate higher
-than the highest supported rate, it currently returns 0, which disables
-the clock. According to the clk API, round_rate() should instead return
-the highest supported rate. Update the function to return the maximum
-supported rate in this case.
+Although unlikely, devm_pm_runtime_enable() call might fail, so handle
+the return value.
 
-Fixes: dcaf038493525 ("rtc: add hym8563 rtc-driver")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-2-33140bb2278e@redhat.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 78cb66caa6ab ("hwrng: mtk - Use devm_pm_runtime_enable")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.oss@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-hym8563.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/hw_random/mtk-rng.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-hym8563.c b/drivers/rtc/rtc-hym8563.c
-index 0fb79c4afb46..b5e76d6ee64b 100644
---- a/drivers/rtc/rtc-hym8563.c
-+++ b/drivers/rtc/rtc-hym8563.c
-@@ -312,7 +312,7 @@ static long hym8563_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
- 		if (clkout_rates[i] <= rate)
- 			return clkout_rates[i];
+diff --git a/drivers/char/hw_random/mtk-rng.c b/drivers/char/hw_random/mtk-rng.c
+index 3e00506543b6..72269d0f2a4e 100644
+--- a/drivers/char/hw_random/mtk-rng.c
++++ b/drivers/char/hw_random/mtk-rng.c
+@@ -142,7 +142,9 @@ static int mtk_rng_probe(struct platform_device *pdev)
+ 	dev_set_drvdata(&pdev->dev, priv);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+-	devm_pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
  
--	return 0;
-+	return clkout_rates[0];
- }
+ 	dev_info(&pdev->dev, "registered RNG driver\n");
  
- static int hym8563_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
