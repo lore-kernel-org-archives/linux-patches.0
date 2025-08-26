@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1BC1EB9F2;
-	Tue, 26 Aug 2025 12:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901141F09BF;
+	Tue, 26 Aug 2025 12:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212962; cv=none; b=jdSWf8IOV4/h6d8sTFz+Y7kvbu3sSMYurcGxo2GrR5dt9lZLcIR6UFCFZdq4q1r6qtEPKHwTPTjeY7L+NQY+NS4ujoZFmNDUmuiPboZ4Hgy5Hb6JeCI8HERQaLyvgZk9rUIr9zCzNGKvQqfr7kZlGTnLiwamlVIIsNaaWL/44EU=
+	t=1756212964; cv=none; b=DKf2EdU4kI351iplDGCnrp0LBULn6kjLsD6sff+GTTNBJCo+DwF35WVU9SX41IWSQee9fcx+87mTbChjDuyTR9aWZjKhUWxeq5CvKIWtAgmkefADZ1sIf9JrfS539azA67xnRYIjP1JJSwTbRnLa6UA6bOxxoOmIgyfNFL20+cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212962; c=relaxed/simple;
-	bh=+EVIEPoVrZaeEgbCoXtp5AzCI8ZyLy4HDVqxEOlFePw=;
+	s=arc-20240116; t=1756212964; c=relaxed/simple;
+	bh=0ecDO2Verj5lA5yQxKcstBLp/sa7TA8TSpIVRSZkhJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1YfXXVahyUpvF6ysyxuK9fpPBfB6+Py4qHG9sLnxAQVFHfjiD7kRdzAtTOJbBMRW65D8HJPvwLJgyPByBU9c2jSv+GotuZRVE5WjMtU3ERHt5grDoi2hAp44dRLsXTVx31OozHMvHzmB2XEccoCIRBd7mpX9dggbQfvob/YgBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOzJxCY9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XXW2Cb+Z2hkUoFBMTipujxAMWwW5sHktOOeNqoOQmoIij5Tnv+wNi5vKzQFSCCoQmuVhEEFYq5qhu7bLkCZaDYgcg3ioYOkf1lYL0LSdQ/+Uy8UO9WKT0Kd3V5NRxof/k0x53xfHaWRSW8IdDrzugL7+CD8n0rtv5OdDqfjEVGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApPvRmWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOzJxCY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B35DC4CEF1;
-	Tue, 26 Aug 2025 12:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApPvRmWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A99C4CEF4;
+	Tue, 26 Aug 2025 12:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212961;
-	bh=+EVIEPoVrZaeEgbCoXtp5AzCI8ZyLy4HDVqxEOlFePw=;
+	s=korg; t=1756212964;
+	bh=0ecDO2Verj5lA5yQxKcstBLp/sa7TA8TSpIVRSZkhJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOzJxCY9N+WD7QzUkVZyTE90u91LmN24GwrAKVO8o2Z+QfypkX40JDhujZO319N/8
-	 xrz5kbvrsOjMdIexyMXqENB9C9+rFzO/Nz320vnfsjSGNyBgMakFwjowvb0sXG5ZWx
-	 b1+s8KSGNzZKguRiwrUSwUyqUr8tBmxoYu4U+aUY=
+	b=ApPvRmWlr442KzflEZlqK7GOhNtV258I2nxzWhkeNrUiC3DKO5uYcbksxLxB45O0l
+	 pyb6RB8p0+KkIZ7WRy3poqFLcJ+WP8Eq3cdl/SZFWSbq9SYYzEr0HYF9KNlpYM81HG
+	 NJKj9DbhNsoNOjNKO1YjIwoR2ThqyPsQ8K0OlRCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Antonino Maniscalco <antomani103@gmail.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/587] drm/msm: use trylock for debugfs
-Date: Tue, 26 Aug 2025 13:05:18 +0200
-Message-ID: <20250826110957.245400560@linuxfoundation.org>
+Subject: [PATCH 6.6 170/587] wifi: rtw89: Fix rtw89_mac_power_switch() for USB
+Date: Tue, 26 Aug 2025 13:05:19 +0200
+Message-ID: <20250826110957.271065662@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,63 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 0a1ff88ec5b60b41ba830c5bf08b6cd8f45ab411 ]
+[ Upstream commit e2b71603333a9dd73ee88347d8894fffc3456ac1 ]
 
-This resolves a potential deadlock vs msm_gem_vm_close().  Otherwise for
-_NO_SHARE buffers msm_gem_describe() could be trying to acquire the
-shared vm resv, while already holding priv->obj_lock.  But _vm_close()
-might drop the last reference to a GEM obj while already holding the vm
-resv, and msm_gem_free_object() needs to grab priv->obj_lock, a locking
-inversion.
+Clear some bits in some registers in order to allow RTL8851BU to power
+on. This is done both when powering on and when powering off because
+that's what the vendor driver does.
 
-OTOH this is only for debugfs and it isn't critical if we undercount by
-skipping a locked obj.  So just use trylock() and move along if we can't
-get the lock.
+Also tested with RTL8832BU and RTL8832CU.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Tested-by: Antonino Maniscalco <antomani103@gmail.com>
-Reviewed-by: Antonino Maniscalco <antomani103@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/661525/
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/a39da939-d640-4486-ad38-f658f220afc8@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem.c | 3 ++-
- drivers/gpu/drm/msm/msm_gem.h | 6 ++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/mac.c | 19 +++++++++++++++++++
+ drivers/net/wireless/realtek/rtw89/reg.h |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 1113e6b2ec8e..aaf7c338eb96 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -928,7 +928,8 @@ void msm_gem_describe(struct drm_gem_object *obj, struct seq_file *m,
- 	uint64_t off = drm_vma_node_start(&obj->vma_node);
- 	const char *madv;
- 
--	msm_gem_lock(obj);
-+	if (!msm_gem_trylock(obj))
-+		return;
- 
- 	stats->all.count++;
- 	stats->all.size += obj->size;
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 8ddef5443140..631a9aa129bd 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -183,6 +183,12 @@ msm_gem_lock(struct drm_gem_object *obj)
- 	dma_resv_lock(obj->resv, NULL);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 3c818c4b4653..3d63f8b2770e 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -1301,6 +1301,23 @@ void rtw89_mac_notify_wake(struct rtw89_dev *rtwdev)
+ 	rtw89_mac_send_rpwm(rtwdev, state, true);
  }
  
-+static inline bool __must_check
-+msm_gem_trylock(struct drm_gem_object *obj)
++static void rtw89_mac_power_switch_boot_mode(struct rtw89_dev *rtwdev)
 +{
-+	return dma_resv_trylock(obj->resv);
++	u32 boot_mode;
++
++	if (rtwdev->hci.type != RTW89_HCI_TYPE_USB)
++		return;
++
++	boot_mode = rtw89_read32_mask(rtwdev, R_AX_GPIO_MUXCFG, B_AX_BOOT_MODE);
++	if (!boot_mode)
++		return;
++
++	rtw89_write32_clr(rtwdev, R_AX_SYS_PW_CTRL, B_AX_APFN_ONMAC);
++	rtw89_write32_clr(rtwdev, R_AX_SYS_STATUS1, B_AX_AUTO_WLPON);
++	rtw89_write32_clr(rtwdev, R_AX_GPIO_MUXCFG, B_AX_BOOT_MODE);
++	rtw89_write32_clr(rtwdev, R_AX_RSV_CTRL, B_AX_R_DIS_PRST);
 +}
 +
- static inline int
- msm_gem_lock_interruptible(struct drm_gem_object *obj)
+ static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
  {
+ #define PWR_ACT 1
+@@ -1310,6 +1327,8 @@ static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
+ 	int ret;
+ 	u8 val;
+ 
++	rtw89_mac_power_switch_boot_mode(rtwdev);
++
+ 	if (on) {
+ 		cfg_seq = chip->pwr_on_seq;
+ 		cfg_func = chip->ops->pwr_on_func;
+diff --git a/drivers/net/wireless/realtek/rtw89/reg.h b/drivers/net/wireless/realtek/rtw89/reg.h
+index c0aac4d3678a..ef1162595042 100644
+--- a/drivers/net/wireless/realtek/rtw89/reg.h
++++ b/drivers/net/wireless/realtek/rtw89/reg.h
+@@ -172,6 +172,7 @@
+ 
+ #define R_AX_SYS_STATUS1 0x00F4
+ #define B_AX_SEL_0XC0_MASK GENMASK(17, 16)
++#define B_AX_AUTO_WLPON BIT(10)
+ #define B_AX_PAD_HCI_SEL_V2_MASK GENMASK(5, 3)
+ #define MAC_AX_HCI_SEL_SDIO_UART 0
+ #define MAC_AX_HCI_SEL_MULTI_USB 1
 -- 
 2.39.5
 
