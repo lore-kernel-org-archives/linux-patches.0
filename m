@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0768B8462;
-	Tue, 26 Aug 2025 13:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BB5FBF0;
+	Tue, 26 Aug 2025 13:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213336; cv=none; b=nXfL2vQ0LYngvlSa8IdCHRYhJfu+mzrrUvsGLgfsJpZxQfEv6z4FrXca892uPtgLI+toJV+OKAykEaEEWkmcYQreFC4w7DZjdMCbBLyGEqE/tRazjgH+bcykVNAdU9nKH2aBf5EkEgpn0HTE+9BD/F4YAm0y3cEyJPddNEsAuhY=
+	t=1756213338; cv=none; b=C6GxFHgRQDzUgmkhY+GcDLfGmBGobXKQzzGr0qWx94m49g/XDhBKSLHicS72oVF+GySI81JvtnaGfGLkD6XnE5crTz/htWLwC0+/cqQYwClnlYkCvSqMQwKXIhQthK3eST1qr6aswTwYaUKtKeWigzIk9vPsELGzr4QDdBrzum0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213336; c=relaxed/simple;
-	bh=Gt9J5eN+rrORbDiiwcA0H3iCyq/0tVYkcnFVAy7lPlM=;
+	s=arc-20240116; t=1756213338; c=relaxed/simple;
+	bh=i+Jj41Zw3aiakUL0piURaAgY7gQF9Igq7vFwecT70r0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBVrfgIRqp3gDpC0yvY3Py8SPrubK2iVRi3x2Z8Ty3AScd+nG586fJN52Dl+JBhY3mJadFTnRLQC9QTTXhDTLtn1EfVYG+fhPLJcrwTtjHc0Tr8yPhzSrZk21OCEvv6pDX8mxOCTnM4MK467G4gUu6wXRTLeq0jQN4zW0WLXCtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrF+xNSb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGR70yxZYIbK9/qw+2O1+uOMZ31HFGGV/6hsC6gCoNyRpwydweOglsSpRTiMPNEf7DcOeGe1MCndWt9ZfzARTlBpQyEEkVqpCCQkphMSIkPIglnmvVPV3g56QexbGe+dnFdjIwECdvlOkiwW5AYW5LBQxrC7ICXe9n9DhMivp88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBavY+ON; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrF+xNSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85191C4CEF1;
-	Tue, 26 Aug 2025 13:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBavY+ON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FA2C4CEF1;
+	Tue, 26 Aug 2025 13:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213335;
-	bh=Gt9J5eN+rrORbDiiwcA0H3iCyq/0tVYkcnFVAy7lPlM=;
+	s=korg; t=1756213338;
+	bh=i+Jj41Zw3aiakUL0piURaAgY7gQF9Igq7vFwecT70r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RrF+xNSbDve7hahbBwh9gM9hivrlPwsntvaLzCpgOOXBioiZ5OE7yZnmdMQL1G93k
-	 AEHt+Pz5D/64CC5OXOYmPktmNOJxUyLmwnolnDGQFhDjXmtc4euGRZ4/+27Z6ntNrx
-	 7XztL/zE7BqYiRaeMf6c78ngqy0unOxu7hRBd0YU=
+	b=bBavY+ONjp0RFX0cz9KMoV0Ty06tl+CqK9OdPHxq/9Szuo+2fOQVyci/+h3YFretk
+	 K08PnQdaayKi/8YYeTipLQ30s47Wq1qdTJSl3pJK2VD/+Y77edhwYZbIlkrzPJMgX4
+	 ucwHcjeHzH3Z2g6BCBryWZoPNOF9sHp2kEjoGBJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Evtushenko <koevtushenko@yandex.com>,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 292/587] pNFS: Fix uninited ptr deref in block/scsi layout
-Date: Tue, 26 Aug 2025 13:07:21 +0200
-Message-ID: <20250826111000.354587133@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 310/587] btrfs: abort transaction during log replay if walk_log_tree() failed
+Date: Tue, 26 Aug 2025 13:07:39 +0200
+Message-ID: <20250826111000.804363056@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,99 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 9768797c219326699778fba9cd3b607b2f1e7950 ]
+commit 2a5898c4aac67494c2f0f7fe38373c95c371c930 upstream.
 
-The error occurs on the third attempt to encode extents. When function
-ext_tree_prepare_commit() reallocates a larger buffer to retry encoding
-extents, the "layoutupdate_pages" page array is initialized only after the
-retry loop. But ext_tree_free_commitdata() is called on every iteration
-and tries to put pages in the array, thus dereferencing uninitialized
-pointers.
+If we failed walking a log tree during replay, we have a missing
+transaction abort to prevent committing a transaction where we didn't
+fully replay all the changes from a log tree and therefore can leave the
+respective subvolume tree in some inconsistent state. So add the missing
+transaction abort.
 
-An additional problem is that there is no limit on the maximum possible
-buffer_size. When there are too many extents, the client may create a
-layoutcommit that is larger than the maximum possible RPC size accepted
-by the server.
-
-During testing, we observed two typical scenarios. First, one memory page
-for extents is enough when we work with small files, append data to the
-end of the file, or preallocate extents before writing. But when we fill
-a new large file without preallocating, the number of extents can be huge,
-and counting the number of written extents in ext_tree_encode_commit()
-does not help much. Since this number increases even more between
-unlocking and locking of ext_tree, the reallocated buffer may not be
-large enough again and again.
-
-Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20250630183537.196479-2-sergeybashirov@gmail.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/blocklayout/extent_tree.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ fs/btrfs/tree-log.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/blocklayout/extent_tree.c b/fs/nfs/blocklayout/extent_tree.c
-index 8f7cff7a4293..0add0f329816 100644
---- a/fs/nfs/blocklayout/extent_tree.c
-+++ b/fs/nfs/blocklayout/extent_tree.c
-@@ -552,6 +552,15 @@ static int ext_tree_encode_commit(struct pnfs_block_layout *bl, __be32 *p,
- 	return ret;
- }
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -7300,11 +7300,14 @@ again:
  
-+/**
-+ * ext_tree_prepare_commit - encode extents that need to be committed
-+ * @arg: layout commit data
-+ *
-+ * Return values:
-+ *   %0: Success, all required extents are encoded
-+ *   %-ENOSPC: Some extents are encoded, but not all, due to RPC size limit
-+ *   %-ENOMEM: Out of memory, extents not encoded
-+ */
- int
- ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- {
-@@ -568,12 +577,12 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- 	start_p = page_address(arg->layoutupdate_page);
- 	arg->layoutupdate_pages = &arg->layoutupdate_page;
+ 		wc.replay_dest->log_root = log;
+ 		ret = btrfs_record_root_in_trans(trans, wc.replay_dest);
+-		if (ret)
++		if (ret) {
+ 			/* The loop needs to continue due to the root refs */
+ 			btrfs_abort_transaction(trans, ret);
+-		else
++		} else {
+ 			ret = walk_log_tree(trans, log, &wc);
++			if (ret)
++				btrfs_abort_transaction(trans, ret);
++		}
  
--retry:
--	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size, &count, &arg->lastbytewritten);
-+	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
-+			&count, &arg->lastbytewritten);
- 	if (unlikely(ret)) {
- 		ext_tree_free_commitdata(arg, buffer_size);
- 
--		buffer_size = ext_tree_layoutupdate_size(bl, count);
-+		buffer_size = NFS_SERVER(arg->inode)->wsize;
- 		count = 0;
- 
- 		arg->layoutupdate_pages =
-@@ -588,7 +597,8 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- 			return -ENOMEM;
- 		}
- 
--		goto retry;
-+		ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
-+				&count, &arg->lastbytewritten);
- 	}
- 
- 	*start_p = cpu_to_be32(count);
-@@ -608,7 +618,7 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
- 	}
- 
- 	dprintk("%s found %zu ranges\n", __func__, count);
--	return 0;
-+	return ret;
- }
- 
- void
--- 
-2.39.5
-
+ 		if (!ret && wc.stage == LOG_WALK_REPLAY_ALL) {
+ 			ret = fixup_inode_link_counts(trans, wc.replay_dest,
 
 
