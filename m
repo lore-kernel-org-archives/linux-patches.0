@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C1535A2A2;
-	Tue, 26 Aug 2025 14:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A254D35A281;
+	Tue, 26 Aug 2025 14:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217722; cv=none; b=tm4US0b27FT3Kmh1PTuGd+Fw3Wz4RibiOQ/0tbvh5Zrd3E46EOGt2F8yFODmxcMQ6vpHjrKdO40ZTe6XGI/tBYZ6lBgnIujnFRfmxzRhITPc1nB4XLLT6O51dHn0CCVcnqXDO8YFUFU+AqXW58hCfoyprivDoHD3KLPQXPBSZI4=
+	t=1756217725; cv=none; b=T/SfJWMqpyv6P0m2ZNACupr/SHtyV71Pfh9DyCcjV5XWWQMVg6d3YDJ+3aGHWQcYg21z9A4omytGdIP8ikNYOBJ9o+bKDLV5Rz56q/f9N5j9lOXPN/Gkx8Cz66HapEvg6CGHc8U69LewflMscow/MwgxdXcCv+64G0ZaWjv4XQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217722; c=relaxed/simple;
-	bh=GcVCjv0fTRTlEV7XFQbhekDMcavpaD65y75cHRA+m3A=;
+	s=arc-20240116; t=1756217725; c=relaxed/simple;
+	bh=3/He20O2z8i4qpvy0zJjnWMo1zAYf/qkuFrhXlFEby0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rceTItnoGP+har8KnDwjuRr7mJ+GlSWIGygNQG4ppbZ8aFfqtCB2HZneCsUmWPnqno26AyjepX/21YQoztyysjYxNxxkk9+r7iX2G3ptnGXdj6+Byns4y4zstR86xeuHOBoIYaoQGcLqKbOKD+5sdRpealZ8nUQjK0eCuG1ULWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLUDH3c3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZQdUr7Pn2nNgmh7c9jxZWNQ8+vOO+j4FmzFXhfShNpjmSoOuG927vkFh4DTkp0WvWts2Zsj1m4K+k3pwlLpsGVUUB/x8wBl7cpSbs4daziSZe3o6tNFUTzxRJpP4YiH/Xqbdjl19a7MvhAUxLZLmM/IABH8DphGLJvcQv+/4yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wn50gpQg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLUDH3c3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E314C4CEF1;
-	Tue, 26 Aug 2025 14:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wn50gpQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F5EC113D0;
+	Tue, 26 Aug 2025 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217722;
-	bh=GcVCjv0fTRTlEV7XFQbhekDMcavpaD65y75cHRA+m3A=;
+	s=korg; t=1756217725;
+	bh=3/He20O2z8i4qpvy0zJjnWMo1zAYf/qkuFrhXlFEby0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLUDH3c3vHA90xH/ECVC0rmpanAuYmiTfmAir9LZ0ZShPlP25NNYCUOH6XI9Agi1T
-	 NhXUbzX34hbhxTND+/L/6vbCp3FVZ1xOj1YTzBzA2w0UfavKL0NaZt9DvDPfcDQC6H
-	 YIm9Vt9+OeK+McyIPhI+Rt2IupOAQ8NNYXTqlqqA=
+	b=wn50gpQgwtHTWismjeLwt1yydV99UyP9l1Q839su9UdoOwunsykNvBPuiTch6aeyL
+	 UM5clkiVWncsG9dYSmANGf3vJ7Tn2feKI4ADBapEMxDfBKGoTQFDskpC5zHMr9sQGs
+	 ri8zc8z/6mc5wfKDVU8kEhwtiCJmMchQGZG7nF/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Tomasz Michalec <tmichalec@google.com>,
+	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 251/523] platform/x86: thinkpad_acpi: Handle KCOV __init vs inline mismatches
-Date: Tue, 26 Aug 2025 13:07:41 +0200
-Message-ID: <20250826110930.623783961@linuxfoundation.org>
+Subject: [PATCH 5.10 252/523] platform/chrome: cros_ec_typec: Defer probe on missing EC parent
+Date: Tue, 26 Aug 2025 13:07:42 +0200
+Message-ID: <20250826110930.648490761@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -45,52 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Tomasz Michalec <tmichalec@google.com>
 
-[ Upstream commit 6418a8504187dc7f5b6f9d0649c03e362cb0664b ]
+[ Upstream commit 8866f4e557eba43e991f99711515217a95f62d2e ]
 
-When KCOV is enabled all functions get instrumented, unless the
-__no_sanitize_coverage attribute is used. To prepare for
-__no_sanitize_coverage being applied to __init functions[1], we have
-to handle differences in how GCC's inline optimizations get resolved.
-For thinkpad_acpi routines, this means forcing two functions to be
-inline with __always_inline.
+If cros_typec_probe is called before EC device is registered,
+cros_typec_probe will fail. It may happen when cros-ec-typec.ko is
+loaded before EC bus layer module (e.g. cros_ec_lpcs.ko,
+cros_ec_spi.ko).
 
-Link: https://lore.kernel.org/lkml/20250523043935.2009972-11-kees@kernel.org/ [1]
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://lore.kernel.org/r/20250529181831.work.439-kees@kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Return -EPROBE_DEFER when cros_typec_probe doesn't get EC device, so
+the probe function can be called again after EC device is registered.
+
+Signed-off-by: Tomasz Michalec <tmichalec@google.com>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Link: https://lore.kernel.org/r/20250610153748.1858519-1-tmichalec@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 4 ++--
+ drivers/platform/chrome/cros_ec_typec.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index 5a8434da60e7..d18b6ddba982 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -515,12 +515,12 @@ static unsigned long __init tpacpi_check_quirks(
- 	return 0;
- }
+diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
+index 983daa220ee3..137f99c1848e 100644
+--- a/drivers/platform/chrome/cros_ec_typec.c
++++ b/drivers/platform/chrome/cros_ec_typec.c
+@@ -716,8 +716,8 @@ static int cros_typec_probe(struct platform_device *pdev)
  
--static inline bool __pure __init tpacpi_is_lenovo(void)
-+static __always_inline bool __pure __init tpacpi_is_lenovo(void)
- {
- 	return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
- }
+ 	typec->ec = dev_get_drvdata(pdev->dev.parent);
+ 	if (!typec->ec) {
+-		dev_err(dev, "couldn't find parent EC device\n");
+-		return -ENODEV;
++		dev_warn(dev, "couldn't find parent EC device\n");
++		return -EPROBE_DEFER;
+ 	}
  
--static inline bool __pure __init tpacpi_is_ibm(void)
-+static __always_inline bool __pure __init tpacpi_is_ibm(void)
- {
- 	return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
- }
+ 	platform_set_drvdata(pdev, typec);
 -- 
 2.39.5
 
