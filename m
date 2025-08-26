@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7707229D273;
-	Tue, 26 Aug 2025 11:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225AC299959;
+	Tue, 26 Aug 2025 11:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207571; cv=none; b=NE1iJfk1QlGeh1/XIe7zZEJW4u+oWnT7LywBj/skIPJCUdwxB9k7N9j36wnoUpozvXElK0/0UUIN/2iw7aXBFJVR7g9CZL24SMsez7yG6FrNzdJP7gptxXaB5d6bH1MgaoXW+biQydV+65cTXT17TvZgR8vhR38rH7lPKoHliGE=
+	t=1756207574; cv=none; b=rISospnF6Ewr9cUaDcjj7LNIev+/PACpqh5LBeA3ZqwikJ18vOI0amGVZ7FDJkAePNt90LlJHvO7ihACU1UO7DjGUpgY9GKqyfCUNZs5AWozlQItciLG+vPwWxCH1ULYMuiaYnf0kJRwc6eqq7fwcVh1n+GJyfaFqBTN/2Bpm7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207571; c=relaxed/simple;
-	bh=vj0xebZVJS8xaXu7ecdcpbtztkoRsPsZ8NXBLDNFEvo=;
+	s=arc-20240116; t=1756207574; c=relaxed/simple;
+	bh=dyNYS8MYFWZBVOdzGHS9e5i+020xCCWlXp45oq3Emgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/JO+SSjMSB8D1ZNBwh1VqX+wMcajZlwQbbiv/DaN18WbZT2FwiFtpFjHcFtFArbvdR4PM2bDOj/jLQOjrAxECE1gPsMU8h8NsOCo3Ekfd/6trNWGn7dAXRMV9RBQp5kCp5igJwH52SYiNZTil8RidsM2Bcd0OoSMqP/Ze/w4nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7Fa7Y9G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rScG6717U3OZ9VJ6Lgcu1U5LnSa9TzXViLx9lRa7eXy7he8mnI8v9fp9SlQRo/PzPN4ovpKYx3t7nky8huDX1KOq35YkhoTuoj+hflWQKOZgufEh3uZJMAE+R3g3BJC2RDysvETVwHB+6S87Usfk1gk1EIQ/1b+JgOT5NZoQnt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO0KWIrE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7Fa7Y9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0752DC4CEF1;
-	Tue, 26 Aug 2025 11:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO0KWIrE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B6BC4CEF1;
+	Tue, 26 Aug 2025 11:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207571;
-	bh=vj0xebZVJS8xaXu7ecdcpbtztkoRsPsZ8NXBLDNFEvo=;
+	s=korg; t=1756207574;
+	bh=dyNYS8MYFWZBVOdzGHS9e5i+020xCCWlXp45oq3Emgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X7Fa7Y9GQiEIsvNGCbBoJuHYYOTvRJTQmVuy/xDeff7ht1fNJ1LO9ihH8r45UErUV
-	 rQwTAm09K/NHvljbJjb1optsGXn1CF47zZ/0L7nUXC4Ex41ICupjPaHfxP9HaoyFcG
-	 KEXFcWwOegv6eVLIIWrtNls72ykUbrP/1DFNPjFI=
+	b=NO0KWIrEtfKmeTYLSKCTBQonSQzeZ82S2Y2Vm2HEBtDJ3cfvpn/MHvvj0zI2n+bFx
+	 CwK2covnKeNiMVyEwP+jQ0gIRSKroEe6yG+Huf3F7c3untqZB4tzIQQ1zfeQMEGMxP
+	 iGtw2sWDsK1s0wONoBTr4B+MYhB5hexOU8dtLyc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.16 233/457] iommu/arm-smmu-v3: Fix smmu_domain->nr_ats_masters decrement
-Date: Tue, 26 Aug 2025 13:08:37 +0200
-Message-ID: <20250826110943.132732354@linuxfoundation.org>
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 234/457] mm/damon/core: fix commit_ops_filters by using correct nth function
+Date: Tue, 26 Aug 2025 13:08:38 +0200
+Message-ID: <20250826110943.157669522@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,53 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-commit 685ca577b408ffd9c5a4057a2acc0cd3e6978b36 upstream.
+commit 63f5dec16760f2cd7d3f9034d18fc1fa0d83652f upstream.
 
-The arm_smmu_attach_commit() updates master->ats_enabled before calling
-arm_smmu_remove_master_domain() that is supposed to clean up everything
-in the old domain, including the old domain's nr_ats_masters. So, it is
-supposed to use the old ats_enabled state of the device, not an updated
-state.
+damos_commit_ops_filters() incorrectly uses damos_nth_filter() which
+iterates core_filters.  As a result, performing a commit unintentionally
+corrupts ops_filters.
 
-This isn't a problem if switching between two domains where:
- - old ats_enabled = false; new ats_enabled = false
- - old ats_enabled = true;  new ats_enabled = true
-but can fail cases where:
- - old ats_enabled = false; new ats_enabled = true
-   (old domain should keep the counter but incorrectly decreased it)
- - old ats_enabled = true;  new ats_enabled = false
-   (old domain needed to decrease the counter but incorrectly missed it)
+Add damos_nth_ops_filter() which iterates ops_filters.  Use this function
+to fix issues caused by wrong iteration.
 
-Update master->ats_enabled after arm_smmu_remove_master_domain() to fix
-this.
-
-Fixes: 7497f4211f4f ("iommu/arm-smmu-v3: Make changing domains be hitless for ATS")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Link: https://lore.kernel.org/r/20250801030127.2006979-1-nicolinc@nvidia.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Link: https://lkml.kernel.org/r/20250810124201.15743-1-ekffu200098@gmail.com
+Fixes: 3607cc590f18 ("mm/damon/core: support committing ops_filters") # 6.15.x
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/core.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2997,9 +2997,9 @@ void arm_smmu_attach_commit(struct arm_s
- 		/* ATS is being switched off, invalidate the entire ATC */
- 		arm_smmu_atc_inv_master(master, IOMMU_NO_PASID);
- 	}
--	master->ats_enabled = state->ats_enabled;
- 
- 	arm_smmu_remove_master_domain(master, state->old_domain, state->ssid);
-+	master->ats_enabled = state->ats_enabled;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -843,6 +843,18 @@ static struct damos_filter *damos_nth_fi
+ 	return NULL;
  }
  
- static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
++static struct damos_filter *damos_nth_ops_filter(int n, struct damos *s)
++{
++	struct damos_filter *filter;
++	int i = 0;
++
++	damos_for_each_ops_filter(filter, s) {
++		if (i++ == n)
++			return filter;
++	}
++	return NULL;
++}
++
+ static void damos_commit_filter_arg(
+ 		struct damos_filter *dst, struct damos_filter *src)
+ {
+@@ -906,7 +918,7 @@ static int damos_commit_ops_filters(stru
+ 	int i = 0, j = 0;
+ 
+ 	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
+-		src_filter = damos_nth_filter(i++, src);
++		src_filter = damos_nth_ops_filter(i++, src);
+ 		if (src_filter)
+ 			damos_commit_filter(dst_filter, src_filter);
+ 		else
 
 
