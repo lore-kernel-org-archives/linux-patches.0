@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010F41DE8BE;
-	Tue, 26 Aug 2025 14:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946351DE8BE;
+	Tue, 26 Aug 2025 14:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217261; cv=none; b=TA4URZJI8SoQhwm/LOE1Aq10xVulDm1YhswP1TkJySmP6zh3/0VBLm5NBBJ5WLbgwQuLnOV4JDhXhgtlJIKTDFmk0s9JXrtXt5W271Kr7wBrZxVKbXSdiuNUXGRpxBrI6ed0WfhKCWYBqPT2+sAFfvJnZkyGeeWDZryhJY7I8Eg=
+	t=1756217263; cv=none; b=YEsEPh0dpfXi2yxyFqXqb80PEB71gWCeu70/u6tkURRdg/OH3ePqysgbV3BG7EfqaRoDbJj7uyoDyullgMbykzMslYMiV8dM2TspW336it4xVOrhJ8wpRH2kN1assi8eqPKd4km7IaHLsEIlC5qtS76Q7D4x6P48mxsvb1XrWGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217261; c=relaxed/simple;
-	bh=tWD61AE5KaPgIJ/8L7Wd38qX0eFRL583cUe4cggrP3Q=;
+	s=arc-20240116; t=1756217263; c=relaxed/simple;
+	bh=sUSbm7EiiEPhqp5NxMXnUXhZOI69IEGzEwhoT9vnLH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TCCkMY+tko7gtQYhOzqtEOB+cCHX9vdTGmscGnXaOPLRoXuvf/q3gBLvQzqVJByMQUTAkP9vPN1qbpQjS///7kDBKmqnN+TTPkyhWK54xD3wYbwjk1zCfXvIlBn41au2ep90hx4/71F9G3L7aJhwkvRKYZc/ErzoqGPaJKiaL6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZK/fLg5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otVuHR+O5jNzXLeMS/JJCNWA6JDup8uVOv4U2zb1J/If5Pkef/3da1lXaobKEZ2q31HP9pouph9F3SI3XtpA082D7/OfYfo3QH7YqZkydqB3ZpcV8cU4ISnG4P5mms0tDmVNvJfrgtvGtHRbrWsNrER8FIRO3sCZuJsM9LJDTUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7cYmAXy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZK/fLg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88709C4CEF1;
-	Tue, 26 Aug 2025 14:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7cYmAXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242E8C4CEF1;
+	Tue, 26 Aug 2025 14:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217260;
-	bh=tWD61AE5KaPgIJ/8L7Wd38qX0eFRL583cUe4cggrP3Q=;
+	s=korg; t=1756217263;
+	bh=sUSbm7EiiEPhqp5NxMXnUXhZOI69IEGzEwhoT9vnLH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZK/fLg59N/SRu1rAJgcvFXWhkEHa/+dgnGAAMAKjpQGhLKWMcmVBRmwPthhIAYSS
-	 D+o1sbrwzO+CdHQ8kPXIVK/pEmLQzGWk4Jr4DI8hnyIlsXdTBTpqcY5IyEy2EwzpxL
-	 1xF3iSwI3AcKI8+hjzZEetCU5EZfL3qjFzhh4p+Y=
+	b=S7cYmAXycekDkETMhB1Qz1KMYsEKW8Jr/SZSGGZLUnsBLOiY7xgPLF1mjJLEQDsor
+	 BZqQD8zs56l1aEQ1g63y8gC3duzBDWvT9gMO6fuRMB9BTjQiHJJjcLDWSCpHLd/Lc8
+	 CsYYS9Opjd0ORdY38sJ5AexR1gLN6EW3PhHlrzLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RubenKelevra <rubenkelevra@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com,
+	Yangtao Li <frank.li@vivo.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/523] fs_context: fix parameter name in infofc() macro
-Date: Tue, 26 Aug 2025 13:04:47 +0200
-Message-ID: <20250826110926.466853665@linuxfoundation.org>
+Subject: [PATCH 5.10 078/523] hfsplus: remove mutex_lock check in hfsplus_free_extents
+Date: Tue, 26 Aug 2025 13:04:48 +0200
+Message-ID: <20250826110926.491082695@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -45,44 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: RubenKelevra <rubenkelevra@gmail.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit ffaf1bf3737f706e4e9be876de4bc3c8fc578091 ]
+[ Upstream commit fcb96956c921f1aae7e7b477f2435c56f77a31b4 ]
 
-The macro takes a parameter called "p" but references "fc" internally.
-This happens to compile as long as callers pass a variable named fc,
-but breaks otherwise. Rename the first parameter to “fc” to match the
-usage and to be consistent with warnfc() / errorfc().
+Syzbot reported an issue in hfsplus filesystem:
 
-Fixes: a3ff937b33d9 ("prefix-handling analogues of errorf() and friends")
-Signed-off-by: RubenKelevra <rubenkelevra@gmail.com>
-Link: https://lore.kernel.org/20250617230927.1790401-1-rubenkelevra@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 4400 at fs/hfsplus/extents.c:346
+	hfsplus_free_extents+0x700/0xad0
+Call Trace:
+<TASK>
+hfsplus_file_truncate+0x768/0xbb0 fs/hfsplus/extents.c:606
+hfsplus_write_begin+0xc2/0xd0 fs/hfsplus/inode.c:56
+cont_expand_zero fs/buffer.c:2383 [inline]
+cont_write_begin+0x2cf/0x860 fs/buffer.c:2446
+hfsplus_write_begin+0x86/0xd0 fs/hfsplus/inode.c:52
+generic_cont_expand_simple+0x151/0x250 fs/buffer.c:2347
+hfsplus_setattr+0x168/0x280 fs/hfsplus/inode.c:263
+notify_change+0xe38/0x10f0 fs/attr.c:420
+do_truncate+0x1fb/0x2e0 fs/open.c:65
+do_sys_ftruncate+0x2eb/0x380 fs/open.c:193
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+To avoid deadlock, Commit 31651c607151 ("hfsplus: avoid deadlock
+on file truncation") unlock extree before hfsplus_free_extents(),
+and add check wheather extree is locked in hfsplus_free_extents().
+
+However, when operations such as hfsplus_file_release,
+hfsplus_setattr, hfsplus_unlink, and hfsplus_get_block are executed
+concurrently in different files, it is very likely to trigger the
+WARN_ON, which will lead syzbot and xfstest to consider it as an
+abnormality.
+
+The comment above this warning also describes one of the easy
+triggering situations, which can easily trigger and cause
+xfstest&syzbot to report errors.
+
+[task A]			[task B]
+->hfsplus_file_release
+  ->hfsplus_file_truncate
+    ->hfs_find_init
+      ->mutex_lock
+    ->mutex_unlock
+				->hfsplus_write_begin
+				  ->hfsplus_get_block
+				    ->hfsplus_file_extend
+				      ->hfsplus_ext_read_extent
+				        ->hfs_find_init
+					  ->mutex_lock
+    ->hfsplus_free_extents
+      WARN_ON(mutex_is_locked) !!!
+
+Several threads could try to lock the shared extents tree.
+And warning can be triggered in one thread when another thread
+has locked the tree. This is the wrong behavior of the code and
+we need to remove the warning.
+
+Fixes: 31651c607151f ("hfsplus: avoid deadlock on file truncation")
+Reported-by: syzbot+8c0bc9f818702ff75b76@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/00000000000057fa4605ef101c4c@google.com/
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250529061807.2213498-1-frank.li@vivo.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fs_context.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/extents.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/linux/fs_context.h b/include/linux/fs_context.h
-index e869ce3ae660..40dd74bdd9fb 100644
---- a/include/linux/fs_context.h
-+++ b/include/linux/fs_context.h
-@@ -207,7 +207,7 @@ void logfc(struct fc_log *log, const char *prefix, char level, const char *fmt,
-  */
- #define infof(fc, fmt, ...) __logfc(fc, 'i', fmt, ## __VA_ARGS__)
- #define info_plog(p, fmt, ...) __plog(p, 'i', fmt, ## __VA_ARGS__)
--#define infofc(p, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
-+#define infofc(fc, fmt, ...) __plog((&(fc)->log), 'i', fmt, ## __VA_ARGS__)
+diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
+index c95a2f0ed4a7..fad1c250f150 100644
+--- a/fs/hfsplus/extents.c
++++ b/fs/hfsplus/extents.c
+@@ -342,9 +342,6 @@ static int hfsplus_free_extents(struct super_block *sb,
+ 	int i;
+ 	int err = 0;
  
- /**
-  * warnf - Store supplementary warning message
+-	/* Mapping the allocation file may lock the extent tree */
+-	WARN_ON(mutex_is_locked(&HFSPLUS_SB(sb)->ext_tree->tree_lock));
+-
+ 	hfsplus_dump_extent(extent);
+ 	for (i = 0; i < 8; extent++, i++) {
+ 		count = be32_to_cpu(extent->block_count);
 -- 
 2.39.5
 
