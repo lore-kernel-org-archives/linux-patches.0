@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7551335207C;
-	Tue, 26 Aug 2025 14:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C2A350D7F;
+	Tue, 26 Aug 2025 14:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218056; cv=none; b=Bsu0U0PHfWSiXpXa3UKYLbwrms8tigDg1Zrsj+L1y1lX7TvUQ8m2aq1H4pdPuY5VB48iY75Qw8yybVte+Zy1uIgOMygGyTM7IQG3I2nUWgyC02Guh6THHXNUenT1FD0JZ/oMkD0DORt36qJDbAcr+n98GwvdlloPRq5K8uXQDKU=
+	t=1756218059; cv=none; b=MDoO8++/yhW0FJDXI73f2LSGBOrJuB0qSgVuf5WPAxczvFsbSyaFjhK4FKm+mp0Kv0rJbYXjZR9UbZ5g7En6vWT9GT5A1lkTXzt78u40nOzrmpBl0txOewSGC+C5tTWdWVOu7qJ0RoyzE9/KJy5Tw06uNrYIetge72mJcUT5k7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218056; c=relaxed/simple;
-	bh=X6YqMUn871OxclPXbC5riGTFMyPe7TFaK7eaJRBLFXI=;
+	s=arc-20240116; t=1756218059; c=relaxed/simple;
+	bh=T+G28X2Qi8hWDk1qvHI5kWRwQJ71GlureO/3B32+JgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNa+pXqfcFFOzVHaDBt2ijfKitdW/vhZxkr25tc+bKa2YtDU4/wdNlrwsY5S/o4ltuVvG2dvBsiqObN7CKmHSajh7Y+CkxH4fx+NNbe5q90NLrXhdG2tiS+u/8weGZPsTImoUBYwbZa1VKUgn+Q20n+5HijLy5jwnV2DXybprNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HsJ4ZGup; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rw3/NJm0FiLn/LYHoIQYpVxh7Ma9tfsi2zVnj3WRvMubz2Tr8gcmcoUG/bq2f0MZFHlOqx2Oh5+EVsAj2O8iyHja5GfjLObqmXWkX1/LmZI4HXNw+LVfN7tD8X3DWgO1MHoBVnDN+7ezOFdUmufcruwrv+yc6J1YN6hvu6eAq0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSF6dQk/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsJ4ZGup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C2BC4CEF1;
-	Tue, 26 Aug 2025 14:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSF6dQk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A459FC4CEF1;
+	Tue, 26 Aug 2025 14:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218056;
-	bh=X6YqMUn871OxclPXbC5riGTFMyPe7TFaK7eaJRBLFXI=;
+	s=korg; t=1756218059;
+	bh=T+G28X2Qi8hWDk1qvHI5kWRwQJ71GlureO/3B32+JgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HsJ4ZGupZ3eJfWrFMr5EqdXx6cGvTwjOmS2sJ/RmEQMW51F2S10eB2uim8mKxcHLP
-	 mHEQomE8GBqdt0qhB3oN1o62VnhI8oPn0JvBr4MKtaQ+5Hdx6FlxizSGnQqkrnscvc
-	 8meyre4j8InVHQATthx9IV1/euCWxXIoG0VOXx44=
+	b=BSF6dQk/Wt/CJBSJ0km1mOXrCOK8PE/qd2uqHLlcf62JpFc8XcdhL5q+M/deEPttx
+	 qB6oYO1LvnK2z53nZNykFQJRBPJIK3XDUmo/Nz4KhAaM8YE3xY3MtHaCTTjRUpIAk5
+	 equgRON+xuqKH63ZhyiqZ8pWSp+nYueT0TWBhvQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.10 369/523] wifi: ath11k: fix source ring-buffer corruption
-Date: Tue, 26 Aug 2025 13:09:39 +0200
-Message-ID: <20250826110933.568985743@linuxfoundation.org>
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.10 378/523] media: hi556: correct the test pattern configuration
+Date: Tue, 26 Aug 2025 13:09:48 +0200
+Message-ID: <20250826110933.787659214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,56 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Bingbu Cao <bingbu.cao@intel.com>
 
-commit 6efa0df54022c6c9fd4d294b87622c7fcdc418c8 upstream.
+commit 020f602b068c9ce18d5056d02c8302199377d98d upstream.
 
-Add the missing memory barrier to make sure that LMAC source ring
-descriptors are written before updating the head pointer to avoid
-passing stale data to the firmware on weakly ordered architectures like
-aarch64.
+Hynix hi556 support 8 test pattern modes:
+hi556_test_pattern_menu[] = {
+{
+	"Disabled",
+	"Solid Colour",
+	"100% Colour Bars",
+	"Fade To Grey Colour Bars",
+	"PN9",
+	"Gradient Horizontal",
+	"Gradient Vertical",
+	"Check Board",
+	"Slant Pattern",
+}
 
-Note that non-LMAC rings use MMIO write accessors which have the
-required write memory barrier.
+The test pattern is set by a 8-bit register according to the
+specification.
++--------+-------------------------------+
+| BIT[0] |  Solid color                  |
++--------+-------------------------------+
+| BIT[1] |  Color bar                    |
++--------+-------------------------------+
+| BIT[2] |  Fade to grey color bar       |
++--------+-------------------------------+
+| BIT[3] |  PN9                          |
++--------+-------------------------------+
+| BIT[4] |  Gradient horizontal          |
++--------+-------------------------------+
+| BIT[5] |  Gradient vertical            |
++--------+-------------------------------+
+| BIT[6] |  Check board                  |
++--------+-------------------------------+
+| BIT[7] |  Slant pattern                |
++--------+-------------------------------+
+Based on function above, current test pattern programming is wrong.
+This patch fixes it by 'BIT(pattern - 1)'. If pattern is 0, driver
+will disable the test pattern generation and set the pattern to 0.
 
-Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org      # 5.6
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://patch.msgid.link/20250604143457.26032-5-johan+linaro@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: e62138403a84 ("media: hi556: Add support for Hi-556 sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/hal.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/media/i2c/hi556.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/hal.c
-+++ b/drivers/net/wireless/ath/ath11k/hal.c
-@@ -841,7 +841,11 @@ void ath11k_hal_srng_access_end(struct a
- 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
- 			srng->u.src_ring.last_tp =
- 				*(volatile u32 *)srng->u.src_ring.tp_addr;
--			*srng->u.src_ring.hp_addr = srng->u.src_ring.hp;
-+			/* Make sure descriptor is written before updating the
-+			 * head pointer.
-+			 */
-+			dma_wmb();
-+			WRITE_ONCE(*srng->u.src_ring.hp_addr, srng->u.src_ring.hp);
- 		} else {
- 			srng->u.dst_ring.last_hp = *srng->u.dst_ring.hp_addr;
- 			*srng->u.dst_ring.tp_addr = srng->u.dst_ring.tp;
-@@ -850,6 +854,10 @@ void ath11k_hal_srng_access_end(struct a
- 		if (srng->ring_dir == HAL_SRNG_DIR_SRC) {
- 			srng->u.src_ring.last_tp =
- 				*(volatile u32 *)srng->u.src_ring.tp_addr;
-+			/* Assume implementation use an MMIO write accessor
-+			 * which has the required wmb() so that the descriptor
-+			 * is written before the updating the head pointer.
-+			 */
- 			ath11k_hif_write32(ab,
- 					   (unsigned long)srng->u.src_ring.hp_addr -
- 					   (unsigned long)ab->mem,
+--- a/drivers/media/i2c/hi556.c
++++ b/drivers/media/i2c/hi556.c
+@@ -602,21 +602,23 @@ static int hi556_test_pattern(struct hi5
+ 	int ret;
+ 	u32 val;
+ 
+-	if (pattern) {
+-		ret = hi556_read_reg(hi556, HI556_REG_ISP,
+-				     HI556_REG_VALUE_08BIT, &val);
+-		if (ret)
+-			return ret;
+-
+-		ret = hi556_write_reg(hi556, HI556_REG_ISP,
+-				      HI556_REG_VALUE_08BIT,
+-				      val | HI556_REG_ISP_TPG_EN);
+-		if (ret)
+-			return ret;
+-	}
++	ret = hi556_read_reg(hi556, HI556_REG_ISP,
++			     HI556_REG_VALUE_08BIT, &val);
++	if (ret)
++		return ret;
++
++	val = pattern ? (val | HI556_REG_ISP_TPG_EN) :
++		(val & ~HI556_REG_ISP_TPG_EN);
++
++	ret = hi556_write_reg(hi556, HI556_REG_ISP,
++			      HI556_REG_VALUE_08BIT, val);
++	if (ret)
++		return ret;
++
++	val = pattern ? BIT(pattern - 1) : 0;
+ 
+ 	return hi556_write_reg(hi556, HI556_REG_TEST_PATTERN,
+-			       HI556_REG_VALUE_08BIT, pattern);
++			       HI556_REG_VALUE_08BIT, val);
+ }
+ 
+ static int hi556_set_ctrl(struct v4l2_ctrl *ctrl)
 
 
