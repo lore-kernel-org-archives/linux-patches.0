@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C5835209C;
-	Tue, 26 Aug 2025 14:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A902AE68;
+	Tue, 26 Aug 2025 14:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217476; cv=none; b=gYw7kTAdpsUyOIKAYE0xHTd1B4dJG8/7qZ/VUc9KiRqfYWhoyLu0jp3E+BrFMurYPWyegDpAjWERQe+i3wV7aDD6FOGz4oOVzMO2ixgG6JPiTwW7j1JpQi3F3Zb1B7JN+dmxQUAsgPW23nCXX4GlVaew7kXDEjfZhhR1vKSSjDU=
+	t=1756217477; cv=none; b=OI0WGLwwlJ4VpahjX6JuSZcqHehZ/ELiwn8gaF7RAJT3QURaFLeUaHsVjYHzu0ZwuPDvMKqj63+GHa8EkUzIXrLUEjTFBbCpcLwKb/ZDmCm2bqr0ITr1QO2wmtNZ/DnpYSjMpNod9zxeZOvev8lp4NDqUmUyYv88q0Dm4fhKrxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217476; c=relaxed/simple;
-	bh=Th40kzPvMI6EWkFLfSvMonoE94JkpXuCd9iiGBh2XJU=;
+	s=arc-20240116; t=1756217477; c=relaxed/simple;
+	bh=+nCrRWefvo087vhxSiDBB+6Ia2Q42qz0xkCfzXsRueU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byx01IhYQLvfsj5WTIugeoRYsjyVZ2QkkjZZm9nM/Wkd77cas6nc6V2mn7EL4wD2XVc+Vob033gvVqOopV8qF7BhXzFYiuDDWExG6T2i6GgMhxz8T1cFBZmqfsQyAx/HPHIMtWeIOyfTZ42EgGDsweH33fDzneinaSTTN+a1ajI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztszsCg2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ws4VvjEBlnc0QucBF62+u/2LByOcHrPkv4pSRzZdQYiNdXjPziDMlxnQ+tP6L/9HrKMS+MAi9FPycNgls6qUgSdfBj/PYknTOLOrjfsEy/STsm7GKb6pJ1Yt9JYvnWQEISUFGtc8JTfYMJYC9OQ2GpEiIKEbJfz3feclmdrQy5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am5AiQu3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztszsCg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29F1C113CF;
-	Tue, 26 Aug 2025 14:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am5AiQu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61926C4CEF1;
+	Tue, 26 Aug 2025 14:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217474;
-	bh=Th40kzPvMI6EWkFLfSvMonoE94JkpXuCd9iiGBh2XJU=;
+	s=korg; t=1756217476;
+	bh=+nCrRWefvo087vhxSiDBB+6Ia2Q42qz0xkCfzXsRueU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztszsCg2uutS2J9193irO5GmYDfKxb0X4vKgNQsiNCBJz0EUU+iYswRgifX/mjh5D
-	 ijWGBNA/UTabuyvGUNJNscKEDBFYnSmUIExIuoI1xmO544Skfxqz9pFzwfvCDbuXse
-	 bmP2DunqQqgdHKZ21VOIP4Tg/sKnUi6CSC7393O8=
+	b=Am5AiQu3+Pjw8lvcBld8rAlGXhqwez/v6Q01vkowsW3Y6oASq4WSiqTJajuKskZtf
+	 bpD/sAYrJm2kaxadtdkdcmr27xNKtV1w9uUoAevnVIWBQROsUvB85RtBTZKix2g2kq
+	 LOU9yVCnm9semvveJmeF0bJOCK0lMYbM7cf/2CbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 156/523] f2fs: fix to avoid UAF in f2fs_sync_inode_meta()
-Date: Tue, 26 Aug 2025 13:06:06 +0200
-Message-ID: <20250826110928.324065819@linuxfoundation.org>
+Subject: [PATCH 5.10 157/523] f2fs: fix to avoid panic in f2fs_evict_inode
+Date: Tue, 26 Aug 2025 13:06:07 +0200
+Message-ID: <20250826110928.346865771@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,231 +53,278 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 7c30d79930132466f5be7d0b57add14d1a016bda ]
+[ Upstream commit a509a55f8eecc8970b3980c6f06886bbff0e2f68 ]
 
-syzbot reported an UAF issue as below: [1] [2]
+As syzbot [1] reported as below:
 
-[1] https://syzkaller.appspot.com/text?tag=CrashReport&x=16594c60580000
-
+R10: 0000000000000100 R11: 0000000000000206 R12: 00007ffe17473450
+R13: 00007f28b1c10854 R14: 000000000000dae5 R15: 00007ffe17474520
+ </TASK>
+---[ end trace 0000000000000000 ]---
 ==================================================================
 BUG: KASAN: use-after-free in __list_del_entry_valid+0xa6/0x130 lib/list_debug.c:62
-Read of size 8 at addr ffff888100567dc8 by task kworker/u4:0/8
+Read of size 8 at addr ffff88812d962278 by task syz-executor/564
 
-CPU: 1 PID: 8 Comm: kworker/u4:0 Tainted: G        W          6.1.129-syzkaller-00017-g642656a36791 #0
+CPU: 1 PID: 564 Comm: syz-executor Tainted: G        W          6.1.129-syzkaller #0
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Workqueue: writeback wb_workfn (flush-7:0)
 Call Trace:
  <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x151/0x1b7 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:316 [inline]
- print_report+0x158/0x4e0 mm/kasan/report.c:427
- kasan_report+0x13c/0x170 mm/kasan/report.c:531
+ __dump_stack+0x21/0x24 lib/dump_stack.c:88
+ dump_stack_lvl+0xee/0x158 lib/dump_stack.c:106
+ print_address_description+0x71/0x210 mm/kasan/report.c:316
+ print_report+0x4a/0x60 mm/kasan/report.c:427
+ kasan_report+0x122/0x150 mm/kasan/report.c:531
  __asan_report_load8_noabort+0x14/0x20 mm/kasan/report_generic.c:351
  __list_del_entry_valid+0xa6/0x130 lib/list_debug.c:62
  __list_del_entry include/linux/list.h:134 [inline]
  list_del_init include/linux/list.h:206 [inline]
- f2fs_inode_synced+0x100/0x2e0 fs/f2fs/super.c:1553
- f2fs_update_inode+0x72/0x1c40 fs/f2fs/inode.c:588
- f2fs_update_inode_page+0x135/0x170 fs/f2fs/inode.c:706
- f2fs_write_inode+0x416/0x790 fs/f2fs/inode.c:734
+ f2fs_inode_synced+0xf7/0x2e0 fs/f2fs/super.c:1531
+ f2fs_update_inode+0x74/0x1c40 fs/f2fs/inode.c:585
+ f2fs_update_inode_page+0x137/0x170 fs/f2fs/inode.c:703
+ f2fs_write_inode+0x4ec/0x770 fs/f2fs/inode.c:731
  write_inode fs/fs-writeback.c:1460 [inline]
- __writeback_single_inode+0x4cf/0xb80 fs/fs-writeback.c:1677
- writeback_sb_inodes+0xb32/0x1910 fs/fs-writeback.c:1903
- __writeback_inodes_wb+0x118/0x3f0 fs/fs-writeback.c:1974
- wb_writeback+0x3da/0xa00 fs/fs-writeback.c:2081
- wb_check_background_flush fs/fs-writeback.c:2151 [inline]
- wb_do_writeback fs/fs-writeback.c:2239 [inline]
- wb_workfn+0xbba/0x1030 fs/fs-writeback.c:2266
- process_one_work+0x73d/0xcb0 kernel/workqueue.c:2299
- worker_thread+0xa60/0x1260 kernel/workqueue.c:2446
- kthread+0x26d/0x300 kernel/kthread.c:386
- ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
+ __writeback_single_inode+0x4a0/0xab0 fs/fs-writeback.c:1677
+ writeback_single_inode+0x221/0x8b0 fs/fs-writeback.c:1733
+ sync_inode_metadata+0xb6/0x110 fs/fs-writeback.c:2789
+ f2fs_sync_inode_meta+0x16d/0x2a0 fs/f2fs/checkpoint.c:1159
+ block_operations fs/f2fs/checkpoint.c:1269 [inline]
+ f2fs_write_checkpoint+0xca3/0x2100 fs/f2fs/checkpoint.c:1658
+ kill_f2fs_super+0x231/0x390 fs/f2fs/super.c:4668
+ deactivate_locked_super+0x98/0x100 fs/super.c:332
+ deactivate_super+0xaf/0xe0 fs/super.c:363
+ cleanup_mnt+0x45f/0x4e0 fs/namespace.c:1186
+ __cleanup_mnt+0x19/0x20 fs/namespace.c:1193
+ task_work_run+0x1c6/0x230 kernel/task_work.c:203
+ exit_task_work include/linux/task_work.h:39 [inline]
+ do_exit+0x9fb/0x2410 kernel/exit.c:871
+ do_group_exit+0x210/0x2d0 kernel/exit.c:1021
+ __do_sys_exit_group kernel/exit.c:1032 [inline]
+ __se_sys_exit_group kernel/exit.c:1030 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1030
+ x64_sys_call+0x7b4/0x9a0 arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x4c/0xa0 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x68/0xd2
+RIP: 0033:0x7f28b1b8e169
+Code: Unable to access opcode bytes at 0x7f28b1b8e13f.
+RSP: 002b:00007ffe174710a8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00007f28b1c10879 RCX: 00007f28b1b8e169
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000001
+RBP: 0000000000000002 R08: 00007ffe1746ee47 R09: 00007ffe17472360
+R10: 0000000000000009 R11: 0000000000000246 R12: 00007ffe17472360
+R13: 00007f28b1c10854 R14: 000000000000dae5 R15: 00007ffe17474520
  </TASK>
 
-Allocated by task 298:
+Allocated by task 569:
  kasan_save_stack mm/kasan/common.c:45 [inline]
  kasan_set_track+0x4b/0x70 mm/kasan/common.c:52
- kasan_save_alloc_info+0x1f/0x30 mm/kasan/generic.c:505
- __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:333
- kasan_slab_alloc include/linux/kasan.h:202 [inline]
- slab_post_alloc_hook+0x53/0x2c0 mm/slab.h:768
- slab_alloc_node mm/slub.c:3421 [inline]
- slab_alloc mm/slub.c:3431 [inline]
- __kmem_cache_alloc_lru mm/slub.c:3438 [inline]
- kmem_cache_alloc_lru+0x102/0x270 mm/slub.c:3454
- alloc_inode_sb include/linux/fs.h:3255 [inline]
- f2fs_alloc_inode+0x2d/0x350 fs/f2fs/super.c:1437
+ kasan_save_alloc_info+0x25/0x30 mm/kasan/generic.c:505
+ __kasan_slab_alloc+0x72/0x80 mm/kasan/common.c:328
+ kasan_slab_alloc include/linux/kasan.h:201 [inline]
+ slab_post_alloc_hook+0x4f/0x2c0 mm/slab.h:737
+ slab_alloc_node mm/slub.c:3398 [inline]
+ slab_alloc mm/slub.c:3406 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
+ kmem_cache_alloc_lru+0x104/0x220 mm/slub.c:3429
+ alloc_inode_sb include/linux/fs.h:3245 [inline]
+ f2fs_alloc_inode+0x2d/0x340 fs/f2fs/super.c:1419
  alloc_inode fs/inode.c:261 [inline]
- iget_locked+0x18c/0x7e0 fs/inode.c:1373
- f2fs_iget+0x55/0x4ca0 fs/f2fs/inode.c:486
- f2fs_lookup+0x3c1/0xb50 fs/f2fs/namei.c:484
- __lookup_slow+0x2b9/0x3e0 fs/namei.c:1689
- lookup_slow+0x5a/0x80 fs/namei.c:1706
- walk_component+0x2e7/0x410 fs/namei.c:1997
- lookup_last fs/namei.c:2454 [inline]
- path_lookupat+0x16d/0x450 fs/namei.c:2478
- filename_lookup+0x251/0x600 fs/namei.c:2507
- vfs_statx+0x107/0x4b0 fs/stat.c:229
+ iget_locked+0x186/0x880 fs/inode.c:1373
+ f2fs_iget+0x55/0x4c60 fs/f2fs/inode.c:483
+ f2fs_lookup+0x366/0xab0 fs/f2fs/namei.c:487
+ __lookup_slow+0x2a3/0x3d0 fs/namei.c:1690
+ lookup_slow+0x57/0x70 fs/namei.c:1707
+ walk_component+0x2e6/0x410 fs/namei.c:1998
+ lookup_last fs/namei.c:2455 [inline]
+ path_lookupat+0x180/0x490 fs/namei.c:2479
+ filename_lookup+0x1f0/0x500 fs/namei.c:2508
+ vfs_statx+0x10b/0x660 fs/stat.c:229
  vfs_fstatat fs/stat.c:267 [inline]
- vfs_lstat include/linux/fs.h:3434 [inline]
+ vfs_lstat include/linux/fs.h:3424 [inline]
  __do_sys_newlstat fs/stat.c:423 [inline]
- __se_sys_newlstat+0xda/0x7c0 fs/stat.c:417
+ __se_sys_newlstat+0xd5/0x350 fs/stat.c:417
  __x64_sys_newlstat+0x5b/0x70 fs/stat.c:417
- x64_sys_call+0x52/0x9a0 arch/x86/include/generated/asm/syscalls_64.h:7
+ x64_sys_call+0x393/0x9a0 arch/x86/include/generated/asm/syscalls_64.h:7
  do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x3b/0x80 arch/x86/entry/common.c:81
+ do_syscall_64+0x4c/0xa0 arch/x86/entry/common.c:81
  entry_SYSCALL_64_after_hwframe+0x68/0xd2
 
-Freed by task 0:
+Freed by task 13:
  kasan_save_stack mm/kasan/common.c:45 [inline]
  kasan_set_track+0x4b/0x70 mm/kasan/common.c:52
- kasan_save_free_info+0x2b/0x40 mm/kasan/generic.c:516
- ____kasan_slab_free+0x131/0x180 mm/kasan/common.c:241
- __kasan_slab_free+0x11/0x20 mm/kasan/common.c:249
- kasan_slab_free include/linux/kasan.h:178 [inline]
- slab_free_hook mm/slub.c:1745 [inline]
- slab_free_freelist_hook mm/slub.c:1771 [inline]
- slab_free mm/slub.c:3686 [inline]
- kmem_cache_free+0x291/0x560 mm/slub.c:3711
- f2fs_free_inode+0x24/0x30 fs/f2fs/super.c:1584
- i_callback+0x4b/0x70 fs/inode.c:250
- rcu_do_batch+0x552/0xbe0 kernel/rcu/tree.c:2297
- rcu_core+0x502/0xf40 kernel/rcu/tree.c:2557
+ kasan_save_free_info+0x31/0x50 mm/kasan/generic.c:516
+ ____kasan_slab_free+0x132/0x180 mm/kasan/common.c:236
+ __kasan_slab_free+0x11/0x20 mm/kasan/common.c:244
+ kasan_slab_free include/linux/kasan.h:177 [inline]
+ slab_free_hook mm/slub.c:1724 [inline]
+ slab_free_freelist_hook+0xc2/0x190 mm/slub.c:1750
+ slab_free mm/slub.c:3661 [inline]
+ kmem_cache_free+0x12d/0x2a0 mm/slub.c:3683
+ f2fs_free_inode+0x24/0x30 fs/f2fs/super.c:1562
+ i_callback+0x4c/0x70 fs/inode.c:250
+ rcu_do_batch+0x503/0xb80 kernel/rcu/tree.c:2297
+ rcu_core+0x5a2/0xe70 kernel/rcu/tree.c:2557
  rcu_core_si+0x9/0x10 kernel/rcu/tree.c:2574
- handle_softirqs+0x1db/0x650 kernel/softirq.c:624
- __do_softirq kernel/softirq.c:662 [inline]
- invoke_softirq kernel/softirq.c:479 [inline]
- __irq_exit_rcu+0x52/0xf0 kernel/softirq.c:711
- irq_exit_rcu+0x9/0x10 kernel/softirq.c:723
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1118 [inline]
- sysvec_apic_timer_interrupt+0xa9/0xc0 arch/x86/kernel/apic/apic.c:1118
- asm_sysvec_apic_timer_interrupt+0x1b/0x20 arch/x86/include/asm/idtentry.h:691
+ handle_softirqs+0x178/0x500 kernel/softirq.c:578
+ run_ksoftirqd+0x28/0x30 kernel/softirq.c:945
+ smpboot_thread_fn+0x45a/0x8c0 kernel/smpboot.c:164
+ kthread+0x270/0x310 kernel/kthread.c:376
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
 
 Last potentially related work creation:
- kasan_save_stack+0x3b/0x60 mm/kasan/common.c:45
- __kasan_record_aux_stack+0xb4/0xc0 mm/kasan/generic.c:486
+ kasan_save_stack+0x3a/0x60 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0xb6/0xc0 mm/kasan/generic.c:486
  kasan_record_aux_stack_noalloc+0xb/0x10 mm/kasan/generic.c:496
- __call_rcu_common kernel/rcu/tree.c:2807 [inline]
- call_rcu+0xdc/0x10f0 kernel/rcu/tree.c:2926
+ call_rcu+0xd4/0xf70 kernel/rcu/tree.c:2845
  destroy_inode fs/inode.c:316 [inline]
- evict+0x87d/0x930 fs/inode.c:720
+ evict+0x7da/0x870 fs/inode.c:720
  iput_final fs/inode.c:1834 [inline]
- iput+0x616/0x690 fs/inode.c:1860
- do_unlinkat+0x4e1/0x920 fs/namei.c:4396
- __do_sys_unlink fs/namei.c:4437 [inline]
- __se_sys_unlink fs/namei.c:4435 [inline]
- __x64_sys_unlink+0x49/0x50 fs/namei.c:4435
- x64_sys_call+0x289/0x9a0 arch/x86/include/generated/asm/syscalls_64.h:88
+ iput+0x62b/0x830 fs/inode.c:1860
+ do_unlinkat+0x356/0x540 fs/namei.c:4397
+ __do_sys_unlink fs/namei.c:4438 [inline]
+ __se_sys_unlink fs/namei.c:4436 [inline]
+ __x64_sys_unlink+0x49/0x50 fs/namei.c:4436
+ x64_sys_call+0x958/0x9a0 arch/x86/include/generated/asm/syscalls_64.h:88
  do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x3b/0x80 arch/x86/entry/common.c:81
+ do_syscall_64+0x4c/0xa0 arch/x86/entry/common.c:81
  entry_SYSCALL_64_after_hwframe+0x68/0xd2
 
-The buggy address belongs to the object at ffff888100567a10
- which belongs to the cache f2fs_inode_cache of size 1360
-The buggy address is located 952 bytes inside of
- 1360-byte region [ffff888100567a10, ffff888100567f60)
+The buggy address belongs to the object at ffff88812d961f20
+ which belongs to the cache f2fs_inode_cache of size 1200
+The buggy address is located 856 bytes inside of
+ 1200-byte region [ffff88812d961f20, ffff88812d9623d0)
 
 The buggy address belongs to the physical page:
-page:ffffea0004015800 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x100560
-head:ffffea0004015800 order:3 compound_mapcount:0 compound_pincount:0
+page:ffffea0004b65800 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x12d960
+head:ffffea0004b65800 order:2 compound_mapcount:0 compound_pincount:0
 flags: 0x4000000000010200(slab|head|zone=1)
-raw: 4000000000010200 0000000000000000 dead000000000122 ffff8881002c4d80
-raw: 0000000000000000 0000000080160016 00000001ffffffff 0000000000000000
+raw: 4000000000010200 0000000000000000 dead000000000122 ffff88810a94c500
+raw: 0000000000000000 00000000800c000c 00000001ffffffff 0000000000000000
 page dumped because: kasan: bad access detected
 page_owner tracks the page as allocated
-page last allocated via order 3, migratetype Reclaimable, gfp_mask 0xd2050(__GFP_IO|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC|__GFP_RECLAIMABLE), pid 298, tgid 298 (syz-executor330), ts 26489303743, free_ts 0
- set_page_owner include/linux/page_owner.h:33 [inline]
- post_alloc_hook+0x213/0x220 mm/page_alloc.c:2637
- prep_new_page+0x1b/0x110 mm/page_alloc.c:2644
- get_page_from_freelist+0x3a98/0x3b10 mm/page_alloc.c:4539
- __alloc_pages+0x234/0x610 mm/page_alloc.c:5837
- alloc_slab_page+0x6c/0xf0 include/linux/gfp.h:-1
- allocate_slab mm/slub.c:1962 [inline]
- new_slab+0x90/0x3e0 mm/slub.c:2015
- ___slab_alloc+0x6f9/0xb80 mm/slub.c:3203
- __slab_alloc+0x5d/0xa0 mm/slub.c:3302
- slab_alloc_node mm/slub.c:3387 [inline]
- slab_alloc mm/slub.c:3431 [inline]
- __kmem_cache_alloc_lru mm/slub.c:3438 [inline]
- kmem_cache_alloc_lru+0x149/0x270 mm/slub.c:3454
- alloc_inode_sb include/linux/fs.h:3255 [inline]
- f2fs_alloc_inode+0x2d/0x350 fs/f2fs/super.c:1437
+page last allocated via order 2, migratetype Reclaimable, gfp_mask 0x1d2050(__GFP_IO|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC|__GFP_HARDWALL|__GFP_RECLAIMABLE), pid 569, tgid 568 (syz.2.16), ts 55943246141, free_ts 0
+ set_page_owner include/linux/page_owner.h:31 [inline]
+ post_alloc_hook+0x1d0/0x1f0 mm/page_alloc.c:2532
+ prep_new_page mm/page_alloc.c:2539 [inline]
+ get_page_from_freelist+0x2e63/0x2ef0 mm/page_alloc.c:4328
+ __alloc_pages+0x235/0x4b0 mm/page_alloc.c:5605
+ alloc_slab_page include/linux/gfp.h:-1 [inline]
+ allocate_slab mm/slub.c:1939 [inline]
+ new_slab+0xec/0x4b0 mm/slub.c:1992
+ ___slab_alloc+0x6f6/0xb50 mm/slub.c:3180
+ __slab_alloc+0x5e/0xa0 mm/slub.c:3279
+ slab_alloc_node mm/slub.c:3364 [inline]
+ slab_alloc mm/slub.c:3406 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
+ kmem_cache_alloc_lru+0x13f/0x220 mm/slub.c:3429
+ alloc_inode_sb include/linux/fs.h:3245 [inline]
+ f2fs_alloc_inode+0x2d/0x340 fs/f2fs/super.c:1419
  alloc_inode fs/inode.c:261 [inline]
- iget_locked+0x18c/0x7e0 fs/inode.c:1373
- f2fs_iget+0x55/0x4ca0 fs/f2fs/inode.c:486
- f2fs_fill_super+0x5360/0x6dc0 fs/f2fs/super.c:4488
- mount_bdev+0x282/0x3b0 fs/super.c:1445
- f2fs_mount+0x34/0x40 fs/f2fs/super.c:4743
- legacy_get_tree+0xf1/0x190 fs/fs_context.c:632
+ iget_locked+0x186/0x880 fs/inode.c:1373
+ f2fs_iget+0x55/0x4c60 fs/f2fs/inode.c:483
+ f2fs_fill_super+0x3ad7/0x6bb0 fs/f2fs/super.c:4293
+ mount_bdev+0x2ae/0x3e0 fs/super.c:1443
+ f2fs_mount+0x34/0x40 fs/f2fs/super.c:4642
+ legacy_get_tree+0xea/0x190 fs/fs_context.c:632
+ vfs_get_tree+0x89/0x260 fs/super.c:1573
+ do_new_mount+0x25a/0xa20 fs/namespace.c:3056
 page_owner free stack trace missing
 
 Memory state around the buggy address:
- ffff888100567c80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff888100567d00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff888100567d80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                              ^
- ffff888100567e00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff888100567e80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88812d962100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88812d962180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88812d962200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                                ^
+ ffff88812d962280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88812d962300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
 ==================================================================
 
-[2] https://syzkaller.appspot.com/text?tag=CrashLog&x=13654c60580000
+[1] https://syzkaller.appspot.com/x/report.txt?x=13448368580000
 
-[   24.675720][   T28] audit: type=1400 audit(1745327318.732:72): avc:  denied  { write } for  pid=298 comm="syz-executor399" name="/" dev="loop0" ino=3 scontext=root:sysadm_r:sysadm_t tcontext=system_u:object_r:unlabeled_t tclass=dir permissive=1
-[   24.705426][  T296] ------------[ cut here ]------------
-[   24.706608][   T28] audit: type=1400 audit(1745327318.732:73): avc:  denied  { remove_name } for  pid=298 comm="syz-executor399" name="file0" dev="loop0" ino=4 scontext=root:sysadm_r:sysadm_t tcontext=system_u:object_r:unlabeled_t tclass=dir permissive=1
-[   24.711550][  T296] WARNING: CPU: 0 PID: 296 at fs/f2fs/inode.c:847 f2fs_evict_inode+0x1262/0x1540
-[   24.734141][   T28] audit: type=1400 audit(1745327318.732:74): avc:  denied  { rename } for  pid=298 comm="syz-executor399" name="file0" dev="loop0" ino=4 scontext=root:sysadm_r:sysadm_t tcontext=system_u:object_r:unlabeled_t tclass=dir permissive=1
-[   24.742969][  T296] Modules linked in:
-[   24.765201][   T28] audit: type=1400 audit(1745327318.732:75): avc:  denied  { add_name } for  pid=298 comm="syz-executor399" name="bus" scontext=root:sysadm_r:sysadm_t tcontext=system_u:object_r:unlabeled_t tclass=dir permissive=1
-[   24.768847][  T296] CPU: 0 PID: 296 Comm: syz-executor399 Not tainted 6.1.129-syzkaller-00017-g642656a36791 #0
-[   24.799506][  T296] Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-[   24.809401][  T296] RIP: 0010:f2fs_evict_inode+0x1262/0x1540
-[   24.815018][  T296] Code: 34 70 4a ff eb 0d e8 2d 70 4a ff 4d 89 e5 4c 8b 64 24 18 48 8b 5c 24 28 4c 89 e7 e8 78 38 03 00 e9 84 fc ff ff e8 0e 70 4a ff <0f> 0b 4c 89 f7 be 08 00 00 00 e8 7f 21 92 ff f0 41 80 0e 04 e9 61
-[   24.834584][  T296] RSP: 0018:ffffc90000db7a40 EFLAGS: 00010293
-[   24.840465][  T296] RAX: ffffffff822aca42 RBX: 0000000000000002 RCX: ffff888110948000
-[   24.848291][  T296] RDX: 0000000000000000 RSI: 0000000000000002 RDI: 0000000000000000
-[   24.856064][  T296] RBP: ffffc90000db7bb0 R08: ffffffff822ac6a8 R09: ffffed10200b005d
-[   24.864073][  T296] R10: 0000000000000000 R11: dffffc0000000001 R12: ffff888100580000
-[   24.871812][  T296] R13: dffffc0000000000 R14: ffff88810fef4078 R15: 1ffff920001b6f5c
+This bug can be reproduced w/ the reproducer [2], once we enable
+CONFIG_F2FS_CHECK_FS config, the reproducer will trigger panic as below,
+so the direct reason of this bug is the same as the one below patch [3]
+fixed.
 
-The root cause is w/ a fuzzed image, f2fs may missed to clear FI_DIRTY_INODE
-flag for target inode, after f2fs_evict_inode(), the inode is still linked in
-sbi->inode_list[DIRTY_META] global list, once it triggers checkpoint,
-f2fs_sync_inode_meta() may access the released inode.
+kernel BUG at fs/f2fs/inode.c:857!
+RIP: 0010:f2fs_evict_inode+0x1204/0x1a20
+Call Trace:
+ <TASK>
+ evict+0x32a/0x7a0
+ do_unlinkat+0x37b/0x5b0
+ __x64_sys_unlink+0xad/0x100
+ do_syscall_64+0x5a/0xb0
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+RIP: 0010:f2fs_evict_inode+0x1204/0x1a20
 
-In f2fs_evict_inode(), let's always call f2fs_inode_synced() to clear
-FI_DIRTY_INODE flag and drop inode from global dirty list to avoid this
-UAF issue.
+[2] https://syzkaller.appspot.com/x/repro.c?x=17495ccc580000
+[3] https://lore.kernel.org/linux-f2fs-devel/20250702120321.1080759-1-chao@kernel.org
+
+Tracepoints before panic:
+
+f2fs_unlink_enter: dev = (7,0), dir ino = 3, i_size = 4096, i_blocks = 8, name = file1
+f2fs_unlink_exit: dev = (7,0), ino = 7, ret = 0
+f2fs_evict_inode: dev = (7,0), ino = 7, pino = 3, i_mode = 0x81ed, i_size = 10, i_nlink = 0, i_blocks = 0, i_advise = 0x0
+f2fs_truncate_node: dev = (7,0), ino = 7, nid = 8, block_address = 0x3c05
+
+f2fs_unlink_enter: dev = (7,0), dir ino = 3, i_size = 4096, i_blocks = 8, name = file3
+f2fs_unlink_exit: dev = (7,0), ino = 8, ret = 0
+f2fs_evict_inode: dev = (7,0), ino = 8, pino = 3, i_mode = 0x81ed, i_size = 9000, i_nlink = 0, i_blocks = 24, i_advise = 0x4
+f2fs_truncate: dev = (7,0), ino = 8, pino = 3, i_mode = 0x81ed, i_size = 0, i_nlink = 0, i_blocks = 24, i_advise = 0x4
+f2fs_truncate_blocks_enter: dev = (7,0), ino = 8, i_size = 0, i_blocks = 24, start file offset = 0
+f2fs_truncate_blocks_exit: dev = (7,0), ino = 8, ret = -2
+
+The root cause is: in the fuzzed image, dnode #8 belongs to inode #7,
+after inode #7 eviction, dnode #8 was dropped.
+
+However there is dirent that has ino #8, so, once we unlink file3, in
+f2fs_evict_inode(), both f2fs_truncate() and f2fs_update_inode_page()
+will fail due to we can not load node #8, result in we missed to call
+f2fs_inode_synced() to clear inode dirty status.
+
+Let's fix this by calling f2fs_inode_synced() in error path of
+f2fs_evict_inode().
+
+PS: As I verified, the reproducer [2] can trigger this bug in v6.1.129,
+but it failed in v6.16-rc4, this is because the testcase will stop due to
+other corruption has been detected by f2fs:
+
+F2FS-fs (loop0): inconsistent node block, node_type:2, nid:8, node_footer[nid:8,ino:8,ofs:0,cpver:5013063228981249506,blkaddr:15366]
+F2FS-fs (loop0): f2fs_lookup: inode (ino=9) has zero i_nlink
 
 Fixes: 0f18b462b2e5 ("f2fs: flush inode metadata when checkpoint is doing")
-Closes: https://syzkaller.appspot.com/bug?extid=849174b2efaf0d8be6ba
+Closes: https://syzkaller.appspot.com/x/report.txt?x=13448368580000
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/f2fs/inode.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 452c0240cc11..c858a354a19f 100644
+index c858a354a19f..a3bcf19cd586 100644
 --- a/fs/f2fs/inode.c
 +++ b/fs/f2fs/inode.c
-@@ -813,8 +813,12 @@ void f2fs_evict_inode(struct inode *inode)
- 	if (likely(!f2fs_cp_error(sbi) &&
- 				!is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
- 		f2fs_bug_on(sbi, is_inode_flag_set(inode, FI_DIRTY_INODE));
--	else
--		f2fs_inode_synced(inode);
+@@ -798,6 +798,19 @@ void f2fs_evict_inode(struct inode *inode)
+ 		f2fs_update_inode_page(inode);
+ 		if (dquot_initialize_needed(inode))
+ 			set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
 +
-+	/*
-+	 * anyway, it needs to remove the inode from sbi->inode_list[DIRTY_META]
-+	 * list to avoid UAF in f2fs_sync_inode_meta() during checkpoint.
-+	 */
-+	f2fs_inode_synced(inode);
- 
- 	/* for the case f2fs_new_inode() was failed, .i_ino is zero, skip it */
- 	if (inode->i_ino)
++		/*
++		 * If both f2fs_truncate() and f2fs_update_inode_page() failed
++		 * due to fuzzed corrupted inode, call f2fs_inode_synced() to
++		 * avoid triggering later f2fs_bug_on().
++		 */
++		if (is_inode_flag_set(inode, FI_DIRTY_INODE)) {
++			f2fs_warn(sbi,
++				"f2fs_evict_inode: inode is dirty, ino:%lu",
++				inode->i_ino);
++			f2fs_inode_synced(inode);
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++		}
+ 	}
+ 	sb_end_intwrite(inode->i_sb);
+ no_delete:
 -- 
 2.39.5
 
