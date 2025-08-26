@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35715352071;
-	Tue, 26 Aug 2025 14:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F68352FC4;
+	Tue, 26 Aug 2025 14:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217453; cv=none; b=P5gD1GRMIdCvqNpyplX3BVkKgHTgphqIChzZCo8wLPtu1TrbaTOlfdhOAcwNMfKs1JRP13/JlPYlxw/iN5y2NMfdY28Bj6gy+UtwckhSlY2cfJgm0tBnIvnLoP5knjbK5LWp6lC8BF5ZqwcOGCLAkpmxRg3JwFmvOadsejMqfI4=
+	t=1756217456; cv=none; b=n66BVFQHo1xM8c7nPf+OKO53x8us+ml8Ju+5znH8WqJMdjwPkPSYyPCAXbysNGIBitqBosiR5gpdwYTieBQ2LXOuhHRW2txI6BcDiatZZyN5iyfDhwfbYQnb3WEDQ7WMweto/ZRhJ8uSEk0Pb1U2m6OSWJTogF9nEBChYNYYWIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217453; c=relaxed/simple;
-	bh=ZwbN4QhHh3+L5L3VBeP5EpxvEb8W6Ez/GuO9qirH55A=;
+	s=arc-20240116; t=1756217456; c=relaxed/simple;
+	bh=iBJPYxh4OBViWXNm1+5pJytfJ3NE2AjMM337l0zovP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BN9UyOv2uQBbHbbULmbGaCn9W7b9PHwbP6s/o9OvEsynrYYQz7qJxkRy+AsZ0d6nt3rv22FkqK57YkkkKfdZvrR5pcZaiRlPuKiS84KeQcE3Ciq4beaOlZ7ex86mWg5ZMneVjph3/xIBhClEey+MxWgEL9VoAQFNPZw391Cub30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzkBv5Kv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBxhY61JiL5RgniVFPvEtJ29HPvX4Cvri4roeG1vuYW/cE16pRdbukO0cn98Coi9wZUsPJhJO+C3yo+fe8wj6BgXbF6yKr1L8TqpR1GSRnD1gy6LQB5te9WPKx52L1oiFrN7TtiHhcUyjg4R+2kt52bOik/VJOsJPa1vNUqk98g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khjJk/Bt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzkBv5Kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3459C4CEF1;
-	Tue, 26 Aug 2025 14:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khjJk/Bt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCFCC4CEF1;
+	Tue, 26 Aug 2025 14:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217453;
-	bh=ZwbN4QhHh3+L5L3VBeP5EpxvEb8W6Ez/GuO9qirH55A=;
+	s=korg; t=1756217455;
+	bh=iBJPYxh4OBViWXNm1+5pJytfJ3NE2AjMM337l0zovP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzkBv5KvMw/TlKw/DlJRuEb7pMhO1PqhtrDmTmemvydQcNu1onW1ebpVWDH4MlHuI
-	 dXvbjWLnHNEGcXg7j1GnpCPFweViOkzMXIkXU7iKmOBSPlEKqLBOSsNI3dSHPAow4G
-	 j3AWCur0mgROsdd8NkZPREWh+9ndPFV3W1U6oKeQ=
+	b=khjJk/BtJgLEsP3VRPz4cTet60xePiCbG/nAXJ2fRF16WhraL18Ch4onuOhD50lAF
+	 ajJO3gJnNVvmGaVWe4Avpf8o+DL6FwRQtV1/DzBf3MATlrMVJL+XaMbuhxV1D4Vjfd
+	 WiVt3XA4+1YNS6OzU6vFatJTlxVX5L1vNTGWx0L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/523] module: Restore the moduleparam prefix length check
-Date: Tue, 26 Aug 2025 13:05:59 +0200
-Message-ID: <20250826110928.163601060@linuxfoundation.org>
+Subject: [PATCH 5.10 150/523] rtc: ds1307: fix incorrect maximum clock rate handling
+Date: Tue, 26 Aug 2025 13:06:00 +0200
+Message-ID: <20250826110928.186179936@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,59 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit bdc877ba6b7ff1b6d2ebeff11e63da4a50a54854 ]
+[ Upstream commit cf6eb547a24af7ad7bbd2abe9c5327f956bbeae8 ]
 
-The moduleparam code allows modules to provide their own definition of
-MODULE_PARAM_PREFIX, instead of using the default KBUILD_MODNAME ".".
+When ds3231_clk_sqw_round_rate() is called with a requested rate higher
+than the highest supported rate, it currently returns 0, which disables
+the clock. According to the clk API, round_rate() should instead return
+the highest supported rate. Update the function to return the maximum
+supported rate in this case.
 
-Commit 730b69d22525 ("module: check kernel param length at compile time,
-not runtime") added a check to ensure the prefix doesn't exceed
-MODULE_NAME_LEN, as this is what param_sysfs_builtin() expects.
-
-Later, commit 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking
-for sysfs perms.") removed this check, but there is no indication this was
-intentional.
-
-Since the check is still useful for param_sysfs_builtin() to function
-properly, reintroduce it in __module_param_call(), but in a modernized form
-using static_assert().
-
-While here, clean up the __module_param_call() comments. In particular,
-remove the comment "Default value instead of permissions?", which comes
-from commit 9774a1f54f17 ("[PATCH] Compile-time check re world-writeable
-module params"). This comment was related to the test variable
-__param_perm_check_##name, which was removed in the previously mentioned
-commit 58f86cc89c33.
-
-Fixes: 58f86cc89c33 ("VERIFY_OCTAL_PERMISSIONS: stricter checking for sysfs perms.")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Link: https://lore.kernel.org/r/20250630143535.267745-4-petr.pavlu@suse.com
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Fixes: 6c6ff145b3346 ("rtc: ds1307: add clock provider support for DS3231")
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/r/20250710-rtc-clk-round-rate-v1-1-33140bb2278e@redhat.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/moduleparam.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-ds1307.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index f25a1c484390..2c9d43eed9c7 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -282,10 +282,9 @@ struct kparam_array
- #define __moduleparam_const const
- #endif
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index 3a2401ce2ec9..ba420201505c 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -1518,7 +1518,7 @@ static long ds3231_clk_sqw_round_rate(struct clk_hw *hw, unsigned long rate,
+ 			return ds3231_clk_sqw_rates[i];
+ 	}
  
--/* This is the fundamental function for registering boot/module
--   parameters. */
-+/* This is the fundamental function for registering boot/module parameters. */
- #define __module_param_call(prefix, name, ops, arg, perm, level, flags)	\
--	/* Default value instead of permissions? */			\
-+	static_assert(sizeof(""prefix) - 1 <= MAX_PARAM_PREFIX_LEN);	\
- 	static const char __param_str_##name[] = prefix #name;		\
- 	static struct kernel_param __moduleparam_const __param_##name	\
- 	__used								\
+-	return 0;
++	return ds3231_clk_sqw_rates[ARRAY_SIZE(ds3231_clk_sqw_rates) - 1];
+ }
+ 
+ static int ds3231_clk_sqw_set_rate(struct clk_hw *hw, unsigned long rate,
 -- 
 2.39.5
 
