@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB2D352FFF;
-	Tue, 26 Aug 2025 14:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABB83568EA;
+	Tue, 26 Aug 2025 14:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218384; cv=none; b=F8MgqDR5E0uWgtZo6suhfhCVYQ8oV3O4LScfhoys+6uuTyhSmOmSt1hG4hLArn7MwNaJYI1zeIl26MBLTZmXQ18TyrU1QAQYFITOBhfyuUanTg2UVRxhHgdwaWFnRxu5ckvb06cVxxmMGn0cEii8yFNUZ5Z9vhe+1L7prB0//Es=
+	t=1756218387; cv=none; b=n8JD2LOS3YOLqc3fO/osaEsYu+ji7Zvp/PxvpaIJE7I6crcq2XQ6DBSwRFELkpcYWahY9aYACXnu9+0D6xxToUNxDwom9FMcCEzpqqAfG9RmJ+fxUPqQy62ntzeefsoFSVZ0FaG8qEoPwj58rM0sYVB+a/qGGHdDQzm6QJ0bvYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218384; c=relaxed/simple;
-	bh=rOL7SMgwNeWDyPpdW6X0uRWobSIn5BNiX5iOPvc4JnE=;
+	s=arc-20240116; t=1756218387; c=relaxed/simple;
+	bh=eFdP8uQwayKi3f43Bg6xyNOGDUSDmCN15hH9YAb6QQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8A1eOujIyTsrllOp7GyePR4HyQApY4dnI4n0T/ZmCIeY0KYVBGX3P/eZrSZhMDdYhdJODnsR8jPeuS/Er9iAj+jG+fkHas+CnzNs3fM7o1p5SR55yf15k9RVrJE/5ar9bM4ygtCyQ2iN+PMEcrsXWDU0nhG2dHCo3r5ESI4e84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSjOy5tr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RB8gTfLrbJ/T7JZy3uj4xvgap7wFNCTIfADAKeOsB8BpZNpzyw8aUSTQ/qJ5G2VCg/eT9jAG5JvxVHsl3eLsUR+TennMDdjEjgLBMltPkETAGTjhJbHNGrwFZinHOXPZ9sn7mBv4tE/n5Y2vWZC26o3ZF1c89wwR4u8oB0WxbKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjXGKX3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSjOy5tr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AA6C4CEF1;
-	Tue, 26 Aug 2025 14:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjXGKX3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB075C4CEF1;
+	Tue, 26 Aug 2025 14:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218384;
-	bh=rOL7SMgwNeWDyPpdW6X0uRWobSIn5BNiX5iOPvc4JnE=;
+	s=korg; t=1756218387;
+	bh=eFdP8uQwayKi3f43Bg6xyNOGDUSDmCN15hH9YAb6QQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSjOy5trpnax4m5SlF0a41xdKs0XtfPqzMH+7Pbvat8aosUkblkjSFXmBPqKQmyG8
-	 RYYszFQ0VxS6GgUmd66HMSierYOp24lcsGZ2OnY/1BEbWNTXbF+NWqwFZRaAZhi6dT
-	 bJjzx+jIKka2KCGB5PDJGadciH5bO9mgQL35bGg0=
+	b=fjXGKX3KLuveHge4yX5BUxcOTvvtgUs1hV4/wUKw81NiytJmKcVro2uHaO2dpzPPz
+	 4vG5Vxfndnde/co6FrDeUPiFzaMavs0Z4HCI0P0RkjEuPJxnbSDphSsVEhJ4ZpQbUR
+	 j6/Mkc1e1uzWBhheEdDcYWFNUlbiu/pTMeAsCJbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armando Budianto <sprite@gnuweeb.org>,
-	Simon Horman <horms@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Subject: [PATCH 5.10 500/523] net: usbnet: Fix the wrong netif_carrier_on() call
-Date: Tue, 26 Aug 2025 13:11:50 +0200
-Message-ID: <20250826110936.773440242@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 501/523] compiler: remove __ADDRESSABLE_ASM{_STR,}() again
+Date: Tue, 26 Aug 2025 13:11:51 +0200
+Message-ID: <20250826110936.798345728@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,57 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 8466d393700f9ccef68134d3349f4e0a087679b9 upstream.
+[ Upstream commit 8ea815399c3fcce1889bd951fec25b5b9a3979c1 ]
 
-The commit referenced in the Fixes tag causes usbnet to malfunction
-(identified via git bisect). Post-commit, my external RJ45 LAN cable
-fails to connect. Linus also reported the same issue after pulling that
-commit.
+__ADDRESSABLE_ASM_STR() is where the necessary stringification happens.
+As long as "sym" doesn't contain any odd characters, no quoting is
+required for its use with .quad / .long. In fact the quotation gets in
+the way with gas 2.25; it's only from 2.26 onwards that quoted symbols
+are half-way properly supported.
 
-The code has a logic error: netif_carrier_on() is only called when the
-link is already on. Fix this by moving the netif_carrier_on() call
-outside the if-statement entirely. This ensures it is always called
-when EVENT_LINK_CARRIER_ON is set and properly clears it regardless
-of the link state.
+However, assembly being different from C anyway, drop
+__ADDRESSABLE_ASM_STR() and its helper macro altogether. A simple
+.global directive will suffice to get the symbol "declared", i.e. into
+the symbol table. While there also stop open-coding STATIC_CALL_TRAMP()
+and STATIC_CALL_KEY().
 
+Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Armando Budianto <sprite@gnuweeb.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/all/CAHk-=wjqL4uF0MG_c8+xHX1Vv8==sPYQrtzbdA3kzi96284nuQ@mail.gmail.com
-Closes: https://lore.kernel.org/netdev/CAHk-=wjKh8X4PT_mU1kD4GQrbjivMfPn-_hXa6han_BTDcXddw@mail.gmail.com
-Closes: https://lore.kernel.org/netdev/0752dee6-43d6-4e1f-81d2-4248142cccd2@gnuweeb.org
-Fixes: 0d9cfc9b8cb1 ("net: usbnet: Avoid potential RCU stall on LINK_CHANGE event")
-Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <609d2c74-de13-4fae-ab1a-1ec44afb948d@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/xen/hypercall.h |    6 ++++--
+ include/linux/compiler.h             |    8 --------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1071,6 +1071,9 @@ static void __handle_link_change(struct
- 	if (!test_bit(EVENT_DEV_OPEN, &dev->flags))
- 		return;
+--- a/arch/x86/include/asm/xen/hypercall.h
++++ b/arch/x86/include/asm/xen/hypercall.h
+@@ -37,6 +37,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/errno.h>
+ #include <linux/string.h>
++#include <linux/stringify.h>
+ #include <linux/types.h>
+ #include <linux/pgtable.h>
+ #include <linux/instrumentation.h>
+@@ -94,12 +95,13 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ #ifdef MODULE
+ #define __ADDRESSABLE_xen_hypercall
+ #else
+-#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
++#define __ADDRESSABLE_xen_hypercall \
++	__stringify(.global STATIC_CALL_KEY(xen_hypercall);)
+ #endif
  
-+	if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
-+		netif_carrier_on(dev->net);
-+
- 	if (!netif_carrier_ok(dev->net)) {
- 		/* kill URBs for reading packets to save bus bandwidth */
- 		unlink_urbs(dev, &dev->rxq);
-@@ -1080,9 +1083,6 @@ static void __handle_link_change(struct
- 		 * tx queue is stopped by netcore after link becomes off
- 		 */
- 	} else {
--		if (test_and_clear_bit(EVENT_LINK_CARRIER_ON, &dev->flags))
--			netif_carrier_on(dev->net);
+ #define __HYPERCALL					\
+ 	__ADDRESSABLE_xen_hypercall			\
+-	"call __SCT__xen_hypercall"
++	__stringify(call STATIC_CALL_TRAMP(xen_hypercall))
+ 
+ #define __HYPERCALL_ENTRY(x)	"a" (x)
+ 
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -242,14 +242,6 @@ static inline void *offset_to_ptr(const
+ 	static void * __section(".discard.addressable") __used \
+ 		__UNIQUE_ID(__PASTE(__addressable_,sym)) = (void *)&sym;
+ 
+-#define __ADDRESSABLE_ASM(sym)						\
+-	.pushsection .discard.addressable,"aw";				\
+-	.align ARCH_SEL(8,4);						\
+-	ARCH_SEL(.quad, .long) __stringify(sym);			\
+-	.popsection;
 -
- 		/* submitting URBs for reading packets */
- 		tasklet_schedule(&dev->bh);
- 	}
+-#define __ADDRESSABLE_ASM_STR(sym) __stringify(__ADDRESSABLE_ASM(sym))
+-
+ /* &a[0] degrades to a pointer: a different type from an array */
+ #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+ 
 
 
