@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD59434DCFF;
-	Tue, 26 Aug 2025 13:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C90D34DCFE;
+	Tue, 26 Aug 2025 13:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216470; cv=none; b=lMj2bLzkpER6yuS0sO4TGie3yeBsdXoIJcazNWFRsrRIfS2LFmPt8UoIp86pIwwYxIHVxKs3W5YvyKQCBujdP4fXUELgWf0NyhAjLdR/ykUl7BQzGGE9SF32wqZoXbBAxeyR0R3yma42WrxxOALgaITOO8jvmz7gNKbUuMC5oCY=
+	t=1756216473; cv=none; b=Vci6Om1FERwvLzcEV17kat7lRNr+SOqz74zI/5evqviXt46S3AKOmLTItJ8/G1sF7kswIGLFdEQOiL9yBVUpFi/5mz9yvBYG8P0w5QXkvoX4lZ5CTDGgrJt1/lAtY7npStgHA1ZNWOjyTpG6wSN5wKdGeCct0nFBe+B2LhoLRsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216470; c=relaxed/simple;
-	bh=UMVOyjnngagMluAx+NXMoDfRxxzEi5l7FuQOIQGopec=;
+	s=arc-20240116; t=1756216473; c=relaxed/simple;
+	bh=XafPz7ZIQksSvraX3qw4iZjZdaX6Hx5mlLXztQ5FQlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6vMaIko3DJd/DEl2j/BhAkMhEw3eLyxyk+VrHJzVpgER96jTQk86CkOT2b+gc1QNRjHrL1IKwawcdhiz5B6mYHy8JcFli9ANRG3PXtF9XtMl9f52LZpeqUQHG2IGS+TR7PYueZfSr7JUWdhRFScaxycWn2oHjlDjpAXkFPAjLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY9UTEga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YM+YKmnQumrG5MPLiPC9ycf0DSUZqaAYyq8mVkKzVXOORrVqLXHVSvhEx7RdVDRw7OdbTyXHOTSvRO/X9U+HlW9rMfgBEFcVzuNSuTgyY737aW2fc1TJvQf/RAgfilMYOaDjkwy6Ainx7LIucVBX0tEMor6NaW5OlXFvq+elg2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGP78ZYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY9UTEga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F97C4CEF1;
-	Tue, 26 Aug 2025 13:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGP78ZYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92B1C4CEF1;
+	Tue, 26 Aug 2025 13:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216470;
-	bh=UMVOyjnngagMluAx+NXMoDfRxxzEi5l7FuQOIQGopec=;
+	s=korg; t=1756216473;
+	bh=XafPz7ZIQksSvraX3qw4iZjZdaX6Hx5mlLXztQ5FQlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qY9UTEgaTXbqa28ZWS8ImKD1b2tzKI1lJ7X9cEXdBgpiQrTO4NnHIaj0YZha2DBdO
-	 0YTV6CtTge7vhMFJJRNH9hpOaTa+5bz0H/c/IiI1EFGEMmd7b4R7RaZRhrT9Qo79fK
-	 OZANDjwyljh8RdxD5PpeJkxTt9r/8c8Hbgm1umy0=
+	b=KGP78ZYCDm7PMS88jloYoo/V/lDenzelTAFl4vy9XvBoNnC4c7r85Ok3gfr/1eCmv
+	 MMLNbiFhP/uqbyzU8/1o2xuEPDpj21gXJ0odWJy4XqlO8P17udXjGhck5AmF0jp4oi
+	 SkJnwfePxHsTJpQJ+EiLgY6vEdGn0FzfKymARCN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Breno Leitao <leitao@debian.org>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 422/644] scsi: aacraid: Stop using PCI_IRQ_AFFINITY
-Date: Tue, 26 Aug 2025 13:08:33 +0200
-Message-ID: <20250826110956.917328259@linuxfoundation.org>
+Subject: [PATCH 5.15 423/644] ipmi: Use dev_warn_ratelimited() for incorrect message warnings
+Date: Tue, 26 Aug 2025 13:08:34 +0200
+Message-ID: <20250826110956.943113287@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,67 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit dafeaf2c03e71255438ffe5a341d94d180e6c88e ]
+[ Upstream commit ec50ec378e3fd83bde9b3d622ceac3509a60b6b5 ]
 
-When PCI_IRQ_AFFINITY is set for calling pci_alloc_irq_vectors(), it
-means interrupts are spread around the available CPUs. It also means that
-the interrupts become managed, which means that an interrupt is shutdown
-when all the CPUs in the interrupt affinity mask go offline.
+During BMC firmware upgrades on live systems, the ipmi_msghandler
+generates excessive "BMC returned incorrect response" warnings
+while the BMC is temporarily offline. This can flood system logs
+in large deployments.
 
-Using managed interrupts in this way means that we should ensure that
-completions should not occur on HW queues where the associated interrupt
-is shutdown. This is typically achieved by ensuring only CPUs which are
-online can generate IO completion traffic to the HW queue which they are
-mapped to (so that they can also serve completion interrupts for that HW
-queue).
+Replace dev_warn() with dev_warn_ratelimited() to throttle these
+warnings and prevent log spam during BMC maintenance operations.
 
-The problem in the driver is that a CPU can generate completions to a HW
-queue whose interrupt may be shutdown, as the CPUs in the HW queue
-interrupt affinity mask may be offline. This can cause IOs to never
-complete and hang the system. The driver maintains its own CPU <-> HW
-queue mapping for submissions, see aac_fib_vector_assign(), but this does
-not reflect the CPU <-> HW queue interrupt affinity mapping.
-
-Commit 9dc704dcc09e ("scsi: aacraid: Reply queue mapping to CPUs based on
-IRQ affinity") tried to remedy this issue may mapping CPUs properly to HW
-queue interrupts. However this was later reverted in commit c5becf57dd56
-("Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ
-affinity") - it seems that there were other reports of hangs. I guess
-that this was due to some implementation issue in the original commit or
-maybe a HW issue.
-
-Fix the very original hang by just not using managed interrupts by not
-setting PCI_IRQ_AFFINITY.  In this way, all CPUs will be in each HW queue
-affinity mask, so should not create completion problems if any CPUs go
-offline.
-
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20250715111535.499853-1-john.g.garry@oracle.com
-Closes: https://lore.kernel.org/linux-scsi/20250618192427.3845724-1-jmeneghi@redhat.com/
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Tested-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Message-ID: <20250710-ipmi_ratelimit-v1-1-6d417015ebe9@debian.org>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aacraid/comminit.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
-index 34e45c87cae0..7b520e824c29 100644
---- a/drivers/scsi/aacraid/comminit.c
-+++ b/drivers/scsi/aacraid/comminit.c
-@@ -481,8 +481,7 @@ void aac_define_int_mode(struct aac_dev *dev)
- 	    pci_find_capability(dev->pdev, PCI_CAP_ID_MSIX)) {
- 		min_msix = 2;
- 		i = pci_alloc_irq_vectors(dev->pdev,
--					  min_msix, msi_count,
--					  PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
-+					  min_msix, msi_count, PCI_IRQ_MSIX);
- 		if (i > 0) {
- 			dev->msi_enabled = 1;
- 			msi_count = i;
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 15c211c5d6f4..af563ee827aa 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -4294,10 +4294,10 @@ static int handle_one_recv_msg(struct ipmi_smi *intf,
+ 		 * The NetFN and Command in the response is not even
+ 		 * marginally correct.
+ 		 */
+-		dev_warn(intf->si_dev,
+-			 "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
+-			 (msg->data[0] >> 2) | 1, msg->data[1],
+-			 msg->rsp[0] >> 2, msg->rsp[1]);
++		dev_warn_ratelimited(intf->si_dev,
++				     "BMC returned incorrect response, expected netfn %x cmd %x, got netfn %x cmd %x\n",
++				     (msg->data[0] >> 2) | 1, msg->data[1],
++				     msg->rsp[0] >> 2, msg->rsp[1]);
+ 
+ 		/* Generate an error response for the message. */
+ 		msg->rsp[0] = msg->data[0] | (1 << 2);
 -- 
 2.39.5
 
