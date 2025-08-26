@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991D62F9C23;
-	Tue, 26 Aug 2025 11:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6132BE653;
+	Tue, 26 Aug 2025 11:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207326; cv=none; b=rjM8kRhW2w+5vvpDSX72gYWk7E0CyB6tpfOBe+17znwUwmeVlNhrZwQVd+w5h6xF7P99nB5lekB11LfUE9T6n9y14rL/gPff/bKWnQs/CljGrl+Yaca7tIAosxfrQQxz58DnLtc1QTwonnpjdE/2qVFd0OJrwMsqnyFfhCYc49Q=
+	t=1756207329; cv=none; b=N5eTC5dFG5AU1A9cp89iwVIYra85wHiK+pPUq5sLHnsrV4DuNj2KyFJLutaocTMIkWmWVlQviQNhWAaPEaQIr+pZksmm9QYOsDobdZFFt/SXYK9oGBrvXl7/bf4G6cohUbI1caClFSPDMEejO6E0ufe82r4KE+6rLMmlMtyKAes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207326; c=relaxed/simple;
-	bh=4/ZtpWlXbtzVoU8u/RzRLYnjBTz8vLD+kJ/cIVv3mtM=;
+	s=arc-20240116; t=1756207329; c=relaxed/simple;
+	bh=5pL+cwObd+jAjCMoxvbJXfIAAVDw+tbyPHmkymYwnc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/wRYDyK6SH9YWimEdIwE7GyT1GwF5jtCclgFfZplh9COZYjXS4nRbXxnm8945uj9nYDW0EGTjeINJ3eNxYVcyy4rlIDBU3K4tGnGwg07Mu4+soyQzYF2KEZPiiFCSdqnaBlO+iMGC5X5O5/nqx3zFg+vgmD+yXJJWmFD6LRefo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tq8W8Afm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o02mpN50HGePgADYf2Scs4j3gKVcfUZeM6bYCPPqfQGBBeEi11TgOX2xyzi5zbcdW4TSyPyDfN5rNq3CSRDPu00GX0gKs6CR+M6egeZPsVJkVftYL+w+K5yARZfJdhSnAS913hKZBMUHjGXYPmIdNJqp02a2EZsplquFxV3gkus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y55GfDnt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tq8W8Afm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E7EC4CEF1;
-	Tue, 26 Aug 2025 11:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y55GfDnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C340CC4CEF4;
+	Tue, 26 Aug 2025 11:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207326;
-	bh=4/ZtpWlXbtzVoU8u/RzRLYnjBTz8vLD+kJ/cIVv3mtM=;
+	s=korg; t=1756207329;
+	bh=5pL+cwObd+jAjCMoxvbJXfIAAVDw+tbyPHmkymYwnc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tq8W8AfmFbqLBlWugBDUEz1zIJi5z3xvQWGscTS5Ff3DPyyEucVWitap+BFgc8jLd
-	 VQ81+YIwc+GYqeJkS9lve3hdGz8UXPMg2fsf852L9RfEhX0Yr9CrCJdgaEw1kiI6tN
-	 1uniETQOGVn8FcPXl8lGzvI+UPBp9demQW6XZpfc=
+	b=Y55GfDnt3W7N+tOgiWE64Y8e41ZFlJIyJALegtXcOBM//XeEayLHHaPTeu3uhqDmO
+	 nYxL4NDORNw1jQpQuQroN61g++mQpGcBs6kBfVSMB5rqjiMyafq9oIeIXTjyhJJcUh
+	 l0OKJLoV92vRh6LLh0YkYncYk8LCYwk54FsDppAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	Naushir Patuck <naush@raspberrypi.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.16 138/457] media: rainshadow-cec: fix TOCTOU race condition in rain_interrupt()
-Date: Tue, 26 Aug 2025 13:07:02 +0200
-Message-ID: <20250826110940.786597193@linuxfoundation.org>
+Subject: [PATCH 6.16 139/457] media: pisp_be: Fix pm_runtime underrun in probe
+Date: Tue, 26 Aug 2025 13:07:03 +0200
+Message-ID: <20250826110940.810413780@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,54 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-commit 7af160aea26c7dc9e6734d19306128cce156ec40 upstream.
+commit e9bb2eacc7222ff8210903eb3b7d56709cc53228 upstream.
 
-In the interrupt handler rain_interrupt(), the buffer full check on
-rain->buf_len is performed before acquiring rain->buf_lock. This
-creates a Time-of-Check to Time-of-Use (TOCTOU) race condition, as
-rain->buf_len is concurrently accessed and modified in the work
-handler rain_irq_work_handler() under the same lock.
+During the probe() routine, the PiSP BE driver needs to power up the
+interface in order to identify and initialize the hardware.
 
-Multiple interrupt invocations can race, with each reading buf_len
-before it becomes full and then proceeding. This can lead to both
-interrupts attempting to write to the buffer, incrementing buf_len
-beyond its capacity (DATA_SIZE) and causing a buffer overflow.
+The driver resumes the interface by calling the
+pispbe_runtime_resume() function directly, without going
+through the pm_runtime helpers, but later suspends it by calling
+pm_runtime_put_autosuspend().
 
-Fix this bug by moving the spin_lock() to before the buffer full
-check. This ensures that the check and the subsequent buffer modification
-are performed atomically, preventing the race condition. An corresponding
-spin_unlock() is added to the overflow path to correctly release the
-lock.
+This causes a PM usage count imbalance at probe time, notified by the
+runtime_pm framework with the below message in the system log:
 
-This possible bug was found by an experimental static analysis tool
-developed by our team.
+ pispbe 1000880000.pisp_be: Runtime PM usage count underflow!
 
-Fixes: 0f314f6c2e77 ("[media] rainshadow-cec: new RainShadow Tech HDMI CEC driver")
+Fix this by resuming the interface using the pm runtime helpers instead
+of calling the resume function directly and use the pm_runtime framework
+in the probe() error path. While at it, remove manual suspend of the
+interface in the remove() function. The driver cannot be unloaded if in
+use, so simply disable runtime pm.
+
+To simplify the implementation, make the driver depend on PM as the
+RPI5 platform where the ISP is integrated in uses the PM framework by
+default.
+
+Fixes: 12187bd5d4f8 ("media: raspberrypi: Add support for PiSP BE")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Tested-by: Naushir Patuck <naush@raspberrypi.com>
+Reviewed-by: Naushir Patuck <naush@raspberrypi.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/usb/rainshadow/rainshadow-cec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/raspberrypi/pisp_be/Kconfig   |    1 +
+ drivers/media/platform/raspberrypi/pisp_be/pisp_be.c |    5 ++---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/media/cec/usb/rainshadow/rainshadow-cec.c
-+++ b/drivers/media/cec/usb/rainshadow/rainshadow-cec.c
-@@ -171,11 +171,12 @@ static irqreturn_t rain_interrupt(struct
- {
- 	struct rain *rain = serio_get_drvdata(serio);
+--- a/drivers/media/platform/raspberrypi/pisp_be/Kconfig
++++ b/drivers/media/platform/raspberrypi/pisp_be/Kconfig
+@@ -3,6 +3,7 @@ config VIDEO_RASPBERRYPI_PISP_BE
+ 	depends on V4L_PLATFORM_DRIVERS
+ 	depends on VIDEO_DEV
+ 	depends on ARCH_BCM2835 || COMPILE_TEST
++	depends on PM
+ 	select VIDEO_V4L2_SUBDEV_API
+ 	select MEDIA_CONTROLLER
+ 	select VIDEOBUF2_DMA_CONTIG
+--- a/drivers/media/platform/raspberrypi/pisp_be/pisp_be.c
++++ b/drivers/media/platform/raspberrypi/pisp_be/pisp_be.c
+@@ -1726,7 +1726,7 @@ static int pispbe_probe(struct platform_
+ 	pm_runtime_use_autosuspend(pispbe->dev);
+ 	pm_runtime_enable(pispbe->dev);
  
-+	spin_lock(&rain->buf_lock);
- 	if (rain->buf_len == DATA_SIZE) {
-+		spin_unlock(&rain->buf_lock);
- 		dev_warn_once(rain->dev, "buffer overflow\n");
- 		return IRQ_HANDLED;
- 	}
--	spin_lock(&rain->buf_lock);
- 	rain->buf_len++;
- 	rain->buf[rain->buf_wr_idx] = data;
- 	rain->buf_wr_idx = (rain->buf_wr_idx + 1) & 0xff;
+-	ret = pispbe_runtime_resume(pispbe->dev);
++	ret = pm_runtime_resume_and_get(pispbe->dev);
+ 	if (ret)
+ 		goto pm_runtime_disable_err;
+ 
+@@ -1748,7 +1748,7 @@ static int pispbe_probe(struct platform_
+ disable_devs_err:
+ 	pispbe_destroy_devices(pispbe);
+ pm_runtime_suspend_err:
+-	pispbe_runtime_suspend(pispbe->dev);
++	pm_runtime_put(pispbe->dev);
+ pm_runtime_disable_err:
+ 	pm_runtime_dont_use_autosuspend(pispbe->dev);
+ 	pm_runtime_disable(pispbe->dev);
+@@ -1762,7 +1762,6 @@ static void pispbe_remove(struct platfor
+ 
+ 	pispbe_destroy_devices(pispbe);
+ 
+-	pispbe_runtime_suspend(pispbe->dev);
+ 	pm_runtime_dont_use_autosuspend(pispbe->dev);
+ 	pm_runtime_disable(pispbe->dev);
+ }
 
 
