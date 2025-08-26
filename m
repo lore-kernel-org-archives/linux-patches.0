@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6CD17332C;
-	Tue, 26 Aug 2025 11:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0339D1A256B;
+	Tue, 26 Aug 2025 11:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208522; cv=none; b=tbUqod07wtrqJGjIz9cHavxX/A0ksr6S1/RzFWbP8eDy0jQPKbAFvPo8v7K2B3Q5d2ifaDu1j6f5HhOg8zHPtr5PxEIjY6Mgu9eutgWiymPS+9frZ638p8DyeLj9dkCn7Y8AEvJCWrciCGwIKUt94QWfs6meOLND0MXfbmAAEd0=
+	t=1756208525; cv=none; b=XkuxZ367mrry1zWA0C8R+ogv1AkIVyERx+dAomt33jfPMWA/TJ1Nh36QltCoD8+1GzcGbBGCkdWsJ0spEjWdorCGHuOACHrV4wRsWBuEdvAl4kMQ1e7Yr2Z4vuq7vJ+wMWrm3QWG2RmFQGEcMQ61hysD87ON32456nP/iEgyh3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208522; c=relaxed/simple;
-	bh=3b9EFpXRh9bvo4gnOOfIQznvwBUsOxbYxz+YtO8QURM=;
+	s=arc-20240116; t=1756208525; c=relaxed/simple;
+	bh=lL7IqldyAnXCVY8brYyFrnXSGDy/Zw7rgYj6hpz8k8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOEkwQP0yUFDk6rzYVAHnAoCxY5dCvY/vBESVCaPm2CxWJQhchAhPTKp26PD6qwP5E8zgzS69fURftsZK16U8pneL34Ur5suMWulmeeG4VvKm6F4kBJJlJmcBorLd1VKFmFLZbLYXC5ufkd3/v8O7Pd6WEsbQpavDdJjpOq+8EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0HWmokF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u9beBMPK1hBJgmrRqQDImPxfJxiI1SrqzuvPFv4uX/cPWkV6VMMlFR34Alo7fIcszumcSTudMlwaQcQ6JYKnaYxzJND9Kra6ggzwWtNyRJxQ1DDiGUcldxmycIwLgxxLArvoSUhjNgTtR9NYVRVU7ZroLoaRdr9JSsCow7595Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bbsnWNc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0HWmokF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94F4C4CEF1;
-	Tue, 26 Aug 2025 11:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bbsnWNc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E5DC4CEF1;
+	Tue, 26 Aug 2025 11:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208522;
-	bh=3b9EFpXRh9bvo4gnOOfIQznvwBUsOxbYxz+YtO8QURM=;
+	s=korg; t=1756208524;
+	bh=lL7IqldyAnXCVY8brYyFrnXSGDy/Zw7rgYj6hpz8k8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V0HWmokFl8gy0xD0eDfH/ngy5ZIB5hfzLAYynoESpN4UEV3O6Ani1TBT9+kIalVol
-	 qZuBdAI2pvYJKGLB6O77qv2qMifVxRsX62Cwj+HmhHy+RoIvUgupIdNBvZWA/UjsPj
-	 vqdez72hx8xnuroCfeafYS8bjjS3h3nEOgMOKkHk=
+	b=0bbsnWNcvlMmK5Qmu3cXXRDmuFf6DWNzxAzGEvBQjaOEEOA8RvvyndxBTLyPO1Ak4
+	 TshlnW4EsoPTmnXWHA54TPkrwiCi3bRxtA1vyAxvhNUAdityjbALAbG761cAdtL7HU
+	 kqFYIXvqmESn3nbrKrjfReLZgGAFq5aKDCeAjUz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 113/322] media: venus: Fix MSM8998 frequency table
-Date: Tue, 26 Aug 2025 13:08:48 +0200
-Message-ID: <20250826110918.577711584@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 6.12 104/322] media: v4l2-ctrls: Dont reset handlers error in v4l2_ctrl_handler_free()
+Date: Tue, 26 Aug 2025 13:08:39 +0200
+Message-ID: <20250826110918.303270686@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -54,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit ee3b94f22638e0f7a1893d95d87b08698b680052 upstream.
+commit 5a0400aca5fa7c6b8ba456c311a460e733571c88 upstream.
 
-Fill in the correct data for the production SKU.
+It's a common pattern in drivers to free the control handler's resources
+and then return the handler's error code on drivers' error handling paths.
+Alas, the v4l2_ctrl_handler_free() function also zeroes the error field,
+effectively indicating successful return to the caller.
 
-Fixes: 193b3dac29a4 ("media: venus: add msm8998 support")
+There's no apparent need to touch the error field while releasing the
+control handler's resources and cleaning up stale pointers. Not touching
+the handler's error field is a more certain way to address this problem
+than changing all the users, in which case the pattern would be likely to
+re-emerge in new drivers.
+
+Do just that, don't touch the control handler's error field in
+v4l2_ctrl_handler_free().
+
+Fixes: 0996517cf8ea ("V4L/DVB: v4l2: Add new control handling framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/core.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -593,11 +593,11 @@ static const struct venus_resources msm8
- };
- 
- static const struct freq_tbl msm8998_freq_table[] = {
--	{ 1944000, 465000000 },	/* 4k UHD @ 60 (decode only) */
--	{  972000, 465000000 },	/* 4k UHD @ 30 */
--	{  489600, 360000000 },	/* 1080p @ 60 */
--	{  244800, 186000000 },	/* 1080p @ 30 */
--	{  108000, 100000000 },	/* 720p @ 30 */
-+	{ 1728000, 533000000 },	/* 4k UHD @ 60 (decode only) */
-+	{ 1036800, 444000000 },	/* 2k @ 120 */
-+	{  829440, 355200000 },	/* 4k @ 44 */
-+	{  489600, 269330000 },/* 4k @ 30 */
-+	{  108000, 200000000 },	/* 1080p @ 60 */
- };
- 
- static const struct reg_val msm8998_reg_preset[] = {
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -1582,7 +1582,6 @@ void v4l2_ctrl_handler_free(struct v4l2_
+ 	kvfree(hdl->buckets);
+ 	hdl->buckets = NULL;
+ 	hdl->cached = NULL;
+-	hdl->error = 0;
+ 	mutex_unlock(hdl->lock);
+ 	mutex_destroy(&hdl->_lock);
+ }
 
 
