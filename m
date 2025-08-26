@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06F67081F;
-	Tue, 26 Aug 2025 12:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874631DE4C2;
+	Tue, 26 Aug 2025 12:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212756; cv=none; b=Jqy4BnvVZ6SbreZ4fgknsk/G/M4+iU6ys/5eU0H8iTscQJ5dTrS5jYaEPOhMALMwqKd04ZRF5/G2oIRNxNkaQ6RTTZbbNibGQH3iCZd92ZkAEyFHWXfgjDx2mblMfq5PtE8b4E4WboI6ph57aCldrRmkT0YSeYt99l0biYnIDJE=
+	t=1756212759; cv=none; b=a0IqhVdO7PFEbXDshJkIKzaCfBkZ0Jnezw6GPHP6lJdKGrLwPTHAFbk1xeGt2HZ16NEaXCtTF3La24MY9xn0lMIC4cDu8vM3DEfSQ42GIPgUqSAFWmN1gfd1uBF1fCja/4uZFGWKdWQ2HjRiojZljD+uC9bKEKkS9Ga5UbLi+Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212756; c=relaxed/simple;
-	bh=QffHjhWXkbFu/TBSzgBFHDQkP1xdBdQ5Ran635j90Bs=;
+	s=arc-20240116; t=1756212759; c=relaxed/simple;
+	bh=epI4Ow7afYyc0fKrO73bm7Fbz5ZC7SvKSqx4OQK5hJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5sQIzokBUD/3BVFkYfGbjgI+3P3cnCuYf2nWD8Amed83S4tMtldB0fZG5zUxx8Z7/gsR7a16pN2K0Yddi43mLs1dnCIwZ8dQCMyLqPMlSjw80MZaf/BiA6RwJOo2BR+GTfv4/qPIGntQH1EJjKnrrKLDKHV+da+ZFSAZgTVSOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVtLPgtn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iqu/h3fQ3YzuEomzqtVVTEe/93xzbeVbpekzEdjk5gRlcBQ1cc8WDWfvqQCE95QFiRq88M0PshQZj/0VBW3rWy453YeOzAnVyvxFOoeodFmc0urJ8oYE3KJh+Xo0rAAb52f0887ET++tnAAVLTImbHJHvbOUQVbk1VAqc6gDHmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQ+JWrJN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVtLPgtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623FAC4CEF1;
-	Tue, 26 Aug 2025 12:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQ+JWrJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155FDC4CEF1;
+	Tue, 26 Aug 2025 12:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212756;
-	bh=QffHjhWXkbFu/TBSzgBFHDQkP1xdBdQ5Ran635j90Bs=;
+	s=korg; t=1756212759;
+	bh=epI4Ow7afYyc0fKrO73bm7Fbz5ZC7SvKSqx4OQK5hJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVtLPgtnMUJ1xWxnARfeNsX1mld8NENDZCaJ8dt+6PEHe/nFZRBYZ+/HGWeLwoBzx
-	 /C8asrpgb1YubAMWJEYs4cepcEsNvfaPpyFF4KwIX/7646F/E6TvZm/bAgceqtMN5G
-	 J2UFbxPObZzhXHhjjt/bc0PN3yuSLfqDnEOxhuC4=
+	b=pQ+JWrJNFfoRkZstUFFVMbUN3sVrMa8Ow9oFYgCfKwfQfzGvUoFCZhSGKNOtrXc5p
+	 VrWQzxDi1JL1zP/TZGkycruccNvHEJMZu+0Mmvh6jNo9NV8VpKO4aXpWnsw/X+tBtN
+	 keX8m1kSOdzumS4uW4pBSkTx7ipdVhMxwFGOBph4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7cfb66a237c4a5fb22ad@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/587] ptp: prevent possible ABBA deadlock in ptp_clock_freerun()
-Date: Tue, 26 Aug 2025 13:03:29 +0200
-Message-ID: <20250826110954.463345177@linuxfoundation.org>
+Subject: [PATCH 6.6 061/587] tls: handle data disappearing from under the TLS ULP
+Date: Tue, 26 Aug 2025 13:03:30 +0200
+Message-ID: <20250826110954.488275645@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -54,101 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2efe41234dbd0a83fdb7cd38226c2f70039a2cd3 ]
+[ Upstream commit 6db015fc4b5d5f63a64a193f65d98da3a7fc811d ]
 
-syzbot reported the following ABBA deadlock:
+TLS expects that it owns the receive queue of the TCP socket.
+This cannot be guaranteed in case the reader of the TCP socket
+entered before the TLS ULP was installed, or uses some non-standard
+read API (eg. zerocopy ones). Replace the WARN_ON() and a buggy
+early exit (which leaves anchor pointing to a freed skb) with real
+error handling. Wipe the parsing state and tell the reader to retry.
 
-       CPU0                           CPU1
-       ----                           ----
-  n_vclocks_store()
-    lock(&ptp->n_vclocks_mux) [1]
-        (physical clock)
-                                     pc_clock_adjtime()
-                                       lock(&clk->rwsem) [2]
-                                        (physical clock)
-                                       ...
-                                       ptp_clock_freerun()
-                                         ptp_vclock_in_use()
-                                           lock(&ptp->n_vclocks_mux) [3]
-                                              (physical clock)
-    ptp_clock_unregister()
-      posix_clock_unregister()
-        lock(&clk->rwsem) [4]
-          (virtual clock)
+We already reload the anchor every time we (re)acquire the socket lock,
+so the only condition we need to avoid is an out of bounds read
+(not having enough bytes in the socket for previously parsed record len).
 
-Since ptp virtual clock is registered only under ptp physical clock, both
-ptp_clock and posix_clock must be physical clocks for ptp_vclock_in_use()
-to lock &ptp->n_vclocks_mux and check ptp->n_vclocks.
+If some data was read from under TLS but there's enough in the queue
+we'll reload and decrypt what is most likely not a valid TLS record.
+Leading to some undefined behavior from TLS perspective (corrupting
+a stream? missing an alert? missing an attack?) but no kernel crash
+should take place.
 
-However, when unregistering vclocks in n_vclocks_store(), the locking
-ptp->n_vclocks_mux is a physical clock lock, but clk->rwsem of
-ptp_clock_unregister() called through device_for_each_child_reverse()
-is a virtual clock lock.
-
-Therefore, clk->rwsem used in CPU0 and clk->rwsem used in CPU1 are
-different locks, but in lockdep, a false positive occurs because the
-possibility of deadlock is determined through lock-class.
-
-To solve this, lock subclass annotation must be added to the posix_clock
-rwsem of the vclock.
-
-Reported-by: syzbot+7cfb66a237c4a5fb22ad@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7cfb66a237c4a5fb22ad
-Fixes: 73f37068d540 ("ptp: support ptp physical/virtual clocks conversion")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250728062649.469882-1-aha310510@gmail.com
+Reported-by: William Liu <will@willsroot.io>
+Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
+Link: https://lore.kernel.org/tFjq_kf7sWIG3A7CrCg_egb8CVsT_gsmHAK0_wxDPJXfIzxFAMxqmLwp3MlU5EHiet0AwwJldaaFdgyHpeIUCS-3m3llsmRzp9xIOBR4lAI=@syst3mfailure.io
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250807232907.600366-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_private.h | 5 +++++
- drivers/ptp/ptp_vclock.c  | 7 +++++++
- 2 files changed, 12 insertions(+)
+ net/tls/tls.h      |  2 +-
+ net/tls/tls_strp.c | 11 ++++++++---
+ net/tls/tls_sw.c   |  3 ++-
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index a54124269c2f..3fbd1d68a9bc 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -20,6 +20,11 @@
- #define PTP_BUF_TIMESTAMPS 30
- #define PTP_DEFAULT_MAX_VCLOCKS 20
+diff --git a/net/tls/tls.h b/net/tls/tls.h
+index 02038d0381b7..5dc61c85c076 100644
+--- a/net/tls/tls.h
++++ b/net/tls/tls.h
+@@ -192,7 +192,7 @@ void tls_strp_msg_done(struct tls_strparser *strp);
+ int tls_rx_msg_size(struct tls_strparser *strp, struct sk_buff *skb);
+ void tls_rx_msg_ready(struct tls_strparser *strp);
  
-+enum {
-+	PTP_LOCK_PHYSICAL = 0,
-+	PTP_LOCK_VIRTUAL,
-+};
-+
- struct timestamp_event_queue {
- 	struct ptp_extts_event buf[PTP_MAX_TIMESTAMPS];
- 	int head;
-diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
-index dcf752c9e045..7d08ff3b30fc 100644
---- a/drivers/ptp/ptp_vclock.c
-+++ b/drivers/ptp/ptp_vclock.c
-@@ -154,6 +154,11 @@ static long ptp_vclock_refresh(struct ptp_clock_info *ptp)
- 	return PTP_VCLOCK_REFRESH_INTERVAL;
+-void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh);
++bool tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh);
+ int tls_strp_msg_cow(struct tls_sw_context_rx *ctx);
+ struct sk_buff *tls_strp_msg_detach(struct tls_sw_context_rx *ctx);
+ int tls_strp_msg_hold(struct tls_strparser *strp, struct sk_buff_head *dst);
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index bea60b0160d1..6ce64a6e4495 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -474,7 +474,7 @@ static void tls_strp_load_anchor_with_queue(struct tls_strparser *strp, int len)
+ 	strp->stm.offset = offset;
  }
  
-+static void ptp_vclock_set_subclass(struct ptp_clock *ptp)
-+{
-+	lockdep_set_subclass(&ptp->clock.rwsem, PTP_LOCK_VIRTUAL);
-+}
+-void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
++bool tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
+ {
+ 	struct strp_msg *rxm;
+ 	struct tls_msg *tlm;
+@@ -483,8 +483,11 @@ void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
+ 	DEBUG_NET_WARN_ON_ONCE(!strp->stm.full_len);
+ 
+ 	if (!strp->copy_mode && force_refresh) {
+-		if (WARN_ON(tcp_inq(strp->sk) < strp->stm.full_len))
+-			return;
++		if (unlikely(tcp_inq(strp->sk) < strp->stm.full_len)) {
++			WRITE_ONCE(strp->msg_ready, 0);
++			memset(&strp->stm, 0, sizeof(strp->stm));
++			return false;
++		}
+ 
+ 		tls_strp_load_anchor_with_queue(strp, strp->stm.full_len);
+ 	}
+@@ -494,6 +497,8 @@ void tls_strp_msg_load(struct tls_strparser *strp, bool force_refresh)
+ 	rxm->offset	= strp->stm.offset;
+ 	tlm = tls_msg(strp->anchor);
+ 	tlm->control	= strp->mark;
 +
- static const struct ptp_clock_info ptp_vclock_info = {
- 	.owner		= THIS_MODULE,
- 	.name		= "ptp virtual clock",
-@@ -213,6 +218,8 @@ struct ptp_vclock *ptp_vclock_register(struct ptp_clock *pclock)
- 		return NULL;
++	return true;
+ }
+ 
+ /* Called with lock held on lower socket */
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 4905a81c4ac1..c9b53472e955 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1380,7 +1380,8 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
+ 			return sock_intr_errno(timeo);
  	}
  
-+	ptp_vclock_set_subclass(vclock->clock);
-+
- 	timecounter_init(&vclock->tc, &vclock->cc, 0);
- 	ptp_schedule_worker(vclock->clock, PTP_VCLOCK_REFRESH_INTERVAL);
+-	tls_strp_msg_load(&ctx->strp, released);
++	if (unlikely(!tls_strp_msg_load(&ctx->strp, released)))
++		return tls_rx_rec_wait(sk, psock, nonblock, false);
  
+ 	return 1;
+ }
 -- 
 2.50.1
 
