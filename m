@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12560101F2;
-	Tue, 26 Aug 2025 13:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B3413957E;
+	Tue, 26 Aug 2025 13:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213246; cv=none; b=QLstuhKX6++mztKcYmTaieA/HfYXHvMOCOJIKutE01UP7prkc10fqs64apMSJrQz6T0+krdpmqdwE1DVkvmo0FMl5ce3dKLtUBTs/4SvE/44Auu4xzV0Nfa32rTVhfuK5alq/xXOndeWkRYbsZ2v2VSC7ooYLb6mBKxynG9oopU=
+	t=1756213248; cv=none; b=Su3pkiUH3VnOeEJoX57pN6o+Q9legMMlFQJsd/ekFGEiJCLC19ekpiTF7kYaafQnGHrcTPwXWbx/zpx2uGbKRgcmtmMMjd6zBEao5TmkGixx5bytm6xg2waxXip90PFmvDxrDRs1fUGntF+E9r3TJ5wEpZQ4rqOzBqa8kiX6Vss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213246; c=relaxed/simple;
-	bh=3WBbV79wxdRbsy/kVlkc/CYxPgXUnh0kId2OktlLo+g=;
+	s=arc-20240116; t=1756213248; c=relaxed/simple;
+	bh=zs7wjhdApDgAOLGlxKLCTSmEM1VKmzAmX8tZMwBWLkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8Os9V5SWuDJvk4SE05M0DplpStm7tbjMwz1FWiR4OWe6ae5Msic6QaTTJ0sNBmHTRk9WvfJ1u0XIVyf7oEh5v9PeJQ69AmCxuW+CMQNVfT08jvaCDdBeCuF+Y4BIBpgbY+7Iq+QQ5GTCGG8AdaWHTBoi3Rq8KZTb6oKjR9WjoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuCwu0V2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBLMs5Q/PM12rTGoZdNYaWiOkBOSs/jvkp70KvBNKp9N1YxbnIIAliI3XfGRR58mfHZa4HetT3KHZa9jyz/erPqEb+YBG79VU4YfWymu5IN+T+BYmYzPK/8KQrFb5yp4fFIkECCqZ1frSIiShNl8Ww58me4gr49Ail7BbVZ0aFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkMukoUi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuCwu0V2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9611AC4CEF1;
-	Tue, 26 Aug 2025 13:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkMukoUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E01C4CEF1;
+	Tue, 26 Aug 2025 13:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213245;
-	bh=3WBbV79wxdRbsy/kVlkc/CYxPgXUnh0kId2OktlLo+g=;
+	s=korg; t=1756213248;
+	bh=zs7wjhdApDgAOLGlxKLCTSmEM1VKmzAmX8tZMwBWLkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IuCwu0V2oENSNJuTadkSaXbjWpXtjtd3x9cfItH5FYbDr9yBFGqBEOEYXNncigSeK
-	 V8mBSwK7v96WbmdzFmXFu52R64jseS/sFQW1zIqRWwto6Vz051Au2RDYqMj4McWeGU
-	 D+Sw8gLG0ijmbfyjHqTReIGDCSc0XT7STda7V4oY=
+	b=MkMukoUiSw6wdnGSW159SbuZCkyixPyHAyOiqHFMOaZYX20BOu/e22aTK7M0Maxg0
+	 ETGq1gABRas+CJlgCZKfqR3bPWIGLCsPiEOeQWCh5vcVxXKRRGXG/LaTRMLNgrN+Iw
+	 bPgBWsC58dD3b4iRlnOtwS3e17NUIp61rA7P+OFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Shankari Anand <shankari.ak0208@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Nicolas Schier <n.schier@avm.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 275/587] vfio/type1: conditional rescheduling while pinning
-Date: Tue, 26 Aug 2025 13:07:04 +0200
-Message-ID: <20250826110959.924241369@linuxfoundation.org>
+Subject: [PATCH 6.6 276/587] kconfig: nconf: Ensure null termination where strncpy is used
+Date: Tue, 26 Aug 2025 13:07:05 +0200
+Message-ID: <20250826110959.948892993@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,72 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Shankari Anand <shankari.ak0208@gmail.com>
 
-[ Upstream commit b1779e4f209c7ff7e32f3c79d69bca4e3a3a68b6 ]
+[ Upstream commit f468992936894c9ce3b1659cf38c230d33b77a16 ]
 
-A large DMA mapping request can loop through dma address pinning for
-many pages. In cases where THP can not be used, the repeated vmf_insert_pfn can
-be costly, so let the task reschedule as need to prevent CPU stalls. Failure to
-do so has potential harmful side effects, like increased memory pressure
-as unrelated rcu tasks are unable to make their reclaim callbacks and
-result in OOM conditions.
+strncpy() does not guarantee null-termination if the source string is
+longer than the destination buffer.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:   36-....: (20999 ticks this GP) idle=b01c/1/0x4000000000000000 softirq=35839/35839 fqs=3538
- rcu:            hardirqs   softirqs   csw/system
- rcu:    number:        0        107            0
- rcu:   cputime:       50          0        10446   ==> 10556(ms)
- rcu:   (t=21075 jiffies g=377761 q=204059 ncpus=384)
-...
-  <TASK>
-  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-  ? walk_system_ram_range+0x63/0x120
-  ? walk_system_ram_range+0x46/0x120
-  ? pgprot_writethrough+0x20/0x20
-  lookup_memtype+0x67/0xf0
-  track_pfn_insert+0x20/0x40
-  vmf_insert_pfn_prot+0x88/0x140
-  vfio_pci_mmap_huge_fault+0xf9/0x1b0 [vfio_pci_core]
-  __do_fault+0x28/0x1b0
-  handle_mm_fault+0xef1/0x2560
-  fixup_user_fault+0xf5/0x270
-  vaddr_get_pfns+0x169/0x2f0 [vfio_iommu_type1]
-  vfio_pin_pages_remote+0x162/0x8e0 [vfio_iommu_type1]
-  vfio_iommu_type1_ioctl+0x1121/0x1810 [vfio_iommu_type1]
-  ? futex_wake+0x1c1/0x260
-  x64_sys_call+0x234/0x17a0
-  do_syscall_64+0x63/0x130
-  ? exc_page_fault+0x63/0x130
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Ensure the buffer is explicitly null-terminated to prevent potential
+string overflows or undefined behavior.
 
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lore.kernel.org/r/20250715184622.3561598-1-kbusch@meta.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Shankari Anand <shankari.ak0208@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Nicolas Schier <n.schier@avm.de>
+Acked-by: Nicolas Schier <n.schier@avm.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/vfio_iommu_type1.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ scripts/kconfig/nconf.c     | 2 ++
+ scripts/kconfig/nconf.gui.c | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 5fe7aed3672e..f63f116b9cd0 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -635,6 +635,13 @@ static long vfio_pin_pages_remote(struct vfio_dma *dma, unsigned long vaddr,
+diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
+index 8cd72fe25974..7a17c94a1594 100644
+--- a/scripts/kconfig/nconf.c
++++ b/scripts/kconfig/nconf.c
+@@ -591,6 +591,8 @@ static void item_add_str(const char *fmt, ...)
+ 		tmp_str,
+ 		sizeof(k_menu_items[index].str));
  
- 	while (npage) {
- 		if (!batch->size) {
-+			/*
-+			 * Large mappings may take a while to repeatedly refill
-+			 * the batch, so conditionally relinquish the CPU when
-+			 * needed to avoid stalls.
-+			 */
-+			cond_resched();
++	k_menu_items[index].str[sizeof(k_menu_items[index].str) - 1] = '\0';
 +
- 			/* Empty batch, so refill it. */
- 			long req_pages = min_t(long, npage, batch->capacity);
+ 	free_item(curses_menu_items[index]);
+ 	curses_menu_items[index] = new_item(
+ 			k_menu_items[index].str,
+diff --git a/scripts/kconfig/nconf.gui.c b/scripts/kconfig/nconf.gui.c
+index 25a7263ef3c8..5f13a0a7fb0b 100644
+--- a/scripts/kconfig/nconf.gui.c
++++ b/scripts/kconfig/nconf.gui.c
+@@ -349,6 +349,7 @@ int dialog_inputbox(WINDOW *main_window,
+ 	x = (columns-win_cols)/2;
  
+ 	strncpy(result, init, *result_len);
++	result[*result_len - 1] = '\0';
+ 
+ 	/* create the windows */
+ 	win = newwin(win_lines, win_cols, y, x);
 -- 
 2.39.5
 
