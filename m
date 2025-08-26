@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DDB35209C;
-	Tue, 26 Aug 2025 14:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A09306D3F;
+	Tue, 26 Aug 2025 14:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217271; cv=none; b=QMfRmer2SCTYtjjn3Z0FfAsPC74bG+Osi4DDpIZ3i8Vo7NMoGzFHioZqguFY4G0Pq345/We5KQX3KROsGnq/tQucztcN/PaUoecFABOU5se20nuKSU64ZHKdwaYZZCB/aQOWuJpvxPEkD1HuHLW6QRZLp2jDNtrEOpUJjBg6tMM=
+	t=1756217274; cv=none; b=AoRVTsWlw45n+emv0tkwc9PiQIyeizdy8JhVt8bNCAHq5iPPmhkELHXxSHm+KlRnwWIQ8YeQg+hWJFk0Tvi7JmDBmCF4/frz3wl2iBBuwuq9FvvOEAJYRJCABqPUCatI6olhL7cFZviNHrDSztyXlxTkYrFjBey4YnaDMvYCW1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217271; c=relaxed/simple;
-	bh=rQIH94CfEkyiLep1fhl3or7cCfW7U7yXLQVMHwVu3hs=;
+	s=arc-20240116; t=1756217274; c=relaxed/simple;
+	bh=AoRDQm+hgcmu7KpEstdm+wIDk8/+8RJ4J3QF2YT5Iug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PA1504a1mpgc3CMEoaT4CxwWONdKqegkUB/xe1sRf0jgRmIVmQMKgS2QI6dBJxfvw+c60auXR35Gx9Bo7DK73+c2DbGfar7y3NA/cPYi2ahnjQq8Zld3/r5QoUi0PJLUnZGyn9Rnjn23o0uA2nZjBi2baSNPQQpCMbqc4NI1Jms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7ORNaIu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxC8512IPK+voGgdDK8ZaCSn16YoQ9QxG+O8WfiahTqFRSi5pTVCWhU6Se7xiWwH0GCH+cKp01gv+np5oBulP0Pmojpb383oMnHC1xH2kyhejEQcjghUD1Ya8MOwj9anFGuIGRgO7+NUctgf2qNm4BL+VPqKJEtI+jAzc1OzLsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjxwW6f/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7ORNaIu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C1BC4CEF1;
-	Tue, 26 Aug 2025 14:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjxwW6f/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DE5C4CEF1;
+	Tue, 26 Aug 2025 14:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217271;
-	bh=rQIH94CfEkyiLep1fhl3or7cCfW7U7yXLQVMHwVu3hs=;
+	s=korg; t=1756217274;
+	bh=AoRDQm+hgcmu7KpEstdm+wIDk8/+8RJ4J3QF2YT5Iug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7ORNaIupSaMjjNkTNbo7C5bPgHnGvKNL4M09pwWvu66b97cbgLwhv7GvrzM0KDGa
-	 O3VsEacOP70sT5SWr6ClPxqP+gQSnmUID4QtMbHblXB8eeCghZAAwklK7Hik2bjQP+
-	 o2CqHBdjbYHuxFVrkzejTTNx+bcybB69HaTc3W/4=
+	b=fjxwW6f/D2Ta/tK9Vh7r/3AB1iif95onSpgqCE7gnWH8/ACB1/eOUplckTxrzaRjY
+	 9BR+tFfPf5IXiG7admcQNm7eY5+p6Gnfrcc0sxg3IigefvlPVkDBcj4xpxzI2Sf8MJ
+	 uMDATFxOnW67pVICWunF1K7DM3Tv9rjgCZKklZDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/523] ARM: dts: vfxxx: Correctly use two tuples for timer address
-Date: Tue, 26 Aug 2025 13:04:51 +0200
-Message-ID: <20250826110926.562441937@linuxfoundation.org>
+Subject: [PATCH 5.10 082/523] staging: fbtft: fix potential memory leak in fbtft_framebuffer_alloc()
+Date: Tue, 26 Aug 2025 13:04:52 +0200
+Message-ID: <20250826110926.585361864@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,35 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit f3440dcf8b994197c968fbafe047ce27eed226e8 ]
+[ Upstream commit eb2cb7dab60f9be0b435ac4a674255429a36d72c ]
 
-Address and size-cells are 1 and the ftm timer node takes two address
-spaces in "reg" property, so this should be in two <> tuples.  Change
-has no functional impact, but original code is confusing/less readable.
+In the error paths after fb_info structure is successfully allocated,
+the memory allocated in fb_deferred_io_init() for info->pagerefs is not
+freed. Fix that by adding the cleanup function on the error path.
 
-Fixes: 07513e1330a9 ("ARM: dts: vf610: Add Freescale FlexTimer Module timer node.")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20250626172412.18355-1-abdun.nihaal@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/vfxxx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/fbtft/fbtft-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/vfxxx.dtsi b/arch/arm/boot/dts/vfxxx.dtsi
-index 2259d11af721..fb7709b8a334 100644
---- a/arch/arm/boot/dts/vfxxx.dtsi
-+++ b/arch/arm/boot/dts/vfxxx.dtsi
-@@ -617,7 +617,7 @@ usbmisc1: usb@400b4800 {
+diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
+index d0c8d85f3db0..2c04fcff0e1c 100644
+--- a/drivers/staging/fbtft/fbtft-core.c
++++ b/drivers/staging/fbtft/fbtft-core.c
+@@ -745,6 +745,7 @@ struct fb_info *fbtft_framebuffer_alloc(struct fbtft_display *display,
+ 	return info;
  
- 			ftm: ftm@400b8000 {
- 				compatible = "fsl,ftm-timer";
--				reg = <0x400b8000 0x1000 0x400b9000 0x1000>;
-+				reg = <0x400b8000 0x1000>, <0x400b9000 0x1000>;
- 				interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
- 				clock-names = "ftm-evt", "ftm-src",
- 					"ftm-evt-counter-en", "ftm-src-counter-en";
+ release_framebuf:
++	fb_deferred_io_cleanup(info);
+ 	framebuffer_release(info);
+ 
+ alloc_fail:
 -- 
 2.39.5
 
