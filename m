@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25826286881;
-	Tue, 26 Aug 2025 14:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812452B9A7;
+	Tue, 26 Aug 2025 14:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217309; cv=none; b=JNIzJNq3iQg1nKsJixlVVbZDWAesHI8t0gLwfspE9No9hvBRDyOlKxgvNodjOQF6yQULo7uweL4GuDeZZh/B9KocYdRuRlGWxthRiXEim9kLryfUg7QK7Aos3/taL3OLepsyVrrrZUcXwtwIzlCY9t1C0TqKaBZq/PSYRe9K/rA=
+	t=1756217311; cv=none; b=rLtOmZrni9xOIQosg1jK6MKkUt2tsd+qX8bq+aXlnu1B+5n7VOX31MJyXIUgqEw5RYTKqKC1OKJbuNfgUvpUoX5yb+/PE1AC7zHKkF6ehNKBv6DpPxgLNY4wy7DtSXv8vg9MKOJ4kSRRo9/dACqb6dzn00EaQywsXF/b4PSq9q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217309; c=relaxed/simple;
-	bh=qoHc4H2alG9tr+b5dJlgvd2E7Af+ikPtn6Jom3dyzkE=;
+	s=arc-20240116; t=1756217311; c=relaxed/simple;
+	bh=jJ8sdRyzhUnYTAREakBiSz2kdlrZHervtoqpZORKSJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THhkofp6hnTSrJT9xBpLkWp0jALZQQk8HQCVkRCMuPAVelJLRFUnzfqyzjR2V9HKN80RuP/PSZGydqedXspOV9ocs/lqxp5Pagkg1bq3nb4lQGJ9QQNkcogPgu4c0NI7Vk8FIqpw91Pj+pzKbGSbseVaEQXH5ya/5kHUf3S3ONw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn9WkWfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tk/grJpZmeXwYx7uaF7cb1rK9mIl3vuwhK/27qCK7tp8I4Ftr6azGkFD7CRlDs5F9pXd/62kPKvbA4j1aiGd3ICtsecP0caLIkjiMtWI1FmefLjHJ0jkvkZA4FuoxENqpbCaxh+juOA1RCH8XgcA+kZiRjxiD84hi2WXVDMBX/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I06gPPGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn9WkWfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E661C4CEF1;
-	Tue, 26 Aug 2025 14:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I06gPPGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E245C4CEF1;
+	Tue, 26 Aug 2025 14:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217308;
-	bh=qoHc4H2alG9tr+b5dJlgvd2E7Af+ikPtn6Jom3dyzkE=;
+	s=korg; t=1756217311;
+	bh=jJ8sdRyzhUnYTAREakBiSz2kdlrZHervtoqpZORKSJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gn9WkWfcUtx5dpGb4jADAESFn+R23smeIlHHHAulu2jpngt2cvZoITPJYGZNO3CGb
-	 82iClU6UEYmHa+SRMgNeY0v3TyYOvgRPN/OZ0esbck86RxoQX+6tQCxG4ctrvDKADV
-	 vHi841lS/bkm/VSNIPCuSnI7yTXqrDM0sjttdNfE=
+	b=I06gPPGnuy+ouees5831QFMA1y8f+oqcO6iEUf9jpZ/4sswTCNUbvhfxScYtmDU32
+	 n2pIQPKDFLI9Ym3wM5YxS0PYuvQIhrA6LC4Xmh/fnQ0RJ2nnrfpliC3Mln4MHXP5ey
+	 x10TKnvFXq6MwGOz3dZtYOewxb+Z0unuVGolx4f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacek Kowalski <jacek@jacekk.info>,
-	Vlad URSU <vlad@ursu.me>,
-	Simon Horman <horms@kernel.org>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.10 067/523] e1000e: ignore uninitialized checksum word on tgp
-Date: Tue, 26 Aug 2025 13:04:37 +0200
-Message-ID: <20250826110926.229254832@linuxfoundation.org>
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 094/523] drm/rockchip: cleanup fb when drm_gem_fb_afbc_init failed
+Date: Tue, 26 Aug 2025 13:05:04 +0200
+Message-ID: <20250826110926.865637238@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacek Kowalski <jacek@jacekk.info>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-commit 61114910a5f6a71d0b6ea3b95082dfe031b19dfe upstream.
+[ Upstream commit 099593a28138b48feea5be8ce700e5bc4565e31d ]
 
-As described by Vitaly Lifshits:
+In the function drm_gem_fb_init_with_funcs, the framebuffer (fb)
+and its corresponding object ID have already been registered.
 
-> Starting from Tiger Lake, LAN NVM is locked for writes by SW, so the
-> driver cannot perform checksum validation and correction. This means
-> that all NVM images must leave the factory with correct checksum and
-> checksum valid bit set.
+So we need to cleanup the drm framebuffer if the subsequent
+execution of drm_gem_fb_afbc_init fails.
 
-Unfortunately some systems have left the factory with an uninitialized
-value of 0xFFFF at register address 0x3F (checksum word location).
-So on Tiger Lake platform we ignore the computed checksum when such
-condition is encountered.
+Directly call drm_framebuffer_put to ensure that all fb related
+resources are cleanup.
 
-Signed-off-by: Jacek Kowalski <jacek@jacekk.info>
-Tested-by: Vlad URSU <vlad@ursu.me>
-Fixes: 4051f68318ca9 ("e1000e: Do not take care about recovery NVM checksum")
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7707f7227f09 ("drm/rockchip: Add support for afbc")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20250509031607.2542187-1-andyshrk@163.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/defines.h |    3 +++
- drivers/net/ethernet/intel/e1000e/nvm.c     |    6 ++++++
- 2 files changed, 9 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_drm_fb.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/intel/e1000e/defines.h
-+++ b/drivers/net/ethernet/intel/e1000e/defines.h
-@@ -638,6 +638,9 @@
- /* For checksumming, the sum of all words in the NVM should equal 0xBABA. */
- #define NVM_SUM                    0xBABA
- 
-+/* Uninitialized ("empty") checksum word value */
-+#define NVM_CHECKSUM_UNINITIALIZED 0xFFFF
-+
- /* PBA (printed board assembly) number words */
- #define NVM_PBA_OFFSET_0           8
- #define NVM_PBA_OFFSET_1           9
---- a/drivers/net/ethernet/intel/e1000e/nvm.c
-+++ b/drivers/net/ethernet/intel/e1000e/nvm.c
-@@ -558,6 +558,12 @@ s32 e1000e_validate_nvm_checksum_generic
- 		checksum += nvm_data;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+index 3aa37e177667..b386c17e8668 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+@@ -81,16 +81,9 @@ rockchip_fb_create(struct drm_device *dev, struct drm_file *file,
  	}
  
-+	if (hw->mac.type == e1000_pch_tgp &&
-+	    nvm_data == NVM_CHECKSUM_UNINITIALIZED) {
-+		e_dbg("Uninitialized NVM Checksum on TGP platform - ignoring\n");
-+		return 0;
-+	}
-+
- 	if (checksum != (u16)NVM_SUM) {
- 		e_dbg("NVM Checksum Invalid\n");
- 		return -E1000_ERR_NVM;
+ 	if (drm_is_afbc(mode_cmd->modifier[0])) {
+-		int ret, i;
+-
+ 		ret = drm_gem_fb_afbc_init(dev, mode_cmd, afbc_fb);
+ 		if (ret) {
+-			struct drm_gem_object **obj = afbc_fb->base.obj;
+-
+-			for (i = 0; i < info->num_planes; ++i)
+-				drm_gem_object_put(obj[i]);
+-
+-			kfree(afbc_fb);
++			drm_framebuffer_put(&afbc_fb->base);
+ 			return ERR_PTR(ret);
+ 		}
+ 	}
+-- 
+2.39.5
+
 
 
