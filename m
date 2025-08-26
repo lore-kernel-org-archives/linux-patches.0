@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DB7267386;
-	Tue, 26 Aug 2025 11:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED71199935;
+	Tue, 26 Aug 2025 11:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208517; cv=none; b=a8jOOHnqATYpfKRIrp8w6RMU0bqCGETc56xr6F3j4dtDErRzHdItUCCzHruJm9O5YRTK1N6judnSyhqtL2hYdQXccmj8q6AWTHnEKkRfAnl6hh2+maEmRP/GQ8qHL1kliyKGRbMzro8yGev2YO4QHEiIVqdTjdhon//G/UZV7j0=
+	t=1756208519; cv=none; b=iEuVj13S7wyPrAuzLBUvbSz/pqm2HeIvmzM+g2AOc+VGqOGNeryFhzhqIB6o+Iaq7MND723tejhdRa1Xx25nfOf6Gr6CYeeSYc3jtwnD0qwSztQpi9orOq9Cbel18UI8QH4XRqNEjEzFoitpWa3xCqQb6YEUTQ12QK4xq3IfEdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208517; c=relaxed/simple;
-	bh=co7IBiseY2/AfHAZBuxegkui80qpxn2I5ukuOABSdW4=;
+	s=arc-20240116; t=1756208519; c=relaxed/simple;
+	bh=uB1UCPiPqOY7SLHpNFsb9+i1WA/K2Vob+CJYUMTgeOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McivxDU3wK5fN+eQpEbxaRdrVUDpeBwGWd0l7831Hz0arn2pHWpnyMZOZKtw8avmxnRS4v5Xm2/WhV9HjllwYRPjof6pbLWCRayY/1Zo6Bdr5AE0+W0FT5KZzogE6Mxd5/PT8ddmYNFJQb2cLweZyQ/GGhrtsrZ3ryOv33G0Bps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXJKqNuq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p8zF+/TolXBxgrK8clJp47ynYgPH35tATmsrVxFhFx9HoSVLOHfWScM2pYZTquvhLsat+xoeDVUwA8STVm531irPwAdv33YUsiR2/1VM57VXpW4Me/7Kea0sI+q2xOhBhZy0lNa7r3CYbl3TruCAcwNHQw2tX4obHSLDzEng3Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlklQ4CE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXJKqNuq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96196C4CEF1;
-	Tue, 26 Aug 2025 11:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlklQ4CE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410B6C4CEF1;
+	Tue, 26 Aug 2025 11:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208516;
-	bh=co7IBiseY2/AfHAZBuxegkui80qpxn2I5ukuOABSdW4=;
+	s=korg; t=1756208519;
+	bh=uB1UCPiPqOY7SLHpNFsb9+i1WA/K2Vob+CJYUMTgeOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXJKqNuq0CX39f7j7om8xTN4j5enxDwS/TS/3HP38sikB9OA+d1UAQNi+t4w7jNft
-	 CVvcjjPQsNh6CGHwbQtys5YuOuUdSi2knsTgaY2rpEPh1DhN1PSEBHHpHhKfKC4p+4
-	 ZUPkU0eJMlZELn30gH6HcbbsTk008zK7mkWefSqw=
+	b=nlklQ4CEiUaU1Oya9X6V5dwXRIJMr3XZy1F7lqR8a0cCTQ0oa/WMUCBvbXiug+iYe
+	 jhHoQsZP1flYDcMB0B7ioR1sAye5syFS9eI8JFigTA6urcmZflRFRh6StmueKgtvAo
+	 rXorPOtsS2UBVVvZul9/UCVp+v+ABYIEC0qkhbQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Vedang Nagar <quic_vnagar@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 111/322] media: qcom: camss: cleanup media device allocated resource on error path
-Date: Tue, 26 Aug 2025 13:08:46 +0200
-Message-ID: <20250826110918.528560505@linuxfoundation.org>
+Subject: [PATCH 6.12 112/322] media: venus: Add a check for packet size after reading from shared memory
+Date: Tue, 26 Aug 2025 13:08:47 +0200
+Message-ID: <20250826110918.554048902@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,46 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Vedang Nagar <quic_vnagar@quicinc.com>
 
-commit 69080ec3d0daba8a894025476c98ab16b5a505a4 upstream.
+commit 49befc830daa743e051a65468c05c2ff9e8580e6 upstream.
 
-A call to media_device_init() requires media_device_cleanup() counterpart
-to complete cleanup and release any allocated resources.
+Add a check to ensure that the packet size does not exceed the number of
+available words after reading the packet header from shared memory. This
+ensures that the size provided by the firmware is safe to process and
+prevent potential out-of-bounds memory access.
 
-This has been done in the driver .remove() right from the beginning, but
-error paths on .probe() shall also be fixed.
-
-Fixes: a1d7c116fcf7 ("media: camms: Add core files")
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -2275,7 +2275,7 @@ static int camss_probe(struct platform_d
- 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
--		goto err_genpd_cleanup;
-+		goto err_media_device_cleanup;
- 	}
- 
- 	v4l2_async_nf_init(&camss->notifier, &camss->v4l2_dev);
-@@ -2330,6 +2330,8 @@ err_v4l2_device_unregister:
- 	v4l2_device_unregister(&camss->v4l2_dev);
- 	v4l2_async_nf_cleanup(&camss->notifier);
- 	pm_runtime_disable(dev);
-+err_media_device_cleanup:
-+	media_device_cleanup(&camss->media_dev);
- err_genpd_cleanup:
- 	camss_genpd_cleanup(camss);
- 
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -239,6 +239,7 @@ static int venus_write_queue(struct venu
+ static int venus_read_queue(struct venus_hfi_device *hdev,
+ 			    struct iface_queue *queue, void *pkt, u32 *tx_req)
+ {
++	struct hfi_pkt_hdr *pkt_hdr = NULL;
+ 	struct hfi_queue_header *qhdr;
+ 	u32 dwords, new_rd_idx;
+ 	u32 rd_idx, wr_idx, type, qsize;
+@@ -304,6 +305,9 @@ static int venus_read_queue(struct venus
+ 			memcpy(pkt, rd_ptr, len);
+ 			memcpy(pkt + len, queue->qmem.kva, new_rd_idx << 2);
+ 		}
++		pkt_hdr = (struct hfi_pkt_hdr *)(pkt);
++		if ((pkt_hdr->size >> 2) != dwords)
++			return -EINVAL;
+ 	} else {
+ 		/* bad packet received, dropping */
+ 		new_rd_idx = qhdr->write_idx;
 
 
