@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4301DE8BE;
-	Tue, 26 Aug 2025 14:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A51534DCC0;
+	Tue, 26 Aug 2025 14:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217215; cv=none; b=EpV8nU907skXG8chCfV9hbzDOZ2l7MSu5+SfkapdzJNa/qfMaIl6/9sN5d3QQhEdPfdqkwgQARALMnaSZC+cQR8o4LdeVaKDHYtb474xDl701VpwFpWr9/XoRCTjOp/lP0OzAc0W4p77xIIk/YkjS2+xmPyvnLroK4FI+jff+JQ=
+	t=1756217218; cv=none; b=JcxgbAO5g3gRRVoFFTlewKzRgRrIrweA8lFiqQXR2/3wBwKCa1bPDVZDw5drATyC12J+5cvFRKWiY9mIDkpQRw4kq90XvftujK0rlBivTRBh8pTBFgo9DPnPGjiGIg0R/r6CqDT0qf0NRO4+3tT8lX2zqOmaMYUMwurIBkHD/N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217215; c=relaxed/simple;
-	bh=h1Vw24IXINTvTPwC3nA2oEg8s+YW7mj9dgMsdPNb8CI=;
+	s=arc-20240116; t=1756217218; c=relaxed/simple;
+	bh=t1v/k26CMo4WqvQyLcn+j72gwtPIENSjnrGk6/6bMfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqOSG2NuhU8vKg+PhkPLPaajTUIxNDQK68MJ0TmiF6QuTgpWYD9n8uAfrRhlKT6MYK1qocKExLN5K2UnvRrvqiYb8YEgsq3mvibZroavtZWYowVCOWBYlctzNZqCOQ1kt8BeFm1L0XIl/jh3jxZF4Del+1R3T9nj0aoJIwB1Hsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVefFlFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0XzJJAPvDJEcqLtEPEYxOcFfMKJW8byAuUz/nH7LgS2SgcgIzVRu63U/5gZPmzHPPcdtm16PfRf2zh1n6JPwSwqfHJ30BPQrbCwfQ5so+VJ28IE1cw6g0nOaD0ZPJO6/c4uzHK/23W/XLxQhkbOomDwLK7SIi+gm//9gCU0EfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEPRFJ2f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVefFlFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66266C4CEF1;
-	Tue, 26 Aug 2025 14:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEPRFJ2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BE5C116D0;
+	Tue, 26 Aug 2025 14:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217215;
-	bh=h1Vw24IXINTvTPwC3nA2oEg8s+YW7mj9dgMsdPNb8CI=;
+	s=korg; t=1756217218;
+	bh=t1v/k26CMo4WqvQyLcn+j72gwtPIENSjnrGk6/6bMfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVefFlFtTUOj3VBQK9XvkiYo66mfXmj61LykUEocGn69QU8GOWHq6iNapR3pITQce
-	 SKQWqwpZYGJEWHKfZCOUHeQHsSmYi6dHphC8L8iVzxdx/1rHUzylfmRXHa3I7lweWC
-	 2qdrUqQoe39GjU7pO2QeWU+zoPqb1QN2s5eT2vw4=
+	b=JEPRFJ2fd6P5bzeCpLZiu7ZgjGQrbPAhYVCNcaNkkwe0aBZuTjBik1oJP1jA2rl3n
+	 hQKjfUYoiZaWTbcoyXyVOh03eoxC2hyEqXgwx619T9zX3dJEFMGGk1QWmmX7nQLZsC
+	 wGQIlQEvAjaLLI3/iAyD299JeuJNoloOtJGocszw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/523] net: appletalk: fix kerneldoc warnings
-Date: Tue, 26 Aug 2025 13:04:29 +0200
-Message-ID: <20250826110926.041815121@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.10 033/523] comedi: Fix initialization of data for instructions that write to subdevice
+Date: Tue, 26 Aug 2025 13:04:03 +0200
+Message-ID: <20250826110925.417635645@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,83 +49,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 709565ae14aa2670d6b480be46720856e804af41 ]
+commit 46d8c744136ce2454aa4c35c138cc06817f92b8e upstream.
 
-net/appletalk/aarp.c:68: warning: Function parameter or member 'dev' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'expires_at' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'hwaddr' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'last_sent' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'next' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'packet_queue' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'status' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'target_addr' not described in 'aarp_entry'
-net/appletalk/aarp.c:68: warning: Function parameter or member 'xmit_count' not described in 'aarp_entry'
-net/appletalk/ddp.c:1422: warning: Function parameter or member 'dev' not described in 'atalk_rcv'
-net/appletalk/ddp.c:1422: warning: Function parameter or member 'orig_dev' not described in 'atalk_rcv'
-net/appletalk/ddp.c:1422: warning: Function parameter or member 'pt' not described in 'atalk_rcv'
-net/appletalk/ddp.c:1422: warning: Function parameter or member 'skb' not described in 'atalk_rcv'
+Some Comedi subdevice instruction handlers are known to access
+instruction data elements beyond the first `insn->n` elements in some
+cases.  The `do_insn_ioctl()` and `do_insnlist_ioctl()` functions
+allocate at least `MIN_SAMPLES` (16) data elements to deal with this,
+but they do not initialize all of that.  For Comedi instruction codes
+that write to the subdevice, the first `insn->n` data elements are
+copied from user-space, but the remaining elements are left
+uninitialized.  That could be a problem if the subdevice instruction
+handler reads the uninitialized data.  Ensure that the first
+`MIN_SAMPLES` elements are initialized before calling these instruction
+handlers, filling the uncopied elements with 0.  For
+`do_insnlist_ioctl()`, the same data buffer elements are used for
+handling a list of instructions, so ensure the first `MIN_SAMPLES`
+elements are initialized for each instruction that writes to the
+subdevice.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20201028005527.930388-1-andrew@lunn.ch
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 6c4a92d07b08 ("net: appletalk: Fix use-after-free in AARP proxy probe")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Cc: stable@vger.kernel.org # 5.13+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250707161439.88385-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/appletalk/aarp.c | 18 +++++++++---------
- net/appletalk/ddp.c  |  7 ++++---
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ drivers/staging/comedi/comedi_fops.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/appletalk/aarp.c b/net/appletalk/aarp.c
-index 45f584171de79..be18af481d7d5 100644
---- a/net/appletalk/aarp.c
-+++ b/net/appletalk/aarp.c
-@@ -44,15 +44,15 @@ int sysctl_aarp_resolve_time = AARP_RESOLVE_TIME;
- /* Lists of aarp entries */
- /**
-  *	struct aarp_entry - AARP entry
-- *	@last_sent - Last time we xmitted the aarp request
-- *	@packet_queue - Queue of frames wait for resolution
-- *	@status - Used for proxy AARP
-- *	expires_at - Entry expiry time
-- *	target_addr - DDP Address
-- *	dev - Device to use
-- *	hwaddr - Physical i/f address of target/router
-- *	xmit_count - When this hits 10 we give up
-- *	next - Next entry in chain
-+ *	@last_sent: Last time we xmitted the aarp request
-+ *	@packet_queue: Queue of frames wait for resolution
-+ *	@status: Used for proxy AARP
-+ *	@expires_at: Entry expiry time
-+ *	@target_addr: DDP Address
-+ *	@dev:  Device to use
-+ *	@hwaddr:  Physical i/f address of target/router
-+ *	@xmit_count:  When this hits 10 we give up
-+ *	@next: Next entry in chain
-  */
- struct aarp_entry {
- 	/* These first two are only used for unresolved entries */
-diff --git a/net/appletalk/ddp.c b/net/appletalk/ddp.c
-index c9edfca153c99..f38b170a51af0 100644
---- a/net/appletalk/ddp.c
-+++ b/net/appletalk/ddp.c
-@@ -1408,9 +1408,10 @@ static int atalk_route_packet(struct sk_buff *skb, struct net_device *dev,
+--- a/drivers/staging/comedi/comedi_fops.c
++++ b/drivers/staging/comedi/comedi_fops.c
+@@ -1551,21 +1551,27 @@ static int do_insnlist_ioctl(struct come
+ 	}
  
- /**
-  *	atalk_rcv - Receive a packet (in skb) from device dev
-- *	@skb - packet received
-- *	@dev - network device where the packet comes from
-- *	@pt - packet type
-+ *	@skb: packet received
-+ *	@dev: network device where the packet comes from
-+ *	@pt: packet type
-+ *	@orig_dev: the original receive net device
-  *
-  *	Receive a packet (in skb) from device dev. This has come from the SNAP
-  *	decoder, and on entry skb->transport_header is the DDP header, skb->len
--- 
-2.39.5
-
+ 	for (i = 0; i < n_insns; ++i) {
++		unsigned int n = insns[i].n;
++
+ 		if (insns[i].insn & INSN_MASK_WRITE) {
+ 			if (copy_from_user(data, insns[i].data,
+-					   insns[i].n * sizeof(unsigned int))) {
++					   n * sizeof(unsigned int))) {
+ 				dev_dbg(dev->class_dev,
+ 					"copy_from_user failed\n");
+ 				ret = -EFAULT;
+ 				goto error;
+ 			}
++			if (n < MIN_SAMPLES) {
++				memset(&data[n], 0, (MIN_SAMPLES - n) *
++						    sizeof(unsigned int));
++			}
+ 		}
+ 		ret = parse_insn(dev, insns + i, data, file);
+ 		if (ret < 0)
+ 			goto error;
+ 		if (insns[i].insn & INSN_MASK_READ) {
+ 			if (copy_to_user(insns[i].data, data,
+-					 insns[i].n * sizeof(unsigned int))) {
++					 n * sizeof(unsigned int))) {
+ 				dev_dbg(dev->class_dev,
+ 					"copy_to_user failed\n");
+ 				ret = -EFAULT;
+@@ -1628,6 +1634,10 @@ static int do_insn_ioctl(struct comedi_d
+ 			ret = -EFAULT;
+ 			goto error;
+ 		}
++		if (insn->n < MIN_SAMPLES) {
++			memset(&data[insn->n], 0,
++			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
++		}
+ 	}
+ 	ret = parse_insn(dev, insn, data, file);
+ 	if (ret < 0)
 
 
