@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D841350D51;
-	Tue, 26 Aug 2025 13:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC46E350851;
+	Tue, 26 Aug 2025 13:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216171; cv=none; b=mOEjBEcE1mX1gzMjv7Zkg8M5fqb2tO/skL9oJdOOsM5yRIAqUP0NNbvk8pX3ruQQm3o8QtGVtFDhZgxAHOisSWZcox+MMASRb6iefkArIlz1KvtMQUpEbOJQaCKg6NBS5qC9dR3uZov8YOMFw8jGGRNM2V3VkxY72iDj04zhubc=
+	t=1756216175; cv=none; b=gcPHab21OUGa3yS2R8CO/6a3vtAmd0smTwI6GZFRpSskVZ1xfON1zOXRxnBatyMafWipJrqP57tiYu71pH76pTGFJcn4wHklTQ/ZZ9oh7PbWULmSJhg/AZEbNwXFEaFCCfc6DvmH28kfkzRTNWAgtWkAeCmhVAJzV2atWykbvrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216171; c=relaxed/simple;
-	bh=3L9RcfrhNYYh2U+sf5T/OG3xdQYzsfQ6p3jCmMtQ9N0=;
+	s=arc-20240116; t=1756216175; c=relaxed/simple;
+	bh=mPh2YN8129UButDFr7HQe0Puho2ZDnarJPIQnCXfy+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N/C/7HO19OaaCddxI7isF4SsXwmQFgFh3N0m9gb3+oY8FuVNar1BmNUkGKOrA8UpQ2ns86xpxADllavRa6BrfHrdKIvlJXyeSIPWTqJ9FdNdXvvRGQ82YRbMmDe9/PYR1DotT0E7guYaQafDendOcxH/NlGN7dHdNplP2qSKbh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHL24PE8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FVWankC/jSjSSt166oSNrsHzYEiryo5dEOqB1Glf+/2NhxvGTHpIO8NB87V4uYU4hwV5BKVmat2Ca7I7ZXQn/pQdH1lc58+nJc+beEEq/73kgF4NrSRbZiWXnamA0WWnXc1krKSLD7gMJKSqprZTCNCCY385GQRUExYZb/dRt1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvhD+xcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHL24PE8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F9AC4CEF1;
-	Tue, 26 Aug 2025 13:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvhD+xcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2F4C4CEF1;
+	Tue, 26 Aug 2025 13:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216171;
-	bh=3L9RcfrhNYYh2U+sf5T/OG3xdQYzsfQ6p3jCmMtQ9N0=;
+	s=korg; t=1756216173;
+	bh=mPh2YN8129UButDFr7HQe0Puho2ZDnarJPIQnCXfy+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHL24PE8t6P/hPO5AXEM0lbO1QjSNSy+GESmJ1SdSMN8W6Est+mHBEncDkMwgxmtr
-	 GsYh4QFRAS5JsTULO+5GHG7EbLZGMtOeO0/fvUsgpyyyJhER4iONh1jwu+FU5Zzz+v
-	 OzpJmk6ILoQclxUgfWvs+UtCafSA2KWW9FjwIfoo=
+	b=GvhD+xcK7mAIFVdr0Kknr/OSu9SiBRuEqcsji+5QWoGhUkukQyyEHI3SZ8V+QSfiD
+	 YPS/NFffPkWmD6i8nRaP5FTyuwNPjwZiLKL5TBCUQR2IiVCwpEgPN+yllat8Bjq7cH
+	 R9ql5jWr4Bp3wWg1krqeU265cjTqwN9OTmAsSN4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Zhu Qiyu <qiyuzhu2@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 312/644] selftests: tracing: Use mutex_unlock for testing glob filter
-Date: Tue, 26 Aug 2025 13:06:43 +0200
-Message-ID: <20250826110954.116186246@linuxfoundation.org>
+Subject: [PATCH 5.15 313/644] ACPI: PRM: Reduce unnecessary printing to avoid user confusion
+Date: Tue, 26 Aug 2025 13:06:44 +0200
+Message-ID: <20250826110954.141536303@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,39 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Zhu Qiyu <qiyuzhu2@amd.com>
 
-[ Upstream commit a089bb2822a49b0c5777a8936f82c1f8629231fb ]
+[ Upstream commit 3db5648c4d608b5483470efc1da9780b081242dd ]
 
-Since commit c5b6ababd21a ("locking/mutex: implement
-mutex_trylock_nested") makes mutex_trylock() as an inlined
-function if CONFIG_DEBUG_LOCK_ALLOC=y, we can not use
-mutex_trylock() for testing the glob filter of ftrace.
+Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
+handler and context") introduced non-essential printing "Failed to find
+VA for GUID: xxxx, PA: 0x0" which may confuse users to think that
+something wrong is going on while it is not the case.
 
-Use mutex_unlock instead.
+According to the PRM Spec Section 4.1.2 [1], both static data buffer
+address and ACPI parameter buffer address may be NULL if they are not
+needed, so there is no need to print out the "Failed to find VA ... "
+in those cases.
 
-Link: https://lore.kernel.org/r/175151680309.2149615.9795104805153538717.stgit@mhiramat.tok.corp.google.com
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
+Signed-off-by: Zhu Qiyu <qiyuzhu2@amd.com>
+Link: https://patch.msgid.link/20250704014104.82524-1-qiyuzhu2@amd.com
+[ rjw: Edits in new comments, subject and changelog ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc  | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/prmt.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-index 4b994b6df5ac..ed81eaf2afd6 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func-filter-glob.tc
-@@ -29,7 +29,7 @@ ftrace_filter_check 'schedule*' '^schedule.*$'
- ftrace_filter_check '*pin*lock' '.*pin.*lock$'
+diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
+index 890c74c52beb..6290ed84c595 100644
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -85,8 +85,6 @@ static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
+ 		}
+ 	}
  
- # filter by start*mid*
--ftrace_filter_check 'mutex*try*' '^mutex.*try.*'
-+ftrace_filter_check 'mutex*unl*' '^mutex.*unl.*'
+-	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
+-
+ 	return 0;
+ }
  
- # Advanced full-glob matching feature is recently supported.
- # Skip the tests if we are sure the kernel does not support it.
+@@ -142,13 +140,37 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
+ 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
+ 		th->handler_addr =
+ 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
++		/*
++		 * Print a warning message if handler_addr is zero which is not expected to
++		 * ever happen.
++		 */
++		if (unlikely(!th->handler_addr))
++			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
++				&th->guid, handler_info->handler_address);
+ 
+ 		th->static_data_buffer_addr =
+ 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
++		/*
++		 * According to the PRM specification, static_data_buffer_address can be zero,
++		 * so avoid printing a warning message in that case.  Otherwise, if the
++		 * return value of efi_pa_va_lookup() is zero, print the message.
++		 */
++		if (unlikely(!th->static_data_buffer_addr && handler_info->static_data_buffer_address))
++			pr_warn("Failed to find VA of static data buffer for GUID: %pUL, PA: 0x%llx",
++				&th->guid, handler_info->static_data_buffer_address);
+ 
+ 		th->acpi_param_buffer_addr =
+ 			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
+ 
++		/*
++		 * According to the PRM specification, acpi_param_buffer_address can be zero,
++		 * so avoid printing a warning message in that case.  Otherwise, if the
++		 * return value of efi_pa_va_lookup() is zero, print the message.
++		 */
++		if (unlikely(!th->acpi_param_buffer_addr && handler_info->acpi_param_buffer_address))
++			pr_warn("Failed to find VA of acpi param buffer for GUID: %pUL, PA: 0x%llx",
++				&th->guid, handler_info->acpi_param_buffer_address);
++
+ 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
+ 
+ 	return 0;
 -- 
 2.39.5
 
