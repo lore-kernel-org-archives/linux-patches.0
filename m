@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077383568E7;
-	Tue, 26 Aug 2025 14:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CCE3568E7;
+	Tue, 26 Aug 2025 14:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217032; cv=none; b=llk+rh3bJwo+azPgPvXb5Ha4XbWbwb+xjVxkf+1+Q9dmN3+qgNEibne4kP0HVKHyrOJNy/3PXh/DcrlzznCEw02M7uGiTue71LyzDZ314056LxiSbfflqHfg0rf0SN8kVOf6OdyKN/wPmSHnZCet3e2D3WUZb9aeybjxvsNY+WE=
+	t=1756217034; cv=none; b=u5hIHyx8rib06CYqoKqx2HdWPLo1noXTOqU31FeawX+BP3B71B1kf88/8BHbt/mgO3eOPngozev3wNFyAC/yAg0S1kWt8c/ZxO5HosOiTaK1W4d+P9nZ/fpEip1sMmtKG8FJWiUDx4sziRucjmhfS/cgMnr7D+ML7u29yoEb7+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217032; c=relaxed/simple;
-	bh=pcpq0dUwiy/mmFeDzJHn+GcKl3/8qSqpxQMGMPMfytc=;
+	s=arc-20240116; t=1756217034; c=relaxed/simple;
+	bh=K82djbxXimfVBHLQQCFDpnENfQF1GDRYvT82JhEq/qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1np3aDFjCTSVhN8QeqgdTkaCqbAOeTJ+0jwpLTtGdnLTLqKm7DUEFCxZgvIACpVM+uCi01xpIvp4/Wr+R4q+WWWTxVuETpWuztfzuasukxIV+uSLRSALJ9lANzB78t7USCF6zro5qF47WPEp+dv6kMUuICbHQU6fEEWIYnHwEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voyw55rJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8Jj0vQjEQ9CaF6iNN9V4sPBECN26LgKxmyKNfdw9Y4TbnnQbOOunt85X6J35xN4di3s9uWau294p4tWM6aY01qqtebcbf2h2EQ9jTJiQz6oJDhl4YarfFBL3KS1nTGSjxa1UMiZ4eCfvPT/InRt7eO81QQMLlmJr5R65hiJN7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpZmy1zu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voyw55rJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FF0C4CEF1;
-	Tue, 26 Aug 2025 14:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpZmy1zu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271B5C4CEF1;
+	Tue, 26 Aug 2025 14:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217031;
-	bh=pcpq0dUwiy/mmFeDzJHn+GcKl3/8qSqpxQMGMPMfytc=;
+	s=korg; t=1756217034;
+	bh=K82djbxXimfVBHLQQCFDpnENfQF1GDRYvT82JhEq/qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voyw55rJiyQQPk5v95MbvcCp+QWAWXesKWaiqwjHxuQoPIRw8EGzuFItrH65q9FxZ
-	 /syY6HpTJHKRTK2ppWTjyS3E8LNGnL/h72TaBNOLhjBDLeBQj+j2ZGaiKfQV+iPJa0
-	 dkQhOwplKKemmxOYJklBikqBaeLCnEQfq9VYdUqQ=
+	b=WpZmy1zu31U8DLWwh6Fs8HXfxWZ/imi4Jl64C7I1Cg6+9/0ywNnSeptyTlA5c3GhF
+	 xB3uDdSk2ngZ8ttd/lOZTs/PnX7xynrdsUO4KxLGMd3sAG/3+iDM4pPyvPRbfWU5Mr
+	 cgyZHKpBIVa/eqaye6YBVvDoXW2UZPkyjMiB8ykM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Radu Pirea <radu-nicolae.pirea@oss.nxp.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 632/644] net: phy: Use netif_rx().
-Date: Tue, 26 Aug 2025 13:12:03 +0200
-Message-ID: <20250826111002.220162843@linuxfoundation.org>
+Subject: [PATCH 5.15 633/644] phy: mscc: Fix timestamping for vsc8584
+Date: Tue, 26 Aug 2025 13:12:04 +0200
+Message-ID: <20250826111002.246085711@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -56,90 +53,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit a3d73e15909bdcf25f341e6623cc165ba7eb5968 ]
+[ Upstream commit bc1a59cff9f797bfbf8f3104507584d89e9ecf2e ]
 
-Since commit
-   baebdf48c3600 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
+There was a problem when we received frames and the frames were
+timestamped. The driver is configured to store the nanosecond part of
+the timestmap in the ptp reserved bits and it would take the second part
+by reading the LTC. The problem is that when reading the LTC we are in
+atomic context and to read the second part will go over mdio bus which
+might sleep, so we get an error.
+The fix consists in actually put all the frames in a queue and start the
+aux work and in that work to read the LTC and then calculate the full
+received time.
 
-the function netif_rx() can be used in preemptible/thread context as
-well as in interrupt context.
-
-Use netif_rx().
-
-Cc: Andrew Lunn <andrew@lunn.ch>
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Radu Pirea <radu-nicolae.pirea@oss.nxp.com>
-Cc: Richard Cochran <richardcochran@gmail.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: bc1a59cff9f7 ("phy: mscc: Fix timestamping for vsc8584")
+Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250818081029.1300780-1-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83640.c         | 6 +++---
- drivers/net/phy/mscc/mscc_ptp.c   | 2 +-
- drivers/net/phy/nxp-c45-tja11xx.c | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/phy/mscc/mscc.h      | 12 ++++++++
+ drivers/net/phy/mscc/mscc_main.c | 12 ++++++++
+ drivers/net/phy/mscc/mscc_ptp.c  | 49 ++++++++++++++++++++++++--------
+ 3 files changed, 61 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/phy/dp83640.c b/drivers/net/phy/dp83640.c
-index 705c16675b80..88d23890f3be 100644
---- a/drivers/net/phy/dp83640.c
-+++ b/drivers/net/phy/dp83640.c
-@@ -886,7 +886,7 @@ static void decode_rxts(struct dp83640_private *dp83640,
- 	spin_unlock_irqrestore(&dp83640->rx_lock, flags);
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index 055e4ca5b3b5..878298304430 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -360,6 +360,13 @@ struct vsc85xx_hw_stat {
+ 	u16 mask;
+ };
  
- 	if (shhwtstamps)
--		netif_rx_ni(skb);
-+		netif_rx(skb);
++struct vsc8531_skb_cb {
++	u32 ns;
++};
++
++#define VSC8531_SKB_CB(skb) \
++	((struct vsc8531_skb_cb *)((skb)->cb))
++
+ struct vsc8531_private {
+ 	int rate_magic;
+ 	u16 supp_led_modes;
+@@ -408,6 +415,11 @@ struct vsc8531_private {
+ 	 */
+ 	struct mutex ts_lock;
+ 	struct mutex phc_lock;
++
++	/* list of skbs that were received and need timestamp information but it
++	 * didn't received it yet
++	 */
++	struct sk_buff_head rx_skbs_list;
+ };
+ 
+ /* Shared structure between the PHYs of the same package.
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index b349c359089e..03aa85ec60df 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2324,6 +2324,13 @@ static int vsc85xx_probe(struct phy_device *phydev)
+ 	return vsc85xx_dt_led_modes_get(phydev, default_mode);
  }
  
- static void decode_txts(struct dp83640_private *dp83640,
-@@ -1332,7 +1332,7 @@ static void rx_timestamp_work(struct work_struct *work)
- 			break;
- 		}
- 
--		netif_rx_ni(skb);
-+		netif_rx(skb);
- 	}
- 
- 	if (!skb_queue_empty(&dp83640->rx_queue))
-@@ -1383,7 +1383,7 @@ static bool dp83640_rxtstamp(struct mii_timestamper *mii_ts,
- 		skb_queue_tail(&dp83640->rx_queue, skb);
- 		schedule_delayed_work(&dp83640->ts_work, SKB_TIMESTAMP_TIMEOUT);
- 	} else {
--		netif_rx_ni(skb);
-+		netif_rx(skb);
- 	}
- 
- 	return true;
++static void vsc85xx_remove(struct phy_device *phydev)
++{
++	struct vsc8531_private *priv = phydev->priv;
++
++	skb_queue_purge(&priv->rx_skbs_list);
++}
++
+ /* Microsemi VSC85xx PHYs */
+ static struct phy_driver vsc85xx_driver[] = {
+ {
+@@ -2554,6 +2561,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
++	.remove		= &vsc85xx_remove,
+ 	.probe		= &vsc8574_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+@@ -2579,6 +2587,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
++	.remove		= &vsc85xx_remove,
+ 	.probe		= &vsc8574_probe,
+ 	.set_wol	= &vsc85xx_wol_set,
+ 	.get_wol	= &vsc85xx_wol_get,
+@@ -2604,6 +2613,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
++	.remove		= &vsc85xx_remove,
+ 	.probe		= &vsc8584_probe,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+ 	.set_tunable	= &vsc85xx_set_tunable,
+@@ -2627,6 +2637,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
++	.remove		= &vsc85xx_remove,
+ 	.probe		= &vsc8584_probe,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+ 	.set_tunable	= &vsc85xx_set_tunable,
+@@ -2650,6 +2661,7 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.config_intr    = &vsc85xx_config_intr,
+ 	.suspend	= &genphy_suspend,
+ 	.resume		= &genphy_resume,
++	.remove		= &vsc85xx_remove,
+ 	.probe		= &vsc8584_probe,
+ 	.get_tunable	= &vsc85xx_get_tunable,
+ 	.set_tunable	= &vsc85xx_set_tunable,
 diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index 92f59c964409..cf61990ccd37 100644
+index cf61990ccd37..f77bfbee5f20 100644
 --- a/drivers/net/phy/mscc/mscc_ptp.c
 +++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -1218,7 +1218,7 @@ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
- 		ts.tv_sec--;
+@@ -1190,9 +1190,7 @@ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
+ {
+ 	struct vsc8531_private *vsc8531 =
+ 		container_of(mii_ts, struct vsc8531_private, mii_ts);
+-	struct skb_shared_hwtstamps *shhwtstamps = NULL;
+ 	struct vsc85xx_ptphdr *ptphdr;
+-	struct timespec64 ts;
+ 	unsigned long ns;
  
- 	shhwtstamps->hwtstamp = ktime_set(ts.tv_sec, ns);
--	netif_rx_ni(skb);
-+	netif_rx(skb);
+ 	if (!vsc8531->ptp->configured)
+@@ -1202,27 +1200,52 @@ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
+ 	    type == PTP_CLASS_NONE)
+ 		return false;
+ 
+-	vsc85xx_gettime(&vsc8531->ptp->caps, &ts);
+-
+ 	ptphdr = get_ptp_header_rx(skb, vsc8531->ptp->rx_filter);
+ 	if (!ptphdr)
+ 		return false;
+ 
+-	shhwtstamps = skb_hwtstamps(skb);
+-	memset(shhwtstamps, 0, sizeof(struct skb_shared_hwtstamps));
+-
+ 	ns = ntohl(ptphdr->rsrvd2);
+ 
+-	/* nsec is in reserved field */
+-	if (ts.tv_nsec < ns)
+-		ts.tv_sec--;
++	VSC8531_SKB_CB(skb)->ns = ns;
++	skb_queue_tail(&vsc8531->rx_skbs_list, skb);
+ 
+-	shhwtstamps->hwtstamp = ktime_set(ts.tv_sec, ns);
+-	netif_rx(skb);
++	ptp_schedule_worker(vsc8531->ptp->ptp_clock, 0);
  
  	return true;
  }
-diff --git a/drivers/net/phy/nxp-c45-tja11xx.c b/drivers/net/phy/nxp-c45-tja11xx.c
-index 13269c4e87dd..e6ac851b217a 100644
---- a/drivers/net/phy/nxp-c45-tja11xx.c
-+++ b/drivers/net/phy/nxp-c45-tja11xx.c
-@@ -436,7 +436,7 @@ static long nxp_c45_do_aux_work(struct ptp_clock_info *ptp)
- 		shhwtstamps_rx = skb_hwtstamps(skb);
- 		shhwtstamps_rx->hwtstamp = ns_to_ktime(timespec64_to_ns(&ts));
- 		NXP_C45_SKB_CB(skb)->header->reserved2 = 0;
--		netif_rx_ni(skb);
-+		netif_rx(skb);
- 	}
  
- 	return reschedule ? 1 : -1;
++static long vsc85xx_do_aux_work(struct ptp_clock_info *info)
++{
++	struct vsc85xx_ptp *ptp = container_of(info, struct vsc85xx_ptp, caps);
++	struct skb_shared_hwtstamps *shhwtstamps = NULL;
++	struct phy_device *phydev = ptp->phydev;
++	struct vsc8531_private *priv = phydev->priv;
++	struct sk_buff_head received;
++	struct sk_buff *rx_skb;
++	struct timespec64 ts;
++	unsigned long flags;
++
++	__skb_queue_head_init(&received);
++	spin_lock_irqsave(&priv->rx_skbs_list.lock, flags);
++	skb_queue_splice_tail_init(&priv->rx_skbs_list, &received);
++	spin_unlock_irqrestore(&priv->rx_skbs_list.lock, flags);
++
++	vsc85xx_gettime(info, &ts);
++	while ((rx_skb = __skb_dequeue(&received)) != NULL) {
++		shhwtstamps = skb_hwtstamps(rx_skb);
++		memset(shhwtstamps, 0, sizeof(struct skb_shared_hwtstamps));
++
++		if (ts.tv_nsec < VSC8531_SKB_CB(rx_skb)->ns)
++			ts.tv_sec--;
++
++		shhwtstamps->hwtstamp = ktime_set(ts.tv_sec,
++						  VSC8531_SKB_CB(rx_skb)->ns);
++		netif_rx(rx_skb);
++	}
++
++	return -1;
++}
++
+ static const struct ptp_clock_info vsc85xx_clk_caps = {
+ 	.owner		= THIS_MODULE,
+ 	.name		= "VSC85xx timer",
+@@ -1236,6 +1259,7 @@ static const struct ptp_clock_info vsc85xx_clk_caps = {
+ 	.adjfine	= &vsc85xx_adjfine,
+ 	.gettime64	= &vsc85xx_gettime,
+ 	.settime64	= &vsc85xx_settime,
++	.do_aux_work	= &vsc85xx_do_aux_work,
+ };
+ 
+ static struct vsc8531_private *vsc8584_base_priv(struct phy_device *phydev)
+@@ -1563,6 +1587,7 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
+ 
+ 	mutex_init(&vsc8531->phc_lock);
+ 	mutex_init(&vsc8531->ts_lock);
++	skb_queue_head_init(&vsc8531->rx_skbs_list);
+ 
+ 	/* Retrieve the shared load/save GPIO. Request it as non exclusive as
+ 	 * the same GPIO can be requested by all the PHYs of the same package.
 -- 
 2.50.1
 
