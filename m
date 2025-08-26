@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9871B1ADFFE;
-	Tue, 26 Aug 2025 13:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F7265CCD;
+	Tue, 26 Aug 2025 13:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215304; cv=none; b=EkOivcmD/G3XvExMMv1ZidKtoF92XRtWrgwYNF3bgIo7+ewmvKgUoSATg4ZzXSOXenmZQJ4bFJR4GIePlcu1QW1MPAYBHN9M+fYfX08sjC1d72mcgwooTpNG+I6n3o0xG/L3qj09tzwQtPlg7rOZIhPZgWs4+VEYfwms7WQ6+Yk=
+	t=1756215306; cv=none; b=ANJZnyQt1bVSrJmG/lwYkcmynKc3+5b8/gEm6VOHu0foDmLYRAazlrrVxQcsaIVzxaNkFNC7EPs61TzPIwyvyV1G26quVNsCODTE05tWvkbiJygJkuVu82Ydt7uq8X58bqVycnFRd8McU20lBK0Tl4lR+TS9iYVMimhXuEBxVKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215304; c=relaxed/simple;
-	bh=74GjVozd1b4mdY2K3P/cmiHx/RWLRx+NEpqjF6GX9mQ=;
+	s=arc-20240116; t=1756215306; c=relaxed/simple;
+	bh=GvVn8jBnYHzTYeusE7syH6v6hi1+U3QzOE1hiLEMTSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=huaBXEqh0l2yO32fsSV5oG/9HYMsvP2iAj0gz0lz7aUZzQuKZITEeaVD3nLqnb3XhDFiyssXFFRUf+rAnc3I4xxjtWo9GFaUkYNRC9MuTiGqsz9VUTMnAwWVqfSvavZQiPvda+4n7h6dJM/BCyCqrfUwLx2bHBZTFxmOY09aJJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0dx58+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CD9IRzl4Mys40nTqDTSe6/ykmQO+0Rf4uuJyYtoqQPaSfzYQRgkXZ3S0ZaJSXB5KIiuBAcRhsNdhJgtcNiM6GI3qAvNeyIZbOl1q9qp+pIQ11jNFUkHMQ55dnFFYH5wFrltpgaCXoad1qJmqMQzmtSkbdAfqs+Qli/HLo1RKqJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoicpSp5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0dx58+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F55C4CEF1;
-	Tue, 26 Aug 2025 13:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoicpSp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51639C4CEF1;
+	Tue, 26 Aug 2025 13:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215304;
-	bh=74GjVozd1b4mdY2K3P/cmiHx/RWLRx+NEpqjF6GX9mQ=;
+	s=korg; t=1756215306;
+	bh=GvVn8jBnYHzTYeusE7syH6v6hi1+U3QzOE1hiLEMTSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0dx58+TxDftKNYvaALXYXuI8UWpPUKyQO0oI7plVtA/jI9DtdN0YU86F/L1brCD7
-	 n9sbE3w7IRDj/A3598Fw+W15J9z/Ghfc6ezL6Wo+gvlCiNF8LyQQ+spn0aXPceJgrP
-	 j5+BhGRHXpAyTzvgQ4c8F75K12e7Scg9fEPWjBL0=
+	b=HoicpSp5ZsWRDTUP5sLR0D0UQv9W55CiN2pvmLpm4pH83VKWjmB4LTCVZe3UYfUSI
+	 GqeEw/eoIDcFEZ14WHoWpBE82IGWUunfIa/lGlSXuobcuX8U5yxkFV5ZCiysWwwyjZ
+	 hIO5tG5MM8xtSO97mtsS1bbkA//JY3CQSrKm65gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tianhao Zhao <tizhao@redhat.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Jakub Ramaseuski <jramaseu@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 464/482] drm/amd/display: Add null pointer check in mod_hdcp_hdcp1_create_session()
-Date: Tue, 26 Aug 2025 13:11:57 +0200
-Message-ID: <20250826110942.284695686@linuxfoundation.org>
+Subject: [PATCH 6.1 465/482] net: gso: Forbid IPv6 TSO with extensions on devices with only IPV6_CSUM
+Date: Tue, 26 Aug 2025 13:11:58 +0200
+Message-ID: <20250826110942.309533446@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,46 +55,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Jakub Ramaseuski <jramaseu@redhat.com>
 
-[ Upstream commit 7a2ca2ea64b1b63c8baa94a8f5deb70b2248d119 ]
+[ Upstream commit 864e3396976ef41de6cc7bc366276bf4e084fff2 ]
 
-The function mod_hdcp_hdcp1_create_session() calls the function
-get_first_active_display(), but does not check its return value.
-The return value is a null pointer if the display list is empty.
-This will lead to a null pointer dereference.
+When performing Generic Segmentation Offload (GSO) on an IPv6 packet that
+contains extension headers, the kernel incorrectly requests checksum offload
+if the egress device only advertises NETIF_F_IPV6_CSUM feature, which has
+a strict contract: it supports checksum offload only for plain TCP or UDP
+over IPv6 and explicitly does not support packets with extension headers.
+The current GSO logic violates this contract by failing to disable the feature
+for packets with extension headers, such as those used in GREoIPv6 tunnels.
 
-Add a null pointer check for get_first_active_display() and return
-MOD_HDCP_STATUS_DISPLAY_NOT_FOUND if the function return null.
+This violation results in the device being asked to perform an operation
+it cannot support, leading to a `skb_warn_bad_offload` warning and a collapse
+of network throughput. While device TSO/USO is correctly bypassed in favor
+of software GSO for these packets, the GSO stack must be explicitly told not
+to request checksum offload.
 
-This is similar to the commit c3e9826a2202
-("drm/amd/display: Add null pointer check for get_first_active_display()").
+Mask NETIF_F_IPV6_CSUM, NETIF_F_TSO6 and NETIF_F_GSO_UDP_L4
+in gso_features_check if the IPv6 header contains extension headers to compute
+checksum in software.
 
-Fixes: 2deade5ede56 ("drm/amd/display: Remove hdcp display state with mst fix")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5e43eb3cd731649c4f8b9134f857be62a416c893)
+The exception is a BIG TCP extension, which, as stated in commit
+68e068cabd2c6c53 ("net: reenable NETIF_F_IPV6_CSUM offload for BIG TCP packets"):
+"The feature is only enabled on devices that support BIG TCP TSO.
+The header is only present for PF_PACKET taps like tcpdump,
+and not transmitted by physical devices."
+
+kernel log output (truncated):
+WARNING: CPU: 1 PID: 5273 at net/core/dev.c:3535 skb_warn_bad_offload+0x81/0x140
+...
+Call Trace:
+ <TASK>
+ skb_checksum_help+0x12a/0x1f0
+ validate_xmit_skb+0x1a3/0x2d0
+ validate_xmit_skb_list+0x4f/0x80
+ sch_direct_xmit+0x1a2/0x380
+ __dev_xmit_skb+0x242/0x670
+ __dev_queue_xmit+0x3fc/0x7f0
+ ip6_finish_output2+0x25e/0x5d0
+ ip6_finish_output+0x1fc/0x3f0
+ ip6_tnl_xmit+0x608/0xc00 [ip6_tunnel]
+ ip6gre_tunnel_xmit+0x1c0/0x390 [ip6_gre]
+ dev_hard_start_xmit+0x63/0x1c0
+ __dev_queue_xmit+0x6d0/0x7f0
+ ip6_finish_output2+0x214/0x5d0
+ ip6_finish_output+0x1fc/0x3f0
+ ip6_xmit+0x2ca/0x6f0
+ ip6_finish_output+0x1fc/0x3f0
+ ip6_xmit+0x2ca/0x6f0
+ inet6_csk_xmit+0xeb/0x150
+ __tcp_transmit_skb+0x555/0xa80
+ tcp_write_xmit+0x32a/0xe90
+ tcp_sendmsg_locked+0x437/0x1110
+ tcp_sendmsg+0x2f/0x50
+...
+skb linear:   00000000: e4 3d 1a 7d ec 30 e4 3d 1a 7e 5d 90 86 dd 60 0e
+skb linear:   00000010: 00 0a 1b 34 3c 40 20 11 00 00 00 00 00 00 00 00
+skb linear:   00000020: 00 00 00 00 00 12 20 11 00 00 00 00 00 00 00 00
+skb linear:   00000030: 00 00 00 00 00 11 2f 00 04 01 04 01 01 00 00 00
+skb linear:   00000040: 86 dd 60 0e 00 0a 1b 00 06 40 20 23 00 00 00 00
+skb linear:   00000050: 00 00 00 00 00 00 00 00 00 12 20 23 00 00 00 00
+skb linear:   00000060: 00 00 00 00 00 00 00 00 00 11 bf 96 14 51 13 f9
+skb linear:   00000070: ae 27 a0 a8 2b e3 80 18 00 40 5b 6f 00 00 01 01
+skb linear:   00000080: 08 0a 42 d4 50 d5 4b 70 f8 1a
+
+Fixes: 04c20a9356f283da ("net: skip offload for NETIF_F_IPV6_CSUM if ipv6 header contains extension")
+Reported-by: Tianhao Zhao <tizhao@redhat.com>
+Suggested-by: Michal Schmidt <mschmidt@redhat.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Jakub Ramaseuski <jramaseu@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20250814105119.1525687-1-jramaseu@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/dev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
-index 7f8f127e7722..ab6964ca1c2b 100644
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_psp.c
-@@ -260,6 +260,9 @@ enum mod_hdcp_status mod_hdcp_hdcp1_create_session(struct mod_hdcp *hdcp)
- 		return MOD_HDCP_STATUS_FAILURE;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 212a909b4840..114fc8bc37f8 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3610,6 +3610,18 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
+ 			features &= ~NETIF_F_TSO_MANGLEID;
  	}
  
-+	if (!display)
-+		return MOD_HDCP_STATUS_DISPLAY_NOT_FOUND;
++	/* NETIF_F_IPV6_CSUM does not support IPv6 extension headers,
++	 * so neither does TSO that depends on it.
++	 */
++	if (features & NETIF_F_IPV6_CSUM &&
++	    (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
++	     (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
++	      vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
++	    skb_transport_header_was_set(skb) &&
++	    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
++	    !ipv6_has_hopopt_jumbo(skb))
++		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
 +
- 	hdcp_cmd = (struct ta_hdcp_shared_memory *)psp->hdcp_context.context.mem_context.shared_buf;
+ 	return features;
+ }
  
- 	mutex_lock(&psp->hdcp_context.mutex);
 -- 
 2.50.1
 
