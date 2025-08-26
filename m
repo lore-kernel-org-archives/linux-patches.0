@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B689212CD88;
-	Tue, 26 Aug 2025 12:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FE5145B3E;
+	Tue, 26 Aug 2025 12:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212990; cv=none; b=BEo1dlwzbWZEjLaKZ1XjYLp36SQf2SgPFTbAoCgSea9TAKcnfFKiBtJRtjMNkhcz+JwJH5pIgAcprhAZ7BP4RgpCeJ4wTpZD2HVDZQFOWo5jSAZeOIGzrnXWibkntMQZtyiEBHAHyb4UHlTStS4nOTYojlQpAczpn/XwNb1Uzms=
+	t=1756212993; cv=none; b=AGLgdYQjHZXI6YEBQcXmOWweGRj+DwuS9X7ikeLIAPGZH9VHk/OcL8U5bW4BbyhBsYeUvrUrhGKXX2huB2Jt1aOchs5tvFIY4k6E+VAwYxL72Nzk7cGcE5u5SVXbPz/nwjWSfNEATKCwMsgS1zJZj+FsLUx7aFuB8aKpbigHBjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212990; c=relaxed/simple;
-	bh=Z42X4WOu3uY5iIBakE4Q4BJ1TlyWiEfpSs9bon0Dcos=;
+	s=arc-20240116; t=1756212993; c=relaxed/simple;
+	bh=Q924h72a7tr14zjBZVSwxpmtFfoPKtP2vheM2+hsWeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXi73g2b7yUoNrjcM6CntKrnNGsF9SSl44DPdD5x561sAq50jjtJk0XK378siZmC/CkNCX7BB2qs8MxG+57RqV6huoCH34sw0kCfyqa3u/K5Mu0IRX8Or0Ly036Fil/TDWpEVFV4y8gaStLKA2EXQo7TQiwo8k/va9wSiKD3V5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BLBWTDa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYO4CmrLVRl061B7jxPMLfIhkPpSX6p5ua2nombbc2o4AxmuYy9r72RsiEaWIe2YVDxlpO+1A+BadCz9kI8MjW8rTgwC586uYdqorkojSAop1WBm3CgsBzb2hr+9qDkW3lJioWS+KY1qk9U+aVe1YlCNw7Yx1oomf8dlrTb/pnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MF7e8553; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BLBWTDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E43C4CEF1;
-	Tue, 26 Aug 2025 12:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MF7e8553"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89AAC4CEF1;
+	Tue, 26 Aug 2025 12:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212990;
-	bh=Z42X4WOu3uY5iIBakE4Q4BJ1TlyWiEfpSs9bon0Dcos=;
+	s=korg; t=1756212993;
+	bh=Q924h72a7tr14zjBZVSwxpmtFfoPKtP2vheM2+hsWeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BLBWTDaAb9Pv3NWTkMFaYPSOimqoTvr5as58uxT12tObAbtWRrnT+SOz6cH5ROh/
-	 6vgjwJTX+BmYIQXmkWprBiX24WiECLK0MYP99dLOc0Dhid5oJY/q+E1scUZ3Y9Pc0C
-	 JIbMZBsLxWs14DkwAXITUS/zrW0/s7k+UHsvoJ6M=
+	b=MF7e8553VqrneB+lXMwFMb7C2YbKIg7x7tyTTQswNJwkJv/rUK7zwSmY6QQiUusN0
+	 C29lfvgBnPBolaXQcBltMX8rcCdRP/GQnJdIipws19js6XTnE+qoRw6LVXHzGiabAo
+	 XIubR2OaywuKe9kAmU+mHerILt8Xbf97Pkkz1DsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <nevenko.stupar@amd.com>,
-	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sarika Sharma <quic_sarishar@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/587] drm/amd/display: Separate set_gsl from set_gsl_source_select
-Date: Tue, 26 Aug 2025 13:05:28 +0200
-Message-ID: <20250826110957.495328645@linuxfoundation.org>
+Subject: [PATCH 6.6 180/587] wifi: ath12k: Add memset and update default rate value in wmi tx completion
+Date: Tue, 26 Aug 2025 13:05:29 +0200
+Message-ID: <20250826110957.520945626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -54,47 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+From: Sarika Sharma <quic_sarishar@quicinc.com>
 
-[ Upstream commit 660a467a5e7366cd6642de61f1aaeaf0d253ee68 ]
+[ Upstream commit 9903c0986f782dfc511d7638b6f15fb6e8600cd3 ]
 
-[Why/How]
-Separate the checks for set_gsl and set_gsl_source_select, since
-source_select may not be implemented/necessary.
+When both AP/STA and monitor interfaces are enabled, ieee80211_tx_status()
+is invoked from two paths: the TX completion handler for data frames
+and the WMI TX completion handler for management frames.
+In the data path, the skb->cb is properly zeroed using memset, but in
+the WMI path, this step is missing.
 
-Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
-Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+As a result, mac80211 encountered uninitialized (junk) values in
+skb->cb when generating the radiotap header for monitor mode, leading
+to invalid radiotap lengths.
+
+Hence, explicitly zero the status field in the skb->cb using memset
+in WMI TX completion path to ensure consistent and correct behavior
+during WMI tx completion path.
+
+Additionally, set info->status.rates[0].idx = -1 to indicate that
+no valid rate information is available, avoiding misinterpretation of
+garbage values.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250603063512.1887652-1-quic_sarishar@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-index a825fd6c7fa6..f3c682c7fbe6 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_hwseq.c
-@@ -163,14 +163,13 @@ static void dcn20_setup_gsl_group_as_lock(
- 	}
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index e918218ce2d6..7e400a0e0eb1 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -4965,6 +4965,11 @@ static int wmi_process_mgmt_tx_comp(struct ath12k *ar, u32 desc_id,
+ 	dma_unmap_single(ar->ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
  
- 	/* at this point we want to program whether it's to enable or disable */
--	if (pipe_ctx->stream_res.tg->funcs->set_gsl != NULL &&
--		pipe_ctx->stream_res.tg->funcs->set_gsl_source_select != NULL) {
-+	if (pipe_ctx->stream_res.tg->funcs->set_gsl != NULL) {
- 		pipe_ctx->stream_res.tg->funcs->set_gsl(
- 			pipe_ctx->stream_res.tg,
- 			&gsl);
--
--		pipe_ctx->stream_res.tg->funcs->set_gsl_source_select(
--			pipe_ctx->stream_res.tg, group_idx,	enable ? 4 : 0);
-+		if (pipe_ctx->stream_res.tg->funcs->set_gsl_source_select != NULL)
-+			pipe_ctx->stream_res.tg->funcs->set_gsl_source_select(
-+				pipe_ctx->stream_res.tg, group_idx, enable ? 4 : 0);
- 	} else
- 		BREAK_TO_DEBUGGER();
- }
+ 	info = IEEE80211_SKB_CB(msdu);
++	memset(&info->status, 0, sizeof(info->status));
++
++	/* skip tx rate update from ieee80211_status*/
++	info->status.rates[0].idx = -1;
++
+ 	if ((!(info->flags & IEEE80211_TX_CTL_NO_ACK)) && !status)
+ 		info->flags |= IEEE80211_TX_STAT_ACK;
+ 
 -- 
 2.39.5
 
