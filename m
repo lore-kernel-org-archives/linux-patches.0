@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EBF283FDF;
-	Tue, 26 Aug 2025 11:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D728A393DD1;
+	Tue, 26 Aug 2025 11:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208374; cv=none; b=BMN+JIh+SXjDDy+Z7MS8BZ69Ssvy3evVYiGFWEJMPe5e6niR1osNTsSfPuk3NZhGSBmbV0z7qx/yaDgS50BEKBlTrJL5r2J2YJhWWjtaIza07/IM+gKkYEp5UUiATnY2a/7SsLLSU4oYXeiWFm79aSGJ9JGJ7JReZbU2cBryLkY=
+	t=1756208376; cv=none; b=BtbJ8ivDcyj/5NoxUnmJ9Nuc1lDqePJ/DBAs3aEgLpuCgtl7vfkJ7EVxr52JZcvlDmFL+E4TK2vwNX2nXPGEwKx6zukvy9XAJMYKsLR9yMhNxlUb1mAFO9t72NFBqEajf+ocNfxZ4I2eF8PscTXNgb8r7RzkICu6WywKzLnH0i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208374; c=relaxed/simple;
-	bh=torqszSfg/TKo70gm55gG0xrvIjxkwrK/rZcRTlZjVA=;
+	s=arc-20240116; t=1756208376; c=relaxed/simple;
+	bh=Ya1SeCYQleYG5ew/puP/5ArUbR6eXqtHG4PmMAjY6ZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kdV96XDN+vlw/n3jmVJlsuPJPusJSlavtHjtD34mkjK7BerdUoI4zJTmRAak5L6mp8CiRXcFw0d3ZVd92J57i2HV76qx+r3c4yvmlBWVuliYvewH9s6cynQKv/Po4ftrfVpO87x90nsYc6LsSwqlqIwLYQaiwO5cxOpeC7eonzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXEc32bI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXzIhiZWrdyZ+vQyQkUiu6lgeDaxehhy7JDs6tGJPmXNo3cccIYg/PR5JOIDJB/6QydoIXgyGV8SmGGjU8M+Areh2W/4RpssVerZzpdw9E7ii9/p3s6FvuFwyo3OHVVQ4dlEhzDCEZjkmu5QZq82BTs6fbSz5HgbjqvrvWd83Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG9q7qsv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXEc32bI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8AFC4CEF1;
-	Tue, 26 Aug 2025 11:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG9q7qsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66487C4CEF1;
+	Tue, 26 Aug 2025 11:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208374;
-	bh=torqszSfg/TKo70gm55gG0xrvIjxkwrK/rZcRTlZjVA=;
+	s=korg; t=1756208376;
+	bh=Ya1SeCYQleYG5ew/puP/5ArUbR6eXqtHG4PmMAjY6ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXEc32bILVD/19ZSz0mes1Eah5f8hhT6ZuK7//vuCX0k99g37L1lCHwrUSz9P4Ss2
-	 hSC8gYgutK1XTsZ0kc2jMrhAi44tChnbWcfTecnkHvb66zoBYWmFANOBukjZWi033V
-	 ZYrbGbIrdmlQ/U/pfMo2YOcJrE5hr8lXvzX74JHs=
+	b=gG9q7qsveoYNFTfKxO82CKrmoBL2+djv1ThK0f3Pp1HfigsSx81hLjN1pHZnjEro/
+	 1SzyDInOfM8LLA3VIjQ3KePA6x1GrsQAqV6TywUadumwThAODMz9yTsxaj4CV807Rq
+	 y4fXMGx5yu2XvUXG0zmv8OhALxDmTs12cbQNC5MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.12 087/322] kbuild: userprogs: use correct linker when mixing clang and GNU ld
-Date: Tue, 26 Aug 2025 13:08:22 +0200
-Message-ID: <20250826110917.801449430@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 088/322] soc/tegra: pmc: Ensure power-domains are in a known state
+Date: Tue, 26 Aug 2025 13:08:23 +0200
+Message-ID: <20250826110917.828536284@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -45,45 +44,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 936599ca514973d44a766b7376c6bbdc96b6a8cc upstream.
+commit b6bcbce3359619d05bf387d4f5cc3af63668dbaa upstream.
 
-The userprogs infrastructure does not expect clang being used with GNU ld
-and in that case uses /usr/bin/ld for linking, not the configured $(LD).
-This fallback is problematic as it will break when cross-compiling.
-Mixing clang and GNU ld is used for example when building for SPARC64,
-as ld.lld is not sufficient; see Documentation/kbuild/llvm.rst.
+After commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on
+until late_initcall_sync") was applied, the Tegra210 Jetson TX1 board
+failed to boot. Looking into this issue, before this commit was applied,
+if any of the Tegra power-domains were in 'on' state when the kernel
+booted, they were being turned off by the genpd core before any driver
+had chance to request them. This was purely by luck and a consequence of
+the power-domains being turned off earlier during boot. After this
+commit was applied, any power-domains in the 'on' state are kept on for
+longer during boot and therefore, may never transitioned to the off
+state before they are requested/used. The hang on the Tegra210 Jetson
+TX1 is caused because devices in some power-domains are accessed without
+the power-domain being turned off and on, indicating that the
+power-domain is not in a completely on state.
 
-Relax the check around --ld-path so it gets used for all linkers.
+>From reviewing the Tegra PMC driver code, if a power-domain is in the
+'on' state there is no guarantee that all the necessary clocks
+associated with the power-domain are on and even if they are they would
+not have been requested via the clock framework and so could be turned
+off later. Some power-domains also have a 'clamping' register that needs
+to be configured as well. In short, if a power-domain is already 'on' it
+is difficult to know if it has been configured correctly. Given that the
+power-domains happened to be switched off during boot previously, to
+ensure that they are in a good known state on boot, fix this by
+switching off any power-domains that are on initially when registering
+the power-domains with the genpd framework.
 
-Fixes: dfc1b168a8c4 ("kbuild: userprogs: use correct lld when linking through clang")
+Note that commit 05cfb988a4d0 ("soc/tegra: pmc: Initialise resets
+associated with a power partition") updated the
+tegra_powergate_of_get_resets() function to pass the 'off' to ensure
+that the resets for the power-domain are in the correct state on boot.
+However, now that we may power off a domain on boot, if it is on, it is
+better to move this logic into the tegra_powergate_add() function so
+that there is a single place where we are handling the initial state of
+the power-domain.
+
+Fixes: a38045121bf4 ("soc/tegra: pmc: Add generic PM domain support")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20250731121832.213671-1-jonathanh@nvidia.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/tegra/pmc.c |   51 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1069,7 +1069,7 @@ KBUILD_USERCFLAGS  += $(filter -m32 -m64
- KBUILD_USERLDFLAGS += $(filter -m32 -m64 --target=%, $(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS))
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -1233,7 +1233,7 @@ err:
+ }
  
- # userspace programs are linked via the compiler, use the correct linker
--ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_LD_IS_LLD),yy)
-+ifdef CONFIG_CC_IS_CLANG
- KBUILD_USERLDFLAGS += --ld-path=$(LD)
- endif
+ static int tegra_powergate_of_get_resets(struct tegra_powergate *pg,
+-					 struct device_node *np, bool off)
++					 struct device_node *np)
+ {
+ 	struct device *dev = pg->pmc->dev;
+ 	int err;
+@@ -1248,22 +1248,6 @@ static int tegra_powergate_of_get_resets
+ 	err = reset_control_acquire(pg->reset);
+ 	if (err < 0) {
+ 		pr_err("failed to acquire resets: %d\n", err);
+-		goto out;
+-	}
+-
+-	if (off) {
+-		err = reset_control_assert(pg->reset);
+-	} else {
+-		err = reset_control_deassert(pg->reset);
+-		if (err < 0)
+-			goto out;
+-
+-		reset_control_release(pg->reset);
+-	}
+-
+-out:
+-	if (err) {
+-		reset_control_release(pg->reset);
+ 		reset_control_put(pg->reset);
+ 	}
  
+@@ -1308,20 +1292,43 @@ static int tegra_powergate_add(struct te
+ 		goto set_available;
+ 	}
+ 
+-	err = tegra_powergate_of_get_resets(pg, np, off);
++	err = tegra_powergate_of_get_resets(pg, np);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to get resets for %pOFn: %d\n", np, err);
+ 		goto remove_clks;
+ 	}
+ 
+-	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
+-		if (off)
+-			WARN_ON(tegra_powergate_power_up(pg, true));
++	/*
++	 * If the power-domain is off, then ensure the resets are asserted.
++	 * If the power-domain is on, then power down to ensure that when is
++	 * it turned on the power-domain, clocks and resets are all in the
++	 * expected state.
++	 */
++	if (off) {
++		err = reset_control_assert(pg->reset);
++		if (err) {
++			pr_err("failed to assert resets: %d\n", err);
++			goto remove_resets;
++		}
++	} else {
++		err = tegra_powergate_power_down(pg);
++		if (err) {
++			dev_err(dev, "failed to turn off PM domain %s: %d\n",
++				pg->genpd.name, err);
++			goto remove_resets;
++		}
++	}
+ 
++	/*
++	 * If PM_GENERIC_DOMAINS is not enabled, power-on
++	 * the domain and skip the genpd registration.
++	 */
++	if (!IS_ENABLED(CONFIG_PM_GENERIC_DOMAINS)) {
++		WARN_ON(tegra_powergate_power_up(pg, true));
+ 		goto remove_resets;
+ 	}
+ 
+-	err = pm_genpd_init(&pg->genpd, NULL, off);
++	err = pm_genpd_init(&pg->genpd, NULL, true);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to initialise PM domain %pOFn: %d\n", np,
+ 		       err);
 
 
