@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7F5350843;
-	Tue, 26 Aug 2025 14:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A6D34DCC1;
+	Tue, 26 Aug 2025 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219344; cv=none; b=rIlI9PbQlv7QuCOq+gbqj5X0wn6Dud2y7OIvCiXtWa3BKSBc0bAs09Ea4yS2IgkQvjh4zUHRG0VhOof0dXBBV1S0Hi0KBiYBQb9Eg6qoY0ccsbMdECOc6B/b6S/poEwcdYPeajeFz4qR+ttdAIYRENwg1rTwYylkB+7c5ddaCwE=
+	t=1756219346; cv=none; b=NAC3cbQ+JDlbotXzsWX878YTjk3jCPpI3KXGa8iqIH3H9bW2/lrf7bTZDn1Wz44gOk8x4HoO0KOuL13EtvBQBfiD+tLH9+QBTYBmcTwk6in6GhpbEmSLEUh1DWu29/H8BSzITMG4Ysb/37QlWT90um1CX2TL3V9TH0gQcKfy6UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219344; c=relaxed/simple;
-	bh=yntLBfZpsI2YZJ3VwexHWKx9ER9WiBVFCJyGfNxbtRg=;
+	s=arc-20240116; t=1756219346; c=relaxed/simple;
+	bh=wILl2yiJcdxppjF5VBvaBvZj4Mbqjwe7UbOwomXqAWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsB12GmJVQ7rZ1UayZAfIb0fQ4tT8owjZNCuiwJ1ZDYfSFbZFJXtAUTjMb8N+rEeD8liHdQJGbxtKJPxRMtXguq5eMHnqy+3E08GhJQ8CEyoATrbZ74ZwIyg57Br3O606p2A+c/P0G7aSKqXRlH27xGWGo2a7L/kzxLX0qqq2Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CjMK4TE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aeTubL1UVJ/b+QAfFlBwsSVyzQDtAztMRp2s46WgnnGuvsDXozieTVy07wTxIn8edohBCbXPtpcdpDE4La8nbIjIhWfcoPwSCktOYtpYwAaypGSPS67Fdwu31pTdsj6jr8SuTmC6rGaV6ERFp+iA+v5Hbyxwu0yiUsFuW++7dWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQNrQ9xD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CjMK4TE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D78C4CEF1;
-	Tue, 26 Aug 2025 14:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQNrQ9xD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD59C4CEF1;
+	Tue, 26 Aug 2025 14:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219344;
-	bh=yntLBfZpsI2YZJ3VwexHWKx9ER9WiBVFCJyGfNxbtRg=;
+	s=korg; t=1756219346;
+	bh=wILl2yiJcdxppjF5VBvaBvZj4Mbqjwe7UbOwomXqAWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0CjMK4TE91l+cjxyCtNrdXXJ3F+Xte62Wd2izg4Hnl4nl9OAVc76MplpdskncrpOK
-	 cVzymPqhw7s4Fw/BDhHRMcw3PJzHf7S2my/EGKoBmk+sbYZfdCbM+w2JEFn8n4wJln
-	 bhhfPVparDLSvjy8m1T6BOxXa/w+cO75lwnnimNI=
+	b=cQNrQ9xDBUCqKm5R1C5EkSoXDzHRDTJ/CgozKzSOYdLkjRojjm2/PJFuquxjfpo3d
+	 GvoGp1HkUEaYfmoEqgDtSarLxbCVJD0pGNqM8mwmwlZlzh+iBfCl0dsquMr8QN7PZu
+	 e9ag6dBhPXDOv1Kw+iNeqsGOtPnSG8Ujmdmg2laA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	lei lu <llfamsec@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 345/403] pmdomain: governor: Consider CPU latency tolerance from pm_domain_cpu_gov
-Date: Tue, 26 Aug 2025 13:11:11 +0200
-Message-ID: <20250826110916.392609668@linuxfoundation.org>
+Subject: [PATCH 5.4 346/403] nfsd: handle get_client_locked() failure in nfsd4_setclientid_confirm()
+Date: Tue, 26 Aug 2025 13:11:12 +0200
+Message-ID: <20250826110916.424420671@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,111 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 500ba33284416255b9a5b50ace24470b6fe77ea5 ]
+[ Upstream commit 908e4ead7f757504d8b345452730636e298cbf68 ]
 
-pm_domain_cpu_gov is selecting a cluster idle state but does not consider
-latency tolerance of child CPUs. This results in deeper cluster idle state
-whose latency does not meet latency tolerance requirement.
+Lei Lu recently reported that nfsd4_setclientid_confirm() did not check
+the return value from get_client_locked(). a SETCLIENTID_CONFIRM could
+race with a confirmed client expiring and fail to get a reference. That
+could later lead to a UAF.
 
-Select deeper idle state only if global and device latency tolerance of all
-child CPUs meet.
+Fix this by getting a reference early in the case where there is an
+extant confirmed client. If that fails then treat it as if there were no
+confirmed client found at all.
 
-Test results on SM8750 with 300 usec PM-QoS on CPU0 which is less than
-domain idle state entry (2150) + exit (1983) usec latency mentioned in
-devicetree, demonstrate the issue.
+In the case where the unconfirmed client is expiring, just fail and
+return the result from get_client_locked().
 
-	# echo 300 > /sys/devices/system/cpu/cpu0/power/pm_qos_resume_latency_us
-
-Before: (Usage is incrementing)
-======
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             29817          537        8          270        0
-
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             30348          542        8          271        0
-
-After: (Usage is not incrementing due to latency tolerance)
-======
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             39319          626        14         307        0
-
-	# cat /sys/kernel/debug/pm_genpd/power-domain-cluster0/idle_states
-	State          Time Spent(ms) Usage      Rejected   Above      Below
-	S0             39319          626        14         307        0
-
-Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Fixes: e94999688e3a ("PM / Domains: Add genpd governor for CPUs")
+Reported-by: lei lu <llfamsec@gmail.com>
+Closes: https://lore.kernel.org/linux-nfs/CAEBF3_b=UvqzNKdnfD_52L05Mqrqui9vZ2eFamgAbV0WG+FNWQ@mail.gmail.com/
+Fixes: d20c11d86d8f ("nfsd: Protect session creation and client confirm using client_lock")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250709-pmdomain_qos-v2-1-976b12257899@oss.qualcomm.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-[ replaced cpu_latency_qos_limit() with pm_qos_request(PM_QOS_CPU_DMA_LATENCY) ]
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/domain_governor.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/base/power/domain_governor.c
-+++ b/drivers/base/power/domain_governor.c
-@@ -8,6 +8,7 @@
- #include <linux/pm_domain.h>
- #include <linux/pm_qos.h>
- #include <linux/hrtimer.h>
-+#include <linux/cpu.h>
- #include <linux/cpuidle.h>
- #include <linux/cpumask.h>
- #include <linux/ktime.h>
-@@ -254,6 +255,8 @@ static bool cpu_power_down_ok(struct dev
- 	struct generic_pm_domain *genpd = pd_to_genpd(pd);
- 	struct cpuidle_device *dev;
- 	ktime_t domain_wakeup, next_hrtimer;
-+	struct device *cpu_dev;
-+	s64 cpu_constraint, global_constraint;
- 	s64 idle_duration_ns;
- 	int cpu, i;
- 
-@@ -264,6 +267,7 @@ static bool cpu_power_down_ok(struct dev
- 	if (!(genpd->flags & GENPD_FLAG_CPU_DOMAIN))
- 		return true;
- 
-+	global_constraint = pm_qos_request(PM_QOS_CPU_DMA_LATENCY);
- 	/*
- 	 * Find the next wakeup for any of the online CPUs within the PM domain
- 	 * and its subdomains. Note, we only need the genpd->cpus, as it already
-@@ -277,8 +281,16 @@ static bool cpu_power_down_ok(struct dev
- 			if (ktime_before(next_hrtimer, domain_wakeup))
- 				domain_wakeup = next_hrtimer;
- 		}
-+
-+		cpu_dev = get_cpu_device(cpu);
-+		if (cpu_dev) {
-+			cpu_constraint = dev_pm_qos_raw_resume_latency(cpu_dev);
-+			if (cpu_constraint < global_constraint)
-+				global_constraint = cpu_constraint;
-+		}
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -3956,10 +3956,16 @@ nfsd4_setclientid_confirm(struct svc_rqs
  	}
- 
-+	global_constraint *= NSEC_PER_USEC;
- 	/* The minimum idle duration is from now - until the next wakeup. */
- 	idle_duration_ns = ktime_to_ns(ktime_sub(domain_wakeup, ktime_get()));
- 	if (idle_duration_ns <= 0)
-@@ -291,8 +303,10 @@ static bool cpu_power_down_ok(struct dev
- 	 */
- 	i = genpd->state_idx;
- 	do {
--		if (idle_duration_ns >= (genpd->states[i].residency_ns +
--		    genpd->states[i].power_off_latency_ns)) {
-+		if ((idle_duration_ns >= (genpd->states[i].residency_ns +
-+		    genpd->states[i].power_off_latency_ns)) &&
-+		    (global_constraint >= (genpd->states[i].power_on_latency_ns +
-+		    genpd->states[i].power_off_latency_ns))) {
- 			genpd->state_idx = i;
- 			return true;
+ 	status = nfs_ok;
+ 	if (conf) { /* case 1: callback update */
+-		old = unconf;
+-		unhash_client_locked(old);
+-		nfsd4_change_callback(conf, &unconf->cl_cb_conn);
+-	} else { /* case 3: normal case; new or rebooted client */
++		if (get_client_locked(conf) == nfs_ok) {
++			old = unconf;
++			unhash_client_locked(old);
++			nfsd4_change_callback(conf, &unconf->cl_cb_conn);
++		} else {
++			conf = NULL;
++		}
++	}
++
++	if (!conf) { /* case 3: normal case; new or rebooted client */
+ 		old = find_confirmed_client_by_name(&unconf->cl_name, nn);
+ 		if (old) {
+ 			status = nfserr_clid_inuse;
+@@ -3975,10 +3981,14 @@ nfsd4_setclientid_confirm(struct svc_rqs
+ 				goto out;
+ 			}
  		}
++		status = get_client_locked(unconf);
++		if (status != nfs_ok) {
++			old = NULL;
++			goto out;
++		}
+ 		move_to_confirmed(unconf);
+ 		conf = unconf;
+ 	}
+-	get_client_locked(conf);
+ 	spin_unlock(&nn->client_lock);
+ 	nfsd4_probe_callback(conf);
+ 	spin_lock(&nn->client_lock);
 
 
