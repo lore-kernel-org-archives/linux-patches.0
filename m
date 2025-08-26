@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839162AE7F;
-	Tue, 26 Aug 2025 14:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4687E31985C;
+	Tue, 26 Aug 2025 14:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218036; cv=none; b=H65qMaFKfbZpwRBgBG99A2b2CxdMQ/hinKjZO3VSSuzdSc5fkcokpBVB3pYmE1dfc4kRKF2srkf20Gko1Z8PSqZ4+mP0hPX3oZpXC5OQ0JNwr5ETne0mmareH1WK++T7qYFjJl56EPfJbWxUdIcBEjWw7TPsdTdYlW3ep9p6fTM=
+	t=1756218039; cv=none; b=ebOsrtq4CMFgE9i+9OSqblcrXn7f/+98LdDVeci8jW9VL4O8mqzJwUz8sbcNmkIQWUi9FHQTX0h35fSDljX8YD58gDsr+qVp4w3bvsH+cu0QzyfxleBpZMB+XK5bLYGuDyEQ4vQhJljkTa0kNjUljOoq4LclI/CvEjLcaDTQdks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218036; c=relaxed/simple;
-	bh=4YSpal2R1eQmsg1En29N6SV28ybkWMDoM/doLkF0dCc=;
+	s=arc-20240116; t=1756218039; c=relaxed/simple;
+	bh=7TWVcdezufxr2Ij0RdUA+C76oXXw3FvvYqtuWz2S8bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZetsScgLIFo98EAVrkK9qgToBl8p0AtyntnVDiE0ACkcPHZtPKWfz7IPZ3knXxKj0qLMl4gFa+Lbwn9OCNZ9BSJPu9JpMg3BlhzsKdgPRDO+Cc4GwZdiv4yx6zwYe5W2ravvxLB3fUbmnntn7UE4791eRn1KhPpEJxgUrIaKVao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9HoMX2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hYaaCLG+O3YrHKtlWaZovi2Kb6QzWFnWAO18pMqOegG3+tzG8oFdCEfoKUwxk2YcmwkasnzCrTO9Py79ge/IjC/Vxrr1rZ8pSiqgdj8Tziz+9kHvM5cADRwltxSNBxpgrYNrNLHz5e6FMtsmtycZlBx27LN8uZGDx2mzvOrG2OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yM3hDbxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9HoMX2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F18C4CEF1;
-	Tue, 26 Aug 2025 14:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yM3hDbxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A10C4CEF1;
+	Tue, 26 Aug 2025 14:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218036;
-	bh=4YSpal2R1eQmsg1En29N6SV28ybkWMDoM/doLkF0dCc=;
+	s=korg; t=1756218039;
+	bh=7TWVcdezufxr2Ij0RdUA+C76oXXw3FvvYqtuWz2S8bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m9HoMX2lGa3Rla96TPdpHkzrWA/GOYzrPNXbmSAKT82RtFtHLOoqCgM0FKIf9TH0x
-	 UGcyUezg46MuDoW/z6MbCZj0HyYATXD5CNgflM1r92rSgBFbWYns1ZsDhfeUpqG7Cc
-	 X9Yr09UTUUtEuBWTy6XRbqKWDLK7Bca7YIY7MBHI=
+	b=yM3hDbxS3uwqz/2+MnJiFdatY2r/EwsCE9EEcZz/YBvsafPLjjVa0WwQRtW3Av3uI
+	 QuGhJOqE53QE29IJkDTwjrqThbme+PWiKsd7McBK23Gp2UsE+kagFjGUxwDAJt9g3I
+	 N9JwmNW9BKBC7fXa3stby1cz27/owara2v1o4Hzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 338/523] ASoC: soc-dai.c: add missing flag check at snd_soc_pcm_dai_probe()
-Date: Tue, 26 Aug 2025 13:09:08 +0200
-Message-ID: <20250826110932.809360025@linuxfoundation.org>
+Subject: [PATCH 5.10 339/523] ASoC: fsl_sai: replace regmap_write with regmap_update_bits
+Date: Tue, 26 Aug 2025 13:09:09 +0200
+Message-ID: <20250826110932.832543200@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -51,74 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 5c5a7521e9364a40fe2c1b67ab79991e3e9085df ]
+[ Upstream commit 0e270f32975fd21874185ba53653630dd40bf560 ]
 
-dai->probed is used at snd_soc_pcm_dai_probe/remove(),
-and used to call real remove() function only when it was probed.
+Use the regmap_write() for software reset in fsl_sai_config_disable would
+cause the FSL_SAI_CSR_BCE bit to be cleared. Refer to
+commit 197c53c8ecb34 ("ASoC: fsl_sai: Don't disable bitclock for i.MX8MP")
+FSL_SAI_CSR_BCE should not be cleared. So need to use regmap_update_bits()
+instead of regmap_write() for these bit operations.
 
-	int snd_soc_pcm_dai_probe(...)
-	{
-		...
-		for_each_rtd_dais(rtd, i, dai) {
-			...
-
-			if (dai->driver->probe) {
-(A)				int ret = dai->driver->probe(dai);
-
-				if (ret < 0)
-					return soc_dai_ret(dai, ret);
-			}
-
-=>			dai->probed = 1;
-		}
-		...
-	}
-
-	int snd_soc_pcm_dai_remove(...)
-	{
-		...
-		for_each_rtd_dais(rtd, i, dai) {
-			...
-=>			if (dai->probed &&
-			    ...) {
-				...
-			}
-
-=>			dai->probed = 0;
-		}
-		...
-	}
-
-But on probe() case, we need to check dai->probed before calling
-real probe() function at (A), otherwise real probe() might be called
-multi times (but real remove() will be called only once).
-This patch checks it at probe().
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87wn3u64e6.wl-kuninori.morimoto.gx@renesas.com
+Fixes: dc78f7e59169d ("ASoC: fsl_sai: Force a software reset when starting in consumer mode")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20250807020318.2143219-1-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 0e270f32975f ("ASoC: fsl_sai: replace regmap_write with regmap_update_bits")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-dai.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/fsl/fsl_sai.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/soc-dai.c b/sound/soc/soc-dai.c
-index e2db2ad219b8..583b18d0f446 100644
---- a/sound/soc/soc-dai.c
-+++ b/sound/soc/soc-dai.c
-@@ -488,6 +488,9 @@ int snd_soc_pcm_dai_probe(struct snd_soc_pcm_runtime *rtd, int order)
- 		if (dai->driver->probe_order != order)
- 			continue;
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index d81a9322b03d..0314d4257b2d 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -578,9 +578,9 @@ static void fsl_sai_config_disable(struct fsl_sai *sai, int dir)
+ 	 * are running concurrently.
+ 	 */
+ 	/* Software Reset */
+-	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
+ 	/* Clear SR bit to finish the reset */
+-	regmap_write(sai->regmap, FSL_SAI_xCSR(tx, ofs), 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_xCSR(tx, ofs), FSL_SAI_CSR_SR, 0);
+ }
  
-+		if (dai->probed)
-+			continue;
-+
- 		if (dai->driver->probe) {
- 			int ret = dai->driver->probe(dai);
+ static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
+@@ -710,11 +710,11 @@ static int fsl_sai_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	unsigned int ofs = sai->soc_data->reg_offset;
  
+ 	/* Software Reset for both Tx and Rx */
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
+ 	/* Clear SR bit to finish the reset */
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), 0);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, 0);
+ 
+ 	regmap_update_bits(sai->regmap, FSL_SAI_TCR1(ofs),
+ 			   FSL_SAI_CR1_RFW_MASK(sai->soc_data->fifo_depth),
+@@ -1256,11 +1256,11 @@ static int fsl_sai_runtime_resume(struct device *dev)
+ 
+ 	regcache_cache_only(sai->regmap, false);
+ 	regcache_mark_dirty(sai->regmap);
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, FSL_SAI_CSR_SR);
+ 	usleep_range(1000, 2000);
+-	regmap_write(sai->regmap, FSL_SAI_TCSR(ofs), 0);
+-	regmap_write(sai->regmap, FSL_SAI_RCSR(ofs), 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_TCSR(ofs), FSL_SAI_CSR_SR, 0);
++	regmap_update_bits(sai->regmap, FSL_SAI_RCSR(ofs), FSL_SAI_CSR_SR, 0);
+ 
+ 	ret = regcache_sync(sai->regmap);
+ 	if (ret)
 -- 
 2.50.1
 
