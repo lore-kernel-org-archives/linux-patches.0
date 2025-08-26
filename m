@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B29C35690E;
-	Tue, 26 Aug 2025 14:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED60635FC0D;
+	Tue, 26 Aug 2025 14:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219105; cv=none; b=oJ616nAk8NLgM6pnGERd+gwU0l5lqERGzPlPC9wRwxAelzCmm8se1Fhyp5Oys3MJgFTXNiZA6Rju00yNDpEYL7GKdwKv6mXJDISEtNbszUfFy7oaZL/t9S5lvB6nvdJ3nai97R05Uitp9IcOVR+VWaN5IrhgAgx14MMSBQ0DwJU=
+	t=1756219108; cv=none; b=fJRVXsAY9ywhWF7V0dJcdSJocpcTHNLkbYIJl7k0598a5Igw3DdHZ0Eq2zkmefjhGQ62hCP8/Cx23UqWT2TsMqNEeacPVOGePDKDP/VZOhtpA7AvPL4VVxSgScjekioQSdjFCuv8p/Uv9ARmaT4raT2cCO/Xcq36Yvm5dUCToUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219105; c=relaxed/simple;
-	bh=mJ9Ljmwd5hze8flgwAsQJLDVde/auEVf3A+sMpdOp0U=;
+	s=arc-20240116; t=1756219108; c=relaxed/simple;
+	bh=kXw2sIolxUsxuos3O3CqDxDY1xaShKBn7Wp3W9iIQ4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCc6IZgRPINne9mnzQ4JrnXK+WgtdVVIYUVGgdBzfNYtaE42b0dE2ch54rxHGlhVW3VLJ6WJTmV6brjFcWqfFVQJAYHyxiBAmfmhPwqIdf3o8EbHMSMGUheg7i5svrzzv041f26eqdjtUCnho8qd+z9do1peL59S4cwjEetcTu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuEhzrvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdmUCPJXB7P0MPGXP2oUt+oVXIXBpY75e0jfpWTMU2OvIv7ps5/f9ngyl6ZHsn7D3y5o1F2LSXVcrJbWLxDSsNMhEbZ/K9TGStWsibRiCVBStWDDPDowIAC9P9Xranwjj/mjHB58hbQDOV1A9MltK5WczwkWnDzbjtAXbDrrB5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX37U+Vk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuEhzrvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE82C4CEF1;
-	Tue, 26 Aug 2025 14:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX37U+Vk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285F9C4CEF1;
+	Tue, 26 Aug 2025 14:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219104;
-	bh=mJ9Ljmwd5hze8flgwAsQJLDVde/auEVf3A+sMpdOp0U=;
+	s=korg; t=1756219107;
+	bh=kXw2sIolxUsxuos3O3CqDxDY1xaShKBn7Wp3W9iIQ4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uuEhzrvR0+D8t31sYG2NULWJn0pkszy2xdm1JThfsCNesqf4TVa+yUDssBzijQGhP
-	 trgSC4tPp0ZFgm1gnvDift+hNjhd7nkB1ez51rsADAjgc/LKVIfoKW9MiXQ9HM6edl
-	 y6nd8xLK8CfgoSkjJ+118lmePbf8dPYU9rGm4eW0=
+	b=qX37U+VknauHzvkFKm4hV4CY4u/IMG7Qddtuzvr9ly8fq/nuGFKZ0wSPNw/qCHGaA
+	 rkSWufEcBAGSTbP/L6jUerXo+KdPuzTMw2QB2LmY4vVwbkwtywaSmS9PVxJGp/sApt
+	 Rx69cOQ1AlzTlPBqnMmbpqtqbXeCF+W1hFtA+xZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ap420073@gmail.com,
-	Mina Almasry <almasrymina@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexei Safin <a.safin@rosa.ru>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 223/403] netmem: fix skb_frag_address_safe with unreadable skbs
-Date: Tue, 26 Aug 2025 13:09:09 +0200
-Message-ID: <20250826110912.992795542@linuxfoundation.org>
+Subject: [PATCH 5.4 224/403] wifi: iwlegacy: Check rate_idx range after addition
+Date: Tue, 26 Aug 2025 13:09:10 +0200
+Message-ID: <20250826110913.018450661@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -53,43 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-[ Upstream commit 4672aec56d2e8edabcb74c3e2320301d106a377e ]
+[ Upstream commit 0de19d5ae0b2c5b18b88c5c7f0442f707a207409 ]
 
-skb_frag_address_safe() needs a check that the
-skb_frag_page exists check similar to skb_frag_address().
+Limit rate_idx to IL_LAST_OFDM_RATE for 5GHz band for thinkable case
+the index is incorrect.
 
-Cc: ap420073@gmail.com
-
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20250619175239.3039329-1-almasrymina@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reported-by: Alexei Safin <a.safin@rosa.ru>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20250525144524.GA172583@wp.pl
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlegacy/4965-mac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index d9abd9e6833e..101ac3d6581e 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -3073,7 +3073,13 @@ static inline void *skb_frag_address(const skb_frag_t *frag)
-  */
- static inline void *skb_frag_address_safe(const skb_frag_t *frag)
- {
--	void *ptr = page_address(skb_frag_page(frag));
-+	struct page *page = skb_frag_page(frag);
-+	void *ptr;
-+
-+	if (!page)
-+		return NULL;
-+
-+	ptr = page_address(page);
- 	if (unlikely(!ptr))
- 		return NULL;
- 
+diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
+index 20c933602f0a..31f1c57450d4 100644
+--- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
+@@ -1573,8 +1573,11 @@ il4965_tx_cmd_build_rate(struct il_priv *il,
+ 	    || rate_idx > RATE_COUNT_LEGACY)
+ 		rate_idx = rate_lowest_index(&il->bands[info->band], sta);
+ 	/* For 5 GHZ band, remap mac80211 rate indices into driver indices */
+-	if (info->band == NL80211_BAND_5GHZ)
++	if (info->band == NL80211_BAND_5GHZ) {
+ 		rate_idx += IL_FIRST_OFDM_RATE;
++		if (rate_idx > IL_LAST_OFDM_RATE)
++			rate_idx = IL_LAST_OFDM_RATE;
++	}
+ 	/* Get PLCP rate for tx_cmd->rate_n_flags */
+ 	rate_plcp = il_rates[rate_idx].plcp;
+ 	/* Zero out flags for this packet */
 -- 
 2.39.5
 
