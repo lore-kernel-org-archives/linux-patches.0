@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1835145B3E;
-	Tue, 26 Aug 2025 12:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AC11DD0D4;
+	Tue, 26 Aug 2025 12:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212875; cv=none; b=Q56S6hTvl2WPV6bbCe4JJbmsOwGjN12WEJquXBO5HM15J405X3O5aW2t1bVlhMjjaZ3w4rdnkAoCWBWktI0GzvaECnDoy7NZ4atkYFOEGubQqPFgbc0mqOmTK6dJmpeQtZ9WscQWi20g5EXXFy8hJenLsgA2ZylnWakriwZIx6s=
+	t=1756212878; cv=none; b=Mx10/DllSkgazG375s0TyAqr3uNVaR8IwMtNq7Svtka7BLW4Z/fmlz/3ikrjBQeQIhYlRcJ4DLrhLSaq7mVEckgMNCmeyqNKzc1yAbR1vOwt3sgkBd4DCZypbXIhigRlpZSGUQxyIrFr7msY8Hz7H4U8NgDrZcnqIhGkx5TBmWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212875; c=relaxed/simple;
-	bh=3Vgy52usXlO+wjGBWTnRMajgK4EHmxdy6nQKUc9ZIWU=;
+	s=arc-20240116; t=1756212878; c=relaxed/simple;
+	bh=AEFTlktuC6q61b1IL3+c6ImwUlzakuDHaOTp1fe+RDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gqw94pyQNIM5wgNvhsmPyt+ij63MQYIqMQdHBPZhJiyRdrfs5B8x9FWyx8vB2Tp7u3bzgqLF9+an8VTfum/RqgDJqrON8EbJsLTv4aGE963euFSTzC/KDrGyuvwNCasUEQx7vzA5nT5c8qB1uPzumF6+MWuHrmp9CLS/zpCtX84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrmhEjpI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pibEqIjGRXLirO5Dn+daCW0C9x0G1KvjxSDWqJhJQxiNW6id3RamZXkLATRHok/DXGF2Mvy0jvz9IDqcggdV8o7kswPxIEyIbjxw4kNBtOxv4qQ/0RShVtIMwFg8TnJywMuI4CYNuMiBYwkkqMZv0zOwQRqQlN806BClKxRmihg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13YuhUGb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrmhEjpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F747C4CEF1;
-	Tue, 26 Aug 2025 12:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13YuhUGb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E910BC4CEF1;
+	Tue, 26 Aug 2025 12:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756212875;
-	bh=3Vgy52usXlO+wjGBWTnRMajgK4EHmxdy6nQKUc9ZIWU=;
+	s=korg; t=1756212878;
+	bh=AEFTlktuC6q61b1IL3+c6ImwUlzakuDHaOTp1fe+RDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrmhEjpISf+UdIZmVEkGQFP9j9FfrdY0eKr7QRPafGiGKv8yVHCP7iNxbcKX7cl0C
-	 VPmQvznr3WaQcCZvtl6KeYltkb4w2Q0txX4EcZOl1mbB/c8q8ErKWsNWUPWzg8mheg
-	 i37V/MIQ/8PWRtx7shGwr6gRaSpE4f36FEuh4v7U=
+	b=13YuhUGbvdNCAGrLuWrcz6dOWb3AC/yU9JcT0YwqC6RHuoPy+lvSk93zUF2zpWfy6
+	 FV8PBNzKPrRHtHn4SWSei0zP674XEBRAY7j6QWtbvvvuRfN4pwFGH359ffQyyipGT6
+	 u4Z+Ai1lJyUqp+3crWrBuIxNhd4xut9F76p6o5tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Xinxin Wan <xinxin.wan@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/587] iio: adc: ad7768-1: Ensure SYNC_IN pulse minimum timing requirement
-Date: Tue, 26 Aug 2025 13:04:45 +0200
-Message-ID: <20250826110956.412863723@linuxfoundation.org>
+Subject: [PATCH 6.6 137/587] ASoC: codecs: rt5640: Retry DEVICE_ID verification
+Date: Tue, 26 Aug 2025 13:04:46 +0200
+Message-ID: <20250826110956.436875343@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -54,65 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: Xinxin Wan <xinxin.wan@intel.com>
 
-[ Upstream commit 7e54d932873d91a55d1b89b7389876d78aeeab32 ]
+[ Upstream commit 19f971057b2d7b99c80530ec1052b45de236a8da ]
 
-The SYNC_IN pulse width must be at least 1.5 x Tmclk, corresponding to
-~2.5 µs at the lowest supported MCLK frequency. Add a 3 µs delay to
-ensure reliable synchronization timing even for the worst-case scenario.
+To be more resilient to codec-detection failures when the hardware
+powers on slowly, add retry mechanism to the device verification check.
+Similar pattern is found throughout a number of Realtek codecs. Our
+tests show that 60ms delay is sufficient to address readiness issues on
+rt5640 chip.
 
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/d3ee92a533cd1207cf5c5cc4d7bdbb5c6c267f68.1749063024.git.Jonathan.Santos@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Xinxin Wan <xinxin.wan@intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250530142120.2944095-3-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7768-1.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt5640.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7768-1.c b/drivers/iio/adc/ad7768-1.c
-index 967f06cd3f94..e147eaf1a3b1 100644
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -203,6 +203,24 @@ static int ad7768_spi_reg_write(struct ad7768_state *st,
- 	return spi_write(st->spi, st->data.d8, 2);
- }
+diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
+index 1955d77cffd9..0f250e8e216a 100644
+--- a/sound/soc/codecs/rt5640.c
++++ b/sound/soc/codecs/rt5640.c
+@@ -3016,6 +3016,11 @@ static int rt5640_i2c_probe(struct i2c_client *i2c)
+ 	}
  
-+static int ad7768_send_sync_pulse(struct ad7768_state *st)
-+{
-+	/*
-+	 * The datasheet specifies a minimum SYNC_IN pulse width of 1.5 × Tmclk,
-+	 * where Tmclk is the MCLK period. The supported MCLK frequencies range
-+	 * from 0.6 MHz to 17 MHz, which corresponds to a minimum SYNC_IN pulse
-+	 * width of approximately 2.5 µs in the worst-case scenario (0.6 MHz).
-+	 *
-+	 * Add a delay to ensure the pulse width is always sufficient to
-+	 * trigger synchronization.
-+	 */
-+	gpiod_set_value_cansleep(st->gpio_sync_in, 1);
-+	fsleep(3);
-+	gpiod_set_value_cansleep(st->gpio_sync_in, 0);
+ 	regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
++	if (val != RT5640_DEVICE_ID) {
++		usleep_range(60000, 100000);
++		regmap_read(rt5640->regmap, RT5640_VENDOR_ID2, &val);
++	}
 +
-+	return 0;
-+}
-+
- static int ad7768_set_mode(struct ad7768_state *st,
- 			   enum ad7768_conv_mode mode)
- {
-@@ -288,10 +306,7 @@ static int ad7768_set_dig_fil(struct ad7768_state *st,
- 		return ret;
- 
- 	/* A sync-in pulse is required every time the filter dec rate changes */
--	gpiod_set_value(st->gpio_sync_in, 1);
--	gpiod_set_value(st->gpio_sync_in, 0);
--
--	return 0;
-+	return ad7768_send_sync_pulse(st);
- }
- 
- static int ad7768_set_freq(struct ad7768_state *st,
+ 	if (val != RT5640_DEVICE_ID) {
+ 		dev_err(&i2c->dev,
+ 			"Device with ID register %#x is not rt5640/39\n", val);
 -- 
 2.39.5
 
