@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537DB221704;
-	Tue, 26 Aug 2025 13:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B876221704;
+	Tue, 26 Aug 2025 13:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213896; cv=none; b=DSLPo0SfJ3XN0zxEagDbfZrHFjrHs1//x+tDjBCLKrCOu0PlQz/PxPQWeKWW0dxjkbE/GwEacf0jtzZcYf2sZeC7WcV84gTgRk5eWTILO5m/FFjxhOOTdN5WAHUkyMN+XIPC+0ur9KaKFR5sLS8333JUHDHFwODL14KR/rK1+6Y=
+	t=1756213899; cv=none; b=GVeuP0nQMzQoUsZsTxWdi4nSAXcuriPnRsTPoFXubZlN3PXjAIb1Jz6VJFMMPQc+iigfKdTh7mTYEPHAOXLW0bARxbCf7wEcpYSITa+RQ4ncX1j34KMKiOuYGdUpoLcrmBPYag3ZbFX+YWr/V5ehW+pZCdcC2Ze7dVHlc0csraQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213896; c=relaxed/simple;
-	bh=Pb6fEs0Rbz6GTdE+pgMRQo0073rrEIkR/IADinFYukM=;
+	s=arc-20240116; t=1756213899; c=relaxed/simple;
+	bh=BFFImIJSLPvQ2ApktTqGOTr9aL4tv8B8h6GeX5dMzpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieleSD35HcU2bUU2EohD/Y/ayhfNfH9mLhOJ9513RGISGjS4VJtkGGGjMtvaLHwxMyxdHNqhxXrtqYYF3PmerIc6MUCrp3utAOnyJEsRHymUEzVwWn5BGgJGx3AfFXd7/niiUQlCNgRDs6kP8CjXGZ4dG+KHOzDNnFqrosIyErI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toFMw5Ek; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvXMRxjvgbIsb1EYZPH3ZDUD/DZ/myVpOgwqToi4khLqFA79v0VI2Y9JNhOne9HXUCjdEHaHunmtQpuQZHpY9Txol7po90xKj686msHAYVNXJ9FJ/1bLnn64rSYNzlwSlfJteGj0m3v6RmRm89Vs11PhHmbtdbJ9rrEEXYpWyQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pujPGAEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toFMw5Ek"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D860FC4CEF1;
-	Tue, 26 Aug 2025 13:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pujPGAEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0B5C4CEF1;
+	Tue, 26 Aug 2025 13:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213896;
-	bh=Pb6fEs0Rbz6GTdE+pgMRQo0073rrEIkR/IADinFYukM=;
+	s=korg; t=1756213898;
+	bh=BFFImIJSLPvQ2ApktTqGOTr9aL4tv8B8h6GeX5dMzpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=toFMw5Ek5C2bJrOGGQbp4HvoDT6ezrqN4i4hxqAS3wuSz9pKtjYg2m30wSiMT+wDs
-	 9KCjUSI/az5aQZRYb/XcoPtjxSFPI9tOXzd0VyTxLHni3XPNFKAzSfi9GkVq5L1RsL
-	 BKBfvI1xwfbfHdQqBgTSNByM29y/XwNMlhWQ0yB0=
+	b=pujPGAEbp0O2A3r0cQSG5AbyzrC+5zXNYbfVdQOZinE2QI05Tm/sbhEvCzEQmTaUv
+	 9bOnRAyyHNivco5BE8kYUvaA4p1pSqyHyveC12bFJ6TF+FGeoO/PMnQDEhyrDPKWvB
+	 pJfX5siDvPvAxXJEOw9wKsppaTwl+QikdMgUk65w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5cd373521edd68bebcb3@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com,
+	syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com,
+	Arnaud Lecomte <contact@arnaud-lcm.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.6 521/587] comedi: pcl726: Prevent invalid irq number
-Date: Tue, 26 Aug 2025 13:11:10 +0200
-Message-ID: <20250826111006.250178700@linuxfoundation.org>
+Subject: [PATCH 6.6 522/587] comedi: Fix use of uninitialized memory in do_insn_ioctl() and do_insnlist_ioctl()
+Date: Tue, 26 Aug 2025 13:11:11 +0200
+Message-ID: <20250826111006.276383670@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -52,50 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 96cb948408b3adb69df7e451ba7da9d21f814d00 upstream.
+commit 3cd212e895ca2d58963fdc6422502b10dd3966bb upstream.
 
-The reproducer passed in an irq number(0x80008000) that was too large,
-which triggered the oob.
+syzbot reports a KMSAN kernel-infoleak in `do_insn_ioctl()`.  A kernel
+buffer is allocated to hold `insn->n` samples (each of which is an
+`unsigned int`).  For some instruction types, `insn->n` samples are
+copied back to user-space, unless an error code is being returned.  The
+problem is that not all the instruction handlers that need to return
+data to userspace fill in the whole `insn->n` samples, so that there is
+an information leak.  There is a similar syzbot report for
+`do_insnlist_ioctl()`, although it does not have a reproducer for it at
+the time of writing.
 
-Added an interrupt number check to prevent users from passing in an irq
-number that was too large.
+One culprit is `insn_rw_emulate_bits()` which is used as the handler for
+`INSN_READ` or `INSN_WRITE` instructions for subdevices that do not have
+a specific handler for that instruction, but do have an `INSN_BITS`
+handler.  For `INSN_READ` it only fills in at most 1 sample, so if
+`insn->n` is greater than 1, the remaining `insn->n - 1` samples copied
+to userspace will be uninitialized kernel data.
 
-If `it->options[1]` is 31, then `1 << it->options[1]` is still invalid
-because it shifts a 1-bit into the sign bit (which is UB in C).
-Possible solutions include reducing the upper bound on the
-`it->options[1]` value to 30 or lower, or using `1U << it->options[1]`.
+Another culprit is `vm80xx_ai_insn_read()` in the "vm80xx" driver.  It
+never returns an error, even if it fails to fill the buffer.
 
-The old code would just not attempt to request the IRQ if the
-`options[1]` value were invalid.  And it would still configure the
-device without interrupts even if the call to `request_irq` returned an
-error.  So it would be better to combine this test with the test below.
+Fix it in `do_insn_ioctl()` and `do_insnlist_ioctl()` by making sure
+that uninitialized parts of the allocated buffer are zeroed before
+handling each instruction.
 
-Fixes: fff46207245c ("staging: comedi: pcl726: enable the interrupt support code")
+Thanks to Arnaud Lecomte for their fix to `do_insn_ioctl()`.  That fix
+replaced the call to `kmalloc_array()` with `kcalloc()`, but it is not
+always necessary to clear the whole buffer.
+
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Reported-by: syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a5e45f768aab5892da5d
+Reported-by: syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fb4362a104d45ab09cf9
 Cc: stable <stable@kernel.org> # 5.13+
-Reported-by: syzbot+5cd373521edd68bebcb3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5cd373521edd68bebcb3
-Tested-by: syzbot+5cd373521edd68bebcb3@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/tencent_3C66983CC1369E962436264A50759176BF09@qq.com
+Cc: Arnaud Lecomte <contact@arnaud-lcm.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20250725125324.80276-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/pcl726.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/comedi_fops.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/comedi/drivers/pcl726.c
-+++ b/drivers/comedi/drivers/pcl726.c
-@@ -328,7 +328,8 @@ static int pcl726_attach(struct comedi_d
- 	 * Hook up the external trigger source interrupt only if the
- 	 * user config option is valid and the board supports interrupts.
- 	 */
--	if (it->options[1] && (board->irq_mask & (1 << it->options[1]))) {
-+	if (it->options[1] > 0 && it->options[1] < 16 &&
-+	    (board->irq_mask & (1U << it->options[1]))) {
- 		ret = request_irq(it->options[1], pcl726_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0) {
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -1587,6 +1587,9 @@ static int do_insnlist_ioctl(struct come
+ 				memset(&data[n], 0, (MIN_SAMPLES - n) *
+ 						    sizeof(unsigned int));
+ 			}
++		} else {
++			memset(data, 0, max_t(unsigned int, n, MIN_SAMPLES) *
++					sizeof(unsigned int));
+ 		}
+ 		ret = parse_insn(dev, insns + i, data, file);
+ 		if (ret < 0)
+@@ -1670,6 +1673,8 @@ static int do_insn_ioctl(struct comedi_d
+ 			memset(&data[insn->n], 0,
+ 			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
+ 		}
++	} else {
++		memset(data, 0, n_data * sizeof(unsigned int));
+ 	}
+ 	ret = parse_insn(dev, insn, data, file);
+ 	if (ret < 0)
 
 
