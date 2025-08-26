@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6623034F486;
-	Tue, 26 Aug 2025 13:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95352F0671;
+	Tue, 26 Aug 2025 13:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216690; cv=none; b=AehGaeDRSALJjUYcbzwcgre2g70fVHDkwO3nU0KaT4bHzhsXDqekIcPkpvpf/9MOfiK+NdCa20GjkKgdZhcScwlqsbwfRDMfDtyTdARnwGlqO8cU/xcRHgIwI81FbMhvn4/XSPVVhvTER4U3sk41oIBr+H9wcdBbE+FcnVNof+Y=
+	t=1756216693; cv=none; b=StJEhrWokE/bXUoUbV4ScEuWMfbJ0FUTWmb29ku46ElJsyqCGpH8HChSwyxiwKIh2fO5DY1D0JcW72+pkro9Z6sEr1lw0FfGuPJ6W1I+peT58DMDdjJVeWhxWax9rK3KldlLCtSjh6zVJfBbaNbKn7BwrHLpFlCfgupOKaxoajc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216690; c=relaxed/simple;
-	bh=WsZVPhqxQ00nForpI4Dt/CnR7O5Zmqh/CgJGA6rxGj0=;
+	s=arc-20240116; t=1756216693; c=relaxed/simple;
+	bh=Wfa1li5jLEYu4ZHbFenM2XERtAmrJIANC6XOaM2XjB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6E1sQnaoJEtrLr3GRiidMQwaP1/L5/Jd4PyYsWgudZJcX8py5H7bBEYfACj/eBjM0+xP0cYwRC9lRcUq8fC5kMcRDETqb5I63luboBcybdr78rfHd5mcBDDyuR8fqIpacRFa7n+zPW/udY4JQsiz61YQkFeI0DXXGXiMUkcWJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwh7aUGQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RAv+hkWJRlaC8xbvMwlP6GCksMVR3BCj6eUlafBgQq8QPBCFDOasTMmKrspRiJsI2jrldbrat7Ad9KCVsaIa8nhqXFCFRSvDKSCJ3qwgJf+RsuiOozD+dGibGIAIXcpv6roItE3MgFNX7Ej7r3NSDx/At00ih0v165npBHrMUks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xk7s5bc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwh7aUGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFC6C4CEF1;
-	Tue, 26 Aug 2025 13:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xk7s5bc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A78C4CEF1;
+	Tue, 26 Aug 2025 13:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216690;
-	bh=WsZVPhqxQ00nForpI4Dt/CnR7O5Zmqh/CgJGA6rxGj0=;
+	s=korg; t=1756216692;
+	bh=Wfa1li5jLEYu4ZHbFenM2XERtAmrJIANC6XOaM2XjB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwh7aUGQLsr9PMPSYCjI2kG54FfHsWpFe/JTmUp34sEb4jdtF29DG6E9E9AptzdFO
-	 RKnKyx1Q+sgBhUOXdI3tlK20EAoeeByrTfAjFeNmtGc4q2lQ2Jyd/QGTEXzcfhNez/
-	 ckcwtMmJpDuGj+DyPFyeOBjwamhYS4TagsC2mi2g=
+	b=Xk7s5bc7GFBKPJRfPp8FI0QN2ssJR2X/M7t+aElFd3GcZCttaMTjhRUFQGpVvLL5D
+	 VIkCp/Iq9L4iiWTCQNAiTs9haUKRY/WB2PLx12uMsoqq76bNNC3/Cu8lqVZDbtYfAF
+	 ubmNJrwpabZxDtf7aPMG177rJ01sDn7lLd3o1kog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>
-Subject: [PATCH 5.15 475/644] zynq_fpga: use sgtable-based scatterlist wrappers
-Date: Tue, 26 Aug 2025 13:09:26 +0200
-Message-ID: <20250826110958.254859985@linuxfoundation.org>
+	Jari Ruusu <jariruusu@protonmail.com>,
+	Yi Yang <yiyang13@huawei.com>,
+	GONG Ruiqi <gongruiqi1@huawei.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 466/644] Revert "vgacon: Add check for vc_origin address range in vgacon_scroll()"
+Date: Tue, 26 Aug 2025 13:09:17 +0200
+Message-ID: <20250826110958.028111743@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,46 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 37e00703228ab44d0aacc32a97809a4f6f58df1b upstream.
+commit e4fc307d8e24f122402907ebf585248cad52841d upstream.
 
-Use common wrappers operating directly on the struct sg_table objects to
-fix incorrect use of statterlists related calls. dma_unmap_sg() function
-has to be called with the number of elements originally passed to the
-dma_map_sg() function, not the one returned in sgtable's nents.
+This reverts commit 864f9963ec6b4b76d104d595ba28110b87158003.
 
-CC: stable@vger.kernel.org
-Fixes: 425902f5c8e3 ("fpga zynq: Use the scatterlist interface")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20250616120932.1090614-1-m.szyprowski@samsung.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
+The patch is wrong as it checks vc_origin against vc_screenbuf,
+while in text mode it should compare against vga_vram_base.
+
+As such it broke VGA text scrolling, which can be reproduced like this:
+(1) boot a kernel that is configured to use text mode VGA-console
+(2) type commands:  ls -l /usr/bin | less -S
+(3) scroll up/down with cursor-down/up keys
+
+Reported-by: Jari Ruusu <jariruusu@protonmail.com>
+Cc: stable@vger.kernel.org
+Cc: Yi Yang <yiyang13@huawei.com>
+Cc: GONG Ruiqi <gongruiqi1@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/zynq-fpga.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/console/vgacon.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/fpga/zynq-fpga.c
-+++ b/drivers/fpga/zynq-fpga.c
-@@ -406,7 +406,7 @@ static int zynq_fpga_ops_write(struct fp
- 	}
- 
- 	priv->dma_nelms =
--	    dma_map_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	    dma_map_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	if (priv->dma_nelms == 0) {
- 		dev_err(&mgr->dev, "Unable to DMA map (TO_DEVICE)\n");
- 		return -ENOMEM;
-@@ -478,7 +478,7 @@ out_clk:
- 	clk_disable(priv->clk);
- 
- out_free:
--	dma_unmap_sg(mgr->dev.parent, sgt->sgl, sgt->nents, DMA_TO_DEVICE);
-+	dma_unmap_sgtable(mgr->dev.parent, sgt, DMA_TO_DEVICE, 0);
- 	return err;
- }
- 
+--- a/drivers/video/console/vgacon.c
++++ b/drivers/video/console/vgacon.c
+@@ -1170,7 +1170,7 @@ static bool vgacon_scroll(struct vc_data
+ 				     c->vc_screenbuf_size - delta);
+ 			c->vc_origin = vga_vram_end - c->vc_screenbuf_size;
+ 			vga_rolled_over = 0;
+-		} else if (oldo - delta >= (unsigned long)c->vc_screenbuf)
++		} else
+ 			c->vc_origin -= delta;
+ 		c->vc_scr_end = c->vc_origin + c->vc_screenbuf_size;
+ 		scr_memsetw((u16 *) (c->vc_origin), c->vc_video_erase_char,
 
 
