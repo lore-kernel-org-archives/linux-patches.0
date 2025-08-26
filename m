@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0E032144F;
-	Tue, 26 Aug 2025 11:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B261299959;
+	Tue, 26 Aug 2025 11:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207788; cv=none; b=EmlLxgUXimwtstdZOKpIsU7cPf3yNmISdaJlsLsbYQFp8H4rbZqw8iTt8y0w+UulaqFoEgoQlxCC5qw9iJ3o6fxRf4l2XGSO/5RfbeQSodRsRl4+9tffMIwtQ1dGTrjQkYC6utq0cptKHn+3r1A6i/lF5jmzoj+/H5izM4vDKtM=
+	t=1756207791; cv=none; b=oN5CnbJ+I/YgyG7EpPaI3FlZnp+n2H/Exg8G75XafZnwiiwbck+EG+8GjjYdbGt9M3Yu2qAMwPNl+KMdO/xljBYScpnsy1Zij45BfzRFDKFxbqvefUcNeRt4TwU8J9crd1XhgRXHpqFYiWutyKSGwCfB9KePwoG8ojmCdpEhUlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207788; c=relaxed/simple;
-	bh=NN/VGsWHWzTntBi+JJIAofKbczPXARncCuGSJaN6Slo=;
+	s=arc-20240116; t=1756207791; c=relaxed/simple;
+	bh=lANnqWj56TndussZWKWp+dbvIWO27NIl2plU+s0tTyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pI+YZ2csE34SW45KZgrX0iU2PINTmIlt3kQGlFQeYdNV8Pu5lk9qb9rtMaM9ToyrwWKzPuPzI+5NNVh4/IXN9wuv9cIvHDpSgan2ZteNtOEVOXGyuOOR11s1NbhC38eoD+hzLJDf/J8oNBpfdrM0nzhoC5iQveV2gW1uL7OarCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJeKvZXu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kk7FqQ286hNgtAo8XBbQkk4Q+aekGWg2Wu7c9PxHXuFR9Q6T703Tow+Fl2zT5zE591l6QlowJq2W11Pv7zoMTX0pJ83HK9r86CftozVMBR8z8hW2GKjPqDs1L1J0nF1FltiCLffo9t8AyNaW+bjMmzQ2NsqQRm4Bm9iF6gnNDK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0R0ivn2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJeKvZXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AD4C4CEF1;
-	Tue, 26 Aug 2025 11:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0R0ivn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0484C4CEF4;
+	Tue, 26 Aug 2025 11:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207788;
-	bh=NN/VGsWHWzTntBi+JJIAofKbczPXARncCuGSJaN6Slo=;
+	s=korg; t=1756207791;
+	bh=lANnqWj56TndussZWKWp+dbvIWO27NIl2plU+s0tTyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJeKvZXudxXB9VaV+rGDP+oMcQgur/RbuNM3FenuUNAZW94QjeJLD0GTsXzBRPEqS
-	 4/z4YtjNIp6R7pFqGgjY8goqWYHRkx1IYgZEndAExtfjs6OLAt8B8hl6pP4WSe4Fzl
-	 SskhHv108yaAqTe4fmwzXAN1NT9URdVONooM0w5s=
+	b=b0R0ivn2toTXFy+TPd/0mBL1Bz9IT4ixaytKLwSGOFoIbGDUC3lJD8knGB5U0fYM+
+	 5O2SvhhHs3jwoVcjn+Uuj64nmX63vjJi/DmUntgC5bYtTIjx8qhgGFS6K25/25oa94
+	 QHrRP90YloaJxB95YqoQiTLJ1dQNxY2hh84o//HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 287/457] fs/buffer: fix use-after-free when call bh_read() helper
-Date: Tue, 26 Aug 2025 13:09:31 +0200
-Message-ID: <20250826110944.475494690@linuxfoundation.org>
+Subject: [PATCH 6.16 288/457] signal: Fix memory leak for PIDFD_SELF* sentinels
+Date: Tue, 26 Aug 2025 13:09:32 +0200
+Message-ID: <20250826110944.500942028@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -52,94 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
 
-[ Upstream commit 7375f22495e7cd1c5b3b5af9dcc4f6dffe34ce49 ]
+[ Upstream commit a2c1f82618b0b65f1ef615aa9cfdac8122537d69 ]
 
-There's issue as follows:
-BUG: KASAN: stack-out-of-bounds in end_buffer_read_sync+0xe3/0x110
-Read of size 8 at addr ffffc9000168f7f8 by task swapper/3/0
-CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.16.0-862.14.0.6.x86_64
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x55/0x70
- print_address_description.constprop.0+0x2c/0x390
- print_report+0xb4/0x270
- kasan_report+0xb8/0xf0
- end_buffer_read_sync+0xe3/0x110
- end_bio_bh_io_sync+0x56/0x80
- blk_update_request+0x30a/0x720
- scsi_end_request+0x51/0x2b0
- scsi_io_completion+0xe3/0x480
- ? scsi_device_unbusy+0x11e/0x160
- blk_complete_reqs+0x7b/0x90
- handle_softirqs+0xef/0x370
- irq_exit_rcu+0xa5/0xd0
- sysvec_apic_timer_interrupt+0x6e/0x90
- </IRQ>
+Commit f08d0c3a7111 ("pidfd: add PIDFD_SELF* sentinels to refer to own
+thread/process") introduced a leak by acquiring a pid reference through
+get_task_pid(), which increments pid->count but never drops it with
+put_pid().
 
- Above issue happens when do ntfs3 filesystem mount, issue may happens
- as follows:
-           mount                            IRQ
-ntfs_fill_super
-  read_cache_page
-    do_read_cache_folio
-      filemap_read_folio
-        mpage_read_folio
-	 do_mpage_readpage
-	  ntfs_get_block_vbo
-	   bh_read
-	     submit_bh
-	     wait_on_buffer(bh);
-	                            blk_complete_reqs
-				     scsi_io_completion
-				      scsi_end_request
-				       blk_update_request
-				        end_bio_bh_io_sync
-					 end_buffer_read_sync
-					  __end_buffer_read_notouch
-					   unlock_buffer
+As a result, kmemleak reports unreferenced pid objects after running
+tools/testing/selftests/pidfd/pidfd_test, for example:
 
-            wait_on_buffer(bh);--> return will return to caller
+  unreferenced object 0xff1100206757a940 (size 160):
+    comm "pidfd_test", pid 16965, jiffies 4294853028
+    hex dump (first 32 bytes):
+      01 00 00 00 00 00 00 00 00 00 00 00 fd 57 50 04  .............WP.
+      5e 44 00 00 00 00 00 00 18 de 34 17 01 00 11 ff  ^D........4.....
+    backtrace (crc cd8844d4):
+      kmem_cache_alloc_noprof+0x2f4/0x3f0
+      alloc_pid+0x54/0x3d0
+      copy_process+0xd58/0x1740
+      kernel_clone+0x99/0x3b0
+      __do_sys_clone3+0xbe/0x100
+      do_syscall_64+0x7b/0x2c0
+      entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-					  put_bh
-					    --> trigger stack-out-of-bounds
-In the mpage_read_folio() function, the stack variable 'map_bh' is
-passed to ntfs_get_block_vbo(). Once unlock_buffer() unlocks and
-wait_on_buffer() returns to continue processing, the stack variable
-is likely to be reclaimed. Consequently, during the end_buffer_read_sync()
-process, calling put_bh() may result in stack overrun.
+Fix this by calling put_pid() after do_pidfd_send_signal() returns.
 
-If the bh is not allocated on the stack, it belongs to a folio.  Freeing
-a buffer head which belongs to a folio is done by drop_buffers() which
-will fail to free buffers which are still locked.  So it is safe to call
-put_bh() before __end_buffer_read_notouch().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/20250811141830.343774-1-yebin@huaweicloud.com
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: f08d0c3a7111 ("pidfd: add PIDFD_SELF* sentinels to refer to own thread/process")
+Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+Link: https://lore.kernel.org/20250818134310.12273-1-adrianhuang0701@gmail.com
+Tested-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/buffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/signal.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 8cf4a1dc481e..eb6d85edc37a 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -157,8 +157,8 @@ static void __end_buffer_read_notouch(struct buffer_head *bh, int uptodate)
-  */
- void end_buffer_read_sync(struct buffer_head *bh, int uptodate)
+diff --git a/kernel/signal.c b/kernel/signal.c
+index 148082db9a55..6b1493558a3d 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -4067,6 +4067,7 @@ SYSCALL_DEFINE4(pidfd_send_signal, int, pidfd, int, sig,
  {
--	__end_buffer_read_notouch(bh, uptodate);
- 	put_bh(bh);
-+	__end_buffer_read_notouch(bh, uptodate);
- }
- EXPORT_SYMBOL(end_buffer_read_sync);
+ 	struct pid *pid;
+ 	enum pid_type type;
++	int ret;
  
+ 	/* Enforce flags be set to 0 until we add an extension. */
+ 	if (flags & ~PIDFD_SEND_SIGNAL_FLAGS)
+@@ -4108,7 +4109,10 @@ SYSCALL_DEFINE4(pidfd_send_signal, int, pidfd, int, sig,
+ 	}
+ 	}
+ 
+-	return do_pidfd_send_signal(pid, sig, type, info, flags);
++	ret = do_pidfd_send_signal(pid, sig, type, info, flags);
++	put_pid(pid);
++
++	return ret;
+ }
+ 
+ static int
 -- 
 2.50.1
 
