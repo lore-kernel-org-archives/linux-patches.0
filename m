@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11E8187554;
-	Tue, 26 Aug 2025 13:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8DB187554;
+	Tue, 26 Aug 2025 13:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214437; cv=none; b=GvqDP08wdlsTNeUFmdBjsu9e2SXAVn6eieexQotHz6QeRJJM4VA1JKBYI2au6sCg3K3urQMSJkwJg9FSK5AZLhgOd3vWWIV7IF8drHQZWaySVc71WyngPeszLRUKWxk9zn2hgxayixQqx6GTvG4b8XysSJDMoHsOIg7ziQipMRI=
+	t=1756214440; cv=none; b=FketmDb7XtNJ2drEBBzwCcA+m3chjJ6Z0vP+RA2thy6AAZ5nfEPRUUe5m8WvbB6Dc8ml37PosGhqPblgf7wY0guam8E8gJoHw9w8KZv0JnT8j6QkGttPvfTKbfXcBHxT/61E14DoGMnGbEEb5PcFApB2TT/ASjcFmy0qzDV1QJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214437; c=relaxed/simple;
-	bh=jkCCGhCaTPKxcp9oL7W03OL1kZXSdCsRnPLV24GjlLc=;
+	s=arc-20240116; t=1756214440; c=relaxed/simple;
+	bh=DXqboIZKXZ42CGARzccnAhpFGIKrXnremqSDac6qvzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUzV39jrbWjhqR7UCqZTcY2cxLGarCrIrjY7TXq6ieEZ9+vmeVGEEROZl8SzirG3SJQW16s8S0ffWFG/trxfnRf3ZayMD4ervIg7RRZeGxdG5RAsD7qA9scC2GEq09XMRTTJ+zSZXEA5ITrQMyNVnsvL0IcaodAim4VKQR+EuS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjzN/Gq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CISRNpy6nAk0DD5UxzlIIJwxYhCvaNz7E8l289Ni4qUQaWn9Iw5VSjz1DG0n94fvZTSB2cVPXypBXeLVCzsW+ymsHvecz6LAL2Gsf9XOQugd5ru/g8HM+jdIZjOqxNE8n34+8FjcaivXjDmJrR+wk9IikPC4tzeeMFynA5D8NGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6yrKxf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjzN/Gq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5403FC4CEF1;
-	Tue, 26 Aug 2025 13:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6yrKxf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEE7C4CEF1;
+	Tue, 26 Aug 2025 13:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214437;
-	bh=jkCCGhCaTPKxcp9oL7W03OL1kZXSdCsRnPLV24GjlLc=;
+	s=korg; t=1756214440;
+	bh=DXqboIZKXZ42CGARzccnAhpFGIKrXnremqSDac6qvzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xjzN/Gq+aFZrC63R1w+Ebe8SXlI+tUBNimj1WCMn/cjVXfw+XhXv6TtWk9d2aElr3
-	 rmKYe+IWb8s2BjUtgChi9FaVkEDVN17AoMUo33coCNhsgxnhn7cUmwBeSPHwp0smcz
-	 yIv9BkRklXz/1ZpP148NCaag1dI6bbLWPo6zbUPk=
+	b=M6yrKxf9aBaWcF93PT0d833PeAtf0XJcEWXOwi4E1dA6C1FzHCPprHHX5E7ExB09Z
+	 8orgUZO6nc88P0kDfIVmgBMXC67N74dUBzhcdXOJbv+nIwRNG3oBeih4UyPDxcL/ah
+	 YSl9z8qOPU2GOsQycuuefT2TnQmGXOWdjeFIBowo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/482] wifi: rtw89: Fix rtw89_mac_power_switch() for USB
-Date: Tue, 26 Aug 2025 13:06:30 +0200
-Message-ID: <20250826110934.203292070@linuxfoundation.org>
+Subject: [PATCH 6.1 138/482] wifi: rtw89: Disable deep power saving for USB/SDIO
+Date: Tue, 26 Aug 2025 13:06:31 +0200
+Message-ID: <20250826110934.229854994@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,73 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit e2b71603333a9dd73ee88347d8894fffc3456ac1 ]
+[ Upstream commit a3b871a0f7c083c2a632a31da8bc3de554ae8550 ]
 
-Clear some bits in some registers in order to allow RTL8851BU to power
-on. This is done both when powering on and when powering off because
-that's what the vendor driver does.
-
-Also tested with RTL8832BU and RTL8832CU.
+Disable deep power saving for USB and SDIO because rtw89_mac_send_rpwm()
+is called in atomic context and accessing hardware registers results in
+"scheduling while atomic" errors.
 
 Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/a39da939-d640-4486-ad38-f658f220afc8@gmail.com
+Link: https://patch.msgid.link/0f49eceb-0de0-47e2-ba36-3c6a0dddd17d@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c | 19 +++++++++++++++++++
- drivers/net/wireless/realtek/rtw89/reg.h |  1 +
- 2 files changed, 20 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 4a1c9e18c530..f15a2c6874cb 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -1093,6 +1093,23 @@ void rtw89_mac_notify_wake(struct rtw89_dev *rtwdev)
- 	rtw89_mac_send_rpwm(rtwdev, state, true);
- }
- 
-+static void rtw89_mac_power_switch_boot_mode(struct rtw89_dev *rtwdev)
-+{
-+	u32 boot_mode;
-+
-+	if (rtwdev->hci.type != RTW89_HCI_TYPE_USB)
-+		return;
-+
-+	boot_mode = rtw89_read32_mask(rtwdev, R_AX_GPIO_MUXCFG, B_AX_BOOT_MODE);
-+	if (!boot_mode)
-+		return;
-+
-+	rtw89_write32_clr(rtwdev, R_AX_SYS_PW_CTRL, B_AX_APFN_ONMAC);
-+	rtw89_write32_clr(rtwdev, R_AX_SYS_STATUS1, B_AX_AUTO_WLPON);
-+	rtw89_write32_clr(rtwdev, R_AX_GPIO_MUXCFG, B_AX_BOOT_MODE);
-+	rtw89_write32_clr(rtwdev, R_AX_RSV_CTRL, B_AX_R_DIS_PRST);
-+}
-+
- static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 9e4a02a322ff..ff3a31bf3a87 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -1721,6 +1721,9 @@ static enum rtw89_ps_mode rtw89_update_ps_mode(struct rtw89_dev *rtwdev)
  {
- #define PWR_ACT 1
-@@ -1102,6 +1119,8 @@ static int rtw89_mac_power_switch(struct rtw89_dev *rtwdev, bool on)
- 	int ret;
- 	u8 val;
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
  
-+	rtw89_mac_power_switch_boot_mode(rtwdev);
++	if (rtwdev->hci.type != RTW89_HCI_TYPE_PCIE)
++		return RTW89_PS_MODE_NONE;
 +
- 	if (on) {
- 		cfg_seq = chip->pwr_on_seq;
- 		cfg_func = chip->ops->pwr_on_func;
-diff --git a/drivers/net/wireless/realtek/rtw89/reg.h b/drivers/net/wireless/realtek/rtw89/reg.h
-index 0291aff94016..52dd24a6216d 100644
---- a/drivers/net/wireless/realtek/rtw89/reg.h
-+++ b/drivers/net/wireless/realtek/rtw89/reg.h
-@@ -157,6 +157,7 @@
- 
- #define R_AX_SYS_STATUS1 0x00F4
- #define B_AX_SEL_0XC0_MASK GENMASK(17, 16)
-+#define B_AX_AUTO_WLPON BIT(10)
- #define B_AX_PAD_HCI_SEL_V2_MASK GENMASK(5, 3)
- #define MAC_AX_HCI_SEL_SDIO_UART 0
- #define MAC_AX_HCI_SEL_MULTI_USB 1
+ 	if (rtw89_disable_ps_mode || !chip->ps_mode_supported ||
+ 	    RTW89_CHK_FW_FEATURE(NO_DEEP_PS, &rtwdev->fw))
+ 		return RTW89_PS_MODE_NONE;
 -- 
 2.39.5
 
