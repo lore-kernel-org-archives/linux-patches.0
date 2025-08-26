@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F65E258A;
-	Tue, 26 Aug 2025 13:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD59434DCFF;
+	Tue, 26 Aug 2025 13:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216468; cv=none; b=TDeEZkJHmtkeZpVoBiZ0qFoCtCGEZUfnYVzep6p5yMYi7WCfCrkl8a2phU3P2GHBviQWPulmG7EXYWom0IujNqCY7UyfCbCVqZYHomLATZARspS0+0uDMDX7CcYRc8y20In9tp+8GIq6yTCwMAuvxnj30TWSVsfsZt5Yluzh1I0=
+	t=1756216470; cv=none; b=lMj2bLzkpER6yuS0sO4TGie3yeBsdXoIJcazNWFRsrRIfS2LFmPt8UoIp86pIwwYxIHVxKs3W5YvyKQCBujdP4fXUELgWf0NyhAjLdR/ykUl7BQzGGE9SF32wqZoXbBAxeyR0R3yma42WrxxOALgaITOO8jvmz7gNKbUuMC5oCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216468; c=relaxed/simple;
-	bh=kw/g9cPvszbtDslEyBk3zPNWZ/0YnTfjsFj4cnPzMsg=;
+	s=arc-20240116; t=1756216470; c=relaxed/simple;
+	bh=UMVOyjnngagMluAx+NXMoDfRxxzEi5l7FuQOIQGopec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JuxhY6g7Db9y+9uPLnvRqGTVFa+V9mEAqVa2kbWvp3MBpt2H2Lo0GzRwh918FheKAyePn3XVB/70I8sxRDDuX6wDtnTO5g23Y7cK4zaRNY43xTUsJFld3XAyk2TP7wYP2bEZaxvtxscuMz7HwyJVOncjZhkIVvMtRcMlw8SC8uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re1J9PfT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6vMaIko3DJd/DEl2j/BhAkMhEw3eLyxyk+VrHJzVpgER96jTQk86CkOT2b+gc1QNRjHrL1IKwawcdhiz5B6mYHy8JcFli9ANRG3PXtF9XtMl9f52LZpeqUQHG2IGS+TR7PYueZfSr7JUWdhRFScaxycWn2oHjlDjpAXkFPAjLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY9UTEga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re1J9PfT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C40C4CEF1;
-	Tue, 26 Aug 2025 13:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY9UTEga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F97C4CEF1;
+	Tue, 26 Aug 2025 13:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216468;
-	bh=kw/g9cPvszbtDslEyBk3zPNWZ/0YnTfjsFj4cnPzMsg=;
+	s=korg; t=1756216470;
+	bh=UMVOyjnngagMluAx+NXMoDfRxxzEi5l7FuQOIQGopec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Re1J9PfTOPVjKAZnua3KtQT5I3VlCJn6HnCiLVoS+1D2ZPGWTYrsxEhAv0O+0oRBU
-	 eRamRrsIrWf51tr/flpKnDEJ/BcGtNpsTEXLSQLV4OBXLbpPJqGVrxiGC3wJ8QD/eO
-	 HTauaFE15L647+Y4aQDwYgiBKZFb6omDir0u/JXw=
+	b=qY9UTEgaTXbqa28ZWS8ImKD1b2tzKI1lJ7X9cEXdBgpiQrTO4NnHIaj0YZha2DBdO
+	 0YTV6CtTge7vhMFJJRNH9hpOaTa+5bz0H/c/IiI1EFGEMmd7b4R7RaZRhrT9Qo79fK
+	 OZANDjwyljh8RdxD5PpeJkxTt9r/8c8Hbgm1umy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	John Meneghini <jmeneghi@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 395/644] jfs: upper bound check of tree index in dbAllocAG
-Date: Tue, 26 Aug 2025 13:08:06 +0200
-Message-ID: <20250826110956.237392298@linuxfoundation.org>
+Subject: [PATCH 5.15 422/644] scsi: aacraid: Stop using PCI_IRQ_AFFINITY
+Date: Tue, 26 Aug 2025 13:08:33 +0200
+Message-ID: <20250826110956.917328259@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,42 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit c214006856ff52a8ff17ed8da52d50601d54f9ce ]
+[ Upstream commit dafeaf2c03e71255438ffe5a341d94d180e6c88e ]
 
-When computing the tree index in dbAllocAG, we never check if we are
-out of bounds realative to the size of the stree.
-This could happen in a scenario where the filesystem metadata are
-corrupted.
+When PCI_IRQ_AFFINITY is set for calling pci_alloc_irq_vectors(), it
+means interrupts are spread around the available CPUs. It also means that
+the interrupts become managed, which means that an interrupt is shutdown
+when all the CPUs in the interrupt affinity mask go offline.
 
-Reported-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cffd18309153948f3c3e
-Tested-by: syzbot+cffd18309153948f3c3e@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Using managed interrupts in this way means that we should ensure that
+completions should not occur on HW queues where the associated interrupt
+is shutdown. This is typically achieved by ensuring only CPUs which are
+online can generate IO completion traffic to the HW queue which they are
+mapped to (so that they can also serve completion interrupts for that HW
+queue).
+
+The problem in the driver is that a CPU can generate completions to a HW
+queue whose interrupt may be shutdown, as the CPUs in the HW queue
+interrupt affinity mask may be offline. This can cause IOs to never
+complete and hang the system. The driver maintains its own CPU <-> HW
+queue mapping for submissions, see aac_fib_vector_assign(), but this does
+not reflect the CPU <-> HW queue interrupt affinity mapping.
+
+Commit 9dc704dcc09e ("scsi: aacraid: Reply queue mapping to CPUs based on
+IRQ affinity") tried to remedy this issue may mapping CPUs properly to HW
+queue interrupts. However this was later reverted in commit c5becf57dd56
+("Revert "scsi: aacraid: Reply queue mapping to CPUs based on IRQ
+affinity") - it seems that there were other reports of hangs. I guess
+that this was due to some implementation issue in the original commit or
+maybe a HW issue.
+
+Fix the very original hang by just not using managed interrupts by not
+setting PCI_IRQ_AFFINITY.  In this way, all CPUs will be in each HW queue
+affinity mask, so should not create completion problems if any CPUs go
+offline.
+
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20250715111535.499853-1-john.g.garry@oracle.com
+Closes: https://lore.kernel.org/linux-scsi/20250618192427.3845724-1-jmeneghi@redhat.com/
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Tested-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/scsi/aacraid/comminit.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index c2d4349cd959..f4f4c5ec38c6 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1457,6 +1457,12 @@ dbAllocAG(struct bmap * bmp, int agno, s64 nblocks, int l2nb, s64 * results)
- 	    (1 << (L2LPERCTL - (bmp->db_agheight << 1))) / bmp->db_agwidth;
- 	ti = bmp->db_agstart + bmp->db_agwidth * (agno & (agperlev - 1));
- 
-+	if (ti < 0 || ti >= le32_to_cpu(dcp->nleafs)) {
-+		jfs_error(bmp->db_ipbmap->i_sb, "Corrupt dmapctl page\n");
-+		release_metapage(mp);
-+		return -EIO;
-+	}
-+
- 	/* dmap control page trees fan-out by 4 and a single allocation
- 	 * group may be described by 1 or 2 subtrees within the ag level
- 	 * dmap control page, depending upon the ag size. examine the ag's
+diff --git a/drivers/scsi/aacraid/comminit.c b/drivers/scsi/aacraid/comminit.c
+index 34e45c87cae0..7b520e824c29 100644
+--- a/drivers/scsi/aacraid/comminit.c
++++ b/drivers/scsi/aacraid/comminit.c
+@@ -481,8 +481,7 @@ void aac_define_int_mode(struct aac_dev *dev)
+ 	    pci_find_capability(dev->pdev, PCI_CAP_ID_MSIX)) {
+ 		min_msix = 2;
+ 		i = pci_alloc_irq_vectors(dev->pdev,
+-					  min_msix, msi_count,
+-					  PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
++					  min_msix, msi_count, PCI_IRQ_MSIX);
+ 		if (i > 0) {
+ 			dev->msi_enabled = 1;
+ 			msi_count = i;
 -- 
 2.39.5
 
