@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C35350D54;
-	Tue, 26 Aug 2025 14:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90310350D65;
+	Tue, 26 Aug 2025 14:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219144; cv=none; b=dj+LX6MUviiIDALB84x55HtMiVdP1QDsbAobD1k3YSNrDn5RXGj43xVPFbJSWiEaHhuWIXb3jwkGTkVkUHb0MLd4CNSEV0k/5FYTCq25mOvxpIxfSGnVRL7kNWpohN9gQ+aHYF3eeg37SZwi0CI0tPqD6vGjmUEWigIHdo8cBHA=
+	t=1756219146; cv=none; b=HTiuhb/ICt88wuiSaUbOkUSO+pAyYCFmLaxNDjwX0QqFRzc8OCHof6HvZIsn4mS3pgseEe4wDkvOap6VOojXF2WuXf7e/GCotHRzzExrlOsvJP66DudTNnGQ2nxxEvcJ5fNPrGQ6Xn7s4SrHdNLmI0ecf+RXGg6HLp2h/7qD5Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219144; c=relaxed/simple;
-	bh=VzJsjKsz/h/Fc6pGivXYVWLEsmtg1/xkhFlMQigwn6I=;
+	s=arc-20240116; t=1756219146; c=relaxed/simple;
+	bh=DaApaJf1H6jGMEE09npt9b8N7gWMEf47GJvLzE6zQzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fuTvPHbMUjXY7I0dKl73ykKS92Eu4w5fmFIJE8MD6055OECAgOc6RZM0Iermi0GAwpJqrU+taRb4N3npMA3oc+w0wfCX/0c4tz2dRMrzr6yos0YI4IdlFifMZTJxbOO2fqhreTLhjBconr1cOjcKtUT9TSK2CPRcKuSMY4nYDhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJnka9Iu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hd8WjkgqwqBwk5enNgg0ycA5P/bigP9ZtAu9h+lU5TV7mDsGH8aHvFCX9r3qQNKF6EeysLmXcZRPre50lRRyNSLFDssxDvY/lxR2MZ/3og6D26vs6Xs30TygNUM6Yl4+FL/VPxaXNVgtMOQ9uaqqhhJgPNQ2xd2i08gVQoELkyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtP2A16J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJnka9Iu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B71C4CEF1;
-	Tue, 26 Aug 2025 14:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtP2A16J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242B0C4CEF1;
+	Tue, 26 Aug 2025 14:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219143;
-	bh=VzJsjKsz/h/Fc6pGivXYVWLEsmtg1/xkhFlMQigwn6I=;
+	s=korg; t=1756219146;
+	bh=DaApaJf1H6jGMEE09npt9b8N7gWMEf47GJvLzE6zQzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJnka9IuBVu8qAGKN3zAGXyYdEfiUDJwUm3WWTELv8pfiCOqVXwivb1PDE+DlUAzj
-	 GrR9kk5bpf0lfZjCrcIBKgITxZbXkb3uFLYXIJbDd8gEENMeWTqJ5w7cNJd5V7dSVM
-	 hpu/EkajZFY1/voa3X/NI25qq/hbz6nmt8aexx7k=
+	b=LtP2A16JNZ5t5ocBSbEZg6qsP81OyXwYwak75ELtDvVkl+M9VJGrkzwyqIO460EN2
+	 aozhkgj9gflD/qDPZKDS+JtHH90i7JvBlDgmi/aF92EeuzheSYvkDCH8rXeemXj73I
+	 ssRb73W3+2cV/EU6uXtkzNU9lz6UwH7WCkNUstis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Guo <alexguo1023@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Konstantin Evtushenko <koevtushenko@yandex.com>,
+	Sergey Bashirov <sergeybashirov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 252/403] media: dvb-frontends: w7090p: fix null-ptr-deref in w7090p_tuner_write_serpar and w7090p_tuner_read_serpar
-Date: Tue, 26 Aug 2025 13:09:38 +0200
-Message-ID: <20250826110913.784466478@linuxfoundation.org>
+Subject: [PATCH 5.4 270/403] pNFS: Fix uninited ptr deref in block/scsi layout
+Date: Tue, 26 Aug 2025 13:09:56 +0200
+Message-ID: <20250826110914.261726197@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -51,45 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Guo <alexguo1023@gmail.com>
+From: Sergey Bashirov <sergeybashirov@gmail.com>
 
-[ Upstream commit ed0234c8458b3149f15e496b48a1c9874dd24a1b ]
+[ Upstream commit 9768797c219326699778fba9cd3b607b2f1e7950 ]
 
-In w7090p_tuner_write_serpar, msg is controlled by user. When msg[0].buf is null and msg[0].len is zero, former checks on msg[0].buf would be passed. If accessing msg[0].buf[2] without sanity check, null pointer deref would happen. We add
-check on msg[0].len to prevent crash.
+The error occurs on the third attempt to encode extents. When function
+ext_tree_prepare_commit() reallocates a larger buffer to retry encoding
+extents, the "layoutupdate_pages" page array is initialized only after the
+retry loop. But ext_tree_free_commitdata() is called on every iteration
+and tries to put pages in the array, thus dereferencing uninitialized
+pointers.
 
-Similar commit: commit 0ed554fd769a ("media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()")
+An additional problem is that there is no limit on the maximum possible
+buffer_size. When there are too many extents, the client may create a
+layoutcommit that is larger than the maximum possible RPC size accepted
+by the server.
 
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-Link: https://lore.kernel.org/r/20250616013353.738790-1-alexguo1023@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+During testing, we observed two typical scenarios. First, one memory page
+for extents is enough when we work with small files, append data to the
+end of the file, or preallocate extents before writing. But when we fill
+a new large file without preallocating, the number of extents can be huge,
+and counting the number of written extents in ext_tree_encode_commit()
+does not help much. Since this number increases even more between
+unlocking and locking of ext_tree, the reallocated buffer may not be
+large enough again and again.
+
+Co-developed-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Konstantin Evtushenko <koevtushenko@yandex.com>
+Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250630183537.196479-2-sergeybashirov@gmail.com
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib7000p.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfs/blocklayout/extent_tree.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib7000p.c b/drivers/media/dvb-frontends/dib7000p.c
-index d31ce5c7104d..41dcbabdc193 100644
---- a/drivers/media/dvb-frontends/dib7000p.c
-+++ b/drivers/media/dvb-frontends/dib7000p.c
-@@ -2198,6 +2198,8 @@ static int w7090p_tuner_write_serpar(struct i2c_adapter *i2c_adap, struct i2c_ms
- 	struct dib7000p_state *state = i2c_get_adapdata(i2c_adap);
- 	u8 n_overflow = 1;
- 	u16 i = 1000;
-+	if (msg[0].len < 3)
-+		return -EOPNOTSUPP;
- 	u16 serpar_num = msg[0].buf[0];
+diff --git a/fs/nfs/blocklayout/extent_tree.c b/fs/nfs/blocklayout/extent_tree.c
+index 7a57ff2528af..055ec818eaaa 100644
+--- a/fs/nfs/blocklayout/extent_tree.c
++++ b/fs/nfs/blocklayout/extent_tree.c
+@@ -552,6 +552,15 @@ static int ext_tree_encode_commit(struct pnfs_block_layout *bl, __be32 *p,
+ 	return ret;
+ }
  
- 	while (n_overflow == 1 && i) {
-@@ -2217,6 +2219,8 @@ static int w7090p_tuner_read_serpar(struct i2c_adapter *i2c_adap, struct i2c_msg
- 	struct dib7000p_state *state = i2c_get_adapdata(i2c_adap);
- 	u8 n_overflow = 1, n_empty = 1;
- 	u16 i = 1000;
-+	if (msg[0].len < 1 || msg[1].len < 2)
-+		return -EOPNOTSUPP;
- 	u16 serpar_num = msg[0].buf[0];
- 	u16 read_word;
++/**
++ * ext_tree_prepare_commit - encode extents that need to be committed
++ * @arg: layout commit data
++ *
++ * Return values:
++ *   %0: Success, all required extents are encoded
++ *   %-ENOSPC: Some extents are encoded, but not all, due to RPC size limit
++ *   %-ENOMEM: Out of memory, extents not encoded
++ */
+ int
+ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ {
+@@ -568,12 +577,12 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 	start_p = page_address(arg->layoutupdate_page);
+ 	arg->layoutupdate_pages = &arg->layoutupdate_page;
  
+-retry:
+-	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size, &count, &arg->lastbytewritten);
++	ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
++			&count, &arg->lastbytewritten);
+ 	if (unlikely(ret)) {
+ 		ext_tree_free_commitdata(arg, buffer_size);
+ 
+-		buffer_size = ext_tree_layoutupdate_size(bl, count);
++		buffer_size = NFS_SERVER(arg->inode)->wsize;
+ 		count = 0;
+ 
+ 		arg->layoutupdate_pages =
+@@ -588,7 +597,8 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 			return -ENOMEM;
+ 		}
+ 
+-		goto retry;
++		ret = ext_tree_encode_commit(bl, start_p + 1, buffer_size,
++				&count, &arg->lastbytewritten);
+ 	}
+ 
+ 	*start_p = cpu_to_be32(count);
+@@ -608,7 +618,7 @@ ext_tree_prepare_commit(struct nfs4_layoutcommit_args *arg)
+ 	}
+ 
+ 	dprintk("%s found %zu ranges\n", __func__, count);
+-	return 0;
++	return ret;
+ }
+ 
+ void
 -- 
 2.39.5
 
