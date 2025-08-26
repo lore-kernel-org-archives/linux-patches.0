@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650A533471E;
-	Tue, 26 Aug 2025 13:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC12D307491;
+	Tue, 26 Aug 2025 13:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215863; cv=none; b=Aw2YFUZeh/1ywUZ0pqrjswoseHo3V+vUnANcqIKxhuwyfIiLg+acvM4X36l0SaEqP7hNEJ+idwRcqzfO4Z2kd4Mp5/bRu0eE6qVRScL0el5x4Ql/MJwpHQ+jNM33oeVO3JcivQHsC6wc+LkjlBO0reBNEuySq11cP/qG3tOsYu8=
+	t=1756215866; cv=none; b=cP+KxmTFT3iroTPJ3xDPUxoOxSmsmwfkRFVP3KmBdt0myjTch4n3M9GOQV3r/msjNedMwODsp6+h0OfUzSB/ElxPvG4V0bMP5cFhz3AejivNn/u9//lRtMh2wlW3fZmux+ytRce1hg4FHfIpuXUAk6K+7SZCHAmSTeQie+g1Y3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215863; c=relaxed/simple;
-	bh=87+FEWUKWJfFtozmHVKxBK01pBDzQt+QWy8LroiXEWs=;
+	s=arc-20240116; t=1756215866; c=relaxed/simple;
+	bh=pk5snmZsWNeOXB93sDumbd9N2KUeZvI1j/9pZiIQZX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZR4Q3NWevUzBlmLuAOYtc2YvOw1b3ZAw6RwkIa2f48FpPwHDETOHPUsNY+eX2Fbh29ZK2DW0uhswFOtFT7D1kBvG1AXzkeJJ+Gv3Z8oiRA9flRx8xfciBUxzv+in5YNfB3yxzzJgxT7QCB2SKH+9mF2X7a0kpRFsP7YeMkv1Ppg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVNBCkD5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Un5eRGO3CdpxUxF+tz68iVGbbbnDHEN3UEIDeDyG7sOXr0d+AwaUtgAFzdGwES+36m/IoNn/ZDJvArxTf8cn9XOqnO+erHBSHxtHoyjqR+PRY/y/VCjGlTkbNQiW/LyJusWDuk8MnByjt+3NG6LgXg6N6hbGsBv/0gGx6ey+OwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJuW4wna; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVNBCkD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C8FC4CEF1;
-	Tue, 26 Aug 2025 13:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJuW4wna"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE93C4CEF1;
+	Tue, 26 Aug 2025 13:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215862;
-	bh=87+FEWUKWJfFtozmHVKxBK01pBDzQt+QWy8LroiXEWs=;
+	s=korg; t=1756215865;
+	bh=pk5snmZsWNeOXB93sDumbd9N2KUeZvI1j/9pZiIQZX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVNBCkD5OyNBeYhpt2PsrpMJU5P3T/i45s1P+fbgu5YdWvNleWsVcghMLR+zsh5CB
-	 XTKkjQhnw5D421dg4Fw44Q2F+pA9WDofMBVn1Tip8yg9W5iUrUtcXexB9+AIe5ABxU
-	 zgBGsXb4ur/3QXCo/NL58bcKfbI7M95/P7NcupBM=
+	b=RJuW4wnadtCz09IDBzO77NEfMaHctCXfaGTynQyoC1kHFcdwSSFfBrd/5jiDo76r3
+	 qs+SKn4fWbbzCKbtZnYhgxKmvL4OKnX0r74Tr9XLbJbKMQTbxjcX/uIyhH3QYJFc5g
+	 dPLJ9sZYu5lsILa4Gc/o7AFKKcZrwuVKxwOv/Leo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiumei Mu <xmu@redhat.com>,
-	Shannon Nelson <sln@onemain.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 163/644] selftests: rtnetlink.sh: remove esp4_offload after test
-Date: Tue, 26 Aug 2025 13:04:14 +0200
-Message-ID: <20250826110950.519266268@linuxfoundation.org>
+Subject: [PATCH 5.15 164/644] vrf: Drop existing dst reference in vrf_ip6_input_dst
+Date: Tue, 26 Aug 2025 13:04:15 +0200
+Message-ID: <20250826110950.544189402@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,60 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiumei Mu <xmu@redhat.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit 5b32321fdaf3fd1a92ec726af18765e225b0ee2b ]
+[ Upstream commit f388f807eca1de9e6e70f9ffb1a573c3811c4215 ]
 
-The esp4_offload module, loaded during IPsec offload tests, should
-be reset to its default settings after testing.
-Otherwise, leaving it enabled could unintentionally affect subsequence
-test cases by keeping offload active.
+Commit ff3fbcdd4724 ("selftests: tc: Add generic erspan_opts matching support
+for tc-flower") started triggering the following kmemleak warning:
 
-Without this fix:
-$ lsmod | grep offload; ./rtnetlink.sh -t kci_test_ipsec_offload ; lsmod | grep offload;
-PASS: ipsec_offload
-esp4_offload           12288  0
-esp4                   32768  1 esp4_offload
+unreferenced object 0xffff888015fb0e00 (size 512):
+  comm "softirq", pid 0, jiffies 4294679065
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 40 d2 85 9e ff ff ff ff  ........@.......
+    41 69 59 9d ff ff ff ff 00 00 00 00 00 00 00 00  AiY.............
+  backtrace (crc 30b71e8b):
+    __kmalloc_noprof+0x359/0x460
+    metadata_dst_alloc+0x28/0x490
+    erspan_rcv+0x4f1/0x1160 [ip_gre]
+    gre_rcv+0x217/0x240 [ip_gre]
+    gre_rcv+0x1b8/0x400 [gre]
+    ip_protocol_deliver_rcu+0x31d/0x3a0
+    ip_local_deliver_finish+0x37d/0x620
+    ip_local_deliver+0x174/0x460
+    ip_rcv+0x52b/0x6b0
+    __netif_receive_skb_one_core+0x149/0x1a0
+    process_backlog+0x3c8/0x1390
+    __napi_poll.constprop.0+0xa1/0x390
+    net_rx_action+0x59b/0xe00
+    handle_softirqs+0x22b/0x630
+    do_softirq+0xb1/0xf0
+    __local_bh_enable_ip+0x115/0x150
 
-With this fix:
-$ lsmod | grep offload; ./rtnetlink.sh -t kci_test_ipsec_offload ; lsmod | grep offload;
-PASS: ipsec_offload
+vrf_ip6_input_dst unconditionally sets skb dst entry, add a call to
+skb_dst_drop to drop any existing entry.
 
-Fixes: 2766a11161cc ("selftests: rtnetlink: add ipsec offload API test")
-Signed-off-by: Xiumei Mu <xmu@redhat.com>
-Reviewed-by: Shannon Nelson <sln@onemain.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/6d3a1d777c4de4eb0ca94ced9e77be8d48c5b12f.1753415428.git.xmu@redhat.com
+Cc: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: 9ff74384600a ("net: vrf: Handle ipv6 multicast and link-local addresses")
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20250725160043.350725-1-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/rtnetlink.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/vrf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/rtnetlink.sh b/tools/testing/selftests/net/rtnetlink.sh
-index a3597b3e579f..0a6212a96415 100755
---- a/tools/testing/selftests/net/rtnetlink.sh
-+++ b/tools/testing/selftests/net/rtnetlink.sh
-@@ -746,6 +746,11 @@ kci_test_ipsec_offload()
- 	sysfsf=$sysfsd/ipsec
- 	sysfsnet=/sys/bus/netdevsim/devices/netdevsim0/net/
- 	probed=false
-+	esp4_offload_probed_default=false
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index 27ab443ffa65..6c719d6da5b8 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1364,6 +1364,8 @@ static void vrf_ip6_input_dst(struct sk_buff *skb, struct net_device *vrf_dev,
+ 	struct net *net = dev_net(vrf_dev);
+ 	struct rt6_info *rt6;
+ 
++	skb_dst_drop(skb);
 +
-+	if lsmod | grep -q esp4_offload; then
-+		esp4_offload_probed_default=true
-+	fi
- 
- 	# setup netdevsim since dummydev doesn't have offload support
- 	if [ ! -w /sys/bus/netdevsim/new_device ] ; then
-@@ -835,6 +840,7 @@ EOF
- 	fi
- 
- 	# clean up any leftovers
-+	! "$esp4_offload_probed_default" && lsmod | grep -q esp4_offload && rmmod esp4_offload
- 	echo 0 > /sys/bus/netdevsim/del_device
- 	$probed && rmmod netdevsim
- 
+ 	rt6 = vrf_ip6_route_lookup(net, vrf_dev, &fl6, ifindex, skb,
+ 				   RT6_LOOKUP_F_HAS_SADDR | RT6_LOOKUP_F_IFACE);
+ 	if (unlikely(!rt6))
 -- 
 2.39.5
 
