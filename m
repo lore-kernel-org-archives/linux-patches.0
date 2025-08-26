@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D44E246BC5;
-	Tue, 26 Aug 2025 13:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF07200112;
+	Tue, 26 Aug 2025 13:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215433; cv=none; b=Xdj6gtauFhScfR3qfDZnXbH2OQf6FHbL9P+P3FChm/8420X7zZV9Zp+983w7GkM82jyoOTqAuEv/SEnpREZEdYVVYnNsgibWIPrdrbox/gQzgTvv3SQQW7lPemIeYfzhyJJg0JQYoQLAdiJidFxdU8SKA0CNLrivTZo530uqAiI=
+	t=1756215435; cv=none; b=Gz1iXT+s4mg27cBEzk+N7tPmV6VZma2r9Fh5K1GOcBl6u4mA65HtrX3IqsYoL+Lw+zMzxMUW917pKefP+63fS3wE/gbhUMK9kQSMg3HpofBi928aEFGuQ20jf2Wskg1iOKIpO7jU8hBmu7P5Xufxal4faG2hph7krWwnNd58MYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215433; c=relaxed/simple;
-	bh=kXVRAsdH1mvKfA/2Mvxo7ZuW2XN9G+TPdop+Ldk2uIs=;
+	s=arc-20240116; t=1756215435; c=relaxed/simple;
+	bh=fiizIjRTnq/BEt0my1hamOBtvKwulDso0eboI/gn87M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pULYpqKvEibTKmXp2rRjJP5Bfjd+I0vAN5tw0jmB9a4OT0Ee286VP9DT1xD9tUJQgHBFjv0LggoF0psCL7R43FedDka1ku0kzlL51hGmCcb775c6uF431mo1lwm3adjIDC8TGxrfWUfbWn221FUU54Ot6jsxFBNAXwf5b3A4qJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdwWlnz4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvXzBbfw3O77dHD+NsclvqMuAV5KY2Ec5SHG3VDzUvVjPlx+/l+iEoVPvXGYXpHdEoLXxpwgdv/IKyzwAheKyPVKbfJveOop41o6Jmo+DYcnTJHfsdAKjpmZg8HMpzI/JX1bA0QvopJMPG7zjjULp9DiGmK9VJIYuwChBIs1CbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iy5xAF3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdwWlnz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DE9C4CEF1;
-	Tue, 26 Aug 2025 13:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iy5xAF3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613E7C4CEF1;
+	Tue, 26 Aug 2025 13:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215433;
-	bh=kXVRAsdH1mvKfA/2Mvxo7ZuW2XN9G+TPdop+Ldk2uIs=;
+	s=korg; t=1756215435;
+	bh=fiizIjRTnq/BEt0my1hamOBtvKwulDso0eboI/gn87M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdwWlnz45dtdN+TUV9ayWw6mahjEOpG4MvPmj4Cqd0E2pZBG74sK32RYoxV4YV2nQ
-	 UlaQJ9m1V154+cF+nvFGk20sMzUB88VYacDmwWPy2C6Rn4XKXe+Q18xzOR09pDO9+6
-	 Rn/DxmbExDGCvcOO71MhVECr/6lu0MbadR6ktfCE=
+	b=Iy5xAF3GIq1FBQOHIKHHUPtmuTIXEJxKuAYr6jpPTmzHwrpcFYrh08arzvKBlHMYJ
+	 mrIVwPVu7PzQBE0G8q6IVk7Ex6vUvw55sxJUHgpmOtaOh8jXzufwPQ4ywyupraEWd1
+	 TtpfMLa/DLiiI4aRE/DCYqGPEUQkDIfGHD7Py4qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 002/644] USB: serial: option: add Telit Cinterion FE910C04 (ECM) composition
-Date: Tue, 26 Aug 2025 13:01:33 +0200
-Message-ID: <20250826110946.572554255@linuxfoundation.org>
+	Jean Delvare <jdelvare@suse.de>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PATCH 5.15 025/644] soc: aspeed: lpc-snoop: Dont disable channels that arent enabled
+Date: Tue, 26 Aug 2025 13:01:56 +0200
+Message-ID: <20250826110947.131698485@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -50,57 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-commit 252f4ac08cd2f16ecd20e4c5e41ac2a17dd86942 upstream.
+commit 56448e78a6bb4e1a8528a0e2efe94eff0400c247 upstream.
 
-Add Telit Cinterion FE910C04 (ECM) composition:
-0x10c7: ECM + tty (AT) + tty (AT) + tty (diag)
+Mitigate e.g. the following:
 
-usb-devices output:
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10c7 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FE910
-S:  SerialNumber=f71b8b32
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+    # echo 1e789080.lpc-snoop > /sys/bus/platform/drivers/aspeed-lpc-snoop/unbind
+    ...
+    [  120.363594] Unable to handle kernel NULL pointer dereference at virtual address 00000004 when write
+    [  120.373866] [00000004] *pgd=00000000
+    [  120.377910] Internal error: Oops: 805 [#1] SMP ARM
+    [  120.383306] CPU: 1 UID: 0 PID: 315 Comm: sh Not tainted 6.15.0-rc1-00009-g926217bc7d7d-dirty #20 NONE
+    ...
+    [  120.679543] Call trace:
+    [  120.679559]  misc_deregister from aspeed_lpc_snoop_remove+0x84/0xac
+    [  120.692462]  aspeed_lpc_snoop_remove from platform_remove+0x28/0x38
+    [  120.700996]  platform_remove from device_release_driver_internal+0x188/0x200
+    ...
 
+Fixes: 9f4f9ae81d0a ("drivers/misc: add Aspeed LPC snoop driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: Jean Delvare <jdelvare@suse.de>
+Acked-by: Jean Delvare <jdelvare@suse.de>
+Link: https://patch.msgid.link/20250616-aspeed-lpc-snoop-fixes-v2-2-3cdd59c934d3@codeconstruct.com.au
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soc/aspeed/aspeed-lpc-snoop.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1415,6 +1415,9 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(5) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x60) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x30),	/* Telit FE910C04 (ECM) */
-+	  .driver_info = NCTRL(4) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x30),	/* Telit FN990B (MBIM) */
- 	  .driver_info = NCTRL(6) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x40) },
+--- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
++++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
+@@ -59,6 +59,7 @@ struct aspeed_lpc_snoop_model_data {
+ };
+ 
+ struct aspeed_lpc_snoop_channel {
++	bool enabled;
+ 	struct kfifo		fifo;
+ 	wait_queue_head_t	wq;
+ 	struct miscdevice	miscdev;
+@@ -191,6 +192,9 @@ static int aspeed_lpc_enable_snoop(struc
+ 	const struct aspeed_lpc_snoop_model_data *model_data =
+ 		of_device_get_match_data(dev);
+ 
++	if (WARN_ON(lpc_snoop->chan[channel].enabled))
++		return -EBUSY;
++
+ 	init_waitqueue_head(&lpc_snoop->chan[channel].wq);
+ 	/* Create FIFO datastructure */
+ 	rc = kfifo_alloc(&lpc_snoop->chan[channel].fifo,
+@@ -237,6 +241,8 @@ static int aspeed_lpc_enable_snoop(struc
+ 		regmap_update_bits(lpc_snoop->regmap, HICRB,
+ 				hicrb_en, hicrb_en);
+ 
++	lpc_snoop->chan[channel].enabled = true;
++
+ 	return 0;
+ 
+ err_misc_deregister:
+@@ -249,6 +255,9 @@ err_free_fifo:
+ static void aspeed_lpc_disable_snoop(struct aspeed_lpc_snoop *lpc_snoop,
+ 				     int channel)
+ {
++	if (!lpc_snoop->chan[channel].enabled)
++		return;
++
+ 	switch (channel) {
+ 	case 0:
+ 		regmap_update_bits(lpc_snoop->regmap, HICR5,
+@@ -264,6 +273,8 @@ static void aspeed_lpc_disable_snoop(str
+ 		return;
+ 	}
+ 
++	lpc_snoop->chan[channel].enabled = false;
++	/* Consider improving safety wrt concurrent reader(s) */
+ 	misc_deregister(&lpc_snoop->chan[channel].miscdev);
+ 	kfifo_free(&lpc_snoop->chan[channel].fifo);
+ }
 
 
