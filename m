@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C3735E4C8;
-	Tue, 26 Aug 2025 14:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282A9350D45;
+	Tue, 26 Aug 2025 14:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218964; cv=none; b=WPlDwIni7+CtHt+NdrCScjCqMGJzkOqCJR2g+re0ddektIMeWknGWmCK+UAdsNq+5YeCzxhAy+GcsEP7VXUzuHInXrYLmBdNey4+YJIPYxPeHAkCENDsVP3tsvY16EMDDGOSZ6MgRPwhdTc2NCIoy90z5W/s20zCqk8AZUPezCg=
+	t=1756218967; cv=none; b=S7IQNVwX2e5Krtyp37xakHxYIbCTpOaIoc4noPOpAJGQsnI8JiHGFVAN8dC/UmhE/hbK1v8rU40ZSZ7BSmOaJ12QHuOxePMcvcJvOCADdvoMQc523G107jo/CMkBi4Xpxhf7Hh9H2XOfL5A4a2GWNYyd7cAnbcCJBJ6b5kffyG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218964; c=relaxed/simple;
-	bh=r+kW4W0fkduqmeqMvyTVU5aGT9gVP7dnB3hC3/AKScI=;
+	s=arc-20240116; t=1756218967; c=relaxed/simple;
+	bh=iIsVZq9orTc3WwFy11sJRdidapNc7U4RCmXw8xG2B6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gpRmgTGxs3aO3u3SBpi2/V+kxBfYX0iXB95OWja+0V/NEsLdQyVjxXsrmSrq8NqxbELjmOYRsKNQXm7nDq0N7p4o4f/w3CyD0yB5rFHZfC2o7eG2jkOfMLjoPzCNiZzEv9+bXscds4MVGK4BDZgPBDaDi2OCyAII2QYVhvwQp8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JE2BJ1Pb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nuOtfiRsAzCNuT1iqK/fmtL9ypmUDpNi2ooUvkdtgGgYPf/Lhicre41xAbFF/9GFlffYXlJmw1e+N0mzFnmJXeaP/vO361s6ffbXUHS/2zaOiwIF9PfX+RUvTBUfsb3M7c3fvX1Lh6vRZthECw5i+CtY0QoxISAfCpisSg6aiFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhMPbZyA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JE2BJ1Pb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2732AC4CEF1;
-	Tue, 26 Aug 2025 14:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhMPbZyA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B398EC4CEF1;
+	Tue, 26 Aug 2025 14:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218964;
-	bh=r+kW4W0fkduqmeqMvyTVU5aGT9gVP7dnB3hC3/AKScI=;
+	s=korg; t=1756218967;
+	bh=iIsVZq9orTc3WwFy11sJRdidapNc7U4RCmXw8xG2B6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JE2BJ1Pbuh6Ro0Iy59vU7u4t2hd7IQ1T6ktGrxw4EoRLkbZOCf6DWn9VeUxvThvnh
-	 KElsNmoCjdQKZ8OYhqv93hmuYnCPDur5Lo+wnYHIuJgdSZcnUfwCdVY6lH3zI8UgFv
-	 eYR4gTprrH16y8ogSdZW5Q1ipJPE56hBM2ZNIGUw=
+	b=HhMPbZyAbwCcADDTu1kaYh8NFz4RZ3XUP427D+ijB41U3us+j5Iow+YgYgNXntgAF
+	 qfIww3sNmM8oaUp79i8WFlxuHWqqZWa3i9qYKsZwVyf9wjrGJXLDHzyblLGsAyCMQX
+	 cgAUP8EMw6fisVol1ppZ2aZ/0kmhvfnhdpDHEjQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Chen <shawn2000100@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 184/403] usb: xhci: Set avg_trb_len = 8 for EP0 during Address Device Command
-Date: Tue, 26 Aug 2025 13:08:30 +0200
-Message-ID: <20250826110911.963577305@linuxfoundation.org>
+Subject: [PATCH 5.4 202/403] platform/x86: thinkpad_acpi: Handle KCOV __init vs inline mismatches
+Date: Tue, 26 Aug 2025 13:08:48 +0200
+Message-ID: <20250826110912.437454137@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -45,65 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jay Chen <shawn2000100@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit f72b9aa821a2bfe4b6dfec4be19f264d0673b008 ]
+[ Upstream commit 6418a8504187dc7f5b6f9d0649c03e362cb0664b ]
 
-There is a subtle contradiction between sections of the xHCI 1.2 spec
-regarding the initialization of Input Endpoint Context fields. Section
-4.8.2 ("Endpoint Context Initialization") states that all fields should
-be initialized to 0. However, Section 6.2.3 ("Endpoint Context", p.453)
-specifies that the Average TRB Length (avg_trb_len) field shall be
-greater than 0, and explicitly notes (p.454): "Software shall set
-Average TRB Length to '8' for control endpoints."
+When KCOV is enabled all functions get instrumented, unless the
+__no_sanitize_coverage attribute is used. To prepare for
+__no_sanitize_coverage being applied to __init functions[1], we have
+to handle differences in how GCC's inline optimizations get resolved.
+For thinkpad_acpi routines, this means forcing two functions to be
+inline with __always_inline.
 
-Strictly setting all fields to 0 during initialization conflicts with
-the specific recommendation for control endpoints. In practice, setting
-avg_trb_len = 0 is not meaningful for the hardware/firmware, as the
-value is used for bandwidth calculation.
-
-Motivation: Our company is developing a custom Virtual xHC hardware
-platform that strictly follows the xHCI spec and its recommendations.
-During validation, we observed that enumeration fails and a parameter
-error (TRB Completion Code = 5) is reported if avg_trb_len for EP0 is
-not set to 8 as recommended by Section 6.2.3. This demonstrates the
-importance of assigning a meaningful, non-zero value to avg_trb_len,
-even in virtualized or emulated environments.
-
-This patch explicitly sets avg_trb_len to 8 for EP0 in
-xhci_setup_addressable_virt_dev(), as recommended in Section 6.2.3, to
-prevent potential issues with xHCI host controllers that enforce the
-spec strictly.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220033
-Signed-off-by: Jay Chen <shawn2000100@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250717073107.488599-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/20250523043935.2009972-11-kees@kernel.org/ [1]
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250529181831.work.439-kees@kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/thinkpad_acpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 610190bf62da..6dddd5414fe9 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -1214,6 +1214,8 @@ int xhci_setup_addressable_virt_dev(struct xhci_hcd *xhci, struct usb_device *ud
- 	ep0_ctx->deq = cpu_to_le64(dev->eps[0].ring->first_seg->dma |
- 				   dev->eps[0].ring->cycle_state);
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 9eb74d9e1519..e480fff7142a 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -514,12 +514,12 @@ static unsigned long __init tpacpi_check_quirks(
+ 	return 0;
+ }
  
-+	ep0_ctx->tx_info = cpu_to_le32(EP_AVG_TRB_LENGTH(8));
-+
- 	trace_xhci_setup_addressable_virt_device(dev);
+-static inline bool __pure __init tpacpi_is_lenovo(void)
++static __always_inline bool __pure __init tpacpi_is_lenovo(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_LENOVO;
+ }
  
- 	/* Steps 7 and 8 were done in xhci_alloc_virt_device() */
+-static inline bool __pure __init tpacpi_is_ibm(void)
++static __always_inline bool __pure __init tpacpi_is_ibm(void)
+ {
+ 	return thinkpad_id.vendor == PCI_VENDOR_ID_IBM;
+ }
 -- 
 2.39.5
 
