@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153493314DF;
-	Tue, 26 Aug 2025 11:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2D3338F51;
+	Tue, 26 Aug 2025 11:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207931; cv=none; b=DvQ0wz8i+kyAr41LNu6FujGkPQuj4Tt4UGyB18bGz7ofH0W7AfxYZPNUyOwHO7uRCAt9onr3QBRUjddwk1yD3qHGHQi1sDvjMEbalwLN03em4x08EqTsPACXruIN3jihO6ehq28qy1fk2MSqOdeQKqgX05BDFqdyyAmWpYhqyao=
+	t=1756207933; cv=none; b=ZVF+jjtJ/GtKKP14Eg2cVpUCMZmXdWST3PPs0doRNWNQX1Pd3LERxeVZ/WYGyFhPoOxydk2905ahUTEcVXuc+0x5tavOWbwd7bfeWFN41Ca8rMurtUoUIRhsPPi68lcUR0jdMd+31Y6GOLtzqbDWEwd+DmKyurZgRaMGCxzbvvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207931; c=relaxed/simple;
-	bh=1aWLhuz9E15GrQU7cWvUFYnJIruQ6TTBzCTxQFhjHeI=;
+	s=arc-20240116; t=1756207933; c=relaxed/simple;
+	bh=kYZJiJtyO0vA4fBO8xtbsxd3je3GiPm4V5N0cle3EzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qv48fbFSyGfHfMyD6UjQtoxIEPrEznlUAeAxHz0QOdUTGYYhONnwYJI5cvnL+4AXLGLDbRnebWZyC2esJDDcH4jnguUVRwWlK5BdJvhHPLDgbVC3SqoAwGXAgZm5ISS53xnm3jKvLe2PFQeT2C0rYpK1JH8Jcyd4ULdmm2OmqSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ken1M37N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WkY5psyCfFmCeWhrXqac5LFchlL8HHxKroDYE0uA5Fdmv087HBp6+/yTJPQojmnFklNne5+193zmUkD3dEIlxWU3ipV7+TDdioGbb+V7414+5ZgDLw3cimB4pKHlOX2JQdQDj4xi7cv1Kz0/Iq5aDPTCrpS/7fUQKfRFhtbwrCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrdWroQU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ken1M37N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A2BC4CEF1;
-	Tue, 26 Aug 2025 11:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrdWroQU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5077C4CEF4;
+	Tue, 26 Aug 2025 11:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207930;
-	bh=1aWLhuz9E15GrQU7cWvUFYnJIruQ6TTBzCTxQFhjHeI=;
+	s=korg; t=1756207933;
+	bh=kYZJiJtyO0vA4fBO8xtbsxd3je3GiPm4V5N0cle3EzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ken1M37Nea5snvQUsqlEPxpnsQtacfGrkF1ZopWSti2fLMjJc4Fn0Nf51Urs2NRdf
-	 y6ZbpVNbbHj4DBkAZ+VH8g5yg73CS+0GBGOCA6TeQib8DEJ/zXcmRY0Fvhs5ZzcNWc
-	 cr7FuvjeSs9A2wcG2olZODuqeHzRFAtTV3sksZQo=
+	b=JrdWroQU2vLAhxcUS4iNAQUSbKnK4KE2oKrq80snf0I61i6t8EkpaFpKkJet52zC2
+	 /g4hWzlKLfXMNqwvGSMf40357LjB/N5KAQiEB2jmgRjfGMML7Ud1kpApOKciHiaDa1
+	 MM96hSSHuIB2cuwUo5X57sKsJ/f9eiX+fhfDgiUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simcha Kosman <simcha.kosman@cyberark.com>,
-	Kees Cook <kees@kernel.org>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 372/457] iommu/amd: Avoid stack buffer overflow from kernel cmdline
-Date: Tue, 26 Aug 2025 13:10:56 +0200
-Message-ID: <20250826110946.493729366@linuxfoundation.org>
+Subject: [PATCH 6.16 373/457] Bluetooth: hci_sync: Fix scan state after PA Sync has been established
+Date: Tue, 26 Aug 2025 13:10:57 +0200
+Message-ID: <20250826110946.516834527@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -53,48 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 8503d0fcb1086a7cfe26df67ca4bd9bd9e99bdec ]
+[ Upstream commit ca88be1a2725a42f8dbad579181611d9dcca8e88 ]
 
-While the kernel command line is considered trusted in most environments,
-avoid writing 1 byte past the end of "acpiid" if the "str" argument is
-maximum length.
+Passive scanning is used to program the address of the peer to be
+synchronized, so once HCI_EV_LE_PA_SYNC_ESTABLISHED is received it
+needs to be updated after clearing HCI_PA_SYNC then call
+hci_update_passive_scan_sync to return it to its original state.
 
-Reported-by: Simcha Kosman <simcha.kosman@cyberark.com>
-Closes: https://lore.kernel.org/all/AS8P193MB2271C4B24BCEDA31830F37AE84A52@AS8P193MB2271.EURP193.PROD.OUTLOOK.COM
-Fixes: b6b26d86c61c ("iommu/amd: Add a length limitation for the ivrs_acpihid command-line parameter")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Link: https://lore.kernel.org/r/20250804154023.work.970-kees@kernel.org
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 6d0417e4e1cf ("Bluetooth: hci_conn: Fix not setting conn_timeout for Broadcast Receiver")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 9c17dfa76703..7add9bcf45dc 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3596,7 +3596,7 @@ static int __init parse_ivrs_acpihid(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
- 	char *hid, *uid, *p, *addr;
--	char acpiid[ACPIID_LEN] = {0};
-+	char acpiid[ACPIID_LEN + 1] = { }; /* size with NULL terminator */
- 	int i;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 7938c004071c..6c3218bac116 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6985,8 +6985,6 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
  
- 	addr = strchr(str, '@');
-@@ -3622,7 +3622,7 @@ static int __init parse_ivrs_acpihid(char *str)
- 	/* We have the '@', make it the terminator to get just the acpiid */
- 	*addr++ = 0;
+ 	hci_dev_lock(hdev);
  
--	if (strlen(str) > ACPIID_LEN + 1)
-+	if (strlen(str) > ACPIID_LEN)
- 		goto not_found;
+-	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
+-
+ 	if (!hci_conn_valid(hdev, conn))
+ 		clear_bit(HCI_CONN_CREATE_PA_SYNC, &conn->flags);
  
- 	if (sscanf(str, "=%s", acpiid) != 1)
+@@ -7080,6 +7078,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
+ 		__hci_cmd_sync_status(hdev, HCI_OP_LE_PA_CREATE_SYNC_CANCEL,
+ 				      0, NULL, HCI_CMD_TIMEOUT);
+ 
++	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
++
++	/* Update passive scan since HCI_PA_SYNC flag has been cleared */
++	hci_update_passive_scan_sync(hdev);
++
+ 	return err;
+ }
+ 
 -- 
 2.50.1
 
