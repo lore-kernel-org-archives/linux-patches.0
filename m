@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91F5219300;
-	Tue, 26 Aug 2025 13:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00387264A76;
+	Tue, 26 Aug 2025 13:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215014; cv=none; b=DbVReEC0kkCosH+ztXSqX/ciCZW1+OjyI1QBCqDFZfAP8KNGQ6lTNcmV1LVq1Y6qD++wj7DZp8dWhwJb/BuEjtQNXJ1T7DBduFwoY3cgkseO8xlQae+TQki8hpuF+j4essw4jjaTwvyYxWgQc1KhxKC7No/ZHE8DCDpnjLBr7RU=
+	t=1756215017; cv=none; b=kO2Y0QOrABYDje+Y4+XZWDyDJHGfDKoVgPFshQVOIXtbeXXQyxIQ8+qNxBL2PIP9IlL9eHRx1fXhoXWHM+oGHmeesVRtM4YWV0IVd5LbK8iil6A6EFR5mQbouvpELOeFDrbmnWYuMZ7ifIWewZSdsuK4jAfS5PlLnWrHwaewEyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215014; c=relaxed/simple;
-	bh=gVdMEv9x56O2xWyM7ZXFwzq73G8bO7VECjkTfxNBUvY=;
+	s=arc-20240116; t=1756215017; c=relaxed/simple;
+	bh=+juATEhE2R0Sc8Poq0IQvGxrujwYSJbgUHyHXPSo6/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHFSz9ijDv6oyd4baboqfR3ghk0m9GtcRuL1xGzlzn4IYtc9NTWHmZeUYBH2xHKQ5Je047UET9940FEU1LFmwTLIXVzR3jzrSlKdFz1nuOl82bhDfXSD0w0CQedfsyCOOjwW6I+8YtyNzfDfhshPbufC1sxpS7BOpYZJJbagC9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KivGwKOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XeIsPxI/4Hf8jlFHUU1twqfojTxzK0XzmLmeF5Qe0eVNLC7k484QrNFwdxXikS7SLCk8Ykp/fg47qF5pxaLggRtGSdcLb2dW/l0+uXDduma3j6zprIiUhgQgfcpKsosH9MvM5giIdM47BpmeTOwY6IiauDzPXs4ZTSL7yB6aHb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7CetV54; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KivGwKOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF1CC4CEF1;
-	Tue, 26 Aug 2025 13:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7CetV54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891A9C4CEF1;
+	Tue, 26 Aug 2025 13:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215014;
-	bh=gVdMEv9x56O2xWyM7ZXFwzq73G8bO7VECjkTfxNBUvY=;
+	s=korg; t=1756215016;
+	bh=+juATEhE2R0Sc8Poq0IQvGxrujwYSJbgUHyHXPSo6/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KivGwKODXFHGMRfHwxdAOg5MsrPcDi7Qy8LU1qAtGPkQvfRq/tmrAiq4KSzwwAlaA
-	 qfOryr9ZFRC5A2eD2j5Wozf2OCXLRuQTS2nvSbn+bdI4nLFzw0p3C9/ZMyNIDGwE+s
-	 uWNTh0Pb37rIcMJ7ZEQtaq9L6WUkbbUG8Oesn4Q8=
+	b=Q7CetV54EqE216yqMcRzzzYD1T3y/CbZolrptYHFqvaelUZR9L4L2B3WM2QCUlsbm
+	 jna7DPOzAvqDUpfcn5nzc4H7ybqEwWbaK1wedB8COi/G9Z/Oh1vJ87QUsL1HDmWrrC
+	 5IvOdlQwL6gmpT0mqMkwkDF727KZhImU8wdFHqxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Subject: [PATCH 6.1 323/482] media: v4l2-ctrls: Dont reset handlers error in v4l2_ctrl_handler_free()
-Date: Tue, 26 Aug 2025 13:09:36 +0200
-Message-ID: <20250826110938.789701779@linuxfoundation.org>
+	Ludwig Disterhof <ludwig@disterhof.eu>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.1 324/482] media: usbtv: Lock resolution while streaming
+Date: Tue, 26 Aug 2025 13:09:37 +0200
+Message-ID: <20250826110938.815027577@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,44 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Ludwig Disterhof <ludwig@disterhof.eu>
 
-commit 5a0400aca5fa7c6b8ba456c311a460e733571c88 upstream.
+commit 7e40e0bb778907b2441bff68d73c3eb6b6cd319f upstream.
 
-It's a common pattern in drivers to free the control handler's resources
-and then return the handler's error code on drivers' error handling paths.
-Alas, the v4l2_ctrl_handler_free() function also zeroes the error field,
-effectively indicating successful return to the caller.
+When an program is streaming (ffplay) and another program (qv4l2)
+changes the TV standard from NTSC to PAL, the kernel crashes due to trying
+to copy to unmapped memory.
 
-There's no apparent need to touch the error field while releasing the
-control handler's resources and cleaning up stale pointers. Not touching
-the handler's error field is a more certain way to address this problem
-than changing all the users, in which case the pattern would be likely to
-re-emerge in new drivers.
+Changing from NTSC to PAL increases the resolution in the usbtv struct,
+but the video plane buffer isn't adjusted, so it overflows.
 
-Do just that, don't touch the control handler's error field in
-v4l2_ctrl_handler_free().
-
-Fixes: 0996517cf8ea ("V4L/DVB: v4l2: Add new control handling framework")
+Fixes: 0e0fe3958fdd13d ("[media] usbtv: Add support for PAL video source")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ludwig Disterhof <ludwig@disterhof.eu>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[hverkuil: call vb2_is_busy instead of vb2_is_streaming]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/usb/usbtv/usbtv-video.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -1327,7 +1327,6 @@ void v4l2_ctrl_handler_free(struct v4l2_
- 	kvfree(hdl->buckets);
- 	hdl->buckets = NULL;
- 	hdl->cached = NULL;
--	hdl->error = 0;
- 	mutex_unlock(hdl->lock);
- 	mutex_destroy(&hdl->_lock);
- }
+--- a/drivers/media/usb/usbtv/usbtv-video.c
++++ b/drivers/media/usb/usbtv/usbtv-video.c
+@@ -73,6 +73,10 @@ static int usbtv_configure_for_norm(stru
+ 	}
+ 
+ 	if (params) {
++		if (vb2_is_busy(&usbtv->vb2q) &&
++		    (usbtv->width != params->cap_width ||
++		     usbtv->height != params->cap_height))
++			return -EBUSY;
+ 		usbtv->width = params->cap_width;
+ 		usbtv->height = params->cap_height;
+ 		usbtv->n_chunks = usbtv->width * usbtv->height
 
 
