@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D959221704;
-	Tue, 26 Aug 2025 13:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B084F1FBCB5;
+	Tue, 26 Aug 2025 13:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214045; cv=none; b=RsY1Y7VCybRLie5cq5Lw/EvVwan6GE7ISuLxn29szwEfoRIO2f5yjPEahHaS19OTL5TPUEm8Dpq1oCXssDxY/JZBBmuZERyp3zOPax4bFTYMeTZs07sBBHSUFRIeOISbgLvdjO9mrOapyT3SMm4/r0zkf+sNmrL+Yry76VNKBX8=
+	t=1756214047; cv=none; b=UbeCIamDn7k3KjjmMIE/v0QCu4eOQSVXCkyVskIuN4d29KALeUPoq7yIclPX5fKTmUJGSPJ6rOzatHhx8mRieB8wcc9B8zDIlVhp8F1h4UOObGBYP86QfeiHkxMPsmp2IlwJDzQCh3Ul5OE8VC7hD0fzjr9b2JX2d90VLPhVU2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214045; c=relaxed/simple;
-	bh=cNjzw58PlW7KpuxXvV+z9TkNyYIjoCBnDXG4SNdv7Ao=;
+	s=arc-20240116; t=1756214047; c=relaxed/simple;
+	bh=gtzP9J7tViN4/Tdwx0UQ8H1vtnDVlP5Ro2pfqfFzvj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8lg9mmfNiNlAIbSGwk/ZT28m2wSOYE5bq2ISH8lQqIy+TWZA17c13Z33Ul/LSGPGhjBywzo7lZi/uflVS4VDk77FYOlUUGtYzVJTIZY4EDQFWOxJxbBxDh2SlUJeFcJ92XoJK9tzyNsPNNuol6xYu3Bxx5/GGwupd8Rf+sciFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hExoXJCy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YrMwiJ/G19Bob/sQDEILuCim8VD7nA13YCCdqMrF9bpxH+KHkJyQOPdPzLW55hIB6HjIMMM+whb5uWGCIjKoHEUT9F6ktkq+Jh/e4RmaujEJxWgYzsgPSjeOF1XS1VwAs7D+267qhS87u1vBLOlQUROAQoPMmjGZnhc0GDwn1a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUj46kwn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hExoXJCy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFE9C4CEF1;
-	Tue, 26 Aug 2025 13:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUj46kwn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E1CC4CEF1;
+	Tue, 26 Aug 2025 13:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214045;
-	bh=cNjzw58PlW7KpuxXvV+z9TkNyYIjoCBnDXG4SNdv7Ao=;
+	s=korg; t=1756214047;
+	bh=gtzP9J7tViN4/Tdwx0UQ8H1vtnDVlP5Ro2pfqfFzvj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hExoXJCyGm4SRLvJMOCjLA+3gGn9BYAf4TgKg0HYKHgt0Li1erKTVmikl6YtLowKi
-	 1qqcyq2PSCdZYNRizqaovcEjVGx5t9wxmIz4pO2pyw8x3F+JQEIbuMwQHfPk8VNoCc
-	 JC+zb0bVXC9VnQt7BX+beCcnGXduCJ7NtSzMOliQ=
+	b=TUj46kwngED25DGbScQqQGRBf8s4hcPcrMVVzRxQm3WRwyZ9PkBEK0wZsIDYKDAcy
+	 MCsLX9iG4Ipx3YRfV6vhgq9sDMO+6Xtoh8lQmr29TEuWQs5KO5sYNtAGIwFlRenR1A
+	 5RYmej+mELP4gJg6Shrixmmw+A/VXyWvi/qmns/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ValdikSS <iam@valdikss.org.ru>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 575/587] igc: fix disabling L1.2 PCI-E link substate on I226 on init
-Date: Tue, 26 Aug 2025 13:12:04 +0200
-Message-ID: <20250826111007.662785292@linuxfoundation.org>
+Subject: [PATCH 6.6 576/587] net/sched: Make cake_enqueue return NET_XMIT_CN when past buffer_limit
+Date: Tue, 26 Aug 2025 13:12:05 +0200
+Message-ID: <20250826111007.688456378@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -48,83 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ValdikSS <iam@valdikss.org.ru>
+From: William Liu <will@willsroot.io>
 
-[ Upstream commit 1468c1f97cf32418e34dbb40b784ed9333b9e123 ]
+[ Upstream commit 15de71d06a400f7fdc15bf377a2552b0ec437cf5 ]
 
-Device ID comparison in igc_is_device_id_i226 is performed before
-the ID is set, resulting in always failing check on init.
+The following setup can trigger a WARNING in htb_activate due to
+the condition: !cl->leaf.q->q.qlen
 
-Before the patch:
-* L1.2 is not disabled on init
-* L1.2 is properly disabled after suspend-resume cycle
+tc qdisc del dev lo root
+tc qdisc add dev lo root handle 1: htb default 1
+tc class add dev lo parent 1: classid 1:1 \
+       htb rate 64bit
+tc qdisc add dev lo parent 1:1 handle f: \
+       cake memlimit 1b
+ping -I lo -f -c1 -s64 -W0.001 127.0.0.1
 
-With the patch:
-* L1.2 is properly disabled both on init and after suspend-resume
+This is because the low memlimit leads to a low buffer_limit, which
+causes packet dropping. However, cake_enqueue still returns
+NET_XMIT_SUCCESS, causing htb_enqueue to call htb_activate with an
+empty child qdisc. We should return NET_XMIT_CN when packets are
+dropped from the same tin and flow.
 
-How to test:
-Connect to the 1G link with 300+ mbit/s Internet speed, and run
-the download speed test, such as:
+I do not believe return value of NET_XMIT_CN is necessary for packet
+drops in the case of ack filtering, as that is meant to optimize
+performance, not to signal congestion.
 
-    curl -o /dev/null http://speedtest.selectel.ru/1GB
-
-Without L1.2 disabled, the speed would be no more than ~200 mbit/s.
-With L1.2 disabled, the speed would reach 1 gbit/s.
-Note: it's required that the latency between your host and the remote
-be around 3-5 ms, the test inside LAN (<1 ms latency) won't trigger the
-issue.
-
-Link: https://lore.kernel.org/intel-wired-lan/15248b4f-3271-42dd-8e35-02bfc92b25e1@intel.com
-Fixes: 0325143b59c6 ("igc: disable L1.2 PCI-E link substate to avoid performance issue")
-Signed-off-by: ValdikSS <iam@valdikss.org.ru>
-Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20250819222000.3504873-6-anthony.l.nguyen@intel.com
+Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
+Signed-off-by: William Liu <will@willsroot.io>
+Reviewed-by: Savino Dicanosa <savy@syst3mfailure.io>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20250819033601.579821-1-will@willsroot.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/sched/sch_cake.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 11543db4c47f..3e1408e1c1fc 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6772,6 +6772,13 @@ static int igc_probe(struct pci_dev *pdev,
- 	adapter->port_num = hw->bus.func;
- 	adapter->msg_enable = netif_msg_init(debug, DEFAULT_MSG_ENABLE);
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index 09242578dac5..85984c91cf51 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1762,7 +1762,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	ktime_t now = ktime_get();
+ 	struct cake_tin_data *b;
+ 	struct cake_flow *flow;
+-	u32 idx;
++	u32 idx, tin;
  
-+	/* PCI config space info */
-+	hw->vendor_id = pdev->vendor;
-+	hw->device_id = pdev->device;
-+	hw->revision_id = pdev->revision;
-+	hw->subsystem_vendor_id = pdev->subsystem_vendor;
-+	hw->subsystem_device_id = pdev->subsystem_device;
+ 	/* choose flow to insert into */
+ 	idx = cake_classify(sch, &b, skb, q->flow_mode, &ret);
+@@ -1772,6 +1772,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		__qdisc_drop(skb, to_free);
+ 		return ret;
+ 	}
++	tin = (u32)(b - q->tins);
+ 	idx--;
+ 	flow = &b->flows[idx];
+ 
+@@ -1939,13 +1940,22 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		q->buffer_max_used = q->buffer_used;
+ 
+ 	if (q->buffer_used > q->buffer_limit) {
++		bool same_flow = false;
+ 		u32 dropped = 0;
++		u32 drop_id;
+ 
+ 		while (q->buffer_used > q->buffer_limit) {
+ 			dropped++;
+-			cake_drop(sch, to_free);
++			drop_id = cake_drop(sch, to_free);
 +
- 	/* Disable ASPM L1.2 on I226 devices to avoid packet loss */
- 	if (igc_is_device_id_i226(hw))
- 		pci_disable_link_state(pdev, PCIE_LINK_STATE_L1_2);
-@@ -6797,13 +6804,6 @@ static int igc_probe(struct pci_dev *pdev,
- 	netdev->mem_start = pci_resource_start(pdev, 0);
- 	netdev->mem_end = pci_resource_end(pdev, 0);
- 
--	/* PCI config space info */
--	hw->vendor_id = pdev->vendor;
--	hw->device_id = pdev->device;
--	hw->revision_id = pdev->revision;
--	hw->subsystem_vendor_id = pdev->subsystem_vendor;
--	hw->subsystem_device_id = pdev->subsystem_device;
--
- 	/* Copy the default MAC and PHY function pointers */
- 	memcpy(&hw->mac.ops, ei->mac_ops, sizeof(hw->mac.ops));
- 	memcpy(&hw->phy.ops, ei->phy_ops, sizeof(hw->phy.ops));
++			if ((drop_id >> 16) == tin &&
++			    (drop_id & 0xFFFF) == idx)
++				same_flow = true;
+ 		}
+ 		b->drop_overlimit += dropped;
++
++		if (same_flow)
++			return NET_XMIT_CN;
+ 	}
+ 	return NET_XMIT_SUCCESS;
+ }
 -- 
 2.50.1
 
