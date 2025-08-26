@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9B8352061;
-	Tue, 26 Aug 2025 14:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A8835083A;
+	Tue, 26 Aug 2025 14:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216927; cv=none; b=SLm/FuctiLF+vBfKAmhC9FinA6qquUBqWMHDcmbomp3u0Zyt7TgUCEsUPOAML+MOzjtcmU9yva0LfEHvT+eGA+PA9/WK8bknOJ6xF25kJzHuN9cjZgMx8JUzUiAuFzD4k3QdoOnPLghISY5mM0IO1jKAUX7VOIIJWUmvjCxwLwQ=
+	t=1756216931; cv=none; b=MmA/Pc7IuEKdQXSFlN5YmZ1lgbFvMYOLNRlAMQuxmrM38iMyhYF7Tgow6lTWf6UsSQBI5A8Rk4Z03wGi4qDemIAYyMlEVTlk7AxWdLW/pjG/zWRf2ktCtPqPTDLBKEcH3TCWAW/ehfMAgegeK6Cy1BVOz10pB2L6W2vhNeXDLGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216927; c=relaxed/simple;
-	bh=qDcEDZmDR9xDgyldLc/9s5RKtA7ctaJMdwN+YS4Y7cQ=;
+	s=arc-20240116; t=1756216931; c=relaxed/simple;
+	bh=Q+TGISCWWRlvVp1zZnaCZ6BoUTfkwwifgAOi68JCzoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKyj9MX4tfo0DME6cXX+NqVjkJJ4uF2+GsPqIk/mPqjUBS0JBFYl7GRSiZ0FqsSLp3yj6m3slOQFWmnmfSqVDCKncWcuoDAE7ihqOQxbKVta5dlhjlTOjNMtS4tKfgFsYb++KafXKDmaixzVnQJQNHJE1uiUItOVZjeSHhruL5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZljAmkWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ADFE/a+3qM9Og7jCBZhWhizhX9OcKScJrSTZ2tC4WOoe2ztTR5/wrO72BHYxVOzHehmkkBsC61JRbpesElzQPgIKD8qGbKYFIPOiLkMOyKcnqUJ5FqCkOD137xr+4dULIaDKAvxAghWFuOk2X1d2iiZHw7VGJ034eLuF1O6Zmdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ti2IyluY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZljAmkWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30610C4CEF1;
-	Tue, 26 Aug 2025 14:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ti2IyluY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3A2C4CEF1;
+	Tue, 26 Aug 2025 14:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216927;
-	bh=qDcEDZmDR9xDgyldLc/9s5RKtA7ctaJMdwN+YS4Y7cQ=;
+	s=korg; t=1756216930;
+	bh=Q+TGISCWWRlvVp1zZnaCZ6BoUTfkwwifgAOi68JCzoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZljAmkWcIhaoRgm7ms5QbVI5rEJY9t2msAtILg8zO/WfhGkOdiPSNQL1bHqxf9Q38
-	 hGo5QAv7/wU+yBEbP9i2e/0A+bN+A8ilSRu9wk9xA7i+MTev6xRu4lCDq2roysZojZ
-	 o+fuEmVWMjciauj1ugXk6S0z3IOnJO3sRcvQgxeI=
+	b=Ti2IyluYSjLPVxOe3J6NOyhhnEmghFa13AbQTsH5jmUWU+nkw7wTjf+LgumnOtzgA
+	 /evAqvdZFuyIVXEUmM+r2DRTi2Htt8/2nKMK8hccaU9UmmEvJLQ+Q3xXgMROEIHpgF
+	 qIFTwNCejat5tVoj9l6sIad04OGDoFIIPSdpbdn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 595/644] f2fs: fix to avoid out-of-boundary access in dnode page
-Date: Tue, 26 Aug 2025 13:11:26 +0200
-Message-ID: <20250826111001.284796189@linuxfoundation.org>
+Subject: [PATCH 5.15 596/644] media: camss: Convert to platform remove callback returning void
+Date: Tue, 26 Aug 2025 13:11:27 +0200
+Message-ID: <20250826111001.310414654@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,79 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 77de19b6867f2740cdcb6c9c7e50d522b47847a4 ]
+[ Upstream commit 428bbf4be4018aefa26e4d6531779fa8925ecaaf ]
 
-As Jiaming Zhang reported:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x1c1/0x2a0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x17e/0x800 mm/kasan/report.c:480
- kasan_report+0x147/0x180 mm/kasan/report.c:593
- data_blkaddr fs/f2fs/f2fs.h:3053 [inline]
- f2fs_data_blkaddr fs/f2fs/f2fs.h:3058 [inline]
- f2fs_get_dnode_of_data+0x1a09/0x1c40 fs/f2fs/node.c:855
- f2fs_reserve_block+0x53/0x310 fs/f2fs/data.c:1195
- prepare_write_begin fs/f2fs/data.c:3395 [inline]
- f2fs_write_begin+0xf39/0x2190 fs/f2fs/data.c:3594
- generic_perform_write+0x2c7/0x910 mm/filemap.c:4112
- f2fs_buffered_write_iter fs/f2fs/file.c:4988 [inline]
- f2fs_file_write_iter+0x1ec8/0x2410 fs/f2fs/file.c:5216
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x546/0xa90 fs/read_write.c:686
- ksys_write+0x149/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xf3/0x3d0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-The root cause is in the corrupted image, there is a dnode has the same
-node id w/ its inode, so during f2fs_get_dnode_of_data(), it tries to
-access block address in dnode at offset 934, however it parses the dnode
-as inode node, so that get_dnode_addr() returns 360, then it tries to
-access page address from 360 + 934 * 4 = 4096 w/ 4 bytes.
-
-To fix this issue, let's add sanity check for node id of all direct nodes
-during f2fs_get_dnode_of_data().
-
-Cc: stable@kernel.org
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Closes: https://groups.google.com/g/syzkaller/c/-ZnaaOOfO3M
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ replaced f2fs_err_ratelimited() with f2fs_err() ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 69080ec3d0da ("media: qcom: camss: cleanup media device allocated resource on error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/node.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/platform/qcom/camss/camss.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -798,6 +798,16 @@ int f2fs_get_dnode_of_data(struct dnode_
- 	for (i = 1; i <= level; i++) {
- 		bool done = false;
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1477,7 +1477,7 @@ void camss_delete(struct camss *camss)
+  *
+  * Always returns 0.
+  */
+-static int camss_remove(struct platform_device *pdev)
++static void camss_remove(struct platform_device *pdev)
+ {
+ 	struct camss *camss = platform_get_drvdata(pdev);
  
-+		if (nids[i] && nids[i] == dn->inode->i_ino) {
-+			err = -EFSCORRUPTED;
-+			f2fs_err(sbi,
-+				"inode mapping table is corrupted, run fsck to fix it, "
-+				"ino:%lu, nid:%u, level:%d, offset:%d",
-+				dn->inode->i_ino, nids[i], level, offset[level]);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			goto release_pages;
-+		}
-+
- 		if (!nids[i] && mode == ALLOC_NODE) {
- 			/* alloc new node */
- 			if (!f2fs_alloc_nid(sbi, &(nids[i]))) {
+@@ -1487,8 +1487,6 @@ static int camss_remove(struct platform_
+ 
+ 	if (atomic_read(&camss->ref_count) == 0)
+ 		camss_delete(camss);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id camss_dt_match[] = {
+@@ -1519,7 +1517,7 @@ static const struct dev_pm_ops camss_pm_
+ 
+ static struct platform_driver qcom_camss_driver = {
+ 	.probe = camss_probe,
+-	.remove = camss_remove,
++	.remove_new = camss_remove,
+ 	.driver = {
+ 		.name = "qcom-camss",
+ 		.of_match_table = camss_dt_match,
 
 
