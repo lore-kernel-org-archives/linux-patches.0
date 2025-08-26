@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0E51DF75A;
-	Tue, 26 Aug 2025 14:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73831DF75A;
+	Tue, 26 Aug 2025 14:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218294; cv=none; b=KlNMgsbWoWV3xVI+0HvkFUYw5PLzxBlO5hRa265wa88c1FeicoKMLKCGsw//z/256gM6y4yb3JuJWkxX3xpW72F3E+tjA6BAvxplId+IVINDY6oQ9UGjpiusOEejFHJ0yoR8YlisINbRWROJ2r9sT3ELdC3Vf01wxi230wB6NcI=
+	t=1756218297; cv=none; b=d0UXEJqGUTvbayHFC7in4QPM7PKcAomi1J5zz61Beqr+F1hfV0grZt2HJwgeKp8QOjaAHOX6doSi07YRGYzkqdse6wDuYGq4TSXB+oCJXayT8gQCW5pCxTpneOJ0uzzCrHZdHtgG/OQkvEsmubgtuyK0nNSfmwZO+qbCD3l8dlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218294; c=relaxed/simple;
-	bh=VX734G8Rdgstp4wit+6ZO5DnBZEcih2BmNpJ9yeJK60=;
+	s=arc-20240116; t=1756218297; c=relaxed/simple;
+	bh=mwkbWIzGJfeNK4g14Sn/0eAT1AT1wkOMaubhU4iSfr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmXEpTDj3KFu+zEPmGE1DLuSSiOJQq1wNCQEIzjkFkEsK0bNhl1SXuXFMJYJXu/S6zcEhpuiggX/rfMz+Sl1826mzM4DMR2UUN7qMb0icpQKggv1jRjPQ0p2Y0Z4Vn+Ien/WhHKcl+AIK0PXe3uvECor1xN0UPxqFc7Xf7nVmiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSLY2ojz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t97vQGbZK76yoafbDhcC2Qp6PswAhum3TmGQpva/ehG3PQA13FMyqZk/uZGxIdpYFo6VSsw+bJMkO5Hx5wk+5YGtMNHPSrW5Cz1HuRJP31FusGgPSWoEqPwdqkuaHygNqRU0e5QlEgGdJB6n6njNUkbp+MRgzEiYlFaIIoZASmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rikKzIf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSLY2ojz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D417DC4CEF1;
-	Tue, 26 Aug 2025 14:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rikKzIf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717CFC4CEF1;
+	Tue, 26 Aug 2025 14:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218294;
-	bh=VX734G8Rdgstp4wit+6ZO5DnBZEcih2BmNpJ9yeJK60=;
+	s=korg; t=1756218296;
+	bh=mwkbWIzGJfeNK4g14Sn/0eAT1AT1wkOMaubhU4iSfr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSLY2ojzrMOyRgx+smgm45vebOsWylD5D5wdRYY1MWlc/Y1w4W5sCjV7kyLnytWiG
-	 US+GGZGKTYVxU7JN1p1XKPp5trAF6gO1lBsZ0gli7m20QkMmiWP5NWUyUdKUgcaMmo
-	 I8vCrTx5vpicMxNUm6O3ToEeRxMamnU6gGhyo6/Y=
+	b=rikKzIf9cvL2h0ibUfbU4wcCnWikzNdgIiTi2YtZfMbgZTIqvOudGhcodKr7siiCb
+	 rq5G7avvnWMtq8rVLx7dbQ9o9baUCpSyvFxdOya/4Sje3KrN21JXjB1CsvsAP7ThzF
+	 2xwy9iONeWq/AxGW+xkBOVsHPzjcdbpEr80eIQ88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 466/523] soc: qcom: mdt_loader: Ensure we dont read past the ELF header
-Date: Tue, 26 Aug 2025 13:11:16 +0200
-Message-ID: <20250826110935.938626950@linuxfoundation.org>
+Subject: [PATCH 5.10 467/523] usb: musb: omap2430: fix device leak at unbind
+Date: Tue, 26 Aug 2025 13:11:17 +0200
+Message-ID: <20250826110935.963394045@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -53,106 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 9f9967fed9d066ed3dae9372b45ffa4f6fccfeef ]
+[ Upstream commit 1473e9e7679bd4f5a62d1abccae894fb86de280f ]
 
-When the MDT loader is used in remoteproc, the ELF header is sanitized
-beforehand, but that's not necessary the case for other clients.
+Make sure to drop the reference to the control device taken by
+of_find_device_by_node() during probe when the driver is unbound.
 
-Validate the size of the firmware buffer to ensure that we don't read
-past the end as we iterate over the header. e_phentsize and e_shentsize
-are validated as well, to ensure that the assumptions about step size in
-the traversal are valid.
-
-Fixes: 2aad40d911ee ("remoteproc: Move qcom_mdt_loader into drivers/soc/qcom")
-Cc: stable@vger.kernel.org
-Reported-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-1-f7073e9ab899@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 8934d3e4d0e7 ("usb: musb: omap2430: Don't use omap_get_control_dev()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-5-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Removed populate_irqs-related goto changes ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/usb/musb/omap2430.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -12,11 +12,43 @@
- #include <linux/firmware.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/qcom_scm.h>
- #include <linux/sizes.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -403,13 +403,13 @@ static int omap2430_probe(struct platfor
+ 			ARRAY_SIZE(musb_resources));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add resources\n");
+-		goto err2;
++		goto err_put_control_otghs;
+ 	}
  
-+static bool mdt_header_valid(const struct firmware *fw)
-+{
-+	const struct elf32_hdr *ehdr;
-+	size_t phend;
-+	size_t shend;
-+
-+	if (fw->size < sizeof(*ehdr))
-+		return false;
-+
-+	ehdr = (struct elf32_hdr *)fw->data;
-+
-+	if (memcmp(ehdr->e_ident, ELFMAG, SELFMAG))
-+		return false;
-+
-+	if (ehdr->e_phentsize != sizeof(struct elf32_phdr))
-+		return false;
-+
-+	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
-+	if (phend > fw->size)
-+		return false;
-+
-+	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-+		return false;
-+
-+	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-+	if (shend > fw->size)
-+		return false;
-+
-+	return true;
-+}
-+
- static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
- {
- 	if (phdr->p_type != PT_LOAD)
-@@ -46,6 +78,9 @@ ssize_t qcom_mdt_get_size(const struct f
- 	phys_addr_t max_addr = 0;
- 	int i;
+ 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add platform_data\n");
+-		goto err2;
++		goto err_put_control_otghs;
+ 	}
  
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+ 	pm_runtime_enable(glue->dev);
+@@ -424,7 +424,9 @@ static int omap2430_probe(struct platfor
  
-@@ -92,6 +127,9 @@ void *qcom_mdt_read_metadata(const struc
- 	size_t ehdr_size;
- 	void *data;
+ err3:
+ 	pm_runtime_disable(glue->dev);
+-
++err_put_control_otghs:
++	if (!IS_ERR(glue->control_otghs))
++		put_device(glue->control_otghs);
+ err2:
+ 	platform_device_put(musb);
  
-+	if (!mdt_header_valid(fw))
-+		return ERR_PTR(-EINVAL);
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+@@ -438,6 +440,8 @@ static int omap2430_remove(struct platfo
  
-@@ -151,6 +189,9 @@ static int __qcom_mdt_load(struct device
- 	if (!fw || !mem_region || !mem_phys || !mem_size)
- 		return -EINVAL;
+ 	platform_device_unregister(glue->musb);
+ 	pm_runtime_disable(glue->dev);
++	if (!IS_ERR(glue->control_otghs))
++		put_device(glue->control_otghs);
  
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
- 
+ 	return 0;
+ }
 
 
