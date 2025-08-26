@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACD534AB1A;
-	Tue, 26 Aug 2025 13:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026A30146A;
+	Tue, 26 Aug 2025 13:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216664; cv=none; b=WWW6wlKmxCvvK+IBvhrqQfIj+sprNf0cSfuDlW/hudcEeOlhwi0g1wsIfYtuSnQGqxCs0UHF5RXV84eAqNOsOVpzHATfJZNV5mLqMmBX9cneZRkDHb3RnFjtKx9z0jKr/mvAyZE/tS2wAUjYarpWroxt8DO2JHXyWKFjrpdMgTA=
+	t=1756216666; cv=none; b=J1j9fOvO1YMIQ4+U+i7IhGNkBHASfok85cMw+ik9pJYzMdCN76u/TTz08KSujWr4kukcm59wD98KK77i53NyvX5+2sMyb7aO2vX7/EUqDHp3yigK4fqetoA8VyjZN26wxon93KV9qV7qcciOZADo9J/cn/jyFCRFSldNK4g2GzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216664; c=relaxed/simple;
-	bh=YXRtNuzEDqHtr27DxjelpU9F6K+GnOJWy+j8vpO3Uo0=;
+	s=arc-20240116; t=1756216666; c=relaxed/simple;
+	bh=QPm1apT2R44XuOdlqLiu0JEpl7NzQD2tb6fuL2rCzCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDwreNGWAc/kOfYw4sSApf9svC0V8xZHwxVFECwn193S4wz1BRpA772k5oWo3sHK/3AMxSOwlOJYBRlZsbZLOtNo1zLdY75SCwdk/qz+7DiCvdiC4bcQqIXfP+3sqlqejEclYn+JV2DzT40Nml7i4ePWC8PqBDXhN7yYjHLcEWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYDIOKJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KmR73XcLbc1W5SSlWyqL8HI1UaBJLKKS6RpEkgVJt99GXdzMDtLz5QIW99ef+RmtUN/v4T0vgxW2ouez6gljmj7XH3xY/eRjZlHCEMTbfShDDQnypT+ywdoNikCVKDid+sHGX5KIPCB64Cx+VEcGatarhDse2r04It5+I91sUjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q75EQcq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYDIOKJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98036C116D0;
-	Tue, 26 Aug 2025 13:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q75EQcq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEF7C4CEF1;
+	Tue, 26 Aug 2025 13:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216664;
-	bh=YXRtNuzEDqHtr27DxjelpU9F6K+GnOJWy+j8vpO3Uo0=;
+	s=korg; t=1756216666;
+	bh=QPm1apT2R44XuOdlqLiu0JEpl7NzQD2tb6fuL2rCzCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYDIOKJ8i+axNqSKhGVyptHmDm7xluxUlq0DDJtL5hjjgRznDlludt8LIbCaz5RT5
-	 GHPuyjStUS3u/TcgiEbPID+/d0NFOzr5Vs7j1vWiyH5R7xWXWowAWlfxDgfTaI4LZP
-	 etGwyIH81+zuQDl/9ls/RxAZVbvTEyUoRJrvHkaY=
+	b=Q75EQcq4b/x2wSQXYEXrVD+GMsbkaa8+aEAlKMbdeqF3PuoWdIveon0YkRWf6tiPY
+	 tCvK7lWl0oHG+nsZrMvdd8Bp993Isfkc856SXyZbUrrj75xnBYgyVytSkYLOgYcL+x
+	 MfHQb0PY56CrXz518WF0O4/qcnoJ++dTZnixFDD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 469/644] ext4: fix reserved gdt blocks handling in fsmap
-Date: Tue, 26 Aug 2025 13:09:20 +0200
-Message-ID: <20250826110958.103540240@linuxfoundation.org>
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 5.15 496/644] media: venus: venc: Clamp param smaller than 1fps and bigger than 240
+Date: Tue, 26 Aug 2025 13:09:47 +0200
+Message-ID: <20250826110958.785724377@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,53 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 3ffbdd1f1165f1b2d6a94d1b1aabef57120deaf7 upstream.
+commit 417c01b92ec278a1118a05c6ad8a796eaa0c9c52 upstream.
 
-In some cases like small FSes with no meta_bg and where the resize
-doesn't need extra gdt blocks as it can fit in the current one,
-s_reserved_gdt_blocks is set as 0, which causes fsmap to emit a 0
-length entry, which is incorrect.
+The driver uses "whole" fps in all its calculations (e.g. in
+load_per_instance()). Those calculation expect an fps bigger than 1, and
+not big enough to overflow.
 
-  $ mkfs.ext4 -b 65536 -O bigalloc /dev/sda 5G
-  $ mount /dev/sda /mnt/scratch
-  $ xfs_io -c "fsmap -d" /mnt/scartch
+Clamp the param if the user provides a value that will result in an invalid
+fps.
 
-        0: 253:48 [0..127]: static fs metadata 128
-        1: 253:48 [128..255]: special 102:1 128
-        2: 253:48 [256..255]: special 102:2 0     <---- 0 len entry
-        3: 253:48 [256..383]: special 102:3 128
-
-Fix this by adding a check for this case.
-
-Cc: stable@kernel.org
-Fixes: 0c9ec4beecac ("ext4: support GETFSMAP ioctls")
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://patch.msgid.link/08781b796453a5770112aa96ad14c864fbf31935.1754377641.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
+Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
+Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+[bod: Change "parm" to "param"]
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fsmap.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/platform/qcom/venus/venc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/fsmap.c
-+++ b/fs/ext4/fsmap.c
-@@ -393,6 +393,14 @@ static unsigned int ext4_getfsmap_find_s
- 	/* Reserved GDT blocks */
- 	if (!ext4_has_feature_meta_bg(sb) || metagroup < first_meta_bg) {
- 		len = le16_to_cpu(sbi->s_es->s_reserved_gdt_blocks);
-+
-+		/*
-+		 * mkfs.ext4 can set s_reserved_gdt_blocks as 0 in some cases,
-+		 * check for that.
-+		 */
-+		if (!len)
-+			return 0;
-+
- 		error = ext4_getfsmap_fill(meta_list, fsb, len,
- 					   EXT4_FMR_OWN_RESV_GDT);
- 		if (error)
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -408,11 +408,10 @@ static int venc_s_parm(struct file *file
+ 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
+ 	do_div(us_per_frame, timeperframe->denominator);
+ 
+-	if (!us_per_frame)
+-		return -EINVAL;
+-
++	us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
+ 	fps = (u64)USEC_PER_SEC;
+ 	do_div(fps, us_per_frame);
++	fps = min(VENUS_MAX_FPS, fps);
+ 
+ 	inst->timeperframe = *timeperframe;
+ 	inst->fps = fps;
 
 
