@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0C2356908;
-	Tue, 26 Aug 2025 14:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BD335207D;
+	Tue, 26 Aug 2025 14:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217377; cv=none; b=oAv7SwD6igWFQyZwnJ1KA5qkLjOQWwTvj4FjRjoRWgkZ06iD4Ce/RyPFG2gc6XyCPcxFGmej/wbG1tvLucUHf5BdhLEe9SwNT6z+4aHawI7f83URbrXkELru+b7yF5SkM5MhC2CvhxjkBy8OgxNHNqFKhqOhx/I38qWELxlmzRY=
+	t=1756217380; cv=none; b=heknkWSGLvkoWRKpQxfqtzn4Odm7RmCh+EwUo8Y2nrY0FmVQGdvOMUeFhzpCJlZvHR/mH8xFGJ7QzsfLHfL6jo2EQLURGPepYUwlEpt1ipqIMvgE35w27e4qiy3Rnm5MlLs/hUAJldl9bHqyeqE0pEGDEqFA01azMFLsL2dEp2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217377; c=relaxed/simple;
-	bh=L9+4kEGMKrfkcJ5g4+rUUUMU6AgMpGkDkNxUIdoxhc0=;
+	s=arc-20240116; t=1756217380; c=relaxed/simple;
+	bh=6Cd0tVSw6HktUPb1NjnezfpqsoxZeAFCVbHCLk6P3X8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSjx8+5H/93K+8C/Wv8WF3C4LXa+18/6slHPX8Y0kqtl5hukojlFA6zU9RVkgq4uTzLhNfEdlG8rGrQwLOWNwZnv1/Ag537xgABXdOFa57PvCRl7FozeF22CNilHu4FRIMyvdf5B3E1kBsAh0JiU6ZtTq5nAihe/dFgqzvRJzHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4l0O3rQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5vXhS/YbIGBGoexE1iLVVQuirz+iv0fufi1k7NJvO7NDAfFNABImHhzkMuonuXPpznpdmItlw8DZLYYyW3ZDZMYkyYLDh5G1PC28XDIMgd2JpWxcNKIMcv8AY4eeu4n/Y/if4HNRkxUjkImct3tGw3s0x3oF4ho+Jy4Gn7TOcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtvMRBlD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4l0O3rQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5777EC116B1;
-	Tue, 26 Aug 2025 14:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtvMRBlD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FF0C4CEF1;
+	Tue, 26 Aug 2025 14:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217377;
-	bh=L9+4kEGMKrfkcJ5g4+rUUUMU6AgMpGkDkNxUIdoxhc0=;
+	s=korg; t=1756217380;
+	bh=6Cd0tVSw6HktUPb1NjnezfpqsoxZeAFCVbHCLk6P3X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4l0O3rQ/v+sZxwoZ0tmLC6Xzi/ZwlBfOoRzdwmYgFE9XQqUWsqIKpKwprBqPnT/W
-	 BF2tA2jq/9LstWAw7mrGbzQqcLuVyrJaxinKZa7LtFRgKJps2SuHmIb4zEdQbaO1gx
-	 AgxLfo/XVByipO11XNz9ONtxnlXA81Vb1LS7XKXQ=
+	b=dtvMRBlDPjmXlHqonKj8vf6D+NsX2z7PpD5BMce0APqg/I9J5D3UnEK4iz8Botf+s
+	 vNROUvjTDJ+QM5O5RNdltkpylNji7EC0VIwsJsZczt3vXoZyJfG09UjLnapr17YRLZ
+	 MFvUvmulZOUujNUJNXSC+SYXLjh/iX1u4Zq2iZUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/523] PCI: rockchip-host: Fix "Unexpected Completion" log message
-Date: Tue, 26 Aug 2025 13:05:30 +0200
-Message-ID: <20250826110927.477561097@linuxfoundation.org>
+Subject: [PATCH 5.10 121/523] crypto: marvell/cesa - Fix engine load inaccuracy
+Date: Tue, 26 Aug 2025 13:05:31 +0200
+Message-ID: <20250826110927.502716140@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,39 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit fcc5f586c4edbcc10de23fb9b8c0972a84e945cd ]
+[ Upstream commit 442134ab30e75b7229c4bfc1ac5641d245cffe27 ]
 
-Fix the debug message for the PCIE_CORE_INT_UCR interrupt to clearly
-indicate "Unexpected Completion" instead of a duplicate "malformed TLP"
-message.
+If an error occurs during queueing the engine load will never be
+decremented.  Fix this by moving the engine load adjustment into
+the cleanup function.
 
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Signed-off-by: Hans Zhang <18255117159@163.com>
-[mani: added fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/20250607160201.807043-2-18255117159@163.com
+Fixes: bf8f91e71192 ("crypto: marvell - Add load balancing between engines")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/marvell/cesa/cipher.c | 4 +++-
+ drivers/crypto/marvell/cesa/hash.c   | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index 0d6df73bb918..86bb4f82048a 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -442,7 +442,7 @@ static irqreturn_t rockchip_pcie_subsys_irq_handler(int irq, void *arg)
- 			dev_dbg(dev, "malformed TLP received from the link\n");
+diff --git a/drivers/crypto/marvell/cesa/cipher.c b/drivers/crypto/marvell/cesa/cipher.c
+index 051a661a63ee..e9411c84db74 100644
+--- a/drivers/crypto/marvell/cesa/cipher.c
++++ b/drivers/crypto/marvell/cesa/cipher.c
+@@ -75,9 +75,12 @@ mv_cesa_skcipher_dma_cleanup(struct skcipher_request *req)
+ static inline void mv_cesa_skcipher_cleanup(struct skcipher_request *req)
+ {
+ 	struct mv_cesa_skcipher_req *creq = skcipher_request_ctx(req);
++	struct mv_cesa_engine *engine = creq->base.engine;
  
- 		if (sub_reg & PCIE_CORE_INT_UCR)
--			dev_dbg(dev, "malformed TLP received from the link\n");
-+			dev_dbg(dev, "Unexpected Completion received from the link\n");
+ 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
+ 		mv_cesa_skcipher_dma_cleanup(req);
++
++	atomic_sub(req->cryptlen, &engine->load);
+ }
  
- 		if (sub_reg & PCIE_CORE_INT_FCE)
- 			dev_dbg(dev, "an error was observed in the flow control advertisements from the other side\n");
+ static void mv_cesa_skcipher_std_step(struct skcipher_request *req)
+@@ -205,7 +208,6 @@ mv_cesa_skcipher_complete(struct crypto_async_request *req)
+ 	struct mv_cesa_engine *engine = creq->base.engine;
+ 	unsigned int ivsize;
+ 
+-	atomic_sub(skreq->cryptlen, &engine->load);
+ 	ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(skreq));
+ 
+ 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ) {
+diff --git a/drivers/crypto/marvell/cesa/hash.c b/drivers/crypto/marvell/cesa/hash.c
+index 823a8fb114bb..3c4f4f704c64 100644
+--- a/drivers/crypto/marvell/cesa/hash.c
++++ b/drivers/crypto/marvell/cesa/hash.c
+@@ -109,9 +109,12 @@ static inline void mv_cesa_ahash_dma_cleanup(struct ahash_request *req)
+ static inline void mv_cesa_ahash_cleanup(struct ahash_request *req)
+ {
+ 	struct mv_cesa_ahash_req *creq = ahash_request_ctx(req);
++	struct mv_cesa_engine *engine = creq->base.engine;
+ 
+ 	if (mv_cesa_req_get_type(&creq->base) == CESA_DMA_REQ)
+ 		mv_cesa_ahash_dma_cleanup(req);
++
++	atomic_sub(req->nbytes, &engine->load);
+ }
+ 
+ static void mv_cesa_ahash_last_cleanup(struct ahash_request *req)
+@@ -371,8 +374,6 @@ static void mv_cesa_ahash_complete(struct crypto_async_request *req)
+ 			}
+ 		}
+ 	}
+-
+-	atomic_sub(ahashreq->nbytes, &engine->load);
+ }
+ 
+ static void mv_cesa_ahash_prepare(struct crypto_async_request *req,
 -- 
 2.39.5
 
