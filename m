@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544171DB127;
-	Tue, 26 Aug 2025 13:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D048F1F4CA9;
+	Tue, 26 Aug 2025 13:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215567; cv=none; b=m6AqrMdGSxhQkSzqWGhRwBuAakInAwrJvFpJ+uRS3qxB3R1v4kRamxkKUWb6bsKd1J2/uM0vbpCwnD8K0Cef0JvCQqUxKnjKqewA5bTIi72YzJxul8+nSMb59p+ofOuZmuQrZjLaV42lnTdiBlSWKo030si/LS3+zRk5UZlLXeU=
+	t=1756215569; cv=none; b=qYpMY/GT08E3XsbEIZf4hbTAbhHBSO6M48O5RZwAr2sToyQ4X7doPfjsSImyhUiAX/QKavIpPBE3F/4am6t4GPnCftwIcY8B6Kpzc2/Y81zJ58CtehbCH8x6+fmzLp32NHo57yXJsSHcnQnaIxJYxBpBl7LCi92xAUUQKYEJtaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215567; c=relaxed/simple;
-	bh=WTdc1ddzF2A6nhx+9pUeDckjcK0era9QOabeux7KtWc=;
+	s=arc-20240116; t=1756215569; c=relaxed/simple;
+	bh=csDltn4MJmfSHrdlK5W99IsyGW34AJ54EeCc3XOHP9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CqlAjhXe2/2JQ8UTme0ebZ0zRMvs57i7KunpYBhkmnWGVYCAY9APupDpnBuT8OkSlx9Xbdjsefbibn+2fripGw7gnrADtYUfkoUz3/TEOQb3ewlCfRqUdlTsLEL3jnsDdDNVgfSYfNt9FdK/npXp20Pr8xtKdiW1L78PTBXFbhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6MKIvpo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YzXlLzL3JpvZ7zbJvSLsnBmt/U/GqTA9GIc9JMDtf8XFYMQVU3JP5kj9n3iYu1Ddwo521wjkJSpWvbV/tWnLPDfKgANgzTI+ZPxFNo6kk9+RV1bIKwcbyg/MHpptYBAr0i6xCfMcxeAaT71rA5GfQgZHgq2wywfBR3+fiizQ8qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcoGpNdu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6MKIvpo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FAFC4CEF1;
-	Tue, 26 Aug 2025 13:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcoGpNdu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE39C4CEF1;
+	Tue, 26 Aug 2025 13:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215566;
-	bh=WTdc1ddzF2A6nhx+9pUeDckjcK0era9QOabeux7KtWc=;
+	s=korg; t=1756215569;
+	bh=csDltn4MJmfSHrdlK5W99IsyGW34AJ54EeCc3XOHP9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6MKIvpo+JKsBYY0iWRBNfmCaAV8ZNnIeWVYs1r+lCIhtft+O26M/eG0d+oD/KQDd
-	 F71uXkLlgnUgEq79BDFIg34rxhCjPGOrcydgpsk5L9wZw7O56JF5b4K7/yciShYd5I
-	 UszncI1vZodvtT66EwWyE2jJ8rE3ZzLxH9DNtbZg=
+	b=YcoGpNdulxIB0qTkiBTZAbeLevb1evfSP+gRtKPVskQ5SadmMTLLVkJAAXBQlNJmy
+	 waXF2KoI+yTBA1NRFCR7pms8jYVhr3BX4w7P1+O/hoSYtewlg3DOi2SaS8ndwoZ/F8
+	 O29c9WUJZXuGYXTXBl1tE2QSxiaOfyhlMq2MrZkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Chen <dechen@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"Kito Xu (veritas501)" <hxzene@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/644] i40e: report VF tx_dropped with tx_errors instead of tx_discards
-Date: Tue, 26 Aug 2025 13:02:53 +0200
-Message-ID: <20250826110948.530598359@linuxfoundation.org>
+Subject: [PATCH 5.15 083/644] net: appletalk: Fix use-after-free in AARP proxy probe
+Date: Tue, 26 Aug 2025 13:02:54 +0200
+Message-ID: <20250826110948.553936448@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -47,112 +45,187 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dennis Chen <dechen@redhat.com>
+From: Kito Xu (veritas501) <hxzene@gmail.com>
 
-[ Upstream commit 50b2af451597ca6eefe9d4543f8bbf8de8aa00e7 ]
+[ Upstream commit 6c4a92d07b0850342d3becf2e608f805e972467c ]
 
-Currently the tx_dropped field in VF stats is not updated correctly
-when reading stats from the PF. This is because it reads from
-i40e_eth_stats.tx_discards which seems to be unused for per VSI stats,
-as it is not updated by i40e_update_eth_stats() and the corresponding
-register, GLV_TDPC, is not implemented[1].
+The AARP proxy‐probe routine (aarp_proxy_probe_network) sends a probe,
+releases the aarp_lock, sleeps, then re-acquires the lock.  During that
+window an expire timer thread (__aarp_expire_timer) can remove and
+kfree() the same entry, leading to a use-after-free.
 
-Use i40e_eth_stats.tx_errors instead, which is actually updated by
-i40e_update_eth_stats() by reading from GLV_TEPC.
+race condition:
 
-To test, create a VF and try to send bad packets through it:
+         cpu 0                          |            cpu 1
+    atalk_sendmsg()                     |   atif_proxy_probe_device()
+    aarp_send_ddp()                     |   aarp_proxy_probe_network()
+    mod_timer()                         |   lock(aarp_lock) // LOCK!!
+    timeout around 200ms                |   alloc(aarp_entry)
+    and then call                       |   proxies[hash] = aarp_entry
+    aarp_expire_timeout()               |   aarp_send_probe()
+                                        |   unlock(aarp_lock) // UNLOCK!!
+    lock(aarp_lock) // LOCK!!           |   msleep(100);
+    __aarp_expire_timer(&proxies[ct])   |
+    free(aarp_entry)                    |
+    unlock(aarp_lock) // UNLOCK!!       |
+                                        |   lock(aarp_lock) // LOCK!!
+                                        |   UAF aarp_entry !!
 
-$ echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-$ cat test.py
-from scapy.all import *
+==================================================================
+BUG: KASAN: slab-use-after-free in aarp_proxy_probe_network+0x560/0x630 net/appletalk/aarp.c:493
+Read of size 4 at addr ffff8880123aa360 by task repro/13278
 
-vlan_pkt = Ether(dst="ff:ff:ff:ff:ff:ff") / Dot1Q(vlan=999) / IP(dst="192.168.0.1") / ICMP()
-ttl_pkt = IP(dst="8.8.8.8", ttl=0) / ICMP()
+CPU: 3 UID: 0 PID: 13278 Comm: repro Not tainted 6.15.2 #3 PREEMPT(full)
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1b0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xc1/0x630 mm/kasan/report.c:521
+ kasan_report+0xca/0x100 mm/kasan/report.c:634
+ aarp_proxy_probe_network+0x560/0x630 net/appletalk/aarp.c:493
+ atif_proxy_probe_device net/appletalk/ddp.c:332 [inline]
+ atif_ioctl+0xb58/0x16c0 net/appletalk/ddp.c:857
+ atalk_ioctl+0x198/0x2f0 net/appletalk/ddp.c:1818
+ sock_do_ioctl+0xdc/0x260 net/socket.c:1190
+ sock_ioctl+0x239/0x6a0 net/socket.c:1311
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:906 [inline]
+ __se_sys_ioctl fs/ioctl.c:892 [inline]
+ __x64_sys_ioctl+0x194/0x200 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcb/0x250 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-print("Send packet with bad VLAN tag")
-sendp(vlan_pkt, iface="enp2s0f0v0")
-print("Send packet with TTL=0")
-sendp(ttl_pkt, iface="enp2s0f0v0")
-$ ip -s link show dev enp2s0f0
-16: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether e2:c6:fd:c1:1e:92 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        0
-$ python test.py
-Send packet with bad VLAN tag
-.
-Sent 1 packets.
-Send packet with TTL=0
-.
-Sent 1 packets.
-$ ip -s link show dev enp2s0f0
-16: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether e2:c6:fd:c1:1e:92 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        0
+Allocated:
+ aarp_alloc net/appletalk/aarp.c:382 [inline]
+ aarp_proxy_probe_network+0xd8/0x630 net/appletalk/aarp.c:468
+ atif_proxy_probe_device net/appletalk/ddp.c:332 [inline]
+ atif_ioctl+0xb58/0x16c0 net/appletalk/ddp.c:857
+ atalk_ioctl+0x198/0x2f0 net/appletalk/ddp.c:1818
 
-A packet with non-existent VLAN tag and a packet with TTL = 0 are sent,
-but tx_dropped is not incremented.
+Freed:
+ kfree+0x148/0x4d0 mm/slub.c:4841
+ __aarp_expire net/appletalk/aarp.c:90 [inline]
+ __aarp_expire_timer net/appletalk/aarp.c:261 [inline]
+ aarp_expire_timeout+0x480/0x6e0 net/appletalk/aarp.c:317
 
-After patch:
+The buggy address belongs to the object at ffff8880123aa300
+ which belongs to the cache kmalloc-192 of size 192
+The buggy address is located 96 bytes inside of
+ freed 192-byte region [ffff8880123aa300, ffff8880123aa3c0)
 
-$ ip -s link show dev enp2s0f0
-19: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:e0:ac brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-             0       0      0       0       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0       0      0       0       0       0
-    vf 0     link/ether 4a:b7:3d:37:f7:56 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-    RX: bytes  packets  mcast   bcast   dropped
-             0        0       0       0        0
-    TX: bytes  packets   dropped
-             0        0        2
+Memory state around the buggy address:
+ ffff8880123aa200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff8880123aa280: 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff8880123aa300: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                       ^
+ ffff8880123aa380: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+ ffff8880123aa400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+==================================================================
 
-Fixes: dc645daef9af5bcbd9c ("i40e: implement VF stats NDO")
-Signed-off-by: Dennis Chen <dechen@redhat.com>
-Link: https://www.intel.com/content/www/us/en/content-details/596333/intel-ethernet-controller-x710-tm4-at2-carlsville-datasheet.html
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kito Xu (veritas501) <hxzene@gmail.com>
+Link: https://patch.msgid.link/20250717012843.880423-1-hxzene@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/appletalk/aarp.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index cc0c775d5d057..7673ce2be1c02 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -4880,7 +4880,7 @@ int i40e_get_vf_stats(struct net_device *netdev, int vf_id,
- 	vf_stats->broadcast  = stats->rx_broadcast;
- 	vf_stats->multicast  = stats->rx_multicast;
- 	vf_stats->rx_dropped = stats->rx_discards + stats->rx_discards_other;
--	vf_stats->tx_dropped = stats->tx_discards;
-+	vf_stats->tx_dropped = stats->tx_errors;
+diff --git a/net/appletalk/aarp.c b/net/appletalk/aarp.c
+index c7236daa24152..0d7c14a496681 100644
+--- a/net/appletalk/aarp.c
++++ b/net/appletalk/aarp.c
+@@ -35,6 +35,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/export.h>
+ #include <linux/etherdevice.h>
++#include <linux/refcount.h>
  
- 	return 0;
+ int sysctl_aarp_expiry_time = AARP_EXPIRY_TIME;
+ int sysctl_aarp_tick_time = AARP_TICK_TIME;
+@@ -44,6 +45,7 @@ int sysctl_aarp_resolve_time = AARP_RESOLVE_TIME;
+ /* Lists of aarp entries */
+ /**
+  *	struct aarp_entry - AARP entry
++ *	@refcnt: Reference count
+  *	@last_sent: Last time we xmitted the aarp request
+  *	@packet_queue: Queue of frames wait for resolution
+  *	@status: Used for proxy AARP
+@@ -55,6 +57,7 @@ int sysctl_aarp_resolve_time = AARP_RESOLVE_TIME;
+  *	@next: Next entry in chain
+  */
+ struct aarp_entry {
++	refcount_t			refcnt;
+ 	/* These first two are only used for unresolved entries */
+ 	unsigned long		last_sent;
+ 	struct sk_buff_head	packet_queue;
+@@ -79,6 +82,17 @@ static DEFINE_RWLOCK(aarp_lock);
+ /* Used to walk the list and purge/kick entries.  */
+ static struct timer_list aarp_timer;
+ 
++static inline void aarp_entry_get(struct aarp_entry *a)
++{
++	refcount_inc(&a->refcnt);
++}
++
++static inline void aarp_entry_put(struct aarp_entry *a)
++{
++	if (refcount_dec_and_test(&a->refcnt))
++		kfree(a);
++}
++
+ /*
+  *	Delete an aarp queue
+  *
+@@ -87,7 +101,7 @@ static struct timer_list aarp_timer;
+ static void __aarp_expire(struct aarp_entry *a)
+ {
+ 	skb_queue_purge(&a->packet_queue);
+-	kfree(a);
++	aarp_entry_put(a);
  }
+ 
+ /*
+@@ -380,9 +394,11 @@ static void aarp_purge(void)
+ static struct aarp_entry *aarp_alloc(void)
+ {
+ 	struct aarp_entry *a = kmalloc(sizeof(*a), GFP_ATOMIC);
++	if (!a)
++		return NULL;
+ 
+-	if (a)
+-		skb_queue_head_init(&a->packet_queue);
++	refcount_set(&a->refcnt, 1);
++	skb_queue_head_init(&a->packet_queue);
+ 	return a;
+ }
+ 
+@@ -508,6 +524,7 @@ int aarp_proxy_probe_network(struct atalk_iface *atif, struct atalk_addr *sa)
+ 	entry->dev = atif->dev;
+ 
+ 	write_lock_bh(&aarp_lock);
++	aarp_entry_get(entry);
+ 
+ 	hash = sa->s_node % (AARP_HASH_SIZE - 1);
+ 	entry->next = proxies[hash];
+@@ -533,6 +550,7 @@ int aarp_proxy_probe_network(struct atalk_iface *atif, struct atalk_addr *sa)
+ 		retval = 1;
+ 	}
+ 
++	aarp_entry_put(entry);
+ 	write_unlock_bh(&aarp_lock);
+ out:
+ 	return retval;
 -- 
 2.39.5
 
