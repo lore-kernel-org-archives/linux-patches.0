@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB151347C3;
-	Tue, 26 Aug 2025 13:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C572714883F;
+	Tue, 26 Aug 2025 13:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213665; cv=none; b=e/Egk/SkgXEsDuSNTk4r6QNwj8XetEFcQsdvGMT7AeThU7ba67we4jr5lNZAaRKI8ENg6VvGtyLzdiCwoAAq8/jstq7YG/x0c5+T6KDydMrktbOrc8a/YEtOg/yQDgF5zrdCZbBXBCCofINtxSj6FYBaYWnUUL/cSirfB3HpOzM=
+	t=1756213668; cv=none; b=OY+dzH/PRx/h1OqJCuWFCk5cCpt0iS6YpZciW3Y1erUNTZ3jz9Xy4ARQOMxS9QN5sKRGrV9ZmM8XbL67l8wtyCH+YUkAgEG+sJPOHQjsOOWRjDxFBtrX4LUY2cPNXzLlVf0RFz6T7OuybOTmU1YVoviZqVqmUP9euG3NCiG6wSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213665; c=relaxed/simple;
-	bh=sVXCatzAjVWLt2SBwsFNzExZMib+qbqMZnaGiFrXpiY=;
+	s=arc-20240116; t=1756213668; c=relaxed/simple;
+	bh=yfEy48TgHOhcrNGtD1wV3ElgMN5PzQ8DJcBOCeRa7cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGDVX137dhueg2PbSKOAyo+nVLPq1LT+kiVwxkbghKzRSJOb2RngH9hlDD7OEoWU47vyJuEdwgaG1oaof1J2Uzr7pXbwfGcch/fuIGpjXLf5QIePU/A+/TRv49O0dcHWNpdMIRSD1FI3HBHo57QNf8YMv/3mKy2fFPUj1ckaCV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDqVKKv8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oShmgVAgTiguuesqsz3N2J4SQ7V7WRMJmgpBNqa9pBwA2DAvOACv1XaBshS/2BOu8qshVJ7LTBoK8kgonS/YidgcTSh3ebBXKlovghi4ahb0m0bgm7u0QrVa6Kc7IK/vmZLwZGUIeiSHSEgNjCh+7U2ejF2oWCHipyJureqbP0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tga/kUax; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDqVKKv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7A6C4CEF1;
-	Tue, 26 Aug 2025 13:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tga/kUax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F9BC4CEF1;
+	Tue, 26 Aug 2025 13:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213665;
-	bh=sVXCatzAjVWLt2SBwsFNzExZMib+qbqMZnaGiFrXpiY=;
+	s=korg; t=1756213668;
+	bh=yfEy48TgHOhcrNGtD1wV3ElgMN5PzQ8DJcBOCeRa7cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDqVKKv8JOK8Ou8dFYGFlbSeglHB4TngdSyZXa5lWQfbEHzqWh5Z+0Vvx4qTln5q/
-	 pvhahs6SzUcuKb84FCGYW6STwBnuijQBHlkW/UJ6VnQoKoFeCrVSvEoDV4HxLB9hQn
-	 psXxtbVHqWBjHdUm6BajYcjS3olWB9nkuaORczGI=
+	b=tga/kUax+wqbXE3adza3Gfn1ras5EvUY9G4S4jvZEzKwDvuhEfreQ+nvgCJdWmqCK
+	 A7jt5Oxq6gNfs4ItF2B2vBsWc6T4icFxUVgArgxONGpC3so3c1Ox4uAthYEb6eR/Wd
+	 2Ty77AhhUmvyySUeIVAlqvaLV3hxjXflWFMnwvtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+30a19e01a97420719891@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Wang Zhaolong <wangzhaolong@huaweicloud.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 433/587] net: better track kernel sockets lifetime
-Date: Tue, 26 Aug 2025 13:09:42 +0200
-Message-ID: <20250826111003.963808430@linuxfoundation.org>
+Subject: [PATCH 6.6 434/587] smb: client: fix netns refcount leak after net_passive changes
+Date: Tue, 26 Aug 2025 13:09:43 +0200
+Message-ID: <20250826111003.990530563@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -53,239 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wang Zhaolong <wangzhaolong@huaweicloud.com>
 
-[ Upstream commit 5c70eb5c593d64d93b178905da215a9fd288a4b5 ]
+[ Upstream commit 59b33fab4ca4d7dacc03367082777627e05d0323 ]
 
-While kernel sockets are dismantled during pernet_operations->exit(),
-their freeing can be delayed by any tx packets still held in qdisc
-or device queues, due to skb_set_owner_w() prior calls.
+After commit 5c70eb5c593d ("net: better track kernel sockets lifetime"),
+kernel sockets now use net_passive reference counting. However, commit
+95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock after rmmod"")
+restored the manual socket refcount manipulation without adapting to this
+new mechanism, causing a memory leak.
 
-This then trigger the following warning from ref_tracker_dir_exit() [1]
+The issue can be reproduced by[1]:
+1. Creating a network namespace
+2. Mounting and Unmounting CIFS within the namespace
+3. Deleting the namespace
 
-To fix this, make sure that kernel sockets own a reference on net->passive.
+Some memory leaks may appear after a period of time following step 3.
 
-Add sk_net_refcnt_upgrade() helper, used whenever a kernel socket
-is converted to a refcounted one.
+unreferenced object 0xffff9951419f6b00 (size 256):
+  comm "ip", pid 447, jiffies 4294692389 (age 14.730s)
+  hex dump (first 32 bytes):
+    1b 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 80 77 c2 44 51 99 ff ff  .........w.DQ...
+  backtrace:
+    __kmem_cache_alloc_node+0x30e/0x3d0
+    __kmalloc+0x52/0x120
+    net_alloc_generic+0x1d/0x30
+    copy_net_ns+0x86/0x200
+    create_new_namespaces+0x117/0x300
+    unshare_nsproxy_namespaces+0x60/0xa0
+    ksys_unshare+0x148/0x360
+    __x64_sys_unshare+0x12/0x20
+    do_syscall_64+0x59/0x110
+    entry_SYSCALL_64_after_hwframe+0x78/0xe2
+...
+unreferenced object 0xffff9951442e7500 (size 32):
+  comm "mount.cifs", pid 475, jiffies 4294693782 (age 13.343s)
+  hex dump (first 32 bytes):
+    40 c5 38 46 51 99 ff ff 18 01 96 42 51 99 ff ff  @.8FQ......BQ...
+    01 00 00 00 6f 00 c5 07 6f 00 d8 07 00 00 00 00  ....o...o.......
+  backtrace:
+    __kmem_cache_alloc_node+0x30e/0x3d0
+    kmalloc_trace+0x2a/0x90
+    ref_tracker_alloc+0x8e/0x1d0
+    sk_alloc+0x18c/0x1c0
+    inet_create+0xf1/0x370
+    __sock_create+0xd7/0x1e0
+    generic_ip_connect+0x1d4/0x5a0 [cifs]
+    cifs_get_tcp_session+0x5d0/0x8a0 [cifs]
+    cifs_mount_get_session+0x47/0x1b0 [cifs]
+    dfs_mount_share+0xfa/0xa10 [cifs]
+    cifs_mount+0x68/0x2b0 [cifs]
+    cifs_smb3_do_mount+0x10b/0x760 [cifs]
+    smb3_get_tree+0x112/0x2e0 [cifs]
+    vfs_get_tree+0x29/0xf0
+    path_mount+0x2d4/0xa00
+    __se_sys_mount+0x165/0x1d0
 
-[1]
+Root cause:
+When creating kernel sockets, sk_alloc() calls net_passive_inc() for
+sockets with sk_net_refcnt=0. The CIFS code manually converts kernel
+sockets to user sockets by setting sk_net_refcnt=1, but doesn't call
+the corresponding net_passive_dec(). This creates an imbalance in the
+net_passive counter, which prevents the network namespace from being
+destroyed when its last user reference is dropped. As a result, the
+entire namespace and all its associated resources remain allocated.
 
-[  136.263918][   T35] ref_tracker: net notrefcnt@ffff8880638f01e0 has 1/2 users at
-[  136.263918][   T35]      sk_alloc+0x2b3/0x370
-[  136.263918][   T35]      inet6_create+0x6ce/0x10f0
-[  136.263918][   T35]      __sock_create+0x4c0/0xa30
-[  136.263918][   T35]      inet_ctl_sock_create+0xc2/0x250
-[  136.263918][   T35]      igmp6_net_init+0x39/0x390
-[  136.263918][   T35]      ops_init+0x31e/0x590
-[  136.263918][   T35]      setup_net+0x287/0x9e0
-[  136.263918][   T35]      copy_net_ns+0x33f/0x570
-[  136.263918][   T35]      create_new_namespaces+0x425/0x7b0
-[  136.263918][   T35]      unshare_nsproxy_namespaces+0x124/0x180
-[  136.263918][   T35]      ksys_unshare+0x57d/0xa70
-[  136.263918][   T35]      __x64_sys_unshare+0x38/0x40
-[  136.263918][   T35]      do_syscall_64+0xf3/0x230
-[  136.263918][   T35]      entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[  136.263918][   T35]
-[  136.343488][   T35] ref_tracker: net notrefcnt@ffff8880638f01e0 has 1/2 users at
-[  136.343488][   T35]      sk_alloc+0x2b3/0x370
-[  136.343488][   T35]      inet6_create+0x6ce/0x10f0
-[  136.343488][   T35]      __sock_create+0x4c0/0xa30
-[  136.343488][   T35]      inet_ctl_sock_create+0xc2/0x250
-[  136.343488][   T35]      ndisc_net_init+0xa7/0x2b0
-[  136.343488][   T35]      ops_init+0x31e/0x590
-[  136.343488][   T35]      setup_net+0x287/0x9e0
-[  136.343488][   T35]      copy_net_ns+0x33f/0x570
-[  136.343488][   T35]      create_new_namespaces+0x425/0x7b0
-[  136.343488][   T35]      unshare_nsproxy_namespaces+0x124/0x180
-[  136.343488][   T35]      ksys_unshare+0x57d/0xa70
-[  136.343488][   T35]      __x64_sys_unshare+0x38/0x40
-[  136.343488][   T35]      do_syscall_64+0xf3/0x230
-[  136.343488][   T35]      entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Timeline of patches leading to this issue:
+- commit ef7134c7fc48 ("smb: client: Fix use-after-free of network
+  namespace.") in v6.12 fixed the original netns UAF by manually
+  managing socket refcounts
+- commit e9f2517a3e18 ("smb: client: fix TCP timers deadlock after
+  rmmod") in v6.13 attempted to use kernel sockets but introduced
+  TCP timer issues
+- commit 5c70eb5c593d ("net: better track kernel sockets lifetime")
+  in v6.14-rc5 introduced the net_passive mechanism with
+  sk_net_refcnt_upgrade() for proper socket conversion
+- commit 95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock
+  after rmmod"") in v6.15-rc3 reverted to manual refcount management
+  without adapting to the new net_passive changes
 
-Fixes: 0cafd77dcd03 ("net: add a refcount tracker for kernel sockets")
-Reported-by: syzbot+30a19e01a97420719891@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67b72aeb.050a0220.14d86d.0283.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250220131854.4048077-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by using sk_net_refcnt_upgrade() which properly handles the
+net_passive counter when converting kernel sockets to user sockets.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220343 [1]
+Fixes: 95d2b9f693ff ("Revert "smb: client: fix TCP timers deadlock after rmmod"")
+Cc: stable@vger.kernel.org
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sock.h       |    1 +
- net/core/sock.c          |   27 ++++++++++++++++++++++-----
- net/mptcp/subflow.c      |    5 +----
- net/netlink/af_netlink.c |   10 ----------
- net/rds/tcp.c            |    8 ++------
- net/smc/af_smc.c         |    5 +----
- net/sunrpc/svcsock.c     |    5 +----
- net/sunrpc/xprtsock.c    |    8 ++------
- 8 files changed, 30 insertions(+), 39 deletions(-)
+ fs/smb/client/connect.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1859,6 +1859,7 @@ static inline bool sock_allow_reclassifi
- struct sock *sk_alloc(struct net *net, int family, gfp_t priority,
- 		      struct proto *prot, int kern);
- void sk_free(struct sock *sk);
-+void sk_net_refcnt_upgrade(struct sock *sk);
- void sk_destruct(struct sock *sk);
- struct sock *sk_clone_lock(const struct sock *sk, const gfp_t priority);
- void sk_free_unlock_clone(struct sock *sk);
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2159,6 +2159,7 @@ struct sock *sk_alloc(struct net *net, i
- 			get_net_track(net, &sk->ns_tracker, priority);
- 			sock_inuse_add(net, 1);
- 		} else {
-+			net_passive_inc(net);
- 			__netns_tracker_alloc(net, &sk->ns_tracker,
- 					      false, priority);
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3162,18 +3162,15 @@ generic_ip_connect(struct TCP_Server_Inf
+ 		struct net *net = cifs_net_ns(server);
+ 		struct sock *sk;
+ 
+-		rc = __sock_create(net, sfamily, SOCK_STREAM,
+-				   IPPROTO_TCP, &server->ssocket, 1);
++		rc = sock_create_kern(net, sfamily, SOCK_STREAM,
++				      IPPROTO_TCP, &server->ssocket);
+ 		if (rc < 0) {
+ 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
+ 			return rc;
  		}
-@@ -2183,6 +2184,7 @@ EXPORT_SYMBOL(sk_alloc);
- static void __sk_destruct(struct rcu_head *head)
- {
- 	struct sock *sk = container_of(head, struct sock, sk_rcu);
-+	struct net *net = sock_net(sk);
- 	struct sk_filter *filter;
  
- 	if (sk->sk_destruct)
-@@ -2214,14 +2216,28 @@ static void __sk_destruct(struct rcu_hea
- 	put_cred(sk->sk_peer_cred);
- 	put_pid(sk->sk_peer_pid);
- 
--	if (likely(sk->sk_net_refcnt))
--		put_net_track(sock_net(sk), &sk->ns_tracker);
--	else
--		__netns_tracker_free(sock_net(sk), &sk->ns_tracker, false);
--
-+	if (likely(sk->sk_net_refcnt)) {
-+		put_net_track(net, &sk->ns_tracker);
-+	} else {
-+		__netns_tracker_free(net, &sk->ns_tracker, false);
-+		net_passive_dec(net);
-+	}
- 	sk_prot_free(sk->sk_prot_creator, sk);
- }
- 
-+void sk_net_refcnt_upgrade(struct sock *sk)
-+{
-+	struct net *net = sock_net(sk);
-+
-+	WARN_ON_ONCE(sk->sk_net_refcnt);
-+	__netns_tracker_free(net, &sk->ns_tracker, false);
-+	net_passive_dec(net);
-+	sk->sk_net_refcnt = 1;
-+	get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
-+	sock_inuse_add(net, 1);
-+}
-+EXPORT_SYMBOL_GPL(sk_net_refcnt_upgrade);
-+
- void sk_destruct(struct sock *sk)
- {
- 	bool use_call_rcu = sock_flag(sk, SOCK_RCU_FREE);
-@@ -2313,6 +2329,7 @@ struct sock *sk_clone_lock(const struct
- 		 * is not properly dismantling its kernel sockets at netns
- 		 * destroy time.
- 		 */
-+		net_passive_inc(sock_net(newsk));
- 		__netns_tracker_alloc(sock_net(newsk), &newsk->ns_tracker,
- 				      false, priority);
- 	}
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1715,10 +1715,7 @@ int mptcp_subflow_create_socket(struct s
- 	 * needs it.
- 	 * Update ns_tracker to current stack trace and refcounted tracker.
- 	 */
--	__netns_tracker_free(net, &sf->sk->ns_tracker, false);
--	sf->sk->sk_net_refcnt = 1;
--	get_net_track(net, &sf->sk->ns_tracker, GFP_KERNEL);
--	sock_inuse_add(net, 1);
-+	sk_net_refcnt_upgrade(sf->sk);
- 	err = tcp_set_ulp(sf->sk, "mptcp");
- 
- release_ssk:
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -798,16 +798,6 @@ static int netlink_release(struct socket
- 
- 	sock_prot_inuse_add(sock_net(sk), &netlink_proto, -1);
- 
--	/* Because struct net might disappear soon, do not keep a pointer. */
--	if (!sk->sk_net_refcnt && sock_net(sk) != &init_net) {
--		__netns_tracker_free(sock_net(sk), &sk->ns_tracker, false);
--		/* Because of deferred_put_nlk_sk and use of work queue,
--		 * it is possible  netns will be freed before this socket.
--		 */
--		sock_net_set(sk, &init_net);
--		__netns_tracker_alloc(&init_net, &sk->ns_tracker,
--				      false, GFP_KERNEL);
--	}
- 	call_rcu(&nlk->rcu, deferred_put_nlk_sk);
- 	return 0;
- }
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -503,12 +503,8 @@ bool rds_tcp_tune(struct socket *sock)
- 			release_sock(sk);
- 			return false;
- 		}
--		/* Update ns_tracker to current stack trace and refcounted tracker */
+ 		sk = server->ssocket->sk;
 -		__netns_tracker_free(net, &sk->ns_tracker, false);
--
 -		sk->sk_net_refcnt = 1;
--		netns_tracker_alloc(net, &sk->ns_tracker, GFP_KERNEL);
+-		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
 -		sock_inuse_add(net, 1);
 +		sk_net_refcnt_upgrade(sk);
-+		put_net(net);
- 	}
- 	rtn = net_generic(net, rds_tcp_netid);
- 	if (rtn->sndbuf_size > 0) {
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -3343,10 +3343,7 @@ int smc_create_clcsk(struct net *net, st
- 	 * which need net ref.
- 	 */
- 	sk = smc->clcsock->sk;
--	__netns_tracker_free(net, &sk->ns_tracker, false);
--	sk->sk_net_refcnt = 1;
--	get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
--	sock_inuse_add(net, 1);
-+	sk_net_refcnt_upgrade(sk);
- 	return 0;
- }
  
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1579,10 +1579,7 @@ static struct svc_xprt *svc_create_socke
- 	newlen = error;
- 
- 	if (protocol == IPPROTO_TCP) {
--		__netns_tracker_free(net, &sock->sk->ns_tracker, false);
--		sock->sk->sk_net_refcnt = 1;
--		get_net_track(net, &sock->sk->ns_tracker, GFP_KERNEL);
--		sock_inuse_add(net, 1);
-+		sk_net_refcnt_upgrade(sock->sk);
- 		if ((error = kernel_listen(sock, 64)) < 0)
- 			goto bummer;
- 	}
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1941,12 +1941,8 @@ static struct socket *xs_create_sock(str
- 		goto out;
- 	}
- 
--	if (protocol == IPPROTO_TCP) {
--		__netns_tracker_free(xprt->xprt_net, &sock->sk->ns_tracker, false);
--		sock->sk->sk_net_refcnt = 1;
--		get_net_track(xprt->xprt_net, &sock->sk->ns_tracker, GFP_KERNEL);
--		sock_inuse_add(xprt->xprt_net, 1);
--	}
-+	if (protocol == IPPROTO_TCP)
-+		sk_net_refcnt_upgrade(sock->sk);
- 
- 	filp = sock_alloc_file(sock, O_NONBLOCK, NULL);
- 	if (IS_ERR(filp))
+ 		/* BB other socket options to set KEEPALIVE, NODELAY? */
+ 		cifs_dbg(FYI, "Socket created\n");
 
 
