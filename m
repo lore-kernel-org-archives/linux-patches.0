@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB39622DFA7;
-	Tue, 26 Aug 2025 13:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2807522DFA7;
+	Tue, 26 Aug 2025 13:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215286; cv=none; b=A0ufK3DVjZdjaCmyA6oYGLFgUy80+ZYuPm5rPqB7ybS9ksBmSqTJpBUDSJv87uvMGLq2fNdRMtit9D2lxlttejLQdsKdw0w/oSYdyJahf/KWPfCL0Xt+g9cDB5Mk/TiYqgV7fkqZq9bC0XW0Y3vaJ9+LCLFz9niqIeSdH8uKUPg=
+	t=1756215290; cv=none; b=C8pq8Aagl1FnUrrtpIYldgS3kxEJgf6vkxr1NFuWe1zNjtwbxRqYSqsV7+yQCmRleg4YvFJDSR/CZiEZ3s4stcgy6QcpvP/izyzjSVwL1iw+3nF4iR7y4q41AFEAdWf/nPZ275vrayzwaRba3Vfa397u0ZuvAztGOXcA+7O2SHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215286; c=relaxed/simple;
-	bh=XUiNpvcKyB24DvKtEtWeodRIdjz3XuyjRQFaYmbNF6Q=;
+	s=arc-20240116; t=1756215290; c=relaxed/simple;
+	bh=tZWsXvPkxErUXdzP7lupJwGUgEsECwt4il8uYMZS7oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlGlAwHxZ0tlNPRmJ5FVTwxNKw5gUrpN3V9lVmFiIFamkO+qXMqm6NTZSQmDKGrIN+2JErlSYG77nMt7WbArrTWJEPJv2cuaACWlcoqcLGBKTMqH/QyNTaGPnuFuXaWUQNeIyVC1F/iK2qX4nbIDFC7LUaYrt5eG7XFU+Qr+EdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+fcMTFl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nUIwN12NIFlHWb2c1OJQVdupED/WgPceakgHmlbqg3BOM8bKMnZWZsM29OLJrloCeceuYLlfwX/mt76Qlcnr53GXkLUy5piuISAs7qCDMJuzxneQt4Gou5ryXp91NYL4TrtCUYphjLll4PiBofc/Rxl4ES/JL3mpRaPNpoXN8/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ae8LW6CP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+fcMTFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557A9C4CEF1;
-	Tue, 26 Aug 2025 13:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ae8LW6CP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B071C4CEF1;
+	Tue, 26 Aug 2025 13:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215286;
-	bh=XUiNpvcKyB24DvKtEtWeodRIdjz3XuyjRQFaYmbNF6Q=;
+	s=korg; t=1756215289;
+	bh=tZWsXvPkxErUXdzP7lupJwGUgEsECwt4il8uYMZS7oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+fcMTFlbQWr53PnD5d6wTKoeHSVExHSBk45Ne+V026nHpiw0mY/fDr9YxnuWe6Dm
-	 vXiPEPxmKIdaGnZR2M6zYSp0W4ivO4Qkblxzd7LOjKeO1YtatqJkn0kEcdbqN/KlIg
-	 0NeDiuUcPyR967GGPoDForYa0o0rYAGPMz+bUBZU=
+	b=ae8LW6CPDZ6LWwiNX9jPNDPYFlOroifS4JyRIRfpcCUNNOqQSTTp1MLDUt82r+RZf
+	 C13eSB9rahf2ps8zCELGJZPD+Bc4EqeK8RA9C5h5qCU+jyKeIiX0sspV5KVK/JBAF2
+	 QT2iQ0DT5TPsmCy3gFRrwAm33PT4xGCYasF7a3P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com,
-	syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 416/482] comedi: Fix use of uninitialized memory in do_insn_ioctl() and do_insnlist_ioctl()
-Date: Tue, 26 Aug 2025 13:11:09 +0200
-Message-ID: <20250826110941.105961194@linuxfoundation.org>
+	Jan Beulich <jbeulich@suse.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 451/482] compiler: remove __ADDRESSABLE_ASM{_STR,}() again
+Date: Tue, 26 Aug 2025 13:11:44 +0200
+Message-ID: <20250826110941.972204833@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -53,72 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Jan Beulich <jbeulich@suse.com>
 
-commit 3cd212e895ca2d58963fdc6422502b10dd3966bb upstream.
+[ Upstream commit 8ea815399c3fcce1889bd951fec25b5b9a3979c1 ]
 
-syzbot reports a KMSAN kernel-infoleak in `do_insn_ioctl()`.  A kernel
-buffer is allocated to hold `insn->n` samples (each of which is an
-`unsigned int`).  For some instruction types, `insn->n` samples are
-copied back to user-space, unless an error code is being returned.  The
-problem is that not all the instruction handlers that need to return
-data to userspace fill in the whole `insn->n` samples, so that there is
-an information leak.  There is a similar syzbot report for
-`do_insnlist_ioctl()`, although it does not have a reproducer for it at
-the time of writing.
+__ADDRESSABLE_ASM_STR() is where the necessary stringification happens.
+As long as "sym" doesn't contain any odd characters, no quoting is
+required for its use with .quad / .long. In fact the quotation gets in
+the way with gas 2.25; it's only from 2.26 onwards that quoted symbols
+are half-way properly supported.
 
-One culprit is `insn_rw_emulate_bits()` which is used as the handler for
-`INSN_READ` or `INSN_WRITE` instructions for subdevices that do not have
-a specific handler for that instruction, but do have an `INSN_BITS`
-handler.  For `INSN_READ` it only fills in at most 1 sample, so if
-`insn->n` is greater than 1, the remaining `insn->n - 1` samples copied
-to userspace will be uninitialized kernel data.
+However, assembly being different from C anyway, drop
+__ADDRESSABLE_ASM_STR() and its helper macro altogether. A simple
+.global directive will suffice to get the symbol "declared", i.e. into
+the symbol table. While there also stop open-coding STATIC_CALL_TRAMP()
+and STATIC_CALL_KEY().
 
-Another culprit is `vm80xx_ai_insn_read()` in the "vm80xx" driver.  It
-never returns an error, even if it fails to fill the buffer.
-
-Fix it in `do_insn_ioctl()` and `do_insnlist_ioctl()` by making sure
-that uninitialized parts of the allocated buffer are zeroed before
-handling each instruction.
-
-Thanks to Arnaud Lecomte for their fix to `do_insn_ioctl()`.  That fix
-replaced the call to `kmalloc_array()` with `kcalloc()`, but it is not
-always necessary to clear the whole buffer.
-
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Reported-by: syzbot+a5e45f768aab5892da5d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a5e45f768aab5892da5d
-Reported-by: syzbot+fb4362a104d45ab09cf9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fb4362a104d45ab09cf9
-Cc: stable <stable@kernel.org> # 5.13+
-Cc: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20250725125324.80276-1-abbotti@mev.co.uk
+Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
+Signed-off-by: Jan Beulich <jbeulich@suse.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <609d2c74-de13-4fae-ab1a-1ec44afb948d@suse.com>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/include/asm/xen/hypercall.h |    5 +++--
+ include/linux/compiler.h             |    8 --------
+ 2 files changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -1582,6 +1582,9 @@ static int do_insnlist_ioctl(struct come
- 				memset(&data[n], 0, (MIN_SAMPLES - n) *
- 						    sizeof(unsigned int));
- 			}
-+		} else {
-+			memset(data, 0, max_t(unsigned int, n, MIN_SAMPLES) *
-+					sizeof(unsigned int));
- 		}
- 		ret = parse_insn(dev, insns + i, data, file);
- 		if (ret < 0)
-@@ -1665,6 +1668,8 @@ static int do_insn_ioctl(struct comedi_d
- 			memset(&data[insn->n], 0,
- 			       (MIN_SAMPLES - insn->n) * sizeof(unsigned int));
- 		}
-+	} else {
-+		memset(data, 0, n_data * sizeof(unsigned int));
- 	}
- 	ret = parse_insn(dev, insn, data, file);
- 	if (ret < 0)
+--- a/arch/x86/include/asm/xen/hypercall.h
++++ b/arch/x86/include/asm/xen/hypercall.h
+@@ -94,12 +94,13 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ #ifdef MODULE
+ #define __ADDRESSABLE_xen_hypercall
+ #else
+-#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
++#define __ADDRESSABLE_xen_hypercall \
++	__stringify(.global STATIC_CALL_KEY(xen_hypercall);)
+ #endif
+ 
+ #define __HYPERCALL					\
+ 	__ADDRESSABLE_xen_hypercall			\
+-	"call __SCT__xen_hypercall"
++	__stringify(call STATIC_CALL_TRAMP(xen_hypercall))
+ 
+ #define __HYPERCALL_ENTRY(x)	"a" (x)
+ 
+--- a/include/linux/compiler.h
++++ b/include/linux/compiler.h
+@@ -235,14 +235,6 @@ static inline void *offset_to_ptr(const
+ #define __ADDRESSABLE(sym) \
+ 	___ADDRESSABLE(sym, __section(".discard.addressable"))
+ 
+-#define __ADDRESSABLE_ASM(sym)						\
+-	.pushsection .discard.addressable,"aw";				\
+-	.align ARCH_SEL(8,4);						\
+-	ARCH_SEL(.quad, .long) __stringify(sym);			\
+-	.popsection;
+-
+-#define __ADDRESSABLE_ASM_STR(sym) __stringify(__ADDRESSABLE_ASM(sym))
+-
+ /* &a[0] degrades to a pointer: a different type from an array */
+ #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
+ 
 
 
