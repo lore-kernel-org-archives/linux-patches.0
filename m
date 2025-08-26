@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E84A1F3FF8;
-	Tue, 26 Aug 2025 12:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3F51F1534;
+	Tue, 26 Aug 2025 12:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213009; cv=none; b=XbgVc4BC0eYRXw24ZAJsHlYzMP+AbVZ9dFGxcA+alViTcdGUuH6GZneDDcAanTJ7P45o7vVFcTS0I0UsDeiCaNSUJ9k5s4gG7zwqxkyOZVe7BlTui7GT8g/KHEm+kPmZlrz5fS3GwX+RzSPc1T/R5LYMVfVTadOwmMCs1sEoFos=
+	t=1756213011; cv=none; b=KdJBoD6j/xPHnianRg7Uu2P6o8yidLS8hrOB9vuMVCOHOnA2Y3Avw4uJO5Vb4WOhU7m3iSexnKZbBT4/i7YNFuw1BepmkeVfKyLaWVYZ1rhSW2kdWO7XwDVo3kTl9KA4oK7QVMtIGfq8OCQFYT1SkjFDZZTagN/6xZeE/tpFryA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213009; c=relaxed/simple;
-	bh=UkkcMNJLUpNwRlVx5Ge6anm1Pnqtu3zOKAxXQNrb0/Y=;
+	s=arc-20240116; t=1756213011; c=relaxed/simple;
+	bh=EbPS1fczFAqZscfSbt9v4jh1T/otaUSpo0zGKIR/ENI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FS7zfdSC/6msbosl9i5fjKQkdFtzRYQxpmP/kmjhY0/d5Ars7zoqm3tBOthIMWp/T1QiqVKT6sbsv6roS9+CmL9URB85yG+HYtfShkaj3ZKhUg+sNOR6D7Kh6CXe6qn7YzBA3wHR9gXY4IjD5JFzN2SJhj9VxQZucJR9+tw5DX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2kUGhsz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgQO3Z7sDFkl0xNRteDf4njRsDwdjAX6HAtYrtUMgJ7l7iW4ovN7W291j6YGwS8yChI9UxtYKnfqHR4dwpPK1faFUx78NBweR6RfUnh42SMkdxIhohgmKi2UUGlNaZr8ROtMKMxXTgS3h757USAyrddgEb+sZlyMYagqfLyb4HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkmgAiYl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2kUGhsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7577CC4CEF1;
-	Tue, 26 Aug 2025 12:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkmgAiYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CAEC116B1;
+	Tue, 26 Aug 2025 12:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213008;
-	bh=UkkcMNJLUpNwRlVx5Ge6anm1Pnqtu3zOKAxXQNrb0/Y=;
+	s=korg; t=1756213011;
+	bh=EbPS1fczFAqZscfSbt9v4jh1T/otaUSpo0zGKIR/ENI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2kUGhszK2AB8VoGryDCftJTS1Toz741BJlbFs7f2Zfp/qA127Sb+pxNN/4/5OSb8
-	 VXHmQTRhveQeUCj5ibv/3Kic22ZsNjgRV5NJREXUDEGCsFBdp3J+2re0S6iT7j4Ldv
-	 y8HFgwvZQrWP0XgtqFNJzigmUpVkNRPvkVCgSrik=
+	b=lkmgAiYlKxjyRjTiV7m0+lfJ6RkGedHm6o/sz37rrxRYzLSyUnogVw5VY5XV+5wQJ
+	 Ooa+J4wWYuXZOtyVfJCaR6aMOEsmAIB/7CkDyHHsD8XOclowemS9MPRvfT96axgdNv
+	 dFTv/nlo2R4pkaqdpZq+4d7hE7elqlCruVEPL8kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/587] wifi: rtlwifi: fix possible skb memory leak in `_rtl_pci_rx_interrupt()`.
-Date: Tue, 26 Aug 2025 13:05:34 +0200
-Message-ID: <20250826110957.648883354@linuxfoundation.org>
+Subject: [PATCH 6.6 186/587] wifi: ath12k: Enable REO queue lookup table feature on QCN9274 hw2.0
+Date: Tue, 26 Aug 2025 13:05:35 +0200
+Message-ID: <20250826110957.674015804@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,55 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
 
-[ Upstream commit 44c0e191004f0e3aa1bdee3be248be14dbe5b020 ]
+[ Upstream commit b79742b84e16e41c4a09f3126436f39f36e75c06 ]
 
-The function `_rtl_pci_init_one_rxdesc()` can fail even when the new
-`skb` is passed because of a DMA mapping error.  If it fails, the `skb`
-is not saved in the rx ringbuffer and thus lost.
+The commit 89ac53e96217 ("wifi: ath12k: Enable REO queue lookup table
+feature on QCN9274") originally intended to enable the reoq_lut_support
+hardware parameter flag for both QCN9274 hw1.0 and hw2.0. However,
+it enabled it only for QCN9274 hw1.0.
 
-Compile tested only
+Hence, enable REO queue lookup table feature on QCN9274 hw2.0.
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250616105631.444309-4-fourier.thomas@gmail.com
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250609-qcn9274-reoq-v1-1-a92c91abc9b9@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath12k/hw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 3645f212021f..6264ef7805d6 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -803,13 +803,19 @@ static void _rtl_pci_rx_interrupt(struct ieee80211_hw *hw)
- 		skb = new_skb;
- no_new:
- 		if (rtlpriv->use_new_trx_flow) {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)buffer_desc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 		} else {
--			_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
--						 rxring_idx,
--						 rtlpci->rx_ring[rxring_idx].idx);
-+			if (!_rtl_pci_init_one_rxdesc(hw, skb, (u8 *)pdesc,
-+						      rxring_idx,
-+						      rtlpci->rx_ring[rxring_idx].idx)) {
-+				if (new_skb)
-+					dev_kfree_skb_any(skb);
-+			}
- 			if (rtlpci->rx_ring[rxring_idx].idx ==
- 			    rtlpci->rxringcount - 1)
- 				rtlpriv->cfg->ops->set_desc(hw, (u8 *)pdesc,
+diff --git a/drivers/net/wireless/ath/ath12k/hw.c b/drivers/net/wireless/ath/ath12k/hw.c
+index dafd7c34d746..97ed179be228 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.c
++++ b/drivers/net/wireless/ath/ath12k/hw.c
+@@ -1002,7 +1002,7 @@ static const struct ath12k_hw_params ath12k_hw_params[] = {
+ 		.download_calib = true,
+ 		.supports_suspend = false,
+ 		.tcl_ring_retry = true,
+-		.reoq_lut_support = false,
++		.reoq_lut_support = true,
+ 		.supports_shadow_regs = false,
+ 
+ 		.hal_desc_sz = sizeof(struct hal_rx_desc_qcn9274),
 -- 
 2.39.5
 
