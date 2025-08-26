@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404512F7473;
-	Tue, 26 Aug 2025 13:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06EF3431E9;
+	Tue, 26 Aug 2025 13:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214337; cv=none; b=H7Q3AGGrrIt26oW9bJ+dGGqr0YBMQCqqnVx8KTIAGPFOjlmLkJ17CZVMiJKO832bcjPrFaqosPBsfbe0xNKsEeHTdT9gnRvwP0rAv5xeRvDXCz1dlqU+NGNnFtZouT+CCf4SYweiBJhhtVmYQ0VsWAKxqoBIs7+v1rdEX+9PgUw=
+	t=1756214339; cv=none; b=mPMggCH9rJb7ZPs1H59LBuRbYn9SYahsGBL7DMI22Cb5ld9D1ykKDiRSqHAZJut30N5I5emzqvqRvp9dgYMkzBhsJUWccrC0y5WMqKHbFKEExvoDO0fGMUT6P3UlMK3Pclgjm7kdGZ4ogAvF4I8HrldM9nOEldoQDEcin1KL6fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214337; c=relaxed/simple;
-	bh=RwdIzsvsuR1FP4j0tyO5mx9zzw8MwEVeK1lnqdV8mhE=;
+	s=arc-20240116; t=1756214339; c=relaxed/simple;
+	bh=ocudBeZNDUtRNuyjRIbREox0eMoYJCdC1J/yrZQTH0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfxPpDGXYt9z4NC5oPCn8Og5U0KllXpjq8IsiHJugO5wwfZ+1G2CCmHMJ8KvbCkbEHvdIX00G3UYTrEueufU7DmcOI811PZNOPTSqgKTaDRngR812N24UFaDxbkTwo6bk+MVjRmTOqNfvZSRd+Ct4wZtaoeUl6cnM2FhJEg2BPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shlQMq/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WeYtTkHM4QII7wWj5RCQlkKyTXGT7mrj2dgJyYOuni/FXXs/6sBceaIJrQ616ZLkuv4yGBMb+BH1lsZoScEm+2FdC6bX+G8C6ZvrTcAB6TUMzaDEE5CiMxzLgdWTmP1MymUInjuBtdQwIJJuZdGKxuV9Ja6v4psm4s+Z6Su0G9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqzobsps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shlQMq/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65105C4CEF1;
-	Tue, 26 Aug 2025 13:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqzobsps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FA7C4CEF1;
+	Tue, 26 Aug 2025 13:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214336;
-	bh=RwdIzsvsuR1FP4j0tyO5mx9zzw8MwEVeK1lnqdV8mhE=;
+	s=korg; t=1756214339;
+	bh=ocudBeZNDUtRNuyjRIbREox0eMoYJCdC1J/yrZQTH0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shlQMq/vSHQ95dM8HGn07OV61LyNnLsLkN+qMYWYGwGuIVBV09QBBKd8ljhS05piN
-	 3UpRe9Mh/Ro6cmQvTGjCTMmK/vG7SmlulsWRdxQSpx92StgG7P/NuAd7tlRqtUm2SG
-	 MTSyuLtW5FhHU6+PBqmXLQcSzBwAQJB5KVRH/QJs=
+	b=yqzobspsAsvx6xHUsoW/LmdtUaFXMnu3PvFHKHch8Ut459U5k8/Dda5284vrdDLfX
+	 2iOoTF64BGOLD6cvfeR+zzWxVsI7TZADViKCjG8ntY8oAoz6MOpD0I6Mv9PMdAxPWf
+	 uXE0dU06fSxH09fESmCdjcuLL6wod0rntlvOxoxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/482] ASoC: hdac_hdmi: Rate limit logging on connection and disconnection
-Date: Tue, 26 Aug 2025 13:05:53 +0200
-Message-ID: <20250826110933.299134590@linuxfoundation.org>
+Subject: [PATCH 6.1 101/482] ALSA: intel8x0: Fix incorrect codec index usage in mixer for ICH4
+Date: Tue, 26 Aug 2025 13:05:54 +0200
+Message-ID: <20250826110933.323377227@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -50,66 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit c4ca928a6db1593802cd945f075a7e21dd0430c1 ]
+[ Upstream commit 87aafc8580acf87fcaf1a7e30ed858d8c8d37d81 ]
 
-We currently log parse failures for ELD data and some disconnection events
-as errors without rate limiting. These log messages can be triggered very
-frequently in some situations, especially ELD parsing when there is nothing
-connected to a HDMI port which will generate:
+code mistakenly used a hardcoded index (codec[1]) instead of
+iterating, over the codec array using the loop variable i.
+Use codec[i] instead of codec[1] to match the loop iteration.
 
-hdmi-audio-codec hdmi-audio-codec.1.auto: HDMI: Unknown ELD version 0
-
-While there's doubtless work that could be done on reducing the number of
-connection notification callbacks it's possible these may be legitimately
-generated by poor quality physical connections so let's use rate limiting
-to mitigate the log spam for the parse errors and lower the severity for
-disconnect logging to debug level.
-
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250613-asoc-hdmi-eld-logging-v1-1-76d64154d969@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250621185233.4081094-1-alok.a.tiwari@oracle.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/pci/intel8x0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index d8e83150ea28..90baca4c2b4d 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -1230,7 +1230,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
- 						>> DRM_ELD_VER_SHIFT;
- 
- 	if (ver != ELD_VER_CEA_861D && ver != ELD_VER_PARTIAL) {
--		dev_err(&hdev->dev, "HDMI: Unknown ELD version %d\n", ver);
-+		dev_err_ratelimited(&hdev->dev,
-+				    "HDMI: Unknown ELD version %d\n", ver);
- 		return -EINVAL;
- 	}
- 
-@@ -1238,7 +1239,8 @@ static int hdac_hdmi_parse_eld(struct hdac_device *hdev,
- 		DRM_ELD_MNL_MASK) >> DRM_ELD_MNL_SHIFT;
- 
- 	if (mnl > ELD_MAX_MNL) {
--		dev_err(&hdev->dev, "HDMI: MNL Invalid %d\n", mnl);
-+		dev_err_ratelimited(&hdev->dev,
-+				    "HDMI: MNL Invalid %d\n", mnl);
- 		return -EINVAL;
- 	}
- 
-@@ -1297,8 +1299,8 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
- 
- 	if (!port->eld.monitor_present || !port->eld.eld_valid) {
- 
--		dev_err(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
--						__func__, pin->nid, port->id);
-+		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
-+			__func__, pin->nid, port->id);
- 
- 		/*
- 		 * PCMs are not registered during device probe, so don't
+diff --git a/sound/pci/intel8x0.c b/sound/pci/intel8x0.c
+index ae285c0a629c..f3df6fe2b7f1 100644
+--- a/sound/pci/intel8x0.c
++++ b/sound/pci/intel8x0.c
+@@ -2252,7 +2252,7 @@ static int snd_intel8x0_mixer(struct intel8x0 *chip, int ac97_clock,
+ 			tmp |= chip->ac97_sdin[0] << ICH_DI1L_SHIFT;
+ 			for (i = 1; i < 4; i++) {
+ 				if (pcm->r[0].codec[i]) {
+-					tmp |= chip->ac97_sdin[pcm->r[0].codec[1]->num] << ICH_DI2L_SHIFT;
++					tmp |= chip->ac97_sdin[pcm->r[0].codec[i]->num] << ICH_DI2L_SHIFT;
+ 					break;
+ 				}
+ 			}
 -- 
 2.39.5
 
