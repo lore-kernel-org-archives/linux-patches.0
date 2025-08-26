@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB9735335B;
-	Tue, 26 Aug 2025 14:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077383568E7;
+	Tue, 26 Aug 2025 14:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217029; cv=none; b=AAog32+9sBR6ynttauA4/3K9vsEW0jFYAfrzyU8HTqN0wuF86QrBGuYHqxcAMvbAhUCogN596jDb248h8gdi++wuCEOSqH5+SCwPRbxwhXqlORXwhlQtZyh+i6Q1uee9KzbKkLQShNSYoutiylPdenRDSz81mBDpaxjvFkg3ZW4=
+	t=1756217032; cv=none; b=llk+rh3bJwo+azPgPvXb5Ha4XbWbwb+xjVxkf+1+Q9dmN3+qgNEibne4kP0HVKHyrOJNy/3PXh/DcrlzznCEw02M7uGiTue71LyzDZ314056LxiSbfflqHfg0rf0SN8kVOf6OdyKN/wPmSHnZCet3e2D3WUZb9aeybjxvsNY+WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217029; c=relaxed/simple;
-	bh=nWl5SJU4zs/RfzDBXstBnGevlFrzYmuUnKrl2pSqW8M=;
+	s=arc-20240116; t=1756217032; c=relaxed/simple;
+	bh=pcpq0dUwiy/mmFeDzJHn+GcKl3/8qSqpxQMGMPMfytc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vi0X4ZS9kpnEUxaMgtMRnepaiIMTzN77zkxr2LYu+7/3pv+J+Fx/eCTzgd2sllengREmZEEZIK2E4OAeVvlLUUZeGaWWymjQzfVQLdSYzAbHslJtkDJb4aW3JKHgGE9/Lo8iQ+/bMheC+56R+4v1sGi2MF+/bG3gpTM4mjlxhoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUW/1zE9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a1np3aDFjCTSVhN8QeqgdTkaCqbAOeTJ+0jwpLTtGdnLTLqKm7DUEFCxZgvIACpVM+uCi01xpIvp4/Wr+R4q+WWWTxVuETpWuztfzuasukxIV+uSLRSALJ9lANzB78t7USCF6zro5qF47WPEp+dv6kMUuICbHQU6fEEWIYnHwEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voyw55rJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUW/1zE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D3EC4CEF1;
-	Tue, 26 Aug 2025 14:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voyw55rJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FF0C4CEF1;
+	Tue, 26 Aug 2025 14:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217029;
-	bh=nWl5SJU4zs/RfzDBXstBnGevlFrzYmuUnKrl2pSqW8M=;
+	s=korg; t=1756217031;
+	bh=pcpq0dUwiy/mmFeDzJHn+GcKl3/8qSqpxQMGMPMfytc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUW/1zE9hFZDv+fwnam6dJgKohktOTRjvQLV3ulaRPzuA0OoSEM8nbT4xnPIT4cQ+
-	 VRqhtNL7DDz4mo3lfMcgz9kS7oPFetXyUf/9bSnPr2169tfyBImrJwV7QPDPre1w02
-	 P4drEcZgPBqJEqLarhMyuaswCkRZIdwmxWmmeOXM=
+	b=voyw55rJiyQQPk5v95MbvcCp+QWAWXesKWaiqwjHxuQoPIRw8EGzuFItrH65q9FxZ
+	 /syY6HpTJHKRTK2ppWTjyS3E8LNGnL/h72TaBNOLhjBDLeBQj+j2ZGaiKfQV+iPJa0
+	 dkQhOwplKKemmxOYJklBikqBaeLCnEQfq9VYdUqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Radu Pirea <radu-nicolae.pirea@oss.nxp.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 631/644] ppp: fix race conditions in ppp_fill_forward_path
-Date: Tue, 26 Aug 2025 13:12:02 +0200
-Message-ID: <20250826111002.194592748@linuxfoundation.org>
+Subject: [PATCH 5.15 632/644] net: phy: Use netif_rx().
+Date: Tue, 26 Aug 2025 13:12:03 +0200
+Message-ID: <20250826111002.220162843@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,97 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 0417adf367a0af11adf7ace849af4638cfb573f7 ]
+[ Upstream commit a3d73e15909bdcf25f341e6623cc165ba7eb5968 ]
 
-ppp_fill_forward_path() has two race conditions:
+Since commit
+   baebdf48c3600 ("net: dev: Makes sure netif_rx() can be invoked in any context.")
 
-1. The ppp->channels list can change between list_empty() and
-   list_first_entry(), as ppp_lock() is not held. If the only channel
-   is deleted in ppp_disconnect_channel(), list_first_entry() may
-   access an empty head or a freed entry, and trigger a panic.
+the function netif_rx() can be used in preemptible/thread context as
+well as in interrupt context.
 
-2. pch->chan can be NULL. When ppp_unregister_channel() is called,
-   pch->chan is set to NULL before pch is removed from ppp->channels.
+Use netif_rx().
 
-Fix these by using a lockless RCU approach:
-- Use list_first_or_null_rcu() to safely test and access the first list
-  entry.
-- Convert list modifications on ppp->channels to their RCU variants and
-  add synchronize_net() after removal.
-- Check for a NULL pch->chan before dereferencing it.
-
-Fixes: f6efc675c9dd ("net: ppp: resolve forwarding path for bridge pppoe devices")
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20250814012559.3705-2-dqfext@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Andrew Lunn <andrew@lunn.ch>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Radu Pirea <radu-nicolae.pirea@oss.nxp.com>
+Cc: Richard Cochran <richardcochran@gmail.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: bc1a59cff9f7 ("phy: mscc: Fix timestamping for vsc8584")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/phy/dp83640.c         | 6 +++---
+ drivers/net/phy/mscc/mscc_ptp.c   | 2 +-
+ drivers/net/phy/nxp-c45-tja11xx.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 3e804800c509..5cb06e04293e 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -33,6 +33,7 @@
- #include <linux/ppp_channel.h>
- #include <linux/ppp-comp.h>
- #include <linux/skbuff.h>
-+#include <linux/rculist.h>
- #include <linux/rtnetlink.h>
- #include <linux/if_arp.h>
- #include <linux/ip.h>
-@@ -1612,11 +1613,14 @@ static int ppp_fill_forward_path(struct net_device_path_ctx *ctx,
- 	if (ppp->flags & SC_MULTILINK)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/phy/dp83640.c b/drivers/net/phy/dp83640.c
+index 705c16675b80..88d23890f3be 100644
+--- a/drivers/net/phy/dp83640.c
++++ b/drivers/net/phy/dp83640.c
+@@ -886,7 +886,7 @@ static void decode_rxts(struct dp83640_private *dp83640,
+ 	spin_unlock_irqrestore(&dp83640->rx_lock, flags);
  
--	if (list_empty(&ppp->channels))
-+	pch = list_first_or_null_rcu(&ppp->channels, struct channel, clist);
-+	if (!pch)
-+		return -ENODEV;
-+
-+	chan = READ_ONCE(pch->chan);
-+	if (!chan)
- 		return -ENODEV;
+ 	if (shhwtstamps)
+-		netif_rx_ni(skb);
++		netif_rx(skb);
+ }
  
--	pch = list_first_entry(&ppp->channels, struct channel, clist);
--	chan = pch->chan;
- 	if (!chan->ops->fill_forward_path)
- 		return -EOPNOTSUPP;
+ static void decode_txts(struct dp83640_private *dp83640,
+@@ -1332,7 +1332,7 @@ static void rx_timestamp_work(struct work_struct *work)
+ 			break;
+ 		}
  
-@@ -2999,7 +3003,7 @@ ppp_unregister_channel(struct ppp_channel *chan)
- 	 */
- 	down_write(&pch->chan_sem);
- 	spin_lock_bh(&pch->downl);
--	pch->chan = NULL;
-+	WRITE_ONCE(pch->chan, NULL);
- 	spin_unlock_bh(&pch->downl);
- 	up_write(&pch->chan_sem);
- 	ppp_disconnect_channel(pch);
-@@ -3505,7 +3509,7 @@ ppp_connect_channel(struct channel *pch, int unit)
- 	hdrlen = pch->file.hdrlen + 2;	/* for protocol bytes */
- 	if (hdrlen > ppp->dev->hard_header_len)
- 		ppp->dev->hard_header_len = hdrlen;
--	list_add_tail(&pch->clist, &ppp->channels);
-+	list_add_tail_rcu(&pch->clist, &ppp->channels);
- 	++ppp->n_channels;
- 	pch->ppp = ppp;
- 	refcount_inc(&ppp->file.refcnt);
-@@ -3535,10 +3539,11 @@ ppp_disconnect_channel(struct channel *pch)
- 	if (ppp) {
- 		/* remove it from the ppp unit's list */
- 		ppp_lock(ppp);
--		list_del(&pch->clist);
-+		list_del_rcu(&pch->clist);
- 		if (--ppp->n_channels == 0)
- 			wake_up_interruptible(&ppp->file.rwait);
- 		ppp_unlock(ppp);
-+		synchronize_net();
- 		if (refcount_dec_and_test(&ppp->file.refcnt))
- 			ppp_destroy_interface(ppp);
- 		err = 0;
+-		netif_rx_ni(skb);
++		netif_rx(skb);
+ 	}
+ 
+ 	if (!skb_queue_empty(&dp83640->rx_queue))
+@@ -1383,7 +1383,7 @@ static bool dp83640_rxtstamp(struct mii_timestamper *mii_ts,
+ 		skb_queue_tail(&dp83640->rx_queue, skb);
+ 		schedule_delayed_work(&dp83640->ts_work, SKB_TIMESTAMP_TIMEOUT);
+ 	} else {
+-		netif_rx_ni(skb);
++		netif_rx(skb);
+ 	}
+ 
+ 	return true;
+diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
+index 92f59c964409..cf61990ccd37 100644
+--- a/drivers/net/phy/mscc/mscc_ptp.c
++++ b/drivers/net/phy/mscc/mscc_ptp.c
+@@ -1218,7 +1218,7 @@ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
+ 		ts.tv_sec--;
+ 
+ 	shhwtstamps->hwtstamp = ktime_set(ts.tv_sec, ns);
+-	netif_rx_ni(skb);
++	netif_rx(skb);
+ 
+ 	return true;
+ }
+diff --git a/drivers/net/phy/nxp-c45-tja11xx.c b/drivers/net/phy/nxp-c45-tja11xx.c
+index 13269c4e87dd..e6ac851b217a 100644
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -436,7 +436,7 @@ static long nxp_c45_do_aux_work(struct ptp_clock_info *ptp)
+ 		shhwtstamps_rx = skb_hwtstamps(skb);
+ 		shhwtstamps_rx->hwtstamp = ns_to_ktime(timespec64_to_ns(&ts));
+ 		NXP_C45_SKB_CB(skb)->header->reserved2 = 0;
+-		netif_rx_ni(skb);
++		netif_rx(skb);
+ 	}
+ 
+ 	return reschedule ? 1 : -1;
 -- 
 2.50.1
 
