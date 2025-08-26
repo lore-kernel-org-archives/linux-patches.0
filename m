@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213931FECAB;
-	Tue, 26 Aug 2025 11:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA29D284B5B;
+	Tue, 26 Aug 2025 11:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208572; cv=none; b=QnEmOl3/BDuk1vnKS1SgiESdwO+eFp6ztZ23pH+1H2Uf+hSTedytm1VsKVSOSGh04jhvsp/JzVClunrxoN33tCPsTG3pHrBw3hWhpaY62qzqIb6KDfIVN56pCB76VxnJuZgtBOpRMlxqcbocdO7LQcy0ctMDxIihCGfUrveJREw=
+	t=1756208574; cv=none; b=qY4ouPb8sWr1ka3v8g2QfIBGzFkv0ShVEDw+hdhpGnDzE5nca0rQb8jGnXGhx9+GzT9HpjNGQe7AtD+pnXl8NGr+zORuB8+5zplrpORsNkBuPLpWFErzzamfoJ/vqLvaal1CXaYg0XdiBj3swAuCp4428lvnVHDuKHhbsf7cdVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208572; c=relaxed/simple;
-	bh=vDfJWoZUrGDRYz/mCLoXR2khibwuGmA9Ex6iNCHEjdk=;
+	s=arc-20240116; t=1756208574; c=relaxed/simple;
+	bh=y61hu5+2eciFXatgzbpAYDf2g4kBUXHdpUpxLXudO/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSIy3X6wkLB2B9EWDU4KWoxJ4kUaiSNkER7aupZ9MIQt9ttZXh+OH7T3ZH6VkvPkcbj9FBTYN0qS9WYZK/UrVfRGmcBtteah+aUy7yD2XiNnWBmaS/ZRsqfk0TUi6GlWysDAg+r50YzAFRv6ReB+rVB/KE4T6rHQFFQzJmaIdyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r61+70FR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZKouktdxxlwIe8pM0JV8KqIM2zktAt0majx1SWaqkUHX1S/OBH/ItQgSuGb5pmRMsMmVDkYJIQFj4JCGSr3Nc/F8kCzMSa2X6aOrg6957wDSN8ExiwkVEZkZ0MRxGM9m21o0YKXgk+AXYPFaEPoTaUrzkSefJ+kmUafr/rsp1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJTJBhkR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r61+70FR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C4FC4CEF1;
-	Tue, 26 Aug 2025 11:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJTJBhkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45340C116B1;
+	Tue, 26 Aug 2025 11:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208572;
-	bh=vDfJWoZUrGDRYz/mCLoXR2khibwuGmA9Ex6iNCHEjdk=;
+	s=korg; t=1756208574;
+	bh=y61hu5+2eciFXatgzbpAYDf2g4kBUXHdpUpxLXudO/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r61+70FRmK9oS0N0Gt1lwSVPAIQ18EjTNMM7mn0dp63+XtUS7/qpXYbcssbk8LOc2
-	 Sau4OiUydHlxzI09K9C0Wiiqjpq3tinNtZfiPQ2vIY1NSh5UgN57AetEpSQ5XkE4Xu
-	 Hf7gPOQC52/zg3ZJ+Cal+ZS4z9CapGmf5rtJ/VHg=
+	b=DJTJBhkR85FELLJPEWzoXcPS2mqFBCuaZTK5Sz/kGYEfHkTlqz1+4Xcd4Bj/0j2mC
+	 3dIc3WxRN0Fk29rCDKNwLXr0id9UfShZTFCO3OEpkITuiSk41Ht6CCu2NQHnE97t9p
+	 9ASfjqThr+Mp4cMZ3Ot8VLZIAvv38d9VhPj+S55s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 162/322] Revert "can: ti_hecc: fix -Woverflow compiler warning"
-Date: Tue, 26 Aug 2025 13:09:37 +0200
-Message-ID: <20250826110919.824243796@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 163/322] io_uring/futex: ensure io_futex_wait() cleans up properly on failure
+Date: Tue, 26 Aug 2025 13:09:38 +0200
+Message-ID: <20250826110919.852004790@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -52,31 +49,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-This reverts commit 1da38b70d90f8529c060dd380d0c18e6d9595463 which is
-commit 7cae4d04717b002cffe41169da3f239c845a0723 upstream.
+commit 508c1314b342b78591f51c4b5dadee31a88335df upstream.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/63e25fdb-095a-40eb-b341-75781e71ea95@roeck-us.net
-Cc: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: Sasha Levin <sashal@kernel.org>
+The io_futex_data is allocated upfront and assigned to the io_kiocb
+async_data field, but the request isn't marked with REQ_F_ASYNC_DATA
+at that point. Those two should always go together, as the flag tells
+io_uring whether the field is valid or not.
+
+Additionally, on failure cleanup, the futex handler frees the data but
+does not clear ->async_data. Clear the data and the flag in the error
+path as well.
+
+Thanks to Trend Micro Zero Day Initiative and particularly ReDress for
+reporting this.
+
+Cc: stable@vger.kernel.org
+Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/ti_hecc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/futex.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/can/ti_hecc.c
-+++ b/drivers/net/can/ti_hecc.c
-@@ -383,7 +383,7 @@ static void ti_hecc_start(struct net_dev
- 	 * overflows instead of the hardware silently dropping the
- 	 * messages.
- 	 */
--	mbx_mask = ~BIT_U32(HECC_RX_LAST_MBOX);
-+	mbx_mask = ~BIT(HECC_RX_LAST_MBOX);
- 	hecc_write(priv, HECC_CANOPC, mbx_mask);
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -337,6 +337,7 @@ int io_futex_wait(struct io_kiocb *req,
+ 		goto done_unlock;
+ 	}
  
- 	/* Enable interrupts */
++	req->flags |= REQ_F_ASYNC_DATA;
+ 	req->async_data = ifd;
+ 	ifd->q = futex_q_init;
+ 	ifd->q.bitset = iof->futex_mask;
+@@ -359,6 +360,8 @@ done:
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
++	req->async_data = NULL;
++	req->flags &= ~REQ_F_ASYNC_DATA;
+ 	kfree(ifd);
+ 	return IOU_OK;
+ }
 
 
