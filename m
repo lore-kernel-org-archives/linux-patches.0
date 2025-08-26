@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FBC352084;
-	Tue, 26 Aug 2025 14:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860E8352084;
+	Tue, 26 Aug 2025 14:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219191; cv=none; b=H2rE4EL49TQ21m7a+i2EdQF8+kPEiE3x4l4/J3S8yVbdYv3mEWBsx+xbWOy83HTtBDLlJy3lsEPD0oD7+jBTYj6NFvC1scjzu7mX4Dj+5Z7h912e4bqLJ9QG4cOYGK0fBFuJUgYFs3J2TbIFqAI0epI7q8kXx90dmiFro8ulxXQ=
+	t=1756219193; cv=none; b=pRwmgU/Vv2Qu/mTX4nnSeKFh0KFajp4hde1IDvem5U4jFFqZkdwtaKkK9objWN2Tyk/9ZoD4+SYR3wdfg4OblQXcNUo+aUDG951PihMrFsAMB3POrKIvmk/rtlUwvLfq7s707ZRfgu8o1nfSc8jkTNu8DUXXwa4vGhdPLETpbio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219191; c=relaxed/simple;
-	bh=wn/GhMAKteOo4etVudQx1DZkn3IojmXbh707384kfAo=;
+	s=arc-20240116; t=1756219193; c=relaxed/simple;
+	bh=a3JDrf12o7JmvsJhmydU9ECZ+Rg9n/TiXaLQ7fRf4PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e2RX/bbTDpLPrVC56ePtvQ/ribvW43XESYelQixUvJCfxM/z0js6Za+Txbdscyvb7sH0GFZpMZADYKuwGxSmDv6n3Vs4o1m98fZE8KAExl44jdqsTEK7IMw5AfzfKW8kNeO7UbS3XJBlRfxGrRs/gLvRtxHD2vMs1CIz+7/fKow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQshWgj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwSYN/0fKHzELK8w7DEJE4Pz9KdHEsy8TMpaLNQsJG98kifMteEjxj7G49IMKkx3/rIeIKy/rn1S9ePV6+r2bdzK/9PD0NS9MMo63v6uiVCPhBpSJBOeNbyzjz2K2Cjg4BKJTzP//gXLCWAY91cQAJ1r9M/BGoWaZrciB0eIYVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwkjSj3J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQshWgj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BCDC4CEF1;
-	Tue, 26 Aug 2025 14:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwkjSj3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D8EC113CF;
+	Tue, 26 Aug 2025 14:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219190;
-	bh=wn/GhMAKteOo4etVudQx1DZkn3IojmXbh707384kfAo=;
+	s=korg; t=1756219193;
+	bh=a3JDrf12o7JmvsJhmydU9ECZ+Rg9n/TiXaLQ7fRf4PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQshWgj7rQIabh9+bdNH+fHXLdVxJJipFp/brQlU8MhaLC0175Lm+XHQN2OkTM//g
-	 kOME6ICul3hYpM0Sq6Pb8rKgbY8zooSqknPESglrTKLzEpt6LuS+WPuraNGbtWshv3
-	 5E94Cbj/ZUCHd/3uLkfSOkWdHCey2dWRELAqK4Yk=
+	b=TwkjSj3JolewCln9SA3W/KSyPxd7+D56BbTjUcD4jTRF8PbL5wQZ46mylEs5EsvA6
+	 RRDbNURNDyLohOB5+ZVXlZnENy2JuoFpm9C8bUZZK1NaFrhwtXxJg4/QFZ6tY+Px3E
+	 W9AvVgwiAMG5MikvrXcRQwqOUjRPrKEhTWCe/kXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suchit Karunakaran <suchitkarunakaran@gmail.com>,
-	Nicolas Schier <nicolas.schier@linux.dev>,
+	Shankari Anand <shankari.ak0208@gmail.com>,
 	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Nicolas Schier <n.schier@avm.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 257/403] kconfig: lxdialog: replace strcpy() with strncpy() in inputbox.c
-Date: Tue, 26 Aug 2025 13:09:43 +0200
-Message-ID: <20250826110913.922202113@linuxfoundation.org>
+Subject: [PATCH 5.4 258/403] kconfig: nconf: Ensure null termination where strncpy is used
+Date: Tue, 26 Aug 2025 13:09:44 +0200
+Message-ID: <20250826110913.947561415@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,39 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suchit Karunakaran <suchitkarunakaran@gmail.com>
+From: Shankari Anand <shankari.ak0208@gmail.com>
 
-[ Upstream commit 5ac726653a1029a2eccba93bbe59e01fc9725828 ]
+[ Upstream commit f468992936894c9ce3b1659cf38c230d33b77a16 ]
 
-strcpy() performs no bounds checking and can lead to buffer overflows if
-the input string exceeds the destination buffer size. This patch replaces
-it with strncpy(), and null terminates the input string.
+strncpy() does not guarantee null-termination if the source string is
+longer than the destination buffer.
 
-Signed-off-by: Suchit Karunakaran <suchitkarunakaran@gmail.com>
-Reviewed-by: Nicolas Schier <nicolas.schier@linux.dev>
+Ensure the buffer is explicitly null-terminated to prevent potential
+string overflows or undefined behavior.
+
+Signed-off-by: Shankari Anand <shankari.ak0208@gmail.com>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Nicolas Schier <n.schier@avm.de>
+Acked-by: Nicolas Schier <n.schier@avm.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/lxdialog/inputbox.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ scripts/kconfig/nconf.c     | 2 ++
+ scripts/kconfig/nconf.gui.c | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/scripts/kconfig/lxdialog/inputbox.c b/scripts/kconfig/lxdialog/inputbox.c
-index 1dcfb288ee63..327b60cdb8da 100644
---- a/scripts/kconfig/lxdialog/inputbox.c
-+++ b/scripts/kconfig/lxdialog/inputbox.c
-@@ -39,8 +39,10 @@ int dialog_inputbox(const char *title, const char *prompt, int height, int width
+diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
+index 331b2cc917ec..af56d27693d0 100644
+--- a/scripts/kconfig/nconf.c
++++ b/scripts/kconfig/nconf.c
+@@ -580,6 +580,8 @@ static void item_add_str(const char *fmt, ...)
+ 		tmp_str,
+ 		sizeof(k_menu_items[index].str));
  
- 	if (!init)
- 		instr[0] = '\0';
--	else
--		strcpy(instr, init);
-+	else {
-+		strncpy(instr, init, sizeof(dialog_input_result) - 1);
-+		instr[sizeof(dialog_input_result) - 1] = '\0';
-+	}
++	k_menu_items[index].str[sizeof(k_menu_items[index].str) - 1] = '\0';
++
+ 	free_item(curses_menu_items[index]);
+ 	curses_menu_items[index] = new_item(
+ 			k_menu_items[index].str,
+diff --git a/scripts/kconfig/nconf.gui.c b/scripts/kconfig/nconf.gui.c
+index 77f525a8617c..8b3e9bc893a7 100644
+--- a/scripts/kconfig/nconf.gui.c
++++ b/scripts/kconfig/nconf.gui.c
+@@ -398,6 +398,7 @@ int dialog_inputbox(WINDOW *main_window,
+ 	x = (columns-win_cols)/2;
  
- do_resize:
- 	if (getmaxy(stdscr) <= (height - INPUTBOX_HEIGTH_MIN))
+ 	strncpy(result, init, *result_len);
++	result[*result_len - 1] = '\0';
+ 
+ 	/* create the windows */
+ 	win = newwin(win_lines, win_cols, y, x);
 -- 
 2.39.5
 
