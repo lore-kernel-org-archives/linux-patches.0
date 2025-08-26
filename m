@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1442218F2FC;
-	Tue, 26 Aug 2025 13:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A659D22AE5D;
+	Tue, 26 Aug 2025 13:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213904; cv=none; b=C+Jtc8c18WxIk1i/zDZXun46ER3qiyqIMgpGmZZwEcqhvLuEiJznJfnfbpiWcmgnFm+REuexfvQptqJ/kR2vMTOTz0IpGkgHglUqntuJizHx943qEROoNgg8GiG0jtIXWjqSapF007FioRP/M7X5rDIliDJO0mRlWO/MHjTg6No=
+	t=1756213906; cv=none; b=qy3G1j1aY1zF+vUxAO5LWwtOuf17vmp8kYYXYEvG8aHXgvlEji5Sroq8TIf7ZgPkFdsUkzob5S9SApngRt4AypAk3SNwIiJwJNdVptQNVKz+om2tdFprtVUJ371hNtnO+7rrHvYHmMexi+U1dhQRPYiYjJiIM6QnNLaAjfC5zrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213904; c=relaxed/simple;
-	bh=5NQourxqfRnFBuuQLZF7yvFt5OEuOYgYz2gKRfDzPzY=;
+	s=arc-20240116; t=1756213906; c=relaxed/simple;
+	bh=8+oqSpJcLVvtoc4pKraivdneiPCCHxU4aZOiEZ1s0kY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rQiEwKHO120e/tHotHo4RXYBCOeX3HRhuwyJd/ZJEcj878qMNQ1cJvd/5DTWmMx0yP+suuLaiM4FVThF8NIeLqJ8aVIRYt61vzeTGY3FEo+1d+5SWx2JrssSQjkWrES2KP1kxmAbzFV6+8PGWkP/O+8dgkK98fyh41zZCeJ293Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxONGDkg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NDzxHxKjU8CL43FCUj5aaaQqLDX53xWeX1Fvlv/Wr7WkgnfmNEgUEl7VDRRAUPskDQpmAAmpg0cD6cJaeYFukFQODulrbF31rzEPLbih9q6hS1kEBHXB55iBHF1Cj6jtLaFd+GnydB15ClvHX3fgV0y56FFQLliO6fT7kwZA4xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rev2Ehk6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxONGDkg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C99EC4CEF1;
-	Tue, 26 Aug 2025 13:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rev2Ehk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFDFC4CEF1;
+	Tue, 26 Aug 2025 13:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213903;
-	bh=5NQourxqfRnFBuuQLZF7yvFt5OEuOYgYz2gKRfDzPzY=;
+	s=korg; t=1756213906;
+	bh=8+oqSpJcLVvtoc4pKraivdneiPCCHxU4aZOiEZ1s0kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxONGDkgWt+GLmZt0RRDJkDamsJTwgSPDn1P3BEm+T/Kd6d1S7PP4P4AY3NNIHxso
-	 EzIu4x+X1WyFn9/o34XZoviw4p3F/na5xZLN7I1a5s2myl8hIS6oOwX+bcGm6dh7E6
-	 JgtsXDIvgVFlMZJREeT9KHG8wCFDYvP7HFLzT9X8=
+	b=rev2Ehk6YGon3FDuJtRMhKolNwKl7Xoz2qo3OprWo16c2xEnyxgyRCgPxVfzEsYgL
+	 7ZV3NNam2cLoYkJgU7F0tR2zX/IxcOxaIJWMgNiGur9avBqAmv4YJoLlIXDml2F2YN
+	 AZlmvPeKnUlwv06AnAM3eA6YbYUyJs6Fim+MmkvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mael GUERIN <mael.guerin@murena.io>,
 	stable <stable@kernel.org>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>
-Subject: [PATCH 6.6 524/587] usb: renesas-xhci: Fix External ROM access timeouts
-Date: Tue, 26 Aug 2025 13:11:13 +0200
-Message-ID: <20250826111006.328526578@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 525/587] USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera
+Date: Tue, 26 Aug 2025 13:11:14 +0200
+Message-ID: <20250826111006.355755626@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,69 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Mael GUERIN <mael.guerin@murena.io>
 
-commit f9420f4757752f056144896024d5ea89e5a611f1 upstream.
+commit 6ca8af3c8fb584f3424a827f554ff74f898c27cd upstream.
 
-Increase the External ROM access timeouts to prevent failures during
-programming of External SPI EEPROM chips. The current timeouts are
-too short for some SPI EEPROMs used with uPD720201 controllers.
+Add the US_FL_BULK_IGNORE_TAG quirk for Novatek NTK96550-based camera
+to fix USB resets after sending SCSI vendor commands due to CBW and
+CSW tags difference, leading to undesired slowness while communicating
+with the device.
 
-The current timeout for Chip Erase in renesas_rom_erase() is 100 ms ,
-the current timeout for Sector Erase issued by the controller before
-Page Program in renesas_fw_download_image() is also 100 ms. Neither
-timeout is sufficient for e.g. the Macronix MX25L5121E or MX25V5126F.
+Please find below the copy of /sys/kernel/debug/usb/devices with my
+device plugged in (listed as TechSys USB mass storage here, the
+underlying chipset being the Novatek NTK96550-based camera):
 
-MX25L5121E reference manual [1] page 35 section "ERASE AND PROGRAMMING
-PERFORMANCE" and page 23 section "Table 8. AC CHARACTERISTICS (Temperature
-= 0°C to 70°C for Commercial grade, VCC = 2.7V ~ 3.6V)" row "tCE" indicate
-that the maximum time required for Chip Erase opcode to complete is 2 s,
-and for Sector Erase it is 300 ms .
+T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=0603 ProdID=8611 Rev= 0.01
+S:  Manufacturer=TechSys
+S:  Product=USB Mass Storage
+S:  SerialNumber=966110000000100
+C:* #Ifs= 1 Cfg#= 1 Atr=c0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-MX25V5126F reference manual [2] page 47 section "13. ERASE AND PROGRAMMING
-PERFORMANCE (2.3V - 3.6V)" and page 42 section "Table 8. AC CHARACTERISTICS
-(Temperature = -40°C to 85°C for Industrial grade, VCC = 2.3V - 3.6V)" row
-"tCE" indicate that the maximum time required for Chip Erase opcode to
-complete is 3.2 s, and for Sector Erase it is 400 ms .
-
-Update the timeouts such, that Chip Erase timeout is set to 5 seconds,
-and Sector Erase timeout is set to 500 ms. Such lengthy timeouts ought
-to be sufficient for majority of SPI EEPROM chips.
-
-[1] https://www.macronix.com/Lists/Datasheet/Attachments/8634/MX25L5121E,%203V,%20512Kb,%20v1.3.pdf
-[2] https://www.macronix.com/Lists/Datasheet/Attachments/8750/MX25V5126F,%202.5V,%20512Kb,%20v1.1.pdf
-
-Fixes: 2478be82de44 ("usb: renesas-xhci: Add ROM loader for uPD720201")
+Signed-off-by: Mael GUERIN <mael.guerin@murena.io>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/r/20250802225526.25431-1-marek.vasut+renesas@mailbox.org
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250806164406.43450-1-mael.guerin@murena.io
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci-renesas.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -47,8 +47,9 @@
- #define RENESAS_ROM_ERASE_MAGIC				0x5A65726F
- #define RENESAS_ROM_WRITE_MAGIC				0x53524F4D
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -934,6 +934,13 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_SANE_SENSE ),
  
--#define RENESAS_RETRY	10000
--#define RENESAS_DELAY	10
-+#define RENESAS_RETRY			50000	/* 50000 * RENESAS_DELAY ~= 500ms */
-+#define RENESAS_CHIP_ERASE_RETRY	500000	/* 500000 * RENESAS_DELAY ~= 5s */
-+#define RENESAS_DELAY			10
- 
- static int renesas_fw_download_image(struct pci_dev *dev,
- 				     const u32 *fw, size_t step, bool rom)
-@@ -405,7 +406,7 @@ static void renesas_rom_erase(struct pci
- 	/* sleep a bit while ROM is erased */
- 	msleep(20);
- 
--	for (i = 0; i < RENESAS_RETRY; i++) {
-+	for (i = 0; i < RENESAS_CHIP_ERASE_RETRY; i++) {
- 		retval = pci_read_config_byte(pdev, RENESAS_ROM_STATUS,
- 					      &status);
- 		status &= RENESAS_ROM_STATUS_ERASE;
++/* Added by Maël GUERIN <mael.guerin@murena.io> */
++UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
++		"Novatek",
++		"NTK96550-based camera",
++		USB_SC_SCSI, USB_PR_BULK, NULL,
++		US_FL_BULK_IGNORE_TAG ),
++
+ /*
+  * Reported by Hanno Boeck <hanno@gmx.de>
+  * Taken from the Lycoris Kernel
 
 
