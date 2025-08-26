@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C933568E7;
-	Tue, 26 Aug 2025 14:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221BA2FC89C;
+	Tue, 26 Aug 2025 14:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218541; cv=none; b=MtLQT3BHbIwBsDNmSn231psUrBG470Gvlj4YUmKewgebZJdHCKWDUa+TFRg7keboDhded/IxcFNqLFnxusWmtVbWYpSJu59LbiAoZS+5tZg/tt1aprew9mY2qntTkgZYb5OlyjIbhNPE2mh5VHKWmL6vl04aKXNX58dbOfz7FmI=
+	t=1756218544; cv=none; b=h4eAlTYPcMaMBV1xgkw1mA99xlN5q7knlqiY8hbrjWr1zzPdIvlluH491gboT/AkA9qoEnTa31f70qcMtm3XTyiK+voX7Fqy1zwWVaTQkXcFcN4VTD2yLnj9OaMoM6VXsqnKzNcckenf5ISM6uuWm/vue1H5sqCQZz1T9Lo3OZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218541; c=relaxed/simple;
-	bh=vS+ROOjklo/VJNQ3+F7pGYJZ/zyFAknUF2N/gcPZZ5k=;
+	s=arc-20240116; t=1756218544; c=relaxed/simple;
+	bh=3CDN/iTDGdSb7mnlWXzyoa6/xzmhg7zjEXr++NvRqQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZ/gcIWhhSBl7f3jymw9NTGkCu4S+gmYCxnxYfi/8xn3UbTAFUtQT5ZXnErzP75L4kfSiPWQcfdx5w6Q+cSmoFd2wWpVSAl/5EX10PrtqzBkMEZRchzjaAyolgCdk8OmCa6qGylHLZ4eDlw0NRkvh5EojIy8QkoT+l2bglOeQHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpaklglL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3skOVfxe5fBqO6qoXt7I1lpHSBuOYjKxVHqA5BVr7mniowxyFsV/Q5kiIoJuTM9ivOQ0XeuzkfKVkW1mbFo0tejtLHI7nFdE3xFMjjVT4Fi356QpwK8WEVYawVmzkyKWrDYCpZT4Ao7+0hPQ3OBketH9xv3g52/kjs9xKGjN+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2KUsB5e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpaklglL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1AFC4CEF1;
-	Tue, 26 Aug 2025 14:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2KUsB5e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDA5C4CEF1;
+	Tue, 26 Aug 2025 14:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218541;
-	bh=vS+ROOjklo/VJNQ3+F7pGYJZ/zyFAknUF2N/gcPZZ5k=;
+	s=korg; t=1756218544;
+	bh=3CDN/iTDGdSb7mnlWXzyoa6/xzmhg7zjEXr++NvRqQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpaklglLp82WPChR0JFUt/PysolOK0N9CIy1w1bjrrvxW0pkEYHu35diRsQ8D88Bp
-	 WSmICIBh4VRo8YExz3r+kwroGX9e0RrriRzt1S1zsvsO3e8KI6cDMj5K/p5NEpjIPv
-	 7jeELLv6AWzsZnxUwKUcjlKV9AmfvZA3XhZf4of4=
+	b=J2KUsB5eXCDcSqXIaItXvp0JjWKq1vaJkQ48CeLd/rh7zPMg2SjpBMyaDVBDRpJkx
+	 MW2j8WBc6DSGZpLLP6vhXJ3D94z01l111HwZLke9oWeKjnAhL1lmQzaTFzKMAQbTQu
+	 cKdRiO6iu6hziTSUlfIEWROz1PIFHbpNPMukFSm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>,
+	Drew Hamilton <drew.hamilton@zetier.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 039/403] net/sched: Return NULL when htb_lookup_leaf encounters an empty rbtree
-Date: Tue, 26 Aug 2025 13:06:05 +0200
-Message-ID: <20250826110906.898579547@linuxfoundation.org>
+Subject: [PATCH 5.4 040/403] usb: musb: fix gadget state on disconnect
+Date: Tue, 26 Aug 2025 13:06:06 +0200
+Message-ID: <20250826110906.923920683@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,91 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Liu <will@willsroot.io>
+From: Drew Hamilton <drew.hamilton@zetier.com>
 
-[ Upstream commit 0e1d5d9b5c5966e2e42e298670808590db5ed628 ]
+commit 67a59f82196c8c4f50c83329f0577acfb1349b50 upstream.
 
-htb_lookup_leaf has a BUG_ON that can trigger with the following:
+When unplugging the USB cable or disconnecting a gadget in usb peripheral mode with
+echo "" > /sys/kernel/config/usb_gadget/<your_gadget>/UDC,
+/sys/class/udc/musb-hdrc.0/state does not change from USB_STATE_CONFIGURED.
 
-tc qdisc del dev lo root
-tc qdisc add dev lo root handle 1: htb default 1
-tc class add dev lo parent 1: classid 1:1 htb rate 64bit
-tc qdisc add dev lo parent 1:1 handle 2: netem
-tc qdisc add dev lo parent 2:1 handle 3: blackhole
-ping -I lo -c1 -W0.001 127.0.0.1
+Testing on dwc2/3 shows they both update the state to USB_STATE_NOTATTACHED.
 
-The root cause is the following:
+Add calls to usb_gadget_set_state in musb_g_disconnect and musb_gadget_stop
+to fix both cases.
 
-1. htb_dequeue calls htb_dequeue_tree which calls the dequeue handler on
-   the selected leaf qdisc
-2. netem_dequeue calls enqueue on the child qdisc
-3. blackhole_enqueue drops the packet and returns a value that is not
-   just NET_XMIT_SUCCESS
-4. Because of this, netem_dequeue calls qdisc_tree_reduce_backlog, and
-   since qlen is now 0, it calls htb_qlen_notify -> htb_deactivate ->
-   htb_deactiviate_prios -> htb_remove_class_from_row -> htb_safe_rb_erase
-5. As this is the only class in the selected hprio rbtree,
-   __rb_change_child in __rb_erase_augmented sets the rb_root pointer to
-   NULL
-6. Because blackhole_dequeue returns NULL, netem_dequeue returns NULL,
-   which causes htb_dequeue_tree to call htb_lookup_leaf with the same
-   hprio rbtree, and fail the BUG_ON
-
-The function graph for this scenario is shown here:
- 0)               |  htb_enqueue() {
- 0) + 13.635 us   |    netem_enqueue();
- 0)   4.719 us    |    htb_activate_prios();
- 0) # 2249.199 us |  }
- 0)               |  htb_dequeue() {
- 0)   2.355 us    |    htb_lookup_leaf();
- 0)               |    netem_dequeue() {
- 0) + 11.061 us   |      blackhole_enqueue();
- 0)               |      qdisc_tree_reduce_backlog() {
- 0)               |        qdisc_lookup_rcu() {
- 0)   1.873 us    |          qdisc_match_from_root();
- 0)   6.292 us    |        }
- 0)   1.894 us    |        htb_search();
- 0)               |        htb_qlen_notify() {
- 0)   2.655 us    |          htb_deactivate_prios();
- 0)   6.933 us    |        }
- 0) + 25.227 us   |      }
- 0)   1.983 us    |      blackhole_dequeue();
- 0) + 86.553 us   |    }
- 0) # 2932.761 us |    qdisc_warn_nonwc();
- 0)               |    htb_lookup_leaf() {
- 0)               |      BUG_ON();
- ------------------------------------------
-
-The full original bug report can be seen here [1].
-
-We can fix this just by returning NULL instead of the BUG_ON,
-as htb_dequeue_tree returns NULL when htb_lookup_leaf returns
-NULL.
-
-[1] https://lore.kernel.org/netdev/pF5XOOIim0IuEfhI-SOxTgRvNoDwuux7UHKnE_Y5-zVd4wmGvNk2ceHjKb8ORnzw0cGwfmVu42g9dL7XyJLf1NEzaztboTWcm0Ogxuojoeo=@willsroot.io/
-
-Fixes: 512bb43eb542 ("pkt_sched: sch_htb: Optimize WARN_ONs in htb_dequeue_tree() etc.")
-Signed-off-by: William Liu <will@willsroot.io>
-Signed-off-by: Savino Dicanosa <savy@syst3mfailure.io>
-Link: https://patch.msgid.link/20250717022816.221364-1-will@willsroot.io
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 49401f4169c0 ("usb: gadget: introduce gadget state tracking")
+Cc: stable@vger.kernel.org
+Co-authored-by: Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>
+Signed-off-by: Yehowshua Immanuel <yehowshua.immanuel@twosixtech.com>
+Signed-off-by: Drew Hamilton <drew.hamilton@zetier.com>
+Link: https://lore.kernel.org/r/20250701154126.8543-1-drew.hamilton@zetier.com
+[ replaced musb_set_state() call with direct otg state assignment ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_htb.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/musb/musb_gadget.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -776,7 +776,9 @@ static struct htb_class *htb_lookup_leaf
- 		u32 *pid;
- 	} stk[TC_HTB_MAXDEPTH], *sp = stk;
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1910,6 +1910,7 @@ static int musb_gadget_stop(struct usb_g
+ 	 * gadget driver here and have everything work;
+ 	 * that currently misbehaves.
+ 	 */
++	usb_gadget_set_state(g, USB_STATE_NOTATTACHED);
  
--	BUG_ON(!hprio->row.rb_node);
-+	if (unlikely(!hprio->row.rb_node))
-+		return NULL;
-+
- 	sp->root = hprio->row.rb_node;
- 	sp->pptr = &hprio->ptr;
- 	sp->pid = &hprio->last_ptr_id;
+ 	/* Force check of devctl register for PM runtime */
+ 	schedule_delayed_work(&musb->irq_work, 0);
+@@ -2018,6 +2019,7 @@ void musb_g_disconnect(struct musb *musb
+ 	case OTG_STATE_B_PERIPHERAL:
+ 	case OTG_STATE_B_IDLE:
+ 		musb->xceiv->otg->state = OTG_STATE_B_IDLE;
++		usb_gadget_set_state(&musb->g, USB_STATE_NOTATTACHED);
+ 		break;
+ 	case OTG_STATE_B_SRP_INIT:
+ 		break;
 
 
