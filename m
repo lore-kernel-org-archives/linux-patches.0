@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F90350D4F;
-	Tue, 26 Aug 2025 13:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BA934A315;
+	Tue, 26 Aug 2025 13:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216627; cv=none; b=sGGbcxOKngwPdmO9I9560cimot3XJFX2iO78KCPaLOPKbdhBh+YJ1UTtwhISq+xc2Hb9sSjmgia+pHmXvsqf2vAHzV5i+fA0FNmoURFWVOXoj9Q59lGu+OsnbDclKjc9e4FRbHy3HOz+RS0XCFLDvKhatMX2FXYwYu0tP27PdDY=
+	t=1756216630; cv=none; b=fqYPd2jQ8Y4yOa0UFuxiwYrmJdE2/sVGcz4ailA2QNdWwfBI+s9c5cOyFim82vDnSSSkjPcY/KO46rx2m+kivbpWynoja3vW909Go9e9zwoiJcTWLVuWovhiSXP9ufqCo0JitU9VwRljgQcp+uYXl8SKPh2eb1k5PnYhDNSHkgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216627; c=relaxed/simple;
-	bh=vfauPPBk3wbvwfVs7n0sLkoNqXu+IpBf8oCkqoJnljI=;
+	s=arc-20240116; t=1756216630; c=relaxed/simple;
+	bh=n3NrfI0BL3KZz2vNYIxLDwH0+fTdaKE0czVDD0UIIls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E43a69laGGzFGygrGc2rrUTrE7uV9XlhMXLIkM0XLGDQX7D+Ve+LfdO3XymYycW35XmcHg3NuFAyjAhBVdjLkLMfc95ut4H6XY5/IDR5Skcb5+1bb58PKbn1Bj+1zV3R/mXxvBfwEQzn4Sw+DLJD2bfB1Xj9yXZyzVtIG68fsKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkAY2M3R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UZfjQ8Xh04Sc3Ws7f6x0aPh/o9p25lVU56Yr0D0eLAf7BOwjctAzamTRTBdj5P8ue4uIppSHuuVSqfj0BzJzQyjbzagGQ2VQV2uWML/RijSjV2vWlo1aYZXAAgMzW7Ur1o0zhq0DZYBIgrTr3X4Ja3JGMWwYocbVKsLnLCSuAd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEW0wKWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkAY2M3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131CAC4CEF1;
-	Tue, 26 Aug 2025 13:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEW0wKWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2A4C4CEF1;
+	Tue, 26 Aug 2025 13:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216627;
-	bh=vfauPPBk3wbvwfVs7n0sLkoNqXu+IpBf8oCkqoJnljI=;
+	s=korg; t=1756216630;
+	bh=n3NrfI0BL3KZz2vNYIxLDwH0+fTdaKE0czVDD0UIIls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkAY2M3RpzqWve5rgaCljAb1ukMwJR3TFHQ1cmPXJQcoV+mv4XOT4D8ueAVlsHgsq
-	 gtRiZtV/4FVmMx6CN+tTQGCk/tCzOy4rb9kwu/wifl9jzN75/WM5s1N1a42sFvzgHO
-	 tap52TXYkhcnQ9wPSqR6qvZhYV8axdWGSEo7/9uk=
+	b=pEW0wKWIbdc2IRZFKP5UehD+6NJ7yXCBkRlfjNU/UQ6Hw810f+9GyjXoM9uv1Jkp/
+	 UbGWuaPprrby1eqw+58RRdJe69s22EEcc05VEPOKtSdXZERWjY9+73JbXdJ+cawuCu
+	 3JkWKe6lj7WMQnXi+0U5QR7UYOuyQGOOP9a2iyYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 5.15 483/644] PCI: endpoint: Fix configfs group removal on driver teardown
-Date: Tue, 26 Aug 2025 13:09:34 +0200
-Message-ID: <20250826110958.454926893@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 484/644] jbd2: prevent softlockup in jbd2_log_do_checkpoint()
+Date: Tue, 26 Aug 2025 13:09:35 +0200
+Message-ID: <20250826110958.481051200@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,53 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 910bdb8197f9322790c738bb32feaa11dba26909 upstream.
+commit 9d98cf4632258720f18265a058e62fde120c0151 upstream.
 
-An endpoint driver configfs attributes group is added to the
-epf_group list of struct pci_epf_driver by pci_epf_add_cfs() but an
-added group is not removed from this list when the attribute group is
-unregistered with pci_ep_cfs_remove_epf_group().
+Both jbd2_log_do_checkpoint() and jbd2_journal_shrink_checkpoint_list()
+periodically release j_list_lock after processing a batch of buffers to
+avoid long hold times on the j_list_lock. However, since both functions
+contend for j_list_lock, the combined time spent waiting and processing
+can be significant.
 
-Add the missing list_del() call in pci_ep_cfs_remove_epf_group()
-to correctly remove the attribute group from the driver list.
+jbd2_journal_shrink_checkpoint_list() explicitly calls cond_resched() when
+need_resched() is true to avoid softlockups during prolonged operations.
+But jbd2_log_do_checkpoint() only exits its loop when need_resched() is
+true, relying on potentially sleeping functions like __flush_batch() or
+wait_on_buffer() to trigger rescheduling. If those functions do not sleep,
+the kernel may hit a softlockup.
 
-With this change, once the loop over all attribute groups in
-pci_epf_remove_cfs() completes, the driver epf_group list should be
-empty. Add a WARN_ON() to make sure of that.
+watchdog: BUG: soft lockup - CPU#3 stuck for 156s! [kworker/u129:2:373]
+CPU: 3 PID: 373 Comm: kworker/u129:2 Kdump: loaded Not tainted 6.6.0+ #10
+Hardware name: Huawei TaiShan 2280 /BC11SPCD, BIOS 1.27 06/13/2017
+Workqueue: writeback wb_workfn (flush-7:2)
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : native_queued_spin_lock_slowpath+0x358/0x418
+lr : jbd2_log_do_checkpoint+0x31c/0x438 [jbd2]
+Call trace:
+ native_queued_spin_lock_slowpath+0x358/0x418
+ jbd2_log_do_checkpoint+0x31c/0x438 [jbd2]
+ __jbd2_log_wait_for_space+0xfc/0x2f8 [jbd2]
+ add_transaction_credits+0x3bc/0x418 [jbd2]
+ start_this_handle+0xf8/0x560 [jbd2]
+ jbd2__journal_start+0x118/0x228 [jbd2]
+ __ext4_journal_start_sb+0x110/0x188 [ext4]
+ ext4_do_writepages+0x3dc/0x740 [ext4]
+ ext4_writepages+0xa4/0x190 [ext4]
+ do_writepages+0x94/0x228
+ __writeback_single_inode+0x48/0x318
+ writeback_sb_inodes+0x204/0x590
+ __writeback_inodes_wb+0x54/0xf8
+ wb_writeback+0x2cc/0x3d8
+ wb_do_writeback+0x2e0/0x2f8
+ wb_workfn+0x80/0x2a8
+ process_one_work+0x178/0x3e8
+ worker_thread+0x234/0x3b8
+ kthread+0xf0/0x108
+ ret_from_fork+0x10/0x20
 
-Fixes: ef1433f717a2 ("PCI: endpoint: Create configfs entry for each pci_epf_device_id table entry")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250624114544.342159-3-dlemoal@kernel.org
+So explicitly call cond_resched() in jbd2_log_do_checkpoint() to avoid
+softlockup.
+
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20250812063752.912130-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-ep-cfs.c   |    1 +
- drivers/pci/endpoint/pci-epf-core.c |    1 +
- 2 files changed, 2 insertions(+)
+ fs/jbd2/checkpoint.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/endpoint/pci-ep-cfs.c
-+++ b/drivers/pci/endpoint/pci-ep-cfs.c
-@@ -658,6 +658,7 @@ void pci_ep_cfs_remove_epf_group(struct
- 	if (IS_ERR_OR_NULL(group))
- 		return;
- 
-+	list_del(&group->group_entry);
- 	configfs_unregister_default_group(group);
- }
- EXPORT_SYMBOL(pci_ep_cfs_remove_epf_group);
---- a/drivers/pci/endpoint/pci-epf-core.c
-+++ b/drivers/pci/endpoint/pci-epf-core.c
-@@ -343,6 +343,7 @@ static void pci_epf_remove_cfs(struct pc
- 	mutex_lock(&pci_epf_mutex);
- 	list_for_each_entry_safe(group, tmp, &driver->epf_group, group_entry)
- 		pci_ep_cfs_remove_epf_group(group);
-+	WARN_ON(!list_empty(&driver->epf_group));
- 	mutex_unlock(&pci_epf_mutex);
- }
- 
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -297,6 +297,7 @@ restart:
+ 		retry:
+ 			if (batch_count)
+ 				__flush_batch(journal, &batch_count);
++			cond_resched();
+ 			spin_lock(&journal->j_list_lock);
+ 			goto restart;
+ 	}
 
 
