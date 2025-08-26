@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7051DB127;
-	Tue, 26 Aug 2025 13:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46702139C9;
+	Tue, 26 Aug 2025 13:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215559; cv=none; b=JDlrN9lnZUUf4DNrdb0dBaH29GijwQf2xMjYn5S7vxTK3my4Y+9Qm7vzP6mpe8xvuFnVyXyzKyX5akGfVO7Y7sLDyiiQmFhdRZLK0o9w2B+NK78hSCmnsaNSDHuqNjW88dY7g2odoBnzf9uFZH2HWnUJILm9mGoWA/LqjV+Pq1Q=
+	t=1756215561; cv=none; b=jWp0dte2hlVr+7NcbFp07DEr0ti8vU21SFcv6MYif7S8x6GMQ4cPC/Cv//xRPbGlqMbN6GB8chLyauls+RYlLhLSPFks2KFTUqYLule0iU2H2nIbbfCpRNce1TBAibK+ppSjopGRzDz3wZ/NiSrvO2eu6IxwCtItHz/lueWk2gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215559; c=relaxed/simple;
-	bh=/MD4zmlpTiXKV9rJVSwaS+j51LzygHOijN8gOagfRRk=;
+	s=arc-20240116; t=1756215561; c=relaxed/simple;
+	bh=MqJrrWzPvSPNq3fIoCYWKeXs2xTQfMuNOP0Ucsukddg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oep14ecHBMx17pLQ4Mdy/HvC5CK8ElwGpRcC5/F8hB5/qiGFYVBXd+rmB/2huSdt9aT+d6M5PLXEh3XM9LFbp4CwXWUm/7ZlXTGmK7o8QxT0ya3Yioh+OeXHvkOIP9Bm4Ee3zB6q+xspbmMZQGoKQzMLMTRkLOwZGgPNUGRmVUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ0UnkU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bY6xtopfEtngBw365H0YP1laFaba4mZJ4vTM5C3KbGYJ3q6Sgr1ChMv4Ms0xDPQVWAo3jSIFYpwHjf1119k7TUyI+wS2/HdCran6emnmwijMZCTy5qJqd8UZUDSulNP3XuD+k/r5/kXFsCMqbzU4rZmdNtCRvry9ZB91bQs4pQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gm0fs3TI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ0UnkU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1083C4CEF1;
-	Tue, 26 Aug 2025 13:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gm0fs3TI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36087C4CEF1;
+	Tue, 26 Aug 2025 13:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215559;
-	bh=/MD4zmlpTiXKV9rJVSwaS+j51LzygHOijN8gOagfRRk=;
+	s=korg; t=1756215561;
+	bh=MqJrrWzPvSPNq3fIoCYWKeXs2xTQfMuNOP0Ucsukddg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yZ0UnkU5FzApoOPF/gnKjC0UXfZZMbDqvw48iRipqMoIc9A3nG6beJPuWHgLRmziZ
-	 9yMRUybf75nsG0UJTHjxKWMpplsOWhM4xI85Ydw/nN4K+Z3xy10S2q4yfeTAZqXW2u
-	 ui0CMpa5NM9QhfHevpUG2A0qg4dEo0waVkw8hz74=
+	b=gm0fs3TI6Rur20/jJCrgChYFC/cXreQTku+VhedRvERe8wai7Sj1TnKA1Y9nVxYph
+	 Tfo8PLOZad1A1GUkKEBR535PXVWUnCcVfC5LzZ4PO8Kp/FstN/vjSaqKle8onPaESi
+	 yA2rJJilfzcCln9RxR+k1gGOET0Vu5eMja3YlnXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xilin Wu <sophon@radxa.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/644] interconnect: qcom: sc7280: Add missing num_links to xm_pcie3_1 node
-Date: Tue, 26 Aug 2025 13:02:50 +0200
-Message-ID: <20250826110948.455114476@linuxfoundation.org>
+Subject: [PATCH 5.15 080/644] regmap: fix potential memory leak of regmap_bus
+Date: Tue, 26 Aug 2025 13:02:51 +0200
+Message-ID: <20250826110948.480096770@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,34 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xilin Wu <sophon@radxa.com>
+From: Abdun Nihaal <abdun.nihaal@gmail.com>
 
-[ Upstream commit 886a94f008dd1a1702ee66dd035c266f70fd9e90 ]
+[ Upstream commit c871c199accb39d0f4cb941ad0dccabfc21e9214 ]
 
-This allows adding interconnect paths for PCIe 1 in device tree later.
+When __regmap_init() is called from __regmap_init_i2c() and
+__regmap_init_spi() (and their devm versions), the bus argument
+obtained from regmap_get_i2c_bus() and regmap_get_spi_bus(), may be
+allocated using kmemdup() to support quirks. In those cases, the
+bus->free_on_exit field is set to true.
 
-Fixes: 46bdcac533cc ("interconnect: qcom: Add SC7280 interconnect provider driver")
-Signed-off-by: Xilin Wu <sophon@radxa.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250613-sc7280-icc-pcie1-fix-v1-1-0b09813e3b09@radxa.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+However, inside __regmap_init(), buf is not freed on any error path.
+This could lead to a memory leak of regmap_bus when __regmap_init()
+fails. Fix that by freeing bus on error path when free_on_exit is set.
+
+Fixes: ea030ca68819 ("regmap-i2c: Set regmap max raw r/w from quirks")
+Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Link: https://patch.msgid.link/20250626172823.18725-1-abdun.nihaal@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sc7280.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/regmap/regmap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
-index f8b34f6cbb0d1..cd5efeb764044 100644
---- a/drivers/interconnect/qcom/sc7280.c
-+++ b/drivers/interconnect/qcom/sc7280.c
-@@ -164,6 +164,7 @@ static struct qcom_icc_node xm_pcie3_1 = {
- 	.id = SC7280_MASTER_PCIE_1,
- 	.channels = 1,
- 	.buswidth = 8,
-+	.num_links = 1,
- 	.links = { SC7280_SLAVE_ANOC_PCIE_GEM_NOC },
- };
- 
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 6d94ad8bf1eb7..ebddc69bc969c 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1264,6 +1264,8 @@ struct regmap *__regmap_init(struct device *dev,
+ err_map:
+ 	kfree(map);
+ err:
++	if (bus && bus->free_on_exit)
++		kfree(bus);
+ 	return ERR_PTR(ret);
+ }
+ EXPORT_SYMBOL_GPL(__regmap_init);
 -- 
 2.39.5
 
