@@ -1,108 +1,219 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68931F5825
-	for <patches@lists.linux.dev>; Tue, 26 Aug 2025 23:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F4429BD90;
+	Tue, 26 Aug 2025 23:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756249523; cv=none; b=uuSe0w7BKpS/upkycfBpfvpVUXszpRgLMX8O7vnfecBxTS2JV5oJncVWFx0jNn7mMjFsYFR4todpEAJFAKkkTZt/lVjAj6Cw2saDb6Aw7H+qejvOD9atubCZ9GtFy6H+bNqnUvwhhgx8NKFHHxPlgXdCkp7vcjhEoyyQ8BaOOOQ=
+	t=1756250460; cv=none; b=TfJxxHujXLa//0zIZP/uj8e+QMdRXdWv2ppQT1jzKHTzKttDWRgu3sPLh9gYHCuBA7mSnpCcubck1gQwauXylokMovv+IamsWszZDCbWYQ3O7F0t2AqG3IEDvQ0tli0PxdxdWzM4X477es2C2YHMjrodGUjdMsR3vyMowkM9PdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756249523; c=relaxed/simple;
-	bh=Ntf1uv8iqeTVzpcpfPCUovUSPoRWsWezcHFAuAaDnQ4=;
+	s=arc-20240116; t=1756250460; c=relaxed/simple;
+	bh=4JztsWOXxaNw/MW7O5iCvXzmvGGxquSUTrJMlIKbZeo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=slq3aKoxO37Nf3Yds6Y5mXAdHIFbgsEu7YeKc4l2+UVmjKj9VAYQfsdHPUfz8+sUYKp7pOSnLhCb9xyvcMJAdObzRjfx97dZhvW+EpIaYtWnQok77OL16lyGA/pIz/4nbMNga1ehcnzDm/h8VmcjiUq0tPsWw5ObCJ5YvwB5pAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=IOjKwPNx; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=QOwOMBFMPoj0eJiRipwYNrhPK+/JysWPSekfbMojM6GfNBUKeqaLv9J3l3jM2bIFqEG4ErKfHfZyj7Ai+7lte6u1VT8EN9TTppv21xtm4gOxVfJcGa/e4NXIl1Gde5YL9oVDN3tAbet4fLUDUOmbHVleJamEOWd3SWjW81g2VZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ZN/eUk8w; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IOjKwPNx"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3cb9268511bso599567f8f.0
-        for <patches@lists.linux.dev>; Tue, 26 Aug 2025 16:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1756249520; x=1756854320; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AZfSjh7i/ntcVqacdlAKOPl4pOi7bpW4S9RgH4BiaRA=;
-        b=IOjKwPNxM/LB20C3J2bRNnJMtPE+aOwEDT45unoPbD1QnTl6OaVLuNWM9tWBFrpnKc
-         23YQr2sDuvRvFjFvrx2abXi+Jq68RRLkVsAgOdQcco8B6QN5HfMNbOFznZt/VfGCaXyK
-         qL6TgbMeRUeTVl/g4VNznUTBYLaVAvI1BSson6tFDYdvlyrc8GxEa3/9Rq2hB45Bmpa5
-         LKiuDt35j8gOBFxIBpK+osfomi+206d8GGDCYAXHun7gxdYvJrGmgYqPlRE04b0cBoml
-         R1WtvUPQS6i6SF7FYfY9h+Vhg8+K4arCdQGq/AOpZwj2uMA3W+7Nv/7uBIk9sdEL5VyE
-         CPxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756249520; x=1756854320;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AZfSjh7i/ntcVqacdlAKOPl4pOi7bpW4S9RgH4BiaRA=;
-        b=uIqenFcaZUChNF7BuoeC1Y5NP9oWZPFTKzLpabt3TBPYrQiU7nkDXUprEcaSN0BXO7
-         /a8D34bSS3TA2fluA1i9w8zDg9IGHYraZlmhvGHeLeSBVnxnPyGE4P6dgFHaRWP9cNeQ
-         rj4Yl0j0ZymntZv3pQiCbarQuz3f25lUYWL6+PIUVkelcaGdwB0+V3nTNNmf+oOaWUWT
-         v92f66fnUA+XMrAgeEUNuvl6V5GnkcjpCvC3n9KL49KrEkG7GvyZKdoE2zeFqPQROuku
-         XDkNx2txj+WlHKph4n1m8yHoFra5kvp6XSihIj4pHkhENy2vHSdcKFt6iJuCRzn0fY8D
-         RY2Q==
-X-Gm-Message-State: AOJu0YyFeZieLxQPbkibUHLemX2O3sgUbNM4tosDepLZNBxJaCF6MTh+
-	hmuhgh+CKgUvr6dLafYePC+M02RAe+HS0yg+Zsh4u/NHCyp9yjtbFv4=
-X-Gm-Gg: ASbGnctE/6z00P4+MIwB95CLg11sFid65fO6N5VgJ5h4cb63UJHs639uNPCuZsNxX0j
-	Pl+emIkSQjOIPfIVh9N/Kdbx1FdSrUUQlHmdKS0wur5EojzfpYLf9O6P6C9ZYscTS+8TffqIud9
-	pmJBCM3Cc+r2WzVgdp2QT3uv9Q3Ih2IdiQVJa96TwG0aKB1JkOfxFoJfXW4b+QxJtOlTiW3HARG
-	wZ+0eXZtn2ccZpd38kYM6xUnbIqbqOqRbq0YMzydQjZAP8JYU13uw8GTvSWiAW5Wz/0EsXlLiwZ
-	Ub4gT1B7aE+qiA/S0S3RyF03njEy8zn8o4fJQYC0WbnV8Y8VtwZ5Mto2vkvl4qU012+f2gZ6Iiw
-	uPNSusu15kUgF5z//DvWPDpswt7xpAPwOajCXFUKaVvZWuoWg9n9VDc3WEBPvizWyKlsp6GdC6A
-	==
-X-Google-Smtp-Source: AGHT+IHlfoH3zm/dopGG45e2eJiSTjBOdFRANpue/GnxzPD0rcQZdRsEs1ifItNI1iZFFELob93y4Q==
-X-Received: by 2002:a05:6000:3105:b0:3b9:10c5:bd7d with SMTP id ffacd0b85a97d-3c5da83a6b8mr13874103f8f.10.1756249520171;
-        Tue, 26 Aug 2025 16:05:20 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057219.dip0.t-ipconnect.de. [91.5.114.25])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c70e4ba078sm19710659f8f.4.2025.08.26.16.05.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 16:05:19 -0700 (PDT)
-Message-ID: <7f7b9d4b-ff17-4efc-bc93-699bb417c925@googlemail.com>
-Date: Wed, 27 Aug 2025 01:05:19 +0200
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ZN/eUk8w"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=58PKSnkaNXZ7dYOOuXTdylSdXrVJpRTgtX2b86oy1M8=; b=ZN/eUk8w54n3WKCh0soZlXbogy
+	uroA3WDBcrBimk4WvO0pNWvr4KX7NutaJ8/oec5OUHF5zsNpaXdejW69qLnA1Iwl/GGWWM/q7X/qg
+	vg2WZOMv+Hee/4LBnpuULqtF6drrP3AqdmARO7MIwSVbzF/hr+33ekQTazmv3LkrCjYhd23L0O6jr
+	AcmwRVgbeZVS9ZyaePigAxwmm9WHvVm5EobZndcXHhzQtk9sbxMX7UbNkakORIF+PxZP6twXkbp1M
+	3pit4NxKSKB9Ox2BEl5409tHVEdcL5V7hh+r7bYl4ZRoTcqBhiBNAYYbn/5M6y3sQKZqiYOix+Rn9
+	uu8rcxEA==;
+Received: from [50.53.25.54] (helo=[192.168.254.17])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1ur2yF-0000000DL6g-3kG1;
+	Tue, 26 Aug 2025 23:20:55 +0000
+Message-ID: <c17f0cf1-9a80-4f1a-94a1-8869b8ed0a53@infradead.org>
+Date: Tue, 26 Aug 2025 16:20:54 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.16 000/457] 6.16.4-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org
-References: <20250826110937.289866482@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Am 26.08.2025 um 13:04 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.16.4 release.
-> There are 457 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/15] iommupt: Add map_pages op
+To: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Justin Stitt <justinstitt@google.com>, Kevin Tian <kevin.tian@intel.com>,
+ linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ llvm@lists.linux.dev, Bill Wendling <morbo@google.com>,
+ Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+ Miguel Ojeda <ojeda@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Shuah Khan <shuah@kernel.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Will Deacon <will@kernel.org>
+Cc: Alexey Kardashevskiy <aik@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ James Gowans <jgowans@amazon.com>, Michael Roth <michael.roth@amd.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
+References: <7-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <7-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
-Beste Grüße,
-Peter Schneider
+
+On 8/26/25 10:18 AM, Jason Gunthorpe wrote:
+> 
+> Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/generic_pt/iommu_pt.h | 480 ++++++++++++++++++++++++++++
+>  include/linux/generic_pt/iommu.h    |  58 ++++
+>  2 files changed, 538 insertions(+)
+> 
+> diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+> index 53901a4a977935..ee762dde6fd531 100644
+> --- a/drivers/iommu/generic_pt/iommu_pt.h
+> +++ b/drivers/iommu/generic_pt/iommu_pt.h
+
+[snip]
+
+
+> +
+> +/**
+> + * map_range() - Install translation for an IOVA range
+
+Maybe I don't understand the macros (haven't looked lately).
+
+Function name appears to be map_pages(), not map_range().
+
+> + * @iommu_table: Table to manipulate
+> + * @iova: IO virtual address to start
+> + * @paddr: Physical/Output address to start
+> + * @len: Length of the range starting from @iova
+> + * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
+> + * @gfp: GFP flags for any memory allocations
+> + * @gather: Gather struct that must be flushed on return
+> + *
+
+and the @params above don't match the actual function arguments. (?)
+
+> + * The range starting at IOVA will have paddr installed into it. The rage is
+> + * automatically segmented into optimally sized table entries, and can have any
+> + * valid alignment.
+> + *
+> + * On error the caller will probably want to invoke unmap on the range from iova
+> + * up to the amount indicated by @mapped to return the table back to an
+> + * unchanged state.
+> + *
+> + * Context: The caller must hold a write range lock that includes the whole
+> + * range.
+> + *
+> + * Returns: -ERRNO on failure, 0 on success. The number of bytes of VA that were
+> + * mapped are added to @mapped, @mapped is not zerod first.
+> + */
+> +int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova,
+> +			 phys_addr_t paddr, size_t pgsize, size_t pgcount,
+> +			 int prot, gfp_t gfp, size_t *mapped)
+> +{
+
+
+> diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
+> index 382596b70e394e..2ca62812b5a152 100644
+> --- a/include/linux/generic_pt/iommu.h
+> +++ b/include/linux/generic_pt/iommu.h
+> @@ -11,6 +11,7 @@
+>  
+>  struct iommu_iotlb_gather;
+>  struct pt_iommu_ops;
+> +struct pt_iommu_flush_ops;
+>  
+>  /**
+>   * DOC: IOMMU Radix Page Table
+> @@ -43,6 +44,12 @@ struct pt_iommu {
+>  	 */
+>  	const struct pt_iommu_ops *ops;
+>  
+> +	/**
+> +	 * @hw_flush_ops - Function pointers provided by the HW driver to flush
+> +	 * HW caches after changes to the page table.
+
+All of these "@param -" should be "@param:" (or "@param :" if you prefer that.)
+Otherwise a kernel-doc build warning happens for each one of them.
+
+(others deleted...)
+
+
+>  
+> +/**
+> + * struct pt_iommu_flush_ops - HW IOTLB cache flushing operations
+> + *
+> + * The IOMMU driver should implement these using container_of(iommu_table) to
+> + * get to it's iommu_domain dervied structure. All ops can be called in atomic
+> + * contexts as they are buried under DMA API calls.
+> + */
+> +struct pt_iommu_flush_ops {
+> +	/**
+> +	 * change_top() - Update the top of table pointer
+
+This should be
+	 * @change_top: Update the top of table pointer
+since it is a struct member, not a function. Otherwise it causes
+build warnings.
+
+
+> +	 * @iommu_table: Table to operate on
+> +	 * @top_paddr: New CPU physical address of the top pointer
+> +	 * @top_level: IOMMU PT level of the new top
+
+We don't really have a way to document parameters of a callback function
+inside a struct, but for now kernel-doc.py won't complain about it.
+(Somehow kernel-doc.pl did once upon a time and then that became dead code.)
+
+> +	 *
+> +	 * Called under the get_top_lock() spinlock. The driver must update all
+> +	 * HW references to this domain with a new top address and
+> +	 * configuration. On return mappings placed in the new top must be
+> +	 * reachable by the HW.
+> +	 *
+> +	 * top_level encodes the level in IOMMU PT format, level 0 is the
+> +	 * smallest page size increasing from there. This has to be translated
+> +	 * to any HW specific format. During this call the new top will not be
+> +	 * visible to any other API.
+> +	 *
+> +	 * This op is only used by PT_FEAT_DYNAMIC_TOP, and is required if
+> +	 * enabled.
+> +	 */
+> +	void (*change_top)(struct pt_iommu *iommu_table, phys_addr_t top_paddr,
+> +			   unsigned int top_level);
+> +
+> +	/**
+> +	 * get_top_lock() - Return a lock to hold when changing the table top
+
+This one should be
+	 * @get_top_lock: <description>
+
+This is just a struct.member so it should be documented like one; otherwise
+it causes a kernel warning.
+
+
+> +	 * @iommu_table: Table to operate on
+> +	 *
+> +	 * page table from being stored in HW. The lock will be held prior
+> +	 * to calling change_top() and released once the top is fully visible.
+> +	 *
+> +	 * Typically this would be a lock that protects the iommu_domain's
+> +	 * attachment list.
+> +	 *
+> +	 * This op is only used by PT_FEAT_DYNAMIC_TOP, and is required if
+> +	 * enabled.
+> +	 */
+> +	spinlock_t *(*get_top_lock)(struct pt_iommu *iommu_table);
+> +};
+> +
 
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+~Randy
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
