@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDD7242D6A;
-	Tue, 26 Aug 2025 13:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201E228000C;
+	Tue, 26 Aug 2025 13:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213541; cv=none; b=rKM7bm8ueHlnYBpWt4MmwFq5sT21oTPEY+LJRtz+68zxO0XQt5XukBMyEIuV+itGMCCBu1YvQ3IWhw9cCVzopDcYkLKrs+kjRaVjFIt2aBRDmdrw4ogtRstUsXb7YLmCVslnCX9uaxalRF8Kd6VzguvGyQrg8sIpULW3wYUQeHo=
+	t=1756213544; cv=none; b=TIhOUNSkGEeytwCpz/0VK4UlyrRZs/1yY4eaG3vfTjLl9SZ/gKcX1E3wvtckKPyTzhd2zd9J2pc/DU6uY7v9/9uHh/n93TUOmesTEgbu0YR8Mown9MMh+oEGOustxGVjAxSLK5cV3EFfbA9CvMWGVI7TG1vnQy72FS/Tqddlz7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213541; c=relaxed/simple;
-	bh=7obho7UFx38bScCwidz5bZTIrbg9wrbYGkgaR842tZs=;
+	s=arc-20240116; t=1756213544; c=relaxed/simple;
+	bh=ynzZZ1WveFX6Zdc9Pu3fkpgqS8OX/onsvj+UUny2NiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYD3BTRqoONomvmaTW5M9HG7cZk9IM/t1uKxmHQ0VcjJytNDJG1Z6ZRaWit9qeIK5kxjYa1MD0YzcEgRTjbZ7r7SuAt/dj3mrU6t7vxVifCk6rSAEbsV6YQu7sMMnGTYX+WIe5uvfxszQTMJSr/74E+J0VyW6BN9h4lXInz1AgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SemD0CdS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEtvGstM0tzXtQFyoR9RePYMCLV6Achp6EgeOwxW0CiYSyVNqIbD2xpsvWSoDJq0wBYKzxsS9U6IUbo2ZCLqr9Hk3AZGZv8Maa4ft6CVDB8WsdzVczbdXFHZjJj9sgxgm6eaYksqbAkgrHAbmwMsV1/ftvUIn13ONFT5Apju78Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CijGA5/O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SemD0CdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DADC19421;
-	Tue, 26 Aug 2025 13:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CijGA5/O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB4CC4CEF4;
+	Tue, 26 Aug 2025 13:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213541;
-	bh=7obho7UFx38bScCwidz5bZTIrbg9wrbYGkgaR842tZs=;
+	s=korg; t=1756213544;
+	bh=ynzZZ1WveFX6Zdc9Pu3fkpgqS8OX/onsvj+UUny2NiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SemD0CdSFzE7OQ8vy5gXirTGajONH1GG82J3004up6SNK8TzfJ05cHwP9YbybgmCV
-	 ik3uXtAVoo4qMar+GsqIRgyt3xe/gpXYRR+MRY7OWDtBqcnsurNaRTQEqn1hcMswcG
-	 53rFIvack8OeFcS5Gbl2WkBhnB9xEpB/2CpobK5c=
+	b=CijGA5/OFgWPFmKVJFAep1p3qmYH+Ked6pgRFLq8uxAquqv8Md4U0qDpTcMFMnbMF
+	 RQCmT0y1v9mQg2O0ki9C+YJhh6LxXKYUg6WFPCQ03xXR5MPB8Be7iImqjgUUokKMp5
+	 a3Naju1nGKKKgLlTEmMehP0RklB14W83dlat12T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.6 387/587] vhost/vsock: Avoid allocating arbitrarily-sized SKBs
-Date: Tue, 26 Aug 2025 13:08:56 +0200
-Message-ID: <20250826111002.758593819@linuxfoundation.org>
+	stable@kernel.org,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 388/587] phy: qcom: phy-qcom-m31: Update IPQ5332 M31 USB phy initialization sequence
+Date: Tue, 26 Aug 2025 13:08:57 +0200
+Message-ID: <20250826111002.785927543@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -51,53 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-commit 10a886aaed293c4db3417951f396827216299e3d upstream.
+commit 4a3556b81b99f0c8c0358f7cc6801a62b4538fe2 upstream.
 
-vhost_vsock_alloc_skb() returns NULL for packets advertising a length
-larger than VIRTIO_VSOCK_MAX_PKT_BUF_SIZE in the packet header. However,
-this is only checked once the SKB has been allocated and, if the length
-in the packet header is zero, the SKB may not be freed immediately.
+The current configuration used for the IPQ5332 M31 USB PHY fails the
+Near End High Speed Signal Quality compliance test. To resolve this,
+update the initialization sequence as specified in the Hardware Design
+Document.
 
-Hoist the size check before the SKB allocation so that an iovec larger
-than VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + the header size is rejected
-outright. The subsequent check on the length field in the header can
-then simply check that the allocated SKB is indeed large enough to hold
-the packet.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Message-Id: <20250717090116.11987-2-will@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 08e49af50701 ("phy: qcom: Introduce M31 USB PHY driver")
+Cc: stable@kernel.org
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250630-ipq5332_hsphy_complaince-v2-1-63621439ebdb@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vsock.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-m31.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/vhost/vsock.c
-+++ b/drivers/vhost/vsock.c
-@@ -340,6 +340,9 @@ vhost_vsock_alloc_skb(struct vhost_virtq
+--- a/drivers/phy/qualcomm/phy-qcom-m31.c
++++ b/drivers/phy/qualcomm/phy-qcom-m31.c
+@@ -58,14 +58,16 @@
+  #define USB2_0_TX_ENABLE		BIT(2)
  
- 	len = iov_length(vq->iov, out);
+ #define USB2PHY_USB_PHY_M31_XCFGI_4	0xc8
+- #define HSTX_SLEW_RATE_565PS		GENMASK(1, 0)
++ #define HSTX_SLEW_RATE_400PS		GENMASK(2, 0)
+  #define PLL_CHARGING_PUMP_CURRENT_35UA	GENMASK(4, 3)
+  #define ODT_VALUE_38_02_OHM		GENMASK(7, 6)
  
-+	if (len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM)
-+		return NULL;
+ #define USB2PHY_USB_PHY_M31_XCFGI_5	0xcc
+- #define ODT_VALUE_45_02_OHM		BIT(2)
+  #define HSTX_PRE_EMPHASIS_LEVEL_0_55MA	BIT(0)
+ 
++#define USB2PHY_USB_PHY_M31_XCFGI_9	0xdc
++ #define HSTX_CURRENT_17_1MA_385MV	BIT(1)
 +
- 	/* len contains both payload and hdr */
- 	skb = virtio_vsock_alloc_skb(len, GFP_KERNEL);
- 	if (!skb)
-@@ -363,8 +366,7 @@ vhost_vsock_alloc_skb(struct vhost_virtq
- 		return skb;
- 
- 	/* The pkt is too big or the length in the header is invalid */
--	if (payload_len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE ||
--	    payload_len + sizeof(*hdr) > len) {
-+	if (payload_len + sizeof(*hdr) > len) {
- 		kfree_skb(skb);
- 		return NULL;
- 	}
+ #define USB2PHY_USB_PHY_M31_XCFGI_11	0xe4
+  #define XCFG_COARSE_TUNE_NUM		BIT(1)
+  #define XCFG_FINE_TUNE_NUM		BIT(3)
+@@ -120,7 +122,7 @@ static struct m31_phy_regs m31_ipq5332_r
+ 	},
+ 	{
+ 		USB2PHY_USB_PHY_M31_XCFGI_4,
+-		HSTX_SLEW_RATE_565PS | PLL_CHARGING_PUMP_CURRENT_35UA | ODT_VALUE_38_02_OHM,
++		HSTX_SLEW_RATE_400PS | PLL_CHARGING_PUMP_CURRENT_35UA | ODT_VALUE_38_02_OHM,
+ 		0
+ 	},
+ 	{
+@@ -130,10 +132,14 @@ static struct m31_phy_regs m31_ipq5332_r
+ 	},
+ 	{
+ 		USB2PHY_USB_PHY_M31_XCFGI_5,
+-		ODT_VALUE_45_02_OHM | HSTX_PRE_EMPHASIS_LEVEL_0_55MA,
++		HSTX_PRE_EMPHASIS_LEVEL_0_55MA,
+ 		4
+ 	},
+ 	{
++		USB2PHY_USB_PHY_M31_XCFGI_9,
++		HSTX_CURRENT_17_1MA_385MV,
++	},
++	{
+ 		USB_PHY_UTMI_CTRL5,
+ 		0x0,
+ 		0
 
 
