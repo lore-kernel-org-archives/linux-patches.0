@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B5334F49D;
-	Tue, 26 Aug 2025 13:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38C2341650;
+	Tue, 26 Aug 2025 13:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216260; cv=none; b=szdZsdcQ21w3wZKfUchgobmU54hnImNwZ3m0AWUMwedLqmTDzYS0+IzNa3HwEofs/eXFDW+ZQwB1MQaH2gPtf7akoc9x/xKFXKmzl3W7DZsmBjX3P1OHwfec5yCcmIl50bj+dCKmmAs+sC7I8ukfTrjDX8PwkCQ25pApEd5anOA=
+	t=1756216263; cv=none; b=RRACq5EGvaoT5Xv9+Te8g13PqzCwuGeP2FXiNKiEU2WOIEcNlWS3/p/s48emFxbj/Kvc1QJv9O26mLPrHDTV6i9bv6GXHYOeb8JDGudO+VHLbVGzBRF4Cfig6Gx74qkTFjKm5l78NQ/ZwyhPAzI7nUf0Kb49Q8jozLj5Q34FiRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216260; c=relaxed/simple;
-	bh=fuaXNmrn2483jiKLkv1Rz9yQ+DzKd4BYGxCLg4Rz3c0=;
+	s=arc-20240116; t=1756216263; c=relaxed/simple;
+	bh=3xsIC9qqir2cL7xmzn/il4aBxpp9cpTEEyrfAAEYv+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiq3a1+HDnWSA+/WGvAMNr6YoMgJLChQn71MPh8Maa0fcMXUGX2LB7Ehsqm0DxsTSn03B47XI5zJydoQNtwYfPJlIeONKO7NEBSFGgEn8KToCVbt87vA9I+/aIKdz3xugObZ7KlJ2GQj2WcDlIipgsghipfYLrbNraHU8SrxaYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBgCFuwh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdAk1vZs6bBHe4Mfqrcmf3enF04yimyKSMbTJCrwt0drqW8sgcgLfJ2CVhyyrSmRV6qySL5Syxt6jW/v3+1QBX2N5SCKjVXuVeFrsQ9uMkql9JMQKZcxvKXndznn6eITwemselMi9Cc5VrTrfK9w2S+F0E6u8Q3rK3Diz0ePmn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coUjSKL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBgCFuwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A981C4CEF1;
-	Tue, 26 Aug 2025 13:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coUjSKL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0562EC113CF;
+	Tue, 26 Aug 2025 13:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216260;
-	bh=fuaXNmrn2483jiKLkv1Rz9yQ+DzKd4BYGxCLg4Rz3c0=;
+	s=korg; t=1756216263;
+	bh=3xsIC9qqir2cL7xmzn/il4aBxpp9cpTEEyrfAAEYv+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBgCFuwhRvL7eAg2mj01XkKAJ3BYDsdKD4bwOZSWNrRlf0iKIwRYtbP0+n+IQzGEJ
-	 Z1wEZ/Qsp889Ln6k0ceMtgHqLXtaqRMM/gaWW+4RvbElqqWUVExOIlU+jyR0YvKYBZ
-	 OsqVsYUI0mPFINfilN9pP8Uu31P7Qt+r6YzAVUJk=
+	b=coUjSKL5Z4Yif3x3Okvgo/aQTMj92nxpBLLvaW7N7eFA2Dllx+jMkh2IUL8wXFktD
+	 TRbMlp22RcmG7waxQCbXeplWy4BNCk55qsnAvAAdFhGiDUV7pBIwmLri2Jn/bJM2Dl
+	 ipIBqj59Y0sL7kkr1oAYnjiPBf2IqWhCeEoUDzmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Fourier <fourier.thomas@gmail.com>,
-	Mark Einon <mark.einon@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 342/644] et131x: Add missing check after DMA map
-Date: Tue, 26 Aug 2025 13:07:13 +0200
-Message-ID: <20250826110954.867159130@linuxfoundation.org>
+Subject: [PATCH 5.15 343/644] net: ag71xx: Add missing check after DMA map
+Date: Tue, 26 Aug 2025 13:07:14 +0200
+Message-ID: <20250826110954.894086527@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -55,96 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit d61f6cb6f6ef3c70d2ccc0d9c85c508cb8017da9 ]
+[ Upstream commit 96a1e15e60216b52da0e6da5336b6d7f5b0188b0 ]
 
 The DMA map functions can fail and should be tested for errors.
-If the mapping fails, unmap and return an error.
 
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Mark Einon <mark.einon@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250716094733.28734-2-fourier.thomas@gmail.com
+Link: https://patch.msgid.link/20250716095733.37452-3-fourier.thomas@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/agere/et131x.c | 36 +++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/net/ethernet/atheros/ag71xx.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/agere/et131x.c b/drivers/net/ethernet/agere/et131x.c
-index f4edc616388c..1869c0635e56 100644
---- a/drivers/net/ethernet/agere/et131x.c
-+++ b/drivers/net/ethernet/agere/et131x.c
-@@ -2460,6 +2460,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
- 							  skb->data,
- 							  skb_headlen(skb),
- 							  DMA_TO_DEVICE);
-+				if (dma_mapping_error(&adapter->pdev->dev,
-+						      dma_addr))
-+					return -ENOMEM;
-+
- 				desc[frag].addr_lo = lower_32_bits(dma_addr);
- 				desc[frag].addr_hi = upper_32_bits(dma_addr);
- 				frag++;
-@@ -2469,6 +2473,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
- 							  skb->data,
- 							  skb_headlen(skb) / 2,
- 							  DMA_TO_DEVICE);
-+				if (dma_mapping_error(&adapter->pdev->dev,
-+						      dma_addr))
-+					return -ENOMEM;
-+
- 				desc[frag].addr_lo = lower_32_bits(dma_addr);
- 				desc[frag].addr_hi = upper_32_bits(dma_addr);
- 				frag++;
-@@ -2479,6 +2487,10 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
- 							  skb_headlen(skb) / 2,
- 							  skb_headlen(skb) / 2,
- 							  DMA_TO_DEVICE);
-+				if (dma_mapping_error(&adapter->pdev->dev,
-+						      dma_addr))
-+					goto unmap_first_out;
-+
- 				desc[frag].addr_lo = lower_32_bits(dma_addr);
- 				desc[frag].addr_hi = upper_32_bits(dma_addr);
- 				frag++;
-@@ -2490,6 +2502,9 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
- 						    0,
- 						    desc[frag].len_vlan,
- 						    DMA_TO_DEVICE);
-+			if (dma_mapping_error(&adapter->pdev->dev, dma_addr))
-+				goto unmap_out;
-+
- 			desc[frag].addr_lo = lower_32_bits(dma_addr);
- 			desc[frag].addr_hi = upper_32_bits(dma_addr);
- 			frag++;
-@@ -2579,6 +2594,27 @@ static int nic_send_packet(struct et131x_adapter *adapter, struct tcb *tcb)
- 		       &adapter->regs->global.watchdog_timer);
- 	}
- 	return 0;
-+
-+unmap_out:
-+	// Unmap the body of the packet with map_page
-+	while (--i) {
-+		frag--;
-+		dma_addr = desc[frag].addr_lo;
-+		dma_addr |= (u64)desc[frag].addr_hi << 32;
-+		dma_unmap_page(&adapter->pdev->dev, dma_addr,
-+			       desc[frag].len_vlan, DMA_TO_DEVICE);
+diff --git a/drivers/net/ethernet/atheros/ag71xx.c b/drivers/net/ethernet/atheros/ag71xx.c
+index 9d8b214c129d..d5be9ca4d4fe 100644
+--- a/drivers/net/ethernet/atheros/ag71xx.c
++++ b/drivers/net/ethernet/atheros/ag71xx.c
+@@ -1287,6 +1287,11 @@ static bool ag71xx_fill_rx_buf(struct ag71xx *ag, struct ag71xx_buf *buf,
+ 	buf->rx.rx_buf = data;
+ 	buf->rx.dma_addr = dma_map_single(&ag->pdev->dev, data, ag->rx_buf_size,
+ 					  DMA_FROM_DEVICE);
++	if (dma_mapping_error(&ag->pdev->dev, buf->rx.dma_addr)) {
++		skb_free_frag(data);
++		buf->rx.rx_buf = NULL;
++		return false;
 +	}
-+
-+unmap_first_out:
-+	// Unmap the header with map_single
-+	while (frag--) {
-+		dma_addr = desc[frag].addr_lo;
-+		dma_addr |= (u64)desc[frag].addr_hi << 32;
-+		dma_unmap_single(&adapter->pdev->dev, dma_addr,
-+				 desc[frag].len_vlan, DMA_TO_DEVICE);
-+	}
-+
-+	return -ENOMEM;
+ 	desc->data = (u32)buf->rx.dma_addr + offset;
+ 	return true;
  }
+@@ -1585,6 +1590,10 @@ static netdev_tx_t ag71xx_hard_start_xmit(struct sk_buff *skb,
  
- static int send_packet(struct sk_buff *skb, struct et131x_adapter *adapter)
+ 	dma_addr = dma_map_single(&ag->pdev->dev, skb->data, skb->len,
+ 				  DMA_TO_DEVICE);
++	if (dma_mapping_error(&ag->pdev->dev, dma_addr)) {
++		netif_dbg(ag, tx_err, ndev, "DMA mapping error\n");
++		goto err_drop;
++	}
+ 
+ 	i = ring->curr & ring_mask;
+ 	desc = ag71xx_ring_desc(ring, i);
 -- 
 2.39.5
 
