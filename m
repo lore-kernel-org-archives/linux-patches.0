@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7381A00F0;
-	Tue, 26 Aug 2025 12:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6906E1A00F0;
+	Tue, 26 Aug 2025 12:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756213087; cv=none; b=PebSidf8MasPzV79bs54JRf/48ZeSJvzVNUhUarY81T2RXzBKC4jbXaeNCQz+9n4/Mu8tw77wkufnUKjynFovSt9SLrPe9UB7qc0oQ0mQO+7aHU8HSc/PddVDqYwYoeJWHktzegh2+PF7r1+Wdc1MwxpMDsrJsEar76274zIiVs=
+	t=1756213091; cv=none; b=URwNgyj6LpTRN0S8moquM1gAqg14zt6wE5gmf/AB6VxCOkT57XMZs4VebqOfgQ9cpTXvCDfeyqo33YN+P1WLg+dbDQghHmUO2Vey/uxsdg723MJJuM+pQQ26yJCzhtPeLAelnB/4u1+yjaKYMqUoP61LjMvMYM9MJKcEptCPjUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756213087; c=relaxed/simple;
-	bh=itnukO7GY/CRW/XMIX5jr1YE5qSHjweA7x3Ued7hmd0=;
+	s=arc-20240116; t=1756213091; c=relaxed/simple;
+	bh=Pf2Cf+L1yoTxGqpaB+jMpziwKJ0hAk+Hpn/hyA6/axQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aiHEyv1vysMjSGpV4Gw/k+K1l74ZjDSFjcw7k7Oj5hWFIdXzot7uf/qjn4DP54GFzrx+M3qmBe8Pp2fyDkRMWsw3raMJGTd2CElQHdrduu+u0to+XqhuwmZpkWeBe0a0agxSfTz71dbVTedITHeXlsIK7HRW3VrdJ5nVbAkdgmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3/OvbjM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oPA3tD9g6tkAGXhwiaR146KoPRBv1DRdKvhym/LFCn7gmoTYm0q4mnfxWQE9sj+ExKfHDG22MKqRpDIeLtW+lTdv+ftD2lhDNV6IrgKCV4pPB982j/MJE9qgKmt0MKbTYBYx0lq3QqSvDHQVGamSIl1FCTo0fj6c9/mPC/AbqTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAz9jipA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3/OvbjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFF9C4CEF1;
-	Tue, 26 Aug 2025 12:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAz9jipA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B75BC4CEF1;
+	Tue, 26 Aug 2025 12:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756213087;
-	bh=itnukO7GY/CRW/XMIX5jr1YE5qSHjweA7x3Ued7hmd0=;
+	s=korg; t=1756213090;
+	bh=Pf2Cf+L1yoTxGqpaB+jMpziwKJ0hAk+Hpn/hyA6/axQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3/OvbjM9aYGCeZOXThxuB2QHikMh6Rsb4ZU4eFy+DDriN51q6bzdd34va8nKzGA3
-	 hYqtuO9ONGphXZtauH4WWCNy3uuYp5RZbZLh6C7FRqEuHZj11ytlIyRJpuxgLbQH6N
-	 vrgvsKASW7KWBY0ufb28ZP9xwZPHXc28M9u0wWRI=
+	b=EAz9jipAODo1zfZdXF+IDwVvmjUjA9WRuwC2IuadLsj8gs2iM+UxVtEZHvzddQQV8
+	 nF670NL5ycj5iiJKLPHtLhUKjo90cQoeABZpnExXVTRvLersH28RwFd1mbtO32TPMq
+	 DScjkfbKmjHFcSxxQvPncPxvaqv+Qlt/3Ougvpmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexei Safin <a.safin@rosa.ru>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/587] vhost: fail early when __vhost_add_used() fails
-Date: Tue, 26 Aug 2025 13:06:05 +0200
-Message-ID: <20250826110958.431252037@linuxfoundation.org>
+Subject: [PATCH 6.6 190/587] wifi: iwlegacy: Check rate_idx range after addition
+Date: Tue, 26 Aug 2025 13:05:39 +0200
+Message-ID: <20250826110957.776048729@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110952.942403671@linuxfoundation.org>
 References: <20250826110952.942403671@linuxfoundation.org>
@@ -47,45 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-[ Upstream commit b4ba1207d45adaafa2982c035898b36af2d3e518 ]
+[ Upstream commit 0de19d5ae0b2c5b18b88c5c7f0442f707a207409 ]
 
-This patch fails vhost_add_used_n() early when __vhost_add_used()
-fails to make sure used idx is not updated with stale used ring
-information.
+Limit rate_idx to IL_LAST_OFDM_RATE for 5GHz band for thinkable case
+the index is incorrect.
 
-Reported-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20250714084755.11921-2-jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
+Reported-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reported-by: Alexei Safin <a.safin@rosa.ru>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20250525144524.GA172583@wp.pl
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlegacy/4965-mac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index d0238bd741b0..147cfb64bba2 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -2770,6 +2770,9 @@ int vhost_add_used_n(struct vhost_virtqueue *vq, struct vring_used_elem *heads,
- 	}
- 	r = __vhost_add_used_n(vq, heads, count);
- 
-+	if (r < 0)
-+		return r;
-+
- 	/* Make sure buffer is written before we update index. */
- 	smp_wmb();
- 	if (vhost_put_used_idx(vq)) {
+diff --git a/drivers/net/wireless/intel/iwlegacy/4965-mac.c b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
+index 0a4aa3c678c1..75118e240619 100644
+--- a/drivers/net/wireless/intel/iwlegacy/4965-mac.c
++++ b/drivers/net/wireless/intel/iwlegacy/4965-mac.c
+@@ -1575,8 +1575,11 @@ il4965_tx_cmd_build_rate(struct il_priv *il,
+ 	    || rate_idx > RATE_COUNT_LEGACY)
+ 		rate_idx = rate_lowest_index(&il->bands[info->band], sta);
+ 	/* For 5 GHZ band, remap mac80211 rate indices into driver indices */
+-	if (info->band == NL80211_BAND_5GHZ)
++	if (info->band == NL80211_BAND_5GHZ) {
+ 		rate_idx += IL_FIRST_OFDM_RATE;
++		if (rate_idx > IL_LAST_OFDM_RATE)
++			rate_idx = IL_LAST_OFDM_RATE;
++	}
+ 	/* Get PLCP rate for tx_cmd->rate_n_flags */
+ 	rate_plcp = il_rates[rate_idx].plcp;
+ 	/* Zero out flags for this packet */
 -- 
 2.39.5
 
