@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E022083;
-	Tue, 26 Aug 2025 13:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103B9226861;
+	Tue, 26 Aug 2025 13:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216559; cv=none; b=k/zunCQxsLLSmQF4Wm1edWbAMnl7OIHcknO3Vg0oH7nHniV4J8Dx2vpNlbt2y77dLh5pQXViPLwEsLKwZWD5eOFMxlIWUZCO8hQSfADBtMg+9FKEzeDte48qdL+8nsaqKfyLumnujuAHvwHQLT9SqiFG+2oP2ywT++LqPdO4wCs=
+	t=1756216562; cv=none; b=ZEmxCoNH4ASeDTsPXUf8n9oLeECw+raNlqc5+o90+P+XeD92jKXK0dEkc96vHIUFq0sVBt7yX0dxZDZ0J55558yz544MPYQX5L5k5qYVguiNPRHnrgho5q+a/nyLrzu+HmzNLczeJZL8mcA9dLyO/Aw/sP2rWtCeWFeS54tvqTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216559; c=relaxed/simple;
-	bh=vnU0OpZ4FEmZAHsne9XsmpC/VUEqitOjhmH4Eqa+GJk=;
+	s=arc-20240116; t=1756216562; c=relaxed/simple;
+	bh=WjJwW2TaoAMGkd+Eh6mZA8WLl/ERSnTPztqHFPusT/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hubP+bXnOIkHACFuFL22KepikWcn3N8yTK2Y7iBaPNW1mwvs6sfbC9P6fSt20+1l/rexp1suHoDVFQOvkvo4rFT6WLfMaouphOpisV/Vkq2w1/SWm6RrPwt1py607+WungPHKXOunRRd4L1Ud37G5Z8kmK4Ex/BWO0I7isY3IGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4/QoOuQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Onk/wLWcBRb4Lec+9a8CpwMtvPWAsUaSVEzH+pwDOAoTS6BnF7nldVY9RfqUHRZVGNbqw/trrMKlh6IvVcTG/+cPLGXy3HKdTTb0M8BnJ4ahN9Um519innO+pG/yWlFirRsZK7VSSkgjhCrsjMgys5DotO6PGIPAXE13HNX38v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cT+gNtYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4/QoOuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BDBC4CEF1;
-	Tue, 26 Aug 2025 13:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cT+gNtYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FD1C4CEF1;
+	Tue, 26 Aug 2025 13:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216559;
-	bh=vnU0OpZ4FEmZAHsne9XsmpC/VUEqitOjhmH4Eqa+GJk=;
+	s=korg; t=1756216561;
+	bh=WjJwW2TaoAMGkd+Eh6mZA8WLl/ERSnTPztqHFPusT/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4/QoOuQHcP31SJ8abaip2Q7gPCi9UFAU9/mlnoPvXMNnG2sNX+BzXdlsaj7BSQr3
-	 Zgl5WvI70KUTXz1Db0pgv4YzfOYERO+XM0JymfUfIldii00KYOw6aOw6J/5/MT41sm
-	 jCHqeNT/qK0rBFEo+G3YY9OrlmqNrmJBEvqSs+hs=
+	b=cT+gNtYQkPRtUlsE14NnmwmRL38t1TEyDqRoj14ZieFiLzRzLwhhRfKivZEJGVrHD
+	 eE/EiSVXVn/enHncJ8dau8bxTSK7yKOhIrSeS8krhzvnff9pWohoBw19ay/Lq9U7lQ
+	 DzQSgTKJHLHHqW16luTHs/9Dax4WpbEKAEuGOJsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	stable <stable@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 456/644] serial: 8250: fix panic due to PSLVERR
-Date: Tue, 26 Aug 2025 13:09:07 +0200
-Message-ID: <20250826110957.776429706@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 5.15 457/644] cpufreq: armada-8k: Fix off by one in armada_8k_cpufreq_free_table()
+Date: Tue, 26 Aug 2025 13:09:08 +0200
+Message-ID: <20250826110957.800603271@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,61 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 7f8fdd4dbffc05982b96caf586f77a014b2a9353 upstream.
+commit 4a26df233266a628157d7f0285451d8655defdfc upstream.
 
-When the PSLVERR_RESP_EN parameter is set to 1, the device generates
-an error response if an attempt is made to read an empty RBR (Receive
-Buffer Register) while the FIFO is enabled.
+The freq_tables[] array has num_possible_cpus() elements so, to avoid an
+out of bounds access, this loop should be capped at "< nb_cpus" instead
+of "<= nb_cpus".  The freq_tables[] array is allocated in
+armada_8k_cpufreq_init().
 
-In serial8250_do_startup(), calling serial_port_out(port, UART_LCR,
-UART_LCR_WLEN8) triggers dw8250_check_lcr(), which invokes
-dw8250_force_idle() and serial8250_clear_and_reinit_fifos(). The latter
-function enables the FIFO via serial_out(p, UART_FCR, p->fcr).
-Execution proceeds to the serial_port_in(port, UART_RX).
-This satisfies the PSLVERR trigger condition.
-
-When another CPU (e.g., using printk()) is accessing the UART (UART
-is busy), the current CPU fails the check (value & ~UART_LCR_SPAR) ==
-(lcr & ~UART_LCR_SPAR) in dw8250_check_lcr(), causing it to enter
-dw8250_force_idle().
-
-Put serial_port_out(port, UART_LCR, UART_LCR_WLEN8) under the port->lock
-to fix this issue.
-
-Panic backtrace:
-[    0.442336] Oops - unknown exception [#1]
-[    0.442343] epc : dw8250_serial_in32+0x1e/0x4a
-[    0.442351]  ra : serial8250_do_startup+0x2c8/0x88e
-...
-[    0.442416] console_on_rootfs+0x26/0x70
-
-Fixes: c49436b657d0 ("serial: 8250_dw: Improve unwritable LCR workaround")
-Link: https://lore.kernel.org/all/84cydt5peu.fsf@jogness.linutronix.de/T/
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250723023322.464-2-cuiyunhui@bytedance.com
-[ Applied fix to serial8250_do_startup() instead of serial8250_initialize() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: f525a670533d ("cpufreq: ap806: add cpufreq driver for Armada 8K")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cpufreq/armada-8k-cpufreq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2332,9 +2332,8 @@ int serial8250_do_startup(struct uart_po
- 	/*
- 	 * Now, initialize the UART
- 	 */
--	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
--
- 	spin_lock_irqsave(&port->lock, flags);
-+	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
- 	if (up->port.flags & UPF_FOURPORT) {
- 		if (!up->port.irq)
- 			up->port.mctrl |= TIOCM_OUT1;
+--- a/drivers/cpufreq/armada-8k-cpufreq.c
++++ b/drivers/cpufreq/armada-8k-cpufreq.c
+@@ -96,7 +96,7 @@ static void armada_8k_cpufreq_free_table
+ {
+ 	int opps_index, nb_cpus = num_possible_cpus();
+ 
+-	for (opps_index = 0 ; opps_index <= nb_cpus; opps_index++) {
++	for (opps_index = 0 ; opps_index < nb_cpus; opps_index++) {
+ 		int i;
+ 
+ 		/* If cpu_dev is NULL then we reached the end of the array */
 
 
