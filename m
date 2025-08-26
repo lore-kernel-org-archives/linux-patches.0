@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D25128314A;
-	Tue, 26 Aug 2025 13:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9987428314A;
+	Tue, 26 Aug 2025 13:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215885; cv=none; b=ALYUfbunyziZFfEBXqUwPp72l2tUezzDHF8F/L9aenUc6YJUZECDyY1bLtTr0P0tv6I8O1Af1wM+ASHNMpw0NrE/bhl3ZXqtZlYnkatT9XGxY+ZQqERyrHeF2bFtZvpYCYVrInLs8kAlabCdYscxR4wai8dYdW3eH6u4507wyF0=
+	t=1756215886; cv=none; b=B7Oa9Peu+1IqY1NQgEDlUg0bQKQGoy8eTR6Y3gvNkkofdZ46tPjalSKzyLKwE1AsiIF/0GaZ0+ANIA9zyk5HCx9c1rc7hODMmWLnVHqL43v6mHJzX6XyOdZk2Lz1wroRbvsILPD+XERZAXL63jR2RzdpwOqkTmFQItq3goxWqhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215885; c=relaxed/simple;
-	bh=Zq6qgLoauGsh/zUxLi2QThKXJLiMbHnkHD+qyOwqxSA=;
+	s=arc-20240116; t=1756215886; c=relaxed/simple;
+	bh=Yz94jz0/0Hbs/tuoX7BIsALLuN1RKTkwhlAlzHScjSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIH+lfpXpcemAWMrgpUnu1gGZPdtmMhfXE9WDptA4WnOOW1hqw+bLIHZS2LVCBlGPTFy2xSNWf1KjVPSpuOGHmeUb68zY867LkDuIoeAByOct/C5mLH1i8iwY24HlTqsV1Sebg5Ih7rXC3I2cfy1DDrrUI/IwPcSCW16jQWxHyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdnW2OZ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ioHl6QKaxOaCF/Ba/grNuV0CvDJ1pFET8gjAjApxJh99q75AZnVtuF1O7axjihsAhRmqtZ/1770/+uDwEg0N7QUHDZAHxY/lSLpUGWF9+JqwvUH9nt/veVm8G5aq9p+03euxg+TB1IZbyU4QMfqF2QrHDmRv8JWvVW0+ptfKoME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neppza1o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdnW2OZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898A2C4CEF1;
-	Tue, 26 Aug 2025 13:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neppza1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED46C116B1;
+	Tue, 26 Aug 2025 13:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215883;
-	bh=Zq6qgLoauGsh/zUxLi2QThKXJLiMbHnkHD+qyOwqxSA=;
+	s=korg; t=1756215886;
+	bh=Yz94jz0/0Hbs/tuoX7BIsALLuN1RKTkwhlAlzHScjSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NdnW2OZ/0Ucgrg5yGXKTW7Q4m3AcnyNVFNUzQ6ESYSDl1aDylUSM1WJA30/MJBe2l
-	 Unv3GUDqkWsSPVQ0zJbvsE4whGecRk2AbKNMG/L3fGVzQZs4e48nMEq0U6VO1346GK
-	 vnX1Bm1h29MkPLU7n00bnK+5SFwS1FdjOUGLrTDA=
+	b=neppza1o0AFAehAcE8ZFwzJzuP+Sp2owhPWcLbr1W0LEBvpYOdRW7KIR50aN3GDr2
+	 0ocz+o5NMrE3Esw198YXC0JaGlxzec9H1AwHMuFj9sBHIR3hss6GeHQ889kbNBTy17
+	 TTT8kTNCC/e0Vol83dUqFcCtuxMdSJ6MRymqS6gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ryan Lee <ryan.lee@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 203/644] bpf: Check flow_dissector ctx accesses are aligned
-Date: Tue, 26 Aug 2025 13:04:54 +0200
-Message-ID: <20250826110951.467259230@linuxfoundation.org>
+Subject: [PATCH 5.15 204/644] apparmor: ensure WB_HISTORY_SIZE value is a power of 2
+Date: Tue, 26 Aug 2025 13:04:55 +0200
+Message-ID: <20250826110951.489793478@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -54,46 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Ryan Lee <ryan.lee@canonical.com>
 
-[ Upstream commit ead3d7b2b6afa5ee7958620c4329982a7d9c2b78 ]
+[ Upstream commit 6c055e62560b958354625604293652753d82bcae ]
 
-flow_dissector_is_valid_access doesn't check that the context access is
-aligned. As a consequence, an unaligned access within one of the exposed
-field is considered valid and later rejected by
-flow_dissector_convert_ctx_access when we try to convert it.
+WB_HISTORY_SIZE was defined to be a value not a power of 2, despite a
+comment in the declaration of struct match_workbuf stating it is and a
+modular arithmetic usage in the inc_wb_pos macro assuming that it is. Bump
+WB_HISTORY_SIZE's value up to 32 and add a BUILD_BUG_ON_NOT_POWER_OF_2
+line to ensure that any future changes to the value of WB_HISTORY_SIZE
+respect this requirement.
 
-The later rejection is problematic because it's reported as a verifier
-bug with a kernel warning and doesn't point to the right instruction in
-verifier logs.
+Fixes: 136db994852a ("apparmor: increase left match history buffer size")
 
-Fixes: d58e468b1112 ("flow_dissector: implements flow dissector BPF hook")
-Reported-by: syzbot+ccac90e482b2a81d74aa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ccac90e482b2a81d74aa
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/cc1b036be484c99be45eddf48bd78cc6f72839b1.1754039605.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ security/apparmor/include/match.h | 3 ++-
+ security/apparmor/match.c         | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 169d9ba4e7a0..f346f19cf468 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -8764,6 +8764,9 @@ static bool flow_dissector_is_valid_access(int off, int size,
- 	if (off < 0 || off >= sizeof(struct __sk_buff))
- 		return false;
+diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
+index 884489590588..29306ec87fd1 100644
+--- a/security/apparmor/include/match.h
++++ b/security/apparmor/include/match.h
+@@ -141,7 +141,8 @@ unsigned int aa_dfa_matchn_until(struct aa_dfa *dfa, unsigned int start,
  
-+	if (off % size != 0)
-+		return false;
-+
- 	if (type == BPF_WRITE)
- 		return false;
+ void aa_dfa_free_kref(struct kref *kref);
  
+-#define WB_HISTORY_SIZE 24
++/* This needs to be a power of 2 */
++#define WB_HISTORY_SIZE 32
+ struct match_workbuf {
+ 	unsigned int count;
+ 	unsigned int pos;
+diff --git a/security/apparmor/match.c b/security/apparmor/match.c
+index 3e9e1eaf990e..0e683ee323e3 100644
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -672,6 +672,7 @@ unsigned int aa_dfa_matchn_until(struct aa_dfa *dfa, unsigned int start,
+ 
+ #define inc_wb_pos(wb)						\
+ do {								\
++	BUILD_BUG_ON_NOT_POWER_OF_2(WB_HISTORY_SIZE);			\
+ 	wb->pos = (wb->pos + 1) & (WB_HISTORY_SIZE - 1);		\
+ 	wb->len = (wb->len + 1) & (WB_HISTORY_SIZE - 1);		\
+ } while (0)
 -- 
 2.39.5
 
