@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DD71ADFFE;
-	Tue, 26 Aug 2025 13:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4D61EF39E;
+	Tue, 26 Aug 2025 13:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215228; cv=none; b=Go+5zuSdKXqAwkGb531MQvvVwLNc8w5MvYcTFyZgOzsN7MT4fJfLuG6EQi/oORmwyp163sLvshgm3R8HKdNwt7gLL0KrehjSwntQ7oApBbivvlWIyrNr88AGEedaGbWa4gUOmVkxBUz6rFcj8PfIpTvPJrUMjRSEDhMwNCLpywU=
+	t=1756215231; cv=none; b=G1nC/kDlgdm6idzocwuJvKD6nEnPQj9xLHyEkYamcM0F/ZEfG962JeqspsuTZyKvy9GaoB5K58XCJ/7L53v4wfc/YXbmhQBvirafuQzSkMu/6/kE8aKApw4Yb4hH4pc4J7g27GJpIelq7e5xNcs5S38une1l2LYIbWDnryjbhvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215228; c=relaxed/simple;
-	bh=EfM1qeyhZiXrkzaLQ6A/WbMxDqMh2O2wRwBJBzfatf8=;
+	s=arc-20240116; t=1756215231; c=relaxed/simple;
+	bh=C2CxFTc+T5YcAYW/hztnpk6cVB78xZ1horICN2KAh6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pprNfGjTpyMHgHzQ/P6edgd0n/BCn6OACClkLgmuFr5IoFvirz6xD/ySSabTsUegty3vIC3+evWno5y24SclGFRMei9sPNabPi11hTBUOhOHgExmT3zMD5iMbNKHhx2cY6lOTPHiSuphUYnmRjNUatZUiZO5RhjKHEnagHUqvSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NabkhMOE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZHtDgFVVWkf+/Mf8xJT9LvwL1EepsoAf+EGH6Fcyj+Zxu9SLNKNHXoSnYCmT8MeIB9UvWjEMgrHRIQZogn3KUEcahxfnM712/MSnLEZqR99gaby0oX0oBYVcvuLU/l8E7LYbD+J+dvjwtcf3g24gW1tz+jaXSCx/AY6Ez0n5Gxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OK7qG3Wk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NabkhMOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 082CCC113D0;
-	Tue, 26 Aug 2025 13:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OK7qG3Wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1508C4CEF1;
+	Tue, 26 Aug 2025 13:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215228;
-	bh=EfM1qeyhZiXrkzaLQ6A/WbMxDqMh2O2wRwBJBzfatf8=;
+	s=korg; t=1756215231;
+	bh=C2CxFTc+T5YcAYW/hztnpk6cVB78xZ1horICN2KAh6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NabkhMOEAG1PdazjX8T2kQUBjpYfertUduRXE/KLK9QhibZtmLfsmE4YkHQjayVFQ
-	 qgux1JSny7MYKNhnJsDjGWtzqOp2PWdJAxaII4khLk7DH3RP+bU222hQtnM4Yb0bS0
-	 SoZXe3CCiNrdOxcKdQQsbtZWhB+GC1IjnT4msAx0=
+	b=OK7qG3WkOodlD7fcv6STF+3HRDpxKIwqLLkBRhPYVb1s0Fm0l9sPKw+leDXvHcee3
+	 DOwiawqMCkYwtmFRlk8wHJhCGjjWD2RPHb0l3MZ1820y76e0V1GFiRchZlXCajPoM0
+	 ZPIOGvnrRoKulxNORKvH9d4BEOUs3t+nR8l881hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>
-Subject: [PATCH 6.1 418/482] usb: renesas-xhci: Fix External ROM access timeouts
-Date: Tue, 26 Aug 2025 13:11:11 +0200
-Message-ID: <20250826110941.153767446@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 436/482] drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS
+Date: Tue, 26 Aug 2025 13:11:29 +0200
+Message-ID: <20250826110941.601617887@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,69 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Imre Deak <imre.deak@intel.com>
 
-commit f9420f4757752f056144896024d5ea89e5a611f1 upstream.
+[ Upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ]
 
-Increase the External ROM access timeouts to prevent failures during
-programming of External SPI EEPROM chips. The current timeouts are
-too short for some SPI EEPROMs used with uPD720201 controllers.
+Reading DPCD registers has side-effects in general. In particular
+accessing registers outside of the link training register range
+(0x102-0x106, 0x202-0x207, 0x200c-0x200f, 0x2216) is explicitly
+forbidden by the DP v2.1 Standard, see
 
-The current timeout for Chip Erase in renesas_rom_erase() is 100 ms ,
-the current timeout for Sector Erase issued by the controller before
-Page Program in renesas_fw_download_image() is also 100 ms. Neither
-timeout is sufficient for e.g. the Macronix MX25L5121E or MX25V5126F.
+3.6.5.1 DPTX AUX Transaction Handling Mandates
+3.6.7.4 128b/132b DP Link Layer LTTPR Link Training Mandates
 
-MX25L5121E reference manual [1] page 35 section "ERASE AND PROGRAMMING
-PERFORMANCE" and page 23 section "Table 8. AC CHARACTERISTICS (Temperature
-= 0°C to 70°C for Commercial grade, VCC = 2.7V ~ 3.6V)" row "tCE" indicate
-that the maximum time required for Chip Erase opcode to complete is 2 s,
-and for Sector Erase it is 300 ms .
+Based on my tests, accessing the DPCD_REV register during the link
+training of an UHBR TBT DP tunnel sink leads to link training failures.
 
-MX25V5126F reference manual [2] page 47 section "13. ERASE AND PROGRAMMING
-PERFORMANCE (2.3V - 3.6V)" and page 42 section "Table 8. AC CHARACTERISTICS
-(Temperature = -40°C to 85°C for Industrial grade, VCC = 2.3V - 3.6V)" row
-"tCE" indicate that the maximum time required for Chip Erase opcode to
-complete is 3.2 s, and for Sector Erase it is 400 ms .
+Solve the above by using the DP_LANE0_1_STATUS (0x202) register for the
+DPCD register access quirk.
 
-Update the timeouts such, that Chip Erase timeout is set to 5 seconds,
-and Sector Erase timeout is set to 500 ms. Such lengthy timeouts ought
-to be sufficient for majority of SPI EEPROM chips.
-
-[1] https://www.macronix.com/Lists/Datasheet/Attachments/8634/MX25L5121E,%203V,%20512Kb,%20v1.3.pdf
-[2] https://www.macronix.com/Lists/Datasheet/Attachments/8750/MX25V5126F,%202.5V,%20512Kb,%20v1.1.pdf
-
-Fixes: 2478be82de44 ("usb: renesas-xhci: Add ROM loader for uPD720201")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/r/20250802225526.25431-1-marek.vasut+renesas@mailbox.org
+Cc: <stable@vger.kernel.org>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://lore.kernel.org/r/20250605082850.65136-2-imre.deak@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci-renesas.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -47,8 +47,9 @@
- #define RENESAS_ROM_ERASE_MAGIC				0x5A65726F
- #define RENESAS_ROM_WRITE_MAGIC				0x53524F4D
- 
--#define RENESAS_RETRY	10000
--#define RENESAS_DELAY	10
-+#define RENESAS_RETRY			50000	/* 50000 * RENESAS_DELAY ~= 500ms */
-+#define RENESAS_CHIP_ERASE_RETRY	500000	/* 500000 * RENESAS_DELAY ~= 5s */
-+#define RENESAS_DELAY			10
- 
- static int renesas_fw_download_image(struct pci_dev *dev,
- 				     const u32 *fw, size_t step, bool rom)
-@@ -405,7 +406,7 @@ static void renesas_rom_erase(struct pci
- 	/* sleep a bit while ROM is erased */
- 	msleep(20);
- 
--	for (i = 0; i < RENESAS_RETRY; i++) {
-+	for (i = 0; i < RENESAS_CHIP_ERASE_RETRY; i++) {
- 		retval = pci_read_config_byte(pdev, RENESAS_ROM_STATUS,
- 					      &status);
- 		status &= RENESAS_ROM_STATUS_ERASE;
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -663,7 +663,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
++		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 
 
