@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F251C23D7DD;
-	Tue, 26 Aug 2025 13:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FCC34CF9;
+	Tue, 26 Aug 2025 13:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214801; cv=none; b=hdhPprj0Sqbp+ulFSLogiBzXnNZenkpQQ4jKBTV3HL8rapdKZe6CQqrY98EmdXtihlBRzawjIuz7u8dnH3BjSsKSaAOZPeOfec8UGUPfjsyLoa9FA+7BDzU19cLEwy3QAZYpDtqqKU0yacKh0kD6Ogv8vechkXTwBH7oZoY3fJc=
+	t=1756214803; cv=none; b=aMbzPKJlTYofR3Jow2JSv1E7ooFiMQL67LH2ctQOZpLS6lG/LulFSavsL7YVxoRq1oxtqazAz0Pi6k53KcKY/Z6tEoo2c4gvyYoKOtwEWSQuOqGORdkElXhRqezPpKsoXJGPZt6EF9fJaVAVsLPYHpRIlDs9CtLsQxTLA2RN+y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214801; c=relaxed/simple;
-	bh=P1cLPx0ctWdtXg4/ijhYjsD0riHmKk0RRWZvL/vUqAU=;
+	s=arc-20240116; t=1756214803; c=relaxed/simple;
+	bh=6CgimN1RakXd40mwQMSfAeregfnE0rPBc4WCMcZUAac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6JcWFK4FWjeotJ6AyZFdEvPdpp1zgvHqjrOUB0VBntufIpIgofXOrI9utN9s0fj+yn9uJvhIxjlj6f4fNoSaSie0Xf3iOaGtrUYD0NGIjLrk0C8lWJFDRLGWoIcFgvr8SYDxEStVOAw3lV/M8+Iho51es+r95dl+XDY7DQMmZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+dV7DN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JytnHTLuoFK8xRzAivsbb+MttHpXJCG8rv8/H7updN1URle0bx6ow6lTpW99FYq5Dldr7QM8aWf+/3eaduqZRXF2Dd/AI3bfvjWKwg8I/eoZWcfcP8zAPbGVkePCAbS2yRvYDbB9R3M3AVWgiwa2pVvLQWZIqBVamD4sWeCcsZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDWDcPuE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+dV7DN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E38C4CEF1;
-	Tue, 26 Aug 2025 13:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDWDcPuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B33C4CEF1;
+	Tue, 26 Aug 2025 13:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214800;
-	bh=P1cLPx0ctWdtXg4/ijhYjsD0riHmKk0RRWZvL/vUqAU=;
+	s=korg; t=1756214803;
+	bh=6CgimN1RakXd40mwQMSfAeregfnE0rPBc4WCMcZUAac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+dV7DN2KZTU58E5cWpHW9zpd1mmXWO/RV096bl25j/M770z+h25JwCX8ym5hFPhP
-	 F78w7Oq6Ug4gPxupDw5D7S9/heKK+7W2T/fpI7VQXa0jyODQvsbi3Wn32UJAdFkfLQ
-	 /y8TYF3GgkciRmCVFn9bsnct1TJ+snrNPBsE4H8Q=
+	b=PDWDcPuE8BdKUHuqI+Tn6rCDOlBOrgboSKUVn4zk9peh+m9TMa09vBiC8pDypt13I
+	 ztCsv/hS9CqKXVwZYApBVpKk3Ih7bTyQ1d2asJJ+cW9q5NllRQ1nUqqG04tD3ItLwb
+	 5iKXZE0QvRLdKGHqsim3GcnLgguW8ZTQ9FLo6ARo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Subject: [PATCH 6.1 274/482] bus: mhi: host: Detect events pointing to unexpected TREs
-Date: Tue, 26 Aug 2025 13:08:47 +0200
-Message-ID: <20250826110937.543348726@linuxfoundation.org>
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	stable <stable@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.1 275/482] vt: keyboard: Dont process Unicode characters in K_OFF mode
+Date: Tue, 26 Aug 2025 13:08:48 +0200
+Message-ID: <20250826110937.566968062@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,75 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <quic_yabdulra@quicinc.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-commit 5bd398e20f0833ae8a1267d4f343591a2dd20185 upstream.
+commit b1cc2092ea7a52e2c435aee6d2b1bcb773202663 upstream.
 
-When a remote device sends a completion event to the host, it contains a
-pointer to the consumed TRE. The host uses this pointer to process all of
-the TREs between it and the host's local copy of the ring's read pointer.
-This works when processing completion for chained transactions, but can
-lead to nasty results if the device sends an event for a single-element
-transaction with a read pointer that is multiple elements ahead of the
-host's read pointer.
+We don't process Unicode characters if the virtual terminal is in raw
+mode, so there's no reason why we shouldn't do the same for K_OFF
+(especially since people would expect K_OFF to actually turn off all VT
+key processing).
 
-For instance, if the host accesses an event ring while the device is
-updating it, the pointer inside of the event might still point to an old
-TRE. If the host uses the channel's xfer_cb() to directly free the buffer
-pointed to by the TRE, the buffer will be double-freed.
-
-This behavior was observed on an ep that used upstream EP stack without
-'commit 6f18d174b73d ("bus: mhi: ep: Update read pointer only after buffer
-is written")'. Where the device updated the events ring pointer before
-updating the event contents, so it left a window where the host was able to
-access the stale data the event pointed to, before the device had the
-chance to update them. The usual pattern was that the host received an
-event pointing to a TRE that is not immediately after the last processed
-one, so it got treated as if it was a chained transaction, processing all
-of the TREs in between the two read pointers.
-
-This commit aims to harden the host by ensuring transactions where the
-event points to a TRE that isn't local_rp + 1 are chained.
-
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-[mani: added stable tag and reworded commit message]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250714163039.3438985-1-quic_yabdulra@quicinc.com
+Fixes: 9fc3de9c8356 ("vt: Add virtual console keyboard mode OFF")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20250702-vt-misc-unicode-fixes-v1-1-c27e143cc2eb@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/tty/vt/keyboard.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -603,7 +603,7 @@ static int parse_xfer_event(struct mhi_c
- 	{
- 		dma_addr_t ptr = MHI_TRE_GET_EV_PTR(event);
- 		struct mhi_ring_element *local_rp, *ev_tre;
--		void *dev_rp;
-+		void *dev_rp, *next_rp;
- 		struct mhi_buf_info *buf_info;
- 		u16 xfer_len;
- 
-@@ -622,6 +622,16 @@ static int parse_xfer_event(struct mhi_c
- 		result.dir = mhi_chan->dir;
- 
- 		local_rp = tre_ring->rp;
-+
-+		next_rp = local_rp + 1;
-+		if (next_rp >= tre_ring->base + tre_ring->len)
-+			next_rp = tre_ring->base;
-+		if (dev_rp != next_rp && !MHI_TRE_DATA_GET_CHAIN(local_rp)) {
-+			dev_err(&mhi_cntrl->mhi_dev->dev,
-+				"Event element points to an unexpected TRE\n");
-+			break;
-+		}
-+
- 		while (local_rp != dev_rp) {
- 			buf_info = buf_ring->rp;
- 			/* If it's the last TRE, get length from the event */
+--- a/drivers/tty/vt/keyboard.c
++++ b/drivers/tty/vt/keyboard.c
+@@ -1496,7 +1496,7 @@ static void kbd_keycode(unsigned int key
+ 		rc = atomic_notifier_call_chain(&keyboard_notifier_list,
+ 						KBD_UNICODE, &param);
+ 		if (rc != NOTIFY_STOP)
+-			if (down && !raw_mode)
++			if (down && !(raw_mode || kbd->kbdmode == VC_OFF))
+ 				k_unicode(vc, keysym, !down);
+ 		return;
+ 	}
 
 
