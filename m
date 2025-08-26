@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D57350D5D;
-	Tue, 26 Aug 2025 14:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DF0350D5D;
+	Tue, 26 Aug 2025 14:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216997; cv=none; b=NJBfCxwV9g7GsuY6lN4dzkTRhLK2zKSz9tE42v79yIxkylSI0qd0VOcjZJuqRtV/e1P3CditYVXSCmf6TDdobzndk5/CLhTk2CNKt00joVEWyUDtU6lrz5M+mNB6MMqMpFMML3G699GxuLstiV0IMrO7REb5Ufc/7t5vFj+aS3U=
+	t=1756217000; cv=none; b=BiAVED3IRLLsM+2AdOCL8vqNQ7zJJm9vbirVvqrd8IUVdMtYnTmfIPHbn7ZZIigcnUZcn9I6+A+9ZlLnIXHSHH5WhAxJKieRZgSbNPRcPd7TixIsbYISiSlYZqhTLNMoyPrG7l584S2hwB1M+OBvoNkaWnzH6x5JrRB2KEtiqrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216997; c=relaxed/simple;
-	bh=5kQu4DzGiGC/UGScrGHPBZFoRI8YSIk12xe8kg2wLbQ=;
+	s=arc-20240116; t=1756217000; c=relaxed/simple;
+	bh=tUh0H3/5w1+JSNUlL4MS3Xuep+vgn2srVcRXBDcygvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAR6bmKTw/dpmf0142Libf1Orht4/++iDBxYyqfrjB68X1PFi/OaRU2yNVIo8grX7wHOY3Uc8MUs+CjdxWLrD8+v20oY2O+XFFGFn+6NbNBdLpS55oGoERemvQzQBIIE11QjeY6BXO/pSA+byf+tcR1DPuSo8/EdXkpdfL0+tWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ec6iqkyM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JFhQxpnwVevCLGKLR4+iL/+QgAGGmAWCQ7KkGAZ2siw6PGenrSMboLevDQ2gvTR47k+95V0mwxt+9rFBxnsUQiSH8RTIbJl2TvK5QIPMsMnnvfUxBksW2L2hGy8OLT/qdZsnOPPxZsRGfXoYY+zeVNDLWpxO/GMat9Dm2mXqWTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ng/R4Vep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ec6iqkyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5777EC4CEF1;
-	Tue, 26 Aug 2025 14:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ng/R4Vep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2B1C4CEF1;
+	Tue, 26 Aug 2025 14:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216997;
-	bh=5kQu4DzGiGC/UGScrGHPBZFoRI8YSIk12xe8kg2wLbQ=;
+	s=korg; t=1756217000;
+	bh=tUh0H3/5w1+JSNUlL4MS3Xuep+vgn2srVcRXBDcygvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ec6iqkyMMnMS2XtCB2Q+jfIeJ49fecJRPm0yAN12hHobCyHxB65VE465f2xhsi6hU
-	 Na/gTwRbh322WxpvlfG1bBl6czq16rGcjDTwv7PcISUz6LwvF5V100xM2K8MuwglXT
-	 3hth9vg0B8vgplcb0NBg4kwTU7pCN6xBvZvJiWA8=
+	b=ng/R4VepVZMWS+JtZ0S2tq4AK1INhZRGFoR9ProJDH69spXnFshgGB+QIh3XG8RSM
+	 dgWUAqRqHdg3unaosuhByJRMrc/UqzkDZHkJUX1cxt+OT+96rmjRAg6dVFk5k4cumL
+	 pH3vIB+n04ILS958tg8f7V9ayWI8g8k41w5U3PXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 603/644] soc: qcom: mdt_loader: Ensure we dont read past the ELF header
-Date: Tue, 26 Aug 2025 13:11:34 +0200
-Message-ID: <20250826111001.491490668@linuxfoundation.org>
+Subject: [PATCH 5.15 621/644] cgroup/cpuset: Use static_branch_enable_cpuslocked() on cpusets_insane_config_key
+Date: Tue, 26 Aug 2025 13:11:52 +0200
+Message-ID: <20250826111001.945123474@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -53,106 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 9f9967fed9d066ed3dae9372b45ffa4f6fccfeef ]
+[ Upstream commit 65f97cc81b0adc5f49cf6cff5d874be0058e3f41 ]
 
-When the MDT loader is used in remoteproc, the ELF header is sanitized
-beforehand, but that's not necessary the case for other clients.
+The following lockdep splat was observed.
 
-Validate the size of the firmware buffer to ensure that we don't read
-past the end as we iterate over the header. e_phentsize and e_shentsize
-are validated as well, to ensure that the assumptions about step size in
-the traversal are valid.
+[  812.359086] ============================================
+[  812.359089] WARNING: possible recursive locking detected
+[  812.359097] --------------------------------------------
+[  812.359100] runtest.sh/30042 is trying to acquire lock:
+[  812.359105] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: static_key_enable+0xe/0x20
+[  812.359131]
+[  812.359131] but task is already holding lock:
+[  812.359134] ffffffffa7f27420 (cpu_hotplug_lock){++++}-{0:0}, at: cpuset_write_resmask+0x98/0xa70
+     :
+[  812.359267] Call Trace:
+[  812.359272]  <TASK>
+[  812.359367]  cpus_read_lock+0x3c/0xe0
+[  812.359382]  static_key_enable+0xe/0x20
+[  812.359389]  check_insane_mems_config.part.0+0x11/0x30
+[  812.359398]  cpuset_write_resmask+0x9f2/0xa70
+[  812.359411]  cgroup_file_write+0x1c7/0x660
+[  812.359467]  kernfs_fop_write_iter+0x358/0x530
+[  812.359479]  vfs_write+0xabe/0x1250
+[  812.359529]  ksys_write+0xf9/0x1d0
+[  812.359558]  do_syscall_64+0x5f/0xe0
 
-Fixes: 2aad40d911ee ("remoteproc: Move qcom_mdt_loader into drivers/soc/qcom")
-Cc: stable@vger.kernel.org
-Reported-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250610-mdt-loader-validation-and-fixes-v2-1-f7073e9ab899@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Since commit d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem
+and hotplug lock order"), the ordering of cpu hotplug lock
+and cpuset_mutex had been reversed. That patch correctly
+used the cpuslocked version of the static branch API to enable
+cpusets_pre_enable_key and cpusets_enabled_key, but it didn't do the
+same for cpusets_insane_config_key.
+
+The cpusets_insane_config_key can be enabled in the
+check_insane_mems_config() which is called from update_nodemask()
+or cpuset_hotplug_update_tasks() with both cpu hotplug lock and
+cpuset_mutex held. Deadlock can happen with a pending hotplug event that
+tries to acquire the cpu hotplug write lock which will block further
+cpus_read_lock() attempt from check_insane_mems_config(). Fix that by
+switching to use static_branch_enable_cpuslocked().
+
+Fixes: d74b27d63a8b ("cgroup/cpuset: Change cpuset_rwsem and hotplug lock order")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ kernel/cgroup/cpuset.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -12,11 +12,43 @@
- #include <linux/firmware.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/qcom_scm.h>
- #include <linux/sizes.h>
- #include <linux/slab.h>
- #include <linux/soc/qcom/mdt_loader.h>
- 
-+static bool mdt_header_valid(const struct firmware *fw)
-+{
-+	const struct elf32_hdr *ehdr;
-+	size_t phend;
-+	size_t shend;
-+
-+	if (fw->size < sizeof(*ehdr))
-+		return false;
-+
-+	ehdr = (struct elf32_hdr *)fw->data;
-+
-+	if (memcmp(ehdr->e_ident, ELFMAG, SELFMAG))
-+		return false;
-+
-+	if (ehdr->e_phentsize != sizeof(struct elf32_phdr))
-+		return false;
-+
-+	phend = size_add(size_mul(sizeof(struct elf32_phdr), ehdr->e_phnum), ehdr->e_phoff);
-+	if (phend > fw->size)
-+		return false;
-+
-+	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-+		return false;
-+
-+	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-+	if (shend > fw->size)
-+		return false;
-+
-+	return true;
-+}
-+
- static bool mdt_phdr_valid(const struct elf32_phdr *phdr)
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index b40f86a3f605..78c499021768 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -408,7 +408,7 @@ static inline void check_insane_mems_config(nodemask_t *nodes)
  {
- 	if (phdr->p_type != PT_LOAD)
-@@ -46,6 +78,9 @@ ssize_t qcom_mdt_get_size(const struct f
- 	phys_addr_t max_addr = 0;
- 	int i;
- 
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
- 
-@@ -92,6 +127,9 @@ void *qcom_mdt_read_metadata(const struc
- 	size_t ehdr_size;
- 	void *data;
- 
-+	if (!mdt_header_valid(fw))
-+		return ERR_PTR(-EINVAL);
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
- 
-@@ -151,6 +189,9 @@ static int __qcom_mdt_load(struct device
- 	if (!fw || !mem_region || !mem_phys || !mem_size)
- 		return -EINVAL;
- 
-+	if (!mdt_header_valid(fw))
-+		return -EINVAL;
-+
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
- 
+ 	if (!cpusets_insane_config() &&
+ 		movable_only_nodes(nodes)) {
+-		static_branch_enable(&cpusets_insane_config_key);
++		static_branch_enable_cpuslocked(&cpusets_insane_config_key);
+ 		pr_info("Unsupported (movable nodes only) cpuset configuration detected (nmask=%*pbl)!\n"
+ 			"Cpuset allocations might fail even with a lot of memory available.\n",
+ 			nodemask_pr_args(nodes));
+-- 
+2.50.1
+
 
 
