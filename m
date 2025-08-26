@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D342350855;
-	Tue, 26 Aug 2025 14:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7366F352084;
+	Tue, 26 Aug 2025 14:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219180; cv=none; b=PMz5GRUFbts7B8oUkmSS5MBlVINDuui/qIgy7fyRrNCKHuKm2R4dei1drEnQRxv1akkp7POmJeJJXrCjf0dJmFDrSWPaDBzOYsBE7RD6fsDJdsI4XtLZ4F+hj6iSUavYC4Fwfnf4B55dnP8tE0QGA9WiXuQLLLVYZC9jVZV3y/g=
+	t=1756219183; cv=none; b=jD3VtIVvdUPMfUOmVWraO8ocglfxEzfI5EbOxjm6AGv26bsn6eCe3wfl/5Z2D2+E174+SnCfHWqs3pO3DRrrSfE/sJv0MVy7LcZSTB6S/wZ43Ald5z/V1j2Cw4uJyFe4nxMgYO9rP6nv2mF3TpaJ0AbFUgnc1LbCVALt3PaskfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219180; c=relaxed/simple;
-	bh=unl/ms9Yi/3355658KJlJTYUvOdTKzYhQWcoyaDUiZE=;
+	s=arc-20240116; t=1756219183; c=relaxed/simple;
+	bh=Lm4nrumM6k+eVJ3wjg9szAdJj5gPE1+j1gIsIb40tro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X31DKTMNJVq1atDRPGTzBuVmuhei1OATuZQLoi3YZKlINQbtRMx1vU3CQo9BpkhjSTkCNjCXQLj03ulbcDGhTeYsIpOuXdZ6iIAmqT81+J3Wm8psDR7wOBLX2jk99inBMSck0q0OjEeXP7D3fQPito5aFVwFxqv27isFjY6Lnio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRmNUm8M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOwGbLo6NM9uXab0902+9rzAvS3nSptmlEDZ7pYgLkm/U0wMxJKMVWIHGmr5XpQMATKjZa6sTZMzrMLtbqFTsx9zdPiTqgrStm2zeRVAUwbmObe+ar+QjrMAynuqLkOmmo5rLxECS9ftkGW2fIsIVqkF/KY9FemO0uO0gr/s59k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZmEuEHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRmNUm8M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6CDC4CEF1;
-	Tue, 26 Aug 2025 14:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZmEuEHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9822FC4CEF1;
+	Tue, 26 Aug 2025 14:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219180;
-	bh=unl/ms9Yi/3355658KJlJTYUvOdTKzYhQWcoyaDUiZE=;
+	s=korg; t=1756219182;
+	bh=Lm4nrumM6k+eVJ3wjg9szAdJj5gPE1+j1gIsIb40tro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRmNUm8Mz6C/+b9TMGCxgHMZ1a4F8jObzDDEA7xmxkW7UGbVlipxND8MZCrU8SBSp
-	 1fKNt+3rR4sdja5gbhbZqNLDkgaDbmQP+2G5SPP8z4MoHRhXISNKMYryFeROX+Q/Ch
-	 JRDiY/1v1u0P14Sg0kBoFw5pkwK5eA2y4VRCPZEY=
+	b=jZmEuEHC+1ifzMCl0D9x4lgQO95I0hvNyHWjpYt0A9RijjIYtuWHjBwKa31hO/dSs
+	 jkVwVlJteVcFg9+yOP0U94Yxtx0xDKADg/jR5Ah2KFjZfTjBvIFYPKUCIO501GtydO
+	 7QaS7CgqyPFoZ2fsl2fjd7eQhzwDfhQukZjxpEHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	stable <stable@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 282/403] serial: 8250: fix panic due to PSLVERR
-Date: Tue, 26 Aug 2025 13:10:08 +0200
-Message-ID: <20250826110914.595070414@linuxfoundation.org>
+Subject: [PATCH 5.4 254/403] i3c: add missing include to internal header
+Date: Tue, 26 Aug 2025 13:09:40 +0200
+Message-ID: <20250826110913.840670594@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,61 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 7f8fdd4dbffc05982b96caf586f77a014b2a9353 upstream.
+[ Upstream commit 3b661ca549b9e5bb11d0bc97ada6110aac3282d2 ]
 
-When the PSLVERR_RESP_EN parameter is set to 1, the device generates
-an error response if an attempt is made to read an empty RBR (Receive
-Buffer Register) while the FIFO is enabled.
+LKP found a random config which failed to build because IO accessors
+were not defined:
 
-In serial8250_do_startup(), calling serial_port_out(port, UART_LCR,
-UART_LCR_WLEN8) triggers dw8250_check_lcr(), which invokes
-dw8250_force_idle() and serial8250_clear_and_reinit_fifos(). The latter
-function enables the FIFO via serial_out(p, UART_FCR, p->fcr).
-Execution proceeds to the serial_port_in(port, UART_RX).
-This satisfies the PSLVERR trigger condition.
+   In file included from drivers/i3c/master.c:21:
+   drivers/i3c/internals.h: In function 'i3c_writel_fifo':
+>> drivers/i3c/internals.h:35:9: error: implicit declaration of function 'writesl' [-Werror=implicit-function-declaration]
 
-When another CPU (e.g., using printk()) is accessing the UART (UART
-is busy), the current CPU fails the check (value & ~UART_LCR_SPAR) ==
-(lcr & ~UART_LCR_SPAR) in dw8250_check_lcr(), causing it to enter
-dw8250_force_idle().
+Add the proper header to where the IO accessors are used.
 
-Put serial_port_out(port, UART_LCR, UART_LCR_WLEN8) under the port->lock
-to fix this issue.
-
-Panic backtrace:
-[    0.442336] Oops - unknown exception [#1]
-[    0.442343] epc : dw8250_serial_in32+0x1e/0x4a
-[    0.442351]  ra : serial8250_do_startup+0x2c8/0x88e
-...
-[    0.442416] console_on_rootfs+0x26/0x70
-
-Fixes: c49436b657d0 ("serial: 8250_dw: Improve unwritable LCR workaround")
-Link: https://lore.kernel.org/all/84cydt5peu.fsf@jogness.linutronix.de/T/
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20250723023322.464-2-cuiyunhui@bytedance.com
-[ Applied fix to serial8250_do_startup() instead of serial8250_initialize() ]
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507150208.BZDzzJ5E-lkp@intel.com/
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250717120046.9022-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/i3c/internals.h | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2296,9 +2296,8 @@ int serial8250_do_startup(struct uart_po
- 	/*
- 	 * Now, initialize the UART
- 	 */
--	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
--
- 	spin_lock_irqsave(&port->lock, flags);
-+	serial_port_out(port, UART_LCR, UART_LCR_WLEN8);
- 	if (up->port.flags & UPF_FOURPORT) {
- 		if (!up->port.irq)
- 			up->port.mctrl |= TIOCM_OUT1;
+diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
+index 86b7b44cfca2..1906c711f38a 100644
+--- a/drivers/i3c/internals.h
++++ b/drivers/i3c/internals.h
+@@ -9,6 +9,7 @@
+ #define I3C_INTERNALS_H
+ 
+ #include <linux/i3c/master.h>
++#include <linux/io.h>
+ 
+ extern struct bus_type i3c_bus_type;
+ 
+-- 
+2.39.5
+
 
 
