@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822A4200112;
-	Tue, 26 Aug 2025 13:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D44E246BC5;
+	Tue, 26 Aug 2025 13:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215430; cv=none; b=C9PQOfSz+FXVnkP4+aXpYTL/tvMb6lKa8Dd6Yb3+lBjj15vNQrzDdecjw8Lb3lWmVwm+lx9JJ0mUCVdi8giT/fR0GAvlwOCmbCkVxnyFMlsTxpYpe8Wdq313k8HAcfRVeEmTongI9Nqw42/P33No+9Y3rCD1oV60Szvnirl9c4g=
+	t=1756215433; cv=none; b=Xdj6gtauFhScfR3qfDZnXbH2OQf6FHbL9P+P3FChm/8420X7zZV9Zp+983w7GkM82jyoOTqAuEv/SEnpREZEdYVVYnNsgibWIPrdrbox/gQzgTvv3SQQW7lPemIeYfzhyJJg0JQYoQLAdiJidFxdU8SKA0CNLrivTZo530uqAiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215430; c=relaxed/simple;
-	bh=YdYBmMG+X+p2tzga4P/PfYG4EeiiZuOLNP/qOkJCPo4=;
+	s=arc-20240116; t=1756215433; c=relaxed/simple;
+	bh=kXVRAsdH1mvKfA/2Mvxo7ZuW2XN9G+TPdop+Ldk2uIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCFu6yB8yCVgwia1Px/5CewnBPoGYj9/vBMf6gUa0nI9wZI1pxYuFAfq22JPYYQX/umwcbEYgqXXw/2QMe/Uf/UjIEVuMp/Cr5PUwVWiQgMvpBO+ZLUZ37r7MCZPvJNRgstpUjdZFtCY/YhlxE6K8wHOq0VSEEvun4nlyJrjaG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfU1xNau; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pULYpqKvEibTKmXp2rRjJP5Bfjd+I0vAN5tw0jmB9a4OT0Ee286VP9DT1xD9tUJQgHBFjv0LggoF0psCL7R43FedDka1ku0kzlL51hGmCcb775c6uF431mo1lwm3adjIDC8TGxrfWUfbWn221FUU54Ot6jsxFBNAXwf5b3A4qJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdwWlnz4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfU1xNau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14950C113CF;
-	Tue, 26 Aug 2025 13:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdwWlnz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DE9C4CEF1;
+	Tue, 26 Aug 2025 13:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215430;
-	bh=YdYBmMG+X+p2tzga4P/PfYG4EeiiZuOLNP/qOkJCPo4=;
+	s=korg; t=1756215433;
+	bh=kXVRAsdH1mvKfA/2Mvxo7ZuW2XN9G+TPdop+Ldk2uIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfU1xNauYm/ZBcFxGustfsKSYV2RQ1paxXrPmNO6R93sRWDwUNRpsTVHpRaOTkx+F
-	 AJmDwqrGFnQYAmEkcU981+IrLWBghtTJqDHff0Eb5e1yMPlSbeRLFMg5G7ipeoviZ1
-	 tr/Pi+1TvUNMqbVSXNZw0Gwf9H/sYO60bCzYp0hE=
+	b=XdwWlnz45dtdN+TUV9ayWw6mahjEOpG4MvPmj4Cqd0E2pZBG74sK32RYoxV4YV2nQ
+	 UlaQJ9m1V154+cF+nvFGk20sMzUB88VYacDmwWPy2C6Rn4XKXe+Q18xzOR09pDO9+6
+	 Rn/DxmbExDGCvcOO71MhVECr/6lu0MbadR6ktfCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+8258d5439c49d4c35f43@syzkaller.appspotmail.com,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.15 011/644] HID: core: ensure __hid_request reserves the report ID as the first byte
-Date: Tue, 26 Aug 2025 13:01:42 +0200
-Message-ID: <20250826110946.792505595@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 002/644] USB: serial: option: add Telit Cinterion FE910C04 (ECM) composition
+Date: Tue, 26 Aug 2025 13:01:33 +0200
+Message-ID: <20250826110946.572554255@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -51,82 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 0d0777ccaa2d46609d05b66ba0096802a2746193 upstream.
+commit 252f4ac08cd2f16ecd20e4c5e41ac2a17dd86942 upstream.
 
-The low level transport driver expects the first byte to be the report
-ID, even when the report ID is not use (in which case they just shift
-the buffer).
+Add Telit Cinterion FE910C04 (ECM) composition:
+0x10c7: ECM + tty (AT) + tty (AT) + tty (diag)
 
-However, __hid_request() whas not offsetting the buffer it used by one
-in this case, meaning that the raw_request() callback emitted by the
-transport driver would be stripped of the first byte.
+usb-devices output:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  7 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c7 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Note: this changes the API for uhid devices when a request is made
-through hid_hw_request. However, several considerations makes me think
-this is fine:
-- every request to a HID device made through hid_hw_request() would see
-  that change, but every request made through hid_hw_raw_request()
-  already has the new behaviour. So that means that the users are
-  already facing situations where they might have or not the first byte
-  being the null report ID when it is 0. We are making things more
-  straightforward in the end.
-- uhid is mainly used for BLE devices
-- uhid is also used for testing, but I don't see that change a big issue
-- for BLE devices, we can check which kernel module is calling
-  hid_hw_request()
-- and in those modules, we can check which are using a Bluetooth device
-- and then we can check if the command is used with a report ID or not.
-- surprise: none of the kernel module are using a report ID 0
-- and finally, bluez, in its function set_report()[0], does the same
-  shift if the report ID is 0 and the given buffer has a size > 0.
-
-[0] https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/profiles/input/hog-lib.c#n879
-
-Reported-by: Alan Stern <stern@rowland.harvard.edu>
-Closes: https://lore.kernel.org/linux-input/c75433e0-9b47-4072-bbe8-b1d14ea97b13@rowland.harvard.edu/
-Reported-by: syzbot+8258d5439c49d4c35f43@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8258d5439c49d4c35f43
-Tested-by: syzbot+8258d5439c49d4c35f43@syzkaller.appspotmail.com
-Fixes: 4fa5a7f76cc7 ("HID: core: implement generic .request()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20250710-report-size-null-v2-2-ccf922b7c4e5@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1730,7 +1730,7 @@ static struct hid_report *hid_get_report
- int __hid_request(struct hid_device *hid, struct hid_report *report,
- 		int reqtype)
- {
--	char *buf;
-+	char *buf, *data_buf;
- 	int ret;
- 	u32 len;
- 
-@@ -1738,10 +1738,17 @@ int __hid_request(struct hid_device *hid
- 	if (!buf)
- 		return -ENOMEM;
- 
-+	data_buf = buf;
- 	len = hid_report_len(report);
- 
-+	if (report->id == 0) {
-+		/* reserve the first byte for the report ID */
-+		data_buf++;
-+		len++;
-+	}
-+
- 	if (reqtype == HID_REQ_SET_REPORT)
--		hid_output_report(report, buf);
-+		hid_output_report(report, data_buf);
- 
- 	ret = hid->ll_driver->raw_request(hid, report->id, buf, len,
- 					  report->type, reqtype);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1415,6 +1415,9 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d0, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x30),	/* Telit FE910C04 (ECM) */
++	  .driver_info = NCTRL(4) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10c7, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x30),	/* Telit FN990B (MBIM) */
+ 	  .driver_info = NCTRL(6) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x10d1, 0xff, 0xff, 0x40) },
 
 
