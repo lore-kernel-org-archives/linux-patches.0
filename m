@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A60434DCFA;
-	Tue, 26 Aug 2025 13:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9598034F46B;
+	Tue, 26 Aug 2025 13:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216478; cv=none; b=Uv/8mFE9cNwoRB6edSuK4XrtkjBnNSgnhCmD7V7Dd12KulEqCdTyFoc9iEJrku+jHJWZEv8cIqpd0vWhxSImY0E4v2ZZbuTmRDhP+Pj1S/FixKGARBEq42oVLVIgRT7IYdumLiC1DEsyg/ny0qcf8WiUqltaC3n9/jmu0w9J/Ig=
+	t=1756216478; cv=none; b=WCktu8C71cnBCE37Es6kS4AUe2uhm9vfgrM8ZTW+x//+RY3lh75q9S+A6tk8SZm0QFGO+nxfAj+gCAvnhVm7DFvtgGj6zVPDheHab5WN2u68Jm3YACGw6faNxAKnLnuElfsgKp9HUn7KIlEZo3Dl/aw2KkugnqpuFU2x3B8xrIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756216478; c=relaxed/simple;
-	bh=NvU7SrWJt0zVXCnfx3ayn5OG2ELPvrO44WbJvYrNst0=;
+	bh=CDsSN9FySRlSqlka3OLtY3OIpIdslMtYkG84w84VcVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paT0pNpuS3bTVt28VzOsqRhV3iNx4gv8rVsieBehXEpsV0ZAhhcf4hW8CP1+HWMMBL02fqxdRLh0NRD2Fh/IffURT+AeIFnHBcQM4hxkR0ymX0qt9/2khCLHQ5EiRNb/3Gq3MUVfJ4hQeGOrsYUtnUFdxvcLJ/oa/s0KsyMwdVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANqHiBkn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k5vlIGpdkwFGgFNTW/owCw3HpWC43a158D3HnDFdaJ1u4LSVXjtW2MtAwpxtspqlR3KW6oYrTsgpEnBkq04bL5WLxR5zmSL9JH9I5PhXtdRdBpvv1a4wh4FpB3HumWRAOh2w4s7CTZVYSklFRPGQfUyaxB5+8789g9nxLR0iIPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+7UTzdN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANqHiBkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958DDC4CEF1;
-	Tue, 26 Aug 2025 13:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+7UTzdN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26842C113CF;
+	Tue, 26 Aug 2025 13:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756216475;
-	bh=NvU7SrWJt0zVXCnfx3ayn5OG2ELPvrO44WbJvYrNst0=;
+	s=korg; t=1756216478;
+	bh=CDsSN9FySRlSqlka3OLtY3OIpIdslMtYkG84w84VcVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANqHiBknjUgL7Ix7U+nJNFhS/uybkS15ZCOWdMosVMW/9o9uPxwXRZ74YCOc3OraS
-	 N85VAbunzUFmmr47bzOC8cTLdocTZhXompZn3q8ritTDXSQMlH0B1U0VNmRnK52Yy4
-	 AteypslWqa+jzSEtTMm+e59Gq7ZXn3OBqKEAXb0M=
+	b=M+7UTzdN5VTaI4x12nUOvowSsRgIQxhouWH3zXn8jgfeaaFa4fEYmei2eT9LOEfIX
+	 GRHi9U0VgsAa8JX00Z2xZPunOjL+h919/RuLEGjrKxTDevn6uewRQk3yK8ztjO+Xeq
+	 ubBYibQ8Mpw1UScvigMH4S7dUMV/bKE/VTmx1K9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 424/644] kconfig: gconf: avoid hardcoding model2 in on_treeview2_cursor_changed()
-Date: Tue, 26 Aug 2025 13:08:35 +0200
-Message-ID: <20250826110956.966466146@linuxfoundation.org>
+Subject: [PATCH 5.15 425/644] kconfig: gconf: fix potential memory leak in renderer_edited()
+Date: Tue, 26 Aug 2025 13:08:36 +0200
+Message-ID: <20250826110956.991377068@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110946.507083938@linuxfoundation.org>
 References: <20250826110946.507083938@linuxfoundation.org>
@@ -52,40 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit cae9cdbcd9af044810bcceeb43a87accca47c71d ]
+[ Upstream commit f72ed4c6a375e52a3f4b75615e4a89d29d8acea7 ]
 
-The on_treeview2_cursor_changed() handler is connected to both the left
-and right tree views, but it hardcodes model2 (the GtkTreeModel of the
-right tree view). This is incorrect. Get the associated model from the
-view.
+If gtk_tree_model_get_iter() fails, gtk_tree_path_free() is not called.
 
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/gconf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ scripts/kconfig/gconf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
-index 5d1404178e48..87f8a4db5bc6 100644
+index 87f8a4db5bc6..3c726ead8f7e 100644
 --- a/scripts/kconfig/gconf.c
 +++ b/scripts/kconfig/gconf.c
-@@ -977,13 +977,14 @@ on_treeview2_key_press_event(GtkWidget * widget,
- void
- on_treeview2_cursor_changed(GtkTreeView * treeview, gpointer user_data)
- {
-+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
- 	GtkTreeSelection *selection;
- 	GtkTreeIter iter;
- 	struct menu *menu;
+@@ -783,7 +783,7 @@ static void renderer_edited(GtkCellRendererText * cell,
+ 	struct symbol *sym;
  
- 	selection = gtk_tree_view_get_selection(treeview);
--	if (gtk_tree_selection_get_selected(selection, &model2, &iter)) {
--		gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
-+	if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-+		gtk_tree_model_get(model, &iter, COL_MENU, &menu, -1);
- 		text_insert_help(menu);
- 	}
+ 	if (!gtk_tree_model_get_iter(model2, &iter, path))
+-		return;
++		goto free;
+ 
+ 	gtk_tree_model_get(model2, &iter, COL_MENU, &menu, -1);
+ 	sym = menu->sym;
+@@ -795,6 +795,7 @@ static void renderer_edited(GtkCellRendererText * cell,
+ 
+ 	update_tree(&rootmenu, NULL);
+ 
++free:
+ 	gtk_tree_path_free(path);
  }
+ 
 -- 
 2.39.5
 
