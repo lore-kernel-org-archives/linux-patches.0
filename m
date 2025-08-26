@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1542BE058;
-	Tue, 26 Aug 2025 13:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954AA34164F;
+	Tue, 26 Aug 2025 13:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214224; cv=none; b=IMgwu3pJQDU2HBwBQqER8rHnkemHOoh6C03ctCoFaoD9UwCeDFRUMRoB8t/sFdHmN9n2FeZ91rMRRYNTxV36uCZB+SW4H0g2RzrAgKIk9I19NN/Tk48oPIhqGi8bEqq/LVgXCO8RvH+pH0pwDSko7HY/Ko7aiuMV8npTEVpHtYw=
+	t=1756214226; cv=none; b=azAlANY24SJeO+skeaiXCN25HNF2TE5eso70p/lXhfqaXOjf6KWKyLAkzVpgfyUqw7ZWMxThjkAa2oFN1s/n4y4OLmlrHnXYFrZTgNt45lCwNF2ROC0Qj8+i6fMG/up5gSjSXKe6CdXuvAqEE3ylAdgNdX5iDB3Uvx4zPtwG9/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214224; c=relaxed/simple;
-	bh=1PTrbylr8Tz+b+YL259XIWH+be4WNI2bAmWIIe5Kg7M=;
+	s=arc-20240116; t=1756214226; c=relaxed/simple;
+	bh=pbXsuTNwRbcFWSGx5P2I4o9ENy8ydqW3Uj7z5G+FDVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItpguBiKT1gkMJh2N+zNa/b0LygCKtvlJz/W6tLPH56s3+fAARECPr0uYk6b56VULwChEL62SZmonblxWBBLGQ8ErXdS7z0O1YXG7a9MSwJ0XRwsRQWS7ef0JP4/Xc+V/XMsW8wywz4sz50/FLVUWKuiCfr7oXXGdbSv3Aqcqbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoaW/9Di; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JiScXrmwkD3LESyqz2rHs10cSl3DFFsdsg0cKM3s+b+8ewCv/C6eNLMztVTruU8qIQNY76V4/Smg2+sjIne9YojYG1Rhv27MLgbdbSVXlTdwihc/3eR2Yg6FRR/IuQEwy3R9IxOPXd6qOalEMuGF7Cz6B00wPis1pSya1ytTHrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtzKqhzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoaW/9Di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990D3C4CEF1;
-	Tue, 26 Aug 2025 13:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtzKqhzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2950FC4CEF1;
+	Tue, 26 Aug 2025 13:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214223;
-	bh=1PTrbylr8Tz+b+YL259XIWH+be4WNI2bAmWIIe5Kg7M=;
+	s=korg; t=1756214226;
+	bh=pbXsuTNwRbcFWSGx5P2I4o9ENy8ydqW3Uj7z5G+FDVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XoaW/9Did+/UZTZXSbvaatqyBpb5ikPkGmWJcqz35UtxrvciGkANUi6YV21cZlcz1
-	 plcwZq0qYoNPM1l8i49VCXa4Iuh8ufix7uUmr0P6uaKAXwUYzf5mS9+RsA2AzFpibK
-	 9bN4EF1yaQg0qWxBJ8gWj+t2rHhzTiwYOGcI9+xU=
+	b=PtzKqhzT5JWzYKEj0szjN0MFUcag+R6tXeSBbGEGq7D+o6UIzWv72goKWk9oJ7hDd
+	 VcxwkQVjKZSG/AfIVKQSsoYDU9DBYZ6iR6wDFKtXwJldw7xUikynsZUkQXwEGLK7u0
+	 tWxxFdhLdY9IJOulGYwXhtdVlx3Liwa9XmB9KjN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/482] better lockdep annotations for simple_recursive_removal()
-Date: Tue, 26 Aug 2025 13:05:11 +0200
-Message-ID: <20250826110932.256182890@linuxfoundation.org>
+Subject: [PATCH 6.1 059/482] ata: libata-sata: Disallow changing LPM state if not supported
+Date: Tue, 26 Aug 2025 13:05:12 +0200
+Message-ID: <20250826110932.281644140@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,55 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 2a8061ee5e41034eb14170ec4517b5583dbeff9f ]
+[ Upstream commit 413e800cadbf67550d76c77c230b2ecd96bce83a ]
 
-We want a class that nests outside of I_MUTEX_NORMAL (for the sake of
-callbacks that might want to lock the victim) and inside I_MUTEX_PARENT
-(so that a variant of that could be used with parent of the victim
-held locked by the caller).
+Modify ata_scsi_lpm_store() to return an error if a user attempts to set
+a link power management policy for a port that does not support LPM,
+that is, ports flagged with ATA_FLAG_NO_LPM.
 
-In reality, simple_recursive_removal()
-	* never holds two locks at once
-	* holds the lock on parent of dentry passed to callback
-	* is used only on the trees with fixed topology, so the depths
-are not changing.
-
-So the locking order is actually fine.
-
-AFAICS, the best solution is to assign I_MUTEX_CHILD to the locks
-grabbed by that thing.
-
-Reported-by: syzbot+169de184e9defe7fe709@syzkaller.appspotmail.com
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Link: https://lore.kernel.org/r/20250701125321.69496-6-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/libata-sata.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index aada4e7c8713..cbd42d76fbd0 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -274,7 +274,7 @@ void simple_recursive_removal(struct dentry *dentry,
- 		struct dentry *victim = NULL, *child;
- 		struct inode *inode = this->d_inode;
+diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
+index 71a00842eb5e..b75999388bf0 100644
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -812,6 +812,11 @@ static ssize_t ata_scsi_lpm_store(struct device *device,
  
--		inode_lock(inode);
-+		inode_lock_nested(inode, I_MUTEX_CHILD);
- 		if (d_is_dir(this))
- 			inode->i_flags |= S_DEAD;
- 		while ((child = find_next_child(this, victim)) == NULL) {
-@@ -286,7 +286,7 @@ void simple_recursive_removal(struct dentry *dentry,
- 			victim = this;
- 			this = this->d_parent;
- 			inode = this->d_inode;
--			inode_lock(inode);
-+			inode_lock_nested(inode, I_MUTEX_CHILD);
- 			if (simple_positive(victim)) {
- 				d_invalidate(victim);	// avoid lost mounts
- 				if (d_is_dir(victim))
+ 	spin_lock_irqsave(ap->lock, flags);
+ 
++	if (ap->flags & ATA_FLAG_NO_LPM) {
++		count = -EOPNOTSUPP;
++		goto out_unlock;
++	}
++
+ 	ata_for_each_link(link, ap, EDGE) {
+ 		ata_for_each_dev(dev, &ap->link, ENABLED) {
+ 			if (dev->horkage & ATA_HORKAGE_NOLPM) {
 -- 
 2.39.5
 
