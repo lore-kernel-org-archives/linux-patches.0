@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625D0356908;
-	Tue, 26 Aug 2025 14:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390C8352FD9;
+	Tue, 26 Aug 2025 14:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218263; cv=none; b=OB4MJ5wZGBTDy/cTBzKCEzHXNW8yQfhmWS4uAqTOr+YXGmzApTacxN3WH52hXE0CF4BuiAYEoeu6ZdJJ2vBFoHg008c6tDoaRmMhoD+o0daCfkcJqv/FAt7nNxI1LJ4O9FT85CCczqygZcUEPicMgmB6ARKI4IqCtb/s/cQfLEk=
+	t=1756218266; cv=none; b=uPZsQWmQftV69UVvQR12SbRytTy9gxxbp+Om3UTHa3KYzSZxkohSs/jHQGWnUFoz+MjiS2KZRU2+gLNSFbzxKVFNK2lsyujH7Zi8zvGRmzee0e3n7ksq0d7fR/1SWzGOpVLUrX77CiNHySzzFN/V9rNIkitXzWjd6aJWdjRYAtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218263; c=relaxed/simple;
-	bh=YUrGJII0nxAEE+6EjIVI5zmXgTfxQSnjKHGuCD6Keqw=;
+	s=arc-20240116; t=1756218266; c=relaxed/simple;
+	bh=i/BbdCfvnCfCQK+DKkJXrUcSOIfYrsVoiyAxN6t82SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5A2v/PFakMe2521G9pRHK1Dg+aI73pd2PuW7xn5nw99vcQZSXUftju7+BnoxMcN/p4wyW5K/hOWMusfWL3PvwICu1wrSEp/xI7Ns25Yq+sKKAyEO9b+xgOyNQ6rA5Va5RoHYfMCpFNaW6bsUEcVQ4QGqasO4hpSjywdnuBjFRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgxYFjXf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cW3wuCb9QVGToYvlf5apfMVreSrTcPF8B6W+A/zjUgh90QaEdPVHmrhRevByG8l+9myDB+BQ9jrI5pxAd7DjJiYtzddOBqi9+5eBZikxtBXIB9fnzz7HYpkp9m5BsvzjSxFSjmeHTeDhfmsKORQTAK6fPIb/u1/mapBPB3f9mkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmDqP13B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgxYFjXf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76E5C4CEF1;
-	Tue, 26 Aug 2025 14:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmDqP13B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD0AC4CEF1;
+	Tue, 26 Aug 2025 14:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218263;
-	bh=YUrGJII0nxAEE+6EjIVI5zmXgTfxQSnjKHGuCD6Keqw=;
+	s=korg; t=1756218265;
+	bh=i/BbdCfvnCfCQK+DKkJXrUcSOIfYrsVoiyAxN6t82SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgxYFjXfsSEuXaSfom5lmKZ29kk43u1BWCEbBZg5p/XXsL3uiR+9ZzW1ttndcZzzx
-	 4QjT7N0Cg3PXynUz56sxVpOOTSn4B+Zw31y+wiaEPoL9plXRGltTuxhfNRqlACIgJi
-	 F+LbbBamMcOpJrZElSml0zWZk3anfo6ZuoAZ88Qk=
+	b=cmDqP13Bg6ZM3LW/SIZSGprylJu/EYRPJIc465hLz2Kb9DhbkzY//4QRiiwCynfEB
+	 fOPRzeOFJa/ZkJCa0W7tVd9B+yPFe71Ox8CCPrgSasHGr3QWw8RHtsuA8N7kcDZ+vp
+	 RDURrEx01vzVA8bROYhWVVEdAksC0jL8cflagync=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 455/523] NFS: Dont set NFS_INO_REVAL_PAGECACHE in the inode cache validity
-Date: Tue, 26 Aug 2025 13:11:05 +0200
-Message-ID: <20250826110935.672866348@linuxfoundation.org>
+Subject: [PATCH 5.10 456/523] NFSv4: Fix nfs4_bitmap_copy_adjust()
+Date: Tue, 26 Aug 2025 13:11:06 +0200
+Message-ID: <20250826110935.696386887@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -52,68 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 36a9346c225270262d9f34e66c91aa1723fa903f ]
+[ Upstream commit a71029b86752e8d40301af235a6bbf4896cc1402 ]
 
-It is no longer necessary to preserve the NFS_INO_REVAL_PAGECACHE flag.
+Don't remove flags from the set retrieved from the cache_validity.
+We do want to retrieve all attributes that are listed as being
+invalid, whether or not there is a delegation set.
 
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Stable-dep-of: b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a new filesystem")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c    |    6 ++----
- fs/nfs/nfs4proc.c |    1 -
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ fs/nfs/nfs4proc.c |   33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -217,11 +217,12 @@ static void nfs_set_cache_invalid(struct
- 			flags &= ~NFS_INO_INVALID_OTHER;
- 		flags &= ~(NFS_INO_INVALID_CHANGE
- 				| NFS_INO_INVALID_SIZE
--				| NFS_INO_REVAL_PAGECACHE
- 				| NFS_INO_INVALID_XATTR);
- 	} else if (flags & NFS_INO_REVAL_PAGECACHE)
- 		flags |= NFS_INO_INVALID_CHANGE | NFS_INO_INVALID_SIZE;
- 
-+	flags &= ~NFS_INO_REVAL_PAGECACHE;
-+
- 	if (!nfs_has_xattr_cache(nfsi))
- 		flags &= ~NFS_INO_INVALID_XATTR;
- 	if (inode->i_mapping->nrpages == 0)
-@@ -1900,7 +1901,6 @@ static int nfs_update_inode(struct inode
- 	nfsi->cache_validity &= ~(NFS_INO_INVALID_ATTR
- 			| NFS_INO_INVALID_ATIME
- 			| NFS_INO_REVAL_FORCED
--			| NFS_INO_REVAL_PAGECACHE
- 			| NFS_INO_INVALID_BLOCKS);
- 
- 	/* Do atomic weak cache consistency updates */
-@@ -1942,7 +1942,6 @@ static int nfs_update_inode(struct inode
- 	} else {
- 		nfsi->cache_validity |= save_cache_validity &
- 				(NFS_INO_INVALID_CHANGE
--				| NFS_INO_REVAL_PAGECACHE
- 				| NFS_INO_REVAL_FORCED);
- 		cache_revalidated = false;
- 	}
-@@ -1988,7 +1987,6 @@ static int nfs_update_inode(struct inode
- 	} else {
- 		nfsi->cache_validity |= save_cache_validity &
- 				(NFS_INO_INVALID_SIZE
--				| NFS_INO_REVAL_PAGECACHE
- 				| NFS_INO_REVAL_FORCED);
- 		cache_revalidated = false;
- 	}
 --- a/fs/nfs/nfs4proc.c
 +++ b/fs/nfs/nfs4proc.c
-@@ -1213,7 +1213,6 @@ nfs4_update_changeattr_locked(struct ino
- 		| cache_validity;
+@@ -292,7 +292,7 @@ const u32 nfs4_fs_locations_bitmap[3] =
+ };
  
- 	if (cinfo->atomic && cinfo->before == inode_peek_iversion_raw(inode)) {
--		nfsi->cache_validity &= ~NFS_INO_REVAL_PAGECACHE;
- 		nfsi->attrtimeo_timestamp = jiffies;
- 	} else {
- 		if (S_ISDIR(inode->i_mode)) {
+ static void nfs4_bitmap_copy_adjust(__u32 *dst, const __u32 *src,
+-		struct inode *inode)
++				    struct inode *inode, unsigned long flags)
+ {
+ 	unsigned long cache_validity;
+ 
+@@ -300,22 +300,19 @@ static void nfs4_bitmap_copy_adjust(__u3
+ 	if (!inode || !nfs4_have_delegation(inode, FMODE_READ))
+ 		return;
+ 
+-	cache_validity = READ_ONCE(NFS_I(inode)->cache_validity);
+-	if (!(cache_validity & NFS_INO_REVAL_FORCED))
+-		cache_validity &= ~(NFS_INO_INVALID_CHANGE
+-				| NFS_INO_INVALID_SIZE);
++	cache_validity = READ_ONCE(NFS_I(inode)->cache_validity) | flags;
+ 
++	/* Remove the attributes over which we have full control */
++	dst[1] &= ~FATTR4_WORD1_RAWDEV;
+ 	if (!(cache_validity & NFS_INO_INVALID_SIZE))
+ 		dst[0] &= ~FATTR4_WORD0_SIZE;
+ 
+ 	if (!(cache_validity & NFS_INO_INVALID_CHANGE))
+ 		dst[0] &= ~FATTR4_WORD0_CHANGE;
+-}
+ 
+-static void nfs4_bitmap_copy_adjust_setattr(__u32 *dst,
+-		const __u32 *src, struct inode *inode)
+-{
+-	nfs4_bitmap_copy_adjust(dst, src, inode);
++	if (!(cache_validity & NFS_INO_INVALID_OTHER))
++		dst[1] &= ~(FATTR4_WORD1_MODE | FATTR4_WORD1_OWNER |
++			    FATTR4_WORD1_OWNER_GROUP);
+ }
+ 
+ static void nfs4_setup_readdir(u64 cookie, __be32 *verifier, struct dentry *dentry,
+@@ -3379,12 +3376,15 @@ static int nfs4_do_setattr(struct inode
+ 		.inode = inode,
+ 		.stateid = &arg.stateid,
+ 	};
++	unsigned long adjust_flags = NFS_INO_INVALID_CHANGE;
+ 	int err;
+ 
++	if (sattr->ia_valid & (ATTR_MODE|ATTR_UID|ATTR_GID))
++		adjust_flags |= NFS_INO_INVALID_OTHER;
++
+ 	do {
+-		nfs4_bitmap_copy_adjust_setattr(bitmask,
+-				nfs4_bitmask(server, olabel),
+-				inode);
++		nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, olabel),
++					inode, adjust_flags);
+ 
+ 		err = _nfs4_do_setattr(inode, &arg, &res, cred, ctx);
+ 		switch (err) {
+@@ -4192,8 +4192,7 @@ static int _nfs4_proc_getattr(struct nfs
+ 	if (inode && (server->flags & NFS_MOUNT_SOFTREVAL))
+ 		task_flags |= RPC_TASK_TIMEOUT;
+ 
+-	nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, label), inode);
+-
++	nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, label), inode, 0);
+ 	nfs_fattr_init(fattr);
+ 	nfs4_init_sequence(&args.seq_args, &res.seq_res, 0, 0);
+ 	return nfs4_do_call_sync(server->client, server, &msg,
+@@ -4795,8 +4794,8 @@ static int _nfs4_proc_link(struct inode
+ 	}
+ 
+ 	nfs4_inode_make_writeable(inode);
+-	nfs4_bitmap_copy_adjust_setattr(bitmask, nfs4_bitmask(server, res.label), inode);
+-
++	nfs4_bitmap_copy_adjust(bitmask, nfs4_bitmask(server, res.label), inode,
++				NFS_INO_INVALID_CHANGE);
+ 	status = nfs4_call_sync(server->client, server, &msg, &arg.seq_args, &res.seq_res, 1);
+ 	if (!status) {
+ 		nfs4_update_changeattr(dir, &res.cinfo, res.fattr->time_start,
 
 
