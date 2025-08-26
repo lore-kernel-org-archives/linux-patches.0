@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A4D2C0F9C;
-	Tue, 26 Aug 2025 14:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3E02C0F60;
+	Tue, 26 Aug 2025 14:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756218302; cv=none; b=SPS254U29qtxfDQNJt8rBBQemX5W5/XRLYuaEH1Z7R3snvO2/5j7Huz5fHjSt+cri+OGRW7ufjxM1VVvWYkfhOLPFWv4lfpuQebCaDw3+OfaTbXxg+GDOjJXHOCgBWd042EY8nEt+G0b7eiY6oD1eXKZINjs/65y7tmNKHCA18U=
+	t=1756218304; cv=none; b=Nn9thZk0pGXYE7Tiz8C2vHt+DD68NyntVwfxW0iuR9ERnvEGMtQYOZc+fkJMLRsOlHUSOE1hxBLJYYYC+9xaix68gpKeuqBEbXxmCcaH7Wwt+LLK1PNnvEw2bBp06yI0ZuZn0UA5Ij4nuh5tJPTGsylr+i3YmUzUH02yaoKwQOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756218302; c=relaxed/simple;
-	bh=appIQ4gHbCTcIikBIA5ku/11S+c6+XH7n97Uf0FmjLg=;
+	s=arc-20240116; t=1756218304; c=relaxed/simple;
+	bh=4m8tVnjaT5gPF7cFZjwcD9W9OXKCsRFWI87fwikfobA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlCR0U1ft4b0seVwLxqwYq7Iux5v77KHvmfXroXg8VtFU5DYYVjEZ4Lwk8PMKkZiDldw9SHpEPtzIKM63eSRBpkV2jywf+6myyMvulRR0Xoez4p0Yi/FZdqpqz0MAKxh0H/alYPqAyv80i3hgLqNL7Eemcfy4mW3yB9pJRu0skM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyDIRlIb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d/odNxOIM/1ZOetmPBRRoyDbDOxPFfZm2HTv3uXCiZAkjD1kS4/RXuLcxeH4IuxGqnjglfd2O06e1GWwsMfd/QeCSkfOmJfoR/5fZgsak8dEO8ErUySFj1/Jl5wNP5QI1QPpaadtlPVWUib4dW7fBdBKKZM4snj2KhP87YR1ngw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chDw7gVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyDIRlIb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD734C4CEF1;
-	Tue, 26 Aug 2025 14:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chDw7gVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F184C4CEF1;
+	Tue, 26 Aug 2025 14:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756218302;
-	bh=appIQ4gHbCTcIikBIA5ku/11S+c6+XH7n97Uf0FmjLg=;
+	s=korg; t=1756218304;
+	bh=4m8tVnjaT5gPF7cFZjwcD9W9OXKCsRFWI87fwikfobA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyDIRlIb9BbKDODNlixRFmFBdVlR+ruaTrzTWaV36O0pcmBzQmeMw0akU7Ds+hQnR
-	 Lslm0bZRjqScnDPGG3PbSxuncjDUmX9Rkz6dcJiIeSUF2PxXiNWsLT+xkCsTheL0TS
-	 JvtTCJnk+h4AkunLsKZBw39iPk99uF1j6Tw7qngY=
+	b=chDw7gVDoQZtqHxrqaORIkMymuve4WvpB249ewa/CQS6rIefDatqP8665o+t9wE3L
+	 EQ+xAc2T8bm1qzM3rFSjoCpc6nT6e88FRa1oTRoI7TXpZs+FsH2g5Wst1h/m5H8ugK
+	 aN6i/kzNdCJbnTmDT40M27p7rwp+FhUNG+91UacQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	tj@kernel.org,
-	Ming Lei <ming.lei@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Wang Yugui <wangyugui@e16-tech.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.10 439/523] block: dont call rq_qos_ops->done_bio if the bio isnt tracked
-Date: Tue, 26 Aug 2025 13:10:49 +0200
-Message-ID: <20250826110935.282923717@linuxfoundation.org>
+Subject: [PATCH 5.10 440/523] btrfs: fix deadlock when cloning inline extents and using qgroups
+Date: Tue, 26 Aug 2025 13:10:50 +0200
+Message-ID: <20250826110935.306039214@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -54,54 +53,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit a647a524a46736786c95cdb553a070322ca096e3 upstream.
+commit f9baa501b4fd6962257853d46ddffbc21f27e344 upstream.
 
-rq_qos framework is only applied on request based driver, so:
+There are a few exceptional cases where cloning an inline extent needs to
+copy the inline extent data into a page of the destination inode.
 
-1) rq_qos_done_bio() needn't to be called for bio based driver
+When this happens, we end up starting a transaction while having a dirty
+page for the destination inode and while having the range locked in the
+destination's inode iotree too. Because when reserving metadata space
+for a transaction we may need to flush existing delalloc in case there is
+not enough free space, we have a mechanism in place to prevent a deadlock,
+which was introduced in commit 3d45f221ce627d ("btrfs: fix deadlock when
+cloning inline extent and low on free metadata space").
 
-2) rq_qos_done_bio() needn't to be called for bio which isn't tracked,
-such as bios ended from error handling code.
+However when using qgroups, a transaction also reserves metadata qgroup
+space, which can also result in flushing delalloc in case there is not
+enough available space at the moment. When this happens we deadlock, since
+flushing delalloc requires locking the file range in the inode's iotree
+and the range was already locked at the very beginning of the clone
+operation, before attempting to start the transaction.
 
-Especially in bio_endio():
+When this issue happens, stack traces like the following are reported:
 
-1) request queue is referred via bio->bi_bdev->bd_disk->queue, which
-may be gone since request queue refcount may not be held in above two
-cases
+  [72747.556262] task:kworker/u81:9   state:D stack:    0 pid:  225 ppid:     2 flags:0x00004000
+  [72747.556268] Workqueue: writeback wb_workfn (flush-btrfs-1142)
+  [72747.556271] Call Trace:
+  [72747.556273]  __schedule+0x296/0x760
+  [72747.556277]  schedule+0x3c/0xa0
+  [72747.556279]  io_schedule+0x12/0x40
+  [72747.556284]  __lock_page+0x13c/0x280
+  [72747.556287]  ? generic_file_readonly_mmap+0x70/0x70
+  [72747.556325]  extent_write_cache_pages+0x22a/0x440 [btrfs]
+  [72747.556331]  ? __set_page_dirty_nobuffers+0xe7/0x160
+  [72747.556358]  ? set_extent_buffer_dirty+0x5e/0x80 [btrfs]
+  [72747.556362]  ? update_group_capacity+0x25/0x210
+  [72747.556366]  ? cpumask_next_and+0x1a/0x20
+  [72747.556391]  extent_writepages+0x44/0xa0 [btrfs]
+  [72747.556394]  do_writepages+0x41/0xd0
+  [72747.556398]  __writeback_single_inode+0x39/0x2a0
+  [72747.556403]  writeback_sb_inodes+0x1ea/0x440
+  [72747.556407]  __writeback_inodes_wb+0x5f/0xc0
+  [72747.556410]  wb_writeback+0x235/0x2b0
+  [72747.556414]  ? get_nr_inodes+0x35/0x50
+  [72747.556417]  wb_workfn+0x354/0x490
+  [72747.556420]  ? newidle_balance+0x2c5/0x3e0
+  [72747.556424]  process_one_work+0x1aa/0x340
+  [72747.556426]  worker_thread+0x30/0x390
+  [72747.556429]  ? create_worker+0x1a0/0x1a0
+  [72747.556432]  kthread+0x116/0x130
+  [72747.556435]  ? kthread_park+0x80/0x80
+  [72747.556438]  ret_from_fork+0x1f/0x30
 
-2) q->rq_qos may be freed in blk_cleanup_queue() when calling into
-__rq_qos_done_bio()
+  [72747.566958] Workqueue: btrfs-flush_delalloc btrfs_work_helper [btrfs]
+  [72747.566961] Call Trace:
+  [72747.566964]  __schedule+0x296/0x760
+  [72747.566968]  ? finish_wait+0x80/0x80
+  [72747.566970]  schedule+0x3c/0xa0
+  [72747.566995]  wait_extent_bit.constprop.68+0x13b/0x1c0 [btrfs]
+  [72747.566999]  ? finish_wait+0x80/0x80
+  [72747.567024]  lock_extent_bits+0x37/0x90 [btrfs]
+  [72747.567047]  btrfs_invalidatepage+0x299/0x2c0 [btrfs]
+  [72747.567051]  ? find_get_pages_range_tag+0x2cd/0x380
+  [72747.567076]  __extent_writepage+0x203/0x320 [btrfs]
+  [72747.567102]  extent_write_cache_pages+0x2bb/0x440 [btrfs]
+  [72747.567106]  ? update_load_avg+0x7e/0x5f0
+  [72747.567109]  ? enqueue_entity+0xf4/0x6f0
+  [72747.567134]  extent_writepages+0x44/0xa0 [btrfs]
+  [72747.567137]  ? enqueue_task_fair+0x93/0x6f0
+  [72747.567140]  do_writepages+0x41/0xd0
+  [72747.567144]  __filemap_fdatawrite_range+0xc7/0x100
+  [72747.567167]  btrfs_run_delalloc_work+0x17/0x40 [btrfs]
+  [72747.567195]  btrfs_work_helper+0xc2/0x300 [btrfs]
+  [72747.567200]  process_one_work+0x1aa/0x340
+  [72747.567202]  worker_thread+0x30/0x390
+  [72747.567205]  ? create_worker+0x1a0/0x1a0
+  [72747.567208]  kthread+0x116/0x130
+  [72747.567211]  ? kthread_park+0x80/0x80
+  [72747.567214]  ret_from_fork+0x1f/0x30
 
-Fix the potential kernel panic by not calling rq_qos_ops->done_bio if
-the bio isn't tracked. This way is safe because both ioc_rqos_done_bio()
-and blkcg_iolatency_done_bio() are nop if the bio isn't tracked.
+  [72747.569686] task:fsstress        state:D stack:    0 pid:841421 ppid:841417 flags:0x00000000
+  [72747.569689] Call Trace:
+  [72747.569691]  __schedule+0x296/0x760
+  [72747.569694]  schedule+0x3c/0xa0
+  [72747.569721]  try_flush_qgroup+0x95/0x140 [btrfs]
+  [72747.569725]  ? finish_wait+0x80/0x80
+  [72747.569753]  btrfs_qgroup_reserve_data+0x34/0x50 [btrfs]
+  [72747.569781]  btrfs_check_data_free_space+0x5f/0xa0 [btrfs]
+  [72747.569804]  btrfs_buffered_write+0x1f7/0x7f0 [btrfs]
+  [72747.569810]  ? path_lookupat.isra.48+0x97/0x140
+  [72747.569833]  btrfs_file_write_iter+0x81/0x410 [btrfs]
+  [72747.569836]  ? __kmalloc+0x16a/0x2c0
+  [72747.569839]  do_iter_readv_writev+0x160/0x1c0
+  [72747.569843]  do_iter_write+0x80/0x1b0
+  [72747.569847]  vfs_writev+0x84/0x140
+  [72747.569869]  ? btrfs_file_llseek+0x38/0x270 [btrfs]
+  [72747.569873]  do_writev+0x65/0x100
+  [72747.569876]  do_syscall_64+0x33/0x40
+  [72747.569879]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
 
-Reported-by: Yu Kuai <yukuai3@huawei.com>
-Cc: tj@kernel.org
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20210924110704.1541818-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Shivani: Modified to apply on 5.10.y ]
+  [72747.569899] task:fsstress        state:D stack:    0 pid:841424 ppid:841417 flags:0x00004000
+  [72747.569903] Call Trace:
+  [72747.569906]  __schedule+0x296/0x760
+  [72747.569909]  schedule+0x3c/0xa0
+  [72747.569936]  try_flush_qgroup+0x95/0x140 [btrfs]
+  [72747.569940]  ? finish_wait+0x80/0x80
+  [72747.569967]  __btrfs_qgroup_reserve_meta+0x36/0x50 [btrfs]
+  [72747.569989]  start_transaction+0x279/0x580 [btrfs]
+  [72747.570014]  clone_copy_inline_extent+0x332/0x490 [btrfs]
+  [72747.570041]  btrfs_clone+0x5b7/0x7a0 [btrfs]
+  [72747.570068]  ? lock_extent_bits+0x64/0x90 [btrfs]
+  [72747.570095]  btrfs_clone_files+0xfc/0x150 [btrfs]
+  [72747.570122]  btrfs_remap_file_range+0x3d8/0x4a0 [btrfs]
+  [72747.570126]  do_clone_file_range+0xed/0x200
+  [72747.570131]  vfs_clone_file_range+0x37/0x110
+  [72747.570134]  ioctl_file_clone+0x7d/0xb0
+  [72747.570137]  do_vfs_ioctl+0x138/0x630
+  [72747.570140]  __x64_sys_ioctl+0x62/0xc0
+  [72747.570143]  do_syscall_64+0x33/0x40
+  [72747.570146]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+So fix this by skipping the flush of delalloc for an inode that is
+flagged with BTRFS_INODE_NO_DELALLOC_FLUSH, meaning it is currently under
+such a special case of cloning an inline extent, when flushing delalloc
+during qgroup metadata reservation.
+
+The special cases for cloning inline extents were added in kernel 5.7 by
+by commit 05a5a7621ce66c ("Btrfs: implement full reflink support for
+inline extents"), while having qgroup metadata space reservation flushing
+delalloc when low on space was added in kernel 5.9 by commit
+c53e9653605dbf ("btrfs: qgroup: try to flush qgroup space when we get
+-EDQUOT"). So use a "Fixes:" tag for the later commit to ease stable
+kernel backports.
+
+Reported-by: Wang Yugui <wangyugui@e16-tech.com>
+Link: https://lore.kernel.org/linux-btrfs/20210421083137.31E3.409509F4@e16-tech.com/
+Fixes: c53e9653605dbf ("btrfs: qgroup: try to flush qgroup space when we get -EDQUOT")
+CC: stable@vger.kernel.org # 5.9+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ Shivani: Modified to apply on 5.10.y, Passed false to
+  btrfs_start_delalloc_flush() in fs/btrfs/transaction.c file to
+  maintain the default behaviour ]
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ctree.h       |    2 +-
+ fs/btrfs/inode.c       |    4 ++--
+ fs/btrfs/ioctl.c       |    2 +-
+ fs/btrfs/qgroup.c      |    2 +-
+ fs/btrfs/send.c        |    4 ++--
+ fs/btrfs/transaction.c |    2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1430,7 +1430,7 @@ again:
- 	if (!bio_integrity_endio(bio))
- 		return;
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -3013,7 +3013,7 @@ int btrfs_truncate_inode_items(struct bt
+ 			       struct inode *inode, u64 new_size,
+ 			       u32 min_type);
  
--	if (bio->bi_disk)
-+	if (bio->bi_disk && bio_flagged(bio, BIO_TRACKED))
- 		rq_qos_done_bio(bio->bi_disk->queue, bio);
+-int btrfs_start_delalloc_snapshot(struct btrfs_root *root);
++int btrfs_start_delalloc_snapshot(struct btrfs_root *root, bool in_reclaim_context);
+ int btrfs_start_delalloc_roots(struct btrfs_fs_info *fs_info, u64 nr,
+ 			       bool in_reclaim_context);
+ int btrfs_set_extent_delalloc(struct btrfs_inode *inode, u64 start, u64 end,
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -9566,7 +9566,7 @@ out:
+ 	return ret;
+ }
  
- 	/*
+-int btrfs_start_delalloc_snapshot(struct btrfs_root *root)
++int btrfs_start_delalloc_snapshot(struct btrfs_root *root, bool in_reclaim_context)
+ {
+ 	struct writeback_control wbc = {
+ 		.nr_to_write = LONG_MAX,
+@@ -9579,7 +9579,7 @@ int btrfs_start_delalloc_snapshot(struct
+ 	if (test_bit(BTRFS_FS_STATE_ERROR, &fs_info->fs_state))
+ 		return -EROFS;
+ 
+-	return start_delalloc_inodes(root, &wbc, true, false);
++	return start_delalloc_inodes(root, &wbc, true, in_reclaim_context);
+ }
+ 
+ int btrfs_start_delalloc_roots(struct btrfs_fs_info *fs_info, u64 nr,
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -1030,7 +1030,7 @@ static noinline int btrfs_mksnapshot(con
+ 	 */
+ 	btrfs_drew_read_lock(&root->snapshot_lock);
+ 
+-	ret = btrfs_start_delalloc_snapshot(root);
++	ret = btrfs_start_delalloc_snapshot(root, false);
+ 	if (ret)
+ 		goto out;
+ 
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3704,7 +3704,7 @@ static int try_flush_qgroup(struct btrfs
+ 		return 0;
+ 	}
+ 
+-	ret = btrfs_start_delalloc_snapshot(root);
++	ret = btrfs_start_delalloc_snapshot(root, true);
+ 	if (ret < 0)
+ 		goto out;
+ 	btrfs_wait_ordered_extents(root, U64_MAX, 0, (u64)-1);
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -7207,7 +7207,7 @@ static int flush_delalloc_roots(struct s
+ 	int i;
+ 
+ 	if (root) {
+-		ret = btrfs_start_delalloc_snapshot(root);
++		ret = btrfs_start_delalloc_snapshot(root, false);
+ 		if (ret)
+ 			return ret;
+ 		btrfs_wait_ordered_extents(root, U64_MAX, 0, U64_MAX);
+@@ -7215,7 +7215,7 @@ static int flush_delalloc_roots(struct s
+ 
+ 	for (i = 0; i < sctx->clone_roots_cnt; i++) {
+ 		root = sctx->clone_roots[i].root;
+-		ret = btrfs_start_delalloc_snapshot(root);
++		ret = btrfs_start_delalloc_snapshot(root, false);
+ 		if (ret)
+ 			return ret;
+ 		btrfs_wait_ordered_extents(root, U64_MAX, 0, U64_MAX);
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -2045,7 +2045,7 @@ static inline int btrfs_start_delalloc_f
+ 		list_for_each_entry(pending, head, list) {
+ 			int ret;
+ 
+-			ret = btrfs_start_delalloc_snapshot(pending->root);
++			ret = btrfs_start_delalloc_snapshot(pending->root, false);
+ 			if (ret)
+ 				return ret;
+ 		}
 
 
