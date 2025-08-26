@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B9F34F490;
-	Tue, 26 Aug 2025 14:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D89A35337D;
+	Tue, 26 Aug 2025 14:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756217645; cv=none; b=EgQkfZJZO+kAy+VmeVKTHpzKCsg7IDwIyawSjQLwmv8x1rygNk+Go/k6PmFXFexKbXDNxKJp1ga+LsYlFBz63g1iP7m1i61PONB/2FEHX+mh6J0cHx7BZInlpP+OeWBE1Ydy0yQ+uDPakkTGjLw/WK+s+Dg0Sx/eud05pEv3Nxg=
+	t=1756217648; cv=none; b=IAs7pIq+rOG0CaaOQ4+Qyvrj3jcjhRqVVA6MJ+zAYj/Tq/s1PQW4tLqPL3jlRhMDz2Gv23D5Sp8rbcMufwQKVnu3Jirqvwxcak37lN96leFpMrxy3cRnSimj8GmQ6Sr6dLc/MzU602sH6uids31XKKd9af1j4tby076fLGvhAJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756217645; c=relaxed/simple;
-	bh=lsFx3SB3CmxW9iuvx9kAJu/QcU7twZyQKb4tdWtbZOU=;
+	s=arc-20240116; t=1756217648; c=relaxed/simple;
+	bh=sT4puVGDDGHnoXb6j7l9sc86RWkid7cWRTcjY6ep2FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAwHIfUYKL5uRK2yIA/Mr2sDFowJlP0KhAX6XjOSW4owFQAlOyAUToU9J74l9G/y4hjZ5aUDjlKGJ/eRWroyvmADqRIVv6O/ETdglAZxoEmW5KrMObjV6YaByBIrjwaCk181Vf2OcL/f8VohoNJcv8OaH2bo1g+3E6i3W7O3rGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6JLYmRd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FJvtcDS8WRRR1BeUgsfon69JKaNXLwjzKh4+mU696Tx+b1d8Nu50Aden3P4cm3rYlHilO/amQyjpN4Gw/Ck66kUC9tNPytiiawoJm9DFseL2Pyl2blZPMt4QrIdalPHbT205VzmC2ND1bSbbzTirBxPEb2WNwDZUgh8x1BPyfGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkXxTyrU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6JLYmRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54049C4CEF1;
-	Tue, 26 Aug 2025 14:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkXxTyrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001B9C4CEF1;
+	Tue, 26 Aug 2025 14:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756217645;
-	bh=lsFx3SB3CmxW9iuvx9kAJu/QcU7twZyQKb4tdWtbZOU=;
+	s=korg; t=1756217648;
+	bh=sT4puVGDDGHnoXb6j7l9sc86RWkid7cWRTcjY6ep2FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6JLYmRdXRNgY2XUlVwoJ3bA6EQD/c+SJlcMpN5JDlWm8MjAWox/M3NI71f/yBrGZ
-	 8dT5BfpEfznecatThNAGNGxoslV076G8Sw/s6matr+uTiMxTewXP0TEQHRNwuZIsGp
-	 y1PNv/JbPEKOqGN2QBX1J99/qbeapEe7d/99dvEQ=
+	b=xkXxTyrUAjsIwA+FF7KAYDavyPK43wo+fMSM+D78Llzwr5J6PO24ZTD0K58lW7uNH
+	 QrxWHMBKTVi0bLTEFfgXH5jWBHogxXxX2flwcG7pNOodxXCOAA/x8ooFGgxyvNDc8I
+	 0ut01R/WPnSEyTipLnMXDj2ZgdDrjkKOWXR1pGqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Prashant Malani <pmalani@google.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 221/523] usb: xhci: print xhci->xhc_state when queue_command failed
-Date: Tue, 26 Aug 2025 13:07:11 +0200
-Message-ID: <20250826110929.910940399@linuxfoundation.org>
+Subject: [PATCH 5.10 222/523] cpufreq: CPPC: Mark driver with NEED_UPDATE_LIMITS flag
+Date: Tue, 26 Aug 2025 13:07:12 +0200
+Message-ID: <20250826110929.935376299@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110924.562212281@linuxfoundation.org>
 References: <20250826110924.562212281@linuxfoundation.org>
@@ -50,40 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Prashant Malani <pmalani@google.com>
 
-[ Upstream commit 7919407eca2ef562fa6c98c41cfdf6f6cdd69d92 ]
+[ Upstream commit 0a1416a49e63c320f6e6c1c8d07e1b58c0d4a3f3 ]
 
-When encounters some errors like these:
-xhci_hcd 0000:4a:00.2: xHCI dying or halted, can't queue_command
-xhci_hcd 0000:4a:00.2: FIXME: allocate a command ring segment
-usb usb5-port6: couldn't allocate usb_device
+AMU counters on certain CPPC-based platforms tend to yield inaccurate
+delivered performance measurements on systems that are idle/mostly idle.
+This results in an inaccurate frequency being stored by cpufreq in its
+policy structure when the CPU is brought online. [1]
 
-It's hard to know whether xhc_state is dying or halted. So it's better
-to print xhc_state's value which can help locate the resaon of the bug.
+Consequently, if the userspace governor tries to set the frequency to a
+new value, there is a possibility that it would be the erroneous value
+stored earlier. In such a scenario, cpufreq would assume that the
+requested frequency has already been set and return early, resulting in
+the correct/new frequency request never making it to the hardware.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20250725060117.1773770-1-suhui@nfschina.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Since the operating frequency is liable to this sort of inconsistency,
+mark the CPPC driver with CPUFREQ_NEED_UPDATE_LIMITS so that it is always
+invoked when a target frequency update is requested.
+
+Link: https://lore.kernel.org/linux-pm/20250619000925.415528-3-pmalani@google.com/ [1]
+Suggested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Prashant Malani <pmalani@google.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20250722055611.130574-2-pmalani@google.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cppc_cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 954cd962e113..c026e7cc0af1 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -4183,7 +4183,8 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
+diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+index f29e8d0553a8..17e712651090 100644
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -396,7 +396,7 @@ static int cppc_cpufreq_set_boost(struct cpufreq_policy *policy, int state)
+ }
  
- 	if ((xhci->xhc_state & XHCI_STATE_DYING) ||
- 		(xhci->xhc_state & XHCI_STATE_HALTED)) {
--		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command\n");
-+		xhci_dbg(xhci, "xHCI dying or halted, can't queue_command. state: 0x%x\n",
-+			 xhci->xhc_state);
- 		return -ESHUTDOWN;
- 	}
- 
+ static struct cpufreq_driver cppc_cpufreq_driver = {
+-	.flags = CPUFREQ_CONST_LOOPS,
++	.flags = CPUFREQ_CONST_LOOPS | CPUFREQ_NEED_UPDATE_LIMITS,
+ 	.verify = cppc_verify_policy,
+ 	.target = cppc_cpufreq_set_target,
+ 	.get = cppc_cpufreq_get_rate,
 -- 
 2.39.5
 
