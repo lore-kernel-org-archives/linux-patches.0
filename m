@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D88284678;
-	Tue, 26 Aug 2025 13:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D5334A30A;
+	Tue, 26 Aug 2025 13:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214139; cv=none; b=rHh9jCNwDg7NLlqp6XyqRwyTKBqkiJXjqrx2k/JyXF0gH+QPxzi+LO8rrBswd66PvfkOtJTFRnbRsCIz36Me9k7U9rchlHSHClBKle0ORDM9dGABeNgsTdIyQ/eL1G/CIdVOM55Flago7TAXvlT4uZOQD4TDHuV/qlGstjio7YQ=
+	t=1756214142; cv=none; b=Fez+WNRnczI6ML6DXvJQUKrrENgjMCly/KSgxCODhCzbM0ALjcNq/CU3mpfrPFUiufodjg/qW9etLn4hM1j0ftBLhYX0kBI1wBeZkPuP/163wq8oOgivLxJGVZVBer/yGfhLaUECWyFHPt4FOwI7a6b7eyiiCfY9ICVuue9hMLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214139; c=relaxed/simple;
-	bh=GVlf6s5esLRcE4P+ATAmht9anVgF7DgSO9KkUYCSaK0=;
+	s=arc-20240116; t=1756214142; c=relaxed/simple;
+	bh=vt5rmSqVE66Jb3E8rzCkyn6bBr/EEx3fQtiaCSd15AA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pl2StObofAjBmPJRsy/8e3pfNvFwaYd64Guv6hoIVJf9IllOk/gJsyzSrESY/oL+9grRvM0Z4z2wZGz/cvezuZhEmlbvROBY7nG/0Km71ICGz+Pet5rKbp65IT1bIZVSL/0pyBLKPLGrIZnGWpBQ3fwNznRFFOWbvvrLGiEap0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W7nPkwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RK7cu//85IYDQABT5BrDyT7YB1mvGqpdcMpm4siQidAeQXth1c14z3l8exdtLDaKjp1cry+XT0WJkr0fYWlBnxYemj+19AYStRFtVZZ6eHvxjakPPGmqaLRCSZBMxGAUkWTs88ML1zqGomufjyTlPRMbRhe34LXTpt9ktRV+FGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOwOry7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W7nPkwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B8EC4CEF1;
-	Tue, 26 Aug 2025 13:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOwOry7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822B0C4CEF1;
+	Tue, 26 Aug 2025 13:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214139;
-	bh=GVlf6s5esLRcE4P+ATAmht9anVgF7DgSO9KkUYCSaK0=;
+	s=korg; t=1756214142;
+	bh=vt5rmSqVE66Jb3E8rzCkyn6bBr/EEx3fQtiaCSd15AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0W7nPkwY9EXpOdroRfoNsME3MMEFlAJaE8/P7+UfRStFQIS3xxcg3Y1At3tJ91yXI
-	 zC/FGCmlglpU3raBEQ4NryO1o8WAn5+lROnBzKVKC9L+o/xav//VdatpGnImWIxcgw
-	 GSUUDgZV2kpodgC2FRF78jzc4HJW24j7axsfgN8A=
+	b=MOwOry7t0Oz9mWpbOGuBxlnFzngRYYKawjiQ5zL1xohHp7xow3Nm4wFChZWSV+AOu
+	 fRH5hoebx/St5Tt3mxt6FKkQztnFp7lZ7aFvZ+ee+/E9WR1fROwFmZaMHuU98GQSXb
+	 UfoFck1FQRUrjsE321ZCDaNhYOXjqy3smxgidhmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 026/482] ACPI: processor: perflib: Move problematic pr->performance check
-Date: Tue, 26 Aug 2025 13:04:39 +0200
-Message-ID: <20250826110931.444593025@linuxfoundation.org>
+	Doug Covelli <doug.covelli@broadcom.com>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 027/482] KVM: SVM: Set RFLAGS.IF=1 in C code, to get VMRUN out of the STI shadow
+Date: Tue, 26 Aug 2025 13:04:40 +0200
+Message-ID: <20250826110931.471035362@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -49,55 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d405ec23df13e6df599f5bd965a55d13420366b8 upstream.
+[ Upstream commit be45bc4eff33d9a7dae84a2150f242a91a617402 ]
 
-Commit d33bd88ac0eb ("ACPI: processor: perflib: Fix initial _PPC limit
-application") added a pr->performance check that prevents the frequency
-QoS request from being added when the given processor has no performance
-object.  Unfortunately, this causes a WARN() in freq_qos_remove_request()
-to trigger on an attempt to take the given CPU offline later because the
-frequency QoS object has not been added for it due to the missing
-performance object.
+Enable/disable local IRQs, i.e. set/clear RFLAGS.IF, in the common
+svm_vcpu_enter_exit() just after/before guest_state_{enter,exit}_irqoff()
+so that VMRUN is not executed in an STI shadow.  AMD CPUs have a quirk
+(some would say "bug"), where the STI shadow bleeds into the guest's
+intr_state field if a #VMEXIT occurs during injection of an event, i.e. if
+the VMRUN doesn't complete before the subsequent #VMEXIT.
 
-Address this by moving the pr->performance check before calling
-acpi_processor_get_platform_limit() so it only prevents a limit from
-being set for the CPU if the performance object is not present.  This
-way, the frequency QoS request is added as it was before the above
-commit and it is present all the time along with the CPU's cpufreq
-policy regardless of whether or not the CPU is online.
+The spurious "interrupts masked" state is relatively benign, as it only
+occurs during event injection and is transient.  Because KVM is already
+injecting an event, the guest can't be in HLT, and if KVM is querying IRQ
+blocking for injection, then KVM would need to force an immediate exit
+anyways since injecting multiple events is impossible.
 
-Fixes: d33bd88ac0eb ("ACPI: processor: perflib: Fix initial _PPC limit application")
-Tested-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: 5.4+ <stable@vger.kernel.org> # 5.4+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2801421.mvXUDI8C0e@rafael.j.wysocki
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, because KVM copies int_state verbatim from vmcb02 to vmcb12, the
+spurious STI shadow is visible to L1 when running a nested VM, which can
+trip sanity checks, e.g. in VMware's VMM.
+
+Hoist the STI+CLI all the way to C code, as the aforementioned calls to
+guest_state_{enter,exit}_irqoff() already inform lockdep that IRQs are
+enabled/disabled, and taking a fault on VMRUN with RFLAGS.IF=1 is already
+possible.  I.e. if there's kernel code that is confused by running with
+RFLAGS.IF=1, then it's already a problem.  In practice, since GIF=0 also
+blocks NMIs, the only change in exposure to non-KVM code (relative to
+surrounding VMRUN with STI+CLI) is exception handling code, and except for
+the kvm_rebooting=1 case, all exception in the core VM-Enter/VM-Exit path
+are fatal.
+
+Use the "raw" variants to enable/disable IRQs to avoid tracing in the
+"no instrumentation" code; the guest state helpers also take care of
+tracing IRQ state.
+
+Oppurtunstically document why KVM needs to do STI in the first place.
+
+Reported-by: Doug Covelli <doug.covelli@broadcom.com>
+Closes: https://lore.kernel.org/all/CADH9ctBs1YPmE4aCfGPNBwA10cA8RuAk2gO7542DjMZgs4uzJQ@mail.gmail.com
+Fixes: f14eec0a3203 ("KVM: SVM: move more vmentry code to assembly")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20250224165442.2338294-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[sean: resolve minor syntatic conflict in __svm_sev_es_vcpu_run()]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_perflib.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/svm.c     | 14 ++++++++++++++
+ arch/x86/kvm/svm/vmenter.S |  9 +--------
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
---- a/drivers/acpi/processor_perflib.c
-+++ b/drivers/acpi/processor_perflib.c
-@@ -180,7 +180,7 @@ void acpi_processor_ppc_init(struct cpuf
- 		struct acpi_processor *pr = per_cpu(processors, cpu);
- 		int ret;
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index b6bbd0dc4e65..c95a84afc35f 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3982,6 +3982,18 @@ static noinstr void svm_vcpu_enter_exit(struct kvm_vcpu *vcpu, bool spec_ctrl_in
  
--		if (!pr || !pr->performance)
-+		if (!pr)
- 			continue;
+ 	guest_state_enter_irqoff();
  
- 		/*
-@@ -197,6 +197,9 @@ void acpi_processor_ppc_init(struct cpuf
- 			pr_err("Failed to add freq constraint for CPU%d (%d)\n",
- 			       cpu, ret);
- 
-+		if (!pr->performance)
-+			continue;
++	/*
++	 * Set RFLAGS.IF prior to VMRUN, as the host's RFLAGS.IF at the time of
++	 * VMRUN controls whether or not physical IRQs are masked (KVM always
++	 * runs with V_INTR_MASKING_MASK).  Toggle RFLAGS.IF here to avoid the
++	 * temptation to do STI+VMRUN+CLI, as AMD CPUs bleed the STI shadow
++	 * into guest state if delivery of an event during VMRUN triggers a
++	 * #VMEXIT, and the guest_state transitions already tell lockdep that
++	 * IRQs are being enabled/disabled.  Note!  GIF=0 for the entirety of
++	 * this path, so IRQs aren't actually unmasked while running host code.
++	 */
++	raw_local_irq_enable();
 +
- 		ret = acpi_processor_get_platform_limit(pr);
- 		if (ret)
- 			pr_err("Failed to update freq constraint for CPU%d (%d)\n",
+ 	amd_clear_divider();
+ 
+ 	if (sev_es_guest(vcpu->kvm))
+@@ -3989,6 +4001,8 @@ static noinstr void svm_vcpu_enter_exit(struct kvm_vcpu *vcpu, bool spec_ctrl_in
+ 	else
+ 		__svm_vcpu_run(svm, spec_ctrl_intercepted);
+ 
++	raw_local_irq_disable();
++
+ 	guest_state_exit_irqoff();
+ }
+ 
+diff --git a/arch/x86/kvm/svm/vmenter.S b/arch/x86/kvm/svm/vmenter.S
+index 42824f9b06a2..48b72625cc45 100644
+--- a/arch/x86/kvm/svm/vmenter.S
++++ b/arch/x86/kvm/svm/vmenter.S
+@@ -170,12 +170,8 @@ SYM_FUNC_START(__svm_vcpu_run)
+ 	VM_CLEAR_CPU_BUFFERS
+ 
+ 	/* Enter guest mode */
+-	sti
+-
+ 3:	vmrun %_ASM_AX
+ 4:
+-	cli
+-
+ 	/* Pop @svm to RAX while it's the only available register. */
+ 	pop %_ASM_AX
+ 
+@@ -343,11 +339,8 @@ SYM_FUNC_START(__svm_sev_es_vcpu_run)
+ 	VM_CLEAR_CPU_BUFFERS
+ 
+ 	/* Enter guest mode */
+-	sti
+-
+ 1:	vmrun %_ASM_AX
+-
+-2:	cli
++2:
+ 
+ 	/* Pop @svm to RDI, guest registers have been saved already. */
+ 	pop %_ASM_DI
+-- 
+2.50.1
+
 
 
