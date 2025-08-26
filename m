@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2807522DFA7;
-	Tue, 26 Aug 2025 13:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE58224B09;
+	Tue, 26 Aug 2025 13:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215290; cv=none; b=C8pq8Aagl1FnUrrtpIYldgS3kxEJgf6vkxr1NFuWe1zNjtwbxRqYSqsV7+yQCmRleg4YvFJDSR/CZiEZ3s4stcgy6QcpvP/izyzjSVwL1iw+3nF4iR7y4q41AFEAdWf/nPZ275vrayzwaRba3Vfa397u0ZuvAztGOXcA+7O2SHs=
+	t=1756215293; cv=none; b=CMkx4FTgqEphBz3ng8OCRc6DCCjOL9q1UiuFsAdLOLv2jhUU+KBFga4m48J9r174AFgtJgxItJSnhmwduQIF9fr8UWKkS1EtRsR6oceYKZOQcEWjw/5qbEwiMQA1yLOMUhOBRHHuyiwD8o6qAomxCc7MAqBndqSOrYbj9fmET4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215290; c=relaxed/simple;
-	bh=tZWsXvPkxErUXdzP7lupJwGUgEsECwt4il8uYMZS7oM=;
+	s=arc-20240116; t=1756215293; c=relaxed/simple;
+	bh=a7MWMzoaJCO3hEQoNSYB4hoWZYM8HGnlmWtxf5/uodw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUIwN12NIFlHWb2c1OJQVdupED/WgPceakgHmlbqg3BOM8bKMnZWZsM29OLJrloCeceuYLlfwX/mt76Qlcnr53GXkLUy5piuISAs7qCDMJuzxneQt4Gou5ryXp91NYL4TrtCUYphjLll4PiBofc/Rxl4ES/JL3mpRaPNpoXN8/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ae8LW6CP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cj3+fWizCpnfIovw1lgcQdQ+17fF1DOdOyV791x3O4kyPLz2my6DevLzT8lZbJ4e7STA3nRibPtGayUymnz95sRES8ailASBUDTnh1Nu3fv8q4ob6OcaAcuSHVEPBFfbzkIAhLSXfwHeKHH/3iyGVmtomPaZPzYNe8uVR73gvoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gw5TFRDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ae8LW6CP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B071C4CEF1;
-	Tue, 26 Aug 2025 13:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gw5TFRDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10E1C4CEF1;
+	Tue, 26 Aug 2025 13:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756215289;
-	bh=tZWsXvPkxErUXdzP7lupJwGUgEsECwt4il8uYMZS7oM=;
+	s=korg; t=1756215293;
+	bh=a7MWMzoaJCO3hEQoNSYB4hoWZYM8HGnlmWtxf5/uodw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ae8LW6CPDZ6LWwiNX9jPNDPYFlOroifS4JyRIRfpcCUNNOqQSTTp1MLDUt82r+RZf
-	 C13eSB9rahf2ps8zCELGJZPD+Bc4EqeK8RA9C5h5qCU+jyKeIiX0sspV5KVK/JBAF2
-	 QT2iQ0DT5TPsmCy3gFRrwAm33PT4xGCYasF7a3P4=
+	b=Gw5TFRDgOC1TucdnBtQLA6vkRwyPOXEFpkkrOw3zpS3a/4Lbxk02BRpuV+gB42Hct
+	 NPlMLp8+vb4kCEwnDrYkv+K/bWlSf6OcHGuphKRwdUnMMNoZRaIwubVL+BPwnxWCDc
+	 /mVfFzjOlesuG+zEcqechXiJZ4KWw/TolJh0LJRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 451/482] compiler: remove __ADDRESSABLE_ASM{_STR,}() again
-Date: Tue, 26 Aug 2025 13:11:44 +0200
-Message-ID: <20250826110941.972204833@linuxfoundation.org>
+Subject: [PATCH 6.1 460/482] Bluetooth: hci_conn: do return error from hci_enhanced_setup_sync()
+Date: Tue, 26 Aug 2025 13:11:53 +0200
+Message-ID: <20250826110942.188640677@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -52,70 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 8ea815399c3fcce1889bd951fec25b5b9a3979c1 ]
+[ Upstream commit 0eaf7c7e85da7495c0e03a99375707fc954f5e7b ]
 
-__ADDRESSABLE_ASM_STR() is where the necessary stringification happens.
-As long as "sym" doesn't contain any odd characters, no quoting is
-required for its use with .quad / .long. In fact the quotation gets in
-the way with gas 2.25; it's only from 2.26 onwards that quoted symbols
-are half-way properly supported.
+The commit e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to
+hci_sync") missed to update the *return* statement under the *case* of
+BT_CODEC_TRANSPARENT in hci_enhanced_setup_sync(), which led to returning
+success (0) instead of the negative error code (-EINVAL).  However, the
+result of hci_enhanced_setup_sync() seems to be ignored anyway, since NULL
+gets passed to hci_cmd_sync_queue() as the last argument in that case and
+the only function interested in that result is specified by that argument.
 
-However, assembly being different from C anyway, drop
-__ADDRESSABLE_ASM_STR() and its helper macro altogether. A simple
-.global directive will suffice to get the symbol "declared", i.e. into
-the symbol table. While there also stop open-coding STATIC_CALL_TRAMP()
-and STATIC_CALL_KEY().
-
-Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <609d2c74-de13-4fae-ab1a-1ec44afb948d@suse.com>
-[ Adjust context ]
+Fixes: e07a06b4eb41 ("Bluetooth: Convert SCO configure_datapath to hci_sync")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/xen/hypercall.h |    5 +++--
- include/linux/compiler.h             |    8 --------
- 2 files changed, 3 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_conn.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/xen/hypercall.h
-+++ b/arch/x86/include/asm/xen/hypercall.h
-@@ -94,12 +94,13 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
- #ifdef MODULE
- #define __ADDRESSABLE_xen_hypercall
- #else
--#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
-+#define __ADDRESSABLE_xen_hypercall \
-+	__stringify(.global STATIC_CALL_KEY(xen_hypercall);)
- #endif
- 
- #define __HYPERCALL					\
- 	__ADDRESSABLE_xen_hypercall			\
--	"call __SCT__xen_hypercall"
-+	__stringify(call STATIC_CALL_TRAMP(xen_hypercall))
- 
- #define __HYPERCALL_ENTRY(x)	"a" (x)
- 
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -235,14 +235,6 @@ static inline void *offset_to_ptr(const
- #define __ADDRESSABLE(sym) \
- 	___ADDRESSABLE(sym, __section(".discard.addressable"))
- 
--#define __ADDRESSABLE_ASM(sym)						\
--	.pushsection .discard.addressable,"aw";				\
--	.align ARCH_SEL(8,4);						\
--	ARCH_SEL(.quad, .long) __stringify(sym);			\
--	.popsection;
--
--#define __ADDRESSABLE_ASM_STR(sym) __stringify(__ADDRESSABLE_ASM(sym))
--
- /* &a[0] degrades to a pointer: a different type from an array */
- #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
- 
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 49b9dd21b73e..5f6785fd6af5 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -439,7 +439,8 @@ static int hci_enhanced_setup_sync(struct hci_dev *hdev, void *data)
+ 	case BT_CODEC_TRANSPARENT:
+ 		if (!find_next_esco_param(conn, esco_param_msbc,
+ 					  ARRAY_SIZE(esco_param_msbc)))
+-			return false;
++			return -EINVAL;
++
+ 		param = &esco_param_msbc[conn->attempt - 1];
+ 		cp.tx_coding_format.id = 0x03;
+ 		cp.rx_coding_format.id = 0x03;
+-- 
+2.50.1
+
 
 
