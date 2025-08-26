@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD7633A010;
-	Tue, 26 Aug 2025 13:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8CD340DA4;
+	Tue, 26 Aug 2025 13:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756214630; cv=none; b=SShAyQucohcCreYWAh2ofixGa3ZKxaIcLr8NDxverWQcXGRClCTEmK+tA/HbhinV7lCM05EE1D/mKg3J3mC+ydpoZ0PgS5d4KNbFEQlKCbW72wSt2C+DjTbU2V9zbJ8T88A05DJMIVA0JYlrUJ5TGfnlikhukC8YXSdB3cHnSRI=
+	t=1756214633; cv=none; b=hRUwHX/qCWGSGY5QVmk1GdkfOjD3qQEHNHf3IAh0jZ6626SE5UlupWbyOxaAJbxeKZMfvRPtR/CNseIJIgqORov9hL9OX9bLG+HofiEf5yzvwa2lp25QfO+YcFMPwXh3oN3nmdKv2Ue7U6oYqjZSIbjtmtrLPKI6gYYHb6IBIaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756214630; c=relaxed/simple;
-	bh=4+LGFgKZTx53Y2ILqDHy17rvq8oWdlIs/t2sNDQn0KM=;
+	s=arc-20240116; t=1756214633; c=relaxed/simple;
+	bh=OcGDKtW9vuFaI31DZXX9+EXmWQ+EsvgT/6H4RDW/Kp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/zwR3/7iCA23flTAhLqOAj8ys6qzCBxbb2xRWrfN/CAyzm36kM4yQv9Nw40prLNwoDoJGaMtMF4RmzHeEXdynvcO46eXNpQjBje7uso537fPmGrQpDuCVb/+EnqTZdrwIHLA9zv4e+rxiVX8tyApyoeRmKWA+9D1ZSUTTMNuVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2TgX9hw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pcjwnsv4ZwaGhyOFsNaU/Du635pTsVSkbLPtgltuyOa1B/aU8DKlIKkwZfkfDj7zSLpCI71hAU2nmJc6nM/R2S8MLAcaCM92+xI0rUK3l84CcifN5v9uWANIHID+5oR/3B4Q7sf2d0TLkytbEy5FcmfU/1qTe21uNPJrs3xydrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s94zxi7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2TgX9hw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E046C4CEF1;
-	Tue, 26 Aug 2025 13:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s94zxi7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD3FC4CEF1;
+	Tue, 26 Aug 2025 13:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756214630;
-	bh=4+LGFgKZTx53Y2ILqDHy17rvq8oWdlIs/t2sNDQn0KM=;
+	s=korg; t=1756214633;
+	bh=OcGDKtW9vuFaI31DZXX9+EXmWQ+EsvgT/6H4RDW/Kp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2TgX9hwCuVONZH/oLVLKG3vNm0Hrg5nV/CzRGuhiBwOaCPUMwLUKNToBWe1Lv2IZ
-	 bP2AztVIdByt9Xo0ul/Z0ja5/hxTIfWOgORRJXECtaqm7qiW4tdvVOLaF8ExY43/M0
-	 sJtyiBKes9upm775p7hEwFud6YAELj4H7D+nrzLQ=
+	b=s94zxi7JXjQ0MxokQdduk3/YBg7vZ7m2oLpi708TsCn1aLzuRDr2TdGLPTg24HV9D
+	 CguT3p2FC+h5KHQHBOTNoZA9XDgQjOzfsrF6/pWOYbAdtFkjYewFYl26ekHoj/R1v+
+	 AtyEjJFmziJE2elvjfoailsVIGTnAXGy7vlfhOCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	kernel test robot <lkp@intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/482] MIPS: vpe-mt: add missing prototypes for vpe_{alloc,start,stop,free}
-Date: Tue, 26 Aug 2025 13:07:16 +0200
-Message-ID: <20250826110935.327000708@linuxfoundation.org>
+Subject: [PATCH 6.1 210/482] i3c: add missing include to internal header
+Date: Tue, 26 Aug 2025 13:07:43 +0200
+Message-ID: <20250826110935.968732652@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110930.769259449@linuxfoundation.org>
 References: <20250826110930.769259449@linuxfoundation.org>
@@ -51,51 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 844615dd0f2d95c018ec66b943e08af22b62aff3 ]
+[ Upstream commit 3b661ca549b9e5bb11d0bc97ada6110aac3282d2 ]
 
-These functions are exported but their prototypes are not defined.
-This patch adds the missing function prototypes to fix the following
-compilation warnings:
+LKP found a random config which failed to build because IO accessors
+were not defined:
 
-arch/mips/kernel/vpe-mt.c:180:7: error: no previous prototype for 'vpe_alloc' [-Werror=missing-prototypes]
-  180 | void *vpe_alloc(void)
-      |       ^~~~~~~~~
-arch/mips/kernel/vpe-mt.c:198:5: error: no previous prototype for 'vpe_start' [-Werror=missing-prototypes]
-  198 | int vpe_start(void *vpe, unsigned long start)
-      |     ^~~~~~~~~
-arch/mips/kernel/vpe-mt.c:208:5: error: no previous prototype for 'vpe_stop' [-Werror=missing-prototypes]
-  208 | int vpe_stop(void *vpe)
-      |     ^~~~~~~~
-arch/mips/kernel/vpe-mt.c:229:5: error: no previous prototype for 'vpe_free' [-Werror=missing-prototypes]
-  229 | int vpe_free(void *vpe)
-      |     ^~~~~~~~
+   In file included from drivers/i3c/master.c:21:
+   drivers/i3c/internals.h: In function 'i3c_writel_fifo':
+>> drivers/i3c/internals.h:35:9: error: implicit declaration of function 'writesl' [-Werror=implicit-function-declaration]
 
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Add the proper header to where the IO accessors are used.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202507150208.BZDzzJ5E-lkp@intel.com/
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20250717120046.9022-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/vpe.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/i3c/internals.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/include/asm/vpe.h b/arch/mips/include/asm/vpe.h
-index baa949a744cb..babbe8742b81 100644
---- a/arch/mips/include/asm/vpe.h
-+++ b/arch/mips/include/asm/vpe.h
-@@ -124,4 +124,12 @@ void cleanup_tc(struct tc *tc);
+diff --git a/drivers/i3c/internals.h b/drivers/i3c/internals.h
+index 86b7b44cfca2..1906c711f38a 100644
+--- a/drivers/i3c/internals.h
++++ b/drivers/i3c/internals.h
+@@ -9,6 +9,7 @@
+ #define I3C_INTERNALS_H
  
- int __init vpe_module_init(void);
- void __exit vpe_module_exit(void);
-+
-+#ifdef CONFIG_MIPS_VPE_LOADER_MT
-+void *vpe_alloc(void);
-+int vpe_start(void *vpe, unsigned long start);
-+int vpe_stop(void *vpe);
-+int vpe_free(void *vpe);
-+#endif /* CONFIG_MIPS_VPE_LOADER_MT */
-+
- #endif /* _ASM_VPE_H */
+ #include <linux/i3c/master.h>
++#include <linux/io.h>
+ 
+ extern struct bus_type i3c_bus_type;
+ 
 -- 
 2.39.5
 
