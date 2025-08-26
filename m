@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F79B350D4D;
-	Tue, 26 Aug 2025 14:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9DB35206F;
+	Tue, 26 Aug 2025 14:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756219154; cv=none; b=b0RkO+GrQx87QU7TGsyEHWK4ujspHQyK9gUH7b/E0dHby05ZR7HHoGW38JuHBaT7ube8qxodyVN+PJwulEbpT9ibbxjW9RvGy3EZ9EDnTvt7T67TdRUkdE4yzcJHTHe+nikFYpVvQdfTg26TLzeDWNs6xoWagzs8PXtGRtM4jk4=
+	t=1756219157; cv=none; b=EKUGcu2jbrXycNhLklj3ohff9PTzj6vzYh84J6d+W8bxKaacuk5jqWHDc4JGcT79z4rQ47OqbawiwFGjs8D+zNUCZwlRvSNozJrkgdOAYi9wiviztDUPUpi6Y8MghXYIFbTualc7SZWt8Lx1YXifhnB9j8phv+iowqqqV2EgUDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756219154; c=relaxed/simple;
-	bh=tYGdkpdPsOaEneMUYRbASqaZpnKrzJngt7IjhF+GfCE=;
+	s=arc-20240116; t=1756219157; c=relaxed/simple;
+	bh=rihpMrQutS5qf6Sz4ZchwcjAMo0FvSZ9tqBG4FMkl2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVw85jZMXBu7MxHfQdxBDGuLHCprOhQ1yLKJKXcRq2VSqln5mGDawFIaS2w2K7yDFWplwnXtVNlqnkOk5x++29DwdAz6O/N/YoeCwPgIxbV7eUm11C3offKEfiaS+m/H3Z67r3iEnH/N8JmJ1Mqax3/so4UfFykLntGjkZ8UgkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBn7CeTR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ceq2zrxsU3fFwhXTWOoqNnIzyUYFzELBp6lyaAG7Cx1vd0M7xvFvvocHdQp4ncL3CtPI9BIgwmJOYaCVU7IX/f+vuoEJOGKNXlv5cdW7cuMxLS9WKiL1c2BKUBmTVzDsFI9e62P5jNBlOCm5MNhVHvY43dl2gKyrqUHpOYA6WRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugXc7C15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBn7CeTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28E6C113D0;
-	Tue, 26 Aug 2025 14:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugXc7C15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F965C113CF;
+	Tue, 26 Aug 2025 14:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756219154;
-	bh=tYGdkpdPsOaEneMUYRbASqaZpnKrzJngt7IjhF+GfCE=;
+	s=korg; t=1756219156;
+	bh=rihpMrQutS5qf6Sz4ZchwcjAMo0FvSZ9tqBG4FMkl2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBn7CeTRpL7kE9Mz6ta017URXx/hb9KjmzQgjhqRpjv5kjvQuZ24sDWNnEfyPvZTW
-	 0t6S5th8kc0bS1Nzk7tMLYJTn2EcbTLYfWRWsALPPFv1cC84+kkZQ7Cum60KR48oI4
-	 LiK497eOB/OPKvh2844gOuDbDmjXYL6lAt2kiPA8=
+	b=ugXc7C15mggog4Fl69vFj3ewyXXaa7XByYWu/fmq5RpCJQ3ezYdhVvkS8zk10caJR
+	 OtF488ZbvLM7nr9+cZn8iZhOvetsCIOL9Btm/3L6a49eEi+xUp7jSUdfv1zUVFQwg1
+	 Du6/DSn8lzkKFlArHp6RO3ez0zOHjlpFlDZsO71A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	Likun Gao <Likun.Gao@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 273/403] drm/amdgpu: fix incorrect vm flags to map bo
-Date: Tue, 26 Aug 2025 13:09:59 +0200
-Message-ID: <20250826110914.343656035@linuxfoundation.org>
+	Ricky Wu <ricky_wu@realtek.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 274/403] misc: rtsx: usb: Ensure mmc child device is active when card is present
+Date: Tue, 26 Aug 2025 13:10:00 +0200
+Message-ID: <20250826110914.369407075@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110905.607690791@linuxfoundation.org>
 References: <20250826110905.607690791@linuxfoundation.org>
@@ -52,35 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Xiao <Jack.Xiao@amd.com>
+From: Ricky Wu <ricky_wu@realtek.com>
 
-[ Upstream commit 040bc6d0e0e9c814c9c663f6f1544ebaff6824a8 ]
+commit 966c5cd72be8989c8a559ddef8e8ff07a37c5eb0 upstream.
 
-It should use vm flags instead of pte flags
-to specify bo vm attributes.
+When a card is present in the reader, the driver currently defers
+autosuspend by returning -EAGAIN during the suspend callback to
+trigger USB remote wakeup signaling. However, this does not guarantee
+that the mmc child device has been resumed, which may cause issues if
+it remains suspended while the card is accessible.
+This patch ensures that all child devices, including the mmc host
+controller, are explicitly resumed before returning -EAGAIN. This
+fixes a corner case introduced by earlier remote wakeup handling,
+improving reliability of runtime PM when a card is inserted.
 
-Fixes: 7946340fa389 ("drm/amdgpu: Move csa related code to separate file")
-Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
-Reviewed-by: Likun Gao <Likun.Gao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b08425fa77ad2f305fe57a33dceb456be03b653f)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 883a87ddf2f1 ("misc: rtsx_usb: Use USB remote wakeup signaling for card insertion detection")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ricky Wu <ricky_wu@realtek.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20250711140143.2105224-1-ricky_wu@realtek.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/cardreader/rtsx_usb.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -94,8 +94,8 @@ int amdgpu_map_static_csa(struct amdgpu_
- 	}
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -698,6 +698,12 @@ static void rtsx_usb_disconnect(struct u
+ }
  
- 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
--			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
--			     AMDGPU_PTE_EXECUTABLE);
-+			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
-+			     AMDGPU_VM_PAGE_EXECUTABLE);
+ #ifdef CONFIG_PM
++static int rtsx_usb_resume_child(struct device *dev, void *data)
++{
++	pm_request_resume(dev);
++	return 0;
++}
++
+ static int rtsx_usb_suspend(struct usb_interface *intf, pm_message_t message)
+ {
+ 	struct rtsx_ucr *ucr =
+@@ -713,8 +719,10 @@ static int rtsx_usb_suspend(struct usb_i
+ 			mutex_unlock(&ucr->dev_mutex);
  
- 	if (r) {
- 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
+ 			/* Defer the autosuspend if card exists */
+-			if (val & (SD_CD | MS_CD))
++			if (val & (SD_CD | MS_CD)) {
++				device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
+ 				return -EAGAIN;
++			}
+ 		} else {
+ 			/* There is an ongoing operation*/
+ 			return -EAGAIN;
+@@ -724,12 +732,6 @@ static int rtsx_usb_suspend(struct usb_i
+ 	return 0;
+ }
+ 
+-static int rtsx_usb_resume_child(struct device *dev, void *data)
+-{
+-	pm_request_resume(dev);
+-	return 0;
+-}
+-
+ static int rtsx_usb_resume(struct usb_interface *intf)
+ {
+ 	device_for_each_child(&intf->dev, NULL, rtsx_usb_resume_child);
 
 
