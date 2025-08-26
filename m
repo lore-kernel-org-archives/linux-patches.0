@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1363832144B;
-	Tue, 26 Aug 2025 11:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC06732144B;
+	Tue, 26 Aug 2025 11:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207959; cv=none; b=B918ZgBWyQH/kxsDCAOVjA+/EVztJerfCVRWAY/4DA49RMYdvBLAziA6BfyLpYV2rKMJt1bd5GSIqIgJ9fJ4kdch6hmGFxkJhTdpcZ9HOENa1E3AYE8Ci63cc6un0qdfTs8OFcUyDYOZhB2JSnicw0jn9pwt7XwLk905rlJRXwU=
+	t=1756207959; cv=none; b=svAuTYhPEpO8mJp/nh67R1Igyfqn8kkSe0i3LfraWEiRlk1tsal6HpySnN9rwUliWWOCAEG+MPdR5XvUxs7DqFRWrrnEgSsJ38JSyf3QeLidUN1RS1y+ghQdfITMuY7R6nyeV3DOsX5NI/O4nvNMcF3OGiLFqNlkGbllzxJIczs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756207959; c=relaxed/simple;
-	bh=hINt2RYz1hVIanxuI5wet5r9iqwDzvv59AaIMHlnR54=;
+	bh=EsIEF7sA6l0MGnJFV9ECiExtaeORaF91/VRUI7lEAxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+pI64PXKp5kbWfEETD9BEr7htHXoTf64q22dAJJqYtWlMtVW4J1dmvU4GoeDjUzAkElBC0IG/ivwXAlUy6cfHyRdosPQ0j7YebpzHTUGd1y9xf1yrePcFbxX3WgDK93Nc/VOSOM2P72kLPq0pbezxzg92hMKGFDkbU01oHPcHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0zWxKpX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdgWpmN0m13V5OiUyWKCHRQRhUOEBfKUDM0kuUVhZ+uWoRkvlFNRwdL7R8F1x1Ed7lhR0OQZKndZq5PoEQR6x18k76ChCWxzqMVbIiJ/nQ0p7rxMsvP+p/vapicR4g85Ak+tUmmYsV9FKKr7SO9VS4Y9tQ39h4wtMSntOrcXUKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEaJADUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0zWxKpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D2DC4CEF4;
-	Tue, 26 Aug 2025 11:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEaJADUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83DAC4CEF1;
+	Tue, 26 Aug 2025 11:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207958;
-	bh=hINt2RYz1hVIanxuI5wet5r9iqwDzvv59AaIMHlnR54=;
+	s=korg; t=1756207956;
+	bh=EsIEF7sA6l0MGnJFV9ECiExtaeORaF91/VRUI7lEAxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0zWxKpX9W+/zDx305vggs3SfsCNXM+ScT1PLBbB5/ZwjTqfuX8VOSpdZ+nT8CmCZ
-	 3U1JS5b860DEg4VnkEPCTkkDHrIwWAHVzP8UObxG0sf5BnUykRBxl+C4W9RUz7TDbF
-	 pagzaTzpQzpy4zylcHzGykEAp/5IAmvnB9xhVT+o=
+	b=mEaJADUDeQpBRXCYaNg2EyUmhbT5Duq/bxO6DazMclONzgm8yWH7bvIuH3YUThcjS
+	 /Aqnm1jptgiSh72xUt7QAUUHCvBwohiMQ3hei53ZvHBnUmxKuObbeuRxIUqcVfV69a
+	 aNzF0JT76eFZVM0sHhVJDm+XrYaKz6+icARJT+jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 352/457] rust: alloc: replace aligned_size() with Kmalloc::aligned_layout()
-Date: Tue, 26 Aug 2025 13:10:36 +0200
-Message-ID: <20250826110946.020935439@linuxfoundation.org>
+Subject: [PATCH 6.16 351/457] iosys-map: Fix undefined behavior in iosys_map_clear()
+Date: Tue, 26 Aug 2025 13:10:35 +0200
+Message-ID: <20250826110945.997187858@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -51,102 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-[ Upstream commit fde578c86281f27b182680c7642836a0dbbd0be7 ]
+[ Upstream commit 5634c8cb298a7146b4e38873473e280b50e27a2c ]
 
-aligned_size() dates back to when Rust did support kmalloc() only, but
-is now used in ReallocFunc::call() and hence for all allocators.
+The current iosys_map_clear() implementation reads the potentially
+uninitialized 'is_iomem' boolean field to decide which union member
+to clear. This causes undefined behavior when called on uninitialized
+structures, as 'is_iomem' may contain garbage values like 0xFF.
 
-However, the additional padding applied by aligned_size() is only
-required by the kmalloc() allocator backend.
+UBSAN detects this as:
+    UBSAN: invalid-load in include/linux/iosys-map.h:267
+    load of value 255 is not a valid value for type '_Bool'
 
-Hence, replace aligned_size() with Kmalloc::aligned_layout() and use it
-for the affected allocators, i.e. kmalloc() and kvmalloc(), only.
+Fix by unconditionally clearing the entire structure with memset(),
+eliminating the need to read uninitialized data and ensuring all
+fields are set to known good values.
 
-While at it, make Kmalloc::aligned_layout() public, such that Rust
-abstractions, which have to call subsystem specific kmalloc() based
-allocation primitives directly, can make use of it.
-
-Fixes: 8a799831fc63 ("rust: alloc: implement `ReallocFunc`")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250731154919.4132-2-dakr@kernel.org
-[ Remove `const` from Kmalloc::aligned_layout(). - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14639
+Fixes: 01fd30da0474 ("dma-buf: Add struct dma-buf-map for storing struct dma_buf.vaddr_ptr")
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://lore.kernel.org/r/20250718105051.2709487-1-nitin.r.gote@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/alloc/allocator.rs | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ include/linux/iosys-map.h | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/rust/kernel/alloc/allocator.rs b/rust/kernel/alloc/allocator.rs
-index aa2dfa9dca4c..2692cf90c948 100644
---- a/rust/kernel/alloc/allocator.rs
-+++ b/rust/kernel/alloc/allocator.rs
-@@ -43,17 +43,6 @@ pub struct Vmalloc;
- /// For more details see [self].
- pub struct KVmalloc;
- 
--/// Returns a proper size to alloc a new object aligned to `new_layout`'s alignment.
--fn aligned_size(new_layout: Layout) -> usize {
--    // Customized layouts from `Layout::from_size_align()` can have size < align, so pad first.
--    let layout = new_layout.pad_to_align();
--
--    // Note that `layout.size()` (after padding) is guaranteed to be a multiple of `layout.align()`
--    // which together with the slab guarantees means the `krealloc` will return a properly aligned
--    // object (see comments in `kmalloc()` for more information).
--    layout.size()
--}
--
- /// # Invariants
- ///
- /// One of the following: `krealloc`, `vrealloc`, `kvrealloc`.
-@@ -88,7 +77,7 @@ impl ReallocFunc {
-         old_layout: Layout,
-         flags: Flags,
-     ) -> Result<NonNull<[u8]>, AllocError> {
--        let size = aligned_size(layout);
-+        let size = layout.size();
-         let ptr = match ptr {
-             Some(ptr) => {
-                 if old_layout.size() == 0 {
-@@ -123,6 +112,17 @@ impl ReallocFunc {
-     }
+diff --git a/include/linux/iosys-map.h b/include/linux/iosys-map.h
+index 4696abfd311c..3e85afe794c0 100644
+--- a/include/linux/iosys-map.h
++++ b/include/linux/iosys-map.h
+@@ -264,12 +264,7 @@ static inline bool iosys_map_is_set(const struct iosys_map *map)
+  */
+ static inline void iosys_map_clear(struct iosys_map *map)
+ {
+-	if (map->is_iomem) {
+-		map->vaddr_iomem = NULL;
+-		map->is_iomem = false;
+-	} else {
+-		map->vaddr = NULL;
+-	}
++	memset(map, 0, sizeof(*map));
  }
  
-+impl Kmalloc {
-+    /// Returns a [`Layout`] that makes [`Kmalloc`] fulfill the requested size and alignment of
-+    /// `layout`.
-+    pub fn aligned_layout(layout: Layout) -> Layout {
-+        // Note that `layout.size()` (after padding) is guaranteed to be a multiple of
-+        // `layout.align()` which together with the slab guarantees means that `Kmalloc` will return
-+        // a properly aligned object (see comments in `kmalloc()` for more information).
-+        layout.pad_to_align()
-+    }
-+}
-+
- // SAFETY: `realloc` delegates to `ReallocFunc::call`, which guarantees that
- // - memory remains valid until it is explicitly freed,
- // - passing a pointer to a valid memory allocation is OK,
-@@ -135,6 +135,8 @@ unsafe impl Allocator for Kmalloc {
-         old_layout: Layout,
-         flags: Flags,
-     ) -> Result<NonNull<[u8]>, AllocError> {
-+        let layout = Kmalloc::aligned_layout(layout);
-+
-         // SAFETY: `ReallocFunc::call` has the same safety requirements as `Allocator::realloc`.
-         unsafe { ReallocFunc::KREALLOC.call(ptr, layout, old_layout, flags) }
-     }
-@@ -176,6 +178,10 @@ unsafe impl Allocator for KVmalloc {
-         old_layout: Layout,
-         flags: Flags,
-     ) -> Result<NonNull<[u8]>, AllocError> {
-+        // `KVmalloc` may use the `Kmalloc` backend, hence we have to enforce a `Kmalloc`
-+        // compatible layout.
-+        let layout = Kmalloc::aligned_layout(layout);
-+
-         // TODO: Support alignments larger than PAGE_SIZE.
-         if layout.align() > bindings::PAGE_SIZE {
-             pr_warn!("KVmalloc does not support alignments larger than PAGE_SIZE yet.\n");
+ /**
 -- 
 2.50.1
 
