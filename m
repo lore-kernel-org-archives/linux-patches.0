@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B3A2FD7C8;
-	Tue, 26 Aug 2025 11:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4D72FD7C8;
+	Tue, 26 Aug 2025 11:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207825; cv=none; b=ipGwb19wZSBMHPTb2PsX6aDJ+4Cj4+Hn7UUV/uCVuHVJV1Gvp8Dz7vCYS6r/22yYjmJ2XrT1B2Tqfi1mtxu+sx6MeZw2rKJAszpFVXtQIWUq02B0v4DjEI1ByLkWyOI+v20xttc0rr3ZA5GYpgavMqIYKTSX1zXBrXMgwLaqWqs=
+	t=1756207828; cv=none; b=W9n2AS+PzLQXEgJGpQtTLzPlwv50Pa1mYkXA1Jl/kmzSslF+ptOcMOlt+x7mcqdXvkDDpxaxVm/TRJiMxjGnGWjfuC0I/A9RJx8pyKMYFFGKUgUIFqNliS4EYvhSHsG9m1bkgqTwNkNOJVxwCt4+jViSj4z1hlWCYgGd7rEn/GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207825; c=relaxed/simple;
-	bh=9yJi8XkPlIjGzpXZRE5Tn+wCR9xuZunLGtxG03EKwvw=;
+	s=arc-20240116; t=1756207828; c=relaxed/simple;
+	bh=Yv2b1FUc87f1hyOE0QeMRU/G71UizWsJa/JiMcBYAs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLzL3BIIpTm1TXBTHeqnZ+AyGyw4gZr+/MmHbc1aaqVflSf4u6/wdnzVzbT1CuTIAPG2K2v7lYSSuvxIaS75lHZ9809NbaJ0Fa5e73sCpTQ/lxnhe8QDI/bBb24mrDiWIhmIY2tcVciSAmI/aEXnk8G8qYcrZ3rz7dRTAq56A70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ka6pSuu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WxmJylo9CwZ+VZ2gzeOOm0DaYWOyIPY5K8OkBVCNP+n2hSwKHqr43dVf9XRSKvrccaghhAcm8nExx6t4J8Gh74qTwLuMWLWIXNStjwKNOsksaj/g4HvSGXs0okaoJYsB1AimOk1XlSnhKW/YLr3ZaVHf+qJR4PDUfd5D+TpZZYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCG8jK8A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ka6pSuu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D4BC4CEF1;
-	Tue, 26 Aug 2025 11:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCG8jK8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF89C4CEF1;
+	Tue, 26 Aug 2025 11:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207825;
-	bh=9yJi8XkPlIjGzpXZRE5Tn+wCR9xuZunLGtxG03EKwvw=;
+	s=korg; t=1756207828;
+	bh=Yv2b1FUc87f1hyOE0QeMRU/G71UizWsJa/JiMcBYAs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ka6pSuu5xM3KDXZyjxkCc0PSVY2iZNAmPhYxkHss2CHpor1Ijwq/t7pJXwYUjS9rQ
-	 M4tJ5xjyw08bDYmyF4frWod+3qyO/mz7WAoXNnfqKh5mrOW55JUVjBuwbtFRD0Wpla
-	 ++KbOcDahgPVKAAdfFS25DFIKfAKCNO8G9LC2MLk=
+	b=iCG8jK8AxQJl5a2sGGYgMx1XYPfHGDTo4s3bzoE71EVdw/Ms4u2WgUHs6zqdN81bL
+	 zrSvA7AfH0PoFSCZ1OpTVjU8mT68yZ/+d8/bk8lt/ZY2f+tJ3e9u8Gnw6xKFRlK3ef
+	 fTbr/6cDF9IFxHr3vw4ihQv0hKlRMio4jYaFH4I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianxiang Peng <txpeng@tencent.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Hui Li <caelli@tencent.com>,
-	stable@kernel.org
-Subject: [PATCH 6.16 332/457] x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper
-Date: Tue, 26 Aug 2025 13:10:16 +0200
-Message-ID: <20250826110945.544378985@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>
+Subject: [PATCH 6.16 315/457] usb: renesas-xhci: Fix External ROM access timeouts
+Date: Tue, 26 Aug 2025 13:09:59 +0200
+Message-ID: <20250826110945.143865084@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -46,61 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianxiang Peng <txpeng@tencent.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-commit d8df126349dad855cdfedd6bbf315bad2e901c2f upstream.
+commit f9420f4757752f056144896024d5ea89e5a611f1 upstream.
 
-Since
+Increase the External ROM access timeouts to prevent failures during
+programming of External SPI EEPROM chips. The current timeouts are
+too short for some SPI EEPROMs used with uPD720201 controllers.
 
-  923f3a2b48bd ("x86/resctrl: Query LLC monitoring properties once during boot")
+The current timeout for Chip Erase in renesas_rom_erase() is 100 ms ,
+the current timeout for Sector Erase issued by the controller before
+Page Program in renesas_fw_download_image() is also 100 ms. Neither
+timeout is sufficient for e.g. the Macronix MX25L5121E or MX25V5126F.
 
-resctrl_cpu_detect() has been moved from common CPU initialization code to
-the vendor-specific BSP init helper, while Hygon didn't put that call in their
-code.
+MX25L5121E reference manual [1] page 35 section "ERASE AND PROGRAMMING
+PERFORMANCE" and page 23 section "Table 8. AC CHARACTERISTICS (Temperature
+= 0°C to 70°C for Commercial grade, VCC = 2.7V ~ 3.6V)" row "tCE" indicate
+that the maximum time required for Chip Erase opcode to complete is 2 s,
+and for Sector Erase it is 300 ms .
 
-This triggers a division by zero fault during early booting stage on our
-machines with X86_FEATURE_CQM* supported, where get_rdt_mon_resources() tries
-to calculate mon_l3_config with uninitialized boot_cpu_data.x86_cache_occ_scale.
+MX25V5126F reference manual [2] page 47 section "13. ERASE AND PROGRAMMING
+PERFORMANCE (2.3V - 3.6V)" and page 42 section "Table 8. AC CHARACTERISTICS
+(Temperature = -40°C to 85°C for Industrial grade, VCC = 2.3V - 3.6V)" row
+"tCE" indicate that the maximum time required for Chip Erase opcode to
+complete is 3.2 s, and for Sector Erase it is 400 ms .
 
-Add the missing resctrl_cpu_detect() in the Hygon BSP init helper.
+Update the timeouts such, that Chip Erase timeout is set to 5 seconds,
+and Sector Erase timeout is set to 500 ms. Such lengthy timeouts ought
+to be sufficient for majority of SPI EEPROM chips.
 
-  [ bp: Massage commit message. ]
+[1] https://www.macronix.com/Lists/Datasheet/Attachments/8634/MX25L5121E,%203V,%20512Kb,%20v1.3.pdf
+[2] https://www.macronix.com/Lists/Datasheet/Attachments/8750/MX25V5126F,%202.5V,%20512Kb,%20v1.1.pdf
 
-Fixes: 923f3a2b48bd ("x86/resctrl: Query LLC monitoring properties once during boot")
-Signed-off-by: Tianxiang Peng <txpeng@tencent.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Hui Li <caelli@tencent.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/20250623093153.3016937-1-txpeng@tencent.com
+Fixes: 2478be82de44 ("usb: renesas-xhci: Add ROM loader for uPD720201")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://lore.kernel.org/r/20250802225526.25431-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/hygon.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/xhci-pci-renesas.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/cpu/hygon.c
-+++ b/arch/x86/kernel/cpu/hygon.c
-@@ -16,6 +16,7 @@
- #include <asm/spec-ctrl.h>
- #include <asm/delay.h>
- #include <asm/msr.h>
-+#include <asm/resctrl.h>
+--- a/drivers/usb/host/xhci-pci-renesas.c
++++ b/drivers/usb/host/xhci-pci-renesas.c
+@@ -47,8 +47,9 @@
+ #define RENESAS_ROM_ERASE_MAGIC				0x5A65726F
+ #define RENESAS_ROM_WRITE_MAGIC				0x53524F4D
  
- #include "cpu.h"
+-#define RENESAS_RETRY	10000
+-#define RENESAS_DELAY	10
++#define RENESAS_RETRY			50000	/* 50000 * RENESAS_DELAY ~= 500ms */
++#define RENESAS_CHIP_ERASE_RETRY	500000	/* 500000 * RENESAS_DELAY ~= 5s */
++#define RENESAS_DELAY			10
  
-@@ -117,6 +118,8 @@ static void bsp_init_hygon(struct cpuinf
- 			x86_amd_ls_cfg_ssbd_mask = 1ULL << 10;
- 		}
- 	}
-+
-+	resctrl_cpu_detect(c);
- }
+ #define RENESAS_FW_NAME	"renesas_usb_fw.mem"
  
- static void early_init_hygon(struct cpuinfo_x86 *c)
+@@ -407,7 +408,7 @@ static void renesas_rom_erase(struct pci
+ 	/* sleep a bit while ROM is erased */
+ 	msleep(20);
+ 
+-	for (i = 0; i < RENESAS_RETRY; i++) {
++	for (i = 0; i < RENESAS_CHIP_ERASE_RETRY; i++) {
+ 		retval = pci_read_config_byte(pdev, RENESAS_ROM_STATUS,
+ 					      &status);
+ 		status &= RENESAS_ROM_STATUS_ERASE;
 
 
