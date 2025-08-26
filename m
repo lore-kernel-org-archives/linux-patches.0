@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E3B17332C;
-	Tue, 26 Aug 2025 11:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3EE199935;
+	Tue, 26 Aug 2025 11:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756208446; cv=none; b=Y6RN3noFprOZTjsjZR5gOp/K8UR/5hTpxAR02RH6fa326d4CNCVRGofuflVPqKQtwIKLeF+0injHVTo2wNOvuMpDlJlqfhovysn5dQz9uhT0vaKU90ZT61guTvmWex1o64aoidjux65ENIxfb8kkC3ZAJtMShgId7HZFCslYpqA=
+	t=1756208448; cv=none; b=pkBNMZVjCr7XX2AdJL3amaTb02A015rhMuCQghYl8V2779EkoRGI6q3Wuocz7jRfPoL4By2o3qmXuguTDpPlNmUexwoRidl0Pb+jpx3BEP4aOKD4FGUZauCpIdhwMI17gzDSZOyw6B/i2mFMI3IPQfk3rgW3+ayweVrPmfG0UQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756208446; c=relaxed/simple;
-	bh=Cm7WQwshncAXpXFr/6oXqdP3lkciBHBNGZ/PGzxda4A=;
+	s=arc-20240116; t=1756208448; c=relaxed/simple;
+	bh=hGLCeozpeShmt/+XUBIdNd72DY2tOUg0JVPnkYeBdsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gFTagRpR+8rAl/Ti4xpoE2qX6ajNpDl9YvLYZNjHWobGD+wUGfGxbT7hYOjKtySB6ic5GH4kyJ4cx/tZnXHcIQ9DEwaz9/fzhZtKYy28F3rP8YW0OFQqfJsCatDjRmKl6MNmeyPAeCcvUql8oHTzfezVN9qNOZ6NSR6NdA/afvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVVkcB9z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hW/2EJeUjgGyGL/LT4VjmqUlTmerWJuo8UkMZlhu2hJcZS/lTB2A0AYebY+7xClG5abHeubc1PQjhl6N65U7d0x5GkasA59TQEyiT02NIP8FqQUEN2ypa7BeelgCV1qLDD2n3aYx/4bu+9MrJFmolT8uG9lLw7PkjL6yk2srQq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1il7GUXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVVkcB9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948D1C4CEF1;
-	Tue, 26 Aug 2025 11:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1il7GUXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC64C4CEF1;
+	Tue, 26 Aug 2025 11:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756208445;
-	bh=Cm7WQwshncAXpXFr/6oXqdP3lkciBHBNGZ/PGzxda4A=;
+	s=korg; t=1756208448;
+	bh=hGLCeozpeShmt/+XUBIdNd72DY2tOUg0JVPnkYeBdsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVVkcB9zaMC1tvKAXftf4r2BWygrcexaUrXKHbtxirCUU7dZv0zPbgV66GZvzk3GL
-	 G6/DAfj0lvxj6a3Bw4pENMOW2P7X+xMjg0wEatV/BkoukXMO3jHxK31m1JaJUVsEBx
-	 DAVofu+tyQHNPcbho25wLzDm+tDy6waZIed3KWTY=
+	b=1il7GUXrxxKdDcJhyy5ZyyCqsyfg0MZhxHi73jPDY1LrRyXed86bbJvDnzE2RleED
+	 GLytZa1oSAUXooxHBJ7ZFOFULoN6Fb3u9DJo+/FBGdCYChdtEZ0kz2fg7waRoPGOTM
+	 r0e6ZQxT5nG5vd3C9UeX3wskeej4hCZMVGldJYo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.12 115/322] media: venus: protect against spurious interrupts during probe
-Date: Tue, 26 Aug 2025 13:08:50 +0200
-Message-ID: <20250826110918.629481140@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 6.12 116/322] media: venus: vdec: Clamp param smaller than 1fps and bigger than 240.
+Date: Tue, 26 Aug 2025 13:08:51 +0200
+Message-ID: <20250826110918.658873522@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
 References: <20250826110915.169062587@linuxfoundation.org>
@@ -54,52 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 3200144a2fa4209dc084a19941b9b203b43580f0 upstream.
+commit 377dc500d253f0b26732b2cb062e89668aef890a upstream.
 
-Make sure the interrupt handler is initialized before the interrupt is
-registered.
+The driver uses "whole" fps in all its calculations (e.g. in
+load_per_instance()). Those calculation expect an fps bigger than 1, and
+not big enough to overflow.
 
-If the IRQ is registered before hfi_create(), it's possible that an
-interrupt fires before the handler setup is complete, leading to a NULL
-dereference.
+Clamp the value if the user provides a param that will result in an invalid
+fps.
 
-This error condition has been observed during system boot on Rb3Gen2.
-
-Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Reported-by: Hans Verkuil <hverkuil@xs4all.nl>
+Closes: https://lore.kernel.org/linux-media/f11653a7-bc49-48cd-9cdb-1659147453e4@xs4all.nl/T/#m91cd962ac942834654f94c92206e2f85ff7d97f0
+Fixes: 7472c1c69138 ("[media] media: venus: vdec: add video decoder files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5615-rb5
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Dikshita Agarwal <quic_dikshita@quicinc.com> # RB5
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+[bod: Change "parm" to "param"]
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/core.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/venus/core.h |    2 ++
+ drivers/media/platform/qcom/venus/vdec.c |    5 ++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -340,13 +340,13 @@ static int venus_probe(struct platform_d
- 	INIT_DELAYED_WORK(&core->work, venus_sys_error_handler);
- 	init_waitqueue_head(&core->sys_err_done);
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -27,6 +27,8 @@
+ #define VIDC_VCODEC_CLKS_NUM_MAX	2
+ #define VIDC_RESETS_NUM_MAX		2
  
--	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
--					"venus", core);
-+	ret = hfi_create(core, &venus_core_ops);
- 	if (ret)
- 		goto err_core_put;
++#define VENUS_MAX_FPS			240
++
+ extern int venus_fw_debug;
  
--	ret = hfi_create(core, &venus_core_ops);
-+	ret = devm_request_threaded_irq(dev, core->irq, hfi_isr, venus_isr_thread,
-+					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					"venus", core);
- 	if (ret)
- 		goto err_core_put;
+ struct freq_tbl {
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -481,11 +481,10 @@ static int vdec_s_parm(struct file *file
+ 	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
+ 	do_div(us_per_frame, timeperframe->denominator);
  
+-	if (!us_per_frame)
+-		return -EINVAL;
+-
++	us_per_frame = clamp(us_per_frame, 1, USEC_PER_SEC);
+ 	fps = (u64)USEC_PER_SEC;
+ 	do_div(fps, us_per_frame);
++	fps = min(VENUS_MAX_FPS, fps);
+ 
+ 	inst->fps = fps;
+ 	inst->timeperframe = *timeperframe;
 
 
