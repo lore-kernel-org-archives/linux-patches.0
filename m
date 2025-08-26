@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC0A20B7EE;
-	Tue, 26 Aug 2025 11:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1B52264A3;
+	Tue, 26 Aug 2025 11:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207025; cv=none; b=S4P0wpkaJZJVyLXWUaZUIdE6Wj3y9oVXRZMsd/DoW+gB36iK6IPqIoxafPd3aVwGfoGlmFsAZ8Ng+u2vkGP9fNyBv1UIh2Dxtllf9pvGzStXNIpy1vazWJIRky7QVrucyzoWK363Wm58DcOPNl6oS4vufsyYIXmtWg81LUCD2Zw=
+	t=1756207027; cv=none; b=j41xsz7sNHip52GoExNFDAVT4fgaXO8I1aORDiijtl/vV7tJVkG8sEF8qp6GwskyMMiHUk2dra4wKNEe9gSCoeljPbmQA8I1C5ktEDWzI4FUkUyKE9M4WoRqQG2912ZpO6RtqkNA4Djcp+kF2jACxJkDG8ihTp1nN3h5JEY6cJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207025; c=relaxed/simple;
-	bh=6Dsu5ZXvhA77KSqqrU9G4x48OcyUofydbqn2Ho0YiLw=;
+	s=arc-20240116; t=1756207027; c=relaxed/simple;
+	bh=la/aBSxLSuMfMhQUsjRlNpAamnEc2itkcDnprhlnQQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJmxR5QgHSu/oQ2iyuhTBVxpX0RKnrUFIVMa+Y3H+P2Sbz2MacLWExzvzDb3LSC4TWnRDD1QWMOGwExvr6VYq8GVCFahdLbzLhQFLsSfY45Qx4nxzoO6/BDPXx2F65BsTbGK5Ws5njL0p7eEpHOhpsit/yaZo5mCl1h8LMn+Sjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPQyS8nF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JdufqxN4qu1emg0F4nkF7S9yHihQEIMqQagsRzDu4nidFBNyXGa0xb9TZalRryzT8wjaMGc+kqcRwSURIFCZmi5jdb3LPKaCQLWcG3oEZEFIuvXl0xQkYd0+SG/M79urNFRvTfnA680Df4i/AL+8kok3lNhQWCCG06XwQg3kmJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVUDvuP7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPQyS8nF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45641C4CEF1;
-	Tue, 26 Aug 2025 11:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVUDvuP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF89DC4CEF1;
+	Tue, 26 Aug 2025 11:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756207024;
-	bh=6Dsu5ZXvhA77KSqqrU9G4x48OcyUofydbqn2Ho0YiLw=;
+	s=korg; t=1756207027;
+	bh=la/aBSxLSuMfMhQUsjRlNpAamnEc2itkcDnprhlnQQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPQyS8nF4TmbQFkKnLktA5oDvObAP3XJrKIiEWysnBR94a5VtW6as2pkwkqMGFVwG
-	 U+uOUnLkIIrm3OgD+7T7Ui3QodU0nHAy/zdNLUTYHSP5FEEYqDoy1852flkqAOuemv
-	 7fV1Tv0b5zK4BwakEOCq+FG0tyJPsOJaXLEbA8Qc=
+	b=YVUDvuP783wFw7Iox29F4/qQ76ViKUz9l2GoegjODlC4GN+FQPGwcpRVUuiCCKYXE
+	 ukjzW7LSdVOBMdqhj5OllAmcmmH4fUH8yoaHQlx2ijb//+jF0FbHZzU3dEz8kE+7pF
+	 Va4iDFokb1z8T1FxKgq96Ir4v0hnMcG/goIVKt8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.16 022/457] lib/crypto: arm64/poly1305: Fix register corruption in no-SIMD contexts
-Date: Tue, 26 Aug 2025 13:05:06 +0200
-Message-ID: <20250826110937.880487652@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.16 023/457] crypto: qat - lower priority for skcipher and aead algorithms
+Date: Tue, 26 Aug 2025 13:05:07 +0200
+Message-ID: <20250826110937.904144108@linuxfoundation.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
 References: <20250826110937.289866482@linuxfoundation.org>
@@ -50,50 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit eec76ea5a7213c48529a46eed1b343e5cee3aaab upstream.
+commit 8024774190a5ef2af2c5846f60a50b23e0980a32 upstream.
 
-Restore the SIMD usability check that was removed by commit a59e5468a921
-("crypto: arm64/poly1305 - Add block-only interface").
+Most kernel applications utilizing the crypto API operate synchronously
+and on small buffer sizes, therefore do not benefit from QAT acceleration.
 
-This safety check is cheap and is well worth eliminating a footgun.
-While the Poly1305 functions should not be called when SIMD registers
-are unusable, if they are anyway, they should just do the right thing
-instead of corrupting random tasks' registers and/or computing incorrect
-MACs.  Fixing this is also needed for poly1305_kunit to pass.
+Reduce the priority of QAT implementations for both skcipher and aead
+algorithms, allowing more suitable alternatives to be selected by default.
 
-Just use may_use_simd() instead of the original crypto_simd_usable(),
-since poly1305_kunit won't rely on crypto_simd_disabled_for_test.
-
-Fixes: a59e5468a921 ("crypto: arm64/poly1305 - Add block-only interface")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Link: https://lore.kernel.org/all/20250613012357.GA3603104@google.com/
 Cc: stable@vger.kernel.org
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250706231100.176113-4-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/lib/crypto/poly1305-glue.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/intel/qat/qat_common/qat_algs.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/lib/crypto/poly1305-glue.c
-+++ b/arch/arm64/lib/crypto/poly1305-glue.c
-@@ -7,6 +7,7 @@
- 
- #include <asm/hwcap.h>
- #include <asm/neon.h>
-+#include <asm/simd.h>
- #include <crypto/internal/poly1305.h>
- #include <linux/cpufeature.h>
- #include <linux/jump_label.h>
-@@ -33,7 +34,7 @@ void poly1305_blocks_arch(struct poly130
- 			  unsigned int len, u32 padbit)
- {
- 	len = round_down(len, POLY1305_BLOCK_SIZE);
--	if (static_branch_likely(&have_neon)) {
-+	if (static_branch_likely(&have_neon) && likely(may_use_simd())) {
- 		do {
- 			unsigned int todo = min_t(unsigned int, len, SZ_4K);
- 
+--- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+@@ -1277,7 +1277,7 @@ static struct aead_alg qat_aeads[] = { {
+ 	.base = {
+ 		.cra_name = "authenc(hmac(sha1),cbc(aes))",
+ 		.cra_driver_name = "qat_aes_cbc_hmac_sha1",
+-		.cra_priority = 4001,
++		.cra_priority = 100,
+ 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 		.cra_blocksize = AES_BLOCK_SIZE,
+ 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
+@@ -1294,7 +1294,7 @@ static struct aead_alg qat_aeads[] = { {
+ 	.base = {
+ 		.cra_name = "authenc(hmac(sha256),cbc(aes))",
+ 		.cra_driver_name = "qat_aes_cbc_hmac_sha256",
+-		.cra_priority = 4001,
++		.cra_priority = 100,
+ 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 		.cra_blocksize = AES_BLOCK_SIZE,
+ 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
+@@ -1311,7 +1311,7 @@ static struct aead_alg qat_aeads[] = { {
+ 	.base = {
+ 		.cra_name = "authenc(hmac(sha512),cbc(aes))",
+ 		.cra_driver_name = "qat_aes_cbc_hmac_sha512",
+-		.cra_priority = 4001,
++		.cra_priority = 100,
+ 		.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 		.cra_blocksize = AES_BLOCK_SIZE,
+ 		.cra_ctxsize = sizeof(struct qat_alg_aead_ctx),
+@@ -1329,7 +1329,7 @@ static struct aead_alg qat_aeads[] = { {
+ static struct skcipher_alg qat_skciphers[] = { {
+ 	.base.cra_name = "cbc(aes)",
+ 	.base.cra_driver_name = "qat_aes_cbc",
+-	.base.cra_priority = 4001,
++	.base.cra_priority = 100,
+ 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 	.base.cra_blocksize = AES_BLOCK_SIZE,
+ 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
+@@ -1347,7 +1347,7 @@ static struct skcipher_alg qat_skciphers
+ }, {
+ 	.base.cra_name = "ctr(aes)",
+ 	.base.cra_driver_name = "qat_aes_ctr",
+-	.base.cra_priority = 4001,
++	.base.cra_priority = 100,
+ 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_ALLOCATES_MEMORY,
+ 	.base.cra_blocksize = 1,
+ 	.base.cra_ctxsize = sizeof(struct qat_alg_skcipher_ctx),
+@@ -1365,7 +1365,7 @@ static struct skcipher_alg qat_skciphers
+ }, {
+ 	.base.cra_name = "xts(aes)",
+ 	.base.cra_driver_name = "qat_aes_xts",
+-	.base.cra_priority = 4001,
++	.base.cra_priority = 100,
+ 	.base.cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK |
+ 			  CRYPTO_ALG_ALLOCATES_MEMORY,
+ 	.base.cra_blocksize = AES_BLOCK_SIZE,
 
 
