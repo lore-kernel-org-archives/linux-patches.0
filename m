@@ -1,270 +1,176 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3603595C;
-	Wed, 27 Aug 2025 01:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECFB1FF1A1;
+	Wed, 27 Aug 2025 03:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756256840; cv=none; b=Fw/jVQAhaweKmceHgF8qr+PNROa27xIoCM4Jb3ERI2ZBG1V4VRmfq8oeRSLuWRLbx97ndIXEMqRwzL9aMfPepo5Br0HdvjrCw0tAqwvYQAj+wAuEZm1a+nhXBJ/OP125kZrL2dBEEnJRkmA1z34p0FNMeaKmvc0NIMiljRWEJvY=
+	t=1756265467; cv=none; b=DzYh9ixJbgB9f14avvMwWrvViuH4Jl0x7J+nupUNmFr+j8BHJSXF9HTbQZooBPuPSrDqgdPRvKlw3XCk5e6qQiMTear0n4iNsNkehLPb6NUW4YDo1Uw48KEgrXK4PguSG+vg5aBnWoOkP7gNdQopDGYqeS127KH+S8LRna/5w1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756256840; c=relaxed/simple;
-	bh=ptg3hadmfo2fwJ+oQGUqKSF+CCbCyayELJdhHf7zfgk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GP4R6FtuRtD8pYCn3K2COS27JF3+SYqhQ0rTxAF30XuptsRG4rz0yrL81vUY9C+6Zebxoh2lrcMDo02YgQo0uFLrOlNS+8SueXhovh2KfAwGnIm+gN0Hd1BSvqYRPQ51+u1tXQDZVk0v3hEg1ug5MvMBVEy8PNy86JqNIsVxQ0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=AXv+iyu6; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1756265467; c=relaxed/simple;
+	bh=e7xVinN1DKv/LfINZQZ99Qeb7FvC2LDy5qAEZGht7s0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ta6DVi0EWqjhR4T8UGS7xUXKhcZ1heDaBurVOo9Qm1LEZz9Y9ET7GUa3AuCktLup3ZfdRBFBn+KJtv6g1PX0WI/znWaUhRisq+DosR6KHlkKI7rX4D3P/skY2x+/uDt4CwKw+4qcY5U9d5e3S87q0ra1oqfPOHAZ2B5hZZKpCic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ReOlTIS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="AXv+iyu6"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=VO1laDguuSxP27SypRdymEziv/15eUANmc0X6Tkn9F4=; b=AXv+iyu6tzbuHM9ea1KZ6XKL5r
-	aJ45hCoGWurLgHLegyj3pNzyBcFYRcD+m+PnzQtng0ky3TYyIJ/S/M+K5COyk/+sBzpMxJRN/vEaD
-	X9kXBSFcM0P1DQrBMVtqKh0YLLTDIFDsuCUGp8Awb32Wu/QPTjpxcsXO2Osrr1+dalzStftvw4Y6n
-	3Z4SMHvBEcQq8BZHI1lThW2Zq9bFXDnxaQB6nRP4RxBaGeh1mqadoKN57oQIuyf+xWk/q2dWH0tBk
-	mivcdcSOPezwUuivthLT5pknKEV8HAViFguj1T59vzXzDewBT6QK9ERx67tE/Ix3HoNwBsjlAvFh2
-	jcSEq9wA==;
-Received: from [50.53.25.54] (helo=[192.168.254.17])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1ur4dA-0000000DUey-3IVq;
-	Wed, 27 Aug 2025 01:07:16 +0000
-Message-ID: <48f34379-f0aa-40fd-8578-3cf562880731@infradead.org>
-Date: Tue, 26 Aug 2025 18:07:15 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ReOlTIS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2110FC4CEEB;
+	Wed, 27 Aug 2025 03:31:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756265467;
+	bh=e7xVinN1DKv/LfINZQZ99Qeb7FvC2LDy5qAEZGht7s0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ReOlTIS4pMklpwdQBIe7Tyr2QKilJmSpzeQ0FkTdLiBDXVMwKUJyJCdOkpOyx1pc1
+	 GEfnrgPSXHrUKGoeW1g86KZZgRUCteslZ99xPYU+FasTlFkDslCVAo1QA8vUAVV/R8
+	 Z9b16xMHBJmCSvbN0HYhGT8MCbDwjVtWEugeOXGTz3bGVy6FperQ+qchp4GhIiOMLh
+	 tfg8jYLpu6o1X5wPIX6Qsn65zPJ6Y7Vb6poAACsUpIZWLetFhrWSdo8lYOzY2DmOKO
+	 1HM4auazOt3cZUas0zluo89/Sl/MXiqVwEJm8LBGmMusgzlAl2J6iFubvm6zt/JZ0g
+	 3MWWJEO2k5V9g==
+Date: Tue, 26 Aug 2025 23:31:05 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Salvatore Bonaccorso <carnil@debian.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH 6.6 028/587] fs: Prevent file descriptor table
+ allocations exceeding INT_MAX
+Message-ID: <aK57-fMeclMVck7S@laps>
+References: <20250826110952.942403671@linuxfoundation.org>
+ <20250826110953.666871765@linuxfoundation.org>
+ <aK355BFz6ErdVI7j@eldamar.lan>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/15] genpt: Add Documentation/ files
-To: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Justin Stitt <justinstitt@google.com>, Kevin Tian <kevin.tian@intel.com>,
- linux-doc@vger.kernel.org, linux-kselftest@vger.kernel.org,
- llvm@lists.linux.dev, Bill Wendling <morbo@google.com>,
- Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Miguel Ojeda <ojeda@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Shuah Khan <shuah@kernel.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Will Deacon <will@kernel.org>
-Cc: Alexey Kardashevskiy <aik@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- James Gowans <jgowans@amazon.com>, Michael Roth <michael.roth@amd.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
-References: <2-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <2-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aK355BFz6ErdVI7j@eldamar.lan>
 
-Hi,
+On Tue, Aug 26, 2025 at 08:16:04PM +0200, Salvatore Bonaccorso wrote:
+>Hi Greg,
+>
+>On Tue, Aug 26, 2025 at 01:02:57PM +0200, Greg Kroah-Hartman wrote:
+>> 6.6-stable review patch.  If anyone has any objections, please let me know.
+>>
+>> ------------------
+>>
+>> From: Sasha Levin <sashal@kernel.org>
+>>
+>> commit 04a2c4b4511d186b0fce685da21085a5d4acd370 upstream.
+>>
+>> When sysctl_nr_open is set to a very high value (for example, 1073741816
+>> as set by systemd), processes attempting to use file descriptors near
+>> the limit can trigger massive memory allocation attempts that exceed
+>> INT_MAX, resulting in a WARNING in mm/slub.c:
+>>
+>>   WARNING: CPU: 0 PID: 44 at mm/slub.c:5027 __kvmalloc_node_noprof+0x21a/0x288
+>>
+>> This happens because kvmalloc_array() and kvmalloc() check if the
+>> requested size exceeds INT_MAX and emit a warning when the allocation is
+>> not flagged with __GFP_NOWARN.
+>>
+>> Specifically, when nr_open is set to 1073741816 (0x3ffffff8) and a
+>> process calls dup2(oldfd, 1073741880), the kernel attempts to allocate:
+>> - File descriptor array: 1073741880 * 8 bytes = 8,589,935,040 bytes
+>> - Multiple bitmaps: ~400MB
+>> - Total allocation size: > 8GB (exceeding INT_MAX = 2,147,483,647)
+>>
+>> Reproducer:
+>> 1. Set /proc/sys/fs/nr_open to 1073741816:
+>>    # echo 1073741816 > /proc/sys/fs/nr_open
+>>
+>> 2. Run a program that uses a high file descriptor:
+>>    #include <unistd.h>
+>>    #include <sys/resource.h>
+>>
+>>    int main() {
+>>        struct rlimit rlim = {1073741824, 1073741824};
+>>        setrlimit(RLIMIT_NOFILE, &rlim);
+>>        dup2(2, 1073741880);  // Triggers the warning
+>>        return 0;
+>>    }
+>>
+>> 3. Observe WARNING in dmesg at mm/slub.c:5027
+>>
+>> systemd commit a8b627a introduced automatic bumping of fs.nr_open to the
+>> maximum possible value. The rationale was that systems with memory
+>> control groups (memcg) no longer need separate file descriptor limits
+>> since memory is properly accounted. However, this change overlooked
+>> that:
+>>
+>> 1. The kernel's allocation functions still enforce INT_MAX as a maximum
+>>    size regardless of memcg accounting
+>> 2. Programs and tests that legitimately test file descriptor limits can
+>>    inadvertently trigger massive allocations
+>> 3. The resulting allocations (>8GB) are impractical and will always fail
+>>
+>> systemd's algorithm starts with INT_MAX and keeps halving the value
+>> until the kernel accepts it. On most systems, this results in nr_open
+>> being set to 1073741816 (0x3ffffff8), which is just under 1GB of file
+>> descriptors.
+>>
+>> While processes rarely use file descriptors near this limit in normal
+>> operation, certain selftests (like
+>> tools/testing/selftests/core/unshare_test.c) and programs that test file
+>> descriptor limits can trigger this issue.
+>>
+>> Fix this by adding a check in alloc_fdtable() to ensure the requested
+>> allocation size does not exceed INT_MAX. This causes the operation to
+>> fail with -EMFILE instead of triggering a kernel warning and avoids the
+>> impractical >8GB memory allocation request.
+>>
+>> Fixes: 9cfe015aa424 ("get rid of NR_OPEN and introduce a sysctl_nr_open")
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> Link: https://lore.kernel.org/20250629074021.1038845-1-sashal@kernel.org
+>> Signed-off-by: Christian Brauner <brauner@kernel.org>
+>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>> ---
+>>  fs/file.c |   15 +++++++++++++++
+>>  1 file changed, 15 insertions(+)
+>>
+>> --- a/fs/file.c
+>> +++ b/fs/file.c
+>> @@ -126,6 +126,21 @@ static struct fdtable * alloc_fdtable(un
+>>  	if (unlikely(nr > sysctl_nr_open))
+>>  		nr = ((sysctl_nr_open - 1) | (BITS_PER_LONG - 1)) + 1;
+>>
+>> +	/*
+>> +	 * Check if the allocation size would exceed INT_MAX. kvmalloc_array()
+>> +	 * and kvmalloc() will warn if the allocation size is greater than
+>> +	 * INT_MAX, as filp_cachep objects are not __GFP_NOWARN.
+>> +	 *
+>> +	 * This can happen when sysctl_nr_open is set to a very high value and
+>> +	 * a process tries to use a file descriptor near that limit. For example,
+>> +	 * if sysctl_nr_open is set to 1073741816 (0x3ffffff8) - which is what
+>> +	 * systemd typically sets it to - then trying to use a file descriptor
+>> +	 * close to that value will require allocating a file descriptor table
+>> +	 * that exceeds 8GB in size.
+>> +	 */
+>> +	if (unlikely(nr > INT_MAX / sizeof(struct file *)))
+>> +		return ERR_PTR(-EMFILE);
+>> +
+>>  	fdt = kmalloc(sizeof(struct fdtable), GFP_KERNEL_ACCOUNT);
+>>  	if (!fdt)
+>>  		goto out;
+>
+>I see you picked this commit for the current stable series, but TTBOMK
+>this introduces a regression as it was as well present in 6.12.43:
+>
+>https://lore.kernel.org/regressions/20250825152725.43133-1-zcgao@amazon.com/
+>
+>and the current 6.12.44 contains a followup. If I'm not mistaken Sasha
+>has picked up 1d3b4bec3ce5 ("alloc_fdtable(): change calling
+>conventions.") to fix that.
+>
+>So unless I'm wrong, if you pick up 04a2c4b4511d ("fs: Prevent file
+>descriptor table allocations exceeding INT_MAX"), then as well
+>1d3b4bec3ce5 ("alloc_fdtable(): change calling conventions.")  is
+>needed.
 
-On 8/26/25 10:18 AM, Jason Gunthorpe wrote:
-> Add some general description and pull in the kdoc comments from the source
-> file to index most of the useful functions.
-> 
-> Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  Documentation/driver-api/generic_pt.rst | 140 ++++++++++++++++++++++++
->  Documentation/driver-api/index.rst      |   1 +
->  2 files changed, 141 insertions(+)
->  create mode 100644 Documentation/driver-api/generic_pt.rst
-> 
-> diff --git a/Documentation/driver-api/generic_pt.rst b/Documentation/driver-api/generic_pt.rst
-> new file mode 100644
-> index 00000000000000..45b05dafece814
-> --- /dev/null
-> +++ b/Documentation/driver-api/generic_pt.rst
-> @@ -0,0 +1,140 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +========================
-> +Generic Radix Page Table
-> +========================
-> +
-> +.. kernel-doc:: include/linux/generic_pt/common.h
-> +	:doc: Generic Radix Page Table
-> +
-> +.. kernel-doc:: drivers/iommu/generic_pt/pt_defs.h
-> +	:doc: Generic Page Table Language
-> +
-> +-----
-> +Usage
-> +-----
-> +
-> +Generic PT is structured as a multi-compilation system. Since each format
-> +provides an API using a common set of names there can be only one format active
-> +within a compilation unit. This design avoids function pointers around the low
-> +level API.
-> +
-> +Instead the function pointers can end up at the higher level API (ie map/unmap,
+I've just queued it up for the rest of the trees too, thanks!
 
-                                                                    (i.e.,
-
-> +etc) and the per-format code can be directly inlined into the per-format
-
-   etc.)
-
-> +compilation unit. For something like iommu each format will be compiled into a
-> +per-format iommu operations kernel module.
-> +
-
-I would s/iommu/IOMMU/g when it's used in a sentence as an acronym (i.e., not
-functions names, struct names, struct fields, file names, etc.).
-
-> +For this to work the .c file for each compilation unit will include both the
-> +format headers and the generic code for the implementation. For instance in an
-> +implementation compilation unit the headers would normally be included as
-> +follows::
-> +
-> +	#include <linux/generic_pt/common.h>
-> +	#include "fmt/defs_amdv1.h"
-> +	#include "pt_defs.h"
-> +	#include "fmt/amdv1.h"
-> +	#include "pt_common.h"
-> +	#include "pt_iter.h"
-> +	#include "iommut_pt.h"  /* The iommu implementation */
-> +
-> +iommu_pt.h includes definitions that will generate the operations functions for
-> +map/unmap/etc using the definitions provided by AMDv1. The resulting module
-             etc.
-
-> +will have exported symbols named like pt_iommu_amdv1_init().
-> +
-> +Refer to drivers/iommu/generic-pt/fmt/iommu_template.h for an example of how the
-> +iommu implementation uses multi-compilation to generate per-format ops structs
-> +pointers.
-> +
-> +The format code is written so that the common names arise from #defines to
-> +distinct format specific names. This is intended to aid debuggability by
-> +avoiding symbol clashes across all the different formats.
-> +
-> +Exported symbols and other global names are mangled using a per-format string
-> +via the NS() helper macro.
-> +
-> +The format uses struct pt_common as the top level struct for the table,
-
-                                           top-level
-
-> +and each format will have its own struct pt_xxx which embeds it to store
-> +format-specific information.
-> +
-> +The implementation will further wrapper this in its own top level struct, such
-
-                                           this???         top-level
-oh, maybe                          wrap this               top-level
-
-
-
-> +as struct pt_iommu_amdv1.
-> +
-> +----------------------------------------------
-> +Format functions at the struct pt_common level
-> +----------------------------------------------
-> +
-> +.. kernel-doc:: include/linux/generic_pt/common.h
-> +	:identifiers:
-> +.. kernel-doc:: drivers/iommu/generic_pt/pt_common.h
-> +
-> +-----------------
-> +Iteration Helpers
-> +-----------------
-> +
-> +.. kernel-doc:: drivers/iommu/generic_pt/pt_iter.h
-> +
-> +----------------
-> +Writing a Format
-> +----------------
-> +
-> +It is best to start from a simple format that is similar to the target. x86_64
-> +is usually a good reference for something simple, and AMDv1 is something fairly
-> +complete.
-> +
-> +The required inline functions need to be implemented in the format header.
-> +These should all follow the standard pattern of::
-> +
-> + static inline pt_oaddr_t amdv1pt_entry_oa(const struct pt_state *pts)
-> + {
-> +	[..]
-> + }
-> + #define pt_entry_oa amdv1pt_entry_oa
-> +
-> +Where a uniquely named per-format inline function provides the implementation
-
-   where
-
-> +and a define maps it to the generic name. This is intended to make debug symbols
-> +work better. inline functions should always be used as the prototypes in
-> +pt_common.h will cause the compiler to validate the function signature to
-> +prevent errors.
-> +
-> +Review pt_fmt_defaults.h to understand some of the optional inlines.
-> +
-> +Once the format compiles then it should be run through the generic page table
-> +kunit test in kunit_generic_pt.h using kunit. For example::
-> +
-> +   $ tools/testing/kunit/kunit.py run --build_dir build_kunit_x86_64 --arch x86_64 --kunitconfig ./drivers/iommu/generic_pt/.kunitconfig amdv1_fmt_test.*
-> +   [...]
-> +   [11:15:08] Testing complete. Ran 9 tests: passed: 9
-> +   [11:15:09] Elapsed time: 3.137s total, 0.001s configuring, 2.368s building, 0.311s running
-> +
-> +The generic tests are intended to prove out the format functions and give
-> +clearer failures to speed up finding the problems. Once those pass then the
-> +entire kunit suite should be run.
-> +
-> +---------------------------
-> +IOMMU Invalidation Features
-> +---------------------------
-> +
-> +Invalidation is how the page table algorithms synchronize with a HW cache of the
-> +pagetable memory, typically called the TLB (or IOTLB for IOMMU cases).
-
-   page table
-to match the rest of this document.
-
-> +
-> +The TLB can store present PTEs, non-present PTEs and table pointers, depending
-> +on its design. Every HW has its own approach on how to describe what has changed
-> +to get changed items removed from the TLB.
-
-   to have changed items removed
-
-> +
-> +PT_FEAT_FLUSH_RANGE
-> +-------------------
-> +
-> +PT_FEAT_FLUSH_RANGE is the easiest scheme to understand. It tries to generate a
-> +single range invalidation for each operation, over invalidating if there are
-
-                                                 over-invalidating
-
-> +gaps of VA that don't need invalidation. This trades off impacted VA for number
-> +of invalidation operations. It does not keep track of what is being invalidated,
-
-                                                                       invalidated;
-
-> +however if pages have to be freed then page table pointers have to be cleaned
-
-   however,
-
-> +from the walk cache. The range can start/end at any page boundary.
-> +
-> +PT_FEAT_FLUSH_RANGE_NO_GAPS
-> +---------------------------
-> +
-> +PT_FEAT_FLUSH_RANGE_NO_GAPS is similar to PT_FEAT_FLUSH_RANGE however it tries
-
-                                             PT_FEAT_FLUSH_RANGE; however, it tries
-
-> +to minimize the amount of impacted VA by issuing extra flush operations. This is
-> +useful if the cost of processing VA is very high, for instance because a
-> +hypervisor is processing the page table with a shadowing algorithm.
 -- 
-~Randy
-
+Thanks,
+Sasha
