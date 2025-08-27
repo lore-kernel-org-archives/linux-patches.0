@@ -1,37 +1,37 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2B5301004;
-	Tue, 26 Aug 2025 23:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054F84C6C;
+	Wed, 27 Aug 2025 00:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756251525; cv=none; b=MY5fbvdKwtZGqwEMj0sYo3kXHswZ4uHlKsuXnC8sqR5aowBNrQmr9lGoVUzVhFpk8bwAzTGfzGxiqmYhyPkuAKCRm5YThP6KSWoK+w1s1J/KC8FzK2lAPBcOZoyeydBbIW8HmvPFOXB31mF1PgFp4IZGSp2MSrzHYs8jCe4stS4=
+	t=1756253023; cv=none; b=nKacrsRRQJTuh1lxHI2BnI59ve6wxiPk3S74liFHo1FR21SsOZAiK85tKQ8PYxK7mN74wQQYpGLPPt4aDm992t0JUf/8/zupg8XzmZYOGLLSdKNm67l8hGTYCCX4rRmi74Nbo2OnxzCAsAssPafokAUSoD2EFkVhGsgvhE9gc0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756251525; c=relaxed/simple;
-	bh=8UR3B0CuSxPS348YqJdjWzCjeKMvHvYhVYO+yfZsIJs=;
+	s=arc-20240116; t=1756253023; c=relaxed/simple;
+	bh=I8oPMo3mvwS3Bjjxb0BZcps4wLguxYSEV5nbVXUhU/8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pb6F3n41ntRU+jVX7MMllZNTX+MtxWRus+CJCjD4E0xslc7Af+PBOxFOHR3ITuEE3gdkfkH0iaEC+FUSJnBAkymoP2wVf5RS9/7ZJNsqR3cqOoNFuVMV0SBwRTgujD0i6b9wqEBlaEg4KawSJJc1k2ez0SMFEyMxucKTQ8SP4GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=EFLiktwH; arc=none smtp.client-ip=198.137.202.133
+	 In-Reply-To:Content-Type; b=rCQCu5+D45sg2bpAMBexYLsDtmvx08xHB7vCkquL0dfVTyxOmr6VzsVoUU54imNjtn6pAmukwvfHQDYKUg9dIdrLHmvDbwTPvMJdrbUGFl08txqWIQUfqwTtVlt2hjH1sf+exa6pyzpPDNCwa2RDwV7oTxchBiGqS9vta7Z2jHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=zU3fHBFx; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="EFLiktwH"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="zU3fHBFx"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
 	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=F3WrV83lywZCsqisVifMLjYiGEt1ohM+PRdmLgso4ig=; b=EFLiktwHQtoOiXlrcWx5gUkr+L
-	AqEN4m1ZGNClo5E99GpTTwCv8XU7tSqBRAdueD5W1zSevun/jL4mr9vzeXTqeupeX5Wlk7VpyoytD
-	YpaS5sZeTN9cN+nBpN2kg3iNXtCAujnfEA4MlRTRuOJpxlTYpXB+AeTcevPYvvEM50vUt8Uti25/N
-	AfDico4izN/nIIrUokNvhPozmQlUpWTMttybMo2jb5YnpUqS41I+ZvyoPzwKh4nRNKcRjqVbwOH79
-	nV/jLnEFAOYxpPN/YHfijJBTIInSC8456Y/KoIckN5Tg4ydZyL6883uYQ8MZKJYbJdfawlCZBSMlW
-	52L7B2Fg==;
+	bh=Uk4pOKm9w1DFf3d0P5bL4B0MQh3SUsa1t5AwYgg9Fyw=; b=zU3fHBFx6AEsYZv+UoxMnHxjLP
+	hXnNntqpg8T2xkglr2er4K6A2mC3xfuHqDZE14q4wyRICdMYjK2lFezTyJ5PdpddodxgA1csOBd5J
+	i3OdSG2JTwgB7BARHbe9+CkvesWVYrZ5JxJG+a8DKL70CB/zEdI4QQwRxauq5ffiCh9GMEQJOh9V9
+	2QxlQS2AXBBSrdL8fzMPop1IyKgUIy9RH12JPkGsHTcJ2gMrL4eCT0pelksjD4TPOFoaGCngUqIvC
+	yL7y9dPIpMSLle+mqDh9sccw3RvCdLXBfjzkQfBzjbYFpPBChibTWm5Vs1EvWjw6n/dJNURcQF9lh
+	XdfeMZpA==;
 Received: from [50.53.25.54] (helo=[192.168.254.17])
 	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1ur3FS-0000000DMbt-3ewP;
-	Tue, 26 Aug 2025 23:38:42 +0000
-Message-ID: <adf12245-08c2-4a14-bac9-2cf7a1bf8107@infradead.org>
-Date: Tue, 26 Aug 2025 16:38:41 -0700
+	id 1ur3dc-0000000DOXO-1EJx;
+	Wed, 27 Aug 2025 00:03:40 +0000
+Message-ID: <cfeead98-4344-47e6-ac62-08eaa5f5b318@infradead.org>
+Date: Tue, 26 Aug 2025 17:03:39 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,7 +39,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/15] iommupt: Add the x86 64 bit page table format
+Subject: Re: [PATCH v4 04/15] iommupt: Add the AMD IOMMU v1 page table format
 To: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
  iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
  Justin Stitt <justinstitt@google.com>, Kevin Tian <kevin.tian@intel.com>,
@@ -55,10 +55,10 @@ Cc: Alexey Kardashevskiy <aik@amd.com>,
  Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
  James Gowans <jgowans@amazon.com>, Michael Roth <michael.roth@amd.com>,
  Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
-References: <12-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
+References: <4-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
 Content-Language: en-US
 From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <12-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
+In-Reply-To: <4-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -66,36 +66,31 @@ Content-Transfer-Encoding: 7bit
 
 On 8/26/25 10:18 AM, Jason Gunthorpe wrote:
 > diff --git a/drivers/iommu/generic_pt/Kconfig b/drivers/iommu/generic_pt/Kconfig
-> index 57dc81060f9f0d..8665a1d4299b7a 100644
+> index c35ddc7c827e92..1867e8d74b4be9 100644
 > --- a/drivers/iommu/generic_pt/Kconfig
 > +++ b/drivers/iommu/generic_pt/Kconfig
-> @@ -41,10 +41,21 @@ config IOMMU_PT_AMDV1
->  
->  	  Selected automatically by an IOMMU driver that uses this format.
->  
-> +config IOMMU_PT_X86_64
-> +       tristate "IOMMU page table for x86 64 bit, 4/5 levels"
+> @@ -29,4 +29,16 @@ config IOMMU_PT
+>  	  IOMMU_PT provides an implementation of the page table operations
+>  	  related struct iommu_domain using GENERIC_PT to abstract the page
+>  	  table format.
+> +
+> +if IOMMU_PT
+> +config IOMMU_PT_AMDV1
+> +	tristate "IOMMU page table for 64 bit AMD IOMMU v1"
 
-	                                     64-bit,
-and use tab to indent, not spaces.
+	                               64-bit
 
 > +	depends on !GENERIC_ATOMIC64 # for cmpxchg64
 > +	help
-> +	  iommu_domain implementation for the x86 64 bit 4/5 level page table.
+> +	  iommu_domain implementation for the AMD v1 page table. AMDv1 is the
+> +	  "host" page table. It supports granular page sizes of almost every
+> +	  power of 2 and decodes an full 64 bit IOVA space.
 
-	                                          64-bit
-
-> +	  It supports 4K/2M/1G page sizes and can decode a sign extended
-
-	                                                   sign-extended
-
-> +	  portion of the 64 bit IOVA space.
-
-	                 64-bit
+	                                 64-bit
 
 > +
 > +	  Selected automatically by an IOMMU driver that uses this format.
-> +
+> +endif
 
 -- 
 ~Randy
