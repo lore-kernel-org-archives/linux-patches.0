@@ -1,348 +1,169 @@
-Received: from smtp-o-3.desy.de (smtp-o-3.desy.de [131.169.56.156])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2081.outbound.protection.outlook.com [40.107.244.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AA130C604
-	for <patches@lists.linux.dev>; Thu, 28 Aug 2025 12:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=131.169.56.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756385298; cv=none; b=nYCoSyLp4kGiwHmpAqW0jjgM43TN1A1Q75EskBINb7xakFOV5dLQzAuHQ/vYAObivTgVeBh6xjxSsap7MVQUivtRQvu6JZj7iQpDbozMpEq+LCDjS0vurhL2xOVjCcGrug5wTOPU8im6daJsk5TvNlFvB50UHqNKvXvkihnDZbI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756385298; c=relaxed/simple;
-	bh=NwlJER5TwN4jq9RS4wj5cl/xjNnKeNCPBoVP+zjAuNI=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=YsTv9StpPJuG6F5PWq5GRAsWHI+42Udjy29JGRwU9X939jWEYQggOgCA1diTx8dkJa7SkE4Sa9gudEJ3OnXxJZ2ZNdNJrvlCvUX5FhO4SkAcIyIGb6Z4Y4cvtGB45JBzm33YZzPBz0WJGtuxIenIkdWtY8K93Y+jlfidat4RGzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=desy.de; spf=pass smtp.mailfrom=desy.de; dkim=pass (1024-bit key) header.d=desy.de header.i=@desy.de header.b=dfI+mLWu; arc=none smtp.client-ip=131.169.56.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=desy.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=desy.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A48731063B;
+	Thu, 28 Aug 2025 12:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756385520; cv=fail; b=HwNaCgjjK4A4e+M7GrYGxrGkRR0Bi11RYQuHfHcyRrfhOjfyBUsC8hgQFOP0uFGWR6p5YVjTtOq0qmU1pchmlIpQvGPKEeUQSiOu/bVbPrIkNni73nWStYdWcYJVHRxAdM4C1BydPrYGk7TkD4jdVoEuaitHQ/Cl7TmtjIGEErE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756385520; c=relaxed/simple;
+	bh=DMJ4Kl0ooCBxizCYvK8E5v//mnvFUeza0TU6bVPmF2k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=SQT3FRbxFeeuV3QrzOI0I4V2eNm7Hu13GvcuAUcZxXxcOsI+j0LWW0cOuGJsU3gb4RarwxWyDpHxSOs1eN9W6J/6hnqaXIotFdzx2QYRDebNJn83N3p7TS5yLOLFqedf2XDuJ19WbGp5R/1owMCuHH/OWrpE3+mXGSZaQgfmlUA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=trUqhWdT; arc=fail smtp.client-ip=40.107.244.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=desy.de header.i=@desy.de header.b="dfI+mLWu"
-Received: from smtp-o-2.desy.de (smtp-o-2.desy.de [131.169.56.155])
-	by smtp-o-3.desy.de (Postfix) with ESMTP id BEF4D11F91C
-	for <patches@lists.linux.dev>; Thu, 28 Aug 2025 14:48:13 +0200 (CEST)
-Received: from smtp-buf-1.desy.de (smtp-buf-1.desy.de [IPv6:2001:638:700:1038::1:a4])
-	by smtp-o-2.desy.de (Postfix) with ESMTP id 08A7B13F648
-	for <patches@lists.linux.dev>; Thu, 28 Aug 2025 14:48:06 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-o-2.desy.de 08A7B13F648
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=desy.de; s=default;
-	t=1756385286; bh=yPEnCEUlOjZndbu8nSXz/U5gUyjQihz79sLTH6kpWqY=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=dfI+mLWukAU1TF+Gnpu4XNfV4G+0fxyCdbxD+UsHsXuWBWBoExusXfTcg/o1umrPS
-	 ze0sBoSfp/IywMytURRuF69gFFk8Mn0AAyffPDvIsrEWUIGy4LHvKbZOy0npbYtsia
-	 ClMZkz13dET4HNDsIXhqfqJrT5Ely9fEO0WlvMiE=
-Received: from smtp-m-2.desy.de (smtp-m-2.desy.de [131.169.56.130])
-	by smtp-buf-1.desy.de (Postfix) with ESMTP id EE53420056;
-	Thu, 28 Aug 2025 14:48:05 +0200 (CEST)
-Received: from b1722.mx.srv.dfn.de (b1722.mx.srv.dfn.de [194.95.235.47])
-	by smtp-m-2.desy.de (Postfix) with ESMTP id E09F616003F;
-	Thu, 28 Aug 2025 14:48:05 +0200 (CEST)
-Received: from smtp-intra-2.desy.de (smtp-intra-2.desy.de [131.169.56.83])
-	by b1722.mx.srv.dfn.de (Postfix) with ESMTP id 991AA160058;
-	Thu, 28 Aug 2025 14:48:04 +0200 (CEST)
-Received: from z-mbx-2.desy.de (z-mbx-2.desy.de [131.169.55.140])
-	by smtp-intra-2.desy.de (Postfix) with ESMTP id BABB620044;
-	Thu, 28 Aug 2025 14:48:03 +0200 (CEST)
-Date: Thu, 28 Aug 2025 14:48:03 +0200 (CEST)
-From: "Mkrtchyan, Tigran" <tigran.mkrtchyan@desy.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable <stable@vger.kernel.org>, patches@lists.linux.dev, 
-	Trond Myklebust <trond.myklebust@hammerspace.com>, 
-	Sasha Levin <sashal@kernel.org>, 
-	Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <1930989002.4608779.1756385283630.JavaMail.zimbra@desy.de>
-In-Reply-To: <20250826110928.612854620@linuxfoundation.org>
-References: <20250826110924.562212281@linuxfoundation.org> <20250826110928.612854620@linuxfoundation.org>
-Subject: Re: [PATCH 5.10 168/523] pNFS/flexfiles: dont attempt pnfs on fatal
- DS errors
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="trUqhWdT"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uP8gSuEFGmfnIU6Xyl+s/3OLKwee/hgM70EC/4042SsHNmy1BV8cr0x9Gav4ucaqMU87jY3imlbW+n/BZ02SBhDOFiNTgYN5IYDl3vYFRLZRffiyxqBn6wNlW9LSGwoXsGxpHN4pshtMwsfdifDTmUz+KbiiscKlvkIN6HWaf4DuCPD6X3MasIUX3OlgwBU85eZTWtpHxcF6MFQOlKbcDzhJXToqVLrKOJANKYa1tvV7Nli+BiVy1EdYQwvW+Jxu1VZQktR4TdN2J9mSYENWs2IuATdFE0TylVfOEyjGu2+ZQ7mwsPXwZ1C3ptBAOK/GjKQZI02QypzK/Yf/U267uA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DMJ4Kl0ooCBxizCYvK8E5v//mnvFUeza0TU6bVPmF2k=;
+ b=Z3+OAGrLmhF+sfse105Ukv8nyOkQPIRBRuittOGEHSGAZhisFWCL/6MXYiES+Ve28vaEBrDgvCYqgu7rohRLjKbfnhcYYKwNuXSphZYnckeBuJX2NcyvQ9jPBnkzlZlrSgsT1VPv2SQfzIUb8kIgX371Eq793ehoXdKRCCILZcMOVrI+xU0h/dnNgHu9FK1gJ0gD2maYOpIWX9vd+xEzrb19m6SZXcBlZTbWN/ZCQr9xciPAT7EnrN2pISfmSrZMXQxeqWPLfHDNwznSRXoVjOfa+9jASMs5g7/SWOdjbIzo7ImN9kqjgV75Qdbtgi2ohalwyvsZmeEqLM3mVKH4fw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DMJ4Kl0ooCBxizCYvK8E5v//mnvFUeza0TU6bVPmF2k=;
+ b=trUqhWdTwygKlk8B0QHizFS71/2INpBu3HFcoijn9AERpCaImNn0Q+O3m9nVj1Y2F53oEwLGGMrcbw/9Ee/2rbtQOt8ZMskImlB1yvI8WIiuaVjp+r02Tx6X9aIYcMGZPJDmwNn2IrElwn4EEZgp1UF0SXtvXw66Awdm5Pgr4XiNDkWQCSeuZd20TnS1tvnI8o1vClWbIdLa9ucvfjwieidHXgHRE2fJeMYO+8wryk+V+DtoSbQpNKhP/cKGA7P2k/6Xn7U/oiUP5Lf7PN/+Em5JTY4fEOvAezS2DHgu3MtY3eFJ6hxNDhDe+dCeYZRidlfW4L8u0Ruu//TA6PRWzg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DM6PR12MB4369.namprd12.prod.outlook.com (2603:10b6:5:2a1::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.19; Thu, 28 Aug
+ 2025 12:51:51 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.9073.010; Thu, 28 Aug 2025
+ 12:51:51 +0000
+Date: Thu, 28 Aug 2025 09:51:49 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Ethan Zhao <etzhao1900@gmail.com>, robin.murphy@arm.com,
+	joro@8bytes.org, bhelgaas@google.com, will@kernel.org,
+	robin.clark@oss.qualcomm.com, yong.wu@mediatek.com,
+	matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+	thierry.reding@gmail.com, vdumpa@nvidia.com, jonathanh@nvidia.com,
+	rafael@kernel.org, lenb@kernel.org, kevin.tian@intel.com,
+	yi.l.liu@intel.com, baolu.lu@linux.intel.com,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
+	patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
+	helgaas@kernel.org
+Subject: Re: [PATCH v3 5/5] pci: Suspend iommu function prior to resetting a
+ device
+Message-ID: <20250828125149.GD7333@nvidia.com>
+References: <cover.1754952762.git.nicolinc@nvidia.com>
+ <3749cd6a1430ac36d1af1fadaa4d90ceffef9c62.1754952762.git.nicolinc@nvidia.com>
+ <550635db-00ce-410e-add0-77c1a75adb11@gmail.com>
+ <aKTzq6SLGB22Xq5b@Asurada-Nvidia>
+ <20250821130741.GL802098@nvidia.com>
+ <aKgPr3mUcIsd1iuT@Asurada-Nvidia>
+ <20250822140821.GE1311579@nvidia.com>
+ <aKi8EqEp1DKG+h38@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aKi8EqEp1DKG+h38@Asurada-Nvidia>
+X-ClientProxiedBy: YT4PR01CA0330.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:10a::17) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256; 
-	boundary="----=_Part_4608780_1928269810.1756385283660"
-X-Mailer: Zimbra 10.1.10_GA_4785 (ZimbraWebClient - FF142 (Linux)/10.1.10_GA_4785)
-Thread-Topic: pNFS/flexfiles: dont attempt pnfs on fatal DS errors
-Thread-Index: eZfEBFLMzAkAKXIDN4nCBFX/JcedBg==
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM6PR12MB4369:EE_
+X-MS-Office365-Filtering-Correlation-Id: 09b36ca2-ceba-4050-302f-08dde631a862
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?v2xtB7lc3M2wHestbaJbTkgpH+GnOlGN2Drbiryyhf83Xi3cBzcQqgKh6yiD?=
+ =?us-ascii?Q?up2blkNKgWLq2G+vOFIAPVonk3BEjST0WbLcksVHKNbob8ez6LWuMKDMEDp4?=
+ =?us-ascii?Q?ZhJkIgG3c8bZ4nZIdJ7H5GJIDCUwKG8jGzjOX7DdmMvjKNUrbFHfOQMfBMBu?=
+ =?us-ascii?Q?Cr1HLZ7C+VOIJZg53f11dpjZAZU9Gz0UtkkQAm6cP1W7LvvT1hESY+dGt/0m?=
+ =?us-ascii?Q?XKLjSliDtHjSqAzrsailerIM9C220y2NtNGFQ74fxtjpRyfkwz7hH7W9ceEw?=
+ =?us-ascii?Q?I6SZP2/ap1/Cc8hYZk7zJv079ksH96hFQewHRyd4WRpJw2aI0rIRvb9BITl0?=
+ =?us-ascii?Q?02hJZf+1W6qYT/8+f0xIXnMyuqDh1Ixm2dUTk/0O/aHTBc0EtlMvJl9aQyt6?=
+ =?us-ascii?Q?Zc3HnMncc9HLuWHq04WeTrZnU+nenxvjmf9YvlyiySVqPmD5v9PvCxXCYkuU?=
+ =?us-ascii?Q?Vamthi7m1YvK55t47ypFq6WsAtLWY6Q1spo3yxB5SwG8xaf+Zjcimt6RjZQk?=
+ =?us-ascii?Q?bt1V6674C9PfjWIp6ZF3KsMhhHODKJc2fxYuLLKN2hMh6BX+J8YX59Zt4RNN?=
+ =?us-ascii?Q?jf37wE6BD3NfAOpnKrGRe567jMvb+V1nb++rTowXjnpynQbuft7PsX1noILu?=
+ =?us-ascii?Q?0CZ/hBbthoTWH31311RaAB5xPGTsRiDnL2OCo1mmsyTlWLr4WNbiKPd4xyam?=
+ =?us-ascii?Q?UpA7hl86U9Mhn3Wg7JuofExqksR2UDrDoHPXFVLO2R74VO8QGAbLiR0GABPh?=
+ =?us-ascii?Q?goBVlCHszBJKmNEv4eijiubQKf6FZF4RK1rz8IWuh8ojDfvkFlYcu0VGKWPU?=
+ =?us-ascii?Q?UoPRp0bbubPMeGdUFzuIuMim9uO2pQTFAU2lSbGATJI74CgaLGW7kbKvN2eM?=
+ =?us-ascii?Q?96bdavoc9EWSN5KA5hBHGWzPedTtrl3UXsRgH5E34PwHjY2gkS9si3fTz8Qy?=
+ =?us-ascii?Q?RwPWB8OzCi5VKxQwk3Z9tlv1CVPPZPSQbxdr868DqU3pARGIXYn9bAItEbKP?=
+ =?us-ascii?Q?03JGj3b4mSYpv4H9+NVGOfZBWMv9iWcTSjdWJK4uyP2YZQqWH+novYg7nZyp?=
+ =?us-ascii?Q?Sm+rAUDfYH8OmI2ykcIC1/7OFv3H46vahAQGJgespZvt7Ya2jj4UNt8WgFNU?=
+ =?us-ascii?Q?0rfoGXcuVCUM1wDfWseSMk9c9mAQzq4ZDMxYMn3vzNJeGWoO+74v6fx7KflB?=
+ =?us-ascii?Q?E71N/H6S929ZVFaifARnJTh0XL2N+UtYEzkCz6InU08frCqGzDWPaoI76+r9?=
+ =?us-ascii?Q?x0c0JB6FpL66mrg/pjyYFae4J9ayFT4Hw3nnlkQs6cwn6h/cXJ8XohtClS8w?=
+ =?us-ascii?Q?VloGnf87EHkUtcrstHywVwvoy2t5lDkUjpgNNtt8MMszVnPMGudwI1TWCBdR?=
+ =?us-ascii?Q?LXNZpM55dA+xLv7AbxIEjMzvGNY8iVmGpzWmFyBg6lJ1Ygbicf2Qrh3ALBbm?=
+ =?us-ascii?Q?6DnBnxpS1y4=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?t82/JyT9hpuFJxoIG9sVTwFZiLbXMY2yC0vvHWdN42eQKfHiMyLf4TY+cr3d?=
+ =?us-ascii?Q?hLBdTBptFeRgfqpRc/deYlbDZ9jNTAKF2kp33hgqGYRcvT0jfDpAtovyLQyK?=
+ =?us-ascii?Q?NpYw8zK/QqSx7/+J04e+T9FCS8CH0thdbeg0xaU/9BspCEh/fV8IhTKoYSfu?=
+ =?us-ascii?Q?dxdDSOjG8aEP3VVyY8QUKzCuxwhEuLISUExT8AZT3uDuWfyGDGTvghj/iMqF?=
+ =?us-ascii?Q?bV540vooaTaaoPYQvgDQ/LYyGp7dSyb4csh3AJulTA6OYIf5/fEIcwxSacNj?=
+ =?us-ascii?Q?OyooPO8XrQrMbW15iz29x0DFHHlB1PjuPksixOIY7vNVzcQPssgq2LAW4ydk?=
+ =?us-ascii?Q?ihYLIzFN1A0oBYk3jBUWUShFPHWcvhwGVIcXYA8W/xekotuheKaxxpZfR02q?=
+ =?us-ascii?Q?1Hga4W5tU5Ye4wLrGNG9061HqIXZ40sRztTYir23BL1CaKeIH3iyxYcUTzn2?=
+ =?us-ascii?Q?tkjDRMiiqaVESSeftYSJ3Hu82FbqYxoNw18ShfYXwjIofz6TJGZ/aK1uU3Tf?=
+ =?us-ascii?Q?8z322jJz1VPW4P1ltiZNFBJaACGMgi7+e+RQEfLf7vP2dMFZORq4+HRg1TbB?=
+ =?us-ascii?Q?z54uk/D3zhcXDpTXXx/XMcotFZjjXFj8IfhgJ5IlvyfMuQ/Ta3ozQznbDOMk?=
+ =?us-ascii?Q?7xXfroUN9IT5E754OyafxpdXUn+4LB8dCvrKJgdxgEB2VXxcpvVMFVnKIKIy?=
+ =?us-ascii?Q?6aPhDYVosciPJU4DdokyTp0Gj3DcZzli9cWA+U/rVyhzg1r+lpJ+ISfgRDwz?=
+ =?us-ascii?Q?DcQzpSUAjCoo/JFHopxf84NwYfHrxuQ/j5rBD7CGMcGOrASx+Q3FIVvLnF4i?=
+ =?us-ascii?Q?SqYx5Zmc/3YrEizQCpNXe7gMNixdwSbRwpHU8niZW3Jwz6KeY1N5rRnA832B?=
+ =?us-ascii?Q?dfqECyimMYcs+EBKqrLToqFztCV2inXqaN0tOSHlN0iXnz1qTQWpeGBw2otn?=
+ =?us-ascii?Q?HZaQ5QuoNNqWKlooMcNWjkpS6t+q7vOLc+k4QFQaU8CbmysNfJISq2qTFzBg?=
+ =?us-ascii?Q?tnlnH1xoDpcMq7uRt+P7Z2Gdo4gFp6Z2p36OxxxEKQi29j+EiO1Rju6nCBuZ?=
+ =?us-ascii?Q?TmDXx3v50AceiZ9yu003E9k6QlwlL6YonjPF9NXJj9bG0Dl3xBYrb5vzU9Wv?=
+ =?us-ascii?Q?iIZVGJohjERtcdcD8fNSZA8TYzaiqkZpAwNqSunWm27DRGnS0pkH0EsZ4jqh?=
+ =?us-ascii?Q?727kQ1W2SUqjYVWjg33buiIOU1FOOkWgrhPlbzAUGa/vnOXRbB8EKRb7bWXH?=
+ =?us-ascii?Q?BiVyvcQO6pAdTUXEMCUV1nt4H8uyZwqrEgXjsIMfubW4Jcvurmr4g1KsTdDN?=
+ =?us-ascii?Q?TvCXiuxCsLRvkdzD466BngNXSoBi4X9qprACkq5fqpQXhS1PFEIYLtVjumy8?=
+ =?us-ascii?Q?z7Z7mE0kXHTsmnHhHxutyVYN/+dbAJ7zH98nN5Nb/85iuAA+hrHu83jpFrYn?=
+ =?us-ascii?Q?PoOFFUjJF7xi8Z9tfkWF5PYJXI4yAAyCO5ZVKu+gAOKI/G+BVr8pN42YlQyu?=
+ =?us-ascii?Q?G9uTDXeEJQlByfatLg+bnibEpHXrg4Zur40kJLuwYyizqDZZUuQtuwu7eDgs?=
+ =?us-ascii?Q?+VvMiQ6f3K8Tf9iOSZU=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 09b36ca2-ceba-4050-302f-08dde631a862
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 12:51:51.3122
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WSy3j956Gw+6LmJ3rqhkiqdb7nqlD10qDzf41KoloQg4jUxOIqdLNAiag1jrYZ3R
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4369
 
-------=_Part_4608780_1928269810.1756385283660
-Date: Thu, 28 Aug 2025 14:48:03 +0200 (CEST)
-From: "Mkrtchyan, Tigran" <tigran.mkrtchyan@desy.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable <stable@vger.kernel.org>, patches@lists.linux.dev, 
-	Trond Myklebust <trond.myklebust@hammerspace.com>, 
-	Sasha Levin <sashal@kernel.org>, 
-	Dan Carpenter <dan.carpenter@linaro.org>
-Message-ID: <1930989002.4608779.1756385283630.JavaMail.zimbra@desy.de>
-In-Reply-To: <20250826110928.612854620@linuxfoundation.org>
-References: <20250826110924.562212281@linuxfoundation.org> <20250826110928.612854620@linuxfoundation.org>
-Subject: Re: [PATCH 5.10 168/523] pNFS/flexfiles: dont attempt pnfs on fatal
- DS errors
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 10.1.10_GA_4785 (ZimbraWebClient - FF142 (Linux)/10.1.10_GA_4785)
-Thread-Topic: pNFS/flexfiles: dont attempt pnfs on fatal DS errors
-Thread-Index: eZfEBFLMzAkAKXIDN4nCBFX/JcedBg==
+On Fri, Aug 22, 2025 at 11:50:58AM -0700, Nicolin Chen wrote:
 
+> It feels like we need a no-fail re-attach operation, or at least an
+> unlikely-to-fail one. I recall years ago we tried a can_attach op
+> to test the compatibility but it didn't get merged. Maybe we'd need
+> it so that a concurrent attach can test compatibility, allowing the
+> re-attach in iommu_dev_reset_done() to more likely succeed.
 
-Hi Greg,
+This is probably the cleanest option to split these things
 
-I just got a report that the proposed fix has a bug in one of the error paths. I am
-trying to fix that, so you might want to wait with the backport.
-
-Sorry about that,
-   Tigran.
-
------ Original Message -----
-> From: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-> To: "stable" <stable@vger.kernel.org>
-> Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, patches@lists.linux.dev, "Tigran Mkrtchyan"
-> <tigran.mkrtchyan@desy.de>, "Trond Myklebust" <trond.myklebust@hammerspace.com>, "Sasha Levin" <sashal@kernel.org>
-> Sent: Tuesday, 26 August, 2025 13:06:18
-> Subject: [PATCH 5.10 168/523] pNFS/flexfiles: dont attempt pnfs on fatal DS errors
-
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-> 
-> [ Upstream commit f06bedfa62d57f7b67d44aacd6badad2e13a803f ]
-> 
-> When an applications get killed (SIGTERM/SIGINT) while pNFS client performs a
-> connection
-> to DS, client ends in an infinite loop of connect-disconnect. This
-> source of the issue, it that flexfilelayoutdev#nfs4_ff_layout_prepare_ds gets an
-> error
-> on nfs4_pnfs_ds_connect with status ERESTARTSYS, which is set by
-> rpc_signal_task, but
-> the error is treated as transient, thus retried.
-> 
-> The issue is reproducible with Ctrl+C the following script(there should be ~1000
-> files in
-> a directory, client should must not have any connections to DSes):
-> 
-> ```
-> echo 3 > /proc/sys/vm/drop_caches
-> 
-> for i in *
-> do
->   head -1 $i
-> done
-> ```
-> 
-> The change aims to propagate the nfs4_ff_layout_prepare_ds error state
-> to the caller that can decide whatever this is a retryable error or not.
-> 
-> Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
-> Link: https://lore.kernel.org/r/20250627071751.189663-1-tigran.mkrtchyan@desy.de
-> Fixes: 260f32adb88d ("pNFS/flexfiles: Check the result of nfs4_pnfs_ds_connect")
-> Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
-> fs/nfs/flexfilelayout/flexfilelayout.c    | 26 ++++++++++++++---------
-> fs/nfs/flexfilelayout/flexfilelayoutdev.c |  6 +++---
-> 2 files changed, 19 insertions(+), 13 deletions(-)
-> 
-> diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c
-> b/fs/nfs/flexfilelayout/flexfilelayout.c
-> index a053dd05057f..57150b27c0fd 100644
-> --- a/fs/nfs/flexfilelayout/flexfilelayout.c
-> +++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-> @@ -739,14 +739,14 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment
-> *lseg,
-> {
-> 	struct nfs4_ff_layout_segment *fls = FF_LAYOUT_LSEG(lseg);
-> 	struct nfs4_ff_layout_mirror *mirror;
-> -	struct nfs4_pnfs_ds *ds;
-> +	struct nfs4_pnfs_ds *ds = ERR_PTR(-EAGAIN);
-> 	u32 idx;
-> 
-> 	/* mirrors are initially sorted by efficiency */
-> 	for (idx = start_idx; idx < fls->mirror_array_cnt; idx++) {
-> 		mirror = FF_LAYOUT_COMP(lseg, idx);
-> 		ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
-> -		if (!ds)
-> +		if (IS_ERR(ds))
-> 			continue;
-> 
-> 		if (check_device &&
-> @@ -754,10 +754,10 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment
-> *lseg,
-> 			continue;
-> 
-> 		*best_idx = idx;
-> -		return ds;
-> +		break;
-> 	}
-> 
-> -	return NULL;
-> +	return ds;
-> }
-> 
-> static struct nfs4_pnfs_ds *
-> @@ -933,7 +933,7 @@ ff_layout_pg_init_write(struct nfs_pageio_descriptor *pgio,
-> 	for (i = 0; i < pgio->pg_mirror_count; i++) {
-> 		mirror = FF_LAYOUT_COMP(pgio->pg_lseg, i);
-> 		ds = nfs4_ff_layout_prepare_ds(pgio->pg_lseg, mirror, true);
-> -		if (!ds) {
-> +		if (IS_ERR(ds)) {
-> 			if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
-> 				goto out_mds;
-> 			pnfs_generic_pg_cleanup(pgio);
-> @@ -1820,6 +1820,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
-> 	u32 idx = hdr->pgio_mirror_idx;
-> 	int vers;
-> 	struct nfs_fh *fh;
-> +	bool ds_fatal_error = false;
-> 
-> 	dprintk("--> %s ino %lu pgbase %u req %zu@%llu\n",
-> 		__func__, hdr->inode->i_ino,
-> @@ -1827,8 +1828,10 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
-> 
-> 	mirror = FF_LAYOUT_COMP(lseg, idx);
-> 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, false);
-> -	if (!ds)
-> +	if (IS_ERR(ds)) {
-> +		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
-> 		goto out_failed;
-> +	}
-> 
-> 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
-> 						   hdr->inode);
-> @@ -1869,7 +1872,7 @@ ff_layout_read_pagelist(struct nfs_pgio_header *hdr)
-> 	return PNFS_ATTEMPTED;
-> 
-> out_failed:
-> -	if (ff_layout_avoid_mds_available_ds(lseg))
-> +	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
-> 		return PNFS_TRY_AGAIN;
-> 	trace_pnfs_mds_fallback_read_pagelist(hdr->inode,
-> 			hdr->args.offset, hdr->args.count,
-> @@ -1890,11 +1893,14 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr,
-> int sync)
-> 	int vers;
-> 	struct nfs_fh *fh;
-> 	u32 idx = hdr->pgio_mirror_idx;
-> +	bool ds_fatal_error = false;
-> 
-> 	mirror = FF_LAYOUT_COMP(lseg, idx);
-> 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
-> -	if (!ds)
-> +	if (IS_ERR(ds)) {
-> +		ds_fatal_error = nfs_error_is_fatal(PTR_ERR(ds));
-> 		goto out_failed;
-> +	}
-> 
-> 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
-> 						   hdr->inode);
-> @@ -1937,7 +1943,7 @@ ff_layout_write_pagelist(struct nfs_pgio_header *hdr, int
-> sync)
-> 	return PNFS_ATTEMPTED;
-> 
-> out_failed:
-> -	if (ff_layout_avoid_mds_available_ds(lseg))
-> +	if (ff_layout_avoid_mds_available_ds(lseg) && !ds_fatal_error)
-> 		return PNFS_TRY_AGAIN;
-> 	trace_pnfs_mds_fallback_write_pagelist(hdr->inode,
-> 			hdr->args.offset, hdr->args.count,
-> @@ -1979,7 +1985,7 @@ static int ff_layout_initiate_commit(struct
-> nfs_commit_data *data, int how)
-> 	idx = calc_ds_index_from_commit(lseg, data->ds_commit_index);
-> 	mirror = FF_LAYOUT_COMP(lseg, idx);
-> 	ds = nfs4_ff_layout_prepare_ds(lseg, mirror, true);
-> -	if (!ds)
-> +	if (IS_ERR(ds))
-> 		goto out_err;
-> 
-> 	ds_clnt = nfs4_ff_find_or_create_ds_client(mirror, ds->ds_clp,
-> diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-> b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-> index 4b0cdddce6eb..11777d33a85e 100644
-> --- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-> +++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-> @@ -368,11 +368,11 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment
-> *lseg,
-> 			  struct nfs4_ff_layout_mirror *mirror,
-> 			  bool fail_return)
-> {
-> -	struct nfs4_pnfs_ds *ds = NULL;
-> +	struct nfs4_pnfs_ds *ds;
-> 	struct inode *ino = lseg->pls_layout->plh_inode;
-> 	struct nfs_server *s = NFS_SERVER(ino);
-> 	unsigned int max_payload;
-> -	int status;
-> +	int status = -EAGAIN;
-> 
-> 	if (!ff_layout_init_mirror_ds(lseg->pls_layout, mirror))
-> 		goto noconnect;
-> @@ -410,7 +410,7 @@ nfs4_ff_layout_prepare_ds(struct pnfs_layout_segment *lseg,
-> 	ff_layout_send_layouterror(lseg);
-> 	if (fail_return || !ff_layout_has_available_ds(lseg))
-> 		pnfs_error_mark_layout_for_return(ino, lseg);
-> -	ds = NULL;
-> +	ds = ERR_PTR(status);
-> out:
-> 	return ds;
-> }
-> --
-> 2.39.5
-
-------=_Part_4608780_1928269810.1756385283660
-Content-Type: application/pkcs7-signature; name=smime.p7s; smime-type=signed-data
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCAMIIH
-XzCCBUegAwIBAgIQGrSZ0tLzGu9JoeeaXGroSzANBgkqhkiG9w0BAQwFADBVMQswCQYDVQQGEwJO
-TDEZMBcGA1UEChMQR0VBTlQgVmVyZW5pZ2luZzErMCkGA1UEAxMiR0VBTlQgVENTIEF1dGhlbnRp
-Y2F0aW9uIFJTQSBDQSA0QjAeFw0yNDEyMDQwOTQzMjZaFw0yNjAxMDMwOTQzMjZaMIGpMRMwEQYK
-CZImiZPyLGQBGRMDb3JnMRYwFAYKCZImiZPyLGQBGRMGdGVyZW5hMRMwEQYKCZImiZPyLGQBGRMD
-dGNzMQswCQYDVQQGEwJERTEuMCwGA1UEChMlRGV1dHNjaGVzIEVsZWt0cm9uZW4tU3luY2hyb3Ry
-b24gREVTWTEoMCYGA1UEAwwfVGlncmFuIE1rcnRjaHlhbiB0aWdyYW5AZGVzeS5kZTCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBAKZ1aJleygPW8bRzYJ3VfXwfY2TxAF0QUuTk/6Bqu8Bi
-UQjIgmBQ1hCzz8DVdJ8saw7p5/c1JDmVHqm2DJPwXLROKACiDdSHPf+N8PFZvxHxOqFNPeO/oJhO
-jHXG1c/tL8ElfiUlMtEZYtoS60/VUz3A/4FIWP2A5s/UIOSZyCcKz3AUcAanHGEJVS8oWKQj7pNX
-yjojvX4aPHzsKP+c+c/5wq08/aziRXLCekhKk+VdS8lhlS/3AL1G0VSWKj5/pOpz4ozmv44GEw9z
-FAsPWuTcLXqCX993BOoWAyQDcygAsb0nQQMzx+4wlSGsI31/gKOE5ZOJ3SErWDswgzxWm8Xht/Kl
-ymDHPXi8P0ohQjJrQRpJXVwD/tXDwSSbWP9jnVbtqpvLLBkNrSy6elW19nkE1ObpSPcn+be5hs1P
-59Y+GPudytAQ3MOoFoNd7kxpVQoM6cdQjRHdyIDbavZrdxr33s7uqSbcI/PE8W5M0iPNnd4ip4kH
-UIOdpsjk7b7kEdO4Jf9dDrz/fduAEaW+AUTfb+G42LiftUBXkANa50nOseW3tocadYOTySufN9or
-IwvcQ/1uemVd83On7k8bWevfU159x28aidxv8liqJXrrT28tp/QxtGtDXjo9jdkWi/5d/9XfqQgN
-IT7KH42fc3ZlaL3pLuJwEQWVtFnWUTRJAgMBAAGjggHUMIIB0DAfBgNVHSMEGDAWgBQQMuoC4vzP
-6lYlVIfDmPXog9bFJDAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEF
-BQcDAgYIKwYBBQUHAwQwRQYDVR0gBD4wPDAMBgoqhkiG90wFAgIFMA0GCyqGSIb3TAUCAwMDMA0G
-CyqGSIb3TAUCAwECMA4GDCsGAQQBgcRaAgMCAjBUBgNVHR8ETTBLMEmgR6BFhkNodHRwOi8vY3Js
-LmVudGVycHJpc2Uuc2VjdGlnby5jb20vR0VBTlRUQ1NBdXRoZW50aWNhdGlvblJTQUNBNEIuY3Js
-MIGRBggrBgEFBQcBAQSBhDCBgTBPBggrBgEFBQcwAoZDaHR0cDovL2NydC5lbnRlcnByaXNlLnNl
-Y3RpZ28uY29tL0dFQU5UVENTQXV0aGVudGljYXRpb25SU0FDQTRCLmNydDAuBggrBgEFBQcwAYYi
-aHR0cDovL29jc3AuZW50ZXJwcmlzZS5zZWN0aWdvLmNvbTAjBgNVHREEHDAagRh0aWdyYW4ubWty
-dGNoeWFuQGRlc3kuZGUwHQYDVR0OBBYEFMmhx6vILo+tVVV6rojJTwL+t2eGMA0GCSqGSIb3DQEB
-DAUAA4ICAQARKKJEO1G3lIe+AA+E3pl5mNYs/+XgswX1316JYDRzBnfVweMR6IaOT7yrP+Mwhx3v
-yiM8VeSVFtfyLlV6FaHAxNFo5Z19L++g/FWWAg0Wz13aFaEm0+KEp8RkB/Mh3EbSukZxUqmWCgrx
-zmx+I5zlX8pLxNgrxcc1WW5l7Y7y2sci++W6wE/L7rgMuznqiBLw/qwnkXAeQrw2PIllAGwRqrwa
-37kPa+naT1P0HskuBFHQSmMihB5HQl6+2Rs9M5RMW3/IlUQAqkhZQGBXmiWDivjPFKXJQnCmhQmh
-76sOcSOScfzYI5xOD+ZGdBRRufkUxaXJ2G//IgkK2R8mqrFEXxBFaBMc0uMBJHKNv+FO7H6VPOe9
-BD9FwfLiqWvGwKJrF11Bk/QSfWh+zCJ8JHPAi6irwQO4Xf+0xhPsxb+jBfKK3I84YMf6zsDkdDzH
-lkNPhDh4xhYhEAk+L228pjTEmnbb2QVv52grZ0dbITuN+Hz2ypvLfaS8p06lrht45COlkmuIUVqp
-bsc3kRt610qwXSjYcc8zeCQI0Rqnnq+0UN5T0KU7JSzUho6vaTSUG57uc7b3DkIW2Z9VpXX5xKb/
-vfl++jC5JzKrbCeS+QOStpXwwaH62IUHwdfWfkvpzb8EFALEmCvu8nlT9NaqYlB/xogMH6oHBm+Y
-nxmRQxWROAAAMYIDZTCCA2ECAQEwaTBVMQswCQYDVQQGEwJOTDEZMBcGA1UEChMQR0VBTlQgVmVy
-ZW5pZ2luZzErMCkGA1UEAxMiR0VBTlQgVENTIEF1dGhlbnRpY2F0aW9uIFJTQSBDQSA0QgIQGrSZ
-0tLzGu9JoeeaXGroSzANBglghkgBZQMEAgEFAKCBzjAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
-MBwGCSqGSIb3DQEJBTEPFw0yNTA4MjgxMjQ4MDRaMC0GCSqGSIb3DQEJNDEgMB4wDQYJYIZIAWUD
-BAIBBQChDQYJKoZIhvcNAQELBQAwLwYJKoZIhvcNAQkEMSIEINZCD2mmSaO/R3BB29hsiRjsJp9z
-ALPLHP01zrK2xxZcMDQGCSqGSIb3DQEJDzEnMCUwCgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCA
-MAcGBSsOAwIHMA0GCSqGSIb3DQEBCwUABIICAA2r7Wj2atsN7kbp6ffNwzA4JOo9F+ifcN6FQVSo
-RTbGaqOabAPHhkCmCMwyyHFhyEEYqoh07Kc47gntk7Mi/ci9X0YTZfJ4VXn3TPOSaTy4HThVewQ+
-yQPvAOqsQx1o0MX6a3V2ybrdg3k5V96XklknqRakHrnFwgDpG119ruBX5CV9qa2q+qIs2PeKgOxE
-KboB0IRMTfojYatPYyap0/Y/aUFsGhA+d2OL1zlw8ozZvKPmZm+ShmBH8eJdZGy0U43ugi9Iseze
-dvYlwDsLq2uCPtnMtlYPxdwWSLMN2eJr7B/RRpuS5AbOps/A1Yz4yXKW5KlfFUobO11WoPUd5c9v
-2oKBLPv8usSyHzAJTCRuVCwNAQ+07/T9yYM+RO3trRBN8R894P0npf09cAxr/60KItl89cOmCr+Z
-jYkPdUljV6DbOggmwfp7kVz1sMud6vYypOggvvAGlb0VJ2woAvZuM7FCRAFbh5p1w2Y8vfUZyWsn
-/K6KSHUHHBuDFpz1SP7SwGZLugwHL4nqhRcvG+iOqRlAbVxuxsLTAPdzZbkXC8AUg5KLAvomNrwP
-+B10bwboWo/U1R1VGUAeJZkiiMUGx2yOOaC5no/PuBHH4o+fnoIXIGe+URGSVu8WccItmP04StiS
-8Pjc26wjEJtIUbt2DpmhqUyi7DmznAsvfKZIAAAAAAAA
-------=_Part_4608780_1928269810.1756385283660--
+Jason
