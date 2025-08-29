@@ -1,100 +1,104 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142857404E
-	for <patches@lists.linux.dev>; Fri, 29 Aug 2025 06:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0293375B1;
+	Fri, 29 Aug 2025 17:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756448540; cv=none; b=SLXh4lTVK7sdN0bpA6gDoCUDTA7ZTKImMR0Tnd5C2YHmRjN0Vy5z0nN2MXeeH6svwRUveQouEl7IaR9JFp5pN2MXHm2N7B/+qDQ0b5oUBL+1oTGhzo33gW3i+zE3uIuh9N7zAHh45gJuBsJWyWrNb1V4DbB1OwfdB6akSQlW5do=
+	t=1756487308; cv=none; b=W1t4iQZ3bM+Cs117JMSNHc9kYojjBtZdnwcx9uX9gga1624bdKnp7h+KKImZCphCP5NDj6ObDXzmKqwBri5tFgwQQ2c/6uFWyEFkzynIE514z2cV8l4z6AVPmVL6eSrkbDQh2nAP+MBtSYN6IaVYi1cC1j1bP31E8vpOQaDxrgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756448540; c=relaxed/simple;
-	bh=4gCFEIfkrKrA1+mEzotv5zc6YOWP+rTyFVajfyvuIi0=;
+	s=arc-20240116; t=1756487308; c=relaxed/simple;
+	bh=SIIL7tfbe1Qypqdr/Gnur9FsUbBj729FigkstAdP5m4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sd27zaRiBQnDGFZk70HHNPxb+REm40KLsbdUy9Xa4dvrTZZfVyhvhWqBra696Zn9bLbYSlPKm/rMl2V5R7iimiO1Vepg2KdFcpN2pnsQhjsFlwz7NcYUD6NGEyhdJcQPI642BNEtuuOuhkrWnk3LIF+0jZjlT93GFa3VfX+6n9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=ABbewqVE; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="ABbewqVE"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id EE3DC1038C106;
-	Fri, 29 Aug 2025 08:22:13 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1756448536; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=+4kbNWU3I7s5Rt2E7e4PezX57PUPBa3x3YJEDebywiY=;
-	b=ABbewqVE3twDU0JiaIK/fdpx9rDf2VkSKxp54WrITS0NtPctVUXz843ijtaBhOuSDat8YX
-	9dtVSsDIJ0sWVTBPYalS2JLPk3WVgVWLkzCzXaKC/Vqa/vsJsauOAZ6Kc5oX+KC1eZyWAg
-	ZEr2a87/6cxixpeB0NlKNN2Ejd4k7ENoiHpOahfkK7a8drznC5YISTAioFk43VuZmEXQuu
-	7gz1lywzqG2F9mxFpfbDEXRYU1cCj5WrmvxC5p7ipNn7jSQN3cDPBhC9il0DSYPjBloS42
-	vX2OMzaea9o5A+Bn1lVXsIOczIPRHoT4Raen7+m7lvn+CYbP8O3LzHwlb+/aUw==
-Date: Fri, 29 Aug 2025 08:22:10 +0200
-From: Pavel Machek <pavel@denx.de>
+	 Content-Type:Content-Disposition:In-Reply-To; b=tCuM5xER1B61JY+En9ooTH4kDioRIrtS7yCPxTJnJMqAh89feVp8JdpIfEQQ0abWUdW3OYf9ovrhvn6ecjRiWRNzUoSgjH0NuGYYmjR/7W0RYAecvwQH8rX7GPRAtfaWmBQ4IM8WXC7KjaexWK4C4OdVBlo+681aiSXZxpCHK60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+Date: Fri, 29 Aug 2025 17:08:03 +0000
+From: Brett Sheffield <bacs@librecast.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
 	achill@achill.org
-Subject: Re: [PATCH 6.16 000/457] 6.16.4-rc1 review
-Message-ID: <aLFHEtRqvj4vzfpz@duo.ucw.cz>
-References: <20250826110937.289866482@linuxfoundation.org>
+Subject: Re: [PATCH 6.6 000/587] 6.6.103-rc1 review
+Message-ID: <aLHecwEL3r7lrw2e@auntie>
+References: <20250826110952.942403671@linuxfoundation.org>
+ <aK2rwEQ5hdOQSlLq@auntie>
+ <2025082620-humorous-stinky-bf0e@gregkh>
+ <aK3Lj1OouiUqskLh@karahi.gladserv.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ITu0OCEWvQWhf7Nb"
-Content-Disposition: inline
-In-Reply-To: <20250826110937.289866482@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
-
-
---ITu0OCEWvQWhf7Nb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <aK3Lj1OouiUqskLh@karahi.gladserv.com>
 
-Hi!
+On 2025-08-26 16:58, Brett Sheffield wrote:
+> On 2025-08-26 14:50, Greg Kroah-Hartman wrote:
+> > On Tue, Aug 26, 2025 at 12:42:40PM +0000, Brett A C Sheffield wrote:
+> > > Hi Greg,
+> > > 
+> > > On 2025-08-26 13:02, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 6.6.103 release.
+> > > > There are 587 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Thu, 28 Aug 2025 11:08:24 +0000.
+> > > > Anything received after that time might be too late.
+> > > 
+> > > Quick query - should we be backporting a known regression, even if it is in
+> > > mainline presently, or do we wait until the fix is applied to mainline and
+> > > *then* backport both patches?
+> > > 
+> > > 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
+> > > 
+> > > introduces a regression which breaks IPv4 broadcast, which stops WOL working
+> > > (breaking my CI system), among other things:
+> > > 
+> > > https://lore.kernel.org/regressions/20250822165231.4353-4-bacs@librecast.net
+> > > 
+> > > This regression has *already* been backported to:
+> > > 
+> > > - 6.16.3
+> > > - 6.12.43
+> > > 
+> > > so I guess we wait for a fix for these.
+> > > 
+> > > However, it is not yet present in the other stable kernels.  The new stable
+> > > release candidates today would spread the breakage to:
+> > > 
+> > > - 6.6.y
+> > > - 6.1.y
+> > > - 5.15.y
+> > > - 5.10.y
+> > > 
+> > > Do we revert this patch in today's RCs for now, or keep it for full
+> > > compatibility with mainline bugliness?
+> > 
+> > Is the fix in linux-next yet?  If it's there, I can queue it up
+> > everywhere, which might be best.
+> 
+> Not yet, but I'll let you know as soon as it is.  I'd suggest dropping
+> 9e30ecf23b1b from 6.6.y 6.1.y 5.15.y 5.10.y and 5.4.y until the fix is
+> available.
 
-> This is the start of the stable review cycle for the 6.16.4 release.
-> There are 457 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Greg,
 
-CIP testing did not find any problems here:
+The fix has hit Linus' tree now with commit:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.16.y
+5189446ba995 ("net: ipv4: fix regression in local-broadcast routes")
 
-6.6, 6.15, 5.15 pass our testing, too:
+This needs to be applied to all stable trees.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.15.y
+Cheers,
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---ITu0OCEWvQWhf7Nb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaLFHEgAKCRAw5/Bqldv6
-8onRAKCLxziG4eJ1UUFqYtKsD8eDvAIPHACeKqlrw6gWzUx3GKLmP07b0aGGoIs=
-=Xb9s
------END PGP SIGNATURE-----
-
---ITu0OCEWvQWhf7Nb--
+Brett
