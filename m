@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5053E241674;
-	Fri, 29 Aug 2025 19:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDB9239E9E;
+	Fri, 29 Aug 2025 19:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756495388; cv=none; b=AXoNJ6XSgIoM+d04vNgA5iuaicbKN0WvhdoMrHh4I5aTMnYDDDzva7S5Ecllet1anOqOlhaG7/lN7qGxLLbrh65B2nsm75yNvo7lljCmIGJzvNdnLSNmk0+5GDR3IbUxZdEnLuHSSlEd33lPjwxRKgCYXMtrKfvH7Dx9UyEgRkQ=
+	t=1756495392; cv=none; b=pBAaIP7rjyAZV9+H50jnGloLighpozw4Oj0MBGh966DLNxqrDanskwO4dirXSb1p/P/leMYEutSTmB9FzzH4QEhCRn5Z9fL0+P9YUyADR+3TVrkz0lf3ptT/Xa+CZFxi3Oc1FeqQvPJ9zJl/33IHZgQiylARBR6OZcFliL20wbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756495388; c=relaxed/simple;
-	bh=nGhud1S2ik/vjCeVwqLM0vCxAkmpQiP1560oLzqcxgs=;
+	s=arc-20240116; t=1756495392; c=relaxed/simple;
+	bh=mIhxfi8PIu+hlogvO+xLc5ASjZ3oFz+evVdeTWUt5c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1MzUcDy8CiVE9eIqjyc6T2yVjGjFO7JTE8rou5a43WubOfxLbyzTSjMIBkTGECNjYIJOGSlbBhm4ZCbWzyCxer6GkSxxB9K422bXFDtE2DMpZWY5DhbToDuRwMWa9ZRyv8gAXRVMAtw5oRJxT87cXSzqBaiiU38RbbXAWn1i4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eVdefEZd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHQ8F70xwBScuwdvMxWoYRfnhDiykpbuY14MH4v3VJ84LfHQkEWllx4HLP1TeTvTHUiaQHtY/JlXYZEUC3pBOd1DDRt/plcaAKoX6NpIbKE90KOa+C5YPv3dLuLYehGgE2G1VcG/4HQGhhbLXXxxTmFwpGvGTDW5BroO24se1/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YiCflnW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eVdefEZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB88C4CEF1;
-	Fri, 29 Aug 2025 19:23:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YiCflnW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577A2C4CEF7;
+	Fri, 29 Aug 2025 19:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756495387;
-	bh=nGhud1S2ik/vjCeVwqLM0vCxAkmpQiP1560oLzqcxgs=;
+	s=k20201202; t=1756495391;
+	bh=mIhxfi8PIu+hlogvO+xLc5ASjZ3oFz+evVdeTWUt5c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVdefEZdr4MIirVprvNowlcZIFOjUD67q4gzDoN44GjGncFd+p+zT9W5QkGacuL/1
-	 /tVFZ3AIyhyQHtsgJK2aZKB79oL89PvzNUvbkBphfNMoHwMY1jkQHgLglmeHIgKJny
-	 Z6yUTQuzzYDr9SBhVmlOI8jPsCfY0XNq7skMHk0aKmgJfVCoXY/YaTs8+cL5vqEfXI
-	 ABWbpviWTC3MvdyZhopa3pOkoMvWmE+DVOWiSysH1DSKcEhL1bskUfMDyj6KDun4XF
-	 blqg6TJaE1TyRWCjCfnOK4+str4BVKTKlfuj/cK9S6gWE+gHapKopNEIiI9FUvt6GU
-	 xINHs8U8qZgZA==
+	b=YiCflnW345EnnvmzDb7BWqZX4icGW8gvaYs6tUBIo1p7+oGdXOxByVnw+Zkvs/wZv
+	 vbpWptxBruz1RKvNkxmkWusr2Nmo4lbSEpIQZhknxBwAt9jyLI494fSWwNEvzwBcYe
+	 P9dTMIm2YfDjV6PSL7oz3njMKSeH0MYNaF3rHh33fVskMkVCMYmSU+FPinn17gKNlM
+	 8Sae57XBAXzbqUMBzA6u7M4sSiHVhAFNwoIt9Km4l4fe6dVCd+hhC44/K7xzdVhJe+
+	 EtLfIKGPdqi4phi167rhRsFmpcO+586SCwzwVbsQOnJ6DGwlPlEoM6Dh6CG9q7Z/AL
+	 w2n5Is3cORcaw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -39,10 +39,11 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 2/3] rust: error: improve `to_result` documentation
-Date: Fri, 29 Aug 2025 21:22:42 +0200
-Message-ID: <20250829192243.678079-3-ojeda@kernel.org>
+	patches@lists.linux.dev,
+	Greg KH <gregkh@linuxfoundation.org>
+Subject: [PATCH 3/3] rust: error: replace `WARN_ON_ONCE` comment with `debug_assert!`
+Date: Fri, 29 Aug 2025 21:22:43 +0200
+Message-ID: <20250829192243.678079-4-ojeda@kernel.org>
 In-Reply-To: <20250829192243.678079-1-ojeda@kernel.org>
 References: <20250829192243.678079-1-ojeda@kernel.org>
 Precedence: bulk
@@ -53,66 +54,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Core functions like `to_result` should have good documentation.
+`warn_on!` support landed recently, and we had a very old comment
+about using it when supported to catch invalid inputs passed to
+`Error::from_errno`.
 
-Thus improve it, including adding an example of how to perform early
-returns with it.
+However, the kernel policy is that reaching a `WARN_ON` by user
+interactions is a CVE, e.g. [1].
 
+Since `from_errno` and other functions that use it such as `to_result`
+will be used everywhere, sooner or later a caller may pass an invalid
+value due to a user interaction.
+
+Thus, instead, use a debug assertion -- this assumes hitting one of them
+is not going to be considered a CVE (which requires
+`CONFIG_RUST_DEBUG_ASSERTIONS=y`).
+
+We don't want to potentially panic when testing the examples, thus
+convert those to a build-test.
+
+Cc: Greg KH <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/2024092340-renovate-cornflake-4b5e@gregkh/ [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- rust/kernel/error.rs | 39 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 37 insertions(+), 2 deletions(-)
+ rust/kernel/error.rs | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
-index c415c3d3a3b6..1ebdb798fd5d 100644
+index 1ebdb798fd5d..7b9892a46505 100644
 --- a/rust/kernel/error.rs
 +++ b/rust/kernel/error.rs
-@@ -390,8 +390,43 @@ fn from(e: core::convert::Infallible) -> Error {
- /// [Rust documentation]: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
- pub type Result<T = (), E = Error> = core::result::Result<T, E>;
- 
--/// Converts an integer as returned by a C kernel function to an error if it's negative, and
--/// `Ok(())` otherwise.
-+/// Converts an integer as returned by a C kernel function to a [`Result`].
-+///
-+/// If the integer is negative, an [`Err`] with an [`Error`] as given by [`Error::from_errno`] is
-+/// returned. This means the integer must be `>= -MAX_ERRNO`.
-+///
-+/// Otherwise, it returns [`Ok`].
-+///
-+/// It is a bug to pass an out-of-range negative integer. `Err(EINVAL)` is returned in such a case.
-+///
-+/// # Examples
-+///
-+/// This function may be used to easily perform early returns with the [`?`] operator when working
-+/// with C APIs within Rust abstractions:
-+///
-+/// ```
-+/// # use kernel::error::to_result;
-+/// # mod bindings {
-+/// #     #![expect(clippy::missing_safety_doc)]
-+/// #     use kernel::prelude::*;
-+/// #     pub(super) unsafe fn f1() -> c_int { 0 }
-+/// #     pub(super) unsafe fn f2() -> c_int { EINVAL.to_errno() }
-+/// # }
-+/// fn f() -> Result {
-+///     // SAFETY: ...
-+///     to_result(unsafe { bindings::f1() })?;
-+///
-+///     // SAFETY: ...
-+///     to_result(unsafe { bindings::f2() })?;
-+///
-+///     // ...
-+///
-+///     Ok(())
-+/// }
-+/// # assert_eq!(f(), Err(EINVAL));
-+/// ```
-+///
-+/// [`?`]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
- pub fn to_result(err: crate::ffi::c_int) -> Result {
-     if err < 0 {
-         Err(Error::from_errno(err))
+@@ -115,18 +115,20 @@ impl Error {
+     /// The following calls are considered a bug:
+     ///
+     /// ```
++    /// # fn no_run() {
+     /// assert_eq!(Error::from_errno(0), EINVAL);
+     /// assert_eq!(Error::from_errno(-1000000), EINVAL);
++    /// # }
+     /// ```
+     pub fn from_errno(errno: crate::ffi::c_int) -> Error {
+         if let Some(error) = Self::try_from_errno(errno) {
+             error
+         } else {
+-            // TODO: Make it a `WARN_ONCE` once available.
+             crate::pr_warn!(
+                 "attempted to create `Error` with out of range `errno`: {}\n",
+                 errno
+             );
++            debug_assert!(false);
+             code::EINVAL
+         }
+     }
 -- 
 2.51.0
 
