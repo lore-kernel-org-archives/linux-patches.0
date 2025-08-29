@@ -1,216 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19288242D84
-	for <patches@lists.linux.dev>; Fri, 29 Aug 2025 19:34:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF901DFE26
+	for <patches@lists.linux.dev>; Fri, 29 Aug 2025 19:43:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756496057; cv=none; b=NzPr4IRaiW/95FA3LQMn+tNLsquCpIukXqxPpiCc5aPk6l/H6xlOX2o6OorMDJ2DGQaTqKKt00uvOnp/P8dlrOvSpgk+XZB/tFKoiowllCNolVk15Zv45nChpAJv0XRFk2smAP65IMuSjQ79dzUvVNM5Y3nFz+yUUXw1A5lzygw=
+	t=1756496619; cv=none; b=IJjDGhmMvoQRwARGYpC817cMwQmQuaCP2vJLJtI8TwQlLMnBar2B2hKqS+tp5sYisvlL2fyrA4Y8iAwMgPRc8P7vno3747OozFOVlJ8du0DtqfiBF20z5+MHq0tkirWuyMJUfjJgKp4AsuEZmskCAmTbxG1GNxp40QFePbAUFSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756496057; c=relaxed/simple;
-	bh=zH8x13Si8Yt26D26LIpJslO/XLlS8cnq4VGztV5gLSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGkexPbJdLd7bGXMnVyplHC+po0ttJqASKtYtu6I892IzjtrIYfSAybmSoR0Ysz5H5IIxupJtOuGilsmUas546Zimb2iH6bN9XavWtx13DWQCYqlttLImEq8whWSYCxXqQdXymGp1GwndpSuLMsF+M2+kkoWIpqZ1RUsv0WqyjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iBvxE2zR; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1756496619; c=relaxed/simple;
+	bh=4nRNZ/OwQos6PIKG2HVphry94ftYsfgFC/siNRlqeIw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rFopohoC0g5eQzEBkG+N8XUBwFs6TXW4UtDKMDyK2mCzGTQZHlG3W450uFBnzBTjMZdJDCrfHZas/tl6fnacwfGtXSumD0db/QPg8cif0b9jom476LxpTZn2b9Mvob5aGQnDEsnn8T9njM2trc1bZQsCoG0F5amzgUU+N6HLC1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c+44fRl3; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iBvxE2zR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1756496055; x=1788032055;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=zH8x13Si8Yt26D26LIpJslO/XLlS8cnq4VGztV5gLSc=;
-  b=iBvxE2zRw5z4xGe67Sw0HnL+JcUSXOp+Fq00fmENUl0RYXJzpZ5B4QGV
-   BavJCDFrol0h5nOkZjycmizlHKtQ24nymNBwj4kJrc/7lfSrAHq/SL2zs
-   Bp1ZRAdOoXgmboZ8CCJdCriqibAB3KmqoExeSbcKbaIwU/P2jBKYJ9gUk
-   FrkXkCSQaMhiGwmkCSpIYvOKimcEm+h+hxfmomZsURlWI3Op17voC6HbF
-   nVv6YhverjLZIAy8YnfN4c1AlXASQcudBFNMJw73xA1ce93KWU1/dXl8Q
-   E12uDBvCSwlUrEqWXaMXSlSE+Y2OzHzUo3kDIJUsSnpRmMqEXNOfGOjUW
-   w==;
-X-CSE-ConnectionGUID: G/xYbFm1RoOuSfvdC5XYjQ==
-X-CSE-MsgGUID: bTz8AFV9Sliu/Q4f25TSKw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="62625395"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="62625395"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2025 12:33:57 -0700
-X-CSE-ConnectionGUID: WmdEO+lgT4q+PvsXcrdEEg==
-X-CSE-MsgGUID: LIYzV1jVSam4d5NJlA7OZg==
-X-ExtLoop1: 1
-Received: from ldmartin-desk2.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.202])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2025 12:33:57 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v9 31/31] x86,fs/resctrl: Update Documentation for package events
-Date: Fri, 29 Aug 2025 12:33:43 -0700
-Message-ID: <20250829193346.31565-32-tony.luck@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250829193346.31565-1-tony.luck@intel.com>
-References: <20250829193346.31565-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c+44fRl3"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-24914277174so1654525ad.2
+        for <patches@lists.linux.dev>; Fri, 29 Aug 2025 12:43:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756496617; x=1757101417; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4nRNZ/OwQos6PIKG2HVphry94ftYsfgFC/siNRlqeIw=;
+        b=c+44fRl39dlWVvKrKYqfFfvsx2O1kGz+bbXYb22t2N4mVAnbnnBiZAy/n+2rAzypom
+         3lqP3QTwp0tISuFVMUVShWEiOvl1a+Vh9LQ+3c0JS3bC3aUe6dmKAOIzEThXiA1h5st0
+         zyDrxpL6FGBLPTIGLeNVxUS01mE5+iLQBqlKk5eUegM8OMDOYWjmEukyafsGZcaGPR3N
+         rTXeHIHB9w70+eddqiGPcMaG/yvrUBeF02vYNn7OEtxcjY3ugl7qm8WV67uodPjO3YCK
+         Sub6e45NZeQRR5cnNaB0rAJQZYA93pJyEhGLVcPR4rTEjj3jOpzRrTI+IxPaOb75Y39t
+         qoUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756496617; x=1757101417;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4nRNZ/OwQos6PIKG2HVphry94ftYsfgFC/siNRlqeIw=;
+        b=oX5dcUVeHLTZ/wXbqIXeTburV0vg0Z5AxMqQBWxORNAjMTS9nt/+AMT291AxZrzFN3
+         Hx2YPePrlzyH6WAduOi58TTpcOV1eluzmHlYrnQ33iq5ybCeNTQ68wSY1B1guWbjm/eX
+         MlUshyMFOw7E970eJJKPem8MC1zFVyDneu2fva25ZbW1vOBzRCF1RDO+AsS1j0Lnr7jH
+         hB9Cx2037NHQym4kOiJctlUdObMudy2kUiZk/Bjko+qvY4WN1GcDN9mZtezx+4Ke8h0H
+         Ocy9KVh5NZrKsmSs6/bEbawO+J3r2D8YreA3ohSeM68m+qS4b9s79+6K8GFbkzB+B3MJ
+         lPug==
+X-Forwarded-Encrypted: i=1; AJvYcCWbzoZ8It++5Y1odiL7DCVzmtebw3LAX6lZLxvwgcSkmXvfimj240BubVC2+Mdt95Wa+7ESWgxd@lists.linux.dev
+X-Gm-Message-State: AOJu0YyGML/OtoHjb+PaOVMKY23REXo/RwSx/wEAjE1hKHxr6atxuRNM
+	qmWcFEsTzT9lrGJPfPG8zUPfQAAp7sQV79wLtcGlj4uvrrogdQu5xM+zRHWLqnUt9iVfvjVTSGx
+	xDLXEKCyM45DvZk5jFYeD9jDa18p7Bf0=
+X-Gm-Gg: ASbGncs+3ZehWe0E6FglR6eSuUkTze33LKXUJzldOdL0ESREekblyKh1gDezl1qNX/N
+	kw+dO1/OyBzK3eSVZSte7KRIGfb75rDtcf0i3dvcMTfKaMMrrax6/HLRcRrltrUkOiztXBcEOCw
+	ATD/8riQE3MrIBVuqAq/A3PM9CsEoByc0iQeGEKUio65xPm+prJrGujk1ATrpEO0UsHHvx/aZ+w
+	U9iYtManvreFCPUpt4EZ3ebsVokqJ50nKcK0OyT5O7h6/ORazofjaxdlKP5TPhreGEFl0EnxXZF
+	housDE5rIoQqoqNYperzbIDt5w==
+X-Google-Smtp-Source: AGHT+IFWZb4xaY7v5s0ylSP5ELEMnxzQujAXKzF//SpCqMfVGSq+8gvW+Xpth3BkeD9kVV8HxQDYlRSXEcjPedhBXTw=
+X-Received: by 2002:a17:903:1c7:b0:240:8717:e393 with SMTP id
+ d9443c01a7336-2490f7591bdmr25798105ad.5.1756496617089; Fri, 29 Aug 2025
+ 12:43:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250829192243.678079-1-ojeda@kernel.org> <20250829192243.678079-4-ojeda@kernel.org>
+In-Reply-To: <20250829192243.678079-4-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Fri, 29 Aug 2025 21:43:24 +0200
+X-Gm-Features: Ac12FXxdaqCu4yJ1IdyQ22odRNAFIeLXOSCLMds7lUVCV-3Ct83AvKEf6yXHQx4
+Message-ID: <CANiq72k7_GbFwRxW5vikF_SpiNcNm7Ff0oe6jyYX_voDg92QFA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rust: error: replace `WARN_ON_ONCE` comment with `debug_assert!`
+To: Miguel Ojeda <ojeda@kernel.org>, Greg KH <gregkh@linuxfoundation.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Update resctrl filesystem documentation with the details about the
-resctrl files that support telemetry events.
+On Fri, Aug 29, 2025 at 9:23=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Thus, instead, use a debug assertion -- this assumes hitting one of them
+> is not going to be considered a CVE (which requires
+> `CONFIG_RUST_DEBUG_ASSERTIONS=3Dy`).
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/filesystems/resctrl.rst | 99 +++++++++++++++++++++++----
- 1 file changed, 86 insertions(+), 13 deletions(-)
+Greg: RFC on this -- this is the usual conundrum around `WARN`. I
+would like to have an assertion or `WARN`-like entity for developers
+that doesn't imply CVEs when hit by user interactions. More generally,
+to know that such a config option is OK as long as it is labeled
+clearly a debug one like this one (we can document the CVE bit
+explicitly if needed).
 
-diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
-index c7949dd44f2f..7ee2832a3aa6 100644
---- a/Documentation/filesystems/resctrl.rst
-+++ b/Documentation/filesystems/resctrl.rst
-@@ -167,13 +167,12 @@ with respect to allocation:
- 			bandwidth percentages are directly applied to
- 			the threads running on the core
- 
--If RDT monitoring is available there will be an "L3_MON" directory
-+If L3 monitoring is available there will be an "L3_MON" directory
- with the following files:
- 
- "num_rmids":
--		The number of RMIDs available. This is the
--		upper bound for how many "CTRL_MON" + "MON"
--		groups can be created.
-+		The number of RMIDs supported by hardware for
-+		L3 monitoring events.
- 
- "mon_features":
- 		Lists the monitoring events if
-@@ -261,6 +260,19 @@ with the following files:
- 		bytes) at which a previously used LLC_occupancy
- 		counter can be considered for re-use.
- 
-+If telemetry monitoring is available there will be an "PERF_PKG_MON" directory
-+with the following files:
-+
-+"num_rmids":
-+		The number of RMIDs supported by hardware for
-+		telemetry monitoring events.
-+
-+"mon_features":
-+		Lists the telemetry monitoring events that are enabled on this system.
-+
-+The upper bound for how many "CTRL_MON" + "MON" can be created
-+is the smaller of the "num_rmids" values.
-+
- Finally, in the top level of the "info" directory there is a file
- named "last_cmd_status". This is reset with every "command" issued
- via the file system (making new directories or writing to any of the
-@@ -366,15 +378,38 @@ When control is enabled all CTRL_MON groups will also contain:
- When monitoring is enabled all MON groups will also contain:
- 
- "mon_data":
--	This contains a set of files organized by L3 domain and by
--	RDT event. E.g. on a system with two L3 domains there will
--	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
--	directories have one file per event (e.g. "llc_occupancy",
--	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
--	files provide a read out of the current value of the event for
--	all tasks in the group. In CTRL_MON groups these files provide
--	the sum for all tasks in the CTRL_MON group and all tasks in
--	MON groups. Please see example section for more details on usage.
-+	This contains a set of directories, one for each instance
-+	of an L3 cache, another for each processor package. The L3 cache
-+	directories are named "mon_L3_00", "mon_L3_01" etc. The
-+	package directories "mon_PERF_PKG_00", "mon_PERF_PKG_01" etc.
-+
-+	Within each directory there is one file per event. For
-+	example the L3 directories may contain "llc_occupancy", "mbm_total_bytes",
-+	and "mbm_local_bytes". The PERF_PKG directories may contain "core_energy",
-+	"activity", etc.
-+
-+	"core energy" reports a floating point number for the energy (in Joules)
-+	consumed by cores (registers, arithmetic units, TLB and L1/L2 caches)
-+	during execution of instructions summed across all logical CPUs on a
-+	package for the current RMID.
-+
-+	"activity" also reports a floating point value (in Farads).
-+	This provides an estimate of work done independent of the
-+	frequency that the CPUs used for execution.
-+
-+	Note that these two counters only measure energy/activity
-+	in the "core" of the CPU (arithmetic units, TLB, L1 and L2
-+	caches, etc.). They do not include L3 cache, memory, I/O
-+	devices etc.
-+
-+	All other events report decimal integer values.
-+
-+	In a MON group these files provide a read out of the current
-+	value of the event for all tasks in the group. In CTRL_MON groups
-+	these files provide the sum for all tasks in the CTRL_MON group
-+	and all tasks in MON groups. Please see example section for more
-+	details on usage.
-+
- 	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
- 	directories for each node (located within the "mon_L3_XX" directory
- 	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
-@@ -1300,6 +1335,44 @@ Example with C::
-     resctrl_release_lock(fd);
-   }
- 
-+Debugfs
-+=======
-+In addition to the use of debugfs for tracing of pseudo-locking
-+performance, architecture code may create debugfs directories
-+associated with monitoring features for a specific resource.
-+
-+The full pathname for these is in the form:
-+
-+    /sys/kernel/debug/resctrl/info/{resource_name}_MON/{arch}/
-+
-+The presence, names, and format of these files will vary
-+between architectures even if the same resource is present.
-+
-+PERF_PKG_MON/x86_64
-+-------------------
-+Three files are present per telemetry aggregator instance
-+that show when and how often the hardware has failed to
-+collect and accumulate data from the CPUs. The prefix of
-+each file name describes the type ("energy" or "perf") which
-+processor package it belongs to, and the instance number of
-+the aggregator. For example: "energy_pkg1_agg2".
-+
-+The suffix describes which data is reported in the file and
-+is one of:
-+
-+data_loss_count:
-+	This counts the number of times that this aggregator
-+	failed to accumulate a counter value supplied by a CPU.
-+
-+data_loss_timestamp:
-+	This is a "timestamp" from a free running 25MHz uncore
-+	timer indicating when the most recent data loss occurred.
-+
-+last_update_timestamp:
-+	Another 25MHz timestamp indicating when the
-+	most recent counter update was successfully applied.
-+
-+
- Examples for RDT Monitoring along with allocation usage
- =======================================================
- Reading monitored data
--- 
-2.50.1
+Thanks!
 
+Cheers,
+Miguel
