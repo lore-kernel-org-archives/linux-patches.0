@@ -1,102 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D497224676A;
-	Fri, 29 Aug 2025 19:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0222B2A1AA;
+	Fri, 29 Aug 2025 22:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756497336; cv=none; b=r8WBY5pIzTPJu19/dBgwiGk8iyDRbZcEJ8EbSoKV01EeHa+Xja3cI7XXt460gfMqF85qZdAnttYM0cCzVJxQQ/zCRxGkcIewn86LFOXQ107NPWJZxw98s+rOlTgFd4y0RfIdclxt5rMEtWFBKnxe2qFuN9gE2qKbXX3+7Bm8ly8=
+	t=1756506832; cv=none; b=vCSXcb3tONzlxX8lGWE4RfH9MzadJKSKN8KpuOzRbxRM4xyGxCWkBAMMYD8xWpkpBmMqSRZL9ZhsUysqOaKMArGu8gFK5AhEcZDdOitMjjhT4LB86ZCX9wu29wVzR3XdMR2zdi/4AfwvgMJjzKfFpCks03mrdUmUedM0Sq9Ic/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756497336; c=relaxed/simple;
-	bh=itlVCGisz6iB2X01ClCKsCQncrsTeK3qSEMOx++ZN8U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ChM9Iq/2lyxWjrwh58fjbaXrWwaNoBb5e1uEfwbg2HqCETsb2gi2llIHb4w2fPE9IvrDl4XmgPZesdIdjp36064SkqqBrG8y1iW7BFvwR5BpFSN1bbn0oof9RaYVlJuMICmvNv3AEVbV4fj/rqdwXJN+2vPIysm6yC4lbl0EQ40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SeM6Qfdx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756506832; c=relaxed/simple;
+	bh=gW3UREhITNbhZNhXVhy/1JzS54isi8alO3SClI/0N4U=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=OR0jCuckKwC+/om4uA/xqjZIFiQDrlbyj1/B/fyWYk66So9zIi3gPnpxjGBQ5q9F9OZ1dggmD+qSIwnQt+CvaqDHdc6a0WjvqigEHzNyxR4RyfnYRyVXdRgGw/7AM0x5fYkwtzbEinlCHb8s/I4LZ2Lu3AylE0Mz2ZRAfKgc6qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CeI1Uyyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SeM6Qfdx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72443C4CEF0;
-	Fri, 29 Aug 2025 19:55:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CeI1Uyyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5459DC4CEF0;
+	Fri, 29 Aug 2025 22:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756497336;
-	bh=itlVCGisz6iB2X01ClCKsCQncrsTeK3qSEMOx++ZN8U=;
-	h=From:To:Cc:Subject:Date:From;
-	b=SeM6QfdxqgMW0X3my7juosJyc+L8arDghwWPS5PzGFL7NvMeIzjuG3bpg8hKujgqR
-	 1fzNkcVuqR4gJZMpVTgKJWT/E1diNT67B2mFse4q2pr2RSv3vmg+Od66+pr7AXaOz6
-	 b9g57sbhFOd/LbffwlxuKfbeHP7uuTwg5P3lMJrX3WfVrItNiqfHX4aasvaQCOooAJ
-	 +NbJ8Li0ulzVS9eqwIE1d+a5vhVc9H0YikIwwVayd4MTUdwECuTQLkHbWOPflgJh5l
-	 1xxwkBtGHFncKRnNV69qXYQ5PWufMGnazsLun3CItFe0U/n6K+PIgHBHntleoa1HBW
-	 //FdAyoqfoyKg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Waffle Maybe <waffle.lapkin@gmail.com>
-Subject: [PATCH] rust: support Rust >= 1.91.0 target spec
-Date: Fri, 29 Aug 2025 21:55:25 +0200
-Message-ID: <20250829195525.721664-1-ojeda@kernel.org>
+	s=k20201202; t=1756506831;
+	bh=gW3UREhITNbhZNhXVhy/1JzS54isi8alO3SClI/0N4U=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=CeI1UyywLphq6rbxihW3K12s6RgLJ57FMTz4eKtrVBaIOZQlRF5Mw5MGN9VZqsyUF
+	 ws1VVPK2A9Aphpeu08IZ+PBsvH/hZxYQZ/E8LlLJ2UoQZh6ZiWU7Ee+Bxfnwgu4wDN
+	 qm+ussMtaWLdi83SF8aT0+Btb7yjNB9Ygip41cIO0PmgxXzADx6IHAKLQjnLPLfqj2
+	 5eqSmq9NNuwF0+wjF3Nc60azb8fAUFVptz94yF9f9Xn6OeJKPvhEVPRSVPcQIiH9ig
+	 389Jr83bSdXVSFqVbGJ4RM5keAw6x2twpNgOifIA2xME7cb4HiY+r6PWu/R5+ICtHu
+	 LsNzjw1Q4Twaw==
+From: Nathan Chancellor <nathan@kernel.org>
+To: linux-kernel@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>, 
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nicolas Schier <nsc@kernel.org>, linux-kbuild@vger.kernel.org, 
+ linux-hardening@vger.kernel.org, Russell King <linux@armlinux.org.uk>, 
+ Ard Biesheuvel <ardb@kernel.org>, linux-arm-kernel@lists.infradead.org, 
+ Will Deacon <will@kernel.org>, 
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org, 
+ Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Christophe Leroy <christophe.leroy@csgroup.eu>, 
+ linuxppc-dev@lists.ozlabs.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
+ Marco Elver <elver@google.com>, 
+ "Peter Zijlstra (Intel)" <peterz@infraded.org>, kasan-dev@googlegroups.com
+In-Reply-To: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
+References: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
+Subject: Re: [PATCH v2 00/12] Bump minimum supported version of LLVM for
+ building the kernel to 15.0.0
+Message-Id: <175650682606.3003527.17329504429724755241.b4-ty@kernel.org>
+Date: Fri, 29 Aug 2025 15:33:46 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev
 
-Starting with Rust 1.91.0 (expected 2025-10-30), the target spec format
-has changed the type of the `target-pointer-width` key from string
-to integer [1].
 
-Thus conditionally use one or the other depending on the version.
+On Thu, 21 Aug 2025 14:15:37 -0700, Nathan Chancellor wrote:
+> s390 and x86 have required LLVM 15 since
+> 
+>   30d17fac6aae ("scripts/min-tool-version.sh: raise minimum clang version to 15.0.0 for s390")
+>   7861640aac52 ("x86/build: Raise the minimum LLVM version to 15.0.0")
+> 
+> respectively. This series bumps the rest of the kernel to 15.0.0 to
+> match, which allows for a decent number of clean ups.
+> 
+> [...]
 
-Cc: Waffle Maybe <waffle.lapkin@gmail.com>
-Link: https://github.com/rust-lang/rust/pull/144443 [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-Conditional to the PR getting merged.
+Applied, thanks!
 
- scripts/generate_rust_target.rs | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+[01/12] kbuild: Bump minimum version of LLVM for building the kernel to 15.0.0
+        https://git.kernel.org/kbuild/c/20c0989283564
+[02/12] arch/Kconfig: Drop always true condition from RANDOMIZE_KSTACK_OFFSET
+        https://git.kernel.org/kbuild/c/65aebf6f5880e
+[03/12] ARM: Clean up definition of ARM_HAS_GROUP_RELOCS
+        https://git.kernel.org/kbuild/c/02aba266e391f
+[04/12] arm64: Remove tautological LLVM Kconfig conditions
+        https://git.kernel.org/kbuild/c/23cb0514208da
+[05/12] mips: Unconditionally select ARCH_HAS_CURRENT_STACK_POINTER
+        https://git.kernel.org/kbuild/c/e633c2e78fd1c
+[06/12] powerpc: Drop unnecessary initializations in __copy_inst_from_kernel_nofault()
+        https://git.kernel.org/kbuild/c/488954ca195d0
+[07/12] riscv: Remove version check for LTO_CLANG selects
+        https://git.kernel.org/kbuild/c/6578a1ff6aa49
+[08/12] riscv: Unconditionally use linker relaxation
+        https://git.kernel.org/kbuild/c/7ccbe91796d7b
+[09/12] riscv: Remove ld.lld version checks from many TOOLCHAIN_HAS configs
+        https://git.kernel.org/kbuild/c/87b28d71396bf
+[10/12] lib/Kconfig.debug: Drop CLANG_VERSION check from DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
+        https://git.kernel.org/kbuild/c/a817de20091c3
+[11/12] objtool: Drop noinstr hack for KCSAN_WEAK_MEMORY
+        https://git.kernel.org/kbuild/c/573ad421cc551
+[12/12] KMSAN: Remove tautological checks
+        https://git.kernel.org/kbuild/c/5ff8c11775c74
 
-diff --git a/scripts/generate_rust_target.rs b/scripts/generate_rust_target.rs
-index 39c82908ff3a..38b3416bb979 100644
---- a/scripts/generate_rust_target.rs
-+++ b/scripts/generate_rust_target.rs
-@@ -225,7 +225,11 @@ fn main() {
-         ts.push("features", features);
-         ts.push("llvm-target", "x86_64-linux-gnu");
-         ts.push("supported-sanitizers", ["kcfi", "kernel-address"]);
--        ts.push("target-pointer-width", "64");
-+        if cfg.rustc_version_atleast(1, 91, 0) {
-+            ts.push("target-pointer-width", 64);
-+        } else {
-+            ts.push("target-pointer-width", "64");
-+        }
-     } else if cfg.has("X86_32") {
-         // This only works on UML, as i386 otherwise needs regparm support in rustc
-         if !cfg.has("UML") {
-@@ -245,7 +249,11 @@ fn main() {
-         }
-         ts.push("features", features);
-         ts.push("llvm-target", "i386-unknown-linux-gnu");
--        ts.push("target-pointer-width", "32");
-+        if cfg.rustc_version_atleast(1, 91, 0) {
-+            ts.push("target-pointer-width", 32);
-+        } else {
-+            ts.push("target-pointer-width", "32");
-+        }
-     } else if cfg.has("LOONGARCH") {
-         panic!("loongarch uses the builtin rustc loongarch64-unknown-none-softfloat target");
-     } else {
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-base-commit: 1b237f190eb3d36f52dffe07a40b5eb210280e00
---
-2.51.0
