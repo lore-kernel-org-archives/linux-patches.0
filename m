@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15D11C84C7;
-	Fri, 29 Aug 2025 19:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0934B241674;
+	Fri, 29 Aug 2025 19:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756495382; cv=none; b=l8gwKzzNIRIrP09Yl3Bw/JKxQHAkDT3+Q0Zzh6h3wlgV3IbnPzfVdwqacBqsDR9EAQh1PpVjWidRWF+8m6EkG6vsar/VDiqOAQIshdAYMcrwFvvYzECWkVrkSdP8Z4ncDXHJEgMlNQF6/5+U0FzWaqawiWzpYrx+TYw4bzT/SVM=
+	t=1756495385; cv=none; b=VfRakyMwG7I93SRKem7dlIDTT0Ieg6pGkvAzu3zva+TOku4N9ce8P86KLGfJuR47UttJ0Fs4OoEMgiYwmi4dOu08XAKAJzDX76VkGrQjSnQihVTZN/060ChX+XQEb0SQQmWxmc9WYaqqjMG0jRwdxkptW8MqI0ULT0iRTgGWZsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756495382; c=relaxed/simple;
-	bh=OEqfpYaXjoesa3749aicLTFrLaKPE0VOx63A9aywxp0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f3dn12aQ6rki9qAfczVUgdc4t51zXiEBUC1A+U11yzRMUHseZFHi20xRm3skWZQZx0eC3w+RLMeRKHvvXBm8NcK15+FDpE4sCiBwKAryNKTLEct/JF8CDhmjPyXuT4yPwSAWdj8eE62/cWDyAjYXw7ke6dzFF5V8SZyqv1kDmAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/Y0siOg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756495385; c=relaxed/simple;
+	bh=RTdq4XCBySE+wjdxN5Vmcpc6AEytNGOl0QEDpXc4EpQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ip+80pPG5F1j5qu1oU+5VFqnppf6Fsgee1JMSJufCkrDZJiWJRD40AAwb0iQSmhV+KfXzgOOErs8ESbxVj7sl8RD0ZnmOD/D6EPWV4CgMFaQPC1vEiuDXBX9kCxrh1UZ4UXny/kQSmee6BDbeWJCsSWUBRkBvHwrM/ajrFE4aOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r1pyXjZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/Y0siOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A0BC4CEF0;
-	Fri, 29 Aug 2025 19:22:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r1pyXjZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA211C4CEF8;
+	Fri, 29 Aug 2025 19:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756495381;
-	bh=OEqfpYaXjoesa3749aicLTFrLaKPE0VOx63A9aywxp0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=B/Y0siOgPRydyoN32IMA+eOdAJFX1dxY5dFllqHRse/t6KaNBdx7nQhU+W+m8SONs
-	 rrCcnfziu10EqCeLBY3cJ6W0qIsaqIiXDq3x49Fc1AabRdY/7mENJV9ueAvYUCaNis
-	 bjDRIOg+CRyRLUCgPFJwBwWCkFoOWB2vxVRvghBbKZrYeT67py8w6mBKp/7BnScvS4
-	 jcy59gJwakSkVqeDz9o7pwJZVXF32fFg4Qii5GCQ1BWXkwdI6qFv2dmCUBZjsnxQDf
-	 8dKWBgGcZaVKRODomUe0d2IypMKP5GKJncXK7vqXX1SZ5QE03a4sV9t6LH97agY83X
-	 n51Qm/jPEKugQ==
+	s=k20201202; t=1756495384;
+	bh=RTdq4XCBySE+wjdxN5Vmcpc6AEytNGOl0QEDpXc4EpQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=r1pyXjZarIutc62IHt2EkceW5CwW3uReNw8hVp3NwHr98EZE12sEAxjCKA1B6Aa/d
+	 aKMj9gpN3cXyQ0iK4+wd5a7Gs4NF+SvDVzG1eZUh9gZtZ+2kVzMd9OdPK1Jw44nUQG
+	 ZqR0ErRkCTswn+Mb81X+ZAnQkb6Fo9zrGVevtFxLKovGQ7lQ8mjrqq3IkM307lELYF
+	 fm9erv21uSQ1ECYi9Op1yh3WsuXxIWUIhdBBM2exQDi2tmijJAUnOqvirCW4Z06Yd/
+	 58tJMVhQXbg8joGmmYO3bZ36r0vYa7EVgbLe61kSZqJPx9Z6BvPsNvBcF/OSLgEdcO
+	 CitWBRtEIB6tw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -39,9 +40,11 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 0/3] Error improvements
-Date: Fri, 29 Aug 2025 21:22:40 +0200
-Message-ID: <20250829192243.678079-1-ojeda@kernel.org>
+Subject: [PATCH 1/3] rust: error: improve `Error::from_errno` documentation
+Date: Fri, 29 Aug 2025 21:22:41 +0200
+Message-ID: <20250829192243.678079-2-ojeda@kernel.org>
+In-Reply-To: <20250829192243.678079-1-ojeda@kernel.org>
+References: <20250829192243.678079-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,18 +53,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A couple improvements from the past that I rebased prompted by the
-discussion at [1].
+This constructor is public since commit 5ed147473458 ("rust: error:
+make conversion functions public"), and we will refer to it from the
+documentation of `to_result` in a later commit.
 
-Link: https://rust-for-linux.zulipchat.com/#narrow/channel/288089-General/topic/x/near/535616940 [1]
+Thus improve its documentation, including adding examples.
 
-Miguel Ojeda (3):
-  rust: error: improve `Error::from_errno` documentation
-  rust: error: improve `to_result` documentation
-  rust: error: replace `WARN_ON_ONCE` comment with `debug_assert!`
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/kernel/error.rs | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
- rust/kernel/error.rs | 62 ++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 57 insertions(+), 5 deletions(-)
-
---
+diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
+index a41de293dcd1..c415c3d3a3b6 100644
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -101,8 +101,23 @@ macro_rules! declare_err {
+ impl Error {
+     /// Creates an [`Error`] from a kernel error code.
+     ///
+-    /// It is a bug to pass an out-of-range `errno`. `EINVAL` would
+-    /// be returned in such a case.
++    /// `errno` must be within error code range (i.e. `>= -MAX_ERRNO && < 0`).
++    ///
++    /// It is a bug to pass an out-of-range `errno`. [`code::EINVAL`] is returned in such a case.
++    ///
++    /// # Examples
++    ///
++    /// ```
++    /// assert_eq!(Error::from_errno(-1), EPERM);
++    /// assert_eq!(Error::from_errno(-2), ENOENT);
++    /// ```
++    ///
++    /// The following calls are considered a bug:
++    ///
++    /// ```
++    /// assert_eq!(Error::from_errno(0), EINVAL);
++    /// assert_eq!(Error::from_errno(-1000000), EINVAL);
++    /// ```
+     pub fn from_errno(errno: crate::ffi::c_int) -> Error {
+         if let Some(error) = Self::try_from_errno(errno) {
+             error
+-- 
 2.51.0
+
