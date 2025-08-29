@@ -1,105 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0222B2A1AA;
-	Fri, 29 Aug 2025 22:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD9823507E;
+	Fri, 29 Aug 2025 22:50:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756506832; cv=none; b=vCSXcb3tONzlxX8lGWE4RfH9MzadJKSKN8KpuOzRbxRM4xyGxCWkBAMMYD8xWpkpBmMqSRZL9ZhsUysqOaKMArGu8gFK5AhEcZDdOitMjjhT4LB86ZCX9wu29wVzR3XdMR2zdi/4AfwvgMJjzKfFpCks03mrdUmUedM0Sq9Ic/c=
+	t=1756507850; cv=none; b=OxBZmZHUUXkGuqdU5jzhZeBjstZ14ExAcehFnz5XM3MnAdORZFpdRYdiNXWEYewjqmqi6Q99oVW09EfGxBaED1cVkxTUBAh9AaBdwv7TbJUjrMEBU9LvPiUxZ3eRwQn6izwDdzmeAMydmZvx3WRzr2U5a3WxsCDax2Rp6gcmbvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756506832; c=relaxed/simple;
-	bh=gW3UREhITNbhZNhXVhy/1JzS54isi8alO3SClI/0N4U=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=OR0jCuckKwC+/om4uA/xqjZIFiQDrlbyj1/B/fyWYk66So9zIi3gPnpxjGBQ5q9F9OZ1dggmD+qSIwnQt+CvaqDHdc6a0WjvqigEHzNyxR4RyfnYRyVXdRgGw/7AM0x5fYkwtzbEinlCHb8s/I4LZ2Lu3AylE0Mz2ZRAfKgc6qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CeI1Uyyw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756507850; c=relaxed/simple;
+	bh=yQrl3gCtzdyKztNdAWjGjfEx4RFSnzGpjf6FUTnKgcQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SogMMMGrJ5Io2j8ViZodebUFWKwu5oGMop/hxgxLGEoJGt9bKXVkWqVVzYOhkEoewPHTX+xJvn9H/8AsBXE+vOp0NdRnpP5DyW/0L44mhlsAkX/Jx2hd4f4fsAM7D5gVi/hQzLGzYiJI0o5K0oCgiM3P3zYPJaU2vOjUPi4U8lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=pITCHuWU; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CeI1Uyyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5459DC4CEF0;
-	Fri, 29 Aug 2025 22:33:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756506831;
-	bh=gW3UREhITNbhZNhXVhy/1JzS54isi8alO3SClI/0N4U=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=CeI1UyywLphq6rbxihW3K12s6RgLJ57FMTz4eKtrVBaIOZQlRF5Mw5MGN9VZqsyUF
-	 ws1VVPK2A9Aphpeu08IZ+PBsvH/hZxYQZ/E8LlLJ2UoQZh6ZiWU7Ee+Bxfnwgu4wDN
-	 qm+ussMtaWLdi83SF8aT0+Btb7yjNB9Ygip41cIO0PmgxXzADx6IHAKLQjnLPLfqj2
-	 5eqSmq9NNuwF0+wjF3Nc60azb8fAUFVptz94yF9f9Xn6OeJKPvhEVPRSVPcQIiH9ig
-	 389Jr83bSdXVSFqVbGJ4RM5keAw6x2twpNgOifIA2xME7cb4HiY+r6PWu/R5+ICtHu
-	 LsNzjw1Q4Twaw==
-From: Nathan Chancellor <nathan@kernel.org>
-To: linux-kernel@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>, 
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nicolas Schier <nsc@kernel.org>, linux-kbuild@vger.kernel.org, 
- linux-hardening@vger.kernel.org, Russell King <linux@armlinux.org.uk>, 
- Ard Biesheuvel <ardb@kernel.org>, linux-arm-kernel@lists.infradead.org, 
- Will Deacon <will@kernel.org>, 
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>, linux-mips@vger.kernel.org, 
- Madhavan Srinivasan <maddy@linux.ibm.com>, 
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
- Christophe Leroy <christophe.leroy@csgroup.eu>, 
- linuxppc-dev@lists.ozlabs.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alexandre Ghiti <alex@ghiti.fr>, linux-riscv@lists.infradead.org, 
- Marco Elver <elver@google.com>, 
- "Peter Zijlstra (Intel)" <peterz@infraded.org>, kasan-dev@googlegroups.com
-In-Reply-To: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
-References: <20250821-bump-min-llvm-ver-15-v2-0-635f3294e5f0@kernel.org>
-Subject: Re: [PATCH v2 00/12] Bump minimum supported version of LLVM for
- building the kernel to 15.0.0
-Message-Id: <175650682606.3003527.17329504429724755241.b4-ty@kernel.org>
-Date: Fri, 29 Aug 2025 15:33:46 -0700
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="pITCHuWU"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=vBqocCSrw/I/eTnjICc/R9VLegWS9kJ8fWJ+dhUrmbM=; b=pITCHuWUJuiDHiaEscGXVXczcK
+	I0/Wd74s+NDD/sEhJ3i0C7fgA9qpUSo8PJP1moXRGQnykNvxDXnxrqB2EIlySGG8dICRLkd4z6RHb
+	8KmkRHhoO+I/My0S3KX39ab8d3rYDeE0cLqWyIEYKNp5So3JeyY3f4amPxDo5zRskH7MdCU2cT4Kg
+	lkyk0k5hFEHpftWgCDxLX8H16kaIyfhbK35YVpzi0iECQVlLfDs/SxqnbrdaJz7dKqPuxbamvVnQ7
+	pLhICedjX9Wm5Ox+ZzOhDlVKF8oktW8T2cu4SuiApJT5Yps43hWywifM8Dr6AoBWERW4ru+BpvfZ0
+	QYZbU3VQ==;
+Received: from [50.53.25.54] (helo=[192.168.254.17])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1us7vg-00000006zQp-3RYK;
+	Fri, 29 Aug 2025 22:50:44 +0000
+Message-ID: <e11b42b9-8294-4cc3-b27c-2344ae898ce0@infradead.org>
+Date: Fri, 29 Aug 2025 15:50:43 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/15] genpt: Generic Page Table base API
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Justin Stitt <justinstitt@google.com>,
+ Kevin Tian <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, llvm@lists.linux.dev,
+ Bill Wendling <morbo@google.com>, Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+ Miguel Ojeda <ojeda@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Shuah Khan <shuah@kernel.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ James Gowans <jgowans@amazon.com>, Michael Roth <michael.roth@amd.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
+References: <1-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
+ <bdbd466f-01d3-40ac-abca-81527dbfb901@infradead.org>
+ <20250829185124.GE79520@nvidia.com>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20250829185124.GE79520@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev
 
 
-On Thu, 21 Aug 2025 14:15:37 -0700, Nathan Chancellor wrote:
-> s390 and x86 have required LLVM 15 since
+
+On 8/29/25 11:51 AM, Jason Gunthorpe wrote:
+> On Wed, Aug 27, 2025 at 12:11:40AM -0700, Randy Dunlap wrote:
+>>> +/**
+>>> + * pt_entry_num_contig_lg2() - Number of contiguous items for this leaf entry
+>>> + * @pts: Entry to query
+>>> + *
+>>> + * Returns the number of contiguous items this leaf entry spans. If the entry is
+>>
+>>  * Returns:
 > 
->   30d17fac6aae ("scripts/min-tool-version.sh: raise minimum clang version to 15.0.0 for s390")
->   7861640aac52 ("x86/build: Raise the minimum LLVM version to 15.0.0")
+> I think I prefer to leave many of these as is, putting the entire body
+> in a Returns: block seems too weird. I did the ones that seemed to fit
+> that pattern.
+
+Sure, no problem.
+
+> Most of these descriptions are entirely talking about the return value
+> since that is the only thing the function does.
 > 
-> respectively. This series bumps the rest of the kernel to 15.0.0 to
-> match, which allows for a decent number of clean ups.
+>>> + * If true the caller use at level 0 pt_install_leaf_entry(PAGE_SHIFT). This is
+>>
+>>                          uses
+>> ?
+>> although it might just be missing a word or two? I can't tell.
 > 
-> [...]
+>  * If true the caller can use, at level 0, pt_install_leaf_entry(PAGE_SHIFT).
+>  * This is useful to create optimized paths for common cases of PAGE_SIZE
+>  * mappings.
 
-Applied, thanks!
+Ack.
 
-[01/12] kbuild: Bump minimum version of LLVM for building the kernel to 15.0.0
-        https://git.kernel.org/kbuild/c/20c0989283564
-[02/12] arch/Kconfig: Drop always true condition from RANDOMIZE_KSTACK_OFFSET
-        https://git.kernel.org/kbuild/c/65aebf6f5880e
-[03/12] ARM: Clean up definition of ARM_HAS_GROUP_RELOCS
-        https://git.kernel.org/kbuild/c/02aba266e391f
-[04/12] arm64: Remove tautological LLVM Kconfig conditions
-        https://git.kernel.org/kbuild/c/23cb0514208da
-[05/12] mips: Unconditionally select ARCH_HAS_CURRENT_STACK_POINTER
-        https://git.kernel.org/kbuild/c/e633c2e78fd1c
-[06/12] powerpc: Drop unnecessary initializations in __copy_inst_from_kernel_nofault()
-        https://git.kernel.org/kbuild/c/488954ca195d0
-[07/12] riscv: Remove version check for LTO_CLANG selects
-        https://git.kernel.org/kbuild/c/6578a1ff6aa49
-[08/12] riscv: Unconditionally use linker relaxation
-        https://git.kernel.org/kbuild/c/7ccbe91796d7b
-[09/12] riscv: Remove ld.lld version checks from many TOOLCHAIN_HAS configs
-        https://git.kernel.org/kbuild/c/87b28d71396bf
-[10/12] lib/Kconfig.debug: Drop CLANG_VERSION check from DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
-        https://git.kernel.org/kbuild/c/a817de20091c3
-[11/12] objtool: Drop noinstr hack for KCSAN_WEAK_MEMORY
-        https://git.kernel.org/kbuild/c/573ad421cc551
-[12/12] KMSAN: Remove tautological checks
-        https://git.kernel.org/kbuild/c/5ff8c11775c74
+>>> + * Otherwise the bit in position pt_table_item_lg2sz() should be set indicating
+>>> + * that a non-contigous singe item leaf entry is supported. The following
+>>
+>>              non-contiguous
+>> Also, is that               single
+>> ?
+>> or is "singe" a real word here? (IDK.)
+> 
+>  * Otherwise the bit in position pt_table_item_lg2sz() should be set indicating
+>  * that a non-contiguous single item leaf entry is supported. The following
 
-Best regards,
+Ack.
+
+thanks.
+
 -- 
-Nathan Chancellor <nathan@kernel.org>
+~Randy
 
