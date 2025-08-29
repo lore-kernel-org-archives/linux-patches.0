@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414E834AB05
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19288242D84
 	for <patches@lists.linux.dev>; Fri, 29 Aug 2025 19:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756496056; cv=none; b=hW6lV7Dwmc1okni9/hAA7SacJH6aCr4WOrkzriveioiXF8fJEL0Kp7Js6aksVcpEPq5um0RRjMtPQ6xc6GHzEBYcBVb+PdFXGe8Fk6GeJlQLCoHn5cBmmqGZYZxoFpjJwgl+VOyv9i4i10PuJq8dqntw6jakGaCgaU3ZyarhwC4=
+	t=1756496057; cv=none; b=NzPr4IRaiW/95FA3LQMn+tNLsquCpIukXqxPpiCc5aPk6l/H6xlOX2o6OorMDJ2DGQaTqKKt00uvOnp/P8dlrOvSpgk+XZB/tFKoiowllCNolVk15Zv45nChpAJv0XRFk2smAP65IMuSjQ79dzUvVNM5Y3nFz+yUUXw1A5lzygw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756496056; c=relaxed/simple;
-	bh=Lncq/jLYO+WU5E8LHu+kqPvJFoGVWOJEXvzfJAno3+U=;
+	s=arc-20240116; t=1756496057; c=relaxed/simple;
+	bh=zH8x13Si8Yt26D26LIpJslO/XLlS8cnq4VGztV5gLSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=om5boDrJUKjlhf3f6SB/NnN6WxTueFjiPKbp2WG1RdgqpIG/S0Pjlrbks7OgRpY1vS+tkl/QhYTtGAM0XvfhAZOP3OcrH8tr0XeYLidwoSTh1KWmazytSce3TyzVEkhYFIHhEyu2RaQ7O+94P2w/cjkqTRfrUvsLAhxA15gGKFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eQEqGa0f; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=LGkexPbJdLd7bGXMnVyplHC+po0ttJqASKtYtu6I892IzjtrIYfSAybmSoR0Ysz5H5IIxupJtOuGilsmUas546Zimb2iH6bN9XavWtx13DWQCYqlttLImEq8whWSYCxXqQdXymGp1GwndpSuLMsF+M2+kkoWIpqZ1RUsv0WqyjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iBvxE2zR; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eQEqGa0f"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iBvxE2zR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1756496054; x=1788032054;
+  t=1756496055; x=1788032055;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=Lncq/jLYO+WU5E8LHu+kqPvJFoGVWOJEXvzfJAno3+U=;
-  b=eQEqGa0f2w00UKmxu+YnrT7EYbwhx5Iowrob0O0mzJJ2iQzL82qLSAGF
-   fLsh/vbX9WixytO33/6PnSAMdA5Eyn9orAoMcuykD0nELpFjSAbJ7Q0Tn
-   82mc/EC5nMdNfKdDSWGFsJxZ+WePMtzcTtKITTC2SzALgvuSTwoQAKiBT
-   RbJU8kLxRh6NlXx+1xqvVZAOZLUc9FWmiC5nNnT2u/CKF02E4iEURAl5v
-   D7wSJhg36gD1QIE40MyLdt+KDL0YR7E6OyR+427eck0y3S1DQIIOTelIH
-   fx4QIVci/x/SW7Ouy+aTn9Icvjt6tmoYfvUqVinnnRGoojacbp4MADN7O
-   Q==;
-X-CSE-ConnectionGUID: uX9svAtwSxOvblS4KzeDGw==
-X-CSE-MsgGUID: /gkOuqeVTuaDuv4hZ6+rvg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="62625382"
+  bh=zH8x13Si8Yt26D26LIpJslO/XLlS8cnq4VGztV5gLSc=;
+  b=iBvxE2zRw5z4xGe67Sw0HnL+JcUSXOp+Fq00fmENUl0RYXJzpZ5B4QGV
+   BavJCDFrol0h5nOkZjycmizlHKtQ24nymNBwj4kJrc/7lfSrAHq/SL2zs
+   Bp1ZRAdOoXgmboZ8CCJdCriqibAB3KmqoExeSbcKbaIwU/P2jBKYJ9gUk
+   FrkXkCSQaMhiGwmkCSpIYvOKimcEm+h+hxfmomZsURlWI3Op17voC6HbF
+   nVv6YhverjLZIAy8YnfN4c1AlXASQcudBFNMJw73xA1ce93KWU1/dXl8Q
+   E12uDBvCSwlUrEqWXaMXSlSE+Y2OzHzUo3kDIJUsSnpRmMqEXNOfGOjUW
+   w==;
+X-CSE-ConnectionGUID: G/xYbFm1RoOuSfvdC5XYjQ==
+X-CSE-MsgGUID: bTz8AFV9Sliu/Q4f25TSKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="62625395"
 X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="62625382"
+   d="scan'208";a="62625395"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2025 12:33:57 -0700
-X-CSE-ConnectionGUID: nUBALeHzRXeNLRceRV0c+w==
-X-CSE-MsgGUID: d7bFGg2cQt+Zsp6B1i90Iw==
+X-CSE-ConnectionGUID: WmdEO+lgT4q+PvsXcrdEEg==
+X-CSE-MsgGUID: LIYzV1jVSam4d5NJlA7OZg==
 X-ExtLoop1: 1
 Received: from ldmartin-desk2.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.202])
   by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2025 12:33:57 -0700
@@ -55,9 +55,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v9 29/31] fs/resctrl: Provide interface to create architecture specific debugfs area
-Date: Fri, 29 Aug 2025 12:33:41 -0700
-Message-ID: <20250829193346.31565-30-tony.luck@intel.com>
+Subject: [PATCH v9 31/31] x86,fs/resctrl: Update Documentation for package events
+Date: Fri, 29 Aug 2025 12:33:43 -0700
+Message-ID: <20250829193346.31565-32-tony.luck@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250829193346.31565-1-tony.luck@intel.com>
 References: <20250829193346.31565-1-tony.luck@intel.com>
@@ -69,113 +69,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-All files below /sys/fs/resctrl are considered user ABI.
+Update resctrl filesystem documentation with the details about the
+resctrl files that support telemetry events.
 
-This leaves no place for architectures to provide additional
-interfaces.
-
-Add resctrl_debugfs_mon_info_arch_mkdir() which creates a directory in
-the debugfs file system for a monitoring resource. Naming follows the
-layout of the main resctrl hierarchy:
-
-	/sys/kernel/debug/resctrl/info/{resource}_MON/{arch}
-
-The {arch} last level directory name matches the output of
-the user level "uname -m" command.
-
-Architecture code may use this directory for debug information,
-or for minor tuning of features. It must not be used for basic
-feature enabling as debugfs may not be configured/mounted on
-production systems.
-
-Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/resctrl.h |  9 +++++++++
- fs/resctrl/rdtgroup.c   | 29 +++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
+ Documentation/filesystems/resctrl.rst | 99 +++++++++++++++++++++++----
+ 1 file changed, 86 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 1f42bc761377..8a010c29c8b4 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -569,6 +569,15 @@ void resctrl_arch_reset_all_ctrls(struct rdt_resource *r);
- extern unsigned int resctrl_rmid_realloc_threshold;
- extern unsigned int resctrl_rmid_realloc_limit;
+diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
+index c7949dd44f2f..7ee2832a3aa6 100644
+--- a/Documentation/filesystems/resctrl.rst
++++ b/Documentation/filesystems/resctrl.rst
+@@ -167,13 +167,12 @@ with respect to allocation:
+ 			bandwidth percentages are directly applied to
+ 			the threads running on the core
  
-+/**
-+ * resctrl_debugfs_mon_info_arch_mkdir() - Create a debugfs info directory.
-+ *					   Removed by resctrl_exit().
-+ * @r:	Resource (must be mon_capable).
-+ *
-+ * Return: dentry pointer on success, or NULL on error.
-+ */
-+struct dentry *resctrl_debugfs_mon_info_arch_mkdir(struct rdt_resource *r);
+-If RDT monitoring is available there will be an "L3_MON" directory
++If L3 monitoring is available there will be an "L3_MON" directory
+ with the following files:
+ 
+ "num_rmids":
+-		The number of RMIDs available. This is the
+-		upper bound for how many "CTRL_MON" + "MON"
+-		groups can be created.
++		The number of RMIDs supported by hardware for
++		L3 monitoring events.
+ 
+ "mon_features":
+ 		Lists the monitoring events if
+@@ -261,6 +260,19 @@ with the following files:
+ 		bytes) at which a previously used LLC_occupancy
+ 		counter can be considered for re-use.
+ 
++If telemetry monitoring is available there will be an "PERF_PKG_MON" directory
++with the following files:
 +
- int resctrl_init(void);
- void resctrl_exit(void);
- 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 886de0e01e8a..8f0bcb139a74 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -24,6 +24,7 @@
- #include <linux/sched/task.h>
- #include <linux/slab.h>
- #include <linux/user_namespace.h>
-+#include <linux/utsname.h>
- 
- #include <uapi/linux/magic.h>
- 
-@@ -75,6 +76,8 @@ static void rdtgroup_destroy_root(void);
- 
- struct dentry *debugfs_resctrl;
- 
-+static struct dentry *debugfs_resctrl_info;
++"num_rmids":
++		The number of RMIDs supported by hardware for
++		telemetry monitoring events.
 +
- /*
-  * Memory bandwidth monitoring event to use for the default CTRL_MON group
-  * and each new CTRL_MON group created by the user.  Only relevant when
-@@ -4355,6 +4358,31 @@ int resctrl_init(void)
- 	return ret;
- }
++"mon_features":
++		Lists the telemetry monitoring events that are enabled on this system.
++
++The upper bound for how many "CTRL_MON" + "MON" can be created
++is the smaller of the "num_rmids" values.
++
+ Finally, in the top level of the "info" directory there is a file
+ named "last_cmd_status". This is reset with every "command" issued
+ via the file system (making new directories or writing to any of the
+@@ -366,15 +378,38 @@ When control is enabled all CTRL_MON groups will also contain:
+ When monitoring is enabled all MON groups will also contain:
  
-+/*
-+ * Create /sys/kernel/debug/resctrl/info/{r->name}_MON/{arch} directory
-+ * by request for architecture to use for debugging or minor tuning.
-+ * Basic functionality of features must not be controlled by files
-+ * added to this directory as debugfs may not be configured/mounted
-+ * on production systems.
-+ */
-+struct dentry *resctrl_debugfs_mon_info_arch_mkdir(struct rdt_resource *r)
-+{
-+	struct dentry *moninfodir;
-+	char name[32];
+ "mon_data":
+-	This contains a set of files organized by L3 domain and by
+-	RDT event. E.g. on a system with two L3 domains there will
+-	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
+-	directories have one file per event (e.g. "llc_occupancy",
+-	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+-	files provide a read out of the current value of the event for
+-	all tasks in the group. In CTRL_MON groups these files provide
+-	the sum for all tasks in the CTRL_MON group and all tasks in
+-	MON groups. Please see example section for more details on usage.
++	This contains a set of directories, one for each instance
++	of an L3 cache, another for each processor package. The L3 cache
++	directories are named "mon_L3_00", "mon_L3_01" etc. The
++	package directories "mon_PERF_PKG_00", "mon_PERF_PKG_01" etc.
 +
-+	if (!r->mon_capable)
-+		return NULL;
++	Within each directory there is one file per event. For
++	example the L3 directories may contain "llc_occupancy", "mbm_total_bytes",
++	and "mbm_local_bytes". The PERF_PKG directories may contain "core_energy",
++	"activity", etc.
 +
-+	if (!debugfs_resctrl_info)
-+		debugfs_resctrl_info = debugfs_create_dir("info", debugfs_resctrl);
++	"core energy" reports a floating point number for the energy (in Joules)
++	consumed by cores (registers, arithmetic units, TLB and L1/L2 caches)
++	during execution of instructions summed across all logical CPUs on a
++	package for the current RMID.
 +
-+	sprintf(name, "%s_MON", r->name);
++	"activity" also reports a floating point value (in Farads).
++	This provides an estimate of work done independent of the
++	frequency that the CPUs used for execution.
 +
-+	moninfodir = debugfs_create_dir(name, debugfs_resctrl_info);
++	Note that these two counters only measure energy/activity
++	in the "core" of the CPU (arithmetic units, TLB, L1 and L2
++	caches, etc.). They do not include L3 cache, memory, I/O
++	devices etc.
 +
-+	return debugfs_create_dir(utsname()->machine, moninfodir);
-+}
++	All other events report decimal integer values.
 +
- static bool resctrl_online_domains_exist(void)
- {
- 	struct rdt_resource *r;
-@@ -4406,6 +4434,7 @@ void resctrl_exit(void)
++	In a MON group these files provide a read out of the current
++	value of the event for all tasks in the group. In CTRL_MON groups
++	these files provide the sum for all tasks in the CTRL_MON group
++	and all tasks in MON groups. Please see example section for more
++	details on usage.
++
+ 	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
+ 	directories for each node (located within the "mon_L3_XX" directory
+ 	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
+@@ -1300,6 +1335,44 @@ Example with C::
+     resctrl_release_lock(fd);
+   }
  
- 	debugfs_remove_recursive(debugfs_resctrl);
- 	debugfs_resctrl = NULL;
-+	debugfs_resctrl_info = NULL;
- 	unregister_filesystem(&rdt_fs_type);
- 
- 	/*
++Debugfs
++=======
++In addition to the use of debugfs for tracing of pseudo-locking
++performance, architecture code may create debugfs directories
++associated with monitoring features for a specific resource.
++
++The full pathname for these is in the form:
++
++    /sys/kernel/debug/resctrl/info/{resource_name}_MON/{arch}/
++
++The presence, names, and format of these files will vary
++between architectures even if the same resource is present.
++
++PERF_PKG_MON/x86_64
++-------------------
++Three files are present per telemetry aggregator instance
++that show when and how often the hardware has failed to
++collect and accumulate data from the CPUs. The prefix of
++each file name describes the type ("energy" or "perf") which
++processor package it belongs to, and the instance number of
++the aggregator. For example: "energy_pkg1_agg2".
++
++The suffix describes which data is reported in the file and
++is one of:
++
++data_loss_count:
++	This counts the number of times that this aggregator
++	failed to accumulate a counter value supplied by a CPU.
++
++data_loss_timestamp:
++	This is a "timestamp" from a free running 25MHz uncore
++	timer indicating when the most recent data loss occurred.
++
++last_update_timestamp:
++	Another 25MHz timestamp indicating when the
++	most recent counter update was successfully applied.
++
++
+ Examples for RDT Monitoring along with allocation usage
+ =======================================================
+ Reading monitored data
 -- 
 2.50.1
 
