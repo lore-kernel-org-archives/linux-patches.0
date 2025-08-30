@@ -1,116 +1,80 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD9823507E;
-	Fri, 29 Aug 2025 22:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADA652F99;
+	Sat, 30 Aug 2025 06:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756507850; cv=none; b=OxBZmZHUUXkGuqdU5jzhZeBjstZ14ExAcehFnz5XM3MnAdORZFpdRYdiNXWEYewjqmqi6Q99oVW09EfGxBaED1cVkxTUBAh9AaBdwv7TbJUjrMEBU9LvPiUxZ3eRwQn6izwDdzmeAMydmZvx3WRzr2U5a3WxsCDax2Rp6gcmbvk=
+	t=1756534684; cv=none; b=mDYndX+FqxSzPOlAqezGZaWXDSQVay8HJAzPj6qs9RvvyH+h0s115gfjW91HMUsHOWLqFc0EyvGokNieNp/bpwLnOwj/wP1nW0S3+eDZdyaJqCaoHZp6/xUy76K3aGjzkVfFaI2Cp/DyzzT9Egu0Y358C9Df3TEBB+BV+6rAkQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756507850; c=relaxed/simple;
-	bh=yQrl3gCtzdyKztNdAWjGjfEx4RFSnzGpjf6FUTnKgcQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SogMMMGrJ5Io2j8ViZodebUFWKwu5oGMop/hxgxLGEoJGt9bKXVkWqVVzYOhkEoewPHTX+xJvn9H/8AsBXE+vOp0NdRnpP5DyW/0L44mhlsAkX/Jx2hd4f4fsAM7D5gVi/hQzLGzYiJI0o5K0oCgiM3P3zYPJaU2vOjUPi4U8lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=pITCHuWU; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1756534684; c=relaxed/simple;
+	bh=8QxXN92CL+ywVbSvEbZeFhl5sfTdPMsZM6SLi+qfAyk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U8wV3E8Dv2RXQoAMNcqP3HpICN/d5jzGc+5DVUUdMSrJtIBuGOJeqQsDJpEOGO2XuG5/AwSy5btnXJxIqO5I34DOT4/6i143NDl7b2KQ4jjcWRI6iQJjMfVLPSzkuhN1UFl62qUGjoeH4PPY9JDGf+AdbRcGuBrr1nzkL/n7Du0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBJolfAx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="pITCHuWU"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=vBqocCSrw/I/eTnjICc/R9VLegWS9kJ8fWJ+dhUrmbM=; b=pITCHuWUJuiDHiaEscGXVXczcK
-	I0/Wd74s+NDD/sEhJ3i0C7fgA9qpUSo8PJP1moXRGQnykNvxDXnxrqB2EIlySGG8dICRLkd4z6RHb
-	8KmkRHhoO+I/My0S3KX39ab8d3rYDeE0cLqWyIEYKNp5So3JeyY3f4amPxDo5zRskH7MdCU2cT4Kg
-	lkyk0k5hFEHpftWgCDxLX8H16kaIyfhbK35YVpzi0iECQVlLfDs/SxqnbrdaJz7dKqPuxbamvVnQ7
-	pLhICedjX9Wm5Ox+ZzOhDlVKF8oktW8T2cu4SuiApJT5Yps43hWywifM8Dr6AoBWERW4ru+BpvfZ0
-	QYZbU3VQ==;
-Received: from [50.53.25.54] (helo=[192.168.254.17])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1us7vg-00000006zQp-3RYK;
-	Fri, 29 Aug 2025 22:50:44 +0000
-Message-ID: <e11b42b9-8294-4cc3-b27c-2344ae898ce0@infradead.org>
-Date: Fri, 29 Aug 2025 15:50:43 -0700
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBJolfAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F5AC4CEEB;
+	Sat, 30 Aug 2025 06:18:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1756534683;
+	bh=8QxXN92CL+ywVbSvEbZeFhl5sfTdPMsZM6SLi+qfAyk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dBJolfAxMvC8RD4BYYnTp7IpLLRWcTIqzDLfhKDCIs7Fp4zUMs1REWyaS8dyIpH/2
+	 dETIdyw7C8SlkjzixG9seR7Zm0zTGSsL8h2Pjy5gw+zXtFcDZzs8v1rO2IM20AJh2j
+	 KrtWyAmPxOS1lx1CU25+Y1KTb+4fR0550w855Mow=
+Date: Sat, 30 Aug 2025 08:18:00 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Sherry Yang <sherry.yang@oracle.com>
+Cc: "johannes.berg@intel.com" <johannes.berg@intel.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"repk@triplefau.lt" <repk@triplefau.lt>,
+	"sashal@kernel.org" <sashal@kernel.org>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.4 098/403] Reapply "wifi: mac80211: Update skbs control
+ block key in ieee80211_tx_dequeue()"
+Message-ID: <2025083022-bleep-numbness-0fc1@gregkh>
+References: <20250826110909.381604948@linuxfoundation.org>
+ <20250828225323.725505-1-sherry.yang@oracle.com>
+ <2025082931-repurpose-unfeeling-04fb@gregkh>
+ <6E63CCB8-0298-45F1-B835-B5E040CE6815@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/15] genpt: Generic Page Table base API
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, Justin Stitt <justinstitt@google.com>,
- Kevin Tian <kevin.tian@intel.com>, linux-doc@vger.kernel.org,
- linux-kselftest@vger.kernel.org, llvm@lists.linux.dev,
- Bill Wendling <morbo@google.com>, Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Miguel Ojeda <ojeda@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Shuah Khan <shuah@kernel.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- James Gowans <jgowans@amazon.com>, Michael Roth <michael.roth@amd.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
-References: <1-v4-0d6a6726a372+18959-iommu_pt_jgg@nvidia.com>
- <bdbd466f-01d3-40ac-abca-81527dbfb901@infradead.org>
- <20250829185124.GE79520@nvidia.com>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20250829185124.GE79520@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6E63CCB8-0298-45F1-B835-B5E040CE6815@oracle.com>
 
-
-
-On 8/29/25 11:51 AM, Jason Gunthorpe wrote:
-> On Wed, Aug 27, 2025 at 12:11:40AM -0700, Randy Dunlap wrote:
->>> +/**
->>> + * pt_entry_num_contig_lg2() - Number of contiguous items for this leaf entry
->>> + * @pts: Entry to query
->>> + *
->>> + * Returns the number of contiguous items this leaf entry spans. If the entry is
->>
->>  * Returns:
+On Fri, Aug 29, 2025 at 05:15:00PM +0000, Sherry Yang wrote:
 > 
-> I think I prefer to leave many of these as is, putting the entire body
-> in a Returns: block seems too weird. I did the ones that seemed to fit
-> that pattern.
-
-Sure, no problem.
-
-> Most of these descriptions are entirely talking about the return value
-> since that is the only thing the function does.
 > 
->>> + * If true the caller use at level 0 pt_install_leaf_entry(PAGE_SHIFT). This is
->>
->>                          uses
->> ?
->> although it might just be missing a word or two? I can't tell.
+> > On Aug 28, 2025, at 9:24 PM, Greg KH <gregkh@linuxfoundation.org> wrote:
+> > 
+> > On Thu, Aug 28, 2025 at 03:53:23PM -0700, Sherry Yang wrote:
+> >> Hi Greg,
+> >> 
+> >> I noticed that only [PATCH 2/2] from the series
+> >> 
+> >> [PATCH wireless 0/2] Fix ieee80211_tx_h_select_key() for 802.11 encaps offloading [1]
+> >> 
+> >> was backported to 5.4-stable, while [PATCH 1/2] is missing.
+> >> 
+> >> It looks like the 1st patch is the prerequisite patch to apply the 2nd patch.
+> >> 
+> >> [1] https://urldefense.com/v3/__https://lore.kernel.org/all/cover.1752765971.git.repk@triplefau.lta__;!!ACWV5N9M2RV99hQ!ITMqVu4PcbzGTShSCka7THPXkavGtJSDV14NENhXrSlnq5NVYm5c44uQujhYeIJ-y6oHMzBYuTV7qUh-7_ENrMBs$
+> > 
+> > What is the git id of the patch you feel is missing?
 > 
->  * If true the caller can use, at level 0, pt_install_leaf_entry(PAGE_SHIFT).
->  * This is useful to create optimized paths for common cases of PAGE_SIZE
->  * mappings.
+> 9b096abd5454 (“wifi: mac80211: Check 802.11 encaps offloading in ieee80211_tx_h_select_key()”) in linux-stable-5.15.y
 
-Ack.
+So you really mean 4037c468d1b3 ("wifi: mac80211: Check 802.11 encaps
+offloading in ieee80211_tx_h_select_key()") needs to be backported to
+5.4.y as well?
 
->>> + * Otherwise the bit in position pt_table_item_lg2sz() should be set indicating
->>> + * that a non-contigous singe item leaf entry is supported. The following
->>
->>              non-contiguous
->> Also, is that               single
->> ?
->> or is "singe" a real word here? (IDK.)
-> 
->  * Otherwise the bit in position pt_table_item_lg2sz() should be set indicating
->  * that a non-contiguous single item leaf entry is supported. The following
+thanks,
 
-Ack.
-
-thanks.
-
--- 
-~Randy
-
+greg k-h
