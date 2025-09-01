@@ -1,240 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A2F33E1;
-	Mon,  1 Sep 2025 17:46:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FF615E8B;
+	Mon,  1 Sep 2025 23:14:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756748763; cv=none; b=QeIRxroLREOF5oeukXOYR5YPUhmwC+Am/ij5vs8iON5clVg6Sh11sYpF4Hiccc6qsE1qrn1RkxtVYJZFFB4skKM/31GlnHGSPZ21qNpDLc2w4rQOVr91oXdiT28d+mvV35RwwIipRl/oAZO98hFhko1p8lfYLTcQpdJrarAukfU=
+	t=1756768502; cv=none; b=WJb/jFcqCK2aIdBWcTFFaBembNy2oPX+4lKeXL1BRsYh4ZrIuZN1PUjnP/xffvhddTLINvJpWyXNddmRfB25KssWSNO40GzDd0HzO7qU2fSfrfkAsAvPpzrgPiHa5QPID523c3JRCe9tafwdmC+1++vcLhNxQe+f0DZ8jt7SNKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756748763; c=relaxed/simple;
-	bh=mkiyPyDj9nqRryG6c8NXuKXdNEmPx96Yw2sXoi/eVZA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FfPe1wGx4wNMxfOu3brMpVfHjcLWD3k/FarWcKJBeIIQvD1Qe7TBjoKv0ifPcn4Z9djdrOaebF6dVmCD6qXMPu7wmgpPDWQRUjMCwb8o3zwd60fWyEpqIv2frv0roGOE70R92GnO+aYDUBiaOlUBYWxjlxmJUMJQgnCiYn6yFUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f9jzYM2f; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756768502; c=relaxed/simple;
+	bh=ygKnE+IltxOXIp5p79x9wfHQd5zLgcG1Wm046Dcjfqg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dj//do4XsX/gq3rHj9GEtIHstpLkHJ0VJnW3Qgq2T5Ah6EIbUmN/2EI94E3fK0d1parQBl05lHYyg2Wqfst866RygRgBLXFEvLi/2Rgtms4zgVxe8rZMGF0gMt/zBO7SqNfaDulpNWgx0wXWb7AtHraOI9T0dm6ACmA4g966fY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=0MtS/cRE; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f9jzYM2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AB5C4CEF0;
-	Mon,  1 Sep 2025 17:45:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756748761;
-	bh=mkiyPyDj9nqRryG6c8NXuKXdNEmPx96Yw2sXoi/eVZA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f9jzYM2frw0sUhWaJqO5YlLtjhXYIosJUWmi8hp+hWqBqitZP4aVGcM/FJURdp0L9
-	 QEkKVlihsSyUaDvJ+YPo4Y3ob9/m6XjKTlBZmnsaZY/vUTQqGIw39EcrvwebN6cKP8
-	 VZl5Zt2VWHJ92aVNLQg5bvHPgMTwwCn8rLpUvjtLARC21u55EyeDsSyTpVejckMGFn
-	 ucg3FFGrJ4ZnMauZDEo0zdClc1o/8faywlWjLq2FGvQ8gA800u5Vs7bq78IGXQmE33
-	 PRx4e05LPg9rVkOcO87dFhF2A4ttjvbyG6vnR+Nnc68xSP+hrapVz911GoO8MRmOuC
-	 B30h4dRxkrW6g==
-Date: Mon, 1 Sep 2025 18:45:54 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Matthew Maurer <mmaurer@google.com>,
-	Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
-Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
-Message-ID: <20250901-shrimp-define-9d99cc2a012a@spud>
-References: <20250408220311.1033475-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="0MtS/cRE"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=R3Kh8a0W/CYcl61SRfKWoq4jyctXtMxOD0GfEp0yocA=; b=0MtS/cRE96LOUdZSLn/kUsCqvY
+	GttpkhXRe49qWV0+3n7YhDmOThAweZniCOkrxQhAPgLdYPniiRIIrVHBxgZkFKp5yUxFqMRL1NQ+d
+	NSJ+pijCTO8MdJyK7i8/ph9th/EnNqN0dKLpILrWx37CFa0Fq5AjhwI6H1FRFG3U18XAeDdJlvO+N
+	dsxolIlgmDk+o5SzvrKGqp9GkjLBhb75kKKutHCL58XqOAgC1wS5BO65JgCwTpwFTKrdsQbKMQPl8
+	4pDQwzHTiurKzPqCMRKjZT823DnSh8RR+JLtkQPu6Jobo0xwCd3M9el2ryl66Sk9vqtFGxNCTiNh0
+	SHpWtShA==;
+Received: from [50.53.25.54] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1utDjm-0000000EHK5-2ST3;
+	Mon, 01 Sep 2025 23:14:58 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: linux-fsdevel@vger.kernel.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Alexander Aring <alex.aring@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-api@vger.kernel.org
+Subject: [PATCH v2] uapi/fcntl: define RENAME_* and AT_RENAME_* macros
+Date: Mon,  1 Sep 2025 16:14:48 -0700
+Message-ID: <20250901231457.1179748-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jV0+S3M+JORbrPCq"
-Content-Disposition: inline
-In-Reply-To: <20250408220311.1033475-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Define the RENAME_* and AT_RENAME_* macros exactly the same as in
+recent glibc <stdio.h> so that duplicate definition build errors in
+both samples/watch_queue/watch_test.c and samples/vfs/test-statx.c
+no longer happen. When they defined in exactly the same way in
+multiple places, the build errors are prevented.
 
---jV0+S3M+JORbrPCq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Defining only the AT_RENAME_* macros is not sufficient since they
+depend on the RENAME_* macros, which may not be defined when the
+AT_RENAME_* macros are used.
 
-Yo,
+Build errors being fixed:
 
-On Wed, Apr 09, 2025 at 12:03:11AM +0200, Miguel Ojeda wrote:
-> If KASAN is enabled, and one runs in a clean repository e.g.:
->=20
->     make LLVM=3D1 prepare
->     make LLVM=3D1 prepare
->=20
-> Then the Rust code gets rebuilt, which should not happen.
->=20
-> The reason is some of the LLVM KASAN `rustc` flags are added in the
-> second run:
->=20
->     -Cllvm-args=3D-asan-instrumentation-with-call-threshold=3D10000
->     -Cllvm-args=3D-asan-stack=3D0
->     -Cllvm-args=3D-asan-globals=3D1
->     -Cllvm-args=3D-asan-kernel-mem-intrinsic-prefix=3D1
->=20
-> Further runs do not rebuild Rust because the flags do not change anymore.
->=20
-> Rebuilding like that in the second run is bad, even if this just happens
-> with KASAN enabled, but missing flags in the first one is even worse.
->=20
-> The root issue is that we pass, for some architectures and for the moment,
-> a generated `target.json` file. That file is not ready by the time `rustc`
-> gets called for the flag test, and thus the flag test fails just because
-> the file is not available, e.g.:
->=20
->     $ ... --target=3D./scripts/target.json ... -Cllvm-args=3D...
->     error: target file "./scripts/target.json" does not exist
->=20
-> There are a few approaches we could take here to solve this. For instance,
-> we could ensure that every time that the config is rebuilt, we regenerate
-> the file and recompute the flags. Or we could use the LLVM version to
-> check for these flags, instead of testing the flag (which may have other
-> advantages, such as allowing us to detect renames on the LLVM side).
->=20
-> However, it may be easier than that: `rustc` is aware of the `-Cllvm-args`
-> regardless of the `--target` (e.g. I checked that the list printed
-> is the same, plus that I can check for these flags even if I pass
-> a completely unrelated target), and thus we can just eliminate the
-> dependency completely.
->=20
-> Thus filter out the target.
+for samples/vfs/test-statx.c:
 
+In file included from ../samples/vfs/test-statx.c:23:
+usr/include/linux/fcntl.h:159:9: warning: ‘AT_RENAME_NOREPLACE’ redefined
+  159 | #define AT_RENAME_NOREPLACE     0x0001
+In file included from ../samples/vfs/test-statx.c:13:
+/usr/include/stdio.h:171:10: note: this is the location of the previous definition
+  171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+usr/include/linux/fcntl.h:160:9: warning: ‘AT_RENAME_EXCHANGE’ redefined
+  160 | #define AT_RENAME_EXCHANGE      0x0002
+/usr/include/stdio.h:173:10: note: this is the location of the previous definition
+  173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+usr/include/linux/fcntl.h:161:9: warning: ‘AT_RENAME_WHITEOUT’ redefined
+  161 | #define AT_RENAME_WHITEOUT      0x0004
+/usr/include/stdio.h:175:10: note: this is the location of the previous definition
+  175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
 
+for samples/watch_queue/watch_test.c:
 
+In file included from usr/include/linux/watch_queue.h:6,
+                 from ../samples/watch_queue/watch_test.c:19:
+usr/include/linux/fcntl.h:159:9: warning: ‘AT_RENAME_NOREPLACE’ redefined
+  159 | #define AT_RENAME_NOREPLACE     0x0001
+In file included from ../samples/watch_queue/watch_test.c:11:
+/usr/include/stdio.h:171:10: note: this is the location of the previous definition
+  171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+usr/include/linux/fcntl.h:160:9: warning: ‘AT_RENAME_EXCHANGE’ redefined
+  160 | #define AT_RENAME_EXCHANGE      0x0002
+/usr/include/stdio.h:173:10: note: this is the location of the previous definition
+  173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+usr/include/linux/fcntl.h:161:9: warning: ‘AT_RENAME_WHITEOUT’ redefined
+  161 | #define AT_RENAME_WHITEOUT      0x0004
+/usr/include/stdio.h:175:10: note: this is the location of the previous definition
+  175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
 
-> This does mean that `rustc-option` cannot be used to test a flag that
-> requires the right target, but we don't have other users yet, it is a
-> minimal change and we want to get rid of custom targets in the future.
+Fixes: b4fef22c2fb9 ("uapi: explain how per-syscall AT_* flags should be allocated")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+---
+Cc: Amir Goldstein <amir73il@gmail.com>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: Chuck Lever <chuck.lever@oracle.com>
+Cc: Alexander Aring <alex.aring@gmail.com>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: Aleksa Sarai <cyphar@cyphar.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: David Howells <dhowells@redhat.com>
+CC: linux-api@vger.kernel.org
+To: linux-fsdevel@vger.kernel.org
 
-Hmm, while this might be true, I think it should not actually have been
-true. Commit ca627e636551e ("rust: cfi: add support for CFI_CLANG with Rust=
-")
-added a cc-option check to the rust kconfig symbol, checking if the c
-compiler supports the integer normalisations stuff:
-	depends on !CFI_CLANG || RUSTC_VERSION >=3D 107900 && $(cc-option,-fsaniti=
-ze=3Dkcfi -fsanitize-cfi-icall-experimental-normalize-integers)
-and also sets the relevant options in the makefile:
-	ifdef CONFIG_RUST
-	       # Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST sel=
-ects
-	       # CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
-	       RUSTC_FLAGS_CFI   :=3D -Zsanitizer=3Dkcfi -Zsanitizer-cfi-normalize=
--integers
-	       KBUILD_RUSTFLAGS +=3D $(RUSTC_FLAGS_CFI)
-	       export RUSTC_FLAGS_CFI
-	endif
-but it should also have added a rustc-option check as, unfortunately,
-support for kcfi in rustc is target specific. This results in build
-breakages where the arch supports CFI_CLANG and RUST, but the target in
-use does not have the kcfi flag set.
-I attempted to fix this by adding:
-	diff --git a/arch/Kconfig b/arch/Kconfig
-	index d1b4ffd6e0856..235709fb75152 100644
-	--- a/arch/Kconfig
-	+++ b/arch/Kconfig
-	@@ -916,6 +916,7 @@ config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
-	 config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
-	        def_bool y
-	        depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
-	+       depends on $(rustc-option,-C panic=3Dabort -Zsanitizer=3Dkcfi -Zsa=
-nitizer-cfi-normalize-integers)
-	        depends on RUSTC_VERSION >=3D 107900
-	        # With GCOV/KASAN we need this fix: https://github.com/rust-lang/r=
-ust/pull/129373
-	        depends on (RUSTC_LLVM_VERSION >=3D 190103 && RUSTC_VERSION >=3D 1=
-08200) || \
-but of course this does not work for cross compilation, as you're
-stripping the target information out and so the check passes on my host
-even though my intended
-RUSTC_BOOTSTRAP=3D1 rustc -C panic=3Dabort -Zsanitizer=3Dkcfi -Zsanitizer-c=
-fi-normalize-integers -Ctarget-cpu=3Dgeneric-rv64 --target=3Driscv64imac-un=
-known-none-elf
-is a failure.
+ include/uapi/linux/fcntl.h |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-I dunno too much about rustc itself, but I suspect that adding kcfi to
-the target there is a "free" win, but that'll take time to trickle down
-and the minimum version rustc version for the kernel isn't going to have
-that.
-
-I'm not really sure what your target.json suggestion below is, so just
-reporting so that someone that understands the alternative solutions can
-fix this.
-
-Cheers,
-Conor.
-
->=20
-> We could only filter in the case `target.json` is used, to make it work
-> in more cases, but then it would be harder to notice that it may not
-> work in a couple architectures.
->=20
-> Cc: Matthew Maurer <mmaurer@google.com>
-> Cc: Sami Tolvanen <samitolvanen@google.com>
-> Cc: stable@vger.kernel.org
-> Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> By the way, I noticed that we are not getting `asan-instrument-allocas` e=
-nabled
-> in neither C nor Rust -- upstream LLVM renamed it in commit 8176ee9b5dda =
-("[asan]
-> Rename asan-instrument-allocas -> asan-instrument-dynamic-allocas")). But=
- it
-> happened a very long time ago (9 years ago), and the addition in the kern=
-el
-> is fairly old too, in 342061ee4ef3 ("kasan: support alloca() poisoning").
-> I assume it should either be renamed or removed? Happy to send a patch if=
- so.
->=20
->  scripts/Makefile.compiler | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-> index 8956587b8547..7ed7f92a7daa 100644
-> --- a/scripts/Makefile.compiler
-> +++ b/scripts/Makefile.compiler
-> @@ -80,7 +80,7 @@ ld-option =3D $(call try-run, $(LD) $(KBUILD_LDFLAGS) $=
-(1) -v,$(1),$(2),$(3))
->  # TODO: remove RUSTC_BOOTSTRAP=3D1 when we raise the minimum GNU Make ve=
-rsion to 4.4
->  __rustc-option =3D $(call try-run,\
->  	echo '#![allow(missing_docs)]#![feature(no_core)]#![no_core]' | RUSTC_B=
-OOTSTRAP=3D1\
-> -	$(1) --sysroot=3D/dev/null $(filter-out --sysroot=3D/dev/null,$(2)) $(3=
-)\
-> +	$(1) --sysroot=3D/dev/null $(filter-out --sysroot=3D/dev/null --target=
-=3D%,$(2)) $(3)\
->  	--crate-type=3Drlib --out-dir=3D$(TMPOUT) --emit=3Dobj=3D- - >/dev/null=
-,$(3),$(4))
->=20
->  # rustc-option
->=20
-> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
-> --
-> 2.49.0
-
---jV0+S3M+JORbrPCq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaLXb0gAKCRB4tDGHoIJi
-0r5JAP9stx0TbJREz/W9sAmDo2EJJVmlvCEc0CI4vZzSB2wjKwEA5jtbN7q3rJFE
-W/SZOgW6pFQIP1LZGnzYf2uxoNSSzQ0=
-=5atv
------END PGP SIGNATURE-----
-
---jV0+S3M+JORbrPCq--
+--- linux-next-20250819.orig/include/uapi/linux/fcntl.h
++++ linux-next-20250819/include/uapi/linux/fcntl.h
+@@ -156,9 +156,12 @@
+  */
+ 
+ /* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+-#define AT_RENAME_NOREPLACE	0x0001
+-#define AT_RENAME_EXCHANGE	0x0002
+-#define AT_RENAME_WHITEOUT	0x0004
++# define RENAME_NOREPLACE (1 << 0)
++# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
++# define RENAME_EXCHANGE (1 << 1)
++# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
++# define RENAME_WHITEOUT (1 << 2)
++# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+ 
+ /* Flag for faccessat(2). */
+ #define AT_EACCESS		0x200	/* Test access permitted for
