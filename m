@@ -1,242 +1,240 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BEC241673
-	for <patches@lists.linux.dev>; Mon,  1 Sep 2025 09:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A2F33E1;
+	Mon,  1 Sep 2025 17:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756718161; cv=none; b=lU5kHIFMt0L8oXkb6SdM3xrAR0k8AZdbcWgTlHIvTJXGYd0h3i5e4shign8rDNIRlZD/c9mHjfn3Ir5Bd20u1XVpbVmXhZX4P8eeFueFHz0s9CDo/ni3619wrXM9Sx4+s00oV5rd8Na7cG4eN6JffqHZfIhiX4YERrMXy1uSDQc=
+	t=1756748763; cv=none; b=QeIRxroLREOF5oeukXOYR5YPUhmwC+Am/ij5vs8iON5clVg6Sh11sYpF4Hiccc6qsE1qrn1RkxtVYJZFFB4skKM/31GlnHGSPZ21qNpDLc2w4rQOVr91oXdiT28d+mvV35RwwIipRl/oAZO98hFhko1p8lfYLTcQpdJrarAukfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756718161; c=relaxed/simple;
-	bh=uZf2IakSfTQaFKX1vM1m/YK6WJ46fYXNBqBBEW+YLNs=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=mnLfJWFxQmHsehgqk7rsAVxui6yTg4KQ5mims+LK7qhCI6UVyb/XcgN3As2t0GeRN6cGcSZ2A0FOeRYIs3UhwjENMj43FKDP435bOquUJWQnEp8PXg2jXpjmYJI8H08kC0w1EQnjkI4/pls2LVRxDy0ZSXfCeqDzu2b9o00b1EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mBsUcqEv; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1756748763; c=relaxed/simple;
+	bh=mkiyPyDj9nqRryG6c8NXuKXdNEmPx96Yw2sXoi/eVZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FfPe1wGx4wNMxfOu3brMpVfHjcLWD3k/FarWcKJBeIIQvD1Qe7TBjoKv0ifPcn4Z9djdrOaebF6dVmCD6qXMPu7wmgpPDWQRUjMCwb8o3zwd60fWyEpqIv2frv0roGOE70R92GnO+aYDUBiaOlUBYWxjlxmJUMJQgnCiYn6yFUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f9jzYM2f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mBsUcqEv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1756718160; x=1788254160;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=uZf2IakSfTQaFKX1vM1m/YK6WJ46fYXNBqBBEW+YLNs=;
-  b=mBsUcqEvvg43kE0o6PSZ3g2ZDrulRQ7Tv7dXZQaUb/068eSTYz1SQZkY
-   n7gnpBMjQfNcF5/wOeYTWloXb/B+k39Wk+bHQRLLsavlgt9lH+RCp0BNs
-   1HYaMydepO7FtmdY1cUWRj2mnVoWuwDh7vrNfFtNTOSg98BM6LTjHvIua
-   cyVJhq3CLX9hE/diyrHGcYoEDvCoUgytNStit05vm0rYljbl4QQpAeKN7
-   s4cWFkju0RPWt/I3klarns40h31Cbkx3POLKZiWvaWYFeTNnojB7ncu6g
-   4tQ2GDL8NTzYR8Z5zKh1VSlfIOvpxjex77xyNRYvRIz7yRiphl6cDPC7g
-   A==;
-X-CSE-ConnectionGUID: F2C3M3FJSgyEAuMGyV8tOA==
-X-CSE-MsgGUID: DDMOkLicSKudhLQHpzrAfw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11539"; a="70074978"
-X-IronPort-AV: E=Sophos;i="6.18,225,1751266800"; 
-   d="scan'208";a="70074978"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2025 02:15:59 -0700
-X-CSE-ConnectionGUID: pu9mFY/bSc294BZqaXtguA==
-X-CSE-MsgGUID: k62oB3IsSImcrt2AF5Cr2Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,225,1751266800"; 
-   d="scan'208";a="201920497"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.193])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2025 02:15:53 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 1 Sep 2025 12:15:49 +0300 (EEST)
-To: Tony Luck <tony.luck@intel.com>
-cc: Fenghua Yu <fenghuay@nvidia.com>, 
-    Reinette Chatre <reinette.chatre@intel.com>, 
-    Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>, 
-    Peter Newman <peternewman@google.com>, James Morse <james.morse@arm.com>, 
-    Babu Moger <babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, 
-    Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>, 
-    x86@kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    patches@lists.linux.dev
-Subject: Re: [PATCH v9 21/31] x86/resctrl: Read telemetry events
-In-Reply-To: <20250829193346.31565-22-tony.luck@intel.com>
-Message-ID: <3b0546d4-d0bc-f76e-e1c2-eef2b4abf0f1@linux.intel.com>
-References: <20250829193346.31565-1-tony.luck@intel.com> <20250829193346.31565-22-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f9jzYM2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AB5C4CEF0;
+	Mon,  1 Sep 2025 17:45:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756748761;
+	bh=mkiyPyDj9nqRryG6c8NXuKXdNEmPx96Yw2sXoi/eVZA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=f9jzYM2frw0sUhWaJqO5YlLtjhXYIosJUWmi8hp+hWqBqitZP4aVGcM/FJURdp0L9
+	 QEkKVlihsSyUaDvJ+YPo4Y3ob9/m6XjKTlBZmnsaZY/vUTQqGIw39EcrvwebN6cKP8
+	 VZl5Zt2VWHJ92aVNLQg5bvHPgMTwwCn8rLpUvjtLARC21u55EyeDsSyTpVejckMGFn
+	 ucg3FFGrJ4ZnMauZDEo0zdClc1o/8faywlWjLq2FGvQ8gA800u5Vs7bq78IGXQmE33
+	 PRx4e05LPg9rVkOcO87dFhF2A4ttjvbyG6vnR+Nnc68xSP+hrapVz911GoO8MRmOuC
+	 B30h4dRxkrW6g==
+Date: Mon, 1 Sep 2025 18:45:54 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Matthew Maurer <mmaurer@google.com>,
+	Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
+Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
+Message-ID: <20250901-shrimp-define-9d99cc2a012a@spud>
+References: <20250408220311.1033475-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jV0+S3M+JORbrPCq"
+Content-Disposition: inline
+In-Reply-To: <20250408220311.1033475-1-ojeda@kernel.org>
 
-On Fri, 29 Aug 2025, Tony Luck wrote:
 
-> Telemetry events are enumerated by the INTEL_PMT_TELEMETRY subsystem.
-> resctrl enables events with resctrl_enable_mon_event() passing a pointer
-> to the pmt_event structure for the event within the struct event_group.
-> The file system stores it in mon_evt::arch_priv.
-> 
-> Clear the address field of regions that did not pass the checks in
-> skip_this_region() so they will not be used by intel_aet_read_event().
-> This is safe to do because intel_pmt_get_regions_by_feature() allocates
-> a new pmt_feature_group structure to return to each caller and only
-> makes use of the pmt_feature_group::kref field when
-> intel_pmt_put_feature_group() returns the structure.
-> 
-> Add a check to resctrl_arch_rmid_read() for resource id
-> RDT_RESOURCE_PERF_PKG and directly call intel_aet_read_event()
-> passing the enum resctrl_event_id for the event and the arch_priv
-> pointer that was supplied when the event was enabled.
-> 
-> There may be multiple aggregators tracking each package, so scan all of
-> them and add up all counters. Aggregators may return an invalid data
-> indication if they have received no records for a given RMID. Return
-> success to the user if one or more aggregators provide valid data.
-> 
-> Resctrl now uses readq() so depends on X86_64. Update Kconfig.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+--jV0+S3M+JORbrPCq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Yo,
+
+On Wed, Apr 09, 2025 at 12:03:11AM +0200, Miguel Ojeda wrote:
+> If KASAN is enabled, and one runs in a clean repository e.g.:
+>=20
+>     make LLVM=3D1 prepare
+>     make LLVM=3D1 prepare
+>=20
+> Then the Rust code gets rebuilt, which should not happen.
+>=20
+> The reason is some of the LLVM KASAN `rustc` flags are added in the
+> second run:
+>=20
+>     -Cllvm-args=3D-asan-instrumentation-with-call-threshold=3D10000
+>     -Cllvm-args=3D-asan-stack=3D0
+>     -Cllvm-args=3D-asan-globals=3D1
+>     -Cllvm-args=3D-asan-kernel-mem-intrinsic-prefix=3D1
+>=20
+> Further runs do not rebuild Rust because the flags do not change anymore.
+>=20
+> Rebuilding like that in the second run is bad, even if this just happens
+> with KASAN enabled, but missing flags in the first one is even worse.
+>=20
+> The root issue is that we pass, for some architectures and for the moment,
+> a generated `target.json` file. That file is not ready by the time `rustc`
+> gets called for the flag test, and thus the flag test fails just because
+> the file is not available, e.g.:
+>=20
+>     $ ... --target=3D./scripts/target.json ... -Cllvm-args=3D...
+>     error: target file "./scripts/target.json" does not exist
+>=20
+> There are a few approaches we could take here to solve this. For instance,
+> we could ensure that every time that the config is rebuilt, we regenerate
+> the file and recompute the flags. Or we could use the LLVM version to
+> check for these flags, instead of testing the flag (which may have other
+> advantages, such as allowing us to detect renames on the LLVM side).
+>=20
+> However, it may be easier than that: `rustc` is aware of the `-Cllvm-args`
+> regardless of the `--target` (e.g. I checked that the list printed
+> is the same, plus that I can check for these flags even if I pass
+> a completely unrelated target), and thus we can just eliminate the
+> dependency completely.
+>=20
+> Thus filter out the target.
+
+
+
+
+> This does mean that `rustc-option` cannot be used to test a flag that
+> requires the right target, but we don't have other users yet, it is a
+> minimal change and we want to get rid of custom targets in the future.
+
+Hmm, while this might be true, I think it should not actually have been
+true. Commit ca627e636551e ("rust: cfi: add support for CFI_CLANG with Rust=
+")
+added a cc-option check to the rust kconfig symbol, checking if the c
+compiler supports the integer normalisations stuff:
+	depends on !CFI_CLANG || RUSTC_VERSION >=3D 107900 && $(cc-option,-fsaniti=
+ze=3Dkcfi -fsanitize-cfi-icall-experimental-normalize-integers)
+and also sets the relevant options in the makefile:
+	ifdef CONFIG_RUST
+	       # Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST sel=
+ects
+	       # CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
+	       RUSTC_FLAGS_CFI   :=3D -Zsanitizer=3Dkcfi -Zsanitizer-cfi-normalize=
+-integers
+	       KBUILD_RUSTFLAGS +=3D $(RUSTC_FLAGS_CFI)
+	       export RUSTC_FLAGS_CFI
+	endif
+but it should also have added a rustc-option check as, unfortunately,
+support for kcfi in rustc is target specific. This results in build
+breakages where the arch supports CFI_CLANG and RUST, but the target in
+use does not have the kcfi flag set.
+I attempted to fix this by adding:
+	diff --git a/arch/Kconfig b/arch/Kconfig
+	index d1b4ffd6e0856..235709fb75152 100644
+	--- a/arch/Kconfig
+	+++ b/arch/Kconfig
+	@@ -916,6 +916,7 @@ config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
+	 config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
+	        def_bool y
+	        depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
+	+       depends on $(rustc-option,-C panic=3Dabort -Zsanitizer=3Dkcfi -Zsa=
+nitizer-cfi-normalize-integers)
+	        depends on RUSTC_VERSION >=3D 107900
+	        # With GCOV/KASAN we need this fix: https://github.com/rust-lang/r=
+ust/pull/129373
+	        depends on (RUSTC_LLVM_VERSION >=3D 190103 && RUSTC_VERSION >=3D 1=
+08200) || \
+but of course this does not work for cross compilation, as you're
+stripping the target information out and so the check passes on my host
+even though my intended
+RUSTC_BOOTSTRAP=3D1 rustc -C panic=3Dabort -Zsanitizer=3Dkcfi -Zsanitizer-c=
+fi-normalize-integers -Ctarget-cpu=3Dgeneric-rv64 --target=3Driscv64imac-un=
+known-none-elf
+is a failure.
+
+I dunno too much about rustc itself, but I suspect that adding kcfi to
+the target there is a "free" win, but that'll take time to trickle down
+and the minimum version rustc version for the kernel isn't going to have
+that.
+
+I'm not really sure what your target.json suggestion below is, so just
+reporting so that someone that understands the alternative solutions can
+fix this.
+
+Cheers,
+Conor.
+
+>=20
+> We could only filter in the case `target.json` is used, to make it work
+> in more cases, but then it would be harder to notice that it may not
+> work in a couple architectures.
+>=20
+> Cc: Matthew Maurer <mmaurer@google.com>
+> Cc: Sami Tolvanen <samitolvanen@google.com>
+> Cc: stable@vger.kernel.org
+> Fixes: e3117404b411 ("kbuild: rust: Enable KASAN support")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
->  arch/x86/kernel/cpu/resctrl/internal.h  |  7 ++++
->  arch/x86/kernel/cpu/resctrl/intel_aet.c | 53 ++++++++++++++++++++++++-
->  arch/x86/kernel/cpu/resctrl/monitor.c   |  3 ++
->  arch/x86/Kconfig                        |  2 +-
->  4 files changed, 63 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index 9ddfbbe5c3cf..8986071dd72a 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -172,9 +172,16 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
->  #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
->  bool intel_aet_get_events(void);
->  void __exit intel_aet_exit(void);
-> +int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid,
-> +			 void *arch_priv, u64 *val);
->  #else
->  static inline bool intel_aet_get_events(void) { return false; }
->  static inline void __exit intel_aet_exit(void) { }
-> +static inline int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid,
-> +				       void *arch_priv, u64 *val)
-> +{
-> +	return -EINVAL;
-> +}
->  #endif
->  
->  #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-> diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> index 5c5466dc3189..9239740e9647 100644
-> --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> @@ -14,6 +14,7 @@
->  #include <linux/cleanup.h>
->  #include <linux/cpu.h>
->  #include <linux/intel_vsec.h>
-> +#include <linux/io.h>
->  #include <linux/resctrl.h>
->  
->  #include "internal.h"
-> @@ -125,8 +126,14 @@ static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
->  	bool usable_events = false;
->  
->  	for (int i = 0; i < p->count; i++) {
-> -		if (skip_this_region(&p->regions[i], e))
-> +		if (skip_this_region(&p->regions[i], e)) {
-> +			/*
-> +			 * Clear addr so that intel_aet_read_event() will
-> +			 * skip this region.
-> +			 */
-> +			p->regions[i].addr = NULL;
+> By the way, I noticed that we are not getting `asan-instrument-allocas` e=
+nabled
+> in neither C nor Rust -- upstream LLVM renamed it in commit 8176ee9b5dda =
+("[asan]
+> Rename asan-instrument-allocas -> asan-instrument-dynamic-allocas")). But=
+ it
+> happened a very long time ago (9 years ago), and the addition in the kern=
+el
+> is fairly old too, in 342061ee4ef3 ("kasan: support alloca() poisoning").
+> I assume it should either be renamed or removed? Happy to send a patch if=
+ so.
+>=20
+>  scripts/Makefile.compiler | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+> index 8956587b8547..7ed7f92a7daa 100644
+> --- a/scripts/Makefile.compiler
+> +++ b/scripts/Makefile.compiler
+> @@ -80,7 +80,7 @@ ld-option =3D $(call try-run, $(LD) $(KBUILD_LDFLAGS) $=
+(1) -v,$(1),$(2),$(3))
+>  # TODO: remove RUSTC_BOOTSTRAP=3D1 when we raise the minimum GNU Make ve=
+rsion to 4.4
+>  __rustc-option =3D $(call try-run,\
+>  	echo '#![allow(missing_docs)]#![feature(no_core)]#![no_core]' | RUSTC_B=
+OOTSTRAP=3D1\
+> -	$(1) --sysroot=3D/dev/null $(filter-out --sysroot=3D/dev/null,$(2)) $(3=
+)\
+> +	$(1) --sysroot=3D/dev/null $(filter-out --sysroot=3D/dev/null --target=
+=3D%,$(2)) $(3)\
+>  	--crate-type=3Drlib --out-dir=3D$(TMPOUT) --emit=3Dobj=3D- - >/dev/null=
+,$(3),$(4))
+>=20
+>  # rustc-option
+>=20
+> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+> --
+> 2.49.0
 
-As this is at least semi-hacky, I suggest you move it into own function 
-and add a bit longer comment to the function (along the lines what the 
-changelog also states why it works).
+--jV0+S3M+JORbrPCq
+Content-Type: application/pgp-signature; name="signature.asc"
 
->  			continue;
-> +		}
->  		usable_events = true;
->  	}
->  
-> @@ -204,3 +211,47 @@ void __exit intel_aet_exit(void)
->  		(*peg)->pfg = NULL;
->  	}
->  }
-> +
-> +#define DATA_VALID	BIT_ULL(63)
-> +#define DATA_BITS	GENMASK_ULL(62, 0)
+-----BEGIN PGP SIGNATURE-----
 
-+ linux/bits.h
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaLXb0gAKCRB4tDGHoIJi
+0r5JAP9stx0TbJREz/W9sAmDo2EJJVmlvCEc0CI4vZzSB2wjKwEA5jtbN7q3rJFE
+W/SZOgW6pFQIP1LZGnzYf2uxoNSSzQ0=
+=5atv
+-----END PGP SIGNATURE-----
 
-> +
-> +/*
-> + * Read counter for an event on a domain (summing all aggregators
-> + * on the domain). If an aggregator hasn't received any data for a
-> + * specific RMID, the MMIO read indicates that data is not valid.
-> + * Return success if at least one aggregator has valid data.
-> + */
-> +int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id eventid,
-> +			 void *arch_priv, u64 *val)
-> +{
-> +	struct pmt_event *pevt = arch_priv;
-> +	struct event_group *e;
-> +	bool valid = false;
-> +	u64 evtcount;
-> +	void *pevt0;
-> +	int idx;
-> +
-> +	pevt0 = pevt - pevt->idx;
-> +	e = container_of(pevt0, struct event_group, evts);
-
-+ linux/container_of.h
-
-> +	idx = rmid * e->num_events;
-> +	idx += pevt->idx;
-> +
-> +	if (idx * sizeof(u64) + sizeof(u64) > e->mmio_size) {
-> +		pr_warn_once("MMIO index %d out of range\n", idx);
-> +		return -EIO;
-> +	}
-> +
-> +	for (int i = 0; i < e->pfg->count; i++) {
-> +		if (!e->pfg->regions[i].addr)
-> +			continue;
-> +		if (e->pfg->regions[i].plat_info.package_id != domid)
-> +			continue;
-> +		evtcount = readq(e->pfg->regions[i].addr + idx * sizeof(u64));
-> +		if (!(evtcount & DATA_VALID))
-> +			continue;
-> +		*val += evtcount & DATA_BITS;
-> +		valid = true;
-> +	}
-> +
-> +	return valid ? 0 : -EINVAL;
-> +}
-> diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-> index 249569327e4a..0333dd85450b 100644
-> --- a/arch/x86/kernel/cpu/resctrl/monitor.c
-> +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-> @@ -232,6 +232,9 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
->  
->  	resctrl_arch_rmid_read_context_check();
->  
-> +	if (r->rid == RDT_RESOURCE_PERF_PKG)
-> +		return intel_aet_read_event(hdr->id, rmid, eventid, arch_priv, val);
-> +
->  	if (r->rid != RDT_RESOURCE_L3)
->  		return -EINVAL;
->  
-> diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-> index 50051fdf4659..a42f749f31cb 100644
-> --- a/arch/x86/Kconfig
-> +++ b/arch/x86/Kconfig
-> @@ -527,7 +527,7 @@ config X86_CPU_RESCTRL
->  
->  config X86_CPU_RESCTRL_INTEL_AET
->  	bool "Intel Application Energy Telemetry" if INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
-> -	depends on X86_CPU_RESCTRL && CPU_SUP_INTEL
-> +	depends on X86_64 && X86_CPU_RESCTRL && CPU_SUP_INTEL
->  	help
->  	  Enable per-RMID telemetry events in resctrl.
->  
-> 
-
--- 
- i.
-
+--jV0+S3M+JORbrPCq--
