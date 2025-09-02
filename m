@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A8030DD31;
-	Tue,  2 Sep 2025 13:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAAA30DD31;
+	Tue,  2 Sep 2025 13:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819775; cv=none; b=Jjddsapajwt7YZK7x1YP7PH18qxABuf30Fht+RFdUHETCSvRR4V/ouIXxMYL474dVqDInerScKwKA7y/IbrDOOXU6yKrx3a4SS4tW6Hg1ahqKvnKFr60XEZIJ+OCXM9Ndmo56I0fe1KemjkM6BR/uAfD/JROw6fP3oCI9zSM+Rw=
+	t=1756819778; cv=none; b=U/6smXL/e7FdRf8XcGitHw11U3qflVbcJRBambEqc8JiysMOerC/Htn8LdrbLaJj+LjOnZyDLnKb9Tc/d7HBg9AjrEHsG536+mVdxmybPdrFwlvNW9sjHU8F021VPzrqDdbiQ1QHuGYMtZnnk9hWm6ImI4eUSP5I51ci3jskpgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819775; c=relaxed/simple;
-	bh=DiKbeOjPAe7ndQR80UNRWrfUH83P/oEEH0iC84HgO0o=;
+	s=arc-20240116; t=1756819778; c=relaxed/simple;
+	bh=XM8dlX9Ty4kUQv+w6vk/+qzl6i26u4mQ+Z6x+FewmZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZ8U9UT1D0C+USIzrmz3c1pVqcCqETL8THBTG0WzMzlEzwAPYa9rYXqQpyuXEck2sZUPvXwxjmkGSD62J0DaFPITQeJJk3oQx4G/VtnJDJoGnAuybQkSo+SfZuqgVaTc43X7AL7lsDhuTU6sLQdTtzcqJ+IA2U51LmIHr1O77ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHg7NMM3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HyEoARhOcLlHLSBqeVMfHyFSuURMswqwfonUV4nX6Lr86EBJYsCZ7ZNPNYoMGf6uRkmgpYVY7ygt20miLDzYAa2eN7kZ/xTXeWc8v2CTeyYbinLPnZxJZ5MBEJbYPEBabae7XlqtaVNG4/xJDGfFW+RjdIOO7fEWE3wyRaUHlcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/1iGlez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHg7NMM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDD3C4CEED;
-	Tue,  2 Sep 2025 13:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/1iGlez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10DEC4CEED;
+	Tue,  2 Sep 2025 13:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819774;
-	bh=DiKbeOjPAe7ndQR80UNRWrfUH83P/oEEH0iC84HgO0o=;
+	s=korg; t=1756819778;
+	bh=XM8dlX9Ty4kUQv+w6vk/+qzl6i26u4mQ+Z6x+FewmZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kHg7NMM3IPfDhptGweT+8eooSKEyn7fXZT60ug6iFq72ZxoKL1/28CC1X2TK1zT6b
-	 8v3toa/Ni6MXoOnDFyTNGlBUBctICC2T4Z6/27ioyrwzi/RQuE2zWjCvw2YWY6OkqB
-	 xv9sHolovAsTGOzuIWROzZn0gBm1y271J8ZkGMGo=
+	b=w/1iGlezib6RQ6d353PHKuwRiFhjFHLQbIhLjXhTA60oRJ3dmBMvSu0q7f3qhq6hK
+	 ezJrJSaTtDActwtm0UfFa4Ufh5PQzNB55Wh3C3b5S/T7VvrAsOEvi6kmbTMi+GNnDh
+	 W11ayLuKIfytorKZFWt7sjwgaTqEUmCT7dRQRv0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 103/142] drm/mediatek: mtk_hdmi: Fix inverted parameters in some regmap_update_bits calls
-Date: Tue,  2 Sep 2025 15:20:05 +0200
-Message-ID: <20250902131952.229380556@linuxfoundation.org>
+Subject: [PATCH 6.16 094/142] net: rose: split remove and free operations in rose_remove_neigh()
+Date: Tue,  2 Sep 2025 15:19:56 +0200
+Message-ID: <20250902131951.864253944@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,51 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+From: Takamitsu Iwai <takamitz@amazon.co.jp>
 
-[ Upstream commit c34414883f773412964404d77cd2fea04c6f7d60 ]
+[ Upstream commit dcb34659028f856c423a29ef9b4e2571d203444d ]
 
-In mtk_hdmi driver, a recent change replaced custom register access
-function calls by regmap ones, but two replacements by regmap_update_bits
-were done incorrectly, because original offset and mask parameters were
-inverted, so fix them.
+The current rose_remove_neigh() performs two distinct operations:
+1. Removes rose_neigh from rose_neigh_list
+2. Frees the rose_neigh structure
 
-Fixes: d6e25b3590a0 ("drm/mediatek: hdmi: Use regmap instead of iomem for main registers")
-Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250818-mt8173-fix-hdmi-issue-v1-1-55aff9b0295d@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Split these operations into separate functions to improve maintainability
+and prepare for upcoming refcount_t conversion. The timer cleanup remains
+in rose_remove_neigh() because free operations can be called from timer
+itself.
+
+This patch introduce rose_neigh_put() to handle the freeing of rose_neigh
+structures and modify rose_remove_neigh() to handle removal only.
+
+Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250823085857.47674-2-takamitz@amazon.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_hdmi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/rose.h    |  8 ++++++++
+ net/rose/rose_route.c | 15 ++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-index 8803cd4a8bc9b..4404e1b527b52 100644
---- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
-@@ -182,8 +182,8 @@ static inline struct mtk_hdmi *hdmi_ctx_from_bridge(struct drm_bridge *b)
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 23267b4efcfa3..174b4f605d849 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -151,6 +151,14 @@ struct rose_sock {
  
- static void mtk_hdmi_hw_vid_black(struct mtk_hdmi *hdmi, bool black)
- {
--	regmap_update_bits(hdmi->regs, VIDEO_SOURCE_SEL,
--			   VIDEO_CFG_4, black ? GEN_RGB : NORMAL_PATH);
-+	regmap_update_bits(hdmi->regs, VIDEO_CFG_4,
-+			   VIDEO_SOURCE_SEL, black ? GEN_RGB : NORMAL_PATH);
- }
+ #define rose_sk(sk) ((struct rose_sock *)(sk))
  
- static void mtk_hdmi_hw_make_reg_writable(struct mtk_hdmi *hdmi, bool enable)
-@@ -310,8 +310,8 @@ static void mtk_hdmi_hw_send_info_frame(struct mtk_hdmi *hdmi, u8 *buffer,
++static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
++{
++	if (rose_neigh->ax25)
++		ax25_cb_put(rose_neigh->ax25);
++	kfree(rose_neigh->digipeat);
++	kfree(rose_neigh);
++}
++
+ /* af_rose.c */
+ extern ax25_address rose_callsign;
+ extern int  sysctl_rose_restart_request_timeout;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index b72bf8a08d489..0c44c416f4853 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -234,20 +234,12 @@ static void rose_remove_neigh(struct rose_neigh *rose_neigh)
  
- static void mtk_hdmi_hw_send_aud_packet(struct mtk_hdmi *hdmi, bool enable)
- {
--	regmap_update_bits(hdmi->regs, AUDIO_PACKET_OFF,
--			   GRL_SHIFT_R2, enable ? 0 : AUDIO_PACKET_OFF);
-+	regmap_update_bits(hdmi->regs, GRL_SHIFT_R2,
-+			   AUDIO_PACKET_OFF, enable ? 0 : AUDIO_PACKET_OFF);
- }
+ 	if ((s = rose_neigh_list) == rose_neigh) {
+ 		rose_neigh_list = rose_neigh->next;
+-		if (rose_neigh->ax25)
+-			ax25_cb_put(rose_neigh->ax25);
+-		kfree(rose_neigh->digipeat);
+-		kfree(rose_neigh);
+ 		return;
+ 	}
  
- static void mtk_hdmi_hw_config_sys(struct mtk_hdmi *hdmi)
+ 	while (s != NULL && s->next != NULL) {
+ 		if (s->next == rose_neigh) {
+ 			s->next = rose_neigh->next;
+-			if (rose_neigh->ax25)
+-				ax25_cb_put(rose_neigh->ax25);
+-			kfree(rose_neigh->digipeat);
+-			kfree(rose_neigh);
+ 			return;
+ 		}
+ 
+@@ -331,8 +323,10 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
+ 
+-			if (rose_neigh->count == 0 && rose_neigh->use == 0)
++			if (rose_neigh->count == 0 && rose_neigh->use == 0) {
+ 				rose_remove_neigh(rose_neigh);
++				rose_neigh_put(rose_neigh);
++			}
+ 
+ 			rose_node->count--;
+ 
+@@ -513,6 +507,7 @@ void rose_rt_device_down(struct net_device *dev)
+ 		}
+ 
+ 		rose_remove_neigh(s);
++		rose_neigh_put(s);
+ 	}
+ 	spin_unlock_bh(&rose_neigh_list_lock);
+ 	spin_unlock_bh(&rose_node_list_lock);
+@@ -569,6 +564,7 @@ static int rose_clear_routes(void)
+ 		if (s->use == 0 && !s->loopback) {
+ 			s->count = 0;
+ 			rose_remove_neigh(s);
++			rose_neigh_put(s);
+ 		}
+ 	}
+ 
+@@ -1301,6 +1297,7 @@ void __exit rose_rt_free(void)
+ 		rose_neigh = rose_neigh->next;
+ 
+ 		rose_remove_neigh(s);
++		rose_neigh_put(s);
+ 	}
+ 
+ 	while (rose_node != NULL) {
 -- 
 2.50.1
 
