@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5DA30C35F;
-	Tue,  2 Sep 2025 13:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9984F2DECDE;
+	Tue,  2 Sep 2025 13:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819986; cv=none; b=boEiZlNSyF4npCAws0YPzmGSzJhvQ8g+KtrxO120w/eb2rPirozt656jpZtXO2igjSr6LnWmiY5slQb7B0Vn7/Y/zJ0yDWvQ2HSBMKQ2DFURrnWezX6tQPfj3GsrOPRWO3NboQQZemS6NIZVr6sq1bKA6B3K5ieAaklnTdCaZlw=
+	t=1756819989; cv=none; b=HdtZr5/C3tVenzVtL7A8OzXa8q9l1XBQqHepMH+DM08tOl74VP9PGQofl0H/BtNf//qTtVhEyqyd2iFGYNWPWgnMZzTAqunu8BvVo2puFQg3UKABFvEdlEbw1rfAPkwWtYUi99othzVHQmrfvfmSRks8+VeeCajZcEGnx/Ku5TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819986; c=relaxed/simple;
-	bh=H+AcWaqyfCZ5GmK0CnH7LOOmIf0KwL9sNiVgFGrTe5E=;
+	s=arc-20240116; t=1756819989; c=relaxed/simple;
+	bh=PpZwJ3cTB/Uxm3A4NhUDednMz58VnEOJrev5UTYDnqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEtPCw2AL3RauJBmg5uGlWxYrBmdCc6zbiUbREmg4tXfEg+caYM7l5U7JBYBG6B5ATDEaS2zOs/+eB2Pdg0PsdD4D7oby7W9m2HKif51PLLiAGZnRBgS499/8fRBeJmBzzDHv1Kf2O9bDQNF4LqXhmIqUAO56t52zT5EflvR/Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPjgtmnm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmANbkE1PK3yKbpHf6dqHUw8DzN7wPJ4SQba95+B8DXdTrY82qxxUvXexRpQrsakVTqMSbrIZae6sY0jlbvYQGCb2Lsl0HnH2EasW0eH+JybOvIC1x/kxuNoWIJacK5v2oKv6na2Z9xUXE1A/M75JwxWumrDNz4tH2kn8QPAuPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lXiF0LK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPjgtmnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679E6C4CEED;
-	Tue,  2 Sep 2025 13:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lXiF0LK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055F9C4CEED;
+	Tue,  2 Sep 2025 13:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819986;
-	bh=H+AcWaqyfCZ5GmK0CnH7LOOmIf0KwL9sNiVgFGrTe5E=;
+	s=korg; t=1756819989;
+	bh=PpZwJ3cTB/Uxm3A4NhUDednMz58VnEOJrev5UTYDnqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oPjgtmnmrVi++tnfQFWURLNPcIjNt5KcP+fKRWZABiTVRqIgK3hfAaHjvzpCE8hmi
-	 xizhuyUAioD2fUGh8CdliuxcpGRIvpov8Rxssmpe5QlmiYRzBXhLwwbCXa4qHeBvVe
-	 qeDmAtCX2bu73bMgrilZIIf7Cqzrr+i2cLkfyvSA=
+	b=2lXiF0LKmNLu1yjyH0Zfs6EQQzfyYfSi0HFHaE0YXf3LSz/TBYVs7xLEeAyCbHiIV
+	 vQrTy/latyMHEo/B24vXMEvY3PP0AicTQYxJPFAdaQcrHQw1aRWU1BcqS1/hZPP8jM
+	 VjfXt+MgI1UE2JpqgWtutkpu2LLEx5FL+IdBGOvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ludovico de Nittis <ludovico.denittis@collabora.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 56/95] net: stmmac: Set CIC bit only for TX queues with COE
-Date: Tue,  2 Sep 2025 15:20:32 +0200
-Message-ID: <20250902131941.755044860@linuxfoundation.org>
+Subject: [PATCH 6.12 30/95] Bluetooth: hci_event: Mark connection as closed during suspend disconnect
+Date: Tue,  2 Sep 2025 15:20:06 +0200
+Message-ID: <20250902131940.768602173@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,66 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Ludovico de Nittis <ludovico.denittis@collabora.com>
 
-[ Upstream commit b1eded580ab28119de0b0f21efe37ee2b4419144 ]
+[ Upstream commit b7fafbc499b5ee164018eb0eefe9027f5a6aaad2 ]
 
-Currently, in the AF_XDP transmit paths, the CIC bit of
-TX Desc3 is set for all packets. Setting this bit for
-packets transmitting through queues that don't support
-checksum offloading causes the TX DMA to get stuck after
-transmitting some packets. This patch ensures the CIC bit
-of TX Desc3 is set only if the TX queue supports checksum
-offloading.
+When suspending, the disconnect command for an active Bluetooth
+connection could be issued, but the corresponding
+`HCI_EV_DISCONN_COMPLETE` event might not be received before the system
+completes the suspend process. This can lead to an inconsistent state.
 
-Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-3-c225fe4444c0@altera.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+On resume, the controller may auto-accept reconnections from the same
+device (due to suspend event filters), but these new connections are
+rejected by the kernel which still has connection objects from before
+suspend. Resulting in errors like:
+```
+kernel: Bluetooth: hci0: ACL packet for unknown connection handle 1
+kernel: Bluetooth: hci0: Ignoring HCI_Connection_Complete for existing
+connection
+```
+
+This is a btmon snippet that shows the issue:
+```
+< HCI Command: Disconnect (0x01|0x0006) plen 3
+        Handle: 1 Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
+        Reason: Remote User Terminated Connection (0x13)
+> HCI Event: Command Status (0x0f) plen 4
+      Disconnect (0x01|0x0006) ncmd 2
+        Status: Success (0x00)
+[...]
+// Host suspends with the event filter set for the device
+// On resume, the device tries to reconnect with a new handle
+
+> HCI Event: Connect Complete (0x03) plen 11
+        Status: Success (0x00)
+        Handle: 2
+        Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
+
+// Kernel ignores this event because there is an existing connection
+with
+// handle 1
+```
+
+By explicitly setting the connection state to BT_CLOSED we can ensure a
+consistent state, even if we don't receive the disconnect complete event
+in time.
+
+Link: https://github.com/bluez/bluez/issues/1226
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+Signed-off-by: Ludovico de Nittis <ludovico.denittis@collabora.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_event.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 058cd9e9fd71d..40d56ff66b6a8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2488,6 +2488,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 	struct netdev_queue *nq = netdev_get_tx_queue(priv->dev, queue);
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
- 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
-+	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
- 	struct xsk_buff_pool *pool = tx_q->xsk_pool;
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc = NULL;
-@@ -2573,7 +2574,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 		}
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 428aba38a3654..b8213bfa0a674 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2709,6 +2709,12 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
+ 		goto done;
+ 	}
  
- 		stmmac_prepare_tx_desc(priv, tx_desc, 1, xdp_desc.len,
--				       true, priv->mode, true, true,
-+				       csum, priv->mode, true, true,
- 				       xdp_desc.len);
++	/* During suspend, mark connection as closed immediately
++	 * since we might not receive HCI_EV_DISCONN_COMPLETE
++	 */
++	if (hdev->suspended)
++		conn->state = BT_CLOSED;
++
+ 	mgmt_conn = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
  
- 		stmmac_enable_dma_transmission(priv, priv->ioaddr, queue);
-@@ -4902,6 +4903,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- {
- 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
-+	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc;
- 	dma_addr_t dma_addr;
-@@ -4953,7 +4955,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 	stmmac_set_desc_addr(priv, tx_desc, dma_addr);
- 
- 	stmmac_prepare_tx_desc(priv, tx_desc, 1, xdpf->len,
--			       true, priv->mode, true, true,
-+			       csum, priv->mode, true, true,
- 			       xdpf->len);
- 
- 	tx_q->tx_count_frames++;
+ 	if (conn->type == ACL_LINK) {
 -- 
 2.50.1
 
