@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435D4305076;
-	Tue,  2 Sep 2025 13:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEC0305062;
+	Tue,  2 Sep 2025 13:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819890; cv=none; b=pPOd07aEORQ+h0kJXBQH+uQS8tLOTWFWdD+wLVbQnHLq8pqhnd/OurmBw694MTQJAscvgQoeczIh2XIKFBtrDoUNDQk6OTsuVHsBR39du4dacLkCBVBF0VPsSa2/CVOq2tNH+bznd/IWuU4Gu5NnWKSWlU1GNYhy8YVWp0gnoZw=
+	t=1756819894; cv=none; b=QCC/gDtWQVq5p1vMXar/qPbn4tdHJjaO1AGLk4bm7u10BGINW20D60kp9S6g1g9OfmitZiPC5uD621oMHSQi0n5ZcOBx2inoM0zty4IQUikyM7oGJqsQR4EIOpQ7UW4vthGt8rj3PZ/U42K4OMwHLufxHrh7nVYt27kxKq4tzJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819890; c=relaxed/simple;
-	bh=A/H7RSy1GPaI7c8IMD/jzCg+mM9b7PGRlFLH97bMrPc=;
+	s=arc-20240116; t=1756819894; c=relaxed/simple;
+	bh=rJJJI4Uc3MHTbNgz8SMOfQC5wtgueul78WD/Iah7Opc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vB6Uj8S6lvnCh9V8sCzFDSmiZXMmRdr3DqfbemWXC/PGoFXN4UZEzxMEDZezBxfUaha63dkKhi3XB2FUr7IU4gaHCWlGFGCqqAeJ64BX5Z5GQFFWH9Ms/6c2be1JtuRuHzqPTGMNeS/Ofr6ohFJZbpBe0Wqe9h15xPLkSDt4j/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm43NTLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETkFJouh00nc4DgAlfyM1t+6bACEWJA4h2yQxfN5zwZZCncHfiMcmjrkiB61wnSUY+808YuYwkqjJacvTKflt+mqSrIG0YepNDn73///UldzolSe3EcG+dPw9HHVamIsPPXCahWYep2+zpqmrGfhU2tdOChuY5w0QlNTS4gCZDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcsD/GRh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm43NTLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94F5C4CEF4;
-	Tue,  2 Sep 2025 13:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcsD/GRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E39C4CEF4;
+	Tue,  2 Sep 2025 13:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819890;
-	bh=A/H7RSy1GPaI7c8IMD/jzCg+mM9b7PGRlFLH97bMrPc=;
+	s=korg; t=1756819893;
+	bh=rJJJI4Uc3MHTbNgz8SMOfQC5wtgueul78WD/Iah7Opc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qm43NTLx1adr4Clwg+M/hXIS8ldS5LPWVsn/aRpJIKgEegCGfZdQTsEo1WEOHHPxW
-	 an19GTshK+9FjSqMhJpoaVugDiywaFLGqEvKLMUYroLCU+VF19OL/a8S1VCj8bhJF7
-	 D+4mVyXzLBVp4Q2g5X1kw7MoH3Hsm8r7G5bJbN0U=
+	b=rcsD/GRhGXOuK7x3J0SO90SI9bzFiSluaJIQWqNCisZT95jXn+YPlFfJUStVavVAz
+	 QsroDLgf8xdArcfHTChV1oz1tEQ5r6NqHxLT0LPELc4nwl6rnWbmyqKOMYutUXXDl/
+	 k+pW2Npz2KrdqDwhdzh8t6f8W5N12OcB/hFqxX/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Ye Weihua <yeweihua4@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 03/95] trace/fgraph: Fix the warning caused by missing unregister notifier
-Date: Tue,  2 Sep 2025 15:19:39 +0200
-Message-ID: <20250902131939.742134593@linuxfoundation.org>
+Subject: [PATCH 6.12 04/95] of: dynamic: Fix memleak when of_pci_add_properties() failed
+Date: Tue,  2 Sep 2025 15:19:40 +0200
+Message-ID: <20250902131939.780273661@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,56 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Weihua <yeweihua4@huawei.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit edede7a6dcd7435395cf757d053974aaab6ab1c2 ]
+[ Upstream commit c81f6ce16785cc07ae81f53deb07b662ed0bb3a5 ]
 
-This warning was triggered during testing on v6.16:
+When of_pci_add_properties() failed, of_changeset_destroy() is called to
+free the changeset. And of_changeset_destroy() puts device tree node in
+each entry but does not free property in the entry. This leads to memory
+leak in the failure case.
 
-notifier callback ftrace_suspend_notifier_call already registered
-WARNING: CPU: 2 PID: 86 at kernel/notifier.c:23 notifier_chain_register+0x44/0xb0
-...
-Call Trace:
- <TASK>
- blocking_notifier_chain_register+0x34/0x60
- register_ftrace_graph+0x330/0x410
- ftrace_profile_write+0x1e9/0x340
- vfs_write+0xf8/0x420
- ? filp_flush+0x8a/0xa0
- ? filp_close+0x1f/0x30
- ? do_dup2+0xaf/0x160
- ksys_write+0x65/0xe0
- do_syscall_64+0xa4/0x260
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+In of_changeset_add_prop_helper(), add the property to the device tree node
+deadprops list. Thus, the property will also be freed along with device
+tree node.
 
-When writing to the function_profile_enabled interface, the notifier was
-not unregistered after start_graph_tracing failed, causing a warning the
-next time function_profile_enabled was written.
-
-Fixed by adding unregister_pm_notifier in the exception path.
-
-Link: https://lore.kernel.org/20250818073332.3890629-1-yeweihua4@huawei.com
-Fixes: 4a2b8dda3f870 ("tracing/function-graph-tracer: fix a regression while suspend to disk")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Ye Weihua <yeweihua4@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: b544fc2b8606 ("of: dynamic: Add interfaces for creating device node dynamically")
+Reported-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Closes: https://lore.kernel.org/all/aJms+YT8TnpzpCY8@lpieralisi/
+Tested-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://lore.kernel.org/r/20250818152221.3685724-1-lizhi.hou@amd.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/fgraph.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/of/dynamic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
-index c12335499ec91..2eed8bc672f91 100644
---- a/kernel/trace/fgraph.c
-+++ b/kernel/trace/fgraph.c
-@@ -1316,6 +1316,7 @@ int register_ftrace_graph(struct fgraph_ops *gops)
- 		ftrace_graph_active--;
- 		gops->saved_func = NULL;
- 		fgraph_lru_release_index(i);
-+		unregister_pm_notifier(&ftrace_suspend_notifier);
- 	}
+diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
+index 110104a936d9c..fcaaadc2eca1d 100644
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -938,6 +938,9 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
+ 	if (ret)
+ 		__of_prop_free(new_pp);
+ 
++	new_pp->next = np->deadprops;
++	np->deadprops = new_pp;
++
  	return ret;
  }
+ 
 -- 
 2.50.1
 
