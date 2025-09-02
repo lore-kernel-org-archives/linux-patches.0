@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F103128D5;
-	Tue,  2 Sep 2025 13:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02F63101A8;
+	Tue,  2 Sep 2025 13:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820381; cv=none; b=asRTJ+RA5mJf1NYEwOk3sOFTYmocDx8+IyCl3HUcgA8s8SeNokhrugec7DEUmcR4MrPKmfdxG5w24C31z+lwy0lPGtLOO+9EuK/UrCN6gTozD6NT5QF2cYkciB+PlDgDGS8cXi1rkORQ9vZNpe98+IxtVYu5903RtYAfU1Gsf2A=
+	t=1756820385; cv=none; b=lgj6Mjw8rPA7tCe/P+g6RTfozpx8rd/CrjJA1upshy2PQ3yE54YB0KoZfo0diUzdSWQBuNgmNZp5KvSkt7oK79mI3hiWzCs1elGwck5LL4TKdjDaLsGpnrTXxWPsDi/cIJ2lWfly+sxsZPtlnmbRJQSzsNu1JxlKwowuVd3mc/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820381; c=relaxed/simple;
-	bh=Pt5FSQxhRTPzFxg7URdJXRRjDlYcdDMl+oSyQpKpbMc=;
+	s=arc-20240116; t=1756820385; c=relaxed/simple;
+	bh=U8POCE9LV+gfUUlsL9yclOBeenQXhPIdNKhac5KWwgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3sjLyQxvtGPCLmCWh7jbbnAv8J7aQCIWSp0MWmp2BNa/u/H9aXlrKv1gSgrS+B5vLYY9IT8AyW1mxyGjIvKkUNEwVAss3S8zRl0/mlCjg28A+RCndoy1kIj2vlnnbiu0yaLjvKjnDTL3iRrUtRBxV2tnZAmN8VzoRDoVwfgFPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHPEhgM7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zv8i6nkCyK0M4v2CQchsqr8BJ0QhacRjsszjNyIR5Mr4cecEZftLfvM+j/D6KFGHZ/7KRpzLmxEUL4w4Mq1NcqwuEQZC6ryFJmk+azMfpEXr1BupaJO8gy2EPuj8vkUPIlza9CzIidOwL3YrgsmIetXy40fpHOCQURVYI+7xw6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAg5F3pE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHPEhgM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1458C4CEF4;
-	Tue,  2 Sep 2025 13:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAg5F3pE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BACC4CEED;
+	Tue,  2 Sep 2025 13:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820381;
-	bh=Pt5FSQxhRTPzFxg7URdJXRRjDlYcdDMl+oSyQpKpbMc=;
+	s=korg; t=1756820384;
+	bh=U8POCE9LV+gfUUlsL9yclOBeenQXhPIdNKhac5KWwgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHPEhgM7vLjI7DnZ21rZl5gDhpUWmT8yQYrragsESH+E81ja1aeqdh3hJt9sXWQq0
-	 RjeDzWJWQCrz6D+ikCjsxgTbYey6/OewWs1Ps/c3cNedP2NZdG+BvMiIJgtWk0tXVG
-	 G6evHqBZIG+2pxSEPHe1YLo1YhpPwMZzOuIEiqsY=
+	b=nAg5F3pE726WxWAl4IWIlSUWsFaXWQ9CLvma2kXYUI3UnYu7vakVcalw9rp0ZLkkl
+	 EudIpLANWH2ezsYLOv8Qg7RfdPoKbxIfmkUsxubvhyt3FtucnbicUOLCOEyWI27Ln4
+	 710tbUIb1UwZ+srY8VXR+nXTfqtkejN1+2i4RyLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Joe Quanaim <jdq@meta.com>,
-	Andrew Steffen <aksteffen@meta.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.1 11/50] NFS: Fix a race when updating an existing write
-Date: Tue,  2 Sep 2025 15:21:02 +0200
-Message-ID: <20250902131930.965591805@linuxfoundation.org>
+	Andrey Ryabinin <arbn@yandex-team.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.1 12/50] vhost/net: Protect ubufs with rcu read lock in vhost_net_ubuf_put()
+Date: Tue,  2 Sep 2025 15:21:03 +0200
+Message-ID: <20250902131931.005676144@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -52,178 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit 76d2e3890fb169168c73f2e4f8375c7cc24a765e upstream.
+commit dd54bcf86c91a4455b1f95cbc8e9ac91205f3193 upstream.
 
-After nfs_lock_and_join_requests() tests for whether the request is
-still attached to the mapping, nothing prevents a call to
-nfs_inode_remove_request() from succeeding until we actually lock the
-page group.
-The reason is that whoever called nfs_inode_remove_request() doesn't
-necessarily have a lock on the page group head.
+When operating on struct vhost_net_ubuf_ref, the following execution
+sequence is theoretically possible:
+CPU0 is finalizing DMA operation                   CPU1 is doing VHOST_NET_SET_BACKEND
+                             // ubufs->refcount == 2
+vhost_net_ubuf_put()                               vhost_net_ubuf_put_wait_and_free(oldubufs)
+                                                     vhost_net_ubuf_put_and_wait()
+                                                       vhost_net_ubuf_put()
+                                                         int r = atomic_sub_return(1, &ubufs->refcount);
+                                                         // r = 1
+int r = atomic_sub_return(1, &ubufs->refcount);
+// r = 0
+                                                      wait_event(ubufs->wait, !atomic_read(&ubufs->refcount));
+                                                      // no wait occurs here because condition is already true
+                                                    kfree(ubufs);
+if (unlikely(!r))
+  wake_up(&ubufs->wait);  // use-after-free
 
-So in order to avoid races, let's take the page group lock earlier in
-nfs_lock_and_join_requests(), and hold it across the removal of the
-request in nfs_inode_remove_request().
+This leads to use-after-free on ubufs access. This happens because CPU1
+skips waiting for wake_up() when refcount is already zero.
 
-Reported-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Joe Quanaim <jdq@meta.com>
-Tested-by: Andrew Steffen <aksteffen@meta.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: bd37d6fce184 ("NFSv4: Convert nfs_lock_and_join_requests() to use nfs_page_find_head_request()")
+To prevent that use a read-side RCU critical section in vhost_net_ubuf_put(),
+as suggested by Hillf Danton. For this lock to take effect, free ubufs with
+kfree_rcu().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 0ad8b480d6ee9 ("vhost: fix ref cnt checking deadlock")
+Reported-by: Andrey Ryabinin <arbn@yandex-team.com>
+Suggested-by: Hillf Danton <hdanton@sina.com>
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Message-Id: <20250805130917.727332-1-kniv@yandex-team.ru>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pagelist.c        |    9 +++---
- fs/nfs/write.c           |   66 ++++++++++++++++-------------------------------
- include/linux/nfs_page.h |    1 
- 3 files changed, 29 insertions(+), 47 deletions(-)
+ drivers/vhost/net.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/nfs/pagelist.c
-+++ b/fs/nfs/pagelist.c
-@@ -233,13 +233,14 @@ nfs_page_group_unlock(struct nfs_page *r
- 	nfs_page_clear_headlock(req);
- }
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -95,6 +95,7 @@ struct vhost_net_ubuf_ref {
+ 	atomic_t refcount;
+ 	wait_queue_head_t wait;
+ 	struct vhost_virtqueue *vq;
++	struct rcu_head rcu;
+ };
  
--/*
-- * nfs_page_group_sync_on_bit_locked
-+/**
-+ * nfs_page_group_sync_on_bit_locked - Test if all requests have @bit set
-+ * @req: request in page group
-+ * @bit: PG_* bit that is used to sync page group
-  *
-  * must be called with page group lock held
-  */
--static bool
--nfs_page_group_sync_on_bit_locked(struct nfs_page *req, unsigned int bit)
-+bool nfs_page_group_sync_on_bit_locked(struct nfs_page *req, unsigned int bit)
+ #define VHOST_NET_BATCH 64
+@@ -248,9 +249,13 @@ vhost_net_ubuf_alloc(struct vhost_virtqu
+ 
+ static int vhost_net_ubuf_put(struct vhost_net_ubuf_ref *ubufs)
  {
- 	struct nfs_page *head = req->wb_head;
- 	struct nfs_page *tmp;
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -154,20 +154,10 @@ nfs_page_set_inode_ref(struct nfs_page *
- 	}
+-	int r = atomic_sub_return(1, &ubufs->refcount);
++	int r;
++
++	rcu_read_lock();
++	r = atomic_sub_return(1, &ubufs->refcount);
+ 	if (unlikely(!r))
+ 		wake_up(&ubufs->wait);
++	rcu_read_unlock();
+ 	return r;
  }
  
--static int
--nfs_cancel_remove_inode(struct nfs_page *req, struct inode *inode)
-+static void nfs_cancel_remove_inode(struct nfs_page *req, struct inode *inode)
+@@ -263,7 +268,7 @@ static void vhost_net_ubuf_put_and_wait(
+ static void vhost_net_ubuf_put_wait_and_free(struct vhost_net_ubuf_ref *ubufs)
  {
--	int ret;
--
--	if (!test_bit(PG_REMOVE, &req->wb_flags))
--		return 0;
--	ret = nfs_page_group_lock(req);
--	if (ret)
--		return ret;
- 	if (test_and_clear_bit(PG_REMOVE, &req->wb_flags))
- 		nfs_page_set_inode_ref(req, inode);
--	nfs_page_group_unlock(req);
--	return 0;
+ 	vhost_net_ubuf_put_and_wait(ubufs);
+-	kfree(ubufs);
++	kfree_rcu(ubufs, rcu);
  }
  
- static struct nfs_page *
-@@ -239,36 +229,6 @@ static struct nfs_page *nfs_page_find_he
- 	return req;
- }
- 
--static struct nfs_page *nfs_find_and_lock_page_request(struct page *page)
--{
--	struct inode *inode = page_file_mapping(page)->host;
--	struct nfs_page *req, *head;
--	int ret;
--
--	for (;;) {
--		req = nfs_page_find_head_request(page);
--		if (!req)
--			return req;
--		head = nfs_page_group_lock_head(req);
--		if (head != req)
--			nfs_release_request(req);
--		if (IS_ERR(head))
--			return head;
--		ret = nfs_cancel_remove_inode(head, inode);
--		if (ret < 0) {
--			nfs_unlock_and_release_request(head);
--			return ERR_PTR(ret);
--		}
--		/* Ensure that nobody removed the request before we locked it */
--		if (head == nfs_page_private_request(page))
--			break;
--		if (PageSwapCache(page))
--			break;
--		nfs_unlock_and_release_request(head);
--	}
--	return head;
--}
--
- /* Adjust the file length if we're writing beyond the end */
- static void nfs_grow_file(struct page *page, unsigned int offset, unsigned int count)
- {
-@@ -625,14 +585,32 @@ nfs_lock_and_join_requests(struct page *
- 	 * reference to the whole page group - the group will not be destroyed
- 	 * until the head reference is released.
- 	 */
--	head = nfs_find_and_lock_page_request(page);
-+retry:
-+	head = nfs_page_find_head_request(page);
- 	if (IS_ERR_OR_NULL(head))
- 		return head;
- 
-+	while (!nfs_lock_request(head)) {
-+		ret = nfs_wait_on_request(head);
-+		if (ret < 0) {
-+			nfs_release_request(head);
-+			return ERR_PTR(ret);
-+		}
-+	}
-+
- 	ret = nfs_page_group_lock(head);
- 	if (ret < 0)
- 		goto out_unlock;
- 
-+	/* Ensure that nobody removed the request before we locked it */
-+	if (head != nfs_page_private_request(page) && !PageSwapCache(page)) {
-+		nfs_page_group_unlock(head);
-+		nfs_unlock_and_release_request(head);
-+		goto retry;
-+	}
-+
-+	nfs_cancel_remove_inode(head, inode);
-+
- 	/* lock each request in the page group */
- 	for (subreq = head->wb_this_page;
- 	     subreq != head;
-@@ -853,7 +831,8 @@ static void nfs_inode_remove_request(str
- 	struct nfs_inode *nfsi = NFS_I(inode);
- 	struct nfs_page *head;
- 
--	if (nfs_page_group_sync_on_bit(req, PG_REMOVE)) {
-+	nfs_page_group_lock(req);
-+	if (nfs_page_group_sync_on_bit_locked(req, PG_REMOVE)) {
- 		head = req->wb_head;
- 
- 		spin_lock(&mapping->private_lock);
-@@ -864,6 +843,7 @@ static void nfs_inode_remove_request(str
- 		}
- 		spin_unlock(&mapping->private_lock);
- 	}
-+	nfs_page_group_unlock(req);
- 
- 	if (test_and_clear_bit(PG_INODE_REF, &req->wb_flags)) {
- 		nfs_release_request(req);
---- a/include/linux/nfs_page.h
-+++ b/include/linux/nfs_page.h
-@@ -148,6 +148,7 @@ extern	void nfs_join_page_group(struct n
- extern int nfs_page_group_lock(struct nfs_page *);
- extern void nfs_page_group_unlock(struct nfs_page *);
- extern bool nfs_page_group_sync_on_bit(struct nfs_page *, unsigned int);
-+extern bool nfs_page_group_sync_on_bit_locked(struct nfs_page *, unsigned int);
- extern	int nfs_page_set_headlock(struct nfs_page *req);
- extern void nfs_page_clear_headlock(struct nfs_page *req);
- extern bool nfs_async_iocounter_wait(struct rpc_task *, struct nfs_lock_context *);
+ static void vhost_net_clear_ubuf_info(struct vhost_net *n)
 
 
