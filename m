@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730FB30BB87;
-	Tue,  2 Sep 2025 13:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2936C30BBB9;
+	Tue,  2 Sep 2025 13:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819681; cv=none; b=GEwdkhd6r8lhX1NQxHIUotVp+LSHJSngqz12Dcs7ApKqF7zprk7djrydbZnXTBJiIRYw2nj8zZbD8hXBEAR5D5+KQGqKe8sjnHjO8ajU3OIlIFBgTY+pyR7ZdzTmm8/TkiiBCiAajAM7JsjyxhX210jlNqtBfJZoJatGA5STKOM=
+	t=1756819685; cv=none; b=MvtpN+NwM2rzc2o/i4hl3uVf7Lf7VkttmXD9cr05b5oqJPomzlFKDBSlwannVsHqoLKme2xFSYEsbbLF6pqKRvBGkc4XynAiwNs5rE+E/4AidXb2EMtykvyx77auSAJCTrIEYd0oI7vVPOjHpJQcj7YXFADYGMTmc4jaSgosPfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819681; c=relaxed/simple;
-	bh=34eJqgvZmJlR7a4+glNX/aKMx2MomcKN/XN3zVESiE4=;
+	s=arc-20240116; t=1756819685; c=relaxed/simple;
+	bh=24Urkx0QZ6U/VRDZOVc8pwu8BaXbmaxZytGkfxU30j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A22dSiNzeHjSd2InNaiOTjz8EOwJinaO27Htyl/o2t9Gr7d0bI9lAnbbUM+QORZllEDBLrUyyXGsY0TUk1/L7LL8UPpoSUETruBlLrtn39/FxklFuJBfQm+zSXzen5iIniPF1zmV6fMa76GuKitr8AhtOksg6WcEaTr94E3tLww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwYbRPRI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ahp1kuADOAt7mprS/PezvZ+WZksqOu45uvUONXH1K8SJR2KeFUAdUIsMNqTzZCAamAA/yE+VCO9dZiGOaMdtnu+KOwSck4HR44RLWfGA8689JYK5AgOK1BnwtYsJ5AAxvtIg1qgzTaLBkLwpgIlxzRLoDjPzUYN1VMNiGQ/Az+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClENT+1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwYbRPRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6766C4CEED;
-	Tue,  2 Sep 2025 13:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClENT+1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40815C4CEF5;
+	Tue,  2 Sep 2025 13:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819681;
-	bh=34eJqgvZmJlR7a4+glNX/aKMx2MomcKN/XN3zVESiE4=;
+	s=korg; t=1756819684;
+	bh=24Urkx0QZ6U/VRDZOVc8pwu8BaXbmaxZytGkfxU30j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwYbRPRIPkr5Ayx7vIm63zeC5vZiSepjtRZlGeKGijnyC5JjiEwfdtDHYSNdcJW/t
-	 SF4dlS7sy08qy4etvm8rpDcVaGAAWeyB7vt4SYv7AAH4YEslSJcg40jEntqDdhyQM3
-	 UphWSZfL6lr6cBxNty0eUm4qVMNT2DPsjq9lHAN4=
+	b=ClENT+1z2qXlfP/Dlzvil9EOBVCrR6x7aqk3/+181rTxxKZrn3vO8WVyPBIjT64QU
+	 yU4qmBw3Xmx0HxQz7Cr0EXT9DCUceqRLe+qvo9DiruDTRoovnJOlv2NOH2WtiuKnTn
+	 jpud3mrRRyzplr6fv+HmwBHY/Zsd9a+qJ2A06jyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>
-Subject: [PATCH 6.16 108/142] x86/cpu/topology: Use initial APIC ID from XTOPOLOGY leaf on AMD/HYGON
-Date: Tue,  2 Sep 2025 15:20:10 +0200
-Message-ID: <20250902131952.417298906@linuxfoundation.org>
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.16 109/142] HID: asus: fix UAF via HID_CLAIMED_INPUT validation
+Date: Tue,  2 Sep 2025 15:20:11 +0200
+Message-ID: <20250902131952.453543401@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,113 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit c2415c407a2cde01290d52ce2a1f81b0616379a3 upstream.
+commit d3af6ca9a8c34bbd8cff32b469b84c9021c9e7e4 upstream.
 
-Prior to the topology parsing rewrite and the switchover to the new parsing
-logic for AMD processors in
+After hid_hw_start() is called hidinput_connect() will eventually be
+called to set up the device with the input layer since the
+HID_CONNECT_DEFAULT connect mask is used. During hidinput_connect()
+all input and output reports are processed and corresponding hid_inputs
+are allocated and configured via hidinput_configure_usages(). This
+process involves slot tagging report fields and configuring usages
+by setting relevant bits in the capability bitmaps. However it is possible
+that the capability bitmaps are not set at all leading to the subsequent
+hidinput_has_been_populated() check to fail leading to the freeing of the
+hid_input and the underlying input device.
 
-  c749ce393b8f ("x86/cpu: Use common topology code for AMD"),
+This becomes problematic because a malicious HID device like a
+ASUS ROG N-Key keyboard can trigger the above scenario via a
+specially crafted descriptor which then leads to a user-after-free
+when the name of the freed input device is written to later on after
+hid_hw_start(). Below, report 93 intentionally utilises the
+HID_UP_UNDEFINED Usage Page which is skipped during usage
+configuration, leading to the frees.
 
-the initial_apicid on these platforms was:
+0x05, 0x0D,        // Usage Page (Digitizer)
+0x09, 0x05,        // Usage (Touch Pad)
+0xA1, 0x01,        // Collection (Application)
+0x85, 0x0D,        //   Report ID (13)
+0x06, 0x00, 0xFF,  //   Usage Page (Vendor Defined 0xFF00)
+0x09, 0xC5,        //   Usage (0xC5)
+0x15, 0x00,        //   Logical Minimum (0)
+0x26, 0xFF, 0x00,  //   Logical Maximum (255)
+0x75, 0x08,        //   Report Size (8)
+0x95, 0x04,        //   Report Count (4)
+0xB1, 0x02,        //   Feature (Data,Var,Abs)
+0x85, 0x5D,        //   Report ID (93)
+0x06, 0x00, 0x00,  //   Usage Page (Undefined)
+0x09, 0x01,        //   Usage (0x01)
+0x15, 0x00,        //   Logical Minimum (0)
+0x26, 0xFF, 0x00,  //   Logical Maximum (255)
+0x75, 0x08,        //   Report Size (8)
+0x95, 0x1B,        //   Report Count (27)
+0x81, 0x02,        //   Input (Data,Var,Abs)
+0xC0,              // End Collection
 
-- First initialized to the LocalApicId from CPUID leaf 0x1 EBX[31:24].
+Below is the KASAN splat after triggering the UAF:
 
-- Then overwritten by the ExtendedLocalApicId in CPUID leaf 0xb
-  EDX[31:0] on processors that supported topoext.
+[   21.672709] ==================================================================
+[   21.673700] BUG: KASAN: slab-use-after-free in asus_probe+0xeeb/0xf80
+[   21.673700] Write of size 8 at addr ffff88810a0ac000 by task kworker/1:2/54
+[   21.673700]
+[   21.673700] CPU: 1 UID: 0 PID: 54 Comm: kworker/1:2 Not tainted 6.16.0-rc4-g9773391cf4dd-dirty #36 PREEMPT(voluntary)
+[   21.673700] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+[   21.673700] Call Trace:
+[   21.673700]  <TASK>
+[   21.673700]  dump_stack_lvl+0x5f/0x80
+[   21.673700]  print_report+0xd1/0x660
+[   21.673700]  kasan_report+0xe5/0x120
+[   21.673700]  __asan_report_store8_noabort+0x1b/0x30
+[   21.673700]  asus_probe+0xeeb/0xf80
+[   21.673700]  hid_device_probe+0x2ee/0x700
+[   21.673700]  really_probe+0x1c6/0x6b0
+[   21.673700]  __driver_probe_device+0x24f/0x310
+[   21.673700]  driver_probe_device+0x4e/0x220
+[...]
+[   21.673700]
+[   21.673700] Allocated by task 54:
+[   21.673700]  kasan_save_stack+0x3d/0x60
+[   21.673700]  kasan_save_track+0x18/0x40
+[   21.673700]  kasan_save_alloc_info+0x3b/0x50
+[   21.673700]  __kasan_kmalloc+0x9c/0xa0
+[   21.673700]  __kmalloc_cache_noprof+0x139/0x340
+[   21.673700]  input_allocate_device+0x44/0x370
+[   21.673700]  hidinput_connect+0xcb6/0x2630
+[   21.673700]  hid_connect+0xf74/0x1d60
+[   21.673700]  hid_hw_start+0x8c/0x110
+[   21.673700]  asus_probe+0x5a3/0xf80
+[   21.673700]  hid_device_probe+0x2ee/0x700
+[   21.673700]  really_probe+0x1c6/0x6b0
+[   21.673700]  __driver_probe_device+0x24f/0x310
+[   21.673700]  driver_probe_device+0x4e/0x220
+[...]
+[   21.673700]
+[   21.673700] Freed by task 54:
+[   21.673700]  kasan_save_stack+0x3d/0x60
+[   21.673700]  kasan_save_track+0x18/0x40
+[   21.673700]  kasan_save_free_info+0x3f/0x60
+[   21.673700]  __kasan_slab_free+0x3c/0x50
+[   21.673700]  kfree+0xcf/0x350
+[   21.673700]  input_dev_release+0xab/0xd0
+[   21.673700]  device_release+0x9f/0x220
+[   21.673700]  kobject_put+0x12b/0x220
+[   21.673700]  put_device+0x12/0x20
+[   21.673700]  input_free_device+0x4c/0xb0
+[   21.673700]  hidinput_connect+0x1862/0x2630
+[   21.673700]  hid_connect+0xf74/0x1d60
+[   21.673700]  hid_hw_start+0x8c/0x110
+[   21.673700]  asus_probe+0x5a3/0xf80
+[   21.673700]  hid_device_probe+0x2ee/0x700
+[   21.673700]  really_probe+0x1c6/0x6b0
+[   21.673700]  __driver_probe_device+0x24f/0x310
+[   21.673700]  driver_probe_device+0x4e/0x220
+[...]
 
-With the new parsing flow introduced in
-
-  f7fb3b2dd92c ("x86/cpu: Provide an AMD/HYGON specific topology parser"),
-
-parse_8000_001e() now unconditionally overwrites the initial_apicid already
-parsed during cpu_parse_topology_ext().
-
-Although this has not been a problem on baremetal platforms, on virtualized AMD
-guests that feature more than 255 cores, QEMU zeros out the CPUID leaf
-0x8000001e on CPUs with CoreID > 255 to prevent collision of these IDs in
-EBX[7:0] which can only represent a maximum of 255 cores [1].
-
-This results in the following FW_BUG being logged when booting a guest
-with more than 255 cores:
-
-    [Firmware Bug]: CPU 512: APIC ID mismatch. CPUID: 0x0000 APIC: 0x0200
-
-AMD64 Architecture Programmer's Manual Volume 2: System Programming Pub.
-24593 Rev. 3.42 [2] Section 16.12 "x2APIC_ID" mentions the Extended
-Enumeration leaf 0xb (Fn0000_000B_EDX[31:0])(which was later superseded by the
-extended leaf 0x80000026) provides the full x2APIC ID under all circumstances
-unlike the one reported by CPUID leaf 0x8000001e EAX which depends on the mode
-in which APIC is configured.
-
-Rely on the APIC ID parsed during cpu_parse_topology_ext() from CPUID leaf
-0x80000026 or 0xb and only use the APIC ID from leaf 0x8000001e if
-cpu_parse_topology_ext() failed (has_topoext is false).
-
-On platforms that support the 0xb leaf (Zen2 or later, AMD guests on
-QEMU) or the extended leaf 0x80000026 (Zen4 or later), the
-initial_apicid is now set to the value parsed from EDX[31:0].
-
-On older AMD/Hygon platforms that do not support the 0xb leaf but support the
-TOPOEXT extension (families 0x15, 0x16, 0x17[Zen1], and Hygon), retain current
-behavior where the initial_apicid is set using the 0x8000001e leaf.
-
-Issue debugged by Naveen N Rao (AMD) <naveen@kernel.org> and Sairaj Kodilkar
-<sarunkod@amd.com>.
-
-  [ bp: Massage commit message. ]
-
-Fixes: c749ce393b8f ("x86/cpu: Use common topology code for AMD")
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Fixes: 9ce12d8be12c ("HID: asus: Add i2c touchpad support")
 Cc: stable@vger.kernel.org
-Link: https://github.com/qemu/qemu/commit/35ac5dfbcaa4b [1]
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 [2]
-Link: https://lore.kernel.org/20250825075732.10694-2-kprateek.nayak@amd.com
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Link: https://patch.msgid.link/20250810181041.44874-1-qasdev00@gmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/topology_amd.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/hid/hid-asus.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/topology_amd.c
-+++ b/arch/x86/kernel/cpu/topology_amd.c
-@@ -81,20 +81,25 @@ static bool parse_8000_001e(struct topo_
- 
- 	cpuid_leaf(0x8000001e, &leaf);
- 
--	tscan->c->topo.initial_apicid = leaf.ext_apic_id;
--
- 	/*
--	 * If leaf 0xb is available, then the domain shifts are set
--	 * already and nothing to do here. Only valid for family >= 0x17.
-+	 * If leaf 0xb/0x26 is available, then the APIC ID and the domain
-+	 * shifts are set already.
- 	 */
--	if (!has_topoext && tscan->c->x86 >= 0x17) {
-+	if (!has_topoext) {
-+		tscan->c->topo.initial_apicid = leaf.ext_apic_id;
-+
- 		/*
--		 * Leaf 0x80000008 set the CORE domain shift already.
--		 * Update the SMT domain, but do not propagate it.
-+		 * Leaf 0x8000008 sets the CORE domain shift but not the
-+		 * SMT domain shift. On CPUs with family >= 0x17, there
-+		 * might be hyperthreads.
- 		 */
--		unsigned int nthreads = leaf.core_nthreads + 1;
-+		if (tscan->c->x86 >= 0x17) {
-+			/* Update the SMT domain, but do not propagate it. */
-+			unsigned int nthreads = leaf.core_nthreads + 1;
- 
--		topology_update_dom(tscan, TOPO_SMT_DOMAIN, get_count_order(nthreads), nthreads);
-+			topology_update_dom(tscan, TOPO_SMT_DOMAIN,
-+					    get_count_order(nthreads), nthreads);
-+		}
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1213,7 +1213,13 @@ static int asus_probe(struct hid_device
+ 		return ret;
  	}
  
- 	store_node(tscan, leaf.nnodes_per_socket + 1, leaf.node_id);
+-	if (!drvdata->input) {
++	/*
++	 * Check that input registration succeeded. Checking that
++	 * HID_CLAIMED_INPUT is set prevents a UAF when all input devices
++	 * were freed during registration due to no usages being mapped,
++	 * leaving drvdata->input pointing to freed memory.
++	 */
++	if (!drvdata->input || !(hdev->claimed & HID_CLAIMED_INPUT)) {
+ 		hid_err(hdev, "Asus input not registered\n");
+ 		ret = -ENOMEM;
+ 		goto err_stop_hw;
 
 
