@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AA02848A1;
-	Tue,  2 Sep 2025 13:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C08308F1A;
+	Tue,  2 Sep 2025 13:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820238; cv=none; b=maMFFD4cGvhhHONFy1eN8CkuYl7eIQzJium9dLWeCLVQNboZTTLe8CUcCNBVBUfIWP6JxhLd3RdkBRQQ2gTCRjcNj3R2X+SOjcmZZ6uPFRlZFPrW2esTK7J3Sq3nwjdTvHnChW/N/aF40FgCvqMDRBPoXa9K/+VRj2oiuKqGVrc=
+	t=1756820240; cv=none; b=h/ErukZXeG/TZX8NuOIgWLvWpRGH28YX8KRCl7s67Q9nkrqOSFt3RXcES8TOe5hOMK21Reiwn+wFEZlYq0tTCj35kMopu6IJNPs/lnWQfQAhsdeY1qcevm/TFeF40hCD4gReEL0soVETXLllNj5lOqPSU8TwF0mzBvqoM17pak8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820238; c=relaxed/simple;
-	bh=+vdstVZ4juHqCo3Vna11yyYBcSTfZZvBpFZUGL+22oA=;
+	s=arc-20240116; t=1756820240; c=relaxed/simple;
+	bh=mc1GZB9dhtM7eT8x4uHhh6cvocKrIhFDjjeJ/JGELFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0Q3ljFavc+lP3fa5YZJOiqMLxJmOACwBbhjPGmMgslUbDfOIrGBE7Sbc8TAMcSX6nd/RWVSutBMzs/bNX64RABS0qDf6wXmsMqRtAAZLMIJrfLLe11x4K/sFuEdGauWsmB1GdV55k9do/NsGIoyIlVK0BGTyOJLPY/Qdl7EVoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPa9Wr44; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTBiUMspxrVq3ij9vuFEALuYAx1uabaCYLoKmcJvfM7jEZYxSv4aQ15nTGBGrdvLQ9f4t3rXn8YpDlcR6UlJRZGb4PhvI6B1EUypAuWKOCbJvxmwvniliACe9XMs8S6TKiTy2EFIGw5VQsy0GNlc4NmryUk+wBBAkFTCwVeucMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gxgi4gvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPa9Wr44"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37980C4CEED;
-	Tue,  2 Sep 2025 13:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gxgi4gvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1068C4CEED;
+	Tue,  2 Sep 2025 13:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820234;
-	bh=+vdstVZ4juHqCo3Vna11yyYBcSTfZZvBpFZUGL+22oA=;
+	s=korg; t=1756820240;
+	bh=mc1GZB9dhtM7eT8x4uHhh6cvocKrIhFDjjeJ/JGELFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPa9Wr44olchefg65PLeLWkRrjkoqXD4B4exVozpUVSp0BJKaI/cwBJ8iODB2pC8Q
-	 0cmR3xvtHotN8hUd8iXmwD3S8LMKqa35I2cOIVreoZ4phUVLImzfd9WwqbgqeXGWZK
-	 k9K7HobUdhPUNaLesrQyVmN1gk+Cnjk7pUijtBeU=
+	b=Gxgi4gvvaMjeAs3givU/1ikaljbCPu/4JQ1x3spEzdXriBOaV8s/mrpV5y9HVHDG5
+	 mjBp07LbyQOrB+o0X0JfG5EzxVIj/6KaT6FJliYRlXY2Uwo0y2vZ7t+Swe3lksIW4X
+	 IAPQuuO2dOt68pQn/FIZzRtCoC1RptyVbjUuZjt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Shin <jaeshin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 09/75] smb: client: fix race with concurrent opens in unlink(2)
-Date: Tue,  2 Sep 2025 15:20:21 +0200
-Message-ID: <20250902131935.482135582@linuxfoundation.org>
+Subject: [PATCH 6.6 35/75] phy: mscc: Fix when PTP clock is register and unregister
+Date: Tue,  2 Sep 2025 15:20:47 +0200
+Message-ID: <20250902131936.499191040@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -55,84 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 0af1561b2d60bab2a2b00720a5c7b292ecc549ec ]
+[ Upstream commit 882e57cbc7204662f6c5672d5b04336c1d790b03 ]
 
-According to some logs reported by customers, CIFS client might end up
-reporting unlinked files as existing in stat(2) due to concurrent
-opens racing with unlink(2).
+It looks like that every time when the interface was set down and up the
+driver was creating a new ptp clock. On top of this the function
+ptp_clock_unregister was never called.
+Therefore fix this by calling ptp_clock_register and initialize the
+mii_ts struct inside the probe function and call ptp_clock_unregister when
+driver is removed.
 
-Besides sending the removal request to the server, the unlink process
-could involve closing any deferred close as well as marking all
-existing open handles as deleted to prevent them from deferring
-closes, which increases the race window for potential concurrent
-opens.
-
-Fix this by unhashing the dentry in cifs_unlink() to prevent any
-subsequent opens.  Any open attempts, while we're still unlinking,
-will block on parent's i_rwsem.
-
-Reported-by: Jay Shin <jaeshin@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250825065543.2916334-1-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/net/phy/mscc/mscc.h      |  4 ++++
+ drivers/net/phy/mscc/mscc_main.c |  4 +---
+ drivers/net/phy/mscc/mscc_ptp.c  | 34 ++++++++++++++++++++------------
+ 3 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index d93ebd58ecae1..df01029918fd4 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1856,15 +1856,24 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
- 	struct tcon_link *tlink;
- 	struct cifs_tcon *tcon;
-+	__u32 dosattr = 0, origattr = 0;
- 	struct TCP_Server_Info *server;
- 	struct iattr *attrs = NULL;
--	__u32 dosattr = 0, origattr = 0;
-+	bool rehash = false;
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index cdb343779a8fb..4ba6e32cf6d8d 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -476,6 +476,7 @@ static inline void vsc8584_config_macsec_intr(struct phy_device *phydev)
+ void vsc85xx_link_change_notify(struct phy_device *phydev);
+ void vsc8584_config_ts_intr(struct phy_device *phydev);
+ int vsc8584_ptp_init(struct phy_device *phydev);
++void vsc8584_ptp_deinit(struct phy_device *phydev);
+ int vsc8584_ptp_probe_once(struct phy_device *phydev);
+ int vsc8584_ptp_probe(struct phy_device *phydev);
+ irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev);
+@@ -490,6 +491,9 @@ static inline int vsc8584_ptp_init(struct phy_device *phydev)
+ {
+ 	return 0;
+ }
++static inline void vsc8584_ptp_deinit(struct phy_device *phydev)
++{
++}
+ static inline int vsc8584_ptp_probe_once(struct phy_device *phydev)
+ {
+ 	return 0;
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 3de72d9cc22bd..3a932b30f4358 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2337,9 +2337,7 @@ static int vsc85xx_probe(struct phy_device *phydev)
  
- 	cifs_dbg(FYI, "cifs_unlink, dir=0x%p, dentry=0x%p\n", dir, dentry);
- 
- 	if (unlikely(cifs_forced_shutdown(cifs_sb)))
- 		return -EIO;
- 
-+	/* Unhash dentry in advance to prevent any concurrent opens */
-+	spin_lock(&dentry->d_lock);
-+	if (!d_unhashed(dentry)) {
-+		__d_drop(dentry);
-+		rehash = true;
-+	}
-+	spin_unlock(&dentry->d_lock);
-+
- 	tlink = cifs_sb_tlink(cifs_sb);
- 	if (IS_ERR(tlink))
- 		return PTR_ERR(tlink);
-@@ -1915,7 +1924,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
- 			cifs_drop_nlink(inode);
- 		}
- 	} else if (rc == -ENOENT) {
--		d_drop(dentry);
-+		if (simple_positive(dentry))
-+			d_delete(dentry);
- 	} else if (rc == -EBUSY) {
- 		if (server->ops->rename_pending_delete) {
- 			rc = server->ops->rename_pending_delete(full_path,
-@@ -1968,6 +1978,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
- 	kfree(attrs);
- 	free_xid(xid);
- 	cifs_put_tlink(tlink);
-+	if (rehash)
-+		d_rehash(dentry);
- 	return rc;
+ static void vsc85xx_remove(struct phy_device *phydev)
+ {
+-	struct vsc8531_private *priv = phydev->priv;
+-
+-	skb_queue_purge(&priv->rx_skbs_list);
++	vsc8584_ptp_deinit(phydev);
  }
  
+ /* Microsemi VSC85xx PHYs */
+diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
+index add1a9ee721af..1f6237705b44b 100644
+--- a/drivers/net/phy/mscc/mscc_ptp.c
++++ b/drivers/net/phy/mscc/mscc_ptp.c
+@@ -1297,7 +1297,6 @@ static void vsc8584_set_input_clk_configured(struct phy_device *phydev)
+ 
+ static int __vsc8584_init_ptp(struct phy_device *phydev)
+ {
+-	struct vsc8531_private *vsc8531 = phydev->priv;
+ 	static const u32 ltc_seq_e[] = { 0, 400000, 0, 0, 0 };
+ 	static const u8  ltc_seq_a[] = { 8, 6, 5, 4, 2 };
+ 	u32 val;
+@@ -1514,17 +1513,7 @@ static int __vsc8584_init_ptp(struct phy_device *phydev)
+ 
+ 	vsc85xx_ts_eth_cmp1_sig(phydev);
+ 
+-	vsc8531->mii_ts.rxtstamp = vsc85xx_rxtstamp;
+-	vsc8531->mii_ts.txtstamp = vsc85xx_txtstamp;
+-	vsc8531->mii_ts.hwtstamp = vsc85xx_hwtstamp;
+-	vsc8531->mii_ts.ts_info  = vsc85xx_ts_info;
+-	phydev->mii_ts = &vsc8531->mii_ts;
+-
+-	memcpy(&vsc8531->ptp->caps, &vsc85xx_clk_caps, sizeof(vsc85xx_clk_caps));
+-
+-	vsc8531->ptp->ptp_clock = ptp_clock_register(&vsc8531->ptp->caps,
+-						     &phydev->mdio.dev);
+-	return PTR_ERR_OR_ZERO(vsc8531->ptp->ptp_clock);
++	return 0;
+ }
+ 
+ void vsc8584_config_ts_intr(struct phy_device *phydev)
+@@ -1551,6 +1540,16 @@ int vsc8584_ptp_init(struct phy_device *phydev)
+ 	return 0;
+ }
+ 
++void vsc8584_ptp_deinit(struct phy_device *phydev)
++{
++	struct vsc8531_private *vsc8531 = phydev->priv;
++
++	if (vsc8531->ptp->ptp_clock) {
++		ptp_clock_unregister(vsc8531->ptp->ptp_clock);
++		skb_queue_purge(&vsc8531->rx_skbs_list);
++	}
++}
++
+ irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev)
+ {
+ 	struct vsc8531_private *priv = phydev->priv;
+@@ -1608,7 +1607,16 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
+ 
+ 	vsc8531->ptp->phydev = phydev;
+ 
+-	return 0;
++	vsc8531->mii_ts.rxtstamp = vsc85xx_rxtstamp;
++	vsc8531->mii_ts.txtstamp = vsc85xx_txtstamp;
++	vsc8531->mii_ts.hwtstamp = vsc85xx_hwtstamp;
++	vsc8531->mii_ts.ts_info  = vsc85xx_ts_info;
++	phydev->mii_ts = &vsc8531->mii_ts;
++
++	memcpy(&vsc8531->ptp->caps, &vsc85xx_clk_caps, sizeof(vsc85xx_clk_caps));
++	vsc8531->ptp->ptp_clock = ptp_clock_register(&vsc8531->ptp->caps,
++						     &phydev->mdio.dev);
++	return PTR_ERR_OR_ZERO(vsc8531->ptp->ptp_clock);
+ }
+ 
+ int vsc8584_ptp_probe_once(struct phy_device *phydev)
 -- 
 2.50.1
 
