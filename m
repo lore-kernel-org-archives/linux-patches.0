@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A338304BA4;
-	Tue,  2 Sep 2025 13:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95729304BA4;
+	Tue,  2 Sep 2025 13:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819645; cv=none; b=OdGkavk3boT++W2VtuC1534vhIagb/Ko1/x5hrCWnW//Sawnj9htczaB+fBQJkRAyadYF8lR+LVv/4x0drzRwxjJYH6ANxHe9D/hRSuN7jVR1xBvGvgyNrCAlLzVgcdUmiTYGhT2jHvsjI5rMpWAjjaI+aqVKm6pprhMvKot8UY=
+	t=1756819648; cv=none; b=HB0gPGmkjsxxTLg4pwTmApVkhpX4bgc46DLcIMYOFb+9/hMOf+a0CjMIVX3X/V4U0hqA5QDyVLi8NEFPzK4LOgnxHR73nhPb7rKdm16TqlHez5p5ERUZAQHB2R47+C3v4rQJ9YLjdNdcV6lOiMfZt+/v0/katgQ124Is/SwZUT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819645; c=relaxed/simple;
-	bh=/ICPWVRSuVy6bLexbL9c9hp44yy2D67bKbzxasNjgfc=;
+	s=arc-20240116; t=1756819648; c=relaxed/simple;
+	bh=dgAZaGge23ID4Gtqih21ViQmaJsxqTkW/rTUI3Z+NJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eOH6CtvPbUw80jmasomCR3+WsbUNTpaqvj7EQ3S3lgwFojH2aXWQoa9ZzJ3hKykKSl1baQHG2gWjrLwKPA6LPkEboZFZ3pLtmtTWn+mpPc1Q9XYWXC8a0ESMqnRFf4GHLHen4qglkyyHcVZXIb0V/iliZd0eN77EV+aEw6595SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieqhBDbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFN9VE2Y22p6ZXhcUrneBcMfn4E+hn9k8fABQCbh7skoQAXXbqghqDkTR4HLerpuqMyZC2sWcKb294k8Kly9iaZZ1TPb/N7bowRpMCq3Pwz97OD4KRlmzGWoFu8h0WPUZE5f+i/M9xSESne++wsy4wvslSEpLkzbKtaffoI7GOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVoRAHWG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieqhBDbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36F9C4CEED;
-	Tue,  2 Sep 2025 13:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVoRAHWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035BCC4CEED;
+	Tue,  2 Sep 2025 13:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819645;
-	bh=/ICPWVRSuVy6bLexbL9c9hp44yy2D67bKbzxasNjgfc=;
+	s=korg; t=1756819648;
+	bh=dgAZaGge23ID4Gtqih21ViQmaJsxqTkW/rTUI3Z+NJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ieqhBDbLyp3UpyXZ6Uqu/Zxg8G5vsoCgqhuCEWG1S/XRPuT7O7pONKJFMqgwmr/nm
-	 zVx3qck4HdS51aJ6uQhodTVYjZZt10wJk9xL6nO7t1Hcc2iklWkrLwBz9iMcX4SvwS
-	 Q2fM9s8b6oIqPIbuHCn5b8Z/3Jpf8gi215OB7dv0=
+	b=SVoRAHWG+rNW0MqTrVRhGRlebbROdb06CACSH+3y7LiaYoIU1ThBJp52KOJoNCo8L
+	 KZe/snKGIKyO842kmzHnNd8jKISsrqwrSuZxFOFEHfe29BdwNgZPvMS/fhm5XNXfuz
+	 XzmOZnXt4hrINibU3oAVNsCkyz7UyETUvPTaVOzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 065/142] Octeontx2-af: Fix NIX X2P calibration failures
-Date: Tue,  2 Sep 2025 15:19:27 +0200
-Message-ID: <20250902131950.749846564@linuxfoundation.org>
+Subject: [PATCH 6.16 066/142] mISDN: hfcpci: Fix warning when deleting uninitialized timer
+Date: Tue,  2 Sep 2025 15:19:28 +0200
+Message-ID: <20250902131950.787512902@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -51,77 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-[ Upstream commit d280233fc86692f495d5e08092e5422bc2f583a8 ]
+[ Upstream commit 97766512a9951b9fd6fc97f1b93211642bb0b220 ]
 
-Before configuring the NIX block, the AF driver initiates the
-"NIX block X2P bus calibration" and verifies that NIX interfaces
-such as CGX and LBK are active and functioning correctly.
+With CONFIG_DEBUG_OBJECTS_TIMERS unloading hfcpci module leads
+to the following splat:
 
-On few silicon variants(CNF10KA and CNF10KB), X2P calibration failures
-have been observed on some CGX blocks that are not mapped to the NIX block.
+[  250.215892] ODEBUG: assert_init not available (active state 0) object: ffffffffc01a3dc0 object type: timer_list hint: 0x0
+[  250.217520] WARNING: CPU: 0 PID: 233 at lib/debugobjects.c:612 debug_print_object+0x1b6/0x2c0
+[  250.218775] Modules linked in: hfcpci(-) mISDN_core
+[  250.219537] CPU: 0 UID: 0 PID: 233 Comm: rmmod Not tainted 6.17.0-rc2-g6f713187ac98 #2 PREEMPT(voluntary)
+[  250.220940] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  250.222377] RIP: 0010:debug_print_object+0x1b6/0x2c0
+[  250.223131] Code: fc ff df 48 89 fa 48 c1 ea 03 80 3c 02 00 75 4f 41 56 48 8b 14 dd a0 4e 01 9f 48 89 ee 48 c7 c7 20 46 01 9f e8 cb 84d
+[  250.225805] RSP: 0018:ffff888015ea7c08 EFLAGS: 00010286
+[  250.226608] RAX: 0000000000000000 RBX: 0000000000000005 RCX: ffffffff9be93a95
+[  250.227708] RDX: 1ffff1100d945138 RSI: 0000000000000008 RDI: ffff88806ca289c0
+[  250.228993] RBP: ffffffff9f014a00 R08: 0000000000000001 R09: ffffed1002bd4f39
+[  250.230043] R10: ffff888015ea79cf R11: 0000000000000001 R12: 0000000000000001
+[  250.231185] R13: ffffffff9eea0520 R14: 0000000000000000 R15: ffff888015ea7cc8
+[  250.232454] FS:  00007f3208f01540(0000) GS:ffff8880caf5a000(0000) knlGS:0000000000000000
+[  250.233851] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  250.234856] CR2: 00007f32090a7421 CR3: 0000000004d63000 CR4: 00000000000006f0
+[  250.236117] Call Trace:
+[  250.236599]  <TASK>
+[  250.236967]  ? trace_irq_enable.constprop.0+0xd4/0x130
+[  250.237920]  debug_object_assert_init+0x1f6/0x310
+[  250.238762]  ? __pfx_debug_object_assert_init+0x10/0x10
+[  250.239658]  ? __lock_acquire+0xdea/0x1c70
+[  250.240369]  __try_to_del_timer_sync+0x69/0x140
+[  250.241172]  ? __pfx___try_to_del_timer_sync+0x10/0x10
+[  250.242058]  ? __timer_delete_sync+0xc6/0x120
+[  250.242842]  ? lock_acquire+0x30/0x80
+[  250.243474]  ? __timer_delete_sync+0xc6/0x120
+[  250.244262]  __timer_delete_sync+0x98/0x120
+[  250.245015]  HFC_cleanup+0x10/0x20 [hfcpci]
+[  250.245704]  __do_sys_delete_module+0x348/0x510
+[  250.246461]  ? __pfx___do_sys_delete_module+0x10/0x10
+[  250.247338]  do_syscall_64+0xc1/0x360
+[  250.247924]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Since both NIX-mapped and non-NIX-mapped CGX blocks share the same
-VENDOR,DEVICE,SUBSYS_DEVID, it's not possible to skip probe based on
-these parameters.
+Fix this by initializing hfc_tl timer with DEFINE_TIMER macro.
+Also, use mod_timer instead of manual timeout update.
 
-This patch introuduces "is_cgx_mapped_to_nix" API to detect and skip
-probe of non NIX mapped CGX blocks.
-
-Fixes: aba53d5dbcea ("octeontx2-af: NIX block admin queue init")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Link: https://patch.msgid.link/20250822105805.2236528-1-hkelam@marvell.com
+Fixes: 87c5fa1bb426 ("mISDN: Add different different timer settings for hfc-pci")
+Fixes: 175302f6b79e ("mISDN: hfcpci: Fix use-after-free bug in hfcpci_softirq")
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Link: https://patch.msgid.link/aKiy2D_LiWpQ5kXq@vova-pc
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c |  7 +++++++
- drivers/net/ethernet/marvell/octeontx2/af/rvu.h | 14 ++++++++++++++
- 2 files changed, 21 insertions(+)
+ drivers/isdn/hardware/mISDN/hfcpci.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 971993586fb49..442305463cc0a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -1940,6 +1940,13 @@ static int cgx_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		goto err_release_regions;
- 	}
+diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
+index 2b05722d4dbe8..ea8a0ab47afd8 100644
+--- a/drivers/isdn/hardware/mISDN/hfcpci.c
++++ b/drivers/isdn/hardware/mISDN/hfcpci.c
+@@ -39,12 +39,13 @@
  
-+	if (!is_cn20k(pdev) &&
-+	    !is_cgx_mapped_to_nix(pdev->subsystem_device, cgx->cgx_id)) {
-+		dev_notice(dev, "CGX %d not mapped to NIX, skipping probe\n",
-+			   cgx->cgx_id);
-+		goto err_release_regions;
-+	}
-+
- 	cgx->lmac_count = cgx->mac_ops->get_nr_lmacs(cgx);
- 	if (!cgx->lmac_count) {
- 		dev_notice(dev, "CGX %d LMAC count is zero, skipping probe\n", cgx->cgx_id);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index 5c179df1f1673..9cdb7431f558c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -761,6 +761,20 @@ static inline bool is_cn10kb(struct rvu *rvu)
- 	return false;
+ #include "hfc_pci.h"
+ 
++static void hfcpci_softirq(struct timer_list *unused);
+ static const char *hfcpci_revision = "2.0";
+ 
+ static int HFC_cnt;
+ static uint debug;
+ static uint poll, tics;
+-static struct timer_list hfc_tl;
++static DEFINE_TIMER(hfc_tl, hfcpci_softirq);
+ static unsigned long hfc_jiffies;
+ 
+ MODULE_AUTHOR("Karsten Keil");
+@@ -2305,8 +2306,7 @@ hfcpci_softirq(struct timer_list *unused)
+ 		hfc_jiffies = jiffies + 1;
+ 	else
+ 		hfc_jiffies += tics;
+-	hfc_tl.expires = hfc_jiffies;
+-	add_timer(&hfc_tl);
++	mod_timer(&hfc_tl, hfc_jiffies);
  }
  
-+static inline bool is_cgx_mapped_to_nix(unsigned short id, u8 cgx_id)
-+{
-+	/* On CNF10KA and CNF10KB silicons only two CGX blocks are connected
-+	 * to NIX.
-+	 */
-+	if (id == PCI_SUBSYS_DEVID_CNF10K_A || id == PCI_SUBSYS_DEVID_CNF10K_B)
-+		return cgx_id <= 1;
-+
-+	return !(cgx_id && !(id == PCI_SUBSYS_DEVID_96XX ||
-+			     id == PCI_SUBSYS_DEVID_98XX ||
-+			     id == PCI_SUBSYS_DEVID_CN10K_A ||
-+			     id == PCI_SUBSYS_DEVID_CN10K_B));
-+}
-+
- static inline bool is_rvu_npc_hash_extract_en(struct rvu *rvu)
- {
- 	u64 npc_const3;
+ static int __init
+@@ -2332,10 +2332,8 @@ HFC_init(void)
+ 	if (poll != HFCPCI_BTRANS_THRESHOLD) {
+ 		printk(KERN_INFO "%s: Using alternative poll value of %d\n",
+ 		       __func__, poll);
+-		timer_setup(&hfc_tl, hfcpci_softirq, 0);
+-		hfc_tl.expires = jiffies + tics;
+-		hfc_jiffies = hfc_tl.expires;
+-		add_timer(&hfc_tl);
++		hfc_jiffies = jiffies + tics;
++		mod_timer(&hfc_tl, hfc_jiffies);
+ 	} else
+ 		tics = 0; /* indicate the use of controller's timer */
+ 
 -- 
 2.50.1
 
