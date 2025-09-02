@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5543074B4;
-	Tue,  2 Sep 2025 13:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6496D32A81D;
+	Tue,  2 Sep 2025 13:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820818; cv=none; b=aXxqx8ay1/k4idwCwF8Ns92b1rLMj3TjRNJaPeXXZtFp/mvg+sXGqBoeh+edj+lTJbK5+x+1CWuXQ4wx02gCn63Qu8qY9moYBjqtAJoKhjFF8tq3gWZ2KOaxlvCm7mq+VyezIOWNi7jd5aPbUrseJGVHaX/QjJbJ5ihteHMsNUs=
+	t=1756820822; cv=none; b=ZxAaAhoXNuNU7UpZ0TQHgNCAw1Fp5yhnu/3A59S5uF27JpYCQ3a840NnwBO9PiLOJIoWz1f+v/Zoocn6YjsN6dB028fyI83Ql2c4dAMNAEObWY6D7PX1zM7E8EbPOGSA/C29UNwfAjF4RDiBtbCdL+r9NSHFP6tHu2PSvSjQeZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820818; c=relaxed/simple;
-	bh=lYXccXNNfZxjSLA9ULWJgyMPivlRlhRxZIh2WWjcK4E=;
+	s=arc-20240116; t=1756820822; c=relaxed/simple;
+	bh=z6vOHKqPgIixlcN637GX3TaKXDXa2jVNJvBVfZ8vWXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJhIFUZ5o8KYLymXZxG+FU++3NWunKChz3ArljW9N3LVkbk8vx9aHhGMeJSo9tFTGjxyhEGhkWFwXAtBuy/LQSySQbnnFvJghgeX3jJZEsJpFOT7f2914nXqQQQK+nJyhamtTUtTgao9642f2gnEXEENMwBwEAKPdrHjLk5jWGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuGL8xk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XN0dSVHBRs4fITKLGu1CKjcVTMZDGAr20sVqlTTyVSaWyVUkLHkRJpdtQpHf5zKDZaqa7NV22nV4/xgicTbn3DZGhOd7X0MRzNZemikMAjIyGAC49IATL0t03eOsVZO3UQCdXrR0M0M9TlSREY0/L2TwbZYZ+jBGaKXTIFEIT3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIfxUDBQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuGL8xk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47912C4CEF4;
-	Tue,  2 Sep 2025 13:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIfxUDBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93037C4CEED;
+	Tue,  2 Sep 2025 13:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820818;
-	bh=lYXccXNNfZxjSLA9ULWJgyMPivlRlhRxZIh2WWjcK4E=;
+	s=korg; t=1756820822;
+	bh=z6vOHKqPgIixlcN637GX3TaKXDXa2jVNJvBVfZ8vWXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RuGL8xk24kWJS5y7qPsBpIeHKovwpuOSvEww/uANVG5WBGQ7HaGFYMgabcXIgSujS
-	 5qCPsvRHFYu5R7q4H5VP/gbyf1vuQw9paUeM6TXVkM/xrGEv0zIJG5IoTspIPF08Y+
-	 /AsoU4TauATgE9JSYHMIfRPkeHTmgCQy6hXelI/c=
+	b=mIfxUDBQUa2uPiu6a+cCFDReMXrH6666rbMunPyPBLLOhQVw/B/vMeWdHDP6c1b73
+	 s2W/3C4WtYLVK1Rh2Ky4amVT6ZMAckVsZhm3gkqlb67QH0Jv0twsmt3W95iXybJsRi
+	 ZOBoe9NiSGZjIOl1vjQC/p3Gainp8+5C3qczZb+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/23] powerpc/kvm: Fix ifdef to remove build warning
-Date: Tue,  2 Sep 2025 15:21:52 +0200
-Message-ID: <20250902131924.979572842@linuxfoundation.org>
+Subject: [PATCH 5.4 07/23] Bluetooth: hci_event: Detect if HCI_EV_NUM_COMP_PKTS is unbalanced
+Date: Tue,  2 Sep 2025 15:21:53 +0200
+Message-ID: <20250902131925.016957354@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131924.720400762@linuxfoundation.org>
 References: <20250902131924.720400762@linuxfoundation.org>
@@ -51,66 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 88688a2c8ac6c8036d983ad8b34ce191c46a10aa ]
+[ Upstream commit 15bf2c6391bafb14a3020d06ec0761bce0803463 ]
 
-When compiling for pseries or powernv defconfig with "make C=1",
-these warning were reported bu sparse tool in powerpc/kernel/kvm.c
+This attempts to detect if HCI_EV_NUM_COMP_PKTS contain an unbalanced
+(more than currently considered outstanding) number of packets otherwise
+it could cause the hcon->sent to underflow and loop around breaking the
+tracking of the outstanding packets pending acknowledgment.
 
-arch/powerpc/kernel/kvm.c:635:9: warning: switch with no cases
-arch/powerpc/kernel/kvm.c:646:9: warning: switch with no cases
-
-Currently #ifdef were added after the switch case which are specific
-for BOOKE and PPC_BOOK3S_32. These are not enabled in pseries/powernv
-defconfig. Fix it by moving the #ifdef before switch(){}
-
-Fixes: cbe487fac7fc0 ("KVM: PPC: Add mtsrin PV code")
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250518044107.39928-1-maddy@linux.ibm.com
+Fixes: f42809185896 ("Bluetooth: Simplify num_comp_pkts_evt function")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/kvm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_event.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/kvm.c b/arch/powerpc/kernel/kvm.c
-index d89cf802d9aa7..8067641561a4f 100644
---- a/arch/powerpc/kernel/kvm.c
-+++ b/arch/powerpc/kernel/kvm.c
-@@ -632,19 +632,19 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
- #endif
- 	}
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 33b025a52b83a..4e8911501255d 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3681,7 +3681,17 @@ static void hci_num_comp_pkts_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 		if (!conn)
+ 			continue;
  
--	switch (inst_no_rt & ~KVM_MASK_RB) {
- #ifdef CONFIG_PPC_BOOK3S_32
-+	switch (inst_no_rt & ~KVM_MASK_RB) {
- 	case KVM_INST_MTSRIN:
- 		if (features & KVM_MAGIC_FEAT_SR) {
- 			u32 inst_rb = _inst & KVM_MASK_RB;
- 			kvm_patch_ins_mtsrin(inst, inst_rt, inst_rb);
- 		}
- 		break;
--#endif
- 	}
-+#endif
+-		conn->sent -= count;
++		/* Check if there is really enough packets outstanding before
++		 * attempting to decrease the sent counter otherwise it could
++		 * underflow..
++		 */
++		if (conn->sent >= count) {
++			conn->sent -= count;
++		} else {
++			bt_dev_warn(hdev, "hcon %p sent %u < count %u",
++				    conn, conn->sent, count);
++			conn->sent = 0;
++		}
  
--	switch (_inst) {
- #ifdef CONFIG_BOOKE
-+	switch (_inst) {
- 	case KVM_INST_WRTEEI_0:
- 		kvm_patch_ins_wrteei_0(inst);
- 		break;
-@@ -652,8 +652,8 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
- 	case KVM_INST_WRTEEI_1:
- 		kvm_patch_ins_wrtee(inst, 0, 1);
- 		break;
--#endif
- 	}
-+#endif
- }
- 
- extern u32 kvm_template_start[];
+ 		switch (conn->type) {
+ 		case ACL_LINK:
 -- 
 2.50.1
 
