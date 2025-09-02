@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD1C30E842;
-	Tue,  2 Sep 2025 13:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3CC3093A5;
+	Tue,  2 Sep 2025 13:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819531; cv=none; b=Q59GtN1pm1EDgG9bsbGw4yNprVCNnBqKkuNBLX/XVtCzI3BPUd9m/DuO1tiv814Kmk0ToBu9m847wryfwj9vvZMpnmeGBGzj5rX5bLVqe9fHCFAjq97APHQgajf9/F8ogTXylsb2pAr7W2AYPXX2aJ5wohYBuX9vjhaP0jxUYxU=
+	t=1756819534; cv=none; b=hulKOOeZggF/1TmnSrtT/xnsDYdcxHCepAlOhhTkM5lnFcl514weIqYsbH3RGZvDc2KYegEkOiTIiJ0Gcepoet3Ucr/pVQwdaALCkRFwOuJOcF3PK/po3wZOcg5Pp9+DML34hRqHj5CLu/ZB5XYtyPYKwEfae3KFC2AcZMcC6xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819531; c=relaxed/simple;
-	bh=fMJ6MFhoiROkuiW9kZ4M7UzkT4pa+aXkrcapK/ChIqc=;
+	s=arc-20240116; t=1756819534; c=relaxed/simple;
+	bh=hQ3ibyUPruuK6iQd/E3aaj19AnYljWi9pxM7CH2anFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mi8SAS2wjDVH3fnNbHgoIBF7iEQf338x1/jJsTVykujQcoj5F6uFfpP1NYmRv+giDO1gyANphXAp3rtYJTzd25DmWC0XZH74dnFCb4QRGbS5n6Yb4hF3Trs9qJYWLS9ixLqb2GTSQ7JE3I7aZU6L5C8YR7bOe35+OprwRf9Lrbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjLd8wz0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jg8o3q/eZIvmRNTHeCFj4vyKE/t2I5QkvF15vcqvd6GfJxwgQzH9GVuti5VtZ/i3YylubpJWsQqeBZGTbQ28oOrIgWrX2Bj57SfGm/P6g9KA2ebL7mvpwcGN54fL7DOpY00Xnuq3Hcu9cf1o2zP1idpdXxbGnst3B/36qa9OBmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4os8VIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjLd8wz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A64C4CEED;
-	Tue,  2 Sep 2025 13:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4os8VIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC95C4CEED;
+	Tue,  2 Sep 2025 13:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819531;
-	bh=fMJ6MFhoiROkuiW9kZ4M7UzkT4pa+aXkrcapK/ChIqc=;
+	s=korg; t=1756819534;
+	bh=hQ3ibyUPruuK6iQd/E3aaj19AnYljWi9pxM7CH2anFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjLd8wz0OV5OeVPPeU0iLInDDGHBIDgB+Vnct8v6Q4y/O1M2juhqck1Vwe5mI6hug
-	 FIK2rcm9GCw5UCEm8461iOHxiFFt2rwQRSqYKtZ+HTUqb0PDeBZ+xeBdiWPcGf1DNS
-	 P6M5K89yAqulDq6vPKuZLf2MnbP44/psc/+rZUu0=
+	b=L4os8VIeY809ixKu0fVqe8ryFPbumn0Zjv1vKkQvKAKJghVvIIXWMH2OnYpTnzUN3
+	 hShoRWWefn8rqaGIqPLW/3kByB/tugaOIjpEyMkYjHuZaFk1bBykLL2AQBwWNLv6Tk
+	 QYR7vx3Gb/StsbEX6nt2zTYNwLIjVwIePkMgb3tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oreoluwa Babatunde <oreoluwa.babatunde@oss.qualcomm.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Even Xu <even.xu@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 030/142] of: reserved_mem: Restructure call site for dma_contiguous_early_fixup()
-Date: Tue,  2 Sep 2025 15:18:52 +0200
-Message-ID: <20250902131949.298243747@linuxfoundation.org>
+Subject: [PATCH 6.16 031/142] HID: intel-thc-hid: intel-quicki2c: Fix ACPI dsd ICRS/ISUB length
+Date: Tue,  2 Sep 2025 15:18:53 +0200
+Message-ID: <20250902131949.336040644@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,98 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oreoluwa Babatunde <oreoluwa.babatunde@oss.qualcomm.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 2c223f7239f376a90d71903ec474ba887cf21d94 ]
+[ Upstream commit 1db9df89a213318a48d958385dc1b17b379dc32b ]
 
-Restructure the call site for dma_contiguous_early_fixup() to
-where the reserved_mem nodes are being parsed from the DT so that
-dma_mmu_remap[] is populated before dma_contiguous_remap() is called.
+The QuickI2C ACPI _DSD methods return ICRS and ISUB data with a
+trailing byte, making the actual length is one more byte than the
+structs defined.
 
-Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
-Signed-off-by: Oreoluwa Babatunde <oreoluwa.babatunde@oss.qualcomm.com>
-Tested-by: William Zhang <william.zhang@broadcom.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250806172421.2748302-1-oreoluwa.babatunde@oss.qualcomm.com
+It caused stack-out-of-bounds and kernel crash:
+
+kernel: BUG: KASAN: stack-out-of-bounds in quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
+kernel: Write of size 12 at addr ffff888106d1f900 by task kworker/u33:2/75
+kernel:
+kernel: CPU: 3 UID: 0 PID: 75 Comm: kworker/u33:2 Not tainted 6.16.0+ #3 PREEMPT(voluntary)
+kernel: Workqueue: async async_run_entry_fn
+kernel: Call Trace:
+kernel:  <TASK>
+kernel:  dump_stack_lvl+0x76/0xa0
+kernel:  print_report+0xd1/0x660
+kernel:  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+kernel:  ? __kasan_slab_free+0x5d/0x80
+kernel:  ? kasan_addr_to_slab+0xd/0xb0
+kernel:  kasan_report+0xe1/0x120
+kernel:  ? quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
+kernel:  ? quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
+kernel:  kasan_check_range+0x11c/0x200
+kernel:  __asan_memcpy+0x3b/0x80
+kernel:  quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
+kernel:  ? __pfx_quicki2c_acpi_get_dsd_property.constprop.0+0x10/0x10 [intel_quicki2c]
+kernel:  quicki2c_get_acpi_resources+0x237/0x730 [intel_quicki2c]
+[...]
+kernel:  </TASK>
+kernel:
+kernel: The buggy address belongs to stack of task kworker/u33:2/75
+kernel:  and is located at offset 48 in frame:
+kernel:  quicki2c_get_acpi_resources+0x0/0x730 [intel_quicki2c]
+kernel:
+kernel: This frame has 3 objects:
+kernel:  [32, 36) 'hid_desc_addr'
+kernel:  [48, 59) 'i2c_param'
+kernel:  [80, 224) 'i2c_config'
+
+ACPI DSD methods return:
+
+\_SB.PC00.THC0.ICRS Buffer       000000003fdc947b 001 Len 0C = 0A 00 80 1A 06 00 00 00 00 00 00 00
+\_SB.PC00.THC0.ISUB Buffer       00000000f2fcbdc4 001 Len 91 = 00 00 00 00 00 00 00 00 00 00 00 00
+
+Adding reserved padding to quicki2c_subip_acpi_parameter/config.
+
+Fixes: 5282e45ccbfa9 ("HID: intel-thc-hid: intel-quicki2c: Add THC QuickI2C ACPI interfaces")
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Reviewed-by: Even Xu <even.xu@intel.com>
+Tested-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/of_reserved_mem.c | 16 ++++++++++++----
- include/linux/dma-map-ops.h  |  3 +++
- kernel/dma/contiguous.c      |  2 --
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-index d3b7c4ae429c7..2e9ea751ed2df 100644
---- a/drivers/of/of_reserved_mem.c
-+++ b/drivers/of/of_reserved_mem.c
-@@ -25,6 +25,7 @@
- #include <linux/memblock.h>
- #include <linux/kmemleak.h>
- #include <linux/cma.h>
-+#include <linux/dma-map-ops.h>
+diff --git a/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h b/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h
+index 6ddb584bd6110..97085a6a7452d 100644
+--- a/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h
++++ b/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h
+@@ -71,6 +71,7 @@ struct quicki2c_subip_acpi_parameter {
+ 	u16 device_address;
+ 	u64 connection_speed;
+ 	u8 addressing_mode;
++	u8 reserved;
+ } __packed;
  
- #include "of_private.h"
+ /**
+@@ -120,6 +121,7 @@ struct quicki2c_subip_acpi_config {
+ 	u64 HMTD;
+ 	u64 HMRD;
+ 	u64 HMSL;
++	u8 reserved;
+ };
  
-@@ -175,13 +176,17 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
- 		base = dt_mem_next_cell(dt_root_addr_cells, &prop);
- 		size = dt_mem_next_cell(dt_root_size_cells, &prop);
- 
--		if (size &&
--		    early_init_dt_reserve_memory(base, size, nomap) == 0)
-+		if (size && early_init_dt_reserve_memory(base, size, nomap) == 0) {
-+			/* Architecture specific contiguous memory fixup. */
-+			if (of_flat_dt_is_compatible(node, "shared-dma-pool") &&
-+			    of_get_flat_dt_prop(node, "reusable", NULL))
-+				dma_contiguous_early_fixup(base, size);
- 			pr_debug("Reserved memory: reserved region for node '%s': base %pa, size %lu MiB\n",
- 				uname, &base, (unsigned long)(size / SZ_1M));
--		else
-+		} else {
- 			pr_err("Reserved memory: failed to reserve memory for node '%s': base %pa, size %lu MiB\n",
- 			       uname, &base, (unsigned long)(size / SZ_1M));
-+		}
- 
- 		len -= t_len;
- 	}
-@@ -472,7 +477,10 @@ static int __init __reserved_mem_alloc_size(unsigned long node, const char *unam
- 		       uname, (unsigned long)(size / SZ_1M));
- 		return -ENOMEM;
- 	}
--
-+	/* Architecture specific contiguous memory fixup. */
-+	if (of_flat_dt_is_compatible(node, "shared-dma-pool") &&
-+	    of_get_flat_dt_prop(node, "reusable", NULL))
-+		dma_contiguous_early_fixup(base, size);
- 	/* Save region in the reserved_mem array */
- 	fdt_reserved_mem_save_node(node, uname, base, size);
- 	return 0;
-diff --git a/include/linux/dma-map-ops.h b/include/linux/dma-map-ops.h
-index f48e5fb88bd5d..332b80c42b6f3 100644
---- a/include/linux/dma-map-ops.h
-+++ b/include/linux/dma-map-ops.h
-@@ -153,6 +153,9 @@ static inline void dma_free_contiguous(struct device *dev, struct page *page,
- {
- 	__free_pages(page, get_order(size));
- }
-+static inline void dma_contiguous_early_fixup(phys_addr_t base, unsigned long size)
-+{
-+}
- #endif /* CONFIG_DMA_CMA*/
- 
- #ifdef CONFIG_DMA_DECLARE_COHERENT
-diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
-index 67af8a55185d9..d9b9dcba6ff7c 100644
---- a/kernel/dma/contiguous.c
-+++ b/kernel/dma/contiguous.c
-@@ -483,8 +483,6 @@ static int __init rmem_cma_setup(struct reserved_mem *rmem)
- 		pr_err("Reserved memory: unable to setup CMA region\n");
- 		return err;
- 	}
--	/* Architecture specific contiguous memory fixup. */
--	dma_contiguous_early_fixup(rmem->base, rmem->size);
- 
- 	if (default_cma)
- 		dma_contiguous_default_area = cma;
+ struct device;
 -- 
 2.50.1
 
