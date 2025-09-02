@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6483130E834;
-	Tue,  2 Sep 2025 13:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD193043BA;
+	Tue,  2 Sep 2025 13:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820409; cv=none; b=uW9+cjS2n5gAHa6DJLrT7LU54CmWWChlpELDKz4QMIlOqeCZrdtT/RG7Y7RcqvCyxYt0uab58PIPU4NtywjEWGTIDBIETvCUdM9ZeL3RBDF+lGeW5EGSG22l7RqbLI+dbZmTJl8cKG7uh47eFS4QSIARhm6ZuronCJcEPAoqwIc=
+	t=1756820413; cv=none; b=ZkGIrKtS3pwvvZD+G12BcqYtgwuRdCc70eMQg1ulePtef0qwnhaQinVQOaxid2Yix7ZFyXxOPAT1zbhHXHoXO1BRc5emoyDCePrfxje52eOdarr8a/vSMCyRCRS4irAosd1c/HNaqbIou09G1+10O5mahJbi8C7cDjSNoDJFM6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820409; c=relaxed/simple;
-	bh=R7p/D9Z/ncgzDRziSHIiqRI6/+/QzAM6f2aNJVLYhF0=;
+	s=arc-20240116; t=1756820413; c=relaxed/simple;
+	bh=gWIObeqZM+ORYqYM+gfgPCt8B7SYcs8v1GEtEILKT0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+zWS+v9mlYRdjSGFbM29cIexzvrHIkcixX2F6HI3KguADPFvW9HmbCV5gVpJj5WfxTzqH+kk3WNxyueqUZptIsi0e8R6wW0laZ3/JY0nz8Al/x9Y7ViUkV+/xho4THNkavty9pQZCFGp512zh8fzsNRf3nJgImzEiUGhuNN+wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dar9hdqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqK1+D4VTmpIFB9G/UDaP/xUAoRcv8XQP2GumB9vvDmefl7lvfmRGfvPH7f9kP2OO6PjdJK8S4NuKGTJxegUhwvrP+zqgL7eVaktW1giOAhcOef3Drm5oESJzFSrmE//BSLypoVHI1geOgtPt2l71sjaDZxXhwExbpZrnwaGdZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjb9RUY7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dar9hdqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34FEC4CEED;
-	Tue,  2 Sep 2025 13:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjb9RUY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBEFC4CEED;
+	Tue,  2 Sep 2025 13:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820409;
-	bh=R7p/D9Z/ncgzDRziSHIiqRI6/+/QzAM6f2aNJVLYhF0=;
+	s=korg; t=1756820412;
+	bh=gWIObeqZM+ORYqYM+gfgPCt8B7SYcs8v1GEtEILKT0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dar9hdqIvOM9drd9AfAa13J0coS7eiKwuM/MbMp4lgqH/W6a4IAyB7S8V6sAjYfTK
-	 itJMQTttvUKvLa8oi411mIvmdxN3ju/yHTTx6fDqPHevB9JGWgjWUKzp3exfTUtP69
-	 Qws1lLB7YX47Irty/iV+T8iOsrw+Xv67AmZ+wby4=
+	b=fjb9RUY7Z402zbgCPqUpzGwn66BmEtY6Y5zCusOaDveRJuNHzuKABbpQ5viPqMK8C
+	 sfMGzxy/mDiff5yngVJUwTp9FS0WZVDm5eg2AamHoFM1pc7wxAVmR9hTpGaZdow3AV
+	 esulv+/TvZPCw/fBTJV1oesfEjRaV9gA/zrHlebg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/50] mips: dts: lantiq: danube: add missing burst length property
-Date: Tue,  2 Sep 2025 15:20:53 +0200
-Message-ID: <20250902131930.608571201@linuxfoundation.org>
+Subject: [PATCH 6.1 20/50] Bluetooth: hci_event: Detect if HCI_EV_NUM_COMP_PKTS is unbalanced
+Date: Tue,  2 Sep 2025 15:21:11 +0200
+Message-ID: <20250902131931.327014879@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -51,43 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 7b28232921782aa38048249132899c337405eaa8 ]
+[ Upstream commit 15bf2c6391bafb14a3020d06ec0761bce0803463 ]
 
-The upstream dts lacks the lantiq,{rx/tx}-burst-length property. Other
-issues were also fixed:
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'interrupt-names' is a required property
-	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'lantiq,tx-burst-length' is a required property
-	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'lantiq,rx-burst-length' is a required property
-	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
+This attempts to detect if HCI_EV_NUM_COMP_PKTS contain an unbalanced
+(more than currently considered outstanding) number of packets otherwise
+it could cause the hcon->sent to underflow and loop around breaking the
+tracking of the outstanding packets pending acknowledgment.
 
-Fixes: 14d4e308e0aa ("net: lantiq: configure the burst length in ethernet drivers")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f42809185896 ("Bluetooth: Simplify num_comp_pkts_evt function")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/lantiq/danube_easy50712.dts | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_event.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-index 1ce20b7d05cb8..d8b3cd69eda3c 100644
---- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-+++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-@@ -87,8 +87,11 @@ etop@e180000 {
- 			reg = <0xe180000 0x40000>;
- 			interrupt-parent = <&icu0>;
- 			interrupts = <73 78>;
-+			interrupt-names = "tx", "rx";
- 			phy-mode = "rmii";
- 			mac-address = [ 00 11 22 33 44 55 ];
-+			lantiq,rx-burst-length = <4>;
-+			lantiq,tx-burst-length = <4>;
- 		};
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index ff013e1d82a85..3d81afcccff8b 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4409,7 +4409,17 @@ static void hci_num_comp_pkts_evt(struct hci_dev *hdev, void *data,
+ 		if (!conn)
+ 			continue;
  
- 		stp0: stp@e100bb0 {
+-		conn->sent -= count;
++		/* Check if there is really enough packets outstanding before
++		 * attempting to decrease the sent counter otherwise it could
++		 * underflow..
++		 */
++		if (conn->sent >= count) {
++			conn->sent -= count;
++		} else {
++			bt_dev_warn(hdev, "hcon %p sent %u < count %u",
++				    conn, conn->sent, count);
++			conn->sent = 0;
++		}
+ 
+ 		switch (conn->type) {
+ 		case ACL_LINK:
 -- 
 2.50.1
 
