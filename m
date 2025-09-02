@@ -1,115 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F77826C384;
-	Tue,  2 Sep 2025 16:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635D4310654
+	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 17:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756830954; cv=none; b=YFn1ymJuJvzc8otYHTdBiZxBk4KrrWBfMa8cPqM45Yl1gi0NniORJFQj8W0abhFTNiGljGDgYs92nSxxsQ7NYCUXmGEciOjOVzgL7Ip1jI5NUKWhIKZciUqkis551CpoljC76XPuv5te9IilzRv0/2VGwLX/D23+O0M7F/rz7a0=
+	t=1756833065; cv=none; b=KNPxatmXUuWr9M41beA/u7+nY0mfrqKEEm4x3SkBHoWB4wiKY8mA250qKMMqZTbEPEQWsTQqnfddwrUo89n9miixx21HBRB2BKFwIhXJqjbZ1o68OvjC7+zLH6xSZA0lyXKMXWpfY3BBrctb1nGxTIhJw3O8I6sfH53Fd1z+c+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756830954; c=relaxed/simple;
-	bh=4dMCQTY93FDdn7ueR8Z2tcJ3/CtiSsSmu2HzPGOu/Z0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XBa9bnlWl7GguzsSLZW7929djLaS00vjpAjBkAmW40npqnkEE5CHxaWsUWyT+KVxu+pPYS6yVN9BuIIijhDvnIDH7QJIRvVbMiX85y29ZS/PuiSy9+xEE72mZR890rdGX1Mnjcrvi+nNU7oLo9GJqd5/S8rWc76KENhkfkFKsBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rBh3Pmjc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756833065; c=relaxed/simple;
+	bh=DrCyuQEf6glI7LfRJAuaKNwC1GTQke6K7aTulwZMIX8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ErhfFOCYq2jnLkacduX+TLvuRdP+NH+W4iLaccMnpOusrybjc1JPjPRFUorZS2BZQs1oOUEczh82evFIOsCPcziXD4j7/+NHZT3/O0WLe7EdsoEY9Fx3keU6iyNc2tTmzjh9JID2kAaTlslhR5KveEr4lSRyT8wiQxsryafnRlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXc2H9hd; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rBh3Pmjc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCAEC4CEED;
-	Tue,  2 Sep 2025 16:35:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756830953;
-	bh=4dMCQTY93FDdn7ueR8Z2tcJ3/CtiSsSmu2HzPGOu/Z0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rBh3PmjcZuIEgrrElADaHH9xJIJUAI1t9Bk6cyJMewu7XYbg9zA1CaeEmGz+qtipd
-	 RNZlDjYi9KPC1zeQmwvRiKQ8lTfNaWlsrpU1KAMRZ4bkm1CNWp0GThlUm/fPJ8U/ef
-	 BsSPjZ1RB9m39VEWZ4BLO9AY5iwrokcWvaXLikixJk/aFZQ5m862kOg7s1ObYyK6g6
-	 EspIHiAp48J/5ZfpEPhy4pBonJx2/4kS1dkbMYn8Rpkrefk9HQgD9anbm/tEvFk3Kf
-	 ToZn5hB0Td9dLq/xAf91vB6dxGJ6qZ1Lpo5HXftZQx7mW0G3lXFmW78zg2tCUW3ZU6
-	 DNLjadeOIt0DQ==
-Date: Tue, 2 Sep 2025 17:35:46 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Matthew Maurer <mmaurer@google.com>,
-	Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
-Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
-Message-ID: <20250902-gown-relapse-8fd3978c1ea0@spud>
-References: <20250408220311.1033475-1-ojeda@kernel.org>
- <20250901-shrimp-define-9d99cc2a012a@spud>
- <aLaq6TpUtLkqHg_o@google.com>
- <20250902-crablike-bountiful-eb1c127f024a@spud>
- <CAH5fLggmXaa9JJ-yGdyH06Um8FopvYh97=rANLcoLc+60_HGqA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXc2H9hd"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7f8ea864d63so544697085a.0
+        for <patches@lists.linux.dev>; Tue, 02 Sep 2025 10:11:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756833063; x=1757437863; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=oBHtVSFw10dHsem95fb/g6IdGjhm6pmkppakycR4TZE=;
+        b=nXc2H9hdrFIJRGTF16nU8iy7BzZo3wQjfDD94Du05tIzU+VxN8J26nZfL2Xh+g2lvY
+         MFvH8FZZVcA2jcS9luyJGaiJSy+C1CXGE83v4DCYtqwElwE5UsVNs3XG/xQrKD9nI6wr
+         RplQ8IewOXBf0y93gGpljUoFUeIX9xUbg9kSaevLbIJRFcXccHqOlJRagE5AFe1hCDVV
+         Ssrw/+eao6utYQrRCUoEWUZJJsahbvgQ8Swio3uGzOO8+K938BLwSYWfUIYZaidzXhYe
+         gBV75k7seKtfABVpz6RtzlUPhwhkW8Ek/UIUScBEaGqd8vq4vusCe+OSbTYkFQB0FSiH
+         3xNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756833063; x=1757437863;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oBHtVSFw10dHsem95fb/g6IdGjhm6pmkppakycR4TZE=;
+        b=PI7y8yGcBuASiS4cLZEG/KHFwdufiQFx1T9cBbE4XDKAEsp55fxlYZ9gZbrOFNnfRE
+         QtAFSZmsCndoFYWNSzZEvBoNBKQ1wjGZda8cMSsJmXtMigHJHbn9FlFPm6MdHkzbPYqm
+         l3X/SFfUZPounpgrn7h/lz4abLP2mV1S/fwSL8wGYSm/8Cqf7CmleDoz4/6hylhDgDmO
+         LhK6rctZZxpkWAYbkAU76o9fQsw9+V9BovBHNyknfwov77MwokyKYrtxtrqayBiw3r1r
+         juRJdckjotNexfBsjJ9k3SRoqVpkJF4pyM/r+pvQxSr3tk3/fi7mtRUROM2VDLIzFVZE
+         My2w==
+X-Gm-Message-State: AOJu0YwYW0BKHPo90gqFvrDCndxV0OPhoewx3uYmQ5T9UA0voorS6whH
+	p0B4U3BV4NfaNZi/CwKaV/KyCSqIKFR8NpuOcUHg0/fv13GxqhNhir+t
+X-Gm-Gg: ASbGncu+c3dymiQ79PBQHyqPJ6Qj60ATx1Ac0LqyOORYRHzfKnkBOSoav6XSqcoveJ1
+	8cr3RVQZSTG/Q45zfWJMzIayo4mno9KyWgEzG6hvj0PrCvwszp/f7fsgxZ19q5kBAlqzapWN1HD
+	OXJC9yXy8RfyyJlq0rzfnlAS5NhUyutQZzkpBoRwhFOKm3D/bJj8H08L7o69XmiunNqWLqP8U0P
+	zn+wKmFppToHyWzWtV8W9DZ2Lr2lResVGLD8aSwpBUD5scRLQHjwgRNXIrFpfdPlCTtF+KNR0Yl
+	9m4rg8UT1D7vnEPTVrYuI+ZFL/2ytawqd4SESWbMv14GONsfcA9Xr4S/qGpfG1xefB/o8CyNugc
+	BrHxnvMYGXYIU28zaffCz8jIcvm+LQZzUbAcQ5u6u6UgN9gXzrA==
+X-Google-Smtp-Source: AGHT+IHnCSeufqhOHInLwoqV6gJLxiDNg3lrNlsEFOrhrs3RYhLLhW7CKfH3dJjBuOOkx+9jhFc8EA==
+X-Received: by 2002:a05:620a:1710:b0:809:db70:b415 with SMTP id af79cd13be357-809db70b47dmr80053485a.24.1756833062936;
+        Tue, 02 Sep 2025 10:11:02 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8069d6b056dsm167152785a.68.2025.09.02.10.10.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Sep 2025 10:11:01 -0700 (PDT)
+Message-ID: <109893d0-2df3-4a60-b77b-2be47ac605ae@gmail.com>
+Date: Tue, 2 Sep 2025 10:10:55 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4EeWks93mszFnPWF"
-Content-Disposition: inline
-In-Reply-To: <CAH5fLggmXaa9JJ-yGdyH06Um8FopvYh97=rANLcoLc+60_HGqA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 00/23] 5.4.298-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+References: <20250902131924.720400762@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ WlfRzlpjIPmdjgoicA==
+In-Reply-To: <20250902131924.720400762@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 9/2/25 06:21, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.298 release.
+> There are 23 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.298-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
---4EeWks93mszFnPWF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-> > AFAICT. Then later on it'd become more like:
-> >
-> > config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
-> >         def_bool y
-> >         depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
-> >         depends on RISCV || ((ARM64 || x86_64) && RUSTC_VERSION >=3D 10=
-7900)
-> >         depends on (ARM64 || x86_64) || (RISCV && RUSTC_VERSION >=3D 99=
-9999)
-> >         # With GCOV/KASAN we need this fix: https://github.com/rust-lan=
-g/rust/pull/129373
-> >         depends on (RUSTC_LLVM_VERSION >=3D 190103 && RUSTC_VERSION >=
-=3D 108200) || \
-> >                 (!GCOV_KERNEL && !KASAN_GENERIC && !KASAN_SW_TAGS)
-> >
-> > but that exact sort of mess is what becomes unwieldy fast since that
-> > doesn't even cover 32-bit arm.
->=20
-> I think a better way of writing it is like this:
->=20
-> depends on ARCH1 || ARCH2 || ARCH3
-> depends on !ARCH1 || RUSTC_VERSION >=3D 000000
-> depends on !ARCH2 || RUSTC_VERSION >=3D 000000
-> depends on !ARCH3 || RUSTC_VERSION >=3D 000000
-
-
-Ye, that's a lot more manageable than what I came up with, shoulda
-really done better since the option I used for a reference looks a lot
-more like this than what I had... Thanks.
-
---4EeWks93mszFnPWF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaLcc3gAKCRB4tDGHoIJi
-0jnKAP9LYjFVXcrh5zaOZUH0oAgMo/4x8LRtidC5WGVJnSFzRAEAwRmIFTqnghCO
-5eXDhlTuIMYMEiqkRoSEu+mM/OF6PwQ=
-=RGAX
------END PGP SIGNATURE-----
-
---4EeWks93mszFnPWF--
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
