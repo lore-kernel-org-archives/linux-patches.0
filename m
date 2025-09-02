@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7CF261393;
-	Tue,  2 Sep 2025 13:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EBD2BE036;
+	Tue,  2 Sep 2025 13:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820261; cv=none; b=KxeTjvuQJW4wzcSPXERMObmJfiU5bfmJCp67tBO4+5OLmD72u7v/SOkFnCbptexFtdLQshs1kYCsIpTBvl9GMNli4qRL9kwYA9NU57tf9MIBQDvDAekw3OLjpKh3G2qYwCw8WqeD/OpMTv3HbSxdfAet/IV/u6fFsNMPg2DaoOs=
+	t=1756820265; cv=none; b=KDMP0WqgRk3IQx3N9NDy4axwFZX1xG2NCCysdldqVVJKDOfJOozjV9f9BA7n4CoVfA3Y4WVuUgdSOdlCIY5JMiN5VY9J9IaKwONdTiVYYAo64sGF7sQ9P63C05XhXIj5KMQJMH8I3nCl+7K9xAF+dDzQiPYCm3guUnEvUA+SlCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820261; c=relaxed/simple;
-	bh=YzJVfioyR9Om9pZf936cwaAvqqS53KBzM5M1iH0e61c=;
+	s=arc-20240116; t=1756820265; c=relaxed/simple;
+	bh=+hwnmRr0TcHG2A+gehoXFLL4sC8QtZajnsVrvmMQ6zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfCxwXL7t8ppkIFiueRXAci3riRwtRjxuu2d7BeN2syN+Wok5xIH+6y3LyYk/ejjBquMqu0mX+x8QEun6k6X061fjX1o9S2lVmNxziRWcMW8vM+4nISf2Z5WP1RvmlisHKTk042+s0+rK08rekk/7BkgiSEPSg7zbC0InHDok80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaAuOGmm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgpsVlBjz/caCDkoOAIYS7YfBGT0HbI4HCKMXSakyI2T3q3hKDD9svfNnkFHvLuSt9IZI+JrlQ3IyEKCAWEWz4+EN+whPhnrlL4we56haFrGo//H07gIW+AqzSLelp+cE70dh99NjODLVFLwJgglNE8kHBPGUtKD+OTWAOHpkjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/OYOaDU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaAuOGmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5F9C4CEED;
-	Tue,  2 Sep 2025 13:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/OYOaDU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FB2C4CEED;
+	Tue,  2 Sep 2025 13:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820261;
-	bh=YzJVfioyR9Om9pZf936cwaAvqqS53KBzM5M1iH0e61c=;
+	s=korg; t=1756820264;
+	bh=+hwnmRr0TcHG2A+gehoXFLL4sC8QtZajnsVrvmMQ6zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaAuOGmmzv/f3yqpTOSHYiSfxscNUfBQPmB2cykdihpsrh5wTqvckjmNxptLpuvjG
-	 UY6roCuXpYujJuuDac9EWfej1GWNSycQ1jrNsBPs3EI782ItD9hg34uit5mrssXrVh
-	 /A7LV8NjAQe7x456r1/xiYTwGvl053RMUJ/WMLfg=
+	b=c/OYOaDU9b5gw3xJEeAzGY4x2Dg7Qc4MppEK+h0RqSp41/pTwcsvZhaJLa7urfrEc
+	 7HwDsVxePuDabNywIf+QUZNxTOepbqLa09C6LhPzKJeffGF9uv1FWzT00V6xSpckYa
+	 +0ck2wRUn75Nev8bGKaL2/flMqg3vyeFJNuwXdeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 50/75] net: stmmac: Set CIC bit only for TX queues with COE
-Date: Tue,  2 Sep 2025 15:21:02 +0200
-Message-ID: <20250902131937.085419961@linuxfoundation.org>
+Subject: [PATCH 6.6 51/75] net: rose: split remove and free operations in rose_remove_neigh()
+Date: Tue,  2 Sep 2025 15:21:03 +0200
+Message-ID: <20250902131937.123199740@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -52,66 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Takamitsu Iwai <takamitz@amazon.co.jp>
 
-[ Upstream commit b1eded580ab28119de0b0f21efe37ee2b4419144 ]
+[ Upstream commit dcb34659028f856c423a29ef9b4e2571d203444d ]
 
-Currently, in the AF_XDP transmit paths, the CIC bit of
-TX Desc3 is set for all packets. Setting this bit for
-packets transmitting through queues that don't support
-checksum offloading causes the TX DMA to get stuck after
-transmitting some packets. This patch ensures the CIC bit
-of TX Desc3 is set only if the TX queue supports checksum
-offloading.
+The current rose_remove_neigh() performs two distinct operations:
+1. Removes rose_neigh from rose_neigh_list
+2. Frees the rose_neigh structure
 
-Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-3-c225fe4444c0@altera.com
+Split these operations into separate functions to improve maintainability
+and prepare for upcoming refcount_t conversion. The timer cleanup remains
+in rose_remove_neigh() because free operations can be called from timer
+itself.
+
+This patch introduce rose_neigh_put() to handle the freeing of rose_neigh
+structures and modify rose_remove_neigh() to handle removal only.
+
+Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250823085857.47674-2-takamitz@amazon.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/rose.h    |  8 ++++++++
+ net/rose/rose_route.c | 15 ++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index fa8ee0624f2f2..ff5389a8efc33 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2426,6 +2426,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 	struct netdev_queue *nq = netdev_get_tx_queue(priv->dev, queue);
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
- 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
-+	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
- 	struct xsk_buff_pool *pool = tx_q->xsk_pool;
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc = NULL;
-@@ -2496,7 +2497,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 23267b4efcfa3..174b4f605d849 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -151,6 +151,14 @@ struct rose_sock {
+ 
+ #define rose_sk(sk) ((struct rose_sock *)(sk))
+ 
++static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
++{
++	if (rose_neigh->ax25)
++		ax25_cb_put(rose_neigh->ax25);
++	kfree(rose_neigh->digipeat);
++	kfree(rose_neigh);
++}
++
+ /* af_rose.c */
+ extern ax25_address rose_callsign;
+ extern int  sysctl_rose_restart_request_timeout;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index a7054546f52df..b406b1e0fb1e7 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -234,20 +234,12 @@ static void rose_remove_neigh(struct rose_neigh *rose_neigh)
+ 
+ 	if ((s = rose_neigh_list) == rose_neigh) {
+ 		rose_neigh_list = rose_neigh->next;
+-		if (rose_neigh->ax25)
+-			ax25_cb_put(rose_neigh->ax25);
+-		kfree(rose_neigh->digipeat);
+-		kfree(rose_neigh);
+ 		return;
+ 	}
+ 
+ 	while (s != NULL && s->next != NULL) {
+ 		if (s->next == rose_neigh) {
+ 			s->next = rose_neigh->next;
+-			if (rose_neigh->ax25)
+-				ax25_cb_put(rose_neigh->ax25);
+-			kfree(rose_neigh->digipeat);
+-			kfree(rose_neigh);
+ 			return;
  		}
  
- 		stmmac_prepare_tx_desc(priv, tx_desc, 1, xdp_desc.len,
--				       true, priv->mode, true, true,
-+				       csum, priv->mode, true, true,
- 				       xdp_desc.len);
+@@ -331,8 +323,10 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
  
- 		stmmac_enable_dma_transmission(priv, priv->ioaddr);
-@@ -4789,6 +4790,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- {
- 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
-+	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc;
- 	dma_addr_t dma_addr;
-@@ -4833,7 +4835,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 	stmmac_set_desc_addr(priv, tx_desc, dma_addr);
+-			if (rose_neigh->count == 0 && rose_neigh->use == 0)
++			if (rose_neigh->count == 0 && rose_neigh->use == 0) {
+ 				rose_remove_neigh(rose_neigh);
++				rose_neigh_put(rose_neigh);
++			}
  
- 	stmmac_prepare_tx_desc(priv, tx_desc, 1, xdpf->len,
--			       true, priv->mode, true, true,
-+			       csum, priv->mode, true, true,
- 			       xdpf->len);
+ 			rose_node->count--;
  
- 	tx_q->tx_count_frames++;
+@@ -513,6 +507,7 @@ void rose_rt_device_down(struct net_device *dev)
+ 		}
+ 
+ 		rose_remove_neigh(s);
++		rose_neigh_put(s);
+ 	}
+ 	spin_unlock_bh(&rose_neigh_list_lock);
+ 	spin_unlock_bh(&rose_node_list_lock);
+@@ -569,6 +564,7 @@ static int rose_clear_routes(void)
+ 		if (s->use == 0 && !s->loopback) {
+ 			s->count = 0;
+ 			rose_remove_neigh(s);
++			rose_neigh_put(s);
+ 		}
+ 	}
+ 
+@@ -1301,6 +1297,7 @@ void __exit rose_rt_free(void)
+ 		rose_neigh = rose_neigh->next;
+ 
+ 		rose_remove_neigh(s);
++		rose_neigh_put(s);
+ 	}
+ 
+ 	while (rose_node != NULL) {
 -- 
 2.50.1
 
