@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B253043BA;
-	Tue,  2 Sep 2025 13:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6483130E834;
+	Tue,  2 Sep 2025 13:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820406; cv=none; b=gDp9rhJpRNGeDsPnKobvj47LrcWRbkMglTRrw4lw8qcxmguT9oY3alUfeGJOrklpuKt1G7RJApyQAQlMNZAdpB/9Osi1y4jnvXfTFq+5GBuHm7Jd/efEN6khPZbIQU/jmphq/ZNSoCL+Y2miQ4nC22001VtJQr+UMy5GibL37SA=
+	t=1756820409; cv=none; b=uW9+cjS2n5gAHa6DJLrT7LU54CmWWChlpELDKz4QMIlOqeCZrdtT/RG7Y7RcqvCyxYt0uab58PIPU4NtywjEWGTIDBIETvCUdM9ZeL3RBDF+lGeW5EGSG22l7RqbLI+dbZmTJl8cKG7uh47eFS4QSIARhm6ZuronCJcEPAoqwIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820406; c=relaxed/simple;
-	bh=5RSfbRUfS80LyAaJZhK5n75NBpz5iTWVhmcSYe+J3O0=;
+	s=arc-20240116; t=1756820409; c=relaxed/simple;
+	bh=R7p/D9Z/ncgzDRziSHIiqRI6/+/QzAM6f2aNJVLYhF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMHmYOtijXZzOvWtQTRL3dpW2/Djxt/YsE+qKLdm/RXyDLdAZzsOyo5kD3c44qEkBXSY635vCtUDt6YihqK0A28waAuQbNHsfzqazyJfXgZQt2XgtCfBDCZu0EeVLR1h1bveOXrjgaUGhMnHEjKJJYwhBQG6ql7Fx2hNEOdxda0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P17NrsTv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+zWS+v9mlYRdjSGFbM29cIexzvrHIkcixX2F6HI3KguADPFvW9HmbCV5gVpJj5WfxTzqH+kk3WNxyueqUZptIsi0e8R6wW0laZ3/JY0nz8Al/x9Y7ViUkV+/xho4THNkavty9pQZCFGp512zh8fzsNRf3nJgImzEiUGhuNN+wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dar9hdqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P17NrsTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F17C4CEED;
-	Tue,  2 Sep 2025 13:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dar9hdqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34FEC4CEED;
+	Tue,  2 Sep 2025 13:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820406;
-	bh=5RSfbRUfS80LyAaJZhK5n75NBpz5iTWVhmcSYe+J3O0=;
+	s=korg; t=1756820409;
+	bh=R7p/D9Z/ncgzDRziSHIiqRI6/+/QzAM6f2aNJVLYhF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P17NrsTvMLQlPITWQgB2cRg9bQ0H8yAo9tqjlR9mxgIYlCAo8tDb1TQLfMoCDbVRb
-	 W4DWIGOap2YT7r0DiFOgglGpXAB99b9PKG66BIEYUBlQX1ljUloTzGmgUPZjWIFOvY
-	 uQn4y5acRPO8RRBETL51vQCgpr9AwdNhGcXAGON0=
+	b=dar9hdqIvOM9drd9AfAa13J0coS7eiKwuM/MbMp4lgqH/W6a4IAyB7S8V6sAjYfTK
+	 itJMQTttvUKvLa8oi411mIvmdxN3ju/yHTTx6fDqPHevB9JGWgjWUKzp3exfTUtP69
+	 Qws1lLB7YX47Irty/iV+T8iOsrw+Xv67AmZ+wby4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ludovico de Nittis <ludovico.denittis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/50] Bluetooth: hci_event: Mark connection as closed during suspend disconnect
-Date: Tue,  2 Sep 2025 15:21:10 +0200
-Message-ID: <20250902131931.283381665@linuxfoundation.org>
+Subject: [PATCH 6.1 02/50] mips: dts: lantiq: danube: add missing burst length property
+Date: Tue,  2 Sep 2025 15:20:53 +0200
+Message-ID: <20250902131930.608571201@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -51,77 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ludovico de Nittis <ludovico.denittis@collabora.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit b7fafbc499b5ee164018eb0eefe9027f5a6aaad2 ]
+[ Upstream commit 7b28232921782aa38048249132899c337405eaa8 ]
 
-When suspending, the disconnect command for an active Bluetooth
-connection could be issued, but the corresponding
-`HCI_EV_DISCONN_COMPLETE` event might not be received before the system
-completes the suspend process. This can lead to an inconsistent state.
+The upstream dts lacks the lantiq,{rx/tx}-burst-length property. Other
+issues were also fixed:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'lantiq,tx-burst-length' is a required property
+	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'lantiq,rx-burst-length' is a required property
+	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
 
-On resume, the controller may auto-accept reconnections from the same
-device (due to suspend event filters), but these new connections are
-rejected by the kernel which still has connection objects from before
-suspend. Resulting in errors like:
-```
-kernel: Bluetooth: hci0: ACL packet for unknown connection handle 1
-kernel: Bluetooth: hci0: Ignoring HCI_Connection_Complete for existing
-connection
-```
-
-This is a btmon snippet that shows the issue:
-```
-< HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 1 Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
-        Reason: Remote User Terminated Connection (0x13)
-> HCI Event: Command Status (0x0f) plen 4
-      Disconnect (0x01|0x0006) ncmd 2
-        Status: Success (0x00)
-[...]
-// Host suspends with the event filter set for the device
-// On resume, the device tries to reconnect with a new handle
-
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 2
-        Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
-
-// Kernel ignores this event because there is an existing connection
-with
-// handle 1
-```
-
-By explicitly setting the connection state to BT_CLOSED we can ensure a
-consistent state, even if we don't receive the disconnect complete event
-in time.
-
-Link: https://github.com/bluez/bluez/issues/1226
-Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
-Signed-off-by: Ludovico de Nittis <ludovico.denittis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 14d4e308e0aa ("net: lantiq: configure the burst length in ethernet drivers")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/mips/boot/dts/lantiq/danube_easy50712.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 3ff428df58a46..ff013e1d82a85 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2782,6 +2782,12 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
- 		goto done;
- 	}
+diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+index 1ce20b7d05cb8..d8b3cd69eda3c 100644
+--- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
++++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+@@ -87,8 +87,11 @@ etop@e180000 {
+ 			reg = <0xe180000 0x40000>;
+ 			interrupt-parent = <&icu0>;
+ 			interrupts = <73 78>;
++			interrupt-names = "tx", "rx";
+ 			phy-mode = "rmii";
+ 			mac-address = [ 00 11 22 33 44 55 ];
++			lantiq,rx-burst-length = <4>;
++			lantiq,tx-burst-length = <4>;
+ 		};
  
-+	/* During suspend, mark connection as closed immediately
-+	 * since we might not receive HCI_EV_DISCONN_COMPLETE
-+	 */
-+	if (hdev->suspended)
-+		conn->state = BT_CLOSED;
-+
- 	mgmt_conn = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
- 
- 	if (conn->type == ACL_LINK) {
+ 		stp0: stp@e100bb0 {
 -- 
 2.50.1
 
