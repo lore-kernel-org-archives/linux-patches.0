@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7860E326D53;
-	Tue,  2 Sep 2025 13:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1B4324B2D;
+	Tue,  2 Sep 2025 13:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820488; cv=none; b=oUFKPdTWqo//R2fd3hLjeGVRx4h3fGfEADobWxY4qDR+2H6FN7pzUoEQca0pXKn2eyvF/owBZvK7WSzZj4RC9EDCFaMwe7/k3WQEXFBcW2xn60jCh5e3x6u0L49SVTKx7AHpWPBBaAPtP6V9z6Nyb31sGGpHMteVsNVpsUiFLtY=
+	t=1756820491; cv=none; b=a+iwCU6IavAqd6piJ+gW5m59pBk1i2p8wL6QpB3XVkaPzVjSkCNuFwIkFDnCf1WkE0hRlzNfN2YWWF7aP98/CcQdgT+x7ML80u6bU+f2v8XAqTvMXIFIpQA1A9Pn6KHleTi1HWVX8vABx8KXFc69hjaXPpiCV19ySgz+fDU/Yzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820488; c=relaxed/simple;
-	bh=7q1BlMAkbaZ96ft7MociAFMA45TN8oatms3WeSMrP5k=;
+	s=arc-20240116; t=1756820491; c=relaxed/simple;
+	bh=8iVbkRikCkBI8URpIt0hubUQf/Cu/DEpy/2z2B2ftdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDxXUZWvVck2vLoXt9+UqbftE76cg2rV75sqHdQKJCzmLIKqDo6dyuRPUb7XjH3R6Z1G4fQbXqrotvKUydCiiENvXorxYJGz9upcxWqhR4iShNaIQQweRSf4B7lLTmA+FH3/wdCMmUq5sqyVBTZIhJKI/8fV6XuOIcGT1dCrTnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+qIo+PE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qt6atxsAPJmDvOjgT1D6tmbXLR0skfb1Q0Uv1VpgJDWoV5e2b0z/p8cHdUGrY9J1lOQ0EyGqon4ncFhjq0lWqH3v15TmJ2cTm2SEElzt5aPfzlbF6GuRULEljBDuYGUvqtsX62STATozqTHnbadnVy/ZJieJQ0idjqXfQMTetug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs96chSn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+qIo+PE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD78C4CEED;
-	Tue,  2 Sep 2025 13:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs96chSn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA4CC4CEED;
+	Tue,  2 Sep 2025 13:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820488;
-	bh=7q1BlMAkbaZ96ft7MociAFMA45TN8oatms3WeSMrP5k=;
+	s=korg; t=1756820491;
+	bh=8iVbkRikCkBI8URpIt0hubUQf/Cu/DEpy/2z2B2ftdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+qIo+PEVfn/H3diguM2zjNrHoa1ff7dN3epgpwswo0KNKnvDO42FHfaTj16ehEMj
-	 XSfgsQARYBuSUh9+r3r7bgnx7+yghzkBz/C0EaQUEEnGlxj3s0YlTm4MLhBLJJtpDH
-	 tJkouUZWXCBjzQ/KrqLvc9lZtQFRNWPRVZSeE2/g=
+	b=Cs96chSnKHN72y7IAGdfK8PYKY9/pDYrvMt4Q+/LFafGdKHthE+iEfv0uXdFDJRAg
+	 V44XT7CiM/tLnJtRKcVNAKhQxNOogTlD3O5URX1mJwoaDgPuu3fx1Dd0mfnWnIytq8
+	 ggWlaStkoM5IQ3e78yxB079zNIoezd0d81IM2+78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2eb8d1719f7cfcfa6840@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Takamitsu Iwai <takamitz@amazon.co.jp>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 46/50] net: rose: fix a typo in rose_clear_routes()
-Date: Tue,  2 Sep 2025 15:21:37 +0200
-Message-ID: <20250902131932.342747036@linuxfoundation.org>
+	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Romain Sioen <romain.sioen@microchip.com>
+Subject: [PATCH 6.1 47/50] HID: mcp2221: Dont set bus speed on every transfer
+Date: Tue,  2 Sep 2025 15:21:38 +0200
+Message-ID: <20250902131932.381198014@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -53,51 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
 
-commit 1cc8a5b534e5f9b5e129e54ee2e63c9f5da4f39a upstream.
+commit 02a46753601a24e1673d9c28173121055e8e6cc9 upstream.
 
-syzbot crashed in rose_clear_routes(), after a recent patch typo.
+Since the initial commit of this driver the I2C bus speed has been
+reconfigured for every single transfer. This is despite the fact that we
+never change the speed and it is never "lost" by the chip.
+Upon investigation we find that what was really happening was that the
+setting of the bus speed had the side effect of cancelling a previous
+failed command if there was one, thereby freeing the bus. This is the
+part that was actually required to keep the bus operational in the face
+of failed commands.
 
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-CPU: 0 UID: 0 PID: 10591 Comm: syz.3.1856 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
- RIP: 0010:rose_clear_routes net/rose/rose_route.c:565 [inline]
- RIP: 0010:rose_rt_ioctl+0x162/0x1250 net/rose/rose_route.c:760
- <TASK>
-  rose_ioctl+0x3ce/0x8b0 net/rose/af_rose.c:1381
-  sock_do_ioctl+0xd9/0x300 net/socket.c:1238
-  sock_ioctl+0x576/0x790 net/socket.c:1359
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:598 [inline]
-  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Instead of always setting the speed, we now correctly cancel any failed
+commands as they are detected. This means we can just set the bus speed
+at probe time and remove the previous speed sets on each transfer.
+This has the effect of improving performance and reducing the number of
+commands required to complete transfers.
 
-Fixes: da9c9c877597 ("net: rose: include node references in rose_neigh refcount")
-Reported-by: syzbot+2eb8d1719f7cfcfa6840@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68af3e29.a70a0220.3cafd4.002e.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Takamitsu Iwai <takamitz@amazon.co.jp>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250827172149.5359-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+[romain.sioen@microchip.com: backport to stable, up to 6.8. Add "Fixes" tag]
+Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_route.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-mcp2221.c |   41 +++++++++++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 14 deletions(-)
 
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -562,7 +562,7 @@ static int rose_clear_routes(void)
- 		rose_node = rose_node->next;
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -169,6 +169,25 @@ static int mcp_cancel_last_cmd(struct mc
+ 	return mcp_send_data_req_status(mcp, mcp->txbuf, 8);
+ }
  
- 		if (!t->loopback) {
--			for (i = 0; i < rose_node->count; i++)
-+			for (i = 0; i < t->count; i++)
- 				rose_neigh_put(t->neighbour[i]);
- 			rose_remove_node(t);
++/* Check if the last command succeeded or failed and return the result.
++ * If the command did fail, cancel that command which will free the i2c bus.
++ */
++static int mcp_chk_last_cmd_status_free_bus(struct mcp2221 *mcp)
++{
++	int ret;
++
++	ret = mcp_chk_last_cmd_status(mcp);
++	if (ret) {
++		/* The last command was a failure.
++		 * Send a cancel which will also free the bus.
++		 */
++		usleep_range(980, 1000);
++		mcp_cancel_last_cmd(mcp);
++	}
++
++	return ret;
++}
++
+ static int mcp_set_i2c_speed(struct mcp2221 *mcp)
+ {
+ 	int ret;
+@@ -223,7 +242,7 @@ static int mcp_i2c_write(struct mcp2221
+ 		usleep_range(980, 1000);
+ 
+ 		if (last_status) {
+-			ret = mcp_chk_last_cmd_status(mcp);
++			ret = mcp_chk_last_cmd_status_free_bus(mcp);
+ 			if (ret)
+ 				return ret;
  		}
+@@ -290,7 +309,7 @@ static int mcp_i2c_smbus_read(struct mcp
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = mcp_chk_last_cmd_status(mcp);
++		ret = mcp_chk_last_cmd_status_free_bus(mcp);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -310,11 +329,6 @@ static int mcp_i2c_xfer(struct i2c_adapt
+ 
+ 	mutex_lock(&mcp->lock);
+ 
+-	/* Setting speed before every transaction is required for mcp2221 */
+-	ret = mcp_set_i2c_speed(mcp);
+-	if (ret)
+-		goto exit;
+-
+ 	if (num == 1) {
+ 		if (msgs->flags & I2C_M_RD) {
+ 			ret = mcp_i2c_smbus_read(mcp, msgs, MCP2221_I2C_RD_DATA,
+@@ -399,9 +413,7 @@ static int mcp_smbus_write(struct mcp222
+ 	if (last_status) {
+ 		usleep_range(980, 1000);
+ 
+-		ret = mcp_chk_last_cmd_status(mcp);
+-		if (ret)
+-			return ret;
++		ret = mcp_chk_last_cmd_status_free_bus(mcp);
+ 	}
+ 
+ 	return ret;
+@@ -419,10 +431,6 @@ static int mcp_smbus_xfer(struct i2c_ada
+ 
+ 	mutex_lock(&mcp->lock);
+ 
+-	ret = mcp_set_i2c_speed(mcp);
+-	if (ret)
+-		goto exit;
+-
+ 	switch (size) {
+ 
+ 	case I2C_SMBUS_QUICK:
+@@ -870,6 +878,11 @@ static int mcp2221_probe(struct hid_devi
+ 	if (i2c_clk_freq < 50)
+ 		i2c_clk_freq = 50;
+ 	mcp->cur_i2c_clk_div = (12000000 / (i2c_clk_freq * 1000)) - 3;
++	ret = mcp_set_i2c_speed(mcp);
++	if (ret) {
++		hid_err(hdev, "can't set i2c speed: %d\n", ret);
++		return ret;
++	}
+ 
+ 	mcp->adapter.owner = THIS_MODULE;
+ 	mcp->adapter.class = I2C_CLASS_HWMON;
 
 
