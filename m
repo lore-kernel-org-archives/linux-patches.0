@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8A2311C35;
-	Tue,  2 Sep 2025 13:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9D430ACFE;
+	Tue,  2 Sep 2025 13:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819956; cv=none; b=VpgJAMd0Kkb3LRmpNNrnxJAflhvhZ1sS3NuakHmj5UwCBq2e7tm+U1sclYszaac3afpGKn1hyl6QIRtXTftmwdYdA938DDgNUMy9+5ueBJjJpKCjU/AuCMwcKFgeIjyf9Cpc/em55eI/XfDocYQGEFs8GbdTiFBCu8kMnyeGmaE=
+	t=1756819959; cv=none; b=iZLZBzbSwfmSiytO5LaSlQ8mV2Y9HHjSpi+5um4Dn/12Qw+htPeX8sirfRMccYQmEVnEuBpMGsdu9dABBQNgQbavLIr9ZQEKL5cJ4OTsrQyrw6RMajYQtt2g2RcwGnSjJxAI+4mJHQ3bZOtGUvqSWmoA5ve3WrS4mRKLzwAUAeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819956; c=relaxed/simple;
-	bh=4lbf9oHwBxRRb6TakzCRbGD+E11EfFjFRkzsRQzKeTY=;
+	s=arc-20240116; t=1756819959; c=relaxed/simple;
+	bh=GHm69O06Ffvd8I8UpgY+AOSzPInMKhR0d2tJWzyi/6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlixvBZfeoanHsoQi9lBtJH2D0ehE365IjDTvtn90En1WhIXatUGQzOkTs2aMG71/0uzDORuEmKjDbtt8x1o4tAeUiHdGxF5ODPUpJe7jKFdyUKFDr/J3VyUGanvpvCxdSTbQWLnpMfbWhG/V0aecHejFICL7qX/yGjaOVgAUFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv/4j79F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SmFyWPOtv7ge3Q4ths1jRqqcNcGPMqWji4bBQj43q8rvTkh0c6InIobK0WpdioUI/rcyOEu+Yz7P9i+c2IGcNbxL+TnXT2aR1jKviOuJuoJWRjJjQGQhL/Yz3QjHJE+AP3Ni+4nKo2D2kYf3/c2yN4lITm6UM6+zBt6OMsWgCN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCpfgPXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv/4j79F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8F4C4CEED;
-	Tue,  2 Sep 2025 13:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCpfgPXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEDEC4CEF4;
+	Tue,  2 Sep 2025 13:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819956;
-	bh=4lbf9oHwBxRRb6TakzCRbGD+E11EfFjFRkzsRQzKeTY=;
+	s=korg; t=1756819959;
+	bh=GHm69O06Ffvd8I8UpgY+AOSzPInMKhR0d2tJWzyi/6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rv/4j79F1QPf0Lk0w8PrmEqevNpT0eJWsIcMbS175U6BHrxZzTFM3OEYqedzpPr0C
-	 3wdk0+5FLDaLGyNEIJORm8N1YNyGBfZzcgwHofGG37G+h5RacEkV800+StYZ86F+cF
-	 sPhI0K0VZmzXQRKKLoDSlpeIgNADvI532bUMn0CY=
+	b=aCpfgPXk6YK1qNiHT3Wt9phYEzt/BlFo8kn/rocL3eC/NWk+MP0/Y3vGM4fyuWZBs
+	 BaVsc1JW4woRs5DhlbhMqR07McnIJOzKtULwO0e6V32K4soQ1q5MIOSl16OTY6ijJt
+	 NTy9qO8+l9gOcxcmR7hCD9hKmhXghmDrSwhgsko4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 47/95] bnxt_en: Fix stats context reservation logic
-Date: Tue,  2 Sep 2025 15:20:23 +0200
-Message-ID: <20250902131941.407490297@linuxfoundation.org>
+Subject: [PATCH 6.12 48/95] net/mlx5: Reload auxiliary drivers on fw_activate
+Date: Tue,  2 Sep 2025 15:20:24 +0200
+Message-ID: <20250902131941.451395038@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -53,42 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit b4fc8faacfea2538184a1dbd616ae9447a361f3d ]
+[ Upstream commit 34cc6a54914f478c93e176450fae6313404f9f74 ]
 
-The HW resource reservation logic allows the L2 driver to use the
-RoCE resources if the RoCE driver is not registered.  When calculating
-the stats contexts available for L2, we should not blindly subtract
-the stats contexts reserved for RoCE unless the RoCE driver is
-registered.  This bug may cause the L2 rings to be less than the
-number requested when we are close to running out of stats contexts.
+The devlink reload fw_activate command performs firmware activation
+followed by driver reload, while devlink reload driver_reinit triggers
+only driver reload. However, the driver reload logic differs between the
+two modes, as on driver_reinit mode mlx5 also reloads auxiliary drivers,
+while in fw_activate mode the auxiliary drivers are suspended where
+applicable.
 
-Fixes: 2e4592dc9bee ("bnxt_en: Change MSIX/NQs allocation policy")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20250825175927.459987-4-michael.chan@broadcom.com
+Additionally, following the cited commit, if the device has multiple PFs,
+the behavior during fw_activate may vary between PFs: one PF may suspend
+auxiliary drivers, while another reloads them.
+
+Align devlink dev reload fw_activate behavior with devlink dev reload
+driver_reinit, to reload all auxiliary drivers.
+
+Fixes: 72ed5d5624af ("net/mlx5: Suspend auxiliary devices only in case of PCI device suspend")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250825143435.598584-6-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index b8c6087a5c31e..08886c3a28c61 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -7780,7 +7780,8 @@ static int __bnxt_reserve_rings(struct bnxt *bp)
- 	}
- 	rx_rings = min_t(int, rx_rings, hwr.grp);
- 	hwr.cp = min_t(int, hwr.cp, bp->cp_nr_rings);
--	if (hwr.stat > bnxt_get_ulp_stat_ctxs(bp))
-+	if (bnxt_ulp_registered(bp->edev) &&
-+	    hwr.stat > bnxt_get_ulp_stat_ctxs(bp))
- 		hwr.stat -= bnxt_get_ulp_stat_ctxs(bp);
- 	hwr.cp = min_t(int, hwr.cp, hwr.stat);
- 	rc = bnxt_trim_rings(bp, &rx_rings, &hwr.tx, hwr.cp, sh);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index a2cf3e79693dd..7211e65ad2dcc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -107,7 +107,7 @@ static int mlx5_devlink_reload_fw_activate(struct devlink *devlink, struct netli
+ 	if (err)
+ 		return err;
+ 
+-	mlx5_unload_one_devl_locked(dev, true);
++	mlx5_unload_one_devl_locked(dev, false);
+ 	err = mlx5_health_wait_pci_up(dev);
+ 	if (err)
+ 		NL_SET_ERR_MSG_MOD(extack, "FW activate aborted, PCI reads fail after reset");
 -- 
 2.50.1
 
