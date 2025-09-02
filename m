@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3CC3093A5;
-	Tue,  2 Sep 2025 13:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1865303C8B;
+	Tue,  2 Sep 2025 13:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819534; cv=none; b=hulKOOeZggF/1TmnSrtT/xnsDYdcxHCepAlOhhTkM5lnFcl514weIqYsbH3RGZvDc2KYegEkOiTIiJ0Gcepoet3Ucr/pVQwdaALCkRFwOuJOcF3PK/po3wZOcg5Pp9+DML34hRqHj5CLu/ZB5XYtyPYKwEfae3KFC2AcZMcC6xQ=
+	t=1756819537; cv=none; b=tOblQAQpOpALoI3a8ueQBa51jTByn4sjVKwBwuX0J4bv2gU8SAl5FLEUpEmkRxa3lsRgL5aX+Z8ollWQFAx5vsKd1+wgZDBzzlRE4lK6YGeNc/BmJumjRdDbs1dn1fJMpO6ing+QOkF0mK2nDB3CW3iuLd/MLMMqdSJ0KKuBoqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819534; c=relaxed/simple;
-	bh=hQ3ibyUPruuK6iQd/E3aaj19AnYljWi9pxM7CH2anFY=;
+	s=arc-20240116; t=1756819537; c=relaxed/simple;
+	bh=SBLfv1eOjuvaYIfbCXtRRFf80JcZ7PGuTXDQvSG8des=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jg8o3q/eZIvmRNTHeCFj4vyKE/t2I5QkvF15vcqvd6GfJxwgQzH9GVuti5VtZ/i3YylubpJWsQqeBZGTbQ28oOrIgWrX2Bj57SfGm/P6g9KA2ebL7mvpwcGN54fL7DOpY00Xnuq3Hcu9cf1o2zP1idpdXxbGnst3B/36qa9OBmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4os8VIe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IG59nE83iMKpoDjX4PlSjsg5TY4KBJBSukgwuo/TG9CmtL4UJAxOgQPWQSyBYe1TUts+Kt+1N0Wuf8So/0aqeaj+prDpZzhWD+JD7WOEe6k6yTqENz9YOxi5nbeCMTqlR4kc14rxEgiHg+Qh6WXzUsKZPNmRi/NWFRmnbC67ugM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLhU6ooo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4os8VIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC95C4CEED;
-	Tue,  2 Sep 2025 13:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLhU6ooo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345F2C4CEED;
+	Tue,  2 Sep 2025 13:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819534;
-	bh=hQ3ibyUPruuK6iQd/E3aaj19AnYljWi9pxM7CH2anFY=;
+	s=korg; t=1756819537;
+	bh=SBLfv1eOjuvaYIfbCXtRRFf80JcZ7PGuTXDQvSG8des=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4os8VIeY809ixKu0fVqe8ryFPbumn0Zjv1vKkQvKAKJghVvIIXWMH2OnYpTnzUN3
-	 hShoRWWefn8rqaGIqPLW/3kByB/tugaOIjpEyMkYjHuZaFk1bBykLL2AQBwWNLv6Tk
-	 QYR7vx3Gb/StsbEX6nt2zTYNwLIjVwIePkMgb3tI=
+	b=oLhU6ooo/pZyBm/j+TYgmgiXTkfGUQcNCt+MuO+qp2xLiuc8ByV2u3vcfYCXxdgBe
+	 nMwfaowj8nWqG1rliOZKvzifPLgK5X322y1240QqanqiVhH7WQf/0bwyRX1A9CLjjW
+	 Sf3oV5okN9uqcGUfXaBeFa7Kcn/VggeiEtwapbOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Even Xu <even.xu@intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 031/142] HID: intel-thc-hid: intel-quicki2c: Fix ACPI dsd ICRS/ISUB length
-Date: Tue,  2 Sep 2025 15:18:53 +0200
-Message-ID: <20250902131949.336040644@linuxfoundation.org>
+Subject: [PATCH 6.16 032/142] HID: intel-thc-hid: intel-thc: Fix incorrect pointer arithmetic in I2C regs save
+Date: Tue,  2 Sep 2025 15:18:54 +0200
+Message-ID: <20250902131949.375910242@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -54,83 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 1db9df89a213318a48d958385dc1b17b379dc32b ]
+[ Upstream commit a7fc15ed629be89e51e09b743277c53e0a0168f5 ]
 
-The QuickI2C ACPI _DSD methods return ICRS and ISUB data with a
-trailing byte, making the actual length is one more byte than the
-structs defined.
+Improper use of secondary pointer (&dev->i2c_subip_regs) caused
+kernel crash and out-of-bounds error:
 
-It caused stack-out-of-bounds and kernel crash:
+ BUG: KASAN: slab-out-of-bounds in _regmap_bulk_read+0x449/0x510
+ Write of size 4 at addr ffff888136005dc0 by task kworker/u33:5/5107
 
-kernel: BUG: KASAN: stack-out-of-bounds in quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
-kernel: Write of size 12 at addr ffff888106d1f900 by task kworker/u33:2/75
-kernel:
-kernel: CPU: 3 UID: 0 PID: 75 Comm: kworker/u33:2 Not tainted 6.16.0+ #3 PREEMPT(voluntary)
-kernel: Workqueue: async async_run_entry_fn
-kernel: Call Trace:
-kernel:  <TASK>
-kernel:  dump_stack_lvl+0x76/0xa0
-kernel:  print_report+0xd1/0x660
-kernel:  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-kernel:  ? __kasan_slab_free+0x5d/0x80
-kernel:  ? kasan_addr_to_slab+0xd/0xb0
-kernel:  kasan_report+0xe1/0x120
-kernel:  ? quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
-kernel:  ? quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
-kernel:  kasan_check_range+0x11c/0x200
-kernel:  __asan_memcpy+0x3b/0x80
-kernel:  quicki2c_acpi_get_dsd_property.constprop.0+0x111/0x1b0 [intel_quicki2c]
-kernel:  ? __pfx_quicki2c_acpi_get_dsd_property.constprop.0+0x10/0x10 [intel_quicki2c]
-kernel:  quicki2c_get_acpi_resources+0x237/0x730 [intel_quicki2c]
+ CPU: 3 UID: 0 PID: 5107 Comm: kworker/u33:5 Not tainted 6.16.0+ #3 PREEMPT(voluntary)
+ Workqueue: async async_run_entry_fn
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x76/0xa0
+  print_report+0xd1/0x660
+  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+  ? kasan_complete_mode_report_info+0x26/0x200
+  kasan_report+0xe1/0x120
+  ? _regmap_bulk_read+0x449/0x510
+  ? _regmap_bulk_read+0x449/0x510
+  __asan_report_store4_noabort+0x17/0x30
+  _regmap_bulk_read+0x449/0x510
+  ? __pfx__regmap_bulk_read+0x10/0x10
+  regmap_bulk_read+0x270/0x3d0
+  pio_complete+0x1ee/0x2c0 [intel_thc]
+  ? __pfx_pio_complete+0x10/0x10 [intel_thc]
+  ? __pfx_pio_wait+0x10/0x10 [intel_thc]
+  ? regmap_update_bits_base+0x13b/0x1f0
+  thc_i2c_subip_pio_read+0x117/0x270 [intel_thc]
+  thc_i2c_subip_regs_save+0xc2/0x140 [intel_thc]
+  ? __pfx_thc_i2c_subip_regs_save+0x10/0x10 [intel_thc]
 [...]
-kernel:  </TASK>
-kernel:
-kernel: The buggy address belongs to stack of task kworker/u33:2/75
-kernel:  and is located at offset 48 in frame:
-kernel:  quicki2c_get_acpi_resources+0x0/0x730 [intel_quicki2c]
-kernel:
-kernel: This frame has 3 objects:
-kernel:  [32, 36) 'hid_desc_addr'
-kernel:  [48, 59) 'i2c_param'
-kernel:  [80, 224) 'i2c_config'
+ The buggy address belongs to the object at ffff888136005d00
+  which belongs to the cache kmalloc-rnd-12-192 of size 192
+ The buggy address is located 0 bytes to the right of
+  allocated 192-byte region [ffff888136005d00, ffff888136005dc0)
 
-ACPI DSD methods return:
+Replaced with direct array indexing (&dev->i2c_subip_regs[i]) to ensure
+safe memory access.
 
-\_SB.PC00.THC0.ICRS Buffer       000000003fdc947b 001 Len 0C = 0A 00 80 1A 06 00 00 00 00 00 00 00
-\_SB.PC00.THC0.ISUB Buffer       00000000f2fcbdc4 001 Len 91 = 00 00 00 00 00 00 00 00 00 00 00 00
-
-Adding reserved padding to quicki2c_subip_acpi_parameter/config.
-
-Fixes: 5282e45ccbfa9 ("HID: intel-thc-hid: intel-quicki2c: Add THC QuickI2C ACPI interfaces")
+Fixes: 4228966def884 ("HID: intel-thc-hid: intel-thc: Add THC I2C config interfaces")
 Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
 Reviewed-by: Even Xu <even.xu@intel.com>
 Tested-by: Even Xu <even.xu@intel.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h b/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h
-index 6ddb584bd6110..97085a6a7452d 100644
---- a/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h
-+++ b/drivers/hid/intel-thc-hid/intel-quicki2c/quicki2c-dev.h
-@@ -71,6 +71,7 @@ struct quicki2c_subip_acpi_parameter {
- 	u16 device_address;
- 	u64 connection_speed;
- 	u8 addressing_mode;
-+	u8 reserved;
- } __packed;
+diff --git a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c
+index c105df7f6c873..4698722e0d0a6 100644
+--- a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c
++++ b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dev.c
+@@ -1539,7 +1539,7 @@ int thc_i2c_subip_regs_save(struct thc_device *dev)
  
- /**
-@@ -120,6 +121,7 @@ struct quicki2c_subip_acpi_config {
- 	u64 HMTD;
- 	u64 HMRD;
- 	u64 HMSL;
-+	u8 reserved;
- };
+ 	for (int i = 0; i < ARRAY_SIZE(i2c_subip_regs); i++) {
+ 		ret = thc_i2c_subip_pio_read(dev, i2c_subip_regs[i],
+-					     &read_size, (u32 *)&dev->i2c_subip_regs + i);
++					     &read_size, &dev->i2c_subip_regs[i]);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+@@ -1562,7 +1562,7 @@ int thc_i2c_subip_regs_restore(struct thc_device *dev)
  
- struct device;
+ 	for (int i = 0; i < ARRAY_SIZE(i2c_subip_regs); i++) {
+ 		ret = thc_i2c_subip_pio_write(dev, i2c_subip_regs[i],
+-					      write_size, (u32 *)&dev->i2c_subip_regs + i);
++					      write_size, &dev->i2c_subip_regs[i]);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 -- 
 2.50.1
 
