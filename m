@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8485B3054EC;
-	Tue,  2 Sep 2025 13:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B64307AEA;
+	Tue,  2 Sep 2025 13:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819880; cv=none; b=d/tm5k+DUTlRIOMSQiPJNcKKakO20ZrLWsQgEO7VGQ4s52Iwp6qQvwrLU3OppLmvvNM7osLsEJdCRA1uNw+V0J1QTV705QQdoEHG4FfgUNJQWZ5X2Ajg6KiVY8oczzhwdxAau/bmesz/uacsp4hPYmhHIiI+mRtvdEpT1sRBtNw=
+	t=1756819884; cv=none; b=ZmebEz9r/I6MEfGcZgeBRTGeteghUhwKvh1mWV7doIS4lr0dJUx0q0Dm/dCqWP2s8kBzMOj8ACtPY3SzTfcuCgItuxvmzGDLd3m6otChwYffKaXvl5AeXhYf+wox0r0BluMACATALJDZuJoInVEeLCC9EZZAOq8WmB5m6rHZbrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819880; c=relaxed/simple;
-	bh=JFA1PbaqKa+DvCHEuJgCdDgrUMi5KbPTqIsO6mLnRN0=;
+	s=arc-20240116; t=1756819884; c=relaxed/simple;
+	bh=6WW55WCCvoJFH7uKoIHbTGU5/BjPhrZ73nGzZjwV4HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPLpTuacPmQ/8ZXxtZhNvmAp0yp+1WmPrSXz/LhjLMjuvjrN5BwjIhFtJBylvw3b93Q/d0m1tDICEOsyroFNej214s46hiHvjhiclsvXMj9IOcEo7wyORUiqeGiTmOnmwZHLwiHKAx+KOWuEnfDPCawCN2XFSmwVfnGojfGT6wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUw4ldkH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZrZ8rXTqkdeu6kVeOMd+uJ3zkO+c9fsOcpgTtd6n5Tg/Ik17dyoe9uCfLWlsPV4rTxiQNutXkWYFeEZ4ooT+MRdHlzWaM71E/f+euwo/GRu6bZY8ZAZpfduXVoLyZmFz4jWifGGfJPNm1hbLT6mZqpum7QvIka7WnZnqHc1UfNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5sEJz6R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUw4ldkH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036D3C4CEED;
-	Tue,  2 Sep 2025 13:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5sEJz6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D39C4CEED;
+	Tue,  2 Sep 2025 13:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819880;
-	bh=JFA1PbaqKa+DvCHEuJgCdDgrUMi5KbPTqIsO6mLnRN0=;
+	s=korg; t=1756819883;
+	bh=6WW55WCCvoJFH7uKoIHbTGU5/BjPhrZ73nGzZjwV4HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUw4ldkHuyvmKU30c4KyxfYij1NBe0PGHRhlaRf2hoa7lHShZzqdXbXQkCdNB0zxi
-	 u4MYmn6/m3Juubm0PnyE2+PNEB0wUE+XPJwAjN+QnqJE39/XBJ66kOgIVPU/2wNN83
-	 3AhtCmh5uyaIBHP+6jqavawYgw4W55TvYkoViuPs=
+	b=J5sEJz6RUYLecdhuz23XK9IGMJ4eScccbd2Hl0j530hit0TuJC4nic07RAiVEG3iB
+	 ZVL8Wt6fMdoX/nwENNBRo3Kt8zCUd+mfV0XdhL7BOrnbi86DyTlPAXlv/RAlwYDA7x
+	 e7GVnNl7glLEAgTEYt913RHNjfSqdnFgrdrAD/iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason-JH Lin <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 24/95] drm/mediatek: Add error handling for old state CRTC in atomic_disable
-Date: Tue,  2 Sep 2025 15:20:00 +0200
-Message-ID: <20250902131940.540888264@linuxfoundation.org>
+Subject: [PATCH 6.12 25/95] powerpc/kvm: Fix ifdef to remove build warning
+Date: Tue,  2 Sep 2025 15:20:01 +0200
+Message-ID: <20250902131940.578212725@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -53,64 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH Lin <jason-jh.lin@mediatek.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit 0c6b24d70da21201ed009a2aca740d2dfddc7ab5 ]
+[ Upstream commit 88688a2c8ac6c8036d983ad8b34ce191c46a10aa ]
 
-Introduce error handling to address an issue where, after a hotplug
-event, the cursor continues to update. This situation can lead to a
-kernel panic due to accessing the NULL `old_state->crtc`.
+When compiling for pseries or powernv defconfig with "make C=1",
+these warning were reported bu sparse tool in powerpc/kernel/kvm.c
 
-E,g.
-Unable to handle kernel NULL pointer dereference at virtual address
-Call trace:
- mtk_crtc_plane_disable+0x24/0x140
- mtk_plane_atomic_update+0x8c/0xa8
- drm_atomic_helper_commit_planes+0x114/0x2c8
- drm_atomic_helper_commit_tail_rpm+0x4c/0x158
- commit_tail+0xa0/0x168
- drm_atomic_helper_commit+0x110/0x120
- drm_atomic_commit+0x8c/0xe0
- drm_atomic_helper_update_plane+0xd4/0x128
- __setplane_atomic+0xcc/0x110
- drm_mode_cursor_common+0x250/0x440
- drm_mode_cursor_ioctl+0x44/0x70
- drm_ioctl+0x264/0x5d8
- __arm64_sys_ioctl+0xd8/0x510
- invoke_syscall+0x6c/0xe0
- do_el0_svc+0x68/0xe8
- el0_svc+0x34/0x60
- el0t_64_sync_handler+0x1c/0xf8
- el0t_64_sync+0x180/0x188
+arch/powerpc/kernel/kvm.c:635:9: warning: switch with no cases
+arch/powerpc/kernel/kvm.c:646:9: warning: switch with no cases
 
-Adding NULL pointer checks to ensure stability by preventing operations
-on an invalid CRTC state.
+Currently #ifdef were added after the switch case which are specific
+for BOOKE and PPC_BOOK3S_32. These are not enabled in pseries/powernv
+defconfig. Fix it by moving the #ifdef before switch(){}
 
-Fixes: d208261e9f7c ("drm/mediatek: Add wait_event_timeout when disabling plane")
-Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20250728025036.24953-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: cbe487fac7fc0 ("KVM: PPC: Add mtsrin PV code")
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250518044107.39928-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_plane.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/kvm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_plane.c b/drivers/gpu/drm/mediatek/mtk_plane.c
-index 74c2704efb664..6e20f7037b5bb 100644
---- a/drivers/gpu/drm/mediatek/mtk_plane.c
-+++ b/drivers/gpu/drm/mediatek/mtk_plane.c
-@@ -292,7 +292,8 @@ static void mtk_plane_atomic_disable(struct drm_plane *plane,
- 	wmb(); /* Make sure the above parameter is set before update */
- 	mtk_plane_state->pending.dirty = true;
+diff --git a/arch/powerpc/kernel/kvm.c b/arch/powerpc/kernel/kvm.c
+index 5b3c093611baf..7209d00a9c257 100644
+--- a/arch/powerpc/kernel/kvm.c
++++ b/arch/powerpc/kernel/kvm.c
+@@ -632,19 +632,19 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
+ #endif
+ 	}
  
--	mtk_crtc_plane_disable(old_state->crtc, plane);
-+	if (old_state && old_state->crtc)
-+		mtk_crtc_plane_disable(old_state->crtc, plane);
+-	switch (inst_no_rt & ~KVM_MASK_RB) {
+ #ifdef CONFIG_PPC_BOOK3S_32
++	switch (inst_no_rt & ~KVM_MASK_RB) {
+ 	case KVM_INST_MTSRIN:
+ 		if (features & KVM_MAGIC_FEAT_SR) {
+ 			u32 inst_rb = _inst & KVM_MASK_RB;
+ 			kvm_patch_ins_mtsrin(inst, inst_rt, inst_rb);
+ 		}
+ 		break;
+-#endif
+ 	}
++#endif
+ 
+-	switch (_inst) {
+ #ifdef CONFIG_BOOKE
++	switch (_inst) {
+ 	case KVM_INST_WRTEEI_0:
+ 		kvm_patch_ins_wrteei_0(inst);
+ 		break;
+@@ -652,8 +652,8 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
+ 	case KVM_INST_WRTEEI_1:
+ 		kvm_patch_ins_wrtee(inst, 0, 1);
+ 		break;
+-#endif
+ 	}
++#endif
  }
  
- static void mtk_plane_atomic_update(struct drm_plane *plane,
+ extern u32 kvm_template_start[];
 -- 
 2.50.1
 
