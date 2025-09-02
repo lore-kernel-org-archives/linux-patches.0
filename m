@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4467223D7EC;
-	Tue,  2 Sep 2025 13:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24E42DCC08;
+	Tue,  2 Sep 2025 13:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819906; cv=none; b=s4uCtCLvlcQYx2qfH732nQnsjUXVT4SmO8Dgo7DKr+yScmb6FQAXlq2ncrL7SUM4VPm6AUryXcrLVet4QMzTxEDar3TRhUunK5veQd67YF4f6vcAVfKVQ9dGyvg16NuFHSMVdTGJku92DKzW4+6tpHqPE0oiHxcaVYdmC1XkRZc=
+	t=1756819909; cv=none; b=HBRf74iXxKYAIO5jTOLybaqr9h9FFjYeSpHu6ljKraFb52Ff5NiFj6RBQVBHbyEFqLHL2wGKm0M21bumgZ9ecaOyLI9h6rnTLMCzZXtRqAXsPgIiYIf9ij/b7GTn1duSHRO2R1TxX7AFFqWanzBS94LkqivyyC0I+dmnlTf+LKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819906; c=relaxed/simple;
-	bh=JHvl+XH3Vs3RQuO5rbX8nZ2M4xy4KcEXVa1s86KSobI=;
+	s=arc-20240116; t=1756819909; c=relaxed/simple;
+	bh=3gUA+2Hk7frr17x2e+1snhKAmW6DYvWViFWdEu/q5Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uhj63IIZJpdD7JF6EZPfM/FKgzq0hyYvVaQWoJjUnW77+9e5mb5FuNOwpXXPcfL9j8smCkXDEyIT0oCoZywLy3wbCmIhKb8/CY2VuIIv1jWpvfCtAeMHzbJ7yHPtLyEl4WEPeF1glykwjyggGYhDIDHKIWGzlsTzwAo/N5vZHAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8oh4+3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nBxXLmMLjbrfnbBeGG0R452yiXzgN4BcVl/O7Hz0qZHztICPby9/U6SezeSZOJydgfB9BfVray13gzwikTwgOvLEsS8Do9ur57NGF2ZQhFGoPFZDhGRpwcZvSRQ0Bz2L5vc3tYDb9hGldZB5pY5jWMU+uwdIg6nwAwx2mOvoCeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPSbaBxH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8oh4+3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28DDC4CEF4;
-	Tue,  2 Sep 2025 13:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPSbaBxH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D86C4CEED;
+	Tue,  2 Sep 2025 13:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819906;
-	bh=JHvl+XH3Vs3RQuO5rbX8nZ2M4xy4KcEXVa1s86KSobI=;
+	s=korg; t=1756819909;
+	bh=3gUA+2Hk7frr17x2e+1snhKAmW6DYvWViFWdEu/q5Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8oh4+3E0WAiVB+nNP8i7LDJVbER4oNMVkcHdrl74ZJxvQLOJ1EciufwrB6jxJJvO
-	 IfOXkrGcvLrUj1CTsANiQL52+Cc4l1NoHt+WjkN3XbhXQ5BOMONDxTnoiCKqcNN+z2
-	 A0cdt3R0XqNJM6dG0tDs3R+KpnzicyoT2hQFcDE8=
+	b=IPSbaBxHxv1eOswg1RhlHPVIw2cad7Y44su+otqfIuIdatH95pij7LGslz9bcersd
+	 QqdJ8jKI8C7bdXRBNYo2LlbsjmjYxJ/NgcaahBkAcwBV8c8R47k9WyLDIxtHqSdz0J
+	 gxQOwtII0AswJHbX/3dEKrA1y6Pr5i3skVqva77s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 08/95] of: dynamic: Fix use after free in of_changeset_add_prop_helper()
-Date: Tue,  2 Sep 2025 15:19:44 +0200
-Message-ID: <20250902131939.932828330@linuxfoundation.org>
+Subject: [PATCH 6.12 09/95] ftrace: Fix potential warning in trace_printk_seq during ftrace_dump
+Date: Tue,  2 Sep 2025 15:19:45 +0200
+Message-ID: <20250902131939.971762994@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,45 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 80af3745ca465c6c47e833c1902004a7fa944f37 ]
+[ Upstream commit 4013aef2ced9b756a410f50d12df9ebe6a883e4a ]
 
-If the of_changeset_add_property() function call fails, then this code
-frees "new_pp" and then dereference it on the next line.  Return the
-error code directly instead.
+When calling ftrace_dump_one() concurrently with reading trace_pipe,
+a WARN_ON_ONCE() in trace_printk_seq() can be triggered due to a race
+condition.
 
-Fixes: c81f6ce16785 ("of: dynamic: Fix memleak when of_pci_add_properties() failed")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/aKgljjhnpa4lVpdx@stanley.mountain
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+The issue occurs because:
+
+CPU0 (ftrace_dump)                              CPU1 (reader)
+echo z > /proc/sysrq-trigger
+
+!trace_empty(&iter)
+trace_iterator_reset(&iter) <- len = size = 0
+                                                cat /sys/kernel/tracing/trace_pipe
+trace_find_next_entry_inc(&iter)
+  __find_next_entry
+    ring_buffer_empty_cpu <- all empty
+  return NULL
+
+trace_printk_seq(&iter.seq)
+  WARN_ON_ONCE(s->seq.len >= s->seq.size)
+
+In the context between trace_empty() and trace_find_next_entry_inc()
+during ftrace_dump, the ring buffer data was consumed by other readers.
+This caused trace_find_next_entry_inc to return NULL, failing to populate
+`iter.seq`. At this point, due to the prior trace_iterator_reset, both
+`iter.seq.len` and `iter.seq.size` were set to 0. Since they are equal,
+the WARN_ON_ONCE condition is triggered.
+
+Move the trace_printk_seq() into the if block that checks to make sure the
+return value of trace_find_next_entry_inc() is non-NULL in
+ftrace_dump_one(), ensuring the 'iter.seq' is properly populated before
+subsequent operations.
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ingo Molnar <mingo@elte.hu>
+Link: https://lore.kernel.org/20250822033343.3000289-1-wutengda@huaweicloud.com
+Fixes: d769041f8653 ("ring_buffer: implement new locking")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/dynamic.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
-index fcaaadc2eca1d..492f0354a7922 100644
---- a/drivers/of/dynamic.c
-+++ b/drivers/of/dynamic.c
-@@ -935,13 +935,15 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
- 		return -ENOMEM;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 2f662ca4d3ffd..ba3358eef34ba 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -10130,10 +10130,10 @@ static void ftrace_dump_one(struct trace_array *tr, enum ftrace_dump_mode dump_m
+ 			ret = print_trace_line(&iter);
+ 			if (ret != TRACE_TYPE_NO_CONSUME)
+ 				trace_consume(&iter);
++
++			trace_printk_seq(&iter.seq);
+ 		}
+ 		touch_nmi_watchdog();
+-
+-		trace_printk_seq(&iter.seq);
+ 	}
  
- 	ret = of_changeset_add_property(ocs, np, new_pp);
--	if (ret)
-+	if (ret) {
- 		__of_prop_free(new_pp);
-+		return ret;
-+	}
- 
- 	new_pp->next = np->deadprops;
- 	np->deadprops = new_pp;
- 
--	return ret;
-+	return 0;
- }
- 
- /**
+ 	if (!cnt)
 -- 
 2.50.1
 
