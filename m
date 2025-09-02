@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5505130ACFD;
-	Tue,  2 Sep 2025 13:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B670130BB8D;
+	Tue,  2 Sep 2025 13:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819470; cv=none; b=TjqKPS+crcB47GQd86sx45fon2BDrRqJKTkeWYETZ8yKnbNlSdmNU62FMAY+2IhdPwQpHtdCIfLQQoq3erhOJX1uRUKJ1edVdGiKv12huoujs2B5U73XbjwaAe38bIUS37dqMBylzQ9XRqXXMI08sFWR9+hQc1bvjYiGqBihIkw=
+	t=1756819473; cv=none; b=Rbqqh4C9Jps62sKoUxxXiap9mXKibVJAJ5bUqTwrJzo50G2PGodV+R7ymotZEOTHO2Us5jTnAStv6ZIhCZF+EJILbfob2v1NO5ndVHuWCEzqgRYdB70FgEhixtrBeXPnLsXR8ndME5evCWbR2kY76t+eAgDyMODMgq/s5nmFPgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819470; c=relaxed/simple;
-	bh=Zb4zMyMEpn2Q6IepvzeqPmDbZaaBxhZUCgPTEs0egEw=;
+	s=arc-20240116; t=1756819473; c=relaxed/simple;
+	bh=ZOom7z84AaWkYZ5nL7w724IMa+vAFTRaeWr3jjZg8qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYjgZKcdje5F5HKqRask2jLCERvhbbopMsXBOHqCTMQzuFLh1Zi0LnLuXVAK6mfryiWKEdZcv/Ne2cO5Z8t4U34+gvgGZCK44cM0HhIHQDXA+K2KfDOMZ8xZ6XpttWydlG35SA8Vng6zF2c+bKlhszPRhd3DkcZUBghWvZ/BUPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KC+MebIV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=geqhlbl6W0uRSUTvqK9J2/gz96bfJEJYdMBpDifm3yMnIHsXngWvWfRTqpYrl39dqTIZGz9A0gUp84+HnOLXRwUQqYmk7y9PPlZ+Tq1Rh4ggZnYRh9HxqLDHIF/2R470fVG59vvldzMvCKDHtckTEUL7ywi7Ysk7o27Oa1+H4zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0ca1OJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KC+MebIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671F3C4CEED;
-	Tue,  2 Sep 2025 13:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0ca1OJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3048C4CEED;
+	Tue,  2 Sep 2025 13:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819469;
-	bh=Zb4zMyMEpn2Q6IepvzeqPmDbZaaBxhZUCgPTEs0egEw=;
+	s=korg; t=1756819473;
+	bh=ZOom7z84AaWkYZ5nL7w724IMa+vAFTRaeWr3jjZg8qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KC+MebIVdKC5f7bJfjRTNIOK4GH13R+AWhtbDiDJijXsaFO0M1kJt8fU4SGBK6vxq
-	 qr0WMFc0KAia8G2i7Qxo8kBATlP+LzUz3dgBb43yjxcAnfWE97RPN3ZLlS7dFjq7vW
-	 cdopG/E6e4EMu+osA864YRfAr/KnFLGpRlzRhwoE=
+	b=q0ca1OJwvlqtGuPyQdisN1y5YksYDmysnxAVzTUFxE8Kmk3N6EWrljccbxxmThMlx
+	 31SwZcJoBEgvqa8jrH2qLEdZ1pJ8fEqJTzv9dS2/WgY2224XqMuxl3+oTNh7uXI78a
+	 bX8WniN5Luzu/5fXKHVNP8Dw0f8SUr1A4UsXxFAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hay <joshua.a.hay@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	luoguangfei <15388634752@163.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 044/142] idpf: stop Tx if there are insufficient buffer resources
-Date: Tue,  2 Sep 2025 15:19:06 +0200
-Message-ID: <20250902131949.937296292@linuxfoundation.org>
+Subject: [PATCH 6.16 045/142] net: macb: fix unregister_netdev call order in macb_remove()
+Date: Tue,  2 Sep 2025 15:19:07 +0200
+Message-ID: <20250902131949.980613714@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -53,188 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Hay <joshua.a.hay@intel.com>
+From: luoguangfei <15388634752@163.com>
 
-[ Upstream commit 0c3f135e840d4a2ba4253e15d530ec61bc30718e ]
+[ Upstream commit 01b9128c5db1b470575d07b05b67ffa3cb02ebf1 ]
 
-The Tx refillq logic will cause packets to be silently dropped if there
-are not enough buffer resources available to send a packet in flow
-scheduling mode. Instead, determine how many buffers are needed along
-with number of descriptors. Make sure there are enough of both resources
-to send the packet, and stop the queue if not.
+When removing a macb device, the driver calls phy_exit() before
+unregister_netdev(). This leads to a WARN from kernfs:
 
-Fixes: 7292af042bcf ("idpf: fix a race in txq wakeup")
-Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+  ------------[ cut here ]------------
+  kernfs: can not remove 'attached_dev', no directory
+  WARNING: CPU: 1 PID: 27146 at fs/kernfs/dir.c:1683
+  Call trace:
+    kernfs_remove_by_name_ns+0xd8/0xf0
+    sysfs_remove_link+0x24/0x58
+    phy_detach+0x5c/0x168
+    phy_disconnect+0x4c/0x70
+    phylink_disconnect_phy+0x6c/0xc0 [phylink]
+    macb_close+0x6c/0x170 [macb]
+    ...
+    macb_remove+0x60/0x168 [macb]
+    platform_remove+0x5c/0x80
+    ...
+
+The warning happens because the PHY is being exited while the netdev
+is still registered. The correct order is to unregister the netdev
+before shutting down the PHY and cleaning up the MDIO bus.
+
+Fix this by moving unregister_netdev() ahead of phy_exit() in
+macb_remove().
+
+Fixes: 8b73fa3ae02b ("net: macb: Added ZynqMP-specific initialization")
+Signed-off-by: luoguangfei <15388634752@163.com>
+Link: https://patch.msgid.link/20250818232527.1316-1-15388634752@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/idpf/idpf_singleq_txrx.c   |  4 +-
- drivers/net/ethernet/intel/idpf/idpf_txrx.c   | 47 +++++++++++++------
- drivers/net/ethernet/intel/idpf/idpf_txrx.h   | 15 +++++-
- 3 files changed, 47 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-index a3b3261bbdfa7..bf9b820c83303 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_singleq_txrx.c
-@@ -415,11 +415,11 @@ netdev_tx_t idpf_tx_singleq_frame(struct sk_buff *skb,
- {
- 	struct idpf_tx_offload_params offload = { };
- 	struct idpf_tx_buf *first;
-+	u32 count, buf_count = 1;
- 	int csum, tso, needed;
--	unsigned int count;
- 	__be16 protocol;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index d1f1ae5ea161c..c1e904e4a01f4 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5391,11 +5391,11 @@ static void macb_remove(struct platform_device *pdev)
  
--	count = idpf_tx_desc_count_required(tx_q, skb);
-+	count = idpf_tx_res_count_required(tx_q, skb, &buf_count);
- 	if (unlikely(!count))
- 		return idpf_tx_drop_skb(tx_q, skb);
+ 	if (dev) {
+ 		bp = netdev_priv(dev);
++		unregister_netdev(dev);
+ 		phy_exit(bp->sgmii_phy);
+ 		mdiobus_unregister(bp->mii_bus);
+ 		mdiobus_free(bp->mii_bus);
  
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index 89fedc2ef247b..cd83243e7c765 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -2189,15 +2189,22 @@ void idpf_tx_splitq_build_flow_desc(union idpf_tx_flex_desc *desc,
- 	desc->flow.qw1.compl_tag = cpu_to_le16(params->compl_tag);
- }
- 
--/* Global conditions to tell whether the txq (and related resources)
-- * has room to allow the use of "size" descriptors.
-+/**
-+ * idpf_tx_splitq_has_room - check if enough Tx splitq resources are available
-+ * @tx_q: the queue to be checked
-+ * @descs_needed: number of descriptors required for this packet
-+ * @bufs_needed: number of Tx buffers required for this packet
-+ *
-+ * Return: 0 if no room available, 1 otherwise
-  */
--static int idpf_txq_has_room(struct idpf_tx_queue *tx_q, u32 size)
-+static int idpf_txq_has_room(struct idpf_tx_queue *tx_q, u32 descs_needed,
-+			     u32 bufs_needed)
- {
--	if (IDPF_DESC_UNUSED(tx_q) < size ||
-+	if (IDPF_DESC_UNUSED(tx_q) < descs_needed ||
- 	    IDPF_TX_COMPLQ_PENDING(tx_q->txq_grp) >
- 		IDPF_TX_COMPLQ_OVERFLOW_THRESH(tx_q->txq_grp->complq) ||
--	    IDPF_TX_BUF_RSV_LOW(tx_q))
-+	    IDPF_TX_BUF_RSV_LOW(tx_q) ||
-+	    idpf_tx_splitq_get_free_bufs(tx_q->refillq) < bufs_needed)
- 		return 0;
- 	return 1;
- }
-@@ -2206,14 +2213,21 @@ static int idpf_txq_has_room(struct idpf_tx_queue *tx_q, u32 size)
-  * idpf_tx_maybe_stop_splitq - 1st level check for Tx splitq stop conditions
-  * @tx_q: the queue to be checked
-  * @descs_needed: number of descriptors required for this packet
-+ * @bufs_needed: number of buffers needed for this packet
-  *
-- * Returns 0 if stop is not needed
-+ * Return: 0 if stop is not needed
-  */
- static int idpf_tx_maybe_stop_splitq(struct idpf_tx_queue *tx_q,
--				     unsigned int descs_needed)
-+				     u32 descs_needed,
-+				     u32 bufs_needed)
- {
-+	/* Since we have multiple resources to check for splitq, our
-+	 * start,stop_thrs becomes a boolean check instead of a count
-+	 * threshold.
-+	 */
- 	if (netif_subqueue_maybe_stop(tx_q->netdev, tx_q->idx,
--				      idpf_txq_has_room(tx_q, descs_needed),
-+				      idpf_txq_has_room(tx_q, descs_needed,
-+							bufs_needed),
- 				      1, 1))
- 		return 0;
- 
-@@ -2255,14 +2269,16 @@ void idpf_tx_buf_hw_update(struct idpf_tx_queue *tx_q, u32 val,
- }
- 
- /**
-- * idpf_tx_desc_count_required - calculate number of Tx descriptors needed
-+ * idpf_tx_res_count_required - get number of Tx resources needed for this pkt
-  * @txq: queue to send buffer on
-  * @skb: send buffer
-+ * @bufs_needed: (output) number of buffers needed for this skb.
-  *
-- * Returns number of data descriptors needed for this skb.
-+ * Return: number of data descriptors and buffers needed for this skb.
-  */
--unsigned int idpf_tx_desc_count_required(struct idpf_tx_queue *txq,
--					 struct sk_buff *skb)
-+unsigned int idpf_tx_res_count_required(struct idpf_tx_queue *txq,
-+					struct sk_buff *skb,
-+					u32 *bufs_needed)
- {
- 	const struct skb_shared_info *shinfo;
- 	unsigned int count = 0, i;
-@@ -2273,6 +2289,7 @@ unsigned int idpf_tx_desc_count_required(struct idpf_tx_queue *txq,
- 		return count;
- 
- 	shinfo = skb_shinfo(skb);
-+	*bufs_needed += shinfo->nr_frags;
- 	for (i = 0; i < shinfo->nr_frags; i++) {
- 		unsigned int size;
- 
-@@ -2875,11 +2892,11 @@ static netdev_tx_t idpf_tx_splitq_frame(struct sk_buff *skb,
- 	};
- 	union idpf_flex_tx_ctx_desc *ctx_desc;
- 	struct idpf_tx_buf *first;
--	unsigned int count;
-+	u32 count, buf_count = 1;
- 	int tso, idx;
- 	u32 buf_id;
- 
--	count = idpf_tx_desc_count_required(tx_q, skb);
-+	count = idpf_tx_res_count_required(tx_q, skb, &buf_count);
- 	if (unlikely(!count))
- 		return idpf_tx_drop_skb(tx_q, skb);
- 
-@@ -2889,7 +2906,7 @@ static netdev_tx_t idpf_tx_splitq_frame(struct sk_buff *skb,
- 
- 	/* Check for splitq specific TX resources */
- 	count += (IDPF_TX_DESCS_PER_CACHE_LINE + tso);
--	if (idpf_tx_maybe_stop_splitq(tx_q, count)) {
-+	if (idpf_tx_maybe_stop_splitq(tx_q, count, buf_count)) {
- 		idpf_tx_buf_hw_update(tx_q, tx_q->next_to_use, false);
- 
- 		return NETDEV_TX_BUSY;
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.h b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-index a30b68504d73c..54b314ceee738 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -1023,6 +1023,17 @@ static inline void idpf_vport_intr_set_wb_on_itr(struct idpf_q_vector *q_vector)
- 	       reg->dyn_ctl);
- }
- 
-+/**
-+ * idpf_tx_splitq_get_free_bufs - get number of free buf_ids in refillq
-+ * @refillq: pointer to refillq containing buf_ids
-+ */
-+static inline u32 idpf_tx_splitq_get_free_bufs(struct idpf_sw_queue *refillq)
-+{
-+	return (refillq->next_to_use > refillq->next_to_clean ?
-+		0 : refillq->desc_count) +
-+	       refillq->next_to_use - refillq->next_to_clean - 1;
-+}
-+
- int idpf_vport_singleq_napi_poll(struct napi_struct *napi, int budget);
- void idpf_vport_init_num_qs(struct idpf_vport *vport,
- 			    struct virtchnl2_create_vport *vport_msg);
-@@ -1050,8 +1061,8 @@ void idpf_tx_buf_hw_update(struct idpf_tx_queue *tx_q, u32 val,
- 			   bool xmit_more);
- unsigned int idpf_size_to_txd_count(unsigned int size);
- netdev_tx_t idpf_tx_drop_skb(struct idpf_tx_queue *tx_q, struct sk_buff *skb);
--unsigned int idpf_tx_desc_count_required(struct idpf_tx_queue *txq,
--					 struct sk_buff *skb);
-+unsigned int idpf_tx_res_count_required(struct idpf_tx_queue *txq,
-+					struct sk_buff *skb, u32 *buf_count);
- void idpf_tx_timeout(struct net_device *netdev, unsigned int txqueue);
- netdev_tx_t idpf_tx_singleq_frame(struct sk_buff *skb,
- 				  struct idpf_tx_queue *tx_q);
+-		unregister_netdev(dev);
+ 		cancel_work_sync(&bp->hresp_err_bh_work);
+ 		pm_runtime_disable(&pdev->dev);
+ 		pm_runtime_dont_use_autosuspend(&pdev->dev);
 -- 
 2.50.1
 
