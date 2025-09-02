@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59DB2DC32D;
-	Tue,  2 Sep 2025 13:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A252DC32D;
+	Tue,  2 Sep 2025 13:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820129; cv=none; b=ALOhUlPXF6noNPLU66p4hXg6XVc/BtUNmmW8jvAEn2WjGDe7dVWKLq4/fTjKUZ5bdJEKADaa9j9CoLgGPz9jQW3/raXLuF1y9JQWLzDA+6FGbbW+BwXL3xPs2tyWot91cZhyFIhhJPMctBPeBDBzMHWu7yvGSIL+l2AtHh49gEw=
+	t=1756820134; cv=none; b=X88lXZ7D0IH1f82tUBpfga86s1mScVHT3rY57RaQCWPxioAQi5dYjZw+1aDGArvfbGej9tpv6v1ugZuY9h5iOY16TEWVzR8+8auNwdbPj1r+rmmCJfRdbmY7dnv9yhTv+lx9ZC+RzYPSEkGMzHGSwAdQn0ZiweorEQUfqCcRw04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820129; c=relaxed/simple;
-	bh=oyRfPJ6bVOyHtXD7k05ONsEqj2wjoHm51MUzLidoNHU=;
+	s=arc-20240116; t=1756820134; c=relaxed/simple;
+	bh=mwmxNFGhtpsmFIy4e3DeXSqeSA6rSasAmm4Wx3gAVWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rlo/Q9hmatAPq9n4Ri1CkqvCsAX62hPCpXxnf6OQpCvhclx6GwaYyy/m9nwWdKkVOOsFx46vdyS0NZiEQEHgnkLpU7oxqHsb6eUmfBp72a0lMibjlKhQjMdVZU0Yig5s9zpaSa2cdlnuRkABAT0WTlCrvBQfuKwyg4fJahyGbDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpT0NByd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uV3/4sL3CpPCrd63YOznpLSaRoh7WWqWj2QcK/TQqtP9ghOZFwhN/YWerivAqOPxVc/N5Kk8k8PUMh+QykwD4XaYANZmHRlqBErzIUnkQqQ9fWVlaPRGh7etHIfVM15VCFEUe4h9k5g7isXObuue7hEtFhTZ+8hw/flxqtQs+UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKMSveIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpT0NByd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283EBC4CEED;
-	Tue,  2 Sep 2025 13:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKMSveIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521BCC4CEED;
+	Tue,  2 Sep 2025 13:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820129;
-	bh=oyRfPJ6bVOyHtXD7k05ONsEqj2wjoHm51MUzLidoNHU=;
+	s=korg; t=1756820132;
+	bh=mwmxNFGhtpsmFIy4e3DeXSqeSA6rSasAmm4Wx3gAVWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpT0NBydwKRUi9iE5lKkzspyHYyB1ztjJsV23zfUfcpVzIlUP/46LeRsc8PcwlotP
-	 EmHU05Axgf4IEx6DGPx4v2NV1yywcbLLqdIdT3/a9i0Pejz7mMFXMBW9q5MWuLe2By
-	 44qWqvlZPNMTGfQhrjuHCZZLmih/+dvxXnosuTE0=
+	b=vKMSveIexwybfjErJRRWzBaQ5kymNZ20MjwHiizY6AwjMHdHzIhaAJnjyahEV/YCd
+	 1JE4eN1dzwtSgHbSJACA9ZSWkqW6uCHbiu7/w3DpW3N05Q2sEIu8YkzVoCJqcIdknm
+	 p9zBFx3xiaD1KTJSymnDyKRdKkIrKpVlWW5b9lhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+942297eecf7d2d61d1f1@syzkaller.appspotmail.com,
-	Takamitsu Iwai <takamitz@amazon.co.jp>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 61/95] net: rose: include node references in rose_neigh refcount
-Date: Tue,  2 Sep 2025 15:20:37 +0200
-Message-ID: <20250902131941.946022064@linuxfoundation.org>
+Subject: [PATCH 6.6 01/75] of: dynamic: Fix memleak when of_pci_add_properties() failed
+Date: Tue,  2 Sep 2025 15:20:13 +0200
+Message-ID: <20250902131935.169542293@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
-References: <20250902131939.601201881@linuxfoundation.org>
+In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
+References: <20250902131935.107897242@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,143 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takamitsu Iwai <takamitz@amazon.co.jp>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit da9c9c877597170b929a6121a68dcd3dd9a80f45 ]
+[ Upstream commit c81f6ce16785cc07ae81f53deb07b662ed0bb3a5 ]
 
-Current implementation maintains two separate reference counting
-mechanisms: the 'count' field in struct rose_neigh tracks references from
-rose_node structures, while the 'use' field (now refcount_t) tracks
-references from rose_sock.
+When of_pci_add_properties() failed, of_changeset_destroy() is called to
+free the changeset. And of_changeset_destroy() puts device tree node in
+each entry but does not free property in the entry. This leads to memory
+leak in the failure case.
 
-This patch merges these two reference counting systems using 'use' field
-for proper reference management. Specifically, this patch adds incrementing
-and decrementing of rose_neigh->use when rose_neigh->count is incremented
-or decremented.
+In of_changeset_add_prop_helper(), add the property to the device tree node
+deadprops list. Thus, the property will also be freed along with device
+tree node.
 
-This patch also modifies rose_rt_free(), rose_rt_device_down() and
-rose_clear_route() to properly release references to rose_neigh objects
-before freeing a rose_node through rose_remove_node().
-
-These changes ensure rose_neigh structures are properly freed only when
-all references, including those from rose_node structures, are released.
-As a result, this resolves a slab-use-after-free issue reported by Syzbot.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+942297eecf7d2d61d1f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=942297eecf7d2d61d1f1
-Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250823085857.47674-4-takamitz@amazon.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b544fc2b8606 ("of: dynamic: Add interfaces for creating device node dynamically")
+Reported-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Closes: https://lore.kernel.org/all/aJms+YT8TnpzpCY8@lpieralisi/
+Tested-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://lore.kernel.org/r/20250818152221.3685724-1-lizhi.hou@amd.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_route.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/of/dynamic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 42460da0854d5..6acbb795c506d 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -178,6 +178,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
- 			}
- 		}
- 		rose_neigh->count++;
-+		rose_neigh_hold(rose_neigh);
- 
- 		goto out;
- 	}
-@@ -187,6 +188,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
- 		rose_node->neighbour[rose_node->count] = rose_neigh;
- 		rose_node->count++;
- 		rose_neigh->count++;
-+		rose_neigh_hold(rose_neigh);
+diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
+index 4d57a4e341054..7f78fba502ec4 100644
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -939,6 +939,9 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
+ 		kfree(new_pp);
  	}
  
- out:
-@@ -322,6 +324,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 	for (i = 0; i < rose_node->count; i++) {
- 		if (rose_node->neighbour[i] == rose_neigh) {
- 			rose_neigh->count--;
-+			rose_neigh_put(rose_neigh);
- 
- 			if (rose_neigh->count == 0) {
- 				rose_remove_neigh(rose_neigh);
-@@ -430,6 +433,7 @@ int rose_add_loopback_node(const rose_address *address)
- 	rose_node_list  = rose_node;
- 
- 	rose_loopback_neigh->count++;
-+	rose_neigh_hold(rose_loopback_neigh);
- 
- out:
- 	spin_unlock_bh(&rose_node_list_lock);
-@@ -461,6 +465,7 @@ void rose_del_loopback_node(const rose_address *address)
- 	rose_remove_node(rose_node);
- 
- 	rose_loopback_neigh->count--;
-+	rose_neigh_put(rose_loopback_neigh);
- 
- out:
- 	spin_unlock_bh(&rose_node_list_lock);
-@@ -500,6 +505,7 @@ void rose_rt_device_down(struct net_device *dev)
- 				memmove(&t->neighbour[i], &t->neighbour[i + 1],
- 					sizeof(t->neighbour[0]) *
- 						(t->count - i));
-+				rose_neigh_put(s);
- 			}
- 
- 			if (t->count <= 0)
-@@ -543,6 +549,7 @@ static int rose_clear_routes(void)
- {
- 	struct rose_neigh *s, *rose_neigh;
- 	struct rose_node  *t, *rose_node;
-+	int i;
- 
- 	spin_lock_bh(&rose_node_list_lock);
- 	spin_lock_bh(&rose_neigh_list_lock);
-@@ -553,8 +560,12 @@ static int rose_clear_routes(void)
- 	while (rose_node != NULL) {
- 		t         = rose_node;
- 		rose_node = rose_node->next;
--		if (!t->loopback)
++	new_pp->next = np->deadprops;
++	np->deadprops = new_pp;
 +
-+		if (!t->loopback) {
-+			for (i = 0; i < rose_node->count; i++)
-+				rose_neigh_put(t->neighbour[i]);
- 			rose_remove_node(t);
-+		}
- 	}
- 
- 	while (rose_neigh != NULL) {
-@@ -1189,7 +1200,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
- 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
- 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
- 			   rose_neigh->count,
--			   refcount_read(&rose_neigh->use) - 1,
-+			   refcount_read(&rose_neigh->use) - rose_neigh->count - 1,
- 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
- 			   (rose_neigh->restarted) ? "yes" : "no",
- 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
-@@ -1294,6 +1305,7 @@ void __exit rose_rt_free(void)
- 	struct rose_neigh *s, *rose_neigh = rose_neigh_list;
- 	struct rose_node  *t, *rose_node  = rose_node_list;
- 	struct rose_route *u, *rose_route = rose_route_list;
-+	int i;
- 
- 	while (rose_neigh != NULL) {
- 		s          = rose_neigh;
-@@ -1307,6 +1319,8 @@ void __exit rose_rt_free(void)
- 		t         = rose_node;
- 		rose_node = rose_node->next;
- 
-+		for (i = 0; i < t->count; i++)
-+			rose_neigh_put(t->neighbour[i]);
- 		rose_remove_node(t);
- 	}
+ 	return ret;
+ }
  
 -- 
 2.50.1
