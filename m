@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDBE30505A;
-	Tue,  2 Sep 2025 13:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9BD30505A;
+	Tue,  2 Sep 2025 13:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819587; cv=none; b=I225D6WBr6m8OQCw2z5/OWe94VhGvMdWNq/28vViSJlzsVl4Y400FMqHY8Wlf2nn6pol8kxvVPqnqo0cezSIIxo87Oanso4SylWQ05SDYBLAj0bgNi0RRGxF1FRgIS2C/MbuXR1YgzV9qwbjio2M6SJnqb9gu2p45dsVQrYwWjI=
+	t=1756819589; cv=none; b=RDACay93FkAZrwCYaYm5sG4wWqLN2y4PSCfiPMaWgirAB0++/aL6O6ePlbSoxx2zMXrdkofWNbnpednj7e4vVHiE8zjA8OrrPWV+ZD+mxGK1UVLDmS+xw6i/r6NQvuQGPkHV81qeKngqDaYaiXLPp4866HhyBd/e3j20tNJ7aPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819587; c=relaxed/simple;
-	bh=0ushCIXqAunFs9W/bTF6VNK265qdAUNXrn/zHh68NkE=;
+	s=arc-20240116; t=1756819589; c=relaxed/simple;
+	bh=NwC+gCz3LG1ES0X6rGEdTm/GGpKHXx0pR91kkZYY/uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTeI71yVMiQ0CCDuLe0B0XEeF+mM7eGS9PK5bc1AA1KImrJNmsU0qolPz4OnSgvbL17Oo4zXozclMKUPS3Uqu1cRfmRi+CdM2zH4ujoj/d7RKJKiVUucT5JV1WRW1122j4/zvqu6lr8aujnKegX5ISyptrDuG8DvFAkG5/nN9T0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXLejzV6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t/bzaALneuJhUvn10jt/9bBTAJkleJPNzK5jCKXeakXXedakALxCVkaXBtdawJAUBPzEGySuMWtFJPqj4RP3938zJSVBLnRaW/sFaEPxlzRpUVegStFFWCliy6+TNF7TojW/MfpWvE2/PKyzqX4HaMe2p0LtQ4O+za9U3XrbU/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvlstoTG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXLejzV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1E0C4CEED;
-	Tue,  2 Sep 2025 13:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvlstoTG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21463C4CEED;
+	Tue,  2 Sep 2025 13:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819586;
-	bh=0ushCIXqAunFs9W/bTF6VNK265qdAUNXrn/zHh68NkE=;
+	s=korg; t=1756819589;
+	bh=NwC+gCz3LG1ES0X6rGEdTm/GGpKHXx0pR91kkZYY/uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXLejzV6mt4dI+aR2EfDNtnMsJfRPRYUVQrX1b8loyBeZh2VIGy4ZAiFzxCzkQVDy
-	 JepFmHx3fEdrP62qYDLy/Xx2pEwggMCP8C37l1Mq/7ANXluKivTgGyn/j3bJpIQmaj
-	 dudJBHvDhZMUYzecBuqGMJvG9HTHcOqMUBzHt3NQ=
+	b=lvlstoTGosLpRUjsNXAPN7UsyhTveiLdsi+GtK6xQ3KwAgfVHujChxmR/cwevDdDm
+	 MsH4rMrkFh0CdPRzuJLrZrXDu+ET91f/TvrPDigmMH4gaAnXNV/hnhvOvbz2DwpoNF
+	 gZUqCz4mog31GFgc9T1jZ4Ei1V9yquGyV40XDvlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lama Kayal <lkayal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 079/142] net/mlx5: HWS, Fix memory leak in hws_action_get_shared_stc_nic error flow
-Date: Tue,  2 Sep 2025 15:19:41 +0200
-Message-ID: <20250902131951.296106878@linuxfoundation.org>
+Subject: [PATCH 6.16 062/142] dt-bindings: display/msm: qcom,mdp5: drop lut clock
+Date: Tue,  2 Sep 2025 15:19:24 +0200
+Message-ID: <20250902131950.628912086@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -53,40 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lama Kayal <lkayal@nvidia.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit a630f83592cdad1253523a1b760cfe78fef6cd9c ]
+[ Upstream commit 7ab3b7579a6d2660a3425b9ea93b9a140b07f49c ]
 
-When an invalid stc_type is provided, the function allocates memory for
-shared_stc but jumps to unlock_and_out without freeing it, causing a
-memory leak.
+None of MDP5 platforms have a LUT clock on the display-controller, it
+was added by the mistake. Drop it, fixing DT warnings on MSM8976 /
+MSM8956 platforms. Technically it's an ABI break, but no other platforms
+are affected.
 
-Fix by jumping to free_shared_stc label instead to ensure proper cleanup.
-
-Fixes: 504e536d9010 ("net/mlx5: HWS, added actions handling")
-Signed-off-by: Lama Kayal <lkayal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250825143435.598584-3-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 385c8ac763b3 ("dt-bindings: display/msm: convert MDP5 schema to YAML format")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/667822/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c
-index 447ea3f8722ce..8e4a085f4a2ec 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c
-@@ -117,7 +117,7 @@ static int hws_action_get_shared_stc_nic(struct mlx5hws_context *ctx,
- 		mlx5hws_err(ctx, "No such stc_type: %d\n", stc_type);
- 		pr_warn("HWS: Invalid stc_type: %d\n", stc_type);
- 		ret = -EINVAL;
--		goto unlock_and_out;
-+		goto free_shared_stc;
- 	}
- 
- 	ret = mlx5hws_action_alloc_single_stc(ctx, &stc_attr, tbl_type,
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+index e153f8d26e7aa..2735c78b0b67a 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,mdp5.yaml
+@@ -60,7 +60,6 @@ properties:
+           - const: bus
+           - const: core
+           - const: vsync
+-          - const: lut
+           - const: tbu
+           - const: tbu_rt
+         # MSM8996 has additional iommu clock
 -- 
 2.50.1
 
