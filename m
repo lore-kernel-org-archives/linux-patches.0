@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39DF32ED43;
-	Tue,  2 Sep 2025 13:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A543074B4;
+	Tue,  2 Sep 2025 13:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820527; cv=none; b=Z5mB/BXBTLrJeaKlEic7YM6KASu1EDPCDVNXwylZfPZq0lWGf2LFefUKx1N4zIP+/hhlFt4XjgUpM8io8Rj2UKYcdjDML6ZUMkrqQZf6+17jLX/RLF/C6QNp/cicvUW+dZtxZF9S43hkR4LfQ5xl1EkcjdYVlrpF6P8L9TQU4kM=
+	t=1756820530; cv=none; b=Wrt1x41Acj5s16rDpLiJbt6E/o+e+LA1+rPVXhwbUJyN0fr7zlP5BJeYc/G/e1nXSs/XPOF8WE7axD98Ts2zGcdAvIw4YockJShZS9fiUAIQI2wvicb4A4aY95sHLcNV2ggyJva+4PC4Ml6pDlzKsETetTqWFg048wHOG7fBZMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820527; c=relaxed/simple;
-	bh=RfjKCZBIWxhRJEzFBY2qWvTe5ZjQzYn7HrWMsRoJT/U=;
+	s=arc-20240116; t=1756820530; c=relaxed/simple;
+	bh=Y3chWnZ8xVfg5EDkNVUuDq1uIRtNrukSjgV0ktKMsDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcrHC6jDK7loVG7SNLXM2DVzcjFwRvLimYbDaR1UsW0wiOX1p35182Vm9YHkJW4H9/ORhvwyhTKoKRgd6I8W7EETuGFNhlOgMGHJAFb9GriFzz10F7gfP3ubRW/aNY60TrxVuxzszKAcxFVQ9RNBcM0TySzaGtbjjiBEw2muSsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9KoBA5V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3B9Fa/etHUtBc5JmcByjWFVoJMHs1BQ2VS2ifK5aK+8SxVO3NBiOFDFmlgpMdTrRvQAYqFGANPo0AgXCuhfX+6fflNcYOQ3+Up+FY9WcqSJROr7Ruj4vqXinVdrqLdqmJl8Y6ZS5m9wSZqOIz2Xyiqe850ciHgd+t6dWZWrcK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN4gaC72; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9KoBA5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFC6C4CEED;
-	Tue,  2 Sep 2025 13:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN4gaC72"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C403C4CEED;
+	Tue,  2 Sep 2025 13:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820526;
-	bh=RfjKCZBIWxhRJEzFBY2qWvTe5ZjQzYn7HrWMsRoJT/U=;
+	s=korg; t=1756820530;
+	bh=Y3chWnZ8xVfg5EDkNVUuDq1uIRtNrukSjgV0ktKMsDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9KoBA5V33ivBObg9pbfy+aDjl5dVfOq2pMQcUXq2i6Ez+f/fLB7n/GXtnTFXV6PK
-	 5a5zzx868KMgyK7O57YRiRbS7RNx/0CkE+Tu/V4EUQULpLa9Q2J+ufjrirkYaJzy7L
-	 Prhj2b8+MDHBRUb9C4aAOme9iuQlQMJLiYGssI14=
+	b=GN4gaC7244BJ/A8wGYXhuynDHTpA7nP7iITonc/ziyCG1rg0qDOhYRR04GU4hCxDW
+	 Mgy5UZ0fiErx78Tzl4bITmu9IthMPNxNO1/3N5ZQJ8mWjjbf4gV8h1NFoHDWw4zgwp
+	 BRbdrF9lH22r/HuC5tuSOJ9j+9vIEXJRRS852Re8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 40/50] Revert "drm/amdgpu: fix incorrect vm flags to map bo"
-Date: Tue,  2 Sep 2025 15:21:31 +0200
-Message-ID: <20250902131932.111802796@linuxfoundation.org>
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 31/50] net: rose: convert use field to refcount_t
+Date: Tue,  2 Sep 2025 15:21:22 +0200
+Message-ID: <20250902131931.754000928@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -49,34 +52,370 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Takamitsu Iwai <takamitz@amazon.co.jp>
 
-commit ac4ed2da4c1305a1a002415058aa7deaf49ffe3e upstream.
+[ Upstream commit d860d1faa6b2ce3becfdb8b0c2b048ad31800061 ]
 
-This reverts commit b08425fa77ad2f305fe57a33dceb456be03b653f.
+The 'use' field in struct rose_neigh is used as a reference counter but
+lacks atomicity. This can lead to race conditions where a rose_neigh
+structure is freed while still being referenced by other code paths.
 
-Revert this to align with 6.17 because the fixes tag
-was wrong on this commit.
+For example, when rose_neigh->use becomes zero during an ioctl operation
+via rose_rt_ioctl(), the structure may be removed while its timer is
+still active, potentially causing use-after-free issues.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit be33e8a239aac204d7e9e673c4220ef244eb1ba3)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch changes the type of 'use' from unsigned short to refcount_t and
+updates all code paths to use rose_neigh_hold() and rose_neigh_put() which
+operate reference counts atomically.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250823085857.47674-3-takamitz@amazon.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/rose.h    | 18 +++++++++++++-----
+ net/rose/af_rose.c    | 13 +++++++------
+ net/rose/rose_in.c    | 12 ++++++------
+ net/rose/rose_route.c | 33 ++++++++++++++++++---------------
+ net/rose/rose_timer.c |  2 +-
+ 5 files changed, 45 insertions(+), 33 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -93,8 +93,8 @@ int amdgpu_map_static_csa(struct amdgpu_
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 174b4f605d849..2b5491bbf39ab 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -8,6 +8,7 @@
+ #ifndef _ROSE_H
+ #define _ROSE_H 
+ 
++#include <linux/refcount.h>
+ #include <linux/rose.h>
+ #include <net/ax25.h>
+ #include <net/sock.h>
+@@ -96,7 +97,7 @@ struct rose_neigh {
+ 	ax25_cb			*ax25;
+ 	struct net_device		*dev;
+ 	unsigned short		count;
+-	unsigned short		use;
++	refcount_t		use;
+ 	unsigned int		number;
+ 	char			restarted;
+ 	char			dce_mode;
+@@ -151,12 +152,19 @@ struct rose_sock {
+ 
+ #define rose_sk(sk) ((struct rose_sock *)(sk))
+ 
++static inline void rose_neigh_hold(struct rose_neigh *rose_neigh)
++{
++	refcount_inc(&rose_neigh->use);
++}
++
+ static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
+ {
+-	if (rose_neigh->ax25)
+-		ax25_cb_put(rose_neigh->ax25);
+-	kfree(rose_neigh->digipeat);
+-	kfree(rose_neigh);
++	if (refcount_dec_and_test(&rose_neigh->use)) {
++		if (rose_neigh->ax25)
++			ax25_cb_put(rose_neigh->ax25);
++		kfree(rose_neigh->digipeat);
++		kfree(rose_neigh);
++	}
+ }
+ 
+ /* af_rose.c */
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index b21c2ce401928..5a0bf022a84be 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -170,7 +170,7 @@ void rose_kill_by_neigh(struct rose_neigh *neigh)
+ 
+ 		if (rose->neighbour == neigh) {
+ 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+-			rose->neighbour->use--;
++			rose_neigh_put(rose->neighbour);
+ 			rose->neighbour = NULL;
+ 		}
+ 	}
+@@ -212,7 +212,7 @@ static void rose_kill_by_device(struct net_device *dev)
+ 		if (rose->device == dev) {
+ 			rose_disconnect(sk, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
+ 			if (rose->neighbour)
+-				rose->neighbour->use--;
++				rose_neigh_put(rose->neighbour);
+ 			netdev_put(rose->device, &rose->dev_tracker);
+ 			rose->device = NULL;
+ 		}
+@@ -655,7 +655,7 @@ static int rose_release(struct socket *sock)
+ 		break;
+ 
+ 	case ROSE_STATE_2:
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		release_sock(sk);
+ 		rose_disconnect(sk, 0, -1, -1);
+ 		lock_sock(sk);
+@@ -823,6 +823,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 	rose->lci = rose_new_lci(rose->neighbour);
+ 	if (!rose->lci) {
+ 		err = -ENETUNREACH;
++		rose_neigh_put(rose->neighbour);
+ 		goto out_release;
  	}
  
- 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
--			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
--			     AMDGPU_VM_PAGE_EXECUTABLE);
-+			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
-+			     AMDGPU_PTE_EXECUTABLE);
+@@ -834,12 +835,14 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		dev = rose_dev_first();
+ 		if (!dev) {
+ 			err = -ENETUNREACH;
++			rose_neigh_put(rose->neighbour);
+ 			goto out_release;
+ 		}
  
- 	if (r) {
- 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
+ 		user = ax25_findbyuid(current_euid());
+ 		if (!user) {
+ 			err = -EINVAL;
++			rose_neigh_put(rose->neighbour);
+ 			dev_put(dev);
+ 			goto out_release;
+ 		}
+@@ -874,8 +877,6 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 
+ 	rose->state = ROSE_STATE_1;
+ 
+-	rose->neighbour->use++;
+-
+ 	rose_write_internal(sk, ROSE_CALL_REQUEST);
+ 	rose_start_heartbeat(sk);
+ 	rose_start_t1timer(sk);
+@@ -1077,7 +1078,7 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 			     GFP_ATOMIC);
+ 	make_rose->facilities    = facilities;
+ 
+-	make_rose->neighbour->use++;
++	rose_neigh_hold(make_rose->neighbour);
+ 
+ 	if (rose_sk(sk)->defer) {
+ 		make_rose->state = ROSE_STATE_5;
+diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
+index 4d67f36dce1b4..7caae93937ee9 100644
+--- a/net/rose/rose_in.c
++++ b/net/rose/rose_in.c
+@@ -56,7 +56,7 @@ static int rose_state1_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, ECONNREFUSED, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		break;
+ 
+ 	default:
+@@ -79,12 +79,12 @@ static int rose_state2_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		break;
+ 
+ 	case ROSE_CLEAR_CONFIRMATION:
+ 		rose_disconnect(sk, 0, -1, -1);
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		break;
+ 
+ 	default:
+@@ -120,7 +120,7 @@ static int rose_state3_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		break;
+ 
+ 	case ROSE_RR:
+@@ -233,7 +233,7 @@ static int rose_state4_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	case ROSE_CLEAR_REQUEST:
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		break;
+ 
+ 	default:
+@@ -253,7 +253,7 @@ static int rose_state5_machine(struct sock *sk, struct sk_buff *skb, int framety
+ 	if (frametype == ROSE_CLEAR_REQUEST) {
+ 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
+ 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
+-		rose_sk(sk)->neighbour->use--;
++		rose_neigh_put(rose_sk(sk)->neighbour);
+ 	}
+ 
+ 	return 0;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index b406b1e0fb1e7..42460da0854d5 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -93,11 +93,11 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 		rose_neigh->ax25      = NULL;
+ 		rose_neigh->dev       = dev;
+ 		rose_neigh->count     = 0;
+-		rose_neigh->use       = 0;
+ 		rose_neigh->dce_mode  = 0;
+ 		rose_neigh->loopback  = 0;
+ 		rose_neigh->number    = rose_neigh_no++;
+ 		rose_neigh->restarted = 0;
++		refcount_set(&rose_neigh->use, 1);
+ 
+ 		skb_queue_head_init(&rose_neigh->queue);
+ 
+@@ -255,10 +255,10 @@ static void rose_remove_route(struct rose_route *rose_route)
+ 	struct rose_route *s;
+ 
+ 	if (rose_route->neigh1 != NULL)
+-		rose_route->neigh1->use--;
++		rose_neigh_put(rose_route->neigh1);
+ 
+ 	if (rose_route->neigh2 != NULL)
+-		rose_route->neigh2->use--;
++		rose_neigh_put(rose_route->neigh2);
+ 
+ 	if ((s = rose_route_list) == rose_route) {
+ 		rose_route_list = rose_route->next;
+@@ -323,7 +323,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
+ 
+-			if (rose_neigh->count == 0 && rose_neigh->use == 0) {
++			if (rose_neigh->count == 0) {
+ 				rose_remove_neigh(rose_neigh);
+ 				rose_neigh_put(rose_neigh);
+ 			}
+@@ -375,11 +375,11 @@ void rose_add_loopback_neigh(void)
+ 	sn->ax25      = NULL;
+ 	sn->dev       = NULL;
+ 	sn->count     = 0;
+-	sn->use       = 0;
+ 	sn->dce_mode  = 1;
+ 	sn->loopback  = 1;
+ 	sn->number    = rose_neigh_no++;
+ 	sn->restarted = 1;
++	refcount_set(&sn->use, 1);
+ 
+ 	skb_queue_head_init(&sn->queue);
+ 
+@@ -561,8 +561,7 @@ static int rose_clear_routes(void)
+ 		s          = rose_neigh;
+ 		rose_neigh = rose_neigh->next;
+ 
+-		if (s->use == 0 && !s->loopback) {
+-			s->count = 0;
++		if (!s->loopback) {
+ 			rose_remove_neigh(s);
+ 			rose_neigh_put(s);
+ 		}
+@@ -680,6 +679,7 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
+ 			for (i = 0; i < node->count; i++) {
+ 				if (node->neighbour[i]->restarted) {
+ 					res = node->neighbour[i];
++					rose_neigh_hold(node->neighbour[i]);
+ 					goto out;
+ 				}
+ 			}
+@@ -691,6 +691,7 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
+ 				for (i = 0; i < node->count; i++) {
+ 					if (!rose_ftimer_running(node->neighbour[i])) {
+ 						res = node->neighbour[i];
++						rose_neigh_hold(node->neighbour[i]);
+ 						goto out;
+ 					}
+ 					failed = 1;
+@@ -780,13 +781,13 @@ static void rose_del_route_by_neigh(struct rose_neigh *rose_neigh)
+ 		}
+ 
+ 		if (rose_route->neigh1 == rose_neigh) {
+-			rose_route->neigh1->use--;
++			rose_neigh_put(rose_route->neigh1);
+ 			rose_route->neigh1 = NULL;
+ 			rose_transmit_clear_request(rose_route->neigh2, rose_route->lci2, ROSE_OUT_OF_ORDER, 0);
+ 		}
+ 
+ 		if (rose_route->neigh2 == rose_neigh) {
+-			rose_route->neigh2->use--;
++			rose_neigh_put(rose_route->neigh2);
+ 			rose_route->neigh2 = NULL;
+ 			rose_transmit_clear_request(rose_route->neigh1, rose_route->lci1, ROSE_OUT_OF_ORDER, 0);
+ 		}
+@@ -915,7 +916,7 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 			rose_clear_queues(sk);
+ 			rose->cause	 = ROSE_NETWORK_CONGESTION;
+ 			rose->diagnostic = 0;
+-			rose->neighbour->use--;
++			rose_neigh_put(rose->neighbour);
+ 			rose->neighbour	 = NULL;
+ 			rose->lci	 = 0;
+ 			rose->state	 = ROSE_STATE_0;
+@@ -1040,12 +1041,12 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 
+ 	if ((new_lci = rose_new_lci(new_neigh)) == 0) {
+ 		rose_transmit_clear_request(rose_neigh, lci, ROSE_NETWORK_CONGESTION, 71);
+-		goto out;
++		goto put_neigh;
+ 	}
+ 
+ 	if ((rose_route = kmalloc(sizeof(*rose_route), GFP_ATOMIC)) == NULL) {
+ 		rose_transmit_clear_request(rose_neigh, lci, ROSE_NETWORK_CONGESTION, 120);
+-		goto out;
++		goto put_neigh;
+ 	}
+ 
+ 	rose_route->lci1      = lci;
+@@ -1058,8 +1059,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	rose_route->lci2      = new_lci;
+ 	rose_route->neigh2    = new_neigh;
+ 
+-	rose_route->neigh1->use++;
+-	rose_route->neigh2->use++;
++	rose_neigh_hold(rose_route->neigh1);
++	rose_neigh_hold(rose_route->neigh2);
+ 
+ 	rose_route->next = rose_route_list;
+ 	rose_route_list  = rose_route;
+@@ -1071,6 +1072,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	rose_transmit_link(skb, rose_route->neigh2);
+ 	res = 1;
+ 
++put_neigh:
++	rose_neigh_put(new_neigh);
+ out:
+ 	spin_unlock_bh(&rose_route_list_lock);
+ 	spin_unlock_bh(&rose_neigh_list_lock);
+@@ -1186,7 +1189,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
+ 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
+ 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
+ 			   rose_neigh->count,
+-			   rose_neigh->use,
++			   refcount_read(&rose_neigh->use) - 1,
+ 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
+ 			   (rose_neigh->restarted) ? "yes" : "no",
+ 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
+diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
+index 1525773e94aa1..c52d7d20c5199 100644
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -180,7 +180,7 @@ static void rose_timer_expiry(struct timer_list *t)
+ 		break;
+ 
+ 	case ROSE_STATE_2:	/* T3 */
+-		rose->neighbour->use--;
++		rose_neigh_put(rose->neighbour);
+ 		rose_disconnect(sk, ETIMEDOUT, -1, -1);
+ 		break;
+ 
+-- 
+2.50.1
+
 
 
