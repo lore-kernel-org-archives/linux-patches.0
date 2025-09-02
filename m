@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EAB30DD36;
-	Tue,  2 Sep 2025 13:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07649314A8B;
+	Tue,  2 Sep 2025 13:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820047; cv=none; b=R2hy5EQxS54ksDUxjrPtpn43VV+xa93ghMBJaCbcTdS5VkoCtLHsu9ZH1C6paoTc2HPrK/BWUToIlrs4Pi5HpKbpiW2tPaNMy01jS1ISGYepy2ALzgYV/jlyXgpAaSe+i4kMqQH01aDLvqAl5ePhDtUDytZuSuXcLtf+VwF4sk0=
+	t=1756820050; cv=none; b=OjKbXfwsTUsqC+Fa/XhrSfk2p0D40Qxx+jHQv+1JnJtNtVHQ1nCVp8hi/+DLBHNFNx4wDJHY2J9aX5I/NhrF8fjWrqM1G6U33PJlJcCpHB3+8ENEPR56t6OpcZEQJdorUPhD1mT7E+LB1QlGZ9xzEE3A0YiGeUL63JMPI6sE/rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820047; c=relaxed/simple;
-	bh=2H7PK6itMpTpAJ75p5gZ9COJqCl4PfFomHzDo1esH1s=;
+	s=arc-20240116; t=1756820050; c=relaxed/simple;
+	bh=tpi/8GSFQlH/cjECq13gUF8DSgnCzlNSMKcSqySm+tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nu6wFj+s04sHAEgKY9TrAyqovd09z9pr4Q4E+vdzF6JoHHpzpAqPeOLchiIWesO+j+yo+AwcR2GbapB8AP/+KSgWE4G9l8Quhb6ekC370Wyj6QGSA/1RKfNQOtSNNsSEgrM44a/jtd5DuaULVAYLpxloeTr5UHezMbIbm3oka0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaGbMo+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBDoTL8wzg2cdy7dz/oxXid+tvbLVmJTIWSJBXFyDPTUaE5y/9AwPANWBkmqt081ynzq9UFBsfpGgZL6IrjTQ4nTUWd287ddol/zK1U3sroafWohnx8qoOT+paWxcyGGVodBBLQfB1G948fSSvjS418y5AH2vnJqVrbyY/NfrCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/jgyg1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaGbMo+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6EB9C4CEED;
-	Tue,  2 Sep 2025 13:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/jgyg1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860E2C4CEED;
+	Tue,  2 Sep 2025 13:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820047;
-	bh=2H7PK6itMpTpAJ75p5gZ9COJqCl4PfFomHzDo1esH1s=;
+	s=korg; t=1756820049;
+	bh=tpi/8GSFQlH/cjECq13gUF8DSgnCzlNSMKcSqySm+tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaGbMo+ZYlzV1NXSywrj/dB5x9dVs0bMb340PEm9GxFjUTiWa0ZbjMpvaA9mVqTy/
-	 TdW6qHmhSa7kz1BXUVRKizj1TVUBwEeCFrcPdd05FWxANFww3DVeXzlEocSaSZ+iUx
-	 8mf4CclNzSTXEoZ473jKztJILxaGCc3Qf2g1IiuA=
+	b=j/jgyg1SgWGCUq8Nr6rJXf9JAdug/iFjyRDeq4hBN3fnxU6E+/WybLKu2/UlEmuOP
+	 4XAAfywEjRlEXZg22vpaIw8tIX9VvB8Hf+MKQLTTPJjzJ72f1yJvpd/9OtY93uBMba
+	 b2bl4Tb4p76mhqDQF48sbnULqks4yZMWk8uD8Kq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 77/95] Revert "drm/amdgpu: fix incorrect vm flags to map bo"
-Date: Tue,  2 Sep 2025 15:20:53 +0200
-Message-ID: <20250902131942.566205890@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 78/95] blk-zoned: Fix a lockdep complaint about recursive locking
+Date: Tue,  2 Sep 2025 15:20:54 +0200
+Message-ID: <20250902131942.603456062@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -49,34 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit ac4ed2da4c1305a1a002415058aa7deaf49ffe3e upstream.
+commit 198f36f902ec7e99b645382505f74b87a4523ed9 upstream.
 
-This reverts commit b08425fa77ad2f305fe57a33dceb456be03b653f.
+If preparing a write bio fails then blk_zone_wplug_bio_work() calls
+bio_endio() with zwplug->lock held. If a device mapper driver is stacked
+on top of the zoned block device then this results in nested locking of
+zwplug->lock. The resulting lockdep complaint is a false positive
+because this is nested locking and not recursive locking. Suppress this
+false positive by calling blk_zone_wplug_bio_io_error() without holding
+zwplug->lock. This is safe because no code in
+blk_zone_wplug_bio_io_error() depends on zwplug->lock being held. This
+patch suppresses the following lockdep complaint:
 
-Revert this to align with 6.17 because the fixes tag
-was wrong on this commit.
+WARNING: possible recursive locking detected
+--------------------------------------------
+kworker/3:0H/46 is trying to acquire lock:
+ffffff882968b830 (&zwplug->lock){-...}-{2:2}, at: blk_zone_write_plug_bio_endio+0x64/0x1f0
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit be33e8a239aac204d7e9e673c4220ef244eb1ba3)
+but task is already holding lock:
+ffffff88315bc230 (&zwplug->lock){-...}-{2:2}, at: blk_zone_wplug_bio_work+0x8c/0x48c
+
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+
+       CPU0
+       ----
+  lock(&zwplug->lock);
+  lock(&zwplug->lock);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+3 locks held by kworker/3:0H/46:
+ #0: ffffff8809486758 ((wq_completion)sdd_zwplugs){+.+.}-{0:0}, at: process_one_work+0x1bc/0x65c
+ #1: ffffffc085de3d70 ((work_completion)(&zwplug->bio_work)){+.+.}-{0:0}, at: process_one_work+0x1e4/0x65c
+ #2: ffffff88315bc230 (&zwplug->lock){-...}-{2:2}, at: blk_zone_wplug_bio_work+0x8c/0x48c
+
+stack backtrace:
+CPU: 3 UID: 0 PID: 46 Comm: kworker/3:0H Tainted: G        W  OE      6.12.38-android16-5-maybe-dirty-4k #1 8b362b6f76e3645a58cd27d86982bce10d150025
+Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: Spacecraft board based on MALIBU (DT)
+Workqueue: sdd_zwplugs blk_zone_wplug_bio_work
+Call trace:
+ dump_backtrace+0xfc/0x17c
+ show_stack+0x18/0x28
+ dump_stack_lvl+0x40/0xa0
+ dump_stack+0x18/0x24
+ print_deadlock_bug+0x38c/0x398
+ __lock_acquire+0x13e8/0x2e1c
+ lock_acquire+0x134/0x2b4
+ _raw_spin_lock_irqsave+0x5c/0x80
+ blk_zone_write_plug_bio_endio+0x64/0x1f0
+ bio_endio+0x9c/0x240
+ __dm_io_complete+0x214/0x260
+ clone_endio+0xe8/0x214
+ bio_endio+0x218/0x240
+ blk_zone_wplug_bio_work+0x204/0x48c
+ process_one_work+0x26c/0x65c
+ worker_thread+0x33c/0x498
+ kthread+0x110/0x134
+ ret_from_fork+0x10/0x20
+
+Cc: stable@vger.kernel.org
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250825182720.1697203-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-zoned.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -88,8 +88,8 @@ int amdgpu_map_static_csa(struct amdgpu_
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1281,14 +1281,14 @@ static void blk_zone_wplug_bio_work(stru
+ 	struct block_device *bdev;
+ 	unsigned long flags;
+ 	struct bio *bio;
++	bool prepared;
+ 
+ 	/*
+ 	 * Submit the next plugged BIO. If we do not have any, clear
+ 	 * the plugged flag.
+ 	 */
+-	spin_lock_irqsave(&zwplug->lock, flags);
+-
+ again:
++	spin_lock_irqsave(&zwplug->lock, flags);
+ 	bio = bio_list_pop(&zwplug->bio_list);
+ 	if (!bio) {
+ 		zwplug->flags &= ~BLK_ZONE_WPLUG_PLUGGED;
+@@ -1296,13 +1296,14 @@ again:
+ 		goto put_zwplug;
  	}
  
- 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
--			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
--			     AMDGPU_VM_PAGE_EXECUTABLE);
-+			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
-+			     AMDGPU_PTE_EXECUTABLE);
+-	if (!blk_zone_wplug_prepare_bio(zwplug, bio)) {
++	prepared = blk_zone_wplug_prepare_bio(zwplug, bio);
++	spin_unlock_irqrestore(&zwplug->lock, flags);
++
++	if (!prepared) {
+ 		blk_zone_wplug_bio_io_error(zwplug, bio);
+ 		goto again;
+ 	}
  
- 	if (r) {
- 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
+-	spin_unlock_irqrestore(&zwplug->lock, flags);
+-
+ 	bdev = bio->bi_bdev;
+ 
+ 	/*
 
 
