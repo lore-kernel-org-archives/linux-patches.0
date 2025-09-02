@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE1730507B;
-	Tue,  2 Sep 2025 13:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8232C15A3;
+	Tue,  2 Sep 2025 13:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820803; cv=none; b=DkHfMFWEj2wWBVGX66D+2MCHEy9eU7sK/mwMe0CKN9t3bN36ybtpj8MMuEjV/mbnMpJ6gNxUWlFCMId/G+gEr0Ygl+V5ZZylrr8TI5/mGmb6NYGF6NEeyH24bnOTdhU38n4Ug29q+fFpNVVWVEXqGzp7DHurDIfLGJcKN91R/bE=
+	t=1756820807; cv=none; b=Na2YyykL5aYBu+7PWpBmo5Tk95g4GEPcfDvTklc3iyL5h4syWcKOCemZ4iyD4jKtVd/9HhQQUcL6UbZbIO5CNkffBbzk6bgoe29+ThkABtADe7zJrxIV1AM86G/Ta0xM/y6TQSvKq0eb4PSwkueyhEWaLqMnJvjR2ZPHs/9rR/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820803; c=relaxed/simple;
-	bh=5z/ffheGT1FpNgrUKuioWJJ0fxMbd+7C+Oq3nERSoZg=;
+	s=arc-20240116; t=1756820807; c=relaxed/simple;
+	bh=bAeXueErPR9FkS1aVpvm+MMOl2yBOa/fjOiWjXbDGL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ThQ60nTeP3TKzcrxJTpk44dWEdZEi/ECG5+X6LPRp/wXZoIyiHR3B1HYwuHsS5aW3CBPK6KpUpSy6o2k/BmDf73KEpIN8RxjC2wWieISIFzHQ2+c8QmZvmsh8WxSwNrbHR8y0tNH3uaHWOc9jlRNlbOeEfCgCXiKWPy/hN4/nC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ux2ko6Ir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaw2khzZ7M/FlwmTCYMqYeMWrVvy+XdAa/pXhauX+1i6BkbkO2mwANOMBn5s6YjlUEaqrP4rDtyP51nb8/4fCDU1JOCrHZ7NoQNqY4nY9hLWWoEiIJiqWlDIj+o10sAAeCxhIQF1SgAFGiRxwYUnVIT0fozEa90iyp96+6ppqjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAbbfz/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ux2ko6Ir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0100BC4CEED;
-	Tue,  2 Sep 2025 13:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAbbfz/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2446AC4CEED;
+	Tue,  2 Sep 2025 13:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820803;
-	bh=5z/ffheGT1FpNgrUKuioWJJ0fxMbd+7C+Oq3nERSoZg=;
+	s=korg; t=1756820806;
+	bh=bAeXueErPR9FkS1aVpvm+MMOl2yBOa/fjOiWjXbDGL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ux2ko6IrJfYENl35073lyFfBTwGqV4hsFRCNa/x4Qv4zlhNlM0iIwJtLNBhTgzH7E
-	 Y43N1knQrLR8vOY5T8B0SU5JSwUi74uznAuluATgPxyNZ9FIGUoE30leH70O3zub8a
-	 Z1sLyXLbHSpqc+YP97XbBGd3BBRjxpSKJMj7pmBM=
+	b=iAbbfz/BfllIGjxeaTYvYWAtfCWDX8J3HPvG5zM3tReajV2NZ6EVmZRJlVzSqGBf8
+	 Ysx/ACfbEwxMl66X9v3sRSpS3996sFtJXH+jw5fyvvuKMcdhFl5sYTkwdNIaR3pqyx
+	 VixO4td4+eTl7xk/5qQLrBTvqQH2U9qw+bn0KQBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 22/23] net: usb: qmi_wwan: add Telit Cinterion LE910C4-WWX new compositions
-Date: Tue,  2 Sep 2025 15:22:08 +0200
-Message-ID: <20250902131925.620168082@linuxfoundation.org>
+	intel-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	Sasha Levin <sashal@kernel.org>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 5.4 23/23] Revert "drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS"
+Date: Tue,  2 Sep 2025 15:22:09 +0200
+Message-ID: <20250902131925.659286447@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131924.720400762@linuxfoundation.org>
 References: <20250902131924.720400762@linuxfoundation.org>
@@ -50,104 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit e81a7f65288c7e2cfb7e7890f648e099fd885ab3 upstream.
+This reverts commit 2402adce8da4e7396b63b5ffa71e1fa16e5fe5c4 which is
+commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f upstream.
 
-Add the following Telit Cinterion LE910C4-WWX new compositions:
+The upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ("drm/dp:
+Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS") the
+reverted commit backported causes a regression, on one eDP panel at
+least resulting in display flickering, described in detail at the Link:
+below. The issue fixed by the upstream commit will need a different
+solution, revert the backport for now.
 
-0x1034: tty (AT) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  8 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1034 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=93f617e7
-C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x1037: tty (diag) + tty (Telit custom) + tty (AT) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 15 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1037 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=93f617e7
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x1038: tty (Telit custom) + tty (AT) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1038 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=93f617e7
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Link: https://patch.msgid.link/20250822091324.39558-1-Fabio.Porcedda@telit.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: Sasha Levin <sashal@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14558
+Signed-off-by: Imre Deak <imre.deak@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1319,6 +1319,9 @@ static const struct usb_device_id produc
- 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
- 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1034, 2)}, /* Telit LE910C4-WWX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1037, 4)}, /* Telit LE910C4-WWX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1038, 3)}, /* Telit LE910C4-WWX */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x103a, 0)}, /* Telit LE910C4-WWX */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1040, 2)},	/* Telit LE922A */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
+--- a/drivers/gpu/drm/drm_dp_helper.c
++++ b/drivers/gpu/drm/drm_dp_helper.c
+@@ -280,7 +280,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * We just have to do it before any DPCD access and hope that the
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+-	ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_LANE0_1_STATUS, buffer,
++	ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_DPCD_REV, buffer,
+ 				 1);
+ 	if (ret != 1)
+ 		goto out;
 
 
