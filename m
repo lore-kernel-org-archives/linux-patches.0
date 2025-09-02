@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DE83054EC;
-	Tue,  2 Sep 2025 13:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A529828AB1E;
+	Tue,  2 Sep 2025 13:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820569; cv=none; b=kWgZWzc6aRS5U5+dpfOusYndD3GncAqh3xMssH4eaQOWH7g5Cs9yMnvA+o+PngmaJUqGCwgv5jmQcfkXNA2i0PIf3000/lznx3D9PIbNioqbsIi9ttPOKpVLtkrUzQPioFPpPmAq5ATbz8boH5ZRi5l7+SRhckU21Rfx3E/vmiw=
+	t=1756820572; cv=none; b=kTDELwgy4+i0sTEWoRDTAIdrhJMVxRzdnLKZE73TQlqC6IeR0wMj+U2pNEzvLM+d3RlLTSXnlqSLwohO9Mmo4hVzC+JW8ybYVMY5wJryilrT6Ou2k5tgFuEm3VQiDARV8b9tBppznA5USfH9/9EZj2i/FmHQ2Bi2x0uVWl6XbnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820569; c=relaxed/simple;
-	bh=+27v3kEx0eBZ2CUl38QsIU5RnQp4UP3DwHAbh1PVsxw=;
+	s=arc-20240116; t=1756820572; c=relaxed/simple;
+	bh=nnoX/mQZ17ZeNXkexDp3yJdpjP2ih8/BXt4Jw+oIscc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6LCe61G2Rh5S6Z+iQyju5Om+Xk+HDMsd0sjZJuEdRCmOfD6uz7g+4ysZLa8FauqHlbxvd4EAksJfj0Yjx/sJ+KtR/VhBVSDas6+tRsExNYS/RFMj80BridyqGv5HSk3xScpUtCv1WEbFueUM3RfJxS5+j8RM7EBryZrzVtyTHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpFpaogd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLgQZL1eQWpD5wtZo6oserZkKtPkHPIPP+OI6KFkr/neBxQd8K+5OGx2mGqjFsXdfL73dqJWyHcNSMLIECGczosn1BSXry01QRTwLVfEsy69gBqqxbxT0QQK1ealyNqhJD0En5rAZfPgejRuf8cOU8WYYaw3+ZWQiQVYnd116cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USC9VXeg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpFpaogd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC814C4CEED;
-	Tue,  2 Sep 2025 13:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USC9VXeg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6AAC4CEED;
+	Tue,  2 Sep 2025 13:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820569;
-	bh=+27v3kEx0eBZ2CUl38QsIU5RnQp4UP3DwHAbh1PVsxw=;
+	s=korg; t=1756820572;
+	bh=nnoX/mQZ17ZeNXkexDp3yJdpjP2ih8/BXt4Jw+oIscc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpFpaogd0RsZdu6slRU55jemu8v+4Yo7urL/1RLQ7Jo5rJRsqp0x9E+UvURCt9Q2B
-	 ZjyEXkVMsmqHnSVT8ADprgvkm2bSvLGdM3IpcdpJfB9SI4aVcDll7AVZrY5IiPrVSD
-	 9WPwEft4VJikR/7I6eBNK9TbZLzpX6nLW3RY23T8=
+	b=USC9VXegILiSr0B80YbLWU+ar54aazYYxswwXs37WOy3Mty0VOZf0RCSJU+0eZekN
+	 +lL30PqTGqFQiv42ZcS1VtKkJRGLgARIVGUF4yxi/fyB/gjZK0+fgtnq+n8VCyc5kc
+	 /41QYPSF1I639ARIiisz3HPqW1pmyLzJUeUCMNS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Wu Guanghao <wuguanghao3@huawei.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 20/33] efivarfs: Fix slab-out-of-bounds in efivarfs_d_compare
-Date: Tue,  2 Sep 2025 15:21:38 +0200
-Message-ID: <20250902131927.846198690@linuxfoundation.org>
+	Thijs Raymakers <thijs@raymakers.nl>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 21/33] KVM: x86: use array_index_nospec with indices that come from guest
+Date: Tue,  2 Sep 2025 15:21:39 +0200
+Message-ID: <20250902131927.884915157@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
 References: <20250902131927.045875971@linuxfoundation.org>
@@ -52,77 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Thijs Raymakers <thijs@raymakers.nl>
 
-[ Upstream commit a6358f8cf64850f3f27857b8ed8c1b08cfc4685c ]
+commit c87bd4dd43a624109c3cc42d843138378a7f4548 upstream.
 
-Observed on kernel 6.6 (present on master as well):
+min and dest_id are guest-controlled indices. Using array_index_nospec()
+after the bounds checks clamps these values to mitigate speculative execution
+side-channels.
 
-  BUG: KASAN: slab-out-of-bounds in memcmp+0x98/0xd0
-  Call trace:
-   kasan_check_range+0xe8/0x190
-   __asan_loadN+0x1c/0x28
-   memcmp+0x98/0xd0
-   efivarfs_d_compare+0x68/0xd8
-   __d_lookup_rcu_op_compare+0x178/0x218
-   __d_lookup_rcu+0x1f8/0x228
-   d_alloc_parallel+0x150/0x648
-   lookup_open.isra.0+0x5f0/0x8d0
-   open_last_lookups+0x264/0x828
-   path_openat+0x130/0x3f8
-   do_filp_open+0x114/0x248
-   do_sys_openat2+0x340/0x3c0
-   __arm64_sys_openat+0x120/0x1a0
-
-If dentry->d_name.len < EFI_VARIABLE_GUID_LEN , 'guid' can become
-negative, leadings to oob. The issue can be triggered by parallel
-lookups using invalid filename:
-
-  T1			T2
-  lookup_open
-   ->lookup
-    simple_lookup
-     d_add
-     // invalid dentry is added to hash list
-
-			lookup_open
-			 d_alloc_parallel
-			  __d_lookup_rcu
-			   __d_lookup_rcu_op_compare
-			    hlist_bl_for_each_entry_rcu
-			    // invalid dentry can be retrieved
-			     ->d_compare
-			      efivarfs_d_compare
-			      // oob
-
-Fix it by checking 'guid' before cmp.
-
-Fixes: da27a24383b2 ("efivarfs: guid part of filenames are case-insensitive")
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Wu Guanghao <wuguanghao3@huawei.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thijs Raymakers <thijs@raymakers.nl>
+Cc: stable@vger.kernel.org
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 715062970f37 ("KVM: X86: Implement PV sched yield hypercall")
+Fixes: bdf7ffc89922 ("KVM: LAPIC: Fix pv ipis out-of-bounds access")
+Fixes: 4180bf1b655a ("KVM: X86: Implement "send IPI" hypercall")
+Link: https://lore.kernel.org/r/20250804064405.4802-1-thijs@raymakers.nl
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/efivarfs/super.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kvm/lapic.c |    2 ++
+ arch/x86/kvm/x86.c   |    7 +++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
-index 99d002438008b..124db520b2bd6 100644
---- a/fs/efivarfs/super.c
-+++ b/fs/efivarfs/super.c
-@@ -47,6 +47,10 @@ static int efivarfs_d_compare(const struct dentry *dentry,
- {
- 	int guid = len - EFI_VARIABLE_GUID_LEN;
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -613,6 +613,8 @@ static int __pv_send_ipi(unsigned long *
+ 	if (min > map->max_apic_id)
+ 		return 0;
  
-+	/* Parallel lookups may produce a temporary invalid filename */
-+	if (guid <= 0)
-+		return 1;
++	min = array_index_nospec(min, map->max_apic_id + 1);
 +
- 	if (name->len != len)
- 		return 1;
+ 	for_each_set_bit(i, ipi_bitmap,
+ 		min((u32)BITS_PER_LONG, (map->max_apic_id - min + 1))) {
+ 		if (map->phys_map[min + i]) {
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8923,8 +8923,11 @@ static void kvm_sched_yield(struct kvm_v
+ 	rcu_read_lock();
+ 	map = rcu_dereference(vcpu->kvm->arch.apic_map);
  
--- 
-2.50.1
-
+-	if (likely(map) && dest_id <= map->max_apic_id && map->phys_map[dest_id])
+-		target = map->phys_map[dest_id]->vcpu;
++	if (likely(map) && dest_id <= map->max_apic_id) {
++		dest_id = array_index_nospec(dest_id, map->max_apic_id + 1);
++		if (map->phys_map[dest_id])
++			target = map->phys_map[dest_id]->vcpu;
++	}
+ 
+ 	rcu_read_unlock();
+ 
 
 
