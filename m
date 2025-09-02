@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCEA3594B;
-	Tue,  2 Sep 2025 13:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F0730BF6E;
+	Tue,  2 Sep 2025 13:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820295; cv=none; b=AW1C2v7MGXi/UjzP2WrGQCKlSYTJAFFSjgUC/sHx1RHzSYG56ll3GGi84wtmUPri31ftLtxXDqUkscT5IdY7tq+An6HPllZesZWC6Lf4R3qR8mCVDz2YJy9qL/MLqzIkbeW0CaAv6vPbTihG635HULHXblr5ztn5ElU46mHnl5Y=
+	t=1756820299; cv=none; b=V3SeQYVJUbd0/8NAtaFtgktXWaKTmkiXtDEWrBiXSP55cLqCh7JF9RtFWfyNKWqoWRTHqnnK9ezCRIPvCt4ni+X78c2Y40wFNZPYB823qNpGVqBuk1RaVT0biYu8EMD+nfCrQ692a+XAZB4RNuHJm2JToLpz3IZaK7Ojriw3h1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820295; c=relaxed/simple;
-	bh=cjudG1obOq5P5gH7kbu2QcairVAvaPXEwafW40MmkIk=;
+	s=arc-20240116; t=1756820299; c=relaxed/simple;
+	bh=s7R4hvmyRtQyON2Y/lMgNRmQ2ifPMGIxMnMwQ9k+2Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YN4vxJAgsLTFEOVciVWL/6ht9THpCsSodd5yN75g5gaGr/Sw0EsVmdo919NBZ/RKkA2hzy4R0ZGPARxLUUwj/JzNo8q8kDHmblJrkCh/WenQ3XYfZ2UgYTOUYnXmi660Pa1cc1yubj5Cvxgg6OaVBxPoVcO52cd5tqrftsHNC8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKBEGWts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rpr9Z3fdLOuVn9JWiAd15Ze6cqhNwPW4DAum6+gf613jx2/dAjV+2sw4csP4d4/y6b+ev4xO8Je7yo6B+2nBGLuLrG/IFx5HBgX0QpZusfQHWSopaMLPEhp8hMnR8QUwDvBkK3p8yfkb8ZMYOutTyakk2qshJDPFu0DM+sxKC8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvr7kBjs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKBEGWts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5E3C4CEED;
-	Tue,  2 Sep 2025 13:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvr7kBjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D051DC4CEED;
+	Tue,  2 Sep 2025 13:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820294;
-	bh=cjudG1obOq5P5gH7kbu2QcairVAvaPXEwafW40MmkIk=;
+	s=korg; t=1756820298;
+	bh=s7R4hvmyRtQyON2Y/lMgNRmQ2ifPMGIxMnMwQ9k+2Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKBEGWtsxrkMPr4zMVyaqqfVLhKZ/rcNss/VTs1l6iFuGJva2jzrBmA9Ag57e3uG3
-	 6Ni+LSv3uHJ1Xb1GMT/Y2uDlBwVjviQ5vzKcMjfCHe3hHtaNtaNhYDCf5cma8yywsp
-	 Vvwgzsc2tRNtgn4e/NuMTCIuTmZmZYqIc/jI4vts=
+	b=rvr7kBjsRdr2w5V7tWCI/AEnpu6S8vVMVJ41yHE2XtTtOkimpTtT42zuEPGtRoeY7
+	 mUmoqextaNylCnVeMpT5l01BwXGGG5S7ytVwOfINiap/Su2FveSP99Jo/3qPY1Lkhq
+	 nVC+OtJQBYlufyFNjnK+9YhmN9PL+mfvh+bfaBYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 59/75] HID: multitouch: fix slab out-of-bounds access in mt_report_fixup()
-Date: Tue,  2 Sep 2025 15:21:11 +0200
-Message-ID: <20250902131937.431004340@linuxfoundation.org>
+Subject: [PATCH 6.6 60/75] HID: quirks: add support for Legion Go dual dinput modes
+Date: Tue,  2 Sep 2025 15:21:12 +0200
+Message-ID: <20250902131937.468189641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -51,75 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 0379eb8691b9c4477da0277ae0832036ca4410b4 upstream.
+commit 1f3214aae9f49faf495f3836216afbc6c5400b2e upstream.
 
-A malicious HID device can trigger a slab out-of-bounds during
-mt_report_fixup() by passing in report descriptor smaller than
-607 bytes. mt_report_fixup() attempts to patch byte offset 607
-of the descriptor with 0x25 by first checking if byte offset
-607 is 0x15 however it lacks bounds checks to verify if the
-descriptor is big enough before conducting this check. Fix
-this bug by ensuring the descriptor size is at least 608
-bytes before accessing it.
+The Legion Go features detachable controllers which support a dual
+dinput mode. In this mode, the controllers appear under a single HID
+device with two applications.
 
-Below is the KASAN splat after the out of bounds access happens:
+Currently, both controllers appear under the same event device, causing
+their controls to be mixed up. This patch separates the two so that
+they can be used independently.
 
-[   13.671954] ==================================================================
-[   13.672667] BUG: KASAN: slab-out-of-bounds in mt_report_fixup+0x103/0x110
-[   13.673297] Read of size 1 at addr ffff888103df39df by task kworker/0:1/10
-[   13.673297]
-[   13.673297] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Not tainted 6.15.0-00005-gec5d573d83f4-dirty #3
-[   13.673297] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/04
-[   13.673297] Call Trace:
-[   13.673297]  <TASK>
-[   13.673297]  dump_stack_lvl+0x5f/0x80
-[   13.673297]  print_report+0xd1/0x660
-[   13.673297]  kasan_report+0xe5/0x120
-[   13.673297]  __asan_report_load1_noabort+0x18/0x20
-[   13.673297]  mt_report_fixup+0x103/0x110
-[   13.673297]  hid_open_report+0x1ef/0x810
-[   13.673297]  mt_probe+0x422/0x960
-[   13.673297]  hid_device_probe+0x2e2/0x6f0
-[   13.673297]  really_probe+0x1c6/0x6b0
-[   13.673297]  __driver_probe_device+0x24f/0x310
-[   13.673297]  driver_probe_device+0x4e/0x220
-[   13.673297]  __device_attach_driver+0x169/0x320
-[   13.673297]  bus_for_each_drv+0x11d/0x1b0
-[   13.673297]  __device_attach+0x1b8/0x3e0
-[   13.673297]  device_initial_probe+0x12/0x20
-[   13.673297]  bus_probe_device+0x13d/0x180
-[   13.673297]  device_add+0xe3a/0x1670
-[   13.673297]  hid_add_device+0x31d/0xa40
-[...]
+In addition, the latest firmware update for the Legion Go swaps the IDs
+to the ones used by the Legion Go 2, so add those IDs as well.
 
-Fixes: c8000deb6836 ("HID: multitouch: Add support for GT7868Q")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+[jkosina@suse.com: improved shortlog]
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hid/hid-ids.h    |    2 ++
+ drivers/hid/hid-quirks.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1448,6 +1448,14 @@ static __u8 *mt_report_fixup(struct hid_
- 	if (hdev->vendor == I2C_VENDOR_ID_GOODIX &&
- 	    (hdev->product == I2C_DEVICE_ID_GOODIX_01E8 ||
- 	     hdev->product == I2C_DEVICE_ID_GOODIX_01E9)) {
-+		if (*size < 608) {
-+			dev_info(
-+				&hdev->dev,
-+				"GT7868Q fixup: report descriptor is only %u bytes, skipping\n",
-+				*size);
-+			return rdesc;
-+		}
-+
- 		if (rdesc[607] == 0x15) {
- 			rdesc[607] = 0x25;
- 			dev_info(
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -818,6 +818,8 @@
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019	0x6019
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_602E	0x602e
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6093	0x6093
++#define USB_DEVICE_ID_LENOVO_LEGION_GO_DUAL_DINPUT	0x6184
++#define USB_DEVICE_ID_LENOVO_LEGION_GO2_DUAL_DINPUT	0x61ed
+ 
+ #define USB_VENDOR_ID_LETSKETCH		0x6161
+ #define USB_DEVICE_ID_WP9620N		0x4d15
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -124,6 +124,8 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_MOUSEPEN_I608X_V2), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_PENSKETCH_T609A), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LABTEC, USB_DEVICE_ID_LABTEC_ODDOR_HANDBRAKE), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_LEGION_GO_DUAL_DINPUT), HID_QUIRK_MULTI_INPUT },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_LEGION_GO2_DUAL_DINPUT), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_OPTICAL_USB_MOUSE_600E), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_608D), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019), HID_QUIRK_ALWAYS_POLL },
 
 
