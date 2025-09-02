@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C4D41A8F;
-	Tue,  2 Sep 2025 13:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028412DFA39;
+	Tue,  2 Sep 2025 13:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820709; cv=none; b=mucBig/YDEaIpuTwByba2k26arfo8Af2sYWtG86ReNTV1JACdxV30gNsANQbCcIggEDVdFI2+JmzrOj8W79xYtoac3VG9tDOGvleS3thoZDmB4IbhzBMDJrDqBsPZA7kAFOBUCDcggeTnZS+8ByT3QujNb/m0nLC/jsf/mMtIGc=
+	t=1756820713; cv=none; b=Ra45TPLtIZtfE36tjPSehkfTOWB9huRE580sBJc1YJjq1pW/P2LHnhD+fQIrXlki6tvzz0PniZQ8v37fMxP2DkSM+n3sdMGXhM+fa/9mBRiUsiWiv0w3H9dRQkbsB4jWaLAgYp2id4mBfGwAanKbe6SH+ach7s43/mmRtbhcYKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820709; c=relaxed/simple;
-	bh=eQq2nAFZTeJhbDPDIK8nMD490iWJHQYNEtytL05rdMg=;
+	s=arc-20240116; t=1756820713; c=relaxed/simple;
+	bh=KXVzDdYviA2Y8tVxc9RQkNIL8+L9yidOnhmHTdyqj+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGs0aupkUhst4dBRp4ivaRDwermWB/nr28uhDpyHeVVB6roLUKku1F29Fm97RSLGpLvsQY+6IOysGRdWOFON3zjbPf6VYvbiNMvc1vkr9lvuxfp0GHwQm/oMaxLiCyWXgJFGmVXP8n5OLM29K+uH0DDVNJNs8oJ2CU73eLNpWJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyBNLuGJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iTIoSjVaPeu5C10COYC4sU6NFcKITRc6jTG4jfHbg2Wsibb/haJ49Orq+R6dFF/nnXO8VNJJZ9x1oVTQu21CD33JU6WPsrbtrGEFmrPXgRUtIU3ixz8+leGgkepl1Jat0gXy0TGBwxaSc7+cvBQuKl0WFE5TqcEi30vgwkk6E40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swf70X3d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyBNLuGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABA6C4CEF7;
-	Tue,  2 Sep 2025 13:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swf70X3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB44C4CEF4;
+	Tue,  2 Sep 2025 13:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820709;
-	bh=eQq2nAFZTeJhbDPDIK8nMD490iWJHQYNEtytL05rdMg=;
+	s=korg; t=1756820712;
+	bh=KXVzDdYviA2Y8tVxc9RQkNIL8+L9yidOnhmHTdyqj+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyBNLuGJ0CmCTfvf/2kaTnPRehoW4JSV8PuPvAGJqsSCbH1BZN3dQ9xRWOFrKnBbP
-	 2WniQ2tdylJJ3a5pM5Td+SoxIvlbnk5gEMWdgLJzeaYkTz5FaAWoWrgs3O7orOaSRm
-	 D9gjbvuIti7FE/h/LivRUz39DnFfxWHWunRWwozo=
+	b=swf70X3dlUI6c7gwrLXiGsHT7htHak8Gwso8BXth20yNtRCKBO0geAwDYa0gJ+vzZ
+	 0sZSxWU+9vSXYYH7jaHxpqHid2zUhC3AKcqCBCWemnRBk7Es9+Je8l5H1fRUELsczO
+	 T6g1906NwNKjsYar549DpOWMVs3+Q1LB0L7Q+JOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	intel-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	Sasha Levin <sashal@kernel.org>,
-	Imre Deak <imre.deak@intel.com>
-Subject: [PATCH 5.10 29/34] Revert "drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS"
-Date: Tue,  2 Sep 2025 15:21:55 +0200
-Message-ID: <20250902131927.773792816@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Paul Olaru <paul.olaru@oss.nxp.com>,
+	Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
+Subject: [PATCH 5.10 30/34] ASoC: Intel: bxt_da7219_max98357a: shrink platform_id below 20 characters
+Date: Tue,  2 Sep 2025 15:21:56 +0200
+Message-ID: <20250902131927.813850406@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -46,44 +48,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-This reverts commit 89d17a2d89a83c5b7643ca934651a3f9229e4734 which is
-commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f upstream.
+commit 24e46fb811e991f56d5694b10ae7ceb8d2b8c846 upstream.
 
-The upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ("drm/dp:
-Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS") the
-reverted commit backported causes a regression, on one eDP panel at
-least resulting in display flickering, described in detail at the Link:
-below. The issue fixed by the upstream commit will need a different
-solution, revert the backport for now.
+Sparse throwns the following warnings:
 
-Cc: intel-gfx@lists.freedesktop.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: Sasha Levin <sashal@kernel.org>
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14558
-Signed-off-by: Imre Deak <imre.deak@intel.com>
+sound/soc/intel/boards/bxt_da7219_max98357a.c:843:19: error: too long
+initializer-string for array of char(no space for nul char)
+
+sound/soc/intel/boards/bxt_da7219_max98357a.c:844:19: error: too long
+initializer-string for array of char(no space for nul char)
+
+sound/soc/intel/boards/bxt_da7219_max98357a.c:845:19: error: too long
+initializer-string for array of char(no space for nul char)
+
+Fix by using the 'mx' acronyn for Maxim
+
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Paul Olaru <paul.olaru@oss.nxp.com>
+Reviewed-by: Guennadi Liakhovetski <guennadi.liakhovetski@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Link: https://lore.kernel.org/r/20210511213707.32958-5-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Michał Górny <mgorny@gentoo.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_dp_helper.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/bxt_da7219_max98357a.c     |   12 ++++++------
+ sound/soc/intel/common/soc-acpi-intel-bxt-match.c |    2 +-
+ sound/soc/intel/common/soc-acpi-intel-cml-match.c |    2 +-
+ sound/soc/intel/common/soc-acpi-intel-glk-match.c |    2 +-
+ 4 files changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/drm_dp_helper.c
-+++ b/drivers/gpu/drm/drm_dp_helper.c
-@@ -299,7 +299,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
- 	 * monitor doesn't power down exactly after the throw away read.
- 	 */
- 	if (!aux->is_remote) {
--		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_LANE0_1_STATUS,
-+		ret = drm_dp_dpcd_access(aux, DP_AUX_NATIVE_READ, DP_DPCD_REV,
- 					 buffer, 1);
- 		if (ret != 1)
- 			goto out;
+--- a/sound/soc/intel/boards/bxt_da7219_max98357a.c
++++ b/sound/soc/intel/boards/bxt_da7219_max98357a.c
+@@ -840,9 +840,9 @@ static int broxton_audio_probe(struct pl
+ }
+ 
+ static const struct platform_device_id bxt_board_ids[] = {
+-	{ .name = "bxt_da7219_max98357a" },
+-	{ .name = "glk_da7219_max98357a" },
+-	{ .name = "cml_da7219_max98357a" },
++	{ .name = "bxt_da7219_mx98357a" },
++	{ .name = "glk_da7219_mx98357a" },
++	{ .name = "cml_da7219_mx98357a" },
+ 	{ }
+ };
+ 
+@@ -866,6 +866,6 @@ MODULE_AUTHOR("Naveen Manohar <naveen.m@
+ MODULE_AUTHOR("Mac Chiang <mac.chiang@intel.com>");
+ MODULE_AUTHOR("Brent Lu <brent.lu@intel.com>");
+ MODULE_LICENSE("GPL v2");
+-MODULE_ALIAS("platform:bxt_da7219_max98357a");
+-MODULE_ALIAS("platform:glk_da7219_max98357a");
+-MODULE_ALIAS("platform:cml_da7219_max98357a");
++MODULE_ALIAS("platform:bxt_da7219_mx98357a");
++MODULE_ALIAS("platform:glk_da7219_mx98357a");
++MODULE_ALIAS("platform:cml_da7219_mx98357a");
+--- a/sound/soc/intel/common/soc-acpi-intel-bxt-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-bxt-match.c
+@@ -56,7 +56,7 @@ struct snd_soc_acpi_mach snd_soc_acpi_in
+ 	},
+ 	{
+ 		.id = "DLGS7219",
+-		.drv_name = "bxt_da7219_max98357a",
++		.drv_name = "bxt_da7219_mx98357a",
+ 		.fw_filename = "intel/dsp_fw_bxtn.bin",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &bxt_codecs,
+--- a/sound/soc/intel/common/soc-acpi-intel-cml-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-cml-match.c
+@@ -54,7 +54,7 @@ struct snd_soc_acpi_mach snd_soc_acpi_in
+ 	},
+ 	{
+ 		.id = "DLGS7219",
+-		.drv_name = "cml_da7219_max98357a",
++		.drv_name = "cml_da7219_mx98357a",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &max98357a_spk_codecs,
+ 		.sof_fw_filename = "sof-cml.ri",
+--- a/sound/soc/intel/common/soc-acpi-intel-glk-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-glk-match.c
+@@ -24,7 +24,7 @@ struct snd_soc_acpi_mach snd_soc_acpi_in
+ 	},
+ 	{
+ 		.id = "DLGS7219",
+-		.drv_name = "glk_da7219_max98357a",
++		.drv_name = "glk_da7219_mx98357a",
+ 		.fw_filename = "intel/dsp_fw_glk.bin",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &glk_codecs,
 
 
