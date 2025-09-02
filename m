@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9E12DECDE;
-	Tue,  2 Sep 2025 13:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340662DD5EB;
+	Tue,  2 Sep 2025 13:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820597; cv=none; b=uaa39pkWIXOAQVq+kLaFDWIfwAO+YoESxoe2ryxwLmrenl17Uv8R0+SSmnHoMxYYv6ixOXVMmbE9lq1/l4y8CCKIMVI+g1pmrqEWqiabJJfinNRV/Cp2TKyWC6hdW713fUIqV6vC6hTgStxqnp+UoSjz8l8EsAcoF6hhw7qd0fM=
+	t=1756820600; cv=none; b=h3RrP2nVZiZxjYPnJ9KL4NWrBklRTBfbT2PFg2CzzhmKdfI+B9rT+22UdXRsaiURm8STf18xRA6K7CBrG66hasZ12BzLjhcFOSOWYdU3tqr4HSnl3K5dav/QHqUgo9TN8dZdguG1GgCg6WiXdtS7J874bt4xTPjABbIeSJ12fW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820597; c=relaxed/simple;
-	bh=opFnhu6OwM7Hpk3UJqwad9COVEu4P1iJfd8FfSXvYr8=;
+	s=arc-20240116; t=1756820600; c=relaxed/simple;
+	bh=kKzmVyuqRiooXU8s+twRwimCrC27jgVMgE3Aw8zGLm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ne92UEhtPxZsYpGvJLJhJywMqybYfjNrDetGPl2/gItWwuVKwGOvN6N5IQ3jm/PdwXrFTNe9sZzQ/E/6JJvQ4FhD0KPql+VgwbE0fWF/mi7GzBwcqvWVGlZz8gMbWly227TLpOkrwAiIV+XgP/gaK1W+5f01tx6Z0F35ub4kymU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbPZJbTx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oNdW6qXv48GzfKsUyuzIuLqu9tH1d40Cr/WkK9cBlwtZPc+PeG8TYMILEz2TrhRNn15U4xLXjhX7IDRJvRBn1br/EXhTM0il4rzuWZLnvZ0GH+MV0O4XjR7bJ3M8Au82Umq63c0+9D6X2iTqSyF0g01JPzUEzjpNGBvlYYO7zH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnPnHBvA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbPZJbTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D83C4CEED;
-	Tue,  2 Sep 2025 13:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnPnHBvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED29FC4CEED;
+	Tue,  2 Sep 2025 13:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820596;
-	bh=opFnhu6OwM7Hpk3UJqwad9COVEu4P1iJfd8FfSXvYr8=;
+	s=korg; t=1756820599;
+	bh=kKzmVyuqRiooXU8s+twRwimCrC27jgVMgE3Aw8zGLm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbPZJbTxg6FV7L829toCo/+Q0NhUJdur5aNaKLl9jmdi4ZW+ZJbD/sLAiv8GuMBU5
-	 IZCfhV5BvvV2QGWW+tTh8s0Fi2K3ZmoAqopiTiLFsyJqUVC4zyriTRuGvQsN+5TnBy
-	 yH6mTeejZ65DXRbt/SQBtejmVK3OnEfCarsaOaJM=
+	b=SnPnHBvAzjruk/96KThJ0AkQgu+hmIlgpNr8xxHtZZa7PW/u+yDcOBfz+E7+SEko0
+	 bviGemjVlgKkAhlDjVHALfEI0GT8spoZUyxoI3YoNhj9fD6u4u3XACX2HAb7+XU3wV
+	 Bni7rp7H3bUJ5LKcb+TgtnU6A3IA1OSATLnnFLTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 5.15 27/33] dma/pool: Ensure DMA_DIRECT_REMAP allocations are decrypted
-Date: Tue,  2 Sep 2025 15:21:45 +0200
-Message-ID: <20250902131928.126143244@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 28/33] net: usb: qmi_wwan: add Telit Cinterion LE910C4-WWX new compositions
+Date: Tue,  2 Sep 2025 15:21:46 +0200
+Message-ID: <20250902131928.163805865@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
 References: <20250902131927.045875971@linuxfoundation.org>
@@ -51,48 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shanker Donthineni <sdonthineni@nvidia.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 89a2d212bdb4bc29bed8e7077abe054b801137ea upstream.
+commit e81a7f65288c7e2cfb7e7890f648e099fd885ab3 upstream.
 
-When CONFIG_DMA_DIRECT_REMAP is enabled, atomic pool pages are
-remapped via dma_common_contiguous_remap() using the supplied
-pgprot. Currently, the mapping uses
-pgprot_dmacoherent(PAGE_KERNEL), which leaves the memory encrypted
-on systems with memory encryption enabled (e.g., ARM CCA Realms).
+Add the following Telit Cinterion LE910C4-WWX new compositions:
 
-This can cause the DMA layer to fail or crash when accessing the
-memory, as the underlying physical pages are not configured as
-expected.
+0x1034: tty (AT) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  8 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1034 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fix this by requesting a decrypted mapping in the vmap() call:
-pgprot_decrypted(pgprot_dmacoherent(PAGE_KERNEL))
+0x1037: tty (diag) + tty (Telit custom) + tty (AT) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 15 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1037 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-This ensures that atomic pool memory is consistently mapped
-unencrypted.
+0x1038: tty (Telit custom) + tty (AT) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1038 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250811181759.998805-1-sdonthineni@nvidia.com
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Link: https://patch.msgid.link/20250822091324.39558-1-Fabio.Porcedda@telit.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/pool.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/dma/pool.c
-+++ b/kernel/dma/pool.c
-@@ -102,8 +102,8 @@ static int atomic_pool_expand(struct gen
- 
- #ifdef CONFIG_DMA_DIRECT_REMAP
- 	addr = dma_common_contiguous_remap(page, pool_size,
--					   pgprot_dmacoherent(PAGE_KERNEL),
--					   __builtin_return_address(0));
-+			pgprot_decrypted(pgprot_dmacoherent(PAGE_KERNEL)),
-+			__builtin_return_address(0));
- 	if (!addr)
- 		goto free_page;
- #else
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1358,6 +1358,9 @@ static const struct usb_device_id produc
+ 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
+ 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1034, 2)}, /* Telit LE910C4-WWX */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1037, 4)}, /* Telit LE910C4-WWX */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1038, 3)}, /* Telit LE910C4-WWX */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x103a, 0)}, /* Telit LE910C4-WWX */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1040, 2)},	/* Telit LE922A */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
 
 
