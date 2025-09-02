@@ -1,222 +1,186 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE6B469D
-	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 06:58:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473BD27BF7C
+	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 08:29:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756796335; cv=none; b=FtUEg/R6/qWaBkCee5EJBECSd1l9rg6DWt339IBHx5k4iDzwIuWg691Fh7lQ+gYqaPUHoeRksh0N3ZleY5vEQA3Ns8CHq7yv0AzD0NjoF8kQqAeUYFDSt7cC0zyUGnhOiYn+Pei2GuZi1I/seKmo3mBXpjffNbLgJUn4NlZzkZA=
+	t=1756801774; cv=none; b=mFllF1hkaaHZef5dMXVXXWVnFjApbAUWmVIV7MSkAMm/P3TBF7B/MzU7hdvvp1LUIBIbRkJUolIJRsgYbQx5jtkvTyja8vQRW3IA7ovdzB0iFUHU3bYe0qcxrH34krUgZ7Sd+6xmhwD+5LSCHo+dx7OZYiQFGV5YIhH/hImQ1U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756796335; c=relaxed/simple;
-	bh=FxyB8KmeO2NsdMIYJ6uPIuHJnw18rr2QCLh3a8/xg20=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TZuutEqrVZnpxbJSANtLJcKHVI+mUv0WJp3PBA0lhdr54Qp6vfV7n/JwO3FcJCCWFhVjU0bHd7KbJxS5DgeaEvevjLEuhTk+OXHwu1PKCFIUWgi6JfaQFsGYRMFx1A1JU8oCsMzjiN7t2EjamZoasL3bM6FqMk/T5SpGNrL5naM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LydOJL9y; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756801774; c=relaxed/simple;
+	bh=mz6MChWAhIh1fUS9YL3zMQPODRH3xmYPsKPrGEnKmVE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=U8JrZ84OF1cj5n32ojDFb4K6wHTFTR+HsVrZMdt9FMrkCyxBChrKMEUah5fBC5nBJ+peu7Jzank/FPGGaLVPsYPoXsBz33hxqaxAHl4TvTtjS6QN2TSvPFjwFx8aY5xRTvexjf8NXouJ6MZ2A/PBGxUik1cjloADQ6X/cFVE7/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=2SHWmy4p; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LydOJL9y"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-61cd6089262so7990952a12.3
-        for <patches@lists.linux.dev>; Mon, 01 Sep 2025 23:58:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="2SHWmy4p"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-45b920e0c25so7074225e9.3
+        for <patches@lists.linux.dev>; Tue, 02 Sep 2025 01:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756796332; x=1757401132; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CcgGJ/OYvj+YieT2Mj26UykE9RBcjh8dHLuyKc8kxcQ=;
-        b=LydOJL9yZCjq+L4FRLB9xATfwNhmWPudpg//KLfzRBjchu/+lPr5um1km1g1RIaJVm
-         yTv96xHbSvh0/hHigjjRGHjgrXnXripstFgAtSN6yowRstuDN2Rae+Zd3tpZFSB0awXr
-         F/DyuE1bpoFF9IaJWwQ9tUQBXVREkAb9EtbaD4YZaWCLvszdWN0umIvm+dOTmzLrpTco
-         yA1TFN9IwlohDoygz5TYKXKiJhHpCb7YabmWJxosQyH2vfmNTK0es65NZt9dF3jmMSsQ
-         BPTYZqPNE5y0bXjWivD1bA/QN8VdA86gjEDFmVF5bwPGSKE4vpQ29hqeaW27YW2Dm7uL
-         hL4Q==
+        d=google.com; s=20230601; t=1756801771; x=1757406571; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fMrVj7jAgdBMUg6bB9EkBvTIBFRbh5mF4KGnDnI9ZoQ=;
+        b=2SHWmy4pp2u6kkyUxIJBAlOCYOIs0yYV9cF8w287InDpw0WGwDufff/enapxg4Y7iH
+         yw5kcO49dY7XQE12+ynhipCCLpd7pspDkp3Nd7vvkT7h2BmHKeme+0itW/P6X6hgZnJZ
+         5kppnA8Z8/b3ac62qPuhyuZTKJwFjUJN70RuyQWLNAtQMDTT9GLaKrEfBdWgsF6QjLQd
+         nQ8LD9x01mECqEZS1S1ASpfeZ43KeX0tc5MJ0fJ5s99GXq4/MMkRpj/TQmJgBMbWWxIN
+         3GaGutxkZrqHvuT1HZzegvHNrGR/pPLIuLpd+L4nzYHests3IMZug4w2bHNSn4Q34vVB
+         Z3sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756796332; x=1757401132;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CcgGJ/OYvj+YieT2Mj26UykE9RBcjh8dHLuyKc8kxcQ=;
-        b=JknvMZVyCZvZAAV9SekohNhlXnSqRn+FgoelqiuF3KQMIpsmhGSsYDjDrTuW84D2AI
-         28Mbma2zT0NID4pupTslyxhyRoY3tpO1QGC7N2ofHHFWw3FaRTU+xv21CbOqlzZ9p66B
-         jdR4PwYSJimeP2nAO8boNxuFfcXbU8o86DDqiOuMIxPEkMJkqnvdnFghtxX8LMCtnZlT
-         cuHKaUsWfvdGHFY+elaPih2pzGp7d52EcZ8BaLVluWbLNhSsU35aUvdDCPmIkA2DUVPE
-         YROOww1AA7/oPWNNQei/U2H45VkL9q30bhltGrYGpyIr3ogiDgU/LjY0xmfbJfR5KVrb
-         +Tfg==
-X-Forwarded-Encrypted: i=1; AJvYcCXVBw+a0/mzt6NyhsxL0a18Q6xIke0R8Cwfj6Y5nD2/s6R2wOFAsR9ArllSJ3CyQsYw+ntszMKo@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy0YwXNJX63RcbBu5HrYc7x7JTxq3zicUdO8gZTMXd0TaELGMa/
-	ZPcHvNq+QRJft7lQubsYlVWk26WymOQrm/nGjAoS1ine1H9cGC/pJ+d8rPYIrlszKf+oAu6+95O
-	7bu1sjpEU4fdmegvjC51Lwm43lwykwLc=
-X-Gm-Gg: ASbGnctEIO5EL6XvDLXoRGhkFnzHt2IHptAzxjtW4s4omRY1nPQEbrF6cNQwwTub7BX
-	DPevZD/vsc7tJZWoj66utS9Xy5ACOVPGtl7SgjO9h22XSR2we8jMwARSdzVEfMREo7Exj9ymtoG
-	9D9pxlimPMixswjo4cldGYR/M2cp3JuJEBmjxowNDqn6GaNIgu2heRIkGQtz72wbNktFn35QKpj
-	xdf/VOrORigJXZgFA==
-X-Google-Smtp-Source: AGHT+IHtxRdy/cLBH9rL18FC84yByLcaoc43KzkNVlknKUEcHp6Ul3SE5+4+xVW28Ki8sLRZg6VPCoBHV2tJefNOaOg=
-X-Received: by 2002:a05:6402:274d:b0:61e:95b0:c95d with SMTP id
- 4fb4d7f45d1cf-61e95b11582mr5639504a12.19.1756796331930; Mon, 01 Sep 2025
- 23:58:51 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1756801771; x=1757406571;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fMrVj7jAgdBMUg6bB9EkBvTIBFRbh5mF4KGnDnI9ZoQ=;
+        b=Z1t2LvTA3oBLWNF3unfqhUJp4QTMZ3EzZ9Y89tWGkL4olJLDkMPHYw4xpu351SxL2q
+         5ms+nMsp8BBsnLAj4VImbL1E3hOJWDYXHKMp/Ho/t0q0dyDKiFMpAsk5KVTRRI8Cn2iv
+         6mg/blvu+LJXg2yHnoarAdjyBNtflsasMCZ+LP7k23MggIl9gGA4sOeKhTgY0DQT6KWU
+         vZf2J3GRiVSXA/72A26P4+4JBv3UH2ZP6TYW7Pp3+jpzN0Gf4nqTKY+VPJLn2s7nvI1Z
+         4JD0JP+KEd2Z7biC5DurRoDdqFOQv5QWyQZeblBxZ1aCgRkV9xqZeDIf40tCkVszEUUN
+         a5ww==
+X-Forwarded-Encrypted: i=1; AJvYcCXWsombWdTiVTaOPng4bhj00NbMYRVlaNFr0E0b9X8iCfZ2t8KQzAKHm+qXGCMKuH+WIqv//PNG@lists.linux.dev
+X-Gm-Message-State: AOJu0YyfiJuAbtlJFc5Fov56I4M7LaCElB5AwgyN6j6BrOoDdhCXZKP9
+	gpfVx05RNIbBmIM33hMG9i7ynaUOoBNMYVXWqzvl+bYFw8JtvDNUSaODqrDRoCYHTfX0eEiiSNn
+	EXG/UN6NBqVf75VzBxQ==
+X-Google-Smtp-Source: AGHT+IH+wbAKMP4pet3Iec/jg+z/+uHyKtEPnwn80rzGG04HiSXVcEQZ2VRn1KYTtbbuXX26NiHOYJCKfauiaaw=
+X-Received: from wrbbs17.prod.google.com ([2002:a05:6000:711:b0:3b7:8b93:59f4])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6000:1a8c:b0:3c9:24f5:4711 with SMTP id ffacd0b85a97d-3d1def66f6dmr8162944f8f.43.1756801770707;
+ Tue, 02 Sep 2025 01:29:30 -0700 (PDT)
+Date: Tue, 2 Sep 2025 08:29:29 +0000
+In-Reply-To: <20250901-shrimp-define-9d99cc2a012a@spud>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20250901231457.1179748-1-rdunlap@infradead.org>
-In-Reply-To: <20250901231457.1179748-1-rdunlap@infradead.org>
-From: Amir Goldstein <amir73il@gmail.com>
-Date: Tue, 2 Sep 2025 08:58:40 +0200
-X-Gm-Features: Ac12FXz70y9An6zSkD9I5T6JyN4lQ-aLSWISxg8ShazAXP3F9zmY8IGf3i4xCAk
-Message-ID: <CAOQ4uxjXvYBsW1Nb2HKaoUg1qi8Pkq1XKtQEbnAvMUGcp7LrZA@mail.gmail.com>
-Subject: Re: [PATCH v2] uapi/fcntl: define RENAME_* and AT_RENAME_* macros
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-fsdevel@vger.kernel.org, patches@lists.linux.dev, 
-	Jeff Layton <jlayton@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
-	Alexander Aring <alex.aring@gmail.com>, Josef Bacik <josef@toxicpanda.com>, 
-	Aleksa Sarai <cyphar@cyphar.com>, Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
-	Matthew Wilcox <willy@infradead.org>, David Howells <dhowells@redhat.com>, linux-api@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <20250408220311.1033475-1-ojeda@kernel.org> <20250901-shrimp-define-9d99cc2a012a@spud>
+Message-ID: <aLaq6TpUtLkqHg_o@google.com>
+Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
+From: Alice Ryhl <aliceryhl@google.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	"=?utf-8?B?QmrDtnJu?= Roy Baron" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
+	Andreas Hindborg <a.hindborg@kernel.org>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	Alexander Potapenko <glider@google.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
+	Dmitry Vyukov <dvyukov@google.com>, Vincenzo Frascino <vincenzo.frascino@arm.com>, 
+	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Matthew Maurer <mmaurer@google.com>, Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
 
-On Tue, Sep 2, 2025 at 1:14=E2=80=AFAM Randy Dunlap <rdunlap@infradead.org>=
- wrote:
->
-> Define the RENAME_* and AT_RENAME_* macros exactly the same as in
-> recent glibc <stdio.h> so that duplicate definition build errors in
-> both samples/watch_queue/watch_test.c and samples/vfs/test-statx.c
-> no longer happen. When they defined in exactly the same way in
-> multiple places, the build errors are prevented.
->
-> Defining only the AT_RENAME_* macros is not sufficient since they
-> depend on the RENAME_* macros, which may not be defined when the
-> AT_RENAME_* macros are used.
->
-> Build errors being fixed:
->
-> for samples/vfs/test-statx.c:
->
-> In file included from ../samples/vfs/test-statx.c:23:
-> usr/include/linux/fcntl.h:159:9: warning: =E2=80=98AT_RENAME_NOREPLACE=E2=
-=80=99 redefined
->   159 | #define AT_RENAME_NOREPLACE     0x0001
-> In file included from ../samples/vfs/test-statx.c:13:
-> /usr/include/stdio.h:171:10: note: this is the location of the previous d=
-efinition
->   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> usr/include/linux/fcntl.h:160:9: warning: =E2=80=98AT_RENAME_EXCHANGE=E2=
-=80=99 redefined
->   160 | #define AT_RENAME_EXCHANGE      0x0002
-> /usr/include/stdio.h:173:10: note: this is the location of the previous d=
-efinition
->   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> usr/include/linux/fcntl.h:161:9: warning: =E2=80=98AT_RENAME_WHITEOUT=E2=
-=80=99 redefined
->   161 | #define AT_RENAME_WHITEOUT      0x0004
-> /usr/include/stdio.h:175:10: note: this is the location of the previous d=
-efinition
->   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
->
-> for samples/watch_queue/watch_test.c:
->
-> In file included from usr/include/linux/watch_queue.h:6,
->                  from ../samples/watch_queue/watch_test.c:19:
-> usr/include/linux/fcntl.h:159:9: warning: =E2=80=98AT_RENAME_NOREPLACE=E2=
-=80=99 redefined
->   159 | #define AT_RENAME_NOREPLACE     0x0001
-> In file included from ../samples/watch_queue/watch_test.c:11:
-> /usr/include/stdio.h:171:10: note: this is the location of the previous d=
-efinition
->   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> usr/include/linux/fcntl.h:160:9: warning: =E2=80=98AT_RENAME_EXCHANGE=E2=
-=80=99 redefined
->   160 | #define AT_RENAME_EXCHANGE      0x0002
-> /usr/include/stdio.h:173:10: note: this is the location of the previous d=
-efinition
->   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> usr/include/linux/fcntl.h:161:9: warning: =E2=80=98AT_RENAME_WHITEOUT=E2=
-=80=99 redefined
->   161 | #define AT_RENAME_WHITEOUT      0x0004
-> /usr/include/stdio.h:175:10: note: this is the location of the previous d=
-efinition
->   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
->
-> Fixes: b4fef22c2fb9 ("uapi: explain how per-syscall AT_* flags should be =
-allocated")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> ---
-> Cc: Amir Goldstein <amir73il@gmail.com>
-> Cc: Jeff Layton <jlayton@kernel.org>
-> Cc: Chuck Lever <chuck.lever@oracle.com>
-> Cc: Alexander Aring <alex.aring@gmail.com>
-> Cc: Josef Bacik <josef@toxicpanda.com>
-> Cc: Aleksa Sarai <cyphar@cyphar.com>
-> Cc: Jan Kara <jack@suse.cz>
-> Cc: Christian Brauner <brauner@kernel.org>
-> Cc: Matthew Wilcox <willy@infradead.org>
-> Cc: David Howells <dhowells@redhat.com>
-> CC: linux-api@vger.kernel.org
-> To: linux-fsdevel@vger.kernel.org
->
->  include/uapi/linux/fcntl.h |    9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> --- linux-next-20250819.orig/include/uapi/linux/fcntl.h
-> +++ linux-next-20250819/include/uapi/linux/fcntl.h
-> @@ -156,9 +156,12 @@
->   */
->
->  /* Flags for renameat2(2) (must match legacy RENAME_* flags). */
-> -#define AT_RENAME_NOREPLACE    0x0001
-> -#define AT_RENAME_EXCHANGE     0x0002
-> -#define AT_RENAME_WHITEOUT     0x0004
-> +# define RENAME_NOREPLACE (1 << 0)
-> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> +# define RENAME_EXCHANGE (1 << 1)
-> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> +# define RENAME_WHITEOUT (1 << 2)
-> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
->
+On Mon, Sep 01, 2025 at 06:45:54PM +0100, Conor Dooley wrote:
+> Yo,
+> 
+> On Wed, Apr 09, 2025 at 12:03:11AM +0200, Miguel Ojeda wrote:
+> > If KASAN is enabled, and one runs in a clean repository e.g.:
+> > 
+> >     make LLVM=1 prepare
+> >     make LLVM=1 prepare
+> > 
+> > Then the Rust code gets rebuilt, which should not happen.
+> > 
+> > The reason is some of the LLVM KASAN `rustc` flags are added in the
+> > second run:
+> > 
+> >     -Cllvm-args=-asan-instrumentation-with-call-threshold=10000
+> >     -Cllvm-args=-asan-stack=0
+> >     -Cllvm-args=-asan-globals=1
+> >     -Cllvm-args=-asan-kernel-mem-intrinsic-prefix=1
+> > 
+> > Further runs do not rebuild Rust because the flags do not change anymore.
+> > 
+> > Rebuilding like that in the second run is bad, even if this just happens
+> > with KASAN enabled, but missing flags in the first one is even worse.
+> > 
+> > The root issue is that we pass, for some architectures and for the moment,
+> > a generated `target.json` file. That file is not ready by the time `rustc`
+> > gets called for the flag test, and thus the flag test fails just because
+> > the file is not available, e.g.:
+> > 
+> >     $ ... --target=./scripts/target.json ... -Cllvm-args=...
+> >     error: target file "./scripts/target.json" does not exist
+> > 
+> > There are a few approaches we could take here to solve this. For instance,
+> > we could ensure that every time that the config is rebuilt, we regenerate
+> > the file and recompute the flags. Or we could use the LLVM version to
+> > check for these flags, instead of testing the flag (which may have other
+> > advantages, such as allowing us to detect renames on the LLVM side).
+> > 
+> > However, it may be easier than that: `rustc` is aware of the `-Cllvm-args`
+> > regardless of the `--target` (e.g. I checked that the list printed
+> > is the same, plus that I can check for these flags even if I pass
+> > a completely unrelated target), and thus we can just eliminate the
+> > dependency completely.
+> > 
+> > Thus filter out the target.
+> 
+> 
+> 
+> 
+> > This does mean that `rustc-option` cannot be used to test a flag that
+> > requires the right target, but we don't have other users yet, it is a
+> > minimal change and we want to get rid of custom targets in the future.
+> 
+> Hmm, while this might be true, I think it should not actually have been
+> true. Commit ca627e636551e ("rust: cfi: add support for CFI_CLANG with Rust")
+> added a cc-option check to the rust kconfig symbol, checking if the c
+> compiler supports the integer normalisations stuff:
+> 	depends on !CFI_CLANG || RUSTC_VERSION >= 107900 && $(cc-option,-fsanitize=kcfi -fsanitize-cfi-icall-experimental-normalize-integers)
+> and also sets the relevant options in the makefile:
+> 	ifdef CONFIG_RUST
+> 	       # Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
+> 	       # CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
+> 	       RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
+> 	       KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
+> 	       export RUSTC_FLAGS_CFI
+> 	endif
+> but it should also have added a rustc-option check as, unfortunately,
+> support for kcfi in rustc is target specific. This results in build
+> breakages where the arch supports CFI_CLANG and RUST, but the target in
+> use does not have the kcfi flag set.
+> I attempted to fix this by adding:
+> 	diff --git a/arch/Kconfig b/arch/Kconfig
+> 	index d1b4ffd6e0856..235709fb75152 100644
+> 	--- a/arch/Kconfig
+> 	+++ b/arch/Kconfig
+> 	@@ -916,6 +916,7 @@ config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
+> 	 config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
+> 	        def_bool y
+> 	        depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
+> 	+       depends on $(rustc-option,-C panic=abort -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers)
+> 	        depends on RUSTC_VERSION >= 107900
+> 	        # With GCOV/KASAN we need this fix: https://github.com/rust-lang/rust/pull/129373
+> 	        depends on (RUSTC_LLVM_VERSION >= 190103 && RUSTC_VERSION >= 108200) || \
+> but of course this does not work for cross compilation, as you're
+> stripping the target information out and so the check passes on my host
+> even though my intended
+> RUSTC_BOOTSTRAP=1 rustc -C panic=abort -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Ctarget-cpu=generic-rv64 --target=riscv64imac-unknown-none-elf
+> is a failure.
+> 
+> I dunno too much about rustc itself, but I suspect that adding kcfi to
+> the target there is a "free" win, but that'll take time to trickle down
+> and the minimum version rustc version for the kernel isn't going to have
+> that.
+> 
+> I'm not really sure what your target.json suggestion below is, so just
+> reporting so that someone that understands the alternative solutions can
+> fix this.
 
-This solution, apart from being terribly wrong (adjust the source to match
-to value of its downstream copy), does not address the issue that Mathew
-pointed out on v1 discussion [1]:
+Probably right now we have to do this cfg by
 
-$ grep -r AT_RENAME_NOREPLACE /usr/include
-/usr/include/linux/fcntl.h:#define AT_RENAME_NOREPLACE  0x0001
+	depends on CONFIG_ARM
 
-It's not in stdio.h at all.  This is with libc6 2.41-10
+to prevent riscv if rustc has the missing setting
+set on riscv. Once we add it to riscv, we change it to
 
-[1] https://lore.kernel.org/linux-fsdevel/aKxfGix_o4glz8-Z@casper.infradead=
-.org/
+	depends on CONFIG_ARM || (RUSTC_VERSION >= ??? || CONFIG_RISCV)
 
-I don't know how to resolve the mess that glibc has created.
-
-Perhaps like this:
-
-diff --git a/include/uapi/linux/fcntl.h b/include/uapi/linux/fcntl.h
-index f291ab4f94ebc..dde14fa3c2007 100644
---- a/include/uapi/linux/fcntl.h
-+++ b/include/uapi/linux/fcntl.h
-@@ -155,10 +155,16 @@
-  * as possible, so we can use them for generic bits in the future if neces=
-sary.
-  */
-
--/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
--#define AT_RENAME_NOREPLACE    0x0001
--#define AT_RENAME_EXCHANGE     0x0002
--#define AT_RENAME_WHITEOUT     0x0004
-+/*
-+ * The legacy renameat2(2) RENAME_* flags are conceptually also
-syscall-specific
-+ * flags, so it could makes sense to create the AT_RENAME_* aliases
-for them and
-+ * maybe later add support for generic AT_* flags to this syscall.
-+ * However, following a mismatch of definitions in glibc and since no
-kernel code
-+ * currently uses the AT_RENAME_* aliases, we leave them undefined here.
-+#define AT_RENAME_NOREPLACE    RENAME_NOREPLACE
-+#define AT_RENAME_EXCHANGE     RENAME_EXCHANGE
-+#define AT_RENAME_WHITEOUT     RENAME_WHITEOUT
-+*/
-
- /* Flag for faccessat(2). */
- #define AT_EACCESS             0x200   /* Test access permitted for
+Alice
