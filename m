@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941783043BD;
-	Tue,  2 Sep 2025 13:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3922C15A3;
+	Tue,  2 Sep 2025 13:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819896; cv=none; b=IbPIV+0BjJq1MbjW5ng/zlWwq5iQjs9FNYwGOHuUGyZNMwoaxUeMlwz6HB6hdfXnXRZnxUD11iKD4torV2eL4VwyIUO0KEkaN7UL/hyRGtspGL8BSS5Fucn51by7vIOAQi1bo5xAjPqaJooi/zNlbBNhsH3UOgL1LwCr+j5L5ec=
+	t=1756819899; cv=none; b=lUPIbyHOuQ6emcGQyusrWoKpwDt8901x8JrPaP0avYTpBrGai6LiA5gR2CzGcgjyg/UT9UygGX9UrrVdKtuCxmrplovhFuRp2oOtUQj+ott4pCFMmadzotkbfBWdNaFk+TuU4uCuLiqTcXJpMj5N/cek/h0NqJXLVZt1SBIQ1ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819896; c=relaxed/simple;
-	bh=1SBaA13LhIC9PXqRPTcmLdAOZ3IJh44wt7p8gRPdaNo=;
+	s=arc-20240116; t=1756819899; c=relaxed/simple;
+	bh=4cGydD2YgFlOAoWPYvKDi889gI4dRzMR2d5X9vhTctE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W23OiJA9nYV8awTBlWuJj50Gn6TJSi1S6oyJt0EVu9vWs9MKcsyFvxOl7aGquwXUAH9gn5kL/LWP/Ir/aRRP0i8B8kckL4tayzqlXb5T1y2qVXgiWZL5TXS9IZs+ktaS91Bxe5cnY7MTW1A3JtPR8hnzyr4JUF7ghbpFbWJpngc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vbk8thFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GaKmKVjdRmbeyF/8bm5PrVDD8RXw7NGFAhgVtthvb027afDniFk3mpoFUMl8s5ZOg/JH+Dwpw7WwpWHMa3/fxt8nccrltb9al3B3KSdO1bG397Xp4CHmBlRl+UB2m4sbrG+sPKxG+g8b9dnSikCHjdK7z1jAR6jSktD86Uwv6Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBxSas6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vbk8thFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE05C4CEF5;
-	Tue,  2 Sep 2025 13:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBxSas6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE63C4CEED;
+	Tue,  2 Sep 2025 13:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819896;
-	bh=1SBaA13LhIC9PXqRPTcmLdAOZ3IJh44wt7p8gRPdaNo=;
+	s=korg; t=1756819899;
+	bh=4cGydD2YgFlOAoWPYvKDi889gI4dRzMR2d5X9vhTctE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vbk8thFzEVPBXCw6dNpQ7ZubVBJya4RQWUtjJaW/d3332SyhLb5yaAP+bxfAqQ2aS
-	 OPDK3oOma4xUt+ETm0E7WrG69i+FgNcNEf0umg1yHUCxb9bDDrV6nXhoBdWIoNeiRF
-	 JWkT5b9wdS6nPNeKSttx5UE9urjWDMHuAXgp0k+U=
+	b=DBxSas6PJ4VA5kMbVHSOO4ZKZrBWYn4cR2U5Fsi/Bs3Jlht+ba3+IvcFflZv+TI91
+	 F6O8NCo7BcnBJx4YUQzM9D5gxv8dYPZIiyPcYar33L1i5U10wFftQuhN2SzrqgRHFq
+	 OU2Nj40mA16Qo7Khtf6TPT5wRSE9Dc/K9soWTcqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 05/95] pinctrl: STMFX: add missing HAS_IOMEM dependency
-Date: Tue,  2 Sep 2025 15:19:41 +0200
-Message-ID: <20250902131939.817867220@linuxfoundation.org>
+Subject: [PATCH 6.12 06/95] mips: dts: lantiq: danube: add missing burst length property
+Date: Tue,  2 Sep 2025 15:19:42 +0200
+Message-ID: <20250902131939.856207117@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,42 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit a12946bef0407cf2db0899c83d42c47c00af3fbc ]
+[ Upstream commit 7b28232921782aa38048249132899c337405eaa8 ]
 
-When building on ARCH=um (which does not set HAS_IOMEM), kconfig
-reports an unmet dependency caused by PINCTRL_STMFX. It selects
-MFD_STMFX, which depends on HAS_IOMEM. To stop this warning,
-PINCTRL_STMFX should also depend on HAS_IOMEM.
+The upstream dts lacks the lantiq,{rx/tx}-burst-length property. Other
+issues were also fixed:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'interrupt-names' is a required property
+	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'lantiq,tx-burst-length' is a required property
+	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): 'lantiq,rx-burst-length' is a required property
+	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
 
-kconfig warning:
-WARNING: unmet direct dependencies detected for MFD_STMFX
-  Depends on [n]: HAS_IOMEM [=n] && I2C [=y] && OF [=y]
-  Selected by [y]:
-  - PINCTRL_STMFX [=y] && PINCTRL [=y] && I2C [=y] && OF_GPIO [=y]
-
-Fixes: 1490d9f841b1 ("pinctrl: Add STMFX GPIO expander Pinctrl/GPIO driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/20250815022721.1650885-1-rdunlap@infradead.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 14d4e308e0aa ("net: lantiq: configure the burst length in ethernet drivers")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/mips/boot/dts/lantiq/danube_easy50712.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
-index 354536de564b6..e05174e5efbc3 100644
---- a/drivers/pinctrl/Kconfig
-+++ b/drivers/pinctrl/Kconfig
-@@ -504,6 +504,7 @@ config PINCTRL_STMFX
- 	tristate "STMicroelectronics STMFX GPIO expander pinctrl driver"
- 	depends on I2C
- 	depends on OF_GPIO
-+	depends on HAS_IOMEM
- 	select GENERIC_PINCONF
- 	select GPIOLIB_IRQCHIP
- 	select MFD_STMFX
+diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+index 1ce20b7d05cb8..d8b3cd69eda3c 100644
+--- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
++++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
+@@ -87,8 +87,11 @@ etop@e180000 {
+ 			reg = <0xe180000 0x40000>;
+ 			interrupt-parent = <&icu0>;
+ 			interrupts = <73 78>;
++			interrupt-names = "tx", "rx";
+ 			phy-mode = "rmii";
+ 			mac-address = [ 00 11 22 33 44 55 ];
++			lantiq,rx-burst-length = <4>;
++			lantiq,tx-burst-length = <4>;
+ 		};
+ 
+ 		stp0: stp@e100bb0 {
 -- 
 2.50.1
 
