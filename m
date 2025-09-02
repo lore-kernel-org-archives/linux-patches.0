@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C5C30F533;
-	Tue,  2 Sep 2025 13:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4B32ECD1A;
+	Tue,  2 Sep 2025 13:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820136; cv=none; b=l95B39TVSLY5fVGLrfPLopb0cvxnohh4sRio0Y/PBPaCgLsx6TPLzF1ngAZiGh2Gn0sDYZvtPLoXezmnYv+y7323KJDY/E4x6sGcMC7VhxI2Mt1NNPR9zA7tXX2QVEkoEP/xFeiI8rvCBHoV4xJejilmzLnePtDmfen9HiwU4pw=
+	t=1756820139; cv=none; b=fxDQotiz8tGP6ut3f+qtpcKa26oKIuKCeo8gJaVBFg4HT/jOBP1GncTNxZyZc6IWrImQYLgKOkqL3e6gN12nIGGIwn1SkYJSiMwee/ywL6tXrBo3nxqBZSuixG7eCmL7EBACQUYqSq9DGjWkH8lSB0T5vzIA5L/p42V15Kf2+1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820136; c=relaxed/simple;
-	bh=ibRPVFXtxV12eMzYwOJTp18qbMLcnVNcvmSNgdLLPBk=;
+	s=arc-20240116; t=1756820139; c=relaxed/simple;
+	bh=c01Bt79rOQ0AX/RfuG4RMAN6xFN0vC5kittDoJetQYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiqw6tbvJmtboVGQXUoTm3qROyeIasSN8OPQH/1MYmnopB8ivbCObic+iZvRok6w5B2OgCcxYIEkwZBsCfFrwFGCWR/zKY7/7n4RBpT6zYREaN8D9rVbxXOZ+RFPjvt6hItcjcNBvHK966aLiEJzrt2+we4mNTXxm33XbcqOtQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+ADRmoG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDJNgQB36yJiwIV+Rk9GpLUp3WHV68xm8nwRpLcwzaZkVJQria23+S8hUD/jRZeXjDU/lDtm0XNxNXyD5KoneMquWwQTij1oV77EzP/QW0GtTQksApHwI0HeFtjv3CHjiHGDX0BJ5LntOQWSmP3JW2Gnmwoe/g+oz01SzYzwc1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xawPWm/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+ADRmoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D9BC4CEED;
-	Tue,  2 Sep 2025 13:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xawPWm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16DAC4CEF5;
+	Tue,  2 Sep 2025 13:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820136;
-	bh=ibRPVFXtxV12eMzYwOJTp18qbMLcnVNcvmSNgdLLPBk=;
+	s=korg; t=1756820139;
+	bh=c01Bt79rOQ0AX/RfuG4RMAN6xFN0vC5kittDoJetQYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+ADRmoG2SC4REv+blKDWdQjCBJZrw+rEFq6NaUqdF7Rwyo3yiDdYDG3rVPYwuQXT
-	 5m83G9XNN7Y1W4mLw1cd7sHJCGelkqGTf9GS24A+D0HSvgEyzxg6uTAfawEiBtt9HJ
-	 H7aWwsa3+QAsa3U1IB+i7XM8rITKOymd6sNaN1iE=
+	b=1xawPWm/QJUYWFK3OhNzlVHYUU6aFcJwdV9ckI6AsGfBU44IHnZ856aJqS9gKAfV0
+	 gdLa0CAh5g3EgCOon1hAvac1vMC4WN95bPXhcKbAdQuxRtRK6n8K6v3ysefAos05Oj
+	 5L6909SBtiujbeZX4RGcPNxqe/GQH7aVWIbsoem4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 10/75] smb: client: fix race with concurrent opens in rename(2)
-Date: Tue,  2 Sep 2025 15:20:22 +0200
-Message-ID: <20250902131935.520307071@linuxfoundation.org>
+Subject: [PATCH 6.6 11/75] ASoC: codecs: tx-macro: correct tx_macro_component_drv name
+Date: Tue,  2 Sep 2025 15:20:23 +0200
+Message-ID: <20250902131935.561134696@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -54,85 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit d84291fc7453df7881a970716f8256273aca5747 ]
+[ Upstream commit 43e0da37d5cfb23eec6aeee9422f84d86621ce2b ]
 
-Besides sending the rename request to the server, the rename process
-also involves closing any deferred close, waiting for outstanding I/O
-to complete as well as marking all existing open handles as deleted to
-prevent them from deferring closes, which increases the race window
-for potential concurrent opens on the target file.
+We already have a component driver named "RX-MACRO", which is
+lpass-rx-macro.c. The tx macro component driver's name should
+be "TX-MACRO" accordingly. Fix it.
 
-Fix this by unhashing the dentry in advance to prevent any concurrent
-opens on the target.
-
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20250806140030.691477-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sound/soc/codecs/lpass-tx-macro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index df01029918fd4..6c16c4f34d882 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2379,6 +2379,7 @@ cifs_rename2(struct mnt_idmap *idmap, struct inode *source_dir,
- 	struct cifs_sb_info *cifs_sb;
- 	struct tcon_link *tlink;
- 	struct cifs_tcon *tcon;
-+	bool rehash = false;
- 	unsigned int xid;
- 	int rc, tmprc;
- 	int retry_count = 0;
-@@ -2394,6 +2395,17 @@ cifs_rename2(struct mnt_idmap *idmap, struct inode *source_dir,
- 	if (unlikely(cifs_forced_shutdown(cifs_sb)))
- 		return -EIO;
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index ebddfa74ce0a0..150ed10c8377a 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1940,7 +1940,7 @@ static int tx_macro_register_mclk_output(struct tx_macro *tx)
+ }
  
-+	/*
-+	 * Prevent any concurrent opens on the target by unhashing the dentry.
-+	 * VFS already unhashes the target when renaming directories.
-+	 */
-+	if (d_is_positive(target_dentry) && !d_is_dir(target_dentry)) {
-+		if (!d_unhashed(target_dentry)) {
-+			d_drop(target_dentry);
-+			rehash = true;
-+		}
-+	}
-+
- 	tlink = cifs_sb_tlink(cifs_sb);
- 	if (IS_ERR(tlink))
- 		return PTR_ERR(tlink);
-@@ -2433,6 +2445,8 @@ cifs_rename2(struct mnt_idmap *idmap, struct inode *source_dir,
- 		}
- 	}
- 
-+	if (!rc)
-+		rehash = false;
- 	/*
- 	 * No-replace is the natural behavior for CIFS, so skip unlink hacks.
- 	 */
-@@ -2491,12 +2505,16 @@ cifs_rename2(struct mnt_idmap *idmap, struct inode *source_dir,
- 			goto cifs_rename_exit;
- 		rc = cifs_do_rename(xid, source_dentry, from_name,
- 				    target_dentry, to_name);
-+		if (!rc)
-+			rehash = false;
- 	}
- 
- 	/* force revalidate to go get info when needed */
- 	CIFS_I(source_dir)->time = CIFS_I(target_dir)->time = 0;
- 
- cifs_rename_exit:
-+	if (rehash)
-+		d_rehash(target_dentry);
- 	kfree(info_buf_source);
- 	free_dentry_path(page2);
- 	free_dentry_path(page1);
+ static const struct snd_soc_component_driver tx_macro_component_drv = {
+-	.name = "RX-MACRO",
++	.name = "TX-MACRO",
+ 	.probe = tx_macro_component_probe,
+ 	.controls = tx_macro_snd_controls,
+ 	.num_controls = ARRAY_SIZE(tx_macro_snd_controls),
 -- 
 2.50.1
 
