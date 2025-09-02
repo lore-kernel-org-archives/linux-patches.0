@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B74331A553;
-	Tue,  2 Sep 2025 13:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FA130505C;
+	Tue,  2 Sep 2025 13:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820445; cv=none; b=DOWFZIUPy6sPuu6c79UKETiKsL35SSrPqAWfadm3rKtWmcrV6tdsjYJ3Q6NkhVAuKpTmeLGCzqQfEZ8OZTVQboumzO/ufxAbv3PPjhHgMq+Y83+6Nnf9g1FtQzYhc+4zLBxTLiKHIY8dcxobpnL5aharBkgeV/agAGaUT8v2z0c=
+	t=1756820448; cv=none; b=Os6QJgAh6T05w+wS4aCSVIWqjuwSHeJfoCUVlnZw0xavQslV8Z6DztRSwwti55LdpTlmoxxOZURxvGoq+IQSurB4Erkw29BJAik3+NvZhualIipE8JolAFxMw3Ey3z/YHrGQWIQOTJURuozuLvuULxJ6413pnNKkuFf0zUq3Tws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820445; c=relaxed/simple;
-	bh=XtjuRy4xH4CR5aDG/WkVuU/2IJUtxtrkHsdbKa1l3Ys=;
+	s=arc-20240116; t=1756820448; c=relaxed/simple;
+	bh=skkQzEobM/qLblQoBB/vgKTEOpa/FapuWAYwq6yH6MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW/DmSYvst6R8IljmL14ghRxkkRWagvqHPl0F9DBUtr+hXfi1Iy1aYuf5/LK05GRovQou7h0Rdpfp+AuvNJrLQy+cIifV9ThuqHz9DLlcRx7BDP3yBiPmdqMqUMb/GS9uuI/KgPYWXJO9L/SAYdU4J2GSpLlx3ZijqSYxAejBJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmB65lEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9uHIijyRhIy4FkLmW550Q4E8NcVZ9sfMjScGJ4BZLN2TTFHO/qwSevlzkVD0np2CkxSHylZWTGRxEe0oxXzYQkns9YPq/g8HYetVoA61Cbx3cLWzqY4d5dcUQ44yjzSKCeOmPOiFYuYwxyy1xDgm0DMuOkHTLmLF8ASGPAjfSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zATca0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmB65lEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CF8C4CEED;
-	Tue,  2 Sep 2025 13:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zATca0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7B6C4CEF4;
+	Tue,  2 Sep 2025 13:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820445;
-	bh=XtjuRy4xH4CR5aDG/WkVuU/2IJUtxtrkHsdbKa1l3Ys=;
+	s=korg; t=1756820448;
+	bh=skkQzEobM/qLblQoBB/vgKTEOpa/FapuWAYwq6yH6MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmB65lEiBhxqPV6vf1KNG4SFp/AzZ3bQv+aFoGhnwZCoZPbIh+ho1UMZGk7gKo7x/
-	 bRx6sUqCFGLRVokXqKbenrW8UTyB+mAldC/qIudMjn7KgP9Du058NjSVt244AR3uah
-	 OOGR70gHxKJ2RAhCszsYqR1v9i8oXq7BdwkfNjkQ=
+	b=0zATca0lX+d1LCTPegHnBt1QQDs1+30doW9t8sVRFCVQfKYrJ/PPG/un0tCmoBCb1
+	 nw6YTvxZw17E2eVqHcZT3M5ex4wSDJzWca7lL5rpyIVrBbN/I6ChMwbVbjvSM4QFfV
+	 YUiFPY+EQV+tWaF3M3h8xzRxZzXoL2YeVGb+uFMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takamitsu Iwai <takamitz@amazon.co.jp>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 30/50] net: rose: split remove and free operations in rose_remove_neigh()
-Date: Tue,  2 Sep 2025 15:21:21 +0200
-Message-ID: <20250902131931.715546660@linuxfoundation.org>
+Subject: [PATCH 6.1 04/50] ftrace: Fix potential warning in trace_printk_seq during ftrace_dump
+Date: Tue,  2 Sep 2025 15:20:55 +0200
+Message-ID: <20250902131930.685993163@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -52,113 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takamitsu Iwai <takamitz@amazon.co.jp>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit dcb34659028f856c423a29ef9b4e2571d203444d ]
+[ Upstream commit 4013aef2ced9b756a410f50d12df9ebe6a883e4a ]
 
-The current rose_remove_neigh() performs two distinct operations:
-1. Removes rose_neigh from rose_neigh_list
-2. Frees the rose_neigh structure
+When calling ftrace_dump_one() concurrently with reading trace_pipe,
+a WARN_ON_ONCE() in trace_printk_seq() can be triggered due to a race
+condition.
 
-Split these operations into separate functions to improve maintainability
-and prepare for upcoming refcount_t conversion. The timer cleanup remains
-in rose_remove_neigh() because free operations can be called from timer
-itself.
+The issue occurs because:
 
-This patch introduce rose_neigh_put() to handle the freeing of rose_neigh
-structures and modify rose_remove_neigh() to handle removal only.
+CPU0 (ftrace_dump)                              CPU1 (reader)
+echo z > /proc/sysrq-trigger
 
-Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250823085857.47674-2-takamitz@amazon.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
+!trace_empty(&iter)
+trace_iterator_reset(&iter) <- len = size = 0
+                                                cat /sys/kernel/tracing/trace_pipe
+trace_find_next_entry_inc(&iter)
+  __find_next_entry
+    ring_buffer_empty_cpu <- all empty
+  return NULL
+
+trace_printk_seq(&iter.seq)
+  WARN_ON_ONCE(s->seq.len >= s->seq.size)
+
+In the context between trace_empty() and trace_find_next_entry_inc()
+during ftrace_dump, the ring buffer data was consumed by other readers.
+This caused trace_find_next_entry_inc to return NULL, failing to populate
+`iter.seq`. At this point, due to the prior trace_iterator_reset, both
+`iter.seq.len` and `iter.seq.size` were set to 0. Since they are equal,
+the WARN_ON_ONCE condition is triggered.
+
+Move the trace_printk_seq() into the if block that checks to make sure the
+return value of trace_find_next_entry_inc() is non-NULL in
+ftrace_dump_one(), ensuring the 'iter.seq' is properly populated before
+subsequent operations.
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ingo Molnar <mingo@elte.hu>
+Link: https://lore.kernel.org/20250822033343.3000289-1-wutengda@huaweicloud.com
+Fixes: d769041f8653 ("ring_buffer: implement new locking")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rose.h    |  8 ++++++++
- net/rose/rose_route.c | 15 ++++++---------
- 2 files changed, 14 insertions(+), 9 deletions(-)
+ kernel/trace/trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index 23267b4efcfa3..174b4f605d849 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -151,6 +151,14 @@ struct rose_sock {
- 
- #define rose_sk(sk) ((struct rose_sock *)(sk))
- 
-+static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
-+{
-+	if (rose_neigh->ax25)
-+		ax25_cb_put(rose_neigh->ax25);
-+	kfree(rose_neigh->digipeat);
-+	kfree(rose_neigh);
-+}
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 874f869ae72e6..7e8ab09d98cc7 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -10183,10 +10183,10 @@ void ftrace_dump(enum ftrace_dump_mode oops_dump_mode)
+ 			ret = print_trace_line(&iter);
+ 			if (ret != TRACE_TYPE_NO_CONSUME)
+ 				trace_consume(&iter);
 +
- /* af_rose.c */
- extern ax25_address rose_callsign;
- extern int  sysctl_rose_restart_request_timeout;
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index a7054546f52df..b406b1e0fb1e7 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -234,20 +234,12 @@ static void rose_remove_neigh(struct rose_neigh *rose_neigh)
- 
- 	if ((s = rose_neigh_list) == rose_neigh) {
- 		rose_neigh_list = rose_neigh->next;
--		if (rose_neigh->ax25)
--			ax25_cb_put(rose_neigh->ax25);
--		kfree(rose_neigh->digipeat);
--		kfree(rose_neigh);
- 		return;
- 	}
- 
- 	while (s != NULL && s->next != NULL) {
- 		if (s->next == rose_neigh) {
- 			s->next = rose_neigh->next;
--			if (rose_neigh->ax25)
--				ax25_cb_put(rose_neigh->ax25);
--			kfree(rose_neigh->digipeat);
--			kfree(rose_neigh);
- 			return;
++			trace_printk_seq(&iter.seq);
  		}
- 
-@@ -331,8 +323,10 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 		if (rose_node->neighbour[i] == rose_neigh) {
- 			rose_neigh->count--;
- 
--			if (rose_neigh->count == 0 && rose_neigh->use == 0)
-+			if (rose_neigh->count == 0 && rose_neigh->use == 0) {
- 				rose_remove_neigh(rose_neigh);
-+				rose_neigh_put(rose_neigh);
-+			}
- 
- 			rose_node->count--;
- 
-@@ -513,6 +507,7 @@ void rose_rt_device_down(struct net_device *dev)
- 		}
- 
- 		rose_remove_neigh(s);
-+		rose_neigh_put(s);
- 	}
- 	spin_unlock_bh(&rose_neigh_list_lock);
- 	spin_unlock_bh(&rose_node_list_lock);
-@@ -569,6 +564,7 @@ static int rose_clear_routes(void)
- 		if (s->use == 0 && !s->loopback) {
- 			s->count = 0;
- 			rose_remove_neigh(s);
-+			rose_neigh_put(s);
- 		}
+ 		touch_nmi_watchdog();
+-
+-		trace_printk_seq(&iter.seq);
  	}
  
-@@ -1301,6 +1297,7 @@ void __exit rose_rt_free(void)
- 		rose_neigh = rose_neigh->next;
- 
- 		rose_remove_neigh(s);
-+		rose_neigh_put(s);
- 	}
- 
- 	while (rose_node != NULL) {
+ 	if (!cnt)
 -- 
 2.50.1
 
