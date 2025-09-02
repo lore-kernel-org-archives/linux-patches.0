@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FE3054E7;
-	Tue,  2 Sep 2025 13:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A013128CB;
+	Tue,  2 Sep 2025 13:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819995; cv=none; b=sknu3kozo7MmyNiYvihJIgjZoc0x9p5v1J4jz+jKg/JNpVIDKh4F34okyAO4+w2u583PpqqlXdM8frA0T7ZbawB9mZSjhS6DZBqOHRf7I+74MtN1bu4VFhXY5JGgUkSzb2QZ3m0wzB82JOYY/N6HbHKWou5KATMHoA5xZiYxP0s=
+	t=1756819999; cv=none; b=W78zRid6RqtyyGZwaqqU/aQVByui8tDAto9fZvY5XHVIBdnieYuPzXk2EluNel7sm980IPO7ugk/bqnlDUtgOkKxm8OsXrDYEOMUHEU7EtFBn2QNv7ZJDo/AFz5yIqe0CeF8U/CZBygyLZUX7r28ktzvDCPmmaZhwmUeJ0I5Nes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819995; c=relaxed/simple;
-	bh=cymjOLMXKfkMnEq8oBzdccR9CIR9zRFLaXiG2EQ1CXo=;
+	s=arc-20240116; t=1756819999; c=relaxed/simple;
+	bh=b+xiNj0wWQ3xays4FWZ7dD6H4RVEGOvzVPLzcwkOi78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIG24pA98xoajYCxI2haStmYeVCFKvuplQpYRoxIsBT1bv/+9QYHXOND5kmmoINcjGuAIbZctUSolUYNUGi+grqNgdF+Phyfs3k/YUl9TOeuPCCmgCyAIYcnKR+HXjUpHKjmn6FYljLyv1PtGH0Oy0AbkjrIB5TlOHh5yA9UrCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mmbW0aT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kvfEMjX9GVJimTRFPGALa4MZtqSBQG7ElJp1mXAVQwdKMAHdi72mBD0BaelJnSop5NPlTvBtod9TADnb9SlE+8BbZn10fE+SdbKTOFsEL9QFTwgDpphDqyzhCFFuwIQghFpyxWD7DKF1/xNZolED0WYQo2KZOtIie0zYvafWCEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyD7fhxg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mmbW0aT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB4CFC4CEF5;
-	Tue,  2 Sep 2025 13:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyD7fhxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F915C4CEED;
+	Tue,  2 Sep 2025 13:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819995;
-	bh=cymjOLMXKfkMnEq8oBzdccR9CIR9zRFLaXiG2EQ1CXo=;
+	s=korg; t=1756819998;
+	bh=b+xiNj0wWQ3xays4FWZ7dD6H4RVEGOvzVPLzcwkOi78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mmbW0aTsB4MU5TxHSKoa4rWzVVSXJvcm2nWsaNpnhqJzMPXu1Gf9zLlO23u4ADA1
-	 t6KnstGfcx8EOAIBDGyPTQbZR2W76bWPedrh2BrmfMRy9HAkRFCb24/fWIk8d1ogj2
-	 j8/BNCIOSnLyacwdayz/zgzMYnru6mFpM5o6wgPs=
+	b=fyD7fhxgABZVfmu1UWSIk3mIwltx2HWBIwOOSUt9Bcw4AFPvyBi2khvNEY75xjAQS
+	 XEQ6IoYRunYJcx+GihDvAE/WUct+rUBiMfFbQseRsY8jrNVdM1KD1YRJUtjRXBwEx6
+	 xB8WyKctJKRFPcFyWZi7lxL1lL7pBx8803+Dlg10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 58/95] net: hv_netvsc: fix loss of early receive events from host during channel open.
-Date: Tue,  2 Sep 2025 15:20:34 +0200
-Message-ID: <20250902131941.829985041@linuxfoundation.org>
+Subject: [PATCH 6.12 59/95] net: rose: split remove and free operations in rose_remove_neigh()
+Date: Tue,  2 Sep 2025 15:20:35 +0200
+Message-ID: <20250902131941.870174209@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,119 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Takamitsu Iwai <takamitz@amazon.co.jp>
 
-[ Upstream commit 9448ccd853368582efa9db05db344f8bb9dffe0f ]
+[ Upstream commit dcb34659028f856c423a29ef9b4e2571d203444d ]
 
-The hv_netvsc driver currently enables NAPI after opening the primary and
-subchannels. This ordering creates a race: if the Hyper-V host places data
-in the host -> guest ring buffer and signals the channel before
-napi_enable() has been called, the channel callback will run but
-napi_schedule_prep() will return false. As a result, the NAPI poller never
-gets scheduled, the data in the ring buffer is not consumed, and the
-receive queue may remain permanently stuck until another interrupt happens
-to arrive.
+The current rose_remove_neigh() performs two distinct operations:
+1. Removes rose_neigh from rose_neigh_list
+2. Frees the rose_neigh structure
 
-Fix this by enabling NAPI and registering it with the RX/TX queues before
-vmbus channel is opened. This guarantees that any early host signal after
-open will correctly trigger NAPI scheduling and the ring buffer will be
-drained.
+Split these operations into separate functions to improve maintainability
+and prepare for upcoming refcount_t conversion. The timer cleanup remains
+in rose_remove_neigh() because free operations can be called from timer
+itself.
 
-Fixes: 76bb5db5c749d ("netvsc: fix use after free on module removal")
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Link: https://patch.msgid.link/20250825115627.GA32189@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
+This patch introduce rose_neigh_put() to handle the freeing of rose_neigh
+structures and modify rose_remove_neigh() to handle removal only.
+
+Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250823085857.47674-2-takamitz@amazon.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc.c       | 17 ++++++++---------
- drivers/net/hyperv/rndis_filter.c | 23 ++++++++++++++++-------
- 2 files changed, 24 insertions(+), 16 deletions(-)
+ include/net/rose.h    |  8 ++++++++
+ net/rose/rose_route.c | 15 ++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
-index 87ac2a5f18091..5f14799b68c53 100644
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -1811,6 +1811,11 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 23267b4efcfa3..174b4f605d849 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -151,6 +151,14 @@ struct rose_sock {
  
- 	/* Enable NAPI handler before init callbacks */
- 	netif_napi_add(ndev, &net_device->chan_table[0].napi, netvsc_poll);
-+	napi_enable(&net_device->chan_table[0].napi);
-+	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX,
-+			     &net_device->chan_table[0].napi);
-+	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX,
-+			     &net_device->chan_table[0].napi);
+ #define rose_sk(sk) ((struct rose_sock *)(sk))
  
- 	/* Open the channel */
- 	device->channel->next_request_id_callback = vmbus_next_request_id;
-@@ -1830,12 +1835,6 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
- 	/* Channel is opened */
- 	netdev_dbg(ndev, "hv_netvsc channel opened successfully\n");
- 
--	napi_enable(&net_device->chan_table[0].napi);
--	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX,
--			     &net_device->chan_table[0].napi);
--	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX,
--			     &net_device->chan_table[0].napi);
--
- 	/* Connect with the NetVsp */
- 	ret = netvsc_connect_vsp(device, net_device, device_info);
- 	if (ret != 0) {
-@@ -1853,14 +1852,14 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
- 
- close:
- 	RCU_INIT_POINTER(net_device_ctx->nvdev, NULL);
--	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX, NULL);
--	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX, NULL);
--	napi_disable(&net_device->chan_table[0].napi);
- 
- 	/* Now, we can close the channel safely */
- 	vmbus_close(device->channel);
- 
- cleanup:
-+	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX, NULL);
-+	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX, NULL);
-+	napi_disable(&net_device->chan_table[0].napi);
- 	netif_napi_del(&net_device->chan_table[0].napi);
- 
- cleanup2:
-diff --git a/drivers/net/hyperv/rndis_filter.c b/drivers/net/hyperv/rndis_filter.c
-index 9b8769a8b77a1..9a92552ee35c2 100644
---- a/drivers/net/hyperv/rndis_filter.c
-+++ b/drivers/net/hyperv/rndis_filter.c
-@@ -1252,17 +1252,26 @@ static void netvsc_sc_open(struct vmbus_channel *new_sc)
- 	new_sc->rqstor_size = netvsc_rqstor_size(netvsc_ring_bytes);
- 	new_sc->max_pkt_size = NETVSC_MAX_PKT_SIZE;
- 
-+	/* Enable napi before opening the vmbus channel to avoid races
-+	 * as the host placing data on the host->guest ring may be left
-+	 * out if napi was not enabled.
-+	 */
-+	napi_enable(&nvchan->napi);
-+	netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
-+			     &nvchan->napi);
-+	netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
-+			     &nvchan->napi);
++static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
++{
++	if (rose_neigh->ax25)
++		ax25_cb_put(rose_neigh->ax25);
++	kfree(rose_neigh->digipeat);
++	kfree(rose_neigh);
++}
 +
- 	ret = vmbus_open(new_sc, netvsc_ring_bytes,
- 			 netvsc_ring_bytes, NULL, 0,
- 			 netvsc_channel_cb, nvchan);
--	if (ret == 0) {
--		napi_enable(&nvchan->napi);
--		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
--				     &nvchan->napi);
--		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
--				     &nvchan->napi);
--	} else {
-+	if (ret != 0) {
- 		netdev_notice(ndev, "sub channel open failed: %d\n", ret);
-+		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
-+				     NULL);
-+		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
-+				     NULL);
-+		napi_disable(&nvchan->napi);
+ /* af_rose.c */
+ extern ax25_address rose_callsign;
+ extern int  sysctl_rose_restart_request_timeout;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index a7054546f52df..b406b1e0fb1e7 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -234,20 +234,12 @@ static void rose_remove_neigh(struct rose_neigh *rose_neigh)
+ 
+ 	if ((s = rose_neigh_list) == rose_neigh) {
+ 		rose_neigh_list = rose_neigh->next;
+-		if (rose_neigh->ax25)
+-			ax25_cb_put(rose_neigh->ax25);
+-		kfree(rose_neigh->digipeat);
+-		kfree(rose_neigh);
+ 		return;
  	}
  
- 	if (atomic_inc_return(&nvscdev->open_chn) == nvscdev->num_chn)
+ 	while (s != NULL && s->next != NULL) {
+ 		if (s->next == rose_neigh) {
+ 			s->next = rose_neigh->next;
+-			if (rose_neigh->ax25)
+-				ax25_cb_put(rose_neigh->ax25);
+-			kfree(rose_neigh->digipeat);
+-			kfree(rose_neigh);
+ 			return;
+ 		}
+ 
+@@ -331,8 +323,10 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
+ 
+-			if (rose_neigh->count == 0 && rose_neigh->use == 0)
++			if (rose_neigh->count == 0 && rose_neigh->use == 0) {
+ 				rose_remove_neigh(rose_neigh);
++				rose_neigh_put(rose_neigh);
++			}
+ 
+ 			rose_node->count--;
+ 
+@@ -513,6 +507,7 @@ void rose_rt_device_down(struct net_device *dev)
+ 		}
+ 
+ 		rose_remove_neigh(s);
++		rose_neigh_put(s);
+ 	}
+ 	spin_unlock_bh(&rose_neigh_list_lock);
+ 	spin_unlock_bh(&rose_node_list_lock);
+@@ -569,6 +564,7 @@ static int rose_clear_routes(void)
+ 		if (s->use == 0 && !s->loopback) {
+ 			s->count = 0;
+ 			rose_remove_neigh(s);
++			rose_neigh_put(s);
+ 		}
+ 	}
+ 
+@@ -1301,6 +1297,7 @@ void __exit rose_rt_free(void)
+ 		rose_neigh = rose_neigh->next;
+ 
+ 		rose_remove_neigh(s);
++		rose_neigh_put(s);
+ 	}
+ 
+ 	while (rose_node != NULL) {
 -- 
 2.50.1
 
