@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A4230DD12;
-	Tue,  2 Sep 2025 13:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23935261593;
+	Tue,  2 Sep 2025 13:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820645; cv=none; b=riTHUyv761mKIYBknq5E1AwxPOQQ3Z7WBDURKDQbjgmHw/83JrOt0vaDr1vfp797/otwTSC0nNJZX9QvUkQlsYuKAXsj44QZR1KtFZcSGEA5ULJdC1K2OYZnSLHIO/tRWT6e7ziOPxrvmjkGI/XUPWg0u9OhBgSUhfz70rW91VE=
+	t=1756820647; cv=none; b=f0U5f/PQ/IpT4HP+Wu8flZvv6Av5tk3DEoaEE1IA9e3SaYbvTrWkSkkufIvZr3dpKVxI94RUjzir4oTtvMI9tzHK9WGKqDibrjKUtEUX3H0yET4G1TWkelLmy2aTvkcMrO+urJc7rVmbWY5TJc7RllcmBe/xSgUzIjYVQGpGMdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820645; c=relaxed/simple;
-	bh=/vLxRZHLtt0TXP72WY3i02MWDi5+Pp2bX61YQsKlQVU=;
+	s=arc-20240116; t=1756820647; c=relaxed/simple;
+	bh=3UIQddMcavh455dVvXZCdvzPepsLpJOpcF9PY2IdCA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKcboZNKYGtaFaVqKJpxGURZsVRtLpovC1HpSfTaamWLEB2rOIaB3TY6e0WpxGzD5+0dY4ydca3th/8uFRQLQTC1VZBDIhUSiX04C95jpSKT5k1lwmsTc5h0yb6Zs3nqDdPCKpnvA1bpRnPlAUyddVCNyFnQuur7lqqzQQy6XDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZC3J8DJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lum166NuPM0eT5LU1YUOVxKfxnXL6ch4rxk3F8j5Gsw8YIPwME0l+u7iHiirNUba+Q6scNDEKyejPpcULQ1cnC4dCPqzknjyqZuPXln0O2YNsjZgGC/Xsc7zIAEh2QcMJ5HFBLYqkr7pfPDcGz+d2lzLKeo+2Rsq+Wf2lhfQjnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VoNv25vo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZC3J8DJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39849C4CEED;
-	Tue,  2 Sep 2025 13:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoNv25vo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A95DC4CEED;
+	Tue,  2 Sep 2025 13:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820643;
-	bh=/vLxRZHLtt0TXP72WY3i02MWDi5+Pp2bX61YQsKlQVU=;
+	s=korg; t=1756820647;
+	bh=3UIQddMcavh455dVvXZCdvzPepsLpJOpcF9PY2IdCA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZC3J8DJTzIhGtXaNTylUTRVFVMR70VHlLEQvZTj/bCVnDijN9IdbLwHH/hOF2RZhT
-	 UggW+EbB4klCErg05BkVDuqNEshNDYp+zgl24CjPpQMrrtaQQ23wWSBkQ/z147zwan
-	 MBNmgvaicapNNza1dayAqjg5U2629x5MwaAz+hO8=
+	b=VoNv25vozkVPy1ovayoW7QVeBKqrf2npH4dLASTLZXbUI+ofZy1p+Wdm7kgZjkncq
+	 5C8HryzdCNQ3cgLeWIAZkvl7cdtrrVfmxxPCo6g/AZ0Md1DoTIyeiNMMx2de1MBYgJ
+	 766k/xX+7PH6jeiNmZhYrbJrgyF/FM2mfjbzXnFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/34] pinctrl: STMFX: add missing HAS_IOMEM dependency
-Date: Tue,  2 Sep 2025 15:21:27 +0200
-Message-ID: <20250902131926.670583534@linuxfoundation.org>
+Subject: [PATCH 5.10 10/34] Bluetooth: hci_event: Detect if HCI_EV_NUM_COMP_PKTS is unbalanced
+Date: Tue,  2 Sep 2025 15:21:36 +0200
+Message-ID: <20250902131927.027437754@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -51,42 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit a12946bef0407cf2db0899c83d42c47c00af3fbc ]
+[ Upstream commit 15bf2c6391bafb14a3020d06ec0761bce0803463 ]
 
-When building on ARCH=um (which does not set HAS_IOMEM), kconfig
-reports an unmet dependency caused by PINCTRL_STMFX. It selects
-MFD_STMFX, which depends on HAS_IOMEM. To stop this warning,
-PINCTRL_STMFX should also depend on HAS_IOMEM.
+This attempts to detect if HCI_EV_NUM_COMP_PKTS contain an unbalanced
+(more than currently considered outstanding) number of packets otherwise
+it could cause the hcon->sent to underflow and loop around breaking the
+tracking of the outstanding packets pending acknowledgment.
 
-kconfig warning:
-WARNING: unmet direct dependencies detected for MFD_STMFX
-  Depends on [n]: HAS_IOMEM [=n] && I2C [=y] && OF [=y]
-  Selected by [y]:
-  - PINCTRL_STMFX [=y] && PINCTRL [=y] && I2C [=y] && OF_GPIO [=y]
-
-Fixes: 1490d9f841b1 ("pinctrl: Add STMFX GPIO expander Pinctrl/GPIO driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/20250815022721.1650885-1-rdunlap@infradead.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: f42809185896 ("Bluetooth: Simplify num_comp_pkts_evt function")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_event.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
-index 815095326e2d6..72c27181a4270 100644
---- a/drivers/pinctrl/Kconfig
-+++ b/drivers/pinctrl/Kconfig
-@@ -268,6 +268,7 @@ config PINCTRL_STMFX
- 	tristate "STMicroelectronics STMFX GPIO expander pinctrl driver"
- 	depends on I2C
- 	depends on OF_GPIO
-+	depends on HAS_IOMEM
- 	select GENERIC_PINCONF
- 	select GPIOLIB_IRQCHIP
- 	select MFD_STMFX
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 7f26c1aab9a06..c6dbb4aebfbc1 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3811,7 +3811,17 @@ static void hci_num_comp_pkts_evt(struct hci_dev *hdev, struct sk_buff *skb)
+ 		if (!conn)
+ 			continue;
+ 
+-		conn->sent -= count;
++		/* Check if there is really enough packets outstanding before
++		 * attempting to decrease the sent counter otherwise it could
++		 * underflow..
++		 */
++		if (conn->sent >= count) {
++			conn->sent -= count;
++		} else {
++			bt_dev_warn(hdev, "hcon %p sent %u < count %u",
++				    conn, conn->sent, count);
++			conn->sent = 0;
++		}
+ 
+ 		switch (conn->type) {
+ 		case ACL_LINK:
 -- 
 2.50.1
 
