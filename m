@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04E626D4E2;
-	Tue,  2 Sep 2025 13:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C3831987D;
+	Tue,  2 Sep 2025 13:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820092; cv=none; b=AKrZVMEYK7qbtzY1di4g9WMRhsycgLgNRBdu4GiP/zBc/LXHS+dg1gAd2wM7jt78uQCHF0P+o+66vNGuK/DCIlZ1JWQw+Q9Vj4jY57NiM35C2kib+PtXtFSpATOKjP2QuQUbSbHlBNFLOSfVrIiY//O1l+I3Krj/CPTDppbiW94=
+	t=1756820095; cv=none; b=WPxRHDHkLx/Bwjt+YoZft1/r+jHhjPrue5eKyUt6jJ7K8RjSpTNGuCYciYfxBhwHDrKmSRUrfZMpJ8bagGGT62j7l1czZLkkNSnNw/MtcZKw2hiyUNh5iLle6wNRI5owSIIud9wD17ZKMVKe6H5cimc97deW2e2TU6DU8FgufO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820092; c=relaxed/simple;
-	bh=tqOn55OKjI7RkteyDNPABQ6yKr82DLEfKQKiaEN1O+U=;
+	s=arc-20240116; t=1756820095; c=relaxed/simple;
+	bh=E3FFS4ppZZGBfUp+W6PHGC3YixzxxEkQn+Myt3V3X90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC4AJHV8qsoz0ktPcEUV0LX/imZ+QmpfRryqEk20dgtoG2ozffbGogMlEjRL66vkFJYM7/oemorVbV0XuHOCzlIKJpi6z/k7PJeTb78+JQpSPo2vuar76lhlJC8Ll1ZAFuzgwwvTlQWFQscOCH91O4+oY/2ZxxnTXUjsrcuWxjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrS2Daxe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNHVcZ4Yy0s3Iv+mo4mgrmZD5bdK4in372vKZRqcrfbGD7tfGRA+8Gze2v3rJg1Bna2NHmP4Us/FcgPAXIaF7Yol+wuIoWnZu9wZgnVEMEohWofoHzR2NpvyiIdxM+y+Iu2L8BULlmoRSpUQzzW568ulk0dhYBBMz69va9sfLEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g52cGK2+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrS2Daxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEF4C4CEED;
-	Tue,  2 Sep 2025 13:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g52cGK2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AF4C4CEED;
+	Tue,  2 Sep 2025 13:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820091;
-	bh=tqOn55OKjI7RkteyDNPABQ6yKr82DLEfKQKiaEN1O+U=;
+	s=korg; t=1756820095;
+	bh=E3FFS4ppZZGBfUp+W6PHGC3YixzxxEkQn+Myt3V3X90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrS2DaxeerstxFiZi1EZzGF/j5fqoM4EZs3kTU79qGXanuBobYtJQvd5Yisqy3Hub
-	 vBgIZ+K7x8/2lrdj12HJpqI3xEhgX3lxlviP586KZN4oQasbxUKcW0qMQ2mx/Y3ZrA
-	 zJE7yvI3Ak53Z3mUOvkz8MZZo3ltywW1tTCjfAzw=
+	b=g52cGK2+POQmaSyRP69ypvEFtNFWvfubQEWSJybB3rbAfFWJuxyGpB9Cky3eydruR
+	 pGPN0p5paqLizTkFBJYjDuHqrTiJXIC2jcM02eJ6ZsMRcOUU0gOOjQTebenjjH5dzF
+	 Zp7XDCdd2jaOcdRvthhKfu6ojL4eiqlzj9eziBN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 64/95] fbnic: Move phylink resume out of service_task and into open/close
-Date: Tue,  2 Sep 2025 15:20:40 +0200
-Message-ID: <20250902131942.059054633@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>
+Subject: [PATCH 6.12 91/95] PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link up
+Date: Tue,  2 Sep 2025 15:21:07 +0200
+Message-ID: <20250902131943.094194915@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,120 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 6ede14a2c6365e7e5d855643c7c8390b5268c467 ]
+commit 80dc18a0cba8dea42614f021b20a04354b213d86 upstream.
 
-The fbnic driver was presenting with the following locking assert coming
-out of a PM resume:
-[   42.208116][  T164] RTNL: assertion failed at drivers/net/phy/phylink.c (2611)
-[   42.208492][  T164] WARNING: CPU: 1 PID: 164 at drivers/net/phy/phylink.c:2611 phylink_resume+0x190/0x1e0
-[   42.208872][  T164] Modules linked in:
-[   42.209140][  T164] CPU: 1 UID: 0 PID: 164 Comm: bash Not tainted 6.17.0-rc2-virtme #134 PREEMPT(full)
-[   42.209496][  T164] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-5.fc42 04/01/2014
-[   42.209861][  T164] RIP: 0010:phylink_resume+0x190/0x1e0
-[   42.210057][  T164] Code: 83 e5 01 0f 85 b0 fe ff ff c6 05 1c cd 3e 02 01 90 ba 33 0a 00 00 48 c7 c6 20 3a 1d a5 48 c7 c7 e0 3e 1d a5 e8 21 b8 90 fe 90 <0f> 0b 90 90 e9 86 fe ff ff e8 42 ea 1f ff e9 e2 fe ff ff 48 89 ef
-[   42.210708][  T164] RSP: 0018:ffffc90000affbd8 EFLAGS: 00010296
-[   42.210983][  T164] RAX: 0000000000000000 RBX: ffff8880078d8400 RCX: 0000000000000000
-[   42.211235][  T164] RDX: 0000000000000000 RSI: 1ffffffff4f10938 RDI: 0000000000000001
-[   42.211466][  T164] RBP: 0000000000000000 R08: ffffffffa2ae79ea R09: fffffbfff4b3eb84
-[   42.211707][  T164] R10: 0000000000000003 R11: 0000000000000000 R12: ffff888007ad8000
-[   42.211997][  T164] R13: 0000000000000002 R14: ffff888006a18800 R15: ffffffffa34c59e0
-[   42.212234][  T164] FS:  00007f0dc8e39740(0000) GS:ffff88808f51f000(0000) knlGS:0000000000000000
-[   42.212505][  T164] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   42.212704][  T164] CR2: 00007f0dc8e9fe10 CR3: 000000000b56d003 CR4: 0000000000772ef0
-[   42.213227][  T164] PKRU: 55555554
-[   42.213366][  T164] Call Trace:
-[   42.213483][  T164]  <TASK>
-[   42.213565][  T164]  __fbnic_pm_attach.isra.0+0x8e/0xa0
-[   42.213725][  T164]  pci_reset_function+0x116/0x1d0
-[   42.213895][  T164]  reset_store+0xa0/0x100
-[   42.214025][  T164]  ? pci_dev_reset_attr_is_visible+0x50/0x50
-[   42.214221][  T164]  ? sysfs_file_kobj+0xc1/0x1e0
-[   42.214374][  T164]  ? sysfs_kf_write+0x65/0x160
-[   42.214526][  T164]  kernfs_fop_write_iter+0x2f8/0x4c0
-[   42.214677][  T164]  ? kernfs_vma_page_mkwrite+0x1f0/0x1f0
-[   42.214836][  T164]  new_sync_write+0x308/0x6f0
-[   42.214987][  T164]  ? __lock_acquire+0x34c/0x740
-[   42.215135][  T164]  ? new_sync_read+0x6f0/0x6f0
-[   42.215288][  T164]  ? lock_acquire.part.0+0xbc/0x260
-[   42.215440][  T164]  ? ksys_write+0xff/0x200
-[   42.215590][  T164]  ? perf_trace_sched_switch+0x6d0/0x6d0
-[   42.215742][  T164]  vfs_write+0x65e/0xbb0
-[   42.215876][  T164]  ksys_write+0xff/0x200
-[   42.215994][  T164]  ? __ia32_sys_read+0xc0/0xc0
-[   42.216141][  T164]  ? do_user_addr_fault+0x269/0x9f0
-[   42.216292][  T164]  ? rcu_is_watching+0x15/0xd0
-[   42.216442][  T164]  do_syscall_64+0xbb/0x360
-[   42.216591][  T164]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[   42.216784][  T164] RIP: 0033:0x7f0dc8ea9986
+As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link speeds
+greater than 5.0 GT/s, software must wait a minimum of 100 ms after Link
+training completes before sending a Configuration Request.
 
-A bit of digging showed that we were invoking the phylink_resume as a part
-of the fbnic_up path when we were enabling the service task while not
-holding the RTNL lock. We should be enabling this sooner as a part of the
-ndo_open path and then just letting the service task come online later.
-This will help to enforce the correct locking and brings the phylink
-interface online at the same time as the network interface, instead of at a
-later time.
+Add this delay in dw_pcie_wait_for_link(), after the link is reported as
+up. The delay will only be performed in the success case where the link
+came up.
 
-I tested this on QEMU to verify this was working by putting the system to
-sleep using "echo mem > /sys/power/state" to put the system to sleep in the
-guest and then using the command "system_wakeup" in the QEMU monitor.
+DWC glue drivers that have a link up IRQ (drivers that set
+use_linkup_irq = true) do not call dw_pcie_wait_for_link(), instead they
+perform this delay in their threaded link up IRQ handler.
 
-Fixes: 69684376eed5 ("eth: fbnic: Add link detection")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/175616257316.1963577.12238158800417771119.stgit@ahduyck-xeon-server.home.arpa
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Link: https://patch.msgid.link/20250625102347.1205584-14-cassel@kernel.org
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 4 ++++
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c    | 2 --
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index 79e94632533c8..a8c95b1732f4d 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -53,6 +53,8 @@ int __fbnic_open(struct fbnic_net *fbn)
- 	fbnic_bmc_rpc_init(fbd);
- 	fbnic_rss_reinit(fbd, fbn);
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -655,6 +655,14 @@ int dw_pcie_wait_for_link(struct dw_pcie
+ 		return -ETIMEDOUT;
+ 	}
  
-+	phylink_resume(fbn->phylink);
++	/*
++	 * As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link
++	 * speeds greater than 5.0 GT/s, software must wait a minimum of 100 ms
++	 * after Link training completes before sending a Configuration Request.
++	 */
++	if (pci->max_link_speed > 2)
++		msleep(PCIE_RESET_CONFIG_WAIT_MS);
 +
- 	return 0;
- release_ownership:
- 	fbnic_fw_xmit_ownership_msg(fbn->fbd, false);
-@@ -79,6 +81,8 @@ static int fbnic_stop(struct net_device *netdev)
- {
- 	struct fbnic_net *fbn = netdev_priv(netdev);
+ 	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 	val = dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKSTA);
  
-+	phylink_suspend(fbn->phylink, fbnic_bmc_present(fbn->fbd));
-+
- 	fbnic_down(fbn);
- 	fbnic_pcs_irq_disable(fbn->fbd);
- 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index 268489b15616f..72bdc6c76c0c5 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -116,14 +116,12 @@ static void fbnic_service_task_start(struct fbnic_net *fbn)
- 	struct fbnic_dev *fbd = fbn->fbd;
- 
- 	schedule_delayed_work(&fbd->service_task, HZ);
--	phylink_resume(fbn->phylink);
- }
- 
- static void fbnic_service_task_stop(struct fbnic_net *fbn)
- {
- 	struct fbnic_dev *fbd = fbn->fbd;
- 
--	phylink_suspend(fbn->phylink, fbnic_bmc_present(fbd));
- 	cancel_delayed_work(&fbd->service_task);
- }
- 
--- 
-2.50.1
-
 
 
