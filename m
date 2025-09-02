@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EC4305062;
-	Tue,  2 Sep 2025 13:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435D4305076;
+	Tue,  2 Sep 2025 13:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819887; cv=none; b=C93sjV5UJ/VlH5Didrt0GUeaDvZT9wxX++VIWWXtlS/p/BouXGc7bLCHVfz8lugi+5Lf7MO6N49vMDfYkMcN78wnNE36ciqhjYxWXaB4HCAKNmh5UjMpcWol9qMxHPlqgXcLdPWvXLDQSDXa8b21KR+YSGv36gy5gikoOqCFpZk=
+	t=1756819890; cv=none; b=pPOd07aEORQ+h0kJXBQH+uQS8tLOTWFWdD+wLVbQnHLq8pqhnd/OurmBw694MTQJAscvgQoeczIh2XIKFBtrDoUNDQk6OTsuVHsBR39du4dacLkCBVBF0VPsSa2/CVOq2tNH+bznd/IWuU4Gu5NnWKSWlU1GNYhy8YVWp0gnoZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819887; c=relaxed/simple;
-	bh=reN5bVgGfhRWgX9VDoIsZ+p2z6goOl1FCsqlLi3qmQE=;
+	s=arc-20240116; t=1756819890; c=relaxed/simple;
+	bh=A/H7RSy1GPaI7c8IMD/jzCg+mM9b7PGRlFLH97bMrPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tWMv9yqg47ibRee1vpiFdEQPfMqhHxOyoNxfrNtJYRUdYSRWw86uH7DLOn62F4aSK+HFqT8RmYXDsgOYi3Uyw6mW4UzRUQcJiOeynVhMOXYXUGzolzvDq1LgTNWwMNFBQD4s7i/41pDzcWgeTcRWq2qkZNsDuiZ857R+wCZ0VCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGYF2ON2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vB6Uj8S6lvnCh9V8sCzFDSmiZXMmRdr3DqfbemWXC/PGoFXN4UZEzxMEDZezBxfUaha63dkKhi3XB2FUr7IU4gaHCWlGFGCqqAeJ64BX5Z5GQFFWH9Ms/6c2be1JtuRuHzqPTGMNeS/Ofr6ohFJZbpBe0Wqe9h15xPLkSDt4j/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm43NTLx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGYF2ON2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65591C4CEED;
-	Tue,  2 Sep 2025 13:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm43NTLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94F5C4CEF4;
+	Tue,  2 Sep 2025 13:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819886;
-	bh=reN5bVgGfhRWgX9VDoIsZ+p2z6goOl1FCsqlLi3qmQE=;
+	s=korg; t=1756819890;
+	bh=A/H7RSy1GPaI7c8IMD/jzCg+mM9b7PGRlFLH97bMrPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGYF2ON2ROSzJsMH42CaN5g1S+WOz7Wf1Yj/ZIS6jdzhXXGV7+cpVUEN2u36Aflhj
-	 D88QGLz73B5Km+0hkFC/2hQFxjd+2GpfbYd3u7kQChnvDTKyR6+z3gMrvRGRNW4gpT
-	 rVadh6jieazfTpU2AkGu0E1EjFYUjL/4XTMBH0UE=
+	b=Qm43NTLx1adr4Clwg+M/hXIS8ldS5LPWVsn/aRpJIKgEegCGfZdQTsEo1WEOHHPxW
+	 an19GTshK+9FjSqMhJpoaVugDiywaFLGqEvKLMUYroLCU+VF19OL/a8S1VCj8bhJF7
+	 D+4mVyXzLBVp4Q2g5X1kw7MoH3Hsm8r7G5bJbN0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E5=8D=A2=E5=9B=BD=E5=AE=8F?= <luguohong@xiaomi.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Ye Weihua <yeweihua4@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 26/95] HID: input: rename hidinput_set_battery_charge_status()
-Date: Tue,  2 Sep 2025 15:20:02 +0200
-Message-ID: <20250902131940.615571866@linuxfoundation.org>
+Subject: [PATCH 6.12 03/95] trace/fgraph: Fix the warning caused by missing unregister notifier
+Date: Tue,  2 Sep 2025 15:19:39 +0200
+Message-ID: <20250902131939.742134593@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -46,149 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Ye Weihua <yeweihua4@huawei.com>
 
-[ Upstream commit a82231b2a8712d0218fc286a9b0da328d419a3f4 ]
+[ Upstream commit edede7a6dcd7435395cf757d053974aaab6ab1c2 ]
 
-In preparation for a patch fixing a bug affecting
-hidinput_set_battery_charge_status(), rename the function to
-hidinput_update_battery_charge_status() and move it up so it can be used
-by hidinput_update_battery().
+This warning was triggered during testing on v6.16:
 
-Refactor, no functional changes.
+notifier callback ftrace_suspend_notifier_call already registered
+WARNING: CPU: 2 PID: 86 at kernel/notifier.c:23 notifier_chain_register+0x44/0xb0
+...
+Call Trace:
+ <TASK>
+ blocking_notifier_chain_register+0x34/0x60
+ register_ftrace_graph+0x330/0x410
+ ftrace_profile_write+0x1e9/0x340
+ vfs_write+0xf8/0x420
+ ? filp_flush+0x8a/0xa0
+ ? filp_close+0x1f/0x30
+ ? do_dup2+0xaf/0x160
+ ksys_write+0x65/0xe0
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Tested-by: 卢国宏 <luguohong@xiaomi.com>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: e94536e1d181 ("HID: input: report battery status changes immediately")
+When writing to the function_profile_enabled interface, the notifier was
+not unregistered after start_graph_tracing failed, causing a warning the
+next time function_profile_enabled was written.
+
+Fixed by adding unregister_pm_notifier in the exception path.
+
+Link: https://lore.kernel.org/20250818073332.3890629-1-yeweihua4@huawei.com
+Fixes: 4a2b8dda3f870 ("tracing/function-graph-tracer: fix a regression while suspend to disk")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Ye Weihua <yeweihua4@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input-test.c | 10 +++++-----
- drivers/hid/hid-input.c      | 38 ++++++++++++++++++------------------
- 2 files changed, 24 insertions(+), 24 deletions(-)
+ kernel/trace/fgraph.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-input-test.c b/drivers/hid/hid-input-test.c
-index 77c2d45ac62a7..6f5c71660d823 100644
---- a/drivers/hid/hid-input-test.c
-+++ b/drivers/hid/hid-input-test.c
-@@ -7,7 +7,7 @@
- 
- #include <kunit/test.h>
- 
--static void hid_test_input_set_battery_charge_status(struct kunit *test)
-+static void hid_test_input_update_battery_charge_status(struct kunit *test)
- {
- 	struct hid_device *dev;
- 	bool handled;
-@@ -15,15 +15,15 @@ static void hid_test_input_set_battery_charge_status(struct kunit *test)
- 	dev = kunit_kzalloc(test, sizeof(*dev), GFP_KERNEL);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
- 
--	handled = hidinput_set_battery_charge_status(dev, HID_DG_HEIGHT, 0);
-+	handled = hidinput_update_battery_charge_status(dev, HID_DG_HEIGHT, 0);
- 	KUNIT_EXPECT_FALSE(test, handled);
- 	KUNIT_EXPECT_EQ(test, dev->battery_charge_status, POWER_SUPPLY_STATUS_UNKNOWN);
- 
--	handled = hidinput_set_battery_charge_status(dev, HID_BAT_CHARGING, 0);
-+	handled = hidinput_update_battery_charge_status(dev, HID_BAT_CHARGING, 0);
- 	KUNIT_EXPECT_TRUE(test, handled);
- 	KUNIT_EXPECT_EQ(test, dev->battery_charge_status, POWER_SUPPLY_STATUS_DISCHARGING);
- 
--	handled = hidinput_set_battery_charge_status(dev, HID_BAT_CHARGING, 1);
-+	handled = hidinput_update_battery_charge_status(dev, HID_BAT_CHARGING, 1);
- 	KUNIT_EXPECT_TRUE(test, handled);
- 	KUNIT_EXPECT_EQ(test, dev->battery_charge_status, POWER_SUPPLY_STATUS_CHARGING);
- }
-@@ -63,7 +63,7 @@ static void hid_test_input_get_battery_property(struct kunit *test)
- }
- 
- static struct kunit_case hid_input_tests[] = {
--	KUNIT_CASE(hid_test_input_set_battery_charge_status),
-+	KUNIT_CASE(hid_test_input_update_battery_charge_status),
- 	KUNIT_CASE(hid_test_input_get_battery_property),
- 	{ }
- };
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 9d80635a91ebd..b372b74f3e24b 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -595,6 +595,20 @@ static void hidinput_cleanup_battery(struct hid_device *dev)
- 	dev->battery = NULL;
- }
- 
-+static bool hidinput_update_battery_charge_status(struct hid_device *dev,
-+						  unsigned int usage, int value)
-+{
-+	switch (usage) {
-+	case HID_BAT_CHARGING:
-+		dev->battery_charge_status = value ?
-+					     POWER_SUPPLY_STATUS_CHARGING :
-+					     POWER_SUPPLY_STATUS_DISCHARGING;
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- static void hidinput_update_battery(struct hid_device *dev, int value)
- {
- 	int capacity;
-@@ -617,20 +631,6 @@ static void hidinput_update_battery(struct hid_device *dev, int value)
- 		power_supply_changed(dev->battery);
+diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+index c12335499ec91..2eed8bc672f91 100644
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -1316,6 +1316,7 @@ int register_ftrace_graph(struct fgraph_ops *gops)
+ 		ftrace_graph_active--;
+ 		gops->saved_func = NULL;
+ 		fgraph_lru_release_index(i);
++		unregister_pm_notifier(&ftrace_suspend_notifier);
  	}
+ 	return ret;
  }
--
--static bool hidinput_set_battery_charge_status(struct hid_device *dev,
--					       unsigned int usage, int value)
--{
--	switch (usage) {
--	case HID_BAT_CHARGING:
--		dev->battery_charge_status = value ?
--					     POWER_SUPPLY_STATUS_CHARGING :
--					     POWER_SUPPLY_STATUS_DISCHARGING;
--		return true;
--	}
--
--	return false;
--}
- #else  /* !CONFIG_HID_BATTERY_STRENGTH */
- static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
- 				  struct hid_field *field, bool is_percentage)
-@@ -642,14 +642,14 @@ static void hidinput_cleanup_battery(struct hid_device *dev)
- {
- }
- 
--static void hidinput_update_battery(struct hid_device *dev, int value)
-+static bool hidinput_update_battery_charge_status(struct hid_device *dev,
-+						  unsigned int usage, int value)
- {
-+	return false;
- }
- 
--static bool hidinput_set_battery_charge_status(struct hid_device *dev,
--					       unsigned int usage, int value)
-+static void hidinput_update_battery(struct hid_device *dev, int value)
- {
--	return false;
- }
- #endif	/* CONFIG_HID_BATTERY_STRENGTH */
- 
-@@ -1515,7 +1515,7 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct
- 		return;
- 
- 	if (usage->type == EV_PWR) {
--		bool handled = hidinput_set_battery_charge_status(hid, usage->hid, value);
-+		bool handled = hidinput_update_battery_charge_status(hid, usage->hid, value);
- 
- 		if (!handled)
- 			hidinput_update_battery(hid, value);
 -- 
 2.50.1
 
