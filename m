@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD7D313551;
-	Tue,  2 Sep 2025 13:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041C731355F;
+	Tue,  2 Sep 2025 13:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820415; cv=none; b=g9eP2NsTDEcCJVsXXcDdnTuiLVr8uUZ1uvLIM5G72kjwag+W74wvkVDC/aOAGg/PuvFc7cDrWS99tBIqfC+7ImWjm5VPzLRpa9afS8J+kxEYUS/+1BbVYkZnYEjXjSOc082TrMxeDHKZx3ym0oyvElf3jIj8jwp6BN7QZvLyAPU=
+	t=1756820418; cv=none; b=OIfNt6v7hA3YxprYUeA3W6n8XSb3gFUCWZeA5KEllpIwMEuZtnqVcZIUTy2MpaS/1bdD9pTFTx1sxJhaH2nheawHCS2+kUzb7XuBv1dkhm0llrlfuS8k4Lj9Z1sXweStWort+1GFuR6ac9xE58bkNE9rG0OyoJXlRUaahccB+18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820415; c=relaxed/simple;
-	bh=qI4qAWiHru/RpwMB1JhSZW4ed+Svs3QUhaV+QtidlrA=;
+	s=arc-20240116; t=1756820418; c=relaxed/simple;
+	bh=aUkqaXwORWYVFnslV+17LGgsGflijgf/63M0lMKQNdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3erm6dGELSKlQCNC5VlVqs3vMLM21MCiJ72jyHW6VfwhEVcrxxzz5g12QXG/xzmKZt3iq4Nvr6l8Xcvhr3SFdKvtub1rlecFdqiTcK0aQZU82UZVzSZDJLFBl4tI0V5rmPfGQ3AaGve9ajevsCH1SRmdx3jpa18ixUESu/ZIfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBynRo4W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NoAlGTN805jAmEwjPUDA2lLBW3fFy4qb6oKr3IgW2EbRRyz7e7SIc+18GHx6hmfZaG5kjzvytrmvRiqXvXVrSv8sHPS55wVvGbgDgnhxKVDCnun71E++WJ4xgYp53O00i9FdBDFQltY+0TFdjWpCZUmaGsUCRPQVI/kEpe/3Ys4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IL7gbeqK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBynRo4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D921C4CEF5;
-	Tue,  2 Sep 2025 13:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IL7gbeqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74626C4CEED;
+	Tue,  2 Sep 2025 13:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820414;
-	bh=qI4qAWiHru/RpwMB1JhSZW4ed+Svs3QUhaV+QtidlrA=;
+	s=korg; t=1756820417;
+	bh=aUkqaXwORWYVFnslV+17LGgsGflijgf/63M0lMKQNdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBynRo4WkBpSlpUEu3aKlCLPAbtHTbOWfikHqwPjyDk8J1yHbbpg6SDS+EnO4C+/E
-	 mNJC1zryDJkrH6c/X9Bc8/TJymf0vmAfQpyBkOkgK4dUBMhITify2Ah69uX4Pzu+mq
-	 iYFWlbn7+pD4ZAa/Mp7zJoNrdM9B64DVhpqK6JeE=
+	b=IL7gbeqKPaoybZPwQaGtW3Ep3oxjw7uyvwSm0uomr1EVfBLS9UEsEvWdlqe0x2rJ7
+	 hTl/M5syxfoTESs1VdaG3v6Wydc12OrZw7MYue6Zgx3JZPdOoAVUxoKf/6uuZzJyQO
+	 5ghhnuTPz3OaTVlpEBiTJkNM8b5d3rfkUtDmv6Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Shpakovskiy <pashpakovskii@salutedevices.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+1741b56d54536f4ec349@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/50] Bluetooth: hci_sync: fix set_local_name race condition
-Date: Tue,  2 Sep 2025 15:21:12 +0200
-Message-ID: <20250902131931.368272294@linuxfoundation.org>
+Subject: [PATCH 6.1 22/50] atm: atmtcp: Prevent arbitrary write in atmtcp_recv_control().
+Date: Tue,  2 Sep 2025 15:21:13 +0200
+Message-ID: <20250902131931.409585467@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -52,88 +52,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Shpakovskiy <pashpakovskii@salutedevices.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 6bbd0d3f0c23fc53c17409dd7476f38ae0ff0cd9 ]
+[ Upstream commit ec79003c5f9d2c7f9576fc69b8dbda80305cbe3a ]
 
-Function set_name_sync() uses hdev->dev_name field to send
-HCI_OP_WRITE_LOCAL_NAME command, but copying from data to hdev->dev_name
-is called after mgmt cmd was queued, so it is possible that function
-set_name_sync() will read old name value.
+syzbot reported the splat below. [0]
 
-This change adds name as a parameter for function hci_update_name_sync()
-to avoid race condition.
+When atmtcp_v_open() or atmtcp_v_close() is called via connect()
+or close(), atmtcp_send_control() is called to send an in-kernel
+special message.
 
-Fixes: 6f6ff38a1e14 ("Bluetooth: hci_sync: Convert MGMT_OP_SET_LOCAL_NAME")
-Signed-off-by: Pavel Shpakovskiy <pashpakovskii@salutedevices.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The message has ATMTCP_HDR_MAGIC in atmtcp_control.hdr.length.
+Also, a pointer of struct atm_vcc is set to atmtcp_control.vcc.
+
+The notable thing is struct atmtcp_control is uAPI but has a
+space for an in-kernel pointer.
+
+  struct atmtcp_control {
+  	struct atmtcp_hdr hdr;	/* must be first */
+  ...
+  	atm_kptr_t vcc;		/* both directions */
+  ...
+  } __ATM_API_ALIGN;
+
+  typedef struct { unsigned char _[8]; } __ATM_API_ALIGN atm_kptr_t;
+
+The special message is processed in atmtcp_recv_control() called
+from atmtcp_c_send().
+
+atmtcp_c_send() is vcc->dev->ops->send() and called from 2 paths:
+
+  1. .ndo_start_xmit() (vcc->send() == atm_send_aal0())
+  2. vcc_sendmsg()
+
+The problem is sendmsg() does not validate the message length and
+userspace can abuse atmtcp_recv_control() to overwrite any kptr
+by atmtcp_control.
+
+Let's add a new ->pre_send() hook to validate messages from sendmsg().
+
+[0]:
+Oops: general protection fault, probably for non-canonical address 0xdffffc00200000ab: 0000 [#1] SMP KASAN PTI
+KASAN: probably user-memory-access in range [0x0000000100000558-0x000000010000055f]
+CPU: 0 UID: 0 PID: 5865 Comm: syz-executor331 Not tainted 6.17.0-rc1-syzkaller-00215-gbab3ce404553 #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+RIP: 0010:atmtcp_recv_control drivers/atm/atmtcp.c:93 [inline]
+RIP: 0010:atmtcp_c_send+0x1da/0x950 drivers/atm/atmtcp.c:297
+Code: 4d 8d 75 1a 4c 89 f0 48 c1 e8 03 42 0f b6 04 20 84 c0 0f 85 15 06 00 00 41 0f b7 1e 4d 8d b7 60 05 00 00 4c 89 f0 48 c1 e8 03 <42> 0f b6 04 20 84 c0 0f 85 13 06 00 00 66 41 89 1e 4d 8d 75 1c 4c
+RSP: 0018:ffffc90003f5f810 EFLAGS: 00010203
+RAX: 00000000200000ab RBX: 0000000000000000 RCX: 0000000000000000
+RDX: ffff88802a510000 RSI: 00000000ffffffff RDI: ffff888030a6068c
+RBP: ffff88802699fb40 R08: ffff888030a606eb R09: 1ffff1100614c0dd
+R10: dffffc0000000000 R11: ffffffff8718fc40 R12: dffffc0000000000
+R13: ffff888030a60680 R14: 000000010000055f R15: 00000000ffffffff
+FS:  00007f8d7e9236c0(0000) GS:ffff888125c1c000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000000045ad50 CR3: 0000000075bde000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ vcc_sendmsg+0xa10/0xc60 net/atm/common.c:645
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ __sock_sendmsg+0x219/0x270 net/socket.c:729
+ ____sys_sendmsg+0x505/0x830 net/socket.c:2614
+ ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2668
+ __sys_sendmsg net/socket.c:2700 [inline]
+ __do_sys_sendmsg net/socket.c:2705 [inline]
+ __se_sys_sendmsg net/socket.c:2703 [inline]
+ __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2703
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f8d7e96a4a9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f8d7e923198 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f8d7e9f4308 RCX: 00007f8d7e96a4a9
+RDX: 0000000000000000 RSI: 0000200000000240 RDI: 0000000000000005
+RBP: 00007f8d7e9f4300 R08: 65732f636f72702f R09: 65732f636f72702f
+R10: 65732f636f72702f R11: 0000000000000246 R12: 00007f8d7e9c10ac
+R13: 00007f8d7e9231a0 R14: 0000200000000200 R15: 0000200000000250
+ </TASK>
+Modules linked in:
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+1741b56d54536f4ec349@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68a6767c.050a0220.3d78fd.0011.GAE@google.com/
+Tested-by: syzbot+1741b56d54536f4ec349@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250821021901.2814721-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_sync.h | 2 +-
- net/bluetooth/hci_sync.c         | 6 +++---
- net/bluetooth/mgmt.c             | 5 ++++-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/atm/atmtcp.c   | 17 ++++++++++++++---
+ include/linux/atmdev.h |  1 +
+ net/atm/common.c       | 15 ++++++++++++---
+ 3 files changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index 3a7658d660224..a8b106d884d41 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -65,7 +65,7 @@ int hci_update_class_sync(struct hci_dev *hdev);
- 
- int hci_update_eir_sync(struct hci_dev *hdev);
- int hci_update_class_sync(struct hci_dev *hdev);
--int hci_update_name_sync(struct hci_dev *hdev);
-+int hci_update_name_sync(struct hci_dev *hdev, const u8 *name);
- int hci_write_ssp_mode_sync(struct hci_dev *hdev, u8 mode);
- 
- int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index acff47da799aa..965b0f2b43a72 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3424,13 +3424,13 @@ int hci_update_scan_sync(struct hci_dev *hdev)
- 	return hci_write_scan_enable_sync(hdev, scan);
+diff --git a/drivers/atm/atmtcp.c b/drivers/atm/atmtcp.c
+index ff558908897f3..9c83fb29b2f1b 100644
+--- a/drivers/atm/atmtcp.c
++++ b/drivers/atm/atmtcp.c
+@@ -279,6 +279,19 @@ static struct atm_vcc *find_vcc(struct atm_dev *dev, short vpi, int vci)
+         return NULL;
  }
  
--int hci_update_name_sync(struct hci_dev *hdev)
-+int hci_update_name_sync(struct hci_dev *hdev, const u8 *name)
- {
- 	struct hci_cp_write_local_name cp;
- 
- 	memset(&cp, 0, sizeof(cp));
- 
--	memcpy(cp.name, hdev->dev_name, sizeof(cp.name));
-+	memcpy(cp.name, name, sizeof(cp.name));
- 
- 	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_LOCAL_NAME,
- 					    sizeof(cp), &cp,
-@@ -3482,7 +3482,7 @@ int hci_powered_update_sync(struct hci_dev *hdev)
- 			hci_write_fast_connectable_sync(hdev, false);
- 		hci_update_scan_sync(hdev);
- 		hci_update_class_sync(hdev);
--		hci_update_name_sync(hdev);
-+		hci_update_name_sync(hdev, hdev->dev_name);
- 		hci_update_eir_sync(hdev);
- 	}
- 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 919e1bae2b269..27876512c63a4 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3897,8 +3897,11 @@ static void set_name_complete(struct hci_dev *hdev, void *data, int err)
- 
- static int set_name_sync(struct hci_dev *hdev, void *data)
- {
-+	struct mgmt_pending_cmd *cmd = data;
-+	struct mgmt_cp_set_local_name *cp = cmd->param;
++static int atmtcp_c_pre_send(struct atm_vcc *vcc, struct sk_buff *skb)
++{
++	struct atmtcp_hdr *hdr;
 +
- 	if (lmp_bredr_capable(hdev)) {
--		hci_update_name_sync(hdev);
-+		hci_update_name_sync(hdev, cp->name);
- 		hci_update_eir_sync(hdev);
- 	}
++	if (skb->len < sizeof(struct atmtcp_hdr))
++		return -EINVAL;
++
++	hdr = (struct atmtcp_hdr *)skb->data;
++	if (hdr->length == ATMTCP_HDR_MAGIC)
++		return -EINVAL;
++
++	return 0;
++}
  
+ static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
+ {
+@@ -288,9 +301,6 @@ static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
+ 	struct sk_buff *new_skb;
+ 	int result = 0;
+ 
+-	if (skb->len < sizeof(struct atmtcp_hdr))
+-		goto done;
+-
+ 	dev = vcc->dev_data;
+ 	hdr = (struct atmtcp_hdr *) skb->data;
+ 	if (hdr->length == ATMTCP_HDR_MAGIC) {
+@@ -347,6 +357,7 @@ static const struct atmdev_ops atmtcp_v_dev_ops = {
+ 
+ static const struct atmdev_ops atmtcp_c_dev_ops = {
+ 	.close		= atmtcp_c_close,
++	.pre_send	= atmtcp_c_pre_send,
+ 	.send		= atmtcp_c_send
+ };
+ 
+diff --git a/include/linux/atmdev.h b/include/linux/atmdev.h
+index 45f2f278b50a8..70807c679f1ab 100644
+--- a/include/linux/atmdev.h
++++ b/include/linux/atmdev.h
+@@ -185,6 +185,7 @@ struct atmdev_ops { /* only send is required */
+ 	int (*compat_ioctl)(struct atm_dev *dev,unsigned int cmd,
+ 			    void __user *arg);
+ #endif
++	int (*pre_send)(struct atm_vcc *vcc, struct sk_buff *skb);
+ 	int (*send)(struct atm_vcc *vcc,struct sk_buff *skb);
+ 	int (*send_bh)(struct atm_vcc *vcc, struct sk_buff *skb);
+ 	int (*send_oam)(struct atm_vcc *vcc,void *cell,int flags);
+diff --git a/net/atm/common.c b/net/atm/common.c
+index 9cc82acbc7358..48bb3f66a3f2a 100644
+--- a/net/atm/common.c
++++ b/net/atm/common.c
+@@ -635,18 +635,27 @@ int vcc_sendmsg(struct socket *sock, struct msghdr *m, size_t size)
+ 
+ 	skb->dev = NULL; /* for paths shared with net_device interfaces */
+ 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
+-		atm_return_tx(vcc, skb);
+-		kfree_skb(skb);
+ 		error = -EFAULT;
+-		goto out;
++		goto free_skb;
+ 	}
+ 	if (eff != size)
+ 		memset(skb->data + size, 0, eff-size);
++
++	if (vcc->dev->ops->pre_send) {
++		error = vcc->dev->ops->pre_send(vcc, skb);
++		if (error)
++			goto free_skb;
++	}
++
+ 	error = vcc->dev->ops->send(vcc, skb);
+ 	error = error ? error : size;
+ out:
+ 	release_sock(sk);
+ 	return error;
++free_skb:
++	atm_return_tx(vcc, skb);
++	kfree_skb(skb);
++	goto out;
+ }
+ 
+ __poll_t vcc_poll(struct file *file, struct socket *sock, poll_table *wait)
 -- 
 2.50.1
 
