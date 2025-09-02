@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243372D9ECA;
-	Tue,  2 Sep 2025 13:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6233043D8;
+	Tue,  2 Sep 2025 13:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820162; cv=none; b=PT6Iom5/6vSs9fkSTYFek9k+kRn6lf25NetGmBP/Udi4rygVdmxRunMQvYThOY3mpn6rA7bM3P5Ikltv2gtutMASADLxc/RTMZvmJx1GQCyvx0/Fjf+OsAENXuXYyA02jfXE6W99d0pwEgBL1Dz16HJ3lu0EyRHz9ane8js9biM=
+	t=1756820165; cv=none; b=uGnd6aJbyUxdQ7VEeUth/xRk+Y6gwhpXutFF7T+0eM2sLirdOSbOpQ8mI/Xz/wg/q02lQj6Pm58hmj/JL2HFaUZRZxu+SNqZfIJJqUTuXdbxd9DHoodSvx3aMpM5BpONe5NveOYnDb1b67zCwcHW0wbLMGDer2D/bMb3tyM7guY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820162; c=relaxed/simple;
-	bh=ZQuoZ3hcDlXNFq/bskgGNkr5OgjjUeKcI6LgVOM02Zw=;
+	s=arc-20240116; t=1756820165; c=relaxed/simple;
+	bh=zNnpgIpx61CkChnSQzsKnM3zGcccRdvl/44aWKDhmQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IiC8/fKLMQiUqIdZPV3jBLwz0OuCULC00NdQ5Mt3ufMCOMkmSknfnTTP63aUGU8dmPVywtZdvWyIabfYGhGu4AZQ6Y6RqV2+tlqXtK9TryvyJ7aP9HzEfFTUXcfLKxwNo28X73RChryFyPd6ckXZgrUiIedEuwmOdm9fQu7ltfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSlYn5MT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LK1sfU2OHYtToonn7aDxtc/ZTbKHH92ZksQAZYWQO3bPhrr/1p4k+2SGOR21tecYXEZVRyHtBO9+3yyvFlg1C++MwZfGSE6vy7FKAruZPgU/7xL7u/d5XoS67b+hqbIXaPsjNlnWl+I/wfw6pjC0jb5dnKUZcYK5EDN9dF0+3/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rz4xm0YP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSlYn5MT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87655C4CEF5;
-	Tue,  2 Sep 2025 13:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rz4xm0YP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D20C4CEF5;
+	Tue,  2 Sep 2025 13:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820162;
-	bh=ZQuoZ3hcDlXNFq/bskgGNkr5OgjjUeKcI6LgVOM02Zw=;
+	s=korg; t=1756820165;
+	bh=zNnpgIpx61CkChnSQzsKnM3zGcccRdvl/44aWKDhmQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSlYn5MT/sIPlIUPH+4U/ujiaXqcVijRtKhdUWLPsitfj0cIeiFGSB33XST+2z+Wh
-	 A+6m0/zzGP0cPEDJij+QpeOqqDkPjSR/JswlBq9lghEEcq/0oUNmNNl1rOsa9zl+lw
-	 N3GprR24RL1akXshabNyMMUn/C7ocVHvbUtgSUc8=
+	b=rz4xm0YPDa/szRWKTfQmefnpJJIOlQodrYKDudPUx0TUhRL/j/eQSfFB3Ck/9/iuP
+	 1EpuzFPShz2WyowWgn2ZoaZuO5mibYUhzhdJyDzAwBvxJXAuOE+hSbYI/HwLWhGSvO
+	 2Crr9VgEbi1Rq5aSpWzX5iP4y6ufRfVtF/woHqqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 18/75] drm/msm: Defer fd_install in SUBMIT ioctl
-Date: Tue,  2 Sep 2025 15:20:30 +0200
-Message-ID: <20250902131935.828698098@linuxfoundation.org>
+Subject: [PATCH 6.6 19/75] powerpc/kvm: Fix ifdef to remove build warning
+Date: Tue,  2 Sep 2025 15:20:31 +0200
+Message-ID: <20250902131935.870564609@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -51,57 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit f22853435bbd1e9836d0dce7fd99c040b94c2bf1 ]
+[ Upstream commit 88688a2c8ac6c8036d983ad8b34ce191c46a10aa ]
 
-Avoid fd_install() until there are no more potential error paths, to
-avoid put_unused_fd() after the fd is made visible to userspace.
+When compiling for pseries or powernv defconfig with "make C=1",
+these warning were reported bu sparse tool in powerpc/kernel/kvm.c
 
-Fixes: 68dc6c2d5eec ("drm/msm: Fix submit error-path leaks")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/665363/
+arch/powerpc/kernel/kvm.c:635:9: warning: switch with no cases
+arch/powerpc/kernel/kvm.c:646:9: warning: switch with no cases
+
+Currently #ifdef were added after the switch case which are specific
+for BOOKE and PPC_BOOK3S_32. These are not enabled in pseries/powernv
+defconfig. Fix it by moving the #ifdef before switch(){}
+
+Fixes: cbe487fac7fc0 ("KVM: PPC: Add mtsrin PV code")
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250518044107.39928-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/powerpc/kernel/kvm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index bbe4f1665b603..dc142f9e4f602 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -981,12 +981,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 
- 	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
- 		sync_file = sync_file_create(submit->user_fence);
--		if (!sync_file) {
-+		if (!sync_file)
- 			ret = -ENOMEM;
--		} else {
--			fd_install(out_fence_fd, sync_file->file);
--			args->fence_fd = out_fence_fd;
--		}
+diff --git a/arch/powerpc/kernel/kvm.c b/arch/powerpc/kernel/kvm.c
+index 5b3c093611baf..7209d00a9c257 100644
+--- a/arch/powerpc/kernel/kvm.c
++++ b/arch/powerpc/kernel/kvm.c
+@@ -632,19 +632,19 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
+ #endif
  	}
  
- 	submit_attach_object_fences(submit);
-@@ -1013,10 +1009,14 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- out_unlock:
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
--	if (ret && (out_fence_fd >= 0)) {
--		put_unused_fd(out_fence_fd);
-+	if (ret) {
-+		if (out_fence_fd >= 0)
-+			put_unused_fd(out_fence_fd);
- 		if (sync_file)
- 			fput(sync_file->file);
-+	} else if (sync_file) {
-+		fd_install(out_fence_fd, sync_file->file);
-+		args->fence_fd = out_fence_fd;
+-	switch (inst_no_rt & ~KVM_MASK_RB) {
+ #ifdef CONFIG_PPC_BOOK3S_32
++	switch (inst_no_rt & ~KVM_MASK_RB) {
+ 	case KVM_INST_MTSRIN:
+ 		if (features & KVM_MAGIC_FEAT_SR) {
+ 			u32 inst_rb = _inst & KVM_MASK_RB;
+ 			kvm_patch_ins_mtsrin(inst, inst_rt, inst_rb);
+ 		}
+ 		break;
+-#endif
  	}
++#endif
  
- 	if (!IS_ERR_OR_NULL(submit)) {
+-	switch (_inst) {
+ #ifdef CONFIG_BOOKE
++	switch (_inst) {
+ 	case KVM_INST_WRTEEI_0:
+ 		kvm_patch_ins_wrteei_0(inst);
+ 		break;
+@@ -652,8 +652,8 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
+ 	case KVM_INST_WRTEEI_1:
+ 		kvm_patch_ins_wrtee(inst, 0, 1);
+ 		break;
+-#endif
+ 	}
++#endif
+ }
+ 
+ extern u32 kvm_template_start[];
 -- 
 2.50.1
 
