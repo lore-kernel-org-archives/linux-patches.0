@@ -1,406 +1,140 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A3123D7EC;
-	Tue,  2 Sep 2025 13:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AA02848A1;
+	Tue,  2 Sep 2025 13:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820238; cv=none; b=Zd91F3Z6EegX3zMIF52GOcgKHo8zmC/XGDgNpXp8WtTS5xbwi2kmQWeAQR5/C/fxCa+0hMZRyTaXWFfzwgZOAIC1gOQ331zbzxjrLIsDFtt1Q7frL1WAklc++GOGZh25JMcPLQcetAnL7D4CoRiG8KHVZoJqS1pr2/d3ALn/9Wc=
+	t=1756820238; cv=none; b=maMFFD4cGvhhHONFy1eN8CkuYl7eIQzJium9dLWeCLVQNboZTTLe8CUcCNBVBUfIWP6JxhLd3RdkBRQQ2gTCRjcNj3R2X+SOjcmZZ6uPFRlZFPrW2esTK7J3Sq3nwjdTvHnChW/N/aF40FgCvqMDRBPoXa9K/+VRj2oiuKqGVrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756820238; c=relaxed/simple;
-	bh=m+I9yKtLh+hfE4g4xUdhB+y9EbdNfTm2xyWqG3OiCJ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Eztf9xJEftrtHWulGrler5UVEq8vUWKYE5qKXM6pYKWWWD6/9ocEc2PbW6LrlRX9N+g2VZIPdtHw1Dl5LqcQKeuzau5qE2SqiUMz9UYW6/FUyJSoZEMhHshJ/w0zR7yn29UvIBf5Rhh9ewAVK3bNWpz9o6EQs3wG6PZ2WDnOdvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaPdkGtv; arc=none smtp.client-ip=10.30.226.201
+	bh=+vdstVZ4juHqCo3Vna11yyYBcSTfZZvBpFZUGL+22oA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=U0Q3ljFavc+lP3fa5YZJOiqMLxJmOACwBbhjPGmMgslUbDfOIrGBE7Sbc8TAMcSX6nd/RWVSutBMzs/bNX64RABS0qDf6wXmsMqRtAAZLMIJrfLLe11x4K/sFuEdGauWsmB1GdV55k9do/NsGIoyIlVK0BGTyOJLPY/Qdl7EVoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPa9Wr44; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaPdkGtv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ECEC4CEF5;
-	Tue,  2 Sep 2025 13:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPa9Wr44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37980C4CEED;
+	Tue,  2 Sep 2025 13:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820237;
-	bh=m+I9yKtLh+hfE4g4xUdhB+y9EbdNfTm2xyWqG3OiCJ8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EaPdkGtvJC5FyMP14S7P+A/buxSS1v/exPfoR+EMF0e6fy4lHC6e3rSPaVWTds9wn
-	 rTmns1lAsgW99rXsCbOzKknqoU9CuvuKBILcK1L0hNrTG9EnXYW8trh9fgp2Tf5CcT
-	 mvUD6dDNxY8UXlpa+2EC39VEiRoqYwjeXuUSz99o=
+	s=korg; t=1756820234;
+	bh=+vdstVZ4juHqCo3Vna11yyYBcSTfZZvBpFZUGL+22oA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=uPa9Wr44olchefg65PLeLWkRrjkoqXD4B4exVozpUVSp0BJKaI/cwBJ8iODB2pC8Q
+	 0cmR3xvtHotN8hUd8iXmwD3S8LMKqa35I2cOIVreoZ4phUVLImzfd9WwqbgqeXGWZK
+	 k9K7HobUdhPUNaLesrQyVmN1gk+Cnjk7pUijtBeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org
-Subject: [PATCH 6.6 00/75] 6.6.104-rc1 review
-Date: Tue,  2 Sep 2025 15:20:12 +0200
-Message-ID: <20250902131935.107897242@linuxfoundation.org>
+	Jay Shin <jaeshin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 09/75] smb: client: fix race with concurrent opens in unlink(2)
+Date: Tue,  2 Sep 2025 15:20:21 +0200
+Message-ID: <20250902131935.482135582@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
+References: <20250902131935.107897242@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.104-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.104-rc1
-X-KernelTest-Deadline: 2025-09-04T13:19+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.6.104 release.
-There are 75 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Paulo Alcantara <pc@manguebit.org>
+
+[ Upstream commit 0af1561b2d60bab2a2b00720a5c7b292ecc549ec ]
+
+According to some logs reported by customers, CIFS client might end up
+reporting unlinked files as existing in stat(2) due to concurrent
+opens racing with unlink(2).
+
+Besides sending the removal request to the server, the unlink process
+could involve closing any deferred close as well as marking all
+existing open handles as deleted to prevent them from deferring
+closes, which increases the race window for potential concurrent
+opens.
+
+Fix this by unhashing the dentry in cifs_unlink() to prevent any
+subsequent opens.  Any open attempts, while we're still unlinking,
+will block on parent's i_rwsem.
+
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: linux-cifs@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/client/inode.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index d93ebd58ecae1..df01029918fd4 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -1856,15 +1856,24 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct tcon_link *tlink;
+ 	struct cifs_tcon *tcon;
++	__u32 dosattr = 0, origattr = 0;
+ 	struct TCP_Server_Info *server;
+ 	struct iattr *attrs = NULL;
+-	__u32 dosattr = 0, origattr = 0;
++	bool rehash = false;
+ 
+ 	cifs_dbg(FYI, "cifs_unlink, dir=0x%p, dentry=0x%p\n", dir, dentry);
+ 
+ 	if (unlikely(cifs_forced_shutdown(cifs_sb)))
+ 		return -EIO;
+ 
++	/* Unhash dentry in advance to prevent any concurrent opens */
++	spin_lock(&dentry->d_lock);
++	if (!d_unhashed(dentry)) {
++		__d_drop(dentry);
++		rehash = true;
++	}
++	spin_unlock(&dentry->d_lock);
++
+ 	tlink = cifs_sb_tlink(cifs_sb);
+ 	if (IS_ERR(tlink))
+ 		return PTR_ERR(tlink);
+@@ -1915,7 +1924,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 			cifs_drop_nlink(inode);
+ 		}
+ 	} else if (rc == -ENOENT) {
+-		d_drop(dentry);
++		if (simple_positive(dentry))
++			d_delete(dentry);
+ 	} else if (rc == -EBUSY) {
+ 		if (server->ops->rename_pending_delete) {
+ 			rc = server->ops->rename_pending_delete(full_path,
+@@ -1968,6 +1978,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 	kfree(attrs);
+ 	free_xid(xid);
+ 	cifs_put_tlink(tlink);
++	if (rehash)
++		d_rehash(dentry);
+ 	return rc;
+ }
+ 
+-- 
+2.50.1
 
-Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.104-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.104-rc1
-
-Eric Sandeen <sandeen@redhat.com>
-    xfs: do not propagate ENODATA disk errors into xattr code
-
-Imre Deak <imre.deak@intel.com>
-    Revert "drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS"
-
-Hamish Martin <hamish.martin@alliedtelesis.co.nz>
-    HID: mcp2221: Handle reads greater than 60 bytes
-
-Hamish Martin <hamish.martin@alliedtelesis.co.nz>
-    HID: mcp2221: Don't set bus speed on every transfer
-
-Chris Mi <cmi@nvidia.com>
-    net/mlx5: SF, Fix add port error handling
-
-Eric Dumazet <edumazet@google.com>
-    net: rose: fix a typo in rose_clear_routes()
-
-James Jones <jajones@nvidia.com>
-    drm/nouveau/disp: Always accept linear modifier
-
-Steve French <stfrench@microsoft.com>
-    smb3 client: fix return code mapping of remap_file_range
-
-Fabio Porcedda <fabio.porcedda@gmail.com>
-    net: usb: qmi_wwan: add Telit Cinterion LE910C4-WWX new compositions
-
-Shuhao Fu <sfual@cse.ust.hk>
-    fs/smb: Fix inconsistent refcnt update
-
-Shanker Donthineni <sdonthineni@nvidia.com>
-    dma/pool: Ensure DMA_DIRECT_REMAP allocations are decrypted
-
-Alex Deucher <alexander.deucher@amd.com>
-    Revert "drm/amdgpu: fix incorrect vm flags to map bo"
-
-Minjong Kim <minbell.kim@samsung.com>
-    HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()
-
-Ping Cheng <pinglinux@gmail.com>
-    HID: wacom: Add a new Art Pen 2
-
-Matt Coffin <mcoffin13@gmail.com>
-    HID: logitech: Add ids for G PRO 2 LIGHTSPEED
-
-Antheas Kapenekakis <lkml@antheas.dev>
-    HID: quirks: add support for Legion Go dual dinput modes
-
-Qasim Ijaz <qasdev00@gmail.com>
-    HID: multitouch: fix slab out-of-bounds access in mt_report_fixup()
-
-Qasim Ijaz <qasdev00@gmail.com>
-    HID: asus: fix UAF via HID_CLAIMED_INPUT validation
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/microcode/AMD: Handle the case of no BIOS microcode
-
-Thijs Raymakers <thijs@raymakers.nl>
-    KVM: x86: use array_index_nospec with indices that come from guest
-
-Li Nan <linan122@huawei.com>
-    efivarfs: Fix slab-out-of-bounds in efivarfs_d_compare
-
-Eric Dumazet <edumazet@google.com>
-    sctp: initialize more fields in sctp_v6_from_sk()
-
-Takamitsu Iwai <takamitz@amazon.co.jp>
-    net: rose: include node references in rose_neigh refcount
-
-Takamitsu Iwai <takamitz@amazon.co.jp>
-    net: rose: convert 'use' field to refcount_t
-
-Takamitsu Iwai <takamitz@amazon.co.jp>
-    net: rose: split remove and free operations in rose_remove_neigh()
-
-Rohan G Thomas <rohan.g.thomas@altera.com>
-    net: stmmac: Set CIC bit only for TX queues with COE
-
-Rohan G Thomas <rohan.g.thomas@altera.com>
-    net: stmmac: xgmac: Correct supported speed modes
-
-Serge Semin <fancer.lancer@gmail.com>
-    net: stmmac: Rename phylink_get_caps() callback to update_caps()
-
-Rohan G Thomas <rohan.g.thomas@altera.com>
-    net: stmmac: xgmac: Do not enable RX FIFO Overflow interrupts
-
-Alexei Lazar <alazar@nvidia.com>
-    net/mlx5e: Set local Xoff after FW update
-
-Alexei Lazar <alazar@nvidia.com>
-    net/mlx5e: Update and set Xon/Xoff upon port speed set
-
-Alexei Lazar <alazar@nvidia.com>
-    net/mlx5e: Update and set Xon/Xoff upon MTU set
-
-Moshe Shemesh <moshe@nvidia.com>
-    net/mlx5: Nack sync reset when SFs are present
-
-Jiri Pirko <jiri@resnulli.us>
-    net/mlx5: Convert SF port_indices xarray to function_ids xarray
-
-Jiri Pirko <jiri@resnulli.us>
-    net/mlx5: Use devlink port pointer to get the pointer of container SF struct
-
-Jiri Pirko <jiri@resnulli.us>
-    net/mlx5: Call mlx5_sf_id_erase() once in mlx5_sf_dealloc()
-
-Moshe Shemesh <moshe@nvidia.com>
-    net/mlx5: Fix lockdep assertion on sync reset unload event
-
-Moshe Shemesh <moshe@nvidia.com>
-    net/mlx5: Add support for sync reset using hot reset
-
-Moshe Shemesh <moshe@nvidia.com>
-    net/mlx5: Add device cap for supporting hot reset in sync reset flow
-
-Moshe Shemesh <moshe@nvidia.com>
-    net/mlx5: Reload auxiliary drivers on fw_activate
-
-Horatiu Vultur <horatiu.vultur@microchip.com>
-    phy: mscc: Fix when PTP clock is register and unregister
-
-Yeounsu Moon <yyyynoom@gmail.com>
-    net: dlink: fix multicast stats being counted incorrectly
-
-Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-    dt-bindings: display/msm: qcom,mdp5: drop lut clock
-
-Michal Kubiak <michal.kubiak@intel.com>
-    ice: fix incorrect counter for buffer allocation failures
-
-Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-    ice: stop storing XDP verdict within ice_rx_buf
-
-Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-    ice: gather page_count()'s of each frag right before XDP prog call
-
-Larysa Zaremba <larysa.zaremba@intel.com>
-    ice: Introduce ice_xdp_buff
-
-Timur Tabi <ttabi@nvidia.com>
-    drm/nouveau: remove unused memory target test
-
-Timur Tabi <ttabi@nvidia.com>
-    drm/nouveau: remove unused increment in gm200_flcn_pio_imem_wr
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    atm: atmtcp: Prevent arbitrary write in atmtcp_recv_control().
-
-Pavel Shpakovskiy <pashpakovskii@salutedevices.com>
-    Bluetooth: hci_sync: fix set_local_name race condition
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: hci_event: Detect if HCI_EV_NUM_COMP_PKTS is unbalanced
-
-Ludovico de Nittis <ludovico.denittis@collabora.com>
-    Bluetooth: hci_event: Mark connection as closed during suspend disconnect
-
-Ludovico de Nittis <ludovico.denittis@collabora.com>
-    Bluetooth: hci_event: Treat UNKNOWN_CONN_ID on disconnect as success
-
-José Expósito <jose.exposito89@gmail.com>
-    HID: input: report battery status changes immediately
-
-José Expósito <jose.exposito89@gmail.com>
-    HID: input: rename hidinput_set_battery_charge_status()
-
-Madhavan Srinivasan <maddy@linux.ibm.com>
-    powerpc/kvm: Fix ifdef to remove build warning
-
-Rob Clark <robin.clark@oss.qualcomm.com>
-    drm/msm: Defer fd_install in SUBMIT ioctl
-
-Oscar Maes <oscmaes92@gmail.com>
-    net: ipv4: fix regression in local-broadcast routes
-
-Nikolay Kuratov <kniv@yandex-team.ru>
-    vhost/net: Protect ubufs with rcu read lock in vhost_net_ubuf_put()
-
-Trond Myklebust <trond.myklebust@hammerspace.com>
-    NFS: Fix a race when updating an existing write
-
-Christoph Hellwig <hch@lst.de>
-    nfs: fold nfs_page_group_lock_subrequests into nfs_lock_and_join_requests
-
-Werner Sembach <wse@tuxedocomputers.com>
-    ACPI: EC: Add device to acpi_ec_no_wakeup[] qurik list
-
-Junli Liu <liujunli@lixiang.com>
-    erofs: fix atomic context detection when !CONFIG_DEBUG_LOCK_ALLOC
-
-Alexey Klimov <alexey.klimov@linaro.org>
-    ASoC: codecs: tx-macro: correct tx_macro_component_drv name
-
-Paulo Alcantara <pc@manguebit.org>
-    smb: client: fix race with concurrent opens in rename(2)
-
-Paulo Alcantara <pc@manguebit.org>
-    smb: client: fix race with concurrent opens in unlink(2)
-
-Damien Le Moal <dlemoal@kernel.org>
-    scsi: core: sysfs: Correct sysfs attributes access rights
-
-Tengda Wu <wutengda@huaweicloud.com>
-    ftrace: Fix potential warning in trace_printk_seq during ftrace_dump
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    of: dynamic: Fix use after free in of_changeset_add_prop_helper()
-
-Rob Herring <robh@kernel.org>
-    of: Add a helper to free property struct
-
-Aleksander Jan Bajkowski <olek2@wp.pl>
-    mips: lantiq: xway: sysctrl: rename the etop node
-
-Aleksander Jan Bajkowski <olek2@wp.pl>
-    mips: dts: lantiq: danube: add missing burst length property
-
-Randy Dunlap <rdunlap@infradead.org>
-    pinctrl: STMFX: add missing HAS_IOMEM dependency
-
-Lizhi Hou <lizhi.hou@amd.com>
-    of: dynamic: Fix memleak when of_pci_add_properties() failed
-
-
--------------
-
-Diffstat:
-
- .../devicetree/bindings/display/msm/qcom,mdp5.yaml |   1 -
- Makefile                                           |   4 +-
- arch/mips/boot/dts/lantiq/danube_easy50712.dts     |   5 +-
- arch/mips/lantiq/xway/sysctrl.c                    |  10 +-
- arch/powerpc/kernel/kvm.c                          |   8 +-
- arch/x86/kernel/cpu/microcode/amd.c                |  22 ++-
- arch/x86/kvm/lapic.c                               |   2 +
- arch/x86/kvm/x86.c                                 |   7 +-
- drivers/acpi/ec.c                                  |   6 +
- drivers/atm/atmtcp.c                               |  17 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c            |   4 +-
- drivers/gpu/drm/display/drm_dp_helper.c            |   2 +-
- drivers/gpu/drm/msm/msm_gem_submit.c               |  14 +-
- drivers/gpu/drm/nouveau/dispnv50/wndw.c            |   4 +
- drivers/gpu/drm/nouveau/nvkm/falcon/gm200.c        |  15 +-
- drivers/hid/hid-asus.c                             |   8 +-
- drivers/hid/hid-ids.h                              |   3 +
- drivers/hid/hid-input-test.c                       |  10 +-
- drivers/hid/hid-input.c                            |  51 +++---
- drivers/hid/hid-logitech-dj.c                      |   4 +
- drivers/hid/hid-logitech-hidpp.c                   |   2 +
- drivers/hid/hid-mcp2221.c                          |  71 +++++---
- drivers/hid/hid-multitouch.c                       |   8 +
- drivers/hid/hid-ntrig.c                            |   3 +
- drivers/hid/hid-quirks.c                           |   2 +
- drivers/hid/wacom_wac.c                            |   1 +
- drivers/net/ethernet/dlink/dl2k.c                  |   2 +-
- drivers/net/ethernet/intel/ice/ice_txrx.c          |  94 +++++++---
- drivers/net/ethernet/intel/ice/ice_txrx.h          |  19 +-
- drivers/net/ethernet/intel/ice/ice_txrx_lib.h      |  53 ++----
- drivers/net/ethernet/mellanox/mlx5/core/devlink.c  |   2 +-
- .../ethernet/mellanox/mlx5/core/en/port_buffer.c   |   3 +-
- .../ethernet/mellanox/mlx5/core/en/port_buffer.h   |  12 ++
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c  |  19 +-
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 200 ++++++++++++++-------
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.h |   1 +
- drivers/net/ethernet/mellanox/mlx5/core/main.c     |   3 +
- .../net/ethernet/mellanox/mlx5/core/sf/devlink.c   |  87 ++++-----
- drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h    |   6 +
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c  |   8 +-
- .../net/ethernet/stmicro/stmmac/dwxgmac2_core.c    |  13 +-
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c |   9 +-
- drivers/net/ethernet/stmicro/stmmac/hwif.h         |   8 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |  12 +-
- drivers/net/phy/mscc/mscc.h                        |   4 +
- drivers/net/phy/mscc/mscc_main.c                   |   4 +-
- drivers/net/phy/mscc/mscc_ptp.c                    |  34 ++--
- drivers/net/usb/qmi_wwan.c                         |   3 +
- drivers/of/dynamic.c                               |  29 +--
- drivers/of/of_private.h                            |   1 +
- drivers/of/overlay.c                               |  11 +-
- drivers/of/unittest.c                              |  12 +-
- drivers/pinctrl/Kconfig                            |   1 +
- drivers/scsi/scsi_sysfs.c                          |   4 +-
- drivers/vhost/net.c                                |   9 +-
- fs/efivarfs/super.c                                |   4 +
- fs/erofs/zdata.c                                   |  13 +-
- fs/nfs/pagelist.c                                  |  86 +--------
- fs/nfs/write.c                                     | 148 +++++++++------
- fs/smb/client/cifsfs.c                             |  14 ++
- fs/smb/client/inode.c                              |  34 +++-
- fs/smb/client/smb2inode.c                          |   7 +-
- fs/xfs/libxfs/xfs_attr_remote.c                    |   7 +
- fs/xfs/libxfs/xfs_da_btree.c                       |   6 +
- include/linux/atmdev.h                             |   1 +
- include/linux/mlx5/mlx5_ifc.h                      |  11 +-
- include/linux/nfs_page.h                           |   2 +-
- include/net/bluetooth/hci_sync.h                   |   2 +-
- include/net/rose.h                                 |  18 +-
- kernel/dma/pool.c                                  |   4 +-
- kernel/trace/trace.c                               |   4 +-
- net/atm/common.c                                   |  15 +-
- net/bluetooth/hci_event.c                          |  20 ++-
- net/bluetooth/hci_sync.c                           |   6 +-
- net/bluetooth/mgmt.c                               |   5 +-
- net/ipv4/route.c                                   |  10 +-
- net/rose/af_rose.c                                 |  13 +-
- net/rose/rose_in.c                                 |  12 +-
- net/rose/rose_route.c                              |  62 ++++---
- net/rose/rose_timer.c                              |   2 +-
- net/sctp/ipv6.c                                    |   2 +
- sound/soc/codecs/lpass-tx-macro.c                  |   2 +-
- 82 files changed, 897 insertions(+), 560 deletions(-)
 
 
