@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4D1305062;
-	Tue,  2 Sep 2025 13:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64974305076;
+	Tue,  2 Sep 2025 13:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819605; cv=none; b=C1J3CEeOObaI8/G5QxW7RF+TV4CAiWGnCJq25AkNC3E9EqJd4PbNmLIS+EXODwebiqa/bwkmcKJXOWxOvhlDeUiWxVhH3/6NoNO8tXNNNvo3oYY4gdRsG+hrn6QZFLKHExmOUMtA0wKvvgO+WNzHdrT8ofPZ6AfZsLhQw1o5t90=
+	t=1756819608; cv=none; b=aFzQN3MeeMPG6QVXI6cB2YbpVLvqOh8VMw2WxZebsuhaI6KrY+RHCrAt5PNRsxuYmdnO5p6JjSusdoDqG5S1NeCzBAACQT3S94SeGBkyeme9MicI+8x0CLE5x4JP77zilHIctVAQG8er5B7ZFhIzEPfZ9biNK13WKo1mkswrPHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819605; c=relaxed/simple;
-	bh=4KotfKRPKZnJKtddyKUaWI+dhPI/FleshtCKzkYihzc=;
+	s=arc-20240116; t=1756819608; c=relaxed/simple;
+	bh=5BMB1BYZe78SNzSakXOhv2TRpDP873h+LO9MjF4FbU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKM0LRtXOIQmfUOQTYB3eE2/nG9L/d6ESgnf/CIBbBbmt0sPJvk1aoQBpsBquRPNxCDw70wjpSPUXSS5NlALHuPQK12ze+8daC1aX8j9hNTA6Q3rRUG7h/LWEzOWukc/i4UbXbOYYmGAMOSmsBBeQO1iafSILNL0XME3zq/YyY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0TBZEw0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3DkXldjY9lA3hbJKPhFzNbEQeJPDUOVx0Vc1yOJ5zfsP7LV0wAS9194K9xZ0zKE3+FnKNdJueV2qPG5kBLT7O9Uw4vrv7fsA0VLBYP1nMgQD3v58pq2grSR8r/YduQvg0Bqbq+3g7TAc48DgZu3uWhHW/sufUTDSNLAa//2Xig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChtaCIGz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0TBZEw0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B0AC4CEED;
-	Tue,  2 Sep 2025 13:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChtaCIGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF31C4CEF5;
+	Tue,  2 Sep 2025 13:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819605;
-	bh=4KotfKRPKZnJKtddyKUaWI+dhPI/FleshtCKzkYihzc=;
+	s=korg; t=1756819608;
+	bh=5BMB1BYZe78SNzSakXOhv2TRpDP873h+LO9MjF4FbU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0TBZEw0w/ispt6VZJifdY2QMA2J55zHccyrYlxY9rGzaiLKRmizOYeqwRm/kaTg6
-	 R/YJW3M2MUxzNQsqZ77xrOIf+8Txzlhzxrl7MmNFUEiDUHF6baBiTS6pI8AUB27G4I
-	 iY3PL6Z0gMB5o7uKVL//0brOlLhWKophRrrsRSnI=
+	b=ChtaCIGzIXrBEqHW/OeYxn6ZePmJeW+r718IEWdpm8xXYEiNoECvGqI3/gY7attL3
+	 qnvDO4jRiR4XI8m6TPVD2rSu6iMN4EX4XC4J9ZETEVA71wJmJX6YOIhK0D0a4Ap+hp
+	 6nToszjHqKFKcP9ITysiNo7T26K1KebTmWr7DHz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Moshe Shemesh <moshe@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
 	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 084/142] net/mlx5: Nack sync reset when SFs are present
-Date: Tue,  2 Sep 2025 15:19:46 +0200
-Message-ID: <20250902131951.484839956@linuxfoundation.org>
+Subject: [PATCH 6.16 085/142] net/mlx5: Prevent flow steering mode changes in switchdev mode
+Date: Tue,  2 Sep 2025 15:19:47 +0200
+Message-ID: <20250902131951.521998237@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -56,96 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 26e42ec7712d392d561964514b1f253b1a96f42d ]
+[ Upstream commit cf9a8627b9a369ba01d37be6f71b297beb688faa ]
 
-If PF (Physical Function) has SFs (Sub-Functions), since the SFs are not
-taking part in the synchronization flow, sync reset can lead to fatal
-error on the SFs, as the function will be closed unexpectedly from the
-SF point of view.
+Changing flow steering modes is not allowed when eswitch is in switchdev
+mode. This fix ensures that any steering mode change, including to
+firmware steering, is correctly blocked while eswitch mode is switchdev.
 
-Add a check to prevent sync reset when there are SFs on a PF device
-which is not ECPF, as ECPF is teardowned gracefully before reset.
-
-Fixes: 92501fa6e421 ("net/mlx5: Ack on sync_reset_request only if PF can do reset_now")
+Fixes: e890acd5ff18 ("net/mlx5: Add devlink flow_steering_mode parameter")
 Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250825143435.598584-8-mbloch@nvidia.com
+Link: https://patch.msgid.link/20250825143435.598584-9-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c   |  6 ++++++
- drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c | 10 ++++++++++
- drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h      |  6 ++++++
- 3 files changed, 22 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index 38b9b184ae01b..22995131824a0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -6,6 +6,7 @@
- #include "fw_reset.h"
- #include "diag/fw_tracer.h"
- #include "lib/tout.h"
-+#include "sf/sf.h"
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index 3dd9a6f407092..29ce09af59aef 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -3706,6 +3706,13 @@ static int mlx5_fs_mode_validate(struct devlink *devlink, u32 id,
+ 	char *value = val.vstr;
+ 	u8 eswitch_mode;
  
- enum {
- 	MLX5_FW_RESET_FLAGS_RESET_REQUESTED,
-@@ -428,6 +429,11 @@ static bool mlx5_is_reset_now_capable(struct mlx5_core_dev *dev,
- 		return false;
- 	}
- 
-+	if (!mlx5_core_is_ecpf(dev) && !mlx5_sf_table_empty(dev)) {
-+		mlx5_core_warn(dev, "SFs should be removed before reset\n");
-+		return false;
++	eswitch_mode = mlx5_eswitch_mode(dev);
++	if (eswitch_mode == MLX5_ESWITCH_OFFLOADS) {
++		NL_SET_ERR_MSG_FMT_MOD(extack,
++				       "Changing fs mode is not supported when eswitch offloads enabled.");
++		return -EOPNOTSUPP;
 +	}
 +
- #if IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE)
- 	if (reset_method != MLX5_MFRL_REG_PCI_RESET_METHOD_HOT_RESET) {
- 		err = mlx5_check_hotplug_interrupt(dev, bridge);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c
-index 0864ba625c07d..3304f25cc8055 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c
-@@ -518,3 +518,13 @@ void mlx5_sf_table_cleanup(struct mlx5_core_dev *dev)
- 	WARN_ON(!xa_empty(&table->function_ids));
- 	kfree(table);
- }
-+
-+bool mlx5_sf_table_empty(const struct mlx5_core_dev *dev)
-+{
-+	struct mlx5_sf_table *table = dev->priv.sf_table;
-+
-+	if (!table)
-+		return true;
-+
-+	return xa_empty(&table->function_ids);
-+}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h b/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h
-index 860f9ddb7107b..89559a37997ad 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h
-@@ -17,6 +17,7 @@ void mlx5_sf_hw_table_destroy(struct mlx5_core_dev *dev);
+ 	if (!strcmp(value, "dmfs"))
+ 		return 0;
  
- int mlx5_sf_table_init(struct mlx5_core_dev *dev);
- void mlx5_sf_table_cleanup(struct mlx5_core_dev *dev);
-+bool mlx5_sf_table_empty(const struct mlx5_core_dev *dev);
+@@ -3731,14 +3738,6 @@ static int mlx5_fs_mode_validate(struct devlink *devlink, u32 id,
+ 		return -EINVAL;
+ 	}
  
- int mlx5_devlink_sf_port_new(struct devlink *devlink,
- 			     const struct devlink_port_new_attrs *add_attr,
-@@ -61,6 +62,11 @@ static inline void mlx5_sf_table_cleanup(struct mlx5_core_dev *dev)
- {
+-	eswitch_mode = mlx5_eswitch_mode(dev);
+-	if (eswitch_mode == MLX5_ESWITCH_OFFLOADS) {
+-		NL_SET_ERR_MSG_FMT_MOD(extack,
+-				       "Moving to %s is not supported when eswitch offloads enabled.",
+-				       value);
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	return 0;
  }
  
-+static inline bool mlx5_sf_table_empty(const struct mlx5_core_dev *dev)
-+{
-+	return true;
-+}
-+
- #endif
- 
- #endif
 -- 
 2.50.1
 
