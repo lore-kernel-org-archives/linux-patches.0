@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C41F2FB63F;
-	Tue,  2 Sep 2025 12:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69BF2FB63F;
+	Tue,  2 Sep 2025 12:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756814937; cv=none; b=koG1QpHV/2bhmOSAN/KscNeRfncMrZ7q3+LqMPkKWzJBGlJR3KuXVRJijk6bwLfE2eV8eJ8luknzw4QkBgluQhWGn9OVl4sHTm2jzHpupagUKz1zsSP4lsEhNNzhw36g1jScwAeVfIEf7+028mrUA8fSQroqhPAjd95i2qRz7HA=
+	t=1756814938; cv=none; b=rkT6DISMAM2iPGcAJv1yC+1F1bAux72XH0KmbIFeXZAo3PvRE+LNz2YN3JnpLIGDiIZyIL/n6qInDZBdC7lVXEqLonh2TE1lI3cstT8mWRRONRTmqsAZlmom6eqQnsfljamKDSU6Bnnzjnx924SqwA8ZLX5+bv8mmPvCn5MkuhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756814937; c=relaxed/simple;
-	bh=s7eGJZp6iHwsOqMKnNp/7d6zarSqh4NmZUcRnPi4YZs=;
+	s=arc-20240116; t=1756814938; c=relaxed/simple;
+	bh=xdELgmlhE1A6KzQQQcWlT/1tRd+vpMgwIc19zM1/oBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxcLHMnuVaIdSz2vbBq/qa0t1SkqxEsPkp8LvdEg2q5U6FCdA0fv+QIEeVFLpZw5FTDB8060ZgmcH0VAfjjy1Yib+3A9ImkshqnQTdjqbmuU0j5qJNzEqF9zeK1O07/Lf5o6avAD2NnOiBnpTpd6VDYK+LGMnkExD8bG8v8Scgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KEU80650; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxEQM6k248UK4qcdpSMscniOutZopnCDpxsivm9C4w/vTtCPs/W9KW+k3/tW+ZJRVbXXJh1Oj6vTfiwon3CZnvDMCGabT5xjw8SO/Zb/6i8Vw4xVoDV3tLA71zBYiOaVwnmb1VdFX1nyePsmabJEqIiawPFFyruuU3/9HhyiXDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PcjSlpcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KEU80650"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4A7C4CEF7;
-	Tue,  2 Sep 2025 12:08:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PcjSlpcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13949C4CEF4;
+	Tue,  2 Sep 2025 12:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756814936;
-	bh=s7eGJZp6iHwsOqMKnNp/7d6zarSqh4NmZUcRnPi4YZs=;
+	s=k20201202; t=1756814937;
+	bh=xdELgmlhE1A6KzQQQcWlT/1tRd+vpMgwIc19zM1/oBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KEU80650D44PzgFjq8wPPTNlp2OiqkAkQQnZplNqR2ZuoDNqnGB7NAQQmUvhheIxK
-	 Khk3F5xKt4u+flMiA2BZs5LNGNyVdCz6jGkfEayyLsJP7Gw6p7BjVl/6i/8LEA7oqc
-	 ekB7kjhmo47AFvM0Kws+McaylaNC02FYHouWINVKUO9SYyH1gl2XySQ9jCxqpYxP0G
-	 m5UTBJQl62DRp6v0p90JUfGfI/ARr65NV5IdMmNEpyLgUKyIe+Z+6dHjsnKhMBJcks
-	 +4vo4QH+EYlv+u9j5dVUgLfOawHyMT1xwUiY9sR6VQHkuo55y9/8krHEUa6rV2PRXe
-	 nAZ9DHfZqNShA==
+	b=PcjSlpcfQN0McEKAs5ZIoSft2DOkqodnbBNV2fmnrXuFOy3ChHRFtn7E3Ahg3KBmE
+	 uKYzCq0q+kHy7W4yJDDlbJsnRA4yqMqWY2sstPmnXBPjlu7UB/ryPpADdU26/BZ2xj
+	 VJI1l2bOlY6RG8WA9vxG/unSwgxbDsZoT09zGHBvLBqLAPpnhgtcyT+TVVtdnh3Ml+
+	 rh8d0SvapjeF1e7eouw8j1M2+77Id1EEIrQhXoLf5nAoTqqelULSCK/5Ai0/BAppZ1
+	 EcYRRtMWbvMIEqynt+NM40KCdMxHEMPguF5ShXTQnrrTGXlhch2RzqH4azitLHuI5K
+	 7RQ7TMiCVu1WA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+Cc: Minjong Kim <minbell.kim@samsung.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.16-6.12] drm/msm: Fix order of selector programming in cluster snapshot
-Date: Tue,  2 Sep 2025 08:08:26 -0400
-Message-ID: <20250902120833.1342615-15-sashal@kernel.org>
+	jikos@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()
+Date: Tue,  2 Sep 2025 08:08:27 -0400
+Message-ID: <20250902120833.1342615-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250902120833.1342615-1-sashal@kernel.org>
 References: <20250902120833.1342615-1-sashal@kernel.org>
@@ -52,118 +51,116 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.4
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Minjong Kim <minbell.kim@samsung.com>
 
-[ Upstream commit a506578d8909e7e6f0d545af9850ccd4318bf6cf ]
+[ Upstream commit 185c926283da67a72df20a63a5046b3b4631b7d9 ]
 
-Program the selector _after_ selecting the aperture.  This aligns with
-the downstream driver, and fixes a case where we were failing to capture
-ctx0 regs (and presumably what we thought were ctx1 regs were actually
-ctx0).
+in ntrig_report_version(), hdev parameter passed from hid_probe().
+sending descriptor to /dev/uhid can make hdev->dev.parent->parent to null
+if hdev->dev.parent->parent is null, usb_dev has
+invalid address(0xffffffffffffff58) that hid_to_usb_dev(hdev) returned
+when usb_rcvctrlpipe() use usb_dev,it trigger
+page fault error for address(0xffffffffffffff58)
 
-Suggested-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/666655/
+add null check logic to ntrig_report_version()
+before calling hid_to_usb_dev()
+
+Signed-off-by: Minjong Kim <minbell.kim@samsung.com>
+Link: https://patch.msgid.link/20250813-hid-ntrig-page-fault-fix-v2-1-f98581f35106@samsung.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+Now let me analyze what I've found to make a decision on backporting.
 
-This commit should be backported to stable kernel trees. Here's my
-extensive analysis:
+## Backport Status: YES
 
-## Bug Fix Nature
+This commit should be backported to stable kernel trees for the
+following reasons:
 
-The commit fixes a **clear functional bug** in the GPU crash
-dump/snapshot functionality for Qualcomm Adreno GPUs (specifically the
-a7xx series). The bug causes incorrect register capture during GPU crash
-dumps:
-- **Symptom**: Failing to capture ctx0 (context 0) registers correctly
-- **Impact**: ctx1 registers were actually ctx0 registers, meaning
-  critical debugging information was lost or misrepresented
+### 1. **Critical Bug Fix - Kernel Page Fault**
+The commit fixes a kernel page fault (crash) that can occur when using
+N-Trig HID devices with virtual HID interfaces (through /dev/uhid). The
+commit message describes:
+- When descriptors are sent through /dev/uhid,
+  `hdev->dev.parent->parent` can be NULL
+- This causes `hid_to_usb_dev(hdev)` to return an invalid address
+  (0xffffffffffffff58)
+- When `usb_rcvctrlpipe()` tries to use this invalid pointer, it
+  triggers a page fault
 
-## Code Analysis
-
-The fix is **extremely simple and surgical** - it only reorders two
-blocks of code in the `a7xx_get_cluster()` function:
-
-**Before the fix:**
+### 2. **Simple and Contained Fix**
+The fix is minimal and surgical:
 ```c
-/* Some clusters need a selector register to be programmed too */
-if (cluster->sel)
-    in += CRASHDUMP_WRITE(in, cluster->sel->cd_reg, cluster->sel->val);
-
-in += CRASHDUMP_WRITE(in, REG_A7XX_CP_APERTURE_CNTL_CD, ...);
++       if (!hid_is_usb(hdev))
++               return;
 ```
+This adds a single safety check before attempting USB-specific
+operations. The `hid_is_usb()` function is a well-established pattern in
+the kernel for determining if an HID device is actually backed by USB.
 
-**After the fix:**
-```c
-in += CRASHDUMP_WRITE(in, REG_A7XX_CP_APERTURE_CNTL_CD, ...);
+### 3. **Follows Established Pattern**
+The fix follows an established pattern in the kernel. My analysis shows:
+- The `hid_is_usb()` helper was introduced specifically for this purpose
+  (commit f83baa0cb6cfc)
+- Multiple other HID drivers already use this check pattern to avoid
+  similar issues
+- Greg KH's original commit adding `hid_is_usb()` was marked for stable
+  (`Cc: stable@vger.kernel.org`)
 
-/* Some clusters need a selector register to be programmed too */
-if (cluster->sel)
-    in += CRASHDUMP_WRITE(in, cluster->sel->cd_reg, cluster->sel->val);
-```
+### 4. **Security Implications**
+This bug could potentially be triggered from userspace through
+/dev/uhid, making it a potential denial-of-service vector. Any userspace
+application with access to /dev/uhid could potentially trigger a kernel
+crash.
 
-The aperture control register (`REG_A7XX_CP_APERTURE_CNTL_CD`) must be
-programmed **before** the selector register. This is a classic hardware
-programming sequence issue where register order matters.
+### 5. **Minimal Risk of Regression**
+The fix:
+- Only adds a defensive check that returns early if the device is not
+  USB
+- Does not change any existing logic for actual USB devices
+- Cannot break existing functionality as it only prevents invalid memory
+  access
+- The kmalloc() allocation is moved after the check, which is also a
+  good practice (avoiding unnecessary allocation)
 
-## Stable Backport Criteria Met
+### 6. **Affects Real Hardware**
+N-Trig devices are real touchscreen/digitizer hardware used in various
+tablets and touch-enabled devices. Users of these devices could
+experience kernel crashes when virtual HID tools interact with the
+driver.
 
-1. **Fixes a real bug**: Yes - incorrect crash dump data affects
-   debugging capability
-2. **Small and contained**: Yes - only 4 lines moved, no logic changes
-3. **No architectural changes**: Correct - purely a reordering fix
-4. **Minimal regression risk**: Yes - only affects crash dump path, not
-   normal operation
-5. **Aligns with vendor driver**: The commit explicitly states it
-   "aligns with the downstream driver"
-6. **No new features**: Correct - purely a bug fix
+### 7. **Clear Root Cause**
+The commit clearly identifies the root cause: the `hid_to_usb_dev()`
+macro directly dereferences `hdev->dev.parent->parent` without checking
+if it's valid. For non-USB HID devices (like those created through
+uhid), this pointer chain may not be valid.
 
-## Additional Supporting Evidence
+The fix is appropriate for stable backporting as it:
+- Fixes a real crash that affects users
+- Is minimal and well-understood
+- Follows established kernel patterns
+- Has low risk of introducing new issues
+- Addresses a potential security concern (userspace-triggerable crash)
 
-- The commit has already been marked with "Upstream commit
-  a506578d8909..." suggesting it's been accepted upstream
-- Similar fixes in the same file (e.g., `f28c9fc2c82de drm/msm: Fix
-  debugbus snapshot`) show a pattern of fixing crash dump issues
-- The fix is isolated to the crash dump code path
-  (`a7xx_get_cluster()`), which is only executed during GPU error
-  recovery
-- The author (Rob Clark) is a maintainer of the MSM DRM driver, lending
-  credibility to the fix
+ drivers/hid/hid-ntrig.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-This is an ideal stable backport candidate - it fixes a clear bug with
-minimal code change and virtually no risk of regression.
-
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 61850e2802914..6e8dbd27addbe 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -776,15 +776,15 @@ static void a7xx_get_cluster(struct msm_gpu *gpu,
- 	size_t datasize;
- 	int i, regcount = 0;
+diff --git a/drivers/hid/hid-ntrig.c b/drivers/hid/hid-ntrig.c
+index 2738ce947434f..0f76e241e0afb 100644
+--- a/drivers/hid/hid-ntrig.c
++++ b/drivers/hid/hid-ntrig.c
+@@ -144,6 +144,9 @@ static void ntrig_report_version(struct hid_device *hdev)
+ 	struct usb_device *usb_dev = hid_to_usb_dev(hdev);
+ 	unsigned char *data = kmalloc(8, GFP_KERNEL);
  
--	/* Some clusters need a selector register to be programmed too */
--	if (cluster->sel)
--		in += CRASHDUMP_WRITE(in, cluster->sel->cd_reg, cluster->sel->val);
--
- 	in += CRASHDUMP_WRITE(in, REG_A7XX_CP_APERTURE_CNTL_CD,
- 		A7XX_CP_APERTURE_CNTL_CD_PIPE(cluster->pipe_id) |
- 		A7XX_CP_APERTURE_CNTL_CD_CLUSTER(cluster->cluster_id) |
- 		A7XX_CP_APERTURE_CNTL_CD_CONTEXT(cluster->context_id));
- 
-+	/* Some clusters need a selector register to be programmed too */
-+	if (cluster->sel)
-+		in += CRASHDUMP_WRITE(in, cluster->sel->cd_reg, cluster->sel->val);
++	if (!hid_is_usb(hdev))
++		return;
 +
- 	for (i = 0; cluster->regs[i] != UINT_MAX; i += 2) {
- 		int count = RANGE(cluster->regs, i);
+ 	if (!data)
+ 		goto err_free;
  
 -- 
 2.50.1
