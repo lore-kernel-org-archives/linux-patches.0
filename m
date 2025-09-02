@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B83311C2C;
-	Tue,  2 Sep 2025 13:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226B630BBBD;
+	Tue,  2 Sep 2025 13:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819667; cv=none; b=m5ALp658u8B2/BKloDTrB4pjBv6L2/e3EBeIsLBz9GB/pAUuj1HB8VCHdvuw35iJuAUUVz2CZ3rVvMv7BI9EeaHXBQjfCCHX54BUiuO69+52X+qCYZgmyAwtKdNQTM5ppYsjJYXxPYEmjMPktXwmFQN5PKOillG6j4CzyvgWTwg=
+	t=1756819671; cv=none; b=GSc2nYT/6EqTXZj2Ilz/pl1GVLJRAPWisuXV8MqErHhK5sN0yus54QYJ+pgLdxmCq5uN6NSGfSanBCIC4Aj1R8nzqELgvkFHdnhMd96UeOZgzGjVkxZaf2ZUXaJWPIpe2sp2zx1C8oIO5xEv4FNNXRel+ME2cVVGt5McS5JPDaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819667; c=relaxed/simple;
-	bh=0tYzcJ2v/fnrh5RGmvEn9bOAirlQspH76IDCYZ2bGlc=;
+	s=arc-20240116; t=1756819671; c=relaxed/simple;
+	bh=kGt/jN+giUl8wS3KvkFpQO9WqWJMbxeF0XG8w4jU0gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=op2T6wyVVBy3z3PTiQ/uCYdkiLnPUtrUmTdzo4T7cMFhOzu0iiSsi3DyDEZp8ykBOuEo6jPFsjUvpVYdrZPFh5cetkYOsvqeHLmF7FE6rTHtiJ5Zuaj30lf0/Ex5RN3Fg1RM1+iE0v5HAbxypxzQeROvWS8v2qvvbPakLGFZLxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIT8KaV4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BrWuL7W/wkhT1Z+WmTfLjNLFJAduKF124tgUy4Z1rapktg14CuZ+WFtrF7JtR1OVDmqxjtr9cj0h5liYMxkIjHmDAh7WUofUkJ2lM1IsYA+ODMQGthcgfIBfB5bKRYFzXmjpqUFVy8ezoGtc1xSxF72IPgDS4zVaJkUmvGchnnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwDtJ9VM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIT8KaV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C5FC4CEED;
-	Tue,  2 Sep 2025 13:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwDtJ9VM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4D7C4CEED;
+	Tue,  2 Sep 2025 13:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819667;
-	bh=0tYzcJ2v/fnrh5RGmvEn9bOAirlQspH76IDCYZ2bGlc=;
+	s=korg; t=1756819671;
+	bh=kGt/jN+giUl8wS3KvkFpQO9WqWJMbxeF0XG8w4jU0gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIT8KaV4GFa1ACJSvnV8eSzjP236M2uUn3WgcKGckYfuObLhKiQxPcNUyrU/DW123
-	 1FM6u8XAvFSQLo4pKVmmzq8IgZwfcGDosvyd8tgj5a41xLYxlBr3PhwtTJArg0HWUX
-	 WVDT3qwZVsI44Yma1UQYotJ6wiC7Y70cUED3SU0o=
+	b=GwDtJ9VM+zofQssju0lnCkRGT7R6OtxVxrEgn7Um9zj87/4JZym5n853oiHJtANw9
+	 YRF6I/9M+jT2p4pWLnalZQW5j7QK5fwmmaq9SpAV2iKXwsXlxWN/jQekjd5dgv+vph
+	 d5bUW11g0VKgdiu2gKYiOTJPohk3IY3aTYJowiDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thijs Raymakers <thijs@raymakers.nl>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.16 104/142] KVM: x86: use array_index_nospec with indices that come from guest
-Date: Tue,  2 Sep 2025 15:20:06 +0200
-Message-ID: <20250902131952.266580276@linuxfoundation.org>
+	=?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.16 105/142] RISC-V: KVM: fix stack overrun when loading vlenb
+Date: Tue,  2 Sep 2025 15:20:07 +0200
+Message-ID: <20250902131952.303920784@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -45,62 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thijs Raymakers <thijs@raymakers.nl>
+From: Radim Krčmář <rkrcmar@ventanamicro.com>
 
-commit c87bd4dd43a624109c3cc42d843138378a7f4548 upstream.
+commit 799766208f09f95677a9ab111b93872d414fbad7 upstream.
 
-min and dest_id are guest-controlled indices. Using array_index_nospec()
-after the bounds checks clamps these values to mitigate speculative execution
-side-channels.
+The userspace load can put up to 2048 bits into an xlen bit stack
+buffer.  We want only xlen bits, so check the size beforehand.
 
-Signed-off-by: Thijs Raymakers <thijs@raymakers.nl>
+Fixes: 2fa290372dfe ("RISC-V: KVM: add 'vlenb' Vector CSR")
 Cc: stable@vger.kernel.org
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Fixes: 715062970f37 ("KVM: X86: Implement PV sched yield hypercall")
-Fixes: bdf7ffc89922 ("KVM: LAPIC: Fix pv ipis out-of-bounds access")
-Fixes: 4180bf1b655a ("KVM: X86: Implement "send IPI" hypercall")
-Link: https://lore.kernel.org/r/20250804064405.4802-1-thijs@raymakers.nl
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Radim Krčmář <rkrcmar@ventanamicro.com>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Link: https://lore.kernel.org/r/20250805104418.196023-4-rkrcmar@ventanamicro.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    2 ++
- arch/x86/kvm/x86.c   |    7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ arch/riscv/kvm/vcpu_vector.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -852,6 +852,8 @@ static int __pv_send_ipi(unsigned long *
- 	if (min > map->max_apic_id)
- 		return 0;
+--- a/arch/riscv/kvm/vcpu_vector.c
++++ b/arch/riscv/kvm/vcpu_vector.c
+@@ -182,6 +182,8 @@ int kvm_riscv_vcpu_set_reg_vector(struct
+ 		struct kvm_cpu_context *cntx = &vcpu->arch.guest_context;
+ 		unsigned long reg_val;
  
-+	min = array_index_nospec(min, map->max_apic_id + 1);
-+
- 	for_each_set_bit(i, ipi_bitmap,
- 		min((u32)BITS_PER_LONG, (map->max_apic_id - min + 1))) {
- 		if (map->phys_map[min + i]) {
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10051,8 +10051,11 @@ static void kvm_sched_yield(struct kvm_v
- 	rcu_read_lock();
- 	map = rcu_dereference(vcpu->kvm->arch.apic_map);
- 
--	if (likely(map) && dest_id <= map->max_apic_id && map->phys_map[dest_id])
--		target = map->phys_map[dest_id]->vcpu;
-+	if (likely(map) && dest_id <= map->max_apic_id) {
-+		dest_id = array_index_nospec(dest_id, map->max_apic_id + 1);
-+		if (map->phys_map[dest_id])
-+			target = map->phys_map[dest_id]->vcpu;
-+	}
- 
- 	rcu_read_unlock();
- 
++		if (reg_size != sizeof(reg_val))
++			return -EINVAL;
+ 		if (copy_from_user(&reg_val, uaddr, reg_size))
+ 			return -EFAULT;
+ 		if (reg_val != cntx->vector.vlenb)
 
 
