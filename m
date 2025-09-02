@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26B7322A2A;
-	Tue,  2 Sep 2025 13:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B3C320A08;
+	Tue,  2 Sep 2025 13:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820482; cv=none; b=uE6tnVweQlUL2U/59h1X1mg3tz6SdKplSNGKFXYa5n3bgPSrSEwnGzwMWQ6WCfQdWUG9bWjnItZjCpCXSm76L4P55iWDxhWabhPB0/Dle46PiicpvNlefMwONtylqGX0Ju2awHxuHO73NmFzmkgB/F1wVuS9nJDiUpHCn9pV2Bg=
+	t=1756820485; cv=none; b=b6jayTi7YeJXcfMTDyUF6ExpB/CBUfcBHTF/MB0Y5pkNsPTXkuctmFvPDlUHQgDXgQdBrEDmJE1E64VoyCxrD7JUm1QdjQiYdJIVAxA3mlE8cvWgCNTlI/+OzWGcqlVe4R+Mf2+KOrcduQefxg8HGPn1gIFjcIAMOn/f7yc8fD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820482; c=relaxed/simple;
-	bh=RDmuU69rXIxpbcRaEQuz41zrjX9QCvE5buEvbPCjKmo=;
+	s=arc-20240116; t=1756820485; c=relaxed/simple;
+	bh=swc1nllWYG2kaozmra8krB09lZoKzleds9ckQ79E34w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DohZialvFUQLA/KqSiE2KRFjGNkqDP4ntOiFmyFsnrcUPvmDC4wI/s+ravdm5Wdt/QXOWUoBC5+X/JKcOz/vP+OYzF6hFvuog7PdB+eToBAugbCTyY8BlodufqzROnYGR427cP0+AqS9IOARPlXhvZ4BeESdNRzOPrHIPQj3FXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8cTDqDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A/z9BqnkzwHyX+OZIfb7jv0H6kkPh2RnRI6bDCRC377qVrYKjOEuD3zmf71HD9VgIFFphb87TrNmalSvBBa8+pq7vz/Ie9aVGUTHwDs5YQnyT1Mb2TUOC3x+Th2ys3Sdl56hk5s73A4/CAAuGoaH08UuQFjqE7+XsmZA5G99szc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZgs90i+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8cTDqDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66362C4CEF4;
-	Tue,  2 Sep 2025 13:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZgs90i+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A238EC4CEF7;
+	Tue,  2 Sep 2025 13:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820481;
-	bh=RDmuU69rXIxpbcRaEQuz41zrjX9QCvE5buEvbPCjKmo=;
+	s=korg; t=1756820485;
+	bh=swc1nllWYG2kaozmra8krB09lZoKzleds9ckQ79E34w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8cTDqDfQVDkGk/1A+z4jiO0/Z35ysScM6H38E/t4+T6M3LYg7ivakOzfNWw5EIVx
-	 pgVpRwaXQ0tLvccHHGUn+lX3HKWL+fRLyDvd2N6vAI97wIP+YdtEl5Yykbpp92BXqv
-	 IZ9K8OUSMuUqUstrI/Hqy9SWCLYyJCKcJKAoBBNU=
+	b=HZgs90i+d/4R3hIF1czWWEGBnYnrwpCLvPq4fUKqx3eUx5QNDQsf7xHoPPzcO22sF
+	 F9C1hMf21C7H62v+KsG9NF3YZ0n6bu6573F2DXx8NXSaGxgUEFOLAekcS/lf1L37XA
+	 qrD06A5+zvpDzHnvODkbB9ccZD1Fs4CxG0mumw+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 44/50] smb3 client: fix return code mapping of remap_file_range
-Date: Tue,  2 Sep 2025 15:21:35 +0200
-Message-ID: <20250902131932.265355235@linuxfoundation.org>
+	James Jones <jajones@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.1 45/50] drm/nouveau/disp: Always accept linear modifier
+Date: Tue,  2 Sep 2025 15:21:36 +0200
+Message-ID: <20250902131932.304162550@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -50,47 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: James Jones <jajones@nvidia.com>
 
-commit 0e08fa789d39aa01923e3ba144bd808291895c3c upstream.
+commit e2fe0c54fb7401e6ecd3c10348519ab9e23bd639 upstream.
 
-We were returning -EOPNOTSUPP for various remap_file_range cases
-but for some of these the copy_file_range_syscall() requires -EINVAL
-to be returned (e.g. where source and target file ranges overlap when
-source and target are the same file). This fixes xfstest generic/157
-which was expecting EINVAL for that (and also e.g. for when the src
-offset is beyond end of file).
+On some chipsets, which block-linear modifiers are
+supported is format-specific. However, linear
+modifiers are always be supported. The prior
+modifier filtering logic was not accounting for
+the linear case.
 
 Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c586f30bf74c ("drm/nouveau/kms: Add format mod prop to base/ovly/nvdisp")
+Signed-off-by: James Jones <jajones@nvidia.com>
+Link: https://lore.kernel.org/r/20250811220017.1337-3-jajones@nvidia.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/nouveau/dispnv50/wndw.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1363,6 +1363,20 @@ static loff_t cifs_remap_file_range(stru
- 			netfs_resize_file(&target_cifsi->netfs, new_size);
- 			fscache_resize_cookie(cifs_inode_cookie(target_inode),
- 					      new_size);
-+		} else if (rc == -EOPNOTSUPP) {
-+			/*
-+			 * copy_file_range syscall man page indicates EINVAL
-+			 * is returned e.g when "fd_in and fd_out refer to the
-+			 * same file and the source and target ranges overlap."
-+			 * Test generic/157 was what showed these cases where
-+			 * we need to remap EOPNOTSUPP to EINVAL
-+			 */
-+			if (off >= src_inode->i_size) {
-+				rc = -EINVAL;
-+			} else if (src_inode == target_inode) {
-+				if (off + len > destoff)
-+					rc = -EINVAL;
-+			}
- 		}
- 	}
+--- a/drivers/gpu/drm/nouveau/dispnv50/wndw.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/wndw.c
+@@ -663,6 +663,10 @@ static bool nv50_plane_format_mod_suppor
+ 	struct nouveau_drm *drm = nouveau_drm(plane->dev);
+ 	uint8_t i;
  
++	/* All chipsets can display all formats in linear layout */
++	if (modifier == DRM_FORMAT_MOD_LINEAR)
++		return true;
++
+ 	if (drm->client.device.info.chipset < 0xc0) {
+ 		const struct drm_format_info *info = drm_format_info(format);
+ 		const uint8_t kind = (modifier >> 12) & 0xff;
 
 
