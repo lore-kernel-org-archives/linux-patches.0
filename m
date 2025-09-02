@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821CB3128A7;
-	Tue,  2 Sep 2025 13:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5AD30AAB4;
+	Tue,  2 Sep 2025 13:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819483; cv=none; b=VzyGE5SWz2yZTZxwCE2K5lUO2zTeNbD9Eq/eUqQXwSyb6tWbmEDQEePS/Hn/J++GXo1+jR0xlp7VVml4qHkNrAjBzOs6OcPLThjKvk7RarwlFN3E6+IsO5/UZhT/wzjylvAK76+ub11m8F0/lCbtoLZONRFpYdsFNRlkHPVbt4Y=
+	t=1756819487; cv=none; b=XkAqB2Rs95mw8CTfMlY7u8u8N4imlocJVmJOteGpPDsg7slYHI4pyZ5ZGd1TxzZzEaRbtsFOEh/SszxUZZuBGfWQUyAmHbDqajWpLuIGBlnSYd5oo63lQLQ1VZB6L2JP8vWyQzsPE47vj4kZqQpdGX/52mM1IPnBSr7d319bt/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819483; c=relaxed/simple;
-	bh=iGo+Klsnx/6uDMoD3bve2VUNcU/HnvmK4v4lNNsRwDg=;
+	s=arc-20240116; t=1756819487; c=relaxed/simple;
+	bh=dFF+tTA9JlVT+m1J30BkVDkiw2UB03zDJ/TwlGpBUCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7WDi8Nql25/2pnxMr5OKHPGvXsePRnvRfy8C9gJfFNE7HoP6suSS5xanUFZfiBVnnTw1ViW2RwMIQ5Ibufg4BkaJu1ZGGGBWLLZuV41OOHn5wU/Da7Dt2z/QTrTrU95zDF+Mfqxz3j7ZOyYFHP2bBALlQQS2Q3izNf8XKe9nrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNo2/IAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KCez4iayvEJscQVo22y3upOl4nMiA5pp8126ZQBqtvBswii1NpzOsxeRokaaqizQLS+M4gQZJQJ95Rl9T8xHXwe3mgBdEZyaRrqxoHEgng1yQi3yJq6twCY0as5rAsTSDrEMZsMZm4THA3uW8jLClc1ua168W905ODegD61NRfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGJHT830; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNo2/IAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B35C4CEED;
-	Tue,  2 Sep 2025 13:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGJHT830"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F41CC4CEED;
+	Tue,  2 Sep 2025 13:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819483;
-	bh=iGo+Klsnx/6uDMoD3bve2VUNcU/HnvmK4v4lNNsRwDg=;
+	s=korg; t=1756819486;
+	bh=dFF+tTA9JlVT+m1J30BkVDkiw2UB03zDJ/TwlGpBUCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNo2/IARMzISboAv1BIImfqD3cQZ5W/wbKaVmOS6Qgupq5koxbhyiY0Etzvv5HzDc
-	 cgU9pPYRzqhSYS8pxKMagL9P+yVZaiYnO/cYfZdt+5gsjYtXIyEwWQx/PiL58ORSE/
-	 gDGUhNkAzZY5GB9EvxpDXNPS8QDuY9QSNMKNHM8E=
+	b=FGJHT830XHiH9fuU5CHBoOHjYurjBfWA/iEobWn6xp2LT464bpuhirlCZJf4OJpIH
+	 ZusKUztKdvzmk+Ho3//raW64cwT9z3e/uaUXxdjn54I5Tifo15XGmEtybDxi4glW8D
+	 UwmTDXwCoohRNBGAmwuS5DDYoyMjS2ajG2OR6hqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ludovico de Nittis <ludovico.denittis@collabora.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 047/142] Bluetooth: hci_event: Treat UNKNOWN_CONN_ID on disconnect as success
-Date: Tue,  2 Sep 2025 15:19:09 +0200
-Message-ID: <20250902131950.056355830@linuxfoundation.org>
+Subject: [PATCH 6.16 048/142] Bluetooth: hci_event: Mark connection as closed during suspend disconnect
+Date: Tue,  2 Sep 2025 15:19:10 +0200
+Message-ID: <20250902131950.093759249@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -53,57 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Ludovico de Nittis <ludovico.denittis@collabora.com>
 
-[ Upstream commit 2f050a5392b7a0928bf836d9891df4851463512c ]
+[ Upstream commit b7fafbc499b5ee164018eb0eefe9027f5a6aaad2 ]
 
-When the host sends an HCI_OP_DISCONNECT command, the controller may
-respond with the status HCI_ERROR_UNKNOWN_CONN_ID (0x02). E.g. this can
-happen on resume from suspend, if the link was terminated by the remote
-device before the event mask was correctly set.
+When suspending, the disconnect command for an active Bluetooth
+connection could be issued, but the corresponding
+`HCI_EV_DISCONN_COMPLETE` event might not be received before the system
+completes the suspend process. This can lead to an inconsistent state.
+
+On resume, the controller may auto-accept reconnections from the same
+device (due to suspend event filters), but these new connections are
+rejected by the kernel which still has connection objects from before
+suspend. Resulting in errors like:
+```
+kernel: Bluetooth: hci0: ACL packet for unknown connection handle 1
+kernel: Bluetooth: hci0: Ignoring HCI_Connection_Complete for existing
+connection
+```
 
 This is a btmon snippet that shows the issue:
 ```
-> ACL Data RX: Handle 3 flags 0x02 dlen 12
-      L2CAP: Disconnection Request (0x06) ident 5 len 4
-        Destination CID: 65
-        Source CID: 72
-< ACL Data TX: Handle 3 flags 0x00 dlen 12
-      L2CAP: Disconnection Response (0x07) ident 5 len 4
-        Destination CID: 65
-        Source CID: 72
-> ACL Data RX: Handle 3 flags 0x02 dlen 12
-      L2CAP: Disconnection Request (0x06) ident 6 len 4
-        Destination CID: 64
-        Source CID: 71
-< ACL Data TX: Handle 3 flags 0x00 dlen 12
-      L2CAP: Disconnection Response (0x07) ident 6 len 4
-        Destination CID: 64
-        Source CID: 71
-< HCI Command: Set Event Mask (0x03|0x0001) plen 8
-        Mask: 0x3dbff807fffbffff
-          Inquiry Complete
-          Inquiry Result
-          Connection Complete
-          Connection Request
-          Disconnection Complete
-          Authentication Complete
-[...]
 < HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 3 Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
+        Handle: 1 Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
         Reason: Remote User Terminated Connection (0x13)
 > HCI Event: Command Status (0x0f) plen 4
-      Disconnect (0x01|0x0006) ncmd 1
-        Status: Unknown Connection Identifier (0x02)
+      Disconnect (0x01|0x0006) ncmd 2
+        Status: Success (0x00)
+[...]
+// Host suspends with the event filter set for the device
+// On resume, the device tries to reconnect with a new handle
+
+> HCI Event: Connect Complete (0x03) plen 11
+        Status: Success (0x00)
+        Handle: 2
+        Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
+
+// Kernel ignores this event because there is an existing connection
+with
+// handle 1
 ```
 
-Currently, the hci_cs_disconnect function treats any non-zero status
-as a command failure. This can be misleading because the connection is
-indeed being terminated and the controller is confirming that is has no
-knowledge of that connection handle. Meaning that the initial request of
-disconnecting a device should be treated as done.
-
-With this change we allow the function to proceed, following the success
-path, which correctly calls `mgmt_device_disconnected` and ensures a
-consistent state.
+By explicitly setting the connection state to BT_CLOSED we can ensure a
+consistent state, even if we don't receive the disconnect complete event
+in time.
 
 Link: https://github.com/bluez/bluez/issues/1226
 Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
@@ -111,22 +102,26 @@ Signed-off-by: Ludovico de Nittis <ludovico.denittis@collabora.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_event.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 5ef54853bc5eb..1902982538da7 100644
+index 1902982538da7..cadb53e21c0ef 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -2703,7 +2703,7 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
- 	if (!conn)
- 		goto unlock;
+@@ -2718,6 +2718,12 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
+ 		goto done;
+ 	}
  
--	if (status) {
-+	if (status && status != HCI_ERROR_UNKNOWN_CONN_ID) {
- 		mgmt_disconnect_failed(hdev, &conn->dst, conn->type,
- 				       conn->dst_type, status);
++	/* During suspend, mark connection as closed immediately
++	 * since we might not receive HCI_EV_DISCONN_COMPLETE
++	 */
++	if (hdev->suspended)
++		conn->state = BT_CLOSED;
++
+ 	mgmt_conn = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
  
+ 	if (conn->type == ACL_LINK) {
 -- 
 2.50.1
 
