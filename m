@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81CC31E102;
-	Tue,  2 Sep 2025 13:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243372D9ECA;
+	Tue,  2 Sep 2025 13:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820158; cv=none; b=P1igYJvaB+dTNHREt4td82MNh/6URfG3ZUME374pG88WPtyICpilyxknenopYo7dfzebL/Ekwd1TESnu2v5DBJtwM6g+/nNEmdUxwliu/5Quxbk9DcZrQlNbgxRsu2+UfDX/2mSYBNp0mX/qXrCf4u9Hzyk5z2wgpYCWc4CrDZk=
+	t=1756820162; cv=none; b=PT6Iom5/6vSs9fkSTYFek9k+kRn6lf25NetGmBP/Udi4rygVdmxRunMQvYThOY3mpn6rA7bM3P5Ikltv2gtutMASADLxc/RTMZvmJx1GQCyvx0/Fjf+OsAENXuXYyA02jfXE6W99d0pwEgBL1Dz16HJ3lu0EyRHz9ane8js9biM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820158; c=relaxed/simple;
-	bh=OpcVFwmy5YN/C0nFIkUe4eR9CUTZJpdRSie4latCutA=;
+	s=arc-20240116; t=1756820162; c=relaxed/simple;
+	bh=ZQuoZ3hcDlXNFq/bskgGNkr5OgjjUeKcI6LgVOM02Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhZUKz+ql0NYD8dDrKwveodC+sTWPo5vLcZPiSuCQQqx2q7Mzrqm1yajkGe776w6HQNKOgNsCBUvr5RT6g2mXKmsy2fYcNFPw/ckRH0Czy9Z9DDr661lQH897f5kLw5LD78WstfdEPuU19/tqNHKwgVlrMAXf7hTFpTVgxO/E/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2mNnXfO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IiC8/fKLMQiUqIdZPV3jBLwz0OuCULC00NdQ5Mt3ufMCOMkmSknfnTTP63aUGU8dmPVywtZdvWyIabfYGhGu4AZQ6Y6RqV2+tlqXtK9TryvyJ7aP9HzEfFTUXcfLKxwNo28X73RChryFyPd6ckXZgrUiIedEuwmOdm9fQu7ltfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSlYn5MT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2mNnXfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAB3C4CEF4;
-	Tue,  2 Sep 2025 13:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSlYn5MT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87655C4CEF5;
+	Tue,  2 Sep 2025 13:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820158;
-	bh=OpcVFwmy5YN/C0nFIkUe4eR9CUTZJpdRSie4latCutA=;
+	s=korg; t=1756820162;
+	bh=ZQuoZ3hcDlXNFq/bskgGNkr5OgjjUeKcI6LgVOM02Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2mNnXfODTijQr/ncpIRVujLtrVPqM+1WYJIvuZQ1Ll9IIkF6f2uG4l8p070jwksk
-	 ApZxrzWfVCw6Tvu8c/kGg/z3yY3NvqdeczJB43yfz8FgX3fldMM+C8uWYcBZ3rP8ji
-	 Lf4BSqFAjZnMKA6XtMZ6sEAGqFXT2kP/kV44j7Vw=
+	b=gSlYn5MT/sIPlIUPH+4U/ujiaXqcVijRtKhdUWLPsitfj0cIeiFGSB33XST+2z+Wh
+	 A+6m0/zzGP0cPEDJij+QpeOqqDkPjSR/JswlBq9lghEEcq/0oUNmNNl1rOsa9zl+lw
+	 N3GprR24RL1akXshabNyMMUn/C7ocVHvbUtgSUc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett A C Sheffield <bacs@librecast.net>,
-	Oscar Maes <oscmaes92@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 17/75] net: ipv4: fix regression in local-broadcast routes
-Date: Tue,  2 Sep 2025 15:20:29 +0200
-Message-ID: <20250902131935.791061578@linuxfoundation.org>
+Subject: [PATCH 6.6 18/75] drm/msm: Defer fd_install in SUBMIT ioctl
+Date: Tue,  2 Sep 2025 15:20:30 +0200
+Message-ID: <20250902131935.828698098@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -53,55 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit 5189446ba995556eaa3755a6e875bc06675b88bd ]
+[ Upstream commit f22853435bbd1e9836d0dce7fd99c040b94c2bf1 ]
 
-Commit 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
-introduced a regression where local-broadcast packets would have their
-gateway set in __mkroute_output, which was caused by fi = NULL being
-removed.
+Avoid fd_install() until there are no more potential error paths, to
+avoid put_unused_fd() after the fd is made visible to userspace.
 
-Fix this by resetting the fib_info for local-broadcast packets. This
-preserves the intended changes for directed-broadcast packets.
-
-Cc: stable@vger.kernel.org
-Fixes: 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
-Reported-by: Brett A C Sheffield <bacs@librecast.net>
-Closes: https://lore.kernel.org/regressions/20250822165231.4353-4-bacs@librecast.net
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250827062322.4807-1-oscmaes92@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 68dc6c2d5eec ("drm/msm: Fix submit error-path leaks")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/665363/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 8672ebbace980..20f5c8307443d 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2547,12 +2547,16 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
- 		    !netif_is_l3_master(dev_out))
- 			return ERR_PTR(-EINVAL);
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index bbe4f1665b603..dc142f9e4f602 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -981,12 +981,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
  
--	if (ipv4_is_lbcast(fl4->daddr))
-+	if (ipv4_is_lbcast(fl4->daddr)) {
- 		type = RTN_BROADCAST;
--	else if (ipv4_is_multicast(fl4->daddr))
-+
-+		/* reset fi to prevent gateway resolution */
-+		fi = NULL;
-+	} else if (ipv4_is_multicast(fl4->daddr)) {
- 		type = RTN_MULTICAST;
--	else if (ipv4_is_zeronet(fl4->daddr))
-+	} else if (ipv4_is_zeronet(fl4->daddr)) {
- 		return ERR_PTR(-EINVAL);
-+	}
+ 	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
+ 		sync_file = sync_file_create(submit->user_fence);
+-		if (!sync_file) {
++		if (!sync_file)
+ 			ret = -ENOMEM;
+-		} else {
+-			fd_install(out_fence_fd, sync_file->file);
+-			args->fence_fd = out_fence_fd;
+-		}
+ 	}
  
- 	if (dev_out->flags & IFF_LOOPBACK)
- 		flags |= RTCF_LOCAL;
+ 	submit_attach_object_fences(submit);
+@@ -1013,10 +1009,14 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ out_unlock:
+ 	mutex_unlock(&queue->lock);
+ out_post_unlock:
+-	if (ret && (out_fence_fd >= 0)) {
+-		put_unused_fd(out_fence_fd);
++	if (ret) {
++		if (out_fence_fd >= 0)
++			put_unused_fd(out_fence_fd);
+ 		if (sync_file)
+ 			fput(sync_file->file);
++	} else if (sync_file) {
++		fd_install(out_fence_fd, sync_file->file);
++		args->fence_fd = out_fence_fd;
+ 	}
+ 
+ 	if (!IS_ERR_OR_NULL(submit)) {
 -- 
 2.50.1
 
