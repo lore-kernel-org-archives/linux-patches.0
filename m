@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C08308F1A;
-	Tue,  2 Sep 2025 13:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8714A304BA4;
+	Tue,  2 Sep 2025 13:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820240; cv=none; b=h/ErukZXeG/TZX8NuOIgWLvWpRGH28YX8KRCl7s67Q9nkrqOSFt3RXcES8TOe5hOMK21Reiwn+wFEZlYq0tTCj35kMopu6IJNPs/lnWQfQAhsdeY1qcevm/TFeF40hCD4gReEL0soVETXLllNj5lOqPSU8TwF0mzBvqoM17pak8=
+	t=1756820243; cv=none; b=qOr/PstTpi7DAlgDWJduFhVC59Q3osAa0DTFNsH88p3PaglnitULiuTJYS+bI8ipnHdQ0quKybjYTpL9WtfA4BKX8VN0Stw8hzCbhmLAJYEZ+CTqeRQ9lx6MlwsEtJZteQm1o5s2FsbJMIhVuf8SPI1t6PDVM7h86bJDwV/oYd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820240; c=relaxed/simple;
-	bh=mc1GZB9dhtM7eT8x4uHhh6cvocKrIhFDjjeJ/JGELFE=;
+	s=arc-20240116; t=1756820243; c=relaxed/simple;
+	bh=5k/lgSIrwCGVwwcx/xH+bJxryRmqb0MTrO04swrdybY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTBiUMspxrVq3ij9vuFEALuYAx1uabaCYLoKmcJvfM7jEZYxSv4aQ15nTGBGrdvLQ9f4t3rXn8YpDlcR6UlJRZGb4PhvI6B1EUypAuWKOCbJvxmwvniliACe9XMs8S6TKiTy2EFIGw5VQsy0GNlc4NmryUk+wBBAkFTCwVeucMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gxgi4gvv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VooVKw0C56JLarXZpaokxuv4QxEzeKE7AFBWa3CILh0sePxbAA7VxUlasSZGTh/z3ZLNCAt1vE2vKKjDVzRkgkioAcZhFleAcu77+wSEJRjgZ2JE+C+HXN8DydS0oXlIKuQQVBal8Og4RKMS18DZ+al/KC6DL6ExJWPJhScpA+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojEcK9k4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gxgi4gvv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1068C4CEED;
-	Tue,  2 Sep 2025 13:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojEcK9k4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F95AC4CEF4;
+	Tue,  2 Sep 2025 13:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820240;
-	bh=mc1GZB9dhtM7eT8x4uHhh6cvocKrIhFDjjeJ/JGELFE=;
+	s=korg; t=1756820243;
+	bh=5k/lgSIrwCGVwwcx/xH+bJxryRmqb0MTrO04swrdybY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gxgi4gvvaMjeAs3givU/1ikaljbCPu/4JQ1x3spEzdXriBOaV8s/mrpV5y9HVHDG5
-	 mjBp07LbyQOrB+o0X0JfG5EzxVIj/6KaT6FJliYRlXY2Uwo0y2vZ7t+Swe3lksIW4X
-	 IAPQuuO2dOt68pQn/FIZzRtCoC1RptyVbjUuZjt0=
+	b=ojEcK9k46px3OtY3omqc5ahC+9wgnoXxwLCVs8sH3wKpjp+Nc+oI9ziWo91T9xZtm
+	 wWaogF8r0k8b/UOqfw3miXN1xPJneu9oR5TzqVt5mHGw9P7jTEqEE4LdM2zPVX5+xc
+	 U9/+AMQJxCM5doS4LFjrac98Q1vusP41+fjXcHzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 35/75] phy: mscc: Fix when PTP clock is register and unregister
-Date: Tue,  2 Sep 2025 15:20:47 +0200
-Message-ID: <20250902131936.499191040@linuxfoundation.org>
+Subject: [PATCH 6.6 44/75] net/mlx5e: Update and set Xon/Xoff upon MTU set
+Date: Tue,  2 Sep 2025 15:20:56 +0200
+Message-ID: <20250902131936.850353363@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -53,133 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit 882e57cbc7204662f6c5672d5b04336c1d790b03 ]
+[ Upstream commit ceddedc969f0532b7c62ca971ee50d519d2bc0cb ]
 
-It looks like that every time when the interface was set down and up the
-driver was creating a new ptp clock. On top of this the function
-ptp_clock_unregister was never called.
-Therefore fix this by calling ptp_clock_register and initialize the
-mii_ts struct inside the probe function and call ptp_clock_unregister when
-driver is removed.
+Xon/Xoff sizes are derived from calculation that include the MTU size.
+Set Xon/Xoff when MTU is set.
+If Xon/Xoff fails, set the previous MTU.
 
-Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250825065543.2916334-1-horatiu.vultur@microchip.com
+Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250825143435.598584-10-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc.h      |  4 ++++
- drivers/net/phy/mscc/mscc_main.c |  4 +---
- drivers/net/phy/mscc/mscc_ptp.c  | 34 ++++++++++++++++++++------------
- 3 files changed, 26 insertions(+), 16 deletions(-)
+ .../mellanox/mlx5/core/en/port_buffer.h         | 12 ++++++++++++
+ .../net/ethernet/mellanox/mlx5/core/en_main.c   | 17 ++++++++++++++++-
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
-index cdb343779a8fb..4ba6e32cf6d8d 100644
---- a/drivers/net/phy/mscc/mscc.h
-+++ b/drivers/net/phy/mscc/mscc.h
-@@ -476,6 +476,7 @@ static inline void vsc8584_config_macsec_intr(struct phy_device *phydev)
- void vsc85xx_link_change_notify(struct phy_device *phydev);
- void vsc8584_config_ts_intr(struct phy_device *phydev);
- int vsc8584_ptp_init(struct phy_device *phydev);
-+void vsc8584_ptp_deinit(struct phy_device *phydev);
- int vsc8584_ptp_probe_once(struct phy_device *phydev);
- int vsc8584_ptp_probe(struct phy_device *phydev);
- irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev);
-@@ -490,6 +491,9 @@ static inline int vsc8584_ptp_init(struct phy_device *phydev)
- {
- 	return 0;
- }
-+static inline void vsc8584_ptp_deinit(struct phy_device *phydev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+index f4a19ffbb641c..66d276a1be836 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+@@ -66,11 +66,23 @@ struct mlx5e_port_buffer {
+ 	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_NETWORK_BUFFER];
+ };
+ 
++#ifdef CONFIG_MLX5_CORE_EN_DCB
+ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 				    u32 change, unsigned int mtu,
+ 				    struct ieee_pfc *pfc,
+ 				    u32 *buffer_size,
+ 				    u8 *prio2buffer);
++#else
++static inline int
++mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
++				u32 change, unsigned int mtu,
++				void *pfc,
++				u32 *buffer_size,
++				u8 *prio2buffer)
 +{
-+}
- static inline int vsc8584_ptp_probe_once(struct phy_device *phydev)
- {
- 	return 0;
-diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
-index 3de72d9cc22bd..3a932b30f4358 100644
---- a/drivers/net/phy/mscc/mscc_main.c
-+++ b/drivers/net/phy/mscc/mscc_main.c
-@@ -2337,9 +2337,7 @@ static int vsc85xx_probe(struct phy_device *phydev)
- 
- static void vsc85xx_remove(struct phy_device *phydev)
- {
--	struct vsc8531_private *priv = phydev->priv;
--
--	skb_queue_purge(&priv->rx_skbs_list);
-+	vsc8584_ptp_deinit(phydev);
- }
- 
- /* Microsemi VSC85xx PHYs */
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index add1a9ee721af..1f6237705b44b 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -1297,7 +1297,6 @@ static void vsc8584_set_input_clk_configured(struct phy_device *phydev)
- 
- static int __vsc8584_init_ptp(struct phy_device *phydev)
- {
--	struct vsc8531_private *vsc8531 = phydev->priv;
- 	static const u32 ltc_seq_e[] = { 0, 400000, 0, 0, 0 };
- 	static const u8  ltc_seq_a[] = { 8, 6, 5, 4, 2 };
- 	u32 val;
-@@ -1514,17 +1513,7 @@ static int __vsc8584_init_ptp(struct phy_device *phydev)
- 
- 	vsc85xx_ts_eth_cmp1_sig(phydev);
- 
--	vsc8531->mii_ts.rxtstamp = vsc85xx_rxtstamp;
--	vsc8531->mii_ts.txtstamp = vsc85xx_txtstamp;
--	vsc8531->mii_ts.hwtstamp = vsc85xx_hwtstamp;
--	vsc8531->mii_ts.ts_info  = vsc85xx_ts_info;
--	phydev->mii_ts = &vsc8531->mii_ts;
--
--	memcpy(&vsc8531->ptp->caps, &vsc85xx_clk_caps, sizeof(vsc85xx_clk_caps));
--
--	vsc8531->ptp->ptp_clock = ptp_clock_register(&vsc8531->ptp->caps,
--						     &phydev->mdio.dev);
--	return PTR_ERR_OR_ZERO(vsc8531->ptp->ptp_clock);
 +	return 0;
- }
++}
++#endif
  
- void vsc8584_config_ts_intr(struct phy_device *phydev)
-@@ -1551,6 +1540,16 @@ int vsc8584_ptp_init(struct phy_device *phydev)
+ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 			    struct mlx5e_port_buffer *port_buffer);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 5c6f01abdcb91..09ba60b2e744b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -44,6 +44,7 @@
+ #include "eswitch.h"
+ #include "en.h"
+ #include "en/txrx.h"
++#include "en/port_buffer.h"
+ #include "en_tc.h"
+ #include "en_rep.h"
+ #include "en_accel/ipsec.h"
+@@ -2722,9 +2723,11 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_priv *priv)
+ 	struct mlx5e_params *params = &priv->channels.params;
+ 	struct net_device *netdev = priv->netdev;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+-	u16 mtu;
++	u16 mtu, prev_mtu;
+ 	int err;
+ 
++	mlx5e_query_mtu(mdev, params, &prev_mtu);
++
+ 	err = mlx5e_set_mtu(mdev, params, params->sw_mtu);
+ 	if (err)
+ 		return err;
+@@ -2734,6 +2737,18 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_priv *priv)
+ 		netdev_warn(netdev, "%s: VPort MTU %d is different than netdev mtu %d\n",
+ 			    __func__, mtu, params->sw_mtu);
+ 
++	if (mtu != prev_mtu && MLX5_BUFFER_SUPPORTED(mdev)) {
++		err = mlx5e_port_manual_buffer_config(priv, 0, mtu,
++						      NULL, NULL, NULL);
++		if (err) {
++			netdev_warn(netdev, "%s: Failed to set Xon/Xoff values with MTU %d (err %d), setting back to previous MTU %d\n",
++				    __func__, mtu, err, prev_mtu);
++
++			mlx5e_set_mtu(mdev, params, prev_mtu);
++			return err;
++		}
++	}
++
+ 	params->sw_mtu = mtu;
  	return 0;
  }
- 
-+void vsc8584_ptp_deinit(struct phy_device *phydev)
-+{
-+	struct vsc8531_private *vsc8531 = phydev->priv;
-+
-+	if (vsc8531->ptp->ptp_clock) {
-+		ptp_clock_unregister(vsc8531->ptp->ptp_clock);
-+		skb_queue_purge(&vsc8531->rx_skbs_list);
-+	}
-+}
-+
- irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev)
- {
- 	struct vsc8531_private *priv = phydev->priv;
-@@ -1608,7 +1607,16 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
- 
- 	vsc8531->ptp->phydev = phydev;
- 
--	return 0;
-+	vsc8531->mii_ts.rxtstamp = vsc85xx_rxtstamp;
-+	vsc8531->mii_ts.txtstamp = vsc85xx_txtstamp;
-+	vsc8531->mii_ts.hwtstamp = vsc85xx_hwtstamp;
-+	vsc8531->mii_ts.ts_info  = vsc85xx_ts_info;
-+	phydev->mii_ts = &vsc8531->mii_ts;
-+
-+	memcpy(&vsc8531->ptp->caps, &vsc85xx_clk_caps, sizeof(vsc85xx_clk_caps));
-+	vsc8531->ptp->ptp_clock = ptp_clock_register(&vsc8531->ptp->caps,
-+						     &phydev->mdio.dev);
-+	return PTR_ERR_OR_ZERO(vsc8531->ptp->ptp_clock);
- }
- 
- int vsc8584_ptp_probe_once(struct phy_device *phydev)
 -- 
 2.50.1
 
