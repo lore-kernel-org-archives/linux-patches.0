@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D6430E832;
-	Tue,  2 Sep 2025 13:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B961C303C8B;
+	Tue,  2 Sep 2025 13:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819524; cv=none; b=Qk08gcD1lp4JAwOzcOTJO4gpzQ3FLhkhRK8vxKfauWfP7noq78lU0IEBJ9vopOBjwiFZh6NBQaXQLGhTBDISuz0MWLfcJM1Fv/2Z5U/hpwhmUVWMeL/R8dyZ2tRg/JAHuhKUDhe+uGeEFqA1KyabCmwn+a52jNr9vaAfgJAYnJA=
+	t=1756819527; cv=none; b=JTLK8W0y1X0l7vz12N4v3O/clW0Fp7wR17blfWBdPTED+Eb/pYMbjBPhQB7D6Tx0vPlO90UasTPBo1Q7YlJCfSGqGrXEkV+AqAUVPDGzli/omgIyWLNj8Bg9sfVGqur6iLTxMlr/ZvHuCypH3SNbXt0BZK3QWgWvKljj7/3DP0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819524; c=relaxed/simple;
-	bh=jJ2Hw1muXSj7WrWcSXYRs5Ek8MHMwtUjdbZsWz1MZP0=;
+	s=arc-20240116; t=1756819527; c=relaxed/simple;
+	bh=i19q4oxh0YfLxbzRxYCuraO/WVSLhCj+KSX5Ph8RjPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1iTi4T6N5+tZY0yu2FmlD6Vb/eZusxqmQZZDW8M4edQcC+cq5/ZwCF7RZIS8SPMjGQgGRdKp/zOy+9Do7U5DetexYkdB8pmWbPpGP8dIdTQf3yDqxM7JyHDI8ncBRL31uFcrHP+SZyx4jZUD7AHZwfmGu4s8Zklegca5qX6fZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGSgx7jQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cknrzR3u7mDvHU1wVmS1sTuoQ07NhFxSVGxoi8nspTqscDQaLiNtbOI950VqJfvC/DrEeJZCdZBRWBlQO7pvA1kw0z7OyU/EaR5Gz0olE3l/kYnFZGIaBr2ZpiQiSupvYR96qkVxM4XqkOirBl4XN1cGvuOhkoLNrIERZnUAbxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0jIaXsI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGSgx7jQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1AEC4CEED;
-	Tue,  2 Sep 2025 13:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0jIaXsI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF96C4CEF4;
+	Tue,  2 Sep 2025 13:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819524;
-	bh=jJ2Hw1muXSj7WrWcSXYRs5Ek8MHMwtUjdbZsWz1MZP0=;
+	s=korg; t=1756819527;
+	bh=i19q4oxh0YfLxbzRxYCuraO/WVSLhCj+KSX5Ph8RjPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGSgx7jQ0+GywWNP+h5I1GOiSf48lLbf/cOFHy2vxJDruQVo80c8kEvwGFRvPnhUS
-	 mMujSFgWKwdXromchCcGaCXex1GY4fxOyMxw5DgXF0J2vCc3cY6BmSQz98h1wvpUrH
-	 aziZmq23TXOX3ChYctO/TUZI3JylcV8Kwp8O5jww=
+	b=f0jIaXsIxx0rZxpFOc/8pmWh29gWrQ4FK6ZbQmPUFksF2+oq/KfPvW/l3NgwqG8G1
+	 hvK9q0pnTYXP1Ew9+VZZcIpphgZDBi7ifycRBDSHoSCOG37WAi7OzaFRO/oXRRrl0F
+	 e9P4RsgLKKSdBkuVT2AQF+jRZT9fugOPANCWxbbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.16 058/142] ice: dont leave device non-functional if Tx scheduler config fails
-Date: Tue,  2 Sep 2025 15:19:20 +0200
-Message-ID: <20250902131950.473891114@linuxfoundation.org>
+Subject: [PATCH 6.16 059/142] ice: use fixed adapter index for E825C embedded devices
+Date: Tue,  2 Sep 2025 15:19:21 +0200
+Message-ID: <20250902131950.511752181@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -55,234 +57,198 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 86aae43f21cf784c1d7f6a9af93e5116b0f232ab ]
+[ Upstream commit 5c5e5b52bf05c7fe88768318c041052c5fac36b8 ]
 
-The ice_cfg_tx_topo function attempts to apply Tx scheduler topology
-configuration based on NVM parameters, selecting either a 5 or 9 layer
-topology.
+The ice_adapter structure is used by the ice driver to connect multiple
+physical functions of a device in software. It was introduced by
+commit 0e2bddf9e5f9 ("ice: add ice_adapter for shared data across PFs on
+the same NIC") and is primarily used for PTP support, as well as for
+handling certain cross-PF synchronization.
 
-As part of this flow, the driver acquires the "Global Configuration Lock",
-which is a hardware resource associated with programming the DDP package
-to the device. This "lock" is implemented by firmware as a way to
-guarantee that only one PF can program the DDP for a device. Unlike a
-traditional lock, once a PF has acquired this lock, no other PF will be
-able to acquire it again (including that PF) until a CORER of the device.
-Future requests to acquire the lock report that global configuration has
-already completed.
+The original design of ice_adapter used PCI address information to
+determine which devices should be connected. This was extended to support
+E825C devices by commit fdb7f54700b1 ("ice: Initial support for E825C
+hardware in ice_adapter"), which used the device ID for E825C devices
+instead of the PCI address.
 
-The following flow is used to program the Tx topology:
+Later, commit 0093cb194a75 ("ice: use DSN instead of PCI BDF for
+ice_adapter index") replaced the use of Bus/Device/Function addressing with
+use of the device serial number.
 
- * Read the DDP package for scheduler configuration data
- * Acquire the global configuration lock
- * Program Tx scheduler topology according to DDP package data
- * Trigger a CORER which clears the global configuration lock
+E825C devices may appear in "Dual NAC" configuration which has multiple
+physical devices tied to the same clock source and which need to use the
+same ice_adapter. Unfortunately, each "NAC" has its own NVM which has its
+own unique Device Serial Number. Thus, use of the DSN for connecting
+ice_adapter does not work properly. It "worked" in the pre-production
+systems because the DSN was not initialized on the test NVMs and all the
+NACs had the same zero'd serial number.
 
-This is followed by the flow for programming the DDP package:
+Since we cannot rely on the DSN, lets fall back to the logic in the
+original E825C support which used the device ID. This is safe for E825C
+only because of the embedded nature of the device. It isn't a discreet
+adapter that can be plugged into an arbitrary system. All E825C devices on
+a given system are connected to the same clock source and need to be
+configured through the same PTP clock.
 
- * Acquire the global configuration lock (again)
- * Download the DDP package to the device
- * Release the global configuration lock.
+To make this separation clear, reserve bit 63 of the 64-bit index values as
+a "fixed index" indicator. Always clear this bit when using the device
+serial number as an index.
 
-However, if configuration of the Tx topology fails, (i.e.
-ice_get_set_tx_topo returns an error code), the driver exits
-ice_cfg_tx_topo() immediately, and fails to trigger CORER.
+For E825C, use a fixed value defined as the 0x579C E825C backplane device
+ID bitwise ORed with the fixed index indicator. This is slightly different
+than the original logic of just using the device ID directly. Doing so
+prevents a potential issue with systems where only one of the NACs is
+connected with an external PHY over SGMII. In that case, one NAC would
+have the E825C_SGMII device ID, but the other would not.
 
-While the global configuration lock is held, the firmware rejects most
-AdminQ commands, as it is waiting for the DDP package download (or Tx
-scheduler topology programming) to occur.
+Separate the determination of the full 64-bit index from the 32-bit
+reduction logic. Provide both ice_adapter_index() and a wrapping
+ice_adapter_xa_index() which handles reducing the index to a long on 32-bit
+systems. As before, cache the full index value in the adapter structure to
+warn about collisions.
 
-The current driver flows assume that the global configuration lock has been
-reset by CORER after programming the Tx topology. Thus, the same PF
-attempts to acquire the global lock again, and fails. This results in the
-driver reporting "an unknown error occurred when loading the DDP package".
-It then attempts to enter safe mode, but ultimately fails to finish
-ice_probe() since nearly all AdminQ command report error codes, and the
-driver stops loading the device at some point during its initialization.
+This fixes issues with E825C not initializing PTP on both NACs, due to
+failure to connect the appropriate devices to the same ice_adapter.
 
-The only currently known way that ice_get_set_tx_topo() can fail is with
-certain older DDP packages which contain invalid topology configuration, on
-firmware versions which strictly validate this data. The most recent
-releases of the DDP have resolved the invalid data. However, it is still
-poor practice to essentially brick the device, and prevent access to the
-device even through safe mode or recovery mode. It is also plausible that
-this command could fail for some other reason in the future.
-
-We cannot simply release the global lock after a failed call to
-ice_get_set_tx_topo(). Releasing the lock indicates to firmware that global
-configuration (downloading of the DDP) has completed. Future attempts by
-this or other PFs to load the DDP will fail with a report that the DDP
-package has already been downloaded. Then, PFs will enter safe mode as they
-realize that the package on the device does not meet the minimum version
-requirement to load. The reported error messages are confusing, as they
-indicate the version of the default "safe mode" package in the NVM, rather
-than the version of the file loaded from /lib/firmware.
-
-Instead, we need to trigger CORER to clear global configuration. This is
-the lowest level of hardware reset which clears the global configuration
-lock and related state. It also clears any already downloaded DDP.
-Crucially, it does *not* clear the Tx scheduler topology configuration.
-
-Refactor ice_cfg_tx_topo() to always trigger a CORER after acquiring the
-global lock, regardless of success or failure of the topology
-configuration.
-
-We need to re-initialize the HW structure when we trigger the CORER. Thus,
-it makes sense for this to be the responsibility of ice_cfg_tx_topo()
-rather than its caller, ice_init_tx_topology(). This avoids needless
-re-initialization in cases where we don't attempt to update the Tx
-scheduler topology, such as if it has already been programmed.
-
-There is one catch: failure to re-initialize the HW struct should stop
-ice_probe(). If this function fails, we won't have a valid HW structure and
-cannot ensure the device is functioning properly. To handle this, ensure
-ice_cfg_tx_topo() returns a limited set of error codes. Set aside one
-specifically, -ENODEV, to indicate that the ice_init_tx_topology() should
-fail and stop probe.
-
-Other error codes indicate failure to apply the Tx scheduler topology. This
-is treated as a non-fatal error, with an informational message informing
-the system administrator that the updated Tx topology did not apply. This
-allows the device to load and function with the default Tx scheduler
-topology, rather than failing to load entirely.
-
-Note that this use of CORER will not result in loops with future PFs
-attempting to also load the invalid Tx topology configuration. The first PF
-will acquire the global configuration lock as part of programming the DDP.
-Each PF after this will attempt to acquire the global lock as part of
-programming the Tx topology, and will fail with the indication from
-firmware that global configuration is already complete. Tx scheduler
-topology configuration is only performed during driver init (probe or
-devlink reload) and not during cleanup for a CORER that happens after probe
-completes.
-
-Fixes: 91427e6d9030 ("ice: Support 5 layer topology")
+Fixes: 0093cb194a75 ("ice: use DSN instead of PCI BDF for ice_adapter index")
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ddp.c  | 44 ++++++++++++++++-------
- drivers/net/ethernet/intel/ice/ice_main.c | 16 ++++++---
- 2 files changed, 43 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_adapter.c | 49 +++++++++++++++-----
+ drivers/net/ethernet/intel/ice/ice_adapter.h |  4 +-
+ 2 files changed, 40 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ddp.c b/drivers/net/ethernet/intel/ice/ice_ddp.c
-index 351824dc3c624..1d3e1b188d22c 100644
---- a/drivers/net/ethernet/intel/ice/ice_ddp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ddp.c
-@@ -2376,7 +2376,13 @@ ice_get_set_tx_topo(struct ice_hw *hw, u8 *buf, u16 buf_size,
-  * The function will apply the new Tx topology from the package buffer
-  * if available.
-  *
-- * Return: zero when update was successful, negative values otherwise.
-+ * Return:
-+ * * 0 - Successfully applied topology configuration.
-+ * * -EBUSY - Failed to acquire global configuration lock.
-+ * * -EEXIST - Topology configuration has already been applied.
-+ * * -EIO - Unable to apply topology configuration.
-+ * * -ENODEV - Failed to re-initialize device after applying configuration.
-+ * * Other negative error codes indicate unexpected failures.
-  */
- int ice_cfg_tx_topo(struct ice_hw *hw, const void *buf, u32 len)
- {
-@@ -2409,7 +2415,7 @@ int ice_cfg_tx_topo(struct ice_hw *hw, const void *buf, u32 len)
+diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.c b/drivers/net/ethernet/intel/ice/ice_adapter.c
+index 66e070095d1bb..10285995c9edd 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adapter.c
++++ b/drivers/net/ethernet/intel/ice/ice_adapter.c
+@@ -13,16 +13,45 @@
+ static DEFINE_XARRAY(ice_adapters);
+ static DEFINE_MUTEX(ice_adapters_mutex);
  
- 	if (status) {
- 		ice_debug(hw, ICE_DBG_INIT, "Get current topology is failed\n");
--		return status;
-+		return -EIO;
- 	}
- 
- 	/* Is default topology already applied ? */
-@@ -2496,31 +2502,45 @@ int ice_cfg_tx_topo(struct ice_hw *hw, const void *buf, u32 len)
- 				 ICE_GLOBAL_CFG_LOCK_TIMEOUT);
- 	if (status) {
- 		ice_debug(hw, ICE_DBG_INIT, "Failed to acquire global lock\n");
--		return status;
-+		return -EBUSY;
- 	}
- 
- 	/* Check if reset was triggered already. */
- 	reg = rd32(hw, GLGEN_RSTAT);
- 	if (reg & GLGEN_RSTAT_DEVSTATE_M) {
--		/* Reset is in progress, re-init the HW again */
- 		ice_debug(hw, ICE_DBG_INIT, "Reset is in progress. Layer topology might be applied already\n");
- 		ice_check_reset(hw);
--		return 0;
-+		/* Reset is in progress, re-init the HW again */
-+		goto reinit_hw;
- 	}
- 
- 	/* Set new topology */
- 	status = ice_get_set_tx_topo(hw, new_topo, size, NULL, NULL, true);
- 	if (status) {
--		ice_debug(hw, ICE_DBG_INIT, "Failed setting Tx topology\n");
--		return status;
-+		ice_debug(hw, ICE_DBG_INIT, "Failed to set Tx topology, status %pe\n",
-+			  ERR_PTR(status));
-+		/* only report -EIO here as the caller checks the error value
-+		 * and reports an informational error message informing that
-+		 * the driver failed to program Tx topology.
-+		 */
-+		status = -EIO;
- 	}
- 
--	/* New topology is updated, delay 1 second before issuing the CORER */
-+	/* Even if Tx topology config failed, we need to CORE reset here to
-+	 * clear the global configuration lock. Delay 1 second to allow
-+	 * hardware to settle then issue a CORER
-+	 */
- 	msleep(1000);
- 	ice_reset(hw, ICE_RESET_CORER);
--	/* CORER will clear the global lock, so no explicit call
--	 * required for release.
--	 */
-+	ice_check_reset(hw);
+-static unsigned long ice_adapter_index(u64 dsn)
++#define ICE_ADAPTER_FIXED_INDEX	BIT_ULL(63)
 +
-+reinit_hw:
-+	/* Since we triggered a CORER, re-initialize hardware */
-+	ice_deinit_hw(hw);
-+	if (ice_init_hw(hw)) {
-+		ice_debug(hw, ICE_DBG_INIT, "Failed to re-init hardware after setting Tx topology\n");
-+		return -ENODEV;
++#define ICE_ADAPTER_INDEX_E825C	\
++	(ICE_DEV_ID_E825C_BACKPLANE | ICE_ADAPTER_FIXED_INDEX)
++
++static u64 ice_adapter_index(struct pci_dev *pdev)
+ {
++	switch (pdev->device) {
++	case ICE_DEV_ID_E825C_BACKPLANE:
++	case ICE_DEV_ID_E825C_QSFP:
++	case ICE_DEV_ID_E825C_SFP:
++	case ICE_DEV_ID_E825C_SGMII:
++		/* E825C devices have multiple NACs which are connected to the
++		 * same clock source, and which must share the same
++		 * ice_adapter structure. We can't use the serial number since
++		 * each NAC has its own NVM generated with its own unique
++		 * Device Serial Number. Instead, rely on the embedded nature
++		 * of the E825C devices, and use a fixed index. This relies on
++		 * the fact that all E825C physical functions in a given
++		 * system are part of the same overall device.
++		 */
++		return ICE_ADAPTER_INDEX_E825C;
++	default:
++		return pci_get_dsn(pdev) & ~ICE_ADAPTER_FIXED_INDEX;
 +	}
- 
--	return 0;
-+	return status;
- }
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 0a11b4281092e..d42892c8c5a12 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4532,17 +4532,23 @@ ice_init_tx_topology(struct ice_hw *hw, const struct firmware *firmware)
- 			dev_info(dev, "Tx scheduling layers switching feature disabled\n");
- 		else
- 			dev_info(dev, "Tx scheduling layers switching feature enabled\n");
--		/* if there was a change in topology ice_cfg_tx_topo triggered
--		 * a CORER and we need to re-init hw
-+		return 0;
-+	} else if (err == -ENODEV) {
-+		/* If we failed to re-initialize the device, we can no longer
-+		 * continue loading.
- 		 */
--		ice_deinit_hw(hw);
--		err = ice_init_hw(hw);
--
-+		dev_warn(dev, "Failed to initialize hardware after applying Tx scheduling configuration.\n");
- 		return err;
- 	} else if (err == -EIO) {
- 		dev_info(dev, "DDP package does not support Tx scheduling layers switching feature - please update to the latest DDP package and try again\n");
-+		return 0;
-+	} else if (err == -EEXIST) {
-+		return 0;
- 	}
- 
-+	/* Do not treat this as a fatal error. */
-+	dev_info(dev, "Failed to apply Tx scheduling configuration, err %pe\n",
-+		 ERR_PTR(err));
- 	return 0;
++}
++
++static unsigned long ice_adapter_xa_index(struct pci_dev *pdev)
++{
++	u64 index = ice_adapter_index(pdev);
++
+ #if BITS_PER_LONG == 64
+-	return dsn;
++	return index;
+ #else
+-	return (u32)dsn ^ (u32)(dsn >> 32);
++	return (u32)index ^ (u32)(index >> 32);
+ #endif
  }
  
+-static struct ice_adapter *ice_adapter_new(u64 dsn)
++static struct ice_adapter *ice_adapter_new(struct pci_dev *pdev)
+ {
+ 	struct ice_adapter *adapter;
+ 
+@@ -30,7 +59,7 @@ static struct ice_adapter *ice_adapter_new(u64 dsn)
+ 	if (!adapter)
+ 		return NULL;
+ 
+-	adapter->device_serial_number = dsn;
++	adapter->index = ice_adapter_index(pdev);
+ 	spin_lock_init(&adapter->ptp_gltsyn_time_lock);
+ 	refcount_set(&adapter->refcount, 1);
+ 
+@@ -63,24 +92,23 @@ static void ice_adapter_free(struct ice_adapter *adapter)
+  */
+ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
+ {
+-	u64 dsn = pci_get_dsn(pdev);
+ 	struct ice_adapter *adapter;
+ 	unsigned long index;
+ 	int err;
+ 
+-	index = ice_adapter_index(dsn);
++	index = ice_adapter_xa_index(pdev);
+ 	scoped_guard(mutex, &ice_adapters_mutex) {
+ 		err = xa_insert(&ice_adapters, index, NULL, GFP_KERNEL);
+ 		if (err == -EBUSY) {
+ 			adapter = xa_load(&ice_adapters, index);
+ 			refcount_inc(&adapter->refcount);
+-			WARN_ON_ONCE(adapter->device_serial_number != dsn);
++			WARN_ON_ONCE(adapter->index != ice_adapter_index(pdev));
+ 			return adapter;
+ 		}
+ 		if (err)
+ 			return ERR_PTR(err);
+ 
+-		adapter = ice_adapter_new(dsn);
++		adapter = ice_adapter_new(pdev);
+ 		if (!adapter)
+ 			return ERR_PTR(-ENOMEM);
+ 		xa_store(&ice_adapters, index, adapter, GFP_KERNEL);
+@@ -99,11 +127,10 @@ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
+  */
+ void ice_adapter_put(struct pci_dev *pdev)
+ {
+-	u64 dsn = pci_get_dsn(pdev);
+ 	struct ice_adapter *adapter;
+ 	unsigned long index;
+ 
+-	index = ice_adapter_index(dsn);
++	index = ice_adapter_xa_index(pdev);
+ 	scoped_guard(mutex, &ice_adapters_mutex) {
+ 		adapter = xa_load(&ice_adapters, index);
+ 		if (WARN_ON(!adapter))
+diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.h b/drivers/net/ethernet/intel/ice/ice_adapter.h
+index ac15c0d2bc1a4..409467847c753 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adapter.h
++++ b/drivers/net/ethernet/intel/ice/ice_adapter.h
+@@ -32,7 +32,7 @@ struct ice_port_list {
+  * @refcount: Reference count. struct ice_pf objects hold the references.
+  * @ctrl_pf: Control PF of the adapter
+  * @ports: Ports list
+- * @device_serial_number: DSN cached for collision detection on 32bit systems
++ * @index: 64-bit index cached for collision detection on 32bit systems
+  */
+ struct ice_adapter {
+ 	refcount_t refcount;
+@@ -41,7 +41,7 @@ struct ice_adapter {
+ 
+ 	struct ice_pf *ctrl_pf;
+ 	struct ice_port_list ports;
+-	u64 device_serial_number;
++	u64 index;
+ };
+ 
+ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev);
 -- 
 2.50.1
 
