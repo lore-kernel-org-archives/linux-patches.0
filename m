@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E3A2DC33B;
-	Tue,  2 Sep 2025 13:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA1E2DC33B;
+	Tue,  2 Sep 2025 13:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820083; cv=none; b=Z8iwboMRbzWhxgKPsGGxeLGGx1TTdULugoVzdpdJ/Rof6f+/S1tRC+oh+jtCPQeWW0+Mg3Xx0OIxo0V3vLv9f2klYF9+kJudIBi0Df6HmQmNNXUNL+GxWQDD+m4/KLfOXq7F/+vZwAeXTbDkiOg7bDA+RgVvIp29h4GXwU1OR5Q=
+	t=1756820086; cv=none; b=EF6FllIyC5rJXddrev8qZtf6yumMOy0KTZJaD+crvW4Hf04JLy81Ks0F20r6xw5thLaRV71TRNTrq4LLD8vOV7yEq9anEAdY8Ov4VjT9AYjOOWGF7pN5l/Gu7MsE9HcffMLQ6M+Ub0kMlj2qPh6hlRQaIVoxf8zvBz3vKq16sjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820083; c=relaxed/simple;
-	bh=3Kvwnqo5l6UzUPsfj8lKbFgw+QN+idawybyaVVSEUMo=;
+	s=arc-20240116; t=1756820086; c=relaxed/simple;
+	bh=3uv+OBkP67Rlu2FhqVBFy2GR7vjEhlcSCS6VCWTTwRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kh5k7xdLgK8Qm4a9sTm7UWS2tGkEYUx4SaQRhQ0FLuinOno4apHcm7gnlS0bXqKrXZilD6cKffwmP0JmrbD0bNfl18VJ9QogT65X+jMZqODFPwdyNVAZmUXhMAIqNArW/5+QfPkTEPnVtgx7lRvsqLEP35EieOLeK7b61nbkats=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8P0Rpxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KeBVlsLV0YSAHv3o14oQJpHiIH+kknh5Tia5RzzfiRzEKPg4nY/kbLfTnfzD9ePuaA/NziKgOoN0sDzYoSS5MSb1EbQUnsro1mMJqcTgmyXcwD33j5UCbZG7p094exUwR4K5YFWEkFAsMdKdakm8xtnCAmgscyGFzGcdPyC+1/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIGQmczc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8P0Rpxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F814C4CEED;
-	Tue,  2 Sep 2025 13:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIGQmczc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CC6C4CEED;
+	Tue,  2 Sep 2025 13:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820082;
-	bh=3Kvwnqo5l6UzUPsfj8lKbFgw+QN+idawybyaVVSEUMo=;
+	s=korg; t=1756820085;
+	bh=3uv+OBkP67Rlu2FhqVBFy2GR7vjEhlcSCS6VCWTTwRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8P0RpxrfkLTjf2gw4pGAcCMAKCTWHocpftFSQ11bd4yTX/uSSyaf7mcRsbJOEUGM
-	 yNwO43CuM0dkoehPtqsqgktNlcgxkeQGW4M7GfTO9zsOsW9kmUhKoZF8vlbEZ1N1+B
-	 EF5J+U3VIAV8M8xqcxIYxnPnfphL+eG+xuR2BvME=
+	b=fIGQmczc3F9k0ckjSvtALCGDTLzJj4ArdoRthU9i5qsEFBcHlpeZwowAV/VUtS5Fv
+	 zEbSFTspeldMb89JYwsRPFYgN2SQsPnnWlsPT4Dw1UJZlwSsJpwsO28qReHXQdvLBt
+	 WZ6g072iMHaq2ziAyvNcIEvkuDHjWevesIGO2QZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 88/95] drm/amd/amdgpu: disable hwmon power1_cap* for gfx 11.0.3 on vf mode
-Date: Tue,  2 Sep 2025 15:21:04 +0200
-Message-ID: <20250902131942.981173898@linuxfoundation.org>
+	syzbot+2eb8d1719f7cfcfa6840@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 89/95] net: rose: fix a typo in rose_clear_routes()
+Date: Tue,  2 Sep 2025 15:21:05 +0200
+Message-ID: <20250902131943.019004826@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,50 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 5dff50802b285da8284a7bf17ae2fdc6f1357023 upstream.
+commit 1cc8a5b534e5f9b5e129e54ee2e63c9f5da4f39a upstream.
 
-the PPSMC_MSG_GetPptLimit msg is not valid for gfx 11.0.3 on vf mode,
-so skiped to create power1_cap* hwmon sysfs node.
+syzbot crashed in rose_clear_routes(), after a recent patch typo.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e82a8d441038d8cb10b63047a9e705c42479d156)
-Cc: stable@vger.kernel.org
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+CPU: 0 UID: 0 PID: 10591 Comm: syz.3.1856 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+ RIP: 0010:rose_clear_routes net/rose/rose_route.c:565 [inline]
+ RIP: 0010:rose_rt_ioctl+0x162/0x1250 net/rose/rose_route.c:760
+ <TASK>
+  rose_ioctl+0x3ce/0x8b0 net/rose/af_rose.c:1381
+  sock_do_ioctl+0xd9/0x300 net/socket.c:1238
+  sock_ioctl+0x576/0x790 net/socket.c:1359
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:598 [inline]
+  __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:584
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: da9c9c877597 ("net: rose: include node references in rose_neigh refcount")
+Reported-by: syzbot+2eb8d1719f7cfcfa6840@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68af3e29.a70a0220.3cafd4.002e.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Takamitsu Iwai <takamitz@amazon.co.jp>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250827172149.5359-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ net/rose/rose_route.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -3668,14 +3668,16 @@ static umode_t hwmon_attributes_visible(
- 		effective_mode &= ~S_IWUSR;
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -562,7 +562,7 @@ static int rose_clear_routes(void)
+ 		rose_node = rose_node->next;
  
- 	/* not implemented yet for APUs other than GC 10.3.1 (vangogh) and 9.4.3 */
--	if (((adev->family == AMDGPU_FAMILY_SI) ||
--	     ((adev->flags & AMD_IS_APU) && (gc_ver != IP_VERSION(10, 3, 1)) &&
--	      (gc_ver != IP_VERSION(9, 4, 3) && gc_ver != IP_VERSION(9, 4, 4)))) &&
--	    (attr == &sensor_dev_attr_power1_cap_max.dev_attr.attr ||
--	     attr == &sensor_dev_attr_power1_cap_min.dev_attr.attr ||
--	     attr == &sensor_dev_attr_power1_cap.dev_attr.attr ||
--	     attr == &sensor_dev_attr_power1_cap_default.dev_attr.attr))
--		return 0;
-+	if (attr == &sensor_dev_attr_power1_cap_max.dev_attr.attr ||
-+	    attr == &sensor_dev_attr_power1_cap_min.dev_attr.attr ||
-+	    attr == &sensor_dev_attr_power1_cap.dev_attr.attr ||
-+	    attr == &sensor_dev_attr_power1_cap_default.dev_attr.attr) {
-+		if (adev->family == AMDGPU_FAMILY_SI ||
-+		    ((adev->flags & AMD_IS_APU) && gc_ver != IP_VERSION(10, 3, 1) &&
-+		     (gc_ver != IP_VERSION(9, 4, 3) && gc_ver != IP_VERSION(9, 4, 4))) ||
-+		    (amdgpu_sriov_vf(adev) && gc_ver == IP_VERSION(11, 0, 3)))
-+			return 0;
-+	}
- 
- 	/* not implemented yet for APUs having < GC 9.3.0 (Renoir) */
- 	if (((adev->family == AMDGPU_FAMILY_SI) ||
+ 		if (!t->loopback) {
+-			for (i = 0; i < rose_node->count; i++)
++			for (i = 0; i < t->count; i++)
+ 				rose_neigh_put(t->neighbour[i]);
+ 			rose_remove_node(t);
+ 		}
 
 
