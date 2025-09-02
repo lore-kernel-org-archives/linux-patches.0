@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D7F305E2D;
-	Tue,  2 Sep 2025 13:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FBF30E0F6;
+	Tue,  2 Sep 2025 13:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820421; cv=none; b=elNqJDmebFekq8lUWMWj71CWI4j6IuMqbmEV6lKAp0TcZflAELCZCsh0EKcpk8C/awMc+gEAc00rgLiVxYHjOvG1nxsMqXGV5iAizvaLg6sBeaf8ZIXrtNW/tQ84N7ghCintCNOEH4N0XDmBHKa7szjUOF3DsJ+VXnsZ6Qq+yco=
+	t=1756820424; cv=none; b=qrn1JzsGgWJnH2GIh/znX79U4zCnjkwv30re44Lb3q9SE5XQY/Mm27v0kBQEeFwH3+GommTiuFIN3o3VTFQ5q7jYnF9C8QC2Fl/PXSWkd6UdOmdLzmQBmG+x2M246p17PM+YJF2wL0Bvqk6BHz6wDV9vsYc0r8rLBNJ9ltAsZOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820421; c=relaxed/simple;
-	bh=jpiIygfTrdxAWyb/ymRkWaDW3UVi+eE02WW2ubnZb18=;
+	s=arc-20240116; t=1756820424; c=relaxed/simple;
+	bh=2hozR82bl5QJ5j0qSagjpHm2yO3vAxBj1oxh1tSmNos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwbWbdjy/beFLGCfzPHXdct/KfYozfoUUj92fc+ZNtdxXmmayN1RrXYXhmkC5xoKWqHWSKXYniSiZG7SMSRlpI2z/ZIwmIGbMhUhsooDE6o9xCRbqu79Ju+ygfVYttrlFmwbk6GjJyU7x0qvebOEkyB9IMC+So2xn/4pFrsRmjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncC62lj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O48rQIphT26ykdVuO0EVUwXhPLNVW9MGWDqUjQZRJqeQVBp1Qi0K+Q2oO9LZrrOvZ//J4O5vDvsc+VOV+DN8Gqx3YblVKwLmF45DrA+BQZ4QA4xsqRbUR/sdyXaLjY/tEgv3PEGAdZSfLWUHIDxuiqBTQTyqYx0JTXIiW296Fvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rg1wTK0j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncC62lj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A10AC4CEED;
-	Tue,  2 Sep 2025 13:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rg1wTK0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F18C4CEF4;
+	Tue,  2 Sep 2025 13:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820420;
-	bh=jpiIygfTrdxAWyb/ymRkWaDW3UVi+eE02WW2ubnZb18=;
+	s=korg; t=1756820424;
+	bh=2hozR82bl5QJ5j0qSagjpHm2yO3vAxBj1oxh1tSmNos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncC62lj9XGBjuqG8zCHKfU5mA1/KIhB47TEWPS9p8Lo6VR+BBAppshPzbruVg3cKv
-	 vp317emzsW8NGErcCY+0e0LObvs9D7o0V+SUDuqCatpuc+Q10d1N5DQSncyc6BtigU
-	 IJgI5QvMK0wlKkjwJVVqAlgVLz7gLXlW3aIrKjqY=
+	b=rg1wTK0jm3D3K1oWcxrjt6Gtt4iHe/UCp8yYR4ODM+69ih14F5AJdvCPI2d5/0JJH
+	 syE3dS2dwf5HFspOoX3FM+7TZWeH3JZ217ImzNCkN0H3nhTomKAxRxVrn7GukDSpez
+	 /B0l7aZ6IXaBy3fOg3HdK6E+yoagkVSMSO/v+eaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeounsu Moon <yyyynoom@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 23/50] net: dlink: fix multicast stats being counted incorrectly
-Date: Tue,  2 Sep 2025 15:21:14 +0200
-Message-ID: <20250902131931.447953294@linuxfoundation.org>
+Subject: [PATCH 6.1 24/50] phy: mscc: Fix when PTP clock is register and unregister
+Date: Tue,  2 Sep 2025 15:21:15 +0200
+Message-ID: <20250902131931.486776620@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -52,44 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeounsu Moon <yyyynoom@gmail.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 007a5ffadc4fd51739527f1503b7cf048f31c413 ]
+[ Upstream commit 882e57cbc7204662f6c5672d5b04336c1d790b03 ]
 
-`McstFramesRcvdOk` counts the number of received multicast packets, and
-it reports the value correctly.
+It looks like that every time when the interface was set down and up the
+driver was creating a new ptp clock. On top of this the function
+ptp_clock_unregister was never called.
+Therefore fix this by calling ptp_clock_register and initialize the
+mii_ts struct inside the probe function and call ptp_clock_unregister when
+driver is removed.
 
-However, reading `McstFramesRcvdOk` clears the register to zero. As a
-result, the driver was reporting only the packets since the last read,
-instead of the accumulated total.
-
-Fix this by updating the multicast statistics accumulatively instaed of
-instantaneously.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Tested-on: D-Link DGE-550T Rev-A3
-Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250823182927.6063-3-yyyynoom@gmail.com
+Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250825065543.2916334-1-horatiu.vultur@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dlink/dl2k.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mscc/mscc.h      |  4 ++++
+ drivers/net/phy/mscc/mscc_main.c |  4 +---
+ drivers/net/phy/mscc/mscc_ptp.c  | 34 ++++++++++++++++++++------------
+ 3 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
-index dfc23cc173097..2acb63b547c35 100644
---- a/drivers/net/ethernet/dlink/dl2k.c
-+++ b/drivers/net/ethernet/dlink/dl2k.c
-@@ -1094,7 +1094,7 @@ get_stats (struct net_device *dev)
- 	dev->stats.rx_bytes += dr32(OctetRcvOk);
- 	dev->stats.tx_bytes += dr32(OctetXmtOk);
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index 878298304430c..fcfbff691b3c6 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -474,6 +474,7 @@ static inline void vsc8584_config_macsec_intr(struct phy_device *phydev)
+ void vsc85xx_link_change_notify(struct phy_device *phydev);
+ void vsc8584_config_ts_intr(struct phy_device *phydev);
+ int vsc8584_ptp_init(struct phy_device *phydev);
++void vsc8584_ptp_deinit(struct phy_device *phydev);
+ int vsc8584_ptp_probe_once(struct phy_device *phydev);
+ int vsc8584_ptp_probe(struct phy_device *phydev);
+ irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev);
+@@ -488,6 +489,9 @@ static inline int vsc8584_ptp_init(struct phy_device *phydev)
+ {
+ 	return 0;
+ }
++static inline void vsc8584_ptp_deinit(struct phy_device *phydev)
++{
++}
+ static inline int vsc8584_ptp_probe_once(struct phy_device *phydev)
+ {
+ 	return 0;
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index 36734bb217e42..2fabb6a7d2415 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2326,9 +2326,7 @@ static int vsc85xx_probe(struct phy_device *phydev)
  
--	dev->stats.multicast = dr32(McstFramesRcvdOk);
-+	dev->stats.multicast += dr32(McstFramesRcvdOk);
- 	dev->stats.collisions += dr32(SingleColFrames)
- 			     +  dr32(MultiColFrames);
+ static void vsc85xx_remove(struct phy_device *phydev)
+ {
+-	struct vsc8531_private *priv = phydev->priv;
+-
+-	skb_queue_purge(&priv->rx_skbs_list);
++	vsc8584_ptp_deinit(phydev);
+ }
  
+ /* Microsemi VSC85xx PHYs */
+diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
+index add1a9ee721af..1f6237705b44b 100644
+--- a/drivers/net/phy/mscc/mscc_ptp.c
++++ b/drivers/net/phy/mscc/mscc_ptp.c
+@@ -1297,7 +1297,6 @@ static void vsc8584_set_input_clk_configured(struct phy_device *phydev)
+ 
+ static int __vsc8584_init_ptp(struct phy_device *phydev)
+ {
+-	struct vsc8531_private *vsc8531 = phydev->priv;
+ 	static const u32 ltc_seq_e[] = { 0, 400000, 0, 0, 0 };
+ 	static const u8  ltc_seq_a[] = { 8, 6, 5, 4, 2 };
+ 	u32 val;
+@@ -1514,17 +1513,7 @@ static int __vsc8584_init_ptp(struct phy_device *phydev)
+ 
+ 	vsc85xx_ts_eth_cmp1_sig(phydev);
+ 
+-	vsc8531->mii_ts.rxtstamp = vsc85xx_rxtstamp;
+-	vsc8531->mii_ts.txtstamp = vsc85xx_txtstamp;
+-	vsc8531->mii_ts.hwtstamp = vsc85xx_hwtstamp;
+-	vsc8531->mii_ts.ts_info  = vsc85xx_ts_info;
+-	phydev->mii_ts = &vsc8531->mii_ts;
+-
+-	memcpy(&vsc8531->ptp->caps, &vsc85xx_clk_caps, sizeof(vsc85xx_clk_caps));
+-
+-	vsc8531->ptp->ptp_clock = ptp_clock_register(&vsc8531->ptp->caps,
+-						     &phydev->mdio.dev);
+-	return PTR_ERR_OR_ZERO(vsc8531->ptp->ptp_clock);
++	return 0;
+ }
+ 
+ void vsc8584_config_ts_intr(struct phy_device *phydev)
+@@ -1551,6 +1540,16 @@ int vsc8584_ptp_init(struct phy_device *phydev)
+ 	return 0;
+ }
+ 
++void vsc8584_ptp_deinit(struct phy_device *phydev)
++{
++	struct vsc8531_private *vsc8531 = phydev->priv;
++
++	if (vsc8531->ptp->ptp_clock) {
++		ptp_clock_unregister(vsc8531->ptp->ptp_clock);
++		skb_queue_purge(&vsc8531->rx_skbs_list);
++	}
++}
++
+ irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev)
+ {
+ 	struct vsc8531_private *priv = phydev->priv;
+@@ -1608,7 +1607,16 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
+ 
+ 	vsc8531->ptp->phydev = phydev;
+ 
+-	return 0;
++	vsc8531->mii_ts.rxtstamp = vsc85xx_rxtstamp;
++	vsc8531->mii_ts.txtstamp = vsc85xx_txtstamp;
++	vsc8531->mii_ts.hwtstamp = vsc85xx_hwtstamp;
++	vsc8531->mii_ts.ts_info  = vsc85xx_ts_info;
++	phydev->mii_ts = &vsc8531->mii_ts;
++
++	memcpy(&vsc8531->ptp->caps, &vsc85xx_clk_caps, sizeof(vsc85xx_clk_caps));
++	vsc8531->ptp->ptp_clock = ptp_clock_register(&vsc8531->ptp->caps,
++						     &phydev->mdio.dev);
++	return PTR_ERR_OR_ZERO(vsc8531->ptp->ptp_clock);
+ }
+ 
+ int vsc8584_ptp_probe_once(struct phy_device *phydev)
 -- 
 2.50.1
 
