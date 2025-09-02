@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4CA30BBBD;
-	Tue,  2 Sep 2025 13:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8A2311C35;
+	Tue,  2 Sep 2025 13:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819953; cv=none; b=hl7/U7QSxmzbGU+ndy5yX8g0j6MMdTQznIkXLAjfOCSQjMHXxvuEtW3ZXX8lqwFnCPSi88UVJ4lsniNpIZJ/WsXGAyELpKBdjG8N9KhhqA+Fgx1Sc/58ZrA82dcpHLZdZ9ne0gtS5md46mbp3uSR1MxFozVsC3YhvoKGMWQJryY=
+	t=1756819956; cv=none; b=VpgJAMd0Kkb3LRmpNNrnxJAflhvhZ1sS3NuakHmj5UwCBq2e7tm+U1sclYszaac3afpGKn1hyl6QIRtXTftmwdYdA938DDgNUMy9+5ueBJjJpKCjU/AuCMwcKFgeIjyf9Cpc/em55eI/XfDocYQGEFs8GbdTiFBCu8kMnyeGmaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819953; c=relaxed/simple;
-	bh=5aEUdK3XZbtZq6zvCsWH7qduKbHV4yHeiGIv2dxrsfk=;
+	s=arc-20240116; t=1756819956; c=relaxed/simple;
+	bh=4lbf9oHwBxRRb6TakzCRbGD+E11EfFjFRkzsRQzKeTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agzLTN9ljj4Ym2Jrz2HgnHkumacay8pF0lYOSHc64xF269mxxwT03b8xv9ue/dg8/oY/eyp8EbouIybe0Ievy1m2lsTbi3OQ4qtl9NjOmt58n95nCXiJ+V9/0vUNZbwKBpqMiZVPmo5Z+gEcslWQ1R1ZsSvTjOEcEtg7g4wFOSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=og2+yrda; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlixvBZfeoanHsoQi9lBtJH2D0ehE365IjDTvtn90En1WhIXatUGQzOkTs2aMG71/0uzDORuEmKjDbtt8x1o4tAeUiHdGxF5ODPUpJe7jKFdyUKFDr/J3VyUGanvpvCxdSTbQWLnpMfbWhG/V0aecHejFICL7qX/yGjaOVgAUFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv/4j79F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="og2+yrda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E816FC4CEED;
-	Tue,  2 Sep 2025 13:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv/4j79F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8F4C4CEED;
+	Tue,  2 Sep 2025 13:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819953;
-	bh=5aEUdK3XZbtZq6zvCsWH7qduKbHV4yHeiGIv2dxrsfk=;
+	s=korg; t=1756819956;
+	bh=4lbf9oHwBxRRb6TakzCRbGD+E11EfFjFRkzsRQzKeTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=og2+yrdaVn+wjwB/mEe59pH8kvb/6kPv/YW30N2A16wwZZQOCs9vqHFRd2z2kIU6y
-	 rclV0yaO/r6XImCpBJAgcsRjYR/BZl2GnwDHHiyfg0d65faI0NcFO8ElznFg5K8Pq9
-	 XIn3k0T875eYGNQFYphX62ETPXTeh/aXSUDXuG0Q=
+	b=Rv/4j79F1QPf0Lk0w8PrmEqevNpT0eJWsIcMbS175U6BHrxZzTFM3OEYqedzpPr0C
+	 3wdk0+5FLDaLGyNEIJORm8N1YNyGBfZzcgwHofGG37G+h5RacEkV800+StYZ86F+cF
+	 sPhI0K0VZmzXQRKKLoDSlpeIgNADvI532bUMn0CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ludovico de Nittis <ludovico.denittis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 29/95] Bluetooth: hci_event: Treat UNKNOWN_CONN_ID on disconnect as success
-Date: Tue,  2 Sep 2025 15:20:05 +0200
-Message-ID: <20250902131940.730119428@linuxfoundation.org>
+Subject: [PATCH 6.12 47/95] bnxt_en: Fix stats context reservation logic
+Date: Tue,  2 Sep 2025 15:20:23 +0200
+Message-ID: <20250902131941.407490297@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,82 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ludovico de Nittis <ludovico.denittis@collabora.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 2f050a5392b7a0928bf836d9891df4851463512c ]
+[ Upstream commit b4fc8faacfea2538184a1dbd616ae9447a361f3d ]
 
-When the host sends an HCI_OP_DISCONNECT command, the controller may
-respond with the status HCI_ERROR_UNKNOWN_CONN_ID (0x02). E.g. this can
-happen on resume from suspend, if the link was terminated by the remote
-device before the event mask was correctly set.
+The HW resource reservation logic allows the L2 driver to use the
+RoCE resources if the RoCE driver is not registered.  When calculating
+the stats contexts available for L2, we should not blindly subtract
+the stats contexts reserved for RoCE unless the RoCE driver is
+registered.  This bug may cause the L2 rings to be less than the
+number requested when we are close to running out of stats contexts.
 
-This is a btmon snippet that shows the issue:
-```
-> ACL Data RX: Handle 3 flags 0x02 dlen 12
-      L2CAP: Disconnection Request (0x06) ident 5 len 4
-        Destination CID: 65
-        Source CID: 72
-< ACL Data TX: Handle 3 flags 0x00 dlen 12
-      L2CAP: Disconnection Response (0x07) ident 5 len 4
-        Destination CID: 65
-        Source CID: 72
-> ACL Data RX: Handle 3 flags 0x02 dlen 12
-      L2CAP: Disconnection Request (0x06) ident 6 len 4
-        Destination CID: 64
-        Source CID: 71
-< ACL Data TX: Handle 3 flags 0x00 dlen 12
-      L2CAP: Disconnection Response (0x07) ident 6 len 4
-        Destination CID: 64
-        Source CID: 71
-< HCI Command: Set Event Mask (0x03|0x0001) plen 8
-        Mask: 0x3dbff807fffbffff
-          Inquiry Complete
-          Inquiry Result
-          Connection Complete
-          Connection Request
-          Disconnection Complete
-          Authentication Complete
-[...]
-< HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 3 Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
-        Reason: Remote User Terminated Connection (0x13)
-> HCI Event: Command Status (0x0f) plen 4
-      Disconnect (0x01|0x0006) ncmd 1
-        Status: Unknown Connection Identifier (0x02)
-```
-
-Currently, the hci_cs_disconnect function treats any non-zero status
-as a command failure. This can be misleading because the connection is
-indeed being terminated and the controller is confirming that is has no
-knowledge of that connection handle. Meaning that the initial request of
-disconnecting a device should be treated as done.
-
-With this change we allow the function to proceed, following the success
-path, which correctly calls `mgmt_device_disconnected` and ensures a
-consistent state.
-
-Link: https://github.com/bluez/bluez/issues/1226
-Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
-Signed-off-by: Ludovico de Nittis <ludovico.denittis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 2e4592dc9bee ("bnxt_en: Change MSIX/NQs allocation policy")
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250825175927.459987-4-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 768bd5fd808f2..428aba38a3654 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2694,7 +2694,7 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
- 	if (!conn)
- 		goto unlock;
- 
--	if (status) {
-+	if (status && status != HCI_ERROR_UNKNOWN_CONN_ID) {
- 		mgmt_disconnect_failed(hdev, &conn->dst, conn->type,
- 				       conn->dst_type, status);
- 
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index b8c6087a5c31e..08886c3a28c61 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -7780,7 +7780,8 @@ static int __bnxt_reserve_rings(struct bnxt *bp)
+ 	}
+ 	rx_rings = min_t(int, rx_rings, hwr.grp);
+ 	hwr.cp = min_t(int, hwr.cp, bp->cp_nr_rings);
+-	if (hwr.stat > bnxt_get_ulp_stat_ctxs(bp))
++	if (bnxt_ulp_registered(bp->edev) &&
++	    hwr.stat > bnxt_get_ulp_stat_ctxs(bp))
+ 		hwr.stat -= bnxt_get_ulp_stat_ctxs(bp);
+ 	hwr.cp = min_t(int, hwr.cp, hwr.stat);
+ 	rc = bnxt_trim_rings(bp, &rx_rings, &hwr.tx, hwr.cp, sh);
 -- 
 2.50.1
 
