@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0B220B1F5;
-	Tue,  2 Sep 2025 13:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669441EA7DB;
+	Tue,  2 Sep 2025 13:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820271; cv=none; b=RgG/9efVfW4aXT1Q9MmuXa23vsJydw3XlcstGYO7ZCN1kGWiaZLTEktMjLIqwSNoVdlY9HUcI84oEqjSNB027Q3bXiHWtCutPwQF5s3VUus5p6JAk7oD3gr1YJhAWWod1bjmUvgDX7fUkGb/gCW7lmEzs5PW4VeFG3MFe1qLy1U=
+	t=1756820274; cv=none; b=DcUw4Vawt4AoPQ/vhrr5Tp2KoYK1x5PpaS7OKgrMN0YlG/W0p30HCe+CfnM5HGoQx8ObegEORK012Yd5Elr1AAt1KOOCUdaYugJFAlyN0f84jgNX3MfiD+8oyhYW1jrmoPGNgJ9NxAKMyC7BsBa+Zhb3F6QW+90kAE+8tLxB+ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820271; c=relaxed/simple;
-	bh=b1QpCI0o5DbQLxo4YMy4HrduMUiDnl63uyjtCb2BmA0=;
+	s=arc-20240116; t=1756820274; c=relaxed/simple;
+	bh=oy/d6RNr67SzE7dw4uDNwfmDvhDsujTwHPjvE68uR2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vy1d3Sv4ejvK3kkH6crWKkSTqm3xW1ibWwwCRLARt8zbZiVO1Mw3njTI4Ho2W9smLb92iAhJf4ed1ItHwwizBzt/QxMqEZHfGhj67TxoGINdKT/B/hOaF8/cKzYkfEsuj3Er0y7TIxdlUmNU93B3rPPUpIqs5sRHm0QStmdkB3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKkcZvR0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HARceKuIENOtYXr5qXUt4qh7NiNzP4huK9hCU4mFWAIYOaxsYomZlURyMm5Yz6OwdymhyOq0apW8vWyCRBFM1vnZ96FhLducV8dgErHPrLKKrRFz6Dfba0h4fkK9LwYdt2tEvxZZsYO5mg5yW7r3sSv7k4n5hEdhwLKrq3/W16s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGkQjyHB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKkcZvR0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9623C4CEED;
-	Tue,  2 Sep 2025 13:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGkQjyHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE37C4CEED;
+	Tue,  2 Sep 2025 13:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820271;
-	bh=b1QpCI0o5DbQLxo4YMy4HrduMUiDnl63uyjtCb2BmA0=;
+	s=korg; t=1756820274;
+	bh=oy/d6RNr67SzE7dw4uDNwfmDvhDsujTwHPjvE68uR2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JKkcZvR0uk6hoIIOnYr69Ya85yTU2VvEDxUfMlulc9nwCg3eoqvvso5xwyU+XqUSa
-	 eW0DUnWFj8306b8x7yz5+g/AhTnldnI7abEO4CQ1X86M/Os1dsW86NQU3BC093jYCv
-	 5609FnkDD4Ul4FRA+fzTREYPj2Dwxtq/VIVi/FTQ=
+	b=CGkQjyHBbQYKUhRvbuLFtWG/FcnUSzQ7iS+fpbBDUt4Fg8Ra9RYzKm8ApJvjcx7fs
+	 uq+Df84YicOc6sVmaKxEvVt5URmMEdDxu80BEV6DDf/Nv1XZoFzLKxOsG5GZ+5Ew3a
+	 QUob/aN4Ek3XeuZ7LaO1j5JGB5S7kpyIE2ZP1UOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+942297eecf7d2d61d1f1@syzkaller.appspotmail.com,
-	Takamitsu Iwai <takamitz@amazon.co.jp>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 53/75] net: rose: include node references in rose_neigh refcount
-Date: Tue,  2 Sep 2025 15:21:05 +0200
-Message-ID: <20250902131937.199439456@linuxfoundation.org>
+Subject: [PATCH 6.6 36/75] net/mlx5: Reload auxiliary drivers on fw_activate
+Date: Tue,  2 Sep 2025 15:20:48 +0200
+Message-ID: <20250902131936.540317004@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -53,140 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takamitsu Iwai <takamitz@amazon.co.jp>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit da9c9c877597170b929a6121a68dcd3dd9a80f45 ]
+[ Upstream commit 34cc6a54914f478c93e176450fae6313404f9f74 ]
 
-Current implementation maintains two separate reference counting
-mechanisms: the 'count' field in struct rose_neigh tracks references from
-rose_node structures, while the 'use' field (now refcount_t) tracks
-references from rose_sock.
+The devlink reload fw_activate command performs firmware activation
+followed by driver reload, while devlink reload driver_reinit triggers
+only driver reload. However, the driver reload logic differs between the
+two modes, as on driver_reinit mode mlx5 also reloads auxiliary drivers,
+while in fw_activate mode the auxiliary drivers are suspended where
+applicable.
 
-This patch merges these two reference counting systems using 'use' field
-for proper reference management. Specifically, this patch adds incrementing
-and decrementing of rose_neigh->use when rose_neigh->count is incremented
-or decremented.
+Additionally, following the cited commit, if the device has multiple PFs,
+the behavior during fw_activate may vary between PFs: one PF may suspend
+auxiliary drivers, while another reloads them.
 
-This patch also modifies rose_rt_free(), rose_rt_device_down() and
-rose_clear_route() to properly release references to rose_neigh objects
-before freeing a rose_node through rose_remove_node().
+Align devlink dev reload fw_activate behavior with devlink dev reload
+driver_reinit, to reload all auxiliary drivers.
 
-These changes ensure rose_neigh structures are properly freed only when
-all references, including those from rose_node structures, are released.
-As a result, this resolves a slab-use-after-free issue reported by Syzbot.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+942297eecf7d2d61d1f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=942297eecf7d2d61d1f1
-Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250823085857.47674-4-takamitz@amazon.co.jp
+Fixes: 72ed5d5624af ("net/mlx5: Suspend auxiliary devices only in case of PCI device suspend")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250825143435.598584-6-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_route.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index 42460da0854d5..6acbb795c506d 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -178,6 +178,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
- 			}
- 		}
- 		rose_neigh->count++;
-+		rose_neigh_hold(rose_neigh);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index f66788a2ed77e..f2d1f7cad7e72 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -107,7 +107,7 @@ static int mlx5_devlink_reload_fw_activate(struct devlink *devlink, struct netli
+ 	if (err)
+ 		return err;
  
- 		goto out;
- 	}
-@@ -187,6 +188,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
- 		rose_node->neighbour[rose_node->count] = rose_neigh;
- 		rose_node->count++;
- 		rose_neigh->count++;
-+		rose_neigh_hold(rose_neigh);
- 	}
- 
- out:
-@@ -322,6 +324,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 	for (i = 0; i < rose_node->count; i++) {
- 		if (rose_node->neighbour[i] == rose_neigh) {
- 			rose_neigh->count--;
-+			rose_neigh_put(rose_neigh);
- 
- 			if (rose_neigh->count == 0) {
- 				rose_remove_neigh(rose_neigh);
-@@ -430,6 +433,7 @@ int rose_add_loopback_node(const rose_address *address)
- 	rose_node_list  = rose_node;
- 
- 	rose_loopback_neigh->count++;
-+	rose_neigh_hold(rose_loopback_neigh);
- 
- out:
- 	spin_unlock_bh(&rose_node_list_lock);
-@@ -461,6 +465,7 @@ void rose_del_loopback_node(const rose_address *address)
- 	rose_remove_node(rose_node);
- 
- 	rose_loopback_neigh->count--;
-+	rose_neigh_put(rose_loopback_neigh);
- 
- out:
- 	spin_unlock_bh(&rose_node_list_lock);
-@@ -500,6 +505,7 @@ void rose_rt_device_down(struct net_device *dev)
- 				memmove(&t->neighbour[i], &t->neighbour[i + 1],
- 					sizeof(t->neighbour[0]) *
- 						(t->count - i));
-+				rose_neigh_put(s);
- 			}
- 
- 			if (t->count <= 0)
-@@ -543,6 +549,7 @@ static int rose_clear_routes(void)
- {
- 	struct rose_neigh *s, *rose_neigh;
- 	struct rose_node  *t, *rose_node;
-+	int i;
- 
- 	spin_lock_bh(&rose_node_list_lock);
- 	spin_lock_bh(&rose_neigh_list_lock);
-@@ -553,8 +560,12 @@ static int rose_clear_routes(void)
- 	while (rose_node != NULL) {
- 		t         = rose_node;
- 		rose_node = rose_node->next;
--		if (!t->loopback)
-+
-+		if (!t->loopback) {
-+			for (i = 0; i < rose_node->count; i++)
-+				rose_neigh_put(t->neighbour[i]);
- 			rose_remove_node(t);
-+		}
- 	}
- 
- 	while (rose_neigh != NULL) {
-@@ -1189,7 +1200,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
- 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
- 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
- 			   rose_neigh->count,
--			   refcount_read(&rose_neigh->use) - 1,
-+			   refcount_read(&rose_neigh->use) - rose_neigh->count - 1,
- 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
- 			   (rose_neigh->restarted) ? "yes" : "no",
- 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
-@@ -1294,6 +1305,7 @@ void __exit rose_rt_free(void)
- 	struct rose_neigh *s, *rose_neigh = rose_neigh_list;
- 	struct rose_node  *t, *rose_node  = rose_node_list;
- 	struct rose_route *u, *rose_route = rose_route_list;
-+	int i;
- 
- 	while (rose_neigh != NULL) {
- 		s          = rose_neigh;
-@@ -1307,6 +1319,8 @@ void __exit rose_rt_free(void)
- 		t         = rose_node;
- 		rose_node = rose_node->next;
- 
-+		for (i = 0; i < t->count; i++)
-+			rose_neigh_put(t->neighbour[i]);
- 		rose_remove_node(t);
- 	}
- 
+-	mlx5_unload_one_devl_locked(dev, true);
++	mlx5_unload_one_devl_locked(dev, false);
+ 	err = mlx5_health_wait_pci_up(dev);
+ 	if (err)
+ 		NL_SET_ERR_MSG_MOD(extack, "FW activate aborted, PCI reads fail after reset");
 -- 
 2.50.1
 
