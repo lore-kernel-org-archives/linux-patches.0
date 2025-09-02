@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC56273D6D;
-	Tue,  2 Sep 2025 13:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36F3304BDE;
+	Tue,  2 Sep 2025 13:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819405; cv=none; b=qT7ITfFE80rolMKbOBvh/SZ1SOin0MkunvsjuS1A2Z+c53wi+dUK5+0C9E9EHHTjTCA99N3xhlnD570gdbXnQ+CJl74zFatv+PiwCg4z601wSOWAxwQ8JXVLNR5yIO4oAJaAyyygzFzi75qMArvbCPRt8XoTCx9pxHPkuE0LvOM=
+	t=1756819409; cv=none; b=JNO1VN3l7xnrfDvDNBGpt4DcYBl+WJCh5h7Eqfa6gkOQFGKnEDVw+ddRN3iHRf619EgaC44J18ZmWnbVuYuOFVd2fStGe3Z+17JkByFne1EQCWfpp/JQgvVsA1pDt4mUGyDqpWe3GURuc/N7/XI7ABCZL7rpUDcMwL7YxcI2ZXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819405; c=relaxed/simple;
-	bh=KmkTBbTqJB5qGLsrijsJFeYEQiUJeAg09pdlnDWDw7s=;
+	s=arc-20240116; t=1756819409; c=relaxed/simple;
+	bh=3XfpMu0+dND1ZSTufAlTA7IYddTMfNFQzN725WC5Q8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBHGWlNiqp/dU/Bqnhy0DzhViJQvOljDRY7cUflVIKPvPbWfwPjpz5qtlHjKTvPBZym4Pmr5n5WITDWaQ5Ogq4rt0VzcSWN06Xl9btRUKX0UmMzvx5EajXiToJbyYSd0a1DTqCTPi21Zp2x6Ker/u4E2WsgHFuF5JgoZIVTSbr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vs6haP+c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oolvGTM6duWmNDx6z7ZEf7Rneumfym1WTFyoJGG2pF9p5Xai74NHrMtB361JCvaq9oVRwdnpH/laVNVNSzIw6ydTyIbBnnBs0N0VDIDbjf+vEFPjl8MGTxk/9Nbqpa8KJtKXKUQxojtHQ7UETRyRZirYTSefPY3OxVsK0Lk4J1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BOjYlXD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vs6haP+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62B4C4CEED;
-	Tue,  2 Sep 2025 13:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BOjYlXD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F10C4CEED;
+	Tue,  2 Sep 2025 13:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819402;
-	bh=KmkTBbTqJB5qGLsrijsJFeYEQiUJeAg09pdlnDWDw7s=;
+	s=korg; t=1756819408;
+	bh=3XfpMu0+dND1ZSTufAlTA7IYddTMfNFQzN725WC5Q8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vs6haP+c7wggiCxx4iUYHXt6tLi+DiX6GscVBqKpUIgipd+eYABamR8e57uRBmLWC
-	 rPzlQZXotmnTNh1bxF89w4bp4ACQwFk1eClYgck3i/XC3g6xJvjUIj//dTIGZe0vYC
-	 YjX6i0X5I4e9b75wNka0yA6/GSLRRKP5cgF2EHlM=
+	b=1BOjYlXDMFv9YfblKEgMcmKB5t/zntndzg4aboIHQ2xmvqyQHbTxnAkJWOiB492RQ
+	 AVQon9wUreMgGi1wefcdzjwfAsEa1S8Zahjssqkip7KAuELwlI0e4e4vlshm1tp1LP
+	 9yPEw3sXQGhM2rbGq143wOtSY6qCGXS2N9A6vw0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Friendy Su <friendy.su@sony.com>,
-	Jacky Cao <jacky.cao@sony.com>,
-	Daniel Palmer <daniel.palmer@sony.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Hongbo Li <lihongbo22@huawei.com>,
+	Fengnan Chang <changfengnan@bytedance.com>,
+	Diangang Li <lidiangang@bytedance.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 023/142] erofs: Fallback to normal access if DAX is not supported on extra device
-Date: Tue,  2 Sep 2025 15:18:45 +0200
-Message-ID: <20250902131949.034274321@linuxfoundation.org>
+Subject: [PATCH 6.16 025/142] io_uring/io-wq: add check free worker before create new worker
+Date: Tue,  2 Sep 2025 15:18:47 +0200
+Message-ID: <20250902131949.108458313@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -55,89 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Fengnan Chang <changfengnan@bytedance.com>
 
-[ Upstream commit c6993c4cb91803fceb82d6b5e0ec5e0aec2d0ad6 ]
+[ Upstream commit 9d83e1f05c98bab5de350bef89177e2be8b34db0 ]
 
-If using multiple devices, we should check if the extra device support
-DAX instead of checking the primary device when deciding if to use DAX
-to access a file.
+After commit 0b2b066f8a85 ("io_uring/io-wq: only create a new worker
+if it can make progress"), in our produce environment, we still
+observe that part of io_worker threads keeps creating and destroying.
+After analysis, it was confirmed that this was due to a more complex
+scenario involving a large number of fsync operations, which can be
+abstracted as frequent write + fsync operations on multiple files in
+a single uring instance. Since write is a hash operation while fsync
+is not, and fsync is likely to be suspended during execution, the
+action of checking the hash value in
+io_wqe_dec_running cannot handle such scenarios.
+Similarly, if hash-based work and non-hash-based work are sent at the
+same time, similar issues are likely to occur.
+Returning to the starting point of the issue, when a new work
+arrives, io_wq_enqueue may wake up free worker A, while
+io_wq_dec_running may create worker B. Ultimately, only one of A and
+B can obtain and process the task, leaving the other in an idle
+state. In the end, the issue is caused by inconsistent logic in the
+checks performed by io_wq_enqueue and io_wq_dec_running.
+Therefore, the problem can be resolved by checking for available
+workers in io_wq_dec_running.
 
-If an extra device does not support DAX we should fallback to normal
-access otherwise the data on that device will be inaccessible.
-
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Friendy Su <friendy.su@sony.com>
-Reviewed-by: Jacky Cao <jacky.cao@sony.com>
-Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://lore.kernel.org/r/20250804082030.3667257-2-Yuezhang.Mo@sony.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Fengnan Chang <changfengnan@bytedance.com>
+Reviewed-by: Diangang Li <lidiangang@bytedance.com>
+Link: https://lore.kernel.org/r/20250813120214.18729-1-changfengnan@bytedance.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/super.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ io_uring/io-wq.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index 799fef437aa8e..cad87e4d66943 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -174,6 +174,11 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
- 		if (!erofs_is_fileio_mode(sbi)) {
- 			dif->dax_dev = fs_dax_get_by_bdev(file_bdev(file),
- 					&dif->dax_part_off, NULL, NULL);
-+			if (!dif->dax_dev && test_opt(&sbi->opt, DAX_ALWAYS)) {
-+				erofs_info(sb, "DAX unsupported by %s. Turning off DAX.",
-+					   dif->path);
-+				clear_opt(&sbi->opt, DAX_ALWAYS);
-+			}
- 		} else if (!S_ISREG(file_inode(file)->i_mode)) {
- 			fput(file);
- 			return -EINVAL;
-@@ -210,8 +215,13 @@ static int erofs_scan_devices(struct super_block *sb,
- 			  ondisk_extradevs, sbi->devs->extra_devices);
- 		return -EINVAL;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -357,6 +357,13 @@ static void create_worker_cb(struct call
+ 	worker = container_of(cb, struct io_worker, create_work);
+ 	wq = worker->wq;
+ 	acct = worker->acct;
++
++	rcu_read_lock();
++	do_create = !io_acct_activate_free_worker(acct);
++	rcu_read_unlock();
++	if (!do_create)
++		goto no_need_create;
++
+ 	raw_spin_lock(&acct->workers_lock);
+ 
+ 	if (acct->nr_workers < acct->max_workers) {
+@@ -367,6 +374,7 @@ static void create_worker_cb(struct call
+ 	if (do_create) {
+ 		create_io_worker(wq, acct);
+ 	} else {
++no_need_create:
+ 		atomic_dec(&acct->nr_running);
+ 		io_worker_ref_put(wq);
  	}
--	if (!ondisk_extradevs)
-+	if (!ondisk_extradevs) {
-+		if (test_opt(&sbi->opt, DAX_ALWAYS) && !sbi->dif0.dax_dev) {
-+			erofs_info(sb, "DAX unsupported by block device. Turning off DAX.");
-+			clear_opt(&sbi->opt, DAX_ALWAYS);
-+		}
- 		return 0;
-+	}
- 
- 	if (!sbi->devs->extra_devices && !erofs_is_fscache_mode(sb))
- 		sbi->devs->flatdev = true;
-@@ -330,7 +340,6 @@ static int erofs_read_superblock(struct super_block *sb)
- 	if (ret < 0)
- 		goto out;
- 
--	/* handle multiple devices */
- 	ret = erofs_scan_devices(sb, dsb);
- 
- 	if (erofs_sb_has_48bit(sbi))
-@@ -661,14 +670,9 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
- 			return invalfc(fc, "cannot use fsoffset in fscache mode");
- 	}
- 
--	if (test_opt(&sbi->opt, DAX_ALWAYS)) {
--		if (!sbi->dif0.dax_dev) {
--			errorfc(fc, "DAX unsupported by block device. Turning off DAX.");
--			clear_opt(&sbi->opt, DAX_ALWAYS);
--		} else if (sbi->blkszbits != PAGE_SHIFT) {
--			errorfc(fc, "unsupported blocksize for DAX");
--			clear_opt(&sbi->opt, DAX_ALWAYS);
--		}
-+	if (test_opt(&sbi->opt, DAX_ALWAYS) && sbi->blkszbits != PAGE_SHIFT) {
-+		erofs_info(sb, "unsupported blocksize for DAX");
-+		clear_opt(&sbi->opt, DAX_ALWAYS);
- 	}
- 
- 	sb->s_time_gran = 1;
--- 
-2.50.1
-
 
 
