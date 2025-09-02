@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D65C304BA0;
-	Tue,  2 Sep 2025 13:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EA2190472;
+	Tue,  2 Sep 2025 13:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820690; cv=none; b=hESaNnEZg4KNaZOAd+4+sQsT4Laz77DGuE2c+f8hi59PXy5FOiUhXPw1U/Yu2wv5aZROzpndj7DsmYRO0jGrEcN/+0dMqcgCZkCBV84LRzU0JLXBckXqPDbPZaPM3eCZgVBc916uw/FOLe3N3VdqHXYDDlIEq+KR0ROrm3Sx+ug=
+	t=1756820694; cv=none; b=FIkgpUbcMWYjhTnn8wXdINiKamRjkKBxLdSjlwJeDlT9tgA+/linQrXatocbup7gJZHaYkTIGRPiWMbcaXIHvktPIo91ymvBuiFrM517J6PC9p0fGaw66joI73gTc+0AvLAX3o9HEZFCJTi6aUDYylTMLNAmoUBb5w3H5j/3Z3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820690; c=relaxed/simple;
-	bh=bjEUjlhmSbA5hM+RAm3IMNVyKnoGbWfh0xi84N+IyHo=;
+	s=arc-20240116; t=1756820694; c=relaxed/simple;
+	bh=+SgdQS2sXtzc37fX8S6/iKj0P0ouh4qWr559HFwTUJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7BWo5k3YNpyW4TMohnq6xGrLyhic21yt3CE5KdVky2LfrQVTJKkf9p+PnITCcek7yK4HK3reN+SKop4yZe8TrxQ6dNZLoeuOXr4gCOm8dIoVjI+ndYw7HgkWwHWBukHy3NTjz52PdVMeENoF8MUsaAa17jKGowaf7c4gVEXN1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df6yvQcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=atLrfA+WLTmwDIjzg6Jcgh9n7nfR5G5YbvRrZEAA62G585dJ8ihrYjHkctCbSzZD6WAfk9K+btwuy3JX1y+/HkERHfbWP5k5BKMRS0YehBbQSr8mxtCJGxa7iW4mgpGBVI/DjwVizV/xhfqBQv6dvTUluUhIkuQkDJln7PzGiEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N46ZebxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df6yvQcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E259C4CEED;
-	Tue,  2 Sep 2025 13:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N46ZebxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E385C4CEF4;
+	Tue,  2 Sep 2025 13:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820690;
-	bh=bjEUjlhmSbA5hM+RAm3IMNVyKnoGbWfh0xi84N+IyHo=;
+	s=korg; t=1756820693;
+	bh=+SgdQS2sXtzc37fX8S6/iKj0P0ouh4qWr559HFwTUJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Df6yvQcdvNu2USLYImS4mPHhNzE7lvMQ1UvGgR5dSKTvKLJ6wi/lFbbdkTxGs76zv
-	 G7PEGAuGyA1aI2wxTwnL1Dj9wrLDNJ3PWu4cXj2NNuXfwSdzTjxSFG37srh5fYPkj9
-	 FT4MUH9r/zjHVhKavbsVa7rF/pJOPkqjX2/Kvnf8=
+	b=N46ZebxKwnh+5pkE1zjlEvJjrK8bGPHD4m519v8Y8QGToM0Vd5tIdSNyiNtqzDP6c
+	 6I8RFumRiUyIzwXWlNvXC/+tVUFv2LanJZ3oVbiot5gUujd8oqOc7QBBc1Q9oBWmwI
+	 BmKODA8Ba2BvN9pPHwniy2HsPHRq850uHzuPe2o4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett A C Sheffield <bacs@librecast.net>,
-	Oscar Maes <oscmaes92@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/34] net: ipv4: fix regression in local-broadcast routes
-Date: Tue,  2 Sep 2025 15:21:34 +0200
-Message-ID: <20250902131926.947399123@linuxfoundation.org>
+Subject: [PATCH 5.10 09/34] powerpc/kvm: Fix ifdef to remove build warning
+Date: Tue,  2 Sep 2025 15:21:35 +0200
+Message-ID: <20250902131926.987492413@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -53,55 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
 
-[ Upstream commit 5189446ba995556eaa3755a6e875bc06675b88bd ]
+[ Upstream commit 88688a2c8ac6c8036d983ad8b34ce191c46a10aa ]
 
-Commit 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
-introduced a regression where local-broadcast packets would have their
-gateway set in __mkroute_output, which was caused by fi = NULL being
-removed.
+When compiling for pseries or powernv defconfig with "make C=1",
+these warning were reported bu sparse tool in powerpc/kernel/kvm.c
 
-Fix this by resetting the fib_info for local-broadcast packets. This
-preserves the intended changes for directed-broadcast packets.
+arch/powerpc/kernel/kvm.c:635:9: warning: switch with no cases
+arch/powerpc/kernel/kvm.c:646:9: warning: switch with no cases
 
-Cc: stable@vger.kernel.org
-Fixes: 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
-Reported-by: Brett A C Sheffield <bacs@librecast.net>
-Closes: https://lore.kernel.org/regressions/20250822165231.4353-4-bacs@librecast.net
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250827062322.4807-1-oscmaes92@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Currently #ifdef were added after the switch case which are specific
+for BOOKE and PPC_BOOK3S_32. These are not enabled in pseries/powernv
+defconfig. Fix it by moving the #ifdef before switch(){}
+
+Fixes: cbe487fac7fc0 ("KVM: PPC: Add mtsrin PV code")
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20250518044107.39928-1-maddy@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/powerpc/kernel/kvm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 7c4479adbf325..fbaed08600f0f 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2452,12 +2452,16 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
- 		    !netif_is_l3_master(dev_out))
- 			return ERR_PTR(-EINVAL);
+diff --git a/arch/powerpc/kernel/kvm.c b/arch/powerpc/kernel/kvm.c
+index d89cf802d9aa7..8067641561a4f 100644
+--- a/arch/powerpc/kernel/kvm.c
++++ b/arch/powerpc/kernel/kvm.c
+@@ -632,19 +632,19 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
+ #endif
+ 	}
  
--	if (ipv4_is_lbcast(fl4->daddr))
-+	if (ipv4_is_lbcast(fl4->daddr)) {
- 		type = RTN_BROADCAST;
--	else if (ipv4_is_multicast(fl4->daddr))
-+
-+		/* reset fi to prevent gateway resolution */
-+		fi = NULL;
-+	} else if (ipv4_is_multicast(fl4->daddr)) {
- 		type = RTN_MULTICAST;
--	else if (ipv4_is_zeronet(fl4->daddr))
-+	} else if (ipv4_is_zeronet(fl4->daddr)) {
- 		return ERR_PTR(-EINVAL);
-+	}
+-	switch (inst_no_rt & ~KVM_MASK_RB) {
+ #ifdef CONFIG_PPC_BOOK3S_32
++	switch (inst_no_rt & ~KVM_MASK_RB) {
+ 	case KVM_INST_MTSRIN:
+ 		if (features & KVM_MAGIC_FEAT_SR) {
+ 			u32 inst_rb = _inst & KVM_MASK_RB;
+ 			kvm_patch_ins_mtsrin(inst, inst_rt, inst_rb);
+ 		}
+ 		break;
+-#endif
+ 	}
++#endif
  
- 	if (dev_out->flags & IFF_LOOPBACK)
- 		flags |= RTCF_LOCAL;
+-	switch (_inst) {
+ #ifdef CONFIG_BOOKE
++	switch (_inst) {
+ 	case KVM_INST_WRTEEI_0:
+ 		kvm_patch_ins_wrteei_0(inst);
+ 		break;
+@@ -652,8 +652,8 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
+ 	case KVM_INST_WRTEEI_1:
+ 		kvm_patch_ins_wrtee(inst, 0, 1);
+ 		break;
+-#endif
+ 	}
++#endif
+ }
+ 
+ extern u32 kvm_template_start[];
 -- 
 2.50.1
 
