@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32CA2EFDB1;
-	Tue,  2 Sep 2025 13:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED864311970;
+	Tue,  2 Sep 2025 13:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820325; cv=none; b=dzmvKugtTKskK9ygh/KRIKlXUOYqeUSh9YBNkv7BEYZtJ44dpskvuwNYwIe32/7TlU8nkmOcPXSG0GtTNgAuX0QOa5IFLIyFuxo6uikzA0ovJMB2PYuaz4YT0E5nkXGV93SBbifkqYBNgo8u14sGGpG02GVk828P8DVB4GRH6tQ=
+	t=1756820329; cv=none; b=U335/QXtkFoim2g0prEwQ+a2JBz+HWG0mIXsgQyO+pLgAhwP61mIxRo5P6mjQvTizlePI7sOG+6cZ/BcDtzRKSW+FH505uS4+8+7lodR8jaxN4gjvUGJs2r51dehs+nmxylBdwXy3iROiEzFrOvhecAy5Z16RE9bA5AsygD7Iew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820325; c=relaxed/simple;
-	bh=P68hL7nNaOC5L0s+6LAS0bMdwMiitsHSDCLDhOcvX5c=;
+	s=arc-20240116; t=1756820329; c=relaxed/simple;
+	bh=S+oC7duJFnJXzaSRer4mtYqj7xVLvu2hJgFC8Zd+jO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPrR4Y532OqwvwQWVj2FN6NvyHXGV+hfMofr6apLHcTUOcETw2rwTwmyjr37tOEw2eKVYL/1QzrwDJkoFrw+7fdf0W5rhn+Z3jCaZZfHdO1XVK/SZ3wFXhtlRCzQdM4cJe1hQHLb9ghHfDWDC51JZbcTuzwraRwcGQvOCCBDNRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zurJa5fF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJsKQzyVXO1AeopTsrJGNz1GJvQnXen/sXZCuyhNenZUZ7HY8I+JdFYAo1HS4kpxW5hfp5Mtu4scgk31xxK8lFhb4Rvr3HL2r70VGQhCQXGDLf40sgyGu5q1/YU03+6TJh1GBLuO1QQ6LTcJR6bZo+MoOd6DjWf3TctWmUkUnbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyGCB+sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zurJa5fF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F4AC4CEED;
-	Tue,  2 Sep 2025 13:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyGCB+sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59762C4CEED;
+	Tue,  2 Sep 2025 13:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820325;
-	bh=P68hL7nNaOC5L0s+6LAS0bMdwMiitsHSDCLDhOcvX5c=;
+	s=korg; t=1756820328;
+	bh=S+oC7duJFnJXzaSRer4mtYqj7xVLvu2hJgFC8Zd+jO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zurJa5fFu8TIwN6FLJOdl7lrCH6dnzoMqTFu2KUiMYT8r6gY7VAI0jwmV6IbXhjrK
-	 ANwsdbDHZgmYFPtZcrNQfQ4QUBQB0h4lLQWXHRksIWSiTLF+Tr/9Gj4qAaDeT0DwI1
-	 IOYG71K7uj4slLZCw5bERJZEqvmA43NFwqCQmGdM=
+	b=lyGCB+sz7DA851Jzvh1pKKRQ3IbrvBXcSTXrHUl6cipti1+FiLkq9/CFeWDRfQO1V
+	 EWft+qVRwq1btu00LpOt7flPrr0OGL7WWbeuo+IaP7yNUkGg6T/HByf7UzLstvPnN3
+	 Hvw2fdMZor8Qhivgk/Un7eKhVdtRiVpooi/Id2yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 67/75] net: usb: qmi_wwan: add Telit Cinterion LE910C4-WWX new compositions
-Date: Tue,  2 Sep 2025 15:21:19 +0200
-Message-ID: <20250902131937.743828235@linuxfoundation.org>
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 38/75] net/mlx5: Add support for sync reset using hot reset
+Date: Tue,  2 Sep 2025 15:20:50 +0200
+Message-ID: <20250902131936.615991393@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -50,104 +53,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-commit e81a7f65288c7e2cfb7e7890f648e099fd885ab3 upstream.
+[ Upstream commit 57502f62678ced0149d415324931bde37b42885a ]
 
-Add the following Telit Cinterion LE910C4-WWX new compositions:
+On device that supports sync reset for firmware activate using hot
+reset, the driver queries the required reset method while handling the
+sync reset request. If the required reset method is hot reset, the
+driver will use pci_reset_bus() to reset the PCI link instead of the
+link toggle.
 
-0x1034: tty (AT) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  8 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1034 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=93f617e7
-C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x1037: tty (diag) + tty (Telit custom) + tty (AT) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 15 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1037 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=93f617e7
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x1038: tty (Telit custom) + tty (AT) + tty (AT) + rmnet
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1038 Rev=00.00
-S:  Manufacturer=Telit
-S:  Product=LE910C4-WWX
-S:  SerialNumber=93f617e7
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Link: https://patch.msgid.link/20250822091324.39558-1-Fabio.Porcedda@telit.com
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20240911201757.1505453-11-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 902a8bc23a24 ("net/mlx5: Fix lockdep assertion on sync reset unload event")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c |    3 +++
- 1 file changed, 3 insertions(+)
+ .../ethernet/mellanox/mlx5/core/fw_reset.c    | 82 +++++++++++++++----
+ .../net/ethernet/mellanox/mlx5/core/main.c    |  3 +
+ 2 files changed, 69 insertions(+), 16 deletions(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1363,6 +1363,9 @@ static const struct usb_device_id produc
- 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
- 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1034, 2)}, /* Telit LE910C4-WWX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1037, 4)}, /* Telit LE910C4-WWX */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1038, 3)}, /* Telit LE910C4-WWX */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x103a, 0)}, /* Telit LE910C4-WWX */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1040, 2)},	/* Telit LE922A */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1050, 2)},	/* Telit FN980 */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 6b17346aa4cef..a1c2dd7f5c2c0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -26,6 +26,7 @@ struct mlx5_fw_reset {
+ 	struct work_struct reset_now_work;
+ 	struct work_struct reset_abort_work;
+ 	unsigned long reset_flags;
++	u8 reset_method;
+ 	struct timer_list timer;
+ 	struct completion done;
+ 	int ret;
+@@ -94,7 +95,7 @@ static int mlx5_reg_mfrl_set(struct mlx5_core_dev *dev, u8 reset_level,
+ }
+ 
+ static int mlx5_reg_mfrl_query(struct mlx5_core_dev *dev, u8 *reset_level,
+-			       u8 *reset_type, u8 *reset_state)
++			       u8 *reset_type, u8 *reset_state, u8 *reset_method)
+ {
+ 	u32 out[MLX5_ST_SZ_DW(mfrl_reg)] = {};
+ 	u32 in[MLX5_ST_SZ_DW(mfrl_reg)] = {};
+@@ -110,13 +111,26 @@ static int mlx5_reg_mfrl_query(struct mlx5_core_dev *dev, u8 *reset_level,
+ 		*reset_type = MLX5_GET(mfrl_reg, out, reset_type);
+ 	if (reset_state)
+ 		*reset_state = MLX5_GET(mfrl_reg, out, reset_state);
++	if (reset_method)
++		*reset_method = MLX5_GET(mfrl_reg, out, pci_reset_req_method);
+ 
+ 	return 0;
+ }
+ 
+ int mlx5_fw_reset_query(struct mlx5_core_dev *dev, u8 *reset_level, u8 *reset_type)
+ {
+-	return mlx5_reg_mfrl_query(dev, reset_level, reset_type, NULL);
++	return mlx5_reg_mfrl_query(dev, reset_level, reset_type, NULL, NULL);
++}
++
++static int mlx5_fw_reset_get_reset_method(struct mlx5_core_dev *dev,
++					  u8 *reset_method)
++{
++	if (!MLX5_CAP_GEN(dev, pcie_reset_using_hotreset_method)) {
++		*reset_method = MLX5_MFRL_REG_PCI_RESET_METHOD_LINK_TOGGLE;
++		return 0;
++	}
++
++	return mlx5_reg_mfrl_query(dev, NULL, NULL, NULL, reset_method);
+ }
+ 
+ static int mlx5_fw_reset_get_reset_state_err(struct mlx5_core_dev *dev,
+@@ -124,7 +138,7 @@ static int mlx5_fw_reset_get_reset_state_err(struct mlx5_core_dev *dev,
+ {
+ 	u8 reset_state;
+ 
+-	if (mlx5_reg_mfrl_query(dev, NULL, NULL, &reset_state))
++	if (mlx5_reg_mfrl_query(dev, NULL, NULL, &reset_state, NULL))
+ 		goto out;
+ 
+ 	if (!reset_state)
+@@ -402,7 +416,11 @@ static void mlx5_sync_reset_request_event(struct work_struct *work)
+ 	struct mlx5_core_dev *dev = fw_reset->dev;
+ 	int err;
+ 
+-	if (test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST, &fw_reset->reset_flags) ||
++	err = mlx5_fw_reset_get_reset_method(dev, &fw_reset->reset_method);
++	if (err)
++		mlx5_core_warn(dev, "Failed reading MFRL, err %d\n", err);
++
++	if (err || test_bit(MLX5_FW_RESET_FLAGS_NACK_RESET_REQUEST, &fw_reset->reset_flags) ||
+ 	    !mlx5_is_reset_now_capable(dev)) {
+ 		err = mlx5_fw_reset_set_reset_sync_nack(dev);
+ 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Nack %s",
+@@ -419,21 +437,15 @@ static void mlx5_sync_reset_request_event(struct work_struct *work)
+ 		mlx5_core_warn(dev, "PCI Sync FW Update Reset Ack. Device reset is expected.\n");
+ }
+ 
+-static int mlx5_pci_link_toggle(struct mlx5_core_dev *dev)
++static int mlx5_pci_link_toggle(struct mlx5_core_dev *dev, u16 dev_id)
+ {
+ 	struct pci_bus *bridge_bus = dev->pdev->bus;
+ 	struct pci_dev *bridge = bridge_bus->self;
+ 	unsigned long timeout;
+ 	struct pci_dev *sdev;
+-	u16 reg16, dev_id;
+ 	int cap, err;
++	u16 reg16;
+ 
+-	err = pci_read_config_word(dev->pdev, PCI_DEVICE_ID, &dev_id);
+-	if (err)
+-		return pcibios_err_to_errno(err);
+-	err = mlx5_check_dev_ids(dev, dev_id);
+-	if (err)
+-		return err;
+ 	cap = pci_find_capability(bridge, PCI_CAP_ID_EXP);
+ 	if (!cap)
+ 		return -EOPNOTSUPP;
+@@ -503,6 +515,44 @@ static int mlx5_pci_link_toggle(struct mlx5_core_dev *dev)
+ 	return err;
+ }
+ 
++static int mlx5_pci_reset_bus(struct mlx5_core_dev *dev)
++{
++	if (!MLX5_CAP_GEN(dev, pcie_reset_using_hotreset_method))
++		return -EOPNOTSUPP;
++
++	return pci_reset_bus(dev->pdev);
++}
++
++static int mlx5_sync_pci_reset(struct mlx5_core_dev *dev, u8 reset_method)
++{
++	u16 dev_id;
++	int err;
++
++	err = pci_read_config_word(dev->pdev, PCI_DEVICE_ID, &dev_id);
++	if (err)
++		return pcibios_err_to_errno(err);
++	err = mlx5_check_dev_ids(dev, dev_id);
++	if (err)
++		return err;
++
++	switch (reset_method) {
++	case MLX5_MFRL_REG_PCI_RESET_METHOD_LINK_TOGGLE:
++		err = mlx5_pci_link_toggle(dev, dev_id);
++		if (err)
++			mlx5_core_warn(dev, "mlx5_pci_link_toggle failed\n");
++		break;
++	case MLX5_MFRL_REG_PCI_RESET_METHOD_HOT_RESET:
++		err = mlx5_pci_reset_bus(dev);
++		if (err)
++			mlx5_core_warn(dev, "mlx5_pci_reset_bus failed\n");
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
++
++	return err;
++}
++
+ static void mlx5_sync_reset_now_event(struct work_struct *work)
+ {
+ 	struct mlx5_fw_reset *fw_reset = container_of(work, struct mlx5_fw_reset,
+@@ -521,9 +571,9 @@ static void mlx5_sync_reset_now_event(struct work_struct *work)
+ 		goto done;
+ 	}
+ 
+-	err = mlx5_pci_link_toggle(dev);
++	err = mlx5_sync_pci_reset(dev, fw_reset->reset_method);
+ 	if (err) {
+-		mlx5_core_warn(dev, "mlx5_pci_link_toggle failed, no reset done, err %d\n", err);
++		mlx5_core_warn(dev, "mlx5_sync_pci_reset failed, no reset done, err %d\n", err);
+ 		set_bit(MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED, &fw_reset->reset_flags);
+ 	}
+ 
+@@ -585,9 +635,9 @@ static void mlx5_sync_reset_unload_event(struct work_struct *work)
+ 
+ 	mlx5_core_warn(dev, "Sync Reset, got reset action. rst_state = %u\n", rst_state);
+ 	if (rst_state == MLX5_FW_RST_STATE_TOGGLE_REQ) {
+-		err = mlx5_pci_link_toggle(dev);
++		err = mlx5_sync_pci_reset(dev, fw_reset->reset_method);
+ 		if (err) {
+-			mlx5_core_warn(dev, "mlx5_pci_link_toggle failed, err %d\n", err);
++			mlx5_core_warn(dev, "mlx5_sync_pci_reset failed, err %d\n", err);
+ 			fw_reset->ret = err;
+ 		}
+ 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 62a85f09b52fd..8a11e410f7c13 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -627,6 +627,9 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
+ 	if (MLX5_CAP_GEN_MAX(dev, pci_sync_for_fw_update_with_driver_unload))
+ 		MLX5_SET(cmd_hca_cap, set_hca_cap,
+ 			 pci_sync_for_fw_update_with_driver_unload, 1);
++	if (MLX5_CAP_GEN_MAX(dev, pcie_reset_using_hotreset_method))
++		MLX5_SET(cmd_hca_cap, set_hca_cap,
++			 pcie_reset_using_hotreset_method, 1);
+ 
+ 	if (MLX5_CAP_GEN_MAX(dev, num_vhca_ports))
+ 		MLX5_SET(cmd_hca_cap,
+-- 
+2.50.1
+
 
 
