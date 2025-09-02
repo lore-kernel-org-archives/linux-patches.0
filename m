@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385863126BA;
-	Tue,  2 Sep 2025 13:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7935A3054DD;
+	Tue,  2 Sep 2025 13:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820667; cv=none; b=Cs9MdWQ3OYFMUpstJ/xsldJ0nRe7RPdzPSeJ3uQn1Mvka0uJQJ8MQG8BQOty1ew8rukUsP6v/ksJ/dMoc8hZ6NkRp897Pxb/wyEIs91d1VeM77l4q6BsQ9xDjDUggUIo+P03BbD4UgWu35oIu1anjqBJI42edTPeMTKO3zHf3B0=
+	t=1756820670; cv=none; b=qCRSlX26J6JA5kIhuf3UJthkQcCHSy5jZYqg+PABo7857y95K6K2tntKMpnWfzPDl+V3a0f9srfhzAzNT2HuZlU2gsa5BpH9+GL66jIGSfWAlvEJLZfH4AjhR2GGgDPVY4CZEsKc6RIY+xFlsowqQkaNqXt0doJp4+ItTnF58C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820667; c=relaxed/simple;
-	bh=hmjVXrwclWZCPKF+kKaKpzbxR01zC4AuJ/33/7eHx/M=;
+	s=arc-20240116; t=1756820670; c=relaxed/simple;
+	bh=7he5TZ34zSoeQqcO7keu/MoQxmT60D33CqLRObblGCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8GFeAXWenGLgBTbETkrpF2kVy5zJ5bjy+3YCsAdCKDMoKw/G9yiTfFGRXsbgmaMU/kd/0mLZ2IOAPiiVB0eZemWeqKm9zR2Ypbe928gLuhXL5bG6q5JtxVlETJ7Jum3reDdYQ0TZ2QAC9qerqt8s50JA0tw99jPqD68E5BXAaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTrSBnYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JHFHV5m4Ch0FjsPt294HG94BcLikax5x4ipxtXxj9IWYheZH1WGtcypUFrx8v9TDdtkGjzGHw0zV4SRflckBhWVM1vNVqtozxNaYZdPprjJ9/IBp6PuGHArEONPlRYZ6ZPSyMZoGVDQAMiU8XLqgtKmibdF1eGzQqmySy1RAdoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrqcqbdC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTrSBnYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9482AC4CEF4;
-	Tue,  2 Sep 2025 13:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrqcqbdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCD6C4CEED;
+	Tue,  2 Sep 2025 13:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820667;
-	bh=hmjVXrwclWZCPKF+kKaKpzbxR01zC4AuJ/33/7eHx/M=;
+	s=korg; t=1756820670;
+	bh=7he5TZ34zSoeQqcO7keu/MoQxmT60D33CqLRObblGCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTrSBnYOpcoTRi42YtLI3+Fw4ThqMErPdJQwOv0q6YLuIP/iEfeml2qFaPAfEPA9h
-	 TNz7IfSrAoBhwszOgdgYEmvCahvcg3IdYwgnLTIthB/+8u1gw9GX8d4XrucM0mPp5I
-	 JODxsQ4bqjuINz/iUeqkgAAd2LLXcrQqgIg4awvc=
+	b=HrqcqbdCsHbxwCNe+OYOR8lR7yHhDonSU3SHRBuvw8mxwBPKULAso9IM5d4DZ4UU5
+	 iMSqLtEF9RCyHEUu5Qdh5eaRvKGpRh26SkwE5MS9qeY3rr2hIGOgj4idwNtC5/rvFl
+	 RwO6Faf01kegWMD4mTgShNGShaBfN+QxD+q+8Zrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ingo Molnar <mingo@elte.hu>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 16/34] net: stmmac: xgmac: Do not enable RX FIFO Overflow interrupts
-Date: Tue,  2 Sep 2025 15:21:42 +0200
-Message-ID: <20250902131927.270330624@linuxfoundation.org>
+Subject: [PATCH 5.10 02/34] ftrace: Fix potential warning in trace_printk_seq during ftrace_dump
+Date: Tue,  2 Sep 2025 15:21:28 +0200
+Message-ID: <20250902131926.709996468@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -53,47 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 4f23382841e67174211271a454811dd17c0ef3c5 ]
+[ Upstream commit 4013aef2ced9b756a410f50d12df9ebe6a883e4a ]
 
-Enabling RX FIFO Overflow interrupts is counterproductive
-and causes an interrupt storm when RX FIFO overflows.
-Disabling this interrupt has no side effect and eliminates
-interrupt storms when the RX FIFO overflows.
+When calling ftrace_dump_one() concurrently with reading trace_pipe,
+a WARN_ON_ONCE() in trace_printk_seq() can be triggered due to a race
+condition.
 
-Commit 8a7cb245cf28 ("net: stmmac: Do not enable RX FIFO
-overflow interrupts") disables RX FIFO overflow interrupts
-for DWMAC4 IP and removes the corresponding handling of
-this interrupt. This patch is doing the same thing for
-XGMAC IP.
+The issue occurs because:
 
-Fixes: 2142754f8b9c ("net: stmmac: Add MAC related callbacks for XGMAC2")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-1-c225fe4444c0@altera.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CPU0 (ftrace_dump)                              CPU1 (reader)
+echo z > /proc/sysrq-trigger
+
+!trace_empty(&iter)
+trace_iterator_reset(&iter) <- len = size = 0
+                                                cat /sys/kernel/tracing/trace_pipe
+trace_find_next_entry_inc(&iter)
+  __find_next_entry
+    ring_buffer_empty_cpu <- all empty
+  return NULL
+
+trace_printk_seq(&iter.seq)
+  WARN_ON_ONCE(s->seq.len >= s->seq.size)
+
+In the context between trace_empty() and trace_find_next_entry_inc()
+during ftrace_dump, the ring buffer data was consumed by other readers.
+This caused trace_find_next_entry_inc to return NULL, failing to populate
+`iter.seq`. At this point, due to the prior trace_iterator_reset, both
+`iter.seq.len` and `iter.seq.size` were set to 0. Since they are equal,
+the WARN_ON_ONCE condition is triggered.
+
+Move the trace_printk_seq() into the if block that checks to make sure the
+return value of trace_find_next_entry_inc() is non-NULL in
+ftrace_dump_one(), ensuring the 'iter.seq' is properly populated before
+subsequent operations.
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ingo Molnar <mingo@elte.hu>
+Link: https://lore.kernel.org/20250822033343.3000289-1-wutengda@huaweicloud.com
+Fixes: d769041f8653 ("ring_buffer: implement new locking")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c | 4 ----
- 1 file changed, 4 deletions(-)
+ kernel/trace/trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-index a5583d706b9f2..e30bbe1933ec8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-@@ -199,10 +199,6 @@ static void dwxgmac2_dma_rx_mode(void __iomem *ioaddr, int mode,
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 0c7aa47fb4d3b..d08320c47a150 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9617,10 +9617,10 @@ void ftrace_dump(enum ftrace_dump_mode oops_dump_mode)
+ 			ret = print_trace_line(&iter);
+ 			if (ret != TRACE_TYPE_NO_CONSUME)
+ 				trace_consume(&iter);
++
++			trace_printk_seq(&iter.seq);
+ 		}
+ 		touch_nmi_watchdog();
+-
+-		trace_printk_seq(&iter.seq);
  	}
  
- 	writel(value, ioaddr + XGMAC_MTL_RXQ_OPMODE(channel));
--
--	/* Enable MTL RX overflow */
--	value = readl(ioaddr + XGMAC_MTL_QINTEN(channel));
--	writel(value | XGMAC_RXOIE, ioaddr + XGMAC_MTL_QINTEN(channel));
- }
- 
- static void dwxgmac2_dma_tx_mode(void __iomem *ioaddr, int mode,
+ 	if (!cnt)
 -- 
 2.50.1
 
