@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93350307AFA;
-	Tue,  2 Sep 2025 13:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42A9305E02;
+	Tue,  2 Sep 2025 13:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820228; cv=none; b=MVp0TyQMOfnz5VLEPUqOLfVi39TuBNjsjLMvqArNrew0Vf8WmKwP/eZSMrNDpwwUMkEW6Ipuz3bIFaDHPCNsAjKvRvmfOdUYilg9Bk7m2yqlAUux7PRCYjM8KjAqnZNPMrVG2mYafU1HB+w14c8dJnb0P5EF/CDt9fDJNVc9UCk=
+	t=1756820231; cv=none; b=e+sCIpZ6fbwXVamg8jJkZnpJhEb1t3KmGm+ib2pP2/h2uGuu4epvSlUNiNSwOYv8Wjtiq6yg9pkJgtDTpTclAdhWyA88iuy6STfAFARnxR5ZktWDVa0FFFyUgNejDzcEtuJzEDb4Eem/tz5aQOstDVSmdcNQRNEa5ZVgDAyd+w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820228; c=relaxed/simple;
-	bh=p00fYxZuyiMM/BGBxD3FfK66ZdmECEYxnBKbV4vyTuk=;
+	s=arc-20240116; t=1756820231; c=relaxed/simple;
+	bh=Fu63Y3PoyVYpku9mnBfaz+qkeNqlmAd05BRRPJ0+qlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXhqLHih/qLthRSP/5B5ra5j253RWcQ/ymadfk1dgxqAew2U1XkJo28vH7lh9A4h87wfKPyKMslrnzwxtp+/W7kPI2we5jfVjWDW4wXP6mJbCXNTQjH/pdWslEjT9cqsdKLzrztAaJtYB7IhHGv8VnLd8C4zS1BJkRFbZu91mwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kobQXs8W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jr8+/gUFwGmIEmfHcRWgh51CBtr/2P+OXWrhSyvdNNpBAueSRrKAlhCbPOhY1KbB0MM2Afa4rSonZGCXzkewBOl7nXYHdebAOhZ44ZntC321bID5gZ2j5OrlitHUWiQ27K/5TzQewMbhG336VSAQLexA48Hr/LbwP9XMSTP+cys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxBjUgH5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kobQXs8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C06BC4CEED;
-	Tue,  2 Sep 2025 13:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxBjUgH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296A3C4CEED;
+	Tue,  2 Sep 2025 13:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820228;
-	bh=p00fYxZuyiMM/BGBxD3FfK66ZdmECEYxnBKbV4vyTuk=;
+	s=korg; t=1756820231;
+	bh=Fu63Y3PoyVYpku9mnBfaz+qkeNqlmAd05BRRPJ0+qlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kobQXs8WgR75xDwt6Jh1j+DRdicXVABKAnHhzqvX7Ora+2CIxlElSMCjUzxwgDjDu
-	 ST+IAI5qrD8FdWFt5Wv8ZDlZ2Jun1141hgFIsbBsG1y/M05ByZuxp1gw9KO2rh9Sdd
-	 E2nz9woTGlWSA817O1xhmmlHrERTx9WrT11tLUoU=
+	b=vxBjUgH5XJFWyFM8ytydEQ1ikJUGh9pnsord18ufCphjCQH5ZjhkJ4oSn6YSlsBWy
+	 9SCwZtMfZvKfHKmYjRQZL/Uk3IGLUSOK9wsvV/pp1lkFhUdm73YV5w4D+ICOD8bAR4
+	 18xr3pF7Jn0i4ndvpDck0ut++59PF5BbIWcihjpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ingo Molnar <mingo@elte.hu>,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Johannes Thumshin <johannes.thumshirn@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 07/75] ftrace: Fix potential warning in trace_printk_seq during ftrace_dump
-Date: Tue,  2 Sep 2025 15:20:19 +0200
-Message-ID: <20250902131935.405945486@linuxfoundation.org>
+Subject: [PATCH 6.6 08/75] scsi: core: sysfs: Correct sysfs attributes access rights
+Date: Tue,  2 Sep 2025 15:20:20 +0200
+Message-ID: <20250902131935.443994655@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -55,72 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 4013aef2ced9b756a410f50d12df9ebe6a883e4a ]
+[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
 
-When calling ftrace_dump_one() concurrently with reading trace_pipe,
-a WARN_ON_ONCE() in trace_printk_seq() can be triggered due to a race
-condition.
+The SCSI sysfs attributes "supported_mode" and "active_mode" do not
+define a store method and thus cannot be modified.  Correct the
+DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
+allow write access as they are read-only.
 
-The issue occurs because:
-
-CPU0 (ftrace_dump)                              CPU1 (reader)
-echo z > /proc/sysrq-trigger
-
-!trace_empty(&iter)
-trace_iterator_reset(&iter) <- len = size = 0
-                                                cat /sys/kernel/tracing/trace_pipe
-trace_find_next_entry_inc(&iter)
-  __find_next_entry
-    ring_buffer_empty_cpu <- all empty
-  return NULL
-
-trace_printk_seq(&iter.seq)
-  WARN_ON_ONCE(s->seq.len >= s->seq.size)
-
-In the context between trace_empty() and trace_find_next_entry_inc()
-during ftrace_dump, the ring buffer data was consumed by other readers.
-This caused trace_find_next_entry_inc to return NULL, failing to populate
-`iter.seq`. At this point, due to the prior trace_iterator_reset, both
-`iter.seq.len` and `iter.seq.size` were set to 0. Since they are equal,
-the WARN_ON_ONCE condition is triggered.
-
-Move the trace_printk_seq() into the if block that checks to make sure the
-return value of trace_find_next_entry_inc() is non-NULL in
-ftrace_dump_one(), ensuring the 'iter.seq' is properly populated before
-subsequent operations.
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Ingo Molnar <mingo@elte.hu>
-Link: https://lore.kernel.org/20250822033343.3000289-1-wutengda@huaweicloud.com
-Fixes: d769041f8653 ("ring_buffer: implement new locking")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 4 ++--
+ drivers/scsi/scsi_sysfs.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 907e45361939b..a32c8637503d1 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -10162,10 +10162,10 @@ void ftrace_dump(enum ftrace_dump_mode oops_dump_mode)
- 			ret = print_trace_line(&iter);
- 			if (ret != TRACE_TYPE_NO_CONSUME)
- 				trace_consume(&iter);
-+
-+			trace_printk_seq(&iter.seq);
- 		}
- 		touch_nmi_watchdog();
--
--		trace_printk_seq(&iter.seq);
- 	}
+diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
+index 24f6eefb68030..df37ac81620e6 100644
+--- a/drivers/scsi/scsi_sysfs.c
++++ b/drivers/scsi/scsi_sysfs.c
+@@ -265,7 +265,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
+ 	return show_shost_mode(supported_mode, buf);
+ }
  
- 	if (!cnt)
+-static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
++static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
+ 
+ static ssize_t
+ show_shost_active_mode(struct device *dev,
+@@ -279,7 +279,7 @@ show_shost_active_mode(struct device *dev,
+ 		return show_shost_mode(shost->active_mode, buf);
+ }
+ 
+-static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
++static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
+ 
+ static int check_reset_type(const char *str)
+ {
 -- 
 2.50.1
 
