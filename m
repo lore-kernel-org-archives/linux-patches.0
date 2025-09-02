@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7672F2DC33B;
-	Tue,  2 Sep 2025 13:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF0F2F1FC1;
+	Tue,  2 Sep 2025 13:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820113; cv=none; b=p+7OGq8Fg5T94WpTMATR+EBPCS1FgTytr7eaNU6Pilqnabt0LTfDkOsYIp/BcePAcqS1ih2wbKmaaVML1Z7h5+wEeD1kPZ12xKBGjgEnLW/df4n9tXWK/an2n9yS30qkDAIsAby/ez02VE94fRoIfFKVmFH7DQgwmR2yte16xbI=
+	t=1756820119; cv=none; b=HfX6o4kkKeRGJbVtCqn9JGpAmAjuvVDh7AHT/VTA2ipcdpuC9GhguH31J4A/dDd1JNWnaw6kHCiUPabH8Ppxk09lNlXUf/CzG4TrwCmqtAhIY4cQ/2tY8O7nFw7XU86w9l0pZHAo8kqFtSHTAQzKuF0d4Z5uXOFijRcKFYE8w/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820113; c=relaxed/simple;
-	bh=KC4mhj6NeFqCDCbqTw1hfu1v27IxgJTeUx9rD1TKgqM=;
+	s=arc-20240116; t=1756820119; c=relaxed/simple;
+	bh=/zSGykkH3MctqXFAgWYfydjhLBeZvUDCcPNpp/x90W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvFVjgol8HGP0zGsKxa03Pc9gfHPNxq7iGQWZ0sGkwJlOF2NmI8h08ot4snIq46Iu5Ho/zbzVsH1yz8nv3EIHD/vevMa+4Vcz1aNcltGHuIeWFW274Ay+SK0WrIL5bYOBQ35NXplTZrhNdTHaWX83z8t7MxaFFPFCZ5jZQ3mM64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvMdMqIW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNCHu9JNNnugJuiu1RgPfhrxomHtgQgCGIB8iO9S7LycgcE/3fjYNWOrV9fP7DRKqqQFqEH3r/X/Oy0atQP8ZgNo3+BU3E/PJGongGyzWMw0a2T4J7r6TOcrVa9LokCjyYuHQQH5qH2pkKvaTUnNsSsNwmon+LIEZ+LTf3MZaJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b87ViRc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvMdMqIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02E1C4CEED;
-	Tue,  2 Sep 2025 13:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b87ViRc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114F6C4CEED;
+	Tue,  2 Sep 2025 13:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820113;
-	bh=KC4mhj6NeFqCDCbqTw1hfu1v27IxgJTeUx9rD1TKgqM=;
+	s=korg; t=1756820116;
+	bh=/zSGykkH3MctqXFAgWYfydjhLBeZvUDCcPNpp/x90W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvMdMqIWS0r4E7uSxDZn6RU+lJXMcYpyzC8cbppr6NXqNm2w/hKnLsimBfbWx/FOy
-	 7sD9Tk83ICve4Q4je+HfDGnsmq9Ltl12oi2kKG2fN0c5ONh2qUrZ7YJfCwktUWXGbx
-	 JdwyfTaz4Xwq1VFeIabCxAgN1QiBmED66fya6QSY=
+	b=b87ViRc7M0269/++UY2jUJhZtl/FzK2s4Kc0pASOjBQ1+zn5mmfSaqmjL8m8zLhWR
+	 gMhsnXPpi7+NQpJyH70FyajEhZjjvyL/qm/4aZChYz493P4qesubn/LUXk2cuv7iSw
+	 FZ8/KbE4tOdXFrYlEaN32tylq7ryBOl5xypayY7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Mandir <neil.mandir@seco.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 66/95] net: macb: Disable clocks once
-Date: Tue,  2 Sep 2025 15:20:42 +0200
-Message-ID: <20250902131942.134785198@linuxfoundation.org>
+	Thijs Raymakers <thijs@raymakers.nl>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 67/95] KVM: x86: use array_index_nospec with indices that come from guest
+Date: Tue,  2 Sep 2025 15:20:43 +0200
+Message-ID: <20250902131942.174604048@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,49 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Mandir <neil.mandir@seco.com>
+From: Thijs Raymakers <thijs@raymakers.nl>
 
-[ Upstream commit dac978e51cce0c1f00a14c4a82f81d387f79b2d4 ]
+commit c87bd4dd43a624109c3cc42d843138378a7f4548 upstream.
 
-When the driver is removed the clocks are disabled twice: once in
-macb_remove and a second time by runtime pm. Disable wakeup in remove so
-all the clocks are disabled and skip the second call to macb_clks_disable.
-Always suspend the device as we always set it active in probe.
+min and dest_id are guest-controlled indices. Using array_index_nospec()
+after the bounds checks clamps these values to mitigate speculative execution
+side-channels.
 
-Fixes: d54f89af6cc4 ("net: macb: Add pm runtime support")
-Signed-off-by: Neil Mandir <neil.mandir@seco.com>
-Co-developed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250826143022.935521-1-sean.anderson@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thijs Raymakers <thijs@raymakers.nl>
+Cc: stable@vger.kernel.org
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 715062970f37 ("KVM: X86: Implement PV sched yield hypercall")
+Fixes: bdf7ffc89922 ("KVM: LAPIC: Fix pv ipis out-of-bounds access")
+Fixes: 4180bf1b655a ("KVM: X86: Implement "send IPI" hypercall")
+Link: https://lore.kernel.org/r/20250804064405.4802-1-thijs@raymakers.nl
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ arch/x86/kvm/lapic.c |    2 ++
+ arch/x86/kvm/x86.c   |    7 +++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 2421a7bcd221e..6c2d69ef1a8db 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5230,14 +5230,11 @@ static void macb_remove(struct platform_device *pdev)
- 		mdiobus_unregister(bp->mii_bus);
- 		mdiobus_free(bp->mii_bus);
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -860,6 +860,8 @@ static int __pv_send_ipi(unsigned long *
+ 	if (min > map->max_apic_id)
+ 		return 0;
  
-+		device_set_wakeup_enable(&bp->pdev->dev, 0);
- 		cancel_work_sync(&bp->hresp_err_bh_work);
- 		pm_runtime_disable(&pdev->dev);
- 		pm_runtime_dont_use_autosuspend(&pdev->dev);
--		if (!pm_runtime_suspended(&pdev->dev)) {
--			macb_clks_disable(bp->pclk, bp->hclk, bp->tx_clk,
--					  bp->rx_clk, bp->tsu_clk);
--			pm_runtime_set_suspended(&pdev->dev);
--		}
-+		pm_runtime_set_suspended(&pdev->dev);
- 		phylink_destroy(bp->phylink);
- 		free_netdev(dev);
- 	}
--- 
-2.50.1
-
++	min = array_index_nospec(min, map->max_apic_id + 1);
++
+ 	for_each_set_bit(i, ipi_bitmap,
+ 		min((u32)BITS_PER_LONG, (map->max_apic_id - min + 1))) {
+ 		if (map->phys_map[min + i]) {
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9969,8 +9969,11 @@ static void kvm_sched_yield(struct kvm_v
+ 	rcu_read_lock();
+ 	map = rcu_dereference(vcpu->kvm->arch.apic_map);
+ 
+-	if (likely(map) && dest_id <= map->max_apic_id && map->phys_map[dest_id])
+-		target = map->phys_map[dest_id]->vcpu;
++	if (likely(map) && dest_id <= map->max_apic_id) {
++		dest_id = array_index_nospec(dest_id, map->max_apic_id + 1);
++		if (map->phys_map[dest_id])
++			target = map->phys_map[dest_id]->vcpu;
++	}
+ 
+ 	rcu_read_unlock();
+ 
 
 
