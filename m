@@ -1,421 +1,237 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A543074B4;
-	Tue,  2 Sep 2025 13:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D16333436D;
+	Tue,  2 Sep 2025 13:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820530; cv=none; b=Wrt1x41Acj5s16rDpLiJbt6E/o+e+LA1+rPVXhwbUJyN0fr7zlP5BJeYc/G/e1nXSs/XPOF8WE7axD98Ts2zGcdAvIw4YockJShZS9fiUAIQI2wvicb4A4aY95sHLcNV2ggyJva+4PC4Ml6pDlzKsETetTqWFg048wHOG7fBZMk=
+	t=1756820533; cv=none; b=WZUbgL3cEXEs9/YdIKs9kiyqJTm9mmHY8MuI3k09ePmLjILkBYf8pFIE7kUrXjqCDFJjjQhghMrnQ/2B22kdWHpkkEe0df21lstKo5gLXkICrUIB6xL9gUpVKNakWW8vZfMM3s4rJaCZ/rhjlakrK1iU//xFXXtdEVxsvqxYL4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820530; c=relaxed/simple;
-	bh=Y3chWnZ8xVfg5EDkNVUuDq1uIRtNrukSjgV0ktKMsDE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3B9Fa/etHUtBc5JmcByjWFVoJMHs1BQ2VS2ifK5aK+8SxVO3NBiOFDFmlgpMdTrRvQAYqFGANPo0AgXCuhfX+6fflNcYOQ3+Up+FY9WcqSJROr7Ruj4vqXinVdrqLdqmJl8Y6ZS5m9wSZqOIz2Xyiqe850ciHgd+t6dWZWrcK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN4gaC72; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756820533; c=relaxed/simple;
+	bh=2/iR/uIcgwB42IfEEw8WJHNtpReBdY9p846kS/7dtCI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kX5Z/tovoTBdz/hGXo7mZPJ0cf76m8G2N1DjZhfeOs8gLDPbBMvZfrcijo0c7ZS01TSN8YaKzAxSylZoyJBiufbqbVFBvdElNDzAX34eT8dSyNEMQDo6dGlXbbWztrEuypCPJwduat7mYXeplE0PeoaMp9yi1V+nb8/uwco6YGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBs8VxFe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN4gaC72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C403C4CEED;
-	Tue,  2 Sep 2025 13:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBs8VxFe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2216C4CEED;
+	Tue,  2 Sep 2025 13:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820530;
-	bh=Y3chWnZ8xVfg5EDkNVUuDq1uIRtNrukSjgV0ktKMsDE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GN4gaC7244BJ/A8wGYXhuynDHTpA7nP7iITonc/ziyCG1rg0qDOhYRR04GU4hCxDW
-	 Mgy5UZ0fiErx78Tzl4bITmu9IthMPNxNO1/3N5ZQJ8mWjjbf4gV8h1NFoHDWw4zgwp
-	 BRbdrF9lH22r/HuC5tuSOJ9j+9vIEXJRRS852Re8=
+	s=korg; t=1756820533;
+	bh=2/iR/uIcgwB42IfEEw8WJHNtpReBdY9p846kS/7dtCI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=eBs8VxFeYTS4hjifvdm7H+8yD3UaLVVMW9wSV7e8Zlma9qBvycVPKb6PiDbVHAcEb
+	 SdkcK61C2DTagHIj8hRRN8OHWl2dT+/PpqrhRpg462WFxDBc6crQHUP+7Br4xb6R9d
+	 x/PJuRvBuHOkhs/g9+MB/eTyXn1lr65kp7ITKvus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takamitsu Iwai <takamitz@amazon.co.jp>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/50] net: rose: convert use field to refcount_t
-Date: Tue,  2 Sep 2025 15:21:22 +0200
-Message-ID: <20250902131931.754000928@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org
+Subject: [PATCH 5.15 00/33] 5.15.191-rc1 review
+Date: Tue,  2 Sep 2025 15:21:18 +0200
+Message-ID: <20250902131927.045875971@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
-References: <20250902131930.509077918@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.191-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.191-rc1
+X-KernelTest-Deadline: 2025-09-04T13:19+00:00
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 5.15.191 release.
+There are 33 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
+Anything received after that time might be too late.
 
-From: Takamitsu Iwai <takamitz@amazon.co.jp>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.191-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-[ Upstream commit d860d1faa6b2ce3becfdb8b0c2b048ad31800061 ]
+thanks,
 
-The 'use' field in struct rose_neigh is used as a reference counter but
-lacks atomicity. This can lead to race conditions where a rose_neigh
-structure is freed while still being referenced by other code paths.
+greg k-h
 
-For example, when rose_neigh->use becomes zero during an ioctl operation
-via rose_rt_ioctl(), the structure may be removed while its timer is
-still active, potentially causing use-after-free issues.
+-------------
+Pseudo-Shortlog of commits:
 
-This patch changes the type of 'use' from unsigned short to refcount_t and
-updates all code paths to use rose_neigh_hold() and rose_neigh_put() which
-operate reference counts atomically.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.191-rc1
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250823085857.47674-3-takamitz@amazon.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/net/rose.h    | 18 +++++++++++++-----
- net/rose/af_rose.c    | 13 +++++++------
- net/rose/rose_in.c    | 12 ++++++------
- net/rose/rose_route.c | 33 ++++++++++++++++++---------------
- net/rose/rose_timer.c |  2 +-
- 5 files changed, 45 insertions(+), 33 deletions(-)
+Eric Sandeen <sandeen@redhat.com>
+    xfs: do not propagate ENODATA disk errors into xattr code
 
-diff --git a/include/net/rose.h b/include/net/rose.h
-index 174b4f605d849..2b5491bbf39ab 100644
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -8,6 +8,7 @@
- #ifndef _ROSE_H
- #define _ROSE_H 
- 
-+#include <linux/refcount.h>
- #include <linux/rose.h>
- #include <net/ax25.h>
- #include <net/sock.h>
-@@ -96,7 +97,7 @@ struct rose_neigh {
- 	ax25_cb			*ax25;
- 	struct net_device		*dev;
- 	unsigned short		count;
--	unsigned short		use;
-+	refcount_t		use;
- 	unsigned int		number;
- 	char			restarted;
- 	char			dce_mode;
-@@ -151,12 +152,19 @@ struct rose_sock {
- 
- #define rose_sk(sk) ((struct rose_sock *)(sk))
- 
-+static inline void rose_neigh_hold(struct rose_neigh *rose_neigh)
-+{
-+	refcount_inc(&rose_neigh->use);
-+}
-+
- static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- {
--	if (rose_neigh->ax25)
--		ax25_cb_put(rose_neigh->ax25);
--	kfree(rose_neigh->digipeat);
--	kfree(rose_neigh);
-+	if (refcount_dec_and_test(&rose_neigh->use)) {
-+		if (rose_neigh->ax25)
-+			ax25_cb_put(rose_neigh->ax25);
-+		kfree(rose_neigh->digipeat);
-+		kfree(rose_neigh);
-+	}
- }
- 
- /* af_rose.c */
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index b21c2ce401928..5a0bf022a84be 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -170,7 +170,7 @@ void rose_kill_by_neigh(struct rose_neigh *neigh)
- 
- 		if (rose->neighbour == neigh) {
- 			rose_disconnect(s, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
--			rose->neighbour->use--;
-+			rose_neigh_put(rose->neighbour);
- 			rose->neighbour = NULL;
- 		}
- 	}
-@@ -212,7 +212,7 @@ static void rose_kill_by_device(struct net_device *dev)
- 		if (rose->device == dev) {
- 			rose_disconnect(sk, ENETUNREACH, ROSE_OUT_OF_ORDER, 0);
- 			if (rose->neighbour)
--				rose->neighbour->use--;
-+				rose_neigh_put(rose->neighbour);
- 			netdev_put(rose->device, &rose->dev_tracker);
- 			rose->device = NULL;
- 		}
-@@ -655,7 +655,7 @@ static int rose_release(struct socket *sock)
- 		break;
- 
- 	case ROSE_STATE_2:
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		release_sock(sk);
- 		rose_disconnect(sk, 0, -1, -1);
- 		lock_sock(sk);
-@@ -823,6 +823,7 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
- 	rose->lci = rose_new_lci(rose->neighbour);
- 	if (!rose->lci) {
- 		err = -ENETUNREACH;
-+		rose_neigh_put(rose->neighbour);
- 		goto out_release;
- 	}
- 
-@@ -834,12 +835,14 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
- 		dev = rose_dev_first();
- 		if (!dev) {
- 			err = -ENETUNREACH;
-+			rose_neigh_put(rose->neighbour);
- 			goto out_release;
- 		}
- 
- 		user = ax25_findbyuid(current_euid());
- 		if (!user) {
- 			err = -EINVAL;
-+			rose_neigh_put(rose->neighbour);
- 			dev_put(dev);
- 			goto out_release;
- 		}
-@@ -874,8 +877,6 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
- 
- 	rose->state = ROSE_STATE_1;
- 
--	rose->neighbour->use++;
--
- 	rose_write_internal(sk, ROSE_CALL_REQUEST);
- 	rose_start_heartbeat(sk);
- 	rose_start_t1timer(sk);
-@@ -1077,7 +1078,7 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
- 			     GFP_ATOMIC);
- 	make_rose->facilities    = facilities;
- 
--	make_rose->neighbour->use++;
-+	rose_neigh_hold(make_rose->neighbour);
- 
- 	if (rose_sk(sk)->defer) {
- 		make_rose->state = ROSE_STATE_5;
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index 4d67f36dce1b4..7caae93937ee9 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -56,7 +56,7 @@ static int rose_state1_machine(struct sock *sk, struct sk_buff *skb, int framety
- 	case ROSE_CLEAR_REQUEST:
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, ECONNREFUSED, skb->data[3], skb->data[4]);
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		break;
- 
- 	default:
-@@ -79,12 +79,12 @@ static int rose_state2_machine(struct sock *sk, struct sk_buff *skb, int framety
- 	case ROSE_CLEAR_REQUEST:
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		break;
- 
- 	case ROSE_CLEAR_CONFIRMATION:
- 		rose_disconnect(sk, 0, -1, -1);
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		break;
- 
- 	default:
-@@ -120,7 +120,7 @@ static int rose_state3_machine(struct sock *sk, struct sk_buff *skb, int framety
- 	case ROSE_CLEAR_REQUEST:
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		break;
- 
- 	case ROSE_RR:
-@@ -233,7 +233,7 @@ static int rose_state4_machine(struct sock *sk, struct sk_buff *skb, int framety
- 	case ROSE_CLEAR_REQUEST:
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		break;
- 
- 	default:
-@@ -253,7 +253,7 @@ static int rose_state5_machine(struct sock *sk, struct sk_buff *skb, int framety
- 	if (frametype == ROSE_CLEAR_REQUEST) {
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
- 		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
--		rose_sk(sk)->neighbour->use--;
-+		rose_neigh_put(rose_sk(sk)->neighbour);
- 	}
- 
- 	return 0;
-diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
-index b406b1e0fb1e7..42460da0854d5 100644
---- a/net/rose/rose_route.c
-+++ b/net/rose/rose_route.c
-@@ -93,11 +93,11 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
- 		rose_neigh->ax25      = NULL;
- 		rose_neigh->dev       = dev;
- 		rose_neigh->count     = 0;
--		rose_neigh->use       = 0;
- 		rose_neigh->dce_mode  = 0;
- 		rose_neigh->loopback  = 0;
- 		rose_neigh->number    = rose_neigh_no++;
- 		rose_neigh->restarted = 0;
-+		refcount_set(&rose_neigh->use, 1);
- 
- 		skb_queue_head_init(&rose_neigh->queue);
- 
-@@ -255,10 +255,10 @@ static void rose_remove_route(struct rose_route *rose_route)
- 	struct rose_route *s;
- 
- 	if (rose_route->neigh1 != NULL)
--		rose_route->neigh1->use--;
-+		rose_neigh_put(rose_route->neigh1);
- 
- 	if (rose_route->neigh2 != NULL)
--		rose_route->neigh2->use--;
-+		rose_neigh_put(rose_route->neigh2);
- 
- 	if ((s = rose_route_list) == rose_route) {
- 		rose_route_list = rose_route->next;
-@@ -323,7 +323,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
- 		if (rose_node->neighbour[i] == rose_neigh) {
- 			rose_neigh->count--;
- 
--			if (rose_neigh->count == 0 && rose_neigh->use == 0) {
-+			if (rose_neigh->count == 0) {
- 				rose_remove_neigh(rose_neigh);
- 				rose_neigh_put(rose_neigh);
- 			}
-@@ -375,11 +375,11 @@ void rose_add_loopback_neigh(void)
- 	sn->ax25      = NULL;
- 	sn->dev       = NULL;
- 	sn->count     = 0;
--	sn->use       = 0;
- 	sn->dce_mode  = 1;
- 	sn->loopback  = 1;
- 	sn->number    = rose_neigh_no++;
- 	sn->restarted = 1;
-+	refcount_set(&sn->use, 1);
- 
- 	skb_queue_head_init(&sn->queue);
- 
-@@ -561,8 +561,7 @@ static int rose_clear_routes(void)
- 		s          = rose_neigh;
- 		rose_neigh = rose_neigh->next;
- 
--		if (s->use == 0 && !s->loopback) {
--			s->count = 0;
-+		if (!s->loopback) {
- 			rose_remove_neigh(s);
- 			rose_neigh_put(s);
- 		}
-@@ -680,6 +679,7 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
- 			for (i = 0; i < node->count; i++) {
- 				if (node->neighbour[i]->restarted) {
- 					res = node->neighbour[i];
-+					rose_neigh_hold(node->neighbour[i]);
- 					goto out;
- 				}
- 			}
-@@ -691,6 +691,7 @@ struct rose_neigh *rose_get_neigh(rose_address *addr, unsigned char *cause,
- 				for (i = 0; i < node->count; i++) {
- 					if (!rose_ftimer_running(node->neighbour[i])) {
- 						res = node->neighbour[i];
-+						rose_neigh_hold(node->neighbour[i]);
- 						goto out;
- 					}
- 					failed = 1;
-@@ -780,13 +781,13 @@ static void rose_del_route_by_neigh(struct rose_neigh *rose_neigh)
- 		}
- 
- 		if (rose_route->neigh1 == rose_neigh) {
--			rose_route->neigh1->use--;
-+			rose_neigh_put(rose_route->neigh1);
- 			rose_route->neigh1 = NULL;
- 			rose_transmit_clear_request(rose_route->neigh2, rose_route->lci2, ROSE_OUT_OF_ORDER, 0);
- 		}
- 
- 		if (rose_route->neigh2 == rose_neigh) {
--			rose_route->neigh2->use--;
-+			rose_neigh_put(rose_route->neigh2);
- 			rose_route->neigh2 = NULL;
- 			rose_transmit_clear_request(rose_route->neigh1, rose_route->lci1, ROSE_OUT_OF_ORDER, 0);
- 		}
-@@ -915,7 +916,7 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 			rose_clear_queues(sk);
- 			rose->cause	 = ROSE_NETWORK_CONGESTION;
- 			rose->diagnostic = 0;
--			rose->neighbour->use--;
-+			rose_neigh_put(rose->neighbour);
- 			rose->neighbour	 = NULL;
- 			rose->lci	 = 0;
- 			rose->state	 = ROSE_STATE_0;
-@@ -1040,12 +1041,12 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 
- 	if ((new_lci = rose_new_lci(new_neigh)) == 0) {
- 		rose_transmit_clear_request(rose_neigh, lci, ROSE_NETWORK_CONGESTION, 71);
--		goto out;
-+		goto put_neigh;
- 	}
- 
- 	if ((rose_route = kmalloc(sizeof(*rose_route), GFP_ATOMIC)) == NULL) {
- 		rose_transmit_clear_request(rose_neigh, lci, ROSE_NETWORK_CONGESTION, 120);
--		goto out;
-+		goto put_neigh;
- 	}
- 
- 	rose_route->lci1      = lci;
-@@ -1058,8 +1059,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	rose_route->lci2      = new_lci;
- 	rose_route->neigh2    = new_neigh;
- 
--	rose_route->neigh1->use++;
--	rose_route->neigh2->use++;
-+	rose_neigh_hold(rose_route->neigh1);
-+	rose_neigh_hold(rose_route->neigh2);
- 
- 	rose_route->next = rose_route_list;
- 	rose_route_list  = rose_route;
-@@ -1071,6 +1072,8 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	rose_transmit_link(skb, rose_route->neigh2);
- 	res = 1;
- 
-+put_neigh:
-+	rose_neigh_put(new_neigh);
- out:
- 	spin_unlock_bh(&rose_route_list_lock);
- 	spin_unlock_bh(&rose_neigh_list_lock);
-@@ -1186,7 +1189,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
- 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
- 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
- 			   rose_neigh->count,
--			   rose_neigh->use,
-+			   refcount_read(&rose_neigh->use) - 1,
- 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
- 			   (rose_neigh->restarted) ? "yes" : "no",
- 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
-diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
-index 1525773e94aa1..c52d7d20c5199 100644
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -180,7 +180,7 @@ static void rose_timer_expiry(struct timer_list *t)
- 		break;
- 
- 	case ROSE_STATE_2:	/* T3 */
--		rose->neighbour->use--;
-+		rose_neigh_put(rose->neighbour);
- 		rose_disconnect(sk, ETIMEDOUT, -1, -1);
- 		break;
- 
--- 
-2.50.1
+Imre Deak <imre.deak@intel.com>
+    Revert "drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS"
 
+Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+    HID: mcp2221: Handle reads greater than 60 bytes
+
+Hamish Martin <hamish.martin@alliedtelesis.co.nz>
+    HID: mcp2221: Don't set bus speed on every transfer
+
+James Jones <jajones@nvidia.com>
+    drm/nouveau/disp: Always accept linear modifier
+
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    net: usb: qmi_wwan: add Telit Cinterion LE910C4-WWX new compositions
+
+Shanker Donthineni <sdonthineni@nvidia.com>
+    dma/pool: Ensure DMA_DIRECT_REMAP allocations are decrypted
+
+Alex Deucher <alexander.deucher@amd.com>
+    Revert "drm/amdgpu: fix incorrect vm flags to map bo"
+
+Minjong Kim <minbell.kim@samsung.com>
+    HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()
+
+Ping Cheng <pinglinux@gmail.com>
+    HID: wacom: Add a new Art Pen 2
+
+Qasim Ijaz <qasdev00@gmail.com>
+    HID: multitouch: fix slab out-of-bounds access in mt_report_fixup()
+
+Qasim Ijaz <qasdev00@gmail.com>
+    HID: asus: fix UAF via HID_CLAIMED_INPUT validation
+
+Thijs Raymakers <thijs@raymakers.nl>
+    KVM: x86: use array_index_nospec with indices that come from guest
+
+Li Nan <linan122@huawei.com>
+    efivarfs: Fix slab-out-of-bounds in efivarfs_d_compare
+
+Eric Dumazet <edumazet@google.com>
+    sctp: initialize more fields in sctp_v6_from_sk()
+
+Rohan G Thomas <rohan.g.thomas@altera.com>
+    net: stmmac: xgmac: Do not enable RX FIFO Overflow interrupts
+
+Alexei Lazar <alazar@nvidia.com>
+    net/mlx5e: Set local Xoff after FW update
+
+Alexei Lazar <alazar@nvidia.com>
+    net/mlx5e: Update and set Xon/Xoff upon port speed set
+
+Alexei Lazar <alazar@nvidia.com>
+    net/mlx5e: Update and set Xon/Xoff upon MTU set
+
+Horatiu Vultur <horatiu.vultur@microchip.com>
+    phy: mscc: Fix when PTP clock is register and unregister
+
+Yeounsu Moon <yyyynoom@gmail.com>
+    net: dlink: fix multicast stats being counted incorrectly
+
+Kuniyuki Iwashima <kuniyu@google.com>
+    atm: atmtcp: Prevent arbitrary write in atmtcp_recv_control().
+
+Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    Bluetooth: hci_event: Detect if HCI_EV_NUM_COMP_PKTS is unbalanced
+
+Madhavan Srinivasan <maddy@linux.ibm.com>
+    powerpc/kvm: Fix ifdef to remove build warning
+
+Oscar Maes <oscmaes92@gmail.com>
+    net: ipv4: fix regression in local-broadcast routes
+
+Jan Kara <jack@suse.cz>
+    udf: Fix directory iteration for longer tail extents
+
+Nikolay Kuratov <kniv@yandex-team.ru>
+    vhost/net: Protect ubufs with rcu read lock in vhost_net_ubuf_put()
+
+Trond Myklebust <trond.myklebust@hammerspace.com>
+    NFS: Fix a race when updating an existing write
+
+Christoph Hellwig <hch@lst.de>
+    nfs: fold nfs_page_group_lock_subrequests into nfs_lock_and_join_requests
+
+Alexey Klimov <alexey.klimov@linaro.org>
+    ASoC: codecs: tx-macro: correct tx_macro_component_drv name
+
+Damien Le Moal <dlemoal@kernel.org>
+    scsi: core: sysfs: Correct sysfs attributes access rights
+
+Tengda Wu <wutengda@huaweicloud.com>
+    ftrace: Fix potential warning in trace_printk_seq during ftrace_dump
+
+Randy Dunlap <rdunlap@infradead.org>
+    pinctrl: STMFX: add missing HAS_IOMEM dependency
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/powerpc/kernel/kvm.c                          |   8 +-
+ arch/x86/kvm/lapic.c                               |   2 +
+ arch/x86/kvm/x86.c                                 |   7 +-
+ drivers/atm/atmtcp.c                               |  17 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c            |   4 +-
+ drivers/gpu/drm/drm_dp_helper.c                    |   2 +-
+ drivers/gpu/drm/nouveau/dispnv50/wndw.c            |   4 +
+ drivers/hid/hid-asus.c                             |   8 +-
+ drivers/hid/hid-mcp2221.c                          |  71 +++++++----
+ drivers/hid/hid-multitouch.c                       |   8 ++
+ drivers/hid/hid-ntrig.c                            |   3 +
+ drivers/hid/wacom_wac.c                            |   1 +
+ drivers/net/ethernet/dlink/dl2k.c                  |   2 +-
+ .../ethernet/mellanox/mlx5/core/en/port_buffer.c   |   3 +-
+ .../ethernet/mellanox/mlx5/core/en/port_buffer.h   |  12 ++
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c  |  19 ++-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c |   4 -
+ drivers/net/phy/mscc/mscc.h                        |   4 +
+ drivers/net/phy/mscc/mscc_main.c                   |   4 +-
+ drivers/net/phy/mscc/mscc_ptp.c                    |  34 +++--
+ drivers/net/usb/qmi_wwan.c                         |   3 +
+ drivers/pinctrl/Kconfig                            |   1 +
+ drivers/scsi/scsi_sysfs.c                          |   4 +-
+ drivers/vhost/net.c                                |   9 +-
+ fs/efivarfs/super.c                                |   4 +
+ fs/nfs/pagelist.c                                  |  86 +------------
+ fs/nfs/write.c                                     | 142 +++++++++++++--------
+ fs/udf/directory.c                                 |   2 +-
+ fs/xfs/libxfs/xfs_attr_remote.c                    |   7 +
+ fs/xfs/libxfs/xfs_da_btree.c                       |   6 +
+ include/linux/atmdev.h                             |   1 +
+ include/linux/nfs_page.h                           |   2 +-
+ kernel/dma/pool.c                                  |   4 +-
+ kernel/trace/trace.c                               |   4 +-
+ net/atm/common.c                                   |  15 ++-
+ net/bluetooth/hci_event.c                          |  12 +-
+ net/ipv4/route.c                                   |  10 +-
+ net/sctp/ipv6.c                                    |   2 +
+ sound/soc/codecs/lpass-tx-macro.c                  |   2 +-
+ 40 files changed, 328 insertions(+), 209 deletions(-)
 
 
