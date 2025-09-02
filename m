@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8AD3054E7;
-	Tue,  2 Sep 2025 13:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20DC312821;
+	Tue,  2 Sep 2025 13:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819691; cv=none; b=tJFNVoEZWmu2O1w2u1wAFW3d4M1N6Xp9up/tqqKdwuiFbHb0pLLOMfQ/itsToTi+pbMSDcirSpI/vL+nFSlc8a3MSY9jYROUse7+N3d7YZf/i4Y3o7/ONtZS5LwxhKOhML/Ca4g75bDWM3VTHQl+r0hxwWu2lO2ZnZWWgwA1csU=
+	t=1756819694; cv=none; b=MSkkxUJkFuXD4F/R1ZZlfaQZ/thF1c+e4U/dTc/eMMReOc6G1ayBGcXOA02lG+LepXGYbe7Zv7cKj97pUXu896zNqhcZWrZPA5tGM+UIuStjkA51YGy+Wp7m/pRvEsjjncKRLqK9m9+CipWSBRM53ZNFmWlzDwszvHmBxLnP5iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819691; c=relaxed/simple;
-	bh=YlNbHLseJPjgi8fqTilnuSEPww5/ftkLqlroTq7KYVw=;
+	s=arc-20240116; t=1756819694; c=relaxed/simple;
+	bh=1PHxLMRWMz49/N2GbyLBQxopn/st2nzz+C7u5f21aIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFq8wd9lQ/hyufwpn+W2COf2trwS7rcDhDAI3NjSzSfnam00Lj3eU/K72mdgx0vW9h7gMlewXag/OaLBYqdanKoMBfnBEMfZussGPDseGXCBs4PA791jsrQSwOI1adYxt4QwWN7xsEMprz/j5luv4v3GbmTQFm+Jayfg94ZcSqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCaThGtK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbbhxsQBpWz8TFODFQoW4llfXlGjxplM09vUt979SHAIMAjqqm2+TDfyWmhjUu8puZEkc9+tnNRPVj70DPd18q+LgEwun53cPXMp8WfqUuUNFlX6mIhpcllF1DQ0hD/rjJG2YwcJfGrssVzf7mMIOEc52DNnvStw1JYQpUna6qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecmHNalG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCaThGtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1401C4CEF4;
-	Tue,  2 Sep 2025 13:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecmHNalG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E25FC4CEED;
+	Tue,  2 Sep 2025 13:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819691;
-	bh=YlNbHLseJPjgi8fqTilnuSEPww5/ftkLqlroTq7KYVw=;
+	s=korg; t=1756819694;
+	bh=1PHxLMRWMz49/N2GbyLBQxopn/st2nzz+C7u5f21aIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCaThGtKqlUPa1kddvzKFfsocjI94LQlMS1NpH3n15ulkOPuNmwmK1sGJ3XLAucEY
-	 IlB/OaN/CVR05+72kt46XhE0jYvd+vHibW9qhShwu2fbxjPoaI0nj55PunO2bsE3RC
-	 a5IKC4YuTagModJCQ4wN/wjMkkrPS55smqcBp7RI=
+	b=ecmHNalGZLqdNIMLsXuiGziOk/uvJGGOLDo+EkMLJbRysePk+T8m2L2rswIPZUvOc
+	 cdfJgz+Q711Mgd3YYJp+pJEYpZ5QACABgJ0XnfFrWRIIGlskz49tZ0eKJgcdz8CzC+
+	 1eW2+VXYJm0ZFlsu2nBKV4n5pCUm7ehvn9pfMdOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hilgendorf <martin.hilgendorf@posteo.de>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.16 111/142] HID: elecom: add support for ELECOM M-DT2DRBK
-Date: Tue,  2 Sep 2025 15:20:13 +0200
-Message-ID: <20250902131952.529218975@linuxfoundation.org>
+Subject: [PATCH 6.16 112/142] HID: quirks: add support for Legion Go dual dinput modes
+Date: Tue,  2 Sep 2025 15:20:14 +0200
+Message-ID: <20250902131952.567010693@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -50,60 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Hilgendorf <martin.hilgendorf@posteo.de>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 832e5777143e799a97e8f9b96f002a90f06ba548 upstream.
+commit 1f3214aae9f49faf495f3836216afbc6c5400b2e upstream.
 
-The DT2DRBK trackball has 8 buttons, but the report descriptor only
-specifies 5. This patch adds the device ID and performs a similar fixup as
-for other ELECOM devices to enable the remaining 3 buttons.
+The Legion Go features detachable controllers which support a dual
+dinput mode. In this mode, the controllers appear under a single HID
+device with two applications.
 
-Signed-off-by: Martin Hilgendorf <martin.hilgendorf@posteo.de>
+Currently, both controllers appear under the same event device, causing
+their controls to be mixed up. This patch separates the two so that
+they can be used independently.
+
+In addition, the latest firmware update for the Legion Go swaps the IDs
+to the ones used by the Legion Go 2, so add those IDs as well.
+
+[jkosina@suse.com: improved shortlog]
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-elecom.c |    2 ++
- drivers/hid/hid-ids.h    |    1 +
- drivers/hid/hid-quirks.c |    1 +
- 3 files changed, 4 insertions(+)
+ drivers/hid/hid-ids.h    |    2 ++
+ drivers/hid/hid-quirks.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/hid/hid-elecom.c
-+++ b/drivers/hid/hid-elecom.c
-@@ -101,6 +101,7 @@ static const __u8 *elecom_report_fixup(s
- 		 */
- 		mouse_button_fixup(hdev, rdesc, *rsize, 12, 30, 14, 20, 8);
- 		break;
-+	case USB_DEVICE_ID_ELECOM_M_DT2DRBK:
- 	case USB_DEVICE_ID_ELECOM_M_HT1DRBK_011C:
- 		/*
- 		 * Report descriptor format:
-@@ -123,6 +124,7 @@ static const struct hid_device_id elecom
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1DRBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT2DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1URBK_010C) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1URBK_019B) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D) },
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
-@@ -448,6 +448,7 @@
- #define USB_DEVICE_ID_ELECOM_M_XT4DRBK	0x00fd
- #define USB_DEVICE_ID_ELECOM_M_DT1URBK	0x00fe
- #define USB_DEVICE_ID_ELECOM_M_DT1DRBK	0x00ff
-+#define USB_DEVICE_ID_ELECOM_M_DT2DRBK	0x018d
- #define USB_DEVICE_ID_ELECOM_M_HT1URBK_010C	0x010c
- #define USB_DEVICE_ID_ELECOM_M_HT1URBK_019B	0x019b
- #define USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D	0x010d
+@@ -832,6 +832,8 @@
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019	0x6019
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_602E	0x602e
+ #define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6093	0x6093
++#define USB_DEVICE_ID_LENOVO_LEGION_GO_DUAL_DINPUT	0x6184
++#define USB_DEVICE_ID_LENOVO_LEGION_GO2_DUAL_DINPUT	0x61ed
+ 
+ #define USB_VENDOR_ID_LETSKETCH		0x6161
+ #define USB_DEVICE_ID_WP9620N		0x4d15
 --- a/drivers/hid/hid-quirks.c
 +++ b/drivers/hid/hid-quirks.c
-@@ -410,6 +410,7 @@ static const struct hid_device_id hid_ha
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1DRBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT2DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1URBK_010C) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1URBK_019B) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D) },
+@@ -124,6 +124,8 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_MOUSEPEN_I608X_V2), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_PENSKETCH_T609A), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LABTEC, USB_DEVICE_ID_LABTEC_ODDOR_HANDBRAKE), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_LEGION_GO_DUAL_DINPUT), HID_QUIRK_MULTI_INPUT },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_LEGION_GO2_DUAL_DINPUT), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_OPTICAL_USB_MOUSE_600E), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_608D), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019), HID_QUIRK_ALWAYS_POLL },
 
 
