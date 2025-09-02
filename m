@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C101C3054EC;
-	Tue,  2 Sep 2025 13:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902783074B2;
+	Tue,  2 Sep 2025 13:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820222; cv=none; b=IFIvWaSVBT4TJQNrt9vFUKiu7lPr4RHU4WlAKqDGf4UtCaA+0Tss73DH31QhFXh/nA5E6QtL5sVyxBuhj0yxnZrjJk7FqaK3b7r15FC1k2V9k/U0SMRx7nFzNKkXAiuB0h9xdRWcHCUjVv69FAarPkvcmsGlHl0HIz5f3hjz1wo=
+	t=1756820225; cv=none; b=WOmacnJW8S+ffUQwVmX7OoSSTVlm5f2BX5nXgm46/9Ucw6cKTXvMRZkjO+6cKT7NdqRy7XkV/0uVgsyrBMrpYpiqBYYNY2818XuyO2XPE2sFsXkSZmkYJfaIHNpP3lLJJWLH/qp+7rC1aDP3GjouXx78fyGyMMsjOBtYwbr7ApE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820222; c=relaxed/simple;
-	bh=HHmRj2tZVNrxpD7z80ejDNq9rlnpWgyhvrkvqAeNIsI=;
+	s=arc-20240116; t=1756820225; c=relaxed/simple;
+	bh=pGtSVY3UO+1l+6tB32oSQ159PWDx96uS8m0kDPA0/G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HsS06ibdmKZQ+p/nWjsHTrNR0iMpaXPiGuDA7hFntKVDhG6WT7y7ENApaFexAH37fTlicJFlqnWqBtsVqfcTXQ3uiThPi3eBsSY8WvkeLUhP6qUmIbQi8JaH2408OyUy/N0DGPhhPHWuVMZK3vcrYJsDYyK725xLVksW0ZMSLCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ebajfyoi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlYS8gqjBqCFhVEC9zLFI5IsQtd4AoSsoysGXZ791EPlMUukVpqbCGWwmXuMBjQ968eMZ9QwdOQLWl+vApi6HSrsQj4PobkT9gydYeHwwxMFQO1mBX9ROd9GvZrL9QGm965Rg0yqTDE4an7KuJfPzsRMcpBcEaiBrGYf3TerSMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hrnx8W2B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ebajfyoi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D402BC4CEED;
-	Tue,  2 Sep 2025 13:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hrnx8W2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156F2C4CEED;
+	Tue,  2 Sep 2025 13:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820222;
-	bh=HHmRj2tZVNrxpD7z80ejDNq9rlnpWgyhvrkvqAeNIsI=;
+	s=korg; t=1756820225;
+	bh=pGtSVY3UO+1l+6tB32oSQ159PWDx96uS8m0kDPA0/G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EbajfyoiQlmeWxDGgTQwcCMe0x+Q30byKXY0myTOsTKhdksbkUvhaUMyR1LCB2d1X
-	 qu46t/3qeVkck2/mCXLGAV/nTHCbx/oFx0sBeg432Yhkue7hKvmogAXayHLoroEvsa
-	 IFBV/ST4eBxLfak1ywrxL18lNVBqZ+3ZFannGOy8=
+	b=Hrnx8W2BLWZhjsvR2Dh8o0+tmo8BauR53kneJi2x9HVAkplcBroELm6p2h8ykJXv1
+	 7sEAwkAipQ2fYWRdiSIxDW7XpNi+JAIOahEEhV7r0kXtzGPNHx5zs01xGt1gIVPO3a
+	 wdHWRpX2qsh9Kw3dwGs1S8II4G3CYelo6ZAh713E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Rob Herring <robh@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 05/75] of: Add a helper to free property struct
-Date: Tue,  2 Sep 2025 15:20:17 +0200
-Message-ID: <20250902131935.326327706@linuxfoundation.org>
+Subject: [PATCH 6.6 06/75] of: dynamic: Fix use after free in of_changeset_add_prop_helper()
+Date: Tue,  2 Sep 2025 15:20:18 +0200
+Message-ID: <20250902131935.363655117@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -52,165 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1c5e3d9bf33b811e1c6dd9081b322004acc4a1fd ]
+[ Upstream commit 80af3745ca465c6c47e833c1902004a7fa944f37 ]
 
-Freeing a property struct is 3 kfree()'s which is duplicated in multiple
-spots. Add a helper, __of_prop_free(), and replace all the open coded
-cases in the DT code.
+If the of_changeset_add_property() function call fails, then this code
+frees "new_pp" and then dereference it on the next line.  Return the
+error code directly instead.
 
-Reviewed-by: Saravana Kannan <saravanak@google.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20240409-dt-cleanup-free-v2-1-5b419a4af38d@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Stable-dep-of: 80af3745ca46 ("of: dynamic: Fix use after free in of_changeset_add_prop_helper()")
+Fixes: c81f6ce16785 ("of: dynamic: Fix memleak when of_pci_add_properties() failed")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/aKgljjhnpa4lVpdx@stanley.mountain
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/dynamic.c    | 26 ++++++++++++--------------
- drivers/of/of_private.h |  1 +
- drivers/of/overlay.c    | 11 +++--------
- drivers/of/unittest.c   | 12 +++---------
- 4 files changed, 19 insertions(+), 31 deletions(-)
+ drivers/of/dynamic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
-index 7f78fba502ec4..72531f44adf09 100644
+index 72531f44adf09..18393800546c1 100644
 --- a/drivers/of/dynamic.c
 +++ b/drivers/of/dynamic.c
-@@ -306,15 +306,20 @@ int of_detach_node(struct device_node *np)
- }
- EXPORT_SYMBOL_GPL(of_detach_node);
- 
-+void __of_prop_free(struct property *prop)
-+{
-+	kfree(prop->name);
-+	kfree(prop->value);
-+	kfree(prop);
-+}
-+
- static void property_list_free(struct property *prop_list)
- {
- 	struct property *prop, *next;
- 
- 	for (prop = prop_list; prop != NULL; prop = next) {
- 		next = prop->next;
--		kfree(prop->name);
--		kfree(prop->value);
--		kfree(prop);
-+		__of_prop_free(prop);
- 	}
- }
- 
-@@ -427,9 +432,7 @@ struct property *__of_prop_dup(const struct property *prop, gfp_t allocflags)
- 	return new;
- 
-  err_free:
--	kfree(new->name);
--	kfree(new->value);
--	kfree(new);
-+	__of_prop_free(new);
- 	return NULL;
- }
- 
-@@ -471,9 +474,7 @@ struct device_node *__of_node_dup(const struct device_node *np,
- 			if (!new_pp)
- 				goto err_prop;
- 			if (__of_add_property(node, new_pp)) {
--				kfree(new_pp->name);
--				kfree(new_pp->value);
--				kfree(new_pp);
-+				__of_prop_free(new_pp);
- 				goto err_prop;
- 			}
- 		}
-@@ -933,11 +934,8 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
+@@ -934,13 +934,15 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
  		return -ENOMEM;
  
  	ret = of_changeset_add_property(ocs, np, new_pp);
--	if (ret) {
--		kfree(new_pp->name);
--		kfree(new_pp->value);
--		kfree(new_pp);
--	}
-+	if (ret)
-+		__of_prop_free(new_pp);
+-	if (ret)
++	if (ret) {
+ 		__of_prop_free(new_pp);
++		return ret;
++	}
  
  	new_pp->next = np->deadprops;
  	np->deadprops = new_pp;
-diff --git a/drivers/of/of_private.h b/drivers/of/of_private.h
-index 21f8f5e80917d..73b55f4f84a3c 100644
---- a/drivers/of/of_private.h
-+++ b/drivers/of/of_private.h
-@@ -123,6 +123,7 @@ extern void *__unflatten_device_tree(const void *blob,
-  * own the devtree lock or work on detached trees only.
-  */
- struct property *__of_prop_dup(const struct property *prop, gfp_t allocflags);
-+void __of_prop_free(struct property *prop);
- struct device_node *__of_node_dup(const struct device_node *np,
- 				  const char *full_name);
  
-diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
-index a9a292d6d59b2..dc13299586414 100644
---- a/drivers/of/overlay.c
-+++ b/drivers/of/overlay.c
-@@ -262,9 +262,7 @@ static struct property *dup_and_fixup_symbol_prop(
- 	return new_prop;
- 
- err_free_new_prop:
--	kfree(new_prop->name);
--	kfree(new_prop->value);
--	kfree(new_prop);
-+	__of_prop_free(new_prop);
- err_free_target_path:
- 	kfree(target_path);
- 
-@@ -361,11 +359,8 @@ static int add_changeset_property(struct overlay_changeset *ovcs,
- 		pr_err("WARNING: memory leak will occur if overlay removed, property: %pOF/%s\n",
- 		       target->np, new_prop->name);
- 
--	if (ret) {
--		kfree(new_prop->name);
--		kfree(new_prop->value);
--		kfree(new_prop);
--	}
-+	if (ret)
-+		__of_prop_free(new_prop);
- 	return ret;
+-	return ret;
++	return 0;
  }
  
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 3b22c36bfb0b7..5bfec440b4fd7 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -800,15 +800,11 @@ static void __init of_unittest_property_copy(void)
- 
- 	new = __of_prop_dup(&p1, GFP_KERNEL);
- 	unittest(new && propcmp(&p1, new), "empty property didn't copy correctly\n");
--	kfree(new->value);
--	kfree(new->name);
--	kfree(new);
-+	__of_prop_free(new);
- 
- 	new = __of_prop_dup(&p2, GFP_KERNEL);
- 	unittest(new && propcmp(&p2, new), "non-empty property didn't copy correctly\n");
--	kfree(new->value);
--	kfree(new->name);
--	kfree(new);
-+	__of_prop_free(new);
- #endif
- }
- 
-@@ -3665,9 +3661,7 @@ static __init void of_unittest_overlay_high_level(void)
- 				goto err_unlock;
- 			}
- 			if (__of_add_property(of_symbols, new_prop)) {
--				kfree(new_prop->name);
--				kfree(new_prop->value);
--				kfree(new_prop);
-+				__of_prop_free(new_prop);
- 				/* "name" auto-generated by unflatten */
- 				if (!strcmp(prop->name, "name"))
- 					continue;
+ /**
 -- 
 2.50.1
 
