@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221533081A8;
-	Tue,  2 Sep 2025 13:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2DA3093B6;
+	Tue,  2 Sep 2025 13:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819916; cv=none; b=RY+wUKziqIuTH+vi60Yx1Xc1sVOIKdP1M9plGrSm/8GB+yoGmbxHFrbCjaKofougzuq9lmQCR0S9hbgI9/AFuUDD98qJtOUe8hQ1dgwepJ8isMaXbQjI+2S/1rV3SIVtKJmORo7jqPWCV/tbbQDeHqCeUSvwsp8RmMAxnAGMGKE=
+	t=1756819920; cv=none; b=BfCHryhuJ1X0aGddLz9Cn3S8WnPlk1rgVzrq+AuVdztD5UzXhZKNRS6bL0j+0/XMPshzJBFGcpHuUnmzeSOJynmrUD/nZs3xmStqa3HLjTWxJk+XNOcvKOMRLVZ3rxI+ElN7vPsEhq4jHhRT3aAe46v1rXQrNNWUa+y/dc4oMSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819916; c=relaxed/simple;
-	bh=sBdpjXmQ1SEbyb1HDLwE8Kx4GpWzvBgTbHPriQihUck=;
+	s=arc-20240116; t=1756819920; c=relaxed/simple;
+	bh=iOtZL4yFHKr1pQy+srJ6ksRm4Zt4W0zXiMM5eMF5xMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IiPlggmkwx4WzbTZ6ASyAaRrIXSsyFtsyIZinRDV9otMPfT9Qgdx7VcR6kwGJEOgZZ1bbr23dQWZ0Qg+4/rqqtv7gEIPvzfEeipjoFOvGX+a2BJIyvapqULGaibBgkq1e/Hs/yv7794NXi/KKmtReRoNrTFGVGapzoLZSMwIXfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQCTHmV4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6EtkGKnbhM1soeKc9KLrVmauZ/oOKO+NrjutNFgkpwqMOFtfHfTy/smjXaqwBdaOVDySyxdK8fLVvaEpMKJXOpnAzfkznlFy4KPZ9X2S/xuHcSM/+/Gfv1QYxRwTXxjHyPZWL7OpWAn7aEgRgwvaZlzs0fg728SNM8qyWEZyjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlnkfls7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQCTHmV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934B1C4CEF5;
-	Tue,  2 Sep 2025 13:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlnkfls7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54C1C4CEED;
+	Tue,  2 Sep 2025 13:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819916;
-	bh=sBdpjXmQ1SEbyb1HDLwE8Kx4GpWzvBgTbHPriQihUck=;
+	s=korg; t=1756819920;
+	bh=iOtZL4yFHKr1pQy+srJ6ksRm4Zt4W0zXiMM5eMF5xMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wQCTHmV4YTpe+DHnqVAarq6wtTipQY7+Bvbm0gLRaUIJWzASpf6l/cBUaLBEuhXDc
-	 zia2ouy7fxDfhk183oniteugfDnmIIvtybOVoG03s5FTM/j4k+99OHfxW1KsY4cEqV
-	 mPGJuBmbBQKyVa+mZPLDSqSwzy3bCmkLp+FCtu2Q=
+	b=nlnkfls7MvKEyGCYrDkPxzD3jzstqOSg4DdfF7A0zSI38AsGQ9Xaa8AtxHXO7RUHc
+	 vRINcMUCOdt9tSXaQw00If9Dp2Mr+Q5W7ITavJbgL1rE0XvIR+1z7jjE192UQccmmU
+	 XNwBy/VYYEUhtCoCDRdH20QxMhYbxI0NOi0WYAm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	luoguangfei <15388634752@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 28/95] net: macb: fix unregister_netdev call order in macb_remove()
-Date: Tue,  2 Sep 2025 15:20:04 +0200
-Message-ID: <20250902131940.692435128@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 37/95] ice: use fixed adapter index for E825C embedded devices
+Date: Tue,  2 Sep 2025 15:20:13 +0200
+Message-ID: <20250902131941.034372219@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,61 +55,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: luoguangfei <15388634752@163.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 01b9128c5db1b470575d07b05b67ffa3cb02ebf1 ]
+[ Upstream commit 5c5e5b52bf05c7fe88768318c041052c5fac36b8 ]
 
-When removing a macb device, the driver calls phy_exit() before
-unregister_netdev(). This leads to a WARN from kernfs:
+The ice_adapter structure is used by the ice driver to connect multiple
+physical functions of a device in software. It was introduced by
+commit 0e2bddf9e5f9 ("ice: add ice_adapter for shared data across PFs on
+the same NIC") and is primarily used for PTP support, as well as for
+handling certain cross-PF synchronization.
 
-  ------------[ cut here ]------------
-  kernfs: can not remove 'attached_dev', no directory
-  WARNING: CPU: 1 PID: 27146 at fs/kernfs/dir.c:1683
-  Call trace:
-    kernfs_remove_by_name_ns+0xd8/0xf0
-    sysfs_remove_link+0x24/0x58
-    phy_detach+0x5c/0x168
-    phy_disconnect+0x4c/0x70
-    phylink_disconnect_phy+0x6c/0xc0 [phylink]
-    macb_close+0x6c/0x170 [macb]
-    ...
-    macb_remove+0x60/0x168 [macb]
-    platform_remove+0x5c/0x80
-    ...
+The original design of ice_adapter used PCI address information to
+determine which devices should be connected. This was extended to support
+E825C devices by commit fdb7f54700b1 ("ice: Initial support for E825C
+hardware in ice_adapter"), which used the device ID for E825C devices
+instead of the PCI address.
 
-The warning happens because the PHY is being exited while the netdev
-is still registered. The correct order is to unregister the netdev
-before shutting down the PHY and cleaning up the MDIO bus.
+Later, commit 0093cb194a75 ("ice: use DSN instead of PCI BDF for
+ice_adapter index") replaced the use of Bus/Device/Function addressing with
+use of the device serial number.
 
-Fix this by moving unregister_netdev() ahead of phy_exit() in
-macb_remove().
+E825C devices may appear in "Dual NAC" configuration which has multiple
+physical devices tied to the same clock source and which need to use the
+same ice_adapter. Unfortunately, each "NAC" has its own NVM which has its
+own unique Device Serial Number. Thus, use of the DSN for connecting
+ice_adapter does not work properly. It "worked" in the pre-production
+systems because the DSN was not initialized on the test NVMs and all the
+NACs had the same zero'd serial number.
 
-Fixes: 8b73fa3ae02b ("net: macb: Added ZynqMP-specific initialization")
-Signed-off-by: luoguangfei <15388634752@163.com>
-Link: https://patch.msgid.link/20250818232527.1316-1-15388634752@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Since we cannot rely on the DSN, lets fall back to the logic in the
+original E825C support which used the device ID. This is safe for E825C
+only because of the embedded nature of the device. It isn't a discreet
+adapter that can be plugged into an arbitrary system. All E825C devices on
+a given system are connected to the same clock source and need to be
+configured through the same PTP clock.
+
+To make this separation clear, reserve bit 63 of the 64-bit index values as
+a "fixed index" indicator. Always clear this bit when using the device
+serial number as an index.
+
+For E825C, use a fixed value defined as the 0x579C E825C backplane device
+ID bitwise ORed with the fixed index indicator. This is slightly different
+than the original logic of just using the device ID directly. Doing so
+prevents a potential issue with systems where only one of the NACs is
+connected with an external PHY over SGMII. In that case, one NAC would
+have the E825C_SGMII device ID, but the other would not.
+
+Separate the determination of the full 64-bit index from the 32-bit
+reduction logic. Provide both ice_adapter_index() and a wrapping
+ice_adapter_xa_index() which handles reducing the index to a long on 32-bit
+systems. As before, cache the full index value in the adapter structure to
+warn about collisions.
+
+This fixes issues with E825C not initializing PTP on both NACs, due to
+failure to connect the appropriate devices to the same ice_adapter.
+
+Fixes: 0093cb194a75 ("ice: use DSN instead of PCI BDF for ice_adapter index")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_adapter.c | 49 +++++++++++++++-----
+ drivers/net/ethernet/intel/ice/ice_adapter.h |  4 +-
+ 2 files changed, 40 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 3c2a7919b1289..2421a7bcd221e 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5225,11 +5225,11 @@ static void macb_remove(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.c b/drivers/net/ethernet/intel/ice/ice_adapter.c
+index 66e070095d1bb..10285995c9edd 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adapter.c
++++ b/drivers/net/ethernet/intel/ice/ice_adapter.c
+@@ -13,16 +13,45 @@
+ static DEFINE_XARRAY(ice_adapters);
+ static DEFINE_MUTEX(ice_adapters_mutex);
  
- 	if (dev) {
- 		bp = netdev_priv(dev);
-+		unregister_netdev(dev);
- 		phy_exit(bp->sgmii_phy);
- 		mdiobus_unregister(bp->mii_bus);
- 		mdiobus_free(bp->mii_bus);
+-static unsigned long ice_adapter_index(u64 dsn)
++#define ICE_ADAPTER_FIXED_INDEX	BIT_ULL(63)
++
++#define ICE_ADAPTER_INDEX_E825C	\
++	(ICE_DEV_ID_E825C_BACKPLANE | ICE_ADAPTER_FIXED_INDEX)
++
++static u64 ice_adapter_index(struct pci_dev *pdev)
+ {
++	switch (pdev->device) {
++	case ICE_DEV_ID_E825C_BACKPLANE:
++	case ICE_DEV_ID_E825C_QSFP:
++	case ICE_DEV_ID_E825C_SFP:
++	case ICE_DEV_ID_E825C_SGMII:
++		/* E825C devices have multiple NACs which are connected to the
++		 * same clock source, and which must share the same
++		 * ice_adapter structure. We can't use the serial number since
++		 * each NAC has its own NVM generated with its own unique
++		 * Device Serial Number. Instead, rely on the embedded nature
++		 * of the E825C devices, and use a fixed index. This relies on
++		 * the fact that all E825C physical functions in a given
++		 * system are part of the same overall device.
++		 */
++		return ICE_ADAPTER_INDEX_E825C;
++	default:
++		return pci_get_dsn(pdev) & ~ICE_ADAPTER_FIXED_INDEX;
++	}
++}
++
++static unsigned long ice_adapter_xa_index(struct pci_dev *pdev)
++{
++	u64 index = ice_adapter_index(pdev);
++
+ #if BITS_PER_LONG == 64
+-	return dsn;
++	return index;
+ #else
+-	return (u32)dsn ^ (u32)(dsn >> 32);
++	return (u32)index ^ (u32)(index >> 32);
+ #endif
+ }
  
--		unregister_netdev(dev);
- 		cancel_work_sync(&bp->hresp_err_bh_work);
- 		pm_runtime_disable(&pdev->dev);
- 		pm_runtime_dont_use_autosuspend(&pdev->dev);
+-static struct ice_adapter *ice_adapter_new(u64 dsn)
++static struct ice_adapter *ice_adapter_new(struct pci_dev *pdev)
+ {
+ 	struct ice_adapter *adapter;
+ 
+@@ -30,7 +59,7 @@ static struct ice_adapter *ice_adapter_new(u64 dsn)
+ 	if (!adapter)
+ 		return NULL;
+ 
+-	adapter->device_serial_number = dsn;
++	adapter->index = ice_adapter_index(pdev);
+ 	spin_lock_init(&adapter->ptp_gltsyn_time_lock);
+ 	refcount_set(&adapter->refcount, 1);
+ 
+@@ -63,24 +92,23 @@ static void ice_adapter_free(struct ice_adapter *adapter)
+  */
+ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
+ {
+-	u64 dsn = pci_get_dsn(pdev);
+ 	struct ice_adapter *adapter;
+ 	unsigned long index;
+ 	int err;
+ 
+-	index = ice_adapter_index(dsn);
++	index = ice_adapter_xa_index(pdev);
+ 	scoped_guard(mutex, &ice_adapters_mutex) {
+ 		err = xa_insert(&ice_adapters, index, NULL, GFP_KERNEL);
+ 		if (err == -EBUSY) {
+ 			adapter = xa_load(&ice_adapters, index);
+ 			refcount_inc(&adapter->refcount);
+-			WARN_ON_ONCE(adapter->device_serial_number != dsn);
++			WARN_ON_ONCE(adapter->index != ice_adapter_index(pdev));
+ 			return adapter;
+ 		}
+ 		if (err)
+ 			return ERR_PTR(err);
+ 
+-		adapter = ice_adapter_new(dsn);
++		adapter = ice_adapter_new(pdev);
+ 		if (!adapter)
+ 			return ERR_PTR(-ENOMEM);
+ 		xa_store(&ice_adapters, index, adapter, GFP_KERNEL);
+@@ -99,11 +127,10 @@ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev)
+  */
+ void ice_adapter_put(struct pci_dev *pdev)
+ {
+-	u64 dsn = pci_get_dsn(pdev);
+ 	struct ice_adapter *adapter;
+ 	unsigned long index;
+ 
+-	index = ice_adapter_index(dsn);
++	index = ice_adapter_xa_index(pdev);
+ 	scoped_guard(mutex, &ice_adapters_mutex) {
+ 		adapter = xa_load(&ice_adapters, index);
+ 		if (WARN_ON(!adapter))
+diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.h b/drivers/net/ethernet/intel/ice/ice_adapter.h
+index ac15c0d2bc1a4..409467847c753 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adapter.h
++++ b/drivers/net/ethernet/intel/ice/ice_adapter.h
+@@ -32,7 +32,7 @@ struct ice_port_list {
+  * @refcount: Reference count. struct ice_pf objects hold the references.
+  * @ctrl_pf: Control PF of the adapter
+  * @ports: Ports list
+- * @device_serial_number: DSN cached for collision detection on 32bit systems
++ * @index: 64-bit index cached for collision detection on 32bit systems
+  */
+ struct ice_adapter {
+ 	refcount_t refcount;
+@@ -41,7 +41,7 @@ struct ice_adapter {
+ 
+ 	struct ice_pf *ctrl_pf;
+ 	struct ice_port_list ports;
+-	u64 device_serial_number;
++	u64 index;
+ };
+ 
+ struct ice_adapter *ice_adapter_get(struct pci_dev *pdev);
 -- 
 2.50.1
 
