@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA83304BA0;
-	Tue,  2 Sep 2025 13:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371A5304BA0;
+	Tue,  2 Sep 2025 13:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820673; cv=none; b=a3LolED8YDUKj28xoU6UmWM3ioA6+Cnd7QJ5X9zcEFZ4tzs3EXH7vFjdjGpZr+WY5LRJ7QsCmFizTb5DzNCK3mQwceuUoX9Wf7lT2Su10urcr8fiXq35YaoHOi5yO91rrDQb8YWOAYGuCUFnOHdT5fSXyb4W+C/pU2CNl8eakwQ=
+	t=1756820677; cv=none; b=LyhuFc8W+pjr/8KlSmSbvhIOtqyErctj6MEEHiD7pbEzpVX1AAVEmSPLjti4kdc+CPeuEv3Rb2vDNNux9VTcHZcV8odmMPt5n2F5AdjBVMdivDyCbTId+4dXefP3MX8mI69lHd99Mt5qbV4d/EUyVebxXK1vukA2rNhyP9tPdYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820673; c=relaxed/simple;
-	bh=b3bNlw63Z/EkVCj3UBEXNNWuvDNQZplFS26l5865x7Y=;
+	s=arc-20240116; t=1756820677; c=relaxed/simple;
+	bh=xQ2ic1a67TLQWtfezJ7azFRE6xd5Sy2dtQ/aqlymsns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNYCkoZMZym9n7ZBqHIo4Mst/Gvoia01p28OqJAX1IhUg6h5eTisZ/T6TNybTCeJZNp+lY7YAmKv4QJI+PWwqpvSPME+4qd7woYgargrxVp7eILoGK/Amke5GrvA7xGyccyQKTYkzDScCONJCSYFjzsFm/iyGdL1rMh6tV+YCg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dxse27Lc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1GckgSOgZz10iV//tUJQKov+4IKXu7bEy4VeJ5Crz83UC076SW+x8kEI0Q29Enhl0nj+D9XGyyTO8S7iEkvbHzGMh+smzCL8nwkI1O7BEozHD7p7SpuDMBBHzqay/fBWeYJ6LhegSHIWrzjTsrv5GoXCQR1QBzcLs7mY8XKgL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3cKBKhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dxse27Lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB28C4CEED;
-	Tue,  2 Sep 2025 13:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3cKBKhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD5AC4CEED;
+	Tue,  2 Sep 2025 13:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820673;
-	bh=b3bNlw63Z/EkVCj3UBEXNNWuvDNQZplFS26l5865x7Y=;
+	s=korg; t=1756820677;
+	bh=xQ2ic1a67TLQWtfezJ7azFRE6xd5Sy2dtQ/aqlymsns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dxse27LcZild/KxIdMYJdLteogwJRvwFG/02vpG60DvbXo6++j6xmrgX+v2+82DZ9
-	 4VCLMU8Hwp+blW0vCg8F7fs2AVefgQaKH/crFZmgaIq2QqyIEWpOw49FhRIVe1qe1Q
-	 S9V12/uIllISBL6WYdxqnRwQ3rZMdZg+X9xHEzPs=
+	b=O3cKBKhAZWgww4Id1O3Vw7OuJzZGmIvb2jZhYgNcCmLW++MOyYsdp/Tkx79brrddd
+	 bqmwox3sdu2i2lZrR+vWMRZVD0JsY2i3fhz4kPgLTmkPAwGsD4bllv6bJFY1XbyiyN
+	 w+DA1fxYRsoypQa8CrGHFlD9gld9+vH61jbCNrNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Johannes Thumshin <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/34] scsi: core: sysfs: Correct sysfs attributes access rights
-Date: Tue,  2 Sep 2025 15:21:29 +0200
-Message-ID: <20250902131926.749929779@linuxfoundation.org>
+	Tianxiang Peng <txpeng@tencent.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Hui Li <caelli@tencent.com>,
+	stable@kernel.org
+Subject: [PATCH 5.10 04/34] x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper
+Date: Tue,  2 Sep 2025 15:21:30 +0200
+Message-ID: <20250902131926.788829104@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -53,49 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Tianxiang Peng <txpeng@tencent.com>
 
-[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
+commit d8df126349dad855cdfedd6bbf315bad2e901c2f upstream.
 
-The SCSI sysfs attributes "supported_mode" and "active_mode" do not
-define a store method and thus cannot be modified.  Correct the
-DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
-allow write access as they are read-only.
+Since
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  923f3a2b48bd ("x86/resctrl: Query LLC monitoring properties once during boot")
+
+resctrl_cpu_detect() has been moved from common CPU initialization code to
+the vendor-specific BSP init helper, while Hygon didn't put that call in their
+code.
+
+This triggers a division by zero fault during early booting stage on our
+machines with X86_FEATURE_CQM* supported, where get_rdt_mon_resources() tries
+to calculate mon_l3_config with uninitialized boot_cpu_data.x86_cache_occ_scale.
+
+Add the missing resctrl_cpu_detect() in the Hygon BSP init helper.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 923f3a2b48bd ("x86/resctrl: Query LLC monitoring properties once during boot")
+Signed-off-by: Tianxiang Peng <txpeng@tencent.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Hui Li <caelli@tencent.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/20250623093153.3016937-1-txpeng@tencent.com
+Signed-off-by: Tianxiang Peng <txpeng@tencent.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_sysfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/hygon.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index bb37d698da1a1..4992027f125e8 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -264,7 +264,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
- 	return show_shost_mode(supported_mode, buf);
+--- a/arch/x86/kernel/cpu/hygon.c
++++ b/arch/x86/kernel/cpu/hygon.c
+@@ -17,6 +17,7 @@
+ #ifdef CONFIG_X86_64
+ # include <asm/set_memory.h>
+ #endif
++#include <asm/resctrl.h>
+ 
+ #include "cpu.h"
+ 
+@@ -259,6 +260,8 @@ static void bsp_init_hygon(struct cpuinf
+ 			x86_amd_ls_cfg_ssbd_mask = 1ULL << 10;
+ 		}
+ 	}
++
++	resctrl_cpu_detect(c);
  }
  
--static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
-+static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
- 
- static ssize_t
- show_shost_active_mode(struct device *dev,
-@@ -278,7 +278,7 @@ show_shost_active_mode(struct device *dev,
- 		return show_shost_mode(shost->active_mode, buf);
- }
- 
--static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
-+static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
- 
- static int check_reset_type(const char *str)
- {
--- 
-2.50.1
-
+ static void early_init_hygon(struct cpuinfo_x86 *c)
 
 
