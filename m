@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA1D322A22;
-	Tue,  2 Sep 2025 13:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A4830FC1F;
+	Tue,  2 Sep 2025 13:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819828; cv=none; b=twV8udDqoSgCWX2xo7eK+DV93cqZGfNAqWrGEoSVgYPRavX6jn192FIWYQGwGFYMnq9kq1pq8ZAU+UjJw5SET3ZPMMAWi2DYXAXqhIxAeoGgagUCgPwpaPGbVktbSLbHR/kNLn+7piqUEOrACZ9G/5z2g6m4gTuApJECWDb/gvY=
+	t=1756819831; cv=none; b=uctayZzuxt0aaSnGelG4WPbj8G+DlI6l9IFQ4sih/3nR3xHH0hZZLPEwHs4yMQbyW/PJn+SaJpPn8KOI1Dl0YM3m6hnmkz9I9FbBvb1aIemF7OtVOkXO3SZSN/9SOhrHnIaRHRmZYZjBc14C9nxMX3MjpG0C132/8TnafP/8mAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819828; c=relaxed/simple;
-	bh=gWNrWWQCz+9W2L4jSJjLaOLLKQfbwgM7eIwNfAKUNNY=;
+	s=arc-20240116; t=1756819831; c=relaxed/simple;
+	bh=qad/X1OGe2F8jM0B+ri5dDdxow1EJW9jwTC4tc1bECg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTIMlKSF16vldr/d862XElyPcwgLyoPksYYwJA5l5HEvLvA0K4B2L5+1eMIQCkG7MlN3TVgXs5FCKY1G7n+oMjvYkhpfCeqJ4QGJnNk0Zh70tJ3LQoZNMEMwLrQuzWEqFg0HRFBMn0jyB9cDR0JF08kmgWkPmQHAl4JTg6ZRvf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=011GV4Ve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mNm8gDCfwe9XX4+XLErDTxmQXVh/LnFkSSUVplWmbt2OWktFsoMXN73UsUC5Iw7WhnjE6uG4Q8NlX3G8igMSczw55Hzg1GsJJ767xTkVQHtlDV3hYEFy3WRXuN62UfS8S1hOj5InLV+j6Rd2WH8MlURwesLazG/rVjIRDFV0gzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Od7VWJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="011GV4Ve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48937C4CEF4;
-	Tue,  2 Sep 2025 13:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Od7VWJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5283C4CEF4;
+	Tue,  2 Sep 2025 13:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819827;
-	bh=gWNrWWQCz+9W2L4jSJjLaOLLKQfbwgM7eIwNfAKUNNY=;
+	s=korg; t=1756819831;
+	bh=qad/X1OGe2F8jM0B+ri5dDdxow1EJW9jwTC4tc1bECg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=011GV4VeougIzS8FpVJq/woXQ2+0yhbfkC+ZjKt7j3lSBOpk70k2bxmSdjqo2IlPv
-	 uMUX9eE000AOKquNdPrQsgksH7AWULuBfdM58jQyqlFepSZaMVnzHE+NVtMtuB0NLD
-	 wyHTdQN1bqwmkayTj6kQ3rOZbUR96HINK/C3qYtc=
+	b=X6Od7VWJZQCzv7PO/VNo+HipfDw+Bu7lts3HGrV4rxCFUY0ZkyXC6EumP7g22teCq
+	 beg32jfcBmfbfz4xRx/Gr4hwU+vuCTx4D3tM73HVcNK01XuNYF4CoStPB6d/ZOg3u7
+	 FE6QsPV9zneHBmg5Pqi/VpxEZ9y1ShYJoMfvQ9xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 01/95] tools/latency-collector: Check pkg-config install
-Date: Tue,  2 Sep 2025 15:19:37 +0200
-Message-ID: <20250902131939.665438991@linuxfoundation.org>
+Subject: [PATCH 6.12 10/95] perf symbol-minimal: Fix ehdr reading in filename__read_build_id
+Date: Tue,  2 Sep 2025 15:19:46 +0200
+Message-ID: <20250902131940.010821977@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,51 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 26ebba25e210116053609f4c7ee701bffa7ebd7d ]
+[ Upstream commit ba0b7081f7a521d7c28b527a4f18666a148471e7 ]
 
-The tool pkg-config used to check libtraceevent and libtracefs, if not
-installed, it will report the libs not found, even though they have
-already been installed.
+The e_ident is part of the ehdr and so reading it a second time would
+mean the read ehdr was displaced by 16-bytes. Switch from stdio to
+open/read/lseek syscalls for similarity with the symbol-elf version of
+the function and so that later changes can alter then open flags.
 
-Before:
-libtraceevent is missing. Please install libtraceevent-dev/libtraceevent-devel
-libtracefs is missing. Please install libtracefs-dev/libtracefs-devel
-
-After:
-Makefile.config:10: *** Error: pkg-config needed by libtraceevent/libtracefs is missing
-on this system, please install it.
-
-Link: https://lore.kernel.org/20250808040527.2036023-1-chen.dylane@linux.dev
-Fixes: 9d56c88e5225 ("tools/tracing: Use tools/build makefiles on latency-collector")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: fef8f648bb47 ("perf symbol: Fix use-after-free in filename__read_build_id")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250823000024.724394-2-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/latency/Makefile.config | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/util/symbol-minimal.c | 55 ++++++++++++++++----------------
+ 1 file changed, 27 insertions(+), 28 deletions(-)
 
-diff --git a/tools/tracing/latency/Makefile.config b/tools/tracing/latency/Makefile.config
-index 0fe6b50f029bf..6efa13e3ca93f 100644
---- a/tools/tracing/latency/Makefile.config
-+++ b/tools/tracing/latency/Makefile.config
-@@ -1,7 +1,15 @@
- # SPDX-License-Identifier: GPL-2.0-only
+diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
+index 36c1d3090689f..f114f75ebeb98 100644
+--- a/tools/perf/util/symbol-minimal.c
++++ b/tools/perf/util/symbol-minimal.c
+@@ -4,7 +4,6 @@
  
-+include $(srctree)/tools/scripts/utilities.mak
-+
- STOP_ERROR :=
+ #include <errno.h>
+ #include <unistd.h>
+-#include <stdio.h>
+ #include <fcntl.h>
+ #include <string.h>
+ #include <stdlib.h>
+@@ -88,11 +87,8 @@ int filename__read_debuglink(const char *filename __maybe_unused,
+  */
+ int filename__read_build_id(const char *filename, struct build_id *bid)
+ {
+-	FILE *fp;
+-	int ret = -1;
++	int fd, ret = -1;
+ 	bool need_swap = false, elf32;
+-	u8 e_ident[EI_NIDENT];
+-	int i;
+ 	union {
+ 		struct {
+ 			Elf32_Ehdr ehdr32;
+@@ -103,28 +99,27 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
+ 			Elf64_Phdr *phdr64;
+ 		};
+ 	} hdrs;
+-	void *phdr;
+-	size_t phdr_size;
+-	void *buf = NULL;
+-	size_t buf_size = 0;
++	void *phdr, *buf = NULL;
++	ssize_t phdr_size, ehdr_size, buf_size = 0;
  
-+ifndef ($(NO_LIBTRACEEVENT),1)
-+  ifeq ($(call get-executable,$(PKG_CONFIG)),)
-+    $(error Error: $(PKG_CONFIG) needed by libtraceevent/libtracefs is missing on this system, please install it)
-+  endif
-+endif
+-	fp = fopen(filename, "r");
+-	if (fp == NULL)
++	fd = open(filename, O_RDONLY);
++	if (fd < 0)
+ 		return -1;
+ 
+-	if (fread(e_ident, sizeof(e_ident), 1, fp) != 1)
++	if (read(fd, hdrs.ehdr32.e_ident, EI_NIDENT) != EI_NIDENT)
+ 		goto out;
+ 
+-	if (memcmp(e_ident, ELFMAG, SELFMAG) ||
+-	    e_ident[EI_VERSION] != EV_CURRENT)
++	if (memcmp(hdrs.ehdr32.e_ident, ELFMAG, SELFMAG) ||
++	    hdrs.ehdr32.e_ident[EI_VERSION] != EV_CURRENT)
+ 		goto out;
+ 
+-	need_swap = check_need_swap(e_ident[EI_DATA]);
+-	elf32 = e_ident[EI_CLASS] == ELFCLASS32;
++	need_swap = check_need_swap(hdrs.ehdr32.e_ident[EI_DATA]);
++	elf32 = hdrs.ehdr32.e_ident[EI_CLASS] == ELFCLASS32;
++	ehdr_size = (elf32 ? sizeof(hdrs.ehdr32) : sizeof(hdrs.ehdr64)) - EI_NIDENT;
+ 
+-	if (fread(elf32 ? (void *)&hdrs.ehdr32 : (void *)&hdrs.ehdr64,
+-		  elf32 ? sizeof(hdrs.ehdr32) : sizeof(hdrs.ehdr64),
+-		  1, fp) != 1)
++	if (read(fd,
++		 (elf32 ? (void *)&hdrs.ehdr32 : (void *)&hdrs.ehdr64) + EI_NIDENT,
++		 ehdr_size) != ehdr_size)
+ 		goto out;
+ 
+ 	if (need_swap) {
+@@ -138,14 +133,18 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
+ 			hdrs.ehdr64.e_phnum = bswap_16(hdrs.ehdr64.e_phnum);
+ 		}
+ 	}
+-	phdr_size = elf32 ? hdrs.ehdr32.e_phentsize * hdrs.ehdr32.e_phnum
+-			  : hdrs.ehdr64.e_phentsize * hdrs.ehdr64.e_phnum;
++	if ((elf32 && hdrs.ehdr32.e_phentsize != sizeof(Elf32_Phdr)) ||
++	    (!elf32 && hdrs.ehdr64.e_phentsize != sizeof(Elf64_Phdr)))
++		goto out;
 +
- define lib_setup
-   $(eval LIB_INCLUDES += $(shell sh -c "$(PKG_CONFIG) --cflags lib$(1)"))
-   $(eval LDFLAGS += $(shell sh -c "$(PKG_CONFIG) --libs-only-L lib$(1)"))
++	phdr_size = elf32 ? sizeof(Elf32_Phdr) * hdrs.ehdr32.e_phnum
++			  : sizeof(Elf64_Phdr) * hdrs.ehdr64.e_phnum;
+ 	phdr = malloc(phdr_size);
+ 	if (phdr == NULL)
+ 		goto out;
+ 
+-	fseek(fp, elf32 ? hdrs.ehdr32.e_phoff : hdrs.ehdr64.e_phoff, SEEK_SET);
+-	if (fread(phdr, phdr_size, 1, fp) != 1)
++	lseek(fd, elf32 ? hdrs.ehdr32.e_phoff : hdrs.ehdr64.e_phoff, SEEK_SET);
++	if (read(fd, phdr, phdr_size) != phdr_size)
+ 		goto out_free;
+ 
+ 	if (elf32)
+@@ -153,8 +152,8 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
+ 	else
+ 		hdrs.phdr64 = phdr;
+ 
+-	for (i = 0; i < elf32 ? hdrs.ehdr32.e_phnum : hdrs.ehdr64.e_phnum; i++) {
+-		size_t p_filesz;
++	for (int i = 0; i < (elf32 ? hdrs.ehdr32.e_phnum : hdrs.ehdr64.e_phnum); i++) {
++		ssize_t p_filesz;
+ 
+ 		if (need_swap) {
+ 			if (elf32) {
+@@ -180,8 +179,8 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
+ 				goto out_free;
+ 			buf = tmp;
+ 		}
+-		fseek(fp, elf32 ? hdrs.phdr32[i].p_offset : hdrs.phdr64[i].p_offset, SEEK_SET);
+-		if (fread(buf, p_filesz, 1, fp) != 1)
++		lseek(fd, elf32 ? hdrs.phdr32[i].p_offset : hdrs.phdr64[i].p_offset, SEEK_SET);
++		if (read(fd, buf, p_filesz) != p_filesz)
+ 			goto out_free;
+ 
+ 		ret = read_build_id(buf, p_filesz, bid, need_swap);
+@@ -194,7 +193,7 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
+ 	free(buf);
+ 	free(phdr);
+ out:
+-	fclose(fp);
++	close(fd);
+ 	return ret;
+ }
+ 
 -- 
 2.50.1
 
