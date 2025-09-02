@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947FA31CA5F;
-	Tue,  2 Sep 2025 13:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59DB2DC32D;
+	Tue,  2 Sep 2025 13:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820126; cv=none; b=hlL8kSswUvSt5nnQOtJ8VL2TDiEWIznyycwc6QJYJByFqwdVcC2KWEJu1M53jZVqSXg6DzOiArabP2zwoYLhF5czBUmgdSoDSnke5LABCswOQZM4rKbVPcaumB3lBWYsLRb758fg1qHA/ztP9jSZGJBa7HrEFW+yY3AOchYBC9o=
+	t=1756820129; cv=none; b=ALOhUlPXF6noNPLU66p4hXg6XVc/BtUNmmW8jvAEn2WjGDe7dVWKLq4/fTjKUZ5bdJEKADaa9j9CoLgGPz9jQW3/raXLuF1y9JQWLzDA+6FGbbW+BwXL3xPs2tyWot91cZhyFIhhJPMctBPeBDBzMHWu7yvGSIL+l2AtHh49gEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820126; c=relaxed/simple;
-	bh=Slg65ry9HcMSQV6qwLc8Vq4BkXV+5kY9vA6LdBInXNk=;
+	s=arc-20240116; t=1756820129; c=relaxed/simple;
+	bh=oyRfPJ6bVOyHtXD7k05ONsEqj2wjoHm51MUzLidoNHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQgA7fYQdJHfLRLjl7vxJPPI3+7yFgwIZvrbF5EColRQcIzgdlK4Ko95fFgHjEd76Kl9mpk8Y0fxDRARJjPAaqd8e43WEiM1Wib5fJzs7Ew9QguBukbt1DDm3DkkoIxRMESt9MQ5AYPXWxkrLkYSQNXLhWCszy96Em2WezqYkLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9CCMdfN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rlo/Q9hmatAPq9n4Ri1CkqvCsAX62hPCpXxnf6OQpCvhclx6GwaYyy/m9nwWdKkVOOsFx46vdyS0NZiEQEHgnkLpU7oxqHsb6eUmfBp72a0lMibjlKhQjMdVZU0Yig5s9zpaSa2cdlnuRkABAT0WTlCrvBQfuKwyg4fJahyGbDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpT0NByd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9CCMdfN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA63C4CEED;
-	Tue,  2 Sep 2025 13:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpT0NByd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283EBC4CEED;
+	Tue,  2 Sep 2025 13:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820126;
-	bh=Slg65ry9HcMSQV6qwLc8Vq4BkXV+5kY9vA6LdBInXNk=;
+	s=korg; t=1756820129;
+	bh=oyRfPJ6bVOyHtXD7k05ONsEqj2wjoHm51MUzLidoNHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9CCMdfN917NOJcT3eU4zN3L8arqaAEtx30O3/pNxF7qPBHuIjya6PXwBUYMQqUeg
-	 zrgK3hx7xG/v9B5Er1C4e5NjjMUjdVi6UpJslhsmFLwu0DRTtiWLkBfP3DZdsUPe8q
-	 SlHkuomQh4jjsaeK6edmXg07Bdl++7njUTK2WrZY=
+	b=OpT0NBydwKRUi9iE5lKkzspyHYyB1ztjJsV23zfUfcpVzIlUP/46LeRsc8PcwlotP
+	 EmHU05Axgf4IEx6DGPx4v2NV1yywcbLLqdIdT3/a9i0Pejz7mMFXMBW9q5MWuLe2By
+	 44qWqvlZPNMTGfQhrjuHCZZLmih/+dvxXnosuTE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>
-Subject: [PATCH 6.12 70/95] x86/cpu/topology: Use initial APIC ID from XTOPOLOGY leaf on AMD/HYGON
-Date: Tue,  2 Sep 2025 15:20:46 +0200
-Message-ID: <20250902131942.287686865@linuxfoundation.org>
+	syzbot+942297eecf7d2d61d1f1@syzkaller.appspotmail.com,
+	Takamitsu Iwai <takamitz@amazon.co.jp>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 61/95] net: rose: include node references in rose_neigh refcount
+Date: Tue,  2 Sep 2025 15:20:37 +0200
+Message-ID: <20250902131941.946022064@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,113 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Takamitsu Iwai <takamitz@amazon.co.jp>
 
-commit c2415c407a2cde01290d52ce2a1f81b0616379a3 upstream.
+[ Upstream commit da9c9c877597170b929a6121a68dcd3dd9a80f45 ]
 
-Prior to the topology parsing rewrite and the switchover to the new parsing
-logic for AMD processors in
+Current implementation maintains two separate reference counting
+mechanisms: the 'count' field in struct rose_neigh tracks references from
+rose_node structures, while the 'use' field (now refcount_t) tracks
+references from rose_sock.
 
-  c749ce393b8f ("x86/cpu: Use common topology code for AMD"),
+This patch merges these two reference counting systems using 'use' field
+for proper reference management. Specifically, this patch adds incrementing
+and decrementing of rose_neigh->use when rose_neigh->count is incremented
+or decremented.
 
-the initial_apicid on these platforms was:
+This patch also modifies rose_rt_free(), rose_rt_device_down() and
+rose_clear_route() to properly release references to rose_neigh objects
+before freeing a rose_node through rose_remove_node().
 
-- First initialized to the LocalApicId from CPUID leaf 0x1 EBX[31:24].
+These changes ensure rose_neigh structures are properly freed only when
+all references, including those from rose_node structures, are released.
+As a result, this resolves a slab-use-after-free issue reported by Syzbot.
 
-- Then overwritten by the ExtendedLocalApicId in CPUID leaf 0xb
-  EDX[31:0] on processors that supported topoext.
-
-With the new parsing flow introduced in
-
-  f7fb3b2dd92c ("x86/cpu: Provide an AMD/HYGON specific topology parser"),
-
-parse_8000_001e() now unconditionally overwrites the initial_apicid already
-parsed during cpu_parse_topology_ext().
-
-Although this has not been a problem on baremetal platforms, on virtualized AMD
-guests that feature more than 255 cores, QEMU zeros out the CPUID leaf
-0x8000001e on CPUs with CoreID > 255 to prevent collision of these IDs in
-EBX[7:0] which can only represent a maximum of 255 cores [1].
-
-This results in the following FW_BUG being logged when booting a guest
-with more than 255 cores:
-
-    [Firmware Bug]: CPU 512: APIC ID mismatch. CPUID: 0x0000 APIC: 0x0200
-
-AMD64 Architecture Programmer's Manual Volume 2: System Programming Pub.
-24593 Rev. 3.42 [2] Section 16.12 "x2APIC_ID" mentions the Extended
-Enumeration leaf 0xb (Fn0000_000B_EDX[31:0])(which was later superseded by the
-extended leaf 0x80000026) provides the full x2APIC ID under all circumstances
-unlike the one reported by CPUID leaf 0x8000001e EAX which depends on the mode
-in which APIC is configured.
-
-Rely on the APIC ID parsed during cpu_parse_topology_ext() from CPUID leaf
-0x80000026 or 0xb and only use the APIC ID from leaf 0x8000001e if
-cpu_parse_topology_ext() failed (has_topoext is false).
-
-On platforms that support the 0xb leaf (Zen2 or later, AMD guests on
-QEMU) or the extended leaf 0x80000026 (Zen4 or later), the
-initial_apicid is now set to the value parsed from EDX[31:0].
-
-On older AMD/Hygon platforms that do not support the 0xb leaf but support the
-TOPOEXT extension (families 0x15, 0x16, 0x17[Zen1], and Hygon), retain current
-behavior where the initial_apicid is set using the 0x8000001e leaf.
-
-Issue debugged by Naveen N Rao (AMD) <naveen@kernel.org> and Sairaj Kodilkar
-<sarunkod@amd.com>.
-
-  [ bp: Massage commit message. ]
-
-Fixes: c749ce393b8f ("x86/cpu: Use common topology code for AMD")
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://github.com/qemu/qemu/commit/35ac5dfbcaa4b [1]
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 [2]
-Link: https://lore.kernel.org/20250825075732.10694-2-kprateek.nayak@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+942297eecf7d2d61d1f1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=942297eecf7d2d61d1f1
+Signed-off-by: Takamitsu Iwai <takamitz@amazon.co.jp>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250823085857.47674-4-takamitz@amazon.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/topology_amd.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/rose/rose_route.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/topology_amd.c
-+++ b/arch/x86/kernel/cpu/topology_amd.c
-@@ -80,20 +80,25 @@ static bool parse_8000_001e(struct topo_
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 42460da0854d5..6acbb795c506d 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -178,6 +178,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 			}
+ 		}
+ 		rose_neigh->count++;
++		rose_neigh_hold(rose_neigh);
  
- 	cpuid_leaf(0x8000001e, &leaf);
+ 		goto out;
+ 	}
+@@ -187,6 +188,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 		rose_node->neighbour[rose_node->count] = rose_neigh;
+ 		rose_node->count++;
+ 		rose_neigh->count++;
++		rose_neigh_hold(rose_neigh);
+ 	}
  
--	tscan->c->topo.initial_apicid = leaf.ext_apic_id;
--
- 	/*
--	 * If leaf 0xb is available, then the domain shifts are set
--	 * already and nothing to do here. Only valid for family >= 0x17.
-+	 * If leaf 0xb/0x26 is available, then the APIC ID and the domain
-+	 * shifts are set already.
- 	 */
--	if (!has_topoext && tscan->c->x86 >= 0x17) {
-+	if (!has_topoext) {
-+		tscan->c->topo.initial_apicid = leaf.ext_apic_id;
+ out:
+@@ -322,6 +324,7 @@ static int rose_del_node(struct rose_route_struct *rose_route,
+ 	for (i = 0; i < rose_node->count; i++) {
+ 		if (rose_node->neighbour[i] == rose_neigh) {
+ 			rose_neigh->count--;
++			rose_neigh_put(rose_neigh);
+ 
+ 			if (rose_neigh->count == 0) {
+ 				rose_remove_neigh(rose_neigh);
+@@ -430,6 +433,7 @@ int rose_add_loopback_node(const rose_address *address)
+ 	rose_node_list  = rose_node;
+ 
+ 	rose_loopback_neigh->count++;
++	rose_neigh_hold(rose_loopback_neigh);
+ 
+ out:
+ 	spin_unlock_bh(&rose_node_list_lock);
+@@ -461,6 +465,7 @@ void rose_del_loopback_node(const rose_address *address)
+ 	rose_remove_node(rose_node);
+ 
+ 	rose_loopback_neigh->count--;
++	rose_neigh_put(rose_loopback_neigh);
+ 
+ out:
+ 	spin_unlock_bh(&rose_node_list_lock);
+@@ -500,6 +505,7 @@ void rose_rt_device_down(struct net_device *dev)
+ 				memmove(&t->neighbour[i], &t->neighbour[i + 1],
+ 					sizeof(t->neighbour[0]) *
+ 						(t->count - i));
++				rose_neigh_put(s);
+ 			}
+ 
+ 			if (t->count <= 0)
+@@ -543,6 +549,7 @@ static int rose_clear_routes(void)
+ {
+ 	struct rose_neigh *s, *rose_neigh;
+ 	struct rose_node  *t, *rose_node;
++	int i;
+ 
+ 	spin_lock_bh(&rose_node_list_lock);
+ 	spin_lock_bh(&rose_neigh_list_lock);
+@@ -553,8 +560,12 @@ static int rose_clear_routes(void)
+ 	while (rose_node != NULL) {
+ 		t         = rose_node;
+ 		rose_node = rose_node->next;
+-		if (!t->loopback)
 +
- 		/*
--		 * Leaf 0x80000008 set the CORE domain shift already.
--		 * Update the SMT domain, but do not propagate it.
-+		 * Leaf 0x8000008 sets the CORE domain shift but not the
-+		 * SMT domain shift. On CPUs with family >= 0x17, there
-+		 * might be hyperthreads.
- 		 */
--		unsigned int nthreads = leaf.core_nthreads + 1;
-+		if (tscan->c->x86 >= 0x17) {
-+			/* Update the SMT domain, but do not propagate it. */
-+			unsigned int nthreads = leaf.core_nthreads + 1;
- 
--		topology_update_dom(tscan, TOPO_SMT_DOMAIN, get_count_order(nthreads), nthreads);
-+			topology_update_dom(tscan, TOPO_SMT_DOMAIN,
-+					    get_count_order(nthreads), nthreads);
++		if (!t->loopback) {
++			for (i = 0; i < rose_node->count; i++)
++				rose_neigh_put(t->neighbour[i]);
+ 			rose_remove_node(t);
 +		}
  	}
  
- 	store_node(tscan, leaf.nnodes_per_socket + 1, leaf.node_id);
+ 	while (rose_neigh != NULL) {
+@@ -1189,7 +1200,7 @@ static int rose_neigh_show(struct seq_file *seq, void *v)
+ 			   (rose_neigh->loopback) ? "RSLOOP-0" : ax2asc(buf, &rose_neigh->callsign),
+ 			   rose_neigh->dev ? rose_neigh->dev->name : "???",
+ 			   rose_neigh->count,
+-			   refcount_read(&rose_neigh->use) - 1,
++			   refcount_read(&rose_neigh->use) - rose_neigh->count - 1,
+ 			   (rose_neigh->dce_mode) ? "DCE" : "DTE",
+ 			   (rose_neigh->restarted) ? "yes" : "no",
+ 			   ax25_display_timer(&rose_neigh->t0timer) / HZ,
+@@ -1294,6 +1305,7 @@ void __exit rose_rt_free(void)
+ 	struct rose_neigh *s, *rose_neigh = rose_neigh_list;
+ 	struct rose_node  *t, *rose_node  = rose_node_list;
+ 	struct rose_route *u, *rose_route = rose_route_list;
++	int i;
+ 
+ 	while (rose_neigh != NULL) {
+ 		s          = rose_neigh;
+@@ -1307,6 +1319,8 @@ void __exit rose_rt_free(void)
+ 		t         = rose_node;
+ 		rose_node = rose_node->next;
+ 
++		for (i = 0; i < t->count; i++)
++			rose_neigh_put(t->neighbour[i]);
+ 		rose_remove_node(t);
+ 	}
+ 
+-- 
+2.50.1
+
 
 
