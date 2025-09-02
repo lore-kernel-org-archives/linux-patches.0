@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CD6288C20;
-	Tue,  2 Sep 2025 12:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A24D3043BD;
+	Tue,  2 Sep 2025 12:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756814922; cv=none; b=LDJteAxDkhovEsa4eo0lV6dLvsEcGSFwdp9wD36pJG/6bvo7VweO46WsXOCaCARvWSh6envOwqeXb61kSlWaZ7O9zMgzKUX+EzBnxD6yEdZFbpM8ATW1DpuSmyqCqpEkQZ8Wo+xPl8M/fTL3GkhzIvjNVD9R2cb41v4QCvEuegg=
+	t=1756814923; cv=none; b=X+Wx4GySkEtcNzhHlxaKmlAuBMfgdBuXRvr6Gi/t53f6KBWoyLgGBWaDInfz3/Z/oRZX6HSeqK+YnwEUrBa0z7bhRHxsjx4Y7KfWtRhoxsGU1bnTflInDDy4v7SihLWebYI6klCpH2A99nfTAFS+8f1c4JVK+kMPRuS+odRc5C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756814922; c=relaxed/simple;
-	bh=HeA1+/cHV5gPmD0WyG1N3nwGnqxfJ4RmixgnSuMv4Ic=;
+	s=arc-20240116; t=1756814923; c=relaxed/simple;
+	bh=7HqdDY2xpBnyOB5NQpVxBtywzGaiEgwFO+izjO7w43k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcDuJUKhojoBPFY6ObpEljGf6BYfn/uYeQ3ofPb1Bkh/TRnXK7ILLIf5RZc0vkVLtaCteKTsSZ7wodrd3Y5/nNlieVSHQvG4Y1QLTl9BscOh7evyvLMhN2hBoG+1ddV1uTmR8KY8MythJ7gV3rF26AsKWeTqY/xXeZbsDyoVUNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mYISNsMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KhfxdrC89ij6hBCwbF30uu0vyMQOuJLZZnpbbn8Y5cGaVzwgH6n69wFhkXOxkeVxrvHaebuPA4TebYc7SuWbg3MrU9j1oj2V5l4iHIKnqGYJZMqv6s7DaEd4WJ6m5Uw6lkdr/xmfX0k7snknlg+b8ZHxF/67slWl9aspZs9DQRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PTn1mi69; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mYISNsMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B7C4CEED;
-	Tue,  2 Sep 2025 12:08:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PTn1mi69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919ABC4CEF7;
+	Tue,  2 Sep 2025 12:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756814922;
-	bh=HeA1+/cHV5gPmD0WyG1N3nwGnqxfJ4RmixgnSuMv4Ic=;
+	s=k20201202; t=1756814923;
+	bh=7HqdDY2xpBnyOB5NQpVxBtywzGaiEgwFO+izjO7w43k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYISNsMyYFngdyR8w+SOjktMZM+9/n/3dOylpCuT8CQT0t/pBcDeZC5SgbIc0aw8A
-	 H9FXgXpdg1qGXc6LsgJlGSYa1BgIR8xhp+hNGG30BumqddtAMZr1iCiP5JhyolSSJb
-	 HTj7/ForXletQO1/rnP63Tkhi3Ynys+vQ7DfGtuzqASY7oInBVQuskrh0NcPU5V35j
-	 M1IjElgfmDYwpdfwFciQHqFrFAulKtSMM5W2wxl0OL3+wdz5JuPDK0HJNNSrpu3thq
-	 9lefec8qVz474QEMjIaLqewnfF/FvFO6a9sMZBj0YPc7K4NGcwgNP/L2zUle58lycW
-	 BvOhvpPAJlhJg==
+	b=PTn1mi69YvRUNTxHIh8lMx5LiS0iSc5ZjqEhvyYOYTpBiVd6OtpkHodrdiGux1vFJ
+	 J+QGn9W9ZAQT0gNVD3cJRus/wGg6XrtqoJa/jfoDUwOZJy4ATSRfaQKBv5ToXOTWl+
+	 NjhHc687SQoFCCbfvWC2vTupibRtGQdAEnNkzgXZFmDpcLP34+iW7tKtia4P7WL3N1
+	 nf02p2cXV3+SKSPy/XxHORJdxNDDgIGOYE+OLjvZN9865GLE2oYBrttb01i6VI8fC7
+	 EO6+mbAv03H3Sq7IMJoikGD37aL9MbRtSc8d/HOVZ7DQ8T7o2x+jshGyyyhpnoE2xs
+	 eLHPAQmoVCuOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Lixu <lixu.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Junjie Cao <junjie.cao@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	linux@treblig.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.16-5.15] HID: intel-ish-hid: Increase ISHTP resume ack timeout to 300ms
-Date: Tue,  2 Sep 2025 08:08:14 -0400
-Message-ID: <20250902120833.1342615-3-sashal@kernel.org>
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.4] gpio: timberdale: fix off-by-one in IRQ type boundary check
+Date: Tue,  2 Sep 2025 08:08:15 -0400
+Message-ID: <20250902120833.1342615-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250902120833.1342615-1-sashal@kernel.org>
 References: <20250902120833.1342615-1-sashal@kernel.org>
@@ -52,184 +50,109 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.16.4
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit dfbd535db74df0343ca39670e06326d7aee8c8f4 ]
+[ Upstream commit 810e154d90f44127239957b06ee51a55553a5815 ]
 
-During s2idle suspend/resume testing on some systems, occasional several
-tens of seconds delays were observed in HID sensor resume handling. Trace
-analysis revealed repeated "link not ready" timeout errors during
-set/get_report operations, which were traced to the
-hid_ishtp_cl_resume_handler() timing out while waiting for the ISHTP
-resume acknowledgment. The previous timeout was set to 50ms, which proved
-insufficient on affected machines.
+timbgpio_irq_type() currently accepts offset == ngpio, violating
+gpiolib's [0..ngpio-1] contract. This can lead to undefined behavior
+when computing '1 << offset', and it is also inconsistent with users
+that iterate with for_each_set_bit(..., ngpio).
 
-Empirical measurements on failing systems showed that the time from ISH
-resume initiation to receiving the ISHTP resume ack could be as long as
-180ms. As a result, the 50ms timeout caused failures.
+Tighten the upper bound to reject offset == ngpio. No functional change
+for in-range offsets.
 
-To address this, increase the wait timeout for ISHTP resume ack from 50ms
-to 300ms, providing a safer margin for slower hardware. Additionally, add
-error logging when a timeout occurs to aid future debugging and issue
-triage. No functional changes are made beyond the timeout adjustment and
-improved error reporting.
-
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Link: https://lore.kernel.org/r/20250825090850.127163-1-junjie.cao@intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-**Backport Status: YES**
+**YES**
 
 This commit should be backported to stable kernel trees. Here's my
 extensive analysis:
 
-## 1. Bug Fix Nature
+## Bug Severity and Impact
 
-The commit addresses a **real user-facing bug** that causes "several
-tens of seconds delays" during HID sensor resume handling on s2idle
-suspend/resume cycles. The code changes show this fixes timeout failures
-in `hid_ishtp_cl_resume_handler()` that were causing "link not ready"
-errors and preventing proper resume of HID sensors.
+The commit fixes a critical **off-by-one boundary check bug** in
+`timbgpio_irq_type()` at drivers/gpio/gpio-timberdale.c:141. The bug
+allows `offset == tgpio->gpio.ngpio`, which violates the GPIO
+subsystem's fundamental contract of valid offsets being in the range
+`[0..ngpio-1]`.
 
-## 2. Small and Contained Changes
+## Specific Code Analysis
 
-The commit makes minimal, focused changes:
-- **Primary change**: Increases `WAIT_FOR_RESUME_ACK_MS` from 50ms to
-  300ms
-- **Location consolidation**: Moves the constant definition from
-  multiple files to a single header (`ishtp-dev.h:51`)
-- **Error logging addition**: Adds two lines in `ishtp-hid-
-  client.c:762-763` for debugging
-- **Total impact**: Only 12 lines changed across 4 files
+1. **The Bug**: The original check `if (offset < 0 || offset >
+   tgpio->gpio.ngpio)` incorrectly accepts `offset == ngpio` as valid.
 
-## 3. No Architectural Changes
+2. **Undefined Behavior Risk**: When `offset == ngpio`, the subsequent
+   bit shift operations become problematic:
+   - Line 154: `bflr &= ~(1 << offset)`
+   - Line 157: `lvr |= 1 << offset`
+   - Line 167: `flr |= 1 << offset`
+   - Line 184: `iowrite32(1 << offset, tgpio->membase + TGPIO_ICR)`
 
-The commit makes no structural changes - it only:
-- Adjusts a timeout value based on empirical measurements (180ms
-  observed in failing systems)
-- Adds diagnostic logging
-- Consolidates a constant definition
+   Shifting by 32 or more bits (assuming 32-bit registers) results in
+**undefined behavior** in C, potentially causing:
+   - Memory corruption
+   - System crashes
+   - Security vulnerabilities through out-of-bounds writes
 
-## 4. Clear Regression Risk Assessment
+3. **Inconsistency with GPIO Framework**: The bug creates inconsistency
+   with `for_each_set_bit()` usage at line 208, which correctly iterates
+   from 0 to ngpio-1.
 
-The change has **minimal regression risk**:
-- Increasing timeout from 50ms to 300ms cannot break existing working
-  systems
-- Systems that resumed within 50ms will continue to work
-- Systems that needed 50-180ms (previously failing) will now work
-- The 300ms provides safety margin without being excessive
+## Backport Criteria Met
 
-## 5. Subsystem Impact
+✓ **Fixes a real bug**: Prevents undefined behavior and potential memory
+corruption
+✓ **Small and contained**: Single-line change (`>` to `>=`)
+✓ **No side effects**: Only tightens validation, doesn't change behavior
+for valid inputs
+✓ **No architectural changes**: Simple boundary check fix
+✓ **Long-standing bug**: Present since driver introduction in 2009
+(commit 35570ac6039ef4)
+✓ **Clear fix**: The correction is obvious and mathematically correct
+✓ **Low regression risk**: More restrictive validation cannot break
+correctly functioning code
 
-The changes are confined to the Intel ISH HID driver subsystem:
-- `drivers/hid/intel-ish-hid/` - a specific hardware driver
-- Does not affect core kernel functionality
-- Only impacts systems with Intel ISH (Integrated Sensor Hub) hardware
+## Additional Considerations
 
-## 6. Historical Context
+- The bug has existed for **15+ years** since the driver's introduction,
+  making it a candidate for all maintained stable trees
+- While the timberdale GPIO driver may not be widely used, the fix
+  prevents potential security issues from invalid array indexing
+- Similar boundary check issues in kernel drivers have historically been
+  backported to stable
+- The fix aligns with kernel security best practices of proper input
+  validation
 
-Looking at the git history:
-- The 50ms timeout was introduced in commit `e48bf29cf9d6d6` (2021) for
-  async resume
-- Multiple recent fixes in this subsystem (`07583a00106`,
-  `823987841424`) show it's actively maintained
-- The commit is already marked with "Upstream commit
-  dfbd535db74df0343ca39670e06326d7aee8c8f4" indicating it's been
-  accepted upstream
+The commit message accurately describes the issue, and the fix is the
+minimal change necessary to resolve the bug without introducing new
+functionality or risk.
 
-## 7. Stable Tree Rules Compliance
+ drivers/gpio/gpio-timberdale.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The commit perfectly aligns with stable tree criteria:
-- **Fixes a real bug**: Resume failures causing multi-second delays
-- **Tested solution**: Based on empirical measurements (180ms observed)
-- **Minimal change**: Simple timeout adjustment
-- **Hardware-specific**: Only affects Intel ISH hardware users
-- **No new features**: Pure bugfix with diagnostic improvement
-
-## 8. Additional Evidence
-
-The commit message explicitly states:
-- "The previous timeout was set to 50ms, which proved insufficient on
-  affected machines"
-- "Empirical measurements on failing systems showed that the time...
-  could be as long as 180ms"
-- This is based on actual testing and measurements, not speculation
-
-The error logging addition (`hid_ishtp_trace()` and `dev_err()`) will
-help diagnose any future issues without changing functionality.
-
-This is an ideal candidate for stable backporting - it fixes a concrete
-bug with minimal risk and clear benefit to affected users.
-
- drivers/hid/intel-ish-hid/ipc/pci-ish.c      | 3 ---
- drivers/hid/intel-ish-hid/ishtp-hid-client.c | 3 +++
- drivers/hid/intel-ish-hid/ishtp/bus.c        | 3 ---
- drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h  | 3 +++
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index c57483224db6f..9d150ce234f25 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -264,9 +264,6 @@ static void ish_shutdown(struct pci_dev *pdev)
+diff --git a/drivers/gpio/gpio-timberdale.c b/drivers/gpio/gpio-timberdale.c
+index cb303a26f4d3c..61f15a864a5ad 100644
+--- a/drivers/gpio/gpio-timberdale.c
++++ b/drivers/gpio/gpio-timberdale.c
+@@ -138,7 +138,7 @@ static int timbgpio_irq_type(struct irq_data *d, unsigned trigger)
+ 	u32 ver;
+ 	int ret = 0;
  
- static struct device __maybe_unused *ish_resume_device;
+-	if (offset < 0 || offset > tgpio->gpio.ngpio)
++	if (offset < 0 || offset >= tgpio->gpio.ngpio)
+ 		return -EINVAL;
  
--/* 50ms to get resume response */
--#define WAIT_FOR_RESUME_ACK_MS		50
--
- /**
-  * ish_resume_handler() - Work function to complete resume
-  * @work:	work struct
-diff --git a/drivers/hid/intel-ish-hid/ishtp-hid-client.c b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
-index 6550ad5bfbb53..d8c3c54a8c0f2 100644
---- a/drivers/hid/intel-ish-hid/ishtp-hid-client.c
-+++ b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
-@@ -759,6 +759,9 @@ static void hid_ishtp_cl_resume_handler(struct work_struct *work)
- 	if (ishtp_wait_resume(ishtp_get_ishtp_device(hid_ishtp_cl))) {
- 		client_data->suspended = false;
- 		wake_up_interruptible(&client_data->ishtp_resume_wait);
-+	} else {
-+		hid_ishtp_trace(client_data, "hid client: wait for resume timed out");
-+		dev_err(cl_data_to_dev(client_data), "wait for resume timed out");
- 	}
- }
- 
-diff --git a/drivers/hid/intel-ish-hid/ishtp/bus.c b/drivers/hid/intel-ish-hid/ishtp/bus.c
-index 5ac7d70a7c843..93a0432e70581 100644
---- a/drivers/hid/intel-ish-hid/ishtp/bus.c
-+++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
-@@ -852,9 +852,6 @@ EXPORT_SYMBOL(ishtp_device);
-  */
- bool ishtp_wait_resume(struct ishtp_device *dev)
- {
--	/* 50ms to get resume response */
--	#define WAIT_FOR_RESUME_ACK_MS		50
--
- 	/* Waiting to get resume response */
- 	if (dev->resume_flag)
- 		wait_event_interruptible_timeout(dev->resume_wait,
-diff --git a/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h b/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h
-index ec9f6e87aaf23..23db97ecf21cd 100644
---- a/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h
-+++ b/drivers/hid/intel-ish-hid/ishtp/ishtp-dev.h
-@@ -47,6 +47,9 @@
- 
- #define	MAX_DMA_DELAY	20
- 
-+/* 300ms to get resume response */
-+#define WAIT_FOR_RESUME_ACK_MS		300
-+
- /* ISHTP device states */
- enum ishtp_dev_state {
- 	ISHTP_DEV_INITIALIZING = 0,
+ 	ver = ioread32(tgpio->membase + TGPIO_VER);
 -- 
 2.50.1
 
