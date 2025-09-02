@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13422F8BDC;
-	Tue,  2 Sep 2025 13:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0F930DD34;
+	Tue,  2 Sep 2025 13:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819761; cv=none; b=rO+sFQiMG927ZSRA3zTYoAOilz4BIPe8YXahrRh+UySzQaHb/GDPZDSo6ji6NS/xFMjEom1aDLaU9ipwQ8QU52DEFOAWtR5ofLZhxxPZw3MqKPCXjZ/G3HFX8LVJ712QgmtsedFNK6UIlB8FbxwF/XQkOyJmL2lNy+h7GVKq3Nc=
+	t=1756819765; cv=none; b=Ax6Uf+KyXjQHVPmW1YVAEZH8i5FEM6tn3LcFnQv9zWOjkT3gAnQE1IpPybMH0H5jCOE0fmkMxp57tUF086o6BmbB9J4MUlUClnQ4D13vlziADoIyAXeFoblIJmHLfdlYZj5aAOYr+XsKvFRoHI76m8TqwJfWEzCwjri71whI2dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819761; c=relaxed/simple;
-	bh=ZMiEvpQU3g2B8SwcTfh1CrkX9gEzx2z4rPBQWqHgLUM=;
+	s=arc-20240116; t=1756819765; c=relaxed/simple;
+	bh=psjcQ4UQYahFVEgCFiTMFuA2BQ66D0iGmw2IFXsuuds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nkdpj08fqr/2NGtMg4+B7nw2tBU4yg+rBrnKhqgc8Hh+s5XkkJ/Ut6KECGJYvZPGWv/zgQBpnwokNHUx9kkZSH4l+YUadpDs0Pwz+lbHbR6dVpP5VmeJedDwG7i+LfCijEuL2A0gzRHWDxuJNPAvUr8+cvQHPj1F3RjbUO0pzwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGNpMNIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/slL0ExGNplpt5AQrniLxJujBjkcweoR8LtqSqn2WC8uPcV7uhRFSAMJj0CRCP2CvmNXxen6HnDXaSzjxu1p0HtgTJLvJ+0fZDNLaw6DVnDMNNmw4MU12HjaVTAadAGjv9e1BUGx9SlEx4KRiczq91I5kEXrOCWTMAzkpFk0KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCu1B8X0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGNpMNIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC4EC4CEED;
-	Tue,  2 Sep 2025 13:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCu1B8X0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFBCC4CEED;
+	Tue,  2 Sep 2025 13:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819761;
-	bh=ZMiEvpQU3g2B8SwcTfh1CrkX9gEzx2z4rPBQWqHgLUM=;
+	s=korg; t=1756819765;
+	bh=psjcQ4UQYahFVEgCFiTMFuA2BQ66D0iGmw2IFXsuuds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGNpMNIqbQYbEqc+1YjANQcToEKMc+kKvIbC4A69OD2QS7OEXQzpzsiu6q+tXN4pY
-	 axms+QGeASGHYivdLvGQ4Vij5U9hZSycJ7g3CmhWdMVrLLYhyQJTU/H8zcikCn0z33
-	 pkWVOucRkvyweDlPflL2wYlLGnKYevvo/x+g4jC0=
+	b=FCu1B8X0bL8SpIG0aWzjqJloCE6LAYoHcPslQU6vTc4f8lPOGw2nWnHowDv2i42cc
+	 YrqO5TExQD+v3XXB9IcWNywyg7OMaryumbaG/oeGaR4Fn73Xl0KIdFGmNcPXzWix9D
+	 eeR2mEQEaqxr+RjeBptEol9bu5XZRCjsbozh4nEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Wu Guanghao <wuguanghao3@huawei.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 099/142] fbnic: Move phylink resume out of service_task and into open/close
-Date: Tue,  2 Sep 2025 15:20:01 +0200
-Message-ID: <20250902131952.068976488@linuxfoundation.org>
+Subject: [PATCH 6.16 100/142] efivarfs: Fix slab-out-of-bounds in efivarfs_d_compare
+Date: Tue,  2 Sep 2025 15:20:02 +0200
+Message-ID: <20250902131952.109101405@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,117 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Duyck <alexanderduyck@fb.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 6ede14a2c6365e7e5d855643c7c8390b5268c467 ]
+[ Upstream commit a6358f8cf64850f3f27857b8ed8c1b08cfc4685c ]
 
-The fbnic driver was presenting with the following locking assert coming
-out of a PM resume:
-[   42.208116][  T164] RTNL: assertion failed at drivers/net/phy/phylink.c (2611)
-[   42.208492][  T164] WARNING: CPU: 1 PID: 164 at drivers/net/phy/phylink.c:2611 phylink_resume+0x190/0x1e0
-[   42.208872][  T164] Modules linked in:
-[   42.209140][  T164] CPU: 1 UID: 0 PID: 164 Comm: bash Not tainted 6.17.0-rc2-virtme #134 PREEMPT(full)
-[   42.209496][  T164] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-5.fc42 04/01/2014
-[   42.209861][  T164] RIP: 0010:phylink_resume+0x190/0x1e0
-[   42.210057][  T164] Code: 83 e5 01 0f 85 b0 fe ff ff c6 05 1c cd 3e 02 01 90 ba 33 0a 00 00 48 c7 c6 20 3a 1d a5 48 c7 c7 e0 3e 1d a5 e8 21 b8 90 fe 90 <0f> 0b 90 90 e9 86 fe ff ff e8 42 ea 1f ff e9 e2 fe ff ff 48 89 ef
-[   42.210708][  T164] RSP: 0018:ffffc90000affbd8 EFLAGS: 00010296
-[   42.210983][  T164] RAX: 0000000000000000 RBX: ffff8880078d8400 RCX: 0000000000000000
-[   42.211235][  T164] RDX: 0000000000000000 RSI: 1ffffffff4f10938 RDI: 0000000000000001
-[   42.211466][  T164] RBP: 0000000000000000 R08: ffffffffa2ae79ea R09: fffffbfff4b3eb84
-[   42.211707][  T164] R10: 0000000000000003 R11: 0000000000000000 R12: ffff888007ad8000
-[   42.211997][  T164] R13: 0000000000000002 R14: ffff888006a18800 R15: ffffffffa34c59e0
-[   42.212234][  T164] FS:  00007f0dc8e39740(0000) GS:ffff88808f51f000(0000) knlGS:0000000000000000
-[   42.212505][  T164] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   42.212704][  T164] CR2: 00007f0dc8e9fe10 CR3: 000000000b56d003 CR4: 0000000000772ef0
-[   42.213227][  T164] PKRU: 55555554
-[   42.213366][  T164] Call Trace:
-[   42.213483][  T164]  <TASK>
-[   42.213565][  T164]  __fbnic_pm_attach.isra.0+0x8e/0xa0
-[   42.213725][  T164]  pci_reset_function+0x116/0x1d0
-[   42.213895][  T164]  reset_store+0xa0/0x100
-[   42.214025][  T164]  ? pci_dev_reset_attr_is_visible+0x50/0x50
-[   42.214221][  T164]  ? sysfs_file_kobj+0xc1/0x1e0
-[   42.214374][  T164]  ? sysfs_kf_write+0x65/0x160
-[   42.214526][  T164]  kernfs_fop_write_iter+0x2f8/0x4c0
-[   42.214677][  T164]  ? kernfs_vma_page_mkwrite+0x1f0/0x1f0
-[   42.214836][  T164]  new_sync_write+0x308/0x6f0
-[   42.214987][  T164]  ? __lock_acquire+0x34c/0x740
-[   42.215135][  T164]  ? new_sync_read+0x6f0/0x6f0
-[   42.215288][  T164]  ? lock_acquire.part.0+0xbc/0x260
-[   42.215440][  T164]  ? ksys_write+0xff/0x200
-[   42.215590][  T164]  ? perf_trace_sched_switch+0x6d0/0x6d0
-[   42.215742][  T164]  vfs_write+0x65e/0xbb0
-[   42.215876][  T164]  ksys_write+0xff/0x200
-[   42.215994][  T164]  ? __ia32_sys_read+0xc0/0xc0
-[   42.216141][  T164]  ? do_user_addr_fault+0x269/0x9f0
-[   42.216292][  T164]  ? rcu_is_watching+0x15/0xd0
-[   42.216442][  T164]  do_syscall_64+0xbb/0x360
-[   42.216591][  T164]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[   42.216784][  T164] RIP: 0033:0x7f0dc8ea9986
+Observed on kernel 6.6 (present on master as well):
 
-A bit of digging showed that we were invoking the phylink_resume as a part
-of the fbnic_up path when we were enabling the service task while not
-holding the RTNL lock. We should be enabling this sooner as a part of the
-ndo_open path and then just letting the service task come online later.
-This will help to enforce the correct locking and brings the phylink
-interface online at the same time as the network interface, instead of at a
-later time.
+  BUG: KASAN: slab-out-of-bounds in memcmp+0x98/0xd0
+  Call trace:
+   kasan_check_range+0xe8/0x190
+   __asan_loadN+0x1c/0x28
+   memcmp+0x98/0xd0
+   efivarfs_d_compare+0x68/0xd8
+   __d_lookup_rcu_op_compare+0x178/0x218
+   __d_lookup_rcu+0x1f8/0x228
+   d_alloc_parallel+0x150/0x648
+   lookup_open.isra.0+0x5f0/0x8d0
+   open_last_lookups+0x264/0x828
+   path_openat+0x130/0x3f8
+   do_filp_open+0x114/0x248
+   do_sys_openat2+0x340/0x3c0
+   __arm64_sys_openat+0x120/0x1a0
 
-I tested this on QEMU to verify this was working by putting the system to
-sleep using "echo mem > /sys/power/state" to put the system to sleep in the
-guest and then using the command "system_wakeup" in the QEMU monitor.
+If dentry->d_name.len < EFI_VARIABLE_GUID_LEN , 'guid' can become
+negative, leadings to oob. The issue can be triggered by parallel
+lookups using invalid filename:
 
-Fixes: 69684376eed5 ("eth: fbnic: Add link detection")
-Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/175616257316.1963577.12238158800417771119.stgit@ahduyck-xeon-server.home.arpa
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  T1			T2
+  lookup_open
+   ->lookup
+    simple_lookup
+     d_add
+     // invalid dentry is added to hash list
+
+			lookup_open
+			 d_alloc_parallel
+			  __d_lookup_rcu
+			   __d_lookup_rcu_op_compare
+			    hlist_bl_for_each_entry_rcu
+			    // invalid dentry can be retrieved
+			     ->d_compare
+			      efivarfs_d_compare
+			      // oob
+
+Fix it by checking 'guid' before cmp.
+
+Fixes: da27a24383b2 ("efivarfs: guid part of filenames are case-insensitive")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Wu Guanghao <wuguanghao3@huawei.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_netdev.c | 4 ++++
- drivers/net/ethernet/meta/fbnic/fbnic_pci.c    | 2 --
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/efivarfs/super.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-index 553bd8b8bb056..d3d1003df8314 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_netdev.c
-@@ -52,6 +52,8 @@ int __fbnic_open(struct fbnic_net *fbn)
- 	fbnic_bmc_rpc_init(fbd);
- 	fbnic_rss_reinit(fbd, fbn);
- 
-+	phylink_resume(fbn->phylink);
-+
- 	return 0;
- time_stop:
- 	fbnic_time_stop(fbn);
-@@ -84,6 +86,8 @@ static int fbnic_stop(struct net_device *netdev)
+diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
+index 284d6dbba2ece..5c0d45cccc10e 100644
+--- a/fs/efivarfs/super.c
++++ b/fs/efivarfs/super.c
+@@ -152,6 +152,10 @@ static int efivarfs_d_compare(const struct dentry *dentry,
  {
- 	struct fbnic_net *fbn = netdev_priv(netdev);
+ 	int guid = len - EFI_VARIABLE_GUID_LEN;
  
-+	phylink_suspend(fbn->phylink, fbnic_bmc_present(fbn->fbd));
++	/* Parallel lookups may produce a temporary invalid filename */
++	if (guid <= 0)
++		return 1;
 +
- 	fbnic_down(fbn);
- 	fbnic_pcs_free_irq(fbn->fbd);
- 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-index 249d3ef862d5a..38045cce38012 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_pci.c
-@@ -118,14 +118,12 @@ static void fbnic_service_task_start(struct fbnic_net *fbn)
- 	struct fbnic_dev *fbd = fbn->fbd;
- 
- 	schedule_delayed_work(&fbd->service_task, HZ);
--	phylink_resume(fbn->phylink);
- }
- 
- static void fbnic_service_task_stop(struct fbnic_net *fbn)
- {
- 	struct fbnic_dev *fbd = fbn->fbd;
- 
--	phylink_suspend(fbn->phylink, fbnic_bmc_present(fbd));
- 	cancel_delayed_work(&fbd->service_task);
- }
+ 	if (name->len != len)
+ 		return 1;
  
 -- 
 2.50.1
