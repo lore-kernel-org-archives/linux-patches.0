@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D1828AB1E;
-	Tue,  2 Sep 2025 13:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E802DECDE;
+	Tue,  2 Sep 2025 13:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820589; cv=none; b=Gn4V+Z2Grn8z1BGADUgJZoFPmEz4TKJ4rWejGaijNtHmIO33sZEwNGfzgd51SA0fY+m3uQJjpqbiAuhsDUJxAQxcLRT15mZg3Olk9WQE1DkGIP4VuvDBO8IvlSF5Mxp+XiPpqmQDdQn5psnf3gb5qg7NbdsbVg/RhzjgzwdSIbE=
+	t=1756820594; cv=none; b=Cjqycn2aCwOd5OusmjtphF2FWy+Vyy9OyMW79BQXUhE9yYD1EU4t7fQ24Hu0qI9TpO3r/5eZgDWpEF+LC9UnDU/W0dHkTfNUeyr/4h9fqp1eihPDBW5JYE7bGnTzWD3Z/a+TbT1g5+ymDkPVFsCZQVmaUaRLhGyU+B0ZTBSp1Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820589; c=relaxed/simple;
-	bh=PH5h8z37H0L2mK5/yDFWZJaHTzuxCELYrgmSYh0Nc9E=;
+	s=arc-20240116; t=1756820594; c=relaxed/simple;
+	bh=l9ydAcRih9R0zzVf4CXd12okONOCwdFdkNHZJUjwrZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkfViJPH9XChxcYFTOCn9n+AurNegdytMRQ0SWAfEGTTHX5Zz4AY1uWZij4LgrKGOVJmpc97jVlvkOZLZnQp81/V1MDiKKV9tj2SAu1KJxxPMb9o8yeeAB9W+3faEflYq/XJVLTL5v2IKp1GHSmGFwRnXeWzqTC/DMeU6rJXBjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeGHYa4Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cU/QyRzGqI2jU4XvJVpMEN+rrHKTPGVUQOhaXf94mpjStBEqznH14q4ZtVPKEUP6LCMxcGS2G8erTeTApJ5xB1awDe4ijLgS883sm4NAcpp67CPKH2F4feOz6Z/W/ucYgflmudohUuXN1VfHPJPkiCpF/qnaKPIqnCigKStzI4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVuEfcxb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeGHYa4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65E4C4CEED;
-	Tue,  2 Sep 2025 13:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVuEfcxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281BCC4CEED;
+	Tue,  2 Sep 2025 13:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820589;
-	bh=PH5h8z37H0L2mK5/yDFWZJaHTzuxCELYrgmSYh0Nc9E=;
+	s=korg; t=1756820592;
+	bh=l9ydAcRih9R0zzVf4CXd12okONOCwdFdkNHZJUjwrZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeGHYa4QuumxLhficw193PGxGYIwhEOft1n4aYeCaEzF6ydEHNbcoTHhn///NzXOg
-	 lSOU79kjNYT2//hWkYroYo2VnQjm5XUozmy8V6uK9OW6LJ/XD2MCyDa15zAzBMPjEN
-	 Sd5VXg+rwOtjauDuhVNOt9KFYbWaUIghpf+qdJxM=
+	b=cVuEfcxbkx0FQxHETby6T+gimtNFv96WPXgRLsX4pfWzyIMYscuR4oV0lDRitGV9y
+	 ZIC1+MO/sLunsBCVB9Fs6z6CjinYwJnJdDURsfvpxhbsNaks0V4uaJK9JlzbCh69J2
+	 jR8un6gZtNRzBJx6pjmoA5bj5JdI9/O3giLsMdJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 26/33] Revert "drm/amdgpu: fix incorrect vm flags to map bo"
-Date: Tue,  2 Sep 2025 15:21:44 +0200
-Message-ID: <20250902131928.085837725@linuxfoundation.org>
+	Brett A C Sheffield <bacs@librecast.net>,
+	Oscar Maes <oscmaes92@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 09/33] net: ipv4: fix regression in local-broadcast routes
+Date: Tue,  2 Sep 2025 15:21:27 +0200
+Message-ID: <20250902131927.416793947@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
 References: <20250902131927.045875971@linuxfoundation.org>
@@ -49,34 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Oscar Maes <oscmaes92@gmail.com>
 
-commit ac4ed2da4c1305a1a002415058aa7deaf49ffe3e upstream.
+[ Upstream commit 5189446ba995556eaa3755a6e875bc06675b88bd ]
 
-This reverts commit b08425fa77ad2f305fe57a33dceb456be03b653f.
+Commit 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
+introduced a regression where local-broadcast packets would have their
+gateway set in __mkroute_output, which was caused by fi = NULL being
+removed.
 
-Revert this to align with 6.17 because the fixes tag
-was wrong on this commit.
+Fix this by resetting the fib_info for local-broadcast packets. This
+preserves the intended changes for directed-broadcast packets.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit be33e8a239aac204d7e9e673c4220ef244eb1ba3)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 9e30ecf23b1b ("net: ipv4: fix incorrect MTU in broadcast routes")
+Reported-by: Brett A C Sheffield <bacs@librecast.net>
+Closes: https://lore.kernel.org/regressions/20250822165231.4353-4-bacs@librecast.net
+Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250827062322.4807-1-oscmaes92@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/route.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -93,8 +93,8 @@ int amdgpu_map_static_csa(struct amdgpu_
- 	}
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index df4cbf9ba288f..b24de1c67d0c2 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -2552,12 +2552,16 @@ static struct rtable *__mkroute_output(const struct fib_result *res,
+ 		    !netif_is_l3_master(dev_out))
+ 			return ERR_PTR(-EINVAL);
  
- 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
--			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
--			     AMDGPU_VM_PAGE_EXECUTABLE);
-+			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
-+			     AMDGPU_PTE_EXECUTABLE);
+-	if (ipv4_is_lbcast(fl4->daddr))
++	if (ipv4_is_lbcast(fl4->daddr)) {
+ 		type = RTN_BROADCAST;
+-	else if (ipv4_is_multicast(fl4->daddr))
++
++		/* reset fi to prevent gateway resolution */
++		fi = NULL;
++	} else if (ipv4_is_multicast(fl4->daddr)) {
+ 		type = RTN_MULTICAST;
+-	else if (ipv4_is_zeronet(fl4->daddr))
++	} else if (ipv4_is_zeronet(fl4->daddr)) {
+ 		return ERR_PTR(-EINVAL);
++	}
  
- 	if (r) {
- 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
+ 	if (dev_out->flags & IFF_LOOPBACK)
+ 		flags |= RTCF_LOCAL;
+-- 
+2.50.1
+
 
 
