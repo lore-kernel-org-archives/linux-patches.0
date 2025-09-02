@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C3831987D;
-	Tue,  2 Sep 2025 13:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EDC30BF79;
+	Tue,  2 Sep 2025 13:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820095; cv=none; b=WPxRHDHkLx/Bwjt+YoZft1/r+jHhjPrue5eKyUt6jJ7K8RjSpTNGuCYciYfxBhwHDrKmSRUrfZMpJ8bagGGT62j7l1czZLkkNSnNw/MtcZKw2hiyUNh5iLle6wNRI5owSIIud9wD17ZKMVKe6H5cimc97deW2e2TU6DU8FgufO8=
+	t=1756820098; cv=none; b=ZTsshETTb3iAcn//dZUc4ZA/Agfe8N8c0ibKsjlQXZ5+SepFHoKmBjdDRsFjyoI4jWSKwJg5yvmgasPy23eBE74B+rY0Uu03U7iJfuV/ukAhDiZVhP1gqQpTOXcWRngjpG603SHQ/RxxshX7NZSIiHUAbDhUREu0BL7kReK2H84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820095; c=relaxed/simple;
-	bh=E3FFS4ppZZGBfUp+W6PHGC3YixzxxEkQn+Myt3V3X90=;
+	s=arc-20240116; t=1756820098; c=relaxed/simple;
+	bh=jFCjxaDFyg3REYO0z0eTlaaGYHlxBa1hXMGTHWWTsBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNHVcZ4Yy0s3Iv+mo4mgrmZD5bdK4in372vKZRqcrfbGD7tfGRA+8Gze2v3rJg1Bna2NHmP4Us/FcgPAXIaF7Yol+wuIoWnZu9wZgnVEMEohWofoHzR2NpvyiIdxM+y+Iu2L8BULlmoRSpUQzzW568ulk0dhYBBMz69va9sfLEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g52cGK2+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNiiG7ANlEa23SP4sy5LlGnXYVPJcCro2qkElD720GU04lc/+tH0QLVCBL3URWB7g2knpc6NQSEefxOtsYG3DG9syTN5z2dYpAb0G/9d4o+VpMtCHK8mOx+v48ItYZNrkxKJjhp+/030FRxPOgiNXDpr0Z6rY0VllWRw2y7zhus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z86vJx9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g52cGK2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AF4C4CEED;
-	Tue,  2 Sep 2025 13:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z86vJx9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979BDC4CEED;
+	Tue,  2 Sep 2025 13:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820095;
-	bh=E3FFS4ppZZGBfUp+W6PHGC3YixzxxEkQn+Myt3V3X90=;
+	s=korg; t=1756820098;
+	bh=jFCjxaDFyg3REYO0z0eTlaaGYHlxBa1hXMGTHWWTsBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g52cGK2+POQmaSyRP69ypvEFtNFWvfubQEWSJybB3rbAfFWJuxyGpB9Cky3eydruR
-	 pGPN0p5paqLizTkFBJYjDuHqrTiJXIC2jcM02eJ6ZsMRcOUU0gOOjQTebenjjH5dzF
-	 Zp7XDCdd2jaOcdRvthhKfu6ojL4eiqlzj9eziBN8=
+	b=z86vJx9n23PlohzNBPP3/rfsMeUx1b8lUi63k8XNoOUx8xdTOfx60SXsw7IBncvl7
+	 nkyfzxdVJPS59bfpAml0Z7ktDXdyWUcGF8lS3c59bZp/FZzBCtoN4vTzREeFANLR3Y
+	 XYZX7XQ4BIadH0F11F9cuXBiXOPCKjg3mqQ21It8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>
-Subject: [PATCH 6.12 91/95] PCI: dwc: Ensure that dw_pcie_wait_for_link() waits 100 ms after link up
-Date: Tue,  2 Sep 2025 15:21:07 +0200
-Message-ID: <20250902131943.094194915@linuxfoundation.org>
+	intel-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	Sasha Levin <sashal@kernel.org>,
+	Imre Deak <imre.deak@intel.com>
+Subject: [PATCH 6.12 92/95] Revert "drm/dp: Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS"
+Date: Tue,  2 Sep 2025 15:21:08 +0200
+Message-ID: <20250902131943.130857399@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -53,49 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 80dc18a0cba8dea42614f021b20a04354b213d86 upstream.
+This reverts commit 3c778a98bee16b4c7ba364a0101ee3c399a95b85 which is
+commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f upstream.
 
-As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link speeds
-greater than 5.0 GT/s, software must wait a minimum of 100 ms after Link
-training completes before sending a Configuration Request.
+The upstream commit a40c5d727b8111b5db424a1e43e14a1dcce1e77f ("drm/dp:
+Change AUX DPCD probe address from DPCD_REV to LANE0_1_STATUS") the
+reverted commit backported causes a regression, on one eDP panel at
+least resulting in display flickering, described in detail at the Link:
+below. The issue fixed by the upstream commit will need a different
+solution, revert the backport for now.
 
-Add this delay in dw_pcie_wait_for_link(), after the link is reported as
-up. The delay will only be performed in the success case where the link
-came up.
-
-DWC glue drivers that have a link up IRQ (drivers that set
-use_linkup_irq = true) do not call dw_pcie_wait_for_link(), instead they
-perform this delay in their threaded link up IRQ handler.
-
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Link: https://patch.msgid.link/20250625102347.1205584-14-cassel@kernel.org
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: Sasha Levin <sashal@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14558
+Signed-off-by: Imre Deak <imre.deak@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/display/drm_dp_helper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -655,6 +655,14 @@ int dw_pcie_wait_for_link(struct dw_pcie
- 		return -ETIMEDOUT;
+--- a/drivers/gpu/drm/display/drm_dp_helper.c
++++ b/drivers/gpu/drm/display/drm_dp_helper.c
+@@ -664,7 +664,7 @@ ssize_t drm_dp_dpcd_read(struct drm_dp_a
+ 	 * monitor doesn't power down exactly after the throw away read.
+ 	 */
+ 	if (!aux->is_remote) {
+-		ret = drm_dp_dpcd_probe(aux, DP_LANE0_1_STATUS);
++		ret = drm_dp_dpcd_probe(aux, DP_DPCD_REV);
+ 		if (ret < 0)
+ 			return ret;
  	}
- 
-+	/*
-+	 * As per PCIe r6.0, sec 6.6.1, a Downstream Port that supports Link
-+	 * speeds greater than 5.0 GT/s, software must wait a minimum of 100 ms
-+	 * after Link training completes before sending a Configuration Request.
-+	 */
-+	if (pci->max_link_speed > 2)
-+		msleep(PCIE_RESET_CONFIG_WAIT_MS);
-+
- 	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	val = dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKSTA);
- 
 
 
