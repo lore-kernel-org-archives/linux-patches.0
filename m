@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEC0305062;
-	Tue,  2 Sep 2025 13:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941783043BD;
+	Tue,  2 Sep 2025 13:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819894; cv=none; b=QCC/gDtWQVq5p1vMXar/qPbn4tdHJjaO1AGLk4bm7u10BGINW20D60kp9S6g1g9OfmitZiPC5uD621oMHSQi0n5ZcOBx2inoM0zty4IQUikyM7oGJqsQR4EIOpQ7UW4vthGt8rj3PZ/U42K4OMwHLufxHrh7nVYt27kxKq4tzJo=
+	t=1756819896; cv=none; b=IbPIV+0BjJq1MbjW5ng/zlWwq5iQjs9FNYwGOHuUGyZNMwoaxUeMlwz6HB6hdfXnXRZnxUD11iKD4torV2eL4VwyIUO0KEkaN7UL/hyRGtspGL8BSS5Fucn51by7vIOAQi1bo5xAjPqaJooi/zNlbBNhsH3UOgL1LwCr+j5L5ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819894; c=relaxed/simple;
-	bh=rJJJI4Uc3MHTbNgz8SMOfQC5wtgueul78WD/Iah7Opc=;
+	s=arc-20240116; t=1756819896; c=relaxed/simple;
+	bh=1SBaA13LhIC9PXqRPTcmLdAOZ3IJh44wt7p8gRPdaNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETkFJouh00nc4DgAlfyM1t+6bACEWJA4h2yQxfN5zwZZCncHfiMcmjrkiB61wnSUY+808YuYwkqjJacvTKflt+mqSrIG0YepNDn73///UldzolSe3EcG+dPw9HHVamIsPPXCahWYep2+zpqmrGfhU2tdOChuY5w0QlNTS4gCZDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcsD/GRh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W23OiJA9nYV8awTBlWuJj50Gn6TJSi1S6oyJt0EVu9vWs9MKcsyFvxOl7aGquwXUAH9gn5kL/LWP/Ir/aRRP0i8B8kckL4tayzqlXb5T1y2qVXgiWZL5TXS9IZs+ktaS91Bxe5cnY7MTW1A3JtPR8hnzyr4JUF7ghbpFbWJpngc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vbk8thFz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcsD/GRh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E39C4CEF4;
-	Tue,  2 Sep 2025 13:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vbk8thFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE05C4CEF5;
+	Tue,  2 Sep 2025 13:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819893;
-	bh=rJJJI4Uc3MHTbNgz8SMOfQC5wtgueul78WD/Iah7Opc=;
+	s=korg; t=1756819896;
+	bh=1SBaA13LhIC9PXqRPTcmLdAOZ3IJh44wt7p8gRPdaNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcsD/GRhGXOuK7x3J0SO90SI9bzFiSluaJIQWqNCisZT95jXn+YPlFfJUStVavVAz
-	 QsroDLgf8xdArcfHTChV1oz1tEQ5r6NqHxLT0LPELc4nwl6rnWbmyqKOMYutUXXDl/
-	 k+pW2Npz2KrdqDwhdzh8t6f8W5N12OcB/hFqxX/M=
+	b=Vbk8thFzEVPBXCw6dNpQ7ZubVBJya4RQWUtjJaW/d3332SyhLb5yaAP+bxfAqQ2aS
+	 OPDK3oOma4xUt+ETm0E7WrG69i+FgNcNEf0umg1yHUCxb9bDDrV6nXhoBdWIoNeiRF
+	 JWkT5b9wdS6nPNeKSttx5UE9urjWDMHuAXgp0k+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 04/95] of: dynamic: Fix memleak when of_pci_add_properties() failed
-Date: Tue,  2 Sep 2025 15:19:40 +0200
-Message-ID: <20250902131939.780273661@linuxfoundation.org>
+Subject: [PATCH 6.12 05/95] pinctrl: STMFX: add missing HAS_IOMEM dependency
+Date: Tue,  2 Sep 2025 15:19:41 +0200
+Message-ID: <20250902131939.817867220@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,45 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c81f6ce16785cc07ae81f53deb07b662ed0bb3a5 ]
+[ Upstream commit a12946bef0407cf2db0899c83d42c47c00af3fbc ]
 
-When of_pci_add_properties() failed, of_changeset_destroy() is called to
-free the changeset. And of_changeset_destroy() puts device tree node in
-each entry but does not free property in the entry. This leads to memory
-leak in the failure case.
+When building on ARCH=um (which does not set HAS_IOMEM), kconfig
+reports an unmet dependency caused by PINCTRL_STMFX. It selects
+MFD_STMFX, which depends on HAS_IOMEM. To stop this warning,
+PINCTRL_STMFX should also depend on HAS_IOMEM.
 
-In of_changeset_add_prop_helper(), add the property to the device tree node
-deadprops list. Thus, the property will also be freed along with device
-tree node.
+kconfig warning:
+WARNING: unmet direct dependencies detected for MFD_STMFX
+  Depends on [n]: HAS_IOMEM [=n] && I2C [=y] && OF [=y]
+  Selected by [y]:
+  - PINCTRL_STMFX [=y] && PINCTRL [=y] && I2C [=y] && OF_GPIO [=y]
 
-Fixes: b544fc2b8606 ("of: dynamic: Add interfaces for creating device node dynamically")
-Reported-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Closes: https://lore.kernel.org/all/aJms+YT8TnpzpCY8@lpieralisi/
-Tested-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://lore.kernel.org/r/20250818152221.3685724-1-lizhi.hou@amd.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 1490d9f841b1 ("pinctrl: Add STMFX GPIO expander Pinctrl/GPIO driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/20250815022721.1650885-1-rdunlap@infradead.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/dynamic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
-index 110104a936d9c..fcaaadc2eca1d 100644
---- a/drivers/of/dynamic.c
-+++ b/drivers/of/dynamic.c
-@@ -938,6 +938,9 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
- 	if (ret)
- 		__of_prop_free(new_pp);
- 
-+	new_pp->next = np->deadprops;
-+	np->deadprops = new_pp;
-+
- 	return ret;
- }
- 
+diff --git a/drivers/pinctrl/Kconfig b/drivers/pinctrl/Kconfig
+index 354536de564b6..e05174e5efbc3 100644
+--- a/drivers/pinctrl/Kconfig
++++ b/drivers/pinctrl/Kconfig
+@@ -504,6 +504,7 @@ config PINCTRL_STMFX
+ 	tristate "STMicroelectronics STMFX GPIO expander pinctrl driver"
+ 	depends on I2C
+ 	depends on OF_GPIO
++	depends on HAS_IOMEM
+ 	select GENERIC_PINCONF
+ 	select GPIOLIB_IRQCHIP
+ 	select MFD_STMFX
 -- 
 2.50.1
 
