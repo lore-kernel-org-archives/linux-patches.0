@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B64307AEA;
-	Tue,  2 Sep 2025 13:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EC4305062;
+	Tue,  2 Sep 2025 13:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819884; cv=none; b=ZmebEz9r/I6MEfGcZgeBRTGeteghUhwKvh1mWV7doIS4lr0dJUx0q0Dm/dCqWP2s8kBzMOj8ACtPY3SzTfcuCgItuxvmzGDLd3m6otChwYffKaXvl5AeXhYf+wox0r0BluMACATALJDZuJoInVEeLCC9EZZAOq8WmB5m6rHZbrE=
+	t=1756819887; cv=none; b=C93sjV5UJ/VlH5Didrt0GUeaDvZT9wxX++VIWWXtlS/p/BouXGc7bLCHVfz8lugi+5Lf7MO6N49vMDfYkMcN78wnNE36ciqhjYxWXaB4HCAKNmh5UjMpcWol9qMxHPlqgXcLdPWvXLDQSDXa8b21KR+YSGv36gy5gikoOqCFpZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819884; c=relaxed/simple;
-	bh=6WW55WCCvoJFH7uKoIHbTGU5/BjPhrZ73nGzZjwV4HQ=;
+	s=arc-20240116; t=1756819887; c=relaxed/simple;
+	bh=reN5bVgGfhRWgX9VDoIsZ+p2z6goOl1FCsqlLi3qmQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrZ8rXTqkdeu6kVeOMd+uJ3zkO+c9fsOcpgTtd6n5Tg/Ik17dyoe9uCfLWlsPV4rTxiQNutXkWYFeEZ4ooT+MRdHlzWaM71E/f+euwo/GRu6bZY8ZAZpfduXVoLyZmFz4jWifGGfJPNm1hbLT6mZqpum7QvIka7WnZnqHc1UfNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5sEJz6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tWMv9yqg47ibRee1vpiFdEQPfMqhHxOyoNxfrNtJYRUdYSRWw86uH7DLOn62F4aSK+HFqT8RmYXDsgOYi3Uyw6mW4UzRUQcJiOeynVhMOXYXUGzolzvDq1LgTNWwMNFBQD4s7i/41pDzcWgeTcRWq2qkZNsDuiZ857R+wCZ0VCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGYF2ON2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5sEJz6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D39C4CEED;
-	Tue,  2 Sep 2025 13:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGYF2ON2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65591C4CEED;
+	Tue,  2 Sep 2025 13:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819883;
-	bh=6WW55WCCvoJFH7uKoIHbTGU5/BjPhrZ73nGzZjwV4HQ=;
+	s=korg; t=1756819886;
+	bh=reN5bVgGfhRWgX9VDoIsZ+p2z6goOl1FCsqlLi3qmQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5sEJz6RUYLecdhuz23XK9IGMJ4eScccbd2Hl0j530hit0TuJC4nic07RAiVEG3iB
-	 ZVL8Wt6fMdoX/nwENNBRo3Kt8zCUd+mfV0XdhL7BOrnbi86DyTlPAXlv/RAlwYDA7x
-	 e7GVnNl7glLEAgTEYt913RHNjfSqdnFgrdrAD/iA=
+	b=QGYF2ON2ROSzJsMH42CaN5g1S+WOz7Wf1Yj/ZIS6jdzhXXGV7+cpVUEN2u36Aflhj
+	 D88QGLz73B5Km+0hkFC/2hQFxjd+2GpfbYd3u7kQChnvDTKyR6+z3gMrvRGRNW4gpT
+	 rVadh6jieazfTpU2AkGu0E1EjFYUjL/4XTMBH0UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	=?UTF-8?q?=E5=8D=A2=E5=9B=BD=E5=AE=8F?= <luguohong@xiaomi.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 25/95] powerpc/kvm: Fix ifdef to remove build warning
-Date: Tue,  2 Sep 2025 15:20:01 +0200
-Message-ID: <20250902131940.578212725@linuxfoundation.org>
+Subject: [PATCH 6.12 26/95] HID: input: rename hidinput_set_battery_charge_status()
+Date: Tue,  2 Sep 2025 15:20:02 +0200
+Message-ID: <20250902131940.615571866@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -45,72 +46,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit 88688a2c8ac6c8036d983ad8b34ce191c46a10aa ]
+[ Upstream commit a82231b2a8712d0218fc286a9b0da328d419a3f4 ]
 
-When compiling for pseries or powernv defconfig with "make C=1",
-these warning were reported bu sparse tool in powerpc/kernel/kvm.c
+In preparation for a patch fixing a bug affecting
+hidinput_set_battery_charge_status(), rename the function to
+hidinput_update_battery_charge_status() and move it up so it can be used
+by hidinput_update_battery().
 
-arch/powerpc/kernel/kvm.c:635:9: warning: switch with no cases
-arch/powerpc/kernel/kvm.c:646:9: warning: switch with no cases
+Refactor, no functional changes.
 
-Currently #ifdef were added after the switch case which are specific
-for BOOKE and PPC_BOOK3S_32. These are not enabled in pseries/powernv
-defconfig. Fix it by moving the #ifdef before switch(){}
-
-Fixes: cbe487fac7fc0 ("KVM: PPC: Add mtsrin PV code")
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20250518044107.39928-1-maddy@linux.ibm.com
+Tested-by: 卢国宏 <luguohong@xiaomi.com>
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: e94536e1d181 ("HID: input: report battery status changes immediately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/kvm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hid/hid-input-test.c | 10 +++++-----
+ drivers/hid/hid-input.c      | 38 ++++++++++++++++++------------------
+ 2 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/arch/powerpc/kernel/kvm.c b/arch/powerpc/kernel/kvm.c
-index 5b3c093611baf..7209d00a9c257 100644
---- a/arch/powerpc/kernel/kvm.c
-+++ b/arch/powerpc/kernel/kvm.c
-@@ -632,19 +632,19 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
- #endif
- 	}
+diff --git a/drivers/hid/hid-input-test.c b/drivers/hid/hid-input-test.c
+index 77c2d45ac62a7..6f5c71660d823 100644
+--- a/drivers/hid/hid-input-test.c
++++ b/drivers/hid/hid-input-test.c
+@@ -7,7 +7,7 @@
  
--	switch (inst_no_rt & ~KVM_MASK_RB) {
- #ifdef CONFIG_PPC_BOOK3S_32
-+	switch (inst_no_rt & ~KVM_MASK_RB) {
- 	case KVM_INST_MTSRIN:
- 		if (features & KVM_MAGIC_FEAT_SR) {
- 			u32 inst_rb = _inst & KVM_MASK_RB;
- 			kvm_patch_ins_mtsrin(inst, inst_rt, inst_rb);
- 		}
- 		break;
--#endif
- 	}
-+#endif
+ #include <kunit/test.h>
  
--	switch (_inst) {
- #ifdef CONFIG_BOOKE
-+	switch (_inst) {
- 	case KVM_INST_WRTEEI_0:
- 		kvm_patch_ins_wrteei_0(inst);
- 		break;
-@@ -652,8 +652,8 @@ static void __init kvm_check_ins(u32 *inst, u32 features)
- 	case KVM_INST_WRTEEI_1:
- 		kvm_patch_ins_wrtee(inst, 0, 1);
- 		break;
--#endif
- 	}
-+#endif
+-static void hid_test_input_set_battery_charge_status(struct kunit *test)
++static void hid_test_input_update_battery_charge_status(struct kunit *test)
+ {
+ 	struct hid_device *dev;
+ 	bool handled;
+@@ -15,15 +15,15 @@ static void hid_test_input_set_battery_charge_status(struct kunit *test)
+ 	dev = kunit_kzalloc(test, sizeof(*dev), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
+ 
+-	handled = hidinput_set_battery_charge_status(dev, HID_DG_HEIGHT, 0);
++	handled = hidinput_update_battery_charge_status(dev, HID_DG_HEIGHT, 0);
+ 	KUNIT_EXPECT_FALSE(test, handled);
+ 	KUNIT_EXPECT_EQ(test, dev->battery_charge_status, POWER_SUPPLY_STATUS_UNKNOWN);
+ 
+-	handled = hidinput_set_battery_charge_status(dev, HID_BAT_CHARGING, 0);
++	handled = hidinput_update_battery_charge_status(dev, HID_BAT_CHARGING, 0);
+ 	KUNIT_EXPECT_TRUE(test, handled);
+ 	KUNIT_EXPECT_EQ(test, dev->battery_charge_status, POWER_SUPPLY_STATUS_DISCHARGING);
+ 
+-	handled = hidinput_set_battery_charge_status(dev, HID_BAT_CHARGING, 1);
++	handled = hidinput_update_battery_charge_status(dev, HID_BAT_CHARGING, 1);
+ 	KUNIT_EXPECT_TRUE(test, handled);
+ 	KUNIT_EXPECT_EQ(test, dev->battery_charge_status, POWER_SUPPLY_STATUS_CHARGING);
+ }
+@@ -63,7 +63,7 @@ static void hid_test_input_get_battery_property(struct kunit *test)
  }
  
- extern u32 kvm_template_start[];
+ static struct kunit_case hid_input_tests[] = {
+-	KUNIT_CASE(hid_test_input_set_battery_charge_status),
++	KUNIT_CASE(hid_test_input_update_battery_charge_status),
+ 	KUNIT_CASE(hid_test_input_get_battery_property),
+ 	{ }
+ };
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 9d80635a91ebd..b372b74f3e24b 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -595,6 +595,20 @@ static void hidinput_cleanup_battery(struct hid_device *dev)
+ 	dev->battery = NULL;
+ }
+ 
++static bool hidinput_update_battery_charge_status(struct hid_device *dev,
++						  unsigned int usage, int value)
++{
++	switch (usage) {
++	case HID_BAT_CHARGING:
++		dev->battery_charge_status = value ?
++					     POWER_SUPPLY_STATUS_CHARGING :
++					     POWER_SUPPLY_STATUS_DISCHARGING;
++		return true;
++	}
++
++	return false;
++}
++
+ static void hidinput_update_battery(struct hid_device *dev, int value)
+ {
+ 	int capacity;
+@@ -617,20 +631,6 @@ static void hidinput_update_battery(struct hid_device *dev, int value)
+ 		power_supply_changed(dev->battery);
+ 	}
+ }
+-
+-static bool hidinput_set_battery_charge_status(struct hid_device *dev,
+-					       unsigned int usage, int value)
+-{
+-	switch (usage) {
+-	case HID_BAT_CHARGING:
+-		dev->battery_charge_status = value ?
+-					     POWER_SUPPLY_STATUS_CHARGING :
+-					     POWER_SUPPLY_STATUS_DISCHARGING;
+-		return true;
+-	}
+-
+-	return false;
+-}
+ #else  /* !CONFIG_HID_BATTERY_STRENGTH */
+ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
+ 				  struct hid_field *field, bool is_percentage)
+@@ -642,14 +642,14 @@ static void hidinput_cleanup_battery(struct hid_device *dev)
+ {
+ }
+ 
+-static void hidinput_update_battery(struct hid_device *dev, int value)
++static bool hidinput_update_battery_charge_status(struct hid_device *dev,
++						  unsigned int usage, int value)
+ {
++	return false;
+ }
+ 
+-static bool hidinput_set_battery_charge_status(struct hid_device *dev,
+-					       unsigned int usage, int value)
++static void hidinput_update_battery(struct hid_device *dev, int value)
+ {
+-	return false;
+ }
+ #endif	/* CONFIG_HID_BATTERY_STRENGTH */
+ 
+@@ -1515,7 +1515,7 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct
+ 		return;
+ 
+ 	if (usage->type == EV_PWR) {
+-		bool handled = hidinput_set_battery_charge_status(hid, usage->hid, value);
++		bool handled = hidinput_update_battery_charge_status(hid, usage->hid, value);
+ 
+ 		if (!handled)
+ 			hidinput_update_battery(hid, value);
 -- 
 2.50.1
 
