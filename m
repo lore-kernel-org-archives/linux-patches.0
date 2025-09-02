@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527112D4818;
-	Tue,  2 Sep 2025 13:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E522EDD6B;
+	Tue,  2 Sep 2025 13:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820650; cv=none; b=H7zZTLr10xtgruCiP/BCj/gN8qvjRkn0ocAEn2iEPiadru52ojnIit4Stvg7uLHjehki07IoyNdH2RxVpDClGKoSlXg/DTDg+5f6FOAl6jE8kOf+fYbwOY8v9PXtFP78ggetbXC3EFBUoiomvCKbU/T6yvNCDl2D4nSEoDZAYVs=
+	t=1756820653; cv=none; b=loKVeCC73k2EoRgZjg+rgCvWeLeSUWyc2xzozqjwwojnck2k7UUcD/XTJrWClHVw1s2bHkYs/VohQ0Sh7jxF+bci6Q568hM5Ww6wdw5vBywgHpqQ3V6MRNl9kaeR2/a1uBJf09eZa0L175dccFwfaa7UhUC0a59NOwsunfslt58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820650; c=relaxed/simple;
-	bh=dYYwbeZtKiLL4gFmTnJ158sSLONxGI/oZoZQEFwaJ6c=;
+	s=arc-20240116; t=1756820653; c=relaxed/simple;
+	bh=3QJ+RGXqyv2vT9OrKb+oySheFm09OggUQ30m2fRLbXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1C6pzvU0Mqp1IUQJlnbvcbsn9dKAeq+RbRGNZnMzbxYuFN0QYWESfIQct3vJL/8bjl4maKNZN/Fj4uLk8QtLfDwaTsseoMpkxlQXyAtiAOahFS2iNw7nt/LGbct9mX8Zbv74mMQh4dho4wcvDXTuLqhVZlVBTZ0Z9cQilMf2Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ+vTAc1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dvf/Kpof12OaieMM7PVYA8D7IpRYI49y3ko55myR/AV1B8sOTe82/SoELWfPICjHDdxATl3/HQOYeJlSBXaC7lFt/lXD5CXwPyLp3BsYLvt643We1oI9dy+7+Mqp3pfY+lSByWoJUbkG9MstI9GsvFAksq1MIdU4Fz/KccrVNro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEIvWVat; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ+vTAc1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB5AC4CEED;
-	Tue,  2 Sep 2025 13:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEIvWVat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F069CC4CEED;
+	Tue,  2 Sep 2025 13:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820650;
-	bh=dYYwbeZtKiLL4gFmTnJ158sSLONxGI/oZoZQEFwaJ6c=;
+	s=korg; t=1756820653;
+	bh=3QJ+RGXqyv2vT9OrKb+oySheFm09OggUQ30m2fRLbXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZ+vTAc1K01pYe7/AztAowjYES1iB8652TXZhKVtYdB0kaQqeSgtcA9sA+cIyhMe8
-	 yQEslIQUzVMRMXEeBmgg33mdKoy7PykH0UyIIkGSvawgW/w/vDv2VhrPdNrdCt+Cww
-	 z0rsqFcqyPUYkeg0gv1uzsSzQcSlsFYP6iqG4LAs=
+	b=dEIvWVatXZGcUCiqCHaFC/dQCfjyd8MSzq2WV4R9KSxF+cx6mMLcanPLH98TvW+Ji
+	 Tt5bCqxqBxbURPSltoDKNBbOp5/BmzkjxmX3K/lJ1BD8hxz4+7Wj9MOVay0/WrX1Xo
+	 vRqE26SZCpnGGwAxVtamN+qDJX7M9Mx4lVwCzJEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1741b56d54536f4ec349@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 11/34] atm: atmtcp: Prevent arbitrary write in atmtcp_recv_control().
-Date: Tue,  2 Sep 2025 15:21:37 +0200
-Message-ID: <20250902131927.065790122@linuxfoundation.org>
+Subject: [PATCH 5.10 12/34] net: dlink: fix multicast stats being counted incorrectly
+Date: Tue,  2 Sep 2025 15:21:38 +0200
+Message-ID: <20250902131927.106989838@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -52,190 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Yeounsu Moon <yyyynoom@gmail.com>
 
-[ Upstream commit ec79003c5f9d2c7f9576fc69b8dbda80305cbe3a ]
+[ Upstream commit 007a5ffadc4fd51739527f1503b7cf048f31c413 ]
 
-syzbot reported the splat below. [0]
+`McstFramesRcvdOk` counts the number of received multicast packets, and
+it reports the value correctly.
 
-When atmtcp_v_open() or atmtcp_v_close() is called via connect()
-or close(), atmtcp_send_control() is called to send an in-kernel
-special message.
+However, reading `McstFramesRcvdOk` clears the register to zero. As a
+result, the driver was reporting only the packets since the last read,
+instead of the accumulated total.
 
-The message has ATMTCP_HDR_MAGIC in atmtcp_control.hdr.length.
-Also, a pointer of struct atm_vcc is set to atmtcp_control.vcc.
-
-The notable thing is struct atmtcp_control is uAPI but has a
-space for an in-kernel pointer.
-
-  struct atmtcp_control {
-  	struct atmtcp_hdr hdr;	/* must be first */
-  ...
-  	atm_kptr_t vcc;		/* both directions */
-  ...
-  } __ATM_API_ALIGN;
-
-  typedef struct { unsigned char _[8]; } __ATM_API_ALIGN atm_kptr_t;
-
-The special message is processed in atmtcp_recv_control() called
-from atmtcp_c_send().
-
-atmtcp_c_send() is vcc->dev->ops->send() and called from 2 paths:
-
-  1. .ndo_start_xmit() (vcc->send() == atm_send_aal0())
-  2. vcc_sendmsg()
-
-The problem is sendmsg() does not validate the message length and
-userspace can abuse atmtcp_recv_control() to overwrite any kptr
-by atmtcp_control.
-
-Let's add a new ->pre_send() hook to validate messages from sendmsg().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc00200000ab: 0000 [#1] SMP KASAN PTI
-KASAN: probably user-memory-access in range [0x0000000100000558-0x000000010000055f]
-CPU: 0 UID: 0 PID: 5865 Comm: syz-executor331 Not tainted 6.17.0-rc1-syzkaller-00215-gbab3ce404553 #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:atmtcp_recv_control drivers/atm/atmtcp.c:93 [inline]
-RIP: 0010:atmtcp_c_send+0x1da/0x950 drivers/atm/atmtcp.c:297
-Code: 4d 8d 75 1a 4c 89 f0 48 c1 e8 03 42 0f b6 04 20 84 c0 0f 85 15 06 00 00 41 0f b7 1e 4d 8d b7 60 05 00 00 4c 89 f0 48 c1 e8 03 <42> 0f b6 04 20 84 c0 0f 85 13 06 00 00 66 41 89 1e 4d 8d 75 1c 4c
-RSP: 0018:ffffc90003f5f810 EFLAGS: 00010203
-RAX: 00000000200000ab RBX: 0000000000000000 RCX: 0000000000000000
-RDX: ffff88802a510000 RSI: 00000000ffffffff RDI: ffff888030a6068c
-RBP: ffff88802699fb40 R08: ffff888030a606eb R09: 1ffff1100614c0dd
-R10: dffffc0000000000 R11: ffffffff8718fc40 R12: dffffc0000000000
-R13: ffff888030a60680 R14: 000000010000055f R15: 00000000ffffffff
-FS:  00007f8d7e9236c0(0000) GS:ffff888125c1c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000000045ad50 CR3: 0000000075bde000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- vcc_sendmsg+0xa10/0xc60 net/atm/common.c:645
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:729
- ____sys_sendmsg+0x505/0x830 net/socket.c:2614
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2668
- __sys_sendmsg net/socket.c:2700 [inline]
- __do_sys_sendmsg net/socket.c:2705 [inline]
- __se_sys_sendmsg net/socket.c:2703 [inline]
- __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2703
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f8d7e96a4a9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f8d7e923198 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f8d7e9f4308 RCX: 00007f8d7e96a4a9
-RDX: 0000000000000000 RSI: 0000200000000240 RDI: 0000000000000005
-RBP: 00007f8d7e9f4300 R08: 65732f636f72702f R09: 65732f636f72702f
-R10: 65732f636f72702f R11: 0000000000000246 R12: 00007f8d7e9c10ac
-R13: 00007f8d7e9231a0 R14: 0000200000000200 R15: 0000200000000250
- </TASK>
-Modules linked in:
+Fix this by updating the multicast statistics accumulatively instaed of
+instantaneously.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+1741b56d54536f4ec349@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68a6767c.050a0220.3d78fd.0011.GAE@google.com/
-Tested-by: syzbot+1741b56d54536f4ec349@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250821021901.2814721-1-kuniyu@google.com
+Tested-on: D-Link DGE-550T Rev-A3
+Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250823182927.6063-3-yyyynoom@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/atmtcp.c   | 17 ++++++++++++++---
- include/linux/atmdev.h |  1 +
- net/atm/common.c       | 15 ++++++++++++---
- 3 files changed, 27 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/dlink/dl2k.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/atm/atmtcp.c b/drivers/atm/atmtcp.c
-index ff558908897f3..9c83fb29b2f1b 100644
---- a/drivers/atm/atmtcp.c
-+++ b/drivers/atm/atmtcp.c
-@@ -279,6 +279,19 @@ static struct atm_vcc *find_vcc(struct atm_dev *dev, short vpi, int vci)
-         return NULL;
- }
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index b7f992103da3c..af1e96e0209fc 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -1095,7 +1095,7 @@ get_stats (struct net_device *dev)
+ 	dev->stats.rx_bytes += dr32(OctetRcvOk);
+ 	dev->stats.tx_bytes += dr32(OctetXmtOk);
  
-+static int atmtcp_c_pre_send(struct atm_vcc *vcc, struct sk_buff *skb)
-+{
-+	struct atmtcp_hdr *hdr;
-+
-+	if (skb->len < sizeof(struct atmtcp_hdr))
-+		return -EINVAL;
-+
-+	hdr = (struct atmtcp_hdr *)skb->data;
-+	if (hdr->length == ATMTCP_HDR_MAGIC)
-+		return -EINVAL;
-+
-+	return 0;
-+}
+-	dev->stats.multicast = dr32(McstFramesRcvdOk);
++	dev->stats.multicast += dr32(McstFramesRcvdOk);
+ 	dev->stats.collisions += dr32(SingleColFrames)
+ 			     +  dr32(MultiColFrames);
  
- static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
- {
-@@ -288,9 +301,6 @@ static int atmtcp_c_send(struct atm_vcc *vcc,struct sk_buff *skb)
- 	struct sk_buff *new_skb;
- 	int result = 0;
- 
--	if (skb->len < sizeof(struct atmtcp_hdr))
--		goto done;
--
- 	dev = vcc->dev_data;
- 	hdr = (struct atmtcp_hdr *) skb->data;
- 	if (hdr->length == ATMTCP_HDR_MAGIC) {
-@@ -347,6 +357,7 @@ static const struct atmdev_ops atmtcp_v_dev_ops = {
- 
- static const struct atmdev_ops atmtcp_c_dev_ops = {
- 	.close		= atmtcp_c_close,
-+	.pre_send	= atmtcp_c_pre_send,
- 	.send		= atmtcp_c_send
- };
- 
-diff --git a/include/linux/atmdev.h b/include/linux/atmdev.h
-index bc24d19ec2b37..8cbb992f6293c 100644
---- a/include/linux/atmdev.h
-+++ b/include/linux/atmdev.h
-@@ -185,6 +185,7 @@ struct atmdev_ops { /* only send is required */
- 	int (*compat_ioctl)(struct atm_dev *dev,unsigned int cmd,
- 			    void __user *arg);
- #endif
-+	int (*pre_send)(struct atm_vcc *vcc, struct sk_buff *skb);
- 	int (*send)(struct atm_vcc *vcc,struct sk_buff *skb);
- 	int (*send_oam)(struct atm_vcc *vcc,void *cell,int flags);
- 	void (*phy_put)(struct atm_dev *dev,unsigned char value,
-diff --git a/net/atm/common.c b/net/atm/common.c
-index 930eb302cd10f..38ed7b985f655 100644
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -635,18 +635,27 @@ int vcc_sendmsg(struct socket *sock, struct msghdr *m, size_t size)
- 
- 	skb->dev = NULL; /* for paths shared with net_device interfaces */
- 	if (!copy_from_iter_full(skb_put(skb, size), size, &m->msg_iter)) {
--		atm_return_tx(vcc, skb);
--		kfree_skb(skb);
- 		error = -EFAULT;
--		goto out;
-+		goto free_skb;
- 	}
- 	if (eff != size)
- 		memset(skb->data + size, 0, eff-size);
-+
-+	if (vcc->dev->ops->pre_send) {
-+		error = vcc->dev->ops->pre_send(vcc, skb);
-+		if (error)
-+			goto free_skb;
-+	}
-+
- 	error = vcc->dev->ops->send(vcc, skb);
- 	error = error ? error : size;
- out:
- 	release_sock(sk);
- 	return error;
-+free_skb:
-+	atm_return_tx(vcc, skb);
-+	kfree_skb(skb);
-+	goto out;
- }
- 
- __poll_t vcc_poll(struct file *file, struct socket *sock, poll_table *wait)
 -- 
 2.50.1
 
