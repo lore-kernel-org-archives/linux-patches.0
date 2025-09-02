@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCBA30FF01;
-	Tue,  2 Sep 2025 13:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667573101AE;
+	Tue,  2 Sep 2025 13:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819835; cv=none; b=f2UJzoJOaPL3ZMoBtMdW0XJ3AjGDNFI+7bkDlhthrHQcCH6XEZRUcK1voDuJi6WvMn0f97ShZKYRrLDXL9y9qGQm4MdEOjDAPsEtokJVCc4tYYH+2m2boSwrAhhNU8d3JcFty6lurjpoRY79+cydYnGHbR73OqkCEXMA5Z8vF3w=
+	t=1756819838; cv=none; b=nqTtjoPYkbN8T1xEnfwuzXuEpkuC9+9h+RQxdUJkYfWxVeFK3jBAdUh/ZraLYTbxJ7faCuYPKbI7Dyim6m1rgrvnI0xpK+SEUWdGq3gDZEUqwmYDwmV08ptBX7FRw0uZjMg/3q/kqoUXWAhIrE6EyB1iXb8H3Nlu2qAStRNPeQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819835; c=relaxed/simple;
-	bh=/pBT0uhmxSxgRrH0p4fKz4ndokTrIKF4i2ErwqIKJVg=;
+	s=arc-20240116; t=1756819838; c=relaxed/simple;
+	bh=KqzalcNpd9ri26nqa1mgz7bWfQnyEM8gj0wIAkUkQSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SeC+1HnKu8OMf496HpVjYW/M+08PFfFpbiBZ4s1Ty5eAnFAZLF3zgD65qccIs46ymDXx4ZRtfF0bSoyZgcUQKW4FjpvUUhjozi9CS3ENPNagGktKFnSMo75wumna2TONIUqPmK9MuniOGjgd9JNVFnXkWiTQHvui6gx245aXxEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u6pd83W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfsrcOGFayUyHtvfwTdDk4NTdBDQSbJ9xX3t1HFBkhIahB0c9C5OdjsQLisr/xnZtLWaKATNJAJKfzlhG6Lrf7NnU9kdTGE6rCxkZsbe7ZjkR40gjo5SMgwtELMmtW4RGL1ICKBu9FYDIKebH1dqLcyz10B/2SgCuCMSB5VvDB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+u6WNDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u6pd83W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13933C4CEED;
-	Tue,  2 Sep 2025 13:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+u6WNDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7112FC4CEED;
+	Tue,  2 Sep 2025 13:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819834;
-	bh=/pBT0uhmxSxgRrH0p4fKz4ndokTrIKF4i2ErwqIKJVg=;
+	s=korg; t=1756819837;
+	bh=KqzalcNpd9ri26nqa1mgz7bWfQnyEM8gj0wIAkUkQSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2u6pd83WUCkpYHVCy2LCdDD0ruNuEYZBvYyY9kamr1QPCAlMNrvVpVd3Wb/Oz0nSb
-	 P8YWIUQwtIpwxUOCE2pjF9YPnn373uTRUogzfoS7gYCzEfCaGQb6RljXXgzgp8HfN3
-	 zdlWNccn52NKXMQDDr8Y9v99wgd5jxWwAQxRJJiQ=
+	b=I+u6WNDwradTeXcTQw48XykBORr3RKxSlyMfFnEL0rPNo1xUBGI5itijAwDb8R+9c
+	 DEw/zSf5nY6ULe66p5/k00gXx+yL69lYWf89h/7Krhz0fXpKEo5oNjjU3UGKgf3nme
+	 a5PypgdB2lPhSrjwEuycjy4NIkf00wJ1kYIv/RgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Johannes Thumshin <johannes.thumshirn@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 11/95] vhost: Fix ioctl # for VHOST_[GS]ET_FORK_FROM_OWNER
-Date: Tue,  2 Sep 2025 15:19:47 +0200
-Message-ID: <20250902131940.048257046@linuxfoundation.org>
+Subject: [PATCH 6.12 12/95] scsi: core: sysfs: Correct sysfs attributes access rights
+Date: Tue,  2 Sep 2025 15:19:48 +0200
+Message-ID: <20250902131940.085172529@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -46,59 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 24fc631539cc78225f5c61f99c7666fcff48024d ]
+[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
 
-The VHOST_[GS]ET_FEATURES_ARRAY ioctl already took 0x83 and it would
-result in a build error when the vhost uapi header is used for perf tool
-build like below.
+The SCSI sysfs attributes "supported_mode" and "active_mode" do not
+define a store method and thus cannot be modified.  Correct the
+DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
+allow write access as they are read-only.
 
-  In file included from trace/beauty/ioctl.c:93:
-  tools/perf/trace/beauty/generated/ioctl/vhost_virtio_ioctl_array.c: In function ‘ioctl__scnprintf_vhost_virtio_cmd’:
-  tools/perf/trace/beauty/generated/ioctl/vhost_virtio_ioctl_array.c:36:18: error: initialized field overwritten [-Werror=override-init]
-     36 |         [0x83] = "SET_FORK_FROM_OWNER",
-        |                  ^~~~~~~~~~~~~~~~~~~~~
-  tools/perf/trace/beauty/generated/ioctl/vhost_virtio_ioctl_array.c:36:18: note: (near initialization for ‘vhost_virtio_ioctl_cmds[131]’)
-
-Fixes: 7d9896e9f6d02d8a ("vhost: Reintroduce kthread API and add mode selection")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Message-Id: <20250819063958.833770-1-namhyung@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/vhost.h | 4 ++--
+ drivers/scsi/scsi_sysfs.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/vhost.h b/include/uapi/linux/vhost.h
-index 1c7e7035fc49d..96b178f1bd5ca 100644
---- a/include/uapi/linux/vhost.h
-+++ b/include/uapi/linux/vhost.h
-@@ -254,7 +254,7 @@
-  * When fork_owner is set to VHOST_FORK_OWNER_KTHREAD:
-  *   - Vhost will create vhost workers as kernel threads.
-  */
--#define VHOST_SET_FORK_FROM_OWNER _IOW(VHOST_VIRTIO, 0x83, __u8)
-+#define VHOST_SET_FORK_FROM_OWNER _IOW(VHOST_VIRTIO, 0x84, __u8)
+diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
+index 32f94db6d6bf5..e669768a7a5bf 100644
+--- a/drivers/scsi/scsi_sysfs.c
++++ b/drivers/scsi/scsi_sysfs.c
+@@ -265,7 +265,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
+ 	return show_shost_mode(supported_mode, buf);
+ }
  
- /**
-  * VHOST_GET_FORK_OWNER - Get the current fork_owner flag for the vhost device.
-@@ -262,6 +262,6 @@
-  *
-  * @return: An 8-bit value indicating the current thread mode.
-  */
--#define VHOST_GET_FORK_FROM_OWNER _IOR(VHOST_VIRTIO, 0x84, __u8)
-+#define VHOST_GET_FORK_FROM_OWNER _IOR(VHOST_VIRTIO, 0x85, __u8)
+-static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
++static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
  
- #endif
+ static ssize_t
+ show_shost_active_mode(struct device *dev,
+@@ -279,7 +279,7 @@ show_shost_active_mode(struct device *dev,
+ 		return show_shost_mode(shost->active_mode, buf);
+ }
+ 
+-static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
++static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
+ 
+ static int check_reset_type(const char *str)
+ {
 -- 
 2.50.1
 
