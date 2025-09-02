@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF683064AF;
-	Tue,  2 Sep 2025 13:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0D93009EF;
+	Tue,  2 Sep 2025 13:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819864; cv=none; b=KK5yj+ehz1SZ/VEAXRYKqY91zh3TpbYEWr15a88YmmrEsXFCS/g96MLYnSc92UOTKtBF7QuCeisftyF3uodbsENl6W0/ol0TldHHiYJi94REE+QrE9Mm3QKDRR2bPGFvBH2cUFfoEV8B4G6I12YTTWscoMM7qkBSW2Ytur+x2XY=
+	t=1756819867; cv=none; b=PkN+fEHNsPgaevwsiB3VfQH3Y1K5Ts55u5CQqNs37OMdjlhdYSl4v9lj8pEdAWmoP0z+MBLL5H3ZI7kUwsSL/KMPScikpywmxGSZ4QbqlVM/tczKJmE7RAxDCBIK0xmya0ipvVujkpYuqSWfZSDEnPBp4vckkSB8i9HFUUUBPC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819864; c=relaxed/simple;
-	bh=T/KyQHcD6k7lylIGfYb8mesvM6IpByY3zgdc+Y0J5Wg=;
+	s=arc-20240116; t=1756819867; c=relaxed/simple;
+	bh=p6I7KygETCE2yZBTayXyYizquha/Br0puwe5bWuXQfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/VftE5mbIY1Aqt49j0I79jCaSMSzEB2FdmcwMW1ksT+U3TQluHeq2E+W4e2M9VYHRnbnL8Kizue0fQ+7zcZ9oNL7M4gzAOBB989D2jZyVv9PkR6mmZr1Bm64sTmgzK3QH1PsP/AW5AP7x3J7TIfMUPNeqphEdWeaehUedem+b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RS4QE/Nx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEDomUtUpQ4hLZOY3dzs6/04Gi1dBpc53rUe4IEw72qX9XhIJUIuL8z0bJsTkzl0oM5MDGyABDbCcI8csp3uKnCTFPjjV+0XYFw7Rd/Ur0LofG03thFGdS+DpxSf4LwGTlU+tXDCYRAoFwxhbGE739/ktjRpdLsTrB/5iNa2TF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDl95BKZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RS4QE/Nx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC79C4CEF5;
-	Tue,  2 Sep 2025 13:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDl95BKZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF7EC4CEED;
+	Tue,  2 Sep 2025 13:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819864;
-	bh=T/KyQHcD6k7lylIGfYb8mesvM6IpByY3zgdc+Y0J5Wg=;
+	s=korg; t=1756819867;
+	bh=p6I7KygETCE2yZBTayXyYizquha/Br0puwe5bWuXQfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RS4QE/NxpQbgMCZ/QrxgeE8xNh2KRpfj2yfbzoDMbVvtqRgSv9K3LP96iOZqued+I
-	 BWgqSxFD5p7xADjxk1vIjn6HUK+2bKGTqAcgZ2jg9dhBNU6syRJONeEgBZVDBE17ZF
-	 pdwuQT3gx7gw69oU0tGY+X+hynlZBFvzh60FVl7k=
+	b=PDl95BKZ8ybccIBGFNmQJ/0MMFwZDMC53Qk/jmqrNpX4uBk7zLpboC00ifL+rKzbc
+	 8LP11wri/uSf3X/ep5hj7NzGhCOj9ZdMvMgvD10nbJgKBuHU90MlEbYKLT6xGKiAbH
+	 P+UDZwRfDelUdEpFjuF+le+38VKYSK3npA0ayEF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 02/95] rtla: Check pkg-config install
-Date: Tue,  2 Sep 2025 15:19:38 +0200
-Message-ID: <20250902131939.703694527@linuxfoundation.org>
+Subject: [PATCH 6.12 20/95] drm/msm: Defer fd_install in SUBMIT ioctl
+Date: Tue,  2 Sep 2025 15:19:56 +0200
+Message-ID: <20250902131940.388602075@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,54 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit 7b128f1d53dcaa324d4aa05d821a6bf4a7b203e7 ]
+[ Upstream commit f22853435bbd1e9836d0dce7fd99c040b94c2bf1 ]
 
-The tool pkg-config used to check libtraceevent and libtracefs, if not
-installed, it will report the libs not found, even though they have
-already been installed.
+Avoid fd_install() until there are no more potential error paths, to
+avoid put_unused_fd() after the fd is made visible to userspace.
 
-Before:
-libtraceevent is missing. Please install libtraceevent-dev/libtraceevent-devel
-libtracefs is missing. Please install libtracefs-dev/libtracefs-devel
-
-After:
-Makefile.config:10: *** Error: pkg-config needed by libtraceevent/libtracefs is missing
-on this system, please install it.
-
-Link: https://lore.kernel.org/20250808040527.2036023-2-chen.dylane@linux.dev
-Fixes: 01474dc706ca ("tools/rtla: Use tools/build makefiles to build rtla")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 68dc6c2d5eec ("drm/msm: Fix submit error-path leaks")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/665363/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/Makefile.config | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/tracing/rtla/Makefile.config b/tools/tracing/rtla/Makefile.config
-index 5f8c286712d4c..a35d6ee55ffcd 100644
---- a/tools/tracing/rtla/Makefile.config
-+++ b/tools/tracing/rtla/Makefile.config
-@@ -1,10 +1,18 @@
- # SPDX-License-Identifier: GPL-2.0-only
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 4b3a8ee8e278f..3eee6517541e3 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -879,12 +879,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
  
-+include $(srctree)/tools/scripts/utilities.mak
-+
- STOP_ERROR :=
+ 	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
+ 		sync_file = sync_file_create(submit->user_fence);
+-		if (!sync_file) {
++		if (!sync_file)
+ 			ret = -ENOMEM;
+-		} else {
+-			fd_install(out_fence_fd, sync_file->file);
+-			args->fence_fd = out_fence_fd;
+-		}
+ 	}
  
- LIBTRACEEVENT_MIN_VERSION = 1.5
- LIBTRACEFS_MIN_VERSION = 1.6
+ 	if (ret)
+@@ -912,10 +908,14 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ out_unlock:
+ 	mutex_unlock(&queue->lock);
+ out_post_unlock:
+-	if (ret && (out_fence_fd >= 0)) {
+-		put_unused_fd(out_fence_fd);
++	if (ret) {
++		if (out_fence_fd >= 0)
++			put_unused_fd(out_fence_fd);
+ 		if (sync_file)
+ 			fput(sync_file->file);
++	} else if (sync_file) {
++		fd_install(out_fence_fd, sync_file->file);
++		args->fence_fd = out_fence_fd;
+ 	}
  
-+ifndef ($(NO_LIBTRACEEVENT),1)
-+  ifeq ($(call get-executable,$(PKG_CONFIG)),)
-+    $(error Error: $(PKG_CONFIG) needed by libtraceevent/libtracefs is missing on this system, please install it)
-+  endif
-+endif
-+
- define lib_setup
-   $(eval LIB_INCLUDES += $(shell sh -c "$(PKG_CONFIG) --cflags lib$(1)"))
-   $(eval LDFLAGS += $(shell sh -c "$(PKG_CONFIG) --libs-only-L lib$(1)"))
+ 	if (!IS_ERR_OR_NULL(submit)) {
 -- 
 2.50.1
 
