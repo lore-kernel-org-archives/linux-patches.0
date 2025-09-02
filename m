@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3C73128B1;
-	Tue,  2 Sep 2025 13:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD8330CD95;
+	Tue,  2 Sep 2025 13:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819738; cv=none; b=DDvZFVrljxna1gpvJfPhZ9y5A4v+36z+01Slm1QBMv2vxUYehDw+pX8HW5fm4zdl8WIJ9jp84QPOi6C3FXuhq/zESB6t/202F092M7fpBEe3fwrP0sxNbTf8vHts9M1Ey7oVSt0fjrRamX9lyikSZ+PNU1ocuCigvLwMA2O+3gE=
+	t=1756819741; cv=none; b=J5p3aFNVgCxRSQ7RbXFDWlYJAOGy4KZUU79kIj/qwIxgeNeS464/TNagNJfCZl4XD/2xs0uE7jmRUzUDs8SCzTt8cSUUrrQnEbIB17ItjqDRKWfhWNzVYCvNusv2z6tPZE290MZ5ioD9K8YGHb5Wo/lqX0HMgkZ3C6oh1N+tMCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819738; c=relaxed/simple;
-	bh=fndUhGcFBiZ1UQAze7WXCl83THLNrFaz6XIAk3Tt080=;
+	s=arc-20240116; t=1756819741; c=relaxed/simple;
+	bh=IY8+ymO9pVNM2Dx0fPoxFluZB5Ql+tUYq8WAh+pk3Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBuSLELbMua1nzpMHW+CuUeQMavEvcscjfRnG7bWS8T6CfREWeomCFJ3gx3yb7yVtnvzJVZgc0VA6yABzxbMOqg08FfTdqU7+LzOk8bwOXsfUeYRLxTpqf/InaKAYJsu8dpROBFNE39+FLmhSoU1cx8lOuLDUVvZe+v1icV0UqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7G6a7UN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EaGdcQlcSSLLKTjF1h2NG0VfeYSM1gReXrT+iMP0r7xtIMHqmfZhSYgV6KDbjbWNXL51qgUu4YCPaGRUZFEdZdDpjQjnb6g5ons92NtrTw+Iu/L18L/HL02deoNqSJYJ6wTgKQ/dFo9Boby3MOlVTpjdhLbSygFXOMRw8kRggdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtACvYK9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7G6a7UN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DE5C4CEED;
-	Tue,  2 Sep 2025 13:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtACvYK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40108C4CEED;
+	Tue,  2 Sep 2025 13:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819738;
-	bh=fndUhGcFBiZ1UQAze7WXCl83THLNrFaz6XIAk3Tt080=;
+	s=korg; t=1756819741;
+	bh=IY8+ymO9pVNM2Dx0fPoxFluZB5Ql+tUYq8WAh+pk3Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7G6a7UNl9nelNqjr64HxAhzfaKV2IZotWuqHWSNotdVPMvTxr1ySHycnX6eQ1kND
-	 gUsNVAkap5XsF2XRCk3ld3JrLNfxD09go33nlv74oCi7Qz5PuTuFrPZ6IxiUQMIIza
-	 ojiIQIf0VvGjB0KCQhVlYWNswoN+W5A4aKS0h09w=
+	b=JtACvYK9qcQL+2CmaccHCeeWtH/UVH4g3VieQk4kOW37FzQ5pVQd4ltewqJH/Qyx7
+	 k/FFb9qMeiVgnfVw2fmbg5l334iAWVCtO/E6z4SkyJAptvkRxqpkiFBWlpgosX4Y9O
+	 yvhiZNMv491hxRyQYK9NjtjtNp5KFWarHbtsX8TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e69f06a0f30116c68056@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 097/142] sctp: initialize more fields in sctp_v6_from_sk()
-Date: Tue,  2 Sep 2025 15:19:59 +0200
-Message-ID: <20250902131951.986312455@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Brian Welty <brian.welty@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 6.16 124/142] drm/xe/vm: Clear the scratch_pt pointer on error
+Date: Tue,  2 Sep 2025 15:20:26 +0200
+Message-ID: <20250902131953.034900163@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -48,78 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit 2e8750469242cad8f01f320131fd5a6f540dbb99 ]
+commit 2b55ddf36229e0278c956215784ab1feeff510aa upstream.
 
-syzbot found that sin6_scope_id was not properly initialized,
-leading to undefined behavior.
+Avoid triggering a dereference of an error pointer on cleanup in
+xe_vm_free_scratch() by clearing any scratch_pt error pointer.
 
-Clear sin6_scope_id and sin6_flowinfo.
-
-BUG: KMSAN: uninit-value in __sctp_v6_cmp_addr+0x887/0x8c0 net/sctp/ipv6.c:649
-  __sctp_v6_cmp_addr+0x887/0x8c0 net/sctp/ipv6.c:649
-  sctp_inet6_cmp_addr+0x4f2/0x510 net/sctp/ipv6.c:983
-  sctp_bind_addr_conflict+0x22a/0x3b0 net/sctp/bind_addr.c:390
-  sctp_get_port_local+0x21eb/0x2440 net/sctp/socket.c:8452
-  sctp_get_port net/sctp/socket.c:8523 [inline]
-  sctp_listen_start net/sctp/socket.c:8567 [inline]
-  sctp_inet_listen+0x710/0xfd0 net/sctp/socket.c:8636
-  __sys_listen_socket net/socket.c:1912 [inline]
-  __sys_listen net/socket.c:1927 [inline]
-  __do_sys_listen net/socket.c:1932 [inline]
-  __se_sys_listen net/socket.c:1930 [inline]
-  __x64_sys_listen+0x343/0x4c0 net/socket.c:1930
-  x64_sys_call+0x271d/0x3e20 arch/x86/include/generated/asm/syscalls_64.h:51
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Local variable addr.i.i created at:
-  sctp_get_port net/sctp/socket.c:8515 [inline]
-  sctp_listen_start net/sctp/socket.c:8567 [inline]
-  sctp_inet_listen+0x650/0xfd0 net/sctp/socket.c:8636
-  __sys_listen_socket net/socket.c:1912 [inline]
-  __sys_listen net/socket.c:1927 [inline]
-  __do_sys_listen net/socket.c:1932 [inline]
-  __se_sys_listen net/socket.c:1930 [inline]
-  __x64_sys_listen+0x343/0x4c0 net/socket.c:1930
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+e69f06a0f30116c68056@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68adc0a2.050a0220.37038e.00c4.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250826141314.1802610-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 06951c2ee72d ("drm/xe: Use NULL PTEs as scratch PTEs")
+Cc: Brian Welty <brian.welty@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250821143045.106005-4-thomas.hellstrom@linux.intel.com
+(cherry picked from commit 358ee50ab565f3c8ea32480e9d03127a81ba32f8)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/ipv6.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_vm.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
-index a9ed2ccab1bdb..2bb5e19e10caa 100644
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -546,7 +546,9 @@ static void sctp_v6_from_sk(union sctp_addr *addr, struct sock *sk)
- {
- 	addr->v6.sin6_family = AF_INET6;
- 	addr->v6.sin6_port = 0;
-+	addr->v6.sin6_flowinfo = 0;
- 	addr->v6.sin6_addr = sk->sk_v6_rcv_saddr;
-+	addr->v6.sin6_scope_id = 0;
- }
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1582,8 +1582,12 @@ static int xe_vm_create_scratch(struct x
  
- /* Initialize sk->sk_rcv_saddr from sctp_addr. */
--- 
-2.50.1
-
+ 	for (i = MAX_HUGEPTE_LEVEL; i < vm->pt_root[id]->level; i++) {
+ 		vm->scratch_pt[id][i] = xe_pt_create(vm, tile, i);
+-		if (IS_ERR(vm->scratch_pt[id][i]))
+-			return PTR_ERR(vm->scratch_pt[id][i]);
++		if (IS_ERR(vm->scratch_pt[id][i])) {
++			int err = PTR_ERR(vm->scratch_pt[id][i]);
++
++			vm->scratch_pt[id][i] = NULL;
++			return err;
++		}
+ 
+ 		xe_pt_populate_empty(tile, vm, vm->scratch_pt[id][i]);
+ 	}
 
 
