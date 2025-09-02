@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9984F2DECDE;
-	Tue,  2 Sep 2025 13:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E6231281F;
+	Tue,  2 Sep 2025 13:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819989; cv=none; b=HdtZr5/C3tVenzVtL7A8OzXa8q9l1XBQqHepMH+DM08tOl74VP9PGQofl0H/BtNf//qTtVhEyqyd2iFGYNWPWgnMZzTAqunu8BvVo2puFQg3UKABFvEdlEbw1rfAPkwWtYUi99othzVHQmrfvfmSRks8+VeeCajZcEGnx/Ku5TM=
+	t=1756819992; cv=none; b=mEtohWveS1m8zeTa6tKNDWQsw1FlRcEdpG/TO45FM0/T51qyv4BhSbKYTQX85TWSc9hFq1G4p0jZxrEOrg8yF5fbMiMtcCnVtO1BLFeq2hxKhbZwTBkcGfpPMmNwhQI7I4OnMsjHY1VAvl50+60q8in0t4TFPsqzf5k72+H+xG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819989; c=relaxed/simple;
-	bh=PpZwJ3cTB/Uxm3A4NhUDednMz58VnEOJrev5UTYDnqk=;
+	s=arc-20240116; t=1756819992; c=relaxed/simple;
+	bh=k4lEkO5SNv9t/nAxqi7Jqaz3tMnCQb/dvgJOTa24c/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmANbkE1PK3yKbpHf6dqHUw8DzN7wPJ4SQba95+B8DXdTrY82qxxUvXexRpQrsakVTqMSbrIZae6sY0jlbvYQGCb2Lsl0HnH2EasW0eH+JybOvIC1x/kxuNoWIJacK5v2oKv6na2Z9xUXE1A/M75JwxWumrDNz4tH2kn8QPAuPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lXiF0LK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sR6SvQNjNbUEJWYAUpvjN11R+nP4cVbGC36CnXrky9PnM5xCE3eQGNkRasUj5UemQqW5LFLewtoWveOb9e+Bo1crRb+xtxUjSMmtExn6e4gPPifodimuTSj5vurqHBUvBfMgCcbgy+q8k1nooeIc4eV3Caozr8kfCm58uHXiWDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mA8FSjgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lXiF0LK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055F9C4CEED;
-	Tue,  2 Sep 2025 13:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mA8FSjgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E65C4CEED;
+	Tue,  2 Sep 2025 13:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819989;
-	bh=PpZwJ3cTB/Uxm3A4NhUDednMz58VnEOJrev5UTYDnqk=;
+	s=korg; t=1756819992;
+	bh=k4lEkO5SNv9t/nAxqi7Jqaz3tMnCQb/dvgJOTa24c/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lXiF0LKmNLu1yjyH0Zfs6EQQzfyYfSi0HFHaE0YXf3LSz/TBYVs7xLEeAyCbHiIV
-	 vQrTy/latyMHEo/B24vXMEvY3PP0AicTQYxJPFAdaQcrHQw1aRWU1BcqS1/hZPP8jM
-	 VjfXt+MgI1UE2JpqgWtutkpu2LLEx5FL+IdBGOvk=
+	b=mA8FSjgitgp3o/yXb6nYhskZGT7PSNMTIRUCyeddl21HilXeqLaYU57avFJShtSb2
+	 xJlaFD6VvN4tweqo6A89haFPZNvHi425e5LUntoLmcuY5uPiVlv66OXLqQdT0IANHk
+	 vh5IQG8NpEO5pasfi14YGQH9D20oJ0psko9GEurg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ludovico de Nittis <ludovico.denittis@collabora.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 30/95] Bluetooth: hci_event: Mark connection as closed during suspend disconnect
-Date: Tue,  2 Sep 2025 15:20:06 +0200
-Message-ID: <20250902131940.768602173@linuxfoundation.org>
+Subject: [PATCH 6.12 57/95] hv_netvsc: Link queues to NAPIs
+Date: Tue,  2 Sep 2025 15:20:33 +0200
+Message-ID: <20250902131941.791991233@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,77 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ludovico de Nittis <ludovico.denittis@collabora.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit b7fafbc499b5ee164018eb0eefe9027f5a6aaad2 ]
+[ Upstream commit 8b641b5e4c782464c8818a71b443eeef8984bf34 ]
 
-When suspending, the disconnect command for an active Bluetooth
-connection could be issued, but the corresponding
-`HCI_EV_DISCONN_COMPLETE` event might not be received before the system
-completes the suspend process. This can lead to an inconsistent state.
+Use netif_queue_set_napi to link queues to NAPI instances so that they
+can be queried with netlink.
 
-On resume, the controller may auto-accept reconnections from the same
-device (due to suspend event filters), but these new connections are
-rejected by the kernel which still has connection objects from before
-suspend. Resulting in errors like:
-```
-kernel: Bluetooth: hci0: ACL packet for unknown connection handle 1
-kernel: Bluetooth: hci0: Ignoring HCI_Connection_Complete for existing
-connection
-```
+Shradha Gupta tested the patch and reported that the results are
+as expected:
 
-This is a btmon snippet that shows the issue:
-```
-< HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 1 Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
-        Reason: Remote User Terminated Connection (0x13)
-> HCI Event: Command Status (0x0f) plen 4
-      Disconnect (0x01|0x0006) ncmd 2
-        Status: Success (0x00)
-[...]
-// Host suspends with the event filter set for the device
-// On resume, the device tries to reconnect with a new handle
+$ ./tools/net/ynl/cli.py --spec Documentation/netlink/specs/netdev.yaml \
+                           --dump queue-get --json='{"ifindex": 2}'
 
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 2
-        Address: 78:20:A5:4A:DF:28 (Nintendo Co.,Ltd)
+ [{'id': 0, 'ifindex': 2, 'napi-id': 8193, 'type': 'rx'},
+  {'id': 1, 'ifindex': 2, 'napi-id': 8194, 'type': 'rx'},
+  {'id': 2, 'ifindex': 2, 'napi-id': 8195, 'type': 'rx'},
+  {'id': 3, 'ifindex': 2, 'napi-id': 8196, 'type': 'rx'},
+  {'id': 4, 'ifindex': 2, 'napi-id': 8197, 'type': 'rx'},
+  {'id': 5, 'ifindex': 2, 'napi-id': 8198, 'type': 'rx'},
+  {'id': 6, 'ifindex': 2, 'napi-id': 8199, 'type': 'rx'},
+  {'id': 7, 'ifindex': 2, 'napi-id': 8200, 'type': 'rx'},
+  {'id': 0, 'ifindex': 2, 'napi-id': 8193, 'type': 'tx'},
+  {'id': 1, 'ifindex': 2, 'napi-id': 8194, 'type': 'tx'},
+  {'id': 2, 'ifindex': 2, 'napi-id': 8195, 'type': 'tx'},
+  {'id': 3, 'ifindex': 2, 'napi-id': 8196, 'type': 'tx'},
+  {'id': 4, 'ifindex': 2, 'napi-id': 8197, 'type': 'tx'},
+  {'id': 5, 'ifindex': 2, 'napi-id': 8198, 'type': 'tx'},
+  {'id': 6, 'ifindex': 2, 'napi-id': 8199, 'type': 'tx'},
+  {'id': 7, 'ifindex': 2, 'napi-id': 8200, 'type': 'tx'}]
 
-// Kernel ignores this event because there is an existing connection
-with
-// handle 1
-```
-
-By explicitly setting the connection state to BT_CLOSED we can ensure a
-consistent state, even if we don't receive the disconnect complete event
-in time.
-
-Link: https://github.com/bluez/bluez/issues/1226
-Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
-Signed-off-by: Ludovico de Nittis <ludovico.denittis@collabora.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Tested-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 9448ccd85336 ("net: hv_netvsc: fix loss of early receive events from host during channel open.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/hyperv/netvsc.c       | 13 ++++++++++++-
+ drivers/net/hyperv/rndis_filter.c |  9 +++++++--
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 428aba38a3654..b8213bfa0a674 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -2709,6 +2709,12 @@ static void hci_cs_disconnect(struct hci_dev *hdev, u8 status)
- 		goto done;
+diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
+index 807465dd4c8e3..87ac2a5f18091 100644
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -712,8 +712,13 @@ void netvsc_device_remove(struct hv_device *device)
+ 	for (i = 0; i < net_device->num_chn; i++) {
+ 		/* See also vmbus_reset_channel_cb(). */
+ 		/* only disable enabled NAPI channel */
+-		if (i < ndev->real_num_rx_queues)
++		if (i < ndev->real_num_rx_queues) {
++			netif_queue_set_napi(ndev, i, NETDEV_QUEUE_TYPE_TX,
++					     NULL);
++			netif_queue_set_napi(ndev, i, NETDEV_QUEUE_TYPE_RX,
++					     NULL);
+ 			napi_disable(&net_device->chan_table[i].napi);
++		}
+ 
+ 		netif_napi_del(&net_device->chan_table[i].napi);
  	}
+@@ -1826,6 +1831,10 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
+ 	netdev_dbg(ndev, "hv_netvsc channel opened successfully\n");
  
-+	/* During suspend, mark connection as closed immediately
-+	 * since we might not receive HCI_EV_DISCONN_COMPLETE
-+	 */
-+	if (hdev->suspended)
-+		conn->state = BT_CLOSED;
-+
- 	mgmt_conn = test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags);
+ 	napi_enable(&net_device->chan_table[0].napi);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX,
++			     &net_device->chan_table[0].napi);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX,
++			     &net_device->chan_table[0].napi);
  
- 	if (conn->type == ACL_LINK) {
+ 	/* Connect with the NetVsp */
+ 	ret = netvsc_connect_vsp(device, net_device, device_info);
+@@ -1844,6 +1853,8 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
+ 
+ close:
+ 	RCU_INIT_POINTER(net_device_ctx->nvdev, NULL);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX, NULL);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX, NULL);
+ 	napi_disable(&net_device->chan_table[0].napi);
+ 
+ 	/* Now, we can close the channel safely */
+diff --git a/drivers/net/hyperv/rndis_filter.c b/drivers/net/hyperv/rndis_filter.c
+index e457f809fe311..9b8769a8b77a1 100644
+--- a/drivers/net/hyperv/rndis_filter.c
++++ b/drivers/net/hyperv/rndis_filter.c
+@@ -1255,10 +1255,15 @@ static void netvsc_sc_open(struct vmbus_channel *new_sc)
+ 	ret = vmbus_open(new_sc, netvsc_ring_bytes,
+ 			 netvsc_ring_bytes, NULL, 0,
+ 			 netvsc_channel_cb, nvchan);
+-	if (ret == 0)
++	if (ret == 0) {
+ 		napi_enable(&nvchan->napi);
+-	else
++		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
++				     &nvchan->napi);
++		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
++				     &nvchan->napi);
++	} else {
+ 		netdev_notice(ndev, "sub channel open failed: %d\n", ret);
++	}
+ 
+ 	if (atomic_inc_return(&nvscdev->open_chn) == nvscdev->num_chn)
+ 		wake_up(&nvscdev->subchan_open);
 -- 
 2.50.1
 
