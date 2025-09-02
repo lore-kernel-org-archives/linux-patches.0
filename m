@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E23F31576D;
-	Tue,  2 Sep 2025 13:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408F231A569;
+	Tue,  2 Sep 2025 13:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819496; cv=none; b=J2HsZk3lpFFgy1l4rdeAFjwMrirmxlLkb7KFyg6oKatrhMfMyGIMGODHUocntR6Q7eQvvw7kS78w0d+jz1zf/RWsKDFgJ29+HjxT5PSTY0N5DU2iOjso7EMcD88fiSbMmmPkJ5PVRZPLvbTbycmfzHYWkeBdFpTDk19N6xUFKOo=
+	t=1756819500; cv=none; b=BLet5YHB6q+yN5L+HcwkIhd5CpcrH3RRKyBcejtVJFVBwfc7Ki7mNyD7m5nL7Uy3exqRCgyokqVAaX2NgYZIrm1Nf+FSRjMDdFYp+BM5WLJmg7iDqeIZrXVFbq9gf6oM/YrsacJ4j5MkEPDbfdq5z10rzyrBeHcxkeOxXhF/l2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819496; c=relaxed/simple;
-	bh=9BlOdNZ6lC0qQhXjo20ECvrRuOwfciUNRx0Ebh7j7e4=;
+	s=arc-20240116; t=1756819500; c=relaxed/simple;
+	bh=YPuvZDvMY7VG4J4NM0F94cjHtHW27TMPdIOF0rsSNJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIL9QPjf12QDgdWOuCjHt+Zljh8jmQ81Zqm4dUnTNltzHF7GVqpv18sUk5wmYtBiIfKScsyOXfczoQQOwDA6WTT7jUkUujHrZU7vNA4fuu/vYQUlgHrvtLZhWTCeB8uDU7PFoEGNsw0pJeqiSefpfAGmoyHUrKu00h3YsSLL6Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUY3ACyZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVmChNEKbSb8vaSUPDCx8RSSVKoJiw78K21zZmvssVWNElAHdgb8Smel/9NXwVzAVWhZgWytMXRuY/xPoDt6AM3R5rSYxoia6BzTi3UToZCctWZQcQ9aMSpC40qbWtb5MYWZ+wTVfaH9aWPnV40Y5VAw4PuUbELgtaQoYmBD7Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psroHZNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUY3ACyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C94AC4CEF5;
-	Tue,  2 Sep 2025 13:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psroHZNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C65C4CEF5;
+	Tue,  2 Sep 2025 13:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819496;
-	bh=9BlOdNZ6lC0qQhXjo20ECvrRuOwfciUNRx0Ebh7j7e4=;
+	s=korg; t=1756819499;
+	bh=YPuvZDvMY7VG4J4NM0F94cjHtHW27TMPdIOF0rsSNJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUY3ACyZ8I0QayGOc4cDg4D3ne60zmPAj2JongFr66OGYKtk9A6448NTKIXS54At5
-	 l1T4+BQZud5ImrA7ipTfTwvrmZohBXXQ1x8uz0oNuoBfAj2+WhO87YktNM85U1dSO+
-	 y2ixtwZv83uImjItCiwylOJdMgNtluy+luLHre9c=
+	b=psroHZNyFtV99FS8JQlO797KWqEfcj4/oqDdMV5Jo8N1KP6b/jQ4V3TnZ5r/QMiu1
+	 VyX4jVDa6eIHKmY3iJoj5CDIB6ZgZVnc6W7VK3rYiWMKyIufQGQNuN+dy4ZL1hmtAP
+	 Ep1Ewl9Rz8UYa1Su60u4XXcWIivR1Yap6hFMaBqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Shpakovskiy <pashpakovskii@salutedevices.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	skhawaja@google.com,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 051/142] Bluetooth: hci_sync: fix set_local_name race condition
-Date: Tue,  2 Sep 2025 15:19:13 +0200
-Message-ID: <20250902131950.211373972@linuxfoundation.org>
+Subject: [PATCH 6.16 052/142] page_pool: fix incorrect mp_ops error handling
+Date: Tue,  2 Sep 2025 15:19:14 +0200
+Message-ID: <20250902131950.248891501@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,88 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Shpakovskiy <pashpakovskii@salutedevices.com>
+From: Mina Almasry <almasrymina@google.com>
 
-[ Upstream commit 6bbd0d3f0c23fc53c17409dd7476f38ae0ff0cd9 ]
+[ Upstream commit abadf0ff63be488dc502ecfc9f622929a21b7117 ]
 
-Function set_name_sync() uses hdev->dev_name field to send
-HCI_OP_WRITE_LOCAL_NAME command, but copying from data to hdev->dev_name
-is called after mgmt cmd was queued, so it is possible that function
-set_name_sync() will read old name value.
+Minor fix to the memory provider error handling, we should be jumping to
+free_ptr_ring in this error case rather than returning directly.
 
-This change adds name as a parameter for function hci_update_name_sync()
-to avoid race condition.
+Found by code-inspection.
 
-Fixes: 6f6ff38a1e14 ("Bluetooth: hci_sync: Convert MGMT_OP_SET_LOCAL_NAME")
-Signed-off-by: Pavel Shpakovskiy <pashpakovskii@salutedevices.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: skhawaja@google.com
+
+Fixes: b400f4b87430 ("page_pool: Set `dma_sync` to false for devmem memory provider")
+Signed-off-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Link: https://patch.msgid.link/20250821030349.705244-1-almasrymina@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_sync.h | 2 +-
- net/bluetooth/hci_sync.c         | 6 +++---
- net/bluetooth/mgmt.c             | 5 ++++-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ net/core/page_pool.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index 5224f57f6af2c..e352a4e0ef8d7 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -93,7 +93,7 @@ int hci_update_class_sync(struct hci_dev *hdev);
- 
- int hci_update_eir_sync(struct hci_dev *hdev);
- int hci_update_class_sync(struct hci_dev *hdev);
--int hci_update_name_sync(struct hci_dev *hdev);
-+int hci_update_name_sync(struct hci_dev *hdev, const u8 *name);
- int hci_write_ssp_mode_sync(struct hci_dev *hdev, u8 mode);
- 
- int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 115dc1cd99ce4..749bba1512eb1 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3481,13 +3481,13 @@ int hci_update_scan_sync(struct hci_dev *hdev)
- 	return hci_write_scan_enable_sync(hdev, scan);
- }
- 
--int hci_update_name_sync(struct hci_dev *hdev)
-+int hci_update_name_sync(struct hci_dev *hdev, const u8 *name)
- {
- 	struct hci_cp_write_local_name cp;
- 
- 	memset(&cp, 0, sizeof(cp));
- 
--	memcpy(cp.name, hdev->dev_name, sizeof(cp.name));
-+	memcpy(cp.name, name, sizeof(cp.name));
- 
- 	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_LOCAL_NAME,
- 					    sizeof(cp), &cp,
-@@ -3540,7 +3540,7 @@ int hci_powered_update_sync(struct hci_dev *hdev)
- 			hci_write_fast_connectable_sync(hdev, false);
- 		hci_update_scan_sync(hdev);
- 		hci_update_class_sync(hdev);
--		hci_update_name_sync(hdev);
-+		hci_update_name_sync(hdev, hdev->dev_name);
- 		hci_update_eir_sync(hdev);
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 368412baad264..e14d743554ec1 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -287,8 +287,10 @@ static int page_pool_init(struct page_pool *pool,
  	}
  
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 90e37ff2c85db..50634ef5c8b70 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3892,8 +3892,11 @@ static void set_name_complete(struct hci_dev *hdev, void *data, int err)
+ 	if (pool->mp_ops) {
+-		if (!pool->dma_map || !pool->dma_sync)
+-			return -EOPNOTSUPP;
++		if (!pool->dma_map || !pool->dma_sync) {
++			err = -EOPNOTSUPP;
++			goto free_ptr_ring;
++		}
  
- static int set_name_sync(struct hci_dev *hdev, void *data)
- {
-+	struct mgmt_pending_cmd *cmd = data;
-+	struct mgmt_cp_set_local_name *cp = cmd->param;
-+
- 	if (lmp_bredr_capable(hdev)) {
--		hci_update_name_sync(hdev);
-+		hci_update_name_sync(hdev, cp->name);
- 		hci_update_eir_sync(hdev);
- 	}
- 
+ 		if (WARN_ON(!is_kernel_rodata((unsigned long)pool->mp_ops))) {
+ 			err = -EFAULT;
 -- 
 2.50.1
 
