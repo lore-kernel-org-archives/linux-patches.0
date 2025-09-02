@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA21930DEAE;
-	Tue,  2 Sep 2025 13:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCC33148B2;
+	Tue,  2 Sep 2025 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820022; cv=none; b=RP6snkAZzHhwaH52u4F8sO61eFfkufftj0uC50RbixiscQB45dzQexe96husgNWrmia+NinenRE/zE+kh1aICw8Twhi+cm0Kt4fioVHxYu1ivlzf0uLgPB8usjP0u8kN6hpoakjnF288ga0QGbyI0mdcNxP2jswSGKbCBgqclis=
+	t=1756820025; cv=none; b=qelCQRaGi067TyBJdOFczILsZrnFlzfRB3+XcgSz4n+oBELgibbRCbO2kh2HZ21M7oRorNfY6HZdjuD15LiV2spzh0TxIYZ4M3kOD4chGrCEha7FnXO/cmDRbEjZjtxu4d3f+jRMHjvtI1h42kbe85NiH9qZ4ZS5pC8H36z/9tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820022; c=relaxed/simple;
-	bh=tCJt1q5ZQypetNb01NvmMXCojeDo59SDArgH/ff2XKA=;
+	s=arc-20240116; t=1756820025; c=relaxed/simple;
+	bh=pfriYSCPw0hSOKchjAOGDYo6y/3pdkDd6VUBUJ9PPpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=shLkkUd0Gs8IxjmYbYyBmy0YnQ0YThU+CQnt/MqH+9GxOvoDRll4v/TCwyhl1jDPfLRKX5MbzyFjhnqohT2Wkd3UR5sJ1ZhXXJy8IdZrj7s0kQOhHAt31XUFkFPO0L1xL+guMeEVhMdHANXLUDSz6c/5o1wLW8mYEwmzmriYnws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blaZwU6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6AUYNW0B6gBHi/ylOXfPGzkKv8o5ZTMaT+xyMQOOQxYV1LT/i5M5mCgdXd+9mDEkmKmHrRnEYTfcePMzzF9Fq2aOrQ+dCEY13D6G0yJN3h5599wT3VsVL/WWpDCgA46e7LpsZF0o+ddLgPIdASqATQDbBStG72L5tMjh4D5Yi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFPP04s1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blaZwU6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581CDC4CEED;
-	Tue,  2 Sep 2025 13:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFPP04s1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A1BC4CEED;
+	Tue,  2 Sep 2025 13:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820022;
-	bh=tCJt1q5ZQypetNb01NvmMXCojeDo59SDArgH/ff2XKA=;
+	s=korg; t=1756820025;
+	bh=pfriYSCPw0hSOKchjAOGDYo6y/3pdkDd6VUBUJ9PPpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blaZwU6B/LkQQLVeEQaPtH/C4I9W63iHNTwdZ894LX3BNRIEPPynKsHCmR8Z+AGPm
-	 8bqbsMHrC8hVq4K3w0xrpqJwXetj3uifOpwtJ4ED+wYT5F93h8Si7u+PHGpTNqI2hk
-	 lVNvd2e9ECXTIZqTXPvRVv9xirHiQNytOr31Yd7Q=
+	b=YFPP04s1pzFkYsj1IsBtTl8m3WiuoD1BB89Lvk1jffGLOuHaz0eBbaNZwFXF+5c1k
+	 d8ViqJm9sYrL8WqjlCcnh4faJ5J7l3S0sj7hLwway48ShwEMFtzHpfhe+C/+uUZ4Mg
+	 aSjoCv3fgqGpuNMftjse12QsL4HZyx8tpX4xmrRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E5=8D=A2=E5=9B=BD=E5=AE=8F?= <luguohong@xiaomi.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+e69f06a0f30116c68056@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 27/95] HID: input: report battery status changes immediately
-Date: Tue,  2 Sep 2025 15:20:03 +0200
-Message-ID: <20250902131940.653108576@linuxfoundation.org>
+Subject: [PATCH 6.12 62/95] sctp: initialize more fields in sctp_v6_from_sk()
+Date: Tue,  2 Sep 2025 15:20:38 +0200
+Message-ID: <20250902131941.983606614@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -46,99 +48,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e94536e1d1818b0989aa19b443b7089f50133c35 ]
+[ Upstream commit 2e8750469242cad8f01f320131fd5a6f540dbb99 ]
 
-Previously, the battery status (charging/discharging) was not reported
-immediately to user-space. 
+syzbot found that sin6_scope_id was not properly initialized,
+leading to undefined behavior.
 
-For most input devices, this wasn't problematic because changing their
-battery status requires connecting them to a different bus.
-For example, a gamepad would report a discharging status while
-connected via Bluetooth and a charging status while connected via USB.
+Clear sin6_scope_id and sin6_flowinfo.
 
-However, certain devices are not connected or disconnected when their
-battery status changes. For example, a phone battery changes its status
-without connecting or disconnecting it.
-In these cases, the battery status was not reported immediately to user
-space.
+BUG: KMSAN: uninit-value in __sctp_v6_cmp_addr+0x887/0x8c0 net/sctp/ipv6.c:649
+  __sctp_v6_cmp_addr+0x887/0x8c0 net/sctp/ipv6.c:649
+  sctp_inet6_cmp_addr+0x4f2/0x510 net/sctp/ipv6.c:983
+  sctp_bind_addr_conflict+0x22a/0x3b0 net/sctp/bind_addr.c:390
+  sctp_get_port_local+0x21eb/0x2440 net/sctp/socket.c:8452
+  sctp_get_port net/sctp/socket.c:8523 [inline]
+  sctp_listen_start net/sctp/socket.c:8567 [inline]
+  sctp_inet_listen+0x710/0xfd0 net/sctp/socket.c:8636
+  __sys_listen_socket net/socket.c:1912 [inline]
+  __sys_listen net/socket.c:1927 [inline]
+  __do_sys_listen net/socket.c:1932 [inline]
+  __se_sys_listen net/socket.c:1930 [inline]
+  __x64_sys_listen+0x343/0x4c0 net/socket.c:1930
+  x64_sys_call+0x271d/0x3e20 arch/x86/include/generated/asm/syscalls_64.h:51
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Report battery status changes immediately to user space to support
-these kinds of devices.
+Local variable addr.i.i created at:
+  sctp_get_port net/sctp/socket.c:8515 [inline]
+  sctp_listen_start net/sctp/socket.c:8567 [inline]
+  sctp_inet_listen+0x650/0xfd0 net/sctp/socket.c:8636
+  __sys_listen_socket net/socket.c:1912 [inline]
+  __sys_listen net/socket.c:1927 [inline]
+  __do_sys_listen net/socket.c:1932 [inline]
+  __se_sys_listen net/socket.c:1930 [inline]
+  __x64_sys_listen+0x343/0x4c0 net/socket.c:1930
 
-Fixes: a608dc1c0639 ("HID: input: map battery system charging")
-Reported-by: 卢国宏 <luguohong@xiaomi.com>
-Closes: https://lore.kernel.org/linux-input/aI49Im0sGb6fpgc8@fedora/T/
-Tested-by: 卢国宏 <luguohong@xiaomi.com>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+e69f06a0f30116c68056@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68adc0a2.050a0220.37038e.00c4.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20250826141314.1802610-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ net/sctp/ipv6.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index b372b74f3e24b..f5c217ac4bfaa 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -609,13 +609,19 @@ static bool hidinput_update_battery_charge_status(struct hid_device *dev,
- 	return false;
+diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
+index 38e2fbdcbeac4..9f835e674c599 100644
+--- a/net/sctp/ipv6.c
++++ b/net/sctp/ipv6.c
+@@ -546,7 +546,9 @@ static void sctp_v6_from_sk(union sctp_addr *addr, struct sock *sk)
+ {
+ 	addr->v6.sin6_family = AF_INET6;
+ 	addr->v6.sin6_port = 0;
++	addr->v6.sin6_flowinfo = 0;
+ 	addr->v6.sin6_addr = sk->sk_v6_rcv_saddr;
++	addr->v6.sin6_scope_id = 0;
  }
  
--static void hidinput_update_battery(struct hid_device *dev, int value)
-+static void hidinput_update_battery(struct hid_device *dev, unsigned int usage,
-+				    int value)
- {
- 	int capacity;
- 
- 	if (!dev->battery)
- 		return;
- 
-+	if (hidinput_update_battery_charge_status(dev, usage, value)) {
-+		power_supply_changed(dev->battery);
-+		return;
-+	}
-+
- 	if (value == 0 || value < dev->battery_min || value > dev->battery_max)
- 		return;
- 
-@@ -642,13 +648,8 @@ static void hidinput_cleanup_battery(struct hid_device *dev)
- {
- }
- 
--static bool hidinput_update_battery_charge_status(struct hid_device *dev,
--						  unsigned int usage, int value)
--{
--	return false;
--}
--
--static void hidinput_update_battery(struct hid_device *dev, int value)
-+static void hidinput_update_battery(struct hid_device *dev, unsigned int usage,
-+				    int value)
- {
- }
- #endif	/* CONFIG_HID_BATTERY_STRENGTH */
-@@ -1515,11 +1516,7 @@ void hidinput_hid_event(struct hid_device *hid, struct hid_field *field, struct
- 		return;
- 
- 	if (usage->type == EV_PWR) {
--		bool handled = hidinput_update_battery_charge_status(hid, usage->hid, value);
--
--		if (!handled)
--			hidinput_update_battery(hid, value);
--
-+		hidinput_update_battery(hid, usage->hid, value);
- 		return;
- 	}
- 
+ /* Initialize sk->sk_rcv_saddr from sctp_addr. */
 -- 
 2.50.1
 
