@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A0530EF9D;
-	Tue,  2 Sep 2025 13:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D36330F533;
+	Tue,  2 Sep 2025 13:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819552; cv=none; b=BFN9QMI+1/AclOEiN4eHDY2VAVVUbVYj++OjsLXC5FhegAy/ZrhW7VfxFF8v0lNxvflh5AnoLmkXl4RzEFEVhwMKXfICCaviZ/E8vZJcUsd1KKRCj7YGSH1XfqdRHAubalIBvap8S/2OXbqbd1MQOu+if2X6A+XXkCphCvX0n28=
+	t=1756819554; cv=none; b=keEEVQEzl167RSiA9Yg0awuRvAYAyKCNojvaMaevjhbDe44c39OUTSCrVhbtn/Qm/LxCn4dkmP5/ykmPgtRa5Y0udf+V1huTmootliWefvG+JmnSpWwyNHSG5ekDKiCG+fUKInO6kQSM2kq78R8vIRuHFcNkAmfQO5LpQZy8Vtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819552; c=relaxed/simple;
-	bh=jX4qCk8Vk1qB1Ttg5hZzqUTPA1qwYrFuQLfaXCUIduE=;
+	s=arc-20240116; t=1756819554; c=relaxed/simple;
+	bh=x4prJZq/Uj33Qv6NiJLyvlibqOPRFGTdugTcBgcOWGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p/1eAh/M20M2DyahwjZYpyC//YYXtRHjxa3duvvY7PxjDgkpGMgfCMDjA1LiBbP50fAFz/rFSzg/Wa010sJxAqbXkF1VhVfE8QfI+8B0Wno16cfkhjex7H9tPZl9ocUPFxHBfJMuVOzAkBvm7+sVkv4YTj4NUZnrbCidYLQZa94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sveZmQYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZ3XTNipP49+lOpDyZfn4VOkyU6V+b6qQ4Vgu1ZCUxL8h5qWr/f7f3ZNVeBO6WomrkLqdszU8gEo7XxGCuXvLa/HM4t9KBWustpfVk4AV4KLmrsav0Vi+YKYA8Zw8fvLq+RHKvw52rEUBPajdhA9RBZWxrdQCfIpac7n/pZcIXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZooqWGD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sveZmQYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BEAC4CEED;
-	Tue,  2 Sep 2025 13:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZooqWGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AC8C4CEED;
+	Tue,  2 Sep 2025 13:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819550;
-	bh=jX4qCk8Vk1qB1Ttg5hZzqUTPA1qwYrFuQLfaXCUIduE=;
+	s=korg; t=1756819554;
+	bh=x4prJZq/Uj33Qv6NiJLyvlibqOPRFGTdugTcBgcOWGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sveZmQYYERgdrLkinF04LxvQAeY1yktMfvKghGzm+PcTq/4bPfPLkGn57NnajToQE
-	 oJm11FKcA2AhuLcSxl0y4/BoN1OybitRxhMpFcND9gKiexfLmEvz/066OHxK2nTqLZ
-	 8XVIYcWA6TrVtM7yXqraglkwX/sJpFl7r5Ia53C8=
+	b=MZooqWGDp4KuD3c5nB6hQ779/soqB7D9MtrrI91S/pSW7r9mg6uNKIdEdmHKAlYgN
+	 GpVgIebDbuy6n64wnuQgZGgpp5kGJm/d2RjZ3psMd8ETNbZ4ChUgq+Ocrym4nGkEfG
+	 Al0pinLESupCIBisUq4/DacEnhpOmlxOW6rn/OEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongcheng Yan <dongcheng.yan@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.16 026/142] platform/x86: int3472: add hpd pin support
-Date: Tue,  2 Sep 2025 15:18:48 +0200
-Message-ID: <20250902131949.145844663@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.16 061/142] ixgbe: fix ixgbe_orom_civd_info struct layout
+Date: Tue,  2 Sep 2025 15:19:23 +0200
+Message-ID: <20250902131950.588172002@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -48,78 +48,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dongcheng Yan <dongcheng.yan@intel.com>
+From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
 
-commit a032fe30cf09b6723ab61a05aee057311b00f9e1 upstream.
+[ Upstream commit ed913b343dcf9f623e7436fa1a153c89b22d109b ]
 
-Typically HDMI to MIPI CSI-2 bridges have a pin to signal image data is
-being received. On the host side this is wired to a GPIO for polling or
-interrupts. This includes the Lontium HDMI to MIPI CSI-2 bridges
-lt6911uxe and lt6911uxc.
+The current layout of struct ixgbe_orom_civd_info causes incorrect data
+storage due to compiler-inserted padding. This results in issues when
+writing OROM data into the structure.
 
-The GPIO "hpd" is used already by other HDMI to CSI-2 bridges, use it
-here as well.
+Add the __packed attribute to ensure the structure layout matches the
+expected binary format without padding.
 
-Signed-off-by: Dongcheng Yan <dongcheng.yan@intel.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Fixes: 20244cbafbd6 ("media: i2c: change lt6911uxe irq_gpio name to "hpd"")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 70db0788a262 ("ixgbe: read the OROM version information")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/int3472/discrete.c |    6 ++++++
- include/linux/platform_data/x86/int3472.h     |    1 +
- 2 files changed, 7 insertions(+)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c      | 2 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_type_e610.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/intel/int3472/discrete.c
-+++ b/drivers/platform/x86/intel/int3472/discrete.c
-@@ -193,6 +193,10 @@ static void int3472_get_con_id_and_polar
- 		*con_id = "privacy-led";
- 		*gpio_flags = GPIO_ACTIVE_HIGH;
- 		break;
-+	case INT3472_GPIO_TYPE_HOTPLUG_DETECT:
-+		*con_id = "hpd";
-+		*gpio_flags = GPIO_ACTIVE_HIGH;
-+		break;
- 	case INT3472_GPIO_TYPE_POWER_ENABLE:
- 		*con_id = "avdd";
- 		*gpio_flags = GPIO_ACTIVE_HIGH;
-@@ -223,6 +227,7 @@ static void int3472_get_con_id_and_polar
-  * 0x0b Power enable
-  * 0x0c Clock enable
-  * 0x0d Privacy LED
-+ * 0x13 Hotplug detect
-  *
-  * There are some known platform specific quirks where that does not quite
-  * hold up; for example where a pin with type 0x01 (Power down) is mapped to
-@@ -292,6 +297,7 @@ static int skl_int3472_handle_gpio_resou
- 	switch (type) {
- 	case INT3472_GPIO_TYPE_RESET:
- 	case INT3472_GPIO_TYPE_POWERDOWN:
-+	case INT3472_GPIO_TYPE_HOTPLUG_DETECT:
- 		ret = skl_int3472_map_gpio_to_sensor(int3472, agpio, con_id, gpio_flags);
- 		if (ret)
- 			err_msg = "Failed to map GPIO pin to sensor\n";
---- a/include/linux/platform_data/x86/int3472.h
-+++ b/include/linux/platform_data/x86/int3472.h
-@@ -27,6 +27,7 @@
- #define INT3472_GPIO_TYPE_CLK_ENABLE				0x0c
- #define INT3472_GPIO_TYPE_PRIVACY_LED				0x0d
- #define INT3472_GPIO_TYPE_HANDSHAKE				0x12
-+#define INT3472_GPIO_TYPE_HOTPLUG_DETECT			0x13
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
+index 71ea25de1bac7..754c176fd4a7a 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_e610.c
+@@ -3123,7 +3123,7 @@ static int ixgbe_get_orom_ver_info(struct ixgbe_hw *hw,
+ 	if (err)
+ 		return err;
  
- #define INT3472_PDEV_MAX_NAME_LEN				23
- #define INT3472_MAX_SENSOR_GPIOS				3
+-	combo_ver = le32_to_cpu(civd.combo_ver);
++	combo_ver = get_unaligned_le32(&civd.combo_ver);
+ 
+ 	orom->major = (u8)FIELD_GET(IXGBE_OROM_VER_MASK, combo_ver);
+ 	orom->patch = (u8)FIELD_GET(IXGBE_OROM_VER_PATCH_MASK, combo_ver);
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_type_e610.h b/drivers/net/ethernet/intel/ixgbe/ixgbe_type_e610.h
+index 09df67f03cf47..38a41d81de0fa 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_type_e610.h
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_type_e610.h
+@@ -1150,7 +1150,7 @@ struct ixgbe_orom_civd_info {
+ 	__le32 combo_ver;	/* Combo Image Version number */
+ 	u8 combo_name_len;	/* Length of the unicode combo image version string, max of 32 */
+ 	__le16 combo_name[32];	/* Unicode string representing the Combo Image version */
+-};
++} __packed;
+ 
+ /* Function specific capabilities */
+ struct ixgbe_hw_func_caps {
+-- 
+2.50.1
+
 
 
