@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FE830DEB4;
-	Tue,  2 Sep 2025 13:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734A82D4818;
+	Tue,  2 Sep 2025 13:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820637; cv=none; b=u4RptMDmugruIfhtKUPcmp2DcDW8QoHLiPSwZGJtBN/zP0110rKHA1UwAu1m4pCseRxxenw1VDzl7/ee7zXtoX+cCVLJgI9pSZ4VMxqEGQ0hepFBcyLPqMRvekT8V/1fVxHJ1DswH2wdKQoDdZn+U9ZN0YFZcSP57Uq7PoaihBI=
+	t=1756820640; cv=none; b=tI7AddkvgChpxk4hjmMgrk6Ydq1ryEV8XcGYnMMtoWdQH6SdXcxPXLpf9MPAtUxfMYmLU50C8t/vXwUyueRXXfo82zFrkAb1YTBP+gT/dX9i+q6JEKKg+jdH6PEGmAKZ0NcT9XR6d4LQ/m1CyOH6OSV79Wjc20xUMgAfG/SBPL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820637; c=relaxed/simple;
-	bh=4wqxBUtblcLB+Y3zCax+IRjQdu0nqLDVBLUHrnLqk+8=;
+	s=arc-20240116; t=1756820640; c=relaxed/simple;
+	bh=I4Yn7dm7g9thEasQrS8Q6VXRFHCbJCMcb1kg2ExjKPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XI42lwbZ/ewRID4QDx9AtmX8OA9GXgIP+u9HcaEFD3CduD4Aow7fmBsp+u7zYL7qpr+G2uBDmzPPpxyGKpBLTuUWeyhDC2pawp23K7bQUlHM9CCSgqq/YmHLFQDM4uXZxMhSUIvEWx1V10FzmXd3e9ZOVmxIqUEun0tp33QqKlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r64ONtti; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7mSphZa5VL3sXCVu38j1TiMpWfgEH1eB+YJqaEoZ2kcJlgk9smV7DnVV0PxEPs7azQabuyLPINDrmKUOkYAVm89GDXeVNbbrWBYWkbD889AGmCy2iVLHnVlkEVh3gT7iS3mf229pwDofRjTteS4CfS5QX8pFY1YwlmZd9bUSlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WibDAz//; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r64ONtti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955F1C4CEED;
-	Tue,  2 Sep 2025 13:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WibDAz//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F84C4CEED;
+	Tue,  2 Sep 2025 13:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820637;
-	bh=4wqxBUtblcLB+Y3zCax+IRjQdu0nqLDVBLUHrnLqk+8=;
+	s=korg; t=1756820640;
+	bh=I4Yn7dm7g9thEasQrS8Q6VXRFHCbJCMcb1kg2ExjKPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r64ONttidR2j6duJAHITMHiQn2wxsCtISgVcev/z7jzlaOHpwZ56f2x/HmShU3D4L
-	 OQACPF6PQGgmVrllWk6xEiF19Q+S+gAK4omynHaNTX1Kdto6ULhK8OQzoOhNkXLFuR
-	 l8HBMHyMX2Hwj/5+AttoQfahAW1LJ0cFKN33cxJI=
+	b=WibDAz//UaFxkbSlHe82VKVxpOzEa/BPCkznkQVTgjTNlbtPShh7gWwCfkSY9LjOd
+	 Wct+22Oa6lcC2X0YZKgRlrisyiGOkupLIcx5C3wdDR5T7F/5Sq3H+LtC1dstT/ghZ1
+	 3t6vDIOW9d7CNU7eE5IRiXNWA/3pW1kivpZLZPko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/33] net/mlx5e: Update and set Xon/Xoff upon port speed set
-Date: Tue,  2 Sep 2025 15:21:34 +0200
-Message-ID: <20250902131927.690637009@linuxfoundation.org>
+	Andrey Ryabinin <arbn@yandex-team.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 5.15 07/33] vhost/net: Protect ubufs with rcu read lock in vhost_net_ubuf_put()
+Date: Tue,  2 Sep 2025 15:21:25 +0200
+Message-ID: <20250902131927.338912647@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
 References: <20250902131927.045875971@linuxfoundation.org>
@@ -53,46 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-[ Upstream commit d24341740fe48add8a227a753e68b6eedf4b385a ]
+commit dd54bcf86c91a4455b1f95cbc8e9ac91205f3193 upstream.
 
-Xon/Xoff sizes are derived from calculations that include
-the port speed.
-These settings need to be updated and applied whenever the
-port speed is changed.
-The port speed is typically set after the physical link goes down
-and is negotiated as part of the link-up process between the two
-connected interfaces.
-Xon/Xoff parameters being updated at the point where the new
-negotiated speed is established.
+When operating on struct vhost_net_ubuf_ref, the following execution
+sequence is theoretically possible:
+CPU0 is finalizing DMA operation                   CPU1 is doing VHOST_NET_SET_BACKEND
+                             // ubufs->refcount == 2
+vhost_net_ubuf_put()                               vhost_net_ubuf_put_wait_and_free(oldubufs)
+                                                     vhost_net_ubuf_put_and_wait()
+                                                       vhost_net_ubuf_put()
+                                                         int r = atomic_sub_return(1, &ubufs->refcount);
+                                                         // r = 1
+int r = atomic_sub_return(1, &ubufs->refcount);
+// r = 0
+                                                      wait_event(ubufs->wait, !atomic_read(&ubufs->refcount));
+                                                      // no wait occurs here because condition is already true
+                                                    kfree(ubufs);
+if (unlikely(!r))
+  wake_up(&ubufs->wait);  // use-after-free
 
-Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250825143435.598584-11-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This leads to use-after-free on ubufs access. This happens because CPU1
+skips waiting for wake_up() when refcount is already zero.
+
+To prevent that use a read-side RCU critical section in vhost_net_ubuf_put(),
+as suggested by Hillf Danton. For this lock to take effect, free ubufs with
+kfree_rcu().
+
+Cc: stable@vger.kernel.org
+Fixes: 0ad8b480d6ee9 ("vhost: fix ref cnt checking deadlock")
+Reported-by: Andrey Ryabinin <arbn@yandex-team.com>
+Suggested-by: Hillf Danton <hdanton@sina.com>
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Message-Id: <20250805130917.727332-1-kniv@yandex-team.ru>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/vhost/net.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index bb7e3c80ad74e..cfbc569edfb5f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -104,6 +104,8 @@ void mlx5e_update_carrier(struct mlx5e_priv *priv)
- 	if (up) {
- 		netdev_info(priv->netdev, "Link up\n");
- 		netif_carrier_on(priv->netdev);
-+		mlx5e_port_manual_buffer_config(priv, 0, priv->netdev->mtu,
-+						NULL, NULL, NULL);
- 	} else {
- 		netdev_info(priv->netdev, "Link down\n");
- 		netif_carrier_off(priv->netdev);
--- 
-2.50.1
-
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -95,6 +95,7 @@ struct vhost_net_ubuf_ref {
+ 	atomic_t refcount;
+ 	wait_queue_head_t wait;
+ 	struct vhost_virtqueue *vq;
++	struct rcu_head rcu;
+ };
+ 
+ #define VHOST_NET_BATCH 64
+@@ -248,9 +249,13 @@ vhost_net_ubuf_alloc(struct vhost_virtqu
+ 
+ static int vhost_net_ubuf_put(struct vhost_net_ubuf_ref *ubufs)
+ {
+-	int r = atomic_sub_return(1, &ubufs->refcount);
++	int r;
++
++	rcu_read_lock();
++	r = atomic_sub_return(1, &ubufs->refcount);
+ 	if (unlikely(!r))
+ 		wake_up(&ubufs->wait);
++	rcu_read_unlock();
+ 	return r;
+ }
+ 
+@@ -263,7 +268,7 @@ static void vhost_net_ubuf_put_and_wait(
+ static void vhost_net_ubuf_put_wait_and_free(struct vhost_net_ubuf_ref *ubufs)
+ {
+ 	vhost_net_ubuf_put_and_wait(ubufs);
+-	kfree(ubufs);
++	kfree_rcu(ubufs, rcu);
+ }
+ 
+ static void vhost_net_clear_ubuf_info(struct vhost_net *n)
 
 
