@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9ED305E04;
-	Tue,  2 Sep 2025 13:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03006305E04;
+	Tue,  2 Sep 2025 13:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820539; cv=none; b=XlnaLUhsKkC3RvZ13rsfQFDdHp/+Fz1S1Eom5gb3TAijW9R8M+Jw8pypDTqrulUqZsIBa1ZtXhy7Z+sUXXNFdtNlEr5qnjUWdWAOPRSV+KN4ooyRaFq6NZMv5N7p7j1qyKx0Gx0D5sJSRTzO0EKj9uzu8fYnO7t1JEDHYa+rIWQ=
+	t=1756820543; cv=none; b=urOd4ycovLWM+R9irbFc08FD0CePGphun1nd2eS+IdLwxcLK85UfjvCWtAxfKPRz0pZP5DSM5zvdQS318dfLl4dMNUUNFkD23i1RFf4lb38h4q2hOjBY7IOA9wF0ZYhplnTVuLb5CTqhySineYvSe3t0q/9S9XCNPTONK3No4Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820539; c=relaxed/simple;
-	bh=5hunf4IAnWLbLBpJTMp3AbyMRMPkVIjugJlDBb/I/1w=;
+	s=arc-20240116; t=1756820543; c=relaxed/simple;
+	bh=L/8XHzYIApeu3KAzCWweZMeE7Ics+68+kE4LaeDSUEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tv/dwjGW5fZlAxhZu8NGxO+daeCDCeOA2hHFJgXVyopAu6XthE5YkXMY8IVn7FYAaKMAuf5nTvwX7BLgHpwS3iW/aC4AOHNe7ZGlk5zjhsqTfneZ+JG1LuDC9APXC5lWw/colcb1Rogb8v4MLLANu/rNffLpCBP1aBMmRs+EKWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIiee4/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1371Yjr8AiBuU6/DaYWOep4W8XxoI/U/4PYYpaX/WBmYsMnP6x5jOFhS4S/zdvrN7qU4o+oUPMjMP+EOJ2j15XVM9rbIaG3POo57sjzB1YMDijAuBUr8e/g7hTsWy4dTOKpLvLU5rIMG+gLOpYfcRSgRauyDbwbncMAK7QWd1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyVbFZD4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIiee4/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34510C4CEED;
-	Tue,  2 Sep 2025 13:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyVbFZD4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D496C4CEED;
+	Tue,  2 Sep 2025 13:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820539;
-	bh=5hunf4IAnWLbLBpJTMp3AbyMRMPkVIjugJlDBb/I/1w=;
+	s=korg; t=1756820542;
+	bh=L/8XHzYIApeu3KAzCWweZMeE7Ics+68+kE4LaeDSUEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIiee4/aSiSa3gG2jQumzZQXkQIJZfxjcgixx282uqWQo2DX0PO/Bz0KIWyKMIdNY
-	 zhkumW1Gm0hBofTQJLZEm98T1N5fdn2PbiddQqy0U54W38433XD4dnjjpv+fRxS5Ya
-	 jkkkjlUc3k0T5M/MUt8hhtTLqgBx42w34aJLttU8=
+	b=CyVbFZD4uZjpJVgDQ4nRYmgUzJL/8VydZrvJyDJDCQpfhStriX7vZfSK90qPlHoCY
+	 dBgrws6xb0ATGxA9Mt7CuScgMUPnTlnk+r+Ct8vYQt21VPY0nMAr9m7W5QNIYiyRZO
+	 0MdNFZtlQ7UjTQAbD/2iPY3V8+Mz012y+d4E61yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Johannes Thumshin <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/33] scsi: core: sysfs: Correct sysfs attributes access rights
-Date: Tue,  2 Sep 2025 15:21:21 +0200
-Message-ID: <20250902131927.182275100@linuxfoundation.org>
+Subject: [PATCH 5.15 04/33] ASoC: codecs: tx-macro: correct tx_macro_component_drv name
+Date: Tue,  2 Sep 2025 15:21:22 +0200
+Message-ID: <20250902131927.220714938@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
 References: <20250902131927.045875971@linuxfoundation.org>
@@ -53,47 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
+[ Upstream commit 43e0da37d5cfb23eec6aeee9422f84d86621ce2b ]
 
-The SCSI sysfs attributes "supported_mode" and "active_mode" do not
-define a store method and thus cannot be modified.  Correct the
-DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
-allow write access as they are read-only.
+We already have a component driver named "RX-MACRO", which is
+lpass-rx-macro.c. The tx macro component driver's name should
+be "TX-MACRO" accordingly. Fix it.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20250806140030.691477-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_sysfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/lpass-tx-macro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index 4c72116c8693c..7d3cbf4e6bc6e 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -265,7 +265,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
- 	return show_shost_mode(supported_mode, buf);
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 4377e91733b87..095c6dc564465 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1782,7 +1782,7 @@ static int tx_macro_register_mclk_output(struct tx_macro *tx)
  }
  
--static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
-+static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
- 
- static ssize_t
- show_shost_active_mode(struct device *dev,
-@@ -279,7 +279,7 @@ show_shost_active_mode(struct device *dev,
- 		return show_shost_mode(shost->active_mode, buf);
- }
- 
--static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
-+static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
- 
- static int check_reset_type(const char *str)
- {
+ static const struct snd_soc_component_driver tx_macro_component_drv = {
+-	.name = "RX-MACRO",
++	.name = "TX-MACRO",
+ 	.probe = tx_macro_component_probe,
+ 	.controls = tx_macro_snd_controls,
+ 	.num_controls = ARRAY_SIZE(tx_macro_snd_controls),
 -- 
 2.50.1
 
