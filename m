@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1630231282C;
-	Tue,  2 Sep 2025 13:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E656313558;
+	Tue,  2 Sep 2025 13:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819745; cv=none; b=udDj6p41uA2LooHCedwmOVBrd+oTLoFPPhmrXSBAZEbIHjQRwD8Vc7IAb/ZuLurx1R7tL6rwK70ql6LSjGl9Sb0NlwcVNrdzIIXY3sU61PUVNEvPvJ1N+nSKDI6GOpMDfkEmmtB0wepmaCKzjK7VW8aeGeU0xWpLI47f/dvX+pc=
+	t=1756819748; cv=none; b=NRv7Psqq4Mr7ofXeaLDJ7c9fnK6zvPRC6QgpzAAtHNKsRMTb2fr+uCG5ZU93vGltESdUsMe/Q8qKUCgMp0gbFnI9HIDHeIz/9KZYTDDDaPmPGLHYxnSIkHagqMvjceY2ZgXEB4/GjVNx9CNqo/+ttJ8tKB8dZZjg1Krmh7VQiis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819745; c=relaxed/simple;
-	bh=YsX5QlkR0c1ywN9Wq9AZY2OFJN7vqtsHDrg2M/+P3fc=;
+	s=arc-20240116; t=1756819748; c=relaxed/simple;
+	bh=a1wVJx8MLbDXgWsqMY55ccuEg8z9zVfA7Ut4XP74XJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E3sjulFMlT9wls8I+sZlJdqulZkBkbMmUYxLP3TYEB2XEHueVPkRXV2JrhiT8lW/DG/E0v27+jNbYPp5bWOKWeeen+Vq/OZCrb2aEXnAteM4/CwX+ysF22QFZtZdO2He7fF98tjE80CJcbYuwRt9PvJmWYhTyt4ep20PVbTeVwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz2J0pZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEOU22zjifLIH3h7CLGx901ms7z7lTf7jECks+0D0vESx9UnOcjK6sxAcrv7UT9Y1eIf4zrTV5uMZ4Rj/7JNWioimwFXhUKrVdh18VGxC5KuGHbQ+WrYE4ovjLR6ecMSsU21Cnkp2nF3ojFzdTSx8f1+e9XUxHI4AZiZcwJeQDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5RZx4sF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz2J0pZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74371C4CEF4;
-	Tue,  2 Sep 2025 13:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5RZx4sF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6305C4CEED;
+	Tue,  2 Sep 2025 13:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819744;
-	bh=YsX5QlkR0c1ywN9Wq9AZY2OFJN7vqtsHDrg2M/+P3fc=;
+	s=korg; t=1756819748;
+	bh=a1wVJx8MLbDXgWsqMY55ccuEg8z9zVfA7Ut4XP74XJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vz2J0pZuCZs9YRd6sXqA7BQZZBfzPdzgqkS/q9GvtaXbVCc7/aDsm72tCfqxoPQej
-	 NSpmoTLLxo5MwjewAYINgRS+lBggtxGo0lxLlw6PuDRE6qlQgEf0pC4tNvN4mu+fwK
-	 q9U0oGpiFscaMyDq7Khd9wzfpIg4Roxk+fHlyhOs=
+	b=z5RZx4sFuUHI+RXIGYv6MwacR0LC/P01gPyeq+oaW58BtvSTKHF/YpIkq0j4CSLc3
+	 cLRLrsOPWxjemqtJ8ag5U+q4uRro0Leum3elhJNtom55xYOgYAbjYFc7vaH/qq54DU
+	 /ajdl1BWB3c/r4fZtWS5UTArnT7q9Yxw+MA6XEXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Jones <jajones@nvidia.com>,
+	Timur Tabi <ttabi@nvidia.com>,
 	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.16 125/142] drm/nouveau/disp: Always accept linear modifier
-Date: Tue,  2 Sep 2025 15:20:27 +0200
-Message-ID: <20250902131953.074302374@linuxfoundation.org>
+Subject: [PATCH 6.16 126/142] drm/nouveau: fix error path in nvkm_gsp_fwsec_v2
+Date: Tue,  2 Sep 2025 15:20:28 +0200
+Message-ID: <20250902131953.112979635@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -50,38 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Jones <jajones@nvidia.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-commit e2fe0c54fb7401e6ecd3c10348519ab9e23bd639 upstream.
+commit 66e82b6e0a28d4970383e1ee5d60f431001128cd upstream.
 
-On some chipsets, which block-linear modifiers are
-supported is format-specific. However, linear
-modifiers are always be supported. The prior
-modifier filtering logic was not accounting for
-the linear case.
+Function nvkm_gsp_fwsec_v2() sets 'ret' if the kmemdup() call fails, but
+it never uses or returns 'ret' after that point.  We always need to release
+the firmware regardless, so do that and then check for error.
 
-Cc: stable@vger.kernel.org
-Fixes: c586f30bf74c ("drm/nouveau/kms: Add format mod prop to base/ovly/nvdisp")
-Signed-off-by: James Jones <jajones@nvidia.com>
-Link: https://lore.kernel.org/r/20250811220017.1337-3-jajones@nvidia.com
+Fixes: 176fdcbddfd2 ("drm/nouveau/gsp/r535: add support for booting GSP-RM")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Link: https://lore.kernel.org/r/20250813001004.2986092-1-ttabi@nvidia.com
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/wndw.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/dispnv50/wndw.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/wndw.c
-@@ -795,6 +795,10 @@ static bool nv50_plane_format_mod_suppor
- 	struct nouveau_drm *drm = nouveau_drm(plane->dev);
- 	uint8_t i;
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/fwsec.c
+@@ -209,11 +209,12 @@ nvkm_gsp_fwsec_v2(struct nvkm_gsp *gsp,
+ 	fw->boot_addr = bld->start_tag << 8;
+ 	fw->boot_size = bld->code_size;
+ 	fw->boot = kmemdup(bl->data + hdr->data_offset + bld->code_off, fw->boot_size, GFP_KERNEL);
+-	if (!fw->boot)
+-		ret = -ENOMEM;
  
-+	/* All chipsets can display all formats in linear layout */
-+	if (modifier == DRM_FORMAT_MOD_LINEAR)
-+		return true;
+ 	nvkm_firmware_put(bl);
+ 
++	if (!fw->boot)
++		return -ENOMEM;
 +
- 	if (drm->client.device.info.chipset < 0xc0) {
- 		const struct drm_format_info *info = drm_format_info(format);
- 		const uint8_t kind = (modifier >> 12) & 0xff;
+ 	/* Patch in interface data. */
+ 	return nvkm_gsp_fwsec_patch(gsp, fw, desc->InterfaceOffset, init_cmd);
+ }
 
 
