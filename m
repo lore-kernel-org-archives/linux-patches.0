@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B6330507F;
-	Tue,  2 Sep 2025 13:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D727F261593;
+	Tue,  2 Sep 2025 13:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820345; cv=none; b=FKKx3kN3JxwP/ISMkfdEr/Nv49WL5sG/2eUGZj8CVvAz7lsuzoDxPva83bcM44ob0iXsNDC9ilALATh691bTyRqQNIHw4epV6/8qKLX+/n7nv+lK/xBXQa55jVrtUbY4UGfnJK5gaW4Q7gjs3wKSqKnrhMGXQO+uXF1hrUWA1f4=
+	t=1756820347; cv=none; b=UfJ91VzmG6//m0656f0nmMzzEarO25pFeLb2bGbZ9O6WJdN7ArXtUMZ2gWy2HJ+82PJ2HMzMia8jI5p4Qisu5g2L3fhAI9j7rYxovRpxL0gWaOS7p4L94+BbWnZyYOsFec9EBu2HuTZvXNAunIJ5NBw9dKpnXdVtp2pD1PjSxC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820345; c=relaxed/simple;
-	bh=UDZrxQrVDMQHT2mdJ2IE8S2/8Of3zojZ5bDenDsIPvI=;
+	s=arc-20240116; t=1756820347; c=relaxed/simple;
+	bh=qV/1lzlt+dicd6H74Me8zmxX5Yv/lW3MqXY///o3lmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R9tEKqlG1lHEbhwkHtd3PJOGAV1xCdAEFYS+PrGWg5rcqFUQdnmKYgs2fPwP5HnX++4063Lxui1aSSYPp4x60pXS6ndILCgUzEOjcGgqOCOyDdbhsBWa5gYSmc+2fjU8TM/aqaI22jZOdSwGZv6UFT9QnE8nvt3JwjPlt4+yWOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDB2bry3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kvkzcPOD/+we2nlKUzn5IwSXnhgoHJRVS/xGUHOZPmKKR5PjcgH/iB0Y/Xr2DSD+rO2wmqWrWDwU6bdYAJBO7lwBgkk/+EtSxa0T0YpLyOydEXtC3Jm1wDgRRoybm+Wvxe6HNpsmpul20nfF3RHqflBPX/zF2orhyhFzEX4pNDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13tVq17r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDB2bry3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA30C4CEF4;
-	Tue,  2 Sep 2025 13:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13tVq17r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A22BC4CEED;
+	Tue,  2 Sep 2025 13:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820344;
-	bh=UDZrxQrVDMQHT2mdJ2IE8S2/8Of3zojZ5bDenDsIPvI=;
+	s=korg; t=1756820347;
+	bh=qV/1lzlt+dicd6H74Me8zmxX5Yv/lW3MqXY///o3lmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDB2bry3HR5CLYSyCQnffEubd3AlBmr3FMz+KgmjmaZhnM2r2zcRlv7/GkI6pncKa
-	 Sk/ogo5zuMqXgbqW0tVpN19X5NhEyIRLZggowUsWTWDaDfzLsER84zGIRHoJpRYIdg
-	 0nIxhOff3WZpYU9kYwM4+danyu1MZ8R04rq1KiAg=
+	b=13tVq17rgQQCb6RjQk4oxO4Ev/uagAG7omK01POiVIHAsZxdaNwz6rt2vw9QYWMN5
+	 bTXtkuyo1NX+TWR1w9FENrCsgmSsunyV905bH6BKkAB6yHHB0J8tygtoQHcgzXwLfx
+	 IOET7fz366MrQ43dMpMk+2lNUgLs7YA8mmb90Hnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 43/75] net/mlx5: Nack sync reset when SFs are present
-Date: Tue,  2 Sep 2025 15:20:55 +0200
-Message-ID: <20250902131936.812827993@linuxfoundation.org>
+Subject: [PATCH 6.6 34/75] net: dlink: fix multicast stats being counted incorrectly
+Date: Tue,  2 Sep 2025 15:20:46 +0200
+Message-ID: <20250902131936.460776124@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -54,98 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Yeounsu Moon <yyyynoom@gmail.com>
 
-[ Upstream commit 26e42ec7712d392d561964514b1f253b1a96f42d ]
+[ Upstream commit 007a5ffadc4fd51739527f1503b7cf048f31c413 ]
 
-If PF (Physical Function) has SFs (Sub-Functions), since the SFs are not
-taking part in the synchronization flow, sync reset can lead to fatal
-error on the SFs, as the function will be closed unexpectedly from the
-SF point of view.
+`McstFramesRcvdOk` counts the number of received multicast packets, and
+it reports the value correctly.
 
-Add a check to prevent sync reset when there are SFs on a PF device
-which is not ECPF, as ECPF is teardowned gracefully before reset.
+However, reading `McstFramesRcvdOk` clears the register to zero. As a
+result, the driver was reporting only the packets since the last read,
+instead of the accumulated total.
 
-Fixes: 92501fa6e421 ("net/mlx5: Ack on sync_reset_request only if PF can do reset_now")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250825143435.598584-8-mbloch@nvidia.com
+Fix this by updating the multicast statistics accumulatively instaed of
+instantaneously.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Tested-on: D-Link DGE-550T Rev-A3
+Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250823182927.6063-3-yyyynoom@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c   |  6 ++++++
- drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c | 10 ++++++++++
- drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h      |  6 ++++++
- 3 files changed, 22 insertions(+)
+ drivers/net/ethernet/dlink/dl2k.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index b9986a2656083..1547704c89767 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -6,6 +6,7 @@
- #include "fw_reset.h"
- #include "diag/fw_tracer.h"
- #include "lib/tout.h"
-+#include "sf/sf.h"
+diff --git a/drivers/net/ethernet/dlink/dl2k.c b/drivers/net/ethernet/dlink/dl2k.c
+index fad5a72d3b167..f1208591ed67e 100644
+--- a/drivers/net/ethernet/dlink/dl2k.c
++++ b/drivers/net/ethernet/dlink/dl2k.c
+@@ -1092,7 +1092,7 @@ get_stats (struct net_device *dev)
+ 	dev->stats.rx_bytes += dr32(OctetRcvOk);
+ 	dev->stats.tx_bytes += dr32(OctetXmtOk);
  
- enum {
- 	MLX5_FW_RESET_FLAGS_RESET_REQUESTED,
-@@ -397,6 +398,11 @@ static bool mlx5_is_reset_now_capable(struct mlx5_core_dev *dev)
- 		return false;
- 	}
+-	dev->stats.multicast = dr32(McstFramesRcvdOk);
++	dev->stats.multicast += dr32(McstFramesRcvdOk);
+ 	dev->stats.collisions += dr32(SingleColFrames)
+ 			     +  dr32(MultiColFrames);
  
-+	if (!mlx5_core_is_ecpf(dev) && !mlx5_sf_table_empty(dev)) {
-+		mlx5_core_warn(dev, "SFs should be removed before reset\n");
-+		return false;
-+	}
-+
- #if IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE)
- 	err = mlx5_check_hotplug_interrupt(dev);
- 	if (err)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c
-index 3f0ac2d1dde68..c9089f2ec5f25 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/devlink.c
-@@ -541,3 +541,13 @@ void mlx5_sf_table_cleanup(struct mlx5_core_dev *dev)
- 	WARN_ON(!xa_empty(&table->function_ids));
- 	kfree(table);
- }
-+
-+bool mlx5_sf_table_empty(const struct mlx5_core_dev *dev)
-+{
-+	struct mlx5_sf_table *table = dev->priv.sf_table;
-+
-+	if (!table)
-+		return true;
-+
-+	return xa_empty(&table->function_ids);
-+}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h b/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h
-index 860f9ddb7107b..89559a37997ad 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/sf.h
-@@ -17,6 +17,7 @@ void mlx5_sf_hw_table_destroy(struct mlx5_core_dev *dev);
- 
- int mlx5_sf_table_init(struct mlx5_core_dev *dev);
- void mlx5_sf_table_cleanup(struct mlx5_core_dev *dev);
-+bool mlx5_sf_table_empty(const struct mlx5_core_dev *dev);
- 
- int mlx5_devlink_sf_port_new(struct devlink *devlink,
- 			     const struct devlink_port_new_attrs *add_attr,
-@@ -61,6 +62,11 @@ static inline void mlx5_sf_table_cleanup(struct mlx5_core_dev *dev)
- {
- }
- 
-+static inline bool mlx5_sf_table_empty(const struct mlx5_core_dev *dev)
-+{
-+	return true;
-+}
-+
- #endif
- 
- #endif
 -- 
 2.50.1
 
