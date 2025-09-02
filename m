@@ -1,279 +1,194 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D009D28136E
-	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 10:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B15288C20;
+	Tue,  2 Sep 2025 12:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756808623; cv=none; b=WBKLTMnmlZqubvNRUXdCnWcmvnuutqVn5UeNNHjO1kxhtwXqlCH8Pd4V4tk+XRVlY8sUD8Qp5RoUQ+44aceuo3zDcd8mB0fTdWunn/SwuU7U6/0JZnYTTiv7GwP1opDEUS8LDKzGqIwT/kZpfzm6CyEjJEePCZaR3hZ/diELDqw=
+	t=1756814916; cv=none; b=b1T0z+Us6GcRJTa7ag4esSOT/cOJD28rOBPXBUDl8DZDBHO/2pa4lTcfTlLwHTXEmjx4n0p0GhXf+wPqpWPolqBI62w7fYwUrjrLQJpgcdut39H3FilV4/870TbAr4WVgsGQL43uirwD3nNVyr4aT6QAZXu0LFHJ37fTs6zhD8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756808623; c=relaxed/simple;
-	bh=0KRQMGE2Ku0icIb0e95NofGJzzChw6uLxT6PglA6loc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ByU/CFr4tU4pEfqSfdSfyc/y8w6DwwxYqdVPM4E3ffh+l8c8MYNDlARD8minrrj+VocIVsGmXI3/cBws0zlPgN2fkOKM4nKFogqNO9fa0eGJgi9m4yWHrPRq+883bTi4ozSacjC9ROvkFP0QuxPDUH8ER3wmef1Ffd2Q2wtJrUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KgCS70Xy; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1756814916; c=relaxed/simple;
+	bh=ZPf10cXY2km1B/FVleWiffi1jphCqVPdfHT9UPrkwwo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JpweuvdkdgLuvPf8YvvyUpqpajwpchEn8+P+Ut5asTwDVOY1Tdi0d0wW3+nNbk58kCbazKhrG1EjQL3DtjF64ufvu6ahoqQ0/77t3Tfm4yGnE7NqiSeEzxpFroCX0DzhDqU+wihYlkzZnI8fK12eB5fOkA8B9unRH2FDMnRt3nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oiuGxnBk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KgCS70Xy"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3c6abcfd142so2469085f8f.2
-        for <patches@lists.linux.dev>; Tue, 02 Sep 2025 03:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1756808619; x=1757413419; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jZG75Fyl9tDZ5Dejg8bO+Je0PHBuLoFooUnwuE0fIUk=;
-        b=KgCS70XyHly7D5ElV+tXGR20E/iPo7rd/LNFI3I49oowX0LBmHgLrRboznrvy10d8F
-         8fhypQUxgrO4R5xlKe24NG82n0l5rtiPsRtXs0JSwmQfKIMjTZWTD314WXbrWiQBN+Si
-         z60WDpx4e9eHBzmj0SOqat+vTSYikpgtWR6gpVv4mT07xckX0EJ4yWK3pq6FvMVs/VRQ
-         w67klxwYJ6baexJD1sMJtL8G20CZFSt+Iz3UO44J1vuKfZxlHIzX09ogpOpdJu7RgusR
-         Mx9UMNI9gpST5njdlucxZWFG6Feyh8ySoPlDbuXMug149pIQGDPQ8HSbYgm7TS1tMcZQ
-         cedQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756808619; x=1757413419;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jZG75Fyl9tDZ5Dejg8bO+Je0PHBuLoFooUnwuE0fIUk=;
-        b=DDm9IKFz4QLH6KCW/3CQNsrM5cgtW6KWHrzvKpdBdBTQFtJkFi/ZaOJcqR0aWi2VGh
-         OyRTPQnTFqrDzBhD3m2JNSrpnfzsiQX9Xq78qmhKIyLIDWqoJLg0gT/Nc0L9ehi+kJCy
-         yek3mmmlhTMLeqX/qHRJSdWhr6layP9Ra5OBpfGIEALud/G02PdostkE2gfB6GU18Ttf
-         5KPWRzNbmFEItBnPAv1I4N8hot3OtCAEg3sVhEBfm8J9FBn/BBsZhjJHXC4kr9yF/G5L
-         FG3hRbRnwnXeOie++KktCFNNNNdRYsmR6Ys5upaAzRRVd7CXnt3N3TqRGEP/paAfc3Zw
-         s5IA==
-X-Forwarded-Encrypted: i=1; AJvYcCW7Gfvk6aFUtISytwsCQlfshGyjHkkZsZuDnzWmMfXRRjRUjc4juwcR35x6SWV0ZJCDqrDcNsDl@lists.linux.dev
-X-Gm-Message-State: AOJu0YxCNDrJvFLTDPbO2Qd9PBjUo3lHUc4ZvPWUthKZTc+ZYJUl2IL5
-	TJvOVr7+B2OYSWF28GDs3iTmWL0dwTXk3MvoxTjGvC4ieX8QTY2mKLcifidYT/+HzqWiqc7o6x7
-	bLDJ0ZbBnFtwF4yhD1/80SCw/XEjjlP2OEP9rMqoP
-X-Gm-Gg: ASbGncugw11BtrRoZOzNYPFDJKSiQ810JIaqL/Xj6xfpr6aUvq0X9IY48tMZSSnbhhY
-	luKgK17kKLrk6Ba1WHro6kuQrMHHlYjRWHsDm3H9RWGGtcDAknc1xnlyZT1mECNKslqurl8kxwt
-	7Vs7JlxvPP8l7A7+rENZ8R4KywIyQNqr8IJRNZFlIfJWVI5namoR13/ocvQJVbgnAp0S93R2jMo
-	InKgegefYY6GWqWC+kuj6wlmw+NDEtv/+rLP9EynxNc89wZ+4pkqqzEiLXygl/7kcIk4wfO3tOT
-	XDuWFr67M+4VR8H8M0PqUQ==
-X-Google-Smtp-Source: AGHT+IE5Vy/wSrO6MssjX3WYMX8v3QdFOiofgYk4M9t6NexPcbIwSDmaT3qhZJWKYqATGYUQjTlkcIx74nuY9kBXnqk=
-X-Received: by 2002:a5d:64c9:0:b0:3d8:7c6e:8b08 with SMTP id
- ffacd0b85a97d-3d87c6e8edamr3829658f8f.13.1756808618755; Tue, 02 Sep 2025
- 03:23:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oiuGxnBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B238C4CEED;
+	Tue,  2 Sep 2025 12:08:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756814916;
+	bh=ZPf10cXY2km1B/FVleWiffi1jphCqVPdfHT9UPrkwwo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=oiuGxnBk/8quYXPsfzqBm7ce0j/ZCGpRAyoCPjWmIPvVWTkDxk9Fc88foovL2DSlm
+	 ZnHsFZ/ZZH/m3lfYUJ9V4Fmtgi6QmfaInaEtFFtbRYWBJ8OtVB4FCTCuaeZTGyTTcO
+	 f8vxmer0gi1hUohvgWQPO6/kZwnpyi65XNLj2axScHn3K2OQLEesu+h9umUYgwvnNj
+	 pXVDavGkq19mn3SqhXufvOouCB2kAgJ6Ach+eMGW4qPgU1A0tTJRzwmnOI0bygkuGZ
+	 hLs8Ci+33AtMLwB0Yp6/FWkDYpnbyt/hHb1fVnUeq6PPMveHaC190aEAjYWZaV8sN6
+	 Avi1h+ec0TDBQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Amit Chaudhari <amitchaudhari@mac.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	westeri@kernel.org,
+	andriy.shevchenko@linux.intel.com,
+	brgl@bgdev.pl,
+	linux-gpio@vger.kernel.org,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16] gpiolib: acpi: Add quirk for ASUS ProArt PX13
+Date: Tue,  2 Sep 2025 08:08:12 -0400
+Message-ID: <20250902120833.1342615-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250408220311.1033475-1-ojeda@kernel.org> <20250901-shrimp-define-9d99cc2a012a@spud>
- <aLaq6TpUtLkqHg_o@google.com> <20250902-crablike-bountiful-eb1c127f024a@spud>
-In-Reply-To: <20250902-crablike-bountiful-eb1c127f024a@spud>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Tue, 2 Sep 2025 12:23:26 +0200
-X-Gm-Features: Ac12FXwpn-3-ibRIG1XikBRyRDY3ok1C3LPFFXbq4WkeG6TaAMWRWaWMSctR85g
-Message-ID: <CAH5fLggmXaa9JJ-yGdyH06Um8FopvYh97=rANLcoLc+60_HGqA@mail.gmail.com>
-Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
-To: Conor Dooley <conor@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	Alexander Potapenko <glider@google.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
-	Dmitry Vyukov <dvyukov@google.com>, Vincenzo Frascino <vincenzo.frascino@arm.com>, 
-	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Matthew Maurer <mmaurer@google.com>, Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.16.4
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 2, 2025 at 12:12=E2=80=AFPM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> On Tue, Sep 02, 2025 at 08:29:29AM +0000, Alice Ryhl wrote:
-> > On Mon, Sep 01, 2025 at 06:45:54PM +0100, Conor Dooley wrote:
-> > > Yo,
-> > >
-> > > On Wed, Apr 09, 2025 at 12:03:11AM +0200, Miguel Ojeda wrote:
-> > > > If KASAN is enabled, and one runs in a clean repository e.g.:
-> > > >
-> > > >     make LLVM=3D1 prepare
-> > > >     make LLVM=3D1 prepare
-> > > >
-> > > > Then the Rust code gets rebuilt, which should not happen.
-> > > >
-> > > > The reason is some of the LLVM KASAN `rustc` flags are added in the
-> > > > second run:
-> > > >
-> > > >     -Cllvm-args=3D-asan-instrumentation-with-call-threshold=3D10000
-> > > >     -Cllvm-args=3D-asan-stack=3D0
-> > > >     -Cllvm-args=3D-asan-globals=3D1
-> > > >     -Cllvm-args=3D-asan-kernel-mem-intrinsic-prefix=3D1
-> > > >
-> > > > Further runs do not rebuild Rust because the flags do not change an=
-ymore.
-> > > >
-> > > > Rebuilding like that in the second run is bad, even if this just ha=
-ppens
-> > > > with KASAN enabled, but missing flags in the first one is even wors=
-e.
-> > > >
-> > > > The root issue is that we pass, for some architectures and for the =
-moment,
-> > > > a generated `target.json` file. That file is not ready by the time =
-`rustc`
-> > > > gets called for the flag test, and thus the flag test fails just be=
-cause
-> > > > the file is not available, e.g.:
-> > > >
-> > > >     $ ... --target=3D./scripts/target.json ... -Cllvm-args=3D...
-> > > >     error: target file "./scripts/target.json" does not exist
-> > > >
-> > > > There are a few approaches we could take here to solve this. For in=
-stance,
-> > > > we could ensure that every time that the config is rebuilt, we rege=
-nerate
-> > > > the file and recompute the flags. Or we could use the LLVM version =
-to
-> > > > check for these flags, instead of testing the flag (which may have =
-other
-> > > > advantages, such as allowing us to detect renames on the LLVM side)=
-.
-> > > >
-> > > > However, it may be easier than that: `rustc` is aware of the `-Cllv=
-m-args`
-> > > > regardless of the `--target` (e.g. I checked that the list printed
-> > > > is the same, plus that I can check for these flags even if I pass
-> > > > a completely unrelated target), and thus we can just eliminate the
-> > > > dependency completely.
-> > > >
-> > > > Thus filter out the target.
-> > >
-> > >
-> > >
-> > >
-> > > > This does mean that `rustc-option` cannot be used to test a flag th=
-at
-> > > > requires the right target, but we don't have other users yet, it is=
- a
-> > > > minimal change and we want to get rid of custom targets in the futu=
-re.
-> > >
-> > > Hmm, while this might be true, I think it should not actually have be=
-en
-> > > true. Commit ca627e636551e ("rust: cfi: add support for CFI_CLANG wit=
-h Rust")
-> > > added a cc-option check to the rust kconfig symbol, checking if the c
-> > > compiler supports the integer normalisations stuff:
-> > >     depends on !CFI_CLANG || RUSTC_VERSION >=3D 107900 && $(cc-option=
-,-fsanitize=3Dkcfi -fsanitize-cfi-icall-experimental-normalize-integers)
-> > > and also sets the relevant options in the makefile:
-> > >     ifdef CONFIG_RUST
-> > >            # Always pass -Zsanitizer-cfi-normalize-integers as CONFIG=
-_RUST selects
-> > >            # CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
-> > >            RUSTC_FLAGS_CFI   :=3D -Zsanitizer=3Dkcfi -Zsanitizer-cfi-=
-normalize-integers
-> > >            KBUILD_RUSTFLAGS +=3D $(RUSTC_FLAGS_CFI)
-> > >            export RUSTC_FLAGS_CFI
-> > >     endif
-> > > but it should also have added a rustc-option check as, unfortunately,
-> > > support for kcfi in rustc is target specific. This results in build
-> > > breakages where the arch supports CFI_CLANG and RUST, but the target =
-in
-> > > use does not have the kcfi flag set.
-> > > I attempted to fix this by adding:
-> > >     diff --git a/arch/Kconfig b/arch/Kconfig
-> > >     index d1b4ffd6e0856..235709fb75152 100644
-> > >     --- a/arch/Kconfig
-> > >     +++ b/arch/Kconfig
-> > >     @@ -916,6 +916,7 @@ config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLAN=
-G
-> > >      config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
-> > >             def_bool y
-> > >             depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
-> > >     +       depends on $(rustc-option,-C panic=3Dabort -Zsanitizer=3D=
-kcfi -Zsanitizer-cfi-normalize-integers)
-> > >             depends on RUSTC_VERSION >=3D 107900
-> > >             # With GCOV/KASAN we need this fix: https://github.com/ru=
-st-lang/rust/pull/129373
-> > >             depends on (RUSTC_LLVM_VERSION >=3D 190103 && RUSTC_VERSI=
-ON >=3D 108200) || \
-> > > but of course this does not work for cross compilation, as you're
-> > > stripping the target information out and so the check passes on my ho=
-st
-> > > even though my intended
-> > > RUSTC_BOOTSTRAP=3D1 rustc -C panic=3Dabort -Zsanitizer=3Dkcfi -Zsanit=
-izer-cfi-normalize-integers -Ctarget-cpu=3Dgeneric-rv64 --target=3Driscv64i=
-mac-unknown-none-elf
-> > > is a failure.
-> > >
-> > > I dunno too much about rustc itself, but I suspect that adding kcfi t=
-o
-> > > the target there is a "free" win, but that'll take time to trickle do=
-wn
-> > > and the minimum version rustc version for the kernel isn't going to h=
-ave
-> > > that.
-> > >
-> > > I'm not really sure what your target.json suggestion below is, so jus=
-t
-> > > reporting so that someone that understands the alternative solutions =
-can
-> > > fix this.
-> >
-> > Probably right now we have to do this cfg by
-> >
-> >       depends on CONFIG_ARM
->
-> It's valid on x86 too, right?
->
-> >
-> > to prevent riscv if rustc has the missing setting
-> > set on riscv. Once we add it to riscv, we change it to
-> >
-> >       depends on CONFIG_ARM || (RUSTC_VERSION >=3D ??? || CONFIG_RISCV)
->
-> I kinda shied away from something like this since there was already a
-> cc-option on the other half and checking different versions per arch
-> becomes a mess - but yeah it kinda is a no-brainer to do it here when
-> rustc-option is kinda broken.
->
-> I guess the temporary fix is then:
->
-> config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
->         def_bool y
->         depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
->         depends on ARM64 || x86_64
->         depends on RUSTC_VERSION >=3D 107900
->         # With GCOV/KASAN we need this fix: https://github.com/rust-lang/=
-rust/pull/129373
->         depends on (RUSTC_LLVM_VERSION >=3D 190103 && RUSTC_VERSION >=3D =
-108200) || \
->                 (!GCOV_KERNEL && !KASAN_GENERIC && !KASAN_SW_TAGS)
->
-> because there's no 32-bit target with SanitizerSet::KCFI in rustc either
-> AFAICT. Then later on it'd become more like:
->
-> config HAVE_CFI_ICALL_NORMALIZE_INTEGERS_RUSTC
->         def_bool y
->         depends on HAVE_CFI_ICALL_NORMALIZE_INTEGERS_CLANG
->         depends on RISCV || ((ARM64 || x86_64) && RUSTC_VERSION >=3D 1079=
-00)
->         depends on (ARM64 || x86_64) || (RISCV && RUSTC_VERSION >=3D 9999=
-99)
->         # With GCOV/KASAN we need this fix: https://github.com/rust-lang/=
-rust/pull/129373
->         depends on (RUSTC_LLVM_VERSION >=3D 190103 && RUSTC_VERSION >=3D =
-108200) || \
->                 (!GCOV_KERNEL && !KASAN_GENERIC && !KASAN_SW_TAGS)
->
-> but that exact sort of mess is what becomes unwieldy fast since that
-> doesn't even cover 32-bit arm.
+From: "Mario Limonciello (AMD)" <superm1@kernel.org>
 
-I think a better way of writing it is like this:
+[ Upstream commit 23800ad1265f10c2bc6f42154ce4d20e59f2900e ]
 
-depends on ARCH1 || ARCH2 || ARCH3
-depends on !ARCH1 || RUSTC_VERSION >=3D 000000
-depends on !ARCH2 || RUSTC_VERSION >=3D 000000
-depends on !ARCH3 || RUSTC_VERSION >=3D 000000
+The ASUS ProArt PX13 has a spurious wakeup event from the touchpad
+a few moments after entering hardware sleep.  This can be avoided
+by preventing the touchpad from being a wake source.
 
-Alice
+Add to the wakeup ignore list.
+
+Reported-by: Amit Chaudhari <amitchaudhari@mac.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4482
+Tested-by: Amit Chaudhari <amitchaudhari@mac.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/20250814183430.3887973-1-superm1@kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+Based on my comprehensive analysis of this commit and the context, here
+is my assessment:
+
+**Backport Status: YES**
+
+## Extensive Analysis:
+
+### 1. **Nature of the Fix**
+This commit fixes a real hardware bug - spurious wakeup events from the
+touchpad on the ASUS ProArt PX13 laptop. The code change adds a DMI-
+based quirk entry to the `gpiolib_acpi_quirks` table in
+`/home/sasha/linux/drivers/gpio/gpiolib-acpi-quirks.c:350-359`, which
+instructs the GPIO subsystem to ignore wake events from the specific
+touchpad GPIO pin (`ASCP1A00:00@8`).
+
+### 2. **符合稳定内核规则 (Meets Stable Kernel Rules)**
+According to `/home/sasha/linux/Documentation/process/stable-kernel-
+rules.rst`:
+- **Fixes a real bug**: Yes - spurious wakeups are a real hardware issue
+  that impacts users' ability to use sleep/suspend effectively (lines
+  18-19 of rules)
+- **Obviously correct and tested**: Yes - the fix is straightforward
+  (adding a quirk entry), has been tested by the reporter (Amit
+  Chaudhari), and reviewed by Mika Westerberg
+- **Size constraint**: The patch is only ~20 lines with context, well
+  under the 100-line limit
+- **Already in mainline**: Yes - commit
+  23800ad1265f10c2bc6f42154ce4d20e59f2900e
+
+### 3. **Historical Precedent**
+Multiple similar commits for spurious wakeup quirks have been backported
+to stable:
+- Commit `805c74eac8cb3` (GPD G1619-04 touchpad wakeup) - explicitly
+  marked with `Cc: stable@vger.kernel.org`
+- Commit `782eea0c89f7d` (Clevo NL5xNU) - marked with `Cc:
+  stable@vger.kernel.org`
+- Commit `a69982c37cd05` (Clevo NH5xAx) - marked with `Cc:
+  <stable@vger.kernel.org> # v6.1+`
+
+### 4. **Code Structure Analysis**
+The change follows the exact same pattern as other quirk entries in the
+file:
+```c
+.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
+    .ignore_wake = "ASCP1A00:00@8",
+},
+```
+This is a data-only addition to an existing quirk table - no logic
+changes, no new code paths, minimal regression risk.
+
+### 5. **User Impact**
+The bug causes spurious wakeups "a few moments after entering hardware
+sleep", which:
+- Prevents proper system suspend/sleep functionality
+- Drains battery life on laptops
+- Disrupts user workflow
+- Is a clear hardware-specific issue that cannot be worked around by
+  users
+
+### 6. **Risk Assessment**
+- **Extremely low risk**: The change only affects systems that match the
+  specific DMI strings (ASUSTeK COMPUTER INC. + ProArt PX13)
+- **No impact on other systems**: DMI matching ensures this quirk only
+  applies to the affected hardware
+- **Well-established mechanism**: The ignore_wake infrastructure is
+  mature and widely used
+
+### 7. **Backporting Considerations**
+While this specific commit wasn't explicitly marked with `Cc: stable`,
+it follows the exact same pattern as commits that were. The commit has
+already been picked up by Sasha Levin's stable tree (as shown in the `[
+Upstream commit ]` tag in the local repository), suggesting the stable
+maintainers recognize its importance.
+
+The fix is self-contained, requires no prerequisites, and can be cleanly
+applied to any kernel version that has the `gpiolib-acpi-quirks.c` file
+structure (introduced in commit `92dc572852ddc`).
+
+### Conclusion
+This is a textbook example of a stable-appropriate fix: it addresses a
+specific hardware bug affecting real users, uses a well-established
+quirk mechanism, has zero impact on unaffected systems, and follows the
+exact pattern of previously backported fixes for identical issues on
+different hardware.
+
+ drivers/gpio/gpiolib-acpi-quirks.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/drivers/gpio/gpiolib-acpi-quirks.c b/drivers/gpio/gpiolib-acpi-quirks.c
+index c13545dce3492..bfb04e67c4bc8 100644
+--- a/drivers/gpio/gpiolib-acpi-quirks.c
++++ b/drivers/gpio/gpiolib-acpi-quirks.c
+@@ -344,6 +344,20 @@ static const struct dmi_system_id gpiolib_acpi_quirks[] __initconst = {
+ 			.ignore_interrupt = "AMDI0030:00@8",
+ 		},
+ 	},
++	{
++		/*
++		 * Spurious wakeups from TP_ATTN# pin
++		 * Found in BIOS 5.35
++		 * https://gitlab.freedesktop.org/drm/amd/-/issues/4482
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_FAMILY, "ProArt PX13"),
++		},
++		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
++			.ignore_wake = "ASCP1A00:00@8",
++		},
++	},
+ 	{} /* Terminating entry */
+ };
+ 
+-- 
+2.50.1
+
