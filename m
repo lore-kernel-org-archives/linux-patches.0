@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9443093B8;
-	Tue,  2 Sep 2025 13:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7CF261393;
+	Tue,  2 Sep 2025 13:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820258; cv=none; b=qTrSfoZZLFnAC7imShPA/0WAsTdOtgRUTiUMs0oJCv2K8nDNG7VlNJyNeVXc7HNgXHwXEMvCDeyoyx3Jwfl3M9mBhpvzU9Pn9YShIve49R16LQj0fXvIhMQns0bCv16Fdg+O64ASLe8gFtE/CJkKCegOhjdf6D5P+zCOImFX3VU=
+	t=1756820261; cv=none; b=KxeTjvuQJW4wzcSPXERMObmJfiU5bfmJCp67tBO4+5OLmD72u7v/SOkFnCbptexFtdLQshs1kYCsIpTBvl9GMNli4qRL9kwYA9NU57tf9MIBQDvDAekw3OLjpKh3G2qYwCw8WqeD/OpMTv3HbSxdfAet/IV/u6fFsNMPg2DaoOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820258; c=relaxed/simple;
-	bh=rskP4RvtYK6yG07GGPYOq1vvSNFx2nQmf4XUS5P10zk=;
+	s=arc-20240116; t=1756820261; c=relaxed/simple;
+	bh=YzJVfioyR9Om9pZf936cwaAvqqS53KBzM5M1iH0e61c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHeGibbk7Iy/rcngdjNAahXLovRgMdgWaRpe84uvvIKaFSdnb7SASlg8Te4ziTx5/TWr+H4yquo0410l+/DMijfw6BITCorQm8U69HWc+19un4tpwR2vSIrUI2PRc7eUNpj5qc+CPFwttLWIaa/p5xnnd4g2hBJF+TVQxZahH4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wotww4WZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TfCxwXL7t8ppkIFiueRXAci3riRwtRjxuu2d7BeN2syN+Wok5xIH+6y3LyYk/ejjBquMqu0mX+x8QEun6k6X061fjX1o9S2lVmNxziRWcMW8vM+4nISf2Z5WP1RvmlisHKTk042+s0+rK08rekk/7BkgiSEPSg7zbC0InHDok80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaAuOGmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wotww4WZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1215DC4CEED;
-	Tue,  2 Sep 2025 13:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaAuOGmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5F9C4CEED;
+	Tue,  2 Sep 2025 13:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820258;
-	bh=rskP4RvtYK6yG07GGPYOq1vvSNFx2nQmf4XUS5P10zk=;
+	s=korg; t=1756820261;
+	bh=YzJVfioyR9Om9pZf936cwaAvqqS53KBzM5M1iH0e61c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wotww4WZGdTVSvWwYSIQHqKtlzEdOhucmEKyLwaE1CCeUx2gpZgBNwRLbflNmtm/C
-	 ALmtF5gRubTc34GP4btMsPz+oOuHiW+39Av5w39NOQl49k5PP6q9N+b5/8pZriJt9t
-	 stve4Usnc4/0ooZztRa4f7yE+B9UkE42EMptitjw=
+	b=PaAuOGmmzv/f3yqpTOSHYiSfxscNUfBQPmB2cykdihpsrh5wTqvckjmNxptLpuvjG
+	 UY6roCuXpYujJuuDac9EWfej1GWNSycQ1jrNsBPs3EI782ItD9hg34uit5mrssXrVh
+	 /A7LV8NjAQe7x456r1/xiYTwGvl053RMUJ/WMLfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Gerlach <matthew.gerlach@altera.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 49/75] net: stmmac: xgmac: Correct supported speed modes
-Date: Tue,  2 Sep 2025 15:21:01 +0200
-Message-ID: <20250902131937.045836851@linuxfoundation.org>
+Subject: [PATCH 6.6 50/75] net: stmmac: Set CIC bit only for TX queues with COE
+Date: Tue,  2 Sep 2025 15:21:02 +0200
+Message-ID: <20250902131937.085419961@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131935.107897242@linuxfoundation.org>
 References: <20250902131935.107897242@linuxfoundation.org>
@@ -54,92 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Rohan G Thomas <rohan.g.thomas@altera.com>
 
-[ Upstream commit 42ef11b2bff5b6a2910c28d2ea47cc00e0fbcaec ]
+[ Upstream commit b1eded580ab28119de0b0f21efe37ee2b4419144 ]
 
-Correct supported speed modes as per the XGMAC databook.
-Commit 9cb54af214a7 ("net: stmmac: Fix IP-cores specific
-MAC capabilities") removes support for 10M, 100M and
-1000HD. 1000HD is not supported by XGMAC IP, but it does
-support 10M and 100M FD mode for XGMAC version >= 2_20,
-and it also supports 10M and 100M HD mode if the HDSEL bit
-is set in the MAC_HW_FEATURE0 reg. This commit enables support
-for 10M and 100M speed modes for XGMAC IP based on XGMAC
-version and MAC capabilities.
+Currently, in the AF_XDP transmit paths, the CIC bit of
+TX Desc3 is set for all packets. Setting this bit for
+packets transmitting through queues that don't support
+checksum offloading causes the TX DMA to get stuck after
+transmitting some packets. This patch ensures the CIC bit
+of TX Desc3 is set only if the TX queue supports checksum
+offloading.
 
-Fixes: 9cb54af214a7 ("net: stmmac: Fix IP-cores specific MAC capabilities")
+Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
 Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
 Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-2-c225fe4444c0@altera.com
+Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-3-c225fe4444c0@altera.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c | 13 +++++++++++--
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c  |  5 +++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index 052566f5b7f36..0bcb378fa0bc9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -47,6 +47,14 @@ static void dwxgmac2_core_init(struct mac_device_info *hw,
- 	writel(XGMAC_INT_DEFAULT_EN, ioaddr + XGMAC_INT_EN);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index fa8ee0624f2f2..ff5389a8efc33 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2426,6 +2426,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 	struct netdev_queue *nq = netdev_get_tx_queue(priv->dev, queue);
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
+ 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
++	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
+ 	struct xsk_buff_pool *pool = tx_q->xsk_pool;
+ 	unsigned int entry = tx_q->cur_tx;
+ 	struct dma_desc *tx_desc = NULL;
+@@ -2496,7 +2497,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 		}
  
-+static void dwxgmac2_update_caps(struct stmmac_priv *priv)
-+{
-+	if (!priv->dma_cap.mbps_10_100)
-+		priv->hw->link.caps &= ~(MAC_10 | MAC_100);
-+	else if (!priv->dma_cap.half_duplex)
-+		priv->hw->link.caps &= ~(MAC_10HD | MAC_100HD);
-+}
-+
- static void dwxgmac2_set_mac(void __iomem *ioaddr, bool enable)
+ 		stmmac_prepare_tx_desc(priv, tx_desc, 1, xdp_desc.len,
+-				       true, priv->mode, true, true,
++				       csum, priv->mode, true, true,
+ 				       xdp_desc.len);
+ 
+ 		stmmac_enable_dma_transmission(priv, priv->ioaddr);
+@@ -4789,6 +4790,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
  {
- 	u32 tx = readl(ioaddr + XGMAC_TX_CONFIG);
-@@ -1583,6 +1591,7 @@ static void dwxgmac3_fpe_configure(void __iomem *ioaddr, struct stmmac_fpe_cfg *
+ 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
++	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
+ 	unsigned int entry = tx_q->cur_tx;
+ 	struct dma_desc *tx_desc;
+ 	dma_addr_t dma_addr;
+@@ -4833,7 +4835,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
+ 	stmmac_set_desc_addr(priv, tx_desc, dma_addr);
  
- const struct stmmac_ops dwxgmac210_ops = {
- 	.core_init = dwxgmac2_core_init,
-+	.update_caps = dwxgmac2_update_caps,
- 	.set_mac = dwxgmac2_set_mac,
- 	.rx_ipc = dwxgmac2_rx_ipc,
- 	.rx_queue_enable = dwxgmac2_rx_queue_enable,
-@@ -1705,8 +1714,8 @@ int dwxgmac2_setup(struct stmmac_priv *priv)
- 		mac->mcast_bits_log2 = ilog2(mac->multicast_filter_bins);
+ 	stmmac_prepare_tx_desc(priv, tx_desc, 1, xdpf->len,
+-			       true, priv->mode, true, true,
++			       csum, priv->mode, true, true,
+ 			       xdpf->len);
  
- 	mac->link.caps = MAC_ASYM_PAUSE | MAC_SYM_PAUSE |
--			 MAC_1000FD | MAC_2500FD | MAC_5000FD |
--			 MAC_10000FD;
-+			 MAC_10 | MAC_100 | MAC_1000FD |
-+			 MAC_2500FD | MAC_5000FD | MAC_10000FD;
- 	mac->link.duplex = 0;
- 	mac->link.speed10 = XGMAC_CONFIG_SS_10_MII;
- 	mac->link.speed100 = XGMAC_CONFIG_SS_100_MII;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-index 37c4258fef794..b2c03cb65c7cc 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
-@@ -382,8 +382,11 @@ static int dwxgmac2_dma_interrupt(struct stmmac_priv *priv,
- static int dwxgmac2_get_hw_feature(void __iomem *ioaddr,
- 				   struct dma_features *dma_cap)
- {
-+	struct stmmac_priv *priv;
- 	u32 hw_cap;
- 
-+	priv = container_of(dma_cap, struct stmmac_priv, dma_cap);
-+
- 	/* MAC HW feature 0 */
- 	hw_cap = readl(ioaddr + XGMAC_HW_FEATURE0);
- 	dma_cap->edma = (hw_cap & XGMAC_HWFEAT_EDMA) >> 31;
-@@ -406,6 +409,8 @@ static int dwxgmac2_get_hw_feature(void __iomem *ioaddr,
- 	dma_cap->vlhash = (hw_cap & XGMAC_HWFEAT_VLHASH) >> 4;
- 	dma_cap->half_duplex = (hw_cap & XGMAC_HWFEAT_HDSEL) >> 3;
- 	dma_cap->mbps_1000 = (hw_cap & XGMAC_HWFEAT_GMIISEL) >> 1;
-+	if (dma_cap->mbps_1000 && priv->synopsys_id >= DWXGMAC_CORE_2_20)
-+		dma_cap->mbps_10_100 = 1;
- 
- 	/* MAC HW feature 1 */
- 	hw_cap = readl(ioaddr + XGMAC_HW_FEATURE1);
+ 	tx_q->tx_count_frames++;
 -- 
 2.50.1
 
