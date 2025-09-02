@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D5431197E;
-	Tue,  2 Sep 2025 13:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8C52FE599;
+	Tue,  2 Sep 2025 13:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819439; cv=none; b=BxIVLq2FU60aiQoby6GsfH71ZCdnvdmmH9GcykHMJffz1e/KQGgTc4ZZruZ7dpHJlE94b2klXR5zv/SAuuTxNPI8SZOApYzkxR+zuhrr+YeUsAvV8bzbg92tCZHxAw/eZlbY8/o5NBxYcXQLXw19eD1gpF92oTHXW9WKfWNaMtU=
+	t=1756819444; cv=none; b=o7LL4IaB5absOZiYZjOhBDLS+zAJpmg2me/PoBFBC7SOl4lVzj8m0gkPea5597psjAh8zITxJgHa1cDeasVVKA60F7QjxWNVWHt8Ih5xwZX2TwEipaSashDs8KH4RH0XaUkXi8kqNmbjX0XnL09Xu/GptmohWuAZZJzH/TSY3y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819439; c=relaxed/simple;
-	bh=OxuImUvYIPbeGXNgTCk1YDRZyboqyZVpGTsNQVF6d9I=;
+	s=arc-20240116; t=1756819444; c=relaxed/simple;
+	bh=Gf3tt5L8zghJgCf9JkjKiwBWJ0Z0qesqglqBFOte6Yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAGP39mpW9AwKBez7BSt8CTCA6PpS6QQI4sXDxk+7sP0S83+JImu6A1LxH2zp7mb3e/AHtcbZImuVyfWhvTLyHLwivumYt/D7HURFkZIJ9/4ctCSJwLCwOGnzkxFDdy+GqpZOXnSKwD2CgMvC6KURiOZ9qr6d8EK74b0aZUCMm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgS/6P0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eYLVLirtNN+x3M5NEzm2eqJo2zstyPMVIMibPaNSNA9YOp6aerUKLj5fQWSkH0bvlre1R+ijkC8l4hBA77c9rDozJW9x3R5EeWxFE24DFmUFzYOvz2eygdqR/uI2UoElgzlPJUpX3ljxyL5t/OL91vOEWLOxfgo7yjKfWJT8c9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dz1b44hm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgS/6P0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AACC4CEED;
-	Tue,  2 Sep 2025 13:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dz1b44hm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7E4C4CEED;
+	Tue,  2 Sep 2025 13:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819438;
-	bh=OxuImUvYIPbeGXNgTCk1YDRZyboqyZVpGTsNQVF6d9I=;
+	s=korg; t=1756819443;
+	bh=Gf3tt5L8zghJgCf9JkjKiwBWJ0Z0qesqglqBFOte6Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MgS/6P0bogNoG3pTxHdkccI30xJ7wzwoyZ4mcZ8fLy3OmA+0HGOjlnOoxgaaDB168
-	 CUuNzKRjqBFS3LLdfdyJ82RjMGJPjLU1WvniTbhGPtBSwqKw5s3GEYE9vy2OTUgXDn
-	 r1rFHKT5wyA3n8Ke8NwPvWPAn1I4MVe7AIcO4780=
+	b=Dz1b44hmVW3LP9J2W916YFJq5Dul+OgWWA+sDVifDem8A1k2dUwjhnfr22f2QkFmA
+	 LTh43u7neu/jDv0R9XzX+PkglWg1sZpM/plmUCJw4qxmfEKyjtn/NZlplQlIbk2MKO
+	 VMK8YAkQPzlyTSZ2VS+I8QJcYnRpazhI1Ye4AK+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Ryabinin <arbn@yandex-team.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.16 027/142] vhost/net: Protect ubufs with rcu read lock in vhost_net_ubuf_put()
-Date: Tue,  2 Sep 2025 15:18:49 +0200
-Message-ID: <20250902131949.184286157@linuxfoundation.org>
+	Ayushi Makhija <quic_amakhija@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 036/142] drm/msm: update the high bitfield of certain DSI registers
+Date: Tue,  2 Sep 2025 15:18:58 +0200
+Message-ID: <20250902131949.526745085@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,79 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
 
-commit dd54bcf86c91a4455b1f95cbc8e9ac91205f3193 upstream.
+[ Upstream commit 494045c561e68945b1183ff416b8db8e37a122d6 ]
 
-When operating on struct vhost_net_ubuf_ref, the following execution
-sequence is theoretically possible:
-CPU0 is finalizing DMA operation                   CPU1 is doing VHOST_NET_SET_BACKEND
-                             // ubufs->refcount == 2
-vhost_net_ubuf_put()                               vhost_net_ubuf_put_wait_and_free(oldubufs)
-                                                     vhost_net_ubuf_put_and_wait()
-                                                       vhost_net_ubuf_put()
-                                                         int r = atomic_sub_return(1, &ubufs->refcount);
-                                                         // r = 1
-int r = atomic_sub_return(1, &ubufs->refcount);
-// r = 0
-                                                      wait_event(ubufs->wait, !atomic_read(&ubufs->refcount));
-                                                      // no wait occurs here because condition is already true
-                                                    kfree(ubufs);
-if (unlikely(!r))
-  wake_up(&ubufs->wait);  // use-after-free
+Currently, the high bitfield of certain DSI registers
+do not align with the configuration of the SWI registers
+description. This can lead to wrong programming these DSI
+registers, for example for 4k resloution where H_TOTAL is
+taking 13 bits but software is programming only 12 bits
+because of the incorrect bitmask for H_TOTAL bitfeild,
+this is causing DSI FIFO errors. To resolve this issue,
+increase the high bitfield of the DSI registers from 12 bits
+to 16 bits in dsi.xml to match the SWI register configuration.
 
-This leads to use-after-free on ubufs access. This happens because CPU1
-skips waiting for wake_up() when refcount is already zero.
-
-To prevent that use a read-side RCU critical section in vhost_net_ubuf_put(),
-as suggested by Hillf Danton. For this lock to take effect, free ubufs with
-kfree_rcu().
-
-Cc: stable@vger.kernel.org
-Fixes: 0ad8b480d6ee9 ("vhost: fix ref cnt checking deadlock")
-Reported-by: Andrey Ryabinin <arbn@yandex-team.com>
-Suggested-by: Hillf Danton <hdanton@sina.com>
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Message-Id: <20250805130917.727332-1-kniv@yandex-team.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+Fixes: 4f52f5e63b62 ("drm/msm: import XML display registers database")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/666229/
+Link: https://lore.kernel.org/r/20250730123938.1038640-1-quic_amakhija@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/registers/display/dsi.xml | 28 +++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -96,6 +96,7 @@ struct vhost_net_ubuf_ref {
- 	atomic_t refcount;
- 	wait_queue_head_t wait;
- 	struct vhost_virtqueue *vq;
-+	struct rcu_head rcu;
- };
+diff --git a/drivers/gpu/drm/msm/registers/display/dsi.xml b/drivers/gpu/drm/msm/registers/display/dsi.xml
+index 501ffc585a9f6..c7a7b633d747b 100644
+--- a/drivers/gpu/drm/msm/registers/display/dsi.xml
++++ b/drivers/gpu/drm/msm/registers/display/dsi.xml
+@@ -159,28 +159,28 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="RGB_SWAP" low="12" high="14" type="dsi_rgb_swap"/>
+ 	</reg32>
+ 	<reg32 offset="0x00020" name="ACTIVE_H">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00024" name="ACTIVE_V">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00028" name="TOTAL">
+-		<bitfield name="H_TOTAL" low="0" high="11" type="uint"/>
+-		<bitfield name="V_TOTAL" low="16" high="27" type="uint"/>
++		<bitfield name="H_TOTAL" low="0" high="15" type="uint"/>
++		<bitfield name="V_TOTAL" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x0002c" name="ACTIVE_HSYNC">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00030" name="ACTIVE_VSYNC_HPOS">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00034" name="ACTIVE_VSYNC_VPOS">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
  
- #define VHOST_NET_BATCH 64
-@@ -247,9 +248,13 @@ vhost_net_ubuf_alloc(struct vhost_virtqu
- 
- static int vhost_net_ubuf_put(struct vhost_net_ubuf_ref *ubufs)
- {
--	int r = atomic_sub_return(1, &ubufs->refcount);
-+	int r;
-+
-+	rcu_read_lock();
-+	r = atomic_sub_return(1, &ubufs->refcount);
- 	if (unlikely(!r))
- 		wake_up(&ubufs->wait);
-+	rcu_read_unlock();
- 	return r;
- }
- 
-@@ -262,7 +267,7 @@ static void vhost_net_ubuf_put_and_wait(
- static void vhost_net_ubuf_put_wait_and_free(struct vhost_net_ubuf_ref *ubufs)
- {
- 	vhost_net_ubuf_put_and_wait(ubufs);
--	kfree(ubufs);
-+	kfree_rcu(ubufs, rcu);
- }
- 
- static void vhost_net_clear_ubuf_info(struct vhost_net *n)
+ 	<reg32 offset="0x00038" name="CMD_DMA_CTRL">
+@@ -209,8 +209,8 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="WORD_COUNT" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00058" name="CMD_MDP_STREAM0_TOTAL">
+-		<bitfield name="H_TOTAL" low="0" high="11" type="uint"/>
+-		<bitfield name="V_TOTAL" low="16" high="27" type="uint"/>
++		<bitfield name="H_TOTAL" low="0" high="15" type="uint"/>
++		<bitfield name="V_TOTAL" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x0005c" name="CMD_MDP_STREAM1_CTRL">
+ 		<bitfield name="DATA_TYPE" low="0" high="5" type="uint"/>
+-- 
+2.50.1
+
 
 
