@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9F93043BD;
-	Tue,  2 Sep 2025 13:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572DB3081CB;
+	Tue,  2 Sep 2025 13:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819378; cv=none; b=ZdGSmRO6vdXLJBvI5aI2Af7H+dUi0+DeKQL0Cxaev5Nm22cM1J7Vol78UQex1uw0L6Gby3TeYwLmmGd7Y2emjDZ3+MVX5nln0Hq9LWBUPyCcRQ3hQHeclPWNao6/8UQkyT4f5iJBf6kPf/K9p6awdfld553CkMe47UeBwXVKPII=
+	t=1756819382; cv=none; b=iPklrmxdS/iSrm0xDb0JhOrmBNtumsVOCmA4tT3vshAqPOD4+RpvWPDlHrfZL+40FO3kAIrfupnPdJSainHqnVnT8yTuNbJmtuaFOTYpwVx1o2nchK6pbHsaKTVyCUeWNHhLw/GLJLOZ5BhoypBkZXZY+LcxWgI+5Qfw52GAtxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819378; c=relaxed/simple;
-	bh=Uvow1/4593h13EfEeWGS5xsny0vKtRUwM3yEg7EFZ7w=;
+	s=arc-20240116; t=1756819382; c=relaxed/simple;
+	bh=lYj2VA/PrvRNvHu9amZArG0vQA1+b9CqrD+2kd9RM2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJWjd6x/dKjWR8V1Bj9crtC2vDkiwUVRfR6E6lvGYo+0Zpurrn0RJ7hZEv9aQE2LGhFPM5JeHp7SiIK09PpXLpLD45mPcG3BFwpCswH7eQuWxJLU9Z7wI4XPkMMdRR7RHP6pgdIr/09P4EoHz6hmDeNRoI7CN12Q0A+v03uA0AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF8sugDk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d6ZHG5lBXCrILXVWkxdLYZ+SgB9pV3flFlJgFbBnpvJRiKJl8mJRJFQ2PoCao8vSuHFhlME8OV1ZxuC27S2+0jPxwaCnC2BmFMvs1vdeV3lWtmCQOnZVoOZ4Nl72mkObOH5/QR9M90I0u4dZiXEKU2+fQN+9KmTnpu4HWkinCW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxynNrAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF8sugDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E92C4CEED;
-	Tue,  2 Sep 2025 13:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxynNrAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32B0C4CEF4;
+	Tue,  2 Sep 2025 13:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819378;
-	bh=Uvow1/4593h13EfEeWGS5xsny0vKtRUwM3yEg7EFZ7w=;
+	s=korg; t=1756819382;
+	bh=lYj2VA/PrvRNvHu9amZArG0vQA1+b9CqrD+2kd9RM2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XF8sugDkm74bK7CDITMwiZpPEXMjJkjzd7dirW2y/87XPTzEnOpiOSpkzfek8FBT1
-	 tP/TgHkwm15RLVAAoUDEtVgFYXvVvrp/O89a45kxwKXNgwNV21Slw+OjKXdS8hraLG
-	 KU1oQY4HW1olCCq1KPx9ofjn7F63Rki+wAdJjE2k=
+	b=NxynNrAi25G02A5bBUmGY3YSqwV95YWHFV+eKYu9c0QD52LN4XXaIFF75MEm9DYok
+	 +ctMBsiAews4IkLG48rhad/1lC0Nk7G3i/Qhg+Q7iAwmpwAHcMxkN+nsp/mYcSxn7s
+	 /SRiDK0b8MsiD0FDXgAG+XbwScoNf9b2y+tFjP4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Johannes Thumshin <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 017/142] scsi: core: sysfs: Correct sysfs attributes access rights
-Date: Tue,  2 Sep 2025 15:18:39 +0200
-Message-ID: <20250902131948.811662246@linuxfoundation.org>
+Subject: [PATCH 6.16 018/142] smb: client: fix race with concurrent opens in unlink(2)
+Date: Tue,  2 Sep 2025 15:18:40 +0200
+Message-ID: <20250902131948.850529108@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -53,47 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit a2f54ff15c3bdc0132e20aae041607e2320dbd73 ]
+[ Upstream commit 0af1561b2d60bab2a2b00720a5c7b292ecc549ec ]
 
-The SCSI sysfs attributes "supported_mode" and "active_mode" do not
-define a store method and thus cannot be modified.  Correct the
-DEVICE_ATTR() call for these two attributes to not include S_IWUSR to
-allow write access as they are read-only.
+According to some logs reported by customers, CIFS client might end up
+reporting unlinked files as existing in stat(2) due to concurrent
+opens racing with unlink(2).
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250728041700.76660-1-dlemoal@kernel.org
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Johannes Thumshin <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Besides sending the removal request to the server, the unlink process
+could involve closing any deferred close as well as marking all
+existing open handles as deleted to prevent them from deferring
+closes, which increases the race window for potential concurrent
+opens.
+
+Fix this by unhashing the dentry in cifs_unlink() to prevent any
+subsequent opens.  Any open attempts, while we're still unlinking,
+will block on parent's i_rwsem.
+
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: linux-cifs@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_sysfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/inode.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index d772258e29ad2..e6464b9989609 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -265,7 +265,7 @@ show_shost_supported_mode(struct device *dev, struct device_attribute *attr,
- 	return show_shost_mode(supported_mode, buf);
+diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
+index 75be4b46bc6f1..cf9060f0fc08e 100644
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -1943,15 +1943,24 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+ 	struct tcon_link *tlink;
+ 	struct cifs_tcon *tcon;
++	__u32 dosattr = 0, origattr = 0;
+ 	struct TCP_Server_Info *server;
+ 	struct iattr *attrs = NULL;
+-	__u32 dosattr = 0, origattr = 0;
++	bool rehash = false;
+ 
+ 	cifs_dbg(FYI, "cifs_unlink, dir=0x%p, dentry=0x%p\n", dir, dentry);
+ 
+ 	if (unlikely(cifs_forced_shutdown(cifs_sb)))
+ 		return -EIO;
+ 
++	/* Unhash dentry in advance to prevent any concurrent opens */
++	spin_lock(&dentry->d_lock);
++	if (!d_unhashed(dentry)) {
++		__d_drop(dentry);
++		rehash = true;
++	}
++	spin_unlock(&dentry->d_lock);
++
+ 	tlink = cifs_sb_tlink(cifs_sb);
+ 	if (IS_ERR(tlink))
+ 		return PTR_ERR(tlink);
+@@ -2003,7 +2012,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 			cifs_drop_nlink(inode);
+ 		}
+ 	} else if (rc == -ENOENT) {
+-		d_drop(dentry);
++		if (simple_positive(dentry))
++			d_delete(dentry);
+ 	} else if (rc == -EBUSY) {
+ 		if (server->ops->rename_pending_delete) {
+ 			rc = server->ops->rename_pending_delete(full_path,
+@@ -2056,6 +2066,8 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
+ 	kfree(attrs);
+ 	free_xid(xid);
+ 	cifs_put_tlink(tlink);
++	if (rehash)
++		d_rehash(dentry);
+ 	return rc;
  }
  
--static DEVICE_ATTR(supported_mode, S_IRUGO | S_IWUSR, show_shost_supported_mode, NULL);
-+static DEVICE_ATTR(supported_mode, S_IRUGO, show_shost_supported_mode, NULL);
- 
- static ssize_t
- show_shost_active_mode(struct device *dev,
-@@ -279,7 +279,7 @@ show_shost_active_mode(struct device *dev,
- 		return show_shost_mode(shost->active_mode, buf);
- }
- 
--static DEVICE_ATTR(active_mode, S_IRUGO | S_IWUSR, show_shost_active_mode, NULL);
-+static DEVICE_ATTR(active_mode, S_IRUGO, show_shost_active_mode, NULL);
- 
- static int check_reset_type(const char *str)
- {
 -- 
 2.50.1
 
