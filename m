@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033BE2FE599;
-	Tue,  2 Sep 2025 13:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4467223D7EC;
+	Tue,  2 Sep 2025 13:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819903; cv=none; b=LQ7ZfykDv8SOb9Wq8y0qJkqMVzPt45T4r/qdOxrx5BLls0F7EMFpq5TZay2B0+A0tQYfI3EAmcHXWpa9WueHYBEKcZ2pBmJLpPV8QtdCIntl3aGzAYZpTy/JCekovBf9G0uOpg9kWWd/iRCImRakxOShwYOZX/IxWcdlWlIe16E=
+	t=1756819906; cv=none; b=s4uCtCLvlcQYx2qfH732nQnsjUXVT4SmO8Dgo7DKr+yScmb6FQAXlq2ncrL7SUM4VPm6AUryXcrLVet4QMzTxEDar3TRhUunK5veQd67YF4f6vcAVfKVQ9dGyvg16NuFHSMVdTGJku92DKzW4+6tpHqPE0oiHxcaVYdmC1XkRZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819903; c=relaxed/simple;
-	bh=TbgesYJpIH0YAtpCxpr2MmAQcgYCIzUIZx+jiJJYpSE=;
+	s=arc-20240116; t=1756819906; c=relaxed/simple;
+	bh=JHvl+XH3Vs3RQuO5rbX8nZ2M4xy4KcEXVa1s86KSobI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=faZ+XfLj3LgW8nht3SVTTnH2nii6tNYn5oFyrLxdIs9e+gllQIunHZcS9TNDGeWvcpl/g3TAWtsjf18xbUbICGj3XdBeEWhiC6JBPa2eDt8sijLllbNUAJ85wSmk/8GsgsCc3f4SK+okD4Ey/sF+cOO0hpbEtZR3EqIOz6SXdXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaC+wIrG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uhj63IIZJpdD7JF6EZPfM/FKgzq0hyYvVaQWoJjUnW77+9e5mb5FuNOwpXXPcfL9j8smCkXDEyIT0oCoZywLy3wbCmIhKb8/CY2VuIIv1jWpvfCtAeMHzbJ7yHPtLyEl4WEPeF1glykwjyggGYhDIDHKIWGzlsTzwAo/N5vZHAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8oh4+3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaC+wIrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB93C4CEED;
-	Tue,  2 Sep 2025 13:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8oh4+3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28DDC4CEF4;
+	Tue,  2 Sep 2025 13:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819902;
-	bh=TbgesYJpIH0YAtpCxpr2MmAQcgYCIzUIZx+jiJJYpSE=;
+	s=korg; t=1756819906;
+	bh=JHvl+XH3Vs3RQuO5rbX8nZ2M4xy4KcEXVa1s86KSobI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UaC+wIrG68/WEb+9kChZt1ET4l3jf37jidI4i3zo102hO6lVO5SNiqXgyT79eFMHY
-	 Dvy16h5zuvePV5pBVQD9ij5zXrEmaTip0NRk/mjpNBAOkQGAGl3wO7BzSCM6tE1vt0
-	 T0B06KJKnU0iON432u3BtSYBArbL82BmtYPd8Q8M=
+	b=j8oh4+3E0WAiVB+nNP8i7LDJVbER4oNMVkcHdrl74ZJxvQLOJ1EciufwrB6jxJJvO
+	 IfOXkrGcvLrUj1CTsANiQL52+Cc4l1NoHt+WjkN3XbhXQ5BOMONDxTnoiCKqcNN+z2
+	 A0cdt3R0XqNJM6dG0tDs3R+KpnzicyoT2hQFcDE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 07/95] mips: lantiq: xway: sysctrl: rename the etop node
-Date: Tue,  2 Sep 2025 15:19:43 +0200
-Message-ID: <20250902131939.893443948@linuxfoundation.org>
+Subject: [PATCH 6.12 08/95] of: dynamic: Fix use after free in of_changeset_add_prop_helper()
+Date: Tue,  2 Sep 2025 15:19:44 +0200
+Message-ID: <20250902131939.932828330@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -45,81 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 8c431ea8f3f795c4b9cfa57a85bc4166b9cce0ac ]
+[ Upstream commit 80af3745ca465c6c47e833c1902004a7fa944f37 ]
 
-Bindig requires a node name matching ‘^ethernet@[0-9a-f]+$’. This patch
-changes the clock name from “etop” to “ethernet”.
+If the of_changeset_add_property() function call fails, then this code
+frees "new_pp" and then dereference it on the next line.  Return the
+error code directly instead.
 
-This fixes the following warning:
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: etop@e180000 (lantiq,etop-xway): $nodename:0: 'etop@e180000' does not match '^ethernet@[0-9a-f]+$'
-	from schema $id: http://devicetree.org/schemas/net/lantiq,etop-xway.yaml#
-
-Fixes: dac0bad93741 ("dt-bindings: net: lantiq,etop-xway: Document Lantiq Xway ETOP bindings")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c81f6ce16785 ("of: dynamic: Fix memleak when of_pci_add_properties() failed")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/aKgljjhnpa4lVpdx@stanley.mountain
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/lantiq/danube_easy50712.dts |  2 +-
- arch/mips/lantiq/xway/sysctrl.c                | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/of/dynamic.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-index d8b3cd69eda3c..c4d7aa5753b04 100644
---- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-+++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-@@ -82,7 +82,7 @@ conf_out {
- 			};
- 		};
+diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
+index fcaaadc2eca1d..492f0354a7922 100644
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -935,13 +935,15 @@ static int of_changeset_add_prop_helper(struct of_changeset *ocs,
+ 		return -ENOMEM;
  
--		etop@e180000 {
-+		ethernet@e180000 {
- 			compatible = "lantiq,etop-xway";
- 			reg = <0xe180000 0x40000>;
- 			interrupt-parent = <&icu0>;
-diff --git a/arch/mips/lantiq/xway/sysctrl.c b/arch/mips/lantiq/xway/sysctrl.c
-index 5a75283d17f10..6031a0272d874 100644
---- a/arch/mips/lantiq/xway/sysctrl.c
-+++ b/arch/mips/lantiq/xway/sysctrl.c
-@@ -497,7 +497,7 @@ void __init ltq_soc_init(void)
- 		ifccr = CGU_IFCCR_VR9;
- 		pcicr = CGU_PCICR_VR9;
- 	} else {
--		clkdev_add_pmu("1e180000.etop", NULL, 1, 0, PMU_PPE);
-+		clkdev_add_pmu("1e180000.ethernet", NULL, 1, 0, PMU_PPE);
- 	}
+ 	ret = of_changeset_add_property(ocs, np, new_pp);
+-	if (ret)
++	if (ret) {
+ 		__of_prop_free(new_pp);
++		return ret;
++	}
  
- 	if (!of_machine_is_compatible("lantiq,ase"))
-@@ -531,9 +531,9 @@ void __init ltq_soc_init(void)
- 						CLOCK_133M, CLOCK_133M);
- 		clkdev_add_pmu("1e101000.usb", "otg", 1, 0, PMU_USB0);
- 		clkdev_add_pmu("1f203018.usb2-phy", "phy", 1, 0, PMU_USB0_P);
--		clkdev_add_pmu("1e180000.etop", "ppe", 1, 0, PMU_PPE);
--		clkdev_add_cgu("1e180000.etop", "ephycgu", CGU_EPHY);
--		clkdev_add_pmu("1e180000.etop", "ephy", 1, 0, PMU_EPHY);
-+		clkdev_add_pmu("1e180000.ethernet", "ppe", 1, 0, PMU_PPE);
-+		clkdev_add_cgu("1e180000.ethernet", "ephycgu", CGU_EPHY);
-+		clkdev_add_pmu("1e180000.ethernet", "ephy", 1, 0, PMU_EPHY);
- 		clkdev_add_pmu("1e103000.sdio", NULL, 1, 0, PMU_ASE_SDIO);
- 		clkdev_add_pmu("1e116000.mei", "dfe", 1, 0, PMU_DFE);
- 	} else if (of_machine_is_compatible("lantiq,grx390")) {
-@@ -592,7 +592,7 @@ void __init ltq_soc_init(void)
- 		clkdev_add_pmu("1e101000.usb", "otg", 1, 0, PMU_USB0 | PMU_AHBM);
- 		clkdev_add_pmu("1f203034.usb2-phy", "phy", 1, 0, PMU_USB1_P);
- 		clkdev_add_pmu("1e106000.usb", "otg", 1, 0, PMU_USB1 | PMU_AHBM);
--		clkdev_add_pmu("1e180000.etop", "switch", 1, 0, PMU_SWITCH);
-+		clkdev_add_pmu("1e180000.ethernet", "switch", 1, 0, PMU_SWITCH);
- 		clkdev_add_pmu("1e103000.sdio", NULL, 1, 0, PMU_SDIO);
- 		clkdev_add_pmu("1e103100.deu", NULL, 1, 0, PMU_DEU);
- 		clkdev_add_pmu("1e116000.mei", "dfe", 1, 0, PMU_DFE);
+ 	new_pp->next = np->deadprops;
+ 	np->deadprops = new_pp;
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ /**
 -- 
 2.50.1
 
