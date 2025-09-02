@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9429A273D6D;
-	Tue,  2 Sep 2025 13:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FEB305048;
+	Tue,  2 Sep 2025 13:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819413; cv=none; b=h2S5+uRN/3sjh8846t4NNqEHikQmLIQVgZ6uOl9zQ8S7seaPCT8XClZz/Caa+pZw5M6jGsrDDOJl2IXSM1hFr853YRtXNXKfcO6XcjsMCaI6yjeTyZv41WJVl5s5ii4hS+XeXMq4lCodyJqtPYKm+OELGpGjzXikijxmV/zLZ7Q=
+	t=1756819415; cv=none; b=EkW0qqJYCydqjO2pJWFjRElAA585zW04Td13OybqIA0mZFZ6Twjoyb/nNejxGq4aBv6nnQPPrXJND9c9etn5dWs4MIYK7yoASU01ud3u57clsQ45jUpYMKUtxu/61DJ4TkuOcj6Sa6KyoUiXxhzAs9kCm4I6ph1uN+xTNLoTexs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819413; c=relaxed/simple;
-	bh=Nt+OMVqJoQK8lqH3+zsAUmt/jb0Rg3SZ/iAX0K85heM=;
+	s=arc-20240116; t=1756819415; c=relaxed/simple;
+	bh=/zwaXZ269znNN+JEfwA/znoNey2P0Lt7Sdkh32cYDUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2g5a1UPOAAVOmT+rBMmc3BPBPm6k0niRzGBz9kDruXqJE09E/LvM4tTXTgWjkcxI7gvvjGv+Hq5qC9GhM7ZewAiyhw+bikmC0J66hEm8Rn1uwC1go4r5ybo6k6YkT4DxUrTlkXZS8Eg7337Oq6u0m+U2ibtdWUGKoypepsOsAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPh0uN+8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ETfV3LdBMub1J77EtIFoq+lFsskOK0N6j/t5V2Jt7PbZ46q/Rwpr8CGqxmvatNJXEyS7rHL26j0I/nBTqmwT2GNoqhUJTUG1Q7yqJ3vl58rAZeaDhMoxl+VkaUnasQu1thDpKQK51i9sTeuru3W+aXA4MTOC4lSEF97VG+owOpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlwK6jIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPh0uN+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E0CC4CEED;
-	Tue,  2 Sep 2025 13:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlwK6jIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E683CC4CEED;
+	Tue,  2 Sep 2025 13:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819412;
-	bh=Nt+OMVqJoQK8lqH3+zsAUmt/jb0Rg3SZ/iAX0K85heM=;
+	s=korg; t=1756819415;
+	bh=/zwaXZ269znNN+JEfwA/znoNey2P0Lt7Sdkh32cYDUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPh0uN+8ZAtTnvSGwv5MSexlWSl+yfS+IAUvHkIBg2bN3k2y0uxlGUbZJdEwV+Zqk
-	 idVX81SpuQUYc5iuuVEBPTSoO0SR8iOA2P1tu4aex8ta9bGXA1ZPI62V4ABwH285Op
-	 mKT2YFOiMxmt506uyUbciX1q31QMRMU/xJaB5zRw=
+	b=hlwK6jIROKukygD8Bdg0ShsKNykjXpWMRHpYuhX+MLGRN6wfvEh9WK3SAAUZFDMpX
+	 TtAk8OMomJhTY5JHbFg4p+S+JIn+hQCI23iATIW3HLFiZhlZO7L60I7E338ezx5/cd
+	 Tk4y+K+L2bY4TQ8t2mnzwqHZqSPvZ3FXhaLQOE1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Chen <chen.dylane@linux.dev>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Ye Weihua <yeweihua4@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 003/142] rtla: Check pkg-config install
-Date: Tue,  2 Sep 2025 15:18:25 +0200
-Message-ID: <20250902131948.286754578@linuxfoundation.org>
+Subject: [PATCH 6.16 004/142] trace/fgraph: Fix the warning caused by missing unregister notifier
+Date: Tue,  2 Sep 2025 15:18:26 +0200
+Message-ID: <20250902131948.323493690@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -51,54 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@linux.dev>
+From: Ye Weihua <yeweihua4@huawei.com>
 
-[ Upstream commit 7b128f1d53dcaa324d4aa05d821a6bf4a7b203e7 ]
+[ Upstream commit edede7a6dcd7435395cf757d053974aaab6ab1c2 ]
 
-The tool pkg-config used to check libtraceevent and libtracefs, if not
-installed, it will report the libs not found, even though they have
-already been installed.
+This warning was triggered during testing on v6.16:
 
-Before:
-libtraceevent is missing. Please install libtraceevent-dev/libtraceevent-devel
-libtracefs is missing. Please install libtracefs-dev/libtracefs-devel
+notifier callback ftrace_suspend_notifier_call already registered
+WARNING: CPU: 2 PID: 86 at kernel/notifier.c:23 notifier_chain_register+0x44/0xb0
+...
+Call Trace:
+ <TASK>
+ blocking_notifier_chain_register+0x34/0x60
+ register_ftrace_graph+0x330/0x410
+ ftrace_profile_write+0x1e9/0x340
+ vfs_write+0xf8/0x420
+ ? filp_flush+0x8a/0xa0
+ ? filp_close+0x1f/0x30
+ ? do_dup2+0xaf/0x160
+ ksys_write+0x65/0xe0
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-After:
-Makefile.config:10: *** Error: pkg-config needed by libtraceevent/libtracefs is missing
-on this system, please install it.
+When writing to the function_profile_enabled interface, the notifier was
+not unregistered after start_graph_tracing failed, causing a warning the
+next time function_profile_enabled was written.
 
-Link: https://lore.kernel.org/20250808040527.2036023-2-chen.dylane@linux.dev
-Fixes: 01474dc706ca ("tools/rtla: Use tools/build makefiles to build rtla")
-Signed-off-by: Tao Chen <chen.dylane@linux.dev>
+Fixed by adding unregister_pm_notifier in the exception path.
+
+Link: https://lore.kernel.org/20250818073332.3890629-1-yeweihua4@huawei.com
+Fixes: 4a2b8dda3f870 ("tracing/function-graph-tracer: fix a regression while suspend to disk")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Ye Weihua <yeweihua4@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/Makefile.config | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/trace/fgraph.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/tracing/rtla/Makefile.config b/tools/tracing/rtla/Makefile.config
-index 5f2231d8d6266..07ff5e8f3006e 100644
---- a/tools/tracing/rtla/Makefile.config
-+++ b/tools/tracing/rtla/Makefile.config
-@@ -1,10 +1,18 @@
- # SPDX-License-Identifier: GPL-2.0-only
- 
-+include $(srctree)/tools/scripts/utilities.mak
-+
- STOP_ERROR :=
- 
- LIBTRACEEVENT_MIN_VERSION = 1.5
- LIBTRACEFS_MIN_VERSION = 1.6
- 
-+ifndef ($(NO_LIBTRACEEVENT),1)
-+  ifeq ($(call get-executable,$(PKG_CONFIG)),)
-+    $(error Error: $(PKG_CONFIG) needed by libtraceevent/libtracefs is missing on this system, please install it)
-+  endif
-+endif
-+
- define lib_setup
-   $(eval LIB_INCLUDES += $(shell sh -c "$(PKG_CONFIG) --cflags lib$(1)"))
-   $(eval LDFLAGS += $(shell sh -c "$(PKG_CONFIG) --libs-only-L lib$(1)"))
+diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+index c5b207992fb49..dac2d58f39490 100644
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -1393,6 +1393,7 @@ int register_ftrace_graph(struct fgraph_ops *gops)
+ 		ftrace_graph_active--;
+ 		gops->saved_func = NULL;
+ 		fgraph_lru_release_index(i);
++		unregister_pm_notifier(&ftrace_suspend_notifier);
+ 	}
+ 	return ret;
+ }
 -- 
 2.50.1
 
