@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A4830FC1F;
-	Tue,  2 Sep 2025 13:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCBA30FF01;
+	Tue,  2 Sep 2025 13:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819831; cv=none; b=uctayZzuxt0aaSnGelG4WPbj8G+DlI6l9IFQ4sih/3nR3xHH0hZZLPEwHs4yMQbyW/PJn+SaJpPn8KOI1Dl0YM3m6hnmkz9I9FbBvb1aIemF7OtVOkXO3SZSN/9SOhrHnIaRHRmZYZjBc14C9nxMX3MjpG0C132/8TnafP/8mAQ=
+	t=1756819835; cv=none; b=f2UJzoJOaPL3ZMoBtMdW0XJ3AjGDNFI+7bkDlhthrHQcCH6XEZRUcK1voDuJi6WvMn0f97ShZKYRrLDXL9y9qGQm4MdEOjDAPsEtokJVCc4tYYH+2m2boSwrAhhNU8d3JcFty6lurjpoRY79+cydYnGHbR73OqkCEXMA5Z8vF3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819831; c=relaxed/simple;
-	bh=qad/X1OGe2F8jM0B+ri5dDdxow1EJW9jwTC4tc1bECg=;
+	s=arc-20240116; t=1756819835; c=relaxed/simple;
+	bh=/pBT0uhmxSxgRrH0p4fKz4ndokTrIKF4i2ErwqIKJVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNm8gDCfwe9XX4+XLErDTxmQXVh/LnFkSSUVplWmbt2OWktFsoMXN73UsUC5Iw7WhnjE6uG4Q8NlX3G8igMSczw55Hzg1GsJJ767xTkVQHtlDV3hYEFy3WRXuN62UfS8S1hOj5InLV+j6Rd2WH8MlURwesLazG/rVjIRDFV0gzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6Od7VWJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SeC+1HnKu8OMf496HpVjYW/M+08PFfFpbiBZ4s1Ty5eAnFAZLF3zgD65qccIs46ymDXx4ZRtfF0bSoyZgcUQKW4FjpvUUhjozi9CS3ENPNagGktKFnSMo75wumna2TONIUqPmK9MuniOGjgd9JNVFnXkWiTQHvui6gx245aXxEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u6pd83W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6Od7VWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5283C4CEF4;
-	Tue,  2 Sep 2025 13:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u6pd83W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13933C4CEED;
+	Tue,  2 Sep 2025 13:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819831;
-	bh=qad/X1OGe2F8jM0B+ri5dDdxow1EJW9jwTC4tc1bECg=;
+	s=korg; t=1756819834;
+	bh=/pBT0uhmxSxgRrH0p4fKz4ndokTrIKF4i2ErwqIKJVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X6Od7VWJZQCzv7PO/VNo+HipfDw+Bu7lts3HGrV4rxCFUY0ZkyXC6EumP7g22teCq
-	 beg32jfcBmfbfz4xRx/Gr4hwU+vuCTx4D3tM73HVcNK01XuNYF4CoStPB6d/ZOg3u7
-	 FE6QsPV9zneHBmg5Pqi/VpxEZ9y1ShYJoMfvQ9xQ=
+	b=2u6pd83WUCkpYHVCy2LCdDD0ruNuEYZBvYyY9kamr1QPCAlMNrvVpVd3Wb/Oz0nSb
+	 P8YWIUQwtIpwxUOCE2pjF9YPnn373uTRUogzfoS7gYCzEfCaGQb6RljXXgzgp8HfN3
+	 zdlWNccn52NKXMQDDr8Y9v99wgd5jxWwAQxRJJiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Lei Yang <leiyang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 10/95] perf symbol-minimal: Fix ehdr reading in filename__read_build_id
-Date: Tue,  2 Sep 2025 15:19:46 +0200
-Message-ID: <20250902131940.010821977@linuxfoundation.org>
+Subject: [PATCH 6.12 11/95] vhost: Fix ioctl # for VHOST_[GS]ET_FORK_FROM_OWNER
+Date: Tue,  2 Sep 2025 15:19:47 +0200
+Message-ID: <20250902131940.048257046@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -45,151 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit ba0b7081f7a521d7c28b527a4f18666a148471e7 ]
+[ Upstream commit 24fc631539cc78225f5c61f99c7666fcff48024d ]
 
-The e_ident is part of the ehdr and so reading it a second time would
-mean the read ehdr was displaced by 16-bytes. Switch from stdio to
-open/read/lseek syscalls for similarity with the symbol-elf version of
-the function and so that later changes can alter then open flags.
+The VHOST_[GS]ET_FEATURES_ARRAY ioctl already took 0x83 and it would
+result in a build error when the vhost uapi header is used for perf tool
+build like below.
 
-Fixes: fef8f648bb47 ("perf symbol: Fix use-after-free in filename__read_build_id")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250823000024.724394-2-irogers@google.com
+  In file included from trace/beauty/ioctl.c:93:
+  tools/perf/trace/beauty/generated/ioctl/vhost_virtio_ioctl_array.c: In function ‘ioctl__scnprintf_vhost_virtio_cmd’:
+  tools/perf/trace/beauty/generated/ioctl/vhost_virtio_ioctl_array.c:36:18: error: initialized field overwritten [-Werror=override-init]
+     36 |         [0x83] = "SET_FORK_FROM_OWNER",
+        |                  ^~~~~~~~~~~~~~~~~~~~~
+  tools/perf/trace/beauty/generated/ioctl/vhost_virtio_ioctl_array.c:36:18: note: (near initialization for ‘vhost_virtio_ioctl_cmds[131]’)
+
+Fixes: 7d9896e9f6d02d8a ("vhost: Reintroduce kthread API and add mode selection")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Message-Id: <20250819063958.833770-1-namhyung@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-minimal.c | 55 ++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 28 deletions(-)
+ include/uapi/linux/vhost.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/symbol-minimal.c b/tools/perf/util/symbol-minimal.c
-index 36c1d3090689f..f114f75ebeb98 100644
---- a/tools/perf/util/symbol-minimal.c
-+++ b/tools/perf/util/symbol-minimal.c
-@@ -4,7 +4,6 @@
- 
- #include <errno.h>
- #include <unistd.h>
--#include <stdio.h>
- #include <fcntl.h>
- #include <string.h>
- #include <stdlib.h>
-@@ -88,11 +87,8 @@ int filename__read_debuglink(const char *filename __maybe_unused,
+diff --git a/include/uapi/linux/vhost.h b/include/uapi/linux/vhost.h
+index 1c7e7035fc49d..96b178f1bd5ca 100644
+--- a/include/uapi/linux/vhost.h
++++ b/include/uapi/linux/vhost.h
+@@ -254,7 +254,7 @@
+  * When fork_owner is set to VHOST_FORK_OWNER_KTHREAD:
+  *   - Vhost will create vhost workers as kernel threads.
   */
- int filename__read_build_id(const char *filename, struct build_id *bid)
- {
--	FILE *fp;
--	int ret = -1;
-+	int fd, ret = -1;
- 	bool need_swap = false, elf32;
--	u8 e_ident[EI_NIDENT];
--	int i;
- 	union {
- 		struct {
- 			Elf32_Ehdr ehdr32;
-@@ -103,28 +99,27 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 			Elf64_Phdr *phdr64;
- 		};
- 	} hdrs;
--	void *phdr;
--	size_t phdr_size;
--	void *buf = NULL;
--	size_t buf_size = 0;
-+	void *phdr, *buf = NULL;
-+	ssize_t phdr_size, ehdr_size, buf_size = 0;
+-#define VHOST_SET_FORK_FROM_OWNER _IOW(VHOST_VIRTIO, 0x83, __u8)
++#define VHOST_SET_FORK_FROM_OWNER _IOW(VHOST_VIRTIO, 0x84, __u8)
  
--	fp = fopen(filename, "r");
--	if (fp == NULL)
-+	fd = open(filename, O_RDONLY);
-+	if (fd < 0)
- 		return -1;
+ /**
+  * VHOST_GET_FORK_OWNER - Get the current fork_owner flag for the vhost device.
+@@ -262,6 +262,6 @@
+  *
+  * @return: An 8-bit value indicating the current thread mode.
+  */
+-#define VHOST_GET_FORK_FROM_OWNER _IOR(VHOST_VIRTIO, 0x84, __u8)
++#define VHOST_GET_FORK_FROM_OWNER _IOR(VHOST_VIRTIO, 0x85, __u8)
  
--	if (fread(e_ident, sizeof(e_ident), 1, fp) != 1)
-+	if (read(fd, hdrs.ehdr32.e_ident, EI_NIDENT) != EI_NIDENT)
- 		goto out;
- 
--	if (memcmp(e_ident, ELFMAG, SELFMAG) ||
--	    e_ident[EI_VERSION] != EV_CURRENT)
-+	if (memcmp(hdrs.ehdr32.e_ident, ELFMAG, SELFMAG) ||
-+	    hdrs.ehdr32.e_ident[EI_VERSION] != EV_CURRENT)
- 		goto out;
- 
--	need_swap = check_need_swap(e_ident[EI_DATA]);
--	elf32 = e_ident[EI_CLASS] == ELFCLASS32;
-+	need_swap = check_need_swap(hdrs.ehdr32.e_ident[EI_DATA]);
-+	elf32 = hdrs.ehdr32.e_ident[EI_CLASS] == ELFCLASS32;
-+	ehdr_size = (elf32 ? sizeof(hdrs.ehdr32) : sizeof(hdrs.ehdr64)) - EI_NIDENT;
- 
--	if (fread(elf32 ? (void *)&hdrs.ehdr32 : (void *)&hdrs.ehdr64,
--		  elf32 ? sizeof(hdrs.ehdr32) : sizeof(hdrs.ehdr64),
--		  1, fp) != 1)
-+	if (read(fd,
-+		 (elf32 ? (void *)&hdrs.ehdr32 : (void *)&hdrs.ehdr64) + EI_NIDENT,
-+		 ehdr_size) != ehdr_size)
- 		goto out;
- 
- 	if (need_swap) {
-@@ -138,14 +133,18 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 			hdrs.ehdr64.e_phnum = bswap_16(hdrs.ehdr64.e_phnum);
- 		}
- 	}
--	phdr_size = elf32 ? hdrs.ehdr32.e_phentsize * hdrs.ehdr32.e_phnum
--			  : hdrs.ehdr64.e_phentsize * hdrs.ehdr64.e_phnum;
-+	if ((elf32 && hdrs.ehdr32.e_phentsize != sizeof(Elf32_Phdr)) ||
-+	    (!elf32 && hdrs.ehdr64.e_phentsize != sizeof(Elf64_Phdr)))
-+		goto out;
-+
-+	phdr_size = elf32 ? sizeof(Elf32_Phdr) * hdrs.ehdr32.e_phnum
-+			  : sizeof(Elf64_Phdr) * hdrs.ehdr64.e_phnum;
- 	phdr = malloc(phdr_size);
- 	if (phdr == NULL)
- 		goto out;
- 
--	fseek(fp, elf32 ? hdrs.ehdr32.e_phoff : hdrs.ehdr64.e_phoff, SEEK_SET);
--	if (fread(phdr, phdr_size, 1, fp) != 1)
-+	lseek(fd, elf32 ? hdrs.ehdr32.e_phoff : hdrs.ehdr64.e_phoff, SEEK_SET);
-+	if (read(fd, phdr, phdr_size) != phdr_size)
- 		goto out_free;
- 
- 	if (elf32)
-@@ -153,8 +152,8 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 	else
- 		hdrs.phdr64 = phdr;
- 
--	for (i = 0; i < elf32 ? hdrs.ehdr32.e_phnum : hdrs.ehdr64.e_phnum; i++) {
--		size_t p_filesz;
-+	for (int i = 0; i < (elf32 ? hdrs.ehdr32.e_phnum : hdrs.ehdr64.e_phnum); i++) {
-+		ssize_t p_filesz;
- 
- 		if (need_swap) {
- 			if (elf32) {
-@@ -180,8 +179,8 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 				goto out_free;
- 			buf = tmp;
- 		}
--		fseek(fp, elf32 ? hdrs.phdr32[i].p_offset : hdrs.phdr64[i].p_offset, SEEK_SET);
--		if (fread(buf, p_filesz, 1, fp) != 1)
-+		lseek(fd, elf32 ? hdrs.phdr32[i].p_offset : hdrs.phdr64[i].p_offset, SEEK_SET);
-+		if (read(fd, buf, p_filesz) != p_filesz)
- 			goto out_free;
- 
- 		ret = read_build_id(buf, p_filesz, bid, need_swap);
-@@ -194,7 +193,7 @@ int filename__read_build_id(const char *filename, struct build_id *bid)
- 	free(buf);
- 	free(phdr);
- out:
--	fclose(fp);
-+	close(fd);
- 	return ret;
- }
- 
+ #endif
 -- 
 2.50.1
 
