@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104963054E0;
-	Tue,  2 Sep 2025 13:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A0530EF9D;
+	Tue,  2 Sep 2025 13:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819549; cv=none; b=LZvEc6zHrDYo/0MONB5OhdG69oDfNU0GxTInlaPT/SwFnvu/BsdQIpn2i2O3GPAcXnymGWCCNkPLlnpIPZ9BwKVajrwE5h0OTKGLTgy9f36C1igNmWcutkfqRul/4j9mVyxhu+06Xi7KXc2G8/5S8WxuedIsmfFI2K8JnbQxPPo=
+	t=1756819552; cv=none; b=BFN9QMI+1/AclOEiN4eHDY2VAVVUbVYj++OjsLXC5FhegAy/ZrhW7VfxFF8v0lNxvflh5AnoLmkXl4RzEFEVhwMKXfICCaviZ/E8vZJcUsd1KKRCj7YGSH1XfqdRHAubalIBvap8S/2OXbqbd1MQOu+if2X6A+XXkCphCvX0n28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819549; c=relaxed/simple;
-	bh=5SyZxt5wwHtNiUxXXI+Iu7/gFt7CWAYCMVefsmcf/OE=;
+	s=arc-20240116; t=1756819552; c=relaxed/simple;
+	bh=jX4qCk8Vk1qB1Ttg5hZzqUTPA1qwYrFuQLfaXCUIduE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKYBKe9dhoDt9xvI0ZWtlGNI8jRr+SbeVcBQINQTi504By5/Mm13FAYwk4PJOgG/LynCKCvvCoPuZ64lcXyeKrPxm06Z7O23cHe6My/LXL2OgOEqBCeOujbhLngncIzVRJnApflrBYN/MNmMWQOVAyOHaSu+STLjN8FUoppImkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fToODpUP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p/1eAh/M20M2DyahwjZYpyC//YYXtRHjxa3duvvY7PxjDgkpGMgfCMDjA1LiBbP50fAFz/rFSzg/Wa010sJxAqbXkF1VhVfE8QfI+8B0Wno16cfkhjex7H9tPZl9ocUPFxHBfJMuVOzAkBvm7+sVkv4YTj4NUZnrbCidYLQZa94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sveZmQYY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fToODpUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28ADAC4CEF5;
-	Tue,  2 Sep 2025 13:25:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sveZmQYY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BEAC4CEED;
+	Tue,  2 Sep 2025 13:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819547;
-	bh=5SyZxt5wwHtNiUxXXI+Iu7/gFt7CWAYCMVefsmcf/OE=;
+	s=korg; t=1756819550;
+	bh=jX4qCk8Vk1qB1Ttg5hZzqUTPA1qwYrFuQLfaXCUIduE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fToODpUPjZj1ud/SIzziFsDmjHYNEU5J5+PqCM9l4se6FSAKwfJzMH5S7aJF3EIcs
-	 +XkHb1Ab6GlcqyHgbpSN43ILe+M9uTrO5RDjaUhYo1sQ9CQy+1SgV8IWGJRQ2OyL1Z
-	 0QpWZLLa4eorDdTjm2wsms2KyIhmoOgsR02clMOo=
+	b=sveZmQYYERgdrLkinF04LxvQAeY1yktMfvKghGzm+PcTq/4bPfPLkGn57NnajToQE
+	 oJm11FKcA2AhuLcSxl0y4/BoN1OybitRxhMpFcND9gKiexfLmEvz/066OHxK2nTqLZ
+	 8XVIYcWA6TrVtM7yXqraglkwX/sJpFl7r5Ia53C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 035/142] drm/msm/dpu: correct dpu_plane_virtual_atomic_check()
-Date: Tue,  2 Sep 2025 15:18:57 +0200
-Message-ID: <20250902131949.489058877@linuxfoundation.org>
+	Dongcheng Yan <dongcheng.yan@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.16 026/142] platform/x86: int3472: add hpd pin support
+Date: Tue,  2 Sep 2025 15:18:48 +0200
+Message-ID: <20250902131949.145844663@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -47,47 +48,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Dongcheng Yan <dongcheng.yan@intel.com>
 
-[ Upstream commit 1a76b255eceb9c570c6228f6393e1d63d97a22ba ]
+commit a032fe30cf09b6723ab61a05aee057311b00f9e1 upstream.
 
-Fix c&p error in dpu_plane_virtual_atomic_check(), compare CRTC width
-too, in addition to CRTC height.
+Typically HDMI to MIPI CSI-2 bridges have a pin to signal image data is
+being received. On the host side this is wired to a GPIO for polling or
+interrupts. This includes the Lontium HDMI to MIPI CSI-2 bridges
+lt6911uxe and lt6911uxc.
 
-Fixes: 8c62a31607f6 ("drm/msm/dpu: allow using two SSPP blocks for a single plane")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202507150432.U0cALR6W-lkp@intel.com/
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/664170/
-Link: https://lore.kernel.org/r/20250715-msm-fix-virt-atomic-check-v1-1-9bab02c9f952@oss.qualcomm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The GPIO "hpd" is used already by other HDMI to CSI-2 bridges, use it
+here as well.
+
+Signed-off-by: Dongcheng Yan <dongcheng.yan@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Acked-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 20244cbafbd6 ("media: i2c: change lt6911uxe irq_gpio name to "hpd"")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/int3472/discrete.c |    6 ++++++
+ include/linux/platform_data/x86/int3472.h     |    1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 421138bc3cb77..28d42eade5ccb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -1169,7 +1169,7 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
- 	if (!old_plane_state || !old_plane_state->fb ||
- 	    old_plane_state->src_w != plane_state->src_w ||
- 	    old_plane_state->src_h != plane_state->src_h ||
--	    old_plane_state->src_w != plane_state->src_w ||
-+	    old_plane_state->crtc_w != plane_state->crtc_w ||
- 	    old_plane_state->crtc_h != plane_state->crtc_h ||
- 	    msm_framebuffer_format(old_plane_state->fb) !=
- 	    msm_framebuffer_format(plane_state->fb))
--- 
-2.50.1
-
+--- a/drivers/platform/x86/intel/int3472/discrete.c
++++ b/drivers/platform/x86/intel/int3472/discrete.c
+@@ -193,6 +193,10 @@ static void int3472_get_con_id_and_polar
+ 		*con_id = "privacy-led";
+ 		*gpio_flags = GPIO_ACTIVE_HIGH;
+ 		break;
++	case INT3472_GPIO_TYPE_HOTPLUG_DETECT:
++		*con_id = "hpd";
++		*gpio_flags = GPIO_ACTIVE_HIGH;
++		break;
+ 	case INT3472_GPIO_TYPE_POWER_ENABLE:
+ 		*con_id = "avdd";
+ 		*gpio_flags = GPIO_ACTIVE_HIGH;
+@@ -223,6 +227,7 @@ static void int3472_get_con_id_and_polar
+  * 0x0b Power enable
+  * 0x0c Clock enable
+  * 0x0d Privacy LED
++ * 0x13 Hotplug detect
+  *
+  * There are some known platform specific quirks where that does not quite
+  * hold up; for example where a pin with type 0x01 (Power down) is mapped to
+@@ -292,6 +297,7 @@ static int skl_int3472_handle_gpio_resou
+ 	switch (type) {
+ 	case INT3472_GPIO_TYPE_RESET:
+ 	case INT3472_GPIO_TYPE_POWERDOWN:
++	case INT3472_GPIO_TYPE_HOTPLUG_DETECT:
+ 		ret = skl_int3472_map_gpio_to_sensor(int3472, agpio, con_id, gpio_flags);
+ 		if (ret)
+ 			err_msg = "Failed to map GPIO pin to sensor\n";
+--- a/include/linux/platform_data/x86/int3472.h
++++ b/include/linux/platform_data/x86/int3472.h
+@@ -27,6 +27,7 @@
+ #define INT3472_GPIO_TYPE_CLK_ENABLE				0x0c
+ #define INT3472_GPIO_TYPE_PRIVACY_LED				0x0d
+ #define INT3472_GPIO_TYPE_HANDSHAKE				0x12
++#define INT3472_GPIO_TYPE_HOTPLUG_DETECT			0x13
+ 
+ #define INT3472_PDEV_MAX_NAME_LEN				23
+ #define INT3472_MAX_SENSOR_GPIOS				3
 
 
