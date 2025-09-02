@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2811032ED3C;
-	Tue,  2 Sep 2025 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886653074B3;
+	Tue,  2 Sep 2025 13:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819874; cv=none; b=iL7CcL8JLVcqEsosRn4SbrE+kvLmKotb6SePWGcIZ8/fWoPr1bmU893yTYUAlRiZ2+PIZVMfmpksSYkUmcMmhqZoi2mupcTBbvYFMjUHbDsu+9Ln8yJ9q6RsjPqdZCLvlWMzAhmT2555Z6NESispSUbHJ9V9/wJ5ckqLmmxqR08=
+	t=1756819877; cv=none; b=lkO/mpz0JcTqikI4JlcJMZOtJhb1hJZN38VCl0jZqx6EolzM7JkR52c3v+eU1dtgLHEHw6MDufqJCgSfHWVQFwDD3wiMLbDPYxXkGVQMsAEUEjjjWbLjbprOOcOtnUU/1sW0Jtk1WTqImgymYIMtPUIBe/OiHwNK0RyqBC5OzTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819874; c=relaxed/simple;
-	bh=/s3LXUKG5V8f9wFT92EiS7+ZhuXPY0a1S/IAaZUC7Lo=;
+	s=arc-20240116; t=1756819877; c=relaxed/simple;
+	bh=i0CGpNjW31RRXURtCWiqLIk6S4VVuiHSdvwuH1ybBWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3JhlpFGrUbtKzxAsIT6fxU2yu5+yVRWl6/luOyKkdzCXJiivDiswOoUgs4xufW6Hdrii4dGBqIzz1Jz/qG9ZKV3hDIftMynydE18pXWC666EhFL8JXhOYBAxz8Mz5qAvUEuDoDCAxrmAhTatAUzus4vuCXSkKNKigFK5H/1myU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyhCZmfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0CbxLQjqwj5GyqwQkq0XPZg49AwKBHIudie1YNVd62zkEgluGsgXtDMB8hUPwWDyR2oOu0bHoZ5ydGdepEZpU77hMHVpg8I+Z1MNC/COwrszfaHfmENUHIvdzaL30o2kqTVQMmRPgqyO5y4km+Jy/zarFCIOkWKX6M0YgK1dtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxdJ1qFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyhCZmfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A7BC4CEF4;
-	Tue,  2 Sep 2025 13:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxdJ1qFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078A0C4CEED;
+	Tue,  2 Sep 2025 13:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819874;
-	bh=/s3LXUKG5V8f9wFT92EiS7+ZhuXPY0a1S/IAaZUC7Lo=;
+	s=korg; t=1756819877;
+	bh=i0CGpNjW31RRXURtCWiqLIk6S4VVuiHSdvwuH1ybBWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SyhCZmfmRWFnt2KCec1DeRx4Z6Q7B2XuuH/3IOy4FVqNAp1eQA3ji5u/TqsTywHQ1
-	 JcYnFBWAM+9B3PkWlmikXnTKsJ7bOJkAi4SqhaFiGbR5u5jbXlQPkJj3RPB3FLIMF9
-	 1FUO5aPHar+AbxTNCuzJgoDCXRcs88Y4KqZzTiko=
+	b=YxdJ1qFwq/OjAUGAwuGzXqJBx6EIX3cmU882U0/idLh+v4KPvIQlIb6UKpWsj6GJi
+	 g+sOl8h445ZzskEPcappPincFiz2Ye/YjY7y+7IhDAUKOGBigIKZ5cwT2kwwZaWPQ4
+	 mHYi/CYrHcsIwaPGVNjjeCt7SlA7gr/XKNNbhKpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Ayushi Makhija <quic_amakhija@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 22/95] drm/msm/kms: move snapshot init earlier in KMS init
-Date: Tue,  2 Sep 2025 15:19:58 +0200
-Message-ID: <20250902131940.464999448@linuxfoundation.org>
+Subject: [PATCH 6.12 23/95] drm/msm: update the high bitfield of certain DSI registers
+Date: Tue,  2 Sep 2025 15:19:59 +0200
+Message-ID: <20250902131940.504283170@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -51,116 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
 
-[ Upstream commit 553666f839b86545300773954df7426a45c169c4 ]
+[ Upstream commit 494045c561e68945b1183ff416b8db8e37a122d6 ]
 
-Various parts of the display driver can be triggering the display
-snapshot (including the IOMMU fault handlers). Move the call to
-msm_disp_snapshot_init() before KMS initialization, otherwise it is
-possible to ocassionally trigger the kernel fault during init:
+Currently, the high bitfield of certain DSI registers
+do not align with the configuration of the SWI registers
+description. This can lead to wrong programming these DSI
+registers, for example for 4k resloution where H_TOTAL is
+taking 13 bits but software is programming only 12 bits
+because of the incorrect bitmask for H_TOTAL bitfeild,
+this is causing DSI FIFO errors. To resolve this issue,
+increase the high bitfield of the DSI registers from 12 bits
+to 16 bits in dsi.xml to match the SWI register configuration.
 
-  __lock_acquire+0x44/0x2798 (P)
-  lock_acquire+0x114/0x25c
-  _raw_spin_lock_irqsave+0x6c/0x90
-  kthread_queue_work+0x2c/0xac
-  msm_disp_snapshot_state+0x2c/0x4c
-  msm_kms_fault_handler+0x2c/0x74
-  msm_disp_fault_handler+0x30/0x48
-  report_iommu_fault+0x54/0x128
-  arm_smmu_context_fault+0x74/0x184
-  __handle_irq_event_percpu+0xa4/0x24c
-  handle_irq_event_percpu+0x20/0x5c
-  handle_irq_event+0x48/0x84
-  handle_fasteoi_irq+0xcc/0x170
-  generic_handle_domain_irq+0x48/0x70
-  gic_handle_irq+0x54/0x11c
-  call_on_irq_stack+0x3c/0x50
-  do_interrupt_handler+0x54/0x78
-  el1_interrupt+0x3c/0x5c
-  el1h_64_irq_handler+0x20/0x30
-  el1h_64_irq+0x6c/0x70
-  _raw_spin_unlock_irqrestore+0x44/0x68 (P)
-  klist_next+0xc4/0x124
-  bus_for_each_drv+0x9c/0xe8
-  __device_attach+0xfc/0x190
-  device_initial_probe+0x1c/0x2c
-  bus_probe_device+0x44/0xa0
-  device_add+0x204/0x3e4
-  platform_device_add+0x170/0x244
-  platform_device_register_full+0x130/0x138
-  drm_connector_hdmi_audio_init+0xc0/0x108
-  drm_bridge_connector_init+0x318/0x394
-  msm_dsi_manager_connector_init+0xac/0xdc
-  msm_dsi_modeset_init+0x78/0xc0
-  _dpu_kms_drm_obj_init+0x198/0x75c
-  dpu_kms_hw_init+0x2f8/0x494
-  msm_drm_kms_init+0xb0/0x230
-  msm_drm_init+0x218/0x250
-  msm_drm_bind+0x3c/0x4c
-  try_to_bring_up_aggregate_device+0x208/0x2a4
-  __component_add+0xa8/0x188
-  component_add+0x1c/0x2c
-  dsi_dev_attach+0x24/0x34
-  dsi_host_attach+0x68/0xa0
-  devm_mipi_dsi_attach+0x40/0xcc
-  lt9611_attach_dsi+0x94/0x118
-  lt9611_probe+0x368/0x3c8
-  i2c_device_probe+0x2d0/0x3d8
-  really_probe+0x130/0x354
-  __driver_probe_device+0xac/0x110
-  driver_probe_device+0x44/0x110
-  __device_attach_driver+0xb0/0x138
-  bus_for_each_drv+0x90/0xe8
-  __device_attach+0xfc/0x190
-  device_initial_probe+0x1c/0x2c
-  bus_probe_device+0x44/0xa0
-  deferred_probe_work_func+0xac/0x110
-  process_one_work+0x20c/0x51c
-  process_scheduled_works+0x58/0x88
-  worker_thread+0x1ec/0x304
-  kthread+0x194/0x1d4
-  ret_from_fork+0x10/0x20
-
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
+Fixes: 4f52f5e63b62 ("drm/msm: import XML display registers database")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/666229/
+Link: https://lore.kernel.org/r/20250730123938.1038640-1-quic_amakhija@quicinc.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/664149/
-Link: https://lore.kernel.org/r/20250715-msm-move-snapshot-init-v1-1-f39c396192ab@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_kms.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/registers/display/dsi.xml | 28 +++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-index 6749f0fbca96d..52464a1346f81 100644
---- a/drivers/gpu/drm/msm/msm_kms.c
-+++ b/drivers/gpu/drm/msm/msm_kms.c
-@@ -241,6 +241,12 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/msm/registers/display/dsi.xml b/drivers/gpu/drm/msm/registers/display/dsi.xml
+index 501ffc585a9f6..c7a7b633d747b 100644
+--- a/drivers/gpu/drm/msm/registers/display/dsi.xml
++++ b/drivers/gpu/drm/msm/registers/display/dsi.xml
+@@ -159,28 +159,28 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="RGB_SWAP" low="12" high="14" type="dsi_rgb_swap"/>
+ 	</reg32>
+ 	<reg32 offset="0x00020" name="ACTIVE_H">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00024" name="ACTIVE_V">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00028" name="TOTAL">
+-		<bitfield name="H_TOTAL" low="0" high="11" type="uint"/>
+-		<bitfield name="V_TOTAL" low="16" high="27" type="uint"/>
++		<bitfield name="H_TOTAL" low="0" high="15" type="uint"/>
++		<bitfield name="V_TOTAL" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x0002c" name="ACTIVE_HSYNC">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00030" name="ACTIVE_VSYNC_HPOS">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00034" name="ACTIVE_VSYNC_VPOS">
+-		<bitfield name="START" low="0" high="11" type="uint"/>
+-		<bitfield name="END" low="16" high="27" type="uint"/>
++		<bitfield name="START" low="0" high="15" type="uint"/>
++		<bitfield name="END" low="16" high="31" type="uint"/>
+ 	</reg32>
  
-+	ret = msm_disp_snapshot_init(ddev);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
-+		return ret;
-+	}
-+
- 	ret = priv->kms_init(ddev);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to load kms\n");
-@@ -293,10 +299,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
- 		goto err_msm_uninit;
- 	}
- 
--	ret = msm_disp_snapshot_init(ddev);
--	if (ret)
--		DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
--
- 	drm_mode_config_reset(ddev);
- 
- 	return 0;
+ 	<reg32 offset="0x00038" name="CMD_DMA_CTRL">
+@@ -209,8 +209,8 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+ 		<bitfield name="WORD_COUNT" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x00058" name="CMD_MDP_STREAM0_TOTAL">
+-		<bitfield name="H_TOTAL" low="0" high="11" type="uint"/>
+-		<bitfield name="V_TOTAL" low="16" high="27" type="uint"/>
++		<bitfield name="H_TOTAL" low="0" high="15" type="uint"/>
++		<bitfield name="V_TOTAL" low="16" high="31" type="uint"/>
+ 	</reg32>
+ 	<reg32 offset="0x0005c" name="CMD_MDP_STREAM1_CTRL">
+ 		<bitfield name="DATA_TYPE" low="0" high="5" type="uint"/>
 -- 
 2.50.1
 
