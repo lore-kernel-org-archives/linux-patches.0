@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2421731E0FD;
-	Tue,  2 Sep 2025 13:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10480324B16;
+	Tue,  2 Sep 2025 13:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820742; cv=none; b=QzFpma5Eep/xUdy74hh39lamuJW1M90OkLA4eliDSlqoiyUOo/D46015sRItAMNCIpXr+YatGWc+8mDDJXxEiicv1071AsxiP/mn0VNo8V8UJWi6ujxt9/1p4daCoTQGq9qt8/l88ZFZBjcBRjYRC/CtbY1RWOouB9EjcbzYMVA=
+	t=1756820746; cv=none; b=Nh8b2Koidk2TdrLl0gKJFH1MwAtnoGuIrrnScr8nqJpOqeG+vpAIxxfriX011ZN4c9/EiPtuNWGacZnqIMzM6zL1NNNwyt4h2UONUzANVHEnoHJjHLee3T1tSpieMRMz3lxieMtjMkRiU5nuM+SkAFaa9S6heO7Rh3wvT+GS9Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820742; c=relaxed/simple;
-	bh=shBAnC5QA8D7/Ukszc5oDJLC7tteV2UTEZYHT32HLLY=;
+	s=arc-20240116; t=1756820746; c=relaxed/simple;
+	bh=Kv9BtWFaMO+yb5ULzN1ykGxK1Nj+G5UI/+3Lf0bJeBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paaSKEjLumVZRM90ajGQFhy4Qi5Qse8E/e/kK17+Hg5Z98C9jPmJlHchmbyYfUFxml8m0n7Lcxf5h0MX5v8teGIse2OqrjX4gzSo7bUq7NzPBVq85bXxa0ABDtiz3GZi9XY6cuoNykQl6AMbFGg6wvlGB6gm3eX3+1QmKOKZQi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yev+Huiy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BG8ufANPL+F9Fd3j+0lIOr0+i8xrdLrUXrakaNX5yLH1GE4ltKL9SNxo1C3srFZjgS2zi7k5WnoBYLtbgmwjFhNBG6u1cvsiz8Z9TxdjvMeAAj9s5WTZBLBmZe2OFHKsR+m2Sg1uxmedzi/LiwSJuIFtwZLR//JrtjsNfIS+Hpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spVenkCu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yev+Huiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89860C4CEED;
-	Tue,  2 Sep 2025 13:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spVenkCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093B2C4CEED;
+	Tue,  2 Sep 2025 13:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820742;
-	bh=shBAnC5QA8D7/Ukszc5oDJLC7tteV2UTEZYHT32HLLY=;
+	s=korg; t=1756820745;
+	bh=Kv9BtWFaMO+yb5ULzN1ykGxK1Nj+G5UI/+3Lf0bJeBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yev+Huiyq5U5RQhJiQLvrQeIulVeIOwZ/+eosANu8GgHneb6Sb8yADwM/YT/uG4Bz
-	 POzHyEaQ7bTn2Dr9dPMV8HK9V++/T7YocPyf7IZxNCaZ5K9mY8CZmQqA96HWXXg/ub
-	 lAWtuaLvf/RUDWcZ7YwNKH8DWKcrarDZqqZoOKt0=
+	b=spVenkCu2YNi78aA9ts/p6dKJ6tYF+Ea/ZSWdZhXEH5w6Mj/GacoG34Wz0Jzh2D2e
+	 YsIgOuNRAmfQ5Ns638ER+D5mfLcNrIbYaGBMdT0smAu2hrtZVZz35wB1hiJqPkFU44
+	 UQIPU4KDupEhFF//jnwCgoZHq4MjbLh/C60jp4io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 23/34] Revert "drm/amdgpu: fix incorrect vm flags to map bo"
-Date: Tue,  2 Sep 2025 15:21:49 +0200
-Message-ID: <20250902131927.542121805@linuxfoundation.org>
+	Shanker Donthineni <sdonthineni@nvidia.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 5.10 24/34] dma/pool: Ensure DMA_DIRECT_REMAP allocations are decrypted
+Date: Tue,  2 Sep 2025 15:21:50 +0200
+Message-ID: <20250902131927.579703796@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -49,34 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Shanker Donthineni <sdonthineni@nvidia.com>
 
-commit ac4ed2da4c1305a1a002415058aa7deaf49ffe3e upstream.
+commit 89a2d212bdb4bc29bed8e7077abe054b801137ea upstream.
 
-This reverts commit b08425fa77ad2f305fe57a33dceb456be03b653f.
+When CONFIG_DMA_DIRECT_REMAP is enabled, atomic pool pages are
+remapped via dma_common_contiguous_remap() using the supplied
+pgprot. Currently, the mapping uses
+pgprot_dmacoherent(PAGE_KERNEL), which leaves the memory encrypted
+on systems with memory encryption enabled (e.g., ARM CCA Realms).
 
-Revert this to align with 6.17 because the fixes tag
-was wrong on this commit.
+This can cause the DMA layer to fail or crash when accessing the
+memory, as the underlying physical pages are not configured as
+expected.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit be33e8a239aac204d7e9e673c4220ef244eb1ba3)
+Fix this by requesting a decrypted mapping in the vmap() call:
+pgprot_decrypted(pgprot_dmacoherent(PAGE_KERNEL))
+
+This ensures that atomic pool memory is consistently mapped
+unencrypted.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250811181759.998805-1-sdonthineni@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
+ kernel/dma/pool.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -94,8 +94,8 @@ int amdgpu_map_static_csa(struct amdgpu_
- 	}
+--- a/kernel/dma/pool.c
++++ b/kernel/dma/pool.c
+@@ -105,8 +105,8 @@ static int atomic_pool_expand(struct gen
  
- 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
--			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
--			     AMDGPU_VM_PAGE_EXECUTABLE);
-+			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
-+			     AMDGPU_PTE_EXECUTABLE);
- 
- 	if (r) {
- 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
+ #ifdef CONFIG_DMA_DIRECT_REMAP
+ 	addr = dma_common_contiguous_remap(page, pool_size,
+-					   pgprot_dmacoherent(PAGE_KERNEL),
+-					   __builtin_return_address(0));
++			pgprot_decrypted(pgprot_dmacoherent(PAGE_KERNEL)),
++			__builtin_return_address(0));
+ 	if (!addr)
+ 		goto free_page;
+ #else
 
 
