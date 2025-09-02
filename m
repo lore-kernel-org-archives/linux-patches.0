@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB725261393;
-	Tue,  2 Sep 2025 13:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAAF30AAD6;
+	Tue,  2 Sep 2025 13:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819936; cv=none; b=oJ8X9PgZZK0HhDMBpKY5dXdC0S91R7bnIieP1A8vlxXG6ROQLPiqUgSDDkx4N+s9UkW5OGihbuckmrt0eRnspT7DrwdiqOg3UWEuVKmSgIta4SZwvxlMrU1joFcr09xH+xhgDcvg1WLbvXLAx1LNd3GFjxamzTF7jXVnUqcclfM=
+	t=1756819937; cv=none; b=ICLFtNPes5lmJXFzaB/Yb1gTpMdDac6jP7WPbRTvfAHkaWYMrfmVHqcHX88KFk1QgSDlUA3yBPo7KxBbdSKPMILMHxtmhhXzIFdJZ/IK14iLi07RIVaayTnPFVpnDpTZD3Qti/OiB0UYqwe1SBMYbI6FdxiQRDfY4K5KbA8SHm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819936; c=relaxed/simple;
-	bh=Mg/wi5QQcoFZGQknf2EKv0rhGsmZm53yc+6OETpfG8M=;
+	s=arc-20240116; t=1756819937; c=relaxed/simple;
+	bh=lQR32eDVN+tDobX0/pdpnmHIlA75clHq6ZASKS0C3Ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcJljDcoWQr+LzrBxEXLojYXlsbr3aEiNy/3+LxKbsbK0LlYudtDuX8Yol/MhfflwfyDjuWpYVIH7JbwtzGGHI44dbxFPTCmSYQGgWBE0ty7ctAXkB4evdrc3zNR5FDosuqTJ+U0gYdmBF0O1KPdd9RwPgE6zlMSYX3qMBdV5BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlvcUwlG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UZsLwCRGkZaF+AEtQixg+yBPqhj5MMmXSRrYGQGGQTNs49HI0t3POjwjCpkIh8uey0/BW0dEpOSrEJ2bjGQmSwKRqh02FxMPqttgcj30K/CrLu+t3RFNGR/Pa1XdseNBpP5rS0fG/CN7FdxFBeRn87itqwgeJ52qDVJS2RaxFjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0rhlZn7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlvcUwlG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E767EC4CEED;
-	Tue,  2 Sep 2025 13:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0rhlZn7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18092C4CEF4;
+	Tue,  2 Sep 2025 13:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819933;
-	bh=Mg/wi5QQcoFZGQknf2EKv0rhGsmZm53yc+6OETpfG8M=;
+	s=korg; t=1756819937;
+	bh=lQR32eDVN+tDobX0/pdpnmHIlA75clHq6ZASKS0C3Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlvcUwlGaakspLjYUFL2TFn6EzW4oKHB5pUXQNNKXDiygcB28IKTm/5gSeDFxqr7r
-	 WQH6QB6p/TEeILx2l52EhiyxKpMkLMtAOU+i42urZzlGclSyNDfXinXSGQj++SrSZ0
-	 jBgzCeOB4A/bCPkSpe0orUJ05d/2SJQj/7dgcyVM=
+	b=Y0rhlZn7r/6AGQmOUuXHavv0vKkataGBeBaKRa4zuDhXfCT6FH01d4U/4LFI5KvDW
+	 DbWw0LgtK3NQ8oHoqG4WYnxX7n4zDXxzfySFIAat4MqS4tJYedC3zTmFgGZYc80sQU
+	 Tx8dfK2FLYkZB51foyKSEi6FqAlsWxButCNDAPBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	=?UTF-8?q?Zbigniew=20Kempczy=C5=84ski?= <zbigniew.kempczynski@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 41/95] efi: stmm: Fix incorrect buffer allocation method
-Date: Tue,  2 Sep 2025 15:20:17 +0200
-Message-ID: <20250902131941.183249314@linuxfoundation.org>
+Subject: [PATCH 6.12 42/95] drm/xe/xe_sync: avoid race during ufence signaling
+Date: Tue,  2 Sep 2025 15:20:18 +0200
+Message-ID: <20250902131941.220483215@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -47,115 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Zbigniew Kempczyński <zbigniew.kempczynski@intel.com>
 
-[ Upstream commit c5e81e672699e0c5557b2b755cc8f7a69aa92bff ]
+[ Upstream commit 04e1f683cd28dc9407b238543871a6e09a570dc0 ]
 
-The communication buffer allocated by setup_mm_hdr() is later on passed
-to tee_shm_register_kernel_buf(). The latter expects those buffers to be
-contiguous pages, but setup_mm_hdr() just uses kmalloc(). That can cause
-various corruptions or BUGs, specifically since commit 9aec2fb0fd5e
-("slab: allocate frozen pages"), though it was broken before as well.
+Marking ufence as signalled after copy_to_user() is too late.
+Worker thread which signals ufence by memory write might be raced
+with another userspace vm-bind call. In map/unmap scenario unmap
+may still see ufence is not signalled causing -EBUSY. Change the
+order of marking / write to user-fence fixes this issue.
 
-Fix this by using alloc_pages_exact() instead of kmalloc().
-
-Fixes: c44b6be62e8d ("efi: Add tee-based EFI variable driver")
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 977e5b82e090 ("drm/xe: Expose user fence from xe_sync_entry")
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5536
+Signed-off-by: Zbigniew Kempczyński <zbigniew.kempczynski@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250820083903.2109891-2-zbigniew.kempczynski@intel.com
+(cherry picked from commit 8ae04fe9ffc93d6bc3bc63ac08375427d69cee06)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/stmm/tee_stmm_efi.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/xe/xe_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/stmm/tee_stmm_efi.c b/drivers/firmware/efi/stmm/tee_stmm_efi.c
-index f741ca279052b..e15d11ed165ee 100644
---- a/drivers/firmware/efi/stmm/tee_stmm_efi.c
-+++ b/drivers/firmware/efi/stmm/tee_stmm_efi.c
-@@ -143,6 +143,10 @@ static efi_status_t mm_communicate(u8 *comm_buf, size_t payload_size)
- 	return var_hdr->ret_status;
- }
+diff --git a/drivers/gpu/drm/xe/xe_sync.c b/drivers/gpu/drm/xe/xe_sync.c
+index b0684e6d2047b..dd7bd766ae184 100644
+--- a/drivers/gpu/drm/xe/xe_sync.c
++++ b/drivers/gpu/drm/xe/xe_sync.c
+@@ -77,6 +77,7 @@ static void user_fence_worker(struct work_struct *w)
+ {
+ 	struct xe_user_fence *ufence = container_of(w, struct xe_user_fence, worker);
  
-+#define COMM_BUF_SIZE(__payload_size)	(MM_COMMUNICATE_HEADER_SIZE + \
-+					 MM_VARIABLE_COMMUNICATE_SIZE + \
-+					 (__payload_size))
-+
- /**
-  * setup_mm_hdr() -	Allocate a buffer for StandAloneMM and initialize the
-  *			header data.
-@@ -173,9 +177,8 @@ static void *setup_mm_hdr(u8 **dptr, size_t payload_size, size_t func,
- 		return NULL;
- 	}
- 
--	comm_buf = kzalloc(MM_COMMUNICATE_HEADER_SIZE +
--				   MM_VARIABLE_COMMUNICATE_SIZE + payload_size,
--			   GFP_KERNEL);
-+	comm_buf = alloc_pages_exact(COMM_BUF_SIZE(payload_size),
-+				     GFP_KERNEL | __GFP_ZERO);
- 	if (!comm_buf) {
- 		*ret = EFI_OUT_OF_RESOURCES;
- 		return NULL;
-@@ -239,7 +242,7 @@ static efi_status_t get_max_payload(size_t *size)
++	WRITE_ONCE(ufence->signalled, 1);
+ 	if (mmget_not_zero(ufence->mm)) {
+ 		kthread_use_mm(ufence->mm);
+ 		if (copy_to_user(ufence->addr, &ufence->value, sizeof(ufence->value)))
+@@ -89,7 +90,6 @@ static void user_fence_worker(struct work_struct *w)
+ 	 * Wake up waiters only after updating the ufence state, allowing the UMD
+ 	 * to safely reuse the same ufence without encountering -EBUSY errors.
  	 */
- 	*size -= 2;
- out:
--	kfree(comm_buf);
-+	free_pages_exact(comm_buf, COMM_BUF_SIZE(payload_size));
- 	return ret;
+-	WRITE_ONCE(ufence->signalled, 1);
+ 	wake_up_all(&ufence->xe->ufence_wq);
+ 	user_fence_put(ufence);
  }
- 
-@@ -282,7 +285,7 @@ static efi_status_t get_property_int(u16 *name, size_t name_size,
- 	memcpy(var_property, &smm_property->property, sizeof(*var_property));
- 
- out:
--	kfree(comm_buf);
-+	free_pages_exact(comm_buf, COMM_BUF_SIZE(payload_size));
- 	return ret;
- }
- 
-@@ -347,7 +350,7 @@ static efi_status_t tee_get_variable(u16 *name, efi_guid_t *vendor,
- 	memcpy(data, (u8 *)var_acc->name + var_acc->name_size,
- 	       var_acc->data_size);
- out:
--	kfree(comm_buf);
-+	free_pages_exact(comm_buf, COMM_BUF_SIZE(payload_size));
- 	return ret;
- }
- 
-@@ -404,7 +407,7 @@ static efi_status_t tee_get_next_variable(unsigned long *name_size,
- 	memcpy(name, var_getnext->name, var_getnext->name_size);
- 
- out:
--	kfree(comm_buf);
-+	free_pages_exact(comm_buf, COMM_BUF_SIZE(payload_size));
- 	return ret;
- }
- 
-@@ -467,7 +470,7 @@ static efi_status_t tee_set_variable(efi_char16_t *name, efi_guid_t *vendor,
- 	ret = mm_communicate(comm_buf, payload_size);
- 	dev_dbg(pvt_data.dev, "Set Variable %s %d %lx\n", __FILE__, __LINE__, ret);
- out:
--	kfree(comm_buf);
-+	free_pages_exact(comm_buf, COMM_BUF_SIZE(payload_size));
- 	return ret;
- }
- 
-@@ -507,7 +510,7 @@ static efi_status_t tee_query_variable_info(u32 attributes,
- 	*max_variable_size = mm_query_info->max_variable_size;
- 
- out:
--	kfree(comm_buf);
-+	free_pages_exact(comm_buf, COMM_BUF_SIZE(payload_size));
- 	return ret;
- }
- 
 -- 
 2.50.1
 
