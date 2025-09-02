@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACB82F1FC1;
-	Tue,  2 Sep 2025 13:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FE830DEB4;
+	Tue,  2 Sep 2025 13:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820634; cv=none; b=pSDQa636czDElaHFCBqfEneKFhchdzgH1NLZ50Hj7TpjPzEcxwpN6xOly2pWMFFLQr2c5TA4PusYcjAUXRIL/hMwQvLIlLtCt4dCTwtkLbqdv/j6B7y6krv5EFeUO8X3Jy72q58SjHyagT69huawi8ys0aJvf2BXDTNeS8rzCyc=
+	t=1756820637; cv=none; b=u4RptMDmugruIfhtKUPcmp2DcDW8QoHLiPSwZGJtBN/zP0110rKHA1UwAu1m4pCseRxxenw1VDzl7/ee7zXtoX+cCVLJgI9pSZ4VMxqEGQ0hepFBcyLPqMRvekT8V/1fVxHJ1DswH2wdKQoDdZn+U9ZN0YFZcSP57Uq7PoaihBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820634; c=relaxed/simple;
-	bh=VRIr4BCIEKc7EWmgpBfAk1TJvHO6b+zd7YTi+Z9C2pc=;
+	s=arc-20240116; t=1756820637; c=relaxed/simple;
+	bh=4wqxBUtblcLB+Y3zCax+IRjQdu0nqLDVBLUHrnLqk+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+lzPCSE4QdXAGZBaDJ6tD3DJbHHu39Mli3hHLfbWKpBqnV3XvbrP/DD2kehzayTkg+2pT70hFYqGLxcpjOScUyywjhKNPpKApa8H2YW5MjocUp3biuJaYw/O3Q9Em8JXMuf27iNURVaBjw95U3zkimuLQvbb/8pI0Lvv0kPY+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1tcUKu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XI42lwbZ/ewRID4QDx9AtmX8OA9GXgIP+u9HcaEFD3CduD4Aow7fmBsp+u7zYL7qpr+G2uBDmzPPpxyGKpBLTuUWeyhDC2pawp23K7bQUlHM9CCSgqq/YmHLFQDM4uXZxMhSUIvEWx1V10FzmXd3e9ZOVmxIqUEun0tp33QqKlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r64ONtti; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1tcUKu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D6EC4CEF4;
-	Tue,  2 Sep 2025 13:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r64ONtti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955F1C4CEED;
+	Tue,  2 Sep 2025 13:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820633;
-	bh=VRIr4BCIEKc7EWmgpBfAk1TJvHO6b+zd7YTi+Z9C2pc=;
+	s=korg; t=1756820637;
+	bh=4wqxBUtblcLB+Y3zCax+IRjQdu0nqLDVBLUHrnLqk+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1tcUKu1JDUQ16sBaP0d4L+yq6Jx7OwXPBBpo/bvgvEeT3tvgWDWh4J9PkzddTFl7
-	 yzKaxiKuBp7edchZvCAUCA1mngQzftdkRhnbSAIa0hy9P3njlofqFSg+kNJ+DmFwcQ
-	 1iP8SzqmVgNnEAGv2u/hU6yFEoccYoM1NRBLs114=
+	b=r64ONttidR2j6duJAHITMHiQn2wxsCtISgVcev/z7jzlaOHpwZ56f2x/HmShU3D4L
+	 OQACPF6PQGgmVrllWk6xEiF19Q+S+gAK4omynHaNTX1Kdto6ULhK8OQzoOhNkXLFuR
+	 l8HBMHyMX2Hwj/5+AttoQfahAW1LJ0cFKN33cxJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Bloch <mbloch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/33] net/mlx5e: Update and set Xon/Xoff upon MTU set
-Date: Tue,  2 Sep 2025 15:21:33 +0200
-Message-ID: <20250902131927.651999782@linuxfoundation.org>
+Subject: [PATCH 5.15 16/33] net/mlx5e: Update and set Xon/Xoff upon port speed set
+Date: Tue,  2 Sep 2025 15:21:34 +0200
+Message-ID: <20250902131927.690637009@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
 References: <20250902131927.045875971@linuxfoundation.org>
@@ -55,96 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit ceddedc969f0532b7c62ca971ee50d519d2bc0cb ]
+[ Upstream commit d24341740fe48add8a227a753e68b6eedf4b385a ]
 
-Xon/Xoff sizes are derived from calculation that include the MTU size.
-Set Xon/Xoff when MTU is set.
-If Xon/Xoff fails, set the previous MTU.
+Xon/Xoff sizes are derived from calculations that include
+the port speed.
+These settings need to be updated and applied whenever the
+port speed is changed.
+The port speed is typically set after the physical link goes down
+and is negotiated as part of the link-up process between the two
+connected interfaces.
+Xon/Xoff parameters being updated at the point where the new
+negotiated speed is established.
 
 Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
 Signed-off-by: Alexei Lazar <alazar@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250825143435.598584-10-mbloch@nvidia.com
+Link: https://patch.msgid.link/20250825143435.598584-11-mbloch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en/port_buffer.h         | 12 ++++++++++++
- .../net/ethernet/mellanox/mlx5/core/en_main.c   | 17 ++++++++++++++++-
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-index 80af7a5ac6046..a23e3d810f3e4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-@@ -63,11 +63,23 @@ struct mlx5e_port_buffer {
- 	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_BUFFER];
- };
- 
-+#ifdef CONFIG_MLX5_CORE_EN_DCB
- int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
- 				    u32 change, unsigned int mtu,
- 				    struct ieee_pfc *pfc,
- 				    u32 *buffer_size,
- 				    u8 *prio2buffer);
-+#else
-+static inline int
-+mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
-+				u32 change, unsigned int mtu,
-+				void *pfc,
-+				u32 *buffer_size,
-+				u8 *prio2buffer)
-+{
-+	return 0;
-+}
-+#endif
- 
- int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
- 			    struct mlx5e_port_buffer *port_buffer);
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 321441e6ad328..bb7e3c80ad74e 100644
+index bb7e3c80ad74e..cfbc569edfb5f 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -42,6 +42,7 @@
- #include "eswitch.h"
- #include "en.h"
- #include "en/txrx.h"
-+#include "en/port_buffer.h"
- #include "en_tc.h"
- #include "en_rep.h"
- #include "en_accel/ipsec.h"
-@@ -2242,9 +2243,11 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_priv *priv)
- 	struct mlx5e_params *params = &priv->channels.params;
- 	struct net_device *netdev = priv->netdev;
- 	struct mlx5_core_dev *mdev = priv->mdev;
--	u16 mtu;
-+	u16 mtu, prev_mtu;
- 	int err;
- 
-+	mlx5e_query_mtu(mdev, params, &prev_mtu);
-+
- 	err = mlx5e_set_mtu(mdev, params, params->sw_mtu);
- 	if (err)
- 		return err;
-@@ -2254,6 +2257,18 @@ int mlx5e_set_dev_port_mtu(struct mlx5e_priv *priv)
- 		netdev_warn(netdev, "%s: VPort MTU %d is different than netdev mtu %d\n",
- 			    __func__, mtu, params->sw_mtu);
- 
-+	if (mtu != prev_mtu && MLX5_BUFFER_SUPPORTED(mdev)) {
-+		err = mlx5e_port_manual_buffer_config(priv, 0, mtu,
-+						      NULL, NULL, NULL);
-+		if (err) {
-+			netdev_warn(netdev, "%s: Failed to set Xon/Xoff values with MTU %d (err %d), setting back to previous MTU %d\n",
-+				    __func__, mtu, err, prev_mtu);
-+
-+			mlx5e_set_mtu(mdev, params, prev_mtu);
-+			return err;
-+		}
-+	}
-+
- 	params->sw_mtu = mtu;
- 	return 0;
- }
+@@ -104,6 +104,8 @@ void mlx5e_update_carrier(struct mlx5e_priv *priv)
+ 	if (up) {
+ 		netdev_info(priv->netdev, "Link up\n");
+ 		netif_carrier_on(priv->netdev);
++		mlx5e_port_manual_buffer_config(priv, 0, priv->netdev->mtu,
++						NULL, NULL, NULL);
+ 	} else {
+ 		netdev_info(priv->netdev, "Link down\n");
+ 		netif_carrier_off(priv->netdev);
 -- 
 2.50.1
 
