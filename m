@@ -1,65 +1,41 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464F42E0919
-	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 17:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600603451A6
+	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 17:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756834419; cv=none; b=kt+2iWH9oYZ90uHXxor5AdsKK4nNcQZcmynhKqjG6tjDTpyqv4z8bWp3MInR+BMi2HT+4jTNCA84GBUciHapdW97l2JhdEJiIy4Ku/QES4xnGHvpjt47FcEL2+H/yS7CcFif5LqD/AsjPr/9bQusEWmtt+6MQtSVOo4t28PvPOs=
+	t=1756835356; cv=none; b=ExmCAPmIm/z1Ty26FMd0xLEwRT8OHFIiCqJ3aIhPz7x1NXIDgR5i27K9sLR3ZZDaj365kDCQWGDs8RM4gb7+X0aBJOvN3QGiyHSKz7cltLZbeq2db6GijX/rTaMwQjEPEQ57lUW4PSk1AKGXbFkXF8BQrVHwcvN1rdi1qhA8s6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756834419; c=relaxed/simple;
-	bh=1sb4mNzJKiBNJOkSjHwyzDcm6obJKevfcRIBh9I3Y9s=;
+	s=arc-20240116; t=1756835356; c=relaxed/simple;
+	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IlxykomXS6QQaL7zP6DfUrgBmnqQaOuKmtZA/IyFZ/1vFJ4HWimhTWlHKc1o39AA/FbbwHb15MKzmaIgjzCyauqV8935M89Hm6tz4pepx9TDvL8Ib3X4tNTnhw3vk8b5LAbkhnnxmYlWm25VgbsSvDX3UX4N6BFwMWJNWxGRriI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j8J6lVZf; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=G/p+6yohcMT/2svMRCV+q2fp0//lt+H1Z6d7X6FpZMHut1XD1f0XBIOelgKxiakSkGmFRZvtUErsiHZPr/fLaJW3G1rbUZP80urElmeSNNBYPCleBTJEhJthk1uUM9aRY5emk2Q4dPnNUb1jpuwE5txcIrWI2vbL55rSnwfWGow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=hMpau7uh; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j8J6lVZf"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-7211b09f639so10334746d6.3
-        for <patches@lists.linux.dev>; Tue, 02 Sep 2025 10:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756834417; x=1757439217; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6qN69cGhCW4JcQNOQzKp6W5d08xWFi2OKORK99dzBII=;
-        b=j8J6lVZfCA5WLOhgDhnVHtrcaVtVZHF0NBgKdmsy11gKONH4B/6NYU66S5+MgBYs3Q
-         Z5iyr1fuOhF3RQfg0OsBTjCtrPuSorJLUM4AtZuiyVh8PdB2IHfUDToGGGYNOU0riwDY
-         GgW1HVA3Onvqhe5oZoCoL3A267xeppfUQytJI/sfS2tHB1tdMgbNUgCFia00fMfBwJQ/
-         eQAZtVkBI06C+qKGvfXsPsXyQmWYMUzH7/N9zoCLNHGDFup033sq6KRyqZXNUEjMVzWX
-         pUaDceBH5FRigqFCTMd2Sqh7ZR8lZrNhAb9+CfznYnSFYQAYzFO8prW2HBhgdzM1Gpcp
-         d1hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756834417; x=1757439217;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6qN69cGhCW4JcQNOQzKp6W5d08xWFi2OKORK99dzBII=;
-        b=KV7FZ253fxoWGq7NBFYEZX1Qfx+o5F4AjxmnANGVGW2v+FfLjI9jbC3CxnstNFHHlm
-         zWvym8WcCJ6USKEckd3lsOdF8R61JcB5YmhLBc/BxT11ejDKsY6RX1VFzqx9YiG19s5z
-         eEM8b41UXyy33iqq5cFMdL0ln1eiQj8CbFoW+nLDPDMzhEL5zD+vT3HIZCWj/4iLsC3Y
-         SbB+iUxo0e9ysMHTX++1NUR7F3qmfy2QYkZGJwdLIx4MpZ7O7ACtdF0/wsCYiDN9opNn
-         JP6RiHOMBqAqz0hM3lvbxKBIfksH3v6J8ZZQSHySUG7bbeVYwDAm4MWJQRstZJ7SGbjZ
-         4Dlg==
-X-Gm-Message-State: AOJu0YxgeFtL86TzzP1K6KP5bB6enhRSsn5vmehBagIgMqr/EO172ohM
-	RW2QFzDxwdGPV9XZp2hrX451zt8WBvy/3yF6Xm2xm/aW2mqHpmn53b2t
-X-Gm-Gg: ASbGnctbVKjghfWU4Kb6vq3pZr1zt+LBMFxP5FL2jG8fzZgSpIJs6kEz+LGEB1/5QpP
-	It0/Dex6sylX22dZOHCFAkTbdGfgqIXDjbogEgk+jpKLj0S62aNE8YY+qNOnxIl8K/DOA+ovmtG
-	zBY7S/pAXZlhRgXh7RK5xVMAJqQsfz7P6ZsQ6YQqJ20Qc39Oym47pXKrmTzsuNURXI76L5D6ySd
-	wkI5+KnXXXQWYDteakKf4AIaA2e9OJqmQ+AEn/1Ei9RgZS4IaIJgvi2uEHcYu+NQjM/l2/NrYGj
-	t8lwpYaI2xODp3/qN/BkMDK3izgAjYGDqe6x95wwQe0D5mHXkYz/EI04oRK+soA1haWQHUBHA2u
-	Ny+jEroTUbUZXspknqV3yRQD8Jd/rK6LgN2dmAGrlcXwNZ1LOFfqAzX2xkJKo
-X-Google-Smtp-Source: AGHT+IFgSFSvZEOW6oqviYgs/lS2mqs3G5IXLNF5/g52GWc526Espn4quku/UgYDjQAhamCPVdnpJw==
-X-Received: by 2002:a05:6214:cc3:b0:722:48f8:66a with SMTP id 6a1803df08f44-72248f806bemr8840036d6.28.1756834361702;
-        Tue, 02 Sep 2025 10:32:41 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-720acdff0dbsm15143366d6.18.2025.09.02.10.32.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 10:32:41 -0700 (PDT)
-Message-ID: <7a44540c-198c-4e15-bc87-f93c7e3a3deb@gmail.com>
-Date: Tue, 2 Sep 2025 10:32:35 -0700
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="hMpau7uh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1756835309; x=1757440109; i=rwarsow@gmx.de;
+	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=hMpau7uhJ+cImsmAkPK+JpjUgoKoRHcdx1cuQk/kx7k8XK0avez2AFoURxdOP2Zr
+	 UBaKvjta1EB3wqwnAoHHYHRBGRmDxBSVxj52BDSYpwvZkKnC2RW2yrm5AU0BsuCQ4
+	 W2ge/jrNXN/Uv1AFFzUl6Txv8jPtSRRFiGLgbBydb6PRxBDgqUsjcJy0lEnXOcfKl
+	 vdva1Zbzxz6kmzc5BpvfS5JNM3TwFoPZ01C4bCUOepg4hr+Z5TvmpamVivO7j+WQm
+	 AwdLfjiGzAkdO+Jaqkq/rb/8WpCXLMSuDjGFPYeHW/ZgqFhUpBiIonCNeDnWNlzZX
+	 CZ5Lpjbb5sQX4q1j+Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.34.249]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0X8o-1uWcY43dYK-015N7Q; Tue, 02
+ Sep 2025 19:48:28 +0200
+Message-ID: <06ecd35d-523f-4827-b456-5504a91e8553@gmx.de>
+Date: Tue, 2 Sep 2025 19:48:27 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,76 +43,98 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/33] 5.15.191-rc1 review
+Subject: Re: [PATCH 6.16 000/142] 6.16.5-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-References: <20250902131927.045875971@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
+References: <20250902131948.154194162@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:xPgOoSX50QuD7Pn1cXh8cUnDXCfZGAhTa1E0oWetZ6lNv3ExWVy
+ ZSFOxARoS1GqbkTDP+InvHemGPb2OX/Mz3noctMyQ29kpynq+Q8CSDoJcz1C6zHaamdVAtd
+ BiGkJSgrsHVgjCQ//wOAiEVDFPbavz1MXEnOjWRXocbCn+Sa7i2f2Dg4cQ9cK7DMFvHZwcJ
+ B0jfhbTkKxs5C90XdI/FQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:GC5lMw3ggOY=;9pKy5BJU7VTN59nETNXtnRh6f0j
+ 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
 
-On 9/2/25 06:21, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.191 release.
-> There are 33 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.191-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Thanks
+
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
+
