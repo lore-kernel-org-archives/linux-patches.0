@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E77273D6C;
-	Tue,  2 Sep 2025 13:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A9623D7EC;
+	Tue,  2 Sep 2025 13:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819631; cv=none; b=W3n1vmDrOXcgBj87eF3f7Rwi9zbdpXpmoCd2OY5CdZjBaky/7B2GJw9Nib4+PPCVvTatdprtsLebZGWSWsKFc5RD8YT0nDWIRbmFje5Cd4jEH0xaVouTp0fbct0epEfzoUgBuvT8PQXJPYsnDsIZMyHJssrKCoaOI5NzVZuHup4=
+	t=1756819634; cv=none; b=guqZ48J6fq7Tmow9WWE65OAMSMaffOGvjIaxJ3ma370XvwCgcyZnyvn8F5qbS5VGleYhL9PPz+UlXYf7zvVUbEU4nipeOTqjYkTtULgJ2I2ThEyRLpLi5T/6S31w7Ce1A8wF3IFunfszAHhNu/CLDuwX38jSdtfvHrxirpIUxEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819631; c=relaxed/simple;
-	bh=XutQXBE1NbBzlG/01ZG7EyOS0hfyDnrrqExJ2UlasPE=;
+	s=arc-20240116; t=1756819634; c=relaxed/simple;
+	bh=sNCXZbu9VKXPfzDfoTtufafagTkI6AmDB8gBT7gMo0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdarhVdvEVzCUqabrfA7V89bFPP7IJbc7W9gUlyIL57u7oOtm5tWkw15sOxhtwAYLUq/qEPJv5qfRS0xIJTypmRt5zrW0xYx6jzqlRtIXCIe5wcROeg4SQ/zgQm17Mhvt5tRf91dGynWrQhjs2fsCZ6Z6M9ha7p6BDjpOLsTUTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5CQh98X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D60AFqQhmR8TRzZtEuIKfoDdurFp6cb6xBrHBn7kFNhQKlpqGySKbGeMTFyNr774Z+FQ5RetEr0GR4RcnQNy5XeAm65lyZ/Hu4zSfj2dDI50UK1t9rA34vR0KdrrZJJ8Xk4K5nOrw9/fYvPOJcopJeo0MfyrZswajPLCFC6XgUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5uMfu7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5CQh98X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD413C4CEED;
-	Tue,  2 Sep 2025 13:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5uMfu7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47789C4CEED;
+	Tue,  2 Sep 2025 13:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819631;
-	bh=XutQXBE1NbBzlG/01ZG7EyOS0hfyDnrrqExJ2UlasPE=;
+	s=korg; t=1756819634;
+	bh=sNCXZbu9VKXPfzDfoTtufafagTkI6AmDB8gBT7gMo0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O5CQh98X24e436KvIULwCHH9eXb7aKI7gEn99M2f6c81E1MLCq4H/0kTRqQNmzAGz
-	 01MSYGk67TmwOOBOzZmO9qI9D9SkT42F4yFbXb3aJeGFMM8xL/PqiUL4FPg09MTnAl
-	 vNEWA9nOB7Stvvjep6X0N8sStu7FLB+u8OtxKmng=
+	b=i5uMfu7QE/dxycjFlZnph2gbGpSLrlZTbHdWkUTBa4ZDIUiT7H4XIIvgYlgjfIZlF
+	 gJXi5w0hYNgoZJ3whRUKzN+BYUfHF3aMMTNtIvCqvGWljwh5tK+OX+hYHxvx/wwmpC
+	 JpsVDHTmAKcHiOvplvA2ui+t+hdgcrxQgECEEDgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 091/142] net: stmmac: Set CIC bit only for TX queues with COE
-Date: Tue,  2 Sep 2025 15:19:53 +0200
-Message-ID: <20250902131951.751369950@linuxfoundation.org>
+Subject: [PATCH 6.16 092/142] net: hv_netvsc: fix loss of early receive events from host during channel open.
+Date: Tue,  2 Sep 2025 15:19:54 +0200
+Message-ID: <20250902131951.788993568@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -52,66 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
 
-[ Upstream commit b1eded580ab28119de0b0f21efe37ee2b4419144 ]
+[ Upstream commit 9448ccd853368582efa9db05db344f8bb9dffe0f ]
 
-Currently, in the AF_XDP transmit paths, the CIC bit of
-TX Desc3 is set for all packets. Setting this bit for
-packets transmitting through queues that don't support
-checksum offloading causes the TX DMA to get stuck after
-transmitting some packets. This patch ensures the CIC bit
-of TX Desc3 is set only if the TX queue supports checksum
-offloading.
+The hv_netvsc driver currently enables NAPI after opening the primary and
+subchannels. This ordering creates a race: if the Hyper-V host places data
+in the host -> guest ring buffer and signals the channel before
+napi_enable() has been called, the channel callback will run but
+napi_schedule_prep() will return false. As a result, the NAPI poller never
+gets scheduled, the data in the ring buffer is not consumed, and the
+receive queue may remain permanently stuck until another interrupt happens
+to arrive.
 
-Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-3-c225fe4444c0@altera.com
+Fix this by enabling NAPI and registering it with the RX/TX queues before
+vmbus channel is opened. This guarantees that any early host signal after
+open will correctly trigger NAPI scheduling and the ring buffer will be
+drained.
+
+Fixes: 76bb5db5c749d ("netvsc: fix use after free on module removal")
+Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+Link: https://patch.msgid.link/20250825115627.GA32189@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/hyperv/netvsc.c       | 17 ++++++++---------
+ drivers/net/hyperv/rndis_filter.c | 23 ++++++++++++++++-------
+ 2 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index e0fb06af1f940..36082d4917bcc 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2584,6 +2584,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 	struct netdev_queue *nq = netdev_get_tx_queue(priv->dev, queue);
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
- 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
-+	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
- 	struct xsk_buff_pool *pool = tx_q->xsk_pool;
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc = NULL;
-@@ -2671,7 +2672,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 		}
+diff --git a/drivers/net/hyperv/netvsc.c b/drivers/net/hyperv/netvsc.c
+index 720104661d7f2..60a4629fe6ba7 100644
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -1812,6 +1812,11 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
  
- 		stmmac_prepare_tx_desc(priv, tx_desc, 1, xdp_desc.len,
--				       true, priv->mode, true, true,
-+				       csum, priv->mode, true, true,
- 				       xdp_desc.len);
+ 	/* Enable NAPI handler before init callbacks */
+ 	netif_napi_add(ndev, &net_device->chan_table[0].napi, netvsc_poll);
++	napi_enable(&net_device->chan_table[0].napi);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX,
++			     &net_device->chan_table[0].napi);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX,
++			     &net_device->chan_table[0].napi);
  
- 		stmmac_enable_dma_transmission(priv, priv->ioaddr, queue);
-@@ -4983,6 +4984,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- {
- 	struct stmmac_txq_stats *txq_stats = &priv->xstats.txq_stats[queue];
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
-+	bool csum = !priv->plat->tx_queues_cfg[queue].coe_unsupported;
- 	unsigned int entry = tx_q->cur_tx;
- 	struct dma_desc *tx_desc;
- 	dma_addr_t dma_addr;
-@@ -5034,7 +5036,7 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
- 	stmmac_set_desc_addr(priv, tx_desc, dma_addr);
+ 	/* Open the channel */
+ 	device->channel->next_request_id_callback = vmbus_next_request_id;
+@@ -1831,12 +1836,6 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
+ 	/* Channel is opened */
+ 	netdev_dbg(ndev, "hv_netvsc channel opened successfully\n");
  
- 	stmmac_prepare_tx_desc(priv, tx_desc, 1, xdpf->len,
--			       true, priv->mode, true, true,
-+			       csum, priv->mode, true, true,
- 			       xdpf->len);
+-	napi_enable(&net_device->chan_table[0].napi);
+-	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX,
+-			     &net_device->chan_table[0].napi);
+-	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX,
+-			     &net_device->chan_table[0].napi);
+-
+ 	/* Connect with the NetVsp */
+ 	ret = netvsc_connect_vsp(device, net_device, device_info);
+ 	if (ret != 0) {
+@@ -1854,14 +1853,14 @@ struct netvsc_device *netvsc_device_add(struct hv_device *device,
  
- 	tx_q->tx_count_frames++;
+ close:
+ 	RCU_INIT_POINTER(net_device_ctx->nvdev, NULL);
+-	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX, NULL);
+-	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX, NULL);
+-	napi_disable(&net_device->chan_table[0].napi);
+ 
+ 	/* Now, we can close the channel safely */
+ 	vmbus_close(device->channel);
+ 
+ cleanup:
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_TX, NULL);
++	netif_queue_set_napi(ndev, 0, NETDEV_QUEUE_TYPE_RX, NULL);
++	napi_disable(&net_device->chan_table[0].napi);
+ 	netif_napi_del(&net_device->chan_table[0].napi);
+ 
+ cleanup2:
+diff --git a/drivers/net/hyperv/rndis_filter.c b/drivers/net/hyperv/rndis_filter.c
+index 9e73959e61ee0..c35f9685b6bf0 100644
+--- a/drivers/net/hyperv/rndis_filter.c
++++ b/drivers/net/hyperv/rndis_filter.c
+@@ -1252,17 +1252,26 @@ static void netvsc_sc_open(struct vmbus_channel *new_sc)
+ 	new_sc->rqstor_size = netvsc_rqstor_size(netvsc_ring_bytes);
+ 	new_sc->max_pkt_size = NETVSC_MAX_PKT_SIZE;
+ 
++	/* Enable napi before opening the vmbus channel to avoid races
++	 * as the host placing data on the host->guest ring may be left
++	 * out if napi was not enabled.
++	 */
++	napi_enable(&nvchan->napi);
++	netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
++			     &nvchan->napi);
++	netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
++			     &nvchan->napi);
++
+ 	ret = vmbus_open(new_sc, netvsc_ring_bytes,
+ 			 netvsc_ring_bytes, NULL, 0,
+ 			 netvsc_channel_cb, nvchan);
+-	if (ret == 0) {
+-		napi_enable(&nvchan->napi);
+-		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
+-				     &nvchan->napi);
+-		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
+-				     &nvchan->napi);
+-	} else {
++	if (ret != 0) {
+ 		netdev_notice(ndev, "sub channel open failed: %d\n", ret);
++		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_TX,
++				     NULL);
++		netif_queue_set_napi(ndev, chn_index, NETDEV_QUEUE_TYPE_RX,
++				     NULL);
++		napi_disable(&nvchan->napi);
+ 	}
+ 
+ 	if (atomic_inc_return(&nvscdev->open_chn) == nvscdev->num_chn)
 -- 
 2.50.1
 
