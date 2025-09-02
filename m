@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE2531E0E6;
-	Tue,  2 Sep 2025 13:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2421731E0FD;
+	Tue,  2 Sep 2025 13:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820738; cv=none; b=qOUaqpw9LGcXyMFKfTVbDoQpHXKBWUkIm/5+pbrtf44RESArqSvHpN/k0PuPYYtDp+g0fwmcpP0waTCZG+mVXzi4Ed3QktZ1UqoNuiaJB20Wo1kW/jNPMsQ/YYCKOw/uUGAXq7SyBcflugPxXTNAW1X8rmPhaYtR9l1xo96M6yM=
+	t=1756820742; cv=none; b=QzFpma5Eep/xUdy74hh39lamuJW1M90OkLA4eliDSlqoiyUOo/D46015sRItAMNCIpXr+YatGWc+8mDDJXxEiicv1071AsxiP/mn0VNo8V8UJWi6ujxt9/1p4daCoTQGq9qt8/l88ZFZBjcBRjYRC/CtbY1RWOouB9EjcbzYMVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820738; c=relaxed/simple;
-	bh=O07XhuHXfhI6Sdg+M+KbKXyL+cPjm3zINrcksIiAntY=;
+	s=arc-20240116; t=1756820742; c=relaxed/simple;
+	bh=shBAnC5QA8D7/Ukszc5oDJLC7tteV2UTEZYHT32HLLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJea1cfaRYAtvxgdHeswQLspQpauIxj+xxkyFlLUUqwGtFA1hM0x5FsGuPCxIujWaJXipxqdOB8SYVnQ678yMjSEDeSMgjIOGV87BfGlMe6tFDJ+ry4E8ipOmdUHJ4SERCj2oq2qdF5SCNHKE+gmrooa7bvwmNN/wk1dTPAc9t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/wUg2BR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=paaSKEjLumVZRM90ajGQFhy4Qi5Qse8E/e/kK17+Hg5Z98C9jPmJlHchmbyYfUFxml8m0n7Lcxf5h0MX5v8teGIse2OqrjX4gzSo7bUq7NzPBVq85bXxa0ABDtiz3GZi9XY6cuoNykQl6AMbFGg6wvlGB6gm3eX3+1QmKOKZQi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yev+Huiy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/wUg2BR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D37C4CEF4;
-	Tue,  2 Sep 2025 13:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yev+Huiy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89860C4CEED;
+	Tue,  2 Sep 2025 13:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820738;
-	bh=O07XhuHXfhI6Sdg+M+KbKXyL+cPjm3zINrcksIiAntY=;
+	s=korg; t=1756820742;
+	bh=shBAnC5QA8D7/Ukszc5oDJLC7tteV2UTEZYHT32HLLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/wUg2BRzLhNSK5+qkLZ/T9dhKT03B+asieV6wy0p0bOi2nBfLnx0Mr3/OX8O8bx/
-	 Omzj+MssThC09YQRZ0NwGlHsx/Kk2ZBYqKGZgYYTvk3LPQKl2Z/qSQi4s5bfCz/tLn
-	 AtPwrZRDcP1F0nlSnGGa0uxhgLlwAKOVE1ChLGiI=
+	b=Yev+Huiyq5U5RQhJiQLvrQeIulVeIOwZ/+eosANu8GgHneb6Sb8yADwM/YT/uG4Bz
+	 POzHyEaQ7bTn2Dr9dPMV8HK9V++/T7YocPyf7IZxNCaZ5K9mY8CZmQqA96HWXXg/ub
+	 lAWtuaLvf/RUDWcZ7YwNKH8DWKcrarDZqqZoOKt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minjong Kim <minbell.kim@samsung.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.10 22/34] HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()
-Date: Tue,  2 Sep 2025 15:21:48 +0200
-Message-ID: <20250902131927.503817037@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 23/34] Revert "drm/amdgpu: fix incorrect vm flags to map bo"
+Date: Tue,  2 Sep 2025 15:21:49 +0200
+Message-ID: <20250902131927.542121805@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131926.607219059@linuxfoundation.org>
 References: <20250902131926.607219059@linuxfoundation.org>
@@ -50,39 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minjong Kim <minbell.kim@samsung.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 185c926283da67a72df20a63a5046b3b4631b7d9 upstream.
+commit ac4ed2da4c1305a1a002415058aa7deaf49ffe3e upstream.
 
-in ntrig_report_version(), hdev parameter passed from hid_probe().
-sending descriptor to /dev/uhid can make hdev->dev.parent->parent to null
-if hdev->dev.parent->parent is null, usb_dev has
-invalid address(0xffffffffffffff58) that hid_to_usb_dev(hdev) returned
-when usb_rcvctrlpipe() use usb_dev,it trigger
-page fault error for address(0xffffffffffffff58)
+This reverts commit b08425fa77ad2f305fe57a33dceb456be03b653f.
 
-add null check logic to ntrig_report_version()
-before calling hid_to_usb_dev()
+Revert this to align with 6.17 because the fixes tag
+was wrong on this commit.
 
-Signed-off-by: Minjong Kim <minbell.kim@samsung.com>
-Link: https://patch.msgid.link/20250813-hid-ntrig-page-fault-fix-v2-1-f98581f35106@samsung.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit be33e8a239aac204d7e9e673c4220ef244eb1ba3)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ntrig.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-ntrig.c
-+++ b/drivers/hid/hid-ntrig.c
-@@ -144,6 +144,9 @@ static void ntrig_report_version(struct
- 	struct usb_device *usb_dev = hid_to_usb_dev(hdev);
- 	unsigned char *data = kmalloc(8, GFP_KERNEL);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+@@ -94,8 +94,8 @@ int amdgpu_map_static_csa(struct amdgpu_
+ 	}
  
-+	if (!hid_is_usb(hdev))
-+		return;
-+
- 	if (!data)
- 		goto err_free;
+ 	r = amdgpu_vm_bo_map(adev, *bo_va, csa_addr, 0, size,
+-			     AMDGPU_VM_PAGE_READABLE | AMDGPU_VM_PAGE_WRITEABLE |
+-			     AMDGPU_VM_PAGE_EXECUTABLE);
++			     AMDGPU_PTE_READABLE | AMDGPU_PTE_WRITEABLE |
++			     AMDGPU_PTE_EXECUTABLE);
  
+ 	if (r) {
+ 		DRM_ERROR("failed to do bo_map on static CSA, err=%d\n", r);
 
 
