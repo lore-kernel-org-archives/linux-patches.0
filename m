@@ -1,142 +1,106 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352672DFA2F
-	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 20:50:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A71126AF3
+	for <patches@lists.linux.dev>; Tue,  2 Sep 2025 21:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756846236; cv=none; b=QAOqIOB0JWctH/0p9HBUXpuKxY//my7UUXTcl0f08VnldidrWfTno30aVyqbBEFK1boObzfh3/BVAIVN44DFBGLD8rQtps15/61WzSREsUsgM01mMee+3FbLisPCXSNBVTarPeHe4QqxR64IoIAlyBXXgQUjUtTPavhIn0h18kw=
+	t=1756847758; cv=none; b=F0WY0u5ymRi5Oh+rrsLJ+joK9Mx8FxmDM3Yr5RV2HajesAoQp00Re6sVTuYbdHXJtSko/+2V8KiD2btoGjWBnMZUzkv9UMUg/7p/VYxugYmVeJCmRvWM00EiENthyPRx3QgvXZOKBHCh8TS48CaS+O6H44yhHM3pJ3xUPhzoHuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756846236; c=relaxed/simple;
-	bh=dCRlS3pv+NPs3wOV3tVEzSnNjvt9IFtaC1tNIwQyWJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a57MOPEmO0dha83B7rvkXS/+FWh+iLAUpmUPBTVTcYo9xGQ+nYMvJGf15BS49Q+ODhknhaWn5fGWobXLjjaDBJXgf2V9+BTLTE6DOSS2wvFtKBgZy8O1ws8BJ5nKss3QtVWApzOoVtZ474Y/O6YEOQJYKKfCr6Y/O7ABkSOx8mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TlJRZdh7; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756847758; c=relaxed/simple;
+	bh=95tkdMDuso5OG/9KbTm4H+ptGB07aLJvYeRM1Q04jNU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FVo74wucIbxyDWClgcV77HqBw9f8gv0pVXvPjyy7I80fPOSPdroWOnhhblATb2wnJazgn68VOrQIRYFrFDIG2fgivz9a/RCAaI3MMfPj8KEi5HI3rBL757qhOrTclHHDAcMX6OvnVXHeaBbRPTLNcZnGELqREmJ9PhnFi4/TzlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JdX4OJxz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TlJRZdh7"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7f777836c94so511162885a.2
-        for <patches@lists.linux.dev>; Tue, 02 Sep 2025 13:50:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756846234; x=1757451034; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LWQ/OAw6scTxHWYZBRrURzjaLxJ33N1756x/XY//jVI=;
-        b=TlJRZdh7In0aS/v4VRCfERZKnQofhy0I0MqgCWXScDaYTTGu9byZyW7GtCI5HgCnKU
-         GTQV9R+u7O2NmdXXtFEpYKiZagsrAUTXBsjF6ITSzTPXPJsGsk+5lVmO/1F3FmKdYuFl
-         TBEJ33mIrMiQfPzLgLOIRh1Y3yyOOHr37AiEGimcSYT0MtfvAQK/wi8JjDHQbyXUwo0H
-         ZSN3J7+luf0aAfe3KKounCrVxmFYJRTYVf9oONbIYsC19hnvNLEZp9Ikf43r9LToqAak
-         JdN8/L60A24vRz+15P1j0aZpKm2PF8j1tf41ep/lUZqxDFzqqKv4H868v+HyvSNEpCKE
-         Z0pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756846234; x=1757451034;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LWQ/OAw6scTxHWYZBRrURzjaLxJ33N1756x/XY//jVI=;
-        b=FqR8Ss6GDHeVvRc6UfBpoP9xx3J2EVR5/Sn9OAcSzxA8ILIQ/d9YhkOQ0MoqeUuVEH
-         r0HyitVmYw4GV4r/dDdlPucLb4wjcqqg2sJk1v7yBHa+Lee55Uc7aI+cIIyAGbFrH9z8
-         Y8nVqPhdbVkp0agsf9qemt7xrehfZ37w++0RVGvS/6xqOdSZS9Lb+EkFIT03z0o8TkSj
-         PNrgryAs2x0HMVQSPO97h0UYb22Vb+9lZdqlMUYyA66R0jRID4mgKytGjzk/x7jCPM8r
-         OBfWElUBLXnhsRjWymQM/rh+iP/Z6gvap17XInhldqODaVNYNAjYfCOs6oGIaPXgKSp/
-         aAbA==
-X-Gm-Message-State: AOJu0YzIP9VggdcDxdOrOGAZsgc+s6Q8TemVOBT4sMhUX1I+Ie1v9Mad
-	Bqe+n125Gz5tWJRqzvTEdsoWZbmoRHD1sFG1GTIDWIXKsO6Ef7h062RW
-X-Gm-Gg: ASbGnctO5h+IM5AP3eB3FQPAwcAu87+BPrVdcvFMaLxryDUr3dluw7gTw29Ij/fw/fR
-	+8ijCgHEUOGJltM8V6PsOqvD+Zch73EQmu/6u9jrphcmzDh/gEYintrNBNCQUUi0Ywy+tJWS+yP
-	p9Zm0AP5U21SDs3FHbKypvoKGLvRMav+3eYp2lkKdOkA3D18PvR+0UWkYDbWVR2o0ZZ8y1gNZQP
-	Ea6W/arH0a3GQQpWCgo4j21JZhfF8uNWry3bTTj0h88+JDZyCN1KWKzlajgxE9yHDH8qLZqfgxd
-	AkTNXMKwA4wW+slpXewhPV0sx1HdtCyLe5CJKXPXxQF0WCLO2Ahif7EvTaJ/kWmpQ7L5EIba5hQ
-	YHpKlQo3TisCe5Q/xkgMRGJpj4m5e0qq3xwTv2rif+pHAkfoqLQ==
-X-Google-Smtp-Source: AGHT+IEJPs/9LF36yuHEJI1/SJS2ioDiYjYtNpp8P4U84BCKShYwigccpWSSZRMQ8mpzH5US7zKocQ==
-X-Received: by 2002:a05:620a:1921:b0:801:1c9e:7aaa with SMTP id af79cd13be357-8011c9e7c3bmr1183460285a.67.1756846233877;
-        Tue, 02 Sep 2025 13:50:33 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-720ac262a5asm18064466d6.2.2025.09.02.13.50.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 13:50:33 -0700 (PDT)
-Message-ID: <3b4cbd98-234d-435c-bd6e-0e1acb756d33@gmail.com>
-Date: Tue, 2 Sep 2025 13:50:27 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JdX4OJxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD06C4CEED;
+	Tue,  2 Sep 2025 21:15:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756847758;
+	bh=95tkdMDuso5OG/9KbTm4H+ptGB07aLJvYeRM1Q04jNU=;
+	h=From:Date:Subject:To:Cc:From;
+	b=JdX4OJxzQt/QhxWqIsxxUQwA43kiBUlJL7d2tqHaHNgTvR+AT5CUdn629cKsQZ3Ej
+	 2vFaKUv9Bh0aXWhfL+MDzdMTUStrtik7S24otrzCvsB6ghP5NZ6v0QTRlJyL/wJ+xv
+	 kWoB4Zq1brbwRMpPcfrfhrGgDdhaItnO1q6kPle6ocnJjHBHFYMl1NynCsOBNW+aYJ
+	 ftbXM+euNtf6MQRhY2fiBUNZLzJqwo0xQEzSz5wZO1Cspu3hS3KrAUK+E2poQR8+ya
+	 ulUfsV043ZZAOonMMkL7X3WIgdj1RCfucGDge1+mSwUX1wPBqdNUNgP3iVgM4uyZQq
+	 Z/cewRXtq4jzA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Tue, 02 Sep 2025 14:15:50 -0700
+Subject: [PATCH] drm/tidss: dispc: Explicitly include bitfield.h
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.16 000/142] 6.16.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org
-References: <20250902131948.154194162@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAIVet2gC/x2NwQqDMBAFf0X27MIm2hb7K+JBzaoPNJaslIL47
+ 4YeB4aZk0wT1OhdnJT0C8MeM7iyoHHp46yMkJm8+Ic04jmkjQ8EM57w4w1miDMPOCboGnjhZhC
+ p9emq/uUoZz5Js/lftN113fSkYLByAAAA
+X-Change-ID: 20250902-drm-tidss-fix-missing-bitfield-h-9b004e613a71
+To: Jyri Sarha <jyri.sarha@iki.fi>, 
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2161; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=95tkdMDuso5OG/9KbTm4H+ptGB07aLJvYeRM1Q04jNU=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBnb43pqHyT8+RekoOh2w6RTNrKwN0RfJiBS6PqhPp7vr
+ ZN/7VjRUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACaS1crI8LIqoXqdgDWX681C
+ W7MNiRFqKyZ9Wb3UddbUM7ZyTleDUhkZprpcv+P1PEvmo+m1v19Z1W9/SF+3ZfENka4DbROmuAW
+ WcAEA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 9/2/25 06:18, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.16.5 release.
-> There are 142 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.16.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.16.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+After a recent series to use FIELD_PREP and FIELD_MODIFY in
+tidss_dispc.c, there are many errors when bitfield.h is not implicitly
+included, such as when building allmodconfig for ARCH=hexagon:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+  drivers/gpu/drm/tidss/tidss_dispc.c:1116:2: error: call to undeclared function 'FIELD_MODIFY'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   1116 |         VP_REG_FLD_MOD(dispc, hw_videoport, DISPC_VP_CONTROL, v,
+        |         ^
+  drivers/gpu/drm/tidss/tidss_dispc.c:631:3: note: expanded from macro 'VP_REG_FLD_MOD'
+    631 |                 FIELD_MODIFY((mask), &_reg, (val));                     \
+        |                 ^
+  drivers/gpu/drm/tidss/tidss_dispc.c:1140:2: error: call to undeclared function 'FIELD_MODIFY'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   1140 |         FIELD_MODIFY(DISPC_VP_DSS_OLDI_CFG_MAP_MASK, &oldi_cfg,
+        |         ^
+  drivers/gpu/drm/tidss/tidss_dispc.c:1203:10: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   1203 |                        FIELD_PREP(DISPC_VP_TIMING_H_SYNC_PULSE_MASK, hsw - 1) |
+        |                        ^
+  ...
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Explicitly include bitfield.h to resolve the errors.
+
+Fixes: 9accc8b10de8 ("drm/tidss: dispc: Get rid of FLD_VAL")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/tidss/tidss_dispc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
+index 97e2cd7b1e20..7c8c15a5c39b 100644
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -4,6 +4,7 @@
+  * Author: Jyri Sarha <jsarha@ti.com>
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
+
+---
+base-commit: 306734a1c76ce35fa613ea823a31ddbcdbf1eef5
+change-id: 20250902-drm-tidss-fix-missing-bitfield-h-9b004e613a71
+
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
+
