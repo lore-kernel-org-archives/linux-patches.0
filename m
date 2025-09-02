@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1238332A81A;
-	Tue,  2 Sep 2025 13:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EF932A81A;
+	Tue,  2 Sep 2025 13:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820504; cv=none; b=NZs7xR1dc9yAeMQSd2LT46UF4LkmualnhIBned47lQvw0/vj7hOt0fkCHvibCrhxJaHK1yw9IsO+rWM2INHjxNxakyGUdRgQ2RrkcXz70cP5XxxXQAePXXwl4xD0/FS+tNuBAaUDykcslwGMH3OVsa4uPWbJdeqSp4TJYI7x980=
+	t=1756820507; cv=none; b=Gul9TWB7WBk7YYwL34xC1LRIhmW+8KvULjVF7maz5/+ehyAP1zY8H99j9B3W5zJvb/RsNMq2HG65h+ErMQQrmh3oNAxbK+4U0cNoSE+JZ+YSlN1civnxRU8pQZmX+WACpmFmKHVQo/UZf+TqIIn7lsC0tGaQJBNL3phTGEwFl+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820504; c=relaxed/simple;
-	bh=QWTvrnAXtkBTrfmFgTLPXCjCRu3C8+vhS0JTTWDMQ88=;
+	s=arc-20240116; t=1756820507; c=relaxed/simple;
+	bh=r6FYEosvsfjAt8yy5kw60Cwbp2pYPYVEXNbosG4/m+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TX4YCDvEdTdl4+BmKvFp0Gz5kEWR76/PjWZt+f5Dk+LM3xUU8BBPfaNsjo8R+xKTe1RMWEzqBgDZlQIHgGM6wq71Hi5t1PuN9E6SzkuUOSDjfMIBDefRc0axm63znjJ3F4SbaeW8LmjwTHHwernGKUCQ1U3mXa21zwnxJGQA4Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmtaOF8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/+RtkUCjCLmiWbB+EUxS1fZuREboEKJ5k2B1i2yF0Sp6OvBi+ErJvBlPiUIlve0tXFkbR3NXD/5aLJdYfo2kBReGTP5jO7HAOgdm/Jemq1wVoy5+JttjSw4to1jLPRSiejF29kZNrg1fRG6TwEx3uq0HUWwdW1k+P47xKDVDWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiGS4LNA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmtaOF8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9395FC4CEED;
-	Tue,  2 Sep 2025 13:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiGS4LNA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0197C4CEED;
+	Tue,  2 Sep 2025 13:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820503;
-	bh=QWTvrnAXtkBTrfmFgTLPXCjCRu3C8+vhS0JTTWDMQ88=;
+	s=korg; t=1756820507;
+	bh=r6FYEosvsfjAt8yy5kw60Cwbp2pYPYVEXNbosG4/m+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmtaOF8vLfsyxg4Gkp/jr3uq/GOs9rSyHHHHSwar7WTIlrJZxi6MKJDP3mB6Rz13y
-	 o0SyeZ+y74qEfC8l/cfypWOBmkfc63ABcxR40eK494aW339AC45u95NfqE7kg6uTk3
-	 sYBqntAePRxg+FrcJ7zjs6Lc/t4xmwPu4a6XH20o=
+	b=xiGS4LNA2sDS1UutOtTZzP4Vzkii6r1Upj2yKbXiyyM8FdG6E3SNH7kbpPMdw57w2
+	 BVDFEijiO8wx89xynnmQhvHdm819Qll60b+FysVYlnT/xshy3iBaCfi7JAcRGGBOoO
+	 vYEmX3vPcYjDYXPPcT0lPzN3XYdVRnX1m6x0GKV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e69f06a0f30116c68056@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li Nan <linan122@huawei.com>,
+	Wu Guanghao <wuguanghao3@huawei.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 33/50] sctp: initialize more fields in sctp_v6_from_sk()
-Date: Tue,  2 Sep 2025 15:21:24 +0200
-Message-ID: <20250902131931.834827603@linuxfoundation.org>
+Subject: [PATCH 6.1 34/50] efivarfs: Fix slab-out-of-bounds in efivarfs_d_compare
+Date: Tue,  2 Sep 2025 15:21:25 +0200
+Message-ID: <20250902131931.878152858@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
 References: <20250902131930.509077918@linuxfoundation.org>
@@ -54,70 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 2e8750469242cad8f01f320131fd5a6f540dbb99 ]
+[ Upstream commit a6358f8cf64850f3f27857b8ed8c1b08cfc4685c ]
 
-syzbot found that sin6_scope_id was not properly initialized,
-leading to undefined behavior.
+Observed on kernel 6.6 (present on master as well):
 
-Clear sin6_scope_id and sin6_flowinfo.
+  BUG: KASAN: slab-out-of-bounds in memcmp+0x98/0xd0
+  Call trace:
+   kasan_check_range+0xe8/0x190
+   __asan_loadN+0x1c/0x28
+   memcmp+0x98/0xd0
+   efivarfs_d_compare+0x68/0xd8
+   __d_lookup_rcu_op_compare+0x178/0x218
+   __d_lookup_rcu+0x1f8/0x228
+   d_alloc_parallel+0x150/0x648
+   lookup_open.isra.0+0x5f0/0x8d0
+   open_last_lookups+0x264/0x828
+   path_openat+0x130/0x3f8
+   do_filp_open+0x114/0x248
+   do_sys_openat2+0x340/0x3c0
+   __arm64_sys_openat+0x120/0x1a0
 
-BUG: KMSAN: uninit-value in __sctp_v6_cmp_addr+0x887/0x8c0 net/sctp/ipv6.c:649
-  __sctp_v6_cmp_addr+0x887/0x8c0 net/sctp/ipv6.c:649
-  sctp_inet6_cmp_addr+0x4f2/0x510 net/sctp/ipv6.c:983
-  sctp_bind_addr_conflict+0x22a/0x3b0 net/sctp/bind_addr.c:390
-  sctp_get_port_local+0x21eb/0x2440 net/sctp/socket.c:8452
-  sctp_get_port net/sctp/socket.c:8523 [inline]
-  sctp_listen_start net/sctp/socket.c:8567 [inline]
-  sctp_inet_listen+0x710/0xfd0 net/sctp/socket.c:8636
-  __sys_listen_socket net/socket.c:1912 [inline]
-  __sys_listen net/socket.c:1927 [inline]
-  __do_sys_listen net/socket.c:1932 [inline]
-  __se_sys_listen net/socket.c:1930 [inline]
-  __x64_sys_listen+0x343/0x4c0 net/socket.c:1930
-  x64_sys_call+0x271d/0x3e20 arch/x86/include/generated/asm/syscalls_64.h:51
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xd9/0x210 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+If dentry->d_name.len < EFI_VARIABLE_GUID_LEN , 'guid' can become
+negative, leadings to oob. The issue can be triggered by parallel
+lookups using invalid filename:
 
-Local variable addr.i.i created at:
-  sctp_get_port net/sctp/socket.c:8515 [inline]
-  sctp_listen_start net/sctp/socket.c:8567 [inline]
-  sctp_inet_listen+0x650/0xfd0 net/sctp/socket.c:8636
-  __sys_listen_socket net/socket.c:1912 [inline]
-  __sys_listen net/socket.c:1927 [inline]
-  __do_sys_listen net/socket.c:1932 [inline]
-  __se_sys_listen net/socket.c:1930 [inline]
-  __x64_sys_listen+0x343/0x4c0 net/socket.c:1930
+  T1			T2
+  lookup_open
+   ->lookup
+    simple_lookup
+     d_add
+     // invalid dentry is added to hash list
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+e69f06a0f30116c68056@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68adc0a2.050a0220.37038e.00c4.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20250826141314.1802610-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+			lookup_open
+			 d_alloc_parallel
+			  __d_lookup_rcu
+			   __d_lookup_rcu_op_compare
+			    hlist_bl_for_each_entry_rcu
+			    // invalid dentry can be retrieved
+			     ->d_compare
+			      efivarfs_d_compare
+			      // oob
+
+Fix it by checking 'guid' before cmp.
+
+Fixes: da27a24383b2 ("efivarfs: guid part of filenames are case-insensitive")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Wu Guanghao <wuguanghao3@huawei.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/ipv6.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/efivarfs/super.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
-index d081858c2d073..a1cb8ac0408af 100644
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -547,7 +547,9 @@ static void sctp_v6_from_sk(union sctp_addr *addr, struct sock *sk)
+diff --git a/fs/efivarfs/super.c b/fs/efivarfs/super.c
+index b8c4641ed152b..9025430cf2ad3 100644
+--- a/fs/efivarfs/super.c
++++ b/fs/efivarfs/super.c
+@@ -47,6 +47,10 @@ static int efivarfs_d_compare(const struct dentry *dentry,
  {
- 	addr->v6.sin6_family = AF_INET6;
- 	addr->v6.sin6_port = 0;
-+	addr->v6.sin6_flowinfo = 0;
- 	addr->v6.sin6_addr = sk->sk_v6_rcv_saddr;
-+	addr->v6.sin6_scope_id = 0;
- }
+ 	int guid = len - EFI_VARIABLE_GUID_LEN;
  
- /* Initialize sk->sk_rcv_saddr from sctp_addr. */
++	/* Parallel lookups may produce a temporary invalid filename */
++	if (guid <= 0)
++		return 1;
++
+ 	if (name->len != len)
+ 		return 1;
+ 
 -- 
 2.50.1
 
