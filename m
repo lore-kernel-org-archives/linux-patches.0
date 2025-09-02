@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90252DECDE;
-	Tue,  2 Sep 2025 13:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA132DECDE;
+	Tue,  2 Sep 2025 13:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819975; cv=none; b=CSzbq2tJr7sbTlWoRpssCvOEnf8TKhy+cOdIFxsXootIXUy4wMuASmviOdgGxjS9Z0z7xqYqcdCMtdDazVaKwKTCljWp7QNIFndg91apw9IPV9KnD0YasGO3rx79rFCabeFdu/f3qUK0W2fwu7OxtMpPwNnV03C4EE9jvJHH2Hk=
+	t=1756819979; cv=none; b=UDUvz5Ig53/l8NWDqZPBBkqXZrouBvvTyhiGRNY2WxWW6U1vBVvlOGIolPPKsLcEC9cZTsJE+73SyLVBYc0x4GxMQcLmJ9uI4Ot+AElChuerkKPCbNN9DndR7ygxKmYCdnjQL01Uw0SFh3Xy+aSStdJPQJBCyHo/KVGxqvbW/7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819975; c=relaxed/simple;
-	bh=yjtEcr22ZjG65eqtHsq+8VR+he4Py4SIt0/I6ftcmoY=;
+	s=arc-20240116; t=1756819979; c=relaxed/simple;
+	bh=cqYcfh7PQKtm3rrJ+MxdwY4OIMZP7nv4tbf8HHlJwsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAuwd6J/2pde7mZHiUT8Ao9r1LA2PHnQoElahXVQIfC+XdgeOP8XykCvTDTlQ8b7/By+q31XWc+594MsNgyBc1xzkKQXIYkNtYBf+ZjUmLzKArkz5OanUaWqtrnKmGlYuG2uA6PwtFqRTDD34iqirCQdaHO3q70rPcbXLaJ24p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyRfs4ca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tYj5pjg4C45RtliTGsb25YCzkERfLTF6fkBdxLGIQaeyp/z7SaqzDotHe3g1uaZkIGIeo262OLeUHXOzBK/8RgkVq/2pur+bM3kfOFAx/gPQ5XK/RNWPNswprJQCSiQ3Nt47/CmaIUWvyVWKIu8DSOoaczYl/w5I6pTRCMdqsDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o45uc6yR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyRfs4ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C46CC4CEED;
-	Tue,  2 Sep 2025 13:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o45uc6yR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3214C4CEED;
+	Tue,  2 Sep 2025 13:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819975;
-	bh=yjtEcr22ZjG65eqtHsq+8VR+he4Py4SIt0/I6ftcmoY=;
+	s=korg; t=1756819979;
+	bh=cqYcfh7PQKtm3rrJ+MxdwY4OIMZP7nv4tbf8HHlJwsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyRfs4ca3CUeIyH1PsZYie1p0AX84dVZE0H6QFOBlbqR72aj6M08jxjc0hOp6ULbN
-	 0GqYt9xDrwlX/bUl9UzcPh2pLFF6zTF0Hwa+1kPdeO4xcy+7415vUqXh9WIxGWx0gO
-	 qaLCBoYVlnQgRndfyAEUnF6+eK308qYg15EabgKM=
+	b=o45uc6yR90una8lThkifDD9gYF8aqDzoWVmhREWJFaNISlkHKcLxOKocMBgD9CQXz
+	 7dKZcpAfgZ0w5RexKKl93n9X8qcAkOAHo4mSYQjjhGuuZNLV+5rDiga+P4rtAboN9k
+	 JXpN18a/f9clhD2d1Nl9g2Gp9iBE9YqGQTrVMLpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 53/95] net/mlx5e: Set local Xoff after FW update
-Date: Tue,  2 Sep 2025 15:20:29 +0200
-Message-ID: <20250902131941.639561755@linuxfoundation.org>
+Subject: [PATCH 6.12 54/95] net: stmmac: xgmac: Do not enable RX FIFO Overflow interrupts
+Date: Tue,  2 Sep 2025 15:20:30 +0200
+Message-ID: <20250902131941.677965541@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -54,48 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Rohan G Thomas <rohan.g.thomas@altera.com>
 
-[ Upstream commit aca0c31af61e0d5cf1675a0cbd29460b95ae693c ]
+[ Upstream commit 4f23382841e67174211271a454811dd17c0ef3c5 ]
 
-The local Xoff value is being set before the firmware (FW) update.
-In case of a failure where the FW is not updated with the new value,
-there is no fallback to the previous value.
-Update the local Xoff value after the FW has been successfully set.
+Enabling RX FIFO Overflow interrupts is counterproductive
+and causes an interrupt storm when RX FIFO overflows.
+Disabling this interrupt has no side effect and eliminates
+interrupt storms when the RX FIFO overflows.
 
-Fixes: 0696d60853d5 ("net/mlx5e: Receive buffer configuration")
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250825143435.598584-12-mbloch@nvidia.com
+Commit 8a7cb245cf28 ("net: stmmac: Do not enable RX FIFO
+overflow interrupts") disables RX FIFO overflow interrupts
+for DWMAC4 IP and removes the corresponding handling of
+this interrupt. This patch is doing the same thing for
+XGMAC IP.
+
+Fixes: 2142754f8b9c ("net: stmmac: Add MAC related callbacks for XGMAC2")
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250825-xgmac-minor-fixes-v3-1-c225fe4444c0@altera.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-index 3efa8bf1d14ef..4720523813b97 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-@@ -575,7 +575,6 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
- 		if (err)
- 			return err;
- 	}
--	priv->dcbx.xoff = xoff;
- 
- 	/* Apply the settings */
- 	if (update_buffer) {
-@@ -584,6 +583,8 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
- 			return err;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+index 5dcc95bc0ad28..7201a38842651 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_dma.c
+@@ -203,10 +203,6 @@ static void dwxgmac2_dma_rx_mode(struct stmmac_priv *priv, void __iomem *ioaddr,
  	}
  
-+	priv->dcbx.xoff = xoff;
-+
- 	if (update_prio2buffer)
- 		err = mlx5e_port_set_priority2buffer(priv->mdev, prio2buffer);
+ 	writel(value, ioaddr + XGMAC_MTL_RXQ_OPMODE(channel));
+-
+-	/* Enable MTL RX overflow */
+-	value = readl(ioaddr + XGMAC_MTL_QINTEN(channel));
+-	writel(value | XGMAC_RXOIE, ioaddr + XGMAC_MTL_QINTEN(channel));
+ }
  
+ static void dwxgmac2_dma_tx_mode(struct stmmac_priv *priv, void __iomem *ioaddr,
 -- 
 2.50.1
 
