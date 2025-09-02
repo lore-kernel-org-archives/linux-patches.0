@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94965302745;
-	Tue,  2 Sep 2025 13:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC56273D6D;
+	Tue,  2 Sep 2025 13:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819405; cv=none; b=OcvFfvKhX8SsIphG4/1R6m+4E0/5Wm5FNL6eytDLwH67mBF8QYAwr4N15pvZvpqhMOskqxhkJb5MPUwTzH89l/+762EuMuKyoycrPakBS+o/kK2/9E9OHGo3nNo0kfhnFiiUzgzTfy22lgyc1CHZIw/faou8gGz78M4PEpntCS4=
+	t=1756819405; cv=none; b=qT7ITfFE80rolMKbOBvh/SZ1SOin0MkunvsjuS1A2Z+c53wi+dUK5+0C9E9EHHTjTCA99N3xhlnD570gdbXnQ+CJl74zFatv+PiwCg4z601wSOWAxwQ8JXVLNR5yIO4oAJaAyyygzFzi75qMArvbCPRt8XoTCx9pxHPkuE0LvOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1756819405; c=relaxed/simple;
-	bh=BAHpF8A5b3XuOup3NKcWV7H0xJNTPWM1/C+o6IFul7o=;
+	bh=KmkTBbTqJB5qGLsrijsJFeYEQiUJeAg09pdlnDWDw7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfC1CBUf/ch5Zg3DhGKUHfrozfxC/9jMQKDERQQcdphpkX76fHLIbhwqpUsJSGMYUgKH+V9ud+hDIBcZIQam49oeG43wAW0OZNgCLYb5N0fYH4W9TNPzQY4KB/3+krKhdSBrLkCYkfloiq8KMQAYwTpscyH94dcX8rDF1tCl+9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEDEtG+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBHGWlNiqp/dU/Bqnhy0DzhViJQvOljDRY7cUflVIKPvPbWfwPjpz5qtlHjKTvPBZym4Pmr5n5WITDWaQ5Ogq4rt0VzcSWN06Xl9btRUKX0UmMzvx5EajXiToJbyYSd0a1DTqCTPi21Zp2x6Ker/u4E2WsgHFuF5JgoZIVTSbr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vs6haP+c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEDEtG+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAADC4CEF4;
-	Tue,  2 Sep 2025 13:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vs6haP+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62B4C4CEED;
+	Tue,  2 Sep 2025 13:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819405;
-	bh=BAHpF8A5b3XuOup3NKcWV7H0xJNTPWM1/C+o6IFul7o=;
+	s=korg; t=1756819402;
+	bh=KmkTBbTqJB5qGLsrijsJFeYEQiUJeAg09pdlnDWDw7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEDEtG+EdraCfGbAhzWJ4zXYCbwEMvRKaA+x4K9Yy6XgJnzkpIU2+j5u0IZ9eAYAe
-	 tvYVjAhDfCmcAk9uGsVtUQq4+1BpI4cyGpmZjUihPDnoSa4N6pCZP9f2m9PCPi68L4
-	 toHmrjiTy8Y6TBDVNAA9imdrri0VwWWhgD64CDDU=
+	b=vs6haP+c7wggiCxx4iUYHXt6tLi+DiX6GscVBqKpUIgipd+eYABamR8e57uRBmLWC
+	 rPzlQZXotmnTNh1bxF89w4bp4ACQwFk1eClYgck3i/XC3g6xJvjUIj//dTIGZe0vYC
+	 YjX6i0X5I4e9b75wNka0yA6/GSLRRKP5cgF2EHlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junli Liu <liujunli@lixiang.com>,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Friendy Su <friendy.su@sony.com>,
+	Jacky Cao <jacky.cao@sony.com>,
+	Daniel Palmer <daniel.palmer@sony.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Hongbo Li <lihongbo22@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 024/142] erofs: fix atomic context detection when !CONFIG_DEBUG_LOCK_ALLOC
-Date: Tue,  2 Sep 2025 15:18:46 +0200
-Message-ID: <20250902131949.071350401@linuxfoundation.org>
+Subject: [PATCH 6.16 023/142] erofs: Fallback to normal access if DAX is not supported on extra device
+Date: Tue,  2 Sep 2025 15:18:45 +0200
+Message-ID: <20250902131949.034274321@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -51,126 +55,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junli Liu <liujunli@lixiang.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit c99fab6e80b76422741d34aafc2f930a482afbdd ]
+[ Upstream commit c6993c4cb91803fceb82d6b5e0ec5e0aec2d0ad6 ]
 
-Since EROFS handles decompression in non-atomic contexts due to
-uncontrollable decompression latencies and vmap() usage, it tries
-to detect atomic contexts and only kicks off a kworker on demand
-in order to reduce unnecessary scheduling overhead.
+If using multiple devices, we should check if the extra device support
+DAX instead of checking the primary device when deciding if to use DAX
+to access a file.
 
-However, the current approach is insufficient and can lead to
-sleeping function calls in invalid contexts, causing kernel
-warnings and potential system instability. See the stacktrace [1]
-and previous discussion [2].
+If an extra device does not support DAX we should fallback to normal
+access otherwise the data on that device will be inaccessible.
 
-The current implementation only checks rcu_read_lock_any_held(),
-which behaves inconsistently across different kernel configurations:
-
-- When CONFIG_DEBUG_LOCK_ALLOC is enabled: correctly detects
-  RCU critical sections by checking rcu_lock_map
-- When CONFIG_DEBUG_LOCK_ALLOC is disabled: compiles to
-  "!preemptible()", which only checks preempt_count and misses
-  RCU critical sections
-
-This patch introduces z_erofs_in_atomic() to provide comprehensive
-atomic context detection:
-
-1. Check RCU preemption depth when CONFIG_PREEMPTION is enabled,
-   as RCU critical sections may not affect preempt_count but still
-   require atomic handling
-
-2. Always use async processing when CONFIG_PREEMPT_COUNT is disabled,
-   as preemption state cannot be reliably determined
-
-3. Fall back to standard preemptible() check for remaining cases
-
-The function replaces the previous complex condition check and ensures
-that z_erofs always uses (kthread_)work in atomic contexts to minimize
-scheduling overhead and prevent sleeping in invalid contexts.
-
-[1] Problem stacktrace
-[ 61.266692] BUG: sleeping function called from invalid context at kernel/locking/rtmutex_api.c:510
-[ 61.266702] in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 107, name: irq/54-ufshcd
-[ 61.266704] preempt_count: 0, expected: 0
-[ 61.266705] RCU nest depth: 2, expected: 0
-[ 61.266710] CPU: 0 UID: 0 PID: 107 Comm: irq/54-ufshcd Tainted: G W O 6.12.17 #1
-[ 61.266714] Tainted: [W]=WARN, [O]=OOT_MODULE
-[ 61.266715] Hardware name: schumacher (DT)
-[ 61.266717] Call trace:
-[ 61.266718] dump_backtrace+0x9c/0x100
-[ 61.266727] show_stack+0x20/0x38
-[ 61.266728] dump_stack_lvl+0x78/0x90
-[ 61.266734] dump_stack+0x18/0x28
-[ 61.266736] __might_resched+0x11c/0x180
-[ 61.266743] __might_sleep+0x64/0xc8
-[ 61.266745] mutex_lock+0x2c/0xc0
-[ 61.266748] z_erofs_decompress_queue+0xe8/0x978
-[ 61.266753] z_erofs_decompress_kickoff+0xa8/0x190
-[ 61.266756] z_erofs_endio+0x168/0x288
-[ 61.266758] bio_endio+0x160/0x218
-[ 61.266762] blk_update_request+0x244/0x458
-[ 61.266766] scsi_end_request+0x38/0x278
-[ 61.266770] scsi_io_completion+0x4c/0x600
-[ 61.266772] scsi_finish_command+0xc8/0xe8
-[ 61.266775] scsi_complete+0x88/0x148
-[ 61.266777] blk_mq_complete_request+0x3c/0x58
-[ 61.266780] scsi_done_internal+0xcc/0x158
-[ 61.266782] scsi_done+0x1c/0x30
-[ 61.266783] ufshcd_compl_one_cqe+0x12c/0x438
-[ 61.266786] __ufshcd_transfer_req_compl+0x2c/0x78
-[ 61.266788] ufshcd_poll+0xf4/0x210
-[ 61.266789] ufshcd_transfer_req_compl+0x50/0x88
-[ 61.266791] ufshcd_intr+0x21c/0x7c8
-[ 61.266792] irq_forced_thread_fn+0x44/0xd8
-[ 61.266796] irq_thread+0x1a4/0x358
-[ 61.266799] kthread+0x12c/0x138
-[ 61.266802] ret_from_fork+0x10/0x20
-
-[2] https://lore.kernel.org/r/58b661d0-0ebb-4b45-a10d-c5927fb791cd@paulmck-laptop
-
-Signed-off-by: Junli Liu <liujunli@lixiang.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Friendy Su <friendy.su@sony.com>
+Reviewed-by: Jacky Cao <jacky.cao@sony.com>
+Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
 Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250805011957.911186-1-liujunli@lixiang.com
-[ Gao Xiang: Use the original trace in v1. ]
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Link: https://lore.kernel.org/r/20250804082030.3667257-2-Yuezhang.Mo@sony.com
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/erofs/super.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index e3f28a1bb9452..9bb53f00c2c62 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1430,6 +1430,16 @@ static void z_erofs_decompressqueue_kthread_work(struct kthread_work *work)
- }
- #endif
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 799fef437aa8e..cad87e4d66943 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -174,6 +174,11 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
+ 		if (!erofs_is_fileio_mode(sbi)) {
+ 			dif->dax_dev = fs_dax_get_by_bdev(file_bdev(file),
+ 					&dif->dax_part_off, NULL, NULL);
++			if (!dif->dax_dev && test_opt(&sbi->opt, DAX_ALWAYS)) {
++				erofs_info(sb, "DAX unsupported by %s. Turning off DAX.",
++					   dif->path);
++				clear_opt(&sbi->opt, DAX_ALWAYS);
++			}
+ 		} else if (!S_ISREG(file_inode(file)->i_mode)) {
+ 			fput(file);
+ 			return -EINVAL;
+@@ -210,8 +215,13 @@ static int erofs_scan_devices(struct super_block *sb,
+ 			  ondisk_extradevs, sbi->devs->extra_devices);
+ 		return -EINVAL;
+ 	}
+-	if (!ondisk_extradevs)
++	if (!ondisk_extradevs) {
++		if (test_opt(&sbi->opt, DAX_ALWAYS) && !sbi->dif0.dax_dev) {
++			erofs_info(sb, "DAX unsupported by block device. Turning off DAX.");
++			clear_opt(&sbi->opt, DAX_ALWAYS);
++		}
+ 		return 0;
++	}
  
-+/* Use (kthread_)work in atomic contexts to minimize scheduling overhead */
-+static inline bool z_erofs_in_atomic(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth())
-+		return true;
-+	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
-+		return true;
-+	return !preemptible();
-+}
-+
- static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- 				       int bios)
- {
-@@ -1444,8 +1454,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 	if (!sbi->devs->extra_devices && !erofs_is_fscache_mode(sb))
+ 		sbi->devs->flatdev = true;
+@@ -330,7 +340,6 @@ static int erofs_read_superblock(struct super_block *sb)
+ 	if (ret < 0)
+ 		goto out;
  
- 	if (atomic_add_return(bios, &io->pending_bios))
- 		return;
--	/* Use (kthread_)work and sync decompression for atomic contexts only */
--	if (!in_task() || irqs_disabled() || rcu_read_lock_any_held()) {
-+	if (z_erofs_in_atomic()) {
- #ifdef CONFIG_EROFS_FS_PCPU_KTHREAD
- 		struct kthread_worker *worker;
+-	/* handle multiple devices */
+ 	ret = erofs_scan_devices(sb, dsb);
  
+ 	if (erofs_sb_has_48bit(sbi))
+@@ -661,14 +670,9 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 			return invalfc(fc, "cannot use fsoffset in fscache mode");
+ 	}
+ 
+-	if (test_opt(&sbi->opt, DAX_ALWAYS)) {
+-		if (!sbi->dif0.dax_dev) {
+-			errorfc(fc, "DAX unsupported by block device. Turning off DAX.");
+-			clear_opt(&sbi->opt, DAX_ALWAYS);
+-		} else if (sbi->blkszbits != PAGE_SHIFT) {
+-			errorfc(fc, "unsupported blocksize for DAX");
+-			clear_opt(&sbi->opt, DAX_ALWAYS);
+-		}
++	if (test_opt(&sbi->opt, DAX_ALWAYS) && sbi->blkszbits != PAGE_SHIFT) {
++		erofs_info(sb, "unsupported blocksize for DAX");
++		clear_opt(&sbi->opt, DAX_ALWAYS);
+ 	}
+ 
+ 	sb->s_time_gran = 1;
 -- 
 2.50.1
 
