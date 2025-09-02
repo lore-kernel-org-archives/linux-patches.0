@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07649314A8B;
-	Tue,  2 Sep 2025 13:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB5621D5B8;
+	Tue,  2 Sep 2025 13:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756820050; cv=none; b=OjKbXfwsTUsqC+Fa/XhrSfk2p0D40Qxx+jHQv+1JnJtNtVHQ1nCVp8hi/+DLBHNFNx4wDJHY2J9aX5I/NhrF8fjWrqM1G6U33PJlJcCpHB3+8ENEPR56t6OpcZEQJdorUPhD1mT7E+LB1QlGZ9xzEE3A0YiGeUL63JMPI6sE/rQ=
+	t=1756820053; cv=none; b=U5DaSWAzUHQERvKODRyNglg0j1hmeGQ2GmAuohbJz/z2IAASC++s1EbUOv6XqfEM1hZciapg2VOpwiwMEG4vtaCZndvfvwJe3xv26AzPp7ehrHYa170gpcjBCVbzu4MCZmNl5Sn82IG6KVXlRYxl07AprH7HYtdbAvpnjpMflco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756820050; c=relaxed/simple;
-	bh=tpi/8GSFQlH/cjECq13gUF8DSgnCzlNSMKcSqySm+tI=;
+	s=arc-20240116; t=1756820053; c=relaxed/simple;
+	bh=ZxVSu0nsCa/VfPPVP9gn03jIo22XCU3tDpO+UYqzZUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBDoTL8wzg2cdy7dz/oxXid+tvbLVmJTIWSJBXFyDPTUaE5y/9AwPANWBkmqt081ynzq9UFBsfpGgZL6IrjTQ4nTUWd287ddol/zK1U3sroafWohnx8qoOT+paWxcyGGVodBBLQfB1G948fSSvjS418y5AH2vnJqVrbyY/NfrCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/jgyg1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK1FqY2SSnbp7qmZbmgP8OCXvdgQuas25H6hzb6wk7LD13L1EfZWeoCIsNdZoMPa9FbZDG14ePZQpyClt76i2/DDoec7Xr+qjjFvLeg9BPBd5kPK3WrmAWGkhP16vchjJdK+tOlFLR/dLDNbK6Ncd8+3+l5UH3noaqiHjBWCw6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSHdLGFT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/jgyg1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860E2C4CEED;
-	Tue,  2 Sep 2025 13:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSHdLGFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977BCC4CEED;
+	Tue,  2 Sep 2025 13:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756820049;
-	bh=tpi/8GSFQlH/cjECq13gUF8DSgnCzlNSMKcSqySm+tI=;
+	s=korg; t=1756820053;
+	bh=ZxVSu0nsCa/VfPPVP9gn03jIo22XCU3tDpO+UYqzZUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/jgyg1SgWGCUq8Nr6rJXf9JAdug/iFjyRDeq4hBN3fnxU6E+/WybLKu2/UlEmuOP
-	 4XAAfywEjRlEXZg22vpaIw8tIX9VvB8Hf+MKQLTTPJjzJ72f1yJvpd/9OtY93uBMba
-	 b2bl4Tb4p76mhqDQF48sbnULqks4yZMWk8uD8Kq8=
+	b=vSHdLGFT5N2NwP1/c0h/4spMbyudKsXECLkwX4QeqQWOVlBDyH2MNaWXgIrPNwCbu
+	 tj5RVCf97dFG+sYV63rShOO8gQyow3up+OjPzC5fob+fSoBBjFxTBfn2hKidiRCrDp
+	 avzY0Ecvz1DashJYlfx60+lfBDVTJB6eMuTGZO5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 78/95] blk-zoned: Fix a lockdep complaint about recursive locking
-Date: Tue,  2 Sep 2025 15:20:54 +0200
-Message-ID: <20250902131942.603456062@linuxfoundation.org>
+	Shanker Donthineni <sdonthineni@nvidia.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 6.12 79/95] dma/pool: Ensure DMA_DIRECT_REMAP allocations are decrypted
+Date: Tue,  2 Sep 2025 15:20:55 +0200
+Message-ID: <20250902131942.640782533@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,119 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Shanker Donthineni <sdonthineni@nvidia.com>
 
-commit 198f36f902ec7e99b645382505f74b87a4523ed9 upstream.
+commit 89a2d212bdb4bc29bed8e7077abe054b801137ea upstream.
 
-If preparing a write bio fails then blk_zone_wplug_bio_work() calls
-bio_endio() with zwplug->lock held. If a device mapper driver is stacked
-on top of the zoned block device then this results in nested locking of
-zwplug->lock. The resulting lockdep complaint is a false positive
-because this is nested locking and not recursive locking. Suppress this
-false positive by calling blk_zone_wplug_bio_io_error() without holding
-zwplug->lock. This is safe because no code in
-blk_zone_wplug_bio_io_error() depends on zwplug->lock being held. This
-patch suppresses the following lockdep complaint:
+When CONFIG_DMA_DIRECT_REMAP is enabled, atomic pool pages are
+remapped via dma_common_contiguous_remap() using the supplied
+pgprot. Currently, the mapping uses
+pgprot_dmacoherent(PAGE_KERNEL), which leaves the memory encrypted
+on systems with memory encryption enabled (e.g., ARM CCA Realms).
 
-WARNING: possible recursive locking detected
---------------------------------------------
-kworker/3:0H/46 is trying to acquire lock:
-ffffff882968b830 (&zwplug->lock){-...}-{2:2}, at: blk_zone_write_plug_bio_endio+0x64/0x1f0
+This can cause the DMA layer to fail or crash when accessing the
+memory, as the underlying physical pages are not configured as
+expected.
 
-but task is already holding lock:
-ffffff88315bc230 (&zwplug->lock){-...}-{2:2}, at: blk_zone_wplug_bio_work+0x8c/0x48c
+Fix this by requesting a decrypted mapping in the vmap() call:
+pgprot_decrypted(pgprot_dmacoherent(PAGE_KERNEL))
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(&zwplug->lock);
-  lock(&zwplug->lock);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-3 locks held by kworker/3:0H/46:
- #0: ffffff8809486758 ((wq_completion)sdd_zwplugs){+.+.}-{0:0}, at: process_one_work+0x1bc/0x65c
- #1: ffffffc085de3d70 ((work_completion)(&zwplug->bio_work)){+.+.}-{0:0}, at: process_one_work+0x1e4/0x65c
- #2: ffffff88315bc230 (&zwplug->lock){-...}-{2:2}, at: blk_zone_wplug_bio_work+0x8c/0x48c
-
-stack backtrace:
-CPU: 3 UID: 0 PID: 46 Comm: kworker/3:0H Tainted: G        W  OE      6.12.38-android16-5-maybe-dirty-4k #1 8b362b6f76e3645a58cd27d86982bce10d150025
-Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: Spacecraft board based on MALIBU (DT)
-Workqueue: sdd_zwplugs blk_zone_wplug_bio_work
-Call trace:
- dump_backtrace+0xfc/0x17c
- show_stack+0x18/0x28
- dump_stack_lvl+0x40/0xa0
- dump_stack+0x18/0x24
- print_deadlock_bug+0x38c/0x398
- __lock_acquire+0x13e8/0x2e1c
- lock_acquire+0x134/0x2b4
- _raw_spin_lock_irqsave+0x5c/0x80
- blk_zone_write_plug_bio_endio+0x64/0x1f0
- bio_endio+0x9c/0x240
- __dm_io_complete+0x214/0x260
- clone_endio+0xe8/0x214
- bio_endio+0x218/0x240
- blk_zone_wplug_bio_work+0x204/0x48c
- process_one_work+0x26c/0x65c
- worker_thread+0x33c/0x498
- kthread+0x110/0x134
- ret_from_fork+0x10/0x20
+This ensures that atomic pool memory is consistently mapped
+unencrypted.
 
 Cc: stable@vger.kernel.org
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250825182720.1697203-1-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250811181759.998805-1-sdonthineni@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-zoned.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/dma/pool.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -1281,14 +1281,14 @@ static void blk_zone_wplug_bio_work(stru
- 	struct block_device *bdev;
- 	unsigned long flags;
- 	struct bio *bio;
-+	bool prepared;
+--- a/kernel/dma/pool.c
++++ b/kernel/dma/pool.c
+@@ -102,8 +102,8 @@ static int atomic_pool_expand(struct gen
  
- 	/*
- 	 * Submit the next plugged BIO. If we do not have any, clear
- 	 * the plugged flag.
- 	 */
--	spin_lock_irqsave(&zwplug->lock, flags);
--
- again:
-+	spin_lock_irqsave(&zwplug->lock, flags);
- 	bio = bio_list_pop(&zwplug->bio_list);
- 	if (!bio) {
- 		zwplug->flags &= ~BLK_ZONE_WPLUG_PLUGGED;
-@@ -1296,13 +1296,14 @@ again:
- 		goto put_zwplug;
- 	}
- 
--	if (!blk_zone_wplug_prepare_bio(zwplug, bio)) {
-+	prepared = blk_zone_wplug_prepare_bio(zwplug, bio);
-+	spin_unlock_irqrestore(&zwplug->lock, flags);
-+
-+	if (!prepared) {
- 		blk_zone_wplug_bio_io_error(zwplug, bio);
- 		goto again;
- 	}
- 
--	spin_unlock_irqrestore(&zwplug->lock, flags);
--
- 	bdev = bio->bi_bdev;
- 
- 	/*
+ #ifdef CONFIG_DMA_DIRECT_REMAP
+ 	addr = dma_common_contiguous_remap(page, pool_size,
+-					   pgprot_dmacoherent(PAGE_KERNEL),
+-					   __builtin_return_address(0));
++			pgprot_decrypted(pgprot_dmacoherent(PAGE_KERNEL)),
++			__builtin_return_address(0));
+ 	if (!addr)
+ 		goto free_page;
+ #else
 
 
