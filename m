@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B172321CC5B;
-	Tue,  2 Sep 2025 13:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E321930EF6C;
+	Tue,  2 Sep 2025 13:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819811; cv=none; b=gAr46GhAiYhmvIZKgS1z8uccbURA4Cy0MVn15Vwjnk4T5CV2BJtACsrKf5PizKDHjIUL8YoaKi5sdzC7Suh9KMP32M/9qIvdTd7IbLvr0CHQLLp6/F0em/0PCdEEf3vL1H4e+zBM6IzcGLi+71BWHfLE+gFvJwZr4iqRnsmQotk=
+	t=1756819815; cv=none; b=AzhNgxr41b3X1IPiWdQ9TP59vbwzyEQHwhXgJQFoI182Z6Evxe6HmdlVkcVpKTTAzHwgGxYuXNI3+iPJ/mgVxQbl4IznCTs2EP1VkbnO6gj8HvjbhZQ3RunQcX/5sBLRUHU5ebHkMJVi+5k5M8HMm64+iNS67OWOCToWBSB+25s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819811; c=relaxed/simple;
-	bh=Igk7ylJWW3R1dguOHUIS35e790vceeLNTi03gi1U/B4=;
+	s=arc-20240116; t=1756819815; c=relaxed/simple;
+	bh=Nn8IjDPE03gZtRahSaGlHr2o0U20t3Nhhri9k7sPEiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klH3Bn/wwrREcxaki0HeZQ33EIS8Ux4IkGPGLcenylyyb9gLox3TgoJe9flqhMFxlFuaxi72LCZo7kD8+uHLRH+SvlMIgOb/O4aCysexjKXAhCYXDNZF3suEOxWGc5tXvHT4k0o/e2mH9a2ZPiEOHsnrSGsU5dR6VpkdvE3bcnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sm2Tl41f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GdEYT037GUaa8iXZREZNZ4COay7mVgBXbUavZdseALExYIqtyNWyZebYKDuBld4hr5gQkwnr7vn5nTVrHKIqWVs343oYIuQQsJZEfst75obWxTAxqYel27FaVO9kMTID8Ik6i0M/TTrzHzFE/0DFnByT6sPQwBiZCLuhff/KH1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7vSPM0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sm2Tl41f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C89C4CEED;
-	Tue,  2 Sep 2025 13:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7vSPM0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF75C4CEF9;
+	Tue,  2 Sep 2025 13:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819811;
-	bh=Igk7ylJWW3R1dguOHUIS35e790vceeLNTi03gi1U/B4=;
+	s=korg; t=1756819814;
+	bh=Nn8IjDPE03gZtRahSaGlHr2o0U20t3Nhhri9k7sPEiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sm2Tl41f7xN5bo/8Uk2TFUZgsyKgaHTInM3t2OXIxQlKmtuGMj78UwlVTCYDIMCQS
-	 V3cALyeDznq75rk2vg6jw0+k2Up4P0hsvP66cBDJkrBvtUqe9GXga8DlsiaMYSlGSU
-	 p+UOQDQDIjA03Balam6Yls3FiG3MuWUQPFb6Fn3w=
+	b=b7vSPM0DAk2rqaKErCKCaiiNw3rTo1gUtzXYxBY31fYAJUKvd2GXbiINhFZxsmhn6
+	 p9kHzhmatS8hmGHBPY0apidQgwCpfFyYG9JPm+YOav7KnPuWH90O2OG3gYo29+B29K
+	 ML59Wpc0nUnuqYsnwv++SYfLPkNEoHhYsZn6cLEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.16 135/142] firmware: qcom: scm: remove unused arguments from SHM bridge routines
-Date: Tue,  2 Sep 2025 15:20:37 +0200
-Message-ID: <20250902131953.454671704@linuxfoundation.org>
+Subject: [PATCH 6.16 136/142] firmware: qcom: scm: take struct device as argument in SHM bridge enable
+Date: Tue,  2 Sep 2025 15:20:38 +0200
+Message-ID: <20250902131953.491570164@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
 References: <20250902131948.154194162@linuxfoundation.org>
@@ -53,81 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 23972da96e1eee7f10c8ef641d56202ab9af8ba7 upstream.
+commit dc3f4e75c54c19bad9a70419afae00ce6baf3ebf upstream.
 
-qcom_scm_shm_bridge_create() and qcom_scm_shm_bridge_delete() take
-struct device as argument but don't use it. Remove it from these
-functions' prototypes.
+qcom_scm_shm_bridge_enable() is used early in the SCM initialization
+routine. It makes an SCM call and so expects the internal __scm pointer
+in the SCM driver to be assigned. For this reason the tzmem memory pool
+is allocated *after* this pointer is assigned. However, this can lead to
+a crash if another consumer of the SCM API makes a call using the memory
+pool between the assignment of the __scm pointer and the initialization
+of the tzmem memory pool.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+As qcom_scm_shm_bridge_enable() is a special case, not meant to be
+called by ordinary users, pull it into the local SCM header. Make it
+take struct device as argument. This is the device that will be used to
+make the SCM call as opposed to the global __scm pointer. This will
+allow us to move the tzmem initialization *before* the __scm assignment
+in the core SCM driver.
+
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20250630-qcom-scm-race-v2-1-fa3851c98611@linaro.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250630-qcom-scm-race-v2-2-fa3851c98611@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/qcom/qcom_scm.c       |    4 ++--
- drivers/firmware/qcom/qcom_tzmem.c     |    8 ++++----
- include/linux/firmware/qcom/qcom_scm.h |    4 ++--
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/firmware/qcom/qcom_scm.c       |   12 +++++++++---
+ drivers/firmware/qcom/qcom_scm.h       |    1 +
+ drivers/firmware/qcom/qcom_tzmem.c     |    3 ++-
+ include/linux/firmware/qcom/qcom_scm.h |    1 -
+ 4 files changed, 12 insertions(+), 5 deletions(-)
 
 --- a/drivers/firmware/qcom/qcom_scm.c
 +++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1631,7 +1631,7 @@ int qcom_scm_shm_bridge_enable(void)
+@@ -1603,7 +1603,13 @@ bool qcom_scm_lmh_dcvsh_available(void)
  }
- EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_enable);
+ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh_available);
  
--int qcom_scm_shm_bridge_create(struct device *dev, u64 pfn_and_ns_perm_flags,
-+int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
- 			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
- 			       u64 ns_vmids, u64 *handle)
+-int qcom_scm_shm_bridge_enable(void)
++/*
++ * This is only supposed to be called once by the TZMem module. It takes the
++ * SCM struct device as argument and uses it to pass the call as at the time
++ * the SHM Bridge is enabled, the SCM is not yet fully set up and doesn't
++ * accept global user calls. Don't try to use the __scm pointer here.
++ */
++int qcom_scm_shm_bridge_enable(struct device *scm_dev)
  {
-@@ -1659,7 +1659,7 @@ int qcom_scm_shm_bridge_create(struct de
- }
- EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_create);
+ 	int ret;
  
--int qcom_scm_shm_bridge_delete(struct device *dev, u64 handle)
-+int qcom_scm_shm_bridge_delete(u64 handle)
- {
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_MP,
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -124,9 +124,9 @@ static int qcom_tzmem_init_area(struct q
- 	if (!handle)
- 		return -ENOMEM;
+@@ -1615,11 +1621,11 @@ int qcom_scm_shm_bridge_enable(void)
  
--	ret = qcom_scm_shm_bridge_create(qcom_tzmem_dev, pfn_and_ns_perm,
--					 ipfn_and_s_perm, size_and_flags,
--					 QCOM_SCM_VMID_HLOS, handle);
-+	ret = qcom_scm_shm_bridge_create(pfn_and_ns_perm, ipfn_and_s_perm,
-+					 size_and_flags, QCOM_SCM_VMID_HLOS,
-+					 handle);
+ 	struct qcom_scm_res res;
+ 
+-	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_MP,
++	if (!__qcom_scm_is_call_available(scm_dev, QCOM_SCM_SVC_MP,
+ 					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
+ 		return -EOPNOTSUPP;
+ 
+-	ret = qcom_scm_call(__scm->dev, &desc, &res);
++	ret = qcom_scm_call(scm_dev, &desc, &res);
+ 
  	if (ret)
  		return ret;
+--- a/drivers/firmware/qcom/qcom_scm.h
++++ b/drivers/firmware/qcom/qcom_scm.h
+@@ -83,6 +83,7 @@ int scm_legacy_call(struct device *dev,
+ 		    struct qcom_scm_res *res);
  
-@@ -142,7 +142,7 @@ static void qcom_tzmem_cleanup_area(stru
- 	if (!qcom_tzmem_using_shm_bridge)
- 		return;
+ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
++int qcom_scm_shm_bridge_enable(struct device *scm_dev);
  
--	qcom_scm_shm_bridge_delete(qcom_tzmem_dev, *handle);
-+	qcom_scm_shm_bridge_delete(*handle);
- 	kfree(handle);
- }
+ #define QCOM_SCM_SVC_BOOT		0x01
+ #define QCOM_SCM_BOOT_SET_ADDR		0x01
+--- a/drivers/firmware/qcom/qcom_tzmem.c
++++ b/drivers/firmware/qcom/qcom_tzmem.c
+@@ -20,6 +20,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/types.h>
+ 
++#include "qcom_scm.h"
+ #include "qcom_tzmem.h"
+ 
+ struct qcom_tzmem_area {
+@@ -94,7 +95,7 @@ static int qcom_tzmem_init(void)
+ 			goto notsupp;
+ 	}
+ 
+-	ret = qcom_scm_shm_bridge_enable();
++	ret = qcom_scm_shm_bridge_enable(qcom_tzmem_dev);
+ 	if (ret == -EOPNOTSUPP)
+ 		goto notsupp;
  
 --- a/include/linux/firmware/qcom/qcom_scm.h
 +++ b/include/linux/firmware/qcom/qcom_scm.h
-@@ -149,10 +149,10 @@ bool qcom_scm_lmh_dcvsh_available(void);
+@@ -148,7 +148,6 @@ bool qcom_scm_lmh_dcvsh_available(void);
+ 
  int qcom_scm_gpu_init_regs(u32 gpu_req);
  
- int qcom_scm_shm_bridge_enable(void);
--int qcom_scm_shm_bridge_create(struct device *dev, u64 pfn_and_ns_perm_flags,
-+int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
+-int qcom_scm_shm_bridge_enable(void);
+ int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
  			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
  			       u64 ns_vmids, u64 *handle);
--int qcom_scm_shm_bridge_delete(struct device *dev, u64 handle);
-+int qcom_scm_shm_bridge_delete(u64 handle);
- 
- #ifdef CONFIG_QCOM_QSEECOM
- 
 
 
