@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D9E32A83F;
-	Tue,  2 Sep 2025 13:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2811032ED3C;
+	Tue,  2 Sep 2025 13:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819871; cv=none; b=BwoJm4jfLv5zVImD5gqtu9heFgxpbRY0jvmKfzTBgNsIraINNNI8ekqMbfR6vrM7UnnUct2ZQ1vGXSzuwABwNcwM86rxOi1w0pOHNW+pB5JSPltF6hWrrkMJ52MZE9vTkV3Sj2Jj8qDD1C/4CzOI8cFnw362jTrtyCbzbuozKtg=
+	t=1756819874; cv=none; b=iL7CcL8JLVcqEsosRn4SbrE+kvLmKotb6SePWGcIZ8/fWoPr1bmU893yTYUAlRiZ2+PIZVMfmpksSYkUmcMmhqZoi2mupcTBbvYFMjUHbDsu+9Ln8yJ9q6RsjPqdZCLvlWMzAhmT2555Z6NESispSUbHJ9V9/wJ5ckqLmmxqR08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819871; c=relaxed/simple;
-	bh=d3vL7Cn4V9w+CD8Od9QuEvzylgLDM+A8HL+7RJk+XaQ=;
+	s=arc-20240116; t=1756819874; c=relaxed/simple;
+	bh=/s3LXUKG5V8f9wFT92EiS7+ZhuXPY0a1S/IAaZUC7Lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZkN+UlWHtCKJ2eQggOY+3F/ZE6vRrUH74VbbD/33gyA+ln/TPXygxG5fCrx5CeoB52lMy8o00n37nBiBchKoF9TvFAD5N0wv+WFT8s7uPsiaElWeH5EZOJ3YbKmPbXbwfXLCF6XOr9V+DESujsVNBzLJjdqOOkhcaBv04X76GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPJh8s6l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n3JhlpFGrUbtKzxAsIT6fxU2yu5+yVRWl6/luOyKkdzCXJiivDiswOoUgs4xufW6Hdrii4dGBqIzz1Jz/qG9ZKV3hDIftMynydE18pXWC666EhFL8JXhOYBAxz8Mz5qAvUEuDoDCAxrmAhTatAUzus4vuCXSkKNKigFK5H/1myU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyhCZmfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPJh8s6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374DFC4CEF4;
-	Tue,  2 Sep 2025 13:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyhCZmfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A7BC4CEF4;
+	Tue,  2 Sep 2025 13:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756819870;
-	bh=d3vL7Cn4V9w+CD8Od9QuEvzylgLDM+A8HL+7RJk+XaQ=;
+	s=korg; t=1756819874;
+	bh=/s3LXUKG5V8f9wFT92EiS7+ZhuXPY0a1S/IAaZUC7Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IPJh8s6lfTMxWj5vU1hN02Taut59yl6BKzkUpKWeyFgpgRNIPxpLRG8gNqRWkCOjZ
-	 0/Q7YAPgvTrN4qVjv/yDI/mfrAwf5c+wsqmPh3qUOlYZID1zI8P3rGRTpFMXRR8z4J
-	 GYzxlLYnppXTBwvy1nZBv+C0wzcwxy1M7zGbibGg=
+	b=SyhCZmfmRWFnt2KCec1DeRx4Z6Q7B2XuuH/3IOy4FVqNAp1eQA3ji5u/TqsTywHQ1
+	 JcYnFBWAM+9B3PkWlmikXnTKsJ7bOJkAi4SqhaFiGbR5u5jbXlQPkJj3RPB3FLIMF9
+	 1FUO5aPHar+AbxTNCuzJgoDCXRcs88Y4KqZzTiko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oreoluwa Babatunde <oreoluwa.babatunde@oss.qualcomm.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 21/95] of: reserved_mem: Restructure call site for dma_contiguous_early_fixup()
-Date: Tue,  2 Sep 2025 15:19:57 +0200
-Message-ID: <20250902131940.426408163@linuxfoundation.org>
+Subject: [PATCH 6.12 22/95] drm/msm/kms: move snapshot init earlier in KMS init
+Date: Tue,  2 Sep 2025 15:19:58 +0200
+Message-ID: <20250902131940.464999448@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
 References: <20250902131939.601201881@linuxfoundation.org>
@@ -52,98 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oreoluwa Babatunde <oreoluwa.babatunde@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 2c223f7239f376a90d71903ec474ba887cf21d94 ]
+[ Upstream commit 553666f839b86545300773954df7426a45c169c4 ]
 
-Restructure the call site for dma_contiguous_early_fixup() to
-where the reserved_mem nodes are being parsed from the DT so that
-dma_mmu_remap[] is populated before dma_contiguous_remap() is called.
+Various parts of the display driver can be triggering the display
+snapshot (including the IOMMU fault handlers). Move the call to
+msm_disp_snapshot_init() before KMS initialization, otherwise it is
+possible to ocassionally trigger the kernel fault during init:
 
-Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
-Signed-off-by: Oreoluwa Babatunde <oreoluwa.babatunde@oss.qualcomm.com>
-Tested-by: William Zhang <william.zhang@broadcom.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250806172421.2748302-1-oreoluwa.babatunde@oss.qualcomm.com
+  __lock_acquire+0x44/0x2798 (P)
+  lock_acquire+0x114/0x25c
+  _raw_spin_lock_irqsave+0x6c/0x90
+  kthread_queue_work+0x2c/0xac
+  msm_disp_snapshot_state+0x2c/0x4c
+  msm_kms_fault_handler+0x2c/0x74
+  msm_disp_fault_handler+0x30/0x48
+  report_iommu_fault+0x54/0x128
+  arm_smmu_context_fault+0x74/0x184
+  __handle_irq_event_percpu+0xa4/0x24c
+  handle_irq_event_percpu+0x20/0x5c
+  handle_irq_event+0x48/0x84
+  handle_fasteoi_irq+0xcc/0x170
+  generic_handle_domain_irq+0x48/0x70
+  gic_handle_irq+0x54/0x11c
+  call_on_irq_stack+0x3c/0x50
+  do_interrupt_handler+0x54/0x78
+  el1_interrupt+0x3c/0x5c
+  el1h_64_irq_handler+0x20/0x30
+  el1h_64_irq+0x6c/0x70
+  _raw_spin_unlock_irqrestore+0x44/0x68 (P)
+  klist_next+0xc4/0x124
+  bus_for_each_drv+0x9c/0xe8
+  __device_attach+0xfc/0x190
+  device_initial_probe+0x1c/0x2c
+  bus_probe_device+0x44/0xa0
+  device_add+0x204/0x3e4
+  platform_device_add+0x170/0x244
+  platform_device_register_full+0x130/0x138
+  drm_connector_hdmi_audio_init+0xc0/0x108
+  drm_bridge_connector_init+0x318/0x394
+  msm_dsi_manager_connector_init+0xac/0xdc
+  msm_dsi_modeset_init+0x78/0xc0
+  _dpu_kms_drm_obj_init+0x198/0x75c
+  dpu_kms_hw_init+0x2f8/0x494
+  msm_drm_kms_init+0xb0/0x230
+  msm_drm_init+0x218/0x250
+  msm_drm_bind+0x3c/0x4c
+  try_to_bring_up_aggregate_device+0x208/0x2a4
+  __component_add+0xa8/0x188
+  component_add+0x1c/0x2c
+  dsi_dev_attach+0x24/0x34
+  dsi_host_attach+0x68/0xa0
+  devm_mipi_dsi_attach+0x40/0xcc
+  lt9611_attach_dsi+0x94/0x118
+  lt9611_probe+0x368/0x3c8
+  i2c_device_probe+0x2d0/0x3d8
+  really_probe+0x130/0x354
+  __driver_probe_device+0xac/0x110
+  driver_probe_device+0x44/0x110
+  __device_attach_driver+0xb0/0x138
+  bus_for_each_drv+0x90/0xe8
+  __device_attach+0xfc/0x190
+  device_initial_probe+0x1c/0x2c
+  bus_probe_device+0x44/0xa0
+  deferred_probe_work_func+0xac/0x110
+  process_one_work+0x20c/0x51c
+  process_scheduled_works+0x58/0x88
+  worker_thread+0x1ec/0x304
+  kthread+0x194/0x1d4
+  ret_from_fork+0x10/0x20
+
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/664149/
+Link: https://lore.kernel.org/r/20250715-msm-move-snapshot-init-v1-1-f39c396192ab@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/of_reserved_mem.c | 16 ++++++++++++----
- include/linux/dma-map-ops.h  |  3 +++
- kernel/dma/contiguous.c      |  2 --
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/msm_kms.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-index 45445a1600a96..7b5d6562fe4a0 100644
---- a/drivers/of/of_reserved_mem.c
-+++ b/drivers/of/of_reserved_mem.c
-@@ -24,6 +24,7 @@
- #include <linux/memblock.h>
- #include <linux/kmemleak.h>
- #include <linux/cma.h>
-+#include <linux/dma-map-ops.h>
+diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+index 6749f0fbca96d..52464a1346f81 100644
+--- a/drivers/gpu/drm/msm/msm_kms.c
++++ b/drivers/gpu/drm/msm/msm_kms.c
+@@ -241,6 +241,12 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
+ 	if (ret)
+ 		return ret;
  
- #include "of_private.h"
- 
-@@ -128,13 +129,17 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
- 		base = dt_mem_next_cell(dt_root_addr_cells, &prop);
- 		size = dt_mem_next_cell(dt_root_size_cells, &prop);
- 
--		if (size &&
--		    early_init_dt_reserve_memory(base, size, nomap) == 0)
-+		if (size && early_init_dt_reserve_memory(base, size, nomap) == 0) {
-+			/* Architecture specific contiguous memory fixup. */
-+			if (of_flat_dt_is_compatible(node, "shared-dma-pool") &&
-+			    of_get_flat_dt_prop(node, "reusable", NULL))
-+				dma_contiguous_early_fixup(base, size);
- 			pr_debug("Reserved memory: reserved region for node '%s': base %pa, size %lu MiB\n",
- 				uname, &base, (unsigned long)(size / SZ_1M));
--		else
-+		} else {
- 			pr_err("Reserved memory: failed to reserve memory for node '%s': base %pa, size %lu MiB\n",
- 			       uname, &base, (unsigned long)(size / SZ_1M));
-+		}
- 
- 		len -= t_len;
++	ret = msm_disp_snapshot_init(ddev);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
++		return ret;
++	}
++
+ 	ret = priv->kms_init(ddev);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to load kms\n");
+@@ -293,10 +299,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
+ 		goto err_msm_uninit;
  	}
-@@ -417,7 +422,10 @@ static int __init __reserved_mem_alloc_size(unsigned long node, const char *unam
- 		       uname, (unsigned long)(size / SZ_1M));
- 		return -ENOMEM;
- 	}
+ 
+-	ret = msm_disp_snapshot_init(ddev);
+-	if (ret)
+-		DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
 -
-+	/* Architecture specific contiguous memory fixup. */
-+	if (of_flat_dt_is_compatible(node, "shared-dma-pool") &&
-+	    of_get_flat_dt_prop(node, "reusable", NULL))
-+		dma_contiguous_early_fixup(base, size);
- 	/* Save region in the reserved_mem array */
- 	fdt_reserved_mem_save_node(node, uname, base, size);
+ 	drm_mode_config_reset(ddev);
+ 
  	return 0;
-diff --git a/include/linux/dma-map-ops.h b/include/linux/dma-map-ops.h
-index b7773201414c2..b42408a24ad13 100644
---- a/include/linux/dma-map-ops.h
-+++ b/include/linux/dma-map-ops.h
-@@ -153,6 +153,9 @@ static inline void dma_free_contiguous(struct device *dev, struct page *page,
- {
- 	__free_pages(page, get_order(size));
- }
-+static inline void dma_contiguous_early_fixup(phys_addr_t base, unsigned long size)
-+{
-+}
- #endif /* CONFIG_DMA_CMA*/
- 
- #ifdef CONFIG_DMA_DECLARE_COHERENT
-diff --git a/kernel/dma/contiguous.c b/kernel/dma/contiguous.c
-index 8df0dfaaca18e..9e5d63efe7c57 100644
---- a/kernel/dma/contiguous.c
-+++ b/kernel/dma/contiguous.c
-@@ -480,8 +480,6 @@ static int __init rmem_cma_setup(struct reserved_mem *rmem)
- 		pr_err("Reserved memory: unable to setup CMA region\n");
- 		return err;
- 	}
--	/* Architecture specific contiguous memory fixup. */
--	dma_contiguous_early_fixup(rmem->base, rmem->size);
- 
- 	if (default_cma)
- 		dma_contiguous_default_area = cma;
 -- 
 2.50.1
 
