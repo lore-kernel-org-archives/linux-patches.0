@@ -1,82 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C712F2906;
-	Wed,  3 Sep 2025 10:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4772C199E94
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 11:22:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756896719; cv=none; b=eaU0DPQl8tKzsj9WHxdUepvOr0cYlxcAtvjn3YyZ6JIcBl6BxOCraiX0bkaWkX9N0guc4jyqrU6z8wg23jgcvBPG9uPxGdgAaLaXf5NjvnVs8hOB9SBEHoWNmhpO/fCxxarkIhOhR50/ANyFfN3HdVImT8W9rWi65eOrg4zqkBs=
+	t=1756898580; cv=none; b=WbKxwpa4btV5ChNqucUlv65aRwqv66+zNUgLY9NJK1OwG0gusQFLQiVKdf9FySC294ddNIiZxvulwMU9qN5XF9PkHVmX60bRTKY+jQvvcSSaIqpVn9mhl4X0cYnRwxwLNcX/5fncnlvEtA/M+3JKcOX/JyHRyYClAUAEPrbyOLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756896719; c=relaxed/simple;
-	bh=AyEB0fnmECu9ROQmq/bjt8/vCyxaGfFoTTzNP2vVnFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fej17VK2nMH1c+xzLgiUN7Je63vhOvliEusxmA0HxNVESFkaSw9l0JISWjyUSO9ujHOyJRhG1ZnMy2+FL/sgrcrTdLIPoilBje6DtohPpy6SHn+Kx/mXYTXirdH8A+jL5GbDaVsOEExM7Rr3xfOw8abvg0/VNGGGRNDbYu18vC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s0Gv17oD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756898580; c=relaxed/simple;
+	bh=ry81iS0pGaI7XZRk71tdZS2K88TXryKY30M0BvG/iVM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uoYnuhp2YJhCRs7AScVzendJTuBfT3oo9QzTPJg9etRYO0HPJySRpqedrdSthWvsm0/jSZ4/91vLwmmClwC9rvwO4JZQ3zHi3Zz56SAX9I7fXDuNHPpIpAx2Nig9x5ftRwhJDEFtQZADp5T/UM2OFOpRW8y1NP2KkPOmMEpQ3Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=X/y1zPEA; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s0Gv17oD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4938DC4CEF5;
-	Wed,  3 Sep 2025 10:51:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756896718;
-	bh=AyEB0fnmECu9ROQmq/bjt8/vCyxaGfFoTTzNP2vVnFk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s0Gv17oDNB4jkyBnxfZRqjU5xQk/BXo4JLTTSk1MNzZ0VnmuXslbq8ENlR3rD6b5j
-	 HQYIwPJEQhpgejX3dvnHrtmaJ+UBjf/FkJ9mfxtYdfm0KWw0JObQ2GMQ4cQMmZN5us
-	 NO9Jpi132+M7uQnJ93UZb2xmi2rZ2HYPwsWM7QGMBC/3H6oqX2MMpBMPw/UYo0noDf
-	 BBGgG8TIS2GxR/B2dM2jyY7hsLM8n0r6LB6H/tiSiBNXrJyoxNxXN3TPIAqFi+nUtm
-	 WREYBojX9cD/xpnassGXEU3mN1TP47NP0Uj3WScmT6qNbgF6Pw2G+yHYOZKj5sgFu7
-	 Wsmka+O7Wo7BQ==
-Date: Wed, 3 Sep 2025 11:51:52 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, achill@achill.org
-Subject: Re: [PATCH 5.15 00/33] 5.15.191-rc1 review
-Message-ID: <c032e0ca-221c-4adb-8875-b04c60e11e39@sirena.org.uk>
-References: <20250902131927.045875971@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="X/y1zPEA"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45b7d497ab9so59195725e9.0
+        for <patches@lists.linux.dev>; Wed, 03 Sep 2025 04:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1756898577; x=1757503377; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5e1JnjYPgVVn9KqEgl99sx2QQmKXXKL0ffJeLfTd2k4=;
+        b=X/y1zPEAn2cMjcbEb3W54Z95/34g5LvYvxeQlerN5W+idJYKdQFqzRdNq/Jr0p2h5d
+         5vG+E48Htp073GbfP3J7Gh047UYx32MMUrWE2ZmTwq+TP2meyX279bpjbVw8k5M3+QCw
+         6XoN5xxwhXOmhSqJWAYrLYrkiIZDTt/iDc5eTGPXUpUhkN+Zj5kwsTbqzTM5/v2fNLWw
+         jHG//YUnYZd4VWdKIQkuqVQOfDnnx2y8M47SohiYI0FLVO5MdCC8F9XySiCrMN5MgrSi
+         Gne9LA945wCo+ID63UYoHV0lHTnnPTY8/RKS89yHJGD/Ljt9RpH1MsB0tJVsqZiD0lGe
+         Gqmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756898577; x=1757503377;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5e1JnjYPgVVn9KqEgl99sx2QQmKXXKL0ffJeLfTd2k4=;
+        b=eyNgatpsYY4LeIKnG5UbEGR/WTwum7fXy5UsjedGEVi+aXtRo4y+ZrLXIiluM0ULh2
+         E51BvtAVBveAPqH4/biyIVWQ1TubrMzdIYywAInbIFV30ooFYIBFCPE31Bzgy+y/Swmv
+         TTDThq6x8TgSDoujoKqj1OXQg01UQbWIqK6o3O3lYQUy664UeBtnjeKBT5VY4bhkdCym
+         Vd3hDdsy+tq8wagVpEVxcyLSBo4p4FJejkMZ9gdLAMSgmj3rR15x1m000dUdWgrUCnI1
+         /L/NIzMcOyFyImEIjALlkDPrv/uCdEAy3tANYSPtOW0C3irprrl9tBqL3HJV9cyL7mIO
+         L7kQ==
+X-Gm-Message-State: AOJu0YxXOmj7BueqPIJMLyym6NnbvOXa3U53JdvhxkzXrIto7z4e9D5g
+	ygy7Smw1rgPcs9eu2Oo7PWLYPlzPEM/SNyopyHcIM5xtTnx0Wg8dzlk=
+X-Gm-Gg: ASbGncvdoEiKypvzLZ0z4qWLjGdAwpGceeEbXNHfznDrcjQisKKdZYJtXepuKMC13M9
+	xOcWsra88l3Sc7lSPOmJONX5JaylOEAe5GNV/DaDAdSA96wW3j/QofstCZDOdLSQE6Y6i7cyHVu
+	V40XG0oRj5Wy43mhMrAieapDsPv1qJC9Xy7oraicC26lx4OlHluzwhcOPKSCLWA494H2twIsBOY
+	F0qJ69AHI9ontGgJ41KcaQLL2Mczpi46LRAhSmvtmETOha++u6YvswQNLWzznAriPCHAVSmJZbe
+	XMAQMPA7Okzb7Zducf/K0IMoEl1Ys2TZ9A3Mv8RkpqeF3Kz/wWWub5LAFjQ6m73piL06V3m4/Fz
+	MN3gKIhI0zqMaclzXdKpklJYVuxv3Zm5WDKahi5+oe314Qz6gWWuanzLwxXkCAIip9h+XvEpvC+
+	zfK2hsE98Q
+X-Google-Smtp-Source: AGHT+IHXczgoBb7IZ7vMKaLTiee6/vOOSD/DZ/9p0i8RJKBiMKtefvnzDC6HuJZHVEN1SVqxNlH9Nw==
+X-Received: by 2002:a05:6000:22c8:b0:3d4:d572:b8ea with SMTP id ffacd0b85a97d-3d4d582029dmr10150571f8f.34.1756898577303;
+        Wed, 03 Sep 2025 04:22:57 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2b4f3e.dip0.t-ipconnect.de. [91.43.79.62])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b81a9e971sm240541555e9.18.2025.09.03.04.22.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Sep 2025 04:22:56 -0700 (PDT)
+Message-ID: <bf34b0a0-9945-4823-abba-5ef568fe2152@googlemail.com>
+Date: Wed, 3 Sep 2025 13:22:55 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NTjdQTcjf7neRqT/"
-Content-Disposition: inline
-In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
-X-Cookie: You were s'posed to laugh!
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 00/50] 6.1.150-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org
+References: <20250902131930.509077918@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
---NTjdQTcjf7neRqT/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Tue, Sep 02, 2025 at 03:21:18PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.191 release.
-> There are 33 patches in this series, all will be posted as a response
+Am 02.09.2025 um 15:20 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.150 release.
+> There are 50 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
---NTjdQTcjf7neRqT/
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmi4HccACgkQJNaLcl1U
-h9CE/Af8DLzjOO7Rr6nBmn+v9s9p6cggWs7Vy5fGDG40lCZ+G4ctBJuhg6GBtkFr
-D8mJ2ddoDFmSF8xmYiPuf8t/rsFTJpZgFlLg3CfJ9ymn533yqjTRPZUfvTUAEScG
-3sWjsYffPUN8ctQtBcrAy4CEI+WkZueIkC+vmS5uOQATEPzNH5gALeDXNMOMV9pk
-lzGZgsvXrjMv/ghpa1C3hVtjpxRXtNaDG9KPH0DWZ9Fqnsp6+/FY6028ejIUzjQ3
-TR9zUOHFTxr5LP5Q68m6UBLOnMb5S1lGqgbTdwwauiqq4F8oq8mmVLg3DdeGven9
-ZW6qHQof7FB+JlZYMppInEGHf9xI2g==
-=OULG
------END PGP SIGNATURE-----
+Beste Grüße,
+Peter Schneider
 
---NTjdQTcjf7neRqT/--
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
