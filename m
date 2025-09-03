@@ -1,33 +1,52 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from omta033.useast.a.cloudfilter.net (omta033.useast.a.cloudfilter.net [44.202.169.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE85A285074
-	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 09:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F2221859A
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 09:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756891088; cv=none; b=PJQ7XEIzC4py1f0o625QUKBMIqC6rcLAvqa5njzdpc0ffP/2ntKUhIE+JC02BdzwDJzYUX4KSp1FatQH0jYzbgxc5ydD6lxfH1HTihLKkzTf8dFAoyqtKE5PSPhTLaIEk+rt+q0/uVPJ8BnWJ2B01Z8khYJ79QHi//3b73uDric=
+	t=1756892214; cv=none; b=NrMQBHz44p2ysI6dRbhcfcnjcXpFebzUaIu15qO0Fpd4hX1WiBom3KAMGT0PZG0IrlMIdk24Um8vKBYn829tiSY3lRY/xkzkzVdZAv0RObE2NIDQ0dMi1eIeJxi/mWZDecDTZvZva+m5rcr2t343uTcsMp2DH3YmTCx71IO67Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756891088; c=relaxed/simple;
-	bh=jSwt279x0P0qZ8h50l8WQTci2xG7cY83k3BehMiCcHo=;
+	s=arc-20240116; t=1756892214; c=relaxed/simple;
+	bh=pUdFa52knLKwL8PFuwkmgpkKe6wBUNF8XwbGjbDbRYA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r/dM61ySgknxpItceBM6dL8m9FGH3TuXOGI7K62NLHrquvzizpzbqApEeI9yC3qVgXi+2G1gyy/HLXA9kEzhj2tfzKNLvqfZHBwUmjl51s7yE/oFEBycxL465OErYIX5fLJzslhqzrbMvJUlumRjN+0oVAtzoMHbQ8JuDv50np8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=lE+uNsRJ; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	 In-Reply-To:Content-Type; b=VEUIF/AI3Q06C8KxC9vsenGg2eRanyoB2KBkGBDj5m+oiDi6YsvRH3Ii1+2uTuBRLSHJkrfcHoipZSZcVVtX5PhKA8pvZYGT5XtQfyGBeAGdBuIZC0IA/dkd6Gff+IhFlPQ67A6ORhzrZA7TyCCnaCaDtFweYbSLfpZWGZavkj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=oNkYfQUv; arc=none smtp.client-ip=44.202.169.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="lE+uNsRJ"
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 53364928;
-	Wed,  3 Sep 2025 11:16:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1756891009;
-	bh=jSwt279x0P0qZ8h50l8WQTci2xG7cY83k3BehMiCcHo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lE+uNsRJx2NAp1C3kiQ14e9F7LdrgbHP4kUfG9ICNKXxsNIW63XcMaBloVNDleEgx
-	 dYAGmhRljh8abgjx/CvCiJCpaktwXzCvUfJFt7H6Vi5CCKkkpZPmWN6EUOaWQu5OrG
-	 zTVo3/zSqgWS72OqZbZ404Byc2sMiYpYbVgCUby4=
-Message-ID: <a8e182cb-356d-4b28-a91a-4000293bbc62@ideasonboard.com>
-Date: Wed, 3 Sep 2025 12:17:54 +0300
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="oNkYfQUv"
+Received: from eig-obgw-5003b.ext.cloudfilter.net ([10.0.29.155])
+	by cmsmtp with ESMTPS
+	id tfN1u2uVEU1JTtjv8uzPY7; Wed, 03 Sep 2025 09:36:51 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id tjv8uugOEMnOktjv8uQzrL; Wed, 03 Sep 2025 09:36:50 +0000
+X-Authority-Analysis: v=2.4 cv=Z+/sHGRA c=1 sm=1 tr=0 ts=68b80c32
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=wQHQzwf_Hs2TCVCgcZgA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=MOcpY9KK+CIQKcsWynlbRCZJy1f28QPQndSNgyykgis=; b=oNkYfQUv6UdbcfCMOK9sX9oZvT
+	QPD7X6whOFnuIykY8keUxytnHNMFkGhuxMvQ/YEsyUtPxhrULZrhWVbUivBmkwfFF1QLWBsF0+AaW
+	faR8Kc4hmN7Z92evG8hxw72DmKcIYQow7dLA9iCmUUiJZQ8XV1kZDcCvUWyjWJdsQr9AcCiBUURip
+	6RKpmmhzyy45jZ+bGA+6ySiTtrlGqLiP2kyYTqGe5Ug2cwNGUD1ejW7Fv33MTNzeMMmYP4BCokX/I
+	2oUz58OlbCC4KedOKaEOlRFwaTo06UVhG1YoexDPdweYlNv3fY3gv0riugTPvSMXhXyispzAqBXao
+	FzDBH38g==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:39482 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.1)
+	(envelope-from <re@w6rz.net>)
+	id 1utjv7-0000000108d-2NlM;
+	Wed, 03 Sep 2025 03:36:49 -0600
+Message-ID: <d7fa61b5-a574-4546-ace7-c2ecaacff47f@w6rz.net>
+Date: Wed, 3 Sep 2025 02:36:47 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,114 +54,62 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/tidss: dispc: Explicitly include bitfield.h
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev,
- Jyri Sarha <jyri.sarha@iki.fi>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
-References: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
+Subject: Re: [PATCH 5.15 00/33] 5.15.191-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org
+References: <20250902131927.045875971@linuxfoundation.org>
 Content-Language: en-US
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
- 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
-In-Reply-To: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250902131927.045875971@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1utjv7-0000000108d-2NlM
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:39482
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 58
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfDVGSyg+nd3HpUMBRfOH628wWpDgbSrPeyTbaVDFvWYpvwHHXLQNx23NdEGVmjXtMoS6ixlwB8NfWaoRKCpSY/FfOHuUl3erc+5CT6YfDmn3rdB26Dos
+ xV3VHZsx6fbxVS7UUGlOYHgM2Q5M1O92H25Izh0fi+OQYkAd5Nn0WHm4dTNRatguMf8sD+X37daL6w==
 
-Hi,
+On 9/2/25 06:21, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.191 release.
+> There are 33 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.191-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On 03/09/2025 00:15, Nathan Chancellor wrote:
-> After a recent series to use FIELD_PREP and FIELD_MODIFY in
-> tidss_dispc.c, there are many errors when bitfield.h is not implicitly
-> included, such as when building allmodconfig for ARCH=hexagon:
-> 
->   drivers/gpu/drm/tidss/tidss_dispc.c:1116:2: error: call to undeclared function 'FIELD_MODIFY'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->    1116 |         VP_REG_FLD_MOD(dispc, hw_videoport, DISPC_VP_CONTROL, v,
->         |         ^
->   drivers/gpu/drm/tidss/tidss_dispc.c:631:3: note: expanded from macro 'VP_REG_FLD_MOD'
->     631 |                 FIELD_MODIFY((mask), &_reg, (val));                     \
->         |                 ^
->   drivers/gpu/drm/tidss/tidss_dispc.c:1140:2: error: call to undeclared function 'FIELD_MODIFY'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->    1140 |         FIELD_MODIFY(DISPC_VP_DSS_OLDI_CFG_MAP_MASK, &oldi_cfg,
->         |         ^
->   drivers/gpu/drm/tidss/tidss_dispc.c:1203:10: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->    1203 |                        FIELD_PREP(DISPC_VP_TIMING_H_SYNC_PULSE_MASK, hsw - 1) |
->         |                        ^
->   ...
-> 
-> Explicitly include bitfield.h to resolve the errors.
-> 
-> Fixes: 9accc8b10de8 ("drm/tidss: dispc: Get rid of FLD_VAL")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/gpu/drm/tidss/tidss_dispc.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
-> index 97e2cd7b1e20..7c8c15a5c39b 100644
-> --- a/drivers/gpu/drm/tidss/tidss_dispc.c
-> +++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-> @@ -4,6 +4,7 @@
->   * Author: Jyri Sarha <jsarha@ti.com>
->   */
->  
-> +#include <linux/bitfield.h>
->  #include <linux/clk.h>
->  #include <linux/delay.h>
->  #include <linux/dma-mapping.h>
-> 
-> ---
-> base-commit: 306734a1c76ce35fa613ea823a31ddbcdbf1eef5
-> change-id: 20250902-drm-tidss-fix-missing-bitfield-h-9b004e613a71
-> 
-> Best regards,
-> --  
-> Nathan Chancellor <nathan@kernel.org>
-> 
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Thanks, pushed to drm-misc-next.
-
- Tomi
+Tested-by: Ron Economos <re@w6rz.net>
 
