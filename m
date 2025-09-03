@@ -1,1037 +1,295 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2047.outbound.protection.outlook.com [40.107.243.47])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559AF335BC9;
-	Wed,  3 Sep 2025 17:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756921633; cv=fail; b=tJvmsb+YDnvsw9gS042urPgskgb03uxdlD8p4ZU4o4T8rAMKvKY4Fjl1eY5nq+ImT+/fzoHol0KCFwyC9006p05B5l/e6jPAG6Byif2ajmyGjeaN0HeRnFXqvCzte6lvsAzdt1CyodHBW3n+jimH3glGmMysphsF0O9+Gs2oaYY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756921633; c=relaxed/simple;
-	bh=za15fVUFdYRay+yPVUxxowzziUe8z0V0Ie2JCGbueRQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=fct06Q4XUrNI4KjEkzUKISK+1RGMdjvcGillGi2oBoIbFOfiR4Lf8HbOr1ciV6m/V7cqJsrwq7Ek93gB/NOwAaK1qkFfixPqdjmxdC2xNJdSvwWimKh3vzc+MO8jgUXqboUB/w1Jnpfz77Pv0IW+4ixV5FzL7hNpybBoyVtk1Cg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=K1HLhF71; arc=fail smtp.client-ip=40.107.243.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDBE286D72;
+	Wed,  3 Sep 2025 18:10:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756923048; cv=none; b=OBDjkaJaUeNsUSRPyHOgORdG8Rlk8+lWOlS6pMFW2D0uth3ki1+Vcai3XI5DxM0Uateq7LRPez9M0euKJESnn4bflNAdL4T+gC6lnSOLuyv8x/eWODxOWIiug15J+ZbY3Y+9dxhWo1AxdWHJ59ToB4pFmkbg+FVut3k/iPM47No=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756923048; c=relaxed/simple;
+	bh=/FJiIEoR9OLIjYuLxL2v8qL7Ha9OUKt6hcdLfqgaITQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DEECek1tPmXQD9HUG28QHVbViIJMA4ztlhvN07JUrK/6TH6tTAOUV7j0205wCUXX52utbq2o14i80yF6cuEOHXO6/vq91zvcwzmuAaRN2CyqLs/ZY4brP2vgHMCWXNfDmWFif4PPPjYkk04UTit+5njr2sX8xg0x0ATIqIt2THw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=hgMI1a+o; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="K1HLhF71"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HhS94ePuemw7A3eEmrDjNhYjHQqxI1/b71CPzDswCE9XywqL/h6gxKyikTa69DWzb4D434BuUDd39WPT0i3PSFGiidSfacBneiewCX4jyDkuh+9uyBfr5p229HzbkrRW9D9jFEjoZnF0NjQhTGk9DBpmF6NYJLwtmzZyOm3JP/yaj1gyqVHBHfhwR5zSzBb4vbPvh5AryiC99TtUrBdnQn2GLtLFR0Ml6qa6ygeAkyDZtiazfnqluLvV98h/cNoOjJICJFI3MTLHxCn15qI0siWlfF9u7bqbW3b9Xol2iJI1/xJaHpmWTvw6x7/34tKG4soCkNreB4bUfRlRl1FkYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8IXWH7OnYlIje/uhpJlzgbtLdIR2795V3R5dLuwROZE=;
- b=D/MC+eUHCjqaf7vrtrp8f7Pmnl4LyqL3vygBhUMFA7JdDXqZiE9AXZcKE9FfRDXqtKdvsWjHgFUjnEFKr5Q3yj1TQnKnHy+RWIqEEchRD+sxV0tr2KL8pFzABvxxVTjquJ+Ixq3uUH6WuaLolIBvdkOhp17l0djbbvKpZj8OiJeKgMMPtHZpBqt7MD907NRl8ZnMdN9BRiAn++JaVqlviyPEUxMRvNxjWrQRvULjJQpjy1dWQXXFFTautfabVLrrH51jdfgSqCFq+sbeKUnaEUxHh+zfwEfS+wByiwgYt8ML7YBilxajktXqljivKlc7SAbzANs8namCPkkqUZIeCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8IXWH7OnYlIje/uhpJlzgbtLdIR2795V3R5dLuwROZE=;
- b=K1HLhF71cKQt/GFoJ/6xDrEJW9pkZZ/T9QNsznyUkRlheub3eBCsEBCB62MiU8vQIWC0Kojs4kXnmMa1Aqr0Rs9oO0aoOmXU9BrMhGZGR7x+WJG3Bi94QfIYJnHr021RrUT9MYBb/WfmUx2w/q2MpZxPVxaXsGGaDiO3l5zkFxWkIWc6hvBSl0Rak6mRPOYjfHmidXzqdPJl6WWXtIJ2KThwhJYaxKzs3xS8Fm1mgT4UhKnUq5DYBbwVxliyLYcMGZcUgaBOo6m8qKjqjI62ndqo4RvzEs1NilSTxemhFvHQAPX0sR39FOeOcbFrZbQQ3051eTKdeQR1UCHkjt8JRA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
- by SJ5PPFDF5E260D0.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::9a6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Wed, 3 Sep
- 2025 17:46:54 +0000
-Received: from PH7PR12MB5757.namprd12.prod.outlook.com
- ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
- ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9073.026; Wed, 3 Sep 2025
- 17:46:54 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Jonathan Corbet <corbet@lwn.net>,
-	iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	Justin Stitt <justinstitt@google.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	linux-doc@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	llvm@lists.linux.dev,
-	Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>
-Cc: Alexey Kardashevskiy <aik@amd.com>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	James Gowans <jgowans@amazon.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	patches@lists.linux.dev
-Subject: [PATCH v5 11/15] iommufd: Change the selftest to use iommupt instead of xarray
-Date: Wed,  3 Sep 2025 14:46:38 -0300
-Message-ID: <11-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
-In-Reply-To: <0-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: YT3PR01CA0042.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:82::28) To PH7PR12MB5757.namprd12.prod.outlook.com
- (2603:10b6:510:1d0::13)
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="hgMI1a+o"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=QPHoL5heqNyoTPN26hlEzJF1gIurQM8Iamy6HgpNuPk=; b=hgMI1a+oGL3Nf/r+aSgGrKssmI
+	T1zttSpDhbkKQUdsolif/dGX4LaaWBfzbvDDeIq3QoGai0xX4kKH1foXV+z2+OzCSvE70jQfTJxHu
+	CsFmZT8XnidXiGS+YUGBuHuJks3igDfogh4l0kFrsE3OmyCXWS/S6BXE0jpWt6JttG4Rv36P1/My8
+	jXef8AnoT7itbxUETBTRsVEJ0MmOWDzFlKJOi9XLqt3/JyOY/jatJ4aBq1cPVAPYSphbd4/lNpabI
+	qniGhegluAILwDJTw7eG/rO/LGAuIrXktF7wKGwM/01tZjLTcz52nGfHvrNul3T2YiSU2QAXDZJvk
+	1keKhazQ==;
+Received: from [50.53.25.54] (helo=[192.168.254.17])
+	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1utrwS-00000007GXM-1J60;
+	Wed, 03 Sep 2025 18:10:44 +0000
+Message-ID: <24c671a0-9f4b-4b4d-a54e-6a67cc1d73c0@infradead.org>
+Date: Wed, 3 Sep 2025 11:10:43 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|SJ5PPFDF5E260D0:EE_
-X-MS-Office365-Filtering-Correlation-Id: 78d4afaf-24eb-46c2-b929-08ddeb11da22
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?AtCc+sBerw3pewnWKwD1fXGOKvPHx6CGYhxsFSEAx1pwlroGIzNP/njdROdQ?=
- =?us-ascii?Q?SAIpuOOEdA/HRbgd9oL8qS/+6RkEFf02LYOUpe9stwwER7Ck7pOXMq9a7akz?=
- =?us-ascii?Q?zh4t9DAXY/fSaPXSTi9VtgMtugJPDT+iQ5/72rxVnCfVOu8UTjKodv1Z1n6q?=
- =?us-ascii?Q?Uw+9244e9bo8PQR5EVvOxju+Yq5tC0dw/cZYlo82D+lxX5+jum6VnWDFeo/h?=
- =?us-ascii?Q?Hb6pBYGsTDD0KcfwEZRstY799je1w8WRnelVJc7tO/koYssCHayDM6h0kSAm?=
- =?us-ascii?Q?Yx0U+r0iUR29/29WLFqxWXZVeWWJCmHXYDUMBwvigjkO2vOphPRhWuKu2+zz?=
- =?us-ascii?Q?6kveM+FCBruVDymRpo4wu5N0VTPT5OyEeTieNIczztWdLEIQxD+fHKqcvdf2?=
- =?us-ascii?Q?GwsYzLbEwRhhAMv6b1m6k+IE7aDM1yXu3atqJ3EQ/tSOyrkmrXOQDeZY6bOL?=
- =?us-ascii?Q?jtV7uMiBalp4ZC0S9Pa8ZRpt8lbkDKplp/+yV03xoAF3SQDwsTKfVw119AVK?=
- =?us-ascii?Q?ixgrewX1WM7z1QTwtbh/9r0DV9ijmOyfa5Z5dPX2YR2vW2nWLZIXx7pfl6qi?=
- =?us-ascii?Q?QKIoWfGyRCo1jNs4XmxwBvgRvoVKWNDJ7tLwElSIaQySnpOywMrlE0xnZTj9?=
- =?us-ascii?Q?y1Aa4CeXM7RQu3uEmIXh+nGnBhttui7pAJTMdqAztK1dqaYkISVFQFmxwrid?=
- =?us-ascii?Q?as0jlWUzCUWnz33oEILD1o4kYEFC9257HlFBtbvEM4XCePy2NSWBHiOsGE3+?=
- =?us-ascii?Q?m2BDan2rcuUw6N+Czf9W04BnvaG+uNLMEAvoLSkq2rLtOiFWlmfayr8/hJAX?=
- =?us-ascii?Q?io7dns8AfG4r1elqRGFtsMKn4t6cJPLsJFKRnLCC0HegRVCcLivpczhC5S5M?=
- =?us-ascii?Q?s4Z8vb14eJAC0KJQdaYfYp1oifVSM69I/2Y26s4SN2LUXAd8qqMJ3ygu7lWA?=
- =?us-ascii?Q?rQ5LLqL/nV5qHvvIUYjhzHL35VBE7orXtTvu+adk+yvv0OV4+DjnduXNBURT?=
- =?us-ascii?Q?Fmz9RCYITMKU/NzQyVgbxTsWG/jstordukRSBqvcPXUz2OFkjOnFxTUS07Rw?=
- =?us-ascii?Q?N+b/nir8UXqV2rcK4pwd6F71l+zpREUFTCOgoawCB26cqsCdTPpFD3BNkNgv?=
- =?us-ascii?Q?gNAPo742/Rrq0KF4o01ksz/OxJImYrpVo68a9j2YskZE5/msGgor6bkTc3Wo?=
- =?us-ascii?Q?JenDeF4NWBbIyii3sQ/v2hspn8TqmkiSL93BpRqtEgz1TeWaUprrGpevqaTn?=
- =?us-ascii?Q?guf3XjVcUO42DFqH89/ryuPMbC0rDUanuWWGn+zDidlJjfGv6m82ns9Zuw3t?=
- =?us-ascii?Q?nLSd2I2UROWWUNAO+poZF+Rf/vBxkSjzigYvoZ/WPJP7T2AvkTgupQEjjg5U?=
- =?us-ascii?Q?7IAoTtbECyiuIyfbhSvN/0T7ohtFVUGusTxI3DpA48ioq/uEWf4UJRvHbCwK?=
- =?us-ascii?Q?ud9d8jk3vu4lR6VdKp2iaCFPluoZ10zdzfTN/INtZJqmfZSAWjChNQ=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?4pZ+lXgrOFZ6zsVs8qJXCHu6Qvxg3mGpAk+HXKRWovNpqi5AmRcm/stmEUvU?=
- =?us-ascii?Q?cT3WrHiOJ6K25nax+TO0qF6RMZ6Lr82n3W/hEAuvNPIB+m4uUsP4NxzxkX3V?=
- =?us-ascii?Q?N4DNQY8t3Fozem+GEztFQfMLKzTYETKrEsuIspTrumRsll8U7DlY5CEpMCc1?=
- =?us-ascii?Q?JdjYX7S4ALTY0NbaK3nsvgAuKTR3DvvMyf/d3J8ShAEcGtnZxZqEbVcfh34a?=
- =?us-ascii?Q?IL8tTZwZwrIMqqnvfXuLjTNpP4LVylY2yE+hFOCS8m4jUtnmzxbyH573d3UH?=
- =?us-ascii?Q?qrgUAx618tIA0gtEUDftTI51J9TGjFoT0WU9cuUcpfPfhwFnCEk0x/dQcHZ0?=
- =?us-ascii?Q?mpL4prYZbVAfiYnPtzDIgl1k1MlFGxCGPgsxdjXrK4MuL4LI0wBNcZ4LlZlD?=
- =?us-ascii?Q?WFASYJmdVP7/yPgsFdthDhb8diRAm88a7fVMiWGZoKiWu/8peHefXbGLFTud?=
- =?us-ascii?Q?/Lh2KO69VBaKMguPZFDlTBCXwMTDF4G99uYCDnYBIKgOHiTW1D75upLd6D+q?=
- =?us-ascii?Q?8BVJtE4Ez4A8Mz/FCbhXHuCc5WPCVJeE0MRn+ebUMxGp+YzWkmw2ZmSdw0mi?=
- =?us-ascii?Q?RMx1i5pXF3uHKW81yVO39pHEejAVfJZCH14GRabkRvuLJakryYcwmXYAJNDA?=
- =?us-ascii?Q?/NF15Hnun1YEmTiDPJwHKAFSIXnN9Sv6NcWsj0pAFVBHpn7W/wZQOjnLWhe+?=
- =?us-ascii?Q?saAzPLUs8aOx3MMo7XSnV1PrXSUrgIPDSfPdnHfkZ4okj+MiLK5labHn4+P9?=
- =?us-ascii?Q?LVF8ZBAaPWp/s6ts4WBPhqgxs5JMfqEcCz2ZoG+DVaglNaIzfEwHScB0w75b?=
- =?us-ascii?Q?PV0fX2/9fHhVXjyQOzo7B6I9A9+/Wr/ra5KjJyfmR+0o4QP73CpQ1INRvfJG?=
- =?us-ascii?Q?NxpIEjf41Rnm0sp3GRHh7IEPausddoesoZ6v+yd/8UUVRo6ptmW66rOSy6jj?=
- =?us-ascii?Q?aL9kaFObQeh4IGj43oPJMEIOdje63JqVEljp7g560z1cjHC7Saq+vLSyejvu?=
- =?us-ascii?Q?FlG+wc8kmqyk+EJnwfmZ7TSyTlPyqNqpoMdAlI3oMK5OlPCoGOk+Zy8gIhhg?=
- =?us-ascii?Q?qv6NvxD5IA3hqbjRT4ILvcEZMue6oOHUbzvRnUbnYTd/0wLhC4gUBGCMi23A?=
- =?us-ascii?Q?BOColgUOVgEBDUyYR+N8DkWQz9ybKsroFNgjwHGKLOkjjNZBBIM1kBJwzjOx?=
- =?us-ascii?Q?AMre7j08dtI2FZ17jVnuWEUCneS1EqdU2ys2ep5DGcBtfDFYjP8oN+fWsHwW?=
- =?us-ascii?Q?ZIHROV9U3jFKuu13XK/WnFuOh/E4BWXG8nm257FHE5NZ3XHO8FJ1a+Ahb5ve?=
- =?us-ascii?Q?gnNU2I8/ce1QFXr+XSuQD4sdxIIlvrxJRWwlE1coeYNqRhpZcNxIfOgORWW6?=
- =?us-ascii?Q?Xz77lAVKVtdD3x/ZmqMQUwLGsEMiKRVTmnLWAWLvx0/n6+TRz/W3uqeHOS6v?=
- =?us-ascii?Q?8smxgYTyK1HzN0q6j6V8P4HD9qrELycKSrA9Ygv2jE7SDmU3hfQAdcbphp+w?=
- =?us-ascii?Q?+e/sicAdkB+ywU2+rvCsZcxl0TM/IdfrauyJvJjnujLY3/MCqP5enVh/uUDx?=
- =?us-ascii?Q?LjPPoyTAk4/0a+Q7JeQ=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 78d4afaf-24eb-46c2-b929-08ddeb11da22
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2025 17:46:46.6102
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p5uIjcocAexhngN+Xm9pKkNYzqfWm6X0tS/3CVVrV68SRJ/RvGgbhaavfgiUXg1z
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFDF5E260D0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] uapi/fcntl: define RENAME_* and AT_RENAME_* macros
+To: Amir Goldstein <amir73il@gmail.com>
+Cc: linux-fsdevel@vger.kernel.org, patches@lists.linux.dev,
+ Jeff Layton <jlayton@kernel.org>, Chuck Lever <chuck.lever@oracle.com>,
+ Alexander Aring <alex.aring@gmail.com>, Josef Bacik <josef@toxicpanda.com>,
+ Aleksa Sarai <cyphar@cyphar.com>, Jan Kara <jack@suse.cz>,
+ Christian Brauner <brauner@kernel.org>, Matthew Wilcox
+ <willy@infradead.org>, David Howells <dhowells@redhat.com>,
+ linux-api@vger.kernel.org
+References: <20250901231457.1179748-1-rdunlap@infradead.org>
+ <CAOQ4uxjXvYBsW1Nb2HKaoUg1qi8Pkq1XKtQEbnAvMUGcp7LrZA@mail.gmail.com>
+ <5ff4dfe2-271f-4967-bb45-ad59614edc37@infradead.org>
+ <a6246609-3ec0-4e38-8733-b2cf3b8fbd9a@infradead.org>
+ <CAOQ4uxhN2kPLguMN+VR8qu4AzBzLziFADqJg_dvOOO_gw=GpTw@mail.gmail.com>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <CAOQ4uxhN2kPLguMN+VR8qu4AzBzLziFADqJg_dvOOO_gw=GpTw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The iommufd self test uses an xarray to store the pfns and their orders to
-emulate a page table. Make it act more like a real iommu driver by
-replacing the xarray with an iommupt based page table. The new AMDv1 mock
-format behaves similarly to the xarray.
 
-Add set_dirty() as a iommu_pt operation to allow the test suite to
-simulate HW dirty.
 
-Userspace can select between several formats including the normal AMDv1
-format and a special MOCK_IOMMUPT_HUGE variation for testing huge page
-dirty tracking. To make the dirty tracking test work the page table must
-only store exactly 2M huge pages otherwise the logic the test uses
-fails. They cannot be broken up or combined.
+On 9/3/25 7:14 AM, Amir Goldstein wrote:
+> On Wed, Sep 3, 2025 at 2:46 AM Randy Dunlap <rdunlap@infradead.org> wrote:
+>>
+>>
+>>
+>> On 9/2/25 2:31 PM, Randy Dunlap wrote:
+>>> Hi,
+>>>
+>>> On 9/1/25 11:58 PM, Amir Goldstein wrote:
+>>>> On Tue, Sep 2, 2025 at 1:14 AM Randy Dunlap <rdunlap@infradead.org> wrote:
+>>>>>
+>>>>> Define the RENAME_* and AT_RENAME_* macros exactly the same as in
+>>>>> recent glibc <stdio.h> so that duplicate definition build errors in
+>>>>> both samples/watch_queue/watch_test.c and samples/vfs/test-statx.c
+>>>>> no longer happen. When they defined in exactly the same way in
+>>>>> multiple places, the build errors are prevented.
+>>>>>
+>>>>> Defining only the AT_RENAME_* macros is not sufficient since they
+>>>>> depend on the RENAME_* macros, which may not be defined when the
+>>>>> AT_RENAME_* macros are used.
+>>>>>
+>>>>> Build errors being fixed:
+>>>>>
+>>>>> for samples/vfs/test-statx.c:
+>>>>>
+>>>>> In file included from ../samples/vfs/test-statx.c:23:
+>>>>> usr/include/linux/fcntl.h:159:9: warning: ‘AT_RENAME_NOREPLACE’ redefined
+>>>>>   159 | #define AT_RENAME_NOREPLACE     0x0001
+>>>>> In file included from ../samples/vfs/test-statx.c:13:
+>>>>> /usr/include/stdio.h:171:10: note: this is the location of the previous definition
+>>>>>   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+>>>>> usr/include/linux/fcntl.h:160:9: warning: ‘AT_RENAME_EXCHANGE’ redefined
+>>>>>   160 | #define AT_RENAME_EXCHANGE      0x0002
+>>>>> /usr/include/stdio.h:173:10: note: this is the location of the previous definition
+>>>>>   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+>>>>> usr/include/linux/fcntl.h:161:9: warning: ‘AT_RENAME_WHITEOUT’ redefined
+>>>>>   161 | #define AT_RENAME_WHITEOUT      0x0004
+>>>>> /usr/include/stdio.h:175:10: note: this is the location of the previous definition
+>>>>>   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+>>>>>
+>>>>> for samples/watch_queue/watch_test.c:
+>>>>>
+>>>>> In file included from usr/include/linux/watch_queue.h:6,
+>>>>>                  from ../samples/watch_queue/watch_test.c:19:
+>>>>> usr/include/linux/fcntl.h:159:9: warning: ‘AT_RENAME_NOREPLACE’ redefined
+>>>>>   159 | #define AT_RENAME_NOREPLACE     0x0001
+>>>>> In file included from ../samples/watch_queue/watch_test.c:11:
+>>>>> /usr/include/stdio.h:171:10: note: this is the location of the previous definition
+>>>>>   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+>>>>> usr/include/linux/fcntl.h:160:9: warning: ‘AT_RENAME_EXCHANGE’ redefined
+>>>>>   160 | #define AT_RENAME_EXCHANGE      0x0002
+>>>>> /usr/include/stdio.h:173:10: note: this is the location of the previous definition
+>>>>>   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+>>>>> usr/include/linux/fcntl.h:161:9: warning: ‘AT_RENAME_WHITEOUT’ redefined
+>>>>>   161 | #define AT_RENAME_WHITEOUT      0x0004
+>>>>> /usr/include/stdio.h:175:10: note: this is the location of the previous definition
+>>>>>   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+>>>>>
+>>>>> Fixes: b4fef22c2fb9 ("uapi: explain how per-syscall AT_* flags should be allocated")
+>>>>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+>>>>> ---
+>>>>> Cc: Amir Goldstein <amir73il@gmail.com>
+>>>>> Cc: Jeff Layton <jlayton@kernel.org>
+>>>>> Cc: Chuck Lever <chuck.lever@oracle.com>
+>>>>> Cc: Alexander Aring <alex.aring@gmail.com>
+>>>>> Cc: Josef Bacik <josef@toxicpanda.com>
+>>>>> Cc: Aleksa Sarai <cyphar@cyphar.com>
+>>>>> Cc: Jan Kara <jack@suse.cz>
+>>>>> Cc: Christian Brauner <brauner@kernel.org>
+>>>>> Cc: Matthew Wilcox <willy@infradead.org>
+>>>>> Cc: David Howells <dhowells@redhat.com>
+>>>>> CC: linux-api@vger.kernel.org
+>>>>> To: linux-fsdevel@vger.kernel.org
+>>>>>
+>>>>>  include/uapi/linux/fcntl.h |    9 ++++++---
+>>>>>  1 file changed, 6 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> --- linux-next-20250819.orig/include/uapi/linux/fcntl.h
+>>>>> +++ linux-next-20250819/include/uapi/linux/fcntl.h
+>>>>> @@ -156,9 +156,12 @@
+>>>>>   */
+>>>>>
+>>>>>  /* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+>>>>> -#define AT_RENAME_NOREPLACE    0x0001
+>>>>> -#define AT_RENAME_EXCHANGE     0x0002
+>>>>> -#define AT_RENAME_WHITEOUT     0x0004
+>>>>> +# define RENAME_NOREPLACE (1 << 0)
+>>>>> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+>>>>> +# define RENAME_EXCHANGE (1 << 1)
+>>>>> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+>>>>> +# define RENAME_WHITEOUT (1 << 2)
+>>>>> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+>>>>>
+>>>>
+>>>> This solution, apart from being terribly wrong (adjust the source to match
+>>>> to value of its downstream copy), does not address the issue that Mathew
+>>>> pointed out on v1 discussion [1]:
+>>>
+>>> I didn't forget or ignore this.
+>>> If the macros have the same values (well, not just values but also the
+>>> same text), then I don't see why it matters whether they are in some older
+>>> version of glibc.
+>>>
+>>>> $ grep -r AT_RENAME_NOREPLACE /usr/include
+>>>> /usr/include/linux/fcntl.h:#define AT_RENAME_NOREPLACE  0x0001
+>>>>
+>>>> It's not in stdio.h at all.  This is with libc6 2.41-10
+>>>>
+>>>> [1] https://lore.kernel.org/linux-fsdevel/aKxfGix_o4glz8-Z@casper.infradead.org/
+>>>>
+>>>> I don't know how to resolve the mess that glibc has created.
+>>>
+>>> Yeah, I guess I don't either.
+>>>
+>>>> Perhaps like this:
+>>>>
+>>>> diff --git a/include/uapi/linux/fcntl.h b/include/uapi/linux/fcntl.h
+>>>> index f291ab4f94ebc..dde14fa3c2007 100644
+>>>> --- a/include/uapi/linux/fcntl.h
+>>>> +++ b/include/uapi/linux/fcntl.h
+>>>> @@ -155,10 +155,16 @@
+>>>>   * as possible, so we can use them for generic bits in the future if necessary.
+>>>>   */
+>>>>
+>>>> -/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+>>>> -#define AT_RENAME_NOREPLACE    0x0001
+>>>> -#define AT_RENAME_EXCHANGE     0x0002
+>>>> -#define AT_RENAME_WHITEOUT     0x0004
+>>>> +/*
+>>>> + * The legacy renameat2(2) RENAME_* flags are conceptually also
+>>>> syscall-specific
+>>>> + * flags, so it could makes sense to create the AT_RENAME_* aliases
+>>>> for them and
+>>>> + * maybe later add support for generic AT_* flags to this syscall.
+>>>> + * However, following a mismatch of definitions in glibc and since no
+>>>> kernel code
+>>>> + * currently uses the AT_RENAME_* aliases, we leave them undefined here.
+>>>> +#define AT_RENAME_NOREPLACE    RENAME_NOREPLACE
+>>>> +#define AT_RENAME_EXCHANGE     RENAME_EXCHANGE
+>>>> +#define AT_RENAME_WHITEOUT     RENAME_WHITEOUT
+>>>> +*/
+>>>
+>>> Well, we do have samples/ code that uses fcntl.h (indirectly; maybe
+>>> that can be fixed).
+>>> See the build errors in the patch description.
+>>>
+>>>
+>>>>  /* Flag for faccessat(2). */
+>>>>  #define AT_EACCESS             0x200   /* Test access permitted for
+>>>
+>>> With this patch (your suggestion above):
+>>>
+>>> IF a userspace program in samples/ uses <uapi/linux/fcntl.h> without
+>>> using <stdio.h>, [yes, I created one to test this] and without using
+>>> <uapi/linux/fs.h> then the build fails with similar build errors:
+>>>
+>>> ../samples/watch_queue/watch_nostdio.c: In function ‘consumer’:
+>>> ../samples/watch_queue/watch_nostdio.c:33:32: error: ‘RENAME_NOREPLACE’ undeclared (first use in this function)
+>>>    33 |                         return RENAME_NOREPLACE;
+>>> ../samples/watch_queue/watch_nostdio.c:33:32: note: each undeclared identifier is reported only once for each function it appears in
+>>> ../samples/watch_queue/watch_nostdio.c:37:32: error: ‘RENAME_EXCHANGE’ undeclared (first use in this function)
+>>>    37 |                         return RENAME_EXCHANGE;
+>>> ../samples/watch_queue/watch_nostdio.c:41:32: error: ‘RENAME_WHITEOUT’ undeclared (first use in this function)
+>>>    41 |                         return RENAME_WHITEOUT;
+>>>
+>>> This build succeeds with my version 1 patch (full defining of both
+>>> RENAME_* and AT_RENAME_* macros). It fails with the patch that you suggested
+>>> above.
+>>>
+>>> OK, here's what I propose.
+>>>
+>>> a. remove the unused and (sort of) recently added AT_RENAME_* macros
+>>> in include/uapi/linux/fcntl.h. Nothing in the kernel tree uses them.
+>>> This is:
+>>>
+>>> commit b4fef22c2fb9
+>>> Author: Aleksa Sarai <cyphar@cyphar.com>
+>>> Date:   Wed Aug 28 20:19:42 2024 +1000
+>>>     uapi: explain how per-syscall AT_* flags should be allocated
+>>>
+>>> These macros should have never been added here IMO.
+>>> Just putting them somewhere as examples (in comments) would be OK.
+>>>
+> 
+> I agree.
+> I did not get this patch from Aleksa,
+> but I proposed something similar above.
+> 
+>>> This alone fixes all of the build errors in samples/ that I originally
+>>> reported.
+>>>
+>>> b. if a userspace program wants to use the RENAME_* macros, it should
+>>> #include <linux/fs.h> instead of <linux/fcntl.h>.
+>>>
+>>> This fixes the "contrived" build error that I manufactured.
+>>>
+>>> Note that some programs in tools/ do use AT_RENAME_* (all 3 macros)
+>>> but they define those macros locally.
+>>>
+>>
+>> And after more testing, this is what I think works:
+>>
+>> a. remove all of the AT_RENAME-* macros from <uapi/linux/fcntl.h>
+>>    (as above)
+> 
+> ok.
+> 
+>>
+>> b. put the AT_RENAME_* macros into <uapi/linux/fs.h> like so:
+>>
+>> +/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+>> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+>> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+>> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+>>
+>> so that they match what is in upstream glibc stdio.h, hence not
+>> causing duplicate definition errors.
+> 
+> Disagree.
+> We do not need to define them at all.
+> 
+> The *only* reason we defined them in fcntl.h is so the
+> definition will be together with the rest of the AT_ flags.
+> Now we change that to a comment, but there is no reason to
+> define them at fs.h. Why would we need to do that?
 
-Aside from aligning the selftest with a real page table implementation,
-this helps test the iommupt code itself.
+OK, that works. I'll make a v3 like that.
 
-Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/generic_pt/iommu_pt.h           |  39 ++
- drivers/iommu/iommufd/Kconfig                 |   1 +
- drivers/iommu/iommufd/iommufd_test.h          |  11 +-
- drivers/iommu/iommufd/selftest.c              | 438 +++++++-----------
- include/linux/generic_pt/iommu.h              |  12 +
- tools/testing/selftests/iommu/iommufd.c       |  60 ++-
- tools/testing/selftests/iommu/iommufd_utils.h |  12 +
- 7 files changed, 289 insertions(+), 284 deletions(-)
-
-diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
-index c9062e3bf3efad..040687e93f0fe0 100644
---- a/drivers/iommu/generic_pt/iommu_pt.h
-+++ b/drivers/iommu/generic_pt/iommu_pt.h
-@@ -264,6 +264,41 @@ int DOMAIN_NS(read_and_clear_dirty)(struct iommu_domain *domain,
- }
- EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(read_and_clear_dirty), "GENERIC_PT_IOMMU");
- 
-+static inline int __set_dirty(struct pt_range *range, void *arg,
-+			      unsigned int level, struct pt_table_p *table)
-+{
-+	struct pt_state pts = pt_init(range, level, table);
-+
-+	switch (pt_load_single_entry(&pts)) {
-+	case PT_ENTRY_EMPTY:
-+		return -ENOENT;
-+	case PT_ENTRY_TABLE:
-+		return pt_descend(&pts, arg, __set_dirty);
-+	case PT_ENTRY_OA:
-+		if (!pt_entry_make_write_dirty(&pts))
-+			return -EAGAIN;
-+		return 0;
-+	}
-+	return -ENOENT;
-+}
-+
-+static int __maybe_unused NS(set_dirty)(struct pt_iommu *iommu_table,
-+					dma_addr_t iova)
-+{
-+	struct pt_range range;
-+	int ret;
-+
-+	ret = make_range(common_from_iommu(iommu_table), &range, iova, 1);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Note: There is no locking here yet, if the test suite races this it
-+	 * can crash. It should use RCU locking eventually.
-+	 */
-+	return pt_walk_range(&range, __set_dirty, NULL);
-+}
-+
- struct pt_iommu_collect_args {
- 	struct iommu_pages_list free_list;
- 	u8 ignore_mapped : 1;
-@@ -942,6 +977,10 @@ static void NS(deinit)(struct pt_iommu *iommu_table)
- }
- 
- static const struct pt_iommu_ops NS(ops) = {
-+#if IS_ENABLED(CONFIG_IOMMUFD_DRIVER) && defined(pt_entry_write_is_dirty) && \
-+	IS_ENABLED(CONFIG_IOMMUFD_TEST) && defined(pt_entry_make_write_dirty)
-+	.set_dirty = NS(set_dirty),
-+#endif
- 	.get_info = NS(get_info),
- 	.deinit = NS(deinit),
- };
-diff --git a/drivers/iommu/iommufd/Kconfig b/drivers/iommu/iommufd/Kconfig
-index 2beeb4f60ee538..eae3f03629b0c1 100644
---- a/drivers/iommu/iommufd/Kconfig
-+++ b/drivers/iommu/iommufd/Kconfig
-@@ -41,6 +41,7 @@ config IOMMUFD_TEST
- 	depends on DEBUG_KERNEL
- 	depends on FAULT_INJECTION
- 	depends on RUNTIME_TESTING_MENU
-+	depends on IOMMU_PT_AMDV1
- 	select IOMMUFD_DRIVER
- 	default n
- 	help
-diff --git a/drivers/iommu/iommufd/iommufd_test.h b/drivers/iommu/iommufd/iommufd_test.h
-index 8fc618b2bcf967..781a75c79eeaec 100644
---- a/drivers/iommu/iommufd/iommufd_test.h
-+++ b/drivers/iommu/iommufd/iommufd_test.h
-@@ -31,9 +31,18 @@ enum {
- 	IOMMU_TEST_OP_PASID_CHECK_HWPT,
- };
- 
-+enum {
-+	MOCK_IOMMUPT_DEFAULT = 0,
-+	MOCK_IOMMUPT_HUGE,
-+	MOCK_IOMMUPT_AMDV1,
-+};
-+
-+/* These values are true for MOCK_IOMMUPT_DEFAULT */
- enum {
- 	MOCK_APERTURE_START = 1UL << 24,
- 	MOCK_APERTURE_LAST = (1UL << 31) - 1,
-+	MOCK_PAGE_SIZE = 2048,
-+	MOCK_HUGE_PAGE_SIZE = 512 * MOCK_PAGE_SIZE,
- };
- 
- enum {
-@@ -52,7 +61,6 @@ enum {
- 
- enum {
- 	MOCK_FLAGS_DEVICE_NO_DIRTY = 1 << 0,
--	MOCK_FLAGS_DEVICE_HUGE_IOVA = 1 << 1,
- 	MOCK_FLAGS_DEVICE_PASID = 1 << 2,
- };
- 
-@@ -205,6 +213,7 @@ struct iommu_test_hw_info {
-  */
- struct iommu_hwpt_selftest {
- 	__u32 iotlb;
-+	__u32 pagetable_type;
- };
- 
- /* Should not be equal to any defined value in enum iommu_hwpt_invalidate_data_type */
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index 61686603c76934..b60e7584123352 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -12,6 +12,8 @@
- #include <linux/slab.h>
- #include <linux/xarray.h>
- #include <uapi/linux/iommufd.h>
-+#include <linux/generic_pt/iommu.h>
-+#include "../iommu-pages.h"
- 
- #include "../iommu-priv.h"
- #include "io_pagetable.h"
-@@ -41,21 +43,6 @@ static DEFINE_IDA(mock_dev_ida);
- 
- enum {
- 	MOCK_DIRTY_TRACK = 1,
--	MOCK_IO_PAGE_SIZE = PAGE_SIZE / 2,
--	MOCK_HUGE_PAGE_SIZE = 512 * MOCK_IO_PAGE_SIZE,
--
--	/*
--	 * Like a real page table alignment requires the low bits of the address
--	 * to be zero. xarray also requires the high bit to be zero, so we store
--	 * the pfns shifted. The upper bits are used for metadata.
--	 */
--	MOCK_PFN_MASK = ULONG_MAX / MOCK_IO_PAGE_SIZE,
--
--	_MOCK_PFN_START = MOCK_PFN_MASK + 1,
--	MOCK_PFN_START_IOVA = _MOCK_PFN_START,
--	MOCK_PFN_LAST_IOVA = _MOCK_PFN_START,
--	MOCK_PFN_DIRTY_IOVA = _MOCK_PFN_START << 1,
--	MOCK_PFN_HUGE_IOVA = _MOCK_PFN_START << 2,
- };
- 
- static int mock_dev_enable_iopf(struct device *dev, struct iommu_domain *domain);
-@@ -124,10 +111,15 @@ void iommufd_test_syz_conv_iova_id(struct iommufd_ucmd *ucmd,
- }
- 
- struct mock_iommu_domain {
-+	union {
-+		struct iommu_domain domain;
-+		struct pt_iommu iommu;
-+		struct pt_iommu_amdv1 amdv1;
-+	};
- 	unsigned long flags;
--	struct iommu_domain domain;
--	struct xarray pfns;
- };
-+PT_IOMMU_CHECK_DOMAIN(struct mock_iommu_domain, iommu, domain);
-+PT_IOMMU_CHECK_DOMAIN(struct mock_iommu_domain, amdv1.iommu, domain);
- 
- static inline struct mock_iommu_domain *
- to_mock_domain(struct iommu_domain *domain)
-@@ -344,74 +336,6 @@ static int mock_domain_set_dirty_tracking(struct iommu_domain *domain,
- 	return 0;
- }
- 
--static bool mock_test_and_clear_dirty(struct mock_iommu_domain *mock,
--				      unsigned long iova, size_t page_size,
--				      unsigned long flags)
--{
--	unsigned long cur, end = iova + page_size - 1;
--	bool dirty = false;
--	void *ent, *old;
--
--	for (cur = iova; cur < end; cur += MOCK_IO_PAGE_SIZE) {
--		ent = xa_load(&mock->pfns, cur / MOCK_IO_PAGE_SIZE);
--		if (!ent || !(xa_to_value(ent) & MOCK_PFN_DIRTY_IOVA))
--			continue;
--
--		dirty = true;
--		/* Clear dirty */
--		if (!(flags & IOMMU_DIRTY_NO_CLEAR)) {
--			unsigned long val;
--
--			val = xa_to_value(ent) & ~MOCK_PFN_DIRTY_IOVA;
--			old = xa_store(&mock->pfns, cur / MOCK_IO_PAGE_SIZE,
--				       xa_mk_value(val), GFP_KERNEL);
--			WARN_ON_ONCE(ent != old);
--		}
--	}
--
--	return dirty;
--}
--
--static int mock_domain_read_and_clear_dirty(struct iommu_domain *domain,
--					    unsigned long iova, size_t size,
--					    unsigned long flags,
--					    struct iommu_dirty_bitmap *dirty)
--{
--	struct mock_iommu_domain *mock = to_mock_domain(domain);
--	unsigned long end = iova + size;
--	void *ent;
--
--	if (!(mock->flags & MOCK_DIRTY_TRACK) && dirty->bitmap)
--		return -EINVAL;
--
--	do {
--		unsigned long pgsize = MOCK_IO_PAGE_SIZE;
--		unsigned long head;
--
--		ent = xa_load(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
--		if (!ent) {
--			iova += pgsize;
--			continue;
--		}
--
--		if (xa_to_value(ent) & MOCK_PFN_HUGE_IOVA)
--			pgsize = MOCK_HUGE_PAGE_SIZE;
--		head = iova & ~(pgsize - 1);
--
--		/* Clear dirty */
--		if (mock_test_and_clear_dirty(mock, head, pgsize, flags))
--			iommu_dirty_bitmap_record(dirty, iova, pgsize);
--		iova += pgsize;
--	} while (iova < end);
--
--	return 0;
--}
--
--static const struct iommu_dirty_ops dirty_ops = {
--	.set_dirty_tracking = mock_domain_set_dirty_tracking,
--	.read_and_clear_dirty = mock_domain_read_and_clear_dirty,
--};
--
- static struct mock_iommu_domain_nested *
- __mock_domain_alloc_nested(const struct iommu_user_data *user_data)
- {
-@@ -446,7 +370,7 @@ mock_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
- 
- 	if (flags & ~IOMMU_HWPT_ALLOC_PASID)
- 		return ERR_PTR(-EOPNOTSUPP);
--	if (!parent || parent->ops != mock_ops.default_domain_ops)
-+	if (!parent || !(parent->type & __IOMMU_DOMAIN_PAGING))
- 		return ERR_PTR(-EINVAL);
- 
- 	mock_parent = to_mock_domain(parent);
-@@ -459,6 +383,138 @@ mock_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
- 	return &mock_nested->domain;
- }
- 
-+static void mock_domain_free(struct iommu_domain *domain)
-+{
-+	struct mock_iommu_domain *mock = to_mock_domain(domain);
-+
-+	pt_iommu_deinit(&mock->iommu);
-+	kfree(mock);
-+}
-+
-+static void mock_iotlb_sync(struct iommu_domain *domain,
-+				struct iommu_iotlb_gather *gather)
-+{
-+	iommu_put_pages_list(&gather->freelist);
-+}
-+
-+static const struct iommu_domain_ops amdv1_mock_ops = {
-+	IOMMU_PT_DOMAIN_OPS(amdv1_mock),
-+	.free = mock_domain_free,
-+	.attach_dev = mock_domain_nop_attach,
-+	.set_dev_pasid = mock_domain_set_dev_pasid_nop,
-+	.iotlb_sync = &mock_iotlb_sync,
-+};
-+
-+static const struct iommu_domain_ops amdv1_mock_huge_ops = {
-+	IOMMU_PT_DOMAIN_OPS(amdv1_mock),
-+	.free = mock_domain_free,
-+	.attach_dev = mock_domain_nop_attach,
-+	.set_dev_pasid = mock_domain_set_dev_pasid_nop,
-+	.iotlb_sync = &mock_iotlb_sync,
-+};
-+#undef pt_iommu_amdv1_mock_map_pages
-+
-+static const struct iommu_dirty_ops amdv1_mock_dirty_ops = {
-+	IOMMU_PT_DIRTY_OPS(amdv1_mock),
-+	.set_dirty_tracking = mock_domain_set_dirty_tracking,
-+};
-+
-+static const struct iommu_domain_ops amdv1_ops = {
-+	IOMMU_PT_DOMAIN_OPS(amdv1),
-+	.free = mock_domain_free,
-+	.attach_dev = mock_domain_nop_attach,
-+	.set_dev_pasid = mock_domain_set_dev_pasid_nop,
-+	.iotlb_sync = &mock_iotlb_sync,
-+};
-+
-+static const struct iommu_dirty_ops amdv1_dirty_ops = {
-+	IOMMU_PT_DIRTY_OPS(amdv1),
-+	.set_dirty_tracking = mock_domain_set_dirty_tracking,
-+};
-+
-+static struct mock_iommu_domain *
-+mock_domain_alloc_pgtable(struct device *dev,
-+			  const struct iommu_hwpt_selftest *user_cfg, u32 flags)
-+{
-+	struct mock_iommu_domain *mock;
-+	int rc;
-+
-+	mock = kzalloc(sizeof(*mock), GFP_KERNEL);
-+	if (!mock)
-+		return ERR_PTR(-ENOMEM);
-+	mock->domain.type = IOMMU_DOMAIN_UNMANAGED;
-+
-+	mock->amdv1.iommu.nid = NUMA_NO_NODE;
-+
-+	switch (user_cfg->pagetable_type) {
-+	case MOCK_IOMMUPT_DEFAULT:
-+	case MOCK_IOMMUPT_HUGE: {
-+		struct pt_iommu_amdv1_cfg cfg = {};
-+
-+		/* The mock version has a 2k page size */
-+		cfg.common.hw_max_vasz_lg2 = 56;
-+		cfg.common.hw_max_oasz_lg2 = 51;
-+		cfg.starting_level = 2;
-+		if (user_cfg->pagetable_type == MOCK_IOMMUPT_HUGE)
-+			mock->domain.ops = &amdv1_mock_huge_ops;
-+		else
-+			mock->domain.ops = &amdv1_mock_ops;
-+		rc = pt_iommu_amdv1_mock_init(&mock->amdv1, &cfg, GFP_KERNEL);
-+		if (rc)
-+			goto err_free;
-+
-+		/*
-+		 * In huge mode userspace should only provide huge pages, we
-+		 * have to include PAGE_SIZE for the domain to be accepted by
-+		 * iommufd.
-+		 */
-+		if (user_cfg->pagetable_type == MOCK_IOMMUPT_HUGE)
-+			mock->domain.pgsize_bitmap = MOCK_HUGE_PAGE_SIZE |
-+						     PAGE_SIZE;
-+		if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING)
-+			mock->domain.dirty_ops = &amdv1_mock_dirty_ops;
-+		break;
-+	}
-+
-+	case MOCK_IOMMUPT_AMDV1: {
-+		struct pt_iommu_amdv1_cfg cfg = {};
-+
-+		cfg.common.hw_max_vasz_lg2 = 64;
-+		cfg.common.hw_max_oasz_lg2 = 52;
-+		cfg.common.features = BIT(PT_FEAT_DYNAMIC_TOP) |
-+				      BIT(PT_FEAT_AMDV1_ENCRYPT_TABLES) |
-+				      BIT(PT_FEAT_AMDV1_FORCE_COHERENCE);
-+		cfg.starting_level = 2;
-+		mock->domain.ops = &amdv1_ops;
-+		rc = pt_iommu_amdv1_init(&mock->amdv1, &cfg, GFP_KERNEL);
-+		if (rc)
-+			goto err_free;
-+		if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING)
-+			mock->domain.dirty_ops = &amdv1_dirty_ops;
-+		break;
-+	}
-+	default:
-+		rc = -EOPNOTSUPP;
-+		goto err_free;
-+	}
-+
-+	/*
-+	 * Override the real aperture to the MOCK aperture for test purposes.
-+	 */
-+	if (user_cfg->pagetable_type == MOCK_IOMMUPT_DEFAULT) {
-+		WARN_ON(mock->domain.geometry.aperture_start != 0);
-+		WARN_ON(mock->domain.geometry.aperture_end < MOCK_APERTURE_LAST);
-+
-+		mock->domain.geometry.aperture_start = MOCK_APERTURE_START;
-+		mock->domain.geometry.aperture_end = MOCK_APERTURE_LAST;
-+	}
-+
-+	return mock;
-+err_free:
-+	kfree(mock);
-+	return ERR_PTR(rc);
-+}
-+
- static struct iommu_domain *
- mock_domain_alloc_paging_flags(struct device *dev, u32 flags,
- 			       const struct iommu_user_data *user_data)
-@@ -469,151 +525,30 @@ mock_domain_alloc_paging_flags(struct device *dev, u32 flags,
- 				 IOMMU_HWPT_ALLOC_PASID;
- 	struct mock_dev *mdev = to_mock_dev(dev);
- 	bool no_dirty_ops = mdev->flags & MOCK_FLAGS_DEVICE_NO_DIRTY;
-+	struct iommu_hwpt_selftest user_cfg = {};
- 	struct mock_iommu_domain *mock;
-+	int rc;
- 
--	if (user_data)
--		return ERR_PTR(-EOPNOTSUPP);
- 	if ((flags & ~PAGING_FLAGS) || (has_dirty_flag && no_dirty_ops))
- 		return ERR_PTR(-EOPNOTSUPP);
- 
--	mock = kzalloc(sizeof(*mock), GFP_KERNEL);
--	if (!mock)
--		return ERR_PTR(-ENOMEM);
--	mock->domain.geometry.aperture_start = MOCK_APERTURE_START;
--	mock->domain.geometry.aperture_end = MOCK_APERTURE_LAST;
--	mock->domain.pgsize_bitmap = MOCK_IO_PAGE_SIZE;
--	if (dev && mdev->flags & MOCK_FLAGS_DEVICE_HUGE_IOVA)
--		mock->domain.pgsize_bitmap |= MOCK_HUGE_PAGE_SIZE;
--	mock->domain.ops = mock_ops.default_domain_ops;
--	mock->domain.type = IOMMU_DOMAIN_UNMANAGED;
--	xa_init(&mock->pfns);
-+	if (user_data && (user_data->type != IOMMU_HWPT_DATA_SELFTEST &&
-+			  user_data->type != IOMMU_HWPT_DATA_NONE))
-+		return ERR_PTR(-EOPNOTSUPP);
- 
--	if (has_dirty_flag)
--		mock->domain.dirty_ops = &dirty_ops;
-+	if (user_data) {
-+		rc = iommu_copy_struct_from_user(
-+			&user_cfg, user_data, IOMMU_HWPT_DATA_SELFTEST, iotlb);
-+		if (rc)
-+			return ERR_PTR(rc);
-+	}
-+
-+	mock = mock_domain_alloc_pgtable(dev, &user_cfg, flags);
-+	if (IS_ERR(mock))
-+		return ERR_CAST(mock);
- 	return &mock->domain;
- }
- 
--static void mock_domain_free(struct iommu_domain *domain)
--{
--	struct mock_iommu_domain *mock = to_mock_domain(domain);
--
--	WARN_ON(!xa_empty(&mock->pfns));
--	kfree(mock);
--}
--
--static int mock_domain_map_pages(struct iommu_domain *domain,
--				 unsigned long iova, phys_addr_t paddr,
--				 size_t pgsize, size_t pgcount, int prot,
--				 gfp_t gfp, size_t *mapped)
--{
--	struct mock_iommu_domain *mock = to_mock_domain(domain);
--	unsigned long flags = MOCK_PFN_START_IOVA;
--	unsigned long start_iova = iova;
--
--	/*
--	 * xarray does not reliably work with fault injection because it does a
--	 * retry allocation, so put our own failure point.
--	 */
--	if (iommufd_should_fail())
--		return -ENOENT;
--
--	WARN_ON(iova % MOCK_IO_PAGE_SIZE);
--	WARN_ON(pgsize % MOCK_IO_PAGE_SIZE);
--	for (; pgcount; pgcount--) {
--		size_t cur;
--
--		for (cur = 0; cur != pgsize; cur += MOCK_IO_PAGE_SIZE) {
--			void *old;
--
--			if (pgcount == 1 && cur + MOCK_IO_PAGE_SIZE == pgsize)
--				flags = MOCK_PFN_LAST_IOVA;
--			if (pgsize != MOCK_IO_PAGE_SIZE) {
--				flags |= MOCK_PFN_HUGE_IOVA;
--			}
--			old = xa_store(&mock->pfns, iova / MOCK_IO_PAGE_SIZE,
--				       xa_mk_value((paddr / MOCK_IO_PAGE_SIZE) |
--						   flags),
--				       gfp);
--			if (xa_is_err(old)) {
--				for (; start_iova != iova;
--				     start_iova += MOCK_IO_PAGE_SIZE)
--					xa_erase(&mock->pfns,
--						 start_iova /
--							 MOCK_IO_PAGE_SIZE);
--				return xa_err(old);
--			}
--			WARN_ON(old);
--			iova += MOCK_IO_PAGE_SIZE;
--			paddr += MOCK_IO_PAGE_SIZE;
--			*mapped += MOCK_IO_PAGE_SIZE;
--			flags = 0;
--		}
--	}
--	return 0;
--}
--
--static size_t mock_domain_unmap_pages(struct iommu_domain *domain,
--				      unsigned long iova, size_t pgsize,
--				      size_t pgcount,
--				      struct iommu_iotlb_gather *iotlb_gather)
--{
--	struct mock_iommu_domain *mock = to_mock_domain(domain);
--	bool first = true;
--	size_t ret = 0;
--	void *ent;
--
--	WARN_ON(iova % MOCK_IO_PAGE_SIZE);
--	WARN_ON(pgsize % MOCK_IO_PAGE_SIZE);
--
--	for (; pgcount; pgcount--) {
--		size_t cur;
--
--		for (cur = 0; cur != pgsize; cur += MOCK_IO_PAGE_SIZE) {
--			ent = xa_erase(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
--
--			/*
--			 * iommufd generates unmaps that must be a strict
--			 * superset of the map's performend So every
--			 * starting/ending IOVA should have been an iova passed
--			 * to map.
--			 *
--			 * This simple logic doesn't work when the HUGE_PAGE is
--			 * turned on since the core code will automatically
--			 * switch between the two page sizes creating a break in
--			 * the unmap calls. The break can land in the middle of
--			 * contiguous IOVA.
--			 */
--			if (!(domain->pgsize_bitmap & MOCK_HUGE_PAGE_SIZE)) {
--				if (first) {
--					WARN_ON(ent && !(xa_to_value(ent) &
--							 MOCK_PFN_START_IOVA));
--					first = false;
--				}
--				if (pgcount == 1 &&
--				    cur + MOCK_IO_PAGE_SIZE == pgsize)
--					WARN_ON(ent && !(xa_to_value(ent) &
--							 MOCK_PFN_LAST_IOVA));
--			}
--
--			iova += MOCK_IO_PAGE_SIZE;
--			ret += MOCK_IO_PAGE_SIZE;
--		}
--	}
--	return ret;
--}
--
--static phys_addr_t mock_domain_iova_to_phys(struct iommu_domain *domain,
--					    dma_addr_t iova)
--{
--	struct mock_iommu_domain *mock = to_mock_domain(domain);
--	void *ent;
--
--	WARN_ON(iova % MOCK_IO_PAGE_SIZE);
--	ent = xa_load(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
--	WARN_ON(!ent);
--	return (xa_to_value(ent) & MOCK_PFN_MASK) * MOCK_IO_PAGE_SIZE;
--}
--
- static bool mock_domain_capable(struct device *dev, enum iommu_cap cap)
- {
- 	struct mock_dev *mdev = to_mock_dev(dev);
-@@ -955,15 +890,6 @@ static const struct iommu_ops mock_ops = {
- 	.user_pasid_table = true,
- 	.get_viommu_size = mock_get_viommu_size,
- 	.viommu_init = mock_viommu_init,
--	.default_domain_ops =
--		&(struct iommu_domain_ops){
--			.free = mock_domain_free,
--			.attach_dev = mock_domain_nop_attach,
--			.map_pages = mock_domain_map_pages,
--			.unmap_pages = mock_domain_unmap_pages,
--			.iova_to_phys = mock_domain_iova_to_phys,
--			.set_dev_pasid = mock_domain_set_dev_pasid_nop,
--		},
- };
- 
- static void mock_domain_free_nested(struct iommu_domain *domain)
-@@ -1047,7 +973,7 @@ get_md_pagetable(struct iommufd_ucmd *ucmd, u32 mockpt_id,
- 	if (IS_ERR(hwpt))
- 		return hwpt;
- 	if (hwpt->domain->type != IOMMU_DOMAIN_UNMANAGED ||
--	    hwpt->domain->ops != mock_ops.default_domain_ops) {
-+	    hwpt->domain->owner != &mock_ops) {
- 		iommufd_put_object(ucmd->ictx, &hwpt->obj);
- 		return ERR_PTR(-EINVAL);
- 	}
-@@ -1088,7 +1014,6 @@ static struct mock_dev *mock_dev_create(unsigned long dev_flags)
- 		{},
- 	};
- 	const u32 valid_flags = MOCK_FLAGS_DEVICE_NO_DIRTY |
--				MOCK_FLAGS_DEVICE_HUGE_IOVA |
- 				MOCK_FLAGS_DEVICE_PASID;
- 	struct mock_dev *mdev;
- 	int rc, i;
-@@ -1277,23 +1202,25 @@ static int iommufd_test_md_check_pa(struct iommufd_ucmd *ucmd,
- {
- 	struct iommufd_hw_pagetable *hwpt;
- 	struct mock_iommu_domain *mock;
-+	unsigned int page_size;
- 	uintptr_t end;
- 	int rc;
- 
--	if (iova % MOCK_IO_PAGE_SIZE || length % MOCK_IO_PAGE_SIZE ||
--	    (uintptr_t)uptr % MOCK_IO_PAGE_SIZE ||
--	    check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
--		return -EINVAL;
--
- 	hwpt = get_md_pagetable(ucmd, mockpt_id, &mock);
- 	if (IS_ERR(hwpt))
- 		return PTR_ERR(hwpt);
- 
--	for (; length; length -= MOCK_IO_PAGE_SIZE) {
-+	page_size = 1 << __ffs(mock->domain.pgsize_bitmap);
-+	if (iova % page_size || length % page_size ||
-+	    (uintptr_t)uptr % page_size ||
-+	    check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
-+		return -EINVAL;
-+
-+	for (; length; length -= page_size) {
- 		struct page *pages[1];
-+		phys_addr_t io_phys;
- 		unsigned long pfn;
- 		long npages;
--		void *ent;
- 
- 		npages = get_user_pages_fast((uintptr_t)uptr & PAGE_MASK, 1, 0,
- 					     pages);
-@@ -1308,15 +1235,14 @@ static int iommufd_test_md_check_pa(struct iommufd_ucmd *ucmd,
- 		pfn = page_to_pfn(pages[0]);
- 		put_page(pages[0]);
- 
--		ent = xa_load(&mock->pfns, iova / MOCK_IO_PAGE_SIZE);
--		if (!ent ||
--		    (xa_to_value(ent) & MOCK_PFN_MASK) * MOCK_IO_PAGE_SIZE !=
--			    pfn * PAGE_SIZE + ((uintptr_t)uptr % PAGE_SIZE)) {
-+		io_phys = mock->domain.ops->iova_to_phys(&mock->domain, iova);
-+		if (io_phys !=
-+		    pfn * PAGE_SIZE + ((uintptr_t)uptr % PAGE_SIZE)) {
- 			rc = -EINVAL;
- 			goto out_put;
- 		}
--		iova += MOCK_IO_PAGE_SIZE;
--		uptr += MOCK_IO_PAGE_SIZE;
-+		iova += page_size;
-+		uptr += page_size;
- 	}
- 	rc = 0;
- 
-@@ -1795,7 +1721,7 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
- 	if (IS_ERR(hwpt))
- 		return PTR_ERR(hwpt);
- 
--	if (!(mock->flags & MOCK_DIRTY_TRACK)) {
-+	if (!(mock->flags & MOCK_DIRTY_TRACK) || !mock->iommu.ops->set_dirty) {
- 		rc = -EINVAL;
- 		goto out_put;
- 	}
-@@ -1814,22 +1740,10 @@ static int iommufd_test_dirty(struct iommufd_ucmd *ucmd, unsigned int mockpt_id,
- 	}
- 
- 	for (i = 0; i < max; i++) {
--		unsigned long cur = iova + i * page_size;
--		void *ent, *old;
--
- 		if (!test_bit(i, (unsigned long *)tmp))
- 			continue;
--
--		ent = xa_load(&mock->pfns, cur / page_size);
--		if (ent) {
--			unsigned long val;
--
--			val = xa_to_value(ent) | MOCK_PFN_DIRTY_IOVA;
--			old = xa_store(&mock->pfns, cur / page_size,
--				       xa_mk_value(val), GFP_KERNEL);
--			WARN_ON_ONCE(ent != old);
--			count++;
--		}
-+		mock->iommu.ops->set_dirty(&mock->iommu, iova + i * page_size);
-+		count++;
- 	}
- 
- 	cmd->dirty.out_nr_dirty = count;
-@@ -2202,3 +2116,5 @@ void iommufd_test_exit(void)
- 	platform_device_unregister(selftest_iommu_dev);
- 	debugfs_remove_recursive(dbgfs_root);
- }
-+
-+MODULE_IMPORT_NS("GENERIC_PT_IOMMU");
-diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
-index dc06b2c720b0a4..8b48e374d983f9 100644
---- a/include/linux/generic_pt/iommu.h
-+++ b/include/linux/generic_pt/iommu.h
-@@ -73,6 +73,18 @@ struct pt_iommu_info {
- };
- 
- struct pt_iommu_ops {
-+	/**
-+	 * @set_dirty: Make the iova write dirty
-+	 * @iommu_table: Table to manipulate
-+	 * @iova: IO virtual address to start
-+	 *
-+	 * This is only used by iommufd testing. It makes the iova dirty so that
-+	 * read_and_clear_dirty() will see it as dirty. Unlike all the other ops
-+	 * this one is safe to call without holding any locking. It may return
-+	 * -EAGAIN if there is a race.
-+	 */
-+	int (*set_dirty)(struct pt_iommu *iommu_table, dma_addr_t iova);
-+
- 	/**
- 	 * @get_info: Return the pt_iommu_info structure
- 	 * @iommu_table: Table to query
-diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
-index 3eebf5e3b974f4..595b0a3ead645c 100644
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -13,9 +13,6 @@
- 
- static unsigned long HUGEPAGE_SIZE;
- 
--#define MOCK_PAGE_SIZE (PAGE_SIZE / 2)
--#define MOCK_HUGE_PAGE_SIZE (512 * MOCK_PAGE_SIZE)
--
- static unsigned long get_huge_page_size(void)
- {
- 	char buf[80];
-@@ -2058,6 +2055,12 @@ FIXTURE_VARIANT(iommufd_dirty_tracking)
- 
- FIXTURE_SETUP(iommufd_dirty_tracking)
- {
-+	struct iommu_option cmd = {
-+		.size = sizeof(cmd),
-+		.option_id = IOMMU_OPTION_HUGE_PAGES,
-+		.op = IOMMU_OPTION_OP_SET,
-+		.val64 = 0,
-+	};
- 	size_t mmap_buffer_size;
- 	unsigned long size;
- 	int mmap_flags;
-@@ -2066,7 +2069,7 @@ FIXTURE_SETUP(iommufd_dirty_tracking)
- 
- 	if (variant->buffer_size < MOCK_PAGE_SIZE) {
- 		SKIP(return,
--		     "Skipping buffer_size=%lu, less than MOCK_PAGE_SIZE=%lu",
-+		     "Skipping buffer_size=%lu, less than MOCK_PAGE_SIZE=%u",
- 		     variant->buffer_size, MOCK_PAGE_SIZE);
- 	}
- 
-@@ -2114,16 +2117,18 @@ FIXTURE_SETUP(iommufd_dirty_tracking)
- 	assert((uintptr_t)self->bitmap % PAGE_SIZE == 0);
- 
- 	test_ioctl_ioas_alloc(&self->ioas_id);
--	/* Enable 1M mock IOMMU hugepages */
--	if (variant->hugepages) {
--		test_cmd_mock_domain_flags(self->ioas_id,
--					   MOCK_FLAGS_DEVICE_HUGE_IOVA,
--					   &self->stdev_id, &self->hwpt_id,
--					   &self->idev_id);
--	} else {
--		test_cmd_mock_domain(self->ioas_id, &self->stdev_id,
--				     &self->hwpt_id, &self->idev_id);
--	}
-+
-+	/*
-+	 * For dirty testing it is important that the page size fed into
-+	 * the iommu page tables matches the size the dirty logic
-+	 * expects, or set_dirty can touch too much stuff.
-+	 */
-+	cmd.object_id = self->ioas_id;
-+	if (!variant->hugepages)
-+		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+
-+	test_cmd_mock_domain(self->ioas_id, &self->stdev_id, &self->hwpt_id,
-+			     &self->idev_id);
- }
- 
- FIXTURE_TEARDOWN(iommufd_dirty_tracking)
-@@ -2248,18 +2253,23 @@ TEST_F(iommufd_dirty_tracking, device_dirty_capability)
- TEST_F(iommufd_dirty_tracking, get_dirty_bitmap)
- {
- 	uint32_t page_size = MOCK_PAGE_SIZE;
-+	uint32_t ioas_id = self->ioas_id;
- 	uint32_t hwpt_id;
--	uint32_t ioas_id;
- 
- 	if (variant->hugepages)
- 		page_size = MOCK_HUGE_PAGE_SIZE;
- 
--	test_ioctl_ioas_alloc(&ioas_id);
- 	test_ioctl_ioas_map_fixed_id(ioas_id, self->buffer,
- 				     variant->buffer_size, MOCK_APERTURE_START);
- 
--	test_cmd_hwpt_alloc(self->idev_id, ioas_id,
--			    IOMMU_HWPT_ALLOC_DIRTY_TRACKING, &hwpt_id);
-+	if (variant->hugepages)
-+		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
-+					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
-+					    MOCK_IOMMUPT_HUGE, &hwpt_id);
-+	else
-+		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
-+					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
-+					    MOCK_IOMMUPT_DEFAULT, &hwpt_id);
- 
- 	test_cmd_set_dirty_tracking(hwpt_id, true);
- 
-@@ -2285,18 +2295,24 @@ TEST_F(iommufd_dirty_tracking, get_dirty_bitmap)
- TEST_F(iommufd_dirty_tracking, get_dirty_bitmap_no_clear)
- {
- 	uint32_t page_size = MOCK_PAGE_SIZE;
-+	uint32_t ioas_id = self->ioas_id;
- 	uint32_t hwpt_id;
--	uint32_t ioas_id;
- 
- 	if (variant->hugepages)
- 		page_size = MOCK_HUGE_PAGE_SIZE;
- 
--	test_ioctl_ioas_alloc(&ioas_id);
- 	test_ioctl_ioas_map_fixed_id(ioas_id, self->buffer,
- 				     variant->buffer_size, MOCK_APERTURE_START);
- 
--	test_cmd_hwpt_alloc(self->idev_id, ioas_id,
--			    IOMMU_HWPT_ALLOC_DIRTY_TRACKING, &hwpt_id);
-+
-+	if (variant->hugepages)
-+		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
-+					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
-+					    MOCK_IOMMUPT_HUGE, &hwpt_id);
-+	else
-+		test_cmd_hwpt_alloc_iommupt(self->idev_id, ioas_id,
-+					    IOMMU_HWPT_ALLOC_DIRTY_TRACKING,
-+					    MOCK_IOMMUPT_DEFAULT, &hwpt_id);
- 
- 	test_cmd_set_dirty_tracking(hwpt_id, true);
- 
-diff --git a/tools/testing/selftests/iommu/iommufd_utils.h b/tools/testing/selftests/iommu/iommufd_utils.h
-index 3c3e08b8c90eb3..6d426fa52f860e 100644
---- a/tools/testing/selftests/iommu/iommufd_utils.h
-+++ b/tools/testing/selftests/iommu/iommufd_utils.h
-@@ -215,6 +215,18 @@ static int _test_cmd_hwpt_alloc(int fd, __u32 device_id, __u32 pt_id, __u32 ft_i
- 	ASSERT_EQ(0, _test_cmd_hwpt_alloc(self->fd, device_id, pt_id, 0, flags,   \
- 					  hwpt_id, IOMMU_HWPT_DATA_NONE, NULL, \
- 					  0))
-+#define test_cmd_hwpt_alloc_iommupt(device_id, pt_id, flags, iommupt_type, \
-+				    hwpt_id)                               \
-+	({                                                                 \
-+		struct iommu_hwpt_selftest user_cfg = {                    \
-+			.pagetable_type = iommupt_type                     \
-+		};                                                         \
-+                                                                           \
-+		ASSERT_EQ(0, _test_cmd_hwpt_alloc(                         \
-+				     self->fd, device_id, pt_id, 0, flags, \
-+				     hwpt_id, IOMMU_HWPT_DATA_SELFTEST,    \
-+				     &user_cfg, sizeof(user_cfg)));        \
-+	})
- #define test_err_hwpt_alloc(_errno, device_id, pt_id, flags, hwpt_id)   \
- 	EXPECT_ERRNO(_errno, _test_cmd_hwpt_alloc(                      \
- 				     self->fd, device_id, pt_id, 0, flags, \
+Thanks.
 -- 
-2.43.0
+~Randy
 
