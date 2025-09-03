@@ -1,82 +1,334 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A7730F528;
-	Wed,  3 Sep 2025 14:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F32B2E92C3
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 14:14:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756908182; cv=none; b=COZ/6ikU2IHLBTvcqzyc8JZwMQ8qywWLr8JLiJub2ysHYM6McLFGIqqiI2mqiQh/MGjK/c85Bp8wm5PFO+nbQrF7ckYXvLo2Vcyy1Jo4Rb2G+FOJ12dsi1MXRvDvzbUE5nJIWpvM5dn4krb6FxUyFg1M7uQfceyJNR7U/h9ESoI=
+	t=1756908900; cv=none; b=PVlCLQiNfq0dzntlccAPHK+2z3s6zoWGkhoqtbJuejF6WZjxBvGXKnOrzuDIRDGFSymcmUNhrpJfzQ/L2UaXyrzwjUhPnaYyGUj97Giv07jqkO8F+pkmMnFayGTuafxsTcqoDoMFdoaxxdMIcIhTuyrozes8QFrDZ9KU+Q14eS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756908182; c=relaxed/simple;
-	bh=Ov0nrLS0OcqS08nKtyCJQ1I/kTUYHcBS1+Kn1Ozmnm4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tfHmrWO5IIhZ1X/fgNObyv4o4kQ6ygvDMdo++Zycp2eeJkC8ysGM0H/Etta0CNOHCcLShmVsWv5ZObsiHWYCNl53Z3GOuA1+5wfpWQazH12SUsP7RJDN7wHPEHQasYOWcw1vCSSxX6mkMTVJtQGXlRaFGel7YgkX/H0Ls4KXonU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPnNxN0t; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756908900; c=relaxed/simple;
+	bh=7z0O2nG5P8sF45YF4K38XBklUL2KhQ6VXBcBADLg07A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G4NKNiN0O3F5a4zHcFhYXdUcoA5WRDvw4awJp/pwYMMrbrEGW/jgTRxdg03LoNeJnwIw0ydIOhZ0RiFAPd7sy25+Wqgpud5f0QCD0PKkbQ5nGFkHJH9XeTtkABE197Jw/kNpe4hWm0M6MLl37K99/Xxa4DWt22sScVb0eGB6O/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrZkpimH; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPnNxN0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4726C4CEF4;
-	Wed,  3 Sep 2025 14:02:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756908182;
-	bh=Ov0nrLS0OcqS08nKtyCJQ1I/kTUYHcBS1+Kn1Ozmnm4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gPnNxN0tvRwtsH54UILMJxtCL2STueLpueR/0TF9tBN2BeGe87K2BJtUJSuPc716t
-	 fZcYOsweEHEjjqZ3Ap4QsnJ8zE6OloG2s+zlQwfG150EI/u/PCPeKK5y8XxAxgOpG7
-	 zKIRl2KZxWwgp/h2B6+MUjt5Z0IDcqPxnlmKwxE0MsLHvCxkGfGR7cRjm8/Dk1wXws
-	 UNkYN5g7sFv7soEHKRr6tAN3vGWA8TK4H4Y1UrZ9hMYkP1cMLz0WN6XEhmsUEB/X6Y
-	 6KPALCBb0wLYa2lCXEZ3iLGxwyG4JJJHqBWMVs0NHkRfw3rCMZu0I52BKLY1Ov+jic
-	 YzeHb2gHzKg2Q==
-Date: Wed, 3 Sep 2025 15:02:56 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, achill@achill.org
-Subject: Re: [PATCH 6.1 00/50] 6.1.150-rc1 review
-Message-ID: <fad77ca3-95b3-45b9-ba05-21e3dfef83c4@sirena.org.uk>
-References: <20250902131930.509077918@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrZkpimH"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-61cc281171cso11385137a12.0
+        for <patches@lists.linux.dev>; Wed, 03 Sep 2025 07:14:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756908897; x=1757513697; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lHLCbxm2qevOsyTY7hfbOkOW4ktOmeHjBjDsV0iAsNU=;
+        b=TrZkpimH/KZ5qFTZNIaC4q5iRPNKHwSA3Aiv/zMx/VTUAKcwXg7HBxsfmCCk2er27c
+         OgxRO5gQOWzV8XlijfTSWZRBcDucJmfIZDz3UB9zlNgKEygjMrSCM3emGC0hEIrjL2Vm
+         0KqfLE++rdgLkLh330Scvk9ygfaCDsXJRsfBrdyu9taQlMbavNBTlB1SlAOr4fqwVDst
+         5oZhJaAjMVqjokaBwSiv+m+b65t/oARy7p05X1n8rf389MlOKQk/GwlUw7szvy9fDRTo
+         hj1z2hU7Ywp1w60wifOZXpfff+sicOwlpiwQ8UxTuQqjw6MUh6+wnvPmEAx3FRHtvpsu
+         kt5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756908897; x=1757513697;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lHLCbxm2qevOsyTY7hfbOkOW4ktOmeHjBjDsV0iAsNU=;
+        b=Z+Mr88qNEDjXCfP+77VcmgPeSV5w2OzH8V40kKRTiQB9x6Tgb0myOvcu9O/UEj9I7Q
+         1RheWjszsUv1wFs0Sqa8hByPOwUIz8B68mQBwe/JlWLBaGUSXMJ3zauWK+72SEhvoKDq
+         UfFeE1kpqanIsHsAlgXquY2bLbMkTtNscwxekBUIMkB+XhN+PD0MbntkO/p6sf+Ohdph
+         F0IkKmX/aMJRSlhC2NskumZIsPgsPTylWPzSUzGBtTKGAd2DuwekMat318h89+uSCge5
+         PE+3mkqInnoZZFYuxN7S6nPp+uhHR2f1zwyS0y6OilvqiriR7U1iK/r1mv86VSQYupZv
+         eJPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXUP5emDCwYCeQPh2eTBy2OpM0QZQqxFJVW9mRDSxHpoWoI0n8oVnic9LSLvDiwCgMDBMYcL5Ca@lists.linux.dev
+X-Gm-Message-State: AOJu0YzCT69X8t69KNRHuJ3CbvEfhMpyda6olB3i4+NRZ58/bq9poyJu
+	iHtoPlKk2cx535wdhmsr16MGgHKEUISzc2exV3LTVOUrV+sTMc45F9xmqU5noZaYO11+T8rXn1x
+	F3WeJ7BKLX2QWpcbZ8sLQNVio8fyolbs=
+X-Gm-Gg: ASbGncvQFfmfUOocu+un452qTL9GE7hXACaI4sTz+SjLeWeRmS3X68Ay0WrcI9rcNGF
+	tskOd6S373oePO92RAVGVpRqa0mJ92ei/1MUwTGLWEcPH3n4m+dA5Em9Vdr6mriqaQAQQpv/8Ni
+	/eY2atSCXHeDqh0DWT0nm9AIreqXEbAoSZlWTpBYcJpzgeLfzWHGS5jJk3bXnWjgNQVuB0E+peP
+	H73Czt7quzPzw/uDg==
+X-Google-Smtp-Source: AGHT+IExdsquEhg4Y7gn/T31I32x6vp4PP00/sIHuQwzHhGFjnQjuw1ubn2EZCbVr7BAg8ZN3AP7lol3/uimD46c03I=
+X-Received: by 2002:a05:6402:51cb:b0:618:2733:1a52 with SMTP id
+ 4fb4d7f45d1cf-61d26997500mr13189130a12.8.1756908896472; Wed, 03 Sep 2025
+ 07:14:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mYdIpcyd60mfR52A"
-Content-Disposition: inline
-In-Reply-To: <20250902131930.509077918@linuxfoundation.org>
-X-Cookie: You were s'posed to laugh!
+References: <20250901231457.1179748-1-rdunlap@infradead.org>
+ <CAOQ4uxjXvYBsW1Nb2HKaoUg1qi8Pkq1XKtQEbnAvMUGcp7LrZA@mail.gmail.com>
+ <5ff4dfe2-271f-4967-bb45-ad59614edc37@infradead.org> <a6246609-3ec0-4e38-8733-b2cf3b8fbd9a@infradead.org>
+In-Reply-To: <a6246609-3ec0-4e38-8733-b2cf3b8fbd9a@infradead.org>
+From: Amir Goldstein <amir73il@gmail.com>
+Date: Wed, 3 Sep 2025 16:14:45 +0200
+X-Gm-Features: Ac12FXyjWPU17SHaCP67thoU9lOuY_REmGjEqZhmjb3HYVjgu2ZGEt5MECy2X6E
+Message-ID: <CAOQ4uxhN2kPLguMN+VR8qu4AzBzLziFADqJg_dvOOO_gw=GpTw@mail.gmail.com>
+Subject: Re: [PATCH v2] uapi/fcntl: define RENAME_* and AT_RENAME_* macros
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-fsdevel@vger.kernel.org, patches@lists.linux.dev, 
+	Jeff Layton <jlayton@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
+	Alexander Aring <alex.aring@gmail.com>, Josef Bacik <josef@toxicpanda.com>, 
+	Aleksa Sarai <cyphar@cyphar.com>, Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
+	Matthew Wilcox <willy@infradead.org>, David Howells <dhowells@redhat.com>, linux-api@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Sep 3, 2025 at 2:46=E2=80=AFAM Randy Dunlap <rdunlap@infradead.org>=
+ wrote:
+>
+>
+>
+> On 9/2/25 2:31 PM, Randy Dunlap wrote:
+> > Hi,
+> >
+> > On 9/1/25 11:58 PM, Amir Goldstein wrote:
+> >> On Tue, Sep 2, 2025 at 1:14=E2=80=AFAM Randy Dunlap <rdunlap@infradead=
+.org> wrote:
+> >>>
+> >>> Define the RENAME_* and AT_RENAME_* macros exactly the same as in
+> >>> recent glibc <stdio.h> so that duplicate definition build errors in
+> >>> both samples/watch_queue/watch_test.c and samples/vfs/test-statx.c
+> >>> no longer happen. When they defined in exactly the same way in
+> >>> multiple places, the build errors are prevented.
+> >>>
+> >>> Defining only the AT_RENAME_* macros is not sufficient since they
+> >>> depend on the RENAME_* macros, which may not be defined when the
+> >>> AT_RENAME_* macros are used.
+> >>>
+> >>> Build errors being fixed:
+> >>>
+> >>> for samples/vfs/test-statx.c:
+> >>>
+> >>> In file included from ../samples/vfs/test-statx.c:23:
+> >>> usr/include/linux/fcntl.h:159:9: warning: =E2=80=98AT_RENAME_NOREPLAC=
+E=E2=80=99 redefined
+> >>>   159 | #define AT_RENAME_NOREPLACE     0x0001
+> >>> In file included from ../samples/vfs/test-statx.c:13:
+> >>> /usr/include/stdio.h:171:10: note: this is the location of the previo=
+us definition
+> >>>   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+> >>> usr/include/linux/fcntl.h:160:9: warning: =E2=80=98AT_RENAME_EXCHANGE=
+=E2=80=99 redefined
+> >>>   160 | #define AT_RENAME_EXCHANGE      0x0002
+> >>> /usr/include/stdio.h:173:10: note: this is the location of the previo=
+us definition
+> >>>   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+> >>> usr/include/linux/fcntl.h:161:9: warning: =E2=80=98AT_RENAME_WHITEOUT=
+=E2=80=99 redefined
+> >>>   161 | #define AT_RENAME_WHITEOUT      0x0004
+> >>> /usr/include/stdio.h:175:10: note: this is the location of the previo=
+us definition
+> >>>   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+> >>>
+> >>> for samples/watch_queue/watch_test.c:
+> >>>
+> >>> In file included from usr/include/linux/watch_queue.h:6,
+> >>>                  from ../samples/watch_queue/watch_test.c:19:
+> >>> usr/include/linux/fcntl.h:159:9: warning: =E2=80=98AT_RENAME_NOREPLAC=
+E=E2=80=99 redefined
+> >>>   159 | #define AT_RENAME_NOREPLACE     0x0001
+> >>> In file included from ../samples/watch_queue/watch_test.c:11:
+> >>> /usr/include/stdio.h:171:10: note: this is the location of the previo=
+us definition
+> >>>   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+> >>> usr/include/linux/fcntl.h:160:9: warning: =E2=80=98AT_RENAME_EXCHANGE=
+=E2=80=99 redefined
+> >>>   160 | #define AT_RENAME_EXCHANGE      0x0002
+> >>> /usr/include/stdio.h:173:10: note: this is the location of the previo=
+us definition
+> >>>   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+> >>> usr/include/linux/fcntl.h:161:9: warning: =E2=80=98AT_RENAME_WHITEOUT=
+=E2=80=99 redefined
+> >>>   161 | #define AT_RENAME_WHITEOUT      0x0004
+> >>> /usr/include/stdio.h:175:10: note: this is the location of the previo=
+us definition
+> >>>   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+> >>>
+> >>> Fixes: b4fef22c2fb9 ("uapi: explain how per-syscall AT_* flags should=
+ be allocated")
+> >>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> >>> ---
+> >>> Cc: Amir Goldstein <amir73il@gmail.com>
+> >>> Cc: Jeff Layton <jlayton@kernel.org>
+> >>> Cc: Chuck Lever <chuck.lever@oracle.com>
+> >>> Cc: Alexander Aring <alex.aring@gmail.com>
+> >>> Cc: Josef Bacik <josef@toxicpanda.com>
+> >>> Cc: Aleksa Sarai <cyphar@cyphar.com>
+> >>> Cc: Jan Kara <jack@suse.cz>
+> >>> Cc: Christian Brauner <brauner@kernel.org>
+> >>> Cc: Matthew Wilcox <willy@infradead.org>
+> >>> Cc: David Howells <dhowells@redhat.com>
+> >>> CC: linux-api@vger.kernel.org
+> >>> To: linux-fsdevel@vger.kernel.org
+> >>>
+> >>>  include/uapi/linux/fcntl.h |    9 ++++++---
+> >>>  1 file changed, 6 insertions(+), 3 deletions(-)
+> >>>
+> >>> --- linux-next-20250819.orig/include/uapi/linux/fcntl.h
+> >>> +++ linux-next-20250819/include/uapi/linux/fcntl.h
+> >>> @@ -156,9 +156,12 @@
+> >>>   */
+> >>>
+> >>>  /* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+> >>> -#define AT_RENAME_NOREPLACE    0x0001
+> >>> -#define AT_RENAME_EXCHANGE     0x0002
+> >>> -#define AT_RENAME_WHITEOUT     0x0004
+> >>> +# define RENAME_NOREPLACE (1 << 0)
+> >>> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+> >>> +# define RENAME_EXCHANGE (1 << 1)
+> >>> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+> >>> +# define RENAME_WHITEOUT (1 << 2)
+> >>> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+> >>>
+> >>
+> >> This solution, apart from being terribly wrong (adjust the source to m=
+atch
+> >> to value of its downstream copy), does not address the issue that Math=
+ew
+> >> pointed out on v1 discussion [1]:
+> >
+> > I didn't forget or ignore this.
+> > If the macros have the same values (well, not just values but also the
+> > same text), then I don't see why it matters whether they are in some ol=
+der
+> > version of glibc.
+> >
+> >> $ grep -r AT_RENAME_NOREPLACE /usr/include
+> >> /usr/include/linux/fcntl.h:#define AT_RENAME_NOREPLACE  0x0001
+> >>
+> >> It's not in stdio.h at all.  This is with libc6 2.41-10
+> >>
+> >> [1] https://lore.kernel.org/linux-fsdevel/aKxfGix_o4glz8-Z@casper.infr=
+adead.org/
+> >>
+> >> I don't know how to resolve the mess that glibc has created.
+> >
+> > Yeah, I guess I don't either.
+> >
+> >> Perhaps like this:
+> >>
+> >> diff --git a/include/uapi/linux/fcntl.h b/include/uapi/linux/fcntl.h
+> >> index f291ab4f94ebc..dde14fa3c2007 100644
+> >> --- a/include/uapi/linux/fcntl.h
+> >> +++ b/include/uapi/linux/fcntl.h
+> >> @@ -155,10 +155,16 @@
+> >>   * as possible, so we can use them for generic bits in the future if =
+necessary.
+> >>   */
+> >>
+> >> -/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+> >> -#define AT_RENAME_NOREPLACE    0x0001
+> >> -#define AT_RENAME_EXCHANGE     0x0002
+> >> -#define AT_RENAME_WHITEOUT     0x0004
+> >> +/*
+> >> + * The legacy renameat2(2) RENAME_* flags are conceptually also
+> >> syscall-specific
+> >> + * flags, so it could makes sense to create the AT_RENAME_* aliases
+> >> for them and
+> >> + * maybe later add support for generic AT_* flags to this syscall.
+> >> + * However, following a mismatch of definitions in glibc and since no
+> >> kernel code
+> >> + * currently uses the AT_RENAME_* aliases, we leave them undefined he=
+re.
+> >> +#define AT_RENAME_NOREPLACE    RENAME_NOREPLACE
+> >> +#define AT_RENAME_EXCHANGE     RENAME_EXCHANGE
+> >> +#define AT_RENAME_WHITEOUT     RENAME_WHITEOUT
+> >> +*/
+> >
+> > Well, we do have samples/ code that uses fcntl.h (indirectly; maybe
+> > that can be fixed).
+> > See the build errors in the patch description.
+> >
+> >
+> >>  /* Flag for faccessat(2). */
+> >>  #define AT_EACCESS             0x200   /* Test access permitted for
+> >
+> > With this patch (your suggestion above):
+> >
+> > IF a userspace program in samples/ uses <uapi/linux/fcntl.h> without
+> > using <stdio.h>, [yes, I created one to test this] and without using
+> > <uapi/linux/fs.h> then the build fails with similar build errors:
+> >
+> > ../samples/watch_queue/watch_nostdio.c: In function =E2=80=98consumer=
+=E2=80=99:
+> > ../samples/watch_queue/watch_nostdio.c:33:32: error: =E2=80=98RENAME_NO=
+REPLACE=E2=80=99 undeclared (first use in this function)
+> >    33 |                         return RENAME_NOREPLACE;
+> > ../samples/watch_queue/watch_nostdio.c:33:32: note: each undeclared ide=
+ntifier is reported only once for each function it appears in
+> > ../samples/watch_queue/watch_nostdio.c:37:32: error: =E2=80=98RENAME_EX=
+CHANGE=E2=80=99 undeclared (first use in this function)
+> >    37 |                         return RENAME_EXCHANGE;
+> > ../samples/watch_queue/watch_nostdio.c:41:32: error: =E2=80=98RENAME_WH=
+ITEOUT=E2=80=99 undeclared (first use in this function)
+> >    41 |                         return RENAME_WHITEOUT;
+> >
+> > This build succeeds with my version 1 patch (full defining of both
+> > RENAME_* and AT_RENAME_* macros). It fails with the patch that you sugg=
+ested
+> > above.
+> >
+> > OK, here's what I propose.
+> >
+> > a. remove the unused and (sort of) recently added AT_RENAME_* macros
+> > in include/uapi/linux/fcntl.h. Nothing in the kernel tree uses them.
+> > This is:
+> >
+> > commit b4fef22c2fb9
+> > Author: Aleksa Sarai <cyphar@cyphar.com>
+> > Date:   Wed Aug 28 20:19:42 2024 +1000
+> >     uapi: explain how per-syscall AT_* flags should be allocated
+> >
+> > These macros should have never been added here IMO.
+> > Just putting them somewhere as examples (in comments) would be OK.
+> >
 
---mYdIpcyd60mfR52A
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I agree.
+I did not get this patch from Aleksa,
+but I proposed something similar above.
 
-On Tue, Sep 02, 2025 at 03:20:51PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.150 release.
-> There are 50 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> > This alone fixes all of the build errors in samples/ that I originally
+> > reported.
+> >
+> > b. if a userspace program wants to use the RENAME_* macros, it should
+> > #include <linux/fs.h> instead of <linux/fcntl.h>.
+> >
+> > This fixes the "contrived" build error that I manufactured.
+> >
+> > Note that some programs in tools/ do use AT_RENAME_* (all 3 macros)
+> > but they define those macros locally.
+> >
+>
+> And after more testing, this is what I think works:
+>
+> a. remove all of the AT_RENAME-* macros from <uapi/linux/fcntl.h>
+>    (as above)
 
-Tested-by: Mark Brown <broonie@kernel.org>
+ok.
 
---mYdIpcyd60mfR52A
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> b. put the AT_RENAME_* macros into <uapi/linux/fs.h> like so:
+>
+> +/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
+> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
+> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
+>
+> so that they match what is in upstream glibc stdio.h, hence not
+> causing duplicate definition errors.
 
------BEGIN PGP SIGNATURE-----
+Disagree.
+We do not need to define them at all.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmi4So8ACgkQJNaLcl1U
-h9CU3wf+JXw/Vv4VG9kabz/uHsyI6KKsiGmZLxr1VY9XNcwK7+XCgt/H2YPCdfVD
-WONLTNYH0Q2L+7c02vJINchmi4Uok/3LZsxNR9qRdi7qYPSPyougSFSm0202oaz9
-9D5/ZExLGKtfqfQ8EQZNnMKLU7jwlYZjcRbnGeVySR7Le99OlVC3uVzbkG0NmMR6
-8HoiWCe33bIw9fCSJ8Q6mPOLf8nbQ6reJRu1QwZaRXtlEmfXLqVp0Zw4QR3hYbXE
-VorGqbaQsG9mxwfQZsx8iwAY97qRtF6hWLcOQDkqNaj4Gb/3f9aBpIZhzJ1ZHSO0
-JAMZtqYmlv1dT7m/QYAvVd73KZW0dw==
-=bSEG
------END PGP SIGNATURE-----
+The *only* reason we defined them in fcntl.h is so the
+definition will be together with the rest of the AT_ flags.
+Now we change that to a comment, but there is no reason to
+define them at fs.h. Why would we need to do that?
 
---mYdIpcyd60mfR52A--
+Thanks,
+Amir.
