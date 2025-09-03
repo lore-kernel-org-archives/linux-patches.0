@@ -1,110 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C262B23BCF8;
-	Wed,  3 Sep 2025 09:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D3321A425;
+	Wed,  3 Sep 2025 09:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756892763; cv=none; b=K66ZRchaYvDlwOKxpXBt/2CAYjF6oD21Zlx38NVnzFSFkW2WuU9ZH1VRX19ydrXRFm+SM9Ow2ysZclHdJsMrp+6xGFPN0wO2ZJV6IBzOYu/ifOr6N5o3L7M8tBBg2WWY/UQTueJlqs6JLZzYE8gerdCsSxyDlMitMj+dd7mnMtQ=
+	t=1756892895; cv=none; b=kJlYJfhYZpZpdDGsvDVw9kE6iT4kfZmS3w1qCIdcCVlAijCwV+Pa5VZfImeCHvPgjygCu1Eh0RllYwYzd15eKipD38nXXVfMNIgvUKVFnlApL9QAk2ZwdGunpuQb5YNWQBDjx2BJBDfOku6tQzl5POzkNifd1zen3TPR0Ujdu1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756892763; c=relaxed/simple;
-	bh=ZKlDPs5tUy7NnCdcegG/WFo2cZdk8beeu3/iLMX0A4c=;
+	s=arc-20240116; t=1756892895; c=relaxed/simple;
+	bh=bMCZYJzX4r1caQDY+4LLdVSIBbbsh6amHV8lHquVp1U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fnAb+Ay0B43CkIdJN9CcH5WeK/OE1BGCZFH8XBGQX4k5gKJR6A+njRHAXKTltJ6/crKTXSbaxQeS8wJPJwSm8zMISdSRHCypaZVKFxD27NY0GEr2Z6qYg0X5GHEB8LvFn8O7RoypPbZA3HU2TLwKHeZ03+LTT08vn2xkAkWtr14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GV0C1yzv; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=GaqCTqfHn5gVQSTEsnyc6uI5mmI0aNLZdaSHIH84bs2AILRumVPXTshZEAHJbnqrBQMkUiu2l25EEITJfS278eoDDv9eOym9mSg6mz+MWCNbPYr+C03upQt5OEGUw/AoxAa//SgLRvmSDB+1GHhF80dOo7GmWuJjVaG7W6lIJyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEpkRS8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GV0C1yzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA252C4CEF0;
-	Wed,  3 Sep 2025 09:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEpkRS8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0CFC4CEF1;
+	Wed,  3 Sep 2025 09:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1756892762;
-	bh=ZKlDPs5tUy7NnCdcegG/WFo2cZdk8beeu3/iLMX0A4c=;
+	s=korg; t=1756892894;
+	bh=bMCZYJzX4r1caQDY+4LLdVSIBbbsh6amHV8lHquVp1U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GV0C1yzvREcrwqNjc2PMT67tBBFW/EXhnoIs/QPooaoc8Obdf9N7h3j7PJ5Z/SYjH
-	 ee9berSxGonB2lm1cEbUhrSeqH47I7a1xEwd3ldBEe7lDDGP/PYRM66DJWLtT6BJid
-	 CZWppXqwnkBGcxaq5o8hmS5jHMhN3xzZSiC11V+8=
-Date: Wed, 3 Sep 2025 11:45:58 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 3/3] rust: error: replace `WARN_ON_ONCE` comment with
- `debug_assert!`
-Message-ID: <2025090325-drinking-illusion-ef3d@gregkh>
-References: <20250829192243.678079-1-ojeda@kernel.org>
- <20250829192243.678079-4-ojeda@kernel.org>
- <CANiq72k7_GbFwRxW5vikF_SpiNcNm7Ff0oe6jyYX_voDg92QFA@mail.gmail.com>
- <2025083032-barmaid-rising-a977@gregkh>
- <CANiq72nAagBBPhyU3XdETMKBuFPbMMRaSTStWPpyLnByYPP=+A@mail.gmail.com>
+	b=vEpkRS8ep6J0XdI2ePyO0Jn8LI59zyV42pu0BySpJ5arERSo6pTQc/QEcrkaEoogC
+	 sdnI9h5eN8VfuJ6pJ6v+6OFdyp8PqPQRn1R8KNWdH+cKT9Ribn3OtBnM7LQbuSFCFJ
+	 lQaDRtXmrPksc8lx1Yo8JVnN4P/MARyDX0Q8aRno=
+Date: Wed, 3 Sep 2025 11:48:11 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	achill@achill.org, Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	clang-built-linux <llvm@lists.linux.dev>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ben Copeland <benjamin.copeland@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 5.4 00/23] 5.4.298-rc1 review
+Message-ID: <2025090317-envelope-professed-b38a@gregkh>
+References: <20250902131924.720400762@linuxfoundation.org>
+ <CA+G9fYtoKARW00i0ct=M+-1OAWoQhE_rvsS6RJPPQ7YEcZ4C1w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72nAagBBPhyU3XdETMKBuFPbMMRaSTStWPpyLnByYPP=+A@mail.gmail.com>
+In-Reply-To: <CA+G9fYtoKARW00i0ct=M+-1OAWoQhE_rvsS6RJPPQ7YEcZ4C1w@mail.gmail.com>
 
-On Sat, Aug 30, 2025 at 01:07:52PM +0200, Miguel Ojeda wrote:
-> On Sat, Aug 30, 2025 at 8:28 AM Greg KH <gregkh@linuxfoundation.org> wrote:
+On Wed, Sep 03, 2025 at 03:11:26PM +0530, Naresh Kamboju wrote:
+> On Tue, 2 Sept 2025 at 19:17, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
 > >
-> > If you wish to state that CONFIG_RUST_DEBUG_ASSERTIONS=y should NEVER be
-> > used in ANY shipping Linux system, then yes, we can carve out an
-> > exception for this (we do that if lockdep is enabled as that should
-> > never be in a running system, only a development one).
+> > This is the start of the stable review cycle for the 5.4.298 release.
+> > There are 23 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.298-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> The config option is meant for development purposes ("debug"). We
-> don't control all its behavior anyway, because the compiler/stdlib
-> will also add many assertions (e.g. for unsafe preconditions). So, for
-> instance, it could easily have a non-trivial performance impact.
 > 
-> For the same reason, it will also change behavior depending on the
-> compiler version. So, for instance, new assertions in new compiler
-> versions could have an impact that is not seen in previous versions.
+> The following build warnings / errors were noticed on powerpc cell_defconfig
+> and mpc83xx_defconfig with clang-20 toolchain on stable-rc 5.4.298-rc1.
 > 
-> Thus, for this particular config option, we cannot guarantee much, and
-> the help text already states "This can be used to enable extra
-> debugging code in development but not in production.".
+> But the gcc-12 build passed.
 > 
-> Having said that, I regularly CI-test our main branches with the
-> option enabled, and it has worked fine so far.
+> * powerpc, build
+>   - clang-20-cell_defconfig
+>   - clang-20-mpc83xx_defconfig
+>   - clang-nightly-cell_defconfig
+>   - clang-nightly-mpc83xx_defconfig
 > 
-> So if a user actually run with such kind of asserts in production,
-> because they really want to crash on anything and everything, I don't
-> see why they couldn't. It may really be that it actually stops an
-> important exploit from going on. Of course, it may also be that it
-> elevates a trivial bug into a denial of service elsewhere, but that
-> risk may be worth it for certain users.
+> Regression Analysis:
+> - New regression? yes
+> - Reproducibility? yes
 > 
-> In fact, I would say it is a good thing that certain specialized users
-> run with it enabled, because then it means they may find potential
-> bugs for others, and that makes everyone safer in practice.
+> First seen on 5.4.298-rc1
+> Bad: 5.4.298-rc1
+> Good: v5.4.297
 > 
-> But I don't know what exact constraints the CVE system puts on you, so
-> it is hard to assess what the best wording for such an option would
-> be.
+> Build regression: stable-rc 5.4.298-rc1 powerpc/boot/util.S:44: Error:
+> junk at end of line, first unrecognized character is `0'
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-There are no "constraints" only a definition of a vulnerability that we
-must follow.  And for that, any way that a user could cause a reboot or
-panic, without having root privileges, gets assigned a CVE.
+Known issue, patch already submitted:
+	https://lore.kernel.org/r/20250902235234.2046667-1-nathan@kernel.org
 
-One exception being if lockdep or a few other "debugging only" options
-are enabled.  Those are explicitly stated by their maintainers that they
-should NEVER be enabled in a real system.  For those we do not assign
-CVEs as they should never be actually triggered by a user.
-
-So I don't know what to recommend here.  I strongly advise against
-adding code to the kernel that can cause users to reboot their boxes if
-they do something.  But hey, if developers want to do that, I'll gladly
-assign CVEs for when it happens :)
+Will queue that up for the next round of releases, using clang-20 on
+5.4.y is brave :)
 
 thanks,
 
