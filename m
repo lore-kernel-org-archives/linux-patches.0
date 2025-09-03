@@ -1,111 +1,91 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from zdiv.net (zdiv.net [46.226.106.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753E3305062
-	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 13:28:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461B0199FB2
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 13:38:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.226.106.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756906140; cv=none; b=LgWhjdvgmkUcLg78JmYBmCAgM4DMaIfHJZ6refn4d2WAmxYZsQFwXferv7AQmfBR+0lzKbmHEhOF3bO7fwylpUxcNutjPGJiauB2B8rAHtHteOFtgGh4SdpGqpHjoK/JWEEnJAcZUgieKj+DIOY04qZBlcm5YxNuGrJUE0CS1I0=
+	t=1756906725; cv=none; b=q/X5sR2y5h5HH2NfH28CI/6GGCDF9JS0RyUGFfgvKb1aBv9/Iz6QJYWrvVcngmr2XyxJ1gJ/Q/lEgNJy8avlK4hTR/TqREcf4XU9afhhsMLiDEZnzFNkVNRz3t2kO2DQ7ll8eeWNCEV8pAg5VV3yV3BZMG9RpbBR3jqgTpY3KRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756906140; c=relaxed/simple;
-	bh=izk0IZmyI3MpZX8dah1iAMq8tH5iGUvz2zunPfvcQnw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EePTGYEQB/UEAbzFhtvJlkYiM54deAlkAgZBCkciUXJD93AxcD0jkbr7gOq7jzWQo9h6qAFt7nUUXCRo3mouUh0lgrOyFn+f1/lxRbSm1dPqLTpzXB4VG9oNnmGGDQGUDA3eRv2PTDNfA9dPLqgS5VeEXeNpbduZQAg5sHrxY4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com; spf=pass smtp.mailfrom=ciq.com; dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b=oLKnxh3B; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ciq.com
+	s=arc-20240116; t=1756906725; c=relaxed/simple;
+	bh=QnjkmYqu/1Je2O6m6fzVTKlJEs++2r7mQWuQXxIDZDM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=Nc8q0VoCTfawFzZfHeL5BXS5qXwtSo+BF41goMUVxiRaKsWHn1y4BBRT92aHdo3Ez8mCxljiU2T8KeDkhMXAjTzzgkU/bo+nI4QvTq05nlqlxdNsWePYjE4vt+fDrCRQh1Yx50+PiDvQcNplqq8KbVx+rcTJs+PKS9mxVTeuw1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zdiv.net; spf=pass smtp.mailfrom=zdiv.net; dkim=pass (2048-bit key) header.d=zdiv.net header.i=@zdiv.net header.b=IbPC+GnG; arc=none smtp.client-ip=46.226.106.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zdiv.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zdiv.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b="oLKnxh3B"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4b307179ea4so46740771cf.2
-        for <patches@lists.linux.dev>; Wed, 03 Sep 2025 06:28:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ciq.com; s=s1; t=1756906137; x=1757510937; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g1xV/deyqGkmJxLaaOIY+1qBi2UrFX9CrtK1ZvKF0rs=;
-        b=oLKnxh3B48z5twLvb5Q4yxCajsAumAlsrhmn3fkyfUweewxwsS/WQh1c3rH+BOMNlr
-         zOVFfRyYTMLKRZS6vT5UF7d5T38yp82x1yY93wXdBsQBkkXzhlOvy+0JIktv5V0qmreM
-         9W9wyldMz0ihT+dPWxtGJ0tWJ0YpMuzEFb4yGyO0lUDKSn+czJETXsMCchqe1ZrsOYpz
-         nopaoOxKOaxNK8MWtKLuuNvQ2LOoqXMyc7fuq2Px88UiUi6lxhHMKh7oMk6FnqJCtABi
-         e+RJHQFMMgZ+QzRL1+h0cPzC02Zmuah0ptFIVlSjUhLlBs12ebHsWUCaoMwewoPjcL60
-         GjNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756906137; x=1757510937;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g1xV/deyqGkmJxLaaOIY+1qBi2UrFX9CrtK1ZvKF0rs=;
-        b=oYXqQJYltBq6zlcIKurn8L30sZ6lLz5iuKN7tw/SY501NloCxWZNrCcjXLaGgISjIP
-         aOQ2mhGV0WiNhxLi2fnE2PUmoPLi/wUtQ1Khti4Rv7n+cduMRaoxfweeIyXyLSuQfYOR
-         M7SxOru/YzGEzIPWpmG9mA5FLHUDae3dKlgtKck5DSTmrWUJy9rP0IzY+HafG7R2BJPV
-         SYDBus+HSpnyN3CgMlgPc6Od5y5dUZTXf2KpYVgL7hm2So9YrO9hlgfHYZctQUWh99jD
-         Le/fAeIFPLxebILMpvrReaQ9rJ4LT7oAafdlNDRAPoR5qCrVu4Pw2N+g8y4hbOFNlvra
-         /Rwg==
-X-Forwarded-Encrypted: i=1; AJvYcCVMxTYMDkMfJ9bdn4JS4qMk4IlQHY6xd3wGiAyWziM1keawVSZqb9F0FofuwrjwVn5hPYWG/01y@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy/qJLYSA6klmkNeat5d28wyiLHaHTUb2ZUGjw/et22vi+MqKM5
-	HIU2X2kvEK/oFwqYnOuGbm7rHrmKQE0clMF7DH/R1jxSG9kS71XmGfx02C69eeZYnLCXSelMBLs
-	DUe0Jg2jBfIqM24byUdNfo2mLil2/5YLHVPXdBcqaBQ==
-X-Gm-Gg: ASbGnct0UKl0PHOj2XVlByIR9U+eSWOPUsiCdfHJh1tdm8hpcXoWslLhO2P+RUgyaul
-	Id6cogJklmPn5QWKY+kAPo55jPNGoFlkC6UVhNBb02os6FXbyL42e+3p++D/Ru3EoagjR0g8KtI
-	wO9SI8qgY8suzx4Wwk1kHvowLKVEXaz2JOrpfZ1UdEyOQ7vGqVD/bqq5wz/2XMB1sIVIiEnHpuy
-	53IZbys
-X-Google-Smtp-Source: AGHT+IEb9SF0ZAQ/gl70xHietNZGoqqgRbcYfcZB8vu3mSrxASuhTzMLNODi+2ufxi3Kb5/VCv5lEH2P3alFHmyuJUY=
-X-Received: by 2002:ac8:5d87:0:b0:4a9:c2e1:89c4 with SMTP id
- d75a77b69052e-4b31da3d038mr183413971cf.47.1756906137150; Wed, 03 Sep 2025
- 06:28:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=zdiv.net header.i=@zdiv.net header.b="IbPC+GnG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zdiv.net; s=24;
+	t=1756905121;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=buwyaVC2eaieCu74ufQFtz+GGdBgZ65djZAMVk/mlGw=;
+	b=IbPC+GnGiZl/5AJeoFyyU43MOV0ozSPsmh79WLocWspY0Jy3quSvhF9UG25cv2vLO0azgH
+	AEQAlzaBGgcmRma+xPTZy86NkRWpR/CW92FQSuL+/nrFn6Xc6zfQ/lewoq0gHW1NMVIDN4
+	0Ohk9dvMErhmaYdBrmjTxUl4wPUYcAxTh2KSNi/PtjsSVhw6zfr4usg7PN829sYbmJcCp+
+	G7wp6dx72JU9O1jUjqEwq2ViU4uOFiRGtqXvj31wLokHhDpzN87tp6vMFAmaXcLH0lQ4Yb
+	AAI9mENmjXe822gVl0VcjY5o55C/H7/X1uYPFK54bssy2vhmKv6g8D0ekoC8lg==
+Received: from localhost (<unknown> [2a01:e0a:12:d860:c963:9436:23d3:76c9])
+	by zdiv.net (OpenSMTPD) with ESMTPSA id 05f455d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Sep 2025 15:12:01 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 03 Sep 2025 15:12:01 +0200
+Message-Id: <DCJ6VYEX38V5.299A1614LE5I@zdiv.net>
+Subject: Re: [PATCH 6.12 00/95] 6.12.45-rc1 review
+From: "Jules Maselbas" <jmaselbas@zdiv.net>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ <stable@vger.kernel.org>
+Cc: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+ <torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+ <linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+ <lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+ <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+ <srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>,
+ <hargar@microsoft.com>, <broonie@kernel.org>, <achill@achill.org>
+X-Mailer: aerc 0.21.0
 References: <20250902131939.601201881@linuxfoundation.org>
 In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
-From: Brett Mastbergen <bmastbergen@ciq.com>
-Date: Wed, 3 Sep 2025 09:28:46 -0400
-X-Gm-Features: Ac12FXwi4i5s22HaICVQk8Zg7KdU46JZLCzhgfwfvZeR0OQqZCIwhAezRAG0Tdw
-Message-ID: <CAOBMUvi4yUWxMLU5usvYsCVd_cKd9iQHBqSzVp4sW4Kc9Z3fTg@mail.gmail.com>
-Subject: Re: [PATCH 6.12 00/95] 6.12.45-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, achill@achill.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 2, 2025 at 9:40=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.45 release.
-> There are 95 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.45-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+Hi Greg,
 
-Builds successfully.  Boots and works on qemu and Dell XPS 15 9520 w/
-Intel Core i7-12600H
+Yesterday i experienced an issue with the amdgpu driver on v6.12.44, dmesg =
+saying:
+    [drm:amdgpu_job_submit [amdgpu]] *ERROR* Trying to push to a killed ent=
+ity
 
-Tested-by: Brett Mastbergen <bmastbergen@ciq.com>
+which causes the kernel to freeze/hang, not cool.
 
-Thanks,
-Brett
+I think this issue is fixed by this commit [1]: aa5fc4362fac ("drm/amdgpu: =
+fix task hang from failed job submission during process kill")
+it has a Fixes for the commit: 71598a5a7797 ("drm/amdgpu: Avoid extra evict=
+-restore process.")
+which is in the v6.12.44 tree (but not in v6.12.43)
+
+I am currently on v6.16.4 which include the fix above and i no longer have =
+the issue.
+
+It would be great to include the fix in the v6.12.45 release.
+
+I am not subscribed to this mailing-list, please add me in CC in your reply=
+.
+
+Cheers,
+Jules
+
+some additional info:
+CPU: AMD Ryzen 7 7735HS with Radeon Graphics
+GPU: [AMD/ATI] Rembrandt [Radeon 680M] (rev 0a)
+
+[1] https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/=
+commit/?id=3Daa5fc4362fac9351557eb27c745579159a2e4520
+
