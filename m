@@ -1,102 +1,59 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CF32820B6
-	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 07:47:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951E32E1C55
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 07:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756885645; cv=none; b=SpUv8/qoitgECBTHFPY/UCE3bwQGFCbDq7tAvtQXM/ywqDrX4CqR1G1C/uTCGn5YwWN5np1vmISK7RcUkr0nvoz7ZpZb7RV4Tn7/a0MNU0TFXO8Rt1D6H7ZnlcMa5tYxEn8MXNx0zkFVY/sPn7UXOZaTVk7CsoS5JhaO9BLMD0w=
+	t=1756886370; cv=none; b=jcsghSFn/eO+hgFAfYsPM2hpzWdYJVftbXM/WWoYl3bgZaoBj9yGRBgSN/ieLyWCXLT5PRgTS81v809+LlSP6t1WGUZbrp4TyiY3BOD1SzgYUMoVO7h/gmI30zs9kMHnBcFgPNsIC6DAuerqZpRf8lSktsFgW6fw9glYh+JqlkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756885645; c=relaxed/simple;
-	bh=WB5oFhV6TPfVy/dZQzGsAR9s2F36ZuHdy490NdByYFI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tp5oeoJdEJ4cj/RbTc1UpSDaV1Aft/EsNgtWY4VkfVfuMEojgPUVXEAR2JmujBs/PfSFMFnbfiJ5GgwW2X/+llvft9doz0Iij82gKRAKSugcikEZGNJbGhreCSfCXgEJkdtuc2G7GKNlz+o8WfjjGYVaeH8/A8rhb9RGfOFCLtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=PCVtINom; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1756886370; c=relaxed/simple;
+	bh=bWcrYa09wM8afU1is5QwkSNfFYCNQIT3VyOg4+tWgdw=;
+	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=XnLY1cwXdQt+Zv1pmwGSrsswXl/k/KLLmjCw8HkZs/JyjonE6WrTu08AzXmOAQLdr7tPUdJnTKgDYMsOXu/Wif9M47q3r1mQkwJWk61EgICdTVcBJ9jKgV+7Rit3vSZOiXo07AIncuXorfeUWYyQcjqwTR1lBzEL/YTI40MF8Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWU+9y6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="PCVtINom"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 442191038C103;
-	Wed,  3 Sep 2025 09:47:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1756885641; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=ZH2CuePyC+wEVG/F7e4kduUNkZgVizA9FIDuQHsGJ38=;
-	b=PCVtINomO9jg+j/dhNL7C5piN4tkqzSl2kEbyosQinSCCw7WsaomDX7MhzD1LT9LE658FU
-	iWt8T3DKxU9Mic68D7ZJvTbCKVGscQjks2gYYErtZY0bA1MWoNnIsAqympSgw8lBw/EsQO
-	by5/K5X80XLqCz6uvekwbdmOIBawrPlglJkBn+Buo/DdTfxaR11m3HzXc1iO6PPh+SiR+L
-	udFnO82ZrnUqTT9L2CMXZ9QmjApaL1+G35MubV+cZI+JUj0JeO70TUWGiMOldYTZHoZTMp
-	1kQNU7y4g9ITJXQy83zYfgyNTQZyrb5g8ZzMy175TX1fhFAhib2zYotYTTmELg==
-Date: Wed, 3 Sep 2025 09:47:15 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	achill@achill.org
-Subject: Re: [PATCH 6.16 000/142] 6.16.5-rc1 review
-Message-ID: <aLfygzKOMI2ALBJG@duo.ucw.cz>
-References: <20250902131948.154194162@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWU+9y6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9D8C4CEF0;
+	Wed,  3 Sep 2025 07:59:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756886370;
+	bh=bWcrYa09wM8afU1is5QwkSNfFYCNQIT3VyOg4+tWgdw=;
+	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
+	b=bWU+9y6r/4lC5Fdio3/WKSQOcd0MXFT+s9wx8BhZIWggVhBpzfs134JZoYNsgV4PW
+	 JAkEed7PrSjqxFE4GarQ4Ol4349O0qE5mYpC/z0j3lp5MJ2byJyURYE9FyErSu3vUo
+	 tNYU+TaMH0TAbCCOkBM+mgmFntpFXld1+GTYcfwGU0lpRpoPXSw+yauuklHh2ZVkbj
+	 hxysp/mqjiI7S2YJDoMRcMHI7YKRFCB5dYsCyjmdOK+7WsVARSyZyCm+XJ6s+2PssP
+	 BPZwnwZ8/YfKR8HGZM6GMlqwg7LBn9QnJSzZpCZ1M+97R/3EcxV3/Qhhi9lP0Zhq8b
+	 a/RJGiKeWG6/A==
+Message-ID: <6f5d003df567ca8555c9b6e2a174ac6a@kernel.org>
+Date: Wed, 03 Sep 2025 07:59:26 +0000
+From: "Maxime Ripard" <mripard@kernel.org>
+To: "Nathan Chancellor" <nathan@kernel.org>
+Subject: Re: [PATCH] drm/tidss: dispc: Explicitly include bitfield.h
+In-Reply-To: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
+References: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev, "Jyri Sarha" <jyri.sarha@iki.fi>, "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>, "Thomas
+ Zimmermann" <tzimmermann@suse.de>, "Tomi Valkeinen" <tomi.valkeinen@ideasonboard.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1KYsNb01aP8n7w8a"
-Content-Disposition: inline
-In-Reply-To: <20250902131948.154194162@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
 
+On Tue, 2 Sep 2025 14:15:50 -0700, Nathan Chancellor wrote:
+> After a recent series to use FIELD_PREP and FIELD_MODIFY in
+> tidss_dispc.c, there are many errors when bitfield.h is not implicitly
+> included, such as when building allmodconfig for ARCH=3Dhexagon:
+>=20
+>   drivers/gpu/drm/tidss/tidss_dispc.c:1116:2: error: call to undeclared f=
+unction 'FIELD_MODIFY'; ISO C99 and later do not support implicit function =
+declarations [-Wimplicit-function-declaration]
+>=20
+> [ ... ]
 
---1KYsNb01aP8n7w8a
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Acked-by: Maxime Ripard <mripard@kernel.org>
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.16.5 release.
-> There are 142 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.16.y
-
-5.15, 5.4, 6.6, 6.15, pass our testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.15.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.4.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---1KYsNb01aP8n7w8a
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaLfygwAKCRAw5/Bqldv6
-8hG+AKCxCOjSsbF6RvvJ3x5L1/fLwPYPMwCdGDjpcPHhkaZbJbh46DaJZHvagsI=
-=wzb5
------END PGP SIGNATURE-----
-
---1KYsNb01aP8n7w8a--
+Thanks!
+Maxime
