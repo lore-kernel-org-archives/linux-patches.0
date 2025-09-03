@@ -1,101 +1,148 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23522F28E0
-	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 09:12:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE85A285074
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 09:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756890771; cv=none; b=re2UJkrdj4dzOFliLHT9tlkJNdk2PkfBR0Zb9VO32pPjHaHBFr5K1w+ZpGBj0EfPI4dWaySxmU+BZrQVy0txe6R/RQaH6fGiEobbtgRWrwgAV0pGsZu0mGMwvqNTYSEUUcgwP3odMxuiOHDAD4IgsuSec3LUUISFhQs1EXf5nSA=
+	t=1756891088; cv=none; b=PJQ7XEIzC4py1f0o625QUKBMIqC6rcLAvqa5njzdpc0ffP/2ntKUhIE+JC02BdzwDJzYUX4KSp1FatQH0jYzbgxc5ydD6lxfH1HTihLKkzTf8dFAoyqtKE5PSPhTLaIEk+rt+q0/uVPJ8BnWJ2B01Z8khYJ79QHi//3b73uDric=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756890771; c=relaxed/simple;
-	bh=u1dUo+ncWnByrkiVnzOKVZT2Xjkh2cB3EGgl85trqm8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iN1e8BWZ2DNl6QxgTO8tlnFbhrN+qe12C4chJhh0hNnR2kqt0VDWE7xTyESpd84I49F5lIoLGFAjC4n7jahs54UtrhErY5ik8m8mO+frVFGUIFZrUtjEnMfW4uvqNrk5rg23JuIV90gR4vlyQ+ArV0YjIrvEbBizdi/QbSS0efw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9jT1AM1; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1756891088; c=relaxed/simple;
+	bh=jSwt279x0P0qZ8h50l8WQTci2xG7cY83k3BehMiCcHo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=r/dM61ySgknxpItceBM6dL8m9FGH3TuXOGI7K62NLHrquvzizpzbqApEeI9yC3qVgXi+2G1gyy/HLXA9kEzhj2tfzKNLvqfZHBwUmjl51s7yE/oFEBycxL465OErYIX5fLJzslhqzrbMvJUlumRjN+0oVAtzoMHbQ8JuDv50np8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=lE+uNsRJ; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9jT1AM1"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-24b1331cb98so2930695ad.2
-        for <patches@lists.linux.dev>; Wed, 03 Sep 2025 02:12:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756890769; x=1757495569; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u1dUo+ncWnByrkiVnzOKVZT2Xjkh2cB3EGgl85trqm8=;
-        b=X9jT1AM1rGLf0roSqFFlBen0ytwyTQbTV+QhDy1u+ozeSRc9Hj625htgqmJOO3Qmjp
-         RsMV6K2W/RmFdQxknX76Jll3LDpvP1sZtCCWTNeJmteK+la67NH8Ia8EVXkp8Ribj/lg
-         vHhGLpkwydO5zD63hhOOusA/pjMEB0vlPcqVDaGdH5RdSxWBBccMCTWou6yQnZQFkXd8
-         W0MovJWfSQWhvAfRNOevKNOuEyj2tjM03C+dBtrg4kxu+j7EOOB05KCXDLTYCj7zZ4rL
-         HK8G+CY0VijsGOGKw5+j72uhKF13YXAlYNUVIsnaOogG5L/Uaxi/tT4UokpXIqIMvocl
-         6IWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756890769; x=1757495569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u1dUo+ncWnByrkiVnzOKVZT2Xjkh2cB3EGgl85trqm8=;
-        b=gt4wZE1YowmyipSwyELmXRaBSgSIXe07JRZPoYFcAVwb6pQYOqqA1mGLM+7MS49opv
-         rTI+Ff8owIRxuNd4fMBb/I4g5hFhRhGaGDxWti+vhOVtgBkrqVPyreyP1nvJb3MPfvwZ
-         0huU+VbNfV3WxZKcBVBRDkjUdYwINib4EpsDd7ubIfspj5Hy4NR5NbiXwV/7ELn2i2Pf
-         lLxw8uNwhK7gKj5NXCRDcsZOsXreN2W86FXEeEYlSwcrQZiuREiqfWkIyuT8b3ykBYVY
-         z3Lk7RwFn9Tn06YAF/ZvCWJgJ/C06swTIZEY8IdwHhHv/DuYxJQz0RBL1BPHM39CvJEu
-         XNkA==
-X-Forwarded-Encrypted: i=1; AJvYcCXAlG7vCXr/nwopLW1tKNhz+UFrgy8tr83fBQd1lzXeyMRAQ9JHFGh4ZH/hBUd6f6IQ4bzVG4lV@lists.linux.dev
-X-Gm-Message-State: AOJu0YyyOQljJZgdRZinXNk7RDUNOyTlRUi4+pHyE2I4NfPxxAzUe2dM
-	LBBX/lmQ/Sgvm/Lhb7/Stlb0DpVeOCrgnzXURittfwV8dU0RtGTToxXG1BRdSpcfUQLbR7l5aKf
-	63RPSQx+KGzi0QG/gmJP3E6raXNG5bqA=
-X-Gm-Gg: ASbGncv4CdKSos8Wfc0AvX5xAY9f7bC+v71tmXsSDBF63XQoI/sxOrIB1DwMnH/qwYf
-	/Ld4iNf/k+Xi2FkHLch88HxmoFh4xjCC2/k/C8sDY5lMjjEyxqgIpGNEKQuPNYZKYK8ZK/TI3c8
-	hzEUeLB9tm6Dw/ixXJEpxyd8mUE0HEIxpcPsWQZncUC04LfgkSUirFnTFbyz3Mc/YfP1HTlvep6
-	4LOFcDwJ0gx9qwHCwH/05A/TyvtTYy6v902MsFPsI69+BWZ33CUJP6nnEFQeahQIhTBUtRhWu0a
-	n9qDjZ+mEj2qF0QDxlKpDdSOThE4ieMOzVgf
-X-Google-Smtp-Source: AGHT+IFy+V9mXKNgGUInVKnO4rUD7VlssVnjx0POASZsCkyJ+rfepXrTHaYt+5C8DyDBAIFxdX2YSb9WPGAXKP6wep0=
-X-Received: by 2002:a17:903:41cf:b0:248:b43a:3ff with SMTP id
- d9443c01a7336-2491f246be0mr103559945ad.8.1756890768748; Wed, 03 Sep 2025
- 02:12:48 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="lE+uNsRJ"
+Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 53364928;
+	Wed,  3 Sep 2025 11:16:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1756891009;
+	bh=jSwt279x0P0qZ8h50l8WQTci2xG7cY83k3BehMiCcHo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lE+uNsRJx2NAp1C3kiQ14e9F7LdrgbHP4kUfG9ICNKXxsNIW63XcMaBloVNDleEgx
+	 dYAGmhRljh8abgjx/CvCiJCpaktwXzCvUfJFt7H6Vi5CCKkkpZPmWN6EUOaWQu5OrG
+	 zTVo3/zSqgWS72OqZbZ404Byc2sMiYpYbVgCUby4=
+Message-ID: <a8e182cb-356d-4b28-a91a-4000293bbc62@ideasonboard.com>
+Date: Wed, 3 Sep 2025 12:17:54 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250408220311.1033475-1-ojeda@kernel.org> <20250901-shrimp-define-9d99cc2a012a@spud>
-In-Reply-To: <20250901-shrimp-define-9d99cc2a012a@spud>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 3 Sep 2025 11:12:35 +0200
-X-Gm-Features: Ac12FXzVStDccJZt9jg6LxgcDhbP5A9e31eO3h_DSesybX7nfJW90L6qE4tU3Nw
-Message-ID: <CANiq72=hD3No2R8-8znrOsL+AEs3rCVjNn3sn-d7qKSKZaGWvg@mail.gmail.com>
-Subject: Re: [PATCH] rust: kasan/kbuild: fix missing flags on first build
-To: Conor Dooley <conor@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	Alexander Potapenko <glider@google.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
-	Dmitry Vyukov <dvyukov@google.com>, Vincenzo Frascino <vincenzo.frascino@arm.com>, 
-	kasan-dev@googlegroups.com, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Matthew Maurer <mmaurer@google.com>, Sami Tolvanen <samitolvanen@google.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/tidss: dispc: Explicitly include bitfield.h
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev,
+ Jyri Sarha <jyri.sarha@iki.fi>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+References: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
+Content-Language: en-US
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
+ 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
+In-Reply-To: <20250902-drm-tidss-fix-missing-bitfield-h-v1-1-aaad4a285f98@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 1, 2025 at 7:46=E2=80=AFPM Conor Dooley <conor@kernel.org> wrot=
-e:
->
-> I'm not really sure what your target.json suggestion below is, so just
-> reporting so that someone that understands the alternative solutions can
-> fix this.
+Hi,
 
-If you mean the last paragraph of the commit, then what I meant is
-that we could do the filter conditionally, so that `rustc-option`
-would work to test flags that require the `target.json` for those
-architectures that already do not use `target.json`.
+On 03/09/2025 00:15, Nathan Chancellor wrote:
+> After a recent series to use FIELD_PREP and FIELD_MODIFY in
+> tidss_dispc.c, there are many errors when bitfield.h is not implicitly
+> included, such as when building allmodconfig for ARCH=hexagon:
+> 
+>   drivers/gpu/drm/tidss/tidss_dispc.c:1116:2: error: call to undeclared function 'FIELD_MODIFY'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>    1116 |         VP_REG_FLD_MOD(dispc, hw_videoport, DISPC_VP_CONTROL, v,
+>         |         ^
+>   drivers/gpu/drm/tidss/tidss_dispc.c:631:3: note: expanded from macro 'VP_REG_FLD_MOD'
+>     631 |                 FIELD_MODIFY((mask), &_reg, (val));                     \
+>         |                 ^
+>   drivers/gpu/drm/tidss/tidss_dispc.c:1140:2: error: call to undeclared function 'FIELD_MODIFY'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>    1140 |         FIELD_MODIFY(DISPC_VP_DSS_OLDI_CFG_MAP_MASK, &oldi_cfg,
+>         |         ^
+>   drivers/gpu/drm/tidss/tidss_dispc.c:1203:10: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>    1203 |                        FIELD_PREP(DISPC_VP_TIMING_H_SYNC_PULSE_MASK, hsw - 1) |
+>         |                        ^
+>   ...
+> 
+> Explicitly include bitfield.h to resolve the errors.
+> 
+> Fixes: 9accc8b10de8 ("drm/tidss: dispc: Get rid of FLD_VAL")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/gpu/drm/tidss/tidss_dispc.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/tidss/tidss_dispc.c b/drivers/gpu/drm/tidss/tidss_dispc.c
+> index 97e2cd7b1e20..7c8c15a5c39b 100644
+> --- a/drivers/gpu/drm/tidss/tidss_dispc.c
+> +++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+> @@ -4,6 +4,7 @@
+>   * Author: Jyri Sarha <jsarha@ti.com>
+>   */
+>  
+> +#include <linux/bitfield.h>
+>  #include <linux/clk.h>
+>  #include <linux/delay.h>
+>  #include <linux/dma-mapping.h>
+> 
+> ---
+> base-commit: 306734a1c76ce35fa613ea823a31ddbcdbf1eef5
+> change-id: 20250902-drm-tidss-fix-missing-bitfield-h-9b004e613a71
+> 
+> Best regards,
+> --  
+> Nathan Chancellor <nathan@kernel.org>
+> 
 
-Cheers,
-Miguel
+Thanks, pushed to drm-misc-next.
+
+ Tomi
+
