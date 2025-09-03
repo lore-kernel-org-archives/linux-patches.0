@@ -1,334 +1,232 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F32B2E92C3
-	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 14:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756908900; cv=none; b=PVlCLQiNfq0dzntlccAPHK+2z3s6zoWGkhoqtbJuejF6WZjxBvGXKnOrzuDIRDGFSymcmUNhrpJfzQ/L2UaXyrzwjUhPnaYyGUj97Giv07jqkO8F+pkmMnFayGTuafxsTcqoDoMFdoaxxdMIcIhTuyrozes8QFrDZ9KU+Q14eS8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756908900; c=relaxed/simple;
-	bh=7z0O2nG5P8sF45YF4K38XBklUL2KhQ6VXBcBADLg07A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G4NKNiN0O3F5a4zHcFhYXdUcoA5WRDvw4awJp/pwYMMrbrEGW/jgTRxdg03LoNeJnwIw0ydIOhZ0RiFAPd7sy25+Wqgpud5f0QCD0PKkbQ5nGFkHJH9XeTtkABE197Jw/kNpe4hWm0M6MLl37K99/Xxa4DWt22sScVb0eGB6O/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrZkpimH; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB22307AE6
+	for <patches@lists.linux.dev>; Wed,  3 Sep 2025 14:18:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756909111; cv=fail; b=kkJfOk3BlcqlUFepZgYB4QxZNSHHMR5ZvElpB8tsWNce2LKai10lYSwJY3N40NLeITkeTaO6vDA6Y56QXHEAK7XXy6sVhFy5gO1km38P8eZe1TdGpoeeXOxEaPaureHmyoOOTLVfEjCvaUkmr/dStMxpJR6/rBSY7LIqPs0r+00=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756909111; c=relaxed/simple;
+	bh=eDaRJE3LAaDmPW8OEMws4idFYNfgUdG64HN1l0iikQU=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=am1ErpNqpegCpbmS0+J406MWGdlzZnnGBxfqJUjMj9U21ehucMYGRnPoq2Tns1WrzmdBcBkd1UujwGoV2Fnslknjg1PuiKgUCPOfwg53IWcCd9fLnclF91FELjmTJXFDxlWTQfviaZWo6+sM+gnLeLAdxF2SYv1xAZqAcVWYk0s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=TZjeGO/X; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=ucNt9UQL; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrZkpimH"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-61cc281171cso11385137a12.0
-        for <patches@lists.linux.dev>; Wed, 03 Sep 2025 07:14:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="TZjeGO/X";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="ucNt9UQL"
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5839NBlC016008;
+	Wed, 3 Sep 2025 14:18:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=WM6828uApG6nC/k94IAIfEiydF9PC1hNZXSeU59rlDQ=; b=
+	TZjeGO/XXlxNHgLY3247gbcivPvhQkuuue/2t3PAJCJXwSA6Yun4qLn/xZz7C9rl
+	/PaDRFJSB/opCT+CYjvJptiQQEUZl8X63HVBYRCwBMUD3i0utlNrPXABSPVbO8qA
+	55JmSjumfu7Bdjbm8JnWogcizIq5SacYW7KlNEgew/07rwWLXFCdZrizZbRD1cVf
+	feb1XQMq5TM1IPtdekmTvP9hDEkTx8NK/6f6iQPeVZQSzLVzE2UpJEMANouhuwQt
+	oNoHGsocT7OA+ane3pTx9KNBFX/Z/PksVUS/BM4ueayPfSMh9f2DXyhKTxXtkb5c
+	oZob1CZISX9mtWsmeLtosw==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48ussypasj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 03 Sep 2025 14:18:04 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 583DTno3036213;
+	Wed, 3 Sep 2025 14:18:04 GMT
+Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12on2081.outbound.protection.outlook.com [40.107.237.81])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 48uqracyb8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 03 Sep 2025 14:18:04 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GNOutXMC3s156KqsiZP+TrPAlmeHs49DYaqi2B539ghYIpD0RohCpl0cVNQu3ETdZF0SSVv9v8r0YX4bcf2IStULU70WXLawOzN2AOwbVH4wAeeu/9TiJmuyL/ZGnP+Dr76YJa52PLVDpf0KCcK0TGlDjke6M5rOE+M/GdgWeliqV5qVqeJcdmR5DNLHW/9N4JzgXbawiaFgA+1PhLYdTQA95GSBT18+zbscTa54ftJTIqdMZbl2kiqTPSDXSKfvGNAnTGHhcE2K4Qi9SZJyURa1yuUH0q+H6bfdgrujXhtnTxMlHAhGGXG1CDNUilmGCdLv74S7LQ1UMGgQkTXllw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WM6828uApG6nC/k94IAIfEiydF9PC1hNZXSeU59rlDQ=;
+ b=ggONxKg3MZ8bkIahMSmkG0TK8opLlzQoVGGhKb2PDGIgdpS02pOK6Kftz6du+qhznq1PCH2gqA3Qh0JhDwsjebgmySSAtJZAI2439Xr05ad1JRd2fjV7q+MmAVzAcH/YTlEEvdOEgUCRjPfg1FA6pRsw9bfCDGTa13/Dvb7xo8V//kFxlyoT6Ipvb79we4jGWQzq5pUCrGwcHDekemBPInmhbOUYT4yrYuOVIf3cFH8pQnlUUI0dNWVZeef+EloVyaxpcG5PuyhjJWViPIbvPNW2LEmYx0aQMYya1t+4Y2XE7EGgDwQV/WGMlFMXPRb0U1p4LxZ3icMCPbfbacbKmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756908897; x=1757513697; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lHLCbxm2qevOsyTY7hfbOkOW4ktOmeHjBjDsV0iAsNU=;
-        b=TrZkpimH/KZ5qFTZNIaC4q5iRPNKHwSA3Aiv/zMx/VTUAKcwXg7HBxsfmCCk2er27c
-         OgxRO5gQOWzV8XlijfTSWZRBcDucJmfIZDz3UB9zlNgKEygjMrSCM3emGC0hEIrjL2Vm
-         0KqfLE++rdgLkLh330Scvk9ygfaCDsXJRsfBrdyu9taQlMbavNBTlB1SlAOr4fqwVDst
-         5oZhJaAjMVqjokaBwSiv+m+b65t/oARy7p05X1n8rf389MlOKQk/GwlUw7szvy9fDRTo
-         hj1z2hU7Ywp1w60wifOZXpfff+sicOwlpiwQ8UxTuQqjw6MUh6+wnvPmEAx3FRHtvpsu
-         kt5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756908897; x=1757513697;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lHLCbxm2qevOsyTY7hfbOkOW4ktOmeHjBjDsV0iAsNU=;
-        b=Z+Mr88qNEDjXCfP+77VcmgPeSV5w2OzH8V40kKRTiQB9x6Tgb0myOvcu9O/UEj9I7Q
-         1RheWjszsUv1wFs0Sqa8hByPOwUIz8B68mQBwe/JlWLBaGUSXMJ3zauWK+72SEhvoKDq
-         UfFeE1kpqanIsHsAlgXquY2bLbMkTtNscwxekBUIMkB+XhN+PD0MbntkO/p6sf+Ohdph
-         F0IkKmX/aMJRSlhC2NskumZIsPgsPTylWPzSUzGBtTKGAd2DuwekMat318h89+uSCge5
-         PE+3mkqInnoZZFYuxN7S6nPp+uhHR2f1zwyS0y6OilvqiriR7U1iK/r1mv86VSQYupZv
-         eJPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXUP5emDCwYCeQPh2eTBy2OpM0QZQqxFJVW9mRDSxHpoWoI0n8oVnic9LSLvDiwCgMDBMYcL5Ca@lists.linux.dev
-X-Gm-Message-State: AOJu0YzCT69X8t69KNRHuJ3CbvEfhMpyda6olB3i4+NRZ58/bq9poyJu
-	iHtoPlKk2cx535wdhmsr16MGgHKEUISzc2exV3LTVOUrV+sTMc45F9xmqU5noZaYO11+T8rXn1x
-	F3WeJ7BKLX2QWpcbZ8sLQNVio8fyolbs=
-X-Gm-Gg: ASbGncvQFfmfUOocu+un452qTL9GE7hXACaI4sTz+SjLeWeRmS3X68Ay0WrcI9rcNGF
-	tskOd6S373oePO92RAVGVpRqa0mJ92ei/1MUwTGLWEcPH3n4m+dA5Em9Vdr6mriqaQAQQpv/8Ni
-	/eY2atSCXHeDqh0DWT0nm9AIreqXEbAoSZlWTpBYcJpzgeLfzWHGS5jJk3bXnWjgNQVuB0E+peP
-	H73Czt7quzPzw/uDg==
-X-Google-Smtp-Source: AGHT+IExdsquEhg4Y7gn/T31I32x6vp4PP00/sIHuQwzHhGFjnQjuw1ubn2EZCbVr7BAg8ZN3AP7lol3/uimD46c03I=
-X-Received: by 2002:a05:6402:51cb:b0:618:2733:1a52 with SMTP id
- 4fb4d7f45d1cf-61d26997500mr13189130a12.8.1756908896472; Wed, 03 Sep 2025
- 07:14:56 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WM6828uApG6nC/k94IAIfEiydF9PC1hNZXSeU59rlDQ=;
+ b=ucNt9UQL6ffIMnTdrW8h7+saSRxAz4eoN7/L7CDv1WLgcJYywDIh1tcuY4hfCJDHSldJ63zuzWZvpyXBfHYizkiJTPn7cd4XP/C7u8Yd8LvHsTP6O/AG7Zz7S6+W0fkXx8gN7/GFSKbw9HcKUGuSB1uXcY1B+AnNiYUPsZzwfgc=
+Received: from DS4PPF5E3A27BDE.namprd10.prod.outlook.com
+ (2603:10b6:f:fc00::d20) by PH0PR10MB6959.namprd10.prod.outlook.com
+ (2603:10b6:510:28f::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.17; Wed, 3 Sep
+ 2025 14:17:39 +0000
+Received: from DS4PPF5E3A27BDE.namprd10.prod.outlook.com
+ ([fe80::5e2b:7bd7:5247:ccf]) by DS4PPF5E3A27BDE.namprd10.prod.outlook.com
+ ([fe80::5e2b:7bd7:5247:ccf%6]) with mapi id 15.20.9052.027; Wed, 3 Sep 2025
+ 14:17:38 +0000
+Message-ID: <066215c2-342f-49b8-95f0-d7b02deeff15@oracle.com>
+Date: Wed, 3 Sep 2025 19:47:26 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 00/95] 6.12.45-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+        rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com,
+        broonie@kernel.org, achill@achill.org
+References: <20250902131939.601201881@linuxfoundation.org>
+Content-Language: en-US
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20250902131939.601201881@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LNXP265CA0018.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:5e::30) To DS4PPF5E3A27BDE.namprd10.prod.outlook.com
+ (2603:10b6:f:fc00::d20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250901231457.1179748-1-rdunlap@infradead.org>
- <CAOQ4uxjXvYBsW1Nb2HKaoUg1qi8Pkq1XKtQEbnAvMUGcp7LrZA@mail.gmail.com>
- <5ff4dfe2-271f-4967-bb45-ad59614edc37@infradead.org> <a6246609-3ec0-4e38-8733-b2cf3b8fbd9a@infradead.org>
-In-Reply-To: <a6246609-3ec0-4e38-8733-b2cf3b8fbd9a@infradead.org>
-From: Amir Goldstein <amir73il@gmail.com>
-Date: Wed, 3 Sep 2025 16:14:45 +0200
-X-Gm-Features: Ac12FXyjWPU17SHaCP67thoU9lOuY_REmGjEqZhmjb3HYVjgu2ZGEt5MECy2X6E
-Message-ID: <CAOQ4uxhN2kPLguMN+VR8qu4AzBzLziFADqJg_dvOOO_gw=GpTw@mail.gmail.com>
-Subject: Re: [PATCH v2] uapi/fcntl: define RENAME_* and AT_RENAME_* macros
-To: Randy Dunlap <rdunlap@infradead.org>
-Cc: linux-fsdevel@vger.kernel.org, patches@lists.linux.dev, 
-	Jeff Layton <jlayton@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
-	Alexander Aring <alex.aring@gmail.com>, Josef Bacik <josef@toxicpanda.com>, 
-	Aleksa Sarai <cyphar@cyphar.com>, Jan Kara <jack@suse.cz>, Christian Brauner <brauner@kernel.org>, 
-	Matthew Wilcox <willy@infradead.org>, David Howells <dhowells@redhat.com>, linux-api@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF5E3A27BDE:EE_|PH0PR10MB6959:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8846e73d-2e56-4262-69fc-08ddeaf4a2c3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?bzQ1QVNNV1NKV052M2RQRlVGbWM4aGJPSmpISlgzcEN2YW45RGsvOWJBM0lV?=
+ =?utf-8?B?SlJxTjBWL1ZGS2ZMQXlhZXo3YktGSUxCcEI3MW1jam5RbjdReFpJYTA3S3My?=
+ =?utf-8?B?L3pCaVpnZmtFbmkwNDN4NlFQLzdaOGtVYnRod0ZqVGZlRU93WkdBdlorcHlq?=
+ =?utf-8?B?eTVqeVBKUDdRWjBCTlJHR0dMT0ltYlRvdzJwdzRLU20vZ2xDWCtJVklGZkZh?=
+ =?utf-8?B?Y2VLRHROd1FQMWsrdFVKY3JGQlh4SDRNUUxyYW1RMTlBNHpBUWpiM284azVm?=
+ =?utf-8?B?akk5bGhWbFNKOEtsVVNtNHdsZEtPVW5SVXl2Y2NWdWRKZThSck1HdnRPcm1I?=
+ =?utf-8?B?SHlUVEV3YmMzay9qSmZMK2NMMUV2dE8vODRUcGR1R0JocHNybFV3THlsbnZr?=
+ =?utf-8?B?cEFuRXk3R2pySFlMTGxXSW43eE9HZVI3clozU2ExZCtJcDB2QTV3elZjTlFa?=
+ =?utf-8?B?UEFzTUg0U2tqZkZSOHZEOHhkVHdoYlZmVGcwZHhLYzBvNzdyb1AvK1ZnYXZ4?=
+ =?utf-8?B?SG1POU9rUzFlajdZdjdwZXdXdzhuOFNCSzJPOGRPNGlWVWMyZk5aMTNkZEtr?=
+ =?utf-8?B?d0h6MjFJQms2L3JtRiswM2ExOXNmVGJxU05aQmZYRnBwVFVhV2NTU1dRZXU2?=
+ =?utf-8?B?QWxXMmFBeGJ0aHV1OHVTZTZEWXc2ajgzQURzKzdkWjJrek85SjZjTlhhMWdV?=
+ =?utf-8?B?cE0yOE1KRU94dk9zTjl3SEFXVzlyaXBWM0pDUEFaOGRaUVBsTHJpc3RpbG14?=
+ =?utf-8?B?UllSUDFCdUsydGZ2QjlHcGR2NDZubXJnOFUyV1RBdDBVUWpWVFo0RDBoRXJM?=
+ =?utf-8?B?cjNTRmdtOG1VdlZFOEU3ejlGTnpqbGpsN1NURFBEMjF6K2diYkpzNzlGQVVr?=
+ =?utf-8?B?bTBiNmVkeFdDL1llRTV6TXZLbzdVWWdYMlQ3d0hBSmVEc2s1dzVpWDRoOFBY?=
+ =?utf-8?B?U0xPZDZIY3VQMWRXVy9kNmN0Qklzd0kzMTVjQk1BVG55aFg2bG4weGVpOFZN?=
+ =?utf-8?B?TEJWaUVQUVFub3dLWEFCaGhoUFlmYlQ1LzNLQzBaVDNqNThhVFc1VWdaOEtO?=
+ =?utf-8?B?YnEzVjFjV2MwamNlblAySHNHbm4wb3BYQjN1eEJwSGl3TkU4bDE1djZFNzM1?=
+ =?utf-8?B?MFlhSHhhbm5MVXRrRlZTTld1azU5eUY1S1lTWld0bm9NeVhDanBNbnYzL3BI?=
+ =?utf-8?B?KzRUZkJxT2JDL3Nad3p0VWdHYk0zbEVGT1VwT0dlcVM2M1JSN3hGbURYRTF0?=
+ =?utf-8?B?MzNxNlI5dm51cG54QXVOOHM2Y3VvLzY3ek01UUp3ZE5LSkhOMlphRVREZGhE?=
+ =?utf-8?B?ajhhaFNpMHBZTWhMaWluYlJpSHlhUFZCR29EV2gzN1VTNlBicms2SU5sYU1L?=
+ =?utf-8?B?QXllL3RjQUNKNEVmZ05oekpaRGhLeklWdjkrZUdZdGpuemIwai9Qa3Zyb1dS?=
+ =?utf-8?B?NG0vVVVuSEVNbmZVYXhlRVR2T2MwMThQQ3Zwb0FvTVhIaVk3Rkh6aldXMUhE?=
+ =?utf-8?B?VHpmbExXSWZPMFJnV1orbnIxNTVxSTV2clU0TWRmbUk4cGo1STh6NEhJaDRq?=
+ =?utf-8?B?QmI3SWNZT2syVEUrZlV2bnpRVXVMVS9YajJuSzJoanNpcmJDVUM0eWpzQldH?=
+ =?utf-8?B?WHUydE1iZ0d6ZEN0c3UrRGsvUnZvYlZQZ2F4SU8zSzJVSkpGSE5FQTBNYkJJ?=
+ =?utf-8?B?M3BzbVpjR1BZTXNNVUhBUlFaNkNkR3ZMb2hSQUdJQ2VWN3dCem5YQWxMblJ5?=
+ =?utf-8?B?K202K2p1d3JHR00vN1hhODZQUUtxSm9ua2R5T2pxRmFCTDU2eTdEUThEenZX?=
+ =?utf-8?B?ck5ic05MR2V3ZTlOTFpBZTM3V1BMb1Zqdnc1Q1FtbkFvd0RLeWkrUlc1cVhn?=
+ =?utf-8?B?Snc0SE1Ua0VkN1JkUCtIM0tpcGgzUzJSekx6QkZBMVVhWko5Q3NzTElnNjFQ?=
+ =?utf-8?Q?T+o7l/LNcus=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF5E3A27BDE.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?a0oxZ2R2STRydDJoNy8wWW8rVy9XRUZJZWdYWHZjd3MwdHhVRm10TDNkVE96?=
+ =?utf-8?B?ZVQ3eGlDM3cvaEdXMkZFWWNheDhVZVE2aExTblFUUjZoN0NVSXp3YStpTFdQ?=
+ =?utf-8?B?dlhURm51NUQ3cnRkeC90SDZwUXVkbHBST0ROTUtuaElUWWVYaHBPa21Jelk3?=
+ =?utf-8?B?cWRkZ3EzTkZQV0VVNWtYdkhlaGdpd1loSi9DYURDTFR1QjRXUzhvbUM3WEt5?=
+ =?utf-8?B?ZXh5cjRnd2xEdzZMYzhHTE1vZ2sxZUJEOThUTVR5bGhISXlta0ZJMTY5RzVX?=
+ =?utf-8?B?WG8vaDBRcHl0VGtKd2pmTkhVaXhwd05WS2RTY1R0bE53RkRrelpQR3l1NmRH?=
+ =?utf-8?B?UHlKcERkR1hjMUlGd2J6UHZ2TlJaaDAvUHFPclhuYVZpL2tvN2pHcllTM0ZT?=
+ =?utf-8?B?cjRSRVhKNzZYWnVqbG9PRnU4TXdHWWZWMDFUZlcxODFHd3YzVHZXRzVpa2Fx?=
+ =?utf-8?B?blo0SlJJUVEzbGgzSTUwY1NmSS9BNEViblVEcHVFR0NLUWJ5SXdvM1BTNFN5?=
+ =?utf-8?B?TXRVU2VSa2pZZFVFVU5GTCtRbzk4bzFGeW5iMkJxZXFpTXdxNk9HOHJPTXdP?=
+ =?utf-8?B?Wk1BdDJMOXVSSnlaTnh6RStUUUtXZkdrSldrV0o0TmlRMTV0TWw2MGEvdGtS?=
+ =?utf-8?B?SHRob3pDcEtQSVcxam01TktVNnlUUmhpakJ3bHpYWU1FQjlFU1FXRkZlVGdE?=
+ =?utf-8?B?TFBkNkVwOFRwd1M1VHhndnJKcTlqeFVFTjl6Z3d0NXhCZE14YWYyQTRhQlZB?=
+ =?utf-8?B?OTBEUTBUMGd6TnhQbVdGYmxQQWp6OXRYeTBoMnc0OUoyU1RmQUQ5V1hJN2la?=
+ =?utf-8?B?eTVxc3dVMWJVN0pCY0R5Z0t3b2VRVGxPaDlJUUFrakVWN1RCOWt3NG1IUU9j?=
+ =?utf-8?B?amxBa0hDQjU4bFpkc2VOQUppdmVUTnZrbCsyL1JuVGlMRlA4Z2dMU3hNTTRJ?=
+ =?utf-8?B?d2VVQWJZalZ6Z1lzbmhLeS8waGJpZ0RrZVpBYnlRUmN2NjRNeDkwRUxFY0d3?=
+ =?utf-8?B?TlZmYTNKVG1VWUtveVBNVGxGcm02ZTc2cm9vYzAxbWpVcC9hQnVGODFhaC94?=
+ =?utf-8?B?SEtlbXdETWJ3cnN4d2hqRStLRDJkY0VnRi91ZnoyNklkdWVkbTFLaStsa3Vl?=
+ =?utf-8?B?WFpraWR5bzJpS0ZGa3lpbWNwLysreXR0Q1pqdHlMSVdJbG5HVXZhcW1YZEx4?=
+ =?utf-8?B?VUM0QjY2bTlTcUtUSmgvVW9CNVpYWWh3QTdXb3BMbHd4VzdLMzhoZVJkOHlX?=
+ =?utf-8?B?SEhRYVZISG1IRXNPRStYUkRidzB4U1ErMm1zNHZFZnJDNStNMHQweGhmZnlk?=
+ =?utf-8?B?RWFFbFBIcFg0UThpNmpSOGh3ZzZFRGkxTktNNU9uNWJoQUZSUTRJUWgrc3VZ?=
+ =?utf-8?B?SGg4a2RTdy9VRG1hamRHTXVhajhQL3ByTEZuU2lhK3lDRXdhMHhnWHEya2dF?=
+ =?utf-8?B?YXNyMHhDU1c0ZFNBWVF6b0RBeE9NRzVicSt3UThQVU03d1g2cEplUmROeXNH?=
+ =?utf-8?B?NzhzQ0phNXlNd3p4ZjU5SzdLeGNlY3AwZW5oUnNHN21TWjJyZ01aSkZlZ0N0?=
+ =?utf-8?B?MFhOV2NjcWdaZm9kaFgwTWVmc1l0NWJRcTNyOGU0Z1poME1NT1AvZ3lVbjA2?=
+ =?utf-8?B?ak43WVNPUGRBQkovRVBLR3F3YiswMUV5NmpoMS9kcTdDb2l3djBzTVk5cDV6?=
+ =?utf-8?B?TCtQMVUweXBYM2NsVnpPOVlWUUFhM1Z2ckZoblJZZTBLRkh2dFZ4V0ZOdGxn?=
+ =?utf-8?B?OVhnUjdNUTRKZ1l5ZDdBL1FraEIxQzJXT2VzRlRNLzhJZktEYkk0c2c0cklH?=
+ =?utf-8?B?ZU9rcXk1WW1CK1owbnVFNWZjeEdUTHRDS1lHeWJJY1lFaGR5K2ZPTUJkSmxV?=
+ =?utf-8?B?ZHgrd2MwNzkySGhpNU0zRHFDazZtNzhha25nU3U0c0ZMVWh3MUJWUHl2dkE1?=
+ =?utf-8?B?WGlIdktsRlBTbGtiKzdSOWZIbXF6VlVuY2dycXlWQjVxZHhMT2o0NVJuNFNj?=
+ =?utf-8?B?T0ZDOUpveXcxMTN4RlhnVGM1dUVGaGZXV2d2UkptQ3lDR2Uvb0hwb3pRSU01?=
+ =?utf-8?B?NTJyUU9SYXZMWUpDRGppSjNvSnlwOFI5S0NDOUJtei9HZzNOZ01TZFNLcGd0?=
+ =?utf-8?B?WWc1MWN6WExIbkpUcEtBMU1PUUFia1EvTzJMdU92a2xDOXZycEI1UjlDZEZ3?=
+ =?utf-8?Q?sPa2wTzrQWw7r2e7Eji5upM=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	zc2IX676eyaD6lPVQAWsYbnEZMKF06Won9a3H0ZNlW4+fHNuthAfSkSQpn8A3rsYFftCX/Pl/JELkuZNF+wCTa4nTH71wkAmC5g/8Gg3fsZ8RfWIj2g/yUZMCHjgfk8PeTn94sgExobfxgVpVoUz3mxlHBDzw9Rxd5urXJoYLcJ/YLWfNHReBw6AXCJLNwSmSAfw8XH/9vv9xxtx3YHe5j/G2ZgNYWF9bYi9cwl396cYLP4o4XBFzb1rCVukNKEGH9bZNIyLCWgby1tb94omgGCIzGB+XUOEA8m5BttTrsjpQmbB6rkHZJxDdLZVRFNy8tWXzRtOg7xrRbKeDIT1tGeUUBUi8/rFjeY/PMmEj9SVxXQn1hCYMPjFKRygqduXVEad9hKAvab8VtjC1LoH4HUM+NJUtGpbSN0FJ5m9ssJ6ro9mBLceloZKsVGX1ntwy9rSogTqh7/A0Lksj55z7sGBP8pz3gtGZsISs8jr1TC+rPkRp7rWfwLGgx9gHdwt7/TVDeLaa3VJGrqCbRiPfvsn9pDk0V17C8e2NwCN5Nkux30eWcxjkK3jxJzJKEIuU8N+uoMl5YSuhCrUrgQtaqle1+XR3MM3A/F/yQWEdkQ=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8846e73d-2e56-4262-69fc-08ddeaf4a2c3
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF5E3A27BDE.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2025 14:17:38.4683
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MJ9AUvcXx84kXzkVnFAEEBkGLcNqUZ9w8VZLyIt7cAa/uW2PgiP5ef48eivR+FVuvZ4Cvfzi/81LQDToRgOBO/wMRRPwNk9XLA1T4u7cYloB6cNqvSegIiBQ+zw4D5tx
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB6959
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_07,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 bulkscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2508110000 definitions=main-2509030144
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzNCBTYWx0ZWRfX7CMGwZ+roxP7
+ DHMrIwZsCtlU6jke9JH9HBjn48iNXRiDxHju1OpY+iKJukHyC1xr39FQZ5H7Nnd1Gmbs7sSX8XO
+ ekRTO6kspbetlOsz+CNqX6UIOhN5hMMvm+h9PZsMp4VbWKpGhWbb5jd/uAotKQdHfc9HvofJgp3
+ jkSMLu7HZ8T+XJYcyn55OMrr/gnaR99ig03BN98qHgJm+UBLUvMRCy4Kz+p7OebxX0hM7TepyXm
+ 3qbqWs5v45XFzNI9LQ8xHKSAgt9kRrz4xGoRfeHOZ/o6mzaVZrQS9GCf6rxhDIV24z8U3tu5yOD
+ QRJSjsVHRtiUKxvKy3CXyWOyM6vWYpLJHM9LEg00f5jNpuejZjtQBRFbZUzN4s0fNu++oVSclPB
+ gMjpEyy8
+X-Authority-Analysis: v=2.4 cv=X/9SKHTe c=1 sm=1 tr=0 ts=68b84e1d b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=wQHQzwf_Hs2TCVCgcZgA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: MT5qXyvj7OXTxLwSYE7drLftyIuGYRgE
+X-Proofpoint-GUID: MT5qXyvj7OXTxLwSYE7drLftyIuGYRgE
 
-On Wed, Sep 3, 2025 at 2:46=E2=80=AFAM Randy Dunlap <rdunlap@infradead.org>=
- wrote:
->
->
->
-> On 9/2/25 2:31 PM, Randy Dunlap wrote:
-> > Hi,
-> >
-> > On 9/1/25 11:58 PM, Amir Goldstein wrote:
-> >> On Tue, Sep 2, 2025 at 1:14=E2=80=AFAM Randy Dunlap <rdunlap@infradead=
-.org> wrote:
-> >>>
-> >>> Define the RENAME_* and AT_RENAME_* macros exactly the same as in
-> >>> recent glibc <stdio.h> so that duplicate definition build errors in
-> >>> both samples/watch_queue/watch_test.c and samples/vfs/test-statx.c
-> >>> no longer happen. When they defined in exactly the same way in
-> >>> multiple places, the build errors are prevented.
-> >>>
-> >>> Defining only the AT_RENAME_* macros is not sufficient since they
-> >>> depend on the RENAME_* macros, which may not be defined when the
-> >>> AT_RENAME_* macros are used.
-> >>>
-> >>> Build errors being fixed:
-> >>>
-> >>> for samples/vfs/test-statx.c:
-> >>>
-> >>> In file included from ../samples/vfs/test-statx.c:23:
-> >>> usr/include/linux/fcntl.h:159:9: warning: =E2=80=98AT_RENAME_NOREPLAC=
-E=E2=80=99 redefined
-> >>>   159 | #define AT_RENAME_NOREPLACE     0x0001
-> >>> In file included from ../samples/vfs/test-statx.c:13:
-> >>> /usr/include/stdio.h:171:10: note: this is the location of the previo=
-us definition
-> >>>   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> >>> usr/include/linux/fcntl.h:160:9: warning: =E2=80=98AT_RENAME_EXCHANGE=
-=E2=80=99 redefined
-> >>>   160 | #define AT_RENAME_EXCHANGE      0x0002
-> >>> /usr/include/stdio.h:173:10: note: this is the location of the previo=
-us definition
-> >>>   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> >>> usr/include/linux/fcntl.h:161:9: warning: =E2=80=98AT_RENAME_WHITEOUT=
-=E2=80=99 redefined
-> >>>   161 | #define AT_RENAME_WHITEOUT      0x0004
-> >>> /usr/include/stdio.h:175:10: note: this is the location of the previo=
-us definition
-> >>>   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
-> >>>
-> >>> for samples/watch_queue/watch_test.c:
-> >>>
-> >>> In file included from usr/include/linux/watch_queue.h:6,
-> >>>                  from ../samples/watch_queue/watch_test.c:19:
-> >>> usr/include/linux/fcntl.h:159:9: warning: =E2=80=98AT_RENAME_NOREPLAC=
-E=E2=80=99 redefined
-> >>>   159 | #define AT_RENAME_NOREPLACE     0x0001
-> >>> In file included from ../samples/watch_queue/watch_test.c:11:
-> >>> /usr/include/stdio.h:171:10: note: this is the location of the previo=
-us definition
-> >>>   171 | # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> >>> usr/include/linux/fcntl.h:160:9: warning: =E2=80=98AT_RENAME_EXCHANGE=
-=E2=80=99 redefined
-> >>>   160 | #define AT_RENAME_EXCHANGE      0x0002
-> >>> /usr/include/stdio.h:173:10: note: this is the location of the previo=
-us definition
-> >>>   173 | # define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> >>> usr/include/linux/fcntl.h:161:9: warning: =E2=80=98AT_RENAME_WHITEOUT=
-=E2=80=99 redefined
-> >>>   161 | #define AT_RENAME_WHITEOUT      0x0004
-> >>> /usr/include/stdio.h:175:10: note: this is the location of the previo=
-us definition
-> >>>   175 | # define AT_RENAME_WHITEOUT RENAME_WHITEOUT
-> >>>
-> >>> Fixes: b4fef22c2fb9 ("uapi: explain how per-syscall AT_* flags should=
- be allocated")
-> >>> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> >>> ---
-> >>> Cc: Amir Goldstein <amir73il@gmail.com>
-> >>> Cc: Jeff Layton <jlayton@kernel.org>
-> >>> Cc: Chuck Lever <chuck.lever@oracle.com>
-> >>> Cc: Alexander Aring <alex.aring@gmail.com>
-> >>> Cc: Josef Bacik <josef@toxicpanda.com>
-> >>> Cc: Aleksa Sarai <cyphar@cyphar.com>
-> >>> Cc: Jan Kara <jack@suse.cz>
-> >>> Cc: Christian Brauner <brauner@kernel.org>
-> >>> Cc: Matthew Wilcox <willy@infradead.org>
-> >>> Cc: David Howells <dhowells@redhat.com>
-> >>> CC: linux-api@vger.kernel.org
-> >>> To: linux-fsdevel@vger.kernel.org
-> >>>
-> >>>  include/uapi/linux/fcntl.h |    9 ++++++---
-> >>>  1 file changed, 6 insertions(+), 3 deletions(-)
-> >>>
-> >>> --- linux-next-20250819.orig/include/uapi/linux/fcntl.h
-> >>> +++ linux-next-20250819/include/uapi/linux/fcntl.h
-> >>> @@ -156,9 +156,12 @@
-> >>>   */
-> >>>
-> >>>  /* Flags for renameat2(2) (must match legacy RENAME_* flags). */
-> >>> -#define AT_RENAME_NOREPLACE    0x0001
-> >>> -#define AT_RENAME_EXCHANGE     0x0002
-> >>> -#define AT_RENAME_WHITEOUT     0x0004
-> >>> +# define RENAME_NOREPLACE (1 << 0)
-> >>> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> >>> +# define RENAME_EXCHANGE (1 << 1)
-> >>> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> >>> +# define RENAME_WHITEOUT (1 << 2)
-> >>> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
-> >>>
-> >>
-> >> This solution, apart from being terribly wrong (adjust the source to m=
-atch
-> >> to value of its downstream copy), does not address the issue that Math=
-ew
-> >> pointed out on v1 discussion [1]:
-> >
-> > I didn't forget or ignore this.
-> > If the macros have the same values (well, not just values but also the
-> > same text), then I don't see why it matters whether they are in some ol=
-der
-> > version of glibc.
-> >
-> >> $ grep -r AT_RENAME_NOREPLACE /usr/include
-> >> /usr/include/linux/fcntl.h:#define AT_RENAME_NOREPLACE  0x0001
-> >>
-> >> It's not in stdio.h at all.  This is with libc6 2.41-10
-> >>
-> >> [1] https://lore.kernel.org/linux-fsdevel/aKxfGix_o4glz8-Z@casper.infr=
-adead.org/
-> >>
-> >> I don't know how to resolve the mess that glibc has created.
-> >
-> > Yeah, I guess I don't either.
-> >
-> >> Perhaps like this:
-> >>
-> >> diff --git a/include/uapi/linux/fcntl.h b/include/uapi/linux/fcntl.h
-> >> index f291ab4f94ebc..dde14fa3c2007 100644
-> >> --- a/include/uapi/linux/fcntl.h
-> >> +++ b/include/uapi/linux/fcntl.h
-> >> @@ -155,10 +155,16 @@
-> >>   * as possible, so we can use them for generic bits in the future if =
-necessary.
-> >>   */
-> >>
-> >> -/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
-> >> -#define AT_RENAME_NOREPLACE    0x0001
-> >> -#define AT_RENAME_EXCHANGE     0x0002
-> >> -#define AT_RENAME_WHITEOUT     0x0004
-> >> +/*
-> >> + * The legacy renameat2(2) RENAME_* flags are conceptually also
-> >> syscall-specific
-> >> + * flags, so it could makes sense to create the AT_RENAME_* aliases
-> >> for them and
-> >> + * maybe later add support for generic AT_* flags to this syscall.
-> >> + * However, following a mismatch of definitions in glibc and since no
-> >> kernel code
-> >> + * currently uses the AT_RENAME_* aliases, we leave them undefined he=
-re.
-> >> +#define AT_RENAME_NOREPLACE    RENAME_NOREPLACE
-> >> +#define AT_RENAME_EXCHANGE     RENAME_EXCHANGE
-> >> +#define AT_RENAME_WHITEOUT     RENAME_WHITEOUT
-> >> +*/
-> >
-> > Well, we do have samples/ code that uses fcntl.h (indirectly; maybe
-> > that can be fixed).
-> > See the build errors in the patch description.
-> >
-> >
-> >>  /* Flag for faccessat(2). */
-> >>  #define AT_EACCESS             0x200   /* Test access permitted for
-> >
-> > With this patch (your suggestion above):
-> >
-> > IF a userspace program in samples/ uses <uapi/linux/fcntl.h> without
-> > using <stdio.h>, [yes, I created one to test this] and without using
-> > <uapi/linux/fs.h> then the build fails with similar build errors:
-> >
-> > ../samples/watch_queue/watch_nostdio.c: In function =E2=80=98consumer=
-=E2=80=99:
-> > ../samples/watch_queue/watch_nostdio.c:33:32: error: =E2=80=98RENAME_NO=
-REPLACE=E2=80=99 undeclared (first use in this function)
-> >    33 |                         return RENAME_NOREPLACE;
-> > ../samples/watch_queue/watch_nostdio.c:33:32: note: each undeclared ide=
-ntifier is reported only once for each function it appears in
-> > ../samples/watch_queue/watch_nostdio.c:37:32: error: =E2=80=98RENAME_EX=
-CHANGE=E2=80=99 undeclared (first use in this function)
-> >    37 |                         return RENAME_EXCHANGE;
-> > ../samples/watch_queue/watch_nostdio.c:41:32: error: =E2=80=98RENAME_WH=
-ITEOUT=E2=80=99 undeclared (first use in this function)
-> >    41 |                         return RENAME_WHITEOUT;
-> >
-> > This build succeeds with my version 1 patch (full defining of both
-> > RENAME_* and AT_RENAME_* macros). It fails with the patch that you sugg=
-ested
-> > above.
-> >
-> > OK, here's what I propose.
-> >
-> > a. remove the unused and (sort of) recently added AT_RENAME_* macros
-> > in include/uapi/linux/fcntl.h. Nothing in the kernel tree uses them.
-> > This is:
-> >
-> > commit b4fef22c2fb9
-> > Author: Aleksa Sarai <cyphar@cyphar.com>
-> > Date:   Wed Aug 28 20:19:42 2024 +1000
-> >     uapi: explain how per-syscall AT_* flags should be allocated
-> >
-> > These macros should have never been added here IMO.
-> > Just putting them somewhere as examples (in comments) would be OK.
-> >
+Hi Greg,
 
-I agree.
-I did not get this patch from Aleksa,
-but I proposed something similar above.
+On 02/09/25 18:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.45 release.
+> There are 95 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 04 Sep 2025 13:19:14 +0000.
+> Anything received after that time might be too late.
 
-> > This alone fixes all of the build errors in samples/ that I originally
-> > reported.
-> >
-> > b. if a userspace program wants to use the RENAME_* macros, it should
-> > #include <linux/fs.h> instead of <linux/fcntl.h>.
-> >
-> > This fixes the "contrived" build error that I manufactured.
-> >
-> > Note that some programs in tools/ do use AT_RENAME_* (all 3 macros)
-> > but they define those macros locally.
-> >
->
-> And after more testing, this is what I think works:
->
-> a. remove all of the AT_RENAME-* macros from <uapi/linux/fcntl.h>
->    (as above)
+No problems seen on x86_64 and aarch64 with our testing.
 
-ok.
-
->
-> b. put the AT_RENAME_* macros into <uapi/linux/fs.h> like so:
->
-> +/* Flags for renameat2(2) (must match legacy RENAME_* flags). */
-> +# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-> +# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
-> +# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
->
-> so that they match what is in upstream glibc stdio.h, hence not
-> causing duplicate definition errors.
-
-Disagree.
-We do not need to define them at all.
-
-The *only* reason we defined them in fcntl.h is so the
-definition will be together with the rest of the AT_ flags.
-Now we change that to a comment, but there is no reason to
-define them at fs.h. Why would we need to do that?
+Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
 Thanks,
-Amir.
+Harshit
+
+
