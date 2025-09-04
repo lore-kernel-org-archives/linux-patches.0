@@ -1,84 +1,95 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE41229B2E
-	for <patches@lists.linux.dev>; Thu,  4 Sep 2025 18:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35B442050
+	for <patches@lists.linux.dev>; Thu,  4 Sep 2025 19:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757011769; cv=none; b=I7kZzf4FwdNSAjcPP/HaOGST3zaNfsFPwmmIBJy2LIMMj0EBbXzSwvOQHnYdlkwtqp4FMn6wgn54+gJcpy4pE9vknfsi6SQYfykX/LEgei0M8Eo5YWthRsiqOmcN52v2j06rhy5q3OXFkoU416rGDOVMBn22MmD/dN+MZsvKw8o=
+	t=1757015493; cv=none; b=e6/4bALN2/eeOuIXDp5CLRoCeib0UuzbAdrLxvzjOBTOEGM3ELFljHXm3/NGap2uhLZldE9XENOuMYCUW8cmfCuwz56Z/LoveBYOEyMdN1qc3pu70AAC33B0EInA7VORE9Mfn69pVnmeyLWo76GKExKJoJFw6UYXYTfaryVNjok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757011769; c=relaxed/simple;
-	bh=eXyQJfESFf7Aw5FLo55Mg6bEf+xMsXf9uIP9sy2EQtE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sbm1rKAA/LQdqSLZ262p2ygPWiLPUVV2kx9cA45nW+NSi5ZqGIV4KH/5+KyEzE2WzkTAHrhycpHYDdZ2vxyO80PrEV14qWhxmq3sGgHaqh/u6YgLSvW61oUc7iTxsS3fJa1KN1FITMF7sviJL+XYSkICnWnJRH4fwIqgGiatxlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Kx4NOG4B; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1757015493; c=relaxed/simple;
+	bh=QPZGgKSeK7OkOS6fKJFX6cxsolH+ueRXJKXsFqAwQ14=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AwswUfYwA2Ebsc1gpJ33tTCGq7tFamZ0S2zQtRiPvLwOyBE5nmr9ObdgN+7Jbz9ulw/ZUleHlQdAP//zZeFRwxDrKJwkyabbTi93/oYmHU5ESldULvzKmo2P5YpsclDhAhJwLo/MKu3BiaYNmg+IJiso/sfc0ogwMBvyoxxfVgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a86HyaX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Kx4NOG4B"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757011767;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eXyQJfESFf7Aw5FLo55Mg6bEf+xMsXf9uIP9sy2EQtE=;
-	b=Kx4NOG4BdgzDhhNVKQwp2KLL21g/pvlVEq2nNoqHUkZVUkZ/19DiR7xzgQPxlyoqIr29X9
-	X0fkEKLy/DDsYkX8dWnRGi0xZG4HIDTqH/i/N5HJ4p92TQArIxk0N72dsWjoyohT09MZM2
-	nQmUB7BCRjo1ECMTZu7eukmExJl7Ck4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-3A5xmutrNkSXJHhPd00MnQ-1; Thu,
- 04 Sep 2025 14:49:24 -0400
-X-MC-Unique: 3A5xmutrNkSXJHhPd00MnQ-1
-X-Mimecast-MFC-AGG-ID: 3A5xmutrNkSXJHhPd00MnQ_1757011762
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id BA0631800378;
-	Thu,  4 Sep 2025 18:49:21 +0000 (UTC)
-Received: from fweimer-oldenburg.csb.redhat.com (unknown [10.45.224.87])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 7E9FF3002D27;
-	Thu,  4 Sep 2025 18:49:16 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: Amir Goldstein <amir73il@gmail.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>,  linux-fsdevel@vger.kernel.org,
-  patches@lists.linux.dev,  Jeff Layton <jlayton@kernel.org>,  Chuck Lever
- <chuck.lever@oracle.com>,  Alexander Aring <alex.aring@gmail.com>,  Josef
- Bacik <josef@toxicpanda.com>,  Aleksa Sarai <cyphar@cyphar.com>,  Jan Kara
- <jack@suse.cz>,  Christian Brauner <brauner@kernel.org>,  Matthew Wilcox
- <willy@infradead.org>,  David Howells <dhowells@redhat.com>,
-  linux-api@vger.kernel.org
-Subject: Re: [PATCH v3] uapi/linux/fcntl: remove AT_RENAME* macros
-In-Reply-To: <CAOQ4uxiJibbq_MX3HkNaFb3GXGsZ0nNehk+MNODxXxy_khSwEQ@mail.gmail.com>
-	(Amir Goldstein's message of "Thu, 4 Sep 2025 20:17:24 +0200")
-References: <20250904062215.2362311-1-rdunlap@infradead.org>
-	<CAOQ4uxiJibbq_MX3HkNaFb3GXGsZ0nNehk+MNODxXxy_khSwEQ@mail.gmail.com>
-Date: Thu, 04 Sep 2025 20:49:13 +0200
-Message-ID: <lhua53auk7q.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a86HyaX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B26DC4CEF4;
+	Thu,  4 Sep 2025 19:51:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757015493;
+	bh=QPZGgKSeK7OkOS6fKJFX6cxsolH+ueRXJKXsFqAwQ14=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=a86HyaX7buRnOcJQbTWphoKusLKadxi5a9jJw7PwpNQ3M9l3vIQHTOF0YgIW5sQiZ
+	 akGp/cU1I/v/aqOIOjbUPQ7ETVtcvNJhjdsFZuJeCwO6HAkDwfzf9RVCCDsh8ZnhJv
+	 Z8qz+5d1W81zu0ZtHZBoHKDCKL82XnvEPYXV3cUiCcBbCmfV2bjROl4mbId6BJBGIW
+	 cJHsBp4dp0JLVtSPud4SqyJkR63SJ3qCuFMF30dhLxBxkJqss0iwzohKBXTaO3qAEm
+	 9eiTa25I6ahjey24gEKievkWuymc0pN6VDRy72bvVOJ7XAm+m9K0t5HTTMr1QPzfz7
+	 k2rDjhYYI+crA==
+Date: Thu, 4 Sep 2025 12:51:27 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Cc: dri-devel@lists.freedesktop.org, patches@lists.linux.dev
+Subject: Re: [PATCH] drm/bridge: cdns-dsi: Select VIDEOMODE_HELPERS
+Message-ID: <20250904195127.GA4160085@ax162>
+References: <20250821-cdns-videohelpers-v1-1-853e021908cf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250821-cdns-videohelpers-v1-1-853e021908cf@kernel.org>
 
-* Amir Goldstein:
+Gentle ping, this seems fairly obvious and it continues to break out
+builds in -next.
 
-> I find this end result a bit odd, but I don't want to suggest another variant
-> I already proposed one in v2 review [1] that maybe you did not like.
-> It's fine.
-> I'll let Aleksa and Christian chime in to decide on if and how they want this
-> comment to look or if we should just delete these definitions and be done with
-> this episode.
-
-We should fix the definition in glibc to be identical token-wise to the
-kernel's.
-
-Thanks,
-Florian
-
+On Thu, Aug 21, 2025 at 01:52:12PM -0700, Nathan Chancellor wrote:
+> When no other driver selects CONFIG_VIDEOMODE_HELPERS but
+> CONFIG_DRM_CDNS_DSI is enabled, there is a linker or modpost error:
+> 
+>   ERROR: modpost: "drm_display_mode_to_videomode" [drivers/gpu/drm/bridge/cadence/cdns-dsi.ko] undefined!
+> 
+> Select VIDEOMODE_HELPERS to ensure that this helper function is
+> available to the driver.
+> 
+> Fixes: ce4bc5ca7c1d ("drm/bridge: cdns-dsi: Use video mode and clean up cdns_dsi_mode2cfg()")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  drivers/gpu/drm/bridge/cadence/Kconfig | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/bridge/cadence/Kconfig b/drivers/gpu/drm/bridge/cadence/Kconfig
+> index cced81633ddc..f1d8a8a151d8 100644
+> --- a/drivers/gpu/drm/bridge/cadence/Kconfig
+> +++ b/drivers/gpu/drm/bridge/cadence/Kconfig
+> @@ -6,6 +6,7 @@ config DRM_CDNS_DSI
+>  	select DRM_PANEL_BRIDGE
+>  	select GENERIC_PHY
+>  	select GENERIC_PHY_MIPI_DPHY
+> +	select VIDEOMODE_HELPERS
+>  	depends on OF
+>  	help
+>  	  Support Cadence DPI to DSI bridge. This is an internal
+> 
+> ---
+> base-commit: 3f13bcc886fc034113cb75cb32b8d9db1216b846
+> change-id: 20250821-cdns-videohelpers-71182a6145bc
+> 
+> Best regards,
+> --  
+> Nathan Chancellor <nathan@kernel.org>
+> 
