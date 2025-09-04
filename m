@@ -1,107 +1,100 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A19325A326;
-	Thu,  4 Sep 2025 06:22:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9AD2BE630
+	for <patches@lists.linux.dev>; Thu,  4 Sep 2025 08:08:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756966940; cv=none; b=OGv6gHra92uuyRvOtxZL1epJ6iUm939e/x9xaSeyFMhEMiCT3hGVJMeCXtVdhhO7gqVUIYHhr10fLqzpV5bUJn0lXDgR9ng3Lo6Ch5PUfZ9jp5p4TX1a17KL3aw/w95wWKyOv/xJ4z+WaPaDZE7XZlfV8l63jD5wS4VKX8PFO4o=
+	t=1756973340; cv=none; b=ehK+0cohQvcRuosOJ86OcKKIul4EG9tRTxqj8LGhkbWQK2trMO2nBKR9kiLax7v5YMHoO+sXM/+Hq0ExJJSuyb8kMrH4qATwkWoAImgQa406uEZ30Tot4rORQ2Djn6XNvNosQXogshBvSBqJUKsW1XivV24vk+2Y+BtjMZD4QLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756966940; c=relaxed/simple;
-	bh=4gkG1uQk8lWw9rbqJBG1qb0f1uOkOI0jK2sCgnyNfbY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NCWHVVOWc/IWNpnVfe1F3cMAWVLrTMlH7j1j+fP3ffTT4AYKrZKizcVWEWIYq7Y4mboW064dCohIUDOmNZKItlhX1EgM9fT5C+WUYHnGEw7m+/7oZal916xPM185FwcvUEX3CJ724g3qI8Wzw8ZldVfpNkAOC6Wg0xuVVqFy9pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=XQ29M/xj; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1756973340; c=relaxed/simple;
+	bh=sQRZUjw/NuitnjZWeXvE6DX3fE7M+HJx/GrD6grhYyE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mm6O+y3LKuaxlV1s7Q4CX+rCWyHjSPo6MS6gmDZa7wqORAu7/zav7MXqbPyMwfuukTGIWyIRH/mN+e06DYybwUrp+zWlAswJXbNQsFtQ9WHK1YkT8xu6/ahj/7NyAuF5iu9cK9PRljD3Ea197BQ0w9P7vRaozIPCZriqz/OT9mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=FrLPMhUV; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="XQ29M/xj"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=lvF9s1nrRUArY5JJjxvX+LxPs3kFn+zwehWVSSbnB/0=; b=XQ29M/xjdUFRrP1V73XyhALtKC
-	CX+7fu+3C2OuT6HWbNZKBKI+bPJlf5IPTK4z9UUsKRoF4OIw5pvArpD0K8ungf1BDH95pLtb0Zs0A
-	SD+pd+t4OnBYprF6LGY4EyY9ZxrU2IBqP/s1CzEcaqpanlg4Ln8Q7y2i41fspIq4htFp35jn/FsjB
-	CL2TCDJ4GcY3WcetjN/Qt+DBho+9/M296UkXmvB5mgjZtOP/ZL4tVsNQRDxueMpBpRXvXQFaUsSce
-	E+ZKvRgWEV+2C25grTAgDfZv4pIJ/FIgWXEckbUkBfyMCq5UkdB40CKQGbUBiX0yUuu4zYHWCj4xZ
-	phsb0yaw==;
-Received: from [50.53.25.54] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uu3MO-00000009Ue5-1Loe;
-	Thu, 04 Sep 2025 06:22:16 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-fsdevel@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Alexander Aring <alex.aring@gmail.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	David Howells <dhowells@redhat.com>,
-	linux-api@vger.kernel.org
-Subject: [PATCH v3] uapi/linux/fcntl: remove AT_RENAME* macros
-Date: Wed,  3 Sep 2025 23:22:15 -0700
-Message-ID: <20250904062215.2362311-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="FrLPMhUV"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1014C1038C103;
+	Thu,  4 Sep 2025 10:08:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1756973330; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=XxYVzgu681T/LCDB4jGVbJTLbaYqK3/BHA7KYwFFKUQ=;
+	b=FrLPMhUV9tkmO2CwWeGevu8h9/1ZLpF9mQqUCbpNsRwGBcq5SUN5ArLZKfuTRp/8tKwdUN
+	bCdHhPrRX7gHIwfj7Q+kxXkrgYZyn5KPAnm9cF3pE3jjLJDa03Xpr8jZaOEc1L3w9NXFXV
+	LqdpFA5e6IOwmQj52AHHbsTOaKMnUspKYjW9Z3+vSioU3QyhUioMcYITRlKfqHeP5VyOSB
+	S0Cul0CeEqgZPfnyzqoJjnrVZGoO5O1t9BZm6+x11whb37cv0LB6NMlM88BrRZwvx7yvSz
+	DNUYYm2rsDrIfexgfXMnV5w0J2xoCJkm+LsAliNkh+/sf3iec53+2KuOKPlGDw==
+Date: Thu, 4 Sep 2025 10:08:40 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, dlemoal@kernel.org,
+	WeitaoWang-oc@zhaoxin.com
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	achill@achill.org
+Subject: Re: [PATCH 6.12 000/322] 6.12.44-rc1 review
+Message-ID: <aLlJCKO5vIlZ6ZJp@duo.ucw.cz>
+References: <20250826110915.169062587@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Wgc8ZY9FwFCe7DKA"
+Content-Disposition: inline
+In-Reply-To: <20250826110915.169062587@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-Don't define the AT_RENAME_* macros at all since the kernel does not
-use them nor does the kernel need to provide them for userspace.
-Leave them as comments in <uapi/linux/fcntl.h> only as an example.
 
-The AT_RENAME_* macros have recently been added to glibc's <stdio.h>.
-For a kernel allmodconfig build, this made the macros be defined
-differently in 2 places (same values but different macro text),
-causing build errors/warnings (duplicate definitions) in both
-samples/watch_queue/watch_test.c and samples/vfs/test-statx.c.
-(<linux/fcntl.h> is included indirecty in both programs above.)
+--Wgc8ZY9FwFCe7DKA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Fixes: b4fef22c2fb9 ("uapi: explain how per-syscall AT_* flags should be allocated")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
----
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Jeff Layton <jlayton@kernel.org>
-Cc: Chuck Lever <chuck.lever@oracle.com>
-Cc: Alexander Aring <alex.aring@gmail.com>
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Aleksa Sarai <cyphar@cyphar.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: David Howells <dhowells@redhat.com>
-CC: linux-api@vger.kernel.org
-To: linux-fsdevel@vger.kernel.org
----
- include/uapi/linux/fcntl.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+Hi!
 
---- linux-next-20250819.orig/include/uapi/linux/fcntl.h
-+++ linux-next-20250819/include/uapi/linux/fcntl.h
-@@ -155,10 +155,16 @@
-  * as possible, so we can use them for generic bits in the future if necessary.
-  */
- 
-+/*
-+ * Note: This is an example of how the AT_RENAME_* flags could be defined,
-+ * but the kernel has no need to define them, so leave them as comments.
-+ */
- /* Flags for renameat2(2) (must match legacy RENAME_* flags). */
-+/*
- #define AT_RENAME_NOREPLACE	0x0001
- #define AT_RENAME_EXCHANGE	0x0002
- #define AT_RENAME_WHITEOUT	0x0004
-+*/
- 
- /* Flag for faccessat(2). */
- #define AT_EACCESS		0x200	/* Test access permitted for
+> This is the start of the stable review cycle for the 6.12.44 release.
+> There are 322 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+> Weitao Wang <WeitaoWang-oc@zhaoxin.com>
+>     usb: xhci: Fix slot_id resource race conflict
+
+This was merged for 6.12 and 5.10, but not 6.1. I believe that's an
+mistake.
+
+> Damien Le Moal <dlemoal@kernel.org>
+>     ata: Fix SATA_MOBILE_LPM_POLICY description in Kconfig
+
+Not sure this is suitable for stable, for example it removes warning
+about possible data corruption:
+
+-         Note "Minimum power" is known to cause issues, including disk
+-         corruption, with some disks and should not be used.
+
+Best regards,
+								Pavel
+--=20
+In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
+Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--Wgc8ZY9FwFCe7DKA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaLlJCAAKCRAw5/Bqldv6
+8k7LAKCXDsf9oFpGdmM77qKCKp0BJQqoMwCeKu4Gem3uw7stIQGSe3+ulvHUsmk=
+=XHbR
+-----END PGP SIGNATURE-----
+
+--Wgc8ZY9FwFCe7DKA--
