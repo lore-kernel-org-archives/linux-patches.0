@@ -1,98 +1,224 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABB92571CD
-	for <patches@lists.linux.dev>; Fri,  5 Sep 2025 09:41:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757065306; cv=none; b=tp9IpHGxehD7lcHQlACWaz/Bi/gfnIHcY4uIMXHGnU8pGi+IJYu50frJd/yqc6ndHW/f57xMoxycJCsaGqXMe3Ngkom7c5IIOOUBq4tQWzVG7q+G1pa6Dl/1O+1Hefaz8ElAZlF3MwNFWgrXMUh0/u3zCfiVGKgsL4+RgaIvw8k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757065306; c=relaxed/simple;
-	bh=xK0X5ybXdU7CZSUGGi0MOJLoE7ekQvmtxtU/O/I8VeE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FZSI5kxQSvr4SjNwBoK6lGDf9UNQb/2S8AJkWp7UcKlhfXrgazU+8u0LCrbbQRNSL+2aRlZK/r6XIxfTKi3bNiX+JbKNlh+tl5lkJo13+xrqwv2OL1R3KEtOS0Dh4nkO++0Zj0O6zwu7kJSDDAsDJqhv2O/FHviWOvM7CJ7r+B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=g7W009HW; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31D11A08B8
+	for <patches@lists.linux.dev>; Fri,  5 Sep 2025 13:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757079947; cv=fail; b=njzQuoTTVa8IpViVIi1ZxhqAp8sReVd8ultA8A+NF9Nfw0/odA493P+lbhW6t2+aLR0BxnGif4enN9fu8PZeI5w6Kt9mWwwhawhzocVCZRotMKV14SZLecJ5BUz0MN/j56hE4Vt+AmYUATQ0R120pXhmGdm29qW7LhE4/XTMKn4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757079947; c=relaxed/simple;
+	bh=97//ikfyKpPCfiQq/QiTW4yO3zrXHNKzUgDdMB1fcpY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=rmb76Tdo22oYbh5UjdccbfJkh6cAKOV0r1vSPh3Y6nceOKCYrj10oxD4AsgmdZp3fiw0xAo+VRC4wITWoRCXaPMyTeJZvP2Vnd/bRA5wugR74I+J2zHdTx1XlwHyeZLwT2BwFLVOXeZehXemGwZUVzT+eoVyU1ojPfkZXZFLNNA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=COv6q+iC; arc=fail smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="g7W009HW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757065304;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=AhBFGiEZQECiCXPQgfE0yM1j7Y3xE+crwyDfNzUa1yA=;
-	b=g7W009HWNBxeqBFew5Z8Xj8IsBBGRkOPkZeQyTSJsCfO1akrwOIiRAyawDpD+DEj/Z78c4
-	s2rIjoWjBtyawQPScnsaUOJW9sTx0F+kHpfvaZQZz6Jn2F/t59P7SoCv0iYb401qwgQaS/
-	m/YXSt9f6+UGwDvYTLiWOUA4o89vd9w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-BiEXApicPY29oj70ntVMgQ-1; Fri,
- 05 Sep 2025 05:41:38 -0400
-X-MC-Unique: BiEXApicPY29oj70ntVMgQ-1
-X-Mimecast-MFC-AGG-ID: BiEXApicPY29oj70ntVMgQ_1757065297
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 7EC83180034F;
-	Fri,  5 Sep 2025 09:41:36 +0000 (UTC)
-Received: from fweimer-oldenburg.csb.redhat.com (unknown [10.45.224.104])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9D09419540EB;
-	Fri,  5 Sep 2025 09:41:30 +0000 (UTC)
-From: Florian Weimer <fweimer@redhat.com>
-To: Amir Goldstein <amir73il@gmail.com>
-Cc: Aleksa Sarai <cyphar@cyphar.com>,  linux-fsdevel@vger.kernel.org,
-  patches@lists.linux.dev,  Jeff Layton <jlayton@kernel.org>,  Chuck Lever
- <chuck.lever@oracle.com>,  Alexander Aring <alex.aring@gmail.com>,  Josef
- Bacik <josef@toxicpanda.com>,  Jan Kara <jack@suse.cz>,  Christian Brauner
- <brauner@kernel.org>,  Matthew Wilcox <willy@infradead.org>,  David
- Howells <dhowells@redhat.com>,  linux-api@vger.kernel.org,  Kees Cook
- <kees@kernel.org>,  Randy Dunlap <rdunlap@infradead.org>
-Subject: Re: [PATCH v3] uapi/linux/fcntl: remove AT_RENAME* macros
-In-Reply-To: <CAOQ4uxjcLDUcfdp72cpQcDQEtZaaR4G+P8oPXL_HbotFirGrKQ@mail.gmail.com>
-	(Amir Goldstein's message of "Fri, 5 Sep 2025 11:17:30 +0200")
-References: <20250904062215.2362311-1-rdunlap@infradead.org>
-	<CAOQ4uxiJibbq_MX3HkNaFb3GXGsZ0nNehk+MNODxXxy_khSwEQ@mail.gmail.com>
-	<2025-09-05-armless-uneaten-venture-denizen-HnoIhR@cyphar.com>
-	<CAOQ4uxjcLDUcfdp72cpQcDQEtZaaR4G+P8oPXL_HbotFirGrKQ@mail.gmail.com>
-Date: Fri, 05 Sep 2025 11:41:27 +0200
-Message-ID: <lhutt1htewo.fsf@oldenburg.str.redhat.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="COv6q+iC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757079946; x=1788615946;
+  h=date:from:to:cc:subject:message-id:reply-to:references:
+   in-reply-to:mime-version;
+  bh=97//ikfyKpPCfiQq/QiTW4yO3zrXHNKzUgDdMB1fcpY=;
+  b=COv6q+iCvd1P13i7FZlsGa3FuRZPKTTgaxT1GfuLfNS2/XDwuUEylVHQ
+   lufvW1yl64wLJdWbdk+XRNqqNZFldQF854DRdGlcbXUUOCQb2BE+y5oQI
+   uwoJMnb5Vs/qmgOJCKZ54ucwsQ5h3oB2RbfiS362sb+LztIfB/UEnmZWM
+   QX+l7OiFyYGc68ZFxGtZwr6e4Wy+UHAOIebbuumQU1dMJLm8Pf4okIET/
+   W2U9ov3SfED0GeT62phdlZDT+VPE9x2QZOTF5c3zKuYS2Mp/aFUEMI4Br
+   vHCL8vGbdoLXo22l/t470AMTQI/g4dDiar4GdaLsRzxwY68jo8eFzoxdQ
+   g==;
+X-CSE-ConnectionGUID: 0s99vOA3S9uhLvrd9O2mKg==
+X-CSE-MsgGUID: M4xapXulS3C2Oc98uYr4og==
+X-IronPort-AV: E=McAfee;i="6800,10657,11544"; a="59286002"
+X-IronPort-AV: E=Sophos;i="6.18,241,1751266800"; 
+   d="scan'208";a="59286002"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2025 06:45:46 -0700
+X-CSE-ConnectionGUID: 6oKQnFCvQPmwIpwu4iKN/g==
+X-CSE-MsgGUID: qS65cMwHQqyuQzIrTFHgbg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,241,1751266800"; 
+   d="scan'208";a="172519897"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2025 06:45:45 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Fri, 5 Sep 2025 06:45:44 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Fri, 5 Sep 2025 06:45:44 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.79) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Fri, 5 Sep 2025 06:45:43 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=zTp+qRini3fEYs5P8uEFf3ZGJ4tCRokukZoJ3Cp/QI2E7fx0bmK3pWkJvLerlflkhKaTYe7wZxepfeHTggAeRrEkxCCHeTrDAuCNzGKf+lG6sQkf0YAvuvrNzLObebJZxLGsXhS6huTY7pSmoWLAOE0J23HjubOLCvl0ILLC7wbtuqeGPTQymfG8GPRzKjBH24cfEWBEGrrjOJINyiQ83u6odq+wrFDFIjQcRJ2XL0vUzJgVsjDO1ZYzex5QB1sK6Anc3FMMZtE5A9AAziNxzOeCtYcQPl6NxH/Up06DBbUkvzHVb2fXS5RThbybXJJvU+eNE2UM2q3vsvM8hGguBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Zx7hgb3R77Z9eYMs08C2TAxK663WH4wpTDJp1zzs8uE=;
+ b=VUFPN3xF224PHIvip5YVR40S0ZHoET0GmxLbXC6HIocZFSDxHKpLxeHpVNiMtYubGOn7Pq7+AueRwFkgTyDU+to+4UObXU6fjTuSFo7BbgcvXEkmfI9FcbA0K0IUlD2kDGOKsNg82aICcBnCp3i/HGqdn3UJtfzkNamFcgM2dOzCaSk48J+0tqZPgcqjoWu/X9TV0aKnfGRZGd+koJTo9CSr+0dLu0UpXQ7dRp1/f/Tp3QUOka+BFpjeB2zUZ53bO7EQlNsPnH00JAGCJPonh+tXJQGsf/Bwh8VxDPz9D6956ZBO8hg0Tb+l1mM929z+yced2cg1D1FDpEWx+mwojQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ0PR11MB4845.namprd11.prod.outlook.com (2603:10b6:a03:2d1::10)
+ by DS4PPFC77662F02.namprd11.prod.outlook.com (2603:10b6:f:fc02::4c) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Fri, 5 Sep
+ 2025 13:45:41 +0000
+Received: from SJ0PR11MB4845.namprd11.prod.outlook.com
+ ([fe80::8900:d137:e757:ac9f]) by SJ0PR11MB4845.namprd11.prod.outlook.com
+ ([fe80::8900:d137:e757:ac9f%3]) with mapi id 15.20.9073.026; Fri, 5 Sep 2025
+ 13:45:40 +0000
+Date: Fri, 5 Sep 2025 16:45:34 +0300
+From: Imre Deak <imre.deak@intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<intel-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>, "Sasha
+ Levin" <sashal@kernel.org>
+Subject: Re: [PATCH 6.16 139/142] Revert "drm/dp: Change AUX DPCD probe
+ address from DPCD_REV to LANE0_1_STATUS"
+Message-ID: <aLrpfoemc6jCFNVO@ideak-desk>
+Reply-To: <imre.deak@intel.com>
+References: <20250902131948.154194162@linuxfoundation.org>
+ <20250902131953.603872091@linuxfoundation.org>
+ <aLoJG4Tq4nNwFLu6@ideak-desk>
+ <2025090551-setup-crescent-a670@gregkh>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <2025090551-setup-crescent-a670@gregkh>
+X-ClientProxiedBy: DU7P195CA0011.EURP195.PROD.OUTLOOK.COM
+ (2603:10a6:10:54d::14) To SJ0PR11MB4845.namprd11.prod.outlook.com
+ (2603:10b6:a03:2d1::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR11MB4845:EE_|DS4PPFC77662F02:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7043c7f3-b747-4d4e-802f-08ddec828099
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|10070799003|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?yN4+PLxngG+Z5y0iC90xn4hXQ0xThaczUqvtJud6aZqy66K9DQjpP7dpQ9GX?=
+ =?us-ascii?Q?RNIcAfaFNRrT3U085CWfws2UhU6QijCW6lXr2P8VaQKZGCKYI8ghYSjGsTbW?=
+ =?us-ascii?Q?BfIw1ihd+gyC5IbsOHPZaJ3se3fotpqB0grO7LdZXZovmQf8RzI6Qtdp9Mqj?=
+ =?us-ascii?Q?XpsnmC0tC7EkOP19VPJ1x1u+LE1qvqarYaMQG4h/gPbSc6Xv1N1oZjgO9c/A?=
+ =?us-ascii?Q?NF6fgmd9eFIeNYH04DITWI8tTv8uvsFBw0bkrkN64J3mRMJOguuaj9VMT3X5?=
+ =?us-ascii?Q?Wflbstxt058l7ZQbNQ84p7lyFEE1dxm5WyMb6gztH63Jf0nVTp8l2TqmjPoB?=
+ =?us-ascii?Q?teSVQpTrrNMreEobATcnV3jExfgGprtFXOEEwgrokyL8TpkGyY6vHjrBrT3l?=
+ =?us-ascii?Q?C79jsrZQZUvNNfemJoJEKtA5UgakuLJewZicG399V658gBxuq+j77fJtnbaM?=
+ =?us-ascii?Q?Yp15taupdwP9PyZufvaQ8Is5vXviznu7MJ7QodMmzVyhm3PQwTXNrAwAJhah?=
+ =?us-ascii?Q?fbxrwLOzDbzuCunVdkGqOwxu7TJ/qT+TsZ5pgP290BX83z5BYwPbPq4cRnqY?=
+ =?us-ascii?Q?pptv/9cTMg5iPMKZUXtnKg19XpbcefSyqg+j4u1vpzeQgd/DZKNFulC0UWzq?=
+ =?us-ascii?Q?QNl3v8iVPkcN5iAwk6cGh9+BseRoZ/qAvXhkyRjx+/ooEFDndsVrQCl+9sVb?=
+ =?us-ascii?Q?RgUys+Z3h51QVj42XW498RhJ6GpE8fUc6c2ev/gXQIKGi2cGab+DmIioOA5N?=
+ =?us-ascii?Q?7Y2I6UGTAuUh6+U69udcYCcmEDpmMqRcfjsXapszTNaTn62+9GCOpbb/NMTm?=
+ =?us-ascii?Q?ENwgeWwMWTByedvo29+k5xJa0RkiGbwQhrRUPWSFsbbdCIhJwWRQzDFKddvx?=
+ =?us-ascii?Q?yhe5HcxU0U111Q/Cl9CHDB9EviqNGawIQECKNYe+EXLDL3/X/n/48Wp1hxch?=
+ =?us-ascii?Q?izLHi7rP4VslSiriZCkG0aisQsDUYYcAYtRxibyEYLplkvDw0Z9ft1tI/FNN?=
+ =?us-ascii?Q?daMoiy5LBfcsM5f1k9V8HXBF2JQstLPZTrqc9Y254hMJewpAR1ELmtz3OwLK?=
+ =?us-ascii?Q?VFUFZuh678QboTZbc3KNKKPVAqTudK+FcPL6fXb+L35gQOONI2GoGoptY58L?=
+ =?us-ascii?Q?L4iMlY1vYnDj3PfT2UwkVzFBUKx/f1AW+U1JhuhJ2MLB4HurSnFqBv7XYibo?=
+ =?us-ascii?Q?PG67zyLHfb9WP8/9Omf7xUBBrcpZB5FJL+nrGlHlUQaKbHk9Gh0thyF/TpR2?=
+ =?us-ascii?Q?ZchTaHohqQOKNtRtBXV4fvmFksJ2SDcojdTNwdWQsyLVGwBfa65ChfX/00Xy?=
+ =?us-ascii?Q?Bx/xL71LMoC1RyGvkQWroRd6dhpeua197GBJV+3CxBOgJ2B187l0gauYxnc2?=
+ =?us-ascii?Q?6Hj7ikM=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR11MB4845.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(10070799003)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?AHFbeFBZdYPYj+V8cB/OqHeywNgI+++5xYbxVwHvA+MLPyiy/ErY3lEJTLJs?=
+ =?us-ascii?Q?CyrLqcB3ZySXzNoGp8f1hvbKLZkZuPLWn0Ymbv6iu+ts47XxmPasPIe2DVyr?=
+ =?us-ascii?Q?waUHRVZUAlkRCF5/7UY9YkiUc5L1L+QZ4pSoGP0b+t2OYvojQapiIpS8cBx0?=
+ =?us-ascii?Q?MTxflo7EVF6HEzEP9BaVIuRh2EonvIHkyVhzxoAi1F7bdOh/YVXs34icUYCz?=
+ =?us-ascii?Q?BUYnQ/JDqkoFstKMyrQk9Np8C8VWJ4+/O+modfYrDOlSX7Co5bH7lLDe32Nx?=
+ =?us-ascii?Q?4B5Eec/zdL+yUsWHd6/FQ/KNQJCCscWgDYbinkPeydnrK0YyBYC5eNWdtPQR?=
+ =?us-ascii?Q?ikiz24e8NH2N6mfE3dU95cC769NQBISDVhQLYHo9kDNNDIvE1IUo0rqTFzDR?=
+ =?us-ascii?Q?UIxWg/mVJB/c4AvityldkRlGogBrOi59LGqPn6XQmTFTYnc8rK++xbk2flpn?=
+ =?us-ascii?Q?WX9b1eh/nnhrdjny66cjfezn+v5zWvJMf6klX94iNod3glZF7/8XJrTkbh7P?=
+ =?us-ascii?Q?0vAGg3Dp2TAn8rQTEwG7ho6Scn/sNdXnLGRtccD2uikwxRdWwRn4B4jlpNRO?=
+ =?us-ascii?Q?RXi31S1pPgg8Bt++xnSB5d/Gxk4ytDubFHaA+6VFR14JlERDtZTRMO7dXp0V?=
+ =?us-ascii?Q?Uq3o0S5IGcPCvhLJ33TJGpCDCDQjE/OlAi2lhiBTg4JLliAXhlIvZdD6mZ4c?=
+ =?us-ascii?Q?KlD+bt3fDwQaFHU/59K3nLdH9C8kjgxe2orIHd8b/briq5EPiXm8X9P0auxO?=
+ =?us-ascii?Q?kPlnIPefPwzh05/9G0vGvihU7mFSSOkt8Z3jcyTVdNgaGQou8+oCfKMCHn2R?=
+ =?us-ascii?Q?xhmkgfO1+Zg9G71FGMlLHXFX2S6qUs28kaUvWI4ch2Y+TVrDpLPIp5vnyI6c?=
+ =?us-ascii?Q?U6g3X6zwsMgzfRvu55W3We3t2OWa8+7Tq3y3AgCZQebMrWxd0WIwkrOWwdAM?=
+ =?us-ascii?Q?m1cKd5ISnt2q/XemA6+Qb2NR4Rmk2UdwH2Q8ywKqaiyZIu84ATxsb+5kFHdR?=
+ =?us-ascii?Q?ltwQJIgyf9KHeF5QK1gEixI5EChOWNVL8l8c4nejcnSVklOyriw9r2j/D3yb?=
+ =?us-ascii?Q?SWoZsj7agK8++jbB3+VeYsek8sQ7Aqv/U9AVKn0RE8KB39ATolsXGsed4et5?=
+ =?us-ascii?Q?e/n90VMDurNUEMGZzBgBKvIjv85TkCzluEeLk47i4DFAAbLRqDYNy2to7yPo?=
+ =?us-ascii?Q?ZSufeKcJwpKeU5uw5KwBsEBJnrtpCbsRtZwOvjrFXx2mS3FSBX0A4C558w+V?=
+ =?us-ascii?Q?gtQCWFuj2EWqDddaFrGzNyOXJ9CW4mJ3YNqc05YvZi7ZQOcH+pE0RD1XCXm5?=
+ =?us-ascii?Q?f+EFcvZiNn9Gs7b6CCSM6uedbG3iq9dh7mHvxaBQwntbwp7gBP+YRRv2B3Pn?=
+ =?us-ascii?Q?xUj6r/tEzd1FUfGymI8m/yE0wam7KuI/z4D5XqmW+6iQGnhzP2TLd7w84F+B?=
+ =?us-ascii?Q?/PZyrZtQ4XhPoQnvLPb0khCIt2XrVLYt6NNrr8bCnhY12WLiHaB/jZ00lQzg?=
+ =?us-ascii?Q?X19uUQdEcvhcEW2FXdG46DukQaIQjjM37DK6tBcx9tMDW5qICwK5PA8S168s?=
+ =?us-ascii?Q?2dSrOUvA1DrWAQenIibUFS8MRWWxzigr5V1EAPb0Aluo72t8rvF3GWHlUqM1?=
+ =?us-ascii?Q?9BYNCpGM/kImETbeS6GsKfaIj236Ws9huuSa2TPh27aL?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7043c7f3-b747-4d4e-802f-08ddec828099
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB4845.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2025 13:45:40.8619
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ECEmlnN8p5vDs/pN1UKQTVskRYPsCUF1HRm/OBt2X6OA9pfC5oyHWid/64yTPNV5v1mC09Y7qWrsnZ8HKD47Rw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPFC77662F02
+X-OriginatorOrg: intel.com
 
-* Amir Goldstein:
+On Fri, Sep 05, 2025 at 07:07:40AM +0200, Greg Kroah-Hartman wrote:
+> On Fri, Sep 05, 2025 at 12:48:11AM +0300, Imre Deak wrote:
+> > Hi Greg,
+> > 
+> > On Tue, Sep 02, 2025 at 03:20:41PM +0200, Greg Kroah-Hartman wrote:
+> > > 6.16-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > Thanks for queuing this and the corresponding reverts for the other
+> > stable trees. This one patch doesn't match what I sent, the address
+> > should be changed to DP_TRAINING_PATTERN_SET not to DP_DPCD_REV, see
+> > [1]. I still think that's the correct thing to do here conforming to the
+> > DP Standard and matching what the upstream kernel does, also solving a
+> > link training issue for a DP2.0 docking station.
+> > 
+> > The reverts queued for the other stable trees are correct, since for
+> > now I do not want to change the behavior in those (i.e. those trees
+> > should continue to use the DP_DPCD_REV register matching what's been the
+> > case since the DPCD probing was introduced).
+> 
+> Ick, why were the values different for different branches? That feels
+> wrong, and is why I missed that.
 
->> If it's too much effort to synchronise them between glibc then it's
->> better to just close the book on this whole chapter (even though my
->> impression is that glibc made a mistake or two when adding the
->> definitions).
->
-> Considering that glibc has this fix lined up:
-> https://inbox.sourceware.org/libc-alpha/lhubjnpv03o.fsf@oldenburg.str.redhat.com/
->
-> Do we need to do anything at all?
->
-> Florian,
->
-> I am not that familiar with packaging and distributions of glibc
-> headers and kernel headers to downstream users.
+The requirement for changing the DPCD probe address was only
+introduced/clarified by a recent DP Standard version (with the
+introducation of LTTPR / UHBR link rates), so in the DRM code this got
+changed only in v6.16.0. However, this change revealed a bug in the
+firmwares of an eDP panel and Thunderbolt host, which also had to be
+fixed/worked around. The only such remaining issue is the latter one
+tracked at [1], which is now fixed by [2].
 
-I don't think kernel changes are necessary or desirable at this point.
-The glibc change went into glibc 2.42 only, and at this point in time,
-all distributions shipping 2.42 (few of them do) are pretty much
-guaranteed to pick up fixes from the 2.42 stable release branch
-regularly.  So if we get this into glibc 2.43 and backport it to 2.42,
-the problem should disappear quite soon from a developer's perspective.
+Based on all the above I still would like to keep the change only in the
+v6.16 tree and not backport it to earlier stable trees, until having
+more confidence that the change doesn't cause an issue for any sink
+device.
 
-Thanks,
-Florian
+> Can you just send a fix-up patch for the one I got wrong?
 
+Ok, I can send a patch for v6.16.y on top of what is already queued
+there.
+
+--Imre
+
+[1] https://gitlab.freedesktop.org/drm/amd/-/issues/4500
+[2] https://lore.kernel.org/all/20250904191351.746707-1-Jerry.Zuo@amd.com
+
+> thanks,
+> 
+> greg k-h
