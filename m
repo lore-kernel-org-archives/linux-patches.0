@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FFB15C158;
-	Sun,  7 Sep 2025 20:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57871125B2;
+	Sun,  7 Sep 2025 20:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277160; cv=none; b=MoGFB6FFITc9dA3+d7xAAvMyDnFq1OuCJZSRQmXCUeW9aMtgVgtm3FGRareNl/ehZbDzO1AhA/2XPeNza5f3jfpUFEKp2q4woQaS+yw4eqUXLnTCQJ9QEbYB+ZpBmBZPDn+7FyfUGHAdBcO+zok2ESLpPcYf2/7fLC8qC9FV45o=
+	t=1757277163; cv=none; b=g04ePU8hV9ZgjZ1/oKCgniObGn7IQS67HM0TrgMxdlkNoqjY8uQGmxwsUhPUf5duF0Wh5/98NSF+R2r7jlTndJTmYpHAEyYRWrnDcI6GEkKWZExSSRM8qF2jXOzrIF+COvfTZKK7tHnLbxEGcjdnxMNiSG8k+gO5IL9qk965R64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277160; c=relaxed/simple;
-	bh=14Kd7xQisqnWiQTD0ho6LyY1iqXyoR/pYsk4lQBvSQ8=;
+	s=arc-20240116; t=1757277163; c=relaxed/simple;
+	bh=FLNZV7eJQxA9LyAJ3rZmmh9ACwXamOu3F4UoKf/Blrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KghRoDJuB3E/LF11lMAOelXmR1r1z4COV4xn8HmVSNh9xcwMZF9V0G2kKDVk9KUN8CQSajj6lN19uk4nd6uavh8B9ZrqKHyOdHANNLp6y610VQnicQIcqQ+OsT4f01nGDoEyRopv1Nt5SKarCkBfd52CzYwlIEpfeK3weReMKE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpk7ciXT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=huy60RSvwPpIqgMUGJP9a8pxBidUQzD6jP//IKcrwhZ19FF2EAIqdd+Tx2MUYho1WOhzaObAs3Eog01wHRa/WGegJT022gHiCRcM/pLrglbfcx91OdyE2rQZZT29dSEiNbmnEECet+uTW7UNoHFJr9qa/PLEJuURqQC2pyC0ECs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1x2SZPIG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpk7ciXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C12AC4CEF0;
-	Sun,  7 Sep 2025 20:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1x2SZPIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67415C4CEF0;
+	Sun,  7 Sep 2025 20:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277159;
-	bh=14Kd7xQisqnWiQTD0ho6LyY1iqXyoR/pYsk4lQBvSQ8=;
+	s=korg; t=1757277163;
+	bh=FLNZV7eJQxA9LyAJ3rZmmh9ACwXamOu3F4UoKf/Blrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpk7ciXTRARaQw6kc6qKeS+402cqMfHjhQXkRjpmPxvKVYRTAiASKrXVFxy1rzHYX
-	 5EjN14N/Ri4rIzr88JYowk871qII0dGRr5cQMaXn9fm4o5zjm22nL+8ZeWtY+roaI0
-	 jJhu2qBJkrG4ijBU6PGDrPwqFB2BUFTvGPEQOopY=
+	b=1x2SZPIGE3TZWUxd3TKzGcUVOTxnaeohKTIegtZvWu6djkuyFcfpaW+uaV5QPV4xz
+	 aTllQhw93qzzq+3r0y6naKf2bO9gQ+1wxoxLCkyb5efTmuKFEy309SFf1wR/igqn9M
+	 Mg6g7PivcOAXCIpL8KH5a12uDZQu23Sb8NXCH7pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	syzbot+47d8cb2f2cc1517e515a@syzkaller.appspotmail.com,
-	Mark Tinguely <mark.tinguely@oracle.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
+	wangzijie <wangzijie1@honor.com>,
+	Lars Wendler <polynomial-c@gmx.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <pv@excello.cz>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	"Kirill A. Shutemov" <k.shutemov@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 104/175] ocfs2: prevent release journal inode after journal shutdown
-Date: Sun,  7 Sep 2025 21:58:19 +0200
-Message-ID: <20250907195617.311674803@linuxfoundation.org>
+Subject: [PATCH 6.12 105/175] proc: fix missing pde_set_flags() for net proc files
+Date: Sun,  7 Sep 2025 21:58:20 +0200
+Message-ID: <20250907195617.337324050@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,64 +53,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: wangzijie <wangzijie1@honor.com>
 
-commit f46e8ef8bb7b452584f2e75337b619ac51a7cadf upstream.
+commit 2ce3d282bd5050fca8577defeff08ada0d55d062 upstream.
 
-Before calling ocfs2_delete_osb(), ocfs2_journal_shutdown() has already
-been executed in ocfs2_dismount_volume(), so osb->journal must be NULL.
-Therefore, the following calltrace will inevitably fail when it reaches
-jbd2_journal_release_jbd_inode().
+To avoid potential UAF issues during module removal races, we use
+pde_set_flags() to save proc_ops flags in PDE itself before
+proc_register(), and then use pde_has_proc_*() helpers instead of directly
+dereferencing pde->proc_ops->*.
 
-ocfs2_dismount_volume()->
-  ocfs2_delete_osb()->
-    ocfs2_free_slot_info()->
-      __ocfs2_free_slot_info()->
-        evict()->
-          ocfs2_evict_inode()->
-            ocfs2_clear_inode()->
-	      jbd2_journal_release_jbd_inode(osb->journal->j_journal,
+However, the pde_set_flags() call was missing when creating net related
+proc files.  This omission caused incorrect behavior which FMODE_LSEEK was
+being cleared inappropriately in proc_reg_open() for net proc files.  Lars
+reported it in this link[1].
 
-Adding osb->journal checks will prevent null-ptr-deref during the above
-execution path.
+Fix this by ensuring pde_set_flags() is called when register proc entry,
+and add NULL check for proc_ops in pde_set_flags().
 
-Link: https://lkml.kernel.org/r/tencent_357489BEAEE4AED74CBD67D246DBD2C4C606@qq.com
-Fixes: da5e7c87827e ("ocfs2: cleanup journal init and shutdown")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-by: syzbot+47d8cb2f2cc1517e515a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=47d8cb2f2cc1517e515a
-Tested-by: syzbot+47d8cb2f2cc1517e515a@syzkaller.appspotmail.com
-Reviewed-by: Mark Tinguely <mark.tinguely@oracle.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
+[wangzijie1@honor.com: stash pde->proc_ops in a local const variable, per Christian]
+  Link: https://lkml.kernel.org/r/20250821105806.1453833-1-wangzijie1@honor.com
+Link: https://lkml.kernel.org/r/20250818123102.959595-1-wangzijie1@honor.com
+Link: https://lore.kernel.org/all/20250815195616.64497967@chagall.paradoxon.rec/ [1]
+Fixes: ff7ec8dc1b64 ("proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al")
+Signed-off-by: wangzijie <wangzijie1@honor.com>
+Reported-by: Lars Wendler <polynomial-c@gmx.de>
+Tested-by: Stefano Brivio <sbrivio@redhat.com>
+Tested-by: Petr Vaněk <pv@excello.cz>
+Tested by: Lars Wendler <polynomial-c@gmx.de>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Kirill A. Shutemov <k.shutemov@gmail.com>
+Cc: wangzijie <wangzijie1@honor.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/proc/generic.c |   38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1205,6 +1205,9 @@ static void ocfs2_clear_inode(struct ino
- 	 * the journal is flushed before journal shutdown. Thus it is safe to
- 	 * have inodes get cleaned up after journal shutdown.
- 	 */
-+	if (!osb->journal)
+--- a/fs/proc/generic.c
++++ b/fs/proc/generic.c
+@@ -362,6 +362,25 @@ static const struct inode_operations pro
+ 	.setattr	= proc_notify_change,
+ };
+ 
++static void pde_set_flags(struct proc_dir_entry *pde)
++{
++	const struct proc_ops *proc_ops = pde->proc_ops;
++
++	if (!proc_ops)
 +		return;
 +
- 	jbd2_journal_release_jbd_inode(osb->journal->j_journal,
- 				       &oi->ip_jinode);
++	if (proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
++		pde->flags |= PROC_ENTRY_PERMANENT;
++	if (proc_ops->proc_read_iter)
++		pde->flags |= PROC_ENTRY_proc_read_iter;
++#ifdef CONFIG_COMPAT
++	if (proc_ops->proc_compat_ioctl)
++		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
++#endif
++	if (proc_ops->proc_lseek)
++		pde->flags |= PROC_ENTRY_proc_lseek;
++}
++
+ /* returns the registered entry, or frees dp and returns NULL on failure */
+ struct proc_dir_entry *proc_register(struct proc_dir_entry *dir,
+ 		struct proc_dir_entry *dp)
+@@ -369,6 +388,8 @@ struct proc_dir_entry *proc_register(str
+ 	if (proc_alloc_inum(&dp->low_ino))
+ 		goto out_free_entry;
+ 
++	pde_set_flags(dp);
++
+ 	write_lock(&proc_subdir_lock);
+ 	dp->parent = dir;
+ 	if (pde_subdir_insert(dir, dp) == false) {
+@@ -557,20 +578,6 @@ struct proc_dir_entry *proc_create_reg(c
+ 	return p;
  }
+ 
+-static void pde_set_flags(struct proc_dir_entry *pde)
+-{
+-	if (pde->proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
+-		pde->flags |= PROC_ENTRY_PERMANENT;
+-	if (pde->proc_ops->proc_read_iter)
+-		pde->flags |= PROC_ENTRY_proc_read_iter;
+-#ifdef CONFIG_COMPAT
+-	if (pde->proc_ops->proc_compat_ioctl)
+-		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
+-#endif
+-	if (pde->proc_ops->proc_lseek)
+-		pde->flags |= PROC_ENTRY_proc_lseek;
+-}
+-
+ struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
+ 		struct proc_dir_entry *parent,
+ 		const struct proc_ops *proc_ops, void *data)
+@@ -581,7 +588,6 @@ struct proc_dir_entry *proc_create_data(
+ 	if (!p)
+ 		return NULL;
+ 	p->proc_ops = proc_ops;
+-	pde_set_flags(p);
+ 	return proc_register(parent, p);
+ }
+ EXPORT_SYMBOL(proc_create_data);
+@@ -632,7 +638,6 @@ struct proc_dir_entry *proc_create_seq_p
+ 	p->proc_ops = &proc_seq_ops;
+ 	p->seq_ops = ops;
+ 	p->state_size = state_size;
+-	pde_set_flags(p);
+ 	return proc_register(parent, p);
+ }
+ EXPORT_SYMBOL(proc_create_seq_private);
+@@ -663,7 +668,6 @@ struct proc_dir_entry *proc_create_singl
+ 		return NULL;
+ 	p->proc_ops = &proc_single_ops;
+ 	p->single_show = show;
+-	pde_set_flags(p);
+ 	return proc_register(parent, p);
+ }
+ EXPORT_SYMBOL(proc_create_single_data);
 
 
