@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629D31A704B;
-	Sun,  7 Sep 2025 20:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551D74315A;
+	Sun,  7 Sep 2025 20:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277565; cv=none; b=GjVm6CQBAXQuXRHLrV9drHFNxgiJe/pBpxhoMJuD7oAx9UZImArSXsABXp9+9mzmK3fMXpkTKYovudRiz7U0h8nxKI8Frv5YPLKax8/CyHf/1/mT5+H9eFu49LtYhgK9xkML+zUHoyUlcc2/4wGYeokNbjcHQOydDxCCwIDWg/U=
+	t=1757277568; cv=none; b=sKLDbIyGi+qrJc47OWaOKajzg1FxCqjlk6Jgz9kE7UtR06nE8/FGc8Gc6Su5EOgSMPx4GDcnDRwtLdntE85xZFfECIOHzMMdgvcyw9JSsT2bBBOwKqaklB2+HbwP7y7dPsdzSKDT79O+/CoMJhDentZRV6GxOaSWFshnSnMuhVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277565; c=relaxed/simple;
-	bh=axC/F45ahh3oD8oTV9FRhyFIaEnQULqNp4/oSMF5j/g=;
+	s=arc-20240116; t=1757277568; c=relaxed/simple;
+	bh=8ATidPw5XOd4/KnU9dZrFNgRhE8rtO3FCUcFVU9/4qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbtZif0ehr32cs3Lma1Q4jR1iO4QQIkfhzhp4h8Vs2DgtSv4PKXNpQGhi3bFz05xTWx8nQoOl0URu3zJBTbdcEY1N2C/r0DlfEn8KWivGkeydRcz/K94kJQfVEZVwXqJ0F+BELIXqgB+QjzqpIFau2rLMcLQD+INTfDXttA3ReA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSX8WYoO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ToHbqFtD+wAQZGTEWqEuYgzHRKyIF33pEiOZUqGavxUoYVUlhEi59HV5sOS9S8FtqKrzd/hA9Oq0+gF3X7VTTSwCpKIqzqyh3ppaz3qKLXQByoHEzFANbQGIkDtmTJn5msFtMV6h7ynXXSkqTYoYnPS+9JPt+UP0bNkRbYqG7JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdEbe5U0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSX8WYoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9094BC4CEF0;
-	Sun,  7 Sep 2025 20:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdEbe5U0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2559C4CEF0;
+	Sun,  7 Sep 2025 20:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277565;
-	bh=axC/F45ahh3oD8oTV9FRhyFIaEnQULqNp4/oSMF5j/g=;
+	s=korg; t=1757277568;
+	bh=8ATidPw5XOd4/KnU9dZrFNgRhE8rtO3FCUcFVU9/4qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSX8WYoOp6wmmvBAPd+2IfR4YDFne0yFJ04Cb5g5NoXSxMZieQK51kYEoRCcTTHVx
-	 yn4X89Xz+bA8teceupDgdDDvhnd6KBVt5J99r/cUCdmb/b38r3DaH4Wj5wFBFAit1E
-	 9P44o1W/v8kAFte2YIgF7eP2xTnbSIvCpM6gNCmo=
+	b=jdEbe5U0i/wgT3RYtjKDyiGWgIqshppysATlt/eqG8epQLsCiBNXwCCQcvHmKyzPk
+	 wWuTecwBJk5XUhKjBFzW/WnjFTzNYpGiG0zhgJIcjG+TSAzgOH85DK08NAEk+P3J9w
+	 H+FaFyfZF+UQUEQoaHXSHxQzSe9RCBGWHHYtb8JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 053/183] ptp: ocp: fix use-after-free bugs causing by ptp_ocp_watchdog
-Date: Sun,  7 Sep 2025 21:58:00 +0200
-Message-ID: <20250907195617.044198623@linuxfoundation.org>
+Subject: [PATCH 6.16 054/183] mISDN: Fix memory leak in dsp_hwec_enable()
+Date: Sun,  7 Sep 2025 21:58:01 +0200
+Message-ID: <20250907195617.066366706@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,53 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 8bf935cf789872350b04c1a6468b0a509f67afb2 ]
+[ Upstream commit 0704a3da7ce50f972e898bbda88d2692a22922d9 ]
 
-The ptp_ocp_detach() only shuts down the watchdog timer if it is
-pending. However, if the timer handler is already running, the
-timer_delete_sync() is not called. This leads to race conditions
-where the devlink that contains the ptp_ocp is deallocated while
-the timer handler is still accessing it, resulting in use-after-free
-bugs. The following details one of the race scenarios.
+dsp_hwec_enable() allocates dup pointer by kstrdup(arg),
+but then it updates dup variable by strsep(&dup, ",").
+As a result when it calls kfree(dup), the dup variable may be
+a modified pointer that no longer points to the original allocated
+memory, causing a memory leak.
 
-(thread 1)                           | (thread 2)
-ptp_ocp_remove()                     |
-  ptp_ocp_detach()                   | ptp_ocp_watchdog()
-    if (timer_pending(&bp->watchdog))|   bp = timer_container_of()
-      timer_delete_sync()            |
-                                     |
-  devlink_free(devlink) //free       |
-                                     |   bp-> //use
+The issue is the same pattern as fixed in commit c6a502c22999
+("mISDN: Fix memory leak in dsp_pipeline_build()").
 
-Resolve this by unconditionally calling timer_delete_sync() to ensure
-the timer is reliably deactivated, preventing any access after free.
-
-Fixes: 773bda964921 ("ptp: ocp: Expose various resources on the timecard.")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250828082949.28189-1-duoming@zju.edu.cn
+Fixes: 9a4381618262 ("mISDN: Remove VLAs")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250828081457.36061-1-linmq006@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/isdn/mISDN/dsp_hwec.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index 1e7f72e575576..5388285475952 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -4557,8 +4557,7 @@ ptp_ocp_detach(struct ptp_ocp *bp)
- 	ptp_ocp_debugfs_remove_device(bp);
- 	ptp_ocp_detach_sysfs(bp);
- 	ptp_ocp_attr_group_del(bp);
--	if (timer_pending(&bp->watchdog))
--		timer_delete_sync(&bp->watchdog);
-+	timer_delete_sync(&bp->watchdog);
- 	if (bp->ts0)
- 		ptp_ocp_unregister_ext(bp->ts0);
- 	if (bp->ts1)
+diff --git a/drivers/isdn/mISDN/dsp_hwec.c b/drivers/isdn/mISDN/dsp_hwec.c
+index 0b3f29195330a..0cd216e28f009 100644
+--- a/drivers/isdn/mISDN/dsp_hwec.c
++++ b/drivers/isdn/mISDN/dsp_hwec.c
+@@ -51,14 +51,14 @@ void dsp_hwec_enable(struct dsp *dsp, const char *arg)
+ 		goto _do;
+ 
+ 	{
+-		char *dup, *tok, *name, *val;
++		char *dup, *next, *tok, *name, *val;
+ 		int tmp;
+ 
+-		dup = kstrdup(arg, GFP_ATOMIC);
++		dup = next = kstrdup(arg, GFP_ATOMIC);
+ 		if (!dup)
+ 			return;
+ 
+-		while ((tok = strsep(&dup, ","))) {
++		while ((tok = strsep(&next, ","))) {
+ 			if (!strlen(tok))
+ 				continue;
+ 			name = strsep(&tok, "=");
 -- 
 2.50.1
 
