@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DD82868A2;
-	Sun,  7 Sep 2025 20:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED3420E005;
+	Sun,  7 Sep 2025 20:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276105; cv=none; b=VASFftK/3zQQ26ev5WhblLrhET69IO9aIlNuJGIXRludYxAnv7H+dqpRv+Z4MrkGyvqknJQeduJS6CGi3eDqmYgGH39wwSKnRwxTf/2zE1qyhZm2LjrlpGwWq0aGv3bN/f6T9ib3Gxhxc5vrz4vBzmMDTw0qCk0psoKX7KZsZ3g=
+	t=1757276108; cv=none; b=Q+reI0+bNfzQu6Mzl+J8VLsWhLRPAt6XzF7JsTp0y0dJM6HVIu9DO84dBtGE6Ju4d2C8NI/8PwdpoSeDnYtJjm+W6MAx3P4d64NRlE2YtPPBU1QqW8rK9jGOjQa1G70smAmSOiPFHprJ5vsIAjexZ2DX10bhN50k+4Qp1OdXbJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276105; c=relaxed/simple;
-	bh=lRMN45kAAVha5XCvnMbrI++PHGYmbMKJ9aTCtt/FkqA=;
+	s=arc-20240116; t=1757276108; c=relaxed/simple;
+	bh=PfwQK2KPcMbJSgo+LFjja/hs4gntIpl1aT8HpzZRyro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FP/Y3r+tGyzzVn/nX9Id3/c+yPHesDU9UCyOJ5B1EorpXE/+NlndquwmE15NwIVUF8/1BBxXjZa0GU2M4pMQdvebhq2JVa0Qu9/2A6N6bBgaGEiOpH4zn6sswSx4MeZQ+w9S5wCBxvVZr/G+laz9ceHC+IVZpRtpnnxugcEUrI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uJUPQqq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7d2CAQ8+27MtTAJV3RFqZlEsmVnIqSMaD1xninLLYNQ9DK+24iG+MnH5eofO7IXiJH5XLoPbCq0HZir6WMw8rDJgGjL88+my5h9O9RjVJtg4nlTtYUZVOIEhpmxEa5NDA1EjETajJlVJ2t/K6yQI+0Sodo8Fqpmk0ePsgx4eGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx6wrqf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uJUPQqq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E529C4CEF0;
-	Sun,  7 Sep 2025 20:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx6wrqf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0DFC4CEF0;
+	Sun,  7 Sep 2025 20:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276105;
-	bh=lRMN45kAAVha5XCvnMbrI++PHGYmbMKJ9aTCtt/FkqA=;
+	s=korg; t=1757276108;
+	bh=PfwQK2KPcMbJSgo+LFjja/hs4gntIpl1aT8HpzZRyro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2uJUPQqqeEdbADrH6IsbNFjLKdyquoQW002HwIfLXCFagpEnIVmy0sVzhSOTU1AMf
-	 S10K8xBULnn2GAJI9beV6NSq21jWOJyn2KmS7NSnx4BpEtBLQPjdDcuqEWA6g6lfZ/
-	 u9ZEAwGuYHimxtAz5OuNytHsO6z1nP+vfFLY+4bk=
+	b=yx6wrqf1XtqXWDGja6NL2RPQjfTenLK6Dn4gZ6bPW+EXrNa/u3yz7sQuPPkxkRvdi
+	 nIxrCq4kjetKj0so066DKe2tgzho2InOWf/F9Z3UwTiMnJHt2ZQ3EGVZFxqOsXxwJc
+	 KZR4q7sH1MKnuFedpquZh0w/MFqi6daqLNDY6LBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Eugen Hristev <eugen.hristev@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 63/64] spi: tegra114: Use value to check for invalid delays
-Date: Sun,  7 Sep 2025 21:58:45 +0200
-Message-ID: <20250907195605.156327767@linuxfoundation.org>
+Subject: [PATCH 5.15 64/64] dmaengine: mediatek: Fix a flag reuse error in mtk_cqdma_tx_status()
+Date: Sun,  7 Sep 2025 21:58:46 +0200
+Message-ID: <20250907195605.181810792@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -52,42 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-[ Upstream commit e979a7c79fbc706f6dac913af379ef4caa04d3d5 ]
+[ Upstream commit 8eba2187391e5ab49940cd02d6bd45a5617f4daf ]
 
-A delay unit of 0 is a valid entry, thus it is not valid to check for
-unused delays. Instead, check the value field; if that is zero, the
-given delay is unset.
+Fixed a flag reuse bug in the mtk_cqdma_tx_status() function.
 
-Fixes: 4426e6b4ecf6 ("spi: tegra114: Don't fail set_cs_timing when delays are zero")
+Fixes: 157ae5ffd76a ("dmaengine: mediatek: Fix a possible deadlock error in mtk_cqdma_tx_status()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20250506-spi-tegra114-fixup-v1-1-136dc2f732f3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505270641.MStzJUfU-lkp@intel.com/
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250606090017.5436-1-chenqiuji666@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/mediatek/mtk-cqdma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index af9ed52445fe6..30a699ba9b4c2 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -729,9 +729,9 @@ static int tegra_spi_set_hw_cs_timing(struct spi_device *spi)
- 	u32 inactive_cycles;
- 	u8 cs_state;
+diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
+index 39e902b279e64..60d1d56b98317 100644
+--- a/drivers/dma/mediatek/mtk-cqdma.c
++++ b/drivers/dma/mediatek/mtk-cqdma.c
+@@ -450,9 +450,9 @@ static enum dma_status mtk_cqdma_tx_status(struct dma_chan *c,
+ 		return ret;
  
--	if ((setup->unit && setup->unit != SPI_DELAY_UNIT_SCK) ||
--	    (hold->unit && hold->unit != SPI_DELAY_UNIT_SCK) ||
--	    (inactive->unit && inactive->unit != SPI_DELAY_UNIT_SCK)) {
-+	if ((setup->value && setup->unit != SPI_DELAY_UNIT_SCK) ||
-+	    (hold->value && hold->unit != SPI_DELAY_UNIT_SCK) ||
-+	    (inactive->value && inactive->unit != SPI_DELAY_UNIT_SCK)) {
- 		dev_err(&spi->dev,
- 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
- 			SPI_DELAY_UNIT_SCK);
+ 	spin_lock_irqsave(&cvc->pc->lock, flags);
+-	spin_lock_irqsave(&cvc->vc.lock, flags);
++	spin_lock(&cvc->vc.lock);
+ 	vd = mtk_cqdma_find_active_desc(c, cookie);
+-	spin_unlock_irqrestore(&cvc->vc.lock, flags);
++	spin_unlock(&cvc->vc.lock);
+ 	spin_unlock_irqrestore(&cvc->pc->lock, flags);
+ 
+ 	if (vd) {
 -- 
 2.51.0
 
