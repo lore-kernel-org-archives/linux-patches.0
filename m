@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E5F1B424F;
-	Sun,  7 Sep 2025 20:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375ED27FB21;
+	Sun,  7 Sep 2025 20:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276091; cv=none; b=pRZnMDHE50beqFmhXDseJkhOUch3CzWZjeY/eRv7mT2rH1PLRyHoFVZt41xUtpTL4PKHNFO5WlsN/rl9lKl33ERO53v7zjg5J5hdv0NFh2oAR/rX+dW+JSb2x13ztV4OZZfmK8P2/vH9QodSi3IWHAZpmOiv0cgIeDv+8w93bJI=
+	t=1757276095; cv=none; b=BuV7uO0erglMOW2jHk8df58lCpuy2H2fg8vWZaa96fC2v0togNIeCwgjsGLDO7KR5YsaA014m3x2PsaL6phQKwvEQuRrwz5S9OCo4JHiCj8bNrmMFLFX/YFNmFB5eayutB6VgAHbOoUPQoT22AcRI+6IJA2FrnauiI34ujsVVBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276091; c=relaxed/simple;
-	bh=twNSZMT2s/dfk3nct/z3qZxQp8UIXNrS3a/HzG/7GRQ=;
+	s=arc-20240116; t=1757276095; c=relaxed/simple;
+	bh=QtSGXVZ0q1IzWyNZbslM7+g15VUBrgFb6yt1SlxLz/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGGFGqon19gSlygXdAVMLXEtome49MpZvAW1I2Ka2PoDpMFJu6juEvipPqGQbvHvWf7GlU2IofOv7WYryQm9X9ucomaHk49+sBPy0VbjhM0o4vBp1NATUKVaJ7zoPCWItm+H3U9VK6+fRTYnrL0iBnfwzB9gj/gBejt6SP2JsTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Juy5j9Ny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgqpBnbTUWr2P+oeDTKG/qBq9DnPe+hALRtMAQO/+0cL5WZ2yb+ZHQqJeU6tTN030dwk8rEy5GpoklluSUkoVlm2XsNPOjFg8KopRy40ruK2WVdGPI0UtO+0ookXpBAr9x3iCo0a2VV8PVT2i4i74q3AvN094wu1qVEdc7+GnHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vzb8fGKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Juy5j9Ny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7B6C4CEF0;
-	Sun,  7 Sep 2025 20:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vzb8fGKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C8FC4CEF0;
+	Sun,  7 Sep 2025 20:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276091;
-	bh=twNSZMT2s/dfk3nct/z3qZxQp8UIXNrS3a/HzG/7GRQ=;
+	s=korg; t=1757276095;
+	bh=QtSGXVZ0q1IzWyNZbslM7+g15VUBrgFb6yt1SlxLz/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Juy5j9Nyc0CT4xxve9ow0U2+VrsJ93iABX86QeQVLsMrLjiKoByIyUceeJkevCIbr
-	 U0jkLUZQSpwSho8pQvFzfxq2mrMqtppdbBhHw2r0SJ2Nn8GtHUyFNR94RdfZ/fo2p8
-	 NyE9exh1TWLs7Bv4tlFcr7pFBPrYYF74rpxzXJsM=
+	b=Vzb8fGKBW2XyGEFAO2STwMRWlWN5JWIw2ilOPjcPbdUFOI1/v/tsByA1OWZlhJmJ8
+	 aVBOa8EsnWW6OjHL6DY3RJhI1nZkhNKDcbVEoShbmS5Y+lPj2smA73+DqzUi5vP/5B
+	 rpU+2OyRBbOIKzPt+mKCpRt5lNO/bJkW0UKoO1n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larisa Grigore <larisa.grigore@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	James Clark <james.clark@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 59/64] spi: spi-fsl-lpspi: Reset FIFO and disable module on transfer abort
-Date: Sun,  7 Sep 2025 21:58:41 +0200
-Message-ID: <20250907195605.046483498@linuxfoundation.org>
+Subject: [PATCH 5.15 60/64] drm/bridge: ti-sn65dsi86: fix REFCLK setting
+Date: Sun,  7 Sep 2025 21:58:42 +0200
+Message-ID: <20250907195605.075066564@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -53,45 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larisa Grigore <larisa.grigore@nxp.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit e811b088a3641861fc9d2b2b840efc61a0f1907d ]
+[ Upstream commit bdd5a14e660062114bdebaef9ad52adf04970a89 ]
 
-In DMA mode fsl_lpspi_reset() is always called at the end, even when the
-transfer is aborted. In PIO mode aborts skip the reset leaving the FIFO
-filled and the module enabled.
+The bridge has three bootstrap pins which are sampled to determine the
+frequency of the external reference clock. The driver will also
+(over)write that setting. But it seems this is racy after the bridge is
+enabled. It was observed that although the driver write the correct
+value (by sniffing on the I2C bus), the register has the wrong value.
+The datasheet states that the GPIO lines have to be stable for at least
+5us after asserting the EN signal. Thus, there seems to be some logic
+which samples the GPIO lines and this logic appears to overwrite the
+register value which was set by the driver. Waiting 20us after
+asserting the EN line resolves this issue.
 
-Fix it by always calling fsl_lpspi_reset().
-
-Fixes: a15dc3d657fa ("spi: lpspi: Fix CLK pin becomes low before one transfer")
-Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://patch.msgid.link/20250828-james-nxp-lpspi-v2-3-6262b9aa9be4@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250821122341.1257286-1-mwalle@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index ab096368a1fd5..319cd96bd201b 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -705,12 +705,10 @@ static int fsl_lpspi_pio_transfer(struct spi_controller *controller,
- 	fsl_lpspi_write_tx_fifo(fsl_lpspi);
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 1c9dd62d3c47b..1187bfb449f29 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -313,6 +313,17 @@ static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
  
- 	ret = fsl_lpspi_wait_for_completion(controller);
--	if (ret)
--		return ret;
+ 	gpiod_set_value(pdata->enable_gpio, 1);
  
- 	fsl_lpspi_reset(fsl_lpspi);
- 
--	return 0;
-+	return ret;
- }
- 
- static int fsl_lpspi_transfer_one(struct spi_controller *controller,
++	/*
++	 * After EN is deasserted and an external clock is detected, the bridge
++	 * will sample GPIO3:1 to determine its frequency. The driver will
++	 * overwrite this setting in ti_sn_bridge_set_refclk_freq(). But this is
++	 * racy. Thus we have to wait a couple of us. According to the datasheet
++	 * the GPIO lines has to be stable at least 5 us (td5) but it seems that
++	 * is not enough and the refclk frequency value is still lost or
++	 * overwritten by the bridge itself. Waiting for 20us seems to work.
++	 */
++	usleep_range(20, 30);
++
+ 	/*
+ 	 * If we have a reference clock we can enable communication w/ the
+ 	 * panel (including the aux channel) w/out any need for an input clock
 -- 
 2.51.0
 
