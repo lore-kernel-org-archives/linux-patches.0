@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDF520E005;
-	Sun,  7 Sep 2025 20:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F397E107;
+	Sun,  7 Sep 2025 20:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277915; cv=none; b=suJZQz+6W7Y0N8O3RZz5Vt4JfBkbc4e4kb5ZcOZTsVJw8Y9soUXT/6YwIiTHCBuUBB7xAWpKZ1bUgGnH7rUOG7Uw3ca4PWDVZi+jnwmRx8oxsGrkyPxza2C9TbPayLLwR0dUwhgb4DsU/pwiM5n24+RZP7k5XGQEer8Rxs5Dy0A=
+	t=1757277920; cv=none; b=pISXwyQ52fSDFPuOw6SPV6uxj+N0wbxctNXD+VIxFWm4ru58hY0SynHoeOf/ItcPVsIsnVFXnTjrmc3dmcefQwjc7aFD+K+2WdXIHff3YEHfrhE7b6g7+gM3C6ywCtkGIvHWHcempfvjAn8LZlfUchEcJ5H48K6uIzPa/vBpufU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277915; c=relaxed/simple;
-	bh=v5SJ2cQo3mVtD9OZr0NkrFEfGhAdlywM2c9dSFprOoE=;
+	s=arc-20240116; t=1757277920; c=relaxed/simple;
+	bh=w2ccw3sx9rNaWCF4aNp7ZOzFNoid0Ge1gQwkPNri1YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyjKdKGqe8XftU0T0WayKX6RY23SXxAmVqZo6xh/eq9WIbvc8P8NOJKTcd9TPSiNwEWj3lsLlfIiXkg9OkMbgU32Q+3hBED1rg5aGQTsRQkugrpHiV+YYA3yBfi35qevgR3JCwfSq9UL3M/n5Hz6Gqs8dfwVe0ZJQTU4LePaUy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwdFC4Fx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqilpO1EwGckPrDEQfm3pcMJv82j8YfSqkcU+7lapd6CX+PDcn7j9G/H7L2SJvzPc0Gy/jfUJufZDgejHQTemEJS2j/Q6FScdLZIX8WWlFylBhNvbZs4Pfr5qteZkRIHbrECo+Br2UTFPBc0jAXSnyP37Ep0p7AIjbzY1KeH/J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdW5DpP/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwdFC4Fx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89E1C4CEF0;
-	Sun,  7 Sep 2025 20:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdW5DpP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12365C4CEF0;
+	Sun,  7 Sep 2025 20:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277915;
-	bh=v5SJ2cQo3mVtD9OZr0NkrFEfGhAdlywM2c9dSFprOoE=;
+	s=korg; t=1757277918;
+	bh=w2ccw3sx9rNaWCF4aNp7ZOzFNoid0Ge1gQwkPNri1YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwdFC4Fx6sHVRTj5kvf28lr3jYqWmMc91akYoVPSyb0EwXqU2O9n3CSoW0NAYlIUe
-	 9uLwRMhMCqRWTfIThcG0+P5pAiqgVOpn4B6ol6H5z/aaWWCtfM20HnSYPN8AL4aanX
-	 pvVT90sweuJYBE+hQb+oKqqFrT0x0mcycnmuBklI=
+	b=OdW5DpP/8fYYi+KJrCsEsxWiQ0tXUVbIxCEPDkLFL48sOnzQtquqMeHg4Aahu6xO2
+	 f2tSmGm2IC2sMeiSBbGm6c+D3HDZYOvAuZzsJ1tmkaCFRlu49n2mOZthvHFud8xmU5
+	 uHjiLYtbcyXFE7rziJZqfxif88pWVeoURlGhiMZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Morrow <morrownr@gmail.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.16 119/183] wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete
-Date: Sun,  7 Sep 2025 21:59:06 +0200
-Message-ID: <20250907195618.620473824@linuxfoundation.org>
+Subject: [PATCH 6.16 120/183] wifi: mt76: mt7996: Initialize hdr before passing to skb_put_data()
+Date: Sun,  7 Sep 2025 21:59:07 +0200
+Message-ID: <20250907195618.643161943@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,37 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit c22769de25095c6777e8acb68a1349a3257fc955 upstream.
+commit 87b07a1fbc6b5c23d3b3584ab4288bc9106d3274 upstream.
 
-MT7925 is a connac3 device; using the connac2 helper mis-parses
-TXWI and breaks AMPDU/BA accounting. Use the connac3-specific
-helper mt7925_tx_check_aggr() instead,
+A new warning in clang [1] points out a couple of places where a hdr
+variable is not initialized then passed along to skb_put_data().
+
+  drivers/net/wireless/mediatek/mt76/mt7996/mcu.c:1894:21: warning: variable 'hdr' is uninitialized when passed as a const pointer argument here [-Wuninitialized-const-pointer]
+   1894 |         skb_put_data(skb, &hdr, sizeof(hdr));
+        |                            ^~~
+  drivers/net/wireless/mediatek/mt76/mt7996/mcu.c:3386:21: warning: variable 'hdr' is uninitialized when passed as a const pointer argument here [-Wuninitialized-const-pointer]
+   3386 |         skb_put_data(skb, &hdr, sizeof(hdr));
+        |                            ^~~
+
+Zero initialize these headers as done in other places in the driver when
+there is nothing stored in the header.
 
 Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Reported-by: Nick Morrow <morrownr@gmail.com>
-Tested-by: Nick Morrow <morrownr@gmail.com>
-Tested-on: Netgear A9000 USB WiFi adapter
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250818020203.992338-1-mingyen.hsieh@mediatek.com
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2104
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20250715-mt7996-fix-uninit-const-pointer-v1-1-b5d8d11d7b78@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1449,7 +1449,7 @@ void mt7925_usb_sdio_tx_complete_skb(str
- 	sta = wcid_to_sta(wcid);
- 
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
--		mt76_connac2_tx_check_aggr(sta, txwi);
-+		mt7925_tx_check_aggr(sta, e->skb, wcid);
- 
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1879,8 +1879,8 @@ mt7996_mcu_get_mmps_mode(enum ieee80211_
+ int mt7996_mcu_set_fixed_rate_ctrl(struct mt7996_dev *dev,
+ 				   void *data, u16 version)
+ {
++	struct uni_header hdr = {};
+ 	struct ra_fixed_rate *req;
+-	struct uni_header hdr;
+ 	struct sk_buff *skb;
+ 	struct tlv *tlv;
+ 	int len;
+@@ -3377,7 +3377,7 @@ int mt7996_mcu_set_hdr_trans(struct mt79
+ {
+ 	struct {
+ 		u8 __rsv[4];
+-	} __packed hdr;
++	} __packed hdr = {};
+ 	struct hdr_trans_blacklist *req_blacklist;
+ 	struct hdr_trans_en *req_en;
+ 	struct sk_buff *skb;
 
 
