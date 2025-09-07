@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB6E1CDFAC;
-	Sun,  7 Sep 2025 20:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0BD1CDFAC;
+	Sun,  7 Sep 2025 20:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275822; cv=none; b=R3IctgN+eGhDg6XPi0gJ4FC0NDQsP3no3WeruDyAkW5qRtvFOtRS4TRODJSCLgRBKbFcpouZPQG5o983juo6IQMF4DDVuGdSpWhYMNzQ4BSmcTP1MqXmISII9Ajo1RsuqO3bcXQ8dIYbQFyBg3pUo98/bD/StyMUIAJl5ZD1yvk=
+	t=1757275825; cv=none; b=j8I57dxzlXfvc2mNITOTus13lClb1TczKhb1LZSaLba30KRFPQ59mD6OhcAdkHGrf1MHO2OutKVx8bL6/CNM1eQjLq6lCfxQKTG056Z9Bv3CC3F6NIVoG1npNJudpKmw9kNMAU4TZHx+JJHm4+kDmb9Bohfmc+e2Q4FGPAQdQj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275822; c=relaxed/simple;
-	bh=sYM0xQuBycfTH+jTcBR24nf/zoAc34d56Ie/a7SLAb0=;
+	s=arc-20240116; t=1757275825; c=relaxed/simple;
+	bh=bWFeUWwborG5GdIdPVfmwyTiCIeKyJ/Twc2ZUpWCeSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUteJXNG0k/DECCmqGwLsMiiYUfyVJq96+b5p/kUjmEEuBnj8qRUoPO3S3B7hOuLtR/Ve6hV0qW2byYeCQo/Vq6ITc5JmOJLSulDkd6YoVuNT/NIkile+tSO5WXUZpiQvY6JLrmgfhI9FcSMBHdVbXYY7zJrzlN4r1sYw+96CKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNZ2wJ1Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KSINkqauvSiGRBSnGMcqv1AObNfF39AzEYaf7BtY9X97yGnwl4nbWUHTy66jSdEI4U+NiL0/TcJnDJMGWC9+lhi/yeXVw87CQwZMz7B3Eng3fSWP4901JBrUFKzCc5XqQxvzN6kFrYXpqU4gDCsmIJJe/M1VM8cSI8O3CoK3Qew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFBelXWT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNZ2wJ1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47E1C4CEF0;
-	Sun,  7 Sep 2025 20:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFBelXWT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B962C4CEF0;
+	Sun,  7 Sep 2025 20:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275822;
-	bh=sYM0xQuBycfTH+jTcBR24nf/zoAc34d56Ie/a7SLAb0=;
+	s=korg; t=1757275825;
+	bh=bWFeUWwborG5GdIdPVfmwyTiCIeKyJ/Twc2ZUpWCeSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNZ2wJ1ZimkzzCzMtiI2joYjfr87zlM1M85gcYVVhh8aiiHhsBx36t2nadGvt1yFl
-	 KLJftIOsOXyuQM2K8LDMbsVlXIY5dFlCONC6Cupy3O6z1L8ucZs59A4iXtIXOgNvOR
-	 5UCmpcSo9fXu9y5z87LgOgOODN9mBwElEPiI76X8=
+	b=EFBelXWTAqcyhCWJspNAEyecU/DDsC12Tl6VWF06kXqjVy+8/UmSgnNp2ZUSyYRpq
+	 wEjijfWjRQIfItKkkLTmD9WUeOl6nxpctQU7pqnvwJI+YJFbtnMEaAwtwRrR2g4ara
+	 ME0SMohs+jPTd1d+enX9zWUARyAV+j9K4n9b3iwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fort <disclosure@aisle.com>,
-	Stanislav Fort <stanislav.fort@aisle.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.4 22/45] batman-adv: fix OOB read/write in network-coding decode
-Date: Sun,  7 Sep 2025 21:58:08 +0200
-Message-ID: <20250907195601.602492358@linuxfoundation.org>
+	Mikael Wessel <post@mikaelkw.online>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.4 23/45] e1000e: fix heap overflow in e1000_set_eeprom
+Date: Sun,  7 Sep 2025 21:58:09 +0200
+Message-ID: <20250907195601.630505520@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
 References: <20250907195600.953058118@linuxfoundation.org>
@@ -52,44 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fort <stanislav.fort@aisle.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-commit d77b6ff0ce35a6d0b0b7b9581bc3f76d041d4087 upstream.
+commit 90fb7db49c6dbac961c6b8ebfd741141ffbc8545 upstream.
 
-batadv_nc_skb_decode_packet() trusts coded_len and checks only against
-skb->len. XOR starts at sizeof(struct batadv_unicast_packet), reducing
-payload headroom, and the source skb length is not verified, allowing an
-out-of-bounds read and a small out-of-bounds write.
+Fix a possible heap overflow in e1000_set_eeprom function by adding
+input validation for the requested length of the change in the EEPROM.
+In addition, change the variable type from int to size_t for better
+code practices and rearrange declarations to RCT.
 
-Validate that coded_len fits within the payload area of both destination
-and source sk_buffs before XORing.
-
-Fixes: 2df5278b0267 ("batman-adv: network coding - receive coded packets and decode them")
 Cc: stable@vger.kernel.org
-Reported-by: Stanislav Fort <disclosure@aisle.com>
-Signed-off-by: Stanislav Fort <stanislav.fort@aisle.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Fixes: bc7f75fa9788 ("[E1000E]: New pci-express e1000 driver (currently for ICH9 devices only)")
+Co-developed-by: Mikael Wessel <post@mikaelkw.online>
+Signed-off-by: Mikael Wessel <post@mikaelkw.online>
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/network-coding.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/e1000e/ethtool.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/net/batman-adv/network-coding.c
-+++ b/net/batman-adv/network-coding.c
-@@ -1694,7 +1694,12 @@ batadv_nc_skb_decode_packet(struct batad
+--- a/drivers/net/ethernet/intel/e1000e/ethtool.c
++++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
+@@ -552,12 +552,12 @@ static int e1000_set_eeprom(struct net_d
+ {
+ 	struct e1000_adapter *adapter = netdev_priv(netdev);
+ 	struct e1000_hw *hw = &adapter->hw;
++	size_t total_len, max_len;
+ 	u16 *eeprom_buff;
+-	void *ptr;
+-	int max_len;
++	int ret_val = 0;
+ 	int first_word;
+ 	int last_word;
+-	int ret_val = 0;
++	void *ptr;
+ 	u16 i;
  
- 	coding_len = ntohs(coded_packet_tmp.coded_len);
+ 	if (eeprom->len == 0)
+@@ -572,6 +572,10 @@ static int e1000_set_eeprom(struct net_d
  
--	if (coding_len > skb->len)
-+	/* ensure dst buffer is large enough (payload only) */
-+	if (coding_len + h_size > skb->len)
-+		return NULL;
+ 	max_len = hw->nvm.word_size * 2;
+ 
++	if (check_add_overflow(eeprom->offset, eeprom->len, &total_len) ||
++	    total_len > max_len)
++		return -EFBIG;
 +
-+	/* ensure src buffer is large enough (payload only) */
-+	if (coding_len + h_size > nc_packet->skb->len)
- 		return NULL;
- 
- 	/* Here the magic is reversed:
+ 	first_word = eeprom->offset >> 1;
+ 	last_word = (eeprom->offset + eeprom->len - 1) >> 1;
+ 	eeprom_buff = kmalloc(max_len, GFP_KERNEL);
 
 
