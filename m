@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE1C4315A;
-	Sun,  7 Sep 2025 20:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAE14315A;
+	Sun,  7 Sep 2025 20:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277803; cv=none; b=mGzwvq4KVlB/Jg7ZRYTPuCarhNAZRiXsjr09hq6TzQIoZfXVviwqilQyDGYedE0dgsF3svyfka0DHM3TMOye7t4eYY6fWu21FvkyqsZVNxdRgB6bKo8l2Fn3vJCKo/I2sYZi2SuVcjO9smfy1TuhFda43Oq3Zg+WDphM4vXGr40=
+	t=1757277806; cv=none; b=ks+wXvRBTXx6e7B8WvvKxtfByimnQ6t1FXJmYp5Dy1L2UMZg0+rjW+zpiMYDazxe5V4p6VfTRjvGyKy5yKmUwveAYBQHQE3BckGiOTvQozZKoYu4UNC7aj9+I5OV9D6O/5AVsN9tT9W0VzKX7vB1zYGZxMVv0F+0xZPgdizztLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277803; c=relaxed/simple;
-	bh=d3FnGpuZ2Fe2NBC3VQGarTpVYvGciAq+1mFGv26oVMY=;
+	s=arc-20240116; t=1757277806; c=relaxed/simple;
+	bh=Fq1YAtOVNvFDh7pQpVWB5eqgH74YgkBOcsOGig7b+hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nF3K4qlPMHs7OCvgQkATGw7y2nosKO2r8Ik+VhNOL+E3rs3bGi5RKS4joy6PVr3LSnho13DoQfpindbA6i1X4DHCbN3l+2dVJj3omWdFSfuMtjcadR+0VjyU1OdQMFSvcCbMzNdIIN6moQYGD2BeNB4OP/UEI9cBDE4IsuZc90c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSnN8wKb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A7MbZPLIXTLH5yIvYTZf1istyJInhPVt4cZinAoA1uOFogGpYU1R1Cz0tyq0bYsF/fbi6xcpnKDLTtthlRUOCqvLwKBzkfBTRMFeYtEXva0k7rpL3PRpiU7pf+x9zLKHognIr+KqceBHAnNInP+x6aZFBiXj7IJm6SpNgn1OWFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ru/NGEse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSnN8wKb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CF3C4CEF0;
-	Sun,  7 Sep 2025 20:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ru/NGEse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB14C4CEF0;
+	Sun,  7 Sep 2025 20:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277803;
-	bh=d3FnGpuZ2Fe2NBC3VQGarTpVYvGciAq+1mFGv26oVMY=;
+	s=korg; t=1757277806;
+	bh=Fq1YAtOVNvFDh7pQpVWB5eqgH74YgkBOcsOGig7b+hA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HSnN8wKbqG6a7VoUCdbQt9ScH7l85NWr9NOzYvjNOTbMQgvzrXrudG1hXBHd45p3O
-	 PUztklgTCTQSdNBqTB5HwAc5otChw2OzAjHSfJysjvb58QIr4uF30/3LXA2Y+i1iv4
-	 KlSuohn9q0YeM5ZpieF5Nhy1BPw1rK0DYElj1eXc=
+	b=ru/NGEseOluMg9tVTfp9ip0nuzGSV/EMkSEAXUMh/mKhb8NXCubXHfA/H0YXeIYhC
+	 xbd0tFUcfvqRwyJc7pFOvFuyUKxvE05UWMluf5KIHZVV5Jg90Z+P9/MY9TszdnZTBp
+	 mlmETEo0rHMO4oqxfTU7rWpViDiz3MAXmM1S27/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>
-Subject: [PATCH 6.16 129/183] drm/amdgpu/sdma: bump firmware version checks for user queue support
-Date: Sun,  7 Sep 2025 21:59:16 +0200
-Message-ID: <20250907195618.858323301@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.16 130/183] platform/x86/amd/pmc: Add TUXEDO IB Pro Gen10 AMD to spurious 8042 quirks list
+Date: Sun,  7 Sep 2025 21:59:17 +0200
+Message-ID: <20250907195618.881371173@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -44,55 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse.Zhang <Jesse.Zhang@amd.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit 2d41a4bfee6e9941ff19728c691ab00d19cf882a upstream.
+commit c96f86217bb28e019403bb8f59eacd8ad5a7ad1a upstream.
 
-Using the previous firmware could lead to problems with
-PROTECTED_FENCE_SIGNAL commands, specifically causing register
-conflicts between MCU_DBG0 and MCU_DBG1.
+Prevents instant wakeup ~1s after suspend.
 
-The updated firmware versions ensure proper alignment
-and unification of the SDMA_SUBOP_PROTECTED_FENCE_SIGNAL value with SDMA 7.x,
-resolving these hardware coordination issues
+It seems to be kernel/system dependent if the IRQ actually manages to wake
+the system every time or if it gets ignored (and everything works as
+expected).
 
-Fixes: e8cca30d8b34 ("drm/amdgpu/sdma6: add ucode version checks for userq support")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit aab8b689aded255425db3d80c0030d1ba02fe2ef)
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250827131424.16436-1-wse@tuxedocomputers.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-@@ -1376,15 +1376,15 @@ static int sdma_v6_0_sw_init(struct amdg
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -248,6 +248,20 @@ static const struct dmi_system_id fwbug_
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
+ 		}
+ 	},
++	{
++		.ident = "TUXEDO InfinityBook Pro 14/15 AMD Gen10",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "XxHP4NAx"),
++		}
++	},
++	{
++		.ident = "TUXEDO InfinityBook Pro 14/15 AMD Gen10",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx"),
++		}
++	},
+ 	{}
+ };
  
- 	switch (amdgpu_ip_version(adev, SDMA0_HWIP, 0)) {
- 	case IP_VERSION(6, 0, 0):
--		if ((adev->sdma.instance[0].fw_version >= 24) && !adev->sdma.disable_uq)
-+		if ((adev->sdma.instance[0].fw_version >= 27) && !adev->sdma.disable_uq)
- 			adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
- 		break;
- 	case IP_VERSION(6, 0, 2):
--		if ((adev->sdma.instance[0].fw_version >= 21) && !adev->sdma.disable_uq)
-+		if ((adev->sdma.instance[0].fw_version >= 23) && !adev->sdma.disable_uq)
- 			adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
- 		break;
- 	case IP_VERSION(6, 0, 3):
--		if ((adev->sdma.instance[0].fw_version >= 25) && !adev->sdma.disable_uq)
-+		if ((adev->sdma.instance[0].fw_version >= 27) && !adev->sdma.disable_uq)
- 			adev->userq_funcs[AMDGPU_HW_IP_DMA] = &userq_mes_funcs;
- 		break;
- 	default:
 
 
