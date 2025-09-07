@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA1017BB21;
-	Sun,  7 Sep 2025 20:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AEC17BB21;
+	Sun,  7 Sep 2025 20:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276788; cv=none; b=joftdSq4BfI27ymmYNgS35BITlSxZVjBYIWeUZjlkkb3mu2/63Qc4Q9sij7KtbkDUgCk6ZGbah2AVJlMqMcTSUJsAmSyX6yJbr34sffgvC4CTodRGTrQI0FG47MilJBXqubeUSUxmQbn+LUtWH7iSwDhyvWtdyUo4y+ay7jpajM=
+	t=1757276791; cv=none; b=LAknLVWDEqrljtBSNU39FoYpPgL9Ry55UYgvw6mTh6YCD4pYMdtnt33ekt0h6JoMJzRyYmYznqC4PINu31T8EIc7kUsmI6jR27IgzNDNw07S+nQhW7tFWQkqsXuo8DRyINksPyPqv0JrLR7Fam1Gy45qMn7DVVMSYi7L1Gxv05I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276788; c=relaxed/simple;
-	bh=LeTBdRjHCyARXTHGVW39E6mrapaDBCn2413WF5moaVs=;
+	s=arc-20240116; t=1757276791; c=relaxed/simple;
+	bh=DoBqYWrUT5+LYQhAxgCLfaQgIF/iwMB/wfH5LEnMXGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=boWkysnDahFcy5oUvyT29fUkQ9iIouUpjuPyC839RhLx9ZqmZVLggQvaRyo384iOHLaaHyPcgdzpk5QeiXwy0YjhEJaoR19qgOtqvg7ci8KIvc8AhLGfiOfU19/8ARVivUVOYicRuIFosDgQ6C4/61jAgCNyAV4OgjYOZAvrLno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=po4TokM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KtuXdN15UE0zF+PMJeVOLsgCZCm3e++4HwEeeI3b+yGENbkCXDapTlxC9IWLd/d4OlJWVIIvOX2HOo4WbUJS8R5u9A1IJN1pMYiNlOsl/jLV4eRwcs8Qp4ZevHDElzs2gdfUInZn8rZQuxeXJxlBfDf7rsCysYlE8AT/7dDv1Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxr4cWLM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="po4TokM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB334C4CEF0;
-	Sun,  7 Sep 2025 20:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxr4cWLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C88C4CEF0;
+	Sun,  7 Sep 2025 20:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276788;
-	bh=LeTBdRjHCyARXTHGVW39E6mrapaDBCn2413WF5moaVs=;
+	s=korg; t=1757276791;
+	bh=DoBqYWrUT5+LYQhAxgCLfaQgIF/iwMB/wfH5LEnMXGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=po4TokM/R7XpAyjmCGDcQA3a7eGRBDx+8G04IjlXk+5BqijdEDElHw7CFTGeQadK1
-	 WlIGKqZ/FzgLZ6uXUa+8XjfS8VTbLV+UCOuBzRYb0p5HPc9XGcMlJk9uikguM+lE91
-	 +43nxRh7ERemVTtNhdjkma9k2mOGqmu+um08DXRc=
+	b=Wxr4cWLMKAdX9/TtK5u8XpZtVLXgwiLmTEgtd6gdIR8RzfKSOOVFIupqrVCAf3i0F
+	 SAst133tMdv5Vh38+fc2xvZX8douUd5bSF6KOHDfsxX37VLaDH+G1hPM61go5CSVUd
+	 Ie6JIvG30yLjX5hVaFbQgiHMDdwCHA06YCCpCP6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	zhangjiao <zhangjiao2@cmss.chinamobile.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/121] drm/amd/amdgpu: Fix missing error return on kzalloc failure
-Date: Sun,  7 Sep 2025 21:59:07 +0200
-Message-ID: <20250907195612.696343206@linuxfoundation.org>
+Subject: [PATCH 6.6 112/121] tools: gpio: rm .*.cmd on make clean
+Date: Sun,  7 Sep 2025 21:59:08 +0200
+Message-ID: <20250907195612.724387237@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,37 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: zhangjiao <zhangjiao2@cmss.chinamobile.com>
 
-[ Upstream commit 467e00b30dfe75c4cfc2197ceef1fddca06adc25 ]
+[ Upstream commit 931a36c4138ac418d487bd4db0d03780b46a77ba ]
 
-Currently the kzalloc failure check just sets reports the failure
-and sets the variable ret to -ENOMEM, which is not checked later
-for this specific error. Fix this by just returning -ENOMEM rather
-than setting ret.
+rm .*.cmd when calling make clean
 
-Fixes: 4fb930715468 ("drm/amd/amdgpu: remove redundant host to psp cmd buf allocations")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1ee9d1a0962c13ba5ab7e47d33a80e3b8dc4b52e)
+Signed-off-by: zhangjiao <zhangjiao2@cmss.chinamobile.com>
+Link: https://lore.kernel.org/r/20240829062942.11487-1-zhangjiao2@cmss.chinamobile.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: ed42d80f3bae ("tools: gpio: remove the include directory on make clean")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 2 +-
+ tools/gpio/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index e9a83865ae012..c83445c2e37f3 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -409,7 +409,7 @@ static int psp_sw_init(void *handle)
- 	psp->cmd = kzalloc(sizeof(struct psp_gfx_cmd_resp), GFP_KERNEL);
- 	if (!psp->cmd) {
- 		dev_err(adev->dev, "Failed to allocate memory to command buffer!\n");
--		ret = -ENOMEM;
-+		return -ENOMEM;
- 	}
+diff --git a/tools/gpio/Makefile b/tools/gpio/Makefile
+index d29c9c49e2512..ed565eb52275f 100644
+--- a/tools/gpio/Makefile
++++ b/tools/gpio/Makefile
+@@ -78,7 +78,7 @@ $(OUTPUT)gpio-watch: $(GPIO_WATCH_IN)
+ clean:
+ 	rm -f $(ALL_PROGRAMS)
+ 	rm -f $(OUTPUT)include/linux/gpio.h
+-	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete
++	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete -o -name '\.*.cmd' -delete
  
- 	adev->psp.xgmi_context.supports_extended_data =
+ install: $(ALL_PROGRAMS)
+ 	install -d -m 755 $(DESTDIR)$(bindir);		\
 -- 
 2.51.0
 
