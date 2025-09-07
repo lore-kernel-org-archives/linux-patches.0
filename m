@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519761A2389;
-	Sun,  7 Sep 2025 20:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641E01B424F;
+	Sun,  7 Sep 2025 20:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276228; cv=none; b=EYrtEyWnUOtlgFProl1Q1YPbwv240eGO25ODk5H+W66zZYlf1PZlMV3Yrbse+N4Q7lWmeTYyClOblBlBJOJaCDS/sC2DWUElGTOlNcF6T2kmAL6FszSggfIxhz8ZuhV1SrP+jOX+IlSau3MGi9hn48XqHp2lJDHnSwnguwFPg2s=
+	t=1757276231; cv=none; b=qGyf9i81uHrDB974jd3GgXcefUvzFRkbwX9wppdRotvD/Me6ZtzJCKRkGyoCqF1+NiLZxQ8AdynN7IaKJOvbyyQ4C/uQWrGm1TvGgZm7mFrS+2PfiA3Hs6yQ4OyCSdRZG106bHQ1IwmIUfFUo9+FwkuRuA8m33r+SA3ki+mXSJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276228; c=relaxed/simple;
-	bh=iLAjGRdmSCmtcHCrwHweJnRCtgrIGUYN6o0mK5M4okk=;
+	s=arc-20240116; t=1757276231; c=relaxed/simple;
+	bh=HMmWwcc7XpWnN2U7Q9qu35NJCFQjBSlT8JLdDJcB1Dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5lyGiiDlgmfCoSKGg/pm7hBVPObk4AL9x6wwyq9mra4Zr4Kc2V8IkCVB9sLIAqvpTx2iHLUNlt9H4SJQ3WpTy7RMWjzkios5WmKnQB4VyoQZpS7wMsdS/utJDqjfwfwY9GwP5GPXaCtMYK2qUC64bBkDKFAFpHtPsJOz4AUOjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZhf9iaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwP3AbZ4Nlc/MEY2rZgMIZx+YfDW6/BRy1Sl4JHxcburwC7ERfbSvmLBBUn3abepV8JprGtZFdK50RVYvuD7XK1AzFF+FZyTRzlM3Zt8+gHVj+ATPKZnGPZwmQ2aVHh3+yqpYuf/ETHwop0Rd/z46nzp2nEOMTBKMD3akS9yfvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqS3nwnh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZhf9iaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFC6C4CEF0;
-	Sun,  7 Sep 2025 20:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqS3nwnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE87CC4CEF0;
+	Sun,  7 Sep 2025 20:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276228;
-	bh=iLAjGRdmSCmtcHCrwHweJnRCtgrIGUYN6o0mK5M4okk=;
+	s=korg; t=1757276231;
+	bh=HMmWwcc7XpWnN2U7Q9qu35NJCFQjBSlT8JLdDJcB1Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZhf9iaYWQsXRQxiosk/XhW6PQklWGwI/DO5g1XakJworDDWgNyCzBgehBynTj269
-	 227GVVQ0BJp1du86AHEFAoQB9e2t+NZ2X1x0nIYCEl3JtMZwfH1jJRz6DqcKuwPc35
-	 zIEL3JCvL5ycSIiXYC0DG1k6VBRVgLJjmqUYDwF8=
+	b=eqS3nwnhIU9GNNpiOD1mauFCFQhU3M2bjcf+VuICeoKkgGP7NBqLyYsiUNNX4sw5e
+	 wo61Fq213+1wIpltYd3DflfqKzZEqIliTRa+cX+bzGs5kzSKWt8zEylynYLpFGGIGM
+	 K8rF4IpfWb0fsRaZjbg2T6zG/Z8EvBVPBmJru25c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Simon Horman <horms@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/104] selftest: net: Fix weird setsockopt() in bind_bhash.c.
-Date: Sun,  7 Sep 2025 21:57:55 +0200
-Message-ID: <20250907195608.685692894@linuxfoundation.org>
+Subject: [PATCH 6.1 039/104] phy: mscc: Stop taking ts_lock for tx_queue and use its own lock
+Date: Sun,  7 Sep 2025 21:57:56 +0200
+Message-ID: <20250907195608.711815874@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -52,60 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit fd2004d82d8d8faa94879e3de3096c8511728637 ]
+[ Upstream commit 9b2bfdbf43adb9929c5ddcdd96efedbf1c88cf53 ]
 
-bind_bhash.c passes (SO_REUSEADDR | SO_REUSEPORT) to setsockopt().
+When transmitting a PTP frame which is timestamp using 2 step, the
+following warning appears if CONFIG_PROVE_LOCKING is enabled:
+=============================
+[ BUG: Invalid wait context ]
+6.17.0-rc1-00326-ge6160462704e #427 Not tainted
+-----------------------------
+ptp4l/119 is trying to lock:
+c2a44ed4 (&vsc8531->ts_lock){+.+.}-{3:3}, at: vsc85xx_txtstamp+0x50/0xac
+other info that might help us debug this:
+context-{4:4}
+4 locks held by ptp4l/119:
+ #0: c145f068 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x58/0x1440
+ #1: c29df974 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_queue_xmit+0x5c4/0x1440
+ #2: c2aaaad0 (_xmit_ETHER#2){+.-.}-{2:2}, at: sch_direct_xmit+0x108/0x350
+ #3: c2aac170 (&lan966x->tx_lock){+.-.}-{2:2}, at: lan966x_port_xmit+0xd0/0x350
+stack backtrace:
+CPU: 0 UID: 0 PID: 119 Comm: ptp4l Not tainted 6.17.0-rc1-00326-ge6160462704e #427 NONE
+Hardware name: Generic DT based system
+Call trace:
+ unwind_backtrace from show_stack+0x10/0x14
+ show_stack from dump_stack_lvl+0x7c/0xac
+ dump_stack_lvl from __lock_acquire+0x8e8/0x29dc
+ __lock_acquire from lock_acquire+0x108/0x38c
+ lock_acquire from __mutex_lock+0xb0/0xe78
+ __mutex_lock from mutex_lock_nested+0x1c/0x24
+ mutex_lock_nested from vsc85xx_txtstamp+0x50/0xac
+ vsc85xx_txtstamp from lan966x_fdma_xmit+0xd8/0x3a8
+ lan966x_fdma_xmit from lan966x_port_xmit+0x1bc/0x350
+ lan966x_port_xmit from dev_hard_start_xmit+0xc8/0x2c0
+ dev_hard_start_xmit from sch_direct_xmit+0x8c/0x350
+ sch_direct_xmit from __dev_queue_xmit+0x680/0x1440
+ __dev_queue_xmit from packet_sendmsg+0xfa4/0x1568
+ packet_sendmsg from __sys_sendto+0x110/0x19c
+ __sys_sendto from sys_send+0x18/0x20
+ sys_send from ret_fast_syscall+0x0/0x1c
+Exception stack(0xf0b05fa8 to 0xf0b05ff0)
+5fa0:                   00000001 0000000e 0000000e 0004b47a 0000003a 00000000
+5fc0: 00000001 0000000e 00000000 00000121 0004af58 00044874 00000000 00000000
+5fe0: 00000001 bee9d420 00025a10 b6e75c7c
 
-In the asm-generic definition, the value happens to match with the
-bare SO_REUSEPORT, (2 | 15) == 15, but not on some arch.
+So, instead of using the ts_lock for tx_queue, use the spinlock that
+skb_buff_head has.
 
-arch/alpha/include/uapi/asm/socket.h:18:#define SO_REUSEADDR	0x0004
-arch/alpha/include/uapi/asm/socket.h:24:#define SO_REUSEPORT	0x0200
-arch/mips/include/uapi/asm/socket.h:24:#define SO_REUSEADDR	0x0004	/* Allow reuse of local addresses.  */
-arch/mips/include/uapi/asm/socket.h:33:#define SO_REUSEPORT 0x0200	/* Allow local address and port reuse.  */
-arch/parisc/include/uapi/asm/socket.h:12:#define SO_REUSEADDR	0x0004
-arch/parisc/include/uapi/asm/socket.h:18:#define SO_REUSEPORT	0x0200
-arch/sparc/include/uapi/asm/socket.h:13:#define SO_REUSEADDR	0x0004
-arch/sparc/include/uapi/asm/socket.h:20:#define SO_REUSEPORT	0x0200
-include/uapi/asm-generic/socket.h:12:#define SO_REUSEADDR	2
-include/uapi/asm-generic/socket.h:27:#define SO_REUSEPORT	15
-
-Let's pass SO_REUSEPORT only.
-
-Fixes: c35ecb95c448 ("selftests/net: Add test for timing a bind request to a port with a populated bhash entry")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250903222938.2601522-1-kuniyu@google.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20250902121259.3257536-1-horatiu.vultur@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/bind_bhash.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/mscc/mscc_ptp.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/net/bind_bhash.c b/tools/testing/selftests/net/bind_bhash.c
-index 57ff67a3751eb..da04b0b19b73c 100644
---- a/tools/testing/selftests/net/bind_bhash.c
-+++ b/tools/testing/selftests/net/bind_bhash.c
-@@ -75,7 +75,7 @@ static void *setup(void *arg)
- 	int *array = (int *)arg;
+diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
+index 1f6237705b44b..939a8a17595ef 100644
+--- a/drivers/net/phy/mscc/mscc_ptp.c
++++ b/drivers/net/phy/mscc/mscc_ptp.c
+@@ -455,12 +455,12 @@ static void vsc85xx_dequeue_skb(struct vsc85xx_ptp *ptp)
+ 		*p++ = (reg >> 24) & 0xff;
+ 	}
  
- 	for (i = 0; i < MAX_CONNECTIONS; i++) {
--		sock_fd = bind_socket(SO_REUSEADDR | SO_REUSEPORT, setup_addr);
-+		sock_fd = bind_socket(SO_REUSEPORT, setup_addr);
- 		if (sock_fd < 0) {
- 			ret = sock_fd;
- 			pthread_exit(&ret);
-@@ -103,7 +103,7 @@ int main(int argc, const char *argv[])
+-	len = skb_queue_len(&ptp->tx_queue);
++	len = skb_queue_len_lockless(&ptp->tx_queue);
+ 	if (len < 1)
+ 		return;
  
- 	setup_addr = use_v6 ? setup_addr_v6 : setup_addr_v4;
+ 	while (len--) {
+-		skb = __skb_dequeue(&ptp->tx_queue);
++		skb = skb_dequeue(&ptp->tx_queue);
+ 		if (!skb)
+ 			return;
  
--	listener_fd = bind_socket(SO_REUSEADDR | SO_REUSEPORT, setup_addr);
-+	listener_fd = bind_socket(SO_REUSEPORT, setup_addr);
- 	if (listen(listener_fd, 100) < 0) {
- 		perror("listen failed");
- 		return -1;
+@@ -485,7 +485,7 @@ static void vsc85xx_dequeue_skb(struct vsc85xx_ptp *ptp)
+ 		 * packet in the FIFO right now, reschedule it for later
+ 		 * packets.
+ 		 */
+-		__skb_queue_tail(&ptp->tx_queue, skb);
++		skb_queue_tail(&ptp->tx_queue, skb);
+ 	}
+ }
+ 
+@@ -1067,6 +1067,7 @@ static int vsc85xx_hwtstamp(struct mii_timestamper *mii_ts, struct ifreq *ifr)
+ 	case HWTSTAMP_TX_ON:
+ 		break;
+ 	case HWTSTAMP_TX_OFF:
++		skb_queue_purge(&vsc8531->ptp->tx_queue);
+ 		break;
+ 	default:
+ 		return -ERANGE;
+@@ -1091,9 +1092,6 @@ static int vsc85xx_hwtstamp(struct mii_timestamper *mii_ts, struct ifreq *ifr)
+ 
+ 	mutex_lock(&vsc8531->ts_lock);
+ 
+-	__skb_queue_purge(&vsc8531->ptp->tx_queue);
+-	__skb_queue_head_init(&vsc8531->ptp->tx_queue);
+-
+ 	/* Disable predictor while configuring the 1588 block */
+ 	val = vsc85xx_ts_read_csr(phydev, PROCESSOR,
+ 				  MSCC_PHY_PTP_INGR_PREDICTOR);
+@@ -1179,9 +1177,7 @@ static void vsc85xx_txtstamp(struct mii_timestamper *mii_ts,
+ 
+ 	skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
+ 
+-	mutex_lock(&vsc8531->ts_lock);
+-	__skb_queue_tail(&vsc8531->ptp->tx_queue, skb);
+-	mutex_unlock(&vsc8531->ts_lock);
++	skb_queue_tail(&vsc8531->ptp->tx_queue, skb);
+ 	return;
+ 
+ out:
+@@ -1547,6 +1543,7 @@ void vsc8584_ptp_deinit(struct phy_device *phydev)
+ 	if (vsc8531->ptp->ptp_clock) {
+ 		ptp_clock_unregister(vsc8531->ptp->ptp_clock);
+ 		skb_queue_purge(&vsc8531->rx_skbs_list);
++		skb_queue_purge(&vsc8531->ptp->tx_queue);
+ 	}
+ }
+ 
+@@ -1570,7 +1567,7 @@ irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev)
+ 	if (rc & VSC85XX_1588_INT_FIFO_ADD) {
+ 		vsc85xx_get_tx_ts(priv->ptp);
+ 	} else if (rc & VSC85XX_1588_INT_FIFO_OVERFLOW) {
+-		__skb_queue_purge(&priv->ptp->tx_queue);
++		skb_queue_purge(&priv->ptp->tx_queue);
+ 		vsc85xx_ts_reset_fifo(phydev);
+ 	}
+ 
+@@ -1590,6 +1587,7 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
+ 	mutex_init(&vsc8531->phc_lock);
+ 	mutex_init(&vsc8531->ts_lock);
+ 	skb_queue_head_init(&vsc8531->rx_skbs_list);
++	skb_queue_head_init(&vsc8531->ptp->tx_queue);
+ 
+ 	/* Retrieve the shared load/save GPIO. Request it as non exclusive as
+ 	 * the same GPIO can be requested by all the PHYs of the same package.
 -- 
 2.50.1
 
