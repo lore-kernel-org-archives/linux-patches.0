@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA01189BB0;
-	Sun,  7 Sep 2025 20:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433B6189BB0;
+	Sun,  7 Sep 2025 20:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276976; cv=none; b=RruPFw3B2XtpCPIIbivi1JXv+8gefebQ3Y1+TzN2K5QiE90SLSB4g/S4Y6aRKYquCPc4TJuVdx/soA3LUluTo5b5JPdWwuD9FCjP4wsxJQ8Flq3qNTJRFeQcOM14TNdRRywA/9sLjRF2cZ0KbA8w8WWbyjRqJ2bvxOA8L7R+koA=
+	t=1757276979; cv=none; b=TZLbCge52TiCWnWNvDn2j7aZzBUojcBdho73IbnZ2v9VdVuILGLWFWQBxnhbBtorX8Bb54w6KeN33ywICEMiCvg4PieFNoL9JaImnUxhYTVl0QwJ6J3oclMBZCoMNRmR81unX84WV9Zf9kXwCphG+1XYPatEPjYxe1i6FvDR71U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276976; c=relaxed/simple;
-	bh=pyoiXh5VL4XTt+Ojmb9eBtVZqTRLq5lasqUA/M2emN4=;
+	s=arc-20240116; t=1757276979; c=relaxed/simple;
+	bh=sE90EDh4drFZLaF7yVur5drJqkrn06eG4ysZqsJ0Zmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6nVP6UpGx42Uo1HO/xn3L4u+eKMN72tzACn2i2ZlU0BsDHQvycZLJ9piP6bSQoh0s8CGttrmyXgvv6sKJmEqtG7cLYyynzM5mNMIQuOtNuf8A4caBm9llxbIdey3nqk7t0hQVUXaLMlsLX+Qj+NzN2gthbmbfy8HX+HOZrcl/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5zBdHsf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LyOG3T2xjDTatFpscmH+jx2ov7Z/IIS8E5V3KdyiqVBLg7Dmbt0Y6FU10eRMvUjnkN8rpkwhct4/U386AogqQEF5acipGchZt01S2ewjLIZR6ohLb3+/xgghbpzBUcA7Y4Jhgh/hVX3dMdFALcsTABR3Xsy4wUlPFYWe7REbJ9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUwIybD7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5zBdHsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69722C4CEF0;
-	Sun,  7 Sep 2025 20:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUwIybD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E07C4CEF0;
+	Sun,  7 Sep 2025 20:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276976;
-	bh=pyoiXh5VL4XTt+Ojmb9eBtVZqTRLq5lasqUA/M2emN4=;
+	s=korg; t=1757276979;
+	bh=sE90EDh4drFZLaF7yVur5drJqkrn06eG4ysZqsJ0Zmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5zBdHsfjl+1gzbeyYDwVHWt8oLrfJEeXUJ9xpgm4sskdfbZMXymzW45gAfBBoYtK
-	 cC4pZHkBmgV1ppvQjgXRD90OKtuNYRfcl/7YiNg7qhPFWz1CAIr3Qa77vBXDyMekPW
-	 p1WWSG0nHaw9jFSiuQ6Vh/BrJgvvabTVdPe2hVjo=
+	b=SUwIybD77IHaz44VmYrJMB06pN2+/Tw2M3dNhI98EtUO3kboBWdIy47z+tum3RaTo
+	 bin7+duB1iEfU4+K/6tOpQpiI/5KoklMqikCl6wRSdLkCyeJBGVnGns+L/JSsujmES
+	 jyPCQ0CiEUfWsJDPQEH4s2OJHACUIUJHo77NcF/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/175] selftests: drv-net: csum: fix interface name for remote host
-Date: Sun,  7 Sep 2025 21:57:23 +0200
-Message-ID: <20250907195615.984933299@linuxfoundation.org>
+Subject: [PATCH 6.12 049/175] bnxt_en: fix incorrect page count in RX aggr ring log
+Date: Sun,  7 Sep 2025 21:57:24 +0200
+Message-ID: <20250907195616.007776955@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,46 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 49c2502b5946ebf454d7e16fd0189769a82b6117 ]
+[ Upstream commit 7000f4fa9b24ae2511b07babd0d49e888db5d265 ]
 
-Use cfg.remote_ifname for arguments of remote command.
-Without this UDP tests fail in NIPA where local interface
-is called enp1s0 and remote enp0s4.
+The warning in bnxt_alloc_one_rx_ring_netmem() reports the number
+of pages allocated for the RX aggregation ring. However, it
+mistakenly used bp->rx_ring_size instead of bp->rx_agg_ring_size,
+leading to confusing or misleading log output.
 
-Fixes: 1d0dc857b5d8 ("selftests: drv-net: add checksum tests")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20250830183842.688935-1-kuba@kernel.org
+Use the correct bp->rx_agg_ring_size value to fix this.
+
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Link: https://patch.msgid.link/20250830062331.783783-1-alok.a.tiwari@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/hw/csum.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/drivers/net/hw/csum.py b/tools/testing/selftests/drivers/net/hw/csum.py
-index cb40497faee44..b7e55be9bd9fd 100755
---- a/tools/testing/selftests/drivers/net/hw/csum.py
-+++ b/tools/testing/selftests/drivers/net/hw/csum.py
-@@ -20,7 +20,7 @@ def test_receive(cfg, ipv4=False, extra_args=None):
-         ip_args = f"-6 -S {cfg.remote_v6} -D {cfg.v6}"
- 
-     rx_cmd = f"{cfg.bin_local} -i {cfg.ifname} -n 100 {ip_args} -r 1 -R {extra_args}"
--    tx_cmd = f"{cfg.bin_remote} -i {cfg.ifname} -n 100 {ip_args} -r 1 -T {extra_args}"
-+    tx_cmd = f"{cfg.bin_remote} -i {cfg.remote_ifname} -n 100 {ip_args} -r 1 -T {extra_args}"
- 
-     with bkg(rx_cmd, exit_wait=True):
-         wait_port_listen(34000, proto="udp")
-@@ -43,7 +43,7 @@ def test_transmit(cfg, ipv4=False, extra_args=None):
-     if extra_args != "-U -Z":
-         extra_args += " -r 1"
- 
--    rx_cmd = f"{cfg.bin_remote} -i {cfg.ifname} -L 1 -n 100 {ip_args} -R {extra_args}"
-+    rx_cmd = f"{cfg.bin_remote} -i {cfg.remote_ifname} -L 1 -n 100 {ip_args} -R {extra_args}"
-     tx_cmd = f"{cfg.bin_local} -i {cfg.ifname} -L 1 -n 100 {ip_args} -T {extra_args}"
- 
-     with bkg(rx_cmd, host=cfg.remote, exit_wait=True):
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 08886c3a28c61..8a6f3e230fce6 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -4207,7 +4207,7 @@ static void bnxt_alloc_one_rx_ring_page(struct bnxt *bp,
+ 	for (i = 0; i < bp->rx_agg_ring_size; i++) {
+ 		if (bnxt_alloc_rx_page(bp, rxr, prod, GFP_KERNEL)) {
+ 			netdev_warn(bp->dev, "init'ed rx ring %d with %d/%d pages only\n",
+-				    ring_nr, i, bp->rx_ring_size);
++				    ring_nr, i, bp->rx_agg_ring_size);
+ 			break;
+ 		}
+ 		prod = NEXT_RX_AGG(prod);
 -- 
 2.50.1
 
