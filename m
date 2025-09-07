@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA8515C158;
-	Sun,  7 Sep 2025 20:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F43418DF89;
+	Sun,  7 Sep 2025 20:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277042; cv=none; b=sx9tYFHaHVAhRVIxcrY41YtkNH+NatSBmD4qiVqrpWW7ql6YxnDFTik9sxgb+UoECP9x/Q1paluMzSs1OpGlBYJJ1S9dnKTjAdwgux5ycsDVwCnRjktzBJXCneB16soSqfmm/Nrl1mDXbwlxQJqBAyBLYwNokhIv++Vyh4BgL8A=
+	t=1757277045; cv=none; b=F8xkksfHmI28l7UDu50GVRjUS6vVi++36X5h+OLZNlVZNzbB5N4UEW6wemFuMgEcoJ75GNuKX9jBiL3JysacJOFHEs6fOUZXKzW3J0z3Dz8QHMToVazK3Fqtci4/Rt/lTpp6fgc/MhH3ewqrAS+E1C9M4HxkTgANbcCMriExOFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277042; c=relaxed/simple;
-	bh=+PYN3QyNLYXuxCIt3NLE6vIN65lk5sE3OJGwsrVNA/Y=;
+	s=arc-20240116; t=1757277045; c=relaxed/simple;
+	bh=HMxoWiCF6jn4S1sm0qHpSEdaycKwDZEDVCFa1G0xQe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2PvuCIVg3fXCJip+Rk18Ey+TY3C/K1kyc/Cjc4V0J17JlHC4qrssT8MUiZlxrgAGPCuWtN09fOPnfaTVpJQYMZQgDqUriZo2nuqvUNSzDs6S8mj3WS9E/OifnzYMkw8S9VnhaTZ4UWBiN1nncwhqblXqg8s7qM1ttHpvX9uN8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taltiNxS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKEE9x1li5YKSDI+d5tri2ZZGNTlaU6LkM+jhdrR3MR0tugYwUgeTlySBh4AfwllwpswqSbAmM3qhan6JIo9kE3Wd9Wh4cnm5wyXycsJhCDV1VAGih3mDxFoqT1KsJmWUoJXetCWPQG4Mh7XpxhToFpfMlFMUgGyxy4kBQzbSNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWfakl+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taltiNxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D15C4CEF0;
-	Sun,  7 Sep 2025 20:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWfakl+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AF8C4CEF0;
+	Sun,  7 Sep 2025 20:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277041;
-	bh=+PYN3QyNLYXuxCIt3NLE6vIN65lk5sE3OJGwsrVNA/Y=;
+	s=korg; t=1757277045;
+	bh=HMxoWiCF6jn4S1sm0qHpSEdaycKwDZEDVCFa1G0xQe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=taltiNxSNIjuCNWzWYqe0mo/4JeDvRcqRW5xaI/NZ0YSS8t+t/kiddx2Bt1/9ZYnj
-	 VcX9fmNMYp73498eiDDdJ1yTMkUFN5vm8JoHbSBm9cSbMql0CDTAhyVaT1gSOJ/vBs
-	 DBqq9cTwGcndmwtdyeztj99FhIgFp/yHra9IJ2CY=
+	b=iWfakl+O84tHFO+dgzRt6eeKQRzWrOTTAFaDw5BjRqZO2zQqlA0nIWUlIY5i+tf5O
+	 iBwNaRbZ0ricZy+OyH+/RaK87AW/wTUvP6sA8caGwB9a6bCfbJd0B1rbJirYM59BBu
+	 7ZqWlEEmQxiMRk0EzSxAEAPqHNYsOZSr9i5ctS5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marlin Cremers <mcremers@cloudbear.nl>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/175] net: vxlan: make vxlan_snoop() return drop reasons
-Date: Sun,  7 Sep 2025 21:57:41 +0200
-Message-ID: <20250907195616.398456905@linuxfoundation.org>
+Subject: [PATCH 6.12 067/175] vxlan: Fix NPD when refreshing an FDB entry with a nexthop object
+Date: Sun,  7 Sep 2025 21:57:42 +0200
+Message-ID: <20250907195616.421306498@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,108 +54,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 289fd4e75219a96f77c5d679166035cd5118d139 ]
+[ Upstream commit 6ead38147ebb813f08be6ea8ef547a0e4c09559a ]
 
-Change the return type of vxlan_snoop() from bool to enum
-skb_drop_reason. In this commit, two drop reasons are introduced:
+VXLAN FDB entries can point to either a remote destination or an FDB
+nexthop group. The latter is usually used in EVPN deployments where
+learning is disabled.
 
-  SKB_DROP_REASON_MAC_INVALID_SOURCE
-  SKB_DROP_REASON_VXLAN_ENTRY_EXISTS
+However, when learning is enabled, an incoming packet might try to
+refresh an FDB entry that points to an FDB nexthop group and therefore
+does not have a remote. Such packets should be dropped, but they are
+only dropped after dereferencing the non-existent remote, resulting in a
+NPD [1] which can be reproduced using [2].
 
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 6ead38147ebb ("vxlan: Fix NPD when refreshing an FDB entry with a nexthop object")
+Fix by dropping such packets earlier. Remove the misleading comment from
+first_remote_rcu().
+
+[1]
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+[...]
+CPU: 13 UID: 0 PID: 361 Comm: mausezahn Not tainted 6.17.0-rc1-virtme-g9f6b606b6b37 #1 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+RIP: 0010:vxlan_snoop+0x98/0x1e0
+[...]
+Call Trace:
+ <TASK>
+ vxlan_encap_bypass+0x209/0x240
+ encap_bypass_if_local+0xb1/0x100
+ vxlan_xmit_one+0x1375/0x17e0
+ vxlan_xmit+0x6b4/0x15f0
+ dev_hard_start_xmit+0x5d/0x1c0
+ __dev_queue_xmit+0x246/0xfd0
+ packet_sendmsg+0x113a/0x1850
+ __sock_sendmsg+0x38/0x70
+ __sys_sendto+0x126/0x180
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0xa4/0x260
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+[2]
+ #!/bin/bash
+
+ ip address add 192.0.2.1/32 dev lo
+ ip address add 192.0.2.2/32 dev lo
+
+ ip nexthop add id 1 via 192.0.2.3 fdb
+ ip nexthop add id 10 group 1 fdb
+
+ ip link add name vx0 up type vxlan id 10010 local 192.0.2.1 dstport 12345 localbypass
+ ip link add name vx1 up type vxlan id 10020 local 192.0.2.2 dstport 54321 learning
+
+ bridge fdb add 00:11:22:33:44:55 dev vx0 self static dst 192.0.2.2 port 54321 vni 10020
+ bridge fdb add 00:aa:bb:cc:dd:ee dev vx1 self static nhid 10
+
+ mausezahn vx0 -a 00:aa:bb:cc:dd:ee -b 00:11:22:33:44:55 -c 1 -q
+
+Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
+Reported-by: Marlin Cremers <mcremers@cloudbear.nl>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250901065035.159644-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 17 +++++++++--------
- include/net/dropreason-core.h  |  9 +++++++++
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ drivers/net/vxlan/vxlan_core.c    | 8 ++++----
+ drivers/net/vxlan/vxlan_private.h | 4 +---
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index efd5e99808935..c4ce577eb0908 100644
+index c4ce577eb0908..58590ddbc6a15 100644
 --- a/drivers/net/vxlan/vxlan_core.c
 +++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1437,9 +1437,10 @@ static int vxlan_fdb_get(struct sk_buff *skb,
-  * and Tunnel endpoint.
-  * Return true if packet is bogus and should be dropped.
-  */
--static bool vxlan_snoop(struct net_device *dev,
--			union vxlan_addr *src_ip, const u8 *src_mac,
--			u32 src_ifindex, __be32 vni)
-+static enum skb_drop_reason vxlan_snoop(struct net_device *dev,
-+					union vxlan_addr *src_ip,
-+					const u8 *src_mac, u32 src_ifindex,
-+					__be32 vni)
- {
- 	struct vxlan_dev *vxlan = netdev_priv(dev);
- 	struct vxlan_fdb *f;
-@@ -1447,7 +1448,7 @@ static bool vxlan_snoop(struct net_device *dev,
+@@ -1460,6 +1460,10 @@ static enum skb_drop_reason vxlan_snoop(struct net_device *dev,
+ 	if (likely(f)) {
+ 		struct vxlan_rdst *rdst = first_remote_rcu(f);
  
- 	/* Ignore packets from invalid src-address */
- 	if (!is_valid_ether_addr(src_mac))
--		return true;
-+		return SKB_DROP_REASON_MAC_INVALID_SOURCE;
- 
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (src_ip->sa.sa_family == AF_INET6 &&
-@@ -1461,15 +1462,15 @@ static bool vxlan_snoop(struct net_device *dev,
- 
++		/* Don't override an fdb with nexthop with a learnt entry */
++		if (rcu_access_pointer(f->nh))
++			return SKB_DROP_REASON_VXLAN_ENTRY_EXISTS;
++
  		if (likely(vxlan_addr_equal(&rdst->remote_ip, src_ip) &&
  			   rdst->remote_ifindex == ifindex))
--			return false;
-+			return SKB_NOT_DROPPED_YET;
- 
- 		/* Don't migrate static entries, drop packets */
+ 			return SKB_NOT_DROPPED_YET;
+@@ -1468,10 +1472,6 @@ static enum skb_drop_reason vxlan_snoop(struct net_device *dev,
  		if (f->state & (NUD_PERMANENT | NUD_NOARP))
--			return true;
-+			return SKB_DROP_REASON_VXLAN_ENTRY_EXISTS;
+ 			return SKB_DROP_REASON_VXLAN_ENTRY_EXISTS;
  
- 		/* Don't override an fdb with nexthop with a learnt entry */
- 		if (rcu_access_pointer(f->nh))
--			return true;
-+			return SKB_DROP_REASON_VXLAN_ENTRY_EXISTS;
- 
+-		/* Don't override an fdb with nexthop with a learnt entry */
+-		if (rcu_access_pointer(f->nh))
+-			return SKB_DROP_REASON_VXLAN_ENTRY_EXISTS;
+-
  		if (net_ratelimit())
  			netdev_info(dev,
-@@ -1497,7 +1498,7 @@ static bool vxlan_snoop(struct net_device *dev,
- 		spin_unlock(&vxlan->hash_lock[hash_index]);
- 	}
- 
--	return false;
-+	return SKB_NOT_DROPPED_YET;
+ 				    "%pM migrated from %pIS to %pIS\n",
+diff --git a/drivers/net/vxlan/vxlan_private.h b/drivers/net/vxlan/vxlan_private.h
+index 76a351a997d51..c6279ef98a5c2 100644
+--- a/drivers/net/vxlan/vxlan_private.h
++++ b/drivers/net/vxlan/vxlan_private.h
+@@ -56,9 +56,7 @@ static inline struct hlist_head *vs_head(struct net *net, __be16 port)
+ 	return &vn->sock_list[hash_32(ntohs(port), PORT_HASH_BITS)];
  }
  
- static bool __vxlan_sock_release_prep(struct vxlan_sock *vs)
-diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index 98259d2b3e926..1cb8d7c953beb 100644
---- a/include/net/dropreason-core.h
-+++ b/include/net/dropreason-core.h
-@@ -94,6 +94,8 @@
- 	FN(TC_RECLASSIFY_LOOP)		\
- 	FN(VXLAN_INVALID_HDR)		\
- 	FN(VXLAN_VNI_NOT_FOUND)		\
-+	FN(MAC_INVALID_SOURCE)		\
-+	FN(VXLAN_ENTRY_EXISTS)		\
- 	FN(IP_TUNNEL_ECN)		\
- 	FNe(MAX)
- 
-@@ -429,6 +431,13 @@ enum skb_drop_reason {
- 	SKB_DROP_REASON_VXLAN_INVALID_HDR,
- 	/** @SKB_DROP_REASON_VXLAN_VNI_NOT_FOUND: no VXLAN device found for VNI */
- 	SKB_DROP_REASON_VXLAN_VNI_NOT_FOUND,
-+	/** @SKB_DROP_REASON_MAC_INVALID_SOURCE: source mac is invalid */
-+	SKB_DROP_REASON_MAC_INVALID_SOURCE,
-+	/**
-+	 * @SKB_DROP_REASON_VXLAN_ENTRY_EXISTS: trying to migrate a static
-+	 * entry or an entry pointing to a nexthop.
-+	 */
-+	SKB_DROP_REASON_VXLAN_ENTRY_EXISTS,
- 	/**
- 	 * @SKB_DROP_REASON_IP_TUNNEL_ECN: skb is dropped according to
- 	 * RFC 6040 4.2, see __INET_ECN_decapsulate() for detail.
+-/* First remote destination for a forwarding entry.
+- * Guaranteed to be non-NULL because remotes are never deleted.
+- */
++/* First remote destination for a forwarding entry. */
+ static inline struct vxlan_rdst *first_remote_rcu(struct vxlan_fdb *fdb)
+ {
+ 	if (rcu_access_pointer(fdb->nh))
 -- 
 2.50.1
 
