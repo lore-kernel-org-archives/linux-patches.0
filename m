@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70125125B2;
-	Sun,  7 Sep 2025 20:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACA8126C02;
+	Sun,  7 Sep 2025 20:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277967; cv=none; b=K9ZeS+N2HBcQOKgLonhltkEx6pdLUM7gAv9kfA5NdoiGwOI0RMzVfkJCnVoMJRwtnTBdqemn8F3Uhvrh9aCRAOM2+Qb/VANqYj7He7DztXz00B7wOZFOLcijUgNhjLwZvr+xORczmM5zvAy+HKotdxAJm0ZDrK3rtIvD8xVtfa0=
+	t=1757277970; cv=none; b=BTZXHmKHHG5GgCmuXuJWAff5ugD51uhpcodqSwhbg0eDJF44WJjjuCD0roI/vIHJsWk96cA7jNCdckcwCoVvBZUw+6wdRP4CpWGpMFLF/cJ8ytciEfPZuUqutidmFE8GN61otlaFvPsE4HIDzHED6GIg7Nawh8CsmbUTTh7OPtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277967; c=relaxed/simple;
-	bh=GhyRlseENMbeYsYUBcGQVOFyWNjMadt5bO8jlCXNsHg=;
+	s=arc-20240116; t=1757277970; c=relaxed/simple;
+	bh=Tge4VYfdCObQsBEIasn5xHzlJfFECq9+D3wRXwaSgR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SW9+DBVVWWozjbbKHeZm1yXeH+7lgm647o/MX1XzXdfjXBbWUR7KrT/k3NpsroOwJCDvfEz2JELP/qqGdifzcJu0d4uWqAVOO9a8rigBtUWd+BXUHWsZcaU7KqzpNeevyNk5i2AQLT1Ik/7K05/ZnW6ywpiTFlgRg5kOxRAYFYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ra7+2BMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LqLzh4lOTJ1akjJIgVUMxil36NX75ro8tE+XtMYdINhgNfia2JHXYHvm8Xei8R7PBIGk7SCPwXi9pvVQHs2sWmha1BkukPQKeZ0GW8ZurW8zdYPvTnIEGj/Dm7Td3eJsDHGFzD4QX0W53D9y5iRgq1Rs9uKLiNILrhi6O/aL11M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHXkmeBh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ra7+2BMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC14C4CEF0;
-	Sun,  7 Sep 2025 20:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHXkmeBh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A82C4CEF0;
+	Sun,  7 Sep 2025 20:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277967;
-	bh=GhyRlseENMbeYsYUBcGQVOFyWNjMadt5bO8jlCXNsHg=;
+	s=korg; t=1757277970;
+	bh=Tge4VYfdCObQsBEIasn5xHzlJfFECq9+D3wRXwaSgR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ra7+2BMs+Txvf3ZLL+wR9g9LMD72XO9MuK2Yvm966UbjRBz2N+lisrQ2RLhQeQKRo
-	 dRipZp/lzS+HW5qaRBgMVG1IPFze3WQbP0nFwWCMltAh79XTyVLl1xzrc1q9Ufpn6p
-	 7r9PmhdZ6RcpdcS1Mts2n8yzXDVVZjFRZyM+dYR4=
+	b=NHXkmeBhRR4DKj937NU6sxzD9poe09kjTs9BV4X8gtR3/CvCW7dPbJiVUkG8pS99z
+	 rUdKNGz8W41juCq1Wxr9f9N/4dC2eJSm8xuJ1hku/0AMt5jtnv9+0Bgwdjt6mBsiFw
+	 xTQDnxfW9ek/4Rqmu5DyDxLfHzbB2r6cEL3h/4tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.16 180/183] riscv: kexec: Initialize kexec_buf struct
-Date: Sun,  7 Sep 2025 22:00:07 +0200
-Message-ID: <20250907195620.107840418@linuxfoundation.org>
+	Michael Walle <mwalle@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 163/183] drm/bridge: ti-sn65dsi86: fix REFCLK setting
+Date: Sun,  7 Sep 2025 21:59:50 +0200
+Message-ID: <20250907195619.688483609@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -50,86 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Michael Walle <mwalle@kernel.org>
 
-commit 95c54cd9c769a198118772e196adfaa1f002e365 upstream.
+[ Upstream commit bdd5a14e660062114bdebaef9ad52adf04970a89 ]
 
-The kexec_buf structure was previously declared without initialization.
-commit bf454ec31add ("kexec_file: allow to place kexec_buf randomly")
-added a field that is always read but not consistently populated by all
-architectures. This un-initialized field will contain garbage.
+The bridge has three bootstrap pins which are sampled to determine the
+frequency of the external reference clock. The driver will also
+(over)write that setting. But it seems this is racy after the bridge is
+enabled. It was observed that although the driver write the correct
+value (by sniffing on the I2C bus), the register has the wrong value.
+The datasheet states that the GPIO lines have to be stable for at least
+5us after asserting the EN signal. Thus, there seems to be some logic
+which samples the GPIO lines and this logic appears to overwrite the
+register value which was set by the driver. Waiting 20us after
+asserting the EN line resolves this issue.
 
-This is also triggering a UBSAN warning when the uninitialized data was
-accessed:
-
-	------------[ cut here ]------------
-	UBSAN: invalid-load in ./include/linux/kexec.h:210:10
-	load of value 252 is not a valid value for type '_Bool'
-
-Zero-initializing kexec_buf at declaration ensures all fields are
-cleanly set, preventing future instances of uninitialized memory being
-used.
-
-Fixes: bf454ec31add ("kexec_file: allow to place kexec_buf randomly")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250827-kbuf_all-v1-2-1df9882bb01a@debian.org
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250821122341.1257286-1-mwalle@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/kexec_elf.c          | 4 ++--
- arch/riscv/kernel/kexec_image.c        | 2 +-
- arch/riscv/kernel/machine_kexec_file.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/riscv/kernel/kexec_elf.c b/arch/riscv/kernel/kexec_elf.c
-index 56444c7bd34e..531d348db84d 100644
---- a/arch/riscv/kernel/kexec_elf.c
-+++ b/arch/riscv/kernel/kexec_elf.c
-@@ -28,7 +28,7 @@ static int riscv_kexec_elf_load(struct kimage *image, struct elfhdr *ehdr,
- 	int i;
- 	int ret = 0;
- 	size_t size;
--	struct kexec_buf kbuf;
-+	struct kexec_buf kbuf = {};
- 	const struct elf_phdr *phdr;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 834b42a4d31f8..4545ac42778ab 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -392,6 +392,17 @@ static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
  
- 	kbuf.image = image;
-@@ -66,7 +66,7 @@ static int elf_find_pbase(struct kimage *image, unsigned long kernel_len,
- {
- 	int i;
- 	int ret;
--	struct kexec_buf kbuf;
-+	struct kexec_buf kbuf = {};
- 	const struct elf_phdr *phdr;
- 	unsigned long lowest_paddr = ULONG_MAX;
- 	unsigned long lowest_vaddr = ULONG_MAX;
-diff --git a/arch/riscv/kernel/kexec_image.c b/arch/riscv/kernel/kexec_image.c
-index 26a81774a78a..8f2eb900910b 100644
---- a/arch/riscv/kernel/kexec_image.c
-+++ b/arch/riscv/kernel/kexec_image.c
-@@ -41,7 +41,7 @@ static void *image_load(struct kimage *image,
- 	struct riscv_image_header *h;
- 	u64 flags;
- 	bool be_image, be_kernel;
--	struct kexec_buf kbuf;
-+	struct kexec_buf kbuf = {};
- 	int ret;
+ 	gpiod_set_value_cansleep(pdata->enable_gpio, 1);
  
- 	/* Check Image header */
-diff --git a/arch/riscv/kernel/machine_kexec_file.c b/arch/riscv/kernel/machine_kexec_file.c
-index e36104af2e24..b9eb41b0a975 100644
---- a/arch/riscv/kernel/machine_kexec_file.c
-+++ b/arch/riscv/kernel/machine_kexec_file.c
-@@ -261,7 +261,7 @@ int load_extra_segments(struct kimage *image, unsigned long kernel_start,
- 	int ret;
- 	void *fdt;
- 	unsigned long initrd_pbase = 0UL;
--	struct kexec_buf kbuf;
-+	struct kexec_buf kbuf = {};
- 	char *modified_cmdline = NULL;
- 
- 	kbuf.image = image;
++	/*
++	 * After EN is deasserted and an external clock is detected, the bridge
++	 * will sample GPIO3:1 to determine its frequency. The driver will
++	 * overwrite this setting in ti_sn_bridge_set_refclk_freq(). But this is
++	 * racy. Thus we have to wait a couple of us. According to the datasheet
++	 * the GPIO lines has to be stable at least 5 us (td5) but it seems that
++	 * is not enough and the refclk frequency value is still lost or
++	 * overwritten by the bridge itself. Waiting for 20us seems to work.
++	 */
++	usleep_range(20, 30);
++
+ 	/*
+ 	 * If we have a reference clock we can enable communication w/ the
+ 	 * panel (including the aux channel) w/out any need for an input clock
 -- 
 2.51.0
 
