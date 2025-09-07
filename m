@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A0C1A2389;
-	Sun,  7 Sep 2025 20:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ECA14BFA2;
+	Sun,  7 Sep 2025 20:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276125; cv=none; b=Y/N/GJFx2jZhAbqwkIfrmHYs8ceF8QZyEyrk2UyhL/7TfzFrTmOJ0Rj92eF12Ymi/+yxRkQPRfifl8gbpeO4qiql5KQ7d+7EH8uMkF0vt67namA9wpWsPxTd7fK8mR5c81BeJ0CT/Q2FXPiGfegqn1NdV4n9fEJGLqLjXBj2JxM=
+	t=1757276128; cv=none; b=jvZcCfLvaL3w545/16W4qGoLXsViRudXNBERuDS1JPWEI53EIra3WQOmH6nu6GJhVzmpHvcwX6hCurbnsujICC7iCatJhGupg23P5Hz/P9+AaqMVLnLnB1/ZrYPmV1n9bry9yw4TGVxkOy6bn9/0+A3DzVhu9mFtSk1HbWO725c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276125; c=relaxed/simple;
-	bh=DeJ6DsZ/JNnYKLyEqazkUNhJDhA6l9Zz0gEaxaKTpOw=;
+	s=arc-20240116; t=1757276128; c=relaxed/simple;
+	bh=8+9s0FBpG7JNtgk2c2tGRI1U+5+OXPWUUAnuoeaIN1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2RgiNuJ+VvApqMsZIoqw6N87vEZsjv22uVO+MfvdYAsMK1J3yOin7UlYXFJZBn/5idhS7H9UiDYqKBRxoacf+hubiOIdTVzhnF7ijHSlfhiFi8mGTzneU3uP175MmDUYkGmxzwtz70vtVlQSJaQpZmy4e7b9PtnRAzJp8CHEaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3vlQyfl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Go85LASM5P3F2nIV8IJjWtjQ2JRMU8ygkWD4zEvDrq2OTPRkEM1XMrhDbhSPdnDKxTq7ttSt/t/1Csw8z/QCjtUUZl5KuNonsNV7T5FdhY1rP1eIdxG7aKn3tpZv0y6uXZ+2AvaVsbT8/56qpblYKb+0j8ZEreoK5CySOM9wMS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4dzW3wD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3vlQyfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20DBC4CEF0;
-	Sun,  7 Sep 2025 20:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4dzW3wD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE348C4CEF0;
+	Sun,  7 Sep 2025 20:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276125;
-	bh=DeJ6DsZ/JNnYKLyEqazkUNhJDhA6l9Zz0gEaxaKTpOw=;
+	s=korg; t=1757276128;
+	bh=8+9s0FBpG7JNtgk2c2tGRI1U+5+OXPWUUAnuoeaIN1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3vlQyflOSgUtEzQ3D3Id8+vB3MYvsi0IDtbvAd1TT8fVvPMNtY7JgnNXhot6+OPo
-	 9+5g0CT5aLfFTx1goYr/o5whJ8vYeo7/chtC8EhA/nT+VF4n+97ADyGm4H9KtnaCRQ
-	 wdzrg1qM3OtrQ0yZfz/sGrwTP0lKf91Wq2NkzcQk=
+	b=q4dzW3wD7ftWlQvYGEzqWWi/sep/mH1pyAHkqnxwseSd3bvAnDXnYi3D3m7z03vqm
+	 4O22rq+6KiL70o30twlG3xul3oeXbTkkVtbBdJ80QRQ9NqYfLNbg8sL2SkclHLXfaW
+	 fE6UAHezmdljY6nwHbrJiscsJxhBV3FuUEZerCf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Evans <evans1210144@gmail.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 35/64] scsi: lpfc: Fix buffer free/clear order in deferred receive path
-Date: Sun,  7 Sep 2025 21:58:17 +0200
-Message-ID: <20250907195604.372985060@linuxfoundation.org>
+	Stanislav Fort <disclosure@aisle.com>,
+	Stanislav Fort <stanislav.fort@aisle.com>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.15 36/64] batman-adv: fix OOB read/write in network-coding decode
+Date: Sun,  7 Sep 2025 21:58:18 +0200
+Message-ID: <20250907195604.401040965@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -51,70 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Evans <evans1210144@gmail.com>
+From: Stanislav Fort <stanislav.fort@aisle.com>
 
-commit 9dba9a45c348e8460da97c450cddf70b2056deb3 upstream.
+commit d77b6ff0ce35a6d0b0b7b9581bc3f76d041d4087 upstream.
 
-Fix a use-after-free window by correcting the buffer release sequence in
-the deferred receive path. The code freed the RQ buffer first and only
-then cleared the context pointer under the lock. Concurrent paths (e.g.,
-ABTS and the repost path) also inspect and release the same pointer under
-the lock, so the old order could lead to double-free/UAF.
+batadv_nc_skb_decode_packet() trusts coded_len and checks only against
+skb->len. XOR starts at sizeof(struct batadv_unicast_packet), reducing
+payload headroom, and the source skb length is not verified, allowing an
+out-of-bounds read and a small out-of-bounds write.
 
-Note that the repost path already uses the correct pattern: detach the
-pointer under the lock, then free it after dropping the lock. The
-deferred path should do the same.
+Validate that coded_len fits within the payload area of both destination
+and source sk_buffs before XORing.
 
-Fixes: 472e146d1cf3 ("scsi: lpfc: Correct upcalling nvmet_fc transport during io done downcall")
+Fixes: 2df5278b0267 ("batman-adv: network coding - receive coded packets and decode them")
 Cc: stable@vger.kernel.org
-Signed-off-by: John Evans <evans1210144@gmail.com>
-Link: https://lore.kernel.org/r/20250828044008.743-1-evans1210144@gmail.com
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Stanislav Fort <disclosure@aisle.com>
+Signed-off-by: Stanislav Fort <stanislav.fort@aisle.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_nvmet.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/batman-adv/network-coding.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/lpfc/lpfc_nvmet.c
-+++ b/drivers/scsi/lpfc/lpfc_nvmet.c
-@@ -1244,7 +1244,7 @@ lpfc_nvmet_defer_rcv(struct nvmet_fc_tar
- 	struct lpfc_nvmet_tgtport *tgtp;
- 	struct lpfc_async_xchg_ctx *ctxp =
- 		container_of(rsp, struct lpfc_async_xchg_ctx, hdlrctx.fcp_req);
--	struct rqb_dmabuf *nvmebuf = ctxp->rqb_buffer;
-+	struct rqb_dmabuf *nvmebuf;
- 	struct lpfc_hba *phba = ctxp->phba;
- 	unsigned long iflag;
+--- a/net/batman-adv/network-coding.c
++++ b/net/batman-adv/network-coding.c
+@@ -1691,7 +1691,12 @@ batadv_nc_skb_decode_packet(struct batad
  
-@@ -1252,13 +1252,18 @@ lpfc_nvmet_defer_rcv(struct nvmet_fc_tar
- 	lpfc_nvmeio_data(phba, "NVMET DEFERRCV: xri x%x sz %d CPU %02x\n",
- 			 ctxp->oxid, ctxp->size, raw_smp_processor_id());
+ 	coding_len = ntohs(coded_packet_tmp.coded_len);
  
-+	spin_lock_irqsave(&ctxp->ctxlock, iflag);
-+	nvmebuf = ctxp->rqb_buffer;
- 	if (!nvmebuf) {
-+		spin_unlock_irqrestore(&ctxp->ctxlock, iflag);
- 		lpfc_printf_log(phba, KERN_INFO, LOG_NVME_IOERR,
- 				"6425 Defer rcv: no buffer oxid x%x: "
- 				"flg %x ste %x\n",
- 				ctxp->oxid, ctxp->flag, ctxp->state);
- 		return;
- 	}
-+	ctxp->rqb_buffer = NULL;
-+	spin_unlock_irqrestore(&ctxp->ctxlock, iflag);
+-	if (coding_len > skb->len)
++	/* ensure dst buffer is large enough (payload only) */
++	if (coding_len + h_size > skb->len)
++		return NULL;
++
++	/* ensure src buffer is large enough (payload only) */
++	if (coding_len + h_size > nc_packet->skb->len)
+ 		return NULL;
  
- 	tgtp = phba->targetport->private;
- 	if (tgtp)
-@@ -1266,9 +1271,6 @@ lpfc_nvmet_defer_rcv(struct nvmet_fc_tar
- 
- 	/* Free the nvmebuf since a new buffer already replaced it */
- 	nvmebuf->hrq->rqbp->rqb_free_buffer(phba, nvmebuf);
--	spin_lock_irqsave(&ctxp->ctxlock, iflag);
--	ctxp->rqb_buffer = NULL;
--	spin_unlock_irqrestore(&ctxp->ctxlock, iflag);
- }
- 
- /**
+ 	/* Here the magic is reversed:
 
 
