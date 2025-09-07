@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5548D284883;
-	Sun,  7 Sep 2025 20:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D911CDFAC;
+	Sun,  7 Sep 2025 20:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275817; cv=none; b=uqDCZDnAQ2Z5eegkpnHnjZB3pj61OLCo+d//w+xAnAXBftyuTGv48V/KrjCXCoPnPgIpAVI+kSnlxl2zx8++Yk/PqMeL2b1VgpfmyGGR3CU0m97kG2MlN3QcSqHnP9MljUoDMiKyYDnAIjhPpuAlcVUMWyU0KVA3cmBRPuCW5W8=
+	t=1757275819; cv=none; b=OFuaZZBOuZ3jgAQsWBV61ipVseeCoUuw1Xn83/CvwmV1baOD97OhRZ9tWJO1OR1tI8O+J9cAhJ6lH/eaZWBbLADXjYgz3eRJ8TSuvt3GEAOtpSRuXzMx4M/HUon4c5uT9LSRPw+4s8DGOZZMagiAbevD5nCg7aCfzz//lsYNy0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275817; c=relaxed/simple;
-	bh=5lBMWgcIWpoq2yi2jib0PWpRT054TfapiP9mmesrGHQ=;
+	s=arc-20240116; t=1757275819; c=relaxed/simple;
+	bh=QfgGWkT2ce22Wmyl56AEvDknJx7pYCYK7BlLdujFYfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xs1xCegpUaxaEn277jO6wMQ6GAw+SOe2iEP9tSiMNo6omlllaICaK6ruyKIlcQgSdoPzk0iMQQydk6aUlPJAZQv37u8PVSVZl5stNxk9KpclNbQov0LKgeGEZBCgkkhw2TEPWulADqfbhj/cgjspQbbcj8ErPKxc1RTmBq9k6ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CtBCIiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvD8H4HJvuQ05Wxr2vv6eeNhzy/8IPl1Xs0n/Tqs+9ienDz1XV9lrFaDDFduxrxfJoAWu7/8VFVRI5fYkhgXGyN9j72kZ0afWKz9PJYoyZvOh6EF71Prt0GMXGQ7zU4SscJXjbbLkkvtNq/FqL4U3IiJ+7l1kQ9wXVDbJ2ZS3w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7oi9XNq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CtBCIiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B98C4CEF0;
-	Sun,  7 Sep 2025 20:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7oi9XNq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3915C4CEF0;
+	Sun,  7 Sep 2025 20:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275815;
-	bh=5lBMWgcIWpoq2yi2jib0PWpRT054TfapiP9mmesrGHQ=;
+	s=korg; t=1757275819;
+	bh=QfgGWkT2ce22Wmyl56AEvDknJx7pYCYK7BlLdujFYfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CtBCIiIL4RDZCufO4RSbmZoFU82h54Z7Vy+wgaigjT/1W5LPbTwgzK2shFkRRF5K
-	 i/XfAxcgGN65kcYfgNVYsTMQmAEWg55+NGDOXjuua5B/wTzaQD5uCRHzkQp9/1x1fE
-	 NFZ8SRh2dkaEcx0hDRf4wLBQvWMruY0RnRpDi4K8=
+	b=Z7oi9XNqykStha2jF9crMyOsHSHAyhwh+NJoO2004JSdZmdDVbvKHmYb7utnpW+E8
+	 iQiYam+4bU3w6xo8FDDjEI8PrVwmktHhKS7Dt23U4VDbMJk8Qg+r6U0bUn53xMl25g
+	 6TxF6no37ZD70SCSeYeQkhMCpOeMAX6+E24KEPyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.4 20/45] wifi: mwifiex: Initialize the chan_stats array to zero
-Date: Sun,  7 Sep 2025 21:58:06 +0200
-Message-ID: <20250907195601.545864073@linuxfoundation.org>
+	oushixiong <oushixiong1025@163.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 21/45] drm/amdgpu: drop hw access in non-DC audio fini
+Date: Sun,  7 Sep 2025 21:58:07 +0200
+Message-ID: <20250907195601.575022979@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
 References: <20250907195600.953058118@linuxfoundation.org>
@@ -51,69 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 0e20450829ca3c1dbc2db536391537c57a40fe0b upstream.
+commit 71403f58b4bb6c13b71c05505593a355f697fd94 upstream.
 
-The adapter->chan_stats[] array is initialized in
-mwifiex_init_channel_scan_gap() with vmalloc(), which doesn't zero out
-memory.  The array is filled in mwifiex_update_chan_statistics()
-and then the user can query the data in mwifiex_cfg80211_dump_survey().
+We already disable the audio pins in hw_fini so
+there is no need to do it again in sw_fini.
 
-There are two potential issues here.  What if the user calls
-mwifiex_cfg80211_dump_survey() before the data has been filled in.
-Also the mwifiex_update_chan_statistics() function doesn't necessarily
-initialize the whole array.  Since the array was not initialized at
-the start that could result in an information leak.
-
-Also this array is pretty small.  It's a maximum of 900 bytes so it's
-more appropriate to use kcalloc() instead vmalloc().
-
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4481
+Cc: oushixiong <oushixiong1025@163.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5eeb16ca727f11278b2917fd4311a7d7efb0bbd6)
 Cc: stable@vger.kernel.org
-Fixes: bf35443314ac ("mwifiex: channel statistics support for mwifiex")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250815023055.477719-1-rongqianfeng@vivo.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    5 +++--
- drivers/net/wireless/marvell/mwifiex/main.c     |    4 ++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/dce_v10_0.c |    5 -----
+ drivers/gpu/drm/amd/amdgpu/dce_v11_0.c |    5 -----
+ drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  |    5 -----
+ drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  |    5 -----
+ 4 files changed, 20 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4273,8 +4273,9 @@ int mwifiex_init_channel_scan_gap(struct
- 	 * additional active scan request for hidden SSIDs on passive channels.
- 	 */
- 	adapter->num_in_chan_stats = 2 * (n_channels_bg + n_channels_a);
--	adapter->chan_stats = vmalloc(array_size(sizeof(*adapter->chan_stats),
--						 adapter->num_in_chan_stats));
-+	adapter->chan_stats = kcalloc(adapter->num_in_chan_stats,
-+				      sizeof(*adapter->chan_stats),
-+				      GFP_KERNEL);
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+@@ -1445,17 +1445,12 @@ static int dce_v10_0_audio_init(struct a
  
- 	if (!adapter->chan_stats)
- 		return -ENOMEM;
---- a/drivers/net/wireless/marvell/mwifiex/main.c
-+++ b/drivers/net/wireless/marvell/mwifiex/main.c
-@@ -635,7 +635,7 @@ static int _mwifiex_fw_dpc(const struct
- 	goto done;
+ static void dce_v10_0_audio_fini(struct amdgpu_device *adev)
+ {
+-	int i;
+-
+ 	if (!amdgpu_audio)
+ 		return;
  
- err_add_intf:
--	vfree(adapter->chan_stats);
-+	kfree(adapter->chan_stats);
- err_init_chan_scan:
- 	wiphy_unregister(adapter->wiphy);
- 	wiphy_free(adapter->wiphy);
-@@ -1448,7 +1448,7 @@ static void mwifiex_uninit_sw(struct mwi
- 	wiphy_free(adapter->wiphy);
- 	adapter->wiphy = NULL;
+ 	if (!adev->mode_info.audio.enabled)
+ 		return;
  
--	vfree(adapter->chan_stats);
-+	kfree(adapter->chan_stats);
- 	mwifiex_free_cmd_buffers(adapter);
+-	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
+-		dce_v10_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
+-
+ 	adev->mode_info.audio.enabled = false;
+ }
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
+@@ -1487,17 +1487,12 @@ static int dce_v11_0_audio_init(struct a
+ 
+ static void dce_v11_0_audio_fini(struct amdgpu_device *adev)
+ {
+-	int i;
+-
+ 	if (!amdgpu_audio)
+ 		return;
+ 
+ 	if (!adev->mode_info.audio.enabled)
+ 		return;
+ 
+-	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
+-		dce_v11_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
+-
+ 	adev->mode_info.audio.enabled = false;
+ }
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+@@ -1358,17 +1358,12 @@ static int dce_v6_0_audio_init(struct am
+ 
+ static void dce_v6_0_audio_fini(struct amdgpu_device *adev)
+ {
+-	int i;
+-
+ 	if (!amdgpu_audio)
+ 		return;
+ 
+ 	if (!adev->mode_info.audio.enabled)
+ 		return;
+ 
+-	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
+-		dce_v6_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
+-
+ 	adev->mode_info.audio.enabled = false;
+ }
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+@@ -1408,17 +1408,12 @@ static int dce_v8_0_audio_init(struct am
+ 
+ static void dce_v8_0_audio_fini(struct amdgpu_device *adev)
+ {
+-	int i;
+-
+ 	if (!amdgpu_audio)
+ 		return;
+ 
+ 	if (!adev->mode_info.audio.enabled)
+ 		return;
+ 
+-	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
+-		dce_v8_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
+-
+ 	adev->mode_info.audio.enabled = false;
  }
  
 
