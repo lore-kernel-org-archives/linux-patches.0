@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBF115D5B6;
-	Sun,  7 Sep 2025 20:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0956A15D5B6;
+	Sun,  7 Sep 2025 20:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276131; cv=none; b=EnbtSrZuk7ytIbspZsV7tn7Z2XztYBdKYNUwYqItmq9nto4dARSaEqDxAjmHVj34S8AJ3aQfEw93tmutrhjZ4IGi7Q6kOcfWilqtud+TdpcIg+q6AhOWZM7tDvWWYgZrxi0DwFf8QHZTNi1q1HnjL1qFg76hrRu6/Os19QUMAqw=
+	t=1757276135; cv=none; b=mU0r9RIWE6PFHn5NpKa4seNfzoQhUdiKt/xaQa3aVoyOO243ubAA9zer7RJ8rWrx1+FVvkBfYRp/7aYzcJOflYbG1ALz1B/U8BGcgOFrLez1TP6I5tR11R1ib6c0UK2oJGfuVsglZa0GUW3WjYQdNQ4uFketqJ3xwtCTYbInOAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276131; c=relaxed/simple;
-	bh=lMGVR/QIN3M6vNfgWBnAj5PqsP0ss4UTwvwsvHlnwyU=;
+	s=arc-20240116; t=1757276135; c=relaxed/simple;
+	bh=lWU9TgQwgJtVJ2J3qfhoLQhxruOfomTrHgxUxF33wbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVv6kFOIfEJAVPaFIUcqCCUKrob64v3TjMy8wPos5Bc61drAiKX+A2gUflF6FhotjV2MPX14TqjeiWslhqpu1rk/XIE1jz3Cdj36q1rxjT5KIaUGlbMPR2PpVDGkbjbRMQux83cIlhtNw6CNwSU3FC8yC2wDPiPWu5rLSS/LlsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5tre0Rl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FbVno9Rgz9gqJygcYbO5PHSpfNKYoSXp4tGfb0Guyz6YJmx38JeT49PIw1hxg64IFuLC5GXVdy7Sh86R2G9uyLw+6jh+VUhgZHfKWamR8kjcRyyLjaaYN7Dg/qKIyVcvo8pJurJTRvOshmucfqWTROEcnpKerR/MfdIw9YxRl/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShKf2rkv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5tre0Rl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F039CC4CEF0;
-	Sun,  7 Sep 2025 20:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShKf2rkv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3F2C4CEF0;
+	Sun,  7 Sep 2025 20:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276131;
-	bh=lMGVR/QIN3M6vNfgWBnAj5PqsP0ss4UTwvwsvHlnwyU=;
+	s=korg; t=1757276134;
+	bh=lWU9TgQwgJtVJ2J3qfhoLQhxruOfomTrHgxUxF33wbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5tre0RlBvr3rslKwLHTgkryy//CWzE3GY+mebrVXHa4c0ucWI38A69P6WHTT1+jk
-	 DSU21feTVrRs/tq6y8okQS9K6NOEey3Q6BlxYgb6iivbP9GOrNqCDo9Y+v7uKsaITG
-	 gJmgjo3g84diwAKmQr4VqpFZiUpQDdJzbmgNF2I0=
+	b=ShKf2rkv6uD60dDdLytFPDKft0qRH8wU65JaUkReSX1Vfu9olesB9wLyibkbegAoe
+	 APnSr2CbQWaMtvC979U7ZPOyGo3zO1N3YvsH1UHhCAnM1SRvgbs/gYfjsSymNurUsT
+	 UZnWz38n5l589CyaJTVMBj16xIcro9c6biDawAkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 27/64] net: phy: mscc: Fix memory leak when using one step timestamping
-Date: Sun,  7 Sep 2025 21:58:09 +0200
-Message-ID: <20250907195604.141237112@linuxfoundation.org>
+Subject: [PATCH 6.1 001/104] bpf: Add cookie object to bpf maps
+Date: Sun,  7 Sep 2025 21:57:18 +0200
+Message-ID: <20250907195607.706543012@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
-References: <20250907195603.394640159@linuxfoundation.org>
+In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
+References: <20250907195607.664912704@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 846992645b25ec4253167e3f931e4597eb84af56 ]
+[ Upstream commit 12df58ad294253ac1d8df0c9bb9cf726397a671d ]
 
-Fix memory leak when running one-step timestamping. When running
-one-step sync timestamping, the HW is configured to insert the TX time
-into the frame, so there is no reason to keep the skb anymore. As in
-this case the HW will never generate an interrupt to say that the frame
-was timestamped, then the frame will never released.
-Fix this by freeing the frame in case of one-step timestamping.
+Add a cookie to BPF maps to uniquely identify BPF maps for the timespan
+when the node is up. This is different to comparing a pointer or BPF map
+id which could get rolled over and reused.
 
-Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250522115722.2827199-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 9b2bfdbf43ad ("phy: mscc: Stop taking ts_lock for tx_queue and use its own lock")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20250730234733.530041-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc_ptp.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ include/linux/bpf.h  | 1 +
+ kernel/bpf/syscall.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index e30e6ba9da2f4..717435562f1c5 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -1171,18 +1171,24 @@ static void vsc85xx_txtstamp(struct mii_timestamper *mii_ts,
- 		container_of(mii_ts, struct vsc8531_private, mii_ts);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index e9c1338851e34..2aaa1ed738303 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -260,6 +260,7 @@ struct bpf_map {
+ 	bool frozen; /* write-once; write-protected by freeze_mutex */
+ 	bool free_after_mult_rcu_gp;
+ 	s64 __percpu *elem_count;
++	u64 cookie; /* write-once */
+ };
  
- 	if (!vsc8531->ptp->configured)
--		return;
-+		goto out;
+ static inline bool map_value_has_spin_lock(const struct bpf_map *map)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index b145f3ef3695e..377bb60b79164 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -35,6 +35,7 @@
+ #include <linux/rcupdate_trace.h>
+ #include <linux/memcontrol.h>
+ #include <linux/trace_events.h>
++#include <linux/cookie.h>
  
--	if (vsc8531->ptp->tx_type == HWTSTAMP_TX_OFF) {
--		kfree_skb(skb);
--		return;
--	}
-+	if (vsc8531->ptp->tx_type == HWTSTAMP_TX_OFF)
-+		goto out;
+ #define IS_FD_ARRAY(map) ((map)->map_type == BPF_MAP_TYPE_PERF_EVENT_ARRAY || \
+ 			  (map)->map_type == BPF_MAP_TYPE_CGROUP_ARRAY || \
+@@ -47,6 +48,7 @@
+ #define BPF_OBJ_FLAG_MASK   (BPF_F_RDONLY | BPF_F_WRONLY)
+ 
+ DEFINE_PER_CPU(int, bpf_prog_active);
++DEFINE_COOKIE(bpf_map_cookie);
+ static DEFINE_IDR(prog_idr);
+ static DEFINE_SPINLOCK(prog_idr_lock);
+ static DEFINE_IDR(map_idr);
+@@ -1152,6 +1154,10 @@ static int map_create(union bpf_attr *attr)
+ 	if (err < 0)
+ 		goto free_map;
+ 
++	preempt_disable();
++	map->cookie = gen_cookie_next(&bpf_map_cookie);
++	preempt_enable();
 +
-+	if (vsc8531->ptp->tx_type == HWTSTAMP_TX_ONESTEP_SYNC)
-+		if (ptp_msg_is_sync(skb, type))
-+			goto out;
- 
- 	skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
- 
- 	mutex_lock(&vsc8531->ts_lock);
- 	__skb_queue_tail(&vsc8531->ptp->tx_queue, skb);
- 	mutex_unlock(&vsc8531->ts_lock);
-+	return;
-+
-+out:
-+	kfree_skb(skb);
- }
- 
- static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
+ 	atomic64_set(&map->refcnt, 1);
+ 	atomic64_set(&map->usercnt, 1);
+ 	mutex_init(&map->freeze_mutex);
 -- 
 2.50.1
 
