@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663FA189BB0;
-	Sun,  7 Sep 2025 20:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DE1189BB0;
+	Sun,  7 Sep 2025 20:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276462; cv=none; b=mQdSsHpmi4mryzc1FWZlLG86FNrT1Iva1rRfa5PVxh5Xu1yvS4gy/5BrsXmqkRwWw+D5N0Yb5/uHfhdHfe6Cfaw2oRLq1sJZR7cM32aXMYzEwd98Fr+Z8/yYa1bKikFF068mKVS1iRUEVe8Cyib7w/oWnFtoFCYEM8jsWiWyWXQ=
+	t=1757276465; cv=none; b=KoFxiksA7fMm09M1KCTgjHlGazvVDEcrc7tieskg7UP65L1OrLMyL0vg8TbCllavmVKnnSA9cVPitNu9zo9HCWqcFqNMpVz84CVZAcIl/e2ZZe2lvuYYtj7dV68aLCSDsniY8QjRmGrsi+5tEfWgpdL0adjDJPwYr5/LVqnrw8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276462; c=relaxed/simple;
-	bh=HYT40DUnmccF2uBeaMEt3ap3sED4K5q8NOWrLFw2jKw=;
+	s=arc-20240116; t=1757276465; c=relaxed/simple;
+	bh=bS9+F5rFlCos7coG5DUQjO4wkX23MXPuJpH6pzvmkGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ecUPDFJj88T2dI+Jgkf02m+IGa2RLq/iLR7VvN1P/7mD0Hv3nDvaXhq3yrfwQ9fcYsOFm3UwKeavwKuCJ+jxbEd6mcCjI71T1OhwHCElffecmltsDeGe0wABfVrSqKtg5ls40DZcuRo5g4LbOaPrNRNyQapzN2shHDKXTZN+vEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dmv0z3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dD405m4ybyxP38EflLED2VbdN4f/xR2u7uZKEEdTa9ukXNXSeNj6teLgTDmWED2mB5IvhlVFt87ls7ktDA1Q8bCvJAWH7R3YKGFMrDY0O8cckFQLZBFWdYMYSpYFy8P/JbWameEhwYKuQNRHveAbYJ+lg8tfinsCCKxO5uYtcN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLva/HET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dmv0z3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D730EC4CEF0;
-	Sun,  7 Sep 2025 20:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLva/HET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B7BC4CEF0;
+	Sun,  7 Sep 2025 20:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276462;
-	bh=HYT40DUnmccF2uBeaMEt3ap3sED4K5q8NOWrLFw2jKw=;
+	s=korg; t=1757276465;
+	bh=bS9+F5rFlCos7coG5DUQjO4wkX23MXPuJpH6pzvmkGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dmv0z3Mb39BgWPEh19xD4bqQm+BHcNf5y5gjsFp5mmIIxjy3dRZ+eedbi0mHNobd
-	 yBZ7qFQ2L7IBL1BSv76sWDWKqJiIaLv2LKlpoO96k2GBSGdcYBcCfi/9FKrykJCO7Y
-	 tWA2MItgCXZvh5cvXoBY2SYcdpxmNnEXc0h5zrd0=
+	b=xLva/HETn7EKfu1gN1jiOiLKk5AH/9rQsElB6L1uFJgXZRA7VHClAeuOJSEmkpWTn
+	 6+OuQFRBzU7V1qr50jrGUHhCnNNopFuUtczbSg4yHkr4jpgba3MHuJSnYT+BAW8c/T
+	 FRp0mlBR1xTDalWR8pmrRAbKQoNbjkKJ34dRapLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/104] dmaengine: mediatek: Fix a possible deadlock error in mtk_cqdma_tx_status()
-Date: Sun,  7 Sep 2025 21:58:19 +0200
-Message-ID: <20250907195609.287199377@linuxfoundation.org>
+Subject: [PATCH 6.6 001/121] bpf: Add cookie object to bpf maps
+Date: Sun,  7 Sep 2025 21:57:17 +0200
+Message-ID: <20250907195609.855500634@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
-References: <20250907195607.664912704@linuxfoundation.org>
+In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
+References: <20250907195609.817339617@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,81 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 157ae5ffd76a2857ccb4b7ce40bc5a344ca00395 ]
+[ Upstream commit 12df58ad294253ac1d8df0c9bb9cf726397a671d ]
 
-Fix a potential deadlock bug. Observe that in the mtk-cqdma.c
-file, functions like mtk_cqdma_issue_pending() and
-mtk_cqdma_free_active_desc() properly acquire the pc lock before the vc
-lock when handling pc and vc fields. However, mtk_cqdma_tx_status()
-violates this order by first acquiring the vc lock before invoking
-mtk_cqdma_find_active_desc(), which subsequently takes the pc lock. This
-reversed locking sequence (vc → pc) contradicts the established
-pc → vc order and creates deadlock risks.
+Add a cookie to BPF maps to uniquely identify BPF maps for the timespan
+when the node is up. This is different to comparing a pointer or BPF map
+id which could get rolled over and reused.
 
-Fix the issue by moving the vc lock acquisition code from
-mtk_cqdma_find_active_desc() to mtk_cqdma_tx_status(). Ensure the pc lock
-is acquired before the vc lock in the calling function to maintain correct
-locking hierarchy. Note that since mtk_cqdma_find_active_desc() is a
-static function with only one caller (mtk_cqdma_tx_status()), this
-modification safely eliminates the deadlock possibility without affecting
-other components.
-
-This possible bug is found by an experimental static analysis tool
-developed by our team. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency bugs
-including deadlocks, data races and atomicity violations.
-
-Fixes: b1f01e48df5a ("dmaengine: mediatek: Add MediaTek Command-Queue DMA controller for MT6765 SoC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20250508073634.3719-1-chenqiuji666@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20250730234733.530041-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mediatek/mtk-cqdma.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ include/linux/bpf.h  | 1 +
+ kernel/bpf/syscall.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
---- a/drivers/dma/mediatek/mtk-cqdma.c
-+++ b/drivers/dma/mediatek/mtk-cqdma.c
-@@ -421,15 +421,11 @@ static struct virt_dma_desc *mtk_cqdma_f
- {
- 	struct mtk_cqdma_vchan *cvc = to_cqdma_vchan(c);
- 	struct virt_dma_desc *vd;
--	unsigned long flags;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 17de12a98f858..0a097087f0a7c 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -300,6 +300,7 @@ struct bpf_map {
+ 	bool free_after_rcu_gp;
+ 	atomic64_t sleepable_refcnt;
+ 	s64 __percpu *elem_count;
++	u64 cookie; /* write-once */
+ };
  
--	spin_lock_irqsave(&cvc->pc->lock, flags);
- 	list_for_each_entry(vd, &cvc->pc->queue, node)
- 		if (vd->tx.cookie == cookie) {
--			spin_unlock_irqrestore(&cvc->pc->lock, flags);
- 			return vd;
- 		}
--	spin_unlock_irqrestore(&cvc->pc->lock, flags);
+ static inline const char *btf_field_type_name(enum btf_field_type type)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index b66349f892f25..1d6bd012de9e6 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -35,6 +35,7 @@
+ #include <linux/rcupdate_trace.h>
+ #include <linux/memcontrol.h>
+ #include <linux/trace_events.h>
++#include <linux/cookie.h>
+ #include <net/netfilter/nf_bpf_link.h>
  
- 	list_for_each_entry(vd, &cvc->vc.desc_issued, node)
- 		if (vd->tx.cookie == cookie)
-@@ -453,9 +449,11 @@ static enum dma_status mtk_cqdma_tx_stat
- 	if (ret == DMA_COMPLETE || !txstate)
- 		return ret;
+ #include <net/tcx.h>
+@@ -50,6 +51,7 @@
+ #define BPF_OBJ_FLAG_MASK   (BPF_F_RDONLY | BPF_F_WRONLY)
  
-+	spin_lock_irqsave(&cvc->pc->lock, flags);
- 	spin_lock_irqsave(&cvc->vc.lock, flags);
- 	vd = mtk_cqdma_find_active_desc(c, cookie);
- 	spin_unlock_irqrestore(&cvc->vc.lock, flags);
-+	spin_unlock_irqrestore(&cvc->pc->lock, flags);
+ DEFINE_PER_CPU(int, bpf_prog_active);
++DEFINE_COOKIE(bpf_map_cookie);
+ static DEFINE_IDR(prog_idr);
+ static DEFINE_SPINLOCK(prog_idr_lock);
+ static DEFINE_IDR(map_idr);
+@@ -1253,6 +1255,10 @@ static int map_create(union bpf_attr *attr)
+ 	if (err < 0)
+ 		goto free_map;
  
- 	if (vd) {
- 		cvd = to_cqdma_vdesc(vd);
++	preempt_disable();
++	map->cookie = gen_cookie_next(&bpf_map_cookie);
++	preempt_enable();
++
+ 	atomic64_set(&map->refcnt, 1);
+ 	atomic64_set(&map->usercnt, 1);
+ 	mutex_init(&map->freeze_mutex);
+-- 
+2.50.1
+
 
 
