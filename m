@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14860D528;
-	Sun,  7 Sep 2025 20:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0BF1D88D0;
+	Sun,  7 Sep 2025 20:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276817; cv=none; b=fGZ94Kbu56nzGpkDMHduhzozswih3a6WbX7INv7nzSjHXwLr5PcP0NUq7ksafBF/rm7ucMfSgT4USI8dO2kELb2sVChGCl2mwUqw9TNKsnW3qSlkLtSLNwPKEtWpulcvYEuvt9wuceDMLp5eQLNH4aQOU7nnFXfbron/fvdpk5g=
+	t=1757276820; cv=none; b=e9yWCv71Js2FxS48aHkRkWqsnKhZB2v3MpvCbE7e5ARbQV1gCbCGqVl+wC/yDuSSM/YUg58i5CIBDNRf0JGTjwBCUudxPWGPhsVYJMiOg/0hsrPma5NUWWsNOFNbGQYBHdgH06PC4Lsu/Lu2gPTPtwzMs1SMQAk3jBAANpKQFPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276817; c=relaxed/simple;
-	bh=de9RJlHZKonUIZ3IIz/xoxOBiuPAqVbXc2V89eD91Dk=;
+	s=arc-20240116; t=1757276820; c=relaxed/simple;
+	bh=lGaLkwOKpcV0gT4AowSW7pcBzNSGgZAjDHJD+0WBY7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lX9t6V8I/E7GPQJoRJWPT7M/4gWo5BI0oNQzfdKNmQPNOfnL499AI6vjlvUQtvvTMxyxThqTFsve+2f8seYqCqRdmM9+L/XtDKY1RXSrlmQe5Kj68ITg+rufT3/AouwSiegzVMQBaQGN47upv49JiGpEt+dM/r6r9LMOFgpRQQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blPYhW+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gVRk2BXikQixFyiPd9z+3bO1famq/W1MgLVB94uPAhm21VkzED+9oarKkMup+phFCHwH0A6oGbYdeSVVp3Gx+Xo/3sH7yXblwkXVEuY+aSKnM4YUSAKh35lV0JMv50xGhR6GE9qMa9U1Rt998261ODKTAaO1J/3G5mIIitNn0h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InoWe2H7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blPYhW+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C618C4CEF0;
-	Sun,  7 Sep 2025 20:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InoWe2H7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D9FC4CEF0;
+	Sun,  7 Sep 2025 20:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276817;
-	bh=de9RJlHZKonUIZ3IIz/xoxOBiuPAqVbXc2V89eD91Dk=;
+	s=korg; t=1757276820;
+	bh=lGaLkwOKpcV0gT4AowSW7pcBzNSGgZAjDHJD+0WBY7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blPYhW+EA+CghQvE7lJy68c4AByiaCLBR1ilbyYHbE/k8hPWxOjLyd9mk8ci1U/E+
-	 PMNKdkpSfaV1fDjeB3Gxy3aXz38EPuYdrNPkzPDxdynEmHq4pqrAoNgf+ndeaeCzvE
-	 dXpJc1Xq7sgnvW1xw0/m+TDlcUrhjdLwxeRlu/Qs=
+	b=InoWe2H770aqWrjdTbJzMk2hvrEIpn/aVDeed3yqSdrtOh2Pnrp5HWLycoNl9lFxo
+	 H2uPpqz/z8Rg5m3tef1jCF8pQ1JcbL7FCMSP32R+GswEhM2qXkeQ6mLe5+O8W6Ehu5
+	 H6Q6gmV/wXaFEh7ITmAmTqriG+xF6ri7XCyZ9ty0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Eugen Hristev <eugen.hristev@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/121] cpufreq: intel_pstate: Check turbo_is_disabled() in store_no_turbo()
-Date: Sun,  7 Sep 2025 21:59:15 +0200
-Message-ID: <20250907195612.904297654@linuxfoundation.org>
+Subject: [PATCH 6.6 120/121] dmaengine: mediatek: Fix a flag reuse error in mtk_cqdma_tx_status()
+Date: Sun,  7 Sep 2025 21:59:16 +0200
+Message-ID: <20250907195612.928471086@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,86 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-[ Upstream commit 350cbb5d2f676bff22c49e5e81764c3b8da342a9 ]
+[ Upstream commit 8eba2187391e5ab49940cd02d6bd45a5617f4daf ]
 
-After recent changes in intel_pstate, global.turbo_disabled is only set
-at the initialization time and never changed.  However, it turns out
-that on some systems the "turbo disabled" bit in MSR_IA32_MISC_ENABLE,
-the initial state of which is reflected by global.turbo_disabled, can be
-flipped later and there should be a way to take that into account (other
-than checking that MSR every time the driver runs which is costly and
-useless overhead on the vast majority of systems).
+Fixed a flag reuse bug in the mtk_cqdma_tx_status() function.
 
-For this purpose, notice that before the changes in question,
-store_no_turbo() contained a turbo_is_disabled() check that was used
-for updating global.turbo_disabled if the "turbo disabled" bit in
-MSR_IA32_MISC_ENABLE had been flipped and that functionality can be
-restored.  Then, users will be able to reset global.turbo_disabled
-by writing 0 to no_turbo which used to work before on systems with
-flipping "turbo disabled" bit.
-
-This guarantees the driver state to remain in sync, but READ_ONCE()
-annotations need to be added in two places where global.turbo_disabled
-is accessed locklessly, so modify the driver to make that happen.
-
-Fixes: 0940f1a8011f ("cpufreq: intel_pstate: Do not update global.turbo_disabled after initialization")
-Closes: https://lore.kernel.org/linux-pm/bf3ebf1571a4788e97daf861eb493c12d42639a3.camel@xry111.site
-Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Reported-by: Xi Ruoyao <xry111@xry111.site>
-Tested-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 157ae5ffd76a ("dmaengine: mediatek: Fix a possible deadlock error in mtk_cqdma_tx_status()")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202505270641.MStzJUfU-lkp@intel.com/
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Eugen Hristev <eugen.hristev@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250606090017.5436-1-chenqiuji666@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/dma/mediatek/mtk-cqdma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 05aae7e6da157..ed782c0b48af2 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1288,12 +1288,17 @@ static ssize_t store_no_turbo(struct kobject *a, struct kobj_attribute *b,
+diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
+index 385eee4fd4e11..525bb92ced8f8 100644
+--- a/drivers/dma/mediatek/mtk-cqdma.c
++++ b/drivers/dma/mediatek/mtk-cqdma.c
+@@ -449,9 +449,9 @@ static enum dma_status mtk_cqdma_tx_status(struct dma_chan *c,
+ 		return ret;
  
- 	no_turbo = !!clamp_t(int, input, 0, 1);
+ 	spin_lock_irqsave(&cvc->pc->lock, flags);
+-	spin_lock_irqsave(&cvc->vc.lock, flags);
++	spin_lock(&cvc->vc.lock);
+ 	vd = mtk_cqdma_find_active_desc(c, cookie);
+-	spin_unlock_irqrestore(&cvc->vc.lock, flags);
++	spin_unlock(&cvc->vc.lock);
+ 	spin_unlock_irqrestore(&cvc->pc->lock, flags);
  
--	if (no_turbo == global.no_turbo)
--		goto unlock_driver;
--
--	if (global.turbo_disabled) {
--		pr_notice_once("Turbo disabled by BIOS or unavailable on processor\n");
-+	WRITE_ONCE(global.turbo_disabled, turbo_is_disabled());
-+	if (global.turbo_disabled && !no_turbo) {
-+		pr_notice("Turbo disabled by BIOS or unavailable on processor\n");
- 		count = -EPERM;
-+		if (global.no_turbo)
-+			goto unlock_driver;
-+		else
-+			no_turbo = 1;
-+	}
-+
-+	if (no_turbo == global.no_turbo) {
- 		goto unlock_driver;
- 	}
- 
-@@ -1766,7 +1771,7 @@ static u64 atom_get_val(struct cpudata *cpudata, int pstate)
- 	u32 vid;
- 
- 	val = (u64)pstate << 8;
--	if (READ_ONCE(global.no_turbo) && !global.turbo_disabled)
-+	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
- 		val |= (u64)1 << 32;
- 
- 	vid_fp = cpudata->vid.min + mul_fp(
-@@ -1931,7 +1936,7 @@ static u64 core_get_val(struct cpudata *cpudata, int pstate)
- 	u64 val;
- 
- 	val = (u64)pstate << 8;
--	if (READ_ONCE(global.no_turbo) && !global.turbo_disabled)
-+	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
- 		val |= (u64)1 << 32;
- 
- 	return val;
+ 	if (vd) {
 -- 
 2.51.0
 
