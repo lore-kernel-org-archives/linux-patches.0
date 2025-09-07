@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF424126C02;
-	Sun,  7 Sep 2025 20:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE6D125B2;
+	Sun,  7 Sep 2025 20:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277973; cv=none; b=QF847BeSVVS9SvaQa90KRCfoeBgw76SkX2+zSk4X9s8BhUhThs/IndTV79g3sbZminHjWYKaAh7MsilWj/Y+phB8YuKjk1I1yHsLgbBbkh/nMfbX3HmyKN1y4BhHMh2ll9LABRkqKkgeRTorhx+uY3Vb9ZGnCJ9u98X9+iZ9LiI=
+	t=1757277977; cv=none; b=fTTq2aIk2mL0H9eO0CgCh/w/150mDN3zVm2bVRPAc8zya/BnKMGjpnuR9nhGVBSX3XX5e5nRPxA2j7p9VgzgTY5m3MmM7gTgeeEPu143H7T3mpPNLUmp/S72upUqo6uqZ+P+gpTRFcDm1jb5w2vehAudfPnluvUmAyJEdqp6o3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277973; c=relaxed/simple;
-	bh=sm4rjEt2/cfk1rbL9MoMwt4cpLuKHfVgt9n7KiCWaMw=;
+	s=arc-20240116; t=1757277977; c=relaxed/simple;
+	bh=w+teoBLGtY3Y9tKoPWPPTnXlwFONCyYt03invsCH/uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SHr3puHLq8J3SWn53VdfbdZkAsJTxrrqhDHAgCZog3uN7ofdysXA/xmwb9Uc9WVxaGaREXGomDpGEtdAfdRzl3z1ZbV7HGmOLqbJYtQP789an5zKWyogocUobqqnTUtrCPvwA5AKQzSflA1ESe9Pl/q/pcxEwBSTIX6WHic650A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCkHfweh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQ6BA8aS9bEUjIjFCF/Z0X34GyI6ZPnnFJFykGeNUkpib+c0fIlnhFn7gIBLgQ/ewaE+0VdAiuGdEF09WEPshAydkcEOweRtb55sNDbj2I41rivOHaxroj1cKR6jCecQOYDfb69zBuwmUJa6q2QoiDOyOL7r+NvVdoCyD9k6Cw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnUIxPho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCkHfweh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479B4C4CEF0;
-	Sun,  7 Sep 2025 20:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnUIxPho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B023C4CEF0;
+	Sun,  7 Sep 2025 20:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277973;
-	bh=sm4rjEt2/cfk1rbL9MoMwt4cpLuKHfVgt9n7KiCWaMw=;
+	s=korg; t=1757277977;
+	bh=w+teoBLGtY3Y9tKoPWPPTnXlwFONCyYt03invsCH/uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCkHfweh5YZi2UkEhVaUnO84jZIfrY1qnXIQ+Ki2NQBiTk46z9/loaK0Dx3kZGWKL
-	 4ukrlVO3qFizTpr1VRLexjMUZN39QgHoiDNB6Kmd2Rhuy40Hgrmk1sFG5GkwYbJAgK
-	 /VJKwotfexIGLlS7+BMj4g2c02cKi5k28nkD0fMU=
+	b=gnUIxPhoYA06xDzQl74MRTZwqM4rQebUybYnf7knEbAHt3lFjbhtVNDZ4Fg/Qs2MD
+	 omnSUhmYfLuo9aJWJExkh66VW4Bzt7iAwVtj4/sMZglVEjgLccXcYaGWZBMztdvTmR
+	 WOWzMm/sVuGM8VjMG/u9kcETrGrB2CE2jKG2CE3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kernel test robot <lkp@intel.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
 	Cyril Bur <cyrilbur@tenstorrent.com>,
 	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.16 181/183] riscv: Fix sparse warning in __get_user_error()
-Date: Sun,  7 Sep 2025 22:00:08 +0200
-Message-ID: <20250907195620.132449590@linuxfoundation.org>
+Subject: [PATCH 6.16 182/183] riscv: Fix sparse warning about different address spaces
+Date: Sun,  7 Sep 2025 22:00:09 +0200
+Message-ID: <20250907195620.155067659@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -47,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
@@ -56,44 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit fef7ded169ed7e133612f90a032dc2af1ce19bef upstream.
+commit a03ee11b8f850bd008226c6d392da24163dfb56e upstream.
 
-We used to assign 0 to x without an appropriate cast which results in
-sparse complaining when x is a pointer:
+We did not propagate the __user attribute of the pointers in
+__get_kernel_nofault() and __put_kernel_nofault(), which results in
+sparse complaining:
 
->> block/ioctl.c:72:39: sparse: sparse: Using plain integer as NULL pointer
+>> mm/maccess.c:41:17: sparse: sparse: incorrect type in argument 2 (different address spaces) @@     expected void const [noderef] __user *from @@     got unsigned long long [usertype] * @@
+   mm/maccess.c:41:17: sparse:     expected void const [noderef] __user *from
+   mm/maccess.c:41:17: sparse:     got unsigned long long [usertype] *
 
-So fix this by casting 0 to the correct type of x.
+So fix this by correctly casting those pointers.
 
 Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202508062321.gHv4kvuY-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202508161713.RWu30Lv1-lkp@intel.com/
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
 Fixes: f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for get_user()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Clément Léger <cleger@rivosinc.com>
 Reviewed-by: Cyril Bur <cyrilbur@tenstorrent.com>
-Link: https://lore.kernel.org/r/20250903-dev-alex-sparse_warnings_v1-v1-1-7e6350beb700@rivosinc.com
+Link: https://lore.kernel.org/r/20250903-dev-alex-sparse_warnings_v1-v1-2-7e6350beb700@rivosinc.com
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/uaccess.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/uaccess.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/include/asm/uaccess.h b/arch/riscv/include/asm/uaccess.h
-index 22e3f52a763d..551e7490737e 100644
 --- a/arch/riscv/include/asm/uaccess.h
 +++ b/arch/riscv/include/asm/uaccess.h
-@@ -209,7 +209,7 @@ do {									\
- 		err = 0;						\
- 		break;							\
- __gu_failed:								\
--		x = 0;							\
-+		x = (__typeof__(x))0;					\
- 		err = -EFAULT;						\
- } while (0)
+@@ -438,10 +438,10 @@ unsigned long __must_check clear_user(vo
+ }
  
--- 
-2.51.0
-
+ #define __get_kernel_nofault(dst, src, type, err_label)			\
+-	__get_user_nocheck(*((type *)(dst)), (type *)(src), err_label)
++	__get_user_nocheck(*((type *)(dst)), (__force __user type *)(src), err_label)
+ 
+ #define __put_kernel_nofault(dst, src, type, err_label)			\
+-	__put_user_nocheck(*((type *)(src)), (type *)(dst), err_label)
++	__put_user_nocheck(*((type *)(src)), (__force __user type *)(dst), err_label)
+ 
+ static __must_check __always_inline bool user_access_begin(const void __user *ptr, size_t len)
+ {
 
 
