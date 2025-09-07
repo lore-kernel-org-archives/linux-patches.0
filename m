@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44BF29BDAC;
-	Sun,  7 Sep 2025 20:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4307A1CDFAC;
+	Sun,  7 Sep 2025 20:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276013; cv=none; b=l634iA2XMpImFhVpdTezNZTVovDayr5J/KgoWT4xPWxGZmI4UyGU3mHR6Gz5yndcdkvlmmNZrkKGuMTl7vF/Zf8sZx7foHqMMzjruTo9dl9x5GQD6SxzLa/5ODBRpdYj7TAaIZDtQsJLXmLV1mweBq57iYwcGtAl7oO8ckha7F8=
+	t=1757276016; cv=none; b=pSCl/9gH8CFG5SOPF9dgthxuwKSu5YXiNA+aduoox1KPZ4hrv6TqKAYEmmn0dH8KOOF/N3No9217PxTkFjwDGazz7bMGgJmhX5voyNeQq5zipNRVphe8LRaf9NhD99PN+U1WkPmvPYNdW/QDylWfuv/5OwXaSOxpTcE21vEiumc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276013; c=relaxed/simple;
-	bh=TEgiLEcsET2hmuA+OjYQG7jY6892kjclx//r6PXLFR8=;
+	s=arc-20240116; t=1757276016; c=relaxed/simple;
+	bh=ZeRYoxp85LaBoZb0wJZqWfA0SDdCkDjxz9Re5FAhe+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8b+LKSde7sYofU0fpoQqEZ7GgnbO1NvrDC8Vga6jeKAvquWurqgDa0OhozXvMYlqOt2A9QkZKY1Pl+QrrVrwvIFSk5RAeB+56SIyhNWK/QiR2BPzYXrZJcN/FxlIP+xCsnhJ5L7GgRn8+59XOA7HuOojsb17MEhf92t0/D+65g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1q8reaa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F2tf5+BHyWM9K5L37W4XuHAmdHf+4IXCW/cxpk3Lh3/J2EhOC/lAP6kXG6iuA3g2o/FcserfEtdDU2YWkW3tZtxe5ewCOS65jGQKI7nRg1JAtCoHHODbfuCbfDIREkaiJkVuG+9qPV0i65JDmSaHN+YTB4oo4R30DA0diadYB3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDStG9VL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1q8reaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4196BC4CEF8;
-	Sun,  7 Sep 2025 20:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDStG9VL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76894C4CEF0;
+	Sun,  7 Sep 2025 20:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276012;
-	bh=TEgiLEcsET2hmuA+OjYQG7jY6892kjclx//r6PXLFR8=;
+	s=korg; t=1757276015;
+	bh=ZeRYoxp85LaBoZb0wJZqWfA0SDdCkDjxz9Re5FAhe+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1q8reaa5ni2vuCgJAvw33LPLMmNZ7g1Gpcx7ibJ+GEf9SnlMwgz6K0utMwcsTRj/
-	 F56WivHxmponB/7TrNlhEcA3odExiyaqF6XJxs/X3/Dzk8iKIW0ocaKte8FgGblOIv
-	 +LKxixhSiPxg6IZ0VV4qm0HwFweM/d52GaIJ0NQY=
+	b=HDStG9VL5SK1zDlXZ04GJtoIEi2XGEi/aBxu7DNo1Z1D1FdimHykZ0DhwRlmEKSxz
+	 h4qDqSlt0EbcQbUIbamO1v3kUs2p3a03Q+2rV97Wux8TKGrp0+xIcjaakqUeM/n2NT
+	 b3saZjUsPRadIRzsl96WOux4kGExXu0RmDQTmctk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/64] phy: mscc: Stop taking ts_lock for tx_queue and use its own lock
-Date: Sun,  7 Sep 2025 21:58:10 +0200
-Message-ID: <20250907195604.169027062@linuxfoundation.org>
+	Mikael Wessel <post@mikaelkw.online>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.15 37/64] e1000e: fix heap overflow in e1000_set_eeprom
+Date: Sun,  7 Sep 2025 21:58:19 +0200
+Message-ID: <20250907195604.427742160@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -52,147 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-[ Upstream commit 9b2bfdbf43adb9929c5ddcdd96efedbf1c88cf53 ]
+commit 90fb7db49c6dbac961c6b8ebfd741141ffbc8545 upstream.
 
-When transmitting a PTP frame which is timestamp using 2 step, the
-following warning appears if CONFIG_PROVE_LOCKING is enabled:
-=============================
-[ BUG: Invalid wait context ]
-6.17.0-rc1-00326-ge6160462704e #427 Not tainted
------------------------------
-ptp4l/119 is trying to lock:
-c2a44ed4 (&vsc8531->ts_lock){+.+.}-{3:3}, at: vsc85xx_txtstamp+0x50/0xac
-other info that might help us debug this:
-context-{4:4}
-4 locks held by ptp4l/119:
- #0: c145f068 (rcu_read_lock_bh){....}-{1:2}, at: __dev_queue_xmit+0x58/0x1440
- #1: c29df974 (dev->qdisc_tx_busylock ?: &qdisc_tx_busylock){+...}-{2:2}, at: __dev_queue_xmit+0x5c4/0x1440
- #2: c2aaaad0 (_xmit_ETHER#2){+.-.}-{2:2}, at: sch_direct_xmit+0x108/0x350
- #3: c2aac170 (&lan966x->tx_lock){+.-.}-{2:2}, at: lan966x_port_xmit+0xd0/0x350
-stack backtrace:
-CPU: 0 UID: 0 PID: 119 Comm: ptp4l Not tainted 6.17.0-rc1-00326-ge6160462704e #427 NONE
-Hardware name: Generic DT based system
-Call trace:
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x7c/0xac
- dump_stack_lvl from __lock_acquire+0x8e8/0x29dc
- __lock_acquire from lock_acquire+0x108/0x38c
- lock_acquire from __mutex_lock+0xb0/0xe78
- __mutex_lock from mutex_lock_nested+0x1c/0x24
- mutex_lock_nested from vsc85xx_txtstamp+0x50/0xac
- vsc85xx_txtstamp from lan966x_fdma_xmit+0xd8/0x3a8
- lan966x_fdma_xmit from lan966x_port_xmit+0x1bc/0x350
- lan966x_port_xmit from dev_hard_start_xmit+0xc8/0x2c0
- dev_hard_start_xmit from sch_direct_xmit+0x8c/0x350
- sch_direct_xmit from __dev_queue_xmit+0x680/0x1440
- __dev_queue_xmit from packet_sendmsg+0xfa4/0x1568
- packet_sendmsg from __sys_sendto+0x110/0x19c
- __sys_sendto from sys_send+0x18/0x20
- sys_send from ret_fast_syscall+0x0/0x1c
-Exception stack(0xf0b05fa8 to 0xf0b05ff0)
-5fa0:                   00000001 0000000e 0000000e 0004b47a 0000003a 00000000
-5fc0: 00000001 0000000e 00000000 00000121 0004af58 00044874 00000000 00000000
-5fe0: 00000001 bee9d420 00025a10 b6e75c7c
+Fix a possible heap overflow in e1000_set_eeprom function by adding
+input validation for the requested length of the change in the EEPROM.
+In addition, change the variable type from int to size_t for better
+code practices and rearrange declarations to RCT.
 
-So, instead of using the ts_lock for tx_queue, use the spinlock that
-skb_buff_head has.
-
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20250902121259.3257536-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: bc7f75fa9788 ("[E1000E]: New pci-express e1000 driver (currently for ICH9 devices only)")
+Co-developed-by: Mikael Wessel <post@mikaelkw.online>
+Signed-off-by: Mikael Wessel <post@mikaelkw.online>
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mscc/mscc_ptp.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/e1000e/ethtool.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
-index 717435562f1c5..7b73b78ac9b35 100644
---- a/drivers/net/phy/mscc/mscc_ptp.c
-+++ b/drivers/net/phy/mscc/mscc_ptp.c
-@@ -455,12 +455,12 @@ static void vsc85xx_dequeue_skb(struct vsc85xx_ptp *ptp)
- 		*p++ = (reg >> 24) & 0xff;
- 	}
+--- a/drivers/net/ethernet/intel/e1000e/ethtool.c
++++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
+@@ -559,12 +559,12 @@ static int e1000_set_eeprom(struct net_d
+ {
+ 	struct e1000_adapter *adapter = netdev_priv(netdev);
+ 	struct e1000_hw *hw = &adapter->hw;
++	size_t total_len, max_len;
+ 	u16 *eeprom_buff;
+-	void *ptr;
+-	int max_len;
++	int ret_val = 0;
+ 	int first_word;
+ 	int last_word;
+-	int ret_val = 0;
++	void *ptr;
+ 	u16 i;
  
--	len = skb_queue_len(&ptp->tx_queue);
-+	len = skb_queue_len_lockless(&ptp->tx_queue);
- 	if (len < 1)
- 		return;
+ 	if (eeprom->len == 0)
+@@ -579,6 +579,10 @@ static int e1000_set_eeprom(struct net_d
  
- 	while (len--) {
--		skb = __skb_dequeue(&ptp->tx_queue);
-+		skb = skb_dequeue(&ptp->tx_queue);
- 		if (!skb)
- 			return;
+ 	max_len = hw->nvm.word_size * 2;
  
-@@ -485,7 +485,7 @@ static void vsc85xx_dequeue_skb(struct vsc85xx_ptp *ptp)
- 		 * packet in the FIFO right now, reschedule it for later
- 		 * packets.
- 		 */
--		__skb_queue_tail(&ptp->tx_queue, skb);
-+		skb_queue_tail(&ptp->tx_queue, skb);
- 	}
- }
- 
-@@ -1070,6 +1070,7 @@ static int vsc85xx_hwtstamp(struct mii_timestamper *mii_ts, struct ifreq *ifr)
- 	case HWTSTAMP_TX_ON:
- 		break;
- 	case HWTSTAMP_TX_OFF:
-+		skb_queue_purge(&vsc8531->ptp->tx_queue);
- 		break;
- 	default:
- 		return -ERANGE;
-@@ -1094,9 +1095,6 @@ static int vsc85xx_hwtstamp(struct mii_timestamper *mii_ts, struct ifreq *ifr)
- 
- 	mutex_lock(&vsc8531->ts_lock);
- 
--	__skb_queue_purge(&vsc8531->ptp->tx_queue);
--	__skb_queue_head_init(&vsc8531->ptp->tx_queue);
--
- 	/* Disable predictor while configuring the 1588 block */
- 	val = vsc85xx_ts_read_csr(phydev, PROCESSOR,
- 				  MSCC_PHY_PTP_INGR_PREDICTOR);
-@@ -1182,9 +1180,7 @@ static void vsc85xx_txtstamp(struct mii_timestamper *mii_ts,
- 
- 	skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
- 
--	mutex_lock(&vsc8531->ts_lock);
--	__skb_queue_tail(&vsc8531->ptp->tx_queue, skb);
--	mutex_unlock(&vsc8531->ts_lock);
-+	skb_queue_tail(&vsc8531->ptp->tx_queue, skb);
- 	return;
- 
- out:
-@@ -1550,6 +1546,7 @@ void vsc8584_ptp_deinit(struct phy_device *phydev)
- 	if (vsc8531->ptp->ptp_clock) {
- 		ptp_clock_unregister(vsc8531->ptp->ptp_clock);
- 		skb_queue_purge(&vsc8531->rx_skbs_list);
-+		skb_queue_purge(&vsc8531->ptp->tx_queue);
- 	}
- }
- 
-@@ -1573,7 +1570,7 @@ irqreturn_t vsc8584_handle_ts_interrupt(struct phy_device *phydev)
- 	if (rc & VSC85XX_1588_INT_FIFO_ADD) {
- 		vsc85xx_get_tx_ts(priv->ptp);
- 	} else if (rc & VSC85XX_1588_INT_FIFO_OVERFLOW) {
--		__skb_queue_purge(&priv->ptp->tx_queue);
-+		skb_queue_purge(&priv->ptp->tx_queue);
- 		vsc85xx_ts_reset_fifo(phydev);
- 	}
- 
-@@ -1593,6 +1590,7 @@ int vsc8584_ptp_probe(struct phy_device *phydev)
- 	mutex_init(&vsc8531->phc_lock);
- 	mutex_init(&vsc8531->ts_lock);
- 	skb_queue_head_init(&vsc8531->rx_skbs_list);
-+	skb_queue_head_init(&vsc8531->ptp->tx_queue);
- 
- 	/* Retrieve the shared load/save GPIO. Request it as non exclusive as
- 	 * the same GPIO can be requested by all the PHYs of the same package.
--- 
-2.50.1
-
++	if (check_add_overflow(eeprom->offset, eeprom->len, &total_len) ||
++	    total_len > max_len)
++		return -EFBIG;
++
+ 	first_word = eeprom->offset >> 1;
+ 	last_word = (eeprom->offset + eeprom->len - 1) >> 1;
+ 	eeprom_buff = kmalloc(max_len, GFP_KERNEL);
 
 
