@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E13D1A2389;
-	Sun,  7 Sep 2025 20:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAC01A9FAA;
+	Sun,  7 Sep 2025 20:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276506; cv=none; b=aDHyTG4fkx3rep1ktUACN/36DPMyyGxiyiL2sQ/1ctmnVMeM8W2OsWv3XUVrt5POa0RKTcOCONUvwBSqP+7/yz6mV0c2k6FaeuqUqFJti/e0cMvHvADLtsNGdx/fnh5PwnToJnrs81JIgBDJaRHnD4zYEgYvN+5C80T8dk89FQA=
+	t=1757276510; cv=none; b=ubPT+zL2zzCnsVfyhfPUzFqoxN7ElaSdK5jO46KPwn2Bo1Lsv1QDe2ncKFR7sQGDscnw/s9TdetierlmM27iDSAhRX4EVz7OBCFxtEkLUVw4zD8JPYuGXbsiefeu7xZk07r1Ni3QXtDaOCWgvpfnP1yQsfQhlVNmInaMVGpbFCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276506; c=relaxed/simple;
-	bh=bPqRlOlGIPouChl4Jxh3WXuQ8/yM84wrm3epgbvucLA=;
+	s=arc-20240116; t=1757276510; c=relaxed/simple;
+	bh=f9ZAj6sU1t9S2PZIyDI+zLcVVRRJHgpoU20UzrYchcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teGItW7tnPMhJalNTtm4jOD8TZ2bMktmawvNMPW7QsM8gN62utg9+evrnOo0VGrM8QNuqjj3uad9kyOGjX+gEj4TkBW9dEyc6V3VW19K4rUe1Wzm/L1fO5B5sSGwyHjEUiLuoSnEPyVTnPptboPFckrGeHtc0d9UTQD3qxPZ3jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULBsM4Zc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bE96mEqXJUo2LPPGiZNGTnfy/vWQpBPUDkrdmCrnUxtMMt4InaN/1CAqwkyFxMs/iKknMd81kmOMH5ZxXshFDSw5dCPKPm57+q+DVoU6szAtt67o6dROWG17cKtZjc4FFvJTFZcRr3ieLiIPoAmVlaqYEGVBSZdVzLVMD4n6O78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDp6VbTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULBsM4Zc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F1BC4CEF0;
-	Sun,  7 Sep 2025 20:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDp6VbTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2FCC4CEF0;
+	Sun,  7 Sep 2025 20:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276506;
-	bh=bPqRlOlGIPouChl4Jxh3WXuQ8/yM84wrm3epgbvucLA=;
+	s=korg; t=1757276509;
+	bh=f9ZAj6sU1t9S2PZIyDI+zLcVVRRJHgpoU20UzrYchcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULBsM4Zc3Kq/iJIMrSDpNxAPAV7l8VFFVemlqAs3wWXU2MpQWSCVBl0E+x6V8a4UM
-	 pjGFtG8UAlWT9cgMfx9H2A29tFCPFIOG/O1TG25QMNimDmVRdB6vEF+c9qW5xAQQNd
-	 7FJyOQHTLJIYC9mm+HaCQLp1tw/PF8ogNa0zD268=
+	b=vDp6VbTo4ZbVY3I+xkU+G+XjoG+QS3Foi/4J2ip6Lr2IbkzpTev1RnjG/mnuCkZvs
+	 0KT1gSWPpzDi4n9NkEZAm6tqOK0IAKuciXl1+aS27FKbolft6JcApFEBfKrIbvoYS4
+	 2ln4I+lJeeLBV6MvmJZ3pwXDVYLfNktAA4376u+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Phil Sutter <phil@nwl.cc>,
 	Florian Westphal <fw@strlen.de>,
-	Wang Liang <wangliang74@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/121] netfilter: br_netfilter: do not check confirmed bit in br_nf_local_in() after confirm
-Date: Sun,  7 Sep 2025 21:57:37 +0200
-Message-ID: <20250907195610.359476337@linuxfoundation.org>
+Subject: [PATCH 6.6 022/121] netfilter: conntrack: helper: Replace -EEXIST by -EBUSY
+Date: Sun,  7 Sep 2025 21:57:38 +0200
+Message-ID: <20250907195610.385887831@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,74 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 479a54ab92087318514c82428a87af2d7af1a576 ]
+[ Upstream commit 54416fd76770bd04fc3c501810e8d673550bab26 ]
 
-When send a broadcast packet to a tap device, which was added to a bridge,
-br_nf_local_in() is called to confirm the conntrack. If another conntrack
-with the same hash value is added to the hash table, which can be
-triggered by a normal packet to a non-bridge device, the below warning
-may happen.
+The helper registration return value is passed-through by module_init
+callbacks which modprobe confuses with the harmless -EEXIST returned
+when trying to load an already loaded module.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 1 PID: 96 at net/bridge/br_netfilter_hooks.c:632 br_nf_local_in+0x168/0x200
-  CPU: 1 UID: 0 PID: 96 Comm: tap_send Not tainted 6.17.0-rc2-dirty #44 PREEMPT(voluntary)
-  RIP: 0010:br_nf_local_in+0x168/0x200
-  Call Trace:
-   <TASK>
-   nf_hook_slow+0x3e/0xf0
-   br_pass_frame_up+0x103/0x180
-   br_handle_frame_finish+0x2de/0x5b0
-   br_nf_hook_thresh+0xc0/0x120
-   br_nf_pre_routing_finish+0x168/0x3a0
-   br_nf_pre_routing+0x237/0x5e0
-   br_handle_frame+0x1ec/0x3c0
-   __netif_receive_skb_core+0x225/0x1210
-   __netif_receive_skb_one_core+0x37/0xa0
-   netif_receive_skb+0x36/0x160
-   tun_get_user+0xa54/0x10c0
-   tun_chr_write_iter+0x65/0xb0
-   vfs_write+0x305/0x410
-   ksys_write+0x60/0xd0
-   do_syscall_64+0xa4/0x260
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+Make sure modprobe fails so users notice their helper has not been
+registered and won't work.
 
-To solve the hash conflict, nf_ct_resolve_clash() try to merge the
-conntracks, and update skb->_nfct. However, br_nf_local_in() still use the
-old ct from local variable 'nfct' after confirm(), which leads to this
-warning.
-
-If confirm() does not insert the conntrack entry and return NF_DROP, the
-warning may also occur. There is no need to reserve the WARN_ON_ONCE, just
-remove it.
-
-Link: https://lore.kernel.org/netdev/20250820043329.2902014-1-wangliang74@huawei.com/
-Fixes: 62e7151ae3eb ("netfilter: bridge: confirm multicast packets before passing them up the stack")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netfilter_hooks.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/netfilter/nf_conntrack_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
-index 2a4958e995f2d..e6962d693359b 100644
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -648,9 +648,6 @@ static unsigned int br_nf_local_in(void *priv,
- 		break;
- 	}
- 
--	ct = container_of(nfct, struct nf_conn, ct_general);
--	WARN_ON_ONCE(!nf_ct_is_confirmed(ct));
--
- 	return ret;
- }
- #endif
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index f22691f838536..10f72b5b4e1ad 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -373,7 +373,7 @@ int nf_conntrack_helper_register(struct nf_conntrack_helper *me)
+ 			    (cur->tuple.src.l3num == NFPROTO_UNSPEC ||
+ 			     cur->tuple.src.l3num == me->tuple.src.l3num) &&
+ 			    cur->tuple.dst.protonum == me->tuple.dst.protonum) {
+-				ret = -EEXIST;
++				ret = -EBUSY;
+ 				goto out;
+ 			}
+ 		}
+@@ -384,7 +384,7 @@ int nf_conntrack_helper_register(struct nf_conntrack_helper *me)
+ 		hlist_for_each_entry(cur, &nf_ct_helper_hash[h], hnode) {
+ 			if (nf_ct_tuple_src_mask_cmp(&cur->tuple, &me->tuple,
+ 						     &mask)) {
+-				ret = -EEXIST;
++				ret = -EBUSY;
+ 				goto out;
+ 			}
+ 		}
 -- 
 2.50.1
 
