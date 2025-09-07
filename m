@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2219B14BFA2;
-	Sun,  7 Sep 2025 20:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30ED215D5B6;
+	Sun,  7 Sep 2025 20:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276189; cv=none; b=WmoaE9B9n7kM+Bwz7Eioz0OR/W/ssdkl+agTLTFM/PpOad+lyssGXsgOSUPe+3Kvnxb7dZ0O8f2FoOKvcqdKMpwl7bJUGH/jGgOLubI7WmIK3lWI3DGNHQRL9P+my746E7Zk9BtOr75cTwWggwxH+NKZWIzL+DfqrQqHHpk8Y1I=
+	t=1757276191; cv=none; b=WHy7MNtvm1DtUWQaGNSNjs2d41sGgm+xjd0PHf40RVTtxWTGq2G/jYTsbMnxSNTKoKh3b4XcSriQMCL0rrCJJS3bUfUhU9N1xeH6MIe/C/c2R3EzWolay0GaVYepnqAFgUYC9cW8GTl7p/3w35fpYuiiRmOslNI6s4TW0LJidKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276189; c=relaxed/simple;
-	bh=vsT3RK6KKMmUdCmfbSa1PB4h0mfydP2QjUyuiliKyEo=;
+	s=arc-20240116; t=1757276191; c=relaxed/simple;
+	bh=mNHB/PZoBeUazc3+Y7/SV5RNlRmXR8D8lvo+f3O95Bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=su314MjoxwPS7nqQFs5IoLavzhscpIxR9TQK8hLUsxl4xBMfSeMdD98HcjAQybKcMg5qdXl4BP76udsa7nivIK2yvZnQ1TtgMIeYEWfq5crdPm1OhhDYR/wrESr3AoMCLPXqYNCRqy1J+fMUbrXtKMiSzvj23VdVneGI22sTHeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FD6PH6vt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFV1rK/0Yl6g+cZM0gvjfsP4vscfTXbVeWDVZYOlgL2vDULNjZdiV1n1cuCPgDuDM/d5EaSev0n196ib8IvrIOmhrmEZ149+Ob0TkYICczfcdOvXoBnUOb/aR5MiELyv94iTim5NoJc3BeV+D4VaLBsyf/74+AcdmfJ+zmUjVWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSma95N3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FD6PH6vt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589B5C4CEF0;
-	Sun,  7 Sep 2025 20:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSma95N3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A946C4CEF0;
+	Sun,  7 Sep 2025 20:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276187;
-	bh=vsT3RK6KKMmUdCmfbSa1PB4h0mfydP2QjUyuiliKyEo=;
+	s=korg; t=1757276190;
+	bh=mNHB/PZoBeUazc3+Y7/SV5RNlRmXR8D8lvo+f3O95Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FD6PH6vtEauItgch7tt1jIT/IjK+WLROlB4NCuaRCgbzSklfaKfs6Pqa4SVHKS7I0
-	 UBh+13snMMUTBvpeUgjrPBMHJCkSIK4uq04P8blc/gjRGoDQHmU28wMdJgxOjdmnZs
-	 +PgM/rLe0rZ9Q3Rs6NKMvwSSVzIHiliH9q8LdQcs=
+	b=QSma95N3cySCEY1E/yW+KeqG4wVPiU4zuGOPeBdJLPoJtVejYNO/ziZnK81VoTnOZ
+	 R/6un01kWiaXzCLnOOtQocT4YMI+GQVR0nY8VRMUqIrBrFlP+PyUdIZwQop5BEpy9X
+	 emWBAvMYZXXaw/jnMuITlWKoNfllGpbjxmEVgMhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thibaut VARENE <hacks@slashdirt.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/104] net: ethernet: mtk_eth_soc: fix tx vlan tag for llc packets
-Date: Sun,  7 Sep 2025 21:57:43 +0200
-Message-ID: <20250907195608.375194886@linuxfoundation.org>
+Subject: [PATCH 6.1 027/104] wifi: cw1200: cap SSID length in cw1200_do_join()
+Date: Sun,  7 Sep 2025 21:57:44 +0200
+Message-ID: <20250907195608.402170347@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -53,53 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d4736737110ffa83d29f1c5d17b26113864205f6 ]
+[ Upstream commit f8f15f6742b8874e59c9c715d0af3474608310ad ]
 
-When sending llc packets with vlan tx offload, the hardware fails to
-actually add the tag. Deal with this by fixing it up in software.
+If the ssidie[1] length is more that 32 it leads to memory corruption.
 
-Fixes: 656e705243fd ("net-next: mediatek: add support for MT7623 ethernet")
-Reported-by: Thibaut VARENE <hacks@slashdirt.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250831182007.51619-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/e91fb43fcedc4893b604dfb973131661510901a7.1756456951.git.dan.carpenter@linaro.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/wireless/st/cw1200/sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index fecf3dd22dfaa..3f2f725ccceb3 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -1375,6 +1375,13 @@ static netdev_tx_t mtk_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	bool gso = false;
- 	int tx_num;
- 
-+	if (skb_vlan_tag_present(skb) &&
-+	    !eth_proto_is_802_3(eth_hdr(skb)->h_proto)) {
-+		skb = __vlan_hwaccel_push_inside(skb);
-+		if (!skb)
-+			goto dropped;
-+	}
-+
- 	/* normally we can rely on the stack not calling this more than once,
- 	 * however we have 2 queues running on the same ring so we need to lock
- 	 * the ring access
-@@ -1420,8 +1427,9 @@ static netdev_tx_t mtk_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- drop:
- 	spin_unlock(&eth->page_lock);
--	stats->tx_dropped++;
- 	dev_kfree_skb_any(skb);
-+dropped:
-+	stats->tx_dropped++;
- 	return NETDEV_TX_OK;
- }
- 
+diff --git a/drivers/net/wireless/st/cw1200/sta.c b/drivers/net/wireless/st/cw1200/sta.c
+index 8ef1d06b9bbdd..121d810c8839e 100644
+--- a/drivers/net/wireless/st/cw1200/sta.c
++++ b/drivers/net/wireless/st/cw1200/sta.c
+@@ -1290,7 +1290,7 @@ static void cw1200_do_join(struct cw1200_common *priv)
+ 		rcu_read_lock();
+ 		ssidie = ieee80211_bss_get_ie(bss, WLAN_EID_SSID);
+ 		if (ssidie) {
+-			join.ssid_len = ssidie[1];
++			join.ssid_len = min(ssidie[1], IEEE80211_MAX_SSID_LEN);
+ 			memcpy(join.ssid, &ssidie[2], join.ssid_len);
+ 		}
+ 		rcu_read_unlock();
 -- 
 2.50.1
 
