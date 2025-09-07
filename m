@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E1A1A9FAA;
-	Sun,  7 Sep 2025 20:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BA114BFA2;
+	Sun,  7 Sep 2025 20:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276291; cv=none; b=JcP2GCb/PG/p8g+Imf4DRdemzYnObqKug/U6IPLKI+0e5mYa4v1I2loEJroz2QeIKCMO6o8FU/HpCnu5zgtmLJuVVUeG2Gh98wiXuWOxNiCw2+vu1+B5jx8a4Phx1kOrcRiT+/gggT3e/gkHgKTyPkp4yq7FfzHub1Re38W2Yfc=
+	t=1757276294; cv=none; b=TCIYW+K8OgRZ8Z8G2WqLHDC1s4EwJs9tIHifDYwKFezBGJTleKh3FcPUr3O98TBH5m8rPQLO77zWv1eE0Cl5Lpkyj50VJieCIf/RmZfvD3fZPGely4gs1LSN1LtXPiDdJD8v5grOtrd60sG6hOFXHVYHs6NyfqNuK3VI4ulQ+Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276291; c=relaxed/simple;
-	bh=JFQYDovCTpauLx5SniAAhH7tV2I9RMPxF1bkGXemkT8=;
+	s=arc-20240116; t=1757276294; c=relaxed/simple;
+	bh=4/8huJ41Gzu6uSafmiwZVKNTsoKtMvusfF4HoTywOe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0cZEOVXScG7YYfTojTID//fku/82h6SIBv8gbU8rU8+Ba38fswKMKofswjIz/fjXcJHZkzEiWKZLTtKG3TfTVm9k5Ato1XSfQR+P9C9MSlGIEy/CrN00q8ZS/+2owhfoBGOepm5XzZhgvGDtcKiGdActX1ZEaeqodqKxSBtwic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYOsgh0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d2gnAbH36YtKREHvXvDaGtlxzyrju09mhyo6GpxDYZx6ZUrxy4BL2QTmlmLtkDMzEoYx9aJc9isj77jW0mZzGkpWW5wvMBlwQxN8+qIbrKB+TRPfFYhQ0FIhYrnD6WgeaTIXKqzR3ZbW6mzx0gF/dYvekbB6ArF1/nPmXRReNDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xirzJ5js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYOsgh0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFBCC4CEF0;
-	Sun,  7 Sep 2025 20:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xirzJ5js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAA6C4CEF0;
+	Sun,  7 Sep 2025 20:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276291;
-	bh=JFQYDovCTpauLx5SniAAhH7tV2I9RMPxF1bkGXemkT8=;
+	s=korg; t=1757276294;
+	bh=4/8huJ41Gzu6uSafmiwZVKNTsoKtMvusfF4HoTywOe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYOsgh0YDAPcEOfgus4/qFmWsOeGTPf+8A4c/V9XgFxWVNSmpGiPx6Taq+HQJ+uIQ
-	 GoQDpGXp0zC+RAstrBiBElSz3N64sAcytHljAmrFcIEmAGD4jSsV13HSonC2m4ekIm
-	 zBTlgzejUYn+4YC7KHDZabNGhgGVEs3QWa0zxBL4=
+	b=xirzJ5jsGX2kRBuZDo0Xl+3bTjwT79JL3O5fJoRRHle+iMUWrAJrHOI86ncS4Cgs3
+	 XPpQ51IBxgE2hxl4mMgdtCOD90/kserffoQZ3/2RA2cJ3HThkqfdYqQ3LZ5LLwwS2w
+	 nkChnCsfRrCr7J0Hdsogk8J/M94qbeEwSTO2wWfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/104] cpufreq/sched: Explicitly synchronize limits_changed flag handling
-Date: Sun,  7 Sep 2025 21:58:13 +0200
-Message-ID: <20250907195609.137200615@linuxfoundation.org>
+Subject: [PATCH 6.1 057/104] memcg: drain obj stock on cpu hotplug teardown
+Date: Sun,  7 Sep 2025 21:58:14 +0200
+Message-ID: <20250907195609.161338429@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -51,95 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit 79443a7e9da3c9f68290a8653837e23aba0fa89f ]
+[ Upstream commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb ]
 
-The handling of the limits_changed flag in struct sugov_policy needs to
-be explicitly synchronized to ensure that cpufreq policy limits updates
-will not be missed in some cases.
+Currently on cpu hotplug teardown, only memcg stock is drained but we
+need to drain the obj stock as well otherwise we will miss the stats
+accumulated on the target cpu as well as the nr_bytes cached. The stats
+include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
+addition we are leaking reference to struct obj_cgroup object.
 
-Without that synchronization it is theoretically possible that
-the limits_changed update in sugov_should_update_freq() will be
-reordered with respect to the reads of the policy limits in
-cpufreq_driver_resolve_freq() and in that case, if the limits_changed
-update in sugov_limits() clobbers the one in sugov_should_update_freq(),
-the new policy limits may not take effect for a long time.
-
-Likewise, the limits_changed update in sugov_limits() may theoretically
-get reordered with respect to the updates of the policy limits in
-cpufreq_set_policy() and if sugov_should_update_freq() runs between
-them, the policy limits change may be missed.
-
-To ensure that the above situations will not take place, add memory
-barriers preventing the reordering in question from taking place and
-add READ_ONCE() and WRITE_ONCE() annotations around all of the
-limits_changed flag updates to prevent the compiler from messing up
-with that code.
-
-Fixes: 600f5badb78c ("cpufreq: schedutil: Don't skip freq update when limits change")
-Cc: 5.3+ <stable@vger.kernel.org> # 5.3+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/3376719.44csPzL39Z@rjwysocki.net
-[ bw_min => bw_dl ]
+Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
+Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |   28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ mm/memcontrol.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -82,9 +82,20 @@ static bool sugov_should_update_freq(str
- 	if (!cpufreq_this_cpu_can_update(sg_policy->policy))
- 		return false;
- 
--	if (unlikely(sg_policy->limits_changed)) {
--		sg_policy->limits_changed = false;
-+	if (unlikely(READ_ONCE(sg_policy->limits_changed))) {
-+		WRITE_ONCE(sg_policy->limits_changed, false);
- 		sg_policy->need_freq_update = true;
-+
-+		/*
-+		 * The above limits_changed update must occur before the reads
-+		 * of policy limits in cpufreq_driver_resolve_freq() or a policy
-+		 * limits update might be missed, so use a memory barrier to
-+		 * ensure it.
-+		 *
-+		 * This pairs with the write memory barrier in sugov_limits().
-+		 */
-+		smp_mb();
-+
- 		return true;
- 	}
- 
-@@ -318,7 +329,7 @@ static inline bool sugov_cpu_is_busy(str
- static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu)
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2366,9 +2366,18 @@ static void drain_all_stock(struct mem_c
+ static int memcg_hotplug_cpu_dead(unsigned int cpu)
  {
- 	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_dl)
--		sg_cpu->sg_policy->limits_changed = true;
-+		WRITE_ONCE(sg_cpu->sg_policy->limits_changed, true);
- }
+ 	struct memcg_stock_pcp *stock;
++	struct obj_cgroup *old;
++	unsigned long flags;
  
- static inline bool sugov_update_single_common(struct sugov_cpu *sg_cpu,
-@@ -825,7 +836,16 @@ static void sugov_limits(struct cpufreq_
- 		mutex_unlock(&sg_policy->work_lock);
- 	}
- 
--	sg_policy->limits_changed = true;
-+	/*
-+	 * The limits_changed update below must take place before the updates
-+	 * of policy limits in cpufreq_set_policy() or a policy limits update
-+	 * might be missed, so use a memory barrier to ensure it.
-+	 *
-+	 * This pairs with the memory barrier in sugov_should_update_freq().
-+	 */
-+	smp_wmb();
+ 	stock = &per_cpu(memcg_stock, cpu);
 +
-+	WRITE_ONCE(sg_policy->limits_changed, true);
- }
++	/* drain_obj_stock requires stock_lock */
++	local_lock_irqsave(&memcg_stock.stock_lock, flags);
++	old = drain_obj_stock(stock);
++	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
++
+ 	drain_stock(stock);
++	obj_cgroup_put(old);
  
- struct cpufreq_governor schedutil_gov = {
+ 	return 0;
+ }
 
 
