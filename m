@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2BB14BFA2;
-	Sun,  7 Sep 2025 20:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E781AF0B6;
+	Sun,  7 Sep 2025 20:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276281; cv=none; b=sm5N1ch2dWvrO7xAL+pVPkkyopQsHT1rt1FvGpSrOm1rEW2cgmmDGzSE9Sp+KrCCOUVitH31p9Dm+6Pvzg6r3QD0jcmLd9vthEdcR3ryXDZrr+db92kbnLxVXCLo3HygKsjixo4wA8lM0X09sGUp+0dFk0U79b8zukK6kAJdjQs=
+	t=1757276284; cv=none; b=jBTNej87mNC6DeRR7saOakb4rtPUVxgS21rlZ3LyzmRbppf05G7jut5ulGPuROthmCdW5epYfFPIeSCVJtLVUi30D+9D5PxrgNiyZ8kb8Ghwl9rTQH5q9jTxfoFIg5d/xUyjJldCm9bwA6jAMyp7MVlX7gMaarezUJKnef3NjWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276281; c=relaxed/simple;
-	bh=r0PlFK3yMBJZ0aWhUfMrGeM0odUjROdkjUqnUShpftU=;
+	s=arc-20240116; t=1757276284; c=relaxed/simple;
+	bh=ZwkILo+7bANYFJVxpgv7xK4QYly9iWbCursW/EBjZ6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfg4n/ilrOeY6QEXkd5paRyFCU2L1p0h1GBNUwqXwFooWzGnxz/4D2ID0IAXVZfcbITajIWaYmL4Twjl7z4NeW84I4dTTcxYNMUuvwjm8NURVD98fUZrWjhP14THFnEe3Ndhu1WWNwbrIhxDZ2ddklPsi/NIJGc89ZxOIaVRtOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ac2MTL3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8/FFLAGUkAcfp72kHIsmICSyTWLSPu4vyxQSUDlm2xOQOqBsIuVGTBoix7cc6Bl53igwqo5M4zPYVOqrSP/LxjsgqeTWCGZ9CENqCXOhNW/WjfAGieDulcpXLKiCn+KPp312PW5oZ77WIEvhSeYE9ELU/EsrTXTdjK1hIqqP6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGAzi1us; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ac2MTL3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40921C4CEF8;
-	Sun,  7 Sep 2025 20:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGAzi1us"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D43FC4CEF0;
+	Sun,  7 Sep 2025 20:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276281;
-	bh=r0PlFK3yMBJZ0aWhUfMrGeM0odUjROdkjUqnUShpftU=;
+	s=korg; t=1757276284;
+	bh=ZwkILo+7bANYFJVxpgv7xK4QYly9iWbCursW/EBjZ6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ac2MTL3GqzLMsRaA1AGds13zeXgyTtPgZt7gki69/W+jqpGepr5CGXM4m24CsPNQq
-	 9TCGCyABk2smS4IwPywQG4+6Zk8WNbDfEwg2ZhVmbD1wWsEgthKnYEy85lj3W5+9Do
-	 heWXg5P78gQpwizegBr7J/jWJilTEiHtjVtZV8g4=
+	b=TGAzi1usXX9yPE55PXNBsqZ3/UVyv+XP2N428RIL7+zPuCNag+UCfPwTuV3mMk/VC
+	 W0bhMHrp/bnYudXX2Rurgd0DMr9VkhFtXgOAHlzuE0YMWB9K/m09gVonxcDNFirknR
+	 KHFJ1WwlfZLtisEtg6aw5q8s00Xec+tStZcfMtPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 053/104] net: pcs: rzn1-miic: Correct MODCTRL register offset
-Date: Sun,  7 Sep 2025 21:58:10 +0200
-Message-ID: <20250907195609.063418216@linuxfoundation.org>
+	Li Qiong <liqiong@nfschina.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 054/104] mm/slub: avoid accessing metadata when pointer is invalid in object_err()
+Date: Sun,  7 Sep 2025 21:58:11 +0200
+Message-ID: <20250907195609.086456590@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -54,49 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Li Qiong <liqiong@nfschina.com>
 
-commit a7195a3d67dace056af7ca65144a11874df79562 upstream.
+[ Upstream commit b4efccec8d06ceb10a7d34d7b1c449c569d53770 ]
 
-Correct the Mode Control Register (MODCTRL) offset for RZ/N MIIC.
-According to the R-IN Engine and Ethernet Peripherals Manual (Rev.1.30)
-[0], Table 10.1 "Ethernet Accessory Register List", MODCTRL is at offset
-0x8, not 0x20 as previously defined.
+object_err() reports details of an object for further debugging, such as
+the freelist pointer, redzone, etc. However, if the pointer is invalid,
+attempting to access object metadata can lead to a crash since it does
+not point to a valid object.
 
-Offset 0x20 actually maps to the Port Trigger Control Register (PTCTRL),
-which controls PTP_MODE[3:0] and RGMII_CLKSEL[4]. Using this incorrect
-definition prevented the driver from configuring the SW_MODE[4:0] bits
-in MODCTRL, which control the internal connection of Ethernet ports. As
-a result, the MIIC could not be switched into the correct mode, leading
-to link setup failures and non-functional Ethernet ports on affected
-systems.
+One known path to the crash is when alloc_consistency_checks()
+determines the pointer to the allocated object is invalid because of a
+freelist corruption, and calls object_err() to report it. The debug code
+should report and handle the corruption gracefully and not crash in the
+process.
 
-[0] https://www.renesas.com/en/document/mah/rzn1d-group-rzn1s-group-rzn1l-group-users-manual-r-engine-and-ethernet-peripherals?r=1054571
+In case the pointer is NULL or check_valid_pointer() returns false for
+the pointer, only print the pointer value and skip accessing metadata.
 
-Fixes: 7dc54d3b8d91 ("net: pcs: add Renesas MII converter driver")
-Cc: stable@kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20250901112019.16278-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 81819f0fc828 ("SLUB core")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Li Qiong <liqiong@nfschina.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/pcs/pcs-rzn1-miic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/slub.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/pcs/pcs-rzn1-miic.c
-+++ b/drivers/net/pcs/pcs-rzn1-miic.c
-@@ -18,7 +18,7 @@
- #define MIIC_PRCMD			0x0
- #define MIIC_ESID_CODE			0x4
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -927,7 +927,12 @@ static void object_err(struct kmem_cache
+ 		return;
  
--#define MIIC_MODCTRL			0x20
-+#define MIIC_MODCTRL			0x8
- #define MIIC_MODCTRL_SW_MODE		GENMASK(4, 0)
+ 	slab_bug(s, "%s", reason);
+-	print_trailer(s, slab, object);
++	if (!object || !check_valid_pointer(s, slab, object)) {
++		print_slab_info(slab);
++		pr_err("Invalid pointer 0x%p\n", object);
++	} else {
++		print_trailer(s, slab, object);
++	}
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ }
  
- #define MIIC_CONVCTRL(port)		(0x100 + (port) * 4)
 
 
