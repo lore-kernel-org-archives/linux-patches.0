@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE626189BB0;
-	Sun,  7 Sep 2025 20:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E59189BB0;
+	Sun,  7 Sep 2025 20:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276655; cv=none; b=iigveW7obQQBLtPE8cFBgp3Zgshliw0ZcBwBtE0U41cjVi0TRYzxPe1bVSlBW64aHLbS+Uq/hcQcK3LoJBx4sTnQTs4LkP+1aBzIUwCR62b6Md+OLjjVlH9Klb/mqiwUsVaRJ54Ifu8x1ToSluEvxeHIl7yQPJbN1IbtF0riKcA=
+	t=1757276658; cv=none; b=Q0HJePSwGwTso2kWjaEuJdjDHjyI7VamYzXPZ8QxKj7qqgouuBhI7C7Uz8kQrvccLNWevzDN55M0wNkOIoPUDTiMlOA542Cj1mg6HrTOpmToDnzkyeiq/Jk6ma0EwIH/Imhkdwyd5j2LebnFrw4BxhYG/B4QLapxhyZFXuQB5Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276655; c=relaxed/simple;
-	bh=bqEI6TIinhyktVsUdpSIj6XjbIHJY2LovLGfM8O0eZk=;
+	s=arc-20240116; t=1757276658; c=relaxed/simple;
+	bh=PLqXK+C6bjuG2q1uUfP3kFtuXHZTS5YvUJoetDNGzmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSEK+yJFyX7UpF5KKG6pMKEqqd5YtAyU6qNrXvLDcnQ+ESaTwPM5cNqNatQCxTW8SkfY4FUzVJBv7E+8MUbKcxYQkxpgNbohrV4IMQl78POGnCZ1XR7/2+gG4IvNB+mPcEnCwnEIvZPmKdYdHxALM/wDrizGaog1bB7rcIpa1wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nykp0JUf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anvDcBFLOA848IVLmpHG9wXsraNy7OVm/vc4gttugWC83BkYWlo4pNbnZZkH8Zz3tRbOw8Bsv7ihvZpj35colYYYDSysp3/K+70gAD89ipuYHbSHbOQywwpfIaVsz/2nq+bNg4ICng8tSlQn5ngWw/gQ6Pe0TTOXaWpu5G2D8Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKN+Lm/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nykp0JUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8A3C4CEF0;
-	Sun,  7 Sep 2025 20:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKN+Lm/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC1BC4CEF0;
+	Sun,  7 Sep 2025 20:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276654;
-	bh=bqEI6TIinhyktVsUdpSIj6XjbIHJY2LovLGfM8O0eZk=;
+	s=korg; t=1757276657;
+	bh=PLqXK+C6bjuG2q1uUfP3kFtuXHZTS5YvUJoetDNGzmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nykp0JUfp8KEDhRaDT1QXIbohBT2hJik1qBSLv9KNCad+hyxEcWGf50c3eS95S2Ez
-	 NrMdApBnhd+ltXNwFkU/Xuhqjt5zl6EeCGXtVeQeIXmFs346/6DuMRXF+xCulxH072
-	 CBKasqhqz3W3FksfqO9WGc1f7h6NQ1FolKiNoRz8=
+	b=IKN+Lm/oMVq8lwDXfQUBYqPmMDHIy1HjPLRKgweDImxOXkh50Z/bvRw5U1UE85HR5
+	 y/dSGVir1j4B1KeETAZYkH3MORMHNJQxSIc3gEL/ZbjSsbn8SEuc7aDr943nY/3kIy
+	 EcaA907VHnm1Jro+2A156HyGralyqSljzlkzkzSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Wessel <post@mikaelkw.online>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.6 068/121] e1000e: fix heap overflow in e1000_set_eeprom
-Date: Sun,  7 Sep 2025 21:58:24 +0200
-Message-ID: <20250907195611.581852978@linuxfoundation.org>
+	stable@kernel.org,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 069/121] net: pcs: rzn1-miic: Correct MODCTRL register offset
+Date: Sun,  7 Sep 2025 21:58:25 +0200
+Message-ID: <20250907195611.608672903@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,55 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 90fb7db49c6dbac961c6b8ebfd741141ffbc8545 upstream.
+commit a7195a3d67dace056af7ca65144a11874df79562 upstream.
 
-Fix a possible heap overflow in e1000_set_eeprom function by adding
-input validation for the requested length of the change in the EEPROM.
-In addition, change the variable type from int to size_t for better
-code practices and rearrange declarations to RCT.
+Correct the Mode Control Register (MODCTRL) offset for RZ/N MIIC.
+According to the R-IN Engine and Ethernet Peripherals Manual (Rev.1.30)
+[0], Table 10.1 "Ethernet Accessory Register List", MODCTRL is at offset
+0x8, not 0x20 as previously defined.
 
-Cc: stable@vger.kernel.org
-Fixes: bc7f75fa9788 ("[E1000E]: New pci-express e1000 driver (currently for ICH9 devices only)")
-Co-developed-by: Mikael Wessel <post@mikaelkw.online>
-Signed-off-by: Mikael Wessel <post@mikaelkw.online>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Offset 0x20 actually maps to the Port Trigger Control Register (PTCTRL),
+which controls PTP_MODE[3:0] and RGMII_CLKSEL[4]. Using this incorrect
+definition prevented the driver from configuring the SW_MODE[4:0] bits
+in MODCTRL, which control the internal connection of Ethernet ports. As
+a result, the MIIC could not be switched into the correct mode, leading
+to link setup failures and non-functional Ethernet ports on affected
+systems.
+
+[0] https://www.renesas.com/en/document/mah/rzn1d-group-rzn1s-group-rzn1l-group-users-manual-r-engine-and-ethernet-peripherals?r=1054571
+
+Fixes: 7dc54d3b8d91 ("net: pcs: add Renesas MII converter driver")
+Cc: stable@kernel.org
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20250901112019.16278-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000e/ethtool.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/pcs/pcs-rzn1-miic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/e1000e/ethtool.c
-+++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
-@@ -567,12 +567,12 @@ static int e1000_set_eeprom(struct net_d
- {
- 	struct e1000_adapter *adapter = netdev_priv(netdev);
- 	struct e1000_hw *hw = &adapter->hw;
-+	size_t total_len, max_len;
- 	u16 *eeprom_buff;
--	void *ptr;
--	int max_len;
-+	int ret_val = 0;
- 	int first_word;
- 	int last_word;
--	int ret_val = 0;
-+	void *ptr;
- 	u16 i;
+--- a/drivers/net/pcs/pcs-rzn1-miic.c
++++ b/drivers/net/pcs/pcs-rzn1-miic.c
+@@ -19,7 +19,7 @@
+ #define MIIC_PRCMD			0x0
+ #define MIIC_ESID_CODE			0x4
  
- 	if (eeprom->len == 0)
-@@ -587,6 +587,10 @@ static int e1000_set_eeprom(struct net_d
+-#define MIIC_MODCTRL			0x20
++#define MIIC_MODCTRL			0x8
+ #define MIIC_MODCTRL_SW_MODE		GENMASK(4, 0)
  
- 	max_len = hw->nvm.word_size * 2;
- 
-+	if (check_add_overflow(eeprom->offset, eeprom->len, &total_len) ||
-+	    total_len > max_len)
-+		return -EFBIG;
-+
- 	first_word = eeprom->offset >> 1;
- 	last_word = (eeprom->offset + eeprom->len - 1) >> 1;
- 	eeprom_buff = kmalloc(max_len, GFP_KERNEL);
+ #define MIIC_CONVCTRL(port)		(0x100 + (port) * 4)
 
 
