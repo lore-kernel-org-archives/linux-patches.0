@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3494315A;
-	Sun,  7 Sep 2025 20:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E5E212B3D;
+	Sun,  7 Sep 2025 20:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277896; cv=none; b=mTiYvd86l/bDdyNHhbDdn2rc3GTc+sNvzZ5me5SeZ7PFVKexMnlHX32iFNZVesXSzNHjGzPXSiZ8cIoRSlT3isrP17b2f667eLnBL1i0QeOEmbzwmWziO0bBl/pUcfqeY+96fsYgVQzUF4BE+7fDMl+cEVpF+JqOKl0sl3X4/uc=
+	t=1757277899; cv=none; b=aa37OEYFA79Kj5i9eqckimQjr1B7ofF2aZy9tfI2WuRoAxUzNDld4SRmW56Bb8iowVIbsScNdTd/3MiiY53cTLHgC7g6b1DilThImPBAb02K04q1GGB4k8+TSrK32uHjZt69JqLxL0WHxJI8x2RlrBYXWf5LV57xToyhBu7j7DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277896; c=relaxed/simple;
-	bh=aZ0691GZS1twr1QgfGNttl43YfJLZO+zDDSmNMhl8NA=;
+	s=arc-20240116; t=1757277899; c=relaxed/simple;
+	bh=+hEmMYDuEEy+eRI3rBu9sNGdnWsdCd5cEugTjRzDRTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjTsfXN0f4+ObVJzIXrGNQDmEe2ziYDhuUC5/lsUqd1arE0RKGX9/TAcoeMzeZgzJTsaMhvugV1JzB8PhEEPvrFFTIwiPNqoQ6IDxD+NRa3aH4W/gMsX9ZkPnuvFYj994icSSrFTElvaqoSRCBiLow2z7X6gd03OoitTolcynlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzdCX0Tu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjqXVJbXpgJGNX6roWBBvkfjO0dihmosn1Mh2yzkEyhq2Rif9vhCF21eQlcUXWBflhC++L8fywDKCwWihjKeP+c921HZkVEcWxuaZ4pVZJCw4kaLUhY3tLNgL0NEAWDZlKlGmN68naPZzjRjM2Q/0vGOUQVra/5Hu6YxnH8RUQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAvx5m15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzdCX0Tu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB201C4CEF0;
-	Sun,  7 Sep 2025 20:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAvx5m15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279A6C4CEF0;
+	Sun,  7 Sep 2025 20:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277896;
-	bh=aZ0691GZS1twr1QgfGNttl43YfJLZO+zDDSmNMhl8NA=;
+	s=korg; t=1757277899;
+	bh=+hEmMYDuEEy+eRI3rBu9sNGdnWsdCd5cEugTjRzDRTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzdCX0TukY4zP+wqXypPZYGrc2pKEsMRHUtGOhuCsfDjrerI6y4vfNaocqUHhts+Z
-	 Z5nDUI4KUX4EFHP1J7akr0sCnI9ICo4pCC5+65BrQwD+CZsIEIJPRQ2qzlxj70/Xdz
-	 7VEBMdBOnPUL4W5NrnoGh/6eq+QlIvptIDoIk0vo=
+	b=RAvx5m15xIb5OW1nlS08//Xs80iAdP7c00K7HVSZH7hbbin6LLpf4fWWdVinUZtUI
+	 /Ci0rxh75G+vVbGs1tJSeREvjwtez7k0Ul4GTxt/eOWaMmzJ2fTcIFDevRN1PyGuEd
+	 oG0kWCRyqrfzgMLRu65HNcump9gSHWlVvAL6dtTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 155/183] hwmon: (ina238) Correctly clamp temperature
-Date: Sun,  7 Sep 2025 21:59:42 +0200
-Message-ID: <20250907195619.501175128@linuxfoundation.org>
+Subject: [PATCH 6.16 156/183] scsi: sr: Reinstate rotational media flag
+Date: Sun,  7 Sep 2025 21:59:43 +0200
+Message-ID: <20250907195619.525137220@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,36 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Packham <chris.packham@alliedtelesis.co.nz>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 98fd069dd87386d87eaf439e3c7b5767618926d2 ]
+[ Upstream commit 708e2371f77a9d3f2f1d54d1ec835d71b9d0dafe ]
 
-ina238_write_temp() was attempting to clamp the user input but was
-throwing away the result. Ensure that we clamp the value to the
-appropriate range before it is converted into a register value.
+Reinstate the rotational media flag for the CD-ROM driver. The flag has
+been cleared since commit bd4a633b6f7c ("block: move the nonrot flag to
+queue_limits") and this breaks some applications.
 
-Fixes: 0d9f596b1fe3 ("hwmon: (ina238) Modify the calculation formula to adapt to different chips")
-Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20250829030512.1179998-3-chris.packham@alliedtelesis.co.nz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Move queue limit configuration from get_sectorsize() to
+sr_revalidate_disk() and set the rotational flag.
+
+Cc: Christoph Hellwig <hch@lst.de>
+Fixes: bd4a633b6f7c ("block: move the nonrot flag to queue_limits")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20250827113550.2614535-1-ming.lei@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ina238.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/sr.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/ina238.c b/drivers/hwmon/ina238.c
-index 9a5fd16a4ec2a..a2cb615fa2789 100644
---- a/drivers/hwmon/ina238.c
-+++ b/drivers/hwmon/ina238.c
-@@ -481,7 +481,7 @@ static int ina238_write_temp(struct device *dev, u32 attr, long val)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
+index b17796d5ee665..add13e3068983 100644
+--- a/drivers/scsi/sr.c
++++ b/drivers/scsi/sr.c
+@@ -475,13 +475,21 @@ static blk_status_t sr_init_command(struct scsi_cmnd *SCpnt)
  
- 	/* Signed */
--	regval = clamp_val(val, -40000, 125000);
-+	val = clamp_val(val, -40000, 125000);
- 	regval = div_s64(val * 10000, data->config->temp_lsb) << data->config->temp_shift;
- 	regval = clamp_val(regval, S16_MIN, S16_MAX) & (0xffff << data->config->temp_shift);
+ static int sr_revalidate_disk(struct scsi_cd *cd)
+ {
++	struct request_queue *q = cd->device->request_queue;
+ 	struct scsi_sense_hdr sshdr;
++	struct queue_limits lim;
++	int sector_size;
  
+ 	/* if the unit is not ready, nothing more to do */
+ 	if (scsi_test_unit_ready(cd->device, SR_TIMEOUT, MAX_RETRIES, &sshdr))
+ 		return 0;
+ 	sr_cd_check(&cd->cdi);
+-	return get_sectorsize(cd);
++	sector_size = get_sectorsize(cd);
++
++	lim = queue_limits_start_update(q);
++	lim.logical_block_size = sector_size;
++	lim.features |= BLK_FEAT_ROTATIONAL;
++	return queue_limits_commit_update_frozen(q, &lim);
+ }
+ 
+ static int sr_block_open(struct gendisk *disk, blk_mode_t mode)
+@@ -721,10 +729,8 @@ static int sr_probe(struct device *dev)
+ 
+ static int get_sectorsize(struct scsi_cd *cd)
+ {
+-	struct request_queue *q = cd->device->request_queue;
+ 	static const u8 cmd[10] = { READ_CAPACITY };
+ 	unsigned char buffer[8] = { };
+-	struct queue_limits lim;
+ 	int err;
+ 	int sector_size;
+ 	struct scsi_failure failure_defs[] = {
+@@ -795,9 +801,7 @@ static int get_sectorsize(struct scsi_cd *cd)
+ 		set_capacity(cd->disk, cd->capacity);
+ 	}
+ 
+-	lim = queue_limits_start_update(q);
+-	lim.logical_block_size = sector_size;
+-	return queue_limits_commit_update_frozen(q, &lim);
++	return sector_size;
+ }
+ 
+ static int get_capabilities(struct scsi_cd *cd)
 -- 
 2.51.0
 
