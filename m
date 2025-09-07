@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767454315A;
-	Sun,  7 Sep 2025 20:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B194315A;
+	Sun,  7 Sep 2025 20:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277446; cv=none; b=LiaAllIejwFtbj1PC5gJZJTc4/XLDQW1X/QZ9OxILRQA0kdaaA70klBHUd3naW5RhWZYiuK96NxmEf+442vqwZVemtNJJgOZR1sKS+2V32+el2Spa7wklS2NtD7vj+9bIbh7PR9uuzVRybSBARIYrxqPVGBy3s6xlIX0mn2ONYo=
+	t=1757277449; cv=none; b=oI7ySkYEW3jkDd2X2mFl2txcDBQr3uQkXxKxejB2hwY78aTBmGNl39Qd+jrcAO1Q6qRxbMRpYozY9iC22c+LRrBzEG6xxh/jjujdZ3AK6HB4a5NhSkrM+YkX004TWeRGZVYj/ItIAHLK03yDLxzMAHRPDAADl/b7vznORjlaHmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277446; c=relaxed/simple;
-	bh=+Cxg2ypJ6HtB+Y7RLO9oM/TgHcp0grnuPQZ6vOFpdWk=;
+	s=arc-20240116; t=1757277449; c=relaxed/simple;
+	bh=f1cCr/FmUFPgZ2VW2Ot3J1Z6RVFPJBrkGrBV8OKKvuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEDnsBDYlX9njgxyKEWWH4hw6Z/uIidU3W8SkuanSU2eJKjIL/aROcsFCbqC6oM742CSgJV1N2Or8OINBSeaRwKR5JnaEMt97c59Qn58y0MxkjD0IN33HWmmcTigbdlDg4YPQhyETqtqhW/pBdz09TclraCfBCKNpKshD2zfZOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1LYne2A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dnp3vGnMz6hQeoj9r09Q3VaX16rgCZ+6hAB1XZosZupNYn1whSGPhKSN8AULWi2BQ4g/9Bkt2jH+uSEW8c7FfjV70DyW3XfpJBnj/b+guGl2n97DWKnLz+qMrUh/gC2ViW999SESuBEeNxM5WG8pfhCpxuUENw41ozsQ0df4Gfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvEPdZiH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1LYne2A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F926C4CEF0;
-	Sun,  7 Sep 2025 20:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvEPdZiH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58EDC4CEF0;
+	Sun,  7 Sep 2025 20:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277445;
-	bh=+Cxg2ypJ6HtB+Y7RLO9oM/TgHcp0grnuPQZ6vOFpdWk=;
+	s=korg; t=1757277449;
+	bh=f1cCr/FmUFPgZ2VW2Ot3J1Z6RVFPJBrkGrBV8OKKvuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1LYne2AVuVZ2aUx5R8ZZOR3mdg/vAmg6Ucjf9QpOlyLBTkKOzIv/5PtYFWRaD1kH
-	 CSnK0g3aLZKCBLVOYwOSvtGDcFmnlz6lJheoA7KMdy0yM78/CHaNQ6GA7nyZNUe5rr
-	 N3D/hvKlgN780ghJVC3elpzk+cAxShz1yxg8bGx0=
+	b=gvEPdZiHyWy0Wgdzxk9ZbQmH1I5jsuyfWkYqprPvc5Tf6yPC3Iyj5eiyhfDBNa/UQ
+	 PjPRZjCQU135DTp/zSTtzpjJH4OFgY4ZTQzNCu82e6aCZdSBujJSFQHHbJy4KJXgVu
+	 HwLD5XowADu9bJOx/wpnkegxhRU7J+u6BQjhTre8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiufei Xue <jiufei.xue@samsung.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 018/183] fs: writeback: fix use-after-free in __mark_inode_dirty()
-Date: Sun,  7 Sep 2025 21:57:25 +0200
-Message-ID: <20250907195616.218324465@linuxfoundation.org>
+Subject: [PATCH 6.16 019/183] tee: fix NULL pointer dereference in tee_shm_put
+Date: Sun,  7 Sep 2025 21:57:26 +0200
+Message-ID: <20250907195616.240276459@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,104 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiufei Xue <jiufei.xue@samsung.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit d02d2c98d25793902f65803ab853b592c7a96b29 ]
+[ Upstream commit e4a718a3a47e89805c3be9d46a84de1949a98d5d ]
 
-An use-after-free issue occurred when __mark_inode_dirty() get the
-bdi_writeback that was in the progress of switching.
+tee_shm_put have NULL pointer dereference:
 
-CPU: 1 PID: 562 Comm: systemd-random- Not tainted 6.6.56-gb4403bd46a8e #1
-......
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __mark_inode_dirty+0x124/0x418
-lr : __mark_inode_dirty+0x118/0x418
-sp : ffffffc08c9dbbc0
-........
+__optee_disable_shm_cache -->
+	shm = reg_pair_to_ptr(...);//shm maybe return NULL
+        tee_shm_free(shm); -->
+		tee_shm_put(shm);//crash
+
+Add check in tee_shm_put to fix it.
+
+panic log:
+Unable to handle kernel paging request at virtual address 0000000000100cca
+Mem abort info:
+ESR = 0x0000000096000004
+EC = 0x25: DABT (current EL), IL = 32 bits
+SET = 0, FnV = 0
+EA = 0, S1PTW = 0
+FSC = 0x04: level 0 translation fault
+Data abort info:
+ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=0000002049d07000
+[0000000000100cca] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1] SMP
+CPU: 2 PID: 14442 Comm: systemd-sleep Tainted: P OE ------- ----
+6.6.0-39-generic #38
+Source Version: 938b255f6cb8817c95b0dd5c8c2944acfce94b07
+Hardware name: greatwall GW-001Y1A-FTH, BIOS Great Wall BIOS V3.0
+10/26/2022
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : tee_shm_put+0x24/0x188
+lr : tee_shm_free+0x14/0x28
+sp : ffff001f98f9faf0
+x29: ffff001f98f9faf0 x28: ffff0020df543cc0 x27: 0000000000000000
+x26: ffff001f811344a0 x25: ffff8000818dac00 x24: ffff800082d8d048
+x23: ffff001f850fcd18 x22: 0000000000000001 x21: ffff001f98f9fb88
+x20: ffff001f83e76218 x19: ffff001f83e761e0 x18: 000000000000ffff
+x17: 303a30303a303030 x16: 0000000000000000 x15: 0000000000000003
+x14: 0000000000000001 x13: 0000000000000000 x12: 0101010101010101
+x11: 0000000000000001 x10: 0000000000000001 x9 : ffff800080e08d0c
+x8 : ffff001f98f9fb88 x7 : 0000000000000000 x6 : 0000000000000000
+x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+x2 : ffff001f83e761e0 x1 : 00000000ffff001f x0 : 0000000000100cca
 Call trace:
- __mark_inode_dirty+0x124/0x418
- generic_update_time+0x4c/0x60
- file_modified+0xcc/0xd0
- ext4_buffered_write_iter+0x58/0x124
- ext4_file_write_iter+0x54/0x704
- vfs_write+0x1c0/0x308
- ksys_write+0x74/0x10c
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x114
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x40/0xe4
- el0t_64_sync_handler+0x120/0x12c
- el0t_64_sync+0x194/0x198
+tee_shm_put+0x24/0x188
+tee_shm_free+0x14/0x28
+__optee_disable_shm_cache+0xa8/0x108
+optee_shutdown+0x28/0x38
+platform_shutdown+0x28/0x40
+device_shutdown+0x144/0x2b0
+kernel_power_off+0x3c/0x80
+hibernate+0x35c/0x388
+state_store+0x64/0x80
+kobj_attr_store+0x14/0x28
+sysfs_kf_write+0x48/0x60
+kernfs_fop_write_iter+0x128/0x1c0
+vfs_write+0x270/0x370
+ksys_write+0x6c/0x100
+__arm64_sys_write+0x20/0x30
+invoke_syscall+0x4c/0x120
+el0_svc_common.constprop.0+0x44/0xf0
+do_el0_svc+0x24/0x38
+el0_svc+0x24/0x88
+el0t_64_sync_handler+0x134/0x150
+el0t_64_sync+0x14c/0x15
 
-Root cause is:
-
-systemd-random-seed                         kworker
-----------------------------------------------------------------------
-___mark_inode_dirty                     inode_switch_wbs_work_fn
-
-  spin_lock(&inode->i_lock);
-  inode_attach_wb
-  locked_inode_to_wb_and_lock_list
-     get inode->i_wb
-     spin_unlock(&inode->i_lock);
-     spin_lock(&wb->list_lock)
-  spin_lock(&inode->i_lock)
-  inode_io_list_move_locked
-  spin_unlock(&wb->list_lock)
-  spin_unlock(&inode->i_lock)
-                                    spin_lock(&old_wb->list_lock)
-                                      inode_do_switch_wbs
-                                        spin_lock(&inode->i_lock)
-                                        inode->i_wb = new_wb
-                                        spin_unlock(&inode->i_lock)
-                                    spin_unlock(&old_wb->list_lock)
-                                    wb_put_many(old_wb, nr_switched)
-                                      cgwb_release
-                                      old wb released
-  wb_wakeup_delayed() accesses wb,
-  then trigger the use-after-free
-  issue
-
-Fix this race condition by holding inode spinlock until
-wb_wakeup_delayed() finished.
-
-Signed-off-by: Jiufei Xue <jiufei.xue@samsung.com>
-Link: https://lore.kernel.org/20250728100715.3863241-1-jiufei.xue@samsung.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: dfd0743f1d9e ("tee: handle lookup of shm with reference count 0")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/tee/tee_shm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index cc57367fb641d..a07b8cf73ae27 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2608,10 +2608,6 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 			wakeup_bdi = inode_io_list_move_locked(inode, wb,
- 							       dirty_list);
+diff --git a/drivers/tee/tee_shm.c b/drivers/tee/tee_shm.c
+index daf6e5cfd59ae..915239b033f5f 100644
+--- a/drivers/tee/tee_shm.c
++++ b/drivers/tee/tee_shm.c
+@@ -560,9 +560,13 @@ EXPORT_SYMBOL_GPL(tee_shm_get_from_id);
+  */
+ void tee_shm_put(struct tee_shm *shm)
+ {
+-	struct tee_device *teedev = shm->ctx->teedev;
++	struct tee_device *teedev;
+ 	bool do_release = false;
  
--			spin_unlock(&wb->list_lock);
--			spin_unlock(&inode->i_lock);
--			trace_writeback_dirty_inode_enqueue(inode);
--
- 			/*
- 			 * If this is the first dirty inode for this bdi,
- 			 * we have to wake-up the corresponding bdi thread
-@@ -2621,6 +2617,11 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 			if (wakeup_bdi &&
- 			    (wb->bdi->capabilities & BDI_CAP_WRITEBACK))
- 				wb_wakeup_delayed(wb);
++	if (!shm || !shm->ctx || !shm->ctx->teedev)
++		return;
 +
-+			spin_unlock(&wb->list_lock);
-+			spin_unlock(&inode->i_lock);
-+			trace_writeback_dirty_inode_enqueue(inode);
-+
- 			return;
- 		}
- 	}
++	teedev = shm->ctx->teedev;
+ 	mutex_lock(&teedev->mutex);
+ 	if (refcount_dec_and_test(&shm->refcount)) {
+ 		/*
 -- 
 2.50.1
 
