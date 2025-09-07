@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF85296BB8;
-	Sun,  7 Sep 2025 20:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03EC1CDFAC;
+	Sun,  7 Sep 2025 20:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276022; cv=none; b=VuXLHqTI2wTCVyY59abLsTJCwQyYc7OXT2ipKCTRW83Uj+YrWyw9ujDUazCKEd4RTEiNNbVo8nQOZ4iWB/kwkynU74LSIJcyLovnUZep/F29xgOD0vSWYytrsbEu125UfJI/avz/wUgT0Eho9Hmu6UUZm4Erd2skChZ/0oTY1IE=
+	t=1757276025; cv=none; b=HAJGFsOVvXb7qEmqX2+m+tVeyjn0dXK2YrZ9WxiYA+r7mopEfBC5yfWnCfN5/dWRDQRR1VyzbWXmwdr2t30w85rJSN+0ly6OTGYMzWq7t2o7RV8hpK2U+N5O3PyRSaBVGMuIVG+Ui1n9/DOkO28qZkTDowfFf5m4wqH6+s3Gpqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276022; c=relaxed/simple;
-	bh=nIxlYhBAmwxHxWPoSYJ/m2JuDajocTL5iQCDDpF2Ib0=;
+	s=arc-20240116; t=1757276025; c=relaxed/simple;
+	bh=C6LM3FINu7C2ZCAkYqic4m0oXdV5yJ1WspWaaPgVa6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ayf2Mvv7vpUa1+st2zu/pVBXUSEzIrBDFsa8LJTj5ot8hFBX/egCvzC+ZoulU0pY4n/PO+XMotzl4xLZBKMoVeVm3DDbmWNEKn0GtLGnFKD3KUqzwguE4FuuossqZAQ8KetVAmCkqiwsI9L+GI3DdB5QFRBZXNeaAzWlBK35eZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NclmbKud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gxv5kUU42LrR27B1miKHMHnsqxq5NTeDS7vjlvIwIDVHpJKJ6FYtXHp/aRfVEnhf9T2/3wWGTlWt9HueA5QgOvD+oOCH+Nbi7RhyqTYEkd+TCLfX7WMvZPOgXCVeyxejUwLxvinRIjREX5FnEvxUglNhveT7aKWq5rM9rdgSvG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1kIXaMJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NclmbKud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDD9C4CEF0;
-	Sun,  7 Sep 2025 20:13:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1kIXaMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA128C4CEF0;
+	Sun,  7 Sep 2025 20:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276022;
-	bh=nIxlYhBAmwxHxWPoSYJ/m2JuDajocTL5iQCDDpF2Ib0=;
+	s=korg; t=1757276025;
+	bh=C6LM3FINu7C2ZCAkYqic4m0oXdV5yJ1WspWaaPgVa6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NclmbKudfaeDu571XqCiUpLG8vmYKDsZSqH1sxzE555Zqugo6zH24MSoEOyRIRXvB
-	 lsCvPXHt4pANd1xxca2h0ZMgLzhWMume7CQAWrXQj89ub2+6/wnLT3TGKPpr1dsTJK
-	 CAh97w1WFniuNSU4ZZ4NmkMzykErjcggMlYwyNOI=
+	b=i1kIXaMJDg5GbbEkJ7wcyw/fX4QhC2XTWVG1wKnzSn4XsTls7F5kP1XZUSqLsuKW2
+	 agOrtEnbhxQCmCOt7fPw/DrQAmr/7Fu2gKCnJr+sAwa9SXec5VE2dEP3oNhu4yGhB2
+	 YuQJZP2Xg3luQsRFvCar+NM2cC7QOpJMcBOUMXPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/64] cpufreq/sched: Explicitly synchronize limits_changed flag handling
-Date: Sun,  7 Sep 2025 21:58:21 +0200
-Message-ID: <20250907195604.482311666@linuxfoundation.org>
+Subject: [PATCH 5.15 40/64] KVM: x86: Take irqfds.lock when adding/deleting IRQ bypass producer
+Date: Sun,  7 Sep 2025 21:58:22 +0200
+Message-ID: <20250907195604.509733553@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -51,95 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 79443a7e9da3c9f68290a8653837e23aba0fa89f ]
+[ Upstream commit f1fb088d9cecde5c3066d8ff8846789667519b7d ]
 
-The handling of the limits_changed flag in struct sugov_policy needs to
-be explicitly synchronized to ensure that cpufreq policy limits updates
-will not be missed in some cases.
+Take irqfds.lock when adding/deleting an IRQ bypass producer to ensure
+irqfd->producer isn't modified while kvm_irq_routing_update() is running.
+The only lock held when a producer is added/removed is irqbypass's mutex.
 
-Without that synchronization it is theoretically possible that
-the limits_changed update in sugov_should_update_freq() will be
-reordered with respect to the reads of the policy limits in
-cpufreq_driver_resolve_freq() and in that case, if the limits_changed
-update in sugov_limits() clobbers the one in sugov_should_update_freq(),
-the new policy limits may not take effect for a long time.
-
-Likewise, the limits_changed update in sugov_limits() may theoretically
-get reordered with respect to the updates of the policy limits in
-cpufreq_set_policy() and if sugov_should_update_freq() runs between
-them, the policy limits change may be missed.
-
-To ensure that the above situations will not take place, add memory
-barriers preventing the reordering in question from taking place and
-add READ_ONCE() and WRITE_ONCE() annotations around all of the
-limits_changed flag updates to prevent the compiler from messing up
-with that code.
-
-Fixes: 600f5badb78c ("cpufreq: schedutil: Don't skip freq update when limits change")
-Cc: 5.3+ <stable@vger.kernel.org> # 5.3+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/3376719.44csPzL39Z@rjwysocki.net
-[ bw_min => bw_dl ]
+Fixes: 872768800652 ("KVM: x86: select IRQ_BYPASS_MANAGER")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-5-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |   28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ arch/x86/kvm/x86.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -89,9 +89,20 @@ static bool sugov_should_update_freq(str
- 	if (!cpufreq_this_cpu_can_update(sg_policy->policy))
- 		return false;
- 
--	if (unlikely(sg_policy->limits_changed)) {
--		sg_policy->limits_changed = false;
-+	if (unlikely(READ_ONCE(sg_policy->limits_changed))) {
-+		WRITE_ONCE(sg_policy->limits_changed, false);
- 		sg_policy->need_freq_update = true;
-+
-+		/*
-+		 * The above limits_changed update must occur before the reads
-+		 * of policy limits in cpufreq_driver_resolve_freq() or a policy
-+		 * limits update might be missed, so use a memory barrier to
-+		 * ensure it.
-+		 *
-+		 * This pairs with the write memory barrier in sugov_limits().
-+		 */
-+		smp_mb();
-+
- 		return true;
- 	}
- 
-@@ -326,7 +337,7 @@ static inline bool sugov_cpu_is_busy(str
- static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu)
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -12449,16 +12449,22 @@ int kvm_arch_irq_bypass_add_producer(str
  {
- 	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_dl)
--		sg_cpu->sg_policy->limits_changed = true;
-+		WRITE_ONCE(sg_cpu->sg_policy->limits_changed, true);
- }
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 	int ret;
  
- static inline bool sugov_update_single_common(struct sugov_cpu *sg_cpu,
-@@ -826,7 +837,16 @@ static void sugov_limits(struct cpufreq_
- 		mutex_unlock(&sg_policy->work_lock);
- 	}
- 
--	sg_policy->limits_changed = true;
-+	/*
-+	 * The limits_changed update below must take place before the updates
-+	 * of policy limits in cpufreq_set_policy() or a policy limits update
-+	 * might be missed, so use a memory barrier to ensure it.
-+	 *
-+	 * This pairs with the memory barrier in sugov_should_update_freq().
-+	 */
-+	smp_wmb();
+-	irqfd->producer = prod;
+ 	kvm_arch_start_assignment(irqfd->kvm);
 +
-+	WRITE_ONCE(sg_policy->limits_changed, true);
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = prod;
++
+ 	ret = static_call(kvm_x86_update_pi_irte)(irqfd->kvm,
+ 					 prod->irq, irqfd->gsi, 1);
+-
+ 	if (ret)
+ 		kvm_arch_end_assignment(irqfd->kvm);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	return ret;
  }
  
- struct cpufreq_governor schedutil_gov = {
+@@ -12468,9 +12474,9 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	int ret;
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 
+ 	WARN_ON(irqfd->producer != prod);
+-	irqfd->producer = NULL;
+ 
+ 	/*
+ 	 * When producer of consumer is unregistered, we change back to
+@@ -12478,11 +12484,17 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	 * when the irq is masked/disabled or the consumer side (KVM
+ 	 * int this case doesn't want to receive the interrupts.
+ 	*/
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = NULL;
++
+ 	ret = static_call(kvm_x86_update_pi_irte)(irqfd->kvm, prod->irq, irqfd->gsi, 0);
+ 	if (ret)
+ 		printk(KERN_INFO "irq bypass consumer (token %p) unregistration"
+ 		       " fails: %d\n", irqfd->consumer.token, ret);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	kvm_arch_end_assignment(irqfd->kvm);
+ }
+ 
 
 
