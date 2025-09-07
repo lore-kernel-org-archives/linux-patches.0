@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5711A0BFD;
-	Sun,  7 Sep 2025 20:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEA31A0BFD;
+	Sun,  7 Sep 2025 20:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277278; cv=none; b=mQ4Q/5i0D9ckg4u2DHxlk1apbPAQk9DISBLFKA7wOwe+rk8tOQKbqXPcCvDkhc0Aov3DMFvmwIjHGXZSrmcqRTjqDxd2N4LX4SFX21pcdK3TLBXzLx4SXMyUqZPfNdpM6KDS6r7Qkl5itpKVzahylIuMNvbul6kAi6udsUV+34U=
+	t=1757277281; cv=none; b=Bwp4+JjguwDL9fxS4yKx1p/vwEQm0az7s4Fjk3gE/1WYA2MP1F02Mx2B0J0VxBANUYU8c+I009hXBz18/TMv3sn1R8EVHSIGD6WFreTp6WDkeOGL+yNBWkwdxtxbQNTkEPz+DgWxr9ueWnyMIZ1ZaInYTG7iEyE8IKmqZrFHHmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277278; c=relaxed/simple;
-	bh=bkwSL81Eu9Umog8wHFWX/HymWqH+9ML5i/QdBp6siRY=;
+	s=arc-20240116; t=1757277281; c=relaxed/simple;
+	bh=x+faFj5wZ+rhLzhf57xzUAPVUnYAjgH9jtAKhMTfoa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UlF+KqpEYHc78rlnd7zpBBuW7VHOhEzu+LyFjF55bmYLUtyP0J0G2rfkIA6gkGdbThcQeeVr+opvVO+moJ/XOKOIQg2c6Nc6adzug/rCPkXn2I3xgdbrotHxtHCCssdm9w8PFbbxSuKQ4TFP66mxNwKheKTXQHMCRfGhYTgnG8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKITK9vg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPPteL7IcDpByBDEXwZUWR1EOzas3SJFb+Db2ABCyOG0+m1FRCrhLFTt0RkNjveWFZ0GQvfeBrquckfQf+L8VJl+GOkbV9guUms6os+xupgpHYNkjTyGVEH5n7kqNZPAJyI8tXrZ9cGEsXOkYvS9kyhechhGiC3yLaVbN4K8ny4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KM3esfmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKITK9vg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724CBC4CEF9;
-	Sun,  7 Sep 2025 20:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KM3esfmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B029BC4CEF0;
+	Sun,  7 Sep 2025 20:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277277;
-	bh=bkwSL81Eu9Umog8wHFWX/HymWqH+9ML5i/QdBp6siRY=;
+	s=korg; t=1757277281;
+	bh=x+faFj5wZ+rhLzhf57xzUAPVUnYAjgH9jtAKhMTfoa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CKITK9vgmW4QDHlNbDyn1J+f5r/BkClPDUJLGxueerQMSD4+lYLeYN5bmqHWJDxt5
-	 ajsyI1QI60DJGe5hJZvp5fSQTgNOsBEKl7hNrS1WjCI7Zmxh6TyzIG+vhycKqPmjCK
-	 WFQwgXkvr1DFm/jw40/i89JYJ+70sEAofPKbo1Aw=
+	b=KM3esfmdFoahySw6D1iHdN0dagiSLKXbuRZ2Ic3l4cZR7oS0Q6Wsnzj6c06tQYuJB
+	 J48cvGh07tn4ZOgOtrDAGwxl24yD9xkoPjBZJKiHlhtXe08vftyhHPlUEDRP9YOXzB
+	 iaVdpw0RhcqkqHvAXQQNFWhU26TjZ5MDZEbtSkWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 142/175] kunit: kasan_test: disable fortify string checker on kasan_strings() test
-Date: Sun,  7 Sep 2025 21:58:57 +0200
-Message-ID: <20250907195618.212784613@linuxfoundation.org>
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 143/175] mm: fix accounting of memmap pages
+Date: Sun,  7 Sep 2025 21:58:58 +0200
+Message-ID: <20250907195618.238241517@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -55,55 +57,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-Similar to commit 09c6304e38e4 ("kasan: test: fix compatibility with
-FORTIFY_SOURCE") the kernel is panicing in kasan_string().
+[ Upstream commit c3576889d87b603cb66b417e08844a53c1077a37 ]
 
-This is due to the `src` and `ptr` not being hidden from the optimizer
-which would disable the runtime fortify string checker.
+For !CONFIG_SPARSEMEM_VMEMMAP, memmap page accounting is currently done
+upfront in sparse_buffer_init().  However, sparse_buffer_alloc() may
+return NULL in failure scenario.
 
-Call trace:
-  __fortify_panic+0x10/0x20 (P)
-  kasan_strings+0x980/0x9b0
-  kunit_try_run_case+0x68/0x190
-  kunit_generic_run_threadfn_adapter+0x34/0x68
-  kthread+0x1c4/0x228
-  ret_from_fork+0x10/0x20
- Code: d503233f a9bf7bfd 910003fd 9424b243 (d4210000)
- ---[ end trace 0000000000000000 ]---
- note: kunit_try_catch[128] exited with irqs disabled
- note: kunit_try_catch[128] exited with preempt_count 1
-     # kasan_strings: try faulted: last
-** replaying previous printk message **
-     # kasan_strings: try faulted: last line seen mm/kasan/kasan_test_c.c:1600
-     # kasan_strings: internal error occurred preventing test case from running: -4
+Also, memmap pages may be allocated either from the memblock allocator
+during early boot or from the buddy allocator.  When removed via
+arch_remove_memory(), accounting of memmap pages must reflect the original
+allocation source.
 
-Link: https://lkml.kernel.org/r/20250801120236.2962642-1-yeoreum.yun@arm.com
-Fixes: 73228c7ecc5e ("KASAN: port KASAN Tests to KUnit")
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+To ensure correctness:
+* Account memmap pages after successful allocation in sparse_init_nid()
+  and section_activate().
+* Account memmap pages in section_deactivate() based on allocation
+  source.
+
+Link: https://lkml.kernel.org/r/20250807183545.1424509-1-sumanthk@linux.ibm.com
+Fixes: 15995a352474 ("mm: report per-page metadata information")
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
 Cc: <stable@vger.kernel.org>
-[ One less test in older trees ]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/kasan_test_c.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/sparse-vmemmap.c |    5 -----
+ mm/sparse.c         |   15 +++++++++------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
---- a/mm/kasan/kasan_test_c.c
-+++ b/mm/kasan/kasan_test_c.c
-@@ -1548,6 +1548,7 @@ static void kasan_strings(struct kunit *
+--- a/mm/sparse-vmemmap.c
++++ b/mm/sparse-vmemmap.c
+@@ -474,10 +474,5 @@ struct page * __meminit __populate_secti
+ 	if (r < 0)
+ 		return NULL;
  
- 	ptr = kmalloc(size, GFP_KERNEL | __GFP_ZERO);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ptr);
-+	OPTIMIZER_HIDE_VAR(ptr);
+-	if (system_state == SYSTEM_BOOTING)
+-		memmap_boot_pages_add(DIV_ROUND_UP(end - start, PAGE_SIZE));
+-	else
+-		memmap_pages_add(DIV_ROUND_UP(end - start, PAGE_SIZE));
+-
+ 	return pfn_to_page(pfn);
+ }
+--- a/mm/sparse.c
++++ b/mm/sparse.c
+@@ -462,9 +462,6 @@ static void __init sparse_buffer_init(un
+ 	 */
+ 	sparsemap_buf = memmap_alloc(size, section_map_size(), addr, nid, true);
+ 	sparsemap_buf_end = sparsemap_buf + size;
+-#ifndef CONFIG_SPARSEMEM_VMEMMAP
+-	memmap_boot_pages_add(DIV_ROUND_UP(size, PAGE_SIZE));
+-#endif
+ }
  
- 	kfree(ptr);
+ static void __init sparse_buffer_fini(void)
+@@ -532,6 +529,8 @@ static void __init sparse_init_nid(int n
+ 			sparse_buffer_fini();
+ 			goto failed;
+ 		}
++		memmap_boot_pages_add(DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
++						   PAGE_SIZE));
+ 		check_usemap_section_nr(nid, usage);
+ 		sparse_init_one_section(__nr_to_section(pnum), pnum, map, usage,
+ 				SECTION_IS_EARLY);
+@@ -643,7 +642,6 @@ static void depopulate_section_memmap(un
+ 	unsigned long start = (unsigned long) pfn_to_page(pfn);
+ 	unsigned long end = start + nr_pages * sizeof(struct page);
  
+-	memmap_pages_add(-1L * (DIV_ROUND_UP(end - start, PAGE_SIZE)));
+ 	vmemmap_free(start, end, altmap);
+ }
+ static void free_map_bootmem(struct page *memmap)
+@@ -819,10 +817,14 @@ static void section_deactivate(unsigned
+ 	 * The memmap of early sections is always fully populated. See
+ 	 * section_activate() and pfn_valid() .
+ 	 */
+-	if (!section_is_early)
++	if (!section_is_early) {
++		memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
+ 		depopulate_section_memmap(pfn, nr_pages, altmap);
+-	else if (memmap)
++	} else if (memmap) {
++		memmap_boot_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page),
++							  PAGE_SIZE)));
+ 		free_map_bootmem(memmap);
++	}
+ 
+ 	if (empty)
+ 		ms->section_mem_map = (unsigned long)NULL;
+@@ -867,6 +869,7 @@ static struct page * __meminit section_a
+ 		section_deactivate(pfn, nr_pages, altmap);
+ 		return ERR_PTR(-ENOMEM);
+ 	}
++	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
+ 
+ 	return memmap;
+ }
 
 
