@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512434315A;
-	Sun,  7 Sep 2025 20:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0601A704B;
+	Sun,  7 Sep 2025 20:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277436; cv=none; b=NnHU/MaIGJZbDXtmd5Pc0BqXDHeYm32JbB8WMaInsZ7f8eiwVjLifH5/dZChuSbjL0AoBdV0+LdowZle/49bEIRM/63lQzfJuRkjTVy+wamVQ7m3qr7GJpkRakeV0vaEqALl928UStjg2c86Yq83z9guXvzvtfxRjSPpWdREYcA=
+	t=1757277440; cv=none; b=l1UwV07Efvokzhka415imif9GrRM0VzikNtpnJbVu1Q4sf4JIO8peUm2fvXnVVIUBwIilQP/G497VmweP2A++tzTdEob28ijGb50mwryFHf7K48INPNL3KXskEIKYPK65e2DQPuvsLYQ9o9M55wcsMplrhPtV8uSet+JGLu+jF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277436; c=relaxed/simple;
-	bh=j+gv+qSU/uHkExRxRuaL5XlBZUs1d6tIfUepxb+nb90=;
+	s=arc-20240116; t=1757277440; c=relaxed/simple;
+	bh=pOjqnUswq6SgfRUydvotZiZs3oP8tA+UmlUTX+XOTEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKcay/ebh0BnNsU4NP3emxJh0ddgtiq8/nbsmjNYyqEB7Phao9cKPdeqUEPNRSe7zR5tgCdXQ3ur35a+N9MFtrWwBpzh7sCtfZiALWufIBnhaUwmiuN1i26jmHH3XResnewmeH8ht5bPiGrUVh/LS9KG+YW5G0+Ma7iHHJGmzzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gl5BqeI7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cuetw+9nquxhTLppIaDXJo/pVkL66C8lQAp8FVjXYn0OIKn25rfUg9Wqh3ZDaBZcnCu9Qk6Iyyt7AyHsGrc5jjwRivXxNF5oUL9VTJxcMdRzC5avFbsiH14US6rM0TUJpOg3giFKfNHTWeTqdua84X8UodDBdgtTFyUXDLK3doQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ii7ATQbb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gl5BqeI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA001C4CEF0;
-	Sun,  7 Sep 2025 20:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ii7ATQbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E974CC4CEF0;
+	Sun,  7 Sep 2025 20:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277436;
-	bh=j+gv+qSU/uHkExRxRuaL5XlBZUs1d6tIfUepxb+nb90=;
+	s=korg; t=1757277439;
+	bh=pOjqnUswq6SgfRUydvotZiZs3oP8tA+UmlUTX+XOTEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl5BqeI7K/v40KxdARGqBQctldQPQedCQ4JaPBfO8Mc87nqgMXihFKGnA0bPYyzSw
-	 TeXD7RXRfp95IKQbpnxAqkt1n/MYNrtdyqtPYmMkD900rcg4jvQFa98FyCMfIGw4Wn
-	 RH7qndm/bJs0MLWbdOq3hxnUcVAUrh0OQ2oxSPxY=
+	b=ii7ATQbbgs9zESfMTKg+iW9HyXRXWCvzvKgA+bGNnOYttGLw6xSDVL7pInivDP8pp
+	 Si/7HNCMxK37lQtlr7wFLiT1nK+NpOBbjfPbhezQj+dQZUsyWa3XCdkuReA376XtLJ
+	 ZPA9QA7R8nrll05V2A0yrTCHZKKyIu/ObBi/IKiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 015/183] btrfs: clear block dirty if submit_one_sector() failed
-Date: Sun,  7 Sep 2025 21:57:22 +0200
-Message-ID: <20250907195616.153413575@linuxfoundation.org>
+Subject: [PATCH 6.16 016/183] btrfs: zoned: skip ZONE FINISH of conventional zones
+Date: Sun,  7 Sep 2025 21:57:23 +0200
+Message-ID: <20250907195616.175559098@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,98 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 4bcd3061e8154606af7f721cb75ca04ffe191a12 ]
+[ Upstream commit f0ba0e7172a222ea6043b61ecd86723c46d7bcf2 ]
 
-[BUG]
-If submit_one_sector() failed, the block will be kept dirty, but with
-their corresponding range finished in the ordered extent.
+Don't call ZONE FINISH for conventional zones as this will result in I/O
+errors. Instead check if the zone that needs finishing is a conventional
+zone and if yes skip it.
 
-This means if a writeback happens later again, we can hit the following
-problems:
+Also factor out the actual handling of finishing a single zone into a
+helper function, as do_zone_finish() is growing ever bigger and the
+indentations levels are getting higher.
 
-- ASSERT(block_start != EXTENT_MAP_HOLE) in submit_one_sector()
-  If the original extent map is a hole, then we can hit this case, as
-  the new ordered extent failed, we will drop the new extent map and
-  re-read one from the disk.
-
-- DEBUG_WARN() in btrfs_writepage_cow_fixup()
-  This is because we no longer have an ordered extent for those dirty
-  blocks. The original for them is already finished with error.
-
-[CAUSE]
-The function submit_one_sector() is not following the regular error
-handling of writeback.  The common practice is to clear the folio dirty,
-start and finish the writeback for the block.
-
-This is normally done by extent_clear_unlock_delalloc() with
-PAGE_START_WRITEBACK | PAGE_END_WRITEBACK flags during
-run_delalloc_range().
-
-So if we keep those failed blocks dirty, they will stay in the page
-cache and wait for the next writeback.
-
-And since the original ordered extent is already finished and removed,
-depending on the original extent map, we either hit the ASSERT() inside
-submit_one_sector(), or hit the DEBUG_WARN() in
-btrfs_writepage_cow_fixup().
-
-[FIX]
-Follow the regular error handling to clear the dirty flag for the block,
-start and finish writeback for that block instead.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ fs/btrfs/zoned.c | 55 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 3711a5d073423..fac4000a5bcae 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1483,7 +1483,7 @@ static noinline_for_stack int writepage_delalloc(struct btrfs_inode *inode,
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index af5ba3ad2eb83..d7a1193332d94 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2252,6 +2252,40 @@ static void wait_eb_writebacks(struct btrfs_block_group *block_group)
+ 	rcu_read_unlock();
+ }
  
- /*
-  * Return 0 if we have submitted or queued the sector for submission.
-- * Return <0 for critical errors.
-+ * Return <0 for critical errors, and the sector will have its dirty flag cleared.
-  *
-  * Caller should make sure filepos < i_size and handle filepos >= i_size case.
-  */
-@@ -1506,8 +1506,17 @@ static int submit_one_sector(struct btrfs_inode *inode,
- 	ASSERT(filepos < i_size);
- 
- 	em = btrfs_get_extent(inode, NULL, filepos, sectorsize);
--	if (IS_ERR(em))
-+	if (IS_ERR(em)) {
-+		/*
-+		 * When submission failed, we should still clear the folio dirty.
-+		 * Or the folio will be written back again but without any
-+		 * ordered extent.
-+		 */
-+		btrfs_folio_clear_dirty(fs_info, folio, filepos, sectorsize);
-+		btrfs_folio_set_writeback(fs_info, folio, filepos, sectorsize);
-+		btrfs_folio_clear_writeback(fs_info, folio, filepos, sectorsize);
- 		return PTR_ERR(em);
++static int call_zone_finish(struct btrfs_block_group *block_group,
++			    struct btrfs_io_stripe *stripe)
++{
++	struct btrfs_device *device = stripe->dev;
++	const u64 physical = stripe->physical;
++	struct btrfs_zoned_device_info *zinfo = device->zone_info;
++	int ret;
++
++	if (!device->bdev)
++		return 0;
++
++	if (zinfo->max_active_zones == 0)
++		return 0;
++
++	if (btrfs_dev_is_sequential(device, physical)) {
++		unsigned int nofs_flags;
++
++		nofs_flags = memalloc_nofs_save();
++		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
++				       physical >> SECTOR_SHIFT,
++				       zinfo->zone_size >> SECTOR_SHIFT);
++		memalloc_nofs_restore(nofs_flags);
++
++		if (ret)
++			return ret;
 +	}
++
++	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
++		zinfo->reserved_active_zones++;
++	btrfs_dev_clear_active_zone(device, physical);
++
++	return 0;
++}
++
+ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_written)
+ {
+ 	struct btrfs_fs_info *fs_info = block_group->fs_info;
+@@ -2336,31 +2370,12 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
+ 	down_read(&dev_replace->rwsem);
+ 	map = block_group->physical_map;
+ 	for (i = 0; i < map->num_stripes; i++) {
+-		struct btrfs_device *device = map->stripes[i].dev;
+-		const u64 physical = map->stripes[i].physical;
+-		struct btrfs_zoned_device_info *zinfo = device->zone_info;
+-		unsigned int nofs_flags;
+-
+-		if (!device->bdev)
+-			continue;
+-
+-		if (zinfo->max_active_zones == 0)
+-			continue;
+-
+-		nofs_flags = memalloc_nofs_save();
+-		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
+-				       physical >> SECTOR_SHIFT,
+-				       zinfo->zone_size >> SECTOR_SHIFT);
+-		memalloc_nofs_restore(nofs_flags);
  
- 	extent_offset = filepos - em->start;
- 	em_end = btrfs_extent_map_end(em);
-@@ -1637,8 +1646,8 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
- 	 * Here we set writeback and clear for the range. If the full folio
- 	 * is no longer dirty then we clear the PAGECACHE_TAG_DIRTY tag.
- 	 *
--	 * If we hit any error, the corresponding sector will still be dirty
--	 * thus no need to clear PAGECACHE_TAG_DIRTY.
-+	 * If we hit any error, the corresponding sector will have its dirty
-+	 * flag cleared and writeback finished, thus no need to handle the error case.
- 	 */
- 	if (!submitted_io && !error) {
- 		btrfs_folio_set_writeback(fs_info, folio, start, len);
++		ret = call_zone_finish(block_group, &map->stripes[i]);
+ 		if (ret) {
+ 			up_read(&dev_replace->rwsem);
+ 			return ret;
+ 		}
+-
+-		if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
+-			zinfo->reserved_active_zones++;
+-		btrfs_dev_clear_active_zone(device, physical);
+ 	}
+ 	up_read(&dev_replace->rwsem);
+ 
 -- 
 2.50.1
 
