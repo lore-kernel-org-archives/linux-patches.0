@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5455D528;
-	Sun,  7 Sep 2025 20:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7304189BB0;
+	Sun,  7 Sep 2025 20:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276692; cv=none; b=FcuiNDihTfWzAS3du5igQrOV3NueK9O0tXV5d5WmhUPSnTl71egsZkrMO9PG//uVk2D9IFtLwg8O4vwpxeh+UruxR0A14N2jBJ2rrqZbSmpVjmkvDS+ZbE0HsyTVOYZQD1CuAlya5wJzE2w5hXgGTma952HmYgXxkEErfovmrF8=
+	t=1757276695; cv=none; b=Y5l0ql058TnTrfQFg1TaMUK5VoGaYoJBke+i7OmpxxfKqkduXBgGkB9jLZEDX2J4WVc/xFNB+iGuamPYmapWrWcpLsHsw+IfTKRD0etPJS5WHg2ZcN2oR4r6QBgcVoV9TfDXJpUaYiB09KFOEezMLgUisSxuC34ntGOuE81/3gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276692; c=relaxed/simple;
-	bh=/kLlgMRyzUtOV8/txC7im5T3XMH2h+VxvLygdamFdMg=;
+	s=arc-20240116; t=1757276695; c=relaxed/simple;
+	bh=2WyPavsNqRawZXGBt5jB4f3QBMs5cPHIxOkROJ/IyrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FTuQnvpfbwR9KIKnkBC1v4UAdt/d8rmyWA5qGPeFylOTvxEihJ+aoWi+wuF8P3T/MkqVTaN9BxYo30VXkQp7DPPA+rlyhZZqqixEeRrTM6PZ97Xn6+wlOhhepC6kbEfc8Se+mf48ooaObmwzC573N1GLpSaC2CP+v5Ba8z+ysRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHezfaOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mS/j+OCjwyvQC9U6tsk3fRXEvNpY1ticdaVNdDqhLtl6tJM3g1VQMne7l44+5FHnlBYZ74CNzI01S7zncEvlaYcBQqF+EQq/Z4UytamiEt5cEa0mJCLjkVMjaniBpQ7nN41u3BROqMJwxINR39J/yQdhAYb2uLzqJU9l0yClY2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdvYqF2J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHezfaOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013F4C4CEF0;
-	Sun,  7 Sep 2025 20:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdvYqF2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B9CC4CEF0;
+	Sun,  7 Sep 2025 20:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276692;
-	bh=/kLlgMRyzUtOV8/txC7im5T3XMH2h+VxvLygdamFdMg=;
+	s=korg; t=1757276695;
+	bh=2WyPavsNqRawZXGBt5jB4f3QBMs5cPHIxOkROJ/IyrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHezfaORME1qucohXaY6MjajajwL4F7+MmAhmITI/eqmYb4Ro7Yt8l8ISBvTkNK3I
-	 o0CYJMY9mdgyaheXl2vh0tmnJrtrPO/bUC4/+NBAJElcav/fRuVkWThqRDJBuv1CBS
-	 eZgxR2L/FFNdo3/MUBdEiHZ9Tgby1kYfr76orpSo=
+	b=SdvYqF2JvTDaPK8qQLtfXvpDANfjxoQ6T3QQ9JRsGJB/Hy9uLhQNmeD0i9AbCyR/x
+	 fLP/jxz4s3e9rnt2czp3PDhzDF/FuzS9XdlSTUCfP6A0shDCrVm2185AlHVd1HdnRu
+	 FSDX1CEF9viqHdytB8/7FL2K+DD3r8ZKUwgqoMv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jonathan Currier <dullfire@yahoo.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/121] thermal/drivers/mediatek/lvts: Disable low offset IRQ for minimum threshold
-Date: Sun,  7 Sep 2025 21:58:35 +0200
-Message-ID: <20250907195611.864977778@linuxfoundation.org>
+Subject: [PATCH 6.6 080/121] PCI/MSI: Add an option to write MSIX ENTRY_DATA before any reads
+Date: Sun,  7 Sep 2025 21:58:36 +0200
+Message-ID: <20250907195611.890788497@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -46,112 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Jonathan Currier <dullfire@yahoo.com>
 
-[ Upstream commit fa17ff8e325a657c84be1083f06e54ee7eea82e4 ]
+[ Upstream commit cf761e3dacc6ad5f65a4886d00da1f9681e6805a ]
 
-In order to get working interrupts, a low offset value needs to be
-configured. The minimum value for it is 20 Celsius, which is what is
-configured when there's no lower thermal trip (ie the thermal core
-passes -INT_MAX as low trip temperature). However, when the temperature
-gets that low and fluctuates around that value it causes an interrupt
-storm.
+Commit 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries") introduced a
+readl() from ENTRY_VECTOR_CTRL before the writel() to ENTRY_DATA.
 
-Prevent that interrupt storm by not enabling the low offset interrupt if
-the low threshold is the minimum one.
+This is correct, however some hardware, like the Sun Neptune chips, the NIU
+module, will cause an error and/or fatal trap if any MSIX table entry is
+read before the corresponding ENTRY_DATA field is written to.
 
+Add an optional early writel() in msix_prepare_msi_desc().
+
+Fixes: 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries")
+Signed-off-by: Jonathan Currier <dullfire@yahoo.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: 77354eaef821 ("thermal/drivers/mediatek/lvts_thermal: Don't leave threshold zeroed")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20250113-mt8192-lvts-filtered-suspend-fix-v2-3-07a25200c7c6@collabora.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-[ Adapted interrupt mask definitions ]
+Link: https://lore.kernel.org/all/20241117234843.19236-2-dullfire@yahoo.com
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/mediatek/lvts_thermal.c |   50 +++++++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ drivers/pci/msi/msi.c |    3 +++
+ include/linux/pci.h   |    2 ++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/thermal/mediatek/lvts_thermal.c
-+++ b/drivers/thermal/mediatek/lvts_thermal.c
-@@ -67,10 +67,14 @@
- #define LVTS_CALSCALE_CONF			0x300
- #define LVTS_MONINT_CONF			0x8300318C
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -610,6 +610,9 @@ void msix_prepare_msi_desc(struct pci_de
+ 	if (desc->pci.msi_attrib.can_mask) {
+ 		void __iomem *addr = pci_msix_desc_addr(desc);
  
--#define LVTS_MONINT_OFFSET_SENSOR0		0xC
--#define LVTS_MONINT_OFFSET_SENSOR1		0x180
--#define LVTS_MONINT_OFFSET_SENSOR2		0x3000
--#define LVTS_MONINT_OFFSET_SENSOR3		0x3000000
-+#define LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR0		BIT(3)
-+#define LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR1		BIT(8)
-+#define LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR2		BIT(13)
-+#define LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR3		BIT(25)
-+#define LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR0		BIT(2)
-+#define LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR1		BIT(7)
-+#define LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR2		BIT(12)
-+#define LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR3		BIT(24)
- 
- #define LVTS_INT_SENSOR0			0x0009001F
- #define LVTS_INT_SENSOR1			0x001203E0
-@@ -308,23 +312,41 @@ static int lvts_get_temp(struct thermal_
- 
- static void lvts_update_irq_mask(struct lvts_ctrl *lvts_ctrl)
- {
--	u32 masks[] = {
--		LVTS_MONINT_OFFSET_SENSOR0,
--		LVTS_MONINT_OFFSET_SENSOR1,
--		LVTS_MONINT_OFFSET_SENSOR2,
--		LVTS_MONINT_OFFSET_SENSOR3,
-+	static const u32 high_offset_inten_masks[] = {
-+		LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR0,
-+		LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR1,
-+		LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR2,
-+		LVTS_MONINT_OFFSET_HIGH_INTEN_SENSOR3,
-+	};
-+	static const u32 low_offset_inten_masks[] = {
-+		LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR0,
-+		LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR1,
-+		LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR2,
-+		LVTS_MONINT_OFFSET_LOW_INTEN_SENSOR3,
- 	};
- 	u32 value = 0;
- 	int i;
- 
- 	value = readl(LVTS_MONINT(lvts_ctrl->base));
- 
--	for (i = 0; i < ARRAY_SIZE(masks); i++) {
-+	for (i = 0; i < ARRAY_SIZE(high_offset_inten_masks); i++) {
- 		if (lvts_ctrl->sensors[i].high_thresh == lvts_ctrl->high_thresh
--		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh)
--			value |= masks[i];
--		else
--			value &= ~masks[i];
-+		    && lvts_ctrl->sensors[i].low_thresh == lvts_ctrl->low_thresh) {
-+			/*
-+			 * The minimum threshold needs to be configured in the
-+			 * OFFSETL register to get working interrupts, but we
-+			 * don't actually want to generate interrupts when
-+			 * crossing it.
-+			 */
-+			if (lvts_ctrl->low_thresh == -INT_MAX) {
-+				value &= ~low_offset_inten_masks[i];
-+				value |= high_offset_inten_masks[i];
-+			} else {
-+				value |= low_offset_inten_masks[i] | high_offset_inten_masks[i];
-+			}
-+		} else {
-+			value &= ~(low_offset_inten_masks[i] | high_offset_inten_masks[i]);
-+		}
++		/* Workaround for SUN NIU insanity, which requires write before read */
++		if (dev->dev_flags & PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST)
++			writel(0, addr + PCI_MSIX_ENTRY_DATA);
+ 		desc->pci.msix_ctrl = readl(addr + PCI_MSIX_ENTRY_VECTOR_CTRL);
  	}
+ }
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -245,6 +245,8 @@ enum pci_dev_flags {
+ 	PCI_DEV_FLAGS_NO_RELAXED_ORDERING = (__force pci_dev_flags_t) (1 << 11),
+ 	/* Device does honor MSI masking despite saying otherwise */
+ 	PCI_DEV_FLAGS_HAS_MSI_MASKING = (__force pci_dev_flags_t) (1 << 12),
++	/* Device requires write to PCI_MSIX_ENTRY_DATA before any MSIX reads */
++	PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST = (__force pci_dev_flags_t) (1 << 13),
+ };
  
- 	writel(value, LVTS_MONINT(lvts_ctrl->base));
+ enum pci_irq_reroute_variant {
 
 
