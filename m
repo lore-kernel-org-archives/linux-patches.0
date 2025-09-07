@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218BA1B424F;
-	Sun,  7 Sep 2025 20:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF85296BB8;
+	Sun,  7 Sep 2025 20:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276019; cv=none; b=qwjyiooBzzcRLVHUwzrRwHV64TzRE25U50SRf7wQ3C27+05VJOoT8LYZxARc/ZMrrL+vQwh7ZMiqvdbg5MN7ahrKjiOb4GhThCIYLZiMTASMEbuj4a+tMJ0OumNxbAhxc7EvMQ7sDRIHetAqyi01Vm1XKMAvVMfzcuxxxehFg6c=
+	t=1757276022; cv=none; b=VuXLHqTI2wTCVyY59abLsTJCwQyYc7OXT2ipKCTRW83Uj+YrWyw9ujDUazCKEd4RTEiNNbVo8nQOZ4iWB/kwkynU74LSIJcyLovnUZep/F29xgOD0vSWYytrsbEu125UfJI/avz/wUgT0Eho9Hmu6UUZm4Erd2skChZ/0oTY1IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276019; c=relaxed/simple;
-	bh=XHMyexvUlI0RS58RhhB6bpo3yHXIm+XKtzjyUKdTJ6M=;
+	s=arc-20240116; t=1757276022; c=relaxed/simple;
+	bh=nIxlYhBAmwxHxWPoSYJ/m2JuDajocTL5iQCDDpF2Ib0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOGdgMPAqRXPNlgGQ6B2HJLJPsDvs3uO/7XmoVHhjGb9OUrErL/AstRLOvFsXB1tTeKCbFDU57KkCrzeYCPqjKOwNXyPgLGfX5dOe7Q6FVxCVjDZpniSOItkRlZ7vHY45k4Df7VImMnQdrWQhcN2+rj/tsQBYI0QDPXthDXFbo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKrY0Mza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ayf2Mvv7vpUa1+st2zu/pVBXUSEzIrBDFsa8LJTj5ot8hFBX/egCvzC+ZoulU0pY4n/PO+XMotzl4xLZBKMoVeVm3DDbmWNEKn0GtLGnFKD3KUqzwguE4FuuossqZAQ8KetVAmCkqiwsI9L+GI3DdB5QFRBZXNeaAzWlBK35eZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NclmbKud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKrY0Mza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927FEC4CEF0;
-	Sun,  7 Sep 2025 20:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NclmbKud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDD9C4CEF0;
+	Sun,  7 Sep 2025 20:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276019;
-	bh=XHMyexvUlI0RS58RhhB6bpo3yHXIm+XKtzjyUKdTJ6M=;
+	s=korg; t=1757276022;
+	bh=nIxlYhBAmwxHxWPoSYJ/m2JuDajocTL5iQCDDpF2Ib0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKrY0Mza03Ylu3qWwoCPy7eWqA84PsNL3Nt6CU8bRZicWIboGd62RUhUP0G36PD6l
-	 rjp8iBO4koQCD/eDBu7LQvoXhPEn8x0wqHZe0hDTQJKAaTHlpQGaW2MOpWEnfTErZM
-	 Qinu7MiIqDRACZbN3a69vR+xBDxTcrwWQdKZx2kw=
+	b=NclmbKudfaeDu571XqCiUpLG8vmYKDsZSqH1sxzE555Zqugo6zH24MSoEOyRIRXvB
+	 lsCvPXHt4pANd1xxca2h0ZMgLzhWMume7CQAWrXQj89ub2+6/wnLT3TGKPpr1dsTJK
+	 CAh97w1WFniuNSU4ZZ4NmkMzykErjcggMlYwyNOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Zach OKeefe <zokeefe@google.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@intel.linux.com>,
-	Yang Shi <shy828301@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Bjoern Doebel <doebel@amazon.de>
-Subject: [PATCH 5.15 38/64] mm/khugepaged: fix ->anon_vma race
-Date: Sun,  7 Sep 2025 21:58:20 +0200
-Message-ID: <20250907195604.457007923@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 39/64] cpufreq/sched: Explicitly synchronize limits_changed flag handling
+Date: Sun,  7 Sep 2025 21:58:21 +0200
+Message-ID: <20250907195604.482311666@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -55,81 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-commit 023f47a8250c6bdb4aebe744db4bf7f73414028b upstream.
+[ Upstream commit 79443a7e9da3c9f68290a8653837e23aba0fa89f ]
 
-If an ->anon_vma is attached to the VMA, collapse_and_free_pmd() requires
-it to be locked.
+The handling of the limits_changed flag in struct sugov_policy needs to
+be explicitly synchronized to ensure that cpufreq policy limits updates
+will not be missed in some cases.
 
-Page table traversal is allowed under any one of the mmap lock, the
-anon_vma lock (if the VMA is associated with an anon_vma), and the
-mapping lock (if the VMA is associated with a mapping); and so to be
-able to remove page tables, we must hold all three of them.
-retract_page_tables() bails out if an ->anon_vma is attached, but does
-this check before holding the mmap lock (as the comment above the check
-explains).
+Without that synchronization it is theoretically possible that
+the limits_changed update in sugov_should_update_freq() will be
+reordered with respect to the reads of the policy limits in
+cpufreq_driver_resolve_freq() and in that case, if the limits_changed
+update in sugov_limits() clobbers the one in sugov_should_update_freq(),
+the new policy limits may not take effect for a long time.
 
-If we racily merged an existing ->anon_vma (shared with a child
-process) from a neighboring VMA, subsequent rmap traversals on pages
-belonging to the child will be able to see the page tables that we are
-concurrently removing while assuming that nothing else can access them.
+Likewise, the limits_changed update in sugov_limits() may theoretically
+get reordered with respect to the updates of the policy limits in
+cpufreq_set_policy() and if sugov_should_update_freq() runs between
+them, the policy limits change may be missed.
 
-Repeat the ->anon_vma check once we hold the mmap lock to ensure that
-there really is no concurrent page table access.
+To ensure that the above situations will not take place, add memory
+barriers preventing the reordering in question from taking place and
+add READ_ONCE() and WRITE_ONCE() annotations around all of the
+limits_changed flag updates to prevent the compiler from messing up
+with that code.
 
-Hitting this bug causes a lockdep warning in collapse_and_free_pmd(),
-in the line "lockdep_assert_held_write(&vma->anon_vma->root->rwsem)".
-It can also lead to use-after-free access.
-
-Link: https://lore.kernel.org/linux-mm/CAG48ez3434wZBKFFbdx4M9j6eUwSUVPd4dxhzW_k_POneSDF+A@mail.gmail.com/
-Link: https://lkml.kernel.org/r/20230111133351.807024-1-jannh@google.com
-Fixes: f3f0e1d2150b ("khugepaged: add support of collapse for tmpfs/shmem pages")
-Signed-off-by: Jann Horn <jannh@google.com>
-Reported-by: Zach O'Keefe <zokeefe@google.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@intel.linux.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[doebel@amazon.de: Kernel 5.15 uses a different control flow pattern,
- context adjustments.]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Fixes: 600f5badb78c ("cpufreq: schedutil: Don't skip freq update when limits change")
+Cc: 5.3+ <stable@vger.kernel.org> # 5.3+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/3376719.44csPzL39Z@rjwysocki.net
+[ bw_min => bw_dl ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ kernel/sched/cpufreq_schedutil.c |   28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1609,7 +1609,7 @@ static void retract_page_tables(struct a
- 		 * has higher cost too. It would also probably require locking
- 		 * the anon_vma.
- 		 */
--		if (vma->anon_vma)
-+		if (READ_ONCE(vma->anon_vma))
- 			continue;
- 		addr = vma->vm_start + ((pgoff - vma->vm_pgoff) << PAGE_SHIFT);
- 		if (addr & ~HPAGE_PMD_MASK)
-@@ -1631,6 +1631,19 @@ static void retract_page_tables(struct a
- 			if (!khugepaged_test_exit(mm)) {
- 				struct mmu_notifier_range range;
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -89,9 +89,20 @@ static bool sugov_should_update_freq(str
+ 	if (!cpufreq_this_cpu_can_update(sg_policy->policy))
+ 		return false;
  
-+				/*
-+				 * Re-check whether we have an ->anon_vma, because
-+				 * collapse_and_free_pmd() requires that either no
-+				 * ->anon_vma exists or the anon_vma is locked.
-+				 * We already checked ->anon_vma above, but that check
-+				 * is racy because ->anon_vma can be populated under the
-+				 * mmap lock in read mode.
-+				 */
-+				if (vma->anon_vma) {
-+					mmap_write_unlock(mm);
-+					continue;
-+				}
+-	if (unlikely(sg_policy->limits_changed)) {
+-		sg_policy->limits_changed = false;
++	if (unlikely(READ_ONCE(sg_policy->limits_changed))) {
++		WRITE_ONCE(sg_policy->limits_changed, false);
+ 		sg_policy->need_freq_update = true;
 +
- 				mmu_notifier_range_init(&range,
- 							MMU_NOTIFY_CLEAR, 0,
- 							NULL, mm, addr,
++		/*
++		 * The above limits_changed update must occur before the reads
++		 * of policy limits in cpufreq_driver_resolve_freq() or a policy
++		 * limits update might be missed, so use a memory barrier to
++		 * ensure it.
++		 *
++		 * This pairs with the write memory barrier in sugov_limits().
++		 */
++		smp_mb();
++
+ 		return true;
+ 	}
+ 
+@@ -326,7 +337,7 @@ static inline bool sugov_cpu_is_busy(str
+ static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu)
+ {
+ 	if (cpu_bw_dl(cpu_rq(sg_cpu->cpu)) > sg_cpu->bw_dl)
+-		sg_cpu->sg_policy->limits_changed = true;
++		WRITE_ONCE(sg_cpu->sg_policy->limits_changed, true);
+ }
+ 
+ static inline bool sugov_update_single_common(struct sugov_cpu *sg_cpu,
+@@ -826,7 +837,16 @@ static void sugov_limits(struct cpufreq_
+ 		mutex_unlock(&sg_policy->work_lock);
+ 	}
+ 
+-	sg_policy->limits_changed = true;
++	/*
++	 * The limits_changed update below must take place before the updates
++	 * of policy limits in cpufreq_set_policy() or a policy limits update
++	 * might be missed, so use a memory barrier to ensure it.
++	 *
++	 * This pairs with the memory barrier in sugov_should_update_freq().
++	 */
++	smp_wmb();
++
++	WRITE_ONCE(sg_policy->limits_changed, true);
+ }
+ 
+ struct cpufreq_governor schedutil_gov = {
 
 
