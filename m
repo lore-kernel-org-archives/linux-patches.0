@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1FF1CDFAC;
-	Sun,  7 Sep 2025 20:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A585A1CDFAC;
+	Sun,  7 Sep 2025 20:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275927; cv=none; b=OW87nKdoDR4JLb9Km/ia+3oSZHQqA5u2SAgaBMhG8VcgmbhfT9Qr8iNQjuwiO8uDH2eUcgOK633A/CV5Fr0FXlaf/lU5Iq+zvvREo7GnK8qJp8vQ1Q22tpzUvEJVBGAQ5j7F5qi8dYyV4biCFvYhbF4WALvkEOo4bIl7FOn3cPY=
+	t=1757275930; cv=none; b=PWcG87okyI8BT4tEpccATU1YInmI3gjJY8Eexqwg03noY5tV9DavUKWGKsPrzdyPOjUKYvYOQDgrK7tAlitT0AMu3bZnOVmDlwN4bvf9TPxSe3FFdWANB96ifpzuy08V/ilPK72GLEHLsOy7kDyUUKYsmoHvfvZWR896IaZaUz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275927; c=relaxed/simple;
-	bh=Qt8eTSViy+KfMiVdqoX3u4Hv3QVFKh7eCMTPnJFL088=;
+	s=arc-20240116; t=1757275930; c=relaxed/simple;
+	bh=RVYWxlYtKQvEaTBtQfGT0piYrwf+oVdcBxMCFTgDGSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPcwyRaQ3OYRuNh6iuqC2A1XhbtLVFsLpWYOVZ8c5FZK7m4NrKrElPzKZJRu0Exya9qINNa6yl2s98qHWpchl8el0XYsitBrgn1vYDtef4tYpZ48BYQLdJ6gpfGkFttqAQ+Kv/lP9KqU0v2i8xAbuy3GNWAWYHDCWw4HJKhg9lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzJmXRPr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7YLgTI04iCwD7Z9oZbWCi7IIW+yhIkYdwnIi+P+AVr9e7Anxmkd0VFIa+cvNwWpKRQBJnwAG8jioBr7iVUjsXBx+V1YJx5Qh7UeTtZuzCZ39dbNXSKB4eR+CtQxIfU57AxC3K5peg6wwy+vW5VLVf3i26tqACmP2y1OwVFi4xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiYETvE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzJmXRPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129D8C4CEF0;
-	Sun,  7 Sep 2025 20:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiYETvE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF8BC4CEF0;
+	Sun,  7 Sep 2025 20:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275927;
-	bh=Qt8eTSViy+KfMiVdqoX3u4Hv3QVFKh7eCMTPnJFL088=;
+	s=korg; t=1757275930;
+	bh=RVYWxlYtKQvEaTBtQfGT0piYrwf+oVdcBxMCFTgDGSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EzJmXRPrVeM5YH8f/idWxWqNTBCVlhIXBkN2XxOXOzR/qjZhB+pN55fepb8tLjEFR
-	 QeL6+UUDlIISOeONCkYSktMq6Ea0KWlpFp0ui1FVdP83FqRa28Lep765lj1E5J+6p2
-	 Kus4zs0Z8eFYu1rOkuim2J5C+rSkZ4TEOdNodk6k=
+	b=MiYETvE6KOBtFqE6Gaht7pSxb3HAgFq5tqCHst+j/S4axeFuG+X4R9VQuCV2qOnrs
+	 Bbpc4gTNphtCr0TGIwwCT6bMBYVEKImyLsqas/iN+uedSQYryloGSB4l6bGsOJSbou
+	 2oGGJWs3NVOz5PgxMzL5jS3fsvwR/EwxjSf4V1jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Wang Liang <wangliang74@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/64] bpf: Add cookie object to bpf maps
-Date: Sun,  7 Sep 2025 21:57:43 +0200
-Message-ID: <20250907195603.435311129@linuxfoundation.org>
+Subject: [PATCH 5.15 10/64] netfilter: br_netfilter: do not check confirmed bit in br_nf_local_in() after confirm
+Date: Sun,  7 Sep 2025 21:57:52 +0200
+Message-ID: <20250907195603.691225386@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -51,66 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 12df58ad294253ac1d8df0c9bb9cf726397a671d ]
+[ Upstream commit 479a54ab92087318514c82428a87af2d7af1a576 ]
 
-Add a cookie to BPF maps to uniquely identify BPF maps for the timespan
-when the node is up. This is different to comparing a pointer or BPF map
-id which could get rolled over and reused.
+When send a broadcast packet to a tap device, which was added to a bridge,
+br_nf_local_in() is called to confirm the conntrack. If another conntrack
+with the same hash value is added to the hash table, which can be
+triggered by a normal packet to a non-bridge device, the below warning
+may happen.
 
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20250730234733.530041-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  ------------[ cut here ]------------
+  WARNING: CPU: 1 PID: 96 at net/bridge/br_netfilter_hooks.c:632 br_nf_local_in+0x168/0x200
+  CPU: 1 UID: 0 PID: 96 Comm: tap_send Not tainted 6.17.0-rc2-dirty #44 PREEMPT(voluntary)
+  RIP: 0010:br_nf_local_in+0x168/0x200
+  Call Trace:
+   <TASK>
+   nf_hook_slow+0x3e/0xf0
+   br_pass_frame_up+0x103/0x180
+   br_handle_frame_finish+0x2de/0x5b0
+   br_nf_hook_thresh+0xc0/0x120
+   br_nf_pre_routing_finish+0x168/0x3a0
+   br_nf_pre_routing+0x237/0x5e0
+   br_handle_frame+0x1ec/0x3c0
+   __netif_receive_skb_core+0x225/0x1210
+   __netif_receive_skb_one_core+0x37/0xa0
+   netif_receive_skb+0x36/0x160
+   tun_get_user+0xa54/0x10c0
+   tun_chr_write_iter+0x65/0xb0
+   vfs_write+0x305/0x410
+   ksys_write+0x60/0xd0
+   do_syscall_64+0xa4/0x260
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+To solve the hash conflict, nf_ct_resolve_clash() try to merge the
+conntracks, and update skb->_nfct. However, br_nf_local_in() still use the
+old ct from local variable 'nfct' after confirm(), which leads to this
+warning.
+
+If confirm() does not insert the conntrack entry and return NF_DROP, the
+warning may also occur. There is no need to reserve the WARN_ON_ONCE, just
+remove it.
+
+Link: https://lore.kernel.org/netdev/20250820043329.2902014-1-wangliang74@huawei.com/
+Fixes: 62e7151ae3eb ("netfilter: bridge: confirm multicast packets before passing them up the stack")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h  | 1 +
- kernel/bpf/syscall.c | 6 ++++++
- 2 files changed, 7 insertions(+)
+ net/bridge/br_netfilter_hooks.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 4236de05a8e70..dd6a62134e7d1 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -200,6 +200,7 @@ struct bpf_map {
- 	struct mutex freeze_mutex;
- 	atomic64_t writecnt;
- 	bool free_after_mult_rcu_gp;
-+	u64 cookie; /* write-once */
- };
+diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
+index 7cd2bef583312..9ad0feb248b5d 100644
+--- a/net/bridge/br_netfilter_hooks.c
++++ b/net/bridge/br_netfilter_hooks.c
+@@ -630,9 +630,6 @@ static unsigned int br_nf_local_in(void *priv,
+ 		break;
+ 	}
  
- static inline bool map_value_has_spin_lock(const struct bpf_map *map)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 6f309248f13fc..6d4d08f57ad38 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -31,6 +31,7 @@
- #include <linux/bpf-netns.h>
- #include <linux/rcupdate_trace.h>
- #include <linux/memcontrol.h>
-+#include <linux/cookie.h>
- 
- #define IS_FD_ARRAY(map) ((map)->map_type == BPF_MAP_TYPE_PERF_EVENT_ARRAY || \
- 			  (map)->map_type == BPF_MAP_TYPE_CGROUP_ARRAY || \
-@@ -43,6 +44,7 @@
- #define BPF_OBJ_FLAG_MASK   (BPF_F_RDONLY | BPF_F_WRONLY)
- 
- DEFINE_PER_CPU(int, bpf_prog_active);
-+DEFINE_COOKIE(bpf_map_cookie);
- static DEFINE_IDR(prog_idr);
- static DEFINE_SPINLOCK(prog_idr_lock);
- static DEFINE_IDR(map_idr);
-@@ -886,6 +888,10 @@ static int map_create(union bpf_attr *attr)
- 	if (err < 0)
- 		goto free_map;
- 
-+	preempt_disable();
-+	map->cookie = gen_cookie_next(&bpf_map_cookie);
-+	preempt_enable();
-+
- 	atomic64_set(&map->refcnt, 1);
- 	atomic64_set(&map->usercnt, 1);
- 	mutex_init(&map->freeze_mutex);
+-	ct = container_of(nfct, struct nf_conn, ct_general);
+-	WARN_ON_ONCE(!nf_ct_is_confirmed(ct));
+-
+ 	return ret;
+ }
+ #endif
 -- 
 2.50.1
 
