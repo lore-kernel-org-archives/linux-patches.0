@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684B91CDFAC;
-	Sun,  7 Sep 2025 20:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17CA1CDFAC;
+	Sun,  7 Sep 2025 20:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275681; cv=none; b=AlliHe6iAFc28StiYSZfDNQz/Tkd8C0cCtsNlBShNeabKXJSZxIMxQwimoZAUAeQ00foqjmvxR2fnH+pi3QfDugBvWhi5L02qZf36AOTmb48u7baTFaLlFHJniFdBVI69mIalSNp/Lf01oH0i0ev0W6YdrtU365f50TJwo4ClNg=
+	t=1757275685; cv=none; b=jhE/gjJjrnPrsPrz4DmShacCxUcxnRMlPumazrQq4VX2BcYhvH8HGqZLsnvVpcbWA1l6t5yEEgVy2njARMUYtZaDOuc3tVh+YLZZtOkmx0qDYX/d/TU0BB4erMLzXgWNXjT1/BvHWU88MSG1hev6Y46uHqgkIpZGvz6+HISLo9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275681; c=relaxed/simple;
-	bh=PIo3p6LJjFQZIb32pX5EWnQ0Vz1UIfi6AG7phU7SOLw=;
+	s=arc-20240116; t=1757275685; c=relaxed/simple;
+	bh=b3xMUPv4CT6/gF4aaXd+n+pqXmbP6CevkiEaDlX21+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HlnvJs9kdfAQlGGiWvKeuvo1rDX0PHxfSTGWxXqSoTLqotb4matrSm3/oI+7pj1GSL86RMhJYIzcFYSj3eI9bwOHwMQDd81gXwn/rh2agiWGMl7mUHGaT0t2UVjNusHbrnHDcxJJJzNPZx9zH3KA3ExvTZaE3CAFxeomyaf83zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL02/adA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KapmzQlXyeeT0FVSyMKbsJcvpTdKEGeyABitB23YVcoU6o5ZM+hCS0kF2e3KxV1vbcR3zk7krcgKmBShXmgvRF3S0CscLf+kUQPMn1XE3CUGtD6n/1OG0WMqAsw0wwT7OHxhpDFpxFwGL/GkQNjpXq9za2fJH87/oE2i2ivzvF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiyFFtsd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL02/adA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33BAC4CEF0;
-	Sun,  7 Sep 2025 20:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiyFFtsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02864C4CEF0;
+	Sun,  7 Sep 2025 20:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275681;
-	bh=PIo3p6LJjFQZIb32pX5EWnQ0Vz1UIfi6AG7phU7SOLw=;
+	s=korg; t=1757275684;
+	bh=b3xMUPv4CT6/gF4aaXd+n+pqXmbP6CevkiEaDlX21+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aL02/adAdntWyHu9t+C7AVH9LVZtoY5xJcrJj3aHPp0LvSvYdXuB4z7RMtDKJTSwV
-	 rFzZkVA7l8uVYsXPRhOdxGDgNbfnUe8Pi2iQqi8XU2EbQshzMlRCuvjLX7IuIWQJhS
-	 YvRmKpV1tVPxFM0+EQfvDQdxl/FD5XSFLAMfxneI=
+	b=tiyFFtsd3IXp1uoPItYL7XqXxmor3sVgKAUDKSZ2k2M97h61Vk1eaK+l5J/dIi9fc
+	 XLoHnWQ5DizfRpdWha5mp5cOT/INQL+IxuIOvxu6SP2C/BghKDBQRcWiIBACZKuqVd
+	 GNQRx1DA42mK9+7Or8DN4LQvUGQzJxmOc/isFE0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/52] arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3399-pinebook-pro
-Date: Sun,  7 Sep 2025 21:57:23 +0200
-Message-ID: <20250907195602.065185640@linuxfoundation.org>
+Subject: [PATCH 5.10 30/52] KVM: x86: Take irqfds.lock when adding/deleting IRQ bypass producer
+Date: Sun,  7 Sep 2025 21:57:50 +0200
+Message-ID: <20250907195602.859951366@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -52,41 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit d1f9c497618dece06a00e0b2995ed6b38fafe6b5 ]
+[ Upstream commit f1fb088d9cecde5c3066d8ff8846789667519b7d ]
 
-As described in the pinebookpro_v2.1_mainboard_schematic.pdf page 10,
-he SPI Flash's VCC connector is connected to VCC_3V0 power source.
+Take irqfds.lock when adding/deleting an IRQ bypass producer to ensure
+irqfd->producer isn't modified while kvm_irq_routing_update() is running.
+The only lock held when a producer is added/removed is irqbypass's mutex.
 
-This fixes the following warning:
-
-  spi-nor spi1.0: supply vcc not found, using dummy regulator
-
-Fixes: 5a65505a69884 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/20250730102129.224468-1-pbrobinson@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 872768800652 ("KVM: x86: select IRQ_BYPASS_MANAGER")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20250404193923.1413163-5-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/x86.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-index 015e004bf275c..3dd00ce201f54 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -972,6 +972,7 @@ spiflash: flash@0 {
- 		reg = <0>;
- 		m25p,fast-read;
- 		spi-max-frequency = <10000000>;
-+		vcc-supply = <&vcc_3v0>;
- 	};
- };
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -11417,16 +11417,22 @@ int kvm_arch_irq_bypass_add_producer(str
+ {
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 	int ret;
  
--- 
-2.50.1
-
+-	irqfd->producer = prod;
+ 	kvm_arch_start_assignment(irqfd->kvm);
++
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = prod;
++
+ 	ret = kvm_x86_ops.update_pi_irte(irqfd->kvm,
+ 					 prod->irq, irqfd->gsi, 1);
+-
+ 	if (ret)
+ 		kvm_arch_end_assignment(irqfd->kvm);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	return ret;
+ }
+ 
+@@ -11436,9 +11442,9 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	int ret;
+ 	struct kvm_kernel_irqfd *irqfd =
+ 		container_of(cons, struct kvm_kernel_irqfd, consumer);
++	struct kvm *kvm = irqfd->kvm;
+ 
+ 	WARN_ON(irqfd->producer != prod);
+-	irqfd->producer = NULL;
+ 
+ 	/*
+ 	 * When producer of consumer is unregistered, we change back to
+@@ -11446,11 +11452,17 @@ void kvm_arch_irq_bypass_del_producer(st
+ 	 * when the irq is masked/disabled or the consumer side (KVM
+ 	 * int this case doesn't want to receive the interrupts.
+ 	*/
++	spin_lock_irq(&kvm->irqfds.lock);
++	irqfd->producer = NULL;
++
+ 	ret = kvm_x86_ops.update_pi_irte(irqfd->kvm, prod->irq, irqfd->gsi, 0);
+ 	if (ret)
+ 		printk(KERN_INFO "irq bypass consumer (token %p) unregistration"
+ 		       " fails: %d\n", irqfd->consumer.token, ret);
+ 
++	spin_unlock_irq(&kvm->irqfds.lock);
++
++
+ 	kvm_arch_end_assignment(irqfd->kvm);
+ }
+ 
 
 
