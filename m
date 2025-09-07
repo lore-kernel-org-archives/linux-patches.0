@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AF314BFA2;
-	Sun,  7 Sep 2025 20:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9569B14BFA2;
+	Sun,  7 Sep 2025 20:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276272; cv=none; b=hbfWDoGsBUTeWnuo2mhvqd50si1XCkTK3kC5mSSEOWdHci2Kl7U7L1wH0633KidlU+OZ/WrDUtiQKL5KPtQG0kfjZq60Kb1ifAbGBknjLdsCT7gR3/XH+LiOitzqnuCSkT0Ee2siiqhFwL+GdXuoJLMXq9+33+fzKhNk6ucTumo=
+	t=1757276275; cv=none; b=PvODqiLZSed1sDbhw4W1EacSC79A31dR7m4+TxuAIu8Diy6mv4K39asAXWAIBefIyaBp0DEqCS+VFK07Rr/8Rg+m5IVhLYrudHr//dik9wOnND+bp9MPNvGXhzBeJFukMF5u8pf5aQke9c+Bje8jmOzf7GytpaTZQ3r9HoVjLc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276272; c=relaxed/simple;
-	bh=gdwXxc0mGXTwWX84/aD6kCpYcFwM4/OEZB/v1WplQXA=;
+	s=arc-20240116; t=1757276275; c=relaxed/simple;
+	bh=P0F6xxlV7Yoag49kvrpzB/O4vUVO1FX2s4ZvTjso9PI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLwXZvFcquP1knX9+EL2ay2SQuuNU/cUGlPZAdZ1QXLlWglGwq+ZojCduYBhhjBHgINvdiI2cdalP+9q8UlCCSuZGEIP1BF2xIYDtLO0vykk56fYsJ+dYh71sDrSjaHLU5CLMpuDupcCOYfgmUctDK9CRpD7MMJEpwYzkfbe29g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRDUbzkp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClE9Us/BSa4J2d/v9UTw9EmyHZTJFKzr5jaMvvZKH+9LPdPGTMR/coBT48NvM6LPb8do/8tZjRoABeijM84/NwCPEK5hp3U2wzRZUDLtkRvxbOLVZeJcdC07Hdfmgal9Pk5GJ5HdzGMdADbEUX/ZYANFhy+UDBM0NnGYtVXbowE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MhYUfTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRDUbzkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D9BC4CEF0;
-	Sun,  7 Sep 2025 20:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MhYUfTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67C4C4CEF0;
+	Sun,  7 Sep 2025 20:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276272;
-	bh=gdwXxc0mGXTwWX84/aD6kCpYcFwM4/OEZB/v1WplQXA=;
+	s=korg; t=1757276275;
+	bh=P0F6xxlV7Yoag49kvrpzB/O4vUVO1FX2s4ZvTjso9PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRDUbzkp+HhXE2u7DrG4mOaDKteuQ7GdjKEIILtaWsGkoaLFxnSEq/ROR5gL+UDLu
-	 0MBE4OBn9eWOGTMvcH5JJnLTF7NksxUVMOMiX0QQyAdPStLbH18DBRyFDeKOStj7bK
-	 OvZnJsK9BnyDODG1Jx+5tTOGvzkntIwViXdP1FcY=
+	b=1MhYUfTp8MVCK2IXrB3rJBCi4iOAHJh2vW05bwupo6zfLyfXpTE3XZyWxEhWtlMQD
+	 FRiPCKIiPlHq9UjX9VBK3YoZxLlSGWcz4gdV9joCn+3E0Tpod+GCrwmsCAVezIKeKK
+	 aeEq4jmot0/iCv3kcRj+or5f3lMWTH/smMPqyfrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/104] arm64: dts: imx8mp: Fix missing microSD slot vqmmc on DH electronics i.MX8M Plus DHCOM
-Date: Sun,  7 Sep 2025 21:57:32 +0200
-Message-ID: <20250907195608.076689797@linuxfoundation.org>
+	Makar Semyonov <m.semenov@tssltd.ru>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 051/104] cifs: prevent NULL pointer dereference in UTF16 conversion
+Date: Sun,  7 Sep 2025 21:58:08 +0200
+Message-ID: <20250907195609.012822604@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -51,38 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut@mailbox.org>
+From: Makar Semyonov <m.semenov@tssltd.ru>
 
-[ Upstream commit c53cf8ce3bfe1309cb4fd4d74c5be27c26a86e52 ]
+commit 70bccd9855dae56942f2b18a08ba137bb54093a0 upstream.
 
-Add missing microSD slot vqmmc-supply property, otherwise the kernel
-might shut down LDO5 regulator and that would power off the microSD
-card slot, possibly while it is in use. Add the property to make sure
-the kernel is aware of the LDO5 regulator which supplies the microSD
-slot and keeps the LDO5 enabled.
+There can be a NULL pointer dereference bug here. NULL is passed to
+__cifs_sfu_make_node without checks, which passes it unchecked to
+cifs_strndup_to_utf16, which in turn passes it to
+cifs_local_to_utf16_bytes where '*from' is dereferenced, causing a crash.
 
-Fixes: 8d6712695bc8 ("arm64: dts: imx8mp: Add support for DH electronics i.MX8M Plus DHCOM and PDK2")
-Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch adds a check for NULL 'src' in cifs_strndup_to_utf16 and
+returns NULL early to prevent dereferencing NULL pointer.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+
+Signed-off-by: Makar Semyonov <m.semenov@tssltd.ru>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/cifs_unicode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-index 0f13ee3627715..2fd50b5890afa 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
-@@ -508,6 +508,7 @@ &usdhc2 {
- 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
- 	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
- 	vmmc-supply = <&reg_usdhc2_vmmc>;
-+	vqmmc-supply = <&ldo5>;
- 	bus-width = <4>;
- 	status = "okay";
- };
--- 
-2.50.1
-
+--- a/fs/smb/client/cifs_unicode.c
++++ b/fs/smb/client/cifs_unicode.c
+@@ -619,6 +619,9 @@ cifs_strndup_to_utf16(const char *src, c
+ 	int len;
+ 	__le16 *dst;
+ 
++	if (!src)
++		return NULL;
++
+ 	len = cifs_local_to_utf16_bytes(src, maxlen, cp);
+ 	len += 2; /* NULL */
+ 	dst = kmalloc(len, GFP_KERNEL);
 
 
