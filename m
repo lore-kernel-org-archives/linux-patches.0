@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717AA1A0BFD;
-	Sun,  7 Sep 2025 20:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B3E1A0BFD;
+	Sun,  7 Sep 2025 20:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277252; cv=none; b=G/il6EOAWLIyvrHAz9fGES8Ca94wdFkLMkdHGJJvA799BoOsm4lI3hAfUwscELyB8lc2o4GjABFtlXLwujqcXf392YN6JKwkUVcg7I7NnC7TDzVH7rEWKowwRulvE8vUo7HM86/sHqztW6AiFMCm7Hi+BjhonePZK5LZUJCNOz0=
+	t=1757277255; cv=none; b=AfITr7LI4kNGQK1bokYn6C6f84e4OyrWmpL4/nLySW40EUaY6nWV794nGgs29sMmhy7a6LE4lcO0a+ZvAR44TUIIDqgi9lf9hCPvVQWcyHERDFkmdt85bmHq1EK4nAcp+cQlgFE88SP2tu+xIJxU72NjIskW7HjgdhW55PaHs3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277252; c=relaxed/simple;
-	bh=dvWf7rOSpjr8S41nUyxLJC8aMoDgkiuXc4Rb69b79o0=;
+	s=arc-20240116; t=1757277255; c=relaxed/simple;
+	bh=XLpqoV3p7ineqnA0xhVJAl/Nwsc4wjfnZpy8dlajidM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qjg8L79t6OPPyZK/C+U4DVkiNnr7X/KxSOmg5KP8g54olVq9kQ2zWIfxkOWl4Nlt8v2IzfuQGnS+VnLVztz6EBsPMA0rqTpxuOSNw7woZJBJGBnZDHwQftYKmH6LT70odrCHNUP5LKKtcPrf8XCco5OUFC5QPHFEBtiTIM4NYlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5eG+vaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISWVH/LcuIhEvq0TjGyiL6EzDMWau4hXpd/gN/eZYZaUNFqmGbuv9840FRWWIWiuII4yWnqszZSCcMrk2eY8bO3F4lVWVldSar/yzAo39gPiGohIxWzCHAjvYNStJHchOZkuMqqazWLEyVjKDbVxdKQFcDFVw+arV7p4JRlaBvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGVvuSSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5eG+vaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD72C4CEF0;
-	Sun,  7 Sep 2025 20:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGVvuSSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC02C4CEF0;
+	Sun,  7 Sep 2025 20:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277252;
-	bh=dvWf7rOSpjr8S41nUyxLJC8aMoDgkiuXc4Rb69b79o0=;
+	s=korg; t=1757277255;
+	bh=XLpqoV3p7ineqnA0xhVJAl/Nwsc4wjfnZpy8dlajidM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5eG+vawvhYqX2otDcOwAo6CZuynbggDlNcRub6v6J+fPFjShpCI0mpspwThr0sZa
-	 mT+dRV+vxWX9K/arwjkz86v3yGTOrZNKsKKNR+GNi1ZNksB99H2Hxmf1OiySlHTM0d
-	 8Laa5nHfylLnHEycTOoT681YjmqFqn9yVKfj4Cdo=
+	b=gGVvuSSgEhJzqVTiZkgGEZPrAU5y9ODeNID0HGD4NHFP9/qubjuhx/Ror7Q89V1pw
+	 B1xQwvUeEosu5oo75ZZrOgUm+gtLWcy5GaPHXVZbdDqKBOxlnp30ZBfURUSnEpwF3B
+	 ozM+AxB/4KYiA0qZ7h7pqt6z4WIQPJ8NFC1Dud5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Abin Joseph <abin.joseph@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/175] net: atm: fix memory leak in atm_register_sysfs when device_register fail
-Date: Sun,  7 Sep 2025 21:58:01 +0200
-Message-ID: <20250907195616.870776805@linuxfoundation.org>
+Subject: [PATCH 6.12 087/175] net: xilinx: axienet: Add error handling for RX metadata pointer retrieval
+Date: Sun,  7 Sep 2025 21:58:02 +0200
+Message-ID: <20250907195616.894246168@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,75 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Abin Joseph <abin.joseph@amd.com>
 
-[ Upstream commit 0a228624bcc00af41f281a2a84c928595a74c17d ]
+[ Upstream commit 8bbceba7dc5090c00105e006ce28d1292cfda8dd ]
 
-When device_register() return error in atm_register_sysfs(), which can be
-triggered by kzalloc fail in device_private_init() or other reasons,
-kmemleak reports the following memory leaks:
+Add proper error checking for dmaengine_desc_get_metadata_ptr() which
+can return an error pointer and lead to potential crashes or undefined
+behaviour if the pointer retrieval fails.
 
-unreferenced object 0xffff88810182fb80 (size 8):
-  comm "insmod", pid 504, jiffies 4294852464
-  hex dump (first 8 bytes):
-    61 64 75 6d 6d 79 30 00                          adummy0.
-  backtrace (crc 14dfadaf):
-    __kmalloc_node_track_caller_noprof+0x335/0x450
-    kvasprintf+0xb3/0x130
-    kobject_set_name_vargs+0x45/0x120
-    dev_set_name+0xa9/0xe0
-    atm_register_sysfs+0xf3/0x220
-    atm_dev_register+0x40b/0x780
-    0xffffffffa000b089
-    do_one_initcall+0x89/0x300
-    do_init_module+0x27b/0x7d0
-    load_module+0x54cd/0x5ff0
-    init_module_from_file+0xe4/0x150
-    idempotent_init_module+0x32c/0x610
-    __x64_sys_finit_module+0xbd/0x120
-    do_syscall_64+0xa8/0x270
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Properly handle the error by unmapping DMA buffer, freeing the skb and
+returning early to prevent further processing with invalid data.
 
-When device_create_file() return error in atm_register_sysfs(), the same
-issue also can be triggered.
-
-Function put_device() should be called to release kobj->name memory and
-other device resource, instead of kfree().
-
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250901063537.1472221-1-wangliang74@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
+Signed-off-by: Abin Joseph <abin.joseph@amd.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20250903025213.3120181-1-abin.joseph@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/resources.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/atm/resources.c b/net/atm/resources.c
-index b19d851e1f443..7c6fdedbcf4e5 100644
---- a/net/atm/resources.c
-+++ b/net/atm/resources.c
-@@ -112,7 +112,9 @@ struct atm_dev *atm_dev_register(const char *type, struct device *parent,
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 1775e060d39d3..3339c5e1a57a9 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -1127,6 +1127,15 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
+ 						       &meta_max_len);
+ 	dma_unmap_single(lp->dev, skbuf_dma->dma_address, lp->max_frm_size,
+ 			 DMA_FROM_DEVICE);
++
++	if (IS_ERR(app_metadata)) {
++		if (net_ratelimit())
++			netdev_err(lp->ndev, "Failed to get RX metadata pointer\n");
++		dev_kfree_skb_any(skb);
++		lp->ndev->stats.rx_dropped++;
++		goto rx_submit;
++	}
++
+ 	/* TODO: Derive app word index programmatically */
+ 	rx_len = (app_metadata[LEN_APP] & 0xFFFF);
+ 	skb_put(skb, rx_len);
+@@ -1139,6 +1148,7 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
+ 	u64_stats_add(&lp->rx_bytes, rx_len);
+ 	u64_stats_update_end(&lp->rx_stat_sync);
  
- 	if (atm_proc_dev_register(dev) < 0) {
- 		pr_err("atm_proc_dev_register failed for dev %s\n", type);
--		goto out_fail;
-+		mutex_unlock(&atm_dev_mutex);
-+		kfree(dev);
-+		return NULL;
- 	}
- 
- 	if (atm_register_sysfs(dev, parent) < 0) {
-@@ -128,7 +130,7 @@ struct atm_dev *atm_dev_register(const char *type, struct device *parent,
- 	return dev;
- 
- out_fail:
--	kfree(dev);
-+	put_device(&dev->class_dev);
- 	dev = NULL;
- 	goto out;
- }
++rx_submit:
+ 	for (i = 0; i < CIRC_SPACE(lp->rx_ring_head, lp->rx_ring_tail,
+ 				   RX_BUF_NUM_DEFAULT); i++)
+ 		axienet_rx_submit_desc(lp->ndev);
 -- 
 2.50.1
 
