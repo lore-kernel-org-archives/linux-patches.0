@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D781DF246;
-	Sun,  7 Sep 2025 20:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8D11DF246;
+	Sun,  7 Sep 2025 20:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277303; cv=none; b=VWN/dzQn2GrAMxfWLUuxHEcJ6RUU5t8mxsFHFjyTlx1gr2+JkljIr+TB7YTxRuh+r6O49LzjHF+JuWrn1m0cDHpDRNePRJRASv9nTQ7AsdJqGjWTr+JjmoIB1GoeQLudJ2KiSqdZnBbKur25EiuicPR7lOlQWszCfovvEw0Bg/I=
+	t=1757277306; cv=none; b=t37NYvBxG/zExkyML/TRsT3SQHjDtJzMUta7CoCn23GkYUhcVdx8Hsu6jIZ0dapV0fKdskI6KEEtnjLZWA5YgEe1oFS3L1KS0evBJ9xAziXpUS2gPil7luPUbkZdX+XCgtSHbcK4kOOcHZnToghFa+mEY/g1SUIB99nGW0+SwWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277303; c=relaxed/simple;
-	bh=/2kg4pQ3bu1c9q3/jvngVWpQ9c++qRbKZr/DdJFBit0=;
+	s=arc-20240116; t=1757277306; c=relaxed/simple;
+	bh=heEaoSkwn5GQMvvP6zPpt0fQ6H9p83TKCY3rvhBJpQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r47wspEcX9o747HhKK+V+P4mq/Bq7b3oOQH7Gg1oSgnnJTLKCie12zsehBEXs6Pm5lWf8jKc9CnVODD1UV+D4U8AZ7HwlXL848lE+xll+btLqsYy9bekkBGSXq6cq6/UmIRuj1boOQwY/vzHc3hZJekoK/wwWxMPyL5CRzKQKBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QY818sQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEdS9Bf6vrSfapxBXWA0kiDuBBuwDW9CJUgIPAniBM0VbFhEOwxJaCtkapbhXrSFVV4M2Z4Ss6B8kWogIMwhQGlmNlMLvLv9vdxYtlxXGtDAZ7s+Zs+nhyF/va8TBqH/pBWQd7nptcTUAIgGX/FpPcMeisD8CIF+gmyo9eFXIoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2t0mgXc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QY818sQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8FAC4CEF0;
-	Sun,  7 Sep 2025 20:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2t0mgXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E71C4CEF0;
+	Sun,  7 Sep 2025 20:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277303;
-	bh=/2kg4pQ3bu1c9q3/jvngVWpQ9c++qRbKZr/DdJFBit0=;
+	s=korg; t=1757277306;
+	bh=heEaoSkwn5GQMvvP6zPpt0fQ6H9p83TKCY3rvhBJpQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QY818sQFQpPkFtBc1PdBoGi9BgPA9xLsERL8KmaBZ7StrbLMCtaNNOLRZhduItr9G
-	 rC90C4dpuu2sItUhqauG7k12Vcb4CK7IyvY+UUJbM+kG+b0WZyvE571JOjgOD/pxlY
-	 GpyavQBaguNuR22FnWbuKpOcjjFLRBB6ifUPJpEw=
+	b=z2t0mgXcrBCUzEFQu2XyhIt/06Su7+5ZY/NCdj+5A3Kcb1kvEiTHliZP3K64daM9d
+	 a5jlT2f27CQCVZBVnzMd6HEF3NiNhRYxbCLMDyrgVLYv98C/OZznEO48YMb53hJmpj
+	 AE5kZqvmhFz1ZYHszw5vGxe1tFYUxMAvbjh6cdP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Kumar <maheshkumar657g@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 132/175] ext4: avoid journaling sb update on error if journal is destroying
-Date: Sun,  7 Sep 2025 21:58:47 +0200
-Message-ID: <20250907195617.977825024@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 150/175] pcmcia: omap: Add missing check for platform_get_resource
+Date: Sun,  7 Sep 2025 21:59:05 +0200
+Message-ID: <20250907195618.404532410@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,165 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit ce2f26e73783b4a7c46a86e3af5b5c8de0971790 upstream.
+[ Upstream commit ecef14f70ec9344a10c817248d2ac6cddee5921e ]
 
-Presently we always BUG_ON if trying to start a transaction on a journal marked
-with JBD2_UNMOUNT, since this should never happen. However, while ltp running
-stress tests, it was observed that in case of some error handling paths, it is
-possible for update_super_work to start a transaction after the journal is
-destroyed eg:
+Add missing check for platform_get_resource() and return error if it fails
+to catch the error.
 
-(umount)
-ext4_kill_sb
-  kill_block_super
-    generic_shutdown_super
-      sync_filesystem /* commits all txns */
-      evict_inodes
-        /* might start a new txn */
-      ext4_put_super
-	flush_work(&sbi->s_sb_upd_work) /* flush the workqueue */
-        jbd2_journal_destroy
-          journal_kill_thread
-            journal->j_flags |= JBD2_UNMOUNT;
-          jbd2_journal_commit_transaction
-            jbd2_journal_get_descriptor_buffer
-              jbd2_journal_bmap
-                ext4_journal_bmap
-                  ext4_map_blocks
-                    ...
-                    ext4_inode_error
-                      ext4_handle_error
-                        schedule_work(&sbi->s_sb_upd_work)
-
-                                               /* work queue kicks in */
-                                               update_super_work
-                                                 jbd2_journal_start
-                                                   start_this_handle
-                                                     BUG_ON(journal->j_flags &
-                                                            JBD2_UNMOUNT)
-
-Hence, introduce a new mount flag to indicate journal is destroying and only do
-a journaled (and deferred) update of sb if this flag is not set. Otherwise, just
-fallback to an un-journaled commit.
-
-Further, in the journal destroy path, we have the following sequence:
-
-  1. Set mount flag indicating journal is destroying
-  2. force a commit and wait for it
-  3. flush pending sb updates
-
-This sequence is important as it ensures that, after this point, there is no sb
-update that might be journaled so it is safe to update the sb outside the
-journal. (To avoid race discussed in 2d01ddc86606)
-
-Also, we don't need a similar check in ext4_grp_locked_error since it is only
-called from mballoc and AFAICT it would be always valid to schedule work here.
-
-Fixes: 2d01ddc86606 ("ext4: save error info to sb through journal if available")
-Reported-by: Mahesh Kumar <maheshkumar657g@gmail.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/9613c465d6ff00cd315602f99283d5f24018c3f7.1742279837.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d87d44f7ab35 ("ARM: omap1: move CF chipselect setup to board file")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h      |    3 ++-
- fs/ext4/ext4_jbd2.h |   15 +++++++++++++++
- fs/ext4/super.c     |   16 ++++++++--------
- 3 files changed, 25 insertions(+), 9 deletions(-)
+ drivers/pcmcia/omap_cf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1823,7 +1823,8 @@ static inline int ext4_valid_inum(struct
-  */
- enum {
- 	EXT4_MF_MNTDIR_SAMPLED,
--	EXT4_MF_FC_INELIGIBLE	/* Fast commit ineligible */
-+	EXT4_MF_FC_INELIGIBLE,	/* Fast commit ineligible */
-+	EXT4_MF_JOURNAL_DESTROY	/* Journal is in process of destroying */
- };
+diff --git a/drivers/pcmcia/omap_cf.c b/drivers/pcmcia/omap_cf.c
+index 80137c7afe0d9..5b639c942f17a 100644
+--- a/drivers/pcmcia/omap_cf.c
++++ b/drivers/pcmcia/omap_cf.c
+@@ -215,6 +215,8 @@ static int __init omap_cf_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  
- static inline void ext4_set_mount_flag(struct super_block *sb, int bit)
---- a/fs/ext4/ext4_jbd2.h
-+++ b/fs/ext4/ext4_jbd2.h
-@@ -521,6 +521,21 @@ static inline int ext4_journal_destroy(s
- {
- 	int err = 0;
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!res)
++		return -EINVAL;
  
-+	/*
-+	 * At this point only two things can be operating on the journal.
-+	 * JBD2 thread performing transaction commit and s_sb_upd_work
-+	 * issuing sb update through the journal. Once we set
-+	 * EXT4_JOURNAL_DESTROY, new ext4_handle_error() calls will not
-+	 * queue s_sb_upd_work and ext4_force_commit() makes sure any
-+	 * ext4_handle_error() calls from the running transaction commit are
-+	 * finished. Hence no new s_sb_upd_work can be queued after we
-+	 * flush it here.
-+	 */
-+	ext4_set_mount_flag(sbi->s_sb, EXT4_MF_JOURNAL_DESTROY);
-+
-+	ext4_force_commit(sbi->s_sb);
-+	flush_work(&sbi->s_sb_upd_work);
-+
- 	err = jbd2_journal_destroy(journal);
- 	sbi->s_journal = NULL;
- 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -719,9 +719,13 @@ static void ext4_handle_error(struct sup
- 		 * In case the fs should keep running, we need to writeout
- 		 * superblock through the journal. Due to lock ordering
- 		 * constraints, it may not be safe to do it right here so we
--		 * defer superblock flushing to a workqueue.
-+		 * defer superblock flushing to a workqueue. We just need to be
-+		 * careful when the journal is already shutting down. If we get
-+		 * here in that case, just update the sb directly as the last
-+		 * transaction won't commit anyway.
- 		 */
--		if (continue_fs && journal)
-+		if (continue_fs && journal &&
-+		    !ext4_test_mount_flag(sb, EXT4_MF_JOURNAL_DESTROY))
- 			schedule_work(&EXT4_SB(sb)->s_sb_upd_work);
- 		else
- 			ext4_commit_super(sb);
-@@ -1306,7 +1310,6 @@ static void ext4_put_super(struct super_
- 	ext4_unregister_li_request(sb);
- 	ext4_quotas_off(sb, EXT4_MAXQUOTAS);
- 
--	flush_work(&sbi->s_sb_upd_work);
- 	destroy_workqueue(sbi->rsv_conversion_wq);
- 	ext4_release_orphan_info(sb);
- 
-@@ -1316,7 +1319,8 @@ static void ext4_put_super(struct super_
- 		if ((err < 0) && !aborted) {
- 			ext4_abort(sb, -err, "Couldn't clean up the journal");
- 		}
--	}
-+	} else
-+		flush_work(&sbi->s_sb_upd_work);
- 
- 	ext4_es_unregister_shrinker(sbi);
- 	timer_shutdown_sync(&sbi->s_err_report);
-@@ -4954,8 +4958,6 @@ static int ext4_load_and_init_journal(st
- 	return 0;
- 
- out:
--	/* flush s_sb_upd_work before destroying the journal. */
--	flush_work(&sbi->s_sb_upd_work);
- 	ext4_journal_destroy(sbi, sbi->s_journal);
- 	return -EINVAL;
- }
-@@ -5645,8 +5647,6 @@ failed_mount_wq:
- 	sbi->s_ea_block_cache = NULL;
- 
- 	if (sbi->s_journal) {
--		/* flush s_sb_upd_work before journal destroy. */
--		flush_work(&sbi->s_sb_upd_work);
- 		ext4_journal_destroy(sbi, sbi->s_journal);
- 	}
- failed_mount3a:
+ 	cf = kzalloc(sizeof *cf, GFP_KERNEL);
+ 	if (!cf)
+-- 
+2.51.0
+
 
 
