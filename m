@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2225B1DF246;
-	Sun,  7 Sep 2025 20:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A744315A;
+	Sun,  7 Sep 2025 20:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277491; cv=none; b=ahqRk9Z4ccxMraBR4TxQu+1tnYx6WtiAcrzKG/7Rodkd+/t1v8vS55v3yo4NKtAqK0XTGp5H1s1YizRcXBaM3w3r5bSZXIxV+TbF2HKc5xiJ+/jPF4T0fu9aDnQvXiRcOp+sFvoSVSWED3pRfBGwxKTmpCrommbDNXarXxoHLMg=
+	t=1757277494; cv=none; b=JSRTy5pCyE9gvX38TvuP3f6an2pPXUU5nSh4On2U7oSmILtjKLEuGtB6VtbDBo/gJTYrzNa2FsZYbgkklJkAbaTg1aszqySEqqFT89pNagJACtmyv2GfnWeXCst3KmEix2o0JL28MB6vkvoSFr6JBocxfak8zsr5awPyh8E7/M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277491; c=relaxed/simple;
-	bh=W2ptkzTShpI+ACNEns4ZfqhAjc6vYYabOsSaGl8aP7Q=;
+	s=arc-20240116; t=1757277494; c=relaxed/simple;
+	bh=mcVjB8BrVO4KdZRqIMJ9K1i3Bpmi7aDOxAADN5v26cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CsHa+VQTwHpC8LmiyivzccBV2qaldQkyTQhfRz6o5nwqPFV9q+dFl7q/AgAoLzithPmGNif3DLuq8xwVIJhLwzsCmBkpL/1f6jMeYI67Uf/Rn7fRG2FYcXJEhW8r2r0L0V3qdjGeuWXkegVhOAiAFf0IZfkJGTGB11vTFBH7Cgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFD5hhNS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhURiMU+tnbrAj7S1qHaeNRpMCRUVc8gkD4hCHfIgko9LoqNLaVqoM3JRtV5vM2FO2BPRyRQD5hallbcZK4QLI3tfaJy38uiOfMjM2vbEnNPj/n3sUpb9GLRa38BT7+UlFbrSDN5LwQesaMPhS4wWIwqWv1b1OkNScYyaruD/fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erb1lPzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFD5hhNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC35C4CEF0;
-	Sun,  7 Sep 2025 20:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erb1lPzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6008C4CEF0;
+	Sun,  7 Sep 2025 20:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277490;
-	bh=W2ptkzTShpI+ACNEns4ZfqhAjc6vYYabOsSaGl8aP7Q=;
+	s=korg; t=1757277494;
+	bh=mcVjB8BrVO4KdZRqIMJ9K1i3Bpmi7aDOxAADN5v26cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFD5hhNSDiJ/gkPFtTPH1nA8pzri7j3LPHNaWwkEuF3JqNz+vDeZzQSFxSYYEV3uR
-	 cgN7UgrBOTMAVWFfh6/Zv8TtKslRTyxbXW1FjZ5qnr7Ovg8/WNt/v5x8m0zPGa2qKF
-	 WDQkXzVJOEdT0fBxqn1Ne2o0K98Ss6+VcDW5RKVw=
+	b=erb1lPzV3rjPZgy7Leb7zG3QJ10VlMLF5doTNdRC4SJMLJ1TyzoVK8MCFdCz394sm
+	 oyHi8dDFjUNkQGaesYmSvI/58bCTqLFb83S+sl7H02fv3/LWxfWD3wVmsj6gpHXYlJ
+	 t7y3h78QObfjfiTyNBo4Mc72DoXvKXzrLT6htk0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janusz Dziedzic <janusz.dziedzic@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 032/183] wifi: mt76: mt7921: dont disconnect when CSA to DFS chan
-Date: Sun,  7 Sep 2025 21:57:39 +0200
-Message-ID: <20250907195616.539473739@linuxfoundation.org>
+Subject: [PATCH 6.16 033/183] wifi: mt76: mt7925: fix locking in mt7925_change_vif_links()
+Date: Sun,  7 Sep 2025 21:57:40 +0200
+Message-ID: <20250907195616.560824959@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,44 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janusz Dziedzic <janusz.dziedzic@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 87f38519d27a514c9909f84b8f1334125df9778e ]
+[ Upstream commit 9f15701370ec15fbf1f6a1cbbf584b0018d036b5 ]
 
-When station mode, don't disconnect when we get
-channel switch from AP to DFS channel. Most APs
-send CSA request after pass background CAC. In other
-case we should disconnect after detect beacon miss.
+&dev->mt76.mutex lock is taken using mt792x_mutex_acquire(dev) but not
+released in one of the error paths, add the unlock to fix it.
 
-Without patch when we get CSA to DFS channel get:
-"kernel: wlo1: preparing for channel switch failed, disconnecting"
-
-Fixes: 8aa2f59260eb ("wifi: mt76: mt7921: introduce CSA support")
-Signed-off-by: Janusz Dziedzic <janusz.dziedzic@gmail.com>
-Link: https://patch.msgid.link/20250716165443.28354-1-janusz.dziedzic@gmail.com
+Fixes: 5cd0bd815c8a ("wifi: mt76: mt7925: fix NULL deref check in mt7925_change_vif_links")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202503031055.3ZRqxhAl-lkp@intel.com/
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://patch.msgid.link/20250727140416.1153406-1-harshit.m.mogalapalli@oracle.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 77f73ae1d7ecc..f6b431c422ebc 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -1457,11 +1457,8 @@ static int mt7921_pre_channel_switch(struct ieee80211_hw *hw,
- 	if (vif->type != NL80211_IFTYPE_STATION || !vif->cfg.assoc)
- 		return -EOPNOTSUPP;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 5b001548dffce..328a06998c7b7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -2067,8 +2067,10 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 					     GFP_KERNEL);
+ 			mlink = devm_kzalloc(dev->mt76.dev, sizeof(*mlink),
+ 					     GFP_KERNEL);
+-			if (!mconf || !mlink)
++			if (!mconf || !mlink) {
++				mt792x_mutex_release(dev);
+ 				return -ENOMEM;
++			}
+ 		}
  
--	/* Avoid beacon loss due to the CAC(Channel Availability Check) time
--	 * of the AP.
--	 */
- 	if (!cfg80211_chandef_usable(hw->wiphy, &chsw->chandef,
--				     IEEE80211_CHAN_RADAR))
-+				     IEEE80211_CHAN_DISABLED))
- 		return -EOPNOTSUPP;
- 
- 	return 0;
+ 		mconfs[link_id] = mconf;
 -- 
 2.50.1
 
