@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D23AD528;
-	Sun,  7 Sep 2025 20:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C9B17BB21;
+	Sun,  7 Sep 2025 20:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276747; cv=none; b=f5ao2vmNNkOe4jZfh5xm+yXdBtBzLeFf885MgnX63IJ/TReRGIDnMt0FQw0KVzEcbdWS77TsADN0cfR7G0eAlM9s2ZzWyj4cZ09Nc1JeZv9WiM4FDma8EPv30T+2thDbybcoJYFoWHv0Z+RJelSFNCBcW9xOCDPkthxFCopDkys=
+	t=1757276752; cv=none; b=GzCaGFQxjMWjzHMJFEjEnEWHOhYvNeTxZV32eP0xC6tMp8xJYTncH8CfhwcYnz6hPNtH51w3c+tuKBRM3IPpIb7Vs5PIxFMyHT0RZxLfI6UDftZg89riqaXUlY95Li22q/FjcnSJTYaJOVKEQnHYaoIB5gWZ44qBP96RrWaitNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276747; c=relaxed/simple;
-	bh=NT5IFHJhD5L0oBD84LmdQrMCUL6eGV5MxZ5HCkasmSE=;
+	s=arc-20240116; t=1757276752; c=relaxed/simple;
+	bh=drMpN1R8JJSKJLcFFYNghgYBK/Plv1gag8zMOBldsn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWMAA8O3DsicEg7ESASV4srkHijsK2huQLvDhu4MDMVVhuvmvRnBTAZ5CdpwPuJO+EScVAJQCQ9e4c24r2zrkLYoclfGa8LW1EWY/G/3K2pFkEbuReLegkNR5OpcJAUpk4tpZzzpac+/gGAPHoAb6OH1qW9MretT6o6ELvcM5Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF732v1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H8a8ORj8IRTelhr969yEMd+3Zzq/GTdrEfq5L9pvHyYmrhrOwQLX4/5zktIAPgIgBZG0RrXQA6O4INXqgwYkqOHj5I1v/bw2mnKhv0n7SjBm+st/f5S4BZJ99+3WgYSA9R75R9ulWZrNoRPVGZy43w2CI46z9krTREaksTDahy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpMO8rIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF732v1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47D5C4CEF0;
-	Sun,  7 Sep 2025 20:25:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpMO8rIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F54C4CEF0;
+	Sun,  7 Sep 2025 20:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276747;
-	bh=NT5IFHJhD5L0oBD84LmdQrMCUL6eGV5MxZ5HCkasmSE=;
+	s=korg; t=1757276750;
+	bh=drMpN1R8JJSKJLcFFYNghgYBK/Plv1gag8zMOBldsn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XF732v1OhyW23XDg+jBRxW1nG7gnlD+ovMTtqjKJ86RMgBzzkgJbl2ahJzm9P/q+Y
-	 kaHyQBa4j4Utfwso8+D6ee1A7QfhNUcBViNz4xW+p/OxqPpqJ1PYHx+4ROkYRsUODM
-	 MW6y6whjgLpi8h+P6q3MspKXY6dozjCES6ZsVPUw=
+	b=kpMO8rIefcVPP2v3DvneSBcVa+orCdclEsymfTFk4ztkC9AYIaVvr9MbY4bi04OVy
+	 q7HLqiMaotrBaRr7HSMDbnOBgioGYluYM9QtvCIW36p/Y2w3IdekasRUpFUYu5MitS
+	 6T43B7WfY3t3SycsreXp4/3TglRexFQBjycgW1f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/121] drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv
-Date: Sun,  7 Sep 2025 21:58:51 +0200
-Message-ID: <20250907195612.290388636@linuxfoundation.org>
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 051/121] ALSA: usb-audio: Add mute TLV for playback volumes on some devices
+Date: Sun,  7 Sep 2025 21:58:07 +0200
+Message-ID: <20250907195611.136933589@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,84 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 1f403699c40f0806a707a9a6eed3b8904224021a ]
+commit 9c6182843b0d02ca04cc1d946954a65a2286c7db upstream.
 
-Using device_find_child() and of_find_device_by_node() to locate
-devices could cause an imbalance in the device's reference count.
-device_find_child() and of_find_device_by_node() both call
-get_device() to increment the reference count of the found device
-before returning the pointer. In mtk_drm_get_all_drm_priv(), these
-references are never released through put_device(), resulting in
-permanent reference count increments. Additionally, the
-for_each_child_of_node() iterator fails to release node references in
-all code paths. This leaks device node references when loop
-termination occurs before reaching MAX_CRTC. These reference count
-leaks may prevent device/node resources from being properly released
-during driver unbind operations.
+Applying the quirk of that, the lowest Playback mixer volume setting
+mutes the audio output, on more devices.
 
-As comment of device_find_child() says, 'NOTE: you will need to drop
-the reference with put_device() after use'.
-
-Cc: stable@vger.kernel.org
-Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250812071932.471730-1-make24@iscas.ac.cn/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/2514
+Cc: <stable@vger.kernel.org>
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Link: https://patch.msgid.link/20250822-mixer-quirk-v1-1-b19252239c1c@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ sound/usb/mixer_quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -365,19 +365,19 @@ static bool mtk_drm_get_all_drm_priv(str
- 
- 		of_id = of_match_node(mtk_drm_of_ids, node);
- 		if (!of_id)
--			continue;
-+			goto next_put_node;
- 
- 		pdev = of_find_device_by_node(node);
- 		if (!pdev)
--			continue;
-+			goto next_put_node;
- 
- 		drm_dev = device_find_child(&pdev->dev, NULL, mtk_drm_match);
- 		if (!drm_dev)
--			continue;
-+			goto next_put_device_pdev_dev;
- 
- 		temp_drm_priv = dev_get_drvdata(drm_dev);
- 		if (!temp_drm_priv)
--			continue;
-+			goto next_put_device_drm_dev;
- 
- 		if (temp_drm_priv->data->main_len)
- 			all_drm_priv[CRTC_MAIN] = temp_drm_priv;
-@@ -389,10 +389,17 @@ static bool mtk_drm_get_all_drm_priv(str
- 		if (temp_drm_priv->mtk_drm_bound)
- 			cnt++;
- 
--		if (cnt == MAX_CRTC) {
--			of_node_put(node);
-+next_put_device_drm_dev:
-+		put_device(drm_dev);
-+
-+next_put_device_pdev_dev:
-+		put_device(&pdev->dev);
-+
-+next_put_node:
-+		of_node_put(node);
-+
-+		if (cnt == MAX_CRTC)
- 			break;
--		}
- 	}
- 
- 	if (drm_priv->data->mmsys_dev_num == cnt) {
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -3631,9 +3631,11 @@ void snd_usb_mixer_fu_apply_quirk(struct
+ 			snd_dragonfly_quirk_db_scale(mixer, cval, kctl);
+ 		break;
+ 	/* lowest playback value is muted on some devices */
++	case USB_ID(0x0572, 0x1b09): /* Conexant Systems (Rockwell), Inc. */
+ 	case USB_ID(0x0d8c, 0x000c): /* C-Media */
+ 	case USB_ID(0x0d8c, 0x0014): /* C-Media */
+ 	case USB_ID(0x19f7, 0x0003): /* RODE NT-USB */
++	case USB_ID(0x2d99, 0x0026): /* HECATE G2 GAMING HEADSET */
+ 		if (strstr(kctl->id.name, "Playback"))
+ 			cval->min_mute = 1;
+ 		break;
 
 
