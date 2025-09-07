@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860221F63CD;
-	Sun,  7 Sep 2025 20:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BD44315A;
+	Sun,  7 Sep 2025 20:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277625; cv=none; b=qicExepqvbIvzzU4l1h20FRe+79Knhlbzuca3G+c/V1cingECsUtoMRJRwar8Nqqskg2Y3kYz3aT+KXFe3BWp3wRM5JTelrdijrkWlZ9NXIjDf8Vf9ySBzHE2NoND7IXpyRTJGz9FMFEEP4eq2zfWMDbPYjdcrXe+RuHhRzqBWw=
+	t=1757277628; cv=none; b=Cmaag+oygAhv4VKJpMwqD4xqcEbh8OsDpcYNOKarYN7+IE17Ffp61tNljdv2jef7yytIVNnbJbCu31Sz0qkAKUhL++9i1gU7I0MsKJdNpd9V3gUvOhk1HGucf+N7DN+J9DIL20dwY7kPe8IPS5SHMvJqv4sHG1ksXeZwvcTi2ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277625; c=relaxed/simple;
-	bh=F0iX5oX9EWX6wxQThbz6RqreE9OCml6hRmGKaF9S69A=;
+	s=arc-20240116; t=1757277628; c=relaxed/simple;
+	bh=nKv7B4R20dIFycsvGzhoX4rZI2rXTmhvFKSXzc20Sgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoEOk5yT3IPUcM1SWCfTJGLs0IvPVsrDnzSpXMEAG1HKX3W8KPQqYjr7Embf/sVoYQ05Uy2aXftXA6GTIkVDy8I4l1s/gHpPL7aV3+MVnOqZ4+FQbE7an81ERr3dZsFSZoVRTYToTeBC2uA3KxPV9wafBEzV31vRkbnOYy4InwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fT5/bPpI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O0zTbhOIU5z2yqeQnNTNTZMVLA1Pb07uKZa1A/9UlvGKv1vDelqd4lbWfzhpS9xkGxpO0CP0N64yA1rOnYgiFdMVB9nUJvN365ObXB3r7wNfGGUNIyJyyburnKVUmA+z99dIEo68oXUBN5KCaZLojV13/+9Reg4etH/qTp7nCPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icgqi5Ox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT5/bPpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BDAC4CEF0;
-	Sun,  7 Sep 2025 20:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icgqi5Ox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509B7C4CEF0;
+	Sun,  7 Sep 2025 20:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277625;
-	bh=F0iX5oX9EWX6wxQThbz6RqreE9OCml6hRmGKaF9S69A=;
+	s=korg; t=1757277628;
+	bh=nKv7B4R20dIFycsvGzhoX4rZI2rXTmhvFKSXzc20Sgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fT5/bPpIMoyzNGR8QUzoBrbxipOUYyCAKj3eOWbyagWSpMLjxZXJ7LrcRwujtXKWS
-	 WDOZErHdO5X80yRKttvy4nu14QDUWbcYm5EMYX4M3uC9t8phSgU/jsSxBEEcx/cLDU
-	 Rl0vBv625P6nMbfTY4cJ+/9PGl84EYf2Gs/Iq7Z8=
+	b=icgqi5OxBEu749WkR2d5qyfDAlUEo+T+r/1Z1RUBIsll5/+fc/DpkZ8kpxqwLuVFx
+	 PwjAwOd38vyTnH4wc/WC1wVr+ga53JUcR6pIAUlEHlO0WtWO6W3cFDOZRmTwq4y+Tc
+	 zCqZwgcCpmFJJz5UjPeX5KS3bL7WgD+ozSt5qBYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@csie.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Ryan Wanner <Ryan.Wanner@microchip.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 028/183] arm64: dts: rockchip: Add supplies for eMMC on rk3588-orangepi-5
-Date: Sun,  7 Sep 2025 21:57:35 +0200
-Message-ID: <20250907195616.446030837@linuxfoundation.org>
+Subject: [PATCH 6.16 029/183] ARM: dts: microchip: sama7d65: Force SDMMC Legacy mode
+Date: Sun,  7 Sep 2025 21:57:36 +0200
+Message-ID: <20250907195616.469953749@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Ryan Wanner <Ryan.Wanner@microchip.com>
 
-[ Upstream commit 2dea24df234940b27d378f786933dc10f33de6b8 ]
+[ Upstream commit 217efb440933bf97a78ef328b211d8a39f4ff171 ]
 
-The eMMC description is missing both vmmc and vqmmc supplies.
+The SDMMC in this IP currently only supports legacy mode
+due to a hardware quirk, setting the flags to reflect the limitation.
 
-Add them to complete the description.
-
-Fixes: 236d225e1ee7 ("arm64: dts: rockchip: Add board device tree for rk3588-orangepi-5-plus")
-Fixes: ea63f4666e48 ("arm64: dts: rockchip: refactor common rk3588-orangepi-5.dtsi")
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://lore.kernel.org/r/20250821052939.1869171-1-wens@kernel.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: deaa14ab6b06 ("ARM: dts: microchip: add support for sama7d65_curiosity board")
+Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20250819170528.126010-1-Ryan.Wanner@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi | 2 ++
+ arch/arm/boot/dts/microchip/at91-sama7d65_curiosity.dts | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi
-index 91d56c34a1e45..8a8f3b26754d7 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi
-@@ -365,6 +365,8 @@ &sdhci {
- 	max-frequency = <200000000>;
- 	mmc-hs400-1_8v;
- 	mmc-hs400-enhanced-strobe;
-+	vmmc-supply = <&vcc_3v3_s3>;
-+	vqmmc-supply = <&vcc_1v8_s3>;
- 	status = "okay";
- };
+diff --git a/arch/arm/boot/dts/microchip/at91-sama7d65_curiosity.dts b/arch/arm/boot/dts/microchip/at91-sama7d65_curiosity.dts
+index 53a657cf4efba..dfe1f0616a810 100644
+--- a/arch/arm/boot/dts/microchip/at91-sama7d65_curiosity.dts
++++ b/arch/arm/boot/dts/microchip/at91-sama7d65_curiosity.dts
+@@ -352,6 +352,8 @@ &rtt {
  
+ &sdmmc1 {
+ 	bus-width = <4>;
++	no-1-8-v;
++	sdhci-caps-mask = <0x0 0x00200000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_sdmmc1_default>;
+ 	status = "okay";
 -- 
 2.50.1
 
