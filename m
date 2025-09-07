@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9569B14BFA2;
-	Sun,  7 Sep 2025 20:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81D814BFA2;
+	Sun,  7 Sep 2025 20:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276275; cv=none; b=PvODqiLZSed1sDbhw4W1EacSC79A31dR7m4+TxuAIu8Diy6mv4K39asAXWAIBefIyaBp0DEqCS+VFK07Rr/8Rg+m5IVhLYrudHr//dik9wOnND+bp9MPNvGXhzBeJFukMF5u8pf5aQke9c+Bje8jmOzf7GytpaTZQ3r9HoVjLc4=
+	t=1757276278; cv=none; b=pHGa4BsUfFWL8aM3dUIx1M67nADm2BTrhQbyvDrC896j4idyPXIIv9Ofs9jJMz/3YJibsZTLK5h1L+EBvgrNuOwIvrsFKAsHnjPGa6vSFuzAr+yNOO68BeNgkZAuWdMuPKVVxA05K22Wt0/hkM/nhuLL75pFMdmmY7nNe9aNt5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276275; c=relaxed/simple;
-	bh=P0F6xxlV7Yoag49kvrpzB/O4vUVO1FX2s4ZvTjso9PI=;
+	s=arc-20240116; t=1757276278; c=relaxed/simple;
+	bh=ChCpEGZGyEQ9YMuFvcmu7GPLbB+FArCMCnIQ72d9Owo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClE9Us/BSa4J2d/v9UTw9EmyHZTJFKzr5jaMvvZKH+9LPdPGTMR/coBT48NvM6LPb8do/8tZjRoABeijM84/NwCPEK5hp3U2wzRZUDLtkRvxbOLVZeJcdC07Hdfmgal9Pk5GJ5HdzGMdADbEUX/ZYANFhy+UDBM0NnGYtVXbowE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MhYUfTp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oUah0NTZyPNU4Hzl44tKzB4ThGpL7Dw35Mrjg/bs1/mlTpuDdtTOBpvYhkt3yrx9ma3GHYOBV+pMecEihfDXIBKbZPJ+pZhb8lICZfMqXk7IPqjvNIjRST/7DZKSWVlpcXy12hoANQwX+eqG7Ug2JJVmDtmhF6yTy5oyPpIu1wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXmS8eG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MhYUfTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67C4C4CEF0;
-	Sun,  7 Sep 2025 20:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXmS8eG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A577C4CEF0;
+	Sun,  7 Sep 2025 20:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276275;
-	bh=P0F6xxlV7Yoag49kvrpzB/O4vUVO1FX2s4ZvTjso9PI=;
+	s=korg; t=1757276278;
+	bh=ChCpEGZGyEQ9YMuFvcmu7GPLbB+FArCMCnIQ72d9Owo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1MhYUfTp8MVCK2IXrB3rJBCi4iOAHJh2vW05bwupo6zfLyfXpTE3XZyWxEhWtlMQD
-	 FRiPCKIiPlHq9UjX9VBK3YoZxLlSGWcz4gdV9joCn+3E0Tpod+GCrwmsCAVezIKeKK
-	 aeEq4jmot0/iCv3kcRj+or5f3lMWTH/smMPqyfrE=
+	b=BXmS8eG6HiSZLMpx1NhLO+pyTeoVzL+z/qsAtVFBShdrFzkN28Qv9vSrqOwr+Ijtg
+	 EjpS3MzT80c2HLhbHQpQSWOoMFct3IkOILl01Uc0PPLPMy8tMvKG3zfBHstBYjHSuQ
+	 jbco/0uz8nwcsR34lgX0ixFQNsoCPn5oFEBHz6t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Makar Semyonov <m.semenov@tssltd.ru>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 051/104] cifs: prevent NULL pointer dereference in UTF16 conversion
-Date: Sun,  7 Sep 2025 21:58:08 +0200
-Message-ID: <20250907195609.012822604@linuxfoundation.org>
+	Mikael Wessel <post@mikaelkw.online>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.1 052/104] e1000e: fix heap overflow in e1000_set_eeprom
+Date: Sun,  7 Sep 2025 21:58:09 +0200
+Message-ID: <20250907195609.037868703@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -50,39 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Makar Semyonov <m.semenov@tssltd.ru>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-commit 70bccd9855dae56942f2b18a08ba137bb54093a0 upstream.
+commit 90fb7db49c6dbac961c6b8ebfd741141ffbc8545 upstream.
 
-There can be a NULL pointer dereference bug here. NULL is passed to
-__cifs_sfu_make_node without checks, which passes it unchecked to
-cifs_strndup_to_utf16, which in turn passes it to
-cifs_local_to_utf16_bytes where '*from' is dereferenced, causing a crash.
+Fix a possible heap overflow in e1000_set_eeprom function by adding
+input validation for the requested length of the change in the EEPROM.
+In addition, change the variable type from int to size_t for better
+code practices and rearrange declarations to RCT.
 
-This patch adds a check for NULL 'src' in cifs_strndup_to_utf16 and
-returns NULL early to prevent dereferencing NULL pointer.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-
-Signed-off-by: Makar Semyonov <m.semenov@tssltd.ru>
 Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: bc7f75fa9788 ("[E1000E]: New pci-express e1000 driver (currently for ICH9 devices only)")
+Co-developed-by: Mikael Wessel <post@mikaelkw.online>
+Signed-off-by: Mikael Wessel <post@mikaelkw.online>
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifs_unicode.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/e1000e/ethtool.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cifs_unicode.c
-+++ b/fs/smb/client/cifs_unicode.c
-@@ -619,6 +619,9 @@ cifs_strndup_to_utf16(const char *src, c
- 	int len;
- 	__le16 *dst;
+--- a/drivers/net/ethernet/intel/e1000e/ethtool.c
++++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
+@@ -559,12 +559,12 @@ static int e1000_set_eeprom(struct net_d
+ {
+ 	struct e1000_adapter *adapter = netdev_priv(netdev);
+ 	struct e1000_hw *hw = &adapter->hw;
++	size_t total_len, max_len;
+ 	u16 *eeprom_buff;
+-	void *ptr;
+-	int max_len;
++	int ret_val = 0;
+ 	int first_word;
+ 	int last_word;
+-	int ret_val = 0;
++	void *ptr;
+ 	u16 i;
  
-+	if (!src)
-+		return NULL;
+ 	if (eeprom->len == 0)
+@@ -579,6 +579,10 @@ static int e1000_set_eeprom(struct net_d
+ 
+ 	max_len = hw->nvm.word_size * 2;
+ 
++	if (check_add_overflow(eeprom->offset, eeprom->len, &total_len) ||
++	    total_len > max_len)
++		return -EFBIG;
 +
- 	len = cifs_local_to_utf16_bytes(src, maxlen, cp);
- 	len += 2; /* NULL */
- 	dst = kmalloc(len, GFP_KERNEL);
+ 	first_word = eeprom->offset >> 1;
+ 	last_word = (eeprom->offset + eeprom->len - 1) >> 1;
+ 	eeprom_buff = kmalloc(max_len, GFP_KERNEL);
 
 
