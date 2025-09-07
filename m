@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EA017BB21;
-	Sun,  7 Sep 2025 20:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E812212560;
+	Sun,  7 Sep 2025 20:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276953; cv=none; b=vEYRG4t1n8LHvbYWX0oxP1p34pwchk8YQKkdieeC4H302C2PFOZxrNeYzQV6p10d/Fo84Nj3qNUmjausOmDl5d4CPjUDYOFcENAtwBzbYvKq9lXv2MLumbyDyBbKMz8crE/M87JucNCcYErZj6V81UOyLpe0HWUKz1ZqB1SSbv0=
+	t=1757276958; cv=none; b=NmIZ/rCHUkC6tQs2XksvVgwMljJh9HeUrjlia0Rci04hoX0VPBYEEG0L/rGerizkH2FVctHT2uLQtTXIW9HO+8qO/Z3X0F4OJOSJUyTXmXzOv0JNFfbNLg+Ud2ch5E5Of6K8DWYu6L8JaX3iSgE22qewyTsSDfIL8Uglec6T+s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276953; c=relaxed/simple;
-	bh=hTECp/hoSmq+G1ahONfRrQxLeiXTXfNkfAEV+vRD5y8=;
+	s=arc-20240116; t=1757276958; c=relaxed/simple;
+	bh=HPzPyrG2kNU671PJQ7cdj67D+DFG3IbIwIy4mPjVFy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcXfv6pvt0FR5tTLkIGHaEOCWNLRnNl8cM/4HJHaf5JGNyh1xRp9TxEpwxhVHIuLjs45TEUZK/ulM7cYgqV2amh3jKAVPUlD97io08Sc2xEh8FejQzIrQqK9BOLafmtmYbpWJhvdLrgcL9b2KO3fYx6yZfIN9ZcNeuT63zzXI4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNZHhnJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gsxqD7B/woi7Eml66SPm6lhaw8DxVC65jOs0W4yN147zkY/1sTipaQEgbzkrO1u8PwN8HyqJAA3rB/ktP4+LW0s1nikHyseOGzxjQkKv8C6g64+rLqfxlkhORc5xujmP4vnSt/wZ3qa36TsFw8DEdhqaAQ0Y6HwvqqYj5Nug3hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDrFO6wy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNZHhnJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223BAC4CEF0;
-	Sun,  7 Sep 2025 20:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDrFO6wy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6C5C4CEF0;
+	Sun,  7 Sep 2025 20:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276953;
-	bh=hTECp/hoSmq+G1ahONfRrQxLeiXTXfNkfAEV+vRD5y8=;
+	s=korg; t=1757276956;
+	bh=HPzPyrG2kNU671PJQ7cdj67D+DFG3IbIwIy4mPjVFy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNZHhnJyJd1IVWUtt2oH1aAwOR3rCEXbCsKTNUR0EL5gA+9d8Fz81nG9jXnJO9HT/
-	 oNziEDqRu0lXZq6YCt9PLFzgobxK+t8iCnAo6yjQZZV52y52NfN7TCBE42oR5LmG/Z
-	 vW6J438JJG+DmvL6zfQFCmmysWnHU/gyTEZF/y5w=
+	b=QDrFO6wyYn1u7KFcSuk5GSkajWs4y4eP+IbGnL7mhnCZM55Oc8gmT+GacLnC8BuHx
+	 jsyqlmGrK5i7vFdAaoSxJaTIJVRPTPGaMUJerGejVjUWWvPGtYPIgE5I22+bJAWzRx
+	 Xuqc+v4zurEqAi5t/aLduFUnzkqSMbgFXtTcpLII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ivan Pravdin <ipravdin.official@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/175] wifi: iwlwifi: uefi: check DSM item validity
-Date: Sun,  7 Sep 2025 21:57:16 +0200
-Message-ID: <20250907195615.828538552@linuxfoundation.org>
+Subject: [PATCH 6.12 042/175] Bluetooth: vhci: Prevent use-after-free by removing debugfs files early
+Date: Sun,  7 Sep 2025 21:57:17 +0200
+Message-ID: <20250907195615.850381314@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -51,41 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ivan Pravdin <ipravdin.official@gmail.com>
 
-[ Upstream commit 1d33694462fa7da451846c39d653585b61375992 ]
+[ Upstream commit 28010791193a4503f054e8d69a950ef815deb539 ]
 
-The first array index is a bitmap indicating which of the
-other values are valid. Check that bitmap before returning
-a value.
+Move the creation of debugfs files into a dedicated function, and ensure
+they are explicitly removed during vhci_release(), before associated
+data structures are freed.
 
-Fixes: fc7214c3c986 ("wifi: iwlwifi: read DSM functions from UEFI")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220085
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250828095500.59ec52ff865e.I9e11f497a029eb38f481b2c90c43c0935285216d@changeid
+Previously, debugfs files such as "force_suspend", "force_wakeup", and
+others were created under hdev->debugfs but not removed in
+vhci_release(). Since vhci_release() frees the backing vhci_data
+structure, any access to these files after release would result in
+use-after-free errors.
+
+Although hdev->debugfs is later freed in hci_release_dev(), user can
+access files after vhci_data is freed but before hdev->debugfs is
+released.
+
+Fixes: ab4e4380d4e1 ("Bluetooth: Add vhci devcoredump support")
+Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/uefi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/bluetooth/hci_vhci.c | 57 ++++++++++++++++++++++++++----------
+ 1 file changed, 41 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-index 86d6286a15378..e5fbb5fcc4abc 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
-@@ -741,6 +741,12 @@ int iwl_uefi_get_dsm(struct iwl_fw_runtime *fwrt, enum iwl_dsm_funcs func,
- 		goto out;
+diff --git a/drivers/bluetooth/hci_vhci.c b/drivers/bluetooth/hci_vhci.c
+index 9ac22e4a070be..59872e73c1878 100644
+--- a/drivers/bluetooth/hci_vhci.c
++++ b/drivers/bluetooth/hci_vhci.c
+@@ -380,6 +380,28 @@ static const struct file_operations force_devcoredump_fops = {
+ 	.write		= force_devcd_write,
+ };
+ 
++static void vhci_debugfs_init(struct vhci_data *data)
++{
++	struct hci_dev *hdev = data->hdev;
++
++	debugfs_create_file("force_suspend", 0644, hdev->debugfs, data,
++			    &force_suspend_fops);
++
++	debugfs_create_file("force_wakeup", 0644, hdev->debugfs, data,
++			    &force_wakeup_fops);
++
++	if (IS_ENABLED(CONFIG_BT_MSFTEXT))
++		debugfs_create_file("msft_opcode", 0644, hdev->debugfs, data,
++				    &msft_opcode_fops);
++
++	if (IS_ENABLED(CONFIG_BT_AOSPEXT))
++		debugfs_create_file("aosp_capable", 0644, hdev->debugfs, data,
++				    &aosp_capable_fops);
++
++	debugfs_create_file("force_devcoredump", 0644, hdev->debugfs, data,
++			    &force_devcoredump_fops);
++}
++
+ static int __vhci_create_device(struct vhci_data *data, __u8 opcode)
+ {
+ 	struct hci_dev *hdev;
+@@ -433,22 +455,8 @@ static int __vhci_create_device(struct vhci_data *data, __u8 opcode)
+ 		return -EBUSY;
  	}
  
-+	if (!(data->functions[DSM_FUNC_QUERY] & BIT(func))) {
-+		IWL_DEBUG_RADIO(fwrt, "DSM func %d not in 0x%x\n",
-+				func, data->functions[DSM_FUNC_QUERY]);
-+		goto out;
-+	}
+-	debugfs_create_file("force_suspend", 0644, hdev->debugfs, data,
+-			    &force_suspend_fops);
+-
+-	debugfs_create_file("force_wakeup", 0644, hdev->debugfs, data,
+-			    &force_wakeup_fops);
+-
+-	if (IS_ENABLED(CONFIG_BT_MSFTEXT))
+-		debugfs_create_file("msft_opcode", 0644, hdev->debugfs, data,
+-				    &msft_opcode_fops);
+-
+-	if (IS_ENABLED(CONFIG_BT_AOSPEXT))
+-		debugfs_create_file("aosp_capable", 0644, hdev->debugfs, data,
+-				    &aosp_capable_fops);
+-
+-	debugfs_create_file("force_devcoredump", 0644, hdev->debugfs, data,
+-			    &force_devcoredump_fops);
++	if (!IS_ERR_OR_NULL(hdev->debugfs))
++		vhci_debugfs_init(data);
+ 
+ 	hci_skb_pkt_type(skb) = HCI_VENDOR_PKT;
+ 
+@@ -650,6 +658,21 @@ static int vhci_open(struct inode *inode, struct file *file)
+ 	return 0;
+ }
+ 
++static void vhci_debugfs_remove(struct hci_dev *hdev)
++{
++	debugfs_lookup_and_remove("force_suspend", hdev->debugfs);
 +
- 	*value = data->functions[func];
- 	ret = 0;
- out:
++	debugfs_lookup_and_remove("force_wakeup", hdev->debugfs);
++
++	if (IS_ENABLED(CONFIG_BT_MSFTEXT))
++		debugfs_lookup_and_remove("msft_opcode", hdev->debugfs);
++
++	if (IS_ENABLED(CONFIG_BT_AOSPEXT))
++		debugfs_lookup_and_remove("aosp_capable", hdev->debugfs);
++
++	debugfs_lookup_and_remove("force_devcoredump", hdev->debugfs);
++}
++
+ static int vhci_release(struct inode *inode, struct file *file)
+ {
+ 	struct vhci_data *data = file->private_data;
+@@ -661,6 +684,8 @@ static int vhci_release(struct inode *inode, struct file *file)
+ 	hdev = data->hdev;
+ 
+ 	if (hdev) {
++		if (!IS_ERR_OR_NULL(hdev->debugfs))
++			vhci_debugfs_remove(hdev);
+ 		hci_unregister_dev(hdev);
+ 		hci_free_dev(hdev);
+ 	}
 -- 
 2.50.1
 
