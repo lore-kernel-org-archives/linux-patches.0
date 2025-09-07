@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED99C1F63CD;
-	Sun,  7 Sep 2025 20:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B321F63CD;
+	Sun,  7 Sep 2025 20:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277826; cv=none; b=VovgW5O+GQA7/Hg/55M+29U1jec9SGh4SQU7wQBcDXSxNvBFRH4U9IQ9IqjNRMVyXyhNNzPV3UvzhuryCUrW82wDJlHxxJKaI7gcECBJuFmYaiibQ9X6nkF8N++McM4ElCdY3YBONvSlnPIjMBfbys5nnowlhm1VdkX5FVXU5as=
+	t=1757277829; cv=none; b=eC+8idjeDD2/vowUBf8knxrEtTmnDJuZmXoDNJMpd6GtXFlE8z9WE/+1cs0eQlknib2jwW19Dt+CBNpt/6qELj+LsgMjBdAni20bzGANTpdhymnjcCMW/hTdkPb+fSPdWTJZG7wqioHe+DzfbLrKvaYtHTQnt+qUPxJQlCzCBEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277826; c=relaxed/simple;
-	bh=AVpvz9iepwxd1Dmv1PJlwGvbn7XOaZPUwHOEcHLhAIc=;
+	s=arc-20240116; t=1757277829; c=relaxed/simple;
+	bh=SGmjffX5fuhUk1osPn5fUmhQgzZdLH7cE47dPbTQUFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6+H687iHFeZRmHljTOtrr7+NDAdva/I2Q+FF916l003PYrhGLV/1kXta+rUqUu346XlOS/+9B+ETyg1xPz7XdX0pnzT8UIc4HURMZMu4yIsm5ug/E6X3fWHWt75s8OEFXoQIi3bsg1DHxGsBvBIVWTCoxwao32uwqdOD/Cls9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEt2V91t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O++bum15O5PnSHgzKH5jyyvhXWkEXRfhfBuFLH4ZbLprAjwWDq7If98hJMiqSk/t72oUr2wytDMcdmPH8+i4o6uRzmUmvbxmKxn5YUDxpsfHNOw6Xy+gR7hN5vNNqb94ilLnblcPLLavqeokjcg646JLwpl7T+xjj9bKjjz54/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9Axsujq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEt2V91t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4906DC4CEF0;
-	Sun,  7 Sep 2025 20:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9Axsujq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBB0C4CEF0;
+	Sun,  7 Sep 2025 20:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277825;
-	bh=AVpvz9iepwxd1Dmv1PJlwGvbn7XOaZPUwHOEcHLhAIc=;
+	s=korg; t=1757277829;
+	bh=SGmjffX5fuhUk1osPn5fUmhQgzZdLH7cE47dPbTQUFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEt2V91tTEz5ooo1yS3fi+NpuMqfqaOk28pHZ1lYEU2kmnzgnYoNNu3NCRuL3WB3f
-	 GZHG7lrt7iE/iTfAHpWetrGiT0QCkABTtT6/qcWcUz5Cuud2gac1ArDqnC5Z9i4c6u
-	 lARsbqrXWM7+l/po1YdgVTjpih42j4KNl5RA+zSs=
+	b=j9AxsujqDMtwN2RW+6GNGfyhg3Tr5cVzT5C/L4hKN4sZk61BJ2OvCP/cyqLaepcee
+	 RzmB9k0uZAGeJGscEkFpxFdjs+/LjzdmXE2r480vc1jSOdqV+8efAe+DeAWSYKjMm1
+	 EcPLeQNtg/kncQtoHtXPb4hWx17ly1nq4cnRTE+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fort <disclosure@aisle.com>,
-	Stanislav Fort <stanislav.fort@aisle.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.16 135/183] batman-adv: fix OOB read/write in network-coding decode
-Date: Sun,  7 Sep 2025 21:59:22 +0200
-Message-ID: <20250907195619.001388227@linuxfoundation.org>
+	Makar Semyonov <m.semenov@tssltd.ru>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.16 136/183] cifs: prevent NULL pointer dereference in UTF16 conversion
+Date: Sun,  7 Sep 2025 21:59:23 +0200
+Message-ID: <20250907195619.024272252@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,44 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fort <stanislav.fort@aisle.com>
+From: Makar Semyonov <m.semenov@tssltd.ru>
 
-commit d77b6ff0ce35a6d0b0b7b9581bc3f76d041d4087 upstream.
+commit 70bccd9855dae56942f2b18a08ba137bb54093a0 upstream.
 
-batadv_nc_skb_decode_packet() trusts coded_len and checks only against
-skb->len. XOR starts at sizeof(struct batadv_unicast_packet), reducing
-payload headroom, and the source skb length is not verified, allowing an
-out-of-bounds read and a small out-of-bounds write.
+There can be a NULL pointer dereference bug here. NULL is passed to
+__cifs_sfu_make_node without checks, which passes it unchecked to
+cifs_strndup_to_utf16, which in turn passes it to
+cifs_local_to_utf16_bytes where '*from' is dereferenced, causing a crash.
 
-Validate that coded_len fits within the payload area of both destination
-and source sk_buffs before XORing.
+This patch adds a check for NULL 'src' in cifs_strndup_to_utf16 and
+returns NULL early to prevent dereferencing NULL pointer.
 
-Fixes: 2df5278b0267 ("batman-adv: network coding - receive coded packets and decode them")
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+
+Signed-off-by: Makar Semyonov <m.semenov@tssltd.ru>
 Cc: stable@vger.kernel.org
-Reported-by: Stanislav Fort <disclosure@aisle.com>
-Signed-off-by: Stanislav Fort <stanislav.fort@aisle.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/network-coding.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/client/cifs_unicode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/batman-adv/network-coding.c
-+++ b/net/batman-adv/network-coding.c
-@@ -1687,7 +1687,12 @@ batadv_nc_skb_decode_packet(struct batad
+--- a/fs/smb/client/cifs_unicode.c
++++ b/fs/smb/client/cifs_unicode.c
+@@ -629,6 +629,9 @@ cifs_strndup_to_utf16(const char *src, c
+ 	int len;
+ 	__le16 *dst;
  
- 	coding_len = ntohs(coded_packet_tmp.coded_len);
- 
--	if (coding_len > skb->len)
-+	/* ensure dst buffer is large enough (payload only) */
-+	if (coding_len + h_size > skb->len)
++	if (!src)
 +		return NULL;
 +
-+	/* ensure src buffer is large enough (payload only) */
-+	if (coding_len + h_size > nc_packet->skb->len)
- 		return NULL;
- 
- 	/* Here the magic is reversed:
+ 	len = cifs_local_to_utf16_bytes(src, maxlen, cp);
+ 	len += 2; /* NULL */
+ 	dst = kmalloc(len, GFP_KERNEL);
 
 
