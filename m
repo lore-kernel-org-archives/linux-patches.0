@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8824315A;
-	Sun,  7 Sep 2025 20:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1F14315A;
+	Sun,  7 Sep 2025 20:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277880; cv=none; b=in5b6ynXDU5CIra5ozdphAGNMxqh6HrPlagNxISEWSlyl0rIwtXptXcq4uKFQj8UKIh8uZU11fEiGPxFAEK1sgAWSXUwmwLBEgqfth8uTqo71Fv504nMpKP9OnzdijuQFwwf1t3B2jVaaRY6fzJ44QOu4qLy8ZjHwnzhDRhXjC0=
+	t=1757277884; cv=none; b=FJuOBYCOV8bmH2rng3WTnwx4s01dy5UT56Ka1O2Fv03p0GRVF/E8CmkhJxOUtQsHcSBqRe6uyspOJZBCQet538ZXtb4jxtz41mpKQKWMsGYodEgJYC2vDv30mZkd9JLMkYpPhlMxFHaCVGXTb21frJeIWkpT4SoWMAXtFv3kffA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277880; c=relaxed/simple;
-	bh=2J0ksdMSyVSQeIPHzstJrzT2/PYPvaR6ToxKG1j7M0k=;
+	s=arc-20240116; t=1757277884; c=relaxed/simple;
+	bh=nB4C838HlmyqXJ/TAcBACe4OMd8mv7pv3A+AELIxVRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iYU3KAQek7HKfEIPOGq36L0QqxRonbhVIuS4b5Z3SnDAzNoVvZL7lZl72js684wr4xnvN8zbLjv2ckIUsUB4fDw4U/RoVCBx87tIgSn8VyF+SGRPBr39Mo9yxdYcT88XRu1QNImKf8kjdeRFxjKol7j5IVKiVHVD5PS1BYkIdzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deBFCEoU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mzdUTkMHDWrpJh5gv4xPYFPL6O8zMes2chE2UGSFzMb9PaMSerBkHVZ1tGinb6V2hliJpO+AwEcVNH8LroYgtubdLb1f09+ke4nHSwA/NFzsi+UlOmHZgXMDThbksgrz2M34qZpH3ofLMvXWIC4TWPfoLG9Egvhght0I0ZdhEZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgX03zij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deBFCEoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61B8C4CEF0;
-	Sun,  7 Sep 2025 20:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgX03zij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B72C4CEF0;
+	Sun,  7 Sep 2025 20:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277880;
-	bh=2J0ksdMSyVSQeIPHzstJrzT2/PYPvaR6ToxKG1j7M0k=;
+	s=korg; t=1757277883;
+	bh=nB4C838HlmyqXJ/TAcBACe4OMd8mv7pv3A+AELIxVRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deBFCEoUtGxQF821XpxrG3JLsEehDhi0AGWewb9UEMm1btWnKLx+KIch61n9tJOEP
-	 1rxf0J1ZN8G94QCglXdOTFljugnSElBQl8lApMr8/b3hDsmb+uqhmm6iQMZEuYVmvQ
-	 PSZBbZ7p+pGUBJ7niRM98ch/VUJWncRr8a732xfU=
+	b=OgX03zijeUfJ5jMwwkCWRzEGS6eA8L+iNQvlFrJFUZui99nEJPN4QkqPwckV737nv
+	 2xAvfc66+TCDWS3c0VWqQ6bWVsHNZJphmlLvZbYJkeTWwslm6GyIC+6m8FBxs0lJKD
+	 iE98TKRMMZD/J9KOdV3i5Bt0TeiZ3UtItNgIQjTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Lynne Megido <lynne@bune.city>,
+	Armin Wolf <W_Armin@gmx.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 151/183] platform/x86: asus-wmi: Fix racy registrations
-Date: Sun,  7 Sep 2025 21:59:38 +0200
-Message-ID: <20250907195619.404442217@linuxfoundation.org>
+Subject: [PATCH 6.16 152/183] platform/x86: acer-wmi: Stop using ACPI bitmap for platform profile choices
+Date: Sun,  7 Sep 2025 21:59:39 +0200
+Message-ID: <20250907195619.429326843@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,68 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 5549202b9c02c2ecbc8634768a3da8d9e82d548d ]
+[ Upstream commit b0908e03fdd488a5ffd5b80d86dcfc77207464e7 ]
 
-asus_wmi_register_driver() may be called from multiple drivers
-concurrently, which can lead to the racy list operations, eventually
-corrupting the memory and hitting Oops on some ASUS machines.
-Also, the error handling is missing, and it forgot to unregister ACPI
-lps0 dev ops in the error case.
+It turns out that the platform firmware on some models does not return
+valid data when reading the bitmap of supported platform profiles.
+This prevents the driver from loading on said models, even when the
+platform profile interface itself works.
 
-This patch covers those issues by introducing a simple mutex at
-acpi_wmi_register_driver() & *_unregister_driver, and adding the
-proper call of asus_s2idle_check_unregister() in the error path.
+Fix this by stop using said bitmap until we have figured out how
+the OEM software itself detects available platform profiles.
 
-Fixes: feea7bd6b02d ("platform/x86: asus-wmi: Refactor Ally suspend/resume")
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1246924
-Link: https://lore.kernel.org/07815053-0e31-4e8e-8049-b652c929323b@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20250827052441.23382-1-tiwai@suse.de
+Tested-by: Lynne Megido <lynne@bune.city>
+Reported-by: Lynne Megido <lynne@bune.city>
+Closes: https://lore.kernel.org/platform-driver-x86/3f56e68f-85df-4c0a-982c-43f9d635be38@bune.city/
+Fixes: 191e21f1a4c3 ("platform/x86: acer-wmi: use an ACPI bitmap to set the platform profile choices")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250826204007.5088-1-W_Armin@gmx.de
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/platform/x86/acer-wmi.c | 71 ++++++---------------------------
+ 1 file changed, 12 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index f7191fdded14d..e72a2b5d158e9 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -5088,16 +5088,22 @@ static int asus_wmi_probe(struct platform_device *pdev)
+diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
+index 69336bd778eea..13eb22b35aa8f 100644
+--- a/drivers/platform/x86/acer-wmi.c
++++ b/drivers/platform/x86/acer-wmi.c
+@@ -129,6 +129,7 @@ enum acer_wmi_predator_v4_oc {
+ enum acer_wmi_gaming_misc_setting {
+ 	ACER_WMID_MISC_SETTING_OC_1			= 0x0005,
+ 	ACER_WMID_MISC_SETTING_OC_2			= 0x0007,
++	/* Unreliable on some models */
+ 	ACER_WMID_MISC_SETTING_SUPPORTED_PROFILES	= 0x000A,
+ 	ACER_WMID_MISC_SETTING_PLATFORM_PROFILE		= 0x000B,
+ };
+@@ -794,9 +795,6 @@ static bool platform_profile_support;
+  */
+ static int last_non_turbo_profile = INT_MIN;
  
- 	asus_s2idle_check_register();
+-/* The most performant supported profile */
+-static int acer_predator_v4_max_perf;
+-
+ enum acer_predator_v4_thermal_profile {
+ 	ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET		= 0x00,
+ 	ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED	= 0x01,
+@@ -2014,7 +2012,7 @@ acer_predator_v4_platform_profile_set(struct device *dev,
+ 	if (err)
+ 		return err;
  
--	return asus_wmi_add(pdev);
-+	ret = asus_wmi_add(pdev);
-+	if (ret)
-+		asus_s2idle_check_unregister();
-+
-+	return ret;
+-	if (tp != acer_predator_v4_max_perf)
++	if (tp != ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO)
+ 		last_non_turbo_profile = tp;
+ 
+ 	return 0;
+@@ -2023,55 +2021,14 @@ acer_predator_v4_platform_profile_set(struct device *dev,
+ static int
+ acer_predator_v4_platform_profile_probe(void *drvdata, unsigned long *choices)
+ {
+-	unsigned long supported_profiles;
+-	int err;
++	set_bit(PLATFORM_PROFILE_PERFORMANCE, choices);
++	set_bit(PLATFORM_PROFILE_BALANCED_PERFORMANCE, choices);
++	set_bit(PLATFORM_PROFILE_BALANCED, choices);
++	set_bit(PLATFORM_PROFILE_QUIET, choices);
++	set_bit(PLATFORM_PROFILE_LOW_POWER, choices);
+ 
+-	err = WMID_gaming_get_misc_setting(ACER_WMID_MISC_SETTING_SUPPORTED_PROFILES,
+-					   (u8 *)&supported_profiles);
+-	if (err)
+-		return err;
+-
+-	/* Iterate through supported profiles in order of increasing performance */
+-	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_ECO, &supported_profiles)) {
+-		set_bit(PLATFORM_PROFILE_LOW_POWER, choices);
+-		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_ECO;
+-		last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_ECO;
+-	}
+-
+-	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET, &supported_profiles)) {
+-		set_bit(PLATFORM_PROFILE_QUIET, choices);
+-		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET;
+-		last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET;
+-	}
+-
+-	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED, &supported_profiles)) {
+-		set_bit(PLATFORM_PROFILE_BALANCED, choices);
+-		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED;
+-		last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED;
+-	}
+-
+-	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_PERFORMANCE, &supported_profiles)) {
+-		set_bit(PLATFORM_PROFILE_BALANCED_PERFORMANCE, choices);
+-		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_PERFORMANCE;
+-
+-		/* We only use this profile as a fallback option in case no prior
+-		 * profile is supported.
+-		 */
+-		if (last_non_turbo_profile < 0)
+-			last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_PERFORMANCE;
+-	}
+-
+-	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO, &supported_profiles)) {
+-		set_bit(PLATFORM_PROFILE_PERFORMANCE, choices);
+-		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO;
+-
+-		/* We need to handle the hypothetical case where only the turbo profile
+-		 * is supported. In this case the turbo toggle will essentially be a
+-		 * no-op.
+-		 */
+-		if (last_non_turbo_profile < 0)
+-			last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO;
+-	}
++	/* Set default non-turbo profile */
++	last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED;
+ 
+ 	return 0;
  }
+@@ -2108,19 +2065,15 @@ static int acer_thermal_profile_change(void)
+ 		if (cycle_gaming_thermal_profile) {
+ 			platform_profile_cycle();
+ 		} else {
+-			/* Do nothing if no suitable platform profiles where found */
+-			if (last_non_turbo_profile < 0)
+-				return 0;
+-
+ 			err = WMID_gaming_get_misc_setting(
+ 				ACER_WMID_MISC_SETTING_PLATFORM_PROFILE, &current_tp);
+ 			if (err)
+ 				return err;
  
- static bool used;
-+static DEFINE_MUTEX(register_mutex);
+-			if (current_tp == acer_predator_v4_max_perf)
++			if (current_tp == ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO)
+ 				tp = last_non_turbo_profile;
+ 			else
+-				tp = acer_predator_v4_max_perf;
++				tp = ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO;
  
- int __init_or_module asus_wmi_register_driver(struct asus_wmi_driver *driver)
- {
- 	struct platform_driver *platform_driver;
- 	struct platform_device *platform_device;
+ 			err = WMID_gaming_set_misc_setting(
+ 				ACER_WMID_MISC_SETTING_PLATFORM_PROFILE, tp);
+@@ -2128,7 +2081,7 @@ static int acer_thermal_profile_change(void)
+ 				return err;
  
-+	guard(mutex)(&register_mutex);
- 	if (used)
- 		return -EBUSY;
+ 			/* Store last profile for toggle */
+-			if (current_tp != acer_predator_v4_max_perf)
++			if (current_tp != ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO)
+ 				last_non_turbo_profile = current_tp;
  
-@@ -5120,6 +5126,7 @@ EXPORT_SYMBOL_GPL(asus_wmi_register_driver);
- 
- void asus_wmi_unregister_driver(struct asus_wmi_driver *driver)
- {
-+	guard(mutex)(&register_mutex);
- 	asus_s2idle_check_unregister();
- 
- 	platform_device_unregister(driver->platform_device);
+ 			platform_profile_notify(platform_profile_device);
 -- 
 2.51.0
 
