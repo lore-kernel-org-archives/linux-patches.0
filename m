@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2CC18DF89;
-	Sun,  7 Sep 2025 20:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F4418DF89;
+	Sun,  7 Sep 2025 20:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277070; cv=none; b=gg1pgBBUQAldv7V6Q/J7GtM7tbmNxqeKP9RnZVCRQCxGl21KEwoOF6+Mp8/66NKuG6nRObZrIpbDq7FcHEI8i+38eKzkOrDvJMEyF7mGyb6XhznztiEABfkOgMytpIEMcdmuVmyGxc36RyqLhpIls75O2w2HTevC0VnpMPPoqg4=
+	t=1757277073; cv=none; b=sk1QJ5svUJCJCBpkj673j5HWSj/wNJ97409rKM0htAAeBQRO9qXAhDtTzUfNc9ppg4cyQGJNnfa2maXk5nsAUPgBxie/fIaUVncq3jwkMLGWlRYGuBd0rB8L0ifmR9TTWpy6/jfgzxRYeX4dZAiQGXwBp7s9Yca3M/SzRaoHiGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277070; c=relaxed/simple;
-	bh=RPpxG5pONvbMhQoj4Aq1KIQlVpKp23kuWy61ZjN9cNI=;
+	s=arc-20240116; t=1757277073; c=relaxed/simple;
+	bh=bQPPgCytxfDXBTGmjs3pG+CvckCu2C1KdpSASALOqp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+DO5gaqHoDbEDZpi08j2jQ/QKZSq9UjRuE8Z+M4vZF5DbDZX7DYp7bpoj28XfA0gwTUrlr+9p9cdGYRo2DMK0jMEttUVPFipWJ/NCzoweJ+6vVXmO9kTQECNXXmcCB8L5dAGewSOjdRkvgoUBRzCPGzIgL1EKUwnyui102XULU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5NWoYo4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWJZbkYg+KZZBalzRC1TEJnfgP197o7nfw6A5Ms7FCoYuWhsnIBHpU39cxcyIaxCltTZAwPzLFUYdz1Rjg8iw6G1LcgW8YpPOEOBalXQXMSitwZtqOHMQbx7Sp/lyNK0gO07wWbrM93rx/5SozDhujQlJlllSzutsn0Het0HI8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q70EzOte; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5NWoYo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59DCC4CEF0;
-	Sun,  7 Sep 2025 20:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q70EzOte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B1AC4CEF0;
+	Sun,  7 Sep 2025 20:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277070;
-	bh=RPpxG5pONvbMhQoj4Aq1KIQlVpKp23kuWy61ZjN9cNI=;
+	s=korg; t=1757277073;
+	bh=bQPPgCytxfDXBTGmjs3pG+CvckCu2C1KdpSASALOqp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5NWoYo4m+9w1odo2x5HXO+z6KGPEvLgo70d5MxsjQi+ouWi8b6Y/7hNnBwWoyfQk
-	 MQeV4qIE5nIAzHhVcUDP1T3AaTtN5/yc1e36Fc9Sehom5tolLVJ7AlkDAPdAY05glW
-	 v0jGOj1mxF817fC02W7VC5a1m4JF+qJ7xUFDxyP0=
+	b=Q70EzOteg0zMIWtn7nGoih5p99WtpQ/P1kAZicnRdzXSNo73YCkcn7p4PdmyZLiYu
+	 ZqC/PQm/PnzrKNThc0ks76fIQrHty1PYCGTXDph/5p7r3/P78LoAb9U5UdbcAESwrB
+	 1GwuXvXkWfoPzCVsrBF5UpnCfLqJPlgGLUmk+rEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/175] vxlan: Add RCU read-side critical sections in the Tx path
-Date: Sun,  7 Sep 2025 21:57:49 +0200
-Message-ID: <20250907195616.583684050@linuxfoundation.org>
+Subject: [PATCH 6.12 075/175] vxlan: Rename FDB Tx lookup function
+Date: Sun,  7 Sep 2025 21:57:50 +0200
+Message-ID: <20250907195616.607202093@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -55,91 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 804b09be09f8af4eda5346a72361459ba21fcf1b ]
+[ Upstream commit 5cde39ea38813ebb5bf07922a3ba60871edebf99 ]
 
-The Tx path does not run from an RCU read-side critical section which
-makes the current lockless accesses to FDB entries invalid. As far as I
-am aware, this has not been a problem in practice, but traces will be
-generated once we transition the FDB lookup to rhashtable_lookup().
+vxlan_find_mac() is only expected to be called from the Tx path as it
+updates the 'used' timestamp. Rename it to vxlan_find_mac_tx() to
+reflect that and to avoid incorrect updates of this timestamp like those
+addressed by commit 9722f834fe9a ("vxlan: Avoid unnecessary updates to
+FDB 'used' time").
 
-Add rcu_read_{lock,unlock}() around the handling of FDB entries in the
-Tx path. Remove the RCU read-side critical section from vxlan_xmit_nh()
-as now the function is always called from an RCU read-side critical
-section.
+No functional changes intended.
 
 Reviewed-by: Petr Machata <petrm@nvidia.com>
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250415121143.345227-2-idosch@nvidia.com
+Link: https://patch.msgid.link/20250415121143.345227-12-idosch@nvidia.com
 Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 1f5d2fd1ca04 ("vxlan: Fix NPD in {arp,neigh}_reduce() when using nexthop objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 8853fcb7eb7f2..1d431e3fc71ea 100644
+index 1d431e3fc71ea..6b4b4b0484d6e 100644
 --- a/drivers/net/vxlan/vxlan_core.c
 +++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1909,12 +1909,15 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
- 			goto out;
+@@ -428,8 +428,8 @@ static struct vxlan_fdb *__vxlan_find_mac(struct vxlan_dev *vxlan,
+ 	return NULL;
+ }
+ 
+-static struct vxlan_fdb *vxlan_find_mac(struct vxlan_dev *vxlan,
+-					const u8 *mac, __be32 vni)
++static struct vxlan_fdb *vxlan_find_mac_tx(struct vxlan_dev *vxlan,
++					   const u8 *mac, __be32 vni)
+ {
+ 	struct vxlan_fdb *f;
+ 
+@@ -1910,7 +1910,7 @@ static int arp_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
  		}
  
-+		rcu_read_lock();
- 		f = vxlan_find_mac(vxlan, n->ha, vni);
+ 		rcu_read_lock();
+-		f = vxlan_find_mac(vxlan, n->ha, vni);
++		f = vxlan_find_mac_tx(vxlan, n->ha, vni);
  		if (f && vxlan_addr_any(&(first_remote_rcu(f)->remote_ip))) {
  			/* bridge-local neighbor */
  			neigh_release(n);
-+			rcu_read_unlock();
+@@ -2076,7 +2076,7 @@ static int neigh_reduce(struct net_device *dev, struct sk_buff *skb, __be32 vni)
  			goto out;
  		}
-+		rcu_read_unlock();
  
- 		reply = arp_create(ARPOP_REPLY, ETH_P_ARP, sip, dev, tip, sha,
- 				n->ha, sha);
-@@ -2632,14 +2635,10 @@ static void vxlan_xmit_nh(struct sk_buff *skb, struct net_device *dev,
- 	memset(&nh_rdst, 0, sizeof(struct vxlan_rdst));
- 	hash = skb_get_hash(skb);
- 
--	rcu_read_lock();
- 	nh = rcu_dereference(f->nh);
--	if (!nh) {
--		rcu_read_unlock();
-+	if (!nh)
- 		goto drop;
--	}
- 	do_xmit = vxlan_fdb_nh_path_select(nh, hash, &nh_rdst);
--	rcu_read_unlock();
- 
- 	if (likely(do_xmit))
- 		vxlan_xmit_one(skb, dev, vni, &nh_rdst, did_rsc);
-@@ -2766,6 +2765,7 @@ static netdev_tx_t vxlan_xmit(struct sk_buff *skb, struct net_device *dev)
- 	}
+-		f = vxlan_find_mac(vxlan, n->ha, vni);
++		f = vxlan_find_mac_tx(vxlan, n->ha, vni);
+ 		if (f && vxlan_addr_any(&(first_remote_rcu(f)->remote_ip))) {
+ 			/* bridge-local neighbor */
+ 			neigh_release(n);
+@@ -2766,7 +2766,7 @@ static netdev_tx_t vxlan_xmit(struct sk_buff *skb, struct net_device *dev)
  
  	eth = eth_hdr(skb);
-+	rcu_read_lock();
- 	f = vxlan_find_mac(vxlan, eth->h_dest, vni);
+ 	rcu_read_lock();
+-	f = vxlan_find_mac(vxlan, eth->h_dest, vni);
++	f = vxlan_find_mac_tx(vxlan, eth->h_dest, vni);
  	did_rsc = false;
  
-@@ -2788,7 +2788,7 @@ static netdev_tx_t vxlan_xmit(struct sk_buff *skb, struct net_device *dev)
- 			vxlan_vnifilter_count(vxlan, vni, NULL,
- 					      VXLAN_VNI_STATS_TX_DROPS, 0);
- 			kfree_skb_reason(skb, SKB_DROP_REASON_NO_TX_TARGET);
--			return NETDEV_TX_OK;
-+			goto out;
- 		}
+ 	if (f && (f->flags & NTF_ROUTER) && (vxlan->cfg.flags & VXLAN_F_RSC) &&
+@@ -2774,11 +2774,11 @@ static netdev_tx_t vxlan_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	     ntohs(eth->h_proto) == ETH_P_IPV6)) {
+ 		did_rsc = route_shortcircuit(dev, skb);
+ 		if (did_rsc)
+-			f = vxlan_find_mac(vxlan, eth->h_dest, vni);
++			f = vxlan_find_mac_tx(vxlan, eth->h_dest, vni);
  	}
  
-@@ -2813,6 +2813,8 @@ static netdev_tx_t vxlan_xmit(struct sk_buff *skb, struct net_device *dev)
- 			kfree_skb_reason(skb, SKB_DROP_REASON_NO_TX_TARGET);
- 	}
- 
-+out:
-+	rcu_read_unlock();
- 	return NETDEV_TX_OK;
- }
- 
+ 	if (f == NULL) {
+-		f = vxlan_find_mac(vxlan, all_zeros_mac, vni);
++		f = vxlan_find_mac_tx(vxlan, all_zeros_mac, vni);
+ 		if (f == NULL) {
+ 			if ((vxlan->cfg.flags & VXLAN_F_L2MISS) &&
+ 			    !is_multicast_ether_addr(eth->h_dest))
 -- 
 2.50.1
 
