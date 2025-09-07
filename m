@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFEB17BB21;
-	Sun,  7 Sep 2025 20:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9211B1E5B94;
+	Sun,  7 Sep 2025 20:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276989; cv=none; b=Ar39Z3RXqg3BJx6H3245wKShwNbGekQRxvXlpncy/xWTZovqvsnCJ6cb7QA2qugMWjUJuay/V5kbzr4HuS69WskJWdbiXnGBNMsDKOlE2LGwCQvbceBq4/rmeYu21ucGa6nmXhiUNJi4khjWSLUr2X8H/j8WlFW7rmm3WfJ8sRo=
+	t=1757276992; cv=none; b=qa4UpgsiuD5Ph+9+pYz50CBojYIOEExBGgJ77NfYyfvCyIdF6kNyTti6ivmAD0ORU1XI+c0bT3kv+ocZc3LfSl1LsX4F0p5qGyhaE4JBeJIUjF/2iwkY+po/5iBQ0vOAy1jmfzEa00yiDn/QBMp/uMwahmdFB8bA9Nr+b+oVixk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276989; c=relaxed/simple;
-	bh=hXsTp8vqw4X7Ycryt1SgQj76WKBo09Btcut3KWP1/4Q=;
+	s=arc-20240116; t=1757276992; c=relaxed/simple;
+	bh=N1NCvyy+Kt7uoZ3LEY0XtqPIbtKv+zXztWqWxLX4prA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UyRi3W15bRpfgSaNHM4SF6sG9e8uEQSr6penxT9l/CqpI1/vpmj/3HnRT+QIua4fzeMgUDEQjfb0IWZSGaq1pTxMPiwViFbHJEqGlvTjsUOJwOwaBUBWXTtRpkQmFkS9eBwXeOlggTcLVmlZBJuz3UewdGEaEl0qbzhtaeWvlT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tob2L8Do; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjjHkim+MWpxjGkuoArDrSBsfvEvyPCBiE9D4pEzJHqT5wA4vOrpUz/UpN0WRhWn0Iy8L6799HTbjDmzxPiK4kU8sFDoVS8JflE7z52NfzDqaYn2DV4juSXf9tE7E6KU/G8BhAmXmB1Ylj39CkhV0bitzroksdAaBAqanAr7sT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PthDbuxq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tob2L8Do"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE01C4CEF0;
-	Sun,  7 Sep 2025 20:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PthDbuxq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14263C4CEF0;
+	Sun,  7 Sep 2025 20:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276989;
-	bh=hXsTp8vqw4X7Ycryt1SgQj76WKBo09Btcut3KWP1/4Q=;
+	s=korg; t=1757276992;
+	bh=N1NCvyy+Kt7uoZ3LEY0XtqPIbtKv+zXztWqWxLX4prA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tob2L8DoUX9qmZLD1HCOODyVDQBQxOctn0FxV9A8Qi/vpO5tZDWrFwoaKYIIoikyj
-	 gUMhejlBpuUnsQM5NVZ1hvIx6uLqsP4/XdU7/aY2bQviLmYyZcXXUsg3eO9QhVkmGQ
-	 VKOsxqZikO1ttm4MDAqo1/hqdWAWQ3mq2BrBD7RA=
+	b=PthDbuxqdG9H4nJop9TQorI0DfZ5l9BUhMDIZXRv1+KFLOgrgBwdnpznS00/aQRj6
+	 9KwmbgaUwolN7STLfO0B/gZKUL8H7drFDTjovP3thcEjaIzilGfel2I45LcdLFyuhd
+	 XM4KhylqyP+JTcbczZn2p95Bf2T4WFEk2dunB1Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Galbraith <efault@gmx.de>,
-	Sean Anderson <sean.anderson@linux.dev>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/175] net: macb: Fix tx_ptr_lock locking
-Date: Sun,  7 Sep 2025 21:57:26 +0200
-Message-ID: <20250907195616.050203941@linuxfoundation.org>
+Subject: [PATCH 6.12 052/175] macsec: read MACSEC_SA_ATTR_PN with nla_get_uint
+Date: Sun,  7 Sep 2025 21:57:27 +0200
+Message-ID: <20250907195616.072645103@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,133 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 6bc8a5098bf4a365c4086a4a4130bfab10a58260 ]
+[ Upstream commit 030e1c45666629f72d0fc1d040f9d2915680de8e ]
 
-macb_start_xmit and macb_tx_poll can be called with bottom-halves
-disabled (e.g. from softirq) as well as with interrupts disabled (with
-netpoll). Because of this, all other functions taking tx_ptr_lock must
-use spin_lock_irqsave.
+The code currently reads both U32 attributes and U64 attributes as
+U64, so when a U32 attribute is provided by userspace (ie, when not
+using XPN), on big endian systems, we'll load that value into the
+upper 32bits of the next_pn field instead of the lower 32bits. This
+means that the value that userspace provided is ignored (we only care
+about the lower 32bits for non-XPN), and we'll start using PNs from 0.
 
-Fixes: 138badbc21a0 ("net: macb: use NAPI for TX completion path")
-Reported-by: Mike Galbraith <efault@gmx.de>
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250829143521.1686062-1-sean.anderson@linux.dev
+Switch to nla_get_uint, which will read the value correctly on all
+arches, whether it's 32b or 64b.
+
+Fixes: 48ef50fa866a ("macsec: Netlink support of XPN cipher suites (IEEE 802.1AEbw)")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1c1df1661b89238caf5beefb84a10ebfd56c66ea.1756459839.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 28 ++++++++++++++----------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/net/macsec.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 6c2d69ef1a8db..f7e8c08d84415 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1234,11 +1234,12 @@ static int macb_tx_complete(struct macb_queue *queue, int budget)
- {
- 	struct macb *bp = queue->bp;
- 	u16 queue_index = queue - bp->queues;
-+	unsigned long flags;
- 	unsigned int tail;
- 	unsigned int head;
- 	int packets = 0;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 090a56a5e456a..8b10112c30dc1 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -1843,7 +1843,7 @@ static int macsec_add_rxsa(struct sk_buff *skb, struct genl_info *info)
  
--	spin_lock(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 	head = queue->tx_head;
- 	for (tail = queue->tx_tail; tail != head && packets < budget; tail++) {
- 		struct macb_tx_skb	*tx_skb;
-@@ -1297,7 +1298,7 @@ static int macb_tx_complete(struct macb_queue *queue, int budget)
- 	    CIRC_CNT(queue->tx_head, queue->tx_tail,
- 		     bp->tx_ring_size) <= MACB_TX_WAKEUP_THRESH(bp))
- 		netif_wake_subqueue(bp->dev, queue_index);
--	spin_unlock(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- 
- 	return packets;
- }
-@@ -1713,8 +1714,9 @@ static void macb_tx_restart(struct macb_queue *queue)
- {
- 	struct macb *bp = queue->bp;
- 	unsigned int head_idx, tbqp;
-+	unsigned long flags;
- 
--	spin_lock(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 
- 	if (queue->tx_head == queue->tx_tail)
- 		goto out_tx_ptr_unlock;
-@@ -1726,19 +1728,20 @@ static void macb_tx_restart(struct macb_queue *queue)
- 	if (tbqp == head_idx)
- 		goto out_tx_ptr_unlock;
- 
--	spin_lock_irq(&bp->lock);
-+	spin_lock(&bp->lock);
- 	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(TSTART));
--	spin_unlock_irq(&bp->lock);
-+	spin_unlock(&bp->lock);
- 
- out_tx_ptr_unlock:
--	spin_unlock(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- }
- 
- static bool macb_tx_complete_pending(struct macb_queue *queue)
- {
- 	bool retval = false;
-+	unsigned long flags;
- 
--	spin_lock(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 	if (queue->tx_head != queue->tx_tail) {
- 		/* Make hw descriptor updates visible to CPU */
- 		rmb();
-@@ -1746,7 +1749,7 @@ static bool macb_tx_complete_pending(struct macb_queue *queue)
- 		if (macb_tx_desc(queue, queue->tx_tail)->ctrl & MACB_BIT(TX_USED))
- 			retval = true;
- 	}
--	spin_unlock(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- 	return retval;
- }
- 
-@@ -2314,6 +2317,7 @@ static netdev_tx_t macb_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct macb_queue *queue = &bp->queues[queue_index];
- 	unsigned int desc_cnt, nr_frags, frag_size, f;
- 	unsigned int hdrlen;
-+	unsigned long flags;
- 	bool is_lso;
- 	netdev_tx_t ret = NETDEV_TX_OK;
- 
-@@ -2374,7 +2378,7 @@ static netdev_tx_t macb_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 		desc_cnt += DIV_ROUND_UP(frag_size, bp->max_tx_length);
+ 	if (tb_sa[MACSEC_SA_ATTR_PN]) {
+ 		spin_lock_bh(&rx_sa->lock);
+-		rx_sa->next_pn = nla_get_u64(tb_sa[MACSEC_SA_ATTR_PN]);
++		rx_sa->next_pn = nla_get_uint(tb_sa[MACSEC_SA_ATTR_PN]);
+ 		spin_unlock_bh(&rx_sa->lock);
  	}
  
--	spin_lock_bh(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
+@@ -2085,7 +2085,7 @@ static int macsec_add_txsa(struct sk_buff *skb, struct genl_info *info)
+ 	}
  
- 	/* This is a hard error, log it. */
- 	if (CIRC_SPACE(queue->tx_head, queue->tx_tail,
-@@ -2396,15 +2400,15 @@ static netdev_tx_t macb_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	wmb();
- 	skb_tx_timestamp(skb);
+ 	spin_lock_bh(&tx_sa->lock);
+-	tx_sa->next_pn = nla_get_u64(tb_sa[MACSEC_SA_ATTR_PN]);
++	tx_sa->next_pn = nla_get_uint(tb_sa[MACSEC_SA_ATTR_PN]);
+ 	spin_unlock_bh(&tx_sa->lock);
  
--	spin_lock_irq(&bp->lock);
-+	spin_lock(&bp->lock);
- 	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(TSTART));
--	spin_unlock_irq(&bp->lock);
-+	spin_unlock(&bp->lock);
+ 	if (tb_sa[MACSEC_SA_ATTR_ACTIVE])
+@@ -2397,7 +2397,7 @@ static int macsec_upd_txsa(struct sk_buff *skb, struct genl_info *info)
  
- 	if (CIRC_SPACE(queue->tx_head, queue->tx_tail, bp->tx_ring_size) < 1)
- 		netif_stop_subqueue(dev, queue_index);
+ 		spin_lock_bh(&tx_sa->lock);
+ 		prev_pn = tx_sa->next_pn_halves;
+-		tx_sa->next_pn = nla_get_u64(tb_sa[MACSEC_SA_ATTR_PN]);
++		tx_sa->next_pn = nla_get_uint(tb_sa[MACSEC_SA_ATTR_PN]);
+ 		spin_unlock_bh(&tx_sa->lock);
+ 	}
  
- unlock:
--	spin_unlock_bh(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
+@@ -2495,7 +2495,7 @@ static int macsec_upd_rxsa(struct sk_buff *skb, struct genl_info *info)
  
- 	return ret;
- }
+ 		spin_lock_bh(&rx_sa->lock);
+ 		prev_pn = rx_sa->next_pn_halves;
+-		rx_sa->next_pn = nla_get_u64(tb_sa[MACSEC_SA_ATTR_PN]);
++		rx_sa->next_pn = nla_get_uint(tb_sa[MACSEC_SA_ATTR_PN]);
+ 		spin_unlock_bh(&rx_sa->lock);
+ 	}
+ 
 -- 
 2.50.1
 
