@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C0A20E00B;
-	Sun,  7 Sep 2025 20:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DE820E00B;
+	Sun,  7 Sep 2025 20:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277819; cv=none; b=KmhGIfzGqH6EqAFFIpfPVHWgWYd/1a+6i7mYo7jQL+6VRKRI3ABaDV1+QpY8QT8jAgCbmlWar9LNwYY+wwE/+1ZqQHLap6VY+cdIJaukTi88/nIAFxtufrhr49Z1wTFAlV8ACyaOcIzFiWvfs7rFx7190qvQS3UJf0t15lbXD7Y=
+	t=1757277822; cv=none; b=KMNZlkGXkJsurGuP/YXUn1OjnMZS7+EtR7FRrpYgzgFQbfvHtCCg0WbqHSvBsqs2giIZMgnal+YldGo7Cjg2wYG3hsCroy9dq4i1ZqkbzxM6Gws3T5a+SP1XGARDMPzO4yfk7mT46wB/9TPYAojZmesgvsra2Rt74ixGrogMmOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277819; c=relaxed/simple;
-	bh=av6MYqKx3L4zkLZXei0UoORSapLwGoZKrQSaThv9m8E=;
+	s=arc-20240116; t=1757277822; c=relaxed/simple;
+	bh=szYtjo6hHl4ASM9vEdjmBdnDGdGjZFQ+yVzjHPdiqRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NNFnDS6CnG8FEayoWbE0pY6XOBASnjP3Y2tb2wKy/l24LYUfzLQB66lr7UEA4m0y339+1MeVuoEmqYUIdqt6PcUqAtx6+eVMm3FiEpyUkEAvmXnnR8Y9t7bWiZbXc7WQkt6vVb3jvmyORDKCfM4VO8lYW87KqV5onTZdGXU5ca0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1mUspBc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTxElAFdS7tLmwQFGYEsGiMl7ZjFjj11zgJvt1AI2PjW/RgGoZKeQzndcy5XpguFF+UAS8PwuHdpEnboUEssWrc55dnvHn6gByzlA18FjNnAriVmvF1PDrMVhM7uiww0Tx6uf96h5MTz7ZdCoGmbnqV5tqABBEFjRLbeB++3SME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUSGdt4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1mUspBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE58FC4CEF0;
-	Sun,  7 Sep 2025 20:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUSGdt4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31758C4CEF0;
+	Sun,  7 Sep 2025 20:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277819;
-	bh=av6MYqKx3L4zkLZXei0UoORSapLwGoZKrQSaThv9m8E=;
+	s=korg; t=1757277822;
+	bh=szYtjo6hHl4ASM9vEdjmBdnDGdGjZFQ+yVzjHPdiqRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1mUspBcfESlh2wsR1T2rzpcV0DnYXABcMUmquiUbRlh9+7F2nj+juBwLiKp4VnAm
-	 bTY3nMceqxhbcPP25expYPPm/IY7as8m/vAIrEh9CRyyTp/h1Ov30lLHoDdCKjABMr
-	 vzGiVAl9NtBdhHZAU7wakY/2VvA3hFC3alYUNvOw=
+	b=QUSGdt4Eh5GQqpPjXAyxe7LOvLzfAx4v2c9wXiCCLJlX3JuCMPG3n1LVFb0n1PtNQ
+	 SgNx3EFD3c/p/0uOzsSKoIrvyLgrQ93SI2W73BXJpzwpXuWZ6xzipCrM+sBZtWPgPB
+	 VsoeyjVcE5HwcaP+v0EF6kXcuoL6njpC7w2DVrzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.16 116/183] soc: qcom: mdt_loader: Deal with zero e_shentsize
-Date: Sun,  7 Sep 2025 21:59:03 +0200
-Message-ID: <20250907195618.547356315@linuxfoundation.org>
+	Stanislav Fort <disclosure@aisle.com>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Stanislav Fort <stanislav.fort@aisle.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.16 134/183] audit: fix out-of-bounds read in audit_compare_dname_path()
+Date: Sun,  7 Sep 2025 21:59:21 +0200
+Message-ID: <20250907195618.978297613@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -53,55 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Stanislav Fort <stanislav.fort@aisle.com>
 
-commit 25daf9af0ac1bf12490b723b5efaf8dcc85980bc upstream.
+commit 4540f1d23e7f387880ce46d11b5cd3f27248bf8d upstream.
 
-Firmware that doesn't provide section headers leave both e_shentsize and
-e_shnum 0, which obvious isn't compatible with the newly introduced
-stricter checks.
+When a watch on dir=/ is combined with an fsnotify event for a
+single-character name directly under / (e.g., creating /a), an
+out-of-bounds read can occur in audit_compare_dname_path().
 
-Make the section-related checks conditional on either of these values
-being non-zero.
+The helper parent_len() returns 1 for "/". In audit_compare_dname_path(),
+when parentlen equals the full path length (1), the code sets p = path + 1
+and pathlen = 1 - 1 = 0. The subsequent loop then dereferences
+p[pathlen - 1] (i.e., p[-1]), causing an out-of-bounds read.
 
-Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fix this by adding a pathlen > 0 check to the while loop condition
+to prevent the out-of-bounds access.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e92eebb0d611 ("audit: fix suffixed '/' filename matching")
+Reported-by: Stanislav Fort <disclosure@aisle.com>
+Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Signed-off-by: Stanislav Fort <stanislav.fort@aisle.com>
+[PM: subject tweak, sign-off email fixes]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/auditfilter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -39,12 +39,14 @@ static bool mdt_header_valid(const struc
- 	if (phend > fw->size)
- 		return false;
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -1326,7 +1326,7 @@ int audit_compare_dname_path(const struc
  
--	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
--		return false;
-+	if (ehdr->e_shentsize || ehdr->e_shnum) {
-+		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-+			return false;
+ 	/* handle trailing slashes */
+ 	pathlen -= parentlen;
+-	while (p[pathlen - 1] == '/')
++	while (pathlen > 0 && p[pathlen - 1] == '/')
+ 		pathlen--;
  
--	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
--	if (shend > fw->size)
--		return false;
-+		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-+		if (shend > fw->size)
-+			return false;
-+	}
- 
- 	return true;
- }
+ 	if (pathlen != dlen)
 
 
