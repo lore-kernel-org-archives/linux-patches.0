@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C03C14BFA2;
-	Sun,  7 Sep 2025 20:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B19F14BFA2;
+	Sun,  7 Sep 2025 20:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276256; cv=none; b=cQxFe1Fq4tsiGJf3dFApsTRNYjtlulzAGK7yh/zCYRyBTeQCUTWL0/aJq2nTFqe+4WylfBJkngfx8rmoRvvEdDSuCtlPT0bAszlCBNzZig567TPpU6uhLATHEwMweJICn8aPHUQ/K7LDkwdQSmelxHbJ+204OiaoPX61fAnJIDU=
+	t=1757276259; cv=none; b=FyYrQn9JuUrtPa8ABRfG50tSWZ96gW2Y420EOJ4kQa0Iwwfp5HzWMtcNbwXpKlqzXbMZLyNilJfRSy9SfUj9Wg0nwuCX05iC1nCUTzpaGPCmaktNnh+hqXf5TF9JHgzp5HqG7TuoFI+M1vazI1AioQ8oVmdkp8pmf7ckaQO1xEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276256; c=relaxed/simple;
-	bh=GCqteRMXE2XlQgSY266vW29RlDxDbA/b9UkwPm5n5D8=;
+	s=arc-20240116; t=1757276259; c=relaxed/simple;
+	bh=uKVxe+jY5DOxVajoK4uClqh1YWSZZJtsVWxFG0tjj7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SmlWRnNyqSGS6ZLE/iJjCAHcdruy9O7ueE/+w/JOACh/sKT7l3FfjUiKE8n8KpEbRIdo04CHo9GxRbG8SBKvRB/xVYuuemFGuWpJ2oEQtV5895pOOshR8OYqGKXNyEjbGHcIkZu1BRzvX/y7DnNI9cKWgvR0uht2Ndf7gGiphNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZyOSjbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SX0GSbW9i7Tc4pho1ikaC5bVL5zFfqNtlyGlZM+ReJ1Y48eo/wOISiHSHAucdLna6UskX+IoEqaHPuB9UR5xhIQzwY6a6bR9gU1WNSWG7ovgtABpSD2CJU9NkAJ9MGBZS6WsnfWI9B3kQM5wZnVdDLZyFK28cR0MB0R9UPoAhSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovHipu8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZyOSjbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69C7C4CEF0;
-	Sun,  7 Sep 2025 20:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovHipu8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119FBC4CEF0;
+	Sun,  7 Sep 2025 20:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276256;
-	bh=GCqteRMXE2XlQgSY266vW29RlDxDbA/b9UkwPm5n5D8=;
+	s=korg; t=1757276259;
+	bh=uKVxe+jY5DOxVajoK4uClqh1YWSZZJtsVWxFG0tjj7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZyOSjbLKEP6QsCxHeC5rCqG8KKle6QdyqQBJJ4tOM26Zy9BvTrof7D2sHpt9PJo8
-	 aLguobTK4UZfgWsD1m25L34sP6yxw64kiyGes4nBPPganp2lLAVxSvP0SUm4GlE3Ja
-	 rm4MWesl0Qu4BWE5n4A4dBWlE7kZj4jrj3cbyHdA=
+	b=ovHipu8JVYfV+GH8/kwXOWFAXLsa7QOwDBInwsUlpSEminkk4YevOotLJZdGf6RR0
+	 DNDAUBn9IxmxQhd/00+KUQIQWnoF5hQ5FboCjlfqCOdkXaeXtesI+oGINZgVZjfW0F
+	 tViH5PuC4qQJgu73nbd72QjkZUhfPli3i2+2Eu4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Lars Wendler <polynomial-c@gmx.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <pv@excello.cz>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	"Kirill A. Shutemov" <k.shutemov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 046/104] proc: fix missing pde_set_flags() for net proc files
-Date: Sun,  7 Sep 2025 21:58:03 +0200
-Message-ID: <20250907195608.887605172@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 047/104] wifi: mwifiex: Initialize the chan_stats array to zero
+Date: Sun,  7 Sep 2025 21:58:04 +0200
+Message-ID: <20250907195608.914081968@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -53,136 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit 2ce3d282bd5050fca8577defeff08ada0d55d062 upstream.
+commit 0e20450829ca3c1dbc2db536391537c57a40fe0b upstream.
 
-To avoid potential UAF issues during module removal races, we use
-pde_set_flags() to save proc_ops flags in PDE itself before
-proc_register(), and then use pde_has_proc_*() helpers instead of directly
-dereferencing pde->proc_ops->*.
+The adapter->chan_stats[] array is initialized in
+mwifiex_init_channel_scan_gap() with vmalloc(), which doesn't zero out
+memory.  The array is filled in mwifiex_update_chan_statistics()
+and then the user can query the data in mwifiex_cfg80211_dump_survey().
 
-However, the pde_set_flags() call was missing when creating net related
-proc files.  This omission caused incorrect behavior which FMODE_LSEEK was
-being cleared inappropriately in proc_reg_open() for net proc files.  Lars
-reported it in this link[1].
+There are two potential issues here.  What if the user calls
+mwifiex_cfg80211_dump_survey() before the data has been filled in.
+Also the mwifiex_update_chan_statistics() function doesn't necessarily
+initialize the whole array.  Since the array was not initialized at
+the start that could result in an information leak.
 
-Fix this by ensuring pde_set_flags() is called when register proc entry,
-and add NULL check for proc_ops in pde_set_flags().
+Also this array is pretty small.  It's a maximum of 900 bytes so it's
+more appropriate to use kcalloc() instead vmalloc().
 
-[wangzijie1@honor.com: stash pde->proc_ops in a local const variable, per Christian]
-  Link: https://lkml.kernel.org/r/20250821105806.1453833-1-wangzijie1@honor.com
-Link: https://lkml.kernel.org/r/20250818123102.959595-1-wangzijie1@honor.com
-Link: https://lore.kernel.org/all/20250815195616.64497967@chagall.paradoxon.rec/ [1]
-Fixes: ff7ec8dc1b64 ("proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reported-by: Lars Wendler <polynomial-c@gmx.de>
-Tested-by: Stefano Brivio <sbrivio@redhat.com>
-Tested-by: Petr Vaněk <pv@excello.cz>
-Tested by: Lars Wendler <polynomial-c@gmx.de>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Kirill A. Shutemov <k.shutemov@gmail.com>
-Cc: wangzijie <wangzijie1@honor.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: bf35443314ac ("mwifiex: channel statistics support for mwifiex")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20250815023055.477719-1-rongqianfeng@vivo.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c |   38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |    5 +++--
+ drivers/net/wireless/marvell/mwifiex/main.c     |    4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -363,6 +363,25 @@ static const struct inode_operations pro
- 	.setattr	= proc_notify_change,
- };
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4316,8 +4316,9 @@ int mwifiex_init_channel_scan_gap(struct
+ 	 * additional active scan request for hidden SSIDs on passive channels.
+ 	 */
+ 	adapter->num_in_chan_stats = 2 * (n_channels_bg + n_channels_a);
+-	adapter->chan_stats = vmalloc(array_size(sizeof(*adapter->chan_stats),
+-						 adapter->num_in_chan_stats));
++	adapter->chan_stats = kcalloc(adapter->num_in_chan_stats,
++				      sizeof(*adapter->chan_stats),
++				      GFP_KERNEL);
  
-+static void pde_set_flags(struct proc_dir_entry *pde)
-+{
-+	const struct proc_ops *proc_ops = pde->proc_ops;
-+
-+	if (!proc_ops)
-+		return;
-+
-+	if (proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
-+		pde->flags |= PROC_ENTRY_PERMANENT;
-+	if (proc_ops->proc_read_iter)
-+		pde->flags |= PROC_ENTRY_proc_read_iter;
-+#ifdef CONFIG_COMPAT
-+	if (proc_ops->proc_compat_ioctl)
-+		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
-+#endif
-+	if (proc_ops->proc_lseek)
-+		pde->flags |= PROC_ENTRY_proc_lseek;
-+}
-+
- /* returns the registered entry, or frees dp and returns NULL on failure */
- struct proc_dir_entry *proc_register(struct proc_dir_entry *dir,
- 		struct proc_dir_entry *dp)
-@@ -370,6 +389,8 @@ struct proc_dir_entry *proc_register(str
- 	if (proc_alloc_inum(&dp->low_ino))
- 		goto out_free_entry;
+ 	if (!adapter->chan_stats)
+ 		return -ENOMEM;
+--- a/drivers/net/wireless/marvell/mwifiex/main.c
++++ b/drivers/net/wireless/marvell/mwifiex/main.c
+@@ -664,7 +664,7 @@ static int _mwifiex_fw_dpc(const struct
+ 	goto done;
  
-+	pde_set_flags(dp);
-+
- 	write_lock(&proc_subdir_lock);
- 	dp->parent = dir;
- 	if (pde_subdir_insert(dir, dp) == false) {
-@@ -558,20 +579,6 @@ struct proc_dir_entry *proc_create_reg(c
- 	return p;
+ err_add_intf:
+-	vfree(adapter->chan_stats);
++	kfree(adapter->chan_stats);
+ err_init_chan_scan:
+ 	wiphy_unregister(adapter->wiphy);
+ 	wiphy_free(adapter->wiphy);
+@@ -1486,7 +1486,7 @@ static void mwifiex_uninit_sw(struct mwi
+ 	wiphy_free(adapter->wiphy);
+ 	adapter->wiphy = NULL;
+ 
+-	vfree(adapter->chan_stats);
++	kfree(adapter->chan_stats);
+ 	mwifiex_free_cmd_buffers(adapter);
  }
  
--static void pde_set_flags(struct proc_dir_entry *pde)
--{
--	if (pde->proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
--		pde->flags |= PROC_ENTRY_PERMANENT;
--	if (pde->proc_ops->proc_read_iter)
--		pde->flags |= PROC_ENTRY_proc_read_iter;
--#ifdef CONFIG_COMPAT
--	if (pde->proc_ops->proc_compat_ioctl)
--		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
--#endif
--	if (pde->proc_ops->proc_lseek)
--		pde->flags |= PROC_ENTRY_proc_lseek;
--}
--
- struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
- 		struct proc_dir_entry *parent,
- 		const struct proc_ops *proc_ops, void *data)
-@@ -582,7 +589,6 @@ struct proc_dir_entry *proc_create_data(
- 	if (!p)
- 		return NULL;
- 	p->proc_ops = proc_ops;
--	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_data);
-@@ -633,7 +639,6 @@ struct proc_dir_entry *proc_create_seq_p
- 	p->proc_ops = &proc_seq_ops;
- 	p->seq_ops = ops;
- 	p->state_size = state_size;
--	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_seq_private);
-@@ -664,7 +669,6 @@ struct proc_dir_entry *proc_create_singl
- 		return NULL;
- 	p->proc_ops = &proc_single_ops;
- 	p->single_show = show;
--	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_single_data);
 
 
