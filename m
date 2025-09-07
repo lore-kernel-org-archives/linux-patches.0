@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D84120E005;
-	Sun,  7 Sep 2025 20:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6A617BB21;
+	Sun,  7 Sep 2025 20:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276960; cv=none; b=GtWK3mW4QiF/PpQmkpQdrzFPW2cu+orN/7enTAMmncA1x93RBt9mu+zTi1DsV884eF5X1siqNNy7d6U91fk2X/nEz2VqtouEmMSaI4t8POj7tD+7CakoqV4I0EZZC6JYydbuNPGIjkdQU9dfgfvDgKyAy5fVKZfZRkpWmElHjdw=
+	t=1757276963; cv=none; b=pvzAT/6mZ1Wb5OuI2JYq6oVcdEJfP/Wtue7ZBKRuvt/CbZ389wp+pA5/M5jBi2xjcELJ5tWbk/PbYr+6Tf4tcB9qzqd2SbytMnu+8wAACx8cWmgd3wqHxNCD6ChnoJ/jmhCs4Ehvx3ZEhf23qR+4BHVD+JvDcEJGje6aveb8kvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276960; c=relaxed/simple;
-	bh=XAebNRkLVuvd/8Vmw2dlo1xm6xaqDeSE9sj+ZBgVFjc=;
+	s=arc-20240116; t=1757276963; c=relaxed/simple;
+	bh=BF3rUQIWKLit7A/aw9eAD19dr9Q98Y5MPTVLchFa2AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+e+DZUmej6CSD64Fk7jfp5P+HGHJ8z/A7iW81+QrgXXeBHz1xVQ7y+8j9RCZW4BxXNfBU95g8V7arNZa3dpc02H3h2FMcorHtui46Raaq/9OIldYqw4ZsAPlkiTripbIx3NES0uEou6Coc/b/lKyjMUhwe8xY8EVbon1oChBH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bS38l58b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EIrsbVe9yx9GfE5E8whxMxxFXDVaE97xwMDzZIr5RLj1uHIHJCsNUdOuHxGm4sVU+7VMAPtPT2qTcMEavuIG2xrplrhHIHHifupFNQOn5s0TbVFJA1iuanmOcwx4eE7qQXbryTQyFp3W1EWSmMpwLu+1xXXK1KOugNkwFk0FtQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZKSDzTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bS38l58b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0C2C4CEF8;
-	Sun,  7 Sep 2025 20:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZKSDzTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A142FC4CEF0;
+	Sun,  7 Sep 2025 20:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276959;
-	bh=XAebNRkLVuvd/8Vmw2dlo1xm6xaqDeSE9sj+ZBgVFjc=;
+	s=korg; t=1757276963;
+	bh=BF3rUQIWKLit7A/aw9eAD19dr9Q98Y5MPTVLchFa2AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bS38l58bC9SDO6rdHjeIhV51ORmyrIGrpRFGLoB3r2YElt2QJZe83o4XPe8UP6dOD
-	 QvCMHFKJZQrtVOgVL+0jIVIjBUnfrawlnbVT0vC9qrMaFo46RfOt0y0i5Ud/23Emsv
-	 XWvJmNkOrtrmeugk68Yge6+9x93UwnhuOA9RMMbU=
+	b=iZKSDzTbgZJD5QhvGgWuT9DPIoutpUek6S3xu11GNhKx/xmvS6zpJ3tqiya/M/7hj
+	 rcrRyepGSDF/WlvyQbro386eXMHU7p1hnYqhR54nmu9dJKf46DcU+W6wkJuzykZcvX
+	 w1nwo1AR+BpDcKHBj33OLoe/WqVC6Nknx6emSkI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e5e64cdf8e92046dd3e1@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/175] Bluetooth: Fix use-after-free in l2cap_sock_cleanup_listen()
-Date: Sun,  7 Sep 2025 21:57:18 +0200
-Message-ID: <20250907195615.873298583@linuxfoundation.org>
+Subject: [PATCH 6.12 044/175] netfilter: nft_flowtable.sh: re-run with random mtu sizes
+Date: Sun,  7 Sep 2025 21:57:19 +0200
+Message-ID: <20250907195615.895806234@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,169 +51,383 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 862c628108562d8c7a516a900034823b381d3cba ]
+[ Upstream commit d6a367ec6c96fc8e61b4d67e69df03565ec69fb7 ]
 
-syzbot reported the splat below without a repro.
+Jakub says:
+ nft_flowtable.sh is one of the most flake-atious test for netdev CI currently :(
 
-In the splat, a single thread calling bt_accept_dequeue() freed sk
-and touched it after that.
+The root cause is two-fold:
+1. the failing part of the test is supposed to make sure that ip
+   fragments are forwarded for offloaded flows.
+   (flowtable has to pass them to classic forward path).
+   path mtu discovery for these subtests is disabled.
 
-The root cause would be the racy l2cap_sock_cleanup_listen() call
-added by the cited commit.
+2. nft_flowtable.sh has two passes.  One with fixed mtus/file size and
+  one where link mtus and file sizes are random.
 
-bt_accept_dequeue() is called under lock_sock() except for
-l2cap_sock_release().
+The CI failures all have same pattern:
+  re-run with random mtus and file size: -o 27663 -l 4117 -r 10089 -s 54384840
+  [..]
+  PASS: dscp_egress: dscp packet counters match
+  FAIL: file mismatch for ns1 -> ns2
 
-Two threads could see the same socket during the list iteration
-in bt_accept_dequeue():
+In some cases this error triggers a bit ealier, sometimes in a later
+subtest:
+  re-run with random mtus and file size: -o 20201 -l 4555 -r 12657 -s 9405856
+  [..]
+  PASS: dscp_egress: dscp packet counters match
+  PASS: dscp_fwd: dscp packet counters match
+  2025/08/17 20:37:52 socat[18954] E write(7, 0x560716b96000, 8192): Broken pipe
+  FAIL: file mismatch for ns1 -> ns2
+  -rw------- 1 root root 9405856 Aug 17 20:36 /tmp/tmp.2n63vlTrQe
 
-  CPU1                        CPU2 (close())
-  ----                        ----
-  sock_hold(sk)               sock_hold(sk);
-  lock_sock(sk)   <-- block close()
-  sock_put(sk)
-  bt_accept_unlink(sk)
-    sock_put(sk)  <-- refcnt by bt_accept_enqueue()
-  release_sock(sk)
-                              lock_sock(sk)
-                              sock_put(sk)
-                              bt_accept_unlink(sk)
-                                sock_put(sk)        <-- last refcnt
-                              bt_accept_unlink(sk)  <-- UAF
+But all logs I saw show same scenario:
+1. Failing tests have pmtu discovery off (i.e., ip fragmentation)
+2. The test file is much larger than first-pass default (2M Byte)
+3. peers have much larger MTUs compared to the 'network'.
 
-Depending on the timing, the other thread could show up in the
-"Freed by task" part.
+These errors are very reproducible when re-running the test with
+the same commandline arguments.
 
-Let's call l2cap_sock_cleanup_listen() under lock_sock() in
-l2cap_sock_release().
+The timeout became much more prominent with
+1d2fbaad7cd8 ("tcp: stronger sk_rcvbuf checks"): reassembled packets
+typically have a skb->truesize more than double the skb length.
 
-[0]:
-BUG: KASAN: slab-use-after-free in debug_spin_lock_before kernel/locking/spinlock_debug.c:86 [inline]
-BUG: KASAN: slab-use-after-free in do_raw_spin_lock+0x26f/0x2b0 kernel/locking/spinlock_debug.c:115
-Read of size 4 at addr ffff88803b7eb1c4 by task syz.5.3276/16995
-CPU: 3 UID: 0 PID: 16995 Comm: syz.5.3276 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xcd/0x630 mm/kasan/report.c:482
- kasan_report+0xe0/0x110 mm/kasan/report.c:595
- debug_spin_lock_before kernel/locking/spinlock_debug.c:86 [inline]
- do_raw_spin_lock+0x26f/0x2b0 kernel/locking/spinlock_debug.c:115
- spin_lock_bh include/linux/spinlock.h:356 [inline]
- release_sock+0x21/0x220 net/core/sock.c:3746
- bt_accept_dequeue+0x505/0x600 net/bluetooth/af_bluetooth.c:312
- l2cap_sock_cleanup_listen+0x5c/0x2a0 net/bluetooth/l2cap_sock.c:1451
- l2cap_sock_release+0x5c/0x210 net/bluetooth/l2cap_sock.c:1425
- __sock_release+0xb3/0x270 net/socket.c:649
- sock_close+0x1c/0x30 net/socket.c:1439
- __fput+0x3ff/0xb70 fs/file_table.c:468
- task_work_run+0x14d/0x240 kernel/task_work.c:227
- resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
- exit_to_user_mode_loop+0xeb/0x110 kernel/entry/common.c:43
- exit_to_user_mode_prepare include/linux/irq-entry-common.h:225 [inline]
- syscall_exit_to_user_mode_work include/linux/entry-common.h:175 [inline]
- syscall_exit_to_user_mode include/linux/entry-common.h:210 [inline]
- do_syscall_64+0x3f6/0x4c0 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f2accf8ebe9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffdb6cb1378 EFLAGS: 00000246 ORIG_RAX: 00000000000001b4
-RAX: 0000000000000000 RBX: 00000000000426fb RCX: 00007f2accf8ebe9
-RDX: 0000000000000000 RSI: 000000000000001e RDI: 0000000000000003
-RBP: 00007f2acd1b7da0 R08: 0000000000000001 R09: 00000012b6cb166f
-R10: 0000001b30e20000 R11: 0000000000000246 R12: 00007f2acd1b609c
-R13: 00007f2acd1b6090 R14: ffffffffffffffff R15: 00007ffdb6cb1490
- </TASK>
+As that commit is intentional and pmtud-off with
+large-tcp-packets-as-fragments is not normal adjust the test to use a
+smaller file for the pmtu-off subtests.
 
-Allocated by task 5326:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
- kasan_save_track+0x14/0x30 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:388 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:405
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4365 [inline]
- __kmalloc_noprof+0x223/0x510 mm/slub.c:4377
- kmalloc_noprof include/linux/slab.h:909 [inline]
- sk_prot_alloc+0x1a8/0x2a0 net/core/sock.c:2239
- sk_alloc+0x36/0xc20 net/core/sock.c:2295
- bt_sock_alloc+0x3b/0x3a0 net/bluetooth/af_bluetooth.c:151
- l2cap_sock_alloc.constprop.0+0x33/0x1d0 net/bluetooth/l2cap_sock.c:1894
- l2cap_sock_new_connection_cb+0x101/0x240 net/bluetooth/l2cap_sock.c:1482
- l2cap_connect_cfm+0x4c4/0xf80 net/bluetooth/l2cap_core.c:7287
- hci_connect_cfm include/net/bluetooth/hci_core.h:2050 [inline]
- hci_remote_features_evt+0x4dd/0x970 net/bluetooth/hci_event.c:3712
- hci_event_func net/bluetooth/hci_event.c:7519 [inline]
- hci_event_packet+0xa0d/0x11c0 net/bluetooth/hci_event.c:7573
- hci_rx_work+0x2c5/0x16b0 net/bluetooth/hci_core.c:4071
- process_one_work+0x9cf/0x1b70 kernel/workqueue.c:3236
- process_scheduled_works kernel/workqueue.c:3319 [inline]
- worker_thread+0x6c8/0xf10 kernel/workqueue.c:3400
- kthread+0x3c2/0x780 kernel/kthread.c:463
- ret_from_fork+0x5d7/0x6f0 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+While at it, add more information to pass/fail messages and
+also run the dscp alteration subtest with pmtu discovery enabled.
 
-Freed by task 16995:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
- kasan_save_track+0x14/0x30 mm/kasan/common.c:68
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:243 [inline]
- __kasan_slab_free+0x60/0x70 mm/kasan/common.c:275
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2417 [inline]
- slab_free mm/slub.c:4680 [inline]
- kfree+0x2b4/0x4d0 mm/slub.c:4879
- sk_prot_free net/core/sock.c:2278 [inline]
- __sk_destruct+0x75f/0x9a0 net/core/sock.c:2373
- sk_destruct+0xc2/0xf0 net/core/sock.c:2401
- __sk_free+0xf4/0x3e0 net/core/sock.c:2412
- sk_free+0x6a/0x90 net/core/sock.c:2423
- sock_put include/net/sock.h:1960 [inline]
- bt_accept_unlink+0x245/0x2e0 net/bluetooth/af_bluetooth.c:262
- bt_accept_dequeue+0x517/0x600 net/bluetooth/af_bluetooth.c:308
- l2cap_sock_cleanup_listen+0x5c/0x2a0 net/bluetooth/l2cap_sock.c:1451
- l2cap_sock_release+0x5c/0x210 net/bluetooth/l2cap_sock.c:1425
- __sock_release+0xb3/0x270 net/socket.c:649
- sock_close+0x1c/0x30 net/socket.c:1439
- __fput+0x3ff/0xb70 fs/file_table.c:468
- task_work_run+0x14d/0x240 kernel/task_work.c:227
- resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
- exit_to_user_mode_loop+0xeb/0x110 kernel/entry/common.c:43
- exit_to_user_mode_prepare include/linux/irq-entry-common.h:225 [inline]
- syscall_exit_to_user_mode_work include/linux/entry-common.h:175 [inline]
- syscall_exit_to_user_mode include/linux/entry-common.h:210 [inline]
- do_syscall_64+0x3f6/0x4c0 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 1728137b33c0 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_ready_cb")
-Reported-by: syzbot+e5e64cdf8e92046dd3e1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-bluetooth/68af6b9d.a70a0220.3cafd4.0032.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://netdev.bots.linux.dev/contest.html?test=nft-flowtable-sh
+Fixes: f84ab634904c ("selftests: netfilter: nft_flowtable.sh: re-run with random mtu sizes")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20250822071330.4168f0db@kernel.org/
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Link: https://patch.msgid.link/20250828214918.3385-1-fw@strlen.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../selftests/net/netfilter/nft_flowtable.sh  | 113 ++++++++++++------
+ 1 file changed, 76 insertions(+), 37 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 615c18e290ab9..b35f1551b9be7 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1409,7 +1409,10 @@ static int l2cap_sock_release(struct socket *sock)
- 	if (!sk)
- 		return 0;
+diff --git a/tools/testing/selftests/net/netfilter/nft_flowtable.sh b/tools/testing/selftests/net/netfilter/nft_flowtable.sh
+index a4ee5496f2a17..45832df982950 100755
+--- a/tools/testing/selftests/net/netfilter/nft_flowtable.sh
++++ b/tools/testing/selftests/net/netfilter/nft_flowtable.sh
+@@ -20,6 +20,7 @@ ret=0
+ SOCAT_TIMEOUT=60
  
-+	lock_sock_nested(sk, L2CAP_NESTING_PARENT);
- 	l2cap_sock_cleanup_listen(sk);
-+	release_sock(sk);
+ nsin=""
++nsin_small=""
+ ns1out=""
+ ns2out=""
+ 
+@@ -36,7 +37,7 @@ cleanup() {
+ 
+ 	cleanup_all_ns
+ 
+-	rm -f "$nsin" "$ns1out" "$ns2out"
++	rm -f "$nsin" "$nsin_small" "$ns1out" "$ns2out"
+ 
+ 	[ "$log_netns" -eq 0 ] && sysctl -q net.netfilter.nf_log_all_netns="$log_netns"
+ }
+@@ -72,6 +73,7 @@ lmtu=1500
+ rmtu=2000
+ 
+ filesize=$((2 * 1024 * 1024))
++filesize_small=$((filesize / 16))
+ 
+ usage(){
+ 	echo "nft_flowtable.sh [OPTIONS]"
+@@ -89,7 +91,10 @@ do
+ 		o) omtu=$OPTARG;;
+ 		l) lmtu=$OPTARG;;
+ 		r) rmtu=$OPTARG;;
+-		s) filesize=$OPTARG;;
++		s)
++			filesize=$OPTARG
++			filesize_small=$((OPTARG / 16))
++		;;
+ 		*) usage;;
+ 	esac
+ done
+@@ -215,6 +220,7 @@ if ! ip netns exec "$ns2" ping -c 1 -q 10.0.1.99 > /dev/null; then
+ fi
+ 
+ nsin=$(mktemp)
++nsin_small=$(mktemp)
+ ns1out=$(mktemp)
+ ns2out=$(mktemp)
+ 
+@@ -265,6 +271,7 @@ check_counters()
+ check_dscp()
+ {
+ 	local what=$1
++	local pmtud="$2"
+ 	local ok=1
+ 
+ 	local counter
+@@ -277,37 +284,39 @@ check_dscp()
+ 	local pc4z=${counter%*bytes*}
+ 	local pc4z=${pc4z#*packets}
+ 
++	local failmsg="FAIL: pmtu $pmtu: $what counters do not match, expected"
 +
- 	bt_sock_unlink(&l2cap_sk_list, sk);
+ 	case "$what" in
+ 	"dscp_none")
+ 		if [ "$pc4" -gt 0 ] || [ "$pc4z" -eq 0 ]; then
+-			echo "FAIL: dscp counters do not match, expected dscp3 == 0, dscp0 > 0, but got $pc4,$pc4z" 1>&2
++			echo "$failmsg dscp3 == 0, dscp0 > 0, but got $pc4,$pc4z" 1>&2
+ 			ret=1
+ 			ok=0
+ 		fi
+ 		;;
+ 	"dscp_fwd")
+ 		if [ "$pc4" -eq 0 ] || [ "$pc4z" -eq 0 ]; then
+-			echo "FAIL: dscp counters do not match, expected dscp3 and dscp0 > 0 but got $pc4,$pc4z" 1>&2
++			echo "$failmsg dscp3 and dscp0 > 0 but got $pc4,$pc4z" 1>&2
+ 			ret=1
+ 			ok=0
+ 		fi
+ 		;;
+ 	"dscp_ingress")
+ 		if [ "$pc4" -eq 0 ] || [ "$pc4z" -gt 0 ]; then
+-			echo "FAIL: dscp counters do not match, expected dscp3 > 0, dscp0 == 0 but got $pc4,$pc4z" 1>&2
++			echo "$failmsg dscp3 > 0, dscp0 == 0 but got $pc4,$pc4z" 1>&2
+ 			ret=1
+ 			ok=0
+ 		fi
+ 		;;
+ 	"dscp_egress")
+ 		if [ "$pc4" -eq 0 ] || [ "$pc4z" -gt 0 ]; then
+-			echo "FAIL: dscp counters do not match, expected dscp3 > 0, dscp0 == 0 but got $pc4,$pc4z" 1>&2
++			echo "$failmsg dscp3 > 0, dscp0 == 0 but got $pc4,$pc4z" 1>&2
+ 			ret=1
+ 			ok=0
+ 		fi
+ 		;;
+ 	*)
+-		echo "FAIL: Unknown DSCP check" 1>&2
++		echo "$failmsg: Unknown DSCP check" 1>&2
+ 		ret=1
+ 		ok=0
+ 	esac
+@@ -319,9 +328,9 @@ check_dscp()
  
- 	err = l2cap_sock_shutdown(sock, SHUT_RDWR);
+ check_transfer()
+ {
+-	in=$1
+-	out=$2
+-	what=$3
++	local in=$1
++	local out=$2
++	local what=$3
+ 
+ 	if ! cmp "$in" "$out" > /dev/null 2>&1; then
+ 		echo "FAIL: file mismatch for $what" 1>&2
+@@ -342,25 +351,39 @@ test_tcp_forwarding_ip()
+ {
+ 	local nsa=$1
+ 	local nsb=$2
+-	local dstip=$3
+-	local dstport=$4
++	local pmtu=$3
++	local dstip=$4
++	local dstport=$5
+ 	local lret=0
++	local socatc
++	local socatl
++	local infile="$nsin"
++
++	if [ $pmtu -eq 0 ]; then
++		infile="$nsin_small"
++	fi
+ 
+-	timeout "$SOCAT_TIMEOUT" ip netns exec "$nsb" socat -4 TCP-LISTEN:12345,reuseaddr STDIO < "$nsin" > "$ns2out" &
++	timeout "$SOCAT_TIMEOUT" ip netns exec "$nsb" socat -4 TCP-LISTEN:12345,reuseaddr STDIO < "$infile" > "$ns2out" &
+ 	lpid=$!
+ 
+ 	busywait 1000 listener_ready
+ 
+-	timeout "$SOCAT_TIMEOUT" ip netns exec "$nsa" socat -4 TCP:"$dstip":"$dstport" STDIO < "$nsin" > "$ns1out"
++	timeout "$SOCAT_TIMEOUT" ip netns exec "$nsa" socat -4 TCP:"$dstip":"$dstport" STDIO < "$infile" > "$ns1out"
++	socatc=$?
+ 
+ 	wait $lpid
++	socatl=$?
+ 
+-	if ! check_transfer "$nsin" "$ns2out" "ns1 -> ns2"; then
++	if [ $socatl -ne 0 ] || [ $socatc -ne 0 ];then
++		rc=1
++	fi
++
++	if ! check_transfer "$infile" "$ns2out" "ns1 -> ns2"; then
+ 		lret=1
+ 		ret=1
+ 	fi
+ 
+-	if ! check_transfer "$nsin" "$ns1out" "ns1 <- ns2"; then
++	if ! check_transfer "$infile" "$ns1out" "ns1 <- ns2"; then
+ 		lret=1
+ 		ret=1
+ 	fi
+@@ -370,14 +393,16 @@ test_tcp_forwarding_ip()
+ 
+ test_tcp_forwarding()
+ {
+-	test_tcp_forwarding_ip "$1" "$2" 10.0.2.99 12345
++	local pmtu="$3"
++
++	test_tcp_forwarding_ip "$1" "$2" "$pmtu" 10.0.2.99 12345
+ 
+ 	return $?
+ }
+ 
+ test_tcp_forwarding_set_dscp()
+ {
+-	check_dscp "dscp_none"
++	local pmtu="$3"
+ 
+ ip netns exec "$nsr1" nft -f - <<EOF
+ table netdev dscpmangle {
+@@ -388,8 +413,8 @@ table netdev dscpmangle {
+ }
+ EOF
+ if [ $? -eq 0 ]; then
+-	test_tcp_forwarding_ip "$1" "$2"  10.0.2.99 12345
+-	check_dscp "dscp_ingress"
++	test_tcp_forwarding_ip "$1" "$2" "$3" 10.0.2.99 12345
++	check_dscp "dscp_ingress" "$pmtu"
+ 
+ 	ip netns exec "$nsr1" nft delete table netdev dscpmangle
+ else
+@@ -405,10 +430,10 @@ table netdev dscpmangle {
+ }
+ EOF
+ if [ $? -eq 0 ]; then
+-	test_tcp_forwarding_ip "$1" "$2"  10.0.2.99 12345
+-	check_dscp "dscp_egress"
++	test_tcp_forwarding_ip "$1" "$2" "$pmtu"  10.0.2.99 12345
++	check_dscp "dscp_egress" "$pmtu"
+ 
+-	ip netns exec "$nsr1" nft flush table netdev dscpmangle
++	ip netns exec "$nsr1" nft delete table netdev dscpmangle
+ else
+ 	echo "SKIP: Could not load netdev:egress for veth1"
+ fi
+@@ -416,48 +441,53 @@ fi
+ 	# partial.  If flowtable really works, then both dscp-is-0 and dscp-is-cs3
+ 	# counters should have seen packets (before and after ft offload kicks in).
+ 	ip netns exec "$nsr1" nft -a insert rule inet filter forward ip dscp set cs3
+-	test_tcp_forwarding_ip "$1" "$2"  10.0.2.99 12345
+-	check_dscp "dscp_fwd"
++	test_tcp_forwarding_ip "$1" "$2" "$pmtu"  10.0.2.99 12345
++	check_dscp "dscp_fwd" "$pmtu"
+ }
+ 
+ test_tcp_forwarding_nat()
+ {
++	local nsa="$1"
++	local nsb="$2"
++	local pmtu="$3"
++	local what="$4"
+ 	local lret
+-	local pmtu
+ 
+-	test_tcp_forwarding_ip "$1" "$2" 10.0.2.99 12345
+-	lret=$?
++	[ "$pmtu" -eq 0 ] && what="$what (pmtu disabled)"
+ 
+-	pmtu=$3
+-	what=$4
++	test_tcp_forwarding_ip "$nsa" "$nsb" "$pmtu" 10.0.2.99 12345
++	lret=$?
+ 
+ 	if [ "$lret" -eq 0 ] ; then
+ 		if [ "$pmtu" -eq 1 ] ;then
+-			check_counters "flow offload for ns1/ns2 with masquerade and pmtu discovery $what"
++			check_counters "flow offload for ns1/ns2 with masquerade $what"
+ 		else
+ 			echo "PASS: flow offload for ns1/ns2 with masquerade $what"
+ 		fi
+ 
+-		test_tcp_forwarding_ip "$1" "$2" 10.6.6.6 1666
++		test_tcp_forwarding_ip "$1" "$2" "$pmtu" 10.6.6.6 1666
+ 		lret=$?
+ 		if [ "$pmtu" -eq 1 ] ;then
+-			check_counters "flow offload for ns1/ns2 with dnat and pmtu discovery $what"
++			check_counters "flow offload for ns1/ns2 with dnat $what"
+ 		elif [ "$lret" -eq 0 ] ; then
+ 			echo "PASS: flow offload for ns1/ns2 with dnat $what"
+ 		fi
++	else
++		echo "FAIL: flow offload for ns1/ns2 with dnat $what"
+ 	fi
+ 
+ 	return $lret
+ }
+ 
+ make_file "$nsin" "$filesize"
++make_file "$nsin_small" "$filesize_small"
+ 
+ # First test:
+ # No PMTU discovery, nsr1 is expected to fragment packets from ns1 to ns2 as needed.
+ # Due to MTU mismatch in both directions, all packets (except small packets like pure
+ # acks) have to be handled by normal forwarding path.  Therefore, packet counters
+ # are not checked.
+-if test_tcp_forwarding "$ns1" "$ns2"; then
++if test_tcp_forwarding "$ns1" "$ns2" 0; then
+ 	echo "PASS: flow offloaded for ns1/ns2"
+ else
+ 	echo "FAIL: flow offload for ns1/ns2:" 1>&2
+@@ -489,8 +519,9 @@ table ip nat {
+ }
+ EOF
+ 
++check_dscp "dscp_none" "0"
+ if ! test_tcp_forwarding_set_dscp "$ns1" "$ns2" 0 ""; then
+-	echo "FAIL: flow offload for ns1/ns2 with dscp update" 1>&2
++	echo "FAIL: flow offload for ns1/ns2 with dscp update and no pmtu discovery" 1>&2
+ 	exit 0
+ fi
+ 
+@@ -512,6 +543,14 @@ ip netns exec "$ns2" sysctl net.ipv4.ip_no_pmtu_disc=0 > /dev/null
+ # are lower than file size and packets were forwarded via flowtable layer.
+ # For earlier tests (large mtus), packets cannot be handled via flowtable
+ # (except pure acks and other small packets).
++ip netns exec "$nsr1" nft reset counters table inet filter >/dev/null
++ip netns exec "$ns2"  nft reset counters table inet filter >/dev/null
++
++if ! test_tcp_forwarding_set_dscp "$ns1" "$ns2" 1 ""; then
++	echo "FAIL: flow offload for ns1/ns2 with dscp update and pmtu discovery" 1>&2
++	exit 0
++fi
++
+ ip netns exec "$nsr1" nft reset counters table inet filter >/dev/null
+ 
+ if ! test_tcp_forwarding_nat "$ns1" "$ns2" 1 ""; then
+@@ -644,7 +683,7 @@ ip -net "$ns2" route del 192.168.10.1 via 10.0.2.1
+ ip -net "$ns2" route add default via 10.0.2.1
+ ip -net "$ns2" route add default via dead:2::1
+ 
+-if test_tcp_forwarding "$ns1" "$ns2"; then
++if test_tcp_forwarding "$ns1" "$ns2" 1; then
+ 	check_counters "ipsec tunnel mode for ns1/ns2"
+ else
+ 	echo "FAIL: ipsec tunnel mode for ns1/ns2"
+@@ -668,7 +707,7 @@ if [ "$1" = "" ]; then
+ 	fi
+ 
+ 	echo "re-run with random mtus and file size: -o $o -l $l -r $r -s $filesize"
+-	$0 -o "$o" -l "$l" -r "$r" -s "$filesize"
++	$0 -o "$o" -l "$l" -r "$r" -s "$filesize" || ret=1
+ fi
+ 
+ exit $ret
 -- 
 2.50.1
 
