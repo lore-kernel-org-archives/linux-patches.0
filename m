@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA361F63CD;
-	Sun,  7 Sep 2025 20:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D73C4315A;
+	Sun,  7 Sep 2025 20:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277836; cv=none; b=Hm1uq1DNMDLgOLsIoPfyOMIi5HjzHHo5mGywIgZsvrYypdFRgj9yZ1ej9cee3QC26HWSztzVRpOHq8O4alLabsTsJWGZpT338Y1Hoq++/INrQ2FSX8eosKg23EW7JrZMKYTBZ5XNw8UsodgJF7uY/lsFbsJj6hBlgJ65/iOYL+c=
+	t=1757277839; cv=none; b=AAcwsoCN8gZyL36dqiwb1yg07/zqiKJpPPjY8gcLS3QbFtIV90YPOhTpOybhKVT9m4zXc9Ahlchi4LNXtMBMFWnuMx0VpsGt7bPY+HCO10tNHTm+1NUaZ6aZ5tr6kF1LaGgFN973OVcPik8w50y84CPEajl9adVMerkdUMNX4Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277836; c=relaxed/simple;
-	bh=btuZ+k7tSRZbl0Sil1Xkv0EDDvclb6/cEqi3Q3jfROk=;
+	s=arc-20240116; t=1757277839; c=relaxed/simple;
+	bh=8xwGyeKR/5TkW3VGXfYocmdnWIS+WRYQoXihsgQnKfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpWQRSg2oHNNZXvSLYixiDeeFsmJKGFoPzLRY2IOkB0rUUqfkb+MbhtVn3TD9ZJdg4arsg2J/YUoknC7w9YdRZb2VvvS/HQPwpXPn6VVnJuNKZZFhbq6CX3TISDDJez3CLciX5lnBGAsYzcoq6VqFXSWgMBB51t9zKzATXHOa7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7/Ny+mz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKtDeqBLAua5DZEr9mHtVGbgutmfEsb9GU2u6YJkb58kyclRD/Twpprs1UGaugx6y2elyY0HPLja1PUYGQ1mzXfhuK2oIwDZKSbl6gEm8j2es3nVfRNyLn2jeiQbEtrNIxQAstYtI6RpPXe/7Tsps9eoS+9C6P6K0DlpJPe8wRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwdlgTiO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7/Ny+mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64451C4CEF0;
-	Sun,  7 Sep 2025 20:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwdlgTiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C849C4CEF0;
+	Sun,  7 Sep 2025 20:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277835;
-	bh=btuZ+k7tSRZbl0Sil1Xkv0EDDvclb6/cEqi3Q3jfROk=;
+	s=korg; t=1757277838;
+	bh=8xwGyeKR/5TkW3VGXfYocmdnWIS+WRYQoXihsgQnKfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7/Ny+mzBWE6M2LKxPifcBUbfK/0MH3NJ1EOrRe6dCwS5I6K+2HYNZJo/033FASlx
-	 si76ouhtO1bMstTbYKl3vkpNRitnS5hMMfc2gtyd41iSEYQ0VdqamYjODHKLgx0wP0
-	 GGtqNSD58bUFhhUE0bpuMythoj96RIj3pNiSMA0s=
+	b=VwdlgTiOud4fr0W6Bbez4geF/KNdPfrw7c+cta+UrZn0y/C15sutfjeYBMxeTAxNK
+	 xHvvxEpY2UuWqzcwso7AH/HF37KymcG8iti25ONHBrQVPOKSgvmmYT8VtEgF+xTVc3
+	 46uF5w1xrgIuT0mxnstU9Tjsxe/RjZg3HL0KjB6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	stable@kernel.org,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 138/183] net: dsa: mv88e6xxx: Fix fwnode reference leaks in mv88e6xxx_port_setup_leds
-Date: Sun,  7 Sep 2025 21:59:25 +0200
-Message-ID: <20250907195619.071890114@linuxfoundation.org>
+Subject: [PATCH 6.16 139/183] net: pcs: rzn1-miic: Correct MODCTRL register offset
+Date: Sun,  7 Sep 2025 21:59:26 +0200
+Message-ID: <20250907195619.096343749@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,72 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit f63e7c8a83892781f6ceb55566f9497639c44555 upstream.
+commit a7195a3d67dace056af7ca65144a11874df79562 upstream.
 
-Fix multiple fwnode reference leaks:
+Correct the Mode Control Register (MODCTRL) offset for RZ/N MIIC.
+According to the R-IN Engine and Ethernet Peripherals Manual (Rev.1.30)
+[0], Table 10.1 "Ethernet Accessory Register List", MODCTRL is at offset
+0x8, not 0x20 as previously defined.
 
-1. The function calls fwnode_get_named_child_node() to get the "leds" node,
-   but never calls fwnode_handle_put(leds) to release this reference.
+Offset 0x20 actually maps to the Port Trigger Control Register (PTCTRL),
+which controls PTP_MODE[3:0] and RGMII_CLKSEL[4]. Using this incorrect
+definition prevented the driver from configuring the SW_MODE[4:0] bits
+in MODCTRL, which control the internal connection of Ethernet ports. As
+a result, the MIIC could not be switched into the correct mode, leading
+to link setup failures and non-functional Ethernet ports on affected
+systems.
 
-2. Within the fwnode_for_each_child_node() loop, the early return
-   paths that don't properly release the "led" fwnode reference.
+[0] https://www.renesas.com/en/document/mah/rzn1d-group-rzn1s-group-rzn1l-group-users-manual-r-engine-and-ethernet-peripherals?r=1054571
 
-This fix follows the same pattern as commit d029edefed39
-("net dsa: qca8k: fix usages of device_get_named_child_node()")
-
-Fixes: 94a2a84f5e9e ("net: dsa: mv88e6xxx: Support LED control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patch.msgid.link/20250901073224.2273103-1-linmq006@gmail.com
+Fixes: 7dc54d3b8d91 ("net: pcs: add Renesas MII converter driver")
+Cc: stable@kernel.org
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20250901112019.16278-1-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/leds.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/net/pcs/pcs-rzn1-miic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/dsa/mv88e6xxx/leds.c
-+++ b/drivers/net/dsa/mv88e6xxx/leds.c
-@@ -779,7 +779,8 @@ int mv88e6xxx_port_setup_leds(struct mv8
- 			continue;
- 		if (led_num > 1) {
- 			dev_err(dev, "invalid LED specified port %d\n", port);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto err_put_led;
- 		}
+--- a/drivers/net/pcs/pcs-rzn1-miic.c
++++ b/drivers/net/pcs/pcs-rzn1-miic.c
+@@ -19,7 +19,7 @@
+ #define MIIC_PRCMD			0x0
+ #define MIIC_ESID_CODE			0x4
  
- 		if (led_num == 0)
-@@ -823,17 +824,25 @@ int mv88e6xxx_port_setup_leds(struct mv8
- 		init_data.devname_mandatory = true;
- 		init_data.devicename = kasprintf(GFP_KERNEL, "%s:0%d:0%d", chip->info->name,
- 						 port, led_num);
--		if (!init_data.devicename)
--			return -ENOMEM;
-+		if (!init_data.devicename) {
-+			ret = -ENOMEM;
-+			goto err_put_led;
-+		}
+-#define MIIC_MODCTRL			0x20
++#define MIIC_MODCTRL			0x8
+ #define MIIC_MODCTRL_SW_MODE		GENMASK(4, 0)
  
- 		ret = devm_led_classdev_register_ext(dev, l, &init_data);
- 		kfree(init_data.devicename);
- 
- 		if (ret) {
- 			dev_err(dev, "Failed to init LED %d for port %d", led_num, port);
--			return ret;
-+			goto err_put_led;
- 		}
- 	}
- 
-+	fwnode_handle_put(leds);
- 	return 0;
-+
-+err_put_led:
-+	fwnode_handle_put(led);
-+	fwnode_handle_put(leds);
-+	return ret;
- }
+ #define MIIC_CONVCTRL(port)		(0x100 + (port) * 4)
 
 
