@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27CAD528;
-	Sun,  7 Sep 2025 20:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C71ED528;
+	Sun,  7 Sep 2025 20:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276680; cv=none; b=fZuzMOBMCOvWoHFaAk2iMTk+ez9Z9eNBV4YavaA475aIChUGJMnn1Ygb0nSP+4MZDWyYt4xlLYcZRc9znID4vjpdepHWwnNVVK5OV1KrzYCNRjLXBp/n77kw55VCGvL47sPPtSQHCSHA5R8J76cw9ONe05umH0zFvT9CiCscmAY=
+	t=1757276683; cv=none; b=kt4UcAjuH23IN9CrHH5ESwoYVZxTZ2g/Lgy6/eZ2TFp+1MsSgO4Y8N/QLfbyxqzSUSfD72tgS+PPN8lptFmBAqTpsJaoctCUHQR/UdkTFdczQcwfpuiA2TDXW95Uj6CIqCgccYIcBB4DWCpnd6CRFSblgvoDePYY7I5nfmDidyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276680; c=relaxed/simple;
-	bh=KhdVGlKCG0c2INA6xP3n5MBbOh7ZuRU3NCoKmUJ7V8s=;
+	s=arc-20240116; t=1757276683; c=relaxed/simple;
+	bh=8eqZCmVy2sCEs8mv9MMXL07J+OLv+E1rw8wv/NByAEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Crh65XDTX23RdufU8U0rFOoMXukUp5RIIEn6yVND0EZ2ZFKXqv1VfqPz1L/e5RhO8yzvnyGunMaOcqAFQRzrnScKpTcGul6r9xjQcFq4BUJq2JUhEZFjwQy8qGPLgT0Yel8TlNlD8Dd/9ry2uKf3e8ItTZ2KiKQt6I3h1bR8k28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUZu/ICY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DsC7fFMzehGOU0Sb54qf5zDz42gVaTvc0XZ3VAXxdwy4RNbcVfAWuX31gEKHyQbm/rv1ehap4VITvfwWSzmSupuKpKc9MAU22AxpcngIJCPjKw0rkzJuFgff9ai8PQiAR+ipWsc+lQIqA5eQfC8A5cp+VIjlAyI1yBelffda28A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8RuojOW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUZu/ICY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BEBC4CEF0;
-	Sun,  7 Sep 2025 20:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8RuojOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1BCC4CEF0;
+	Sun,  7 Sep 2025 20:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276679;
-	bh=KhdVGlKCG0c2INA6xP3n5MBbOh7ZuRU3NCoKmUJ7V8s=;
+	s=korg; t=1757276683;
+	bh=8eqZCmVy2sCEs8mv9MMXL07J+OLv+E1rw8wv/NByAEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUZu/ICYCOe6wluNSZgbbE8uM6o8Q/pZ4K2VsmaVlIHqhVrf6j24e2oDgDJVy/Mh7
-	 VgmhNwR1gqBzLT0cLh8tUlyR20cUHyTCHnVBMJkAu5xqKlIzG+v767p9/9KjX5GRCj
-	 uTqLXJywYv08/jrS9dygtZGUx+MPpKUfUOiAE7yY=
+	b=r8RuojOWXedG1/b1OJkJ1MgI5f1M5mbLzqX2gN1TQpAb7gg07nVFM/ttU3L5KGzg5
+	 BfIDrmH5Ztza3z2eK4QzJ6WAVCHFw2Vaw/Ab5wuBlfltehxaSY43XiThTHVNAgZ7kN
+	 /bIcT1WlCmPp7GaH3wJiwMrb/xMNqYws6ceCfwXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dave Airlie <airlied@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/121] selftest: net: Fix weird setsockopt() in bind_bhash.c.
-Date: Sun,  7 Sep 2025 21:58:05 +0200
-Message-ID: <20250907195611.084186589@linuxfoundation.org>
+Subject: [PATCH 6.6 076/121] nouveau: fix disabling the nonstall irq due to storm code
+Date: Sun,  7 Sep 2025 21:58:32 +0200
+Message-ID: <20250907195611.787160933@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,62 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Dave Airlie <airlied@redhat.com>
 
-[ Upstream commit fd2004d82d8d8faa94879e3de3096c8511728637 ]
+[ Upstream commit 0ef5c4e4dbbfcebaa9b2eca18097b43016727dfe ]
 
-bind_bhash.c passes (SO_REUSEADDR | SO_REUSEPORT) to setsockopt().
+Nouveau has code that when it gets an IRQ with no allowed handler
+it disables it to avoid storms.
 
-In the asm-generic definition, the value happens to match with the
-bare SO_REUSEPORT, (2 | 15) == 15, but not on some arch.
+However with nonstall interrupts, we often disable them from
+the drm driver, but still request their emission via the push submission.
 
-arch/alpha/include/uapi/asm/socket.h:18:#define SO_REUSEADDR	0x0004
-arch/alpha/include/uapi/asm/socket.h:24:#define SO_REUSEPORT	0x0200
-arch/mips/include/uapi/asm/socket.h:24:#define SO_REUSEADDR	0x0004	/* Allow reuse of local addresses.  */
-arch/mips/include/uapi/asm/socket.h:33:#define SO_REUSEPORT 0x0200	/* Allow local address and port reuse.  */
-arch/parisc/include/uapi/asm/socket.h:12:#define SO_REUSEADDR	0x0004
-arch/parisc/include/uapi/asm/socket.h:18:#define SO_REUSEPORT	0x0200
-arch/sparc/include/uapi/asm/socket.h:13:#define SO_REUSEADDR	0x0004
-arch/sparc/include/uapi/asm/socket.h:20:#define SO_REUSEPORT	0x0200
-include/uapi/asm-generic/socket.h:12:#define SO_REUSEADDR	2
-include/uapi/asm-generic/socket.h:27:#define SO_REUSEPORT	15
+Just don't disable nonstall irqs ever in normal operation, the
+event handling code will filter them out, and the driver will
+just enable/disable them at load time.
 
-Let's pass SO_REUSEPORT only.
+This fixes timeouts we've been seeing on/off for a long time,
+but they became a lot more noticeable on Blackwell.
 
-Fixes: c35ecb95c448 ("selftests/net: Add test for timing a bind request to a port with a populated bhash entry")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250903222938.2601522-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This doesn't fix all of them, there is a subsequent fence emission
+fix to fix the last few.
+
+Fixes: 3ebd64aa3c4f ("drm/nouveau/intr: support multiple trees, and explicit interfaces")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://lore.kernel.org/r/20250829021633.1674524-1-airlied@gmail.com
+[ Fix a typo and a minor checkpatch.pl warning; remove "v2" from commit
+  subject. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+[ File renames + drop r535 changes ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/bind_bhash.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c  |    2 ++
+ drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c |   23 +++++++++++++++--------
+ drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c |    1 +
+ drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h  |    2 ++
+ 4 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/net/bind_bhash.c b/tools/testing/selftests/net/bind_bhash.c
-index 57ff67a3751eb..da04b0b19b73c 100644
---- a/tools/testing/selftests/net/bind_bhash.c
-+++ b/tools/testing/selftests/net/bind_bhash.c
-@@ -75,7 +75,7 @@ static void *setup(void *arg)
- 	int *array = (int *)arg;
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
+@@ -348,6 +348,8 @@ nvkm_fifo_dtor(struct nvkm_engine *engin
+ 	nvkm_chid_unref(&fifo->chid);
  
- 	for (i = 0; i < MAX_CONNECTIONS; i++) {
--		sock_fd = bind_socket(SO_REUSEADDR | SO_REUSEPORT, setup_addr);
-+		sock_fd = bind_socket(SO_REUSEPORT, setup_addr);
- 		if (sock_fd < 0) {
- 			ret = sock_fd;
- 			pthread_exit(&ret);
-@@ -103,7 +103,7 @@ int main(int argc, const char *argv[])
+ 	nvkm_event_fini(&fifo->nonstall.event);
++	if (fifo->func->nonstall_dtor)
++		fifo->func->nonstall_dtor(fifo);
+ 	mutex_destroy(&fifo->mutex);
+ 	return fifo;
+ }
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
+@@ -516,19 +516,11 @@ ga100_fifo_nonstall_intr(struct nvkm_int
+ static void
+ ga100_fifo_nonstall_block(struct nvkm_event *event, int type, int index)
+ {
+-	struct nvkm_fifo *fifo = container_of(event, typeof(*fifo), nonstall.event);
+-	struct nvkm_runl *runl = nvkm_runl_get(fifo, index, 0);
+-
+-	nvkm_inth_block(&runl->nonstall.inth);
+ }
  
- 	setup_addr = use_v6 ? setup_addr_v6 : setup_addr_v4;
+ static void
+ ga100_fifo_nonstall_allow(struct nvkm_event *event, int type, int index)
+ {
+-	struct nvkm_fifo *fifo = container_of(event, typeof(*fifo), nonstall.event);
+-	struct nvkm_runl *runl = nvkm_runl_get(fifo, index, 0);
+-
+-	nvkm_inth_allow(&runl->nonstall.inth);
+ }
  
--	listener_fd = bind_socket(SO_REUSEADDR | SO_REUSEPORT, setup_addr);
-+	listener_fd = bind_socket(SO_REUSEPORT, setup_addr);
- 	if (listen(listener_fd, 100) < 0) {
- 		perror("listen failed");
- 		return -1;
--- 
-2.50.1
-
+ const struct nvkm_event_func
+@@ -559,12 +551,26 @@ ga100_fifo_nonstall_ctor(struct nvkm_fif
+ 		if (ret)
+ 			return ret;
+ 
++		nvkm_inth_allow(&runl->nonstall.inth);
++
+ 		nr = max(nr, runl->id + 1);
+ 	}
+ 
+ 	return nr;
+ }
+ 
++void
++ga100_fifo_nonstall_dtor(struct nvkm_fifo *fifo)
++{
++	struct nvkm_runl *runl;
++
++	nvkm_runl_foreach(runl, fifo) {
++		if (runl->nonstall.vector < 0)
++			continue;
++		nvkm_inth_block(&runl->nonstall.inth);
++	}
++}
++
+ int
+ ga100_fifo_runl_ctor(struct nvkm_fifo *fifo)
+ {
+@@ -594,6 +600,7 @@ ga100_fifo = {
+ 	.runl_ctor = ga100_fifo_runl_ctor,
+ 	.mmu_fault = &tu102_fifo_mmu_fault,
+ 	.nonstall_ctor = ga100_fifo_nonstall_ctor,
++	.nonstall_dtor = ga100_fifo_nonstall_dtor,
+ 	.nonstall = &ga100_fifo_nonstall,
+ 	.runl = &ga100_runl,
+ 	.runq = &ga100_runq,
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c
+@@ -28,6 +28,7 @@ ga102_fifo = {
+ 	.runl_ctor = ga100_fifo_runl_ctor,
+ 	.mmu_fault = &tu102_fifo_mmu_fault,
+ 	.nonstall_ctor = ga100_fifo_nonstall_ctor,
++	.nonstall_dtor = ga100_fifo_nonstall_dtor,
+ 	.nonstall = &ga100_fifo_nonstall,
+ 	.runl = &ga100_runl,
+ 	.runq = &ga100_runq,
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h
+@@ -38,6 +38,7 @@ struct nvkm_fifo_func {
+ 	void (*start)(struct nvkm_fifo *, unsigned long *);
+ 
+ 	int (*nonstall_ctor)(struct nvkm_fifo *);
++	void (*nonstall_dtor)(struct nvkm_fifo *);
+ 	const struct nvkm_event_func *nonstall;
+ 
+ 	const struct nvkm_runl_func *runl;
+@@ -194,6 +195,7 @@ extern const struct nvkm_fifo_func_mmu_f
+ 
+ int ga100_fifo_runl_ctor(struct nvkm_fifo *);
+ int ga100_fifo_nonstall_ctor(struct nvkm_fifo *);
++void ga100_fifo_nonstall_dtor(struct nvkm_fifo *);
+ extern const struct nvkm_event_func ga100_fifo_nonstall;
+ extern const struct nvkm_runl_func ga100_runl;
+ extern const struct nvkm_runq_func ga100_runq;
 
 
