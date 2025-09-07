@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6D81CDFAC;
-	Sun,  7 Sep 2025 20:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEB21CDFAC;
+	Sun,  7 Sep 2025 20:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275688; cv=none; b=vAQW9bd5P+8orWuewR3JcElkdsOO2r8hBe+IOiyw8YGnrV1dfLzgzdTGcSzIxNRf5w+ClGNVS2BEvQJxvDR30SOSzs/+oItxB0UKJcFTlP818SEoyvhDwP/CvamKl5t/DtpW4prMPA00zkMeBAXFhXQiluNaOUVblZhVFWS9QXw=
+	t=1757275690; cv=none; b=MW3I1G2e/+VEBfxuIwZe7e3bhQZjlgNEGpsJSUZxi+HKtYinIKpPZ6LO4qvHO2O7AlmkPgY0zTvA250deneIaTMZyjF8QJt4CehaTCO8E4UybdcC7kCRcSZfN5AY9/COvLGyz86l0iH6sdVbcvcnQfGmbs+WZM2GqHcBNNTH2hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275688; c=relaxed/simple;
-	bh=IsikHnmjKBUqadZ8jsEjELmZrufHK1y2J8J6YqodZKw=;
+	s=arc-20240116; t=1757275690; c=relaxed/simple;
+	bh=4JJ1F9I0rU/z4ZOD8CwiTp0dRrKcfX0999VJwcOzsms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GbTRN2oAi3GdWirr4lNKwr6WSGENADIH30tM3hIBf07h75yBXoyk5yS8hSo/e9+V8g+vIzQZ2dm/td7NQ6rS5h80rJK4tLbXrnWHozlZZwt7FH1RukX1/K2NmF6Ikzd06nwoPXNN1/KtL/0Pr6Cl5TvLo57MCz7XCqSahfmAq64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeiK9FYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WwhOEiQKHJTf/3T4nqtsvZwcrbZsRb9dJ49N2B6duRejGGpI349+/oXeGAxVdwT7DZ5Q3eLDGodsZhA/ueTl40B6UVewz+HdwXJo1u4SNmPWtfoQNStyDDk5h94KoPFNJyB+ymyg+I7TipaAxvzO1X+S5LgSz11NXIA1iUeENwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDMTDY61; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeiK9FYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE25C4CEF0;
-	Sun,  7 Sep 2025 20:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDMTDY61"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53458C4CEF0;
+	Sun,  7 Sep 2025 20:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275687;
-	bh=IsikHnmjKBUqadZ8jsEjELmZrufHK1y2J8J6YqodZKw=;
+	s=korg; t=1757275690;
+	bh=4JJ1F9I0rU/z4ZOD8CwiTp0dRrKcfX0999VJwcOzsms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PeiK9FYa+vHbvPZvu31LoP8g5LskAbiIs3JyR4a9SqTcagxqQjsHH0jV7WuU0HLHt
-	 Ati2CC2ZAy2kDbtylEv4UjnYyzOhoV/E4W/3rLX2v3ry1IXGyf11Z3Cvs29p33dM4F
-	 pCTSq/93aCwJlMzgSdFvGpMH0u5lWWF2cLi+L9Y0=
+	b=tDMTDY61mCeqV+Vr1fZKzgPag5iL17N5ubMybMcQ+hhhOToM3MLz67BB2Vvif9KBK
+	 Bfsv2KAAdkgqU8NILG2h6wPuEBF1nzm7pV+Rbw7dipsDmRNTDdHFt5GTBBK6z80+Vw
+	 oIQDpfJ2JJ6CQvgUMTeaSy6BkUZnD0FvEC2YW3xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/52] iio: chemical: pms7003: use aligned_s64 for timestamp
-Date: Sun,  7 Sep 2025 21:57:51 +0200
-Message-ID: <20250907195602.887062180@linuxfoundation.org>
+Subject: [PATCH 5.10 32/52] iio: light: opt3001: fix deadlock due to concurrent flag access
+Date: Sun,  7 Sep 2025 21:57:52 +0200
+Message-ID: <20250907195602.913311014@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -47,64 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit 6ffa698674053e82e811520642db2650d00d2c01 ]
+[ Upstream commit f063a28002e3350088b4577c5640882bf4ea17ea ]
 
-Follow the pattern of other drivers and use aligned_s64 for the
-timestamp. This will ensure that the timestamp is correctly aligned on
-all architectures.
+The threaded IRQ function in this driver is reading the flag twice: once to
+lock a mutex and once to unlock it. Even though the code setting the flag
+is designed to prevent it, there are subtle cases where the flag could be
+true at the mutex_lock stage and false at the mutex_unlock stage. This
+results in the mutex not being unlocked, resulting in a deadlock.
 
-Also move the unaligned.h header while touching this since it was the
-only one not in alphabetical order.
+Fix it by making the opt3001_irq() code generally more robust, reading the
+flag into a variable and using the variable value at both stages.
 
-Fixes: 13e945631c2f ("iio:chemical:pms7003: Fix timestamp alignment and prevent data leak.")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20250417-iio-more-timestamp-alignment-v1-4-eafac1e22318@baylibre.com
-Cc: <Stable@vger.kernel.org>
+Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20250321-opt3001-irq-fix-v1-1-6c520d851562@bootlin.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ linux/unaligned.h => asm/unaligned.h ]
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/pms7003.c |    5 +++--
+ drivers/iio/light/opt3001.c |    5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/chemical/pms7003.c
-+++ b/drivers/iio/chemical/pms7003.c
-@@ -5,7 +5,6 @@
-  * Copyright (c) Tomasz Duszynski <tduszyns@gmail.com>
-  */
+--- a/drivers/iio/light/opt3001.c
++++ b/drivers/iio/light/opt3001.c
+@@ -692,8 +692,9 @@ static irqreturn_t opt3001_irq(int irq,
+ 	struct opt3001 *opt = iio_priv(iio);
+ 	int ret;
+ 	bool wake_result_ready_queue = false;
++	bool ok_to_ignore_lock = opt->ok_to_ignore_lock;
  
--#include <asm/unaligned.h>
- #include <linux/completion.h>
- #include <linux/device.h>
- #include <linux/errno.h>
-@@ -19,6 +18,8 @@
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/serdev.h>
-+#include <linux/types.h>
-+#include <asm/unaligned.h>
+-	if (!opt->ok_to_ignore_lock)
++	if (!ok_to_ignore_lock)
+ 		mutex_lock(&opt->lock);
  
- #define PMS7003_DRIVER_NAME "pms7003"
+ 	ret = i2c_smbus_read_word_swapped(opt->client, OPT3001_CONFIGURATION);
+@@ -730,7 +731,7 @@ static irqreturn_t opt3001_irq(int irq,
+ 	}
  
-@@ -76,7 +77,7 @@ struct pms7003_state {
- 	/* Used to construct scan to push to the IIO buffer */
- 	struct {
- 		u16 data[3]; /* PM1, PM2P5, PM10 */
--		s64 ts;
-+		aligned_s64 ts;
- 	} scan;
- };
+ out:
+-	if (!opt->ok_to_ignore_lock)
++	if (!ok_to_ignore_lock)
+ 		mutex_unlock(&opt->lock);
  
+ 	if (wake_result_ready_queue)
 
 
