@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F6F4315A;
-	Sun,  7 Sep 2025 20:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2EC20E00B;
+	Sun,  7 Sep 2025 20:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277707; cv=none; b=GuXkZHrlTfoQZof0tA08ZoZolBmEFII/EUpLp5Jnb2H46DEQttzEBG/wOUw4E7UQalv7N9KTEBrYJ9gVkJO6X0itaiXFlwlqVFW1LVRRBbdKikWQV6EhiVNAfySyG+tZ0JLMyYfMNYuNL1c4DyQJ1g5CTgT7bLNpshuTJxWYISU=
+	t=1757277710; cv=none; b=vEK65AcPfpTsz2YRmxKAr9ol9B85/KZFJglLR08yywknEnTIhjv9ZoV5dibgXj2C9geEJNopUGlC9Ic43lm9gOQg+uMZxxuDsB0H4IfxNNAyjemcURcOobbK/2g/s0EKWPIseg2tjDI1b8uSDD4CRCl05+KF0nXwmo5dyoCRyK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277707; c=relaxed/simple;
-	bh=oyisxrotvDbvtPWvpmRoiqAt6q7w4rhpeoQLT++dUmA=;
+	s=arc-20240116; t=1757277710; c=relaxed/simple;
+	bh=8VTPDvEbNX+m8K/0uj3fZyouJ6KKJoNQVKh0+tUx8X8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CnGHQUZDC+6wHAfxzJ2saeP2tNxh/NMZ3m79KY5aitC7mu3ZJyQUgGlONZxut5Z8En7qYhPaOtKc9L8iGlxwaCT0am1Akc/cFr27jD+O0rG42RDQSRkr+ZgRcsBvEBPkkhcBDiB85sJ+Osa64BTzRFsF2i1gxZTheXy8HfLylEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaV8mMOS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoGHrn92+EqHzJuTaXRPya5UC96rVkSITJF0MXtW2KE81Dsu/S7CA+7+Tm8Uz4TlHk2zA/jlLD08MCwykP6fffgj0U6slDi0ESiobej67FOSKmP6ekyURW7yM+G6TBYifFILZXVnbrh32zl946yjq2wNxsEwt9zpYWXWnoQ0kac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ets2I5CQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaV8mMOS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C051C4CEF0;
-	Sun,  7 Sep 2025 20:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ets2I5CQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81A0C4CEF0;
+	Sun,  7 Sep 2025 20:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277707;
-	bh=oyisxrotvDbvtPWvpmRoiqAt6q7w4rhpeoQLT++dUmA=;
+	s=korg; t=1757277710;
+	bh=8VTPDvEbNX+m8K/0uj3fZyouJ6KKJoNQVKh0+tUx8X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZaV8mMOSZj9fi7c1OEhmJvcJDWJZ45vGAT5IOgBi9bS8iAWHpZTQ1xqsEX1YsbS89
-	 WOhhsQViutJhf1ckG7hyrwuvCDIQCIFzKLx7Yx2wQk2Fnb/A3vmWYRYktuVI5hF5U4
-	 FSvPnjFOCcC+D4ZmPwJmwDLesfd3fKCGhS/yOBw0=
+	b=ets2I5CQ1DODNnhzT9zJiuZM75P6oAj7NjLpFqyjibXN8GQmL0aI+g3KwegBW8448
+	 FXSPgz5outk6GxKpm2eR8j1zdwEx7u77iskKyeAZe6k/ypoKDcOXZJF72EwBgxKbk6
+	 yvdCXd9Q8DQfwg/tCUCE5JuJmGzN8c38GLfUp8W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 071/183] wifi: ath12k: Set EMLSR support flag in MLO flags for EML-capable stations
-Date: Sun,  7 Sep 2025 21:58:18 +0200
-Message-ID: <20250907195617.484688191@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.16 098/183] ACPI/IORT: Fix memory leak in iort_rmr_alloc_sids()
+Date: Sun,  7 Sep 2025 21:58:45 +0200
+Message-ID: <20250907195618.112604970@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -53,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 22c55fb9eb92395d999b8404d73e58540d11bdd8 ]
+commit f3ef7110924b897f4b79db9f7ac75d319ec09c4a upstream.
 
-Currently, when updating EMLSR capabilities of a multi-link (ML) station,
-only the EMLSR parameters (e.g., padding delay, transition delay, and
-timeout) are sent to firmware. However, firmware also requires the
-EMLSR support flag to be set in the MLO flags of the peer assoc WMI
-command to properly handle EML operating mode notification frames.
+If krealloc_array() fails in iort_rmr_alloc_sids(), the function returns
+NULL but does not free the original 'sids' allocation. This results in a
+memory leak since the caller overwrites the original pointer with the
+NULL return value.
 
-Set the ATH12K_WMI_FLAG_MLO_EMLSR_SUPPORT flag in the peer assoc WMI
-command when the ML station is EMLSR-capable, so that the firmware can
-respond to EHT EML action frames from associated stations.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Fixes: 4bcf9525bc49 ("wifi: ath12k: update EMLSR capabilities of ML Station")
-Signed-off-by: Ramya Gnanasekar <ramya.gnanasekar@oss.qualcomm.com>
-Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250801104920.3326352-1-rameshkumar.sundaram@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 491cf4a6735a ("ACPI/IORT: Add support to retrieve IORT RMR reserved regions")
+Cc: <stable@vger.kernel.org> # 6.0.x
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://lore.kernel.org/r/20250828112243.61460-1-linmq006@gmail.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/arm64/iort.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 1d0d4a6689464..eac5d48cade66 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -2370,6 +2370,7 @@ int ath12k_wmi_send_peer_assoc_cmd(struct ath12k *ar,
+--- a/drivers/acpi/arm64/iort.c
++++ b/drivers/acpi/arm64/iort.c
+@@ -937,8 +937,10 @@ static u32 *iort_rmr_alloc_sids(u32 *sid
  
- 	eml_cap = arg->ml.eml_cap;
- 	if (u16_get_bits(eml_cap, IEEE80211_EML_CAP_EMLSR_SUPP)) {
-+		ml_params->flags |= cpu_to_le32(ATH12K_WMI_FLAG_MLO_EMLSR_SUPPORT);
- 		/* Padding delay */
- 		eml_pad_delay = ieee80211_emlsr_pad_delay_in_us(eml_cap);
- 		ml_params->emlsr_padding_delay_us = cpu_to_le32(eml_pad_delay);
--- 
-2.50.1
-
+ 	new_sids = krealloc_array(sids, count + new_count,
+ 				  sizeof(*new_sids), GFP_KERNEL);
+-	if (!new_sids)
++	if (!new_sids) {
++		kfree(sids);
+ 		return NULL;
++	}
+ 
+ 	for (i = count; i < total_count; i++)
+ 		new_sids[i] = id_start++;
 
 
