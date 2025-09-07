@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA111DF246;
-	Sun,  7 Sep 2025 20:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629D31A704B;
+	Sun,  7 Sep 2025 20:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277562; cv=none; b=vECv7bTsbzGmyZcFKKzyd+KM/Nro1ov9lyMR/9Q9PiNMOrT9f8S514bqLKNTxboodqwGdMME2BVUE5LfmuLsuiiM0ip+viEuhM7fnCN/NE+I/aYkLII32Q1tOv6a1SXBPVfO3JyQ/vjHK6uRjGVsOudcZ5x7sBFKVEw9QS7ZGmk=
+	t=1757277565; cv=none; b=GjVm6CQBAXQuXRHLrV9drHFNxgiJe/pBpxhoMJuD7oAx9UZImArSXsABXp9+9mzmK3fMXpkTKYovudRiz7U0h8nxKI8Frv5YPLKax8/CyHf/1/mT5+H9eFu49LtYhgK9xkML+zUHoyUlcc2/4wGYeokNbjcHQOydDxCCwIDWg/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277562; c=relaxed/simple;
-	bh=67s/MIhbJmwY/DasMQt43jblnCTHASuZeqRJSt/7eOw=;
+	s=arc-20240116; t=1757277565; c=relaxed/simple;
+	bh=axC/F45ahh3oD8oTV9FRhyFIaEnQULqNp4/oSMF5j/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qey0XaHSWFVhf/yck1vFgoSYY8FzfIZPi5HVABF+aojAcPNv3XzXtsumdx8pS3HcDknU/s9HMEeE7FEftuhWVkx2cHLeA6k5kWClztiP2W7HulNHKb2Xf/dCS8+G/0lco4FDPYgf4uw6TUj4yb4bMtZr7+87GTjAqZip7DJFJdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOli2OM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FbtZif0ehr32cs3Lma1Q4jR1iO4QQIkfhzhp4h8Vs2DgtSv4PKXNpQGhi3bFz05xTWx8nQoOl0URu3zJBTbdcEY1N2C/r0DlfEn8KWivGkeydRcz/K94kJQfVEZVwXqJ0F+BELIXqgB+QjzqpIFau2rLMcLQD+INTfDXttA3ReA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSX8WYoO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOli2OM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482AEC4CEF0;
-	Sun,  7 Sep 2025 20:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSX8WYoO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9094BC4CEF0;
+	Sun,  7 Sep 2025 20:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277561;
-	bh=67s/MIhbJmwY/DasMQt43jblnCTHASuZeqRJSt/7eOw=;
+	s=korg; t=1757277565;
+	bh=axC/F45ahh3oD8oTV9FRhyFIaEnQULqNp4/oSMF5j/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOli2OM91/Lwd2PGGHyIgqAO06dEsmm1wpIbYi7Cj5tN9keCtrNL3ii98iwAeKfW7
-	 oOX9oYtZXD8PTTd8dJYVaBDizyu8mODQGus1BMFIyfuCYjiSB9XDq0W7U+tn9G/SqU
-	 1GSpRYkc/NQyqpayhenq0M/gTED9QxUsON76ElTE=
+	b=NSX8WYoOp6wmmvBAPd+2IfR4YDFne0yFJ04Cb5g5NoXSxMZieQK51kYEoRCcTTHVx
+	 yn4X89Xz+bA8teceupDgdDDvhnd6KBVt5J99r/cUCdmb/b38r3DaH4Wj5wFBFAit1E
+	 9P44o1W/v8kAFte2YIgF7eP2xTnbSIvCpM6gNCmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 052/183] xirc2ps_cs: fix register access when enabling FullDuplex
-Date: Sun,  7 Sep 2025 21:57:59 +0200
-Message-ID: <20250907195617.017280153@linuxfoundation.org>
+Subject: [PATCH 6.16 053/183] ptp: ocp: fix use-after-free bugs causing by ptp_ocp_watchdog
+Date: Sun,  7 Sep 2025 21:58:00 +0200
+Message-ID: <20250907195617.044198623@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -53,42 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit b79e498080b170fd94fc83bca2471f450811549b ]
+[ Upstream commit 8bf935cf789872350b04c1a6468b0a509f67afb2 ]
 
-The current code incorrectly passes (XIRCREG1_ECR | FullDuplex) as
-the register address to GetByte(), instead of fetching the register
-value and OR-ing it with FullDuplex. This results in an invalid
-register access.
+The ptp_ocp_detach() only shuts down the watchdog timer if it is
+pending. However, if the timer handler is already running, the
+timer_delete_sync() is not called. This leads to race conditions
+where the devlink that contains the ptp_ocp is deallocated while
+the timer handler is still accessing it, resulting in use-after-free
+bugs. The following details one of the race scenarios.
 
-Fix it by reading XIRCREG1_ECR first, then or-ing with FullDuplex
-before writing it back.
+(thread 1)                           | (thread 2)
+ptp_ocp_remove()                     |
+  ptp_ocp_detach()                   | ptp_ocp_watchdog()
+    if (timer_pending(&bp->watchdog))|   bp = timer_container_of()
+      timer_delete_sync()            |
+                                     |
+  devlink_free(devlink) //free       |
+                                     |   bp-> //use
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250827192645.658496-1-alok.a.tiwari@oracle.com
+Resolve this by unconditionally calling timer_delete_sync() to ensure
+the timer is reliably deactivated, preventing any access after free.
+
+Fixes: 773bda964921 ("ptp: ocp: Expose various resources on the timecard.")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250828082949.28189-1-duoming@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ptp/ptp_ocp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index a31d5d5e65936..97e88886253f5 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -1576,7 +1576,7 @@ do_reset(struct net_device *dev, int full)
- 	    msleep(40);			/* wait 40 msec to let it complete */
- 	}
- 	if (full_duplex)
--	    PutByte(XIRCREG1_ECR, GetByte(XIRCREG1_ECR | FullDuplex));
-+	    PutByte(XIRCREG1_ECR, GetByte(XIRCREG1_ECR) | FullDuplex);
-     } else {  /* No MII */
- 	SelectPage(0);
- 	value = GetByte(XIRCREG_ESR);	 /* read the ESR */
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index 1e7f72e575576..5388285475952 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -4557,8 +4557,7 @@ ptp_ocp_detach(struct ptp_ocp *bp)
+ 	ptp_ocp_debugfs_remove_device(bp);
+ 	ptp_ocp_detach_sysfs(bp);
+ 	ptp_ocp_attr_group_del(bp);
+-	if (timer_pending(&bp->watchdog))
+-		timer_delete_sync(&bp->watchdog);
++	timer_delete_sync(&bp->watchdog);
+ 	if (bp->ts0)
+ 		ptp_ocp_unregister_ext(bp->ts0);
+ 	if (bp->ts1)
 -- 
 2.50.1
 
