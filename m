@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F59114BFA2;
-	Sun,  7 Sep 2025 20:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D5414BFA2;
+	Sun,  7 Sep 2025 20:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276394; cv=none; b=LVfNdgFheSpJOA21AnvOVpSvjDwja2pShaBDmqZwBzV8bIcwQjFlDh7GzImJNx0W9S8qmW48xjdQVKoc7UALpvqOp+lmsrEuEKgVf0QuYyTnNVauovlaXwOR4ziODrzNdDZiL9sbx91uT/qNYLOBsT93bLnIWqi8C9+5BCSY9wc=
+	t=1757276397; cv=none; b=BCVR8yx+U4EOYFCyuPAq4H27axP5q8pe8CX1sogVDN+l0sYRNrO8oPU2DGnGaE74yXjG9ZNvd9aIdL8Nkct3SiP6Y1adjPhQglUQrAPkUaOQ70IVBf+UDIgnuOfpAv1ze6lIrTGd5xVB1QmSk5KjnPXHoOL945mgyTr7OzPrmfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276394; c=relaxed/simple;
-	bh=tCv1a8HSlahMMNwB+ZfFKY/hfvYAWIr24jRX1iT5xec=;
+	s=arc-20240116; t=1757276397; c=relaxed/simple;
+	bh=tlKGpN+5eEgHfvq2gtb7xrjHJS6jPF5HiCaixUNnreE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltN/yWYqYURgOdLCVi6hslYnc7vDOCNbkPTLKTp7YF+CG4u73Yz6OFdP/3+xeI8FqSm+AfqgWfUGFwxf/eVkihcVAjIg2ZurUEfrVVP//T2qIulp2mJUl5xXcrc1joCec+Iv3Z8q1rg9nitJ1hl2JPW2ToA2vhMTGePybAvE6eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpiGmhi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFVperLu0WwjM2WgyJ+hDmSrOOtcEZODWBddo3spv2KGb+M8y5qdEvffwBNLmPvlA4utGz3fmCvIaCsdoqbfgh812xK8ZsX/0fjTQS4WZg4lhgEmRJq9mMg4FtIHGoymu1LDoQWqEba6tpXikHRM33fr9DZbIbX5cJ+Y9E7qs1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DfMR9rb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpiGmhi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF81BC4CEF9;
-	Sun,  7 Sep 2025 20:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DfMR9rb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71FAC4CEF0;
+	Sun,  7 Sep 2025 20:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276394;
-	bh=tCv1a8HSlahMMNwB+ZfFKY/hfvYAWIr24jRX1iT5xec=;
+	s=korg; t=1757276397;
+	bh=tlKGpN+5eEgHfvq2gtb7xrjHJS6jPF5HiCaixUNnreE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpiGmhi5MGZcsJNB40afrT7/OqibOIXz9A4y+TPSQujo7s+nvqnArrnT1103UJDjo
-	 HzVk57qwiTgFQCXFvrjiTg1Lrzpz6IcufTkp7bQ2i5U0n7LKMhOt9I7gOzoTqguhX/
-	 +NDWnaS3spCSaMUK+uOk891Ej4Ob+NtJOI4HJNIA=
+	b=2DfMR9rb/WYiojpw1QaN2meuyif5B7CKOHy8tmcLKGNc2NGsmDOWtgX94usPMhfUe
+	 qB8uHwnKciDPfITmQCLERGL1LqOfajq9e/pZEhw0MbP2WOxmiCdX6Pxho1lIj+RYyC
+	 lkONKsQUznB0x6RQBSKbEcUsCw5Uoe3JGkpWp7kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jakob Unterwurzacher <jakob.unterwurzacher@cherry.de>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/104] drm/amdgpu: Skip TMR allocation if not required
-Date: Sun,  7 Sep 2025 21:58:48 +0200
-Message-ID: <20250907195610.028956886@linuxfoundation.org>
+Subject: [PATCH 6.1 065/104] net: dsa: microchip: linearize skb for tail-tagging switches
+Date: Sun,  7 Sep 2025 21:58:22 +0200
+Message-ID: <20250907195609.363134351@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -52,91 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Jakob Unterwurzacher <jakobunt@gmail.com>
 
-[ Upstream commit 5b03127d4745d6848f208463390e6a76d489eb03 ]
+[ Upstream commit ba54bce747fa9e07896c1abd9b48545f7b4b31d2 ]
 
-On ASICs with PSPv13.0.6, TMR is reserved at boot time. There is no need
-to allocate TMR region by driver. However, it's still required to send
-SETUP_TMR command to PSP.
+The pointer arithmentic for accessing the tail tag only works
+for linear skbs.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 467e00b30dfe ("drm/amd/amdgpu: Fix missing error return on kzalloc failure")
+For nonlinear skbs, it reads uninitialized memory inside the
+skb headroom, essentially randomizing the tag. I have observed
+it gets set to 6 most of the time.
+
+Example where ksz9477_rcv thinks that the packet from port 1 comes from port 6
+(which does not exist for the ksz9896 that's in use), dropping the packet.
+Debug prints added by me (not included in this patch):
+
+	[  256.645337] ksz9477_rcv:323 tag0=6
+	[  256.645349] skb len=47 headroom=78 headlen=0 tailroom=0
+	               mac=(64,14) mac_len=14 net=(78,0) trans=78
+	               shinfo(txflags=0 nr_frags=1 gso(size=0 type=0 segs=0))
+	               csum(0x0 start=0 offset=0 ip_summed=0 complete_sw=0 valid=0 level=0)
+	               hash(0x0 sw=0 l4=0) proto=0x00f8 pkttype=1 iif=3
+	               priority=0x0 mark=0x0 alloc_cpu=0 vlan_all=0x0
+	               encapsulation=0 inner(proto=0x0000, mac=0, net=0, trans=0)
+	[  256.645377] dev name=end1 feat=0x0002e10200114bb3
+	[  256.645386] skb headroom: 00000000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	[  256.645395] skb headroom: 00000010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	[  256.645403] skb headroom: 00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	[  256.645411] skb headroom: 00000030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+	[  256.645420] skb headroom: 00000040: ff ff ff ff ff ff 00 1c 19 f2 e2 db 08 06
+	[  256.645428] skb frag:     00000000: 00 01 08 00 06 04 00 01 00 1c 19 f2 e2 db 0a 02
+	[  256.645436] skb frag:     00000010: 00 83 00 00 00 00 00 00 0a 02 a0 2f 00 00 00 00
+	[  256.645444] skb frag:     00000020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01
+	[  256.645452] ksz_common_rcv:92 dsa_conduit_find_user returned NULL
+
+Call skb_linearize before trying to access the tag.
+
+This patch fixes ksz9477_rcv which is used by the ksz9896 I have at
+hand, and also applies the same fix to ksz8795_rcv which seems to have
+the same problem.
+
+Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@cherry.de>
+CC: stable@vger.kernel.org
+Fixes: 016e43a26bab ("net: dsa: ksz: Add KSZ8795 tag code")
+Fixes: 8b8010fb7876 ("dsa: add support for Microchip KSZ tail tagging")
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20250515072920.2313014-1-jakob.unterwurzacher@cherry.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 34 +++++++++++++++++++------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ net/dsa/tag_ksz.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-index 459a5af3a99ac..cbee5c6cdb369 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
-@@ -697,8 +697,13 @@ static void psp_prep_tmr_cmd_buf(struct psp_context *psp,
- 				 uint64_t tmr_mc, struct amdgpu_bo *tmr_bo)
- {
- 	struct amdgpu_device *adev = psp->adev;
--	uint32_t size = amdgpu_bo_size(tmr_bo);
--	uint64_t tmr_pa = amdgpu_gmc_vram_pa(adev, tmr_bo);
-+	uint32_t size = 0;
-+	uint64_t tmr_pa = 0;
-+
-+	if (tmr_bo) {
-+		size = amdgpu_bo_size(tmr_bo);
-+		tmr_pa = amdgpu_gmc_vram_pa(adev, tmr_bo);
-+	}
+--- a/net/dsa/tag_ksz.c
++++ b/net/dsa/tag_ksz.c
+@@ -69,7 +69,12 @@ static struct sk_buff *ksz8795_xmit(stru
  
- 	if (amdgpu_sriov_vf(psp->adev))
- 		cmd->cmd_id = GFX_CMD_ID_SETUP_VMR;
-@@ -743,6 +748,16 @@ static int psp_load_toc(struct psp_context *psp,
- 	return ret;
+ static struct sk_buff *ksz8795_rcv(struct sk_buff *skb, struct net_device *dev)
+ {
+-	u8 *tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
++	u8 *tag;
++
++	if (skb_linearize(skb))
++		return NULL;
++
++	tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
+ 
+ 	return ksz_common_rcv(skb, dev, tag[0] & 7, KSZ_EGRESS_TAG_LEN);
  }
+@@ -136,10 +141,16 @@ static struct sk_buff *ksz9477_xmit(stru
  
-+static bool psp_boottime_tmr(struct psp_context *psp)
-+{
-+	switch (psp->adev->ip_versions[MP0_HWIP][0]) {
-+	case IP_VERSION(13, 0, 6):
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- /* Set up Trusted Memory Region */
- static int psp_tmr_init(struct psp_context *psp)
+ static struct sk_buff *ksz9477_rcv(struct sk_buff *skb, struct net_device *dev)
  {
-@@ -810,8 +825,9 @@ static int psp_tmr_load(struct psp_context *psp)
- 	cmd = acquire_psp_cmd_buf(psp);
+-	/* Tag decoding */
+-	u8 *tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
+-	unsigned int port = tag[0] & KSZ9477_TAIL_TAG_EG_PORT_M;
+ 	unsigned int len = KSZ_EGRESS_TAG_LEN;
++	unsigned int port;
++	u8 *tag;
++
++	if (skb_linearize(skb))
++		return NULL;
++
++	/* Tag decoding */
++	tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
++	port = tag[0] & KSZ9477_TAIL_TAG_EG_PORT_M;
  
- 	psp_prep_tmr_cmd_buf(psp, cmd, psp->tmr_mc_addr, psp->tmr_bo);
--	DRM_INFO("reserve 0x%lx from 0x%llx for PSP TMR\n",
--		 amdgpu_bo_size(psp->tmr_bo), psp->tmr_mc_addr);
-+	if (psp->tmr_bo)
-+		DRM_INFO("reserve 0x%lx from 0x%llx for PSP TMR\n",
-+			 amdgpu_bo_size(psp->tmr_bo), psp->tmr_mc_addr);
- 
- 	ret = psp_cmd_submit_buf(psp, NULL, cmd,
- 				 psp->fence_buf_mc_addr);
-@@ -2098,10 +2114,12 @@ static int psp_hw_start(struct psp_context *psp)
- 	if (amdgpu_sriov_vf(adev) && amdgpu_in_reset(adev))
- 		goto skip_pin_bo;
- 
--	ret = psp_tmr_init(psp);
--	if (ret) {
--		DRM_ERROR("PSP tmr init failed!\n");
--		return ret;
-+	if (!psp_boottime_tmr(psp)) {
-+		ret = psp_tmr_init(psp);
-+		if (ret) {
-+			DRM_ERROR("PSP tmr init failed!\n");
-+			return ret;
-+		}
- 	}
- 
- skip_pin_bo:
--- 
-2.51.0
-
+ 	/* Extra 4-bytes PTP timestamp */
+ 	if (tag[0] & KSZ9477_PTP_TAG_INDICATION)
 
 
