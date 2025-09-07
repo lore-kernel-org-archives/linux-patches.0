@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0FF1E1C1A;
-	Sun,  7 Sep 2025 20:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76B926FA77;
+	Sun,  7 Sep 2025 20:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276901; cv=none; b=cGjzy6+7oSPdTgyOF/imfpl7qVjituToEeg6zv9MWVLAyrQXeKdmoVNISv2ae4w7zJ9k6fVTCd3nqbgdxRAAlTqY2oRILetjinVE47tIZJzf8ebMoQ44OAksj1l3to8NUEX6mUMkXgndo9VCst7xa/nTKPrFsCweSZEIvlUdLbU=
+	t=1757276902; cv=none; b=suV/mZaWEFcwPUH5j2YQ0rz5Lv9k4NNRVFCEhOnuui7Kvb3aL690nCkbVtwhmK9N6lAGr3c+mEq3OUNrrag3uEo8id7QLLKZkEhJYUw8sMYIPAUsQT9KnF7cBAKfg5jiPN7Ks2afXeWQKTNWRJNBLYB1lWvKSmqjmUgY+n1AzCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276901; c=relaxed/simple;
-	bh=7yhslsSMi0QUEQJYze0W5OQZdY6qECRS02FdWPFnCKg=;
+	s=arc-20240116; t=1757276902; c=relaxed/simple;
+	bh=HRSEC3rWjsf5D0ZJL2b9jyuwEQx5dgX8HkmcINB8Plc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XzZKE6a2emtpbXjELDXj49e3synzOLCpcRJMiJ9VlaHmfewISh6SdtPIokSOxY5pAfBijKBV1s6vuZ8HxkBIXa0DNGbt8w157SiXNwBK0oXmd0WjxvVp8JDAUka0roK2TPDHV+MUWG+Lm2YzIq0buOCzQd3LY1ubBb4NM87nbYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZ1MW4DY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oiIAkuLnczIFvAwUXXFo9QaaZHmcaY9hwQSlM9A1ijp/7ctNjdWpdY4Mz3cDLcJpkqWJDiyjghkOWH0w7fMI7uMRkxR3rSaLh8Ee1RxUtnGgLZKTOf7n/ztHltL8XMkdljEqINcJT+3U9Rjr/11TSq0tO7tqp5r5ky/8wSl+OU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lrtx1ZXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZ1MW4DY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDA6C4CEF0;
-	Sun,  7 Sep 2025 20:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lrtx1ZXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27166C4CEF8;
+	Sun,  7 Sep 2025 20:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276899;
-	bh=7yhslsSMi0QUEQJYze0W5OQZdY6qECRS02FdWPFnCKg=;
+	s=korg; t=1757276902;
+	bh=HRSEC3rWjsf5D0ZJL2b9jyuwEQx5dgX8HkmcINB8Plc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZ1MW4DYnry9nfB6F6jAeQ8GxdEffyKpK6QIhw8dDYrPsUFVM73lKFaL92BFLN+bL
-	 rwKSHlwN9QR0wG8/yYG1Yktw9j5ckRKQc6NiN4tQUuXW234R3PDhbxxhCexgukvkf/
-	 6/PMp2Pi4ans0WKlGMc3G0u6LiiNLyw7ibRQFz/c=
+	b=Lrtx1ZXh88mpRjl5j964CMkKnBwa+WFTnbPwM3HW0jhmp5hwI6vzrnt/L8VczCBox
+	 PeF6F3jw/bbvNDXlRqo8UsOJOZh5k/oN45rX3Y7bT05g70AYa/gouRdU/AuznEI7DA
+	 9+OaNtjOelYfW2pEKtUgcqV1ZOgwSdNz4Y1a+QPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/175] HID: simplify snto32()
-Date: Sun,  7 Sep 2025 21:56:58 +0200
-Message-ID: <20250907195615.427742804@linuxfoundation.org>
+Subject: [PATCH 6.12 024/175] HID: stop exporting hid_snto32()
+Date: Sun,  7 Sep 2025 21:56:59 +0200
+Message-ID: <20250907195615.449597440@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,50 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit ae9b956cb26c0fd5a365629f2d723ab2fb14df79 ]
+[ Upstream commit c653ffc283404a6c1c0e65143a833180c7ff799b ]
 
-snto32() does exactly what sign_extend32() does, but handles
-potentially malformed data coming from the device. Keep the checks,
-but then call sign_extend32() to perform the actual conversion.
+The only user of hid_snto32() is Logitech HID++ driver, which always
+calls hid_snto32() with valid size (constant, either 12 or 8) and
+therefore can simply use sign_extend32().
+
+Make the switch and remove hid_snto32(). Move snto32() and s32ton() to
+avoid introducing forward declaration.
 
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/20241003144656.3786064-1-dmitry.torokhov@gmail.com
+Link: https://patch.msgid.link/20241003144656.3786064-2-dmitry.torokhov@gmail.com
+[bentiss: fix checkpatch warning]
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Stable-dep-of: a6b87bfc2ab5 ("HID: core: Harden s32ton() against conversion to 0 bits")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/hid/hid-core.c           | 63 +++++++++++++++-----------------
+ drivers/hid/hid-logitech-hidpp.c |  6 +--
+ include/linux/hid.h              |  1 -
+ 3 files changed, 32 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index c2783d04c6e05..1a8e88624acfb 100644
+index 1a8e88624acfb..5169d8d56c889 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -1318,9 +1318,7 @@ int hid_open_report(struct hid_device *device)
+@@ -45,6 +45,34 @@ static int hid_ignore_special_drivers = 0;
+ module_param_named(ignore_special_drivers, hid_ignore_special_drivers, int, 0600);
+ MODULE_PARM_DESC(ignore_special_drivers, "Ignore any special drivers and handle all devices by generic driver");
+ 
++/*
++ * Convert a signed n-bit integer to signed 32-bit integer.
++ */
++
++static s32 snto32(__u32 value, unsigned int n)
++{
++	if (!value || !n)
++		return 0;
++
++	if (n > 32)
++		n = 32;
++
++	return sign_extend32(value, n - 1);
++}
++
++/*
++ * Convert a signed 32-bit integer to a signed n-bit integer.
++ */
++
++static u32 s32ton(__s32 value, unsigned int n)
++{
++	s32 a = value >> (n - 1);
++
++	if (a && a != -1)
++		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
++	return value & ((1 << n) - 1);
++}
++
+ /*
+  * Register a new report for a device.
+  */
+@@ -425,7 +453,7 @@ static int hid_parser_global(struct hid_parser *parser, struct hid_item *item)
+ 		 * both this and the standard encoding. */
+ 		raw_value = item_sdata(item);
+ 		if (!(raw_value & 0xfffffff0))
+-			parser->global.unit_exponent = hid_snto32(raw_value, 4);
++			parser->global.unit_exponent = snto32(raw_value, 4);
+ 		else
+ 			parser->global.unit_exponent = raw_value;
+ 		return 0;
+@@ -1317,39 +1345,6 @@ int hid_open_report(struct hid_device *device)
+ }
  EXPORT_SYMBOL_GPL(hid_open_report);
  
+-/*
+- * Convert a signed n-bit integer to signed 32-bit integer.
+- */
+-
+-static s32 snto32(__u32 value, unsigned n)
+-{
+-	if (!value || !n)
+-		return 0;
+-
+-	if (n > 32)
+-		n = 32;
+-
+-	return sign_extend32(value, n - 1);
+-}
+-
+-s32 hid_snto32(__u32 value, unsigned n)
+-{
+-	return snto32(value, n);
+-}
+-EXPORT_SYMBOL_GPL(hid_snto32);
+-
+-/*
+- * Convert a signed 32-bit integer to a signed n-bit integer.
+- */
+-
+-static u32 s32ton(__s32 value, unsigned n)
+-{
+-	s32 a = value >> (n - 1);
+-	if (a && a != -1)
+-		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
+-	return value & ((1 << n) - 1);
+-}
+-
  /*
-- * Convert a signed n-bit integer to signed 32-bit integer. Common
-- * cases are done through the compiler, the screwed things has to be
-- * done by hand.
-+ * Convert a signed n-bit integer to signed 32-bit integer.
-  */
+  * Extract/implement a data field from/to a little endian report (bit array).
+  *
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 234ddd4422d90..59f630962338d 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -3296,13 +3296,13 @@ static int m560_raw_event(struct hid_device *hdev, u8 *data, int size)
+ 					 120);
+ 		}
  
- static s32 snto32(__u32 value, unsigned n)
-@@ -1331,12 +1329,7 @@ static s32 snto32(__u32 value, unsigned n)
- 	if (n > 32)
- 		n = 32;
+-		v = hid_snto32(hid_field_extract(hdev, data+3, 0, 12), 12);
++		v = sign_extend32(hid_field_extract(hdev, data + 3, 0, 12), 11);
+ 		input_report_rel(hidpp->input, REL_X, v);
  
--	switch (n) {
--	case 8:  return ((__s8)value);
--	case 16: return ((__s16)value);
--	case 32: return ((__s32)value);
--	}
--	return value & (1 << (n - 1)) ? value | (~0U << n) : value;
-+	return sign_extend32(value, n - 1);
- }
+-		v = hid_snto32(hid_field_extract(hdev, data+3, 12, 12), 12);
++		v = sign_extend32(hid_field_extract(hdev, data + 3, 12, 12), 11);
+ 		input_report_rel(hidpp->input, REL_Y, v);
  
- s32 hid_snto32(__u32 value, unsigned n)
+-		v = hid_snto32(data[6], 8);
++		v = sign_extend32(data[6], 7);
+ 		if (v != 0)
+ 			hidpp_scroll_counter_handle_scroll(hidpp->input,
+ 					&hidpp->vertical_wheel_counter, v);
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 017d31f1d27b8..7d8d09318fa91 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -978,7 +978,6 @@ const struct hid_device_id *hid_match_device(struct hid_device *hdev,
+ 					     struct hid_driver *hdrv);
+ bool hid_compare_device_paths(struct hid_device *hdev_a,
+ 			      struct hid_device *hdev_b, char separator);
+-s32 hid_snto32(__u32 value, unsigned n);
+ __u32 hid_field_extract(const struct hid_device *hid, __u8 *report,
+ 		     unsigned offset, unsigned n);
+ 
 -- 
 2.50.1
 
