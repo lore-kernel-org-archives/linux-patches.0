@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5743F4315A;
-	Sun,  7 Sep 2025 20:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624A64315A;
+	Sun,  7 Sep 2025 20:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277678; cv=none; b=SwzAdLClAW3QFzF7mXxVy37Stzcq6AYTADGZSItBNhfzQypvOSzzK6KKHeb+xa7Imkh34RPsW/VCSiHlcGQSlg7i1V6ajE/5/AwagOvCR5yK11YH48AZPyG7RyKzw3laYYV36HTxOhufgjy4EdhNsc6QKoNLarA70Gmrd0RbVDE=
+	t=1757277681; cv=none; b=hi1yTWFzkOlJ0jcbr3QjWo674Is/Rx0/hNIsdsb/DIoIvegb2JAOyuGRpEH54IwKZNRsjyM0NgflmUgMReIbJqINgvQpaM7y8DK/OvyGRa0ihTzScX2tiY9Ndww1RlWkIK1i6pGyXWFu+gXh4wqMkFyKKEs/UwB2dR7CvQVcQ+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277678; c=relaxed/simple;
-	bh=W09LrDqSV900QIT6+f5BZo7a7QWl+0U6Aq//i1ds1Ic=;
+	s=arc-20240116; t=1757277681; c=relaxed/simple;
+	bh=1e22I0e5Pm7/3wCtdelWSsBv3Dna/vs0JiYJW3WOncc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdVDsevl2EZZ3x2y2sN1y2nKeIkOsA21GnqkGshKNp4CgsIPkGmDpBOHoknc9W6BazyZExwGRp1l677h5++lLF43m4Z7ZpGpkibsKuaxLtKm0l76kFCoUbC69Tvuvh/heBbZAbeA/rWnnpi41i46x4goHo+fD0ZBnAf4mJ0Jcck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFmhMn0P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IO4+65LXVFZc2hk3+aEZBPrM1jEbG90yxFCNkyjG2rnyNznLdKlKRQJxMBZORhVWfGORCiIAZcYr7wJtjirNorpfhG26hKSVSTgwPYdKvx6lqYebHeA6tbSCIkgQR81ukH14g/isQV+7SN3gpSBkIiMt9IhyWgCtTg5PelEEiOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SCiEqfrS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFmhMn0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F5CC4CEF0;
-	Sun,  7 Sep 2025 20:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCiEqfrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1810C4CEF0;
+	Sun,  7 Sep 2025 20:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277678;
-	bh=W09LrDqSV900QIT6+f5BZo7a7QWl+0U6Aq//i1ds1Ic=;
+	s=korg; t=1757277681;
+	bh=1e22I0e5Pm7/3wCtdelWSsBv3Dna/vs0JiYJW3WOncc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yFmhMn0PmnTboCoQ7o1L7l+IjqCsPStaIcBJQpzYDoTnpBwJ0ZMZSGIAxcC0iAIZF
-	 lzzGEMMelinekg628Gm2iqMqQbCvFP9hCs3DiAgWsOPlTyWxZrTZdwONbroFK+gNQR
-	 ff0hocz9Q7NXd+aWw80d9g/joSxNOjReEbHyrEFk=
+	b=SCiEqfrSNOjoKKWysQ65qN+BDcojR7kaHcWwtKnQhK0WGtE3cq266CiuKsA5mZ+Xv
+	 lOmytM6QAPpPKDWXIqSJ1hHwwTMuNJbyjM4QVosFYPavZ/hcKb2pf2oJD/q5pDvpy0
+	 Vim0OZtUnjgH7HTqZDvAYQjmAqpjhXQF4g7H7xQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Chen <yiche@redhat.com>,
+	Phil Sutter <phil@nwl.cc>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 089/183] selftests: netfilter: fix udpclash tool hang
-Date: Sun,  7 Sep 2025 21:58:36 +0200
-Message-ID: <20250907195617.904585223@linuxfoundation.org>
+Subject: [PATCH 6.16 090/183] netfilter: nf_tables: Introduce NFTA_DEVICE_PREFIX
+Date: Sun,  7 Sep 2025 21:58:37 +0200
+Message-ID: <20250907195617.926955147@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,84 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 661a4f307fe0f80c1d544e09476ccba9037e8e65 ]
+[ Upstream commit 4039ce7ef40474d5ba46f414c50cc7020b9cf8ae ]
 
-Yi Chen reports that 'udpclash' loops forever depending on compiler
-(and optimization level used); while (x == 1) gets optimized into
-for (;;).  Add volatile qualifier to avoid that.
+This new attribute is supposed to be used instead of NFTA_DEVICE_NAME
+for simple wildcard interface specs. It holds a NUL-terminated string
+representing an interface name prefix to match on.
 
-While at it, also run it under timeout(1) and fix the resize script
-to not ignore the timeout passed as second parameter to insert_flood.
+While kernel code to distinguish full names from prefixes in
+NFTA_DEVICE_NAME is simpler than this solution, reusing the existing
+attribute with different semantics leads to confusion between different
+versions of kernel and user space though:
 
-Reported-by: Yi Chen <yiche@redhat.com>
-Suggested-by: Yi Chen <yiche@redhat.com>
-Fixes: 78a588363587 ("selftests: netfilter: add conntrack clash resolution test case")
+* With old kernels, wildcards submitted by user space are accepted yet
+  silently treated as regular names.
+* With old user space, wildcards submitted by kernel may cause crashes
+  since libnftnl expects NUL-termination when there is none.
+
+Using a distinct attribute type sanitizes these situations as the
+receiving part detects and rejects the unexpected attribute nested in
+*_HOOK_DEVS attributes.
+
+Fixes: 6d07a289504a ("netfilter: nf_tables: Support wildcard netdev hook specs")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/netfilter/conntrack_clash.sh  | 2 +-
- tools/testing/selftests/net/netfilter/conntrack_resize.sh | 5 +++--
- tools/testing/selftests/net/netfilter/udpclash.c          | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ include/uapi/linux/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c            | 42 +++++++++++++++++-------
+ 2 files changed, 33 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/conntrack_clash.sh b/tools/testing/selftests/net/netfilter/conntrack_clash.sh
-index 606a43a60f736..7fc6c5dbd5516 100755
---- a/tools/testing/selftests/net/netfilter/conntrack_clash.sh
-+++ b/tools/testing/selftests/net/netfilter/conntrack_clash.sh
-@@ -99,7 +99,7 @@ run_one_clash_test()
- 	local entries
- 	local cre
- 
--	if ! ip netns exec "$ns" ./udpclash $daddr $dport;then
-+	if ! ip netns exec "$ns" timeout 30 ./udpclash $daddr $dport;then
- 		echo "INFO: did not receive expected number of replies for $daddr:$dport"
- 		ip netns exec "$ctns" conntrack -S
- 		# don't fail: check if clash resolution triggered after all.
-diff --git a/tools/testing/selftests/net/netfilter/conntrack_resize.sh b/tools/testing/selftests/net/netfilter/conntrack_resize.sh
-index 788cd56ea4a0d..615fe3c6f405d 100755
---- a/tools/testing/selftests/net/netfilter/conntrack_resize.sh
-+++ b/tools/testing/selftests/net/netfilter/conntrack_resize.sh
-@@ -187,7 +187,7 @@ ct_udpclash()
- 	[ -x udpclash ] || return
- 
-         while [ $now -lt $end ]; do
--		ip netns exec "$ns" ./udpclash 127.0.0.1 $((RANDOM%65536)) > /dev/null 2>&1
-+		ip netns exec "$ns" timeout 30 ./udpclash 127.0.0.1 $((RANDOM%65536)) > /dev/null 2>&1
- 
- 		now=$(date +%s)
- 	done
-@@ -277,6 +277,7 @@ check_taint()
- insert_flood()
- {
- 	local n="$1"
-+	local timeout="$2"
- 	local r=0
- 
- 	r=$((RANDOM%$insert_count))
-@@ -302,7 +303,7 @@ test_floodresize_all()
- 	read tainted_then < /proc/sys/kernel/tainted
- 
- 	for n in "$nsclient1" "$nsclient2";do
--		insert_flood "$n" &
-+		insert_flood "$n" "$timeout" &
- 	done
- 
- 	# resize table constantly while flood/insert/dump/flushs
-diff --git a/tools/testing/selftests/net/netfilter/udpclash.c b/tools/testing/selftests/net/netfilter/udpclash.c
-index 85c7b906ad08f..79de163d61ab7 100644
---- a/tools/testing/selftests/net/netfilter/udpclash.c
-+++ b/tools/testing/selftests/net/netfilter/udpclash.c
-@@ -29,7 +29,7 @@ struct thread_args {
- 	int sockfd;
+diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
+index 2beb30be2c5f8..8e0eb832bc01e 100644
+--- a/include/uapi/linux/netfilter/nf_tables.h
++++ b/include/uapi/linux/netfilter/nf_tables.h
+@@ -1784,10 +1784,12 @@ enum nft_synproxy_attributes {
+  * enum nft_device_attributes - nf_tables device netlink attributes
+  *
+  * @NFTA_DEVICE_NAME: name of this device (NLA_STRING)
++ * @NFTA_DEVICE_PREFIX: device name prefix, a simple wildcard (NLA_STRING)
+  */
+ enum nft_devices_attributes {
+ 	NFTA_DEVICE_UNSPEC,
+ 	NFTA_DEVICE_NAME,
++	NFTA_DEVICE_PREFIX,
+ 	__NFTA_DEVICE_MAX
  };
+ #define NFTA_DEVICE_MAX		(__NFTA_DEVICE_MAX - 1)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 46ca725d65381..0e86434ca13b0 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1953,6 +1953,18 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
+ 	return -ENOSPC;
+ }
  
--static int wait = 1;
-+static volatile int wait = 1;
++static bool hook_is_prefix(struct nft_hook *hook)
++{
++	return strlen(hook->ifname) >= hook->ifnamelen;
++}
++
++static int nft_nla_put_hook_dev(struct sk_buff *skb, struct nft_hook *hook)
++{
++	int attr = hook_is_prefix(hook) ? NFTA_DEVICE_PREFIX : NFTA_DEVICE_NAME;
++
++	return nla_put_string(skb, attr, hook->ifname);
++}
++
+ static int nft_dump_basechain_hook(struct sk_buff *skb,
+ 				   const struct net *net, int family,
+ 				   const struct nft_base_chain *basechain,
+@@ -1984,16 +1996,15 @@ static int nft_dump_basechain_hook(struct sk_buff *skb,
+ 			if (!first)
+ 				first = hook;
  
- static void *thread_main(void *varg)
+-			if (nla_put(skb, NFTA_DEVICE_NAME,
+-				    hook->ifnamelen, hook->ifname))
++			if (nft_nla_put_hook_dev(skb, hook))
+ 				goto nla_put_failure;
+ 			n++;
+ 		}
+ 		nla_nest_end(skb, nest_devs);
+ 
+ 		if (n == 1 &&
+-		    nla_put(skb, NFTA_HOOK_DEV,
+-			    first->ifnamelen, first->ifname))
++		    !hook_is_prefix(first) &&
++		    nla_put_string(skb, NFTA_HOOK_DEV, first->ifname))
+ 			goto nla_put_failure;
+ 	}
+ 	nla_nest_end(skb, nest);
+@@ -2297,7 +2308,8 @@ void nf_tables_chain_destroy(struct nft_chain *chain)
+ }
+ 
+ static struct nft_hook *nft_netdev_hook_alloc(struct net *net,
+-					      const struct nlattr *attr)
++					      const struct nlattr *attr,
++					      bool prefix)
  {
+ 	struct nf_hook_ops *ops;
+ 	struct net_device *dev;
+@@ -2314,7 +2326,8 @@ static struct nft_hook *nft_netdev_hook_alloc(struct net *net,
+ 	if (err < 0)
+ 		goto err_hook_free;
+ 
+-	hook->ifnamelen = nla_len(attr);
++	/* include the terminating NUL-char when comparing non-prefixes */
++	hook->ifnamelen = strlen(hook->ifname) + !prefix;
+ 
+ 	/* nf_tables_netdev_event() is called under rtnl_mutex, this is
+ 	 * indirectly serializing all the other holders of the commit_mutex with
+@@ -2361,14 +2374,22 @@ static int nf_tables_parse_netdev_hooks(struct net *net,
+ 	struct nft_hook *hook, *next;
+ 	const struct nlattr *tmp;
+ 	int rem, n = 0, err;
++	bool prefix;
+ 
+ 	nla_for_each_nested(tmp, attr, rem) {
+-		if (nla_type(tmp) != NFTA_DEVICE_NAME) {
++		switch (nla_type(tmp)) {
++		case NFTA_DEVICE_NAME:
++			prefix = false;
++			break;
++		case NFTA_DEVICE_PREFIX:
++			prefix = true;
++			break;
++		default:
+ 			err = -EINVAL;
+ 			goto err_hook;
+ 		}
+ 
+-		hook = nft_netdev_hook_alloc(net, tmp);
++		hook = nft_netdev_hook_alloc(net, tmp, prefix);
+ 		if (IS_ERR(hook)) {
+ 			NL_SET_BAD_ATTR(extack, tmp);
+ 			err = PTR_ERR(hook);
+@@ -2414,7 +2435,7 @@ static int nft_chain_parse_netdev(struct net *net, struct nlattr *tb[],
+ 	int err;
+ 
+ 	if (tb[NFTA_HOOK_DEV]) {
+-		hook = nft_netdev_hook_alloc(net, tb[NFTA_HOOK_DEV]);
++		hook = nft_netdev_hook_alloc(net, tb[NFTA_HOOK_DEV], false);
+ 		if (IS_ERR(hook)) {
+ 			NL_SET_BAD_ATTR(extack, tb[NFTA_HOOK_DEV]);
+ 			return PTR_ERR(hook);
+@@ -9424,8 +9445,7 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
+ 
+ 	list_for_each_entry_rcu(hook, hook_list, list,
+ 				lockdep_commit_lock_is_held(net)) {
+-		if (nla_put(skb, NFTA_DEVICE_NAME,
+-			    hook->ifnamelen, hook->ifname))
++		if (nft_nla_put_hook_dev(skb, hook))
+ 			goto nla_put_failure;
+ 	}
+ 	nla_nest_end(skb, nest_devs);
 -- 
 2.50.1
 
