@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1041114BFA2;
-	Sun,  7 Sep 2025 20:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2C814BFA2;
+	Sun,  7 Sep 2025 20:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276247; cv=none; b=ja/YgW/jGInr9TrrkDHKGVdXCj5pBTjNkdTAEwAyRH36xi23rXPZ5gwmCF808lu9jya+WkaM8V+xUSUT7YruX4jOgycthThmQqH9CuaG6G/GHcufoACC1tKSkV6YptE3oSBEwDyFQMNsYHgrSEhCwUDOIMDitPJ+APIQU5vyb9A=
+	t=1757276250; cv=none; b=ALi7SvTykrXemvQmWSQ44NTsou13Ksq1OrH29wzJ6T+EVNC1Tql2gmsihQ+Dv5PhJiHspYzacvL4vHqMsPpdz8aWCfZ56NbZ97jVcf21e56ck2m1fZPOyED32pslAiV09LCLQbHxIHh9ieaCTvwdgs0G3UloYz9wqTP8ZlWACXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276247; c=relaxed/simple;
-	bh=3akfshxqOVvYdW2rsxcYba1XY35sJrwaWBHTwm4xgZI=;
+	s=arc-20240116; t=1757276250; c=relaxed/simple;
+	bh=Bb49aacZafNiZ2q64jy7aVETtEK/sieHV2I25lWhfsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEEh6qcslOauZvVPFhUkrFh6wcBKvTJ21/I4QG9pIbL8xmz9lHnbTklPxBS4WCcepNxpKTmWRbfKzecl2ypKeatSIVMydtrdR37/4b1n2AgO/MrJgliQyF3YYTR9Dr/0oYTB7W0TXk7xG71aiJBsHUvl1fBSBXwNl9oyeAIBn+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1bTspXS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HrpBDmCs6P2WKWxkKk6VEyC3cmdaePT9AC3P5WsrNwCbzM3AR8smreJi0C25rBH159v9WOgU0Z2disXJfcc1pAtTPyFEcy8BPUfnE2ga1ZP+DrifwJ1XnGEnOluZP9W56TL3N+UEl8IX+SG74sN8FGpHiLFSZRxypPr7xtcTzXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1M4ihVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1bTspXS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CCAC4CEF0;
-	Sun,  7 Sep 2025 20:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1M4ihVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FE9C4CEF0;
+	Sun,  7 Sep 2025 20:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276246;
-	bh=3akfshxqOVvYdW2rsxcYba1XY35sJrwaWBHTwm4xgZI=;
+	s=korg; t=1757276250;
+	bh=Bb49aacZafNiZ2q64jy7aVETtEK/sieHV2I25lWhfsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1bTspXSbPs3BGpxe1IGqPPl6JN+fTiEB6ny2F3fLtA0RoRMqqUik77nLgX/kG2nN
-	 f/upQZTq8HGUty2nSDh+i1JZBvlmckV68A77chjjd9j0kSOdiZqn32KHRV7rMHoqYt
-	 c33zDeJwK4Wlv0HNuGZsJeIaveIZxxrGkAYRvXXg=
+	b=Y1M4ihVuydL8L7B9H02/YI3BCxSz9dGHefDM0lfFP5RbT84y8Cjq9ALdW2IUXFScY
+	 qX/fyfpfjC9td3xyLO1v3T868HG+fLPwZLSr645i5vSnWHQ7BJuIMusp5jiKybMgSe
+	 lTY8viUd7uuffBnqDXV/9W59awOjCsrFkhSXVhqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Harry Yoo <harry.yoo@oracle.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
 	Kiryl Shutsemau <kas@kernel.org>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	David Hildenbrand <david@redhat.com>,
 	Alexander Potapenko <glider@google.com>,
@@ -48,6 +48,7 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dennis Zhou <dennis@kernel.org>,
 	Dev Jain <dev.jain@arm.com>,
 	Dmitriy Vyukov <dvyukov@google.com>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jane Chu <jane.chu@oracle.com>,
 	Joao Martins <joao.m.martins@oracle.com>,
@@ -65,13 +66,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tejun Heo <tj@kernel.org>,
 	Thomas Gleinxer <tglx@linutronix.de>,
 	Thomas Huth <thuth@redhat.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Vincenzo Frascino <vincenzo.frascino@arm.com>,
 	Vlastimil Babka <vbabka@suse.cz>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 043/104] x86/mm/64: define ARCH_PAGE_TABLE_SYNC_MASK and arch_sync_kernel_mappings()
-Date: Sun,  7 Sep 2025 21:58:00 +0200
-Message-ID: <20250907195608.811975335@linuxfoundation.org>
+Subject: [PATCH 6.1 044/104] mm: move page table sync declarations to linux/pgtable.h
+Date: Sun,  7 Sep 2025 21:58:01 +0200
+Message-ID: <20250907195608.838068632@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -92,18 +93,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Harry Yoo <harry.yoo@oracle.com>
 
-commit 6659d027998083fbb6d42a165b0c90dc2e8ba989 upstream.
+commit 7cc183f2e67d19b03ee5c13a6664b8c6cc37ff9d upstream.
 
-Define ARCH_PAGE_TABLE_SYNC_MASK and arch_sync_kernel_mappings() to ensure
-page tables are properly synchronized when calling p*d_populate_kernel().
-
-For 5-level paging, synchronization is performed via
-pgd_populate_kernel().  In 4-level paging, pgd_populate() is a no-op, so
-synchronization is instead performed at the P4D level via
-p4d_populate_kernel().
-
-This fixes intermittent boot failures on systems using 4-level paging and
-a large amount of persistent memory:
+During our internal testing, we started observing intermittent boot
+failures when the machine uses 4-level paging and has a large amount of
+persistent memory:
 
   BUG: unable to handle page fault for address: ffffe70000000034
   #PF: supervisor write access in kernel mode
@@ -123,37 +117,95 @@ a large amount of persistent memory:
    [... snip ...]
    </TASK>
 
-It also fixes a crash in vmemmap_set_pmd() caused by accessing vmemmap
-before sync_global_pgds() [1]:
+It turns out that the kernel panics while initializing vmemmap (struct
+page array) when the vmemmap region spans two PGD entries, because the new
+PGD entry is only installed in init_mm.pgd, but not in the page tables of
+other tasks.
 
-  BUG: unable to handle page fault for address: ffffeb3ff1200000
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  PGD 0 P4D 0
-  Oops: Oops: 0002 [#1] PREEMPT SMP NOPTI
-  Tainted: [W]=WARN
-  RIP: 0010:vmemmap_set_pmd+0xff/0x230
-   <TASK>
-   vmemmap_populate_hugepages+0x176/0x180
-   vmemmap_populate+0x34/0x80
-   __populate_section_memmap+0x41/0x90
-   sparse_add_section+0x121/0x3e0
-   __add_pages+0xba/0x150
-   add_pages+0x1d/0x70
-   memremap_pages+0x3dc/0x810
-   devm_memremap_pages+0x1c/0x60
-   xe_devm_add+0x8b/0x100 [xe]
-   xe_tile_init_noalloc+0x6a/0x70 [xe]
-   xe_device_probe+0x48c/0x740 [xe]
-   [... snip ...]
+And looking at __populate_section_memmap():
+  if (vmemmap_can_optimize(altmap, pgmap))
+          // does not sync top level page tables
+          r = vmemmap_populate_compound_pages(pfn, start, end, nid, pgmap);
+  else
+          // sync top level page tables in x86
+          r = vmemmap_populate(start, end, nid, altmap);
 
-Link: https://lkml.kernel.org/r/20250818020206.4517-4-harry.yoo@oracle.com
+In the normal path, vmemmap_populate() in arch/x86/mm/init_64.c
+synchronizes the top level page table (See commit 9b861528a801 ("x86-64,
+mem: Update all PGDs for direct mapping and vmemmap mapping changes")) so
+that all tasks in the system can see the new vmemmap area.
+
+However, when vmemmap_can_optimize() returns true, the optimized path
+skips synchronization of top-level page tables.  This is because
+vmemmap_populate_compound_pages() is implemented in core MM code, which
+does not handle synchronization of the top-level page tables.  Instead,
+the core MM has historically relied on each architecture to perform this
+synchronization manually.
+
+We're not the first party to encounter a crash caused by not-sync'd top
+level page tables: earlier this year, Gwan-gyeong Mun attempted to address
+the issue [1] [2] after hitting a kernel panic when x86 code accessed the
+vmemmap area before the corresponding top-level entries were synced.  At
+that time, the issue was believed to be triggered only when struct page
+was enlarged for debugging purposes, and the patch did not get further
+updates.
+
+It turns out that current approach of relying on each arch to handle the
+page table sync manually is fragile because 1) it's easy to forget to sync
+the top level page table, and 2) it's also easy to overlook that the
+kernel should not access the vmemmap and direct mapping areas before the
+sync.
+
+# The solution: Make page table sync more code robust and harder to miss
+
+To address this, Dave Hansen suggested [3] [4] introducing
+{pgd,p4d}_populate_kernel() for updating kernel portion of the page tables
+and allow each architecture to explicitly perform synchronization when
+installing top-level entries.  With this approach, we no longer need to
+worry about missing the sync step, reducing the risk of future
+regressions.
+
+The new interface reuses existing ARCH_PAGE_TABLE_SYNC_MASK,
+PGTBL_P*D_MODIFIED and arch_sync_kernel_mappings() facility used by
+vmalloc and ioremap to synchronize page tables.
+
+pgd_populate_kernel() looks like this:
+static inline void pgd_populate_kernel(unsigned long addr, pgd_t *pgd,
+                                       p4d_t *p4d)
+{
+        pgd_populate(&init_mm, pgd, p4d);
+        if (ARCH_PAGE_TABLE_SYNC_MASK & PGTBL_PGD_MODIFIED)
+                arch_sync_kernel_mappings(addr, addr);
+}
+
+It is worth noting that vmalloc() and apply_to_range() carefully
+synchronizes page tables by calling p*d_alloc_track() and
+arch_sync_kernel_mappings(), and thus they are not affected by this patch
+series.
+
+This series was hugely inspired by Dave Hansen's suggestion and hence
+added Suggested-by: Dave Hansen.
+
+Cc stable because lack of this series opens the door to intermittent
+boot failures.
+
+
+This patch (of 3):
+
+Move ARCH_PAGE_TABLE_SYNC_MASK and arch_sync_kernel_mappings() to
+linux/pgtable.h so that they can be used outside of vmalloc and ioremap.
+
+Link: https://lkml.kernel.org/r/20250818020206.4517-1-harry.yoo@oracle.com
+Link: https://lkml.kernel.org/r/20250818020206.4517-2-harry.yoo@oracle.com
+Link: https://lore.kernel.org/linux-mm/20250220064105.808339-1-gwan-gyeong.mun@intel.com [1]
+Link: https://lore.kernel.org/linux-mm/20250311114420.240341-1-gwan-gyeong.mun@intel.com [2]
+Link: https://lore.kernel.org/linux-mm/d1da214c-53d3-45ac-a8b6-51821c5416e4@intel.com [3]
+Link: https://lore.kernel.org/linux-mm/4d800744-7b88-41aa-9979-b245e8bf794b@intel.com  [4]
 Fixes: 8d400913c231 ("x86/vmemmap: handle unpopulated sub-pmd ranges")
 Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Closes: https://lore.kernel.org/linux-mm/20250311114420.240341-1-gwan-gyeong.mun@intel.com [1]
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
 Acked-by: Kiryl Shutsemau <kas@kernel.org>
 Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
 Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Acked-by: David Hildenbrand <david@redhat.com>
 Cc: Alexander Potapenko <glider@google.com>
@@ -171,6 +223,7 @@ Cc: Christoph Lameter (Ampere) <cl@gentwo.org>
 Cc: Dennis Zhou <dennis@kernel.org>
 Cc: Dev Jain <dev.jain@arm.com>
 Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jane Chu <jane.chu@oracle.com>
 Cc: Joao Martins <joao.m.martins@oracle.com>
@@ -188,55 +241,66 @@ Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Tejun Heo <tj@kernel.org>
 Cc: Thomas Gleinxer <tglx@linutronix.de>
 Cc: Thomas Huth <thuth@redhat.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
 Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
 Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/pgtable_64_types.h |    3 +++
- arch/x86/mm/init_64.c                   |   18 ++++++++++++++++++
- 2 files changed, 21 insertions(+)
+ include/linux/pgtable.h |   16 ++++++++++++++++
+ include/linux/vmalloc.h |   16 ----------------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/arch/x86/include/asm/pgtable_64_types.h
-+++ b/arch/x86/include/asm/pgtable_64_types.h
-@@ -40,6 +40,9 @@ static inline bool pgtable_l5_enabled(vo
- #define pgtable_l5_enabled() 0
- #endif /* CONFIG_X86_5LEVEL */
- 
-+#define ARCH_PAGE_TABLE_SYNC_MASK \
-+	(pgtable_l5_enabled() ? PGTBL_PGD_MODIFIED : PGTBL_P4D_MODIFIED)
-+
- extern unsigned int pgdir_shift;
- extern unsigned int ptrs_per_p4d;
- 
---- a/arch/x86/mm/init_64.c
-+++ b/arch/x86/mm/init_64.c
-@@ -224,6 +224,24 @@ static void sync_global_pgds(unsigned lo
+--- a/include/linux/pgtable.h
++++ b/include/linux/pgtable.h
+@@ -1472,6 +1472,22 @@ static inline int pmd_protnone(pmd_t pmd
  }
+ #endif /* CONFIG_NUMA_BALANCING */
  
- /*
-+ * Make kernel mappings visible in all page tables in the system.
-+ * This is necessary except when the init task populates kernel mappings
-+ * during the boot process. In that case, all processes originating from
-+ * the init task copies the kernel mappings, so there is no issue.
-+ * Otherwise, missing synchronization could lead to kernel crashes due
-+ * to missing page table entries for certain kernel mappings.
-+ *
-+ * Synchronization is performed at the top level, which is the PGD in
-+ * 5-level paging systems. But in 4-level paging systems, however,
-+ * pgd_populate() is a no-op, so synchronization is done at the P4D level.
-+ * sync_global_pgds() handles this difference between paging levels.
++/*
++ * Architectures can set this mask to a combination of PGTBL_P?D_MODIFIED values
++ * and let generic vmalloc and ioremap code know when arch_sync_kernel_mappings()
++ * needs to be called.
 + */
-+void arch_sync_kernel_mappings(unsigned long start, unsigned long end)
-+{
-+	sync_global_pgds(start, end);
-+}
++#ifndef ARCH_PAGE_TABLE_SYNC_MASK
++#define ARCH_PAGE_TABLE_SYNC_MASK 0
++#endif
 +
 +/*
-  * NOTE: This function is marked __ref because it calls __init function
-  * (alloc_bootmem_pages). It's safe to do it ONLY when after_bootmem == 0.
++ * There is no default implementation for arch_sync_kernel_mappings(). It is
++ * relied upon the compiler to optimize calls out if ARCH_PAGE_TABLE_SYNC_MASK
++ * is 0.
++ */
++void arch_sync_kernel_mappings(unsigned long start, unsigned long end);
++
+ #endif /* CONFIG_MMU */
+ 
+ #ifdef CONFIG_HAVE_ARCH_HUGE_VMAP
+--- a/include/linux/vmalloc.h
++++ b/include/linux/vmalloc.h
+@@ -176,22 +176,6 @@ extern int remap_vmalloc_range(struct vm
+ 							unsigned long pgoff);
+ 
+ /*
+- * Architectures can set this mask to a combination of PGTBL_P?D_MODIFIED values
+- * and let generic vmalloc and ioremap code know when arch_sync_kernel_mappings()
+- * needs to be called.
+- */
+-#ifndef ARCH_PAGE_TABLE_SYNC_MASK
+-#define ARCH_PAGE_TABLE_SYNC_MASK 0
+-#endif
+-
+-/*
+- * There is no default implementation for arch_sync_kernel_mappings(). It is
+- * relied upon the compiler to optimize calls out if ARCH_PAGE_TABLE_SYNC_MASK
+- * is 0.
+- */
+-void arch_sync_kernel_mappings(unsigned long start, unsigned long end);
+-
+-/*
+  *	Lowlevel-APIs (not for driver use!)
   */
+ 
 
 
