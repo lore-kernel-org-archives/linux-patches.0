@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA50B1B424F;
-	Sun,  7 Sep 2025 20:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D581B424F;
+	Sun,  7 Sep 2025 20:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276037; cv=none; b=KGEZxLGaIIi2QEPOE3BWNDtxHt05kE4v6Qt+cDWCove+BcdAC0n5QjBuCLwrjnftMFJFjpqxzXzrC2JfxyCL40RLcOIRUCxh+xla7dqSH8G8zuOB4gf9Yfspt+jn//rIBGogtBWzuLhzZXYEyLuNOjR9DJ8JMVFCnAHKk/IyvEo=
+	t=1757276041; cv=none; b=TgJWPUZ8qA2d+f26aMtGSRRjx8mxahkb678y5aHU3wHiWo62rcTOBJBB4iyvUhlq4LNDlZno6ZCO3lnsVUOZZoKsunAs26StyAMzUvhspyVZx1MkhQkfABbNMOsLD4pie7W+xC1xsv4858366zY6dsAobjBeEY8fDpI6nM2jPG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276037; c=relaxed/simple;
-	bh=OfN17h7nffr5RM3qkkmuQKOB2cuP9ppxWKySqyyDGSc=;
+	s=arc-20240116; t=1757276041; c=relaxed/simple;
+	bh=ioBNiOS/xiKMKpI62xAfKC8hFX6Cm4/LdjNzmdpPSqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3fpiq61Hj7Za9V996ypTOsyf2MHq5RWQJG/U+phkSYFnTlWQOThK6YCPMQhSmLQUTLrZ75TyRuFgdJ+V08FE80OYCvJikQK9VWaZoFsEO9CjW3TOXjdZpwaOF/j4b06+AX5JIsX+PIHAvGZGdkweSIyAP8GN3A6WlNdy9yD+18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBMAPSzM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aw/SJkXbWjYMRRksvlWVMov5O+gNiL0LxbLkC1UTTW38yIvu+cpLKnJcetHrjlLBSzZXtmbJW5fCQFRcMKZtoDhe21VjjrteNXPU4QfwgRjMNrqmeS4oOJuTqEyWEay95pWsE8EGz2yQuBRxHd3ZxkDdOzwr7agITqgRE2OtYE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9498OUN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBMAPSzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F5CC4CEF0;
-	Sun,  7 Sep 2025 20:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9498OUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611ADC4CEF8;
+	Sun,  7 Sep 2025 20:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276037;
-	bh=OfN17h7nffr5RM3qkkmuQKOB2cuP9ppxWKySqyyDGSc=;
+	s=korg; t=1757276040;
+	bh=ioBNiOS/xiKMKpI62xAfKC8hFX6Cm4/LdjNzmdpPSqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBMAPSzMLIO4Ddwza7sXm+8nzB0HOnaB/0Hs0nPjNgM/tRN0/YIW3tkfcMnVJa8hq
-	 0qSh+fTQ1nG9BZtFqnIZWoc7LFSi7jPdITIk5kjHBE79tTQL3z845IsVq9REN3P5I/
-	 01mNbC0KvI14fp+/GwA7BQOyD0QvOjfi92E6VT0M=
+	b=D9498OUN8UHGNshfa9gPmLvQQgHxYY1fOoC5M67trtM8BjQuTuoUrusqEO09HgGmz
+	 vKPjC2utkynJfxDE+WI86UzdNP/fyrEM5wuElQ2pOsbnl39Elt2KQNhHProQIOoTXy
+	 5Yz0G27awoCf/irpOG7GdeRnfwC/PZcyMY2N3X28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 44/64] iio: light: opt3001: fix deadlock due to concurrent flag access
-Date: Sun,  7 Sep 2025 21:58:26 +0200
-Message-ID: <20250907195604.620072926@linuxfoundation.org>
+Subject: [PATCH 5.15 45/64] gpio: pca953x: fix IRQ storm on system wake up
+Date: Sun,  7 Sep 2025 21:58:27 +0200
+Message-ID: <20250907195604.648449402@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -51,52 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-[ Upstream commit f063a28002e3350088b4577c5640882bf4ea17ea ]
+[ Upstream commit 3e38f946062b4845961ab86b726651b4457b2af8 ]
 
-The threaded IRQ function in this driver is reading the flag twice: once to
-lock a mutex and once to unlock it. Even though the code setting the flag
-is designed to prevent it, there are subtle cases where the flag could be
-true at the mutex_lock stage and false at the mutex_unlock stage. This
-results in the mutex not being unlocked, resulting in a deadlock.
+If an input changes state during wake-up and is used as an interrupt
+source, the IRQ handler reads the volatile input register to clear the
+interrupt mask and deassert the IRQ line. However, the IRQ handler is
+triggered before access to the register is granted, causing the read
+operation to fail.
 
-Fix it by making the opt3001_irq() code generally more robust, reading the
-flag into a variable and using the variable value at both stages.
+As a result, the IRQ handler enters a loop, repeatedly printing the
+"failed reading register" message, until `pca953x_resume()` is eventually
+called, which restores the driver context and enables access to
+registers.
 
-Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
+Fix by disabling the IRQ line before entering suspend mode, and
+re-enabling it after the driver context is restored in `pca953x_resume()`.
+
+An IRQ can be disabled with disable_irq() and still wake the system as
+long as the IRQ has wake enabled, so the wake-up functionality is
+preserved.
+
+Fixes: b76574300504 ("gpio: pca953x: Restore registers after suspend/resume cycle")
 Cc: stable@vger.kernel.org
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20250321-opt3001-irq-fix-v1-1-6c520d851562@bootlin.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ Adjust context ]
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20250512095441.31645-1-francesco@dolcini.it
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+[ Apply directly to suspend/resume functions ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt3001.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-pca953x.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/iio/light/opt3001.c
-+++ b/drivers/iio/light/opt3001.c
-@@ -692,8 +692,9 @@ static irqreturn_t opt3001_irq(int irq,
- 	struct opt3001 *opt = iio_priv(iio);
- 	int ret;
- 	bool wake_result_ready_queue = false;
-+	bool ok_to_ignore_lock = opt->ok_to_ignore_lock;
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -1145,6 +1145,9 @@ static int pca953x_suspend(struct device
+ 	struct pca953x_chip *chip = dev_get_drvdata(dev);
  
--	if (!opt->ok_to_ignore_lock)
-+	if (!ok_to_ignore_lock)
- 		mutex_lock(&opt->lock);
+ 	mutex_lock(&chip->i2c_lock);
++	/* Disable IRQ to prevent early triggering while regmap "cache only" is on */
++	if (chip->client->irq > 0)
++		disable_irq(chip->client->irq);
+ 	regcache_cache_only(chip->regmap, true);
+ 	mutex_unlock(&chip->i2c_lock);
  
- 	ret = i2c_smbus_read_word_swapped(opt->client, OPT3001_CONFIGURATION);
-@@ -730,7 +731,7 @@ static irqreturn_t opt3001_irq(int irq,
+@@ -1170,6 +1173,8 @@ static int pca953x_resume(struct device
  	}
  
- out:
--	if (!opt->ok_to_ignore_lock)
-+	if (!ok_to_ignore_lock)
- 		mutex_unlock(&opt->lock);
- 
- 	if (wake_result_ready_queue)
+ 	mutex_lock(&chip->i2c_lock);
++	if (chip->client->irq > 0)
++		enable_irq(chip->client->irq);
+ 	regcache_cache_only(chip->regmap, false);
+ 	regcache_mark_dirty(chip->regmap);
+ 	ret = pca953x_regcache_sync(dev);
 
 
