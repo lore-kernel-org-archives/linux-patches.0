@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28FF14D29B;
-	Sun,  7 Sep 2025 20:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35687126C02;
+	Sun,  7 Sep 2025 20:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277989; cv=none; b=BCK5Gi6CB3WCNsokAyh2C3rhWt/zeJzAoA3vIaEyFFrvkRYeedsQ0c7p9Q8vOR0K/MRKpt5DVUvak+mUD68YrJ1x4rcKWJeid8X540lfGo82/nKlnuQTqs8YW+8csfI7F7xCrFSl0Oj/baUoaWwaoglk2tjOZs6MGwWz3z2YlaI=
+	t=1757277993; cv=none; b=OO+55tomflhmusG/XNy1dj9frs4aAGKh2Hkqh+0GS9Y9yAq5A//iaBoPbT/BaDwXfYZIrnaTBhnf8t7E9pXVnJJMU4sKl/zi1q7R+eNdmYBBZw1IoQCV7ffeKrBNon9L49/hzE+MguzScu3QYHWcPkitEar6qcYqmJlJLkKE3Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277989; c=relaxed/simple;
-	bh=06CVbgdGd2TYtfsL24t5wdnrsKb9m0aUUxgqcxhNeCU=;
+	s=arc-20240116; t=1757277993; c=relaxed/simple;
+	bh=dRcS/q3gxdY4MGvK8LBZb90mzAQ/nFHftSBm5peteOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIlCGIcMKTF6jsfTMsl/oE3R0J2/qt1YxXWpsEnH315+EgTGJQWo6pt2xUVM+R1EyASiQOFLgW84zuvEsDQVxh1LJx1HtqsRjGZId4wCIsaNWpfDGfNh7kFrmIZ3aFllnm5FhQNJKIX43q2mzpqe1sEtWhqMp+XFPUPTMM9YsSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlMqDnCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IpkyklfWH7vbjfYhBXUh6cJEhcqgMBMCIMtFkdCh2o0DSveD+eNEBTdfZneveT0Y9PSm7+RG3JNl/p6ctqppTjr99ofeZQpN0G1gSvrEa7EhyGRbym5QwOC4mbDvQwDrPxgOAf4Biymj46F/XoWzAzYVyWwfJ9t3b63YIX5rRlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ah9TZd91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlMqDnCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D22C4CEF0;
-	Sun,  7 Sep 2025 20:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ah9TZd91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9ED3C4CEF0;
+	Sun,  7 Sep 2025 20:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277989;
-	bh=06CVbgdGd2TYtfsL24t5wdnrsKb9m0aUUxgqcxhNeCU=;
+	s=korg; t=1757277993;
+	bh=dRcS/q3gxdY4MGvK8LBZb90mzAQ/nFHftSBm5peteOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlMqDnCCRMQwzzPzAKQ2rFw3hmWPhuyOJYTNIXl8Rle00MIo6V+KgIWp5gAln73uD
-	 Tjs+hAWGmLRBO0sO5mOKaysIPI3z/LrOm33IVy7bGGTqAWPSFXASSn1L30U5J7lc2Y
-	 A9fC9jWSbD2xqnfVBYpG6hbTBurIz2iK7nVhtDOA=
+	b=Ah9TZd91/ogiFP0AjNNf7+tNNlMDJN0XK9w7PFoOXqjzVj3Wz6vstAFBluFq/6SZF
+	 37mZliY3h28s+qozXTRNE8hxdxtN9dmiVmyJCJVIivarTc9juPUYQw/F6mvBc8sq17
+	 bfga9a4PvRYr442H/6kBKJuLS6YFFuo23B9Kmmdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 166/183] perf bpf-utils: Harden get_bpf_prog_info_linear
-Date: Sun,  7 Sep 2025 21:59:53 +0200
-Message-ID: <20250907195619.761019341@linuxfoundation.org>
+Subject: [PATCH 6.16 167/183] spi: spi-qpic-snand: unregister ECC engine on probe error and device remove
+Date: Sun,  7 Sep 2025 21:59:54 +0200
+Message-ID: <20250907195619.784170508@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,118 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 01be43f2a0eaeed83e94dee054742f37625c86d9 ]
+[ Upstream commit 1991a458528588ff34e98b6365362560d208710f ]
 
-In get_bpf_prog_info_linear two calls to bpf_obj_get_info_by_fd are
-made, the first to compute memory requirements for a struct perf_bpil
-and the second to fill it in. Previously the code would warn when the
-second call didn't match the first. Such races can be common place in
-things like perf test, whose perf trace tests will frequently load BPF
-programs. Rather than a debug message, return actual errors for this
-case. Out of paranoia also validate the read bpf_prog_info array
-value. Change the type of ptr to avoid mismatched pointer type
-compiler warnings. Add some additional debug print outs and sanity
-asserts.
+The on-host hardware ECC engine remains registered both when
+the spi_register_controller() function returns with an error
+and also on device removal.
 
-Closes: https://lore.kernel.org/lkml/CAP-5=fWJQcmUOP7MuCA2ihKnDAHUCOBLkQFEkQES-1ZZTrgf8Q@mail.gmail.com/
-Fixes: 6ac22d036f86 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250902181713.309797-4-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Change the qcom_spi_probe() function to unregister the engine
+on the error path, and add the missing unregistering call to
+qcom_spi_remove() to avoid possible use-after-free issues.
+
+Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Message-ID: <20250903-qpic-snand-unregister-ecceng-v1-1-ef5387b0abdc@gmail.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-utils.c | 43 ++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/spi/spi-qpic-snand.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
-index 64a5583446964..5a66dc8594aa8 100644
---- a/tools/perf/util/bpf-utils.c
-+++ b/tools/perf/util/bpf-utils.c
-@@ -115,7 +115,7 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 	__u32 info_len = sizeof(info);
- 	__u32 data_len = 0;
- 	int i, err;
--	void *ptr;
-+	__u8 *ptr;
- 
- 	if (arrays >> PERF_BPIL_LAST_ARRAY)
- 		return ERR_PTR(-EINVAL);
-@@ -126,6 +126,8 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 		pr_debug("can't get prog info: %s", strerror(errno));
- 		return ERR_PTR(-EFAULT);
- 	}
-+	if (info.type >= __MAX_BPF_PROG_TYPE)
-+		pr_debug("%s:%d: unexpected program type %u\n", __func__, __LINE__, info.type);
- 
- 	/* step 2: calculate total size of all arrays */
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
-@@ -173,6 +175,8 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 					     desc->count_offset, count);
- 		bpf_prog_info_set_offset_u32(&info_linear->info,
- 					     desc->size_offset, size);
-+		assert(ptr >= info_linear->data);
-+		assert(ptr < &info_linear->data[data_len]);
- 		bpf_prog_info_set_offset_u64(&info_linear->info,
- 					     desc->array_offset,
- 					     ptr_to_u64(ptr));
-@@ -186,26 +190,45 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 		free(info_linear);
- 		return ERR_PTR(-EFAULT);
- 	}
-+	if (info_linear->info.type >= __MAX_BPF_PROG_TYPE) {
-+		pr_debug("%s:%d: unexpected program type %u\n",
-+			 __func__, __LINE__, info_linear->info.type);
-+	}
- 
- 	/* step 6: verify the data */
-+	ptr = info_linear->data;
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
- 		const struct bpil_array_desc *desc = &bpil_array_desc[i];
--		__u32 v1, v2;
-+		__u32 count1, count2, size1, size2;
-+		__u64 ptr2;
- 
- 		if ((arrays & (1UL << i)) == 0)
- 			continue;
- 
--		v1 = bpf_prog_info_read_offset_u32(&info, desc->count_offset);
--		v2 = bpf_prog_info_read_offset_u32(&info_linear->info,
-+		count1 = bpf_prog_info_read_offset_u32(&info, desc->count_offset);
-+		count2 = bpf_prog_info_read_offset_u32(&info_linear->info,
- 						   desc->count_offset);
--		if (v1 != v2)
--			pr_warning("%s: mismatch in element count\n", __func__);
-+		if (count1 != count2) {
-+			pr_warning("%s: mismatch in element count %u vs %u\n", __func__, count1, count2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
- 
--		v1 = bpf_prog_info_read_offset_u32(&info, desc->size_offset);
--		v2 = bpf_prog_info_read_offset_u32(&info_linear->info,
-+		size1 = bpf_prog_info_read_offset_u32(&info, desc->size_offset);
-+		size2 = bpf_prog_info_read_offset_u32(&info_linear->info,
- 						   desc->size_offset);
--		if (v1 != v2)
--			pr_warning("%s: mismatch in rec size\n", __func__);
-+		if (size1 != size2) {
-+			pr_warning("%s: mismatch in rec size %u vs %u\n", __func__, size1, size2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
-+		ptr2 = bpf_prog_info_read_offset_u64(&info_linear->info, desc->array_offset);
-+		if (ptr_to_u64(ptr) != ptr2) {
-+			pr_warning("%s: mismatch in array %p vs %llx\n", __func__, ptr, ptr2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
-+		ptr += roundup(count1 * size1, sizeof(__u64));
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index e98e997680c75..cfc81327f7a44 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -1615,11 +1615,13 @@ static int qcom_spi_probe(struct platform_device *pdev)
+ 	ret = spi_register_controller(ctlr);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "spi_register_controller failed.\n");
+-		goto err_spi_init;
++		goto err_register_controller;
  	}
  
- 	/* step 7: update info_len and data_len */
+ 	return 0;
+ 
++err_register_controller:
++	nand_ecc_unregister_on_host_hw_engine(&snandc->qspi->ecc_eng);
+ err_spi_init:
+ 	qcom_nandc_unalloc(snandc);
+ err_snand_alloc:
+@@ -1641,7 +1643,7 @@ static void qcom_spi_remove(struct platform_device *pdev)
+ 	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 
+ 	spi_unregister_controller(ctlr);
+-
++	nand_ecc_unregister_on_host_hw_engine(&snandc->qspi->ecc_eng);
+ 	qcom_nandc_unalloc(snandc);
+ 
+ 	clk_disable_unprepare(snandc->aon_clk);
 -- 
 2.51.0
 
