@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22560D528;
-	Sun,  7 Sep 2025 20:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0056D528;
+	Sun,  7 Sep 2025 20:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276855; cv=none; b=B0YoA5o/vJcXwu/nsIDhXXVWRlmyALKEdAx0ElRrgPywMYqdSN78NvNLkH8dJy42s8Mk3YufQAij3c8pwiSA0YLpb/KB3rz2itbkHsR4TwAtb0UK/yJ9CeJnKFAXi9xnWGpU01Z+caRWzaKuYUsJudPXPKO1790bv+VQZ2Z+y30=
+	t=1757276858; cv=none; b=TPsaNGS8EwXzjrf2p70Bt31vThs7rYpnRb97G8k/eShSNRMbv1X49SyjMIGvlZ8Y0tr35qR9UEmmudTCir407VgeuavY3440CZZE5MrifwfufLghqnXobJHHGykMsBFYxsCWmimVw2aqscuwgKX+yyEjd/Fszyog4jTMMMr+n9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276855; c=relaxed/simple;
-	bh=SbfVOfvtw6JfeBJpKm1rHK7PGju5Z0EqBCztFsg/jYI=;
+	s=arc-20240116; t=1757276858; c=relaxed/simple;
+	bh=bh3TodQmUVGdF1b6emM7/A3cD3DA/gH/OExI/DBezE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SsdekxWyCBMYyC3aarGovhDOfW3nxPzLkuLPvyQpVy1BW6I5PlamGPg88QeDCrA/8oqG/DQykfOvt9lpxqXylK1MH8QTDqza2nDRNfqcjtL5bJnyq63fIU/L2NvtJMrgo5YhqwRL4pJ4+Mr+vdBZtN7hzK66W4MplettJyjfCc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewDoyH2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xhk8lfA6kxrKBdgNXMAkZHB3XhtdnCIpTWYDofU+xaD4lFLPe2uJOU5ss0yfgoqbQQ6Xn0IQC0zk9yWrnwjUsmZcNaN54cdVWJXOhzUV/DxdDTzi5EInkBx6l2b/MT8k3u/iGI+0VRCysZdJ/Zg5usuRLiN+o5nd2VDkE1oTUnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdI9hHXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewDoyH2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E47EC4CEF0;
-	Sun,  7 Sep 2025 20:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdI9hHXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84EAC4CEF0;
+	Sun,  7 Sep 2025 20:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276855;
-	bh=SbfVOfvtw6JfeBJpKm1rHK7PGju5Z0EqBCztFsg/jYI=;
+	s=korg; t=1757276858;
+	bh=bh3TodQmUVGdF1b6emM7/A3cD3DA/gH/OExI/DBezE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewDoyH2lUCzR2AomriQ5Ed+lOHCsrChJc9Xuo5qlk3B+sEh9apKK1G5RlSK2Mc9EJ
-	 3QYLNsuoHV1eQD0ap4EN4N4jp4OaAAHxvwt8ZYs3ZpN2mRcUO01qIaUKEwWi14U3dM
-	 rljBPdpLtisgKWFTTpEKQXyCRukMoTOEXWr5Aa90=
+	b=RdI9hHXHSIi/ornuRA+0meA8bBmxU7a1kR2rKiW1DMcK4z3HqcTV2SVbsTz2A2frN
+	 UsIMvrEVLMfrt9xwREAzdmXLaW+y6WLe+nXTo4q6vLr69tsGbtXjS14mAxGSK5awFd
+	 zu7oKVMJqhAL4rl0FWLivR2+o+vNZkezFYWwfPl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Shinji Nomoto <fj5851bi@fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/175] drm/amd/display: Dont warn when missing DCE encoder caps
-Date: Sun,  7 Sep 2025 21:56:45 +0200
-Message-ID: <20250907195615.135330944@linuxfoundation.org>
+Subject: [PATCH 6.12 011/175] cpupower: Fix a bug where the -t option of the set subcommand was not working.
+Date: Sun,  7 Sep 2025 21:56:46 +0200
+Message-ID: <20250907195615.158223280@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -47,70 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Shinji Nomoto <fj5851bi@fujitsu.com>
 
-[ Upstream commit 8246147f1fbaed522b8bcc02ca34e4260747dcfb ]
+[ Upstream commit b3eaf14f4c63fd6abc7b68c6d7a07c5680a6d8e5 ]
 
-On some GPUs the VBIOS just doesn't have encoder caps,
-or maybe not for every encoder.
+The set subcommand's -t option is documented as being available for boost
+configuration, but it was not actually functioning due to a bug
+in the option handling.
 
-This isn't really a problem and it's handled well,
-so let's not litter the logs with it.
-
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 33e0227ee96e62d034781e91f215e32fd0b1d512)
+Link: https://lore.kernel.org/r/20250522061122.2149188-2-fj5851bi@fujitsu.com
+Signed-off-by: Shinji Nomoto <fj5851bi@fujitsu.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/power/cpupower/utils/cpupower-set.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-index 4a9d07c31bc5b..0c50fe266c8a1 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-@@ -896,13 +896,13 @@ void dce110_link_encoder_construct(
- 						enc110->base.id, &bp_cap_info);
+diff --git a/tools/power/cpupower/utils/cpupower-set.c b/tools/power/cpupower/utils/cpupower-set.c
+index 0677b58374abf..59ace394cf3ef 100644
+--- a/tools/power/cpupower/utils/cpupower-set.c
++++ b/tools/power/cpupower/utils/cpupower-set.c
+@@ -62,8 +62,8 @@ int cmd_set(int argc, char **argv)
  
- 	/* Override features with DCE-specific values */
--	if (BP_RESULT_OK == result) {
-+	if (result == BP_RESULT_OK) {
- 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
- 				bp_cap_info.DP_HBR2_EN;
- 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
- 				bp_cap_info.DP_HBR3_EN;
- 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
--	} else {
-+	} else if (result != BP_RESULT_NORECORD) {
- 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
- 				__func__,
- 				result);
-@@ -1798,13 +1798,13 @@ void dce60_link_encoder_construct(
- 						enc110->base.id, &bp_cap_info);
- 
- 	/* Override features with DCE-specific values */
--	if (BP_RESULT_OK == result) {
-+	if (result == BP_RESULT_OK) {
- 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
- 				bp_cap_info.DP_HBR2_EN;
- 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
- 				bp_cap_info.DP_HBR3_EN;
- 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
--	} else {
-+	} else if (result != BP_RESULT_NORECORD) {
- 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
- 				__func__,
- 				result);
+ 	params.params = 0;
+ 	/* parameter parsing */
+-	while ((ret = getopt_long(argc, argv, "b:e:m:",
+-						set_opts, NULL)) != -1) {
++	while ((ret = getopt_long(argc, argv, "b:e:m:t:",
++				  set_opts, NULL)) != -1) {
+ 		switch (ret) {
+ 		case 'b':
+ 			if (params.perf_bias)
 -- 
 2.50.1
 
