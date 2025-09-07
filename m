@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F83D528;
-	Sun,  7 Sep 2025 20:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67F3D528;
+	Sun,  7 Sep 2025 20:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276829; cv=none; b=HEu0mbdaS49dxS+ukOzaAR5/eOOrruPMDhcHoa8XQRvQonxNJZr2wZ6oPKbh3c2fxWfSNWozyVtD2ayl0qpzmJq/WR9bfv+B8yGDxGJYElDBtDkkdb9jKinC2xrvj11+t7uVuFMq+z1x+4ai5WMEtURsdmQCyG9EPePPUss+yZM=
+	t=1757276832; cv=none; b=XIRea29tQSC/fyojglbU1oGQXwTk6SkQc8vTk4++FerY+bs3UYiOCnk+fhY6wEAkFpcPHWiLH7hJ/wqn5WLf68COJ8D7MasYW/fqnCj8N3r3jL5ckZFkqBFRAeG/fZp0qVavTuKltba1VL8qQJrr70bVvelR7kIvp8hQl/Baiww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276829; c=relaxed/simple;
-	bh=QHJh/wHGERnZrwFjnlHEFRE5GOeT3UEQHpslYZ1/MYg=;
+	s=arc-20240116; t=1757276832; c=relaxed/simple;
+	bh=SljdRiy65FGZoXJD3ltWpJ447J+VQO1F8QDHzTMCGTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWbK6CM83H0LEsHcruHRaZzvZa8E4uu/3nXHOj8fVfapfzHoA7pZCwdXGVyts2CZeveeyr21Dfk+05LQkWZRrmaXi71he0Aa8ROhb+cp7NGGCnKZTJ1bHTJfUYo45Zmyzet0DagzIYtL7KKeQMYeaWn8x5WEtF+G7sc4CznEcWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXeRt/4B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eYQf4nFNgPVByTD8E5VrLdjXXAjxobm+X5u8J7fTZkLOUD/+xqycFj6ejWTACOh0mr0BN/Wdh+8hHLPQpoRMnTHfNE2+7qQE3dXLCqyNcotztwk3t/layjDWKx+mBw4/+FLCYWm056N+vpzSK4mT7gSRT6pV2k5tb6YW6zGrmpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9ghYmyb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXeRt/4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E11C4CEF0;
-	Sun,  7 Sep 2025 20:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9ghYmyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5718BC4CEF0;
+	Sun,  7 Sep 2025 20:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276829;
-	bh=QHJh/wHGERnZrwFjnlHEFRE5GOeT3UEQHpslYZ1/MYg=;
+	s=korg; t=1757276832;
+	bh=SljdRiy65FGZoXJD3ltWpJ447J+VQO1F8QDHzTMCGTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXeRt/4BkBh3tswd76XuH/4h8fhwTjL2St6JnYV15ULtVb98Hd3VIc3jyqRt8Yo38
-	 a+EJCVt1ZY7i3Jw5Oci8Qyxqk3tpiszQdoTFjimLrln+fN8kwRzrrN4YcaI6ouHL3e
-	 m1gTIGfaOn4UH7+ziwgZ0G+/jbuXrSCuZ0KBVcZA=
+	b=n9ghYmybs3hRwJCLJDMMyvHawvPeQoNSZfg2uPE+uTqGowJzIOH4qpEYzuHLt9qPO
+	 ZA1bMxfnh0fA46SEowiQG2/qcIRebWEX34+5aG8WHkKrg14nAzwv2K+0NgrHa5XUsd
+	 rlRRG27cZgOKGK2AD2JrgqlKlowUt3dKMi3lFFoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/121] pcmcia: Add error handling for add_interval() in do_validate_mem()
-Date: Sun,  7 Sep 2025 21:58:56 +0200
-Message-ID: <20250907195612.420254348@linuxfoundation.org>
+Subject: [PATCH 6.6 101/121] hwmon: mlxreg-fan: Prevent fans from getting stuck at 0 RPM
+Date: Sun,  7 Sep 2025 21:58:57 +0200
+Message-ID: <20250907195612.445244643@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,43 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit 4a81f78caa53e0633cf311ca1526377d9bff7479 ]
+[ Upstream commit 1180c79fbf36e4c02e76ae4658509523437e52a4 ]
 
-In the do_validate_mem(), the call to add_interval() does not
-handle errors. If kmalloc() fails in add_interval(), it could
-result in a null pointer being inserted into the linked list,
-leading to illegal memory access when sub_interval() is called
-next.
+The fans controlled by the driver can get stuck at 0 RPM if they are
+configured below a 20% duty cycle. The driver tries to avoid this by
+enforcing a minimum duty cycle of 20%, but this is done after the fans
+are registered with the thermal subsystem. This is too late as the
+thermal subsystem can set their current state before the driver is able
+to enforce the minimum duty cycle.
 
-This patch adds an error handling for the add_interval(). If
-add_interval() returns an error, the function will return early
-with the error code.
+Fix by setting the minimum duty cycle before registering the fans with
+the thermal subsystem.
 
-Fixes: 7b4884ca8853 ("pcmcia: validate late-added resources")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Fixes: d7efb2ebc7b3 ("hwmon: (mlxreg-fan) Extend driver to support multiply cooling devices")
+Reported-by: Nikolay Aleksandrov <razor@blackwall.org>
+Tested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20250730201715.1111133-1-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/mlxreg-fan.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index bf9d070a44966..da494fe451baf 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -375,7 +375,9 @@ static int do_validate_mem(struct pcmcia_socket *s,
- 
- 	if (validate && !s->fake_cis) {
- 		/* move it to the validated data set */
--		add_interval(&s_data->mem_db_valid, base, size);
-+		ret = add_interval(&s_data->mem_db_valid, base, size);
-+		if (ret)
-+			return ret;
- 		sub_interval(&s_data->mem_db, base, size);
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index a5f89aab3fb4d..c25a54d5b39ad 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -561,15 +561,14 @@ static int mlxreg_fan_cooling_config(struct device *dev, struct mlxreg_fan *fan)
+ 		if (!pwm->connected)
+ 			continue;
+ 		pwm->fan = fan;
++		/* Set minimal PWM speed. */
++		pwm->last_hwmon_state = MLXREG_FAN_PWM_DUTY2STATE(MLXREG_FAN_MIN_DUTY);
+ 		pwm->cdev = devm_thermal_of_cooling_device_register(dev, NULL, mlxreg_fan_name[i],
+ 								    pwm, &mlxreg_fan_cooling_ops);
+ 		if (IS_ERR(pwm->cdev)) {
+ 			dev_err(dev, "Failed to register cooling device\n");
+ 			return PTR_ERR(pwm->cdev);
+ 		}
+-
+-		/* Set minimal PWM speed. */
+-		pwm->last_hwmon_state = MLXREG_FAN_PWM_DUTY2STATE(MLXREG_FAN_MIN_DUTY);
  	}
  
+ 	return 0;
 -- 
 2.51.0
 
