@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AEC1DE8AF;
-	Sun,  7 Sep 2025 20:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8721E1DE8AF;
+	Sun,  7 Sep 2025 20:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277233; cv=none; b=Pcyh41bQyPLulSxMfEz+jz/NMOfvjYNxO3NyBc2mhl2fB1Nv4Dhv2mmtNi56GtmzRrmdYQll1/F7UVm+h8CzDNznl9AGdJv0kz7JV174YQrjhbyOgKju4s8AL1qDMdD53d786viOhPHCNPrc22ukOpPpcYhgJnwPCsY/SQnyFbE=
+	t=1757277236; cv=none; b=rhA1l+cUgl2uoiYF50a4o7jHHr5ufDuukytGUqKCUkMKXZU17+8z2PicwdYkqT5y6s0vdZXnXUvU4OQEJUSyerMPsMtbyjIV3S0Ru3Iwz2xBuG75tJCL/TDCLQxbciHHQI0ZLcKSg9UJut3tlCQf2GjeEPgBU05lpSjSxDNflPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277233; c=relaxed/simple;
-	bh=VnN7ZKHO3jhCGCgkj+c7at6HbuvkdVi6d6F4i6wNFDo=;
+	s=arc-20240116; t=1757277236; c=relaxed/simple;
+	bh=a+orjOynQugwfITG/wVHYDaYQ+Ncix4dngd4c4HMqs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cb9Yy2Ukd3K2rqpsCNjj/xpKbqFDqa+eEbl5rNEiDEEtlXcTCmnCSHnj4wHV1q1zI1LDXB72sMQdsBwuL9NoQiLcU8FeiYcDqPsOlD2tH4qbMdraHv6Ko1aH9FKa/dIVPYn6B5ROSX3hp1YIZLBREtdiNjRutoaYEf2562XbX3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUP7ws9f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yl2j9mAo7atjoPwQgqS5nz+qsNLSFu4/PwVMRQtBKc5q9CPfylZ04lWkvXAt7phWb9FSkoKvITjhkRF8FoWXzNRLcE9fydRietSKcul1lK53EXunMlk7cwG0y5bynbWEzLfSIBWIK8z2ffvxtWQ68pHzL7d9aPdN4mbJR9L2ywE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDaArGG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUP7ws9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C6BC4CEF0;
-	Sun,  7 Sep 2025 20:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDaArGG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBA4C4CEF0;
+	Sun,  7 Sep 2025 20:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277233;
-	bh=VnN7ZKHO3jhCGCgkj+c7at6HbuvkdVi6d6F4i6wNFDo=;
+	s=korg; t=1757277236;
+	bh=a+orjOynQugwfITG/wVHYDaYQ+Ncix4dngd4c4HMqs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUP7ws9fCZveIX9YMdArbtMsplEqPyRiqTjejdXx53JtLwkMlu+8bDeadGHY65BcW
-	 9HvPOY1LUVMmLZkbqdDP1I7+Qbre3CquR5mpT405FnNjxxBC2xAwNu03mo8F2ryIK6
-	 6+GkhQ1A3vqZcY6OOC2p7WsPltMjj41OTjqpJ1VQ=
+	b=sDaArGG0PHJm7RzV+MjAOeMUNh6d5kvvsnqE6KKL25IJpNj/7hEw6I36ulXGhviiq
+	 hdUtANIou7e11yZAKBdInK2X2qFubTaNwxV0sjH798fbuxvG1nfIEjVJHY8mwne+ZX
+	 o8yNgITKaXEV+v7cieDrr8Wxg7iU8Qfy0OhBKslU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 125/175] net: dsa: provide implementation of .support_eee()
-Date: Sun,  7 Sep 2025 21:58:40 +0200
-Message-ID: <20250907195617.814078515@linuxfoundation.org>
+Subject: [PATCH 6.12 126/175] net: dsa: b53/bcm_sf2: implement .support_eee() method
+Date: Sun,  7 Sep 2025 21:58:41 +0200
+Message-ID: <20250907195617.837336539@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -55,61 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit 99379f587278c818777cb4778e2c79c6c1440c65 upstream.
+commit c86692fc2cb77d94dd8c166c2b9017f196d02a84 upstream.
 
-Provide a trivial implementation for the .support_eee() method which
-switch drivers can use to simply indicate that they support EEE on
-all their user ports.
+Implement the .support_eee() method to indicate that EEE is not
+supported by two switch variants, rather than making these checks in
+the .set_mac_eee() and .get_mac_eee() methods.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/E1tL149-006cZJ-JJ@rmk-PC.armlinux.org.uk
+Link: https://patch.msgid.link/E1tL14E-006cZU-Nc@rmk-PC.armlinux.org.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Harshit: Resolve contextual conflicts due to missing commit:
-  539770616521 ("net: dsa: remove obsolete phylink dsa_switch operations")
-  and commit: ecb595ebba0e ("net: dsa: remove
-  dsa_port_phylink_mac_select_pcs()") in 6.12.y ]
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dsa.h |    1 +
- net/dsa/port.c    |   16 ++++++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/net/dsa/b53/b53_common.c |   13 +++++++------
+ drivers/net/dsa/b53/b53_priv.h   |    1 +
+ drivers/net/dsa/bcm_sf2.c        |    1 +
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
---- a/include/net/dsa.h
-+++ b/include/net/dsa.h
-@@ -1399,5 +1399,6 @@ static inline bool dsa_user_dev_check(co
- 
- netdev_tx_t dsa_enqueue_skb(struct sk_buff *skb, struct net_device *dev);
- void dsa_port_phylink_mac_change(struct dsa_switch *ds, int port, bool up);
-+bool dsa_supports_eee(struct dsa_switch *ds, int port);
- 
- #endif
---- a/net/dsa/port.c
-+++ b/net/dsa/port.c
-@@ -1589,6 +1589,22 @@ dsa_port_phylink_mac_select_pcs(struct p
- 	return pcs;
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -2388,13 +2388,16 @@ int b53_eee_init(struct dsa_switch *ds,
  }
+ EXPORT_SYMBOL(b53_eee_init);
  
-+/* dsa_supports_eee - indicate that EEE is supported
-+ * @ds: pointer to &struct dsa_switch
-+ * @port: port index
-+ *
-+ * A default implementation for the .support_eee() DSA operations member,
-+ * which drivers can use to indicate that they support EEE on all of their
-+ * user ports.
-+ *
-+ * Returns: true
-+ */
-+bool dsa_supports_eee(struct dsa_switch *ds, int port)
-+{
-+	return true;
+-int b53_get_mac_eee(struct dsa_switch *ds, int port, struct ethtool_keee *e)
++bool b53_support_eee(struct dsa_switch *ds, int port)
+ {
+ 	struct b53_device *dev = ds->priv;
+ 
+-	if (is5325(dev) || is5365(dev))
+-		return -EOPNOTSUPP;
++	return !is5325(dev) && !is5365(dev);
 +}
-+EXPORT_SYMBOL_GPL(dsa_supports_eee);
-+
- static void dsa_port_phylink_mac_config(struct phylink_config *config,
- 					unsigned int mode,
- 					const struct phylink_link_state *state)
++EXPORT_SYMBOL(b53_support_eee);
+ 
++int b53_get_mac_eee(struct dsa_switch *ds, int port, struct ethtool_keee *e)
++{
+ 	return 0;
+ }
+ EXPORT_SYMBOL(b53_get_mac_eee);
+@@ -2404,9 +2407,6 @@ int b53_set_mac_eee(struct dsa_switch *d
+ 	struct b53_device *dev = ds->priv;
+ 	struct ethtool_keee *p = &dev->ports[port].eee;
+ 
+-	if (is5325(dev) || is5365(dev))
+-		return -EOPNOTSUPP;
+-
+ 	p->eee_enabled = e->eee_enabled;
+ 	b53_eee_enable_set(ds, port, e->eee_enabled);
+ 
+@@ -2463,6 +2463,7 @@ static const struct dsa_switch_ops b53_s
+ 	.port_setup		= b53_setup_port,
+ 	.port_enable		= b53_enable_port,
+ 	.port_disable		= b53_disable_port,
++	.support_eee		= b53_support_eee,
+ 	.get_mac_eee		= b53_get_mac_eee,
+ 	.set_mac_eee		= b53_set_mac_eee,
+ 	.port_bridge_join	= b53_br_join,
+--- a/drivers/net/dsa/b53/b53_priv.h
++++ b/drivers/net/dsa/b53/b53_priv.h
+@@ -387,6 +387,7 @@ int b53_enable_port(struct dsa_switch *d
+ void b53_disable_port(struct dsa_switch *ds, int port);
+ void b53_brcm_hdr_setup(struct dsa_switch *ds, int port);
+ int b53_eee_init(struct dsa_switch *ds, int port, struct phy_device *phy);
++bool b53_support_eee(struct dsa_switch *ds, int port);
+ int b53_get_mac_eee(struct dsa_switch *ds, int port, struct ethtool_keee *e);
+ int b53_set_mac_eee(struct dsa_switch *ds, int port, struct ethtool_keee *e);
+ 
+--- a/drivers/net/dsa/bcm_sf2.c
++++ b/drivers/net/dsa/bcm_sf2.c
+@@ -1233,6 +1233,7 @@ static const struct dsa_switch_ops bcm_s
+ 	.port_setup		= b53_setup_port,
+ 	.port_enable		= bcm_sf2_port_setup,
+ 	.port_disable		= bcm_sf2_port_disable,
++	.support_eee		= b53_support_eee,
+ 	.get_mac_eee		= b53_get_mac_eee,
+ 	.set_mac_eee		= b53_set_mac_eee,
+ 	.port_bridge_join	= b53_br_join,
 
 
