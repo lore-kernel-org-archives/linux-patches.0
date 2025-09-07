@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1046715C158;
-	Sun,  7 Sep 2025 20:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF0515C158;
+	Sun,  7 Sep 2025 20:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277105; cv=none; b=UoKBtJYr4dnAt0sGVhIN8APlj9N4rzribiPED+BGBZXYXgHviJHtXKfSmVOe5TXlrbIvKjeVLAR7Z0OkBM0EWZ6nOaJ+7ciJoDtTcIkVWYzuxnltkGKBrJg7RLmxvTVIfzwT2Wl8y/r4liyxRWmjqM0d6IsWPg0GBNikAnGY4Ac=
+	t=1757277108; cv=none; b=I2+XWJh/WpnGKxNVDrSiJ4xGK1PbMP+eEMVuSNZiT7iJBs7YkA6uS/dHn5uCZrFehJcHKRlXpDTNo6vagF4ewrOlrHCoUpIUSQlMyDCh7Fy/gBffYgQthZ2zDGI6KFbiiIYbeToguaezNK50CX3Kmmt6CgwnB3W3TClEPtrKxBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277105; c=relaxed/simple;
-	bh=9YxmnxPiipSJLg0iURRI71r0c8ef35aaj44VUzHl62k=;
+	s=arc-20240116; t=1757277108; c=relaxed/simple;
+	bh=tpoKvTbAoDdtv20uQGGhIbbb57bAUaQUKQ/jNxtAQNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=afl6A8Eg1pUCirN/qij5NYIJafpRVVwnS5fEffXOlexwjoUpb1WZ3JXlH8hb1hpMb87IFTUzDV1R8w0JK1OYiawGQryzqjvC+J47V4FNXiDFsGacG+aJQ3+6r3tWEJwbFTVui6/g1B+7Bv/HxXVqOe9swEUPjSWr79Na0fIAXqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebbYDAbE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uK41TEK+wEw6apYX28tjtCz9nvAucDxY9cFHNr0p5f9kCkqyVR5FdIE3Nac416+ykRQJv/AvsrPvBaSthTo666DcwDegVLM5ic039iV30pmcJT9y8lB3iuv+A+oMovfjUlid1hlxR/grog1kaVxaQT9gfRHitDasVTWfyhdy2Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lajTqRNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebbYDAbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54237C4CEF0;
-	Sun,  7 Sep 2025 20:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lajTqRNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAD3C4CEF0;
+	Sun,  7 Sep 2025 20:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277104;
-	bh=9YxmnxPiipSJLg0iURRI71r0c8ef35aaj44VUzHl62k=;
+	s=korg; t=1757277108;
+	bh=tpoKvTbAoDdtv20uQGGhIbbb57bAUaQUKQ/jNxtAQNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebbYDAbEP7HmG4krNLCHATcRuVAgFwdfDK9S777mh2IVNJCTVr4DNe+W+BwSXQz98
-	 8Tb4uOMRNUakdfSheNChZ+/GZqFQsmv+irmktGZTL5spRy9z4p0SObIw3pU58W0+c1
-	 3bk7+aBGAtKnf+UFRu/sJ9f6CNPi9dV6xwl14Tjg=
+	b=lajTqRNyqJOrysVZkQhBLYlRL1aSoFqwGSDpa/3gU9StvkLJWF4lOtXTeVKz4BZxx
+	 /ni6EJs4yIPS7XtOCcsiPuRJEzsxz1YnoFsXVuoeRNYKd9S6BVy5CSyQ8xd5p1lnRD
+	 ooSy1VULpCHoOAvLhS/tVzDTVlegQga7zsxWvgLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <siyanteng@cqsoftware.com.cn>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Rosen Penev <rosenp@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/175] LoongArch: vDSO: Remove -nostdlib complier flag
-Date: Sun,  7 Sep 2025 21:57:05 +0200
-Message-ID: <20250907195615.579280306@linuxfoundation.org>
+Subject: [PATCH 6.12 081/175] net: thunder_bgx: decrement cleanup index before use
+Date: Sun,  7 Sep 2025 21:57:56 +0200
+Message-ID: <20250907195616.751581361@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit d35ec48fa6c8fe0cfa4a03155109fec7677911d4 ]
+[ Upstream commit 9e3d71a92e561ccc77025689dab25d201fee7a3e ]
 
-Since $(LD) is directly used, hence -nostdlib is unneeded, MIPS has
-removed this, we should remove it too.
+All paths in probe that call goto defer do so before assigning phydev
+and thus it makes sense to cleanup the prior index. It also fixes a bug
+where index 0 does not get cleaned up.
 
-bdbf2038fbf4 ("MIPS: VDSO: remove -nostdlib compiler flag").
-
-In fact, other architectures also use $(LD) now.
-
-fe00e50b2db8 ("ARM: 8858/1: vdso: use $(LD) instead of $(CC) to link VDSO")
-691efbedc60d ("arm64: vdso: use $(LD) instead of $(CC) to link VDSO")
-2ff906994b6c ("MIPS: VDSO: Use $(LD) instead of $(CC) to link VDSO")
-2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to link vDSO")
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Yanteng Si <siyanteng@cqsoftware.com.cn>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: b7d3e3d3d21a ("net: thunderx: Don't leak phy device references on -EPROBE_DEFER condition.")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250901213314.48599-1-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/vdso/Makefile | 2 +-
+ drivers/net/ethernet/cavium/thunder/thunder_bgx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/vdso/Makefile b/arch/loongarch/vdso/Makefile
-index cf6c41054396a..49af37f781bbe 100644
---- a/arch/loongarch/vdso/Makefile
-+++ b/arch/loongarch/vdso/Makefile
-@@ -36,7 +36,7 @@ endif
- 
- # VDSO linker flags.
- ldflags-y := -Bsymbolic --no-undefined -soname=linux-vdso.so.1 \
--	$(filter -E%,$(KBUILD_CFLAGS)) -nostdlib -shared --build-id -T
-+	$(filter -E%,$(KBUILD_CFLAGS)) -shared --build-id -T
- 
- #
- # Shared build commands.
+diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+index 5afc0735b5827..a360d3dffccd4 100644
+--- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
++++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+@@ -1519,11 +1519,11 @@ static int bgx_init_of_phy(struct bgx *bgx)
+ 	 * for phy devices we may have already found.
+ 	 */
+ 	while (lmac) {
++		lmac--;
+ 		if (bgx->lmac[lmac].phydev) {
+ 			put_device(&bgx->lmac[lmac].phydev->mdio.dev);
+ 			bgx->lmac[lmac].phydev = NULL;
+ 		}
+-		lmac--;
+ 	}
+ 	of_node_put(node);
+ 	return -EPROBE_DEFER;
 -- 
 2.50.1
 
