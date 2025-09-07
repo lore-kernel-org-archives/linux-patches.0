@@ -1,37 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A68D528;
-	Sun,  7 Sep 2025 20:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A04D528;
+	Sun,  7 Sep 2025 20:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276760; cv=none; b=N9Ff8qaiIMTNxRCukZhxrJUQRbqAkxH+rhV/iTjetXXYn5bj+WeTgP7GiXxv8Nvv20RL58Z0K5MRrmtlY/6M5ijWp/zc1zP7ZzvAQ5LIWrsAMcukKg7pNBTa7lveD33QWfzowHKN2cFsEY+zjVA+WjgTcl29ZBoaRpame5L/V9w=
+	t=1757276763; cv=none; b=pL2inj3xVsxmARRBAFNm323FiFHIA8r1WE67B2GBQJ6LbFyzzJiN1SwXrnvSu15G5zAgxSs7cwEwX1wG8Pdaa3KWEo4C/9qrwNKmHa3LAANFtN97DXzI+L2Q2NmBTyUFLsuJsvCMv0yoOMHyGoEiy7yGlcbJGrLsvVwNZsixIqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276760; c=relaxed/simple;
-	bh=vIXZZ/kaHL3g7jghCmhJ/nNZ4cvSZ5WyrF7/+FdDYgk=;
+	s=arc-20240116; t=1757276763; c=relaxed/simple;
+	bh=uR+5zBgTEp2vKwwkG8pfONF7qo0QDMgGB+KikvqgmbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6s3xbEwd/c/k2pqPqB5nm0f5vKtxGg4ZwSyvllFTnHw1rn0uWKwtv4Gnr/mv0jyJWFIPlrA6dhJBdMk7L0ml1kQOcPEcpOhBcrEhWIsI95cDtwNWIu1F4ESjkOkmajD4GBEycBgYxpxVCC7dNBdlvCpIQg9VDrQGT1TA3jYktI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eme1GIfa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBrOYP3I3X75MOdyOFhZX7EoxClBOVIx3k1CAdgAJEFT29inQVtnnBVekMAdgnGdGFEo2QB3q/0phzhrl97cwUaeF74cXnDHBTnZuoytN7rpDLvhLA3WzNEMUM1J24R9rF/2qs6hN6mvfhgjTV5GB2lO/7PHe8RE9/tsayuWikA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJqeam4l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eme1GIfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85182C4CEF0;
-	Sun,  7 Sep 2025 20:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJqeam4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D6AC4CEF0;
+	Sun,  7 Sep 2025 20:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276759;
-	bh=vIXZZ/kaHL3g7jghCmhJ/nNZ4cvSZ5WyrF7/+FdDYgk=;
+	s=korg; t=1757276763;
+	bh=uR+5zBgTEp2vKwwkG8pfONF7qo0QDMgGB+KikvqgmbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eme1GIfa/Tepua3R43Oii8cFIDGh51/TWqXTDBIRfIDUQkgWj2pWLrhUBoPgQcT5F
-	 eZtxUn3oMX8GQ0ONbvFBIwU8HSCswl4+UEPZKuLfSlNxXJkEZq2tdtMS4Zls4Hld+g
-	 YRGuid8wYKunkrG3F0pMyahcHQy1dC88TsTld00c=
+	b=SJqeam4l/GYcfu/EL1BgsgQnZT3KzxCcNiGESBlnEY3HdV8Pfb0b+4GtPtkn0Swfw
+	 sTdn4M1v3XhhqxsffySI67YzVXTkqwomkAFwSkwNXCTsXnUmeE3w024QDifQzA+GYU
+	 OXp64LqMpP/niP3D3AARDzZmDshX0BYoWMTWPZhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Dominik Brodowski <linux@dominikbrodowski.net>
-Subject: [PATCH 6.6 054/121] pcmcia: Fix a NULL pointer dereference in __iodyn_find_io_region()
-Date: Sun,  7 Sep 2025 21:58:10 +0200
-Message-ID: <20250907195611.217385052@linuxfoundation.org>
+	Harry Yoo <harry.yoo@oracle.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	bibo mao <maobibo@loongson.cn>,
+	Borislav Betkov <bp@alien8.de>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Thomas Huth <thuth@redhat.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 055/121] x86/mm/64: define ARCH_PAGE_TABLE_SYNC_MASK and arch_sync_kernel_mappings()
+Date: Sun,  7 Sep 2025 21:58:11 +0200
+Message-ID: <20250907195611.244437688@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -50,37 +90,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-commit 44822df89e8f3386871d9cad563ece8e2fd8f0e7 upstream.
+commit 6659d027998083fbb6d42a165b0c90dc2e8ba989 upstream.
 
-In __iodyn_find_io_region(), pcmcia_make_resource() is assigned to
-res and used in pci_bus_alloc_resource(). There is a dereference of res
-in pci_bus_alloc_resource(), which could lead to a NULL pointer
-dereference on failure of pcmcia_make_resource().
+Define ARCH_PAGE_TABLE_SYNC_MASK and arch_sync_kernel_mappings() to ensure
+page tables are properly synchronized when calling p*d_populate_kernel().
 
-Fix this bug by adding a check of res.
+For 5-level paging, synchronization is performed via
+pgd_populate_kernel().  In 4-level paging, pgd_populate() is a no-op, so
+synchronization is instead performed at the P4D level via
+p4d_populate_kernel().
 
-Cc: stable@vger.kernel.org
-Fixes: 49b1153adfe1 ("pcmcia: move all pcmcia_resource_ops providers into one module")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+This fixes intermittent boot failures on systems using 4-level paging and
+a large amount of persistent memory:
+
+  BUG: unable to handle page fault for address: ffffe70000000034
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 0 P4D 0
+  Oops: 0002 [#1] SMP NOPTI
+  RIP: 0010:__init_single_page+0x9/0x6d
+  Call Trace:
+   <TASK>
+   __init_zone_device_page+0x17/0x5d
+   memmap_init_zone_device+0x154/0x1bb
+   pagemap_range+0x2e0/0x40f
+   memremap_pages+0x10b/0x2f0
+   devm_memremap_pages+0x1e/0x60
+   dev_dax_probe+0xce/0x2ec [device_dax]
+   dax_bus_probe+0x6d/0xc9
+   [... snip ...]
+   </TASK>
+
+It also fixes a crash in vmemmap_set_pmd() caused by accessing vmemmap
+before sync_global_pgds() [1]:
+
+  BUG: unable to handle page fault for address: ffffeb3ff1200000
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 0 P4D 0
+  Oops: Oops: 0002 [#1] PREEMPT SMP NOPTI
+  Tainted: [W]=WARN
+  RIP: 0010:vmemmap_set_pmd+0xff/0x230
+   <TASK>
+   vmemmap_populate_hugepages+0x176/0x180
+   vmemmap_populate+0x34/0x80
+   __populate_section_memmap+0x41/0x90
+   sparse_add_section+0x121/0x3e0
+   __add_pages+0xba/0x150
+   add_pages+0x1d/0x70
+   memremap_pages+0x3dc/0x810
+   devm_memremap_pages+0x1c/0x60
+   xe_devm_add+0x8b/0x100 [xe]
+   xe_tile_init_noalloc+0x6a/0x70 [xe]
+   xe_device_probe+0x48c/0x740 [xe]
+   [... snip ...]
+
+Link: https://lkml.kernel.org/r/20250818020206.4517-4-harry.yoo@oracle.com
+Fixes: 8d400913c231 ("x86/vmemmap: handle unpopulated sub-pmd ranges")
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Closes: https://lore.kernel.org/linux-mm/20250311114420.240341-1-gwan-gyeong.mun@intel.com [1]
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Kiryl Shutsemau <kas@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: bibo mao <maobibo@loongson.cn>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Christoph Lameter (Ampere) <cl@gentwo.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Kevin Brodsky <kevin.brodsky@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pcmcia/rsrc_iodyn.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/include/asm/pgtable_64_types.h |    3 +++
+ arch/x86/mm/init_64.c                   |   18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
---- a/drivers/pcmcia/rsrc_iodyn.c
-+++ b/drivers/pcmcia/rsrc_iodyn.c
-@@ -62,6 +62,9 @@ static struct resource *__iodyn_find_io_
- 	unsigned long min = base;
- 	int ret;
+--- a/arch/x86/include/asm/pgtable_64_types.h
++++ b/arch/x86/include/asm/pgtable_64_types.h
+@@ -41,6 +41,9 @@ static inline bool pgtable_l5_enabled(vo
+ #define pgtable_l5_enabled() 0
+ #endif /* CONFIG_X86_5LEVEL */
  
-+	if (!res)
-+		return NULL;
++#define ARCH_PAGE_TABLE_SYNC_MASK \
++	(pgtable_l5_enabled() ? PGTBL_PGD_MODIFIED : PGTBL_P4D_MODIFIED)
 +
- 	data.mask = align - 1;
- 	data.offset = base & data.mask;
+ extern unsigned int pgdir_shift;
+ extern unsigned int ptrs_per_p4d;
  
+--- a/arch/x86/mm/init_64.c
++++ b/arch/x86/mm/init_64.c
+@@ -224,6 +224,24 @@ static void sync_global_pgds(unsigned lo
+ }
+ 
+ /*
++ * Make kernel mappings visible in all page tables in the system.
++ * This is necessary except when the init task populates kernel mappings
++ * during the boot process. In that case, all processes originating from
++ * the init task copies the kernel mappings, so there is no issue.
++ * Otherwise, missing synchronization could lead to kernel crashes due
++ * to missing page table entries for certain kernel mappings.
++ *
++ * Synchronization is performed at the top level, which is the PGD in
++ * 5-level paging systems. But in 4-level paging systems, however,
++ * pgd_populate() is a no-op, so synchronization is done at the P4D level.
++ * sync_global_pgds() handles this difference between paging levels.
++ */
++void arch_sync_kernel_mappings(unsigned long start, unsigned long end)
++{
++	sync_global_pgds(start, end);
++}
++
++/*
+  * NOTE: This function is marked __ref because it calls __init function
+  * (alloc_bootmem_pages). It's safe to do it ONLY when after_bootmem == 0.
+  */
 
 
