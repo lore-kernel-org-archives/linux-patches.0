@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E426FD528;
-	Sun,  7 Sep 2025 20:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27CAD528;
+	Sun,  7 Sep 2025 20:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276677; cv=none; b=VhHcKvmY0yieZ/OEysrPKArsdDJSC9NKEu7UMafUEIJOtcH5ScaIhHW4j2Na6pgHZXJVCx5i4Mps6G0qPQ4nEZhLa8roz41ZcuJ1oJHVEpYTGEjHvi6+dtABpNB9Ua8X26iK+/vWlhVT9lpdgxYVJ85lDjLGUq6WDNAEFsmbNBM=
+	t=1757276680; cv=none; b=fZuzMOBMCOvWoHFaAk2iMTk+ez9Z9eNBV4YavaA475aIChUGJMnn1Ygb0nSP+4MZDWyYt4xlLYcZRc9znID4vjpdepHWwnNVVK5OV1KrzYCNRjLXBp/n77kw55VCGvL47sPPtSQHCSHA5R8J76cw9ONe05umH0zFvT9CiCscmAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276677; c=relaxed/simple;
-	bh=nI3J0IfCdnm8eF4TyofpQioqee/GYR/gJPLWb9A4alU=;
+	s=arc-20240116; t=1757276680; c=relaxed/simple;
+	bh=KhdVGlKCG0c2INA6xP3n5MBbOh7ZuRU3NCoKmUJ7V8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3BcnNRJ6/NyMpKJYo2MWVQO+7CWKekvW4h627ALX+uoCeM7DuK4uvoSS1gSiyPcqAnY/xaqm5hegxhXxxHZBgnJzK2JOL7YvCh1MxxNerEk1AkO2v6MoSLomGxYFR4yXcqovYIMpqR2gnow2nuRls8I2qTachK1txhkxlS54Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeUJIsKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Crh65XDTX23RdufU8U0rFOoMXukUp5RIIEn6yVND0EZ2ZFKXqv1VfqPz1L/e5RhO8yzvnyGunMaOcqAFQRzrnScKpTcGul6r9xjQcFq4BUJq2JUhEZFjwQy8qGPLgT0Yel8TlNlD8Dd/9ry2uKf3e8ItTZ2KiKQt6I3h1bR8k28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUZu/ICY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeUJIsKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0BDC4CEF0;
-	Sun,  7 Sep 2025 20:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUZu/ICY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BEBC4CEF0;
+	Sun,  7 Sep 2025 20:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276676;
-	bh=nI3J0IfCdnm8eF4TyofpQioqee/GYR/gJPLWb9A4alU=;
+	s=korg; t=1757276679;
+	bh=KhdVGlKCG0c2INA6xP3n5MBbOh7ZuRU3NCoKmUJ7V8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeUJIsKiwBHwjX8ueQtBt5CPsOF+cwjG5ROz62URl0HCT9hd2J2Z79xiUr7UtXMv1
-	 nOfMxIR+pE9FONYag6qeHFxtm1vkcFeT9zYf7L1y3Nb72UKXI6qM4lh97XhmuUMY38
-	 SlwrR5UgDF13NUjkVVvppZb7BEZUFdeh+rXhOSmM=
+	b=rUZu/ICYCOe6wluNSZgbbE8uM6o8Q/pZ4K2VsmaVlIHqhVrf6j24e2oDgDJVy/Mh7
+	 VgmhNwR1gqBzLT0cLh8tUlyR20cUHyTCHnVBMJkAu5xqKlIzG+v767p9/9KjX5GRCj
+	 uTqLXJywYv08/jrS9dygtZGUx+MPpKUfUOiAE7yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/121] cpufreq: intel_pstate: Unchecked MSR aceess in legacy mode
-Date: Sun,  7 Sep 2025 21:58:31 +0200
-Message-ID: <20250907195611.760814741@linuxfoundation.org>
+Subject: [PATCH 6.6 049/121] selftest: net: Fix weird setsockopt() in bind_bhash.c.
+Date: Sun,  7 Sep 2025 21:58:05 +0200
+Message-ID: <20250907195611.084186589@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,61 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ac4e04d9e378f5aa826c2406ad7871ae1b6a6fb9 ]
+[ Upstream commit fd2004d82d8d8faa94879e3de3096c8511728637 ]
 
-When turbo mode is unavailable on a Skylake-X system, executing the
-command:
+bind_bhash.c passes (SO_REUSEADDR | SO_REUSEPORT) to setsockopt().
 
- # echo 1 > /sys/devices/system/cpu/intel_pstate/no_turbo
+In the asm-generic definition, the value happens to match with the
+bare SO_REUSEPORT, (2 | 15) == 15, but not on some arch.
 
-results in an unchecked MSR access error:
+arch/alpha/include/uapi/asm/socket.h:18:#define SO_REUSEADDR	0x0004
+arch/alpha/include/uapi/asm/socket.h:24:#define SO_REUSEPORT	0x0200
+arch/mips/include/uapi/asm/socket.h:24:#define SO_REUSEADDR	0x0004	/* Allow reuse of local addresses.  */
+arch/mips/include/uapi/asm/socket.h:33:#define SO_REUSEPORT 0x0200	/* Allow local address and port reuse.  */
+arch/parisc/include/uapi/asm/socket.h:12:#define SO_REUSEADDR	0x0004
+arch/parisc/include/uapi/asm/socket.h:18:#define SO_REUSEPORT	0x0200
+arch/sparc/include/uapi/asm/socket.h:13:#define SO_REUSEADDR	0x0004
+arch/sparc/include/uapi/asm/socket.h:20:#define SO_REUSEPORT	0x0200
+include/uapi/asm-generic/socket.h:12:#define SO_REUSEADDR	2
+include/uapi/asm-generic/socket.h:27:#define SO_REUSEPORT	15
 
- WRMSR to 0x199 (attempted to write 0x0000000100001300).
+Let's pass SO_REUSEPORT only.
 
-This issue was reproduced on an OEM (Original Equipment Manufacturer)
-system and is not a common problem across all Skylake-X systems.
-
-This error occurs because the MSR 0x199 Turbo Engage Bit (bit 32) is set
-when turbo mode is disabled. The issue arises when intel_pstate fails to
-detect that turbo mode is disabled. Here intel_pstate relies on
-MSR_IA32_MISC_ENABLE bit 38 to determine the status of turbo mode.
-However, on this system, bit 38 is not set even when turbo mode is
-disabled.
-
-According to the Intel Software Developer's Manual (SDM), the BIOS sets
-this bit during platform initialization to enable or disable
-opportunistic processor performance operations. Logically, this bit
-should be set in such cases. However, the SDM also specifies that "OS
-and applications must use CPUID leaf 06H to detect processors with
-opportunistic processor performance operations enabled."
-
-Therefore, in addition to checking MSR_IA32_MISC_ENABLE bit 38, verify
-that CPUID.06H:EAX[1] is 0 to accurately determine if turbo mode is
-disabled.
-
-Fixes: 4521e1a0ce17 ("cpufreq: intel_pstate: Reflect current no_turbo state correctly")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: c35ecb95c448 ("selftests/net: Add test for timing a bind request to a port with a populated bhash entry")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250903222938.2601522-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/bind_bhash.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -594,6 +594,9 @@ static bool turbo_is_disabled(void)
- {
- 	u64 misc_en;
+diff --git a/tools/testing/selftests/net/bind_bhash.c b/tools/testing/selftests/net/bind_bhash.c
+index 57ff67a3751eb..da04b0b19b73c 100644
+--- a/tools/testing/selftests/net/bind_bhash.c
++++ b/tools/testing/selftests/net/bind_bhash.c
+@@ -75,7 +75,7 @@ static void *setup(void *arg)
+ 	int *array = (int *)arg;
  
-+	if (!cpu_feature_enabled(X86_FEATURE_IDA))
-+		return true;
-+
- 	rdmsrl(MSR_IA32_MISC_ENABLE, misc_en);
+ 	for (i = 0; i < MAX_CONNECTIONS; i++) {
+-		sock_fd = bind_socket(SO_REUSEADDR | SO_REUSEPORT, setup_addr);
++		sock_fd = bind_socket(SO_REUSEPORT, setup_addr);
+ 		if (sock_fd < 0) {
+ 			ret = sock_fd;
+ 			pthread_exit(&ret);
+@@ -103,7 +103,7 @@ int main(int argc, const char *argv[])
  
- 	return !!(misc_en & MSR_IA32_MISC_ENABLE_TURBO_DISABLE);
+ 	setup_addr = use_v6 ? setup_addr_v6 : setup_addr_v4;
+ 
+-	listener_fd = bind_socket(SO_REUSEADDR | SO_REUSEPORT, setup_addr);
++	listener_fd = bind_socket(SO_REUSEPORT, setup_addr);
+ 	if (listen(listener_fd, 100) < 0) {
+ 		perror("listen failed");
+ 		return -1;
+-- 
+2.50.1
+
 
 
