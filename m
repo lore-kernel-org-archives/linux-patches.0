@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366061CDFAC;
-	Sun,  7 Sep 2025 20:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5411CDFAC;
+	Sun,  7 Sep 2025 20:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275778; cv=none; b=hmHW9aT72eWoY/pUTaXWzyUo3siLwk0yJWldCc7SLJtJr4kSXWBbw6TRTQ5wZFJ51LVtLcz/0XymHkg8hvB72Xll/g4Lb4J9CLV/II4Pm6YUl3GeH5RYWzO1FW9q8O3ROZXm86bs+1yFv+9jlnekyGQuv3b0ng+4CeT4Mk+ky+s=
+	t=1757275780; cv=none; b=XmNDU+EnDrV6sLLHmUlzKzgQhjDidODlIPAm/m3I57NyMX03ZJKxuWO4uHoYzjd4D2aj9okRl7hq0Ytl6xGfxge9uMVjdRK8wIAZhNuShE76NI9T3wyH0vrftvil5tb/8wMBWT8npmsO3v3c4K354VK7rkPlYY8FV+lS8/b9ru4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275778; c=relaxed/simple;
-	bh=64aOqgjix7/IQbXz6rq8sO+Rg8yvUWmKrfqemUnMDbg=;
+	s=arc-20240116; t=1757275780; c=relaxed/simple;
+	bh=jgNLWj1bUxl7zpmQDJZuU6aJLQeOUdlDdgp78IlEALI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioWTUeXmAM6L0QtpF88RoOF60gBJYSBbMVi3VbFHu0tk6u44YykYYbQYgSP9AnVmu6pTLCZI4xLOYp6yC5SSm5xm0teT49S6YmsqaOIfbS9nDwYKCfRgd0cj/hpTNwFlpNmaUgUwbz4e52zw2RtVAfcYS4QBTPqg1aFWxLByIhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4EFgQuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KX6cWWnVYIR8Q6N7vQNLwkDYJrUQGr4nEr8IzlTIOIV0yMmEOGjbosQFvC6QFFJsH0nauC6fDNkwMHywpdSH58lVuQIvgGLXr8qQHk9nDLYgI/WS2NhXGopxdKRe4d/u2ix7pf63okwcBfKoTChzcJHfSXbEF+7U0W+0LRN/eNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEa+go/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4EFgQuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AF0C4CEF0;
-	Sun,  7 Sep 2025 20:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEa+go/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BBAC4CEF0;
+	Sun,  7 Sep 2025 20:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275776;
-	bh=64aOqgjix7/IQbXz6rq8sO+Rg8yvUWmKrfqemUnMDbg=;
+	s=korg; t=1757275779;
+	bh=jgNLWj1bUxl7zpmQDJZuU6aJLQeOUdlDdgp78IlEALI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4EFgQuzZk69rLvWmVUx86lRw6UTiprH4XWvIy1xMW4AFLhsy3NLMjWnJ2d2VjgUh
-	 pGPQ2aEL9zJfGVi4rxUy7QEmBnkYHwstsRi5sZnbs2HSSQzaTEkISexmhjloNMXMLe
-	 Fr/voyKlK2xN/IeivmME12rC4+l7COvvDKPGG2Jo=
+	b=tEa+go/vxYoxGBk4vgBQBH7OboV3ID6WFkRsNSn/mFqUIehLf54O/IIRPlilfc7/N
+	 IDiS+6dy+nrrVxUUuQQcSAEGDWy33elakjXHBouHvj1loNaDnOdfX1ZRxTUz2M1snc
+	 awlt+NDFG0RKaEpkrArgznROnT0lBPS7tlAzVlOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Imre Kaloz <kaloz@openwrt.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 39/52] arm64: dts: marvell: uDPU: define pinctrl state for alarm LEDs
-Date: Sun,  7 Sep 2025 21:57:59 +0200
-Message-ID: <20250907195603.106100079@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 5.4 01/45] powerpc: boot: Remove leading zero in label in udelay()
+Date: Sun,  7 Sep 2025 21:57:47 +0200
+Message-ID: <20250907195600.995944590@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
-References: <20250907195601.957051083@linuxfoundation.org>
+In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
+References: <20250907195600.953058118@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit b04f0d89e880bc2cca6a5c73cf287082c91878da ]
+When building powerpc configurations in linux-5.4.y with binutils 2.43
+or newer, there is an assembler error in arch/powerpc/boot/util.S:
 
-The two alarm LEDs of on the uDPU board are stopped working since
-commit 78efa53e715e ("leds: Init leds class earlier").
+  arch/powerpc/boot/util.S: Assembler messages:
+  arch/powerpc/boot/util.S:44: Error: junk at end of line, first unrecognized character is `0'
+  arch/powerpc/boot/util.S:49: Error: syntax error; found `b', expected `,'
+  arch/powerpc/boot/util.S:49: Error: junk at end of line: `b'
 
-The LEDs are driven by the GPIO{15,16} pins of the North Bridge
-GPIO controller. These pins are part of the 'spi_quad' pin group
-for which the 'spi' function is selected via the default pinctrl
-state of the 'spi' node. This is wrong however, since in order to
-allow controlling the LEDs, the pins should use the 'gpio' function.
+binutils 2.43 contains stricter parsing of certain labels [1], namely
+that leading zeros are no longer allowed. The GNU assembler
+documentation already somewhat forbade this construct:
 
-Before the commit mentined above, the 'spi' function is selected
-first by the pinctrl core before probing the spi driver, but then
-it gets overridden to 'gpio' implicitly via the
-devm_gpiod_get_index_optional() call from the 'leds-gpio' driver.
+  To define a local label, write a label of the form 'N:' (where N
+  represents any non-negative integer).
 
-After the commit, the LED subsystem gets initialized before the
-SPI subsystem, so the function of the pin group remains 'spi'
-which in turn prevents controlling of the LEDs.
+Eliminate the leading zero in the label to fix the syntax error. This is
+only needed in linux-5.4.y because commit 8b14e1dff067 ("powerpc: Remove
+support for PowerPC 601") removed this code altogether in 5.10.
 
-Despite the change of the initialization order, the root cause is
-that the pinctrl state definition is wrong since its initial commit
-0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board"),
-
-To fix the problem, override the function in the 'spi_quad_pins'
-node to 'gpio' and move the pinctrl state definition from the
-'spi' node into the 'leds' node.
-
-Cc: stable@vger.kernel.org # needs adjustment for < 6.1
-Fixes: 0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-[ Applied to .dts instead of .dtsi ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=226749d5a6ff0d5c607d6428d6c81e1e7e7a994b [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/powerpc/boot/util.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
-+++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
-@@ -28,8 +28,9 @@
- 	};
+--- a/arch/powerpc/boot/util.S
++++ b/arch/powerpc/boot/util.S
+@@ -41,12 +41,12 @@ udelay:
+ 	srwi	r4,r4,16
+ 	cmpwi	0,r4,1		/* 601 ? */
+ 	bne	.Ludelay_not_601
+-00:	li	r0,86	/* Instructions / microsecond? */
++0:	li	r0,86	/* Instructions / microsecond? */
+ 	mtctr	r0
+ 10:	addi	r0,r0,0 /* NOP */
+ 	bdnz	10b
+ 	subic.	r3,r3,1
+-	bne	00b
++	bne	0b
+ 	blr
  
- 	leds {
--		pinctrl-names = "default";
- 		compatible = "gpio-leds";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spi_quad_pins>;
- 
- 		power1 {
- 			label = "udpu:green:power";
-@@ -96,8 +97,6 @@
- 
- &spi0 {
- 	status = "okay";
--	pinctrl-names = "default";
--	pinctrl-0 = <&spi_quad_pins>;
- 
- 	m25p80@0 {
- 		compatible = "jedec,spi-nor";
-@@ -117,6 +116,10 @@
- 	};
- };
- 
-+&spi_quad_pins {
-+	function = "gpio";
-+};
-+
- &pinctrl_nb {
- 	i2c1_recovery_pins: i2c1-recovery-pins {
- 		groups = "i2c1";
+ .Ludelay_not_601:
 
 
