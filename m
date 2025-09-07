@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7AC4315A;
-	Sun,  7 Sep 2025 20:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642C21A704B;
+	Sun,  7 Sep 2025 20:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277526; cv=none; b=rgaZOpIfOqexouWfBXGH8LWCyDpZqtvVwsbf2KOkRaNumtx5nxVWg5UZu9+30qLDYFymEatRykTFCFtNw2SXmZcCtj96vBZr6BzPrTlLc8nPwFjZ4Ez8lWMqneXaFDtMgH8/CeoklaADXG0ekryFCIKnESA4qpbw7N3tZ5I1Jnc=
+	t=1757277529; cv=none; b=TG0M60i7o0T1PDmqEvrjU1dnYYIrV+sX41i+Pi8YrWj2IpHrwXm78ufZfv0skcWZFU6afwSdhK1/0zdutfCMGyLyC1KNMWxoqihI1aibVsbi0SyJY+B7edFROsbOV3Pv+G5m2r9ljoGmnC8vW5k1Xcg7JssfTRAlSXnpTUj6BQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277526; c=relaxed/simple;
-	bh=/uPlkbJrUVezFx9CZYR147VTBxG0GyvAnrXp5nu7wFg=;
+	s=arc-20240116; t=1757277529; c=relaxed/simple;
+	bh=ylGUFb9R6RkcA7b+LxHLlF0OtEvWMKkV28xG2xT3qbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAP9gjDl5XSg2vzFhUKFbQNEYzXVmvihEfEbz1ycR+mxVuEhpIS5eN9GQ6qx4CjC0yli/S64eIRj93gn2j0+byDYZ1N5E1Mrty6NLYQd1ROVMyiXL/bivZYCZJRF5Oa8Tpkzc122YExlyD5FiQ7Ak+HghGEH6RBi/DWGAwfknSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPxzD7nB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRfl/qzY1Kd1ASEXCzCBTSduXEjqHh+zGtnXxKSpILy4TnyI1593aLUfe6VLwipBDE+nIqt9vnppdEK94vhHrVlSjwjdiAg73Lpj2G41+Wn9zSENmcF7jnjQmSjqMTnRncrCc+XxJkZm84RftxyxzZYQKBv4O1nrFjChsdxbaIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBRa19qM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPxzD7nB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AACC4CEF0;
-	Sun,  7 Sep 2025 20:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBRa19qM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF76FC4CEF0;
+	Sun,  7 Sep 2025 20:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277526;
-	bh=/uPlkbJrUVezFx9CZYR147VTBxG0GyvAnrXp5nu7wFg=;
+	s=korg; t=1757277529;
+	bh=ylGUFb9R6RkcA7b+LxHLlF0OtEvWMKkV28xG2xT3qbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPxzD7nBkK1/Xfu2Ewhtf3VYXz7BDpr7tsFS9rkvpJoTMyYB8H8AbN1fMI5muK4ka
-	 014KMjZs4Xyf5L2zqOE+pWd4Zx4cOFEBAhsMrRiCJXUs8mlhB078UvNmPt1r/VQy4W
-	 Smb5HLbz9tbWo0t7tFlGRmAx0jVX3hyqOmnHHZSI=
+	b=XBRa19qMD3juvANX65GddVPZjup+wSl899E46vCLw88vmAGnec8ljRSC5ri6Ak84I
+	 wtFHmnRZujoWeTeKHv3o/qp4ke3C8vaEA+F5hPyfyX5HsC4hB+fdYrEBfz4xgu91on
+	 SzwNQw+WBBsDOXRLZ06cVa7T5I92U0hLbl6XOTfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Phil Sutter <phil@nwl.cc>,
-	Florian Westphal <fw@strlen.de>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 042/183] netfilter: conntrack: helper: Replace -EEXIST by -EBUSY
-Date: Sun,  7 Sep 2025 21:57:49 +0200
-Message-ID: <20250907195616.776872043@linuxfoundation.org>
+Subject: [PATCH 6.16 043/183] wifi: iwlwifi: if scratch is ~0U, consider it a failure
+Date: Sun,  7 Sep 2025 21:57:50 +0200
+Message-ID: <20250907195616.800796142@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,48 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 54416fd76770bd04fc3c501810e8d673550bab26 ]
+[ Upstream commit 224476613c8499f00ce4de975dd65749c5ca498c ]
 
-The helper registration return value is passed-through by module_init
-callbacks which modprobe confuses with the harmless -EEXIST returned
-when trying to load an already loaded module.
+We want to see bits being set in the scratch register upon resume, but
+if all the bits are set, it means that we were kicked out of the PCI bus
+and that clearly doesn't mean we can assume the firmware is still alive
+after the suspend / resume cycle.
 
-Make sure modprobe fails so users notice their helper has not been
-registered and won't work.
-
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: cb347bd29d0d ("wifi: iwlwifi: mvm: fix hibernation")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250828095500.0f203e559242.I59eff718cb5fda575db41081a1a389f7af488717@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
-index 4ed5878cb25b1..ceb48c3ca0a43 100644
---- a/net/netfilter/nf_conntrack_helper.c
-+++ b/net/netfilter/nf_conntrack_helper.c
-@@ -368,7 +368,7 @@ int nf_conntrack_helper_register(struct nf_conntrack_helper *me)
- 			    (cur->tuple.src.l3num == NFPROTO_UNSPEC ||
- 			     cur->tuple.src.l3num == me->tuple.src.l3num) &&
- 			    cur->tuple.dst.protonum == me->tuple.dst.protonum) {
--				ret = -EEXIST;
-+				ret = -EBUSY;
- 				goto out;
- 			}
- 		}
-@@ -379,7 +379,7 @@ int nf_conntrack_helper_register(struct nf_conntrack_helper *me)
- 		hlist_for_each_entry(cur, &nf_ct_helper_hash[h], hnode) {
- 			if (nf_ct_tuple_src_mask_cmp(&cur->tuple, &me->tuple,
- 						     &mask)) {
--				ret = -EEXIST;
-+				ret = -EBUSY;
- 				goto out;
- 			}
- 		}
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 0a9e0dbb58fbf..e4e06bf9161c3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -1503,11 +1503,15 @@ static int _iwl_pci_resume(struct device *device, bool restore)
+ 	 * Note: MAC (bits 0:7) will be cleared upon suspend even with wowlan,
+ 	 * but not bits [15:8]. So if we have bits set in lower word, assume
+ 	 * the device is alive.
++	 * Alternatively, if the scratch value is 0xFFFFFFFF, then we no longer
++	 * have access to the device and consider it powered off.
+ 	 * For older devices, just try silently to grab the NIC.
+ 	 */
+ 	if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
+-		if (!(iwl_read32(trans, CSR_FUNC_SCRATCH) &
+-		      CSR_FUNC_SCRATCH_POWER_OFF_MASK))
++		u32 scratch = iwl_read32(trans, CSR_FUNC_SCRATCH);
++
++		if (!(scratch & CSR_FUNC_SCRATCH_POWER_OFF_MASK) ||
++		    scratch == ~0U)
+ 			device_was_powered_off = true;
+ 	} else {
+ 		/*
 -- 
 2.50.1
 
