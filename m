@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7886E22F74D;
-	Sun,  7 Sep 2025 20:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791B022F74D;
+	Sun,  7 Sep 2025 20:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275768; cv=none; b=gRnBR8eo472yUO/s5WwLS0V3wZFU+iLkE2PZ2aRjxbYNqyUNSk4gVCPrGW1D4wAFZSwCMI21cLWoK1gnS/6MP91Uz3suArFaTwmnC2yXBo1bcmeBFSLThHc+3ctjwPswQMDVOEeiS/ylU2DaRGgpGIw74xtU8BKYZf+XGZZfiC0=
+	t=1757275770; cv=none; b=W0ThTCYv6skeGOstwk+W/b2c9nq8OZXAMCsxt3/K3Fz1q5cyt41rjYSElYzw5JLfNZM/wTzX4CmkJRHoaHDsMdstEFFjM5RfrhlPmSM15oT9Tpl5dHigIuoMBJNbYDlooOEcfdIJMQXJEAsQjwaVSSHZ1wRhqJT9STzqhwuypoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275768; c=relaxed/simple;
-	bh=2vVZBKvmnsGTppBXb0xczq1u5VjxgtUEBluXTKNydRY=;
+	s=arc-20240116; t=1757275770; c=relaxed/simple;
+	bh=ubLyV7glfflDnnIk18oJ8n0NDECjzOLsdHeP4/ckrcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REdwEgEUpAm2xOZH5ayiOCnbxUsHt/SRJ1F6t3wG7cOypHoNaG131qbHD/7zuXinWG5VoH+6OfaPwPIsZZUO6HQ1q9v8rugCcv+CNLljwP937xBNF7Wyhrct4ecbZ66HNoggJ3+MlkkHbaWDf+8GgmkaadO8Rs5I3qVBEUzr2TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jM8NrxTb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ic3qa6v4L8RwGZrNGj7x1EstA8hGA91Uw63jb1ndDVJjw3jX4IbinFAcqQlt0pk24dybOPR7EbyGaj/+wmM4nBn/3n526JZZvXTQJI2vq2Dd5sbHFUQQYvZO8jgYMLFExwoF/7Lcf8mTQPLJMPDth0lYoVw69U2DhdWhBTBibNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXj3NuMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jM8NrxTb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3348C4CEF0;
-	Sun,  7 Sep 2025 20:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXj3NuMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D4DC4CEF0;
+	Sun,  7 Sep 2025 20:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275767;
-	bh=2vVZBKvmnsGTppBXb0xczq1u5VjxgtUEBluXTKNydRY=;
+	s=korg; t=1757275770;
+	bh=ubLyV7glfflDnnIk18oJ8n0NDECjzOLsdHeP4/ckrcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jM8NrxTbJKjUGXtONUw0neMokm1T9lh9zWlbSkXduPczoSlxBHKWXqvdu5Sb8YkdZ
-	 bBF0XsceBb+lnWlJLd1zipLENwiGyuh2BOXvGmEwYt9BL9TndfYojeLiO9xXgVNLCy
-	 rK8OgzlKdSI1YQwffKr3LkXVqEnahfbRzNLgGEEc=
+	b=DXj3NuMjq5q//GcvPS60LR1zCW6IDJlK2wWOnW8abGOBQut7KDGk/a9tmakldiUSr
+	 wxegu5Wmu7QVysGz6Sc8sDpWUZwM2ugWF4UPn1LjyGUMNZVwPMzSQNbifwM/+dNvAJ
+	 Sk3E87R76ARqUXam60PiFrFn4i6mb2blI22pVdLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Larisa Grigore <larisa.grigore@nxp.com>,
+	James Clark <james.clark@linaro.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/52] pcmcia: Add error handling for add_interval() in do_validate_mem()
-Date: Sun,  7 Sep 2025 21:58:06 +0200
-Message-ID: <20250907195603.300141745@linuxfoundation.org>
+Subject: [PATCH 5.10 47/52] spi: spi-fsl-lpspi: Fix transmissions when using CONT
+Date: Sun,  7 Sep 2025 21:58:07 +0200
+Message-ID: <20250907195603.327230000@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -51,41 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Larisa Grigore <larisa.grigore@nxp.com>
 
-[ Upstream commit 4a81f78caa53e0633cf311ca1526377d9bff7479 ]
+[ Upstream commit 782a7c73078e1301c0c427f21c06377d77dfa541 ]
 
-In the do_validate_mem(), the call to add_interval() does not
-handle errors. If kmalloc() fails in add_interval(), it could
-result in a null pointer being inserted into the linked list,
-leading to illegal memory access when sub_interval() is called
-next.
+Commit 6a130448498c ("spi: lpspi: Fix wrong transmission when don't use
+CONT") breaks transmissions when CONT is used. The TDIE interrupt should
+not be disabled in all cases. If CONT is used and the TX transfer is not
+yet completed yet, but the interrupt handler is called because there are
+characters to be received, TDIE is replaced with FCIE. When the transfer
+is finally completed, SR_TDF is set but the interrupt handler isn't
+called again.
 
-This patch adds an error handling for the add_interval(). If
-add_interval() returns an error, the function will return early
-with the error code.
-
-Fixes: 7b4884ca8853 ("pcmcia: validate late-added resources")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Fixes: 6a130448498c ("spi: lpspi: Fix wrong transmission when don't use CONT")
+Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250828-james-nxp-lpspi-v2-1-6262b9aa9be4@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/rsrc_nonstatic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-lpspi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
-index 6e90927e65769..ab487edec2e5b 100644
---- a/drivers/pcmcia/rsrc_nonstatic.c
-+++ b/drivers/pcmcia/rsrc_nonstatic.c
-@@ -375,7 +375,9 @@ static int do_validate_mem(struct pcmcia_socket *s,
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index bf3f600bdd2c8..7ece48667f52d 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -3,7 +3,7 @@
+ // Freescale i.MX7ULP LPSPI driver
+ //
+ // Copyright 2016 Freescale Semiconductor, Inc.
+-// Copyright 2018 NXP Semiconductors
++// Copyright 2018, 2023, 2025 NXP
  
- 	if (validate && !s->fake_cis) {
- 		/* move it to the validated data set */
--		add_interval(&s_data->mem_db_valid, base, size);
-+		ret = add_interval(&s_data->mem_db_valid, base, size);
-+		if (ret)
-+			return ret;
- 		sub_interval(&s_data->mem_db, base, size);
+ #include <linux/clk.h>
+ #include <linux/completion.h>
+@@ -755,7 +755,7 @@ static irqreturn_t fsl_lpspi_isr(int irq, void *dev_id)
+ 	if (temp_SR & SR_MBF ||
+ 	    readl(fsl_lpspi->base + IMX7ULP_FSR) & FSR_TXCOUNT) {
+ 		writel(SR_FCF, fsl_lpspi->base + IMX7ULP_SR);
+-		fsl_lpspi_intctrl(fsl_lpspi, IER_FCIE);
++		fsl_lpspi_intctrl(fsl_lpspi, IER_FCIE | (temp_IER & IER_TDIE));
+ 		return IRQ_HANDLED;
  	}
  
 -- 
