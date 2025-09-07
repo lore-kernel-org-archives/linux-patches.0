@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AC2D528;
-	Sun,  7 Sep 2025 20:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF54817BB21;
+	Sun,  7 Sep 2025 20:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276877; cv=none; b=eeotYDN4/h2+Ve0rmCcCpGyXTNs7Ivgez8pOFa3msK4ZfwUG86a19ctyBtGPNbUFEXuE8YIr+bwzRs5st7X5hxE52MdSbyM68G2Hi6AwPgJ1qbIyP9Rn9TGb/pgA7MST5l5KSaMxA8CYlXJ4GJR51DBO00oseNj2OOiI1PvElQE=
+	t=1757276880; cv=none; b=TEvf8PYgQT9lkvGarnGWICXSUKftxKVFsUEwnEzQPux6YJGcy07lY/6mVzqhz9ZSjUpkje4Cafv2So8K0sjj1UO9Vy/3b20j0xwh258WjntWcCpGBklPpg5LUJdDnFCpO+6RLXlho89U7sWKsdL46XTWXBnR3qjHC2NIz4IGq/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276877; c=relaxed/simple;
-	bh=MnDdFVDundXDx2cLXcEkBSvv2rTPRysDp9oCtU3tZ94=;
+	s=arc-20240116; t=1757276880; c=relaxed/simple;
+	bh=NaPrEL6TKgNOlka63iGj+CUPCHtV/lDLtmVC+K1MLGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pu8o19K2BbGr1Yaz3c35qvOg1FUI53+ohMTm1aCg2eQ3xpbqfeXgJtOa7t2fUgYuVJ/MeqUvmUtDhY/mwFBreaahNPwHCEGwxB++SV5uW/IF4NCYvQFuLAlgv2F7zgXue9AhNOD/gtWeauFj7d772p8DpKNjxtK+no1xRaBAvQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFkgIZXy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=owBJKW1FBr5OkJHfGc6XvK9dJCEhef++7fymOLZyXmJXVm4KwACUK3aSFhtOIZrQIDKN9+Nca3vJzmqsW0ZN4qLCAOoWofpiwF50T4LFZakgbmb728tUEzrmxchtK4ZoJKSGCg0LkbR5sBjpKNjiyR0yiezpfiOQA3OsZ6txnyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI1Gg06g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFkgIZXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED60C4CEF0;
-	Sun,  7 Sep 2025 20:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI1Gg06g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6ECC4CEF0;
+	Sun,  7 Sep 2025 20:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276877;
-	bh=MnDdFVDundXDx2cLXcEkBSvv2rTPRysDp9oCtU3tZ94=;
+	s=korg; t=1757276880;
+	bh=NaPrEL6TKgNOlka63iGj+CUPCHtV/lDLtmVC+K1MLGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFkgIZXyvWTada3NlJ3AMKgmxcnnfEw+9GRbR5zuBd9lRvIfKsry860zXtCd2kMHH
-	 HGUh0vbMx9FnBgVfi8oX8phhnY6ecKAlk+9R/92J9UxN5YmfeuhszDBLzdfwzRRrnc
-	 9xklqpcprKs673B5sXSpmsqU2XDRqhy+Z8ZRIiyU=
+	b=XI1Gg06gvnikER5gyCntL+Dn/ZQlCfORmRzwB6OagASzKdWl+EG4ewYEnIJsOPQSq
+	 G9rnhSClSvO4oMVBpdtz0Empw8xNL/KFf1AzCD4R3nle7MoqJXn38GUQeJ8ueMxxZW
+	 4i5gss9Be5biKAGCI8D13cb01DRch3HU1y4clYqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/175] tee: fix memory leak in tee_dyn_shm_alloc_helper
-Date: Sun,  7 Sep 2025 21:56:52 +0200
-Message-ID: <20250907195615.295364766@linuxfoundation.org>
+Subject: [PATCH 6.12 018/175] arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3399-pinebook-pro
+Date: Sun,  7 Sep 2025 21:56:53 +0200
+Message-ID: <20250907195615.317510290@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 50a74d0095cd23d2012133e208df45a298868870 ]
+[ Upstream commit d1f9c497618dece06a00e0b2995ed6b38fafe6b5 ]
 
-When shm_register() fails in tee_dyn_shm_alloc_helper(), the pre-allocated
-pages array is not freed, resulting in a memory leak.
+As described in the pinebookpro_v2.1_mainboard_schematic.pdf page 10,
+he SPI Flash's VCC connector is connected to VCC_3V0 power source.
 
-Fixes: cf4441503e20 ("tee: optee: Move pool_op helper functions")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+This fixes the following warning:
+
+  spi-nor spi1.0: supply vcc not found, using dummy regulator
+
+Fixes: 5a65505a69884 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250730102129.224468-1-pbrobinson@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_shm.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tee/tee_shm.c b/drivers/tee/tee_shm.c
-index 915239b033f5f..2a7d253d9c554 100644
---- a/drivers/tee/tee_shm.c
-+++ b/drivers/tee/tee_shm.c
-@@ -230,7 +230,7 @@ int tee_dyn_shm_alloc_helper(struct tee_shm *shm, size_t size, size_t align,
- 	pages = kcalloc(nr_pages, sizeof(*pages), GFP_KERNEL);
- 	if (!pages) {
- 		rc = -ENOMEM;
--		goto err;
-+		goto err_pages;
- 	}
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index a5a7e374bc594..a7afc83d2f266 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -966,6 +966,7 @@ spiflash: flash@0 {
+ 		reg = <0>;
+ 		m25p,fast-read;
+ 		spi-max-frequency = <10000000>;
++		vcc-supply = <&vcc_3v0>;
+ 	};
+ };
  
- 	for (i = 0; i < nr_pages; i++)
-@@ -243,11 +243,13 @@ int tee_dyn_shm_alloc_helper(struct tee_shm *shm, size_t size, size_t align,
- 		rc = shm_register(shm->ctx, shm, pages, nr_pages,
- 				  (unsigned long)shm->kaddr);
- 		if (rc)
--			goto err;
-+			goto err_kfree;
- 	}
- 
- 	return 0;
--err:
-+err_kfree:
-+	kfree(pages);
-+err_pages:
- 	free_pages_exact(shm->kaddr, shm->size);
- 	shm->kaddr = NULL;
- 	return rc;
 -- 
 2.50.1
 
