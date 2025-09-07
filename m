@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802F822F74D;
-	Sun,  7 Sep 2025 20:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A871CDFAC;
+	Sun,  7 Sep 2025 20:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275623; cv=none; b=H46gHDlvzXf9GdxBCI4AENf9sZYNNRjnRZbqg54O9rU/KqVDBOMDZdwnE+pHOuowo01oNZYweNxYDaC3vkkc4Py//5LBufU8XPgdtqWKpKLBxpTvNhtoa0WWBCfl9FCjodlhCmnmIYJ1GORulb5fUnQyqBvPpFxaBdmDFvqVjfw=
+	t=1757275627; cv=none; b=aKYMAT9iHxDgpFEnazTcj2iHOBZrNV1j0d573x2F4qhPcyhmnaZXvnpAT5Gh3KXLqTRNM//Z8D9V6t9mLQqF+mIfOw57oB0FZFQEhrYypmvQ+huJkS6oKOsuinuXSgtv3TRqTZkx+Z4o7kDD/+mniLQCb/R/yg236BKsaDO5a8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275623; c=relaxed/simple;
-	bh=lKhPkNnpfNuiM4sqnVsU0Vpq2Wck61kMyUj5nI011eY=;
+	s=arc-20240116; t=1757275627; c=relaxed/simple;
+	bh=rauZ2p14W0TgA8AiqRQ2UQtTUYO7dnEYFe/rtKkBubY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctg7k8AC3OP/AGmJ7W3pQQvVvmPU4hlZLyhobYigbkW+pK2tNTI7+/MzSiQ/F2WR4CQRiuePsl6uXvpZGUyoOLE42hb47za3wjorQbuF59Ir2GCD5KxIykpjzkkqhd5COWBt0PqIyOZGPyHU5yhcSGzi4ZrusBLJzebvAXBxfUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cozDD/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+o7ncUOBJIqtm465O8Ytq+JQcxANmdZ/ZNn4WRzokcP5ObRV1QCyHuz06PDB6vHfUTJWaeUCu1fX0dZPclfE7RSOXuOwIQMMnxtXnJ3bWXLti5zW5aMG3u8dvCVsXUyRbFTG5wZOj5tXPYRQnkWiKhGqoN+UfvnDgRktBjC3mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywGJNSzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cozDD/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CBDC4CEF0;
-	Sun,  7 Sep 2025 20:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywGJNSzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCA3C4CEF0;
+	Sun,  7 Sep 2025 20:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275623;
-	bh=lKhPkNnpfNuiM4sqnVsU0Vpq2Wck61kMyUj5nI011eY=;
+	s=korg; t=1757275626;
+	bh=rauZ2p14W0TgA8AiqRQ2UQtTUYO7dnEYFe/rtKkBubY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cozDD/u9zR5IN3DE7JSoj7Sbi2jzYp1TLDW+KvYUaCgcYXU8A8EosSehoIoEXPh6
-	 tZACTzGO4DpwKmGSIG7BxgXEzDHYABnFur/1ZEfOf56vA4e8Snar2nqCHeedjRXAZL
-	 7aHqA3n0+ft68EmyBv5uf5SzayJS0lrpaaUpzgRY=
+	b=ywGJNSzUYXAMWQp1tgdVBjv4C3+Jbo96sRpyPF2Oxr1nw40V504dCNYRP4wTORDRM
+	 8Bs6QwD25B+VoeVMQLc6R2o+j+dJkWKu2d3AKC8jFZQMWIj0Ck/t3SWP5OexkFczd4
+	 VG0Obm9s9jjJ/pQMVNcJPU+Q1cBQWnyYo8JUROjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 13/52] wifi: libertas: cap SSID len in lbs_associate()
-Date: Sun,  7 Sep 2025 21:57:33 +0200
-Message-ID: <20250907195602.367949578@linuxfoundation.org>
+Subject: [PATCH 5.10 14/52] net: thunder_bgx: add a missing of_node_put
+Date: Sun,  7 Sep 2025 21:57:34 +0200
+Message-ID: <20250907195602.400757058@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -51,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit c786794bd27b0d7a5fd9063695df83206009be59 ]
+[ Upstream commit 9d28f94912589f04ab51fbccaef287d4f40e0d1f ]
 
-If the ssid_eid[1] length is more that 32 it leads to memory corruption.
+phy_np needs to get freed, just like the other child nodes.
 
-Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/2a40f5ec7617144aef412034c12919a4927d90ad.1756456951.git.dan.carpenter@linaro.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5fc7cf179449 ("net: thunderx: Cleanup PHY probing code.")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250901213018.47392-1-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/cfg.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ .../net/ethernet/cavium/thunder/thunder_bgx.c  | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/cfg.c b/drivers/net/wireless/marvell/libertas/cfg.c
-index 4e3de684928bf..a659054c1bcd9 100644
---- a/drivers/net/wireless/marvell/libertas/cfg.c
-+++ b/drivers/net/wireless/marvell/libertas/cfg.c
-@@ -1102,10 +1102,13 @@ static int lbs_associate(struct lbs_private *priv,
- 	/* add SSID TLV */
- 	rcu_read_lock();
- 	ssid_eid = ieee80211_bss_get_ie(bss, WLAN_EID_SSID);
--	if (ssid_eid)
--		pos += lbs_add_ssid_tlv(pos, ssid_eid + 2, ssid_eid[1]);
--	else
-+	if (ssid_eid) {
-+		u32 ssid_len = min(ssid_eid[1], IEEE80211_MAX_SSID_LEN);
-+
-+		pos += lbs_add_ssid_tlv(pos, ssid_eid + 2, ssid_len);
-+	} else {
- 		lbs_deb_assoc("no SSID\n");
-+	}
- 	rcu_read_unlock();
+diff --git a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+index 0a71909bb2ee5..f5dbe2f5af659 100644
+--- a/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
++++ b/drivers/net/ethernet/cavium/thunder/thunder_bgx.c
+@@ -1497,13 +1497,17 @@ static int bgx_init_of_phy(struct bgx *bgx)
+ 		 * this cortina phy, for which there is no driver
+ 		 * support, ignore it.
+ 		 */
+-		if (phy_np &&
+-		    !of_device_is_compatible(phy_np, "cortina,cs4223-slice")) {
+-			/* Wait until the phy drivers are available */
+-			pd = of_phy_find_device(phy_np);
+-			if (!pd)
+-				goto defer;
+-			bgx->lmac[lmac].phydev = pd;
++		if (phy_np) {
++			if (!of_device_is_compatible(phy_np, "cortina,cs4223-slice")) {
++				/* Wait until the phy drivers are available */
++				pd = of_phy_find_device(phy_np);
++				if (!pd) {
++					of_node_put(phy_np);
++					goto defer;
++				}
++				bgx->lmac[lmac].phydev = pd;
++			}
++			of_node_put(phy_np);
+ 		}
  
- 	/* add DS param TLV */
+ 		lmac++;
 -- 
 2.50.1
 
