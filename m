@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6AC1F09BF;
-	Sun,  7 Sep 2025 20:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C9E1D88D0;
+	Sun,  7 Sep 2025 20:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276636; cv=none; b=I+U/pO70qiD6OjTm+lApW0/x0YDBN/Vgg37frRasuuZe+cIBHs1DWHtgM62u4FYEpqQvhaTpVoeNwcKWkGaB1a0hoo5A0Y+AV0itmnZqp7yIiLThJ8EMhBZJ6J6ogAJZA3q9u+H0/Pi3AKfIasJntxWSTNe15IhYfUAlkUbGHWo=
+	t=1757276639; cv=none; b=hK2cIkP9ggSOlrF6osMeItibWZRi8ZAKP2PmS6+olqjJTMNJXnNdCuu9PRkGk9GzWbozuC9f6J0if9kmSYoY89QgGkCS0mebQyiLNIAC9SxU37N5NX7tXqS/ArN4xcc/csH3HE1onwhaf+Ks2jTpz3y/A159ENnt2mdjfz+usvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276636; c=relaxed/simple;
-	bh=ML0BShXLh/EYWJOmtFJryVEqvN3R/T0H4ePcvSGRBMk=;
+	s=arc-20240116; t=1757276639; c=relaxed/simple;
+	bh=Vau0zAnSmIpazJXlgVYjOZPp25rWiyd+/EFXTw9yrVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgBXRypP7Hm7kz3Ugt+jEbQmrTbbxWRJEi7XzHLSNHavjRf5eVcMkeb1y6Mq/UDTz2octl8ZbXEhxGshZi8Qgd/mahsa7+QH5hC12xs3XFMFKzMlVtE3sR7a7AtuM7rQQQBxTKfuLeByJ3UmxL+AIXoEmO7+yepGMzr/1Mq3KAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRdlk//n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iMNCIP1EgCJc/FK8N8eoDnZ0zt5Fbv6YuiFyJjWhBjkujieiceSXNnHrWLyCTSb6bnvPNu6ZfMH+05SbG6QHY14shyvY7HOfpPBRrlEhnwwS/mBZQ9SMXCRdmDEbGatmb5bHVxqiGVTHAZoEyIgODMvUD4PiNWzlBjjq0X7G1W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv3ceh2P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRdlk//n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3C7C4CEF0;
-	Sun,  7 Sep 2025 20:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv3ceh2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88255C4CEF0;
+	Sun,  7 Sep 2025 20:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276635;
-	bh=ML0BShXLh/EYWJOmtFJryVEqvN3R/T0H4ePcvSGRBMk=;
+	s=korg; t=1757276638;
+	bh=Vau0zAnSmIpazJXlgVYjOZPp25rWiyd+/EFXTw9yrVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRdlk//nQ0F7UY+FoyvzVOoc30LNYqWG5ag+WKQ4St79OXJy25x/QyJHR4EkDY5tt
-	 wMsg6CY8V/7U9b5t3XJlG2pj7B7sDf/zFZUKjglUFwpa4bDZiuZABYr5i8eTQudHEj
-	 FUoqkhnhT44lFvfEqlIVNdxHbmHV33GfeqYHMRds=
+	b=Dv3ceh2PYEKYzqhcObq5iJTJzqbJ8SCkwWGyOIDrapgH9TI/m8ha5uDWA8rB5ISKE
+	 27OTC8dMYgVMQBKCJ5poha40Ko6SuV4GctyRwrPCnk7K8YErCF3ErMbJsFoLUopWQJ
+	 FBFuPMX5XaOLPDNUiAAyGpJtKrQovKfY9BTPJ9C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	oushixiong <oushixiong1025@163.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 063/121] drm/amdgpu: drop hw access in non-DC audio fini
-Date: Sun,  7 Sep 2025 21:58:19 +0200
-Message-ID: <20250907195611.456303103@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.6 064/121] platform/x86/amd/pmc: Add TUXEDO IB Pro Gen10 AMD to spurious 8042 quirks list
+Date: Sun,  7 Sep 2025 21:58:20 +0200
+Message-ID: <20250907195611.481873988@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -44,111 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit 71403f58b4bb6c13b71c05505593a355f697fd94 upstream.
+commit c96f86217bb28e019403bb8f59eacd8ad5a7ad1a upstream.
 
-We already disable the audio pins in hw_fini so
-there is no need to do it again in sw_fini.
+Prevents instant wakeup ~1s after suspend.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4481
-Cc: oushixiong <oushixiong1025@163.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5eeb16ca727f11278b2917fd4311a7d7efb0bbd6)
+It seems to be kernel/system dependent if the IRQ actually manages to wake
+the system every time or if it gets ignored (and everything works as
+expected).
+
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250827131424.16436-1-wse@tuxedocomputers.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v11_0.c |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  |    5 -----
- 4 files changed, 20 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-@@ -1459,17 +1459,12 @@ static int dce_v10_0_audio_init(struct a
- 
- static void dce_v10_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v10_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-@@ -1508,17 +1508,12 @@ static int dce_v11_0_audio_init(struct a
- 
- static void dce_v11_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v11_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-@@ -1377,17 +1377,12 @@ static int dce_v6_0_audio_init(struct am
- 
- static void dce_v6_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v6_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-@@ -1426,17 +1426,12 @@ static int dce_v8_0_audio_init(struct am
- 
- static void dce_v8_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v8_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -242,6 +242,20 @@ static const struct dmi_system_id fwbug_
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Lafite Pro V 14M"),
+ 		}
+ 	},
++	{
++		.ident = "TUXEDO InfinityBook Pro 14/15 AMD Gen10",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "XxHP4NAx"),
++		}
++	},
++	{
++		.ident = "TUXEDO InfinityBook Pro 14/15 AMD Gen10",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx"),
++		}
++	},
+ 	{}
+ };
  
 
 
