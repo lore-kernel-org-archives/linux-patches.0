@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C22C1DE8AF;
-	Sun,  7 Sep 2025 20:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A8C1DE8AF;
+	Sun,  7 Sep 2025 20:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277176; cv=none; b=MXiTrmKib+qeNjbVQT1ecJULaNtvCWjFe1EtHz3WkJFBmerl4u/9bCzTXYTHNuY4L4joR+o2pbVUvLzaC73FnzDlXYSBvoARc5ctPqXD4oUN9GEkhs6H+C3r/zn15HndIQ4w9tVYoC5qT5mvOilhcYgKDr/hUeWvHrQAgawrRkM=
+	t=1757277179; cv=none; b=Lqck4NR7Lljuzub53yccAtOHxeOrTe2fBnjMKg5G/tF6tEfd30r80tEzatAXABAjphd13aWPbVGqZWt4oWFksfBgWZoY20yw4t+3AgzeaeZ9ED1abf8yo+QRbdHGjBxsjcQ01DL8aDVAuCE/TrTqdKthcHYV9dypd6uIMRFbwNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277176; c=relaxed/simple;
-	bh=DrG4075r9aCK3lhjAtNJMAeVixflSOQYsXBoqggATEU=;
+	s=arc-20240116; t=1757277179; c=relaxed/simple;
+	bh=QU10ll9j4/wAT+yPSbLdZk6WO1TSzIIR9iATuE+D6RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/q+WVCJZybEmO4I3oKWQ6U/9je8LttK5b1/d93AXAlwzjOy3QcAlJLBE0NW9piZqBDbDOsrJr9Df7iSVIuQu2fysxcoiTErQktAGvxBH9QwNNwZs4NxNBAf9hgwizlRKEOmkgN/PmIaqsMvxY+iPuM/lLa2P7R/IZDz2kcUaeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDurvsG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYf54o5uksupM0qkf01JsdwYV7tPfgnBuZypldbPLPMtp/EPgCCAjiAUyVJS3lJOC42dVSHNxRJO1QPfiC+uuWQSIFaxkNOBuJyfxgk2P7QMHtOfI+3wQP63wSYrQGAoePDxYFStCYKqILDz1QtGYvOJM/bwYaFChIhSSscS1m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK1O6N8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDurvsG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86E9C4CEF0;
-	Sun,  7 Sep 2025 20:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK1O6N8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E2AC4CEF8;
+	Sun,  7 Sep 2025 20:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277176;
-	bh=DrG4075r9aCK3lhjAtNJMAeVixflSOQYsXBoqggATEU=;
+	s=korg; t=1757277179;
+	bh=QU10ll9j4/wAT+yPSbLdZk6WO1TSzIIR9iATuE+D6RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qDurvsG8+V+anY4wU8SGb6E4Xu0lXTJU8bFQTEa4V2qSMQ2DVILOvmLeJ4+5uEQgE
-	 pjMSNWX++qpfHJwHZLlVquti8ACcCRhGsk61SecAP5xkLcbK76SMkHeAENJUuzyZWG
-	 iQAXESZSynFB2oPiRDwA5QOiczDZCCPriE2V0SjQ=
+	b=pK1O6N8hgVB8hMfaNBHmXSwUbGKc3YQN8TrSjO16nB033ejKXdq7CX+uVkgK0W+yP
+	 4Rr+3JhR52GgQVYD4IS8lPE8Jk1vrB5V4LnaW6BVsOtmZmRYl+x1OZ0DoWeZFCmmz7
+	 JqvTtyX+zgexLZgzuN0mnBilWSJaY6wPCkyiE484=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Morrow <morrownr@gmail.com>,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 109/175] wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete
-Date: Sun,  7 Sep 2025 21:58:24 +0200
-Message-ID: <20250907195617.432912403@linuxfoundation.org>
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 083/175] net/smc: Remove validation of reserved bits in CLC Decline message
+Date: Sun,  7 Sep 2025 21:57:58 +0200
+Message-ID: <20250907195616.800876879@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -51,37 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Mahanta Jambigi <mjambigi@linux.ibm.com>
 
-commit c22769de25095c6777e8acb68a1349a3257fc955 upstream.
+[ Upstream commit cc282f73bc0cbdf3ee7af2f2d3a2ef4e6b19242d ]
 
-MT7925 is a connac3 device; using the connac2 helper mis-parses
-TXWI and breaks AMPDU/BA accounting. Use the connac3-specific
-helper mt7925_tx_check_aggr() instead,
+Currently SMC code is validating the reserved bits while parsing the incoming
+CLC decline message & when this validation fails, its treated as a protocol
+error. As a result, the SMC connection is terminated instead of falling back to
+TCP. As per RFC7609[1] specs we shouldn't be validating the reserved bits that
+is part of CLC message. This patch fixes this issue.
 
-Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Reported-by: Nick Morrow <morrownr@gmail.com>
-Tested-by: Nick Morrow <morrownr@gmail.com>
-Tested-on: Netgear A9000 USB WiFi adapter
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250818020203.992338-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CLC Decline message format can viewed here[2].
+
+[1] https://datatracker.ietf.org/doc/html/rfc7609#page-92
+[2] https://datatracker.ietf.org/doc/html/rfc7609#page-105
+
+Fixes: 8ade200c269f ("net/smc: add v2 format of CLC decline message")
+Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20250902082041.98996-1-mjambigi@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/smc_clc.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1459,7 +1459,7 @@ void mt7925_usb_sdio_tx_complete_skb(str
- 	sta = wcid_to_sta(wcid);
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index 521f5df80e10c..8a794333e9927 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -426,8 +426,6 @@ smc_clc_msg_decl_valid(struct smc_clc_msg_decline *dclc)
+ {
+ 	struct smc_clc_msg_hdr *hdr = &dclc->hdr;
  
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
--		mt76_connac2_tx_check_aggr(sta, txwi);
-+		mt7925_tx_check_aggr(sta, e->skb, wcid);
- 
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+-	if (hdr->typev1 != SMC_TYPE_R && hdr->typev1 != SMC_TYPE_D)
+-		return false;
+ 	if (hdr->version == SMC_V1) {
+ 		if (ntohs(hdr->length) != sizeof(struct smc_clc_msg_decline))
+ 			return false;
+-- 
+2.50.1
+
 
 
