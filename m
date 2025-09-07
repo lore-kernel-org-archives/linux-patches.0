@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8789D528;
-	Sun,  7 Sep 2025 20:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201DD189BB0;
+	Sun,  7 Sep 2025 20:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276667; cv=none; b=KC04HGbO68Me8pNo4u/KEuAhsisUwYP5df3diYLi0R4hgFcjAQ+4Iqo18NaBdwl3bgoIr3SwQnhumuAU07tuF+pTlSFZE/IFB5WbvZ/mgv1YPo+rod+eAy+yE1330oGBZ/KrPlpiGbHKUMcOk8dQl6iRWuukyKL+dAQo3M1zxeY=
+	t=1757276671; cv=none; b=b9054EI5fTVB2pK5q1cuqxuB7Udxf5TSKlYEQ4r+ZhPKWqshgvOL1HGKGkCxTklE9W0qhkafSg88SfeOJsyEgXplvxzBoW7C87VyoLjzCH2itoQgPiUXxaiae8Y1G9RnBK8Z0CKodFIO4ZufVljJyn2GFKqLkBnnEBnN44VGN3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276667; c=relaxed/simple;
-	bh=ldqTci8YK70u1QLMCNNoLqAXdJ+hXK7rIWvQyM3Z358=;
+	s=arc-20240116; t=1757276671; c=relaxed/simple;
+	bh=4gSoPuqSifWUWBhTniE00uH+H5IZTN+pVgRoztjXKrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keW0cJyYbwWn0cpMYV/JjJGttyLGdNAzNT7Dj8f4CXAPe29wJgExAC1uohn0FH6+Z8oO8T6uAwEfaCdOI2YBL0t8T3lj1QuJD7hg7cDjlZBSnosNfq42cNPon41l6IKz7vFDSgr9LbVp7dqhJQCI22Gj+z/GPdl2LSJj+PnQgAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXiV0dxS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=htZom+CFqPW3u892lOpS2tyl4PXiH9vKkfpQxyZnEZ8ZGpDlIjmk5qwSYrNZQd2oWXkfhJwCzB16QAeoouxbhjahgLJwy8G8jme1khWmcw+yKNPLA+noIqGmbjqIlE3gZ4tk2YkAANegVZxRzmH76h/OM2JZHQT4/C4hfHWXWxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Br89MDqe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXiV0dxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD5CC4CEF0;
-	Sun,  7 Sep 2025 20:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Br89MDqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F431C4CEF0;
+	Sun,  7 Sep 2025 20:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276667;
-	bh=ldqTci8YK70u1QLMCNNoLqAXdJ+hXK7rIWvQyM3Z358=;
+	s=korg; t=1757276670;
+	bh=4gSoPuqSifWUWBhTniE00uH+H5IZTN+pVgRoztjXKrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXiV0dxS87IKGuMJ5y3k4o0ca4b9302pZiPPvy0yTnNubwyNqUj3zWHKtYQeCiac1
-	 fHJW+Hs+44eRIg4ug3jZsFvr+IINAg4wG/7luNDe4NVsSG601KHPptrdTv+tZ/KPc7
-	 KPC5YhqKgjOuMn09DZO+dImG96pxYDOGeMnmuHYo=
+	b=Br89MDqecIbZ6BzLQ/wZFZEh1m8+9AUkECOojgjYIcQLFwUScR2Ml2u+Dyrbrk0k3
+	 MgZ+s+iMgrIShm2md8o8IUo94LKstuyBSfRTRxqRIEa3j798S2ujZggjlI7CrCHOBy
+	 8hBF0Kpc8btV0+vU8Y0e+ldPD5NHjMv6wxutPRuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/121] cpufreq: intel_pstate: Revise global turbo disable check
-Date: Sun,  7 Sep 2025 21:58:28 +0200
-Message-ID: <20250907195611.684928447@linuxfoundation.org>
+Subject: [PATCH 6.6 073/121] cpufreq: intel_pstate: Fold intel_pstate_max_within_limits() into caller
+Date: Sun,  7 Sep 2025 21:58:29 +0200
+Message-ID: <20250907195611.710168076@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,65 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 37b6ddba967c601479bea418a7ac6ff16b6232b7 ]
+[ Upstream commit 032c5565eb80edb6f2faeb31939540c897987119 ]
 
-Setting global turbo flag based on CPU 0 P-state limits is problematic
-as it limits max P-state request on every CPU on the system just based
-on its P-state limits.
+Fold intel_pstate_max_within_limits() into its only caller.
 
-There are two cases in which global.turbo_disabled flag is set:
-- When the MSR_IA32_MISC_ENABLE_TURBO_DISABLE bit is set to 1
-in the MSR MSR_IA32_MISC_ENABLE. This bit can be only changed by
-the system BIOS before power up.
-- When the max non turbo P-state is same as max turbo P-state for CPU 0.
+No functional impact.
 
-The second check is not a valid to decide global turbo state based on
-the CPU 0. CPU 0 max turbo P-state can be same as max non turbo P-state,
-but for other CPUs this may not be true.
-
-There is no guarantee that max P-state limits are same for every CPU. This
-is possible that during fusing max P-state for a CPU is constrained. Also
-with the Intel Speed Select performance profile, CPU 0 may not be present
-in all profiles. In this case the max non turbo and turbo P-state can be
-set to the lowest possible P-state by the hardware when switched to
-such profile. Since max non turbo and turbo P-state is same,
-global.turbo_disabled flag will be set.
-
-Once global.turbo_disabled is set, any scaling max and min frequency
-update for any CPU will result in its max P-state constrained to the max
-non turbo P-state.
-
-Hence remove the check of max non turbo P-state equal to max turbo P-state
-of CPU 0 to set global turbo disabled flag.
-
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-[ rjw: Subject edit ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Stable-dep-of: ac4e04d9e378 ("cpufreq: intel_pstate: Unchecked MSR aceess in legacy mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/cpufreq/intel_pstate.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 --- a/drivers/cpufreq/intel_pstate.c
 +++ b/drivers/cpufreq/intel_pstate.c
-@@ -595,13 +595,9 @@ static void intel_pstate_hybrid_hwp_adju
- static inline void update_turbo_state(void)
- {
- 	u64 misc_en;
--	struct cpudata *cpu;
- 
--	cpu = all_cpu_data[0];
- 	rdmsrl(MSR_IA32_MISC_ENABLE, misc_en);
--	global.turbo_disabled =
--		(misc_en & MSR_IA32_MISC_ENABLE_TURBO_DISABLE ||
--		 cpu->pstate.max_pstate == cpu->pstate.turbo_pstate);
-+	global.turbo_disabled = misc_en & MSR_IA32_MISC_ENABLE_TURBO_DISABLE;
+@@ -2027,14 +2027,6 @@ static void intel_pstate_set_min_pstate(
+ 	intel_pstate_set_pstate(cpu, cpu->pstate.min_pstate);
  }
  
- static int min_perf_pct_min(void)
+-static void intel_pstate_max_within_limits(struct cpudata *cpu)
+-{
+-	int pstate = max(cpu->pstate.min_pstate, cpu->max_perf_ratio);
+-
+-	update_turbo_state();
+-	intel_pstate_set_pstate(cpu, pstate);
+-}
+-
+ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
+ {
+ 	int perf_ctl_max_phys = pstate_funcs.get_max_physical(cpu->cpu);
+@@ -2608,12 +2600,15 @@ static int intel_pstate_set_policy(struc
+ 	intel_pstate_update_perf_limits(cpu, policy->min, policy->max);
+ 
+ 	if (cpu->policy == CPUFREQ_POLICY_PERFORMANCE) {
++		int pstate = max(cpu->pstate.min_pstate, cpu->max_perf_ratio);
++
+ 		/*
+ 		 * NOHZ_FULL CPUs need this as the governor callback may not
+ 		 * be invoked on them.
+ 		 */
+ 		intel_pstate_clear_update_util_hook(policy->cpu);
+-		intel_pstate_max_within_limits(cpu);
++		update_turbo_state();
++		intel_pstate_set_pstate(cpu, pstate);
+ 	} else {
+ 		intel_pstate_set_update_util_hook(policy->cpu);
+ 	}
 
 
