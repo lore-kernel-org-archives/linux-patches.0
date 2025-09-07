@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364C41DF246;
-	Sun,  7 Sep 2025 20:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E33B315D54;
+	Sun,  7 Sep 2025 20:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277316; cv=none; b=j37QnGYb5gvThbQhICoB0pEfU1sfHbbsqiJZA5u0KwkyuVUuQEUEQpD7nbGx7sVSATcH7Hu+Jjo3Si0Mz0iwOGSXqZDMEBp031tatGHuas5uIH2t0kfl896UbiIhE49cSKrYzd5AJgBsj1nSKmWFK+PT/tPfy75NMD9HHFBuv9w=
+	t=1757277319; cv=none; b=W9wI3mPIjUM6YAtvh8XhNe7QDbXgs6XdTcXTL2AAOO8r2wYrAp7ifjdEWZ3iU09T3a5SR+O0EryAtQFP96nvm6UuTx1MveY2up6JjdxbvqnfWOzJ3Hk0tL5+GCrGb9xlfwuv9ZbbyADeuQcRgPW4144bMXyKnY7EveDY4vpufNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277316; c=relaxed/simple;
-	bh=h9bcyqWyH1Zc4zeNhewdS0T18O1HrrCCwUVXxEo9FFQ=;
+	s=arc-20240116; t=1757277319; c=relaxed/simple;
+	bh=vV+HMt466sbpMwESVGwErsr554rG/FaGBJGpk2IBeNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uEUVo7k//DnZcwFyG7Y9zWfT9AuYnzyxmHc6rC94Q6mYolW7GIBziefbF2tWWAjDIAnJ+Hh3bbUhOeN2ZRfJhMH/Zj2l/lzB2BGrJLVzceRGMhuLc2bHKaM5NdYWDJVL+/uV21zshpKHiN65+or7wINMcuLiEMnktJk0eKuvmB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eq88XfV/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BVEsWoMsDdNMHuRlCYqG7U3Kkpickt1fz4SYZn08ZrMCpv/wFdm/adwwYfYILz5cztngboPQm+/cTV376Z0AlBctT3uHV42NLDjz49lLecad9SuBBLvqK+Nj3ERe2Lc0eYcmtGjx6qYudUWEZ+grjJ1j5eOq/MQG5s+BNu1TsMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsaUaiBv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq88XfV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A85C4CEF0;
-	Sun,  7 Sep 2025 20:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsaUaiBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAF2C4CEF0;
+	Sun,  7 Sep 2025 20:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277316;
-	bh=h9bcyqWyH1Zc4zeNhewdS0T18O1HrrCCwUVXxEo9FFQ=;
+	s=korg; t=1757277319;
+	bh=vV+HMt466sbpMwESVGwErsr554rG/FaGBJGpk2IBeNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eq88XfV/JETW5yiq4TM9W7jAjyz98Uw8q82bTQKpICcdBvtn1XJMH1G7LlQOyyKyL
-	 LC3jWcGGelH/JGX4Wl31gQCj79xEX71mtB1+/RW8poWD4GVIRT7wjxjiCDZRLomMNE
-	 iuzs6/5gQzNKr/emvWbxwXGwug8E2Zu0iFj6D5ok=
+	b=MsaUaiBv9LxiiyzAXgxra6xbLXlq7ildOXTSOR1X8Dfh2wlueHAMuq57nIBAZCIdJ
+	 eziF/dDLImR8GjfKcEK3f6pZ/laD+aEZaRnkPNf0P3MJyQAmnUuhh3XEJXPoSq5IB1
+	 rS/J+P4Gr/YrZzmsR8c8CC3nFCCImHhLN4Jm7Wr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arcari <darcari@redhat.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/175] platform/x86/intel: power-domains: Use topology_logical_package_id() for package ID
-Date: Sun,  7 Sep 2025 21:59:08 +0200
-Message-ID: <20250907195618.476100492@linuxfoundation.org>
+Subject: [PATCH 6.12 154/175] hwmon: mlxreg-fan: Prevent fans from getting stuck at 0 RPM
+Date: Sun,  7 Sep 2025 21:59:09 +0200
+Message-ID: <20250907195618.500511385@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -46,46 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Arcari <darcari@redhat.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-[ Upstream commit aa28991fd5dc4c01a40caab2bd9af8c5e06f9899 ]
+[ Upstream commit 1180c79fbf36e4c02e76ae4658509523437e52a4 ]
 
-Currently, tpmi_get_logical_id() calls topology_physical_package_id()
-to set the pkg_id of the info structure. Since some VM hosts assign non
-contiguous package IDs, topology_physical_package_id() can return a
-larger value than topology_max_packages(). This will result in an
-invalid reference into tpmi_power_domain_mask[] as that is allocatead
-based on topology_max_packages() as the maximum package ID.
+The fans controlled by the driver can get stuck at 0 RPM if they are
+configured below a 20% duty cycle. The driver tries to avoid this by
+enforcing a minimum duty cycle of 20%, but this is done after the fans
+are registered with the thermal subsystem. This is too late as the
+thermal subsystem can set their current state before the driver is able
+to enforce the minimum duty cycle.
 
-Fixes: 17ca2780458c ("platform/x86/intel: TPMI domain id and CPU mapping")
-Signed-off-by: David Arcari <darcari@redhat.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://lore.kernel.org/r/20250829113859.1772827-1-darcari@redhat.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix by setting the minimum duty cycle before registering the fans with
+the thermal subsystem.
+
+Fixes: d7efb2ebc7b3 ("hwmon: (mlxreg-fan) Extend driver to support multiply cooling devices")
+Reported-by: Nikolay Aleksandrov <razor@blackwall.org>
+Tested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20250730201715.1111133-1-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/tpmi_power_domains.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/mlxreg-fan.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/tpmi_power_domains.c b/drivers/platform/x86/intel/tpmi_power_domains.c
-index 12fb0943b5dc3..7e0b86535d02c 100644
---- a/drivers/platform/x86/intel/tpmi_power_domains.c
-+++ b/drivers/platform/x86/intel/tpmi_power_domains.c
-@@ -167,7 +167,7 @@ static int tpmi_get_logical_id(unsigned int cpu, struct tpmi_cpu_info *info)
- 
- 	info->punit_thread_id = FIELD_GET(LP_ID_MASK, data);
- 	info->punit_core_id = FIELD_GET(MODULE_ID_MASK, data);
--	info->pkg_id = topology_physical_package_id(cpu);
-+	info->pkg_id = topology_logical_package_id(cpu);
- 	info->linux_cpu = cpu;
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index a5f89aab3fb4d..c25a54d5b39ad 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -561,15 +561,14 @@ static int mlxreg_fan_cooling_config(struct device *dev, struct mlxreg_fan *fan)
+ 		if (!pwm->connected)
+ 			continue;
+ 		pwm->fan = fan;
++		/* Set minimal PWM speed. */
++		pwm->last_hwmon_state = MLXREG_FAN_PWM_DUTY2STATE(MLXREG_FAN_MIN_DUTY);
+ 		pwm->cdev = devm_thermal_of_cooling_device_register(dev, NULL, mlxreg_fan_name[i],
+ 								    pwm, &mlxreg_fan_cooling_ops);
+ 		if (IS_ERR(pwm->cdev)) {
+ 			dev_err(dev, "Failed to register cooling device\n");
+ 			return PTR_ERR(pwm->cdev);
+ 		}
+-
+-		/* Set minimal PWM speed. */
+-		pwm->last_hwmon_state = MLXREG_FAN_PWM_DUTY2STATE(MLXREG_FAN_MIN_DUTY);
+ 	}
  
  	return 0;
 -- 
