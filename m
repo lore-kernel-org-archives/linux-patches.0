@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE25189BB0;
-	Sun,  7 Sep 2025 20:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24E0189BB0;
+	Sun,  7 Sep 2025 20:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276484; cv=none; b=X16jTViLFJorJrIBycZ33cqjQPkOwixZSXBDnZQUAUOc2xYMXmcOh33StC/llPX9x2n5M1iEjrsodXrzZpNelf3wIxL0JCfFZyVC23sT9MrFoN6Zx2ywK60xFrWkg8p5PO72Eyemf4l9czWnfYAvYaqwpJ/6BR9IlhcAcaBa9Hk=
+	t=1757276488; cv=none; b=FG43HF+sl3JHWe/opoLYC45ynHJZqRXUnad2jwS7whizeP302g+r6In1wxLe4ONhGH0cTEBY4H4b33mLxWM8GWIVDcJnvJE0wRc69WyE61rqye+F+vio5U61MoFnd57W4Fy/E2SQDJilgo0Uhy7w4KbGZ59oxZQFMDnuc5IqFL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276484; c=relaxed/simple;
-	bh=T+Ajl1m02/JRXO1r5Dz8OkOh6MvBtMjw4cPdrGHcWoE=;
+	s=arc-20240116; t=1757276488; c=relaxed/simple;
+	bh=WrMU+g0Cmlu7qYMA9qa1KP4iFc4a8TmHvDYjKQ7buY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ll+Kx2Vyrt1AOQe7fiCLUgcG+o4VMc8dxdypNl3HETgaWK6O8V0QQxX+rH9qZBMFMFBFvfO1mkQRUtNmkagBdtL8vjB23SSGr9JR1l8iSSm/fPz/uNC3lYHDQ4WJbTdtmmc2crtoCavHjqjwKqtQu1++PcpNgnm/7KPk3be9FKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMmnErdC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDm+Zn+SsP3svAIKb0qaGkURV01LE//miHOYuJxIomMOV1zIprFcmLsHm3AwVM05LSnkKzXKYID01QJ7hT856PnEkOP5e7MjhwvDCOfI7Dt+syMqz3qaXwansQDmK0dVdUawNxlyb6uSlaqn807K47teN/0JFXDK9dQ1zrmVFL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouWhGpzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMmnErdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2187CC4CEF0;
-	Sun,  7 Sep 2025 20:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouWhGpzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D05C4CEF0;
+	Sun,  7 Sep 2025 20:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276484;
-	bh=T+Ajl1m02/JRXO1r5Dz8OkOh6MvBtMjw4cPdrGHcWoE=;
+	s=korg; t=1757276487;
+	bh=WrMU+g0Cmlu7qYMA9qa1KP4iFc4a8TmHvDYjKQ7buY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMmnErdC+0g3ZnP2F7jwTU7LE+EHzGmYDxMjkA1rolQMjALN0r/1VjDwAhPdI9u3N
-	 NP0cfpvjtQ4Mhxs4FmWdS/rASdJnlM20WICX6k78+kygMQ+TYO4JFeAcagFABsG+oZ
-	 KGCFQyaZatxnOCFh5wOuZoIgdIbFmiWaSlzMcUEE=
+	b=ouWhGpzchlYKp+SbiAlKLdsEVgOM+Q9RofowlDZ0mksbs6reFXtKSYPSmIfLfzQ5J
+	 PfTVJC1cdsBe+r05Tq8cEtCem8jidX59+Ceg6O2XmcnEhNSp/nKO5TIixMuFGoR/bE
+	 Ecu87GEXLMQCXGtEbF82Unz8rduyN76Srn7ynS1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sungbae Yoo <sungbaey@nvidia.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/121] arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3399-pinebook-pro
-Date: Sun,  7 Sep 2025 21:57:31 +0200
-Message-ID: <20250907195610.203187259@linuxfoundation.org>
+Subject: [PATCH 6.6 016/121] tee: optee: ffa: fix a typo of "optee_ffa_api_is_compatible"
+Date: Sun,  7 Sep 2025 21:57:32 +0200
+Message-ID: <20250907195610.230653075@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Robinson <pbrobinson@gmail.com>
+From: Sungbae Yoo <sungbaey@nvidia.com>
 
-[ Upstream commit d1f9c497618dece06a00e0b2995ed6b38fafe6b5 ]
+[ Upstream commit 75dbd4304afe574fcfc4118a5b78776a9f48fdc4 ]
 
-As described in the pinebookpro_v2.1_mainboard_schematic.pdf page 10,
-he SPI Flash's VCC connector is connected to VCC_3V0 power source.
+Fixes optee_ffa_api_is_compatbile() to optee_ffa_api_is_compatible()
+because compatbile is a typo of compatible.
 
-This fixes the following warning:
-
-  spi-nor spi1.0: supply vcc not found, using dummy regulator
-
-Fixes: 5a65505a69884 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
-Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/20250730102129.224468-1-pbrobinson@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 4615e5a34b95 ("optee: add FF-A support")
+Signed-off-by: Sungbae Yoo <sungbaey@nvidia.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tee/optee/ffa_abi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-index f5e124b235c83..fb3012a6c9fc3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
-@@ -967,6 +967,7 @@ spiflash: flash@0 {
- 		reg = <0>;
- 		m25p,fast-read;
- 		spi-max-frequency = <10000000>;
-+		vcc-supply = <&vcc_3v0>;
- 	};
- };
+diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
+index b8ba360e863ed..927c3d7947f9c 100644
+--- a/drivers/tee/optee/ffa_abi.c
++++ b/drivers/tee/optee/ffa_abi.c
+@@ -653,7 +653,7 @@ static int optee_ffa_do_call_with_arg(struct tee_context *ctx,
+  * with a matching configuration.
+  */
  
+-static bool optee_ffa_api_is_compatbile(struct ffa_device *ffa_dev,
++static bool optee_ffa_api_is_compatible(struct ffa_device *ffa_dev,
+ 					const struct ffa_ops *ops)
+ {
+ 	const struct ffa_msg_ops *msg_ops = ops->msg_ops;
+@@ -804,7 +804,7 @@ static int optee_ffa_probe(struct ffa_device *ffa_dev)
+ 
+ 	ffa_ops = ffa_dev->ops;
+ 
+-	if (!optee_ffa_api_is_compatbile(ffa_dev, ffa_ops))
++	if (!optee_ffa_api_is_compatible(ffa_dev, ffa_ops))
+ 		return -EINVAL;
+ 
+ 	if (!optee_ffa_exchange_caps(ffa_dev, ffa_ops, &sec_caps,
 -- 
 2.50.1
 
