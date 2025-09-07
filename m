@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48841B424F;
-	Sun,  7 Sep 2025 20:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52671B424F;
+	Sun,  7 Sep 2025 20:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276075; cv=none; b=fnayT3YzO9WvBWTnTLOT6oiyfE4XJ83V+M41jrLr71SvzI1WUCNYD98KO0/rLzMYYJvfFuZSQTjM67TwS8+ktZY/d8V0CAK9G88vqYhbEBjMFdYwWSZdMKdYct0hhrlz8R7+VDZvF3nKpFI/4wIrRh6IPNGntCbQbtUoP0exqE4=
+	t=1757276079; cv=none; b=mcMXKV/QbKgEabSa8LqdMQTfAQsbIxzpB1b6EPl3QElUCRjiJICR5Vyzjm5BQsWOdBoIcBYwo4zg/uRQVXhIVY1vXwaZRS3YXVEHFW81oJtO8bXsiNBFT/QeHEmhUQfZMCYdD0rW4/ZNK+Z6Jxrv8D05mBws+nRoc/2AMvpKNdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276075; c=relaxed/simple;
-	bh=LgePqHYOqcj4uIuWRNFc5iiilTRRyZbN1EstbVUgsdc=;
+	s=arc-20240116; t=1757276079; c=relaxed/simple;
+	bh=7g+6ZgA/spz+m7rvGmUiViEFn5tp/jNBBcRms5aSMIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4XdP8IRxLzkaA2EP+KtAjyvZmfkfPTsyNoa50GmaSXMwTwbC6mB9AV6adBqckQNV4NUhAvMNpDuOJ9ssfauMfngNwduguUeY4COFwDkI9r+No4PCJpb0wZ5bqqaqYbia2b6UlNX291X+Md7afTp/8zZ/2oOlBOA/p98s2YUj9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5d626op; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=osYcwh5mEM/NQ5/T+hR80+IMtONszX+ncpkZpGd419hOXQ5MbWKkGEW5zX24ZeOoCfCQmJz27XNm0UJCuwRDVh1XLLCy5LtjZ3dLf2L5oG9Suj4EtC/uFajNQ871zVz1/PBsngkW9quV3D+sPHpf9JYTVeCvW74MRN2JtsZDl30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPTNXohH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5d626op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A358C4CEF0;
-	Sun,  7 Sep 2025 20:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPTNXohH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40080C4CEF0;
+	Sun,  7 Sep 2025 20:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276075;
-	bh=LgePqHYOqcj4uIuWRNFc5iiilTRRyZbN1EstbVUgsdc=;
+	s=korg; t=1757276078;
+	bh=7g+6ZgA/spz+m7rvGmUiViEFn5tp/jNBBcRms5aSMIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5d626oppujpLm+cT22+kZJYDJ1wYC2yd5bGKwDlG5h61aKYyY/MKg7Q0r98obj8Z
-	 err0bjWTS7Ixy68F5/TXDj2MLips3ITNP1H2tRf4VQfjep6B7DWqU6uI/MDo8/0wOK
-	 Gitjakx8bgBiGKmR1m0ioJGD5u3TpAEfko66AHBo=
+	b=LPTNXohHy3uEy0Kq9lrj3kexSGTSJOEIoKq3HvunJ0vECQPtG/bk+C5ESZVHPkX6l
+	 g2ML/lYUkpYslAAggO5xHj84ilTbwAMkYlb1oPHjRjbZpvas/R+HWgWY2byoCSN3w/
+	 3ihgtiMxXNtw1p7QUXe9cq4MTj9KZm0frCdgQdRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 55/64] ALSA: hda/hdmi: Add pin fix for another HP EliteDesk 800 G4 model
-Date: Sun,  7 Sep 2025 21:58:37 +0200
-Message-ID: <20250907195604.934480717@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 56/64] pcmcia: Add error handling for add_interval() in do_validate_mem()
+Date: Sun,  7 Sep 2025 21:58:38 +0200
+Message-ID: <20250907195604.963858086@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -49,31 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit bcd6659d4911c528381531472a0cefbd4003e29e upstream.
+[ Upstream commit 4a81f78caa53e0633cf311ca1526377d9bff7479 ]
 
-It was reported that HP EliteDesk 800 G4 DM 65W (SSID 103c:845a) needs
-the similar quirk for enabling HDMI outputs, too.  This patch adds the
-corresponding quirk entry.
+In the do_validate_mem(), the call to add_interval() does not
+handle errors. If kmalloc() fails in add_interval(), it could
+result in a null pointer being inserted into the linked list,
+leading to illegal memory access when sub_interval() is called
+next.
 
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250901115009.27498-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch adds an error handling for the add_interval(). If
+add_interval() returns an error, the function will return early
+with the error code.
+
+Fixes: 7b4884ca8853 ("pcmcia: validate late-added resources")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pcmcia/rsrc_nonstatic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1962,6 +1962,7 @@ static int hdmi_add_cvt(struct hda_codec
- static const struct snd_pci_quirk force_connect_list[] = {
- 	SND_PCI_QUIRK(0x103c, 0x83e2, "HP EliteDesk 800 G4", 1),
- 	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
-+	SND_PCI_QUIRK(0x103c, 0x845a, "HP EliteDesk 800 G4 DM 65W", 1),
- 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
+diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
+index e6c90c0bb7646..58782f21a442a 100644
+--- a/drivers/pcmcia/rsrc_nonstatic.c
++++ b/drivers/pcmcia/rsrc_nonstatic.c
+@@ -375,7 +375,9 @@ static int do_validate_mem(struct pcmcia_socket *s,
+ 
+ 	if (validate && !s->fake_cis) {
+ 		/* move it to the validated data set */
+-		add_interval(&s_data->mem_db_valid, base, size);
++		ret = add_interval(&s_data->mem_db_valid, base, size);
++		if (ret)
++			return ret;
+ 		sub_interval(&s_data->mem_db, base, size);
+ 	}
+ 
+-- 
+2.51.0
+
 
 
