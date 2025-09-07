@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBE14315A;
-	Sun,  7 Sep 2025 20:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438704315A;
+	Sun,  7 Sep 2025 20:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277890; cv=none; b=qsFC45+2gm0PD053HIK+Qi4XWhv4IsTa6+F5ek6B1pkpY6Ki8zt9mmHsVF348GsYQpNH/GZhX69yNCGbfbfogp0zYWcKapQ8Ppp6/hBimFJvwB0hXgCwEk31CnHoBudaqRzBeiWePHFB9P3U5VhJAS09Gj/0Y6Pym8U/6d4Q0XI=
+	t=1757277893; cv=none; b=X+Wsk7O8gqiakBvRSbH/zLJfzHNdyN2n6HrClzysRGOtsXqpA8NFxwfGw5LkKdQn67y/VoI6DW6o/O6ye7+5pOryqwdwUDthUW1j668ldkzOnOBYn+8+rXKs5F55Og4WHBKOAcTsbU4u6KYotyM56OmOINq8XSrWJEjUcl6GlGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277890; c=relaxed/simple;
-	bh=SxIEbSgrXyULR9IXbUGNGIZDrWDY6Oh02FrQwEdyeKw=;
+	s=arc-20240116; t=1757277893; c=relaxed/simple;
+	bh=C1wp9K/1IvrzqQHdHnzMC1Ld8Ups8Y6dt4euled8FiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iy+hRBsLK5ExDcreLkVaKXrNKR9rK4WCSvpYQOviRIhvKmdNblN/UxDXRplb7d6n0+yXWDXAJ+YgXzaZcGYyf9C2Zbo8r0kZLjCZkpT7grZnqWS+9BK3w35k1xSNNkyBv2F/Ua+q2Mtxo8N5mCOLz973f6f+CLxcVQ6Tvnkek0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOEjFIKh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xv30uGIqkFMbLBO1sT3r5I6qdpsdUBxW9cDdXJ5+6IcOKG++j1kTqc4SqPphGu3TILwHIqCNk8ZynViFRl1gmDJjFNZTyPtes22IOVLEgzkn7mudiPjbL7UjawSTACWzN40OS01hDfAF3UJyMc4p5wLXySTU22jbcTsMv8Jwr0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQGcexO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOEjFIKh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750D6C4CEF0;
-	Sun,  7 Sep 2025 20:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQGcexO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8591C4CEF0;
+	Sun,  7 Sep 2025 20:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277889;
-	bh=SxIEbSgrXyULR9IXbUGNGIZDrWDY6Oh02FrQwEdyeKw=;
+	s=korg; t=1757277893;
+	bh=C1wp9K/1IvrzqQHdHnzMC1Ld8Ups8Y6dt4euled8FiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOEjFIKh0mhBO5wKqYr56SIZPp73DI6SEJ4aBIjyiE34O/N5Xnx54jG4nWw58dZK7
-	 CHjxLhtdwP5xrITzrbdAa7jx/czbvxXh+v/sKzeQo+7YqiWCr/wNQQ4oG7MwYD6fRT
-	 2nG9fLUKSpfOekCj7WSONqMBvL55uNaHROCVSWto=
+	b=LQGcexO70X6Xya+XeFzLpQn5fu/rw2J9Tgj3J4QW/OnMumLeISPyMtK+cAy5bRGuW
+	 FJCbQJ3puHrpiNYIRLPUBp4i1M1RX3Ppm8fbgeU+l2uSdSQob8tGi9MBPJJ29qQSPZ
+	 QfUo0qfgPLRuDwlQw956FhsmKwgQPp1u4YdgPuoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.16 118/183] wifi: mwifiex: Initialize the chan_stats array to zero
-Date: Sun,  7 Sep 2025 21:59:05 +0200
-Message-ID: <20250907195618.596474924@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 154/183] hwmon: mlxreg-fan: Prevent fans from getting stuck at 0 RPM
+Date: Sun,  7 Sep 2025 21:59:41 +0200
+Message-ID: <20250907195619.477190476@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,70 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Vadim Pasternak <vadimp@nvidia.com>
 
-commit 0e20450829ca3c1dbc2db536391537c57a40fe0b upstream.
+[ Upstream commit 1180c79fbf36e4c02e76ae4658509523437e52a4 ]
 
-The adapter->chan_stats[] array is initialized in
-mwifiex_init_channel_scan_gap() with vmalloc(), which doesn't zero out
-memory.  The array is filled in mwifiex_update_chan_statistics()
-and then the user can query the data in mwifiex_cfg80211_dump_survey().
+The fans controlled by the driver can get stuck at 0 RPM if they are
+configured below a 20% duty cycle. The driver tries to avoid this by
+enforcing a minimum duty cycle of 20%, but this is done after the fans
+are registered with the thermal subsystem. This is too late as the
+thermal subsystem can set their current state before the driver is able
+to enforce the minimum duty cycle.
 
-There are two potential issues here.  What if the user calls
-mwifiex_cfg80211_dump_survey() before the data has been filled in.
-Also the mwifiex_update_chan_statistics() function doesn't necessarily
-initialize the whole array.  Since the array was not initialized at
-the start that could result in an information leak.
+Fix by setting the minimum duty cycle before registering the fans with
+the thermal subsystem.
 
-Also this array is pretty small.  It's a maximum of 900 bytes so it's
-more appropriate to use kcalloc() instead vmalloc().
-
-Cc: stable@vger.kernel.org
-Fixes: bf35443314ac ("mwifiex: channel statistics support for mwifiex")
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20250815023055.477719-1-rongqianfeng@vivo.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d7efb2ebc7b3 ("hwmon: (mlxreg-fan) Extend driver to support multiply cooling devices")
+Reported-by: Nikolay Aleksandrov <razor@blackwall.org>
+Tested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20250730201715.1111133-1-vadimp@nvidia.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    5 +++--
- drivers/net/wireless/marvell/mwifiex/main.c     |    4 ++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/hwmon/mlxreg-fan.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -4668,8 +4668,9 @@ int mwifiex_init_channel_scan_gap(struct
- 	 * additional active scan request for hidden SSIDs on passive channels.
- 	 */
- 	adapter->num_in_chan_stats = 2 * (n_channels_bg + n_channels_a);
--	adapter->chan_stats = vmalloc(array_size(sizeof(*adapter->chan_stats),
--						 adapter->num_in_chan_stats));
-+	adapter->chan_stats = kcalloc(adapter->num_in_chan_stats,
-+				      sizeof(*adapter->chan_stats),
-+				      GFP_KERNEL);
+diff --git a/drivers/hwmon/mlxreg-fan.c b/drivers/hwmon/mlxreg-fan.c
+index a5f89aab3fb4d..c25a54d5b39ad 100644
+--- a/drivers/hwmon/mlxreg-fan.c
++++ b/drivers/hwmon/mlxreg-fan.c
+@@ -561,15 +561,14 @@ static int mlxreg_fan_cooling_config(struct device *dev, struct mlxreg_fan *fan)
+ 		if (!pwm->connected)
+ 			continue;
+ 		pwm->fan = fan;
++		/* Set minimal PWM speed. */
++		pwm->last_hwmon_state = MLXREG_FAN_PWM_DUTY2STATE(MLXREG_FAN_MIN_DUTY);
+ 		pwm->cdev = devm_thermal_of_cooling_device_register(dev, NULL, mlxreg_fan_name[i],
+ 								    pwm, &mlxreg_fan_cooling_ops);
+ 		if (IS_ERR(pwm->cdev)) {
+ 			dev_err(dev, "Failed to register cooling device\n");
+ 			return PTR_ERR(pwm->cdev);
+ 		}
+-
+-		/* Set minimal PWM speed. */
+-		pwm->last_hwmon_state = MLXREG_FAN_PWM_DUTY2STATE(MLXREG_FAN_MIN_DUTY);
+ 	}
  
- 	if (!adapter->chan_stats)
- 		return -ENOMEM;
---- a/drivers/net/wireless/marvell/mwifiex/main.c
-+++ b/drivers/net/wireless/marvell/mwifiex/main.c
-@@ -642,7 +642,7 @@ static int _mwifiex_fw_dpc(const struct
- 	goto done;
- 
- err_add_intf:
--	vfree(adapter->chan_stats);
-+	kfree(adapter->chan_stats);
- err_init_chan_scan:
- 	wiphy_unregister(adapter->wiphy);
- 	wiphy_free(adapter->wiphy);
-@@ -1485,7 +1485,7 @@ static void mwifiex_uninit_sw(struct mwi
- 	wiphy_free(adapter->wiphy);
- 	adapter->wiphy = NULL;
- 
--	vfree(adapter->chan_stats);
-+	kfree(adapter->chan_stats);
- 	mwifiex_free_cmd_buffers(adapter);
- }
- 
+ 	return 0;
+-- 
+2.51.0
+
 
 
