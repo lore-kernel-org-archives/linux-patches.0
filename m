@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1AF20E029;
-	Sun,  7 Sep 2025 20:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234D420E029;
+	Sun,  7 Sep 2025 20:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276617; cv=none; b=oZYxtI4s1s9pz2jCABElkuilkEGPNQprgjRzmaB0/WG86KTJFqLTtN4DuijA9BTG1wPbxuxghLDCS3y2jgyxb9rfrvx9kgDkUhVCAT0GAsjzHUxtXv6EfhWnRl3V1qmhbX5mXdyBgM9s6L7eQgiS60XcS9qaq+D811IKKqpHyjA=
+	t=1757276620; cv=none; b=slpF9/HxpYX9XQ5kdClBf/rJptMEB4su4kw2o2yNUkd/VyhyAuP18Ac+WqHgBj/RA/Mkoq4GJXSnn6TOZu+l5jzas7MG3UtXAmCLMmoGSJZh09nbk2vgKSewg/KUqK+WS97gu9bBqIZaOzZY0XJMnJRaT+XJMLByiNAQbo9zCu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276617; c=relaxed/simple;
-	bh=rs1o7EKI9jlO/KnUqx0VNKS9GhKPalBivu6NVlUJh3E=;
+	s=arc-20240116; t=1757276620; c=relaxed/simple;
+	bh=5LpCb30qiBEjsmQRT6B9ZBh8cfgmBUXwU9K/UrKInEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMT2VZOME8f4Y1wM2+flabkNG3hWBDt+YRwKYg93KCeIbp40uYDj0bdTuG63zQInrphwYGxDaYMA/Xz/Rfe0rLE7z0LF9AiHUN+FOKODsAu+9elrM7bORXezA76qmifPPY1wvq0KOovB654UK6/QFgSsBj6HlL+xHKkBeha/bYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEeLFY9G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYaZAUGtmMdPKwPwefmPdZoI023WhVYPVidp90Dan2yLxBzGzxwuqtMBe5VdeW0A3AlkRCnWlcWEKHoAeIHVjf5iAO9+p15Y4L1FVMH6f8Av0eI+T2O200avCo9lAaD6l1QmqWvjr3bvWM+aoMOwPCYiNN6Ar9PDRlBqO093VLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpkssgDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEeLFY9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E2CC4CEF0;
-	Sun,  7 Sep 2025 20:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpkssgDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1E4C4CEF0;
+	Sun,  7 Sep 2025 20:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276616;
-	bh=rs1o7EKI9jlO/KnUqx0VNKS9GhKPalBivu6NVlUJh3E=;
+	s=korg; t=1757276620;
+	bh=5LpCb30qiBEjsmQRT6B9ZBh8cfgmBUXwU9K/UrKInEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEeLFY9GPjxfid3qzw0e8dexg/LMCgeJSCa2Q1JiIdEfIWMuzz1337LXyOXvVfCQ4
-	 3e0AftdIfTvRbSEdQYr9tAjgslhkByLetHMHtABH3tDCLolCOIcTH0vPaZRV3JEtaG
-	 XbfJIcgVQb7g8Y+asOdskYKScx8kTKq3jcMQI8IE=
+	b=UpkssgDXSr6nIg1COWl2HroJE2RZjffPzXsEZiLfF7rfKeqLl8tHfwcBQW82tNLWg
+	 YopBXaKhNnyGDdXKCHTGXf9/NdcBTg6IbOOcgCBwZKfwjs//1HEsV0l+ebgK7RhuPF
+	 wj3Rhwd/tHzvoqmlgjjpHYidl1PUyFvIP0D2KN60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-Subject: [PATCH 6.6 057/121] sched: Fix sched_numa_find_nth_cpu() if mask offline
-Date: Sun,  7 Sep 2025 21:58:13 +0200
-Message-ID: <20250907195611.300378525@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+47d8cb2f2cc1517e515a@syzkaller.appspotmail.com,
+	Mark Tinguely <mark.tinguely@oracle.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 058/121] ocfs2: prevent release journal inode after journal shutdown
+Date: Sun,  7 Sep 2025 21:58:14 +0200
+Message-ID: <20250907195611.325885296@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -50,110 +58,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 5ebf512f335053a42482ebff91e46c6dc156bf8c upstream.
+commit f46e8ef8bb7b452584f2e75337b619ac51a7cadf upstream.
 
-sched_numa_find_nth_cpu() uses a bsearch to look for the 'closest'
-CPU in sched_domains_numa_masks and given cpus mask. However they
-might not intersect if all CPUs in the cpus mask are offline. bsearch
-will return NULL in that case, bail out instead of dereferencing a
-bogus pointer.
+Before calling ocfs2_delete_osb(), ocfs2_journal_shutdown() has already
+been executed in ocfs2_dismount_volume(), so osb->journal must be NULL.
+Therefore, the following calltrace will inevitably fail when it reaches
+jbd2_journal_release_jbd_inode().
 
-The previous behaviour lead to this bug when using maxcpus=4 on an
-rk3399 (LLLLbb) (i.e. booting with all big CPUs offline):
+ocfs2_dismount_volume()->
+  ocfs2_delete_osb()->
+    ocfs2_free_slot_info()->
+      __ocfs2_free_slot_info()->
+        evict()->
+          ocfs2_evict_inode()->
+            ocfs2_clear_inode()->
+	      jbd2_journal_release_jbd_inode(osb->journal->j_journal,
 
-[    1.422922] Unable to handle kernel paging request at virtual address ffffff8000000000
-[    1.423635] Mem abort info:
-[    1.423889]   ESR = 0x0000000096000006
-[    1.424227]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    1.424715]   SET = 0, FnV = 0
-[    1.424995]   EA = 0, S1PTW = 0
-[    1.425279]   FSC = 0x06: level 2 translation fault
-[    1.425735] Data abort info:
-[    1.425998]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-[    1.426499]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    1.426952]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    1.427428] swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000004a9f000
-[    1.428038] [ffffff8000000000] pgd=18000000f7fff403, p4d=18000000f7fff403, pud=18000000f7fff403, pmd=0000000000000000
-[    1.429014] Internal error: Oops: 0000000096000006 [#1]  SMP
-[    1.429525] Modules linked in:
-[    1.429813] CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.17.0-rc4-dirty #343 PREEMPT
-[    1.430559] Hardware name: Pine64 RockPro64 v2.1 (DT)
-[    1.431012] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    1.431634] pc : sched_numa_find_nth_cpu+0x2a0/0x488
-[    1.432094] lr : sched_numa_find_nth_cpu+0x284/0x488
-[    1.432543] sp : ffffffc084e1b960
-[    1.432843] x29: ffffffc084e1b960 x28: ffffff80078a8800 x27: ffffffc0846eb1d0
-[    1.433495] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-[    1.434144] x23: 0000000000000000 x22: fffffffffff7f093 x21: ffffffc081de6378
-[    1.434792] x20: 0000000000000000 x19: 0000000ffff7f093 x18: 00000000ffffffff
-[    1.435441] x17: 3030303866666666 x16: 66663d736b73616d x15: ffffffc104e1b5b7
-[    1.436091] x14: 0000000000000000 x13: ffffffc084712860 x12: 0000000000000372
-[    1.436739] x11: 0000000000000126 x10: ffffffc08476a860 x9 : ffffffc084712860
-[    1.437389] x8 : 00000000ffffefff x7 : ffffffc08476a860 x6 : 0000000000000000
-[    1.438036] x5 : 000000000000bff4 x4 : 0000000000000000 x3 : 0000000000000000
-[    1.438683] x2 : 0000000000000000 x1 : ffffffc0846eb000 x0 : ffffff8000407b68
-[    1.439332] Call trace:
-[    1.439559]  sched_numa_find_nth_cpu+0x2a0/0x488 (P)
-[    1.440016]  smp_call_function_any+0xc8/0xd0
-[    1.440416]  armv8_pmu_init+0x58/0x27c
-[    1.440770]  armv8_cortex_a72_pmu_init+0x20/0x2c
-[    1.441199]  arm_pmu_device_probe+0x1e4/0x5e8
-[    1.441603]  armv8_pmu_device_probe+0x1c/0x28
-[    1.442007]  platform_probe+0x5c/0xac
-[    1.442347]  really_probe+0xbc/0x298
-[    1.442683]  __driver_probe_device+0x78/0x12c
-[    1.443087]  driver_probe_device+0xdc/0x160
-[    1.443475]  __driver_attach+0x94/0x19c
-[    1.443833]  bus_for_each_dev+0x74/0xd4
-[    1.444190]  driver_attach+0x24/0x30
-[    1.444525]  bus_add_driver+0xe4/0x208
-[    1.444874]  driver_register+0x60/0x128
-[    1.445233]  __platform_driver_register+0x24/0x30
-[    1.445662]  armv8_pmu_driver_init+0x28/0x4c
-[    1.446059]  do_one_initcall+0x44/0x25c
-[    1.446416]  kernel_init_freeable+0x1dc/0x3bc
-[    1.446820]  kernel_init+0x20/0x1d8
-[    1.447151]  ret_from_fork+0x10/0x20
-[    1.447493] Code: 90022e21 f000e5f5 910de2b5 2a1703e2 (f8767803)
-[    1.448040] ---[ end trace 0000000000000000 ]---
-[    1.448483] note: swapper/0[1] exited with preempt_count 1
-[    1.449047] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
-[    1.449741] SMP: stopping secondary CPUs
-[    1.450105] Kernel Offset: disabled
-[    1.450419] CPU features: 0x000000,00080000,20002001,0400421b
-[    1.450935] Memory Limit: none
-[    1.451217] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b ]---
+Adding osb->journal checks will prevent null-ptr-deref during the above
+execution path.
 
-Yury: with the fix, the function returns cpu == nr_cpu_ids, and later in
-
-	smp_call_function_any ->
-	  smp_call_function_single ->
-	     generic_exec_single
-
-we test the cpu for '>= nr_cpu_ids' and return -ENXIO. So everything is
-handled correctly.
-
-Fixes: cd7f55359c90 ("sched: add sched_numa_find_nth_cpu()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Link: https://lkml.kernel.org/r/tencent_357489BEAEE4AED74CBD67D246DBD2C4C606@qq.com
+Fixes: da5e7c87827e ("ocfs2: cleanup journal init and shutdown")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reported-by: syzbot+47d8cb2f2cc1517e515a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=47d8cb2f2cc1517e515a
+Tested-by: syzbot+47d8cb2f2cc1517e515a@syzkaller.appspotmail.com
+Reviewed-by: Mark Tinguely <mark.tinguely@oracle.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/topology.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ocfs2/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -2140,6 +2140,8 @@ int sched_numa_find_nth_cpu(const struct
- 		goto unlock;
- 
- 	hop_masks = bsearch(&k, k.masks, sched_domains_numa_levels, sizeof(k.masks[0]), hop_cmp);
-+	if (!hop_masks)
-+		goto unlock;
- 	hop = hop_masks	- k.masks;
- 
- 	ret = hop ?
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1205,6 +1205,9 @@ static void ocfs2_clear_inode(struct ino
+ 	 * the journal is flushed before journal shutdown. Thus it is safe to
+ 	 * have inodes get cleaned up after journal shutdown.
+ 	 */
++	if (!osb->journal)
++		return;
++
+ 	jbd2_journal_release_jbd_inode(osb->journal->j_journal,
+ 				       &oi->ip_jinode);
+ }
 
 
