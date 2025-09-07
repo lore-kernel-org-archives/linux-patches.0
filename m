@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4D626FA77;
-	Sun,  7 Sep 2025 20:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A889A21FF3B;
+	Sun,  7 Sep 2025 20:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276947; cv=none; b=LWeGvrUEcyRdQrMi+BMPpUOEmf0HJM7HyVIwUW/9RiENzizj/PDbfaJWTX51wE+sU9eYwrh3rvN16z8fjx6sAAk9zr5douYjTn+4BFU7faUo+8fdfpsjKOTCXDR5Hkbq56w8zbhFqIij4xOCYnII+QeVQLwLPdYcj2wcwqO94Mg=
+	t=1757276950; cv=none; b=Z9gZHEGxGGlRlC07jaddvOr6+ddRg8w6txWSlL7eOe9PC+QJul43IxnFLwowoR5QDiMmObb5skNm2x+UxzOI0scC2qJ2Eiy95Pt+kQN+p4uzE5XYTBY+Q1FhRZwa2AjiLGgM5VBWqdaeVNQGxLnSi7DCOaEoMe9tScuxGWn+JJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276947; c=relaxed/simple;
-	bh=nbrU8vYZVyTMWZjsAZiQuu3QbpSLBPwd9ICqWXLELhc=;
+	s=arc-20240116; t=1757276950; c=relaxed/simple;
+	bh=74WOn0i3CldVmSv2c5qSrSrz5Xru3+6dqOW5dRY/8xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLhOMpxXhjCkH7ckPvqgqW52MVIcUbJY6EC+rZFgH4f4M3j7GzSUcisv1K0K93T7UnJuOYADb2GEQGhvdtxoV4GjWJ5cWuymnwUhLnKcK0ffgC/DBjZ6iB8npEJ2eaqrbXkErJ6IYnsIAU7oqeE8FMzAtI55lRPkODpaFRGp18Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AN6aNeJu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6+TG7MCMm/qCmwktPvaqfQfIPiJ5X7E7h8FYuMXXR/4eb/v5ko/ES7LmL0zT6fK0yXQBgBsW6B8YK/nXcpfiBOK8eol4L4kD6n0HmlaMkxEw02YLczjnV/QShBbyuRddcK9mffvDtIYNuKTnmQGhFOlNMmUIKtIMsRlYVDdcPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYMXMWuH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AN6aNeJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6F4C4CEF9;
-	Sun,  7 Sep 2025 20:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYMXMWuH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B0AC4CEF0;
+	Sun,  7 Sep 2025 20:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276946;
-	bh=nbrU8vYZVyTMWZjsAZiQuu3QbpSLBPwd9ICqWXLELhc=;
+	s=korg; t=1757276950;
+	bh=74WOn0i3CldVmSv2c5qSrSrz5Xru3+6dqOW5dRY/8xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AN6aNeJuObdHTmoCczhCclHPCgeUsyCJt+71DUKIaistrIvsjofeJXDdsZRIUp/ko
-	 TAqkoPzbEGroC+y12BnqrdaIu4wrwEWtZJZP6atH5U1rtg/5HKNtPCLNBEXbkhpZNc
-	 wyJMSCG1c6vPZWZM546BEhVXiygHMhs4lBlqhud8=
+	b=cYMXMWuHJkTXoe1HuU05nyABVS2+RCBZSJ2CjO/lYYsZ8QnUTAc3Q5D6vOAJ6I3/z
+	 Gm7k5NFOUv+3kjcdVqFsg8DT0Q38AkfvbDjLtPk5adY68/ubC3oD5ZCDeCC/It6Y6r
+	 ezzEW9mLhbUo81I9r6rvasbpTOLTHXkav2zbLkY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Alvin <alvin.paulp@amd.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Phil Sutter <phil@nwl.cc>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/175] mmc: sdhci-of-arasan: Support for emmc hardware reset
-Date: Sun,  7 Sep 2025 21:57:06 +0200
-Message-ID: <20250907195615.601620547@linuxfoundation.org>
+Subject: [PATCH 6.12 040/175] netfilter: conntrack: helper: Replace -EEXIST by -EBUSY
+Date: Sun,  7 Sep 2025 21:57:15 +0200
+Message-ID: <20250907195615.803773844@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,67 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Alvin <alvin.paulp@amd.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 11c7d665181c1879b0d5561102c3834ff14a5615 ]
+[ Upstream commit 54416fd76770bd04fc3c501810e8d673550bab26 ]
 
-Add hw_reset callback to support emmc hardware reset, this callback get
-called from the mmc core only when "cap-mmc-hw-reset" property is
-defined in the DT.
+The helper registration return value is passed-through by module_init
+callbacks which modprobe confuses with the harmless -EEXIST returned
+when trying to load an already loaded module.
 
-Signed-off-by: Paul Alvin <alvin.paulp@amd.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20241007095445.19340-1-alvin.paulp@amd.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: e251709aaddb ("mmc: sdhci-of-arasan: Ensure CD logic stabilization before power-up")
+Make sure modprobe fails so users notice their helper has not been
+registered and won't work.
+
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-of-arasan.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ net/netfilter/nf_conntrack_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
-index 5edd024347bd5..0cb05bdec34d5 100644
---- a/drivers/mmc/host/sdhci-of-arasan.c
-+++ b/drivers/mmc/host/sdhci-of-arasan.c
-@@ -76,6 +76,8 @@
- #define FREQSEL_225M_200M		0x7
- #define PHY_DLL_TIMEOUT_MS		100
- 
-+#define SDHCI_HW_RST_EN		BIT(4)
-+
- /* Default settings for ZynqMP Clock Phases */
- #define ZYNQMP_ICLK_PHASE {0, 63, 63, 0, 63,  0,   0, 183, 54,  0, 0}
- #define ZYNQMP_OCLK_PHASE {0, 72, 60, 0, 60, 72, 135, 48, 72, 135, 0}
-@@ -475,6 +477,21 @@ static void sdhci_arasan_reset(struct sdhci_host *host, u8 mask)
- 	}
- }
- 
-+static void sdhci_arasan_hw_reset(struct sdhci_host *host)
-+{
-+	u8 reg;
-+
-+	reg = sdhci_readb(host, SDHCI_POWER_CONTROL);
-+	reg |= SDHCI_HW_RST_EN;
-+	sdhci_writeb(host, reg, SDHCI_POWER_CONTROL);
-+	/* As per eMMC spec, minimum 1us is required but give it 2us for good measure */
-+	usleep_range(2, 5);
-+	reg &= ~SDHCI_HW_RST_EN;
-+	sdhci_writeb(host, reg, SDHCI_POWER_CONTROL);
-+	/* As per eMMC spec, minimum 200us is required but give it 300us for good measure */
-+	usleep_range(300, 500);
-+}
-+
- static int sdhci_arasan_voltage_switch(struct mmc_host *mmc,
- 				       struct mmc_ios *ios)
- {
-@@ -505,6 +522,7 @@ static const struct sdhci_ops sdhci_arasan_ops = {
- 	.reset = sdhci_arasan_reset,
- 	.set_uhs_signaling = sdhci_set_uhs_signaling,
- 	.set_power = sdhci_set_power_and_bus_voltage,
-+	.hw_reset = sdhci_arasan_hw_reset,
- };
- 
- static u32 sdhci_arasan_cqhci_irq(struct sdhci_host *host, u32 intmask)
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index 4ed5878cb25b1..ceb48c3ca0a43 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -368,7 +368,7 @@ int nf_conntrack_helper_register(struct nf_conntrack_helper *me)
+ 			    (cur->tuple.src.l3num == NFPROTO_UNSPEC ||
+ 			     cur->tuple.src.l3num == me->tuple.src.l3num) &&
+ 			    cur->tuple.dst.protonum == me->tuple.dst.protonum) {
+-				ret = -EEXIST;
++				ret = -EBUSY;
+ 				goto out;
+ 			}
+ 		}
+@@ -379,7 +379,7 @@ int nf_conntrack_helper_register(struct nf_conntrack_helper *me)
+ 		hlist_for_each_entry(cur, &nf_ct_helper_hash[h], hnode) {
+ 			if (nf_ct_tuple_src_mask_cmp(&cur->tuple, &me->tuple,
+ 						     &mask)) {
+-				ret = -EEXIST;
++				ret = -EBUSY;
+ 				goto out;
+ 			}
+ 		}
 -- 
 2.50.1
 
