@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4CD1B4247;
-	Sun,  7 Sep 2025 20:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F25214BFA2;
+	Sun,  7 Sep 2025 20:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276443; cv=none; b=JvDXD4IBzLuMOIUjmI9Jl19Ue97LcJEj86Ujr2dczcFmCp91IFc4F23H22RUjQrpIIYXPEKCrxtwPARkCK+0T0zJIKLLQPQKSkojV8KlcX36qrjmvO4C6tu3C3otyubg92eVZhgD4qGvy9ff6vdbLc7JYbp8NX/QvT8WlmqbK+s=
+	t=1757276446; cv=none; b=WxFxExxjY6l1v9vVvN+gSE16AqPQWZS4/ZFyF2wKngqTGZkHeMAXWSwrLL8TGpaM8AAl3HTA6IajXCISqdFYQeVb7Nk0PUQ5/6OwNJCCwzXfM3JTAx3RQ0UgKol/0/MtzFDmkzMcHk+z7fhgmBplU7xjXuEhIs8wpA3DZHXI93g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276443; c=relaxed/simple;
-	bh=krNL2KbUU2h5RWa7AYAEIHB6MQP+3rf69ZVBwx5BvPc=;
+	s=arc-20240116; t=1757276446; c=relaxed/simple;
+	bh=h4D34a6LLxbF2+UrcJSr8Kv2yF0Pw5bRjDFXiwAMjCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUkwCbvOaDn2lUb8p8cIgLE5NFAW6a9iRm4WE834uFSgpIC0Be8sNemX7pU+tTVbu6/cdg+6Umo8LksZal8k+5vE2WVtubRbD0wO8l8w2gB4nN03LKGmqh7FihFlMe/ib35wzZNzCWkK35CkOV8ec3u8C5jJxH5PtHdHE8C87ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXi3yZqB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SdQr9FrE7mceqw3SiaDA9xMdJ4MYcEcy85TtLV2CVSM7E8GloufIthCO7heqiFuMfOc7QDKr3FZViEacgLxBbi7+Fu5JgE87l5VRnaDTsMY2K5BzG11GMpNO7+hdyZDxL1Ohs1N+NPw7hgDgX+ISa54/AL0K28q6rIchXxeqVTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpFftCz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXi3yZqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD60DC4CEF0;
-	Sun,  7 Sep 2025 20:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpFftCz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50B2C4CEF0;
+	Sun,  7 Sep 2025 20:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276443;
-	bh=krNL2KbUU2h5RWa7AYAEIHB6MQP+3rf69ZVBwx5BvPc=;
+	s=korg; t=1757276446;
+	bh=h4D34a6LLxbF2+UrcJSr8Kv2yF0Pw5bRjDFXiwAMjCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXi3yZqBjvHWKLIX0Vk8w3jpa8KVgpzErUVehHXZGJlISgxziJsx3p3JAp1ZPz5kt
-	 u8FR0oc4XxVBlzAS4X+faTFqiSugbf+dWRTEOmbn4p0IzpFVPZP52AfKht1ZSaz5My
-	 SIMNr7UMxOcKLwqljSIPdGcQjZhyZ0yRftSwCbdI=
+	b=wpFftCz3rbpjquW3CFKPJ5EOA/QkJLPvigOP2he7rGAwiQZ4+U+xhizf3g39ysQe5
+	 WAo8aiwzXRp8V5QkmQeo0ZYoJjbH73UtNg7xuesrzv/EqChRC0wuhQskvjxcItuApd
+	 Ja+4ZpMIt5uLUZQDcpL0+azdP0twsbRsz45q2KxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alexander Danilenko <al.b.danilenko@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/104] cpufreq: intel_pstate: Check turbo_is_disabled() in store_no_turbo()
-Date: Sun,  7 Sep 2025 21:59:01 +0200
-Message-ID: <20250907195610.360270641@linuxfoundation.org>
+Subject: [PATCH 6.1 067/104] spi: tegra114: Remove unnecessary NULL-pointer checks
+Date: Sun,  7 Sep 2025 21:58:24 +0200
+Message-ID: <20250907195609.416850188@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -52,88 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Alexander Danilenko <al.b.danilenko@gmail.com>
 
-[ Upstream commit 350cbb5d2f676bff22c49e5e81764c3b8da342a9 ]
+[ Upstream commit 373c36bf7914e3198ac2654dede499f340c52950 ]
 
-After recent changes in intel_pstate, global.turbo_disabled is only set
-at the initialization time and never changed.  However, it turns out
-that on some systems the "turbo disabled" bit in MSR_IA32_MISC_ENABLE,
-the initial state of which is reflected by global.turbo_disabled, can be
-flipped later and there should be a way to take that into account (other
-than checking that MSR every time the driver runs which is costly and
-useless overhead on the vast majority of systems).
+cs_setup, cs_hold and cs_inactive points to fields of spi_device struct,
+so there is no sense in checking them for NULL.
 
-For this purpose, notice that before the changes in question,
-store_no_turbo() contained a turbo_is_disabled() check that was used
-for updating global.turbo_disabled if the "turbo disabled" bit in
-MSR_IA32_MISC_ENABLE had been flipped and that functionality can be
-restored.  Then, users will be able to reset global.turbo_disabled
-by writing 0 to no_turbo which used to work before on systems with
-flipping "turbo disabled" bit.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This guarantees the driver state to remain in sync, but READ_ONCE()
-annotations need to be added in two places where global.turbo_disabled
-is accessed locklessly, so modify the driver to make that happen.
-
-Fixes: 0940f1a8011f ("cpufreq: intel_pstate: Do not update global.turbo_disabled after initialization")
-Closes: https://lore.kernel.org/linux-pm/bf3ebf1571a4788e97daf861eb493c12d42639a3.camel@xry111.site
-Suggested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Reported-by: Xi Ruoyao <xry111@xry111.site>
-Tested-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
+Signed-off-by: Alexander Danilenko <al.b.danilenko@gmail.com>
+Link: https://lore.kernel.org/r/20230815092058.4083-1-al.b.danilenko@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 4426e6b4ecf6 ("spi: tegra114: Don't fail set_cs_timing when delays are zero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/spi/spi-tegra114.c |   18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 7570d6d1ca8c0..3ded51db833d7 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1255,12 +1255,17 @@ static ssize_t store_no_turbo(struct kobject *a, struct kobj_attribute *b,
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -723,27 +723,23 @@ static int tegra_spi_set_hw_cs_timing(st
+ 	struct spi_delay *setup = &spi->cs_setup;
+ 	struct spi_delay *hold = &spi->cs_hold;
+ 	struct spi_delay *inactive = &spi->cs_inactive;
+-	u8 setup_dly, hold_dly, inactive_dly;
++	u8 setup_dly, hold_dly;
+ 	u32 setup_hold;
+ 	u32 spi_cs_timing;
+ 	u32 inactive_cycles;
+ 	u8 cs_state;
  
- 	no_turbo = !!clamp_t(int, input, 0, 1);
- 
--	if (no_turbo == global.no_turbo)
--		goto unlock_driver;
--
--	if (global.turbo_disabled) {
--		pr_notice_once("Turbo disabled by BIOS or unavailable on processor\n");
-+	WRITE_ONCE(global.turbo_disabled, turbo_is_disabled());
-+	if (global.turbo_disabled && !no_turbo) {
-+		pr_notice("Turbo disabled by BIOS or unavailable on processor\n");
- 		count = -EPERM;
-+		if (global.no_turbo)
-+			goto unlock_driver;
-+		else
-+			no_turbo = 1;
-+	}
-+
-+	if (no_turbo == global.no_turbo) {
- 		goto unlock_driver;
+-	if ((setup && setup->unit != SPI_DELAY_UNIT_SCK) ||
+-	    (hold && hold->unit != SPI_DELAY_UNIT_SCK) ||
+-	    (inactive && inactive->unit != SPI_DELAY_UNIT_SCK)) {
++	if (setup->unit != SPI_DELAY_UNIT_SCK ||
++	    hold->unit != SPI_DELAY_UNIT_SCK ||
++	    inactive->unit != SPI_DELAY_UNIT_SCK) {
+ 		dev_err(&spi->dev,
+ 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
+ 			SPI_DELAY_UNIT_SCK);
+ 		return -EINVAL;
  	}
  
-@@ -1730,7 +1735,7 @@ static u64 atom_get_val(struct cpudata *cpudata, int pstate)
- 	u32 vid;
+-	setup_dly = setup ? setup->value : 0;
+-	hold_dly = hold ? hold->value : 0;
+-	inactive_dly = inactive ? inactive->value : 0;
+-
+-	setup_dly = min_t(u8, setup_dly, MAX_SETUP_HOLD_CYCLES);
+-	hold_dly = min_t(u8, hold_dly, MAX_SETUP_HOLD_CYCLES);
++	setup_dly = min_t(u8, setup->value, MAX_SETUP_HOLD_CYCLES);
++	hold_dly = min_t(u8, hold->value, MAX_SETUP_HOLD_CYCLES);
+ 	if (setup_dly && hold_dly) {
+ 		setup_hold = SPI_SETUP_HOLD(setup_dly - 1, hold_dly - 1);
+ 		spi_cs_timing = SPI_CS_SETUP_HOLD(tspi->spi_cs_timing1,
+@@ -755,7 +751,7 @@ static int tegra_spi_set_hw_cs_timing(st
+ 		}
+ 	}
  
- 	val = (u64)pstate << 8;
--	if (READ_ONCE(global.no_turbo) && !global.turbo_disabled)
-+	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
- 		val |= (u64)1 << 32;
- 
- 	vid_fp = cpudata->vid.min + mul_fp(
-@@ -1900,7 +1905,7 @@ static u64 core_get_val(struct cpudata *cpudata, int pstate)
- 	u64 val;
- 
- 	val = (u64)pstate << 8;
--	if (READ_ONCE(global.no_turbo) && !global.turbo_disabled)
-+	if (READ_ONCE(global.no_turbo) && !READ_ONCE(global.turbo_disabled))
- 		val |= (u64)1 << 32;
- 
- 	return val;
--- 
-2.51.0
-
+-	inactive_cycles = min_t(u8, inactive_dly, MAX_INACTIVE_CYCLES);
++	inactive_cycles = min_t(u8, inactive->value, MAX_INACTIVE_CYCLES);
+ 	if (inactive_cycles)
+ 		inactive_cycles--;
+ 	cs_state = inactive_cycles ? 0 : 1;
 
 
