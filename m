@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D433C1A0BFD;
-	Sun,  7 Sep 2025 20:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5711A0BFD;
+	Sun,  7 Sep 2025 20:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277274; cv=none; b=b6Y9wF6Jg2EjHXT2kjCxEsRgHndSkK0HTlFjHmEf0zn6cO9RcFGaUUSciKKYIRJrqaOkF8nnaM1xBO1eyOT7h9/ADBaK6WWOKF6P6WVuk4TMdRp+Rf+/OIFAyuqzoupoIvNzyMPFGkq9cVGDTwkgGHjyBDo52f1vqHw+aulYy/U=
+	t=1757277278; cv=none; b=mQ4Q/5i0D9ckg4u2DHxlk1apbPAQk9DISBLFKA7wOwe+rk8tOQKbqXPcCvDkhc0Aov3DMFvmwIjHGXZSrmcqRTjqDxd2N4LX4SFX21pcdK3TLBXzLx4SXMyUqZPfNdpM6KDS6r7Qkl5itpKVzahylIuMNvbul6kAi6udsUV+34U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277274; c=relaxed/simple;
-	bh=BHCefXjOo9RomAaHR7wZ4G1AlPAIAafkJ96h149EFN8=;
+	s=arc-20240116; t=1757277278; c=relaxed/simple;
+	bh=bkwSL81Eu9Umog8wHFWX/HymWqH+9ML5i/QdBp6siRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f5JAbfBt+aybMJ4VUd7nT6WAxVRstc9Zs049bGZxPzEFoLUg08N1FhKW7orskkBI10H1i8rhANnynbBcxECd8wJUt+9JvCZB635g4KGXtUWv0jl44tDCkOzCnukONuFBGT7Nsa0CHiCA0Ru84aV0ys6Nc7etj7+7hqWcKcEkQmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GV3PHXm+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UlF+KqpEYHc78rlnd7zpBBuW7VHOhEzu+LyFjF55bmYLUtyP0J0G2rfkIA6gkGdbThcQeeVr+opvVO+moJ/XOKOIQg2c6Nc6adzug/rCPkXn2I3xgdbrotHxtHCCssdm9w8PFbbxSuKQ4TFP66mxNwKheKTXQHMCRfGhYTgnG8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKITK9vg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GV3PHXm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AC2C4CEF0;
-	Sun,  7 Sep 2025 20:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKITK9vg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724CBC4CEF9;
+	Sun,  7 Sep 2025 20:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277274;
-	bh=BHCefXjOo9RomAaHR7wZ4G1AlPAIAafkJ96h149EFN8=;
+	s=korg; t=1757277277;
+	bh=bkwSL81Eu9Umog8wHFWX/HymWqH+9ML5i/QdBp6siRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GV3PHXm+sGHqM9lMCH070znkImsH70s8fFbBc5KwZbxf2I7PqZECb23r8I61QtvZi
-	 RTiZuVIpq/7BrThzthQSXoihb1xdpaTTOodQfrUy/mOd1zQjejsD5YyFcGCRhXY4eA
-	 AyuAE99mY/E4Pu5fNrZjUB5HQgeBIS0GxVlWDz8s=
+	b=CKITK9vgmW4QDHlNbDyn1J+f5r/BkClPDUJLGxueerQMSD4+lYLeYN5bmqHWJDxt5
+	 ajsyI1QI60DJGe5hJZvp5fSQTgNOsBEKl7hNrS1WjCI7Zmxh6TyzIG+vhycKqPmjCK
+	 WFQwgXkvr1DFm/jw40/i89JYJ+70sEAofPKbo1Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/175] nouveau: fix disabling the nonstall irq due to storm code
-Date: Sun,  7 Sep 2025 21:58:56 +0200
-Message-ID: <20250907195618.189069478@linuxfoundation.org>
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 142/175] kunit: kasan_test: disable fortify string checker on kasan_strings() test
+Date: Sun,  7 Sep 2025 21:58:57 +0200
+Message-ID: <20250907195618.212784613@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -51,149 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 0ef5c4e4dbbfcebaa9b2eca18097b43016727dfe ]
+Similar to commit 09c6304e38e4 ("kasan: test: fix compatibility with
+FORTIFY_SOURCE") the kernel is panicing in kasan_string().
 
-Nouveau has code that when it gets an IRQ with no allowed handler
-it disables it to avoid storms.
+This is due to the `src` and `ptr` not being hidden from the optimizer
+which would disable the runtime fortify string checker.
 
-However with nonstall interrupts, we often disable them from
-the drm driver, but still request their emission via the push submission.
+Call trace:
+  __fortify_panic+0x10/0x20 (P)
+  kasan_strings+0x980/0x9b0
+  kunit_try_run_case+0x68/0x190
+  kunit_generic_run_threadfn_adapter+0x34/0x68
+  kthread+0x1c4/0x228
+  ret_from_fork+0x10/0x20
+ Code: d503233f a9bf7bfd 910003fd 9424b243 (d4210000)
+ ---[ end trace 0000000000000000 ]---
+ note: kunit_try_catch[128] exited with irqs disabled
+ note: kunit_try_catch[128] exited with preempt_count 1
+     # kasan_strings: try faulted: last
+** replaying previous printk message **
+     # kasan_strings: try faulted: last line seen mm/kasan/kasan_test_c.c:1600
+     # kasan_strings: internal error occurred preventing test case from running: -4
 
-Just don't disable nonstall irqs ever in normal operation, the
-event handling code will filter them out, and the driver will
-just enable/disable them at load time.
-
-This fixes timeouts we've been seeing on/off for a long time,
-but they became a lot more noticeable on Blackwell.
-
-This doesn't fix all of them, there is a subsequent fence emission
-fix to fix the last few.
-
-Fixes: 3ebd64aa3c4f ("drm/nouveau/intr: support multiple trees, and explicit interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://lore.kernel.org/r/20250829021633.1674524-1-airlied@gmail.com
-[ Fix a typo and a minor checkpatch.pl warning; remove "v2" from commit
-  subject. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-[ Apply to drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250801120236.2962642-1-yeoreum.yun@arm.com
+Fixes: 73228c7ecc5e ("KASAN: port KASAN Tests to KUnit")
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+[ One less test in older trees ]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c  |    2 ++
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c |   23 +++++++++++++++--------
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c |    1 +
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h  |    2 ++
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c  |    1 +
- 5 files changed, 21 insertions(+), 8 deletions(-)
+ mm/kasan/kasan_test_c.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
-@@ -352,6 +352,8 @@ nvkm_fifo_dtor(struct nvkm_engine *engin
- 	mutex_destroy(&fifo->userd.mutex);
+--- a/mm/kasan/kasan_test_c.c
++++ b/mm/kasan/kasan_test_c.c
+@@ -1548,6 +1548,7 @@ static void kasan_strings(struct kunit *
  
- 	nvkm_event_fini(&fifo->nonstall.event);
-+	if (fifo->func->nonstall_dtor)
-+		fifo->func->nonstall_dtor(fifo);
- 	mutex_destroy(&fifo->mutex);
+ 	ptr = kmalloc(size, GFP_KERNEL | __GFP_ZERO);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ptr);
++	OPTIMIZER_HIDE_VAR(ptr);
  
- 	if (fifo->func->dtor)
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
-@@ -517,19 +517,11 @@ ga100_fifo_nonstall_intr(struct nvkm_int
- static void
- ga100_fifo_nonstall_block(struct nvkm_event *event, int type, int index)
- {
--	struct nvkm_fifo *fifo = container_of(event, typeof(*fifo), nonstall.event);
--	struct nvkm_runl *runl = nvkm_runl_get(fifo, index, 0);
--
--	nvkm_inth_block(&runl->nonstall.inth);
- }
+ 	kfree(ptr);
  
- static void
- ga100_fifo_nonstall_allow(struct nvkm_event *event, int type, int index)
- {
--	struct nvkm_fifo *fifo = container_of(event, typeof(*fifo), nonstall.event);
--	struct nvkm_runl *runl = nvkm_runl_get(fifo, index, 0);
--
--	nvkm_inth_allow(&runl->nonstall.inth);
- }
- 
- const struct nvkm_event_func
-@@ -564,12 +556,26 @@ ga100_fifo_nonstall_ctor(struct nvkm_fif
- 		if (ret)
- 			return ret;
- 
-+		nvkm_inth_allow(&runl->nonstall.inth);
-+
- 		nr = max(nr, runl->id + 1);
- 	}
- 
- 	return nr;
- }
- 
-+void
-+ga100_fifo_nonstall_dtor(struct nvkm_fifo *fifo)
-+{
-+	struct nvkm_runl *runl;
-+
-+	nvkm_runl_foreach(runl, fifo) {
-+		if (runl->nonstall.vector < 0)
-+			continue;
-+		nvkm_inth_block(&runl->nonstall.inth);
-+	}
-+}
-+
- int
- ga100_fifo_runl_ctor(struct nvkm_fifo *fifo)
- {
-@@ -599,6 +605,7 @@ ga100_fifo = {
- 	.runl_ctor = ga100_fifo_runl_ctor,
- 	.mmu_fault = &tu102_fifo_mmu_fault,
- 	.nonstall_ctor = ga100_fifo_nonstall_ctor,
-+	.nonstall_dtor = ga100_fifo_nonstall_dtor,
- 	.nonstall = &ga100_fifo_nonstall,
- 	.runl = &ga100_runl,
- 	.runq = &ga100_runq,
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c
-@@ -30,6 +30,7 @@ ga102_fifo = {
- 	.runl_ctor = ga100_fifo_runl_ctor,
- 	.mmu_fault = &tu102_fifo_mmu_fault,
- 	.nonstall_ctor = ga100_fifo_nonstall_ctor,
-+	.nonstall_dtor = ga100_fifo_nonstall_dtor,
- 	.nonstall = &ga100_fifo_nonstall,
- 	.runl = &ga100_runl,
- 	.runq = &ga100_runq,
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h
-@@ -40,6 +40,7 @@ struct nvkm_fifo_func {
- 	void (*start)(struct nvkm_fifo *, unsigned long *);
- 
- 	int (*nonstall_ctor)(struct nvkm_fifo *);
-+	void (*nonstall_dtor)(struct nvkm_fifo *);
- 	const struct nvkm_event_func *nonstall;
- 
- 	const struct nvkm_runl_func *runl;
-@@ -198,6 +199,7 @@ extern const struct nvkm_fifo_func_mmu_f
- 
- int ga100_fifo_runl_ctor(struct nvkm_fifo *);
- int ga100_fifo_nonstall_ctor(struct nvkm_fifo *);
-+void ga100_fifo_nonstall_dtor(struct nvkm_fifo *);
- extern const struct nvkm_event_func ga100_fifo_nonstall;
- extern const struct nvkm_runl_func ga100_runl;
- extern const struct nvkm_runq_func ga100_runq;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c
-@@ -660,6 +660,7 @@ r535_fifo_new(const struct nvkm_fifo_fun
- 	rm->chan.func = &r535_chan;
- 	rm->nonstall = &ga100_fifo_nonstall;
- 	rm->nonstall_ctor = ga100_fifo_nonstall_ctor;
-+	rm->nonstall_dtor = ga100_fifo_nonstall_dtor;
- 
- 	return nvkm_fifo_new_(rm, device, type, inst, pfifo);
- }
 
 
