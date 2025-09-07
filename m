@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0BC4315A;
-	Sun,  7 Sep 2025 20:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A101DF246;
+	Sun,  7 Sep 2025 20:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277513; cv=none; b=GuCcXk0JAzvT5w+8N7wXowyt9mVlV0LuVkF/YNbMcvKeVon/JuvYf9CQ2SxUPMfHG7DCjn4cpdQ/YkSKPQ0nuC6692qfAlaFouJmY4LwLe80fh/0pPT7QgFPvXnhxRp6SIPO/BeYXb8QwkRqoCylFVkx3Je2jfE3VgnWOGx/clg=
+	t=1757277516; cv=none; b=GkaeWzjG/G4R4mHWznvDdyRZq5zghNxB+LCs+tKAFxfxTpQ7OsblWWKIPodYVqjMcpbz0XQy7O8N5jZ2i7rbtQoaN1nikYNlULjancYlvF8pzovuvhoWcUDeDb5b0dsMaMJH51cKLqmoROqeiFaB5R9CwLf1PDcnZdIZQebOqrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277513; c=relaxed/simple;
-	bh=TI9+VOPjz6Q4snpJ1Nkp9nZ14D/2KBxFoHGLnLE5hcs=;
+	s=arc-20240116; t=1757277516; c=relaxed/simple;
+	bh=IOneR6NCt33/Xp/FVrn56JnNv2nOmkOw28BHeFXbGU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkOXIkUmA4g8aADX0xdgNa3afLeCwte/6pCRAAqAj7revegcJi/q19siWYTXXFJ/mLTJAAgAc6dsvrJO/5TYG7DdsfQwXYVMdVMWDtruJ3Vpvb91cuAbYlRbhG4mDgfcMK0Qg6YP7Pw8M95b575JvPEDCoqLfx4JD+upKOHhecQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOeNbhQj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aRz3C5w+uX0AUu8jufYKd4WnylE7xnwlFqweMyK/PK6hPBrbzdoUAwp3iBHxajzXHfLnkpi46fTRlRGotzQgzC07Jl6Qvny347i4WhgzJgxhJ6gj9J690VjGYT8eD7WMBCu/SpnAYK7IVeKhrsJMnEhMT/hh3Yj9HR13GBedwQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZpDGQ1B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOeNbhQj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FEEC4CEF0;
-	Sun,  7 Sep 2025 20:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZpDGQ1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6C3C4CEF8;
+	Sun,  7 Sep 2025 20:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277513;
-	bh=TI9+VOPjz6Q4snpJ1Nkp9nZ14D/2KBxFoHGLnLE5hcs=;
+	s=korg; t=1757277516;
+	bh=IOneR6NCt33/Xp/FVrn56JnNv2nOmkOw28BHeFXbGU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOeNbhQjy0J4FNkMzcLHZK/fsHCmRiHTUTKT8TJD0mRzyWrQVB4/g6QWu3bbhV3YI
-	 4Gq4DqTKwyZgWHSognNar1krvelWh+RXoMmLg4DYyyDNTd1Y8vcEou4QhSoNKZRXpn
-	 FAWInQhf8mTbgAnTza14ojxYreCp4ZJ6qdGVbHHU=
+	b=pZpDGQ1BLM0PwL14kDX0MwAcgyJWRJL+8n1WZimbxLwGj3NMDH1HRqWpbItFrLP9J
+	 LfEuo2kjDqYLdi7qo2Etw2gjTEKeEtJ2iSt3lbpDchuChZooFwkzU64kxc0nN0jZ/8
+	 28aElmCrkl9OB9IYIYdsuZuryYtGCys2QhZSrbm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 039/183] wifi: mt76: free pending offchannel tx frames on wcid cleanup
-Date: Sun,  7 Sep 2025 21:57:46 +0200
-Message-ID: <20250907195616.704468101@linuxfoundation.org>
+Subject: [PATCH 6.16 022/183] arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3399-pinebook-pro
+Date: Sun,  7 Sep 2025 21:57:29 +0200
+Message-ID: <20250907195616.309340525@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -50,35 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit bdeac7815629c1a32b8784922368742e183747ea ]
+[ Upstream commit d1f9c497618dece06a00e0b2995ed6b38fafe6b5 ]
 
-Avoid leaking them or keeping the wcid on the tx list
+As described in the pinebookpro_v2.1_mainboard_schematic.pdf page 10,
+he SPI Flash's VCC connector is connected to VCC_3V0 power source.
 
-Fixes: 0b3be9d1d34e ("wifi: mt76: add separate tx scheduling queue for off-channel tx")
-Link: https://patch.msgid.link/20250827085352.51636-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This fixes the following warning:
+
+  spi-nor spi1.0: supply vcc not found, using dummy regulator
+
+Fixes: 5a65505a69884 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20250730102129.224468-1-pbrobinson@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 4e435bec828b5..8e6ce16ab5b88 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1716,6 +1716,10 @@ void mt76_wcid_cleanup(struct mt76_dev *dev, struct mt76_wcid *wcid)
- 	skb_queue_splice_tail_init(&wcid->tx_pending, &list);
- 	spin_unlock(&wcid->tx_pending.lock);
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index 5473070823cb1..6cadde440fff4 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -966,6 +966,7 @@ spiflash: flash@0 {
+ 		reg = <0>;
+ 		m25p,fast-read;
+ 		spi-max-frequency = <10000000>;
++		vcc-supply = <&vcc_3v0>;
+ 	};
+ };
  
-+	spin_lock(&wcid->tx_offchannel.lock);
-+	skb_queue_splice_tail_init(&wcid->tx_offchannel, &list);
-+	spin_unlock(&wcid->tx_offchannel.lock);
-+
- 	spin_unlock_bh(&phy->tx_lock);
- 
- 	while ((skb = __skb_dequeue(&list)) != NULL) {
 -- 
 2.50.1
 
