@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BC51A704B;
-	Sun,  7 Sep 2025 20:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A9E1A704B;
+	Sun,  7 Sep 2025 20:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277577; cv=none; b=GqZHvjj1XEdZjdLNPWyglGaBFQIIexHQjtxykVgKNg3B/CDpa37QlcDbCuNqNgXtjdFVcX75U0Qwvo8t+1J/8CASkqwGYEV5dsDg0fX4w5mu04lrR1OxhfhsctIfw5sysYWT+U5/ZHMN3Aau4wzr1ZErX6mn5TDlv9S7OqySZW8=
+	t=1757277580; cv=none; b=YyZokorDBXZii8WxKzjrAawkdEJcQz/HljaLWrUXugyXmFZ3hYbx5WQGBbdlA8CmTZdwVNa42eQIWuGUDMcvAV6Br1VAlRSH3SZJ7jsKp+GCgEC6B4A1ywG4jnXNUFRwfd6vdNwKAHuYYNvzR7bZKynRthd49/6gfIb7+RgLlL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277577; c=relaxed/simple;
-	bh=YF8wf7dS935J4AWQ4W1tXiXutfVasMnNkUEE10SPFSo=;
+	s=arc-20240116; t=1757277580; c=relaxed/simple;
+	bh=P7+/SWifkn0/r8+JOU0xtEpSpeJKleNU4/1SbzexJEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jhCWEoLhCjXPc3tu3cg+KZRQ2IvaAlS74AJNVxgHxBAnGBPhK/Im1S7iOc5+q9FWsowRJyBxMNmohgjw2xNQhz+GQXIn6aMPNqh94hJtHpjP4ERQQpksUwFL7b28zKq37iM4iwOax5yJs32KCNiDmbgCx2NOeDKIOOdGU4XlA6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blGEBIzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SUCk0v7FRjgAk2UBOTdb1ymD9A0IeS9vI+L4kHk5zTua7nDgXaGeNEadg0OZg1EnGVxE4Jz7f2OLlpIJ4d1lVZrMq+RHc8973kQOt9m5IaZY+d7oMzy1WgXG6KjDboh3+FPap9w59E/N7LOaUfJMZeuhA1DN0gXkcSk+JFV7NN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXviU3zR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blGEBIzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C1DC4CEF0;
-	Sun,  7 Sep 2025 20:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXviU3zR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00402C4CEF0;
+	Sun,  7 Sep 2025 20:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277577;
-	bh=YF8wf7dS935J4AWQ4W1tXiXutfVasMnNkUEE10SPFSo=;
+	s=korg; t=1757277580;
+	bh=P7+/SWifkn0/r8+JOU0xtEpSpeJKleNU4/1SbzexJEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blGEBIzULg1IvKAXbwym1bfjatTTwpeHEurzQ6oTC8jJCH/yu6WnkjaQIeJdw/lGg
-	 6E1VxaFIjtsC7VzJftzxzbQfjqqYMe7XI/L22Wk4+dXBhXa4pA0QYGkzfbo5obiG8G
-	 Wx9fCqpxm5TwFdKxXdbwY7O3RPPupYbSvK3pQtSI=
+	b=CXviU3zRRY6r7Y94dkfDXV/IUUthfYieTkAaY5Hr7SbQfNaguBcVMDgXdfBn+cgPh
+	 6gnzWF1MJgwU2oupENqhwyBcIwOjtHyYcgWOYMvP9gmyDv6NvhE649f+qclLr0ma+1
+	 OOwZYrvf2V79p0L2+8qDgcj+ADpLkM4ebuSIrL1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Fabian=20Bl=C3=A4se?= <fabian@blaese.de>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Florian Westphal <fw@strlen.de>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 057/183] icmp: fix icmp_ndo_send address translation for reply direction
-Date: Sun,  7 Sep 2025 21:58:04 +0200
-Message-ID: <20250907195617.141512124@linuxfoundation.org>
+Subject: [PATCH 6.16 058/183] eth: mlx4: Fix IS_ERR() vs NULL check bug in mlx4_en_create_rx_ring
+Date: Sun,  7 Sep 2025 21:58:05 +0200
+Message-ID: <20250907195617.167722963@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -47,112 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabian Bläse <fabian@blaese.de>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit c6dd1aa2cbb72b33e0569f3e71d95792beab5042 ]
+[ Upstream commit e580beaf43d563aaf457f1c7f934002355ebfe7b ]
 
-The icmp_ndo_send function was originally introduced to ensure proper
-rate limiting when icmp_send is called by a network device driver,
-where the packet's source address may have already been transformed
-by SNAT.
+Replace NULL check with IS_ERR() check after calling page_pool_create()
+since this function returns error pointers (ERR_PTR).
+Using NULL check could lead to invalid pointer dereference.
 
-However, the original implementation only considers the
-IP_CT_DIR_ORIGINAL direction for SNAT and always replaced the packet's
-source address with that of the original-direction tuple. This causes
-two problems:
-
-1. For SNAT:
-   Reply-direction packets were incorrectly translated using the source
-   address of the CT original direction, even though no translation is
-   required.
-
-2. For DNAT:
-   Reply-direction packets were not handled at all. In DNAT, the original
-   direction's destination is translated. Therefore, in the reply
-   direction the source address must be set to the reply-direction
-   source, so rate limiting works as intended.
-
-Fix this by using the connection direction to select the correct tuple
-for source address translation, and adjust the pre-checks to handle
-reply-direction packets in case of DNAT.
-
-Additionally, wrap the `ct->status` access in READ_ONCE(). This avoids
-possible KCSAN reports about concurrent updates to `ct->status`.
-
-Fixes: 0b41713b6066 ("icmp: introduce helper for nat'd source address in network device context")
-Signed-off-by: Fabian Bläse <fabian@blaese.de>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
+Fixes: 8533b14b3d65 ("eth: mlx4: create a page pool for Rx")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250828121858.67639-1-linmq006@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c     | 6 ++++--
- net/ipv6/ip6_icmp.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx4/en_rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 717cb7d3607a1..14beae97f81b3 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -797,11 +797,12 @@ void icmp_ndo_send(struct sk_buff *skb_in, int type, int code, __be32 info)
- 	struct sk_buff *cloned_skb = NULL;
- 	struct ip_options opts = { 0 };
- 	enum ip_conntrack_info ctinfo;
-+	enum ip_conntrack_dir dir;
- 	struct nf_conn *ct;
- 	__be32 orig_ip;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/en_rx.c b/drivers/net/ethernet/mellanox/mlx4/en_rx.c
+index b33285d755b90..a626fd0d20735 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx4/en_rx.c
+@@ -267,8 +267,10 @@ int mlx4_en_create_rx_ring(struct mlx4_en_priv *priv,
+ 	pp.dma_dir = priv->dma_dir;
  
- 	ct = nf_ct_get(skb_in, &ctinfo);
--	if (!ct || !(ct->status & IPS_SRC_NAT)) {
-+	if (!ct || !(READ_ONCE(ct->status) & IPS_NAT_MASK)) {
- 		__icmp_send(skb_in, type, code, info, &opts);
- 		return;
- 	}
-@@ -816,7 +817,8 @@ void icmp_ndo_send(struct sk_buff *skb_in, int type, int code, __be32 info)
- 		goto out;
+ 	ring->pp = page_pool_create(&pp);
+-	if (!ring->pp)
++	if (IS_ERR(ring->pp)) {
++		err = PTR_ERR(ring->pp);
+ 		goto err_ring;
++	}
  
- 	orig_ip = ip_hdr(skb_in)->saddr;
--	ip_hdr(skb_in)->saddr = ct->tuplehash[0].tuple.src.u3.ip;
-+	dir = CTINFO2DIR(ctinfo);
-+	ip_hdr(skb_in)->saddr = ct->tuplehash[dir].tuple.src.u3.ip;
- 	__icmp_send(skb_in, type, code, info, &opts);
- 	ip_hdr(skb_in)->saddr = orig_ip;
- out:
-diff --git a/net/ipv6/ip6_icmp.c b/net/ipv6/ip6_icmp.c
-index 9e3574880cb03..233914b63bdb8 100644
---- a/net/ipv6/ip6_icmp.c
-+++ b/net/ipv6/ip6_icmp.c
-@@ -54,11 +54,12 @@ void icmpv6_ndo_send(struct sk_buff *skb_in, u8 type, u8 code, __u32 info)
- 	struct inet6_skb_parm parm = { 0 };
- 	struct sk_buff *cloned_skb = NULL;
- 	enum ip_conntrack_info ctinfo;
-+	enum ip_conntrack_dir dir;
- 	struct in6_addr orig_ip;
- 	struct nf_conn *ct;
- 
- 	ct = nf_ct_get(skb_in, &ctinfo);
--	if (!ct || !(ct->status & IPS_SRC_NAT)) {
-+	if (!ct || !(READ_ONCE(ct->status) & IPS_NAT_MASK)) {
- 		__icmpv6_send(skb_in, type, code, info, &parm);
- 		return;
- 	}
-@@ -73,7 +74,8 @@ void icmpv6_ndo_send(struct sk_buff *skb_in, u8 type, u8 code, __u32 info)
- 		goto out;
- 
- 	orig_ip = ipv6_hdr(skb_in)->saddr;
--	ipv6_hdr(skb_in)->saddr = ct->tuplehash[0].tuple.src.u3.in6;
-+	dir = CTINFO2DIR(ctinfo);
-+	ipv6_hdr(skb_in)->saddr = ct->tuplehash[dir].tuple.src.u3.in6;
- 	__icmpv6_send(skb_in, type, code, info, &parm);
- 	ipv6_hdr(skb_in)->saddr = orig_ip;
- out:
+ 	if (xdp_rxq_info_reg(&ring->xdp_rxq, priv->dev, queue_index, 0) < 0)
+ 		goto err_pp;
 -- 
 2.50.1
 
