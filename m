@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A5A1CDFAC;
-	Sun,  7 Sep 2025 20:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435FE1CDFAC;
+	Sun,  7 Sep 2025 20:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275864; cv=none; b=KlC3FCxh77UDByy2E/8xsf26OtLMIaHrYWCBFea3rgAxDr1H8U+K3FZ5GFzLGHefVGQJG7GjV1YThY5IpCwCLnCGrHhskdqksQB1RtxJeptwo5oB0LarL0eWYUfjTH3WS0KLx84XP4u5RmLfp+b5fdk8kJxw9lzi8UauKVYfnf0=
+	t=1757275867; cv=none; b=PvZVh5OQciwIRmdxZl7uuQuXvAKyP9uvuqzzV5Z3lfBAsn4RnCyx9RxzeN1LE/C7vdwvbDBGzxSl1S/SAeLXwVJnrsbCY+paMMABgtqb7NePPeLni8RL/Ae/HfVxEnzE0k3aEvDSqDQFg94PcsNppRTx5q8z+bTCspnD3TmFxxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275864; c=relaxed/simple;
-	bh=elX7YnwNj4uNlcwep6VqeW+BWHU00Z7Yab6eOs51XgU=;
+	s=arc-20240116; t=1757275867; c=relaxed/simple;
+	bh=4nBV7uUXuf4pQ8FmdnSxKLWSOVM79yApOG+LCxzKdao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQ0jP0aA31oC2pNEB8Q3k2KNRdKSNG6xFSOTxLXTqCNOblY8XyvdJalIMafk/QE2f8ftRX96JMXYsWN2PByeOFXIEkaTY0PQHc+0Z4hJcKyP2A9RAIt+1cTy6w6j/apeiNafdo2O2lpJZ/tMeIlrRj6L1q0rW84tP3n8eadWxyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hcb2mef/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T40TUot+cO48KSSBmOpKQrWex00nbrWBO3EACDi0u5XX8dDzyLAZburhzLaZU7CmsEQKeJUSLaYToKWfy9yFZrtr6tPIg8PMQvhBLtpPOfQtskYFtR9ZCmT4XJcKAsERM6QXNGf6b0+lXt+hf9ncMDRYIVaEdwcduH35yYDMnBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9tIFnAY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hcb2mef/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D75C4CEF0;
-	Sun,  7 Sep 2025 20:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9tIFnAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA111C4CEF0;
+	Sun,  7 Sep 2025 20:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275864;
-	bh=elX7YnwNj4uNlcwep6VqeW+BWHU00Z7Yab6eOs51XgU=;
+	s=korg; t=1757275867;
+	bh=4nBV7uUXuf4pQ8FmdnSxKLWSOVM79yApOG+LCxzKdao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hcb2mef/HJsp08XvWRyZBMC1jYuApx6lCE8QCOJM4fJcvvsZqH1LB+2Gtqn6c3jlw
-	 sKpqoxkTfvR2T5DWtbpzGGxfcTAaF6fGltIR7rqfy0ixAHTKsCBJCj2mQ6UFf4/QlA
-	 UGgvSRnVeN+Qf4NfGVB2HwIqih/guWlOdvUA7NjE=
+	b=O9tIFnAYmP5yLMnBmhYNe7M64I2AzTLDgUYY5lkX9ynmJHHmaK9qyH36fCya9mQTJ
+	 Qg+34juPvAwOy6F3jd+o1U3heaES3JxrS/S7+6Uk5UvG9V26nKCO6YKRDR/J/LfL/I
+	 JK4q6HrWa9gSNBl0wgIo2PhHM/dIvzEtYlWBmf20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pieter Van Trappen <pieter.van.trappen@cern.ch>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 34/45] net: dsa: microchip: update tag_ksz masks for KSZ9477 family
-Date: Sun,  7 Sep 2025 21:58:20 +0200
-Message-ID: <20250907195601.976101315@linuxfoundation.org>
+Subject: [PATCH 5.4 08/45] i40e: Fix potential invalid access when MAC list is empty
+Date: Sun,  7 Sep 2025 21:57:54 +0200
+Message-ID: <20250907195601.205513770@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
 References: <20250907195600.953058118@linuxfoundation.org>
@@ -52,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pieter Van Trappen <pieter.van.trappen@cern.ch>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-[ Upstream commit 3f464b193d40e49299dcd087b10cc3b77cbbea68 ]
+[ Upstream commit a556f06338e1d5a85af0e32ecb46e365547f92b9 ]
 
-Remove magic number 7 by introducing a GENMASK macro instead.
-Remove magic number 0x80 by using the BIT macro instead.
+list_first_entry() never returns NULL - if the list is empty, it still
+returns a pointer to an invalid object, leading to potential invalid
+memory access when dereferenced.
 
-Signed-off-by: Pieter Van Trappen <pieter.van.trappen@cern.ch>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20240909134301.75448-1-vtpieter@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ba54bce747fa ("net: dsa: microchip: linearize skb for tail-tagging switches")
+Fix this by using list_first_entry_or_null instead of list_first_entry.
+
+Fixes: e3219ce6a775 ("i40e: Add support for client interface for IWARP driver")
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dsa/tag_ksz.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_client.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/dsa/tag_ksz.c
-+++ b/net/dsa/tag_ksz.c
-@@ -149,8 +149,9 @@ MODULE_ALIAS_DSA_TAG_DRIVER(DSA_TAG_PROT
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_client.c b/drivers/net/ethernet/intel/i40e/i40e_client.c
+index 10125b02d1543..b7c3625aec154 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_client.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_client.c
+@@ -320,8 +320,8 @@ static void i40e_client_add_instance(struct i40e_pf *pf)
+ 		return;
+ 	}
  
- #define KSZ9477_INGRESS_TAG_LEN		2
- #define KSZ9477_PTP_TAG_LEN		4
--#define KSZ9477_PTP_TAG_INDICATION	0x80
-+#define KSZ9477_PTP_TAG_INDICATION	BIT(7)
- 
-+#define KSZ9477_TAIL_TAG_EG_PORT_M	GENMASK(2, 0)
- #define KSZ9477_TAIL_TAG_OVERRIDE	BIT(9)
- #define KSZ9477_TAIL_TAG_LOOKUP		BIT(10)
- 
-@@ -185,7 +186,7 @@ static struct sk_buff *ksz9477_rcv(struc
- {
- 	/* Tag decoding */
- 	u8 *tag = skb_tail_pointer(skb) - KSZ_EGRESS_TAG_LEN;
--	unsigned int port = tag[0] & 7;
-+	unsigned int port = tag[0] & KSZ9477_TAIL_TAG_EG_PORT_M;
- 	unsigned int len = KSZ_EGRESS_TAG_LEN;
- 
- 	/* Extra 4-bytes PTP timestamp */
+-	mac = list_first_entry(&cdev->lan_info.netdev->dev_addrs.list,
+-			       struct netdev_hw_addr, list);
++	mac = list_first_entry_or_null(&cdev->lan_info.netdev->dev_addrs.list,
++				       struct netdev_hw_addr, list);
+ 	if (mac)
+ 		ether_addr_copy(cdev->lan_info.lanmac, mac->addr);
+ 	else
+-- 
+2.50.1
+
 
 
