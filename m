@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD3D1CDFAC;
-	Sun,  7 Sep 2025 20:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1ECB22F74D;
+	Sun,  7 Sep 2025 20:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275649; cv=none; b=LSZKHS3DIqTM7r5cCJHR8ozUGcnvOm4kSq90qj0oNvrAol9Jqb+u2cza+hj7QgWwpe2P0Y7E/I8eWVwKZ2dQp25M60gkWsIVK8BYs0xITRh32m3SortiOemOUXQgbYM9qDVkK0uylUrKajnc+Bafg67//ju4XlMWNEbdNNwRjfQ=
+	t=1757275652; cv=none; b=VdtnL4COHEOuMZfKuxLYX2KoKjBWZ+LW1zZuoDAJhYRSPz9KSz9jFf+dzQyptQMc5zc2qHtgKhw4vxPWDtXB1U1teFSjFluuyOE1WcBlPavoLLHYQwxrkysXvjrwA9wnum8eWZ5c1cKTYkPeYdU3K5zK3cJLmtDPSImrqe36Qko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275649; c=relaxed/simple;
-	bh=3miHTiIiuXmGstWpgLtFKAyo8iYVqA2F5zllCGJP1Aw=;
+	s=arc-20240116; t=1757275652; c=relaxed/simple;
+	bh=T4bDNjhXnxQKFeZj82i3pYB3D3XrO3v+ERC4T088WmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4LBDIbvgP+i3uwAJfb6Bn7qZrC5cpkBP/NoG/rFBmbDqdimpUTnmSmrjgFt07UGtEJozej209HxDPoG6LGPu6lwRBXoTyeuXQ1xsHZcriH0zesDGe28MamJUw6v/kMzCgP/uZ2IQQOBEX91cbMvQTDatThItLvlPhYIKAfVXQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NR+v3wzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gfOJnrHtSYF73mE3N/X8c0yWewnl6l8uopt1L25rKT/euhD+uWisvqsGqGnSMcFKTi9+CnE4rHrdStMIVT7SGONMbnS7oJpdvEuXzsv/gE2Pb0z+cyzwxOuFbJ4yUwGtcg5swUu3KFvLX/3v0dJkjEEHCSv6HIjqdPQyoDbEtDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5noasYg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NR+v3wzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF53C4CEF0;
-	Sun,  7 Sep 2025 20:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5noasYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92F2C4CEF8;
+	Sun,  7 Sep 2025 20:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275648;
-	bh=3miHTiIiuXmGstWpgLtFKAyo8iYVqA2F5zllCGJP1Aw=;
+	s=korg; t=1757275652;
+	bh=T4bDNjhXnxQKFeZj82i3pYB3D3XrO3v+ERC4T088WmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NR+v3wzc6uJWgv1eOUPIR9wpgDecm8d3XELn+2yHO4zkMgYyifugdej+QPVIzUvgU
-	 n54oqA8uDKQt17FNDje3afiWYSZOo+z21xTOU2koniXRspr4NtLQsgpQsX80tL6JLh
-	 wLUqp5WDL0zVR0bbkGp9q/l/9RQs5qi4hjKq16iw=
+	b=E5noasYgtvnYD4YOPgBDXFD3zFjRAKhPOqo9pexfy/EE0sMrcEaCOYm9Xyrd4CAVq
+	 wIh3DmxPp6XlvRRzAdv/tGgSfxvLpAYklZEBSmwNtVsKR+kCtOjDsHb0wL4XpcNh1v
+	 YYxucRTCDuC9IJ7f38g0umjh5oRYaVPcCaHazm/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoli An <anguoli@uniontech.com>,
-	Cryolitia PukNgae <cryolitia@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 20/52] ALSA: usb-audio: Add mute TLV for playback volumes on some devices
-Date: Sun,  7 Sep 2025 21:57:40 +0200
-Message-ID: <20250907195602.584362356@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Dominik Brodowski <linux@dominikbrodowski.net>
+Subject: [PATCH 5.10 21/52] pcmcia: Fix a NULL pointer dereference in __iodyn_find_io_region()
+Date: Sun,  7 Sep 2025 21:57:41 +0200
+Message-ID: <20250907195602.615538486@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -51,37 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia@uniontech.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 9c6182843b0d02ca04cc1d946954a65a2286c7db upstream.
+commit 44822df89e8f3386871d9cad563ece8e2fd8f0e7 upstream.
 
-Applying the quirk of that, the lowest Playback mixer volume setting
-mutes the audio output, on more devices.
+In __iodyn_find_io_region(), pcmcia_make_resource() is assigned to
+res and used in pci_bus_alloc_resource(). There is a dereference of res
+in pci_bus_alloc_resource(), which could lead to a NULL pointer
+dereference on failure of pcmcia_make_resource().
 
-Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/2514
-Cc: <stable@vger.kernel.org>
-Tested-by: Guoli An <anguoli@uniontech.com>
-Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Link: https://patch.msgid.link/20250822-mixer-quirk-v1-1-b19252239c1c@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this bug by adding a check of res.
+
+Cc: stable@vger.kernel.org
+Fixes: 49b1153adfe1 ("pcmcia: move all pcmcia_resource_ops providers into one module")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pcmcia/rsrc_iodyn.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -3352,9 +3352,11 @@ void snd_usb_mixer_fu_apply_quirk(struct
- 			snd_dragonfly_quirk_db_scale(mixer, cval, kctl);
- 		break;
- 	/* lowest playback value is muted on some devices */
-+	case USB_ID(0x0572, 0x1b09): /* Conexant Systems (Rockwell), Inc. */
- 	case USB_ID(0x0d8c, 0x000c): /* C-Media */
- 	case USB_ID(0x0d8c, 0x0014): /* C-Media */
- 	case USB_ID(0x19f7, 0x0003): /* RODE NT-USB */
-+	case USB_ID(0x2d99, 0x0026): /* HECATE G2 GAMING HEADSET */
- 		if (strstr(kctl->id.name, "Playback"))
- 			cval->min_mute = 1;
- 		break;
+--- a/drivers/pcmcia/rsrc_iodyn.c
++++ b/drivers/pcmcia/rsrc_iodyn.c
+@@ -62,6 +62,9 @@ static struct resource *__iodyn_find_io_
+ 	unsigned long min = base;
+ 	int ret;
+ 
++	if (!res)
++		return NULL;
++
+ 	data.mask = align - 1;
+ 	data.offset = base & data.mask;
+ 
 
 
