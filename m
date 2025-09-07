@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A8C1DE8AF;
-	Sun,  7 Sep 2025 20:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784962139C9;
+	Sun,  7 Sep 2025 20:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277179; cv=none; b=Lqck4NR7Lljuzub53yccAtOHxeOrTe2fBnjMKg5G/tF6tEfd30r80tEzatAXABAjphd13aWPbVGqZWt4oWFksfBgWZoY20yw4t+3AgzeaeZ9ED1abf8yo+QRbdHGjBxsjcQ01DL8aDVAuCE/TrTqdKthcHYV9dypd6uIMRFbwNo=
+	t=1757277182; cv=none; b=U1JBbEq5cYihVjM4H/+649Ak1RqGZ231H0A9s37iJO4A365T6bZfq8MicY10LJUixhD6pE2Pkam/8VELpQcTtXBUgyhDWKazlIzgyA7gsYIPUf5Mtylj1f5epTRstHLXs97AYRWs6WSexscuvKRRSYhjYVgNYQeiULa2bPkfYRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277179; c=relaxed/simple;
-	bh=QU10ll9j4/wAT+yPSbLdZk6WO1TSzIIR9iATuE+D6RU=;
+	s=arc-20240116; t=1757277182; c=relaxed/simple;
+	bh=pGVypDUrUc3+B2tlKzekorDtuo82CrgMLZv8pKWQeDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYf54o5uksupM0qkf01JsdwYV7tPfgnBuZypldbPLPMtp/EPgCCAjiAUyVJS3lJOC42dVSHNxRJO1QPfiC+uuWQSIFaxkNOBuJyfxgk2P7QMHtOfI+3wQP63wSYrQGAoePDxYFStCYKqILDz1QtGYvOJM/bwYaFChIhSSscS1m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK1O6N8h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVT9xHWn1Tz/Ty5u9P+tVxIJDoGSf3UdAnRWq7EH65rrlllMUYBZh4vP7jWg93IDUxZx1JDxEiXeLGUVMXKRM3WlODVHic2u24f7XEhU9/20RKkIp/7wg4RiTUixGaPorvzeNgIjoluIUgK8WHbivf//k9mYg8wjuH8zY4HDXI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4yWw5Fv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK1O6N8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E2AC4CEF8;
-	Sun,  7 Sep 2025 20:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4yWw5Fv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0194C4CEF8;
+	Sun,  7 Sep 2025 20:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277179;
-	bh=QU10ll9j4/wAT+yPSbLdZk6WO1TSzIIR9iATuE+D6RU=;
+	s=korg; t=1757277182;
+	bh=pGVypDUrUc3+B2tlKzekorDtuo82CrgMLZv8pKWQeDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pK1O6N8hgVB8hMfaNBHmXSwUbGKc3YQN8TrSjO16nB033ejKXdq7CX+uVkgK0W+yP
-	 4Rr+3JhR52GgQVYD4IS8lPE8Jk1vrB5V4LnaW6BVsOtmZmRYl+x1OZ0DoWeZFCmmz7
-	 JqvTtyX+zgexLZgzuN0mnBilWSJaY6wPCkyiE484=
+	b=t4yWw5FvE4g9cKuQ+R3qmyj5MJQAgDl/YzkXwoD+CQvbPvc0euVUvLUQBh2DEj6dr
+	 lv7Sx/x1EAuy8svO2qkozHbcO+MspCOhkHDTzp+tusNisY1YY0Ky+P79NIS7dSCiqq
+	 w/RwaQG3sNVKa2Pt4UxfBh3VsNPtqORMuR+iltzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/175] net/smc: Remove validation of reserved bits in CLC Decline message
-Date: Sun,  7 Sep 2025 21:57:58 +0200
-Message-ID: <20250907195616.800876879@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.12 110/175] wifi: mt76: mt7996: Initialize hdr before passing to skb_put_data()
+Date: Sun,  7 Sep 2025 21:58:25 +0200
+Message-ID: <20250907195617.456775950@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -54,48 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit cc282f73bc0cbdf3ee7af2f2d3a2ef4e6b19242d ]
+commit 87b07a1fbc6b5c23d3b3584ab4288bc9106d3274 upstream.
 
-Currently SMC code is validating the reserved bits while parsing the incoming
-CLC decline message & when this validation fails, its treated as a protocol
-error. As a result, the SMC connection is terminated instead of falling back to
-TCP. As per RFC7609[1] specs we shouldn't be validating the reserved bits that
-is part of CLC message. This patch fixes this issue.
+A new warning in clang [1] points out a couple of places where a hdr
+variable is not initialized then passed along to skb_put_data().
 
-CLC Decline message format can viewed here[2].
+  drivers/net/wireless/mediatek/mt76/mt7996/mcu.c:1894:21: warning: variable 'hdr' is uninitialized when passed as a const pointer argument here [-Wuninitialized-const-pointer]
+   1894 |         skb_put_data(skb, &hdr, sizeof(hdr));
+        |                            ^~~
+  drivers/net/wireless/mediatek/mt76/mt7996/mcu.c:3386:21: warning: variable 'hdr' is uninitialized when passed as a const pointer argument here [-Wuninitialized-const-pointer]
+   3386 |         skb_put_data(skb, &hdr, sizeof(hdr));
+        |                            ^~~
 
-[1] https://datatracker.ietf.org/doc/html/rfc7609#page-92
-[2] https://datatracker.ietf.org/doc/html/rfc7609#page-105
+Zero initialize these headers as done in other places in the driver when
+there is nothing stored in the header.
 
-Fixes: 8ade200c269f ("net/smc: add v2 format of CLC decline message")
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20250902082041.98996-1-mjambigi@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://github.com/llvm/llvm-project/commit/00dacf8c22f065cb52efb14cd091d441f19b319e [1]
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2104
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20250715-mt7996-fix-uninit-const-pointer-v1-1-b5d8d11d7b78@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_clc.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index 521f5df80e10c..8a794333e9927 100644
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -426,8 +426,6 @@ smc_clc_msg_decl_valid(struct smc_clc_msg_decline *dclc)
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1834,8 +1834,8 @@ mt7996_mcu_get_mmps_mode(enum ieee80211_
+ int mt7996_mcu_set_fixed_rate_ctrl(struct mt7996_dev *dev,
+ 				   void *data, u16 version)
  {
- 	struct smc_clc_msg_hdr *hdr = &dclc->hdr;
- 
--	if (hdr->typev1 != SMC_TYPE_R && hdr->typev1 != SMC_TYPE_D)
--		return false;
- 	if (hdr->version == SMC_V1) {
- 		if (ntohs(hdr->length) != sizeof(struct smc_clc_msg_decline))
- 			return false;
--- 
-2.50.1
-
++	struct uni_header hdr = {};
+ 	struct ra_fixed_rate *req;
+-	struct uni_header hdr;
+ 	struct sk_buff *skb;
+ 	struct tlv *tlv;
+ 	int len;
+@@ -3115,7 +3115,7 @@ int mt7996_mcu_set_hdr_trans(struct mt79
+ {
+ 	struct {
+ 		u8 __rsv[4];
+-	} __packed hdr;
++	} __packed hdr = {};
+ 	struct hdr_trans_blacklist *req_blacklist;
+ 	struct hdr_trans_en *req_en;
+ 	struct sk_buff *skb;
 
 
