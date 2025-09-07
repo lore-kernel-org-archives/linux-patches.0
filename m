@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D131B424F;
-	Sun,  7 Sep 2025 20:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71C71A9FAA;
+	Sun,  7 Sep 2025 20:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276234; cv=none; b=e6S5jqNeJ/G96Ie8ScIRptBA0Qbp2tpmFUcfsvYRXtX50T5H5f/Cb83cYBsjhQxvvEn5ssU90ypk51AWfmbGvyIu8I/B/Nc3vi40gQq/f1KBuaCFltg45JEqEtcO9H/074teP9UIyqZLFXdBtL15o4igLluT9JQlvlSrr+N4pCE=
+	t=1757276237; cv=none; b=ObcsiVkv1wP/SadYibm2qwLPRKdHAj3qv6ZduJv2iOCAzetuDuZpW0B9KEN6abd6TeEnKXpjAhmigBXvEJ2+8ryy0iwfJ9ZaibhwcViOf1RPGeWHGzRjWTs3wPGmB1HmlB7k8j/pLamUFjgDRXQD/Bee2j21m3ct7gf/MpdSeLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276234; c=relaxed/simple;
-	bh=cU2p20Aan+N9w2VVWtscWfK6M6Re1PhMOVPOKVzRxEQ=;
+	s=arc-20240116; t=1757276237; c=relaxed/simple;
+	bh=tiwY3ViueI4RmJTYGbxgGRft3v01bNGMIph0FScxpgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGzKosjU6m7Myt/3Utd7dxsRQ+gNnuDohgeB3ly7g3vuKJ/kazpwMeA3mzb97WUXJa3HSZrGzmlT7nz2L8qr8CSPdiZvCjEwQLCUrwuSTNGir6kKfjhFcNJCIoD8IsZsIdWshfYylk5IFOJUnUQ4ZXppv/Ac9aHLKWbf1VFfgX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/Dyc3cL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8kYh8c8cVZmNDBHWtXcGMVFrbrxAZSKgPuSCapfVEjx9sINQj+/ucHwH3OKimjddWK6q0IxCUeS/4WBkudjGRetwoKIJh32EhWLjzOsFJJ8zuq9+0nZhT1hO1/kySOaSMeYjyuxQ3sQbTIBIMAePH7M7LoX86ByRIklcDGlpUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnLzuXec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/Dyc3cL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024F4C4CEF0;
-	Sun,  7 Sep 2025 20:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnLzuXec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CE4C4CEF0;
+	Sun,  7 Sep 2025 20:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276234;
-	bh=cU2p20Aan+N9w2VVWtscWfK6M6Re1PhMOVPOKVzRxEQ=;
+	s=korg; t=1757276237;
+	bh=tiwY3ViueI4RmJTYGbxgGRft3v01bNGMIph0FScxpgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/Dyc3cLra7bD4+nAqLO+0aRmdk9mbaA93cHUzX0aLnBHt5JuLnzOYKTPASfdLvIY
-	 lRa3oyUBWp3TZqiw8OxHU1ucCikUPyyuxxt0cE9OaZaxVq5KBZyO13PUEeVxP6a+IP
-	 3pb8//pMqtlwxpaZZyISW2OeJn/QdUaXmjPcGzkw=
+	b=EnLzuXec3JtFNKwcy+/OsdLEQ7NMWvTHlrokcOY6R4enb3B3txgz/blfGPUg3rU5I
+	 4K8tLqjuJBDvOeYkjwkDR5ypfMjz6r3a7YDG0iipB8oS743Kh56BBediCSQyYLb85+
+	 uujWUAOU5EBBh7KioV4A0yYwi8m3et/oHGUbjUN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoli An <anguoli@uniontech.com>,
-	Cryolitia PukNgae <cryolitia@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 040/104] ALSA: usb-audio: Add mute TLV for playback volumes on some devices
-Date: Sun,  7 Sep 2025 21:57:57 +0200
-Message-ID: <20250907195608.736005929@linuxfoundation.org>
+	Sungbae Yoo <sungbaey@nvidia.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 014/104] tee: optee: ffa: fix a typo of "optee_ffa_api_is_compatible"
+Date: Sun,  7 Sep 2025 21:57:31 +0200
+Message-ID: <20250907195608.049582546@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -51,37 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia@uniontech.com>
+From: Sungbae Yoo <sungbaey@nvidia.com>
 
-commit 9c6182843b0d02ca04cc1d946954a65a2286c7db upstream.
+[ Upstream commit 75dbd4304afe574fcfc4118a5b78776a9f48fdc4 ]
 
-Applying the quirk of that, the lowest Playback mixer volume setting
-mutes the audio output, on more devices.
+Fixes optee_ffa_api_is_compatbile() to optee_ffa_api_is_compatible()
+because compatbile is a typo of compatible.
 
-Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/2514
-Cc: <stable@vger.kernel.org>
-Tested-by: Guoli An <anguoli@uniontech.com>
-Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Link: https://patch.msgid.link/20250822-mixer-quirk-v1-1-b19252239c1c@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4615e5a34b95 ("optee: add FF-A support")
+Signed-off-by: Sungbae Yoo <sungbaey@nvidia.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tee/optee/ffa_abi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -3631,9 +3631,11 @@ void snd_usb_mixer_fu_apply_quirk(struct
- 			snd_dragonfly_quirk_db_scale(mixer, cval, kctl);
- 		break;
- 	/* lowest playback value is muted on some devices */
-+	case USB_ID(0x0572, 0x1b09): /* Conexant Systems (Rockwell), Inc. */
- 	case USB_ID(0x0d8c, 0x000c): /* C-Media */
- 	case USB_ID(0x0d8c, 0x0014): /* C-Media */
- 	case USB_ID(0x19f7, 0x0003): /* RODE NT-USB */
-+	case USB_ID(0x2d99, 0x0026): /* HECATE G2 GAMING HEADSET */
- 		if (strstr(kctl->id.name, "Playback"))
- 			cval->min_mute = 1;
- 		break;
+diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
+index b8ba360e863ed..927c3d7947f9c 100644
+--- a/drivers/tee/optee/ffa_abi.c
++++ b/drivers/tee/optee/ffa_abi.c
+@@ -653,7 +653,7 @@ static int optee_ffa_do_call_with_arg(struct tee_context *ctx,
+  * with a matching configuration.
+  */
+ 
+-static bool optee_ffa_api_is_compatbile(struct ffa_device *ffa_dev,
++static bool optee_ffa_api_is_compatible(struct ffa_device *ffa_dev,
+ 					const struct ffa_ops *ops)
+ {
+ 	const struct ffa_msg_ops *msg_ops = ops->msg_ops;
+@@ -804,7 +804,7 @@ static int optee_ffa_probe(struct ffa_device *ffa_dev)
+ 
+ 	ffa_ops = ffa_dev->ops;
+ 
+-	if (!optee_ffa_api_is_compatbile(ffa_dev, ffa_ops))
++	if (!optee_ffa_api_is_compatible(ffa_dev, ffa_ops))
+ 		return -EINVAL;
+ 
+ 	if (!optee_ffa_exchange_caps(ffa_dev, ffa_ops, &sec_caps,
+-- 
+2.50.1
+
 
 
