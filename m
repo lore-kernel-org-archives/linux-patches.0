@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC3A1F09A5;
-	Sun,  7 Sep 2025 20:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C101F09A5;
+	Sun,  7 Sep 2025 20:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275854; cv=none; b=ZqJqetDKBTh2dTvK6HKy/HLXC5U5HA59eCHeFRkowpx7snF8mqinaTGn/xJBcLpd6c3Gjdd6Jf/Lp01VOWMSbCCnmmaisuw6+yw781V10AmFx/3SJ34Uciy2K6kV8AmbEKc6Faub0S8Ep9aPp7kI5zSkHtMB/M3zFNseokDNmfA=
+	t=1757275857; cv=none; b=mlDsza9voMQNBNpVx/QTXadtaON+cR4SBILkUsgY/wbg/MQpqT+8eZtxcw748G8wDd1T/7GiTtOuOb+YVY+Hf+OAJ8eXU9JGGThG1NvasksNUGrt0Guxcs+yp/yhxKLX4tjYwwPACylmleS/+f+hvj8G1wQOPAaGqfNK5DSC+xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275854; c=relaxed/simple;
-	bh=1tnaEUhxiVc0wFzPAX/9tgO9wW7i/R1iJnQie2ZEzfg=;
+	s=arc-20240116; t=1757275857; c=relaxed/simple;
+	bh=aMcQT/Zy8Bh2fqgWvS5wmnhWKihRzXUgBttEbqpFV9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Du/SaOR9RaHGqiI6NMHuf8G/QHOYpiIMF1yj8dlYmceITe9Ea8At1DIkol0DyUhrKedXMs+pIfF6psvDmcvqd9dN2Fqt3815CvBqDKrf9DnGc7LtbJx7e5Fq1U0GhQGtdj6gXPMXi9Ph/RK0SFuDd4PHnip5wUBJvGjQ+/UZ6wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/0tzzCo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLWEQsevlmSJV7UjfprKEnD8NLEpDHJ9a9ZkY1tVgw/Sv4gF18pVi1zz+0S1Fjycm2bpKy98Aad8knD3MNgGT16Fip83o99WteZDTu1Ol2G46dUSgSKrX8pVwd9YJGChH8yfH5Bl4eS0N32S1Gs7HLNN6BsMGKUC3Fyyq97x3dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utBHBC9V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/0tzzCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86CDC4CEF0;
-	Sun,  7 Sep 2025 20:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utBHBC9V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2C4C4CEF0;
+	Sun,  7 Sep 2025 20:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275854;
-	bh=1tnaEUhxiVc0wFzPAX/9tgO9wW7i/R1iJnQie2ZEzfg=;
+	s=korg; t=1757275857;
+	bh=aMcQT/Zy8Bh2fqgWvS5wmnhWKihRzXUgBttEbqpFV9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/0tzzCo5+TKj2nZz9CmGe0C8RSbSc/X0wfRQvzS7lBLNSGCBLvWMIuwMHKwXC6sw
-	 YXb2sYRE6YCbFVg22sqkRxY1ZW/gF3OxjEntilezsobTH9s/2KuqIlzmPA4szEiDA7
-	 oT4W6Rojtkjm52xkAA9LzA/8hmohI8kNmpyi1MjI=
+	b=utBHBC9VQnLyJ80VxDQtzxB/U6LjN9HOtk4Z1jfHAAs3KT+wUim0g4e4G0H6ar1zr
+	 zIyQNWqY5xzhrhMrWotWr0s2qgvIIER2T6YJHre4JYWONf+xLHVe+G/iJmdTK1E7BX
+	 3hlM1CzJTIsSIH+wwbaBRx9tgmz9eZ++8V6pHvXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 31/45] gpio: pca953x: fix IRQ storm on system wake up
-Date: Sun,  7 Sep 2025 21:58:17 +0200
-Message-ID: <20250907195601.880352674@linuxfoundation.org>
+Subject: [PATCH 5.4 32/45] ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup
+Date: Sun,  7 Sep 2025 21:58:18 +0200
+Message-ID: <20250907195601.910368811@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
 References: <20250907195600.953058118@linuxfoundation.org>
@@ -54,63 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 3e38f946062b4845961ab86b726651b4457b2af8 ]
+[ Upstream commit f709b78aecab519dbcefa9a6603b94ad18c553e3 ]
 
-If an input changes state during wake-up and is used as an interrupt
-source, the IRQ handler reads the volatile input register to clear the
-interrupt mask and deassert the IRQ line. However, the IRQ handler is
-triggered before access to the register is granted, causing the read
-operation to fail.
+New HP ZBook with Realtek HDA codec ALC3247 needs the quirk
+ALC236_FIXUP_HP_GPIO_LED to fix the micmute LED.
 
-As a result, the IRQ handler enters a loop, repeatedly printing the
-"failed reading register" message, until `pca953x_resume()` is eventually
-called, which restores the driver context and enables access to
-registers.
-
-Fix by disabling the IRQ line before entering suspend mode, and
-re-enabling it after the driver context is restored in `pca953x_resume()`.
-
-An IRQ can be disabled with disable_irq() and still wake the system as
-long as the IRQ has wake enabled, so the wake-up functionality is
-preserved.
-
-Fixes: b76574300504 ("gpio: pca953x: Restore registers after suspend/resume cycle")
-Cc: stable@vger.kernel.org
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20250512095441.31645-1-francesco@dolcini.it
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-[ Apply directly to suspend/resume functions ]
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250520132101.120685-1-chris.chiu@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pca953x.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -1199,6 +1199,9 @@ static int pca953x_suspend(struct device
- 	struct pca953x_chip *chip = dev_get_drvdata(dev);
- 
- 	mutex_lock(&chip->i2c_lock);
-+	/* Disable IRQ to prevent early triggering while regmap "cache only" is on */
-+	if (chip->client->irq > 0)
-+		disable_irq(chip->client->irq);
- 	regcache_cache_only(chip->regmap, true);
- 	mutex_unlock(&chip->i2c_lock);
- 
-@@ -1224,6 +1227,8 @@ static int pca953x_resume(struct device
- 	}
- 
- 	mutex_lock(&chip->i2c_lock);
-+	if (chip->client->irq > 0)
-+		enable_irq(chip->client->irq);
- 	regcache_cache_only(chip->regmap, false);
- 	regcache_mark_dirty(chip->regmap);
- 	ret = pca953x_regcache_sync(dev);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8390,6 +8390,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x877d, "HP", ALC236_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x89aa, "HP EliteBook 630 G9", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8e1d, "HP ZBook X Gli 16 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+ 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
 
 
