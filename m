@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1A94315A;
-	Sun,  7 Sep 2025 20:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119154315A;
+	Sun,  7 Sep 2025 20:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277852; cv=none; b=HFkzFtYBkBtNr6IvO3r+GEGjzl5/08XPX7VcXI43UoYdlg+CHt62a5v+jSyYkiKRuWoGDPcQpk6Dz3HkbkQZEYDh4XaCA1iSDyS0IgwamNWOl5E4SlwXN+abxYWzXmqF/yw2EcRiQqXc0ucCYIqb6K6ilIOpq6TFdus/CM9hyNI=
+	t=1757277855; cv=none; b=OoQ+2EfmrIhuaWHELKiMAFDiJf01ngc4YwXs5ZexfjHXyV5qX38wnH3iC6KSgKwJ9+xtnAZfIds5KtsAdhzq/3kaRY83WmB8d1sXodmX8k23E+iTa6jUFIIFic5KGr4V8KqcsEOIPWASfE035OPtA6Pw8tPJP28zybjghIlGBcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277852; c=relaxed/simple;
-	bh=J5fxbx9K8u1UmpQGPXkzIW3+gkmoMSwuzP7LUdQwznM=;
+	s=arc-20240116; t=1757277855; c=relaxed/simple;
+	bh=QqDsaFyxhmez6DvgpSugps0OW2ynd7hmXjuE8gIH6QE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0m7K9w1K2T/fxj0POYx7CAmTNDGykVizZjvxXAmmMZey5v0Wx0A9donK4nvnpO/c7CI94i3e2ozKehs360b5dz9RXexL3Tfp6fTdeZc3lPJRRmrquqWnW4K4ucobLbjt+RZqYw0H/fKiHFUJ8uQbf9ugSlJuQvf1Xz0+8iGU0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xijc0Vm2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fbknBqf2H7WT7xHlYNz7pYCaQxiBSvxkUlxlwjzEsowx7ZE678Rku/tnm19PrJdC9OTgJ9lUrkbIccHttLUSci4H2wwtGeHTxAlpvYDr/FQ3GHRe07dZer/Awld+V4rf4zWuyWPLrsNQwl09YC3be7z45QmlB1NugceS0DAh6Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipTdTa73; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xijc0Vm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E866C4CEF0;
-	Sun,  7 Sep 2025 20:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipTdTa73"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B883C4CEF0;
+	Sun,  7 Sep 2025 20:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277851;
-	bh=J5fxbx9K8u1UmpQGPXkzIW3+gkmoMSwuzP7LUdQwznM=;
+	s=korg; t=1757277854;
+	bh=QqDsaFyxhmez6DvgpSugps0OW2ynd7hmXjuE8gIH6QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xijc0Vm2glGOCyq+4hZjQRylsmmoGR0aXS4YZpbr/qHGXGlxrVfioTaL3y/CDLVbk
-	 k+T1OcAViZFYhzi/MWwiAJLkz3bTb6wHIYbNFBWd7Q0C7b7GmvB+xMLC8I7jkOhSkI
-	 BeG3RgR9XvEOFS/qF8xhs/pVEOfhNS3x7ytvT/LM=
+	b=ipTdTa73TeAFm9wU5KAmg1tCmn9FfXv+9ICyuOIXVvgMg94lzJwQYtKyIM+r1wryn
+	 7Cd4FHTgdYtS9ifVVX2iNKfWgpFv+lfQv/CTA0HHvdFwBc6W7URHyo56KA82j58TXn
+	 d/yZJfxMZ4wXgdLQzVlkqueKaY3EhWziO9aaaVg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waffle Maybe <waffle.lapkin@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.16 143/183] rust: support Rust >= 1.91.0 target spec
-Date: Sun,  7 Sep 2025 21:59:30 +0200
-Message-ID: <20250907195619.201791443@linuxfoundation.org>
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.16 117/183] wifi: mac80211: do not permit 40 MHz EHT operation on 5/6 GHz
+Date: Sun,  7 Sep 2025 21:59:04 +0200
+Message-ID: <20250907195618.570645208@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -50,52 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-commit 8851e27d2cb947ea8bbbe8e812068f7bf5cbd00b upstream.
+commit 75575e2d252afb29fdbcbeec4d67e042007add52 upstream.
 
-Starting with Rust 1.91.0 (expected 2025-10-30), the target spec format
-has changed the type of the `target-pointer-width` key from string
-to integer [1].
+The EHT PHY requirements state that 80 MHz must be supported on the 5
+and 6 GHz bands unless the STA is 20 MHz only. So if the channel width
+is limited to 40 MHz on a band other than 2.4 GHz, then disable EHT and
+downgrade to HE.
 
-Thus conditionally use one or the other depending on the version.
+The primary case where this can happen is if the hardware disables
+puncturing using IEEE80211_HW_DISALLOW_PUNCTURING.
 
-Cc: Waffle Maybe <waffle.lapkin@gmail.com>
-Link: https://github.com/rust-lang/rust/pull/144443 [1]
-Link: https://lore.kernel.org/r/20250829195525.721664-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250826202553.a6582f3abf57.Ic670429dc7127f68c818b4290d950ebfb5a0b9e1@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/generate_rust_target.rs |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/mac80211/mlme.c            |    8 ++++++++
+ net/mac80211/tests/chan-mode.c |   30 +++++++++++++++++++++++++-----
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 
---- a/scripts/generate_rust_target.rs
-+++ b/scripts/generate_rust_target.rs
-@@ -225,7 +225,11 @@ fn main() {
-         ts.push("features", features);
-         ts.push("llvm-target", "x86_64-linux-gnu");
-         ts.push("supported-sanitizers", ["kcfi", "kernel-address"]);
--        ts.push("target-pointer-width", "64");
-+        if cfg.rustc_version_atleast(1, 91, 0) {
-+            ts.push("target-pointer-width", 64);
-+        } else {
-+            ts.push("target-pointer-width", "64");
-+        }
-     } else if cfg.has("X86_32") {
-         // This only works on UML, as i386 otherwise needs regparm support in rustc
-         if !cfg.has("UML") {
-@@ -245,7 +249,11 @@ fn main() {
-         }
-         ts.push("features", features);
-         ts.push("llvm-target", "i386-unknown-linux-gnu");
--        ts.push("target-pointer-width", "32");
-+        if cfg.rustc_version_atleast(1, 91, 0) {
-+            ts.push("target-pointer-width", 32);
-+        } else {
-+            ts.push("target-pointer-width", "32");
-+        }
-     } else if cfg.has("LOONGARCH") {
-         panic!("loongarch uses the builtin rustc loongarch64-unknown-none-softfloat target");
-     } else {
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1193,6 +1193,14 @@ again:
+ 			     "required MCSes not supported, disabling EHT\n");
+ 	}
+ 
++	if (conn->mode >= IEEE80211_CONN_MODE_EHT &&
++	    channel->band != NL80211_BAND_2GHZ &&
++	    conn->bw_limit == IEEE80211_CONN_BW_LIMIT_40) {
++		conn->mode = IEEE80211_CONN_MODE_HE;
++		link_id_info(sdata, link_id,
++			     "required bandwidth not supported, disabling EHT\n");
++	}
++
+ 	/* the mode can only decrease, so this must terminate */
+ 	if (ap_mode != conn->mode) {
+ 		kfree(elems);
+--- a/net/mac80211/tests/chan-mode.c
++++ b/net/mac80211/tests/chan-mode.c
+@@ -2,7 +2,7 @@
+ /*
+  * KUnit tests for channel mode functions
+  *
+- * Copyright (C) 2024 Intel Corporation
++ * Copyright (C) 2024-2025 Intel Corporation
+  */
+ #include <net/cfg80211.h>
+ #include <kunit/test.h>
+@@ -28,6 +28,10 @@ static const struct determine_chan_mode_
+ 	u8 vht_basic_mcs_1_4, vht_basic_mcs_5_8;
+ 	u8 he_basic_mcs_1_4, he_basic_mcs_5_8;
+ 	u8 eht_mcs7_min_nss;
++	u16 eht_disabled_subchannels;
++	u8 eht_bw;
++	enum ieee80211_conn_bw_limit conn_bw_limit;
++	enum ieee80211_conn_bw_limit expected_bw_limit;
+ 	int error;
+ } determine_chan_mode_cases[] = {
+ 	{
+@@ -128,6 +132,14 @@ static const struct determine_chan_mode_
+ 		.conn_mode = IEEE80211_CONN_MODE_EHT,
+ 		.eht_mcs7_min_nss = 0x15,
+ 		.error = EINVAL,
++	}, {
++		.desc = "80 MHz EHT is downgraded to 40 MHz HE due to puncturing",
++		.conn_mode = IEEE80211_CONN_MODE_EHT,
++		.expected_mode = IEEE80211_CONN_MODE_HE,
++		.conn_bw_limit = IEEE80211_CONN_BW_LIMIT_80,
++		.expected_bw_limit = IEEE80211_CONN_BW_LIMIT_40,
++		.eht_disabled_subchannels = 0x08,
++		.eht_bw = IEEE80211_EHT_OPER_CHAN_WIDTH_80MHZ,
+ 	}
+ };
+ KUNIT_ARRAY_PARAM_DESC(determine_chan_mode, determine_chan_mode_cases, desc)
+@@ -138,7 +150,7 @@ static void test_determine_chan_mode(str
+ 	struct t_sdata *t_sdata = T_SDATA(test);
+ 	struct ieee80211_conn_settings conn = {
+ 		.mode = params->conn_mode,
+-		.bw_limit = IEEE80211_CONN_BW_LIMIT_20,
++		.bw_limit = params->conn_bw_limit,
+ 	};
+ 	struct cfg80211_bss cbss = {
+ 		.channel = &t_sdata->band_5ghz.channels[0],
+@@ -191,14 +203,21 @@ static void test_determine_chan_mode(str
+ 		0x7f, 0x01, 0x00, 0x88, 0x88, 0x88, 0x00, 0x00,
+ 		0x00,
+ 		/* EHT Operation */
+-		WLAN_EID_EXTENSION, 0x09, WLAN_EID_EXT_EHT_OPERATION,
+-		0x01, params->eht_mcs7_min_nss ? params->eht_mcs7_min_nss : 0x11,
+-		0x00, 0x00, 0x00, 0x00, 0x24, 0x00,
++		WLAN_EID_EXTENSION, 0x0b, WLAN_EID_EXT_EHT_OPERATION,
++		0x03, params->eht_mcs7_min_nss ? params->eht_mcs7_min_nss : 0x11,
++		0x00, 0x00, 0x00, params->eht_bw,
++		params->eht_bw == IEEE80211_EHT_OPER_CHAN_WIDTH_80MHZ ? 42 : 36,
++		0x00,
++		u16_get_bits(params->eht_disabled_subchannels, 0xff),
++		u16_get_bits(params->eht_disabled_subchannels, 0xff00),
+ 	};
+ 	struct ieee80211_chan_req chanreq = {};
+ 	struct cfg80211_chan_def ap_chandef = {};
+ 	struct ieee802_11_elems *elems;
+ 
++	/* To force EHT downgrade to HE on punctured 80 MHz downgraded to 40 MHz */
++	set_bit(IEEE80211_HW_DISALLOW_PUNCTURING, t_sdata->local.hw.flags);
++
+ 	if (params->strict)
+ 		set_bit(IEEE80211_HW_STRICT, t_sdata->local.hw.flags);
+ 	else
+@@ -237,6 +256,7 @@ static void test_determine_chan_mode(str
+ 	} else {
+ 		KUNIT_ASSERT_NOT_ERR_OR_NULL(test, elems);
+ 		KUNIT_ASSERT_EQ(test, conn.mode, params->expected_mode);
++		KUNIT_ASSERT_EQ(test, conn.bw_limit, params->expected_bw_limit);
+ 	}
+ }
+ 
 
 
