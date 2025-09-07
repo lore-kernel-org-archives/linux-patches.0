@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F195A22F74D;
-	Sun,  7 Sep 2025 20:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A14326E6FF;
+	Sun,  7 Sep 2025 20:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276032; cv=none; b=glw92iEXE5IDailvqECXzWLWaI8qWUga8eLxM4nrL4aQRNf9lKa7vhHh5MPjjaBgyDp97zwKg1oAUJ+Gg9ZKgC2wktAzSvL2gzK/WCS+jnWLzPVkLqLeFAHjd0Jf8bDYk23x9nCr3x3sF0YT56WVI4HVSEL297DZR315MyI1N9U=
+	t=1757276035; cv=none; b=AO6dmhss0chcaZj0pme7k2wpkyxj3v3S9H+pKXna8NK1h9jllMoarQ7VdnUYvsktlb3KbE1A2vnjWDD7nLP6Qvq6ZsEdeZ71uaJRIqd0KQlsZQrXN1wO+QXz/6KivpG4RQob0qNEkdoHrn34Nnil8124KEAAKTc/2/iMxcdMaHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276032; c=relaxed/simple;
-	bh=RJBvhWT/kysozhI5OTeofwGY+fXAJIBE1wLle83872A=;
+	s=arc-20240116; t=1757276035; c=relaxed/simple;
+	bh=dzNvq67mWx12Lr/5dklSUPYQNYNr4xIe6KcBBU6p/qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNEcEjkKzXMNyOzQOedynoX2u0kdNsNutt5Zhu8F6Xg9JEvQqkfMr1qEnD+4KG+30xRBKvfffHf8/mMbIRa+WgJfzMzBzLwaUO6nQSm81eiSiiPfpJunCVFzPM58Zo03+BtJihuO22dL5HQvigdLG06LybBiculXV/hGjMt2A4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NozbtSEW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MGdVKWz0k+/faOSgp5P+kT8+ekwaQIt6dWTz8XOE4rm6ZN8iY/6emh/nPgWUIFltKCQFoqSsq+ynYZWqqVWn2B2/dpIJz6eWsBw4OtJEdhVyRl0aeldYxbBwYnNWWxRMWo6KudQeJlNE1zZVsAoZADH5vnksAP36EsNsM5lsQs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHHyb7VO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NozbtSEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DC5C4CEF0;
-	Sun,  7 Sep 2025 20:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHHyb7VO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31692C4CEF0;
+	Sun,  7 Sep 2025 20:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276031;
-	bh=RJBvhWT/kysozhI5OTeofwGY+fXAJIBE1wLle83872A=;
+	s=korg; t=1757276034;
+	bh=dzNvq67mWx12Lr/5dklSUPYQNYNr4xIe6KcBBU6p/qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NozbtSEW4yQv1iEQ0CRTafXbWtKTSXb3KWwC4q70MlaeWIeKrpp+k7gAQ9T/wZ2Nj
-	 WbkVpwWJivQSSCUG8jr1isZCMZ87uf8u03yWvk0Xs+MV9N1MBe14CTDwUIC5mNmEOJ
-	 44fmxgqeDUGD1uPHZBuQdgBE43SGMYhVP2hkG/K4=
+	b=MHHyb7VOmoelJrXU2rdP0UIqgLMEJMzDQgWhbWi7+1ARjtlUY8JuCCe0bCrgO5H7H
+	 hBD+dtNnyQJE8xvEDHhQ7b5krwD6tDn8DvBSeRiBz0fcct9fJpOegrqVzGgmba0Jrq
+	 IXkrarhH6fzNJsa/ChFiTQ0tnKO8hpGblvume1YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 42/64] spi: tegra114: Dont fail set_cs_timing when delays are zero
-Date: Sun,  7 Sep 2025 21:58:24 +0200
-Message-ID: <20250907195604.563963491@linuxfoundation.org>
+Subject: [PATCH 5.15 43/64] iio: chemical: pms7003: use aligned_s64 for timestamp
+Date: Sun,  7 Sep 2025 21:58:25 +0200
+Message-ID: <20250907195604.590865340@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -45,46 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit 4426e6b4ecf632bb75d973051e1179b8bfac2320 ]
+[ Upstream commit 6ffa698674053e82e811520642db2650d00d2c01 ]
 
-The original code would skip null delay pointers, but when the pointers
-were converted to point within the spi_device struct, the check was not
-updated to skip delays of zero. Hence all spi devices that didn't set
-delays would fail to probe.
+Follow the pattern of other drivers and use aligned_s64 for the
+timestamp. This will ensure that the timestamp is correctly aligned on
+all architectures.
 
-Fixes: 04e6bb0d6bb1 ("spi: modify set_cs_timing parameter")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://patch.msgid.link/20250423-spi-tegra114-v1-1-2d608bcc12f9@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Also move the unaligned.h header while touching this since it was the
+only one not in alphabetical order.
+
+Fixes: 13e945631c2f ("iio:chemical:pms7003: Fix timestamp alignment and prevent data leak.")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20250417-iio-more-timestamp-alignment-v1-4-eafac1e22318@baylibre.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ linux/unaligned.h => asm/unaligned.h ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra114.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/chemical/pms7003.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -729,9 +729,9 @@ static int tegra_spi_set_hw_cs_timing(st
- 	u32 inactive_cycles;
- 	u8 cs_state;
+--- a/drivers/iio/chemical/pms7003.c
++++ b/drivers/iio/chemical/pms7003.c
+@@ -5,7 +5,6 @@
+  * Copyright (c) Tomasz Duszynski <tduszyns@gmail.com>
+  */
  
--	if (setup->unit != SPI_DELAY_UNIT_SCK ||
--	    hold->unit != SPI_DELAY_UNIT_SCK ||
--	    inactive->unit != SPI_DELAY_UNIT_SCK) {
-+	if ((setup->unit && setup->unit != SPI_DELAY_UNIT_SCK) ||
-+	    (hold->unit && hold->unit != SPI_DELAY_UNIT_SCK) ||
-+	    (inactive->unit && inactive->unit != SPI_DELAY_UNIT_SCK)) {
- 		dev_err(&spi->dev,
- 			"Invalid delay unit %d, should be SPI_DELAY_UNIT_SCK\n",
- 			SPI_DELAY_UNIT_SCK);
+-#include <asm/unaligned.h>
+ #include <linux/completion.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+@@ -19,6 +18,8 @@
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/serdev.h>
++#include <linux/types.h>
++#include <asm/unaligned.h>
+ 
+ #define PMS7003_DRIVER_NAME "pms7003"
+ 
+@@ -76,7 +77,7 @@ struct pms7003_state {
+ 	/* Used to construct scan to push to the IIO buffer */
+ 	struct {
+ 		u16 data[3]; /* PM1, PM2P5, PM10 */
+-		s64 ts;
++		aligned_s64 ts;
+ 	} scan;
+ };
+ 
 
 
