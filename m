@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B3E1A0BFD;
-	Sun,  7 Sep 2025 20:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0746E1A0BFD;
+	Sun,  7 Sep 2025 20:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277255; cv=none; b=AfITr7LI4kNGQK1bokYn6C6f84e4OyrWmpL4/nLySW40EUaY6nWV794nGgs29sMmhy7a6LE4lcO0a+ZvAR44TUIIDqgi9lf9hCPvVQWcyHERDFkmdt85bmHq1EK4nAcp+cQlgFE88SP2tu+xIJxU72NjIskW7HjgdhW55PaHs3k=
+	t=1757277259; cv=none; b=kUDYiAo0/Vp7JTz63ZuzzCpdbsBg1Gto4zBs/g7HQxKhhuQwjcbJnX0gVe6iriwAD6hb8Nsug7bA7gFo69Oq46jAOieYyXkWtKSP+SfbmG/7gStbr+TFX744OURuMeSB4cFMvFOEgTl0C+RoNZVfmZMoXlfYdFeuh8KpNMw2dnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277255; c=relaxed/simple;
-	bh=XLpqoV3p7ineqnA0xhVJAl/Nwsc4wjfnZpy8dlajidM=;
+	s=arc-20240116; t=1757277259; c=relaxed/simple;
+	bh=H1qS7zzHG3B1IObzdsa3eFnB02IxkNx4mUIdlRVZAco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISWVH/LcuIhEvq0TjGyiL6EzDMWau4hXpd/gN/eZYZaUNFqmGbuv9840FRWWIWiuII4yWnqszZSCcMrk2eY8bO3F4lVWVldSar/yzAo39gPiGohIxWzCHAjvYNStJHchOZkuMqqazWLEyVjKDbVxdKQFcDFVw+arV7p4JRlaBvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGVvuSSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WO37oMinjdD7DT98hGNs0JPBRS3zrX0w3kZ1KVSTTdWB14nP5znen376THPbd5FANQ6HM8FYp8MsvEzJz/ceSYubXEhqISMJkgS25mJ88dcRuEpNrRWXDKTZkA2/2IlgwQwPSN1csExBmihsCJgMRlSyQiUzw8aWhKLNIzysGlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMPrzLag; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGVvuSSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC02C4CEF0;
-	Sun,  7 Sep 2025 20:34:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMPrzLag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558AAC4CEF0;
+	Sun,  7 Sep 2025 20:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277255;
-	bh=XLpqoV3p7ineqnA0xhVJAl/Nwsc4wjfnZpy8dlajidM=;
+	s=korg; t=1757277258;
+	bh=H1qS7zzHG3B1IObzdsa3eFnB02IxkNx4mUIdlRVZAco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGVvuSSgEhJzqVTiZkgGEZPrAU5y9ODeNID0HGD4NHFP9/qubjuhx/Ror7Q89V1pw
-	 B1xQwvUeEosu5oo75ZZrOgUm+gtLWcy5GaPHXVZbdDqKBOxlnp30ZBfURUSnEpwF3B
-	 ozM+AxB/4KYiA0qZ7h7pqt6z4WIQPJ8NFC1Dud5g=
+	b=XMPrzLago8kLYpYUjYmicHJbjNaWsoc1zWWCo559LJDINPp/30q8jdkFQmZQK/AU7
+	 SNQbXsRp4ZTK+hf+ZFwhwNo5FAOOF0pceQwIyHMHYExj9TPoEJrpZ24yuc9ta01vfy
+	 uJmyrcLLDpEXf2LmTR2tAgTe413bttMG0N3bo10o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abin Joseph <abin.joseph@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Qingfang Deng <dqfext@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/175] net: xilinx: axienet: Add error handling for RX metadata pointer retrieval
-Date: Sun,  7 Sep 2025 21:58:02 +0200
-Message-ID: <20250907195616.894246168@linuxfoundation.org>
+Subject: [PATCH 6.12 088/175] ppp: fix memory leak in pad_compress_skb
+Date: Sun,  7 Sep 2025 21:58:03 +0200
+Message-ID: <20250907195616.920181554@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,55 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abin Joseph <abin.joseph@amd.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 8bbceba7dc5090c00105e006ce28d1292cfda8dd ]
+[ Upstream commit 4844123fe0b853a4982c02666cb3fd863d701d50 ]
 
-Add proper error checking for dmaengine_desc_get_metadata_ptr() which
-can return an error pointer and lead to potential crashes or undefined
-behaviour if the pointer retrieval fails.
+If alloc_skb() fails in pad_compress_skb(), it returns NULL without
+releasing the old skb. The caller does:
 
-Properly handle the error by unmapping DMA buffer, freeing the skb and
-returning early to prevent further processing with invalid data.
+    skb = pad_compress_skb(ppp, skb);
+    if (!skb)
+        goto drop;
 
-Fixes: 6a91b846af85 ("net: axienet: Introduce dmaengine support")
-Signed-off-by: Abin Joseph <abin.joseph@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20250903025213.3120181-1-abin.joseph@amd.com
+drop:
+    kfree_skb(skb);
+
+When pad_compress_skb() returns NULL, the reference to the old skb is
+lost and kfree_skb(skb) ends up doing nothing, leading to a memory leak.
+
+Align pad_compress_skb() semantics with realloc(): only free the old
+skb if allocation and compression succeed.  At the call site, use the
+new_skb variable so the original skb is not lost when pad_compress_skb()
+fails.
+
+Fixes: b3f9b92a6ec1 ("[PPP]: add PPP MPPE encryption module")
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://patch.msgid.link/20250903100726.269839-1-dqfext@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 1775e060d39d3..3339c5e1a57a9 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -1127,6 +1127,15 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
- 						       &meta_max_len);
- 	dma_unmap_single(lp->dev, skbuf_dma->dma_address, lp->max_frm_size,
- 			 DMA_FROM_DEVICE);
-+
-+	if (IS_ERR(app_metadata)) {
-+		if (net_ratelimit())
-+			netdev_err(lp->ndev, "Failed to get RX metadata pointer\n");
-+		dev_kfree_skb_any(skb);
-+		lp->ndev->stats.rx_dropped++;
-+		goto rx_submit;
-+	}
-+
- 	/* TODO: Derive app word index programmatically */
- 	rx_len = (app_metadata[LEN_APP] & 0xFFFF);
- 	skb_put(skb, rx_len);
-@@ -1139,6 +1148,7 @@ static void axienet_dma_rx_cb(void *data, const struct dmaengine_result *result)
- 	u64_stats_add(&lp->rx_bytes, rx_len);
- 	u64_stats_update_end(&lp->rx_stat_sync);
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 0553b0b356b30..afc1566488b32 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1753,7 +1753,6 @@ pad_compress_skb(struct ppp *ppp, struct sk_buff *skb)
+ 		 */
+ 		if (net_ratelimit())
+ 			netdev_err(ppp->dev, "ppp: compressor dropped pkt\n");
+-		kfree_skb(skb);
+ 		consume_skb(new_skb);
+ 		new_skb = NULL;
+ 	}
+@@ -1855,9 +1854,10 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 					   "down - pkt dropped.\n");
+ 			goto drop;
+ 		}
+-		skb = pad_compress_skb(ppp, skb);
+-		if (!skb)
++		new_skb = pad_compress_skb(ppp, skb);
++		if (!new_skb)
+ 			goto drop;
++		skb = new_skb;
+ 	}
  
-+rx_submit:
- 	for (i = 0; i < CIRC_SPACE(lp->rx_ring_head, lp->rx_ring_tail,
- 				   RX_BUF_NUM_DEFAULT); i++)
- 		axienet_rx_submit_desc(lp->ndev);
+ 	/*
 -- 
 2.50.1
 
