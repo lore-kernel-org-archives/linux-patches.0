@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ECA14BFA2;
-	Sun,  7 Sep 2025 20:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBF115D5B6;
+	Sun,  7 Sep 2025 20:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276128; cv=none; b=jvZcCfLvaL3w545/16W4qGoLXsViRudXNBERuDS1JPWEI53EIra3WQOmH6nu6GJhVzmpHvcwX6hCurbnsujICC7iCatJhGupg23P5Hz/P9+AaqMVLnLnB1/ZrYPmV1n9bry9yw4TGVxkOy6bn9/0+A3DzVhu9mFtSk1HbWO725c=
+	t=1757276131; cv=none; b=EnbtSrZuk7ytIbspZsV7tn7Z2XztYBdKYNUwYqItmq9nto4dARSaEqDxAjmHVj34S8AJ3aQfEw93tmutrhjZ4IGi7Q6kOcfWilqtud+TdpcIg+q6AhOWZM7tDvWWYgZrxi0DwFf8QHZTNi1q1HnjL1qFg76hrRu6/Os19QUMAqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276128; c=relaxed/simple;
-	bh=8+9s0FBpG7JNtgk2c2tGRI1U+5+OXPWUUAnuoeaIN1k=;
+	s=arc-20240116; t=1757276131; c=relaxed/simple;
+	bh=lMGVR/QIN3M6vNfgWBnAj5PqsP0ss4UTwvwsvHlnwyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Go85LASM5P3F2nIV8IJjWtjQ2JRMU8ygkWD4zEvDrq2OTPRkEM1XMrhDbhSPdnDKxTq7ttSt/t/1Csw8z/QCjtUUZl5KuNonsNV7T5FdhY1rP1eIdxG7aKn3tpZv0y6uXZ+2AvaVsbT8/56qpblYKb+0j8ZEreoK5CySOM9wMS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4dzW3wD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fVv6kFOIfEJAVPaFIUcqCCUKrob64v3TjMy8wPos5Bc61drAiKX+A2gUflF6FhotjV2MPX14TqjeiWslhqpu1rk/XIE1jz3Cdj36q1rxjT5KIaUGlbMPR2PpVDGkbjbRMQux83cIlhtNw6CNwSU3FC8yC2wDPiPWu5rLSS/LlsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5tre0Rl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4dzW3wD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE348C4CEF0;
-	Sun,  7 Sep 2025 20:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5tre0Rl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F039CC4CEF0;
+	Sun,  7 Sep 2025 20:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276128;
-	bh=8+9s0FBpG7JNtgk2c2tGRI1U+5+OXPWUUAnuoeaIN1k=;
+	s=korg; t=1757276131;
+	bh=lMGVR/QIN3M6vNfgWBnAj5PqsP0ss4UTwvwsvHlnwyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4dzW3wD7ftWlQvYGEzqWWi/sep/mH1pyAHkqnxwseSd3bvAnDXnYi3D3m7z03vqm
-	 4O22rq+6KiL70o30twlG3xul3oeXbTkkVtbBdJ80QRQ9NqYfLNbg8sL2SkclHLXfaW
-	 fE6UAHezmdljY6nwHbrJiscsJxhBV3FuUEZerCf8=
+	b=P5tre0RlBvr3rslKwLHTgkryy//CWzE3GY+mebrVXHa4c0ucWI38A69P6WHTT1+jk
+	 DSU21feTVrRs/tq6y8okQS9K6NOEey3Q6BlxYgb6iivbP9GOrNqCDo9Y+v7uKsaITG
+	 gJmgjo3g84diwAKmQr4VqpFZiUpQDdJzbmgNF2I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fort <disclosure@aisle.com>,
-	Stanislav Fort <stanislav.fort@aisle.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 5.15 36/64] batman-adv: fix OOB read/write in network-coding decode
-Date: Sun,  7 Sep 2025 21:58:18 +0200
-Message-ID: <20250907195604.401040965@linuxfoundation.org>
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 27/64] net: phy: mscc: Fix memory leak when using one step timestamping
+Date: Sun,  7 Sep 2025 21:58:09 +0200
+Message-ID: <20250907195604.141237112@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -52,44 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fort <stanislav.fort@aisle.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-commit d77b6ff0ce35a6d0b0b7b9581bc3f76d041d4087 upstream.
+[ Upstream commit 846992645b25ec4253167e3f931e4597eb84af56 ]
 
-batadv_nc_skb_decode_packet() trusts coded_len and checks only against
-skb->len. XOR starts at sizeof(struct batadv_unicast_packet), reducing
-payload headroom, and the source skb length is not verified, allowing an
-out-of-bounds read and a small out-of-bounds write.
+Fix memory leak when running one-step timestamping. When running
+one-step sync timestamping, the HW is configured to insert the TX time
+into the frame, so there is no reason to keep the skb anymore. As in
+this case the HW will never generate an interrupt to say that the frame
+was timestamped, then the frame will never released.
+Fix this by freeing the frame in case of one-step timestamping.
 
-Validate that coded_len fits within the payload area of both destination
-and source sk_buffs before XORing.
-
-Fixes: 2df5278b0267 ("batman-adv: network coding - receive coded packets and decode them")
-Cc: stable@vger.kernel.org
-Reported-by: Stanislav Fort <disclosure@aisle.com>
-Signed-off-by: Stanislav Fort <stanislav.fort@aisle.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7d272e63e0979d ("net: phy: mscc: timestamping and PHC support")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20250522115722.2827199-1-horatiu.vultur@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9b2bfdbf43ad ("phy: mscc: Stop taking ts_lock for tx_queue and use its own lock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/network-coding.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/phy/mscc/mscc_ptp.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/net/batman-adv/network-coding.c
-+++ b/net/batman-adv/network-coding.c
-@@ -1691,7 +1691,12 @@ batadv_nc_skb_decode_packet(struct batad
+diff --git a/drivers/net/phy/mscc/mscc_ptp.c b/drivers/net/phy/mscc/mscc_ptp.c
+index e30e6ba9da2f4..717435562f1c5 100644
+--- a/drivers/net/phy/mscc/mscc_ptp.c
++++ b/drivers/net/phy/mscc/mscc_ptp.c
+@@ -1171,18 +1171,24 @@ static void vsc85xx_txtstamp(struct mii_timestamper *mii_ts,
+ 		container_of(mii_ts, struct vsc8531_private, mii_ts);
  
- 	coding_len = ntohs(coded_packet_tmp.coded_len);
+ 	if (!vsc8531->ptp->configured)
+-		return;
++		goto out;
  
--	if (coding_len > skb->len)
-+	/* ensure dst buffer is large enough (payload only) */
-+	if (coding_len + h_size > skb->len)
-+		return NULL;
+-	if (vsc8531->ptp->tx_type == HWTSTAMP_TX_OFF) {
+-		kfree_skb(skb);
+-		return;
+-	}
++	if (vsc8531->ptp->tx_type == HWTSTAMP_TX_OFF)
++		goto out;
 +
-+	/* ensure src buffer is large enough (payload only) */
-+	if (coding_len + h_size > nc_packet->skb->len)
- 		return NULL;
++	if (vsc8531->ptp->tx_type == HWTSTAMP_TX_ONESTEP_SYNC)
++		if (ptp_msg_is_sync(skb, type))
++			goto out;
  
- 	/* Here the magic is reversed:
+ 	skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
+ 
+ 	mutex_lock(&vsc8531->ts_lock);
+ 	__skb_queue_tail(&vsc8531->ptp->tx_queue, skb);
+ 	mutex_unlock(&vsc8531->ts_lock);
++	return;
++
++out:
++	kfree_skb(skb);
+ }
+ 
+ static bool vsc85xx_rxtstamp(struct mii_timestamper *mii_ts,
+-- 
+2.50.1
+
 
 
