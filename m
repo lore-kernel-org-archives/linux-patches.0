@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E199D528;
-	Sun,  7 Sep 2025 20:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4270D528;
+	Sun,  7 Sep 2025 20:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276661; cv=none; b=AmzWx/9t8Q8zLEYKpU1iQurMM2tYlEmGP/Fn5iL1OX37/nELuthmCpE/4pwRUx4hKQki8jIN0ISgo5QU9UDo/eAbxqBpzXw5Z8Jue40wdFzk6O13zoST2oSKYfz2KPpyTDSeQ/Gi4y5pxl8cM5fOBNAFf6d1Jd+xvTYQQ4P5eTA=
+	t=1757276664; cv=none; b=kCwtfpybbZOMHoFNo2CgPL3bIbHME+9V1dKwrsF7LsxtOk15MOox/uOh6w/RkiiAZxivkoWryFXwV50gKP72RNGitHH2EVYE/il0tWvITFJB0x0r2odLLPM0JvYs1l80AhQVDBs9A0eo9bgr2qNgkjV8467CaTu14YXajw0ccug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276661; c=relaxed/simple;
-	bh=fOpYYoSEiS2VzZROy0nEMafWGQAd4rY7edpFL92jd3Q=;
+	s=arc-20240116; t=1757276664; c=relaxed/simple;
+	bh=O2tjjsFPaqYlMOeHKkyN4Ch6VMnDFIXWCl26zM9Ls04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbSob8CJ0CWeM51wmbpuqSEMd4UJdbnul16lYdsAZNEG2U+R26OSFEPWPE1ctay+YaGAS1irriIEbf080Ndwv5VkQrT6CGGcX9kGhiGNPW/4Yil3Tu/KvpPEx0s9MZAUrOG2w3d40W9jj8nmZN5XZUg2FVO1ooR44pr0wGfwp8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/A9Gg6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hntd0QgZWQ4TBoqLmqzqoAOCxQrMObPl0roDTBAcycZWv46+1EoFzBVhHE4cGqBw/BHq7D1MubfNy99Ohkgx2pFYvnQEQe/jK610cw6DqtEb3Igoy0/T+HcWCof3rz3nMok+p64ohl3A3IKO9sUVkKVo5mBzzyI6lVSa7rFwRGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgkVp1e6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/A9Gg6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8965C4CEF0;
-	Sun,  7 Sep 2025 20:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgkVp1e6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3412C4CEF8;
+	Sun,  7 Sep 2025 20:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276661;
-	bh=fOpYYoSEiS2VzZROy0nEMafWGQAd4rY7edpFL92jd3Q=;
+	s=korg; t=1757276664;
+	bh=O2tjjsFPaqYlMOeHKkyN4Ch6VMnDFIXWCl26zM9Ls04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/A9Gg6kZ1HK7ehl4KsXVA/KdJJ3ThakAayO7sEdLxEWK/ezv8AbcK3dXAVH+EWB9
-	 O4hGM3kTZd4bIEq7NP1BcKYXVi0njq0To3rbnI1TN8XDB9iZsdsQqer4dTUFQ8dliH
-	 PWYFTiBakTOIOIWGLV1XUg09EkVrEAIL1x7/Cthc=
+	b=BgkVp1e6lwZqTP4pkqOZgZ3pTAE3UM+67OMbmHaU0vVg2wYEhTD/6Sf/8Ir3V5jPc
+	 9MDZ8PaoptxDwThVEqPdtyZHixd7Ye6AM+7o/+qa8W1A8shGB8OYKjmsudDc8OcXoE
+	 gEy6bbcijf7XY33hYoNlNR3QdckriAr/tGXNRWyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jinfeng Wang <jinfeng.wang.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.6 070/121] Revert "spi: cadence-quadspi: fix cleanup of rx_chan on failure paths"
-Date: Sun,  7 Sep 2025 21:58:26 +0200
-Message-ID: <20250907195611.633723750@linuxfoundation.org>
+Subject: [PATCH 6.6 071/121] Revert "spi: spi-cadence-quadspi: Fix pm runtime unbalance"
+Date: Sun,  7 Sep 2025 21:58:27 +0200
+Message-ID: <20250907195611.658686738@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,8 +52,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinfeng Wang <jinfeng.wang.cn@windriver.com>
 
-This reverts commit 1af6d1696ca40b2d22889b4b8bbea616f94aaa84 which is
-commit 04a8ff1bc3514808481ddebd454342ad902a3f60 upstream.
+This reverts commit cdfb20e4b34ad99b3fe122aafb4f8ee7b9856e1f which is
+commit b07f349d1864abe29436f45e3047da2bdd476462 upstream.
 
 There is cadence-qspi ff8d2000.spi: Unbalanced pm_runtime_enable! error
 without this revert.
@@ -98,22 +98,42 @@ Signed-off-by: Jinfeng Wang <jinfeng.wang.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-cadence-quadspi.c |   11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
 --- a/drivers/spi/spi-cadence-quadspi.c
 +++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1870,6 +1870,11 @@ static int cqspi_probe(struct platform_d
+@@ -1868,13 +1868,6 @@ static int cqspi_probe(struct platform_d
+ 			goto probe_setup_failed;
+ 	}
  
- 	pm_runtime_enable(dev);
- 
-+	if (cqspi->rx_chan) {
-+		dma_release_channel(cqspi->rx_chan);
-+		goto probe_setup_failed;
-+	}
-+
+-	pm_runtime_enable(dev);
+-
+-	if (cqspi->rx_chan) {
+-		dma_release_channel(cqspi->rx_chan);
+-		goto probe_setup_failed;
+-	}
+-
  	ret = spi_register_controller(host);
  	if (ret) {
  		dev_err(&pdev->dev, "failed to register SPI ctlr %d\n", ret);
+@@ -1884,7 +1877,6 @@ static int cqspi_probe(struct platform_d
+ 	return 0;
+ probe_setup_failed:
+ 	cqspi_controller_enable(cqspi, 0);
+-	pm_runtime_disable(dev);
+ probe_reset_failed:
+ 	if (cqspi->is_jh7110)
+ 		cqspi_jh7110_disable_clk(pdev, cqspi);
+@@ -1906,8 +1898,7 @@ static void cqspi_remove(struct platform
+ 	if (cqspi->rx_chan)
+ 		dma_release_channel(cqspi->rx_chan);
+ 
+-	if (pm_runtime_get_sync(&pdev->dev) >= 0)
+-		clk_disable(cqspi->clk);
++	clk_disable_unprepare(cqspi->clk);
+ 
+ 	if (cqspi->is_jh7110)
+ 		cqspi_jh7110_disable_clk(pdev, cqspi);
 
 
