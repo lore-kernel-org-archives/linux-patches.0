@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C2A1CDFAC;
-	Sun,  7 Sep 2025 20:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E671CDFAC;
+	Sun,  7 Sep 2025 20:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275611; cv=none; b=hK+FH4Ix/uGtLDiCimniV6SwGaCa/4cEYWDgd+THGHqd3WHW0Ks27AlPASmgKCjiYmYnAN9JsmtEh5YYG/lZB0eOf2Cfocti/4n2kmPGuifQK4tfk7hVgtQ394oulNdcwU6zchTrvqUUqIK3foMeYGpXyDcwMthcbMZm3JZoRuA=
+	t=1757275615; cv=none; b=iygF2BmjwkIziDd0s9qA3LL0RW5uJ8O8qX4x/bAh7tyPtm3JfMbqBBuQT8mYKr/TMo+u7A+9e4fVJWFPsnk3/V1J9DfNO5hMH24hMj7eadc2Kg913rYleYr6JQ5tvwbCLXKo6PsmMruQ5oefQ4tl+uiGG8N8Zd7aluA+ZNoD7uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275611; c=relaxed/simple;
-	bh=KxVz+oyH3PcQqfxEE0JZE/FeSSFsaJOCNbDAfJc3gJI=;
+	s=arc-20240116; t=1757275615; c=relaxed/simple;
+	bh=nPQxtFuWq5SPfsur8T0HTOWWQ0xFxWWv2X6Io3jnZB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U/3I7bbVC+znGl/atsXeJ8VwwXQeNKz+VbEyYNDhTcOcO9/xiq8OGER2R4rCKE72dq6Zy7e2O6nAwZN4Qh4KqtjefX8KCk1dZ+djwI2yKpiMQSDNVOn+epXbiKKcCrXZGlS0RLwuxNFcrl2thDIowbldoDDGuEOqMaN74Cdhu9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLGpHjVu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tz4OH/rLwIj+8T91MvrDF0wM955XR/gF0DgIYsIrcoOOmsNWQ8qDk7y3q9Zk8YWVG0jV5zQlVSuTGGbZ9/ktuFRnOAUiDorM65fwJJ104I3ZjsrVb/NWxN8Aw77Qfyhcj6i0y/Irm3+baUJ7WargxbuxmO0kjvdDcUZBmqH7DAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghHsql4d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLGpHjVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782FEC4CEF0;
-	Sun,  7 Sep 2025 20:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghHsql4d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AD8C4CEF0;
+	Sun,  7 Sep 2025 20:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275610;
-	bh=KxVz+oyH3PcQqfxEE0JZE/FeSSFsaJOCNbDAfJc3gJI=;
+	s=korg; t=1757275614;
+	bh=nPQxtFuWq5SPfsur8T0HTOWWQ0xFxWWv2X6Io3jnZB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLGpHjVu/VTPqNMzr3uvou8MtHZYx4LL9j0oFd/tcVAVrDx/rWgsewqGQ8xcWB+D4
-	 C4vku5ztZJ/eYj1mpy56q5no4TiePyelqm744oltaNLxqu5F400wRUwjKes8IWGyxt
-	 gY3R9AMxBNWDzIHAP/xuZG2vCM2RwkcvEaZnYDCc=
+	b=ghHsql4dS3zlk5wJGptHszrajrgbaAjN0uQGNzknkBQ0SKU6fKQ+Xh49cChRPwfvR
+	 riGX1SpzxkuYNfNYz3Ot2D6yW1wkmlLtl4jI1vAbrpwSnH5sCyOV6+6fFRmCpA1tnZ
+	 VQtH8QTZ4gOlR3WOHl7NLWds32KP1K37Nre6Te5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/52] drm/amd/display: Dont warn when missing DCE encoder caps
-Date: Sun,  7 Sep 2025 21:57:21 +0200
-Message-ID: <20250907195602.003977938@linuxfoundation.org>
+Subject: [PATCH 5.10 10/52] i40e: Fix potential invalid access when MAC list is empty
+Date: Sun,  7 Sep 2025 21:57:30 +0200
+Message-ID: <20250907195602.273245761@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -47,70 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-[ Upstream commit 8246147f1fbaed522b8bcc02ca34e4260747dcfb ]
+[ Upstream commit a556f06338e1d5a85af0e32ecb46e365547f92b9 ]
 
-On some GPUs the VBIOS just doesn't have encoder caps,
-or maybe not for every encoder.
+list_first_entry() never returns NULL - if the list is empty, it still
+returns a pointer to an invalid object, leading to potential invalid
+memory access when dereferenced.
 
-This isn't really a problem and it's handled well,
-so let's not litter the logs with it.
+Fix this by using list_first_entry_or_null instead of list_first_entry.
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 33e0227ee96e62d034781e91f215e32fd0b1d512)
+Fixes: e3219ce6a775 ("i40e: Add support for client interface for IWARP driver")
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_client.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-index 210466b2d8631..48bc459009547 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
-@@ -899,13 +899,13 @@ void dce110_link_encoder_construct(
- 						enc110->base.id, &bp_cap_info);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_client.c b/drivers/net/ethernet/intel/i40e/i40e_client.c
+index b3cb5d1033260..af65321a68886 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_client.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_client.c
+@@ -318,8 +318,8 @@ static void i40e_client_add_instance(struct i40e_pf *pf)
+ 		return;
+ 	}
  
- 	/* Override features with DCE-specific values */
--	if (BP_RESULT_OK == result) {
-+	if (result == BP_RESULT_OK) {
- 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
- 				bp_cap_info.DP_HBR2_EN;
- 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
- 				bp_cap_info.DP_HBR3_EN;
- 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
--	} else {
-+	} else if (result != BP_RESULT_NORECORD) {
- 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
- 				__func__,
- 				result);
-@@ -1800,13 +1800,13 @@ void dce60_link_encoder_construct(
- 						enc110->base.id, &bp_cap_info);
- 
- 	/* Override features with DCE-specific values */
--	if (BP_RESULT_OK == result) {
-+	if (result == BP_RESULT_OK) {
- 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
- 				bp_cap_info.DP_HBR2_EN;
- 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
- 				bp_cap_info.DP_HBR3_EN;
- 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
--	} else {
-+	} else if (result != BP_RESULT_NORECORD) {
- 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
- 				__func__,
- 				result);
+-	mac = list_first_entry(&cdev->lan_info.netdev->dev_addrs.list,
+-			       struct netdev_hw_addr, list);
++	mac = list_first_entry_or_null(&cdev->lan_info.netdev->dev_addrs.list,
++				       struct netdev_hw_addr, list);
+ 	if (mac)
+ 		ether_addr_copy(cdev->lan_info.lanmac, mac->addr);
+ 	else
 -- 
 2.50.1
 
