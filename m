@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598B6284B33;
-	Sun,  7 Sep 2025 20:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723D21A9FAA;
+	Sun,  7 Sep 2025 20:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276541; cv=none; b=o1+M1Il+Tq5HcXL0X8e2yFOc50Q0S/DMPGqYXCuUHFJY0mLhhsWXnnAiyEOAXUBN7FbRpzKylcavzdIV9Lfpn5fSo05oO6PA2/bZLpacdn8z/K11F9BYOFiLIKbtLwq5j4koWlHkUcwAlKVBeOxS8cUIWnWYm/3iO6kH6ftm7T0=
+	t=1757276544; cv=none; b=PH8YIekLgQ/F3JvQbNDC4Itx80b8mn8SPMXSjjFC1Tp68ZUB5C8PjK72Yh2lQamE8ZVTj9OMMI8BWozdRr0/jcl+Hb96KyKUnOt2dvp1P2cw2Blz6XSPRTybbCWV2dTjD7wtQOOU8oSVCCrS6vuk1VPdorinpqZ40tBqGw3gQfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276541; c=relaxed/simple;
-	bh=N2OgkWruRbBU+VqLbKlLQ78R6xfpoanBBzt9LSKgQwI=;
+	s=arc-20240116; t=1757276544; c=relaxed/simple;
+	bh=WDFplE1AB3GI+VpN0aGegtvE2jAd/PVi89QwfCf1ElU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6g0j0gfsEsi/eJnXb7/EtB11vCFSukpRAbxEJaecGfmM7AWKsMjpcojOoA3R7Mb4ee76H9BDRUFILPtUTRC7Cimnzm3MQRy4LcTuEFeaS7rE2OgndRihMMlOhK5WPR3InBEmy/SLVDCKzjM9PFPvrF+Fz5onC7lQ0TpOa1/hlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTC6prlP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qV9gLvjQL0yIVqyjftUMATkoR8VyzhfVz7Ke8TAf8sYeR07kYad1IPn2ImhOI9LDrbCapUdJsD92vJXSBUxFQvDh7s8QvtZqL3OzVGD+IIkzE6zryxadDjeqX8AHBXWgPZFn2GbGum9z1WvKrOFnYN+mKvn+duKahMbuqrjUC2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CY7f/Pm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTC6prlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62D0C4CEF0;
-	Sun,  7 Sep 2025 20:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CY7f/Pm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB42FC4CEF0;
+	Sun,  7 Sep 2025 20:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276541;
-	bh=N2OgkWruRbBU+VqLbKlLQ78R6xfpoanBBzt9LSKgQwI=;
+	s=korg; t=1757276544;
+	bh=WDFplE1AB3GI+VpN0aGegtvE2jAd/PVi89QwfCf1ElU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTC6prlPjSxLn6gdcQkTrZYd4p1uH8xYJBPrAAWAgi6JIfZEO/4ZCgKoCBqRAQ7Rh
-	 astFE+vsC1J/ci/VfJhl2xM/bYyugwOIUWk4Dm6b5HAxtb6SdVD2UAPJQZc2/G54HQ
-	 4nnmbovMzt3uLGpZGK71XhpGaGh4xSa5c46VJxss=
+	b=1CY7f/Pmfj8hlNhaRgItA3VOmLsSbA2bTZr5r7eUNPeMYMFDjlrIdrHlq2PSylbFg
+	 NxQxUi5dr0cTiceBLSILYX5qeyZ/QefutyRxjwqQUKWkU7z6TfsBen2yLUqR0Rb+J2
+	 bgDcjF2qymzJLGD3KWx6q5fSspj4L8/PZwf4Q3fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/121] net/smc: fix one NULL pointer dereference in smc_ib_is_sg_need_sync()
-Date: Sun,  7 Sep 2025 21:57:47 +0200
-Message-ID: <20250907195610.629045731@linuxfoundation.org>
+Subject: [PATCH 6.6 032/121] i40e: Fix potential invalid access when MAC list is empty
+Date: Sun,  7 Sep 2025 21:57:48 +0200
+Message-ID: <20250907195610.655819351@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -54,65 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-[ Upstream commit ba1e9421cf1a8369d25c3832439702a015d6b5f9 ]
+[ Upstream commit a556f06338e1d5a85af0e32ecb46e365547f92b9 ]
 
-BUG: kernel NULL pointer dereference, address: 00000000000002ec
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 28 UID: 0 PID: 343 Comm: kworker/28:1 Kdump: loaded Tainted: G        OE       6.17.0-rc2+ #9 NONE
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-Workqueue: smc_hs_wq smc_listen_work [smc]
-RIP: 0010:smc_ib_is_sg_need_sync+0x9e/0xd0 [smc]
-...
-Call Trace:
- <TASK>
- smcr_buf_map_link+0x211/0x2a0 [smc]
- __smc_buf_create+0x522/0x970 [smc]
- smc_buf_create+0x3a/0x110 [smc]
- smc_find_rdma_v2_device_serv+0x18f/0x240 [smc]
- ? smc_vlan_by_tcpsk+0x7e/0xe0 [smc]
- smc_listen_find_device+0x1dd/0x2b0 [smc]
- smc_listen_work+0x30f/0x580 [smc]
- process_one_work+0x18c/0x340
- worker_thread+0x242/0x360
- kthread+0xe7/0x220
- ret_from_fork+0x13a/0x160
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+list_first_entry() never returns NULL - if the list is empty, it still
+returns a pointer to an invalid object, leading to potential invalid
+memory access when dereferenced.
 
-If the software RoCE device is used, ibdev->dma_device is a null pointer.
-As a result, the problem occurs. Null pointer detection is added to
-prevent problems.
+Fix this by using list_first_entry_or_null instead of list_first_entry.
 
-Fixes: 0ef69e788411c ("net/smc: optimize for smc_sndbuf_sync_sg_for_device and smc_rmb_sync_sg_for_cpu")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Link: https://patch.msgid.link/20250828124117.2622624-1-liujian56@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e3219ce6a775 ("i40e: Add support for client interface for IWARP driver")
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_ib.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_client.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
-index 598ac9ead64b7..6df543e083fb3 100644
---- a/net/smc/smc_ib.c
-+++ b/net/smc/smc_ib.c
-@@ -743,6 +743,9 @@ bool smc_ib_is_sg_need_sync(struct smc_link *lnk,
- 	unsigned int i;
- 	bool ret = false;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_client.c b/drivers/net/ethernet/intel/i40e/i40e_client.c
+index 306758428aefd..a569d2fcc90af 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_client.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_client.c
+@@ -361,8 +361,8 @@ static void i40e_client_add_instance(struct i40e_pf *pf)
+ 	if (i40e_client_get_params(vsi, &cdev->lan_info.params))
+ 		goto free_cdev;
  
-+	if (!lnk->smcibdev->ibdev->dma_device)
-+		return ret;
-+
- 	/* for now there is just one DMA address */
- 	for_each_sg(buf_slot->sgt[lnk->link_idx].sgl, sg,
- 		    buf_slot->sgt[lnk->link_idx].nents, i) {
+-	mac = list_first_entry(&cdev->lan_info.netdev->dev_addrs.list,
+-			       struct netdev_hw_addr, list);
++	mac = list_first_entry_or_null(&cdev->lan_info.netdev->dev_addrs.list,
++				       struct netdev_hw_addr, list);
+ 	if (mac)
+ 		ether_addr_copy(cdev->lan_info.lanmac, mac->addr);
+ 	else
 -- 
 2.50.1
 
