@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4307A1CDFAC;
-	Sun,  7 Sep 2025 20:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218BA1B424F;
+	Sun,  7 Sep 2025 20:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276016; cv=none; b=pSCl/9gH8CFG5SOPF9dgthxuwKSu5YXiNA+aduoox1KPZ4hrv6TqKAYEmmn0dH8KOOF/N3No9217PxTkFjwDGazz7bMGgJmhX5voyNeQq5zipNRVphe8LRaf9NhD99PN+U1WkPmvPYNdW/QDylWfuv/5OwXaSOxpTcE21vEiumc=
+	t=1757276019; cv=none; b=qwjyiooBzzcRLVHUwzrRwHV64TzRE25U50SRf7wQ3C27+05VJOoT8LYZxARc/ZMrrL+vQwh7ZMiqvdbg5MN7ahrKjiOb4GhThCIYLZiMTASMEbuj4a+tMJ0OumNxbAhxc7EvMQ7sDRIHetAqyi01Vm1XKMAvVMfzcuxxxehFg6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276016; c=relaxed/simple;
-	bh=ZeRYoxp85LaBoZb0wJZqWfA0SDdCkDjxz9Re5FAhe+U=;
+	s=arc-20240116; t=1757276019; c=relaxed/simple;
+	bh=XHMyexvUlI0RS58RhhB6bpo3yHXIm+XKtzjyUKdTJ6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2tf5+BHyWM9K5L37W4XuHAmdHf+4IXCW/cxpk3Lh3/J2EhOC/lAP6kXG6iuA3g2o/FcserfEtdDU2YWkW3tZtxe5ewCOS65jGQKI7nRg1JAtCoHHODbfuCbfDIREkaiJkVuG+9qPV0i65JDmSaHN+YTB4oo4R30DA0diadYB3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDStG9VL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rOGdgMPAqRXPNlgGQ6B2HJLJPsDvs3uO/7XmoVHhjGb9OUrErL/AstRLOvFsXB1tTeKCbFDU57KkCrzeYCPqjKOwNXyPgLGfX5dOe7Q6FVxCVjDZpniSOItkRlZ7vHY45k4Df7VImMnQdrWQhcN2+rj/tsQBYI0QDPXthDXFbo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKrY0Mza; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDStG9VL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76894C4CEF0;
-	Sun,  7 Sep 2025 20:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKrY0Mza"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927FEC4CEF0;
+	Sun,  7 Sep 2025 20:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276015;
-	bh=ZeRYoxp85LaBoZb0wJZqWfA0SDdCkDjxz9Re5FAhe+U=;
+	s=korg; t=1757276019;
+	bh=XHMyexvUlI0RS58RhhB6bpo3yHXIm+XKtzjyUKdTJ6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HDStG9VL5SK1zDlXZ04GJtoIEi2XGEi/aBxu7DNo1Z1D1FdimHykZ0DhwRlmEKSxz
-	 h4qDqSlt0EbcQbUIbamO1v3kUs2p3a03Q+2rV97Wux8TKGrp0+xIcjaakqUeM/n2NT
-	 b3saZjUsPRadIRzsl96WOux4kGExXu0RmDQTmctk=
+	b=qKrY0Mza03Ylu3qWwoCPy7eWqA84PsNL3Nt6CU8bRZicWIboGd62RUhUP0G36PD6l
+	 rjp8iBO4koQCD/eDBu7LQvoXhPEn8x0wqHZe0hDTQJKAaTHlpQGaW2MOpWEnfTErZM
+	 Qinu7MiIqDRACZbN3a69vR+xBDxTcrwWQdKZx2kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Wessel <post@mikaelkw.online>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.15 37/64] e1000e: fix heap overflow in e1000_set_eeprom
-Date: Sun,  7 Sep 2025 21:58:19 +0200
-Message-ID: <20250907195604.427742160@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Zach OKeefe <zokeefe@google.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@intel.linux.com>,
+	Yang Shi <shy828301@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Bjoern Doebel <doebel@amazon.de>
+Subject: [PATCH 5.15 38/64] mm/khugepaged: fix ->anon_vma race
+Date: Sun,  7 Sep 2025 21:58:20 +0200
+Message-ID: <20250907195604.457007923@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -52,55 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Jann Horn <jannh@google.com>
 
-commit 90fb7db49c6dbac961c6b8ebfd741141ffbc8545 upstream.
+commit 023f47a8250c6bdb4aebe744db4bf7f73414028b upstream.
 
-Fix a possible heap overflow in e1000_set_eeprom function by adding
-input validation for the requested length of the change in the EEPROM.
-In addition, change the variable type from int to size_t for better
-code practices and rearrange declarations to RCT.
+If an ->anon_vma is attached to the VMA, collapse_and_free_pmd() requires
+it to be locked.
 
-Cc: stable@vger.kernel.org
-Fixes: bc7f75fa9788 ("[E1000E]: New pci-express e1000 driver (currently for ICH9 devices only)")
-Co-developed-by: Mikael Wessel <post@mikaelkw.online>
-Signed-off-by: Mikael Wessel <post@mikaelkw.online>
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Page table traversal is allowed under any one of the mmap lock, the
+anon_vma lock (if the VMA is associated with an anon_vma), and the
+mapping lock (if the VMA is associated with a mapping); and so to be
+able to remove page tables, we must hold all three of them.
+retract_page_tables() bails out if an ->anon_vma is attached, but does
+this check before holding the mmap lock (as the comment above the check
+explains).
+
+If we racily merged an existing ->anon_vma (shared with a child
+process) from a neighboring VMA, subsequent rmap traversals on pages
+belonging to the child will be able to see the page tables that we are
+concurrently removing while assuming that nothing else can access them.
+
+Repeat the ->anon_vma check once we hold the mmap lock to ensure that
+there really is no concurrent page table access.
+
+Hitting this bug causes a lockdep warning in collapse_and_free_pmd(),
+in the line "lockdep_assert_held_write(&vma->anon_vma->root->rwsem)".
+It can also lead to use-after-free access.
+
+Link: https://lore.kernel.org/linux-mm/CAG48ez3434wZBKFFbdx4M9j6eUwSUVPd4dxhzW_k_POneSDF+A@mail.gmail.com/
+Link: https://lkml.kernel.org/r/20230111133351.807024-1-jannh@google.com
+Fixes: f3f0e1d2150b ("khugepaged: add support of collapse for tmpfs/shmem pages")
+Signed-off-by: Jann Horn <jannh@google.com>
+Reported-by: Zach O'Keefe <zokeefe@google.com>
+Acked-by: Kirill A. Shutemov <kirill.shutemov@intel.linux.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[doebel@amazon.de: Kernel 5.15 uses a different control flow pattern,
+ context adjustments.]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000e/ethtool.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/khugepaged.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/e1000e/ethtool.c
-+++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
-@@ -559,12 +559,12 @@ static int e1000_set_eeprom(struct net_d
- {
- 	struct e1000_adapter *adapter = netdev_priv(netdev);
- 	struct e1000_hw *hw = &adapter->hw;
-+	size_t total_len, max_len;
- 	u16 *eeprom_buff;
--	void *ptr;
--	int max_len;
-+	int ret_val = 0;
- 	int first_word;
- 	int last_word;
--	int ret_val = 0;
-+	void *ptr;
- 	u16 i;
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1609,7 +1609,7 @@ static void retract_page_tables(struct a
+ 		 * has higher cost too. It would also probably require locking
+ 		 * the anon_vma.
+ 		 */
+-		if (vma->anon_vma)
++		if (READ_ONCE(vma->anon_vma))
+ 			continue;
+ 		addr = vma->vm_start + ((pgoff - vma->vm_pgoff) << PAGE_SHIFT);
+ 		if (addr & ~HPAGE_PMD_MASK)
+@@ -1631,6 +1631,19 @@ static void retract_page_tables(struct a
+ 			if (!khugepaged_test_exit(mm)) {
+ 				struct mmu_notifier_range range;
  
- 	if (eeprom->len == 0)
-@@ -579,6 +579,10 @@ static int e1000_set_eeprom(struct net_d
- 
- 	max_len = hw->nvm.word_size * 2;
- 
-+	if (check_add_overflow(eeprom->offset, eeprom->len, &total_len) ||
-+	    total_len > max_len)
-+		return -EFBIG;
++				/*
++				 * Re-check whether we have an ->anon_vma, because
++				 * collapse_and_free_pmd() requires that either no
++				 * ->anon_vma exists or the anon_vma is locked.
++				 * We already checked ->anon_vma above, but that check
++				 * is racy because ->anon_vma can be populated under the
++				 * mmap lock in read mode.
++				 */
++				if (vma->anon_vma) {
++					mmap_write_unlock(mm);
++					continue;
++				}
 +
- 	first_word = eeprom->offset >> 1;
- 	last_word = (eeprom->offset + eeprom->len - 1) >> 1;
- 	eeprom_buff = kmalloc(max_len, GFP_KERNEL);
+ 				mmu_notifier_range_init(&range,
+ 							MMU_NOTIFY_CLEAR, 0,
+ 							NULL, mm, addr,
 
 
