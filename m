@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEE114D29B;
-	Sun,  7 Sep 2025 20:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0E7125B2;
+	Sun,  7 Sep 2025 20:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757278002; cv=none; b=OwRFto4btfeR3CN5SN7/BHLGBsN4W7V8FVcUPspgvPEQBkqKZ56NB/VL6uOoNC/68cvg5bpdUqcvOOGhjJ20YXCTDj0A4mkWhCOVhbd0MV1J/73UeECkp6BEauSvCDOzC0nRovZxSAN3tF5m1mA5dPGEYd3w9Kk90M5mfAthRjs=
+	t=1757278006; cv=none; b=N8+fNQiGaow1fetr7+o41KXV3PIRn+/5vM8nI3DERDNpQy7q+kK+hYupniJpyscla74XojrQd/8vxiXWDMYorlqf74Q0mqahYppotZookyIOQzqmh5jAix5ZLgwTmSlNt1wOXjxB9edhA2lSh+QUMoBqRVNJ0Of51RYD3wuaqOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757278002; c=relaxed/simple;
-	bh=JnBfwiiOioXGNb0X/3G9vKJKzFB4unPAeH2tTugRCE8=;
+	s=arc-20240116; t=1757278006; c=relaxed/simple;
+	bh=bXMToLhIK6JC66BhQEDhleWRd7ynMVpIkp/Zr55bYqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhnnTOFCPlbSQ9xYaziVFQrNx/MFfsOui8AS6acARk9PvOKfc3VA6o6xgP4R4pwVXCoQL+9Boz89oJO1kaZ5uua3cb2oQLdvBcxSEncVDmp+P2UhFwyqIjuArK5p9Eh4N06eUZQh8jD2Ko+kEZk8bPPIKwVobDFYmoWFPe+w+fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JO3z95md; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hdINkA503OsbkV2mfoFfZ5D665/DcR2XTyGhaWYYC6NBmsuWNBDSUOMbNuz1rQu53FnWvRUkrgns6UznBxva540YrXOBOBK00QL3Ps8n+p1FetDonggMTcsFaz+c9nPLApWS34D/rcRwt2No974m/TnSHlbXUXtEawJg0EmaVI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaFfxU5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JO3z95md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FC4C4CEF0;
-	Sun,  7 Sep 2025 20:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaFfxU5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0113C4CEF0;
+	Sun,  7 Sep 2025 20:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757278002;
-	bh=JnBfwiiOioXGNb0X/3G9vKJKzFB4unPAeH2tTugRCE8=;
+	s=korg; t=1757278006;
+	bh=bXMToLhIK6JC66BhQEDhleWRd7ynMVpIkp/Zr55bYqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JO3z95mdmtz3vS9DIX2TwSaoODMLMm12vaXQI5J0BqtQ3geIz9K8nbz3lVzmyZEid
-	 mmFHR+qKfyZoNBHejGzUd3d+ffZHh9duJL0jusUKYS+oT2c4MZsk4qZdxkP4OyQYRt
-	 YI8MVFzsde3vuszXBryHwyYrum7Wt+/e9qFMupfE=
+	b=aaFfxU5hSUxjStjCxcD4hJuupHc2K9PiExYx1ukGnfpcoGKHImojqS1wQugduqL6T
+	 eEx8+SpgNV4g71a9fNFYKe39fG+z1URJ51paqpPPhaNFvtkD3j12KQF9jOCiAZ4VEX
+	 Wy1J9989qjBFVkZ/PwXLGMnq7HNO3PJ9pcVZmQYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Li Nan <linan122@huawei.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ian Dall <ian@beware.dropbear.id.au>
-Subject: [PATCH 6.16 170/183] md/raid1: fix data lost for writemostly rdev
-Date: Sun,  7 Sep 2025 21:59:57 +0200
-Message-ID: <20250907195619.855124756@linuxfoundation.org>
+	Nathan Rossi <nathan.rossi@digi.com>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 161/183] hwmon: (ina238) Correctly clamp shunt voltage limit
+Date: Sun,  7 Sep 2025 21:59:48 +0200
+Message-ID: <20250907195619.642308316@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,42 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 93dec51e716db88f32d770dc9ab268964fff320b ]
+[ Upstream commit bd7e7bc2cc2024035dfbc8239c9f4d8675793445 ]
 
-If writemostly is enabled, alloc_behind_master_bio() will allocate a new
-bio for rdev, with bi_opf set to 0. Later, raid1_write_request() will
-clone from this bio, hence bi_opf is still 0 for the cloned bio. Submit
-this cloned bio will end up to be read, causing write data lost.
+When clamping a register value, the result needs to be masked against the
+register size. This was missing, resulting in errors when trying to write
+negative limits. Fix by masking the clamping result against the register
+size.
 
-Fix this problem by inheriting bi_opf from original bio for
-behind_mast_bio.
-
-Fixes: e879a0d9cb08 ("md/raid1,raid10: don't ignore IO flags")
-Reported-and-tested-by: Ian Dall <ian@beware.dropbear.id.au>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220507
-Link: https://lore.kernel.org/linux-raid/20250903014140.3690499-1-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
+Fixes: eacb52f010a80 ("hwmon: Driver for Texas Instruments INA238")
+Cc: Nathan Rossi <nathan.rossi@digi.com>
+Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 2 +-
+ drivers/hwmon/ina238.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 6cee738a645ff..6d52336057946 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1226,7 +1226,7 @@ static void alloc_behind_master_bio(struct r1bio *r1_bio,
- 	int i = 0;
- 	struct bio *behind_bio = NULL;
+diff --git a/drivers/hwmon/ina238.c b/drivers/hwmon/ina238.c
+index a2cb615fa2789..0562f9a4dcf12 100644
+--- a/drivers/hwmon/ina238.c
++++ b/drivers/hwmon/ina238.c
+@@ -300,7 +300,7 @@ static int ina238_write_in(struct device *dev, u32 attr, int channel,
+ 		regval = clamp_val(val, -163, 163);
+ 		regval = (regval * 1000 * 4) /
+ 			 (INA238_SHUNT_VOLTAGE_LSB * data->gain);
+-		regval = clamp_val(regval, S16_MIN, S16_MAX);
++		regval = clamp_val(regval, S16_MIN, S16_MAX) & 0xffff;
  
--	behind_bio = bio_alloc_bioset(NULL, vcnt, 0, GFP_NOIO,
-+	behind_bio = bio_alloc_bioset(NULL, vcnt, bio->bi_opf, GFP_NOIO,
- 				      &r1_bio->mddev->bio_set);
- 
- 	/* discard op, we don't support writezero/writesame yet */
+ 		switch (attr) {
+ 		case hwmon_in_max:
 -- 
 2.51.0
 
