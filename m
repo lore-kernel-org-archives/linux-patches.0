@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E22BD528;
-	Sun,  7 Sep 2025 20:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9FE17BB21;
+	Sun,  7 Sep 2025 20:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276723; cv=none; b=bOJdHnhXA7cwg60M73hL9t8/EhOOhtgXj+bCQplSUmqD9c1IHwdHUrCV+fWmRINYK4CChistjBAfwwRqSXl0f3q/I/iVCbtO3l0eA1WetWsXHqH0mD9oDf6ZI2wUKvpluwx+M0XYkQ1vimewC0IwvfyGZCEUIHXbczEED1ijcJ0=
+	t=1757276724; cv=none; b=P2RCYMuBIYY+gQcGKnEWDcR7QF8I9Qf9pwE99BsGBoi8v79rgwW7t0aK0rZ0cU9j02DRpGJNJNWBG3yAqINszruaXyWEulJ7OxdMUgLJxye9Ag+fHoyUfOV47LYtOPSWJBIbrt9pnIjQ2VJKS4a3xnRZiaFIbSf6Ap7mUbrdhUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276723; c=relaxed/simple;
-	bh=LpdZbKNv/5DZ8rSrGz+X6y7/ySoynVrvpAFmECHCdDw=;
+	s=arc-20240116; t=1757276724; c=relaxed/simple;
+	bh=aLd6q75luMGINeD0fsiYXxAavbaT9cxanKPDpd5BAqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLWWi8C8lpZiUspUxQotuc1pGM1rsdmNDP2lpEMUN99Rd2pM0CGTMUEUqPi6kRtcn471m0/AhK7N6AAyNs/ACLpm6t/B9c/kwmGVm0TkvLRJ7vD/XM32JDgsxfjwllHTdz6jydPzgXoFjU28m0nNpO/O4SwawQ7L7aXx0Uj/1fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPlgXg+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIx7zX5AURpnUBXwZoPbwJXZFp9QCMpYN+apUhvtzhRnDG0YlcLzji9sBL7QvBRxZJWyIcb2MvYq9FQMoeRcoIFBBgK//euRxhK0a9NrG98kBtnplH2MK+SiQ07t5oK4NCBz8DvIRYz26onGD9mPb9VfTHAMB5sRGkzeLrFpvY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmFjMpoy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPlgXg+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324F2C4CEF0;
-	Sun,  7 Sep 2025 20:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmFjMpoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E36C4CEF0;
+	Sun,  7 Sep 2025 20:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276720;
-	bh=LpdZbKNv/5DZ8rSrGz+X6y7/ySoynVrvpAFmECHCdDw=;
+	s=korg; t=1757276724;
+	bh=aLd6q75luMGINeD0fsiYXxAavbaT9cxanKPDpd5BAqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPlgXg+WgN1Xa6PuHEo8UgCB+5ZJSav0ZBceRXeNF5kyzQ/BZ4yfSOL0jLdEXVf56
-	 3OVux+8mUAs4T/uZrctPKoj8SPP3WuVoy+EvSjlqJ8slyaxvBPL38HACkytbo6BKRO
-	 bbtbAo/FE2sLA9IOvz6JEtNYLgA5ia/4vGI2dH/U=
+	b=LmFjMpoyjiVCr8G1RhfmD6P5GSiIzbEtbkXk1BaC8GZrEUGQR9SaZUgN09bjWsTZV
+	 1NtTjNfiTYLJWQYWQGiJKh/SttZ7c9pOxjhwsjpRkYr9SCjffY6KbkM7G551Bw1bdw
+	 sabmobJ51K8wYM+qd3h+hZncIBQCa7sugUevwWdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/121] ALSA: hda/realtek: Add support for HP Agusta using CS35L41 HDA
-Date: Sun,  7 Sep 2025 21:58:43 +0200
-Message-ID: <20250907195612.073072327@linuxfoundation.org>
+Subject: [PATCH 6.6 088/121] ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup
+Date: Sun,  7 Sep 2025 21:58:44 +0200
+Message-ID: <20250907195612.099741465@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,35 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 7150d57c370f9e61b7d0e82c58002f1c5a205ac4 ]
+[ Upstream commit f709b78aecab519dbcefa9a6603b94ad18c553e3 ]
 
-Add support for HP Agusta.
+New HP ZBook with Realtek HDA codec ALC3247 needs the quirk
+ALC236_FIXUP_HP_GPIO_LED to fix the micmute LED.
 
-Laptops use 2 CS35L41 Amps with HDA, using Internal boost, with I2C
-
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250520124757.12597-1-sbinding@opensource.cirrus.com
+Link: https://patch.msgid.link/20250520132101.120685-1-chris.chiu@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 [ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10249,6 +10249,8 @@ static const struct hda_quirk alc269_fix
+@@ -10249,6 +10249,7 @@ static const struct hda_quirk alc269_fix
  	SND_PCI_QUIRK(0x103c, 0x8e18, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
  	SND_PCI_QUIRK(0x103c, 0x8e19, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
  	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8e3a, "HP Agusta", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8e3b, "HP Agusta", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8e1d, "HP ZBook X Gli 16 G12", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8e3a, "HP Agusta", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8e3b, "HP Agusta", ALC287_FIXUP_CS35L41_I2C_2),
  	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
 
 
