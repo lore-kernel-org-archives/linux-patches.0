@@ -1,40 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5882915C158;
-	Sun,  7 Sep 2025 20:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B2615C158;
+	Sun,  7 Sep 2025 20:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277137; cv=none; b=Brt1n1s3hFjc53bXKuC4yyoqYRDyXeIl4xOYpf+r0RX5dSbjV+i2XB5xLY6jyjZpsKZcT9+2DZrrkLXUzKJDFOLryHh/KuNkBzD8he+DlPjdNIKjqpR31k1iDCyhJWn0NtLReFYA7XcYuuYlcrohAWh3L8Wx4RjVlPnXcMmVAhw=
+	t=1757277142; cv=none; b=WRV0ChY5eJG9k0qYBb31WEzwx+cV2l4/1BoFSysUpnxEP4G/+zjaVVAIizG86fL9GAJvDAF3W1ZqfJXshCc+MTtGGN0UIN8C8wDFixvTYARVYGdxI2KpatNCWM0UYqAcFjvCAoFB3XST/0+f0PutNtjmL7rItiDPOKgDg9ki6zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277137; c=relaxed/simple;
-	bh=ms/G8cy6+Xzgtlwl7VKzqe1fuTvfIs0fYA/jjrTtCZg=;
+	s=arc-20240116; t=1757277142; c=relaxed/simple;
+	bh=gPew25D8mByQZWKv+Yrngac+Fwtd0xkECNH23+Y57z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpO0gqWtc+DYj7jSeOHeFRao6Q1Cv/kSvq2AaZd/+xYtzbev/lgUbafiqwxX8l3hciw5MumBKkDugePRjbeWp7Pr7Ic4bGY1m0MXoi1IVFMb/2tYJmP/MOrlRjEHTwWR15/lhsocZC4Usat8L/p8aiwZk43JbmoeB+tbjhSLVLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USxSAr1q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwMknvQ4Rcw1UVRg61qrK0+BhqGCHamOmSVmz26s994xEz1gt9anarmfBRuBva2Lmj390xwpfVWIqhQotZbGNHu3YPQQH/xeuCvfPQFlFta+FGOauW/e/HHq5lsG7UgEWt+fzyqazokubfDIcSn82CVSABCvYT0+fN4/G8Kh70w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4+9tULt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USxSAr1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD84BC4CEF9;
-	Sun,  7 Sep 2025 20:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4+9tULt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2552CC4CEF0;
+	Sun,  7 Sep 2025 20:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277137;
-	bh=ms/G8cy6+Xzgtlwl7VKzqe1fuTvfIs0fYA/jjrTtCZg=;
+	s=korg; t=1757277141;
+	bh=gPew25D8mByQZWKv+Yrngac+Fwtd0xkECNH23+Y57z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USxSAr1q0g+6kPLEsSrb2OcYOk1AY4W9RP6eQsdpfsgyZjnqCZQ1K2/LhZKApKg4O
-	 /lk9RB8xI5mITWLaPDl9zoY2fli4Rd3ExMlq3OZ7DUmu0GrH18mWrubXhZDbrwQGLW
-	 quBBTe12KQckpGNm0WcYujFRC8ERZF41T+3Lt0U4=
+	b=B4+9tULt5LPe3SCub4VPcENX4qriPNKlxsHXosVq0/COTXDwYxhoFH2XJRdD57/ZG
+	 N8RdoC8nHqIdIL3Cz5MF1JN351RcYwpLHcHNJa339VjYmPgDHK45ckexdM9adb4gQv
+	 FR9pHkjX5RDxU2VHsXxjZgKTdK0TAgIV3RK0XIHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	David Hildenbrand <david@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	bibo mao <maobibo@loongson.cn>,
+	Borislav Betkov <bp@alien8.de>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	Suren Baghdasaryan <surenb@google.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Thomas Huth <thuth@redhat.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 098/175] mm/userfaultfd: fix kmap_local LIFO ordering for CONFIG_HIGHPTE
-Date: Sun,  7 Sep 2025 21:58:13 +0200
-Message-ID: <20250907195617.167690906@linuxfoundation.org>
+Subject: [PATCH 6.12 099/175] mm: move page table sync declarations to linux/pgtable.h
+Date: Sun,  7 Sep 2025 21:58:14 +0200
+Message-ID: <20250907195617.192425932@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,61 +91,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-commit 9614d8bee66387501f48718fa306e17f2aa3f2f3 upstream.
+commit 7cc183f2e67d19b03ee5c13a6664b8c6cc37ff9d upstream.
 
-With CONFIG_HIGHPTE on 32-bit ARM, move_pages_pte() maps PTE pages using
-kmap_local_page(), which requires unmapping in Last-In-First-Out order.
+During our internal testing, we started observing intermittent boot
+failures when the machine uses 4-level paging and has a large amount of
+persistent memory:
 
-The current code maps dst_pte first, then src_pte, but unmaps them in the
-same order (dst_pte, src_pte), violating the LIFO requirement.  This
-causes the warning in kunmap_local_indexed():
+  BUG: unable to handle page fault for address: ffffe70000000034
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 0 P4D 0
+  Oops: 0002 [#1] SMP NOPTI
+  RIP: 0010:__init_single_page+0x9/0x6d
+  Call Trace:
+   <TASK>
+   __init_zone_device_page+0x17/0x5d
+   memmap_init_zone_device+0x154/0x1bb
+   pagemap_range+0x2e0/0x40f
+   memremap_pages+0x10b/0x2f0
+   devm_memremap_pages+0x1e/0x60
+   dev_dax_probe+0xce/0x2ec [device_dax]
+   dax_bus_probe+0x6d/0xc9
+   [... snip ...]
+   </TASK>
 
-  WARNING: CPU: 0 PID: 604 at mm/highmem.c:622 kunmap_local_indexed+0x178/0x17c
-  addr \!= __fix_to_virt(FIX_KMAP_BEGIN + idx)
+It turns out that the kernel panics while initializing vmemmap (struct
+page array) when the vmemmap region spans two PGD entries, because the new
+PGD entry is only installed in init_mm.pgd, but not in the page tables of
+other tasks.
 
-Fix this by reversing the unmap order to respect LIFO ordering.
+And looking at __populate_section_memmap():
+  if (vmemmap_can_optimize(altmap, pgmap))
+          // does not sync top level page tables
+          r = vmemmap_populate_compound_pages(pfn, start, end, nid, pgmap);
+  else
+          // sync top level page tables in x86
+          r = vmemmap_populate(start, end, nid, altmap);
 
-This issue follows the same pattern as similar fixes:
-- commit eca6828403b8 ("crypto: skcipher - fix mismatch between mapping and unmapping order")
-- commit 8cf57c6df818 ("nilfs2: eliminate staggered calls to kunmap in nilfs_rename")
+In the normal path, vmemmap_populate() in arch/x86/mm/init_64.c
+synchronizes the top level page table (See commit 9b861528a801 ("x86-64,
+mem: Update all PGDs for direct mapping and vmemmap mapping changes")) so
+that all tasks in the system can see the new vmemmap area.
 
-Both of which addressed the same fundamental requirement that kmap_local
-operations must follow LIFO ordering.
+However, when vmemmap_can_optimize() returns true, the optimized path
+skips synchronization of top-level page tables.  This is because
+vmemmap_populate_compound_pages() is implemented in core MM code, which
+does not handle synchronization of the top-level page tables.  Instead,
+the core MM has historically relied on each architecture to perform this
+synchronization manually.
 
-Link: https://lkml.kernel.org/r/20250731144431.773923-1-sashal@kernel.org
-Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We're not the first party to encounter a crash caused by not-sync'd top
+level page tables: earlier this year, Gwan-gyeong Mun attempted to address
+the issue [1] [2] after hitting a kernel panic when x86 code accessed the
+vmemmap area before the corresponding top-level entries were synced.  At
+that time, the issue was believed to be triggered only when struct page
+was enlarged for debugging purposes, and the patch did not get further
+updates.
+
+It turns out that current approach of relying on each arch to handle the
+page table sync manually is fragile because 1) it's easy to forget to sync
+the top level page table, and 2) it's also easy to overlook that the
+kernel should not access the vmemmap and direct mapping areas before the
+sync.
+
+# The solution: Make page table sync more code robust and harder to miss
+
+To address this, Dave Hansen suggested [3] [4] introducing
+{pgd,p4d}_populate_kernel() for updating kernel portion of the page tables
+and allow each architecture to explicitly perform synchronization when
+installing top-level entries.  With this approach, we no longer need to
+worry about missing the sync step, reducing the risk of future
+regressions.
+
+The new interface reuses existing ARCH_PAGE_TABLE_SYNC_MASK,
+PGTBL_P*D_MODIFIED and arch_sync_kernel_mappings() facility used by
+vmalloc and ioremap to synchronize page tables.
+
+pgd_populate_kernel() looks like this:
+static inline void pgd_populate_kernel(unsigned long addr, pgd_t *pgd,
+                                       p4d_t *p4d)
+{
+        pgd_populate(&init_mm, pgd, p4d);
+        if (ARCH_PAGE_TABLE_SYNC_MASK & PGTBL_PGD_MODIFIED)
+                arch_sync_kernel_mappings(addr, addr);
+}
+
+It is worth noting that vmalloc() and apply_to_range() carefully
+synchronizes page tables by calling p*d_alloc_track() and
+arch_sync_kernel_mappings(), and thus they are not affected by this patch
+series.
+
+This series was hugely inspired by Dave Hansen's suggestion and hence
+added Suggested-by: Dave Hansen.
+
+Cc stable because lack of this series opens the door to intermittent
+boot failures.
+
+
+This patch (of 3):
+
+Move ARCH_PAGE_TABLE_SYNC_MASK and arch_sync_kernel_mappings() to
+linux/pgtable.h so that they can be used outside of vmalloc and ioremap.
+
+Link: https://lkml.kernel.org/r/20250818020206.4517-1-harry.yoo@oracle.com
+Link: https://lkml.kernel.org/r/20250818020206.4517-2-harry.yoo@oracle.com
+Link: https://lore.kernel.org/linux-mm/20250220064105.808339-1-gwan-gyeong.mun@intel.com [1]
+Link: https://lore.kernel.org/linux-mm/20250311114420.240341-1-gwan-gyeong.mun@intel.com [2]
+Link: https://lore.kernel.org/linux-mm/d1da214c-53d3-45ac-a8b6-51821c5416e4@intel.com [3]
+Link: https://lore.kernel.org/linux-mm/4d800744-7b88-41aa-9979-b245e8bf794b@intel.com  [4]
+Fixes: 8d400913c231 ("x86/vmemmap: handle unpopulated sub-pmd ranges")
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: Kiryl Shutsemau <kas@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: bibo mao <maobibo@loongson.cn>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Christoph Lameter (Ampere) <cl@gentwo.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Kevin Brodsky <kevin.brodsky@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/userfaultfd.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/linux/pgtable.h |   16 ++++++++++++++++
+ include/linux/vmalloc.h |   16 ----------------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -1432,10 +1432,15 @@ out:
- 		folio_unlock(src_folio);
- 		folio_put(src_folio);
- 	}
--	if (dst_pte)
--		pte_unmap(dst_pte);
-+	/*
-+	 * Unmap in reverse order (LIFO) to maintain proper kmap_local
-+	 * index ordering when CONFIG_HIGHPTE is enabled. We mapped dst_pte
-+	 * first, then src_pte, so we must unmap src_pte first, then dst_pte.
-+	 */
- 	if (src_pte)
- 		pte_unmap(src_pte);
-+	if (dst_pte)
-+		pte_unmap(dst_pte);
- 	mmu_notifier_invalidate_range_end(&range);
- 	if (si)
- 		put_swap_device(si);
+--- a/include/linux/pgtable.h
++++ b/include/linux/pgtable.h
+@@ -1697,6 +1697,22 @@ static inline int pmd_protnone(pmd_t pmd
+ }
+ #endif /* CONFIG_NUMA_BALANCING */
+ 
++/*
++ * Architectures can set this mask to a combination of PGTBL_P?D_MODIFIED values
++ * and let generic vmalloc and ioremap code know when arch_sync_kernel_mappings()
++ * needs to be called.
++ */
++#ifndef ARCH_PAGE_TABLE_SYNC_MASK
++#define ARCH_PAGE_TABLE_SYNC_MASK 0
++#endif
++
++/*
++ * There is no default implementation for arch_sync_kernel_mappings(). It is
++ * relied upon the compiler to optimize calls out if ARCH_PAGE_TABLE_SYNC_MASK
++ * is 0.
++ */
++void arch_sync_kernel_mappings(unsigned long start, unsigned long end);
++
+ #endif /* CONFIG_MMU */
+ 
+ #ifdef CONFIG_HAVE_ARCH_HUGE_VMAP
+--- a/include/linux/vmalloc.h
++++ b/include/linux/vmalloc.h
+@@ -210,22 +210,6 @@ extern int remap_vmalloc_range(struct vm
+ 							unsigned long pgoff);
+ 
+ /*
+- * Architectures can set this mask to a combination of PGTBL_P?D_MODIFIED values
+- * and let generic vmalloc and ioremap code know when arch_sync_kernel_mappings()
+- * needs to be called.
+- */
+-#ifndef ARCH_PAGE_TABLE_SYNC_MASK
+-#define ARCH_PAGE_TABLE_SYNC_MASK 0
+-#endif
+-
+-/*
+- * There is no default implementation for arch_sync_kernel_mappings(). It is
+- * relied upon the compiler to optimize calls out if ARCH_PAGE_TABLE_SYNC_MASK
+- * is 0.
+- */
+-void arch_sync_kernel_mappings(unsigned long start, unsigned long end);
+-
+-/*
+  *	Lowlevel-APIs (not for driver use!)
+  */
+ 
 
 
