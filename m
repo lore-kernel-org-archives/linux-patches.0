@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A45017BB21;
-	Sun,  7 Sep 2025 20:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46A81E5B94;
+	Sun,  7 Sep 2025 20:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276969; cv=none; b=rZr20Ug1dg3dicSDD0rxXGDi3SKHO+cxxR9hlQwyHW3h01sDiqy5hPFY2GaGtMVdkSsLGm538Wrcxfi6HU68rHKVYDGDq4i7ccSwhwgPkW2+NO86RZtFCSK87NKYzwf7f7AfvSCYN4z7d821Iv6L0tciRdq5NPvKzMKQORwRuOY=
+	t=1757276972; cv=none; b=eYKpFujFNcNQqk8c+N0B96Hqtw8UKkivhYvTstIucXkvWdGhFZXPDCS4+vbkyTmdviQv27zyOG7rh4XUmCs5IY9xcrCz5MMyHbMLSEyMKPoG1B925lp8ezRrdsvMtjFwetTzojCAOiohZG8qY51Bzn+2GW5QUkQmC9+lo7ks3D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276969; c=relaxed/simple;
-	bh=4bdMO8H159GREjxX9LuzEg0JOQK54ppgH2+WSgDD+Qo=;
+	s=arc-20240116; t=1757276972; c=relaxed/simple;
+	bh=EjTJKbc/0nLsYEEdjUAXJLYKWIwABMEJKrx73PpOztg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QypCBEuKX6LskCjcDUddzNi7DeP7YGSE/OaukMuQc+9PA+kdeMS1z5PDNNzbRC2q+VXjyUegNZWrrjfRi2G7S0Wx/egAyJaXGWMVOkOmg7v8iSOQUtxQd6UHkypJbUFCvWiE6U7OVz8Wq/IWOapGveoEK2ZTcAxUv6EVcdbjj+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBG51y9r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rN1VMv4jEtImNEFrh1ZRxgMqytn/WHpCccLhscINJIuDQNJAmveqJwGKyUsdCHO2/W36/jHHTDYB+H6nx9x3I3N0qE97dPs65RZY3vmMgk5Eaj0hYa+JpzhIXgxBNqYreL738LeGqRfHuV+ncRHFwjx+14l8aj8L9SItNbJQlIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQdPcbwT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBG51y9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10565C4CEF0;
-	Sun,  7 Sep 2025 20:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQdPcbwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45216C4CEF0;
+	Sun,  7 Sep 2025 20:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276969;
-	bh=4bdMO8H159GREjxX9LuzEg0JOQK54ppgH2+WSgDD+Qo=;
+	s=korg; t=1757276972;
+	bh=EjTJKbc/0nLsYEEdjUAXJLYKWIwABMEJKrx73PpOztg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBG51y9r0PFoDuAX0MRxau5R9JIVNL36RoC4pKFIMACLqnAek5TrVxd6PbD+BUnAG
-	 zz1TxiKNiKCBl3QzDYms0eTGo3YA41ptlAPXeGJshRA8QV6+0Up/iMCndPq4aLYab0
-	 j770eX9VwWGmcrsfOLTEha7B/UCjA6q1HD7EkgFk=
+	b=TQdPcbwT66MayiW5x2hfRjscv7z+X9+8ktpmwrmEDPRrWDjFSUerILh9cSdWOKMgF
+	 3vRNC3nWtCXT63qV2KjIoRkxX6yrrpbje55PikEdn4JcXebyiLAfTVY4poDkL6QMJt
+	 oEfbezyEbXc37EL6twpUyCJcq5t1uG1wSHMa3VBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/175] xirc2ps_cs: fix register access when enabling FullDuplex
-Date: Sun,  7 Sep 2025 21:57:21 +0200
-Message-ID: <20250907195615.939324349@linuxfoundation.org>
+Subject: [PATCH 6.12 047/175] mISDN: Fix memory leak in dsp_hwec_enable()
+Date: Sun,  7 Sep 2025 21:57:22 +0200
+Message-ID: <20250907195615.961821313@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,42 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit b79e498080b170fd94fc83bca2471f450811549b ]
+[ Upstream commit 0704a3da7ce50f972e898bbda88d2692a22922d9 ]
 
-The current code incorrectly passes (XIRCREG1_ECR | FullDuplex) as
-the register address to GetByte(), instead of fetching the register
-value and OR-ing it with FullDuplex. This results in an invalid
-register access.
+dsp_hwec_enable() allocates dup pointer by kstrdup(arg),
+but then it updates dup variable by strsep(&dup, ",").
+As a result when it calls kfree(dup), the dup variable may be
+a modified pointer that no longer points to the original allocated
+memory, causing a memory leak.
 
-Fix it by reading XIRCREG1_ECR first, then or-ing with FullDuplex
-before writing it back.
+The issue is the same pattern as fixed in commit c6a502c22999
+("mISDN: Fix memory leak in dsp_pipeline_build()").
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Fixes: 9a4381618262 ("mISDN: Remove VLAs")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250827192645.658496-1-alok.a.tiwari@oracle.com
+Link: https://patch.msgid.link/20250828081457.36061-1-linmq006@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/isdn/mISDN/dsp_hwec.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index a31d5d5e65936..97e88886253f5 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -1576,7 +1576,7 @@ do_reset(struct net_device *dev, int full)
- 	    msleep(40);			/* wait 40 msec to let it complete */
- 	}
- 	if (full_duplex)
--	    PutByte(XIRCREG1_ECR, GetByte(XIRCREG1_ECR | FullDuplex));
-+	    PutByte(XIRCREG1_ECR, GetByte(XIRCREG1_ECR) | FullDuplex);
-     } else {  /* No MII */
- 	SelectPage(0);
- 	value = GetByte(XIRCREG_ESR);	 /* read the ESR */
+diff --git a/drivers/isdn/mISDN/dsp_hwec.c b/drivers/isdn/mISDN/dsp_hwec.c
+index 0b3f29195330a..0cd216e28f009 100644
+--- a/drivers/isdn/mISDN/dsp_hwec.c
++++ b/drivers/isdn/mISDN/dsp_hwec.c
+@@ -51,14 +51,14 @@ void dsp_hwec_enable(struct dsp *dsp, const char *arg)
+ 		goto _do;
+ 
+ 	{
+-		char *dup, *tok, *name, *val;
++		char *dup, *next, *tok, *name, *val;
+ 		int tmp;
+ 
+-		dup = kstrdup(arg, GFP_ATOMIC);
++		dup = next = kstrdup(arg, GFP_ATOMIC);
+ 		if (!dup)
+ 			return;
+ 
+-		while ((tok = strsep(&dup, ","))) {
++		while ((tok = strsep(&next, ","))) {
+ 			if (!strlen(tok))
+ 				continue;
+ 			name = strsep(&tok, "=");
 -- 
 2.50.1
 
