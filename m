@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D911CDFAC;
-	Sun,  7 Sep 2025 20:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB6E1CDFAC;
+	Sun,  7 Sep 2025 20:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275819; cv=none; b=OFuaZZBOuZ3jgAQsWBV61ipVseeCoUuw1Xn83/CvwmV1baOD97OhRZ9tWJO1OR1tI8O+J9cAhJ6lH/eaZWBbLADXjYgz3eRJ8TSuvt3GEAOtpSRuXzMx4M/HUon4c5uT9LSRPw+4s8DGOZZMagiAbevD5nCg7aCfzz//lsYNy0E=
+	t=1757275822; cv=none; b=R3IctgN+eGhDg6XPi0gJ4FC0NDQsP3no3WeruDyAkW5qRtvFOtRS4TRODJSCLgRBKbFcpouZPQG5o983juo6IQMF4DDVuGdSpWhYMNzQ4BSmcTP1MqXmISII9Ajo1RsuqO3bcXQ8dIYbQFyBg3pUo98/bD/StyMUIAJl5ZD1yvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275819; c=relaxed/simple;
-	bh=QfgGWkT2ce22Wmyl56AEvDknJx7pYCYK7BlLdujFYfM=;
+	s=arc-20240116; t=1757275822; c=relaxed/simple;
+	bh=sYM0xQuBycfTH+jTcBR24nf/zoAc34d56Ie/a7SLAb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvD8H4HJvuQ05Wxr2vv6eeNhzy/8IPl1Xs0n/Tqs+9ienDz1XV9lrFaDDFduxrxfJoAWu7/8VFVRI5fYkhgXGyN9j72kZ0afWKz9PJYoyZvOh6EF71Prt0GMXGQ7zU4SscJXjbbLkkvtNq/FqL4U3IiJ+7l1kQ9wXVDbJ2ZS3w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7oi9XNq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUteJXNG0k/DECCmqGwLsMiiYUfyVJq96+b5p/kUjmEEuBnj8qRUoPO3S3B7hOuLtR/Ve6hV0qW2byYeCQo/Vq6ITc5JmOJLSulDkd6YoVuNT/NIkile+tSO5WXUZpiQvY6JLrmgfhI9FcSMBHdVbXYY7zJrzlN4r1sYw+96CKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNZ2wJ1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7oi9XNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3915C4CEF0;
-	Sun,  7 Sep 2025 20:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNZ2wJ1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47E1C4CEF0;
+	Sun,  7 Sep 2025 20:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275819;
-	bh=QfgGWkT2ce22Wmyl56AEvDknJx7pYCYK7BlLdujFYfM=;
+	s=korg; t=1757275822;
+	bh=sYM0xQuBycfTH+jTcBR24nf/zoAc34d56Ie/a7SLAb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7oi9XNqykStha2jF9crMyOsHSHAyhwh+NJoO2004JSdZmdDVbvKHmYb7utnpW+E8
-	 iQiYam+4bU3w6xo8FDDjEI8PrVwmktHhKS7Dt23U4VDbMJk8Qg+r6U0bUn53xMl25g
-	 6TxF6no37ZD70SCSeYeQkhMCpOeMAX6+E24KEPyE=
+	b=sNZ2wJ1ZimkzzCzMtiI2joYjfr87zlM1M85gcYVVhh8aiiHhsBx36t2nadGvt1yFl
+	 KLJftIOsOXyuQM2K8LDMbsVlXIY5dFlCONC6Cupy3O6z1L8ucZs59A4iXtIXOgNvOR
+	 5UCmpcSo9fXu9y5z87LgOgOODN9mBwElEPiI76X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	oushixiong <oushixiong1025@163.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 21/45] drm/amdgpu: drop hw access in non-DC audio fini
-Date: Sun,  7 Sep 2025 21:58:07 +0200
-Message-ID: <20250907195601.575022979@linuxfoundation.org>
+	Stanislav Fort <disclosure@aisle.com>,
+	Stanislav Fort <stanislav.fort@aisle.com>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 5.4 22/45] batman-adv: fix OOB read/write in network-coding decode
+Date: Sun,  7 Sep 2025 21:58:08 +0200
+Message-ID: <20250907195601.602492358@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
 References: <20250907195600.953058118@linuxfoundation.org>
@@ -50,105 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Stanislav Fort <stanislav.fort@aisle.com>
 
-commit 71403f58b4bb6c13b71c05505593a355f697fd94 upstream.
+commit d77b6ff0ce35a6d0b0b7b9581bc3f76d041d4087 upstream.
 
-We already disable the audio pins in hw_fini so
-there is no need to do it again in sw_fini.
+batadv_nc_skb_decode_packet() trusts coded_len and checks only against
+skb->len. XOR starts at sizeof(struct batadv_unicast_packet), reducing
+payload headroom, and the source skb length is not verified, allowing an
+out-of-bounds read and a small out-of-bounds write.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4481
-Cc: oushixiong <oushixiong1025@163.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5eeb16ca727f11278b2917fd4311a7d7efb0bbd6)
+Validate that coded_len fits within the payload area of both destination
+and source sk_buffs before XORing.
+
+Fixes: 2df5278b0267 ("batman-adv: network coding - receive coded packets and decode them")
 Cc: stable@vger.kernel.org
+Reported-by: Stanislav Fort <disclosure@aisle.com>
+Signed-off-by: Stanislav Fort <stanislav.fort@aisle.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v11_0.c |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  |    5 -----
- 4 files changed, 20 deletions(-)
+ net/batman-adv/network-coding.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-@@ -1445,17 +1445,12 @@ static int dce_v10_0_audio_init(struct a
+--- a/net/batman-adv/network-coding.c
++++ b/net/batman-adv/network-coding.c
+@@ -1694,7 +1694,12 @@ batadv_nc_skb_decode_packet(struct batad
  
- static void dce_v10_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
+ 	coding_len = ntohs(coded_packet_tmp.coded_len);
  
- 	if (!adev->mode_info.audio.enabled)
- 		return;
+-	if (coding_len > skb->len)
++	/* ensure dst buffer is large enough (payload only) */
++	if (coding_len + h_size > skb->len)
++		return NULL;
++
++	/* ensure src buffer is large enough (payload only) */
++	if (coding_len + h_size > nc_packet->skb->len)
+ 		return NULL;
  
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v10_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-@@ -1487,17 +1487,12 @@ static int dce_v11_0_audio_init(struct a
- 
- static void dce_v11_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v11_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-@@ -1358,17 +1358,12 @@ static int dce_v6_0_audio_init(struct am
- 
- static void dce_v6_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v6_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-@@ -1408,17 +1408,12 @@ static int dce_v8_0_audio_init(struct am
- 
- static void dce_v8_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v8_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
+ 	/* Here the magic is reversed:
 
 
