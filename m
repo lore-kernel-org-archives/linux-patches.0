@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E944315A;
-	Sun,  7 Sep 2025 20:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554174315A;
+	Sun,  7 Sep 2025 20:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277752; cv=none; b=o2q6v8Qw40r543aVNOrwsAtAuLti6gs+9bFQwCHhG7oNqKNEyGGPhMqZpMnfrM6kFuri23oooGEh5dU/cSdIXaN4xZXSA80O9WCgZPsXSsqbfplGIUFAPUT0PQMTX7p+HUI1JbpW7oGZrfQmFjE8c4zSajxAGl9M81s3wt7ldV8=
+	t=1757277755; cv=none; b=YinFBLCvB040djvG0sKrRMA3UzwsfCyVpeAxXVPJzaJp0LkfUnSg3PFhDpeyR7XhLVl4lwHg+cvfc+RNYkdYXSXU9YuUez1cn8uUDlpYJdeDkwxBYee8y1Tw/f6HAX0/Ig/1xEJeu0bc0XrHQlYnAOIWT4jwLtQiUY5LFK7xQUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277752; c=relaxed/simple;
-	bh=gvDgAz5BiaE6qD0teLF/f00Zmz1jj8dmXIV6k0mo6YI=;
+	s=arc-20240116; t=1757277755; c=relaxed/simple;
+	bh=+kSjPKzR7A3fS4y4WzhSkezp2fbT72gKdA8KqNDYXi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t112fohfvq0Yb81Xq4+VUPJQsPaiuqPmeTDLxsYolaWp6eUXk0NNiJkayaTXYiG157VEgJCk7lDSAh9lJFC+U6wzBglscU3eyn+zTix5CHNjsfNVgoKM5GzA5Gzrdk/x7tmdDqQehs9+G9uorclQR9UZCJl/fRcBjomdzsSMHRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3Brr0eK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWHupsZPnsIRSoJxtDumE7B4ritt08iHGmGhOixuPrsnVUh91eyu9LxV976J2qc3mWQ3B24A2P92r7eiiVZ+E+5jmgDqdXqh1iIG21iTc050sT5SJWf8QSsOHsYhzqMOw/YAXZ6KfR7FECXtWTfc8119ON+xOc1YTondH/UOCdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chcT145S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3Brr0eK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582CDC4CEF0;
-	Sun,  7 Sep 2025 20:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chcT145S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95726C4CEF0;
+	Sun,  7 Sep 2025 20:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277751;
-	bh=gvDgAz5BiaE6qD0teLF/f00Zmz1jj8dmXIV6k0mo6YI=;
+	s=korg; t=1757277755;
+	bh=+kSjPKzR7A3fS4y4WzhSkezp2fbT72gKdA8KqNDYXi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3Brr0eK+Oi/dfNALRIhnnjV4SfRKhsUeHOMJFzGPL8jfAlTLmc1Q3ugUEHx28ncr
-	 xQeYtyWN3/c/KV+WANY7os1dNPnTYv0qmyq/vdGTEV0ad4cJqRIpqqHL4KJbWLP9Pf
-	 uL4yaq0+FgWxKR3oKGQkMn0QhHTk2RgHqOObrFE4=
+	b=chcT145SBuKQcKzpqLGwmWXlAlYIFqvjhPWZ7yFnVx3M9OYySlYHwDPwP2oANB5hv
+	 cmi4XX8HXnHRUK7nsENMjVaa68GGt+LonZjZ/jtHOXbgvp2mcQywB+0w2EmU8hUR9Q
+	 mKazCd7oKYTLy7pqJfTKU0Urk0aj64RwoACK59E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-Subject: [PATCH 6.16 110/183] sched: Fix sched_numa_find_nth_cpu() if mask offline
-Date: Sun,  7 Sep 2025 21:58:57 +0200
-Message-ID: <20250907195618.403765414@linuxfoundation.org>
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Marc Rutland <mark.rutland@arm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 111/183] kasan: fix GCC mem-intrinsic prefix with sw tags
+Date: Sun,  7 Sep 2025 21:58:58 +0200
+Message-ID: <20250907195618.428768769@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -50,110 +60,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-commit 5ebf512f335053a42482ebff91e46c6dc156bf8c upstream.
+commit 51337a9a3a404fde0f5337662ffc7699793dfeb5 upstream.
 
-sched_numa_find_nth_cpu() uses a bsearch to look for the 'closest'
-CPU in sched_domains_numa_masks and given cpus mask. However they
-might not intersect if all CPUs in the cpus mask are offline. bsearch
-will return NULL in that case, bail out instead of dereferencing a
-bogus pointer.
+GCC doesn't support "hwasan-kernel-mem-intrinsic-prefix", only
+"asan-kernel-mem-intrinsic-prefix"[0], while LLVM supports both.  This is
+already taken into account when checking
+"CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX", but not in the KASAN Makefile
+adding those parameters when "CONFIG_KASAN_SW_TAGS" is enabled.
 
-The previous behaviour lead to this bug when using maxcpus=4 on an
-rk3399 (LLLLbb) (i.e. booting with all big CPUs offline):
+Replace the version check with "CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX",
+which already validates that mem-intrinsic prefix parameter can be used,
+and choose the correct name depending on compiler.
 
-[    1.422922] Unable to handle kernel paging request at virtual address ffffff8000000000
-[    1.423635] Mem abort info:
-[    1.423889]   ESR = 0x0000000096000006
-[    1.424227]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    1.424715]   SET = 0, FnV = 0
-[    1.424995]   EA = 0, S1PTW = 0
-[    1.425279]   FSC = 0x06: level 2 translation fault
-[    1.425735] Data abort info:
-[    1.425998]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-[    1.426499]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    1.426952]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    1.427428] swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000004a9f000
-[    1.428038] [ffffff8000000000] pgd=18000000f7fff403, p4d=18000000f7fff403, pud=18000000f7fff403, pmd=0000000000000000
-[    1.429014] Internal error: Oops: 0000000096000006 [#1]  SMP
-[    1.429525] Modules linked in:
-[    1.429813] CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.17.0-rc4-dirty #343 PREEMPT
-[    1.430559] Hardware name: Pine64 RockPro64 v2.1 (DT)
-[    1.431012] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    1.431634] pc : sched_numa_find_nth_cpu+0x2a0/0x488
-[    1.432094] lr : sched_numa_find_nth_cpu+0x284/0x488
-[    1.432543] sp : ffffffc084e1b960
-[    1.432843] x29: ffffffc084e1b960 x28: ffffff80078a8800 x27: ffffffc0846eb1d0
-[    1.433495] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-[    1.434144] x23: 0000000000000000 x22: fffffffffff7f093 x21: ffffffc081de6378
-[    1.434792] x20: 0000000000000000 x19: 0000000ffff7f093 x18: 00000000ffffffff
-[    1.435441] x17: 3030303866666666 x16: 66663d736b73616d x15: ffffffc104e1b5b7
-[    1.436091] x14: 0000000000000000 x13: ffffffc084712860 x12: 0000000000000372
-[    1.436739] x11: 0000000000000126 x10: ffffffc08476a860 x9 : ffffffc084712860
-[    1.437389] x8 : 00000000ffffefff x7 : ffffffc08476a860 x6 : 0000000000000000
-[    1.438036] x5 : 000000000000bff4 x4 : 0000000000000000 x3 : 0000000000000000
-[    1.438683] x2 : 0000000000000000 x1 : ffffffc0846eb000 x0 : ffffff8000407b68
-[    1.439332] Call trace:
-[    1.439559]  sched_numa_find_nth_cpu+0x2a0/0x488 (P)
-[    1.440016]  smp_call_function_any+0xc8/0xd0
-[    1.440416]  armv8_pmu_init+0x58/0x27c
-[    1.440770]  armv8_cortex_a72_pmu_init+0x20/0x2c
-[    1.441199]  arm_pmu_device_probe+0x1e4/0x5e8
-[    1.441603]  armv8_pmu_device_probe+0x1c/0x28
-[    1.442007]  platform_probe+0x5c/0xac
-[    1.442347]  really_probe+0xbc/0x298
-[    1.442683]  __driver_probe_device+0x78/0x12c
-[    1.443087]  driver_probe_device+0xdc/0x160
-[    1.443475]  __driver_attach+0x94/0x19c
-[    1.443833]  bus_for_each_dev+0x74/0xd4
-[    1.444190]  driver_attach+0x24/0x30
-[    1.444525]  bus_add_driver+0xe4/0x208
-[    1.444874]  driver_register+0x60/0x128
-[    1.445233]  __platform_driver_register+0x24/0x30
-[    1.445662]  armv8_pmu_driver_init+0x28/0x4c
-[    1.446059]  do_one_initcall+0x44/0x25c
-[    1.446416]  kernel_init_freeable+0x1dc/0x3bc
-[    1.446820]  kernel_init+0x20/0x1d8
-[    1.447151]  ret_from_fork+0x10/0x20
-[    1.447493] Code: 90022e21 f000e5f5 910de2b5 2a1703e2 (f8767803)
-[    1.448040] ---[ end trace 0000000000000000 ]---
-[    1.448483] note: swapper/0[1] exited with preempt_count 1
-[    1.449047] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
-[    1.449741] SMP: stopping secondary CPUs
-[    1.450105] Kernel Offset: disabled
-[    1.450419] CPU features: 0x000000,00080000,20002001,0400421b
-[    1.450935] Memory Limit: none
-[    1.451217] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b ]---
+GCC 13 and above trigger "CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX" which
+prevents `mem{cpy,move,set}()` being redefined in "mm/kasan/shadow.c"
+since commit 36be5cba99f6 ("kasan: treat meminstrinsic as builtins in
+uninstrumented files"), as we expect the compiler to prefix those calls
+with `__(hw)asan_` instead.  But as the option passed to GCC has been
+incorrect, the compiler has not been emitting those prefixes, effectively
+never calling the instrumented versions of `mem{cpy,move,set}()` with
+"CONFIG_KASAN_SW_TAGS" enabled.
 
-Yury: with the fix, the function returns cpu == nr_cpu_ids, and later in
+If "CONFIG_FORTIFY_SOURCES" is enabled, this issue would be mitigated as
+it redefines `mem{cpy,move,set}()` and properly aliases the
+`__underlying_mem*()` that will be called to the instrumented versions.
 
-	smp_call_function_any ->
-	  smp_call_function_single ->
-	     generic_exec_single
-
-we test the cpu for '>= nr_cpu_ids' and return -ENXIO. So everything is
-handled correctly.
-
-Fixes: cd7f55359c90 ("sched: add sched_numa_find_nth_cpu()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Link: https://lkml.kernel.org/r/20250821120735.156244-1-ada.coupriediaz@arm.com
+Link: https://gcc.gnu.org/onlinedocs/gcc-13.4.0/gcc/Optimize-Options.html [0]
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: 36be5cba99f6 ("kasan: treat meminstrinsic as builtins in uninstrumented files")
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Marc Rutland <mark.rutland@arm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/topology.c |    2 ++
- 1 file changed, 2 insertions(+)
+ scripts/Makefile.kasan |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/topology.c
-+++ b/kernel/sched/topology.c
-@@ -2212,6 +2212,8 @@ int sched_numa_find_nth_cpu(const struct
- 		goto unlock;
+--- a/scripts/Makefile.kasan
++++ b/scripts/Makefile.kasan
+@@ -86,10 +86,14 @@ kasan_params += hwasan-instrument-stack=
+ 		hwasan-use-short-granules=0 \
+ 		hwasan-inline-all-checks=0
  
- 	hop_masks = bsearch(&k, k.masks, sched_domains_numa_levels, sizeof(k.masks[0]), hop_cmp);
-+	if (!hop_masks)
-+		goto unlock;
- 	hop = hop_masks	- k.masks;
+-# Instrument memcpy/memset/memmove calls by using instrumented __hwasan_mem*().
+-ifeq ($(call clang-min-version, 150000)$(call gcc-min-version, 130000),y)
+-	kasan_params += hwasan-kernel-mem-intrinsic-prefix=1
+-endif
++# Instrument memcpy/memset/memmove calls by using instrumented __(hw)asan_mem*().
++ifdef CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX
++	ifdef CONFIG_CC_IS_GCC
++		kasan_params += asan-kernel-mem-intrinsic-prefix=1
++	else
++		kasan_params += hwasan-kernel-mem-intrinsic-prefix=1
++	endif
++endif # CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX
  
- 	ret = hop ?
+ endif # CONFIG_KASAN_SW_TAGS
+ 
 
 
