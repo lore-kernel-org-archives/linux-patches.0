@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B194315A;
-	Sun,  7 Sep 2025 20:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2BB1A704B;
+	Sun,  7 Sep 2025 20:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277449; cv=none; b=oI7ySkYEW3jkDd2X2mFl2txcDBQr3uQkXxKxejB2hwY78aTBmGNl39Qd+jrcAO1Q6qRxbMRpYozY9iC22c+LRrBzEG6xxh/jjujdZ3AK6HB4a5NhSkrM+YkX004TWeRGZVYj/ItIAHLK03yDLxzMAHRPDAADl/b7vznORjlaHmY=
+	t=1757277453; cv=none; b=sFdKw7b1PURkXTuDPSmkMkTZrB1LMsPrvkRnpIiKk6neYGTj8jY9hJnngKYvP3ra0iUSSob+hhj5py8TSa39JAPEmWe999EUF65AcradKx9Hmr7uO+ddlq0g/oWgqXWq2gjz7bhmYutFUzpTxFL9aS72uJmiNZNkVjZMmH8YTKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277449; c=relaxed/simple;
-	bh=f1cCr/FmUFPgZ2VW2Ot3J1Z6RVFPJBrkGrBV8OKKvuQ=;
+	s=arc-20240116; t=1757277453; c=relaxed/simple;
+	bh=AONa4pnHiSvzjTVJG9cyESXJ/1QYTHrE0bEKQtmSBFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dnp3vGnMz6hQeoj9r09Q3VaX16rgCZ+6hAB1XZosZupNYn1whSGPhKSN8AULWi2BQ4g/9Bkt2jH+uSEW8c7FfjV70DyW3XfpJBnj/b+guGl2n97DWKnLz+qMrUh/gC2ViW999SESuBEeNxM5WG8pfhCpxuUENw41ozsQ0df4Gfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvEPdZiH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cYh+EO183WSQXFdfoYsPHcl0K3mr/gjijgEX4xP7eCcAn4Wyetz+5hxXDeLmm+GENEDy4kSuqIwWHNIjQ7p9br9y8qsszYjnFl9OxOdbThPXQRWAm802prDQIb3XEkE+qhhIVYh7ageOeht5IEMrlcORjyFbrq5pGbKILUdEyJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rq9BFp7n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvEPdZiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58EDC4CEF0;
-	Sun,  7 Sep 2025 20:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rq9BFp7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5A3C4CEF0;
+	Sun,  7 Sep 2025 20:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277449;
-	bh=f1cCr/FmUFPgZ2VW2Ot3J1Z6RVFPJBrkGrBV8OKKvuQ=;
+	s=korg; t=1757277452;
+	bh=AONa4pnHiSvzjTVJG9cyESXJ/1QYTHrE0bEKQtmSBFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvEPdZiHyWy0Wgdzxk9ZbQmH1I5jsuyfWkYqprPvc5Tf6yPC3Iyj5eiyhfDBNa/UQ
-	 PjPRZjCQU135DTp/zSTtzpjJH4OFgY4ZTQzNCu82e6aCZdSBujJSFQHHbJy4KJXgVu
-	 HwLD5XowADu9bJOx/wpnkegxhRU7J+u6BQjhTre8=
+	b=Rq9BFp7nRSPj0ljxjYjz5j5PB9CtqqaIlPwJh3dOLDAVrTCMPMr1QImS99sr6/49R
+	 J6b9tL9xpm5HO+H43PLGFx6q5nI7YyXb5j0+wPFpwlFCUSUxswiAqKu5CL3OWGRo/p
+	 B3DjFAIYm8ZdOaX3hxTS9E2sSiOIHe8IgZX3ky74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 019/183] tee: fix NULL pointer dereference in tee_shm_put
-Date: Sun,  7 Sep 2025 21:57:26 +0200
-Message-ID: <20250907195616.240276459@linuxfoundation.org>
+Subject: [PATCH 6.16 002/183] btrfs: fix race between setting last_dir_index_offset and inode logging
+Date: Sun,  7 Sep 2025 21:57:09 +0200
+Message-ID: <20250907195615.861779397@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,104 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit e4a718a3a47e89805c3be9d46a84de1949a98d5d ]
+[ Upstream commit 59a0dd4ab98970086fd096281b1606c506ff2698 ]
 
-tee_shm_put have NULL pointer dereference:
+At inode_logged() if we find that the inode was not logged before we
+update its ->last_dir_index_offset to (u64)-1 with the goal that the
+next directory log operation will see the (u64)-1 and then figure out
+it must check what was the index of the last logged dir index key and
+update ->last_dir_index_offset to that key's offset (this is done in
+update_last_dir_index_offset()).
 
-__optee_disable_shm_cache -->
-	shm = reg_pair_to_ptr(...);//shm maybe return NULL
-        tee_shm_free(shm); -->
-		tee_shm_put(shm);//crash
+This however has a possibility for a time window where a race can happen
+and lead to directory logging skipping dir index keys that should be
+logged. The race happens like this:
 
-Add check in tee_shm_put to fix it.
+1) Task A calls inode_logged(), sees ->logged_trans as 0 and then checks
+   that the inode item was logged before, but before it sets the inode's
+   ->last_dir_index_offset to (u64)-1...
 
-panic log:
-Unable to handle kernel paging request at virtual address 0000000000100cca
-Mem abort info:
-ESR = 0x0000000096000004
-EC = 0x25: DABT (current EL), IL = 32 bits
-SET = 0, FnV = 0
-EA = 0, S1PTW = 0
-FSC = 0x04: level 0 translation fault
-Data abort info:
-ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=0000002049d07000
-[0000000000100cca] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1] SMP
-CPU: 2 PID: 14442 Comm: systemd-sleep Tainted: P OE ------- ----
-6.6.0-39-generic #38
-Source Version: 938b255f6cb8817c95b0dd5c8c2944acfce94b07
-Hardware name: greatwall GW-001Y1A-FTH, BIOS Great Wall BIOS V3.0
-10/26/2022
-pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : tee_shm_put+0x24/0x188
-lr : tee_shm_free+0x14/0x28
-sp : ffff001f98f9faf0
-x29: ffff001f98f9faf0 x28: ffff0020df543cc0 x27: 0000000000000000
-x26: ffff001f811344a0 x25: ffff8000818dac00 x24: ffff800082d8d048
-x23: ffff001f850fcd18 x22: 0000000000000001 x21: ffff001f98f9fb88
-x20: ffff001f83e76218 x19: ffff001f83e761e0 x18: 000000000000ffff
-x17: 303a30303a303030 x16: 0000000000000000 x15: 0000000000000003
-x14: 0000000000000001 x13: 0000000000000000 x12: 0101010101010101
-x11: 0000000000000001 x10: 0000000000000001 x9 : ffff800080e08d0c
-x8 : ffff001f98f9fb88 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
-x2 : ffff001f83e761e0 x1 : 00000000ffff001f x0 : 0000000000100cca
-Call trace:
-tee_shm_put+0x24/0x188
-tee_shm_free+0x14/0x28
-__optee_disable_shm_cache+0xa8/0x108
-optee_shutdown+0x28/0x38
-platform_shutdown+0x28/0x40
-device_shutdown+0x144/0x2b0
-kernel_power_off+0x3c/0x80
-hibernate+0x35c/0x388
-state_store+0x64/0x80
-kobj_attr_store+0x14/0x28
-sysfs_kf_write+0x48/0x60
-kernfs_fop_write_iter+0x128/0x1c0
-vfs_write+0x270/0x370
-ksys_write+0x6c/0x100
-__arm64_sys_write+0x20/0x30
-invoke_syscall+0x4c/0x120
-el0_svc_common.constprop.0+0x44/0xf0
-do_el0_svc+0x24/0x38
-el0_svc+0x24/0x88
-el0t_64_sync_handler+0x134/0x150
-el0t_64_sync+0x14c/0x15
+2) Task B is at btrfs_log_inode() which calls inode_logged() early, and
+   that has set ->last_dir_index_offset to (u64)-1;
 
-Fixes: dfd0743f1d9e ("tee: handle lookup of shm with reference count 0")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+3) Task B then enters log_directory_changes() which calls
+   update_last_dir_index_offset(). There it sees ->last_dir_index_offset
+   is (u64)-1 and that the inode was logged before (ctx->logged_before is
+   true), and so it searches for the last logged dir index key in the log
+   tree and it finds that it has an offset (index) value of N, so it sets
+   ->last_dir_index_offset to N, so that we can skip index keys that are
+   less than or equal to N (later at process_dir_items_leaf());
+
+4) Task A now sets ->last_dir_index_offset to (u64)-1, undoing the update
+   that task B just did;
+
+5) Task B will now skip every index key when it enters
+   process_dir_items_leaf(), since ->last_dir_index_offset is (u64)-1.
+
+Fix this by making inode_logged() not touch ->last_dir_index_offset and
+initializing it to 0 when an inode is loaded (at btrfs_alloc_inode()) and
+then having update_last_dir_index_offset() treat a value of 0 as meaning
+we must check the log tree and update with the index of the last logged
+index key. This is fine since the minimum possible value for
+->last_dir_index_offset is 1 (BTRFS_DIR_START_INDEX - 1 = 2 - 1 = 1).
+This also simplifies the management of ->last_dir_index_offset and now
+all accesses to it are done under the inode's log_mutex.
+
+Fixes: 0f8ce49821de ("btrfs: avoid inode logging during rename and link when possible")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/tee_shm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/btrfs/btrfs_inode.h |  2 +-
+ fs/btrfs/inode.c       |  1 +
+ fs/btrfs/tree-log.c    | 17 ++---------------
+ 3 files changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/tee/tee_shm.c b/drivers/tee/tee_shm.c
-index daf6e5cfd59ae..915239b033f5f 100644
---- a/drivers/tee/tee_shm.c
-+++ b/drivers/tee/tee_shm.c
-@@ -560,9 +560,13 @@ EXPORT_SYMBOL_GPL(tee_shm_get_from_id);
-  */
- void tee_shm_put(struct tee_shm *shm)
- {
--	struct tee_device *teedev = shm->ctx->teedev;
-+	struct tee_device *teedev;
- 	bool do_release = false;
- 
-+	if (!shm || !shm->ctx || !shm->ctx->teedev)
-+		return;
-+
-+	teedev = shm->ctx->teedev;
- 	mutex_lock(&teedev->mutex);
- 	if (refcount_dec_and_test(&shm->refcount)) {
+diff --git a/fs/btrfs/btrfs_inode.h b/fs/btrfs/btrfs_inode.h
+index a79fa0726f1d9..216eff293ffec 100644
+--- a/fs/btrfs/btrfs_inode.h
++++ b/fs/btrfs/btrfs_inode.h
+@@ -248,7 +248,7 @@ struct btrfs_inode {
+ 		u64 new_delalloc_bytes;
  		/*
+ 		 * The offset of the last dir index key that was logged.
+-		 * This is used only for directories.
++		 * This is used only for directories. Protected by 'log_mutex'.
+ 		 */
+ 		u64 last_dir_index_offset;
+ 	};
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index df4c8312aae39..ffa5d6c159405 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7827,6 +7827,7 @@ struct inode *btrfs_alloc_inode(struct super_block *sb)
+ 	ei->last_sub_trans = 0;
+ 	ei->logged_trans = 0;
+ 	ei->delalloc_bytes = 0;
++	/* new_delalloc_bytes and last_dir_index_offset are in a union. */
+ 	ei->new_delalloc_bytes = 0;
+ 	ei->defrag_bytes = 0;
+ 	ei->disk_i_size = 0;
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 17003f3d9dd1c..5f82e8c59cd17 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -3435,19 +3435,6 @@ static int inode_logged(const struct btrfs_trans_handle *trans,
+ 	inode->logged_trans = trans->transid;
+ 	spin_unlock(&inode->lock);
+ 
+-	/*
+-	 * If it's a directory, then we must set last_dir_index_offset to the
+-	 * maximum possible value, so that the next attempt to log the inode does
+-	 * not skip checking if dir index keys found in modified subvolume tree
+-	 * leaves have been logged before, otherwise it would result in attempts
+-	 * to insert duplicate dir index keys in the log tree. This must be done
+-	 * because last_dir_index_offset is an in-memory only field, not persisted
+-	 * in the inode item or any other on-disk structure, so its value is lost
+-	 * once the inode is evicted.
+-	 */
+-	if (S_ISDIR(inode->vfs_inode.i_mode))
+-		inode->last_dir_index_offset = (u64)-1;
+-
+ 	return 1;
+ }
+ 
+@@ -4038,7 +4025,7 @@ static noinline int log_dir_items(struct btrfs_trans_handle *trans,
+ 
+ /*
+  * If the inode was logged before and it was evicted, then its
+- * last_dir_index_offset is (u64)-1, so we don't the value of the last index
++ * last_dir_index_offset is 0, so we don't know the value of the last index
+  * key offset. If that's the case, search for it and update the inode. This
+  * is to avoid lookups in the log tree every time we try to insert a dir index
+  * key from a leaf changed in the current transaction, and to allow us to always
+@@ -4054,7 +4041,7 @@ static int update_last_dir_index_offset(struct btrfs_inode *inode,
+ 
+ 	lockdep_assert_held(&inode->log_mutex);
+ 
+-	if (inode->last_dir_index_offset != (u64)-1)
++	if (inode->last_dir_index_offset != 0)
+ 		return 0;
+ 
+ 	if (!ctx->logged_before) {
 -- 
 2.50.1
 
