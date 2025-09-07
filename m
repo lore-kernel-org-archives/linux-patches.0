@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FB14315A;
-	Sun,  7 Sep 2025 20:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35F94315A;
+	Sun,  7 Sep 2025 20:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277649; cv=none; b=SnOflFmRuPZ0hzugHomPASTrT4H8517cfJyPOkZC695Dd9r2iiqyFaEoNA6NidMQ0c7Pp3HyE2xnLRFLKc8a//xWfkQXiLM3KUVbPRhY+1o+RNx7UKoucBe0KZUWHscsFOOiviJyCGM/pBAuTB5gL1zl7uhcsgtOp31HAxfGNOk=
+	t=1757277652; cv=none; b=SaCFCQLqN9mh/iAoPiINjvLneWIaMNHS8LYGGJbeqZ7cfK+bYayMLG8t+yMPEJa0bHMKu4L/KZisP4UYFSsNn2F+lQusIEmMi/4e7Oyn7q7LaAi+3GVFaARPMSzzY8j5RPzD+lV0BfDSOSFxKIWTx34PqrwdTiSWGpvSNe4bd4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277649; c=relaxed/simple;
-	bh=R0pLa7uz2uC9SuUDx/0yy+LDty/P00UBF4lnRDpWfEc=;
+	s=arc-20240116; t=1757277652; c=relaxed/simple;
+	bh=FWzush1vtC3QOtq71bE0DRHoZ55gOROvcJD4uM3dkXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FlGmHuvTbmmBchcIu/I8lPxHwt9GL0jASLKoKN6vObdpQvk1VcjEj51M9+S+iqDS9NRJ4izr4HAn+0pjCgrJtFv2iy6qOkH0ainVoDcZtNWy25d+VeuL8L8tINByd8BOLtOc3kOEHsU9jsFk6f3F1iUce3qWsUhY1eVTTiS7nP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhku4NQw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4dK6iVn0nB5h0wVrKiXjz2hyaMyMmN56+TwiffbOiH9ZBJS9rtvpq9XL37XXHMkng5shG+dR/3J6/ABL8fj3/h0/a+533CsEmIi+HKGFGaBVThzO51FjmVHWXuvf62BMAidhAcGzBh9LUBn0DYDMhYhkkGNQoixPh3gs1tkp70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiY1KoS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhku4NQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35921C4CEF0;
-	Sun,  7 Sep 2025 20:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiY1KoS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F03C4CEF0;
+	Sun,  7 Sep 2025 20:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277649;
-	bh=R0pLa7uz2uC9SuUDx/0yy+LDty/P00UBF4lnRDpWfEc=;
+	s=korg; t=1757277652;
+	bh=FWzush1vtC3QOtq71bE0DRHoZ55gOROvcJD4uM3dkXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhku4NQwhSj/fe6W3CaSL2cw4c9e+xfwKPvxJSvhJMslA3kJpsb8BZbZKsWJGZA3l
-	 Ci4URorvfXURhEKZNMuwlXSRWdx218wp4Imusg1S2qRxJadVNMFXM/ND+XI2Q4OMyw
-	 la6h8CdWNeinqFk98/Q0z8LG7kPcZ+UeGbkaPZKk=
+	b=BiY1KoS/OvG44SXKhkr0clETQ1brvYZoRT0RxQP7w5/qpMMuQcUF5ofs5c3PR0D5w
+	 pkn4EsJm10/d/aaKgpYk+7PW3EK1sdhYJ/UwB4+LMDVKwBgfIBvXHhzqIQdF8DajD7
+	 LJujUW5NjAWVnrAHQUNLi2ryVXgoKNyiTjKaL/+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+50603c05bbdf4dfdaffa@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 081/183] net: remove sock_i_uid()
-Date: Sun,  7 Sep 2025 21:58:28 +0200
-Message-ID: <20250907195617.721172273@linuxfoundation.org>
+Subject: [PATCH 6.16 082/183] net: lockless sock_i_ino()
+Date: Sun,  7 Sep 2025 21:58:29 +0200
+Message-ID: <20250907195617.744469478@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -47,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
@@ -56,648 +56,170 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c51da3f7a161c6822232be832abdffe47eb55b4c ]
+[ Upstream commit 5d6b58c932ec451a5c41482790eb5b1ecf165a94 ]
 
-Difference between sock_i_uid() and sk_uid() is that
-after sock_orphan(), sock_i_uid() returns GLOBAL_ROOT_UID
-while sk_uid() returns the last cached sk->sk_uid value.
+Followup of commit c51da3f7a161 ("net: remove sock_i_uid()")
 
-None of sock_i_uid() callers care about this.
+A recent syzbot report was the trigger for this change.
 
-Use sk_uid() which is much faster and inlined.
+Over the years, we had many problems caused by the
+read_lock[_bh](&sk->sk_callback_lock) in sock_i_uid().
 
-Note that diag/dump users are calling sock_i_ino() and
-can not see the full benefit yet.
+We could fix smc_diag_dump_proto() or make a more radical move:
 
+Instead of waiting for new syzbot reports, cache the socket
+inode number in sk->sk_ino, so that we no longer
+need to acquire sk->sk_callback_lock in sock_i_ino().
+
+This makes socket dumps faster (one less cache line miss,
+and two atomic ops avoided).
+
+Prior art:
+
+commit 25a9c8a4431c ("netlink: Add __sock_i_ino() for __netlink_diag_dump().")
+commit 4f9bf2a2f5aa ("tcp: Don't acquire inet_listen_hashbucket::lock with disabled BH.")
+commit efc3dbc37412 ("rds: Make rds_sock_lock BH rather than IRQ safe.")
+
+Fixes: d2d6422f8bd1 ("x86: Allow to enable PREEMPT_RT.")
+Reported-by: syzbot+50603c05bbdf4dfdaffa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68b73804.050a0220.3db4df.01d8.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Link: https://patch.msgid.link/20250620133001.4090592-3-edumazet@google.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250902183603.740428-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5d6b58c932ec ("net: lockless sock_i_ino()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h              |  2 --
- net/appletalk/atalk_proc.c      |  2 +-
- net/bluetooth/af_bluetooth.c    |  2 +-
- net/core/sock.c                 | 11 -----------
- net/ipv4/inet_connection_sock.c | 27 ++++++++++++---------------
- net/ipv4/inet_diag.c            |  2 +-
- net/ipv4/inet_hashtables.c      |  4 ++--
- net/ipv4/ping.c                 |  2 +-
- net/ipv4/raw.c                  |  2 +-
- net/ipv4/tcp_ipv4.c             |  8 ++++----
- net/ipv4/udp.c                  | 16 ++++++++--------
- net/ipv6/datagram.c             |  2 +-
- net/ipv6/tcp_ipv6.c             |  4 ++--
- net/key/af_key.c                |  2 +-
- net/llc/llc_proc.c              |  2 +-
- net/packet/af_packet.c          |  2 +-
- net/packet/diag.c               |  2 +-
- net/phonet/socket.c             |  4 ++--
- net/sctp/input.c                |  2 +-
- net/sctp/proc.c                 |  4 ++--
- net/sctp/socket.c               |  4 ++--
- net/smc/smc_diag.c              |  2 +-
- net/tipc/socket.c               |  2 +-
- net/unix/af_unix.c              |  2 +-
- net/unix/diag.c                 |  2 +-
- net/xdp/xsk_diag.c              |  2 +-
- 26 files changed, 50 insertions(+), 66 deletions(-)
+ include/net/sock.h   | 17 +++++++++++++----
+ net/core/sock.c      | 22 ----------------------
+ net/mptcp/protocol.c |  1 -
+ net/netlink/diag.c   |  2 +-
+ 4 files changed, 14 insertions(+), 28 deletions(-)
 
 diff --git a/include/net/sock.h b/include/net/sock.h
-index e3ab203456858..da644ab5ae7f4 100644
+index da644ab5ae7f4..a348ae145eda4 100644
 --- a/include/net/sock.h
 +++ b/include/net/sock.h
-@@ -2092,8 +2092,6 @@ static inline void sock_graft(struct sock *sk, struct socket *parent)
+@@ -285,6 +285,7 @@ struct sk_filter;
+   *	@sk_ack_backlog: current listen backlog
+   *	@sk_max_ack_backlog: listen backlog set in listen()
+   *	@sk_uid: user id of owner
++  *	@sk_ino: inode number (zero if orphaned)
+   *	@sk_prefer_busy_poll: prefer busypolling over softirq processing
+   *	@sk_busy_poll_budget: napi processing budget when busypolling
+   *	@sk_priority: %SO_PRIORITY setting
+@@ -518,6 +519,7 @@ struct sock {
+ 	u32			sk_ack_backlog;
+ 	u32			sk_max_ack_backlog;
+ 	kuid_t			sk_uid;
++	unsigned long		sk_ino;
+ 	spinlock_t		sk_peer_lock;
+ 	int			sk_bind_phc;
+ 	struct pid		*sk_peer_pid;
+@@ -2056,6 +2058,10 @@ static inline int sk_rx_queue_get(const struct sock *sk)
+ static inline void sk_set_socket(struct sock *sk, struct socket *sock)
+ {
+ 	sk->sk_socket = sock;
++	if (sock) {
++		WRITE_ONCE(sk->sk_uid, SOCK_INODE(sock)->i_uid);
++		WRITE_ONCE(sk->sk_ino, SOCK_INODE(sock)->i_ino);
++	}
+ }
+ 
+ static inline wait_queue_head_t *sk_sleep(struct sock *sk)
+@@ -2077,6 +2083,7 @@ static inline void sock_orphan(struct sock *sk)
+ 	sk_set_socket(sk, NULL);
+ 	sk->sk_wq  = NULL;
+ 	/* Note: sk_uid is unchanged. */
++	WRITE_ONCE(sk->sk_ino, 0);
  	write_unlock_bh(&sk->sk_callback_lock);
  }
  
--kuid_t sock_i_uid(struct sock *sk);
--
+@@ -2087,20 +2094,22 @@ static inline void sock_graft(struct sock *sk, struct socket *parent)
+ 	rcu_assign_pointer(sk->sk_wq, &parent->wq);
+ 	parent->sk = sk;
+ 	sk_set_socket(sk, parent);
+-	WRITE_ONCE(sk->sk_uid, SOCK_INODE(parent)->i_uid);
+ 	security_sock_graft(sk, parent);
+ 	write_unlock_bh(&sk->sk_callback_lock);
+ }
+ 
++static inline unsigned long sock_i_ino(const struct sock *sk)
++{
++	/* Paired with WRITE_ONCE() in sock_graft() and sock_orphan() */
++	return READ_ONCE(sk->sk_ino);
++}
++
  static inline kuid_t sk_uid(const struct sock *sk)
  {
  	/* Paired with WRITE_ONCE() in sockfs_setattr() */
-diff --git a/net/appletalk/atalk_proc.c b/net/appletalk/atalk_proc.c
-index 9c1241292d1d2..01787fb6a7bce 100644
---- a/net/appletalk/atalk_proc.c
-+++ b/net/appletalk/atalk_proc.c
-@@ -181,7 +181,7 @@ static int atalk_seq_socket_show(struct seq_file *seq, void *v)
- 		   sk_wmem_alloc_get(s),
- 		   sk_rmem_alloc_get(s),
- 		   s->sk_state,
--		   from_kuid_munged(seq_user_ns(seq), sock_i_uid(s)));
-+		   from_kuid_munged(seq_user_ns(seq), sk_uid(s)));
- out:
- 	return 0;
+ 	return READ_ONCE(sk->sk_uid);
  }
-diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
-index 6ad2f72f53f4e..ee9bf84c88a70 100644
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -815,7 +815,7 @@ static int bt_seq_show(struct seq_file *seq, void *v)
- 			   refcount_read(&sk->sk_refcnt),
- 			   sk_rmem_alloc_get(sk),
- 			   sk_wmem_alloc_get(sk),
--			   from_kuid(seq_user_ns(seq), sock_i_uid(sk)),
-+			   from_kuid(seq_user_ns(seq), sk_uid(sk)),
- 			   sock_i_ino(sk),
- 			   bt->parent ? sock_i_ino(bt->parent) : 0LU);
  
+-unsigned long __sock_i_ino(struct sock *sk);
+-unsigned long sock_i_ino(struct sock *sk);
+-
+ static inline kuid_t sock_net_uid(const struct net *net, const struct sock *sk)
+ {
+ 	return sk ? sk_uid(sk) : make_kuid(net->user_ns, 0);
 diff --git a/net/core/sock.c b/net/core/sock.c
-index 9fae9239f9393..1689eaf42f25b 100644
+index 1689eaf42f25b..10c1df62338be 100644
 --- a/net/core/sock.c
 +++ b/net/core/sock.c
-@@ -2788,17 +2788,6 @@ void sock_pfree(struct sk_buff *skb)
+@@ -2788,28 +2788,6 @@ void sock_pfree(struct sk_buff *skb)
  EXPORT_SYMBOL(sock_pfree);
  #endif /* CONFIG_INET */
  
--kuid_t sock_i_uid(struct sock *sk)
+-unsigned long __sock_i_ino(struct sock *sk)
 -{
--	kuid_t uid;
+-	unsigned long ino;
 -
--	read_lock_bh(&sk->sk_callback_lock);
--	uid = sk->sk_socket ? SOCK_INODE(sk->sk_socket)->i_uid : GLOBAL_ROOT_UID;
--	read_unlock_bh(&sk->sk_callback_lock);
--	return uid;
+-	read_lock(&sk->sk_callback_lock);
+-	ino = sk->sk_socket ? SOCK_INODE(sk->sk_socket)->i_ino : 0;
+-	read_unlock(&sk->sk_callback_lock);
+-	return ino;
 -}
--EXPORT_SYMBOL(sock_i_uid);
+-EXPORT_SYMBOL(__sock_i_ino);
 -
- unsigned long __sock_i_ino(struct sock *sk)
- {
- 	unsigned long ino;
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 46750c96d08ea..f4157d26ec9e4 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -168,7 +168,7 @@ static bool inet_use_bhash2_on_bind(const struct sock *sk)
+-unsigned long sock_i_ino(struct sock *sk)
+-{
+-	unsigned long ino;
+-
+-	local_bh_disable();
+-	ino = __sock_i_ino(sk);
+-	local_bh_enable();
+-	return ino;
+-}
+-EXPORT_SYMBOL(sock_i_ino);
+-
+ /*
+  * Allocate a skb from the socket's send buffer.
+  */
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 76cb699885b38..1063c53850c05 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3537,7 +3537,6 @@ void mptcp_sock_graft(struct sock *sk, struct socket *parent)
+ 	write_lock_bh(&sk->sk_callback_lock);
+ 	rcu_assign_pointer(sk->sk_wq, &parent->wq);
+ 	sk_set_socket(sk, parent);
+-	WRITE_ONCE(sk->sk_uid, SOCK_INODE(parent)->i_uid);
+ 	write_unlock_bh(&sk->sk_callback_lock);
  }
  
- static bool inet_bind_conflict(const struct sock *sk, struct sock *sk2,
--			       kuid_t sk_uid, bool relax,
-+			       kuid_t uid, bool relax,
- 			       bool reuseport_cb_ok, bool reuseport_ok)
- {
- 	int bound_dev_if2;
-@@ -185,12 +185,12 @@ static bool inet_bind_conflict(const struct sock *sk, struct sock *sk2,
- 			if (!relax || (!reuseport_ok && sk->sk_reuseport &&
- 				       sk2->sk_reuseport && reuseport_cb_ok &&
- 				       (sk2->sk_state == TCP_TIME_WAIT ||
--					uid_eq(sk_uid, sock_i_uid(sk2)))))
-+					uid_eq(uid, sk_uid(sk2)))))
- 				return true;
- 		} else if (!reuseport_ok || !sk->sk_reuseport ||
- 			   !sk2->sk_reuseport || !reuseport_cb_ok ||
- 			   (sk2->sk_state != TCP_TIME_WAIT &&
--			    !uid_eq(sk_uid, sock_i_uid(sk2)))) {
-+			    !uid_eq(uid, sk_uid(sk2)))) {
- 			return true;
+diff --git a/net/netlink/diag.c b/net/netlink/diag.c
+index 61981e01fd6ff..b8e58132e8af1 100644
+--- a/net/netlink/diag.c
++++ b/net/netlink/diag.c
+@@ -168,7 +168,7 @@ static int __netlink_diag_dump(struct sk_buff *skb, struct netlink_callback *cb,
+ 				 NETLINK_CB(cb->skb).portid,
+ 				 cb->nlh->nlmsg_seq,
+ 				 NLM_F_MULTI,
+-				 __sock_i_ino(sk)) < 0) {
++				 sock_i_ino(sk)) < 0) {
+ 			ret = 1;
+ 			break;
  		}
- 	}
-@@ -198,7 +198,7 @@ static bool inet_bind_conflict(const struct sock *sk, struct sock *sk2,
- }
- 
- static bool __inet_bhash2_conflict(const struct sock *sk, struct sock *sk2,
--				   kuid_t sk_uid, bool relax,
-+				   kuid_t uid, bool relax,
- 				   bool reuseport_cb_ok, bool reuseport_ok)
- {
- 	if (ipv6_only_sock(sk2)) {
-@@ -211,20 +211,20 @@ static bool __inet_bhash2_conflict(const struct sock *sk, struct sock *sk2,
- #endif
- 	}
- 
--	return inet_bind_conflict(sk, sk2, sk_uid, relax,
-+	return inet_bind_conflict(sk, sk2, uid, relax,
- 				  reuseport_cb_ok, reuseport_ok);
- }
- 
- static bool inet_bhash2_conflict(const struct sock *sk,
- 				 const struct inet_bind2_bucket *tb2,
--				 kuid_t sk_uid,
-+				 kuid_t uid,
- 				 bool relax, bool reuseport_cb_ok,
- 				 bool reuseport_ok)
- {
- 	struct sock *sk2;
- 
- 	sk_for_each_bound(sk2, &tb2->owners) {
--		if (__inet_bhash2_conflict(sk, sk2, sk_uid, relax,
-+		if (__inet_bhash2_conflict(sk, sk2, uid, relax,
- 					   reuseport_cb_ok, reuseport_ok))
- 			return true;
- 	}
-@@ -242,8 +242,8 @@ static int inet_csk_bind_conflict(const struct sock *sk,
- 				  const struct inet_bind2_bucket *tb2, /* may be null */
- 				  bool relax, bool reuseport_ok)
- {
--	kuid_t uid = sock_i_uid((struct sock *)sk);
- 	struct sock_reuseport *reuseport_cb;
-+	kuid_t uid = sk_uid(sk);
- 	bool reuseport_cb_ok;
- 	struct sock *sk2;
- 
-@@ -287,11 +287,11 @@ static int inet_csk_bind_conflict(const struct sock *sk,
- static bool inet_bhash2_addr_any_conflict(const struct sock *sk, int port, int l3mdev,
- 					  bool relax, bool reuseport_ok)
- {
--	kuid_t uid = sock_i_uid((struct sock *)sk);
- 	const struct net *net = sock_net(sk);
- 	struct sock_reuseport *reuseport_cb;
- 	struct inet_bind_hashbucket *head2;
- 	struct inet_bind2_bucket *tb2;
-+	kuid_t uid = sk_uid(sk);
- 	bool conflict = false;
- 	bool reuseport_cb_ok;
- 
-@@ -425,15 +425,13 @@ inet_csk_find_open_port(const struct sock *sk, struct inet_bind_bucket **tb_ret,
- static inline int sk_reuseport_match(struct inet_bind_bucket *tb,
- 				     struct sock *sk)
- {
--	kuid_t uid = sock_i_uid(sk);
--
- 	if (tb->fastreuseport <= 0)
- 		return 0;
- 	if (!sk->sk_reuseport)
- 		return 0;
- 	if (rcu_access_pointer(sk->sk_reuseport_cb))
- 		return 0;
--	if (!uid_eq(tb->fastuid, uid))
-+	if (!uid_eq(tb->fastuid, sk_uid(sk)))
- 		return 0;
- 	/* We only need to check the rcv_saddr if this tb was once marked
- 	 * without fastreuseport and then was reset, as we can only know that
-@@ -458,14 +456,13 @@ static inline int sk_reuseport_match(struct inet_bind_bucket *tb,
- void inet_csk_update_fastreuse(struct inet_bind_bucket *tb,
- 			       struct sock *sk)
- {
--	kuid_t uid = sock_i_uid(sk);
- 	bool reuse = sk->sk_reuse && sk->sk_state != TCP_LISTEN;
- 
- 	if (hlist_empty(&tb->bhash2)) {
- 		tb->fastreuse = reuse;
- 		if (sk->sk_reuseport) {
- 			tb->fastreuseport = FASTREUSEPORT_ANY;
--			tb->fastuid = uid;
-+			tb->fastuid = sk_uid(sk);
- 			tb->fast_rcv_saddr = sk->sk_rcv_saddr;
- 			tb->fast_ipv6_only = ipv6_only_sock(sk);
- 			tb->fast_sk_family = sk->sk_family;
-@@ -492,7 +489,7 @@ void inet_csk_update_fastreuse(struct inet_bind_bucket *tb,
- 			 */
- 			if (!sk_reuseport_match(tb, sk)) {
- 				tb->fastreuseport = FASTREUSEPORT_STRICT;
--				tb->fastuid = uid;
-+				tb->fastuid = sk_uid(sk);
- 				tb->fast_rcv_saddr = sk->sk_rcv_saddr;
- 				tb->fast_ipv6_only = ipv6_only_sock(sk);
- 				tb->fast_sk_family = sk->sk_family;
-diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
-index 1d1d6ad53f4c9..2fa53b16fe778 100644
---- a/net/ipv4/inet_diag.c
-+++ b/net/ipv4/inet_diag.c
-@@ -181,7 +181,7 @@ int inet_diag_msg_attrs_fill(struct sock *sk, struct sk_buff *skb,
- 		goto errout;
- #endif
- 
--	r->idiag_uid = from_kuid_munged(user_ns, sock_i_uid(sk));
-+	r->idiag_uid = from_kuid_munged(user_ns, sk_uid(sk));
- 	r->idiag_inode = sock_i_ino(sk);
- 
- 	memset(&inet_sockopt, 0, sizeof(inet_sockopt));
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 77a0b52b2eabf..ceeeec9b7290a 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -721,8 +721,8 @@ static int inet_reuseport_add_sock(struct sock *sk,
- {
- 	struct inet_bind_bucket *tb = inet_csk(sk)->icsk_bind_hash;
- 	const struct hlist_nulls_node *node;
-+	kuid_t uid = sk_uid(sk);
- 	struct sock *sk2;
--	kuid_t uid = sock_i_uid(sk);
- 
- 	sk_nulls_for_each_rcu(sk2, node, &ilb->nulls_head) {
- 		if (sk2 != sk &&
-@@ -730,7 +730,7 @@ static int inet_reuseport_add_sock(struct sock *sk,
- 		    ipv6_only_sock(sk2) == ipv6_only_sock(sk) &&
- 		    sk2->sk_bound_dev_if == sk->sk_bound_dev_if &&
- 		    inet_csk(sk2)->icsk_bind_hash == tb &&
--		    sk2->sk_reuseport && uid_eq(uid, sock_i_uid(sk2)) &&
-+		    sk2->sk_reuseport && uid_eq(uid, sk_uid(sk2)) &&
- 		    inet_rcv_saddr_equal(sk, sk2, false))
- 			return reuseport_add_sock(sk, sk2,
- 						  inet_rcv_saddr_any(sk));
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index 4eacaf00e2e9b..031df4c19fcc5 100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -1116,7 +1116,7 @@ static void ping_v4_format_sock(struct sock *sp, struct seq_file *f,
- 		sk_wmem_alloc_get(sp),
- 		sk_rmem_alloc_get(sp),
- 		0, 0L, 0,
--		from_kuid_munged(seq_user_ns(f), sock_i_uid(sp)),
-+		from_kuid_munged(seq_user_ns(f), sk_uid(sp)),
- 		0, sock_i_ino(sp),
- 		refcount_read(&sp->sk_refcnt), sp,
- 		atomic_read(&sp->sk_drops));
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index 32f942d0f944c..1d2c89d63cc71 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -1043,7 +1043,7 @@ static void raw_sock_seq_show(struct seq_file *seq, struct sock *sp, int i)
- 		sk_wmem_alloc_get(sp),
- 		sk_rmem_alloc_get(sp),
- 		0, 0L, 0,
--		from_kuid_munged(seq_user_ns(seq), sock_i_uid(sp)),
-+		from_kuid_munged(seq_user_ns(seq), sk_uid(sp)),
- 		0, sock_i_ino(sp),
- 		refcount_read(&sp->sk_refcnt), sp, atomic_read(&sp->sk_drops));
- }
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 6a14f9e6fef64..429fb34b075e0 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2896,7 +2896,7 @@ static void get_openreq4(const struct request_sock *req,
- 		jiffies_delta_to_clock_t(delta),
- 		req->num_timeout,
- 		from_kuid_munged(seq_user_ns(f),
--				 sock_i_uid(req->rsk_listener)),
-+				 sk_uid(req->rsk_listener)),
- 		0,  /* non standard timer */
- 		0, /* open_requests have no inode */
- 		0,
-@@ -2954,7 +2954,7 @@ static void get_tcp4_sock(struct sock *sk, struct seq_file *f, int i)
- 		timer_active,
- 		jiffies_delta_to_clock_t(timer_expires - jiffies),
- 		icsk->icsk_retransmits,
--		from_kuid_munged(seq_user_ns(f), sock_i_uid(sk)),
-+		from_kuid_munged(seq_user_ns(f), sk_uid(sk)),
- 		icsk->icsk_probes_out,
- 		sock_i_ino(sk),
- 		refcount_read(&sk->sk_refcnt), sk,
-@@ -3246,9 +3246,9 @@ static int bpf_iter_tcp_seq_show(struct seq_file *seq, void *v)
- 		const struct request_sock *req = v;
- 
- 		uid = from_kuid_munged(seq_user_ns(seq),
--				       sock_i_uid(req->rsk_listener));
-+				       sk_uid(req->rsk_listener));
- 	} else {
--		uid = from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk));
-+		uid = from_kuid_munged(seq_user_ns(seq), sk_uid(sk));
- 	}
- 
- 	meta.seq = seq;
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index f94bb222aa2d4..19573ee64a0f1 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -145,8 +145,8 @@ static int udp_lib_lport_inuse(struct net *net, __u16 num,
- 			       unsigned long *bitmap,
- 			       struct sock *sk, unsigned int log)
- {
-+	kuid_t uid = sk_uid(sk);
- 	struct sock *sk2;
--	kuid_t uid = sock_i_uid(sk);
- 
- 	sk_for_each(sk2, &hslot->head) {
- 		if (net_eq(sock_net(sk2), net) &&
-@@ -158,7 +158,7 @@ static int udp_lib_lport_inuse(struct net *net, __u16 num,
- 		    inet_rcv_saddr_equal(sk, sk2, true)) {
- 			if (sk2->sk_reuseport && sk->sk_reuseport &&
- 			    !rcu_access_pointer(sk->sk_reuseport_cb) &&
--			    uid_eq(uid, sock_i_uid(sk2))) {
-+			    uid_eq(uid, sk_uid(sk2))) {
- 				if (!bitmap)
- 					return 0;
- 			} else {
-@@ -180,8 +180,8 @@ static int udp_lib_lport_inuse2(struct net *net, __u16 num,
- 				struct udp_hslot *hslot2,
- 				struct sock *sk)
- {
-+	kuid_t uid = sk_uid(sk);
- 	struct sock *sk2;
--	kuid_t uid = sock_i_uid(sk);
- 	int res = 0;
- 
- 	spin_lock(&hslot2->lock);
-@@ -195,7 +195,7 @@ static int udp_lib_lport_inuse2(struct net *net, __u16 num,
- 		    inet_rcv_saddr_equal(sk, sk2, true)) {
- 			if (sk2->sk_reuseport && sk->sk_reuseport &&
- 			    !rcu_access_pointer(sk->sk_reuseport_cb) &&
--			    uid_eq(uid, sock_i_uid(sk2))) {
-+			    uid_eq(uid, sk_uid(sk2))) {
- 				res = 0;
- 			} else {
- 				res = 1;
-@@ -210,7 +210,7 @@ static int udp_lib_lport_inuse2(struct net *net, __u16 num,
- static int udp_reuseport_add_sock(struct sock *sk, struct udp_hslot *hslot)
- {
- 	struct net *net = sock_net(sk);
--	kuid_t uid = sock_i_uid(sk);
-+	kuid_t uid = sk_uid(sk);
- 	struct sock *sk2;
- 
- 	sk_for_each(sk2, &hslot->head) {
-@@ -220,7 +220,7 @@ static int udp_reuseport_add_sock(struct sock *sk, struct udp_hslot *hslot)
- 		    ipv6_only_sock(sk2) == ipv6_only_sock(sk) &&
- 		    (udp_sk(sk2)->udp_port_hash == udp_sk(sk)->udp_port_hash) &&
- 		    (sk2->sk_bound_dev_if == sk->sk_bound_dev_if) &&
--		    sk2->sk_reuseport && uid_eq(uid, sock_i_uid(sk2)) &&
-+		    sk2->sk_reuseport && uid_eq(uid, sk_uid(sk2)) &&
- 		    inet_rcv_saddr_equal(sk, sk2, false)) {
- 			return reuseport_add_sock(sk, sk2,
- 						  inet_rcv_saddr_any(sk));
-@@ -3387,7 +3387,7 @@ static void udp4_format_sock(struct sock *sp, struct seq_file *f,
- 		sk_wmem_alloc_get(sp),
- 		udp_rqueue_get(sp),
- 		0, 0L, 0,
--		from_kuid_munged(seq_user_ns(f), sock_i_uid(sp)),
-+		from_kuid_munged(seq_user_ns(f), sk_uid(sp)),
- 		0, sock_i_ino(sp),
- 		refcount_read(&sp->sk_refcnt), sp,
- 		atomic_read(&sp->sk_drops));
-@@ -3630,7 +3630,7 @@ static int bpf_iter_udp_seq_show(struct seq_file *seq, void *v)
- 		goto unlock;
- 	}
- 
--	uid = from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk));
-+	uid = from_kuid_munged(seq_user_ns(seq), sk_uid(sk));
- 	meta.seq = seq;
- 	prog = bpf_iter_get_info(&meta, false);
- 	ret = udp_prog_seq_show(prog, &meta, v, uid, state->bucket);
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index 83f5aa5e133ab..281722817a65c 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -1064,7 +1064,7 @@ void __ip6_dgram_sock_seq_show(struct seq_file *seq, struct sock *sp,
- 		   sk_wmem_alloc_get(sp),
- 		   rqueue,
- 		   0, 0L, 0,
--		   from_kuid_munged(seq_user_ns(seq), sock_i_uid(sp)),
-+		   from_kuid_munged(seq_user_ns(seq), sk_uid(sp)),
- 		   0,
- 		   sock_i_ino(sp),
- 		   refcount_read(&sp->sk_refcnt), sp,
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 3e83c7b5c14a7..5604ae6163f45 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -2166,7 +2166,7 @@ static void get_openreq6(struct seq_file *seq,
- 		   jiffies_to_clock_t(ttd),
- 		   req->num_timeout,
- 		   from_kuid_munged(seq_user_ns(seq),
--				    sock_i_uid(req->rsk_listener)),
-+				    sk_uid(req->rsk_listener)),
- 		   0,  /* non standard timer */
- 		   0, /* open_requests have no inode */
- 		   0, req);
-@@ -2232,7 +2232,7 @@ static void get_tcp6_sock(struct seq_file *seq, struct sock *sp, int i)
- 		   timer_active,
- 		   jiffies_delta_to_clock_t(timer_expires - jiffies),
- 		   icsk->icsk_retransmits,
--		   from_kuid_munged(seq_user_ns(seq), sock_i_uid(sp)),
-+		   from_kuid_munged(seq_user_ns(seq), sk_uid(sp)),
- 		   icsk->icsk_probes_out,
- 		   sock_i_ino(sp),
- 		   refcount_read(&sp->sk_refcnt), sp,
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index b5d761700776a..2ebde03522459 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -3788,7 +3788,7 @@ static int pfkey_seq_show(struct seq_file *f, void *v)
- 			       refcount_read(&s->sk_refcnt),
- 			       sk_rmem_alloc_get(s),
- 			       sk_wmem_alloc_get(s),
--			       from_kuid_munged(seq_user_ns(f), sock_i_uid(s)),
-+			       from_kuid_munged(seq_user_ns(f), sk_uid(s)),
- 			       sock_i_ino(s)
- 			       );
- 	return 0;
-diff --git a/net/llc/llc_proc.c b/net/llc/llc_proc.c
-index 07e9abb5978a7..aa81c67b24a15 100644
---- a/net/llc/llc_proc.c
-+++ b/net/llc/llc_proc.c
-@@ -151,7 +151,7 @@ static int llc_seq_socket_show(struct seq_file *seq, void *v)
- 		   sk_wmem_alloc_get(sk),
- 		   sk_rmem_alloc_get(sk) - llc->copied_seq,
- 		   sk->sk_state,
--		   from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk)),
-+		   from_kuid_munged(seq_user_ns(seq), sk_uid(sk)),
- 		   llc->link);
- out:
- 	return 0;
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index c7c7de3403f76..a7017d7f09272 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4782,7 +4782,7 @@ static int packet_seq_show(struct seq_file *seq, void *v)
- 			   READ_ONCE(po->ifindex),
- 			   packet_sock_flag(po, PACKET_SOCK_RUNNING),
- 			   atomic_read(&s->sk_rmem_alloc),
--			   from_kuid_munged(seq_user_ns(seq), sock_i_uid(s)),
-+			   from_kuid_munged(seq_user_ns(seq), sk_uid(s)),
- 			   sock_i_ino(s));
- 	}
- 
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index 47f69f3dbf73e..6ce1dcc284d92 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -153,7 +153,7 @@ static int sk_diag_fill(struct sock *sk, struct sk_buff *skb,
- 
- 	if ((req->pdiag_show & PACKET_SHOW_INFO) &&
- 	    nla_put_u32(skb, PACKET_DIAG_UID,
--			from_kuid_munged(user_ns, sock_i_uid(sk))))
-+			from_kuid_munged(user_ns, sk_uid(sk))))
- 		goto out_nlmsg_trim;
- 
- 	if ((req->pdiag_show & PACKET_SHOW_MCLIST) &&
-diff --git a/net/phonet/socket.c b/net/phonet/socket.c
-index 5ce0b3ee5def8..ea4d5e6533dba 100644
---- a/net/phonet/socket.c
-+++ b/net/phonet/socket.c
-@@ -584,7 +584,7 @@ static int pn_sock_seq_show(struct seq_file *seq, void *v)
- 			sk->sk_protocol, pn->sobject, pn->dobject,
- 			pn->resource, sk->sk_state,
- 			sk_wmem_alloc_get(sk), sk_rmem_alloc_get(sk),
--			from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk)),
-+			from_kuid_munged(seq_user_ns(seq), sk_uid(sk)),
- 			sock_i_ino(sk),
- 			refcount_read(&sk->sk_refcnt), sk,
- 			atomic_read(&sk->sk_drops));
-@@ -755,7 +755,7 @@ static int pn_res_seq_show(struct seq_file *seq, void *v)
- 
- 		seq_printf(seq, "%02X %5u %lu",
- 			   (int) (psk - pnres.sk),
--			   from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk)),
-+			   from_kuid_munged(seq_user_ns(seq), sk_uid(sk)),
- 			   sock_i_ino(sk));
- 	}
- 	seq_pad(seq, '\n');
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 6fcdcaeed40e9..7e99894778d4f 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -756,7 +756,7 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
- 			struct sock *sk2 = ep2->base.sk;
- 
- 			if (!net_eq(sock_net(sk2), net) || sk2 == sk ||
--			    !uid_eq(sock_i_uid(sk2), sock_i_uid(sk)) ||
-+			    !uid_eq(sk_uid(sk2), sk_uid(sk)) ||
- 			    !sk2->sk_reuseport)
- 				continue;
- 
-diff --git a/net/sctp/proc.c b/net/sctp/proc.c
-index ec00ee75d59a6..74bff317e205c 100644
---- a/net/sctp/proc.c
-+++ b/net/sctp/proc.c
-@@ -177,7 +177,7 @@ static int sctp_eps_seq_show(struct seq_file *seq, void *v)
- 		seq_printf(seq, "%8pK %8pK %-3d %-3d %-4d %-5d %5u %5lu ", ep, sk,
- 			   sctp_sk(sk)->type, sk->sk_state, hash,
- 			   ep->base.bind_addr.port,
--			   from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk)),
-+			   from_kuid_munged(seq_user_ns(seq), sk_uid(sk)),
- 			   sock_i_ino(sk));
- 
- 		sctp_seq_dump_local_addrs(seq, &ep->base);
-@@ -267,7 +267,7 @@ static int sctp_assocs_seq_show(struct seq_file *seq, void *v)
- 		   assoc->assoc_id,
- 		   assoc->sndbuf_used,
- 		   atomic_read(&assoc->rmem_alloc),
--		   from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk)),
-+		   from_kuid_munged(seq_user_ns(seq), sk_uid(sk)),
- 		   sock_i_ino(sk),
- 		   epb->bind_addr.port,
- 		   assoc->peer.port);
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 1e5739858c206..aa6400811018e 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8345,8 +8345,8 @@ static int sctp_get_port_local(struct sock *sk, union sctp_addr *addr)
- 	bool reuse = (sk->sk_reuse || sp->reuse);
- 	struct sctp_bind_hashbucket *head; /* hash list */
- 	struct net *net = sock_net(sk);
--	kuid_t uid = sock_i_uid(sk);
- 	struct sctp_bind_bucket *pp;
-+	kuid_t uid = sk_uid(sk);
- 	unsigned short snum;
- 	int ret;
- 
-@@ -8444,7 +8444,7 @@ static int sctp_get_port_local(struct sock *sk, union sctp_addr *addr)
- 			    (reuse && (sk2->sk_reuse || sp2->reuse) &&
- 			     sk2->sk_state != SCTP_SS_LISTENING) ||
- 			    (sk->sk_reuseport && sk2->sk_reuseport &&
--			     uid_eq(uid, sock_i_uid(sk2))))
-+			     uid_eq(uid, sk_uid(sk2))))
- 				continue;
- 
- 			if ((!sk->sk_bound_dev_if || !bound_dev_if2 ||
-diff --git a/net/smc/smc_diag.c b/net/smc/smc_diag.c
-index 6fdb2d96777ad..8ed2f6689b017 100644
---- a/net/smc/smc_diag.c
-+++ b/net/smc/smc_diag.c
-@@ -64,7 +64,7 @@ static int smc_diag_msg_attrs_fill(struct sock *sk, struct sk_buff *skb,
- 	if (nla_put_u8(skb, SMC_DIAG_SHUTDOWN, sk->sk_shutdown))
- 		return 1;
- 
--	r->diag_uid = from_kuid_munged(user_ns, sock_i_uid(sk));
-+	r->diag_uid = from_kuid_munged(user_ns, sk_uid(sk));
- 	r->diag_inode = sock_i_ino(sk);
- 	return 0;
- }
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index 7c61d47ea2086..e028bf6584992 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -3642,7 +3642,7 @@ int tipc_sk_fill_sock_diag(struct sk_buff *skb, struct netlink_callback *cb,
- 	    nla_put_u32(skb, TIPC_NLA_SOCK_INO, sock_i_ino(sk)) ||
- 	    nla_put_u32(skb, TIPC_NLA_SOCK_UID,
- 			from_kuid_munged(sk_user_ns(NETLINK_CB(cb->skb).sk),
--					 sock_i_uid(sk))) ||
-+					 sk_uid(sk))) ||
- 	    nla_put_u64_64bit(skb, TIPC_NLA_SOCK_COOKIE,
- 			      tipc_diag_gen_cookie(sk),
- 			      TIPC_NLA_SOCK_PAD))
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 52b155123985a..564c970d97fff 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -3697,7 +3697,7 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
- 		goto unlock;
- 	}
- 
--	uid = from_kuid_munged(seq_user_ns(seq), sock_i_uid(sk));
-+	uid = from_kuid_munged(seq_user_ns(seq), sk_uid(sk));
- 	meta.seq = seq;
- 	prog = bpf_iter_get_info(&meta, false);
- 	ret = unix_prog_seq_show(prog, &meta, v, uid);
-diff --git a/net/unix/diag.c b/net/unix/diag.c
-index 79b182d0e62ae..ca34730261510 100644
---- a/net/unix/diag.c
-+++ b/net/unix/diag.c
-@@ -106,7 +106,7 @@ static int sk_diag_show_rqlen(struct sock *sk, struct sk_buff *nlskb)
- static int sk_diag_dump_uid(struct sock *sk, struct sk_buff *nlskb,
- 			    struct user_namespace *user_ns)
- {
--	uid_t uid = from_kuid_munged(user_ns, sock_i_uid(sk));
-+	uid_t uid = from_kuid_munged(user_ns, sk_uid(sk));
- 	return nla_put(nlskb, UNIX_DIAG_UID, sizeof(uid_t), &uid);
- }
- 
-diff --git a/net/xdp/xsk_diag.c b/net/xdp/xsk_diag.c
-index 09dcea0cbbed9..0e0bca031c039 100644
---- a/net/xdp/xsk_diag.c
-+++ b/net/xdp/xsk_diag.c
-@@ -119,7 +119,7 @@ static int xsk_diag_fill(struct sock *sk, struct sk_buff *nlskb,
- 
- 	if ((req->xdiag_show & XDP_SHOW_INFO) &&
- 	    nla_put_u32(nlskb, XDP_DIAG_UID,
--			from_kuid_munged(user_ns, sock_i_uid(sk))))
-+			from_kuid_munged(user_ns, sk_uid(sk))))
- 		goto out_nlmsg_trim;
- 
- 	if ((req->xdiag_show & XDP_SHOW_RING_CFG) &&
 -- 
 2.50.1
 
