@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484D31DF246;
-	Sun,  7 Sep 2025 20:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871531A0BFD;
+	Sun,  7 Sep 2025 20:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277268; cv=none; b=F94STQMnQoRH4E2e0/SMhnVMah2QBQrarCwfiyDISzfdtNVV7xDJLxuUFDSI7Ds2AU3etC76uzJym9MNNw3MiuGvFErAawqhFH0bCH7MuV20E979U+2thYkSPmrLyXGOiSB19SAcirZSN24Ki62idVURpMP2T7aCJRn1uhdKwc4=
+	t=1757277271; cv=none; b=Ed8BB0Uq8XegVxHvgELBu0kLR6/QxpR0JtFoAtWvuIabF7dWmR12+EK4ho5OwrMmuMnIdzrb6ebl8ATSeyv/d3QPdOWsc1yaTwbkxXhgMDRjvQCFzTQFKTdmkhDY24zHRMpD9gB7B18hDhE6xHFYriD7fcRaRJm489Y9hmN1ZJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277268; c=relaxed/simple;
-	bh=S/Tw3cD5+OdjWsFvhwUnjIJaWuY+X2JkHaF4r2vQOPQ=;
+	s=arc-20240116; t=1757277271; c=relaxed/simple;
+	bh=DzdOHpCN1i+PlqXaiGPMkDDUYLnzP7ACjLApxuc8tHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNGKDycsZ+0a2cIsrkKxe5vpgdeUCggs5JitiulKAC9rGG4KYYVO+XKUQWGyC9ZffTjWqvUZO0JmIztOj6II2CfhKSHCrMl5nhqR2dZVr7gv+CzPcbMW2d9SxqB0vh+U+jn4mIfsr+gr9LAGATQpQeyvPjwi5lJ3tnfEodbfTko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySjwwS0J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niWXtwdgjMmpRgxi6FApLakl3JWBPCjH0W/KZbCuZj0GvnRoNbzV2S3QBJKH0fsqpbGNPVd8YP2ePmHCl32X0Lotc+yQTCN3iBLdD6LqTa+nvB1Cm9VN/RUzBz97a4LzQs/Kwy4hC+YBgKmhKjr0PvpXGi0LbdFMeqaIbukqRAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzAliNYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySjwwS0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C170DC4CEF0;
-	Sun,  7 Sep 2025 20:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzAliNYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB28EC4CEF0;
+	Sun,  7 Sep 2025 20:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277268;
-	bh=S/Tw3cD5+OdjWsFvhwUnjIJaWuY+X2JkHaF4r2vQOPQ=;
+	s=korg; t=1757277271;
+	bh=DzdOHpCN1i+PlqXaiGPMkDDUYLnzP7ACjLApxuc8tHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySjwwS0JmPnu+/s6jNMj4T26FUs34G+8bdjrqgvy768r9DHnTJh4u4GqcKN5gPY9q
-	 Y7AgB+k+E4E4mjYbRDdLwJ4DbSFbVAIHKjtSgsWyqTJSFFXdxHn9l9eaZwUWFPRSrm
-	 YBhGVVCMyUShVkJjAnwfBNPgBfsha164JtQN3a50=
+	b=LzAliNYQNM7UZbLxm6uxLOZiV7OCY5cYXksn7yyWkb62QYmvNSuCp1SS2e6ElonTM
+	 2koZ3SffkvLim/DUdQG76aTKevj/aOE997T6J93rsjn7WPMkU/7iwv8PURdCNUooyT
+	 XFuyJQFbscDTc7siWYHj86C1Kkg/2bc+YGeK3XHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 131/175] ext4: define ext4_journal_destroy wrapper
-Date: Sun,  7 Sep 2025 21:58:46 +0200
-Message-ID: <20250907195617.955445603@linuxfoundation.org>
+	Li Qiong <liqiong@nfschina.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 140/175] mm/slub: avoid accessing metadata when pointer is invalid in object_err()
+Date: Sun,  7 Sep 2025 21:58:55 +0200
+Message-ID: <20250907195618.164031691@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,107 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Li Qiong <liqiong@nfschina.com>
 
-commit 5a02a6204ca37e7c22fbb55a789c503f05e8e89a upstream.
+[ Upstream commit b4efccec8d06ceb10a7d34d7b1c449c569d53770 ]
 
-Define an ext4 wrapper over jbd2_journal_destroy to make sure we
-have consistent behavior during journal destruction. This will also
-come useful in the next patch where we add some ext4 specific logic
-in the destroy path.
+object_err() reports details of an object for further debugging, such as
+the freelist pointer, redzone, etc. However, if the pointer is invalid,
+attempting to access object metadata can lead to a crash since it does
+not point to a valid object.
 
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/c3ba78c5c419757e6d5f2d8ebb4a8ce9d21da86a.1742279837.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+One known path to the crash is when alloc_consistency_checks()
+determines the pointer to the allocated object is invalid because of a
+freelist corruption, and calls object_err() to report it. The debug code
+should report and handle the corruption gracefully and not crash in the
+process.
+
+In case the pointer is NULL or check_valid_pointer() returns false for
+the pointer, only print the pointer value and skip accessing metadata.
+
+Fixes: 81819f0fc828 ("SLUB core")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Li Qiong <liqiong@nfschina.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4_jbd2.h |   14 ++++++++++++++
- fs/ext4/super.c     |   16 ++++++----------
- 2 files changed, 20 insertions(+), 10 deletions(-)
+ mm/slub.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/ext4_jbd2.h
-+++ b/fs/ext4/ext4_jbd2.h
-@@ -513,4 +513,18 @@ static inline int ext4_should_dioread_no
- 	return 1;
- }
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -1113,7 +1113,12 @@ static void object_err(struct kmem_cache
+ 		return;
  
-+/*
-+ * Pass journal explicitly as it may not be cached in the sbi->s_journal in some
-+ * cases
-+ */
-+static inline int ext4_journal_destroy(struct ext4_sb_info *sbi, journal_t *journal)
-+{
-+	int err = 0;
-+
-+	err = jbd2_journal_destroy(journal);
-+	sbi->s_journal = NULL;
-+
-+	return err;
-+}
-+
- #endif	/* _EXT4_JBD2_H */
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1312,8 +1312,7 @@ static void ext4_put_super(struct super_
+ 	slab_bug(s, reason);
+-	print_trailer(s, slab, object);
++	if (!object || !check_valid_pointer(s, slab, object)) {
++		print_slab_info(slab);
++		pr_err("Invalid pointer 0x%p\n", object);
++	} else {
++		print_trailer(s, slab, object);
++	}
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
  
- 	if (sbi->s_journal) {
- 		aborted = is_journal_aborted(sbi->s_journal);
--		err = jbd2_journal_destroy(sbi->s_journal);
--		sbi->s_journal = NULL;
-+		err = ext4_journal_destroy(sbi, sbi->s_journal);
- 		if ((err < 0) && !aborted) {
- 			ext4_abort(sb, -err, "Couldn't clean up the journal");
- 		}
-@@ -4957,8 +4956,7 @@ static int ext4_load_and_init_journal(st
- out:
- 	/* flush s_sb_upd_work before destroying the journal. */
- 	flush_work(&sbi->s_sb_upd_work);
--	jbd2_journal_destroy(sbi->s_journal);
--	sbi->s_journal = NULL;
-+	ext4_journal_destroy(sbi, sbi->s_journal);
- 	return -EINVAL;
- }
- 
-@@ -5649,8 +5647,7 @@ failed_mount_wq:
- 	if (sbi->s_journal) {
- 		/* flush s_sb_upd_work before journal destroy. */
- 		flush_work(&sbi->s_sb_upd_work);
--		jbd2_journal_destroy(sbi->s_journal);
--		sbi->s_journal = NULL;
-+		ext4_journal_destroy(sbi, sbi->s_journal);
- 	}
- failed_mount3a:
- 	ext4_es_unregister_shrinker(sbi);
-@@ -5958,7 +5955,7 @@ static journal_t *ext4_open_dev_journal(
- 	return journal;
- 
- out_journal:
--	jbd2_journal_destroy(journal);
-+	ext4_journal_destroy(EXT4_SB(sb), journal);
- out_bdev:
- 	bdev_fput(bdev_file);
- 	return ERR_PTR(errno);
-@@ -6075,8 +6072,7 @@ static int ext4_load_journal(struct supe
- 	EXT4_SB(sb)->s_journal = journal;
- 	err = ext4_clear_journal_err(sb, es);
- 	if (err) {
--		EXT4_SB(sb)->s_journal = NULL;
--		jbd2_journal_destroy(journal);
-+		ext4_journal_destroy(EXT4_SB(sb), journal);
- 		return err;
- 	}
- 
-@@ -6094,7 +6090,7 @@ static int ext4_load_journal(struct supe
- 	return 0;
- 
- err_out:
--	jbd2_journal_destroy(journal);
-+	ext4_journal_destroy(EXT4_SB(sb), journal);
- 	return err;
- }
- 
+ 	WARN_ON(1);
 
 
