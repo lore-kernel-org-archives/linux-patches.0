@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C7C125B2;
-	Sun,  7 Sep 2025 20:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEE114D29B;
+	Sun,  7 Sep 2025 20:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277999; cv=none; b=RnKkqJaN2s8twA5ihNpDoQA8YzeTWesvVuoXOP7SZpa4ikeiUHihwmrL65lAfLDoTqo17s3mjHgzxCXT9jJv9vByOJFX9v/HJmqHY7ApGqdGamw/nfQqAr151N+SZ9SyFEg/I97VWt7u8EU1Xm3F7K1hVir2dEq+l4BSXlGVCrE=
+	t=1757278002; cv=none; b=OwRFto4btfeR3CN5SN7/BHLGBsN4W7V8FVcUPspgvPEQBkqKZ56NB/VL6uOoNC/68cvg5bpdUqcvOOGhjJ20YXCTDj0A4mkWhCOVhbd0MV1J/73UeECkp6BEauSvCDOzC0nRovZxSAN3tF5m1mA5dPGEYd3w9Kk90M5mfAthRjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277999; c=relaxed/simple;
-	bh=eLYyAxs6g7QltqFEID7kt+zKyfsbOgkvXZx+fNxNZjw=;
+	s=arc-20240116; t=1757278002; c=relaxed/simple;
+	bh=JnBfwiiOioXGNb0X/3G9vKJKzFB4unPAeH2tTugRCE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3pjzmnxm/Bx+8UmA1egsvJBZcjOySJoFl+FiwnWmi+coGram6aM4BVhcbKrwYyCabqXgyNqjg7ZRX5GLcUeqelerNEpC+78W9JTSk+vZJOaw6+RLy/aXsEALQizRiHFG5kVpoNEAQ+e4ejVWFBp93gcNoiaYeHInLAvUqAkIQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyIGuxpi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhnnTOFCPlbSQ9xYaziVFQrNx/MFfsOui8AS6acARk9PvOKfc3VA6o6xgP4R4pwVXCoQL+9Boz89oJO1kaZ5uua3cb2oQLdvBcxSEncVDmp+P2UhFwyqIjuArK5p9Eh4N06eUZQh8jD2Ko+kEZk8bPPIKwVobDFYmoWFPe+w+fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JO3z95md; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyIGuxpi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4DBC4CEF0;
-	Sun,  7 Sep 2025 20:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JO3z95md"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FC4C4CEF0;
+	Sun,  7 Sep 2025 20:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277999;
-	bh=eLYyAxs6g7QltqFEID7kt+zKyfsbOgkvXZx+fNxNZjw=;
+	s=korg; t=1757278002;
+	bh=JnBfwiiOioXGNb0X/3G9vKJKzFB4unPAeH2tTugRCE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyIGuxpihNlRRrF9jRZxMn7BRCeU8kmW23NSgT+AEo7Cmr/7l+zsBKpEfN5QPOb8g
-	 7nW5CzEMZEw4/ifadcvmtS12CPgew+D8hj8IjJPn6VmhdSAZ053pLymYhvstyQCGHa
-	 CPVsVPZjE7IA0hMeZrT+ItNg22y1M960Qd9iTrrM=
+	b=JO3z95mdmtz3vS9DIX2TwSaoODMLMm12vaXQI5J0BqtQ3geIz9K8nbz3lVzmyZEid
+	 mmFHR+qKfyZoNBHejGzUd3d+ffZHh9duJL0jusUKYS+oT2c4MZsk4qZdxkP4OyQYRt
+	 YI8MVFzsde3vuszXBryHwyYrum7Wt+/e9qFMupfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Jiao <zhangjiao2@cmss.chinamobile.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 169/183] tools: gpio: remove the include directory on make clean
-Date: Sun,  7 Sep 2025 21:59:56 +0200
-Message-ID: <20250907195619.832237169@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Li Nan <linan122@huawei.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ian Dall <ian@beware.dropbear.id.au>
+Subject: [PATCH 6.16 170/183] md/raid1: fix data lost for writemostly rdev
+Date: Sun,  7 Sep 2025 21:59:57 +0200
+Message-ID: <20250907195619.855124756@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -51,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhang jiao <zhangjiao2@cmss.chinamobile.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit ed42d80f3bae89592fbb2ffaf8b6b2e720d53f6a ]
+[ Upstream commit 93dec51e716db88f32d770dc9ab268964fff320b ]
 
-Remove the generated include directory when running make clean.
+If writemostly is enabled, alloc_behind_master_bio() will allocate a new
+bio for rdev, with bi_opf set to 0. Later, raid1_write_request() will
+clone from this bio, hence bi_opf is still 0 for the cloned bio. Submit
+this cloned bio will end up to be read, causing write data lost.
 
-Fixes: 8674cea84dc6 ("tools/gpio: move to tools buildsystem")
-Signed-off-by: Zhang Jiao <zhangjiao2@cmss.chinamobile.com>
-Link: https://lore.kernel.org/r/20250903063621.2424-1-zhangjiao2@cmss.chinamobile.com
-[Bartosz: add Fixes tag, improve the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fix this problem by inheriting bi_opf from original bio for
+behind_mast_bio.
+
+Fixes: e879a0d9cb08 ("md/raid1,raid10: don't ignore IO flags")
+Reported-and-tested-by: Ian Dall <ian@beware.dropbear.id.au>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220507
+Link: https://lore.kernel.org/linux-raid/20250903014140.3690499-1-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/gpio/Makefile | 2 +-
+ drivers/md/raid1.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/gpio/Makefile b/tools/gpio/Makefile
-index ed565eb52275f..342e056c8c665 100644
---- a/tools/gpio/Makefile
-+++ b/tools/gpio/Makefile
-@@ -77,7 +77,7 @@ $(OUTPUT)gpio-watch: $(GPIO_WATCH_IN)
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 6cee738a645ff..6d52336057946 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1226,7 +1226,7 @@ static void alloc_behind_master_bio(struct r1bio *r1_bio,
+ 	int i = 0;
+ 	struct bio *behind_bio = NULL;
  
- clean:
- 	rm -f $(ALL_PROGRAMS)
--	rm -f $(OUTPUT)include/linux/gpio.h
-+	rm -rf $(OUTPUT)include
- 	find $(or $(OUTPUT),.) -name '*.o' -delete -o -name '\.*.d' -delete -o -name '\.*.cmd' -delete
+-	behind_bio = bio_alloc_bioset(NULL, vcnt, 0, GFP_NOIO,
++	behind_bio = bio_alloc_bioset(NULL, vcnt, bio->bi_opf, GFP_NOIO,
+ 				      &r1_bio->mddev->bio_set);
  
- install: $(ALL_PROGRAMS)
+ 	/* discard op, we don't support writezero/writesame yet */
 -- 
 2.51.0
 
