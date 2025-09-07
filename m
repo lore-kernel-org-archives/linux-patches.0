@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D581B424F;
-	Sun,  7 Sep 2025 20:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7084A1B424F;
+	Sun,  7 Sep 2025 20:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276041; cv=none; b=TgJWPUZ8qA2d+f26aMtGSRRjx8mxahkb678y5aHU3wHiWo62rcTOBJBB4iyvUhlq4LNDlZno6ZCO3lnsVUOZZoKsunAs26StyAMzUvhspyVZx1MkhQkfABbNMOsLD4pie7W+xC1xsv4858366zY6dsAobjBeEY8fDpI6nM2jPG0=
+	t=1757276044; cv=none; b=prT0KCtGBour0QsBZmdOUBjyjSH/MEcX/ABR4smJIAiqjhkfbNyCAw+HtPKwOir9K/DVwEFJ+GykuMaXmPEnIhli48goQC8jjJTcJ1PG5/1o0/2+vzTrDe6K/rOQHaA++9rH5gWIT0zBMLhldSjEOttXtlrf0myGA/LV5HVEFPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276041; c=relaxed/simple;
-	bh=ioBNiOS/xiKMKpI62xAfKC8hFX6Cm4/LdjNzmdpPSqs=;
+	s=arc-20240116; t=1757276044; c=relaxed/simple;
+	bh=RAg7jlcFzOV3DgV16wE3nLp20HUiUDBGRa+hp+VD+oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aw/SJkXbWjYMRRksvlWVMov5O+gNiL0LxbLkC1UTTW38yIvu+cpLKnJcetHrjlLBSzZXtmbJW5fCQFRcMKZtoDhe21VjjrteNXPU4QfwgRjMNrqmeS4oOJuTqEyWEay95pWsE8EGz2yQuBRxHd3ZxkDdOzwr7agITqgRE2OtYE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9498OUN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s3WawLkz3EaPqeEAkroCsTkfAqg/mX7UMz32q9Wk4A9mEzkn1q49RsblIVcImOiHWiRlBV7WIpWmts+32EB2YCW46KnTRjYwbrNYM0eN380j4dOaUlHAYM6OlvWBPVtgpNyobijvU1KL9mcXvto0gQ9+cr9/hBybSYId2bMUFc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHV3/uFD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9498OUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611ADC4CEF8;
-	Sun,  7 Sep 2025 20:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHV3/uFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4AEC4CEF0;
+	Sun,  7 Sep 2025 20:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276040;
-	bh=ioBNiOS/xiKMKpI62xAfKC8hFX6Cm4/LdjNzmdpPSqs=;
+	s=korg; t=1757276044;
+	bh=RAg7jlcFzOV3DgV16wE3nLp20HUiUDBGRa+hp+VD+oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9498OUN8UHGNshfa9gPmLvQQgHxYY1fOoC5M67trtM8BjQuTuoUrusqEO09HgGmz
-	 vKPjC2utkynJfxDE+WI86UzdNP/fyrEM5wuElQ2pOsbnl39Elt2KQNhHProQIOoTXy
-	 5Yz0G27awoCf/irpOG7GdeRnfwC/PZcyMY2N3X28=
+	b=lHV3/uFDjk98If12R6j803xeR8J9iAGQjFRIqUG1CoX67AEwerfAvzrjBhSh9KCy0
+	 LH/RUTJ8vPtuKi1XkVSVgkuXeHzGXY7bYmNlJOySZ7mB5v9y63FJnHRJTUsDHjMJa6
+	 ifTGbp0sQQCPBl/bu7APLjjOPD2T8TjatLi/8QnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Hyejeong Choi <hjeong.choi@samsung.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/64] gpio: pca953x: fix IRQ storm on system wake up
-Date: Sun,  7 Sep 2025 21:58:27 +0200
-Message-ID: <20250907195604.648449402@linuxfoundation.org>
+Subject: [PATCH 5.15 46/64] dma-buf: insert memory barrier before updating num_fences
+Date: Sun,  7 Sep 2025 21:58:28 +0200
+Message-ID: <20250907195604.675358375@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -48,69 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Hyejeong Choi <hjeong.choi@samsung.com>
 
-[ Upstream commit 3e38f946062b4845961ab86b726651b4457b2af8 ]
+[ Upstream commit 72c7d62583ebce7baeb61acce6057c361f73be4a ]
 
-If an input changes state during wake-up and is used as an interrupt
-source, the IRQ handler reads the volatile input register to clear the
-interrupt mask and deassert the IRQ line. However, the IRQ handler is
-triggered before access to the register is granted, causing the read
-operation to fail.
+smp_store_mb() inserts memory barrier after storing operation.
+It is different with what the comment is originally aiming so Null
+pointer dereference can be happened if memory update is reordered.
 
-As a result, the IRQ handler enters a loop, repeatedly printing the
-"failed reading register" message, until `pca953x_resume()` is eventually
-called, which restores the driver context and enables access to
-registers.
-
-Fix by disabling the IRQ line before entering suspend mode, and
-re-enabling it after the driver context is restored in `pca953x_resume()`.
-
-An IRQ can be disabled with disable_irq() and still wake the system as
-long as the IRQ has wake enabled, so the wake-up functionality is
-preserved.
-
-Fixes: b76574300504 ("gpio: pca953x: Restore registers after suspend/resume cycle")
-Cc: stable@vger.kernel.org
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20250512095441.31645-1-francesco@dolcini.it
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-[ Apply directly to suspend/resume functions ]
+Signed-off-by: Hyejeong Choi <hjeong.choi@samsung.com>
+Fixes: a590d0fdbaa5 ("dma-buf: Update reservation shared_count after adding the new fence")
+CC: stable@vger.kernel.org
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20250513020638.GA2329653@au1-maretx-p37.eng.sarc.samsung.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+[ adjusted `fobj->num_fences` to `fobj->shared_count` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pca953x.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/dma-buf/dma-resv.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -1145,6 +1145,9 @@ static int pca953x_suspend(struct device
- 	struct pca953x_chip *chip = dev_get_drvdata(dev);
+--- a/drivers/dma-buf/dma-resv.c
++++ b/drivers/dma-buf/dma-resv.c
+@@ -267,8 +267,9 @@ void dma_resv_add_shared_fence(struct dm
  
- 	mutex_lock(&chip->i2c_lock);
-+	/* Disable IRQ to prevent early triggering while regmap "cache only" is on */
-+	if (chip->client->irq > 0)
-+		disable_irq(chip->client->irq);
- 	regcache_cache_only(chip->regmap, true);
- 	mutex_unlock(&chip->i2c_lock);
+ replace:
+ 	RCU_INIT_POINTER(fobj->shared[i], fence);
+-	/* pointer update must be visible before we extend the shared_count */
+-	smp_store_mb(fobj->shared_count, count);
++	/* fence update must be visible before we extend the shared_count */
++	smp_wmb();
++	fobj->shared_count = count;
  
-@@ -1170,6 +1173,8 @@ static int pca953x_resume(struct device
- 	}
- 
- 	mutex_lock(&chip->i2c_lock);
-+	if (chip->client->irq > 0)
-+		enable_irq(chip->client->irq);
- 	regcache_cache_only(chip->regmap, false);
- 	regcache_mark_dirty(chip->regmap);
- 	ret = pca953x_regcache_sync(dev);
+ 	write_seqcount_end(&obj->seq);
+ 	dma_fence_put(old);
 
 
