@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16DB1CDFAC;
-	Sun,  7 Sep 2025 20:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F251CDFAC;
+	Sun,  7 Sep 2025 20:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275873; cv=none; b=GEfbjJ05N9IWh+N0+EH7Wz/H2hY+N6Oko9QQqOS2LDGEpjbtMJGd0gztyn54g+r9LQXNkiK0GHSrIMHPe2vz/Tt9604NtHEzRJ+/QbtyfECB5GxGtsJtw48wwrR+lRRPRsFX6YLG8JvCAFF7S+r811TdCJDgKa4ESXCbrCfvTJI=
+	t=1757275877; cv=none; b=NX8Vsv+fuYtVJVv2rdQvy49kEEV4IdzI0abeq4yFLc959WnZME7bFbJPi517sE6kK98Na9TUKWznLrKCrxrJYQzRHCZCIaYIgssFs7zbEFzBVLypRJf7p9wcqjCOpwR+ipN1umvRa9/Lxn731DadLhs01M1YwjcWcrwb4VWjkM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275873; c=relaxed/simple;
-	bh=0/rV5h8Ten0KY8a8oZgthqNUTduGYXsouEorp+yz7VE=;
+	s=arc-20240116; t=1757275877; c=relaxed/simple;
+	bh=TWrgYwLb5cGRN9C3izxWzylDlnVbFy30G4Ri5olK7hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T71GkpdjtWWzJgLBN4HVf8GYPKmrAu4hOilfxuJPMp1SWRfXjC2Nj73LIdqUXRAS20yEdQIeO0A43/wB20cmdRW8ddErDq1XS9IjkgfCcObmTEsL30tXZPK7aI5iqYGaFVBsHYkBzo1oUBxoEJROl6xFLprtRDst/GkQ9joQRmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k9i3woC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fcrCbsVdTSuXHFQ5bQpvrXjYyCUC41xJp2tyeWjfXmCY/EBAPnrynMkfhAUCAqDcmLwmp89BsX/oTVM+JPMFQsycXFKWzkaro7IhdZSF4h8nUVXYlT0oxnbNRbhEFK6ogNo4MAKtVmsVdpYmPmeyrU5ETYB7MajrlLYIs77DD2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4B/JNXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k9i3woC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318F1C4CEF0;
-	Sun,  7 Sep 2025 20:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4B/JNXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AF5C4CEF0;
+	Sun,  7 Sep 2025 20:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275873;
-	bh=0/rV5h8Ten0KY8a8oZgthqNUTduGYXsouEorp+yz7VE=;
+	s=korg; t=1757275876;
+	bh=TWrgYwLb5cGRN9C3izxWzylDlnVbFy30G4Ri5olK7hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0k9i3woC2gRluRKQJnP0U/9guW6W1oc6qr2F/orNpRlNGoReKQduZRMiO7QnCrfZi
-	 pppZFvNSpC7Qek4Hl8g1T1+lixqKk64GdfzGtMgOU7H5EqZE0sxe0QGSYGiQsN0s9b
-	 b/hNxYXHcJNDTm350dUDjizoQAre6OhzuZQcER7g=
+	b=C4B/JNXe0nXr0AzrYUP5Q1cBUtlAH6eEOsL30Oo5fFk+8U/gNWNY5hgFJTksdIX01
+	 6t5UhASCsFs9+WEG5O5mb2JyGqPmDGA+yHNgTBYc8m2xqcy5zyN2Pi/DYPmPhrYrXl
+	 Cqj/jTv9ESvrKP5s+qLzcnQzVAwQqDEKn1Z9+1bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Guolin Yang <guolin.yang@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Mark Brown <broonie@kernel.org>,
+	WangYuli <wangyuli@uniontech.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 36/45] vmxnet3: update MTU after device quiesce
-Date: Sun,  7 Sep 2025 21:58:22 +0200
-Message-ID: <20250907195602.037939474@linuxfoundation.org>
+Subject: [PATCH 5.4 37/45] randstruct: gcc-plugin: Remove bogus void member
+Date: Sun,  7 Sep 2025 21:58:23 +0200
+Message-ID: <20250907195602.071212376@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
 References: <20250907195600.953058118@linuxfoundation.org>
@@ -46,67 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ronak Doshi <ronak.doshi@broadcom.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 43f0999af011fba646e015f0bb08b6c3002a0170 ]
+[ Upstream commit e136a4062174a9a8d1c1447ca040ea81accfa6a8 ]
 
-Currently, when device mtu is updated, vmxnet3 updates netdev mtu, quiesces
-the device and then reactivates it for the ESXi to know about the new mtu.
-So, technically the OS stack can start using the new mtu before ESXi knows
-about the new mtu.
+When building the randomized replacement tree of struct members, the
+randstruct GCC plugin would insert, as the first member, a 0-sized void
+member. This appears as though it was done to catch non-designated
+("unnamed") static initializers, which wouldn't be stable since they
+depend on the original struct layout order.
 
-This can lead to issues for TSO packets which use mss as per the new mtu
-configured. This patch fixes this issue by moving the mtu write after
-device quiesce.
+This was accomplished by having the side-effect of the "void member"
+tripping an assert in GCC internals (count_type_elements) if the member
+list ever needed to be counted (e.g. for figuring out the order of members
+during a non-designated initialization), which would catch impossible type
+(void) in the struct:
 
-Cc: stable@vger.kernel.org
-Fixes: d1a890fa37f2 ("net: VMware virtual Ethernet NIC driver: vmxnet3")
-Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Acked-by: Guolin Yang <guolin.yang@broadcom.com>
-Changes v1-> v2:
-  Moved MTU write after destroy of rx rings
-Link: https://patch.msgid.link/20250515190457.8597-1-ronak.doshi@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ no WRITE_ONCE() in older trees ]
+security/landlock/fs.c: In function ‘hook_file_ioctl_common’:
+security/landlock/fs.c:1745:61: internal compiler error: in count_type_elements, at expr.cc:7075
+ 1745 |                         .u.op = &(struct lsm_ioctlop_audit) {
+      |                                                             ^
+
+static HOST_WIDE_INT
+count_type_elements (const_tree type, bool for_ctor_p)
+{
+  switch (TREE_CODE (type))
+...
+    case VOID_TYPE:
+    default:
+      gcc_unreachable ();
+    }
+}
+
+However this is a redundant safety measure since randstruct uses the
+__designated_initializer attribute both internally and within the
+__randomized_layout attribute macro so that this would be enforced
+by the compiler directly even when randstruct was not enabled (via
+-Wdesignated-init).
+
+A recent change in Landlock ended up tripping the same member counting
+routine when using a full-struct copy initializer as part of an anonymous
+initializer. This, however, is a false positive as the initializer is
+copying between identical structs (and hence identical layouts). The
+"path" member is "struct path", a randomized struct, and is being copied
+to from another "struct path", the "f_path" member:
+
+        landlock_log_denial(landlock_cred(file->f_cred), &(struct landlock_request) {
+                .type = LANDLOCK_REQUEST_FS_ACCESS,
+                .audit = {
+                        .type = LSM_AUDIT_DATA_IOCTL_OP,
+                        .u.op = &(struct lsm_ioctlop_audit) {
+                                .path = file->f_path,
+                                .cmd = cmd,
+                        },
+                },
+	...
+
+As can be seen with the coming randstruct KUnit test, there appears to
+be no behavioral problems with this kind of initialization when the void
+member is removed from the randstruct GCC plugin, so remove it.
+
+Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
+Closes: https://lore.kernel.org/lkml/Z_PRaKx7q70MKgCA@gallifrey/
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/lkml/20250407-kbuild-disable-gcc-plugins-v1-1-5d46ae583f5e@kernel.org/
+Reported-by: WangYuli <wangyuli@uniontech.com>
+Closes: https://lore.kernel.org/lkml/337D5D4887277B27+3c677db3-a8b9-47f0-93a4-7809355f1381@uniontech.com/
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Stable-dep-of: f39f18f3c353 ("randstruct: gcc-plugin: Fix attribute addition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ scripts/gcc-plugins/randomize_layout_plugin.c |   18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -2998,8 +2998,6 @@ vmxnet3_change_mtu(struct net_device *ne
- 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
- 	int err = 0;
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -377,29 +377,13 @@ static int relayout_struct(tree type)
  
--	netdev->mtu = new_mtu;
+ 	shuffle(type, (tree *)newtree, shuffle_length);
+ 
+-	/*
+-	 * set up a bogus anonymous struct field designed to error out on unnamed struct initializers
+-	 * as gcc provides no other way to detect such code
+-	 */
+-	list = make_node(FIELD_DECL);
+-	TREE_CHAIN(list) = newtree[0];
+-	TREE_TYPE(list) = void_type_node;
+-	DECL_SIZE(list) = bitsize_zero_node;
+-	DECL_NONADDRESSABLE_P(list) = 1;
+-	DECL_FIELD_BIT_OFFSET(list) = bitsize_zero_node;
+-	DECL_SIZE_UNIT(list) = size_zero_node;
+-	DECL_FIELD_OFFSET(list) = size_zero_node;
+-	DECL_CONTEXT(list) = type;
+-	// to satisfy the constify plugin
+-	TREE_READONLY(list) = 1;
 -
- 	/*
- 	 * Reset_work may be in the middle of resetting the device, wait for its
- 	 * completion.
-@@ -3013,6 +3011,7 @@ vmxnet3_change_mtu(struct net_device *ne
+ 	for (i = 0; i < num_fields - 1; i++)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
  
- 		/* we need to re-create the rx queue based on the new mtu */
- 		vmxnet3_rq_destroy_all(adapter);
-+		netdev->mtu = new_mtu;
- 		vmxnet3_adjust_rx_ring_size(adapter);
- 		err = vmxnet3_rq_create_all(adapter);
- 		if (err) {
-@@ -3029,6 +3028,8 @@ vmxnet3_change_mtu(struct net_device *ne
- 				   "Closing it\n", err);
- 			goto out;
- 		}
-+	} else {
-+		netdev->mtu = new_mtu;
- 	}
- 
- out:
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+ 	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_FIELDS(variant) = list;
++		TYPE_FIELDS(variant) = newtree[0];
+ 		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+ 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+ 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
 
 
