@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC076D528;
-	Sun,  7 Sep 2025 20:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F73D528;
+	Sun,  7 Sep 2025 20:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276781; cv=none; b=FC3EErFSfbt0CEvhzR173h15zV32Q8ZDBRzCyPlGE47XdgjC/5UdJu2eKEshXmprkP0UGIwADCumMaR5s42LbxTboHrls3hBKYP4gsF1Qes+EomcA/LO8j3yPpQUqbPaKmOGXL9DMilBTjTZQDyv2Ol/YOnx7sThVuZQrhcVpFw=
+	t=1757276785; cv=none; b=dUzIGEULu+wzUKWx66veVU2YxsB9+Cng2q3Bs5fDuV5G0SJ+6xUcW1pM/7ictKzznoZFPz4hnhiaos/T/AFBQHSpZe9S+lhaqPyM7Yu3T7kurlUHuc8OzFOjmNeStheytLUrja6iAsKz1FlxE3sD33WE+vh8ttpyDUq4QzGe/18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276781; c=relaxed/simple;
-	bh=yqeIKel0lo373o4rRsAu+pIz/si+ILYqpUbDRYaXveY=;
+	s=arc-20240116; t=1757276785; c=relaxed/simple;
+	bh=9Gp8Sg9ZtSJMpXVGMFcbEuKOfB97dgYeqFM5Kb78QUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utqxvag95E3aOUXhnuR0vwGdnH3/OalxcdvUt1fYSaMjODlpF5Qf8esM+NLd+KNG9nGG4ZWgdT0OmFleCz6AS0aXwXhR1de5JOmRxiVclKQqdh2Tu+WyrnCMH8uAZL2INQdA6wbzsL6dDpF3MM+4Qjy2c3/YDzVqd5hfrkWSfMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0eL3Hkn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJqiMeU6vq7e+NxWxlYpsEQBQU/C2JZSyK/qiQ0l+4p6UueZssgdH6Wi4RzSYO7ZeMHRR1zgv/AB9CDkDfrLLl0RycNvzifENX9QcmAl9souKCFmkol7sdCzasq0Nedg0KDom6MJuMi36GB45GBNqSM1c+YNP7JpJQcnY9yaRRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u2qx72m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0eL3Hkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D995C4CEF0;
-	Sun,  7 Sep 2025 20:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u2qx72m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7231AC4CEF0;
+	Sun,  7 Sep 2025 20:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276781;
-	bh=yqeIKel0lo373o4rRsAu+pIz/si+ILYqpUbDRYaXveY=;
+	s=korg; t=1757276785;
+	bh=9Gp8Sg9ZtSJMpXVGMFcbEuKOfB97dgYeqFM5Kb78QUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0eL3HkntNtumhR6JUgx3XdD6wZfYegnmrvxK8b9cT/nuIlcarrEpOYk7MXDUx2/n
-	 TrwWRUSPDkeGIBwk+zRzXB56EGiywKcu28Lv9Z4/28m4UN99rV2aK4U7Z2995ydLt1
-	 2qbEsWrPH6/ePSHWdOwU4VXBL7U+iieVKCOf9omg=
+	b=0u2qx72mV/Yq8ZudH6uj5OPJTTwfSjKVGfS5xYLKoPICMu1WD8/pZXqjzPAkStAOq
+	 CR0yJm1a3SvZYFz2pRCGX3UWzYidGM6yD57uyWl1KqO4YzysoLK9FZ8dmMXHfvxuWO
+	 BqHWyI2sV6C6p7VpFpRAdiZ1I4muQ6UjyMbI+wP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 109/121] perf bpf-utils: Harden get_bpf_prog_info_linear
-Date: Sun,  7 Sep 2025 21:59:05 +0200
-Message-ID: <20250907195612.643628263@linuxfoundation.org>
+Subject: [PATCH 6.6 110/121] drm/amdgpu: Replace DRM_* with dev_* in amdgpu_psp.c
+Date: Sun,  7 Sep 2025 21:59:06 +0200
+Message-ID: <20250907195612.669549402@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,118 +52,561 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Hawking Zhang <Hawking.Zhang@amd.com>
 
-[ Upstream commit 01be43f2a0eaeed83e94dee054742f37625c86d9 ]
+[ Upstream commit ac3ff8a90637e813005404a0110802aa384af4aa ]
 
-In get_bpf_prog_info_linear two calls to bpf_obj_get_info_by_fd are
-made, the first to compute memory requirements for a struct perf_bpil
-and the second to fill it in. Previously the code would warn when the
-second call didn't match the first. Such races can be common place in
-things like perf test, whose perf trace tests will frequently load BPF
-programs. Rather than a debug message, return actual errors for this
-case. Out of paranoia also validate the read bpf_prog_info array
-value. Change the type of ptr to avoid mismatched pointer type
-compiler warnings. Add some additional debug print outs and sanity
-asserts.
+So kernel message has the device pcie bdf information,
+which helps issue debugging especially in multiple GPU
+system.
 
-Closes: https://lore.kernel.org/lkml/CAP-5=fWJQcmUOP7MuCA2ihKnDAHUCOBLkQFEkQES-1ZZTrgf8Q@mail.gmail.com/
-Fixes: 6ac22d036f86 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250902181713.309797-4-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 467e00b30dfe ("drm/amd/amdgpu: Fix missing error return on kzalloc failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-utils.c | 43 ++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 144 ++++++++++++------------
+ 1 file changed, 75 insertions(+), 69 deletions(-)
 
-diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
-index 64a5583446964..5a66dc8594aa8 100644
---- a/tools/perf/util/bpf-utils.c
-+++ b/tools/perf/util/bpf-utils.c
-@@ -115,7 +115,7 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 	__u32 info_len = sizeof(info);
- 	__u32 data_len = 0;
- 	int i, err;
--	void *ptr;
-+	__u8 *ptr;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index ffa5e72a84ebc..e9a83865ae012 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -291,21 +291,22 @@ static int psp_memory_training_init(struct psp_context *psp)
+ 	struct psp_memory_training_context *ctx = &psp->mem_train_ctx;
  
- 	if (arrays >> PERF_BPIL_LAST_ARRAY)
- 		return ERR_PTR(-EINVAL);
-@@ -126,6 +126,8 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 		pr_debug("can't get prog info: %s", strerror(errno));
- 		return ERR_PTR(-EFAULT);
- 	}
-+	if (info.type >= __MAX_BPF_PROG_TYPE)
-+		pr_debug("%s:%d: unexpected program type %u\n", __func__, __LINE__, info.type);
- 
- 	/* step 2: calculate total size of all arrays */
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
-@@ -173,6 +175,8 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 					     desc->count_offset, count);
- 		bpf_prog_info_set_offset_u32(&info_linear->info,
- 					     desc->size_offset, size);
-+		assert(ptr >= info_linear->data);
-+		assert(ptr < &info_linear->data[data_len]);
- 		bpf_prog_info_set_offset_u64(&info_linear->info,
- 					     desc->array_offset,
- 					     ptr_to_u64(ptr));
-@@ -186,26 +190,45 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 		free(info_linear);
- 		return ERR_PTR(-EFAULT);
- 	}
-+	if (info_linear->info.type >= __MAX_BPF_PROG_TYPE) {
-+		pr_debug("%s:%d: unexpected program type %u\n",
-+			 __func__, __LINE__, info_linear->info.type);
-+	}
- 
- 	/* step 6: verify the data */
-+	ptr = info_linear->data;
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
- 		const struct bpil_array_desc *desc = &bpil_array_desc[i];
--		__u32 v1, v2;
-+		__u32 count1, count2, size1, size2;
-+		__u64 ptr2;
- 
- 		if ((arrays & (1UL << i)) == 0)
- 			continue;
- 
--		v1 = bpf_prog_info_read_offset_u32(&info, desc->count_offset);
--		v2 = bpf_prog_info_read_offset_u32(&info_linear->info,
-+		count1 = bpf_prog_info_read_offset_u32(&info, desc->count_offset);
-+		count2 = bpf_prog_info_read_offset_u32(&info_linear->info,
- 						   desc->count_offset);
--		if (v1 != v2)
--			pr_warning("%s: mismatch in element count\n", __func__);
-+		if (count1 != count2) {
-+			pr_warning("%s: mismatch in element count %u vs %u\n", __func__, count1, count2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
- 
--		v1 = bpf_prog_info_read_offset_u32(&info, desc->size_offset);
--		v2 = bpf_prog_info_read_offset_u32(&info_linear->info,
-+		size1 = bpf_prog_info_read_offset_u32(&info, desc->size_offset);
-+		size2 = bpf_prog_info_read_offset_u32(&info_linear->info,
- 						   desc->size_offset);
--		if (v1 != v2)
--			pr_warning("%s: mismatch in rec size\n", __func__);
-+		if (size1 != size2) {
-+			pr_warning("%s: mismatch in rec size %u vs %u\n", __func__, size1, size2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
-+		ptr2 = bpf_prog_info_read_offset_u64(&info_linear->info, desc->array_offset);
-+		if (ptr_to_u64(ptr) != ptr2) {
-+			pr_warning("%s: mismatch in array %p vs %llx\n", __func__, ptr, ptr2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
-+		ptr += roundup(count1 * size1, sizeof(__u64));
+ 	if (ctx->init != PSP_MEM_TRAIN_RESERVE_SUCCESS) {
+-		DRM_DEBUG("memory training is not supported!\n");
++		dev_dbg(psp->adev->dev, "memory training is not supported!\n");
+ 		return 0;
  	}
  
- 	/* step 7: update info_len and data_len */
+ 	ctx->sys_cache = kzalloc(ctx->train_data_size, GFP_KERNEL);
+ 	if (ctx->sys_cache == NULL) {
+-		DRM_ERROR("alloc mem_train_ctx.sys_cache failed!\n");
++		dev_err(psp->adev->dev, "alloc mem_train_ctx.sys_cache failed!\n");
+ 		ret = -ENOMEM;
+ 		goto Err_out;
+ 	}
+ 
+-	DRM_DEBUG("train_data_size:%llx,p2c_train_data_offset:%llx,c2p_train_data_offset:%llx.\n",
+-		  ctx->train_data_size,
+-		  ctx->p2c_train_data_offset,
+-		  ctx->c2p_train_data_offset);
++	dev_dbg(psp->adev->dev,
++		"train_data_size:%llx,p2c_train_data_offset:%llx,c2p_train_data_offset:%llx.\n",
++		ctx->train_data_size,
++		ctx->p2c_train_data_offset,
++		ctx->c2p_train_data_offset);
+ 	ctx->init = PSP_MEM_TRAIN_INIT_SUCCESS;
+ 	return 0;
+ 
+@@ -407,7 +408,7 @@ static int psp_sw_init(void *handle)
+ 
+ 	psp->cmd = kzalloc(sizeof(struct psp_gfx_cmd_resp), GFP_KERNEL);
+ 	if (!psp->cmd) {
+-		DRM_ERROR("Failed to allocate memory to command buffer!\n");
++		dev_err(adev->dev, "Failed to allocate memory to command buffer!\n");
+ 		ret = -ENOMEM;
+ 	}
+ 
+@@ -454,13 +455,13 @@ static int psp_sw_init(void *handle)
+ 	if (mem_training_ctx->enable_mem_training) {
+ 		ret = psp_memory_training_init(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to initialize memory training!\n");
++			dev_err(adev->dev, "Failed to initialize memory training!\n");
+ 			return ret;
+ 		}
+ 
+ 		ret = psp_mem_training(psp, PSP_MEM_TRAIN_COLD_BOOT);
+ 		if (ret) {
+-			DRM_ERROR("Failed to process memory training!\n");
++			dev_err(adev->dev, "Failed to process memory training!\n");
+ 			return ret;
+ 		}
+ 	}
+@@ -674,9 +675,11 @@ psp_cmd_submit_buf(struct psp_context *psp,
+ 	 */
+ 	if (!skip_unsupport && (psp->cmd_buf_mem->resp.status || !timeout) && !ras_intr) {
+ 		if (ucode)
+-			DRM_WARN("failed to load ucode %s(0x%X) ",
+-				  amdgpu_ucode_name(ucode->ucode_id), ucode->ucode_id);
+-		DRM_WARN("psp gfx command %s(0x%X) failed and response status is (0x%X)\n",
++			dev_warn(psp->adev->dev,
++				 "failed to load ucode %s(0x%X) ",
++				 amdgpu_ucode_name(ucode->ucode_id), ucode->ucode_id);
++		dev_warn(psp->adev->dev,
++			 "psp gfx command %s(0x%X) failed and response status is (0x%X)\n",
+ 			 psp_gfx_cmd_name(psp->cmd_buf_mem->cmd_id), psp->cmd_buf_mem->cmd_id,
+ 			 psp->cmd_buf_mem->resp.status);
+ 		/* If any firmware (including CAP) load fails under SRIOV, it should
+@@ -806,7 +809,7 @@ static int psp_tmr_init(struct psp_context *psp)
+ 	    psp->fw_pri_buf) {
+ 		ret = psp_load_toc(psp, &tmr_size);
+ 		if (ret) {
+-			DRM_ERROR("Failed to load toc\n");
++			dev_err(psp->adev->dev, "Failed to load toc\n");
+ 			return ret;
+ 		}
+ 	}
+@@ -854,7 +857,7 @@ static int psp_tmr_load(struct psp_context *psp)
+ 
+ 	psp_prep_tmr_cmd_buf(psp, cmd, psp->tmr_mc_addr, psp->tmr_bo);
+ 	if (psp->tmr_bo)
+-		DRM_INFO("reserve 0x%lx from 0x%llx for PSP TMR\n",
++		dev_info(psp->adev->dev, "reserve 0x%lx from 0x%llx for PSP TMR\n",
+ 			 amdgpu_bo_size(psp->tmr_bo), psp->tmr_mc_addr);
+ 
+ 	ret = psp_cmd_submit_buf(psp, NULL, cmd,
+@@ -1112,7 +1115,7 @@ int psp_reg_program(struct psp_context *psp, enum psp_reg_prog_id reg,
+ 	psp_prep_reg_prog_cmd_buf(cmd, reg, value);
+ 	ret = psp_cmd_submit_buf(psp, NULL, cmd, psp->fence_buf_mc_addr);
+ 	if (ret)
+-		DRM_ERROR("PSP failed to program reg id %d", reg);
++		dev_err(psp->adev->dev, "PSP failed to program reg id %d\n", reg);
+ 
+ 	release_psp_cmd_buf(psp);
+ 
+@@ -1492,22 +1495,22 @@ static void psp_ras_ta_check_status(struct psp_context *psp)
+ 	switch (ras_cmd->ras_status) {
+ 	case TA_RAS_STATUS__ERROR_UNSUPPORTED_IP:
+ 		dev_warn(psp->adev->dev,
+-				"RAS WARNING: cmd failed due to unsupported ip\n");
++			 "RAS WARNING: cmd failed due to unsupported ip\n");
+ 		break;
+ 	case TA_RAS_STATUS__ERROR_UNSUPPORTED_ERROR_INJ:
+ 		dev_warn(psp->adev->dev,
+-				"RAS WARNING: cmd failed due to unsupported error injection\n");
++			 "RAS WARNING: cmd failed due to unsupported error injection\n");
+ 		break;
+ 	case TA_RAS_STATUS__SUCCESS:
+ 		break;
+ 	case TA_RAS_STATUS__TEE_ERROR_ACCESS_DENIED:
+ 		if (ras_cmd->cmd_id == TA_RAS_COMMAND__TRIGGER_ERROR)
+ 			dev_warn(psp->adev->dev,
+-					"RAS WARNING: Inject error to critical region is not allowed\n");
++				 "RAS WARNING: Inject error to critical region is not allowed\n");
+ 		break;
+ 	default:
+ 		dev_warn(psp->adev->dev,
+-				"RAS WARNING: ras status = 0x%X\n", ras_cmd->ras_status);
++			 "RAS WARNING: ras status = 0x%X\n", ras_cmd->ras_status);
+ 		break;
+ 	}
+ }
+@@ -1531,7 +1534,7 @@ int psp_ras_invoke(struct psp_context *psp, uint32_t ta_cmd_id)
+ 		return ret;
+ 
+ 	if (ras_cmd->if_version > RAS_TA_HOST_IF_VER) {
+-		DRM_WARN("RAS: Unsupported Interface");
++		dev_warn(psp->adev->dev, "RAS: Unsupported Interface\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1681,7 +1684,7 @@ int psp_ras_initialize(struct psp_context *psp)
+ 		psp->ras_context.context.initialized = true;
+ 	else {
+ 		if (ras_cmd->ras_status)
+-			dev_warn(psp->adev->dev, "RAS Init Status: 0x%X\n", ras_cmd->ras_status);
++			dev_warn(adev->dev, "RAS Init Status: 0x%X\n", ras_cmd->ras_status);
+ 
+ 		/* fail to load RAS TA */
+ 		psp->ras_context.context.initialized = false;
+@@ -2101,7 +2104,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_kdb != NULL)) {
+ 			ret = psp_bootloader_load_kdb(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load kdb failed!\n");
++				dev_err(adev->dev, "PSP load kdb failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2110,7 +2113,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_spl != NULL)) {
+ 			ret = psp_bootloader_load_spl(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load spl failed!\n");
++				dev_err(adev->dev, "PSP load spl failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2119,7 +2122,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_sysdrv != NULL)) {
+ 			ret = psp_bootloader_load_sysdrv(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load sys drv failed!\n");
++				dev_err(adev->dev, "PSP load sys drv failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2128,7 +2131,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_soc_drv != NULL)) {
+ 			ret = psp_bootloader_load_soc_drv(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load soc drv failed!\n");
++				dev_err(adev->dev, "PSP load soc drv failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2137,7 +2140,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_intf_drv != NULL)) {
+ 			ret = psp_bootloader_load_intf_drv(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load intf drv failed!\n");
++				dev_err(adev->dev, "PSP load intf drv failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2146,7 +2149,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_dbg_drv != NULL)) {
+ 			ret = psp_bootloader_load_dbg_drv(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load dbg drv failed!\n");
++				dev_err(adev->dev, "PSP load dbg drv failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2155,7 +2158,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_ras_drv != NULL)) {
+ 			ret = psp_bootloader_load_ras_drv(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load ras_drv failed!\n");
++				dev_err(adev->dev, "PSP load ras_drv failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2164,7 +2167,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 		    (psp->funcs->bootloader_load_sos != NULL)) {
+ 			ret = psp_bootloader_load_sos(psp);
+ 			if (ret) {
+-				DRM_ERROR("PSP load sos failed!\n");
++				dev_err(adev->dev, "PSP load sos failed!\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2172,7 +2175,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 
+ 	ret = psp_ring_create(psp, PSP_RING_TYPE__KM);
+ 	if (ret) {
+-		DRM_ERROR("PSP create ring failed!\n");
++		dev_err(adev->dev, "PSP create ring failed!\n");
+ 		return ret;
+ 	}
+ 
+@@ -2182,7 +2185,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 	if (!psp_boottime_tmr(psp)) {
+ 		ret = psp_tmr_init(psp);
+ 		if (ret) {
+-			DRM_ERROR("PSP tmr init failed!\n");
++			dev_err(adev->dev, "PSP tmr init failed!\n");
+ 			return ret;
+ 		}
+ 	}
+@@ -2201,7 +2204,7 @@ static int psp_hw_start(struct psp_context *psp)
+ 
+ 	ret = psp_tmr_load(psp);
+ 	if (ret) {
+-		DRM_ERROR("PSP load tmr failed!\n");
++		dev_err(adev->dev, "PSP load tmr failed!\n");
+ 		return ret;
+ 	}
+ 
+@@ -2448,7 +2451,8 @@ static void psp_print_fw_hdr(struct psp_context *psp,
+ 	}
+ }
+ 
+-static int psp_prep_load_ip_fw_cmd_buf(struct amdgpu_firmware_info *ucode,
++static int psp_prep_load_ip_fw_cmd_buf(struct psp_context *psp,
++				       struct amdgpu_firmware_info *ucode,
+ 				       struct psp_gfx_cmd_resp *cmd)
+ {
+ 	int ret;
+@@ -2461,7 +2465,7 @@ static int psp_prep_load_ip_fw_cmd_buf(struct amdgpu_firmware_info *ucode,
+ 
+ 	ret = psp_get_fw_type(ucode, &cmd->cmd.cmd_load_ip_fw.fw_type);
+ 	if (ret)
+-		DRM_ERROR("Unknown firmware type\n");
++		dev_err(psp->adev->dev, "Unknown firmware type\n");
+ 
+ 	return ret;
+ }
+@@ -2472,7 +2476,7 @@ int psp_execute_ip_fw_load(struct psp_context *psp,
+ 	int ret = 0;
+ 	struct psp_gfx_cmd_resp *cmd = acquire_psp_cmd_buf(psp);
+ 
+-	ret = psp_prep_load_ip_fw_cmd_buf(ucode, cmd);
++	ret = psp_prep_load_ip_fw_cmd_buf(psp, ucode, cmd);
+ 	if (!ret) {
+ 		ret = psp_cmd_submit_buf(psp, ucode, cmd,
+ 					 psp->fence_buf_mc_addr);
+@@ -2507,13 +2511,13 @@ static int psp_load_smu_fw(struct psp_context *psp)
+ 	      adev->ip_versions[MP0_HWIP][0] == IP_VERSION(11, 0, 2)))) {
+ 		ret = amdgpu_dpm_set_mp1_state(adev, PP_MP1_STATE_UNLOAD);
+ 		if (ret)
+-			DRM_WARN("Failed to set MP1 state prepare for reload\n");
++			dev_err(adev->dev, "Failed to set MP1 state prepare for reload\n");
+ 	}
+ 
+ 	ret = psp_execute_ip_fw_load(psp, ucode);
+ 
+ 	if (ret)
+-		DRM_ERROR("PSP load smu failed!\n");
++		dev_err(adev->dev, "PSP load smu failed!\n");
+ 
+ 	return ret;
+ }
+@@ -2609,7 +2613,7 @@ static int psp_load_non_psp_fw(struct psp_context *psp)
+ 		    adev->virt.autoload_ucode_id : AMDGPU_UCODE_ID_RLC_G)) {
+ 			ret = psp_rlc_autoload_start(psp);
+ 			if (ret) {
+-				DRM_ERROR("Failed to start rlc autoload\n");
++				dev_err(adev->dev, "Failed to start rlc autoload\n");
+ 				return ret;
+ 			}
+ 		}
+@@ -2631,7 +2635,7 @@ static int psp_load_fw(struct amdgpu_device *adev)
+ 
+ 		ret = psp_ring_init(psp, PSP_RING_TYPE__KM);
+ 		if (ret) {
+-			DRM_ERROR("PSP ring init failed!\n");
++			dev_err(adev->dev, "PSP ring init failed!\n");
+ 			goto failed;
+ 		}
+ 	}
+@@ -2646,13 +2650,13 @@ static int psp_load_fw(struct amdgpu_device *adev)
+ 
+ 	ret = psp_asd_initialize(psp);
+ 	if (ret) {
+-		DRM_ERROR("PSP load asd failed!\n");
++		dev_err(adev->dev, "PSP load asd failed!\n");
+ 		goto failed1;
+ 	}
+ 
+ 	ret = psp_rl_load(adev);
+ 	if (ret) {
+-		DRM_ERROR("PSP load RL failed!\n");
++		dev_err(adev->dev, "PSP load RL failed!\n");
+ 		goto failed1;
+ 	}
+ 
+@@ -2672,7 +2676,7 @@ static int psp_load_fw(struct amdgpu_device *adev)
+ 		ret = psp_ras_initialize(psp);
+ 		if (ret)
+ 			dev_err(psp->adev->dev,
+-					"RAS: Failed to initialize RAS\n");
++				"RAS: Failed to initialize RAS\n");
+ 
+ 		ret = psp_hdcp_initialize(psp);
+ 		if (ret)
+@@ -2725,7 +2729,7 @@ static int psp_hw_init(void *handle)
+ 
+ 	ret = psp_load_fw(adev);
+ 	if (ret) {
+-		DRM_ERROR("PSP firmware loading failed\n");
++		dev_err(adev->dev, "PSP firmware loading failed\n");
+ 		goto failed;
+ 	}
+ 
+@@ -2772,7 +2776,7 @@ static int psp_suspend(void *handle)
+ 	    psp->xgmi_context.context.initialized) {
+ 		ret = psp_xgmi_terminate(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to terminate xgmi ta\n");
++			dev_err(adev->dev, "Failed to terminate xgmi ta\n");
+ 			goto out;
+ 		}
+ 	}
+@@ -2780,46 +2784,46 @@ static int psp_suspend(void *handle)
+ 	if (psp->ta_fw) {
+ 		ret = psp_ras_terminate(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to terminate ras ta\n");
++			dev_err(adev->dev, "Failed to terminate ras ta\n");
+ 			goto out;
+ 		}
+ 		ret = psp_hdcp_terminate(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to terminate hdcp ta\n");
++			dev_err(adev->dev, "Failed to terminate hdcp ta\n");
+ 			goto out;
+ 		}
+ 		ret = psp_dtm_terminate(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to terminate dtm ta\n");
++			dev_err(adev->dev, "Failed to terminate dtm ta\n");
+ 			goto out;
+ 		}
+ 		ret = psp_rap_terminate(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to terminate rap ta\n");
++			dev_err(adev->dev, "Failed to terminate rap ta\n");
+ 			goto out;
+ 		}
+ 		ret = psp_securedisplay_terminate(psp);
+ 		if (ret) {
+-			DRM_ERROR("Failed to terminate securedisplay ta\n");
++			dev_err(adev->dev, "Failed to terminate securedisplay ta\n");
+ 			goto out;
+ 		}
+ 	}
+ 
+ 	ret = psp_asd_terminate(psp);
+ 	if (ret) {
+-		DRM_ERROR("Failed to terminate asd\n");
++		dev_err(adev->dev, "Failed to terminate asd\n");
+ 		goto out;
+ 	}
+ 
+ 	ret = psp_tmr_terminate(psp);
+ 	if (ret) {
+-		DRM_ERROR("Failed to terminate tmr\n");
++		dev_err(adev->dev, "Failed to terminate tmr\n");
+ 		goto out;
+ 	}
+ 
+ 	ret = psp_ring_stop(psp, PSP_RING_TYPE__KM);
+ 	if (ret)
+-		DRM_ERROR("PSP ring stop failed\n");
++		dev_err(adev->dev, "PSP ring stop failed\n");
+ 
+ out:
+ 	return ret;
+@@ -2831,12 +2835,12 @@ static int psp_resume(void *handle)
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 	struct psp_context *psp = &adev->psp;
+ 
+-	DRM_INFO("PSP is resuming...\n");
++	dev_info(adev->dev, "PSP is resuming...\n");
+ 
+ 	if (psp->mem_train_ctx.enable_mem_training) {
+ 		ret = psp_mem_training(psp, PSP_MEM_TRAIN_RESUME);
+ 		if (ret) {
+-			DRM_ERROR("Failed to process memory training!\n");
++			dev_err(adev->dev, "Failed to process memory training!\n");
+ 			return ret;
+ 		}
+ 	}
+@@ -2853,7 +2857,7 @@ static int psp_resume(void *handle)
+ 
+ 	ret = psp_asd_initialize(psp);
+ 	if (ret) {
+-		DRM_ERROR("PSP load asd failed!\n");
++		dev_err(adev->dev, "PSP load asd failed!\n");
+ 		goto failed;
+ 	}
+ 
+@@ -2877,7 +2881,7 @@ static int psp_resume(void *handle)
+ 		ret = psp_ras_initialize(psp);
+ 		if (ret)
+ 			dev_err(psp->adev->dev,
+-					"RAS: Failed to initialize RAS\n");
++				"RAS: Failed to initialize RAS\n");
+ 
+ 		ret = psp_hdcp_initialize(psp);
+ 		if (ret)
+@@ -2905,7 +2909,7 @@ static int psp_resume(void *handle)
+ 	return 0;
+ 
+ failed:
+-	DRM_ERROR("PSP resume failed\n");
++	dev_err(adev->dev, "PSP resume failed\n");
+ 	mutex_unlock(&adev->firmware.mutex);
+ 	return ret;
+ }
+@@ -2966,9 +2970,11 @@ int psp_ring_cmd_submit(struct psp_context *psp,
+ 		write_frame = ring_buffer_start + (psp_write_ptr_reg / rb_frame_size_dw);
+ 	/* Check invalid write_frame ptr address */
+ 	if ((write_frame < ring_buffer_start) || (ring_buffer_end < write_frame)) {
+-		DRM_ERROR("ring_buffer_start = %p; ring_buffer_end = %p; write_frame = %p\n",
+-			  ring_buffer_start, ring_buffer_end, write_frame);
+-		DRM_ERROR("write_frame is pointing to address out of bounds\n");
++		dev_err(adev->dev,
++			"ring_buffer_start = %p; ring_buffer_end = %p; write_frame = %p\n",
++			ring_buffer_start, ring_buffer_end, write_frame);
++		dev_err(adev->dev,
++			"write_frame is pointing to address out of bounds\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -3495,7 +3501,7 @@ static ssize_t psp_usbc_pd_fw_sysfs_read(struct device *dev,
+ 	int ret;
+ 
+ 	if (!adev->ip_blocks[AMD_IP_BLOCK_TYPE_PSP].status.late_initialized) {
+-		DRM_INFO("PSP block is not ready yet.");
++		dev_info(adev->dev, "PSP block is not ready yet\n.");
+ 		return -EBUSY;
+ 	}
+ 
+@@ -3504,7 +3510,7 @@ static ssize_t psp_usbc_pd_fw_sysfs_read(struct device *dev,
+ 	mutex_unlock(&adev->psp.mutex);
+ 
+ 	if (ret) {
+-		DRM_ERROR("Failed to read USBC PD FW, err = %d", ret);
++		dev_err(adev->dev, "Failed to read USBC PD FW, err = %d\n", ret);
+ 		return ret;
+ 	}
+ 
+@@ -3526,7 +3532,7 @@ static ssize_t psp_usbc_pd_fw_sysfs_write(struct device *dev,
+ 	void *fw_pri_cpu_addr;
+ 
+ 	if (!adev->ip_blocks[AMD_IP_BLOCK_TYPE_PSP].status.late_initialized) {
+-		DRM_INFO("PSP block is not ready yet.");
++		dev_err(adev->dev, "PSP block is not ready yet.");
+ 		return -EBUSY;
+ 	}
+ 
+@@ -3559,7 +3565,7 @@ static ssize_t psp_usbc_pd_fw_sysfs_write(struct device *dev,
+ 	release_firmware(usbc_pd_fw);
+ fail:
+ 	if (ret) {
+-		DRM_ERROR("Failed to load USBC PD FW, err = %d", ret);
++		dev_err(adev->dev, "Failed to load USBC PD FW, err = %d", ret);
+ 		count = ret;
+ 	}
+ 
+@@ -3606,7 +3612,7 @@ static ssize_t amdgpu_psp_vbflash_write(struct file *filp, struct kobject *kobj,
+ 
+ 	/* Safeguard against memory drain */
+ 	if (adev->psp.vbflash_image_size > AMD_VBIOS_FILE_MAX_SIZE_B) {
+-		dev_err(adev->dev, "File size cannot exceed %u", AMD_VBIOS_FILE_MAX_SIZE_B);
++		dev_err(adev->dev, "File size cannot exceed %u\n", AMD_VBIOS_FILE_MAX_SIZE_B);
+ 		kvfree(adev->psp.vbflash_tmp_buf);
+ 		adev->psp.vbflash_tmp_buf = NULL;
+ 		adev->psp.vbflash_image_size = 0;
+@@ -3625,7 +3631,7 @@ static ssize_t amdgpu_psp_vbflash_write(struct file *filp, struct kobject *kobj,
+ 	adev->psp.vbflash_image_size += count;
+ 	mutex_unlock(&adev->psp.mutex);
+ 
+-	dev_dbg(adev->dev, "IFWI staged for update");
++	dev_dbg(adev->dev, "IFWI staged for update\n");
+ 
+ 	return count;
+ }
+@@ -3645,7 +3651,7 @@ static ssize_t amdgpu_psp_vbflash_read(struct file *filp, struct kobject *kobj,
+ 	if (adev->psp.vbflash_image_size == 0)
+ 		return -EINVAL;
+ 
+-	dev_dbg(adev->dev, "PSP IFWI flash process initiated");
++	dev_dbg(adev->dev, "PSP IFWI flash process initiated\n");
+ 
+ 	ret = amdgpu_bo_create_kernel(adev, adev->psp.vbflash_image_size,
+ 					AMDGPU_GPU_PAGE_SIZE,
+@@ -3670,11 +3676,11 @@ static ssize_t amdgpu_psp_vbflash_read(struct file *filp, struct kobject *kobj,
+ 	adev->psp.vbflash_image_size = 0;
+ 
+ 	if (ret) {
+-		dev_err(adev->dev, "Failed to load IFWI, err = %d", ret);
++		dev_err(adev->dev, "Failed to load IFWI, err = %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	dev_dbg(adev->dev, "PSP IFWI flash process done");
++	dev_dbg(adev->dev, "PSP IFWI flash process done\n");
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
