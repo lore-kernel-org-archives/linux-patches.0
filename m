@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28B11F09BF;
-	Sun,  7 Sep 2025 20:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82CA15C158;
+	Sun,  7 Sep 2025 20:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277027; cv=none; b=kxAVm1aF0oCVZuM9+2QDTuYNX9NoKHyQq5odxEjCDUB/VzkTfjrdGy7dbYmOUFgHzrioZlGTDcPW3N1n8JLGDToduXCHQmIRm5U/vzrbMyJEapqRXYIMH7ntfNWtNcHubptZT5igiRQijL8VXgNMvLNXpE3mknS9IzHrksLi+Bk=
+	t=1757277031; cv=none; b=CqBQEmwPJ/o1GZPEQ5XiA8c27MUxcSHAgpLILuwG/eYhCOgZ+SXdw5aGuGLhNLJYDPJPejbIJCOFoRJKSQih8N7zfl/XXByruUh09Yt0LFyP5bGTmgeaXmTWgjDzYjedYIUuht2KzbqvZPrwv2UEbEXXQwOABvDddlh3C5V+F+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277027; c=relaxed/simple;
-	bh=jxzrCuseVpZGPRRHIIa1dWmJAfMLOVNXrqXX2pbQsEw=;
+	s=arc-20240116; t=1757277031; c=relaxed/simple;
+	bh=Nhq4xNU1rVQYLqAsihWyS3qR8fDdpaS1bd2mEGWA22o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQcBv/xcXj9lRjSL+T1K6sqIei3NslQdeQTZOOweTN0IJb7xXuUgVgIym0x5YDt41cYNCuWhyOuMaLNx3+I1PzIU9NtlCeK/7GQP+FbBGJ9tJu+1LBAy9Uem+higlVshut5lsLCOhjXGM/mc0zRTJOF0ZHOHi7hO3K2Vo2IOLLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lqwqdoh9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N60WNJvYUrAA5oT4RjlcbDoiGF2uiaTuIEGZ+wlo1HZIrDZB244dHJ5QkOBlDPK7wk2/HGDc3O9Z0oj1CNi6XXTose6s1kaann/oNc6Jewfhz9BZ4sFTwjJS2vnjQT45hwgnN/alMYItjfu0Dn8BfmyAE2gwmDaakYVltNx/Aqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PzhQOqR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lqwqdoh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD1FC4CEF0;
-	Sun,  7 Sep 2025 20:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PzhQOqR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29006C4CEF0;
+	Sun,  7 Sep 2025 20:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277027;
-	bh=jxzrCuseVpZGPRRHIIa1dWmJAfMLOVNXrqXX2pbQsEw=;
+	s=korg; t=1757277031;
+	bh=Nhq4xNU1rVQYLqAsihWyS3qR8fDdpaS1bd2mEGWA22o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lqwqdoh9fikmACtcNfbaFfN1JJjJ1kdTxtD+OJ75n+hO7WiR/mghJd9IxweJjgS0A
-	 2BA6ejZCrDp0RxeBD7Ho2GUelq+nOlh9RIk9qZ1cixd380BZLHjZlnyJgMavGlOaf3
-	 XVJO03OEvS0RSMTdRe6fw7Y3ONMU5o9qnaak7djA=
+	b=1PzhQOqRnAXYSPYHfllAA62HxgKk143tmGnlPW/Q+gf8X1flEq6WByvKuqK3wX6GQ
+	 0yBiaSju0O/x8UjgkVF+PyLcSD+ZEk6Q1h0ZUy3dwSYBQzP9WtxACHBK/elXuAtyaB
+	 B6+LTVBL7BOMZy7FyMo7EhH9w4+IYy9Dogoig1pE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thibaut VARENE <hacks@slashdirt.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Menglong Dong <dongml2@chinatelecom.cn>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/175] net: ethernet: mtk_eth_soc: fix tx vlan tag for llc packets
-Date: Sun,  7 Sep 2025 21:57:37 +0200
-Message-ID: <20250907195616.308599650@linuxfoundation.org>
+Subject: [PATCH 6.12 063/175] net: skb: add pskb_network_may_pull_reason() helper
+Date: Sun,  7 Sep 2025 21:57:38 +0200
+Message-ID: <20250907195616.331267586@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,53 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-[ Upstream commit d4736737110ffa83d29f1c5d17b26113864205f6 ]
+[ Upstream commit 454bbde8f0d465e93e5a3a4003ac6c7e62fa4473 ]
 
-When sending llc packets with vlan tx offload, the hardware fails to
-actually add the tag. Deal with this by fixing it up in software.
+Introduce the function pskb_network_may_pull_reason() and make
+pskb_network_may_pull() a simple inline call to it. The drop reasons of
+it just come from pskb_may_pull_reason.
 
-Fixes: 656e705243fd ("net-next: mediatek: add support for MT7623 ethernet")
-Reported-by: Thibaut VARENE <hacks@slashdirt.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250831182007.51619-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 6ead38147ebb ("vxlan: Fix NPD when refreshing an FDB entry with a nexthop object")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/linux/skbuff.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 272f178906d61..64d86068b51eb 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -1606,6 +1606,13 @@ static netdev_tx_t mtk_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	bool gso = false;
- 	int tx_num;
- 
-+	if (skb_vlan_tag_present(skb) &&
-+	    !eth_proto_is_802_3(eth_hdr(skb)->h_proto)) {
-+		skb = __vlan_hwaccel_push_inside(skb);
-+		if (!skb)
-+			goto dropped;
-+	}
-+
- 	/* normally we can rely on the stack not calling this more than once,
- 	 * however we have 2 queues running on the same ring so we need to lock
- 	 * the ring access
-@@ -1651,8 +1658,9 @@ static netdev_tx_t mtk_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- drop:
- 	spin_unlock(&eth->page_lock);
--	stats->tx_dropped++;
- 	dev_kfree_skb_any(skb);
-+dropped:
-+	stats->tx_dropped++;
- 	return NETDEV_TX_OK;
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index b2827fce5a2de..314328ab0b843 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -3153,9 +3153,15 @@ static inline int skb_inner_network_offset(const struct sk_buff *skb)
+ 	return skb_inner_network_header(skb) - skb->data;
  }
  
++static inline enum skb_drop_reason
++pskb_network_may_pull_reason(struct sk_buff *skb, unsigned int len)
++{
++	return pskb_may_pull_reason(skb, skb_network_offset(skb) + len);
++}
++
+ static inline int pskb_network_may_pull(struct sk_buff *skb, unsigned int len)
+ {
+-	return pskb_may_pull(skb, skb_network_offset(skb) + len);
++	return pskb_network_may_pull_reason(skb, len) == SKB_NOT_DROPPED_YET;
+ }
+ 
+ /*
 -- 
 2.50.1
 
