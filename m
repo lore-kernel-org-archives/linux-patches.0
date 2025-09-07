@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D73C4315A;
-	Sun,  7 Sep 2025 20:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED5F1F63CD;
+	Sun,  7 Sep 2025 20:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277839; cv=none; b=AAcwsoCN8gZyL36dqiwb1yg07/zqiKJpPPjY8gcLS3QbFtIV90YPOhTpOybhKVT9m4zXc9Ahlchi4LNXtMBMFWnuMx0VpsGt7bPY+HCO10tNHTm+1NUaZ6aZ5tr6kF1LaGgFN973OVcPik8w50y84CPEajl9adVMerkdUMNX4Vc=
+	t=1757277842; cv=none; b=sP6iZIqyIS4Qcw2NNrslZOYpu5CYs2Fd8J/OUwrTb+5k5TcHjOiKZh1WAvlkSgO6iq8gCmaOWFgHop8Uw0SfJctapOhDKhPocPOsH738D+C8CWLcfz/6uinZdijDrJoxmrIq5HobpZKgzy1WUNN7aJevxmoJxWHsapLpV7YsfwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277839; c=relaxed/simple;
-	bh=8xwGyeKR/5TkW3VGXfYocmdnWIS+WRYQoXihsgQnKfw=;
+	s=arc-20240116; t=1757277842; c=relaxed/simple;
+	bh=kCIIGWRapwEXbyE3iIsdkY9JcthL5ynmZFHClmheo3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKtDeqBLAua5DZEr9mHtVGbgutmfEsb9GU2u6YJkb58kyclRD/Twpprs1UGaugx6y2elyY0HPLja1PUYGQ1mzXfhuK2oIwDZKSbl6gEm8j2es3nVfRNyLn2jeiQbEtrNIxQAstYtI6RpPXe/7Tsps9eoS+9C6P6K0DlpJPe8wRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwdlgTiO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ludxJvjr67mh/mk2CxyO2r6QGHrbl9o/UqaQYkZaNTvmE+VQ8yvOXc+6N6i22Er0OwZoDdUGMxFtilX8MQPlIL+hb0Cvz0Bc/BjJaAUVU/Fy3ktMvRsGydJrP8v+CjMdA+Krhrwtu+fbU/6RVSE4HPxZ2LpI9TLAD98ZTVN2jSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ris66YOs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwdlgTiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C849C4CEF0;
-	Sun,  7 Sep 2025 20:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ris66YOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B410AC4CEF0;
+	Sun,  7 Sep 2025 20:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277838;
-	bh=8xwGyeKR/5TkW3VGXfYocmdnWIS+WRYQoXihsgQnKfw=;
+	s=korg; t=1757277842;
+	bh=kCIIGWRapwEXbyE3iIsdkY9JcthL5ynmZFHClmheo3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwdlgTiOud4fr0W6Bbez4geF/KNdPfrw7c+cta+UrZn0y/C15sutfjeYBMxeTAxNK
-	 xHvvxEpY2UuWqzcwso7AH/HF37KymcG8iti25ONHBrQVPOKSgvmmYT8VtEgF+xTVc3
-	 46uF5w1xrgIuT0mxnstU9Tjsxe/RjZg3HL0KjB6I=
+	b=ris66YOsbeHeGzqIiXQdavM1Nv7+rn9KzTdzRDnuWNw2hpN/TeQ2YumM8hXQXg2uQ
+	 TWx/b24BeWHc++sp7fyHVuzum3ib4TKoie6kMLYOxrvBCYt67RSJ35XcGlonVA56Zv
+	 YDevlijBFS4BWSBr5aZTkto/3XKuLWssFatwnmj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stefan Wahren <wahrenst@gmx.net>,
 	stable@kernel.org,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 139/183] net: pcs: rzn1-miic: Correct MODCTRL register offset
-Date: Sun,  7 Sep 2025 21:59:26 +0200
-Message-ID: <20250907195619.096343749@linuxfoundation.org>
+Subject: [PATCH 6.16 140/183] microchip: lan865x: Fix module autoloading
+Date: Sun,  7 Sep 2025 21:59:27 +0200
+Message-ID: <20250907195619.121723478@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -54,49 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit a7195a3d67dace056af7ca65144a11874df79562 upstream.
+commit c7217963eb779be0a7627dd2121152fa6786ecf7 upstream.
 
-Correct the Mode Control Register (MODCTRL) offset for RZ/N MIIC.
-According to the R-IN Engine and Ethernet Peripherals Manual (Rev.1.30)
-[0], Table 10.1 "Ethernet Accessory Register List", MODCTRL is at offset
-0x8, not 0x20 as previously defined.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from spi_device_id table. While at this, fix
+the misleading variable name (spidev is unrelated to this driver).
 
-Offset 0x20 actually maps to the Port Trigger Control Register (PTCTRL),
-which controls PTP_MODE[3:0] and RGMII_CLKSEL[4]. Using this incorrect
-definition prevented the driver from configuring the SW_MODE[4:0] bits
-in MODCTRL, which control the internal connection of Ethernet ports. As
-a result, the MIIC could not be switched into the correct mode, leading
-to link setup failures and non-functional Ethernet ports on affected
-systems.
-
-[0] https://www.renesas.com/en/document/mah/rzn1d-group-rzn1s-group-rzn1l-group-users-manual-r-engine-and-ethernet-peripherals?r=1054571
-
-Fixes: 7dc54d3b8d91 ("net: pcs: add Renesas MII converter driver")
+Fixes: 5cd2340cb6a3 ("microchip: lan865x: add driver support for Microchip's LAN865X MAC-PHY")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
 Cc: stable@kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20250901112019.16278-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250827115341.34608-3-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/pcs/pcs-rzn1-miic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microchip/lan865x/lan865x.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/pcs/pcs-rzn1-miic.c
-+++ b/drivers/net/pcs/pcs-rzn1-miic.c
-@@ -19,7 +19,7 @@
- #define MIIC_PRCMD			0x0
- #define MIIC_ESID_CODE			0x4
+--- a/drivers/net/ethernet/microchip/lan865x/lan865x.c
++++ b/drivers/net/ethernet/microchip/lan865x/lan865x.c
+@@ -423,10 +423,11 @@ static void lan865x_remove(struct spi_de
+ 	free_netdev(priv->netdev);
+ }
  
--#define MIIC_MODCTRL			0x20
-+#define MIIC_MODCTRL			0x8
- #define MIIC_MODCTRL_SW_MODE		GENMASK(4, 0)
+-static const struct spi_device_id spidev_spi_ids[] = {
++static const struct spi_device_id lan865x_ids[] = {
+ 	{ .name = "lan8650" },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(spi, lan865x_ids);
  
- #define MIIC_CONVCTRL(port)		(0x100 + (port) * 4)
+ static const struct of_device_id lan865x_dt_ids[] = {
+ 	{ .compatible = "microchip,lan8650" },
+@@ -441,7 +442,7 @@ static struct spi_driver lan865x_driver
+ 	 },
+ 	.probe = lan865x_probe,
+ 	.remove = lan865x_remove,
+-	.id_table = spidev_spi_ids,
++	.id_table = lan865x_ids,
+ };
+ module_spi_driver(lan865x_driver);
+ 
 
 
