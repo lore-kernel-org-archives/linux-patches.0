@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C211A2389;
-	Sun,  7 Sep 2025 20:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5738714BFA2;
+	Sun,  7 Sep 2025 20:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276310; cv=none; b=mcRKDLgQp3O6iUW5ReBcwNutu5ONCfiS9z7BdiCAsnZsRrm1dgmx4ce/RTVAuIw/jtGoSN4/WlgrIpL7sQN/ne66Mn9xIem1KvdSdCT293xylReAqphlCjaw2jbyikoQrhoBEy8HCux6cs0g7rTl1N152DaEYaJ2mrE0ALlsmGE=
+	t=1757276313; cv=none; b=QpM+KP2CP0zSaxn6+5fvixpXFA+1TjXMTV+BTDHyQA4dW8JYOfiLdRdhEVBEyoikTkolObMT/ccvWQnnccO7zQ2tPDSLDpuuwRlD1kTAN6O+aJALQL95F0Vf2OOJUFlQWt3e0YmobBEBqwYxLGzUAtGFMpFN1bj3fUySSsjsXNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276310; c=relaxed/simple;
-	bh=gS3W3mDP0lslAeUayjZJgePr5IoB1uU+FSyYPoM1WgE=;
+	s=arc-20240116; t=1757276313; c=relaxed/simple;
+	bh=mOs834qi8Bo0H4Gfk5UDnPSGNfHTpFGFeQFzc1nPjdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhWYyIznZUXWlKouhWHDL1LBpd2CmieWijauraVxm9tTxfqAwng04OkpcYdp4VyPmqepKnzWbdjzjlBjCWhlFZMi1Th4OEwIzJ/kh2WF8TOLPUEFx1uiVrvQSaa4Y0LPsPTBv5IVOke+wAR7JOT3KSq5sQCw94WcKU81hykqZ/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjwxBvBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ag9/0m83PlUBbacXoMIDWPEveUU7z9E3ccpYD2qLKlGzd9i4wb1Xu37QEe2yJl3hD92Qb6jyLAemFoJqsBmBY+BZ/P3zCUKX6eqXj0dvHXyRqfJlBAM3/1lHK1KlMUF9LTnA5HsOifQWpr5r0RHOBoBaz6yn338ebit8SL0y0Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xckG7IiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjwxBvBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E63EC4CEF0;
-	Sun,  7 Sep 2025 20:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xckG7IiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDD6C4CEF0;
+	Sun,  7 Sep 2025 20:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276310;
-	bh=gS3W3mDP0lslAeUayjZJgePr5IoB1uU+FSyYPoM1WgE=;
+	s=korg; t=1757276313;
+	bh=mOs834qi8Bo0H4Gfk5UDnPSGNfHTpFGFeQFzc1nPjdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjwxBvBColpukIpiNDHgvbhxZSiH0nowo0SBwlL8eLNsiqRekky5EZKSBuzlM92vd
-	 K/nOL9gHOF8VXuNh9aVWO95jLEFmqq4x16J3IxkK8KFE5AmdT90Fv6UngiOMCSKL1W
-	 Ny00wytA7QCCwMlpmovFvMoiJbvKx0fwc0jRhcvE=
+	b=xckG7IiFamgvL9a0/E4Uv/kHgB+MFJmeK8sBsyNB5ibtt6vNYi9Y+fTUt08i9Z8Z4
+	 gQRyMsYfT8AyfHQeu7mJYnuos0WO/WAY10NgLSshfD1NhanjavCRCVdkxMhDxlfXz1
+	 Vq5UxgTC849bXVQsoSMAxlnqvlClp6e8jI/WgFA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Wang Liang <wangliang74@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/104] i2c: designware: Fix an error handling path in i2c_dw_pci_probe()
-Date: Sun,  7 Sep 2025 21:58:18 +0200
-Message-ID: <20250907195609.262996262@linuxfoundation.org>
+Subject: [PATCH 6.1 017/104] netfilter: br_netfilter: do not check confirmed bit in br_nf_local_in() after confirm
+Date: Sun,  7 Sep 2025 21:57:34 +0200
+Message-ID: <20250907195608.129223084@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -52,41 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 1cfe51ef07ca3286581d612debfb0430eeccbb65 ]
+[ Upstream commit 479a54ab92087318514c82428a87af2d7af1a576 ]
 
-If navi_amd_register_client() fails, the previous i2c_dw_probe() call
-should be undone by a corresponding i2c_del_adapter() call, as already done
-in the remove function.
+When send a broadcast packet to a tap device, which was added to a bridge,
+br_nf_local_in() is called to confirm the conntrack. If another conntrack
+with the same hash value is added to the hash table, which can be
+triggered by a normal packet to a non-bridge device, the below warning
+may happen.
 
-Fixes: 17631e8ca2d3 ("i2c: designware: Add driver support for AMD NAVI GPU")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: <stable@vger.kernel.org> # v5.13+
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/fcd9651835a32979df8802b2db9504c523a8ebbb.1747158983.git.christophe.jaillet@wanadoo.fr
-[ Adjust context ]
+  ------------[ cut here ]------------
+  WARNING: CPU: 1 PID: 96 at net/bridge/br_netfilter_hooks.c:632 br_nf_local_in+0x168/0x200
+  CPU: 1 UID: 0 PID: 96 Comm: tap_send Not tainted 6.17.0-rc2-dirty #44 PREEMPT(voluntary)
+  RIP: 0010:br_nf_local_in+0x168/0x200
+  Call Trace:
+   <TASK>
+   nf_hook_slow+0x3e/0xf0
+   br_pass_frame_up+0x103/0x180
+   br_handle_frame_finish+0x2de/0x5b0
+   br_nf_hook_thresh+0xc0/0x120
+   br_nf_pre_routing_finish+0x168/0x3a0
+   br_nf_pre_routing+0x237/0x5e0
+   br_handle_frame+0x1ec/0x3c0
+   __netif_receive_skb_core+0x225/0x1210
+   __netif_receive_skb_one_core+0x37/0xa0
+   netif_receive_skb+0x36/0x160
+   tun_get_user+0xa54/0x10c0
+   tun_chr_write_iter+0x65/0xb0
+   vfs_write+0x305/0x410
+   ksys_write+0x60/0xd0
+   do_syscall_64+0xa4/0x260
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+To solve the hash conflict, nf_ct_resolve_clash() try to merge the
+conntracks, and update skb->_nfct. However, br_nf_local_in() still use the
+old ct from local variable 'nfct' after confirm(), which leads to this
+warning.
+
+If confirm() does not insert the conntrack entry and return NF_DROP, the
+warning may also occur. There is no need to reserve the WARN_ON_ONCE, just
+remove it.
+
+Link: https://lore.kernel.org/netdev/20250820043329.2902014-1-wangliang74@huawei.com/
+Fixes: 62e7151ae3eb ("netfilter: bridge: confirm multicast packets before passing them up the stack")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-pcidrv.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bridge/br_netfilter_hooks.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-designware-pcidrv.c
-+++ b/drivers/i2c/busses/i2c-designware-pcidrv.c
-@@ -337,9 +337,11 @@ static int i2c_dw_pci_probe(struct pci_d
- 
- 	if ((dev->flags & MODEL_MASK) == MODEL_AMD_NAVI_GPU) {
- 		dev->slave = i2c_new_ccgx_ucsi(&dev->adapter, dev->irq, &dgpu_node);
--		if (IS_ERR(dev->slave))
-+		if (IS_ERR(dev->slave)) {
-+			i2c_del_adapter(&dev->adapter);
- 			return dev_err_probe(dev->dev, PTR_ERR(dev->slave),
- 					     "register UCSI failed\n");
-+		}
+diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
+index b4d661fe7886d..c4765691e7815 100644
+--- a/net/bridge/br_netfilter_hooks.c
++++ b/net/bridge/br_netfilter_hooks.c
+@@ -648,9 +648,6 @@ static unsigned int br_nf_local_in(void *priv,
+ 		break;
  	}
  
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, 1000);
+-	ct = container_of(nfct, struct nf_conn, ct_general);
+-	WARN_ON_ONCE(!nf_ct_is_confirmed(ct));
+-
+ 	return ret;
+ }
+ #endif
+-- 
+2.50.1
+
 
 
