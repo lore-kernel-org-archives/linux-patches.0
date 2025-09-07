@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8066C1A0BFD;
-	Sun,  7 Sep 2025 20:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076E71DE8AF;
+	Sun,  7 Sep 2025 20:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277169; cv=none; b=d2G5xQnW6hsw7p/UkF2vxlFKSAKCMGp4YZ+AC2YdRQoxNOtoho0KXQksIoeLL5+vFrBDsirIhzxThtQzil0ZHt1Kckm1N2wte+QlgDd6AmYZTsJK74Rzfzw8RsxVL4N1fGUcsVHmTNj1sNu57e9J/ScUUSHDy6XC3xbW+utzPv8=
+	t=1757277173; cv=none; b=slg09vurqyiCtflc5tA7c4YMfpdoli4qZIIjv4FAh3DrdQnPlkJRzt6WTiAKbtF6jIoOfesM3dGKrhu519kcADMIUwlDpLYr0K//SJIsLFLWel7sbo3RRjThhvz2LXvTduQGu88y9bx3vZT1ffn6WQFfW5NXqcJidKT4jdVUN8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277169; c=relaxed/simple;
-	bh=wgg1lqswwymiS9Tbs3uq5AG2pQuESldabiRJkiD3Q1M=;
+	s=arc-20240116; t=1757277173; c=relaxed/simple;
+	bh=8Acv5Ul8VPybbfGDO0eji1ZaNvR+nR1k5U9rQYIH788=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQYukGHwB9fH5OssjiaM1CnBXBCLXqIShWVlFRgr4aI4RjVJ/8w/qpH+rX6sazJN+TfcI5EQgQKJagHf7+knJD4bszz0A1dOdpGlbqhiDDKJDRckTAJnO4Lw2Wae7Br3Gh7N2nGC+d/Zjl+MUgexBwo342wSfA1jh0X0yPsdvqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHNO5+O+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEMjzldN3wiGRj3RqP/YE/wIHKlOPw906Ay4i0A/gFJsEFTX/54q7Jl3FX1tvajE9i0j6a1eeMxTcbo1JTtT63V0ka1UkoW9PV6xRN50Ty96KRfJvBgk61oiqq0YZGDjbROAvdzHjyJAlHWrCBeaQebOUfkPAVGLR8Dhwz1gvOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqnoOadP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHNO5+O+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F298BC4CEF0;
-	Sun,  7 Sep 2025 20:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqnoOadP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE1CC4CEF0;
+	Sun,  7 Sep 2025 20:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277169;
-	bh=wgg1lqswwymiS9Tbs3uq5AG2pQuESldabiRJkiD3Q1M=;
+	s=korg; t=1757277172;
+	bh=8Acv5Ul8VPybbfGDO0eji1ZaNvR+nR1k5U9rQYIH788=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHNO5+O+IfC+wdCIKdU7jbUmEcP/5eH7iRGgelqrHLwgckhhLhguTklx+p75nTwsv
-	 JUnsbFLLgmtZ9obrLUqUWjrv1j2UrGrPLWcOoOAY5w2ZzWTu49/FnMTmQeEpwN/5BL
-	 SUGjfxpuDeQIrdo+ltux/tA2towzs3yogoDp/klI=
+	b=VqnoOadPMW3GfGDrN1fLv1LEUYXQC6N4Q8F4bNP10NYAcL+r+nK127WdRDn1aYcI9
+	 W4BYVf81hRd/7nIqPfpo5/+bifoAXzJ2mqzm1HD6ly7e+iG7HD7zMzk7z0s6ZCApDU
+	 m6pjZqYceueH0BUO2cvtb45eNujAxIqW5ypBKdaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 107/175] soc: qcom: mdt_loader: Deal with zero e_shentsize
-Date: Sun,  7 Sep 2025 21:58:22 +0200
-Message-ID: <20250907195617.384626091@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 108/175] wifi: mwifiex: Initialize the chan_stats array to zero
+Date: Sun,  7 Sep 2025 21:58:23 +0200
+Message-ID: <20250907195617.408483701@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,55 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-commit 25daf9af0ac1bf12490b723b5efaf8dcc85980bc upstream.
+commit 0e20450829ca3c1dbc2db536391537c57a40fe0b upstream.
 
-Firmware that doesn't provide section headers leave both e_shentsize and
-e_shnum 0, which obvious isn't compatible with the newly introduced
-stricter checks.
+The adapter->chan_stats[] array is initialized in
+mwifiex_init_channel_scan_gap() with vmalloc(), which doesn't zero out
+memory.  The array is filled in mwifiex_update_chan_statistics()
+and then the user can query the data in mwifiex_cfg80211_dump_survey().
 
-Make the section-related checks conditional on either of these values
-being non-zero.
+There are two potential issues here.  What if the user calls
+mwifiex_cfg80211_dump_survey() before the data has been filled in.
+Also the mwifiex_update_chan_statistics() function doesn't necessarily
+initialize the whole array.  Since the array was not initialized at
+the start that could result in an information leak.
 
-Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Also this array is pretty small.  It's a maximum of 900 bytes so it's
+more appropriate to use kcalloc() instead vmalloc().
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: bf35443314ac ("mwifiex: channel statistics support for mwifiex")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20250815023055.477719-1-rongqianfeng@vivo.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/mdt_loader.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |    5 +++--
+ drivers/net/wireless/marvell/mwifiex/main.c     |    4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -39,12 +39,14 @@ static bool mdt_header_valid(const struc
- 	if (phend > fw->size)
- 		return false;
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4680,8 +4680,9 @@ int mwifiex_init_channel_scan_gap(struct
+ 	 * additional active scan request for hidden SSIDs on passive channels.
+ 	 */
+ 	adapter->num_in_chan_stats = 2 * (n_channels_bg + n_channels_a);
+-	adapter->chan_stats = vmalloc(array_size(sizeof(*adapter->chan_stats),
+-						 adapter->num_in_chan_stats));
++	adapter->chan_stats = kcalloc(adapter->num_in_chan_stats,
++				      sizeof(*adapter->chan_stats),
++				      GFP_KERNEL);
  
--	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
--		return false;
-+	if (ehdr->e_shentsize || ehdr->e_shnum) {
-+		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
-+			return false;
+ 	if (!adapter->chan_stats)
+ 		return -ENOMEM;
+--- a/drivers/net/wireless/marvell/mwifiex/main.c
++++ b/drivers/net/wireless/marvell/mwifiex/main.c
+@@ -667,7 +667,7 @@ static int _mwifiex_fw_dpc(const struct
+ 	goto done;
  
--	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
--	if (shend > fw->size)
--		return false;
-+		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
-+		if (shend > fw->size)
-+			return false;
-+	}
+ err_add_intf:
+-	vfree(adapter->chan_stats);
++	kfree(adapter->chan_stats);
+ err_init_chan_scan:
+ 	wiphy_unregister(adapter->wiphy);
+ 	wiphy_free(adapter->wiphy);
+@@ -1515,7 +1515,7 @@ static void mwifiex_uninit_sw(struct mwi
+ 	wiphy_free(adapter->wiphy);
+ 	adapter->wiphy = NULL;
  
- 	return true;
+-	vfree(adapter->chan_stats);
++	kfree(adapter->chan_stats);
+ 	mwifiex_free_cmd_buffers(adapter);
  }
+ 
 
 
