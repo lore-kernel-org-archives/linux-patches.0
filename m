@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCE61B424F;
-	Sun,  7 Sep 2025 20:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B01B424F;
+	Sun,  7 Sep 2025 20:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276060; cv=none; b=QJ/whZjvqqJrq7NQ2MxgaRl0NbuMcdIE6HaVE3iKQosM7bdpgD4NgqX1mVGbljrbDys9b4cyFYnqnyBDe9CnDFQAzp/reBHcqfp9WFyDHheeIptRg9+ht0kTwWS/zjEE5ezpVFEfj4ktGho1Qhgmix9OXNiVZP5HCSMpByB5yTU=
+	t=1757276063; cv=none; b=byIl3fvKUiGZVc397RSgT3gPyeCMVgRTACSIZgo0ab5NuB+5SJxi4T8eU6x4MFMYX3ro32RyEybG6WghAW7E81ghPmJFDsrfP/4Csrr51r9q8WPUXF6UIcrU0FjyFBBafJ1mGmQsjR+nrl+Y7cSuESNxV/2nOgzpA8lXAK9ERHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276060; c=relaxed/simple;
-	bh=l5NOygkF8W5Ukg9SvatM2/gVwnxdR1IESTB5ciDO3FY=;
+	s=arc-20240116; t=1757276063; c=relaxed/simple;
+	bh=rQKhdC2TiiWzyuggWW4PwjZi3omNH1OzJOG4Zdmzh04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcR33qINB5zKsgkJ5qWDtESWh6VO14fxfQVHfvYh+1iQf55uORRL1IQZIVHxEHVChiP5eb8ylI8/f71up4yscMQrqOZG6qz6PIteBfWzoWTCH9mUI2FgmVL8v/ovLoCuIGUHbJthbmPkL6/jQ2SM37fNuq9RpQWP/SZhpQenojo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWcT59m4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jbp79wAhJYhKn5a6b+LrSER0C1uRwNSdyRL98V+KMJAMXTurvawQ8LYkEI6Oqzfjy0vGxu8uHQFD14/5ptPqY97DUCIqosC77zYgf4aK+i1Idabg2DYgDQXa+zCyhflF4jajhgHWjEPHttaqjjKPoynbhPjsg3QK6vYdwhFHiJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeFnui24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWcT59m4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541CCC4CEF0;
-	Sun,  7 Sep 2025 20:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeFnui24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9628CC4CEF0;
+	Sun,  7 Sep 2025 20:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276059;
-	bh=l5NOygkF8W5Ukg9SvatM2/gVwnxdR1IESTB5ciDO3FY=;
+	s=korg; t=1757276063;
+	bh=rQKhdC2TiiWzyuggWW4PwjZi3omNH1OzJOG4Zdmzh04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TWcT59m4ImqE+1+O5fDRDrGzcnXKFg9EnY1Bezy5kTEgh7AHPi7/sxlQ4EKFBTBw+
-	 vFtAbhYzxswZQqfCqTf9s04KHoe1yY3e7XD1Pt2KS+tABi9IyMGY8HLlssl7tfzlYQ
-	 n7WYSO29rnK/dv1UOm1Sg+fPHl4nsuLMQOeKhdU4=
+	b=aeFnui24mF0X4+SAhjdbdMikNg5/wlHplYJVmhfcOHA3cQPSso8XozrpPo/+WEfSY
+	 ElHyCs7DtlrmH983gskwfBFOJxSFc6xGFgLC4nEKABoni3dIAsT4VCU7BnwwvnK9aL
+	 +IZNxi0fJTEi+bfOmn3eCxEv9dadqCe3B2Q5cqYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Guolin Yang <guolin.yang@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 50/64] vmxnet3: update MTU after device quiesce
-Date: Sun,  7 Sep 2025 21:58:32 +0200
-Message-ID: <20250907195604.790183369@linuxfoundation.org>
+Subject: [PATCH 5.15 51/64] arm64: dts: marvell: uDPU: define pinctrl state for alarm LEDs
+Date: Sun,  7 Sep 2025 21:58:33 +0200
+Message-ID: <20250907195604.818724879@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
 References: <20250907195603.394640159@linuxfoundation.org>
@@ -52,61 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronak Doshi <ronak.doshi@broadcom.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 43f0999af011fba646e015f0bb08b6c3002a0170 ]
+[ Upstream commit b04f0d89e880bc2cca6a5c73cf287082c91878da ]
 
-Currently, when device mtu is updated, vmxnet3 updates netdev mtu, quiesces
-the device and then reactivates it for the ESXi to know about the new mtu.
-So, technically the OS stack can start using the new mtu before ESXi knows
-about the new mtu.
+The two alarm LEDs of on the uDPU board are stopped working since
+commit 78efa53e715e ("leds: Init leds class earlier").
 
-This can lead to issues for TSO packets which use mss as per the new mtu
-configured. This patch fixes this issue by moving the mtu write after
-device quiesce.
+The LEDs are driven by the GPIO{15,16} pins of the North Bridge
+GPIO controller. These pins are part of the 'spi_quad' pin group
+for which the 'spi' function is selected via the default pinctrl
+state of the 'spi' node. This is wrong however, since in order to
+allow controlling the LEDs, the pins should use the 'gpio' function.
 
-Cc: stable@vger.kernel.org
-Fixes: d1a890fa37f2 ("net: VMware virtual Ethernet NIC driver: vmxnet3")
-Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Acked-by: Guolin Yang <guolin.yang@broadcom.com>
-Changes v1-> v2:
-  Moved MTU write after destroy of rx rings
-Link: https://patch.msgid.link/20250515190457.8597-1-ronak.doshi@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ no WRITE_ONCE() in older trees ]
+Before the commit mentined above, the 'spi' function is selected
+first by the pinctrl core before probing the spi driver, but then
+it gets overridden to 'gpio' implicitly via the
+devm_gpiod_get_index_optional() call from the 'leds-gpio' driver.
+
+After the commit, the LED subsystem gets initialized before the
+SPI subsystem, so the function of the pin group remains 'spi'
+which in turn prevents controlling of the LEDs.
+
+Despite the change of the initialization order, the root cause is
+that the pinctrl state definition is wrong since its initial commit
+0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board"),
+
+To fix the problem, override the function in the 'spi_quad_pins'
+node to 'gpio' and move the pinctrl state definition from the
+'spi' node into the 'leds' node.
+
+Cc: stable@vger.kernel.org # needs adjustment for < 6.1
+Fixes: 0d45062cfc89 ("arm64: dts: marvell: Add device tree for uDPU board")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Imre Kaloz <kaloz@openwrt.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+[ Applied to .dts instead of .dtsi ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -3175,8 +3175,6 @@ vmxnet3_change_mtu(struct net_device *ne
- 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
- 	int err = 0;
+--- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
++++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts
+@@ -28,8 +28,9 @@
+ 	};
  
--	netdev->mtu = new_mtu;
--
- 	/*
- 	 * Reset_work may be in the middle of resetting the device, wait for its
- 	 * completion.
-@@ -3190,6 +3188,7 @@ vmxnet3_change_mtu(struct net_device *ne
+ 	leds {
+-		pinctrl-names = "default";
+ 		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&spi_quad_pins>;
  
- 		/* we need to re-create the rx queue based on the new mtu */
- 		vmxnet3_rq_destroy_all(adapter);
-+		netdev->mtu = new_mtu;
- 		vmxnet3_adjust_rx_ring_size(adapter);
- 		err = vmxnet3_rq_create_all(adapter);
- 		if (err) {
-@@ -3206,6 +3205,8 @@ vmxnet3_change_mtu(struct net_device *ne
- 				   "Closing it\n", err);
- 			goto out;
- 		}
-+	} else {
-+		netdev->mtu = new_mtu;
- 	}
+ 		power1 {
+ 			label = "udpu:green:power";
+@@ -96,8 +97,6 @@
  
- out:
+ &spi0 {
+ 	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&spi_quad_pins>;
+ 
+ 	m25p80@0 {
+ 		compatible = "jedec,spi-nor";
+@@ -117,6 +116,10 @@
+ 	};
+ };
+ 
++&spi_quad_pins {
++	function = "gpio";
++};
++
+ &pinctrl_nb {
+ 	i2c1_recovery_pins: i2c1-recovery-pins {
+ 		groups = "i2c1";
 
 
