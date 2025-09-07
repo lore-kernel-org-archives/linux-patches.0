@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E4317BB21;
-	Sun,  7 Sep 2025 20:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF371C84A0;
+	Sun,  7 Sep 2025 20:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276999; cv=none; b=t68e2vsOjSXwokiCNGHyNPoKW31+5L4SdgPciVuS//vaE+HSpcmQ7v4Fawtqs2fVokZPp7eTqZ1wCnLc9U8x1xS45nZF86pYB1bv/Ucx54QKTjhTQMKJ4KNmc1SadzOT6+tXPQAHpHBjotdw3HjXF4Heqr6slVq1MNWCK9M5X14=
+	t=1757277002; cv=none; b=OVA2YeA47Mlf+wIhhsVcEsNMtZvbjmWrB+n/NMXTkaRvIOGZyufrPZpB6OcQtDQmM5eW/xbUwD0r5mD6iwUItUpJHobLRzvReMdvwwWsUi0oWXaozm9F9xaAPqpoMdQJGQpxBpMAMhdt/3G4xYmQFlKMo+o3UQdSLAcgiTKLUDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276999; c=relaxed/simple;
-	bh=amHk2ZkfVtE6Sgw1kdAXz84+hQbx38yu0vpWD9CBk2s=;
+	s=arc-20240116; t=1757277002; c=relaxed/simple;
+	bh=u8zplHa06fFwpCSSRCfmkD8W7xuNH/WFrli2d33XDNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkBK2nYsNhnlpkvkQ7+KtYR8XFdd3xrWTFHivGIu4k0+r1kaXotlqUDDGtDpVNZxHior+Cwju9BVmwL5l+xUPwAs98iUOGISzYhGV2KckcuyKn2jWRtlqqQlX4J5ulACenWgIkbuQhbgHiqonpPIv3ZHPSxdJNe5c9Bax3F8JYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URxK//U7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KKpvOZhiRdYa/rgeFjFpmO3OcUHZq56JEHU3CV6Y1mITqgySQLs2O0stdTwg5v9g5yBUmbh3F4xNYYLc2JwznqtqLZyHwLk2NHFUxq0GVzb9LAcohF+82WCGO1wzEqTf/3u4/Zyx0AMRyPXlSniNceJifFzyBBC5OnLW/iUDIQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1rJWRGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URxK//U7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AA0C4CEF0;
-	Sun,  7 Sep 2025 20:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1rJWRGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE164C4CEF8;
+	Sun,  7 Sep 2025 20:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276998;
-	bh=amHk2ZkfVtE6Sgw1kdAXz84+hQbx38yu0vpWD9CBk2s=;
+	s=korg; t=1757277002;
+	bh=u8zplHa06fFwpCSSRCfmkD8W7xuNH/WFrli2d33XDNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URxK//U77XTf8CpiDtePqNTi7gQyOMheFiyEnOiXe7Lx0vpVoiFQDMMwZSMJJaS3J
-	 CClVnjLMIIrMna8RFd6kBNnQLg1XsLq7btvBKG1Rh4UVwiaySSWduU+lEpPw/Yod4L
-	 W8m91C9YES29AvDtH1q/fGPoGES1nTGrEfA8dJs0=
+	b=u1rJWRGVsOi1XeDDXvdrwztJwfoEpyLZAW7CcpVpQc+U6PYt9PLlyakXI1hcD0LAj
+	 vv6g2kPRfk7ZXkczMoqMeK3GsSF0/1brgGkqR/kCl8uXvpf9JtC4axbxk7MtBc0xip
+	 cOjYbNifwyV6bgqcnJUsyoB+UJ9NjiL6Y9aZnibc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/175] net: mctp: mctp_fraq_queue should take ownership of passed skb
-Date: Sun,  7 Sep 2025 21:57:29 +0200
-Message-ID: <20250907195616.117744702@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 055/175] ice: fix NULL access of tx->in_use in ice_ll_ts_intr
+Date: Sun,  7 Sep 2025 21:57:30 +0200
+Message-ID: <20250907195616.141756661@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -51,127 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 773b27a8a2f00ce3134e92e50ea4794a98ba2b76 ]
+[ Upstream commit f6486338fde3f04ed0ec59fe67a69a208c32734f ]
 
-As of commit f5d83cf0eeb9 ("net: mctp: unshare packets when
-reassembling"), we skb_unshare() in mctp_frag_queue(). The unshare may
-invalidate the original skb pointer, so we need to treat the skb as
-entirely owned by the fraq queue, even on failure.
+Recent versions of the E810 firmware have support for an extra interrupt to
+handle report of the "low latency" Tx timestamps coming from the
+specialized low latency firmware interface. Instead of polling the
+registers, software can wait until the low latency interrupt is fired.
 
-Fixes: f5d83cf0eeb9 ("net: mctp: unshare packets when reassembling")
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250829-mctp-skb-unshare-v1-1-1c28fe10235a@codeconstruct.com.au
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This logic makes use of the Tx timestamp tracking structure, ice_ptp_tx, as
+it uses the same "ready" bitmap to track which Tx timestamps complete.
+
+Unfortunately, the ice_ll_ts_intr() function does not check if the
+tracker is initialized before its first access. This results in NULL
+dereference or use-after-free bugs similar to the issues fixed in the
+ice_ptp_ts_irq() function.
+
+Fix this by only checking the in_use bitmap (and other fields) if the
+tracker is marked as initialized. The reset flow will clear the init field
+under lock before it tears the tracker down, thus preventing any
+use-after-free or NULL access.
+
+Fixes: 82e71b226e0e ("ice: Enable SW interrupt from FW for LL TS")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index d9c8e5a5f9ce9..19ff259d7bc43 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -325,6 +325,7 @@ static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
- static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev) {}
- #endif
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 74d4f2fde3e0f..bd5db525f1939 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -3193,12 +3193,14 @@ static irqreturn_t ice_ll_ts_intr(int __always_unused irq, void *data)
+ 	hw = &pf->hw;
+ 	tx = &pf->ptp.port.tx;
+ 	spin_lock_irqsave(&tx->lock, flags);
+-	ice_ptp_complete_tx_single_tstamp(tx);
++	if (tx->init) {
++		ice_ptp_complete_tx_single_tstamp(tx);
  
-+/* takes ownership of skb, both in success and failure cases */
- static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
- {
- 	struct mctp_hdr *hdr = mctp_hdr(skb);
-@@ -334,8 +335,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
- 		& MCTP_HDR_SEQ_MASK;
+-	idx = find_next_bit_wrap(tx->in_use, tx->len,
+-				 tx->last_ll_ts_idx_read + 1);
+-	if (idx != tx->len)
+-		ice_ptp_req_tx_single_tstamp(tx, idx);
++		idx = find_next_bit_wrap(tx->in_use, tx->len,
++					 tx->last_ll_ts_idx_read + 1);
++		if (idx != tx->len)
++			ice_ptp_req_tx_single_tstamp(tx, idx);
++	}
+ 	spin_unlock_irqrestore(&tx->lock, flags);
  
- 	if (!key->reasm_head) {
--		/* Since we're manipulating the shared frag_list, ensure it isn't
--		 * shared with any other SKBs.
-+		/* Since we're manipulating the shared frag_list, ensure it
-+		 * isn't shared with any other SKBs. In the cloned case,
-+		 * this will free the skb; callers can no longer access it
-+		 * safely.
- 		 */
- 		key->reasm_head = skb_unshare(skb, GFP_ATOMIC);
- 		if (!key->reasm_head)
-@@ -349,10 +352,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
- 	exp_seq = (key->last_seq + 1) & MCTP_HDR_SEQ_MASK;
- 
- 	if (this_seq != exp_seq)
--		return -EINVAL;
-+		goto err_free;
- 
- 	if (key->reasm_head->len + skb->len > mctp_message_maxlen)
--		return -EINVAL;
-+		goto err_free;
- 
- 	skb->next = NULL;
- 	skb->sk = NULL;
-@@ -366,6 +369,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
- 	key->reasm_head->truesize += skb->truesize;
- 
- 	return 0;
-+
-+err_free:
-+	kfree_skb(skb);
-+	return -EINVAL;
- }
- 
- static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
-@@ -476,18 +483,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 			 * key isn't observable yet
- 			 */
- 			mctp_frag_queue(key, skb);
-+			skb = NULL;
- 
- 			/* if the key_add fails, we've raced with another
- 			 * SOM packet with the same src, dest and tag. There's
- 			 * no way to distinguish future packets, so all we
--			 * can do is drop; we'll free the skb on exit from
--			 * this function.
-+			 * can do is drop.
- 			 */
- 			rc = mctp_key_add(key, msk);
--			if (!rc) {
-+			if (!rc)
- 				trace_mctp_key_acquire(key);
--				skb = NULL;
--			}
- 
- 			/* we don't need to release key->lock on exit, so
- 			 * clean up here and suppress the unlock via
-@@ -505,8 +510,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 				key = NULL;
- 			} else {
- 				rc = mctp_frag_queue(key, skb);
--				if (!rc)
--					skb = NULL;
-+				skb = NULL;
- 			}
- 		}
- 
-@@ -516,17 +520,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 		 */
- 
- 		/* we need to be continuing an existing reassembly... */
--		if (!key->reasm_head)
-+		if (!key->reasm_head) {
- 			rc = -EINVAL;
--		else
-+		} else {
- 			rc = mctp_frag_queue(key, skb);
-+			skb = NULL;
-+		}
- 
- 		if (rc)
- 			goto out_unlock;
- 
--		/* we've queued; the queue owns the skb now */
--		skb = NULL;
--
- 		/* end of message? deliver to socket, and we're done with
- 		 * the reassembly/response key
- 		 */
+ 	val = GLINT_DYN_CTL_INTENA_M | GLINT_DYN_CTL_CLEARPBA_M |
 -- 
 2.50.1
 
