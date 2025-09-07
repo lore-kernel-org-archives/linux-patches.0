@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B382414BFA2;
-	Sun,  7 Sep 2025 20:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0BA1D88D0;
+	Sun,  7 Sep 2025 20:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276353; cv=none; b=hn1rskrIlHzLGjN9rUaDDIFonTuGidm/NHcv3sO8fGsnPQFLyRzg8t6ZBNJlOxWsbV8bVrBt7pMiOPOw6BRQaLpvqHQ1kw01Y1/ODsYSnVmwi1wtyzbBKyvqXcYhghUL/qrgSwLIOdLf2U85o37v4a/T34/4BxwZ2fH5kXLn2Nw=
+	t=1757276359; cv=none; b=us3q94gaaywMQ4iy2lCmuTbzcNmvndzGny0zGyEGVf3vU0djOy2NOCCanWjYDIP6bbjHOqD3WBp7/UKdOzS/S+Wl6SHQLySg7VRHaEpByRTECPLTd9/airJR/s0CE4dl9hNZXz3CHQZD/kG+C/IZbPFF4nBaXp1mRHhLT6ZTiB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276353; c=relaxed/simple;
-	bh=YcsWqAWqOtWX2eTSJqyb8qdhyzSGW5eKL2Vid9t1Gug=;
+	s=arc-20240116; t=1757276359; c=relaxed/simple;
+	bh=4+uGD51F76N8QcijdU94gFNKQqfQMr+Jaw8OWr42t1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHKn+18u0DgBlEULPfPq0zdfNn43zKpKE0HHqnIMvZRJ+7ZgHH0EsWhXtpAb0NAiTQhVSUFBPDr+IcM0MRCOr1BFIZwWhTHUR4pwFNnIzqJMg8M6wre+KpHMFdaFzwv/snXcIc1+J0teBFdzO7ItXhD/kKdiXOw5nxgjgB9x4Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vG6E3xtE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NqlGs1YxIoAgRiwNvr2/01U8N9+qyUUFD5VWE7l1/encqsoChvi1GznwDBWM3x1AIvES3qPfEPBKUq4G1mJLbqpjwsqmNG/PayYc1TeBUq+TQ0OjSgKoMYtUX03S6qTAlbjLo2mYh0lu0bLUlsR3pa98HtorVzeSaoNSe+wwOoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Mb3xY3K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG6E3xtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367DBC4CEF0;
-	Sun,  7 Sep 2025 20:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Mb3xY3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5070DC4CEF0;
+	Sun,  7 Sep 2025 20:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276353;
-	bh=YcsWqAWqOtWX2eTSJqyb8qdhyzSGW5eKL2Vid9t1Gug=;
+	s=korg; t=1757276356;
+	bh=4+uGD51F76N8QcijdU94gFNKQqfQMr+Jaw8OWr42t1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vG6E3xtE8vkqt3Mfgfg/bVNfQ7MiBLVSi3iNlh1+vj3M1l5OoONjJn/uCw6VPmQcr
-	 ZGFmVh4TW9G8ZPlVBGhOfTQKM2+MddFKM7CXOovPnNONbo/Vlys7df3OvolbBGg2Oj
-	 qrdLo7ydtKoSKynNMw5iidIJzxCT2PkkAxO1Y8/M=
+	b=0Mb3xY3KVzNHog3zWvhhPQlul7T836uJqogJx90/wgzUT4154/ekThvZqlbnyjSbc
+	 iG/CgEG5xUcUGMpwzfzrO6qR2ts59qlNrggH1Gp0/uzMSyYtdHvCJA+dqwg/1BGiHK
+	 E5ceTYiJbhTFlYQvaLQ9PSpP+8Jko2MNxCrB1QkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/104] pcmcia: omap: Add missing check for platform_get_resource
-Date: Sun,  7 Sep 2025 21:58:36 +0200
-Message-ID: <20250907195609.723190270@linuxfoundation.org>
+Subject: [PATCH 6.1 080/104] pcmcia: Add error handling for add_interval() in do_validate_mem()
+Date: Sun,  7 Sep 2025 21:58:37 +0200
+Message-ID: <20250907195609.750434061@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -51,34 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit ecef14f70ec9344a10c817248d2ac6cddee5921e ]
+[ Upstream commit 4a81f78caa53e0633cf311ca1526377d9bff7479 ]
 
-Add missing check for platform_get_resource() and return error if it fails
-to catch the error.
+In the do_validate_mem(), the call to add_interval() does not
+handle errors. If kmalloc() fails in add_interval(), it could
+result in a null pointer being inserted into the linked list,
+leading to illegal memory access when sub_interval() is called
+next.
 
-Fixes: d87d44f7ab35 ("ARM: omap1: move CF chipselect setup to board file")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+This patch adds an error handling for the add_interval(). If
+add_interval() returns an error, the function will return early
+with the error code.
+
+Fixes: 7b4884ca8853 ("pcmcia: validate late-added resources")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/omap_cf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pcmcia/rsrc_nonstatic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pcmcia/omap_cf.c b/drivers/pcmcia/omap_cf.c
-index d3f827d4224a3..e22a752052f2f 100644
---- a/drivers/pcmcia/omap_cf.c
-+++ b/drivers/pcmcia/omap_cf.c
-@@ -215,6 +215,8 @@ static int __init omap_cf_probe(struct platform_device *pdev)
- 		return -EINVAL;
+diff --git a/drivers/pcmcia/rsrc_nonstatic.c b/drivers/pcmcia/rsrc_nonstatic.c
+index 8bda75990bce5..0a4e439d46094 100644
+--- a/drivers/pcmcia/rsrc_nonstatic.c
++++ b/drivers/pcmcia/rsrc_nonstatic.c
+@@ -375,7 +375,9 @@ static int do_validate_mem(struct pcmcia_socket *s,
  
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!res)
-+		return -EINVAL;
+ 	if (validate && !s->fake_cis) {
+ 		/* move it to the validated data set */
+-		add_interval(&s_data->mem_db_valid, base, size);
++		ret = add_interval(&s_data->mem_db_valid, base, size);
++		if (ret)
++			return ret;
+ 		sub_interval(&s_data->mem_db, base, size);
+ 	}
  
- 	cf = kzalloc(sizeof *cf, GFP_KERNEL);
- 	if (!cf)
 -- 
 2.51.0
 
