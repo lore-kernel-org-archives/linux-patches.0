@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1AC14BFA2;
-	Sun,  7 Sep 2025 20:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E28215D5B6;
+	Sun,  7 Sep 2025 20:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276159; cv=none; b=n2G2LXtrnx9PONAlLmq+M/biP1BJmaiICwPdVI2X3StMz8Y+hnSeF49vGpvprJSPkA46NQ4J5OpGnZzQYix3doEMvtRUVRH0MVuC/rKX6LOF5uCgqOMy932GFA9Vt4S0rIHl7SYpVXc2PEDypMaa+eDr83zbas7E6Y1HOpMoedo=
+	t=1757276163; cv=none; b=DhgkMEVdVov3G8HrBRVlXssMvnUyp8ESCBDFZA24PuieE5paOcEeXGsb8h6+lIs6PncuhJpPdK9hmdqZFDznYdqk6W5TrZOrUZoye+0xwisEiuBpAClWJHSed1IvP5mrs7qxgmpmrRDGfw4Tvyd3fX764f7XsHXx9NPfnMVkBoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276159; c=relaxed/simple;
-	bh=Jvr/QMrh03N2p3R5FOu7NYDAozbX6Dx2ntneFMG1AGU=;
+	s=arc-20240116; t=1757276163; c=relaxed/simple;
+	bh=UYofmJvBHffT3FXGpsK4dcjlHIh7Ysy9oee8Oui5+rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjeadfOXyVwhr2asytTtYez5RpgdzHNTEhBctiVDsV+1XsrKLhCw6e5DA7ma9lQ0fdMUOEccLYjOzWkYIU6C/6dzIAnWMdKcZmv1MzCY9+/0Caqnapqm9t2WzcZg/rKtiMGTa/AUeUtqtX0KXM7XZKTP5mvljv3VmuTJCt939Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bXWB4bz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HsdKpCd1vzQ0RnLDhTmC1ANXoq7aiUBkOz2P2pMwn6Pdq4kjJC+oWicT+hCM3IO4jzjQrO78yi1Z0BF2+r+gcSej5OQ079nPfzCJh38n6JTS8xUVZLLOBaWVzN4s29Hbn7QoibiS/cY3XJhV+gfF6nWVi5/xgKdc/qhcZ2qWrgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFShME0i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bXWB4bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A67EC4CEF0;
-	Sun,  7 Sep 2025 20:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFShME0i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCD2C4CEF0;
+	Sun,  7 Sep 2025 20:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276159;
-	bh=Jvr/QMrh03N2p3R5FOu7NYDAozbX6Dx2ntneFMG1AGU=;
+	s=korg; t=1757276163;
+	bh=UYofmJvBHffT3FXGpsK4dcjlHIh7Ysy9oee8Oui5+rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bXWB4bzcHE6zZDDm1JtOMhNDVGLb1X8buOvwQNVgkVIB6WANtLun4zTVNEi/t0/Z
-	 u22JQWGwnC7GsIiq6Fr/oNmZKx610oTo+qwpLWgCRl88mwhAitsbtrLQhx/RBOx3cf
-	 0bofHijDQ4YlNSOBHinYklcRpmKEfDzXvOUAUNHg=
+	b=NFShME0iUSbaSy46Iy+vHMduZ04anwcQA6W8GjjDfP+lYNwFdE26nSWE2VMyyA3+e
+	 Z6DezvHe64IwzjX5cjR0aFIkOgZUvnCZ26Ro4FF6rWNc8bhiVX0Zws5M82hebbGHwm
+	 2rTNI9s3p6QR8F7tcHQEUlWxCBRGR6HXHxFIM6AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lubomir Rintel <lkundrak@v3.sk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/104] cdc_ncm: Flag Intel OEM version of Fibocom L850-GL as WWAN
-Date: Sun,  7 Sep 2025 21:57:25 +0200
-Message-ID: <20250907195607.888965757@linuxfoundation.org>
+Subject: [PATCH 6.1 009/104] drm/amd/display: Dont warn when missing DCE encoder caps
+Date: Sun,  7 Sep 2025 21:57:26 +0200
+Message-ID: <20250907195607.914819220@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -45,45 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lubomir Rintel <lkundrak@v3.sk>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 4a73a36cb704813f588af13d9842d0ba5a185758 ]
+[ Upstream commit 8246147f1fbaed522b8bcc02ca34e4260747dcfb ]
 
-This lets NetworkManager/ModemManager know that this is a modem and
-needs to be connected first.
+On some GPUs the VBIOS just doesn't have encoder caps,
+or maybe not for every encoder.
 
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
-Link: https://patch.msgid.link/20250814154214.250103-1-lkundrak@v3.sk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This isn't really a problem and it's handled well,
+so let's not litter the logs with it.
+
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Rodrigo Siqueira <siqueira@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 33e0227ee96e62d034781e91f215e32fd0b1d512)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ncm.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index 9eb3c6b66a38b..c3b1e9af922b1 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -2042,6 +2042,13 @@ static const struct usb_device_id cdc_devs[] = {
- 	  .driver_info = (unsigned long)&wwan_info,
- 	},
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+index 09260c23c3bde..85926d2300444 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+@@ -897,13 +897,13 @@ void dce110_link_encoder_construct(
+ 						enc110->base.id, &bp_cap_info);
  
-+	/* Intel modem (label from OEM reads Fibocom L850-GL) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x8087, 0x095a,
-+		USB_CLASS_COMM,
-+		USB_CDC_SUBCLASS_NCM, USB_CDC_PROTO_NONE),
-+	  .driver_info = (unsigned long)&wwan_info,
-+	},
-+
- 	/* DisplayLink docking stations */
- 	{ .match_flags = USB_DEVICE_ID_MATCH_INT_INFO
- 		| USB_DEVICE_ID_MATCH_VENDOR,
+ 	/* Override features with DCE-specific values */
+-	if (BP_RESULT_OK == result) {
++	if (result == BP_RESULT_OK) {
+ 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
+ 				bp_cap_info.DP_HBR2_EN;
+ 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
+ 				bp_cap_info.DP_HBR3_EN;
+ 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
+-	} else {
++	} else if (result != BP_RESULT_NORECORD) {
+ 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
+ 				__func__,
+ 				result);
+@@ -1798,13 +1798,13 @@ void dce60_link_encoder_construct(
+ 						enc110->base.id, &bp_cap_info);
+ 
+ 	/* Override features with DCE-specific values */
+-	if (BP_RESULT_OK == result) {
++	if (result == BP_RESULT_OK) {
+ 		enc110->base.features.flags.bits.IS_HBR2_CAPABLE =
+ 				bp_cap_info.DP_HBR2_EN;
+ 		enc110->base.features.flags.bits.IS_HBR3_CAPABLE =
+ 				bp_cap_info.DP_HBR3_EN;
+ 		enc110->base.features.flags.bits.HDMI_6GB_EN = bp_cap_info.HDMI_6GB_EN;
+-	} else {
++	} else if (result != BP_RESULT_NORECORD) {
+ 		DC_LOG_WARNING("%s: Failed to get encoder_cap_info from VBIOS with error code %d!\n",
+ 				__func__,
+ 				result);
 -- 
 2.50.1
 
