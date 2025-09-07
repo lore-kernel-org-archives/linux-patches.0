@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E12212B3D;
-	Sun,  7 Sep 2025 20:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8334F296BB8;
+	Sun,  7 Sep 2025 20:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276341; cv=none; b=jUAgk238Ghoyp/D0U/DdkAj/ANQJiytbqWKSdrZZG1A4dPnqO6uf/CMgm6L5aWQxPHaXnrQbXQwL7uyr2xG/b4pykFHVjF8IPoWxK0frjRB98ReJDkORS0BeescyWj5vPE0zJMNHsLB9BgpW7+ELgT+/Dt6fdrqazyCer4SCszA=
+	t=1757276344; cv=none; b=eCCQIrmXP2EDsB4Op/2GvcKcnCuxU573DJm7sIVJuboKTJS76yH1FNDiybV9yB/7yiQqipmgWqZvsK9APLK9/moUeqVfnnHbKCOTsykCelwROMUUGv1b/5y8+s7ULvhg35aHz4z173B1pEdnxLLu2QtxyDdaJJ2qOrBxPw+HRJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276341; c=relaxed/simple;
-	bh=/oifftiKl62f21GY+POulFhnS75HbT/t4okkbi5A2UA=;
+	s=arc-20240116; t=1757276344; c=relaxed/simple;
+	bh=dyzijL+szvMEBLvvzXIMeaKLwdAtfNuLZKDPZsV2rVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2dQ1Nk5E4faqveBx2hRz38+rUXylSvbGXBs81jN4pjrMfVHoJAqp7GljraSrozjI/clgxLENhKbTQqnmMNQAhR72XcVoG9DpQrMTswpb99hHkYFMMbJcmSst75GYEztK90QWi5OmPbhNTh3okn2l1w8tEOZsXRZVYgU991JVPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmAHGEUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PA/ItJ8nLrYPjlFD7SX3NqpFv0mO7xAs0E9TNgkVE8CIiMBYyDGWRmUI/SRZucmE6NGI9cQzOk4FVAxC0nqP9n8Crsr/bl48njJRbpQQXiH8FPklfthvetGlN6GQDpgf6Wsu72g8F9hdBqT2JzKDGLVOsYjzlSrQIciQY0PWTuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kotealg6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmAHGEUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FDFC4CEF0;
-	Sun,  7 Sep 2025 20:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kotealg6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002CAC4CEF0;
+	Sun,  7 Sep 2025 20:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276341;
-	bh=/oifftiKl62f21GY+POulFhnS75HbT/t4okkbi5A2UA=;
+	s=korg; t=1757276344;
+	bh=dyzijL+szvMEBLvvzXIMeaKLwdAtfNuLZKDPZsV2rVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmAHGEUHI2LTCstTNaalv8vanfSX74Qgq0OuOfH64tAlf/gSecIU17rKBU5Ou2T7f
-	 tzEAewaL++HpVFJDuImO2RtSIJjA6Q3NZSIHwuxxhe/s5m7Sh1lh06tXeNGRhv0V61
-	 26Yzjgi3Pvd3aKUEYsyN4gEeeq/3jZsGZ2sUx8nI=
+	b=Kotealg6XzV9CYm5IIXT1dm3pl7+XLGAkVKnVWG/R7X1fZT75krrfR4GLitKyC2lE
+	 MafX7AdE7fDW9phknNnaHQ+bEmnxpz4SZgQyiiZaHOhDAlzgNlj8FlIiOmPErCmM/0
+	 zXdIbchwiSYF+7MNPuTWhYZ9jU7pIkOf3Aq1oKoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.1 075/104] drm/amd/display: Check link_res->hpo_dp_link_enc before using it
-Date: Sun,  7 Sep 2025 21:58:32 +0200
-Message-ID: <20250907195609.625253436@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 076/104] ALSA: hda/hdmi: Add pin fix for another HP EliteDesk 800 G4 model
+Date: Sun,  7 Sep 2025 21:58:33 +0200
+Message-ID: <20250907195609.649982525@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -54,51 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 0beca868cde8742240cd0038141c30482d2b7eb8 upstream.
+commit bcd6659d4911c528381531472a0cefbd4003e29e upstream.
 
-[WHAT & HOW]
-Functions dp_enable_link_phy and dp_disable_link_phy can pass link_res
-without initializing hpo_dp_link_enc and it is necessary to check for
-null before dereferencing.
+It was reported that HP EliteDesk 800 G4 DM 65W (SSID 103c:845a) needs
+the similar quirk for enabling HDMI outputs, too.  This patch adds the
+corresponding quirk entry.
 
-This fixes 2 FORWARD_NULL issues reported by Coverity.
-
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Minor context change fixed. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250901115009.27498-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_hwss_hpo_dp.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/pci/hda/patch_hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/link/link_hwss_hpo_dp.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_hwss_hpo_dp.c
-@@ -29,6 +29,8 @@
- #include "dc_link_dp.h"
- #include "clk_mgr.h"
- 
-+#define DC_LOGGER link->ctx->logger
-+
- static enum phyd32clk_clock_source get_phyd32clk_src(struct dc_link *link)
- {
- 	switch (link->link_enc->transmitter) {
-@@ -224,6 +226,11 @@ static void disable_hpo_dp_link_output(s
- 		const struct link_resource *link_res,
- 		enum signal_type signal)
- {
-+	if (!link_res->hpo_dp_link_enc) {
-+		DC_LOG_ERROR("%s: invalid hpo_dp_link_enc\n", __func__);
-+		return;
-+	}
-+
- 	if (IS_FPGA_MAXIMUS_DC(link->dc->ctx->dce_environment)) {
- 		disable_hpo_dp_fpga_link_output(link, link_res, signal);
- 	} else {
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1991,6 +1991,7 @@ static int hdmi_add_cvt(struct hda_codec
+ static const struct snd_pci_quirk force_connect_list[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x83e2, "HP EliteDesk 800 G4", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
++	SND_PCI_QUIRK(0x103c, 0x845a, "HP EliteDesk 800 G4 DM 65W", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
 
 
