@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62FB14BFA2;
-	Sun,  7 Sep 2025 20:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A6E1A9FAA;
+	Sun,  7 Sep 2025 20:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276381; cv=none; b=K2qfbs3D1azbENTTwlOOiSeYMJtiLBjIRDrYFFj8taNyMH6WAcBUS/wx3ZZTCzzqgdJE//GvXyl/4lq9fDsAuKHoA1xdcPw72/EXxp5G9YJoF85eUhmpOE5XBzoa6qtCNsBku/wpzfvws/AyMy21zYk7gENv5oOlv3bmtPmbAds=
+	t=1757276385; cv=none; b=PAOMuVm9MGOE/CMem1vZlNKKcwL21X2K0zWDtl3+gujwz9NsY1cPoSh+T1Rp7Zf4jkYKzBuJfU4UOy+f63wbaWc+mwCGdYuC395wRkjRXkmXrjeN/YhjsyjfGGPsbjCVMsapgCug/HKHDxmZavrbSDKYaak0NSBmwcJ/v19OquE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276381; c=relaxed/simple;
-	bh=ssaiwajrfMlwhUivW9ETHeYzqQ81UOBvTjeta0QzNTY=;
+	s=arc-20240116; t=1757276385; c=relaxed/simple;
+	bh=cunvF/uwGZsRfoBEPN/+x2Qj/G5A4LDPY2w9ZB590Kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAUUS73ku3eoYLZdKG9bG6I0HP3Gzb/yEz/6VMag+sFdaWcpp3zEIusWYWb3xD9KRn9XIptVdSJrQH7FASUYmgcTtxj4GqhbWLIXvIu/m03XTS8Xrgc43nGkqM+BkLrRm6mml1QmDdJmh2XaiqJTygANpS6gO7LDBE/+U0gWMNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQXfGgZb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ainyeYg4zWFnxZdNAVjUsdNdsW/skzRXEH7B7NRxYTrO8lreax3958+cG0Eq1MCz00U+dSTr2YsyDUahJ+XdEvrBHdjjHXv0KsH74bFYgNnWnPFQwjWADuIgbl8FENOhF+wWVuuesriuzYodz3mUgIbBD002kjA5sSI4CMCDrUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjsMp6Wk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQXfGgZb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED15AC4CEF0;
-	Sun,  7 Sep 2025 20:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjsMp6Wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3302DC4CEF0;
+	Sun,  7 Sep 2025 20:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276381;
-	bh=ssaiwajrfMlwhUivW9ETHeYzqQ81UOBvTjeta0QzNTY=;
+	s=korg; t=1757276384;
+	bh=cunvF/uwGZsRfoBEPN/+x2Qj/G5A4LDPY2w9ZB590Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQXfGgZb0+32ANZkxGRZSL60Qw7TwfDq6/efYX/NECEVvltFkHbMWVggxJY/RgMNi
-	 6EtJ7JIBcm8fpVNuzxqizsHkPu7FgexUMoabHPgUildh5QjHA0EWUBjcnRhNZI0RZ1
-	 1xoDOBrZI0OZOwOuTsQHTv6yj2QBoFwSQew+wKto=
+	b=WjsMp6WkpOfp1Pnec5sc+Csh6cxzMan19CDZ2aR7I3SCJvZ67FyjHjacM17fT4LdG
+	 9tgD6ljLIchLA+R1fYzIoUKW7sOCJYzf/YjVsKTD5LRDz4yTum8XlNvGVddAYQEuhM
+	 gDvP0QcyeuFFHtmn9cdjaG2w+Kqe0NYIINq2iCbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/104] perf bpf-utils: Harden get_bpf_prog_info_linear
-Date: Sun,  7 Sep 2025 21:58:44 +0200
-Message-ID: <20250907195609.929521679@linuxfoundation.org>
+Subject: [PATCH 6.1 088/104] drm/amdgpu: Optimize RAS TA initialization and TA unload funcs
+Date: Sun,  7 Sep 2025 21:58:45 +0200
+Message-ID: <20250907195609.953620312@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -51,118 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Candice Li <candice.li@amd.com>
 
-[ Upstream commit 01be43f2a0eaeed83e94dee054742f37625c86d9 ]
+[ Upstream commit bf7d777289d106963fd2080d298e6b88b7263b66 ]
 
-In get_bpf_prog_info_linear two calls to bpf_obj_get_info_by_fd are
-made, the first to compute memory requirements for a struct perf_bpil
-and the second to fill it in. Previously the code would warn when the
-second call didn't match the first. Such races can be common place in
-things like perf test, whose perf trace tests will frequently load BPF
-programs. Rather than a debug message, return actual errors for this
-case. Out of paranoia also validate the read bpf_prog_info array
-value. Change the type of ptr to avoid mismatched pointer type
-compiler warnings. Add some additional debug print outs and sanity
-asserts.
+1. Save TA unload psp response status
+2. Add RAS TA loading status check for initializaiton
+3. Drop RAS context teardown to allow RAS TA to be reloaded
 
-Closes: https://lore.kernel.org/lkml/CAP-5=fWJQcmUOP7MuCA2ihKnDAHUCOBLkQFEkQES-1ZZTrgf8Q@mail.gmail.com/
-Fixes: 6ac22d036f86 ("perf bpf: Pull in bpf_program__get_prog_info_linear()")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250902181713.309797-4-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Candice Li <candice.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 467e00b30dfe ("drm/amd/amdgpu: Fix missing error return on kzalloc failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-utils.c | 43 ++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/bpf-utils.c b/tools/perf/util/bpf-utils.c
-index 64a5583446964..5a66dc8594aa8 100644
---- a/tools/perf/util/bpf-utils.c
-+++ b/tools/perf/util/bpf-utils.c
-@@ -115,7 +115,7 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 	__u32 info_len = sizeof(info);
- 	__u32 data_len = 0;
- 	int i, err;
--	void *ptr;
-+	__u8 *ptr;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index ae6643c8ade6c..d101333fe3a57 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -994,6 +994,8 @@ int psp_ta_unload(struct psp_context *psp, struct ta_context *context)
  
- 	if (arrays >> PERF_BPIL_LAST_ARRAY)
- 		return ERR_PTR(-EINVAL);
-@@ -126,6 +126,8 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 		pr_debug("can't get prog info: %s", strerror(errno));
- 		return ERR_PTR(-EFAULT);
- 	}
-+	if (info.type >= __MAX_BPF_PROG_TYPE)
-+		pr_debug("%s:%d: unexpected program type %u\n", __func__, __LINE__, info.type);
+ 	ret = psp_cmd_submit_buf(psp, NULL, cmd, psp->fence_buf_mc_addr);
  
- 	/* step 2: calculate total size of all arrays */
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
-@@ -173,6 +175,8 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 					     desc->count_offset, count);
- 		bpf_prog_info_set_offset_u32(&info_linear->info,
- 					     desc->size_offset, size);
-+		assert(ptr >= info_linear->data);
-+		assert(ptr < &info_linear->data[data_len]);
- 		bpf_prog_info_set_offset_u64(&info_linear->info,
- 					     desc->array_offset,
- 					     ptr_to_u64(ptr));
-@@ -186,26 +190,45 @@ get_bpf_prog_info_linear(int fd, __u64 arrays)
- 		free(info_linear);
- 		return ERR_PTR(-EFAULT);
- 	}
-+	if (info_linear->info.type >= __MAX_BPF_PROG_TYPE) {
-+		pr_debug("%s:%d: unexpected program type %u\n",
-+			 __func__, __LINE__, info_linear->info.type);
++	context->resp_status = cmd->resp.status;
++
+ 	release_psp_cmd_buf(psp);
+ 
+ 	return ret;
+@@ -1569,6 +1571,11 @@ static int psp_ras_initialize(struct psp_context *psp)
+ 	if (amdgpu_sriov_vf(adev))
+ 		return 0;
+ 
++	if (psp->ras_context.context.initialized) {
++		dev_warn(adev->dev, "RAS WARN: TA has already been loaded\n");
++		return 0;
 +	}
++
+ 	if (!adev->psp.ras_context.context.bin_desc.size_bytes ||
+ 	    !adev->psp.ras_context.context.bin_desc.start_addr) {
+ 		dev_info(adev->dev, "RAS: optional ras ta ucode is not available\n");
+@@ -1619,7 +1626,7 @@ static int psp_ras_initialize(struct psp_context *psp)
+ 	psp->ras_context.context.mem_context.shared_mem_size = PSP_RAS_SHARED_MEM_SIZE;
+ 	psp->ras_context.context.ta_load_type = GFX_CMD_ID_LOAD_TA;
  
- 	/* step 6: verify the data */
-+	ptr = info_linear->data;
- 	for (i = PERF_BPIL_FIRST_ARRAY; i < PERF_BPIL_LAST_ARRAY; ++i) {
- 		const struct bpil_array_desc *desc = &bpil_array_desc[i];
--		__u32 v1, v2;
-+		__u32 count1, count2, size1, size2;
-+		__u64 ptr2;
- 
- 		if ((arrays & (1UL << i)) == 0)
- 			continue;
- 
--		v1 = bpf_prog_info_read_offset_u32(&info, desc->count_offset);
--		v2 = bpf_prog_info_read_offset_u32(&info_linear->info,
-+		count1 = bpf_prog_info_read_offset_u32(&info, desc->count_offset);
-+		count2 = bpf_prog_info_read_offset_u32(&info_linear->info,
- 						   desc->count_offset);
--		if (v1 != v2)
--			pr_warning("%s: mismatch in element count\n", __func__);
-+		if (count1 != count2) {
-+			pr_warning("%s: mismatch in element count %u vs %u\n", __func__, count1, count2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
- 
--		v1 = bpf_prog_info_read_offset_u32(&info, desc->size_offset);
--		v2 = bpf_prog_info_read_offset_u32(&info_linear->info,
-+		size1 = bpf_prog_info_read_offset_u32(&info, desc->size_offset);
-+		size2 = bpf_prog_info_read_offset_u32(&info_linear->info,
- 						   desc->size_offset);
--		if (v1 != v2)
--			pr_warning("%s: mismatch in rec size\n", __func__);
-+		if (size1 != size2) {
-+			pr_warning("%s: mismatch in rec size %u vs %u\n", __func__, size1, size2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
-+		ptr2 = bpf_prog_info_read_offset_u64(&info_linear->info, desc->array_offset);
-+		if (ptr_to_u64(ptr) != ptr2) {
-+			pr_warning("%s: mismatch in array %p vs %llx\n", __func__, ptr, ptr2);
-+			free(info_linear);
-+			return ERR_PTR(-ERANGE);
-+		}
-+		ptr += roundup(count1 * size1, sizeof(__u64));
+-	if (!psp->ras_context.context.initialized) {
++	if (!psp->ras_context.context.mem_context.shared_buf) {
+ 		ret = psp_ta_init_shared_buf(psp, &psp->ras_context.context.mem_context);
+ 		if (ret)
+ 			return ret;
+@@ -1640,7 +1647,6 @@ static int psp_ras_initialize(struct psp_context *psp)
+ 	else {
+ 		if (ras_cmd->ras_status)
+ 			dev_warn(psp->adev->dev, "RAS Init Status: 0x%X\n", ras_cmd->ras_status);
+-		amdgpu_ras_fini(psp->adev);
  	}
  
- 	/* step 7: update info_len and data_len */
+ 	return ret;
 -- 
 2.51.0
 
