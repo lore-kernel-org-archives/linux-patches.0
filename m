@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9821814BFA2;
-	Sun,  7 Sep 2025 20:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD4B1AF0B6;
+	Sun,  7 Sep 2025 20:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276178; cv=none; b=iZrGBJIKxSavFXiLf5zIRQF4K//C9NuSlokiLJP59Mnk+dr3n6Fu+zoX1JE6v+PI7AHTiobLb/Nu0ujUo4d/CpHJjIUgAUVW3/H79dIJSdnWxw+J96+h1HghVXu7lEixWKFGrvJul/2NFi3X+0M+O+k/Sj6aLXeCFQOvD9sX3yM=
+	t=1757276181; cv=none; b=BV7c7dkAImO9esJ3Qj59O7Ze8joRKSEEPhBwcc6A0hB0Bhs8BPTBz1Mt5jataXtj5v4o799J3erVOmQ+ACudauHfgyTmOismGm5j/jm91PmANgoYm4DU3W/PWHxvwykef2PI+uFVD+o+RpnNWl5KAMbLO9B8qr9w+7XFPaeDb38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276178; c=relaxed/simple;
-	bh=v3RoLLUPlzjnoZeEa7RhfpZ1KqU3WktPy++JCIIXofg=;
+	s=arc-20240116; t=1757276181; c=relaxed/simple;
+	bh=e9t3VRtqQDI366+OOGfNXqn/rh/1HFITj4OFIzUDJHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRFsUjgMqva1jz8HG5bYz+67nZitm+Ad+mAob8mnwliyZ4Qcc7ywXpJ+JdcLvxNP52a5Df4GKOcJbTsSFkVQDJW+cF8LmcfZQcT1roQvKuKQJiPqtGNaa+gkg14TpkKOYBSnzdcK4jQWmuT+gPPV0zaebeKNR4oCw8MzhL7cZV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljHBAtwV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNE2K6q0YCfW4fVCIZ37gqSp7yHwlBx9d2vY0fXk2kxm5Ey30/zn0mehb/zH09RBRsMKsQarevj0h8Kp2uz6MvZ8Hl238+tEHXq6D0cFveVfZb29NQrxdyl6jwPLR7R6FvrXWqokN8Xl/GUyXCkRSOjXNpW5748wBPd+7hqk8hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzn1r2jY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljHBAtwV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B591C4CEF0;
-	Sun,  7 Sep 2025 20:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzn1r2jY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E45EC4CEF0;
+	Sun,  7 Sep 2025 20:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276178;
-	bh=v3RoLLUPlzjnoZeEa7RhfpZ1KqU3WktPy++JCIIXofg=;
+	s=korg; t=1757276181;
+	bh=e9t3VRtqQDI366+OOGfNXqn/rh/1HFITj4OFIzUDJHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljHBAtwV16GbzlxBP/OUrHDwH6O+TpcPtike/NxOkTk/JqgCgrxm6l2RbbZ/KUDkd
-	 GjtLYrZ7fDeyMh8BokTN/Udt7kTxYr2BqnxHSqz0gZBj3UxXCy3UdQAgxiihpoZnRP
-	 jZ4uj/QvxZLtZAosY3RakHlq5p4JKsraezG4QaKo=
+	b=nzn1r2jY7RMZNh/6CUpIAfRaWymItdE+qxGCayQdzNrm2i8mYPF4AhOcnS5WWPUhO
+	 +XElu9nZvxUnZVH9U8rOn7hf9XftgkEa8/z0DBSLjZoDY73CUhNUyncfYvak5rvldX
+	 diE1xCDU2uwPDwL8LCN6f+S5P8QlOKxUNbGuRh8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Galbraith <efault@gmx.de>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liu Jian <liujian56@huawei.com>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/104] net: macb: Fix tx_ptr_lock locking
-Date: Sun,  7 Sep 2025 21:57:40 +0200
-Message-ID: <20250907195608.292819996@linuxfoundation.org>
+Subject: [PATCH 6.1 024/104] net/smc: fix one NULL pointer dereference in smc_ib_is_sg_need_sync()
+Date: Sun,  7 Sep 2025 21:57:41 +0200
+Message-ID: <20250907195608.319493883@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -52,133 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 6bc8a5098bf4a365c4086a4a4130bfab10a58260 ]
+[ Upstream commit ba1e9421cf1a8369d25c3832439702a015d6b5f9 ]
 
-macb_start_xmit and macb_tx_poll can be called with bottom-halves
-disabled (e.g. from softirq) as well as with interrupts disabled (with
-netpoll). Because of this, all other functions taking tx_ptr_lock must
-use spin_lock_irqsave.
+BUG: kernel NULL pointer dereference, address: 00000000000002ec
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 28 UID: 0 PID: 343 Comm: kworker/28:1 Kdump: loaded Tainted: G        OE       6.17.0-rc2+ #9 NONE
+Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+Workqueue: smc_hs_wq smc_listen_work [smc]
+RIP: 0010:smc_ib_is_sg_need_sync+0x9e/0xd0 [smc]
+...
+Call Trace:
+ <TASK>
+ smcr_buf_map_link+0x211/0x2a0 [smc]
+ __smc_buf_create+0x522/0x970 [smc]
+ smc_buf_create+0x3a/0x110 [smc]
+ smc_find_rdma_v2_device_serv+0x18f/0x240 [smc]
+ ? smc_vlan_by_tcpsk+0x7e/0xe0 [smc]
+ smc_listen_find_device+0x1dd/0x2b0 [smc]
+ smc_listen_work+0x30f/0x580 [smc]
+ process_one_work+0x18c/0x340
+ worker_thread+0x242/0x360
+ kthread+0xe7/0x220
+ ret_from_fork+0x13a/0x160
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Fixes: 138badbc21a0 ("net: macb: use NAPI for TX completion path")
-Reported-by: Mike Galbraith <efault@gmx.de>
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://patch.msgid.link/20250829143521.1686062-1-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If the software RoCE device is used, ibdev->dma_device is a null pointer.
+As a result, the problem occurs. Null pointer detection is added to
+prevent problems.
+
+Fixes: 0ef69e788411c ("net/smc: optimize for smc_sndbuf_sync_sg_for_device and smc_rmb_sync_sg_for_cpu")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Reviewed-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
+Link: https://patch.msgid.link/20250828124117.2622624-1-liujian56@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 28 ++++++++++++++----------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ net/smc/smc_ib.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 495a1cb0bc183..1ea7c86f75013 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1174,11 +1174,12 @@ static int macb_tx_complete(struct macb_queue *queue, int budget)
- {
- 	struct macb *bp = queue->bp;
- 	u16 queue_index = queue - bp->queues;
-+	unsigned long flags;
- 	unsigned int tail;
- 	unsigned int head;
- 	int packets = 0;
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index 6de53431629ca..8e41034d8d96f 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -743,6 +743,9 @@ bool smc_ib_is_sg_need_sync(struct smc_link *lnk,
+ 	unsigned int i;
+ 	bool ret = false;
  
--	spin_lock(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 	head = queue->tx_head;
- 	for (tail = queue->tx_tail; tail != head && packets < budget; tail++) {
- 		struct macb_tx_skb	*tx_skb;
-@@ -1241,7 +1242,7 @@ static int macb_tx_complete(struct macb_queue *queue, int budget)
- 	    CIRC_CNT(queue->tx_head, queue->tx_tail,
- 		     bp->tx_ring_size) <= MACB_TX_WAKEUP_THRESH(bp))
- 		netif_wake_subqueue(bp->dev, queue_index);
--	spin_unlock(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- 
- 	return packets;
- }
-@@ -1657,8 +1658,9 @@ static void macb_tx_restart(struct macb_queue *queue)
- {
- 	struct macb *bp = queue->bp;
- 	unsigned int head_idx, tbqp;
-+	unsigned long flags;
- 
--	spin_lock(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 
- 	if (queue->tx_head == queue->tx_tail)
- 		goto out_tx_ptr_unlock;
-@@ -1670,19 +1672,20 @@ static void macb_tx_restart(struct macb_queue *queue)
- 	if (tbqp == head_idx)
- 		goto out_tx_ptr_unlock;
- 
--	spin_lock_irq(&bp->lock);
-+	spin_lock(&bp->lock);
- 	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(TSTART));
--	spin_unlock_irq(&bp->lock);
-+	spin_unlock(&bp->lock);
- 
- out_tx_ptr_unlock:
--	spin_unlock(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- }
- 
- static bool macb_tx_complete_pending(struct macb_queue *queue)
- {
- 	bool retval = false;
-+	unsigned long flags;
- 
--	spin_lock(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 	if (queue->tx_head != queue->tx_tail) {
- 		/* Make hw descriptor updates visible to CPU */
- 		rmb();
-@@ -1690,7 +1693,7 @@ static bool macb_tx_complete_pending(struct macb_queue *queue)
- 		if (macb_tx_desc(queue, queue->tx_tail)->ctrl & MACB_BIT(TX_USED))
- 			retval = true;
- 	}
--	spin_unlock(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- 	return retval;
- }
- 
-@@ -2258,6 +2261,7 @@ static netdev_tx_t macb_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct macb_queue *queue = &bp->queues[queue_index];
- 	unsigned int desc_cnt, nr_frags, frag_size, f;
- 	unsigned int hdrlen;
-+	unsigned long flags;
- 	bool is_lso;
- 	netdev_tx_t ret = NETDEV_TX_OK;
- 
-@@ -2312,7 +2316,7 @@ static netdev_tx_t macb_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 		desc_cnt += DIV_ROUND_UP(frag_size, bp->max_tx_length);
- 	}
- 
--	spin_lock_bh(&queue->tx_ptr_lock);
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
- 
- 	/* This is a hard error, log it. */
- 	if (CIRC_SPACE(queue->tx_head, queue->tx_tail,
-@@ -2334,15 +2338,15 @@ static netdev_tx_t macb_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	wmb();
- 	skb_tx_timestamp(skb);
- 
--	spin_lock_irq(&bp->lock);
-+	spin_lock(&bp->lock);
- 	macb_writel(bp, NCR, macb_readl(bp, NCR) | MACB_BIT(TSTART));
--	spin_unlock_irq(&bp->lock);
-+	spin_unlock(&bp->lock);
- 
- 	if (CIRC_SPACE(queue->tx_head, queue->tx_tail, bp->tx_ring_size) < 1)
- 		netif_stop_subqueue(dev, queue_index);
- 
- unlock:
--	spin_unlock_bh(&queue->tx_ptr_lock);
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
- 
- 	return ret;
- }
++	if (!lnk->smcibdev->ibdev->dma_device)
++		return ret;
++
+ 	/* for now there is just one DMA address */
+ 	for_each_sg(buf_slot->sgt[lnk->link_idx].sgl, sg,
+ 		    buf_slot->sgt[lnk->link_idx].nents, i) {
 -- 
 2.50.1
 
