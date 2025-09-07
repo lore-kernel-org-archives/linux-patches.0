@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3EA17BB21;
-	Sun,  7 Sep 2025 20:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EA7D528;
+	Sun,  7 Sep 2025 20:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276845; cv=none; b=HhcJLnLhyXtd/E4qiLqC8r1QW6M2cOkGt6//EK2+l/4oLjNTKQfc58+QSMLAxkxjNlC8g5U0jAgTeLr2KNvQXtbsIsDh+wdYJMk+blpMmqIft5+/CT1bZxecIHe4g98QxEw+rMHcUwdtb5UW3QPHkrrPuejgAqzYGmHwk1IsWh8=
+	t=1757276849; cv=none; b=t+f29wx8kk5MUdw5kqwwXd/u8Y3sk7TFz41kdcQSiDVsejxoIhaZ9EYGK6rHg/dHea7mmMf07gBQ2KehJFXkknCihKquFOabK+EcuP6s+V0X/uwzO4U5a20CnD7nJ2XV/1I30z3PDRtOf/mBsG+LxbuCBfFXQjk29BP2JkTewPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276845; c=relaxed/simple;
-	bh=PxQL1rlmw6XwyMxhDjuM6R+kaDlHt3dJNsq2WKgrACc=;
+	s=arc-20240116; t=1757276849; c=relaxed/simple;
+	bh=2MZIRB25ab24HTIyxr657zMiYlcszLfcWne7NUnDw/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9fwIwXtTG9NVQhO29IX/Dc7LefB8ZXUbagyE4n74pcGFogLPP6une4dqvq07VEZpPW3bN8hKIyaLiNYcwPgcF0q25vy9ip+fTYp2dOjLS1EGyt0znYjfdGVp6cHaJ3uX/dijnU5WuJOk2Hv/hMxJPKKoRBBOwqGIiwB9aoMh+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2N/LJHwN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apdbEmXr9dNnTRfixGG3UDQ9N6ij8oJ/B2ikK0EGOf16DRxHy47g8W2Iw6dgzJPLlZbOoK64E+TM7S4u8P/iBx5NIEflut8V17NQ5z/e1igL5xzixhNcGIfx0wdY8KpQ9eU/ASpbh56DC/UYgmkvM04bxrDLiMPQ9Te7poWdX0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOWwnpEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2N/LJHwN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2378CC4CEF0;
-	Sun,  7 Sep 2025 20:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOWwnpEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C79BC4CEF0;
+	Sun,  7 Sep 2025 20:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276845;
-	bh=PxQL1rlmw6XwyMxhDjuM6R+kaDlHt3dJNsq2WKgrACc=;
+	s=korg; t=1757276848;
+	bh=2MZIRB25ab24HTIyxr657zMiYlcszLfcWne7NUnDw/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2N/LJHwNwiudXBSnzdZ1SzyPj4qO10x/wWn4fuTXDm836nMXPR4p0Uuj3LcXEHJJA
-	 OYXwvPBnhrFsJnjcoxO4n0916ptICjtTfEd9A3s4gaAbDmlPTEyp7QJ8ClRwD25Kpv
-	 ngnWVZOgBbOptlGO2WXplAVQBGK/XoSR7fRI6u1A=
+	b=DOWwnpEbfQXZKmhkUpdSD6w8KqX46rSHNqjhIxL/xPc5FgK+1qNwuuz7SQzARJEgE
+	 O/pw95w9Yg75RsVoRzIFOpftzNVCULRncsjQuMtj/UCY774g6DWnVO8tecGCCkwYcI
+	 6ePPPTGTt1UI5zYywshDTF23aChoxfGFbOC5fxIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larisa Grigore <larisa.grigore@nxp.com>,
-	Ciprian Marian Costea <ciprianmarian.costea@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	James Clark <james.clark@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/121] spi: spi-fsl-lpspi: Clear status register after disabling the module
-Date: Sun,  7 Sep 2025 21:59:01 +0200
-Message-ID: <20250907195612.542153275@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 096/121] ALSA: hda/hdmi: Add pin fix for another HP EliteDesk 800 G4 model
+Date: Sun,  7 Sep 2025 21:58:52 +0200
+Message-ID: <20250907195612.317010282@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -54,65 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larisa Grigore <larisa.grigore@nxp.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit dedf9c93dece441e9a0a4836458bc93677008ddd ]
+commit bcd6659d4911c528381531472a0cefbd4003e29e upstream.
 
-Clear the error flags after disabling the module to avoid the case when
-a flag is set again between flag clear and module disable. And use
-SR_CLEAR_MASK to replace hardcoded value for improved readability.
+It was reported that HP EliteDesk 800 G4 DM 65W (SSID 103c:845a) needs
+the similar quirk for enabling HDMI outputs, too.  This patch adds the
+corresponding quirk entry.
 
-Although fsl_lpspi_reset() was only introduced in commit a15dc3d657fa
-("spi: lpspi: Fix CLK pin becomes low before one transfer"), the
-original driver only reset SR in the interrupt handler, making it
-vulnerable to the same issue. Therefore the fixes commit is set at the
-introduction of the driver.
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
-Signed-off-by: Ciprian Marian Costea <ciprianmarian.costea@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://patch.msgid.link/20250828-james-nxp-lpspi-v2-4-6262b9aa9be4@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20250901115009.27498-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index d437ed1349edb..8ef82a11ebb0f 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -83,6 +83,8 @@
- #define TCR_RXMSK	BIT(19)
- #define TCR_TXMSK	BIT(18)
- 
-+#define SR_CLEAR_MASK	GENMASK(13, 8)
-+
- struct fsl_lpspi_devtype_data {
- 	u8 prescale_max;
- };
-@@ -532,14 +534,13 @@ static int fsl_lpspi_reset(struct fsl_lpspi_data *fsl_lpspi)
- 		fsl_lpspi_intctrl(fsl_lpspi, 0);
- 	}
- 
--	/* W1C for all flags in SR */
--	temp = 0x3F << 8;
--	writel(temp, fsl_lpspi->base + IMX7ULP_SR);
--
- 	/* Clear FIFO and disable module */
- 	temp = CR_RRF | CR_RTF;
- 	writel(temp, fsl_lpspi->base + IMX7ULP_CR);
- 
-+	/* W1C for all flags in SR */
-+	writel(SR_CLEAR_MASK, fsl_lpspi->base + IMX7ULP_SR);
-+
- 	return 0;
- }
- 
--- 
-2.51.0
-
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1991,6 +1991,7 @@ static int hdmi_add_cvt(struct hda_codec
+ static const struct snd_pci_quirk force_connect_list[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x83e2, "HP EliteDesk 800 G4", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
++	SND_PCI_QUIRK(0x103c, 0x845a, "HP EliteDesk 800 G4 DM 65W", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
 
 
