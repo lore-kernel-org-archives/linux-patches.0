@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C6320E00B;
-	Sun,  7 Sep 2025 20:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860221F63CD;
+	Sun,  7 Sep 2025 20:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277622; cv=none; b=T1ZnN4Fpwu6RM7/tRu/c0rGKQwvfdRFkUh23j4uYDvV3MksjAWe0WGwdudfwG4cFs96ud1M6psHOUAOKCOtjNBMWKfMZI9XBEUFAaqNOi2ygFOcF2n0zgImpll97u8Ae4UWpvE20MevDmd+EOT3NgENQnAs16SrWLdpUIN92do0=
+	t=1757277625; cv=none; b=qicExepqvbIvzzU4l1h20FRe+79Knhlbzuca3G+c/V1cingECsUtoMRJRwar8Nqqskg2Y3kYz3aT+KXFe3BWp3wRM5JTelrdijrkWlZ9NXIjDf8Vf9ySBzHE2NoND7IXpyRTJGz9FMFEEP4eq2zfWMDbPYjdcrXe+RuHhRzqBWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277622; c=relaxed/simple;
-	bh=TWfh7j8s7soES57xijcAqQMlSSlKspA/Uy3dFEpb+Vc=;
+	s=arc-20240116; t=1757277625; c=relaxed/simple;
+	bh=F0iX5oX9EWX6wxQThbz6RqreE9OCml6hRmGKaF9S69A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TpIC7/okBL+FEEqZsEUoEzQKgYWkcNnRbGLSyxfvkFXgto4uMTNclbmxUOXDAXPUwuCRngv5hI47cBV+8N/LBktNCx2qsw91WPZhbm3qUNKdvdrcHyHcXgZ1pgCTivSraYDAYKaTJbAFENn6+L7NiwPXLyPr5+mPSid56Fmwu3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2UkWa6s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DoEOk5yT3IPUcM1SWCfTJGLs0IvPVsrDnzSpXMEAG1HKX3W8KPQqYjr7Embf/sVoYQ05Uy2aXftXA6GTIkVDy8I4l1s/gHpPL7aV3+MVnOqZ4+FQbE7an81ERr3dZsFSZoVRTYToTeBC2uA3KxPV9wafBEzV31vRkbnOYy4InwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fT5/bPpI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2UkWa6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0736C4CEF0;
-	Sun,  7 Sep 2025 20:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT5/bPpI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BDAC4CEF0;
+	Sun,  7 Sep 2025 20:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277622;
-	bh=TWfh7j8s7soES57xijcAqQMlSSlKspA/Uy3dFEpb+Vc=;
+	s=korg; t=1757277625;
+	bh=F0iX5oX9EWX6wxQThbz6RqreE9OCml6hRmGKaF9S69A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s2UkWa6sZ4FFydnWS46prNSHoQdM7fFnaoWceaQ5xcHYAsvjuulzthdF2gIqvlUYw
-	 su+Cx2aJ1pWAnkqNzqnbZ54WsaFmzXE9GJEL69jqnjYBijFMy4nfIwjYUNUsydgUaC
-	 YtWhAYLOgN0ozpTiVn+bjksPyon5fMtj0v+Fuysk=
+	b=fT5/bPpIMoyzNGR8QUzoBrbxipOUYyCAKj3eOWbyagWSpMLjxZXJ7LrcRwujtXKWS
+	 WDOZErHdO5X80yRKttvy4nu14QDUWbcYm5EMYX4M3uC9t8phSgU/jsSxBEEcx/cLDU
+	 Rl0vBv625P6nMbfTY4cJ+/9PGl84EYf2Gs/Iq7Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maud_spierings@hotmail.com>,
-	=?UTF-8?q?Ond=C5=99ej=20Jirman?= <megi@xff.cz>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 027/183] arm64: dts: rockchip: Fix the headphone detection on the orangepi 5 plus
-Date: Sun,  7 Sep 2025 21:57:34 +0200
-Message-ID: <20250907195616.420976428@linuxfoundation.org>
+Subject: [PATCH 6.16 028/183] arm64: dts: rockchip: Add supplies for eMMC on rk3588-orangepi-5
+Date: Sun,  7 Sep 2025 21:57:35 +0200
+Message-ID: <20250907195616.446030837@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -46,45 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maud Spierings <maud_spierings@hotmail.com>
+From: Chen-Yu Tsai <wens@csie.org>
 
-[ Upstream commit 8976583832579fe7e450034d6143d74d9f8c8608 ]
+[ Upstream commit 2dea24df234940b27d378f786933dc10f33de6b8 ]
 
-The logic of the headphone detect pin seems to be inverted, with this
-change headphones actually output sound when plugged in.
+The eMMC description is missing both vmmc and vqmmc supplies.
 
-Verified by checking /sys/kernel/debug/gpio and by listening.
+Add them to complete the description.
 
 Fixes: 236d225e1ee7 ("arm64: dts: rockchip: Add board device tree for rk3588-orangepi-5-plus")
-Signed-off-by: Maud Spierings <maud_spierings@hotmail.com>
-Reviewed-by: Ondřej Jirman <megi@xff.cz>
-Link: https://lore.kernel.org/r/20250823-orangepi5-v1-1-ae77dd0e06d7@hotmail.com
+Fixes: ea63f4666e48 ("arm64: dts: rockchip: refactor common rk3588-orangepi-5.dtsi")
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20250821052939.1869171-1-wens@kernel.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
-index 121e4d1c3fa5d..8222f1fae8fad 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5-plus.dts
-@@ -77,7 +77,7 @@ &analog_sound {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&hp_detect>;
- 	simple-audio-card,aux-devs = <&speaker_amp>, <&headphone_amp>;
--	simple-audio-card,hp-det-gpios = <&gpio1 RK_PD3 GPIO_ACTIVE_LOW>;
-+	simple-audio-card,hp-det-gpios = <&gpio1 RK_PD3 GPIO_ACTIVE_HIGH>;
- 	simple-audio-card,widgets =
- 		"Microphone", "Onboard Microphone",
- 		"Microphone", "Microphone Jack",
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi
+index 91d56c34a1e45..8a8f3b26754d7 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-orangepi-5.dtsi
+@@ -365,6 +365,8 @@ &sdhci {
+ 	max-frequency = <200000000>;
+ 	mmc-hs400-1_8v;
+ 	mmc-hs400-enhanced-strobe;
++	vmmc-supply = <&vcc_3v3_s3>;
++	vqmmc-supply = <&vcc_1v8_s3>;
+ 	status = "okay";
+ };
+ 
 -- 
 2.50.1
 
