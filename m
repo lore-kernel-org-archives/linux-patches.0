@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416A51F1921;
-	Sun,  7 Sep 2025 20:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B001D88D0;
+	Sun,  7 Sep 2025 20:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276623; cv=none; b=B49QJJ1ztdYZbSxyvZfg0xhH6nK1fSSUVmG5iokDVvQwxI6J2rkoXkjGnzblPZ89uhUZDSrOqX23NsnWTkpsa57L2Svhr4xOPbzXwVYu5cjfDPhtpUEsYGlHEYSI7wN8cNjhl2qbqtlBTnGtasT6E3woZNTdekfi/DSRRswK95c=
+	t=1757276626; cv=none; b=NAmQ/rqCIPYhi4WiP8LuhFNxr3tq44gsMok4HaMgGd65Okdp4YQ0H+o3IwnUPQQQBZdyMLaes5k6mE2rShLWQkYYrOGNelv2f+adSM29uf1oOgU6iYOyl1eOlHA6j7aH8i/0A6LgfQDRM4oTPXJxU2BOzy6na+Q7DURWZFkW8uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276623; c=relaxed/simple;
-	bh=cE3N1Xe30iIEhzjfCyxcUU7ku+9uYgE9/XSM27omgNc=;
+	s=arc-20240116; t=1757276626; c=relaxed/simple;
+	bh=NBYV9/oXcgAcUOSg6vqzI4/UtpyvDn7GeCBwy98HOx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EsgTePTroQLGOZuo9DE4aDJyzlxV3bMYmrboso17/+oMIqvaeMKxeAvOBwMu80lEGgkrEG/WlW8Hp4MQkMpjbZYXmArOXRgrfkrcRIYyF1oya9vthyZArvixXHpAlRIGR2X/7h8fNg9ul4bLm1SFuY74y19YrszDKEF3it2k9RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quD+AfYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nu/13O/fng+QDCvT4XIBmg4K0aJcbukJtYmnOFark4TnGq5srhOhqfeeLFrsFDDHC4rwBgd8Pesoi4ulOTQcVObj72auE17qpBbLnYEPAxHRQGxM2zGHKVwbJ3wGXQ/02lFdq8uj92bqWR4BFjpNosd9UBfn9C1p1Ouie+to3Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVb4+FT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quD+AfYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC87C4CEF0;
-	Sun,  7 Sep 2025 20:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVb4+FT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FB7C4CEF0;
+	Sun,  7 Sep 2025 20:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276623;
-	bh=cE3N1Xe30iIEhzjfCyxcUU7ku+9uYgE9/XSM27omgNc=;
+	s=korg; t=1757276626;
+	bh=NBYV9/oXcgAcUOSg6vqzI4/UtpyvDn7GeCBwy98HOx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=quD+AfYYlhp3Gh/ezlF9zzOSiLGDPl5aKnbYa5nzDuC4XX9e2cY+UIQC3AYv6rWfB
-	 ZURjTDK4wBPNAtiThOZnXerKMSNCER/9DYrLjJ1ejvbUEb1eG8h6mX2VmHiWp8pTBT
-	 GKI+guOOyaXX4uqhoC+nIPOaQ6+OU+Cy9Z4HLf0E=
+	b=CVb4+FT8OECcLrp6lZkzlM45KYkglyK2VWYQxIhnWlt/iUG8Bv4yTOQptkH7KtoNu
+	 PrC8//S5LW9RGjJYJfs4RicnJOezx+Uq4mTTp3gyETaZiY/ECSpwWNlDu/nUpCp23m
+	 Cx65dZF3RIjKRKuBHXofo56xvbJ0kyoq9yr8eEt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Lars Wendler <polynomial-c@gmx.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <pv@excello.cz>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	"Kirill A. Shutemov" <k.shutemov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 059/121] proc: fix missing pde_set_flags() for net proc files
-Date: Sun,  7 Sep 2025 21:58:15 +0200
-Message-ID: <20250907195611.352952180@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 060/121] soc: qcom: mdt_loader: Deal with zero e_shentsize
+Date: Sun,  7 Sep 2025 21:58:16 +0200
+Message-ID: <20250907195611.379256816@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -53,136 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-commit 2ce3d282bd5050fca8577defeff08ada0d55d062 upstream.
+commit 25daf9af0ac1bf12490b723b5efaf8dcc85980bc upstream.
 
-To avoid potential UAF issues during module removal races, we use
-pde_set_flags() to save proc_ops flags in PDE itself before
-proc_register(), and then use pde_has_proc_*() helpers instead of directly
-dereferencing pde->proc_ops->*.
+Firmware that doesn't provide section headers leave both e_shentsize and
+e_shnum 0, which obvious isn't compatible with the newly introduced
+stricter checks.
 
-However, the pde_set_flags() call was missing when creating net related
-proc files.  This omission caused incorrect behavior which FMODE_LSEEK was
-being cleared inappropriately in proc_reg_open() for net proc files.  Lars
-reported it in this link[1].
+Make the section-related checks conditional on either of these values
+being non-zero.
 
-Fix this by ensuring pde_set_flags() is called when register proc entry,
-and add NULL check for proc_ops in pde_set_flags().
-
-[wangzijie1@honor.com: stash pde->proc_ops in a local const variable, per Christian]
-  Link: https://lkml.kernel.org/r/20250821105806.1453833-1-wangzijie1@honor.com
-Link: https://lkml.kernel.org/r/20250818123102.959595-1-wangzijie1@honor.com
-Link: https://lore.kernel.org/all/20250815195616.64497967@chagall.paradoxon.rec/ [1]
-Fixes: ff7ec8dc1b64 ("proc: use the same treatment to check proc_lseek as ones for proc_read_iter et.al")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reported-by: Lars Wendler <polynomial-c@gmx.de>
-Tested-by: Stefano Brivio <sbrivio@redhat.com>
-Tested-by: Petr Vaněk <pv@excello.cz>
-Tested by: Lars Wendler <polynomial-c@gmx.de>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Kirill A. Shutemov <k.shutemov@gmail.com>
-Cc: wangzijie <wangzijie1@honor.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read past the ELF header")
+Reported-by: Val Packett <val@packett.cool>
+Closes: https://lore.kernel.org/all/ece307c3-7d65-440f-babd-88cf9705b908@packett.cool/
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Closes: https://lore.kernel.org/all/aec9cd03-6fc2-4dc8-b937-8b7cf7bf4128@linaro.org/
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 9f35ab0e53cc ("soc: qcom: mdt_loader: Fix error return values in mdt_header_valid()")
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250730-mdt-loader-shentsize-zero-v1-1-04f43186229c@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c |   38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ drivers/soc/qcom/mdt_loader.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -362,6 +362,25 @@ static const struct inode_operations pro
- 	.setattr	= proc_notify_change,
- };
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -38,12 +38,14 @@ static bool mdt_header_valid(const struc
+ 	if (phend > fw->size)
+ 		return false;
  
-+static void pde_set_flags(struct proc_dir_entry *pde)
-+{
-+	const struct proc_ops *proc_ops = pde->proc_ops;
-+
-+	if (!proc_ops)
-+		return;
-+
-+	if (proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
-+		pde->flags |= PROC_ENTRY_PERMANENT;
-+	if (proc_ops->proc_read_iter)
-+		pde->flags |= PROC_ENTRY_proc_read_iter;
-+#ifdef CONFIG_COMPAT
-+	if (proc_ops->proc_compat_ioctl)
-+		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
-+#endif
-+	if (proc_ops->proc_lseek)
-+		pde->flags |= PROC_ENTRY_proc_lseek;
-+}
-+
- /* returns the registered entry, or frees dp and returns NULL on failure */
- struct proc_dir_entry *proc_register(struct proc_dir_entry *dir,
- 		struct proc_dir_entry *dp)
-@@ -369,6 +388,8 @@ struct proc_dir_entry *proc_register(str
- 	if (proc_alloc_inum(&dp->low_ino))
- 		goto out_free_entry;
+-	if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
+-		return false;
++	if (ehdr->e_shentsize || ehdr->e_shnum) {
++		if (ehdr->e_shentsize != sizeof(struct elf32_shdr))
++			return false;
  
-+	pde_set_flags(dp);
-+
- 	write_lock(&proc_subdir_lock);
- 	dp->parent = dir;
- 	if (pde_subdir_insert(dir, dp) == false) {
-@@ -557,20 +578,6 @@ struct proc_dir_entry *proc_create_reg(c
- 	return p;
- }
+-	shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
+-	if (shend > fw->size)
+-		return false;
++		shend = size_add(size_mul(sizeof(struct elf32_shdr), ehdr->e_shnum), ehdr->e_shoff);
++		if (shend > fw->size)
++			return false;
++	}
  
--static void pde_set_flags(struct proc_dir_entry *pde)
--{
--	if (pde->proc_ops->proc_flags & PROC_ENTRY_PERMANENT)
--		pde->flags |= PROC_ENTRY_PERMANENT;
--	if (pde->proc_ops->proc_read_iter)
--		pde->flags |= PROC_ENTRY_proc_read_iter;
--#ifdef CONFIG_COMPAT
--	if (pde->proc_ops->proc_compat_ioctl)
--		pde->flags |= PROC_ENTRY_proc_compat_ioctl;
--#endif
--	if (pde->proc_ops->proc_lseek)
--		pde->flags |= PROC_ENTRY_proc_lseek;
--}
--
- struct proc_dir_entry *proc_create_data(const char *name, umode_t mode,
- 		struct proc_dir_entry *parent,
- 		const struct proc_ops *proc_ops, void *data)
-@@ -581,7 +588,6 @@ struct proc_dir_entry *proc_create_data(
- 	if (!p)
- 		return NULL;
- 	p->proc_ops = proc_ops;
--	pde_set_flags(p);
- 	return proc_register(parent, p);
+ 	return true;
  }
- EXPORT_SYMBOL(proc_create_data);
-@@ -632,7 +638,6 @@ struct proc_dir_entry *proc_create_seq_p
- 	p->proc_ops = &proc_seq_ops;
- 	p->seq_ops = ops;
- 	p->state_size = state_size;
--	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_seq_private);
-@@ -663,7 +668,6 @@ struct proc_dir_entry *proc_create_singl
- 		return NULL;
- 	p->proc_ops = &proc_single_ops;
- 	p->single_show = show;
--	pde_set_flags(p);
- 	return proc_register(parent, p);
- }
- EXPORT_SYMBOL(proc_create_single_data);
 
 
