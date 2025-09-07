@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246551D88D0;
-	Sun,  7 Sep 2025 20:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE8014BFA2;
+	Sun,  7 Sep 2025 20:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276222; cv=none; b=ifHDGRCRhsqhuoDzQrktRku6MYZyMBqjiAOlrpPx4Nr9oaGQVEiuS4qnQOQBjk7mWGleqSCc+z+6RgXV5Pol8FCiz5nIvFn+Fr0dn7Qq2G8qdlLS5AM5UBHDSIOwTi/01p7u0t4wQPwj/uwxicuM6zU6Ck2JA++Up2b4hjmuBcg=
+	t=1757276225; cv=none; b=LnpPPxXqJ3IQf6unfeCwn0Tq6y/YS09Z9PrX1ZVpZlx3TRlfjr29sGN4O3D6fidjRWlNlcFnpoJs8d47XK9ZUTXf7ffaZGEMQBHwIxpbpyhqKYwdAl3sKAlBix94IQ7E9/1OY7MtCpkGmoio+fJBzNhUU+43/uP1jqp5EDSD7oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276222; c=relaxed/simple;
-	bh=1x6pbrbZybFi9HTBfxA4Cdgu3EwuC/T4BvEJmQIDTr8=;
+	s=arc-20240116; t=1757276225; c=relaxed/simple;
+	bh=pYT+XW04jwk02pD2S2UMQFEThYp6y9uEdwf3ifsumYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpyJPZG0v8aJsW1ckUVvKNsjq7TjcriSZ8hQWSBEPFXYKThH+7l9JpUxIhcBW+Nk/LqYhKWRvLWJ31n8e7YI1omyNbHlWurCXK7U+VRbMbzX9JneNQyoXmj6NNsjACGk/P/buzxLqP/HtRWOkSwvm1NYab8uZaQdVfE/ogCaAzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOI/QOnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3JGk1fsUj8bceWOss+kogFPFTZS13qrefP+7HTtnapUxLBjD/Cf4gx9eoHIQWpaB6ZjWAMimP/aMKMK9wkckv9eS8RmDci2F7OrxFBZD168CWVS+y78ETS/bJt1vCIE3bhgvciTOiSHoDjoPMiOD+r/hsdo6bsj1P16LYKzWuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwvBVnbX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOI/QOnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F90C4CEF0;
-	Sun,  7 Sep 2025 20:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwvBVnbX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDFFC4CEF0;
+	Sun,  7 Sep 2025 20:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276222;
-	bh=1x6pbrbZybFi9HTBfxA4Cdgu3EwuC/T4BvEJmQIDTr8=;
+	s=korg; t=1757276225;
+	bh=pYT+XW04jwk02pD2S2UMQFEThYp6y9uEdwf3ifsumYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOI/QOnbZxJTv9jM69MjDA05NEM6C1wWWMKNTZblcCoi7mjquhhTVGW0sbVl07zwP
-	 V8GjXM9RyQCZ6FSYuEeVolfWZc7nsj1PCi1p155TrigHd0EwOwdtNyvGoqQs1TEMnb
-	 hgNwLQNY1i9PSxPHY85QNqXTjkKmPvz3r+gy10ms=
+	b=MwvBVnbXhzJw5oQA8Q9066z2gf5XSoeHqbv15Pdj4GpCux+D9NxVUgbaONFoSYnW8
+	 TEejWzexdVCTgcMol18On/YkhoZ0+bqrEt3bwACsRIMumHS6gBjRF0EMK5QWUJW3Et
+	 wCGFkIpyhG6AdFkJaflcAp9DKClDkWnoraQaM8fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Qingfang Deng <dqfext@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/104] net: atm: fix memory leak in atm_register_sysfs when device_register fail
-Date: Sun,  7 Sep 2025 21:57:53 +0200
-Message-ID: <20250907195608.634215118@linuxfoundation.org>
+Subject: [PATCH 6.1 037/104] ppp: fix memory leak in pad_compress_skb
+Date: Sun,  7 Sep 2025 21:57:54 +0200
+Message-ID: <20250907195608.660189685@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -52,75 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 0a228624bcc00af41f281a2a84c928595a74c17d ]
+[ Upstream commit 4844123fe0b853a4982c02666cb3fd863d701d50 ]
 
-When device_register() return error in atm_register_sysfs(), which can be
-triggered by kzalloc fail in device_private_init() or other reasons,
-kmemleak reports the following memory leaks:
+If alloc_skb() fails in pad_compress_skb(), it returns NULL without
+releasing the old skb. The caller does:
 
-unreferenced object 0xffff88810182fb80 (size 8):
-  comm "insmod", pid 504, jiffies 4294852464
-  hex dump (first 8 bytes):
-    61 64 75 6d 6d 79 30 00                          adummy0.
-  backtrace (crc 14dfadaf):
-    __kmalloc_node_track_caller_noprof+0x335/0x450
-    kvasprintf+0xb3/0x130
-    kobject_set_name_vargs+0x45/0x120
-    dev_set_name+0xa9/0xe0
-    atm_register_sysfs+0xf3/0x220
-    atm_dev_register+0x40b/0x780
-    0xffffffffa000b089
-    do_one_initcall+0x89/0x300
-    do_init_module+0x27b/0x7d0
-    load_module+0x54cd/0x5ff0
-    init_module_from_file+0xe4/0x150
-    idempotent_init_module+0x32c/0x610
-    __x64_sys_finit_module+0xbd/0x120
-    do_syscall_64+0xa8/0x270
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    skb = pad_compress_skb(ppp, skb);
+    if (!skb)
+        goto drop;
 
-When device_create_file() return error in atm_register_sysfs(), the same
-issue also can be triggered.
+drop:
+    kfree_skb(skb);
 
-Function put_device() should be called to release kobj->name memory and
-other device resource, instead of kfree().
+When pad_compress_skb() returns NULL, the reference to the old skb is
+lost and kfree_skb(skb) ends up doing nothing, leading to a memory leak.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250901063537.1472221-1-wangliang74@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Align pad_compress_skb() semantics with realloc(): only free the old
+skb if allocation and compression succeed.  At the call site, use the
+new_skb variable so the original skb is not lost when pad_compress_skb()
+fails.
+
+Fixes: b3f9b92a6ec1 ("[PPP]: add PPP MPPE encryption module")
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://patch.msgid.link/20250903100726.269839-1-dqfext@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/resources.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/atm/resources.c b/net/atm/resources.c
-index b19d851e1f443..7c6fdedbcf4e5 100644
---- a/net/atm/resources.c
-+++ b/net/atm/resources.c
-@@ -112,7 +112,9 @@ struct atm_dev *atm_dev_register(const char *type, struct device *parent,
- 
- 	if (atm_proc_dev_register(dev) < 0) {
- 		pr_err("atm_proc_dev_register failed for dev %s\n", type);
--		goto out_fail;
-+		mutex_unlock(&atm_dev_mutex);
-+		kfree(dev);
-+		return NULL;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index cbf1c1f23281d..f184368d5c5e7 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1753,7 +1753,6 @@ pad_compress_skb(struct ppp *ppp, struct sk_buff *skb)
+ 		 */
+ 		if (net_ratelimit())
+ 			netdev_err(ppp->dev, "ppp: compressor dropped pkt\n");
+-		kfree_skb(skb);
+ 		consume_skb(new_skb);
+ 		new_skb = NULL;
+ 	}
+@@ -1855,9 +1854,10 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 					   "down - pkt dropped.\n");
+ 			goto drop;
+ 		}
+-		skb = pad_compress_skb(ppp, skb);
+-		if (!skb)
++		new_skb = pad_compress_skb(ppp, skb);
++		if (!new_skb)
+ 			goto drop;
++		skb = new_skb;
  	}
  
- 	if (atm_register_sysfs(dev, parent) < 0) {
-@@ -128,7 +130,7 @@ struct atm_dev *atm_dev_register(const char *type, struct device *parent,
- 	return dev;
- 
- out_fail:
--	kfree(dev);
-+	put_device(&dev->class_dev);
- 	dev = NULL;
- 	goto out;
- }
+ 	/*
 -- 
 2.50.1
 
