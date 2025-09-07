@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7304189BB0;
-	Sun,  7 Sep 2025 20:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF697D528;
+	Sun,  7 Sep 2025 20:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276695; cv=none; b=Y5l0ql058TnTrfQFg1TaMUK5VoGaYoJBke+i7OmpxxfKqkduXBgGkB9jLZEDX2J4WVc/xFNB+iGuamPYmapWrWcpLsHsw+IfTKRD0etPJS5WHg2ZcN2oR4r6QBgcVoV9TfDXJpUaYiB09KFOEezMLgUisSxuC34ntGOuE81/3gY=
+	t=1757276699; cv=none; b=YXsfBHeeGe1JKMVD0nZEPmIrp6o9eD38LTNuS2sE3+EY20LQUl/TlqB0tMyg2Nv9SjrRRwg+ZvZYIGoBiFsP3PAfMwBeh5Agwlc3N0ACm1PBr2PTRdf4OpgQi/4Zww++dr2IU+hy1JmcOZzfn8uUks4s+t5epC85021HMPifA24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276695; c=relaxed/simple;
-	bh=2WyPavsNqRawZXGBt5jB4f3QBMs5cPHIxOkROJ/IyrA=;
+	s=arc-20240116; t=1757276699; c=relaxed/simple;
+	bh=UMSmyIRqCohQZyOI6fG6GNHvQr4QEjKuXOMTmnOD29Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mS/j+OCjwyvQC9U6tsk3fRXEvNpY1ticdaVNdDqhLtl6tJM3g1VQMne7l44+5FHnlBYZ74CNzI01S7zncEvlaYcBQqF+EQq/Z4UytamiEt5cEa0mJCLjkVMjaniBpQ7nN41u3BROqMJwxINR39J/yQdhAYb2uLzqJU9l0yClY2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdvYqF2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwLZ10rfzBhEe6I+1KffgxkdckENXL5TDUWhGDIjg+uUF0n+ZKqsywD0OiHRuAP5J9jaURGmu7jgxtRkOFhGlBX8JkRX7tat0tim2eHnnTEg8mFgrsfFAWdZnYqvBubtAIPCX9RsHqjk1EvlUosg7wf5fLGWpsUS5OmYOtRgmOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eifVOTTv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdvYqF2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B9CC4CEF0;
-	Sun,  7 Sep 2025 20:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eifVOTTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657B2C4CEF9;
+	Sun,  7 Sep 2025 20:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276695;
-	bh=2WyPavsNqRawZXGBt5jB4f3QBMs5cPHIxOkROJ/IyrA=;
+	s=korg; t=1757276698;
+	bh=UMSmyIRqCohQZyOI6fG6GNHvQr4QEjKuXOMTmnOD29Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdvYqF2JvTDaPK8qQLtfXvpDANfjxoQ6T3QQ9JRsGJB/Hy9uLhQNmeD0i9AbCyR/x
-	 fLP/jxz4s3e9rnt2czp3PDhzDF/FuzS9XdlSTUCfP6A0shDCrVm2185AlHVd1HdnRu
-	 FSDX1CEF9viqHdytB8/7FL2K+DD3r8ZKUwgqoMv4=
+	b=eifVOTTvYFtXzjig9JbSzW/go1HvXsRD+dH0oEXFEPilH3GHHU35dwxDuZSbOSOmb
+	 9THnxH0yjTie0nzMUG+S174O4pva0IQ+Yr9bYw0c13hF1eC6n6U9rGeaRp0KeKVEfi
+	 4qKwNEshOI8Evw7bCgRYHPe5olU6EHE2y8bIBPWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Currier <dullfire@yahoo.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/121] PCI/MSI: Add an option to write MSIX ENTRY_DATA before any reads
-Date: Sun,  7 Sep 2025 21:58:36 +0200
-Message-ID: <20250907195611.890788497@linuxfoundation.org>
+Subject: [PATCH 6.6 081/121] memcg: drain obj stock on cpu hotplug teardown
+Date: Sun,  7 Sep 2025 21:58:37 +0200
+Message-ID: <20250907195611.916719134@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,54 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Currier <dullfire@yahoo.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit cf761e3dacc6ad5f65a4886d00da1f9681e6805a ]
+[ Upstream commit 9f01b4954490d4ccdbcc2b9be34a9921ceee9cbb ]
 
-Commit 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries") introduced a
-readl() from ENTRY_VECTOR_CTRL before the writel() to ENTRY_DATA.
+Currently on cpu hotplug teardown, only memcg stock is drained but we
+need to drain the obj stock as well otherwise we will miss the stats
+accumulated on the target cpu as well as the nr_bytes cached. The stats
+include MEMCG_KMEM, NR_SLAB_RECLAIMABLE_B & NR_SLAB_UNRECLAIMABLE_B. In
+addition we are leaking reference to struct obj_cgroup object.
 
-This is correct, however some hardware, like the Sun Neptune chips, the NIU
-module, will cause an error and/or fatal trap if any MSIX table entry is
-read before the corresponding ENTRY_DATA field is written to.
-
-Add an optional early writel() in msix_prepare_msi_desc().
-
-Fixes: 7d5ec3d36123 ("PCI/MSI: Mask all unused MSI-X entries")
-Signed-off-by: Jonathan Currier <dullfire@yahoo.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241117234843.19236-2-dullfire@yahoo.com
-[ Adjust context ]
+Link: https://lkml.kernel.org/r/20250310230934.2913113-1-shakeel.butt@linux.dev
+Fixes: bf4f059954dc ("mm: memcg/slab: obj_cgroup API")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/msi/msi.c |    3 +++
- include/linux/pci.h   |    2 ++
- 2 files changed, 5 insertions(+)
+ mm/memcontrol.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -610,6 +610,9 @@ void msix_prepare_msi_desc(struct pci_de
- 	if (desc->pci.msi_attrib.can_mask) {
- 		void __iomem *addr = pci_msix_desc_addr(desc);
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2376,9 +2376,18 @@ static void drain_all_stock(struct mem_c
+ static int memcg_hotplug_cpu_dead(unsigned int cpu)
+ {
+ 	struct memcg_stock_pcp *stock;
++	struct obj_cgroup *old;
++	unsigned long flags;
  
-+		/* Workaround for SUN NIU insanity, which requires write before read */
-+		if (dev->dev_flags & PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST)
-+			writel(0, addr + PCI_MSIX_ENTRY_DATA);
- 		desc->pci.msix_ctrl = readl(addr + PCI_MSIX_ENTRY_VECTOR_CTRL);
- 	}
+ 	stock = &per_cpu(memcg_stock, cpu);
++
++	/* drain_obj_stock requires stock_lock */
++	local_lock_irqsave(&memcg_stock.stock_lock, flags);
++	old = drain_obj_stock(stock);
++	local_unlock_irqrestore(&memcg_stock.stock_lock, flags);
++
+ 	drain_stock(stock);
++	obj_cgroup_put(old);
+ 
+ 	return 0;
  }
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -245,6 +245,8 @@ enum pci_dev_flags {
- 	PCI_DEV_FLAGS_NO_RELAXED_ORDERING = (__force pci_dev_flags_t) (1 << 11),
- 	/* Device does honor MSI masking despite saying otherwise */
- 	PCI_DEV_FLAGS_HAS_MSI_MASKING = (__force pci_dev_flags_t) (1 << 12),
-+	/* Device requires write to PCI_MSIX_ENTRY_DATA before any MSIX reads */
-+	PCI_DEV_FLAGS_MSIX_TOUCH_ENTRY_DATA_FIRST = (__force pci_dev_flags_t) (1 << 13),
- };
- 
- enum pci_irq_reroute_variant {
 
 
