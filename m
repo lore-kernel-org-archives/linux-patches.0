@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C71ED528;
-	Sun,  7 Sep 2025 20:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57505D528;
+	Sun,  7 Sep 2025 20:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276683; cv=none; b=kt4UcAjuH23IN9CrHH5ESwoYVZxTZ2g/Lgy6/eZ2TFp+1MsSgO4Y8N/QLfbyxqzSUSfD72tgS+PPN8lptFmBAqTpsJaoctCUHQR/UdkTFdczQcwfpuiA2TDXW95Uj6CIqCgccYIcBB4DWCpnd6CRFSblgvoDePYY7I5nfmDidyg=
+	t=1757276686; cv=none; b=VlmtUo11LYqEP3EhpKlCifYOsziQV7MlxxoK9wPwKpMH1/MNqlfu1huzr2VAUWucZGydOU+DbyfgKT+AA8bNz0wCrpYIKPxJicOx4SHxmCtFuKUNhyAkDBIwZ+SgxLJ+est1YnRfTkuUvWZGWgwAZ2xL9SNV3/hwJIUfWRpjfw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276683; c=relaxed/simple;
-	bh=8eqZCmVy2sCEs8mv9MMXL07J+OLv+E1rw8wv/NByAEM=;
+	s=arc-20240116; t=1757276686; c=relaxed/simple;
+	bh=/nWa69YyEo9gI+g0tylMWRIEdR0MLukCGgjSdYD1BJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DsC7fFMzehGOU0Sb54qf5zDz42gVaTvc0XZ3VAXxdwy4RNbcVfAWuX31gEKHyQbm/rv1ehap4VITvfwWSzmSupuKpKc9MAU22AxpcngIJCPjKw0rkzJuFgff9ai8PQiAR+ipWsc+lQIqA5eQfC8A5cp+VIjlAyI1yBelffda28A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8RuojOW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BCrmpPEz2z5B23AAn3Wtj3rf/ZIytImNB4Mpmr/j4fkQurt2G0+cJxHCVabaYeD6/ITHJMvdxNqNx0U8RC6ykLActh2OSVFWzJlKdBBznuZP+PDgH6sVs8sO+5Iym6ciLNkRq66qEZGTPrHL6GCo0G6REBas29ZWWSTyr2WEugo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oc/1nLqH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8RuojOW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1BCC4CEF0;
-	Sun,  7 Sep 2025 20:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oc/1nLqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCED6C4CEF0;
+	Sun,  7 Sep 2025 20:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276683;
-	bh=8eqZCmVy2sCEs8mv9MMXL07J+OLv+E1rw8wv/NByAEM=;
+	s=korg; t=1757276686;
+	bh=/nWa69YyEo9gI+g0tylMWRIEdR0MLukCGgjSdYD1BJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8RuojOWXedG1/b1OJkJ1MgI5f1M5mbLzqX2gN1TQpAb7gg07nVFM/ttU3L5KGzg5
-	 BfIDrmH5Ztza3z2eK4QzJ6WAVCHFw2Vaw/Ab5wuBlfltehxaSY43XiThTHVNAgZ7kN
-	 /bIcT1WlCmPp7GaH3wJiwMrb/xMNqYws6ceCfwXA=
+	b=oc/1nLqHtPh9Xk93daq/eLzbLN54QlT68/A0CO/0d5JM4zd/LLEt/bdeqXR3iD7VI
+	 /LPPkqIOaeu1ScHhJkcHrxumEtSewGIsIoAjz9NNCAvlUAZCK5HWx6LELuv3/NmRku
+	 9FCBiYMSiiOKbo2sDFar9II5YAF9j3d8R/s58DaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Li Qiong <liqiong@nfschina.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/121] nouveau: fix disabling the nonstall irq due to storm code
-Date: Sun,  7 Sep 2025 21:58:32 +0200
-Message-ID: <20250907195611.787160933@linuxfoundation.org>
+Subject: [PATCH 6.6 077/121] mm/slub: avoid accessing metadata when pointer is invalid in object_err()
+Date: Sun,  7 Sep 2025 21:58:33 +0200
+Message-ID: <20250907195611.811975508@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,138 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Li Qiong <liqiong@nfschina.com>
 
-[ Upstream commit 0ef5c4e4dbbfcebaa9b2eca18097b43016727dfe ]
+[ Upstream commit b4efccec8d06ceb10a7d34d7b1c449c569d53770 ]
 
-Nouveau has code that when it gets an IRQ with no allowed handler
-it disables it to avoid storms.
+object_err() reports details of an object for further debugging, such as
+the freelist pointer, redzone, etc. However, if the pointer is invalid,
+attempting to access object metadata can lead to a crash since it does
+not point to a valid object.
 
-However with nonstall interrupts, we often disable them from
-the drm driver, but still request their emission via the push submission.
+One known path to the crash is when alloc_consistency_checks()
+determines the pointer to the allocated object is invalid because of a
+freelist corruption, and calls object_err() to report it. The debug code
+should report and handle the corruption gracefully and not crash in the
+process.
 
-Just don't disable nonstall irqs ever in normal operation, the
-event handling code will filter them out, and the driver will
-just enable/disable them at load time.
+In case the pointer is NULL or check_valid_pointer() returns false for
+the pointer, only print the pointer value and skip accessing metadata.
 
-This fixes timeouts we've been seeing on/off for a long time,
-but they became a lot more noticeable on Blackwell.
-
-This doesn't fix all of them, there is a subsequent fence emission
-fix to fix the last few.
-
-Fixes: 3ebd64aa3c4f ("drm/nouveau/intr: support multiple trees, and explicit interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://lore.kernel.org/r/20250829021633.1674524-1-airlied@gmail.com
-[ Fix a typo and a minor checkpatch.pl warning; remove "v2" from commit
-  subject. - Danilo ]
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-[ File renames + drop r535 changes ]
+Fixes: 81819f0fc828 ("SLUB core")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Li Qiong <liqiong@nfschina.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c  |    2 ++
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c |   23 +++++++++++++++--------
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c |    1 +
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h  |    2 ++
- 4 files changed, 20 insertions(+), 8 deletions(-)
+ mm/slub.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
-@@ -348,6 +348,8 @@ nvkm_fifo_dtor(struct nvkm_engine *engin
- 	nvkm_chid_unref(&fifo->chid);
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -988,7 +988,12 @@ static void object_err(struct kmem_cache
+ 		return;
  
- 	nvkm_event_fini(&fifo->nonstall.event);
-+	if (fifo->func->nonstall_dtor)
-+		fifo->func->nonstall_dtor(fifo);
- 	mutex_destroy(&fifo->mutex);
- 	return fifo;
- }
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
-@@ -516,19 +516,11 @@ ga100_fifo_nonstall_intr(struct nvkm_int
- static void
- ga100_fifo_nonstall_block(struct nvkm_event *event, int type, int index)
- {
--	struct nvkm_fifo *fifo = container_of(event, typeof(*fifo), nonstall.event);
--	struct nvkm_runl *runl = nvkm_runl_get(fifo, index, 0);
--
--	nvkm_inth_block(&runl->nonstall.inth);
- }
- 
- static void
- ga100_fifo_nonstall_allow(struct nvkm_event *event, int type, int index)
- {
--	struct nvkm_fifo *fifo = container_of(event, typeof(*fifo), nonstall.event);
--	struct nvkm_runl *runl = nvkm_runl_get(fifo, index, 0);
--
--	nvkm_inth_allow(&runl->nonstall.inth);
- }
- 
- const struct nvkm_event_func
-@@ -559,12 +551,26 @@ ga100_fifo_nonstall_ctor(struct nvkm_fif
- 		if (ret)
- 			return ret;
- 
-+		nvkm_inth_allow(&runl->nonstall.inth);
-+
- 		nr = max(nr, runl->id + 1);
- 	}
- 
- 	return nr;
- }
- 
-+void
-+ga100_fifo_nonstall_dtor(struct nvkm_fifo *fifo)
-+{
-+	struct nvkm_runl *runl;
-+
-+	nvkm_runl_foreach(runl, fifo) {
-+		if (runl->nonstall.vector < 0)
-+			continue;
-+		nvkm_inth_block(&runl->nonstall.inth);
+ 	slab_bug(s, "%s", reason);
+-	print_trailer(s, slab, object);
++	if (!object || !check_valid_pointer(s, slab, object)) {
++		print_slab_info(slab);
++		pr_err("Invalid pointer 0x%p\n", object);
++	} else {
++		print_trailer(s, slab, object);
 +	}
-+}
-+
- int
- ga100_fifo_runl_ctor(struct nvkm_fifo *fifo)
- {
-@@ -594,6 +600,7 @@ ga100_fifo = {
- 	.runl_ctor = ga100_fifo_runl_ctor,
- 	.mmu_fault = &tu102_fifo_mmu_fault,
- 	.nonstall_ctor = ga100_fifo_nonstall_ctor,
-+	.nonstall_dtor = ga100_fifo_nonstall_dtor,
- 	.nonstall = &ga100_fifo_nonstall,
- 	.runl = &ga100_runl,
- 	.runq = &ga100_runq,
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga102.c
-@@ -28,6 +28,7 @@ ga102_fifo = {
- 	.runl_ctor = ga100_fifo_runl_ctor,
- 	.mmu_fault = &tu102_fifo_mmu_fault,
- 	.nonstall_ctor = ga100_fifo_nonstall_ctor,
-+	.nonstall_dtor = ga100_fifo_nonstall_dtor,
- 	.nonstall = &ga100_fifo_nonstall,
- 	.runl = &ga100_runl,
- 	.runq = &ga100_runq,
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/priv.h
-@@ -38,6 +38,7 @@ struct nvkm_fifo_func {
- 	void (*start)(struct nvkm_fifo *, unsigned long *);
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ }
  
- 	int (*nonstall_ctor)(struct nvkm_fifo *);
-+	void (*nonstall_dtor)(struct nvkm_fifo *);
- 	const struct nvkm_event_func *nonstall;
- 
- 	const struct nvkm_runl_func *runl;
-@@ -194,6 +195,7 @@ extern const struct nvkm_fifo_func_mmu_f
- 
- int ga100_fifo_runl_ctor(struct nvkm_fifo *);
- int ga100_fifo_nonstall_ctor(struct nvkm_fifo *);
-+void ga100_fifo_nonstall_dtor(struct nvkm_fifo *);
- extern const struct nvkm_event_func ga100_fifo_nonstall;
- extern const struct nvkm_runl_func ga100_runl;
- extern const struct nvkm_runq_func ga100_runq;
 
 
