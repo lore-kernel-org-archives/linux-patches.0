@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D4B4315A;
-	Sun,  7 Sep 2025 20:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E944315A;
+	Sun,  7 Sep 2025 20:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277748; cv=none; b=ZDBS6PFbBRF7xBkopLSC/yiGSSThJhenHCemWFAEilIkyFRbP0M2EtY8utcMlBYC/xv4RIVKDs3lfE7wakGe4G+xV8haUrsKrCK+yagxL9NqKCL2w1TDX/mc7usuGKMg2MCueHE/6rDjSJQCwNusMiCZ2T2AHaggL8bon9IO8FE=
+	t=1757277752; cv=none; b=o2q6v8Qw40r543aVNOrwsAtAuLti6gs+9bFQwCHhG7oNqKNEyGGPhMqZpMnfrM6kFuri23oooGEh5dU/cSdIXaN4xZXSA80O9WCgZPsXSsqbfplGIUFAPUT0PQMTX7p+HUI1JbpW7oGZrfQmFjE8c4zSajxAGl9M81s3wt7ldV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277748; c=relaxed/simple;
-	bh=8QeXkyOY8U7LunKnNszYhbI8sjZZlhcOjoTauAqC3cU=;
+	s=arc-20240116; t=1757277752; c=relaxed/simple;
+	bh=gvDgAz5BiaE6qD0teLF/f00Zmz1jj8dmXIV6k0mo6YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3NTR61GUPHZ5rFDg5jB779sOvbQwgpqDoWgqKHZu442/d4T8Az04jBcsVRQv3nA6tzjBMGR47ILpCJnj1pPwRI/Z2wXSatgmk223OGK0khSaU/wfsXIPOVhclZ1pKuJJF0VUmA//VIXkR3/gnLq4Migr4jzXtlrzFpxxsJw2Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIHAJA0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t112fohfvq0Yb81Xq4+VUPJQsPaiuqPmeTDLxsYolaWp6eUXk0NNiJkayaTXYiG157VEgJCk7lDSAh9lJFC+U6wzBglscU3eyn+zTix5CHNjsfNVgoKM5GzA5Gzrdk/x7tmdDqQehs9+G9uorclQR9UZCJl/fRcBjomdzsSMHRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3Brr0eK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIHAJA0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F41C4CEF0;
-	Sun,  7 Sep 2025 20:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3Brr0eK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582CDC4CEF0;
+	Sun,  7 Sep 2025 20:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277748;
-	bh=8QeXkyOY8U7LunKnNszYhbI8sjZZlhcOjoTauAqC3cU=;
+	s=korg; t=1757277751;
+	bh=gvDgAz5BiaE6qD0teLF/f00Zmz1jj8dmXIV6k0mo6YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIHAJA0LhheIM6Sa3/8SbALy+tbM0aGlO4hU/gjv+ijQlt0PCG+CkwmgJL0k84ysA
-	 q7x8PcyY/f73CCbDa7z7oKTiYDCtH78nuiiiepyW37JBhEqLHpxeXZBDCUSeiCif6L
-	 1elzYozRYmzbikwywakdDHGTaWLg2gRxiNw1S7Lw=
+	b=C3Brr0eK+Oi/dfNALRIhnnjV4SfRKhsUeHOMJFzGPL8jfAlTLmc1Q3ugUEHx28ncr
+	 xQeYtyWN3/c/KV+WANY7os1dNPnTYv0qmyq/vdGTEV0ad4cJqRIpqqHL4KJbWLP9Pf
+	 uL4yaq0+FgWxKR3oKGQkMn0QhHTk2RgHqOObrFE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangshiguang <yangshiguang@xiaomi.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.16 109/183] mm: slub: avoid wake up kswapd in set_track_prepare
-Date: Sun,  7 Sep 2025 21:58:56 +0200
-Message-ID: <20250907195618.380996558@linuxfoundation.org>
+	Christian Loehle <christian.loehle@arm.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>
+Subject: [PATCH 6.16 110/183] sched: Fix sched_numa_find_nth_cpu() if mask offline
+Date: Sun,  7 Sep 2025 21:58:57 +0200
+Message-ID: <20250907195618.403765414@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -50,164 +50,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yangshiguang <yangshiguang@xiaomi.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-commit 850470a8413a8a78e772c4f6bd9fe81ec6bd5b0f upstream.
+commit 5ebf512f335053a42482ebff91e46c6dc156bf8c upstream.
 
-set_track_prepare() can incur lock recursion.
-The issue is that it is called from hrtimer_start_range_ns
-holding the per_cpu(hrtimer_bases)[n].lock, but when enabled
-CONFIG_DEBUG_OBJECTS_TIMERS, may wake up kswapd in set_track_prepare,
-and try to hold the per_cpu(hrtimer_bases)[n].lock.
+sched_numa_find_nth_cpu() uses a bsearch to look for the 'closest'
+CPU in sched_domains_numa_masks and given cpus mask. However they
+might not intersect if all CPUs in the cpus mask are offline. bsearch
+will return NULL in that case, bail out instead of dereferencing a
+bogus pointer.
 
-Avoid deadlock caused by implicitly waking up kswapd by passing in
-allocation flags, which do not contain __GFP_KSWAPD_RECLAIM in the
-debug_objects_fill_pool() case. Inside stack depot they are processed by
-gfp_nested_mask().
-Since ___slab_alloc() has preemption disabled, we mask out
-__GFP_DIRECT_RECLAIM from the flags there.
+The previous behaviour lead to this bug when using maxcpus=4 on an
+rk3399 (LLLLbb) (i.e. booting with all big CPUs offline):
 
-The oops looks something like:
+[    1.422922] Unable to handle kernel paging request at virtual address ffffff8000000000
+[    1.423635] Mem abort info:
+[    1.423889]   ESR = 0x0000000096000006
+[    1.424227]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    1.424715]   SET = 0, FnV = 0
+[    1.424995]   EA = 0, S1PTW = 0
+[    1.425279]   FSC = 0x06: level 2 translation fault
+[    1.425735] Data abort info:
+[    1.425998]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+[    1.426499]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    1.426952]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    1.427428] swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000004a9f000
+[    1.428038] [ffffff8000000000] pgd=18000000f7fff403, p4d=18000000f7fff403, pud=18000000f7fff403, pmd=0000000000000000
+[    1.429014] Internal error: Oops: 0000000096000006 [#1]  SMP
+[    1.429525] Modules linked in:
+[    1.429813] CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.17.0-rc4-dirty #343 PREEMPT
+[    1.430559] Hardware name: Pine64 RockPro64 v2.1 (DT)
+[    1.431012] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    1.431634] pc : sched_numa_find_nth_cpu+0x2a0/0x488
+[    1.432094] lr : sched_numa_find_nth_cpu+0x284/0x488
+[    1.432543] sp : ffffffc084e1b960
+[    1.432843] x29: ffffffc084e1b960 x28: ffffff80078a8800 x27: ffffffc0846eb1d0
+[    1.433495] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+[    1.434144] x23: 0000000000000000 x22: fffffffffff7f093 x21: ffffffc081de6378
+[    1.434792] x20: 0000000000000000 x19: 0000000ffff7f093 x18: 00000000ffffffff
+[    1.435441] x17: 3030303866666666 x16: 66663d736b73616d x15: ffffffc104e1b5b7
+[    1.436091] x14: 0000000000000000 x13: ffffffc084712860 x12: 0000000000000372
+[    1.436739] x11: 0000000000000126 x10: ffffffc08476a860 x9 : ffffffc084712860
+[    1.437389] x8 : 00000000ffffefff x7 : ffffffc08476a860 x6 : 0000000000000000
+[    1.438036] x5 : 000000000000bff4 x4 : 0000000000000000 x3 : 0000000000000000
+[    1.438683] x2 : 0000000000000000 x1 : ffffffc0846eb000 x0 : ffffff8000407b68
+[    1.439332] Call trace:
+[    1.439559]  sched_numa_find_nth_cpu+0x2a0/0x488 (P)
+[    1.440016]  smp_call_function_any+0xc8/0xd0
+[    1.440416]  armv8_pmu_init+0x58/0x27c
+[    1.440770]  armv8_cortex_a72_pmu_init+0x20/0x2c
+[    1.441199]  arm_pmu_device_probe+0x1e4/0x5e8
+[    1.441603]  armv8_pmu_device_probe+0x1c/0x28
+[    1.442007]  platform_probe+0x5c/0xac
+[    1.442347]  really_probe+0xbc/0x298
+[    1.442683]  __driver_probe_device+0x78/0x12c
+[    1.443087]  driver_probe_device+0xdc/0x160
+[    1.443475]  __driver_attach+0x94/0x19c
+[    1.443833]  bus_for_each_dev+0x74/0xd4
+[    1.444190]  driver_attach+0x24/0x30
+[    1.444525]  bus_add_driver+0xe4/0x208
+[    1.444874]  driver_register+0x60/0x128
+[    1.445233]  __platform_driver_register+0x24/0x30
+[    1.445662]  armv8_pmu_driver_init+0x28/0x4c
+[    1.446059]  do_one_initcall+0x44/0x25c
+[    1.446416]  kernel_init_freeable+0x1dc/0x3bc
+[    1.446820]  kernel_init+0x20/0x1d8
+[    1.447151]  ret_from_fork+0x10/0x20
+[    1.447493] Code: 90022e21 f000e5f5 910de2b5 2a1703e2 (f8767803)
+[    1.448040] ---[ end trace 0000000000000000 ]---
+[    1.448483] note: swapper/0[1] exited with preempt_count 1
+[    1.449047] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+[    1.449741] SMP: stopping secondary CPUs
+[    1.450105] Kernel Offset: disabled
+[    1.450419] CPU features: 0x000000,00080000,20002001,0400421b
+[    1.450935] Memory Limit: none
+[    1.451217] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b ]---
 
-BUG: spinlock recursion on CPU#3, swapper/3/0
- lock: 0xffffff8a4bf29c80, .magic: dead4ead, .owner: swapper/3/0, .owner_cpu: 3
-Hardware name: Qualcomm Technologies, Inc. Popsicle based on SM8850 (DT)
-Call trace:
-spin_bug+0x0
-_raw_spin_lock_irqsave+0x80
-hrtimer_try_to_cancel+0x94
-task_contending+0x10c
-enqueue_dl_entity+0x2a4
-dl_server_start+0x74
-enqueue_task_fair+0x568
-enqueue_task+0xac
-do_activate_task+0x14c
-ttwu_do_activate+0xcc
-try_to_wake_up+0x6c8
-default_wake_function+0x20
-autoremove_wake_function+0x1c
-__wake_up+0xac
-wakeup_kswapd+0x19c
-wake_all_kswapds+0x78
-__alloc_pages_slowpath+0x1ac
-__alloc_pages_noprof+0x298
-stack_depot_save_flags+0x6b0
-stack_depot_save+0x14
-set_track_prepare+0x5c
-___slab_alloc+0xccc
-__kmalloc_cache_noprof+0x470
-__set_page_owner+0x2bc
-post_alloc_hook[jt]+0x1b8
-prep_new_page+0x28
-get_page_from_freelist+0x1edc
-__alloc_pages_noprof+0x13c
-alloc_slab_page+0x244
-allocate_slab+0x7c
-___slab_alloc+0x8e8
-kmem_cache_alloc_noprof+0x450
-debug_objects_fill_pool+0x22c
-debug_object_activate+0x40
-enqueue_hrtimer[jt]+0xdc
-hrtimer_start_range_ns+0x5f8
-...
+Yury: with the fix, the function returns cpu == nr_cpu_ids, and later in
 
-Signed-off-by: yangshiguang <yangshiguang@xiaomi.com>
-Fixes: 5cf909c553e9 ("mm/slub: use stackdepot to save stack trace in objects")
+	smp_call_function_any ->
+	  smp_call_function_single ->
+	     generic_exec_single
+
+we test the cpu for '>= nr_cpu_ids' and return -ENXIO. So everything is
+handled correctly.
+
+Fixes: cd7f55359c90 ("sched: add sched_numa_find_nth_cpu()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |   30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ kernel/sched/topology.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -926,19 +926,19 @@ static struct track *get_track(struct km
- }
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -2212,6 +2212,8 @@ int sched_numa_find_nth_cpu(const struct
+ 		goto unlock;
  
- #ifdef CONFIG_STACKDEPOT
--static noinline depot_stack_handle_t set_track_prepare(void)
-+static noinline depot_stack_handle_t set_track_prepare(gfp_t gfp_flags)
- {
- 	depot_stack_handle_t handle;
- 	unsigned long entries[TRACK_ADDRS_COUNT];
- 	unsigned int nr_entries;
+ 	hop_masks = bsearch(&k, k.masks, sched_domains_numa_levels, sizeof(k.masks[0]), hop_cmp);
++	if (!hop_masks)
++		goto unlock;
+ 	hop = hop_masks	- k.masks;
  
- 	nr_entries = stack_trace_save(entries, ARRAY_SIZE(entries), 3);
--	handle = stack_depot_save(entries, nr_entries, GFP_NOWAIT);
-+	handle = stack_depot_save(entries, nr_entries, gfp_flags);
- 
- 	return handle;
- }
- #else
--static inline depot_stack_handle_t set_track_prepare(void)
-+static inline depot_stack_handle_t set_track_prepare(gfp_t gfp_flags)
- {
- 	return 0;
- }
-@@ -960,9 +960,9 @@ static void set_track_update(struct kmem
- }
- 
- static __always_inline void set_track(struct kmem_cache *s, void *object,
--				      enum track_item alloc, unsigned long addr)
-+				      enum track_item alloc, unsigned long addr, gfp_t gfp_flags)
- {
--	depot_stack_handle_t handle = set_track_prepare();
-+	depot_stack_handle_t handle = set_track_prepare(gfp_flags);
- 
- 	set_track_update(s, object, alloc, addr, handle);
- }
-@@ -1890,9 +1890,9 @@ static inline bool free_debug_processing
- static inline void slab_pad_check(struct kmem_cache *s, struct slab *slab) {}
- static inline int check_object(struct kmem_cache *s, struct slab *slab,
- 			void *object, u8 val) { return 1; }
--static inline depot_stack_handle_t set_track_prepare(void) { return 0; }
-+static inline depot_stack_handle_t set_track_prepare(gfp_t gfp_flags) { return 0; }
- static inline void set_track(struct kmem_cache *s, void *object,
--			     enum track_item alloc, unsigned long addr) {}
-+			     enum track_item alloc, unsigned long addr, gfp_t gfp_flags) {}
- static inline void add_full(struct kmem_cache *s, struct kmem_cache_node *n,
- 					struct slab *slab) {}
- static inline void remove_full(struct kmem_cache *s, struct kmem_cache_node *n,
-@@ -3849,9 +3849,14 @@ new_objects:
- 			 * For debug caches here we had to go through
- 			 * alloc_single_from_partial() so just store the
- 			 * tracking info and return the object.
-+			 *
-+			 * Due to disabled preemption we need to disallow
-+			 * blocking. The flags are further adjusted by
-+			 * gfp_nested_mask() in stack_depot itself.
- 			 */
- 			if (s->flags & SLAB_STORE_USER)
--				set_track(s, freelist, TRACK_ALLOC, addr);
-+				set_track(s, freelist, TRACK_ALLOC, addr,
-+					  gfpflags & ~(__GFP_DIRECT_RECLAIM));
- 
- 			return freelist;
- 		}
-@@ -3883,7 +3888,8 @@ new_objects:
- 			goto new_objects;
- 
- 		if (s->flags & SLAB_STORE_USER)
--			set_track(s, freelist, TRACK_ALLOC, addr);
-+			set_track(s, freelist, TRACK_ALLOC, addr,
-+				  gfpflags & ~(__GFP_DIRECT_RECLAIM));
- 
- 		return freelist;
- 	}
-@@ -4394,8 +4400,12 @@ static noinline void free_to_partial_lis
- 	unsigned long flags;
- 	depot_stack_handle_t handle = 0;
- 
-+	/*
-+	 * We cannot use GFP_NOWAIT as there are callsites where waking up
-+	 * kswapd could deadlock
-+	 */
- 	if (s->flags & SLAB_STORE_USER)
--		handle = set_track_prepare();
-+		handle = set_track_prepare(__GFP_NOWARN);
- 
- 	spin_lock_irqsave(&n->list_lock, flags);
- 
+ 	ret = hop ?
 
 
