@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133F71E1C1A;
-	Sun,  7 Sep 2025 20:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24874D528;
+	Sun,  7 Sep 2025 20:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276868; cv=none; b=NSum6egnyzhXJ87ns0gudN3tFum+1cdKixiRfGxXJDzaRrkK0wtZw0xFftD0Zf3myHwFm8BBKJohjCvC/i8Tb+Kkq+UyuOr4wP/sbBLwkzpLLA54hEUQl4zZIIYIIbGQOjewfC/2vI/5+2L05l/DnbG9o5gfVwcdCJK3kNi3Wk4=
+	t=1757276871; cv=none; b=oFT6XYcOq2CXC2e9uzFUelBjk8QqGiNK63SvmrgW8ajEA6tEUYZka5voUY9qpqnype6M0dwjsBlxcSFQ1MJKIqoIlcDJ4oPJrNjzbVTFIz6Khz4+lhmyVgKM0rsuhy0AoMqNwxGaPG7LE8+6RFgZo+iIYQbTTSCu8tmlX+7b8xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276868; c=relaxed/simple;
-	bh=lAGCapAROlIdc2nwy7DCsWSYoLKkRi8lgYj+MFBJYBo=;
+	s=arc-20240116; t=1757276871; c=relaxed/simple;
+	bh=tM0S1AeJCXRIDSy3nF+1kx1HfVXhnbGag1I9ExJ+RYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubnJsFkGzHVHXXA4SfUMJyRBB7MZ5jvDfBrtyQwAjBazp8Puj9l7ErGu5UM03GxE+wnbN3AVm/pFEYqYZKj7+0pL9gGlVIaM8TWcj+oYstQX9siLeI2ysLXr6qpC1MszFfQ8VWbGDSpKUgId8FCSqHHjt0ZlJlB5QC3Lpc6HPvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSjjUnXo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHsPXlP3g830nFwfCL5DlgcqITcCqiRf/ODsroUBzBHwoxffWu3DXcJJDYQk7cV4NIUqaeZOZBRdkHHJsjK50Obbz4NuifyLLP8A+B7SxKTuTiOHZ1L07tGRsHlr1mrQasRMllP/YkETbmGGO148KHzRrQX13YLnGIF3YKUY2/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RB9SJOab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSjjUnXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B030C4CEF0;
-	Sun,  7 Sep 2025 20:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RB9SJOab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975EEC4CEF0;
+	Sun,  7 Sep 2025 20:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276868;
-	bh=lAGCapAROlIdc2nwy7DCsWSYoLKkRi8lgYj+MFBJYBo=;
+	s=korg; t=1757276871;
+	bh=tM0S1AeJCXRIDSy3nF+1kx1HfVXhnbGag1I9ExJ+RYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSjjUnXoyTw4he9rUyqWHiBoPa76RjnA1nVdupNjRApPvO0lrVq4goFTAeG4K/EF6
-	 ZwHwow/ir6BYpDl5HHBzqIliCEP3THLPnRIxmDnjBp6NBaHQd7eEyMdyD0RTP43tJ1
-	 6ma4/riyzGzZdGOrL1YJ9wScq9H7GpTAY+4otYuc=
+	b=RB9SJOabIhM6lQrPQv+qb2WgZl2Bq0fWMnq62msFcZgA9vy+ejRAf65SVJpaTA64M
+	 ETqM4F2spI6juDlrG196vn4LX6FUrAFyrqN08EU6h9yBSN+JLB/xRd8ck7R40Mumw3
+	 hs0I0UExE+OY7lN/FIgSOW+ZAZrwHPDVs7kl4/4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Jiufei Xue <jiufei.xue@samsung.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/175] btrfs: zoned: skip ZONE FINISH of conventional zones
-Date: Sun,  7 Sep 2025 21:56:49 +0200
-Message-ID: <20250907195615.225419723@linuxfoundation.org>
+Subject: [PATCH 6.12 015/175] fs: writeback: fix use-after-free in __mark_inode_dirty()
+Date: Sun,  7 Sep 2025 21:56:50 +0200
+Message-ID: <20250907195615.247959430@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -53,107 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Jiufei Xue <jiufei.xue@samsung.com>
 
-[ Upstream commit f0ba0e7172a222ea6043b61ecd86723c46d7bcf2 ]
+[ Upstream commit d02d2c98d25793902f65803ab853b592c7a96b29 ]
 
-Don't call ZONE FINISH for conventional zones as this will result in I/O
-errors. Instead check if the zone that needs finishing is a conventional
-zone and if yes skip it.
+An use-after-free issue occurred when __mark_inode_dirty() get the
+bdi_writeback that was in the progress of switching.
 
-Also factor out the actual handling of finishing a single zone into a
-helper function, as do_zone_finish() is growing ever bigger and the
-indentations levels are getting higher.
+CPU: 1 PID: 562 Comm: systemd-random- Not tainted 6.6.56-gb4403bd46a8e #1
+......
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __mark_inode_dirty+0x124/0x418
+lr : __mark_inode_dirty+0x118/0x418
+sp : ffffffc08c9dbbc0
+........
+Call trace:
+ __mark_inode_dirty+0x124/0x418
+ generic_update_time+0x4c/0x60
+ file_modified+0xcc/0xd0
+ ext4_buffered_write_iter+0x58/0x124
+ ext4_file_write_iter+0x54/0x704
+ vfs_write+0x1c0/0x308
+ ksys_write+0x74/0x10c
+ __arm64_sys_write+0x1c/0x28
+ invoke_syscall+0x48/0x114
+ el0_svc_common.constprop.0+0xc0/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x40/0xe4
+ el0t_64_sync_handler+0x120/0x12c
+ el0t_64_sync+0x194/0x198
 
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Root cause is:
+
+systemd-random-seed                         kworker
+----------------------------------------------------------------------
+___mark_inode_dirty                     inode_switch_wbs_work_fn
+
+  spin_lock(&inode->i_lock);
+  inode_attach_wb
+  locked_inode_to_wb_and_lock_list
+     get inode->i_wb
+     spin_unlock(&inode->i_lock);
+     spin_lock(&wb->list_lock)
+  spin_lock(&inode->i_lock)
+  inode_io_list_move_locked
+  spin_unlock(&wb->list_lock)
+  spin_unlock(&inode->i_lock)
+                                    spin_lock(&old_wb->list_lock)
+                                      inode_do_switch_wbs
+                                        spin_lock(&inode->i_lock)
+                                        inode->i_wb = new_wb
+                                        spin_unlock(&inode->i_lock)
+                                    spin_unlock(&old_wb->list_lock)
+                                    wb_put_many(old_wb, nr_switched)
+                                      cgwb_release
+                                      old wb released
+  wb_wakeup_delayed() accesses wb,
+  then trigger the use-after-free
+  issue
+
+Fix this race condition by holding inode spinlock until
+wb_wakeup_delayed() finished.
+
+Signed-off-by: Jiufei Xue <jiufei.xue@samsung.com>
+Link: https://lore.kernel.org/20250728100715.3863241-1-jiufei.xue@samsung.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 55 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 20 deletions(-)
+ fs/fs-writeback.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 2fdb2987c83ac..8e8edfe0c6190 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2186,6 +2186,40 @@ static void wait_eb_writebacks(struct btrfs_block_group *block_group)
- 	rcu_read_unlock();
- }
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -2572,10 +2572,6 @@ void __mark_inode_dirty(struct inode *in
+ 			wakeup_bdi = inode_io_list_move_locked(inode, wb,
+ 							       dirty_list);
  
-+static int call_zone_finish(struct btrfs_block_group *block_group,
-+			    struct btrfs_io_stripe *stripe)
-+{
-+	struct btrfs_device *device = stripe->dev;
-+	const u64 physical = stripe->physical;
-+	struct btrfs_zoned_device_info *zinfo = device->zone_info;
-+	int ret;
-+
-+	if (!device->bdev)
-+		return 0;
-+
-+	if (zinfo->max_active_zones == 0)
-+		return 0;
-+
-+	if (btrfs_dev_is_sequential(device, physical)) {
-+		unsigned int nofs_flags;
-+
-+		nofs_flags = memalloc_nofs_save();
-+		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
-+				       physical >> SECTOR_SHIFT,
-+				       zinfo->zone_size >> SECTOR_SHIFT);
-+		memalloc_nofs_restore(nofs_flags);
-+
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
-+		zinfo->reserved_active_zones++;
-+	btrfs_dev_clear_active_zone(device, physical);
-+
-+	return 0;
-+}
-+
- static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_written)
- {
- 	struct btrfs_fs_info *fs_info = block_group->fs_info;
-@@ -2270,31 +2304,12 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
- 	down_read(&dev_replace->rwsem);
- 	map = block_group->physical_map;
- 	for (i = 0; i < map->num_stripes; i++) {
--		struct btrfs_device *device = map->stripes[i].dev;
--		const u64 physical = map->stripes[i].physical;
--		struct btrfs_zoned_device_info *zinfo = device->zone_info;
--		unsigned int nofs_flags;
+-			spin_unlock(&wb->list_lock);
+-			spin_unlock(&inode->i_lock);
+-			trace_writeback_dirty_inode_enqueue(inode);
 -
--		if (!device->bdev)
--			continue;
--
--		if (zinfo->max_active_zones == 0)
--			continue;
--
--		nofs_flags = memalloc_nofs_save();
--		ret = blkdev_zone_mgmt(device->bdev, REQ_OP_ZONE_FINISH,
--				       physical >> SECTOR_SHIFT,
--				       zinfo->zone_size >> SECTOR_SHIFT);
--		memalloc_nofs_restore(nofs_flags);
- 
-+		ret = call_zone_finish(block_group, &map->stripes[i]);
- 		if (ret) {
- 			up_read(&dev_replace->rwsem);
- 			return ret;
+ 			/*
+ 			 * If this is the first dirty inode for this bdi,
+ 			 * we have to wake-up the corresponding bdi thread
+@@ -2585,6 +2581,11 @@ void __mark_inode_dirty(struct inode *in
+ 			if (wakeup_bdi &&
+ 			    (wb->bdi->capabilities & BDI_CAP_WRITEBACK))
+ 				wb_wakeup_delayed(wb);
++
++			spin_unlock(&wb->list_lock);
++			spin_unlock(&inode->i_lock);
++			trace_writeback_dirty_inode_enqueue(inode);
++
+ 			return;
  		}
--
--		if (!(block_group->flags & BTRFS_BLOCK_GROUP_DATA))
--			zinfo->reserved_active_zones++;
--		btrfs_dev_clear_active_zone(device, physical);
  	}
- 	up_read(&dev_replace->rwsem);
- 
--- 
-2.50.1
-
 
 
