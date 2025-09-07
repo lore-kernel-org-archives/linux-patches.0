@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A438A1B424F;
-	Sun,  7 Sep 2025 20:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C872F189BB0;
+	Sun,  7 Sep 2025 20:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276553; cv=none; b=YvJV2IYSkBJ7zNucSjItIJdjxsngBV2e6B2T0ym4Olqdn+6g2/L6iozsTphzB7jni3EVTDuPnyUZjn0YUmZWcMTHunRJ2RBMgvTf+yp1JBN4nzKa+w5w1eixE64TTdayK8xxMZP/ReuUXDm0mLHdtSYDJtDJ6uru2O2IytSwcLk=
+	t=1757276556; cv=none; b=CDbE0PnTeO+5srIUC4ONKHwZjxp/p7fpI1fGQVW+0b4xqPHAO5bZOZuURsv7O1a+mS9p4nkk/8dD7z/sPpHCms0HHMwHEMAvrBGCMyJuwPM/Zl2TYvnw2wKNrMACdYbedC6a4KsC7HqrowIKmFLKetXzjVXYHRTtrvexd3DHreM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276553; c=relaxed/simple;
-	bh=EII8aC/yDzLnTGuUGr6TEjVS+EBjFC3+i6VhTWDVjw0=;
+	s=arc-20240116; t=1757276556; c=relaxed/simple;
+	bh=K6IkHk+aW/b+zBtrGeXtvn/ymj8tb75dXUSNwnfAzvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GC8T7Ecs3J8FN9RgVPMsqlZl6/W0GiDjxdH03ErCqAOWRJKSklzLvA04UvcVTvExUL7EIz8RqoKQz/7nyp70o87Ei+tpwFFNPkoe9angzRYqP50S38d6qOj6WCNKiGTD4EDRIaiVAsdLq4MR89NN3rBlNtRJhUgLw5+tRgS72yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z15jDGFF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LhaTWuPNBy6lloSHhMCKMNWPmFD/622SJV5PGGSglKHFIf4TUQI1+do5ZuBUBWTExW+2DB/A4H/4Q+29WEnJ0k3iWsbAhwLiUvaKU/WHpGBWVI0yB8rQZEbpcOWB+2ydD92zDbNAw2s1PViEPmwqF0nwigRsEADzxHwt0Re01pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQIhuo09; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z15jDGFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2674DC4CEF0;
-	Sun,  7 Sep 2025 20:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQIhuo09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3E3C4CEF0;
+	Sun,  7 Sep 2025 20:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276553;
-	bh=EII8aC/yDzLnTGuUGr6TEjVS+EBjFC3+i6VhTWDVjw0=;
+	s=korg; t=1757276556;
+	bh=K6IkHk+aW/b+zBtrGeXtvn/ymj8tb75dXUSNwnfAzvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z15jDGFFkWyZoKw2Sh6HVL384Op9sACeUkyrwfu9qR//bHJrtdNsLON3/H6E11eLj
-	 Tll2d/7OXBWTEQoGIMBgkeU/gZaw7a6RfsQsacAPM6aFwDryto6iyJUMCQpW7urA+G
-	 ms30SczEpLKdxO3lNvSZvKTleEbhRLL2bDxa8Sag=
+	b=zQIhuo09mkUWInii+5d+ICpek6RAkY7Jtw31PW88IiQQSpTZ5w9ViW6kwAT+S5Hjm
+	 6M0Xu4qJhJS/gWtBPYGEw790reltBxLxNIDN9D5mckM781lZVAR+VYEaAyMWmQ8ENR
+	 QeMmWAxO24MgSw7A3Eppc87SdVy95h7e+zWeeuBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Steffen Moser <lists@steffen-moser.de>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/121] wifi: ath11k: avoid forward declaration of ath11k_mac_start_vdev_delay()
-Date: Sun,  7 Sep 2025 21:57:51 +0200
-Message-ID: <20250907195610.732605619@linuxfoundation.org>
+Subject: [PATCH 6.6 036/121] wifi: ath11k: fix group data packet drops during rekey
+Date: Sun,  7 Sep 2025 21:57:52 +0200
+Message-ID: <20250907195610.757277718@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -46,523 +48,246 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 
-[ Upstream commit ce59902e56ea0477ad9bef0067d0e47b6c4d707d ]
+[ Upstream commit 97acb0259cc9cbfbd7ab689e25684f3d8ce10e26 ]
 
-Currently ath11k_mac_start_vdev_delay() needs a forward declaration because
-it is defined after where it is called. Avoid this by re-arranging
-ath11k_mac_station_add() and ath11k_mac_op_sta_state().
+During GTK rekey, mac80211 issues a clear key (if the old key exists)
+followed by an install key operation in the same context. This causes
+ath11k to send two WMI commands in quick succession: one to clear the
+old key and another to install the new key in the same slot.
 
-No functional changes. Compile tested only.
+Under certain conditions—especially under high load or time sensitive
+scenarios, firmware may process these commands asynchronously in a way
+that firmware assumes the key is cleared whereas hardware has a valid key.
+This inconsistency between hardware and firmware leads to group addressed
+packet drops. Only setting the same key again can restore a valid key in
+firmware and allow packets to be transmitted.
 
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240123025700.2929-4-quic_bqiang@quicinc.com
-Stable-dep-of: 97acb0259cc9 ("wifi: ath11k: fix group data packet drops during rekey")
+This issue remained latent because the host's clear key commands were
+not effective in firmware until commit 436a4e886598 ("ath11k: clear the
+keys properly via DISABLE_KEY"). That commit enabled the host to
+explicitly clear group keys, which inadvertently exposed the race.
+
+To mitigate this, restrict group key clearing across all modes (AP, STA,
+MESH). During rekey, the new key can simply be set on top of the previous
+one, avoiding the need for a clear followed by a set.
+
+However, in AP mode specifically, permit group key clearing when no
+stations are associated. This exception supports transitions from secure
+modes (e.g., WPA2/WPA3) to open mode, during which all associated peers
+are removed and the group key is cleared as part of the transition.
+
+Add a per-BSS station counter to track the presence of stations during
+set key operations. Also add a reset_group_keys flag to track the key
+re-installation state and avoid repeated installation of the same key
+when the number of connected stations transitions to non-zero within a
+rekey period.
+
+Additionally, for AP and Mesh modes, when the first station associates,
+reinstall the same group key that was last set. This ensures that the
+firmware recovers from any race that may have occurred during a previous
+key clear when no stations were associated.
+
+This change ensures that key clearing is permitted only when no clients
+are connected, avoiding packet loss while enabling dynamic security mode
+transitions.
+
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-02146-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+
+Reported-by: Steffen Moser <lists@steffen-moser.de>
+Closes: https://lore.kernel.org/linux-wireless/c6366409-9928-4dd7-bf7b-ba7fcf20eabf@steffen-moser.de
+Fixes: 436a4e886598 ("ath11k: clear the keys properly via DISABLE_KEY")
+Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Tested-by: Nicolas Escande <nico.escande@gmail.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250810170018.1124014-1-rameshkumar.sundaram@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 459 +++++++++++++-------------
- 1 file changed, 228 insertions(+), 231 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.h |   2 +
+ drivers/net/wireless/ath/ath11k/mac.c  | 111 +++++++++++++++++++++++--
+ 2 files changed, 104 insertions(+), 9 deletions(-)
 
+diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
+index fea96620e0672..4bb36dc6ae08b 100644
+--- a/drivers/net/wireless/ath/ath11k/core.h
++++ b/drivers/net/wireless/ath/ath11k/core.h
+@@ -365,6 +365,8 @@ struct ath11k_vif {
+ 	struct ieee80211_chanctx_conf chanctx;
+ 	struct ath11k_arp_ns_offload arp_ns_offload;
+ 	struct ath11k_rekey_data rekey_data;
++	u32 num_stations;
++	bool reinstall_group_keys;
+ 
+ #ifdef CONFIG_ATH11K_DEBUGFS
+ 	struct dentry *debugfs_twt;
 diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 58cc079f0df4a..eb295d092a33c 100644
+index eb295d092a33c..2921be9bd530c 100644
 --- a/drivers/net/wireless/ath/ath11k/mac.c
 +++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -254,9 +254,6 @@ static const u32 ath11k_smps_map[] = {
- 	[WLAN_HT_CAP_SM_PS_DISABLED] = WMI_PEER_SMPS_PS_NONE,
- };
- 
--static int ath11k_mac_start_vdev_delay(struct ieee80211_hw *hw,
--				       struct ieee80211_vif *vif);
--
- enum nl80211_he_ru_alloc ath11k_mac_phy_he_ru_to_nl80211_he_ru_alloc(u16 ru_phy)
- {
- 	enum nl80211_he_ru_alloc ret;
-@@ -4896,100 +4893,6 @@ static void ath11k_mac_dec_num_stations(struct ath11k_vif *arvif,
- 	ar->num_stations--;
+@@ -4205,6 +4205,40 @@ static int ath11k_clear_peer_keys(struct ath11k_vif *arvif,
+ 	return first_errno;
  }
  
--static int ath11k_mac_station_add(struct ath11k *ar,
--				  struct ieee80211_vif *vif,
--				  struct ieee80211_sta *sta)
--{
--	struct ath11k_base *ab = ar->ab;
--	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
--	struct ath11k_sta *arsta = ath11k_sta_to_arsta(sta);
--	struct peer_create_params peer_param;
--	int ret;
--
--	lockdep_assert_held(&ar->conf_mutex);
--
--	ret = ath11k_mac_inc_num_stations(arvif, sta);
++static int ath11k_set_group_keys(struct ath11k_vif *arvif)
++{
++	struct ath11k *ar = arvif->ar;
++	struct ath11k_base *ab = ar->ab;
++	const u8 *addr = arvif->bssid;
++	int i, ret, first_errno = 0;
++	struct ath11k_peer *peer;
++
++	spin_lock_bh(&ab->base_lock);
++	peer = ath11k_peer_find(ab, arvif->vdev_id, addr);
++	spin_unlock_bh(&ab->base_lock);
++
++	if (!peer)
++		return -ENOENT;
++
++	for (i = 0; i < ARRAY_SIZE(peer->keys); i++) {
++		struct ieee80211_key_conf *key = peer->keys[i];
++
++		if (!key || (key->flags & IEEE80211_KEY_FLAG_PAIRWISE))
++			continue;
++
++		ret = ath11k_install_key(arvif, key, SET_KEY, addr,
++					 WMI_KEY_GROUP);
++		if (ret < 0 && first_errno == 0)
++			first_errno = ret;
++
++		if (ret < 0)
++			ath11k_warn(ab, "failed to set group key of idx %d for vdev %d: %d\n",
++				    i, arvif->vdev_id, ret);
++	}
++
++	return first_errno;
++}
++
+ static int ath11k_mac_op_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
+ 				 struct ieee80211_vif *vif, struct ieee80211_sta *sta,
+ 				 struct ieee80211_key_conf *key)
+@@ -4214,6 +4248,7 @@ static int ath11k_mac_op_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
+ 	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
+ 	struct ath11k_peer *peer;
+ 	struct ath11k_sta *arsta;
++	bool is_ap_with_no_sta;
+ 	const u8 *peer_addr;
+ 	int ret = 0;
+ 	u32 flags = 0;
+@@ -4274,16 +4309,57 @@ static int ath11k_mac_op_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
+ 	else
+ 		flags |= WMI_KEY_GROUP;
+ 
+-	ret = ath11k_install_key(arvif, key, cmd, peer_addr, flags);
 -	if (ret) {
--		ath11k_warn(ab, "refusing to associate station: too many connected already (%d)\n",
--			    ar->max_num_stations);
+-		ath11k_warn(ab, "ath11k_install_key failed (%d)\n", ret);
 -		goto exit;
 -	}
--
--	arsta->rx_stats = kzalloc(sizeof(*arsta->rx_stats), GFP_KERNEL);
--	if (!arsta->rx_stats) {
--		ret = -ENOMEM;
--		goto dec_num_station;
--	}
--
--	peer_param.vdev_id = arvif->vdev_id;
--	peer_param.peer_addr = sta->addr;
--	peer_param.peer_type = WMI_PEER_TYPE_DEFAULT;
--
--	ret = ath11k_peer_create(ar, arvif, sta, &peer_param);
--	if (ret) {
--		ath11k_warn(ab, "Failed to add peer: %pM for VDEV: %d\n",
--			    sta->addr, arvif->vdev_id);
--		goto free_rx_stats;
--	}
--
--	ath11k_dbg(ab, ATH11K_DBG_MAC, "Added peer: %pM for VDEV: %d\n",
--		   sta->addr, arvif->vdev_id);
--
--	if (ath11k_debugfs_is_extd_tx_stats_enabled(ar)) {
--		arsta->tx_stats = kzalloc(sizeof(*arsta->tx_stats), GFP_KERNEL);
--		if (!arsta->tx_stats) {
--			ret = -ENOMEM;
--			goto free_peer;
--		}
--	}
--
--	if (ieee80211_vif_is_mesh(vif)) {
--		ath11k_dbg(ab, ATH11K_DBG_MAC,
--			   "setting USE_4ADDR for mesh STA %pM\n", sta->addr);
--		ret = ath11k_wmi_set_peer_param(ar, sta->addr,
--						arvif->vdev_id,
--						WMI_PEER_USE_4ADDR, 1);
--		if (ret) {
--			ath11k_warn(ab, "failed to set mesh STA %pM 4addr capability: %d\n",
--				    sta->addr, ret);
--			goto free_tx_stats;
--		}
--	}
--
--	ret = ath11k_dp_peer_setup(ar, arvif->vdev_id, sta->addr);
--	if (ret) {
--		ath11k_warn(ab, "failed to setup dp for peer %pM on vdev %i (%d)\n",
--			    sta->addr, arvif->vdev_id, ret);
--		goto free_tx_stats;
--	}
--
--	if (ab->hw_params.vdev_start_delay &&
--	    !arvif->is_started &&
--	    arvif->vdev_type != WMI_VDEV_TYPE_AP) {
--		ret = ath11k_mac_start_vdev_delay(ar->hw, vif);
--		if (ret) {
--			ath11k_warn(ab, "failed to delay vdev start: %d\n", ret);
--			goto free_tx_stats;
--		}
--	}
--
--	ewma_avg_rssi_init(&arsta->avg_rssi);
--	return 0;
--
--free_tx_stats:
--	kfree(arsta->tx_stats);
--	arsta->tx_stats = NULL;
--free_peer:
--	ath11k_peer_delete(ar, arvif->vdev_id, sta->addr);
--free_rx_stats:
--	kfree(arsta->rx_stats);
--	arsta->rx_stats = NULL;
--dec_num_station:
--	ath11k_mac_dec_num_stations(arvif, sta);
--exit:
--	return ret;
--}
--
- static u32 ath11k_mac_ieee80211_sta_bw_to_wmi(struct ath11k *ar,
- 					      struct ieee80211_sta *sta)
- {
-@@ -5018,140 +4921,6 @@ static u32 ath11k_mac_ieee80211_sta_bw_to_wmi(struct ath11k *ar,
- 	return bw;
- }
++	ath11k_dbg(ar->ab, ATH11K_DBG_MAC,
++		   "%s for peer %pM on vdev %d flags 0x%X, type = %d, num_sta %d\n",
++		   cmd == SET_KEY ? "SET_KEY" : "DEL_KEY", peer_addr, arvif->vdev_id,
++		   flags, arvif->vdev_type, arvif->num_stations);
++
++	/* Allow group key clearing only in AP mode when no stations are
++	 * associated. There is a known race condition in firmware where
++	 * group addressed packets may be dropped if the key is cleared
++	 * and immediately set again during rekey.
++	 *
++	 * During GTK rekey, mac80211 issues a clear key (if the old key
++	 * exists) followed by an install key operation for same key
++	 * index. This causes ath11k to send two WMI commands in quick
++	 * succession: one to clear the old key and another to install the
++	 * new key in the same slot.
++	 *
++	 * Under certain conditions—especially under high load or time
++	 * sensitive scenarios, firmware may process these commands
++	 * asynchronously in a way that firmware assumes the key is
++	 * cleared whereas hardware has a valid key. This inconsistency
++	 * between hardware and firmware leads to group addressed packet
++	 * drops after rekey.
++	 * Only setting the same key again can restore a valid key in
++	 * firmware and allow packets to be transmitted.
++	 *
++	 * There is a use case where an AP can transition from Secure mode
++	 * to open mode without a vdev restart by just deleting all
++	 * associated peers and clearing key, Hence allow clear key for
++	 * that case alone. Mark arvif->reinstall_group_keys in such cases
++	 * and reinstall the same key when the first peer is added,
++	 * allowing firmware to recover from the race if it had occurred.
++	 */
  
--static int ath11k_mac_op_sta_state(struct ieee80211_hw *hw,
--				   struct ieee80211_vif *vif,
--				   struct ieee80211_sta *sta,
--				   enum ieee80211_sta_state old_state,
--				   enum ieee80211_sta_state new_state)
--{
--	struct ath11k *ar = hw->priv;
--	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
--	struct ath11k_sta *arsta = ath11k_sta_to_arsta(sta);
--	struct ath11k_peer *peer;
--	int ret = 0;
--
--	/* cancel must be done outside the mutex to avoid deadlock */
--	if ((old_state == IEEE80211_STA_NONE &&
--	     new_state == IEEE80211_STA_NOTEXIST)) {
--		cancel_work_sync(&arsta->update_wk);
--		cancel_work_sync(&arsta->set_4addr_wk);
--	}
--
--	mutex_lock(&ar->conf_mutex);
--
--	if (old_state == IEEE80211_STA_NOTEXIST &&
--	    new_state == IEEE80211_STA_NONE) {
--		memset(arsta, 0, sizeof(*arsta));
--		arsta->arvif = arvif;
--		arsta->peer_ps_state = WMI_PEER_PS_STATE_DISABLED;
--		INIT_WORK(&arsta->update_wk, ath11k_sta_rc_update_wk);
--		INIT_WORK(&arsta->set_4addr_wk, ath11k_sta_set_4addr_wk);
--
--		ret = ath11k_mac_station_add(ar, vif, sta);
--		if (ret)
--			ath11k_warn(ar->ab, "Failed to add station: %pM for VDEV: %d\n",
--				    sta->addr, arvif->vdev_id);
--	} else if ((old_state == IEEE80211_STA_NONE &&
--		    new_state == IEEE80211_STA_NOTEXIST)) {
--		bool skip_peer_delete = ar->ab->hw_params.vdev_start_delay &&
--			vif->type == NL80211_IFTYPE_STATION;
--
--		ath11k_dp_peer_cleanup(ar, arvif->vdev_id, sta->addr);
--
--		if (!skip_peer_delete) {
--			ret = ath11k_peer_delete(ar, arvif->vdev_id, sta->addr);
--			if (ret)
--				ath11k_warn(ar->ab,
--					    "Failed to delete peer: %pM for VDEV: %d\n",
--					    sta->addr, arvif->vdev_id);
--			else
--				ath11k_dbg(ar->ab,
--					   ATH11K_DBG_MAC,
--					   "Removed peer: %pM for VDEV: %d\n",
--					   sta->addr, arvif->vdev_id);
--		}
--
--		ath11k_mac_dec_num_stations(arvif, sta);
--		mutex_lock(&ar->ab->tbl_mtx_lock);
--		spin_lock_bh(&ar->ab->base_lock);
--		peer = ath11k_peer_find(ar->ab, arvif->vdev_id, sta->addr);
--		if (skip_peer_delete && peer) {
--			peer->sta = NULL;
--		} else if (peer && peer->sta == sta) {
--			ath11k_warn(ar->ab, "Found peer entry %pM n vdev %i after it was supposedly removed\n",
--				    vif->addr, arvif->vdev_id);
--			ath11k_peer_rhash_delete(ar->ab, peer);
--			peer->sta = NULL;
--			list_del(&peer->list);
--			kfree(peer);
--			ar->num_peers--;
--		}
--		spin_unlock_bh(&ar->ab->base_lock);
--		mutex_unlock(&ar->ab->tbl_mtx_lock);
--
--		kfree(arsta->tx_stats);
--		arsta->tx_stats = NULL;
--
--		kfree(arsta->rx_stats);
--		arsta->rx_stats = NULL;
--	} else if (old_state == IEEE80211_STA_AUTH &&
--		   new_state == IEEE80211_STA_ASSOC &&
--		   (vif->type == NL80211_IFTYPE_AP ||
--		    vif->type == NL80211_IFTYPE_MESH_POINT ||
--		    vif->type == NL80211_IFTYPE_ADHOC)) {
--		ret = ath11k_station_assoc(ar, vif, sta, false);
--		if (ret)
--			ath11k_warn(ar->ab, "Failed to associate station: %pM\n",
--				    sta->addr);
--
--		spin_lock_bh(&ar->data_lock);
--		/* Set arsta bw and prev bw */
--		arsta->bw = ath11k_mac_ieee80211_sta_bw_to_wmi(ar, sta);
--		arsta->bw_prev = arsta->bw;
--		spin_unlock_bh(&ar->data_lock);
--	} else if (old_state == IEEE80211_STA_ASSOC &&
--		   new_state == IEEE80211_STA_AUTHORIZED) {
--		spin_lock_bh(&ar->ab->base_lock);
--
--		peer = ath11k_peer_find(ar->ab, arvif->vdev_id, sta->addr);
--		if (peer)
--			peer->is_authorized = true;
--
--		spin_unlock_bh(&ar->ab->base_lock);
--
--		if (vif->type == NL80211_IFTYPE_STATION && arvif->is_up) {
--			ret = ath11k_wmi_set_peer_param(ar, sta->addr,
--							arvif->vdev_id,
--							WMI_PEER_AUTHORIZE,
--							1);
--			if (ret)
--				ath11k_warn(ar->ab, "Unable to authorize peer %pM vdev %d: %d\n",
--					    sta->addr, arvif->vdev_id, ret);
--		}
--	} else if (old_state == IEEE80211_STA_AUTHORIZED &&
--		   new_state == IEEE80211_STA_ASSOC) {
--		spin_lock_bh(&ar->ab->base_lock);
--
--		peer = ath11k_peer_find(ar->ab, arvif->vdev_id, sta->addr);
--		if (peer)
--			peer->is_authorized = false;
--
--		spin_unlock_bh(&ar->ab->base_lock);
--	} else if (old_state == IEEE80211_STA_ASSOC &&
--		   new_state == IEEE80211_STA_AUTH &&
--		   (vif->type == NL80211_IFTYPE_AP ||
--		    vif->type == NL80211_IFTYPE_MESH_POINT ||
--		    vif->type == NL80211_IFTYPE_ADHOC)) {
--		ret = ath11k_station_disassoc(ar, vif, sta);
--		if (ret)
--			ath11k_warn(ar->ab, "Failed to disassociate station: %pM\n",
--				    sta->addr);
--	}
--
--	mutex_unlock(&ar->conf_mutex);
--	return ret;
--}
--
- static int ath11k_mac_op_sta_set_txpwr(struct ieee80211_hw *hw,
- 				       struct ieee80211_vif *vif,
- 				       struct ieee80211_sta *sta)
-@@ -9099,6 +8868,234 @@ static int ath11k_mac_op_get_txpower(struct ieee80211_hw *hw,
+-	ret = ath11k_dp_peer_rx_pn_replay_config(arvif, peer_addr, cmd, key);
+-	if (ret) {
+-		ath11k_warn(ab, "failed to offload PN replay detection %d\n", ret);
+-		goto exit;
++	is_ap_with_no_sta = (vif->type == NL80211_IFTYPE_AP &&
++			     !arvif->num_stations);
++	if ((flags & WMI_KEY_PAIRWISE) || cmd == SET_KEY || is_ap_with_no_sta) {
++		ret = ath11k_install_key(arvif, key, cmd, peer_addr, flags);
++		if (ret) {
++			ath11k_warn(ab, "ath11k_install_key failed (%d)\n", ret);
++			goto exit;
++		}
++
++		ret = ath11k_dp_peer_rx_pn_replay_config(arvif, peer_addr, cmd, key);
++		if (ret) {
++			ath11k_warn(ab, "failed to offload PN replay detection %d\n",
++				    ret);
++			goto exit;
++		}
++
++		if ((flags & WMI_KEY_GROUP) && cmd == SET_KEY && is_ap_with_no_sta)
++			arvif->reinstall_group_keys = true;
+ 	}
+ 
+ 	spin_lock_bh(&ab->base_lock);
+@@ -4876,6 +4952,7 @@ static int ath11k_mac_inc_num_stations(struct ath11k_vif *arvif,
+ 		return -ENOBUFS;
+ 
+ 	ar->num_stations++;
++	arvif->num_stations++;
+ 
  	return 0;
  }
+@@ -4891,6 +4968,7 @@ static void ath11k_mac_dec_num_stations(struct ath11k_vif *arvif,
+ 		return;
  
-+static int ath11k_mac_station_add(struct ath11k *ar,
-+				  struct ieee80211_vif *vif,
-+				  struct ieee80211_sta *sta)
-+{
-+	struct ath11k_base *ab = ar->ab;
-+	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
-+	struct ath11k_sta *arsta = ath11k_sta_to_arsta(sta);
-+	struct peer_create_params peer_param;
-+	int ret;
-+
-+	lockdep_assert_held(&ar->conf_mutex);
-+
-+	ret = ath11k_mac_inc_num_stations(arvif, sta);
-+	if (ret) {
-+		ath11k_warn(ab, "refusing to associate station: too many connected already (%d)\n",
-+			    ar->max_num_stations);
-+		goto exit;
-+	}
-+
-+	arsta->rx_stats = kzalloc(sizeof(*arsta->rx_stats), GFP_KERNEL);
-+	if (!arsta->rx_stats) {
-+		ret = -ENOMEM;
-+		goto dec_num_station;
-+	}
-+
-+	peer_param.vdev_id = arvif->vdev_id;
-+	peer_param.peer_addr = sta->addr;
-+	peer_param.peer_type = WMI_PEER_TYPE_DEFAULT;
-+
-+	ret = ath11k_peer_create(ar, arvif, sta, &peer_param);
-+	if (ret) {
-+		ath11k_warn(ab, "Failed to add peer: %pM for VDEV: %d\n",
-+			    sta->addr, arvif->vdev_id);
-+		goto free_rx_stats;
-+	}
-+
-+	ath11k_dbg(ab, ATH11K_DBG_MAC, "Added peer: %pM for VDEV: %d\n",
-+		   sta->addr, arvif->vdev_id);
-+
-+	if (ath11k_debugfs_is_extd_tx_stats_enabled(ar)) {
-+		arsta->tx_stats = kzalloc(sizeof(*arsta->tx_stats), GFP_KERNEL);
-+		if (!arsta->tx_stats) {
-+			ret = -ENOMEM;
-+			goto free_peer;
-+		}
-+	}
-+
-+	if (ieee80211_vif_is_mesh(vif)) {
-+		ath11k_dbg(ab, ATH11K_DBG_MAC,
-+			   "setting USE_4ADDR for mesh STA %pM\n", sta->addr);
-+		ret = ath11k_wmi_set_peer_param(ar, sta->addr,
-+						arvif->vdev_id,
-+						WMI_PEER_USE_4ADDR, 1);
-+		if (ret) {
-+			ath11k_warn(ab, "failed to set mesh STA %pM 4addr capability: %d\n",
-+				    sta->addr, ret);
-+			goto free_tx_stats;
-+		}
-+	}
-+
-+	ret = ath11k_dp_peer_setup(ar, arvif->vdev_id, sta->addr);
-+	if (ret) {
-+		ath11k_warn(ab, "failed to setup dp for peer %pM on vdev %i (%d)\n",
-+			    sta->addr, arvif->vdev_id, ret);
-+		goto free_tx_stats;
-+	}
-+
-+	if (ab->hw_params.vdev_start_delay &&
-+	    !arvif->is_started &&
-+	    arvif->vdev_type != WMI_VDEV_TYPE_AP) {
-+		ret = ath11k_mac_start_vdev_delay(ar->hw, vif);
-+		if (ret) {
-+			ath11k_warn(ab, "failed to delay vdev start: %d\n", ret);
-+			goto free_tx_stats;
-+		}
-+	}
-+
-+	ewma_avg_rssi_init(&arsta->avg_rssi);
-+	return 0;
-+
-+free_tx_stats:
-+	kfree(arsta->tx_stats);
-+	arsta->tx_stats = NULL;
-+free_peer:
-+	ath11k_peer_delete(ar, arvif->vdev_id, sta->addr);
-+free_rx_stats:
-+	kfree(arsta->rx_stats);
-+	arsta->rx_stats = NULL;
-+dec_num_station:
-+	ath11k_mac_dec_num_stations(arvif, sta);
-+exit:
-+	return ret;
-+}
-+
-+static int ath11k_mac_op_sta_state(struct ieee80211_hw *hw,
-+				   struct ieee80211_vif *vif,
-+				   struct ieee80211_sta *sta,
-+				   enum ieee80211_sta_state old_state,
-+				   enum ieee80211_sta_state new_state)
-+{
-+	struct ath11k *ar = hw->priv;
-+	struct ath11k_vif *arvif = ath11k_vif_to_arvif(vif);
-+	struct ath11k_sta *arsta = ath11k_sta_to_arsta(sta);
-+	struct ath11k_peer *peer;
-+	int ret = 0;
-+
-+	/* cancel must be done outside the mutex to avoid deadlock */
-+	if ((old_state == IEEE80211_STA_NONE &&
-+	     new_state == IEEE80211_STA_NOTEXIST)) {
-+		cancel_work_sync(&arsta->update_wk);
-+		cancel_work_sync(&arsta->set_4addr_wk);
-+	}
-+
-+	mutex_lock(&ar->conf_mutex);
-+
-+	if (old_state == IEEE80211_STA_NOTEXIST &&
-+	    new_state == IEEE80211_STA_NONE) {
-+		memset(arsta, 0, sizeof(*arsta));
-+		arsta->arvif = arvif;
-+		arsta->peer_ps_state = WMI_PEER_PS_STATE_DISABLED;
-+		INIT_WORK(&arsta->update_wk, ath11k_sta_rc_update_wk);
-+		INIT_WORK(&arsta->set_4addr_wk, ath11k_sta_set_4addr_wk);
-+
-+		ret = ath11k_mac_station_add(ar, vif, sta);
+ 	ar->num_stations--;
++	arvif->num_stations--;
+ }
+ 
+ static u32 ath11k_mac_ieee80211_sta_bw_to_wmi(struct ath11k *ar,
+@@ -8887,6 +8965,21 @@ static int ath11k_mac_station_add(struct ath11k *ar,
+ 		goto exit;
+ 	}
+ 
++	/* Driver allows the DEL KEY followed by SET KEY sequence for
++	 * group keys for only when there is no clients associated, if at
++	 * all firmware has entered the race during that window,
++	 * reinstalling the same key when the first sta connects will allow
++	 * firmware to recover from the race.
++	 */
++	if (arvif->num_stations == 1 && arvif->reinstall_group_keys) {
++		ath11k_dbg(ab, ATH11K_DBG_MAC, "set group keys on 1st station add for vdev %d\n",
++			   arvif->vdev_id);
++		ret = ath11k_set_group_keys(arvif);
 +		if (ret)
-+			ath11k_warn(ar->ab, "Failed to add station: %pM for VDEV: %d\n",
-+				    sta->addr, arvif->vdev_id);
-+	} else if ((old_state == IEEE80211_STA_NONE &&
-+		    new_state == IEEE80211_STA_NOTEXIST)) {
-+		bool skip_peer_delete = ar->ab->hw_params.vdev_start_delay &&
-+			vif->type == NL80211_IFTYPE_STATION;
-+
-+		ath11k_dp_peer_cleanup(ar, arvif->vdev_id, sta->addr);
-+
-+		if (!skip_peer_delete) {
-+			ret = ath11k_peer_delete(ar, arvif->vdev_id, sta->addr);
-+			if (ret)
-+				ath11k_warn(ar->ab,
-+					    "Failed to delete peer: %pM for VDEV: %d\n",
-+					    sta->addr, arvif->vdev_id);
-+			else
-+				ath11k_dbg(ar->ab,
-+					   ATH11K_DBG_MAC,
-+					   "Removed peer: %pM for VDEV: %d\n",
-+					   sta->addr, arvif->vdev_id);
-+		}
-+
-+		ath11k_mac_dec_num_stations(arvif, sta);
-+		mutex_lock(&ar->ab->tbl_mtx_lock);
-+		spin_lock_bh(&ar->ab->base_lock);
-+		peer = ath11k_peer_find(ar->ab, arvif->vdev_id, sta->addr);
-+		if (skip_peer_delete && peer) {
-+			peer->sta = NULL;
-+		} else if (peer && peer->sta == sta) {
-+			ath11k_warn(ar->ab, "Found peer entry %pM n vdev %i after it was supposedly removed\n",
-+				    vif->addr, arvif->vdev_id);
-+			ath11k_peer_rhash_delete(ar->ab, peer);
-+			peer->sta = NULL;
-+			list_del(&peer->list);
-+			kfree(peer);
-+			ar->num_peers--;
-+		}
-+		spin_unlock_bh(&ar->ab->base_lock);
-+		mutex_unlock(&ar->ab->tbl_mtx_lock);
-+
-+		kfree(arsta->tx_stats);
-+		arsta->tx_stats = NULL;
-+
-+		kfree(arsta->rx_stats);
-+		arsta->rx_stats = NULL;
-+	} else if (old_state == IEEE80211_STA_AUTH &&
-+		   new_state == IEEE80211_STA_ASSOC &&
-+		   (vif->type == NL80211_IFTYPE_AP ||
-+		    vif->type == NL80211_IFTYPE_MESH_POINT ||
-+		    vif->type == NL80211_IFTYPE_ADHOC)) {
-+		ret = ath11k_station_assoc(ar, vif, sta, false);
-+		if (ret)
-+			ath11k_warn(ar->ab, "Failed to associate station: %pM\n",
-+				    sta->addr);
-+
-+		spin_lock_bh(&ar->data_lock);
-+		/* Set arsta bw and prev bw */
-+		arsta->bw = ath11k_mac_ieee80211_sta_bw_to_wmi(ar, sta);
-+		arsta->bw_prev = arsta->bw;
-+		spin_unlock_bh(&ar->data_lock);
-+	} else if (old_state == IEEE80211_STA_ASSOC &&
-+		   new_state == IEEE80211_STA_AUTHORIZED) {
-+		spin_lock_bh(&ar->ab->base_lock);
-+
-+		peer = ath11k_peer_find(ar->ab, arvif->vdev_id, sta->addr);
-+		if (peer)
-+			peer->is_authorized = true;
-+
-+		spin_unlock_bh(&ar->ab->base_lock);
-+
-+		if (vif->type == NL80211_IFTYPE_STATION && arvif->is_up) {
-+			ret = ath11k_wmi_set_peer_param(ar, sta->addr,
-+							arvif->vdev_id,
-+							WMI_PEER_AUTHORIZE,
-+							1);
-+			if (ret)
-+				ath11k_warn(ar->ab, "Unable to authorize peer %pM vdev %d: %d\n",
-+					    sta->addr, arvif->vdev_id, ret);
-+		}
-+	} else if (old_state == IEEE80211_STA_AUTHORIZED &&
-+		   new_state == IEEE80211_STA_ASSOC) {
-+		spin_lock_bh(&ar->ab->base_lock);
-+
-+		peer = ath11k_peer_find(ar->ab, arvif->vdev_id, sta->addr);
-+		if (peer)
-+			peer->is_authorized = false;
-+
-+		spin_unlock_bh(&ar->ab->base_lock);
-+	} else if (old_state == IEEE80211_STA_ASSOC &&
-+		   new_state == IEEE80211_STA_AUTH &&
-+		   (vif->type == NL80211_IFTYPE_AP ||
-+		    vif->type == NL80211_IFTYPE_MESH_POINT ||
-+		    vif->type == NL80211_IFTYPE_ADHOC)) {
-+		ret = ath11k_station_disassoc(ar, vif, sta);
-+		if (ret)
-+			ath11k_warn(ar->ab, "Failed to disassociate station: %pM\n",
-+				    sta->addr);
++			goto dec_num_station;
++		arvif->reinstall_group_keys = false;
 +	}
 +
-+	mutex_unlock(&ar->conf_mutex);
-+	return ret;
-+}
-+
- static const struct ieee80211_ops ath11k_ops = {
- 	.tx				= ath11k_mac_op_tx,
- 	.wake_tx_queue			= ieee80211_handle_wake_tx_queue,
+ 	arsta->rx_stats = kzalloc(sizeof(*arsta->rx_stats), GFP_KERNEL);
+ 	if (!arsta->rx_stats) {
+ 		ret = -ENOMEM;
 -- 
 2.50.1
 
