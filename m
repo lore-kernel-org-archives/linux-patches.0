@@ -1,307 +1,166 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BAF27F754;
-	Sun,  7 Sep 2025 20:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D1C22F74D;
+	Sun,  7 Sep 2025 20:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275732; cv=none; b=SgHyEPGb+svcVc6L4+eD8AJTzrjO/z2dG/P0AVBisXA2WK4yMrBUc2INMSvgWZ/ogi7JuBZuqZQ5wORs3DtFnDuFvOo+lEiP6FzZ3hScXeBb73Zpnl+hQlA+3SExJuho/iOm12lqTD729QCsyA8yfwsuBhysTqhGfYcRaNlhmG0=
+	t=1757275735; cv=none; b=CCIr+TPn8IIK6sUelR1Z4H0gz6B0sR3ebqctDZZcr6whi/4q3z73bqxEUaceVA5wUQN+sjxqyg9ASb7enjmSnRZVjiuxGviZeuFdIar3V00EnelfcCxaw5/iSIzwP4PVApugjdDOjOOqfD9/lS9Y8iDEWvuCGWXJ7j7EpKcPuQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275732; c=relaxed/simple;
-	bh=EviXvaDuG+/ae0gYei7/+0EGgrsnR2o3RahJnKL6aS8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=h3RbOKLReB3u5BBeWviyXU7zKYRquZ7UM5kyfuzbmfiSKhDp0fSJhp0edbX6FHEX0nLxXFn3Q8fMo7yH4/Z/eTosGmlI0Q+7vPyiic9rD5ufEbToN6EiAD4+QNZTFjLGlLqvWpoZQanYgrov/bKmxEWXcybID+BiqDx75V4OKpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2TZ0CTW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757275735; c=relaxed/simple;
+	bh=JHXI5DOjm/mDkLeQ3IOQWKnRd+GIPAUGWtkK2jLkxJ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=e6rT/5ZkxAhCUCtxeOgiNdtsOzh+V8MdbP/nEXrdxg+J6GYqvje42Snq1HqOUP7UJvP0QIHinqwxIe1ZnxRJyvb2dvA8RjakIIeHzlCDsgaCFVEq7/1rwEUEVc/bHrxTfXQzqGEwpkbdgF2WlWtRdQruTsyla2LwRQXIyNdcO+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCmP9Jzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2TZ0CTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E05AC4CEF0;
-	Sun,  7 Sep 2025 20:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCmP9Jzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0E1C4CEF8;
+	Sun,  7 Sep 2025 20:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275731;
-	bh=EviXvaDuG+/ae0gYei7/+0EGgrsnR2o3RahJnKL6aS8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=F2TZ0CTWX9RJcXDqU027W/2wexl1cTmAoqM2EayBqg1G89MAueq0ujL+Nkj/8cDqq
-	 QeiEmUns1su/oIHtZLWws5bma6BYA9BvsWVoAOuwWUVf0PwWnZ+Ssm6xs9qbyZi50A
-	 nGIWsxJ2C8ccVpXy4XP5bz0ZOtUx8zwg29NmFcvE=
+	s=korg; t=1757275735;
+	bh=JHXI5DOjm/mDkLeQ3IOQWKnRd+GIPAUGWtkK2jLkxJ4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TCmP9JzmlrldaZ/qhrz0PiK9RdcdxkgcykpRIu3YzlkFlxi5M4oK5AHawu89jwPJp
+	 UBFsIiItSzHU2CdeeypSQnfamqIS2gDrS1o2MzzHAvt/MgRSOnuS7W/0ByDqkdHRWs
+	 wiyVbTaEQ/E72x3v/natEkSSmj68i+PTTWkqXbEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org
-Subject: [PATCH 5.10 00/52] 5.10.243-rc1 review
-Date: Sun,  7 Sep 2025 21:57:20 +0200
-Message-ID: <20250907195601.957051083@linuxfoundation.org>
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Mark Brown <broonie@kernel.org>,
+	WangYuli <wangyuli@uniontech.com>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 40/52] randstruct: gcc-plugin: Remove bogus void member
+Date: Sun,  7 Sep 2025 21:58:00 +0200
+Message-ID: <20250907195603.133313000@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
+References: <20250907195601.957051083@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.243-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.243-rc1
-X-KernelTest-Deadline: 2025-09-09T19:56+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.243 release.
-There are 52 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Tue, 09 Sep 2025 19:55:53 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.243-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
+From: Kees Cook <kees@kernel.org>
 
-thanks,
+[ Upstream commit e136a4062174a9a8d1c1447ca040ea81accfa6a8 ]
 
-greg k-h
+When building the randomized replacement tree of struct members, the
+randstruct GCC plugin would insert, as the first member, a 0-sized void
+member. This appears as though it was done to catch non-designated
+("unnamed") static initializers, which wouldn't be stable since they
+depend on the original struct layout order.
 
--------------
-Pseudo-Shortlog of commits:
+This was accomplished by having the side-effect of the "void member"
+tripping an assert in GCC internals (count_type_elements) if the member
+list ever needed to be counted (e.g. for figuring out the order of members
+during a non-designated initialization), which would catch impossible type
+(void) in the struct:
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.243-rc1
+security/landlock/fs.c: In function ‘hook_file_ioctl_common’:
+security/landlock/fs.c:1745:61: internal compiler error: in count_type_elements, at expr.cc:7075
+ 1745 |                         .u.op = &(struct lsm_ioctlop_audit) {
+      |                                                             ^
 
-Qiu-ji Chen <chenqiuji666@gmail.com>
-    dmaengine: mediatek: Fix a flag reuse error in mtk_cqdma_tx_status()
+static HOST_WIDE_INT
+count_type_elements (const_tree type, bool for_ctor_p)
+{
+  switch (TREE_CODE (type))
+...
+    case VOID_TYPE:
+    default:
+      gcc_unreachable ();
+    }
+}
 
-Roman Smirnov <r.smirnov@omp.ru>
-    cifs: fix integer overflow in match_server()
+However this is a redundant safety measure since randstruct uses the
+__designated_initializer attribute both internally and within the
+__randomized_layout attribute macro so that this would be enforced
+by the compiler directly even when randstruct was not enabled (via
+-Wdesignated-init).
 
-Taniya Das <quic_tdas@quicinc.com>
-    clk: qcom: gdsc: Set retain_ff before moving to HW CTRL
+A recent change in Landlock ended up tripping the same member counting
+routine when using a full-struct copy initializer as part of an anonymous
+initializer. This, however, is a false positive as the initializer is
+copying between identical structs (and hence identical layouts). The
+"path" member is "struct path", a randomized struct, and is being copied
+to from another "struct path", the "f_path" member:
 
-Larisa Grigore <larisa.grigore@nxp.com>
-    spi: spi-fsl-lpspi: Reset FIFO and disable module on transfer abort
+        landlock_log_denial(landlock_cred(file->f_cred), &(struct landlock_request) {
+                .type = LANDLOCK_REQUEST_FS_ACCESS,
+                .audit = {
+                        .type = LSM_AUDIT_DATA_IOCTL_OP,
+                        .u.op = &(struct lsm_ioctlop_audit) {
+                                .path = file->f_path,
+                                .cmd = cmd,
+                        },
+                },
+	...
 
-Larisa Grigore <larisa.grigore@nxp.com>
-    spi: spi-fsl-lpspi: Set correct chip-select polarity bit
+As can be seen with the coming randstruct KUnit test, there appears to
+be no behavioral problems with this kind of initialization when the void
+member is removed from the randstruct GCC plugin, so remove it.
 
-Larisa Grigore <larisa.grigore@nxp.com>
-    spi: spi-fsl-lpspi: Fix transmissions when using CONT
+Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
+Closes: https://lore.kernel.org/lkml/Z_PRaKx7q70MKgCA@gallifrey/
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/lkml/20250407-kbuild-disable-gcc-plugins-v1-1-5d46ae583f5e@kernel.org/
+Reported-by: WangYuli <wangyuli@uniontech.com>
+Closes: https://lore.kernel.org/lkml/337D5D4887277B27+3c677db3-a8b9-47f0-93a4-7809355f1381@uniontech.com/
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Stable-dep-of: f39f18f3c353 ("randstruct: gcc-plugin: Fix attribute addition")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ scripts/gcc-plugins/randomize_layout_plugin.c |   18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
-Wentao Liang <vulab@iscas.ac.cn>
-    pcmcia: Add error handling for add_interval() in do_validate_mem()
-
-Takashi Iwai <tiwai@suse.de>
-    ALSA: hda/hdmi: Add pin fix for another HP EliteDesk 800 G4 model
-
-Fiona Klute <fiona.klute@gmx.de>
-    net: phy: microchip: force IRQ polling mode for lan88xx
-
-Ioana Ciornei <ioana.ciornei@nxp.com>
-    net: phy: microchip: remove the use of .ack_interrupt()
-
-Ioana Ciornei <ioana.ciornei@nxp.com>
-    net: phy: microchip: implement generic .handle_interrupt() callback
-
-Kees Cook <kees@kernel.org>
-    randstruct: gcc-plugin: Fix attribute addition
-
-Kees Cook <kees@kernel.org>
-    randstruct: gcc-plugin: Remove bogus void member
-
-Gabor Juhos <j4g8y7@gmail.com>
-    arm64: dts: marvell: uDPU: define pinctrl state for alarm LEDs
-
-Ronak Doshi <ronak.doshi@broadcom.com>
-    vmxnet3: update MTU after device quiesce
-
-Jakob Unterwurzacher <jakobunt@gmail.com>
-    net: dsa: microchip: linearize skb for tail-tagging switches
-
-Pieter Van Trappen <pieter.van.trappen@cern.ch>
-    net: dsa: microchip: update tag_ksz masks for KSZ9477 family
-
-Qiu-ji Chen <chenqiuji666@gmail.com>
-    dmaengine: mediatek: Fix a possible deadlock error in mtk_cqdma_tx_status()
-
-Chris Chiu <chris.chiu@canonical.com>
-    ALSA: hda/realtek - Add new HP ZBook laptop with micmute led fixup
-
-Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-    gpio: pca953x: fix IRQ storm on system wake up
-
-Luca Ceresoli <luca.ceresoli@bootlin.com>
-    iio: light: opt3001: fix deadlock due to concurrent flag access
-
-David Lechner <dlechner@baylibre.com>
-    iio: chemical: pms7003: use aligned_s64 for timestamp
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86: Take irqfds.lock when adding/deleting IRQ bypass producer
-
-Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-    cpufreq/sched: Explicitly synchronize limits_changed flag handling
-
-Li Qiong <liqiong@nfschina.com>
-    mm/slub: avoid accessing metadata when pointer is invalid in object_err()
-
-Jann Horn <jannh@google.com>
-    mm/khugepaged: fix ->anon_vma race
-
-Vitaly Lifshits <vitaly.lifshits@intel.com>
-    e1000e: fix heap overflow in e1000_set_eeprom
-
-Stanislav Fort <stanislav.fort@aisle.com>
-    batman-adv: fix OOB read/write in network-coding decode
-
-John Evans <evans1210144@gmail.com>
-    scsi: lpfc: Fix buffer free/clear order in deferred receive path
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu: drop hw access in non-DC audio fini
-
-Qianfeng Rong <rongqianfeng@vivo.com>
-    wifi: mwifiex: Initialize the chan_stats array to zero
-
-Ma Ke <make24@iscas.ac.cn>
-    pcmcia: Fix a NULL pointer dereference in __iodyn_find_io_region()
-
-Cryolitia PukNgae <cryolitia@uniontech.com>
-    ALSA: usb-audio: Add mute TLV for playback volumes on some devices
-
-Qingfang Deng <dqfext@gmail.com>
-    ppp: fix memory leak in pad_compress_skb
-
-Wang Liang <wangliang74@huawei.com>
-    net: atm: fix memory leak in atm_register_sysfs when device_register fail
-
-Eric Dumazet <edumazet@google.com>
-    ax25: properly unshare skbs in ax25_kiss_rcv()
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    ipv4: Fix NULL vs error pointer check in inet_blackhole_dev_init()
-
-Rosen Penev <rosenp@gmail.com>
-    net: thunder_bgx: decrement cleanup index before use
-
-Rosen Penev <rosenp@gmail.com>
-    net: thunder_bgx: add a missing of_node_put
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    wifi: libertas: cap SSID len in lbs_associate()
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    wifi: cw1200: cap SSID length in cw1200_do_join()
-
-Felix Fietkau <nbd@nbd.name>
-    net: ethernet: mtk_eth_soc: fix tx vlan tag for llc packets
-
-Zhen Ni <zhen.ni@easystack.cn>
-    i40e: Fix potential invalid access when MAC list is empty
-
-Fabian Bläse <fabian@blaese.de>
-    icmp: fix icmp_ndo_send address translation for reply direction
-
-Miaoqian Lin <linmq006@gmail.com>
-    mISDN: Fix memory leak in dsp_hwec_enable()
-
-Alok Tiwari <alok.a.tiwari@oracle.com>
-    xirc2ps_cs: fix register access when enabling FullDuplex
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    Bluetooth: Fix use-after-free in l2cap_sock_cleanup_listen()
-
-Phil Sutter <phil@nwl.cc>
-    netfilter: conntrack: helper: Replace -EEXIST by -EBUSY
-
-Dmitry Antipov <dmantipov@yandex.ru>
-    wifi: cfg80211: fix use-after-free in cmp_bss()
-
-Peter Robinson <pbrobinson@gmail.com>
-    arm64: dts: rockchip: Add vcc-supply to SPI flash on rk3399-pinebook-pro
-
-Pei Xiao <xiaopei01@kylinos.cn>
-    tee: fix NULL pointer dereference in tee_shm_put
-
-Timur Kristóf <timur.kristof@gmail.com>
-    drm/amd/display: Don't warn when missing DCE encoder caps
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +--
- arch/arm64/boot/dts/marvell/armada-3720-uDPU.dts   |  9 +++--
- .../boot/dts/rockchip/rk3399-pinebook-pro.dts      |  1 +
- arch/x86/kvm/x86.c                                 | 18 ++++++++--
- drivers/clk/qcom/gdsc.c                            | 21 ++++++------
- drivers/dma/mediatek/mtk-cqdma.c                   | 10 +++---
- drivers/gpio/gpio-pca953x.c                        |  5 +++
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c             |  5 ---
- drivers/gpu/drm/amd/amdgpu/dce_v11_0.c             |  5 ---
- drivers/gpu/drm/amd/amdgpu/dce_v6_0.c              |  5 ---
- drivers/gpu/drm/amd/amdgpu/dce_v8_0.c              |  5 ---
- .../gpu/drm/amd/display/dc/dce/dce_link_encoder.c  |  8 ++---
- drivers/iio/chemical/pms7003.c                     |  5 +--
- drivers/iio/light/opt3001.c                        |  5 +--
- drivers/isdn/mISDN/dsp_hwec.c                      |  6 ++--
- drivers/net/ethernet/cavium/thunder/thunder_bgx.c  | 20 ++++++-----
- drivers/net/ethernet/intel/e1000e/ethtool.c        | 10 ++++--
- drivers/net/ethernet/intel/i40e/i40e_client.c      |  4 +--
- drivers/net/ethernet/mediatek/mtk_eth_soc.c        | 10 +++++-
- drivers/net/ethernet/xircom/xirc2ps_cs.c           |  2 +-
- drivers/net/phy/microchip.c                        | 30 ++--------------
- drivers/net/phy/microchip_t1.c                     | 28 +++++++++++----
- drivers/net/ppp/ppp_generic.c                      |  6 ++--
- drivers/net/vmxnet3/vmxnet3_drv.c                  |  5 +--
- drivers/net/wireless/marvell/libertas/cfg.c        |  9 +++--
- drivers/net/wireless/marvell/mwifiex/cfg80211.c    |  5 +--
- drivers/net/wireless/marvell/mwifiex/main.c        |  4 +--
- drivers/net/wireless/st/cw1200/sta.c               |  2 +-
- drivers/pcmcia/rsrc_iodyn.c                        |  3 ++
- drivers/pcmcia/rsrc_nonstatic.c                    |  4 ++-
- drivers/scsi/lpfc/lpfc_nvmet.c                     | 10 +++---
- drivers/spi/spi-fsl-lpspi.c                        | 15 ++++----
- drivers/tee/tee_shm.c                              |  6 +++-
- fs/cifs/connect.c                                  |  5 +++
- kernel/sched/cpufreq_schedutil.c                   | 28 ++++++++++++---
- mm/khugepaged.c                                    | 15 +++++++-
- mm/slub.c                                          |  7 +++-
- net/atm/resources.c                                |  6 ++--
- net/ax25/ax25_in.c                                 |  4 +++
- net/batman-adv/network-coding.c                    |  7 +++-
- net/bluetooth/l2cap_sock.c                         |  3 ++
- net/dsa/tag_ksz.c                                  | 22 +++++++++---
- net/ipv4/devinet.c                                 |  7 ++--
- net/ipv4/icmp.c                                    |  6 ++--
- net/ipv6/ip6_icmp.c                                |  6 ++--
- net/netfilter/nf_conntrack_helper.c                |  4 +--
- net/wireless/scan.c                                |  3 +-
- scripts/gcc-plugins/gcc-common.h                   | 32 +++++++++++++++++
- scripts/gcc-plugins/randomize_layout_plugin.c      | 40 +++++++---------------
- sound/pci/hda/patch_hdmi.c                         |  1 +
- sound/pci/hda/patch_realtek.c                      |  1 +
- sound/usb/mixer_quirks.c                           |  2 ++
- 52 files changed, 302 insertions(+), 182 deletions(-)
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -377,29 +377,13 @@ static int relayout_struct(tree type)
+ 
+ 	shuffle(type, (tree *)newtree, shuffle_length);
+ 
+-	/*
+-	 * set up a bogus anonymous struct field designed to error out on unnamed struct initializers
+-	 * as gcc provides no other way to detect such code
+-	 */
+-	list = make_node(FIELD_DECL);
+-	TREE_CHAIN(list) = newtree[0];
+-	TREE_TYPE(list) = void_type_node;
+-	DECL_SIZE(list) = bitsize_zero_node;
+-	DECL_NONADDRESSABLE_P(list) = 1;
+-	DECL_FIELD_BIT_OFFSET(list) = bitsize_zero_node;
+-	DECL_SIZE_UNIT(list) = size_zero_node;
+-	DECL_FIELD_OFFSET(list) = size_zero_node;
+-	DECL_CONTEXT(list) = type;
+-	// to satisfy the constify plugin
+-	TREE_READONLY(list) = 1;
+-
+ 	for (i = 0; i < num_fields - 1; i++)
+ 		TREE_CHAIN(newtree[i]) = newtree[i+1];
+ 	TREE_CHAIN(newtree[num_fields - 1]) = NULL_TREE;
+ 
+ 	main_variant = TYPE_MAIN_VARIANT(type);
+ 	for (variant = main_variant; variant; variant = TYPE_NEXT_VARIANT(variant)) {
+-		TYPE_FIELDS(variant) = list;
++		TYPE_FIELDS(variant) = newtree[0];
+ 		TYPE_ATTRIBUTES(variant) = copy_list(TYPE_ATTRIBUTES(variant));
+ 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("randomize_performed"), NULL_TREE, TYPE_ATTRIBUTES(variant));
+ 		TYPE_ATTRIBUTES(variant) = tree_cons(get_identifier("designated_init"), NULL_TREE, TYPE_ATTRIBUTES(variant));
 
 
