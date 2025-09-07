@@ -1,97 +1,105 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC0C224AEB
-	for <patches@lists.linux.dev>; Sun,  7 Sep 2025 22:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8761E2823
+	for <patches@lists.linux.dev>; Sun,  7 Sep 2025 22:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757284209; cv=none; b=FtHyqrKiYGRP4Bsk3uJdtFcuvDf3VPlzIJH0Twvw+NhLZlTSWFysKNl7NIhTZCT5EGylCpq1pbmJnlUTvHPPRLDtBYcc4pYIWzctLvd20QWi04whBy8Pv6GdgR1EBIXpMoEKwVlgWcO4v+K1TfpVTZFq71DOlc725BlKEyqiOSU=
+	t=1757284271; cv=none; b=Z3VzP0OJlwDBArZB6GH1CjQf0YhkLnFmSX+GV2t2Bba7BsRDPffOoI7VclI2MSkoQfeWru4+1ymlaSiF8CKuje8rIIG0yIU3l9uawIm1BOYTscmUR4tu34GBljpZ7/Q95KD06+Fk2egID8eYopwMBj7bx1AfZRWIhis9KcggqMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757284209; c=relaxed/simple;
-	bh=YiYQFvOAi/L3rfcO0B8Dn3oJyiTeX8xkf4kbnG9dX4Q=;
+	s=arc-20240116; t=1757284271; c=relaxed/simple;
+	bh=CSFBlBtDLQ60LZNRpaUXVbkiMpIx+cA4r6gRvNosVrw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CaaEglupWKXL0sFLDWsle0BWQiJVUZxYOgaVoMg4u3nfvIbO90EvMpn8b5gF04LEYm6sHlpHI7nq00gOoCWL32+RISapw3v/f4BFK1ojP47p2lKmil6GQji4/YacCZ01Wq5zA2zhwXDkI9o9RQO5WldIC7UB33jmLi+3VmqSnJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SK6R9XRQ; arc=none smtp.client-ip=209.85.214.175
+	 To:Cc:Content-Type; b=UKjAe2cVawHX2DoXYdYCN6QdycfvO4+9qdHVeUF9y+naC4mAlouy7jVQCN8TC7Pjr4Xl5jYNOWI2CPD+5qkMV9JkHfuUXOPRaqnllwcBKGr8pUnEiz12QdqTih9Dhn18l6GHTw5qzJPSZ1UfFCMjJnaUX8bjQXf2BspuE7stsog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S3fMNdi3; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SK6R9XRQ"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-24af8aa2606so8100685ad.1
-        for <patches@lists.linux.dev>; Sun, 07 Sep 2025 15:30:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S3fMNdi3"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-24aacdf40a2so10447315ad.1
+        for <patches@lists.linux.dev>; Sun, 07 Sep 2025 15:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757284207; x=1757889007; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757284270; x=1757889070; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YiYQFvOAi/L3rfcO0B8Dn3oJyiTeX8xkf4kbnG9dX4Q=;
-        b=SK6R9XRQi9RFet99zioNkVHFdcOG8N5HNxPRgAapqIbDAkKzrSr3i9N7BcfzEgJjmd
-         cEKhLpUX/4P9PGEjre+XPIC9z4A/0yeX6VLAw1rrwCKrFVwVIzqMITk9AWVe+QF+ukic
-         diEK0hiT6ihyl4G/7fW9TH9gzxm86jnVaBDelEc2eRw8U4UXYFISW+iUump/mryUGDwO
-         ZnW/jvHAqRuVKQGDweVDacC+0LD1rvd/PNVzF0CbMLSY8u2rv6a8we4xMZe+kbc5qoZs
-         3NfNt/+c2Qx2PFi2IrvxzoMyrMciVSfkgPvMb+iVG3DkrAjxcPL5f95fVhuwnZHRbaym
-         ohww==
+        bh=g9bPu15Z4/dThW5eomvhcfyNbJrTtij67l4baLOyMhc=;
+        b=S3fMNdi3t9VBli5A1XmCkML4uGKBMsV52YgyJkLQEb+PkG28HXqkbbCkM3mB4Ezb7b
+         MTLrT/g+Puwk3dXIVUMwBYyJ0WHrfX++vnJxkqrdtPnzw5PZ4VtZSRQ0LBXkR7K4HtP5
+         dyGGu91dFxvhAtqft2yi/c2D1QwkjvP8fQTQnvaaQ1ytbhH+v4LuGzmW6o+x6/ZLYUcC
+         Kc/nSXasjs9vrI7pKQ3nO/6p8/1JxHCAKYNVnOgqZcP1or/MdcvcQv1HaaE5NMkZp7vb
+         frbp9i65TKBClYv38Met5N8g/BpUfUMZxy8nVTO37jwE/Bzit3ca8fzbh8XV9QcToGtN
+         SiIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757284207; x=1757889007;
+        d=1e100.net; s=20230601; t=1757284270; x=1757889070;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YiYQFvOAi/L3rfcO0B8Dn3oJyiTeX8xkf4kbnG9dX4Q=;
-        b=U4H2Hkkljp6CeShSqomDwAs2erYvjdPvkj0GZbJIUvs4oKvB5jgbl0RwalGpfr/RAS
-         cAsZqjDZWw1/JpJZPqiDXoMVITwFBtncNC57wNag33g7xooQC3nOeOA/F/8o38h/Wzwp
-         v7oNJDqVZdw67ucVeLXSEPxWuWRM30xV7u+j1vTrdJwPKPkEud8JL5G2ljEbgeS9y3P/
-         shmpe+reh/hZxEIlpUS5LnwiTr5vcKusqymQqD5wdDxwQS0VVhBVPe1zf0wHsniDKkLF
-         Wa5wz53OnFCL0F6eyEMdZr+aXid3IgOA/l9zU/XVgaUJu9OPBlsgpLyGmDrqEZdEbwpJ
-         RE3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXCu2xkrPUrgY5JaLQh5PCXCNCPjiuvNrwPe9VPNUI5ideToVYqBgoxC59lGEo85nvHKLtgX4i4@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVnQazbP+aSXq/QfV6AHQCz0WnkmJj7WNBUEoIltnp/HLEhlHk
-	SGlIZlaNdaiMPeO4pDnk1mFtqUEOsmfSZs9XwwQnKEiV4H7q61ITKP7pUJDmjVVhl6iBY97mWoL
-	swegEwYiJYkoi+awbL9QylJO7W6U+p+o=
-X-Gm-Gg: ASbGncuUMNqtrbqmXRViARKi8ZAwImuHS531u6uMHdb4xZKsyNPgh8aqvV0TCbQvIYz
-	rdnlvjo4n8cK6KizO78s1T9qCAtP+Yb3Nu0PVgospJHTCTCHbzX8VK0GUkiwkVaJhg1kAfBzOVh
-	3jQ08jnEGyZc6VrBmgJmHt5KkO2TM6OH2pOjgWx6rnBOll+juxwEQDAbhuo/KRh0mfvnc111yCj
-	UiTPtFVEJ3sO/U4mR37q72FApav6/MEpR3YDTclYFnkv3qGa4nvorh8Q5K29HZNeeO91Ihcg5e/
-	p0bYDbo9V4j3bfu16G8sRmmsBg==
-X-Google-Smtp-Source: AGHT+IEJXHXVeEXiUuxDDtDL+F2z+Li35l5mEMwus84iNqmeDyb9GLSYacR9e0Qf9AaGo8FSywEfNdNTn/METasbJfo=
-X-Received: by 2002:a17:902:ce83:b0:24c:b881:201 with SMTP id
- d9443c01a7336-251757ba959mr44510665ad.9.1757284206873; Sun, 07 Sep 2025
- 15:30:06 -0700 (PDT)
+        bh=g9bPu15Z4/dThW5eomvhcfyNbJrTtij67l4baLOyMhc=;
+        b=UZ/kLaBq+AsVg32Tpcg5PBeyaUQBtYo8b9Zt6KVd8D5BnTWoJHmHfHjq5yNSrKpALE
+         lVBOXsUz9Mc9wTv2bl8RZMLzUC6Gs0zHMG6LbBPEBEmyjcbWu5f2fpm0PE7poBBUWj2R
+         nUdK19jX5PYaSJzoBIYlMegrpxvDQH3itSPxtupeNA+Xq5nG6lrKMXpmCNumlZ5Zj+m1
+         K6tQO5qKGpsD5yxTHqyqtWbcRcS1oyUtE4+6o/cF/nTs11W+6sTV6MUJ0bfVBpMJV/qC
+         nTuMHNnJtqks7zAqVIvvZpDhf2CXxnh5M2guuybMMrhIuwhDZPadONGLvZv/V3/fzq7B
+         6kMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUCPskKEQ+J0QhdvzamOuef+9bYGKuebN3XSPGEApxkqsC9GKQ6qpy2LxlEZNSB4Ld5SEKY9kGE@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx3XFlZv8JshgtQixQMTc0xMkTjUnpVbnTnxHK42voZWL0l0bFO
+	hS94CLCunBC0L0yqE6G6reAGQRQRk7d3joa8+3ynAn2bprRcSNwQ8lWmtC4pAmhvS9Ngww9g2qE
+	GY3Ct/+vXUlIDwrGb49SmGXiWkVA1CBs=
+X-Gm-Gg: ASbGnctZTvzv4EyB5VjjIjRDIpvIMzj5XPqVrKDkGBir86wOjOdLsKbg2aqbgyfDDyB
+	KyJ9CnoPFnbt8iCgG1oFBKrt1c3SGaT+EVjZpjB9YiXijf6lbbXLm+Udq3rrhyc15W0sF2pZ8Io
+	z3qrcVJoMDY9QL1iY7EuBiWaUYBPhp69z3tryXBp3XSX0GAxLHuMkWjn5UdW6t3jibRdVpaViu9
+	Bb5ABFh2iHcNxyiJUt7KV5g/Rr2T5s76GqUBqhOPdH6Zi3wAL2iJibAY6zcYHNv6hShajorKPHB
+	9T+gg+QXba0uhWdCGoDMuRuZ//IIpFtndMaShEMZXabDNTQ=
+X-Google-Smtp-Source: AGHT+IEj4AVClx0YLlxE3BvIdWOpSMLw0zkdrNVU6iMlzQLJXUNXJO8RnxcSaBFanH1/GPk0Wy3TwbgoCxNXplP3A44=
+X-Received: by 2002:a17:902:d4c4:b0:24c:cfcd:7356 with SMTP id
+ d9443c01a7336-251663b6f4emr41816155ad.0.1757284269623; Sun, 07 Sep 2025
+ 15:31:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250730130716.3278285-1-ojeda@kernel.org>
-In-Reply-To: <20250730130716.3278285-1-ojeda@kernel.org>
+References: <20250801161752.443431-1-ojeda@kernel.org>
+In-Reply-To: <20250801161752.443431-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 8 Sep 2025 00:29:54 +0200
-X-Gm-Features: AS18NWDiFBEztBvhh545-DHfsVGSBiVzynGVpEdm2_GOyJiuoW_17RumQHpRyQ4
-Message-ID: <CANiq72=gYXqcXyVK1vq36Y6ofv4QQiLLgnAY=zhFVV8CGYuziw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Fix broken `srctree/` links and warn about them
-To: Miguel Ojeda <ojeda@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+Date: Mon, 8 Sep 2025 00:30:57 +0200
+X-Gm-Features: AS18NWA5OqPbW63AgbnzQJKJXtbFL3DAUQrImPSTwrtiRAD94szVxKKASywRaM8
+Message-ID: <CANiq72myxAFJbKYaxsuf1PmRQetEct=3yqeJ2sqNkJROT1CQaw@mail.gmail.com>
+Subject: Re: [PATCH] rust: prelude: re-export `core::mem::{align,size}_of{,_val}`
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
 	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-block@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 30, 2025 at 3:07=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On Fri, Aug 1, 2025 at 6:18=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
+e:
 >
-> This fixes a handful of broken links and introduces a warning to
-> prevent them from happening in the future.
+> Rust 1.80.0 added:
+>
+>     align_of
+>     align_of_val
+>     size_of
+>     size_of_val
+>
+> from `core::mem` to the prelude [1].
+>
+> For similar reasons, and to minimize potential confusion when code may
+> work in later versions but not in our current minimum, add it to our
+> prelude too.
+>
+> Link: https://github.com/rust-lang/rust/pull/123168 [1]
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72kOLYR2A95o0ji2mDmEqOK=
+h9e9_60zZKmgF=3DvZmsW6DRg@mail.gmail.com/ [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Applied to `rust-next` -- thanks everyone!
-
-I added Cc: stable@vger.kernel.org on the fixes.
-
-Andreas/Boqun: if you don't want the block fix, please shout!
 
 Cheers,
 Miguel
