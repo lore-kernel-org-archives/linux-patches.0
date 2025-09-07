@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1438614D29B;
-	Sun,  7 Sep 2025 20:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2243214D29B;
+	Sun,  7 Sep 2025 20:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277941; cv=none; b=tT0q7uLdsvdr+jtKiovIsarmMv3Te2yfEzmBQDuC9k7Q/wGVtkzD5IDzRKxNk3eGIuFgjDB64YUR7ZpxXSg1/lN5NgyYQGZeoQP6Cpdp4ia5KVTv/PSCruKRnBYcrFywrbLUtaR1JtfdlJpFKlAF0hkuMZEvqUFHxHwNNG2Slcg=
+	t=1757277944; cv=none; b=iO+5dxtiE5aB7mV0uG2ZI1YsVNf8MLQeXwtR6yjJsDumGfM2f8ZEQxQnfOp5FkEC0erNb7p9t76xrflI2EYFk1mMRQww+DhDMvezXsKQ2kxwAxPGdWl18tgqhThWffXB+bin3xZhFqDyL7aqSg2Wqz/LghmwWo0DVRqdm8R+FdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277941; c=relaxed/simple;
-	bh=9k/6+0PMCK1NEs0VMZux+8MMHW2Iew+MavCijYvOA9s=;
+	s=arc-20240116; t=1757277944; c=relaxed/simple;
+	bh=/z5j9yqiUaD3yi9kJFYSSzzEI1FN0aHAJhfizJxgQ94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NhI4s6McP1GugFUAaqIc6jhvbg+ZW4NSEBZA3mc3BN8FSaz9t/Av+CTVDKpPl0oNphN566mwqy5cIOGHL+c6DZ1KQzuRed+Gy5AScExrGF27hN3MD5wZIYp9CMIn4Zj8W6xwAlwJlQScLQq027KR2YdnoXPmlShVYO6L+Ez6RFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBpglu4w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOtcsaSL0ZLg1uAjWpa+3I+gtAdlhp+OGWDXcGdlT0pu15XhMua1A0Afko8HmKwzZ2ruBSjIcA7agHAsxIRoUujWCRBg/Ev61jt65qPlW0W6DJ7sZEz2g1M1NyEiTKZhdpNNCgJXGCmUW2XiY/zp9D8Vydu+5vxGo1Z5EvAygPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXWBgirR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBpglu4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5138CC4CEF0;
-	Sun,  7 Sep 2025 20:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXWBgirR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71059C4CEF0;
+	Sun,  7 Sep 2025 20:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277940;
-	bh=9k/6+0PMCK1NEs0VMZux+8MMHW2Iew+MavCijYvOA9s=;
+	s=korg; t=1757277944;
+	bh=/z5j9yqiUaD3yi9kJFYSSzzEI1FN0aHAJhfizJxgQ94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBpglu4wEQDZO9basHT+ocK4R12EYHT36hiElW505DKmOeF4v7O3OssdZvGmXFJOC
-	 UY2KfZIMfVOM7w6kDTGj0VFO6qMjhpb/60P5UFNWW7ti3yOqYOpCq8kyWpdtaP9OPg
-	 eH2sR8icNTIXBg/LmHmalj0F9Zx+oB6btSJM41Iw=
+	b=yXWBgirRNVSHDqfk8u5g8+WhUu/TnbPpCgPDmnfPPspUDqn0Yl2hc0U3kzyLedyDz
+	 l9IOCBRZF5L2kLSUWS2KxiJB3jrgc0gwhi6614Fes5CYxxbpxzdM+ITkLHdwt/NIfG
+	 y4UACevZIFbRU0MHaZgPirngoTNkYx63t5hL/Uzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 172/183] drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1
-Date: Sun,  7 Sep 2025 21:59:59 +0200
-Message-ID: <20250907195619.903088122@linuxfoundation.org>
+	Anup Patel <apatel@ventanamicro.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Sunil V L <sunilvl@ventanamicro.com>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.16 173/183] ACPI: RISC-V: Fix FFH_CPPC_CSR error handling
+Date: Sun,  7 Sep 2025 22:00:00 +0200
+Message-ID: <20250907195619.928485661@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -48,53 +49,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Anup Patel <apatel@ventanamicro.com>
 
-[ Upstream commit d6e020819612a4a06207af858e0978be4d3e3140 ]
+commit 5b3706597b90a7b6c9ae148edd07a43531dcd49e upstream.
 
-The intel-media-driver is currently broken on DG1 because
-it uses EXEC_CAPTURE with recovarable contexts. Relax the
-check to allow that.
+The cppc_ffh_csr_read() and cppc_ffh_csr_write() returns Linux error
+code in "data->ret.error" so cpc_read_ffh() and cpc_write_ffh() must
+not use sbi_err_map_linux_errno() for FFH_CPPC_CSR.
 
-I've also submitted a fix for the intel-media-driver:
-https://github.com/intel/media-driver/pull/1920
-
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Testcase: igt/gem_exec_capture/capture-invisible
-Fixes: 71b1669ea9bd ("drm/i915/uapi: tweak error capture on recoverable contexts")
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250411144313.11660-2-ville.syrjala@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 30f3ffbee86b ("ACPI: RISC-V: Add CPPC driver")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250818143600.894385-2-apatel@ventanamicro.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/riscv/cppc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index ca7e9216934a7..ea9d5063ce78c 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2013,7 +2013,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
- 			continue;
+--- a/drivers/acpi/riscv/cppc.c
++++ b/drivers/acpi/riscv/cppc.c
+@@ -119,7 +119,7 @@ int cpc_read_ffh(int cpu, struct cpc_reg
  
- 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
--		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
-+		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
- 			return -EINVAL;
+ 		*val = data.ret.value;
  
- 		for_each_batch_create_order(eb, j) {
--- 
-2.51.0
-
+-		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
++		return data.ret.error;
+ 	}
+ 
+ 	return -EINVAL;
+@@ -148,7 +148,7 @@ int cpc_write_ffh(int cpu, struct cpc_re
+ 
+ 		smp_call_function_single(cpu, cppc_ffh_csr_write, &data, 1);
+ 
+-		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
++		return data.ret.error;
+ 	}
+ 
+ 	return -EINVAL;
 
 
