@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620F6126C02;
-	Sun,  7 Sep 2025 20:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B0D126C02;
+	Sun,  7 Sep 2025 20:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277980; cv=none; b=Z3pHz1TJ8JCXbibut6Rzz8UHctDjhUHjtZe1WEJMIgUOFG3a6oiZdfeX/FhVI36+t2afcJVat1K0AncNB6z6lyycC8M1BETkuiJUIT9YO30RMjS9D+7WkNEZ2eXTC8rZBNMzorDaKw52oMGKb2B9lHEpfki0wb9vbQyCzcjKnBg=
+	t=1757277983; cv=none; b=aF7t75WLrnttXOWuistbt4u10IGJBab9cKexFdQlV4eIUBMG23sTFomaw9H++9AWK5rk1VYDUVpg5atGtdx+U+fL3cm+pP8gPi/ugwt3O1RJDcMh68vWGa51FqvLwOUt+eiOSbbtXKgZxGl9fKDc0qEbWRiYSHu1kOI1Pa8QLuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277980; c=relaxed/simple;
-	bh=LikieFQTUkLFUfYPz34XjchdbH9grj5C3TrEP+huM5c=;
+	s=arc-20240116; t=1757277983; c=relaxed/simple;
+	bh=GR5cUyc982LHxGvvusiIZrsZQIKzfhujvlRxCCWWCr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O1qz97Clf0ycUGaMpO4bSsu30GZ3BQaWvZkeJ5KOTtT18K9VcObbFBg2xxTYc9fFLfnIzieUoqV5qAG6D4hzBP9uAb99AJfbp1mlpNv9gQwDJiHN5648x29J/cNaqvSfUAICRdizgbO2+w+5gnEH8VeoAaZxzUXpPSV+0kSw7+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epcD4UBV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7QOEeaYtn4Ipbph8HgIEoX7HijczJX697u0QgTM1Eg8b/NDPtVMYnzrUDFqB/oAPo7Qcs2hmQFghLW8RwXmjvReB5I+ea27sjFXZJbZER8Uy5XBRWnttN6YD5v2emVWwHYWKqz7mHbKPAkrej/npaJgCQZYSnvmDKvAKLrocZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XB5VzsWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epcD4UBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ADAC4CEF0;
-	Sun,  7 Sep 2025 20:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XB5VzsWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F029AC4CEF0;
+	Sun,  7 Sep 2025 20:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277980;
-	bh=LikieFQTUkLFUfYPz34XjchdbH9grj5C3TrEP+huM5c=;
+	s=korg; t=1757277983;
+	bh=GR5cUyc982LHxGvvusiIZrsZQIKzfhujvlRxCCWWCr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epcD4UBVJbkmnQYa4BQ83nDD3YLxkZILDXNvaK/nN4slF1eLgmLyyebYNM20o4xSr
-	 DLg8kB/tBUQtbi278nJY+52AvwhJYe3ZQK7uA4OGxIIOiDeMIezQFyEEG9G18OrxlI
-	 Vonh/QDOxIFu8L5qjIk6B63sDi3EAwogPWH1ugJ8=
+	b=XB5VzsWqz6TtnjpISkodV04eXIwwelIpTgu/01SpW1/mnQ+nIaNpMTqRZyw6jojEa
+	 FXuq454zQa1rw7shJpT19LwQkMCHuAi1XmKTRLbs5z35Q6RDiDmX7IzIkg1fUtUYDl
+	 4Yjexr9tyEWFiDhUESZM0XVxsIJsijQ6PrhPJvuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 183/183] Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"
-Date: Sun,  7 Sep 2025 22:00:10 +0200
-Message-ID: <20250907195620.178049041@linuxfoundation.org>
+Subject: [PATCH 6.16 164/183] perf bpf-event: Fix use-after-free in synthesis
+Date: Sun,  7 Sep 2025 21:59:51 +0200
+Message-ID: <20250907195619.712125131@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -50,57 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d2dc30e0aa252830f908c8e793d3139d51321370 ]
+[ Upstream commit d7b67dd6f9db7bd2c49b415e901849b182ff0735 ]
 
-This reverts commit d6e020819612a4a06207af858e0978be4d3e3140.
+Calls to perf_env__insert_bpf_prog_info may fail as a sideband thread
+may already have inserted the bpf_prog_info. Such failures may yield
+info_linear being freed which then causes use-after-free issues with
+the internal bpf_prog_info info struct. Make it so that
+perf_env__insert_bpf_prog_info trigger early non-error paths and fix
+the use-after-free in perf_event__synthesize_one_bpf_prog. Add proper
+return error handling to perf_env__add_bpf_info (that calls
+perf_env__insert_bpf_prog_info) and propagate the return value in its
+callers.
 
-The IS_DGFX check was put in place because error capture of buffer
-objects is expected to be broken on devices with VRAM.
-
-Userspace fix[1] to the impacted media driver has been submitted, merged
-and a new driver release is out as 25.2.3 where the capture flag is
-dropped on DG1 thus unblocking the usage of media driver on DG1.
-
-[1] https://github.com/intel/media-driver/commit/93c07d9b4b96a78bab21f6acd4eb863f4313ea4a
-
-Cc: stable@vger.kernel.org # v6.0+
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20250522064127.24293-1-joonas.lahtinen@linux.intel.com
-[Joonas: Update message to point out the merged userspace fix]
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Closes: https://lore.kernel.org/lkml/CAP-5=fWJQcmUOP7MuCA2ihKnDAHUCOBLkQFEkQES-1ZZTrgf8Q@mail.gmail.com/
+Fixes: 03edb7020bb9 ("perf bpf: Fix two memory leakages when calling perf_env__insert_bpf_prog_info()")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/20250902181713.309797-2-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/bpf-event.c | 39 +++++++++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index ea9d5063ce78c..ca7e9216934a7 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2013,7 +2013,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
- 			continue;
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index c81444059ad07..d9123c9637baa 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -290,9 +290,15 @@ static int perf_event__synthesize_one_bpf_prog(struct perf_session *session,
  
- 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
--		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
-+		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
- 			return -EINVAL;
+ 		info_node->info_linear = info_linear;
+ 		if (!perf_env__insert_bpf_prog_info(env, info_node)) {
+-			free(info_linear);
++			/*
++			 * Insert failed, likely because of a duplicate event
++			 * made by the sideband thread. Ignore synthesizing the
++			 * metadata.
++			 */
+ 			free(info_node);
++			goto out;
+ 		}
++		/* info_linear is now owned by info_node and shouldn't be freed below. */
+ 		info_linear = NULL;
  
- 		for_each_batch_create_order(eb, j) {
+ 		/*
+@@ -451,18 +457,18 @@ int perf_event__synthesize_bpf_events(struct perf_session *session,
+ 	return err;
+ }
+ 
+-static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
++static int perf_env__add_bpf_info(struct perf_env *env, u32 id)
+ {
+ 	struct bpf_prog_info_node *info_node;
+ 	struct perf_bpil *info_linear;
+ 	struct btf *btf = NULL;
+ 	u64 arrays;
+ 	u32 btf_id;
+-	int fd;
++	int fd, err = 0;
+ 
+ 	fd = bpf_prog_get_fd_by_id(id);
+ 	if (fd < 0)
+-		return;
++		return -EINVAL;
+ 
+ 	arrays = 1UL << PERF_BPIL_JITED_KSYMS;
+ 	arrays |= 1UL << PERF_BPIL_JITED_FUNC_LENS;
+@@ -475,6 +481,7 @@ static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
+ 	info_linear = get_bpf_prog_info_linear(fd, arrays);
+ 	if (IS_ERR_OR_NULL(info_linear)) {
+ 		pr_debug("%s: failed to get BPF program info. aborting\n", __func__);
++		err = PTR_ERR(info_linear);
+ 		goto out;
+ 	}
+ 
+@@ -484,38 +491,46 @@ static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
+ 	if (info_node) {
+ 		info_node->info_linear = info_linear;
+ 		if (!perf_env__insert_bpf_prog_info(env, info_node)) {
++			pr_debug("%s: duplicate add bpf info request for id %u\n",
++				 __func__, btf_id);
+ 			free(info_linear);
+ 			free(info_node);
++			goto out;
+ 		}
+-	} else
++	} else {
+ 		free(info_linear);
++		err = -ENOMEM;
++		goto out;
++	}
+ 
+ 	if (btf_id == 0)
+ 		goto out;
+ 
+ 	btf = btf__load_from_kernel_by_id(btf_id);
+-	if (libbpf_get_error(btf)) {
+-		pr_debug("%s: failed to get BTF of id %u, aborting\n",
+-			 __func__, btf_id);
+-		goto out;
++	if (!btf) {
++		err = -errno;
++		pr_debug("%s: failed to get BTF of id %u %d\n", __func__, btf_id, err);
++	} else {
++		perf_env__fetch_btf(env, btf_id, btf);
+ 	}
+-	perf_env__fetch_btf(env, btf_id, btf);
+ 
+ out:
+ 	btf__free(btf);
+ 	close(fd);
++	return err;
+ }
+ 
+ static int bpf_event__sb_cb(union perf_event *event, void *data)
+ {
+ 	struct perf_env *env = data;
++	int ret = 0;
+ 
+ 	if (event->header.type != PERF_RECORD_BPF_EVENT)
+ 		return -1;
+ 
+ 	switch (event->bpf.type) {
+ 	case PERF_BPF_EVENT_PROG_LOAD:
+-		perf_env__add_bpf_info(env, event->bpf.id);
++		ret = perf_env__add_bpf_info(env, event->bpf.id);
+ 
+ 	case PERF_BPF_EVENT_PROG_UNLOAD:
+ 		/*
+@@ -529,7 +544,7 @@ static int bpf_event__sb_cb(union perf_event *event, void *data)
+ 		break;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int evlist__add_bpf_sb_event(struct evlist *evlist, struct perf_env *env)
 -- 
 2.51.0
 
