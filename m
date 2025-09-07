@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD851CDFAC;
-	Sun,  7 Sep 2025 20:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1FF1CDFAC;
+	Sun,  7 Sep 2025 20:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275924; cv=none; b=QuIs6o0vdwkVE4gzfpBc35ZJrWXFQ8ZonhYQwu8N2cwbBArjDiERRVusNVYfQuzFUtrXV5xnA/WkeSbM1RJMOpx4Ak1pg3bPugu0RV+/NkW+xVjxa8d333OvV8w5uBbW2hOpaXGfw0x1ZIgb1qp3cOfnlUYXwHLSiKyhnC8dpSA=
+	t=1757275927; cv=none; b=OW87nKdoDR4JLb9Km/ia+3oSZHQqA5u2SAgaBMhG8VcgmbhfT9Qr8iNQjuwiO8uDH2eUcgOK633A/CV5Fr0FXlaf/lU5Iq+zvvREo7GnK8qJp8vQ1Q22tpzUvEJVBGAQ5j7F5qi8dYyV4biCFvYhbF4WALvkEOo4bIl7FOn3cPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275924; c=relaxed/simple;
-	bh=NFmI68oZUN4OrXpg7YMe8uCocV+515/qeICAl+Z8A5w=;
+	s=arc-20240116; t=1757275927; c=relaxed/simple;
+	bh=Qt8eTSViy+KfMiVdqoX3u4Hv3QVFKh7eCMTPnJFL088=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKArK31uU690wkuMgnjxzJDHpuDMLF3xTngSBsVPabQjUxxg7P8peQscFPbyg0X2pQFU0xMMX50fD9qV8fQDWgDt+Rg+ZxxaRNgfzBlzDk8FJHZ17vOCfNI/3EJC+7AlUHUeNPhhgB4HB03Ud2JSPnGW+GBJjmbBrw7HwFrurUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCrBlbDb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qPcwyRaQ3OYRuNh6iuqC2A1XhbtLVFsLpWYOVZ8c5FZK7m4NrKrElPzKZJRu0Exya9qINNa6yl2s98qHWpchl8el0XYsitBrgn1vYDtef4tYpZ48BYQLdJ6gpfGkFttqAQ+Kv/lP9KqU0v2i8xAbuy3GNWAWYHDCWw4HJKhg9lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzJmXRPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCrBlbDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C6EC4CEF0;
-	Sun,  7 Sep 2025 20:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzJmXRPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129D8C4CEF0;
+	Sun,  7 Sep 2025 20:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275924;
-	bh=NFmI68oZUN4OrXpg7YMe8uCocV+515/qeICAl+Z8A5w=;
+	s=korg; t=1757275927;
+	bh=Qt8eTSViy+KfMiVdqoX3u4Hv3QVFKh7eCMTPnJFL088=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCrBlbDbyN8pz1jm+fKZIOUgRr3RDN/eXTofFniO+fdso4EVdprNItE9JTYxzsV3e
-	 GvBrSpAb0yx03h2f8I8/B1bAKabT3LYBDxo4gscf0H1Lag8U+oBrGlfEOuIhFdlAiy
-	 OwL6k/TVVMZzpYvT7yu66H3bMLwFQ70SY6wn8Di0=
+	b=EzJmXRPrVeM5YH8f/idWxWqNTBCVlhIXBkN2XxOXOzR/qjZhB+pN55fepb8tLjEFR
+	 QeL6+UUDlIISOeONCkYSktMq6Ea0KWlpFp0ui1FVdP83FqRa28Lep765lj1E5J+6p2
+	 Kus4zs0Z8eFYu1rOkuim2J5C+rSkZ4TEOdNodk6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 05/45] xirc2ps_cs: fix register access when enabling FullDuplex
-Date: Sun,  7 Sep 2025 21:57:51 +0200
-Message-ID: <20250907195601.119286089@linuxfoundation.org>
+Subject: [PATCH 5.15 01/64] bpf: Add cookie object to bpf maps
+Date: Sun,  7 Sep 2025 21:57:43 +0200
+Message-ID: <20250907195603.435311129@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
-References: <20250907195600.953058118@linuxfoundation.org>
+In-Reply-To: <20250907195603.394640159@linuxfoundation.org>
+References: <20250907195603.394640159@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit b79e498080b170fd94fc83bca2471f450811549b ]
+[ Upstream commit 12df58ad294253ac1d8df0c9bb9cf726397a671d ]
 
-The current code incorrectly passes (XIRCREG1_ECR | FullDuplex) as
-the register address to GetByte(), instead of fetching the register
-value and OR-ing it with FullDuplex. This results in an invalid
-register access.
+Add a cookie to BPF maps to uniquely identify BPF maps for the timespan
+when the node is up. This is different to comparing a pointer or BPF map
+id which could get rolled over and reused.
 
-Fix it by reading XIRCREG1_ECR first, then or-ing with FullDuplex
-before writing it back.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250827192645.658496-1-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20250730234733.530041-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xircom/xirc2ps_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/bpf.h  | 1 +
+ kernel/bpf/syscall.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/xircom/xirc2ps_cs.c b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-index e3438cef5f9c6..4d8a1728e8ed6 100644
---- a/drivers/net/ethernet/xircom/xirc2ps_cs.c
-+++ b/drivers/net/ethernet/xircom/xirc2ps_cs.c
-@@ -1584,7 +1584,7 @@ do_reset(struct net_device *dev, int full)
- 	    msleep(40);			/* wait 40 msec to let it complete */
- 	}
- 	if (full_duplex)
--	    PutByte(XIRCREG1_ECR, GetByte(XIRCREG1_ECR | FullDuplex));
-+	    PutByte(XIRCREG1_ECR, GetByte(XIRCREG1_ECR) | FullDuplex);
-     } else {  /* No MII */
- 	SelectPage(0);
- 	value = GetByte(XIRCREG_ESR);	 /* read the ESR */
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 4236de05a8e70..dd6a62134e7d1 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -200,6 +200,7 @@ struct bpf_map {
+ 	struct mutex freeze_mutex;
+ 	atomic64_t writecnt;
+ 	bool free_after_mult_rcu_gp;
++	u64 cookie; /* write-once */
+ };
+ 
+ static inline bool map_value_has_spin_lock(const struct bpf_map *map)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 6f309248f13fc..6d4d08f57ad38 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -31,6 +31,7 @@
+ #include <linux/bpf-netns.h>
+ #include <linux/rcupdate_trace.h>
+ #include <linux/memcontrol.h>
++#include <linux/cookie.h>
+ 
+ #define IS_FD_ARRAY(map) ((map)->map_type == BPF_MAP_TYPE_PERF_EVENT_ARRAY || \
+ 			  (map)->map_type == BPF_MAP_TYPE_CGROUP_ARRAY || \
+@@ -43,6 +44,7 @@
+ #define BPF_OBJ_FLAG_MASK   (BPF_F_RDONLY | BPF_F_WRONLY)
+ 
+ DEFINE_PER_CPU(int, bpf_prog_active);
++DEFINE_COOKIE(bpf_map_cookie);
+ static DEFINE_IDR(prog_idr);
+ static DEFINE_SPINLOCK(prog_idr_lock);
+ static DEFINE_IDR(map_idr);
+@@ -886,6 +888,10 @@ static int map_create(union bpf_attr *attr)
+ 	if (err < 0)
+ 		goto free_map;
+ 
++	preempt_disable();
++	map->cookie = gen_cookie_next(&bpf_map_cookie);
++	preempt_enable();
++
+ 	atomic64_set(&map->refcnt, 1);
+ 	atomic64_set(&map->usercnt, 1);
+ 	mutex_init(&map->freeze_mutex);
 -- 
 2.50.1
 
