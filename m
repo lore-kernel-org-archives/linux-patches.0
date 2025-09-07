@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C98014BFA2;
-	Sun,  7 Sep 2025 20:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A29122F74D;
+	Sun,  7 Sep 2025 20:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276472; cv=none; b=GGeidulCyejVt5vFEQS5OinFwTpG2CySZV6nRWAhdjVqksJjTXxC3U443OfKRFNrSvm3UIUD4srxDXks4ab028dmbnqrtWJ5vg35KFte9q6UFycIHTcfnAbdBaHBA9vMpf3cm3oremWl1ZeFVlqcpWdXCTO9L8bymrPcd6imKW0=
+	t=1757276475; cv=none; b=QstT1qM/mjkIx28MT6fPiPYPNnKMFjMnCW6iVjY/fRpIt2euNoR6lObSed3HCzdGIl1AOv8O7sdPcMgl1gDknmjeVrn6j850o5uWHxOXQ4QuYWW901gn4R2zXXP2bko21M6A9jXyufJwc3jZXbdKBnaE7ugnhzkuJ0k6/H6R0WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276472; c=relaxed/simple;
-	bh=L1b/rinwP5r9jFAHWTc2DC6B4u34boWC4kj+WpVuUGo=;
+	s=arc-20240116; t=1757276475; c=relaxed/simple;
+	bh=hNQF7A4XXpT8EhtrZw0bpUgbO5kZdcAIZrq1E+DFux0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcdCW1AlPET1UmjvxXUYboI5Y28yuAe6oWI3KGBeQwsHDPJjZgrOOo0Ma8/AZEoqpJr2eI1cksNa0xmDa4JMrth1LxRHLcbpQC8NIOz/FfA3kFm27Cq29oTY8DNMrFowus/saC4MOZZww+6Cyvg7Zz0Xmmx/EJXMYGTm58P4ioU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiYLfIdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9hU+J8BEwqYKW9xfMF/Ap5uwY2PDhCdH0mGH4IYOmeous81WGcg53bYCNpfEaU0CWDWPLlen8FYsAZeEtjQpgyy8P2L0N5INfdGnfa6g5VeQFHnpF8BMNmyjP0DeXCheTUyqkAjnuWChCDon8o/6qAQB8o6yRaKVq+iKcbtuvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVliceEY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiYLfIdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64074C4CEF0;
-	Sun,  7 Sep 2025 20:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVliceEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D4AC4CEF8;
+	Sun,  7 Sep 2025 20:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276471;
-	bh=L1b/rinwP5r9jFAHWTc2DC6B4u34boWC4kj+WpVuUGo=;
+	s=korg; t=1757276475;
+	bh=hNQF7A4XXpT8EhtrZw0bpUgbO5kZdcAIZrq1E+DFux0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiYLfIdNWUZHQJ3yC6lG76Mwl8gwYZOUSfRx68goWjkGKOjaDU0B730eZ3hyzIils
-	 kc6uB56X2j6NsHG3zNGyUjOVPpM3ma4dZyjyTEPfTWKcZRZCp3TW1S0j/xa82/KOGz
-	 +XA1CMXHnPSygS5tClnlwg0SlUWi27q42cHj9rkY=
+	b=VVliceEYXYd4cdkSsVBZK2Rltw6UjAQyY0W8ZLC2zBVWBZn8YS3S/QOA7muGLXWmJ
+	 FQX9Zjkbzhl+NF1nIfincWaN+NAxh+xEyZmdJm24gHmFIud20OAjMqDd8nLpcXoGu7
+	 puec2CO34ux2BDy0G9dSvj+Kdm355hKjLvuI/soA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinji Nomoto <fj5851bi@fujitsu.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Yang Li <yang.li@amlogic.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/121] cpupower: Fix a bug where the -t option of the set subcommand was not working.
-Date: Sun,  7 Sep 2025 21:57:27 +0200
-Message-ID: <20250907195610.103771049@linuxfoundation.org>
+Subject: [PATCH 6.6 012/121] Bluetooth: hci_sync: Avoid adding default advertising on startup
+Date: Sun,  7 Sep 2025 21:57:28 +0200
+Message-ID: <20250907195610.128247243@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,37 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shinji Nomoto <fj5851bi@fujitsu.com>
+From: Yang Li <yang.li@amlogic.com>
 
-[ Upstream commit b3eaf14f4c63fd6abc7b68c6d7a07c5680a6d8e5 ]
+[ Upstream commit de5d7d3f27ddd4046736f558a40e252ddda82013 ]
 
-The set subcommand's -t option is documented as being available for boost
-configuration, but it was not actually functioning due to a bug
-in the option handling.
+list_empty(&hdev->adv_instances) is always true during startup,
+so an advertising instance is added by default.
 
-Link: https://lore.kernel.org/r/20250522061122.2149188-2-fj5851bi@fujitsu.com
-Signed-off-by: Shinji Nomoto <fj5851bi@fujitsu.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Call trace:
+  dump_backtrace+0x94/0xec
+  show_stack+0x18/0x24
+  dump_stack_lvl+0x48/0x60
+  dump_stack+0x18/0x24
+  hci_setup_ext_adv_instance_sync+0x17c/0x328
+  hci_powered_update_adv_sync+0xb4/0x12c
+  hci_powered_update_sync+0x54/0x70
+  hci_power_on_sync+0xe4/0x278
+  hci_set_powered_sync+0x28/0x34
+  set_powered_sync+0x40/0x58
+  hci_cmd_sync_work+0x94/0x100
+  process_one_work+0x168/0x444
+  worker_thread+0x378/0x3f4
+  kthread+0x108/0x10c
+  ret_from_fork+0x10/0x20
+
+Link: https://github.com/bluez/bluez/issues/1442
+Signed-off-by: Yang Li <yang.li@amlogic.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/utils/cpupower-set.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/cpupower/utils/cpupower-set.c b/tools/power/cpupower/utils/cpupower-set.c
-index 0677b58374abf..59ace394cf3ef 100644
---- a/tools/power/cpupower/utils/cpupower-set.c
-+++ b/tools/power/cpupower/utils/cpupower-set.c
-@@ -62,8 +62,8 @@ int cmd_set(int argc, char **argv)
- 
- 	params.params = 0;
- 	/* parameter parsing */
--	while ((ret = getopt_long(argc, argv, "b:e:m:",
--						set_opts, NULL)) != -1) {
-+	while ((ret = getopt_long(argc, argv, "b:e:m:t:",
-+				  set_opts, NULL)) != -1) {
- 		switch (ret) {
- 		case 'b':
- 			if (params.perf_bias)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 020f1809fc994..7f3f700faebc2 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3354,7 +3354,7 @@ static int hci_powered_update_adv_sync(struct hci_dev *hdev)
+ 	 * advertising data. This also applies to the case
+ 	 * where BR/EDR was toggled during the AUTO_OFF phase.
+ 	 */
+-	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) ||
++	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
+ 	    list_empty(&hdev->adv_instances)) {
+ 		if (ext_adv_capable(hdev)) {
+ 			err = hci_setup_ext_adv_instance_sync(hdev, 0x00);
 -- 
 2.50.1
 
