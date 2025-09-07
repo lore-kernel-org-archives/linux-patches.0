@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FAD315D54;
-	Sun,  7 Sep 2025 20:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507F6315D54;
+	Sun,  7 Sep 2025 20:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277369; cv=none; b=DMYjaSyb2V3LZF3aDmHJCRNSady1EsTkfEUXsYFbaLuwzrdhc382BT5JQmJk6y4GxOGJpf1ZXMHaN+8iOzf50KDneoMDPmSfNJLO7mfSBN8N4Y+ijb3x5O0A4QfXZBFdFnN6KQngEwW6ik1bddfgBgifRQ7a4n/ctHFgmJ38j+M=
+	t=1757277372; cv=none; b=br44tQMXyBCPWD0+Fz2/OzXPNhTySDcv7hx21i1HYc8MYDzn/dxKs2fuctPvKlq8ihsWpole4+mlQ0jhjbI313Zi8NAXKk+w2GX3RZ+V0fXKyc3q2YUOCPw+jy8PG3cye7a5WCB9fhtB7yMc1BFKxmc850regQ4K5dlHEWx8CQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277369; c=relaxed/simple;
-	bh=NZmooTos3MgoRI8/Kxpqzk+N/xUpeH6sqvK0aEuS9lk=;
+	s=arc-20240116; t=1757277372; c=relaxed/simple;
+	bh=qZ0SqWuGT2GwuB6b8UZ4WArN+yF5AQWqxorRGT3UXpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIFRAuwwRpJCvZ1kqGQMIwM+S+5XpGg/iV81FACBn8Q6V0AmPRvRFtBfPfDbCQQVA7eZarp6GD3LAV0iuQoQganUjGbWOUBOzq340Nd/VEKpIfOrFuuKy8rzU4uTcU7LjbbDLbpJHbKPwv+XVDJSCszDmx7HK/rE5fsIccx4mKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5ioAYde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxf4fs7l+7Z8FfrZsodd0gyZ35S1qzn+gGZlTcFZ8hDlzxabpzm1GX6X8ReepyTyaLI432D8lxrNUTS5AMJhx12qHDNxpFx5oTZ0EdZvK4WQ3M4cH4v7U+5ek2q3vMoKDi2hxP1gf7xZsIQSvgxWD21CRObVwiVLGq5PlcBE38w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcp30mqJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5ioAYde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19FCC4CEF0;
-	Sun,  7 Sep 2025 20:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcp30mqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA33BC4CEF0;
+	Sun,  7 Sep 2025 20:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277369;
-	bh=NZmooTos3MgoRI8/Kxpqzk+N/xUpeH6sqvK0aEuS9lk=;
+	s=korg; t=1757277372;
+	bh=qZ0SqWuGT2GwuB6b8UZ4WArN+yF5AQWqxorRGT3UXpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5ioAYdeYkp/voTLucu3GdIizTMGRYdiiLQLpk5Sj277wX0VtTIaHcusRONFWjHHv
-	 5wsT+92BUuMtNMt29mp1jarzzh/n06xRXizcEmblHew8EpPO58oRCX1ayv1kVSsmUT
-	 /18ntTU4nh16eFHVO7+jdIGFnJKfwBS8Yv3pRv4Q=
+	b=fcp30mqJ5WMBsSKZRDfEfw1P2n5o/1MofWOn2P1ywbzJJBKe0IKvYQIgd4mXx5GCh
+	 R79ZOBPNCQQyuwbDHlEbvySFBjHSgo8lfsCradpeY+717cy2fVaZcgKVOe1cJ8nWKl
+	 aMpXRGZMJLhUabSQAWY6aHHoEyIiHoySJiaf9Kwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Troy Mitchell <troy.mitchell@linux.dev>,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Atish Patra <atishp@rivosinc.com>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.12 168/175] ACPI: RISC-V: Fix FFH_CPPC_CSR error handling
-Date: Sun,  7 Sep 2025 21:59:23 +0200
-Message-ID: <20250907195618.835784781@linuxfoundation.org>
+Subject: [PATCH 6.12 169/175] riscv: Only allow LTO with CMODEL_MEDANY
+Date: Sun,  7 Sep 2025 21:59:24 +0200
+Message-ID: <20250907195618.858117898@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -55,48 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 5b3706597b90a7b6c9ae148edd07a43531dcd49e upstream.
+commit 41f9049cff324b7033e6ed1ded7dfff803cf550a upstream.
 
-The cppc_ffh_csr_read() and cppc_ffh_csr_write() returns Linux error
-code in "data->ret.error" so cpc_read_ffh() and cpc_write_ffh() must
-not use sbi_err_map_linux_errno() for FFH_CPPC_CSR.
+When building with CONFIG_CMODEL_MEDLOW and CONFIG_LTO_CLANG, there is a
+series of errors due to some files being unconditionally compiled with
+'-mcmodel=medany', mismatching with the rest of the kernel built with
+'-mcmodel=medlow':
 
-Fixes: 30f3ffbee86b ("ACPI: RISC-V: Add CPPC driver")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
+  ld.lld: error: Function Import: link error: linking module flags 'Code Model': IDs have conflicting values: 'i32 3' from vmlinux.a(init.o at 899908), and 'i32 1' from vmlinux.a(net-traces.o at 1014628)
+
+Only allow LTO to be performed when CONFIG_CMODEL_MEDANY is enabled to
+ensure there will be no code model mismatch errors. An alternative
+solution would be disabling LTO for the files with a different code
+model than the main kernel like some specialized areas of the kernel do
+but doing that for individual files is not as sustainable than
+forbidding the combination altogether.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250818143600.894385-2-apatel@ventanamicro.com
+Fixes: 021d23428bdb ("RISC-V: build: Allow LTO to be selected")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506290255.KBVM83vZ-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250710-riscv-restrict-lto-to-medany-v1-1-b1dac9871ecf@kernel.org
 Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/riscv/cppc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/riscv/cppc.c
-+++ b/drivers/acpi/riscv/cppc.c
-@@ -121,7 +121,7 @@ int cpc_read_ffh(int cpu, struct cpc_reg
- 
- 		*val = data.ret.value;
- 
--		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
-+		return data.ret.error;
- 	}
- 
- 	return -EINVAL;
-@@ -150,7 +150,7 @@ int cpc_write_ffh(int cpu, struct cpc_re
- 
- 		smp_call_function_single(cpu, cppc_ffh_csr_write, &data, 1);
- 
--		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
-+		return data.ret.error;
- 	}
- 
- 	return -EINVAL;
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -61,7 +61,7 @@ config RISCV
+ 	select ARCH_SUPPORTS_DEBUG_PAGEALLOC if MMU
+ 	select ARCH_SUPPORTS_HUGETLBFS if MMU
+ 	# LLD >= 14: https://github.com/llvm/llvm-project/issues/50505
+-	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000
++	select ARCH_SUPPORTS_LTO_CLANG if LLD_VERSION >= 140000 && CMODEL_MEDANY
+ 	select ARCH_SUPPORTS_LTO_CLANG_THIN if LLD_VERSION >= 140000
+ 	select ARCH_SUPPORTS_PAGE_TABLE_CHECK if MMU
+ 	select ARCH_SUPPORTS_PER_VMA_LOCK if MMU
 
 
