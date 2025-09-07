@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C3A212560;
-	Sun,  7 Sep 2025 20:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A82C1A9FAA;
+	Sun,  7 Sep 2025 20:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276494; cv=none; b=jd3BhjyFP+aJHMIN/PgT6lM81ey8yxj/jTanBOrjYPBWD3AK1LLq2uL/W+EPiJsJ2xyfwm8PrMR4bZckZ697wFgZGz2dlItTe49czeXmFGLr+WWKmE2VKoBUySKnS5/E2PvqAmJgse452ROj4Mh6mMGG9ppvl0kVlnhlsO+06i4=
+	t=1757276497; cv=none; b=aiNTo2rtQM+jP08d2eu3RmUyC2KpXLgcVSklBg17r9TxsNBC2ETfkaHIAmtJdZeyZG0JAgzjWDSWD3jzWeC5NgapFhBIChiCPCD2FzRoJeUj9FXL79x2baPsEredjITgLFZ5fXVlzuI7c4WoJh4oy/4zFr7TmtQvO/TH5GM8YSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276494; c=relaxed/simple;
-	bh=F0e2xUmkabh+LrMd4wZ6L5xO2DHOCbm/+k1ggbIqPpA=;
+	s=arc-20240116; t=1757276497; c=relaxed/simple;
+	bh=wm2wKG2GjtjImOZf9/qRyalOiarOZr5lk9nWwVO9geo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRB5g8cO91i0mBZ3NgZDvLUkUqIKHqG4wGGT+K5IkXF83+X1hNq5N1zyk3HjpjDVUnTK7bCqrQvOSgS13Jcpa3BzvZpjb/B3vu9C6Dd8KyaiNWkBkqTpENkbBbkTqgivx8ZS42jOhQk3muhEmD018ljHYokPhq/oQbPcy6pgQrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bzl8QqaL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0ytOzNS568giYry5B5TP/DjwBYb8biY6a7ackTw2h9Z2A3K6ZyOTK13N+cP+a0aoaIll22a/kR56oPDn7mM8B2r1bA57isRLy88oZubXAfh4cjlhCI0opUpFNKs8584Gs4qRsuOnEBccL5DsFXkwdET8PyxB/7i0LnU3a65QYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSMHQhfN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bzl8QqaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924A3C4CEF0;
-	Sun,  7 Sep 2025 20:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSMHQhfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1D9C4CEF0;
+	Sun,  7 Sep 2025 20:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276494;
-	bh=F0e2xUmkabh+LrMd4wZ6L5xO2DHOCbm/+k1ggbIqPpA=;
+	s=korg; t=1757276497;
+	bh=wm2wKG2GjtjImOZf9/qRyalOiarOZr5lk9nWwVO9geo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bzl8QqaLbxq0ckisTaaHysYtdPgyicLCqYDU5QXUny/We4eTlo/7j4xDZrMJqRFMw
-	 Msbv+bOsQKm+SSt863mVMowC9jEt4XKImpD3M5dgbfrOx67NdDbRqOk1r1TNaZqZIf
-	 BvMFsVm/GHdkupmBPHR+QNzX1Q3uKLs5X2rQZ7rk=
+	b=KSMHQhfNFCOs4lEZH1omhN9OGh1BsVP2VUFJg+axwjMioZPLzG0eDH55hYp4AS2Wf
+	 8Z3jQQXZcGuwww4+Snz6eWGnBXhJGEr994kxrudU6a1lLFXEAr39uvp4Jb7BpZnSHx
+	 ILqWiIKDMiAc2n/3VTVJBWd6xAMZvrt13gtXS5LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	syzbot+30754ca335e6fb7e3092@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/121] arm64: dts: imx8mp: Fix missing microSD slot vqmmc on Data Modul i.MX8M Plus eDM SBC
-Date: Sun,  7 Sep 2025 21:57:34 +0200
-Message-ID: <20250907195610.283954544@linuxfoundation.org>
+Subject: [PATCH 6.6 019/121] wifi: cfg80211: fix use-after-free in cmp_bss()
+Date: Sun,  7 Sep 2025 21:57:35 +0200
+Message-ID: <20250907195610.309162116@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -51,36 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut@mailbox.org>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 80733306290f6d2e05f0632e5d3e98cd16105c3c ]
+[ Upstream commit 26e84445f02ce6b2fe5f3e0e28ff7add77f35e08 ]
 
-Add missing microSD slot vqmmc-supply property, otherwise the kernel
-might shut down LDO5 regulator and that would power off the microSD
-card slot, possibly while it is in use. Add the property to make sure
-the kernel is aware of the LDO5 regulator which supplies the microSD
-slot and keeps the LDO5 enabled.
+Following bss_free() quirk introduced in commit 776b3580178f
+("cfg80211: track hidden SSID networks properly"), adjust
+cfg80211_update_known_bss() to free the last beacon frame
+elements only if they're not shared via the corresponding
+'hidden_beacon_bss' pointer.
 
-Fixes: 562d222f23f0 ("arm64: dts: imx8mp: Add support for Data Modul i.MX8M Plus eDM SBC")
-Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Reported-by: syzbot+30754ca335e6fb7e3092@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=30754ca335e6fb7e3092
+Fixes: 3ab8227d3e7d ("cfg80211: refactor cfg80211_bss_update")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20250813135236.799384-1-dmantipov@yandex.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/scan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
-index cd44bf83745ca..678ecc9f81dbb 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc.dts
-@@ -442,6 +442,7 @@ &usdhc2 {
- 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
- 	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
- 	vmmc-supply = <&reg_usdhc2_vmmc>;
-+	vqmmc-supply = <&ldo5>;
- 	bus-width = <4>;
- 	status = "okay";
- };
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 6db8c9a2a7a2b..c1d64e2504548 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1807,7 +1807,8 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ 			 */
+ 
+ 			f = rcu_access_pointer(new->pub.beacon_ies);
+-			kfree_rcu((struct cfg80211_bss_ies *)f, rcu_head);
++			if (!new->pub.hidden_beacon_bss)
++				kfree_rcu((struct cfg80211_bss_ies *)f, rcu_head);
+ 			return false;
+ 		}
+ 
 -- 
 2.50.1
 
