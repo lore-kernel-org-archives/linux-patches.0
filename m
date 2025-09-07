@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E114315A;
-	Sun,  7 Sep 2025 20:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916414315A;
+	Sun,  7 Sep 2025 20:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277635; cv=none; b=DyWnAlg3WJllEzla8DlvE2mX0vJBhDYt9UuLODf1ZiKdsmzy9JqLeAAlLqWvDxTfTgfixLdu2W/Vv+G7dPXpnn82L9gDwRq6LS29jNJb5pk5hixMtT49ol2AuhHyjUEaU3mrxVa1AdiKXoebBO+ct2vs2CfZB6S2lPOVxOVqf1M=
+	t=1757277638; cv=none; b=DxbAcUNYDbM6Vyd5di4sL0QgDzLfofjQTd8xtV+S+CXRKSQpcuVETvpK1iImMhzn2p8v/RRR1BM/14KGotjGI6ir9XAK0XVJ7p2gDOr4T2vwyNn2TqPae2nZ5iD1wxi3pGC5oj8QeHrvG7xWmw3JtfvHyvsGLGrw7SE5HDrV0tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277635; c=relaxed/simple;
-	bh=NU58ET4J7M6strQWVIRGP7SpqqmKykpjVr1eTonEZH8=;
+	s=arc-20240116; t=1757277638; c=relaxed/simple;
+	bh=59nwwKuokVUsOAH5sHeVZXnvbQjaXk+h8vT69nSsWkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FATFsx/huxB2IbfYQ/qAJZIUmzo0aCGVCDjyC6tAtq69SaYzJdYf5I5Am21t4+FN91o0NdYAsophjRUV8cfssKIBbiSsogi2zc2GwbtYmnyNCDM7NSKy1dnfjJlt39tptlrSMmxPaubVqj76ZPyLreLz7nWi1H3+f0xCh/Mk9Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCDPE9iW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l8TxBK/YK2u37bvm4BmJP/P7k8wK3u8rbj9cr/+Nygh/TAshqWvqLe1VEL+mQ9lBmNmi97f3xlI5Msc3A+WfxPC2hbKw/CsnrYhMptS7ICP13R78FNhKJthDMvhcT8b+kioEHfwt4Apg6mC9p6guSSJIevfYT5k1qA4+kvKsQHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUcCyf46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCDPE9iW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7EAC4CEF0;
-	Sun,  7 Sep 2025 20:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUcCyf46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC3DC4CEF0;
+	Sun,  7 Sep 2025 20:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277635;
-	bh=NU58ET4J7M6strQWVIRGP7SpqqmKykpjVr1eTonEZH8=;
+	s=korg; t=1757277638;
+	bh=59nwwKuokVUsOAH5sHeVZXnvbQjaXk+h8vT69nSsWkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCDPE9iWq/IdLbFJ1u7NjnS2QUtpIB+tiESU+uw7UpbVjS9kMASG/D8lO5KS2BTd1
-	 ibAmvnoHEx6Rk6vnrIv/2Kqf1DNpV3ULN86l+e5yVrpcUlYrtQAldrKzwpafWvkgsa
-	 tbalFLn24vyAXrvWOS4mYWK2wQAnoWKHLIBjCZp0=
+	b=iUcCyf46emsE8LNNKprZK04QCuao/8I42D10aurfg2PR7ZWh7pfR246xZw4L6v51b
+	 5xhIcfdAuguraJPCN4OOBoIec1h5K/YfjExuSTvhEDoDkEr7ZiaYeTdocfEeTKWdCr
+	 aDQM+Kn9gjzpkFbgrymwRql/57VSiEpq77A0X/xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 069/183] i40e: Fix potential invalid access when MAC list is empty
-Date: Sun,  7 Sep 2025 21:58:16 +0200
-Message-ID: <20250907195617.435343994@linuxfoundation.org>
+Subject: [PATCH 6.16 078/183] wifi: libertas: cap SSID len in lbs_associate()
+Date: Sun,  7 Sep 2025 21:58:25 +0200
+Message-ID: <20250907195617.648194865@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,40 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit a556f06338e1d5a85af0e32ecb46e365547f92b9 ]
+[ Upstream commit c786794bd27b0d7a5fd9063695df83206009be59 ]
 
-list_first_entry() never returns NULL - if the list is empty, it still
-returns a pointer to an invalid object, leading to potential invalid
-memory access when dereferenced.
+If the ssid_eid[1] length is more that 32 it leads to memory corruption.
 
-Fix this by using list_first_entry_or_null instead of list_first_entry.
-
-Fixes: e3219ce6a775 ("i40e: Add support for client interface for IWARP driver")
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/2a40f5ec7617144aef412034c12919a4927d90ad.1756456951.git.dan.carpenter@linaro.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_client.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/marvell/libertas/cfg.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_client.c b/drivers/net/ethernet/intel/i40e/i40e_client.c
-index 59263551c3838..0b099e5f48163 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_client.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_client.c
-@@ -359,8 +359,8 @@ static void i40e_client_add_instance(struct i40e_pf *pf)
- 	if (i40e_client_get_params(vsi, &cdev->lan_info.params))
- 		goto free_cdev;
+diff --git a/drivers/net/wireless/marvell/libertas/cfg.c b/drivers/net/wireless/marvell/libertas/cfg.c
+index 2e2c193716d96..309556541a83e 100644
+--- a/drivers/net/wireless/marvell/libertas/cfg.c
++++ b/drivers/net/wireless/marvell/libertas/cfg.c
+@@ -1151,10 +1151,13 @@ static int lbs_associate(struct lbs_private *priv,
+ 	/* add SSID TLV */
+ 	rcu_read_lock();
+ 	ssid_eid = ieee80211_bss_get_ie(bss, WLAN_EID_SSID);
+-	if (ssid_eid)
+-		pos += lbs_add_ssid_tlv(pos, ssid_eid + 2, ssid_eid[1]);
+-	else
++	if (ssid_eid) {
++		u32 ssid_len = min(ssid_eid[1], IEEE80211_MAX_SSID_LEN);
++
++		pos += lbs_add_ssid_tlv(pos, ssid_eid + 2, ssid_len);
++	} else {
+ 		lbs_deb_assoc("no SSID\n");
++	}
+ 	rcu_read_unlock();
  
--	mac = list_first_entry(&cdev->lan_info.netdev->dev_addrs.list,
--			       struct netdev_hw_addr, list);
-+	mac = list_first_entry_or_null(&cdev->lan_info.netdev->dev_addrs.list,
-+				       struct netdev_hw_addr, list);
- 	if (mac)
- 		ether_addr_copy(cdev->lan_info.lanmac, mac->addr);
- 	else
+ 	/* add DS param TLV */
 -- 
 2.50.1
 
