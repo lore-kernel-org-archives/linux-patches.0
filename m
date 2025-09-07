@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4491DF246;
-	Sun,  7 Sep 2025 20:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E174315A;
+	Sun,  7 Sep 2025 20:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277593; cv=none; b=hoqznqPPfBdeZQpSKBGWyk5yEAJMX9PS6KGJNUxeOKvf0ozxsloHKBCjNoenWiMjTNNUcOUZogvY2t9E/QCsrIEXDPVdALsuU/d6b04Tv7FYtrfCrsqP1NFK8epxKvsH9ZXHoQWXo8wdWGhNnrSpBsJCn+b3cFDONeonvQ1tYqo=
+	t=1757277597; cv=none; b=Jgr9UQiT8R45TDtCFnW3LYq9Yw9mYCmIa1l6irVDoY3okdx938Vfy0iqon4zzeoCwDbNAmGDzejewvcw5fRfTgl/LFQKIe/2JFEt0fkpFvgASGzYZJR9ntTAojwId3Sb6XS4jw1pwndId1jmyXAaJKqCNzziUxMiSOpJGyFULu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277593; c=relaxed/simple;
-	bh=24OdXIYd2z52mQwke4dgpgctKNp10B6YbB7R0+f8IPk=;
+	s=arc-20240116; t=1757277597; c=relaxed/simple;
+	bh=Z8SsJDerRv2ho0DAJZuNC5xGr4Q0JBTU69G0xTZ7g4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0ioJhto4W98qV+1eCk3RSl5eKhCc9h7WfX0EJQi2rSbjvZ+ZMuRuXckO37LyLfWoAoz60r/iuadCW9jCmg+xD1jcgAGEO0bJpTOn+t+H6xRSfwWaP3YQB/iXILvKliWj2MpiL1+fy11rT/9VkIBKIdnytHOlksgi1HPNkN7yio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Uv2iCiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GrH3Nl3qkiA9t+bTLzAoy1EibG/5WkrFEDH6eO/h660oFrp5BZsqA6a8dIi/Ftgk7MWrU9BeQjIbqgD4h/BhfPuj/xmbwAeJca+m7ToSi4Y+byWK9Z/T9L8KxNhSgsIimLFv6hqRcUD7OLS04HAW79Prp/Sa9DFkLScN0spY3GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMdir4iX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Uv2iCiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B64C4CEF0;
-	Sun,  7 Sep 2025 20:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMdir4iX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347DFC4CEF0;
+	Sun,  7 Sep 2025 20:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277593;
-	bh=24OdXIYd2z52mQwke4dgpgctKNp10B6YbB7R0+f8IPk=;
+	s=korg; t=1757277596;
+	bh=Z8SsJDerRv2ho0DAJZuNC5xGr4Q0JBTU69G0xTZ7g4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Uv2iCiIc6fxR9XhLujvggl2I0Ua3ss3TbGdGQu1VldawAzfaKfDxhGxXIILu3zgI
-	 ooidlvHOzoRYIAs399ftKZOxRl3ccVq8QJ1OWf11POzQXkgHmWW5pVRBdm7CyGF32u
-	 5aCz9Ex1IKNXF7g/4ZavpPocW+bFQuihPtM8E8/0=
+	b=lMdir4iX3JBqgH9CfqOgt8M/YH+VeB2elpUDD/MiWY68zXd6G00vk6bStc7iibQ2A
+	 6wj98bDQuYKtE5yCKYegMxcaLn1g3l48VcdiqpKJvYut6vAYjQ1fjK4BTOneFsCbY2
+	 PQUZVUmPoYM4fXu2odaUIoisPNL9MI3Oa0OW0PXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 061/183] net/smc: fix one NULL pointer dereference in smc_ib_is_sg_need_sync()
-Date: Sun,  7 Sep 2025 21:58:08 +0200
-Message-ID: <20250907195617.241483989@linuxfoundation.org>
+Subject: [PATCH 6.16 062/183] net: mctp: mctp_fraq_queue should take ownership of passed skb
+Date: Sun,  7 Sep 2025 21:58:09 +0200
+Message-ID: <20250907195617.264481994@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -54,65 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit ba1e9421cf1a8369d25c3832439702a015d6b5f9 ]
+[ Upstream commit 773b27a8a2f00ce3134e92e50ea4794a98ba2b76 ]
 
-BUG: kernel NULL pointer dereference, address: 00000000000002ec
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP PTI
-CPU: 28 UID: 0 PID: 343 Comm: kworker/28:1 Kdump: loaded Tainted: G        OE       6.17.0-rc2+ #9 NONE
-Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-Workqueue: smc_hs_wq smc_listen_work [smc]
-RIP: 0010:smc_ib_is_sg_need_sync+0x9e/0xd0 [smc]
-...
-Call Trace:
- <TASK>
- smcr_buf_map_link+0x211/0x2a0 [smc]
- __smc_buf_create+0x522/0x970 [smc]
- smc_buf_create+0x3a/0x110 [smc]
- smc_find_rdma_v2_device_serv+0x18f/0x240 [smc]
- ? smc_vlan_by_tcpsk+0x7e/0xe0 [smc]
- smc_listen_find_device+0x1dd/0x2b0 [smc]
- smc_listen_work+0x30f/0x580 [smc]
- process_one_work+0x18c/0x340
- worker_thread+0x242/0x360
- kthread+0xe7/0x220
- ret_from_fork+0x13a/0x160
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+As of commit f5d83cf0eeb9 ("net: mctp: unshare packets when
+reassembling"), we skb_unshare() in mctp_frag_queue(). The unshare may
+invalidate the original skb pointer, so we need to treat the skb as
+entirely owned by the fraq queue, even on failure.
 
-If the software RoCE device is used, ibdev->dma_device is a null pointer.
-As a result, the problem occurs. Null pointer detection is added to
-prevent problems.
-
-Fixes: 0ef69e788411c ("net/smc: optimize for smc_sndbuf_sync_sg_for_device and smc_rmb_sync_sg_for_cpu")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Reviewed-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Link: https://patch.msgid.link/20250828124117.2622624-1-liujian56@huawei.com
+Fixes: f5d83cf0eeb9 ("net: mctp: unshare packets when reassembling")
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/20250829-mctp-skb-unshare-v1-1-1c28fe10235a@codeconstruct.com.au
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_ib.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/mctp/route.c | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
-index 53828833a3f7f..a42ef3f77b961 100644
---- a/net/smc/smc_ib.c
-+++ b/net/smc/smc_ib.c
-@@ -742,6 +742,9 @@ bool smc_ib_is_sg_need_sync(struct smc_link *lnk,
- 	unsigned int i;
- 	bool ret = false;
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index d9c8e5a5f9ce9..19ff259d7bc43 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -325,6 +325,7 @@ static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
+ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev) {}
+ #endif
  
-+	if (!lnk->smcibdev->ibdev->dma_device)
-+		return ret;
++/* takes ownership of skb, both in success and failure cases */
+ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ {
+ 	struct mctp_hdr *hdr = mctp_hdr(skb);
+@@ -334,8 +335,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 		& MCTP_HDR_SEQ_MASK;
+ 
+ 	if (!key->reasm_head) {
+-		/* Since we're manipulating the shared frag_list, ensure it isn't
+-		 * shared with any other SKBs.
++		/* Since we're manipulating the shared frag_list, ensure it
++		 * isn't shared with any other SKBs. In the cloned case,
++		 * this will free the skb; callers can no longer access it
++		 * safely.
+ 		 */
+ 		key->reasm_head = skb_unshare(skb, GFP_ATOMIC);
+ 		if (!key->reasm_head)
+@@ -349,10 +352,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 	exp_seq = (key->last_seq + 1) & MCTP_HDR_SEQ_MASK;
+ 
+ 	if (this_seq != exp_seq)
+-		return -EINVAL;
++		goto err_free;
+ 
+ 	if (key->reasm_head->len + skb->len > mctp_message_maxlen)
+-		return -EINVAL;
++		goto err_free;
+ 
+ 	skb->next = NULL;
+ 	skb->sk = NULL;
+@@ -366,6 +369,10 @@ static int mctp_frag_queue(struct mctp_sk_key *key, struct sk_buff *skb)
+ 	key->reasm_head->truesize += skb->truesize;
+ 
+ 	return 0;
 +
- 	/* for now there is just one DMA address */
- 	for_each_sg(buf_slot->sgt[lnk->link_idx].sgl, sg,
- 		    buf_slot->sgt[lnk->link_idx].nents, i) {
++err_free:
++	kfree_skb(skb);
++	return -EINVAL;
+ }
+ 
+ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+@@ -476,18 +483,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 			 * key isn't observable yet
+ 			 */
+ 			mctp_frag_queue(key, skb);
++			skb = NULL;
+ 
+ 			/* if the key_add fails, we've raced with another
+ 			 * SOM packet with the same src, dest and tag. There's
+ 			 * no way to distinguish future packets, so all we
+-			 * can do is drop; we'll free the skb on exit from
+-			 * this function.
++			 * can do is drop.
+ 			 */
+ 			rc = mctp_key_add(key, msk);
+-			if (!rc) {
++			if (!rc)
+ 				trace_mctp_key_acquire(key);
+-				skb = NULL;
+-			}
+ 
+ 			/* we don't need to release key->lock on exit, so
+ 			 * clean up here and suppress the unlock via
+@@ -505,8 +510,7 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 				key = NULL;
+ 			} else {
+ 				rc = mctp_frag_queue(key, skb);
+-				if (!rc)
+-					skb = NULL;
++				skb = NULL;
+ 			}
+ 		}
+ 
+@@ -516,17 +520,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 		 */
+ 
+ 		/* we need to be continuing an existing reassembly... */
+-		if (!key->reasm_head)
++		if (!key->reasm_head) {
+ 			rc = -EINVAL;
+-		else
++		} else {
+ 			rc = mctp_frag_queue(key, skb);
++			skb = NULL;
++		}
+ 
+ 		if (rc)
+ 			goto out_unlock;
+ 
+-		/* we've queued; the queue owns the skb now */
+-		skb = NULL;
+-
+ 		/* end of message? deliver to socket, and we're done with
+ 		 * the reassembly/response key
+ 		 */
 -- 
 2.50.1
 
