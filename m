@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34038D528;
-	Sun,  7 Sep 2025 20:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D23AD528;
+	Sun,  7 Sep 2025 20:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276744; cv=none; b=bv7oVeN1DSI9/5gtg37MD6/GWRxBggYQ6KKalYsP6QBhPg0EhMzC8+iXb1y0sUiMMroky0aSyohAtLrVYbtSCqa+xe7yYVUHS1WQ7LWitTblZCps7dDU0gS8B7knLS2p59rM1ZYU96NBhNZlhaSXwRAZgXiEHDhBAuLqjiWOuPY=
+	t=1757276747; cv=none; b=f5ao2vmNNkOe4jZfh5xm+yXdBtBzLeFf885MgnX63IJ/TReRGIDnMt0FQw0KVzEcbdWS77TsADN0cfR7G0eAlM9s2ZzWyj4cZ09Nc1JeZv9WiM4FDma8EPv30T+2thDbybcoJYFoWHv0Z+RJelSFNCBcW9xOCDPkthxFCopDkys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276744; c=relaxed/simple;
-	bh=gDssaU6KHpVkQqFgJTQEH9It95lbAMYmnj0nEF4oLzI=;
+	s=arc-20240116; t=1757276747; c=relaxed/simple;
+	bh=NT5IFHJhD5L0oBD84LmdQrMCUL6eGV5MxZ5HCkasmSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZn8FuJAeqPJAbycad1Cme2y1ym/GR6w2RitEcA/TAr0ml5+S5TfK2TO3pOJfxRMep63570HbrmdOruSvR+s6i13wu5tp9Jy8mszYvXlgjtqesp9Tkejhmkl6IvnU8dqZgMcv4fsAJ3W5VC3D4Qkjdtl2c8hY0R1wF86HVHgOdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBoL2Ppj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VWMAA8O3DsicEg7ESASV4srkHijsK2huQLvDhu4MDMVVhuvmvRnBTAZ5CdpwPuJO+EScVAJQCQ9e4c24r2zrkLYoclfGa8LW1EWY/G/3K2pFkEbuReLegkNR5OpcJAUpk4tpZzzpac+/gGAPHoAb6OH1qW9MretT6o6ELvcM5Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XF732v1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBoL2Ppj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A3BC4CEF0;
-	Sun,  7 Sep 2025 20:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XF732v1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47D5C4CEF0;
+	Sun,  7 Sep 2025 20:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276744;
-	bh=gDssaU6KHpVkQqFgJTQEH9It95lbAMYmnj0nEF4oLzI=;
+	s=korg; t=1757276747;
+	bh=NT5IFHJhD5L0oBD84LmdQrMCUL6eGV5MxZ5HCkasmSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBoL2PpjJNfsLYHF9oKXukMa5HH+5wiHlFWBzC/ui7vqUGqWavqYtenwyHrODXjF7
-	 sl+3Qojc2tWmiRo0eMLi61ADsmui1+B/o2874IFhE7ATcee6hpiuyw3zAoDxQWTAlQ
-	 pg8DbO8Gl4Z7o0bI02uW4GP/oEReSZJ39LmixgmM=
+	b=XF732v1OhyW23XDg+jBRxW1nG7gnlD+ovMTtqjKJ86RMgBzzkgJbl2ahJzm9P/q+Y
+	 kaHyQBa4j4Utfwso8+D6ee1A7QfhNUcBViNz4xW+p/OxqPpqJ1PYHx+4ROkYRsUODM
+	 MW6y6whjgLpi8h+P6q3MspKXY6dozjCES6ZsVPUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ma Ke <make24@iscas.ac.cn>,
 	CK Hu <ck.hu@mediatek.com>,
-	Fei Shao <fshao@chromium.org>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/121] drm/mediatek: Fix using wrong drm private data to bind mediatek-drm
-Date: Sun,  7 Sep 2025 21:58:50 +0200
-Message-ID: <20250907195612.264219352@linuxfoundation.org>
+Subject: [PATCH 6.6 095/121] drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv
+Date: Sun,  7 Sep 2025 21:58:51 +0200
+Message-ID: <20250907195612.290388636@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -54,73 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Jason-JH.Lin" <jason-jh.lin@mediatek.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit ebba0960993045787ca00bb0932d83dad98c2e26 ]
+[ Upstream commit 1f403699c40f0806a707a9a6eed3b8904224021a ]
 
-According to mtk_drm_kms_init(), the all_drm_private array in each
-drm private data stores all drm private data in display path order.
+Using device_find_child() and of_find_device_by_node() to locate
+devices could cause an imbalance in the device's reference count.
+device_find_child() and of_find_device_by_node() both call
+get_device() to increment the reference count of the found device
+before returning the pointer. In mtk_drm_get_all_drm_priv(), these
+references are never released through put_device(), resulting in
+permanent reference count increments. Additionally, the
+for_each_child_of_node() iterator fails to release node references in
+all code paths. This leaks device node references when loop
+termination occurs before reaching MAX_CRTC. These reference count
+leaks may prevent device/node resources from being properly released
+during driver unbind operations.
 
-In mtk_drm_get_all_drm_priv(), each element in all_drm_priv should have one
-display path private data, such as:
-all_drm_priv[CRTC_MAIN] should only have main_path data
-all_drm_priv[CRTC_EXT] should only have ext_path data
-all_drm_priv[CRTC_THIRD] should only have third_path data
+As comment of device_find_child() says, 'NOTE: you will need to drop
+the reference with put_device() after use'.
 
-So we need to add the length checking for each display path before
-assigning their drm private data into all_drm_priv array.
-
-Then the all_drm_private array in each drm private data needs to be
-assigned in their display path order.
-
+Cc: stable@vger.kernel.org
 Fixes: 1ef7ed48356c ("drm/mediatek: Modify mediatek-drm for mt8195 multi mmsys support")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Tested-by: Fei Shao <fshao@chromium.org>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20231004024013.18956-4-jason-jh.lin@mediatek.com/
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250812071932.471730-1-make24@iscas.ac.cn/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Stable-dep-of: 1f403699c40f ("drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
 +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -352,6 +352,7 @@ static bool mtk_drm_get_all_drm_priv(str
- {
- 	struct mtk_drm_private *drm_priv = dev_get_drvdata(dev);
- 	struct mtk_drm_private *all_drm_priv[MAX_CRTC];
-+	struct mtk_drm_private *temp_drm_priv;
- 	struct device_node *phandle = dev->parent->of_node;
- 	const struct of_device_id *of_id;
- 	struct device_node *node;
-@@ -371,11 +372,21 @@ static bool mtk_drm_get_all_drm_priv(str
- 			continue;
+@@ -365,19 +365,19 @@ static bool mtk_drm_get_all_drm_priv(str
+ 
+ 		of_id = of_match_node(mtk_drm_of_ids, node);
+ 		if (!of_id)
+-			continue;
++			goto next_put_node;
+ 
+ 		pdev = of_find_device_by_node(node);
+ 		if (!pdev)
+-			continue;
++			goto next_put_node;
  
  		drm_dev = device_find_child(&pdev->dev, NULL, mtk_drm_match);
--		if (!drm_dev || !dev_get_drvdata(drm_dev))
-+		if (!drm_dev)
- 			continue;
+ 		if (!drm_dev)
+-			continue;
++			goto next_put_device_pdev_dev;
  
--		all_drm_priv[cnt] = dev_get_drvdata(drm_dev);
--		if (all_drm_priv[cnt] && all_drm_priv[cnt]->mtk_drm_bound)
-+		temp_drm_priv = dev_get_drvdata(drm_dev);
-+		if (!temp_drm_priv)
-+			continue;
-+
-+		if (temp_drm_priv->data->main_len)
-+			all_drm_priv[CRTC_MAIN] = temp_drm_priv;
-+		else if (temp_drm_priv->data->ext_len)
-+			all_drm_priv[CRTC_EXT] = temp_drm_priv;
-+		else if (temp_drm_priv->data->third_len)
-+			all_drm_priv[CRTC_THIRD] = temp_drm_priv;
-+
-+		if (temp_drm_priv->mtk_drm_bound)
+ 		temp_drm_priv = dev_get_drvdata(drm_dev);
+ 		if (!temp_drm_priv)
+-			continue;
++			goto next_put_device_drm_dev;
+ 
+ 		if (temp_drm_priv->data->main_len)
+ 			all_drm_priv[CRTC_MAIN] = temp_drm_priv;
+@@ -389,10 +389,17 @@ static bool mtk_drm_get_all_drm_priv(str
+ 		if (temp_drm_priv->mtk_drm_bound)
  			cnt++;
  
- 		if (cnt == MAX_CRTC) {
+-		if (cnt == MAX_CRTC) {
+-			of_node_put(node);
++next_put_device_drm_dev:
++		put_device(drm_dev);
++
++next_put_device_pdev_dev:
++		put_device(&pdev->dev);
++
++next_put_node:
++		of_node_put(node);
++
++		if (cnt == MAX_CRTC)
+ 			break;
+-		}
+ 	}
+ 
+ 	if (drm_priv->data->mmsys_dev_num == cnt) {
 
 
