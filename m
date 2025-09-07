@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBDD1F63CD;
-	Sun,  7 Sep 2025 20:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11064315A;
+	Sun,  7 Sep 2025 20:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277781; cv=none; b=sZ0dzcm0jvzyY0QsMLz3oK1Sr6gNVw5I9BzcSpkzx/FtYgbeppMAxg//fw/GEn6+MnKPKKrZc7zxwU9S714MyUGxmG25szhP7RPgGiDRAvIUKtPsiwQQupE5K2tre5Yb9ayw21VvEhhB8p3xhx58Rd2XzRCIImntgv7Vd3ipDk4=
+	t=1757277784; cv=none; b=UaXi6xnHmllbABpPvmAm87cozc37fEUGFNpLjR4F0vOkUkIW8jExQcoQi4255XCEK8JNG3Va6HuxPd7awpG2oWWu3bVVuznMzIB6YGP16ZfiNCuTvSYJhLTXEWlbPkkMX8aORG0ohrz/pOSPD13HwK8/Rq+dZW+8YMB/KuGeB2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277781; c=relaxed/simple;
-	bh=OeZyowlguJJhpGcunSpYC1d1NQ3YPoO5Y2E6U+COPBs=;
+	s=arc-20240116; t=1757277784; c=relaxed/simple;
+	bh=gGherhTyas3+ZjgtfYUuD9e3cv/dSBkz67YUDZtHBM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5KPnNz2+tvyIu1ThmHbBzELCsJflnrJyjokc9L/Xb+WGrDhUo2MViI262NNuQdTcBzF98YgCBwy4iWW3R8r60dh5mpS+1vWEKSdfNmn5kkqbEYjYmBNS22bteoh5io0ffyQxr6jX/DGT1YendgqpbK1uSKwSeN8akifMC6j0vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/WPIy8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbqIJ6Xm33mznKqZAkR4/UDVs035XBawKagjWkNEjOYCxXbb3RIBsRrKYAu9CXZ1rWeLFel88Ul6ms6KqC+PStmDh6eXLEPX1XHmhC0zyZ/EuugTutSO/kIsbEmHQIv3+2klC6PSVl5so4vmB7ZQ2h+XIA8nvF8yUNnXhTpD248=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unRAe1ba; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/WPIy8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEDDC4CEF0;
-	Sun,  7 Sep 2025 20:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unRAe1ba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A58FC4CEF0;
+	Sun,  7 Sep 2025 20:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277780;
-	bh=OeZyowlguJJhpGcunSpYC1d1NQ3YPoO5Y2E6U+COPBs=;
+	s=korg; t=1757277783;
+	bh=gGherhTyas3+ZjgtfYUuD9e3cv/dSBkz67YUDZtHBM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/WPIy8k/KrUDl0AUCEqhAJIZ26JwCFRLbCx3DvwdEbxIu7e3ray0QFnSAMKdbPWM
-	 mFyD88iwgOZO+S3uIN99NEwUPl2sMx0SPV/HiDsMEXHRpSl7IHc7UbFy99VKGk6PE8
-	 Izsih6AxkxxUn6XvZtqwDcTLj53jBB1PhLlZY5Ro=
+	b=unRAe1ba7JYaT6UjNaDFE60MEKaZo9cubHZQzYp7HKxe1x9sw2yJSlSy0IA1koZa7
+	 c6JVbr2L2i3PqHsME5SzuCOAUj5oEpbspy5D+aUnduOFfMxr2nM3E9nhUb/vkAw90C
+	 1wH2sJF2ebpug0XeNK9ACq68+ZoWOE7mxGDpt9Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Kunwu Chan <kunwu.chan@linux.dev>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.16 068/183] i40e: remove read access to debugfs files
-Date: Sun,  7 Sep 2025 21:58:15 +0200
-Message-ID: <20250907195617.409393173@linuxfoundation.org>
+	Yin Tirui <yintirui@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Chen Jun <chenjun102@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 115/183] of_numa: fix uninitialized memory nodes causing kernel panic
+Date: Sun,  7 Sep 2025 21:59:02 +0200
+Message-ID: <20250907195618.524442608@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -59,286 +58,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Yin Tirui <yintirui@huawei.com>
 
-[ Upstream commit 9fcdb1c3c4ba134434694c001dbff343f1ffa319 ]
+commit ee4d098cbc9160f573b5c1b5a51d6158efdb2896 upstream.
 
-The 'command' and 'netdev_ops' debugfs files are a legacy debugging
-interface supported by the i40e driver since its early days by commit
-02e9c290814c ("i40e: debugfs interface").
+When there are memory-only nodes (nodes without CPUs), these nodes are not
+properly initialized, causing kernel panic during boot.
 
-Both of these debugfs files provide a read handler which is mostly useless,
-and which is implemented with questionable logic. They both use a static
-256 byte buffer which is initialized to the empty string. In the case of
-the 'command' file this buffer is literally never used and simply wastes
-space. In the case of the 'netdev_ops' file, the last command written is
-saved here.
+of_numa_init
+	of_numa_parse_cpu_nodes
+		node_set(nid, numa_nodes_parsed);
+	of_numa_parse_memory_nodes
 
-On read, the files contents are presented as the name of the device
-followed by a colon and then the contents of their respective static
-buffer. For 'command' this will always be "<device>: ". For 'netdev_ops',
-this will be "<device>: <last command written>". But note the buffer is
-shared between all devices operated by this module. At best, it is mostly
-meaningless information, and at worse it could be accessed simultaneously
-as there doesn't appear to be any locking mechanism.
+In of_numa_parse_cpu_nodes, numa_nodes_parsed gets updated only for nodes
+containing CPUs.  Memory-only nodes should have been updated in
+of_numa_parse_memory_nodes, but they weren't.
 
-We have also recently received multiple reports for both read functions
-about their use of snprintf and potential overflow that could result in
-reading arbitrary kernel memory. For the 'command' file, this is definitely
-impossible, since the static buffer is always zero and never written to.
-For the 'netdev_ops' file, it does appear to be possible, if the user
-carefully crafts the command input, it will be copied into the buffer,
-which could be large enough to cause snprintf to truncate, which then
-causes the copy_to_user to read beyond the length of the buffer allocated
-by kzalloc.
+Subsequently, when free_area_init() attempts to access NODE_DATA() for
+these uninitialized memory nodes, the kernel panics due to NULL pointer
+dereference.
 
-A minimal fix would be to replace snprintf() with scnprintf() which would
-cap the return to the number of bytes written, preventing an overflow. A
-more involved fix would be to drop the mostly useless static buffers,
-saving 512 bytes and modifying the read functions to stop needing those as
-input.
+This can be reproduced on ARM64 QEMU with 1 CPU and 2 memory nodes:
 
-Instead, lets just completely drop the read access to these files. These
-are debug interfaces exposed as part of debugfs, and I don't believe that
-dropping read access will break any script, as the provided output is
-pretty useless. You can find the netdev name through other more standard
-interfaces, and the 'netdev_ops' interface can easily result in garbage if
-you issue simultaneous writes to multiple devices at once.
+qemu-system-aarch64 \
+-cpu host -nographic \
+-m 4G -smp 1 \
+-machine virt,accel=kvm,gic-version=3,iommu=smmuv3 \
+-object memory-backend-ram,size=2G,id=mem0 \
+-object memory-backend-ram,size=2G,id=mem1 \
+-numa node,nodeid=0,memdev=mem0 \
+-numa node,nodeid=1,memdev=mem1 \
+-kernel $IMAGE \
+-hda $DISK \
+-append "console=ttyAMA0 root=/dev/vda rw earlycon"
 
-In order to properly remove the i40e_dbg_netdev_ops_buf, we need to
-refactor its write function to avoid using the static buffer. Instead, use
-the same logic as the i40e_dbg_command_write, with an allocated buffer.
-Update the code to use this instead of the static buffer, and ensure we
-free the buffer on exit. This fixes simultaneous writes to 'netdev_ops' on
-multiple devices, and allows us to remove the now unused static buffer
-along with removing the read access.
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x481fd010]
+[    0.000000] Linux version 6.17.0-rc1-00001-gabb4b3daf18c-dirty (yintirui@local) (gcc (GCC) 12.3.1, GNU ld (GNU Binutils) 2.41) #52 SMP PREEMPT Mon Aug 18 09:49:40 CST 2025
+[    0.000000] KASLR enabled
+[    0.000000] random: crng init done
+[    0.000000] Machine model: linux,dummy-virt
+[    0.000000] efi: UEFI not found.
+[    0.000000] earlycon: pl11 at MMIO 0x0000000009000000 (options '')
+[    0.000000] printk: legacy bootconsole [pl11] enabled
+[    0.000000] OF: reserved mem: Reserved memory: No reserved-memory node in the DT
+[    0.000000] NODE_DATA(0) allocated [mem 0xbfffd9c0-0xbfffffff]
+[    0.000000] node 1 must be removed before remove section 23
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000040000000-0x00000000ffffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   [mem 0x0000000100000000-0x000000013fffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000040000000-0x00000000bfffffff]
+[    0.000000]   node   1: [mem 0x00000000c0000000-0x000000013fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000040000000-0x00000000bfffffff]
+[    0.000000] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000a0
+[    0.000000] Mem abort info:
+[    0.000000]   ESR = 0x0000000096000004
+[    0.000000]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    0.000000]   SET = 0, FnV = 0
+[    0.000000]   EA = 0, S1PTW = 0
+[    0.000000]   FSC = 0x04: level 0 translation fault
+[    0.000000] Data abort info:
+[    0.000000]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    0.000000]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    0.000000]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    0.000000] [00000000000000a0] user address but active_mm is swapper
+[    0.000000] Internal error: Oops: 0000000096000004 [#1]  SMP
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 UID: 0 PID: 0 Comm: swapper Not tainted 6.17.0-rc1-00001-g760c6dabf762-dirty #54 PREEMPT
+[    0.000000] Hardware name: linux,dummy-virt (DT)
+[    0.000000] pstate: 800000c5 (Nzcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.000000] pc : free_area_init+0x50c/0xf9c
+[    0.000000] lr : free_area_init+0x5c0/0xf9c
+[    0.000000] sp : ffffa02ca0f33c00
+[    0.000000] x29: ffffa02ca0f33cb0 x28: 0000000000000000 x27: 0000000000000000
+[    0.000000] x26: 4ec4ec4ec4ec4ec5 x25: 00000000000c0000 x24: 00000000000c0000
+[    0.000000] x23: 0000000000040000 x22: 0000000000000000 x21: ffffa02ca0f3b368
+[    0.000000] x20: ffffa02ca14c7b98 x19: 0000000000000000 x18: 0000000000000002
+[    0.000000] x17: 000000000000cacc x16: 0000000000000001 x15: 0000000000000001
+[    0.000000] x14: 0000000080000000 x13: 0000000000000018 x12: 0000000000000002
+[    0.000000] x11: ffffa02ca0fd4f00 x10: ffffa02ca14bab20 x9 : ffffa02ca14bab38
+[    0.000000] x8 : 00000000000c0000 x7 : 0000000000000001 x6 : 0000000000000002
+[    0.000000] x5 : 0000000140000000 x4 : ffffa02ca0f33c90 x3 : ffffa02ca0f33ca0
+[    0.000000] x2 : ffffa02ca0f33c98 x1 : 0000000080000000 x0 : 0000000000000001
+[    0.000000] Call trace:
+[    0.000000]  free_area_init+0x50c/0xf9c (P)
+[    0.000000]  bootmem_init+0x110/0x1dc
+[    0.000000]  setup_arch+0x278/0x60c
+[    0.000000]  start_kernel+0x70/0x748
+[    0.000000]  __primary_switched+0x88/0x90
+[    0.000000] Code: d503201f b98093e0 52800016 f8607a93 (f9405260)
+[    0.000000] ---[ end trace 0000000000000000 ]---
+[    0.000000] Kernel panic - not syncing: Attempted to kill the idle task!
+[    0.000000] ---[ end Kernel panic - not syncing: Attempted to kill the idle task! ]---
 
-Fixes: 02e9c290814c ("i40e: debugfs interface")
-Reported-by: Kunwu Chan <chentao@kylinos.cn>
-Closes: https://lore.kernel.org/intel-wired-lan/20231208031950.47410-1-chentao@kylinos.cn/
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Closes: https://lore.kernel.org/all/CANZ3JQRRiOdtfQJoP9QM=6LS1Jto8PGBGw6y7-TL=BcnzHQn1Q@mail.gmail.com/
-Reported-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Closes: https://lore.kernel.org/all/20250722115017.206969-1-a.jahangirzad@gmail.com/
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kunwu Chan <kunwu.chan@linux.dev>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250819075510.2079961-1-yintirui@huawei.com
+Fixes: 767507654c22 ("arch_numa: switch over to numa_memblks")
+Signed-off-by: Yin Tirui <yintirui@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Chen Jun <chenjun102@huawei.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/intel/i40e/i40e_debugfs.c    | 123 +++---------------
- 1 file changed, 19 insertions(+), 104 deletions(-)
+ drivers/of/of_numa.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-index 6cd9da662ae11..a5c794371dfe6 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
-@@ -40,48 +40,6 @@ static struct i40e_vsi *i40e_dbg_find_vsi(struct i40e_pf *pf, int seid)
-  * setup, adding or removing filters, or other things.  Many of
-  * these will be useful for some forms of unit testing.
-  **************************************************************/
--static char i40e_dbg_command_buf[256] = "";
--
--/**
-- * i40e_dbg_command_read - read for command datum
-- * @filp: the opened file
-- * @buffer: where to write the data for the user to read
-- * @count: the size of the user's buffer
-- * @ppos: file position offset
-- **/
--static ssize_t i40e_dbg_command_read(struct file *filp, char __user *buffer,
--				     size_t count, loff_t *ppos)
--{
--	struct i40e_pf *pf = filp->private_data;
--	struct i40e_vsi *main_vsi;
--	int bytes_not_copied;
--	int buf_size = 256;
--	char *buf;
--	int len;
--
--	/* don't allow partial reads */
--	if (*ppos != 0)
--		return 0;
--	if (count < buf_size)
--		return -ENOSPC;
--
--	buf = kzalloc(buf_size, GFP_KERNEL);
--	if (!buf)
--		return -ENOSPC;
--
--	main_vsi = i40e_pf_get_main_vsi(pf);
--	len = snprintf(buf, buf_size, "%s: %s\n", main_vsi->netdev->name,
--		       i40e_dbg_command_buf);
--
--	bytes_not_copied = copy_to_user(buffer, buf, len);
--	kfree(buf);
--
--	if (bytes_not_copied)
--		return -EFAULT;
--
--	*ppos = len;
--	return len;
--}
- 
- static char *i40e_filter_state_string[] = {
- 	"INVALID",
-@@ -1621,7 +1579,6 @@ static ssize_t i40e_dbg_command_write(struct file *filp,
- static const struct file_operations i40e_dbg_command_fops = {
- 	.owner = THIS_MODULE,
- 	.open =  simple_open,
--	.read =  i40e_dbg_command_read,
- 	.write = i40e_dbg_command_write,
- };
- 
-@@ -1630,48 +1587,6 @@ static const struct file_operations i40e_dbg_command_fops = {
-  * The netdev_ops entry in debugfs is for giving the driver commands
-  * to be executed from the netdev operations.
-  **************************************************************/
--static char i40e_dbg_netdev_ops_buf[256] = "";
--
--/**
-- * i40e_dbg_netdev_ops_read - read for netdev_ops datum
-- * @filp: the opened file
-- * @buffer: where to write the data for the user to read
-- * @count: the size of the user's buffer
-- * @ppos: file position offset
-- **/
--static ssize_t i40e_dbg_netdev_ops_read(struct file *filp, char __user *buffer,
--					size_t count, loff_t *ppos)
--{
--	struct i40e_pf *pf = filp->private_data;
--	struct i40e_vsi *main_vsi;
--	int bytes_not_copied;
--	int buf_size = 256;
--	char *buf;
--	int len;
--
--	/* don't allow partal reads */
--	if (*ppos != 0)
--		return 0;
--	if (count < buf_size)
--		return -ENOSPC;
--
--	buf = kzalloc(buf_size, GFP_KERNEL);
--	if (!buf)
--		return -ENOSPC;
--
--	main_vsi = i40e_pf_get_main_vsi(pf);
--	len = snprintf(buf, buf_size, "%s: %s\n", main_vsi->netdev->name,
--		       i40e_dbg_netdev_ops_buf);
--
--	bytes_not_copied = copy_to_user(buffer, buf, len);
--	kfree(buf);
--
--	if (bytes_not_copied)
--		return -EFAULT;
--
--	*ppos = len;
--	return len;
--}
- 
- /**
-  * i40e_dbg_netdev_ops_write - write into netdev_ops datum
-@@ -1685,35 +1600,36 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 					 size_t count, loff_t *ppos)
- {
- 	struct i40e_pf *pf = filp->private_data;
-+	char *cmd_buf, *buf_tmp;
- 	int bytes_not_copied;
- 	struct i40e_vsi *vsi;
--	char *buf_tmp;
- 	int vsi_seid;
- 	int i, cnt;
- 
- 	/* don't allow partial writes */
- 	if (*ppos != 0)
- 		return 0;
--	if (count >= sizeof(i40e_dbg_netdev_ops_buf))
--		return -ENOSPC;
- 
--	memset(i40e_dbg_netdev_ops_buf, 0, sizeof(i40e_dbg_netdev_ops_buf));
--	bytes_not_copied = copy_from_user(i40e_dbg_netdev_ops_buf,
--					  buffer, count);
--	if (bytes_not_copied)
-+	cmd_buf = kzalloc(count + 1, GFP_KERNEL);
-+	if (!cmd_buf)
-+		return count;
-+	bytes_not_copied = copy_from_user(cmd_buf, buffer, count);
-+	if (bytes_not_copied) {
-+		kfree(cmd_buf);
- 		return -EFAULT;
--	i40e_dbg_netdev_ops_buf[count] = '\0';
-+	}
-+	cmd_buf[count] = '\0';
- 
--	buf_tmp = strchr(i40e_dbg_netdev_ops_buf, '\n');
-+	buf_tmp = strchr(cmd_buf, '\n');
- 	if (buf_tmp) {
- 		*buf_tmp = '\0';
--		count = buf_tmp - i40e_dbg_netdev_ops_buf + 1;
-+		count = buf_tmp - cmd_buf + 1;
- 	}
- 
--	if (strncmp(i40e_dbg_netdev_ops_buf, "change_mtu", 10) == 0) {
-+	if (strncmp(cmd_buf, "change_mtu", 10) == 0) {
- 		int mtu;
- 
--		cnt = sscanf(&i40e_dbg_netdev_ops_buf[11], "%i %i",
-+		cnt = sscanf(&cmd_buf[11], "%i %i",
- 			     &vsi_seid, &mtu);
- 		if (cnt != 2) {
- 			dev_info(&pf->pdev->dev, "change_mtu <vsi_seid> <mtu>\n");
-@@ -1735,8 +1651,8 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 			dev_info(&pf->pdev->dev, "Could not acquire RTNL - please try again\n");
+--- a/drivers/of/of_numa.c
++++ b/drivers/of/of_numa.c
+@@ -59,8 +59,11 @@ static int __init of_numa_parse_memory_n
+ 			r = -EINVAL;
  		}
  
--	} else if (strncmp(i40e_dbg_netdev_ops_buf, "set_rx_mode", 11) == 0) {
--		cnt = sscanf(&i40e_dbg_netdev_ops_buf[11], "%i", &vsi_seid);
-+	} else if (strncmp(cmd_buf, "set_rx_mode", 11) == 0) {
-+		cnt = sscanf(&cmd_buf[11], "%i", &vsi_seid);
- 		if (cnt != 1) {
- 			dev_info(&pf->pdev->dev, "set_rx_mode <vsi_seid>\n");
- 			goto netdev_ops_write_done;
-@@ -1756,8 +1672,8 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 			dev_info(&pf->pdev->dev, "Could not acquire RTNL - please try again\n");
- 		}
+-		for (i = 0; !r && !of_address_to_resource(np, i, &rsrc); i++)
++		for (i = 0; !r && !of_address_to_resource(np, i, &rsrc); i++) {
+ 			r = numa_add_memblk(nid, rsrc.start, rsrc.end + 1);
++			if (!r)
++				node_set(nid, numa_nodes_parsed);
++		}
  
--	} else if (strncmp(i40e_dbg_netdev_ops_buf, "napi", 4) == 0) {
--		cnt = sscanf(&i40e_dbg_netdev_ops_buf[4], "%i", &vsi_seid);
-+	} else if (strncmp(cmd_buf, "napi", 4) == 0) {
-+		cnt = sscanf(&cmd_buf[4], "%i", &vsi_seid);
- 		if (cnt != 1) {
- 			dev_info(&pf->pdev->dev, "napi <vsi_seid>\n");
- 			goto netdev_ops_write_done;
-@@ -1775,21 +1691,20 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
- 			dev_info(&pf->pdev->dev, "napi called\n");
- 		}
- 	} else {
--		dev_info(&pf->pdev->dev, "unknown command '%s'\n",
--			 i40e_dbg_netdev_ops_buf);
-+		dev_info(&pf->pdev->dev, "unknown command '%s'\n", cmd_buf);
- 		dev_info(&pf->pdev->dev, "available commands\n");
- 		dev_info(&pf->pdev->dev, "  change_mtu <vsi_seid> <mtu>\n");
- 		dev_info(&pf->pdev->dev, "  set_rx_mode <vsi_seid>\n");
- 		dev_info(&pf->pdev->dev, "  napi <vsi_seid>\n");
- 	}
- netdev_ops_write_done:
-+	kfree(cmd_buf);
- 	return count;
- }
- 
- static const struct file_operations i40e_dbg_netdev_ops_fops = {
- 	.owner = THIS_MODULE,
- 	.open = simple_open,
--	.read = i40e_dbg_netdev_ops_read,
- 	.write = i40e_dbg_netdev_ops_write,
- };
- 
--- 
-2.50.1
-
+ 		if (!i || r) {
+ 			of_node_put(np);
 
 
