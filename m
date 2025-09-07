@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEA11A0BFD;
-	Sun,  7 Sep 2025 20:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA551A0BFD;
+	Sun,  7 Sep 2025 20:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277227; cv=none; b=Lba0WIwhbaJdZzGlfmoawUict0o4Xcfsi1nDGSEMndYlyp6fGB7ho8ODV9cmvIidp8rYyHSVNkumhL4f+o3RtzUJZNeiRralN2B7XXezo5xXkFidoyEC2pnSZKlIHSkDr4gQR8hM8HRGfsPHt4iDhD10PSQMQeP9+1CK9CLCkxQ=
+	t=1757277230; cv=none; b=qes7pEjHAGDkHnP+DCd68WNZkJPNZAJFHRGVnhwmKB3tDZAs1/TzCFjCHNWsJHZYa+ivmJNLKJf7M/7xgcDUaSEIGBkRlBrEh4vZiVkgdv1teNuXFSHd5w05PMXdlwri+OmfosDz5h+N0swcn/EO4WtjE0j+K/gPAl8tI+/4148=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277227; c=relaxed/simple;
-	bh=HiRbnMMMq8EUnjpQrx1DVasTvF7kn3ynCL1xkL9IBLA=;
+	s=arc-20240116; t=1757277230; c=relaxed/simple;
+	bh=sx62alKdaqvVgboo8mZ6mwmPDAj4CWx3tq8GFOqYzew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FeHUNLjeDMFSULQ7xDmA0CgIzJwcaw1klxKZjUTm0BwF2P++j5JT1GwnXrnY677sVn4M7ym1cLbCNRtHZqyo6WImM0z0Ucpfb1QJO6lfSkfqp38avnKpM6+wl3Ko21r1unAS/jEguRjIg6+4xSUBF7zZkR3tQof4cumIPDd9V3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdritSk+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rf3bmRLXkFXxhMH2oK8YKCCIV3aFofGFsDl8EXZk55WI7FIaFGH01WDv8bPv6dDGO6t5kqDHYCYCJdWgnE5zsT9xm3V6W9BbdSx0qvmUmJ7RnrJovRIhEe8oXGioKKIuEDPmgfTTSEdzWnCLSXXWIawdvTXxt8IqjJB+LpnxnSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5vF1Acy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdritSk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F39BC4CEF0;
-	Sun,  7 Sep 2025 20:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5vF1Acy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71948C4CEF0;
+	Sun,  7 Sep 2025 20:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277226;
-	bh=HiRbnMMMq8EUnjpQrx1DVasTvF7kn3ynCL1xkL9IBLA=;
+	s=korg; t=1757277229;
+	bh=sx62alKdaqvVgboo8mZ6mwmPDAj4CWx3tq8GFOqYzew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdritSk+FZ2xMKPki8UaDq3aJaJ4qoTDZ7HFRYAyfqNJfKkBFmq/e3fPRnoKn7EwL
-	 Fk5LKMP44jsu8l4tg6sdh+sbu33fXH9w3HM1B6DpYjfg/RmpAN97s8Xos2Q/pagjdF
-	 QoGqjB2SR+Un7cGxqlTXrhyEty7m73aajHnnnUe8=
+	b=i5vF1AcyaGxJ/P+vTLUIZe1RyQQTX5joVtAHkUvf3bL9QJfwj1mKnLBrdMV8IrhlM
+	 byPg9TDpoPD9wPTLeYNNEIeJZcknvzPGQOng+olcTOqQcn5AwBs2zqQUd+ueye4mBW
+	 NUQbSfXs6HKy6BiB/xmmiTz45XpbZ5puJYyelUBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 123/175] fs/fhandle.c: fix a race in call of has_locked_children()
-Date: Sun,  7 Sep 2025 21:58:38 +0200
-Message-ID: <20250907195617.767460359@linuxfoundation.org>
+Subject: [PATCH 6.12 124/175] net: dsa: add hook to determine whether EEE is supported
+Date: Sun,  7 Sep 2025 21:58:39 +0200
+Message-ID: <20250907195617.791021145@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -52,89 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit 1f282cdc1d219c4a557f7009e81bc792820d9d9a upstream.
+commit 9723a77318b7c0cfd06ea207e52a042f8c815318 upstream.
 
-may_decode_fh() is calling has_locked_children() while holding no locks.
-That's an oopsable race...
+Add a hook to determine whether the switch supports EEE. This will
+return false if the switch does not, or true if it does. If the
+method is not implemented, we assume (currently) that the switch
+supports EEE.
 
-The rest of the callers are safe since they are holding namespace_sem and
-are guaranteed a positive refcount on the mount in question.
-
-Rename the current has_locked_children() to __has_locked_children(), make
-it static and switch the fs/namespace.c users to it.
-
-Make has_locked_children() a wrapper for __has_locked_children(), calling
-the latter under read_seqlock_excl(&mount_lock).
-
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-[ Harshit: Resolved conflicts due to missing commit:
-  db04662e2f4f ("fs: allow detached mounts in clone_private_mount()") in
-  linux-6.12.y ]
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/E1tL144-006cZD-El@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ include/net/dsa.h |    1 +
+ net/dsa/user.c    |    8 ++++++++
+ 2 files changed, 9 insertions(+)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -2227,7 +2227,7 @@ void drop_collected_mounts(struct vfsmou
- 	namespace_unlock();
- }
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -1003,6 +1003,7 @@ struct dsa_switch_ops {
+ 	/*
+ 	 * Port's MAC EEE settings
+ 	 */
++	bool	(*support_eee)(struct dsa_switch *ds, int port);
+ 	int	(*set_mac_eee)(struct dsa_switch *ds, int port,
+ 			       struct ethtool_keee *e);
+ 	int	(*get_mac_eee)(struct dsa_switch *ds, int port,
+--- a/net/dsa/user.c
++++ b/net/dsa/user.c
+@@ -1231,6 +1231,10 @@ static int dsa_user_set_eee(struct net_d
+ 	struct dsa_switch *ds = dp->ds;
+ 	int ret;
  
--bool has_locked_children(struct mount *mnt, struct dentry *dentry)
-+static bool __has_locked_children(struct mount *mnt, struct dentry *dentry)
- {
- 	struct mount *child;
- 
-@@ -2241,6 +2241,16 @@ bool has_locked_children(struct mount *m
- 	return false;
- }
- 
-+bool has_locked_children(struct mount *mnt, struct dentry *dentry)
-+{
-+	bool res;
++	/* Check whether the switch supports EEE */
++	if (ds->ops->support_eee && !ds->ops->support_eee(ds, dp->index))
++		return -EOPNOTSUPP;
 +
-+	read_seqlock_excl(&mount_lock);
-+	res = __has_locked_children(mnt, dentry);
-+	read_sequnlock_excl(&mount_lock);
-+	return res;
-+}
+ 	/* Port's PHY and MAC both need to be EEE capable */
+ 	if (!dev->phydev || !dp->pl)
+ 		return -ENODEV;
+@@ -1251,6 +1255,10 @@ static int dsa_user_get_eee(struct net_d
+ 	struct dsa_switch *ds = dp->ds;
+ 	int ret;
+ 
++	/* Check whether the switch supports EEE */
++	if (ds->ops->support_eee && !ds->ops->support_eee(ds, dp->index))
++		return -EOPNOTSUPP;
 +
- /**
-  * clone_private_mount - create a private clone of a path
-  * @path: path to clone
-@@ -2268,7 +2278,7 @@ struct vfsmount *clone_private_mount(con
- 		return ERR_PTR(-EPERM);
- 	}
- 
--	if (has_locked_children(old_mnt, path->dentry))
-+	if (__has_locked_children(old_mnt, path->dentry))
- 		goto invalid;
- 
- 	new_mnt = clone_mnt(old_mnt, path->dentry, CL_PRIVATE);
-@@ -2762,7 +2772,7 @@ static struct mount *__do_loopback(struc
- 	if (!check_mnt(old) && old_path->dentry->d_op != &ns_dentry_operations)
- 		return mnt;
- 
--	if (!recurse && has_locked_children(old, old_path->dentry))
-+	if (!recurse && __has_locked_children(old, old_path->dentry))
- 		return mnt;
- 
- 	if (recurse)
-@@ -3152,7 +3162,7 @@ static int do_set_group(struct path *fro
- 		goto out;
- 
- 	/* From mount should not have locked children in place of To's root */
--	if (has_locked_children(from, to->mnt.mnt_root))
-+	if (__has_locked_children(from, to->mnt.mnt_root))
- 		goto out;
- 
- 	/* Setting sharing groups is only allowed on private mounts */
+ 	/* Port's PHY and MAC both need to be EEE capable */
+ 	if (!dev->phydev || !dp->pl)
+ 		return -ENODEV;
 
 
