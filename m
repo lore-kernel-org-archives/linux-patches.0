@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE6D125B2;
-	Sun,  7 Sep 2025 20:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620F6126C02;
+	Sun,  7 Sep 2025 20:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277977; cv=none; b=fTTq2aIk2mL0H9eO0CgCh/w/150mDN3zVm2bVRPAc8zya/BnKMGjpnuR9nhGVBSX3XX5e5nRPxA2j7p9VgzgTY5m3MmM7gTgeeEPu143H7T3mpPNLUmp/S72upUqo6uqZ+P+gpTRFcDm1jb5w2vehAudfPnluvUmAyJEdqp6o3U=
+	t=1757277980; cv=none; b=Z3pHz1TJ8JCXbibut6Rzz8UHctDjhUHjtZe1WEJMIgUOFG3a6oiZdfeX/FhVI36+t2afcJVat1K0AncNB6z6lyycC8M1BETkuiJUIT9YO30RMjS9D+7WkNEZ2eXTC8rZBNMzorDaKw52oMGKb2B9lHEpfki0wb9vbQyCzcjKnBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277977; c=relaxed/simple;
-	bh=w+teoBLGtY3Y9tKoPWPPTnXlwFONCyYt03invsCH/uw=;
+	s=arc-20240116; t=1757277980; c=relaxed/simple;
+	bh=LikieFQTUkLFUfYPz34XjchdbH9grj5C3TrEP+huM5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQ6BA8aS9bEUjIjFCF/Z0X34GyI6ZPnnFJFykGeNUkpib+c0fIlnhFn7gIBLgQ/ewaE+0VdAiuGdEF09WEPshAydkcEOweRtb55sNDbj2I41rivOHaxroj1cKR6jCecQOYDfb69zBuwmUJa6q2QoiDOyOL7r+NvVdoCyD9k6Cw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnUIxPho; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=O1qz97Clf0ycUGaMpO4bSsu30GZ3BQaWvZkeJ5KOTtT18K9VcObbFBg2xxTYc9fFLfnIzieUoqV5qAG6D4hzBP9uAb99AJfbp1mlpNv9gQwDJiHN5648x29J/cNaqvSfUAICRdizgbO2+w+5gnEH8VeoAaZxzUXpPSV+0kSw7+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epcD4UBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnUIxPho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B023C4CEF0;
-	Sun,  7 Sep 2025 20:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epcD4UBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ADAC4CEF0;
+	Sun,  7 Sep 2025 20:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277977;
-	bh=w+teoBLGtY3Y9tKoPWPPTnXlwFONCyYt03invsCH/uw=;
+	s=korg; t=1757277980;
+	bh=LikieFQTUkLFUfYPz34XjchdbH9grj5C3TrEP+huM5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnUIxPhoYA06xDzQl74MRTZwqM4rQebUybYnf7knEbAHt3lFjbhtVNDZ4Fg/Qs2MD
-	 omnSUhmYfLuo9aJWJExkh66VW4Bzt7iAwVtj4/sMZglVEjgLccXcYaGWZBMztdvTmR
-	 WOWzMm/sVuGM8VjMG/u9kcETrGrB2CE2jKG2CE3E=
+	b=epcD4UBVJbkmnQYa4BQ83nDD3YLxkZILDXNvaK/nN4slF1eLgmLyyebYNM20o4xSr
+	 DLg8kB/tBUQtbi278nJY+52AvwhJYe3ZQK7uA4OGxIIOiDeMIezQFyEEG9G18OrxlI
+	 Vonh/QDOxIFu8L5qjIk6B63sDi3EAwogPWH1ugJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Cyril Bur <cyrilbur@tenstorrent.com>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.16 182/183] riscv: Fix sparse warning about different address spaces
-Date: Sun,  7 Sep 2025 22:00:09 +0200
-Message-ID: <20250907195620.155067659@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 183/183] Revert "drm/i915/gem: Allow EXEC_CAPTURE on recoverable contexts on DG1"
+Date: Sun,  7 Sep 2025 22:00:10 +0200
+Message-ID: <20250907195620.178049041@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -47,54 +50,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit a03ee11b8f850bd008226c6d392da24163dfb56e upstream.
+[ Upstream commit d2dc30e0aa252830f908c8e793d3139d51321370 ]
 
-We did not propagate the __user attribute of the pointers in
-__get_kernel_nofault() and __put_kernel_nofault(), which results in
-sparse complaining:
+This reverts commit d6e020819612a4a06207af858e0978be4d3e3140.
 
->> mm/maccess.c:41:17: sparse: sparse: incorrect type in argument 2 (different address spaces) @@     expected void const [noderef] __user *from @@     got unsigned long long [usertype] * @@
-   mm/maccess.c:41:17: sparse:     expected void const [noderef] __user *from
-   mm/maccess.c:41:17: sparse:     got unsigned long long [usertype] *
+The IS_DGFX check was put in place because error capture of buffer
+objects is expected to be broken on devices with VRAM.
 
-So fix this by correctly casting those pointers.
+Userspace fix[1] to the impacted media driver has been submitted, merged
+and a new driver release is out as 25.2.3 where the capture flag is
+dropped on DG1 thus unblocking the usage of media driver on DG1.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202508161713.RWu30Lv1-lkp@intel.com/
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Fixes: f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for get_user()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Cyril Bur <cyrilbur@tenstorrent.com>
-Link: https://lore.kernel.org/r/20250903-dev-alex-sparse_warnings_v1-v1-2-7e6350beb700@rivosinc.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] https://github.com/intel/media-driver/commit/93c07d9b4b96a78bab21f6acd4eb863f4313ea4a
+
+Cc: stable@vger.kernel.org # v6.0+
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Acked-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20250522064127.24293-1-joonas.lahtinen@linux.intel.com
+[Joonas: Update message to point out the merged userspace fix]
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/uaccess.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -438,10 +438,10 @@ unsigned long __must_check clear_user(vo
- }
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+index ea9d5063ce78c..ca7e9216934a7 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -2013,7 +2013,7 @@ static int eb_capture_stage(struct i915_execbuffer *eb)
+ 			continue;
  
- #define __get_kernel_nofault(dst, src, type, err_label)			\
--	__get_user_nocheck(*((type *)(dst)), (type *)(src), err_label)
-+	__get_user_nocheck(*((type *)(dst)), (__force __user type *)(src), err_label)
+ 		if (i915_gem_context_is_recoverable(eb->gem_context) &&
+-		    GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 10))
++		    (IS_DGFX(eb->i915) || GRAPHICS_VER_FULL(eb->i915) > IP_VER(12, 0)))
+ 			return -EINVAL;
  
- #define __put_kernel_nofault(dst, src, type, err_label)			\
--	__put_user_nocheck(*((type *)(src)), (type *)(dst), err_label)
-+	__put_user_nocheck(*((type *)(src)), (__force __user type *)(dst), err_label)
- 
- static __must_check __always_inline bool user_access_begin(const void __user *ptr, size_t len)
- {
+ 		for_each_batch_create_order(eb, j) {
+-- 
+2.51.0
+
 
 
