@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A9C1CDFAC;
-	Sun,  7 Sep 2025 20:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CE21CDFAC;
+	Sun,  7 Sep 2025 20:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757275658; cv=none; b=QRP9eD38V3GaEM1XvJcu3nwtgiABgLaiotZacXTAhkU4bel2lcrAxmWpjjRF8pMHWS3OeWlBGFDvKdW5dUF05RK3pC1qN7ndeCsL/387PlLWL40I8LC0XXESFS5U+FAvRtfHeaLGm9rX5A3dT3AJAywfQBN55X+l51xMOA2wIkI=
+	t=1757275661; cv=none; b=hjwtoiZlIX3YXsa78LqvARxaa/xjZxLVDbM9On131gWnulgJSN81xLCYIZV5KCf+B20fAIQ2NRgo1QA4TkyakRMcRupMTYQtWjzQ5cRhkG7zmL97M53tKSQqq7SMNrMV5NMbM5I5mRCJbITLL/3RdfE1+1aoK/a50EutG2VdR44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757275658; c=relaxed/simple;
-	bh=EOkqqw2deM5MzUjnMR5WLva/JNV7wlGPEAB2QX9qh94=;
+	s=arc-20240116; t=1757275661; c=relaxed/simple;
+	bh=oGbdt+cmnhkwT8GUVkGy684cK4CoWWrOPdgsv/LcAog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiC1HMPj7Y+KBV+SfNY+f+l5l3gF4+sedAXYMF/6IQzS2zk+COqG2/kGnB7XdAvNqPf06SNakZLhSCC68sAQapnZF7dl85iKv/GFb6r8N0TCDPsyWYiJhL5UtwHOZqA0/mu7Nozr4Vtn9hrPBpsi9zoNq/Jp1TnbJVmw/cVMVsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y01/4hvi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBx1b/0K0Ffp7oLMLCa/vAMyu4i+/XgwqUYXr+gWtm3vshaGD8esuifc7y5jVLmKTERPnqyPdMI4zlOFpOckXH3dzKglzG4liLDFRP9mgBcjQ9VJ5fo0d0O3Tbleyx8qu4uP9LGWpDdFXB1oLw5Xn/608MR2k9ftvNL1vWbL5fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPNK/Xwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y01/4hvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E852C4CEF0;
-	Sun,  7 Sep 2025 20:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPNK/Xwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E46C4CEF0;
+	Sun,  7 Sep 2025 20:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757275658;
-	bh=EOkqqw2deM5MzUjnMR5WLva/JNV7wlGPEAB2QX9qh94=;
+	s=korg; t=1757275661;
+	bh=oGbdt+cmnhkwT8GUVkGy684cK4CoWWrOPdgsv/LcAog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y01/4hvi67OfkrT8bKcYAVRjjcB2wT+eAMpRkyaN0zECRkrl5wA33sz8O70H/COMx
-	 UIaDLteTZEAz1wB8WeI/KXaJlSPQFO5lG1oW3xD3jNJ07dC5TWgKqn9BgevuxytNuQ
-	 L5cwcc8qjy9Eukrg44/f8CP1lF8WmqAdDZd9A3q0=
+	b=PPNK/XwuyOrecS4FULmV2hoZSY6C3bFPdDJCyn3/TWmw8XODsXXpQ3CdJ4NSu+0xf
+	 lMkxjdo+gLQyG7IyYaviZZgA87/9R4iY6plr1SPzqdtnnPj4tpsxriuK2+J3kesGG6
+	 nW5rRnSmsolkqYCkr1v9vS7qirdzPpjZajivgS14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	oushixiong <oushixiong1025@163.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 23/52] drm/amdgpu: drop hw access in non-DC audio fini
-Date: Sun,  7 Sep 2025 21:57:43 +0200
-Message-ID: <20250907195602.672975323@linuxfoundation.org>
+	John Evans <evans1210144@gmail.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.10 24/52] scsi: lpfc: Fix buffer free/clear order in deferred receive path
+Date: Sun,  7 Sep 2025 21:57:44 +0200
+Message-ID: <20250907195602.699053186@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195601.957051083@linuxfoundation.org>
 References: <20250907195601.957051083@linuxfoundation.org>
@@ -50,105 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: John Evans <evans1210144@gmail.com>
 
-commit 71403f58b4bb6c13b71c05505593a355f697fd94 upstream.
+commit 9dba9a45c348e8460da97c450cddf70b2056deb3 upstream.
 
-We already disable the audio pins in hw_fini so
-there is no need to do it again in sw_fini.
+Fix a use-after-free window by correcting the buffer release sequence in
+the deferred receive path. The code freed the RQ buffer first and only
+then cleared the context pointer under the lock. Concurrent paths (e.g.,
+ABTS and the repost path) also inspect and release the same pointer under
+the lock, so the old order could lead to double-free/UAF.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4481
-Cc: oushixiong <oushixiong1025@163.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5eeb16ca727f11278b2917fd4311a7d7efb0bbd6)
+Note that the repost path already uses the correct pattern: detach the
+pointer under the lock, then free it after dropping the lock. The
+deferred path should do the same.
+
+Fixes: 472e146d1cf3 ("scsi: lpfc: Correct upcalling nvmet_fc transport during io done downcall")
 Cc: stable@vger.kernel.org
+Signed-off-by: John Evans <evans1210144@gmail.com>
+Link: https://lore.kernel.org/r/20250828044008.743-1-evans1210144@gmail.com
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/dce_v10_0.c |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v11_0.c |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  |    5 -----
- drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  |    5 -----
- 4 files changed, 20 deletions(-)
+ drivers/scsi/lpfc/lpfc_nvmet.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
-@@ -1463,17 +1463,12 @@ static int dce_v10_0_audio_init(struct a
+--- a/drivers/scsi/lpfc/lpfc_nvmet.c
++++ b/drivers/scsi/lpfc/lpfc_nvmet.c
+@@ -1245,7 +1245,7 @@ lpfc_nvmet_defer_rcv(struct nvmet_fc_tar
+ 	struct lpfc_nvmet_tgtport *tgtp;
+ 	struct lpfc_async_xchg_ctx *ctxp =
+ 		container_of(rsp, struct lpfc_async_xchg_ctx, hdlrctx.fcp_req);
+-	struct rqb_dmabuf *nvmebuf = ctxp->rqb_buffer;
++	struct rqb_dmabuf *nvmebuf;
+ 	struct lpfc_hba *phba = ctxp->phba;
+ 	unsigned long iflag;
  
- static void dce_v10_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
+@@ -1253,13 +1253,18 @@ lpfc_nvmet_defer_rcv(struct nvmet_fc_tar
+ 	lpfc_nvmeio_data(phba, "NVMET DEFERRCV: xri x%x sz %d CPU %02x\n",
+ 			 ctxp->oxid, ctxp->size, raw_smp_processor_id());
+ 
++	spin_lock_irqsave(&ctxp->ctxlock, iflag);
++	nvmebuf = ctxp->rqb_buffer;
+ 	if (!nvmebuf) {
++		spin_unlock_irqrestore(&ctxp->ctxlock, iflag);
+ 		lpfc_printf_log(phba, KERN_INFO, LOG_NVME_IOERR,
+ 				"6425 Defer rcv: no buffer oxid x%x: "
+ 				"flg %x ste %x\n",
+ 				ctxp->oxid, ctxp->flag, ctxp->state);
  		return;
+ 	}
++	ctxp->rqb_buffer = NULL;
++	spin_unlock_irqrestore(&ctxp->ctxlock, iflag);
  
- 	if (!adev->mode_info.audio.enabled)
- 		return;
+ 	tgtp = phba->targetport->private;
+ 	if (tgtp)
+@@ -1267,9 +1272,6 @@ lpfc_nvmet_defer_rcv(struct nvmet_fc_tar
  
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v10_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
+ 	/* Free the nvmebuf since a new buffer already replaced it */
+ 	nvmebuf->hrq->rqbp->rqb_free_buffer(phba, nvmebuf);
+-	spin_lock_irqsave(&ctxp->ctxlock, iflag);
+-	ctxp->rqb_buffer = NULL;
+-	spin_unlock_irqrestore(&ctxp->ctxlock, iflag);
  }
  
---- a/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v11_0.c
-@@ -1505,17 +1505,12 @@ static int dce_v11_0_audio_init(struct a
- 
- static void dce_v11_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v11_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
-@@ -1375,17 +1375,12 @@ static int dce_v6_0_audio_init(struct am
- 
- static void dce_v6_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v6_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
-@@ -1426,17 +1426,12 @@ static int dce_v8_0_audio_init(struct am
- 
- static void dce_v8_0_audio_fini(struct amdgpu_device *adev)
- {
--	int i;
--
- 	if (!amdgpu_audio)
- 		return;
- 
- 	if (!adev->mode_info.audio.enabled)
- 		return;
- 
--	for (i = 0; i < adev->mode_info.audio.num_pins; i++)
--		dce_v8_0_audio_enable(adev, &adev->mode_info.audio.pin[i], false);
--
- 	adev->mode_info.audio.enabled = false;
- }
- 
+ /**
 
 
