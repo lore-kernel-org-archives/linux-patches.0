@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3017B1DF246;
-	Sun,  7 Sep 2025 20:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52011315D54;
+	Sun,  7 Sep 2025 20:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277329; cv=none; b=CnBGDrSs4x5aaKV/xQuO282qLJLgdF/MmFStR1tlbCo3ys0Sst7iCdtyAlUrW6Tt3bcw8DmMoBSqoX8STkPdwCMGSER4YiHBSJuyfpQifvdCeH7I068ij7ScBNiYENcy4txDdVXIzrJcXdZ+Ze8jVmto+xsgKB221Y+zRFnfvbE=
+	t=1757277332; cv=none; b=UxdE0+Kr5IiFtXK0AbMGQ9St00AX8fhhoKfQN9ax0HdOuXs8L/1OP0kAQi5ae45y9QU3x5omRRQaizjNtcunI4CiuORSP5OskePC9SibQsgM5C9FOgm2K7XR7opJFfip+YmJjQaqrK4sNc+ffu5L9ALxYuO8J0eIZnIbDRYVXzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277329; c=relaxed/simple;
-	bh=7r+vjvEmyEqIUZfswRX1Dme4/QPJ5uqAJqnz0jDtyJw=;
+	s=arc-20240116; t=1757277332; c=relaxed/simple;
+	bh=lZUZC80KNUZh2/Mfo/qDdulxJ9alNm74/41bblwtoX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSd0nVWz/ACWWFd5zu6XPnamQA0pNPLCVxxfg5f38tniPWNz4DolpvITVPiUPAdhCQWeJhYedru5vJ/8V1e9gfuVD/MOxZkt1oCuy+hztGxY3PIXVq4bJPGnciWr3c25xsZdX9vlfgaXdiLSHBBKUat5tyzJO0q40cawPdJRGBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8qgWYBg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTQVUFB3QxHZZp3upYexnYZR6/e7h+XBsbDLHBc/Z8D27h7F9qeAvIScgRpeOLLJFJgAgL+3NcOkreD3MjLNu3lvM0QolUKzb7Eru/dgIbJk7/ZMLwstEy0co33Pc3btxfuw1aBb7TkW6n9Zxt40tmbHybUzlsPfingFakEqJiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCr/5J7A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8qgWYBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92FAC4CEF0;
-	Sun,  7 Sep 2025 20:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCr/5J7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71B6C4CEF0;
+	Sun,  7 Sep 2025 20:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277329;
-	bh=7r+vjvEmyEqIUZfswRX1Dme4/QPJ5uqAJqnz0jDtyJw=;
+	s=korg; t=1757277332;
+	bh=lZUZC80KNUZh2/Mfo/qDdulxJ9alNm74/41bblwtoX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8qgWYBgplCqHfiUIfjJTVsgyDlaWdWq9QztfYzbIrOfwkiITRHuPuCS6XdVTbVKS
-	 4VRhdLZ9Ett+f5gNevy6WPiGmPZSEdqpu+Yywh1F1rtitEl5xKmqZKNHtIRoyHw/+I
-	 CMIYjMiM4RbhkL3K3t5gVjDpc8Y9Cf4TuwPu8E8Q=
+	b=JCr/5J7ASL2J89ZY+GZjxlYBPbBN+EIkCIWNPYdcE01j4aQ5gSTgUVimwuMeuNxc/
+	 J2AvF+9NVaOyJ2I7gXAt7KK57h2eXK35loh55O9wxXUY2gmNVOA88+unz91k82EjmR
+	 skpPbaD7z1EaOvHTa6iDQDLKeClz3sBV/e70D6ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 157/175] spi: spi-fsl-lpspi: Fix transmissions when using CONT
-Date: Sun,  7 Sep 2025 21:59:12 +0200
-Message-ID: <20250907195618.569922142@linuxfoundation.org>
+Subject: [PATCH 6.12 158/175] spi: spi-fsl-lpspi: Set correct chip-select polarity bit
+Date: Sun,  7 Sep 2025 21:59:13 +0200
+Message-ID: <20250907195618.596142480@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195614.892725141@linuxfoundation.org>
 References: <20250907195614.892725141@linuxfoundation.org>
@@ -55,49 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Larisa Grigore <larisa.grigore@nxp.com>
 
-[ Upstream commit 782a7c73078e1301c0c427f21c06377d77dfa541 ]
+[ Upstream commit cbe33705864ba2697a2939de715b81538cf32430 ]
 
-Commit 6a130448498c ("spi: lpspi: Fix wrong transmission when don't use
-CONT") breaks transmissions when CONT is used. The TDIE interrupt should
-not be disabled in all cases. If CONT is used and the TX transfer is not
-yet completed yet, but the interrupt handler is called because there are
-characters to be received, TDIE is replaced with FCIE. When the transfer
-is finally completed, SR_TDF is set but the interrupt handler isn't
-called again.
+The driver currently supports multiple chip-selects, but only sets the
+polarity for the first one (CS 0). Fix it by setting the PCSPOL bit for
+the desired chip-select.
 
-Fixes: 6a130448498c ("spi: lpspi: Fix wrong transmission when don't use CONT")
+Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
 Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
 Signed-off-by: James Clark <james.clark@linaro.org>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20250828-james-nxp-lpspi-v2-1-6262b9aa9be4@linaro.org
+Link: https://patch.msgid.link/20250828-james-nxp-lpspi-v2-2-6262b9aa9be4@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index f8cacb9c7408f..50633115e83dd 100644
+index 50633115e83dd..9d05d18451c6d 100644
 --- a/drivers/spi/spi-fsl-lpspi.c
 +++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -3,7 +3,7 @@
- // Freescale i.MX7ULP LPSPI driver
- //
+@@ -5,6 +5,7 @@
  // Copyright 2016 Freescale Semiconductor, Inc.
--// Copyright 2018 NXP Semiconductors
-+// Copyright 2018, 2023, 2025 NXP
+ // Copyright 2018, 2023, 2025 NXP
  
++#include <linux/bitfield.h>
  #include <linux/clk.h>
  #include <linux/completion.h>
-@@ -780,7 +780,7 @@ static irqreturn_t fsl_lpspi_isr(int irq, void *dev_id)
- 	if (temp_SR & SR_MBF ||
- 	    readl(fsl_lpspi->base + IMX7ULP_FSR) & FSR_TXCOUNT) {
- 		writel(SR_FCF, fsl_lpspi->base + IMX7ULP_SR);
--		fsl_lpspi_intctrl(fsl_lpspi, IER_FCIE);
-+		fsl_lpspi_intctrl(fsl_lpspi, IER_FCIE | (temp_IER & IER_TDIE));
- 		return IRQ_HANDLED;
- 	}
+ #include <linux/delay.h>
+@@ -70,7 +71,7 @@
+ #define DER_TDDE	BIT(0)
+ #define CFGR1_PCSCFG	BIT(27)
+ #define CFGR1_PINCFG	(BIT(24)|BIT(25))
+-#define CFGR1_PCSPOL	BIT(8)
++#define CFGR1_PCSPOL_MASK	GENMASK(11, 8)
+ #define CFGR1_NOSTALL	BIT(3)
+ #define CFGR1_HOST	BIT(0)
+ #define FSR_TXCOUNT	(0xFF)
+@@ -420,7 +421,9 @@ static int fsl_lpspi_config(struct fsl_lpspi_data *fsl_lpspi)
+ 	else
+ 		temp = CFGR1_PINCFG;
+ 	if (fsl_lpspi->config.mode & SPI_CS_HIGH)
+-		temp |= CFGR1_PCSPOL;
++		temp |= FIELD_PREP(CFGR1_PCSPOL_MASK,
++				   BIT(fsl_lpspi->config.chip_select));
++
+ 	writel(temp, fsl_lpspi->base + IMX7ULP_CFGR1);
  
+ 	temp = readl(fsl_lpspi->base + IMX7ULP_CR);
 -- 
 2.51.0
 
