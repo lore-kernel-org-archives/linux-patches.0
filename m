@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A841B424F;
-	Sun,  7 Sep 2025 20:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE461F09BF;
+	Sun,  7 Sep 2025 20:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276569; cv=none; b=ORGRXB+7wZkFx//pShBCmSVsxZT15N0Q4rWh5OF0rNdTAd7vxmuaghLTos+3wSeHWTc4fmG5RNtlzyrLW4xASQNoFvMurGVv/m74JF6jb6SmigFwyQjSqewIf+UyRgZaqVDYky8QFTAOAyqjYVTqdyvUaTz0YEqRqzdrKDJWOwY=
+	t=1757276572; cv=none; b=AqVQIWdElg9j049oSS/2Z2TDBOMgqC1gIrxxWBtYDVHsf63IoC2SmFDvZFj3AjfNBU8CdHvFGCxPUAioy2g1Kdq8waFwfJxSaXGWRv8KWUULg387DxWE5MnCYphWAI7Zqt10Ro0Sj10fJpDgXxGZJMvwzNZ72yGKxffKc1XvvOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276569; c=relaxed/simple;
-	bh=Jh6EPOcjom78P9Kxu5JG/bn4m9Eyi0nhGC8V2KIBAM4=;
+	s=arc-20240116; t=1757276572; c=relaxed/simple;
+	bh=OpTleShsZYroUx3quEKgoW7eJ72DXP9lW0msH4oYJbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hA7l7UVk5O+Kz3+Fx/bCrEopDNgQ3ZO8EW0nMRabsKDJI/JrT8hOT1uSbpgEtH31Q+9yC1pLdT3Zrl6lUUu7rAjkuqALxrH9BF1TvQfYYWI2DyCFaC0CtQinR2uEYSJpNIoVTIbDtGuOvitBL1ZI+pJu4VxHiNDrMieh6PXQsiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydUvF6BQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toGkSxesNs2wpotEC9L+Ox8wGV4z32GbXJVvfoFtt7yScznpSQoHpOjvmRvNGsbvVgWHChMUVgpCiQKQ79HQqQ9AMavqwRuUmB6N/uraa3S1X1azL96goedVZODu2VZ80T0JNelQmKITYHKUxmSjsqDZcMXGDWuHXAvBZN92PEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bdimp0Ty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydUvF6BQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD5DC4CEF0;
-	Sun,  7 Sep 2025 20:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bdimp0Ty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185FDC4CEF0;
+	Sun,  7 Sep 2025 20:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276569;
-	bh=Jh6EPOcjom78P9Kxu5JG/bn4m9Eyi0nhGC8V2KIBAM4=;
+	s=korg; t=1757276572;
+	bh=OpTleShsZYroUx3quEKgoW7eJ72DXP9lW0msH4oYJbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ydUvF6BQwMjlnKD0QitQriDGPeSznBG/9/fwf00Mp9cDUbSxKjVcearUebjXwEK8u
-	 p3P4jQrbOhMrjGP4aSZd6qq9DLUGVXkOZxc2JPASdLTZnt0IP2OIgjPEd6x8fEYKRe
-	 zx72IacdOT0vEhiA8Go1I5X/RRmluqIGfiGE0tPE=
+	b=Bdimp0TyX61ynC5yYjUSPT/ocHva+jewgofNmwqEaDrnUDZG19JpHQhe3s7uf5ha4
+	 hZ0oVVEouvw1Mn7Md8dNb8ttX0P+YPvtt7zFjS4qJB3xNjOsEbElNTTMnU9K7WeUaQ
+	 3R5WWHwSk/C7fxbl4rlTI2BON/N3tIhikCnWa/wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/121] bpf: Fix oob access in cgroup local storage
-Date: Sun,  7 Sep 2025 21:57:20 +0200
-Message-ID: <20250907195609.930557005@linuxfoundation.org>
+Subject: [PATCH 6.6 040/121] wifi: cfg80211: sme: cap SSID length in __cfg80211_connect_result()
+Date: Sun,  7 Sep 2025 21:57:56 +0200
+Message-ID: <20250907195610.854592407@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195609.817339617@linuxfoundation.org>
 References: <20250907195609.817339617@linuxfoundation.org>
@@ -52,101 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit abad3d0bad72a52137e0c350c59542d75ae4f513 ]
+[ Upstream commit 62b635dcd69c4fde7ce1de4992d71420a37e51e3 ]
 
-Lonial reported that an out-of-bounds access in cgroup local storage
-can be crafted via tail calls. Given two programs each utilizing a
-cgroup local storage with a different value size, and one program
-doing a tail call into the other. The verifier will validate each of
-the indivial programs just fine. However, in the runtime context
-the bpf_cg_run_ctx holds an bpf_prog_array_item which contains the
-BPF program as well as any cgroup local storage flavor the program
-uses. Helpers such as bpf_get_local_storage() pick this up from the
-runtime context:
+If the ssid->datalen is more than IEEE80211_MAX_SSID_LEN (32) it would
+lead to memory corruption so add some bounds checking.
 
-  ctx = container_of(current->bpf_ctx, struct bpf_cg_run_ctx, run_ctx);
-  storage = ctx->prog_item->cgroup_storage[stype];
-
-  if (stype == BPF_CGROUP_STORAGE_SHARED)
-    ptr = &READ_ONCE(storage->buf)->data[0];
-  else
-    ptr = this_cpu_ptr(storage->percpu_buf);
-
-For the second program which was called from the originally attached
-one, this means bpf_get_local_storage() will pick up the former
-program's map, not its own. With mismatching sizes, this can result
-in an unintended out-of-bounds access.
-
-To fix this issue, we need to extend bpf_map_owner with an array of
-storage_cookie[] to match on i) the exact maps from the original
-program if the second program was using bpf_get_local_storage(), or
-ii) allow the tail call combination if the second program was not
-using any of the cgroup local storage maps.
-
-Fixes: 7d9c3427894f ("bpf: Make cgroup storages shared between programs on the same cgroup")
-Reported-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20250730234733.530041-4-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: c38c70185101 ("wifi: cfg80211: Set SSID if it is not already set")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/0aaaae4a3ed37c6252363c34ae4904b1604e8e32.1756456951.git.dan.carpenter@linaro.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h |  1 +
- kernel/bpf/core.c   | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ net/wireless/sme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index b8e0204992857..83da9c81fa86a 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -267,6 +267,7 @@ struct bpf_map_owner {
- 	enum bpf_prog_type type;
- 	bool jited;
- 	bool xdp_has_frags;
-+	u64 storage_cookie[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	const struct btf_type *attach_func_proto;
- };
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index 70881782c25c6..5904c869085c8 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -915,13 +915,16 @@ void __cfg80211_connect_result(struct net_device *dev,
+ 	if (!wdev->u.client.ssid_len) {
+ 		rcu_read_lock();
+ 		for_each_valid_link(cr, link) {
++			u32 ssid_len;
++
+ 			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
+ 						      WLAN_EID_SSID);
  
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index c3369c66eae8f..3618be05fc352 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2263,7 +2263,9 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- {
- 	enum bpf_prog_type prog_type = resolve_prog_type(fp);
- 	struct bpf_prog_aux *aux = fp->aux;
-+	enum bpf_cgroup_storage_type i;
- 	bool ret = false;
-+	u64 cookie;
+ 			if (!ssid || !ssid->datalen)
+ 				continue;
  
- 	if (fp->kprobe_override)
- 		return ret;
-@@ -2278,11 +2280,24 @@ static bool __bpf_prog_map_compatible(struct bpf_map *map,
- 		map->owner->jited = fp->jited;
- 		map->owner->xdp_has_frags = aux->xdp_has_frags;
- 		map->owner->attach_func_proto = aux->attach_func_proto;
-+		for_each_cgroup_storage_type(i) {
-+			map->owner->storage_cookie[i] =
-+				aux->cgroup_storage[i] ?
-+				aux->cgroup_storage[i]->cookie : 0;
-+		}
- 		ret = true;
- 	} else {
- 		ret = map->owner->type  == prog_type &&
- 		      map->owner->jited == fp->jited &&
- 		      map->owner->xdp_has_frags == aux->xdp_has_frags;
-+		for_each_cgroup_storage_type(i) {
-+			if (!ret)
-+				break;
-+			cookie = aux->cgroup_storage[i] ?
-+				 aux->cgroup_storage[i]->cookie : 0;
-+			ret = map->owner->storage_cookie[i] == cookie ||
-+			      !cookie;
-+		}
- 		if (ret &&
- 		    map->owner->attach_func_proto != aux->attach_func_proto) {
- 			switch (prog_type) {
+-			memcpy(wdev->u.client.ssid, ssid->data, ssid->datalen);
++			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
++			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
+ 			wdev->u.client.ssid_len = ssid->datalen;
+ 			break;
+ 		}
 -- 
 2.50.1
 
