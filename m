@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1F14315A;
-	Sun,  7 Sep 2025 20:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A414315A;
+	Sun,  7 Sep 2025 20:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277884; cv=none; b=FJuOBYCOV8bmH2rng3WTnwx4s01dy5UT56Ka1O2Fv03p0GRVF/E8CmkhJxOUtQsHcSBqRe6uyspOJZBCQet538ZXtb4jxtz41mpKQKWMsGYodEgJYC2vDv30mZkd9JLMkYpPhlMxFHaCVGXTb21frJeIWkpT4SoWMAXtFv3kffA=
+	t=1757277887; cv=none; b=ItxPMMDaMT56Oi6kBTFCfZ91JdoBPxRTEMWHoTxuCQZN1agT6BaM4F9XJyhyBVHByKR++FAe8wiZQyrcCJ/GNTzZp8iWCZSOkYob7r7DD5oOTtAeus7mw1TIE1ml6YBbFKIp4auM1oXu99pP+CvDG4vOHjAqNMRKBmxlXuODVN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277884; c=relaxed/simple;
-	bh=nB4C838HlmyqXJ/TAcBACe4OMd8mv7pv3A+AELIxVRU=;
+	s=arc-20240116; t=1757277887; c=relaxed/simple;
+	bh=mP5J+ZOlTV5SGEbGYtB1K86DEm7Ov/e0EQUy+WzL+RE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mzdUTkMHDWrpJh5gv4xPYFPL6O8zMes2chE2UGSFzMb9PaMSerBkHVZ1tGinb6V2hliJpO+AwEcVNH8LroYgtubdLb1f09+ke4nHSwA/NFzsi+UlOmHZgXMDThbksgrz2M34qZpH3ofLMvXWIC4TWPfoLG9Egvhght0I0ZdhEZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgX03zij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Vc5yEzqcxnpWtqn+yNaaQ98sPpZ2+OB7AGNAwF55x1bNeml5BzL/SY2Uinu8rgNUWHPsw14+cF2eMmkXbZEqE/3d3TtKr8nzUUANa+1JoKpxwTjoLiG1GcIh9jW9CSehGH5RT3QSPXmeFj9tU/p59y46HiyEuicT9YWe/dCGvS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwJm5e7D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgX03zij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B72C4CEF0;
-	Sun,  7 Sep 2025 20:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwJm5e7D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CEAC4CEF0;
+	Sun,  7 Sep 2025 20:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277883;
-	bh=nB4C838HlmyqXJ/TAcBACe4OMd8mv7pv3A+AELIxVRU=;
+	s=korg; t=1757277886;
+	bh=mP5J+ZOlTV5SGEbGYtB1K86DEm7Ov/e0EQUy+WzL+RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgX03zijeUfJ5jMwwkCWRzEGS6eA8L+iNQvlFrJFUZui99nEJPN4QkqPwckV737nv
-	 2xAvfc66+TCDWS3c0VWqQ6bWVsHNZJphmlLvZbYJkeTWwslm6GyIC+6m8FBxs0lJKD
-	 iE98TKRMMZD/J9KOdV3i5Bt0TeiZ3UtItNgIQjTM=
+	b=rwJm5e7Dv0Rys4Jqc5PgF8VcmFCPX/4rWJcxj68fgw2IIdpWT2rAG8n3k7/5zempp
+	 C0iFT+HgKzVnr1pOjb+RYZ5nd5LVyYNZ3GypIjgHs5JKSAkSirGjE3iw1kbUqlG01W
+	 3mzhMX3WaymAkzmiAie4W1BN69bxl4Bwy+XPHo2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lynne Megido <lynne@bune.city>,
-	Armin Wolf <W_Armin@gmx.de>,
+	David Arcari <darcari@redhat.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 152/183] platform/x86: acer-wmi: Stop using ACPI bitmap for platform profile choices
-Date: Sun,  7 Sep 2025 21:59:39 +0200
-Message-ID: <20250907195619.429326843@linuxfoundation.org>
+Subject: [PATCH 6.16 153/183] platform/x86/intel: power-domains: Use topology_logical_package_id() for package ID
+Date: Sun,  7 Sep 2025 21:59:40 +0200
+Message-ID: <20250907195619.452682225@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -53,156 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: David Arcari <darcari@redhat.com>
 
-[ Upstream commit b0908e03fdd488a5ffd5b80d86dcfc77207464e7 ]
+[ Upstream commit aa28991fd5dc4c01a40caab2bd9af8c5e06f9899 ]
 
-It turns out that the platform firmware on some models does not return
-valid data when reading the bitmap of supported platform profiles.
-This prevents the driver from loading on said models, even when the
-platform profile interface itself works.
+Currently, tpmi_get_logical_id() calls topology_physical_package_id()
+to set the pkg_id of the info structure. Since some VM hosts assign non
+contiguous package IDs, topology_physical_package_id() can return a
+larger value than topology_max_packages(). This will result in an
+invalid reference into tpmi_power_domain_mask[] as that is allocatead
+based on topology_max_packages() as the maximum package ID.
 
-Fix this by stop using said bitmap until we have figured out how
-the OEM software itself detects available platform profiles.
-
-Tested-by: Lynne Megido <lynne@bune.city>
-Reported-by: Lynne Megido <lynne@bune.city>
-Closes: https://lore.kernel.org/platform-driver-x86/3f56e68f-85df-4c0a-982c-43f9d635be38@bune.city/
-Fixes: 191e21f1a4c3 ("platform/x86: acer-wmi: use an ACPI bitmap to set the platform profile choices")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250826204007.5088-1-W_Armin@gmx.de
+Fixes: 17ca2780458c ("platform/x86/intel: TPMI domain id and CPU mapping")
+Signed-off-by: David Arcari <darcari@redhat.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://lore.kernel.org/r/20250829113859.1772827-1-darcari@redhat.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/acer-wmi.c | 71 ++++++---------------------------
- 1 file changed, 12 insertions(+), 59 deletions(-)
+ drivers/platform/x86/intel/tpmi_power_domains.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index 69336bd778eea..13eb22b35aa8f 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -129,6 +129,7 @@ enum acer_wmi_predator_v4_oc {
- enum acer_wmi_gaming_misc_setting {
- 	ACER_WMID_MISC_SETTING_OC_1			= 0x0005,
- 	ACER_WMID_MISC_SETTING_OC_2			= 0x0007,
-+	/* Unreliable on some models */
- 	ACER_WMID_MISC_SETTING_SUPPORTED_PROFILES	= 0x000A,
- 	ACER_WMID_MISC_SETTING_PLATFORM_PROFILE		= 0x000B,
- };
-@@ -794,9 +795,6 @@ static bool platform_profile_support;
-  */
- static int last_non_turbo_profile = INT_MIN;
+diff --git a/drivers/platform/x86/intel/tpmi_power_domains.c b/drivers/platform/x86/intel/tpmi_power_domains.c
+index 9d8247bb9cfa5..8641353b2e061 100644
+--- a/drivers/platform/x86/intel/tpmi_power_domains.c
++++ b/drivers/platform/x86/intel/tpmi_power_domains.c
+@@ -178,7 +178,7 @@ static int tpmi_get_logical_id(unsigned int cpu, struct tpmi_cpu_info *info)
  
--/* The most performant supported profile */
--static int acer_predator_v4_max_perf;
--
- enum acer_predator_v4_thermal_profile {
- 	ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET		= 0x00,
- 	ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED	= 0x01,
-@@ -2014,7 +2012,7 @@ acer_predator_v4_platform_profile_set(struct device *dev,
- 	if (err)
- 		return err;
- 
--	if (tp != acer_predator_v4_max_perf)
-+	if (tp != ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO)
- 		last_non_turbo_profile = tp;
+ 	info->punit_thread_id = FIELD_GET(LP_ID_MASK, data);
+ 	info->punit_core_id = FIELD_GET(MODULE_ID_MASK, data);
+-	info->pkg_id = topology_physical_package_id(cpu);
++	info->pkg_id = topology_logical_package_id(cpu);
+ 	info->linux_cpu = cpu;
  
  	return 0;
-@@ -2023,55 +2021,14 @@ acer_predator_v4_platform_profile_set(struct device *dev,
- static int
- acer_predator_v4_platform_profile_probe(void *drvdata, unsigned long *choices)
- {
--	unsigned long supported_profiles;
--	int err;
-+	set_bit(PLATFORM_PROFILE_PERFORMANCE, choices);
-+	set_bit(PLATFORM_PROFILE_BALANCED_PERFORMANCE, choices);
-+	set_bit(PLATFORM_PROFILE_BALANCED, choices);
-+	set_bit(PLATFORM_PROFILE_QUIET, choices);
-+	set_bit(PLATFORM_PROFILE_LOW_POWER, choices);
- 
--	err = WMID_gaming_get_misc_setting(ACER_WMID_MISC_SETTING_SUPPORTED_PROFILES,
--					   (u8 *)&supported_profiles);
--	if (err)
--		return err;
--
--	/* Iterate through supported profiles in order of increasing performance */
--	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_ECO, &supported_profiles)) {
--		set_bit(PLATFORM_PROFILE_LOW_POWER, choices);
--		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_ECO;
--		last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_ECO;
--	}
--
--	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET, &supported_profiles)) {
--		set_bit(PLATFORM_PROFILE_QUIET, choices);
--		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET;
--		last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_QUIET;
--	}
--
--	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED, &supported_profiles)) {
--		set_bit(PLATFORM_PROFILE_BALANCED, choices);
--		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED;
--		last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED;
--	}
--
--	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_PERFORMANCE, &supported_profiles)) {
--		set_bit(PLATFORM_PROFILE_BALANCED_PERFORMANCE, choices);
--		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_PERFORMANCE;
--
--		/* We only use this profile as a fallback option in case no prior
--		 * profile is supported.
--		 */
--		if (last_non_turbo_profile < 0)
--			last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_PERFORMANCE;
--	}
--
--	if (test_bit(ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO, &supported_profiles)) {
--		set_bit(PLATFORM_PROFILE_PERFORMANCE, choices);
--		acer_predator_v4_max_perf = ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO;
--
--		/* We need to handle the hypothetical case where only the turbo profile
--		 * is supported. In this case the turbo toggle will essentially be a
--		 * no-op.
--		 */
--		if (last_non_turbo_profile < 0)
--			last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO;
--	}
-+	/* Set default non-turbo profile */
-+	last_non_turbo_profile = ACER_PREDATOR_V4_THERMAL_PROFILE_BALANCED;
- 
- 	return 0;
- }
-@@ -2108,19 +2065,15 @@ static int acer_thermal_profile_change(void)
- 		if (cycle_gaming_thermal_profile) {
- 			platform_profile_cycle();
- 		} else {
--			/* Do nothing if no suitable platform profiles where found */
--			if (last_non_turbo_profile < 0)
--				return 0;
--
- 			err = WMID_gaming_get_misc_setting(
- 				ACER_WMID_MISC_SETTING_PLATFORM_PROFILE, &current_tp);
- 			if (err)
- 				return err;
- 
--			if (current_tp == acer_predator_v4_max_perf)
-+			if (current_tp == ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO)
- 				tp = last_non_turbo_profile;
- 			else
--				tp = acer_predator_v4_max_perf;
-+				tp = ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO;
- 
- 			err = WMID_gaming_set_misc_setting(
- 				ACER_WMID_MISC_SETTING_PLATFORM_PROFILE, tp);
-@@ -2128,7 +2081,7 @@ static int acer_thermal_profile_change(void)
- 				return err;
- 
- 			/* Store last profile for toggle */
--			if (current_tp != acer_predator_v4_max_perf)
-+			if (current_tp != ACER_PREDATOR_V4_THERMAL_PROFILE_TURBO)
- 				last_non_turbo_profile = current_tp;
- 
- 			platform_profile_notify(platform_profile_device);
 -- 
 2.51.0
 
