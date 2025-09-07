@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916414315A;
-	Sun,  7 Sep 2025 20:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BFD20E00B;
+	Sun,  7 Sep 2025 20:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277638; cv=none; b=DxbAcUNYDbM6Vyd5di4sL0QgDzLfofjQTd8xtV+S+CXRKSQpcuVETvpK1iImMhzn2p8v/RRR1BM/14KGotjGI6ir9XAK0XVJ7p2gDOr4T2vwyNn2TqPae2nZ5iD1wxi3pGC5oj8QeHrvG7xWmw3JtfvHyvsGLGrw7SE5HDrV0tQ=
+	t=1757277641; cv=none; b=WhelBhUDtLFS08sDVcGcEsftSCSFdKDtXSV0ocBS2O4CJUTkPlT+CcDDPijP78LsWpaXl3tZkxNWuvLBuuhuWIAZY9X0rAcDmsERnLPl3+1z5kX647Udh9yx1K/4o09KyJOonrGu0TQHdZipXvgLZ8F4xYlLgwGdMHREEiz9E48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277638; c=relaxed/simple;
-	bh=59nwwKuokVUsOAH5sHeVZXnvbQjaXk+h8vT69nSsWkE=;
+	s=arc-20240116; t=1757277641; c=relaxed/simple;
+	bh=4R+8gBJWuqaO48vcZXShH9r1EFZy12rZRxgqppP0fcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8TxBK/YK2u37bvm4BmJP/P7k8wK3u8rbj9cr/+Nygh/TAshqWvqLe1VEL+mQ9lBmNmi97f3xlI5Msc3A+WfxPC2hbKw/CsnrYhMptS7ICP13R78FNhKJthDMvhcT8b+kioEHfwt4Apg6mC9p6guSSJIevfYT5k1qA4+kvKsQHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUcCyf46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=THM/Q6FgOx8B3R91rljNukP0zkUZ1Qo+SFWIdLaMe2QXEvqAfH6O+Z6eR6pj6Mr55dTeogk+hywdlHeq9I7n2/iDBGHTtTjW5bJQYKTnKxssntAFC6Mk6O8fCDiSerPfjANtDy3QmKkzlU1mGJcGLDejZ78Bt2YfTtdu3k8uLZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsRzKn7P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUcCyf46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC3DC4CEF0;
-	Sun,  7 Sep 2025 20:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsRzKn7P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1749C4CEF0;
+	Sun,  7 Sep 2025 20:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277638;
-	bh=59nwwKuokVUsOAH5sHeVZXnvbQjaXk+h8vT69nSsWkE=;
+	s=korg; t=1757277641;
+	bh=4R+8gBJWuqaO48vcZXShH9r1EFZy12rZRxgqppP0fcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUcCyf46emsE8LNNKprZK04QCuao/8I42D10aurfg2PR7ZWh7pfR246xZw4L6v51b
-	 5xhIcfdAuguraJPCN4OOBoIec1h5K/YfjExuSTvhEDoDkEr7ZiaYeTdocfEeTKWdCr
-	 aDQM+Kn9gjzpkFbgrymwRql/57VSiEpq77A0X/xU=
+	b=nsRzKn7PMX8uBJOrUMrdffagH2iJVBVcvbk13ruGsjLn1iAT+tb2jzBXwEO+RQKxE
+	 AdpkDvMJTkOWyWIOnEBmcJSkL/FAgoVXduGc5+kIKXselFMFxiyqSZ7ImTWp/INWd7
+	 ChRHI0yO4dKFhTVYvS7y1tNluSQJvG29MRTaZ/kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 078/183] wifi: libertas: cap SSID len in lbs_associate()
-Date: Sun,  7 Sep 2025 21:58:25 +0200
-Message-ID: <20250907195617.648194865@linuxfoundation.org>
+Subject: [PATCH 6.16 079/183] wifi: cfg80211: sme: cap SSID length in __cfg80211_connect_result()
+Date: Sun,  7 Sep 2025 21:58:26 +0200
+Message-ID: <20250907195617.672690056@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -53,40 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit c786794bd27b0d7a5fd9063695df83206009be59 ]
+[ Upstream commit 62b635dcd69c4fde7ce1de4992d71420a37e51e3 ]
 
-If the ssid_eid[1] length is more that 32 it leads to memory corruption.
+If the ssid->datalen is more than IEEE80211_MAX_SSID_LEN (32) it would
+lead to memory corruption so add some bounds checking.
 
-Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Fixes: c38c70185101 ("wifi: cfg80211: Set SSID if it is not already set")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/2a40f5ec7617144aef412034c12919a4927d90ad.1756456951.git.dan.carpenter@linaro.org
+Link: https://patch.msgid.link/0aaaae4a3ed37c6252363c34ae4904b1604e8e32.1756456951.git.dan.carpenter@linaro.org
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/cfg.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/wireless/sme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/cfg.c b/drivers/net/wireless/marvell/libertas/cfg.c
-index 2e2c193716d96..309556541a83e 100644
---- a/drivers/net/wireless/marvell/libertas/cfg.c
-+++ b/drivers/net/wireless/marvell/libertas/cfg.c
-@@ -1151,10 +1151,13 @@ static int lbs_associate(struct lbs_private *priv,
- 	/* add SSID TLV */
- 	rcu_read_lock();
- 	ssid_eid = ieee80211_bss_get_ie(bss, WLAN_EID_SSID);
--	if (ssid_eid)
--		pos += lbs_add_ssid_tlv(pos, ssid_eid + 2, ssid_eid[1]);
--	else
-+	if (ssid_eid) {
-+		u32 ssid_len = min(ssid_eid[1], IEEE80211_MAX_SSID_LEN);
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index cf998500a9654..05d06512983c2 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -901,13 +901,16 @@ void __cfg80211_connect_result(struct net_device *dev,
+ 	if (!wdev->u.client.ssid_len) {
+ 		rcu_read_lock();
+ 		for_each_valid_link(cr, link) {
++			u32 ssid_len;
 +
-+		pos += lbs_add_ssid_tlv(pos, ssid_eid + 2, ssid_len);
-+	} else {
- 		lbs_deb_assoc("no SSID\n");
-+	}
- 	rcu_read_unlock();
+ 			ssid = ieee80211_bss_get_elem(cr->links[link].bss,
+ 						      WLAN_EID_SSID);
  
- 	/* add DS param TLV */
+ 			if (!ssid || !ssid->datalen)
+ 				continue;
+ 
+-			memcpy(wdev->u.client.ssid, ssid->data, ssid->datalen);
++			ssid_len = min(ssid->datalen, IEEE80211_MAX_SSID_LEN);
++			memcpy(wdev->u.client.ssid, ssid->data, ssid_len);
+ 			wdev->u.client.ssid_len = ssid->datalen;
+ 			break;
+ 		}
 -- 
 2.50.1
 
