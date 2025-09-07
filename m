@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0956A15D5B6;
-	Sun,  7 Sep 2025 20:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7601A2389;
+	Sun,  7 Sep 2025 20:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757276135; cv=none; b=mU0r9RIWE6PFHn5NpKa4seNfzoQhUdiKt/xaQa3aVoyOO243ubAA9zer7RJ8rWrx1+FVvkBfYRp/7aYzcJOflYbG1ALz1B/U8BGcgOFrLez1TP6I5tR11R1ib6c0UK2oJGfuVsglZa0GUW3WjYQdNQ4uFketqJ3xwtCTYbInOAA=
+	t=1757276137; cv=none; b=Rzyf2Y9NE/xmhxowLBYSvo2C3Oa1ghwAkj5gYe/bnZ5d7A0QIPIf7OBEsCONiX49M/P0BSxU6fpyhlid+aUhKKf+9zB98uA5eHLG+GLUjRC8hUKmDyIN4eZMi/ekGH8vCfIFC5TjM4AZcCGFy8wH1/3oIf5nBJMDZ0aba/8SK4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757276135; c=relaxed/simple;
-	bh=lWU9TgQwgJtVJ2J3qfhoLQhxruOfomTrHgxUxF33wbQ=;
+	s=arc-20240116; t=1757276137; c=relaxed/simple;
+	bh=eOixkJ6nJJLywTkv/LM32m98FbEmOd8Oq1qZ3MTjM+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbVno9Rgz9gqJygcYbO5PHSpfNKYoSXp4tGfb0Guyz6YJmx38JeT49PIw1hxg64IFuLC5GXVdy7Sh86R2G9uyLw+6jh+VUhgZHfKWamR8kjcRyyLjaaYN7Dg/qKIyVcvo8pJurJTRvOshmucfqWTROEcnpKerR/MfdIw9YxRl/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShKf2rkv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LemW5QicDxvcgU0AMXTeYssk4iCQu9vV/on+lKMat9vGb9N9GXUAUc9ZeMrzunHSN8gwiOR0qOMl799NWfEzHHQdQ0T3179nynKuVXWvPVO4clydaaC3YIg32LWcRlg3MJqQbomN9DIS6gntf7wxGDywC3cJXF0uoS0pYh6U1c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mJEy5Po; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShKf2rkv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3F2C4CEF0;
-	Sun,  7 Sep 2025 20:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mJEy5Po"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64593C4CEF0;
+	Sun,  7 Sep 2025 20:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757276134;
-	bh=lWU9TgQwgJtVJ2J3qfhoLQhxruOfomTrHgxUxF33wbQ=;
+	s=korg; t=1757276137;
+	bh=eOixkJ6nJJLywTkv/LM32m98FbEmOd8Oq1qZ3MTjM+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShKf2rkv6uD60dDdLytFPDKft0qRH8wU65JaUkReSX1Vfu9olesB9wLyibkbegAoe
-	 APnSr2CbQWaMtvC979U7ZPOyGo3zO1N3YvsH1UHhCAnM1SRvgbs/gYfjsSymNurUsT
-	 UZnWz38n5l589CyaJTVMBj16xIcro9c6biDawAkU=
+	b=2mJEy5PoGY5YFJikP6iaSonVbOvOtU0Wnprz3aLAStPSFU8f+UW7J8k7DpZsVaI5o
+	 pQKaWE+mZnykE+f5CTYiS/9AufkB7yuvpgzx6TuQrKbhPTdnPAN9qroigQE++lV/MB
+	 DxIlGGUZhmQfQ2GrWyQY/s5KGcedXDdiqQrRCR+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Yang Li <yang.li@amlogic.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/104] bpf: Add cookie object to bpf maps
-Date: Sun,  7 Sep 2025 21:57:18 +0200
-Message-ID: <20250907195607.706543012@linuxfoundation.org>
+Subject: [PATCH 6.1 010/104] Bluetooth: hci_sync: Avoid adding default advertising on startup
+Date: Sun,  7 Sep 2025 21:57:27 +0200
+Message-ID: <20250907195607.942416826@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
 References: <20250907195607.664912704@linuxfoundation.org>
@@ -51,66 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Yang Li <yang.li@amlogic.com>
 
-[ Upstream commit 12df58ad294253ac1d8df0c9bb9cf726397a671d ]
+[ Upstream commit de5d7d3f27ddd4046736f558a40e252ddda82013 ]
 
-Add a cookie to BPF maps to uniquely identify BPF maps for the timespan
-when the node is up. This is different to comparing a pointer or BPF map
-id which could get rolled over and reused.
+list_empty(&hdev->adv_instances) is always true during startup,
+so an advertising instance is added by default.
 
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20250730234733.530041-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Call trace:
+  dump_backtrace+0x94/0xec
+  show_stack+0x18/0x24
+  dump_stack_lvl+0x48/0x60
+  dump_stack+0x18/0x24
+  hci_setup_ext_adv_instance_sync+0x17c/0x328
+  hci_powered_update_adv_sync+0xb4/0x12c
+  hci_powered_update_sync+0x54/0x70
+  hci_power_on_sync+0xe4/0x278
+  hci_set_powered_sync+0x28/0x34
+  set_powered_sync+0x40/0x58
+  hci_cmd_sync_work+0x94/0x100
+  process_one_work+0x168/0x444
+  worker_thread+0x378/0x3f4
+  kthread+0x108/0x10c
+  ret_from_fork+0x10/0x20
+
+Link: https://github.com/bluez/bluez/issues/1442
+Signed-off-by: Yang Li <yang.li@amlogic.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h  | 1 +
- kernel/bpf/syscall.c | 6 ++++++
- 2 files changed, 7 insertions(+)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index e9c1338851e34..2aaa1ed738303 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -260,6 +260,7 @@ struct bpf_map {
- 	bool frozen; /* write-once; write-protected by freeze_mutex */
- 	bool free_after_mult_rcu_gp;
- 	s64 __percpu *elem_count;
-+	u64 cookie; /* write-once */
- };
- 
- static inline bool map_value_has_spin_lock(const struct bpf_map *map)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index b145f3ef3695e..377bb60b79164 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -35,6 +35,7 @@
- #include <linux/rcupdate_trace.h>
- #include <linux/memcontrol.h>
- #include <linux/trace_events.h>
-+#include <linux/cookie.h>
- 
- #define IS_FD_ARRAY(map) ((map)->map_type == BPF_MAP_TYPE_PERF_EVENT_ARRAY || \
- 			  (map)->map_type == BPF_MAP_TYPE_CGROUP_ARRAY || \
-@@ -47,6 +48,7 @@
- #define BPF_OBJ_FLAG_MASK   (BPF_F_RDONLY | BPF_F_WRONLY)
- 
- DEFINE_PER_CPU(int, bpf_prog_active);
-+DEFINE_COOKIE(bpf_map_cookie);
- static DEFINE_IDR(prog_idr);
- static DEFINE_SPINLOCK(prog_idr_lock);
- static DEFINE_IDR(map_idr);
-@@ -1152,6 +1154,10 @@ static int map_create(union bpf_attr *attr)
- 	if (err < 0)
- 		goto free_map;
- 
-+	preempt_disable();
-+	map->cookie = gen_cookie_next(&bpf_map_cookie);
-+	preempt_enable();
-+
- 	atomic64_set(&map->refcnt, 1);
- 	atomic64_set(&map->usercnt, 1);
- 	mutex_init(&map->freeze_mutex);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 965b0f2b43a72..a2c3b58db54c2 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3287,7 +3287,7 @@ static int hci_powered_update_adv_sync(struct hci_dev *hdev)
+ 	 * advertising data. This also applies to the case
+ 	 * where BR/EDR was toggled during the AUTO_OFF phase.
+ 	 */
+-	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) ||
++	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
+ 	    list_empty(&hdev->adv_instances)) {
+ 		if (ext_adv_capable(hdev)) {
+ 			err = hci_setup_ext_adv_instance_sync(hdev, 0x00);
 -- 
 2.50.1
 
