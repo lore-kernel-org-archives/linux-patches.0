@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C7820E00B;
-	Sun,  7 Sep 2025 20:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8824315A;
+	Sun,  7 Sep 2025 20:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757277877; cv=none; b=U4pMNVf4UzRQ0GYsS5tTOs4xU74CbSYEreNDD5w1vX5KHyUKxtoeVHrXm5yCiG0U4FroKbOc1RNLtuUlz89AaxNExaEwyIvEFDeo4KA78qAvwJJZ4qMH5qK3kzQ0rFAgoHaTwk160ZGCfNsAf2EG3qSkp6ECDSY++akY0DcJTK0=
+	t=1757277880; cv=none; b=in5b6ynXDU5CIra5ozdphAGNMxqh6HrPlagNxISEWSlyl0rIwtXptXcq4uKFQj8UKIh8uZU11fEiGPxFAEK1sgAWSXUwmwLBEgqfth8uTqo71Fv504nMpKP9OnzdijuQFwwf1t3B2jVaaRY6fzJ44QOu4qLy8ZjHwnzhDRhXjC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757277877; c=relaxed/simple;
-	bh=unVAgJYxw0MfuPYzvw6wz7owK1+ZVEyRKdP/JIcF4L8=;
+	s=arc-20240116; t=1757277880; c=relaxed/simple;
+	bh=2J0ksdMSyVSQeIPHzstJrzT2/PYPvaR6ToxKG1j7M0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f5zrRrjdms43Yg4/Vk8YUW5CUI4yUCmQZFxhGSmzasSS/oXvw3MSP+1bl1szzT5qbh6Lcpm+O5MrIr0e9qm1aVXidHJnYEeBVEJYfhHk6xKd9nqEYn+CB4VovImiGCQgrXtwoMebHJ+QLWthsfiMGFtlkJRCZF9xc51otm8bg0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3e0QM1i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iYU3KAQek7HKfEIPOGq36L0QqxRonbhVIuS4b5Z3SnDAzNoVvZL7lZl72js684wr4xnvN8zbLjv2ckIUsUB4fDw4U/RoVCBx87tIgSn8VyF+SGRPBr39Mo9yxdYcT88XRu1QNImKf8kjdeRFxjKol7j5IVKiVHVD5PS1BYkIdzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deBFCEoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3e0QM1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F3BC4CEF0;
-	Sun,  7 Sep 2025 20:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deBFCEoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61B8C4CEF0;
+	Sun,  7 Sep 2025 20:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1757277877;
-	bh=unVAgJYxw0MfuPYzvw6wz7owK1+ZVEyRKdP/JIcF4L8=;
+	s=korg; t=1757277880;
+	bh=2J0ksdMSyVSQeIPHzstJrzT2/PYPvaR6ToxKG1j7M0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3e0QM1itkWoN1lU3yy9F5G6vJZh+tI9YLNsohAhUUbYZSqpxOv5xFzAFncbup1oT
-	 UPCpe52pZ1xy8Ap/Njh+uYBzLNLO39AA1+LAs8yfR0hGVHLE/bY01yfWxdXyPsxtxT
-	 rdEPWgxBbi4ZPpqDUls5c4wxssvLmNOluNwVazio=
+	b=deBFCEoUtGxQF821XpxrG3JLsEehDhi0AGWewb9UEMm1btWnKLx+KIch61n9tJOEP
+	 1rxf0J1ZN8G94QCglXdOTFljugnSElBQl8lApMr8/b3hDsmb+uqhmm6iQMZEuYVmvQ
+	 PSZBbZ7p+pGUBJ7niRM98ch/VUJWncRr8a732xfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 150/183] platform/x86: asus-wmi: Remove extra keys from ignore_key_wlan quirk
-Date: Sun,  7 Sep 2025 21:59:37 +0200
-Message-ID: <20250907195619.377343277@linuxfoundation.org>
+Subject: [PATCH 6.16 151/183] platform/x86: asus-wmi: Fix racy registrations
+Date: Sun,  7 Sep 2025 21:59:38 +0200
+Message-ID: <20250907195619.404442217@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
 References: <20250907195615.802693401@linuxfoundation.org>
@@ -52,41 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit cf3940ac737d05c85395f343fe33a3cfcadb47db ]
+[ Upstream commit 5549202b9c02c2ecbc8634768a3da8d9e82d548d ]
 
-Currently, the ignore_key_wlan quirk applies to keycodes 0x5D, 0x5E, and
-0x5F. However, the relevant code for the Asus Zenbook Duo is only 0x5F.
-Since this code is emitted by other Asus devices, such as from the Z13
-for its ROG button, remove the extra codes before expanding the quirk.
+asus_wmi_register_driver() may be called from multiple drivers
+concurrently, which can lead to the racy list operations, eventually
+corrupting the memory and hitting Oops on some ASUS machines.
+Also, the error handling is missing, and it forgot to unregister ACPI
+lps0 dev ops in the error case.
 
-For the Duo devices, which are the only ones that use this quirk, there
-should be no effect.
+This patch covers those issues by introducing a simple mutex at
+acpi_wmi_register_driver() & *_unregister_driver, and adding the
+proper call of asus_s2idle_check_unregister() in the error path.
 
-Fixes: 9286dfd5735b ("platform/x86: asus-wmi: Fix spurious rfkill on UX8406MA")
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://lore.kernel.org/r/20250808154710.8981-1-lkml@antheas.dev
+Fixes: feea7bd6b02d ("platform/x86: asus-wmi: Refactor Ally suspend/resume")
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1246924
+Link: https://lore.kernel.org/07815053-0e31-4e8e-8049-b652c929323b@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250827052441.23382-1-tiwai@suse.de
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index f84c3d03c1de7..e6726be5890e7 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -655,8 +655,6 @@ static void asus_nb_wmi_key_filter(struct asus_wmi_driver *asus_wmi, int *code,
- 		if (atkbd_reports_vol_keys)
- 			*code = ASUS_WMI_KEY_IGNORE;
- 		break;
--	case 0x5D: /* Wireless console Toggle */
--	case 0x5E: /* Wireless console Enable */
- 	case 0x5F: /* Wireless console Disable */
- 		if (quirks->ignore_key_wlan)
- 			*code = ASUS_WMI_KEY_IGNORE;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index f7191fdded14d..e72a2b5d158e9 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -5088,16 +5088,22 @@ static int asus_wmi_probe(struct platform_device *pdev)
+ 
+ 	asus_s2idle_check_register();
+ 
+-	return asus_wmi_add(pdev);
++	ret = asus_wmi_add(pdev);
++	if (ret)
++		asus_s2idle_check_unregister();
++
++	return ret;
+ }
+ 
+ static bool used;
++static DEFINE_MUTEX(register_mutex);
+ 
+ int __init_or_module asus_wmi_register_driver(struct asus_wmi_driver *driver)
+ {
+ 	struct platform_driver *platform_driver;
+ 	struct platform_device *platform_device;
+ 
++	guard(mutex)(&register_mutex);
+ 	if (used)
+ 		return -EBUSY;
+ 
+@@ -5120,6 +5126,7 @@ EXPORT_SYMBOL_GPL(asus_wmi_register_driver);
+ 
+ void asus_wmi_unregister_driver(struct asus_wmi_driver *driver)
+ {
++	guard(mutex)(&register_mutex);
+ 	asus_s2idle_check_unregister();
+ 
+ 	platform_device_unregister(driver->platform_device);
 -- 
 2.51.0
 
