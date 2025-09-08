@@ -1,47 +1,58 @@
-Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A7F2F3C28;
-	Mon,  8 Sep 2025 09:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6939721D3E4;
+	Mon,  8 Sep 2025 11:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757323683; cv=none; b=iNSUyfPe6hGIkyqRm6m9TE1Mz5bFibyODO1DnL5VeTvf3C3r+dlghc0NMZFtdYhgGi4iM3YaykbqX1E9HjCAGJdntGO2f+wRBeZXh0mox72B3Ko9uu+ZcivIJch6wK5S38aQmgo9b5M03pGxpj4emqBSNH3SAJt3APc3J7w7qh8=
+	t=1757330823; cv=none; b=bFvEY4IOPADKj7hJEn/0wtfNLwcnyeUhXub2l961ZJd3CRbU9Y29MLf5h866q7AIu2Ydb8juIazfhw1ZyptC9H9jZ9mg1BlxZj1mRyG7MELaWV9+e2pVmD873i+516W9Nj+YB2uBOOUEgpwDborEAO3depfkpZxw0JMJoItHmOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757323683; c=relaxed/simple;
-	bh=I/G23htBdL+aAw2glF8u1J1f4kdwA8kOYWqAS9WT9Ko=;
+	s=arc-20240116; t=1757330823; c=relaxed/simple;
+	bh=X/jO8pWsLbAH6Yh81G2J0GT3k0C2SMOrX0dExuS0FhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+F4RmPln11Vxd27jmQmOh/jnPSKh3xOxK4li9h/ssD/VO6/YWjhdH+d29ACbWmcI2I+bv2Of6NrNvnVp6WRIb+AL/hs/JE0QY+OK0VD2RMbvl6WkKqqcpb7JsWZZlqVKNw1m6gDkeoaQprFVkU8svWoLYLw1C4FIMlaD1/bwAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-From: Brett A C Sheffield <bacs@librecast.net>
+	 MIME-Version; b=Sknj1t0mm2HBdBS9soLNAqQ+1dzENJHwA1eYpEAgTwBYzLD2aAz0zz7HJx/ZWO+PPA+yyk+ZQXVdPE8fxX/fsQM7IYBa3SWUl0ePQSMhN+2J5qdoNuj4JsCmIF4VXy2mf/SYNvMLTBqHqZ8H5Fih4ffx6RdscPRsQhDw6RAyoBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jqqZCYWX; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jqqZCYWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A61C4CEF1;
+	Mon,  8 Sep 2025 11:26:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757330823;
+	bh=X/jO8pWsLbAH6Yh81G2J0GT3k0C2SMOrX0dExuS0FhY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jqqZCYWXk7QAPiACoRbvJYTnDYxr4vJdLBocN495dXhOunWB3Vk3QGdEHpF3eZWSx
+	 rdx8taT7qbyMWr1pXPvlBEFwmGvjXhKeBbymv1VBda/psFDXjhSudidKBSe9ZP7kZY
+	 o+XBs+LAidrEf4ECaqfP4NDRJn6kYCZdBFRPr4TAuypPD1ZXiW1dZIZ9Q2D0Gieni4
+	 lMwjuCkSS/DvPt+yAuuy0vYt6U+Q8tBDcXby5vBdYa8i4OQFbCWmUnKlw3HU2wdByu
+	 nNMxHQjzyLcxiy/BRW5mu6i4beVLcWxwXTyr8bNK208omXhpgThFPnQS+0Db3m0WNP
+	 bZzR0lLmTCYqA==
+From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
+Cc: achill@achill.org,
 	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
 	broonie@kernel.org,
-	achill@achill.org,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 5.4 00/45] 5.4.299-rc1 review
-Date: Mon,  8 Sep 2025 09:27:46 +0000
-Message-ID: <20250908092745.22874-2-bacs@librecast.net>
-X-Mailer: git-send-email 2.49.1
-In-Reply-To: <20250907195600.953058118@linuxfoundation.org>
-References: <20250907195600.953058118@linuxfoundation.org>
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.1 000/104] 6.1.151-rc1 review
+Date: Mon,  8 Sep 2025 13:26:50 +0200
+Message-ID: <20250908112650.567205-1-ojeda@kernel.org>
+In-Reply-To: <20250907195607.664912704@linuxfoundation.org>
+References: <20250907195607.664912704@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,8 +61,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Builds and boots. No network testing performed.
+On Sun, 07 Sep 2025 21:57:17 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.151 release.
+> There are 104 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 09 Sep 2025 19:55:53 +0000.
+> Anything received after that time might be too late.
 
-CPU/kernel: Linux auntie 5.4.299-rc1-00070-gf858bf548429 #68 SMP Mon Sep 8 07:03:03 -00 2025 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+Boot-tested under QEMU for Rust x86_64:
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
+
+Thanks!
+
+Cheers,
+Miguel
