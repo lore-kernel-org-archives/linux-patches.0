@@ -1,71 +1,71 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269F63009C1
-	for <patches@lists.linux.dev>; Tue,  9 Sep 2025 19:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A56F3126C5
+	for <patches@lists.linux.dev>; Tue,  9 Sep 2025 19:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757447750; cv=none; b=Dqvj/dQAsW6PEOmI+Cg6EcLlpaXgtKbpYyDMnJAQT3XgSwA18oMgqEyTcsbRV2IsmujKNoqQ/m2IirZFg9TD1NxjRxkzjfM8DLorJSmOVzyIwKsIk760Qsu+R747vaoeChgE3y6Jj4l+CXvl7LNiRt+bcoBk3nIoJSfTVZQFSG0=
+	t=1757447903; cv=none; b=KRx5yimpj+ye+FJnWPt88R87uW1TgHLsWboOlQ7mWSg1CsI2viC8ES+DS5cGiDwvakaeLBJvEpL6dyMiXr4eE9tBT6vklf244nrVd0TAIjiXwuVOiAEuGYmB8BQ4AfIXE20wjjwCvVnNQZtCu9inllG1Mo87o6KYu+blyWK4NoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757447750; c=relaxed/simple;
-	bh=UBTwN9epOeHMQdtzqaWFx5uzJ4dIDcreN1C53Qvt8jo=;
+	s=arc-20240116; t=1757447903; c=relaxed/simple;
+	bh=9kyPH/7+wdW7kBbHqGG+Ud1ODCMJF98xQA/Qhwi4KzA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IrK5k2KM9f993LiJADskVaUAImYN9Zvka3fdaW9QT8bgcqOyAcuZzISEup0G0AHdHvnTzoUIcFkKHixjDDxaxo9Z2wTaWvyXoi6QZlQX4dzbb40qyBpng+OnjehsmeZq95+wJUJvDzlk19/kKfttQeq16wBVcV/dexUtNvUX0EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=N8BUWrtY; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type; b=FNfLyXtuqKnTM3lwS4fOI1AaSjIX1DphGYK92Hy/Bsbb5i/qx5G23l/eI91PQrqFZYWbV9Zwsz5lSVntStJN66PrlQpIF9484QoBdXZBPRUvznU0fSOGLnDQwBgQCQBHEgKycLibUjKCL54s01qIJnzA3IpXJno71+4kd+elrQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RI4cGZ28; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="N8BUWrtY"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RI4cGZ28"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757447748;
+	s=mimecast20190719; t=1757447901;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VwEaYTkppqVE2bssVNAxlDikzdrxi/t7gGAUHOOn71I=;
-	b=N8BUWrtYCQn2ENL2WYj3KNdAOVBlLw4IuPeTC5WdfMlz5vMNIOgWFV49Ad/Af2FGknBiQ8
-	y4sNXY2KKwS8ulImht7eBDPuc1SM7bDo/uF3T+UJGHhVcTe9EKi8+5xbjHYCEnG0/qKMmc
-	chjV+OOxQZb1k4oPM+0MPB/HGIdbDcg=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=LgCo6nYdRNSIrE5RFL1DFAnJKWKeGruM3UAqjFfXFW8=;
+	b=RI4cGZ28P7oxUBKT0weaGedZZow52DDtV+eFCdKSQ82LSRGK2zLg02+LdmYw5bU7duqWXZ
+	RwP6yfB04fGO81ArG1AdrfrpabH1VuFJzGIFfBKFXcQWtO91E05l3zpoA+d9ABdCaEHBgk
+	iPslmoxEaurffDEGO58V545Ij9HunWU=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-113-XeS4dE97PLWYDepSCGmGdQ-1; Tue, 09 Sep 2025 15:55:47 -0400
-X-MC-Unique: XeS4dE97PLWYDepSCGmGdQ-1
-X-Mimecast-MFC-AGG-ID: XeS4dE97PLWYDepSCGmGdQ_1757447746
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-811917bdcfeso1369730585a.3
-        for <patches@lists.linux.dev>; Tue, 09 Sep 2025 12:55:47 -0700 (PDT)
+ us-mta-541-7W0xvgZXMHivyuYJ-JZXkA-1; Tue, 09 Sep 2025 15:58:18 -0400
+X-MC-Unique: 7W0xvgZXMHivyuYJ-JZXkA-1
+X-Mimecast-MFC-AGG-ID: 7W0xvgZXMHivyuYJ-JZXkA_1757447898
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-806a4452050so1164114085a.1
+        for <patches@lists.linux.dev>; Tue, 09 Sep 2025 12:58:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757447746; x=1758052546;
+        d=1e100.net; s=20230601; t=1757447898; x=1758052698;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VwEaYTkppqVE2bssVNAxlDikzdrxi/t7gGAUHOOn71I=;
-        b=nO2VrFfFz/zu8jGjQ65HMAK66AXcHOOyRqSM1zAUogYfVFrjFoBPi2B936o7ev9URT
-         mHXtBziVcRLDNy6g6MdI+taMPiBH6NyZFQkJZTvQQtTJGRNOi6Wld0ZPly44b4Li8uZE
-         Z/CmkMnN0MJUNXhnV74vNkTKvv1luLKZ3Yp3BLFKSQ9BbAgeAaThF6pxdBsV87bYCgs4
-         mwKi+yETzLn0TNjAUCIIk387zP+m7q2dQSmhYIRtOtdX5hobHCDlbkxo9Oc6rL9Sf2XH
-         cweWhM3eTQIc5NdxHGQX9fdDQ0jAy4RtbA4MJ2MyEZkQkf3WP6HtO8yTMA/zA2JOR+2A
-         sSBw==
-X-Forwarded-Encrypted: i=1; AJvYcCWQPw2P32Y7qtRR/C/JqEn9TPc42YzctqTDmhzX0IT7gc1I1YOSeNAU2DSgD9l1wo0QvPkEc7Q6@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9te/jmi3ee33JB3bkOHEchn2tToN92RXHTq5kZwroDnkc4MaN
-	qXiyZZQFGGbTsNUXH0Vu8Ky/e56C800bKQMIh91t6oLMZVAE+67YtVCZTJGrCW8oEEz5AYctyds
-	Y0QZpsV2WL9yEUyR84IXlc6cX+3VWawyX4ebuQbFrBt5zYey2ljhRmifo3lo=
-X-Gm-Gg: ASbGncsPnEqUjVM1eZ/XG+XE45pFYxk7h/HOrrhZabSortp64g+jqKPOtFRu3T4vfVj
-	TX2pl55J0erJzanBQ74zgeZvFg5xAZtFKtQb7nzrNUpDB4CdxIVA21N+QHAjgjzVna9J5rCqi+6
-	K2mFz740u6MHWi/2BDeiDnabw7y3kAigq7vhHp2Ee7hXUSc5SkEFBybCY3XgkMcTQLxc3QsxS6w
-	VNL2kjKV2NURWoTIYQrzgl/vlSkyBo1cx/e6Y2OzJAEgLbrOO/Vy0F6rtJJ4wYDBAGTdkCKqpl3
-	S50mU6jQyPSe9tDzxV5+pij2ydb3vfn10vWC/las
-X-Received: by 2002:a05:620a:2695:b0:813:ccb9:509f with SMTP id af79cd13be357-813ccb9510emr1236085185a.5.1757447746511;
-        Tue, 09 Sep 2025 12:55:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaAcXU8kXFobnNvUqNWSUsQz0woT7+jL6jE0MUCrwRybPYjUTXel6RI/GHw+5Xzip867Mnsw==
-X-Received: by 2002:a05:620a:2695:b0:813:ccb9:509f with SMTP id af79cd13be357-813ccb9510emr1236082685a.5.1757447746092;
-        Tue, 09 Sep 2025 12:55:46 -0700 (PDT)
+        bh=LgCo6nYdRNSIrE5RFL1DFAnJKWKeGruM3UAqjFfXFW8=;
+        b=HSpoAesr0bWoh0tdwX+9bxYeHoiAhh0MMBRs3LVhMwVeB5azWuxk4AoCNvSFsPRpBO
+         zKp7VXyDqNot3VY4HpnnAjGR8gGY/MIceq5Mo6/opHkIbiUDU8ySCHFvHisIoZixDZDM
+         ZLqIjEuSh/inXez3sUM7f9j5fprJ/APQhVS1M/BHPUlHJnwxFfeGdg+VS2K01UG5jknb
+         UOeBRFDP0qgTRT5WIUSZYiR7MdK3oG66mvELSLaJZmidayL94oHU1bBN4wAUbT2eYPYU
+         bQ4WpPyJ2ZRKQt4tfVIz0k1mMI30uLoyiEnHOe2odhjdd67zOfjsildggcSStvH2p36s
+         5uAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWmpwQeaSagnUal+Abx46upJEsuy0bgUmCWNP34+DRSr39yTYnV54woSJOxIT5jrtBAJtbXjC1I@lists.linux.dev
+X-Gm-Message-State: AOJu0YzM1/O8DNgZOqpxw9RMJjs/tItqyDz6sS1BoPOHLo16SqkaJuCN
+	y1IYBUcFnsiJfXAMJWZwygmb0pAHwYRPn3LqAPObYAdaRFZ6jG3RmizXQbfthwD9cjSDBWjVXqM
+	QlXjfITQ0UEE/X7pnsdyZoI3Iy3A+s/nio9n02v4L6nnn6SiLMzjcvXpXRmc=
+X-Gm-Gg: ASbGncvmiXIDClpFTBrH9dKdnRzNjRnW2CLrfdQRSvCn3+j2sxCzuWzdVezybIn3eez
+	0DH7pcZDAz0lsYVZlR4Wx18uasF9bgwdJ/2RdtuxolM02d3VrRnWIPH5beI+BT2dGQO2wc+9E1H
+	T0B7sVeXcIh4fQ2mZN/jD2j1sgweBAeqiEOpyg+mQPMlK3OPlZg9XFzwiiL3qP1kDQTcX61ZDND
+	ChxL91RKyfBO/IihYMJRGVGcKEv5WsDhyYK0/3X1uFQCyc4BUGzQJeIDkN+CLmhGxFkBluLKNFU
+	kLSUd9Iln9KnTuTMHoLtfNPjGXEofIPoqtF1A2yP
+X-Received: by 2002:a05:620a:29d0:b0:813:8842:93c3 with SMTP id af79cd13be357-813c568dadamr1292510685a.81.1757447898337;
+        Tue, 09 Sep 2025 12:58:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFDoXxrFaCmJ/Gj+lCNKoCToXRUvhVa9mV8loJbiqez27cqgvzNF+qndJRohMfDl/gHnjbl+w==
+X-Received: by 2002:a05:620a:29d0:b0:813:8842:93c3 with SMTP id af79cd13be357-813c568dadamr1292508485a.81.1757447897982;
+        Tue, 09 Sep 2025 12:58:17 -0700 (PDT)
 Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-73a16bb3ff5sm74385076d6.1.2025.09.09.12.55.44
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-81b58c54d9asm170295485a.1.2025.09.09.12.58.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Sep 2025 12:55:45 -0700 (PDT)
-Message-ID: <25676d12-57f0-4f54-8554-a6d77d2c6631@redhat.com>
-Date: Tue, 9 Sep 2025 15:55:43 -0400
+        Tue, 09 Sep 2025 12:58:17 -0700 (PDT)
+Message-ID: <819b6482-eb2c-4e2e-bf74-3396326aef5c@redhat.com>
+Date: Tue, 9 Sep 2025 15:58:15 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -73,8 +73,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/11] iommu: Compute iommu_groups properly for PCIe
- MFDs
+Subject: Re: [PATCH v3 07/11] iommu: Validate that pci_for_each_dma_alias()
+ matches the groups
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
  Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
@@ -84,13 +84,13 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
  Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
  kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
  tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <6-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
- <d0a5052e-fbbc-4bb7-b1cd-f3f72c7085d3@redhat.com>
- <20250909133128.GK789684@nvidia.com>
+References: <7-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
+ <9487fde9-ec40-4383-aafe-7ae0811830f5@redhat.com>
+ <20250909153511.GM789684@nvidia.com>
 From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250909133128.GK789684@nvidia.com>
+In-Reply-To: <20250909153511.GM789684@nvidia.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: wiPj0XQpKMg4an2X8EATqWVJK3ZCE0ezyTNjYaD0Gc0_1757447746
+X-Mimecast-MFC-PROC-ID: qIr0SXrU4odl5SZGjEZWg9P0mhMLxq6HQSeS_JlSL-E_1757447898
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -98,28 +98,22 @@ Content-Transfer-Encoding: 7bit
 
 
 
-On 9/9/25 9:31 AM, Jason Gunthorpe wrote:
-> On Tue, Sep 09, 2025 at 12:57:59AM -0400, Donald Dutile wrote:
+On 9/9/25 11:35 AM, Jason Gunthorpe wrote:
+> On Tue, Sep 09, 2025 at 01:00:08AM -0400, Donald Dutile wrote:
+>>
+>>
+>> On 9/5/25 2:06 PM, Jason Gunthorpe wrote:
+>>> Directly check that the devices touched by pci_for_each_dma_alias() match
+>>> the groups that were built by pci_device_group(). This helps validate that
+>> Do they have to match, as in equal, or be included ?
 > 
->> ... and why was the above code done in patch 3 and then undone here to
->> use the reachable() support in patch 5 below, when patch 5 could be moved before
->> patch 3, and we just get to this final implementation, dropping (some of) patch 3?
+> All aliases have to be in the same group, or have no group discovered yet.
 > 
-> If you use that order then the switch stuff has to be done and redone :(
-> 
-> I put it in this order because the switch change seems lower risk to
-> me. Fewer people have switches in their system. While the MFD change
-> on top is higher risk, even my simple consumer test systems hit
-> troubles with it.
-> 
-In 'my world' I see -lots- of switches in servers.
-I don't disagree on the MFD being a higher risk, and more common across all systems.
+I guess I'm not asking correctly, as I think you agreed, but I'm looking for a clearer statement.
+You said 'in' the same group; that's not 'equal', or what I think of as a 'match' of the pci_device_group() & dma-alias.
+
+So, is it in equality/match, or inclusion/inclusive check; if the later, just tweak the verbage.
 
 > Jason
 > 
-
-poe-tay-toe, poh-tah-toh... It gets to the end point needed.
-Thanks for reasoning...
-
-Reviewed-by: Donald Dutile <ddutile@redhat.com>
 
