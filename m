@@ -1,313 +1,161 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2070.outbound.protection.outlook.com [40.107.236.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F01D322E;
-	Tue,  9 Sep 2025 13:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757422928; cv=none; b=Lqakd90ex5uhUH457GHmIuOcaxDnQETbpTzQ4o80IjAJnCVV8S333iLJ9PPTc2Zl9dDPV87T52hdgkHwO6eg5HgJEO4OK3pdzQkfmFlrXIPgxmbomDnpGleKrwBYXHQo6E1wSMwULXH6++rch6W/PTmm1g6QcrXbETw5eyFARLE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757422928; c=relaxed/simple;
-	bh=IMA0hrozi89cCMAFa8tayuZ0jLgUEdMU2u5d1AcjFdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PmVyhNJowAh2WX/aOSfogsfK2fY+ddNa5MDXysK78t87dcL5N+g2Tpwmqi+jMVkIcAoa8ldm2+X9iHeJtZtDh/iJgfH6aGCSTeohXC0+Zoypfas96A87lXE+L6YzV/Hpu7yNBqbkLm0S+T+GP5YpFciAfKCl1dmCmk374Qh37Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XlGwIiQa; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693E2350D5A;
+	Tue,  9 Sep 2025 13:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757424697; cv=fail; b=Rtjpf1PLtS5gno84JI/RKhJMuQrK09mmbsgF99hq/uyK5/ZBmcr6DwZ9bae3IstI06Wyfr8T9GuEPPbfx7oZzb9+tEhdeHVKbzrHsY6kxt+0ZS82JnwCcrg2NWvf4ugu7bQODl2KzEnvt4hK47PbJpuOIGQAsAJJVdu3jReSMDA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757424697; c=relaxed/simple;
+	bh=eao5XMBpUCkAbf1ekSctzFTPQ8W/4dvaIUPEB66cCv0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=M+/SnHkEEsWdM+KKXxTSCQFZs4OWZjCLYm7Xu+TlzHggt+xCxZKCwGewBrNUEyvzGSqQJUDYuHbjE2LnGtostvfjyTOOkwItZXrKYLgUBmDNH0V6/rxTRkZPAuYVbSvtOgRheXHs4gF2OTyFfuDGPdh7YKEhDo8so0/HLskwvDo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DAbXhSX9; arc=fail smtp.client-ip=40.107.236.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XlGwIiQa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1757422926; x=1788958926;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=IMA0hrozi89cCMAFa8tayuZ0jLgUEdMU2u5d1AcjFdE=;
-  b=XlGwIiQa8F4cZqX+/0sgcHhJvW+oUPGLQ4E7w/YorrGJoyqXTa0ZidF5
-   DgL5qDdtq+Kf9LVrYaPkMS4HNEyGDwHtZgjpW03HrdPgd4bhLzpBL+35z
-   LKSq3RKG95WRQoW/RqY2JjIw8T3DdXuU50xZnrx2wnyt6iklXoHm64JXF
-   8YdFgUWVonZ/J2Z0DB5l335UgJBEBpFjAd+lFBrByeGtLDZ9Q9QDxDPiW
-   jWFBk1NmjR+ADWkYg+LQ7jy8nRMVuvQtP90G29t70fvEUyG1UC6xKzHNK
-   VpYOLf1Vh7ZJfj15LK4OvCwqAQ3JbHPgy339tkA8VjQBAoTxhqAGFmZvh
-   Q==;
-X-CSE-ConnectionGUID: 9eJzVp6nRpeATmv7dH6faw==
-X-CSE-MsgGUID: R4H2ZVyCSKKeDwPl2Xy8EA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11547"; a="62332701"
-X-IronPort-AV: E=Sophos;i="6.18,251,1751266800"; 
-   d="scan'208";a="62332701"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 06:02:05 -0700
-X-CSE-ConnectionGUID: xEPoSo38S5S/y6YfQS7UgQ==
-X-CSE-MsgGUID: DxGAStGNTjuqZlrDaEzHWg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,251,1751266800"; 
-   d="scan'208";a="172250957"
-Received: from lkp-server01.sh.intel.com (HELO 114d98da2b6c) ([10.239.97.150])
-  by orviesa006.jf.intel.com with ESMTP; 09 Sep 2025 06:02:00 -0700
-Received: from kbuild by 114d98da2b6c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uvxyw-0004rz-1o;
-	Tue, 09 Sep 2025 13:01:58 +0000
-Date: Tue, 9 Sep 2025 21:01:08 +0800
-From: kernel test robot <lkp@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, will@kernel.org,
-	robin.murphy@arm.com
-Cc: oe-kbuild-all@lists.linux.dev, joro@8bytes.org,
-	jean-philippe@linaro.org, miko.lenczewski@arm.com,
-	balbirs@nvidia.com, peterz@infradead.org, smostafa@google.com,
-	kevin.tian@intel.com, praan@google.com,
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH rfcv2 4/8] iommu/arm-smmu-v3: Introduce a per-domain
- arm_smmu_invs array
-Message-ID: <202509092020.mxUyqGcN-lkp@intel.com>
-References: <80310b98efa4bd7e95d7b3ca302f40d4d69e59c5.1757373449.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DAbXhSX9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y/x1y8fPvgOuf5lwNSXgQFRrODbTIRn/R5fTlRE+b85Uotel2Kv0mIGfr1JtE1t9/InCbhizomOi6OND0dfRtjH7Lumq7UypFBUvW6/BnKJn6HbIIQqtYO6Lzs3C9tBg2ke1oBaFHwK0w2bgN13QSyk+TG4hDFB2hYaAyIbCD1uyPk69Q8Ph02jde9b5O4Bwm0R91PxpSRFdn/m0rFywpj4olX+bTakwK+Uga/nHGel/m5JLleMr8eUX01ysbzV6fy2t9KDYynrUVbje8ydCxzaPThma4gptl+o37n8cdmVyjMc2hX9GEtW6AkAaNKv15DTdlMwnv24e0ec9YSuB9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eao5XMBpUCkAbf1ekSctzFTPQ8W/4dvaIUPEB66cCv0=;
+ b=zA0lhBWr88o5oyWtx/SymDbdhbKG1tM/PWRBjoVKSuV3t0qWov4y2phSWzhqbX+zbehhrty58SwjXP8RyoQzaP0FP4GIct35EaYPJgOwx0VFd3fVPbkfGVnA0ZwdTSas419CoKx2bk6xXqno1UnAQaArmVyyp9NvOip9paHWZ3l24bZXap673eA+Zn0HbRUsEfnIDtqa2JdAwGoXt/UX3dBXnyVaQ3rtSunOmCTjyOPwtpTBzxEg1DTu+/gGEuO2PA2/3dUpufKHaVjMo59gqvgDthtRsQ/YHZH/qxnyRdeAEFIM34/Wh9/wh1SE/Ot5ZNcHjyhBhpwqUsvKixyqhw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eao5XMBpUCkAbf1ekSctzFTPQ8W/4dvaIUPEB66cCv0=;
+ b=DAbXhSX9o3GonLja3MloN3VOOFxn0qTefNmef1jQ+hxKo+q00BWM2jCvvTSoCcwOCvdSJQI/3pormFepvfMMUBxT9Vb4h+komF0jq84efTW4YFraAZP3vwJZI4zIhxXeR44RezwaKD34DkRp6jrMvAJTE9ABlvM8+3PPdxNKx98n2uLjXPkRF44DFmZj47+MywT+m+SLvOQXS8HnNtoaOJh1kWlTxxAAKtHbp7YHiOmwLjtEe51BaZ2lCw5Z2w7/ZlTONJrMvjUroOCieaiyKrj3ngiUlVEeMerEaDjO+VgBwRbkTm77T0dkkCzKSommrROw/BDCcHrB1QQKZIPphg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
+ by CH3PR12MB9456.namprd12.prod.outlook.com (2603:10b6:610:1c2::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Tue, 9 Sep
+ 2025 13:31:31 +0000
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9094.021; Tue, 9 Sep 2025
+ 13:31:30 +0000
+Date: Tue, 9 Sep 2025 10:31:28 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Donald Dutile <ddutile@redhat.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
+	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+Subject: Re: [PATCH v3 06/11] iommu: Compute iommu_groups properly for PCIe
+ MFDs
+Message-ID: <20250909133128.GK789684@nvidia.com>
+References: <6-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
+ <d0a5052e-fbbc-4bb7-b1cd-f3f72c7085d3@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d0a5052e-fbbc-4bb7-b1cd-f3f72c7085d3@redhat.com>
+X-ClientProxiedBy: YT4PR01CA0502.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:10c::11) To PH7PR12MB5757.namprd12.prod.outlook.com
+ (2603:10b6:510:1d0::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <80310b98efa4bd7e95d7b3ca302f40d4d69e59c5.1757373449.git.nicolinc@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|CH3PR12MB9456:EE_
+X-MS-Office365-Filtering-Correlation-Id: d43ddd0a-8bb0-4a8f-2b46-08ddefa52fbc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?ruGr/GbJK8fb3WpIZKlAhTewNAdnh9EAE5hRSa0Q0I4mk0RSpha0wmn3HgDn?=
+ =?us-ascii?Q?9be+UQQsOCciZFcjNngBbOHqOcTBqmwE0cc1+zJaY13yCUox90pxKETbeu91?=
+ =?us-ascii?Q?+Kxh5TAkVDJNv6iiF//T7wUWhsNXgrdwtM71nZAvBSZm+9Cfgq7M+F3Fl2vO?=
+ =?us-ascii?Q?ENhooukfbej3/W/GIPK7RFBa8HuwkdlgOHaw37kv6EGZiwlfqvaWnva+Ysoj?=
+ =?us-ascii?Q?Y+ZerRPOZP69kr8TxZWzCTieA8+3tUvkWFqOLa4p2VEjLi1PGX6iWXcqjn/F?=
+ =?us-ascii?Q?gi/25uzAIFM535OhPB3NeK4kkClw3NZEL58QrNpexvkwgmSQmdvnyvDktECx?=
+ =?us-ascii?Q?5MvcLLnSX8sGaQ9Y9kuAy7vLiMmaq0hDiYwsV4NVBZwRsga6wmGFTgPr4oq8?=
+ =?us-ascii?Q?cifKD3dLp1uBn1lxPL9SNUIfM+IlXF9+403eoxycFQFjwgKjedwSH4gXtPv3?=
+ =?us-ascii?Q?1fbNoreQMOXiO6DiJVNUeR+AOfRm/tQtiu6vrHZhvbxPCr7NR1jfPCi/vwKC?=
+ =?us-ascii?Q?Zy5gy2rhsdBslmIwNqBAi020z9ydO/mZOY+G85/btWzltDRxMy1I0LkBRMW8?=
+ =?us-ascii?Q?8f+y2hNyGm7nFUUdJWXZozo5obb6NZvbX1DIuYJ6rqeNol4E/f4j9oau8Qyn?=
+ =?us-ascii?Q?mCKluB+TcFdMOadvyFQgmtEBcOJHkoXlwrL5D4h6VrKs15DJNfrSkPhQ/o9x?=
+ =?us-ascii?Q?rmTraBXbP9sR7VVTO0UXSAUwgkUbeHLdkLNQbUqmTgyiS7C16Hui/WRxKIc8?=
+ =?us-ascii?Q?jak+S7Z1Z4r0y+/M0O3ckU8icJJ1O7KKo1kOL8rlJ1vndhiAblJf3b8Zw4dZ?=
+ =?us-ascii?Q?uXV1G/08AMmSBb5aexvEJ7XjEn9ISb207JQlaQww4fv0TEWKaVe6ky9VddmM?=
+ =?us-ascii?Q?qvGVhpcVpopWOk62L4WY20amnglksGq7EiknLYDwWuvzUHsUTe0cJrrvfxT8?=
+ =?us-ascii?Q?9PiCH17m1sieTNCobvFnl8jo85y1BOqsuy4NKoYzv/+kjdpCAkv79pxMWqm7?=
+ =?us-ascii?Q?GCD8QyZCxI0Rq4V7vhCKn/TRn0GDxVsawzgF09uNCJBaSxa39UAeqJ1Nelqb?=
+ =?us-ascii?Q?6HEnANwar2uOLt5Du0RnVuSc4JiE6NDvZCp1xUui4kkSA2A7W563+6/7g70D?=
+ =?us-ascii?Q?bl+LA1d7o+f/ph/rdiSRS1VB+FxNKDDrEB7sURZO2x5nqzR+ATfu0rS/d895?=
+ =?us-ascii?Q?ygKmhU9yq745KK4kxCFRMqFl0iEIUE2ySXbT3AlXG+rqxLcUaHgVfrY07Grl?=
+ =?us-ascii?Q?kbZ99ATmnsd9ddi9e5RwJ6ROMb6J7s8JKkaoijaUAl5h056l7UcYBYYnjxJz?=
+ =?us-ascii?Q?ijYlDMDqwu2Sa930LWSK/oudbWLcxgVQHiwYE8HxBm+zuJ+2WvRl/CuKmYjP?=
+ =?us-ascii?Q?EVMowPmblCzGLaT3/Drim2PFyMi7nXHVRpTKI73YWpEV0FPPnl6Qy/luTeRW?=
+ =?us-ascii?Q?r70vC02Pa4E=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?FTNQQ5bD8jQ89k4uaYqb0SUrpjMkV8+ol4Hl5wigew1+AQE5yTl7IliG0QH3?=
+ =?us-ascii?Q?1OkkdNP5ac05S/HRFk0azO8Xa5auLq7t9OsuTwki2P5naiSYdCgh5STUvNXN?=
+ =?us-ascii?Q?Kf6hnUGFPi1B53cJgDUXc5DfvLeEd7X2b4ROXmyOp8XCN3Vf0Ehl/WGnABRs?=
+ =?us-ascii?Q?6IQBYgk8bYOn7WCR1f03TCy8HtLVs8YqvR0ddGGHUACY4ACpnvvlQfaxaQnE?=
+ =?us-ascii?Q?4IxaMpAae4PzHQPvhruSh6b1piEft3KomdDrqmslvNanrcx9LL+9bPZzkJlt?=
+ =?us-ascii?Q?0pksGtJh71ofF3i6ye85uF1c9GPoRWORLE7w/0K+LG2BRKNbvILXFfUeNTTR?=
+ =?us-ascii?Q?cFiJCMlI/dLSj+sjSY+mH5PLeDYI3AmDwzZIGL+n0uA2tE9kCh9rLmzYxjYl?=
+ =?us-ascii?Q?Cixmc1y9VhnWhVQkkp8eotMGcme3eep0wl+hmjcX841+d0f6X3vS6fNfXZX8?=
+ =?us-ascii?Q?Co3KfvxPhoJPIf+60DTe1Jaf8h6erkdVKA/dtEwj3Aj1iBvAfSpMEsmYA6Gu?=
+ =?us-ascii?Q?VlkD1WBvhuu/LundCww99OSERSXc3GGHQxkaLoDC2n1mrJ2IKSFIUhrryeU5?=
+ =?us-ascii?Q?bUJurD3y086r2p4CzIJr0+AFdVcr449NU5CN6hGFkYZzOMSTzZiopC0WSI6D?=
+ =?us-ascii?Q?53mewe335e8O+hOGpfbrATc2Gg6GcrarNpzgN+x14piqMcWwHzsKK/5xzZvj?=
+ =?us-ascii?Q?4u5qzZamO3F8jnNig0r1VaD9RFnNwbZC+XLFMnYRvw/vgCS2jdDzrXqX+N3r?=
+ =?us-ascii?Q?Mw315nqlRJfkT4MNyiENAlyWCbAvJa0jpNiBLXiEq8Cbte35urKWB1mMLsbg?=
+ =?us-ascii?Q?nrDDdyWjNATyB1JIE55tI/ts/09DSPoLP4oP5lyUSx8uvCQaf87JFCCO+NNf?=
+ =?us-ascii?Q?5Q9UqAHWChlkUs9FThoxjd33vaYli8vJMaGu5sm7IXIUNlWLlKhZd9hBsEdc?=
+ =?us-ascii?Q?xylO2jTmmjHyveo1+8oF4NlERppSeYA2TH95wTVkotWiLbPM+gz+VBVLpmDf?=
+ =?us-ascii?Q?xgTzMCZ+wd/vclkSeaD2V/UoZfH6qwhs9yG638xxXO4ov7ZDhIgVxq93oNUl?=
+ =?us-ascii?Q?ZQZx5PI+0EP5iFJnJO5DHHUGhmvigJVBa0UTdhzQEg5E34RVlaNKLlPcMtfP?=
+ =?us-ascii?Q?ZAbyoiCJyVmQe/H2t3wGlkt0rnA8wSEnZYeqB9GBjWFXAeNQGuaG94gz3XM4?=
+ =?us-ascii?Q?eIwOjTTuJhYmb83y/sBsdyVsjnZP/hgur/2uxzOXZjX+MYfNmDQPx/6RSbIh?=
+ =?us-ascii?Q?pwKQI4wwBOlf85+Dva0li7CRXvh3m9NbsliovV318jJf3uRTzvXoGATzZ6Sz?=
+ =?us-ascii?Q?atEFd1KY6nzNd6Mus5k+RG4ha3vQitZhoWszpXxiKXWD3UD+ZjHqDK9911TN?=
+ =?us-ascii?Q?fNuens3Co31H16rVt3ppN5xFG+SxiCP/3RFVPykinynNke27CJI/aAlTGGYa?=
+ =?us-ascii?Q?zuy6KdfTpw7Te+Muihv+yYdrzv1qweVEngsyXscArmleUnWJb7oZhhkEWZs+?=
+ =?us-ascii?Q?OD2BUTPwQ5wR1SrIbDRHeWkTAU31XlLpVRMWkpZINz2sLxoySoVPGA7t2LYp?=
+ =?us-ascii?Q?t+iBOgEKnhKqzErRbhw=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d43ddd0a-8bb0-4a8f-2b46-08ddefa52fbc
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2025 13:31:30.8638
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VVWuSCXb49TNWpm5qq6dNlCmcaRVIiGHL9KnJQKKONg744Gb4PTPh0NA/0NVXisQ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9456
 
-Hi Nicolin,
+On Tue, Sep 09, 2025 at 12:57:59AM -0400, Donald Dutile wrote:
 
-kernel test robot noticed the following build errors:
+> ... and why was the above code done in patch 3 and then undone here to
+> use the reachable() support in patch 5 below, when patch 5 could be moved before
+> patch 3, and we just get to this final implementation, dropping (some of) patch 3?
 
-[auto build test ERROR on soc/for-next]
-[also build test ERROR on linus/master v6.17-rc5 next-20250909]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+If you use that order then the switch stuff has to be done and redone :(
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Nicolin-Chen/iommu-arm-smmu-v3-Clear-cmds-num-after-arm_smmu_cmdq_batch_submit/20250909-073052
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git for-next
-patch link:    https://lore.kernel.org/r/80310b98efa4bd7e95d7b3ca302f40d4d69e59c5.1757373449.git.nicolinc%40nvidia.com
-patch subject: [PATCH rfcv2 4/8] iommu/arm-smmu-v3: Introduce a per-domain arm_smmu_invs array
-config: arm64-randconfig-003-20250909 (https://download.01.org/0day-ci/archive/20250909/202509092020.mxUyqGcN-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250909/202509092020.mxUyqGcN-lkp@intel.com/reproduce)
+I put it in this order because the switch change seems lower risk to
+me. Fewer people have switches in their system. While the MFD change
+on top is higher risk, even my simple consumer test systems hit
+troubles with it.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509092020.mxUyqGcN-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1082:23: error: static declaration of 'arm_smmu_invs_merge' follows non-static declaration
-    1082 | struct arm_smmu_invs *arm_smmu_invs_merge(struct arm_smmu_invs *invs,
-         |                       ^~~~~~~~~~~~~~~~~~~
-   In file included from drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:34:
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h:721:23: note: previous declaration of 'arm_smmu_invs_merge' with type 'struct arm_smmu_invs *(struct arm_smmu_invs *, struct arm_smmu_invs *)'
-     721 | struct arm_smmu_invs *arm_smmu_invs_merge(struct arm_smmu_invs *invs,
-         |                       ^~~~~~~~~~~~~~~~~~~
->> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1165:8: error: static declaration of 'arm_smmu_invs_unref' follows non-static declaration
-    1165 | size_t arm_smmu_invs_unref(struct arm_smmu_invs *invs,
-         |        ^~~~~~~~~~~~~~~~~~~
-   In file included from drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:34:
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h:723:8: note: previous declaration of 'arm_smmu_invs_unref' with type 'size_t(struct arm_smmu_invs *, struct arm_smmu_invs *)' {aka 'long unsigned int(struct arm_smmu_invs *, struct arm_smmu_invs *)'}
-     723 | size_t arm_smmu_invs_unref(struct arm_smmu_invs *invs,
-         |        ^~~~~~~~~~~~~~~~~~~
->> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1215:23: error: static declaration of 'arm_smmu_invs_purge' follows non-static declaration
-    1215 | struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs,
-         |                       ^~~~~~~~~~~~~~~~~~~
-   In file included from drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:34:
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h:725:23: note: previous declaration of 'arm_smmu_invs_purge' with type 'struct arm_smmu_invs *(struct arm_smmu_invs *, size_t)' {aka 'struct arm_smmu_invs *(struct arm_smmu_invs *, long unsigned int)'}
-     725 | struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs,
-         |                       ^~~~~~~~~~~~~~~~~~~
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1215:23: warning: 'arm_smmu_invs_purge' defined but not used [-Wunused-function]
-    1215 | struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs,
-         |                       ^~~~~~~~~~~~~~~~~~~
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1165:8: warning: 'arm_smmu_invs_unref' defined but not used [-Wunused-function]
-    1165 | size_t arm_smmu_invs_unref(struct arm_smmu_invs *invs,
-         |        ^~~~~~~~~~~~~~~~~~~
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1082:23: warning: 'arm_smmu_invs_merge' defined but not used [-Wunused-function]
-    1082 | struct arm_smmu_invs *arm_smmu_invs_merge(struct arm_smmu_invs *invs,
-         |                       ^~~~~~~~~~~~~~~~~~~
-
-
-vim +/arm_smmu_invs_merge +1082 drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-
-  1063	
-  1064	/**
-  1065	 * arm_smmu_invs_merge() - Merge @to_merge into @invs and generate a new array
-  1066	 * @invs: the base invalidation array
-  1067	 * @to_merge: an array of invlidations to merge
-  1068	 *
-  1069	 * Return: a newly allocated array on success, or ERR_PTR
-  1070	 *
-  1071	 * This function must be locked and serialized with arm_smmu_invs_unref() and
-  1072	 * arm_smmu_invs_purge(), but do not lockdep on any lock for KUNIT test.
-  1073	 *
-  1074	 * Either @invs or @to_merge must be sorted itself. This ensures the returned
-  1075	 * array will be sorted as well.
-  1076	 *
-  1077	 * Caller is resposible for freeing the @invs and the returned new one.
-  1078	 *
-  1079	 * Entries marked as trash will be purged in the returned array.
-  1080	 */
-  1081	VISIBLE_IF_KUNIT
-> 1082	struct arm_smmu_invs *arm_smmu_invs_merge(struct arm_smmu_invs *invs,
-  1083						  struct arm_smmu_invs *to_merge)
-  1084	{
-  1085		struct arm_smmu_invs *new_invs;
-  1086		struct arm_smmu_inv *new;
-  1087		size_t num_adds = 0;
-  1088		size_t num_dels = 0;
-  1089		size_t i, j;
-  1090	
-  1091		for (i = j = 0; i != invs->num_invs || j != to_merge->num_invs;) {
-  1092			int cmp = arm_smmu_invs_merge_cmp(invs, i, to_merge, j);
-  1093	
-  1094			if (cmp < 0) {
-  1095				/* no found in to_merge, leave alone but delete trash */
-  1096				if (!refcount_read(&invs->inv[i].users))
-  1097					num_dels++;
-  1098				i++;
-  1099			} else if (cmp == 0) {
-  1100				/* same item */
-  1101				i++;
-  1102				j++;
-  1103			} else {
-  1104				/* unique to to_merge */
-  1105				num_adds++;
-  1106				j++;
-  1107			}
-  1108		}
-  1109	
-  1110		new_invs = arm_smmu_invs_alloc(invs->num_invs - num_dels + num_adds);
-  1111		if (IS_ERR(new_invs))
-  1112			return new_invs;
-  1113	
-  1114		new = new_invs->inv;
-  1115		for (i = j = 0; i != invs->num_invs || j != to_merge->num_invs;) {
-  1116			int cmp = arm_smmu_invs_merge_cmp(invs, i, to_merge, j);
-  1117	
-  1118			if (cmp <= 0 && !refcount_read(&invs->inv[i].users)) {
-  1119				i++;
-  1120				continue;
-  1121			}
-  1122	
-  1123			if (cmp < 0) {
-  1124				*new = invs->inv[i];
-  1125				i++;
-  1126			} else if (cmp == 0) {
-  1127				*new = invs->inv[i];
-  1128				refcount_inc(&new->users);
-  1129				i++;
-  1130				j++;
-  1131			} else {
-  1132				*new = to_merge->inv[j];
-  1133				refcount_set(&new->users, 1);
-  1134				j++;
-  1135			}
-  1136			new++;
-  1137		}
-  1138	
-  1139		WARN_ON(new != new_invs->inv + new_invs->num_invs);
-  1140	
-  1141		return new_invs;
-  1142	}
-  1143	EXPORT_SYMBOL_IF_KUNIT(arm_smmu_invs_merge);
-  1144	
-  1145	/**
-  1146	 * arm_smmu_invs_unref() - Find in @invs for all entries in @to_unref, decrease
-  1147	 *                         the user counts without deletions
-  1148	 * @invs: the base invalidation array
-  1149	 * @to_unref: an array of invlidations to decrease their user counts
-  1150	 *
-  1151	 * Return: the number of trash entries in the array, for arm_smmu_invs_purge()
-  1152	 *
-  1153	 * This function will not fail. Any entry with users=0 will be marked as trash.
-  1154	 * All trash entries will remain in the @invs until being completely deleted by
-  1155	 * the next arm_smmu_invs_merge() or an arm_smmu_invs_purge() function call.
-  1156	 *
-  1157	 * This function must be locked and serialized with arm_smmu_invs_merge() and
-  1158	 * arm_smmu_invs_purge(), but do not lockdep on any lock for KUNIT test.
-  1159	 *
-  1160	 * Note that the @invs->num_invs will not be updated, even if the actual number
-  1161	 * of invalidations are decreased. Readers should take the read lock to iterate
-  1162	 * each entry and check its users counter until @inv->num_invs.
-  1163	 */
-  1164	VISIBLE_IF_KUNIT
-> 1165	size_t arm_smmu_invs_unref(struct arm_smmu_invs *invs,
-  1166				   struct arm_smmu_invs *to_unref)
-  1167	{
-  1168		size_t num_dels = 0;
-  1169		size_t i, j;
-  1170	
-  1171		for (i = j = 0; i != invs->num_invs || j != to_unref->num_invs;) {
-  1172			int cmp;
-  1173	
-  1174			if (!refcount_read(&invs->inv[i].users)) {
-  1175				num_dels++;
-  1176				i++;
-  1177				continue;
-  1178			}
-  1179	
-  1180			cmp = arm_smmu_invs_merge_cmp(invs, i, to_unref, j);
-  1181			if (cmp < 0) {
-  1182				/* not found in to_unref, leave alone */
-  1183				i++;
-  1184			} else if (cmp == 0) {
-  1185				/* same item */
-  1186				if (refcount_dec_and_test(&invs->inv[i].users))
-  1187					num_dels++;
-  1188				i++;
-  1189				j++;
-  1190			} else {
-  1191				/* item in to_unref is not in invs or already a trash */
-  1192				WARN_ON(true);
-  1193				j++;
-  1194			}
-  1195		}
-  1196		return num_dels;
-  1197	}
-  1198	EXPORT_SYMBOL_IF_KUNIT(arm_smmu_invs_unref);
-  1199	
-  1200	/**
-  1201	 * arm_smmu_invs_purge() - Purge all the trash entries in the @invs
-  1202	 * @invs: the base invalidation array
-  1203	 * @num_dels: expected number of trash entries, typically the return value from
-  1204	 *            a prior arm_smmu_invs_unref() call
-  1205	 *
-  1206	 * Return: a newly allocated array on success removing all the trash entries, or
-  1207	 *         NULL on failure
-  1208	 *
-  1209	 * This function must be locked and serialized with arm_smmu_invs_merge() and
-  1210	 * arm_smmu_invs_unref(), but do not lockdep on any lock for KUNIT test.
-  1211	 *
-  1212	 * Caller is resposible for freeing the @invs and the returned new one.
-  1213	 */
-  1214	VISIBLE_IF_KUNIT
-> 1215	struct arm_smmu_invs *arm_smmu_invs_purge(struct arm_smmu_invs *invs,
-  1216						  size_t num_dels)
-  1217	{
-  1218		struct arm_smmu_invs *new_invs;
-  1219		size_t i, j;
-  1220	
-  1221		if (WARN_ON(invs->num_invs < num_dels))
-  1222			return NULL;
-  1223	
-  1224		new_invs = arm_smmu_invs_alloc(invs->num_invs - num_dels);
-  1225		if (IS_ERR(new_invs))
-  1226			return NULL;
-  1227	
-  1228		for (i = j = 0; i != invs->num_invs; i++) {
-  1229			if (!refcount_read(&invs->inv[i].users))
-  1230				continue;
-  1231			new_invs->inv[j] = invs->inv[i];
-  1232			j++;
-  1233		}
-  1234	
-  1235		WARN_ON(j != new_invs->num_invs);
-  1236		return new_invs;
-  1237	}
-  1238	EXPORT_SYMBOL_IF_KUNIT(arm_smmu_invs_purge);
-  1239	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Jason
