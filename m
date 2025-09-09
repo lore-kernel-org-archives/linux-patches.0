@@ -1,240 +1,395 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A42221F15
-	for <patches@lists.linux.dev>; Tue,  9 Sep 2025 21:23:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757453037; cv=fail; b=NnizfKdJfaAQd0MFjdu3rMX7oA7pg0ITGKoIf+sx2Yj9Sbx+i2iXWjhsp1tXL+fDuX7kUlS8AMQ6TaatyYrIkXjGD3XHlMsgLMzbTxzQSWMW571iA2jkIMSBpZxlfVH/XkGfihw7kz2p3jiXMOkPCqyXGrCcn3MfpgaSGsjKlpU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757453037; c=relaxed/simple;
-	bh=mfhcTPguna/OgTqEV3IJv1afzOUqjcWjROa4/qAzH7Q=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=GYw0v6FmhC8c+IDfBk/ceossR4ktSJp691SzLuIjTPD2SodHrJ0Yh3B2f5yCZtx5SzVE3zxnhzsc+Cw7NOVSRegWUNiocQUjCbVNaA4MlD4cnXocI2c4EEkezndUV1Qb6oueuRtH6H7w5wOaZb/wbGLSqBGIaiDsIoJsFva2TzM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WMGyhMJu; arc=fail smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43B6221F15;
+	Tue,  9 Sep 2025 21:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757453099; cv=none; b=MiAD8Hj8cQSZTQ11h3chXLnT+flGS2Qd01YFzF6BIc55GYHqssJQmM7T/Q+jVaxwVc88ibFLfAW2oXGFVLVaLc19JtsSSBt+jCEoczkA8Fdel4ZjtDyDVN2U3iyLNV6QCILw/pt13KqpNvkGhqjHUPpQAgGwDP4O+Lr+GLk3tiU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757453099; c=relaxed/simple;
+	bh=nVeL025PyzaygZ/cm/L6ZCfVuIYMF82QcpuSOzrDeu8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ogxJzT5qe+UIc7eilfvsUrQEbx9k1B1/Ztt6uI1R6RPojQYRseOvc7K3sGg/b7abBzk4s2S5CGooU2bMAx2GaJZgR/KQ1e3DylDoK9sKlPVtigqNs5M6bbdw5G3dGp2n2vinVMeYbb3iixs50xOpn9aCx3xFGOh+zMfTu5FHqyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqsN63Wa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WMGyhMJu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1757453036; x=1788989036;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=mfhcTPguna/OgTqEV3IJv1afzOUqjcWjROa4/qAzH7Q=;
-  b=WMGyhMJuA/lzlVs0sot8yobp3Azepjilb9Ot/44SSwkRhLIKXVaJ2eug
-   rinST/JEwYrP7ezyk7LwiN9X/iEy9EkijVCvCK4pL5dButwS1MCf2AOn9
-   WJL6t4ETlx+m/hqn/AixDvaRcJzOj5IMTSmgz1osfKLim4AE3w02u5WQQ
-   vvohhT2XOVfxNHybJl+BDtgJtAhOKExXTEQqaiESa0FhbS5g8x+e4jlwe
-   6GqiaHbbKrhFITCc8OZrv7Fj81h3emj9JpVdl/H80k1H/fU9IjXz/BFAr
-   OaB/xNnP1V2wUFcI1N12pu2roz1n7fvD9sAU+nBZWdL/sPASf8xxD1116
-   Q==;
-X-CSE-ConnectionGUID: 9jsMixZ6R9CF7Jh/Q0IW9w==
-X-CSE-MsgGUID: ccf5jVSXRmqQPzFgkniSbw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63583979"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="63583979"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 14:23:55 -0700
-X-CSE-ConnectionGUID: u0lXMiGcSsOmP4vnu8niCQ==
-X-CSE-MsgGUID: zH8W41oNRRWjLgiEesV5BA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,252,1751266800"; 
-   d="scan'208";a="172773731"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 14:23:54 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Tue, 9 Sep 2025 14:23:54 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Tue, 9 Sep 2025 14:23:54 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (40.107.244.71)
- by edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Tue, 9 Sep 2025 14:23:54 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=po4cH8nWDIcI7hiVxqizB+5jxCWP8svJoMAFQ6U5Jdk6K/fbZuKA40A1+o1768xWvhKduZtxh2cVabtF4EmidmbR4yLiBw+vTWJb87TSlIH8aMx+NLSZ6V6zDb07UGs1GJCi6vPzIDL5Pq33iibMzTPhqr3L0SEIIBxqvfBLMLpFOh3DwlhF/5xKLwX7rKb9xT4ldC3wDcxSPRUVyaKd0eNSfJVL2AWZ2InVMSZ5+4VZSVkWckP+NlDIWWvcpMCNUTVfNvZdJXEl67skeZR/41UgPpxfoteM4stc4YMqLpmlIrePlUygByYjNld8qtXzXhgFXx7R53JpulEX+xbvmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4Ty+OoIhkM3zLHbPRibrlIEDuZhdsR1gVy6agrga7zU=;
- b=QyJNuZdHXdW/h1Wm+Fao9QCCpGf84MqrhTSLTN51Pb6be8X6TGMGCSt4Z/5S739FEHN3QPcoiCb9pfnOSEB/bNGtpON2yIRAosz0cU+6A54aSmo5uhgmUjwlkfdGVdmbNVp6oRVLVw8C1y6YwWqmO/WBVd2IoUZGWzvErhNMq3YwUApzDTFmHwOsqbGW+p7H2bDAPg7yXKwceV+zeIDza3rn4K6OxyFSTB7Nx6OVPkqHuSi5KPAZ8Q4gsCYaW4ILLXpviw01SCNN/mCDBQ9BHR2RQZ8tV5ODOzuTEZSJgd33HZWWRmn6N4oJOSWjy918DLKyLH65ShQqg/FVi3pyJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.33; Tue, 9 Sep
- 2025 21:23:52 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%4]) with mapi id 15.20.9094.021; Tue, 9 Sep 2025
- 21:23:52 +0000
-Message-ID: <40461810-95e8-4efa-bff4-540ef01051f4@intel.com>
-Date: Tue, 9 Sep 2025 14:23:50 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 07/31] x86,fs/resctrl: Refactor domain_remove_cpu_mon()
- ready for new domain types
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
- Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
-	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
-	<babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, Dave Martin
-	<Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>
-CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20250829193346.31565-1-tony.luck@intel.com>
- <20250829193346.31565-8-tony.luck@intel.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <20250829193346.31565-8-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0253.namprd03.prod.outlook.com
- (2603:10b6:303:b4::18) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqsN63Wa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A931C4CEF4;
+	Tue,  9 Sep 2025 21:24:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757453099;
+	bh=nVeL025PyzaygZ/cm/L6ZCfVuIYMF82QcpuSOzrDeu8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=UqsN63WaTM+aTS+Yx59jQKkT9DfkWSDLlFnKzOdF0a6rerY9/rR4H9Dq09yoJ3/5E
+	 ++J7/l+I9GWmeGwQY2npxnshPw1UTBik5RopJig+eqyZOoilmXaZq7cTk3tk7j8eqi
+	 cdM5SwYBMr1261Uj7Lns0ud3tPzQM2PWIZx7BPNGzsW/A0+PgruczCuzPlg/zO1C58
+	 74LGM5IFcgGVL0iE/Qg6dqCRD5V6QE6Pb/W1iWDCTTVBSU/g2seMCyItfa8JoRWzyT
+	 iv8y70Ih9tOSLD7xvpMEuVMLbQ11ltVoAAjbFPXGbNVhqgEQN3biBQ4UQ3Q7wNYRQc
+	 5vtphmwHHt0TQ==
+Date: Tue, 9 Sep 2025 16:24:57 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, linux-pci@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Donald Dutile <ddutile@redhat.com>, galshalom@nvidia.com,
+	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
+	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
+	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+Subject: Re: [PATCH v3 06/11] iommu: Compute iommu_groups properly for PCIe
+ MFDs
+Message-ID: <20250909212457.GA1508122@bhelgaas>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|IA3PR11MB9136:EE_
-X-MS-Office365-Filtering-Correlation-Id: de8de257-b4e1-48f5-c98c-08ddefe72c96
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZDFPTDMrQkF3Vm02bnQySVE1c2F3OS9CNGE4WDlJRE4xbzBvaVZTOUx4V0JZ?=
- =?utf-8?B?ZzVXVXpudTVtQXkyR3BWNjJsM0JtWVlPSkkwTm5ySmRYclpzYkEzMEliS1lE?=
- =?utf-8?B?dDdsN0xtek15d1p2TDN2OWpIRDNkaFFoclc4TUJnSXpLaHFkU29oK094RGg5?=
- =?utf-8?B?RkpmZTh6K2dEY0J1ejRmMHp0U2xKb0F4MnphMXdkMXVnUXVzcnpGb3k0OFZO?=
- =?utf-8?B?YW5oV09vc1hrc01FTnVldmsza2cxTXdSQ1dCSXdWaCtiWldoZ0Z3TTBLeG56?=
- =?utf-8?B?V00vRjFBSmx1Vkx2dEVrTkRESk5qMU9vbnJpMkJYaHlYNEpMVUhoSVY1amF5?=
- =?utf-8?B?Vm9vQ1JpUnNYbk52THNyS1BJOU9MKzhHcldZODdqVXB1V29hQnJVbjJKZ3Rj?=
- =?utf-8?B?YXM2KzlMZ0diSGRtZ0lQZ3k2KytxaDRPL1BWcWtNNHNGa0IzTW5Mdk5jYllD?=
- =?utf-8?B?djBlR3BKclFUYmEyNSsrUVVWMDRuUktQQjZ0UDY3OXl1M2xMR2U3ak1BMVF0?=
- =?utf-8?B?a0xpZTdDMEZWNmY4ZjZ1SmNwVHRxTElpUW1Dd0IwamNHa2pVSUVweG5rcW9t?=
- =?utf-8?B?R3R5a3BGS1JTRXZ4RkhkYjU1NlJodFRWSE1JYTJGT0YxWjhHd1RxWE9nZ3Rz?=
- =?utf-8?B?UzR1Y0NVSk9SMEU5Zm43c2ZEQk1oVjJRZUJmLzRiN2pIMXBHU09acVJZY3VD?=
- =?utf-8?B?SVlwSXY1djhxYmRVZCtCZG04N0VpV0lFaGNKZFF6eHRwbCs1bXVNaGxaMXE3?=
- =?utf-8?B?N24yQjJqZ05mRElUTWg0MEMyYytkbzQxazNqUFRvN3ZrcDF3MlFsdUVOalla?=
- =?utf-8?B?T1lzdTFjUTlST29LRFFsNy9YTTBrd2JCZ0lxZGFYL1NFOHZKU05FYmFHUjFG?=
- =?utf-8?B?QmlCemVFcHlqU25UQ2xQV1NlbWhjTnVMamp5R095Q3F3WEQxWFAyZHhWeDls?=
- =?utf-8?B?a09lLzgwNkF2eUE4V2U3bWp6aTVoUkEvblNMdTkvU3AyVWRKSEVLL0tTVElt?=
- =?utf-8?B?Y0JPTWpzL085OEd6dEhJVzhSOVNNNHNKVytxN2N3R3VBYmJsRmMzTVVranVW?=
- =?utf-8?B?MkxieFRna2VFVlZGRlNVTURTZmkzaHlnOXlLLzZJM3JnNXJrU2Y1a09rK3Qr?=
- =?utf-8?B?eTJXVTFFT1lRWmJhb2NvT3JiWDFmM1ZZamUwQjFYdEh2aU84T1QxR2N3eThn?=
- =?utf-8?B?cktOamJ6UE9SRHN3a0tRQWE1OC9nd0laZ3N1Tm5TdWN4WEFRUXRMRUVzaURS?=
- =?utf-8?B?ZVdGYy9HVWRrU2txenAyL0lLODRDMlZmQ0JDN1hzQXlUWjcyNGlNZUdPWVh1?=
- =?utf-8?B?d0RScjFVbjlZdS9IeEtWcWFWT1k0VFR1MkhaSnlCd2R2NXh0L2JUajJZK0w5?=
- =?utf-8?B?VGJPSC80TEQ1aVdKVWk3L2JKekI4Tk1Jby9yVzZwNktibXdFU0p4OVNhQkdM?=
- =?utf-8?B?VVpDREFTQnVzSjU0aVBiU2h3bEFOdHRZZTIva05UZFV1bEVVMFovQTNYV1lE?=
- =?utf-8?B?aS83eGdORFdURDRRbTJkcFJFN0lYeUQvYmx1RjFIWjFWUVNJYXc5TGFkQ3B5?=
- =?utf-8?B?dm5tTi9Ob2NKTEIvd1R2ekN0Njd5eDJqcTFxaEJPRFByNjlvOU9UejlkM1c4?=
- =?utf-8?B?S2JjN2ZvSURneHBUc1VwWldYMmN1cWhlME95U2dRZWdDeThBbEpzRE9SdFQx?=
- =?utf-8?B?Sm1yT0NNWUlyaWU5MVVTNk9WclZmVmhnbkxYTDRwVzJ6b2tyWERHOGxPTE9U?=
- =?utf-8?B?eEV6bkQzZ1E1RS90Q1A2QnNGRmVsa05Ib3NQKzdMUEwvdUo1UVFXNHhmZDV4?=
- =?utf-8?B?ZDkwN1VySER6MXJYT3A1NElaZ2hBVmtTS1FjRjNPVW5ETmVncHovTHpjVUR6?=
- =?utf-8?B?NXc1UjdGQTVsaDEvbGV3T3ZrOWpJeEh0N0NQMTVtUDBTSnBWRGlZd0QrM3Ns?=
- =?utf-8?Q?WdXbQsqIi6U=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WUtDcEFsT2hIenhsOVUweElVWEJxS0ozRUM4dlNtME5NYVBlNWFPRzgyOVJs?=
- =?utf-8?B?RTVkQURDY0VSR1RFT1hzSTB5b1JNakJ2ZUFtdldqakFidjRGSmZ0alZRVVpj?=
- =?utf-8?B?TWdGcHZLZ0ZFSFB0djRaSFNzS3lvZHpKSHUyMTM4bGRtYnIza2lDMG5SMkp2?=
- =?utf-8?B?RVRkR1htSHEvRHV0bEV3QVlRMlpkb2d6ZGpML3Rmdlp5UUFGaldhVERRQzJz?=
- =?utf-8?B?TVdza2Z5STVCLzlTaWI1eUl1U1VVdkxjeXVvNWZOaXZxemJUV3hlZDFBSnFV?=
- =?utf-8?B?dER6UVdaWEJ5cmJQaGp5SDM2cEt4NndObExiY00wbnZGR1BGUkh5UHhZcXNN?=
- =?utf-8?B?TUZ5OGxodGZsM09kQXlhUG5hWVhFdjg5VURHYlIwbGRKbzJkanh0QXh0YmVE?=
- =?utf-8?B?MUUwMWhObW0vVVhtWmlSWEVNRnEwRjc5Nmw3UU5pSFpPa244eXVOWXBKV1R2?=
- =?utf-8?B?RUxWR3BCa09hY09RTFVPWmJDSmVQRHp4N0hTekNEZkpwaHk1YkVrMnJGVkVL?=
- =?utf-8?B?Q2d3UXIveGhNUzVQNDM2YjZ4aFlHTDRHT2E5K3ZWREY3QlVmUXg4eFQ4NVQx?=
- =?utf-8?B?K2pSdzlVYUUyaHZsdlBNalhtN2E1VmpwVUwvaEt1NzBjZTlhUkF1cHB6MVRn?=
- =?utf-8?B?ZkVVajV2Z0NUSUk2YjRvTGtOekhUeEptMWpRc2xBNG5SQWxJMDY5U2xVclRF?=
- =?utf-8?B?ckNPbldnNDlNdVU2TmFiTjQ0bTNtTnVUR2pnVk05b0VERlRvNkVBU0t1blpN?=
- =?utf-8?B?SHMySWVQZzBsNWRvcnd6L0NWSEw2UGVvMU85VWF1QXkwaWRqMGw0Q1g5TGZI?=
- =?utf-8?B?eklzY0VtVDZVenhMOVJrYy82OE8vSlFubzN3bmFhRGZKVTF3cHNsMXVGWWxG?=
- =?utf-8?B?MkhnZENKMC9ZL09aNUp6Wit1S1dGL2JsWXNyeFB0YkhKQUw5WUF0aUd4Rlhv?=
- =?utf-8?B?cmp2aTFJUGZLc2l1OCtrWGpJZ1U2TldXTWFBMGFIT1FOdGlMSmd2TlA1L05p?=
- =?utf-8?B?VExOMjZER05GOTFMSlNlR2toak9YTEdFZkJiMDdWSzJQVkxiaHA2YnJsc2tv?=
- =?utf-8?B?TGcyMG5vekliWkJESlpDenVDU1o3KzdSRjJaRnlDVW1JRDJLS05aQjAzZXFr?=
- =?utf-8?B?OHkyME1IY1Yvc2E0dTJPaFpIZWhMN1FSY1BzV0JnbW82bjc5d2h2blloSmVF?=
- =?utf-8?B?S0hEQyt2OTVuUzV1NkEwejFnTllKbTZtN3lZZEZTUGxWc3Q5NGpYeWwzOG1Y?=
- =?utf-8?B?eVJDVXlkRFFyTStyRjdYZ1BCZkNUTHZKdjUxVlFxWlR6MU9WeXFwWmlWb1da?=
- =?utf-8?B?WjBiNitOMGxnc08xVmJZNzFuWGJaSmNnV1BaUGFzeG9sSWtMWFNCOVlHNjlZ?=
- =?utf-8?B?YnlqdnVETjV1ODIrbjhBR0hLY0hEcWFPVWJzV29rMXpwQ056Y0hwdFE0SEhS?=
- =?utf-8?B?cXF4ZmpxZmJRQm1KNHExVlY2Y1J2ejdkdHEwdWJuSWwraGVFN3prQTR4UmZq?=
- =?utf-8?B?R0JvNDZIWnVmYmJiY2lNc2tkeEFXS1hKRUlUa0toYlQ3SFRUWFQvQ2p2YXpP?=
- =?utf-8?B?eUpJVDBYaVdEK243eHVXTmtKODl4RHRjVTJKcTlrZmVlN01jYkRtR293YTU0?=
- =?utf-8?B?YzByckx5cmY5TkMxUENWUWJlQzU5di9DSGRCV0hkdng2cGNlVTJXT0hiVlZz?=
- =?utf-8?B?VUdCZStnSUk4dTA3dkZHY09lVjBzUUpXdjVNT0VIVFhtV3JWa0o1OG9LMzJ5?=
- =?utf-8?B?U1l5RWZ1a20xWWpCc25mMHE0K2V1YzlOQTVDcklPTTNKUEgwbVZzRlJCN3BC?=
- =?utf-8?B?VW0wSnlXMmg5Sy8xb0l1Z0N3ckV0bW4vZEZ0WFJaMW10dUR3UkJsdG0vSThZ?=
- =?utf-8?B?ZU9mWVNMNFEyNi9Va3gxb3dZbGlHc3dKbHBUOVV2NFhBYzNDeGRPdExrblIr?=
- =?utf-8?B?SVBaajlNZzBiWGtnSCszYTZwQysyZFhJUlk4R0hhYVFWcDA5b0JpN3hEN3NF?=
- =?utf-8?B?MEEvLy9YWWUyTGhTUHAyT1orb2hLR2JNR0JEelp3TURvakhhRGJTYkw3VkRh?=
- =?utf-8?B?SUU2VDlaY0d6ZS9EYzRhd0REcVNzNTFIMWlIYVdYalN2ODhoRy9GRUlVMVpO?=
- =?utf-8?B?cUVZTnl2Nkd3TVBmRHpUVFpNQWlCL0dSZ0EycVgxeXpSQ2Y1RlF0c0ZWZUJ2?=
- =?utf-8?B?VFE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: de8de257-b4e1-48f5-c98c-08ddefe72c96
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2025 21:23:52.2962
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kUXuL5WgC4MHInrJL4CKYZ1MMLYH8EkVk158gU3vIjBLPvBPIZbYOhswC3/xp3AkeZvO9CWFS1fmyGtGE9xlmdITkZvfvZ+0JLsrdHOpXNE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR11MB9136
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
 
-Hi Tony,
-
-On 8/29/25 12:33 PM, Tony Luck wrote:
-> All monitoring events are associated with the L3 resource.
+On Fri, Sep 05, 2025 at 03:06:21PM -0300, Jason Gunthorpe wrote:
+> Like with switches the current MFD algorithm does not consider asymmetric
+> ACS within a MFD. If any MFD function has ACS that permits P2P the spec
+> says it can reach through the MFD internal loopback any other function in
+> the device.
 > 
-> The RDT_RESOURCE_L3 resource carries a lot of state in the domain
-> structures which needs to be dealt with when a domain is taken offline
-> by removing the last CPU in the domain.
+> For discussion let's consider a simple MFD topology like the below:
 > 
-> New telemetry events will be associated with a new package scoped
-> resource with new domain structures.
+>                       -- MFD 00:1f.0 ACS != REQ_ACS_FLAGS
+>       Root 00:00.00 --|- MFD 00:1f.2 ACS != REQ_ACS_FLAGS
+>                       |- MFD 00:1f.6 ACS = REQ_ACS_FLAGS
+
+REQ_ACS_FLAGS was renamed in an earlier patch.
+
+I don't quite understand the "Root 00:00.00" notation.  I guess it
+must refer to the root bus 00?  It looks sort of like a bridge, and
+the ".00" makes it look sort of like a bus/device/function address,
+but I don't think it is.
+
+> This asymmetric ACS could be created using the config_acs kernel command
+> line parameter, from quirks, or from a poorly thought out device that has
+> ACS flags only on some functions.
 > 
-> Refactor domain_remove_cpu_mon() so all the L3 processing is separate
-> from general actions of clearing the CPU bit in the mask and removing
-> sub-directories from the mon_data directory.
+> Since ACS is an egress property the asymmetric flags allow for 00:1f.0 to
+> do memory acesses into 00:1f.6's BARs, but 00:1f.6 cannot reach any other
+> function. Thus we expect an iommu_group to contain all three
+> devices. Instead the current algorithm gives a group of [1f.0, 1f.2] and a
+> single device group of 1f.6.
 > 
-> resctrl_offline_mon_domain() continues to remove domain specific
-> directories and files from the "mon_data" directories, but skips the
-> L3 resource specific cleanup when called for other resource types.
+> The current algorithm sees the good ACS flags on 00:1f.6 and does not
+> consider ACS on any other MFD functions.
+> 
+> For path properties the ACS flags say that 00:1f.6 is safe to use with
+> PASID and supports SVA as it will not have any portions of its address
+> space routed away from the IOMMU, this part of the ACS system is working
+> correctly.
+> 
+> Further, if one of the MFD functions is a bridge, eg like 1f.2:
+> 
+>                       -- MFD 00:1f.0
+>       Root 00:00.00 --|- MFD 00:1f.2 Root Port --- 01:01.0
+>                       |- MFD 00:1f.6
 
-This part does not seem to be related to this change since up to here
-this is all about refactoring L3 support while the final part starts to
-add support for a new resource under the guise of "L3 refactoring".
+Same question.
 
-The resctrl_offline_mon_domain() change looks more appropriate for
-patch #9 "x86,fs/resctrl: Use struct rdt_domain_hdr instead of struct
-rdt_mon_domain" where the change makes clear to which code only a
-RDT_RESOURCE_L3 domain can belong and matches the change to
-resctrl_online_mon_domain() in same patch. This is not ideal though
-since even in patch #9 this seems to be PERF_PKG enabling code (in both
-resctrl_online_mon_domain() and resctrl_offline_mon_domain()) added
-under another guise of refactoring.
+> Then the correct grouping will include 01:01.0, 00:1f.0/2/6 together in a
+> group if there is any internal loopback within the MFD 00:1f. The current
+> algorithm does not understand this and gives 01:01.0 it's own group even
+> if it thinks there is an internal loopback in the MFD.
 
-I think it could also be argued that the related changes (code flow changes to
-support only files for PERF_PKG) to resctrl_online_mon_domain()
-and resctrl_offline_mon_domain() belongs in patch 22 since only then is
-support for PERF_PKG added and indeed is when it is explicit that
-"Support the PERF_PKG resource in the CPU online/offline handlers."
+s/it's/its/
 
-Doing so will keep refactoring as-is ... it is just refactoring existing flow,
-and then code flow changes come later when actual enabling is done.
+> Unfortunately this detail makes it hard to fix. Currently the code assumes
+> that any MFD without an ACS cap has an internal loopback which will cause
+> a large number of modern real systems to group in a pessimistic way.
+> 
+> However, the PCI spec does not really support this:
+> 
+>    PCI Section 6.12.1.2 ACS Functions in SR-IOV, SIOV, and Multi-Function
+>    Devices
+> 
+>     ACS P2P Request Redirect: must be implemented by Functions that
+>     support peer-to-peer traffic with other Functions.
 
-Reinette
+I would include the PCIe r7.0 spec revision, even though the PCI SIG
+seems to try to preserve section numbers across revisions.
 
+It seems pretty clear that Multi-Function Devices that have an ACS
+Capability and support peer-to-peer traffic with other Functions are
+required to implement ACS P2P Request Redirect.
+
+> Meaning from a spec perspective the absence of ACS indicates the absence
+> of internal loopback. Granted I think we are aware of older real devices
+> that ignore this, but it seems to be the only way forward.
+
+It's not as clear to me that Multi-Function Devices that support
+peer-to-peer traffic are required to have an ACS Capability at all.
+
+Alex might remember more, but I kind of suspect the current system of
+quirks is there because of devices that do internal loopback but have
+no ACS Capability.
+
+> So, rely on 6.12.1.2 and assume functions without ACS do not have internal
+> loopback. This resolves the common issue with modern systems and MFD root
+> ports, but it makes the ACS quirks system less used. Instead we'd want
+> quirks that say self-loopback is actually present, not like today's quirks
+> that say it is absent. This is surely negative for older hardware, but
+> positive for new HW that complies with the spec.
+> 
+> Use pci_reachable_set() in pci_device_group() to make the resulting
+> algorithm faster and easier to understand.
+> 
+> Add pci_mfds_are_same_group() which specifically looks pair-wise at all
+> functions in the MFDs. Any function with ACS capabilities and non-isolated
+> aCS flags will become reachable to all other functions.
+
+s/aCS/ACS/
+
+> pci_reachable_set() does the calculations for figuring out the set of
+> devices under the pci_bus_sem, which is better than repeatedly searching
+> across all PCI devices.
+> 
+> Once the set of devices is determined and the set has more than one device
+> use pci_get_slot() to search for any existing groups in the reachable set.
+> 
+> Fixes: 104a1c13ac66 ("iommu/core: Create central IOMMU group lookup/creation interface")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/iommu.c | 189 +++++++++++++++++++-----------------------
+>  1 file changed, 87 insertions(+), 102 deletions(-)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 543d6347c0e5e3..fc3c71b243a850 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -1413,85 +1413,6 @@ int iommu_group_id(struct iommu_group *group)
+>  }
+>  EXPORT_SYMBOL_GPL(iommu_group_id);
+>  
+> -static struct iommu_group *get_pci_alias_group(struct pci_dev *pdev,
+> -					       unsigned long *devfns);
+> -
+> -/*
+> - * For multifunction devices which are not isolated from each other, find
+> - * all the other non-isolated functions and look for existing groups.  For
+> - * each function, we also need to look for aliases to or from other devices
+> - * that may already have a group.
+> - */
+> -static struct iommu_group *get_pci_function_alias_group(struct pci_dev *pdev,
+> -							unsigned long *devfns)
+> -{
+> -	struct pci_dev *tmp = NULL;
+> -	struct iommu_group *group;
+> -
+> -	if (!pdev->multifunction || pci_acs_enabled(pdev, PCI_ACS_ISOLATED))
+> -		return NULL;
+> -
+> -	for_each_pci_dev(tmp) {
+> -		if (tmp == pdev || tmp->bus != pdev->bus ||
+> -		    PCI_SLOT(tmp->devfn) != PCI_SLOT(pdev->devfn) ||
+> -		    pci_acs_enabled(tmp, PCI_ACS_ISOLATED))
+> -			continue;
+> -
+> -		group = get_pci_alias_group(tmp, devfns);
+> -		if (group) {
+> -			pci_dev_put(tmp);
+> -			return group;
+> -		}
+> -	}
+> -
+> -	return NULL;
+> -}
+> -
+> -/*
+> - * Look for aliases to or from the given device for existing groups. DMA
+> - * aliases are only supported on the same bus, therefore the search
+> - * space is quite small (especially since we're really only looking at pcie
+> - * device, and therefore only expect multiple slots on the root complex or
+> - * downstream switch ports).  It's conceivable though that a pair of
+> - * multifunction devices could have aliases between them that would cause a
+> - * loop.  To prevent this, we use a bitmap to track where we've been.
+> - */
+> -static struct iommu_group *get_pci_alias_group(struct pci_dev *pdev,
+> -					       unsigned long *devfns)
+> -{
+> -	struct pci_dev *tmp = NULL;
+> -	struct iommu_group *group;
+> -
+> -	if (test_and_set_bit(pdev->devfn & 0xff, devfns))
+> -		return NULL;
+> -
+> -	group = iommu_group_get(&pdev->dev);
+> -	if (group)
+> -		return group;
+> -
+> -	for_each_pci_dev(tmp) {
+> -		if (tmp == pdev || tmp->bus != pdev->bus)
+> -			continue;
+> -
+> -		/* We alias them or they alias us */
+> -		if (pci_devs_are_dma_aliases(pdev, tmp)) {
+> -			group = get_pci_alias_group(tmp, devfns);
+> -			if (group) {
+> -				pci_dev_put(tmp);
+> -				return group;
+> -			}
+> -
+> -			group = get_pci_function_alias_group(tmp, devfns);
+> -			if (group) {
+> -				pci_dev_put(tmp);
+> -				return group;
+> -			}
+> -		}
+> -	}
+> -
+> -	return NULL;
+> -}
+> -
+>  /*
+>   * Generic device_group call-back function. It just allocates one
+>   * iommu-group per device.
+> @@ -1534,44 +1455,108 @@ static struct iommu_group *pci_group_alloc_non_isolated(void)
+>  	return group;
+>  }
+>  
+> +/*
+> + * All functions in the MFD need to be isolated from each other and get their
+> + * own groups, otherwise the whole MFD will share a group.
+> + */
+> +static bool pci_mfds_are_same_group(struct pci_dev *deva, struct pci_dev *devb)
+> +{
+> +	/*
+> +	 * SRIOV VFs will use the group of the PF if it has
+> +	 * BUS_DATA_PCI_NON_ISOLATED. We don't support VFs that also have ACS
+> +	 * that are set to non-isolating.
+
+"SR-IOV" is more typical in drivers/pci/.
+
+> +	 */
+> +	if (deva->is_virtfn || devb->is_virtfn)
+> +		return false;
+> +
+> +	/* Are deva/devb functions in the same MFD? */
+> +	if (PCI_SLOT(deva->devfn) != PCI_SLOT(devb->devfn))
+> +		return false;
+> +	/* Don't understand what is happening, be conservative */
+> +	if (deva->multifunction != devb->multifunction)
+> +		return true;
+> +	if (!deva->multifunction)
+> +		return false;
+> +
+> +	/*
+> +	 * PCI Section 6.12.1.2 ACS Functions in SR-IOV, SIOV, and
+
+PCIe r7.0, sec 6.12.1.2
+
+> +	 * Multi-Function Devices
+> +	 *   ...
+> +	 *   ACS P2P Request Redirect: must be implemented by Functions that
+> +	 *   support peer-to-peer traffic with other Functions.
+> +	 *
+> +	 * Therefore assume if a MFD has no ACS capability then it does not
+> +	 * support a loopback. This is the reverse of what Linux <= v6.16
+> +	 * assumed - that any MFD was capable of P2P and used quirks identify
+> +	 * devices that complied with the above.
+> +	 */
+> +	if (deva->acs_cap && !pci_acs_enabled(deva, PCI_ACS_ISOLATED))
+> +		return true;
+> +	if (devb->acs_cap && !pci_acs_enabled(devb, PCI_ACS_ISOLATED))
+> +		return true;
+> +	return false;
+> +}
+> +
+> +static bool pci_devs_are_same_group(struct pci_dev *deva, struct pci_dev *devb)
+> +{
+> +	/*
+> +	 * This is allowed to return cycles: a,b -> b,c -> c,a can be aliases.
+> +	 */
+> +	if (pci_devs_are_dma_aliases(deva, devb))
+> +		return true;
+> +
+> +	return pci_mfds_are_same_group(deva, devb);
+> +}
+> +
+>  /*
+>   * Return a group if the function has isolation restrictions related to
+>   * aliases or MFD ACS.
+>   */
+>  static struct iommu_group *pci_get_function_group(struct pci_dev *pdev)
+>  {
+> -	struct iommu_group *group;
+> -	DECLARE_BITMAP(devfns, 256) = {};
+> +	struct pci_reachable_set devfns;
+> +	const unsigned int NR_DEVFNS = sizeof(devfns.devfns) * BITS_PER_BYTE;
+> +	unsigned int devfn;
+>  
+>  	/*
+> -	 * Look for existing groups on device aliases.  If we alias another
+> -	 * device or another device aliases us, use the same group.
+> +	 * Look for existing groups on device aliases and multi-function ACS. If
+> +	 * we alias another device or another device aliases us, use the same
+> +	 * group.
+> +	 *
+> +	 * pci_reachable_set() should return the same bitmap if called for any
+> +	 * device in the set and we want all devices in the set to have the same
+> +	 * group.
+>  	 */
+> -	group = get_pci_alias_group(pdev, devfns);
+> -	if (group)
+> -		return group;
+> +	pci_reachable_set(pdev, &devfns, pci_devs_are_same_group);
+> +	/* start is known to have iommu_group_get() == NULL */
+> +	__clear_bit(pdev->devfn, devfns.devfns);
+>  
+>  	/*
+> -	 * Look for existing groups on non-isolated functions on the same
+> -	 * slot and aliases of those funcions, if any.  No need to clear
+> -	 * the search bitmap, the tested devfns are still valid.
+> -	 */
+> -	group = get_pci_function_alias_group(pdev, devfns);
+> -	if (group)
+> -		return group;
+> -
+> -	/*
+> -	 * When MFD's are included in the set due to ACS we assume that if ACS
+> -	 * permits an internal loopback between functions it also permits the
+> -	 * loopback to go downstream if a function is a bridge.
+> +	 * When MFD functions are included in the set due to ACS we assume that
+> +	 * if ACS permits an internal loopback between functions it also permits
+> +	 * the loopback to go downstream if any function is a bridge.
+>  	 *
+>  	 * It is less clear what aliases mean when applied to a bridge. For now
+>  	 * be conservative and also propagate the group downstream.
+>  	 */
+> -	__clear_bit(pdev->devfn & 0xFF, devfns);
+> -	if (!bitmap_empty(devfns, sizeof(devfns) * BITS_PER_BYTE))
+> -		return pci_group_alloc_non_isolated();
+> -	return NULL;
+> +	if (bitmap_empty(devfns.devfns, NR_DEVFNS))
+> +		return NULL;
+> +
+> +	for_each_set_bit(devfn, devfns.devfns, NR_DEVFNS) {
+> +		struct iommu_group *group;
+> +		struct pci_dev *pdev_slot;
+> +
+> +		pdev_slot = pci_get_slot(pdev->bus, devfn);
+> +		group = iommu_group_get(&pdev_slot->dev);
+> +		pci_dev_put(pdev_slot);
+> +		if (group) {
+> +			if (WARN_ON(!(group->bus_data &
+> +				      BUS_DATA_PCI_NON_ISOLATED)))
+> +				group->bus_data |= BUS_DATA_PCI_NON_ISOLATED;
+> +			return group;
+> +		}
+> +	}
+> +	return pci_group_alloc_non_isolated();
+>  }
+>  
+>  /* Return a group if the upstream hierarchy has isolation restrictions. */
+> -- 
+> 2.43.0
+> 
