@@ -1,130 +1,108 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040D5264608
-	for <patches@lists.linux.dev>; Tue,  9 Sep 2025 04:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC6F45945
+	for <patches@lists.linux.dev>; Tue,  9 Sep 2025 04:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757391426; cv=none; b=vC/PpCkFdfy3r1M3vj0NFS+v0oo8iGG0pLwWHeKmpUU8rlwDd2q3CdqCztwWqymF9GFpaVo5hrfVgBN5e117kZqa1i4fLQoNPkGARTIlWMPikI6mM0P9RfCxRMVFEmgw9mEm7qxemaGtycMorS93y3bOvqYGPAr5YwF8S3LRMOk=
+	t=1757393880; cv=none; b=TF6GEwT3IaMzUvQMeBeZlSq/HLVYwoYCwi0ItM5DIa6NQhTNdyoMUt3TdIjtDvSkeZggNLMyyPt3m6Z2lDOM+70KOaCr0GQqWt489doTGM67AVz3QOsySP/txHV8I980EJMtxYWuhT7cOqCMJrbcuIfeAPkb5gvkgNF38pG1PRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757391426; c=relaxed/simple;
-	bh=Vrtl+xs7K4zXcPnLFH1TuZOu/V+27YNQSOap/9QG3ug=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R3fi6dAGn07AHvF028WO8IOx5zXPlhvvlKUc3sJEV1aeQ2fXHB5B0HAlPoqMDfq9xekyuk7UhewIWDp456keZbJ9JreNaTM0nU8VsdipU4wAIIJe//dTsHgdjA+1BkhwRuwSjLZ8cteNenwwrslw1LHRE0ev/n+2HK7v+sq8ZzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gazw1fRq; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1757393880; c=relaxed/simple;
+	bh=Tb/9I9r3+HRBGBPJda2/t0vKpz6/1fF1C/OCaKN9U4g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RP11KVaXDb6glsXLVLzDa/WI95EBBYasK6fbeW0CeDi/j/4HbaTPBbZMTE1J69fl4mN8oqITtzeTPQxUePKt3Iq+pL1VPAUbObqR7Va6hAcgehlaOaRm4WCI2nfO8b5+KxmFEBC4oZjnFPUToy3C++muNjW2QVDVyWq/smqAAXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXaEPJdA; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gazw1fRq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757391424;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PXc4wYDZmZ/L8uZekYzqBJVvEmMbocn1KotryOo59zE=;
-	b=gazw1fRq3FlUpr9AAM3srtv70EnitSiZV8xi/tSoQH23d/eFrUHSaO3Fbbk8HdeB763MKJ
-	aVXVF9u9e5+XNwWIu7n1FiE5wmL5kOFLLQKqAvhTnBrKp3HOOKkGC9DeaW5RTIf+blb9Xn
-	+ajVRMs4H6imOqNeQvjWmRI110LiOmA=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-KLFwevOqNEebja-WJblXAw-1; Tue, 09 Sep 2025 00:17:02 -0400
-X-MC-Unique: KLFwevOqNEebja-WJblXAw-1
-X-Mimecast-MFC-AGG-ID: KLFwevOqNEebja-WJblXAw_1757391422
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b6019b13b2so105378261cf.3
-        for <patches@lists.linux.dev>; Mon, 08 Sep 2025 21:17:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXaEPJdA"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-567fb8be044so341882e87.0
+        for <patches@lists.linux.dev>; Mon, 08 Sep 2025 21:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757393876; x=1757998676; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l25NFxExAUe1eqmMOMVfFw3dzd2Dt4hw0Sr3RoaXfRE=;
+        b=QXaEPJdA4dYO8c5n3VO6627KJlc5kfoG3l13MbKpgzyEnLegSofCzJUFBOGLC45ONE
+         8i1VH2zDxZqnvCisymYzsgUiP0u1UujBTLusVxac9G56gGEzYfevkvsYhWGd8ivLRsHK
+         9P2xLYMbpAVFIeYbIQCLwR6nBgxJQPw4aNInJqtPr2sx/IaeCwBtoHhkWqKGkI2K5YwC
+         7+M5PHUnVFosNO6Yrm53aQPkYi4MBMZ6QDnAJ0yFCqYqQTYaMbHzbIMJEPJKwR1hskmV
+         hrjk0ikIqqZ3j/8GFrPjLp4LUyrWNQFjLBoTFLk7kkipK+kQVvSF/d6wox3/hgWRC8aB
+         loDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757391422; x=1757996222;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PXc4wYDZmZ/L8uZekYzqBJVvEmMbocn1KotryOo59zE=;
-        b=SJ96no0BC7K20jLxFJwjfsXWV5IxkBvVZ0fL+qAIkVMQcGLM1kbU1HsRY9HtTJkyDz
-         76Xn422/1LtI15qSjvb3CrOS3bhSIDIF/elnOx4cTNKuW+oSMygwr8j4TDVPscs31Hej
-         OcwbD7ECtpxzkDYYJIjx8eVfhlfyzsCS387OWGW6hhqwDUp/TjMNCOdYXMemZXZVVSxO
-         21Ojx6d+8d1I/ebnJJq+XWit/yImlfmZqtM0XNAMrYJ3ixnVJdnWLSE52KbJ+D7Q41kJ
-         VtlruLMdlrLq5EnR8urhYOYwGDH8zF6cp+S0hgUh01Qm+eAOUfTzOLcEZd1DSkOe8msK
-         WrXg==
-X-Forwarded-Encrypted: i=1; AJvYcCV3BpYoUAn6znvshEkry3Cxu8QufDRCRJV6GzVEX+8z6almJSDuPsLJfuf6/zb7iDhlgy2ygPIj@lists.linux.dev
-X-Gm-Message-State: AOJu0YxbOaHeLeMS3a9iTXHkjg+v4Bmbvr8m6imto/6VQ7zhZDrmfI4p
-	tteGHmifLqZKdrKcxC3ZGN9tpcxKlZHOGjL0w0MRQfkytnka9N4a9jxrVCzDgvT+W0y3BJdOvf2
-	S5LlGawRqSe1u7EYAXTG1srppt3AORNXj30tq8MPdJXXYHTjIqspLiXVm5ZE=
-X-Gm-Gg: ASbGnctPnBJp/ZDUJFsEBjdAO1igoIpW0avjoZuVk53ncT97xBTQlpl8IiG9KCb3ZeO
-	7b5Xw0EVQcj9wvIKx+xOO0SoTQP2v6/SbspLoMobFFgV86H2Zl0sINdeW/XEmmgNhheVR24bhs9
-	ktz9HGRpqoeh0mgE18NDReIK8oagXAx8s9H/fT3gEvUI4gpaADIdukNnKpd96gLMs7UlymQDpxT
-	OQw/YA5HUPc1s3sQt82tP4L5Qaof/kB7npHYCTwe3QOeFLpNqYzTbsB0kivJVo1h5o/5qPfEfyp
-	fHf8QQGwNMKRtjK1q5VyV0M7zyxJbAv/mdvTODiU
-X-Received: by 2002:ac8:7f56:0:b0:4b2:fcf4:44c9 with SMTP id d75a77b69052e-4b5f846701amr118252561cf.60.1757391422234;
-        Mon, 08 Sep 2025 21:17:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHlZTe8MK04WhNv9/TediecLNUlQjS4uZJ6D+gPH8b1KU0M6GQFQ+qYugLVX8lKpMw4F3h/7g==
-X-Received: by 2002:ac8:7f56:0:b0:4b2:fcf4:44c9 with SMTP id d75a77b69052e-4b5f846701amr118252291cf.60.1757391421878;
-        Mon, 08 Sep 2025 21:17:01 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-728a860bdebsm100439826d6.69.2025.09.08.21.16.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 21:17:01 -0700 (PDT)
-Message-ID: <d89d3606-a464-443a-891c-637f304127d5@redhat.com>
-Date: Tue, 9 Sep 2025 00:16:59 -0400
+        d=1e100.net; s=20230601; t=1757393876; x=1757998676;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=l25NFxExAUe1eqmMOMVfFw3dzd2Dt4hw0Sr3RoaXfRE=;
+        b=W5lC+hXnilQYpPjgGh0yO9F1TY0Fgg0JQOFQtW87JF/RyxROyG4SNaxwZ8nWBGJjuM
+         9d3qyjJcZImNzysyE2U9FJPdGhs0Tg5NFuXyr+2c9MlT9DB0xTNDULKjEsxXkaKfJze8
+         i/yWG4TmPRvEzzGy9Z2wAgUpvfwAwWoJU1KCZIolVBrWYG9xY5cpQWUS7ZtkVqok1Uak
+         6QeBLHaYfITZPA4zlnHcIGZzsI78w9zDTuXR/KUWiSjnufD/hKsENKFbNvVlJmQGjq7t
+         X2OoV7xYHRbvm3wRfIxJaf97Tcac3L/I0nIfo0lbovf64Wwua/ISczl75m6l2AHOWAhf
+         Au3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXrSXRujljAl7gTe/osHERUUXk5haGugkGyUn7rAB5h6BJHS3X3ZYJwb0V3H5Xf7Q8ZbvRXkUfG@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywnb5Aj3OGdbUia9JKXGef4xVK2cb52ul8qv3gp62Pet2dXwbKK
+	BzBN3LFrcGauY9uAt02oVByJBU6VZHhudNW6CQZ2Qc4EHdrQQ+54ZiBkWcqQtPq6CcR55h9zL5X
+	Q+bE0MX7B1kTutVgL0KOWG04c0Zp5FbE=
+X-Gm-Gg: ASbGncuqIbPKiN3F5h2OIJ2/2MLYk9FNyfPGXkR60XV7ogMUzzWyKiM0al9JMDxDoK7
+	E9BnCZ7RqKzSZsWDJ17cejZz5ehpJWVDxrLY+sWuuZdl69P1pKEFG/UZ3+t/tz+8zB/143PF482
+	ovNogMLH0ARB68hX+Ps4ytWZK1mf6urD5L5Ku6rpzJlz/g3TEDx+EDx5IDyoftL5F3AiQrJbnl3
+	K7WN+ueGj06nYfpbDOk9ZN4LCucKjU8zWVHPOyuie+Mq1qzab4GFLVOLLvCjWxHqLAA3pyF
+X-Google-Smtp-Source: AGHT+IE4aJVhuUj7txtOnsYYhZRub3AWkInGLQh7N4cBU32Yoh4aAHd3WHdXBY7fRpvJ76Yz+6786ilhvVSEk1wTKAY=
+X-Received: by 2002:a05:6512:3b94:b0:55f:3ddb:2306 with SMTP id
+ 2adb3069b0e04-5626310e5bdmr2842619e87.45.1757393876318; Mon, 08 Sep 2025
+ 21:57:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/11] iommu: Organize iommu_group by member size
-To: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
- Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
- tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <4-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <4-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: rKTiiAMq4eLbRbt7QfrTbDUG--U3c0QyPT6gwB8VxxA_1757391422
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250907195615.802693401@linuxfoundation.org>
+In-Reply-To: <20250907195615.802693401@linuxfoundation.org>
+From: Dileep malepu <dileep.debian@gmail.com>
+Date: Tue, 9 Sep 2025 10:27:44 +0530
+X-Gm-Features: AS18NWC-8lpDwDSXRJI-52ZPSz8rigrQ13cs8hdUtHhPutYSVIO0pan4rBPN_Ww
+Message-ID: <CAC-m1rqeq33V5JU2HuQ+4iw4j41CZqCpocgKG2uLjnuTnf4w0A@mail.gmail.com>
+Subject: Re: [PATCH 6.16 000/183] 6.16.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Sep 8, 2025 at 2:08=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.16.6 release.
+> There are 183 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 09 Sep 2025 19:55:53 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.16.6-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.16.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
+Build and boot tested 6.16.6-rc1 using qemu-x86_64. The kernel was
+successfully built and booted in a virtualized environment without
+issues.
 
-On 9/5/25 2:06 PM, Jason Gunthorpe wrote:
-> To avoid some internal padding.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/iommu.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 1874bbdc73b75e..543d6347c0e5e3 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -58,13 +58,13 @@ struct iommu_group {
->   	void *iommu_data;
->   	void (*iommu_data_release)(void *iommu_data);
->   	char *name;
-> -	int id;
->   	struct iommu_domain *default_domain;
->   	struct iommu_domain *blocking_domain;
->   	struct iommu_domain *domain;
->   	struct list_head entry;
-> -	unsigned int owner_cnt;
->   	void *owner;
-> +	unsigned int owner_cnt;
-> +	int id;
->   
->   	/* Used by the device_group() callbacks */
->   	u32 bus_data;
-
-ok, but still leaves a 32-bit hole at the end, which would occur in the struct if bus_data was put after id or owner_cnt.
-
-Reviewed-by: Donald Dutile <ddutile@redhat.com>
-
+Tested-by: Dileep Malepu <dileep.debian@gmail.com>
