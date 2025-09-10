@@ -1,293 +1,427 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2044.outbound.protection.outlook.com [40.107.244.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EBD450F2
-	for <patches@lists.linux.dev>; Wed, 10 Sep 2025 03:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93831199BC;
+	Wed, 10 Sep 2025 03:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757475634; cv=fail; b=PIUwXpVtQYiL+OaAmQogVcKsDx3E2jz4mx8kbLHUzxkmKbkR4iHF9hq1k4jpEoiv9FyvBkn3q1DNSVrnWDZ5pkdd8XnEsmY31lIwQQBuh8fvMB5f52DzFQn1b0J2j4h8C53bT+fyKZnDinZnTXdlwjuX7zAkTQ5XO4RRyaJoqVQ=
+	t=1757475679; cv=fail; b=RCZ9VVU/KYaaWd08qjkldu7JLUAhyG9Bn6EMfv376vXnasPCNZHlDeE50fbJjgaHTjbOLupLLh2llBjWgAabXYSQJ/BeuVO32KFROyAUrqow4gPAD9u3iGHvV9UOKVDToB6L3ZOfCH9sr+TyIWXUCCUrLrPqxVrcvSB6auqR/b4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757475634; c=relaxed/simple;
-	bh=FNaz+kjl7b/IkiiRMxVv97qveFDiCf6tWxcW2VfcY4Y=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=HxED8E/D7Y0KkqNkgpxijXesI2N8Nq+uW2Cum8It0unTPLy4m4L0fm0kaf+Yifw7+OUV2S/IiRIIFKe0GzlTJYs4D+NGSXkI3jwhL3HOnt1BKA6W9IY1okGwTu55Ig+e2wz76hNfonA79ysxNXmL54AhKxS7iDhnGKjmyOVGe4M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bd2GbsND; arc=fail smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1757475679; c=relaxed/simple;
+	bh=1uJdHbF/2p6WFaS/WRmXw/z/3nxH22R8M/oHMBKxIGQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ARCHfLONnwTjnI6YuI4VDLRHa2djrk8Gbs+atx3QkGBBnnkJIlpnG6kss6XmNvsZ+K9zAph6WtfwAFTP/LV+pkNuXzwO2gEP+kujW13olkQw27vAzpNkT2G9EeNvokX3hVOSNebX8qF/V/8xtLcLfdDIqrMVyY3m8Jk2mV5kiVI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=i9sMBVFK; arc=fail smtp.client-ip=40.107.244.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bd2GbsND"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1757475633; x=1789011633;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=FNaz+kjl7b/IkiiRMxVv97qveFDiCf6tWxcW2VfcY4Y=;
-  b=bd2GbsNDkLJgQec66fqknTxs6y8Riya+DPDmVlkVNxfY1G0iQfI4c4d6
-   s77gqNVIgEd96LShfZPEOiQX9sr5fu53A/dWdBoAJZYgVcH2Z1hNhasD6
-   wvpVoBqvs/TIOYDDmbcE38ktffjs+JZqhjFbqa4PkbshUIzXehvp5Q34w
-   0oMvelxpM+BDTzhcOCI7qf76ct/SaSpUkyr6LzfUt5nQeNOuK8SX+gxqc
-   RV7IDE6x1JF+NeD09AXI3/X1gQKqnSuE9bBrqMIIGOkrQMpx1+Cm2b66g
-   Pw306s7HRyN6/R4t5rYGOxO1TrRgpA9kQlBiG6m9BH8I6BtjWMGTWBBYV
-   w==;
-X-CSE-ConnectionGUID: OfUnGtQhQhKhj4dwEznIjA==
-X-CSE-MsgGUID: J4+K3sYeQKyDYAv/bqVvxg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11548"; a="77382661"
-X-IronPort-AV: E=Sophos;i="6.18,253,1751266800"; 
-   d="scan'208";a="77382661"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 20:40:32 -0700
-X-CSE-ConnectionGUID: x1WvNQIyQiaZvPbn7ub3Cg==
-X-CSE-MsgGUID: KteioIXyS2aZKHB1P9OfSQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,253,1751266800"; 
-   d="scan'208";a="204259256"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 20:40:32 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Tue, 9 Sep 2025 20:40:30 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Tue, 9 Sep 2025 20:40:30 -0700
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (40.107.95.55) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Tue, 9 Sep 2025 20:40:30 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="i9sMBVFK"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V2vU3Z8qS3JTWxwwizbRRLyZhs/hDoYTfZLbd8zFRvHiFWHKig6CUIlUGN79V1Fd1b65YdtYLwFuPekYLfBh83muo2kHniuFtb6heukJaIvxLzknubyKykbBDK06/qYpoJc5StswuMy+rMwL/dfrLQtBQVlHfdUrNRw61o+rpGq/8j3J+4yMaC0MGKrB9Mgcbc0KaszFEgCWAyjYIbtZ+YPEblHY5ljBNWeBY7hCXDjtWPWfNZwTlP26tnfb23p+E3TAzUch0DjYphQ/6pzAh1OAcF2o/BH8YkvYDGATB7nvZZ7uV8XqSKGjKaWHeYtawWR2JFCyIH5PXCuWKCHgTw==
+ b=qkOvYG8gYpN9N+Tuw4HNfW7ew9P7M535+48squEttE61VAQCjRcEE1wkCWmYV5MpjnMEmYKIU7l/8kY+DkcvQmHWITEII5wWi5uMar8kQf4rR6+A94ItzZGk2wTD5mY1Mcr1t+OC15LlANZHXPxWl2lAnXRnVwzIuNd7W9yZssZboyuf+M2bq4UjOvKjk5IBnfLIMoQTYu7caTX2raFhnJq5B6VhLFDcriPkRVq7YOep8i9BhgsCnfwpdJhGXaIA0qOAIuyDoxWnyLL+cr5iabIAunM+eUkrHVc3rVaIEn0tMiVF7YOsajZSkdp55wwBE2CmVDRCpGGBl1qYuFJmaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aQm28VHiw0d4QHJaK0Y1QkKlgbGWfEvVLrYXSJTInUg=;
- b=cYWMWcylWwq82iwC6/JC8MmQ//wj292Q1mK3W5EjZftW4dHYEtAk25StO9wFkmjXCpYhXXX1vv/AO6eCbggwBfGQGOy+Qqlsrj6Mn+8ydO7Qsu3Q0rZMQQCfqoCy7VCdknL2QQSQ+ykyiXcJ/T8vvd6DtCbxWq9YQ4oJwJvFFFRebASAZEeynR+cKsxf325QYVupJAeD25/OY71oaGf+XqdEW4BGmZt7GxnLL6jRT9SklbFmUynwCOlEDvup6ajLmeXplF8lzM+BL312Wa2dARVC42QJZq/neHxoCCvta/DYOWsUUVEEZq6wATwk33miFYXNeLL+K5536gvqvR2DGg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SJ5PPF66B2E927F.namprd11.prod.outlook.com (2603:10b6:a0f:fc02::830) with
+ bh=e57k7knQGO7/P4zdu53XlbuNfFwJnDaDKDBucIRLWMI=;
+ b=gseUrK1PmoaaKki6H4ItZsC0x/f+UQAW+Ml6mmxm/1v0Tka+tVrOoR274/Az0CjGdfpF36f5ECcYud38s+P1edAm/AgJfuJCCagrzd4zagi2uI/HahT7GY6VAdvnJKTxhJ5c9/QHld2qGTEO8t6V5bpUMYqMG1el8YlyOR4ZrQOOBahIAOOBLb28gA9YY/IkAx4V2cbathCULsQqWWutxrXfLdrRbR/seq1x3CG6lV7Kg3y9/q9R0loxZ6MplvUv/1GZrNOmi/IhcKtN+CVF3O5gI3NF2V8gadBwFsKSuM199Jzik8sz22QgVrE9dKfYPuEtrl1DyjpxrxUKrY4QgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=e57k7knQGO7/P4zdu53XlbuNfFwJnDaDKDBucIRLWMI=;
+ b=i9sMBVFKbSRV1ZQVfOHKo2U5HdGq0g5OkRlLjjOSB4HEh/iixe8pJwceb7Da+0UhJPAsWm/IsbAtyLeHXeihM9FFuXexsAJLg0RP5jr3wlb17z9ov+PbTwWnlfh9cQ101wiQjFdJKzq02f81BZ1+2YgGqx9uV244jwfmdw/hJ8rKj9lRW3fhRD/J4XELN9KMlA0phG2a9wPR7cn2Lmfi7IsAK5dTS/csFpWa+9Ds3/oJLkdzyRCRAln+9rVRdIYlvPi7hRSg9lwt99R0r16VsHjK96Pp4vQEraglVSnkXGuHikKsMK7DFS3VO2qlNvMdqreNr5x/YHIxAraFkxQZZg==
+Received: from SJ0PR03CA0369.namprd03.prod.outlook.com (2603:10b6:a03:3a1::14)
+ by CH8PR12MB9792.namprd12.prod.outlook.com (2603:10b6:610:2b5::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 10 Sep
- 2025 03:40:23 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%4]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
- 03:40:23 +0000
-Message-ID: <8748a2ab-f25f-462e-b769-9afbe0462996@intel.com>
-Date: Tue, 9 Sep 2025 20:40:22 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 20/31] x86/resctrl: Find and enable usable telemetry
- events
-To: "Luck, Tony" <tony.luck@intel.com>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?=
-	<ilpo.jarvinen@linux.intel.com>
-CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
-	<yu.c.chen@intel.com>, <x86@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ 2025 03:41:11 +0000
+Received: from SN1PEPF00036F3D.namprd05.prod.outlook.com
+ (2603:10b6:a03:3a1:cafe::c6) by SJ0PR03CA0369.outlook.office365.com
+ (2603:10b6:a03:3a1::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9115.15 via Frontend Transport; Wed,
+ 10 Sep 2025 03:41:10 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ SN1PEPF00036F3D.mail.protection.outlook.com (10.167.248.21) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9115.13 via Frontend Transport; Wed, 10 Sep 2025 03:41:10 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 9 Sep
+ 2025 20:40:47 -0700
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 9 Sep
+ 2025 20:40:35 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Tue, 9 Sep 2025 20:40:31 -0700
+Date: Tue, 9 Sep 2025 20:40:28 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Jonathan Corbet <corbet@lwn.net>, <iommu@lists.linux.dev>, Joerg Roedel
+	<joro@8bytes.org>, Justin Stitt <justinstitt@google.com>, Kevin Tian
+	<kevin.tian@intel.com>, <linux-doc@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <llvm@lists.linux.dev>, Bill Wendling
+	<morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
+	<nick.desaulniers+lkml@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, "Robin
+ Murphy" <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, "Suravee
+ Suthikulpanit" <suravee.suthikulpanit@amd.com>, Will Deacon
+	<will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez
+	<alejandro.j.jimenez@oracle.com>, James Gowans <jgowans@amazon.com>, "Michael
+ Roth" <michael.roth@amd.com>, Pasha Tatashin <pasha.tatashin@soleen.com>,
 	<patches@lists.linux.dev>
-References: <20250829193346.31565-1-tony.luck@intel.com>
- <20250829193346.31565-21-tony.luck@intel.com>
- <9ac43e78-8955-db5d-61be-e08008e41f0d@linux.intel.com>
- <aLiGuhOM4ciPLT8K@agluck-desk3>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <aLiGuhOM4ciPLT8K@agluck-desk3>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW2PR2101CA0028.namprd21.prod.outlook.com
- (2603:10b6:302:1::41) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+Subject: Re: [PATCH v5 01/15] genpt: Generic Page Table base API
+Message-ID: <aMDzLC9nV47Xvud9@nvidia.com>
+References: <0-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
+ <1-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SJ5PPF66B2E927F:EE_
-X-MS-Office365-Filtering-Correlation-Id: 962efa6e-d785-4076-68f4-08ddf01bc642
+X-MS-TrafficTypeDiagnostic: SN1PEPF00036F3D:EE_|CH8PR12MB9792:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3202ec10-8b0a-4bc0-d157-08ddf01be248
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?K2V5MThueEx2ZFMrWktrY1VzTThrZmtySXJXaThRbXRMUDhxVHBqSUdQL3Vr?=
- =?utf-8?B?U3VGNVdVaGN1R05OUytNdmlCRzZnZFdEQmYzSlF0ckhZMUtPR2xWYWlQV0NE?=
- =?utf-8?B?S0JBR3FlMytTS25VUTEwN0FRSlQ1SlhtWjhkWlpOZmE5K3R6dkZSbmZhT0FY?=
- =?utf-8?B?OFV5RzQ5UnZXTGluN3QzdjBRNVEwZmFycy9TTUJXakNIajR1SndIM2dDdmR3?=
- =?utf-8?B?bkxtNzNHSnFTQTVNMVdVdHNjV3IxSmg1VllRZUVlZG9ia09IUDFLcm1NbWVW?=
- =?utf-8?B?ZmtQUG1SYnF6TXMzVEwwU3Y5YUlBaGhWNGJmWTVFQjl4bk5rc0pEdklnUjZi?=
- =?utf-8?B?KzBpK09IT2d4eXFES1k2RFNNYzIxNEgwM1F3ZUpDY1hsSUtZMFJuUWpYdzZh?=
- =?utf-8?B?dlpscGJqWEFUam1RR1kxNmxMN2tlb2ROczRLN1MyYkF4dHA1T0pOR2Y0Qjdw?=
- =?utf-8?B?cWZucXh2cDRLSml1cGdKeGk3THhHQ2VheWNxOTArWlQrUlJ2dXNWd1N3ejNV?=
- =?utf-8?B?Zys3UldJZVZrNmtUVXJXWnR3RnFaSmFMN3ZoN0lNSjNIOFNJd0cxTnEyd094?=
- =?utf-8?B?MTdiOFVGRFllc1M3TTVTVFNBVW9JdkwvSmwxUDJQbkM1TWM0Rm9ZQllBaC9Z?=
- =?utf-8?B?TVl3dTRnQjN4b1JVZUExSVNUamFYckdwS1MzcmhBRk1IWE92SXZndkNqZTNW?=
- =?utf-8?B?T1doZUkxZk1ON0tzZ0FtdHNXdTAwN1VBWGZqOVlONHZUMUZzZytXTkZpempa?=
- =?utf-8?B?V3U5WlJ5NDZMMkI0cFN5cGZEV3QyTzRLQ010c3U2ZnAxL3JEWW41b3JvRTNX?=
- =?utf-8?B?Skd5RksvVFFUOG5DbGlpNHROMEhwR1FSNnZpVWhYb1VrdFpJVTVQak9Tbk0r?=
- =?utf-8?B?c3loVmtEUmRHZVhrM0JmZkxZT3Zud2NoMVdERVR0c0g2QXFBL0xTYkd2c3A4?=
- =?utf-8?B?R2pOYm5TZWFZcTJpY1FTeS9LRDhKSC9SVXk4U1BWTkpiR0Y5ZWNYaDM1cnJ1?=
- =?utf-8?B?Vk9oODdRMWdNeVVISDcxNlc4RDY1QTFOV1l3R1M2V2VIR2ZPRFgrTzZzeEFt?=
- =?utf-8?B?MHpHOUNPL0QvS3JZVlhvVnpGK3N0QzczVWJZMFplTDVHZStJNHREQUR2RU1a?=
- =?utf-8?B?VzVtZG0xazFoeEQ4bnEvcCtvTHRTenNNU243RkRvdUIvR2l6QkpmdUZUazht?=
- =?utf-8?B?OGU1NU5oTkFVaFVPRzI2Nk8wY1pSemxZOVA3WEhSL3dTdGR0VXEzL0xtQlht?=
- =?utf-8?B?WDFhR3FCK1Z3TVpscGdQT0hOQlZ1RmorRzJQcU0rNEhueldBbDRCTHVPeENE?=
- =?utf-8?B?eGxqUDhqRmwyUEx6SnhRQjhaWVVjQk52a0ZrWkFqRGxIamxVRVMrSVo2UG80?=
- =?utf-8?B?SG9iM3dsdDB5WXltVDJYNUh6YXgvSEdCZTdLaGs5YnBqZ0lyUjhYblFoZC92?=
- =?utf-8?B?MXFaa3gvWitBUE9ZMVBoUDU0SitsV1dmZ3Y3b0s5TUVPc3dWcUs4YVdqTXAr?=
- =?utf-8?B?KzlzWDFPbDg1NUN3WmZMQ0dONi9yQVVFZmxmVjd6UjJGaHZqdUpwQVc4YnFB?=
- =?utf-8?B?c3VlY3BsN2xzKzUxMk50NVpmdWhjbWtlZWZ3bEZlOHhCOFlxVU1BUTFuVFJW?=
- =?utf-8?B?eFBOZlFQMzNFYVVtS2NySjk0UG9YV2hicE5rSS9DODVROXpZODhFUTV1bWdJ?=
- =?utf-8?B?ZlMrT0YvU3A2U3dGd2FQMXhPWWlNMjFOMVdxY09iMHZzeE5YR0VoczhDdm1S?=
- =?utf-8?B?YlRyWVI3RTFLOGxBdHlCUFpqUTBUTnVCWVAyREZLbWtlQWFRWUlEUXVOWlNT?=
- =?utf-8?B?S3Y4TStTTDVBRFRvSGp4NWZZandtMnRHcU5VTC91NCtVd2NtN1MvN1dDbUxB?=
- =?utf-8?B?MkR4dFNsOFZ6TkVXOEl3N3djTE90SHFWMmdRU3JxKzJ1eFp5UXM3TGo3dyt6?=
- =?utf-8?Q?sqAyY6x/Wp0=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VlFPTGZEQjNvR3BNUG5FT0FnRG5tVkhMb1A3MjJsVE52dE9leEpRbEkwVENQ?=
- =?utf-8?B?OVVnNUc5WnhJNm1QeUxLc0pML0l1QVdoZ3lWZ25vTkhIQUc3eWd4c3pHeFNU?=
- =?utf-8?B?SHBiZTd0dDV3Z2x3VnRmWU56cW1iRVM4RUZyeU1jc0JCdU9MTENqQVF5WFd0?=
- =?utf-8?B?cnJhMndxa2RKUGtwbE9DMlU3eEpzTUIyVGFnOHViYklpWHZTVEJ3WEQreVpG?=
- =?utf-8?B?VGo0bGFkMmFDNjRyQVY0ZVFSeVFhR1l0Vm5iR0ZCVXNHZkdOV2J2OHg3QnlE?=
- =?utf-8?B?RTVpVjNlY0FBcDlOb3NJdi92Q3JTdVJMSmdMd0pjcTY4c2cyeUcwTDdKLzdj?=
- =?utf-8?B?MmxYT2tQYVcwd09MMzJQemVWdDRTWjN5a1NLeFZlSG1lNTJxVmxZMFJQdDJp?=
- =?utf-8?B?clFCK3dRM3JHekNiVzBYYzFpTlc4cWNPMmdWTjN1NXVjSGpOVlE0MTlQY1lv?=
- =?utf-8?B?ekdiRXJWQ3hXdlpzdk5WMHZrcnlraVprNm1nazNYMGdZczF5Z3dwQStHRm5K?=
- =?utf-8?B?em9EcHlrY1RkclFZbHNnQWJ0R1NsV3V3SHVtRnhiRW1WSGd3WFhLOEZzVEo3?=
- =?utf-8?B?c2NDY1IyZ0NzUzNHd3JmRTFqTlhnME9mczlPODU3R29KUi85RHo5SmlVbXB0?=
- =?utf-8?B?NXhyK2MybWVpczhnWC9jc2hKQWFCYkw0K0krQmNKdHBIRjVhcnhFcUJ3WWtK?=
- =?utf-8?B?RlpXc2hLZE55VVNpVzZwNlNwMklsMC8zV3lsTlhGMnJEVXhwcmFpaEg2ZENl?=
- =?utf-8?B?dE9XUXFvblYxQ0VvUHNZNHZDNjhxeGZiT0hUbDlzUDBGRWVDcjNNa3FTbkRR?=
- =?utf-8?B?Qm1yKzg4cmdYV3lqRS9CMkpiUE1SbnRCWDYzT2RpV3I5bUxTVTZTQnpTKzlT?=
- =?utf-8?B?YnhyZ1o5RFNEQlczS2t6YTJrQmFPL282aG5OOHRMZlQ4S3ZSY1NDUURzMEsy?=
- =?utf-8?B?VnBRa2JGL2w2OVM5UWg1SUhtbloydjVuT0RZRHk1NENCMURvUDEvbVhkM3ZC?=
- =?utf-8?B?TDRKdWErSjUyWUlFbjIreVMwSzBWQ2FuZUxEWWpkQ2RNWUg4MHBvV0p2Yk54?=
- =?utf-8?B?emorVkFhdEJvNURVb1E0cmlEZUhTbFlCR2NlTlE1N0psRFYrZDhIMXdRc1JD?=
- =?utf-8?B?MlVCTnk5QmV5MWNtd29EY1JNVFNENVdjRSsyVWRsaGE4Nzk2RHNMNU5NOXUv?=
- =?utf-8?B?N2JkNUtZbi9YTEk5RFNiNkNua2RwL2N5RTdsMUYzZlBvbEVIUmpDRmE0UHkr?=
- =?utf-8?B?dlB3b0laUlorS2RJZmgrT0prbjg0NWJPNnQrckovdG9jZVpPUHdaT3RWcEJB?=
- =?utf-8?B?dEpGbFNUWTBLZDNoVzc2YkxxdkMweEVlZjdRdDZkRnZYQTRqMERFaUJPMnJs?=
- =?utf-8?B?WlM1V0IyWHBnNWFla3lEcWs0M3NEWlR6N0dMalZ0VUI4UmNHelJRdUJ3Zzdi?=
- =?utf-8?B?RThqZHpOQUNwRUFQeUFIRm1pcVRhdUhCMUthM1h4RkM4YjdEaE5ONXBPd29E?=
- =?utf-8?B?UFlNNXNBYTlTNkVnZVlDUlhzMlJGWTZiSWs0VEpBZEVjMU9wL2ZTNkZiTjRI?=
- =?utf-8?B?RGdBeDlIb2V6Y29mOUE4cUdkRGdpbmp5OTloMzNqbGFVUWV1RjZPejhjbW5I?=
- =?utf-8?B?dnlFSmlvWWJDSVMvSTJoNzJDamtNcjZQekNTOTUvS3BVTUd6RmRuWjg0RWpj?=
- =?utf-8?B?Tlc5MDhuVWg3OVNVcFpYT1F0V0tSU2lvd3dUdThIS0hWUDkyYWR0dHRoWVRl?=
- =?utf-8?B?T1o4RjdnY04rWHJVQmVRY3hKaXJsMnNQdXdYc0VXSDU4Vy9WR3hRTzF6NDN1?=
- =?utf-8?B?ZDk0cStwMmEwZnAyc082ZFdiVkFSRjNGM0kxVjdhZ1JncjlKRFRQNjk3aWRY?=
- =?utf-8?B?MHdXZDRJazA5TEhmaVljZUdaTTFZNlhTUWF0bEJsY0lTZVU1dmsxdmR6M09z?=
- =?utf-8?B?WUNUcElrOERIeUZXYUFMY21NUTgxSHRHZ1NLbHNWYUtzc2tFcDYrMm5jNzV2?=
- =?utf-8?B?dE1iRm91UnlGSTRRQ3pENFZFNlRjZ0FvRjZkUyswK0lNTDN3MUxwY1U1NTBC?=
- =?utf-8?B?a1Ayb1MvYUU0ZUgrSDRqeVh5eWZmMk5HVHN3VW5EU2pkWEltYWhVSWZmWmVn?=
- =?utf-8?B?REE4RnFLaGJyUHErVUdHRDQwZEtudWhIZHVoWitnbXFnYm1pZ1hGTjFIdXNa?=
- =?utf-8?B?akE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 962efa6e-d785-4076-68f4-08ddf01bc642
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 03:40:23.8579
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|82310400026|36860700013|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Fh1lpHf7wTivpkTSMN5CWpCL2iivEBTtLYQOYWD2cw0IVz9aOjrLSAJsDDHC?=
+ =?us-ascii?Q?HE7whtKHBThXnW3yXP1rONOuy9eHg5meZeGY0xwaFiXPlUVTax9BGR3ksHva?=
+ =?us-ascii?Q?nuDJ1P2hDl0RRMZNwfnISGd3A5OEsQu8hJUG+axW+bwz/dRazFfx1FW9QNVh?=
+ =?us-ascii?Q?KRl+47kC5lAi8eBc6U6tk6ykyd/U1EkjkxykssPTioC/qCuuLzLU7g9Prae+?=
+ =?us-ascii?Q?37MtEJrKIBA3XdtW7TPnO8Qj1IOQc1xYBFuKYSXiYz4DQJC4ehzjE+ltYmYm?=
+ =?us-ascii?Q?vtCR6HGSREMlPzNR1arMOC860jCEfZ4QIQSPed6D1eqI5YGaeu3Hq17BtjGw?=
+ =?us-ascii?Q?nyUh9mhwWJNfi2xwBwteAftwSFz49GYWSeY4W98tKNYS/JSCJaiu3vKPAzqA?=
+ =?us-ascii?Q?sVmYa5FRXuBcdi/GPP6iOTzXteqbRsTMry2eRUcFdw1Y7H8bRp66ul2iYdo5?=
+ =?us-ascii?Q?aymZyLbSX7LlmGoEx8sTRnIFWCowg8PVBtxguVmYU1eQwsZdXTXo0A4pGdu7?=
+ =?us-ascii?Q?2eb6J5PjJB0FQrasmRhWjcKRIvI6JwN7U1QPZOIdhbfjsySft5UXvnFveqYK?=
+ =?us-ascii?Q?whobzAOdGdjw6WdZpF8eKtP8ZAiCihsGxoWSBoqdf/zGcMUvWTNFvgGfVKaH?=
+ =?us-ascii?Q?m9N0Zt5BeShkZGG9q67zrPpoffUqO1mfDKnECK2tIgecQrFeR8hoZ2YLwz8r?=
+ =?us-ascii?Q?IMa3MOT0+QemE9Zzy2D3kUxXGF+k8O0E3NqD2oDM+T509mcLF220Cstiy4AC?=
+ =?us-ascii?Q?lHY4ECjZpukfF/khPs5gP2AwzDPw+y2BGBUcFkgZworoNELpAeoIRJ+bSlms?=
+ =?us-ascii?Q?+D7fBN+KkNmchPHfi4Omassbqdm/DWjPYELykFIRPQwj9fMeLgClHTA3IxQ6?=
+ =?us-ascii?Q?ngVqSfiEjq3CK2prbeFYgw5HfLjq9qPGWpOPpVPw1GiJAdxx2HYKtah8Qidw?=
+ =?us-ascii?Q?mOC4Bf+nSComi+zUR7EGzsR/Qq/iMvjTnOc2HprilGwI1ZzcVS1SvJqxvUvu?=
+ =?us-ascii?Q?t9SELNtfzT4S8U4YQUgXxI+oDzfGqGEasg4qJqoUjZGL3k7Xyt3pTrDZubUM?=
+ =?us-ascii?Q?LIWJDJR/DetMOJXXrZPFrsC0fDpOzg8PJVjheHUXZNen/Ki3bjt1T2fq/fJl?=
+ =?us-ascii?Q?8qnCAWZUUt94nDTs/lLgWmwDCVQsY6TMgTKUItWfspH8AWIPb4P1oL2izhGr?=
+ =?us-ascii?Q?c+Gcarvw7EsPpbXR/f96SOoDQ5xxk0mklpteq2WLXeVOCZH3KwMrJmXbyTYQ?=
+ =?us-ascii?Q?hx8MnUVxsrGO4XzMXdVdnV8Yd5dVZM8QhDLx0zA6K7+dChUaoD6Bikvfbi6r?=
+ =?us-ascii?Q?ERZkI+VMFvs3yTvh1jFjAGq8KFQgmpQz5vjHCEtxUEZS9ZHdG5ePUTSkj6LS?=
+ =?us-ascii?Q?31PwxeL8xZHrF3fmJeLI11IQuiyWAi+HnNV1JpmFVr2VjfW/eIV5uPP1G0nc?=
+ =?us-ascii?Q?gDF+OTy1xbVi3Al6KNMtD3tFmMo/+3gT4ZGYnLi1uNqka3l6raosY6dutZHD?=
+ =?us-ascii?Q?RrLqBClntOyT+iP9MIqwOMLlrntG27DmfH+Q?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(36860700013)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 03:41:10.4937
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: V75gm3BKFEnbfxHnzjLBsKrXMu4heUglr+XQYt9oXm/SvyGdBPXMEzWkbC0BhznFE7/OC6wV4qZKAKTUB4cl6s9oFMWl7iTfi7ZrbN30f/w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF66B2E927F
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3202ec10-8b0a-4bc0-d157-08ddf01be248
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF00036F3D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9792
 
-Hi Tony,
+On Wed, Sep 03, 2025 at 02:46:28PM -0300, Jason Gunthorpe wrote:
+> +/**
+> + * pt_entry_oa_lg2sz() - Return the size of a OA entry
 
-On 9/3/25 11:19 AM, Luck, Tony wrote:
+an OA
 
-> 
-> Updated patch with changes applied below. Also pushed to
-> git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git rdt-aet-v10-wip
-> 
-> -Tony
-> 
-> From 19f90ec0c526791be589fe3ff4797536f7e9e9c9 Mon Sep 17 00:00:00 2001
-> From: Tony Luck <tony.luck@intel.com>
-> Date: Mon, 25 Aug 2025 10:47:06 -0700
-> Subject: [PATCH 20/31] x86/resctrl: Find and enable usable telemetry events
-> 
-> The INTEL_PMT driver provides telemetry region structures of the
+> + * @pts: Entry to query
+> + *
+> + * If the entry is not contiguous this returns pt_table_item_lg2sz(), otherwise
+> + * it returns the total VA/OA size of the entire contiguous entry.
+> + */
+> +static inline unsigned int pt_entry_oa_lg2sz(const struct pt_state *pts)
+> +{
+> +	return pt_entry_num_contig_lg2(pts) + pt_table_item_lg2sz(pts);
+> +}
+------
 
-"INTEL_PMT" -> "INTEL_PMT_TELEMETRY"
+> + *  level
+> + *     The number of table hops from the lowest leaf. Level 0
+> + *     is always a table of only leaves of the least significant VA bits. The
 
-> types requested by resctrl.
-> 
-> Scan these structures to discover which pass sanity checks:
-> 
-> 1) They have guid known to resctrl.
-> 2) They have a valid package ID.
-> 3) The enumerated size of the MMIO region matches the expected
->    value from the XML description file.
-> 4) At least one region passes the above checks.
+Hmm, I am a bit confused here. I thought "leaf" was meant to be a
+"leaf" table? But here "a table of only leaves" makes it feel like
+a "leaf" table entry?
 
-Above describes how resctrl determines "valid" telemetry regions.
+Also, isn't "the least significant VA bits" the page offset?
 
-> 
-> Enable the active events in resctrl filesystem to make them available to
+> + *  table
+> + *     A linear array of entries representing the translation items for that
+> + *     level.
+> + *  index
+> + *     The position in a table of an element: item = table[index]
+> + *  item
+> + *     A single position in a table
+> + *  entry
+> + *     A single logical element in a table. If contiguous pages are not
+> + *     supported then item and entry are the same thing, otherwise entry refers
+> + *     to the all the items that comprise a single contiguous translation.
 
-This jumps from "valid telemetry regions" to "active events" without a
-connection between the two.
+So, an "entry" is a group of "items" if contiguous pages (huge
+page?) are supported. Then, the "entry" sounds like a physical
+(v.s. "logical") table entry, e.g. a PTE that we usually say?
 
-
-> user space. Pass a pointer to the pmt_event structure of the event within
-> the struct event_group that resctrl stores in mon_evt::arch_priv. resctrl
-> passes this pointer back when asking to read the event data which enables
-> the data to be found in MMIO.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> ---
->  arch/x86/kernel/cpu/resctrl/intel_aet.c | 38 +++++++++++++++++++++++--
->  1 file changed, 36 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> index 93862060652a..e36b3790733b 100644
-> --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> @@ -20,9 +20,11 @@
->  #include <linux/intel_pmt_features.h>
->  #include <linux/intel_vsec.h>
->  #include <linux/overflow.h>
-> +#include <linux/printk.h>
->  #include <linux/resctrl.h>
->  #include <linux/resctrl_types.h>
->  #include <linux/stddef.h>
-> +#include <linux/topology.h>
->  #include <linux/types.h>
->  
->  #include "internal.h"
-> @@ -111,12 +113,44 @@ static struct event_group *known_perf_event_groups[] = {
->  	for (_peg = (_grp); _peg < &_grp[ARRAY_SIZE(_grp)]; _peg++)	\
->  		if ((*_peg)->pfg)
->  
-> -/* Stub for now */
-> -static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
-> +static bool skip_telem_region(struct telemetry_region *tr, struct event_group *e)
->  {
-> +	if (tr->guid != e->guid)
-> +		return true;
-> +	if (tr->plat_info.package_id >= topology_max_packages()) {
-> +		pr_warn("Bad package %d in guid 0x%x\n", tr->plat_info.package_id,
-
-%d -> %u?
-
-> +			tr->guid);
-> +		return true;
-> +	}
-> +	if (tr->size != e->mmio_size) {
-> +		pr_warn("MMIO space wrong size (%zu bytes) for guid 0x%x. Expected %zu bytes.\n",
-> +			tr->size, e->guid, e->mmio_size);
-> +		return true;
-> +	}
+> +#if !IS_ENABLED(CONFIG_GENERIC_ATOMIC64)
+> +static inline bool pt_table_install64(struct pt_state *pts, u64 table_entry)
+> +{
+> +	u64 *entryp = pt_cur_table(pts, u64) + pts->index;
+> +	u64 old_entry = pts->entry;
+> +	bool ret;
 > +
->  	return false;
->  }
->  
+> +	/*
+> +	 * Ensure the zero'd table content itself is visible before its PTE can
+> +	 * be. release is a NOP on !SMP, but the HW is still doing an acquire.
+> +	 */
+> +	if (!IS_ENABLED(CONFIG_SMP))
+> +		dma_wmb();
 
-Reinette
+Mind elaborating why SMP doesn't need this?
 
+> +/*
+> + * PT_WARN_ON is used for invariants that the kunit should be checking can't
+> + * happen.
+> + */
+> +#if IS_ENABLED(CONFIG_DEBUG_GENERIC_PT)
+> +#define PT_WARN_ON WARN_ON
+> +#else
+> +static inline bool PT_WARN_ON(bool condition)
+> +{
+> +	return false;
+
+Should it "return condition"?
+
+Otherwise, these validations wouldn't be effective?
+
+drivers/iommu/generic_pt/pt_iter.h:388: if (PT_WARN_ON(!pts->table_lower))
+drivers/iommu/generic_pt/pt_iter.h-389-         return -EINVAL;
+--
+drivers/iommu/generic_pt/pt_iter.h-429-
+drivers/iommu/generic_pt/pt_iter.h:430: if (PT_WARN_ON(!pt_can_have_table(pts)) ||
+drivers/iommu/generic_pt/pt_iter.h:431:     PT_WARN_ON(!pts->table_lower))
+drivers/iommu/generic_pt/pt_iter.h-432-         return -EINVAL;
+
+> +/**
+> + * pt_load_entry() - Read from the location pts points at into the pts
+> + * @pts: Table index to load
+> + *
+> + * Set the type of entry that was loaded. pts->entry and pts->table_lower
+> + * will be filled in with the entry's content.
+> + */
+> +static inline void pt_load_entry(struct pt_state *pts)
+> +{
+> +	pts->type = pt_load_entry_raw(pts);
+> +	if (pts->type == PT_ENTRY_TABLE)
+> +		pts->table_lower = pt_table_ptr(pts);
+> +}
+
+I see a couple of callers check pts->type. Maybe it could return
+pts->type, matching with pt_load_entry_raw()?
+
+> diff --git a/drivers/iommu/generic_pt/pt_fmt_defaults.h b/drivers/iommu/generic_pt/pt_fmt_defaults.h
+> new file mode 100644
+> index 00000000000000..19e8f820c1dccf
+> --- /dev/null
+> +++ b/drivers/iommu/generic_pt/pt_fmt_defaults.h
+> @@ -0,0 +1,193 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
+> + *
+> + * Default definitions for formats that don't define these functions.
+> + */
+> +#ifndef __GENERIC_PT_PT_FMT_DEFAULTS_H
+> +#define __GENERIC_PT_PT_FMT_DEFAULTS_H
+> +
+> +#include "pt_defs.h"
+> +#include <linux/log2.h>
+
+<> precedes ""
+
+> +#ifndef pt_pgsz_lg2_to_level
+> +static inline unsigned int pt_pgsz_lg2_to_level(struct pt_common *common,
+> +						unsigned int pgsize_lg2)
+> +{
+> +	return (pgsize_lg2 - PT_GRANULE_LG2SZ) /
+> +	       (PT_TABLEMEM_LG2SZ - ilog2(PT_ITEM_WORD_SIZE));
+> +	return 0;
+
+"return 0" should likely be dropped.
+
+> +/*
+> + * Format supplies either:
+> + *   pt_entry_oa - OA is at the start of a contiguous entry
+> + * or
+> + *   pt_item_oa  - OA is correct for every item in a contiguous entry
+
+What does the "correct" mean here?
+
+> +/**
+> + * pt_range_to_end_index() - Ending index iteration
+> + * @pts: Iteration State
+> + *
+> + * Return: the last index for the iteration in pts.
+> + */
+> +static inline unsigned int pt_range_to_end_index(const struct pt_state *pts)
+> +{
+> +	unsigned int isz_lg2 = pt_table_item_lg2sz(pts);
+> +	struct pt_range *range = pts->range;
+> +	unsigned int num_entries_lg2;
+> +
+> +	if (range->va == range->last_va)
+> +		return pts->index + 1;
+> +
+> +	if (pts->range->top_level == pts->level)
+> +		return log2_div(fvalog2_mod(pts->range->last_va,
+> +					    pts->range->max_vasz_lg2),
+> +				isz_lg2) +
+> +		       1;
+
+How about:
+		return 1 + log2_div(...);
+?
+
+> +static __always_inline struct pt_range _pt_top_range(struct pt_common *common,
+> +						     uintptr_t top_of_table)
+> +{
+> +	struct pt_range range = {
+> +		.common = common,
+> +		.top_table =
+> +			(struct pt_table_p *)(top_of_table &
+> +					      ~(uintptr_t)PT_TOP_LEVEL_MASK),
+> +		.top_level = top_of_table % (1 << PT_TOP_LEVEL_BITS),
+
+Since top_level is unsigned, would it be faster to do bitwise:
+		.top_level = top_of_table & PT_TOP_LEVEL_MASK,
+?
+
+> +/*
+
+/**
+
+> + * pt_walk_descend_all() - Recursively invoke the walker for a table item
+> + * @parent_pts: Iteration State
+> + * @fn: Walker function to call
+> + * @arg: Value to pass to the function
+> + *
+> + * With pts pointing at a table item this will descend and over the entire lower
+> + * table. This creates a new walk and does not alter pts or pts->range.
+> + */
+> +static __always_inline int
+> +pt_walk_descend_all(const struct pt_state *parent_pts, pt_level_fn_t fn,
+> +		    void *arg)
+-------
+
+> +/**
+> + * pt_compute_best_pgsize() - Determine the best page size for leaf entries
+> + * @pgsz_bitmap: Permitted page sizes
+> + * @va: Starting virtual address for the leaf entry
+> + * @last_va: Last virtual address for the leaf entry, sets the max page size
+> + * @oa: Starting output address for the leaf entry
+> + *
+> + * Compute the largest page size for va, last_va, and oa together and return it
+> + * in lg2. The largest page size depends on the format's supported page sizes at
+> + * this level, and the relative alignment of the VA and OA addresses. 0 means
+> + * the OA cannot be stored with the provided pgsz_bitmap.
+> + */
+> +static inline unsigned int pt_compute_best_pgsize(pt_vaddr_t pgsz_bitmap,
+> +						  pt_vaddr_t va,
+> +						  pt_vaddr_t last_va,
+> +						  pt_oaddr_t oa)
+> +{
+> +	unsigned int best_pgsz_lg2;
+> +	unsigned int pgsz_lg2;
+> +	pt_vaddr_t len = last_va - va + 1;
+> +	pt_vaddr_t mask;
+> +
+> +	if (PT_WARN_ON(va >= last_va))
+> +		return 0;
+> +
+> +	/*
+> +	 * Given a VA/OA pair the best page size is the largest page side
+> +	 * where:
+> +	 *
+> +	 * 1) VA and OA start at the page. Bitwise this is the count of least
+> +	 *    significant 0 bits.
+> +	 *    This also implies that last_va/oa has the same prefix as va/oa.
+> +	 */
+> +	mask = va | oa;
+> +
+> +	/*
+> +	 * 2) The page size is not larger than the last_va (length). Since page
+> +	 *    sizes are always power of two this can't be larger than the
+> +	 *    largest power of two factor of the length.
+> +	 */
+> +	mask |= log2_to_int(log2_fls(len) - 1);
+> +
+> +	best_pgsz_lg2 = log2_ffs(mask);
+> +
+> +	/* Choose the higest bit <= best_pgsz_lg2 */
+
+highest
+
+> +/* Compute a */
+> +#define log2_to_int_t(type, a_lg2) ((type)(((type)1) << (a_lg2)))
+> +static_assert(log2_to_int_t(unsigned int, 0) == 1);
+> +
+> +/* Compute a - 1 (aka all low bits set) */
+> +#define log2_to_max_int_t(type, a_lg2) ((type)(log2_to_int_t(type, a_lg2) - 1))
+> +
+> +/* Compute a / b */
+> +#define log2_div_t(type, a, b_lg2) ((type)(((type)a) >> (b_lg2)))
+> +static_assert(log2_div_t(unsigned int, 4, 2) == 1);
+
+I skimmed through these macros and its callers. They are mostly
+dealing with VA, OA, and mask, which feels like straightforward
+bit-masking/shifting operations.
+
+E.g.
+log2_to_int_t = 64bit ? BIT_ULL(lg2) : BIT(lg2);
+log2_to_max_int_t = 64bit ? GENMASK_ULL(lg2 - 1, 0) : GENMASK(lg2 - 1, 0);
+
+What's the benefit from making them as arithmetic ones?
+
+> diff --git a/include/linux/generic_pt/common.h b/include/linux/generic_pt/common.h
+> new file mode 100644
+> index 00000000000000..a29bdd7b244de6
+> --- /dev/null
+> +++ b/include/linux/generic_pt/common.h
+> @@ -0,0 +1,134 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
+> + */
+> +#ifndef __GENERIC_PT_COMMON_H
+> +#define __GENERIC_PT_COMMON_H
+> +
+> +#include <linux/types.h>
+> +#include <linux/build_bug.h>
+> +#include <linux/bits.h>
+
+In alphabetical order.
+
+Thanks
+Nicolin
