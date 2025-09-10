@@ -1,70 +1,103 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2071.outbound.protection.outlook.com [40.107.92.71])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02ADE2C11E1;
-	Wed, 10 Sep 2025 17:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C49231D749
+	for <patches@lists.linux.dev>; Wed, 10 Sep 2025 17:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757526189; cv=fail; b=pylF+OjvYSPlh/pE4g1IGwYhIjx3JHetfO7+UYvEV2LUdEyAAs4uSrBtPK73WYSk29re/950q+PQ+XumXakXo7wO+dRaVlN5R7du8Ra0kfywGZfimm9++n9gMMwhWC2z3RrDRcWa7dN/jO/H/c4rnSO18XWYjTr7emUtbTeBIQc=
+	t=1757526932; cv=fail; b=As1NK1c8EO8Kc25K9i/bX9V++oWM7KJmZubGyS0VKOouoydR6YkbKv5cNQiRkTg1nGS04w5vz6nVFFWCVSC/ZaR/rFnG2UGzp18jeMkSn23on5HrPnHDIDPKkAbLu+ygiW1Cz7lI4GSircygysXQvbRhzPTtMnWjd160V2wpz/Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757526189; c=relaxed/simple;
-	bh=queIhJ0L30V36YGla6wSwSsnJ+qSRZDuCSRtL1VnwHg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QLi0QVbqs+/odZ78AaFSfzonH81jpBtYLlvzHWRJyBSaoel5meLBF56OFLbh+Ev5CusymlUTC9pVRXJaw92bVKRnIiCWx/Wt7DGBKgYLLTgu0I5HXBdMd+nJbpYsjvsuuL/vicRtCSjsmUhhtvOtpBNBs9pWElCSrx/3vxYlHeU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nuKgz0b8; arc=fail smtp.client-ip=40.107.92.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1757526932; c=relaxed/simple;
+	bh=yc6gLGMSZ5EqJim0PZgIsBZDstVwbsZaFPwFR7Z6LaE=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=kknyVK61EfcFRtDiGjHI3rzyB54tvnmYJLUpsP51dh37pBpur8KMIyAtK/NLDTL02zreX57yikZWezPzwFPHn6GS04Q7S6+nojBTUJMMewKFA4+jzSfQDK5dz5PB3UIHqNJ4F+ulFNqIchkF4nyomCgA/EmdpqlttRs+X12MNsA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KSK1qFvG; arc=fail smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nuKgz0b8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KSK1qFvG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757526931; x=1789062931;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=yc6gLGMSZ5EqJim0PZgIsBZDstVwbsZaFPwFR7Z6LaE=;
+  b=KSK1qFvGrtgFQPkQNw4vSQ5KcNCuHaQ+DUxGta5wvPWb766o7ngqVven
+   k4xcZrDRJ/37fGZtrwHYYPTstc2ZUbBOJ/JRg636W+IyeqngsI80mRo+J
+   UJ2AI8Kdl1Cx8tJFYt+EG0WH9c97vklOLfbgSbE5pU/AeBF29bFK2q/aJ
+   CbWjmkT6FqFoHSN6mu5sCjpktvC8R/Dd1s3IIQuHxqZ0SZQmd1AoArdFz
+   sG45bLGSRmF7Rxdh/8qDys30n0PGN9RAJ41eSBDs22n9BqkNxBDquBC2g
+   moz99VJARzpteQ13Pn7rts024JThDS/IptvSbV8vTQs+08vtzDw7472CW
+   Q==;
+X-CSE-ConnectionGUID: lw5FxEW1RLCaWI/fcF9WQw==
+X-CSE-MsgGUID: 6bVkxvDHQby627q4ddNF0A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="82435053"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
+   d="scan'208";a="82435053"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2025 10:55:30 -0700
+X-CSE-ConnectionGUID: 50pIUvXcQwmS1eq/ocHCtw==
+X-CSE-MsgGUID: xLDPj6AeR0+cdoLU6GAO0Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,255,1751266800"; 
+   d="scan'208";a="173034392"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2025 10:55:30 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Wed, 10 Sep 2025 10:55:28 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Wed, 10 Sep 2025 10:55:28 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.47)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Wed, 10 Sep 2025 10:55:27 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=miFSLyMnz537QnRyK+RjiMe2MZPdmYPCscx/0G8SsZNTpkpyXr3CzJnBEj+0YKR/x0mNlnoBLSIWYEUwgba9eXqSjm0tezGKjoXgli8KDOYPOcs95cMWCmm/PRmZhNmvOV2alBHP83Mjbc4SbvtpWU2HpdeWv5/6DMGH8PTHlK0lPYOuix0P1RlhT9WPw5HWCAefbEuLiYhxM6wNSzVoOe+Y0uZvJWl9dyImXBRbCdxz0CTjd+2XFPnxEkF35Bgd7KPyBcoCoq44NXPPnUb9IXfBtdqAXYm7NFxw6fblgUIzr5WYPs9a4PK2NS7/fbmFtbQcigSpoLaDhwLpEVgsow==
+ b=YZW8WwBiI4UGNEdtsWPpkZBVB2bhBjJMMH4R1XmnhfKZozxPGNWT1/YD8o+ZM6NIh/6BGMxutjVnqR5Ugjw8386uLVLUdko9IcyxIAXPpSg6k7ohZI4ETvi/G2J8NHwJ7Oz6TQcdv7nogOFP7MEtVs57NnO0dcnG4MpFxHfzCsquNlGEmv3JW3SZ8tgKh70jeIfpVHInoIJdmRCChXhGc/eqlFaLiyMs64PXXkg512aLYod+DWd6ptKc8yYPtT5LBNs8TpiZ0JFMaODaw16fB7NxmxkfHOK/IPsJ7KswD8dwBnYKgq3Fwv2AsrbeGilTG6SSrH6rJu2rqLClAWy7bg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5eoSG2CnVrJe6mEcXVgAutFjdmwJ1dJvrvu5znyb3Pg=;
- b=ZOSye1Nq6uI01dXsblf5Te/HC+3lVKVTByVXHZK3tp5e7VMeZHdVBnnvnZ6IXvQqnTKsqEYMB9StPZKN3LeNZo2d+3I9d6gfdA6jeOWis79kspR2kvsWlhDn3TrMas5phJml6Kqi74saBS1d6mnzbNLt4gjtwV+RrScWF7s6+ReZsVu1LY7v/An2XvpMxsA7uIz5e148yeJoexdyoi8jOTrq24p19IIj/ST7FwjhgIbOuR7FFMbuJVfob0DqD2zDTRtqGi798gP4dzXMQnCopPVItqk/37a6Jb0FfDkz9Y6vxDncxf5Hy8nziaQsUNbFqcxrfGpLykJp/wMlaLUkLg==
+ bh=mrr8/t7FIzkelWqIaZAzUPEhNVE1RJYcCBvNhYkT1WY=;
+ b=YdDo6xD0k/UN1ZqK17L2jmpnaXc1FbLsizQua/KEKk/PC0eMaQH77gxljYCkvHmknrk7OYGWJ0ekP4UpQgjYUnkylENcHFgtm7jFw3RExCtTDvCRGcxz9lhCbOdEphltht1i6zLHczeDicJRESoxZAtgi8EXMQXQ+Rfx7hIIBfvLuKvT2m/rqVnDFoXlc3Tr9anZCxjhNZ4ldgoBs4xUnc6sIn3jA6vJd9NnNjCD6qpPy0Hzn44ylV0AvDLlp3nC8OYZlOL7Vu2cvDx5EqYo1LRPGxmzXuq2AWw8ncymE+QyuOako0ybatV86pBKJliYBO4xMJuG+O/mFkPR4yirFQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5eoSG2CnVrJe6mEcXVgAutFjdmwJ1dJvrvu5znyb3Pg=;
- b=nuKgz0b8xzxmWLcBT6qAeUj4xRvXMkyE+q6z4A0sthrsiUYdG7PhawB+6hb5H5TQbW76oJ7j5P2Ekd7njgURsQY2n9FV9fPwAIwmesCQicMH4OzZ8T1ZG14JV5Oq9376xqGURNFwzpyea4DoIk14L97Ggz1dSkpkF8QgjBxDT4RB8kelAHTRuH12B8rMR6J20CXbsAO99yMFuagp6SfL5wRykiuQjbTSqtFllg3BUdiblBpOdhdqKFuCeCAMMoM0Fu+xmcQ/QfIIex3EoqeDmviZfWpEKiueXt5/XUFZ+Hir/zgAqq4egfsqhyG7RP6llti4l6OtM2VH4VCNWzmW2Q==
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB5769.namprd12.prod.outlook.com (2603:10b6:8:60::6) by
- PH7PR12MB7454.namprd12.prod.outlook.com (2603:10b6:510:20d::17) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by MN2PR11MB4694.namprd11.prod.outlook.com (2603:10b6:208:266::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 10 Sep
- 2025 17:43:04 +0000
-Received: from DM4PR12MB5769.namprd12.prod.outlook.com
- ([fe80::f5f:6beb:c64a:e1ff]) by DM4PR12MB5769.namprd12.prod.outlook.com
- ([fe80::f5f:6beb:c64a:e1ff%5]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
- 17:43:04 +0000
-Date: Wed, 10 Sep 2025 14:43:02 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Donald Dutile <ddutile@redhat.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>, galshalom@nvidia.com,
-	Joerg Roedel <jroedel@suse.de>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, maorg@nvidia.com, patches@lists.linux.dev,
-	tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH v3 06/11] iommu: Compute iommu_groups properly for PCIe
- MFDs
-Message-ID: <20250910174302.GD922134@nvidia.com>
-References: <20250909212457.GA1508122@bhelgaas>
- <15ee1d12-6900-4cf2-9348-6e6cc8aefbe9@redhat.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <15ee1d12-6900-4cf2-9348-6e6cc8aefbe9@redhat.com>
-X-ClientProxiedBy: YT4PR01CA0451.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:10d::17) To DM4PR12MB5769.namprd12.prod.outlook.com
- (2603:10b6:8:60::6)
+ 2025 17:55:25 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf%4]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
+ 17:55:25 +0000
+Message-ID: <3ecedad8-6283-4141-9f44-2ac126796ceb@intel.com>
+Date: Wed, 10 Sep 2025 10:55:23 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 25/31] fs/resctrl: Move allocation/free of
+ closid_num_dirty_rmid
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
+ Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
+	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
+	<babu.moger@amd.com>, Drew Fustini <dfustini@baylibre.com>, Dave Martin
+	<Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>
+CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>
+References: <20250829193346.31565-1-tony.luck@intel.com>
+ <20250829193346.31565-26-tony.luck@intel.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
+Content-Language: en-US
+In-Reply-To: <20250829193346.31565-26-tony.luck@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0260.namprd03.prod.outlook.com
+ (2603:10b6:303:b4::25) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,130 +105,234 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5769:EE_|PH7PR12MB7454:EE_
-X-MS-Office365-Filtering-Correlation-Id: c34a16da-7322-4cf1-fe7a-08ddf0917e92
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MN2PR11MB4694:EE_
+X-MS-Office365-Filtering-Correlation-Id: ac21a32c-eb75-4d74-e1e4-08ddf093387c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Xu/b6m4mNL6NnDORoHMjXFaBEYgDWqi2qfcYI29LE0lh4rHnECfkVUgKCd29?=
- =?us-ascii?Q?kL/LWXGZI7qsI3DS42rDeYwOXHCxUxZqXxX69lODtJhAuo+8hs81Rw8IQbCe?=
- =?us-ascii?Q?GbOP0/UAn+h1YTIvh3SuLV1XPvM+gXIpv30htiogoFL8rpH7fSQSN/Q9fPdS?=
- =?us-ascii?Q?0b49OF/XXPLimzsiiUiHZRaLCUg5aE2I+YzXPDEqVnEDQvg2PU3IvLaDdw9m?=
- =?us-ascii?Q?08zg9WnxQSlADeVi17DJs3VUh+cd2iUzWq2FmdokB3tdjPX0JgPVMf3WuX2O?=
- =?us-ascii?Q?rvRuV6gScQJx8DTj45+ePucJgPXMLV2JSgJyf3PJoq8NnARvmowZCc0xaON6?=
- =?us-ascii?Q?nspwqrYovE6l7i+ypKBoil4JkG5qX8ANra0Kk/OQgKcpCggjR5UAb1xpg7lJ?=
- =?us-ascii?Q?jeymXjVWhV+Xw8oft8m0s5c1iuW+4MDLP1CONFrKq8a1zQPDxmGNOHQ+YK5Q?=
- =?us-ascii?Q?/BzvWuwUR2MwXGOlxqfEfGL1ql3MPmKW2XpNknBUB4iQ+kZNj23RPgQycEcO?=
- =?us-ascii?Q?h2IcGxwUENOr32WDy3Pby2F8pNOu4ZNQzvcu/PaMhg4Z4cWCq9RGGIkG8xFQ?=
- =?us-ascii?Q?KxeSY/ZttfbE1NR6IE2zQpxirzOe7vJAaCffsd8JCJMNSUFqojbRalHcMsll?=
- =?us-ascii?Q?6vGsob7BHB1NUqFgHB5NX5SLXrpebfZ8jVcjgIY/zGcOvInXgJZJNu6iUFgv?=
- =?us-ascii?Q?p7gIGULBsvGHAmMU+JqZiciaM6WW0JwwY0Z0l6NkWonzv1vp4f3m+WmfOItA?=
- =?us-ascii?Q?0SItHeaF4meI9vyL4dxAKjiSCWEnzKWHveh5OhxamP4f6cWHikLEqCMwkWLX?=
- =?us-ascii?Q?zKp8IRgmI0PGgao0Lj9dDHfGHFaMv3uMkF7TzqJ9O9n7fGi7V6XTdQ+tVjtX?=
- =?us-ascii?Q?slOay+y1PQHPjYxBDb0Ltkcypo+idafbPoDiut4RigHCO0QD3rCPH10Ta5VO?=
- =?us-ascii?Q?OwiUM4aIXRk/negmYd70XZFAU2Dg0VkDouZPMu0uAKroHJLoosLyO8gfLChy?=
- =?us-ascii?Q?omCwx3wp1N+Y6Abmk0GCokqQOAWIdShhpU1jiAyXvNmbIYlq+pJidk/vP343?=
- =?us-ascii?Q?rbz6mD21tAWacp/jHNKuzqdYViEza69zchX6MHOP5Mv8MZXggu7I8zwqADJ5?=
- =?us-ascii?Q?IPX2AanE9sqPYJn25jtFK6AkX07meowE97vMKUXasReUV7NVYpC9g09Vn9aL?=
- =?us-ascii?Q?DDOT/5WnY37IxV8l36yrecrNLdog1KCuWE7zx3kb49YbFKsp6+58+qxfP7sf?=
- =?us-ascii?Q?wVF2K+j85RIkbN1zX1YDF9clX+P/hiJg2x5OFFiA8ocys7rxSr9bLu4OGp4w?=
- =?us-ascii?Q?p8MbuX/60QnmvD6EJQNlnqKeRrikayaesWfR03E9YKdsHn3cyyfvOl9iqtSz?=
- =?us-ascii?Q?Z2jk+JAbhzE6w0Y4JxjAI9SjT/n5wWmLH4gouicy6O68k5QTrYou9uPnSk/t?=
- =?us-ascii?Q?/QCdV1W/yoQ=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR12MB5769.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VnJnMkMrK2ZCS3BjdExvSzgraSt2SGNSaEo5bkFiQWJ6Wk1nZ3FxcU5iM3Z5?=
+ =?utf-8?B?bnhHcXhPNTNqaWQvQUNkaC9haVZ3bGNGWmZqOVdYUUx0ZVJEWnNpWmpSekN1?=
+ =?utf-8?B?NGQxL2NSV2tiMDlhTk9MSFcveUg0THZBTzVFY2FzM3RyWkpvajhEVlJ3SnFz?=
+ =?utf-8?B?bjIzOFE4RWt0bDlpRmtRTzZwd1J5aEVCaHNScXM3Rmx5Ri90U3dkU25MeUFT?=
+ =?utf-8?B?RWtCQVczNjhMckFZYWxmZjFCaTZYd3ZJNldJSFFKa1JYSU5zYU1IRloyZ05Z?=
+ =?utf-8?B?ZEZTMzdLZThuY2hkeGhkaWtOa1NVdmoySTRiU1VwdVhsTHdqOHdiUEdwQzhC?=
+ =?utf-8?B?ZThtOGhucXk1VmJVbkYrUXpDMm9DMWQxYTV5UHkrRStiamlDajEwaDRIUjFO?=
+ =?utf-8?B?U2QxMmswZXZ2M1F6bGNTK25DMWVleEprVEZONnVMbzN1aDNLVDdYM0FBVm5S?=
+ =?utf-8?B?RW1HVXJ4R3hqV1liWEg2aWtpRDRDaTNtb2ZFa0hmdkVQQW0veE1pK2REV0dl?=
+ =?utf-8?B?Y3l0SE1TS1NJVTBwbW1EYU9XeS9CazNETGkxVnVkU1VtaUhqYmxEMU1RZWxT?=
+ =?utf-8?B?Yy9ZUEFJUmhlbzdYR0ViQ0RhUFNWYk5MUHJyRjNtTk1WeWhkTVIrTXRCaTE1?=
+ =?utf-8?B?NFJGdnk2VVY2QkhQZnFIV2JNQUQzL1Z0VmxWMGNZd0szdUtnQW9yK2F6aDdu?=
+ =?utf-8?B?NkRTd3NRUnB0eGFqUFNDNkFRSkR2M1ZIMnhMYXN0SzhoODJvZlJzSjRDZDdC?=
+ =?utf-8?B?Z0FPcFRVOHoxTEIzQmtyV3ZaTHVFWnJ3VkViWFlYSXFtTDFza016RExpYUJi?=
+ =?utf-8?B?L28vWGk3N0FiYTlyZDcvZU5STkdYQlRrSkw2T01pZ2tOY3JPeXhVWjBpYjk1?=
+ =?utf-8?B?a1VCNWp4OXo0TVNtbjAvQlo2ZFRQMlN5bkRKck51bVRmL1MrWkVLOFgyY3Vu?=
+ =?utf-8?B?SHIwamZIVG52T09pWTZaK2NERTlsamdLc201R2crL1psSUJMWFoyK3lqSHVC?=
+ =?utf-8?B?TmF4eUJ4YUlzekR0YVhUcHNlSmNGKyttK2FIKzVmZk03Skt0V3pFaXA4VCtJ?=
+ =?utf-8?B?NlIwb1ZqeEJGOXlnUnVsckMyWEM3Wk1vcG13L0xWNmUyRDBlQy82cU5acnBF?=
+ =?utf-8?B?TmlxNFRBY2hybGdZTU5WMXZ6YXNUK2NlNjNNOGVDWTZaZnY5OXhYcG5LUHdz?=
+ =?utf-8?B?cXV0VHdldGFPS0tmd3NxNmFTQ3RKd0hHa1lnSm0xbldhVnN6ZFFVTXlkQlRs?=
+ =?utf-8?B?elpDQy8xVWVwK3RxU3FTM2Z2dWVCQURxNnJob2pxZW1KSTZKT3MwTmRiYkRp?=
+ =?utf-8?B?Q0g2MEJUSjBxcXY2d3AzWVlHemhJa3NwSGl3U3JwSTU5RHpxSTJnZElKK0t5?=
+ =?utf-8?B?RUJLL2NTd0NYOXlWZjNuNHFBbWI4TEFTZUt1ZGdRMElVaVhRc2pPT3VHMUg5?=
+ =?utf-8?B?RVZFSC9NQWJubnllZWYyUGJhRVh5bFg4L0VTY2JRb3VYMm9GTDZYU1B4VnhF?=
+ =?utf-8?B?cCtYa2l5dm1yam9sVG9CamNmTkd3dWg3YmxOdWdha1l5TFUvUHlXKzNGbkZm?=
+ =?utf-8?B?RVBDZXJodkIxK2R5YysyZXJ1TlpqNW9VU1VvUnV6STJuUjJndmlrT3cyL2Nt?=
+ =?utf-8?B?Mk1mZlZXWEJWbmNKQ09zMWR1aHVjS1Myb3FCK3F3OExkK1RzNExEcTJKRElx?=
+ =?utf-8?B?TGNYMURlT0NqVDRGREN3Z3N1TWV6RHprN085TGhONjNkRUs0TXVUSy9zc3l2?=
+ =?utf-8?B?TkJOYjMzeTg2L0c2VzNrcGJuOEhqNXNVZ0J6QnRXbCtTUzNxUkp5dVVJUHQ1?=
+ =?utf-8?B?L2wwbk0xZjgzekF1YmtYNVBXNzkvV1dSRUNsai9oZWwyV3ZKZnNEaWdCaVlw?=
+ =?utf-8?B?YWw3eXNSY2FNTHJCT21UcDlNanExYzg0VUNpcFpoVENnb2tyN3J1dlZsNDlX?=
+ =?utf-8?Q?huldegPJj28=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?EeZn7Bxa4eYCBd2R5pen5wX3s07f1Yy9PbapB6WgGHut2Zi+OMcTg93gbY7/?=
- =?us-ascii?Q?WlImeidiEAWvHkAwMiFpp/K/tcFCY2wVQKkW8xiThHJWGKyWM9ki7IlLvX5j?=
- =?us-ascii?Q?O8lBQvvKl9QTizbb52IRIfXNi9fWd5FxFmraFfVy3Yk0UZQbGlw7qEly++wC?=
- =?us-ascii?Q?sWTNpzHPpFezoDyJrAfTmpQ8QrgkbrH76p5dbtErHebjZcmTUe0zwpC3YaUP?=
- =?us-ascii?Q?CpwKrkJE+mPLILH92EisdmipEW07vMFASUU6eSvSVSWGqZoU+7R+BR7wXdcs?=
- =?us-ascii?Q?V0sjbjoiqWdiiaFXmPINA/XJzMkadlmQwgRwEpeBPodnoCZwcDhcwUJkjZIj?=
- =?us-ascii?Q?X2brOtvYxHXwf+4EABh4FMc/ULYuKEnbMRaa8/Wl/iIZ5O1MaXB5ByjL+7c2?=
- =?us-ascii?Q?V2icGxEzoLqkzJIW7y5Y6cJhdcabP6S3ILXbIkz0RV+IaFJi4a0JQu0TUYqb?=
- =?us-ascii?Q?BVpgR43tky7e0Ur6c4pD62xTKkokMgE2EEKfDa58Y7wnmwaZPiDT6VD2BULd?=
- =?us-ascii?Q?Y+Jq52t/eDojpChb2RoIu2JYZocYZgTKkt/K5ZAG+mW4bblBwPvwVnYxDYoe?=
- =?us-ascii?Q?KrzqEJ2hoeITNEPN1a1pc+LvQ9r3GfMh+XwMRsqnQB6Lnwur9VgzyJrEnRdW?=
- =?us-ascii?Q?oUrgDTczvhoaC7QckrJbHxuDTTWE6zzsQg3mtggaAxriZvbNr6+eHFi4Tea2?=
- =?us-ascii?Q?XbMOj56fqiK0miGPKLer01A4Hbkw39xQT19BlzbrhIQjxVEYqjVqbgLccwmE?=
- =?us-ascii?Q?a/d7S7eusUbtJNSxM9KDuxDQVWvMPnvDAkGhox9OwcdMEvEoYFHZ19WAONqn?=
- =?us-ascii?Q?wL87iqfCg65hpAH08fHaBdVHnQRnTSmFZM/gEfL6MHHgDchAYHzDVFjEv7lz?=
- =?us-ascii?Q?ns27nygGg46OK4KTnnvJXpxQb22fzBRGHz0RJ3rjjIvzTtKdr0z8YPZ3ZIBQ?=
- =?us-ascii?Q?gQ02r6NfTOFGmrRkmVcC3JwT9Q9l5IAWX3ebm3ZyQ4LiQXw4QnzkEI9AR8W/?=
- =?us-ascii?Q?TIxJWaOmvqDn5BgE7vct0ZXeuasK/breuAYG5ypi7aafvvAvkXXCPjbin8Pf?=
- =?us-ascii?Q?mZwFqA/5hLL8/DUNkbXclqn4rvqQg/7RvqZTOgQPYT57dnKR+bax0V9eOpvL?=
- =?us-ascii?Q?njetdvpdSWjw/UqcjeBAHKYmIJBKMLi57dPUFwW92YHM3A7pT/w0yqb0uJ25?=
- =?us-ascii?Q?r8QyRL8n3B+XuYG6f/HugWqLifUg+rbENpJYQ/e5i1oPfQAfhJpCVOtHwXs8?=
- =?us-ascii?Q?CDdktGb96Bp7qawwP2YI/a8VGREgVh/0v4Uw7wwY3DL8b+1wnaVhrHDKw9Ds?=
- =?us-ascii?Q?NrJGIrySCvHeo+tFf+24yjImCVhyHACMcBmHrJ7GV15roTlMyTGGJmYQE3D2?=
- =?us-ascii?Q?8+F82rEatq9RZqCtS87KPY+nUW8nGY0Vp1+ynHHZno4w1ZoLf2H5TzVPoxeA?=
- =?us-ascii?Q?lW6TQTTbxOqNsA9DaN3oMWXPLkAcHldRmjDgT6GLh2W0/vLzrb4IqN0/q9J7?=
- =?us-ascii?Q?GBc7F/f5o3aFPu9ChBOVHb0J6EhsRmt1iHTPdNoythlTCbqT/ohUknRqfnJm?=
- =?us-ascii?Q?WlQ5CSMZKC/8I7Z/kYw=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c34a16da-7322-4cf1-fe7a-08ddf0917e92
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5769.namprd12.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V0U5RzkrSHNrS3pZVVM0R3FoeElTOEVyOXNMem5XYituSHRBWitPU2JrVVlQ?=
+ =?utf-8?B?NjMzSjY1WCs3dVRGVDlsWU1JRHRIYVRXUWwxdlQrekZJN2JIdzhza2ZsTG8r?=
+ =?utf-8?B?ZjJYZVpEV3ZYRmNaOW1uUFNHWG15d3VnZDZmemlNa1V2U3RhTTBPMVkwN21B?=
+ =?utf-8?B?bWp1R3FrdUdldnVUcmI1RDM2OXY3Q3RhaGZJUVN0aGN5TlpjK1FkWXUwaFhH?=
+ =?utf-8?B?N2x5NWtZR0l3YzlCMGQ5OGRCL3poZWdhNjl1VytiRmNaVnJYT0RsTHovblRw?=
+ =?utf-8?B?d0NlSnRpVmZYYVlJUTR6RkVvVmNLQnh5V09Ld2VKQ2Uya1c4VHJCT2F2ZW5T?=
+ =?utf-8?B?WGFNcjRxdmprZ1BrdXFrUFc5VitLMlgzOGd6U1FLNEN3anQ0TldjMDlQeFVU?=
+ =?utf-8?B?MktpOXF3YkcvSHlIQWVhNlgyNldCUlpoZHFUMXpZcjRYenJEVGlWT2ZVTDN1?=
+ =?utf-8?B?ditjc1ZVQ2JOUm93eE5hc3JuaVhiSXpEOXRtditTRDRiL0tUU2RpRnBnN05I?=
+ =?utf-8?B?Wjc4OU83OXpKbUJnaE53RnErVkFyKzNGVGNLUUZuazN1MVpsK0tLZnJaUzBy?=
+ =?utf-8?B?N0VsZzNNcjVhWFkzN1gvN2cyaFNaYjlGb0RRcGw4TXJNVXNxVzBZVVJ2V3NK?=
+ =?utf-8?B?cUlsandmajdHT2J2UEN6QXBjWHk4aEViMzdWWUl1MVAxcTVla0hlMDJsb3BD?=
+ =?utf-8?B?T3lTZW4xSWxzZ2NKNytPTEJwaDlieEpFOUIvcEtUK1d6YmN5T3pvK3FYY1Ex?=
+ =?utf-8?B?L09aaVIxS29sbjJmUTE4N0JBb3dodDJxZzFWVVIvL2tRUXV3RXVqOXJ5T0RC?=
+ =?utf-8?B?eWlZNHUrc3kzY0gwN3RDSWJ0dUNVZXhtK2tqSUFsaDkvazJlcmppV0ZEYzlT?=
+ =?utf-8?B?a0ZvUlMwUVZxKzY4WEw5VDhyNXc1Q3hYQUE0d2V1bkVLb2sveW1jRkJEa0lk?=
+ =?utf-8?B?ME44K2w2RDJkdWtSSHAvcW8zRmNKdVlHTlpINUc1ekJVZmRCZ3U1YUdYaU9C?=
+ =?utf-8?B?MjdCUDZ6bnRaQlNhblpvK3g2UDRWeS8zdHRDNVFQNnVQaTNxeXJkUHAvNDhp?=
+ =?utf-8?B?dnlmamJhMHZXR0NWbVRHdEhSQ1J3a2F2R09XN2piUnE2L0pQMXR2QThQZW4v?=
+ =?utf-8?B?R28vczBrUzVXWXRvSVc5Yy9Zc1MzMkJFTFg0TjVlUFdkVUtLMy9RaDRJK2Ja?=
+ =?utf-8?B?SnpIaTQ1a0NybEExa2VQTEFmTXRQcXhFcmR3Rk9ubXl5a2ttZ3U5ZytjdkhW?=
+ =?utf-8?B?ckR4aVFGcEUrckZRYitYdVpjTmw1TkJicXh4ZDMzNDBYQ1dTZ3Q3YUlZajRB?=
+ =?utf-8?B?Wmx5UEFUSnkrTTF2dnRudUt0eHJ5Z0pESDFwcE5Vclg0cXBvRXhRRURXdjk4?=
+ =?utf-8?B?bXcvaGp4TWVTaDZTL0RMckpUK3lRRWI4cXhQQ3VQa1VnbjlrZ1JPanZLc2Yz?=
+ =?utf-8?B?dDk0VHM4dTBtdXNJeThoRUJ6T0VrQS91ZUwxUmpraDBBREswN04zRmpyc0Ey?=
+ =?utf-8?B?M1k2d3hHSUYrTmZTN3VVTEZRdHRLZE0yNjM0cmNnZ1FUdEI0V1B3enRUOXYw?=
+ =?utf-8?B?dXRlRUhPeEtQWU9Qa3B6bWVmOUpSS3VzbVRaWnJzMW1hMDJ2LytDNG81NmF1?=
+ =?utf-8?B?bjRxOTYrS1p4UjQ2UHMza1M3L3FwZjhURmhYenJ5OGd2WHZmVlRqZnN6WC93?=
+ =?utf-8?B?V1lScHlreWdxdVhrS09GOHBmSHJzaUZlczY0WjBRZVE2UnlQWW56eVlJNWov?=
+ =?utf-8?B?TzhQaW43RVBmeFdrR1BGYzdONEE0ZWM0ZWorTTJtTzFwYVJZd25jd2FpQWN6?=
+ =?utf-8?B?MnF4RldqVDNsQk1obTBzeUlOL2ROWktuSGlvNDlFOVFLWWp6VlRFOWVoRFEr?=
+ =?utf-8?B?WlpqdHNkYjZpcGkxN1g2N3d2WVBYNCtyVUZUV0JDWjhUbWROYlZVRGUwK0F3?=
+ =?utf-8?B?YmRtNWhhc1V6VkRSNTEyelRMdG1yaldVS1RoSGxjMXlRa29FMWl1UjBabitl?=
+ =?utf-8?B?T1YwbUMwYm9Ka1l2cnAzQnRVYm03anBOU2o3ckpQVnpyNW9YNUpiKzlGQmxs?=
+ =?utf-8?B?M1RuaFFmSEdTTjF6MUdBTUNvOG1vd1dPY1JUNWI2a3hNTit0aEpSUUQ2akVY?=
+ =?utf-8?B?S0tGOTZabUVNL0g2RnZoSm10RFJCY1FFRklUblZibkJOTm4rVjkrcHFSVnZt?=
+ =?utf-8?B?R3c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac21a32c-eb75-4d74-e1e4-08ddf093387c
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 17:43:04.2742
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 17:55:25.7297
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6WDbIUmiewYlq3ni9nA8tB2aUdDwHtQzPbcUHMmx2j6hyNInW/lYZ7YeXOWdMjXo
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7454
+X-MS-Exchange-CrossTenant-UserPrincipalName: CC55SlejRFHzG7VAg13oggi5Ct1T9RKqNfezbUbtMxULa2SPZybd4dKebfJpZq95Tz5etyDsJuABNsicRC2pmi0RwT43BTKllI5xMRtLxZA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4694
+X-OriginatorOrg: intel.com
 
-On Tue, Sep 09, 2025 at 09:59:23PM -0400, Donald Dutile wrote:
-> > Alex might remember more, but I kind of suspect the current system of
-> > quirks is there because of devices that do internal loopback but have
-> > no ACS Capability.
-> > 
-> and they are quirks b/c ... they violated the spec.... they are suppose
-> to have an ACS Cap if they can do internal loopback p2p dma.
+Hi Tony,
 
-It is the reverse
+In subject:
+closid_num_dirty_rmid -> closid_num_dirty_rmid[]
 
-Linux assumed all devices without ACS capability CAN do internal
-loopback.
+On 8/29/25 12:33 PM, Tony Luck wrote:
+> closid_num_dirty_rmid[] is allocated in dom_data_init() during resctrl
+> initialization and freed by dom_data_exit() during resctrl exit giving
+> it the same life cycle as rmid_ptrs[].
+> 
+> Move closid_num_dirty_rmid[] allocaction/free out to
+> resctrl_l3_mon_resource_init() and resctrl_l3_mon_resource_exit() in
+> preparation for rmid_ptrs[] to be allocated on resctrl mount in support
+> of the new telemetry events.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  fs/resctrl/monitor.c | 56 ++++++++++++++++++++++----------------------
+>  1 file changed, 28 insertions(+), 28 deletions(-)
+> 
+> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+> index 33432a7f56da..d5b96aca5d03 100644
+> --- a/fs/resctrl/monitor.c
+> +++ b/fs/resctrl/monitor.c
+> @@ -805,36 +805,14 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
+>  static int dom_data_init(struct rdt_resource *r)
+>  {
+>  	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
+> -	u32 num_closid = resctrl_arch_get_num_closid(r);
+>  	struct rmid_entry *entry = NULL;
+>  	int err = 0, i;
+>  	u32 idx;
+>  
+>  	mutex_lock(&rdtgroup_mutex);
 
-This captures a huge number of real devices that it seems don't
-actually do internal loopback.
+mutex is held during original allocation code below ...
 
-When people complained, ie for DPDK/etc then quirks saying they don't
-do internal loopback were added. But this was never structured or
-sensible, I have systems here were LOM E1000 is quirked and a few
-generations later it is not quirked. I doubt it suddenly gained
-loopback.
+> -	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+> -		u32 *tmp;
+> -
+> -		/*
+> -		 * If the architecture hasn't provided a sanitised value here,
+> -		 * this may result in larger arrays than necessary. Resctrl will
+> -		 * use a smaller system wide value based on the resources in
+> -		 * use.
+> -		 */
+> -		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
+> -		if (!tmp) {
+> -			err = -ENOMEM;
+> -			goto out_unlock;
+> -		}
+> -
+> -		closid_num_dirty_rmid = tmp;
+> -	}
+>  
+>  	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
+>  	if (!rmid_ptrs) {
+> -		if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+> -			kfree(closid_num_dirty_rmid);
+> -			closid_num_dirty_rmid = NULL;
+> -		}
+>  		err = -ENOMEM;
+>  		goto out_unlock;
+>  	}
+> @@ -870,11 +848,6 @@ static void dom_data_exit(struct rdt_resource *r)
+>  	if (!r->mon_capable)
+>  		goto out_unlock;
+>  
+> -	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+> -		kfree(closid_num_dirty_rmid);
+> -		closid_num_dirty_rmid = NULL;
+> -	}
+> -
 
-That said in doing so a few cases (AMD sound & GPU MFD comes to mind)
-were found where the MFD actually does internal loopback.
+mutex is held in original free code  ...
 
-So here we have to pick the least bad option:
+>  	kfree(rmid_ptrs);
+>  	rmid_ptrs = NULL;
+>  
+> @@ -957,9 +930,31 @@ int resctrl_l3_mon_resource_init(void)
+>  	if (!r->mon_capable)
+>  		return 0;
+>  
+> +	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+> +		u32 num_closid = resctrl_arch_get_num_closid(r);
+> +		u32 *tmp;
+> +
+> +		/*
+> +		 * If the architecture hasn't provided a sanitised value here,
+> +		 * this may result in larger arrays than necessary. Resctrl will
+> +		 * use a smaller system wide value based on the resources in
+> +		 * use.
+> +		 */
+> +		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
+> +		if (!tmp)
+> +			return -ENOMEM;
+> +
+> +		closid_num_dirty_rmid = tmp;
+> +	}
 
-1) Be pessimistic and assume internal loopback exists without ACS Cap
-   and expand groups. Quirk devices determined to not have internal
-   loopback. (as today, except due to bugs we don't expand the groups
-   enough)
+mutex no longer held during allocation ... no mention in changelog why this is ok?
 
-2) Be optimistic and assume no internal looback exists without ACS Cap
-   and shrink groups. Quirk devices that are determiend to have
-   internal loopback. (proposed here)
+> +
+>  	ret = dom_data_init(r);
+> -	if (ret)
+> +	if (ret) {
+> +		if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+> +			kfree(closid_num_dirty_rmid);
+> +			closid_num_dirty_rmid = NULL;
+> +		}
+>  		return ret;
+> +	}
+>  
+>  	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
+>  		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
+> @@ -984,5 +979,10 @@ void resctrl_l3_mon_resource_exit(void)
+>  {
+>  	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+>  
 
-v2 of this series did my best attempt at #1, and there were too many
-regressions because if you fix ACS to actually group the way it is
-supposed to the internal MFD loopback pessimism breaks alot of real
-systems.
+If you also use the "if (!r->mon_capable)" check as is done in original code
+then resctrl_l3_mon_resource_exit() will be symmetrical with
+resctrl_l3_mon_resource_init(). Since resctrl_l3_mon_resource_exit() is
+_always_ called, whether monitoring is enabled or not, adding this check
+will also make the code easier to follow and not require that reader knows
+how closid_num_dirty_rmid[] is connected.
+Another benefit of keeping this check is that it forces the function to
+remain L3 resource specific (not just by name) and not seemingly become generic
+later in series ("fs/resctrl: Move RMID initialization to first mount")
 
-Don pointed to the spec and says there is reasonable language to
-assume that if the MFD has internal loopback it must have an ACS
-capability.
+> +	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+> +		kfree(closid_num_dirty_rmid);
+> +		closid_num_dirty_rmid = NULL;
+> +	}
 
-> I'm assuming the quirks that the current system of quirks impacts the
-> groups and/or reachability, such that the quirks are accounted for, and that
-> history isn't lost (and we have another regression issue).
+... now freed without mutex without mention in changelog?
 
-In this version effectively the quirks become ignored for iommu
-grouping as we don't call the acs functions if there is no acs cap.
+> +
+>  	dom_data_exit(r);
+>  }
 
-Jason
+Reinette
