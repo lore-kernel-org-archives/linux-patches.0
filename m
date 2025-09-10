@@ -1,427 +1,397 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2044.outbound.protection.outlook.com [40.107.244.44])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93831199BC;
-	Wed, 10 Sep 2025 03:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF99238171
+	for <patches@lists.linux.dev>; Wed, 10 Sep 2025 03:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757475679; cv=fail; b=RCZ9VVU/KYaaWd08qjkldu7JLUAhyG9Bn6EMfv376vXnasPCNZHlDeE50fbJjgaHTjbOLupLLh2llBjWgAabXYSQJ/BeuVO32KFROyAUrqow4gPAD9u3iGHvV9UOKVDToB6L3ZOfCH9sr+TyIWXUCCUrLrPqxVrcvSB6auqR/b4=
+	t=1757475808; cv=fail; b=inBY39Ix/CAjranw7BJPqlTr/OpA9kXQtA0ps3iVJoX47HQ696WpvnaBP2lX9ryD0VUAgNeVKHBV7JdH4iTO1eprbNd8k3G+KtxLuMGMrLtRdPkYODxIJQPe9yRKEii1E7oxcKmEBomypX7FFwIxok7jejkBObry3vb6GWFGz/8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757475679; c=relaxed/simple;
-	bh=1uJdHbF/2p6WFaS/WRmXw/z/3nxH22R8M/oHMBKxIGQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ARCHfLONnwTjnI6YuI4VDLRHa2djrk8Gbs+atx3QkGBBnnkJIlpnG6kss6XmNvsZ+K9zAph6WtfwAFTP/LV+pkNuXzwO2gEP+kujW13olkQw27vAzpNkT2G9EeNvokX3hVOSNebX8qF/V/8xtLcLfdDIqrMVyY3m8Jk2mV5kiVI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=i9sMBVFK; arc=fail smtp.client-ip=40.107.244.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1757475808; c=relaxed/simple;
+	bh=4frlPi8kzTvANc0CZmIpyRrBFhMfQPfzuLpJKYKq1D8=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=R9aRdyXkkdAE+eq2LaGW0Mqkqc930aAK+E/BVXfG/yjsDt0Lvsp52K/indmSCS6QEQJRk0eqaN3iur3mhuxZeb9rNDJhZ3sRauERZuPV78VMsKJQ/YMiqeCsWk7gKkHY/Wr1bPU8Cip47G90pF/7P+DkPvMPP47bDyK/wnXzTY8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nctmD3Eu; arc=fail smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="i9sMBVFK"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nctmD3Eu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757475807; x=1789011807;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=4frlPi8kzTvANc0CZmIpyRrBFhMfQPfzuLpJKYKq1D8=;
+  b=nctmD3EuD075daug1iVo+kMW+iWVacMPgd4RiGoX2pYRuMP1INGjq105
+   vWbl2fbjzXMK/KA5J0D4JjIMEmSi6GB4jB3xGhd0bQ8Hdr+3ggBPiuFRx
+   CZtGIiGFZzsDHQvZocF67pJBC2iI4m116W7Gb3PiCHqOCRntekGsBvn9E
+   43HierMgB6vflqY9g3dDMt0RkBEKY5zMVv36SWSpzrXaz9JrA4RDwhlL1
+   pzzc3RtW3jgEBa+fCzPqPYpld8OdAse7mD35iG01I0HLO+/Bk7uvmLC0c
+   +WNbE0dMKqUBzoOH3o55tmYcjjWlKdXLQVhEpRpzUhOfkrC4zYPESz4vu
+   A==;
+X-CSE-ConnectionGUID: xgDlok1QRuKVrolUWZq+Dw==
+X-CSE-MsgGUID: fXjOhH4cRSWpjtXskwi3Kw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11548"; a="70392456"
+X-IronPort-AV: E=Sophos;i="6.18,253,1751266800"; 
+   d="scan'208";a="70392456"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 20:43:26 -0700
+X-CSE-ConnectionGUID: galmNsv6QQ69lDX2P6Q0vQ==
+X-CSE-MsgGUID: oG2TbBmnSxGv/A4tUAnrtA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,253,1751266800"; 
+   d="scan'208";a="173658874"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2025 20:43:25 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 9 Sep 2025 20:43:24 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Tue, 9 Sep 2025 20:43:24 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (40.107.92.77) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 9 Sep 2025 20:43:24 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qkOvYG8gYpN9N+Tuw4HNfW7ew9P7M535+48squEttE61VAQCjRcEE1wkCWmYV5MpjnMEmYKIU7l/8kY+DkcvQmHWITEII5wWi5uMar8kQf4rR6+A94ItzZGk2wTD5mY1Mcr1t+OC15LlANZHXPxWl2lAnXRnVwzIuNd7W9yZssZboyuf+M2bq4UjOvKjk5IBnfLIMoQTYu7caTX2raFhnJq5B6VhLFDcriPkRVq7YOep8i9BhgsCnfwpdJhGXaIA0qOAIuyDoxWnyLL+cr5iabIAunM+eUkrHVc3rVaIEn0tMiVF7YOsajZSkdp55wwBE2CmVDRCpGGBl1qYuFJmaQ==
+ b=UVl0kyArgJ6ehnhivUS4wBTdNRm2l+VKVLmd6STL2YJzWygLz5xbz+w6lLteMQRDcEMql+ZknndGjCuVhLWZXeDZE4sP5XwEI1SqIiz+6B2aQtqw2rsMblmPFGxCXQUjU1D4s82aVWykbfwfotsUOrhIVgp561QRpX6SvTW/VYOcRVSDDjHzqLLyVfJGSbtaKvwdhyHZJPgzZexM5002wPNa4Zw7tCDiX4i6UIj0inNQsqYwPNbLK7lQVYBGl2wewUyByPIjWLb7UdMMhX8GqB2iY665bjU8oDJz6+rcafD5eewCe6Fda25cVTVd8nJWzB5wvd82Bi6XGt5COP2UJw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e57k7knQGO7/P4zdu53XlbuNfFwJnDaDKDBucIRLWMI=;
- b=gseUrK1PmoaaKki6H4ItZsC0x/f+UQAW+Ml6mmxm/1v0Tka+tVrOoR274/Az0CjGdfpF36f5ECcYud38s+P1edAm/AgJfuJCCagrzd4zagi2uI/HahT7GY6VAdvnJKTxhJ5c9/QHld2qGTEO8t6V5bpUMYqMG1el8YlyOR4ZrQOOBahIAOOBLb28gA9YY/IkAx4V2cbathCULsQqWWutxrXfLdrRbR/seq1x3CG6lV7Kg3y9/q9R0loxZ6MplvUv/1GZrNOmi/IhcKtN+CVF3O5gI3NF2V8gadBwFsKSuM199Jzik8sz22QgVrE9dKfYPuEtrl1DyjpxrxUKrY4QgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e57k7knQGO7/P4zdu53XlbuNfFwJnDaDKDBucIRLWMI=;
- b=i9sMBVFKbSRV1ZQVfOHKo2U5HdGq0g5OkRlLjjOSB4HEh/iixe8pJwceb7Da+0UhJPAsWm/IsbAtyLeHXeihM9FFuXexsAJLg0RP5jr3wlb17z9ov+PbTwWnlfh9cQ101wiQjFdJKzq02f81BZ1+2YgGqx9uV244jwfmdw/hJ8rKj9lRW3fhRD/J4XELN9KMlA0phG2a9wPR7cn2Lmfi7IsAK5dTS/csFpWa+9Ds3/oJLkdzyRCRAln+9rVRdIYlvPi7hRSg9lwt99R0r16VsHjK96Pp4vQEraglVSnkXGuHikKsMK7DFS3VO2qlNvMdqreNr5x/YHIxAraFkxQZZg==
-Received: from SJ0PR03CA0369.namprd03.prod.outlook.com (2603:10b6:a03:3a1::14)
- by CH8PR12MB9792.namprd12.prod.outlook.com (2603:10b6:610:2b5::10) with
+ bh=pVQoyZQzJHXhHixb6H/3PuA8ZnINnLfVJPV9rM3ozik=;
+ b=XBuX15oDWRxmNkQr7QNY7qibW+2MJATZ0Uft5Cmpzt+9fFad94C7apur5sG5spGEWsqf7lYuY0fBNT2oBFReLILFXcYTZ3w6z1CiWx+xNwfQsC8xR+pxvnhSReUOmgV+SCaZfOnVqlXmMXJVRK9TcvCSmS70bCboMTxeRINvIOtNEkKkAvVnllXzgX5U5MmomMVX1G+D+8xZKbS4dd8ok3rozMB6m1Q8aUSfgljnxuGL53NLvg6o+b53Z06oahdPPLoZAieOmPFzGKlPe5TD7wWySTap5A449ayoRgEE1hWGtGUgTyLIPtqlsK0MIDpf1Xv2eeUyQknXl3dNbZKWgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by BL4PR11MB8846.namprd11.prod.outlook.com (2603:10b6:208:5aa::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 10 Sep
- 2025 03:41:11 +0000
-Received: from SN1PEPF00036F3D.namprd05.prod.outlook.com
- (2603:10b6:a03:3a1:cafe::c6) by SJ0PR03CA0369.outlook.office365.com
- (2603:10b6:a03:3a1::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9115.15 via Frontend Transport; Wed,
- 10 Sep 2025 03:41:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SN1PEPF00036F3D.mail.protection.outlook.com (10.167.248.21) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9115.13 via Frontend Transport; Wed, 10 Sep 2025 03:41:10 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 9 Sep
- 2025 20:40:47 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Tue, 9 Sep
- 2025 20:40:35 -0700
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Tue, 9 Sep 2025 20:40:31 -0700
-Date: Tue, 9 Sep 2025 20:40:28 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Jonathan Corbet <corbet@lwn.net>, <iommu@lists.linux.dev>, Joerg Roedel
-	<joro@8bytes.org>, Justin Stitt <justinstitt@google.com>, Kevin Tian
-	<kevin.tian@intel.com>, <linux-doc@vger.kernel.org>,
-	<linux-kselftest@vger.kernel.org>, <llvm@lists.linux.dev>, Bill Wendling
-	<morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
-	<nick.desaulniers+lkml@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, "Robin
- Murphy" <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, "Suravee
- Suthikulpanit" <suravee.suthikulpanit@amd.com>, Will Deacon
-	<will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez
-	<alejandro.j.jimenez@oracle.com>, James Gowans <jgowans@amazon.com>, "Michael
- Roth" <michael.roth@amd.com>, Pasha Tatashin <pasha.tatashin@soleen.com>,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.18; Wed, 10 Sep
+ 2025 03:43:22 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf%4]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
+ 03:43:22 +0000
+Message-ID: <919e104e-aeec-48d7-89bf-8d96ebce7e35@intel.com>
+Date: Tue, 9 Sep 2025 20:43:20 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 21/31] x86/resctrl: Read telemetry events
+To: "Luck, Tony" <tony.luck@intel.com>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?=
+	<ilpo.jarvinen@linux.intel.com>
+CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
+	<yu.c.chen@intel.com>, <x86@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
-Subject: Re: [PATCH v5 01/15] genpt: Generic Page Table base API
-Message-ID: <aMDzLC9nV47Xvud9@nvidia.com>
-References: <0-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
- <1-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
+References: <20250829193346.31565-1-tony.luck@intel.com>
+ <20250829193346.31565-22-tony.luck@intel.com>
+ <3b0546d4-d0bc-f76e-e1c2-eef2b4abf0f1@linux.intel.com>
+ <aLiH0QxFCP9EpmWn@agluck-desk3>
+From: Reinette Chatre <reinette.chatre@intel.com>
+Content-Language: en-US
+In-Reply-To: <aLiH0QxFCP9EpmWn@agluck-desk3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR04CA0211.namprd04.prod.outlook.com
+ (2603:10b6:303:87::6) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F3D:EE_|CH8PR12MB9792:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3202ec10-8b0a-4bc0-d157-08ddf01be248
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|BL4PR11MB8846:EE_
+X-MS-Office365-Filtering-Correlation-Id: c3724d15-adea-4d51-dae2-08ddf01c3093
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|82310400026|36860700013|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Fh1lpHf7wTivpkTSMN5CWpCL2iivEBTtLYQOYWD2cw0IVz9aOjrLSAJsDDHC?=
- =?us-ascii?Q?HE7whtKHBThXnW3yXP1rONOuy9eHg5meZeGY0xwaFiXPlUVTax9BGR3ksHva?=
- =?us-ascii?Q?nuDJ1P2hDl0RRMZNwfnISGd3A5OEsQu8hJUG+axW+bwz/dRazFfx1FW9QNVh?=
- =?us-ascii?Q?KRl+47kC5lAi8eBc6U6tk6ykyd/U1EkjkxykssPTioC/qCuuLzLU7g9Prae+?=
- =?us-ascii?Q?37MtEJrKIBA3XdtW7TPnO8Qj1IOQc1xYBFuKYSXiYz4DQJC4ehzjE+ltYmYm?=
- =?us-ascii?Q?vtCR6HGSREMlPzNR1arMOC860jCEfZ4QIQSPed6D1eqI5YGaeu3Hq17BtjGw?=
- =?us-ascii?Q?nyUh9mhwWJNfi2xwBwteAftwSFz49GYWSeY4W98tKNYS/JSCJaiu3vKPAzqA?=
- =?us-ascii?Q?sVmYa5FRXuBcdi/GPP6iOTzXteqbRsTMry2eRUcFdw1Y7H8bRp66ul2iYdo5?=
- =?us-ascii?Q?aymZyLbSX7LlmGoEx8sTRnIFWCowg8PVBtxguVmYU1eQwsZdXTXo0A4pGdu7?=
- =?us-ascii?Q?2eb6J5PjJB0FQrasmRhWjcKRIvI6JwN7U1QPZOIdhbfjsySft5UXvnFveqYK?=
- =?us-ascii?Q?whobzAOdGdjw6WdZpF8eKtP8ZAiCihsGxoWSBoqdf/zGcMUvWTNFvgGfVKaH?=
- =?us-ascii?Q?m9N0Zt5BeShkZGG9q67zrPpoffUqO1mfDKnECK2tIgecQrFeR8hoZ2YLwz8r?=
- =?us-ascii?Q?IMa3MOT0+QemE9Zzy2D3kUxXGF+k8O0E3NqD2oDM+T509mcLF220Cstiy4AC?=
- =?us-ascii?Q?lHY4ECjZpukfF/khPs5gP2AwzDPw+y2BGBUcFkgZworoNELpAeoIRJ+bSlms?=
- =?us-ascii?Q?+D7fBN+KkNmchPHfi4Omassbqdm/DWjPYELykFIRPQwj9fMeLgClHTA3IxQ6?=
- =?us-ascii?Q?ngVqSfiEjq3CK2prbeFYgw5HfLjq9qPGWpOPpVPw1GiJAdxx2HYKtah8Qidw?=
- =?us-ascii?Q?mOC4Bf+nSComi+zUR7EGzsR/Qq/iMvjTnOc2HprilGwI1ZzcVS1SvJqxvUvu?=
- =?us-ascii?Q?t9SELNtfzT4S8U4YQUgXxI+oDzfGqGEasg4qJqoUjZGL3k7Xyt3pTrDZubUM?=
- =?us-ascii?Q?LIWJDJR/DetMOJXXrZPFrsC0fDpOzg8PJVjheHUXZNen/Ki3bjt1T2fq/fJl?=
- =?us-ascii?Q?8qnCAWZUUt94nDTs/lLgWmwDCVQsY6TMgTKUItWfspH8AWIPb4P1oL2izhGr?=
- =?us-ascii?Q?c+Gcarvw7EsPpbXR/f96SOoDQ5xxk0mklpteq2WLXeVOCZH3KwMrJmXbyTYQ?=
- =?us-ascii?Q?hx8MnUVxsrGO4XzMXdVdnV8Yd5dVZM8QhDLx0zA6K7+dChUaoD6Bikvfbi6r?=
- =?us-ascii?Q?ERZkI+VMFvs3yTvh1jFjAGq8KFQgmpQz5vjHCEtxUEZS9ZHdG5ePUTSkj6LS?=
- =?us-ascii?Q?31PwxeL8xZHrF3fmJeLI11IQuiyWAi+HnNV1JpmFVr2VjfW/eIV5uPP1G0nc?=
- =?us-ascii?Q?gDF+OTy1xbVi3Al6KNMtD3tFmMo/+3gT4ZGYnLi1uNqka3l6raosY6dutZHD?=
- =?us-ascii?Q?RrLqBClntOyT+iP9MIqwOMLlrntG27DmfH+Q?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(36860700013)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 03:41:10.4937
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?R3dFclFsTGF2SFVoeVBjbGVZWGk1b0tlZXdtbSthRHlBcVNVL2toWjM5c0Rn?=
+ =?utf-8?B?anNwZmlia1VFNVFzS0hOTTUwVi9yNWVrZWFiMkN0K2UzMWRaYlEzMVVDd0gx?=
+ =?utf-8?B?T1ZIanQ0bzNYNGdKWGJOcitHOW92TFIwOURjcXFGTS91V3RZYlhOeTFCQlFB?=
+ =?utf-8?B?bUdqMjI1eXpuVDZoYW91SUdWZlM1bStrUE1UMUIwQWhQYkU3R04vNjlMalZT?=
+ =?utf-8?B?bnRITXdnTllySmhRK3EvTytMMXlPdi95UjE1OHhUQ2QvQkFYa01oc2h1bEpH?=
+ =?utf-8?B?aGpqdVZFZWhWYzJ0cW9MZWV4VWNwN2xibDBLLzF3M3g2SmtCanBHTHVDRU1M?=
+ =?utf-8?B?OEJBY0NIREYza3FTTUhmQUJNanBGelVCajQ2TWxMWHdvZlR2ZVJKa24yZDRI?=
+ =?utf-8?B?K3lBWEhFd1ZIR0FDdkNLNWw2cVdJZlVyR0huS2hBeWwxWGY0eGtRWGRNWVMw?=
+ =?utf-8?B?eEc2MDdjRi80YWU0QlYrUDNSWE92SVRTRzZ5YXp4VVJzQlpGVzVSNTFxTFZP?=
+ =?utf-8?B?Um1yakw3MFV3enV6OE5YSlpaVmJscktWdmdnNk9nYTIvZ0MxeFQ2Mzg2VTAz?=
+ =?utf-8?B?bjNqd3JNd3dPTFYyN1E0V2FXeWZFVjdJc0pldWo2OTdMVlE1eDcydEpIVUk2?=
+ =?utf-8?B?ZzdTM3pLcUpoWFVFOHJ0T1VncDMxdHhWd1VTN3BCZTVsdWc5WnJnb1FmbS9L?=
+ =?utf-8?B?WHg4M3JmcGd0Tnk4YjczY3c3cDFubjNsbUJtSTIzU3ZaRytvVWM3ZjlROE1H?=
+ =?utf-8?B?a3h2WVFLUXRDMHJxcXpSZHd1dzFDL1pWeXl4YW55SjBhY3FXa1ZXalpWcVRK?=
+ =?utf-8?B?R0pCYUxWVVdWblVkOXpLZkR6Sy9sY2JuUk0zRE02TUhVaGF1eFdHNXE0dVFV?=
+ =?utf-8?B?aUpiRnNYU2FrbEdDdCtvNWRrS25PbStvS3FRQlU1Mm93cjJrT0Zzc2FCMjhu?=
+ =?utf-8?B?a1dtRDRmQ3VINXIzNXlkblBZaWFWYmxXaVV1aXBxNk90YzFteEtUM3ZMdm1G?=
+ =?utf-8?B?SENScEJzUkVPaWNKY1RuN0tBZElVc3FkTVhQek5YQytHTUFYbDA3Y0dVUzhq?=
+ =?utf-8?B?U1N5NUR0Tzk3dnRsR01HbHdwZUpTTHIrN3NRSjhMY1I3cmEzNmFoeDkvS0ZT?=
+ =?utf-8?B?Mlk3V2o0OUdPMDVIcWdVbi9CU0pMK1oreVR4blIzS1o2dU5GSXI4UVc5c29h?=
+ =?utf-8?B?TVpoZEU3VFhSSzdINnFVei9iUXZQSytXNWtOaFhlekJPYVRYN3Z2bmY0RjlF?=
+ =?utf-8?B?RTErNGVONkRDRmE0SzRROEFjdEtzUllITWxaWU55aU1xQWRkbE1OZkkrbFlR?=
+ =?utf-8?B?d2VqdlRDd2NZZGM3WkNkNlVzWC9vVVh1Q1JkWkdwdVBweWxMd1pCZUJqWkRp?=
+ =?utf-8?B?V0lPMnBwMHdQU3Q4Nm84R2lxTHh0VExYaERmei90ZkxIRzlpNCtDTGdrd24r?=
+ =?utf-8?B?NEZLM00wUm9TMktXWWNUK2pzcXhYbmx2ZmIvYnM4N3FEbDBZSDdObnd2Zytp?=
+ =?utf-8?B?S2s3N0Zpa284RWhzaFlFOS9Fc2JEV3hNdHByVHB1V1JrbktobTNiNG5JZDJy?=
+ =?utf-8?B?c3R2elRnQWdLV01iQXZBWU1YV0VmTEVMdWVOQmNYeEdYOWRJNmhMQnVVS3pI?=
+ =?utf-8?B?d1AwaVJBQ2swcWg1a2ErNnJoQzRHYjhnZzYwUzZKSWdtUjIxNG9ORXNucThl?=
+ =?utf-8?B?M2NHb2JpTGRxWUZBTTViTTdEQzNjSUVqWVJ0bEZ0b01YT3NvYmx5ejFkYW8x?=
+ =?utf-8?B?ZDR0OTMrRFJSMGhJSys3OWZ5QzBSVHBXMk9PUVFpM3JRdTB6czBMeE9RckpG?=
+ =?utf-8?B?MVVMRDMvaWpnNzhjQVZMWHh2ckZMZmVkUTFQN0RTSWpSOEdBRkNsRk95UzB5?=
+ =?utf-8?B?eFh0TStPZTg3dXV1TGxINXdVcU8wYmlxWk9SdkozMVBXUUJtd09nSVg4Z0RO?=
+ =?utf-8?Q?jHat1FfTZX8=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Zm94UmRIYXo2KzUzSTlCUXNDeG5Sa09KQ0NoZlNlNThPdzR5YzBnUDY0VG9t?=
+ =?utf-8?B?eUhJQnhwQ05yL09xNFpqQVJZcTRPaU01Q29pUnFPV0VrSjFMRmE4Q2pwM2F6?=
+ =?utf-8?B?MHlCWGpmem9xVzYrM3QyZXE1cDAzclZpenJRVkdPbHRkbEhkaFROZjZxdngz?=
+ =?utf-8?B?VzduSUpMNUpyRVNIYTd4eXdaVDdxMTY2MGExKzFBbGxyVEkreEQwYzBkUnBh?=
+ =?utf-8?B?b29GTnJlaGFBMWVzRTVydUxqcVQ4ekdxM1JkWkZPSEtkZVNJWG45MlRKcHk5?=
+ =?utf-8?B?Y0R5ZlBuYTJhNGJpazRXV3dvWTk4cGxsSk9maXdPNzdDNGpaQURZNzBob090?=
+ =?utf-8?B?Z0R3VHBqZGZKaHZkRmszYzVZY0dlZnFtSG1Ra2pWVm1lMHVUQWJpQi8yeFdr?=
+ =?utf-8?B?VzAvVGxzUC8wVzNydUMrdTdMRDlzMTR2QWNyRlUyVFZGaW8rSmo3Q1pidjZv?=
+ =?utf-8?B?THY2ZTRTbUxsc0tpbk1OZ01aQS9Dd3JsRW45Zk9NejVXWjNnLzJWeDV3SlZ6?=
+ =?utf-8?B?MHFidGRXVGVyaVNTejFPYzJxbllxSnk4eXRJbTlpd2pLckRKaUVWWjM3L0tr?=
+ =?utf-8?B?RDVaMnZVQjFocklsdjljWjNFanNXQnhXUmxpYStvOGdtUVRsZnloYnZkWjNs?=
+ =?utf-8?B?T09TamkxUHhKblF0dGdDcEdvTUxXZUVKLytIUStwV1lHaDJsVThmdno4UStP?=
+ =?utf-8?B?ZTM1MEtMamRrY1g4cENNTzM2aHdOUUo1eDZ4c0h5T0VoemFXejlIdkhiYVV2?=
+ =?utf-8?B?RWl0YU1JQlg4YzNhTm0vUk1vYnYyN3FScDVCZVlaVi9QWXFYQkZLNXhhWTJK?=
+ =?utf-8?B?aGdCVGVMbVZ3TWFvOGZjYnVWS3lRQmo0a2xXM01ROHM4OHVHOTRGOUlhb3dy?=
+ =?utf-8?B?UWRickFncDVmM1lJQWQ5eDRHd3FYaVpabGxBRVF3T2FpMSt0MGN1eFliL3cw?=
+ =?utf-8?B?Ri9MMXpXV0hsa09WWHdERnBZa1BzYXY4N3lsSXp3TnlxQ2s0a0wwUmVPcW45?=
+ =?utf-8?B?eWwvWlJIMnU2Szg2RmZtbnN1c1ZMVGRqNHFST3h1ODk0MWFLS0I0aThrQjdj?=
+ =?utf-8?B?TE5yQ21ROUNGZFBVV3QxTUZOT0xHbXFPYVZORlVHTWtzakEvcFZsUWExS1B0?=
+ =?utf-8?B?UlJzU0NQTm5SOGxhZVc0SWR3MCtueVduVkV2Nks3R0ZNZjA0TjBGRk5DbmM0?=
+ =?utf-8?B?dnFBQk93M1IwWjd1NXdjaHArNlR3ZlNybnkzZ2cyT2VPZmJVdWZFN0lNdTl0?=
+ =?utf-8?B?SHJrbDlpL1RyY0d1MkNwQ0Z5SDNwOTZtOG5MbGVkSUgrVXFoblF3ei9EU2xv?=
+ =?utf-8?B?Y1ludE15ajBkUi9vU3FPMUhPb2xpdXBybDhkdTluSVZMTkMrcWJaWEY1Kzl4?=
+ =?utf-8?B?Vi9aMHRIY1RZbXgxb3B2eG5Ic0JrTU1QTjd5cmpKN054ZWVaWUdJYmhYaDhF?=
+ =?utf-8?B?M3I4aFUvUzdPbGplelZjODYvaHd2ME0vTE85M3lqZzJSK1pHcGRmb3c4d2pQ?=
+ =?utf-8?B?Vks1a3hGYkdTMXZaSUhEN2JCV1YwOVFrT3lIT0tFczM1MTJHaWY3MENDbkZU?=
+ =?utf-8?B?Sjd2MnVYdFR5d3R3bHVoaUNyT25aWUx4VUkrZTVGVUp0RzBSays3MDd3bGZ6?=
+ =?utf-8?B?MHVUaTBNNmZIRzUwT0RuQlI2MFdpZENReExVcVgrY2g0SHhTU3JQaFk1cS9G?=
+ =?utf-8?B?U3RnSlZWRVJwaXZMM3ZjRXJJa00xK2pyWmdHWC91cFZQd2FNUTdzQTNMM3RB?=
+ =?utf-8?B?OUZ0SlNQR3pESGRsWHFPMWtKRVpXMTExY20wdTJIb0IzYUdNUTJGSWtjUDFr?=
+ =?utf-8?B?a29rU21tRi93bWcrRmUwTEZFWXA0MCtoY1VQcUNwNkoyZFpGcUNQS2hqOW9i?=
+ =?utf-8?B?RlZoZjRCVWJ2bGQ4SExuYnRQalhlUWpuanRpRjl0QzNSV0dvbDRFdkFTbHFu?=
+ =?utf-8?B?cGNBM2RyQTE1Q3gvUTYvSjJHREpRV210TlBjdTRrQmNHR0o1Z3BIajF1eFRX?=
+ =?utf-8?B?RDQxSCttVWVnMlpMWW04SStGZEVLRXQ4UXZnKzE0eGl3T0JRSlJsMXd5WEJ6?=
+ =?utf-8?B?cGdjNXVzZnliTElxQlJXTUFrVjNUQ1dTRGJJL1pJQmc3NFArWHM5OVVNcHJL?=
+ =?utf-8?B?Y0dvTzk1MjlZSEIyQUcyM2puT1pzUXpSZ1NuNS9kMStjN1BzWlk2L015SWFm?=
+ =?utf-8?B?OGc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3724d15-adea-4d51-dae2-08ddf01c3093
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 03:43:22.2200
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3202ec10-8b0a-4bc0-d157-08ddf01be248
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF00036F3D.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9792
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: EJvE1KMaGlLJEqWbmcSGa1G0d3iuTWyXZ3Dk81Ghdkt9CTheTQDiVsbfrNj6km4yyLIvwII223x2q5kE28pbFfsQ1fbAEKQ9dwp6TGDj39k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR11MB8846
+X-OriginatorOrg: intel.com
 
-On Wed, Sep 03, 2025 at 02:46:28PM -0300, Jason Gunthorpe wrote:
-> +/**
-> + * pt_entry_oa_lg2sz() - Return the size of a OA entry
+Hi Tony,
 
-an OA
+On 9/3/25 11:24 AM, Luck, Tony wrote:
 
-> + * @pts: Entry to query
-> + *
-> + * If the entry is not contiguous this returns pt_table_item_lg2sz(), otherwise
-> + * it returns the total VA/OA size of the entire contiguous entry.
-> + */
-> +static inline unsigned int pt_entry_oa_lg2sz(const struct pt_state *pts)
+> Agreed. See new mark_telem_region_unusable() in updated patch below.
+> Also pushed to
+> git://git.kernel.org/pub/scm/linux/kernel/git/aegl/linux.git rdt-aet-v10-wip
+> 
+> -Tony
+> 
+> P.S. In addition to all the extra #include files you suggested, I found
+> a few others missing. So those are added as needed in the series.
+> 
+> From 163824a2e10de9f63e20f0bc9f86b8c14f58bfcb Mon Sep 17 00:00:00 2001
+> From: Tony Luck <tony.luck@intel.com>
+> Date: Mon, 25 Aug 2025 10:47:06 -0700
+> Subject: [PATCH 21/31] x86/resctrl: Read telemetry events
+> 
+> Telemetry events are enumerated by the INTEL_PMT_TELEMETRY subsystem.
+> resctrl enables events with resctrl_enable_mon_event() passing a pointer
+> to the pmt_event structure for the event within the struct event_group.
+> The file system stores it in mon_evt::arch_priv.
+
+This is getting to be very detailed description of code as opposed to
+what the code does ... hmmm ... looks like I already made an attempt
+with a proposal in v8 that was just ignored without any reason. <sigh>
+
+> 
+> Mark regions that did not pass the checks in skip_telemetry_region()
+> so they will not be used by intel_aet_read_event().
+
+Apart from skip_telemetry_region() -> skip_telem_region() I think this
+should lighten up on the code details. Compare with, for example:
+
+	Mark telemetry regions that did not pass the sanity checks by
+	clearing their MMIO address fields so that they will not be
+	used when reading events.  
+
+(i.e, more about what the code does instead of actual code)
+
+> 
+> Add a check to resctrl_arch_rmid_read() for resource id
+> RDT_RESOURCE_PERF_PKG and directly call intel_aet_read_event()
+> passing the enum resctrl_event_id for the event and the arch_priv
+> pointer that was supplied when the event was enabled.
+
+Also heavy on code details while written as though reader is familiar
+with function (intel_aet_read_event()) introduced in this patch. Compare
+with, for example:
+	Introduce intel_aet_read_event() to read telemetry events for
+	resource RDT_RESOURCE_PERF_PKG. There may be multiple aggregators ...
+	
+> 
+> There may be multiple aggregators tracking each package, so scan all of
+> them and add up all counters. Aggregators may return an invalid data
+> indication if they have received no records for a given RMID. Return
+> success to the user if one or more aggregators provide valid data.
+> 
+> Resctrl now uses readq() so depends on X86_64. Update Kconfig.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  arch/x86/kernel/cpu/resctrl/internal.h  |  7 +++
+>  arch/x86/kernel/cpu/resctrl/intel_aet.c | 65 ++++++++++++++++++++++++-
+>  arch/x86/kernel/cpu/resctrl/monitor.c   |  3 ++
+>  arch/x86/Kconfig                        |  2 +-
+>  4 files changed, 75 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+> index 9ddfbbe5c3cf..8986071dd72a 100644
+> --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> @@ -172,9 +172,16 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
+>  #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
+>  bool intel_aet_get_events(void);
+>  void __exit intel_aet_exit(void);
+> +int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid,
+
+Patch 24 goes through effort of making RMID unsigned while intel_aet_read_event()
+casts an unsigned RMID to signed?
+
+> +			 void *arch_priv, u64 *val);
+>  #else
+>  static inline bool intel_aet_get_events(void) { return false; }
+>  static inline void __exit intel_aet_exit(void) { }
+> +static inline int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id evtid,
+> +				       void *arch_priv, u64 *val)
 > +{
-> +	return pt_entry_num_contig_lg2(pts) + pt_table_item_lg2sz(pts);
+> +	return -EINVAL;
 > +}
-------
-
-> + *  level
-> + *     The number of table hops from the lowest leaf. Level 0
-> + *     is always a table of only leaves of the least significant VA bits. The
-
-Hmm, I am a bit confused here. I thought "leaf" was meant to be a
-"leaf" table? But here "a table of only leaves" makes it feel like
-a "leaf" table entry?
-
-Also, isn't "the least significant VA bits" the page offset?
-
-> + *  table
-> + *     A linear array of entries representing the translation items for that
-> + *     level.
-> + *  index
-> + *     The position in a table of an element: item = table[index]
-> + *  item
-> + *     A single position in a table
-> + *  entry
-> + *     A single logical element in a table. If contiguous pages are not
-> + *     supported then item and entry are the same thing, otherwise entry refers
-> + *     to the all the items that comprise a single contiguous translation.
-
-So, an "entry" is a group of "items" if contiguous pages (huge
-page?) are supported. Then, the "entry" sounds like a physical
-(v.s. "logical") table entry, e.g. a PTE that we usually say?
-
-> +#if !IS_ENABLED(CONFIG_GENERIC_ATOMIC64)
-> +static inline bool pt_table_install64(struct pt_state *pts, u64 table_entry)
-> +{
-> +	u64 *entryp = pt_cur_table(pts, u64) + pts->index;
-> +	u64 old_entry = pts->entry;
-> +	bool ret;
-> +
-> +	/*
-> +	 * Ensure the zero'd table content itself is visible before its PTE can
-> +	 * be. release is a NOP on !SMP, but the HW is still doing an acquire.
-> +	 */
-> +	if (!IS_ENABLED(CONFIG_SMP))
-> +		dma_wmb();
-
-Mind elaborating why SMP doesn't need this?
-
-> +/*
-> + * PT_WARN_ON is used for invariants that the kunit should be checking can't
-> + * happen.
-> + */
-> +#if IS_ENABLED(CONFIG_DEBUG_GENERIC_PT)
-> +#define PT_WARN_ON WARN_ON
-> +#else
-> +static inline bool PT_WARN_ON(bool condition)
-> +{
-> +	return false;
-
-Should it "return condition"?
-
-Otherwise, these validations wouldn't be effective?
-
-drivers/iommu/generic_pt/pt_iter.h:388: if (PT_WARN_ON(!pts->table_lower))
-drivers/iommu/generic_pt/pt_iter.h-389-         return -EINVAL;
---
-drivers/iommu/generic_pt/pt_iter.h-429-
-drivers/iommu/generic_pt/pt_iter.h:430: if (PT_WARN_ON(!pt_can_have_table(pts)) ||
-drivers/iommu/generic_pt/pt_iter.h:431:     PT_WARN_ON(!pts->table_lower))
-drivers/iommu/generic_pt/pt_iter.h-432-         return -EINVAL;
-
-> +/**
-> + * pt_load_entry() - Read from the location pts points at into the pts
-> + * @pts: Table index to load
-> + *
-> + * Set the type of entry that was loaded. pts->entry and pts->table_lower
-> + * will be filled in with the entry's content.
-> + */
-> +static inline void pt_load_entry(struct pt_state *pts)
-> +{
-> +	pts->type = pt_load_entry_raw(pts);
-> +	if (pts->type == PT_ENTRY_TABLE)
-> +		pts->table_lower = pt_table_ptr(pts);
-> +}
-
-I see a couple of callers check pts->type. Maybe it could return
-pts->type, matching with pt_load_entry_raw()?
-
-> diff --git a/drivers/iommu/generic_pt/pt_fmt_defaults.h b/drivers/iommu/generic_pt/pt_fmt_defaults.h
-> new file mode 100644
-> index 00000000000000..19e8f820c1dccf
-> --- /dev/null
-> +++ b/drivers/iommu/generic_pt/pt_fmt_defaults.h
-> @@ -0,0 +1,193 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
-> + *
-> + * Default definitions for formats that don't define these functions.
-> + */
-> +#ifndef __GENERIC_PT_PT_FMT_DEFAULTS_H
-> +#define __GENERIC_PT_PT_FMT_DEFAULTS_H
-> +
-> +#include "pt_defs.h"
-> +#include <linux/log2.h>
-
-<> precedes ""
-
-> +#ifndef pt_pgsz_lg2_to_level
-> +static inline unsigned int pt_pgsz_lg2_to_level(struct pt_common *common,
-> +						unsigned int pgsize_lg2)
-> +{
-> +	return (pgsize_lg2 - PT_GRANULE_LG2SZ) /
-> +	       (PT_TABLEMEM_LG2SZ - ilog2(PT_ITEM_WORD_SIZE));
-> +	return 0;
-
-"return 0" should likely be dropped.
-
-> +/*
-> + * Format supplies either:
-> + *   pt_entry_oa - OA is at the start of a contiguous entry
-> + * or
-> + *   pt_item_oa  - OA is correct for every item in a contiguous entry
-
-What does the "correct" mean here?
-
-> +/**
-> + * pt_range_to_end_index() - Ending index iteration
-> + * @pts: Iteration State
-> + *
-> + * Return: the last index for the iteration in pts.
-> + */
-> +static inline unsigned int pt_range_to_end_index(const struct pt_state *pts)
-> +{
-> +	unsigned int isz_lg2 = pt_table_item_lg2sz(pts);
-> +	struct pt_range *range = pts->range;
-> +	unsigned int num_entries_lg2;
-> +
-> +	if (range->va == range->last_va)
-> +		return pts->index + 1;
-> +
-> +	if (pts->range->top_level == pts->level)
-> +		return log2_div(fvalog2_mod(pts->range->last_va,
-> +					    pts->range->max_vasz_lg2),
-> +				isz_lg2) +
-> +		       1;
-
-How about:
-		return 1 + log2_div(...);
-?
-
-> +static __always_inline struct pt_range _pt_top_range(struct pt_common *common,
-> +						     uintptr_t top_of_table)
-> +{
-> +	struct pt_range range = {
-> +		.common = common,
-> +		.top_table =
-> +			(struct pt_table_p *)(top_of_table &
-> +					      ~(uintptr_t)PT_TOP_LEVEL_MASK),
-> +		.top_level = top_of_table % (1 << PT_TOP_LEVEL_BITS),
-
-Since top_level is unsigned, would it be faster to do bitwise:
-		.top_level = top_of_table & PT_TOP_LEVEL_MASK,
-?
-
-> +/*
-
-/**
-
-> + * pt_walk_descend_all() - Recursively invoke the walker for a table item
-> + * @parent_pts: Iteration State
-> + * @fn: Walker function to call
-> + * @arg: Value to pass to the function
-> + *
-> + * With pts pointing at a table item this will descend and over the entire lower
-> + * table. This creates a new walk and does not alter pts or pts->range.
-> + */
-> +static __always_inline int
-> +pt_walk_descend_all(const struct pt_state *parent_pts, pt_level_fn_t fn,
-> +		    void *arg)
--------
-
-> +/**
-> + * pt_compute_best_pgsize() - Determine the best page size for leaf entries
-> + * @pgsz_bitmap: Permitted page sizes
-> + * @va: Starting virtual address for the leaf entry
-> + * @last_va: Last virtual address for the leaf entry, sets the max page size
-> + * @oa: Starting output address for the leaf entry
-> + *
-> + * Compute the largest page size for va, last_va, and oa together and return it
-> + * in lg2. The largest page size depends on the format's supported page sizes at
-> + * this level, and the relative alignment of the VA and OA addresses. 0 means
-> + * the OA cannot be stored with the provided pgsz_bitmap.
-> + */
-> +static inline unsigned int pt_compute_best_pgsize(pt_vaddr_t pgsz_bitmap,
-> +						  pt_vaddr_t va,
-> +						  pt_vaddr_t last_va,
-> +						  pt_oaddr_t oa)
-> +{
-> +	unsigned int best_pgsz_lg2;
-> +	unsigned int pgsz_lg2;
-> +	pt_vaddr_t len = last_va - va + 1;
-> +	pt_vaddr_t mask;
-> +
-> +	if (PT_WARN_ON(va >= last_va))
-> +		return 0;
-> +
-> +	/*
-> +	 * Given a VA/OA pair the best page size is the largest page side
-> +	 * where:
-> +	 *
-> +	 * 1) VA and OA start at the page. Bitwise this is the count of least
-> +	 *    significant 0 bits.
-> +	 *    This also implies that last_va/oa has the same prefix as va/oa.
-> +	 */
-> +	mask = va | oa;
-> +
-> +	/*
-> +	 * 2) The page size is not larger than the last_va (length). Since page
-> +	 *    sizes are always power of two this can't be larger than the
-> +	 *    largest power of two factor of the length.
-> +	 */
-> +	mask |= log2_to_int(log2_fls(len) - 1);
-> +
-> +	best_pgsz_lg2 = log2_ffs(mask);
-> +
-> +	/* Choose the higest bit <= best_pgsz_lg2 */
-
-highest
-
-> +/* Compute a */
-> +#define log2_to_int_t(type, a_lg2) ((type)(((type)1) << (a_lg2)))
-> +static_assert(log2_to_int_t(unsigned int, 0) == 1);
-> +
-> +/* Compute a - 1 (aka all low bits set) */
-> +#define log2_to_max_int_t(type, a_lg2) ((type)(log2_to_int_t(type, a_lg2) - 1))
-> +
-> +/* Compute a / b */
-> +#define log2_div_t(type, a, b_lg2) ((type)(((type)a) >> (b_lg2)))
-> +static_assert(log2_div_t(unsigned int, 4, 2) == 1);
-
-I skimmed through these macros and its callers. They are mostly
-dealing with VA, OA, and mask, which feels like straightforward
-bit-masking/shifting operations.
-
-E.g.
-log2_to_int_t = 64bit ? BIT_ULL(lg2) : BIT(lg2);
-log2_to_max_int_t = 64bit ? GENMASK_ULL(lg2 - 1, 0) : GENMASK(lg2 - 1, 0);
-
-What's the benefit from making them as arithmetic ones?
-
-> diff --git a/include/linux/generic_pt/common.h b/include/linux/generic_pt/common.h
-> new file mode 100644
-> index 00000000000000..a29bdd7b244de6
-> --- /dev/null
-> +++ b/include/linux/generic_pt/common.h
-> @@ -0,0 +1,134 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2024-2025, NVIDIA CORPORATION & AFFILIATES
-> + */
-> +#ifndef __GENERIC_PT_COMMON_H
-> +#define __GENERIC_PT_COMMON_H
-> +
-> +#include <linux/types.h>
-> +#include <linux/build_bug.h>
+>  #endif
+>  
+>  #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
+> diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> index e36b3790733b..170158d40e27 100644
+> --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+> @@ -12,13 +12,17 @@
+>  #define pr_fmt(fmt)   "resctrl: " fmt
+>  
+>  #include <linux/array_size.h>
 > +#include <linux/bits.h>
+>  #include <linux/cleanup.h>
+>  #include <linux/compiler_types.h>
+> +#include <linux/container_of.h>
+>  #include <linux/cpu.h>
+>  #include <linux/err.h>
+> +#include <linux/errno.h>
+>  #include <linux/init.h>
+>  #include <linux/intel_pmt_features.h>
+>  #include <linux/intel_vsec.h>
+> +#include <linux/io.h>
+>  #include <linux/overflow.h>
+>  #include <linux/printk.h>
+>  #include <linux/resctrl.h>
+> @@ -131,13 +135,28 @@ static bool skip_telem_region(struct telemetry_region *tr, struct event_group *e
+>  	return false;
+>  }
+>  
+> +/*
+> + * Clear the address field of regions that did not pass the checks in
+> + * skip_telem_region() so they will not be used by intel_aet_read_event().
+> + * This is safe to do because intel_pmt_get_regions_by_feature() allocates
+> + * a new pmt_feature_group structure to return to each caller and only makes
+> + * use of the pmt_feature_group::kref field when intel_pmt_put_feature_group()
+> + * returns the structure.
+> + */
+> +static void mark_telem_region_unusable(struct telemetry_region *tr)
+> +{
+> +	tr->addr = NULL;
+> +}
+> +
+>  static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
+>  {
+>  	bool usable_events = false;
+>  
+>  	for (int i = 0; i < p->count; i++) {
+> -		if (skip_telem_region(&p->regions[i], e))
+> +		if (skip_telem_region(&p->regions[i], e)) {
+> +			mark_telem_region_unusable(&p->regions[i]);
+>  			continue;
+> +		}
+>  		usable_events = true;
+>  	}
+>  
+> @@ -215,3 +234,47 @@ void __exit intel_aet_exit(void)
+>  		(*peg)->pfg = NULL;
+>  	}
+>  }
+> +
+> +#define DATA_VALID	BIT_ULL(63)
+> +#define DATA_BITS	GENMASK_ULL(62, 0)
+> +
+> +/*
+> + * Read counter for an event on a domain (summing all aggregators
+> + * on the domain). If an aggregator hasn't received any data for a
+> + * specific RMID, the MMIO read indicates that data is not valid.
+> + * Return success if at least one aggregator has valid data.
+> + */
+> +int intel_aet_read_event(int domid, int rmid, enum resctrl_event_id eventid,
+> +			 void *arch_priv, u64 *val)
+> +{
+> +	struct pmt_event *pevt = arch_priv;
+> +	struct event_group *e;
+> +	bool valid = false;
+> +	u64 evtcount;
+> +	void *pevt0;
+> +	int idx;
+> +
+> +	pevt0 = pevt - pevt->idx;
+> +	e = container_of(pevt0, struct event_group, evts);
+> +	idx = rmid * e->num_events;
 
-In alphabetical order.
+Looks like idx can also be unsigned (since rmid and num_events are unsigned) and
+should be printed with %u?
 
-Thanks
-Nicolin
+> +	idx += pevt->idx;
+> +
+> +	if (idx * sizeof(u64) + sizeof(u64) > e->mmio_size) {
+> +		pr_warn_once("MMIO index %d out of range\n", idx);
+> +		return -EIO;
+> +	}
+> +
+> +	for (int i = 0; i < e->pfg->count; i++) {
+> +		if (!e->pfg->regions[i].addr)
+> +			continue;
+> +		if (e->pfg->regions[i].plat_info.package_id != domid)
+> +			continue;
+> +		evtcount = readq(e->pfg->regions[i].addr + idx * sizeof(u64));
+> +		if (!(evtcount & DATA_VALID))
+> +			continue;
+> +		*val += evtcount & DATA_BITS;
+> +		valid = true;
+> +	}
+> +
+> +	return valid ? 0 : -EINVAL;
+> +}
+
+Reinette
