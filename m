@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3E7334391
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0E333EB1B
 	for <patches@lists.linux.dev>; Fri, 12 Sep 2025 22:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757715073; cv=none; b=QepVT35vOcQ+5cgibyPIWsHqSXRzzU9V6+GJKjrY/dfs4dSE3GFjdzliY2v8L+DNIrLk331wkpX3DziSqGn7T0o53+RHbpJ102N++BAgxLKB1uaIFS/f54bVA4jUnyFfNRBSwAAjvi9qoJnt3QK9rPQvDjTiYsPMdeGi7kzSVM4=
+	t=1757715073; cv=none; b=MdM9QBq4JX3GULbWdmr8A7GyV1UQu5qlefkEDwZqOoXkDWGw3nLe9t9Ehp+laTXtboIlIsb1At9jrhI/x3etByrR/nMgIcVlLMkraMOsgZn5bmiqor94WKy7RDgZM0D4gxbGgDltd0qUK3F/lFf9i3okqf0DJ9/mEacQr2m7sVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757715073; c=relaxed/simple;
-	bh=Zo7eX0MprfL/R/qdhLarnJhHu9ZtgO+AShM/+7+ExZk=;
+	bh=gf7CpiVBMV8TkYcnM8i16uDQlFIz7QT1NCE3HrlDU7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tw/ZHiYWO0mofo7FwMKgBcKiP/11FPIdNcZEuKp3ucMn7XbtOMB0IvdmQDiBNGRQHgw3DdlmbE0nBpgd1HneXKMsZy/5DdRZ9fQVY9inTQCulPFWjss3sUNGmTKl/hvY/Om4SAypEq6FtTcqqkanVTEXmskHohyqmoKYcNzOOAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GvR0G44Y; arc=none smtp.client-ip=192.198.163.17
+	 MIME-Version; b=ASwbWidhV8D+ma9I2wJAbKFZoIFBSuHZKvQT/xB8VpHEOQ9cHcwmmKjWSQIW2eTkrLV/QajsvyYwspXm5YnHNZLyEvDYA/GEXHgnT97VhEyhvDvyxg5T2IljVEl/lat48tFuu5sXwFD0dRRH3lQPVJZnO5jBnl95Wc3UG6DtOYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Gpodz6B3; arc=none smtp.client-ip=192.198.163.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GvR0G44Y"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gpodz6B3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1757715071; x=1789251071;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=Zo7eX0MprfL/R/qdhLarnJhHu9ZtgO+AShM/+7+ExZk=;
-  b=GvR0G44Y3l5fCjH+fJA9XJ1lS0bBudyZe2Ghmu5HAfLMDLtquJ/4uYgY
-   P8NMtHsZ5Tmj8m5Bpmv2QAdDJ1JLpSFpoWeMH86/6VACrH9nJPMq/Jxnl
-   3bvmT07/TQTC5/OXeDCgfXi6ca9K41bIm2vOrc1xwd/7KxPagLvk76Z7q
-   KN8Y8FbDlXkabBP/Z16mbWysDI6WpbZahKMmaudt6q/n9ufwvZ3+QfIF9
-   HPB0oTrsjULVD7Hir0mkmkaTJXvEbLsmqomkKNCraluqQtgVck5gtN3bw
-   THROgQCBy2OXvaWKhq+tAbUYR7Vx+1Quq37hEA0k4dvZFZpok1vY/lTgb
-   A==;
-X-CSE-ConnectionGUID: LXQlblEMSFSx/yefVcyKYw==
-X-CSE-MsgGUID: BekfcbvpQlurhS3SscRXsA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11551"; a="60002742"
+  bh=gf7CpiVBMV8TkYcnM8i16uDQlFIz7QT1NCE3HrlDU7U=;
+  b=Gpodz6B3eM8jxBh9jgK8D8ykridmX/yk/9Nem9/m02RorWzTdbU75iJN
+   Rn/PsVMM7g9ZhddAD0roOiaa1/4zb2Pc9KbSrjQB5weplhVQ4JZv0VXWL
+   HT1PoQw1CPOaBipm5u1ZoLdq/C/fpxOVFBNkVCEQuTXRkEsKFgHQHluBQ
+   bVMAvC4SJyg/tFYS3VEsr/I7QnNRcwo2bjjGhN6KdQnJIDI1l1b05Chds
+   4V5JjZwDJ+l+sDjDZBiR8Gt774E3fkIOmwstipLWaYR0lv7YbPRkf8zFf
+   MkQqidEeX2GR7ECBsnBfQ2skOACBMmKTkNVOMWs+3pDJvFliMrqvgZ6tm
+   w==;
+X-CSE-ConnectionGUID: LJHbbZCOQCmWSM7D1fQuIg==
+X-CSE-MsgGUID: A0LNhCXdS5GiJXoeZfmzgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11551"; a="60002733"
 X-IronPort-AV: E=Sophos;i="6.18,260,1751266800"; 
-   d="scan'208";a="60002742"
+   d="scan'208";a="60002733"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2025 15:11:07 -0700
-X-CSE-ConnectionGUID: bL1u4U3WTqG4WhG4tIdDXg==
-X-CSE-MsgGUID: i9/oAuAQTomrj7cdLwCiqw==
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2025 15:11:06 -0700
+X-CSE-ConnectionGUID: ee8Xo1RhTsiIV2VrlerXAA==
+X-CSE-MsgGUID: lCLnyLLsSJKH2BkZMgcvZw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.18,260,1751266800"; 
-   d="scan'208";a="179265178"
+   d="scan'208";a="179265172"
 Received: from smoehrl-linux.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.49])
   by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Sep 2025 15:11:06 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v10 13/28] x86,fs/resctrl: Add and initialize rdt_resource for package scope monitor
-Date: Fri, 12 Sep 2025 15:10:34 -0700
-Message-ID: <20250912221053.11349-14-tony.luck@intel.com>
+Subject: [PATCH v10 12/28] x86,fs/resctrl: Add an architectural hook called for each mount
+Date: Fri, 12 Sep 2025 15:10:33 -0700
+Message-ID: <20250912221053.11349-13-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250912221053.11349-1-tony.luck@intel.com>
 References: <20250912221053.11349-1-tony.luck@intel.com>
@@ -71,99 +71,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new PERF_PKG resource and introduce package level scope for
-monitoring telemetry events so that CPU hot plug notifiers can build domains
-at the package granularity.
+Enumeration of Intel telemetry events is an asynchronous process involving
+several mutually dependent drivers added as auxiliary devices during
+the device_initcall() phase of Linux boot. The process finishes after
+the probe functions of these drivers completes. But this happens after
+resctrl_arch_late_init() is executed.
 
-Use the physical package ID available via topology_physical_package_id()
-to identify the monitoring domains with package level scope. This enables
-user space to use:
- /sys/devices/system/cpu/cpuX/topology/physical_package_id
-to identify the monitoring domain a CPU is associated with.
+Tracing the enumeration process shows that it does complete a full seven
+seconds before the earliest possible mount of the resctrl file system
+(when included in /etc/fstab for automatic mount by systemd).
+
+Add a hook at the beginning of the mount code that will be used
+to check for telemetry events and initialize if any are found.
+
+Call the hook on every attempted mount. Expectations are that
+most actions (like enumeration) will only need to be performed
+on the first call.
+
+resctrl filesystem calls the hook with no locks held. Architecture code
+is responsible for any required locking.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- include/linux/resctrl.h            |  2 ++
- fs/resctrl/internal.h              |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c | 10 ++++++++++
- fs/resctrl/rdtgroup.c              |  2 ++
- 4 files changed, 16 insertions(+)
+ include/linux/resctrl.h            | 6 ++++++
+ arch/x86/kernel/cpu/resctrl/core.c | 9 +++++++++
+ fs/resctrl/rdtgroup.c              | 2 ++
+ 3 files changed, 17 insertions(+)
 
 diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 6350064ac8be..ff67224b80c8 100644
+index de66928e9430..6350064ac8be 100644
 --- a/include/linux/resctrl.h
 +++ b/include/linux/resctrl.h
-@@ -53,6 +53,7 @@ enum resctrl_res_level {
- 	RDT_RESOURCE_L2,
- 	RDT_RESOURCE_MBA,
- 	RDT_RESOURCE_SMBA,
-+	RDT_RESOURCE_PERF_PKG,
+@@ -511,6 +511,12 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ void resctrl_online_cpu(unsigned int cpu);
+ void resctrl_offline_cpu(unsigned int cpu);
  
- 	/* Must be the last */
- 	RDT_NUM_RESOURCES,
-@@ -267,6 +268,7 @@ enum resctrl_scope {
- 	RESCTRL_L2_CACHE = 2,
- 	RESCTRL_L3_CACHE = 3,
- 	RESCTRL_L3_NODE,
-+	RESCTRL_PACKAGE,
- };
- 
- /**
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 3c87b27375b1..a71f602da816 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -253,6 +253,8 @@ struct rdtgroup {
- 
- #define RFTYPE_ASSIGN_CONFIG		BIT(11)
- 
-+#define RFTYPE_RES_PERF_PKG		BIT(11)
++/*
++ * Architecture hook called at beginning of each file system mount attempt.
++ * No locks are held.
++ */
++void resctrl_arch_pre_mount(void);
 +
- #define RFTYPE_CTRL_INFO		(RFTYPE_INFO | RFTYPE_CTRL)
- 
- #define RFTYPE_MON_INFO			(RFTYPE_INFO | RFTYPE_MON)
+ /**
+  * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
+  *			      for this resource and domain.
 diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 05b9fd415d78..4588c133729e 100644
+index 7219004e896f..05b9fd415d78 100644
 --- a/arch/x86/kernel/cpu/resctrl/core.c
 +++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -100,6 +100,14 @@ struct rdt_hw_resource rdt_resources_all[RDT_NUM_RESOURCES] = {
- 			.schema_fmt		= RESCTRL_SCHEMA_RANGE,
- 		},
- 	},
-+	[RDT_RESOURCE_PERF_PKG] =
-+	{
-+		.r_resctrl = {
-+			.name			= "PERF_PKG",
-+			.mon_scope		= RESCTRL_PACKAGE,
-+			.mon_domains		= mon_domain_init(RDT_RESOURCE_PERF_PKG),
-+		},
-+	},
- };
+@@ -720,6 +720,15 @@ static int resctrl_arch_offline_cpu(unsigned int cpu)
+ 	return 0;
+ }
  
- u32 resctrl_arch_system_num_rmid_idx(void)
-@@ -433,6 +441,8 @@ static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
- 		return get_cpu_cacheinfo_id(cpu, scope);
- 	case RESCTRL_L3_NODE:
- 		return cpu_to_node(cpu);
-+	case RESCTRL_PACKAGE:
-+		return topology_physical_package_id(cpu);
- 	default:
- 		break;
- 	}
++void resctrl_arch_pre_mount(void)
++{
++	static atomic_t only_once = ATOMIC_INIT(0);
++	int old = 0;
++
++	if (!atomic_try_cmpxchg(&only_once, &old, 1))
++		return;
++}
++
+ enum {
+ 	RDT_FLAG_CMT,
+ 	RDT_FLAG_MBM_TOTAL,
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 223fd8b761e6..c19d87fa96ec 100644
+index 4f992b497092..223fd8b761e6 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -2330,6 +2330,8 @@ static unsigned long fflags_from_resource(struct rdt_resource *r)
- 	case RDT_RESOURCE_MBA:
- 	case RDT_RESOURCE_SMBA:
- 		return RFTYPE_RES_MB;
-+	case RDT_RESOURCE_PERF_PKG:
-+		return RFTYPE_RES_PERF_PKG;
- 	}
+@@ -2720,6 +2720,8 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	struct rdt_resource *r;
+ 	int ret;
  
- 	return WARN_ON_ONCE(1);
++	resctrl_arch_pre_mount();
++
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 	/*
 -- 
 2.51.0
 
