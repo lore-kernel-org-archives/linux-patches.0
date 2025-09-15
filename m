@@ -1,73 +1,39 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AF8223DF0
-	for <patches@lists.linux.dev>; Mon, 15 Sep 2025 09:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FB033009D3;
+	Mon, 15 Sep 2025 11:50:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757929313; cv=none; b=VQ3tXbR9oQv3uNJeGmTFdFgJMxB4oTXao0ny2/Dx6gTF9LXn4Rv/+vDDY2GamRgGLoBBemoa7ZlcSBujeogrOS/AylFfPJuAq/wNxlfnaT4meJotyzzxpvWBQtHRwfY6i8w1mFRMCVW2XwomoFlZ20+AR2PP8KVuOkTpi1zm/OQ=
+	t=1757937038; cv=none; b=RhgpmOtNIKVUIkJfFmZxPMZHW/SFHybs+cqzOTVw8EnsSwSjOtqHda0idhnSE4TqTSa8FcrcbltZpVkdnWHmma2cLpFnR+3/YE0E9QL8aDy7ZHuBHncR2smb2pkSarF3JSCUUiQtoyw129jgjEtL8t+N9aeRDiEKndRh+Dpl6v0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757929313; c=relaxed/simple;
-	bh=bpFMZabaBpAY2pP5TxRVkzX6A/el9BHedG8sx0ri/pA=;
+	s=arc-20240116; t=1757937038; c=relaxed/simple;
+	bh=a0VRXbta8K9gtk+IGHOwOU6MaIwzucwt5cPvZhkP+xE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oESFthJ4SJd+LsVUvu1odk7sn4SqShsh2+Ip6ki//B1Bzt/U9D6rSR0p8e1HNqOxPoccOhW5Da8NZ70oQtlDAa4lZj5nYm4HPhr+S2DJ8j/vXLIGApwGo2HXTAjP/LEcBUbYj48xM/wUmcnru2OS/UBYxP8jfHOITzLk8Q3gQnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MHRdwX7i; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MHRdwX7i"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757929309;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uyyAmT26WPY63DOQqTvlGR3GzEVA1MQHKPqxpl3/fSQ=;
-	b=MHRdwX7iH1mNGB0WToY8QFgNel7eOPQhBKVmSI30KScbIs+jHSU5GPajKjmiXUzJ/beuv9
-	fG2peb5R1SKHgkN1xPwVCXnN+LVu7tkf4jN/Em+twg2fdvccnnbXhI5w158UlHXCArhZND
-	GvBvZCv/dF/DFI7+XczkiaYWs7ozra4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-XG_93oYtOmKhMAnHUIfstA-1; Mon, 15 Sep 2025 05:41:48 -0400
-X-MC-Unique: XG_93oYtOmKhMAnHUIfstA-1
-X-Mimecast-MFC-AGG-ID: XG_93oYtOmKhMAnHUIfstA_1757929307
-Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-3eae869cb3fso349533f8f.0
-        for <patches@lists.linux.dev>; Mon, 15 Sep 2025 02:41:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757929307; x=1758534107;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uyyAmT26WPY63DOQqTvlGR3GzEVA1MQHKPqxpl3/fSQ=;
-        b=H9dE8TfAtqP3v/BcJU9yNAhKcFQjiLXsB0JmFCmtckFnCnAnV3R7+9WlBZhCW12GTK
-         OdYM6fmzhPW+8xvCP94p58PXB5s3+TVz2QAavLlrcHRLvdLwUaFDh9HFw3hjOE+Okn7m
-         WIE2fWAj8fWWtH4n/5gMuiTA3lwYOrpXQWGoTUatJNV9D36NGm1w4DHYXh/KBe/EclA2
-         Wz2WJInFc42ylunYTmYb5iflfg80Zf+dd0db+RS0BjaQCR9aLDzq1s5e2siKzAo/yx5+
-         1pECitH8CCl4KMvLKHk5fmq6I53UdZTsvth6EgrzlncQ+da2Oveb13V0GBjkxoqA1/S+
-         DjUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXdqudIsANWtKnvWGypd0gshZA6adyMYc+TBKfvZqB/YcrHkN8E91qsRZo3Iu3BoFtm6yfSMKex@lists.linux.dev
-X-Gm-Message-State: AOJu0YxZCxNAWWgMeRwDRXQIciD4HIkJ6CXH3K3G+uu0NEYqBSSMjeoj
-	LImNiS0O0ch3+VN6dnl2HAeVMN6YXPY423qdTQWDGUf6qGWiA0iofm9ZKEw8Kxd6TzeFJT+0FkG
-	AbAFCrnQaUjw+nAIInQTbu/EXLvZbxI/X5Sg2Oz3/96pa27PHNtGVpSlOyAI=
-X-Gm-Gg: ASbGnct71TjkKPZtF5X0tdZJp9VaC/Vv/CzumFNAvbvg9WXNEMckV3PVJNBM7y5J7oX
-	L2oCbLeT8Mlge8EWvV8qarUHfbHdw224/lvU/kX6FplRdhA67nd+kACWzdwXwa1SdnGnQtvAs0I
-	tXn8up2zWppmGcpGWAWPvpvVqnVwLa+K9uqP0MpdfXAX4T9rvUpRod7D1VkFL3qOcQ2nD+BhGOI
-	UzU5i8uX4AL4JJIzUOfBXvRTHwvRuxB/PFYptA3a2bgYFybzLXwjoHt2/xXmImrFFiU9skSik61
-	/+TUONNQwIwYKslYWBnvG8Rif+SCfrA9nA+Lcl/95RSWsZELr1Rm3k2JVPvOoe3Kt73i29bPPfr
-	8pLk=
-X-Received: by 2002:a05:6000:22c1:b0:3da:d8a1:9b86 with SMTP id ffacd0b85a97d-3e765a09221mr8615316f8f.50.1757929307078;
-        Mon, 15 Sep 2025 02:41:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFg3xxaOKspn1hA6O93v4fHlqqQJyEimS5ZxAfU8EHz2MjAiPIfjWh2uApK5fHPxe09sU8QnA==
-X-Received: by 2002:a05:6000:22c1:b0:3da:d8a1:9b86 with SMTP id ffacd0b85a97d-3e765a09221mr8615288f8f.50.1757929306566;
-        Mon, 15 Sep 2025 02:41:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a? ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ebc49f7ebbsm660792f8f.51.2025.09.15.02.41.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 02:41:46 -0700 (PDT)
-Message-ID: <835a9022-aca1-49ec-a704-578a4b3c5bbd@redhat.com>
-Date: Mon, 15 Sep 2025 11:41:44 +0200
+	 In-Reply-To:Content-Type; b=qHbQsrk3JqQEy7tJ5SvGf8UVLyLSqDHQl/YKRK3b6NUFnQaS3lAtif9EkhF6RelfSez/7oB5LWNM+qe+ju9bq9pLtl2qtEfG6s+SYrEInN8d8TKksNY77Lxo4ZV0z6SJ2WXi8ISFApobG5jUEyDa9Ax/4ZB7LSKFVj7T4PA69fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
+Received: from localhost (mailhub4.si.c-s.fr [172.26.127.67])
+	by localhost (Postfix) with ESMTP id 4cQNTb42Jgz9syc;
+	Mon, 15 Sep 2025 13:43:47 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at c-s.fr
+Received: from pegase2.c-s.fr ([172.26.127.65])
+	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cfGBSkOtiCmq; Mon, 15 Sep 2025 13:43:47 +0200 (CEST)
+Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
+	by pegase2.c-s.fr (Postfix) with ESMTP id 4cQNTZ1TZpz9syZ;
+	Mon, 15 Sep 2025 13:43:46 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by messagerie.si.c-s.fr (Postfix) with ESMTP id E29168B766;
+	Mon, 15 Sep 2025 13:43:45 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at c-s.fr
+Received: from messagerie.si.c-s.fr ([127.0.0.1])
+	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
+	with ESMTP id bAFn8JW7pVEL; Mon, 15 Sep 2025 13:43:45 +0200 (CEST)
+Received: from [10.25.207.160] (unknown [10.25.207.160])
+	by messagerie.si.c-s.fr (Postfix) with ESMTP id 5E4998B763;
+	Mon, 15 Sep 2025 13:43:44 +0200 (CEST)
+Message-ID: <ba78173a-9312-40fc-a88a-d94764ed6010@csgroup.eu>
+Date: Mon, 15 Sep 2025 13:43:43 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -75,236 +41,432 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/11] Fix incorrect iommu_groups with PCIe ACS
-To: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Lu Baolu <baolu.lu@linux.intel.com>, Donald Dutile <ddutile@redhat.com>,
- galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>,
- Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
- patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <0-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <0-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: GrFrhKOpmCK6SwyLlXLuU8sMjfgjp_IHRdjsKQ11ICc_1757929307
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, fr
+Subject: Re: [PATCH RESEND 04/62] init: x86, arm, sh, sparc: remove variable
+ rd_image_start, which controls starting block number of initrd
+To: Askar Safin <safinaskar@gmail.com>, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Christian Brauner <brauner@kernel.org>, Al Viro <viro@zeniv.linux.org.uk>,
+ Jan Kara <jack@suse.cz>, Christoph Hellwig <hch@lst.de>,
+ Jens Axboe <axboe@kernel.dk>, Andy Shevchenko <andy.shevchenko@gmail.com>,
+ Aleksa Sarai <cyphar@cyphar.com>,
+ =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ Julian Stecklina <julian.stecklina@cyberus-technology.de>,
+ Gao Xiang <hsiangkao@linux.alibaba.com>, Art Nikpal <email2tema@gmail.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Eric Curtin <ecurtin@redhat.com>,
+ Alexander Graf <graf@amazon.com>, Rob Landley <rob@landley.net>,
+ Lennart Poettering <mzxreary@0pointer.de>, linux-arch@vger.kernel.org,
+ linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ linux-arm-kernel@lists.infradead.org, linux-csky@vger.kernel.org,
+ linux-hexagon@vger.kernel.org, loongarch@lists.linux.dev,
+ linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org,
+ linux-openrisc@vger.kernel.org, linux-parisc@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+ linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+ sparclinux@vger.kernel.org, linux-um@lists.infradead.org, x86@kernel.org,
+ Ingo Molnar <mingo@redhat.com>, linux-block@vger.kernel.org,
+ initramfs@vger.kernel.org, linux-api@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-efi@vger.kernel.org,
+ linux-ext4@vger.kernel.org, "Theodore Y . Ts'o" <tytso@mit.edu>,
+ linux-acpi@vger.kernel.org, Michal Simek <monstr@monstr.eu>,
+ devicetree@vger.kernel.org, Luis Chamberlain <mcgrof@kernel.org>,
+ Kees Cook <kees@kernel.org>, Thorsten Blum <thorsten.blum@linux.dev>,
+ Heiko Carstens <hca@linux.ibm.com>, patches@lists.linux.dev
+References: <20250913003842.41944-1-safinaskar@gmail.com>
+ <20250913003842.41944-5-safinaskar@gmail.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
+Content-Language: fr-FR
+In-Reply-To: <20250913003842.41944-5-safinaskar@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 9/5/25 20:06, Jason Gunthorpe wrote:
-> The series patches have extensive descriptions as to the problem and
-> solution, but in short the ACS flags are not analyzed according to the
-> spec to form the iommu_groups that VFIO is expecting for security.
-> 
-> ACS is an egress control only. For a path the ACS flags on each hop only
-> effect what other devices the TLP is allowed to reach. It does not prevent
-> other devices from reaching into this path.
-> 
-> For VFIO if device A is permitted to access device B's MMIO then A and B
-> must be grouped together. This says that even if a path has isolating ACS
-> flags on each hop, off-path devices with non-isolating ACS can still reach
-> into that path and must be grouped gother.
-> 
-> For switches, a PCIe topology like:
-> 
->                                 -- DSP 02:00.0 -> End Point A
->   Root 00:00.0 -> USP 01:00.0 --|
->                                 -- DSP 02:03.0 -> End Point B
-> 
-> Will generate unique single device groups for every device even if ACS is
-> not enabled on the two DSP ports. It should at least group A/B together
-> because no ACS means A can reach the MMIO of B. This is a serious failure
-> for the VFIO security model.
-> 
-> For multi-function-devices, a PCIe topology like:
-> 
->                    -- MFD 00:1f.0 ACS not supported
->    Root 00:00.00 --|- MFD 00:1f.2 ACS not supported
->                    |- MFD 00:1f.6 ACS = REQ_ACS_FLAGS
-> 
-> Will group [1f.0, 1f.2] and 1f.6 gets a single device group. However from
-> a spec perspective each device should get its own group, because ACS not
-> supported can assume no loopback is possible by spec.
-> 
-> For root-ports a PCIe topology like:
->                                           -- Dev 01:00.0
->    Root  00:00.00 --- Root Port 00:01.0 --|
->                    |                      -- Dev 01:00.1
-> 		  |- Dev 00:17.0
-> 
-> Previously would group [00:01.0, 01:00.0, 01:00.1] together if there is no
-> ACS capability in the root port.
-> 
-> While ACS on root ports is underspecified in the spec, it should still
-> function as an egress control and limit access to either the MMIO of the
-> root port itself, or perhaps some other devices upstream of the root
-> complex - 00:17.0 perhaps in this example.
-> 
-> Historically the grouping in Linux has assumed the root port routes all
-> traffic into the TA/IOMMU and never bypasses the TA to go to other
-> functions in the root complex. Following the new understanding that ACS is
-> required for internal loopback also treat root ports with no ACS
-> capability as lacking internal loopback as well.
-> 
-> There is also some confusing spec language about how ACS and SRIOV works
-> which this series does not address.
-> 
-> 
-> This entire series goes further and makes some additional improvements to
-> the ACS validation found while studying this problem. The groups around a
-> PCIe to PCI bridge are shrunk to not include the PCIe bridge.
-> 
-> The last patches implement "ACS Enhanced" on top of it. Due to how ACS
-> Enhanced was defined as a non-backward compatible feature it is important
-> to get SW support out there.
-> 
-> Due to the potential of iommu_groups becoming wider and thus non-usable
-> for VFIO this should go to a linux-next tree to give it some more
-> exposure.
-> 
-> I have now tested this a few systems I could get:
-> 
->   - Various Intel client systems:
->     * Raptor Lake, with VMD enabled and using the real_dev mechanism
->     * 6/7th generation 100 Series/C320
->     * 5/6th generation 100 Series/C320 with a NIC MFD quirk
->     * Tiger Lake
->     * 5/6th generation Sunrise Point
-
-
-FWIW, I have tested this series on some of the systems I use
-for upstream VFIO  :
-
-   Intel(R) Xeon(R) Silver 4310 CPU @ 2.10GHz
-   Intel(R) Xeon(R) Silver 4514Y
-   Intel(R) 12th Gen Core(TM) i7-12700K
-   Neoverse-N1
-
-I didn't see any regressions on IOMMU grouping like on v2.
-Please ping me if you need more info on the PCI topology.
-
-I also booted an IBM/S390 z16 LPAR with VFs to complete the
-experiment. All good.
+Content-Transfer-Encoding: 8bit
 
 
 
->    The 6/7th gen system has a root port without an ACS capability and it
->    becomes ungrouped as described above.
+Le 13/09/2025 à 02:37, Askar Safin a écrit :
+> [Vous ne recevez pas souvent de courriers de safinaskar@gmail.com. Découvrez pourquoi ceci est important à https://aka.ms/LearnAboutSenderIdentification ]
 > 
->    All systems have changes, the MFDs in the root complex all become ungrouped.
+> This is preparation for initrd removal
 > 
->   - NVIDIA Grace system with 5 different PCI switches from two vendors
->     Bug fix widening the iommu_groups works as expected here
+> Signed-off-by: Askar Safin <safinaskar@gmail.com>
+> ---
+>   Documentation/arch/x86/boot.rst       | 4 ++--
+>   arch/arm/kernel/atags_parse.c         | 2 --
+>   arch/sh/include/asm/setup.h           | 1 -
+>   arch/sh/kernel/head_32.S              | 2 +-
+>   arch/sh/kernel/setup.c                | 9 +--------
+>   arch/sparc/boot/piggyback.c           | 4 ++--
+>   arch/sparc/kernel/head_32.S           | 4 ++--
+>   arch/sparc/kernel/head_64.S           | 6 ++++--
+>   arch/sparc/kernel/setup_32.c          | 5 -----
+>   arch/sparc/kernel/setup_64.c          | 5 -----
+>   arch/x86/boot/header.S                | 2 +-
+>   arch/x86/include/uapi/asm/bootparam.h | 5 +----
+>   arch/x86/kernel/setup.c               | 5 -----
+>   include/linux/initrd.h                | 3 ---
+>   init/do_mounts_rd.c                   | 8 +++-----
+>   15 files changed, 17 insertions(+), 48 deletions(-)
 > 
-> This is on github: https://github.com/jgunthorpe/linux/commits/pcie_switch_groups
-> 
-> v3:
->   - Rebase to v6.17-rc4
->   - Drop the quirks related patches
->   - Change the MFD logic to process no ACS cap as meaning no internal
->     loopback. This avoids creating non-isolated groups for MFD root ports in
->     common AMD and Intel systems
->   - Fix matching MFDs to ignore SRIOV VFs
->   - Fix some kbuild splats
-> v2: https://patch.msgid.link/r/0-v2-4a9b9c983431+10e2-pcie_switch_groups_jgg@nvidia.com
->   - Revise comments and commit messages
->   - Rename struct pci_alias_set to pci_reachable_set
->   - Make more sense of the special bus->self = NULL case for SRIOV
->   - Add pci_group_alloc_non_isolated() for readability
->   - Rename BUS_DATA_PCI_UNISOLATED to BUS_DATA_PCI_NON_ISOLATED
->   - Propogate BUS_DATA_PCI_NON_ISOLATED downstream from a MFD in case a MFD
->     function is a bridge
->   - New patches to add pci_mfd_isolation() to retain more cases of narrow
->     groups on MFDs with missing ACS.
->   - Redescribe the MFD related change as a bug fix. For a MFD to be
->     isolated all functions must have egress control on their P2P.
-> v1: https://patch.msgid.link/r/0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com
-> 
-> Cc: galshalom@nvidia.com
-> Cc: tdave@nvidia.com
-> Cc: maorg@nvidia.com
-> Cc: kvm@vger.kernel.org
-> Cc: Ceric Le Goater" <clg@redhat.com>
+> diff --git a/Documentation/arch/x86/boot.rst b/Documentation/arch/x86/boot.rst
+> index 77e6163288db..118aa7b69667 100644
+> --- a/Documentation/arch/x86/boot.rst
+> +++ b/Documentation/arch/x86/boot.rst
+> @@ -189,7 +189,7 @@ Offset/Size Proto           Name                    Meaning
+>   01F1/1         ALL(1)          setup_sects             The size of the setup in sectors
+>   01F2/2         ALL             root_flags              If set, the root is mounted readonly
+>   01F4/4         2.04+(2)        syssize                 The size of the 32-bit code in 16-byte paras
+> -01F8/2         ALL             ram_size                DO NOT USE - for bootsect.S use only
+> +01F8/2         ALL             ram_size                DO NOT USE - for bootsect.S use only - used to control initrd, which was removed from Linux in 2025
 
-Curiously, I didn't get the email. weird.
+Is this change really needed/usefull. Here people can think it shall not 
+be used because it is removed in 2025. But it reality it was already 
+DO-NOT-USE 20 years old.
 
-Cheers,
-
-C.
-
-
-
-> Cc: Donald Dutile <ddutile@redhat.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+>   01FA/2         ALL             vid_mode                Video mode control
+>   01FC/2         ALL             root_dev                Default root device number
+>   01FE/2         ALL             boot_flag               0xAA55 magic number
+> @@ -308,7 +308,7 @@ Offset/size:        0x1f8/2
+>   Protocol:      ALL
+>   ============   ===============
 > 
-> Jason Gunthorpe (11):
->    PCI: Move REQ_ACS_FLAGS into pci_regs.h as PCI_ACS_ISOLATED
->    PCI: Add pci_bus_isolated()
->    iommu: Compute iommu_groups properly for PCIe switches
->    iommu: Organize iommu_group by member size
->    PCI: Add pci_reachable_set()
->    iommu: Compute iommu_groups properly for PCIe MFDs
->    iommu: Validate that pci_for_each_dma_alias() matches the groups
->    PCI: Add the ACS Enhanced Capability definitions
->    PCI: Enable ACS Enhanced bits for enable_acs and config_acs
->    PCI: Check ACS DSP/USP redirect bits in pci_enable_pasid()
->    PCI: Check ACS Extended flags for pci_bus_isolated()
+> -  This field is obsolete.
+> +  This field is obsolete. Used to control initrd, which was removed from Linux in 2025.
+
+Same comment, this field has been obsolete long before the removal of 
+initrd in 2025 so that new comment bring confusion.
+
 > 
->   drivers/iommu/iommu.c         | 510 +++++++++++++++++++++++-----------
->   drivers/pci/ats.c             |   4 +-
->   drivers/pci/pci.c             |  73 ++++-
->   drivers/pci/search.c          | 274 ++++++++++++++++++
->   include/linux/pci.h           |  46 +++
->   include/uapi/linux/pci_regs.h |  18 ++
->   6 files changed, 759 insertions(+), 166 deletions(-)
+>   ============   ===================
+>   Field name:    vid_mode
+> diff --git a/arch/arm/kernel/atags_parse.c b/arch/arm/kernel/atags_parse.c
+> index 4ec591bde3df..a3f0a4f84e04 100644
+> --- a/arch/arm/kernel/atags_parse.c
+> +++ b/arch/arm/kernel/atags_parse.c
+> @@ -90,8 +90,6 @@ __tagtable(ATAG_VIDEOTEXT, parse_tag_videotext);
+>   #ifdef CONFIG_BLK_DEV_RAM
+>   static int __init parse_tag_ramdisk(const struct tag *tag)
+>   {
+> -       rd_image_start = tag->u.ramdisk.start;
+> -
+>          if (tag->u.ramdisk.size)
+>                  rd_size = tag->u.ramdisk.size;
+> 
+> diff --git a/arch/sh/include/asm/setup.h b/arch/sh/include/asm/setup.h
+> index 84bb23a771f3..d1b97c5726e4 100644
+> --- a/arch/sh/include/asm/setup.h
+> +++ b/arch/sh/include/asm/setup.h
+> @@ -10,7 +10,6 @@
+>   #define PARAM  ((unsigned char *)empty_zero_page)
+> 
+>   #define MOUNT_ROOT_RDONLY (*(unsigned long *) (PARAM+0x000))
+> -#define RAMDISK_FLAGS (*(unsigned long *) (PARAM+0x004))
+>   #define ORIG_ROOT_DEV (*(unsigned long *) (PARAM+0x008))
+>   #define LOADER_TYPE (*(unsigned long *) (PARAM+0x00c))
+>   #define INITRD_START (*(unsigned long *) (PARAM+0x010))
+> diff --git a/arch/sh/kernel/head_32.S b/arch/sh/kernel/head_32.S
+> index b603b7968b38..4382c0f058c8 100644
+> --- a/arch/sh/kernel/head_32.S
+> +++ b/arch/sh/kernel/head_32.S
+> @@ -28,7 +28,7 @@
+>          .section        .empty_zero_page, "aw"
+>   ENTRY(empty_zero_page)
+>          .long   1               /* MOUNT_ROOT_RDONLY */
+> -       .long   0               /* RAMDISK_FLAGS */
+> +       .long   0               /* RAMDISK_FLAGS - used to control initrd, which was removed from Linux in 2025 */
+>          .long   0x0200          /* ORIG_ROOT_DEV */
+>          .long   1               /* LOADER_TYPE */
+>          .long   0x00000000      /* INITRD_START */
+> diff --git a/arch/sh/kernel/setup.c b/arch/sh/kernel/setup.c
+> index d66f098e9e9f..50f1d39fe34f 100644
+> --- a/arch/sh/kernel/setup.c
+> +++ b/arch/sh/kernel/setup.c
+> @@ -70,8 +70,6 @@ EXPORT_SYMBOL(sh_mv);
+> 
+>   extern int root_mountflags;
+> 
+> -#define RAMDISK_IMAGE_START_MASK       0x07FF
+> -
+>   static char __initdata command_line[COMMAND_LINE_SIZE] = { 0, };
+> 
+>   static struct resource code_resource = {
+> @@ -273,19 +271,14 @@ void __init setup_arch(char **cmdline_p)
+> 
+>          printk(KERN_NOTICE "Boot params:\n"
+>                             "... MOUNT_ROOT_RDONLY - %08lx\n"
+> -                          "... RAMDISK_FLAGS     - %08lx\n"
+>                             "... ORIG_ROOT_DEV     - %08lx\n"
+>                             "... LOADER_TYPE       - %08lx\n"
+>                             "... INITRD_START      - %08lx\n"
+>                             "... INITRD_SIZE       - %08lx\n",
+> -                          MOUNT_ROOT_RDONLY, RAMDISK_FLAGS,
+> +                          MOUNT_ROOT_RDONLY,
+>                             ORIG_ROOT_DEV, LOADER_TYPE,
+>                             INITRD_START, INITRD_SIZE);
+> 
+> -#ifdef CONFIG_BLK_DEV_RAM
+> -       rd_image_start = RAMDISK_FLAGS & RAMDISK_IMAGE_START_MASK;
+> -#endif
+> -
+>          if (!MOUNT_ROOT_RDONLY)
+>                  root_mountflags &= ~MS_RDONLY;
+>          setup_initial_init_mm(_text, _etext, _edata, _end);
+> diff --git a/arch/sparc/boot/piggyback.c b/arch/sparc/boot/piggyback.c
+> index 6d74064add0a..a9cc55254ff8 100644
+> --- a/arch/sparc/boot/piggyback.c
+> +++ b/arch/sparc/boot/piggyback.c
+> @@ -220,8 +220,8 @@ int main(int argc,char **argv)
+> 
+>          /*
+>           * root_flags = 0
+> -        * root_dev = 1 (RAMDISK_MAJOR)
+> -        * ram_flags = 0
+> +        * root_dev = 1 (1 used to mean RAMDISK_MAJOR, i. e. initrd, which was removed from Linux)
+
+At the end of your series RAMDISK_MAJOR still exists so this comment is 
+wrong.
+
+> +        * ram_flags = 0 (used to control initrd, which was removed from Linux in 2025)
+>           * sparc_ramdisk_image = "PAGE aligned address after _end")
+>           * sparc_ramdisk_size = size of image
+>           */
+
+Shouldn't this block be droped entirely ?
+
+> diff --git a/arch/sparc/kernel/head_32.S b/arch/sparc/kernel/head_32.S
+> index 38345460d542..46f0e39b9037 100644
+> --- a/arch/sparc/kernel/head_32.S
+> +++ b/arch/sparc/kernel/head_32.S
+> @@ -65,7 +65,7 @@ empty_zero_page:      .skip PAGE_SIZE
+>   EXPORT_SYMBOL(empty_zero_page)
+> 
+>          .global root_flags
+> -       .global ram_flags
+> +       .global ram_flags /* used to control initrd, which was removed from Linux in 2025 */
+
+Can we remove this line completely instead of adding a comment ?
+
+>          .global root_dev
+>          .global sparc_ramdisk_image
+>          .global sparc_ramdisk_size
+> @@ -81,7 +81,7 @@ root_flags:
+>          .half   1
+>   root_dev:
+>          .half   0
+> -ram_flags:
+> +ram_flags: /* used to control initrd, which was removed from Linux in 2025 */
+
+Same, why not remove this object completely ?
+
+>          .half   0
+>   sparc_ramdisk_image:
+>          .word   0
+> diff --git a/arch/sparc/kernel/head_64.S b/arch/sparc/kernel/head_64.S
+> index cf0549134234..4480c0532fe9 100644
+> --- a/arch/sparc/kernel/head_64.S
+> +++ b/arch/sparc/kernel/head_64.S
+> @@ -52,7 +52,9 @@ stext:
+>    * Fields should be kept upward compatible and whenever any change is made,
+>    * HdrS version should be incremented.
+>    */
+> -        .global root_flags, ram_flags, root_dev
+> +        .global root_flags
+> +        .global ram_flags /* used to control initrd, which was removed from Linux in 2025 */
+
+Same, can you remove them ?
+Such comments in the code are generaly pointless, you can recover 
+history with 'git log'.
+
+> +        .global root_dev
+>           .global sparc_ramdisk_image, sparc_ramdisk_size
+>          .global sparc_ramdisk_image64
+> 
+> @@ -71,7 +73,7 @@ root_flags:
+>           .half   1
+>   root_dev:
+>           .half   0
+> -ram_flags:
+> +ram_flags: /* used to control initrd, which was removed from Linux in 2025 */
+
+Same, remove.
+
+>           .half   0
+>   sparc_ramdisk_image:
+>           .word   0
+> diff --git a/arch/sparc/kernel/setup_32.c b/arch/sparc/kernel/setup_32.c
+> index eb60be31127f..fb46fb3acf54 100644
+> --- a/arch/sparc/kernel/setup_32.c
+> +++ b/arch/sparc/kernel/setup_32.c
+> @@ -170,8 +170,6 @@ static void __init boot_flags_init(char *commands)
+> 
+>   extern unsigned short root_flags;
+>   extern unsigned short root_dev;
+> -extern unsigned short ram_flags;
+> -#define RAMDISK_IMAGE_START_MASK       0x07FF
+> 
+>   extern int root_mountflags;
+> 
+> @@ -335,9 +333,6 @@ void __init setup_arch(char **cmdline_p)
+>          if (!root_flags)
+>                  root_mountflags &= ~MS_RDONLY;
+>          ROOT_DEV = old_decode_dev(root_dev);
+> -#ifdef CONFIG_BLK_DEV_RAM
+> -       rd_image_start = ram_flags & RAMDISK_IMAGE_START_MASK;
+> -#endif
+> 
+>          prom_setsync(prom_sync_me);
+> 
+> diff --git a/arch/sparc/kernel/setup_64.c b/arch/sparc/kernel/setup_64.c
+> index f728f1b00aca..79b56613c6d8 100644
+> --- a/arch/sparc/kernel/setup_64.c
+> +++ b/arch/sparc/kernel/setup_64.c
+> @@ -143,8 +143,6 @@ static void __init boot_flags_init(char *commands)
+> 
+>   extern unsigned short root_flags;
+>   extern unsigned short root_dev;
+> -extern unsigned short ram_flags;
+> -#define RAMDISK_IMAGE_START_MASK       0x07FF
+> 
+>   extern int root_mountflags;
+> 
+> @@ -640,9 +638,6 @@ void __init setup_arch(char **cmdline_p)
+>          if (!root_flags)
+>                  root_mountflags &= ~MS_RDONLY;
+>          ROOT_DEV = old_decode_dev(root_dev);
+> -#ifdef CONFIG_BLK_DEV_RAM
+> -       rd_image_start = ram_flags & RAMDISK_IMAGE_START_MASK;
+> -#endif
+> 
+>   #ifdef CONFIG_IP_PNP
+>          if (!ic_set_manually) {
+> diff --git a/arch/x86/boot/header.S b/arch/x86/boot/header.S
+> index 9bea5a1e2c52..0ced2e9f100e 100644
+> --- a/arch/x86/boot/header.S
+> +++ b/arch/x86/boot/header.S
+> @@ -235,7 +235,7 @@ hdr:
+>                  .byte setup_sects - 1
+>   root_flags:    .word ROOT_RDONLY
+>   syssize:       .long ZO__edata / 16
+> -ram_size:      .word 0                 /* Obsolete */
+> +ram_size:      .word 0                 /* Used to control initrd, which was removed from Linux in 2025 */
+
+Same, just remove, or make 'reserved' if you need to keep the space.
+
+>   vid_mode:      .word SVGA_MODE
+>   root_dev:      .word 0                 /* Default to major/minor 0/0 */
+>   boot_flag:     .word 0xAA55
+> diff --git a/arch/x86/include/uapi/asm/bootparam.h b/arch/x86/include/uapi/asm/bootparam.h
+> index f53dd3f319ba..bf56549f79bb 100644
+> --- a/arch/x86/include/uapi/asm/bootparam.h
+> +++ b/arch/x86/include/uapi/asm/bootparam.h
+> @@ -4,9 +4,6 @@
+> 
+>   #include <asm/setup_data.h>
+> 
+> -/* ram_size flags */
+> -#define RAMDISK_IMAGE_START_MASK       0x07FF
+> -
+>   /* loadflags */
+>   #define LOADED_HIGH    (1<<0)
+>   #define KASLR_FLAG     (1<<1)
+> @@ -37,7 +34,7 @@ struct setup_header {
+>          __u8    setup_sects;
+>          __u16   root_flags;
+>          __u32   syssize;
+> -       __u16   ram_size;
+> +       __u16   ram_size; /* used to control initrd, which was removed from Linux in 2025 */
+
+Rename it to 'reserved'.
+
+>          __u16   vid_mode;
+>          __u16   root_dev;
+>          __u16   boot_flag;
+> diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+> index 6409e766fb17..797c3c9fc75e 100644
+> --- a/arch/x86/kernel/setup.c
+> +++ b/arch/x86/kernel/setup.c
+> @@ -222,8 +222,6 @@ extern int root_mountflags;
+> 
+>   unsigned long saved_video_mode;
+> 
+> -#define RAMDISK_IMAGE_START_MASK       0x07FF
+> -
+>   static char __initdata command_line[COMMAND_LINE_SIZE];
+>   #ifdef CONFIG_CMDLINE_BOOL
+>   char builtin_cmdline[COMMAND_LINE_SIZE] = CONFIG_CMDLINE;
+> @@ -541,9 +539,6 @@ static void __init parse_boot_params(void)
+>          bootloader_version  = bootloader_type & 0xf;
+>          bootloader_version |= boot_params.hdr.ext_loader_ver << 4;
+> 
+> -#ifdef CONFIG_BLK_DEV_RAM
+> -       rd_image_start = boot_params.hdr.ram_size & RAMDISK_IMAGE_START_MASK;
+> -#endif
+>   #ifdef CONFIG_EFI
+>          if (!strncmp((char *)&boot_params.efi_info.efi_loader_signature,
+>                       EFI32_LOADER_SIGNATURE, 4)) {
+> diff --git a/include/linux/initrd.h b/include/linux/initrd.h
+> index f1a1f4c92ded..6320a9cb6686 100644
+> --- a/include/linux/initrd.h
+> +++ b/include/linux/initrd.h
+> @@ -5,9 +5,6 @@
+> 
+>   #define INITRD_MINOR 250 /* shouldn't collide with /dev/ram* too soon ... */
+> 
+> -/* starting block # of image */
+> -extern int rd_image_start;
+> -
+>   /* size of a single RAM disk */
+>   extern unsigned long rd_size;
+> 
+> diff --git a/init/do_mounts_rd.c b/init/do_mounts_rd.c
+> index f7d53bc21e41..8e0a774a9c6f 100644
+> --- a/init/do_mounts_rd.c
+> +++ b/init/do_mounts_rd.c
+> @@ -17,11 +17,9 @@
+>   static struct file *in_file, *out_file;
+>   static loff_t in_pos, out_pos;
+> 
+> -int __initdata rd_image_start;         /* starting block # of image */
+
+Why do you need to change this really ? In any case this entire file 
+goes away in a later patch so you shouldn't bother to update that.
+
+> -
+>   static int __init ramdisk_start_setup(char *str)
+>   {
+> -       rd_image_start = simple_strtol(str,NULL,0);
+> +       /* will be removed in next commit */
+
+Useless comment, don't add such burden.
+
+>          return 1;
+>   }
+>   __setup("ramdisk_start=", ramdisk_start_setup);
+> @@ -60,7 +58,7 @@ identify_ramdisk_image(struct file *file, loff_t pos,
+>          unsigned char *buf;
+>          const char *compress_name;
+>          unsigned long n;
+> -       int start_block = rd_image_start;
+> +       int start_block = 0;
+
+Don't change, it is removed later.
+
+> 
+>          buf = kmalloc(size, GFP_KERNEL);
+>          if (!buf)
+> @@ -196,7 +194,7 @@ int __init rd_load_image(char *from)
+>          if (IS_ERR(in_file))
+>                  goto noclose_input;
+> 
+> -       in_pos = rd_image_start * BLOCK_SIZE;
+> +       in_pos = 0;
+
+Same
+
+>          nblocks = identify_ramdisk_image(in_file, in_pos, &decompressor);
+>          if (nblocks < 0)
+>                  goto done;
+> --
+> 2.47.2
 > 
 > 
-> base-commit: b320789d6883cc00ac78ce83bccbfe7ed58afcf0
 
