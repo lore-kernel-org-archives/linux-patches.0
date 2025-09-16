@@ -1,159 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A36128CF5D;
-	Mon, 15 Sep 2025 23:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17621E379B
+	for <patches@lists.linux.dev>; Tue, 16 Sep 2025 01:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757978119; cv=none; b=CNndiZM/CMFhL3D4ge1TCUSWFIumYgpJoWc1OyfYRP74okBQZUc/WmcpcxjwseXSmIqt2bu+IBreV8axjOtA4pz+yzqbBhMfGjJpjiTzngcgrJv8DxWKhvkDIFBehp5Hl1EqjaHMr8Tt1jVD+x2oBiLxfCDIjk+7Kc0BXf2jVEY=
+	t=1757984728; cv=none; b=L8AI1kJKy35ZSbvBXuOD9z40lMd+Qf8vuysnRaplSrZO+KPAoy/TgUcdIP5m821R6AxtxGBEVB5r4tHFVjk9ICCqg/lIQ2yP+ctFB7qDwcXw0ZEC8hDq7/1khqRxuRlmog+cxHL/FDgIWfHkb3Z0cf/OMOklx74rVGOCZEWcjA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757978119; c=relaxed/simple;
-	bh=NZVjwENaK3+moDPtvfhqs0yvrJHkbbnLBuuY1y0SxaE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rZQ756F9B6ZUpfKiiO6NVEHsOjtZ4GJ7XQxq1pwOwniLrzJRHfxadQraG2daI64RsqO7+UJ0VpR+1wuO9fYrWX4t5AMub/6li4hZ1DNtGMymo1m9e1J75wmG4dJ+S36EvpbT/NwPZu/3QY07B02BhbkLhai7PSRP3dr2fYuxYD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsM2bbYr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757984728; c=relaxed/simple;
+	bh=d4rwn8y0vRJNvu8C079VdIgUQlj+kBjL5HuZ7smgp/E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SfitUdFPu+H2skQ7qybvigddpcJ+sJAQX/QpQMo0lSKn1NvczV33UspmFQafLwdpA65tU3UK05uwnfzx8PsTyZi3GuEo/sFviZZOmWPrgVcWe7/8iqvEHSyVzcUYOldd9ATfva4Rmq4+GWtSF6XC8eg0c1Tv0Wwh9QdUXB1x7ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dCiylnmk; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsM2bbYr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1499C4CEF1;
-	Mon, 15 Sep 2025 23:15:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757978119;
-	bh=NZVjwENaK3+moDPtvfhqs0yvrJHkbbnLBuuY1y0SxaE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tsM2bbYr6kONzJgx6IaM9qmXwh6IylLUWOIv8KL1Gd/47LIsx5/9FMH00QAGj+85f
-	 YOQlOzogYKlYvY08pRk1hFWCcqEA0xIW+xm+F5XFc+3D58mpVjA+WUIsJXmL91YBfj
-	 /GqbFG1oD6o7jYCPsmcGnZ8Z3XqRx38OlzOMGdG5NqFc3YX3BbNG/sXZbdJRVBqtBV
-	 x9wDkKV2eotAJlDKHyES+owYkLDkcy+cXeAALdxt8fv+1FyrS7S6XbhHL6rMIhcJiC
-	 jkTzj8sjH1a8MYC7h56umQ9SoDv7Y4JFTFxNufV+YN1UUglimXMuMyI7YBDS4lW9Eq
-	 cut8a2by1XQVg==
-Date: Mon, 15 Sep 2025 16:15:06 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Tariq Toukan <tariqt@nvidia.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>, Mark Bloch <mbloch@nvidia.com>,
-	Sabrina Dubroca <sd@queasysnail.net>, netdev@vger.kernel.org,
-	linux-rdma@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Gal Pressman <gal@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>, Will Deacon <will@kernel.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Justin Stitt <justinstitt@google.com>, linux-s390@vger.kernel.org,
-	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
-	Bill Wendling <morbo@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Salil Mehta <salil.mehta@huawei.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Patrisious Haddad <phaddad@nvidia.com>
-Subject: Re: [PATCH net-next V2] net/mlx5: Improve write-combining test
- reliability for ARM64 Grace CPUs
-Message-ID: <20250915231506.GA973819@ax162>
-References: <1757925308-614943-1-git-send-email-tariqt@nvidia.com>
- <20250915221859.GB925462@ax162>
- <20250915222758.GC925462@ax162>
- <20250915224810.GM1024672@nvidia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dCiylnmk"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-ea3f0d9150eso1951875276.0
+        for <patches@lists.linux.dev>; Mon, 15 Sep 2025 18:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757984724; x=1758589524; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d4rwn8y0vRJNvu8C079VdIgUQlj+kBjL5HuZ7smgp/E=;
+        b=dCiylnmkKEBUpfyZZXdzlu4I6PxulfCLuAEeG9jVGv/DEBKecLTXXtcFWEYTXzDYhg
+         GWdd6FxCiC5BL4V2F5hGkD9IW9okGdGPu1cq/ha6NBK/N6eCIvffm/LheiYKPnAhrL45
+         6HaNc1r3Y5Kf0pva0uFX+stacOddLqdCJOd+Wmsz4TjtLyc4ZnuHnm0CQeR/Rp3xZt0T
+         KNIky1Hv3YiccHaCQkVxwlX4WR4wzKTD97YNnTGXZSqLk30lHGUX/6W94q2IDWqQCVrZ
+         ZP8NRLp6nCNMn29qSN98EuRSwOdB1f8B5+4lJyXoQEcs1Zl+XuMQLCbulfgQNu6TuHmi
+         +JWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757984724; x=1758589524;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d4rwn8y0vRJNvu8C079VdIgUQlj+kBjL5HuZ7smgp/E=;
+        b=gWPLsOW+PdYVBzBmaiU1ta9GwKKqtM1yNeatPQHMup7mhUMEGPg7x5ccNyEEyT2PqC
+         AGHrN0H2WZM7lp7IDZiYBfvsfEzOxJDsruMznkHLv3vn7rYJXbofvwywPu6sTZgK4PXT
+         Bgug3rdmFYjiCIAbyivOgCYEM1B9vOWcW8g6daeusmC86jxE3UsdyMBeswxWHPEuoO12
+         f7ngpoQe/B5NdJKdbo9nIhm8+6CIJdYUK7b6qh9f5EFd08fgCBbsCWo2gUPc/FzbWUDU
+         14DVOwSyqRNukWi5abAmjqth3sEQligAL0pW60Bo2mhuI5/KfI/BqjVtkikxXkLBsBMM
+         UYjA==
+X-Forwarded-Encrypted: i=1; AJvYcCW8D9EQMcHHn+rLgfPaXoraR2Yh8csFBKbwDhgily/2MQZ4z0KkfAKh/cE5aXAA2JH0E9fadjaE@lists.linux.dev
+X-Gm-Message-State: AOJu0YzubtxaisNqr45jt8mwYltKgG/mygfBkP0b4ssS47aLQfHOsnTj
+	Cyg7/tgJWvg0fbtfeykiZSrX6u4Z9HjQlhZSo9VBzvxS285pwX3DwgULl+4EpgFqCWh+yzNA32t
+	jVjPjuRMhyKQaLsIuHuK8vMM38Y+FVZ8=
+X-Gm-Gg: ASbGncta4uDtlp20eFwLzNXlTn6BE4uDtVcT98g4Bxp7DfVE16LuDH1m62wdnjyGHpz
+	BNmdtOCH+JkAVBcLIO8k7mcC3eCQepq67eo0U19TZ7JbtLV2UFlbLE69xhe3JTCb+TyoFpCg8jk
+	W0+HqVYMX9F/GgIOpD0iwci+M56JDHtWxWH4BCgIHKLFz8xSGUmoJRB4WFpmLAP2B6uDj5gsrxJ
+	dyAr59GyAx3jSlYFw==
+X-Google-Smtp-Source: AGHT+IFaJEo1gVHkPCEaCD3vWYjtreYFiQ2WOrRU9CIpbMyg97OVJtr/v3uxdpG+fiXE68E0IfjXLuECnr1bsw09sPQ=
+X-Received: by 2002:a05:6902:2b02:b0:e98:9926:e5ca with SMTP id
+ 3f1490d57ef6-ea3d9a6c911mr10729577276.36.1757984723469; Mon, 15 Sep 2025
+ 18:05:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250915224810.GM1024672@nvidia.com>
+References: <20250913003842.41944-1-safinaskar@gmail.com> <20250915-modebranche-marken-fc832a25e05d@brauner>
+In-Reply-To: <20250915-modebranche-marken-fc832a25e05d@brauner>
+From: Askar Safin <safinaskar@gmail.com>
+Date: Tue, 16 Sep 2025 04:04:47 +0300
+X-Gm-Features: Ac12FXwuxsP2xoupllcCoDiRw8q2uuerrvP566PgC2Qr6qfMP36Zqdrto9P8zEU
+Message-ID: <CAPnZJGAjfpHZn_VzU3ry9ZV6OUS0RN2iWos153_oM_PhVbMgVg@mail.gmail.com>
+Subject: Re: [PATCH RESEND 00/62] initrd: remove classic initrd support
+To: Christian Brauner <brauner@kernel.org>
+Cc: linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Linus Torvalds <torvalds@linux-foundation.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Al Viro <viro@zeniv.linux.org.uk>, 
+	Jan Kara <jack@suse.cz>, Christoph Hellwig <hch@lst.de>, Jens Axboe <axboe@kernel.dk>, 
+	Andy Shevchenko <andy.shevchenko@gmail.com>, Aleksa Sarai <cyphar@cyphar.com>, 
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
+	Julian Stecklina <julian.stecklina@cyberus-technology.de>, 
+	Gao Xiang <hsiangkao@linux.alibaba.com>, Art Nikpal <email2tema@gmail.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, Alexander Graf <graf@amazon.com>, 
+	Rob Landley <rob@landley.net>, Lennart Poettering <mzxreary@0pointer.de>, linux-arch@vger.kernel.org, 
+	linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-csky@vger.kernel.org, 
+	linux-hexagon@vger.kernel.org, loongarch@lists.linux.dev, 
+	linux-m68k@lists.linux-m68k.org, linux-mips@vger.kernel.org, 
+	linux-openrisc@vger.kernel.org, linux-parisc@vger.kernel.org, 
+	linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org, 
+	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org, 
+	sparclinux@vger.kernel.org, linux-um@lists.infradead.org, x86@kernel.org, 
+	Ingo Molnar <mingo@redhat.com>, linux-block@vger.kernel.org, initramfs@vger.kernel.org, 
+	linux-api@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-efi@vger.kernel.org, linux-ext4@vger.kernel.org, 
+	"Theodore Y . Ts'o" <tytso@mit.edu>, linux-acpi@vger.kernel.org, Michal Simek <monstr@monstr.eu>, 
+	devicetree@vger.kernel.org, Luis Chamberlain <mcgrof@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Thorsten Blum <thorsten.blum@linux.dev>, Heiko Carstens <hca@linux.ibm.com>, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 15, 2025 at 07:48:10PM -0300, Jason Gunthorpe wrote:
-> On Mon, Sep 15, 2025 at 03:27:58PM -0700, Nathan Chancellor wrote:
-> > On Mon, Sep 15, 2025 at 03:18:59PM -0700, Nathan Chancellor wrote:
-> > > On Mon, Sep 15, 2025 at 11:35:08AM +0300, Tariq Toukan wrote:
-> > > ...
-> > > > diff --git a/drivers/net/ethernet/mellanox/mlx5/core/Makefile b/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-> > > > index d77696f46eb5..06d0eb190816 100644
-> > > > --- a/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-> > > > +++ b/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-> > > > @@ -176,3 +176,9 @@ mlx5_core-$(CONFIG_PCIE_TPH) += lib/st.o
-> > > >  
-> > > >  obj-$(CONFIG_MLX5_DPLL) += mlx5_dpll.o
-> > > >  mlx5_dpll-y :=	dpll.o
-> > > > +
-> > > > +#
-> > > > +# NEON WC specific for mlx5
-> > > > +#
-> > > > +mlx5_core-$(CONFIG_KERNEL_MODE_NEON) += lib/wc_neon_iowrite64_copy.o
-> > > > +FLAGS_lib/wc_neon_iowrite64_copy.o += $(CC_FLAGS_FPU)
-> > > 
-> > > Does this work as is? I think this needs to be CFLAGS instead of FLAGS
-> > > but I did not test to verify.
-> > 
-> > Also, Documentation/core-api/floating-point.rst states that code should
-> > also use CFLAGS_REMOVE_ for CC_FLAGS_NO_FPU as well as adding
-> > CC_FLAGS_FPU.
-> > 
-> >   CFLAGS_REMOVE_lib/wc_neon_iowrite64_copy.o += $(CC_FLAGS_NO_FPU)
-> 
-> I wondered if you needed the seperate compilation unit at all since it
-> it all done with inline assembly.. Since the makefile seems to have a
-> typo, it suggests you don't need the compilation unit and it could
-> just be a little inline protected by CONFIG_KERNEL_MODE_NEON.
+On Mon, Sep 15, 2025 at 4:34=E2=80=AFPM Christian Brauner <brauner@kernel.o=
+rg> wrote:
+> Split it up into multiple patch series. Send a first series that
+> focusses only on removing the generic infrastructure keeping it as
+> contained as possible. Only do non-generic cleanups that are absolutely
+> essential for the removal. Then the cleanups can go in separate series
+> later.
 
-Hmmm, clang rejects the current patch
+Ok, I will do this.
+I will send a minimal patchset with arch/ changes kept to absolute minimum
+or even absent. Nearly all of the changes will be in init/ and docs.
+Hopefully it will pass via the VFS tree.
 
-  drivers/net/ethernet/mellanox/mlx5/core/lib/wc_neon_iowrite64_copy.c:9:3: error: instruction requires: neon
-      9 |         ("ld1 {v0.16b, v1.16b, v2.16b, v3.16b}, [%0]\n\t"
-        |          ^
-  <inline asm>:1:2: note: instantiated into assembly here
-      1 |         ld1 {v0.16b, v1.16b, v2.16b, v3.16b}, [x19]
-        |         ^
-  drivers/net/ethernet/mellanox/mlx5/core/lib/wc_neon_iowrite64_copy.c:9:48: error: instruction requires: neon
-      9 |         ("ld1 {v0.16b, v1.16b, v2.16b, v3.16b}, [%0]\n\t"
-        |                                                       ^
-  <inline asm>:2:2: note: instantiated into assembly here
-      2 |         st1 {v0.16b, v1.16b, v2.16b, v3.16b}, [x20]
-        |         ^
+If it gets to kernel release, I will consider sending more patchsets.
 
-while GCC accepts it... It looks like GCC's -mgeneral-regs-only only
-impacts the compiler using floating-point and SIMD registers after [1]
-in GCC 6.x, whereas clang's restriction is on both the compiler and
-assembler. Perhaps clang should be adjusted to match but its behavior
-seems more desirable for the kernel to ensure floating-point code is
-properly separated and called between kernel_fpu_{begin,end}(). This
-error is resolved with the following diff.
 
-[1]: https://gcc.gnu.org/cgit/gcc/commit/?id=7d9425d46b58e69667300331aa55ebddddcceaeb
-
-Cheers,
-Nathan
-
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/Makefile b/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-index 06d0eb190816..a85fc21419d8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-@@ -181,4 +181,5 @@ mlx5_dpll-y :=	dpll.o
- # NEON WC specific for mlx5
- #
- mlx5_core-$(CONFIG_KERNEL_MODE_NEON) += lib/wc_neon_iowrite64_copy.o
--FLAGS_lib/wc_neon_iowrite64_copy.o += $(CC_FLAGS_FPU)
-+CFLAGS_lib/wc_neon_iowrite64_copy.o += $(CC_FLAGS_FPU)
-+CFLAGS_REMOVE_lib/wc_neon_iowrite64_copy.o += $(CC_FLAGS_NO_FPU)
+--=20
+Askar Safin
