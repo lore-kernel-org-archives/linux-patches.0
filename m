@@ -1,151 +1,241 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail.burntcomma.com (mail2.burntcomma.com [217.169.27.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC642FFF96
-	for <patches@lists.linux.dev>; Tue, 16 Sep 2025 17:08:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8643126E6FB
+	for <patches@lists.linux.dev>; Tue, 16 Sep 2025 19:03:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.169.27.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758042515; cv=none; b=swob+TSiSTax7rGtDfu27GREh7c/EMWkb2ewy6b5GZP5X0H9uCV0GeCAuNI5Fe6qVnJ+GYbUSKTI3T0z278YbntZV2J6xrLd15oIY3PvfCUplAUcbBy/H3MEsOCoIa3jJwyfPbZmUanale8Ig5I5md3GRdaGBFLda6P9fOQfDDc=
+	t=1758049432; cv=none; b=mMNeQSDBUqnzuIamWNxlvX4Ue1uP5FONWX43JOFAKURosKWKPYS2Nk24Z8NIfpc2s6BTWEepwv8ORPRPA97uuYf8Us5ljeU1jgItLvdGP5Jbu8UjaPvxoV0GLd5hk0xfWvHC2RP28yE3eKM6o4adUNtOFHX+e7oBRD2YFwNg2O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758042515; c=relaxed/simple;
-	bh=PgWcajlgRtwCN1aidp/F0FGsvN0V9p5zYN3VYaOBF0E=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=C6apTbfE7us3D+lI+RUQo9ox+CrOY+rZg27vcxSWkhn0cHXyRII7rXKm2OBBDgc/4ZbVmhg+12/hPG6+xh07/dJ3KrixxjJMKCazdLwleaAZMdqcq+GsHj4GQiAlVcAvl4NL4fIK/DvqRPsBdSv+c/KjLhoJ+SIbS2PyHk5puJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jrtc27.com; spf=pass smtp.mailfrom=jrtc27.com; dkim=pass (2048-bit key) header.d=jrtc27.com header.i=@jrtc27.com header.b=Hnr3QzTs; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jrtc27.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jrtc27.com
+	s=arc-20240116; t=1758049432; c=relaxed/simple;
+	bh=6T8xgcg3GJ/eyqR/4tiAb/hZshcEhhULYcSuDN8rSR4=;
+	h=Message-ID:Date:Mime-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qGDEelS8tqK679o4iP0oMOdQ38VNMutd4wWjnA9XyNu0TQ0ijDXkTx7iVnqijpF5U5TCE8DceRGJ0g5YVwm63CX6rH+aUUMidXxPeeILxYlO7kvqeQBVBjYYbGP2XtagdN3y2p9oHhV0cb0UIS7V3mnSXd+c3mhyMGILlUFOFaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=harmstone.com; spf=pass smtp.mailfrom=harmstone.com; dkim=pass (1024-bit key) header.d=harmstone.com header.i=@harmstone.com header.b=XcvYHvGx; arc=none smtp.client-ip=217.169.27.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=harmstone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=harmstone.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jrtc27.com header.i=@jrtc27.com header.b="Hnr3QzTs"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3ebe8dc13a3so1238421f8f.3
-        for <patches@lists.linux.dev>; Tue, 16 Sep 2025 10:08:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jrtc27.com; s=gmail.jrtc27.user; t=1758042511; x=1758647311; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AIXyc3Fa0oN4a5i/p3ClDZo8xo9GAZJtSKI5SCU0zd8=;
-        b=Hnr3QzTsmHkewP7ZgYg6kL56fAPGlK3lnqtivxkONFj/hYptAt7eDf4kAJ2iUOdFnA
-         WMgpXADwmFUxPvxCNBAwLJycpXtlcIvN2AvH+LR4igVyrJLVOnSDoqWoEh2cANHTk+uh
-         LW9QWC54BXjBBfYjU6BeOQ8238aC47RztbdpIyf4i2r2X9vKTXZauyeyDFOtlXd7kPxr
-         r+JIOvMVj7rjjygki94y0PlsGcxepCvXZXEa9X1GLrUq/VERYnYOYbJ2pxudJQ28Jiir
-         xZjiCq0wteOdZzg8hBwbWdu/EIa7sG7LOSP8vjxLtfApNwOHOoKJKurJwOSO5ewA3Zp3
-         bjxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758042511; x=1758647311;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AIXyc3Fa0oN4a5i/p3ClDZo8xo9GAZJtSKI5SCU0zd8=;
-        b=VJUtBQJQlFTcKTxr2tOwMOgpN1Jm/1lvRv5uq8cF17+vePfhvUXOCEMlpFZWJnn7S7
-         7uA9zMy6+paM4wOD9PVn2Y0VG4EAVnJJbzTDi519rCjjGHye34O1hP+AxJeiGJcRdHau
-         6lo9tlyscoZWL7BxRpwSeU1t1StBotai1xrRaQVmjzFoXRZWORDwll6zeElIzOtefGx9
-         Db+tTqe844y6sCNpsFK2IFBqDSWpP8q0BhfI6VWAlVtOFC8TpN5UOnD12nBSQ1Ha6Rhk
-         olAKjFwi7Q453xgItChYv8Qw6W5H6+YB/4cXmUJT6Q3FfGfgFUo9jk8RTsFgd3a7wVAv
-         T1OQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWXSL0Tuadq077wsaTQ4H1O0KaPBmEx3dtQPXDw3gdhoyf5sbZIWPQa/XfGEFeHuRbTdK3l+3o+@lists.linux.dev
-X-Gm-Message-State: AOJu0YwveXPbsg+D6WiecJImh1IjBRHO0Cr1ubJQBl1MALf0ovTxFzNO
-	TL1k0nGUABTIDP3la09TLE709tSvvuGTZg428m/a4nypeCnCw5cDOK+XbYCefjT45Go=
-X-Gm-Gg: ASbGncvEG634tZg0xGE/hQ0vzAUJdRxfP0Qa4y7PV3Sgeqesi3ELZiyC0IYT+x8PLwc
-	oJCNs4tl+WEfVcpidYO0HGLyOtQVgw+cARx0tagOqjUpMdf8yLVpSkOtutkDfOkpdAQ8IPzWnqz
-	Ufy1o2GmnDiZTPxf1uoGZ3OFrrXZJsKaIW87jCbj0Z1XCR11wgb4Y7DjnyY1vEjmu5Zvz4fM4Rh
-	SciTigN2zSACm8SBaGYjsLGm64bc2e01Mp46t0q2DiMsJFrsII8KLmY7Q86u0y3cZ1sJZ2Gr9GI
-	ZENKN7Wnkh9KuuNnPMotpz0VFARbDffnmD9z9FMy8Ikz9Mid2pnSUDSofQJJsoDL++TXJGkQenX
-	hxC05ih+nAII3X+51Kb5ylakEPVEKftzDgt9B3IiHpC6i+V66GI0xl3nb4w==
-X-Google-Smtp-Source: AGHT+IGdFovreVsG0VTuKKVTgWJJEqEKFnO21Mo+tI9uoQq7jJrFi/9vVCfXuUmfB6QhCbWUaAaAkg==
-X-Received: by 2002:a05:6000:2dca:b0:3eb:2437:97c5 with SMTP id ffacd0b85a97d-3eb24379a13mr7083124f8f.22.1758042510664;
-        Tue, 16 Sep 2025 10:08:30 -0700 (PDT)
-Received: from smtpclient.apple (nat-184-7.net.cam.ac.uk. [131.111.184.7])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607cd0a7sm22520843f8f.39.2025.09.16.10.08.29
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Sep 2025 10:08:30 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (1024-bit key) header.d=harmstone.com header.i=@harmstone.com header.b="XcvYHvGx"
+Received: from [IPV6:2a02:8012:8cf0:0:ce28:aaff:fe0d:6db2] (beren.burntcomma.com [IPv6:2a02:8012:8cf0:0:ce28:aaff:fe0d:6db2])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
+	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
+	(Client CN "hellas", Issuer "burntcomma.com" (verified OK))
+	by mail.burntcomma.com (Postfix) with ESMTPS id F192E2B89E7;
+	Tue, 16 Sep 2025 19:58:10 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=harmstone.com;
+	s=mail; t=1758049091;
+	bh=9CRWlhepUa3NwEJD5MBsJogKriioWIexgEtfCbT/svI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=XcvYHvGxd2OCRpYOvGIrnizNYKD5BO4LhvFX31/c4oIxs5q1i3eGU8bNRrOxLtxYe
+	 x8bm+I9pTRbOI/mEi41+UHoOGBs3OV3MFgnfhFhxiyAETQGB5cdv6n+2ul4T0H4naZ
+	 xZ6jqA+lrVrSmnDbNZ9Zg1R9DjC6YKzR7QtYlT6I=
+Message-ID: <a36c8edd-e692-485d-861d-a4752b0411ac@harmstone.com>
+Date: Tue, 16 Sep 2025 19:58:10 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH RESEND 00/62] initrd: remove classic initrd support
-From: Jessica Clarke <jrtc27@jrtc27.com>
-In-Reply-To: <20250913003842.41944-1-safinaskar@gmail.com>
-Date: Tue, 16 Sep 2025 18:08:18 +0100
-Cc: linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Christian Brauner <brauner@kernel.org>,
- Al Viro <viro@zeniv.linux.org.uk>,
- Jan Kara <jack@suse.cz>,
- Christoph Hellwig <hch@lst.de>,
- Jens Axboe <axboe@kernel.dk>,
- Andy Shevchenko <andy.shevchenko@gmail.com>,
- Aleksa Sarai <cyphar@cyphar.com>,
- =?utf-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
- Julian Stecklina <julian.stecklina@cyberus-technology.de>,
- Gao Xiang <hsiangkao@linux.alibaba.com>,
- Art Nikpal <email2tema@gmail.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Eric Curtin <ecurtin@redhat.com>,
- Alexander Graf <graf@amazon.com>,
- Rob Landley <rob@landley.net>,
- Lennart Poettering <mzxreary@0pointer.de>,
- linux-arch@vger.kernel.org,
- linux-alpha@vger.kernel.org,
- linux-snps-arc@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org,
- linux-csky@vger.kernel.org,
- linux-hexagon@vger.kernel.org,
- loongarch@lists.linux.dev,
- linux-m68k@lists.linux-m68k.org,
- linux-mips@vger.kernel.org,
- linux-openrisc@vger.kernel.org,
- linux-parisc@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org,
- linux-riscv@lists.infradead.org,
- linux-s390@vger.kernel.org,
- linux-sh@vger.kernel.org,
- sparclinux@vger.kernel.org,
- linux-um@lists.infradead.org,
- x86@kernel.org,
- Ingo Molnar <mingo@redhat.com>,
- linux-block@vger.kernel.org,
- initramfs@vger.kernel.org,
- linux-api@vger.kernel.org,
- linux-doc@vger.kernel.org,
- linux-efi@vger.kernel.org,
- linux-ext4@vger.kernel.org,
- "Theodore Y . Ts'o" <tytso@mit.edu>,
- linux-acpi@vger.kernel.org,
- Michal Simek <monstr@monstr.eu>,
- devicetree@vger.kernel.org,
- Luis Chamberlain <mcgrof@kernel.org>,
- Kees Cook <kees@kernel.org>,
- Thorsten Blum <thorsten.blum@linux.dev>,
- Heiko Carstens <hca@linux.ibm.com>,
- patches@lists.linux.dev
-Content-Transfer-Encoding: 7bit
-Message-Id: <A08066E1-A57E-4980-B15A-8FB00AC747CC@jrtc27.com>
-References: <20250913003842.41944-1-safinaskar@gmail.com>
-To: Askar Safin <safinaskar@gmail.com>
-X-Mailer: Apple Mail (2.3826.700.81)
+Mime-Version: 1.0
+Subject: Re: [PATCH AUTOSEL 6.16-6.12] btrfs: don't allow adding block device
+ of less than 1 MB
+To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
+ stable@vger.kernel.org
+Cc: Qu Wenruo <wqu@suse.com>, David Sterba <dsterba@suse.com>, clm@fb.com,
+ linux-btrfs@vger.kernel.org
+References: <20250916135936.1450850-1-sashal@kernel.org>
+ <20250916135936.1450850-7-sashal@kernel.org>
+Content-Language: en-US
+From: Mark Harmstone <mark@harmstone.com>
+Autocrypt: addr=mark@harmstone.com; keydata=
+ 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
+In-Reply-To: <20250916135936.1450850-7-sashal@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 13 Sep 2025, at 01:37, Askar Safin <safinaskar@gmail.com> wrote:
-> [...]
-> For example, I renamed the following global variables:
-> 
-> __initramfs_start
-> __initramfs_size
-> [...]
-> 
-> to:
-> 
-> __builtin_initramfs_start
-> __builtin_initramfs_size
+There's no real security angle here as you need to be root to call the
+ioctl, but that aside the LLM analysis is impressively good.
 
-I strongly suggest picking different names given __builtin_foo is the
-naming scheme used for GNU C builtins/intrinsics. I leave you and
-others to bikeshed that one.
-
-Jessica
+On 16/09/2025 2.59 pm, Sasha Levin wrote:
+> From: Mark Harmstone <mark@harmstone.com>
+> 
+> [ Upstream commit 3d1267475b94b3df7a61e4ea6788c7c5d9e473c4 ]
+> 
+> Commit 15ae0410c37a79 ("btrfs-progs: add error handling for
+> device_get_partition_size_fd_stat()") in btrfs-progs inadvertently
+> changed it so that if the BLKGETSIZE64 ioctl on a block device returned
+> a size of 0, this was no longer seen as an error condition.
+> 
+> Unfortunately this is how disconnected NBD devices behave, meaning that
+> with btrfs-progs 6.16 it's now possible to add a device you can't
+> remove:
+> 
+>    # btrfs device add /dev/nbd0 /root/temp
+>    # btrfs device remove /dev/nbd0 /root/temp
+>    ERROR: error removing device '/dev/nbd0': Invalid argument
+> 
+> This check should always have been done kernel-side anyway, so add a
+> check in btrfs_init_new_device() that the new device doesn't have a size
+> less than BTRFS_DEVICE_RANGE_RESERVED (i.e. 1 MB).
+> 
+> Reviewed-by: Qu Wenruo <wqu@suse.com>
+> Signed-off-by: Mark Harmstone <mark@harmstone.com>
+> Reviewed-by: David Sterba <dsterba@suse.com>
+> Signed-off-by: David Sterba <dsterba@suse.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> 
+> LLM Generated explanations, may be completely bogus:
+> 
+> Based on my extensive investigation using multiple specialized agents
+> and deep code analysis, here is my determination:
+> 
+> ## **Backport Status: YES**
+> 
+> This commit MUST be backported to stable kernel trees. Here's the
+> comprehensive analysis:
+> 
+> ### **1. Critical Bug Fix**
+> The commit fixes a severe bug where block devices smaller than 1MB
+> (including 0-size NBD devices) can be added to a btrfs filesystem but
+> **cannot be removed**, leaving the filesystem in a permanently degraded
+> state. The specific error users encounter:
+> ```
+> ERROR: error removing device '/dev/nbd0': Invalid argument
+> ```
+> 
+> ### **2. Real User Impact**
+> - **Unrecoverable filesystem state**: Once a small/zero-size device is
+>    added, it cannot be removed without recreating the entire filesystem
+> - **Data migration required**: Users must backup all data and recreate
+>    the filesystem to resolve
+> - **NBD vulnerability**: Disconnected NBD devices report 0 size, making
+>    this easy to trigger accidentally
+> - **No workaround available**: There is no way to force-remove the stuck
+>    device
+> 
+> ### **3. Root Cause Analysis**
+> The kernel-code-researcher agent found:
+> - The kernel **never had this validation** - it always relied on
+>    userspace (btrfs-progs) to check
+> - Btrfs-progs commit 15ae0410c37a79 in version 6.16 inadvertently
+>    removed the size check for 0-byte devices
+> - The kernel reserves the first 1MB (`BTRFS_DEVICE_RANGE_RESERVED =
+>    SZ_1M`) for bootloader safety
+> - Device removal fails because shrinking calculations become invalid
+>    when device size ≤ 1MB
+> 
+> ### **4. Security Implications**
+> The security-auditor agent identified:
+> - **Medium severity DoS vulnerability** (CVSS 6.0)
+> - **Security boundary violation**: Privileged operations creating
+>    irreversible states
+> - **Container/cloud impact**: Affects modern deployment scenarios with
+>    device passthrough
+> - **No CVE assigned yet**: This is an unreported vulnerability
+> 
+> ### **5. Code Change Analysis**
+> The fix is minimal and safe:
+> ```c
+> +       if (bdev_nr_bytes(file_bdev(bdev_file)) <=
+> BTRFS_DEVICE_RANGE_RESERVED) {
+> +               ret = -EINVAL;
+> +               goto error;
+> +       }
+> ```
+> - **5 lines added** in `btrfs_init_new_device()`
+> - **No complexity**: Simple size check before device initialization
+> - **Zero regression risk**: Only blocks operations that would fail
+>    anyway
+> - **Clear error path**: Uses existing error handling
+> 
+> ### **6. Stable Tree Criteria Met**
+> ✅ **Fixes a real bug**: Users cannot remove devices, filesystem stuck
+> ✅ **Small and contained**: 5-line change in one function
+> ✅ **No new features**: Pure bug fix, no functional changes
+> ✅ **Minimal regression risk**: Only blocks already-broken operations
+> ✅ **Clear side effects**: None - prevents invalid state creation
+> ✅ **Important for users**: Prevents unrecoverable filesystem states
+> ✅ **Maintainer reviewed**: Approved by Qu Wenruo and David Sterba
+> 
+> ### **7. Version Applicability**
+> The search-specialist agent found:
+> - **No prior bug reports**: This is a newly discovered issue
+> - **Affects all kernel versions** when used with btrfs-progs 6.16+
+> - Should be backported to **all actively maintained stable branches**
+>    (4.19, 5.4, 5.10, 5.15, 6.1, 6.6, 6.11)
+> 
+> ### **8. Testing Verification**
+> The fix can be easily verified:
+> ```bash
+> # Without patch: succeeds but creates stuck device
+> btrfs device add /dev/zero_size_device /mnt
+> btrfs device remove /dev/zero_size_device /mnt  # Fails with -EINVAL
+> 
+> # With patch: properly rejects at add time
+> btrfs device add /dev/zero_size_device /mnt  # Fails with -EINVAL
+> ```
+> 
+> ### **Conclusion**
+> This is a textbook example of a commit that should be backported to
+> stable:
+> - Fixes a real, user-impacting bug with no workaround
+> - Minimal, safe change with clear benefits
+> - Prevents filesystem corruption/stuck states
+> - Has security implications (DoS)
+> - Already reviewed by subsystem maintainers
+> 
+> The absence of this validation in the kernel combined with the recent
+> btrfs-progs change creates a critical gap that leaves users vulnerable
+> to unrecoverable filesystem states. This fix closes that gap with
+> minimal risk.
+> 
+>   fs/btrfs/volumes.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+> index f475b4b7c4578..817d3ef501ec4 100644
+> --- a/fs/btrfs/volumes.c
+> +++ b/fs/btrfs/volumes.c
+> @@ -2714,6 +2714,11 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
+>   		goto error;
+>   	}
+>   
+> +	if (bdev_nr_bytes(file_bdev(bdev_file)) <= BTRFS_DEVICE_RANGE_RESERVED) {
+> +		ret = -EINVAL;
+> +		goto error;
+> +	}
+> +
+>   	if (fs_devices->seeding) {
+>   		seeding_dev = true;
+>   		down_write(&sb->s_umount);
 
