@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7637B328995;
-	Wed, 17 Sep 2025 13:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA885296BCC;
+	Wed, 17 Sep 2025 13:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114120; cv=none; b=Xizz0Uo4hE+NYnN9brRmKE2gHKQWRtmFTTTbGnuY5Rmi/A+8yZQO8aQHtb5DrFut2E4vp10KOtyg/bIWQ2oInbWx1uNrLosjVIBFIwFhwlA9g2kRKieR94aQKtz3z7XnkZduyHD1r7jJat6lcRBJufcblpzfLaoh8L/AWFqpv4Q=
+	t=1758114124; cv=none; b=eT0/+QpBf7csJxzQsck80+R7O/SYJrH8Hm3IssqvlRjA2i9/mY1tQjd7KQNHOWpd+10XU/NH07guV42s9S/aNVf/yO8Yn9DeAkxfnuLrLd48lj/ioaLdQY4/dqIAW/s2fU00Moh6IIh0liABDCt9Cm3Fz9bnwXLhHEc8t8c+WGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114120; c=relaxed/simple;
-	bh=yD71f/148iIRMecgCLpjaKm6WgSz2/BrJXwJhKNnUrg=;
+	s=arc-20240116; t=1758114124; c=relaxed/simple;
+	bh=P2GjAKDCJJablRkGzxm6xae9PqW326BCJTcjrv9nr0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xeha5FmWX3ESwDLGD+G9R0jtD9PCTWGRMftL7CCGFOoH9Tnf0s0N9EpLXvGiqMgbxEYbebGQs7DuQd4PBVETC4DRxtDhHuEtJlVmXp1LBZd5OhHxopsA5vQiNRXBOqq1HDnomcfsLk9Cspu38k6QSf44mmkOUXB2P/RraS3oXQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8nlMgwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQbL0ckxAPaP7FxBH3OqTfTodisEwvb4/goVS88RomOjXKtwaeBNrDRzmbcKJMjWPX+DuNa7W2zvAsnhAwmbI+SL6aNgngyw05ODs9htb6s56Mtyv3EjpLo8Ut9CcYBOLiu0F6lZ6FE2sO7O4rPuMN9eY59MXo4Naejvk8CWUC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alRrG3Lb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8nlMgwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93066C4CEF0;
-	Wed, 17 Sep 2025 13:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alRrG3Lb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E369EC4CEF5;
+	Wed, 17 Sep 2025 13:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114120;
-	bh=yD71f/148iIRMecgCLpjaKm6WgSz2/BrJXwJhKNnUrg=;
+	s=korg; t=1758114123;
+	bh=P2GjAKDCJJablRkGzxm6xae9PqW326BCJTcjrv9nr0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8nlMgwib81lgd2PRS0ceW3/LpwxrOLXqV9bxHa133/6xrHeXkz38WYXiKMNPKNSX
-	 vsPmM6jp0MPl+JBMXdmP7EDwJBXAjabL9vUNenzNayFpLSnAkSzj3UC/VivoKK3Vle
-	 5KK4R74ijfoLapqUtCw5aAq3rjBrLJpBUI9f1JE4=
+	b=alRrG3Lb/5VFtdJAMLqUI1aAEKuxElyziOzzPFiR9VYGwthMIBza45YmPNm0xTcmA
+	 xazn7uJWdJjMN7yL8Fm7aEqqLhFa1GaoPoQlUMwAUKDorcsUvO5oGZTMi9Gxu/cP9C
+	 rDpYEIFOHVKJafb8ac+upDfVKdrZpMmSAKrEb5VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Moreno <amorenoz@redhat.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alex Tran <alex.t.tran@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 52/78] tunnels: reset the GSO metadata before reusing the skb
-Date: Wed, 17 Sep 2025 14:35:13 +0200
-Message-ID: <20250917123330.836618422@linuxfoundation.org>
+Subject: [PATCH 6.1 53/78] docs: networking: can: change bcm_msg_head frames member to support flexible array
+Date: Wed, 17 Sep 2025 14:35:14 +0200
+Message-ID: <20250917123330.860834716@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,78 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Alex Tran <alex.t.tran@gmail.com>
 
-[ Upstream commit e3c674db356c4303804b2415e7c2b11776cdd8c3 ]
+[ Upstream commit 641427d5bf90af0625081bf27555418b101274cd ]
 
-If a GSO skb is sent through a Geneve tunnel and if Geneve options are
-added, the split GSO skb might not fit in the MTU anymore and an ICMP
-frag needed packet can be generated. In such case the ICMP packet might
-go through the segmentation logic (and dropped) later if it reaches a
-path were the GSO status is checked and segmentation is required.
+The documentation of the 'bcm_msg_head' struct does not match how
+it is defined in 'bcm.h'. Changed the frames member to a flexible array,
+matching the definition in the header file.
 
-This is especially true when an OvS bridge is used with a Geneve tunnel
-attached to it. The following set of actions could lead to the ICMP
-packet being wrongfully segmented:
+See commit 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with
+flexible-array members")
 
-1. An skb is constructed by the TCP layer (e.g. gso_type SKB_GSO_TCPV4,
-   segs >= 2).
-
-2. The skb hits the OvS bridge where Geneve options are added by an OvS
-   action before being sent through the tunnel.
-
-3. When the skb is xmited in the tunnel, the split skb does not fit
-   anymore in the MTU and iptunnel_pmtud_build_icmp is called to
-   generate an ICMP fragmentation needed packet. This is done by reusing
-   the original (GSO!) skb. The GSO metadata is not cleared.
-
-4. The ICMP packet being sent back hits the OvS bridge again and because
-   skb_is_gso returns true, it goes through queue_gso_packets...
-
-5. ...where __skb_gso_segment is called. The skb is then dropped.
-
-6. Note that in the above example on re-transmission the skb won't be a
-   GSO one as it would be segmented (len > MSS) and the ICMP packet
-   should go through.
-
-Fix this by resetting the GSO information before reusing an skb in
-iptunnel_pmtud_build_icmp and iptunnel_pmtud_build_icmpv6.
-
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Reported-by: Adrian Moreno <amorenoz@redhat.com>
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20250904125351.159740-1-atenart@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Alex Tran <alex.t.tran@gmail.com>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20250904031709.1426895-1-alex.t.tran@gmail.com
+Fixes: 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with flexible-array members")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217783
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/networking/can.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index deb08cab44640..75e3d7501752d 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -203,6 +203,9 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
- 	if (!pskb_may_pull(skb, ETH_HLEN + sizeof(struct iphdr)))
- 		return -EINVAL;
+diff --git a/Documentation/networking/can.rst b/Documentation/networking/can.rst
+index ebc822e605f55..9ac6d3973ad58 100644
+--- a/Documentation/networking/can.rst
++++ b/Documentation/networking/can.rst
+@@ -740,7 +740,7 @@ The broadcast manager sends responses to user space in the same form:
+             struct timeval ival1, ival2;    /* count and subsequent interval */
+             canid_t can_id;                 /* unique can_id for task */
+             __u32 nframes;                  /* number of can_frames following */
+-            struct can_frame frames[0];
++            struct can_frame frames[];
+     };
  
-+	if (skb_is_gso(skb))
-+		skb_gso_reset(skb);
-+
- 	skb_copy_bits(skb, skb_mac_offset(skb), &eh, ETH_HLEN);
- 	pskb_pull(skb, ETH_HLEN);
- 	skb_reset_network_header(skb);
-@@ -297,6 +300,9 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
- 	if (!pskb_may_pull(skb, ETH_HLEN + sizeof(struct ipv6hdr)))
- 		return -EINVAL;
- 
-+	if (skb_is_gso(skb))
-+		skb_gso_reset(skb);
-+
- 	skb_copy_bits(skb, skb_mac_offset(skb), &eh, ETH_HLEN);
- 	pskb_pull(skb, ETH_HLEN);
- 	skb_reset_network_header(skb);
+ The aligned payload 'frames' uses the same basic CAN frame structure defined
 -- 
 2.51.0
 
