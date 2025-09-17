@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FA53233F8;
-	Wed, 17 Sep 2025 12:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A74832340B;
+	Wed, 17 Sep 2025 12:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113478; cv=none; b=SZCGXI8iTKxLhAVmFZZZ1TTlMECoziItfvkhoCvNae57KLG0rkAFXTlYouGDxUTj4ZAlHW/r4dzC3eSHTQV1womf5/jSeupkXOEtEWPkJjv4hLrHsc8n9ZlXvxcndrJq+hTMWoBP2TUgmaqmds40Yh0aKG9aNLR7dRsTtHtR/vk=
+	t=1758113478; cv=none; b=REy3xqs/29AO2lYdcAwc6Lrv0S9hgqIGpL5m67EE3UyG0bJVar00+YJIWq0DX5nY8W+Ka2laZg//6V4t5Y4AxoJseiQomJ+hg/+h/voxhJ8fuor9GAoG+vir6v1dz4M3KZuiDU9BJyAgAqo23t5sYUd2og/zQ4DGvCOO+aw6sWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758113478; c=relaxed/simple;
-	bh=qBlQYQiEikr8M4F0yrnYVfo4U2rFw3KTjzUPo6eicFw=;
+	bh=j7nP8tIrHTAT3NbfIyww5ZWPS4wE8g3ET0DNNaHVeZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpA/+6XKBAIXAR29p8V2GRHLeL3RoyADuvOfKgVO5OqP9/2E8YUxb5FBH0FjhsB+Smq9aA2P+kINwDubj8HHramx6KzfHqDGgYo+XOuYhBbW4lOAuX7oIAP/LGnlECcKAf+6Q4ygDyAZsvRjcKdWfFYasg6tNmdXFCl60VP45e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESWqhebu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ib7L4fFlOAtdc2md2OVfro2gcD8SSSKlEITtJhDamCe7vhCrn3MH9KmFT0PBJEbG5Ztw+wG6mmdlsQBrWYHTk+MR/tiTA0GOLDc6KwGOa4QUKjsN7H4uCICHAfziJxuafJcldpyFIs4/WwSMpczIrckUni+I2YoeASFwUxZGwIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTA7GI50; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESWqhebu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4079AC4CEF0;
-	Wed, 17 Sep 2025 12:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTA7GI50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87757C4CEF5;
+	Wed, 17 Sep 2025 12:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113474;
-	bh=qBlQYQiEikr8M4F0yrnYVfo4U2rFw3KTjzUPo6eicFw=;
+	s=korg; t=1758113478;
+	bh=j7nP8tIrHTAT3NbfIyww5ZWPS4wE8g3ET0DNNaHVeZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESWqhebu3CISZWecLvN6XP285360xtV+vK9/P0UaPTh9/WZIfJ2kDSW9MXB2LxuIU
-	 jL3PDR8qbhK0Ul92UpB3gfk7Jao8CUyS5dLiJp62kUMq43yyOrbyvMiFrOccX5TbTS
-	 KirYPl0HfuZcYINB+LYKaX8iK3gdV+Dp/HcwzhGo=
+	b=NTA7GI50vmZydxzusdJrJx3f1BakE2SKJmmjGNEtrXdtFhaywN3SZ4LqHFvb/vxPp
+	 cm0uqs1E4sWMQTavGAXbUiaCPD4UuPPqiO+UMLCfNWGfHy5V89NTtAjodlNkRsoBJ8
+	 jb5i8rHWjgbY14Seetd7TYpTy7+pa5cm8SGujtrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/140] genetlink: fix genl_bind() invoking bind() after -EPERM
-Date: Wed, 17 Sep 2025 14:34:29 +0200
-Message-ID: <20250917123346.674107872@linuxfoundation.org>
+Subject: [PATCH 6.12 098/140] net: bridge: Bounce invalid boolopts
+Date: Wed, 17 Sep 2025 14:34:30 +0200
+Message-ID: <20250917123346.698879825@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,44 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit 1dbfb0363224f6da56f6655d596dc5097308d6f5 ]
+[ Upstream commit 8625f5748fea960d2af4f3c3e9891ee8f6f80906 ]
 
-Per family bind/unbind callbacks were introduced to allow families
-to track multicast group consumer presence, e.g. to start or stop
-producing events depending on listeners.
+The bridge driver currently tolerates options that it does not recognize.
+Instead, it should bounce them.
 
-However, in genl_bind() the bind() callback was invoked even if
-capability checks failed and ret was set to -EPERM. This means that
-callbacks could run on behalf of unauthorized callers while the
-syscall still returned failure to user space.
-
-Fix this by only invoking bind() after "if (ret) break;" check
-i.e. after permission checks have succeeded.
-
-Fixes: 3de21a8990d3 ("genetlink: Add per family bind/unbind callbacks")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250905135731.3026965-1-alok.a.tiwari@oracle.com
+Fixes: a428afe82f98 ("net: bridge: add support for user-controlled bool options")
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/e6fdca3b5a8d54183fbda075daffef38bdd7ddce.1757070067.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/genetlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bridge/br.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 07ad65774fe29..3327d84518141 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1836,6 +1836,9 @@ static int genl_bind(struct net *net, int group)
- 		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
- 			ret = -EPERM;
+diff --git a/net/bridge/br.c b/net/bridge/br.c
+index 2cab878e0a39c..ed08717541fe7 100644
+--- a/net/bridge/br.c
++++ b/net/bridge/br.c
+@@ -312,6 +312,13 @@ int br_boolopt_multi_toggle(struct net_bridge *br,
+ 	int err = 0;
+ 	int opt_id;
  
-+		if (ret)
-+			break;
++	opt_id = find_next_bit(&bitmap, BITS_PER_LONG, BR_BOOLOPT_MAX);
++	if (opt_id != BITS_PER_LONG) {
++		NL_SET_ERR_MSG_FMT_MOD(extack, "Unknown boolean option %d",
++				       opt_id);
++		return -EINVAL;
++	}
 +
- 		if (family->bind)
- 			family->bind(i);
+ 	for_each_set_bit(opt_id, &bitmap, BR_BOOLOPT_MAX) {
+ 		bool on = !!(bm->optval & BIT(opt_id));
  
 -- 
 2.51.0
