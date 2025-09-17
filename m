@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3BE3195E0;
-	Wed, 17 Sep 2025 12:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E41A3167;
+	Wed, 17 Sep 2025 12:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113876; cv=none; b=fGg9qRVDzjG+upBlwkrRj2bC3WvBe7I4+H1LXgQq5Q1Br2wXF34q4lDsAsd+ZLkMYD1iYA6D21uhY2p23EPrNxXBbn+b7y94k9cAbUNROMZcdiuMR3pVCPg45y3zxQiPM4AmtNdqzO42MT9dxN2Ona/1YoB5Pk3HCTqvBPAD0cg=
+	t=1758113879; cv=none; b=p6+mYlSsbyxHvraLDXyDgFe9hc/3n6IJUQz7TOnm5pgdzH209hLOBYoUZUj1DgiJZoFXVJz1TGNpvjb4dQLBYZzYEGKY2UVRpM4rOMR3uXhmoUiXCFZDad4hryqeBeIZ6+E1ZWfimnydsoOeLnq6lI9kY4N8NbRuY2VFZETp0Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113876; c=relaxed/simple;
-	bh=f+Dt+tQHlomY0HLITsr9xfMqXz4xlMGKIBIf23jO38E=;
+	s=arc-20240116; t=1758113879; c=relaxed/simple;
+	bh=I5gC/ui3MCJcKTWQiCovPlXYLYugq2Z/sI2iu404YJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkmSFA8RyiqmQZs0lgXC9CdUoS5j+7Zj9jPLENjhw1AQv36ZYc0OQDNbwmwM/0kCc+wUlYuptiYfkUBqQF7uxJl47vMxrdOTV3tdF1KWP0XQPfchn5nvItbfNv83Su7E7bYijFq7Luohe8Xm8NtYalma1ar5rDh06FcKiQJEbaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHgfu/Of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c02rBSLcUgUAv8c18Zo6jDp8bvJqs3NZ1CW0Z5r4nrneBJgM/F76NltUzSFOByBCh41YrfNSeBqCLbT7/ynmLTT4zWDNFhd2Shq3F7LVdNfdlLjv8ymxsGtn6a0yCo6X1KkCfpkmjgdlHlONpiDrAq7w+NPoIn5oklVXQ8XVgbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFospepG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHgfu/Of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8B7C4CEF0;
-	Wed, 17 Sep 2025 12:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFospepG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363A3C4CEF0;
+	Wed, 17 Sep 2025 12:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113876;
-	bh=f+Dt+tQHlomY0HLITsr9xfMqXz4xlMGKIBIf23jO38E=;
+	s=korg; t=1758113879;
+	bh=I5gC/ui3MCJcKTWQiCovPlXYLYugq2Z/sI2iu404YJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wHgfu/OfvW+In7BFWQTiv7AgmOE5xOEuEiF/Zn8yB8Dmh4uHaxgeVBSRQrxuUwWTU
-	 bSFz/jUO6elVWLV1GVc3iosXtm9ciVBr4UAsmoybkwSFB0qI6KiL7sI0UfYYYcm4ul
-	 FY34ofD4+iW0FBQiIMDYHR7+zGOSIzj4yArrOCEE=
+	b=DFospepGpina+C1R3EdUDA4vYFM5AUZgGK8kddLLAVzKJ/Izc6CqJnuVInWbJi/D/
+	 /JuOn+x8K0Iq09vwSh4gEKItX7wTTssv6pBAHy3hqEMHsXPmn2/lG3AHG5neHzUWUR
+	 4OW3J2CIrxmCfq8F1x+J82MQoV0IfDXBUdMevFkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/101] dmaengine: idxd: Remove improper idxd_free
-Date: Wed, 17 Sep 2025 14:35:04 +0200
-Message-ID: <20250917123338.793812865@linuxfoundation.org>
+Subject: [PATCH 6.6 082/101] dmaengine: idxd: Fix refcount underflow on module unload
+Date: Wed, 17 Sep 2025 14:35:05 +0200
+Message-ID: <20250917123338.817246725@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -56,63 +56,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Yi Sun <yi.sun@intel.com>
 
-[ Upstream commit f41c538881eec4dcf5961a242097d447f848cda6 ]
+[ Upstream commit b7cb9a034305d52222433fad10c3de10204f29e7 ]
 
-The call to idxd_free() introduces a duplicate put_device() leading to a
-reference count underflow:
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 15 PID: 4428 at lib/refcount.c:28 refcount_warn_saturate+0xbe/0x110
-...
-Call Trace:
- <TASK>
-  idxd_remove+0xe4/0x120 [idxd]
-  pci_device_remove+0x3f/0xb0
-  device_release_driver_internal+0x197/0x200
-  driver_detach+0x48/0x90
-  bus_remove_driver+0x74/0xf0
-  pci_unregister_driver+0x2e/0xb0
-  idxd_exit_module+0x34/0x7a0 [idxd]
-  __do_sys_delete_module.constprop.0+0x183/0x280
-  do_syscall_64+0x54/0xd70
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+A recent refactor introduced a misplaced put_device() call, resulting in a
+reference count underflow during module unload.
 
-The idxd_unregister_devices() which is invoked at the very beginning of
-idxd_remove(), already takes care of the necessary put_device() through the
-following call path:
+There is no need to add additional put_device() calls for idxd groups,
+engines, or workqueues. Although the commit claims: "Note, this also
+fixes the missing put_device() for idxd groups, engines, and wqs."
+
+It appears no such omission actually existed. The required cleanup is
+already handled by the call chain:
 idxd_unregister_devices() -> device_unregister() -> put_device()
 
-In addition, when CONFIG_DEBUG_KOBJECT_RELEASE is enabled, put_device() may
-trigger asynchronous cleanup via schedule_delayed_work(). If idxd_free() is
-called immediately after, it can result in a use-after-free.
+Extend idxd_cleanup() to handle the remaining necessary cleanup and
+remove idxd_cleanup_internals(), which duplicates deallocation logic
+for idxd, engines, groups, and workqueues. Memory management is also
+properly handled through the Linux device model.
 
-Remove the improper idxd_free() to avoid both the refcount underflow and
-potential memory corruption during module unload.
-
-Fixes: d5449ff1b04d ("dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call")
+Fixes: a409e919ca32 ("dmaengine: idxd: Refactor remove call with idxd_cleanup() helper")
 Signed-off-by: Yi Sun <yi.sun@intel.com>
 Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-Link: https://lore.kernel.org/r/20250729150313.1934101-2-yi.sun@intel.com
+Link: https://lore.kernel.org/r/20250729150313.1934101-3-yi.sun@intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/init.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/dma/idxd/init.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 92e86ae9db29d..3a78973882211 100644
+index 3a78973882211..163a276d2670e 100644
 --- a/drivers/dma/idxd/init.c
 +++ b/drivers/dma/idxd/init.c
-@@ -907,7 +907,6 @@ static void idxd_remove(struct pci_dev *pdev)
- 	idxd_cleanup(idxd);
+@@ -904,7 +904,10 @@ static void idxd_remove(struct pci_dev *pdev)
+ 	device_unregister(idxd_confdev(idxd));
+ 	idxd_shutdown(pdev);
+ 	idxd_device_remove_debugfs(idxd);
+-	idxd_cleanup(idxd);
++	perfmon_pmu_remove(idxd);
++	idxd_cleanup_interrupts(idxd);
++	if (device_pasid_enabled(idxd))
++		idxd_disable_system_pasid(idxd);
  	pci_iounmap(pdev, idxd->reg_base);
  	put_device(idxd_confdev(idxd));
--	idxd_free(idxd);
  	pci_disable_device(pdev);
- }
- 
 -- 
 2.51.0
 
