@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFA12FBDFF;
-	Wed, 17 Sep 2025 12:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CC62FBDFF;
+	Wed, 17 Sep 2025 12:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113266; cv=none; b=jSKmkjBgC5I3QLIDLO6TiONNk3ibDio6k2LDHUapVHCm0psXBdeiXysSxVRsiE4usdkwtG3q03IGktquFxTfetOnKdYpWmm8VvAsaw8CWQITLi2H6Wh8e+R/MzA9NMuYMXQLzIDJ4pwRGO6FyHqYJZHyvAoSP9isCMvM3cuSu6Y=
+	t=1758113269; cv=none; b=iVknUTt2vklLdngMtTVX7IryqWUo1NzfEwHJ3Ar26xnt8ojKk8dqe5GGp4YyIHCLKPWQ5TiF+jm7iy2ZAn5dhBEKyW1JQcotvrDJ8BzjMH/Z1uKR6DEjTIGuwlSvY1DRS08ZbGnGFEkZ9JS4ybYOJVCNN3CriEJzDKHHAPEmONM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113266; c=relaxed/simple;
-	bh=YxLcCVHtdHGPskGiW6YhEZwOwxjeprLk9djG/gkOWos=;
+	s=arc-20240116; t=1758113269; c=relaxed/simple;
+	bh=yo4NqTqFf/8uKzy8Vjuh0ygzuZOMNWxTSrj5Lj4z3r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=beR2axFEzJn+YVXMY1Ci8JoX3qlT6kbnwSrDUKKyIY8qG4waoNG4ZTeD5gr+PxUUV9LjIbfphDx6efrcbTBBsRMaO6GavjUkRRaAYbdzPjuiF+E/hvvptpQ1s6f/xTMCDa1XvH3TW2P+kAIAok929dytI8pEJVEyYmZrYvnf7s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzhVYM6G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BgrlX/CvDqzZ+oHqLSd6Hsx6HLjHWzoNrXf+FcvaOobQ5XQBAPyK6Sl7qh/zTHKz1q/tHwv12kIKcfH9KfV7Wgu65qHwp8LlSV7jYzdZpAawZGdzdgR4IGl2teuidmzQqanRaf8PtADh1tFIfxJN6rSEzPvUCSmFkmtAW9FAzms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLbuvdYa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzhVYM6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9844C4CEF0;
-	Wed, 17 Sep 2025 12:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLbuvdYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342BCC4CEF0;
+	Wed, 17 Sep 2025 12:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113266;
-	bh=YxLcCVHtdHGPskGiW6YhEZwOwxjeprLk9djG/gkOWos=;
+	s=korg; t=1758113269;
+	bh=yo4NqTqFf/8uKzy8Vjuh0ygzuZOMNWxTSrj5Lj4z3r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzhVYM6GiDDQdI9A5one9+tW7HVnWgOZmlaVViCRma2bQJfUuFfYxudg1kkVTqjyb
-	 cXNA03krDthI0aFPUAOjI2nFQS+xYdwAyyVTyD1W8p19756qPVKUfykm1WkjohuZOD
-	 JsmNQ1lMS7MO2E7oBqLiM89qSlQ0aS4UPLLzrdQw=
+	b=XLbuvdYavWrErfXHxEI8lO0BPBjXnhgXnpfvkXo1h6gEBALzd6O57ZSHfDGGvhjfd
+	 O/2RMkSYwarw2yBigyiHb1latBKjXm4r6K1QlLit1bAwV5v32OOaC1472Oj42ooGWN
+	 EJqcTpTzWp7F1QADgBZk0VfSJLcb7f9+0T5lwjo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 007/140] kunit: kasan_test: disable fortify string checker on kasan_strings() test
-Date: Wed, 17 Sep 2025 14:32:59 +0200
-Message-ID: <20250917123344.499524811@linuxfoundation.org>
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Itamar Gozlan <igozlan@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jan Alexander Preissler <akendo@akendo.eu>,
+	Sujana Subramaniam <sujana.subramaniam@sap.com>
+Subject: [PATCH 6.12 008/140] net/mlx5: HWS, change error flow on matcher disconnect
+Date: Wed, 17 Sep 2025 14:33:00 +0200
+Message-ID: <20250917123344.523489396@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -55,57 +55,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-commit 7a19afee6fb39df63ddea7ce78976d8c521178c6 upstream.
+commit 1ce840c7a659aa53a31ef49f0271b4fd0dc10296 upstream.
 
-Similar to commit 09c6304e38e4 ("kasan: test: fix compatibility with
-FORTIFY_SOURCE") the kernel is panicing in kasan_string().
+Currently, when firmware failure occurs during matcher disconnect flow,
+the error flow of the function reconnects the matcher back and returns
+an error, which continues running the calling function and eventually
+frees the matcher that is being disconnected.
+This leads to a case where we have a freed matcher on the matchers list,
+which in turn leads to use-after-free and eventual crash.
 
-This is due to the `src` and `ptr` not being hidden from the optimizer
-which would disable the runtime fortify string checker.
+This patch fixes that by not trying to reconnect the matcher back when
+some FW command fails during disconnect.
 
-Call trace:
-  __fortify_panic+0x10/0x20 (P)
-  kasan_strings+0x980/0x9b0
-  kunit_try_run_case+0x68/0x190
-  kunit_generic_run_threadfn_adapter+0x34/0x68
-  kthread+0x1c4/0x228
-  ret_from_fork+0x10/0x20
- Code: d503233f a9bf7bfd 910003fd 9424b243 (d4210000)
- ---[ end trace 0000000000000000 ]---
- note: kunit_try_catch[128] exited with irqs disabled
- note: kunit_try_catch[128] exited with preempt_count 1
-     # kasan_strings: try faulted: last
-** replaying previous printk message **
-     # kasan_strings: try faulted: last line seen mm/kasan/kasan_test_c.c:1600
-     # kasan_strings: internal error occurred preventing test case from running: -4
+Note that we're dealing here with FW error. We can't overcome this
+problem. This might lead to bad steering state (e.g. wrong connection
+between matchers), and will also lead to resource leakage, as it is
+the case with any other error handling during resource destruction.
 
-Link: https://lkml.kernel.org/r/20250801120236.2962642-1-yeoreum.yun@arm.com
-Fixes: 73228c7ecc5e ("KASAN: port KASAN Tests to KUnit")
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+However, the goal here is to allow the driver to continue and not crash
+the machine with use-after-free error.
+
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Itamar Gozlan <igozlan@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250102181415.1477316-7-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jan Alexander Preissler <akendo@akendo.eu>
+Signed-off-by: Sujana Subramaniam <sujana.subramaniam@sap.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/kasan_test_c.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c |   24 +++-------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
---- a/mm/kasan/kasan_test_c.c
-+++ b/mm/kasan/kasan_test_c.c
-@@ -1500,6 +1500,7 @@ static void kasan_memchr(struct kunit *t
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
+@@ -165,14 +165,14 @@ static int hws_matcher_disconnect(struct
+ 						    next->match_ste.rtc_0_id,
+ 						    next->match_ste.rtc_1_id);
+ 		if (ret) {
+-			mlx5hws_err(tbl->ctx, "Failed to disconnect matcher\n");
+-			goto matcher_reconnect;
++			mlx5hws_err(tbl->ctx, "Fatal error, failed to disconnect matcher\n");
++			return ret;
+ 		}
+ 	} else {
+ 		ret = mlx5hws_table_connect_to_miss_table(tbl, tbl->default_miss.miss_tbl);
+ 		if (ret) {
+-			mlx5hws_err(tbl->ctx, "Failed to disconnect last matcher\n");
+-			goto matcher_reconnect;
++			mlx5hws_err(tbl->ctx, "Fatal error, failed to disconnect last matcher\n");
++			return ret;
+ 		}
+ 	}
  
- 	ptr = kmalloc(size, GFP_KERNEL | __GFP_ZERO);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ptr);
-+	OPTIMIZER_HIDE_VAR(ptr);
+@@ -180,27 +180,19 @@ static int hws_matcher_disconnect(struct
+ 	if (prev_ft_id == tbl->ft_id) {
+ 		ret = mlx5hws_table_update_connected_miss_tables(tbl);
+ 		if (ret) {
+-			mlx5hws_err(tbl->ctx, "Fatal error, failed to update connected miss table\n");
+-			goto matcher_reconnect;
++			mlx5hws_err(tbl->ctx,
++				    "Fatal error, failed to update connected miss table\n");
++			return ret;
+ 		}
+ 	}
  
- 	OPTIMIZER_HIDE_VAR(ptr);
- 	OPTIMIZER_HIDE_VAR(size);
+ 	ret = mlx5hws_table_ft_set_default_next_ft(tbl, prev_ft_id);
+ 	if (ret) {
+ 		mlx5hws_err(tbl->ctx, "Fatal error, failed to restore matcher ft default miss\n");
+-		goto matcher_reconnect;
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-matcher_reconnect:
+-	if (list_empty(&tbl->matchers_list) || !prev)
+-		list_add(&matcher->list_node, &tbl->matchers_list);
+-	else
+-		/* insert after prev matcher */
+-		list_add(&matcher->list_node, &prev->list_node);
+-
+-	return ret;
+ }
+ 
+ static void hws_matcher_set_rtc_attr_sz(struct mlx5hws_matcher *matcher,
 
 
