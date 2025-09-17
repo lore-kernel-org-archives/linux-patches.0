@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5E218A6CF;
-	Wed, 17 Sep 2025 12:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55C71F09A5;
+	Wed, 17 Sep 2025 12:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112769; cv=none; b=m0WatkjYl3dO+A8UzjacJ1dbZE5vqPVeMKl2jYDWFLf/eOKFcJeBs/pnUQpRWPlbNxtAGuBeK3YZSix/9t5nuG+e260YZyAK7ZKzLyzLoayMl3ednkqvNiCSHCdLk3FtomMBqG1e99LGTgjH6mEZP6ZtWnlYEIaCEXNrtrOq60c=
+	t=1758112772; cv=none; b=quRg9skN3TljsHdl9BxgMg1/rDw4qo5Rl8BirXlv9Nq0+taHWm6/rWtt/mhxVzd1HrsDzMSqcukPI0SaYK1Yy/4Y41dHlJcL9j+WR3QSFBIy1kbsMfv9iYOZOdAf46djsXXHqMPksjy0puH/7l162gs6dVR9UlZhz4DbAoDoMpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112769; c=relaxed/simple;
-	bh=6xNcal+DbnP9qQ3z8fMXEl+MKUBT283kRCqMulhH4C0=;
+	s=arc-20240116; t=1758112772; c=relaxed/simple;
+	bh=vj9VLr3ilFDwK36sXPb7FYLh/NWicj4ZSAoiWnJjN60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeZlfzf/Yx0yGf33UdG160pD20B5J8uh8o84jZ/SAaqYAR4+wzjbFNa3AvRscS+BlJmb15h+znn3RSxMQD6m3Nb9sw2z7zkkv3Hac+deL4ouuxfJ/tOqR+miJU4nlOE4Pem6PWfYng5RmEOZdxYqOO1MkIpye877i9VeedLrCNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VulEXuy8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJ/jQHxkiDHGnhBTQbIYhTRIOE80E4trjm9uWKdEIRS4K47hDn647kJbNLtMGKdCdQQQLlXnONWacrFi8XFwDUJ+Vjr31yIs9ev2ZAoBqHMQv8CxcirjaWKp/HZP4eWzMvkTb1tb/BKRUEPvTfY6QDw+m+CVsws+ev67bKdTZ5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHelgds0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VulEXuy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAA8C4CEF0;
-	Wed, 17 Sep 2025 12:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHelgds0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F6EC4CEF5;
+	Wed, 17 Sep 2025 12:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112769;
-	bh=6xNcal+DbnP9qQ3z8fMXEl+MKUBT283kRCqMulhH4C0=;
+	s=korg; t=1758112772;
+	bh=vj9VLr3ilFDwK36sXPb7FYLh/NWicj4ZSAoiWnJjN60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VulEXuy8wwXvkUyL+yyySh2sUzC3ytm4XbGagd5v5PSD/F6hkh3VK434/nKxhN0LZ
-	 jHYzUpYQKhJn3KgMy5AXm0WjFeC0WkV5Y0Hi4/DJxBL+BL7BTqkc7uk2vr8u5IC8Gr
-	 yih9HNmyBSv2OI03/Xwo65XIiH+N1mjHl4fkzyaY=
+	b=FHelgds0mqNCymXN5w/SLMaE5Vr4ubNWOiVh8xss5wQS+Bl7Urs+jQmwtIWtf8ZvU
+	 KVLRgLgj5LhktQ4Pg9mhf3BkZ0xbWDqN58Iwv/uNETExSzZjiKMilznU/QA9KWnU6K
+	 b86ZKUlVJhbAKAtDSQ8T8XDksnf3XslbVxoR/QYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.16 072/189] mtd: rawnand: stm32_fmc2: fix ECC overwrite
-Date: Wed, 17 Sep 2025 14:33:02 +0200
-Message-ID: <20250917123353.630417575@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.16 073/189] fuse: do not allow mapping a non-regular backing file
+Date: Wed, 17 Sep 2025 14:33:03 +0200
+Message-ID: <20250917123353.653059502@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -50,49 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 811c0da4542df3c065f6cb843ced68780e27bb44 upstream.
+commit e9c8da670e749f7dedc53e3af54a87b041918092 upstream.
 
-In case OOB write is requested during a data write, ECC is currently
-lost. Avoid this issue by only writing in the free spare area.
-This issue has been seen with a YAFFS2 file system.
+We do not support passthrough operations other than read/write on
+regular file, so allowing non-regular backing files makes no sense.
 
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Fixes: efad7153bf93 ("fuse: allow O_PATH fd for FUSE_DEV_IOC_BACKING_OPEN")
 Cc: stable@vger.kernel.org
-Fixes: 2cd457f328c1 ("mtd: rawnand: stm32_fmc2: add STM32 FMC2 NAND flash controller driver")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/stm32_fmc2_nand.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/fuse/passthrough.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-+++ b/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-@@ -985,9 +985,21 @@ static int stm32_fmc2_nfc_seq_write(stru
+--- a/fs/fuse/passthrough.c
++++ b/fs/fuse/passthrough.c
+@@ -237,6 +237,11 @@ int fuse_backing_open(struct fuse_conn *
+ 	if (!file)
+ 		goto out;
  
- 	/* Write oob */
- 	if (oob_required) {
--		ret = nand_change_write_column_op(chip, mtd->writesize,
--						  chip->oob_poi, mtd->oobsize,
--						  false);
-+		unsigned int offset_in_page = mtd->writesize;
-+		const void *buf = chip->oob_poi;
-+		unsigned int len = mtd->oobsize;
++	/* read/write/splice/mmap passthrough only relevant for regular files */
++	res = d_is_dir(file->f_path.dentry) ? -EISDIR : -EINVAL;
++	if (!d_is_reg(file->f_path.dentry))
++		goto out_fput;
 +
-+		if (!raw) {
-+			struct mtd_oob_region oob_free;
-+
-+			mtd_ooblayout_free(mtd, 0, &oob_free);
-+			offset_in_page += oob_free.offset;
-+			buf += oob_free.offset;
-+			len = oob_free.length;
-+		}
-+
-+		ret = nand_change_write_column_op(chip, offset_in_page,
-+						  buf, len, false);
- 		if (ret)
- 			return ret;
- 	}
+ 	backing_sb = file_inode(file)->i_sb;
+ 	res = -ELOOP;
+ 	if (backing_sb->s_stack_depth >= fc->max_stack_depth)
 
 
