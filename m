@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB3E31A807;
-	Wed, 17 Sep 2025 12:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4DA30CB5B;
+	Wed, 17 Sep 2025 12:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113114; cv=none; b=jcHzTqIwhrKTdTWzmmJ72CTOXCeCF9il30tla220pvW4DIQKCajbQO+EwLs7Vj1cpy6apiT1SMHBkVH68u3tagcQWE9fUVilMaNlLIZAOncKsFiysIkfq13pzu3ITsquLGIR+mVlYvGKyh6PUE0CM6+lZqJIKclryGyPlfzXdgk=
+	t=1758113118; cv=none; b=ZM9ABxIU+rHBVSIPBTyYJ5ZwLdGlE+V8/zGJPZCVaNPJ3olKbpUUOmV8qrQ3OiV3qg28izroeI1LiGCRdM7OHijZM8nMdacZT0c5CEMWqX3jUHrZXQHELK6Su5oFHMuAZSu9LUDFNyt7/W46xQz+ChbrookKvVv27e23vEBCo2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113114; c=relaxed/simple;
-	bh=8iG1EWRjpwLC4EV3nWdGxBVMNN/g4ZbZauqtBrN/tbs=;
+	s=arc-20240116; t=1758113118; c=relaxed/simple;
+	bh=bUaUTPO+E+d5OMRGxTUdPovT9tRha0mXcxdhloLDc5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAs9FPWdOmpALNZ0XSWGLIZTqxGry8q6Y2lbznzOq97GAKCLEpvdowZFFqqKWcM1doehO+f8I7PHvjdfnIZ37sN1l3UocmlfAc5qyGJjKAIyuq2G9+B44/DcPleV6vz/jcU+5ygqMI2mHrLd+DRlXGe/oB2IifSxYODuVIwQDyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTQS6e+R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmiygjXWkhXybxBE2fMdo5n4bI1oSqVXrJzav+VQDSJAVw89saU+LqB+4lTKxLHAwvP+3aL9KeMaRgRtu6ZxOFXupnKudVPqjjsocgGRiHGWByoIkVN9vi0zVeW0/y823tiTBtRQD5aRT3jdB1sB7ddwj39ox5AgMNh5rhRVXCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8Hp0G3p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTQS6e+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1BEC4CEF0;
-	Wed, 17 Sep 2025 12:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8Hp0G3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEE8C4CEF0;
+	Wed, 17 Sep 2025 12:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113114;
-	bh=8iG1EWRjpwLC4EV3nWdGxBVMNN/g4ZbZauqtBrN/tbs=;
+	s=korg; t=1758113117;
+	bh=bUaUTPO+E+d5OMRGxTUdPovT9tRha0mXcxdhloLDc5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTQS6e+Rcv4s2fdkQDtObhpFmpopQ0rkHk187w7EvF6f4u/qad1XxCcywukS6QJmE
-	 VXJh8vq9eyK1LnpbmLgoR2716nATMD9Ilq5lAa2AobnLbkD1PZKB2osB07Thq1DPsZ
-	 661zC/dEwu/egDUsSVt6dw2C9tOrgm606nJoc45U=
+	b=o8Hp0G3ppyZttLNWWfyO0oDN1poB4kioN4X06PT1tbGXJegJVv2hge5v7MpdW6yLv
+	 YnIY8RDxO6IezWpDLb6wQXc0t7pcUmc3hvqkx2FM/NokZhMF3dUv0rOe7IH1xSQ5PM
+	 Zt63THJ7FTQogRNz6J+QjdNmNslMEGUcBBoUhQDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Friendy Su <friendy.su@sony.com>,
-	Daniel Palmer <daniel.palmer@sony.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 176/189] erofs: fix runtime warning on truncate_folio_batch_exceptionals()
-Date: Wed, 17 Sep 2025 14:34:46 +0200
-Message-ID: <20250917123356.184101517@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.16 177/189] xhci: dbc: decouple endpoint allocation from initialization
+Date: Wed, 17 Sep 2025 14:34:47 +0200
+Message-ID: <20250917123356.207863072@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,127 +49,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 181993bb0d626cf88cc803f4356ce5c5abe86278 ]
+commit 220a0ffde02f962c13bc752b01aa570b8c65a37b upstream.
 
-Commit 0e2f80afcfa6("fs/dax: ensure all pages are idle prior to
-filesystem unmount") introduced the WARN_ON_ONCE to capture whether
-the filesystem has removed all DAX entries or not and applied the
-fix to xfs and ext4.
+Decouple allocation of endpoint ring buffer from initialization
+of the buffer, and initialization of endpoint context parts from
+from the rest of the contexts.
 
-Apply the missed fix on erofs to fix the runtime warning:
+It allows driver to clear up and reinitialize endpoint rings
+after disconnect without reallocating everything.
 
-[  5.266254] ------------[ cut here ]------------
-[  5.266274] WARNING: CPU: 6 PID: 3109 at mm/truncate.c:89 truncate_folio_batch_exceptionals+0xff/0x260
-[  5.266294] Modules linked in:
-[  5.266999] CPU: 6 UID: 0 PID: 3109 Comm: umount Tainted: G S                  6.16.0+ #6 PREEMPT(voluntary)
-[  5.267012] Tainted: [S]=CPU_OUT_OF_SPEC
-[  5.267017] Hardware name: Dell Inc. OptiPlex 5000/05WXFV, BIOS 1.5.1 08/24/2022
-[  5.267024] RIP: 0010:truncate_folio_batch_exceptionals+0xff/0x260
-[  5.267076] Code: 00 00 41 39 df 7f 11 eb 78 83 c3 01 49 83 c4 08 41 39 df 74 6c 48 63 f3 48 83 fe 1f 0f 83 3c 01 00 00 43 f6 44 26 08 01 74 df <0f> 0b 4a 8b 34 22 4c 89 ef 48 89 55 90 e8 ff 54 1f 00 48 8b 55 90
-[  5.267083] RSP: 0018:ffffc900013f36c8 EFLAGS: 00010202
-[  5.267095] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-[  5.267101] RDX: ffffc900013f3790 RSI: 0000000000000000 RDI: ffff8882a1407898
-[  5.267108] RBP: ffffc900013f3740 R08: 0000000000000000 R09: 0000000000000000
-[  5.267113] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
-[  5.267119] R13: ffff8882a1407ab8 R14: ffffc900013f3888 R15: 0000000000000001
-[  5.267125] FS:  00007aaa8b437800(0000) GS:ffff88850025b000(0000) knlGS:0000000000000000
-[  5.267132] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  5.267138] CR2: 00007aaa8b3aac10 CR3: 000000024f764000 CR4: 0000000000f52ef0
-[  5.267144] PKRU: 55555554
-[  5.267150] Call Trace:
-[  5.267154]  <TASK>
-[  5.267181]  truncate_inode_pages_range+0x118/0x5e0
-[  5.267193]  ? save_trace+0x54/0x390
-[  5.267296]  truncate_inode_pages_final+0x43/0x60
-[  5.267309]  evict+0x2a4/0x2c0
-[  5.267339]  dispose_list+0x39/0x80
-[  5.267352]  evict_inodes+0x150/0x1b0
-[  5.267376]  generic_shutdown_super+0x41/0x180
-[  5.267390]  kill_block_super+0x1b/0x50
-[  5.267402]  erofs_kill_sb+0x81/0x90 [erofs]
-[  5.267436]  deactivate_locked_super+0x32/0xb0
-[  5.267450]  deactivate_super+0x46/0x60
-[  5.267460]  cleanup_mnt+0xc3/0x170
-[  5.267475]  __cleanup_mnt+0x12/0x20
-[  5.267485]  task_work_run+0x5d/0xb0
-[  5.267499]  exit_to_user_mode_loop+0x144/0x170
-[  5.267512]  do_syscall_64+0x2b9/0x7c0
-[  5.267523]  ? __lock_acquire+0x665/0x2ce0
-[  5.267535]  ? __lock_acquire+0x665/0x2ce0
-[  5.267560]  ? lock_acquire+0xcd/0x300
-[  5.267573]  ? find_held_lock+0x31/0x90
-[  5.267582]  ? mntput_no_expire+0x97/0x4e0
-[  5.267606]  ? mntput_no_expire+0xa1/0x4e0
-[  5.267625]  ? mntput+0x24/0x50
-[  5.267634]  ? path_put+0x1e/0x30
-[  5.267647]  ? do_faccessat+0x120/0x2f0
-[  5.267677]  ? do_syscall_64+0x1a2/0x7c0
-[  5.267686]  ? from_kgid_munged+0x17/0x30
-[  5.267703]  ? from_kuid_munged+0x13/0x30
-[  5.267711]  ? __do_sys_getuid+0x3d/0x50
-[  5.267724]  ? do_syscall_64+0x1a2/0x7c0
-[  5.267732]  ? irqentry_exit+0x77/0xb0
-[  5.267743]  ? clear_bhb_loop+0x30/0x80
-[  5.267752]  ? clear_bhb_loop+0x30/0x80
-[  5.267765]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  5.267772] RIP: 0033:0x7aaa8b32a9fb
-[  5.267781] Code: c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 f3 0f 1e fa 31 f6 e9 05 00 00 00 0f 1f 44 00 00 f3 0f 1e fa b8 a6 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 05 c3 0f 1f 40 00 48 8b 15 e9 83 0d 00 f7 d8
-[  5.267787] RSP: 002b:00007ffd7c4c9468 EFLAGS: 00000246 ORIG_RAX: 00000000000000a6
-[  5.267796] RAX: 0000000000000000 RBX: 00005a61592a8b00 RCX: 00007aaa8b32a9fb
-[  5.267802] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00005a61592b2080
-[  5.267806] RBP: 00007ffd7c4c9540 R08: 00007aaa8b403b20 R09: 0000000000000020
-[  5.267812] R10: 0000000000000001 R11: 0000000000000246 R12: 00005a61592a8c00
-[  5.267817] R13: 0000000000000000 R14: 00005a61592b2080 R15: 00005a61592a8f10
-[  5.267849]  </TASK>
-[  5.267854] irq event stamp: 4721
-[  5.267859] hardirqs last  enabled at (4727): [<ffffffff814abf50>] __up_console_sem+0x90/0xa0
-[  5.267873] hardirqs last disabled at (4732): [<ffffffff814abf35>] __up_console_sem+0x75/0xa0
-[  5.267884] softirqs last  enabled at (3044): [<ffffffff8132adb3>] kernel_fpu_end+0x53/0x70
-[  5.267895] softirqs last disabled at (3042): [<ffffffff8132b5f4>] kernel_fpu_begin_mask+0xc4/0x120
-[  5.267905] ---[ end trace 0000000000000000 ]---
+This is a prerequisite for the next patch that prevents the transfer
+ring from filling up with cancelled (no-op) TRBs if a debug cable is
+reconnected several times without transferring anything.
 
-Fixes: bde708f1a65d ("fs/dax: always remove DAX page-cache entries when breaking layouts")
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Friendy Su <friendy.su@sony.com>
-Reviewed-by: Daniel Palmer <daniel.palmer@sony.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250902105306.877476-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/super.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/usb/host/xhci-dbgcap.c |   71 ++++++++++++++++++++++++++---------------
+ 1 file changed, 46 insertions(+), 25 deletions(-)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index 7cc74ef4be031..06c8981eea7f8 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -999,10 +999,22 @@ static int erofs_show_options(struct seq_file *seq, struct dentry *root)
- 	return 0;
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -101,13 +101,34 @@ static u32 xhci_dbc_populate_strings(str
+ 	return string_length;
  }
  
-+static void erofs_evict_inode(struct inode *inode)
++static void xhci_dbc_init_ep_contexts(struct xhci_dbc *dbc)
 +{
-+#ifdef CONFIG_FS_DAX
-+	if (IS_DAX(inode))
-+		dax_break_layout_final(inode);
-+#endif
++	struct xhci_ep_ctx      *ep_ctx;
++	unsigned int		max_burst;
++	dma_addr_t		deq;
 +
-+	truncate_inode_pages_final(&inode->i_data);
-+	clear_inode(inode);
++	max_burst               = DBC_CTRL_MAXBURST(readl(&dbc->regs->control));
++
++	/* Populate bulk out endpoint context: */
++	ep_ctx                  = dbc_bulkout_ctx(dbc);
++	deq                     = dbc_bulkout_enq(dbc);
++	ep_ctx->ep_info         = 0;
++	ep_ctx->ep_info2        = dbc_epctx_info2(BULK_OUT_EP, 1024, max_burst);
++	ep_ctx->deq             = cpu_to_le64(deq | dbc->ring_out->cycle_state);
++
++	/* Populate bulk in endpoint context: */
++	ep_ctx                  = dbc_bulkin_ctx(dbc);
++	deq                     = dbc_bulkin_enq(dbc);
++	ep_ctx->ep_info         = 0;
++	ep_ctx->ep_info2        = dbc_epctx_info2(BULK_IN_EP, 1024, max_burst);
++	ep_ctx->deq             = cpu_to_le64(deq | dbc->ring_in->cycle_state);
 +}
 +
- const struct super_operations erofs_sops = {
- 	.put_super = erofs_put_super,
- 	.alloc_inode = erofs_alloc_inode,
- 	.free_inode = erofs_free_inode,
-+	.evict_inode = erofs_evict_inode,
- 	.statfs = erofs_statfs,
- 	.show_options = erofs_show_options,
- };
--- 
-2.51.0
-
+ static void xhci_dbc_init_contexts(struct xhci_dbc *dbc, u32 string_length)
+ {
+ 	struct dbc_info_context	*info;
+-	struct xhci_ep_ctx	*ep_ctx;
+ 	u32			dev_info;
+-	dma_addr_t		deq, dma;
+-	unsigned int		max_burst;
++	dma_addr_t		dma;
+ 
+ 	if (!dbc)
+ 		return;
+@@ -121,20 +142,8 @@ static void xhci_dbc_init_contexts(struc
+ 	info->serial		= cpu_to_le64(dma + DBC_MAX_STRING_LENGTH * 3);
+ 	info->length		= cpu_to_le32(string_length);
+ 
+-	/* Populate bulk out endpoint context: */
+-	ep_ctx			= dbc_bulkout_ctx(dbc);
+-	max_burst		= DBC_CTRL_MAXBURST(readl(&dbc->regs->control));
+-	deq			= dbc_bulkout_enq(dbc);
+-	ep_ctx->ep_info		= 0;
+-	ep_ctx->ep_info2	= dbc_epctx_info2(BULK_OUT_EP, 1024, max_burst);
+-	ep_ctx->deq		= cpu_to_le64(deq | dbc->ring_out->cycle_state);
+-
+-	/* Populate bulk in endpoint context: */
+-	ep_ctx			= dbc_bulkin_ctx(dbc);
+-	deq			= dbc_bulkin_enq(dbc);
+-	ep_ctx->ep_info		= 0;
+-	ep_ctx->ep_info2	= dbc_epctx_info2(BULK_IN_EP, 1024, max_burst);
+-	ep_ctx->deq		= cpu_to_le64(deq | dbc->ring_in->cycle_state);
++	/* Populate bulk in and out endpoint contexts: */
++	xhci_dbc_init_ep_contexts(dbc);
+ 
+ 	/* Set DbC context and info registers: */
+ 	lo_hi_writeq(dbc->ctx->dma, &dbc->regs->dccp);
+@@ -436,6 +445,23 @@ dbc_alloc_ctx(struct device *dev, gfp_t
+ 	return ctx;
+ }
+ 
++static void xhci_dbc_ring_init(struct xhci_ring *ring)
++{
++	struct xhci_segment *seg = ring->first_seg;
++
++	/* clear all trbs on ring in case of old ring */
++	memset(seg->trbs, 0, TRB_SEGMENT_SIZE);
++
++	/* Only event ring does not use link TRB */
++	if (ring->type != TYPE_EVENT) {
++		union xhci_trb *trb = &seg->trbs[TRBS_PER_SEGMENT - 1];
++
++		trb->link.segment_ptr = cpu_to_le64(ring->first_seg->dma);
++		trb->link.control = cpu_to_le32(LINK_TOGGLE | TRB_TYPE(TRB_LINK));
++	}
++	xhci_initialize_ring_info(ring);
++}
++
+ static struct xhci_ring *
+ xhci_dbc_ring_alloc(struct device *dev, enum xhci_ring_type type, gfp_t flags)
+ {
+@@ -464,15 +490,10 @@ xhci_dbc_ring_alloc(struct device *dev,
+ 
+ 	seg->dma = dma;
+ 
+-	/* Only event ring does not use link TRB */
+-	if (type != TYPE_EVENT) {
+-		union xhci_trb *trb = &seg->trbs[TRBS_PER_SEGMENT - 1];
+-
+-		trb->link.segment_ptr = cpu_to_le64(dma);
+-		trb->link.control = cpu_to_le32(LINK_TOGGLE | TRB_TYPE(TRB_LINK));
+-	}
+ 	INIT_LIST_HEAD(&ring->td_list);
+-	xhci_initialize_ring_info(ring);
++
++	xhci_dbc_ring_init(ring);
++
+ 	return ring;
+ dma_fail:
+ 	kfree(seg);
 
 
