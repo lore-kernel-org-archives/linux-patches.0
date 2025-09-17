@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6025118A6CF;
-	Wed, 17 Sep 2025 12:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8868D337EB9;
+	Wed, 17 Sep 2025 12:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112999; cv=none; b=t0v7Jj2HFzQaeoG4b3gZBx/1B3AJ1cTSpElRtlL/3g4eoMltbBa0H+Z8KnuOfKiRULQkCAAQ+i9to/5u7dVt3BU/jdeBmZgeO9CX39O60gqKf69qDrAZPcGGAwO0w+UqE+GOersqSaBcyA9R4zwZK1M4dTD2jArGSgBenCBEHho=
+	t=1758113002; cv=none; b=a4hnnQ5JZ9Crkd+31IrNnH8VLm/1eBi5i7JvcNjap6XeeBc5h41b9EE9gSBAbvbbWuPmc+SumOYDeC1OV5WKFJ+7NqpFvtqsJU47Bfx0oZ0zDOu+WJ6YMtwvZIxBGoS9dZsmFjIpOPgfSlNkQjldHO0F1Lb6cWRxwMGVwU3iZ+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112999; c=relaxed/simple;
-	bh=4VZuPhg4GnxTIAj20x32TN4G7DnLuIQqQyXqcsYMQ2Y=;
+	s=arc-20240116; t=1758113002; c=relaxed/simple;
+	bh=ON64tQisSpeRv+BeE0wpfhMX6TuJoOGT7PvccQs+yCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KazC4fTzITCCaIIa3SnYXm2p8Z9HKdLNqspyNAkrL7K/RSkiCMLNI288aCF8bU0o/gAAFS86NBvEgExdVjNywUwyPpXu+XeCwr9BYDmGxhakqXoglN2+OcK3rLEbgCCr3UTbfqIqt8NDyMY2kgLHD7saBWLCtH0VdiuNp3XjezE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsrXZ1bv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VAJgTnYUCDL1CiYSZJHl4W9llYHNhKrLJ03Q/ZpNcgnpx1YWtkQiRgEAOVtYan/F6ACXJPmggIBtV5EL8UjA4JO2HiGCqQ+5+Y5aK5iFHXmktlGQzMXxhfotofb/v/PxqjjSX/Gx2p00GPx9FpcGFBmJ2hri3npHdWtPASRJH8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j762exvk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsrXZ1bv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AD8C4CEF5;
-	Wed, 17 Sep 2025 12:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j762exvk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A604EC4CEF0;
+	Wed, 17 Sep 2025 12:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112998;
-	bh=4VZuPhg4GnxTIAj20x32TN4G7DnLuIQqQyXqcsYMQ2Y=;
+	s=korg; t=1758113002;
+	bh=ON64tQisSpeRv+BeE0wpfhMX6TuJoOGT7PvccQs+yCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsrXZ1bv2LwznRlubZGFZ/uB6bQE2CRtbOLVLNYZFz9e8PVXvfsuMf31VfpQoB4Nk
-	 /qfW4Hnscbxm2gPK1ce04i9fhgrPBUwDqSIjfwrZtKjf7M7ze922IPZq/F8VKjdgKa
-	 Qr8M90Jm+CJn46EVnFOisRLffY/w/NftoJut6lkI=
+	b=j762exvkx++0+W/UmL/9tQp7iax55VMBT5uJFcsCMBCYgCLRuzGgDlqkkxohYmVW8
+	 ybUOtPneMyy9VnJqGeFjMKwLZL+Nt/injBOkMYleLvdP2z5MUZ6t+nySIVIT4Fpi58
+	 7gnPkMkzFjxNYS5bdFIUVT+Llu2tRo5c26rKBtZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Tran <alex.t.tran@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 139/189] docs: networking: can: change bcm_msg_head frames member to support flexible array
-Date: Wed, 17 Sep 2025 14:34:09 +0200
-Message-ID: <20250917123355.258709256@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Joe Damato <joe@dama.to>,
+	Tianyu Xu <tianyxu@cisco.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.16 140/189] igb: Fix NULL pointer dereference in ethtool loopback test
+Date: Wed, 17 Sep 2025 14:34:10 +0200
+Message-ID: <20250917123355.284104545@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,41 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Tran <alex.t.tran@gmail.com>
+From: Tianyu Xu <tianyxu@cisco.com>
 
-[ Upstream commit 641427d5bf90af0625081bf27555418b101274cd ]
+[ Upstream commit 75871a525a596ff4d16c4aebc0018f8d0923c9b1 ]
 
-The documentation of the 'bcm_msg_head' struct does not match how
-it is defined in 'bcm.h'. Changed the frames member to a flexible array,
-matching the definition in the header file.
+The igb driver currently causes a NULL pointer dereference when executing
+the ethtool loopback test. This occurs because there is no associated
+q_vector for the test ring when it is set up, as interrupts are typically
+not added to the test rings.
 
-See commit 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with
-flexible-array members")
+Since commit 5ef44b3cb43b removed the napi_id assignment in
+__xdp_rxq_info_reg(), there is no longer a need to pass a napi_id to it.
+Therefore, simply use 0 as the last parameter.
 
-Signed-off-by: Alex Tran <alex.t.tran@gmail.com>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20250904031709.1426895-1-alex.t.tran@gmail.com
-Fixes: 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with flexible-array members")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217783
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 2c6196013f84 ("igb: Add AF_XDP zero-copy Rx support")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Signed-off-by: Tianyu Xu <tianyxu@cisco.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/can.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/networking/can.rst b/Documentation/networking/can.rst
-index b018ce3463926..515a3876f58cf 100644
---- a/Documentation/networking/can.rst
-+++ b/Documentation/networking/can.rst
-@@ -742,7 +742,7 @@ The broadcast manager sends responses to user space in the same form:
-             struct timeval ival1, ival2;    /* count and subsequent interval */
-             canid_t can_id;                 /* unique can_id for task */
-             __u32 nframes;                  /* number of can_frames following */
--            struct can_frame frames[0];
-+            struct can_frame frames[];
-     };
- 
- The aligned payload 'frames' uses the same basic CAN frame structure defined
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index b76a154e635e0..d87438bef6fba 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -4451,8 +4451,7 @@ int igb_setup_rx_resources(struct igb_ring *rx_ring)
+ 	if (xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
+ 		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
+ 	res = xdp_rxq_info_reg(&rx_ring->xdp_rxq, rx_ring->netdev,
+-			       rx_ring->queue_index,
+-			       rx_ring->q_vector->napi.napi_id);
++			       rx_ring->queue_index, 0);
+ 	if (res < 0) {
+ 		dev_err(dev, "Failed to register xdp_rxq index %u\n",
+ 			rx_ring->queue_index);
 -- 
 2.51.0
 
