@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043E3016F8;
-	Wed, 17 Sep 2025 12:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B253016F8;
+	Wed, 17 Sep 2025 12:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113214; cv=none; b=Ee+xP+qe+H4L0Sx8QwxIM7Ami9ecgGSZIluBCUZXnzu3IOUU8YC3c/0Uutgxq+6GnO0vZ/wmZr5TEf1VGiZsmLjnEV1Atm4EEZx90/DVjVjU5oxOy61eGyp8WMAuCDOZd8X+a1JroXKgjd+O9e25GlfBPcfjlUpnjuvaLPlmgz8=
+	t=1758113218; cv=none; b=CFrCmzmMJraz3pzCEIAOWdz8mSM5oEpx5rqqs6wrUJHfeamZ4urEELSij4AhHDcJ9BjLhMDw+SjqdJHIdQTu1+CX2eZWwBayGzT1Hh+Aw0NmvQD4uPnqOsdNL6b5l0RjdLuuye9ewt6qI3l5BYLcxAMZdq9B9Y6nnXiy4YhCl2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113214; c=relaxed/simple;
-	bh=xy4RDdvfh68AwXx27hjLgDvko+0pzwtFjQTxewgfl/E=;
+	s=arc-20240116; t=1758113218; c=relaxed/simple;
+	bh=S75SXKgGLBJxD2rl4Gbk7MVv4yaXL3zexg4u48rIUtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QYpW1kTg/IdYnaarQd9OhJ3vDSoyw+wbIQSAc7K2/gDTYHY1DNAZoLE7bYZaW9A8jZz/zosQSgZqIY6lzJdKQb0jiFGkaNIu1XocCMbXQpYaTKTAvZXNIXzsBdPVJI0BcDTrGdF+PkjUTt8PsBKAPgdHf5ozcakO6DEvEQqtKYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADGEJ/AB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnaVNTUUz4NwjgBAKuh54GvfQTk/MvOIX5vhhpQ4zebbcsDf+9sn/sQlfS+raBh3P1RsNfn62rgh2zUjQCeUNGlwjjXIMzL0UKkYbynyXslnPMKL2qcpgG1XN4k6CNWwnNJVCvt6gk+mUeYecXu7vJCKT9ey3fKqxkHdY3Ow3kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/bA1yd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADGEJ/AB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7C2C4CEF0;
-	Wed, 17 Sep 2025 12:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/bA1yd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7397DC4CEF0;
+	Wed, 17 Sep 2025 12:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113214;
-	bh=xy4RDdvfh68AwXx27hjLgDvko+0pzwtFjQTxewgfl/E=;
+	s=korg; t=1758113217;
+	bh=S75SXKgGLBJxD2rl4Gbk7MVv4yaXL3zexg4u48rIUtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADGEJ/ABA7pNPyyjAVFAjvADpZLhuB4IdcbzRP3edJAG7QCP5xVOASk7dP1vVAfCD
-	 4/pYJVjrWMp2DSFJ2pWf6eNpwLvspnIyJd1aDOAtsuGEvA48dAfAjgG04wfpHb+rAO
-	 /5iZ1NGk/nW8QfDCSKkJJk//Xy2Z84OCV2lJ1BI8=
+	b=0/bA1yd44o6vArl/COPIansvNWsb/Yl1Zbs2PK/2xO+mgf/CxqPRHONsQsqxxRKEB
+	 cJZt/SzLDxbiX4FLgiTxD1DK2TGbSbu2urSOoAeB8s2YJIqoEZLSkmopAELqVBoRaU
+	 26pcGzMBAIvl0oI8rZ18sVDBkA9p6pa7lh3i1kas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/140] ALSA: hda/realtek: Fix built-in mic assignment on ASUS VivoBook X515UA
-Date: Wed, 17 Sep 2025 14:33:10 +0200
-Message-ID: <20250917123344.756968379@linuxfoundation.org>
+Subject: [PATCH 6.12 019/140] drm/amdgpu: Add back JPEG to video caps for carrizo and newer
+Date: Wed, 17 Sep 2025 14:33:11 +0200
+Message-ID: <20250917123344.781425696@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -50,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: David Rosca <david.rosca@amd.com>
 
-[ Upstream commit 829ee558f3527fd602c6e2e9f270959d1de09fe0 ]
+[ Upstream commit 2036be31741b00f030530381643a8b35a5a42b5c ]
 
-ASUS VivoBook X515UA with PCI SSID 1043:106f had a default quirk
-pickup via pin table that applies ALC256_FIXUP_ASUS_MIC, but this adds
-a bogus built-in mic pin 0x13 enabled.  This was no big problem
-because the pin 0x13 was assigned as the secondary mic, but the recent
-fix made the entries sorted, hence this bogus pin appeared now as the
-primary input and it broke.
+JPEG is not supported on Vega only.
 
-For fixing the bug, put the right quirk entry for this device pointing
-to ALC256_FIXUP_ASUS_MIC_NO_PRESENCE.
-
-Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219897
-Link: https://patch.msgid.link/20250324153233.21195-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 0a6e7b06bdbe ("drm/amdgpu: Remove JPEG from vega and carrizo video caps")
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0f4dfe86fe922c37bcec99dce80a15b4d5d4726d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/vi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index a28a59926adad..eb0e404c17841 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10857,6 +10857,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x1054, "ASUS G614FH/FM/FP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x1043, 0x106f, "ASUS VivoBook X515UA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
+index 48ab93e715c82..6e4f9c6108f60 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vi.c
++++ b/drivers/gpu/drm/amd/amdgpu/vi.c
+@@ -239,6 +239,13 @@ static const struct amdgpu_video_codec_info cz_video_codecs_decode_array[] =
+ 		.max_pixels_per_frame = 4096 * 4096,
+ 		.max_level = 186,
+ 	},
++	{
++		.codec_type = AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_JPEG,
++		.max_width = 4096,
++		.max_height = 4096,
++		.max_pixels_per_frame = 4096 * 4096,
++		.max_level = 0,
++	},
+ };
+ 
+ static const struct amdgpu_video_codecs cz_video_codecs_decode =
 -- 
 2.51.0
 
