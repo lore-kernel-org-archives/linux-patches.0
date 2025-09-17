@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3CC3090EC;
-	Wed, 17 Sep 2025 12:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BDF3090EC;
+	Wed, 17 Sep 2025 12:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113303; cv=none; b=UhiB7hOgUHGzkKqzEfiPMGhceXdy/NJnW18WCD9eYmGMRf78hJcNnvpxm4ITMdEVDedacqnITIU7gfk0iKLbKithQUxQ4K+ba9G44ZvhOdO5H9f1KzIxdBM/wcsLk09HK+bdKqcFzp4BQTVfMVED+CWTCQ5YwRGL8owN7TZgu6g=
+	t=1758113305; cv=none; b=LUIfmx+9giERbu5yLN7CRHVBdKtTdmzkN7zNFb6j7GwJqsSIsYUBV9pgL7e9Ii8BbtdboqIJMbaJnAgqEk8loVGMBUuz0jD7T0p+EglbCMQlL985WzgaFEiESIQKkY29wWeGS47FiPf6kzvPaHt4Sej4HDnP9ng+6w+5u9gfTJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113303; c=relaxed/simple;
-	bh=c24VzB0PqQJBoti7Zx654rK4+bz8+OF7jrVKKL1GJyo=;
+	s=arc-20240116; t=1758113305; c=relaxed/simple;
+	bh=HfpJjjTTWnUO3n4C3qOFvR7gMm83FB54XwXjit7Vfpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esDwp9kTH/C2mVeQWYTMb8TCM1tkUqXWLSru2puD6duz3aCSm4IUFuzj4YRgdGQH1X5CpRyI8MEKUA84AKyOZ80PRfzF4xLcdw2ZbN4veEAS98Wyj/fcvqup7O7omFXvdZTZoWdjsX3dl4SoAP0mXLU7PgywTgDjAzOsZ3TEVxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFwiwu/+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dL7WGnmECrbOLZteAMmnQ4REpupB1jP8fPwJfxgve03SFTNrcoFYCGvHphkDOcOiVuTXwBjWXT7bLYY61cujM0ensYwrKMQv0YMK5FhnlqtYBUMzgVWfyhOOweT5PL53vOYHccPSXapbz3OWGIhaIbliasEXlmjgshDHKO9cTN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgRBNzgK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFwiwu/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEA0C4CEF0;
-	Wed, 17 Sep 2025 12:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgRBNzgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC369C4CEF0;
+	Wed, 17 Sep 2025 12:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113301;
-	bh=c24VzB0PqQJBoti7Zx654rK4+bz8+OF7jrVKKL1GJyo=;
+	s=korg; t=1758113305;
+	bh=HfpJjjTTWnUO3n4C3qOFvR7gMm83FB54XwXjit7Vfpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFwiwu/+hrnkprESU2eWJajj+g+sDqz9XuJDGUEdBLmSPaBqU5vVVYvED7mf7ytUj
-	 w+JhOWrLRU6ESJHe0z1j1Jr78S9yTjgp7ZXKqdcmHUD+8Umsh0TYUNY/+lLGbL+3og
-	 04cf66hM/pnUIKAV/A9D7g3/JXwUrrTqxRO3Lxb4=
+	b=pgRBNzgKWsgckshiD9w193XNqG/fRWAt27G3K1mIsYmx/tZ5o0zexLQz4Y8uXHmLX
+	 Ox52+TfPw5rhJzhOuIP7bL19ila8r0x79T5oXeJH1WTFcGY8SydGMU0LuYbIXvFmQX
+	 2itIQe5iBHFjsOfRlkdvHtyGs3JInG5dXesIkOoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4cabd1d2fa917a456db8@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	wangzijie <wangzijie1@honor.com>,
+	Brad Spengler <spender@grsecurity.net>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/140] tcp_bpf: Call sk_msg_free() when tcp_bpf_send_verdict() fails to allocate psock->cork.
-Date: Wed, 17 Sep 2025 14:33:37 +0200
-Message-ID: <20250917123345.404365991@linuxfoundation.org>
+Subject: [PATCH 6.12 046/140] proc: fix type confusion in pde_set_flags()
+Date: Wed, 17 Sep 2025 14:33:38 +0200
+Message-ID: <20250917123345.427181264@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,95 +57,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: wangzijie <wangzijie1@honor.com>
 
-[ Upstream commit a3967baad4d533dc254c31e0d221e51c8d223d58 ]
+[ Upstream commit 0ce9398aa0830f15f92bbed73853f9861c3e74ff ]
 
-syzbot reported the splat below. [0]
+Commit 2ce3d282bd50 ("proc: fix missing pde_set_flags() for net proc
+files") missed a key part in the definition of proc_dir_entry:
 
-The repro does the following:
+union {
+	const struct proc_ops *proc_ops;
+	const struct file_operations *proc_dir_ops;
+};
 
-  1. Load a sk_msg prog that calls bpf_msg_cork_bytes(msg, cork_bytes)
-  2. Attach the prog to a SOCKMAP
-  3. Add a socket to the SOCKMAP
-  4. Activate fault injection
-  5. Send data less than cork_bytes
+So dereference of ->proc_ops assumes it is a proc_ops structure results in
+type confusion and make NULL check for 'proc_ops' not work for proc dir.
 
-At 5., the data is carried over to the next sendmsg() as it is
-smaller than the cork_bytes specified by bpf_msg_cork_bytes().
+Add !S_ISDIR(dp->mode) test before calling pde_set_flags() to fix it.
 
-Then, tcp_bpf_send_verdict() tries to allocate psock->cork to hold
-the data, but this fails silently due to fault injection + __GFP_NOWARN.
-
-If the allocation fails, we need to revert the sk->sk_forward_alloc
-change done by sk_msg_alloc().
-
-Let's call sk_msg_free() when tcp_bpf_send_verdict fails to allocate
-psock->cork.
-
-The "*copied" also needs to be updated such that a proper error can
-be returned to the caller, sendmsg. It fails to allocate psock->cork.
-Nothing has been corked so far, so this patch simply sets "*copied"
-to 0.
-
-[0]:
-WARNING: net/ipv4/af_inet.c:156 at inet_sock_destruct+0x623/0x730 net/ipv4/af_inet.c:156, CPU#1: syz-executor/5983
-Modules linked in:
-CPU: 1 UID: 0 PID: 5983 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:inet_sock_destruct+0x623/0x730 net/ipv4/af_inet.c:156
-Code: 0f 0b 90 e9 62 fe ff ff e8 7a db b5 f7 90 0f 0b 90 e9 95 fe ff ff e8 6c db b5 f7 90 0f 0b 90 e9 bb fe ff ff e8 5e db b5 f7 90 <0f> 0b 90 e9 e1 fe ff ff 89 f9 80 e1 07 80 c1 03 38 c1 0f 8c 9f fc
-RSP: 0018:ffffc90000a08b48 EFLAGS: 00010246
-RAX: ffffffff8a09d0b2 RBX: dffffc0000000000 RCX: ffff888024a23c80
-RDX: 0000000000000100 RSI: 0000000000000fff RDI: 0000000000000000
-RBP: 0000000000000fff R08: ffff88807e07c627 R09: 1ffff1100fc0f8c4
-R10: dffffc0000000000 R11: ffffed100fc0f8c5 R12: ffff88807e07c380
-R13: dffffc0000000000 R14: ffff88807e07c60c R15: 1ffff1100fc0f872
-FS:  00005555604c4500(0000) GS:ffff888125af1000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005555604df5c8 CR3: 0000000032b06000 CR4: 00000000003526f0
-Call Trace:
- <IRQ>
- __sk_destruct+0x86/0x660 net/core/sock.c:2339
- rcu_do_batch kernel/rcu/tree.c:2605 [inline]
- rcu_core+0xca8/0x1770 kernel/rcu/tree.c:2861
- handle_softirqs+0x286/0x870 kernel/softirq.c:579
- __do_softirq kernel/softirq.c:613 [inline]
- invoke_softirq kernel/softirq.c:453 [inline]
- __irq_exit_rcu+0xca/0x1f0 kernel/softirq.c:680
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:696
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1052 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1052
- </IRQ>
-
-Fixes: 4f738adba30a ("bpf: create tcp_bpf_ulp allowing BPF to monitor socket TX/RX data")
-Reported-by: syzbot+4cabd1d2fa917a456db8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68c0b6b5.050a0220.3c6139.0013.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250909232623.4151337-1-kuniyu@google.com
+Link: https://lkml.kernel.org/r/20250904135715.3972782-1-wangzijie1@honor.com
+Fixes: 2ce3d282bd50 ("proc: fix missing pde_set_flags() for net proc files")
+Signed-off-by: wangzijie <wangzijie1@honor.com>
+Reported-by: Brad Spengler <spender@grsecurity.net>
+Closes: https://lore.kernel.org/all/20250903065758.3678537-1-wangzijie1@honor.com/
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Stefano Brivio <sbrivio@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/proc/generic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 22e8a2af5dd8b..8372ca512a755 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -408,8 +408,11 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		if (!psock->cork) {
- 			psock->cork = kzalloc(sizeof(*psock->cork),
- 					      GFP_ATOMIC | __GFP_NOWARN);
--			if (!psock->cork)
-+			if (!psock->cork) {
-+				sk_msg_free(sk, msg);
-+				*copied = 0;
- 				return -ENOMEM;
-+			}
- 		}
- 		memcpy(psock->cork, msg, sizeof(*msg));
- 		return 0;
+diff --git a/fs/proc/generic.c b/fs/proc/generic.c
+index a87a9404e0d0c..eb49beff69bcb 100644
+--- a/fs/proc/generic.c
++++ b/fs/proc/generic.c
+@@ -388,7 +388,8 @@ struct proc_dir_entry *proc_register(struct proc_dir_entry *dir,
+ 	if (proc_alloc_inum(&dp->low_ino))
+ 		goto out_free_entry;
+ 
+-	pde_set_flags(dp);
++	if (!S_ISDIR(dp->mode))
++		pde_set_flags(dp);
+ 
+ 	write_lock(&proc_subdir_lock);
+ 	dp->parent = dir;
 -- 
 2.51.0
 
