@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA238371E9E;
-	Wed, 17 Sep 2025 13:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A3731A7F4;
+	Wed, 17 Sep 2025 13:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114033; cv=none; b=K8Kd92e5nlK7XddFtmZ1QIqX1uxSVGTdxajTbQYVz8XimOSWZdZsL5XtqQ5jB6oo1e3f2IUDsQGsTYQ+S6zi7ruMeGDvgtcKVHexkH8zWIhsmRxsE+jm5ZjBqk3tC/dfe4YR94JjkiM2NoU8ZGJjzry1eYuIq9rnYvNj9GffNBM=
+	t=1758114037; cv=none; b=RdhOyNpT655wrirK7ioXFPbX9tZ+QqW1YBXtirsmBt91ianzU2Vb7J7C8CWCvdUcZkOwvMxDXBfvW8EcxCMmEcsFuRUsa0jjgDDwoCjmda0gwQEurSMKnITefwdrjvBQjgdvxVcTvsY3sJNVrp9596azBE/3gwvSi2Qg+vZ8UFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114033; c=relaxed/simple;
-	bh=XNAsv/X0PVTtU14TkixXVkSFc8WfygJm5Bhv261xfps=;
+	s=arc-20240116; t=1758114037; c=relaxed/simple;
+	bh=MnDwYjDnJtf+LbwdSVbNORiLIxyrl4x/7eaEUsZMOb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qpmR7WeLZJtIvZC+FifcwSKWuWUajegIq5BXewsUxRBb6Y+0f4hqhqbrbRDlI69yXNOUoKPaZsfYupey3r+8U9meFIbJbC3ouNaBgcjUczhPOYHo4X6WrL/vKdHlQrb5WgZJo3qIjXGTrsTMGnf+yg5/e7SgVzeKLeT04rYc7xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSxQ8BPP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWweiDHoOqZpO/4AS5TZZimnsMfC5lsm9yy8oPKv8V9EU0tzJa9MKgboeMloHlx3t/zYzwftAl0u8oyusCBZqtHD2qEmpnmOp42y66QchaaqFLn7iFKrY/dxwpTck1dlQ+htARTtsMjh+CsVAOcPsCGvFExasxfd2d2HDAKP7Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2sX2Iyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSxQ8BPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEBBC4CEF0;
-	Wed, 17 Sep 2025 13:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2sX2Iyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1A8C4CEF0;
+	Wed, 17 Sep 2025 13:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114033;
-	bh=XNAsv/X0PVTtU14TkixXVkSFc8WfygJm5Bhv261xfps=;
+	s=korg; t=1758114037;
+	bh=MnDwYjDnJtf+LbwdSVbNORiLIxyrl4x/7eaEUsZMOb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSxQ8BPPK9I1QivAzxBrL878QmGoDLabbXfbmH91oTazI91EoGCZ99nd1NB4seANs
-	 W05XDylLDiN3Qs9H1hNufuVp0suh1/6VBSmAbeU93NqEB8cEPpXiRFTCy0u9CiqAqG
-	 b1/opkLg0I8PiJKD7p9Zr8lY1IPGMe8inWYo8jbg=
+	b=r2sX2IydT5pWky2UOw4XyPC6sV2YWJxJ+vnOctovNyQBnlwqAgDbDIDtpcV4HZRUr
+	 xfgzvNUmMSIihgoOdVGfsZi6HaYevQ/kwjbDwJ8+KSCCh60f334xk0bVnsER4uReuC
+	 vgrhU9wBl/tunvwCCGD66z7DXQOU8vLqur+T+l3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alexandre Courbot <acourbot@google.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/78] media: mediatek: vcodec: Fix a resource leak related to the scp device in FW initialization
-Date: Wed, 17 Sep 2025 14:34:24 +0200
-Message-ID: <20250917123329.662389376@linuxfoundation.org>
+Subject: [PATCH 6.1 04/78] media: mtk-vcodec: venc: avoid -Wenum-compare-conditional warning
+Date: Wed, 17 Sep 2025 14:34:25 +0200
+Message-ID: <20250917123329.685372059@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -51,39 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4936cd5817af35d23e4d283f48fa59a18ef481e4 ]
+[ Upstream commit 07df4f23ef3ffe6fee697cd2e03623ad27108843 ]
 
-On Mediatek devices with a system companion processor (SCP) the mtk_scp
-structure has to be removed explicitly to avoid a resource leak.
-Free the structure in case the allocation of the firmware structure fails
-during the firmware initialization.
+This is one of three clang warnings about incompatible enum types
+in a conditional expression:
 
-Fixes: 53dbe0850444 ("media: mtk-vcodec: potential null pointer deference in SCP")
+drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c:597:29: error: conditional expression between different enumeration types ('enum scp_ipi_id' and 'enum ipi_id') [-Werror,-Wenum-compare-conditional]
+  597 |         inst->vpu_inst.id = is_ext ? SCP_IPI_VENC_H264 : IPI_VENC_H264;
+      |                                    ^ ~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~
+
+The code is correct, so just rework it to avoid the warning.
+
+Fixes: 0dc4b3286125 ("media: mtk-vcodec: venc: support SCP firmware")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Alexandre Courbot <acourbot@google.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[ Adapted file path ]
+[ Adjust file paths ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_scp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_scp.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_scp.c
-@@ -65,8 +65,10 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_scp_
- 	}
+--- a/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
++++ b/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
+@@ -611,7 +611,11 @@ static int h264_enc_init(struct mtk_vcod
  
- 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
--	if (!fw)
-+	if (!fw) {
-+		scp_put(scp);
- 		return ERR_PTR(-ENOMEM);
-+	}
- 	fw->type = SCP;
- 	fw->ops = &mtk_vcodec_rproc_msg;
- 	fw->scp = scp;
+ 	inst->ctx = ctx;
+ 	inst->vpu_inst.ctx = ctx;
+-	inst->vpu_inst.id = is_ext ? SCP_IPI_VENC_H264 : IPI_VENC_H264;
++	if (is_ext)
++		inst->vpu_inst.id = SCP_IPI_VENC_H264;
++	else
++		inst->vpu_inst.id = IPI_VENC_H264;
++
+ 	inst->hw_base = mtk_vcodec_get_reg_addr(inst->ctx, VENC_SYS);
+ 
+ 	mtk_vcodec_debug_enter(inst);
 
 
