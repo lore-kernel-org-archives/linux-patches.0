@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010D430CB41;
-	Wed, 17 Sep 2025 12:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC522D7DF2;
+	Wed, 17 Sep 2025 12:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112720; cv=none; b=FyGO8Sl7O3mIsYviA5LjJAPRXttzKI09lmlc0MNt6gX+4diPXl+fnkzEQx203bcbOKI0Ys9Zo4v4miW0mvpZx1IMFh/bPR4tnxG3ZqoUoEbUiK++YzByKUwJ4Mf6+A8jzKZPX0E8eNOlr2UfBV11M7RjnLz3qPzHM2l1sDI9Zis=
+	t=1758112723; cv=none; b=bTf6Yl1clG5/6mPsAeEYkIeNo0oG7tYkV0ulOKUepwPOgTG/17mEKSDmdFcRWapKyatKtu/ght7a6veCBePxq9wF2u7F4P4YY0JIBSar8ygtIR3BCgK6Ul3O6WKUqxP5E2H9Gx0CJw42A8W1/RyIXV2XQlpFisWP6RgSAb4qdKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112720; c=relaxed/simple;
-	bh=9wGb2OKF8v0sPyFpPAc61mZb5TYMhwMtkxAdDUcaRxk=;
+	s=arc-20240116; t=1758112723; c=relaxed/simple;
+	bh=5xnB5NizULBOa0RBEo1pKwJgHOeKJHs/k2nYhYhcwKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQOD4lrExkiHVQEm1q19YsFRH3wLtu4SJJUCkzQcL7LJ8oSeOj9i5eFSFhKriP643roH9k8ofsDyV5/dikWxt4J2sFGzSN4WkHTuqkCJ5vtzoFeBIP5uhSgFb3Mh583hzPoXQQrKj2HHYZUx9XbScK20rSnMrgHgmkVc7ttwojY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHew81U0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ucJvjS4MVKUPhYZRT/YVl095zCysMQedKY3CFB5zG9g9IVd6Kyb7VQhZeNFNbKsfTaW3z0o556aPmXWdLt31g9y52IeqlMydx80ZRmQD+r67z6UIOzcL2jY2DGH5GI7LmVqwbAk/uCiKrjATf9w4Rq6xtxQarnoNDcbegRR6BcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff4oK3U4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHew81U0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428BAC4CEF7;
-	Wed, 17 Sep 2025 12:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff4oK3U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7F7C4AF0B;
+	Wed, 17 Sep 2025 12:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112719;
-	bh=9wGb2OKF8v0sPyFpPAc61mZb5TYMhwMtkxAdDUcaRxk=;
+	s=korg; t=1758112723;
+	bh=5xnB5NizULBOa0RBEo1pKwJgHOeKJHs/k2nYhYhcwKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHew81U0+QdaeBZi0Hae7hI3HqO7SQZOnYrvBU4RF8R1UvDG1CBCJutCmyTy5LQ7P
-	 x4SPW0uFxVcBoPKtY/dr9KJNS/4YZJnDUjmbAx1ehvmkfWZy0Nwpen1i+IpSAJw1/2
-	 rqBNwmgwfpdtFaOvBF3197BZGr+MLdebi2rv2B1Q=
+	b=Ff4oK3U4IpMkjeIY5vL8hngpOiF/xaX1UiWccBglrkeCBMocI6ORxZfZ9p3FOw6o2
+	 Upm6HZ4cCsWn8G8fC5m620cv49/UTbgmDvfcs2KAAS25QYtQ0UAuPL7hLbzqXEx42U
+	 622d+bjhRk2rEb03sHZDHeh1xyW7FYxf/nxaRDm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 054/189] doc: mptcp: net.mptcp.pm_type is deprecated
-Date: Wed, 17 Sep 2025 14:32:44 +0200
-Message-ID: <20250917123353.184685080@linuxfoundation.org>
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 012/189] iommu/vt-d: Split paging_domain_compatible()
+Date: Wed, 17 Sep 2025 14:32:02 +0200
+Message-ID: <20250917123352.149597615@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,44 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 6f021e95d0828edc8ed104a294594c2f9569383a upstream.
+[ Upstream commit 85cfaacc99377a63e47412eeef66eff77197acea ]
 
-The net.mptcp.pm_type sysctl knob has been deprecated in v6.15,
-net.mptcp.path_manager should be used instead.
+Make First/Second stage specific functions that follow the same pattern in
+intel_iommu_domain_alloc_first/second_stage() for computing
+EOPNOTSUPP. This makes the code easier to understand as if we couldn't
+create a domain with the parameters for this IOMMU instance then we
+certainly are not compatible with it.
 
-Adapt the section about path managers to suggest using the new sysctl
-knob instead of the deprecated one.
+Check superpage support directly against the per-stage cap bits and the
+pgsize_bitmap.
 
-Fixes: 595c26d122d1 ("mptcp: sysctl: set path manager by name")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250908-net-mptcp-misc-fixes-6-17-rc5-v1-2-5f2168a66079@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add a note that the force_snooping is read without locking. The locking
+needs to cover the compatible check and the add of the device to the list.
+
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/7-v3-dbbe6f7e7ae3+124ffe-vtd_prep_jgg@nvidia.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20250714045028.958850-10-baolu.lu@linux.intel.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: cee686775f9c ("iommu/vt-d: Make iotlb_sync_map a static property of dmar_domain")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/mptcp.rst |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iommu/intel/iommu.c | 66 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 54 insertions(+), 12 deletions(-)
 
---- a/Documentation/networking/mptcp.rst
-+++ b/Documentation/networking/mptcp.rst
-@@ -60,10 +60,10 @@ address announcements. Typically, it is
- and the server side that announces additional addresses via the ``ADD_ADDR`` and
- ``REMOVE_ADDR`` options.
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 207f87eeb47a2..a718f0bc14cdf 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -3434,33 +3434,75 @@ static void intel_iommu_domain_free(struct iommu_domain *domain)
+ 	domain_exit(dmar_domain);
+ }
  
--Path managers are controlled by the ``net.mptcp.pm_type`` sysctl knob -- see
--mptcp-sysctl.rst. There are two types: the in-kernel one (type ``0``) where the
--same rules are applied for all the connections (see: ``ip mptcp``) ; and the
--userspace one (type ``1``), controlled by a userspace daemon (i.e. `mptcpd
-+Path managers are controlled by the ``net.mptcp.path_manager`` sysctl knob --
-+see mptcp-sysctl.rst. There are two types: the in-kernel one (``kernel``) where
-+the same rules are applied for all the connections (see: ``ip mptcp``) ; and the
-+userspace one (``userspace``), controlled by a userspace daemon (i.e. `mptcpd
- <https://mptcpd.mptcp.dev/>`_) where different rules can be applied for each
- connection. The path managers can be controlled via a Netlink API; see
- netlink_spec/mptcp_pm.rst.
++static int paging_domain_compatible_first_stage(struct dmar_domain *dmar_domain,
++						struct intel_iommu *iommu)
++{
++	if (WARN_ON(dmar_domain->domain.dirty_ops ||
++		    dmar_domain->nested_parent))
++		return -EINVAL;
++
++	/* Only SL is available in legacy mode */
++	if (!sm_supported(iommu) || !ecap_flts(iommu->ecap))
++		return -EINVAL;
++
++	/* Same page size support */
++	if (!cap_fl1gp_support(iommu->cap) &&
++	    (dmar_domain->domain.pgsize_bitmap & SZ_1G))
++		return -EINVAL;
++	return 0;
++}
++
++static int
++paging_domain_compatible_second_stage(struct dmar_domain *dmar_domain,
++				      struct intel_iommu *iommu)
++{
++	unsigned int sslps = cap_super_page_val(iommu->cap);
++
++	if (dmar_domain->domain.dirty_ops && !ssads_supported(iommu))
++		return -EINVAL;
++	if (dmar_domain->nested_parent && !nested_supported(iommu))
++		return -EINVAL;
++
++	/* Legacy mode always supports second stage */
++	if (sm_supported(iommu) && !ecap_slts(iommu->ecap))
++		return -EINVAL;
++
++	/* Same page size support */
++	if (!(sslps & BIT(0)) && (dmar_domain->domain.pgsize_bitmap & SZ_2M))
++		return -EINVAL;
++	if (!(sslps & BIT(1)) && (dmar_domain->domain.pgsize_bitmap & SZ_1G))
++		return -EINVAL;
++	return 0;
++}
++
+ int paging_domain_compatible(struct iommu_domain *domain, struct device *dev)
+ {
+ 	struct device_domain_info *info = dev_iommu_priv_get(dev);
+ 	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
+ 	struct intel_iommu *iommu = info->iommu;
++	int ret = -EINVAL;
+ 	int addr_width;
+ 
+-	if (WARN_ON_ONCE(!(domain->type & __IOMMU_DOMAIN_PAGING)))
+-		return -EPERM;
++	if (intel_domain_is_fs_paging(dmar_domain))
++		ret = paging_domain_compatible_first_stage(dmar_domain, iommu);
++	else if (intel_domain_is_ss_paging(dmar_domain))
++		ret = paging_domain_compatible_second_stage(dmar_domain, iommu);
++	else if (WARN_ON(true))
++		ret = -EINVAL;
++	if (ret)
++		return ret;
+ 
++	/*
++	 * FIXME this is locked wrong, it needs to be under the
++	 * dmar_domain->lock
++	 */
+ 	if (dmar_domain->force_snooping && !ecap_sc_support(iommu->ecap))
+ 		return -EINVAL;
+ 
+-	if (domain->dirty_ops && !ssads_supported(iommu))
+-		return -EINVAL;
+-
+ 	if (dmar_domain->iommu_coherency !=
+ 			iommu_paging_structure_coherency(iommu))
+ 		return -EINVAL;
+ 
+-	if (dmar_domain->iommu_superpage !=
+-			iommu_superpage_capability(iommu, dmar_domain->use_first_level))
+-		return -EINVAL;
+-
+-	if (dmar_domain->use_first_level &&
+-	    (!sm_supported(iommu) || !ecap_flts(iommu->ecap)))
+-		return -EINVAL;
+ 
+ 	/* check if this iommu agaw is sufficient for max mapped address */
+ 	addr_width = agaw_to_width(iommu->agaw);
+-- 
+2.51.0
+
 
 
