@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E5731A802;
-	Wed, 17 Sep 2025 12:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A111EF363;
+	Wed, 17 Sep 2025 12:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112749; cv=none; b=gMJode5exuRJVHF68ihBZcF9mBe96C324j16y33t8EJkYbY5jMucbo53ynOmsmgs1sz5swc/MNdtGj6H57S6vTnbmHU26vBr3Ek7KSgb8Kofu+dRFD38PT5o9vv94qzsKfj3V+ZxYGa+XJllOwcggvdpBsiVUZrW79e0+vCG3lg=
+	t=1758112752; cv=none; b=Je6GTt8Enxzb/eDkpn1/Tqli1IPKWOC9Duaa2jZj5ilyrBwDhB19xSQyuj9T6zg+V8L758hy46tCuS2xpHOXvGQansJ0IRF8tkto+C2PALQ7BrdhGoSlmNYjQWMG12XRroLLI+O/APL2Xaa5pYpVMNUihdk/irGYCq6ZvsZtuN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112749; c=relaxed/simple;
-	bh=kXz8hQj7Y4Yry2zbyIUHnm3EIMT9yB8+wPwuazpVX3c=;
+	s=arc-20240116; t=1758112752; c=relaxed/simple;
+	bh=5ffDmHzrIJgyLCAJvSWYYu/B/CWBzh+yF8+lu6roYcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pouZudwAIM2TTVG1N9VNREfdUdg+Bq+DVFG57z/j/wP93sqACqE51YWxmkOICzvHfSk5v3NVEkCayDxXGJK/XeL029/MCJiicRF8weMkUI6kSC9QvTBxZjf164nyQVoefEN462Q+Kh8v+nnO4tvkDGPc3Wpl0zkvtiyYJwhyhkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDxguXQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gg/Dv5zsMk8sRpyg9kreJdtHQesIopSoubXjhfX8wnKWEqQou9pTsMCRQhpz3G723GyxplrZ7SCO49TExVuCvNIMroFRIWbEtmXzHI+AWExQ/H1PAgz2nm0JMt5hKpU8fAwx66oyW3bfveXz07hXOfZVdMYP7bB1lq3ri7rrb7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZWf1di0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDxguXQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE935C4CEF0;
-	Wed, 17 Sep 2025 12:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZWf1di0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03865C4CEF5;
+	Wed, 17 Sep 2025 12:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112749;
-	bh=kXz8hQj7Y4Yry2zbyIUHnm3EIMT9yB8+wPwuazpVX3c=;
+	s=korg; t=1758112752;
+	bh=5ffDmHzrIJgyLCAJvSWYYu/B/CWBzh+yF8+lu6roYcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDxguXQQDTC8gtguM4tJcaiyPi02U9GXJuHUZfxZyQ3j78wbyb2n8N1jcw7Z91V3W
-	 7OwSyjqBl41hW5JshkWRvPgNpAjfzPU5k5MmfTqJIB8MdVMbnAyGhZt8+U/fAoD/4P
-	 9LeYlkIvrNwHqyKb3Bs3jlwJ/B2HcUtuBxkUoW8M=
+	b=CZWf1di0nlu6wbMHMRTGl3iNpe16L8xjev2oClkxOQqgr3Cduut0zkQpE8Xr9eSpF
+	 4C/xc18O2VlA4APi1MiP6Pqj1ZE4d1RVi8j1vSMACWgyjHOmVGDVQsGMGTxMY27wu2
+	 nHVhK968oNmpkqfpHQJ6R8PIC2LKMIFNC5KUmmBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.16 066/189] wifi: iwlwifi: fix 130/1030 configs
-Date: Wed, 17 Sep 2025 14:32:56 +0200
-Message-ID: <20250917123353.486164641@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Baoquan He <bhe@redhat.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Coiby Xu <coxu@redhat.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 067/189] s390: kexec: initialize kexec_buf struct
+Date: Wed, 17 Sep 2025 14:32:57 +0200
+Message-ID: <20250917123353.509884641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -50,71 +63,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 2682e7a317504a9d81cbb397249d4299e84dfadd upstream.
+commit e67f0bd05519012eaabaae68618ffc4ed30ab680 upstream.
 
-The 130/1030 devices are really derivatives of 6030,
-with some small differences not pertaining to the MAC,
-so they must use the 6030 MAC config.
+The kexec_buf structure was previously declared without initialization.
+commit bf454ec31add ("kexec_file: allow to place kexec_buf randomly")
+added a field that is always read but not consistently populated by all
+architectures. This un-initialized field will contain garbage.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220472
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220517
-Fixes: 35ac275ebe0c ("wifi: iwlwifi: cfg: finish config split")
-Cc: stable@vger.kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250909121728.8e4911f12528.I3aa7194012a4b584fbd5ddaa3a77e483280f1de4@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+This is also triggering a UBSAN warning when the uninitialized data was
+accessed:
+
+	------------[ cut here ]------------
+	UBSAN: invalid-load in ./include/linux/kexec.h:210:10
+	load of value 252 is not a valid value for type '_Bool'
+
+Zero-initializing kexec_buf at declaration ensures all fields are
+cleanly set, preventing future instances of uninitialized memory being
+used.
+
+Link: https://lkml.kernel.org/r/20250827-kbuf_all-v1-3-1df9882bb01a@debian.org
+Fixes: bf454ec31add ("kexec_file: allow to place kexec_buf randomly")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Coiby Xu <coxu@redhat.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 26 +++++++++----------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ arch/s390/kernel/kexec_elf.c          | 2 +-
+ arch/s390/kernel/kexec_image.c        | 2 +-
+ arch/s390/kernel/machine_kexec_file.c | 6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index f9e2095d6490..7e56e4ff7642 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -124,13 +124,13 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
- 	{IWL_PCI_DEVICE(0x0082, 0x1304, iwl6005_mac_cfg)},/* low 5GHz active */
- 	{IWL_PCI_DEVICE(0x0082, 0x1305, iwl6005_mac_cfg)},/* high 5GHz active */
+diff --git a/arch/s390/kernel/kexec_elf.c b/arch/s390/kernel/kexec_elf.c
+index 4d364de43799..143e34a4eca5 100644
+--- a/arch/s390/kernel/kexec_elf.c
++++ b/arch/s390/kernel/kexec_elf.c
+@@ -16,7 +16,7 @@
+ static int kexec_file_add_kernel_elf(struct kimage *image,
+ 				     struct s390_load_data *data)
+ {
+-	struct kexec_buf buf;
++	struct kexec_buf buf = {};
+ 	const Elf_Ehdr *ehdr;
+ 	const Elf_Phdr *phdr;
+ 	Elf_Addr entry;
+diff --git a/arch/s390/kernel/kexec_image.c b/arch/s390/kernel/kexec_image.c
+index a32ce8bea745..9a439175723c 100644
+--- a/arch/s390/kernel/kexec_image.c
++++ b/arch/s390/kernel/kexec_image.c
+@@ -16,7 +16,7 @@
+ static int kexec_file_add_kernel_image(struct kimage *image,
+ 				       struct s390_load_data *data)
+ {
+-	struct kexec_buf buf;
++	struct kexec_buf buf = {};
  
--/* 6x30 Series */
--	{IWL_PCI_DEVICE(0x008A, 0x5305, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x008A, 0x5307, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x008A, 0x5325, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x008A, 0x5327, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x008B, 0x5315, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x008B, 0x5317, iwl1000_mac_cfg)},
-+/* 1030/6x30 Series */
-+	{IWL_PCI_DEVICE(0x008A, 0x5305, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x008A, 0x5307, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x008A, 0x5325, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x008A, 0x5327, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x008B, 0x5315, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x008B, 0x5317, iwl6030_mac_cfg)},
- 	{IWL_PCI_DEVICE(0x0090, 0x5211, iwl6030_mac_cfg)},
- 	{IWL_PCI_DEVICE(0x0090, 0x5215, iwl6030_mac_cfg)},
- 	{IWL_PCI_DEVICE(0x0090, 0x5216, iwl6030_mac_cfg)},
-@@ -181,12 +181,12 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
- 	{IWL_PCI_DEVICE(0x08AE, 0x1027, iwl1000_mac_cfg)},
+ 	buf.image = image;
  
- /* 130 Series WiFi */
--	{IWL_PCI_DEVICE(0x0896, 0x5005, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x0896, 0x5007, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x0897, 0x5015, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x0897, 0x5017, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x0896, 0x5025, iwl1000_mac_cfg)},
--	{IWL_PCI_DEVICE(0x0896, 0x5027, iwl1000_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x0896, 0x5005, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x0896, 0x5007, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x0897, 0x5015, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x0897, 0x5017, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x0896, 0x5025, iwl6030_mac_cfg)},
-+	{IWL_PCI_DEVICE(0x0896, 0x5027, iwl6030_mac_cfg)},
+diff --git a/arch/s390/kernel/machine_kexec_file.c b/arch/s390/kernel/machine_kexec_file.c
+index c2bac14dd668..a36d7311c668 100644
+--- a/arch/s390/kernel/machine_kexec_file.c
++++ b/arch/s390/kernel/machine_kexec_file.c
+@@ -129,7 +129,7 @@ static int kexec_file_update_purgatory(struct kimage *image,
+ static int kexec_file_add_purgatory(struct kimage *image,
+ 				    struct s390_load_data *data)
+ {
+-	struct kexec_buf buf;
++	struct kexec_buf buf = {};
+ 	int ret;
  
- /* 2x00 Series */
- 	{IWL_PCI_DEVICE(0x0890, 0x4022, iwl2000_mac_cfg)},
+ 	buf.image = image;
+@@ -152,7 +152,7 @@ static int kexec_file_add_purgatory(struct kimage *image,
+ static int kexec_file_add_initrd(struct kimage *image,
+ 				 struct s390_load_data *data)
+ {
+-	struct kexec_buf buf;
++	struct kexec_buf buf = {};
+ 	int ret;
+ 
+ 	buf.image = image;
+@@ -184,7 +184,7 @@ static int kexec_file_add_ipl_report(struct kimage *image,
+ {
+ 	__u32 *lc_ipl_parmblock_ptr;
+ 	unsigned int len, ncerts;
+-	struct kexec_buf buf;
++	struct kexec_buf buf = {};
+ 	unsigned long addr;
+ 	void *ptr, *end;
+ 	int ret;
 -- 
 2.51.0
 
