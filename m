@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F05731A7E9;
-	Wed, 17 Sep 2025 12:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780B71DE894;
+	Wed, 17 Sep 2025 12:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113292; cv=none; b=SKXFhNADryGOqYjxq6E9olxv/JsAIkiMBf2x59LSamNroKn2rZl4ZsP/Wmw93XNdVg4Q4IeSV/3IHpH1CYAJ/R0GrI7q3rs3MS1gotXdTBFQdRsM72r2GhNxQLJ+Ptw13aW6PIt1W6F+gqLK7E4UOMoLQSr4o1JIs94ZLDjP50g=
+	t=1758113295; cv=none; b=oCd6Cip9woOFTR8hmsm1ilV9Odt5JsDYGevCuayIYT8MWpQ1EXzcBKxngZ6Kl6jmJa7fgRdVnkuPLnZvSlCNoK5wuZZ4XDOnJWHUh80sI9WIwWaUrM/ZgOlxjBat0ebjhIVvfb1/J9I1LtrntPpd7XwToEAeSyUe0wDbELtJ/H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113292; c=relaxed/simple;
-	bh=phg9I8u7yzqBAaqn27JlMy555nhsEXchaoX6RvYO22A=;
+	s=arc-20240116; t=1758113295; c=relaxed/simple;
+	bh=2ADnAJnpV5EF7urWzmht0Uhs9nhvKd50Gxblt5luN0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMiCapTbdn2JBYIvCBdnhZNCnTzm92CMYrMBhBOQ/aoILrQTI8c0+VU6DioTGfiVQpTUJ6z4gurrlB0DY1BjXEc1uNUbT5daIfHL/MBORijNDufxxuuGWC2I33czWq8mJ+ycfExmxOKo3J8QW0oM7C8YuPu6TCzLyrmLHwp8Zwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V16N8lrw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cAns43SQ1XgCGbFWtlgsgGvvuX0MdY5yY+S6cCn4cNL4l7NWJlyOe/bB+bulf9FVdZ6TtuspLQkHI950aR6GzI8dPxCZ2FJuJxFD0ktZqhw7E2gTYBxp3h5ULbNaPxUELvehBJIBlxo9GiJZ0Wz8/vhnlV1ijbAKsgY7QNUGZ+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KeJslqcz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V16N8lrw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D73C4CEF0;
-	Wed, 17 Sep 2025 12:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeJslqcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC7FC4CEF0;
+	Wed, 17 Sep 2025 12:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113292;
-	bh=phg9I8u7yzqBAaqn27JlMy555nhsEXchaoX6RvYO22A=;
+	s=korg; t=1758113295;
+	bh=2ADnAJnpV5EF7urWzmht0Uhs9nhvKd50Gxblt5luN0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V16N8lrwdunUJx12XEKkISZKs5EvMX5AbmoQ2X09G9jiaMNfekaJyszb9Ln7aCqQj
-	 5Wy45N05z5HyeNXMUAqi5oVba2B53LX8QqQI+LKx8dD9sQWjYHArlqYtZ4bvmzeAO7
-	 5iIXi2Y3c3s5Sl9kWF/1dyVz81C50Hnb2DFZstIg=
+	b=KeJslqczo/Owtw98h2lqpvr2nh3KgCVcpWCSKc5jpptfWrdgWSPngpZUCNxgrYFjt
+	 7uW2Gp/HdJWvCshYY/OKedakmlcQKkh7wm6I4fZP9HGz76cAM0VBA5kVFi+2rW/JIG
+	 Zhwktx2C8HKyta38HnfAOqTluL2KFP1GJIEp03Rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fort <disclosure@aisle.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Felix Fietkau <nbd@nbd.name>,
+	KaFai Wan <kafai.wan@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/140] bpf: Fix out-of-bounds dynptr write in bpf_crypto_crypt
-Date: Wed, 17 Sep 2025 14:33:34 +0200
-Message-ID: <20250917123345.333172747@linuxfoundation.org>
+Subject: [PATCH 6.12 043/140] bpf: Allow fall back to interpreter for programs with stack size <= 512
+Date: Wed, 17 Sep 2025 14:33:35 +0200
+Message-ID: <20250917123345.355801612@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -53,57 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: KaFai Wan <kafai.wan@linux.dev>
 
-[ Upstream commit f9bb6ffa7f5ad0f8ee0f53fc4a10655872ee4a14 ]
+[ Upstream commit df0cb5cb50bd54d3cd4d0d83417ceec6a66404aa ]
 
-Stanislav reported that in bpf_crypto_crypt() the destination dynptr's
-size is not validated to be at least as large as the source dynptr's
-size before calling into the crypto backend with 'len = src_len'. This
-can result in an OOB write when the destination is smaller than the
-source.
+OpenWRT users reported regression on ARMv6 devices after updating to latest
+HEAD, where tcpdump filter:
 
-Concretely, in mentioned function, psrc and pdst are both linear
-buffers fetched from each dynptr:
+tcpdump "not ether host 3c37121a2b3c and not ether host 184ecbca2a3a \
+and not ether host 14130b4d3f47 and not ether host f0f61cf440b7 \
+and not ether host a84b4dedf471 and not ether host d022be17e1d7 \
+and not ether host 5c497967208b and not ether host 706655784d5b"
 
-  psrc = __bpf_dynptr_data(src, src_len);
-  [...]
-  pdst = __bpf_dynptr_data_rw(dst, dst_len);
-  [...]
-  err = decrypt ?
-        ctx->type->decrypt(ctx->tfm, psrc, pdst, src_len, piv) :
-        ctx->type->encrypt(ctx->tfm, psrc, pdst, src_len, piv);
+fails with warning: "Kernel filter failed: No error information"
+when using config:
+ # CONFIG_BPF_JIT_ALWAYS_ON is not set
+ CONFIG_BPF_JIT_DEFAULT_ON=y
 
-The crypto backend expects pdst to be large enough with a src_len length
-that can be written. Add an additional src_len > dst_len check and bail
-out if it's the case. Note that these kfuncs are accessible under root
-privileges only.
+The issue arises because commits:
+1. "bpf: Fix array bounds error with may_goto" changed default runtime to
+   __bpf_prog_ret0_warn when jit_requested = 1
+2. "bpf: Avoid __bpf_prog_ret0_warn when jit fails" returns error when
+   jit_requested = 1 but jit fails
 
-Fixes: 3e1c6f35409f ("bpf: make common crypto API for TC/XDP programs")
-Reported-by: Stanislav Fort <disclosure@aisle.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://lore.kernel.org/r/20250829143657.318524-1-daniel@iogearbox.net
+This change restores interpreter fallback capability for BPF programs with
+stack size <= 512 bytes when jit fails.
+
+Reported-by: Felix Fietkau <nbd@nbd.name>
+Closes: https://lore.kernel.org/bpf/2e267b4b-0540-45d8-9310-e127bf95fc63@nbd.name/
+Fixes: 6ebc5030e0c5 ("bpf: Fix array bounds error with may_goto")
+Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20250909144614.2991253-1-kafai.wan@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/crypto.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/core.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/crypto.c b/kernel/bpf/crypto.c
-index 94854cd9c4cc3..83c4d9943084b 100644
---- a/kernel/bpf/crypto.c
-+++ b/kernel/bpf/crypto.c
-@@ -278,7 +278,7 @@ static int bpf_crypto_crypt(const struct bpf_crypto_ctx *ctx,
- 	siv_len = siv ? __bpf_dynptr_size(siv) : 0;
- 	src_len = __bpf_dynptr_size(src);
- 	dst_len = __bpf_dynptr_size(dst);
--	if (!src_len || !dst_len)
-+	if (!src_len || !dst_len || src_len > dst_len)
- 		return -EINVAL;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 6f91e3a123e55..9380e0fd5e4af 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2299,8 +2299,7 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
+ 					 const struct bpf_insn *insn)
+ {
+ 	/* If this handler ever gets executed, then BPF_JIT_ALWAYS_ON
+-	 * is not working properly, or interpreter is being used when
+-	 * prog->jit_requested is not 0, so warn about it!
++	 * is not working properly, so warn about it!
+ 	 */
+ 	WARN_ON_ONCE(1);
+ 	return 0;
+@@ -2401,8 +2400,9 @@ static int bpf_check_tail_call(const struct bpf_prog *fp)
+ 	return ret;
+ }
  
- 	if (siv_len != ctx->siv_len)
+-static void bpf_prog_select_func(struct bpf_prog *fp)
++static bool bpf_prog_select_interpreter(struct bpf_prog *fp)
+ {
++	bool select_interpreter = false;
+ #ifndef CONFIG_BPF_JIT_ALWAYS_ON
+ 	u32 stack_depth = max_t(u32, fp->aux->stack_depth, 1);
+ 	u32 idx = (round_up(stack_depth, 32) / 32) - 1;
+@@ -2411,15 +2411,16 @@ static void bpf_prog_select_func(struct bpf_prog *fp)
+ 	 * But for non-JITed programs, we don't need bpf_func, so no bounds
+ 	 * check needed.
+ 	 */
+-	if (!fp->jit_requested &&
+-	    !WARN_ON_ONCE(idx >= ARRAY_SIZE(interpreters))) {
++	if (idx < ARRAY_SIZE(interpreters)) {
+ 		fp->bpf_func = interpreters[idx];
++		select_interpreter = true;
+ 	} else {
+ 		fp->bpf_func = __bpf_prog_ret0_warn;
+ 	}
+ #else
+ 	fp->bpf_func = __bpf_prog_ret0_warn;
+ #endif
++	return select_interpreter;
+ }
+ 
+ /**
+@@ -2438,7 +2439,7 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
+ 	/* In case of BPF to BPF calls, verifier did all the prep
+ 	 * work with regards to JITing, etc.
+ 	 */
+-	bool jit_needed = fp->jit_requested;
++	bool jit_needed = false;
+ 
+ 	if (fp->bpf_func)
+ 		goto finalize;
+@@ -2447,7 +2448,8 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
+ 	    bpf_prog_has_kfunc_call(fp))
+ 		jit_needed = true;
+ 
+-	bpf_prog_select_func(fp);
++	if (!bpf_prog_select_interpreter(fp))
++		jit_needed = true;
+ 
+ 	/* eBPF JITs can rewrite the program in case constant
+ 	 * blinding is active. However, in case of error during
 -- 
 2.51.0
 
