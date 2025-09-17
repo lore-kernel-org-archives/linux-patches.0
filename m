@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9C3263F34;
-	Wed, 17 Sep 2025 12:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125EA2D7DF2;
+	Wed, 17 Sep 2025 12:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112814; cv=none; b=YmXAysBar6rtTGg0R6Z0YD98dogCXy4lkbplD5dtKgC2u5bgwX33uFlyseFpD/7iWTc6tozKLoJRCCpjpP7OtIGy7lj/P89T4oPRy4QH77gB1Qh/if/RBiWgdHpo/bHZ9ihnMqCTXXGcL9kWpDNMN9Ed9ltYHMt2JbpMG4H1hIc=
+	t=1758112818; cv=none; b=PbW6LsCkCprf2qU2eEc03FKgdg0deVFKDC/s/R8682ai+6QOiVmBDLCqxXymZlZdu7QQ0zTPDWFldL/X7rD2DhiD4q1uU5CHnswReV8yHJwi5VuXrCjfw7wuaowifLUTEnVL4EQCbNRH7hVql/HS+vXs3BtWXnCqLc0zyMvF4HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112814; c=relaxed/simple;
-	bh=NV3tlWV3nDZ6nD9X0VXLGEcpve7WuYAYYIfuSCA53zs=;
+	s=arc-20240116; t=1758112818; c=relaxed/simple;
+	bh=Z/Pw1IahDsgtPL4RvLcNhAxbtaxLl2sltAspswXqoxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lu9ogay8v+GLzCvyfy8ata4UDa6VntiCy4pyg94d9RSd186RIYMwQ7JBngn9lvSd/52h3D8cl3h07bYfARnzGxy0fIqeRO9MYTIC6sokUJVcQKjgnB5bD6MuO9Gq6+w0r8UU1+r2Y54bTgv4jR32PyQ3flZipYi5RdKjsJDCc50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05v8Fzm2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d3qumlIuWLEZ/lT3Urs9mNwCSRL/BwYy5oh+qL5UH7RUtKqXp+hdI2fouhCUwxy38LooYyAdTNHR7WA0lgKhyOgmXjo+65LK9CrScdIbSR60qR9bxFo3ypt2KX1QIjM5m3q7c49Ili7uZiXhjJpxhL+7pcC2s93Yegsugo83Tbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXUqdMbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05v8Fzm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3982AC4CEF0;
-	Wed, 17 Sep 2025 12:40:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXUqdMbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CB3C4CEF0;
+	Wed, 17 Sep 2025 12:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112814;
-	bh=NV3tlWV3nDZ6nD9X0VXLGEcpve7WuYAYYIfuSCA53zs=;
+	s=korg; t=1758112818;
+	bh=Z/Pw1IahDsgtPL4RvLcNhAxbtaxLl2sltAspswXqoxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05v8Fzm2KXiwl7r3yAoz8VFwBasD3sIMHRw//NWZ8N+0Zj8fh7eEPILUivijdRrWm
-	 RWjX1VzEWm1owMz7g55QENVQh/SwLe90NDgBJe+WOHPD+fNxqBq9OVSCF/Y7CJ1750
-	 OvS8EAfEyfaYqX4xqXP9OV618Ibv6ztl6CX/xdKc=
+	b=VXUqdMbeerpx0xbx1MlE6IedmgiCH6bVJYhhlG5CM8hlwasokr+IglKif/o6aZTGT
+	 1ScMrv8k7yWUAwCdkzVBIMbPE6Vxm7HSeRQ2+E2Y/hHUCos7gkVQzmZZqv0d9DR30H
+	 8C0aV6xp52WsbwftT7Wsy1AuNDm5Mt23Yp9Ng+WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Leo Martins <loemra.dev@gmail.com>,
-	Omar Sandoval <osandov@fb.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 058/189] btrfs: fix subvolume deletion lockup caused by inodes xarray race
-Date: Wed, 17 Sep 2025 14:32:48 +0200
-Message-ID: <20250917123353.282095229@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.16 085/189] drm/xe: Attempt to bring bos back to VRAM after eviction
+Date: Wed, 17 Sep 2025 14:33:15 +0200
+Message-ID: <20250917123353.935871050@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -47,82 +46,162 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Omar Sandoval <osandov@fb.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit f6a6c280059c4ddc23e12e3de1b01098e240036f upstream.
+commit 5c87fee3c96ce898ad681552404a66c7605193c0 upstream.
 
-There is a race condition between inode eviction and inode caching that
-can cause a live struct btrfs_inode to be missing from the root->inodes
-xarray. Specifically, there is a window during evict() between the inode
-being unhashed and deleted from the xarray. If btrfs_iget() is called
-for the same inode in that window, it will be recreated and inserted
-into the xarray, but then eviction will delete the new entry, leaving
-nothing in the xarray:
+VRAM+TT bos that are evicted from VRAM to TT may remain in
+TT also after a revalidation following eviction or suspend.
 
-Thread 1                          Thread 2
----------------------------------------------------------------
-evict()
-  remove_inode_hash()
-                                  btrfs_iget_path()
-                                    btrfs_iget_locked()
-                                    btrfs_read_locked_inode()
-                                      btrfs_add_inode_to_root()
-  destroy_inode()
-    btrfs_destroy_inode()
-      btrfs_del_inode_from_root()
-        __xa_erase
+This manifests itself as applications becoming sluggish
+after buffer objects get evicted or after a resume from
+suspend or hibernation.
 
-In turn, this can cause issues for subvolume deletion. Specifically, if
-an inode is in this lost state, and all other inodes are evicted, then
-btrfs_del_inode_from_root() will call btrfs_add_dead_root() prematurely.
-If the lost inode has a delayed_node attached to it, then when
-btrfs_clean_one_deleted_snapshot() calls btrfs_kill_all_delayed_nodes(),
-it will loop forever because the delayed_nodes xarray will never become
-empty (unless memory pressure forces the inode out). We saw this
-manifest as soft lockups in production.
+If the bo supports placement in both VRAM and TT, and
+we are on DGFX, mark the TT placement as fallback. This means
+that it is tried only after VRAM + eviction.
 
-Fix it by only deleting the xarray entry if it matches the given inode
-(using __xa_cmpxchg()).
+This flaw has probably been present since the xe module was
+upstreamed but use a Fixes: commit below where backporting is
+likely to be simple. For earlier versions we need to open-
+code the fallback algorithm in the driver.
 
-Fixes: 310b2f5d5a94 ("btrfs: use an xarray to track open inodes in a root")
-Cc: stable@vger.kernel.org # 6.11+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Co-authored-by: Leo Martins <loemra.dev@gmail.com>
-Signed-off-by: Leo Martins <loemra.dev@gmail.com>
-Signed-off-by: Omar Sandoval <osandov@fb.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+v2:
+- Remove check for dgfx. (Matthew Auld)
+- Update the xe_dma_buf kunit test for the new strategy (CI)
+- Allow dma-buf to pin in current placement (CI)
+- Make xe_bo_validate() for pinned bos a NOP.
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/5995
+Fixes: a78a8da51b36 ("drm/ttm: replace busy placement with flags v6")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: <stable@vger.kernel.org> # v6.9+
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://lore.kernel.org/r/20250904160715.2613-2-thomas.hellstrom@linux.intel.com
+(cherry picked from commit cb3d7b3b46b799c96b54f8e8fe36794a55a77f0b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/tests/xe_bo.c      |    2 +-
+ drivers/gpu/drm/xe/tests/xe_dma_buf.c |   10 +---------
+ drivers/gpu/drm/xe/xe_bo.c            |   16 ++++++++++++----
+ drivers/gpu/drm/xe/xe_bo.h            |    2 +-
+ drivers/gpu/drm/xe/xe_dma_buf.c       |    2 +-
+ 5 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -5685,7 +5685,17 @@ static void btrfs_del_inode_from_root(st
- 	bool empty = false;
+--- a/drivers/gpu/drm/xe/tests/xe_bo.c
++++ b/drivers/gpu/drm/xe/tests/xe_bo.c
+@@ -236,7 +236,7 @@ static int evict_test_run_tile(struct xe
+ 		}
  
- 	xa_lock(&root->inodes);
--	entry = __xa_erase(&root->inodes, btrfs_ino(inode));
-+	/*
-+	 * This btrfs_inode is being freed and has already been unhashed at this
-+	 * point. It's possible that another btrfs_inode has already been
-+	 * allocated for the same inode and inserted itself into the root, so
-+	 * don't delete it in that case.
-+	 *
-+	 * Note that this shouldn't need to allocate memory, so the gfp flags
-+	 * don't really matter.
-+	 */
-+	entry = __xa_cmpxchg(&root->inodes, btrfs_ino(inode), inode, NULL,
-+			     GFP_ATOMIC);
- 	if (entry == inode)
- 		empty = xa_empty(&root->inodes);
- 	xa_unlock(&root->inodes);
+ 		xe_bo_lock(external, false);
+-		err = xe_bo_pin_external(external);
++		err = xe_bo_pin_external(external, false);
+ 		xe_bo_unlock(external);
+ 		if (err) {
+ 			KUNIT_FAIL(test, "external bo pin err=%pe\n",
+--- a/drivers/gpu/drm/xe/tests/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/tests/xe_dma_buf.c
+@@ -89,15 +89,7 @@ static void check_residency(struct kunit
+ 		return;
+ 	}
+ 
+-	/*
+-	 * If on different devices, the exporter is kept in system  if
+-	 * possible, saving a migration step as the transfer is just
+-	 * likely as fast from system memory.
+-	 */
+-	if (params->mem_mask & XE_BO_FLAG_SYSTEM)
+-		KUNIT_EXPECT_TRUE(test, xe_bo_is_mem_type(exported, XE_PL_TT));
+-	else
+-		KUNIT_EXPECT_TRUE(test, xe_bo_is_mem_type(exported, mem_type));
++	KUNIT_EXPECT_TRUE(test, xe_bo_is_mem_type(exported, mem_type));
+ 
+ 	if (params->force_different_devices)
+ 		KUNIT_EXPECT_TRUE(test, xe_bo_is_mem_type(imported, XE_PL_TT));
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -184,6 +184,8 @@ static void try_add_system(struct xe_dev
+ 
+ 		bo->placements[*c] = (struct ttm_place) {
+ 			.mem_type = XE_PL_TT,
++			.flags = (bo_flags & XE_BO_FLAG_VRAM_MASK) ?
++			TTM_PL_FLAG_FALLBACK : 0,
+ 		};
+ 		*c += 1;
+ 	}
+@@ -2266,6 +2268,7 @@ uint64_t vram_region_gpu_offset(struct t
+ /**
+  * xe_bo_pin_external - pin an external BO
+  * @bo: buffer object to be pinned
++ * @in_place: Pin in current placement, don't attempt to migrate.
+  *
+  * Pin an external (not tied to a VM, can be exported via dma-buf / prime FD)
+  * BO. Unique call compared to xe_bo_pin as this function has it own set of
+@@ -2273,7 +2276,7 @@ uint64_t vram_region_gpu_offset(struct t
+  *
+  * Returns 0 for success, negative error code otherwise.
+  */
+-int xe_bo_pin_external(struct xe_bo *bo)
++int xe_bo_pin_external(struct xe_bo *bo, bool in_place)
+ {
+ 	struct xe_device *xe = xe_bo_device(bo);
+ 	int err;
+@@ -2282,9 +2285,11 @@ int xe_bo_pin_external(struct xe_bo *bo)
+ 	xe_assert(xe, xe_bo_is_user(bo));
+ 
+ 	if (!xe_bo_is_pinned(bo)) {
+-		err = xe_bo_validate(bo, NULL, false);
+-		if (err)
+-			return err;
++		if (!in_place) {
++			err = xe_bo_validate(bo, NULL, false);
++			if (err)
++				return err;
++		}
+ 
+ 		spin_lock(&xe->pinned.lock);
+ 		list_add_tail(&bo->pinned_link, &xe->pinned.late.external);
+@@ -2437,6 +2442,9 @@ int xe_bo_validate(struct xe_bo *bo, str
+ 	};
+ 	int ret;
+ 
++	if (xe_bo_is_pinned(bo))
++		return 0;
++
+ 	if (vm) {
+ 		lockdep_assert_held(&vm->lock);
+ 		xe_vm_assert_held(vm);
+--- a/drivers/gpu/drm/xe/xe_bo.h
++++ b/drivers/gpu/drm/xe/xe_bo.h
+@@ -201,7 +201,7 @@ static inline void xe_bo_unlock_vm_held(
+ 	}
+ }
+ 
+-int xe_bo_pin_external(struct xe_bo *bo);
++int xe_bo_pin_external(struct xe_bo *bo, bool in_place);
+ int xe_bo_pin(struct xe_bo *bo);
+ void xe_bo_unpin_external(struct xe_bo *bo);
+ void xe_bo_unpin(struct xe_bo *bo);
+--- a/drivers/gpu/drm/xe/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/xe_dma_buf.c
+@@ -72,7 +72,7 @@ static int xe_dma_buf_pin(struct dma_buf
+ 		return ret;
+ 	}
+ 
+-	ret = xe_bo_pin_external(bo);
++	ret = xe_bo_pin_external(bo, true);
+ 	xe_assert(xe, !ret);
+ 
+ 	return 0;
 
 
