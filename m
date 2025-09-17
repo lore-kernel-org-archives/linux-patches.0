@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC9F31A802;
-	Wed, 17 Sep 2025 12:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E5731A802;
+	Wed, 17 Sep 2025 12:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112746; cv=none; b=Slpk8z92i+aJ6E709vaN4lG9B8ONRYHHQ8BCRWZutb04y2vCc2QMpJWzo3Qcz9Qm73sA1eCLQI1Iw4r8rGDtzD4BHQY5blGcRfVXDhpXrtsO+ubDRO+wh6pLfk2COeLUX7DKK+1pN6HeP6AZ+XRMdx3EEGbyzQmgeN8/QmrpOA4=
+	t=1758112749; cv=none; b=gMJode5exuRJVHF68ihBZcF9mBe96C324j16y33t8EJkYbY5jMucbo53ynOmsmgs1sz5swc/MNdtGj6H57S6vTnbmHU26vBr3Ek7KSgb8Kofu+dRFD38PT5o9vv94qzsKfj3V+ZxYGa+XJllOwcggvdpBsiVUZrW79e0+vCG3lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112746; c=relaxed/simple;
-	bh=7nRY5HU4XRsfbDkyx7nzE5wMXJrBp5d2M6GeOdqO1Sk=;
+	s=arc-20240116; t=1758112749; c=relaxed/simple;
+	bh=kXz8hQj7Y4Yry2zbyIUHnm3EIMT9yB8+wPwuazpVX3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUu5MAzOO4BvBCIHamCPn0LTpHgtLzhIHPGX7ir8GbziSnfxS+Dk26sGsv1FEYt89T1HELblkJW/ReES+1YhXz8VP60fZpyBNXmupVjjeulFJP/LQz1Xqp9yp+jMf2O8mbQwcRJv+WObDe9wUg/kCRMxrGx1QU+z7dMBw7QAJ6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAL9VfGz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pouZudwAIM2TTVG1N9VNREfdUdg+Bq+DVFG57z/j/wP93sqACqE51YWxmkOICzvHfSk5v3NVEkCayDxXGJK/XeL029/MCJiicRF8weMkUI6kSC9QvTBxZjf164nyQVoefEN462Q+Kh8v+nnO4tvkDGPc3Wpl0zkvtiyYJwhyhkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDxguXQQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAL9VfGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D49C4CEF0;
-	Wed, 17 Sep 2025 12:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDxguXQQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE935C4CEF0;
+	Wed, 17 Sep 2025 12:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112746;
-	bh=7nRY5HU4XRsfbDkyx7nzE5wMXJrBp5d2M6GeOdqO1Sk=;
+	s=korg; t=1758112749;
+	bh=kXz8hQj7Y4Yry2zbyIUHnm3EIMT9yB8+wPwuazpVX3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAL9VfGzfGsowANVTwNSXOB6T2JZFjIvA2gVs0KCguuK3UadLBFegv4R8m48F1GMK
-	 iX4vmwJN08+LdWgZTrqCfa2Uhz+C1eBIzXsRdbEH+WPOzdhKT9WUi0yS9rw9bEN3/d
-	 vgWz1JfCVeTJy12rWlRoG7WPkFx77lDbFJ47T0Vg=
+	b=TDxguXQQDTC8gtguM4tJcaiyPi02U9GXJuHUZfxZyQ3j78wbyb2n8N1jcw7Z91V3W
+	 7OwSyjqBl41hW5JshkWRvPgNpAjfzPU5k5MmfTqJIB8MdVMbnAyGhZt8+U/fAoD/4P
+	 9LeYlkIvrNwHqyKb3Bs3jlwJ/B2HcUtuBxkUoW8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Brandt <todd.e.brandt@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>
-Subject: [PATCH 6.16 065/189] PM: hibernate: Restrict GFP mask in hibernation_snapshot()
-Date: Wed, 17 Sep 2025 14:32:55 +0200
-Message-ID: <20250917123353.459941800@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.16 066/189] wifi: iwlwifi: fix 130/1030 configs
+Date: Wed, 17 Sep 2025 14:32:56 +0200
+Message-ID: <20250917123353.486164641@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,49 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 449c9c02537a146ac97ef962327a221e21c9cab3 upstream.
+commit 2682e7a317504a9d81cbb397249d4299e84dfadd upstream.
 
-Commit 12ffc3b1513e ("PM: Restrict swap use to later in the suspend
-sequence") incorrectly removed a pm_restrict_gfp_mask() call from
-hibernation_snapshot(), so memory allocations involving swap are not
-prevented from being carried out in this code path any more which may
-lead to serious breakage.
+The 130/1030 devices are really derivatives of 6030,
+with some small differences not pertaining to the MAC,
+so they must use the 6030 MAC config.
 
-The symptoms of such breakage have become visible after adding a
-shrink_shmem_memory() call to hibernation_snapshot() in commit
-2640e819474f ("PM: hibernate: shrink shmem pages after dev_pm_ops.prepare()")
-which caused this problem to be much more likely to manifest itself.
-
-However, since commit 2640e819474f was initially present in the DRM
-tree that did not include commit 12ffc3b1513e, the symptoms of this
-issue were not visible until merge commit 260f6f4fda93 ("Merge tag
-'drm-next-2025-07-30' of https://gitlab.freedesktop.org/drm/kernel")
-that exposed it through an entirely reasonable merge conflict
-resolution.
-
-Fixes: 12ffc3b1513e ("PM: Restrict swap use to later in the suspend sequence")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220555
-Reported-by: Todd Brandt <todd.e.brandt@linux.intel.com>
-Tested-by: Todd Brandt <todd.e.brandt@linux.intel.com>
-Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220472
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220517
+Fixes: 35ac275ebe0c ("wifi: iwlwifi: cfg: finish config split")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250909121728.8e4911f12528.I3aa7194012a4b584fbd5ddaa3a77e483280f1de4@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/hibernate.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 26 +++++++++----------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/kernel/power/hibernate.c
-+++ b/kernel/power/hibernate.c
-@@ -423,6 +423,7 @@ int hibernation_snapshot(int platform_mo
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index f9e2095d6490..7e56e4ff7642 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -124,13 +124,13 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
+ 	{IWL_PCI_DEVICE(0x0082, 0x1304, iwl6005_mac_cfg)},/* low 5GHz active */
+ 	{IWL_PCI_DEVICE(0x0082, 0x1305, iwl6005_mac_cfg)},/* high 5GHz active */
  
- 	console_suspend_all();
-+	pm_restrict_gfp_mask();
+-/* 6x30 Series */
+-	{IWL_PCI_DEVICE(0x008A, 0x5305, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x008A, 0x5307, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x008A, 0x5325, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x008A, 0x5327, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x008B, 0x5315, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x008B, 0x5317, iwl1000_mac_cfg)},
++/* 1030/6x30 Series */
++	{IWL_PCI_DEVICE(0x008A, 0x5305, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x008A, 0x5307, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x008A, 0x5325, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x008A, 0x5327, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x008B, 0x5315, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x008B, 0x5317, iwl6030_mac_cfg)},
+ 	{IWL_PCI_DEVICE(0x0090, 0x5211, iwl6030_mac_cfg)},
+ 	{IWL_PCI_DEVICE(0x0090, 0x5215, iwl6030_mac_cfg)},
+ 	{IWL_PCI_DEVICE(0x0090, 0x5216, iwl6030_mac_cfg)},
+@@ -181,12 +181,12 @@ VISIBLE_IF_IWLWIFI_KUNIT const struct pci_device_id iwl_hw_card_ids[] = {
+ 	{IWL_PCI_DEVICE(0x08AE, 0x1027, iwl1000_mac_cfg)},
  
- 	error = dpm_suspend(PMSG_FREEZE);
+ /* 130 Series WiFi */
+-	{IWL_PCI_DEVICE(0x0896, 0x5005, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x0896, 0x5007, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x0897, 0x5015, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x0897, 0x5017, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x0896, 0x5025, iwl1000_mac_cfg)},
+-	{IWL_PCI_DEVICE(0x0896, 0x5027, iwl1000_mac_cfg)},
++	{IWL_PCI_DEVICE(0x0896, 0x5005, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x0896, 0x5007, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x0897, 0x5015, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x0897, 0x5017, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x0896, 0x5025, iwl6030_mac_cfg)},
++	{IWL_PCI_DEVICE(0x0896, 0x5027, iwl6030_mac_cfg)},
  
+ /* 2x00 Series */
+ 	{IWL_PCI_DEVICE(0x0890, 0x4022, iwl2000_mac_cfg)},
+-- 
+2.51.0
+
 
 
