@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C6718A6CF;
-	Wed, 17 Sep 2025 12:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5138818A6CF;
+	Wed, 17 Sep 2025 12:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112980; cv=none; b=QoUEbcDDNiSlYZyhIF/jPLg0hdsw3Djapb1EWA4LQeGapSXDh4t+03DjuNAw4JtvtWu3Qg+f0I3OfwyCbDcdCTDQ+MCLPZ7a6emDVnKp6Jwp23zZM1wobRWImqPjMSpmxASEZMxzEXzionnHxvIUICNAmyFCUcXonbh9I5IpWqE=
+	t=1758112983; cv=none; b=F9PualjGbZb+IO2kHg15y9hzadmLOeWxSnZS7aTHNL7Hds2g2uBs4cW8c1hcVzkRouEV+UqmDtkNP8n9JA1NwwJYuifsDVEW8Z9iKJbnhT+sHfBMOoSpNdj7jBW44cwYGfYOaD70HvYHq8Vc6tuXom7+WJb2xJlG5oPQjKtN7r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112980; c=relaxed/simple;
-	bh=WEyXEe9XR805AcKy6apFS8zMbQxJBljmdv790w1KDts=;
+	s=arc-20240116; t=1758112983; c=relaxed/simple;
+	bh=COgEk5K3pVHP4sn9pRfGi7ZKXbpG6W+na3fgae1Wxws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ner/aY2EP7bHN7mpWQZtcv0NyKbbmt36ddMHaZTNC6i2FPt62MR4Ho2ZHyNxoUmZL0cZbh4zsVACSaKmoQdw0tlbmfTr3nTOvCM48H8TdceogreT9T/Sg4pjVApHx8cp075wvxcypkKraGUr65kVoFy5nyvyZC5aPxIkMyqt4RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YC7hlVgf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QL0oemZ2S31k6MkaXNiNjXmjghKjzTpPMr9jL5VJugVyFWHExM1xYifpCK5nA0s2Kd3eS1A9+UXJq1gGzbRHDiRsVyFEHeTDbleF9/SSxz2Pn6P9XyP9qVX4IXpgeJCJ5sIqxNO6FXOLU9Dw1SZ5Q1pIw293z9gZwI5S/6iYUi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCqgX6Tt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YC7hlVgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EFDC4CEF5;
-	Wed, 17 Sep 2025 12:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCqgX6Tt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF6DC4CEF0;
+	Wed, 17 Sep 2025 12:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112979;
-	bh=WEyXEe9XR805AcKy6apFS8zMbQxJBljmdv790w1KDts=;
+	s=korg; t=1758112982;
+	bh=COgEk5K3pVHP4sn9pRfGi7ZKXbpG6W+na3fgae1Wxws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YC7hlVgfhM/tnnvlsHBc6fL0zqp+vXTKuPQpLbD1kGytcxkbQg3w+BF0wzycUbuIl
-	 OZZqI+1sMS5F62tA9jsL0o/lQNrm57zzNlaSkMUiANbPNcJQzzKyImUxR5U79M8pLL
-	 vvVI1b26s5cNFWjqb33Gia13WJS6tB07TVPywmAU=
+	b=hCqgX6TtBapnaPCjUut4fJ7kn7cF+3eaiK79hjUaL3vLRn3Qrxv+k8LayjZDciIgZ
+	 GzMen1alk8VFX0TWuMiXUGsKCHSVF+ryapOZufmjc8Rn1+Uk6qPG0A6FZmmX9FaWc5
+	 wFOPhLxf+N+EPanR43krNmBEEIiff9EECkiqU1HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jan Palus <jpalus@fastmail.com>,
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tony Dinh <mibodhi@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 133/189] wifi: ath12k: fix WMI TLV header misalignment
-Date: Wed, 17 Sep 2025 14:34:03 +0200
-Message-ID: <20250917123355.109245236@linuxfoundation.org>
+Subject: [PATCH 6.16 134/189] PCI: mvebu: Fix use of for_each_of_range() iterator
+Date: Wed, 17 Sep 2025 14:34:04 +0200
+Message-ID: <20250917123355.134137107@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,49 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+From: Klaus Kudielka <klaus.kudielka@gmail.com>
 
-[ Upstream commit 82e2be57d544ff9ad4696c85600827b39be8ce9e ]
+[ Upstream commit b816265396daf1beb915e0ffbfd7f3906c2bf4a4 ]
 
-When buf_len is not 4-byte aligned in ath12k_wmi_mgmt_send(), the
-firmware asserts and triggers a recovery. The following error
-messages are observed:
+5da3d94a23c6 ("PCI: mvebu: Use for_each_of_range() iterator for parsing
+"ranges"") simplified code by using the for_each_of_range() iterator, but
+it broke PCI enumeration on Turris Omnia (and probably other mvebu
+targets).
 
-ath12k_pci 0004:01:00.0: failed to submit WMI_MGMT_TX_SEND_CMDID cmd
-ath12k_pci 0004:01:00.0: failed to send mgmt frame: -108
-ath12k_pci 0004:01:00.0: failed to tx mgmt frame, vdev_id 0 :-108
-ath12k_pci 0004:01:00.0: waiting recovery start...
+Issue #1:
 
-This issue was observed when running 'iw wlanx set power_save off/on'
-in MLO station mode, which triggers the sending of an SMPS action frame
-with a length of 27 bytes to the AP. To resolve the misalignment, use
-buf_len_aligned instead of buf_len when constructing the WMI TLV header.
+To determine range.flags, of_pci_range_parser_one() uses bus->get_flags(),
+which resolves to of_bus_pci_get_flags(), which already returns an
+IORESOURCE bit field, and NOT the original flags from the "ranges"
+resource.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.IOE_HMT.1.1-00011-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
+Then mvebu_get_tgt_attr() attempts the very same conversion again.  Remove
+the misinterpretation of range.flags in mvebu_get_tgt_attr(), to restore
+the intended behavior.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250908015139.1301437-1-miaoqing.pan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Issue #2:
+
+The driver needs target and attributes, which are encoded in the raw
+address values of the "/soc/pcie/ranges" resource. According to
+of_pci_range_parser_one(), the raw values are stored in range.bus_addr and
+range.parent_bus_addr, respectively. range.cpu_addr is a translated version
+of range.parent_bus_addr, and not relevant here.
+
+Use the correct range structure member, to extract target and attributes.
+This restores the intended behavior.
+
+Fixes: 5da3d94a23c6 ("PCI: mvebu: Use for_each_of_range() iterator for parsing "ranges"")
+Reported-by: Jan Palus <jpalus@fastmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220479
+Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tony Dinh <mibodhi@gmail.com>
+Tested-by: Jan Palus <jpalus@fastmail.com>
+Link: https://patch.msgid.link/20250907102303.29735-1-klaus.kudielka@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pci-mvebu.c | 21 ++++-----------------
+ 1 file changed, 4 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index d333f40408feb..d740326079e1d 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -840,7 +840,7 @@ int ath12k_wmi_mgmt_send(struct ath12k_link_vif *arvif, u32 buf_id,
- 	cmd->tx_params_valid = 0;
+diff --git a/drivers/pci/controller/pci-mvebu.c b/drivers/pci/controller/pci-mvebu.c
+index a4a2bac4f4b27..2f8d0223c1a6d 100644
+--- a/drivers/pci/controller/pci-mvebu.c
++++ b/drivers/pci/controller/pci-mvebu.c
+@@ -1168,12 +1168,6 @@ static void __iomem *mvebu_pcie_map_registers(struct platform_device *pdev,
+ 	return devm_ioremap_resource(&pdev->dev, &port->regs);
+ }
  
- 	frame_tlv = (struct wmi_tlv *)(skb->data + sizeof(*cmd));
--	frame_tlv->header = ath12k_wmi_tlv_hdr(WMI_TAG_ARRAY_BYTE, buf_len);
-+	frame_tlv->header = ath12k_wmi_tlv_hdr(WMI_TAG_ARRAY_BYTE, buf_len_aligned);
+-#define DT_FLAGS_TO_TYPE(flags)       (((flags) >> 24) & 0x03)
+-#define    DT_TYPE_IO                 0x1
+-#define    DT_TYPE_MEM32              0x2
+-#define DT_CPUADDR_TO_TARGET(cpuaddr) (((cpuaddr) >> 56) & 0xFF)
+-#define DT_CPUADDR_TO_ATTR(cpuaddr)   (((cpuaddr) >> 48) & 0xFF)
+-
+ static int mvebu_get_tgt_attr(struct device_node *np, int devfn,
+ 			      unsigned long type,
+ 			      unsigned int *tgt,
+@@ -1189,19 +1183,12 @@ static int mvebu_get_tgt_attr(struct device_node *np, int devfn,
+ 		return -EINVAL;
  
- 	memcpy(frame_tlv->value, frame->data, buf_len);
+ 	for_each_of_range(&parser, &range) {
+-		unsigned long rtype;
+ 		u32 slot = upper_32_bits(range.bus_addr);
  
+-		if (DT_FLAGS_TO_TYPE(range.flags) == DT_TYPE_IO)
+-			rtype = IORESOURCE_IO;
+-		else if (DT_FLAGS_TO_TYPE(range.flags) == DT_TYPE_MEM32)
+-			rtype = IORESOURCE_MEM;
+-		else
+-			continue;
+-
+-		if (slot == PCI_SLOT(devfn) && type == rtype) {
+-			*tgt = DT_CPUADDR_TO_TARGET(range.cpu_addr);
+-			*attr = DT_CPUADDR_TO_ATTR(range.cpu_addr);
++		if (slot == PCI_SLOT(devfn) &&
++		    type == (range.flags & IORESOURCE_TYPE_BITS)) {
++			*tgt = (range.parent_bus_addr >> 56) & 0xFF;
++			*attr = (range.parent_bus_addr >> 48) & 0xFF;
+ 			return 0;
+ 		}
+ 	}
 -- 
 2.51.0
 
