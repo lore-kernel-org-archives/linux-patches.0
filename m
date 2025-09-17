@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DE218BBAE;
-	Wed, 17 Sep 2025 12:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F6F1DFE22;
+	Wed, 17 Sep 2025 12:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112603; cv=none; b=gkYPwU6GDl4f8ctCD06q1q8i8EDp0kPRpFiWRfZanIAAxVrxYXbShu2NTUZn2WrxWWNgPjMTyMyhqETz+EQDQHpCQJ/aUeeHnSDVMXYErcG8Rtl9azJCphb1jRVrfTMSJC/9eXWWP9b8uVIpGfCATKA/X0ZCVnvbQxTVuJ2Ongk=
+	t=1758112606; cv=none; b=FhWbRF6OBrMPBbXOJHukR2qIgtG2KDGs50dH98pdvgfNzOoJn/y3e3A8B974XAbOd4uFfjvYzbgV3o9Oa1KmdvAQ/+AWkP2etGSOghWxP62E7q07Jj7Y7JTPy/5OpRLYUsksYGGzZ/KCh1n9BH9lq4c/GUOuBd8koOTUUfLoXrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112603; c=relaxed/simple;
-	bh=Loy2bsHiwcRuENZua7URsmTXZacPEgSGzjBAb9N9zuU=;
+	s=arc-20240116; t=1758112606; c=relaxed/simple;
+	bh=bSMsDYPjCSV4BPuXdHhZn2ya7VqKnzMTPm2Dsy67Uno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P8x1kr+Le+wVFZdNoOB2ZgMw6Lh/HiC7xQNQCPDnEi00kVGJTTyTbo/vzhnVhvqfJdJcLDBaQJDxZaWKhes1I4dv96dHNOhoYyWtmcvfbiJK5Y5cMAIYApZr88SIqyWKJONDWN/wuVepOYTsDoo8x7xKz68cEc9z3MbS5CVtRhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tets+A3S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uH56B1sn6k9qdMl2cu+WSJKmrSeQ80Rsro5VSAOPDkS4/wuNpV04cDdkX7E/dPKgc7eQnITGnh6VVbaE6uJ5GlUg0oA5AfNlyc+KThOwUeNGA9BMkhL2f65IWdm6Snz8v/PtHdg+mX+1zSfvccwiC8oQ1SJIHjvIIWPN2y+TtFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkhVtup6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tets+A3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44BFC4CEF5;
-	Wed, 17 Sep 2025 12:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkhVtup6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07156C4CEF5;
+	Wed, 17 Sep 2025 12:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112603;
-	bh=Loy2bsHiwcRuENZua7URsmTXZacPEgSGzjBAb9N9zuU=;
+	s=korg; t=1758112606;
+	bh=bSMsDYPjCSV4BPuXdHhZn2ya7VqKnzMTPm2Dsy67Uno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tets+A3SzfZ6dnUV3wnGgoRdpJocps/CkaxHLVdiaQdUzKTRz+kcBrMEirEQdZRw9
-	 pNNIEb//FH2p9/+pVpB+iMQFfk0hUkT2E3NHNLDSdm6CsZ2ouyGY0toZR1mMSWfeqT
-	 hAeKtpkS3FKkGq9/6aTOL5Wo1GusCHif4qKJNtMM=
+	b=VkhVtup6rEXjwR8uLr6QLTAblVrhtHPrsbWGBWuLUKv7obeloyDgP7DlTfUmoVKrK
+	 GY5DTCLWu75otBLsMWgI3Xc/BgGH/QmI6AQK+yq10owSxNqePYJLNZ1mzVxN4Yoj9k
+	 QUPU5EmA72vk/IWP4/nSDPMNnF7I7wvQbpiD48aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Weihua <yeweihua4@huawei.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 021/189] trace/fgraph: Fix error handling
-Date: Wed, 17 Sep 2025 14:32:11 +0200
-Message-ID: <20250917123352.371349576@linuxfoundation.org>
+Subject: [PATCH 6.16 022/189] NFSv4: Clear the NFS_CAP_FS_LOCATIONS flag if it is not set
+Date: Wed, 17 Sep 2025 14:32:12 +0200
+Message-ID: <20250917123352.397439439@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -55,49 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit ab1396af7595e7d49a3850481b24d7fe7cbdfd31 ]
+[ Upstream commit dd5a8621b886b02f8341c5d4ea68eb2c552ebd3e ]
 
-Commit edede7a6dcd7 ("trace/fgraph: Fix the warning caused by missing
-unregister notifier") added a call to unregister the PM notifier if
-register_ftrace_graph() failed. It does so unconditionally. However,
-the PM notifier is only registered with the first call to
-register_ftrace_graph(). If the first registration was successful and
-a subsequent registration failed, the notifier is now unregistered even
-if ftrace graphs are still registered.
+_nfs4_server_capabilities() is expected to clear any flags that are not
+supported by the server.
 
-Fix the problem by only unregistering the PM notifier during error handling
-if there are no active fgraph registrations.
-
-Fixes: edede7a6dcd7 ("trace/fgraph: Fix the warning caused by missing unregister notifier")
-Closes: https://lore.kernel.org/all/63b0ba5a-a928-438e-84f9-93028dd72e54@roeck-us.net/
-Cc: Ye Weihua <yeweihua4@huawei.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250906050618.2634078-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 8a59bb93b7e3 ("NFSv4 store server support for fs_location attribute")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/fgraph.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
-index dac2d58f39490..db40ec5cc9d73 100644
---- a/kernel/trace/fgraph.c
-+++ b/kernel/trace/fgraph.c
-@@ -1393,7 +1393,8 @@ int register_ftrace_graph(struct fgraph_ops *gops)
- 		ftrace_graph_active--;
- 		gops->saved_func = NULL;
- 		fgraph_lru_release_index(i);
--		unregister_pm_notifier(&ftrace_suspend_notifier);
-+		if (!ftrace_graph_active)
-+			unregister_pm_notifier(&ftrace_suspend_notifier);
- 	}
- 	return ret;
- }
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index fc86c75372b94..ccd97dcf115f9 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -4007,8 +4007,9 @@ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *f
+ 				     res.attr_bitmask[2];
+ 		}
+ 		memcpy(server->attr_bitmask, res.attr_bitmask, sizeof(server->attr_bitmask));
+-		server->caps &= ~(NFS_CAP_ACLS | NFS_CAP_HARDLINKS |
+-				  NFS_CAP_SYMLINKS| NFS_CAP_SECURITY_LABEL);
++		server->caps &=
++			~(NFS_CAP_ACLS | NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS |
++			  NFS_CAP_SECURITY_LABEL | NFS_CAP_FS_LOCATIONS);
+ 		server->fattr_valid = NFS_ATTR_FATTR_V4;
+ 		if (res.attr_bitmask[0] & FATTR4_WORD0_ACL &&
+ 				res.acl_bitmask & ACL4_SUPPORT_ALLOW_ACL)
 -- 
 2.51.0
 
