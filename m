@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1EE1F3BA2;
-	Wed, 17 Sep 2025 12:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD801E489;
+	Wed, 17 Sep 2025 12:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113053; cv=none; b=g1i//9Smb1lWtuH9F6qZHs8bepyKHVaMmh6kzFq1wIR+gRQzvcbcwHM+J1kdGixqaFkvqeqCCNHh33b5dVikeBIzm2TEMhE8K6NLxlK8VkxYeeKI/rz4TLmwnXVSnrA6hPV7eJVP+dX2ILh0W0bvk/i+MXqljgB6BtITRLR+qpQ=
+	t=1758113056; cv=none; b=Kt0P6aqDjHzBWV8Sa0NbsDYpGBuOaQB+PzqdAa2Qu1p1n/FuIGUwiskfkNg0ebRr4Z9CdpE6Sxw9yTVp95Xg2FuhCUX7aRiL7f4S+VmGvJ/YWBnUfnSVhrAp9SFlGaZgLMy4blYQ/Kh3ouAO4yOcFeBUTWN114YMZYKwLVoGcME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113053; c=relaxed/simple;
-	bh=EeOig5+j15B66zIS0aRrUUkHDiOYt6pSpW6NaHB3L54=;
+	s=arc-20240116; t=1758113056; c=relaxed/simple;
+	bh=a+PcUFfjfRXqjx8DogzpTvLAWdSEkmkTYeV6E+PNwgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iIXtEiMKGtNhVEnW+07y7Q7IsHz505Ah0e1k/xANQTurEVmSTpNUyDk5kLTw9MXa3zCIX6mwRSmOYF3mYKbyYYnEme3rw/dmV3pLd/OeqOoWP4ECYRLDmjZdxj0Js5LGycv6diPBY/D/dgEe8GU/1bNVf7a3z/Q34iLblQ2yF0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iw7wGZYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CotcJOWtiOVio/XCAlkqV3qh6oh2gliDi8t0aR8aqgnk+mINML8Qq++jwwDvZhsj3qYAL512443m7YQmwLva7ifS4BwjjZB1cU5fI81mXbACYUKCJN/gs3aEPw0XDWPavTxEBN2Hyli/EqFdzOb8yVkgMyotg8UF5dgpo7fLDcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yk51TUHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iw7wGZYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F168C4CEF0;
-	Wed, 17 Sep 2025 12:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yk51TUHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEFCC4CEF0;
+	Wed, 17 Sep 2025 12:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113053;
-	bh=EeOig5+j15B66zIS0aRrUUkHDiOYt6pSpW6NaHB3L54=;
+	s=korg; t=1758113056;
+	bh=a+PcUFfjfRXqjx8DogzpTvLAWdSEkmkTYeV6E+PNwgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iw7wGZYlPEWteIoZeF/LlKDJ1LMmelmRSf0JyvR1MmfY5EKvuKk1fIbVbrYE3jUNt
-	 yjjx3hsuuPWfELdLDD5F5bfYKTrHnT4EeK68IScpExGnpOPqDtcmjV1kvcHbzP6YBO
-	 o+P7ZkiRcXKt6zsfmYM/z4VYv6fqF2drNfBbOxt8=
+	b=Yk51TUHhHQP/RfUWKrUE7oOox216hEY0f3Pq4azWp4VLjnpU7XgiqptCPgyVcm/Ao
+	 /WcgW9BfPbnMY+czHs0ffCOqQ/W4uE75CgwKR/BhGzuLh16K1RBnN3J23U7uYSBUEL
+	 64yQUgbQJYoHLB5Ti1RbD+1n8OOB1AJL4LdOFAMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Markuze <amarkuze@redhat.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.16 102/189] ceph: fix race condition where r_parent becomes stale before sending message
-Date: Wed, 17 Sep 2025 14:33:32 +0200
-Message-ID: <20250917123354.357078552@linuxfoundation.org>
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 151/189] can: xilinx_can: xcan_write_frame(): fix use-after-free of transmitted SKB
+Date: Wed, 17 Sep 2025 14:34:21 +0200
+Message-ID: <20250917123355.559830251@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -45,199 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-commit bec324f33d1ed346394b2eee25bf6dbf3511f727 upstream.
+[ Upstream commit ef79f00be72bd81d2e1e6f060d83cf7e425deee4 ]
 
-When the parent directory's i_rwsem is not locked, req->r_parent may become
-stale due to concurrent operations (e.g. rename) between dentry lookup and
-message creation. Validate that r_parent matches the encoded parent inode
-and update to the correct inode if a mismatch is detected.
+can_put_echo_skb() takes ownership of the SKB and it may be freed
+during or after the call.
 
-[ idryomov: folded a follow-up fix from Alex to drop extra reference
-  from ceph_get_reply_dir() in ceph_fill_trace():
+However, xilinx_can xcan_write_frame() keeps using SKB after the call.
 
-  ceph_get_reply_dir() may return a different, referenced inode when
-  r_parent is stale and the parent directory lock is not held.
-  ceph_fill_trace() used that inode but failed to drop the reference
-  when it differed from req->r_parent, leaking an inode reference.
+Fix that by only calling can_put_echo_skb() after the code is done
+touching the SKB.
 
-  Keep the directory inode in a local variable and iput() it at
-  function end if it does not match req->r_parent. ]
+The tx_lock is held for the entire xcan_write_frame() execution and
+also on the can_get_echo_skb() side so the order of operations does not
+matter.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+An earlier fix commit 3d3c817c3a40 ("can: xilinx_can: Fix usage of skb
+memory") did not move the can_put_echo_skb() call far enough.
+
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Fixes: 1598efe57b3e ("can: xilinx_can: refactor code in preparation for CAN FD support")
+Link: https://patch.msgid.link/20250822095002.168389-1-anssi.hannula@bitwise.fi
+[mkl: add "commit" in front of sha1 in patch description]
+[mkl: fix indention]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/inode.c |   81 +++++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 69 insertions(+), 12 deletions(-)
+ drivers/net/can/xilinx_can.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -55,6 +55,52 @@ static int ceph_set_ino_cb(struct inode
- 	return 0;
- }
- 
-+/*
-+ * Check if the parent inode matches the vino from directory reply info
-+ */
-+static inline bool ceph_vino_matches_parent(struct inode *parent,
-+					    struct ceph_vino vino)
-+{
-+	return ceph_ino(parent) == vino.ino && ceph_snap(parent) == vino.snap;
-+}
-+
-+/*
-+ * Validate that the directory inode referenced by @req->r_parent matches the
-+ * inode number and snapshot id contained in the reply's directory record.  If
-+ * they do not match – which can theoretically happen if the parent dentry was
-+ * moved between the time the request was issued and the reply arrived – fall
-+ * back to looking up the correct inode in the inode cache.
-+ *
-+ * A reference is *always* returned.  Callers that receive a different inode
-+ * than the original @parent are responsible for dropping the extra reference
-+ * once the reply has been processed.
-+ */
-+static struct inode *ceph_get_reply_dir(struct super_block *sb,
-+					struct inode *parent,
-+					struct ceph_mds_reply_info_parsed *rinfo)
-+{
-+	struct ceph_vino vino;
-+
-+	if (unlikely(!rinfo->diri.in))
-+		return parent; /* nothing to compare against */
-+
-+	/* If we didn't have a cached parent inode to begin with, just bail out. */
-+	if (!parent)
-+		return NULL;
-+
-+	vino.ino  = le64_to_cpu(rinfo->diri.in->ino);
-+	vino.snap = le64_to_cpu(rinfo->diri.in->snapid);
-+
-+	if (likely(ceph_vino_matches_parent(parent, vino)))
-+		return parent; /* matches – use the original reference */
-+
-+	/* Mismatch – this should be rare.  Emit a WARN and obtain the correct inode. */
-+	WARN_ONCE(1, "ceph: reply dir mismatch (parent valid %llx.%llx reply %llx.%llx)\n",
-+		  ceph_ino(parent), ceph_snap(parent), vino.ino, vino.snap);
-+
-+	return ceph_get_inode(sb, vino, NULL);
-+}
-+
- /**
-  * ceph_new_inode - allocate a new inode in advance of an expected create
-  * @dir: parent directory for new inode
-@@ -1523,6 +1569,7 @@ int ceph_fill_trace(struct super_block *
- 	struct ceph_vino tvino, dvino;
- 	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(sb);
- 	struct ceph_client *cl = fsc->client;
-+	struct inode *parent_dir = NULL;
- 	int err = 0;
- 
- 	doutc(cl, "%p is_dentry %d is_target %d\n", req,
-@@ -1536,10 +1583,17 @@ int ceph_fill_trace(struct super_block *
+diff --git a/drivers/net/can/xilinx_can.c b/drivers/net/can/xilinx_can.c
+index 3f2e378199abb..5abe4af61655c 100644
+--- a/drivers/net/can/xilinx_can.c
++++ b/drivers/net/can/xilinx_can.c
+@@ -690,14 +690,6 @@ static void xcan_write_frame(struct net_device *ndev, struct sk_buff *skb,
+ 		dlc |= XCAN_DLCR_EDL_MASK;
  	}
  
- 	if (rinfo->head->is_dentry) {
--		struct inode *dir = req->r_parent;
+-	if (!(priv->devtype.flags & XCAN_FLAG_TX_MAILBOXES) &&
+-	    (priv->devtype.flags & XCAN_FLAG_TXFEMP))
+-		can_put_echo_skb(skb, ndev, priv->tx_head % priv->tx_max, 0);
+-	else
+-		can_put_echo_skb(skb, ndev, 0, 0);
 -
--		if (dir) {
--			err = ceph_fill_inode(dir, NULL, &rinfo->diri,
-+		/*
-+		 * r_parent may be stale, in cases when R_PARENT_LOCKED is not set,
-+		 * so we need to get the correct inode
-+		 */
-+		parent_dir = ceph_get_reply_dir(sb, req->r_parent, rinfo);
-+		if (unlikely(IS_ERR(parent_dir))) {
-+			err = PTR_ERR(parent_dir);
-+			goto done;
-+		}
-+		if (parent_dir) {
-+			err = ceph_fill_inode(parent_dir, NULL, &rinfo->diri,
- 					      rinfo->dirfrag, session, -1,
- 					      &req->r_caps_reservation);
- 			if (err < 0)
-@@ -1548,14 +1602,14 @@ int ceph_fill_trace(struct super_block *
- 			WARN_ON_ONCE(1);
+-	priv->tx_head++;
+-
+ 	priv->write_reg(priv, XCAN_FRAME_ID_OFFSET(frame_offset), id);
+ 	/* If the CAN frame is RTR frame this write triggers transmission
+ 	 * (not on CAN FD)
+@@ -730,6 +722,14 @@ static void xcan_write_frame(struct net_device *ndev, struct sk_buff *skb,
+ 					data[1]);
  		}
- 
--		if (dir && req->r_op == CEPH_MDS_OP_LOOKUPNAME &&
-+		if (parent_dir && req->r_op == CEPH_MDS_OP_LOOKUPNAME &&
- 		    test_bit(CEPH_MDS_R_PARENT_LOCKED, &req->r_req_flags) &&
- 		    !test_bit(CEPH_MDS_R_ABORTED, &req->r_req_flags)) {
- 			bool is_nokey = false;
- 			struct qstr dname;
- 			struct dentry *dn, *parent;
- 			struct fscrypt_str oname = FSTR_INIT(NULL, 0);
--			struct ceph_fname fname = { .dir	= dir,
-+			struct ceph_fname fname = { .dir	= parent_dir,
- 						    .name	= rinfo->dname,
- 						    .ctext	= rinfo->altname,
- 						    .name_len	= rinfo->dname_len,
-@@ -1564,10 +1618,10 @@ int ceph_fill_trace(struct super_block *
- 			BUG_ON(!rinfo->head->is_target);
- 			BUG_ON(req->r_dentry);
- 
--			parent = d_find_any_alias(dir);
-+			parent = d_find_any_alias(parent_dir);
- 			BUG_ON(!parent);
- 
--			err = ceph_fname_alloc_buffer(dir, &oname);
-+			err = ceph_fname_alloc_buffer(parent_dir, &oname);
- 			if (err < 0) {
- 				dput(parent);
- 				goto done;
-@@ -1576,7 +1630,7 @@ int ceph_fill_trace(struct super_block *
- 			err = ceph_fname_to_usr(&fname, NULL, &oname, &is_nokey);
- 			if (err < 0) {
- 				dput(parent);
--				ceph_fname_free_buffer(dir, &oname);
-+				ceph_fname_free_buffer(parent_dir, &oname);
- 				goto done;
- 			}
- 			dname.name = oname.name;
-@@ -1595,7 +1649,7 @@ retry_lookup:
- 				      dname.len, dname.name, dn);
- 				if (!dn) {
- 					dput(parent);
--					ceph_fname_free_buffer(dir, &oname);
-+					ceph_fname_free_buffer(parent_dir, &oname);
- 					err = -ENOMEM;
- 					goto done;
- 				}
-@@ -1610,12 +1664,12 @@ retry_lookup:
- 				    ceph_snap(d_inode(dn)) != tvino.snap)) {
- 				doutc(cl, " dn %p points to wrong inode %p\n",
- 				      dn, d_inode(dn));
--				ceph_dir_clear_ordered(dir);
-+				ceph_dir_clear_ordered(parent_dir);
- 				d_delete(dn);
- 				dput(dn);
- 				goto retry_lookup;
- 			}
--			ceph_fname_free_buffer(dir, &oname);
-+			ceph_fname_free_buffer(parent_dir, &oname);
- 
- 			req->r_dentry = dn;
- 			dput(parent);
-@@ -1794,6 +1848,9 @@ retry_lookup:
- 					    &dvino, ptvino);
  	}
- done:
-+	/* Drop extra ref from ceph_get_reply_dir() if it returned a new inode */
-+	if (unlikely(!IS_ERR_OR_NULL(parent_dir) && parent_dir != req->r_parent))
-+		iput(parent_dir);
- 	doutc(cl, "done err=%d\n", err);
- 	return err;
++
++	if (!(priv->devtype.flags & XCAN_FLAG_TX_MAILBOXES) &&
++	    (priv->devtype.flags & XCAN_FLAG_TXFEMP))
++		can_put_echo_skb(skb, ndev, priv->tx_head % priv->tx_max, 0);
++	else
++		can_put_echo_skb(skb, ndev, 0, 0);
++
++	priv->tx_head++;
  }
+ 
+ /**
+-- 
+2.51.0
+
 
 
