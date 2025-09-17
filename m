@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2102C1F873B;
-	Wed, 17 Sep 2025 12:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA5F1F4192;
+	Wed, 17 Sep 2025 12:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112970; cv=none; b=OBtY2UEbqzCQc9mgfYzSg/T6ojAkt7Bna28uNFI3DBUWdlgewGi4HBNwWW+JG/nSkvPAW447Vugn83iH9snSa/pGJe53z99HzM7JFrpRp1PfeE/AbIBcXHBH8gdngdKHf6zA4BtFDCu6XyuGOe+hLiV69zkWG4yA3P41b2GwTAE=
+	t=1758112973; cv=none; b=gDNdZHSUKtV9v9078ViYOm8DudpreSt8Wgv4iuBHi/Pv66jWe7JIXwpD7C2GGgnPxMXJJFylHBBRhnrQZpwQimfy4zj8u7qfgD8reVlcXHpZL/eJ012gtyb+EUX2lz7oMTQl9iKODmRjrmxYPynd59vldnvKXIFvzPUhSoUsvbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112970; c=relaxed/simple;
-	bh=u5c7F3GAA/mwgpYl/kTGpe3wfnXatGErvlw76a6qV8E=;
+	s=arc-20240116; t=1758112973; c=relaxed/simple;
+	bh=nk/e64xq/KVqMjTHl8Fgte/8w9J9JdFTy0T5XZ0pzr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5uxBYpPPkVe5AiEupkdIsUsqYstNDFu7dFScGCcQwz4LjBF4bSTEyBMe97Jj8O+4HSI7sYBd2x8ZM5vX4N//Ev8LcrDce2jcmK2mZFaB5BoUMPDTDkfeZFsFGgatl152nNloRzChghfepZYhn03zNpfzIGpQI/im4NqSR55hCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YR+AH6nc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmUeYBCsGoKpCVNjtiy8iNi3489i3OaGRj/FEtzVkl8ojO2tWZ5/7UP3pGsMj/8TMR016MV63a0FhTr/ztDUj1w6LqAyLKiSem434NW5v4oEd3ZKF8Ik13NrMaJ0X+T1z+WYaqLpPsj3VDG9z11W/dYJYudcYmsMhg2ucRpDqmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGDpsLB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR+AH6nc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DF6C4CEF0;
-	Wed, 17 Sep 2025 12:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGDpsLB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2083C4CEF0;
+	Wed, 17 Sep 2025 12:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112970;
-	bh=u5c7F3GAA/mwgpYl/kTGpe3wfnXatGErvlw76a6qV8E=;
+	s=korg; t=1758112973;
+	bh=nk/e64xq/KVqMjTHl8Fgte/8w9J9JdFTy0T5XZ0pzr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YR+AH6nc+LOqqgflezwAz+IIOuwksJr1xFbWdYvUEsz0VRextCEhA7y5AiqiYr40q
-	 4BkbGlfv9LMZlNUH0OXsA2pqJpETBUudUhLG9Va/xGoODn9U6v6xlbJk2iEzwRtPew
-	 80TVLdvQDGtqhkHTlUjGWTRq/RUwOM6Fcn8hUaPQ=
+	b=QGDpsLB68tOA5RqDzBvAccX0toA8ogE74FIaAMfSbR9cvBuZFPFtydfcPYHB0czl8
+	 Oa0hTE5IOJU9gZiM3qscPpFvAgPpLRVqzyUgjQDuF0YHcS8OmgPAZEsjVxj1nMFK2/
+	 q3K4U33Q2LkinRVEpYqTNzYRT5XmjeI7ZKrjJ2Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 131/189] wifi: ath12k: add link support for multi-link in arsta
-Date: Wed, 17 Sep 2025 14:34:01 +0200
-Message-ID: <20250917123355.058842908@linuxfoundation.org>
+Subject: [PATCH 6.16 105/189] mtd: spinand: Add a ->configure_chip() hook
+Date: Wed, 17 Sep 2025 14:33:35 +0200
+Message-ID: <20250917123354.429037608@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,153 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <quic_sarishar@quicinc.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 3b8aa249d0fce93590888a6ed3d22b458091ecb9 ]
+[ Upstream commit da55809ebb45d1d80b7a388ffef841ed683e1a6f ]
 
-Currently, statistics in arsta are updated at deflink for both non-ML
-and multi-link(ML) station. Link statistics are not updated for
-multi-link operation(MLO).
+There is already a manufacturer hook, which is manufacturer specific but
+not chip specific. We no longer have access to the actual NAND identity
+at this stage so let's add a per-chip configuration hook to align the
+chip configuration (if any) with the core's setting.
 
-Hence, add support to correctly obtain the link ID if the peer is ML,
-fetch the arsta from the appropriate link ID, and update the
-statistics in the corresponding arsta.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250701105927.803342-3-quic_sarishar@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Stable-dep-of: 82e2be57d544 ("wifi: ath12k: fix WMI TLV header misalignment")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Stable-dep-of: 4550d33e1811 ("mtd: spinand: winbond: Fix oob_layout for W25N01JW")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_mon.c | 22 ++++++++++++++------
- drivers/net/wireless/ath/ath12k/dp_rx.c  | 11 +++++-----
- drivers/net/wireless/ath/ath12k/peer.h   | 26 ++++++++++++++++++++++++
- 3 files changed, 48 insertions(+), 11 deletions(-)
+ drivers/mtd/nand/spi/core.c |   16 ++++++++++++++--
+ include/linux/mtd/spinand.h |    7 +++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_mon.c b/drivers/net/wireless/ath/ath12k/dp_mon.c
-index 91f4e3aff74c3..6a0915a0c7aae 100644
---- a/drivers/net/wireless/ath/ath12k/dp_mon.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_mon.c
-@@ -3610,7 +3610,6 @@ ath12k_dp_mon_rx_update_user_stats(struct ath12k *ar,
- 				   struct hal_rx_mon_ppdu_info *ppdu_info,
- 				   u32 uid)
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1253,8 +1253,19 @@ static int spinand_id_detect(struct spin
+ 
+ static int spinand_manufacturer_init(struct spinand_device *spinand)
  {
--	struct ath12k_sta *ahsta;
- 	struct ath12k_link_sta *arsta;
- 	struct ath12k_rx_peer_stats *rx_stats = NULL;
- 	struct hal_rx_user_status *user_stats = &ppdu_info->userstats[uid];
-@@ -3628,8 +3627,13 @@ ath12k_dp_mon_rx_update_user_stats(struct ath12k *ar,
- 		return;
- 	}
- 
--	ahsta = ath12k_sta_to_ahsta(peer->sta);
--	arsta = &ahsta->deflink;
-+	arsta = ath12k_peer_get_link_sta(ar->ab, peer);
-+	if (!arsta) {
-+		ath12k_warn(ar->ab, "link sta not found on peer %pM id %d\n",
-+			    peer->addr, peer->peer_id);
-+		return;
+-	if (spinand->manufacturer->ops->init)
+-		return spinand->manufacturer->ops->init(spinand);
++	int ret;
++
++	if (spinand->manufacturer->ops->init) {
++		ret = spinand->manufacturer->ops->init(spinand);
++		if (ret)
++			return ret;
 +	}
 +
- 	arsta->rssi_comb = ppdu_info->rssi_comb;
- 	ewma_avg_rssi_add(&arsta->avg_rssi, ppdu_info->rssi_comb);
- 	rx_stats = arsta->rx_stats;
-@@ -3742,7 +3746,6 @@ int ath12k_dp_mon_srng_process(struct ath12k *ar, int *budget,
- 	struct dp_srng *mon_dst_ring;
- 	struct hal_srng *srng;
- 	struct dp_rxdma_mon_ring *buf_ring;
--	struct ath12k_sta *ahsta = NULL;
- 	struct ath12k_link_sta *arsta;
- 	struct ath12k_peer *peer;
- 	struct sk_buff_head skb_list;
-@@ -3868,8 +3871,15 @@ int ath12k_dp_mon_srng_process(struct ath12k *ar, int *budget,
- 		}
- 
- 		if (ppdu_info->reception_type == HAL_RX_RECEPTION_TYPE_SU) {
--			ahsta = ath12k_sta_to_ahsta(peer->sta);
--			arsta = &ahsta->deflink;
-+			arsta = ath12k_peer_get_link_sta(ar->ab, peer);
-+			if (!arsta) {
-+				ath12k_warn(ar->ab, "link sta not found on peer %pM id %d\n",
-+					    peer->addr, peer->peer_id);
-+				spin_unlock_bh(&ab->base_lock);
-+				rcu_read_unlock();
-+				dev_kfree_skb_any(skb);
-+				continue;
-+			}
- 			ath12k_dp_mon_rx_update_peer_su_stats(ar, arsta,
- 							      ppdu_info);
- 		} else if ((ppdu_info->fc_valid) &&
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index bd95dc88f9b21..e9137ffeb5ab4 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -1418,8 +1418,6 @@ ath12k_update_per_peer_tx_stats(struct ath12k *ar,
- {
- 	struct ath12k_base *ab = ar->ab;
- 	struct ath12k_peer *peer;
--	struct ieee80211_sta *sta;
--	struct ath12k_sta *ahsta;
- 	struct ath12k_link_sta *arsta;
- 	struct htt_ppdu_stats_user_rate *user_rate;
- 	struct ath12k_per_peer_tx_stats *peer_stats = &ar->peer_tx_stats;
-@@ -1500,9 +1498,12 @@ ath12k_update_per_peer_tx_stats(struct ath12k *ar,
- 		return;
- 	}
- 
--	sta = peer->sta;
--	ahsta = ath12k_sta_to_ahsta(sta);
--	arsta = &ahsta->deflink;
-+	arsta = ath12k_peer_get_link_sta(ab, peer);
-+	if (!arsta) {
-+		spin_unlock_bh(&ab->base_lock);
-+		rcu_read_unlock();
-+		return;
++	if (spinand->configure_chip) {
++		ret = spinand->configure_chip(spinand);
++		if (ret)
++			return ret;
 +	}
  
- 	memset(&arsta->txrate, 0, sizeof(arsta->txrate));
+ 	return 0;
+ }
+@@ -1349,6 +1360,7 @@ int spinand_match_and_init(struct spinan
+ 		spinand->flags = table[i].flags;
+ 		spinand->id.len = 1 + table[i].devid.len;
+ 		spinand->select_target = table[i].select_target;
++		spinand->configure_chip = table[i].configure_chip;
+ 		spinand->set_cont_read = table[i].set_cont_read;
+ 		spinand->fact_otp = &table[i].fact_otp;
+ 		spinand->user_otp = &table[i].user_otp;
+--- a/include/linux/mtd/spinand.h
++++ b/include/linux/mtd/spinand.h
+@@ -484,6 +484,7 @@ struct spinand_user_otp {
+  * @op_variants.update_cache: variants of the update-cache operation
+  * @select_target: function used to select a target/die. Required only for
+  *		   multi-die chips
++ * @configure_chip: Align the chip configuration with the core settings
+  * @set_cont_read: enable/disable continuous cached reads
+  * @fact_otp: SPI NAND factory OTP info.
+  * @user_otp: SPI NAND user OTP info.
+@@ -507,6 +508,7 @@ struct spinand_info {
+ 	} op_variants;
+ 	int (*select_target)(struct spinand_device *spinand,
+ 			     unsigned int target);
++	int (*configure_chip)(struct spinand_device *spinand);
+ 	int (*set_cont_read)(struct spinand_device *spinand,
+ 			     bool enable);
+ 	struct spinand_fact_otp fact_otp;
+@@ -539,6 +541,9 @@ struct spinand_info {
+ #define SPINAND_SELECT_TARGET(__func)					\
+ 	.select_target = __func
  
-diff --git a/drivers/net/wireless/ath/ath12k/peer.h b/drivers/net/wireless/ath/ath12k/peer.h
-index f3a5e054d2b55..92c4988df2f16 100644
---- a/drivers/net/wireless/ath/ath12k/peer.h
-+++ b/drivers/net/wireless/ath/ath12k/peer.h
-@@ -91,5 +91,31 @@ struct ath12k_peer *ath12k_peer_find_by_ast(struct ath12k_base *ab, int ast_hash
- int ath12k_peer_ml_create(struct ath12k_hw *ah, struct ieee80211_sta *sta);
- int ath12k_peer_ml_delete(struct ath12k_hw *ah, struct ieee80211_sta *sta);
- int ath12k_peer_mlo_link_peers_delete(struct ath12k_vif *ahvif, struct ath12k_sta *ahsta);
-+static inline
-+struct ath12k_link_sta *ath12k_peer_get_link_sta(struct ath12k_base *ab,
-+						 struct ath12k_peer *peer)
-+{
-+	struct ath12k_sta *ahsta;
-+	struct ath12k_link_sta *arsta;
++#define SPINAND_CONFIGURE_CHIP(__configure_chip)			\
++	.configure_chip = __configure_chip
 +
-+	if (!peer->sta)
-+		return NULL;
-+
-+	ahsta = ath12k_sta_to_ahsta(peer->sta);
-+	if (peer->ml_id & ATH12K_PEER_ML_ID_VALID) {
-+		if (!(ahsta->links_map & BIT(peer->link_id))) {
-+			ath12k_warn(ab, "peer %pM id %d link_id %d can't found in STA link_map 0x%x\n",
-+				    peer->addr, peer->peer_id, peer->link_id,
-+				    ahsta->links_map);
-+			return NULL;
-+		}
-+		arsta = rcu_dereference(ahsta->link[peer->link_id]);
-+		if (!arsta)
-+			return NULL;
-+	} else {
-+		arsta =  &ahsta->deflink;
-+	}
-+	return arsta;
-+}
+ #define SPINAND_CONT_READ(__set_cont_read)				\
+ 	.set_cont_read = __set_cont_read
  
- #endif /* _PEER_H_ */
--- 
-2.51.0
-
+@@ -607,6 +612,7 @@ struct spinand_dirmap {
+  *		passed in spi_mem_op be DMA-able, so we can't based the bufs on
+  *		the stack
+  * @manufacturer: SPI NAND manufacturer information
++ * @configure_chip: Align the chip configuration with the core settings
+  * @cont_read_possible: Field filled by the core once the whole system
+  *		configuration is known to tell whether continuous reads are
+  *		suitable to use or not in general with this chip/configuration.
+@@ -647,6 +653,7 @@ struct spinand_device {
+ 	const struct spinand_manufacturer *manufacturer;
+ 	void *priv;
+ 
++	int (*configure_chip)(struct spinand_device *spinand);
+ 	bool cont_read_possible;
+ 	int (*set_cont_read)(struct spinand_device *spinand,
+ 			     bool enable);
 
 
