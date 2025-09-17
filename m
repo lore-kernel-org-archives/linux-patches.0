@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AF0306B1E;
-	Wed, 17 Sep 2025 12:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7231302774;
+	Wed, 17 Sep 2025 12:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113134; cv=none; b=ZFjiDi1QJKwzTZ5uvVo8RIgX8cUif3hg1fX6tMYyUb8bMDLjJkHP+rWpbb8rSwUQzkUPrfu+Fp+h8ZSADywuaENg6ZcNcSQVW2SaEBw6kIu5wj73RV/qzv78w2Jp8b3GXEHk7Kp5SD5KLd4e+Wo3OJ5LdMu9ApXs+gYdBcfLuC0=
+	t=1758113136; cv=none; b=Tx69lOSbq6O09Aja9xBQ94WiTno4XDd3wKZFDs58g0kmyRnQIPxXebswrPXuZmeSSLNeQpvNoScYFUbDbBsJ27ueIPKXe8xy52vMcfTc5gJM/Pe6SG3pjiwAhnsetYB00Sb2DgoYUkZ+uJrYPEqdCB4DW6IS24dxobp0FF1z9ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113134; c=relaxed/simple;
-	bh=j/HlKQmgVgZYcHs2AkkJF7f4deNFJy7+fv/pqHQYR4k=;
+	s=arc-20240116; t=1758113136; c=relaxed/simple;
+	bh=U0djiQMEdOFdSpkIbY/R/RGWskIzMC0xrCK754oc4N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9UlYJuFkhIluWpVmgzkVINuaLGuFHxQ/Ep1+RalHAWqmFyudjUci3EpcDAXgetifdcXpXRa6PkYxNjmZG9HR9oq91uDRZ1+7M+vJhP51a/m7iupDDwJgmAsQ8wTkhX0GETDbI1E1CmaztlHyzZ6JkJNKfE5GbNc663KjOI9mQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyoV2RZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHNxIJfIb9+zEc1cNnRpOIOyaRUsICq7i643UHfTJzP7QLgNNYkQiWVsP9F3BtGuqb9R5B4eqq9E1nNEVWiaXPO+ZjCuN1X27CHg3t/30oyiMd59PomtY+1/0651f4zjHX72dgQbxNiaJIzCz89DgDVLg9UMjpiUn5EtRWRzczc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGb/TJ0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyoV2RZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E10C4CEF0;
-	Wed, 17 Sep 2025 12:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGb/TJ0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5173DC4CEF0;
+	Wed, 17 Sep 2025 12:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113133;
-	bh=j/HlKQmgVgZYcHs2AkkJF7f4deNFJy7+fv/pqHQYR4k=;
+	s=korg; t=1758113136;
+	bh=U0djiQMEdOFdSpkIbY/R/RGWskIzMC0xrCK754oc4N4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UyoV2RZuh+FIm26R/+W3wzhDqDA/mOfJiLBnN9uXMN9NO+2Pjs4ht7+Fc19NkMPRB
-	 TAHRF18ku0Bt/+IvDqXvNbc1GSrkvjOeVIKv55nzTDW08NI8EuXpnOu07AD8m8h71x
-	 BovueV75zGBHwU2cdO1cMe6+Kn5koW2dPi/HWX6E=
+	b=CGb/TJ0hlM7KguQTzZP6OxZFHtk8RTVylvNGTJ5LzDg/iHi5ID3ghYdjHHf0hVovx
+	 vU01v2ayF2Yo7/PBgi2UwU1dwzKwu+3yv6mpp/FYZ9edYF78629iVuOUMt0F+Mpwj9
+	 xn90LP1XxryGHuDaxftraF9sxw3JcFbu3lxnUxSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.16 181/189] usb: typec: tcpm: properly deliver cable vdms to altmode drivers
-Date: Wed, 17 Sep 2025 14:34:51 +0200
-Message-ID: <20250917123356.306924764@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.16 182/189] usb: gadget: midi2: Fix missing UMP group attributes initialization
+Date: Wed, 17 Sep 2025 14:34:52 +0200
+Message-ID: <20250917123356.333975157@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,57 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit f34bfcc77b18375a87091c289c2eb53c249787b4 upstream.
+commit 21d8525d2e061cde034277d518411b02eac764e2 upstream.
 
-tcpm_handle_vdm_request delivers messages to the partner altmode or the
-cable altmode depending on the SVDM response type, which is incorrect.
-The partner or cable should be chosen based on the received message type
-instead.
+The gadget card driver forgot to call snd_ump_update_group_attrs()
+after adding FBs, and this leaves the UMP group attributes
+uninitialized.  As a result, -ENODEV error is returned at opening a
+legacy rawmidi device as an inactive group.
 
-Also add this filter to ADEV_NOTIFY_USB_AND_QUEUE_VDM, which is used when
-the Enter Mode command is responded to by a NAK on SOP or SOP' and when
-the Exit Mode command is responded to by an ACK on SOP.
+This patch adds the missing call to address the behavior above.
 
-Fixes: 7e7877c55eb1 ("usb: typec: tcpm: add alt mode enter/exit/vdm support for sop'")
-Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250821203759.1720841-2-rdbabiera@google.com
+Fixes: 8b645922b223 ("usb: gadget: Add support for USB MIDI 2.0 function driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250904153932.13589-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_midi2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2426,17 +2426,21 @@ static void tcpm_handle_vdm_request(stru
- 		case ADEV_NONE:
- 			break;
- 		case ADEV_NOTIFY_USB_AND_QUEUE_VDM:
--			WARN_ON(typec_altmode_notify(adev, TYPEC_STATE_USB, NULL));
--			typec_altmode_vdm(adev, p[0], &p[1], cnt);
-+			if (rx_sop_type == TCPC_TX_SOP_PRIME) {
-+				typec_cable_altmode_vdm(adev, TYPEC_PLUG_SOP_P, p[0], &p[1], cnt);
-+			} else {
-+				WARN_ON(typec_altmode_notify(adev, TYPEC_STATE_USB, NULL));
-+				typec_altmode_vdm(adev, p[0], &p[1], cnt);
-+			}
- 			break;
- 		case ADEV_QUEUE_VDM:
--			if (response_tx_sop_type == TCPC_TX_SOP_PRIME)
-+			if (rx_sop_type == TCPC_TX_SOP_PRIME)
- 				typec_cable_altmode_vdm(adev, TYPEC_PLUG_SOP_P, p[0], &p[1], cnt);
- 			else
- 				typec_altmode_vdm(adev, p[0], &p[1], cnt);
- 			break;
- 		case ADEV_QUEUE_VDM_SEND_EXIT_MODE_ON_FAIL:
--			if (response_tx_sop_type == TCPC_TX_SOP_PRIME) {
-+			if (rx_sop_type == TCPC_TX_SOP_PRIME) {
- 				if (typec_cable_altmode_vdm(adev, TYPEC_PLUG_SOP_P,
- 							    p[0], &p[1], cnt)) {
- 					int svdm_version = typec_get_cable_svdm_version(
+--- a/drivers/usb/gadget/function/f_midi2.c
++++ b/drivers/usb/gadget/function/f_midi2.c
+@@ -1599,6 +1599,7 @@ static int f_midi2_create_card(struct f_
+ 			strscpy(fb->info.name, ump_fb_name(b),
+ 				sizeof(fb->info.name));
+ 		}
++		snd_ump_update_group_attrs(ump);
+ 	}
+ 
+ 	for (i = 0; i < midi2->num_eps; i++) {
 
 
