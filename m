@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5708718FDBD;
-	Wed, 17 Sep 2025 12:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43A432BC1B;
+	Wed, 17 Sep 2025 12:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113536; cv=none; b=L6MUEJV/J0LrkLsFBl5t8xaLDtAnmhrcLiGXYGwIB2+UrM86onK7nJsSzYsVpo/6aMB782VI41C1+A7w+h9Rw2HIA6rL34/3gwsb2yMkrYyUM4ZtJeyCljK89KXZaiQHC1BFpvvTlF+GsWhB5ICEDHwvZ7hAiztX9ILJFOXxBY0=
+	t=1758113539; cv=none; b=fZSLA1IJZpvu8CJncZcVqoMU/ioo6j1+LJpUEwxVHmuFGP9HpsR78AeqUXj1PNktujE9Qdqwnm5FakNMMlQpA3eEqbzPRKcSPBdLodIgkd6U8gWafIydZ5q+9LkZ3gBXeH4aJSrXECh4G5vrp6wBZvlEGm4MSKBUaVPT28KmqU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113536; c=relaxed/simple;
-	bh=/QxmnS2pJWa1DVAJz375UDoDzrbyYO4vvY09Y5ob26Q=;
+	s=arc-20240116; t=1758113539; c=relaxed/simple;
+	bh=v3qDzks2CY5t87xIEUQyl4C1mfRqI0RerTFJcFNu2BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnTgP0+u+LwfwnosOU2z9S5im3WeNArCC+zcPoPmI3iEzEzjz4+EWNoOdD/fsEai/vQxuWYx6dtVp8I0lcGFGKob+VPlgkoAt+MGze23bC/bSnBgpnmrPICJ5s0h3JWLoLsYolsZxlI2Pmt6gK5bQjIDjjyQGhBEgTWR1LpPDMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nluAs7Dl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PM1FKnSHRftA0tSxlGuY6sm0QjHPkQq8LBYQtEy+sBzbucnhUcUTcJAVD1gfT27sQNHUZwfCOBwRCqMWgIT8592T0igQ2naEiKVFCokuawG4Due/xMRy32zpPL8JbufTSoNOmvs6V2njbtTwr5RWQ8A9lWz031unDUH0IrzFHSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYcs2KPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nluAs7Dl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BA8C4CEFB;
-	Wed, 17 Sep 2025 12:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYcs2KPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15532C4CEF7;
+	Wed, 17 Sep 2025 12:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113536;
-	bh=/QxmnS2pJWa1DVAJz375UDoDzrbyYO4vvY09Y5ob26Q=;
+	s=korg; t=1758113539;
+	bh=v3qDzks2CY5t87xIEUQyl4C1mfRqI0RerTFJcFNu2BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nluAs7Dl71YEPVnvELKqZ0NA48YS72tZiPZisUBclzkrfAx0WpUqLM+wb+K+X8eZB
-	 r49ydJU0+7h8xJGcL3s5a864wDd/Ie/8DcWTp4NYCHmTrZrk4l0QZw/uvZocg/zOla
-	 oKudQeX6CQpUFni7IXLhkzKZgK7GooTZoPviEDSI=
+	b=vYcs2KPowkY+FPGZ6dJmBUaBjyKN2yZXEtBs7Bc6L5yRp+oD4Wb81OGLS4NoOapg9
+	 iwXlq2IM8JkDf02mYmkhwvTyAUH7p50fVsMeTOCasRDKF5sS5XKW9h6aPmFRrrxj8u
+	 /3vfe61J77WbUwCueRY0eRZzQ3jeMnfLyCzbo/kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/140] netfilter: nf_tables: make nft_set_do_lookup available unconditionally
-Date: Wed, 17 Sep 2025 14:34:47 +0200
-Message-ID: <20250917123347.115710916@linuxfoundation.org>
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	SeongJae Park <sj@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	ze zuo <zuoze1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 080/140] mm/damon/reclaim: avoid divide-by-zero in damon_reclaim_apply_parameters()
+Date: Wed, 17 Sep 2025 14:34:12 +0200
+Message-ID: <20250917123346.265991606@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,96 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Quanmin Yan <yanquanmin1@huawei.com>
 
-[ Upstream commit 11fe5a82e53ac3581a80c88e0e35fb8a80e15f48 ]
+commit e6b543ca9806d7bced863f43020e016ee996c057 upstream.
 
-This function was added for retpoline mitigation and is replaced by a
-static inline helper if mitigations are not enabled.
+When creating a new scheme of DAMON_RECLAIM, the calculation of
+'min_age_region' uses 'aggr_interval' as the divisor, which may lead to
+division-by-zero errors.  Fix it by directly returning -EINVAL when such a
+case occurs.
 
-Enable this helper function unconditionally so next patch can add a lookup
-restart mechanism to fix possible false negatives while transactions are
-in progress.
-
-Adding lookup restarts in nft_lookup_eval doesn't work as nft_objref would
-then need the same copypaste loop.
-
-This patch is separate to ease review of the actual bug fix.
-
-Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: b2f742c846ca ("netfilter: nf_tables: restart set lookup on base_seq change")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250827115858.1186261-3-yanquanmin1@huawei.com
+Fixes: f5a79d7c0c87 ("mm/damon: introduce struct damos_access_pattern")
+Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: ze zuo <zuoze1@huawei.com>
+Cc: <stable@vger.kernel.org>	[6.1+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables_core.h | 10 ++--------
- net/netfilter/nft_lookup.c             | 17 ++++++++++++-----
- 2 files changed, 14 insertions(+), 13 deletions(-)
+ mm/damon/reclaim.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/net/netfilter/nf_tables_core.h b/include/net/netfilter/nf_tables_core.h
-index 6a52fb97b8443..04699eac5b524 100644
---- a/include/net/netfilter/nf_tables_core.h
-+++ b/include/net/netfilter/nf_tables_core.h
-@@ -109,17 +109,11 @@ nft_hash_lookup_fast(const struct net *net, const struct nft_set *set,
- const struct nft_set_ext *
- nft_hash_lookup(const struct net *net, const struct nft_set *set,
- 		const u32 *key);
-+#endif
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -194,6 +194,11 @@ static int damon_reclaim_apply_parameter
+ 	if (err)
+ 		return err;
+ 
++	if (!damon_reclaim_mon_attrs.aggr_interval) {
++		err = -EINVAL;
++		goto out;
++	}
 +
- const struct nft_set_ext *
- nft_set_do_lookup(const struct net *net, const struct nft_set *set,
- 		  const u32 *key);
--#else
--static inline const struct nft_set_ext *
--nft_set_do_lookup(const struct net *net, const struct nft_set *set,
--		  const u32 *key)
--{
--	return set->ops->lookup(net, set, key);
--}
--#endif
- 
- /* called from nft_pipapo_avx2.c */
- const struct nft_set_ext *
-diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
-index 40c602ffbcba7..2c6909bf1b407 100644
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -24,11 +24,11 @@ struct nft_lookup {
- 	struct nft_set_binding		binding;
- };
- 
--#ifdef CONFIG_MITIGATION_RETPOLINE
--const struct nft_set_ext *
--nft_set_do_lookup(const struct net *net, const struct nft_set *set,
--		  const u32 *key)
-+static const struct nft_set_ext *
-+__nft_set_do_lookup(const struct net *net, const struct nft_set *set,
-+		    const u32 *key)
- {
-+#ifdef CONFIG_MITIGATION_RETPOLINE
- 	if (set->ops == &nft_set_hash_fast_type.ops)
- 		return nft_hash_lookup_fast(net, set, key);
- 	if (set->ops == &nft_set_hash_type.ops)
-@@ -51,10 +51,17 @@ nft_set_do_lookup(const struct net *net, const struct nft_set *set,
- 		return nft_rbtree_lookup(net, set, key);
- 
- 	WARN_ON_ONCE(1);
-+#endif
- 	return set->ops->lookup(net, set, key);
- }
-+
-+const struct nft_set_ext *
-+nft_set_do_lookup(const struct net *net, const struct nft_set *set,
-+		  const u32 *key)
-+{
-+	return __nft_set_do_lookup(net, set, key);
-+}
- EXPORT_SYMBOL_GPL(nft_set_do_lookup);
--#endif
- 
- void nft_lookup_eval(const struct nft_expr *expr,
- 		     struct nft_regs *regs,
--- 
-2.51.0
-
+ 	err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
+ 	if (err)
+ 		goto out;
 
 
