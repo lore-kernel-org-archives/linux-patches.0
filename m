@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5138818A6CF;
-	Wed, 17 Sep 2025 12:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EDF337EB9;
+	Wed, 17 Sep 2025 12:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112983; cv=none; b=F9PualjGbZb+IO2kHg15y9hzadmLOeWxSnZS7aTHNL7Hds2g2uBs4cW8c1hcVzkRouEV+UqmDtkNP8n9JA1NwwJYuifsDVEW8Z9iKJbnhT+sHfBMOoSpNdj7jBW44cwYGfYOaD70HvYHq8Vc6tuXom7+WJb2xJlG5oPQjKtN7r4=
+	t=1758112986; cv=none; b=OAfNKq9ZdehuZKesIZq9M371kU8dvi3CXhgjGdjlxH25afw0jH1f5V7ndbJP2CWPNHv9UJ+unjzPkdwkFRDsBn0sWly+GhcltcmxBc3qNagJHmPPS6DIMu838lAvv3RtUiBVZGOg+FO3Y6mUxwFmmIi25C/xF0jeK8XwG20Xw1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112983; c=relaxed/simple;
-	bh=COgEk5K3pVHP4sn9pRfGi7ZKXbpG6W+na3fgae1Wxws=;
+	s=arc-20240116; t=1758112986; c=relaxed/simple;
+	bh=t+o5DmSH//lhFndqnBKUTy9kGl1cI/79pBUwk3HSPaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QL0oemZ2S31k6MkaXNiNjXmjghKjzTpPMr9jL5VJugVyFWHExM1xYifpCK5nA0s2Kd3eS1A9+UXJq1gGzbRHDiRsVyFEHeTDbleF9/SSxz2Pn6P9XyP9qVX4IXpgeJCJ5sIqxNO6FXOLU9Dw1SZ5Q1pIw293z9gZwI5S/6iYUi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCqgX6Tt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p06fJUCsEu3/BPDyHKxlPZcaRw2Jm4mzW/99owXo5zDxR6CM9KltFB6xDaacBVKaLpom9zy8I4WVIfAAigHxmvfaceinfTxNVm40AqlCIcU07dvTGzgkCjUeFCe/qtX8/ama4YmNyKGGheULi7VCngJpy9yvs7PZZJfaS/GIEEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ogu8AlNC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCqgX6Tt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF6DC4CEF0;
-	Wed, 17 Sep 2025 12:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogu8AlNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F707C4CEF0;
+	Wed, 17 Sep 2025 12:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112982;
-	bh=COgEk5K3pVHP4sn9pRfGi7ZKXbpG6W+na3fgae1Wxws=;
+	s=korg; t=1758112985;
+	bh=t+o5DmSH//lhFndqnBKUTy9kGl1cI/79pBUwk3HSPaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCqgX6TtBapnaPCjUut4fJ7kn7cF+3eaiK79hjUaL3vLRn3Qrxv+k8LayjZDciIgZ
-	 GzMen1alk8VFX0TWuMiXUGsKCHSVF+ryapOZufmjc8Rn1+Uk6qPG0A6FZmmX9FaWc5
-	 wFOPhLxf+N+EPanR43krNmBEEIiff9EECkiqU1HI=
+	b=Ogu8AlNCFZn2/JLtvb7DC/NENnuXMiHBkvNHzU0BBVBiev9Yca0KIz4w+Elnr1ma/
+	 n9NG/Wi5UMujGw7eOSW/58PSZR47eeq0hvVbGrm5C0W10gB88UszQsTp+tlJ9neFWS
+	 dQ8161LxvRPiAkxoVXVurX9a02f6sGNHq8kvtHjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Palus <jpalus@fastmail.com>,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Tony Dinh <mibodhi@gmail.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 134/189] PCI: mvebu: Fix use of for_each_of_range() iterator
-Date: Wed, 17 Sep 2025 14:34:04 +0200
-Message-ID: <20250917123355.134137107@linuxfoundation.org>
+Subject: [PATCH 6.16 135/189] genetlink: fix genl_bind() invoking bind() after -EPERM
+Date: Wed, 17 Sep 2025 14:34:05 +0200
+Message-ID: <20250917123355.158949429@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,91 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Klaus Kudielka <klaus.kudielka@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit b816265396daf1beb915e0ffbfd7f3906c2bf4a4 ]
+[ Upstream commit 1dbfb0363224f6da56f6655d596dc5097308d6f5 ]
 
-5da3d94a23c6 ("PCI: mvebu: Use for_each_of_range() iterator for parsing
-"ranges"") simplified code by using the for_each_of_range() iterator, but
-it broke PCI enumeration on Turris Omnia (and probably other mvebu
-targets).
+Per family bind/unbind callbacks were introduced to allow families
+to track multicast group consumer presence, e.g. to start or stop
+producing events depending on listeners.
 
-Issue #1:
+However, in genl_bind() the bind() callback was invoked even if
+capability checks failed and ret was set to -EPERM. This means that
+callbacks could run on behalf of unauthorized callers while the
+syscall still returned failure to user space.
 
-To determine range.flags, of_pci_range_parser_one() uses bus->get_flags(),
-which resolves to of_bus_pci_get_flags(), which already returns an
-IORESOURCE bit field, and NOT the original flags from the "ranges"
-resource.
+Fix this by only invoking bind() after "if (ret) break;" check
+i.e. after permission checks have succeeded.
 
-Then mvebu_get_tgt_attr() attempts the very same conversion again.  Remove
-the misinterpretation of range.flags in mvebu_get_tgt_attr(), to restore
-the intended behavior.
-
-Issue #2:
-
-The driver needs target and attributes, which are encoded in the raw
-address values of the "/soc/pcie/ranges" resource. According to
-of_pci_range_parser_one(), the raw values are stored in range.bus_addr and
-range.parent_bus_addr, respectively. range.cpu_addr is a translated version
-of range.parent_bus_addr, and not relevant here.
-
-Use the correct range structure member, to extract target and attributes.
-This restores the intended behavior.
-
-Fixes: 5da3d94a23c6 ("PCI: mvebu: Use for_each_of_range() iterator for parsing "ranges"")
-Reported-by: Jan Palus <jpalus@fastmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220479
-Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Tony Dinh <mibodhi@gmail.com>
-Tested-by: Jan Palus <jpalus@fastmail.com>
-Link: https://patch.msgid.link/20250907102303.29735-1-klaus.kudielka@gmail.com
+Fixes: 3de21a8990d3 ("genetlink: Add per family bind/unbind callbacks")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20250905135731.3026965-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-mvebu.c | 21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+ net/netlink/genetlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/pci-mvebu.c b/drivers/pci/controller/pci-mvebu.c
-index a4a2bac4f4b27..2f8d0223c1a6d 100644
---- a/drivers/pci/controller/pci-mvebu.c
-+++ b/drivers/pci/controller/pci-mvebu.c
-@@ -1168,12 +1168,6 @@ static void __iomem *mvebu_pcie_map_registers(struct platform_device *pdev,
- 	return devm_ioremap_resource(&pdev->dev, &port->regs);
- }
+diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
+index 104732d345434..978c129c60950 100644
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1836,6 +1836,9 @@ static int genl_bind(struct net *net, int group)
+ 		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
+ 			ret = -EPERM;
  
--#define DT_FLAGS_TO_TYPE(flags)       (((flags) >> 24) & 0x03)
--#define    DT_TYPE_IO                 0x1
--#define    DT_TYPE_MEM32              0x2
--#define DT_CPUADDR_TO_TARGET(cpuaddr) (((cpuaddr) >> 56) & 0xFF)
--#define DT_CPUADDR_TO_ATTR(cpuaddr)   (((cpuaddr) >> 48) & 0xFF)
--
- static int mvebu_get_tgt_attr(struct device_node *np, int devfn,
- 			      unsigned long type,
- 			      unsigned int *tgt,
-@@ -1189,19 +1183,12 @@ static int mvebu_get_tgt_attr(struct device_node *np, int devfn,
- 		return -EINVAL;
++		if (ret)
++			break;
++
+ 		if (family->bind)
+ 			family->bind(i);
  
- 	for_each_of_range(&parser, &range) {
--		unsigned long rtype;
- 		u32 slot = upper_32_bits(range.bus_addr);
- 
--		if (DT_FLAGS_TO_TYPE(range.flags) == DT_TYPE_IO)
--			rtype = IORESOURCE_IO;
--		else if (DT_FLAGS_TO_TYPE(range.flags) == DT_TYPE_MEM32)
--			rtype = IORESOURCE_MEM;
--		else
--			continue;
--
--		if (slot == PCI_SLOT(devfn) && type == rtype) {
--			*tgt = DT_CPUADDR_TO_TARGET(range.cpu_addr);
--			*attr = DT_CPUADDR_TO_ATTR(range.cpu_addr);
-+		if (slot == PCI_SLOT(devfn) &&
-+		    type == (range.flags & IORESOURCE_TYPE_BITS)) {
-+			*tgt = (range.parent_bus_addr >> 56) & 0xFF;
-+			*attr = (range.parent_bus_addr >> 48) & 0xFF;
- 			return 0;
- 		}
- 	}
 -- 
 2.51.0
 
