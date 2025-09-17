@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA5F1F4192;
-	Wed, 17 Sep 2025 12:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09201EE033;
+	Wed, 17 Sep 2025 12:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112973; cv=none; b=gDNdZHSUKtV9v9078ViYOm8DudpreSt8Wgv4iuBHi/Pv66jWe7JIXwpD7C2GGgnPxMXJJFylHBBRhnrQZpwQimfy4zj8u7qfgD8reVlcXHpZL/eJ012gtyb+EUX2lz7oMTQl9iKODmRjrmxYPynd59vldnvKXIFvzPUhSoUsvbw=
+	t=1758112977; cv=none; b=N8X7kRnY4vq35tA1d627bEENAhis/b+57PASOPHiKcAzpfn/7hvvW5CyQvMVs+ze2UTd9HCHDE3uL06TSDlDkz+2p29DX1Buqhd7Xcm1OdLEgUA8DddTL75Em7u4q8hQhxyOUYS4ceR0vQHodSlKfkzcOPkMFvEpbzriehlghUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112973; c=relaxed/simple;
-	bh=nk/e64xq/KVqMjTHl8Fgte/8w9J9JdFTy0T5XZ0pzr0=;
+	s=arc-20240116; t=1758112977; c=relaxed/simple;
+	bh=9zOedvvsywDEpBJO25t5AHpNatWYAHZXAaFdVkTUIZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmUeYBCsGoKpCVNjtiy8iNi3489i3OaGRj/FEtzVkl8ojO2tWZ5/7UP3pGsMj/8TMR016MV63a0FhTr/ztDUj1w6LqAyLKiSem434NW5v4oEd3ZKF8Ik13NrMaJ0X+T1z+WYaqLpPsj3VDG9z11W/dYJYudcYmsMhg2ucRpDqmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGDpsLB6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVTb2KEkVUfeKxKRvCDXAfLJNkmXCwC8b1B8ER6aNGtvP95OuacjwaQP9gmZPbxbCj9DyDkZnoxWcdXnxn87n7xFSF1pTsL2pIb7kypz/LFX6hPJwMnhiLvUvFgexANXmRGJ6ZcEQEBLBl0fc6syfHyUfUTQPy2cxU7FfkV8dio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scCmSNpY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGDpsLB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2083C4CEF0;
-	Wed, 17 Sep 2025 12:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scCmSNpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20430C4CEF0;
+	Wed, 17 Sep 2025 12:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112973;
-	bh=nk/e64xq/KVqMjTHl8Fgte/8w9J9JdFTy0T5XZ0pzr0=;
+	s=korg; t=1758112976;
+	bh=9zOedvvsywDEpBJO25t5AHpNatWYAHZXAaFdVkTUIZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGDpsLB68tOA5RqDzBvAccX0toA8ogE74FIaAMfSbR9cvBuZFPFtydfcPYHB0czl8
-	 Oa0hTE5IOJU9gZiM3qscPpFvAgPpLRVqzyUgjQDuF0YHcS8OmgPAZEsjVxj1nMFK2/
-	 q3K4U33Q2LkinRVEpYqTNzYRT5XmjeI7ZKrjJ2Wc=
+	b=scCmSNpYaiR7k11+QSrSSFQwLOQi5ZmZh8A7eK1WhV/hOl8G4heE7vA4QZON5ZgMT
+	 TC+rhO6lKwcAiaSHeTAI8iVUMkoQhTHKSHpDl7VCtsLFrTStWALfs0hWAAvR3CgTV1
+	 v4ea5xM8OnWMMrVahBeCYT8EkOW0wLbMpmz0A8nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sriram R <quic_srirrama@quicinc.com>,
+	Roopni Devanathan <quic_rdevanat@quicinc.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 105/189] mtd: spinand: Add a ->configure_chip() hook
-Date: Wed, 17 Sep 2025 14:33:35 +0200
-Message-ID: <20250917123354.429037608@linuxfoundation.org>
+Subject: [PATCH 6.16 132/189] wifi: ath12k: Add support to enqueue management frame at MLD level
+Date: Wed, 17 Sep 2025 14:34:02 +0200
+Message-ID: <20250917123355.084234634@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -50,99 +53,346 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Sriram R <quic_srirrama@quicinc.com>
 
-[ Upstream commit da55809ebb45d1d80b7a388ffef841ed683e1a6f ]
+[ Upstream commit 9d2abd4162fca8a1eb46f664268dffad35c8ad20 ]
 
-There is already a manufacturer hook, which is manufacturer specific but
-not chip specific. We no longer have access to the actual NAND identity
-at this stage so let's add a per-chip configuration hook to align the
-chip configuration (if any) with the core's setting.
+A multi-link client can use any link for transmissions. It can decide to
+put one link in power save mode for longer periods while listening on the
+other links as per MLD listen interval. Unicast management frames sent to
+that link station might get dropped if that link station is in power save
+mode or inactive. In such cases, firmware can take decision on which link
+to use.
 
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Stable-dep-of: 4550d33e1811 ("mtd: spinand: winbond: Fix oob_layout for W25N01JW")
+Allow the firmware to decide on which link management frame should be
+sent on, by filling the hardware link with maximum value of u32, so that
+the firmware will not have a specific link to transmit data on and so
+the management frames will be link agnostic. For QCN devices, all action
+frames are marked as link agnostic. For WCN devices, if the device is
+configured as an AP, then all frames other than probe response frames,
+authentication frames, association response frames, re-association response
+frames and ADDBA response frames are marked as link agnostic and if the
+device is configured as a station, then all frames other than probe request
+frames, authentication frames, de-authentication frames and ADDBA response
+frames are marked as link agnostic.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: Sriram R <quic_srirrama@quicinc.com>
+Co-developed-by: Roopni Devanathan <quic_rdevanat@quicinc.com>
+Signed-off-by: Roopni Devanathan <quic_rdevanat@quicinc.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250711091704.3704379-1-quic_rdevanat@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Stable-dep-of: 82e2be57d544 ("wifi: ath12k: fix WMI TLV header misalignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/core.c |   16 ++++++++++++++--
- include/linux/mtd/spinand.h |    7 +++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.h |  1 +
+ drivers/net/wireless/ath/ath12k/hw.c   | 55 +++++++++++++++++++++++++
+ drivers/net/wireless/ath/ath12k/hw.h   |  2 +
+ drivers/net/wireless/ath/ath12k/mac.c  |  5 ++-
+ drivers/net/wireless/ath/ath12k/peer.c |  2 +-
+ drivers/net/wireless/ath/ath12k/peer.h |  2 +
+ drivers/net/wireless/ath/ath12k/wmi.c  | 56 ++++++++++++++++++++++++--
+ drivers/net/wireless/ath/ath12k/wmi.h  | 16 +++++++-
+ 8 files changed, 131 insertions(+), 8 deletions(-)
 
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1253,8 +1253,19 @@ static int spinand_id_detect(struct spin
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index 4bd286296da79..cebdf62ce3db9 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -116,6 +116,7 @@ static inline u64 ath12k_le32hilo_to_u64(__le32 hi, __le32 lo)
+ enum ath12k_skb_flags {
+ 	ATH12K_SKB_HW_80211_ENCAP = BIT(0),
+ 	ATH12K_SKB_CIPHER_SET = BIT(1),
++	ATH12K_SKB_MLO_STA = BIT(2),
+ };
  
- static int spinand_manufacturer_init(struct spinand_device *spinand)
- {
--	if (spinand->manufacturer->ops->init)
--		return spinand->manufacturer->ops->init(spinand);
-+	int ret;
-+
-+	if (spinand->manufacturer->ops->init) {
-+		ret = spinand->manufacturer->ops->init(spinand);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (spinand->configure_chip) {
-+		ret = spinand->configure_chip(spinand);
-+		if (ret)
-+			return ret;
-+	}
+ struct ath12k_skb_cb {
+diff --git a/drivers/net/wireless/ath/ath12k/hw.c b/drivers/net/wireless/ath/ath12k/hw.c
+index ec77ad498b33a..6791ae1d64e50 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.c
++++ b/drivers/net/wireless/ath/ath12k/hw.c
+@@ -14,6 +14,7 @@
+ #include "hw.h"
+ #include "mhi.h"
+ #include "dp_rx.h"
++#include "peer.h"
  
- 	return 0;
+ static const guid_t wcn7850_uuid = GUID_INIT(0xf634f534, 0x6147, 0x11ec,
+ 					     0x90, 0xd6, 0x02, 0x42,
+@@ -49,6 +50,12 @@ static bool ath12k_dp_srng_is_comp_ring_qcn9274(int ring_num)
+ 	return false;
  }
-@@ -1349,6 +1360,7 @@ int spinand_match_and_init(struct spinan
- 		spinand->flags = table[i].flags;
- 		spinand->id.len = 1 + table[i].devid.len;
- 		spinand->select_target = table[i].select_target;
-+		spinand->configure_chip = table[i].configure_chip;
- 		spinand->set_cont_read = table[i].set_cont_read;
- 		spinand->fact_otp = &table[i].fact_otp;
- 		spinand->user_otp = &table[i].user_otp;
---- a/include/linux/mtd/spinand.h
-+++ b/include/linux/mtd/spinand.h
-@@ -484,6 +484,7 @@ struct spinand_user_otp {
-  * @op_variants.update_cache: variants of the update-cache operation
-  * @select_target: function used to select a target/die. Required only for
-  *		   multi-die chips
-+ * @configure_chip: Align the chip configuration with the core settings
-  * @set_cont_read: enable/disable continuous cached reads
-  * @fact_otp: SPI NAND factory OTP info.
-  * @user_otp: SPI NAND user OTP info.
-@@ -507,6 +508,7 @@ struct spinand_info {
- 	} op_variants;
- 	int (*select_target)(struct spinand_device *spinand,
- 			     unsigned int target);
-+	int (*configure_chip)(struct spinand_device *spinand);
- 	int (*set_cont_read)(struct spinand_device *spinand,
- 			     bool enable);
- 	struct spinand_fact_otp fact_otp;
-@@ -539,6 +541,9 @@ struct spinand_info {
- #define SPINAND_SELECT_TARGET(__func)					\
- 	.select_target = __func
  
-+#define SPINAND_CONFIGURE_CHIP(__configure_chip)			\
-+	.configure_chip = __configure_chip
++static bool ath12k_is_frame_link_agnostic_qcn9274(struct ath12k_link_vif *arvif,
++						  struct ieee80211_mgmt *mgmt)
++{
++	return ieee80211_is_action(mgmt->frame_control);
++}
 +
- #define SPINAND_CONT_READ(__set_cont_read)				\
- 	.set_cont_read = __set_cont_read
+ static int ath12k_hw_mac_id_to_pdev_id_wcn7850(const struct ath12k_hw_params *hw,
+ 					       int mac_id)
+ {
+@@ -74,6 +81,52 @@ static bool ath12k_dp_srng_is_comp_ring_wcn7850(int ring_num)
+ 	return false;
+ }
  
-@@ -607,6 +612,7 @@ struct spinand_dirmap {
-  *		passed in spi_mem_op be DMA-able, so we can't based the bufs on
-  *		the stack
-  * @manufacturer: SPI NAND manufacturer information
-+ * @configure_chip: Align the chip configuration with the core settings
-  * @cont_read_possible: Field filled by the core once the whole system
-  *		configuration is known to tell whether continuous reads are
-  *		suitable to use or not in general with this chip/configuration.
-@@ -647,6 +653,7 @@ struct spinand_device {
- 	const struct spinand_manufacturer *manufacturer;
- 	void *priv;
++static bool ath12k_is_addba_resp_action_code(struct ieee80211_mgmt *mgmt)
++{
++	if (!ieee80211_is_action(mgmt->frame_control))
++		return false;
++
++	if (mgmt->u.action.category != WLAN_CATEGORY_BACK)
++		return false;
++
++	if (mgmt->u.action.u.addba_resp.action_code != WLAN_ACTION_ADDBA_RESP)
++		return false;
++
++	return true;
++}
++
++static bool ath12k_is_frame_link_agnostic_wcn7850(struct ath12k_link_vif *arvif,
++						  struct ieee80211_mgmt *mgmt)
++{
++	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(arvif->ahvif);
++	struct ath12k_hw *ah = ath12k_ar_to_ah(arvif->ar);
++	struct ath12k_base *ab = arvif->ar->ab;
++	__le16 fc = mgmt->frame_control;
++
++	spin_lock_bh(&ab->base_lock);
++	if (!ath12k_peer_find_by_addr(ab, mgmt->da) &&
++	    !ath12k_peer_ml_find(ah, mgmt->da)) {
++		spin_unlock_bh(&ab->base_lock);
++		return false;
++	}
++	spin_unlock_bh(&ab->base_lock);
++
++	if (vif->type == NL80211_IFTYPE_STATION)
++		return arvif->is_up &&
++		       (vif->valid_links == vif->active_links) &&
++		       !ieee80211_is_probe_req(fc) &&
++		       !ieee80211_is_auth(fc) &&
++		       !ieee80211_is_deauth(fc) &&
++		       !ath12k_is_addba_resp_action_code(mgmt);
++
++	if (vif->type == NL80211_IFTYPE_AP)
++		return !(ieee80211_is_probe_resp(fc) || ieee80211_is_auth(fc) ||
++			 ieee80211_is_assoc_resp(fc) || ieee80211_is_reassoc_resp(fc) ||
++			 ath12k_is_addba_resp_action_code(mgmt));
++
++	return false;
++}
++
+ static const struct ath12k_hw_ops qcn9274_ops = {
+ 	.get_hw_mac_from_pdev_id = ath12k_hw_qcn9274_mac_from_pdev_id,
+ 	.mac_id_to_pdev_id = ath12k_hw_mac_id_to_pdev_id_qcn9274,
+@@ -81,6 +134,7 @@ static const struct ath12k_hw_ops qcn9274_ops = {
+ 	.rxdma_ring_sel_config = ath12k_dp_rxdma_ring_sel_config_qcn9274,
+ 	.get_ring_selector = ath12k_hw_get_ring_selector_qcn9274,
+ 	.dp_srng_is_tx_comp_ring = ath12k_dp_srng_is_comp_ring_qcn9274,
++	.is_frame_link_agnostic = ath12k_is_frame_link_agnostic_qcn9274,
+ };
  
-+	int (*configure_chip)(struct spinand_device *spinand);
- 	bool cont_read_possible;
- 	int (*set_cont_read)(struct spinand_device *spinand,
- 			     bool enable);
+ static const struct ath12k_hw_ops wcn7850_ops = {
+@@ -90,6 +144,7 @@ static const struct ath12k_hw_ops wcn7850_ops = {
+ 	.rxdma_ring_sel_config = ath12k_dp_rxdma_ring_sel_config_wcn7850,
+ 	.get_ring_selector = ath12k_hw_get_ring_selector_wcn7850,
+ 	.dp_srng_is_tx_comp_ring = ath12k_dp_srng_is_comp_ring_wcn7850,
++	.is_frame_link_agnostic = ath12k_is_frame_link_agnostic_wcn7850,
+ };
+ 
+ #define ATH12K_TX_RING_MASK_0 0x1
+diff --git a/drivers/net/wireless/ath/ath12k/hw.h b/drivers/net/wireless/ath/ath12k/hw.h
+index 0a75bc5abfa24..9c69dd5a22afa 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.h
++++ b/drivers/net/wireless/ath/ath12k/hw.h
+@@ -246,6 +246,8 @@ struct ath12k_hw_ops {
+ 	int (*rxdma_ring_sel_config)(struct ath12k_base *ab);
+ 	u8 (*get_ring_selector)(struct sk_buff *skb);
+ 	bool (*dp_srng_is_tx_comp_ring)(int ring_num);
++	bool (*is_frame_link_agnostic)(struct ath12k_link_vif *arvif,
++				       struct ieee80211_mgmt *mgmt);
+ };
+ 
+ static inline
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 87944e4467050..708dc3dd4347a 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -7685,7 +7685,7 @@ static int ath12k_mac_mgmt_tx_wmi(struct ath12k *ar, struct ath12k_link_vif *arv
+ 
+ 	skb_cb->paddr = paddr;
+ 
+-	ret = ath12k_wmi_mgmt_send(ar, arvif->vdev_id, buf_id, skb);
++	ret = ath12k_wmi_mgmt_send(arvif, buf_id, skb);
+ 	if (ret) {
+ 		ath12k_warn(ar->ab, "failed to send mgmt frame: %d\n", ret);
+ 		goto err_unmap_buf;
+@@ -7997,6 +7997,9 @@ static void ath12k_mac_op_tx(struct ieee80211_hw *hw,
+ 
+ 		skb_cb->flags |= ATH12K_SKB_HW_80211_ENCAP;
+ 	} else if (ieee80211_is_mgmt(hdr->frame_control)) {
++		if (sta && sta->mlo)
++			skb_cb->flags |= ATH12K_SKB_MLO_STA;
++
+ 		ret = ath12k_mac_mgmt_tx(ar, skb, is_prb_rsp);
+ 		if (ret) {
+ 			ath12k_warn(ar->ab, "failed to queue management frame %d\n",
+diff --git a/drivers/net/wireless/ath/ath12k/peer.c b/drivers/net/wireless/ath/ath12k/peer.c
+index ec7236bbccc0f..eb7aeff014903 100644
+--- a/drivers/net/wireless/ath/ath12k/peer.c
++++ b/drivers/net/wireless/ath/ath12k/peer.c
+@@ -8,7 +8,7 @@
+ #include "peer.h"
+ #include "debug.h"
+ 
+-static struct ath12k_ml_peer *ath12k_peer_ml_find(struct ath12k_hw *ah, const u8 *addr)
++struct ath12k_ml_peer *ath12k_peer_ml_find(struct ath12k_hw *ah, const u8 *addr)
+ {
+ 	struct ath12k_ml_peer *ml_peer;
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/peer.h b/drivers/net/wireless/ath/ath12k/peer.h
+index 92c4988df2f16..44afc0b7dd53e 100644
+--- a/drivers/net/wireless/ath/ath12k/peer.h
++++ b/drivers/net/wireless/ath/ath12k/peer.h
+@@ -91,6 +91,8 @@ struct ath12k_peer *ath12k_peer_find_by_ast(struct ath12k_base *ab, int ast_hash
+ int ath12k_peer_ml_create(struct ath12k_hw *ah, struct ieee80211_sta *sta);
+ int ath12k_peer_ml_delete(struct ath12k_hw *ah, struct ieee80211_sta *sta);
+ int ath12k_peer_mlo_link_peers_delete(struct ath12k_vif *ahvif, struct ath12k_sta *ahsta);
++struct ath12k_ml_peer *ath12k_peer_ml_find(struct ath12k_hw *ah,
++					   const u8 *addr);
+ static inline
+ struct ath12k_link_sta *ath12k_peer_get_link_sta(struct ath12k_base *ab,
+ 						 struct ath12k_peer *peer)
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index eac5d48cade66..d333f40408feb 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -782,20 +782,46 @@ struct sk_buff *ath12k_wmi_alloc_skb(struct ath12k_wmi_base *wmi_ab, u32 len)
+ 	return skb;
+ }
+ 
+-int ath12k_wmi_mgmt_send(struct ath12k *ar, u32 vdev_id, u32 buf_id,
++int ath12k_wmi_mgmt_send(struct ath12k_link_vif *arvif, u32 buf_id,
+ 			 struct sk_buff *frame)
+ {
++	struct ath12k *ar = arvif->ar;
+ 	struct ath12k_wmi_pdev *wmi = ar->wmi;
+ 	struct wmi_mgmt_send_cmd *cmd;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(frame);
+-	struct wmi_tlv *frame_tlv;
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)frame->data;
++	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(arvif->ahvif);
++	int cmd_len = sizeof(struct ath12k_wmi_mgmt_send_tx_params);
++	struct ieee80211_mgmt *mgmt = (struct ieee80211_mgmt *)hdr;
++	struct ath12k_wmi_mlo_mgmt_send_params *ml_params;
++	struct ath12k_base *ab = ar->ab;
++	struct wmi_tlv *frame_tlv, *tlv;
++	struct ath12k_skb_cb *skb_cb;
++	u32 buf_len, buf_len_aligned;
++	u32 vdev_id = arvif->vdev_id;
++	bool link_agnostic = false;
+ 	struct sk_buff *skb;
+-	u32 buf_len;
+ 	int ret, len;
++	void *ptr;
+ 
+ 	buf_len = min_t(int, frame->len, WMI_MGMT_SEND_DOWNLD_LEN);
+ 
+-	len = sizeof(*cmd) + sizeof(*frame_tlv) + roundup(buf_len, 4);
++	buf_len_aligned = roundup(buf_len, sizeof(u32));
++
++	len = sizeof(*cmd) + sizeof(*frame_tlv) + buf_len_aligned;
++
++	if (ieee80211_vif_is_mld(vif)) {
++		skb_cb = ATH12K_SKB_CB(frame);
++		if ((skb_cb->flags & ATH12K_SKB_MLO_STA) &&
++		    ab->hw_params->hw_ops->is_frame_link_agnostic &&
++		    ab->hw_params->hw_ops->is_frame_link_agnostic(arvif, mgmt)) {
++			len += cmd_len + TLV_HDR_SIZE + sizeof(*ml_params);
++			ath12k_generic_dbg(ATH12K_DBG_MGMT,
++					   "Sending Mgmt Frame fc 0x%0x as link agnostic",
++					   mgmt->frame_control);
++			link_agnostic = true;
++		}
++	}
+ 
+ 	skb = ath12k_wmi_alloc_skb(wmi->wmi_ab, len);
+ 	if (!skb)
+@@ -818,6 +844,28 @@ int ath12k_wmi_mgmt_send(struct ath12k *ar, u32 vdev_id, u32 buf_id,
+ 
+ 	memcpy(frame_tlv->value, frame->data, buf_len);
+ 
++	if (!link_agnostic)
++		goto send;
++
++	ptr = skb->data + sizeof(*cmd) + sizeof(*frame_tlv) + buf_len_aligned;
++
++	tlv = ptr;
++
++	/* Tx params not used currently */
++	tlv->header = ath12k_wmi_tlv_cmd_hdr(WMI_TAG_TX_SEND_PARAMS, cmd_len);
++	ptr += cmd_len;
++
++	tlv = ptr;
++	tlv->header = ath12k_wmi_tlv_hdr(WMI_TAG_ARRAY_STRUCT, sizeof(*ml_params));
++	ptr += TLV_HDR_SIZE;
++
++	ml_params = ptr;
++	ml_params->tlv_header = ath12k_wmi_tlv_cmd_hdr(WMI_TAG_MLO_TX_SEND_PARAMS,
++						       sizeof(*ml_params));
++
++	ml_params->hw_link_id = cpu_to_le32(WMI_MGMT_LINK_AGNOSTIC_ID);
++
++send:
+ 	ret = ath12k_wmi_cmd_send(wmi, skb, WMI_MGMT_TX_SEND_CMDID);
+ 	if (ret) {
+ 		ath12k_warn(ar->ab,
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
+index 8627154f1680f..6dbcedcf08175 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -3963,6 +3963,7 @@ struct wmi_scan_chan_list_cmd {
+ } __packed;
+ 
+ #define WMI_MGMT_SEND_DOWNLD_LEN	64
++#define WMI_MGMT_LINK_AGNOSTIC_ID	0xFFFFFFFF
+ 
+ #define WMI_TX_PARAMS_DWORD0_POWER		GENMASK(7, 0)
+ #define WMI_TX_PARAMS_DWORD0_MCS_MASK		GENMASK(19, 8)
+@@ -3988,7 +3989,18 @@ struct wmi_mgmt_send_cmd {
+ 
+ 	/* This TLV is followed by struct wmi_mgmt_frame */
+ 
+-	/* Followed by struct wmi_mgmt_send_params */
++	/* Followed by struct ath12k_wmi_mlo_mgmt_send_params */
++} __packed;
++
++struct ath12k_wmi_mlo_mgmt_send_params {
++	__le32 tlv_header;
++	__le32 hw_link_id;
++} __packed;
++
++struct ath12k_wmi_mgmt_send_tx_params {
++	__le32 tlv_header;
++	__le32 tx_param_dword0;
++	__le32 tx_param_dword1;
+ } __packed;
+ 
+ struct wmi_sta_powersave_mode_cmd {
+@@ -6183,7 +6195,7 @@ void ath12k_wmi_init_wcn7850(struct ath12k_base *ab,
+ int ath12k_wmi_cmd_send(struct ath12k_wmi_pdev *wmi, struct sk_buff *skb,
+ 			u32 cmd_id);
+ struct sk_buff *ath12k_wmi_alloc_skb(struct ath12k_wmi_base *wmi_sc, u32 len);
+-int ath12k_wmi_mgmt_send(struct ath12k *ar, u32 vdev_id, u32 buf_id,
++int ath12k_wmi_mgmt_send(struct ath12k_link_vif *arvif, u32 buf_id,
+ 			 struct sk_buff *frame);
+ int ath12k_wmi_p2p_go_bcn_ie(struct ath12k *ar, u32 vdev_id,
+ 			     const u8 *p2p_ie);
+-- 
+2.51.0
+
 
 
