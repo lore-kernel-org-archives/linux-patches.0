@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2257E183CA6;
-	Wed, 17 Sep 2025 13:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D821EB1AA;
+	Wed, 17 Sep 2025 13:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114084; cv=none; b=pWZVDsrC+olezQw4EJ8YSToDWbTkegz9jS0VuzcGOV1gPKUSzgEiqd4FsKIfd9sISm/C4dDW8tBxFoYdO+3QWytrzKlA5vERd4CMeMPnkdrcZJuMbnSFRkzSDtnYy4BeWa3ULq1LK2pJyYUPATFrTJE3sJRZOJMHR1nUguKIOIY=
+	t=1758114087; cv=none; b=K+AZlJfvWJbcaUhu8M+JceT6lwugZMJdrTOQ7XQeQE827gWu5eZlU0YmWpFtnmjwr4zTRvlIKS30qQ3NUwebDdT4rB6uifsD8u11HaqASSEF94ZzvFDa85ieZ8DjKu10LSWjnUmgosqWErMDC9SXkc9Rv7dYGU+Bq+G3o4yK5y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114084; c=relaxed/simple;
-	bh=ureW8E1eoqgFbMKa1G10M5bi2mw9auhEXwGKhGN5nWg=;
+	s=arc-20240116; t=1758114087; c=relaxed/simple;
+	bh=kmZMHegWoOdSKsyanf13qJpSFSaicZHr4B4JubP5lyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1LZC7lgs1Zp/Gk9oLR43NIPgYRS3wWSRGv8GGFJ/F7AduraaqbQmuYRXZlKxHRXbCu6Ylh/HdE2Mp2167CJKBBeKTU+jJRE3D1CuMJxs/1Qf27j5BxA1Nue0ixFUSy7L8CkFdLxuuycvU/D/AfytbFvstMzmtYFMhHUHYxFx9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTUAngJ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I223IM3NpDSsw5Q9/w8VDn8NyPdCx6hTV0eABaihQqNot96uo5t2xUeXvGNNUxNFaBoLNNcuHBb6X4tlWNV6YZcrlBNvcx8z0jAab+xRsMMPSgdwq9nY7QGIFeDgfgsRs6x+rbz442bujCIWmUuXW244hHS2WZSwxH2uv+m5BRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKI93X1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTUAngJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F73EC4CEF0;
-	Wed, 17 Sep 2025 13:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKI93X1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABAFC4CEF0;
+	Wed, 17 Sep 2025 13:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114084;
-	bh=ureW8E1eoqgFbMKa1G10M5bi2mw9auhEXwGKhGN5nWg=;
+	s=korg; t=1758114087;
+	bh=kmZMHegWoOdSKsyanf13qJpSFSaicZHr4B4JubP5lyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTUAngJ858sRXZ+H50FeFzLE/XflEUbeU+Q2jKxyGG01bM4wK/ck2YMNE39UBwOiG
-	 kvM5aSf4c6sdbvfYDnXqqd8T133s/H1JVKKo0tjKKrNYRIVZxKFDLAvAgn/crpk0lg
-	 4gaRukHv2zwNf5VFG1V4SK5ICvV6mDUFhLFxzcBc=
+	b=rKI93X1hAWYw1eFkI5TDet4G+ZuPsGofI4uAbiWpdKZhi6qBl8WRWXd9jqYQqP3FD
+	 9KDy2FOmW7pCyKcitL2wLcfZCjVbmfchrASYn4HXY1anMG4Wt3blB8+4X15Cei8Ili
+	 QdE1OYpHe42PuOL3eW+V5IrAvbusUtfgikOBnJUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/78] mm/memory-failure: fix VM_BUG_ON_PAGE(PagePoisoned(page)) when unpoison memory
-Date: Wed, 17 Sep 2025 14:35:03 +0200
-Message-ID: <20250917123330.592922671@linuxfoundation.org>
+	Jeff LaBundy <jeff@labundy.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 43/78] Input: iqs7222 - avoid enabling unused interrupts
+Date: Wed, 17 Sep 2025 14:35:04 +0200
+Message-ID: <20250917123330.617569957@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,110 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Jeff LaBundy <jeff@labundy.com>
 
-commit d613f53c83ec47089c4e25859d5e8e0359f6f8da upstream.
+commit c9ddc41cdd522f2db5d492eda3df8994d928be34 upstream.
 
-When I did memory failure tests, below panic occurs:
+If a proximity event node is defined so as to specify the wake-up
+properties of the touch surface, the proximity event interrupt is
+enabled unconditionally. This may result in unwanted interrupts.
 
-page dumped because: VM_BUG_ON_PAGE(PagePoisoned(page))
-kernel BUG at include/linux/page-flags.h:616!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 3 PID: 720 Comm: bash Not tainted 6.10.0-rc1-00195-g148743902568 #40
-RIP: 0010:unpoison_memory+0x2f3/0x590
-RSP: 0018:ffffa57fc8787d60 EFLAGS: 00000246
-RAX: 0000000000000037 RBX: 0000000000000009 RCX: ffff9be25fcdc9c8
-RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff9be25fcdc9c0
-RBP: 0000000000300000 R08: ffffffffb4956f88 R09: 0000000000009ffb
-R10: 0000000000000284 R11: ffffffffb4926fa0 R12: ffffe6b00c000000
-R13: ffff9bdb453dfd00 R14: 0000000000000000 R15: fffffffffffffffe
-FS:  00007f08f04e4740(0000) GS:ffff9be25fcc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000564787a30410 CR3: 000000010d4e2000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- unpoison_memory+0x2f3/0x590
- simple_attr_write_xsigned.constprop.0.isra.0+0xb3/0x110
- debugfs_attr_write+0x42/0x60
- full_proxy_write+0x5b/0x80
- vfs_write+0xd5/0x540
- ksys_write+0x64/0xe0
- do_syscall_64+0xb9/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f08f0314887
-RSP: 002b:00007ffece710078 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000009 RCX: 00007f08f0314887
-RDX: 0000000000000009 RSI: 0000564787a30410 RDI: 0000000000000001
-RBP: 0000564787a30410 R08: 000000000000fefe R09: 000000007fffffff
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
-R13: 00007f08f041b780 R14: 00007f08f0417600 R15: 00007f08f0416a00
- </TASK>
-Modules linked in: hwpoison_inject
----[ end trace 0000000000000000 ]---
-RIP: 0010:unpoison_memory+0x2f3/0x590
-RSP: 0018:ffffa57fc8787d60 EFLAGS: 00000246
-RAX: 0000000000000037 RBX: 0000000000000009 RCX: ffff9be25fcdc9c8
-RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff9be25fcdc9c0
-RBP: 0000000000300000 R08: ffffffffb4956f88 R09: 0000000000009ffb
-R10: 0000000000000284 R11: ffffffffb4926fa0 R12: ffffe6b00c000000
-R13: ffff9bdb453dfd00 R14: 0000000000000000 R15: fffffffffffffffe
-FS:  00007f08f04e4740(0000) GS:ffff9be25fcc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000564787a30410 CR3: 000000010d4e2000 CR4: 00000000000006f0
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: 0x31c00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
----[ end Kernel panic - not syncing: Fatal exception ]---
+Solve this problem by enabling the interrupt only if the event is
+mapped to a key or switch code.
 
-The root cause is that unpoison_memory() tries to check the PG_HWPoison
-flags of an uninitialized page.  So VM_BUG_ON_PAGE(PagePoisoned(page)) is
-triggered.  This can be reproduced by below steps:
-
-1.Offline memory block:
-
- echo offline > /sys/devices/system/memory/memory12/state
-
-2.Get offlined memory pfn:
-
- page-types -b n -rlN
-
-3.Write pfn to unpoison-pfn
-
- echo <pfn> > /sys/kernel/debug/hwpoison/unpoison-pfn
-
-This scenario can be identified by pfn_to_online_page() returning NULL.
-And ZONE_DEVICE pages are never expected, so we can simply fail if
-pfn_to_online_page() == NULL to fix the bug.
-
-Link: https://lkml.kernel.org/r/20250828024618.1744895-1-linmiaohe@huawei.com
-Fixes: f1dd2cd13c4b ("mm, memory_hotplug: do not associate hotadded memory to zones until online")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Link: https://lore.kernel.org/r/aKJxxgEWpNaNcUaW@nixie71
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/input/misc/iqs7222.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -2346,10 +2346,9 @@ int unpoison_memory(unsigned long pfn)
- 	static DEFINE_RATELIMIT_STATE(unpoison_rs, DEFAULT_RATELIMIT_INTERVAL,
- 					DEFAULT_RATELIMIT_BURST);
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -2038,6 +2038,9 @@ static int iqs7222_parse_chan(struct iqs
+ 		if (error)
+ 			return error;
  
--	if (!pfn_valid(pfn))
--		return -ENXIO;
--
--	p = pfn_to_page(pfn);
-+	p = pfn_to_online_page(pfn);
-+	if (!p)
-+		return -EIO;
- 	page = compound_head(p);
++		if (!iqs7222->kp_type[chan_index][i])
++			continue;
++
+ 		if (!dev_desc->event_offset)
+ 			continue;
  
- 	mutex_lock(&mf_mutex);
 
 
