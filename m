@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9734E36D;
-	Wed, 17 Sep 2025 12:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C348013B7A3;
+	Wed, 17 Sep 2025 12:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112635; cv=none; b=pEOi/SjClVx51b80n/VQ7PeVwmgSIsaHrPj+3tDMHIwHrkJJVxrapNGD1ddthKjF0KnAOsqhQZUGKPpmCo/8+QgSz6l55kIzfnddJwLpqVJW8d1G6UV/1VZ48ZcrZQ2tWPtNOwCdo2942PT+bqLiNFH3+jZ7v0R6Nqeis/iFUPA=
+	t=1758112638; cv=none; b=nOLpR1Yt+Te0qzumESWpzr4YpKPVKTliECMLfqE0lfc1l6czK14t+tceRZkQQ6jndXFHhdz5kTNFqU5qdxSrMMXQrlJ3TGvOc1ZUwqKd0AdZuS+OVkzCK4q7TY0PbziwhP5airYYAWDsvs0aW7Z/CRW4uiAVnS51k6r+DBV43p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112635; c=relaxed/simple;
-	bh=Bjx7PnUcZNqlqsCHiG7LPBEACXEw2z0BmiFNSNAtDqM=;
+	s=arc-20240116; t=1758112638; c=relaxed/simple;
+	bh=kgN+UUpiv6qOo5ZX4E7thAI29fMe01y/HUkkz3Ftszw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwukSifDYrPkEPzsi2Il/8Abhf+eUvD6Pvjfj9mt6Owhf+fXWVYN1/j0voFCOJbnOtXDMAWZ6Sb1mVVxTPwm2fNRMCvmhitqcyqFzoRztYyg3EXaBeUdxreEMPKetG0wyLy7KZUavSA2xdkjh4yoOOGrZjYgOg0j6IfKrno6TjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1KjwKP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kIM+h+EH2+nSc/ymZeJAgyN5D2tQk8yJwt/UK0T76ybNsWGNFOzen9SzXK0BBLSKbHZwEQskGbGs1EmgXbFuVgS+V2MtACX5k5h4/SzB2lPB/t1RvgXZtYNtKvYgJPN9s0Nrh69x5ZBq2gTgeTX8rAFwsq/bAWJubY4Y7CBjtjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGD4+DEh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1KjwKP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8A9C4CEF0;
-	Wed, 17 Sep 2025 12:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGD4+DEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F42C4CEF0;
+	Wed, 17 Sep 2025 12:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112635;
-	bh=Bjx7PnUcZNqlqsCHiG7LPBEACXEw2z0BmiFNSNAtDqM=;
+	s=korg; t=1758112638;
+	bh=kgN+UUpiv6qOo5ZX4E7thAI29fMe01y/HUkkz3Ftszw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1KjwKP3o9yU4r2y5FE7kZMyWwk0ClX+zFldlo6vwSGH+TpLh84AYDgT1wmsO7tto
-	 LZrE7mtIpb286Jsis7HCTVzi6MZMby3yfjpYcMkJqRu2QUVdC8FvPsOhwPnSNKr8Ty
-	 AQcKW9BGzLcHNnlQN+amUbhTfLsRIOcIczq78Vvs=
+	b=mGD4+DEhcc8YYZsbGOVfz+NherFNTyawK71KWT9oVlOFTM2II3mageggiKg1bwCfZ
+	 n5gj1TnvygmrhhT8niscnxRQ66xZzP4Gyti0BiM49/spX8/iTBd38cOfVH8AnYUbOr
+	 lSS0/J1HRGwyIkaT8YsVlQ0w/PZEsvy1pEsnJbHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 030/189] NFSv4.2: Serialise O_DIRECT i/o and fallocate()
-Date: Wed, 17 Sep 2025 14:32:20 +0200
-Message-ID: <20250917123352.589831696@linuxfoundation.org>
+Subject: [PATCH 6.16 031/189] NFSv4.2: Serialise O_DIRECT i/o and clone range
+Date: Wed, 17 Sep 2025 14:32:21 +0200
+Message-ID: <20250917123352.614234397@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,30 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b93128f29733af5d427a335978a19884c2c230e2 ]
+[ Upstream commit c80ebeba1198eac8811ab0dba36ecc13d51e4438 ]
 
-Ensure that all O_DIRECT reads and writes complete before calling
-fallocate so that we don't race w.r.t. attribute updates.
+Ensure that all O_DIRECT reads and writes complete before cloning a file
+range, so that both the source and destination are up to date.
 
-Fixes: 99f237832243 ("NFSv4.2: Always flush out writes in nfs42_proc_fallocate()")
+Fixes: a5864c999de6 ("NFS: Do not serialise O_DIRECT reads and writes")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs42proc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/nfs4file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index 01c01f45358b7..3774d5b64ba0e 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -114,6 +114,7 @@ static int nfs42_proc_fallocate(struct rpc_message *msg, struct file *filep,
- 	exception.inode = inode;
- 	exception.state = lock->open_context->state;
+diff --git a/fs/nfs/nfs4file.c b/fs/nfs/nfs4file.c
+index 5e9d66f3466c8..1fa69a0b33ab1 100644
+--- a/fs/nfs/nfs4file.c
++++ b/fs/nfs/nfs4file.c
+@@ -291,9 +291,11 @@ static loff_t nfs42_remap_file_range(struct file *src_file, loff_t src_off,
  
-+	nfs_file_block_o_direct(NFS_I(inode));
- 	err = nfs_sync_inode(inode);
- 	if (err)
- 		goto out;
+ 	/* flush all pending writes on both src and dst so that server
+ 	 * has the latest data */
++	nfs_file_block_o_direct(NFS_I(src_inode));
+ 	ret = nfs_sync_inode(src_inode);
+ 	if (ret)
+ 		goto out_unlock;
++	nfs_file_block_o_direct(NFS_I(dst_inode));
+ 	ret = nfs_sync_inode(dst_inode);
+ 	if (ret)
+ 		goto out_unlock;
 -- 
 2.51.0
 
