@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7EC3195FD;
-	Wed, 17 Sep 2025 12:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28A0319603;
+	Wed, 17 Sep 2025 12:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113892; cv=none; b=qItEVzzN/Vt/LmHGe2wBY9iwAnxDOyjzU0UwFUdZKpyOPu2WoqS6kTyWz3NZsQC449CmgzXhIOoin+/lyfxKQw2BF9pI2qBopqNeoq7pCUxwPpa+zFwFErN2ShFowJ/yqJwhKmjqygR1T+x+qUNd08/ODL07AuuR6o3aQHULJI4=
+	t=1758113895; cv=none; b=l30gdy+1GuJsh1ec6X3k8KzvgDm/ooKnydeLZ5kSZdP8OMOdQ9VvhqBtx1jb3F6/M85C3Cm4GC4YcylbO/USondV0uNKUcoeO17FvHqpFecnc5VLOvVYmmlPhZGNK31nRLF4vP6HNBRn6XWbVfotEud+B/KevBL4izhaL3NYMEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113892; c=relaxed/simple;
-	bh=GhQChOUaSbeDmXV79prQ1zCBgKt5FQUoZ3ciGVPYdWU=;
+	s=arc-20240116; t=1758113895; c=relaxed/simple;
+	bh=XVulvJ0GoTkg1yrjJD7WhR0KD+hEFBxPvIMppI9iKOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHzFU8ZAV5GQkw0blowG7Y1MwJHGTFpxlamveU2bDAcjzhKj6z6sE/syuQkIUk9Znf6dL4eSLWZR+o0GtgOfWwqPXTB7qDHjEBRwyd4lSHt6UDxjTB8x08G7qAF8zClbpqpF2DKBFEre0V7ntQMJk4Jb7kBqRi6DPLCIwJtB83U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MC8TfH81; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJvTrdMqeSbNIs1iw1pcDn7UCDqfBEZU6aPFl+nmckS2WQ/cOQTz4DVk/Di4J3RJKi3tfYDNUjYDQ2CIGOTwOp/FTT1TifN+7g3YW51I5rZbF/zb5bHbea4Gc356cOWfWoFuzUuAZOTj43bPUoAQrMkei3gJO1Jvl/Xsm2hfi9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBKeoDOv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MC8TfH81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBE8C4CEF0;
-	Wed, 17 Sep 2025 12:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBKeoDOv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B19C4CEF0;
+	Wed, 17 Sep 2025 12:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113892;
-	bh=GhQChOUaSbeDmXV79prQ1zCBgKt5FQUoZ3ciGVPYdWU=;
+	s=korg; t=1758113895;
+	bh=XVulvJ0GoTkg1yrjJD7WhR0KD+hEFBxPvIMppI9iKOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MC8TfH81+5v0lU0P6NC6uqcqi3wqXqIbFk+jOpp9hlwkOX2/QBnKYMI3q6d+NF+Bh
-	 ZdFEvYNsJoy2DxCLrfASHajklr3CLNOGWgPEn3Dy0qPr/AbEvxKF5uel2jFQ6g8xmu
-	 2T2VhDlJl3gv3GOTK9FZyeNvRUFJbrzfawGW00fA=
+	b=FBKeoDOvz4LSzqD051BVOF34M1lLTXiwBGG6Be2etkySK1FRS1bLW6v178flelcEN
+	 hbaS0uppdZsswux+5DAwJcE8baultKWM/SgBDZc62aE+IZJlhcKZ7RQbR/61gY+q3L
+	 pEM7vL+xuNrQ8I/HAyEMyiGQ8a1HvieTjJ/+344I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <akemnade@kernel.org>,
-	Alistair Francis <alistair@alistair23.me>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/101] regulator: sy7636a: fix lifecycle of power good gpio
-Date: Wed, 17 Sep 2025 14:35:08 +0200
-Message-ID: <20250917123338.894146162@linuxfoundation.org>
+Subject: [PATCH 6.6 086/101] hrtimer: Remove unused function
+Date: Wed, 17 Sep 2025 14:35:09 +0200
+Message-ID: <20250917123338.918820756@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -53,51 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <akemnade@kernel.org>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit c05d0b32eebadc8be6e53196e99c64cf2bed1d99 ]
+[ Upstream commit 82ccdf062a64f3c4ac575c16179ce68edbbbe8e4 ]
 
-Attach the power good gpio to the regulator device devres instead of the
-parent device to fix problems if probe is run multiple times
-(rmmod/insmod or some deferral).
+The function is defined, but not called anywhere:
 
-Fixes: 8c485bedfb785 ("regulator: sy7636a: Initial commit")
-Signed-off-by: Andreas Kemnade <akemnade@kernel.org>
-Reviewed-by: Alistair Francis <alistair@alistair23.me>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Message-ID: <20250906-sy7636-rsrc-v1-2-e2886a9763a7@kernel.org>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  kernel/time/hrtimer.c:1880:20: warning: unused function '__hrtimer_peek_ahead_timers'.
+
+Remove it.
+
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20240322070441.29646-1-jiapeng.chong@linux.alibaba.com
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=8611
+Stable-dep-of: e895f8e29119 ("hrtimers: Unconditionally update target CPU base after offline timer migration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/sy7636a-regulator.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/time/hrtimer.c | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
-diff --git a/drivers/regulator/sy7636a-regulator.c b/drivers/regulator/sy7636a-regulator.c
-index d1e7ba1fb3e1a..27e3d939b7bb9 100644
---- a/drivers/regulator/sy7636a-regulator.c
-+++ b/drivers/regulator/sy7636a-regulator.c
-@@ -83,9 +83,11 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
- 	if (!regmap)
- 		return -EPROBE_DEFER;
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 6d9da768604d6..e9833a30a86a4 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1938,25 +1938,7 @@ void hrtimer_interrupt(struct clock_event_device *dev)
+ 	tick_program_event(expires_next, 1);
+ 	pr_warn_once("hrtimer: interrupt took %llu ns\n", ktime_to_ns(delta));
+ }
+-
+-/* called with interrupts disabled */
+-static inline void __hrtimer_peek_ahead_timers(void)
+-{
+-	struct tick_device *td;
+-
+-	if (!hrtimer_hres_active())
+-		return;
+-
+-	td = this_cpu_ptr(&tick_cpu_device);
+-	if (td && td->evtdev)
+-		hrtimer_interrupt(td->evtdev);
+-}
+-
+-#else /* CONFIG_HIGH_RES_TIMERS */
+-
+-static inline void __hrtimer_peek_ahead_timers(void) { }
+-
+-#endif	/* !CONFIG_HIGH_RES_TIMERS */
++#endif /* !CONFIG_HIGH_RES_TIMERS */
  
--	gdp = devm_gpiod_get(pdev->dev.parent, "epd-pwr-good", GPIOD_IN);
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
-+
-+	gdp = devm_gpiod_get(&pdev->dev, "epd-pwr-good", GPIOD_IN);
- 	if (IS_ERR(gdp)) {
--		dev_err(pdev->dev.parent, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
-+		dev_err(&pdev->dev, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
- 		return PTR_ERR(gdp);
- 	}
- 
-@@ -105,7 +107,6 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
- 	}
- 
- 	config.dev = &pdev->dev;
--	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.regmap = regmap;
- 
- 	rdev = devm_regulator_register(&pdev->dev, &desc, &config);
+ /*
+  * Called from run_local_timers in hardirq context every jiffy
 -- 
 2.51.0
 
