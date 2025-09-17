@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030A617BB21;
-	Wed, 17 Sep 2025 12:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2351F09A5;
+	Wed, 17 Sep 2025 12:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112928; cv=none; b=N0iuEcfILp8Taw0OH0tv9cgE9h3JRnJ1UmyJpM54OsINWBDhu2HUYJ/IwcbK4u+t0QgeJsQI+WZoKp1Eeaj+8dTKppTRxH13+A1O73KbzK5s7FelvCJLWp+QAYoUe2jvmM4WZDdH+B7sBnL8VLTEifrUVHIEJKbK7UddfhTT5j8=
+	t=1758112931; cv=none; b=Sy7DUf9dp0AVPujJVDs2y7LTP4BWOnSNM6I+msbjW+ZVoW9x9CFn2TUVGNwObObgQLF3T2eREsfBGgkUm2g+DmWBqTjgCpUPp8jH9J0xdn1KgA2VJjctGeFtRr/vpxq1CavNf5qOuaPhq/K4bTwxQ404iCHUFVkJXq1go6tTfyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112928; c=relaxed/simple;
-	bh=SgLS6hR0DuNjyayqVfB+ntzd8GO0q6Nfup30WLrE5dM=;
+	s=arc-20240116; t=1758112931; c=relaxed/simple;
+	bh=akJJuQJfReEojc8noYa2E0Z/xnB+94jSb1qgeAdDwJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZhFPNfM7NJTuP3l3yI+F732bQUupmHP9xuDz3rXyLBaBdcx8+FKm9jvp8M/QFVdEwN+fHGSglApp5mORqDzDHfOPZT6DRRZCnS/1qgfBN8Ea5XDIIuIOf3HVxTrcuZF302l9Elm9SIZzQS0UjghaaQdldayP20Ms7Mt82Ff/yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrSDLYHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uarMEi7FTNm5OGdJ6nVX2O5tRFn+MxAW5k+uruasiyb6SGu1QU2zB85FGRvMhNlxjx62t4ofDJvVnSxnZurSn7Eh3xIq59ZKyzusYq7V1W3y8b2KjzCn/jBLKPbxkVmabt3rwTPL7IPDgpNxrfOvdtrHf/tNrrLDvuA2yTdIoeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gbp8rkvC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrSDLYHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7692AC4CEF0;
-	Wed, 17 Sep 2025 12:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gbp8rkvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32AEC4CEF0;
+	Wed, 17 Sep 2025 12:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112927;
-	bh=SgLS6hR0DuNjyayqVfB+ntzd8GO0q6Nfup30WLrE5dM=;
+	s=korg; t=1758112931;
+	bh=akJJuQJfReEojc8noYa2E0Z/xnB+94jSb1qgeAdDwJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrSDLYHOE8OpbVbmyPlqlz3NgWKY6qhl8FHx7utZ72mKUqKxoNWCqzGl6jn4v1945
-	 /uTCsceaRVEH+0itToDnoMDehSJhkAEe8fELjdulhRlC2rBUS4QY6RNfIPvCkW3fap
-	 Y6KXW9g4j7iWqTdKSaw7P0CR2Nku2m92cbdG0du8=
+	b=Gbp8rkvCFqEnvmgrw+7jYRWT3vS+zn8/MbuednHZCjc8H/NO25KOhoTOfVs7LofSU
+	 Ih/7eVDctDtHTFArDEXGYL4BL824X9L3mTXHF8VMS6FrQ2EwyhgshlvO2ieSQg3amD
+	 F/7O0vl7N/nwh0JCECWKyQwO4AOFg7aFRQHkizWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.16 119/189] Revert "net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups"
-Date: Wed, 17 Sep 2025 14:33:49 +0200
-Message-ID: <20250917123354.771525533@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fabian Vogt <fvogt@suse.de>
+Subject: [PATCH 6.16 120/189] tty: hvc_console: Call hvc_kick in hvc_write unconditionally
+Date: Wed, 17 Sep 2025 14:33:50 +0200
+Message-ID: <20250917123354.794127090@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,56 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Fabian Vogt <fvogt@suse.de>
 
-commit 63a796558bc22ec699e4193d5c75534757ddf2e6 upstream.
+commit cfd956dcb101aa3d25bac321fae923323a47c607 upstream.
 
-This reverts commit 5537a4679403 ("net: usb: asix: ax88772: drop
-phylink use in PM to avoid MDIO runtime PM wakeups"), it breaks
-operation of asix ethernet usb dongle after system suspend-resume
-cycle.
+After hvc_write completes, call hvc_kick also in the case the output
+buffer has been drained, to ensure tty_wakeup gets called.
 
-Link: https://lore.kernel.org/all/b5ea8296-f981-445d-a09a-2f389d7f6fdd@samsung.com/
-Fixes: 5537a4679403 ("net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/2945b9dbadb8ee1fee058b19554a5cb14f1763c1.1757601118.git.pabeni@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This fixes that functions which wait for a drained buffer got stuck
+occasionally.
+
+Cc: stable <stable@kernel.org>
+Closes: https://bugzilla.opensuse.org/show_bug.cgi?id=1230062
+Signed-off-by: Fabian Vogt <fvogt@suse.de>
+Link: https://lore.kernel.org/r/2011735.PYKUYFuaPT@fvogt-thinkpad
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix_devices.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/tty/hvc/hvc_console.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -607,8 +607,15 @@ static const struct net_device_ops ax887
+--- a/drivers/tty/hvc/hvc_console.c
++++ b/drivers/tty/hvc/hvc_console.c
+@@ -543,10 +543,10 @@ static ssize_t hvc_write(struct tty_stru
+ 	}
  
- static void ax88772_suspend(struct usbnet *dev)
- {
-+	struct asix_common_private *priv = dev->driver_priv;
- 	u16 medium;
+ 	/*
+-	 * Racy, but harmless, kick thread if there is still pending data.
++	 * Kick thread to flush if there's still pending data
++	 * or to wakeup the write queue.
+ 	 */
+-	if (hp->n_outbuf)
+-		hvc_kick();
++	hvc_kick();
  
-+	if (netif_running(dev->net)) {
-+		rtnl_lock();
-+		phylink_suspend(priv->phylink, false);
-+		rtnl_unlock();
-+	}
-+
- 	/* Stop MAC operation */
- 	medium = asix_read_medium_status(dev, 1);
- 	medium &= ~AX_MEDIUM_RE;
-@@ -637,6 +644,12 @@ static void ax88772_resume(struct usbnet
- 	for (i = 0; i < 3; i++)
- 		if (!priv->reset(dev, 1))
- 			break;
-+
-+	if (netif_running(dev->net)) {
-+		rtnl_lock();
-+		phylink_resume(priv->phylink);
-+		rtnl_unlock();
-+	}
+ 	return written;
  }
- 
- static int asix_resume(struct usb_interface *intf)
 
 
