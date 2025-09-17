@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0D7335957;
-	Wed, 17 Sep 2025 12:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7854333A8E;
+	Wed, 17 Sep 2025 12:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113978; cv=none; b=QI71m4BUmO9pXq5NlHniwZcs7WXG2nfQ05uB8V+bsthB4wzEi9BlnuH57XKDblUBm75ChzYtrEkqQHQ+6XTQAsLjsVTEokT/BAvKOeXXrie/4vVmIhd1K77zqxQ4V6SSIsmruRGNa3r0RRg0Ngi1oCWbqtYie+NLq/HFkVElHzI=
+	t=1758113980; cv=none; b=hwmuVK1bNdDP4DJdIeNuVXKI2MfAVbYBe2Sq1VDPwI+J6Tj9LY/3E+gWwoCIZOfj/gvEU8e+wmr4GuuLdXNAcCnWxJQ1aWUNEbtTSnjVeaTwZ2cjmlVEGem2bQ9W8uVQyEXb4Nce/L2P8v1aWeKlp9KOVJz0XMdSSAW+rXKx6Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113978; c=relaxed/simple;
-	bh=WOri9CPEspaHYvq0r2M8epBJ3Gd24wovBUVyyELI9CI=;
+	s=arc-20240116; t=1758113980; c=relaxed/simple;
+	bh=CN9kLrhx5NRlM+w9YFr/laNN6hX97mLKDSClA4hU3JY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5xb0U54LaT1SCW7u9KfegWQ9TuI9wfeVntYqGjAaFaym5m4FhfzgJ7bjKeWtBMPftMqWtSLJlwLLRhEQ90UhAA+xhvq8BOwsPGjyVL3E3ia+9bq1kCuYP1wSUKxlhejVUUmPHSbLF1koNRmmqIOP9GaBfM/LDwMvCQ7olC9N5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dYU9N7a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ks992eJ5jbbr6gaq2VZo0kCgUPi/1syCXr6ce1F/c6k+a5b+CISVm/V6A5m2PRtkaBQhNZquF7YXIQJqGtmh4qdncRE7E66qpXZuXP6MVYNinXzRMKVc5VSCADHYgL6BhPaEgQBvG7BrFgQO/GXLg0MzzPGQMMw+LRymvFZQ3dA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dq8+JZ5R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dYU9N7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27086C4CEF0;
-	Wed, 17 Sep 2025 12:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dq8+JZ5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EE4C4CEF0;
+	Wed, 17 Sep 2025 12:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113977;
-	bh=WOri9CPEspaHYvq0r2M8epBJ3Gd24wovBUVyyELI9CI=;
+	s=korg; t=1758113980;
+	bh=CN9kLrhx5NRlM+w9YFr/laNN6hX97mLKDSClA4hU3JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dYU9N7aN2fpiiPWC3cCP3lg+K11TKtSn8zcDaNKZup54iwtMBvUupFgxfvof0xng
-	 ze1+EC6sQOZ6i+yCHq8Vua84Z+0qF6d28pMgIUPPAtLLN90DbMc2AII92ELzmfUgMd
-	 ZKKB7W0DDKa52U7ml2O/RpajSnGFezYS7k/RQDfU=
+	b=dq8+JZ5RueHj56mkOoQoLzCBlAQntsbFvJFFrCibxwWuLl2MAQNe5Gj7U6LqEw2bM
+	 4+kP3B2hhSyyCWtJjQO0YqwL/30dL6g1GXnt1KocBXF6y+ArXBrJ+rBlvohy8OZ6kQ
+	 KbUSTpuf5Jw5RsP6mdYHEi6EuRImUOQoBLB+K/x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Haiden <scott.b.haiden@gmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/78] NFSv4: Dont clear capabilities that wont be reset
-Date: Wed, 17 Sep 2025 14:34:31 +0200
-Message-ID: <20250917123329.821830329@linuxfoundation.org>
+Subject: [PATCH 6.1 11/78] NFSv4: Clear the NFS_CAP_FS_LOCATIONS flag if it is not set
+Date: Wed, 17 Sep 2025 14:34:32 +0200
+Message-ID: <20250917123329.843768183@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,31 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 31f1a960ad1a14def94fa0b8c25d62b4c032813f ]
+[ Upstream commit dd5a8621b886b02f8341c5d4ea68eb2c552ebd3e ]
 
-Don't clear the capabilities that are not going to get reset by the call
-to _nfs4_server_capabilities().
+_nfs4_server_capabilities() is expected to clear any flags that are not
+supported by the server.
 
-Reported-by: Scott Haiden <scott.b.haiden@gmail.com>
-Fixes: b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a new filesystem")
+Fixes: 8a59bb93b7e3 ("NFSv4 store server support for fs_location attribute")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfs/nfs4proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 71e96fddc6cb5..29f189dc334fd 100644
+index 29f189dc334fd..f8a91d15982dc 100644
 --- a/fs/nfs/nfs4proc.c
 +++ b/fs/nfs/nfs4proc.c
-@@ -3957,7 +3957,6 @@ int nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *fhandle)
- 	};
- 	int err;
- 
--	nfs_server_set_init_caps(server);
- 	do {
- 		err = nfs4_handle_exception(server,
- 				_nfs4_server_capabilities(server, fhandle),
+@@ -3888,8 +3888,9 @@ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *f
+ 			res.attr_bitmask[2] &= FATTR4_WORD2_NFS42_MASK;
+ 		}
+ 		memcpy(server->attr_bitmask, res.attr_bitmask, sizeof(server->attr_bitmask));
+-		server->caps &= ~(NFS_CAP_ACLS | NFS_CAP_HARDLINKS |
+-				  NFS_CAP_SYMLINKS| NFS_CAP_SECURITY_LABEL);
++		server->caps &=
++			~(NFS_CAP_ACLS | NFS_CAP_HARDLINKS | NFS_CAP_SYMLINKS |
++			  NFS_CAP_SECURITY_LABEL | NFS_CAP_FS_LOCATIONS);
+ 		server->fattr_valid = NFS_ATTR_FATTR_V4;
+ 		if (res.attr_bitmask[0] & FATTR4_WORD0_ACL &&
+ 				res.acl_bitmask & ACL4_SUPPORT_ALLOW_ACL)
 -- 
 2.51.0
 
