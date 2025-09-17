@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDA11F3BA2;
-	Wed, 17 Sep 2025 13:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E03A3161B6;
+	Wed, 17 Sep 2025 13:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114183; cv=none; b=DmPUCSsccAIQlHqk03kP69WikK7FlFwUaGXYKGjr5aRj5eCGZEB8XJv0fXTagRqZMbMrcbWi/+iXt/B4ZuNTNs+lMrWIb94Y8sJ6KliFQ84U13OEIZ+wXK54ftzy+NLWyNYmIT0N48ZJ0oYHKNA2RQpOXWhm6/p5i+YpZJfJE7E=
+	t=1758114186; cv=none; b=IzAjaK0jx3jfKPowSFLhGS4EzjynWBTvDd2df38tpN0iDrgyPz0ZNWFYnoP/AmbVylznB1hSdRXcroL5AwBoiQ/iI+vaXSVzerB7BQ+AYyy/ISJvsQWLcSmeP3TGVP6wgEUdgSpZTs+2MBSEKaIZioFUVjubktAxbZT87TlTRE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114183; c=relaxed/simple;
-	bh=oHyDVUZWYFVbezhx6p0VrN1y7ocMljVJAiF7YNjIwws=;
+	s=arc-20240116; t=1758114186; c=relaxed/simple;
+	bh=b+cg9zF2V9xZustJcnua7ea9/S8HuDaYJm5b8zgfoNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRIqVmAIPUeIkFEHf+7wZoKiPsxaJv8hmax3bTVi7duwEeOjO6zZFSfXLGsZ55hCuYN1bdn/JRg3waOL7n3PosHwaKs6o7whBX8+BMlgTQgOAgIDFeK0DVGJNAJTedGjf6NmBfwGCfOydpFOFPeKfEYGFjyg4u5SHl6T/JEjm7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqnb45F0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5YVnh2vzfae26aNIG9POG99jgCAYAsaZy6hoMVobGtzlKjy+PchJQCMFHB4ivz401QpOJXt9s0+f5O+TB6P4w8e+hzJMUmgGSKVcNlw4VBTPOyyzJd2YFEANar88OvjapZGONeFNkB3DAF3ItYEDx6gxZ8V5oZy5vt6c0uhsVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQzxU9UU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqnb45F0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F06C4CEF0;
-	Wed, 17 Sep 2025 13:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQzxU9UU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DEBC4CEF0;
+	Wed, 17 Sep 2025 13:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114183;
-	bh=oHyDVUZWYFVbezhx6p0VrN1y7ocMljVJAiF7YNjIwws=;
+	s=korg; t=1758114186;
+	bh=b+cg9zF2V9xZustJcnua7ea9/S8HuDaYJm5b8zgfoNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqnb45F0rJb+DrsPPSNrHWAh3YX7Z+GIZFAdasu/uIjDuuNIipLpZ8WqRl3ZEbUEu
-	 4WXzUfwNaR42gCHQGdYM7Avvp2Jz69NrJfssiXx0+goBf4xfUXNPcsEb5Pc5sxb5wW
-	 qLw3SVxT1Wc9XAAFHrKM4Zd5nWvbqwyOTbatnZEg=
+	b=OQzxU9UUnwHW5jxOkeF8X8fLXc11ABxjnrBnsJMEIg4lokjJhjYDUy2EAQ1RXucfR
+	 5s8MFb+OMS9fPE749+4G+NRf+DbgeMqsXtSZx3QIwvrKVrV2lCinY6NEm12rVEaCQM
+	 A6Q7RRarrcKfGKeAfwNsbOIMIyu3Cp5XuxUBRDs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 69/78] hrtimers: Unconditionally update target CPU base after offline timer migration
-Date: Wed, 17 Sep 2025 14:35:30 +0200
-Message-ID: <20250917123331.265690639@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>,
+	Yunseong Kim <ysk@kzalloc.com>,
+	syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 6.1 70/78] USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels
+Date: Wed, 17 Sep 2025 14:35:31 +0200
+Message-ID: <20250917123331.290710739@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -52,78 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit e895f8e29119c8c966ea794af9e9100b10becb88 ]
+commit 8d63c83d8eb922f6c316320f50c82fa88d099bea upstream.
 
-When testing softirq based hrtimers on an ARM32 board, with high resolution
-mode and NOHZ inactive, softirq based hrtimers fail to expire after being
-moved away from an offline CPU:
+Yunseong Kim and the syzbot fuzzer both reported a problem in
+RT-enabled kernels caused by the way dummy-hcd mixes interrupt
+management and spin-locking.  The pattern was:
 
-CPU0				CPU1
-				hrtimer_start(..., HRTIMER_MODE_SOFT);
-cpu_down(CPU1)			...
-				hrtimers_cpu_dying()
-				  // Migrate timers to CPU0
-				  smp_call_function_single(CPU0, returgger_next_event);
-  retrigger_next_event()
-    if (!highres && !nohz)
-        return;
+	local_irq_save(flags);
+	spin_lock(&dum->lock);
+	...
+	spin_unlock(&dum->lock);
+	...		// calls usb_gadget_giveback_request()
+	local_irq_restore(flags);
 
-As retrigger_next_event() is a NOOP when both high resolution timers and
-NOHZ are inactive CPU0's hrtimer_cpu_base::softirq_expires_next is not
-updated and the migrated softirq timers never expire unless there is a
-softirq based hrtimer queued on CPU0 later.
+The code was written this way because usb_gadget_giveback_request()
+needs to be called with interrupts disabled and the private lock not
+held.
 
-Fix this by removing the hrtimer_hres_active() and tick_nohz_active() check
-in retrigger_next_event(), which enforces a full update of the CPU base.
-As this is not a fast path the extra cost does not matter.
+While this pattern works fine in non-RT kernels, it's not good when RT
+is enabled.  RT kernels handle spinlocks much like mutexes; in particular,
+spin_lock() may sleep.  But sleeping is not allowed while local
+interrupts are disabled.
 
-[ tglx: Massaged change log ]
+To fix the problem, rewrite the code to conform to the pattern used
+elsewhere in dummy-hcd and other UDC drivers:
 
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Co-developed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250805081025.54235-1-wangxiongfeng2@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	spin_lock_irqsave(&dum->lock, flags);
+	...
+	spin_unlock(&dum->lock);
+	usb_gadget_giveback_request(...);
+	spin_lock(&dum->lock);
+	...
+	spin_unlock_irqrestore(&dum->lock, flags);
+
+This approach satisfies the RT requirements.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable <stable@kernel.org>
+Fixes: b4dbda1a22d2 ("USB: dummy-hcd: disable interrupts during req->complete")
+Reported-by: Yunseong Kim <ysk@kzalloc.com>
+Closes: <https://lore.kernel.org/linux-usb/5b337389-73b9-4ee4-a83e-7e82bf5af87a@kzalloc.com/>
+Reported-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
+Closes: <https://lore.kernel.org/linux-usb/68ac2411.050a0220.37038e.0087.GAE@google.com/>
+Tested-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
+CC: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+CC: stable@vger.kernel.org
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/bb192ae2-4eee-48ee-981f-3efdbbd0d8f0@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 8971014df5b51..8aa7ede57e718 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -806,10 +806,10 @@ static void retrigger_next_event(void *arg)
- 	 * of the next expiring timer is enough. The return from the SMP
- 	 * function call will take care of the reprogramming in case the
- 	 * CPU was in a NOHZ idle sleep.
-+	 *
-+	 * In periodic low resolution mode, the next softirq expiration
-+	 * must also be updated.
- 	 */
--	if (!hrtimer_hres_active(base) && !tick_nohz_active)
--		return;
--
- 	raw_spin_lock(&base->lock);
- 	hrtimer_update_base(base);
- 	if (hrtimer_hres_active(base))
-@@ -2286,11 +2286,6 @@ int hrtimers_cpu_dying(unsigned int dying_cpu)
- 				     &new_base->clock_base[i]);
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -764,8 +764,7 @@ static int dummy_dequeue(struct usb_ep *
+ 	if (!dum->driver)
+ 		return -ESHUTDOWN;
+ 
+-	local_irq_save(flags);
+-	spin_lock(&dum->lock);
++	spin_lock_irqsave(&dum->lock, flags);
+ 	list_for_each_entry(iter, &ep->queue, queue) {
+ 		if (&iter->req != _req)
+ 			continue;
+@@ -775,15 +774,16 @@ static int dummy_dequeue(struct usb_ep *
+ 		retval = 0;
+ 		break;
  	}
+-	spin_unlock(&dum->lock);
  
--	/*
--	 * The migration might have changed the first expiring softirq
--	 * timer on this CPU. Update it.
--	 */
--	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
- 	/* Tell the other CPU to retrigger the next event */
- 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
+ 	if (retval == 0) {
+ 		dev_dbg(udc_dev(dum),
+ 				"dequeued req %p from %s, len %d buf %p\n",
+ 				req, _ep->name, _req->length, _req->buf);
++		spin_unlock(&dum->lock);
+ 		usb_gadget_giveback_request(_ep, _req);
++		spin_lock(&dum->lock);
+ 	}
+-	local_irq_restore(flags);
++	spin_unlock_irqrestore(&dum->lock, flags);
+ 	return retval;
+ }
  
--- 
-2.51.0
-
 
 
