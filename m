@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3CC330D3E;
-	Wed, 17 Sep 2025 12:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C263330D39;
+	Wed, 17 Sep 2025 12:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113559; cv=none; b=DMwmhmIyrU0+wro88X3BC+2rPrwfLj1wa+DP2RoRpD8cFhy20AXCMKZ+VM5WsQwh8Mlnwbmzz4ej5yEXI5J2EllRPJ3VnYRApsGyFdwY8syiBidlMt8JXEPSc3FLpEeVKsyxmfvjnjWqqldAbWAbiCQob7pwzk+6a5LwCddhsxA=
+	t=1758113562; cv=none; b=DybNBI99LtcEpjjA2enZ2YGafnMIMWnS3ZtxT77PrsSNt6T0mxi5SYrgbEEluf6xzNJeDJsoZMjXTTAhwDP/KPrPWp/cGfOgi+oLuvfcv2IMJIYaN8Q/HfQy6pXEu4SYuoVBSl2xWSjIjK0/u4zAXRoqRKg9sBdV2Aq8zadhWTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113559; c=relaxed/simple;
-	bh=TDQ4H1FhoYaW2LkNoP5F+gj8HNCKdjqBXOV4Tis2ZeQ=;
+	s=arc-20240116; t=1758113562; c=relaxed/simple;
+	bh=gPgVoiwBMCKhfmEVTATk8UJ4v6sWz+EcBF00SG0nt3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+kMqqzVD0IQ+eQqR4jTDl3aJe+QNPgYv25k8y7q8+s0nkbkFwTabS768/dwOs99O5Lbv/HkSTQk3RBL41hRdrhweHR+CyJmyfCSatYq/6p0tvRWAP3ssXwHicAhkyZkQs1vlVcZOAyuMTXTT1V1Xfi8iw2N+NEJS9RbywILwWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vM9s5PY3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6LoxC8mDWcAicUYKMZCMY5XAgWFPmFIYuHvrducYZ7/DprhQ86hjjesSClxgqqtc1qNztP6J2pec1tnKMgkXH8ZZQtB+Y4+qou/RKpbqw5npSXrCFl21t35xMRfaYVZIxt1v5BQUm8rSftfg3YR9x/gqGqMOHkbOawd+ZipLJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDLGWMnM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vM9s5PY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A00CC4CEF0;
-	Wed, 17 Sep 2025 12:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDLGWMnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E508C4CEF0;
+	Wed, 17 Sep 2025 12:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113558;
-	bh=TDQ4H1FhoYaW2LkNoP5F+gj8HNCKdjqBXOV4Tis2ZeQ=;
+	s=korg; t=1758113562;
+	bh=gPgVoiwBMCKhfmEVTATk8UJ4v6sWz+EcBF00SG0nt3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vM9s5PY35gPTHuST5zo4rEiNs57AlJ9tf6POHoHj9l2ucEg6lBo1VSq3Y71zIZigC
-	 OA8kH7Ce3LAu4zDRtLbOi3q/bkgIeVSAdD0/MpZplx7n4wGrv6yseZz8QGzXXIDxPs
-	 jC9JWE44CnWzRVtsEq7lpiPSwVqFOadYTnqfr8qM=
+	b=PDLGWMnMogC87/z8GN4V79wZ37afmBHkTmKmueaEAAKAqr2IL9hCjiQaO921aHUq5
+	 FqHEFR4EfceyBCaX/7ze3UbOX/r/CxSGqMxjW9bYZ2hPrUGcqeovtx8qdjDsuOhZkP
+	 eDV3EJoU6Hkd4Qd9csufQTp7RjfDpisSAl4MUt1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@intel.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jeongjun Park <aha310510@gmail.com>,
+	syzbot+417aeb05fd190f3a6da9@syzkaller.appspotmail.com,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Breno Leitao <leitao@debian.org>,
+	David Hildenbrand <david@redhat.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/140] dmaengine: idxd: Remove improper idxd_free
-Date: Wed, 17 Sep 2025 14:34:53 +0200
-Message-ID: <20250917123347.266177023@linuxfoundation.org>
+Subject: [PATCH 6.12 081/140] mm/hugetlb: add missing hugetlb_lock in __unmap_hugepage_range()
+Date: Wed, 17 Sep 2025 14:34:13 +0200
+Message-ID: <20250917123346.291198113@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -54,67 +57,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Sun <yi.sun@intel.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit f41c538881eec4dcf5961a242097d447f848cda6 ]
+[ Upstream commit 21cc2b5c5062a256ae9064442d37ebbc23f5aef7 ]
 
-The call to idxd_free() introduces a duplicate put_device() leading to a
-reference count underflow:
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 15 PID: 4428 at lib/refcount.c:28 refcount_warn_saturate+0xbe/0x110
-...
-Call Trace:
- <TASK>
-  idxd_remove+0xe4/0x120 [idxd]
-  pci_device_remove+0x3f/0xb0
-  device_release_driver_internal+0x197/0x200
-  driver_detach+0x48/0x90
-  bus_remove_driver+0x74/0xf0
-  pci_unregister_driver+0x2e/0xb0
-  idxd_exit_module+0x34/0x7a0 [idxd]
-  __do_sys_delete_module.constprop.0+0x183/0x280
-  do_syscall_64+0x54/0xd70
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+When restoring a reservation for an anonymous page, we need to check to
+freeing a surplus.  However, __unmap_hugepage_range() causes data race
+because it reads h->surplus_huge_pages without the protection of
+hugetlb_lock.
 
-The idxd_unregister_devices() which is invoked at the very beginning of
-idxd_remove(), already takes care of the necessary put_device() through the
-following call path:
-idxd_unregister_devices() -> device_unregister() -> put_device()
+And adjust_reservation is a boolean variable that indicates whether
+reservations for anonymous pages in each folio should be restored.
+Therefore, it should be initialized to false for each round of the loop.
+However, this variable is not initialized to false except when defining
+the current adjust_reservation variable.
 
-In addition, when CONFIG_DEBUG_KOBJECT_RELEASE is enabled, put_device() may
-trigger asynchronous cleanup via schedule_delayed_work(). If idxd_free() is
-called immediately after, it can result in a use-after-free.
+This means that once adjust_reservation is set to true even once within
+the loop, reservations for anonymous pages will be restored
+unconditionally in all subsequent rounds, regardless of the folio's state.
 
-Remove the improper idxd_free() to avoid both the refcount underflow and
-potential memory corruption during module unload.
+To fix this, we need to add the missing hugetlb_lock, unlock the
+page_table_lock earlier so that we don't lock the hugetlb_lock inside the
+page_table_lock lock, and initialize adjust_reservation to false on each
+round within the loop.
 
-Fixes: d5449ff1b04d ("dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call")
-Signed-off-by: Yi Sun <yi.sun@intel.com>
-Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-
-Link: https://lore.kernel.org/r/20250729150313.1934101-2-yi.sun@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lkml.kernel.org/r/20250823182115.1193563-1-aha310510@gmail.com
+Fixes: df7a6d1f6405 ("mm/hugetlb: restore the reservation if needed")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reported-by: syzbot+417aeb05fd190f3a6da9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=417aeb05fd190f3a6da9
+Reviewed-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Page vs folio differences ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/init.c | 1 -
- 1 file changed, 1 deletion(-)
+ mm/hugetlb.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 18997f80bdc97..d6308adc4eeb9 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -921,7 +921,6 @@ static void idxd_remove(struct pci_dev *pdev)
- 	idxd_cleanup(idxd);
- 	pci_iounmap(pdev, idxd->reg_base);
- 	put_device(idxd_confdev(idxd));
--	idxd_free(idxd);
- 	pci_disable_device(pdev);
- }
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5512,7 +5512,7 @@ void __unmap_hugepage_range(struct mmu_g
+ 	struct page *page;
+ 	struct hstate *h = hstate_vma(vma);
+ 	unsigned long sz = huge_page_size(h);
+-	bool adjust_reservation = false;
++	bool adjust_reservation;
+ 	unsigned long last_addr_mask;
+ 	bool force_flush = false;
  
--- 
-2.51.0
-
+@@ -5604,6 +5604,7 @@ void __unmap_hugepage_range(struct mmu_g
+ 					sz);
+ 		hugetlb_count_sub(pages_per_huge_page(h), mm);
+ 		hugetlb_remove_rmap(page_folio(page));
++		spin_unlock(ptl);
+ 
+ 		/*
+ 		 * Restore the reservation for anonymous page, otherwise the
+@@ -5611,14 +5612,16 @@ void __unmap_hugepage_range(struct mmu_g
+ 		 * If there we are freeing a surplus, do not set the restore
+ 		 * reservation bit.
+ 		 */
++		adjust_reservation = false;
++
++		spin_lock_irq(&hugetlb_lock);
+ 		if (!h->surplus_huge_pages && __vma_private_lock(vma) &&
+ 		    folio_test_anon(page_folio(page))) {
+ 			folio_set_hugetlb_restore_reserve(page_folio(page));
+ 			/* Reservation to be adjusted after the spin lock */
+ 			adjust_reservation = true;
+ 		}
+-
+-		spin_unlock(ptl);
++		spin_unlock_irq(&hugetlb_lock);
+ 
+ 		/*
+ 		 * Adjust the reservation for the region that will have the
 
 
