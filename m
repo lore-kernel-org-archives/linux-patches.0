@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867BA1C07C4;
-	Wed, 17 Sep 2025 12:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3221E489;
+	Wed, 17 Sep 2025 12:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113021; cv=none; b=lgrpRftN/MpPGy4PXW5og8Djvr1fKyhfu1u8lrKn5K8OqyiI5cO+lyWL4cPs6s5m3fJVKKOzs9LsETFwk8n4wvXlHlNAdiC4yOLS067IWPcRGe6g8nHFJfOIzBpIyH0IXwNZZFjEOTUn/n059yJHdAZzhAZPX1tUhmqWDKNu268=
+	t=1758113024; cv=none; b=HajP/i54MKiN2O0i3mxIyedSVH+aJoWE4fqvOA2W/lNaf3Vg0EPyCDeisI9Z61b8U37LKHkmGBz3UluvNIHE4+mZqAu2hxPAMoUkG9M4UUtTsk/xrQTxVSIL54g8pFtcPpc9HgGXIug916m16ppuzjg8U6u3YzuaFGUUTix8bkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113021; c=relaxed/simple;
-	bh=qayx0X55qicu9vsZpZscDqcregRaCEsCQvRC//96V9I=;
+	s=arc-20240116; t=1758113024; c=relaxed/simple;
+	bh=I7gifj+nZ+xPqtpd+ID89J/D+Xb8Q5YUs5X02csJiTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDGZxgnRmdA3kHjCIvS1Y2j3odT9MA4XV1J+7gBDG+bP5FkgLlGlrrG1jiKTDtXeuQnwINnRup3zdRENuugoy9vCpdZJ9yRa8lQFmyEbs50mC65xNqd7P+/gPUx1tJknTNAwUJt94UgaGw0l3GzPsj43cw8sEHMCmDmAM7PqSlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lkwplzpr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G9hwzKgg/ES/hsA83Lu138FptWW97Ft0KFB2WyNMG4VFiXp5YYICyVjJBGbcPNUdmyp0pcQQrC2yRx2QivdCDtjRn5KA4dupzH8WrHUHYF7W+IB9OSSuDplfk5m6LU2P5SNFB6bl3LfQMDTPjl/22uPUrNK25oXSGbB2S3CyePc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDracnVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lkwplzpr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD15AC4CEF0;
-	Wed, 17 Sep 2025 12:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDracnVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64B4C4CEF0;
+	Wed, 17 Sep 2025 12:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113021;
-	bh=qayx0X55qicu9vsZpZscDqcregRaCEsCQvRC//96V9I=;
+	s=korg; t=1758113024;
+	bh=I7gifj+nZ+xPqtpd+ID89J/D+Xb8Q5YUs5X02csJiTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkwplzprW4bZdpptdz7pWdcUvAwUpuG1RLHkqwGbpTdmj9feq9ouc8WHCsmkoTQZf
-	 nkMzjF5y+WPgSuJt6+tCApCPDgbaSxZn8e7PYTkCXrs94I4kxZqzMOqpdDKFj7+YVF
-	 oSwx1cg//FIcRiCzQuD2/Q4SzQyt6Kjb6yz9n5Us=
+	b=jDracnVywLySpkqcHHIHRbgPYZ0d3nGGc0d/enMOgT4lGrDVz6jpApOCezyRYbiK3
+	 u5tdauvd8hvvWbGQsl0gEvBTISgV9tIUYfzHQIM5eVd/9gWGzzDVXXmGRgiJf+Hl6M
+	 I8YID94gzJ7onxKYABqyahgevVecJ1V9QO5jOzOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
+	syzbot+7e0f89fb6cae5d002de0@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 145/189] net: dev_ioctl: take ops lock in hwtstamp lower paths
-Date: Wed, 17 Sep 2025 14:34:15 +0200
-Message-ID: <20250917123355.411141542@linuxfoundation.org>
+Subject: [PATCH 6.16 146/189] macsec: sync features on RTM_NEWLINK
+Date: Wed, 17 Sep 2025 14:34:16 +0200
+Message-ID: <20250917123355.435193987@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,93 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Stanislav Fomichev <sdf@fomichev.me>
 
-[ Upstream commit 686cab5a18e443e1d5f2abb17bed45837836425f ]
+[ Upstream commit 0f82c3ba66c6b2e3cde0f255156a753b108ee9dc ]
 
-ndo hwtstamp callbacks are expected to run under the per-device ops
-lock. Make the lower get/set paths consistent with the rest of ndo
-invocations.
+Syzkaller managed to lock the lower device via ETHTOOL_SFEATURES:
 
-Kernel log:
-WARNING: CPU: 13 PID: 51364 at ./include/net/netdev_lock.h:70 __netdev_update_features+0x4bd/0xe60
-...
-RIP: 0010:__netdev_update_features+0x4bd/0xe60
-...
-Call Trace:
-<TASK>
-netdev_update_features+0x1f/0x60
-mlx5_hwtstamp_set+0x181/0x290 [mlx5_core]
-mlx5e_hwtstamp_set+0x19/0x30 [mlx5_core]
-dev_set_hwtstamp_phylib+0x9f/0x220
-dev_set_hwtstamp_phylib+0x9f/0x220
-dev_set_hwtstamp+0x13d/0x240
-dev_ioctl+0x12f/0x4b0
-sock_ioctl+0x171/0x370
-__x64_sys_ioctl+0x3f7/0x900
-? __sys_setsockopt+0x69/0xb0
-do_syscall_64+0x6f/0x2e0
-entry_SYSCALL_64_after_hwframe+0x4b/0x53
-...
-</TASK>
-....
----[ end trace 0000000000000000 ]---
+ netdev_lock include/linux/netdevice.h:2761 [inline]
+ netdev_lock_ops include/net/netdev_lock.h:42 [inline]
+ netdev_sync_lower_features net/core/dev.c:10649 [inline]
+ __netdev_update_features+0xcb1/0x1be0 net/core/dev.c:10819
+ netdev_update_features+0x6d/0xe0 net/core/dev.c:10876
+ macsec_notify+0x2f5/0x660 drivers/net/macsec.c:4533
+ notifier_call_chain+0x1b3/0x3e0 kernel/notifier.c:85
+ call_netdevice_notifiers_extack net/core/dev.c:2267 [inline]
+ call_netdevice_notifiers net/core/dev.c:2281 [inline]
+ netdev_features_change+0x85/0xc0 net/core/dev.c:1570
+ __dev_ethtool net/ethtool/ioctl.c:3469 [inline]
+ dev_ethtool+0x1536/0x19b0 net/ethtool/ioctl.c:3502
+ dev_ioctl+0x392/0x1150 net/core/dev_ioctl.c:759
 
-Note that the mlx5_hwtstamp_set and mlx5e_hwtstamp_set functions shown
-in the trace come from an in progress patch converting the legacy ioctl
-to ndo_hwtstamp_get/set and are not present in mainline.
+It happens because lower features are out of sync with the upper:
 
-Fixes: ffb7ed19ac0a ("net: hold netdev instance lock during ioctl operations")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://patch.msgid.link/20250907080821.2353388-1-cjubran@nvidia.com
+  __dev_ethtool (real_dev)
+    netdev_lock_ops(real_dev)
+    ETHTOOL_SFEATURES
+      __netdev_features_change
+        netdev_sync_upper_features
+          disable LRO on the lower
+    if (old_features != dev->features)
+      netdev_features_change
+        fires NETDEV_FEAT_CHANGE
+	macsec_notify
+	  NETDEV_FEAT_CHANGE
+	    netdev_update_features (for each macsec dev)
+	      netdev_sync_lower_features
+	        if (upper_features != lower_features)
+	          netdev_lock_ops(lower) # lower == real_dev
+		  stuck
+		  ...
+
+    netdev_unlock_ops(real_dev)
+
+Per commit af5f54b0ef9e ("net: Lock lower level devices when updating
+features"), we elide the lock/unlock when the upper and lower features
+are synced. Makes sure the lower (real_dev) has proper features after
+the macsec link has been created. This makes sure we never hit the
+situation where we need to sync upper flags to the lower.
+
+Reported-by: syzbot+7e0f89fb6cae5d002de0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7e0f89fb6cae5d002de0
+Fixes: 7e4d784f5810 ("net: hold netdev instance lock during rtnetlink operations")
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20250908173614.3358264-1-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev_ioctl.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/net/macsec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/dev_ioctl.c b/net/core/dev_ioctl.c
-index 616479e714663..9447065d01afb 100644
---- a/net/core/dev_ioctl.c
-+++ b/net/core/dev_ioctl.c
-@@ -464,8 +464,15 @@ int generic_hwtstamp_get_lower(struct net_device *dev,
- 	if (!netif_device_present(dev))
- 		return -ENODEV;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 01329fe7451a1..0eca96eeed58a 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -4286,6 +4286,7 @@ static int macsec_newlink(struct net_device *dev,
+ 	if (err < 0)
+ 		goto del_dev;
  
--	if (ops->ndo_hwtstamp_get)
--		return dev_get_hwtstamp_phylib(dev, kernel_cfg);
-+	if (ops->ndo_hwtstamp_get) {
-+		int err;
-+
-+		netdev_lock_ops(dev);
-+		err = dev_get_hwtstamp_phylib(dev, kernel_cfg);
-+		netdev_unlock_ops(dev);
-+
-+		return err;
-+	}
++	netdev_update_features(dev);
+ 	netif_stacked_transfer_operstate(real_dev, dev);
+ 	linkwatch_fire_event(dev);
  
- 	/* Legacy path: unconverted lower driver */
- 	return generic_hwtstamp_ioctl_lower(dev, SIOCGHWTSTAMP, kernel_cfg);
-@@ -481,8 +488,15 @@ int generic_hwtstamp_set_lower(struct net_device *dev,
- 	if (!netif_device_present(dev))
- 		return -ENODEV;
- 
--	if (ops->ndo_hwtstamp_set)
--		return dev_set_hwtstamp_phylib(dev, kernel_cfg, extack);
-+	if (ops->ndo_hwtstamp_set) {
-+		int err;
-+
-+		netdev_lock_ops(dev);
-+		err = dev_set_hwtstamp_phylib(dev, kernel_cfg, extack);
-+		netdev_unlock_ops(dev);
-+
-+		return err;
-+	}
- 
- 	/* Legacy path: unconverted lower driver */
- 	return generic_hwtstamp_ioctl_lower(dev, SIOCSHWTSTAMP, kernel_cfg);
 -- 
 2.51.0
 
