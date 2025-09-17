@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B00A393DE7;
-	Wed, 17 Sep 2025 13:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CC52BD022;
+	Wed, 17 Sep 2025 13:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114047; cv=none; b=MHZ7j3Oyv+Gs2prP4wujgXNBKxR0C0y1iiCnIscBmiDySJrw2Cjm1gTGXi0pRUk9ShCBBeQVjkHPcek4zkkXmZEB5bvkQOeYXhEzDbuQpMRuDjTeeeCCOZNj/pdcSbRno4/LuucO81nK3sXqeCOw8bySqc+yxceYbJJyClhCRyU=
+	t=1758114050; cv=none; b=HFzQRzZAUrLd9e5lFNcfy4DG+ytzcz3FwEnh2mHPiYS1XVas0YnrmXiakQIVl+OJVTKO9SZY3VYC1NmclLv82najMwGrr06WLML/mT7FRRcWkwT6a912CjFxuF8FVBKtDKF1E67+UEYXY6TOGkwl9mk03LoKNv7zTl0dPtYF3is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114047; c=relaxed/simple;
-	bh=rX2RrHpMF3kyKRAJLH+1rZC/IdFz6bsiftwhNigy3MM=;
+	s=arc-20240116; t=1758114050; c=relaxed/simple;
+	bh=G0Ghhy6TXnxPTAPcmkwxugK4TE0EPxmgpItP+cG0aOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIzJElicnwEGoPbUYJ8sSyaLFW0sYmBIjQ/k1ee89ybCJuk7zzN6HNcm8thNRzYWfECwQROJwbjsuh7dgyjW8kie2VOnoim2LsPTqFX2vIhjkMrYbWHszNNtvAxxKbmrwvxO6mWkEOiN3vDhjYEvY+RTJveGSpgPHtB7kDDEYa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzcrBCxi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UnPpcBSiTRAmWB/WjRO7spOsJmK2rt9xrXSyNkaoplDUyKeZuDg6Ia8C5fwIRuNqdI5OV+0JiMKU9CeqFUxMtJ1e0Zo6ZMGZ9rlNqLo7N1RieSzqEye3fxxRZNgu+FDEkB6SDNer7gv7MWUuYi/XFYzJy2wzZeJuJF/HboXBHvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clFx8H/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzcrBCxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B5FC4CEFA;
-	Wed, 17 Sep 2025 13:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clFx8H/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FFAC4CEF0;
+	Wed, 17 Sep 2025 13:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114047;
-	bh=rX2RrHpMF3kyKRAJLH+1rZC/IdFz6bsiftwhNigy3MM=;
+	s=korg; t=1758114050;
+	bh=G0Ghhy6TXnxPTAPcmkwxugK4TE0EPxmgpItP+cG0aOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzcrBCxiGvavvnxLT1w1rqOQwn9SBiBK7BvCRe2rDMjPJjExtnEIu4jvSeJl5itc3
-	 0RYUYT9B/HC2O3e763HkWNqMfCsCgERZYr4YIARVyTXZk59xAm10Qc83Zqrs2KX9rr
-	 4ap6QFG9/1Zc3CHyTGtmox5UBjU4zY1qmCa5FS0Q=
+	b=clFx8H/bToq3MkfxeJgxZ4KIfuaJBlcokkm4xdXr9gX+VWcOhEPrTgQ/ZEstBAfvj
+	 Q3MnaUstNfkz49AUx7t+utqsIhg7hxh24dPaJ8IOGn5fcbo4QPITOJNAhsWEPH8XdH
+	 LPZE7DXEkKGkw7SWB2L6U+ER2+0EDRn6KErkQeog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Douglas Raillard <douglas.raillard@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/78] ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs
-Date: Wed, 17 Sep 2025 14:34:28 +0200
-Message-ID: <20250917123329.756115315@linuxfoundation.org>
+Subject: [PATCH 6.1 08/78] tracing: Do not add length to print format in synthetic events
+Date: Wed, 17 Sep 2025 14:34:29 +0200
+Message-ID: <20250917123329.778315563@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,97 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 3d4a4411aa8bbc3653ff22a1ff0432eb93d22ae0 ]
+[ Upstream commit e1a453a57bc76be678bd746f84e3d73f378a9511 ]
 
-With the existing code, we are only setting up one period at a time, in a
-ping-pong buffer style. This triggers lot of underruns in the dsp
-leading to jitter noise during audio playback.
+The following causes a vsnprintf fault:
 
-Fix this by scheduling all available periods, this will ensure that the dsp
-has enough buffer feed and ultimatley fixing the underruns and audio
-distortion.
+  # echo 's:wake_lat char[] wakee; u64 delta;' >> /sys/kernel/tracing/dynamic_events
+  # echo 'hist:keys=pid:ts=common_timestamp.usecs if !(common_flags & 0x18)' > /sys/kernel/tracing/events/sched/sched_waking/trigger
+  # echo 'hist:keys=next_pid:delta=common_timestamp.usecs-$ts:onmatch(sched.sched_waking).trace(wake_lat,next_comm,$delta)' > /sys/kernel/tracing/events/sched/sched_switch/trigger
 
-Fixes: 9b4fe0f1cd79 ("ASoC: qdsp6: audioreach: add q6apm-dai support")
+Because the synthetic event's "wakee" field is created as a dynamic string
+(even though the string copied is not). The print format to print the
+dynamic string changed from "%*s" to "%s" because another location
+(__set_synth_event_print_fmt()) exported this to user space, and user
+space did not need that. But it is still used in print_synth_event(), and
+the output looks like:
+
+          <idle>-0       [001] d..5.   193.428167: wake_lat: wakee=(efault)sshd-sessiondelta=155
+    sshd-session-879     [001] d..5.   193.811080: wake_lat: wakee=(efault)kworker/u34:5delta=58
+          <idle>-0       [002] d..5.   193.811198: wake_lat: wakee=(efault)bashdelta=91
+            bash-880     [002] d..5.   193.811371: wake_lat: wakee=(efault)kworker/u35:2delta=21
+          <idle>-0       [001] d..5.   193.811516: wake_lat: wakee=(efault)sshd-sessiondelta=129
+    sshd-session-879     [001] d..5.   193.967576: wake_lat: wakee=(efault)kworker/u34:5delta=50
+
+The length isn't needed as the string is always nul terminated. Just print
+the string and not add the length (which was hard coded to the max string
+length anyway).
+
 Cc: stable@vger.kernel.org
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://patch.msgid.link/20250314174800.10142-2-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Changed NO_TIMESTAMP constant to literal 0 ]
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Tom Zanussi <zanussi@kernel.org>
+Cc: Douglas Raillard <douglas.raillard@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/20250407154139.69955768@gandalf.local.home
+Fixes: 4d38328eb442d ("tracing: Fix synth event printk format for str fields");
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ offset calculations instead of union-based data structures ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c |   28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events_synth.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -52,6 +52,7 @@ struct q6apm_dai_rtd {
- 	uint16_t bits_per_sample;
- 	uint16_t source; /* Encoding source bit mask */
- 	uint16_t session_id;
-+	snd_pcm_uframes_t queue_ptr;
- 	enum stream_state state;
- 	struct q6apm_graph *graph;
- 	spinlock_t lock;
-@@ -114,8 +115,6 @@ static void event_handler(uint32_t opcod
- 		prtd->pos += prtd->pcm_count;
- 		spin_unlock_irqrestore(&prtd->lock, flags);
- 		snd_pcm_period_elapsed(substream);
--		if (prtd->state == Q6APM_STREAM_RUNNING)
--			q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -383,13 +383,11 @@ static enum print_line_t print_synth_eve
+ 				str_field = (char *)entry + data_offset;
  
- 		break;
- 	case APM_CLIENT_EVENT_DATA_READ_DONE:
-@@ -209,6 +208,27 @@ static int q6apm_dai_prepare(struct snd_
- 	return 0;
- }
- 
-+static int q6apm_dai_ack(struct snd_soc_component *component, struct snd_pcm_substream *substream)
-+{
-+	struct snd_pcm_runtime *runtime = substream->runtime;
-+	struct q6apm_dai_rtd *prtd = runtime->private_data;
-+	int i, ret = 0, avail_periods;
-+
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-+		avail_periods = (runtime->control->appl_ptr - prtd->queue_ptr)/runtime->period_size;
-+		for (i = 0; i < avail_periods; i++) {
-+			ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
-+			if (ret < 0) {
-+				dev_err(component->dev, "Error queuing playback buffer %d\n", ret);
-+				return ret;
-+			}
-+			prtd->queue_ptr += runtime->period_size;
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static int q6apm_dai_trigger(struct snd_soc_component *component,
- 			     struct snd_pcm_substream *substream, int cmd)
- {
-@@ -220,9 +240,6 @@ static int q6apm_dai_trigger(struct snd_
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
--		 /* start writing buffers for playback only as we already queued capture buffers */
--		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--			ret = q6apm_write_async(prtd->graph, prtd->pcm_count, 0, 0, 0);
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
- 		/* TODO support be handled via SoftPause Module */
-@@ -396,6 +413,7 @@ static const struct snd_soc_component_dr
- 	.hw_params	= q6apm_dai_hw_params,
- 	.pointer	= q6apm_dai_pointer,
- 	.trigger	= q6apm_dai_trigger,
-+	.ack		= q6apm_dai_ack,
- };
- 
- static int q6apm_dai_probe(struct platform_device *pdev)
+ 				trace_seq_printf(s, print_fmt, se->fields[i]->name,
+-						 STR_VAR_LEN_MAX,
+ 						 str_field,
+ 						 i == se->n_fields - 1 ? "" : " ");
+ 				n_u64++;
+ 			} else {
+ 				trace_seq_printf(s, print_fmt, se->fields[i]->name,
+-						 STR_VAR_LEN_MAX,
+ 						 (char *)&entry->fields[n_u64],
+ 						 i == se->n_fields - 1 ? "" : " ");
+ 				n_u64 += STR_VAR_LEN_MAX / sizeof(u64);
 
 
