@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAFA33C77D;
-	Wed, 17 Sep 2025 13:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3BD183CA6;
+	Wed, 17 Sep 2025 13:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114064; cv=none; b=sWElOor0RoRT22rRi5MAZK230V1t3n9oa9vtzDJ9uspjhJ5ZSUcR/mWybq4rva0PAMucPgb7YXrn3AifOrjH9XWQBOcEeDm0mFhwTCDgm9tL4D473aElfyb79GVeiw6K8YBXsEXvI6wU7j8JSVWXsLCHmtFIJYwfv3vG7xu0Q0U=
+	t=1758114068; cv=none; b=j/E6TfYEjxwIRkrLM+QJCYmWEu7LyYvMubao+Y0L6kQbW1oim5VMVE5o/fBd0gImHkHDs49nk71VYZiiTW4dmKzst76pgd9PxKMQUDsu34753d90WTrfEcDnWOCnmtTcRatcwP5mIn1gBazc1t2zJv0v/TSqeqK+n4zoellMs0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114064; c=relaxed/simple;
-	bh=7o2nfqK5kWRFRH5jufGydSIMlPv2aOvjRbMAzH574zo=;
+	s=arc-20240116; t=1758114068; c=relaxed/simple;
+	bh=C3o4St71A+SsCIfz0O8IbEPdk1B2kUt5HTLWcW6YtFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px7N0P+FkXnRwAAH6MJL+C9LFO7nOdJToJ7wrmuGreiAV9wLRTl2y1Gp0+SdMpOtmfz83oVx0e1aHFmZmNPWBuOyY2sMA4cTJd2K7SpTk/s2nBsj0+4nKqwouYyBTg70iHrs0EzyEw4QlZNsfLfBqLKMVtAHvSw6TjW8CVcKnnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+7HWlEH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RYslNRk4PYfeqxcwEf07V5WkkMF5UOI2CYatsLzeevmZfP0qEFGNnzo/BmdRG78wxcu1q8awvdsGg3ekgcaV5w2XVaxYpKKnjjrIDUMspmsE/5MpVuHlRAbEV+7yd14hYP6yUhqv857u9elms7LFL7VwPK9hMIfRw+aKTeqlQ5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHyES7bE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+7HWlEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD93C4CEF0;
-	Wed, 17 Sep 2025 13:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHyES7bE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3724AC4CEF0;
+	Wed, 17 Sep 2025 13:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114064;
-	bh=7o2nfqK5kWRFRH5jufGydSIMlPv2aOvjRbMAzH574zo=;
+	s=korg; t=1758114067;
+	bh=C3o4St71A+SsCIfz0O8IbEPdk1B2kUt5HTLWcW6YtFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+7HWlEHTL9Yxc5dC9AB6ty/qdhvrwt1fPYbhL6GymBiAcnkvLkslZiXQ+odBFWRc
-	 LoR6SUy0gh4vydFIN260MlEO9F7sL2qtwDtcJMaVO4fI71DoCE4cKK0zG66xUgXcl1
-	 Sq655y7rNrMJW5e++C3WQXqP8h7f+ENUFbeRk5wA=
+	b=fHyES7bEp0Se9YtWKOgnxT4NEoQF8sS3eTuo9xncPZF/IWVGmo5rNDoqP0mL7VwOj
+	 xhTXwaaw5pwffx/OpV866+uzZ5IrhCXXTvOh8XPPLVOg+N8jVHMc2G1Xf0gJfTu0Xi
+	 FMtGNhi98ZUmxnQCBs0UNROYMAixOQxXVF4wvq3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	SeongJae Park <sj@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	ze zuo <zuoze1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 36/78] mm/damon/lru_sort: avoid divide-by-zero in damon_lru_sort_apply_parameters()
-Date: Wed, 17 Sep 2025 14:34:57 +0200
-Message-ID: <20250917123330.442121745@linuxfoundation.org>
+	Alexander Dahl <ada@thorsis.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 37/78] mtd: nand: raw: atmel: Fix comment in timings preparation
+Date: Wed, 17 Sep 2025 14:34:58 +0200
+Message-ID: <20250917123330.465730138@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,55 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanmin Yan <yanquanmin1@huawei.com>
+From: Alexander Dahl <ada@thorsis.com>
 
-commit 711f19dfd783ffb37ca4324388b9c4cb87e71363 upstream.
+[ Upstream commit 1c60e027ffdebd36f4da766d9c9abbd1ea4dd8f9 ]
 
-Patch series "mm/damon: avoid divide-by-zero in DAMON module's parameters
-application".
+Looks like a copy'n'paste mistake introduced when initially adding the
+dynamic timings feature with commit f9ce2eddf176 ("mtd: nand: atmel: Add
+->setup_data_interface() hooks").  The context around this and
+especially the code itself suggests 'read' is meant instead of write.
 
-DAMON's RECLAIM and LRU_SORT modules perform no validation on
-user-configured parameters during application, which may lead to
-division-by-zero errors.
-
-Avoid the divide-by-zero by adding validation checks when DAMON modules
-attempt to apply the parameters.
-
-
-This patch (of 2):
-
-During the calculation of 'hot_thres' and 'cold_thres', either
-'sample_interval' or 'aggr_interval' is used as the divisor, which may
-lead to division-by-zero errors.  Fix it by directly returning -EINVAL
-when such a case occurs.  Additionally, since 'aggr_interval' is already
-required to be set no smaller than 'sample_interval' in damon_set_attrs(),
-only the case where 'sample_interval' is zero needs to be checked.
-
-Link: https://lkml.kernel.org/r/20250827115858.1186261-2-yanquanmin1@huawei.com
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: ze zuo <zuoze1@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.0+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Alexander Dahl <ada@thorsis.com>
+Reviewed-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240226122537.75097-1-ada@thorsis.com
+Stable-dep-of: fd779eac2d65 ("mtd: nand: raw: atmel: Respect tAR, tCLR in read setup timing")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/lru_sort.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/raw/atmel/nand-controller.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -203,6 +203,9 @@ static int damon_lru_sort_apply_paramete
- 	unsigned int hot_thres, cold_thres;
- 	int err = 0;
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -1378,7 +1378,7 @@ static int atmel_smc_nand_prepare_smccon
+ 		return ret;
  
-+	if (!damon_lru_sort_mon_attrs.sample_interval)
-+		return -EINVAL;
-+
- 	err = damon_set_attrs(ctx, &damon_lru_sort_mon_attrs);
- 	if (err)
- 		return err;
+ 	/*
+-	 * The write cycle timing is directly matching tWC, but is also
++	 * The read cycle timing is directly matching tRC, but is also
+ 	 * dependent on the setup and hold timings we calculated earlier,
+ 	 * which gives:
+ 	 *
 
 
