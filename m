@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD15332A41;
-	Wed, 17 Sep 2025 12:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F8B328963;
+	Wed, 17 Sep 2025 12:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113808; cv=none; b=f/AdlvhlO1u0jVanKBgJIcGvIBJbSdlm5fO3JTaEt98G1+xFwDSjIMv0InY10S+eJychnudBC/H0Koa7vw7ZuaVXX3VuxBuVNNsdUJZPKbBbmteWoHKRCVVTqkDHojg98QzgEN/494GSkJJJLNigJoBnmbHsyyHSk6dXBvcH5B8=
+	t=1758113811; cv=none; b=p1FkRsHeCeSqAoNPvWTcFQz6FhSBOw4PmF9l6YC4du2B0ri1UaQp5dfZmM+TSJtpuafWz5iBL/NR23jr1Tm4hSY761ESiuNjTa5XHDVuSagVoTAr7Q1JfdjH7Edymgxd1Cr8t3fDXNS4jGwLDfCAQygyAKk28kC6RqGgkIRzDcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113808; c=relaxed/simple;
-	bh=mbEsAKDiV8RtcQylCZeJ17O74Eet0PPIg4QqHJuJ/jg=;
+	s=arc-20240116; t=1758113811; c=relaxed/simple;
+	bh=HLOGYJhXY+6hrlKiiOUCoyTNWP/u+riLGQQZIiQpeuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G0XlQte423uUUtJ7bpOoKpFLdZWRBdm6wl/YSjXNrFDT0PK8/sxULEsJcC2Sj4bSRchF45bHwLmXWLmoZXWqpRIH7B5HbGD6u5UWUf7/cyYcEvinTslHsfBAV4qMBsigBPKK5hgGIHwOZC3bVYJPTCgaKg4mvr8Ilw9tBwSLkcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOTQFZkI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0WSV1hDDyuhzUKAbCguiC/FvbqvLrpNG+KyqKVpitnKT53iFoMakCEVOROMHPgy7zlUGqH+gLyhMFsrHnITbqLWyszkUl1l1TvnSuGR5mpCZ5nPQEFh0YAfA3kjA0pSx23gwOzlTMdsdfJfGaPRRbeVib2ASlj5HeljezhWoU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RyfZaSQP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOTQFZkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1600C4CEFA;
-	Wed, 17 Sep 2025 12:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyfZaSQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF5BC4CEF0;
+	Wed, 17 Sep 2025 12:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113808;
-	bh=mbEsAKDiV8RtcQylCZeJ17O74Eet0PPIg4QqHJuJ/jg=;
+	s=korg; t=1758113811;
+	bh=HLOGYJhXY+6hrlKiiOUCoyTNWP/u+riLGQQZIiQpeuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOTQFZkIGFrsXPqOjWhebhWrNzC00swjlvDWqJvSYB3VnVKjEbrasIVbtIXXDbOD0
-	 FWzrfQRGNAx9J7KCgbA41hXyJ6kg8CCR75cnC3sQJkrDlPlt+c8ZZMRIR/c/N2hQyY
-	 OA85r7Ixoo9nDIKGNpXfY+vOTsJnlDhTt1fBPcwE=
+	b=RyfZaSQPBWpqMvZ4ztEEzAYpdtjDAv/GjWQBljI2HaK//ihjWF+kegSm+uHz0oXyW
+	 55lu2VFwgJy1ITTAA0/XWSLQojZ0tTNtNzaqt+teGsubuAmXDXksaQGpJfR6HXt0rV
+	 0WAGka1uZa2BZYXZzaX9p48gkI4OdP0pRjbzNCKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
-	David Howells <dhowells@redhat.com>,
-	Yang Erkun <yangerkun@huawei.com>,
-	stable@kernel.org
-Subject: [PATCH 6.6 057/101] cifs: fix pagecache leak when do writepages
-Date: Wed, 17 Sep 2025 14:34:40 +0200
-Message-ID: <20250917123338.220970948@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zhang Zhaotian <zhangzhaotian@huawei.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 058/101] kernfs: Fix UAF in polling when open file is released
+Date: Wed, 17 Sep 2025 14:34:41 +0200
+Message-ID: <20250917123338.245690660@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -52,124 +53,278 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-After commit f3dc1bdb6b0b("cifs: Fix writeback data corruption"), the
-writepages for cifs will find all folio needed writepage with two phase.
-The first folio will be found in cifs_writepages_begin, and the latter
-various folios will be found in cifs_extend_writeback.
+commit 3c9ba2777d6c86025e1ba4186dc5cd930e40ec5f upstream.
 
-All those will first get folio, and for normal case, once we set page
-writeback and after do really write, we should put the reference, folio
-found in cifs_extend_writeback do this with folio_batch_release. But the
-folio found in cifs_writepages_begin never get the chance do it. And
-every writepages call, we will leak a folio(found this problem while do
-xfstests over cifs, the latter show that we will leak about 600M+ every
-we run generic/074).
+A use-after-free (UAF) vulnerability was identified in the PSI (Pressure
+Stall Information) monitoring mechanism:
 
-echo 3 > /proc/sys/vm/drop_caches ; cat /proc/meminfo | grep file
-Active(file):      34092 kB
-Inactive(file):   176192 kB
-./check generic/074 (smb v1)
+BUG: KASAN: slab-use-after-free in psi_trigger_poll+0x3c/0x140
+Read of size 8 at addr ffff3de3d50bd308 by task systemd/1
+
+psi_trigger_poll+0x3c/0x140
+cgroup_pressure_poll+0x70/0xa0
+cgroup_file_poll+0x8c/0x100
+kernfs_fop_poll+0x11c/0x1c0
+ep_item_poll.isra.0+0x188/0x2c0
+
+Allocated by task 1:
+cgroup_file_open+0x88/0x388
+kernfs_fop_open+0x73c/0xaf0
+do_dentry_open+0x5fc/0x1200
+vfs_open+0xa0/0x3f0
+do_open+0x7e8/0xd08
+path_openat+0x2fc/0x6b0
+do_filp_open+0x174/0x368
+
+Freed by task 8462:
+cgroup_file_release+0x130/0x1f8
+kernfs_drain_open_files+0x17c/0x440
+kernfs_drain+0x2dc/0x360
+kernfs_show+0x1b8/0x288
+cgroup_file_show+0x150/0x268
+cgroup_pressure_write+0x1dc/0x340
+cgroup_file_write+0x274/0x548
+
+Reproduction Steps:
+1. Open test/cpu.pressure and establish epoll monitoring
+2. Disable monitoring: echo 0 > test/cgroup.pressure
+3. Re-enable monitoring: echo 1 > test/cgroup.pressure
+
+The race condition occurs because:
+1. When cgroup.pressure is disabled (echo 0 > cgroup.pressure), it:
+   - Releases PSI triggers via cgroup_file_release()
+   - Frees of->priv through kernfs_drain_open_files()
+2. While epoll still holds reference to the file and continues polling
+3. Re-enabling (echo 1 > cgroup.pressure) accesses freed of->priv
+
+epolling			disable/enable cgroup.pressure
+fd=open(cpu.pressure)
+while(1)
 ...
-generic/074 50s ...  53s
-Ran: generic/074
-Passed all 1 tests
+epoll_wait
+kernfs_fop_poll
+kernfs_get_active = true	echo 0 > cgroup.pressure
+...				cgroup_file_show
+				kernfs_show
+				// inactive kn
+				kernfs_drain_open_files
+				cft->release(of);
+				kfree(ctx);
+				...
+kernfs_get_active = false
+				echo 1 > cgroup.pressure
+				kernfs_show
+				kernfs_activate_one(kn);
+kernfs_fop_poll
+kernfs_get_active = true
+cgroup_file_poll
+psi_trigger_poll
+// UAF
+...
+end: close(fd)
 
-echo 3 > /proc/sys/vm/drop_caches ; cat /proc/meminfo | grep file
-Active(file):      35036 kB
-Inactive(file):   854708 kB
+To address this issue, introduce kernfs_get_active_of() for kernfs open
+files to obtain active references. This function will fail if the open file
+has been released. Replace kernfs_get_active() with kernfs_get_active_of()
+to prevent further operations on released file descriptors.
 
-Besides, the exist path seem never handle this folio correctly, fix it too
-with this patch. All issue does not occur in the mainline because the
-writepages path for CIFS was changed to netfs (commit 3ee1a1fc3981,
-titled "cifs: Cut over to using netfslib") as part of a major refactor.
-After discussing with the CIFS maintainer, we believe that this single
-patch is safer for the stable branch [1].
-
-Steve said:
-"""
-David and I discussed this today and this patch is MUCH safer than
-backporting the later (6.10) netfs changes which would be much larger
-and riskier to include (and presumably could affect code outside
-cifs.ko as well where this patch is narrowly targeted).
-
-I am fine with this patch.from Yang for 6.6 stable
-"""
-
-David said:
-"""
-Backporting the massive amount of changes to netfslib, fscache, cifs,
-afs, 9p, ceph and nfs would kind of diminish the notion that this is a
-stable kernel;-).
-"""
-
-Fixes: f3dc1bdb6b0b ("cifs: Fix writeback data corruption")
-Cc: stable@kernel.org # v6.6~v6.9
-Link: https://lore.kernel.org/all/20250911030120.1076413-1-yangerkun@huawei.com/ [1]
-Acked-by: Steve French <stfrench@microsoft.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Fixes: 34f26a15611a ("sched/psi: Per-cgroup PSI accounting disable/re-enable interface")
+Cc: stable <stable@kernel.org>
+Reported-by: Zhang Zhaotian <zhangzhaotian@huawei.com>
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20250822070715.1565236-2-chenridong@huaweicloud.com
+[ Drop llseek bits ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ fs/kernfs/file.c |   54 ++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2884,17 +2884,21 @@ static ssize_t cifs_write_back_from_lock
- 	rc = cifs_get_writable_file(CIFS_I(inode), FIND_WR_ANY, &cfile);
- 	if (rc) {
- 		cifs_dbg(VFS, "No writable handle in writepages rc=%d\n", rc);
-+		folio_unlock(folio);
- 		goto err_xid;
+--- a/fs/kernfs/file.c
++++ b/fs/kernfs/file.c
+@@ -70,6 +70,24 @@ static struct kernfs_open_node *of_on(st
+ 					 !list_empty(&of->list));
+ }
+ 
++/* Get active reference to kernfs node for an open file */
++static struct kernfs_open_file *kernfs_get_active_of(struct kernfs_open_file *of)
++{
++	/* Skip if file was already released */
++	if (unlikely(of->released))
++		return NULL;
++
++	if (!kernfs_get_active(of->kn))
++		return NULL;
++
++	return of;
++}
++
++static void kernfs_put_active_of(struct kernfs_open_file *of)
++{
++	return kernfs_put_active(of->kn);
++}
++
+ /**
+  * kernfs_deref_open_node_locked - Get kernfs_open_node corresponding to @kn
+  *
+@@ -139,7 +157,7 @@ static void kernfs_seq_stop_active(struc
+ 
+ 	if (ops->seq_stop)
+ 		ops->seq_stop(sf, v);
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ }
+ 
+ static void *kernfs_seq_start(struct seq_file *sf, loff_t *ppos)
+@@ -152,7 +170,7 @@ static void *kernfs_seq_start(struct seq
+ 	 * the ops aren't called concurrently for the same open file.
+ 	 */
+ 	mutex_lock(&of->mutex);
+-	if (!kernfs_get_active(of->kn))
++	if (!kernfs_get_active_of(of))
+ 		return ERR_PTR(-ENODEV);
+ 
+ 	ops = kernfs_ops(of->kn);
+@@ -238,7 +256,7 @@ static ssize_t kernfs_file_read_iter(str
+ 	 * the ops aren't called concurrently for the same open file.
+ 	 */
+ 	mutex_lock(&of->mutex);
+-	if (!kernfs_get_active(of->kn)) {
++	if (!kernfs_get_active_of(of)) {
+ 		len = -ENODEV;
+ 		mutex_unlock(&of->mutex);
+ 		goto out_free;
+@@ -252,7 +270,7 @@ static ssize_t kernfs_file_read_iter(str
+ 	else
+ 		len = -EINVAL;
+ 
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ 	mutex_unlock(&of->mutex);
+ 
+ 	if (len < 0)
+@@ -323,7 +341,7 @@ static ssize_t kernfs_fop_write_iter(str
+ 	 * the ops aren't called concurrently for the same open file.
+ 	 */
+ 	mutex_lock(&of->mutex);
+-	if (!kernfs_get_active(of->kn)) {
++	if (!kernfs_get_active_of(of)) {
+ 		mutex_unlock(&of->mutex);
+ 		len = -ENODEV;
+ 		goto out_free;
+@@ -335,7 +353,7 @@ static ssize_t kernfs_fop_write_iter(str
+ 	else
+ 		len = -EINVAL;
+ 
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ 	mutex_unlock(&of->mutex);
+ 
+ 	if (len > 0)
+@@ -357,13 +375,13 @@ static void kernfs_vma_open(struct vm_ar
+ 	if (!of->vm_ops)
+ 		return;
+ 
+-	if (!kernfs_get_active(of->kn))
++	if (!kernfs_get_active_of(of))
+ 		return;
+ 
+ 	if (of->vm_ops->open)
+ 		of->vm_ops->open(vma);
+ 
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ }
+ 
+ static vm_fault_t kernfs_vma_fault(struct vm_fault *vmf)
+@@ -375,14 +393,14 @@ static vm_fault_t kernfs_vma_fault(struc
+ 	if (!of->vm_ops)
+ 		return VM_FAULT_SIGBUS;
+ 
+-	if (!kernfs_get_active(of->kn))
++	if (!kernfs_get_active_of(of))
+ 		return VM_FAULT_SIGBUS;
+ 
+ 	ret = VM_FAULT_SIGBUS;
+ 	if (of->vm_ops->fault)
+ 		ret = of->vm_ops->fault(vmf);
+ 
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ 	return ret;
+ }
+ 
+@@ -395,7 +413,7 @@ static vm_fault_t kernfs_vma_page_mkwrit
+ 	if (!of->vm_ops)
+ 		return VM_FAULT_SIGBUS;
+ 
+-	if (!kernfs_get_active(of->kn))
++	if (!kernfs_get_active_of(of))
+ 		return VM_FAULT_SIGBUS;
+ 
+ 	ret = 0;
+@@ -404,7 +422,7 @@ static vm_fault_t kernfs_vma_page_mkwrit
+ 	else
+ 		file_update_time(file);
+ 
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ 	return ret;
+ }
+ 
+@@ -418,14 +436,14 @@ static int kernfs_vma_access(struct vm_a
+ 	if (!of->vm_ops)
+ 		return -EINVAL;
+ 
+-	if (!kernfs_get_active(of->kn))
++	if (!kernfs_get_active_of(of))
+ 		return -EINVAL;
+ 
+ 	ret = -EINVAL;
+ 	if (of->vm_ops->access)
+ 		ret = of->vm_ops->access(vma, addr, buf, len, write);
+ 
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ 	return ret;
+ }
+ 
+@@ -504,7 +522,7 @@ static int kernfs_fop_mmap(struct file *
+ 	mutex_lock(&of->mutex);
+ 
+ 	rc = -ENODEV;
+-	if (!kernfs_get_active(of->kn))
++	if (!kernfs_get_active_of(of))
+ 		goto out_unlock;
+ 
+ 	ops = kernfs_ops(of->kn);
+@@ -539,7 +557,7 @@ static int kernfs_fop_mmap(struct file *
  	}
+ 	vma->vm_ops = &kernfs_vm_ops;
+ out_put:
+-	kernfs_put_active(of->kn);
++	kernfs_put_active_of(of);
+ out_unlock:
+ 	mutex_unlock(&of->mutex);
  
- 	rc = server->ops->wait_mtu_credits(server, cifs_sb->ctx->wsize,
- 					   &wsize, credits);
--	if (rc != 0)
-+	if (rc != 0) {
-+		folio_unlock(folio);
- 		goto err_close;
-+	}
+@@ -894,7 +912,7 @@ static __poll_t kernfs_fop_poll(struct f
+ 	struct kernfs_node *kn = kernfs_dentry_node(filp->f_path.dentry);
+ 	__poll_t ret;
  
- 	wdata = cifs_writedata_alloc(cifs_writev_complete);
- 	if (!wdata) {
- 		rc = -ENOMEM;
-+		folio_unlock(folio);
- 		goto err_uncredit;
- 	}
+-	if (!kernfs_get_active(kn))
++	if (!kernfs_get_active_of(of))
+ 		return DEFAULT_POLLMASK|EPOLLERR|EPOLLPRI;
  
-@@ -3041,17 +3045,22 @@ search_again:
- lock_again:
- 	if (wbc->sync_mode != WB_SYNC_NONE) {
- 		ret = folio_lock_killable(folio);
--		if (ret < 0)
-+		if (ret < 0) {
-+			folio_put(folio);
- 			return ret;
-+		}
- 	} else {
--		if (!folio_trylock(folio))
-+		if (!folio_trylock(folio)) {
-+			folio_put(folio);
- 			goto search_again;
-+		}
- 	}
+ 	if (kn->attr.ops->poll)
+@@ -902,7 +920,7 @@ static __poll_t kernfs_fop_poll(struct f
+ 	else
+ 		ret = kernfs_generic_poll(of, wait);
  
- 	if (folio->mapping != mapping ||
- 	    !folio_test_dirty(folio)) {
- 		start += folio_size(folio);
- 		folio_unlock(folio);
-+		folio_put(folio);
- 		goto search_again;
- 	}
- 
-@@ -3081,6 +3090,7 @@ lock_again:
- out:
- 	if (ret > 0)
- 		*_start = start + ret;
-+	folio_put(folio);
+-	kernfs_put_active(kn);
++	kernfs_put_active_of(of);
  	return ret;
  }
  
