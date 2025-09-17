@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5481328995;
-	Wed, 17 Sep 2025 12:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16010333A81;
+	Wed, 17 Sep 2025 12:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113720; cv=none; b=QUMWZmpey6ubWL39S+I6Txsdgr5t0ISoC8Wwoh83Ky+U4FF0oi8bKqQ8s3beA/Wq7FeXuyLUzIrZYGyREO+mr0WicQoi4Ld89aqk7SrMUcxaM5sye5pftx61cVgkCANu2TU/ER6/Ib5H0QFSFULEjKeC3DI/xOEhhpq45AIkA9I=
+	t=1758113724; cv=none; b=m8vDlZYp17YHjR7+6xXge4ifL3d7lT/1bFuxtHdhBN1G3+kYu8QVVzMnby4gdy2sdlBkjhMYbvfvpVsNujIoi/Ey2TWtqKHDekar7zRfimd8qabC0I/NXZWl4sTDyQPLUx2gUbezzeTXD429fGpoOOnONVL6TC9Dg+h52Cid8xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113720; c=relaxed/simple;
-	bh=tR77rNuZyKCorw19uv0O4dv9vLoHTguK7aTzz969PFI=;
+	s=arc-20240116; t=1758113724; c=relaxed/simple;
+	bh=RdHbKZbIy+j6F2Xp5hkhWQdfxBd37tFN3IuscvQV1Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0gRcp42DKfKO8TxfT6ch0e8C6AJFdQdM1/iPsUeFhPOVF3kFaiAeTWoVaHWJsNckxnHQ5P+32NNH/DHxG5JsX0tz0Y+QIzLMvyVM1/lG9qnAHMGXN+Fw1CVszBj3xVBMCg3Sb6+gQYYvvC5e68iV5qoEUhL4YXnKWRaeIwuKUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fx1NOviD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O22nlwEeRt1rM/IMai25/+0ZNx88O49f+G/qRpqLCnbugojcc7IgybnVrKVDHFS7kgs+K38HWJxY4OP/AGo8mhPX9dWUbkp+osXVS6s7zR3KQYX5VTPJDYG2C2fbGaNbLZekj8ySeyntlwIgIuMB45GAh4nIWGfKWzP+H6bvthM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1dByOsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fx1NOviD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A3EC4CEF0;
-	Wed, 17 Sep 2025 12:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1dByOsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85639C4CEF0;
+	Wed, 17 Sep 2025 12:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113720;
-	bh=tR77rNuZyKCorw19uv0O4dv9vLoHTguK7aTzz969PFI=;
+	s=korg; t=1758113724;
+	bh=RdHbKZbIy+j6F2Xp5hkhWQdfxBd37tFN3IuscvQV1Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fx1NOviDQheY6I6NSjoHHczsI+CnVE1g8GSzohakpiQITwnVB+4WsiB3bPXlT3XFm
-	 hS8w8oInuFGaTTUngXK2kaeh5xK9iZOtdJPu4d8vIxheCxfkFe8Z+rIc4xkdZD0+6i
-	 ay/6YMnoSNs1Sug4TrFPxHzMAJvfG9Q5RRhkrCSM=
+	b=h1dByOsMZN6hwUwirgA9JgsqZgl1ZnO06ix44BSxIa6Z+ed9YumlqlFz3H508lSJf
+	 nYNGCm0qVNQIifQALBZDfxX93VWfqi06M/DVFBl3Mjg/6RWO6DI5xONc9o2/wiyP5e
+	 SSn+7a1qNUNeWNl1kQareP60dFFFl+yyd8RMMaqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Justin Stitt <justinstitt@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 033/101] compiler-clang.h: define __SANITIZE_*__ macros only when undefined
-Date: Wed, 17 Sep 2025 14:34:16 +0200
-Message-ID: <20250917123337.650008536@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 034/101] mptcp: sockopt: make sync_socket_options propagate SOCK_KEEPOPEN
+Date: Wed, 17 Sep 2025 14:34:17 +0200
+Message-ID: <20250917123337.673516008@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -57,96 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 3fac212fe489aa0dbe8d80a42a7809840ca7b0f9 upstream.
+commit 648de37416b301f046f62f1b65715c7fa8ebaa67 upstream.
 
-Clang 22 recently added support for defining __SANITIZE__ macros similar
-to GCC [1], which causes warnings (or errors with CONFIG_WERROR=y or W=e)
-with the existing defines that the kernel creates to emulate this behavior
-with existing clang versions.
+Users reported a scenario where MPTCP connections that were configured
+with SO_KEEPALIVE prior to connect would fail to enable their keepalives
+if MTPCP fell back to TCP mode.
 
-  In file included from <built-in>:3:
-  In file included from include/linux/compiler_types.h:171:
-  include/linux/compiler-clang.h:37:9: error: '__SANITIZE_THREAD__' macro redefined [-Werror,-Wmacro-redefined]
-     37 | #define __SANITIZE_THREAD__
-        |         ^
-  <built-in>:352:9: note: previous definition is here
-    352 | #define __SANITIZE_THREAD__ 1
-        |         ^
+After investigating, this affects keepalives for any connection where
+sync_socket_options is called on a socket that is in the closed or
+listening state.  Joins are handled properly. For connects,
+sync_socket_options is called when the socket is still in the closed
+state.  The tcp_set_keepalive() function does not act on sockets that
+are closed or listening, hence keepalive is not immediately enabled.
+Since the SO_KEEPOPEN flag is absent, it is not enabled later in the
+connect sequence via tcp_finish_connect.  Setting the keepalive via
+sockopt after connect does work, but would not address any subsequently
+created flows.
 
-Refactor compiler-clang.h to only define the sanitizer macros when they
-are undefined and adjust the rest of the code to use these macros for
-checking if the sanitizers are enabled, clearing up the warnings and
-allowing the kernel to easily drop these defines when the minimum
-supported version of LLVM for building the kernel becomes 22.0.0 or newer.
+Fortunately, the fix here is straight-forward: set SOCK_KEEPOPEN on the
+subflow when calling sync_socket_options.
 
-Link: https://lkml.kernel.org/r/20250902-clang-update-sanitize-defines-v1-1-cf3702ca3d92@kernel.org
-Link: https://github.com/llvm/llvm-project/commit/568c23bbd3303518c5056d7f03444dae4fdc8a9c [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The fix was valdidated both by using tcpdump to observe keepalive
+packets not being sent before the fix, and being sent after the fix.  It
+was also possible to observe via ss that the keepalive timer was not
+enabled on these sockets before the fix, but was enabled afterwards.
+
+Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/aL8dYfPZrwedCIh9@templeofstupid.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler-clang.h |   29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ net/mptcp/sockopt.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -23,23 +23,42 @@
- #define KASAN_ABI_VERSION 5
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -1471,13 +1471,12 @@ static void sync_socket_options(struct m
+ {
+ 	static const unsigned int tx_rx_locks = SOCK_RCVBUF_LOCK | SOCK_SNDBUF_LOCK;
+ 	struct sock *sk = (struct sock *)msk;
++	bool keep_open;
  
- /*
-+ * Clang 22 added preprocessor macros to match GCC, in hopes of eventually
-+ * dropping __has_feature support for sanitizers:
-+ * https://github.com/llvm/llvm-project/commit/568c23bbd3303518c5056d7f03444dae4fdc8a9c
-+ * Create these macros for older versions of clang so that it is easy to clean
-+ * up once the minimum supported version of LLVM for building the kernel always
-+ * creates these macros.
-+ *
-  * Note: Checking __has_feature(*_sanitizer) is only true if the feature is
-  * enabled. Therefore it is not required to additionally check defined(CONFIG_*)
-  * to avoid adding redundant attributes in other configurations.
-  */
-+#if __has_feature(address_sanitizer) && !defined(__SANITIZE_ADDRESS__)
-+#define __SANITIZE_ADDRESS__
-+#endif
-+#if __has_feature(hwaddress_sanitizer) && !defined(__SANITIZE_HWADDRESS__)
-+#define __SANITIZE_HWADDRESS__
-+#endif
-+#if __has_feature(thread_sanitizer) && !defined(__SANITIZE_THREAD__)
-+#define __SANITIZE_THREAD__
-+#endif
+-	if (ssk->sk_prot->keepalive) {
+-		if (sock_flag(sk, SOCK_KEEPOPEN))
+-			ssk->sk_prot->keepalive(ssk, 1);
+-		else
+-			ssk->sk_prot->keepalive(ssk, 0);
+-	}
++	keep_open = sock_flag(sk, SOCK_KEEPOPEN);
++	if (ssk->sk_prot->keepalive)
++		ssk->sk_prot->keepalive(ssk, keep_open);
++	sock_valbool_flag(ssk, SOCK_KEEPOPEN, keep_open);
  
--#if __has_feature(address_sanitizer) || __has_feature(hwaddress_sanitizer)
--/* Emulate GCC's __SANITIZE_ADDRESS__ flag */
-+/*
-+ * Treat __SANITIZE_HWADDRESS__ the same as __SANITIZE_ADDRESS__ in the kernel.
-+ */
-+#ifdef __SANITIZE_HWADDRESS__
- #define __SANITIZE_ADDRESS__
-+#endif
-+
-+#ifdef __SANITIZE_ADDRESS__
- #define __no_sanitize_address \
- 		__attribute__((no_sanitize("address", "hwaddress")))
- #else
- #define __no_sanitize_address
- #endif
- 
--#if __has_feature(thread_sanitizer)
--/* emulate gcc's __SANITIZE_THREAD__ flag */
--#define __SANITIZE_THREAD__
-+#ifdef __SANITIZE_THREAD__
- #define __no_sanitize_thread \
- 		__attribute__((no_sanitize("thread")))
- #else
+ 	ssk->sk_priority = sk->sk_priority;
+ 	ssk->sk_bound_dev_if = sk->sk_bound_dev_if;
 
 
