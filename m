@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACCF1E9B19;
-	Wed, 17 Sep 2025 12:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38101E7C2D;
+	Wed, 17 Sep 2025 12:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113850; cv=none; b=smQz1zdiYIkRBQE6k5iGBrGXZVRmUkVkpMQvg9G5yMA4RHcEp2zoMeIQ8h2OJGRNsmAg0OfomFQKNd+HTJvvdOmoBF4hLQT/AMuUwZ5mwHyIooXlTRf9Oh9AiDW//y30B3zZj4j5S19gMIuvI86UiM3zIO9dQAUnUHdG7J/Ti84=
+	t=1758113853; cv=none; b=TG2nH35Ow6prxbKOzRsHI/Yd4cWpVHHeFe/NjY9XRejnQgPQ9OimtjCzzW23N0kx86VIkr0JeVQtWbA6sn9TU5XbYQuBuZtbANv/bdKquYpiaz/4z3gMNhIX3cnbW7AjYNkf44ewLkIGhWIvXjVlSfnlU2nmfUW05SA8wJovWLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113850; c=relaxed/simple;
-	bh=SnrqYQnqjfFu4l2q99QVO8SDyUDU1XOnwkZKNE759IM=;
+	s=arc-20240116; t=1758113853; c=relaxed/simple;
+	bh=S3bcra5z521rKzKZkoSwRF6Y+b3ea7Mt9j4Gh0+4VJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btoXIGfEIcbMJ2XC2nvAsPic0RYThHNS8pEZoW38ka/OL7nwirkTvgjX4cuEc45NZQQTigawj4heJB7cxqAoY5gOOj50gtbVKmd3/Akyk4ES97iNlknkQvsQ3C1iB4z1FEbQ5i2buQMybqnk+dg2bUi5igeiD56L03NWvIWeW/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKFlSxRV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MF5hPoQjIpYzXjy/RA7FM/OvhO7AXJ8NKueaHb8qOHXhxBAi3j8lEd5642lRxv4i6r1oJPxsspJV98FEpbFSMD899MPRSm+dxr6L4RhArS6vC2pfPkKQk44eUW6poIsvuJfTXsYukvP7j+XmowyyZqSr9kiA8djElEFDsNZca/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rdta3ZA1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKFlSxRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03252C4CEF0;
-	Wed, 17 Sep 2025 12:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rdta3ZA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FD12C4CEF0;
+	Wed, 17 Sep 2025 12:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113850;
-	bh=SnrqYQnqjfFu4l2q99QVO8SDyUDU1XOnwkZKNE759IM=;
+	s=korg; t=1758113853;
+	bh=S3bcra5z521rKzKZkoSwRF6Y+b3ea7Mt9j4Gh0+4VJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKFlSxRVT59o7g8h5V5mGxBqWVvbEGxrhT4ltm36CuGFbXZuCNNfAG2xLUwIie2w9
-	 96yumBYeo34cIQEHJ+A8nHvEZQlfYnrz9aHtJ/XXYLq1QGDg1ed1/5p3aJ7N8VMfd4
-	 Ila4fmSvC49CI/JCpdGjWqUgXMeRiBleZ2VJ6tjE=
+	b=Rdta3ZA1XUfz+SCfPFBCB+IAtRiIqUiOV6X8UC1Ku2Kg/Ah2kSidylWjYhR5JBkoE
+	 B7rnF4/RP3YNaMtO0hehyRgQ8gr0OTZHlwPjLuH20xUKO7megmSw5Wz1PcaWxjBElU
+	 4khI/CYRfmXIiNrlE/2nFhByC97rRvbskjlRn088=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/101] NFS: Serialise O_DIRECT i/o and truncate()
-Date: Wed, 17 Sep 2025 14:34:00 +0200
-Message-ID: <20250917123337.277113704@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 066/101] USB: serial: option: add Telit Cinterion LE910C4-WWX new compositions
+Date: Wed, 17 Sep 2025 14:34:49 +0200
+Message-ID: <20250917123338.437900072@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -50,100 +50,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-[ Upstream commit 9eb90f435415c7da4800974ed943e39b5578ee7f ]
+commit a5a261bea9bf8444300d1067b4a73bedee5b5227 upstream.
 
-Ensure that all O_DIRECT reads and writes are complete, and prevent the
-initiation of new i/o until the setattr operation that will truncate the
-file is complete.
+Add the following Telit Cinterion LE910C4-WWX new compositions:
 
-Fixes: a5864c999de6 ("NFS: Do not serialise O_DIRECT reads and writes")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+0x1034: tty (AT) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  8 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1034 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x1036: tty (AT) + tty (AT)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 10 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1036 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x1037: tty (diag) + tty (Telit custom) + tty (AT) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 15 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1037 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x1038: tty (Telit custom) + tty (AT) + tty (AT) + rmnet
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  9 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1038 Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x103b: tty (diag) + tty (Telit custom) + tty (AT) + tty (AT)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 10 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=103b Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x103c: tty (Telit custom) + tty (AT) + tty (AT)
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 11 Spd=480 MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=103c Rev=00.00
+S:  Manufacturer=Telit
+S:  Product=LE910C4-WWX
+S:  SerialNumber=93f617e7
+C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=fe Prot=ff Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c    |  4 +++-
- fs/nfs/internal.h | 10 ++++++++++
- fs/nfs/io.c       | 13 ++-----------
- 3 files changed, 15 insertions(+), 12 deletions(-)
+ drivers/usb/serial/option.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 7e7dd2aab449d..5cd5e4226db36 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -645,8 +645,10 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	trace_nfs_setattr_enter(inode);
- 
- 	/* Write all dirty data */
--	if (S_ISREG(inode->i_mode))
-+	if (S_ISREG(inode->i_mode)) {
-+		nfs_file_block_o_direct(NFS_I(inode));
- 		nfs_sync_inode(inode);
-+	}
- 
- 	fattr = nfs_alloc_fattr_with_label(NFS_SERVER(inode));
- 	if (fattr == NULL) {
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index e78f43a137231..bde81e0abf0ae 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -474,6 +474,16 @@ static inline bool nfs_file_io_is_buffered(struct nfs_inode *nfsi)
- 	return test_bit(NFS_INO_ODIRECT, &nfsi->flags) == 0;
- }
- 
-+/* Must be called with exclusively locked inode->i_rwsem */
-+static inline void nfs_file_block_o_direct(struct nfs_inode *nfsi)
-+{
-+	if (test_bit(NFS_INO_ODIRECT, &nfsi->flags)) {
-+		clear_bit(NFS_INO_ODIRECT, &nfsi->flags);
-+		inode_dio_wait(&nfsi->vfs_inode);
-+	}
-+}
-+
-+
- /* namespace.c */
- #define NFS_PATH_CANONICAL 1
- extern char *nfs_path(char **p, struct dentry *dentry,
-diff --git a/fs/nfs/io.c b/fs/nfs/io.c
-index 3388faf2acb9f..d275b0a250bf3 100644
---- a/fs/nfs/io.c
-+++ b/fs/nfs/io.c
-@@ -14,15 +14,6 @@
- 
- #include "internal.h"
- 
--/* Call with exclusively locked inode->i_rwsem */
--static void nfs_block_o_direct(struct nfs_inode *nfsi, struct inode *inode)
--{
--	if (test_bit(NFS_INO_ODIRECT, &nfsi->flags)) {
--		clear_bit(NFS_INO_ODIRECT, &nfsi->flags);
--		inode_dio_wait(inode);
--	}
--}
--
- /**
-  * nfs_start_io_read - declare the file is being used for buffered reads
-  * @inode: file inode
-@@ -57,7 +48,7 @@ nfs_start_io_read(struct inode *inode)
- 	err = down_write_killable(&inode->i_rwsem);
- 	if (err)
- 		return err;
--	nfs_block_o_direct(nfsi, inode);
-+	nfs_file_block_o_direct(nfsi);
- 	downgrade_write(&inode->i_rwsem);
- 
- 	return 0;
-@@ -90,7 +81,7 @@ nfs_start_io_write(struct inode *inode)
- 
- 	err = down_write_killable(&inode->i_rwsem);
- 	if (!err)
--		nfs_block_o_direct(NFS_I(inode), inode);
-+		nfs_file_block_o_direct(NFS_I(inode));
- 	return err;
- }
- 
--- 
-2.51.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1322,7 +1322,18 @@ static const struct usb_device_id option
+ 	 .driver_info = NCTRL(0) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1033, 0xff),	/* Telit LE910C1-EUX (ECM) */
+ 	 .driver_info = NCTRL(0) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1034, 0xff),	/* Telit LE910C4-WWX (rmnet) */
++	 .driver_info = RSVD(2) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1035, 0xff) }, /* Telit LE910C4-WWX (ECM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1036, 0xff) },  /* Telit LE910C4-WWX */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1037, 0xff),	/* Telit LE910C4-WWX (rmnet) */
++	 .driver_info = NCTRL(0) | NCTRL(1) | RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1038, 0xff),	/* Telit LE910C4-WWX (rmnet) */
++	 .driver_info = NCTRL(0) | RSVD(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x103b, 0xff),	/* Telit LE910C4-WWX */
++	 .driver_info = NCTRL(0) | NCTRL(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x103c, 0xff),	/* Telit LE910C4-WWX */
++	 .driver_info = NCTRL(0) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_LE922_USBCFG0),
+ 	  .driver_info = RSVD(0) | RSVD(1) | NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_LE922_USBCFG1),
 
 
