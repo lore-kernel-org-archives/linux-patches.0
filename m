@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0001B3925;
-	Wed, 17 Sep 2025 12:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E669530CB5A;
+	Wed, 17 Sep 2025 12:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113360; cv=none; b=GxOaY57nlphsRCGhI54Ypki5dW/y64aHZZd8Yg5it1CfTPdzogv1h/0BWKSLFAYQbESQId3/P1BTQMXo1YaGNvlOIMJoWBZ/eluQAbhPfd6rlYy/yKzWrwMkDPjlTFUVPqMAY/lhiSXe2SrSbbjShNEwVpX7YHhJ3jYtKA7raoU=
+	t=1758113364; cv=none; b=FpKMu61qGGKREgv3AKcQ/zHG9b4rwM+yVDdsvKcm/Vfsr+47O8/xaX+qG9C4MYWAN8xjaYAETPq7JBc5XArKdGFNDMosnagSj3RjoDypMRDYiPOKHP44gtqASyw4o2WIujfur/VHrPAoRGJtMDPOGPA2RfO0Tp+mnkBZV4ftGqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113360; c=relaxed/simple;
-	bh=z2jLnjSHJclR7YDtARThHRnCI5nAdGHDf6klATNGeLE=;
+	s=arc-20240116; t=1758113364; c=relaxed/simple;
+	bh=wDWahY85qUPfqIY9GST4aw3sdiYdcRV4HWp4q+r00ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNkH5dtfwHITIfRpv/ZnJ7Re5bdFJAZa+vg9be+O87MnHHRjEcYAFnDECBa1aVqUKp+ktcjNdrgK0xaoyjTVZsHKwzz9CoYN4TsxhzXzAiDNcxAe/+CovfVC8nAeoJr1k0DhbVQ4y6DO3BZKuA13wQRd6OcTE0NaxpVi9G9JRT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKcPz0lu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X2F2eAWz7tMIQi/d2Fi9hAW86aKwxXdR5c1bxM0Yu2agdocpx332sAZ6Mwl8db8z5Tsnehi5aLsPSeYUF6YCNGA8mGxJQT/dn413lTu/8efdfV8+sprV6jeNr9vPPi/xhUgal8PgzMvbE0gIzTaROfeeKQTEow56OORVlHVr9ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLCmkllu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKcPz0lu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F3FC4CEF0;
-	Wed, 17 Sep 2025 12:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLCmkllu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E01C4CEF0;
+	Wed, 17 Sep 2025 12:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113360;
-	bh=z2jLnjSHJclR7YDtARThHRnCI5nAdGHDf6klATNGeLE=;
+	s=korg; t=1758113363;
+	bh=wDWahY85qUPfqIY9GST4aw3sdiYdcRV4HWp4q+r00ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKcPz0luiyaXS4iGnY1BTC+gJv7CT7/GbTUt/tG3L418Qw8Mzfzf0rH5Jh4eGrCXE
-	 CLHaor7hbABUPQz4DWotedM8U2K8ZTa0o7ijO+wap412RwK8Q+6tGLO3slw1tkr9Gb
-	 HLIFqyvZtbCbPDDWmsZ7BrMdjtCHiDSTRAmk0XR8=
+	b=zLCmkllu8r+9gOMwmbwVoPKN+O8QEpqk0SOVupBMZX4I4YgEPZZPZDt0GfoqiwuT/
+	 DoVOEERUz59Ovf2DSGoZQsRZB+T06N/TYrTt1MkEhAdSpOtg86RNGqgItd5yloFFI2
+	 NGooqsveMyXMXCurwvvMo6pnzKjxXyXJBLD4ifZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Weimer <fweimer@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.12 061/140] fuse: prevent overflow in copy_file_range return value
-Date: Wed, 17 Sep 2025 14:33:53 +0200
-Message-ID: <20250917123345.795430167@linuxfoundation.org>
+	Wei Yang <richard.weiyang@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Barry Song <baohua@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 062/140] mm/khugepaged: fix the address passed to notifier on testing young
+Date: Wed, 17 Sep 2025 14:33:54 +0200
+Message-ID: <20250917123345.818392666@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -50,38 +59,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-commit 1e08938c3694f707bb165535df352ac97a8c75c9 upstream.
+commit 394bfac1c7f7b701c2c93834c5761b9c9ceeebcf upstream.
 
-The FUSE protocol uses struct fuse_write_out to convey the return value of
-copy_file_range, which is restricted to uint32_t.  But the COPY_FILE_RANGE
-interface supports a 64-bit size copies.
+Commit 8ee53820edfd ("thp: mmu_notifier_test_young") introduced
+mmu_notifier_test_young(), but we are passing the wrong address.
+In xxx_scan_pmd(), the actual iteration address is "_address" not
+"address".  We seem to misuse the variable on the very beginning.
 
-Currently the number of bytes copied is silently truncated to 32-bit, which
-may result in poor performance or even failure to copy in case of
-truncation to zero.
+Change it to the right one.
 
-Reported-by: Florian Weimer <fweimer@redhat.com>
-Closes: https://lore.kernel.org/all/lhuh5ynl8z5.fsf@oldenburg.str.redhat.com/
-Fixes: 88bc7d5097a1 ("fuse: add support for copy_file_range()")
-Cc: <stable@vger.kernel.org> # v4.20
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[akpm@linux-foundation.org fix whitespace, per everyone]
+Link: https://lkml.kernel.org/r/20250822063318.11644-1-richard.weiyang@gmail.com
+Fixes: 8ee53820edfd ("thp: mmu_notifier_test_young")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/file.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/khugepaged.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -3229,7 +3229,7 @@ static ssize_t __fuse_copy_file_range(st
- 		.nodeid_out = ff_out->nodeid,
- 		.fh_out = ff_out->fh,
- 		.off_out = pos_out,
--		.len = len,
-+		.len = min_t(size_t, len, UINT_MAX & PAGE_MASK),
- 		.flags = flags
- 	};
- 	struct fuse_write_out outarg;
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1403,8 +1403,8 @@ static int hpage_collapse_scan_pmd(struc
+ 		 */
+ 		if (cc->is_khugepaged &&
+ 		    (pte_young(pteval) || folio_test_young(folio) ||
+-		     folio_test_referenced(folio) || mmu_notifier_test_young(vma->vm_mm,
+-								     address)))
++		     folio_test_referenced(folio) ||
++		     mmu_notifier_test_young(vma->vm_mm, _address)))
+ 			referenced++;
+ 	}
+ 	if (!writable) {
 
 
