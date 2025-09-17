@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB4930CB51;
-	Wed, 17 Sep 2025 12:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1031F2EBB8A;
+	Wed, 17 Sep 2025 12:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113101; cv=none; b=rzFt2sJSvYpDAP8O969NQrSZ5hcO16zMZHjWuWj/ccgGn8XGarWA/xbB4y0qwCx6b3o6fyJ0WEldOgxy7nwBxbHgb4qhg4c3IHZijNu5CTiXTxEEy2uYAkYtDqqWqS0jvd8LEP2g24lclp6b+PlN7t+QzgwDYu6+/nF6ja9/RRQ=
+	t=1758113105; cv=none; b=Er6xSPTgUUX/khyNZjwbz3VaZBMOeO6Ne+MMRuNWnxcv24czxAYq6t5D9zhhOxcuqprQ0PMyx/4UfjDjS+RWgwzP+fiT5y44yim557+mhQbNiO3MODNSxkBGppe81AAYocYFxsM59mgRho5Dt70sPcsAgQzfjBGHSKDtigw9kO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113101; c=relaxed/simple;
-	bh=EI1G9mB/M03txTvR6kFjiE4cBrp3VB2yrqXjo9uBuPY=;
+	s=arc-20240116; t=1758113105; c=relaxed/simple;
+	bh=Suv/3N35CecV1ng5K70ImqUeTYlFZBbaS6n0Og8BCBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1x76vZym6b4gkg+htC5CBegds+D3oJQ/e6EOIjorwMiq8B4DzBlZjb/D6lJuxf/sVUQ2/+I/H7FObh2FvHaJyqdejVQdQZ4DTAtZWHrlUd3AiwRM8NlIzUdiItsKWlBtQoCoc9kCvrRfeCB/mCJABNxHQwSzWHXYDC/Xg3O5eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbxAxGy5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POrFocmjltHUJaCD1kZx0FXmASGEQr0FTfYv4yTJnN+gjIbu/apvsoybDWOvDIN8m2DJP4plkiKT6TtIwoCBByFqhFEiaJ7fqZNXWwgiKqkS18ruTRPqE/zYo6tx3yyhcw0EHWv5u9TVQySyFayKABEzQwSI8SaTpGzPwsj863E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNRqZKn6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbxAxGy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7CBC4CEF0;
-	Wed, 17 Sep 2025 12:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNRqZKn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAF0C4CEF0;
+	Wed, 17 Sep 2025 12:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113101;
-	bh=EI1G9mB/M03txTvR6kFjiE4cBrp3VB2yrqXjo9uBuPY=;
+	s=korg; t=1758113104;
+	bh=Suv/3N35CecV1ng5K70ImqUeTYlFZBbaS6n0Og8BCBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JbxAxGy5Dxh4LNq9nwS/n/u6P6L+d+kvoxRiYGmYS2OrGdOT0wdVbc0q/bQu5rmZK
-	 SpezYqHPHlupUATwkwxX+vRwfJpdoTlkxT1SxnAwdoQXbhw5oe1WznxZDYZUn9PRF0
-	 dAXuprHZLFaprtVq2OYTX1RVPibV3136eawq7zf0=
+	b=yNRqZKn6TbVkvmWXWUR+vTkAj0KgVfcTQoYlg7gZFXOnK1kVIxlcc/unGX2b6w8ld
+	 unaQge34E2ax8FugYEzubJ9IqlF06IPlcorFxSDk65PRO/aA3uoykXNnWtd5ulUBn8
+	 ozz8PlVLGFbbM4qLW/JXL2OaFbXJXRIMnwnzlRBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 172/189] erofs: unify meta buffers in z_erofs_fill_inode()
-Date: Wed, 17 Sep 2025 14:34:42 +0200
-Message-ID: <20250917123356.082582101@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+5a398eb460ddaa6f242f@syzkaller.appspotmail.com
+Subject: [PATCH 6.16 173/189] erofs: fix invalid algorithm for encoded extents
+Date: Wed, 17 Sep 2025 14:34:43 +0200
+Message-ID: <20250917123356.108454687@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,111 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit df50848bcd9f17e4e60e6d5823d0e8fe8982bbab ]
+[ Upstream commit 131897c65e2b86cf14bec7379f44aa8fbb407526 ]
 
-There is no need to keep additional local metabufs since we already
-have one in `struct erofs_map_blocks`.
+The current algorithm sanity checks do not properly apply to new
+encoded extents.
 
-This was actually a leftover when applying meta buffers to zmap
-operations, see commit 09c543798c3c ("erofs: use meta buffers for
-zmap operations").
+Unify the algorithm check with Z_EROFS_COMPRESSION(_RUNTIME)_MAX
+and ensure consistency with sbi->available_compr_algs.
 
+Reported-and-tested-by: syzbot+5a398eb460ddaa6f242f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/68a8bd20.050a0220.37038e.005a.GAE@google.com
+Fixes: 1d191b4ca51d ("erofs: implement encoded extent metadata")
+Thanks-to: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250716064152.3537457-1-hsiangkao@linux.alibaba.com
-Stable-dep-of: 131897c65e2b ("erofs: fix invalid algorithm for encoded extents")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ fs/erofs/zmap.c | 67 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 37 insertions(+), 30 deletions(-)
 
 diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 301afd9be4e30..cd33a5d29406c 100644
+index cd33a5d29406c..14d01474ad9dd 100644
 --- a/fs/erofs/zmap.c
 +++ b/fs/erofs/zmap.c
-@@ -641,13 +641,12 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
- 	return 0;
- }
+@@ -403,10 +403,10 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
+ 		.inode = inode,
+ 		.map = map,
+ 	};
+-	int err = 0;
+-	unsigned int endoff, afmt;
++	unsigned int endoff;
+ 	unsigned long initial_lcn;
+ 	unsigned long long ofs, end;
++	int err;
  
--static int z_erofs_fill_inode_lazy(struct inode *inode)
-+static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
+ 	ofs = flags & EROFS_GET_BLOCKS_FINDTAIL ? inode->i_size - 1 : map->m_la;
+ 	if (fragment && !(flags & EROFS_GET_BLOCKS_FINDTAIL) &&
+@@ -502,20 +502,15 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
+ 			err = -EFSCORRUPTED;
+ 			goto unmap_out;
+ 		}
+-		afmt = vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER ?
+-			Z_EROFS_COMPRESSION_INTERLACED :
+-			Z_EROFS_COMPRESSION_SHIFTED;
++		if (vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER)
++			map->m_algorithmformat = Z_EROFS_COMPRESSION_INTERLACED;
++		else
++			map->m_algorithmformat = Z_EROFS_COMPRESSION_SHIFTED;
++	} else if (m.headtype == Z_EROFS_LCLUSTER_TYPE_HEAD2) {
++		map->m_algorithmformat = vi->z_algorithmtype[1];
+ 	} else {
+-		afmt = m.headtype == Z_EROFS_LCLUSTER_TYPE_HEAD2 ?
+-			vi->z_algorithmtype[1] : vi->z_algorithmtype[0];
+-		if (!(EROFS_I_SB(inode)->available_compr_algs & (1 << afmt))) {
+-			erofs_err(sb, "inconsistent algorithmtype %u for nid %llu",
+-				  afmt, vi->nid);
+-			err = -EFSCORRUPTED;
+-			goto unmap_out;
+-		}
++		map->m_algorithmformat = vi->z_algorithmtype[0];
+ 	}
+-	map->m_algorithmformat = afmt;
+ 
+ 	if ((flags & EROFS_GET_BLOCKS_FIEMAP) ||
+ 	    ((flags & EROFS_GET_BLOCKS_READMORE) &&
+@@ -645,9 +640,9 @@ static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
  {
  	struct erofs_inode *const vi = EROFS_I(inode);
  	struct super_block *const sb = inode->i_sb;
- 	int err, headnr;
- 	erofs_off_t pos;
--	struct erofs_buf buf = __EROFS_BUF_INITIALIZER;
+-	int err, headnr;
+-	erofs_off_t pos;
  	struct z_erofs_map_header *h;
++	erofs_off_t pos;
++	int err = 0;
  
  	if (test_bit(EROFS_I_Z_INITED_BIT, &vi->flags)) {
-@@ -667,7 +666,7 @@ static int z_erofs_fill_inode_lazy(struct inode *inode)
+ 		/*
+@@ -661,7 +656,6 @@ static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
+ 	if (wait_on_bit_lock(&vi->flags, EROFS_I_BL_Z_BIT, TASK_KILLABLE))
+ 		return -ERESTARTSYS;
+ 
+-	err = 0;
+ 	if (test_bit(EROFS_I_Z_INITED_BIT, &vi->flags))
  		goto out_unlock;
  
- 	pos = ALIGN(erofs_iloc(inode) + vi->inode_isize + vi->xattr_isize, 8);
--	h = erofs_read_metabuf(&buf, sb, pos);
-+	h = erofs_read_metabuf(&map->buf, sb, pos);
- 	if (IS_ERR(h)) {
- 		err = PTR_ERR(h);
- 		goto out_unlock;
-@@ -705,7 +704,7 @@ static int z_erofs_fill_inode_lazy(struct inode *inode)
- 		erofs_err(sb, "unknown HEAD%u format %u for nid %llu, please upgrade kernel",
- 			  headnr + 1, vi->z_algorithmtype[headnr], vi->nid);
- 		err = -EOPNOTSUPP;
--		goto out_put_metabuf;
-+		goto out_unlock;
- 	}
+@@ -698,15 +692,6 @@ static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
+ 	else if (vi->z_advise & Z_EROFS_ADVISE_INLINE_PCLUSTER)
+ 		vi->z_idata_size = le16_to_cpu(h->h_idata_size);
  
+-	headnr = 0;
+-	if (vi->z_algorithmtype[0] >= Z_EROFS_COMPRESSION_MAX ||
+-	    vi->z_algorithmtype[++headnr] >= Z_EROFS_COMPRESSION_MAX) {
+-		erofs_err(sb, "unknown HEAD%u format %u for nid %llu, please upgrade kernel",
+-			  headnr + 1, vi->z_algorithmtype[headnr], vi->nid);
+-		err = -EOPNOTSUPP;
+-		goto out_unlock;
+-	}
+-
  	if (!erofs_sb_has_big_pcluster(EROFS_SB(sb)) &&
-@@ -714,7 +713,7 @@ static int z_erofs_fill_inode_lazy(struct inode *inode)
- 		erofs_err(sb, "per-inode big pcluster without sb feature for nid %llu",
- 			  vi->nid);
- 		err = -EFSCORRUPTED;
--		goto out_put_metabuf;
-+		goto out_unlock;
- 	}
- 	if (vi->datalayout == EROFS_INODE_COMPRESSED_COMPACT &&
- 	    !(vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1) ^
-@@ -722,27 +721,25 @@ static int z_erofs_fill_inode_lazy(struct inode *inode)
- 		erofs_err(sb, "big pcluster head1/2 of compact indexes should be consistent for nid %llu",
- 			  vi->nid);
- 		err = -EFSCORRUPTED;
--		goto out_put_metabuf;
-+		goto out_unlock;
- 	}
- 
- 	if (vi->z_idata_size ||
- 	    (vi->z_advise & Z_EROFS_ADVISE_FRAGMENT_PCLUSTER)) {
--		struct erofs_map_blocks map = {
-+		struct erofs_map_blocks tm = {
- 			.buf = __EROFS_BUF_INITIALIZER
- 		};
- 
--		err = z_erofs_map_blocks_fo(inode, &map,
-+		err = z_erofs_map_blocks_fo(inode, &tm,
- 					    EROFS_GET_BLOCKS_FINDTAIL);
--		erofs_put_metabuf(&map.buf);
-+		erofs_put_metabuf(&tm.buf);
- 		if (err < 0)
--			goto out_put_metabuf;
-+			goto out_unlock;
- 	}
- done:
- 	/* paired with smp_mb() at the beginning of the function */
- 	smp_mb();
- 	set_bit(EROFS_I_Z_INITED_BIT, &vi->flags);
--out_put_metabuf:
--	erofs_put_metabuf(&buf);
- out_unlock:
- 	clear_and_wake_up_bit(EROFS_I_BL_Z_BIT, &vi->flags);
+ 	    vi->z_advise & (Z_EROFS_ADVISE_BIG_PCLUSTER_1 |
+ 			    Z_EROFS_ADVISE_BIG_PCLUSTER_2)) {
+@@ -745,6 +730,30 @@ static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
  	return err;
-@@ -760,7 +757,7 @@ int z_erofs_map_blocks_iter(struct inode *inode, struct erofs_map_blocks *map,
- 		map->m_la = inode->i_size;
- 		map->m_flags = 0;
- 	} else {
--		err = z_erofs_fill_inode_lazy(inode);
-+		err = z_erofs_fill_inode(inode, map);
- 		if (!err) {
- 			if (vi->datalayout == EROFS_INODE_COMPRESSED_FULL &&
- 			    (vi->z_advise & Z_EROFS_ADVISE_EXTENTS))
+ }
+ 
++static int z_erofs_map_sanity_check(struct inode *inode,
++				    struct erofs_map_blocks *map)
++{
++	struct erofs_sb_info *sbi = EROFS_I_SB(inode);
++
++	if (!(map->m_flags & EROFS_MAP_ENCODED))
++		return 0;
++	if (unlikely(map->m_algorithmformat >= Z_EROFS_COMPRESSION_RUNTIME_MAX)) {
++		erofs_err(inode->i_sb, "unknown algorithm %d @ pos %llu for nid %llu, please upgrade kernel",
++			  map->m_algorithmformat, map->m_la, EROFS_I(inode)->nid);
++		return -EOPNOTSUPP;
++	}
++	if (unlikely(map->m_algorithmformat < Z_EROFS_COMPRESSION_MAX &&
++		     !(sbi->available_compr_algs & (1 << map->m_algorithmformat)))) {
++		erofs_err(inode->i_sb, "inconsistent algorithmtype %u for nid %llu",
++			  map->m_algorithmformat, EROFS_I(inode)->nid);
++		return -EFSCORRUPTED;
++	}
++	if (unlikely(map->m_plen > Z_EROFS_PCLUSTER_MAX_SIZE ||
++		     map->m_llen > Z_EROFS_PCLUSTER_MAX_DSIZE))
++		return -EOPNOTSUPP;
++	return 0;
++}
++
+ int z_erofs_map_blocks_iter(struct inode *inode, struct erofs_map_blocks *map,
+ 			    int flags)
+ {
+@@ -765,10 +774,8 @@ int z_erofs_map_blocks_iter(struct inode *inode, struct erofs_map_blocks *map,
+ 			else
+ 				err = z_erofs_map_blocks_fo(inode, map, flags);
+ 		}
+-		if (!err && (map->m_flags & EROFS_MAP_ENCODED) &&
+-		    unlikely(map->m_plen > Z_EROFS_PCLUSTER_MAX_SIZE ||
+-			     map->m_llen > Z_EROFS_PCLUSTER_MAX_DSIZE))
+-			err = -EOPNOTSUPP;
++		if (!err)
++			err = z_erofs_map_sanity_check(inode, map);
+ 		if (err)
+ 			map->m_llen = 0;
+ 	}
 -- 
 2.51.0
 
