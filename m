@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A49183CA6;
-	Wed, 17 Sep 2025 13:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E611F4192;
+	Wed, 17 Sep 2025 13:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114090; cv=none; b=IdxtSDyrt46otIjTRFrQeBD8QU8/O+vlTtIG31MElcZYKXkjuYtY+3301fgcCiv6OhAIu71Ypi2ztqNW9LxsEQDXLM5p+oVK8o9vyOwqtZNPI4FWC74Addao8p5dRYFVXssDe0ASIL6FYukGfFiXFCRJctJFr9YRU/3vQq4W9PY=
+	t=1758114093; cv=none; b=FdAtkNDlUk3Z6Y+XauOKUqnvJiw0sBwnOhNMjh39Vna814WdsMIP4YDm8C/0qtWabtdbULThuWL56iTdDT2FVr3FuAb2MIaCioVNicvrh6wxBS3hxQv+WPjJFk9tWC/dbI/bYb2mCrtWd1dPkjNoc78wJTLmIkPqR+Cbho1K3fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114090; c=relaxed/simple;
-	bh=CxD1ACyY7nqIdqsfJPTKN6A8GopMiqixr3YCTAz3jlE=;
+	s=arc-20240116; t=1758114093; c=relaxed/simple;
+	bh=hKdmHRXuzYO99eAyhCpjwwpRwSvHK5/770zP81Xhzbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwQj0UVC2fVgrhpfZglS5Yfo/eOd8czTio3NmcbHTTeIEmeGndSL5ASBXbsah82hLRSwnTuDnaz4U5sv3X7CwyZzewgrtWSbPwrgZerELeFAl3n8QAaNtNvrAitYh49LVtgM9Dtx9UoyfS5YyA00MWRImPdRWY+BGwqSl4nwOrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVQTsfWk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZmXGl6ASSA+ZIjTVbM/rWRRkT8WvtoM1JrwC3V3f1SFqE+k/oAab7EUOlMXkZ+8vaKrj/klxndPrwlY1SkouYyTmmdUQyPgTkzmz6E+p81+jDioPFq7Q4Sb51QuWcMv5eHEiRuPMJFQTaLyGXfyhVB/+dXMqoRmk3J8UsDjTLM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJFH1Ya0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVQTsfWk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB4BC4CEF0;
-	Wed, 17 Sep 2025 13:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJFH1Ya0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45867C4CEF0;
+	Wed, 17 Sep 2025 13:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114090;
-	bh=CxD1ACyY7nqIdqsfJPTKN6A8GopMiqixr3YCTAz3jlE=;
+	s=korg; t=1758114093;
+	bh=hKdmHRXuzYO99eAyhCpjwwpRwSvHK5/770zP81Xhzbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVQTsfWkvkS/cX/5dJ8tajXVytitfPHs/+LpxMSSsFXwjSoWn/sVwW6blllBDVrgZ
-	 QnjPn1xalEraAs0Yg38/Pbcxeg4P9N0CY+waQscAF0df11Gp3MtNWJ0GqavGbSUxX2
-	 sXlvOQPwYhlSCtSm/zGJtHM6XLQ94Rj/9eSXdCRk=
+	b=GJFH1Ya0r67xm8TvAdejfd/HDTnxOLgV/dPOCjyFGQG+R3AJJCaunHTJoMsGXGgtm
+	 51MxuA6pOBzc8OapN+sLCakqpzkzI4KIqvQhITwM2q8HJOBEK2vwKI11px4Udg+Gyz
+	 FovNVzycwicNqI5x7uikqkP1Sqwm/fGS/DFMEkFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 44/78] Input: i8042 - add TUXEDO InfinityBook Pro Gen10 AMD to i8042 quirk table
-Date: Wed, 17 Sep 2025 14:35:05 +0200
-Message-ID: <20250917123330.640752108@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 45/78] Revert "net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups"
+Date: Wed, 17 Sep 2025 14:35:06 +0200
+Message-ID: <20250917123330.666619944@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -51,46 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 1939a9fcb80353dd8b111aa1e79c691afbde08b4 upstream.
+commit 63a796558bc22ec699e4193d5c75534757ddf2e6 upstream.
 
-Occasionally wakes up from suspend with missing input on the internal
-keyboard. Setting the quirks appears to fix the issue for this device as
-well.
+This reverts commit 5537a4679403 ("net: usb: asix: ax88772: drop
+phylink use in PM to avoid MDIO runtime PM wakeups"), it breaks
+operation of asix ethernet usb dongle after system suspend-resume
+cycle.
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250826142646.13516-1-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/all/b5ea8296-f981-445d-a09a-2f389d7f6fdd@samsung.com/
+Fixes: 5537a4679403 ("net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/2945b9dbadb8ee1fee058b19554a5cb14f1763c1.1757601118.git.pabeni@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/usb/asix_devices.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1155,6 +1155,20 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
- 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "XxHP4NAx"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
-+					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
-+					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+	},
- 	/*
- 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
- 	 * after suspend fixable with the forcenorestore quirk.
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -607,8 +607,15 @@ static const struct net_device_ops ax887
+ 
+ static void ax88772_suspend(struct usbnet *dev)
+ {
++	struct asix_common_private *priv = dev->driver_priv;
+ 	u16 medium;
+ 
++	if (netif_running(dev->net)) {
++		rtnl_lock();
++		phylink_suspend(priv->phylink, false);
++		rtnl_unlock();
++	}
++
+ 	/* Stop MAC operation */
+ 	medium = asix_read_medium_status(dev, 1);
+ 	medium &= ~AX_MEDIUM_RE;
+@@ -637,6 +644,12 @@ static void ax88772_resume(struct usbnet
+ 	for (i = 0; i < 3; i++)
+ 		if (!priv->reset(dev, 1))
+ 			break;
++
++	if (netif_running(dev->net)) {
++		rtnl_lock();
++		phylink_resume(priv->phylink);
++		rtnl_unlock();
++	}
+ }
+ 
+ static int asix_resume(struct usb_interface *intf)
 
 
