@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C512FBE1D;
-	Wed, 17 Sep 2025 13:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4682F3161A1;
+	Wed, 17 Sep 2025 13:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114153; cv=none; b=W7lAfC45WV3DAs9xWwoeCXT0cQ6YoOUKUQ486XeBrKBT7I/Aennfwb1RpgcWVHTxZ2XMEBUR3wyPn6deZKP1KxImrgMlK0j4oGF5mRwtdhfpuN6GdLpoYBcOpcJyfBDIpKfJBwfvPolcLSkuzRXTCNpSDbQTm2EqdCV+WUX9zHs=
+	t=1758114156; cv=none; b=YQpkfIOR/nzc3HjqN7uOM8YYQTdopq8jGZk90XzRY5a6PNFj58/FVNym86hDixTe9U/TRi/4SobvmvdFGX9SkNFMN2CdtJQ95dBWAkIghDuasXkv2vRuEvrCDtqHBdeG+Jm5OrBhiWVns0eUZfKM5zUwJiDH1hjGw84Z91J6/9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114153; c=relaxed/simple;
-	bh=WNxL7YFfnQAg8O5rOSUMOcPr6XNyYs2arnL3eYYmMHI=;
+	s=arc-20240116; t=1758114156; c=relaxed/simple;
+	bh=dC9NtWqcdf0+gf09pCOO9jG/7iKkOP8eXTMryIff5FA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/H8vdVEoWeZUGIh56TBKpxxBpODakmW6aV71JXekXZRtBVSn7wa11gNRvW66Kn1eRT+Wt0mowzFRx+zMnr01WCf6+ZNLQo55dtKXGI9nJ4b4ghLfXUSWhxeCgQteHaVA1Mm2SmnsIJJLP3n7HSzhjWAaZSGSyP72Sjxwd3nr+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHBDidyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rS702wJZiDB8wpUi9wvIbqB1O9hqnQS/Zp7Z7Duz5FmBPOTihYpq06cIP/hdypc2H4iwDUwHo292+gD6uvy/6yImcuUT8vwPKS5q5Ge4klyRL0O6wfj+qjA3Cm+NVOZCd+CpJBUjF2A97ZGQ0+EdZV9PbJIr+TNGstobTVrSAWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSQmxa0Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHBDidyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F11BC4CEF0;
-	Wed, 17 Sep 2025 13:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSQmxa0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B981EC4CEF0;
+	Wed, 17 Sep 2025 13:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114153;
-	bh=WNxL7YFfnQAg8O5rOSUMOcPr6XNyYs2arnL3eYYmMHI=;
+	s=korg; t=1758114156;
+	bh=dC9NtWqcdf0+gf09pCOO9jG/7iKkOP8eXTMryIff5FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wHBDidyYe0IauUOSwT8IF9PpgdOjQG2zNJx+u3rDzuysvnsGvMnTUhGrvGLJjYEeQ
-	 QQbHKeO107TuRgYHUtc4B54M5hktUf3zMvql6HuorV+qQUhvUFF9UFiQC5uVepDA1X
-	 vA+9ze1Mf1o6ZAy3qrGY5UOHEZw3nrzB+pgDhheA=
+	b=SSQmxa0ZRijHRri3A7LWfeQLc6y2OEXjaYRxF89JG5a1QcATIuD0dCFesor0E25wm
+	 3RlrCerVwwdk0uqI41t1dsoJ4bOe1GGa5bo/bEZz37uPqczYlfIz1CMSCvcaD/EVAh
+	 Ju7jnxDJ6+Fixj/Q6O8G7E4aNJOnHdxdTRS76Zlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murali Karicheri <m-karicheri2@ti.com>,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 61/78] net: hsr: Add VLAN CTAG filter support
-Date: Wed, 17 Sep 2025 14:35:22 +0200
-Message-ID: <20250917123331.062851276@linuxfoundation.org>
+Subject: [PATCH 6.1 62/78] hsr: use rtnl lock when iterating over ports
+Date: Wed, 17 Sep 2025 14:35:23 +0200
+Message-ID: <20250917123331.087984170@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,142 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murali Karicheri <m-karicheri2@ti.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 1a8a63a5305e95519de6f941922dfcd8179f82e5 ]
+[ Upstream commit 8884c693991333ae065830554b9b0c96590b1bb2 ]
 
-This patch adds support for VLAN ctag based filtering at slave devices.
-The slave ethernet device may be capable of filtering ethernet packets
-based on VLAN ID. This requires that when the VLAN interface is created
-over an HSR/PRP interface, it passes the VID information to the
-associated slave ethernet devices so that it updates the hardware
-filters to filter ethernet frames based on VID. This patch adds the
-required functions to propagate the vid information to the slave
-devices.
+hsr_for_each_port is called in many places without holding the RCU read
+lock, this may trigger warnings on debug kernels. Most of the callers
+are actually hold rtnl lock. So add a new helper hsr_for_each_port_rtnl
+to allow callers in suitable contexts to iterate ports safely without
+explicit RCU locking.
 
-Signed-off-by: Murali Karicheri <m-karicheri2@ti.com>
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20241106091710.3308519-3-danishanwar@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8884c6939913 ("hsr: use rtnl lock when iterating over ports")
+This patch only fixed the callers that is hold rtnl lock. Other caller
+issues will be fixed in later patches.
+
+Fixes: c5a759117210 ("net/hsr: Use list_head (and rcu) instead of array for slave devices.")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250905091533.377443-2-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c | 80 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 79 insertions(+), 1 deletion(-)
+ net/hsr/hsr_device.c | 18 +++++++++---------
+ net/hsr/hsr_main.c   |  2 +-
+ net/hsr/hsr_main.h   |  3 +++
+ 3 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index e9a1a5cf120dd..cb4787327c66b 100644
+index cb4787327c66b..8b98b3f3b71d9 100644
 --- a/net/hsr/hsr_device.c
 +++ b/net/hsr/hsr_device.c
-@@ -464,6 +464,77 @@ static void hsr_change_rx_flags(struct net_device *dev, int change)
- 	}
- }
+@@ -59,7 +59,7 @@ static bool hsr_check_carrier(struct hsr_port *master)
  
-+static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
-+				   __be16 proto, u16 vid)
-+{
-+	bool is_slave_a_added = false;
-+	bool is_slave_b_added = false;
-+	struct hsr_port *port;
-+	struct hsr_priv *hsr;
-+	int ret = 0;
-+
-+	hsr = netdev_priv(dev);
-+
-+	hsr_for_each_port(hsr, port) {
-+		if (port->type == HSR_PT_MASTER ||
-+		    port->type == HSR_PT_INTERLINK)
-+			continue;
-+
-+		ret = vlan_vid_add(port->dev, proto, vid);
-+		switch (port->type) {
-+		case HSR_PT_SLAVE_A:
-+			if (ret) {
-+				/* clean up Slave-B */
-+				netdev_err(dev, "add vid failed for Slave-A\n");
-+				if (is_slave_b_added)
-+					vlan_vid_del(port->dev, proto, vid);
-+				return ret;
-+			}
-+
-+			is_slave_a_added = true;
-+			break;
-+
-+		case HSR_PT_SLAVE_B:
-+			if (ret) {
-+				/* clean up Slave-A */
-+				netdev_err(dev, "add vid failed for Slave-B\n");
-+				if (is_slave_a_added)
-+					vlan_vid_del(port->dev, proto, vid);
-+				return ret;
-+			}
-+
-+			is_slave_b_added = true;
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static int hsr_ndo_vlan_rx_kill_vid(struct net_device *dev,
-+				    __be16 proto, u16 vid)
-+{
-+	struct hsr_port *port;
-+	struct hsr_priv *hsr;
-+
-+	hsr = netdev_priv(dev);
-+
-+	hsr_for_each_port(hsr, port) {
-+		switch (port->type) {
-+		case HSR_PT_SLAVE_A:
-+		case HSR_PT_SLAVE_B:
-+			vlan_vid_del(port->dev, proto, vid);
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static const struct net_device_ops hsr_device_ops = {
- 	.ndo_change_mtu = hsr_dev_change_mtu,
- 	.ndo_open = hsr_dev_open,
-@@ -472,6 +543,8 @@ static const struct net_device_ops hsr_device_ops = {
- 	.ndo_change_rx_flags = hsr_change_rx_flags,
- 	.ndo_fix_features = hsr_fix_features,
- 	.ndo_set_rx_mode = hsr_set_rx_mode,
-+	.ndo_vlan_rx_add_vid = hsr_ndo_vlan_rx_add_vid,
-+	.ndo_vlan_rx_kill_vid = hsr_ndo_vlan_rx_kill_vid,
- };
+ 	ASSERT_RTNL();
  
- static struct device_type hsr_type = {
-@@ -512,7 +585,8 @@ void hsr_dev_setup(struct net_device *dev)
+-	hsr_for_each_port(master->hsr, port) {
++	hsr_for_each_port_rtnl(master->hsr, port) {
+ 		if (port->type != HSR_PT_MASTER && is_slave_up(port->dev)) {
+ 			netif_carrier_on(master->dev);
+ 			return true;
+@@ -109,7 +109,7 @@ int hsr_get_max_mtu(struct hsr_priv *hsr)
+ 	struct hsr_port *port;
  
- 	dev->hw_features = NETIF_F_SG | NETIF_F_FRAGLIST | NETIF_F_HIGHDMA |
- 			   NETIF_F_GSO_MASK | NETIF_F_HW_CSUM |
--			   NETIF_F_HW_VLAN_CTAG_TX;
-+			   NETIF_F_HW_VLAN_CTAG_TX |
-+			   NETIF_F_HW_VLAN_CTAG_FILTER;
+ 	mtu_max = ETH_DATA_LEN;
+-	hsr_for_each_port(hsr, port)
++	hsr_for_each_port_rtnl(hsr, port)
+ 		if (port->type != HSR_PT_MASTER)
+ 			mtu_max = min(port->dev->mtu, mtu_max);
  
- 	dev->features = dev->hw_features;
+@@ -144,7 +144,7 @@ static int hsr_dev_open(struct net_device *dev)
+ 	hsr = netdev_priv(dev);
+ 	designation = '\0';
  
-@@ -599,6 +673,10 @@ int hsr_dev_finalize(struct net_device *hsr_dev, struct net_device *slave[2],
- 	    (slave[1]->features & NETIF_F_HW_HSR_FWD))
- 		hsr->fwd_offloaded = true;
+-	hsr_for_each_port(hsr, port) {
++	hsr_for_each_port_rtnl(hsr, port) {
+ 		if (port->type == HSR_PT_MASTER)
+ 			continue;
+ 		switch (port->type) {
+@@ -174,7 +174,7 @@ static int hsr_dev_close(struct net_device *dev)
+ 	struct hsr_priv *hsr;
  
-+	if ((slave[0]->features & NETIF_F_HW_VLAN_CTAG_FILTER) &&
-+	    (slave[1]->features & NETIF_F_HW_VLAN_CTAG_FILTER))
-+		hsr_dev->features |= NETIF_F_HW_VLAN_CTAG_FILTER;
+ 	hsr = netdev_priv(dev);
+-	hsr_for_each_port(hsr, port) {
++	hsr_for_each_port_rtnl(hsr, port) {
+ 		if (port->type == HSR_PT_MASTER)
+ 			continue;
+ 		switch (port->type) {
+@@ -207,7 +207,7 @@ static netdev_features_t hsr_features_recompute(struct hsr_priv *hsr,
+ 	 * may become enabled.
+ 	 */
+ 	features &= ~NETIF_F_ONE_FOR_ALL;
+-	hsr_for_each_port(hsr, port)
++	hsr_for_each_port_rtnl(hsr, port)
+ 		features = netdev_increment_features(features,
+ 						     port->dev->features,
+ 						     mask);
+@@ -425,7 +425,7 @@ static void hsr_set_rx_mode(struct net_device *dev)
+ 
+ 	hsr = netdev_priv(dev);
+ 
+-	hsr_for_each_port(hsr, port) {
++	hsr_for_each_port_rtnl(hsr, port) {
+ 		if (port->type == HSR_PT_MASTER)
+ 			continue;
+ 		switch (port->type) {
+@@ -447,7 +447,7 @@ static void hsr_change_rx_flags(struct net_device *dev, int change)
+ 
+ 	hsr = netdev_priv(dev);
+ 
+-	hsr_for_each_port(hsr, port) {
++	hsr_for_each_port_rtnl(hsr, port) {
+ 		if (port->type == HSR_PT_MASTER)
+ 			continue;
+ 		switch (port->type) {
+@@ -475,7 +475,7 @@ static int hsr_ndo_vlan_rx_add_vid(struct net_device *dev,
+ 
+ 	hsr = netdev_priv(dev);
+ 
+-	hsr_for_each_port(hsr, port) {
++	hsr_for_each_port_rtnl(hsr, port) {
+ 		if (port->type == HSR_PT_MASTER ||
+ 		    port->type == HSR_PT_INTERLINK)
+ 			continue;
+@@ -521,7 +521,7 @@ static int hsr_ndo_vlan_rx_kill_vid(struct net_device *dev,
+ 
+ 	hsr = netdev_priv(dev);
+ 
+-	hsr_for_each_port(hsr, port) {
++	hsr_for_each_port_rtnl(hsr, port) {
+ 		switch (port->type) {
+ 		case HSR_PT_SLAVE_A:
+ 		case HSR_PT_SLAVE_B:
+diff --git a/net/hsr/hsr_main.c b/net/hsr/hsr_main.c
+index 257b50124cee5..c325ddad539a7 100644
+--- a/net/hsr/hsr_main.c
++++ b/net/hsr/hsr_main.c
+@@ -22,7 +22,7 @@ static bool hsr_slave_empty(struct hsr_priv *hsr)
+ {
+ 	struct hsr_port *port;
+ 
+-	hsr_for_each_port(hsr, port)
++	hsr_for_each_port_rtnl(hsr, port)
+ 		if (port->type != HSR_PT_MASTER)
+ 			return false;
+ 	return true;
+diff --git a/net/hsr/hsr_main.h b/net/hsr/hsr_main.h
+index 044e0b456fcfb..8c011b113411f 100644
+--- a/net/hsr/hsr_main.h
++++ b/net/hsr/hsr_main.h
+@@ -215,6 +215,9 @@ struct hsr_priv {
+ #define hsr_for_each_port(hsr, port) \
+ 	list_for_each_entry_rcu((port), &(hsr)->ports, port_list)
+ 
++#define hsr_for_each_port_rtnl(hsr, port) \
++	list_for_each_entry_rcu((port), &(hsr)->ports, port_list, lockdep_rtnl_is_held())
 +
- 	res = register_netdevice(hsr_dev);
- 	if (res)
- 		goto err_unregister;
+ struct hsr_port *hsr_port_get_hsr(struct hsr_priv *hsr, enum hsr_port_type pt);
+ 
+ /* Caller must ensure skb is a valid HSR frame */
 -- 
 2.51.0
 
