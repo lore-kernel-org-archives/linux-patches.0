@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601F518A6CF;
-	Wed, 17 Sep 2025 12:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C691F09B6;
+	Wed, 17 Sep 2025 12:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112934; cv=none; b=Fs7O1SpGn8hYYV4UGa4ZDp0JG29CTvS06eu4AR108b+afXWL/w8rEJSJgi1Pcg2m3ZZ1vL3UxCWiIpfbBN0GUATwNH3I/o8E3yskvbf8hjTJzKTOjChFKU5H5H/wtf1H+eTRDkkhvUkzR99mda2cxZy1Iqhj6gH71x8lRJYf8qQ=
+	t=1758112937; cv=none; b=r7bhHKthIJpOtl2pxOZkc7XJrsm1xd4YWRkkAUr1ulMVmRPAnbmYtT+D4tXYjSZLPK2nKlAVyytdoB97Of+V/Py6aGs08ho2RMiyFc1OLCgVjfwZLgywlGEKWr6CSIrW1ZdRsZICuFat/+Wc2Z8rM6ZpC61g47xWD/uHFYBXhek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112934; c=relaxed/simple;
-	bh=bO3FtTIVunsPXbOaYihxPQgyzwpSbRFnUott6tgYXLM=;
+	s=arc-20240116; t=1758112937; c=relaxed/simple;
+	bh=0BL/g2Bq+dUO0aKqZFyb7f3V925BTw/zxWQm98r8U78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5abuf6B8U6HUbrZr8yU81a/ACRpfnpZp3UIvNtsRFctiTLKW4fBFphUv2RmZ3EWIpZbc5zqQufqBlVY/shnQgWWuqhhaSwQvobxV/wG0YZhKOPNU9JvkYdO246k+hINQeO6IIshYsildhgdCuPpe9tJkwYkmwmDTgWrMRpQXQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LuNFBFlG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOo5gATpfGXF5UXeQd2641bU/UpJkHkxhe6klaJ/WlIFtiQdsc+0B90FRTKt2pr222CNtlL8nH8TMfcvBvjCBeFHrrkOYxiXy94MSotleaEuzBb8knNuS7oXKOvidotRzUtmxH6FYvGvWKyct/JaSM+JK5DDlmtYHY4gQBmAeWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrGJCG1I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuNFBFlG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD186C4CEF0;
-	Wed, 17 Sep 2025 12:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrGJCG1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220ECC4CEF0;
+	Wed, 17 Sep 2025 12:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112934;
-	bh=bO3FtTIVunsPXbOaYihxPQgyzwpSbRFnUott6tgYXLM=;
+	s=korg; t=1758112937;
+	bh=0BL/g2Bq+dUO0aKqZFyb7f3V925BTw/zxWQm98r8U78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuNFBFlGrGcAj+VZwJewmOEAmPUQgfAnjDDqkd8uKyCR47PPf+Mjhczo0lDk0/lRE
-	 SmYCkPMs1X5RtEsiHSNfS6gMYK6rSSIoXq6YMS3zBBvQLXlfbHWzREyoUAQb9VEf1x
-	 epzt/ORpsh+A1bFgUP6LVN9MzvXepDgofvA700Sc=
+	b=GrGJCG1I9uLMPGIkv+sAh5PvRaD/eV7OoH1aaYNm10fzov0QVaIyvjiTXLDFZmROA
+	 6+7UYB1ekOa9p5EOUT03anwNCw9tu53NyviXhRJC0xupApCVk6mBhXwNmYBoMtkDLh
+	 OV5uJD96vRc4top8S6HMJyaOTjXzSkxjNAcsSX3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.16 121/189] serial: sc16is7xx: fix bug in flow control levels init
-Date: Wed, 17 Sep 2025 14:33:51 +0200
-Message-ID: <20250917123354.817986005@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.16 104/189] ceph: fix crash after fscrypt_encrypt_pagecache_blocks() error
+Date: Wed, 17 Sep 2025 14:33:34 +0200
+Message-ID: <20250917123354.405538447@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -49,83 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 535fd4c98452c87537a40610abba45daf5761ec6 upstream.
+commit 249e0a47cdb46bb9eae65511c569044bd8698d7d upstream.
 
-When trying to set MCR[2], XON1 is incorrectly accessed instead. And when
-writing to the TCR register to configure flow control levels, we are
-incorrectly writing to the MSR register. The default value of $00 is then
-used for TCR, which means that selectable trigger levels in FCR are used
-in place of TCR.
+The function move_dirty_folio_in_page_array() was created by commit
+ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method") by
+moving code from ceph_writepages_start() to this function.
 
-TCR/TLR access requires EFR[4] (enable enhanced functions) and MCR[2]
-to be set. EFR[4] is already set in probe().
+This new function is supposed to return an error code which is checked
+by the caller (now ceph_process_folio_batch()), and on error, the
+caller invokes redirty_page_for_writepage() and then breaks from the
+loop.
 
-MCR access requires LCR[7] to be zero.
+However, the refactoring commit has gone wrong, and it by accident, it
+always returns 0 (= success) because it first NULLs the pointer and
+then returns PTR_ERR(NULL) which is always 0.  This means errors are
+silently ignored, leaving NULL entries in the page array, which may
+later crash the kernel.
 
-Since LCR is set to $BF when trying to set MCR[2], XON1 is incorrectly
-accessed instead because MCR shares the same address space as XON1.
+The simple solution is to call PTR_ERR() before clearing the pointer.
 
-Since MCR[2] is unmodified and still zero, when writing to TCR we are in
-fact writing to MSR because TCR/TLR registers share the same address space
-as MSR/SPR.
-
-Fix by first removing useless reconfiguration of EFR[4] (enable enhanced
-functions), as it is already enabled in sc16is7xx_probe() since commit
-43c51bb573aa ("sc16is7xx: make sure device is in suspend once probed").
-Now LCR is $00, which means that MCR access is enabled.
-
-Also remove regcache_cache_bypass() calls since we no longer access the
-enhanced registers set, and TCR is already declared as volatile (in fact
-by declaring MSR as volatile, which shares the same address).
-
-Finally disable access to TCR/TLR registers after modifying them by
-clearing MCR[2].
-
-Note: the comment about "... and internal clock div" is wrong and can be
-      ignored/removed as access to internal clock div registers (DLL/DLH)
-      is permitted only when LCR[7] is logic 1, not when enhanced features
-      is enabled. And DLL/DLH access is not needed in sc16is7xx_startup().
-
-Fixes: dfeae619d781 ("serial: sc16is7xx")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20250731124451.1108864-1-hugo@hugovil.com
+Fixes: ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method")
+Link: https://lore.kernel.org/ceph-devel/aK4v548CId5GIKG1@swift.blarg.de/
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ fs/ceph/addr.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1177,17 +1177,6 @@ static int sc16is7xx_startup(struct uart
- 	sc16is7xx_port_write(port, SC16IS7XX_FCR_REG,
- 			     SC16IS7XX_FCR_FIFO_BIT);
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 8bc66b45dade..322ed268f14a 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1264,7 +1264,9 @@ static inline int move_dirty_folio_in_page_array(struct address_space *mapping,
+ 								0,
+ 								gfp_flags);
+ 		if (IS_ERR(pages[index])) {
+-			if (PTR_ERR(pages[index]) == -EINVAL) {
++			int err = PTR_ERR(pages[index]);
++
++			if (err == -EINVAL) {
+ 				pr_err_client(cl, "inode->i_blkbits=%hhu\n",
+ 						inode->i_blkbits);
+ 			}
+@@ -1273,7 +1275,7 @@ static inline int move_dirty_folio_in_page_array(struct address_space *mapping,
+ 			BUG_ON(ceph_wbc->locked_pages == 0);
  
--	/* Enable EFR */
--	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
--			     SC16IS7XX_LCR_CONF_MODE_B);
--
--	regcache_cache_bypass(one->regmap, true);
--
--	/* Enable write access to enhanced features and internal clock div */
--	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
--			      SC16IS7XX_EFR_ENABLE_BIT,
--			      SC16IS7XX_EFR_ENABLE_BIT);
--
- 	/* Enable TCR/TLR */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
- 			      SC16IS7XX_MCR_TCRTLR_BIT,
-@@ -1199,7 +1188,8 @@ static int sc16is7xx_startup(struct uart
- 			     SC16IS7XX_TCR_RX_RESUME(24) |
- 			     SC16IS7XX_TCR_RX_HALT(48));
- 
--	regcache_cache_bypass(one->regmap, false);
-+	/* Disable TCR/TLR access */
-+	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG, SC16IS7XX_MCR_TCRTLR_BIT, 0);
- 
- 	/* Now, initialize the UART */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, SC16IS7XX_LCR_WORD_LEN_8);
+ 			pages[index] = NULL;
+-			return PTR_ERR(pages[index]);
++			return err;
+ 		}
+ 	} else {
+ 		pages[index] = &folio->page;
+-- 
+2.51.0
+
 
 
