@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A76F2E0B6A;
-	Wed, 17 Sep 2025 12:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0423E1F3BA2;
+	Wed, 17 Sep 2025 12:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113430; cv=none; b=ib70nXBvh4Jsw+fa5CjqDlQZ/MuMdcjYXVZ0ysw+ofNTOEl2fVm8EkpezDSc5JoL9JioiUacXUFSeglYiD2jYJWeqprbJSlA7eIBRwRbBCshbQ2y8QXuoc5/VSPoBcV7p0jDMYTnLqdKis4WtiI+DyxCSakf7UWL/HuZJRyM3qk=
+	t=1758113433; cv=none; b=YLKC58sZg/qMpczcZ4Z7KSdpqiclojaJ7j9SEJYTnZpA1pHNEQJNzn35Zes1ch5pq+zx6Vd9W0Z92vwS7pqnBzzhbMUEddW2YFtOAt2uO5kNcB085a8iKK80xe1PUIJ1pRrQq3D35b4dXpTppNwfB7a8eGG1rV11DPn2wd6k5Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113430; c=relaxed/simple;
-	bh=UFKcQTEwRx4quCoA+xYd2z+16C94cgzy4SSAmXNHBLo=;
+	s=arc-20240116; t=1758113433; c=relaxed/simple;
+	bh=3JqeerwQ/6PjT+pgr/p1gDuHGhkkfceM5eVlvSMP2NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpSYh6MFIAoFw3AZNOdpsxCc6Jler2WQ/4JTvb35hEr3koUuhCB2U4L2vww3KOHbYIauWrTnviCSjzCrK1uQgb4wsqnLE8ZoFzeRWPCn9gk3gJ06wHlSFUYz40OGORsaC2rbUazYNoJEC434Bq0hkQh0QVbcWNFYlPg+JTK1ZaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwWqo3q0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4zO2Xbf/BGYGiy+z/hD6+OrXRsog2zvdPX2SaSoU5h39wAJRMsxXQtT9s3ujxOrR93tChGN+A5S9KsGct+m2VgSvwVWOG0BxyRbgYLFNJbEE5qK/Pll3zSoEfi2aPY7XC+hZpOfF7S6kqqFb3mFuhXLjB3l6QZgTkShh9TmmPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR+nmbgT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwWqo3q0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3230BC4CEF5;
-	Wed, 17 Sep 2025 12:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR+nmbgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746F0C4CEF5;
+	Wed, 17 Sep 2025 12:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113429;
-	bh=UFKcQTEwRx4quCoA+xYd2z+16C94cgzy4SSAmXNHBLo=;
+	s=korg; t=1758113432;
+	bh=3JqeerwQ/6PjT+pgr/p1gDuHGhkkfceM5eVlvSMP2NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwWqo3q034gja9/S39Eojrq29SHZH5fSjDDe/z3ztKG48q/jyDep6X2Kj3cSXzUWy
-	 QyP5dEwHtWgvwC+z58VOJOL303wHm+AOldm69CB0aCNQy75sVx9a+UhKZmCfup5Ess
-	 Y3YATSNetQdhw35Qz4ojN5K++vB9rpn+xMptEkoM=
+	b=fR+nmbgTqr+ktjYBOwSQhAtklEoPiP/TBSZb/QFPGRAFLCwwMMHs73qbDdP/SfPsa
+	 R5xd+jDRt7Xmy7KwF9wQzPc+L8DDlYZhJy5x82kQrEBVlR1P7eQNLnJ86WZCS4y0af
+	 690NVpI5ff8WP7TsP+26MbV56TEfta5kDLQHZ5qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/140] nfs/localio: add direct IO enablement with sync and async IO support
-Date: Wed, 17 Sep 2025 14:33:21 +0200
-Message-ID: <20250917123345.019184916@linuxfoundation.org>
+	Alex Markuze <amarkuze@redhat.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 077/140] ceph: fix race condition validating r_parent before applying state
+Date: Wed, 17 Sep 2025 14:34:09 +0200
+Message-ID: <20250917123346.194516970@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,261 +51,648 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Alex Markuze <amarkuze@redhat.com>
 
-[ Upstream commit 3feec68563dda59517f83d19123aa287a1dfd068 ]
+commit 15f519e9f883b316d86e2bb6b767a023aafd9d83 upstream.
 
-This commit simply adds the required O_DIRECT plumbing.  It doesn't
-address the fact that NFS doesn't ensure all writes are page aligned
-(nor device logical block size aligned as required by O_DIRECT).
+Add validation to ensure the cached parent directory inode matches the
+directory info in MDS replies. This prevents client-side race conditions
+where concurrent operations (e.g. rename) cause r_parent to become stale
+between request initiation and reply processing, which could lead to
+applying state changes to incorrect directory inodes.
 
-Because NFS will read-modify-write for IO that isn't aligned, LOCALIO
-will not use O_DIRECT semantics by default if/when an application
-requests the use of O_DIRECT.  Allow the use of O_DIRECT semantics by:
-1: Adding a flag to the nfs_pgio_header struct to allow the NFS
-   O_DIRECT layer to signal that O_DIRECT was used by the application
-2: Adding a 'localio_O_DIRECT_semantics' NFS module parameter that
-   when enabled will cause LOCALIO to use O_DIRECT semantics (this may
-   cause IO to fail if applications do not properly align their IO).
+[ idryomov: folded a kerneldoc fixup and a follow-up fix from Alex to
+  move CEPH_CAP_PIN reference when r_parent is updated:
 
-This commit is derived from code developed by Weston Andros Adamson.
+  When the parent directory lock is not held, req->r_parent can become
+  stale and is updated to point to the correct inode.  However, the
+  associated CEPH_CAP_PIN reference was not being adjusted.  The
+  CEPH_CAP_PIN is a reference on an inode that is tracked for
+  accounting purposes.  Moving this pin is important to keep the
+  accounting balanced. When the pin was not moved from the old parent
+  to the new one, it created two problems: The reference on the old,
+  stale parent was never released, causing a reference leak.
+  A reference for the new parent was never acquired, creating the risk
+  of a reference underflow later in ceph_mdsc_release_request().  This
+  patch corrects the logic by releasing the pin from the old parent and
+  acquiring it for the new parent when r_parent is switched.  This
+  ensures reference accounting stays balanced. ]
 
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Stable-dep-of: 992203a1fba5 ("nfs/localio: restore creds before releasing pageio data")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Alex Markuze <amarkuze@redhat.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/nfs/localio.rst | 13 ++++
- fs/nfs/direct.c                           |  1 +
- fs/nfs/localio.c                          | 93 ++++++++++++++++++++---
- include/linux/nfs_xdr.h                   |  1 +
- 4 files changed, 98 insertions(+), 10 deletions(-)
+ fs/ceph/debugfs.c    |   14 +---
+ fs/ceph/dir.c        |   17 ++---
+ fs/ceph/file.c       |   24 ++-----
+ fs/ceph/inode.c      |    7 --
+ fs/ceph/mds_client.c |  172 +++++++++++++++++++++++++++++++--------------------
+ fs/ceph/mds_client.h |   18 ++++-
+ 6 files changed, 145 insertions(+), 107 deletions(-)
 
-diff --git a/Documentation/filesystems/nfs/localio.rst b/Documentation/filesystems/nfs/localio.rst
-index bd1967e2eab32..20fc901a08f4d 100644
---- a/Documentation/filesystems/nfs/localio.rst
-+++ b/Documentation/filesystems/nfs/localio.rst
-@@ -306,6 +306,19 @@ is issuing IO to the underlying local filesystem that it is sharing with
- the NFS server. See: fs/nfs/localio.c:nfs_local_doio() and
- fs/nfs/localio.c:nfs_local_commit().
+--- a/fs/ceph/debugfs.c
++++ b/fs/ceph/debugfs.c
+@@ -55,8 +55,6 @@ static int mdsc_show(struct seq_file *s,
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_mds_request *req;
+ 	struct rb_node *rp;
+-	int pathlen = 0;
+-	u64 pathbase;
+ 	char *path;
  
-+With normal NFS that makes use of RPC to issue IO to the server, if an
-+application uses O_DIRECT the NFS client will bypass the pagecache but
-+the NFS server will not. Because the NFS server's use of buffered IO
-+affords applications to be less precise with their alignment when
-+issuing IO to the NFS client. LOCALIO can be configured to use O_DIRECT
-+semantics by setting the 'localio_O_DIRECT_semantics' nfs module
-+parameter to Y, e.g.:
-+
-+  echo Y > /sys/module/nfs/parameters/localio_O_DIRECT_semantics
-+
-+Once enabled, it will cause LOCALIO to use O_DIRECT semantics (this may
-+cause IO to fail if applications do not properly align their IO).
-+
- Security
- ========
+ 	mutex_lock(&mdsc->mutex);
+@@ -81,8 +79,8 @@ static int mdsc_show(struct seq_file *s,
+ 		if (req->r_inode) {
+ 			seq_printf(s, " #%llx", ceph_ino(req->r_inode));
+ 		} else if (req->r_dentry) {
+-			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
+-						    &pathbase, 0);
++			struct ceph_path_info path_info;
++			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &path_info, 0);
+ 			if (IS_ERR(path))
+ 				path = NULL;
+ 			spin_lock(&req->r_dentry->d_lock);
+@@ -91,7 +89,7 @@ static int mdsc_show(struct seq_file *s,
+ 				   req->r_dentry,
+ 				   path ? path : "");
+ 			spin_unlock(&req->r_dentry->d_lock);
+-			ceph_mdsc_free_path(path, pathlen);
++			ceph_mdsc_free_path_info(&path_info);
+ 		} else if (req->r_path1) {
+ 			seq_printf(s, " #%llx/%s", req->r_ino1.ino,
+ 				   req->r_path1);
+@@ -100,8 +98,8 @@ static int mdsc_show(struct seq_file *s,
+ 		}
  
-diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
-index c1f1b826888c9..f159cfc125adc 100644
---- a/fs/nfs/direct.c
-+++ b/fs/nfs/direct.c
-@@ -320,6 +320,7 @@ static void nfs_read_sync_pgio_error(struct list_head *head, int error)
- static void nfs_direct_pgio_init(struct nfs_pgio_header *hdr)
- {
- 	get_dreq(hdr->dreq);
-+	set_bit(NFS_IOHDR_ODIRECT, &hdr->flags);
- }
+ 		if (req->r_old_dentry) {
+-			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &pathlen,
+-						    &pathbase, 0);
++			struct ceph_path_info path_info;
++			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &path_info, 0);
+ 			if (IS_ERR(path))
+ 				path = NULL;
+ 			spin_lock(&req->r_old_dentry->d_lock);
+@@ -111,7 +109,7 @@ static int mdsc_show(struct seq_file *s,
+ 				   req->r_old_dentry,
+ 				   path ? path : "");
+ 			spin_unlock(&req->r_old_dentry->d_lock);
+-			ceph_mdsc_free_path(path, pathlen);
++			ceph_mdsc_free_path_info(&path_info);
+ 		} else if (req->r_path2 && req->r_op != CEPH_MDS_OP_SYMLINK) {
+ 			if (req->r_ino2.ino)
+ 				seq_printf(s, " #%llx/%s", req->r_ino2.ino,
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -1263,10 +1263,8 @@ static void ceph_async_unlink_cb(struct
  
- static const struct nfs_pgio_completion_ops nfs_direct_read_completion_ops = {
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index ab305dfc71269..8fb145124e93b 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -35,6 +35,7 @@ struct nfs_local_kiocb {
- 	struct bio_vec		*bvec;
- 	struct nfs_pgio_header	*hdr;
- 	struct work_struct	work;
-+	void (*aio_complete_work)(struct work_struct *);
- 	struct nfsd_file	*localio;
- };
+ 	/* If op failed, mark everyone involved for errors */
+ 	if (result) {
+-		int pathlen = 0;
+-		u64 base = 0;
+-		char *path = ceph_mdsc_build_path(mdsc, dentry, &pathlen,
+-						  &base, 0);
++		struct ceph_path_info path_info = {0};
++		char *path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
  
-@@ -50,6 +51,11 @@ static void nfs_local_fsync_work(struct work_struct *work);
- static bool localio_enabled __read_mostly = true;
- module_param(localio_enabled, bool, 0644);
+ 		/* mark error on parent + clear complete */
+ 		mapping_set_error(req->r_parent->i_mapping, result);
+@@ -1280,8 +1278,8 @@ static void ceph_async_unlink_cb(struct
+ 		mapping_set_error(req->r_old_inode->i_mapping, result);
  
-+static bool localio_O_DIRECT_semantics __read_mostly = false;
-+module_param(localio_O_DIRECT_semantics, bool, 0644);
-+MODULE_PARM_DESC(localio_O_DIRECT_semantics,
-+		 "LOCALIO will use O_DIRECT semantics to filesystem.");
-+
- static inline bool nfs_client_is_local(const struct nfs_client *clp)
- {
- 	return !!test_bit(NFS_CS_LOCAL_IO, &clp->cl_flags);
-@@ -287,10 +293,19 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
- 		kfree(iocb);
- 		return NULL;
+ 		pr_warn_client(cl, "failure path=(%llx)%s result=%d!\n",
+-			       base, IS_ERR(path) ? "<<bad>>" : path, result);
+-		ceph_mdsc_free_path(path, pathlen);
++			       path_info.vino.ino, IS_ERR(path) ? "<<bad>>" : path, result);
++		ceph_mdsc_free_path_info(&path_info);
  	}
--	init_sync_kiocb(&iocb->kiocb, file);
+ out:
+ 	iput(req->r_old_inode);
+@@ -1339,8 +1337,6 @@ static int ceph_unlink(struct inode *dir
+ 	int err = -EROFS;
+ 	int op;
+ 	char *path;
+-	int pathlen;
+-	u64 pathbase;
+ 
+ 	if (ceph_snap(dir) == CEPH_SNAPDIR) {
+ 		/* rmdir .snap/foo is RMSNAP */
+@@ -1359,14 +1355,15 @@ static int ceph_unlink(struct inode *dir
+ 	if (!dn) {
+ 		try_async = false;
+ 	} else {
+-		path = ceph_mdsc_build_path(mdsc, dn, &pathlen, &pathbase, 0);
++		struct ceph_path_info path_info;
++		path = ceph_mdsc_build_path(mdsc, dn, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			try_async = false;
+ 			err = 0;
+ 		} else {
+ 			err = ceph_mds_check_access(mdsc, path, MAY_WRITE);
+ 		}
+-		ceph_mdsc_free_path(path, pathlen);
++		ceph_mdsc_free_path_info(&path_info);
+ 		dput(dn);
+ 
+ 		/* For none EACCES cases will let the MDS do the mds auth check */
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -368,8 +368,6 @@ int ceph_open(struct inode *inode, struc
+ 	int flags, fmode, wanted;
+ 	struct dentry *dentry;
+ 	char *path;
+-	int pathlen;
+-	u64 pathbase;
+ 	bool do_sync = false;
+ 	int mask = MAY_READ;
+ 
+@@ -399,14 +397,15 @@ int ceph_open(struct inode *inode, struc
+ 	if (!dentry) {
+ 		do_sync = true;
+ 	} else {
+-		path = ceph_mdsc_build_path(mdsc, dentry, &pathlen, &pathbase, 0);
++		struct ceph_path_info path_info;
++		path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			do_sync = true;
+ 			err = 0;
+ 		} else {
+ 			err = ceph_mds_check_access(mdsc, path, mask);
+ 		}
+-		ceph_mdsc_free_path(path, pathlen);
++		ceph_mdsc_free_path_info(&path_info);
+ 		dput(dentry);
+ 
+ 		/* For none EACCES cases will let the MDS do the mds auth check */
+@@ -614,15 +613,13 @@ static void ceph_async_create_cb(struct
+ 	mapping_set_error(req->r_parent->i_mapping, result);
+ 
+ 	if (result) {
+-		int pathlen = 0;
+-		u64 base = 0;
+-		char *path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
+-						  &base, 0);
++		struct ceph_path_info path_info = {0};
++		char *path = ceph_mdsc_build_path(mdsc, req->r_dentry, &path_info, 0);
+ 
+ 		pr_warn_client(cl,
+ 			"async create failure path=(%llx)%s result=%d!\n",
+-			base, IS_ERR(path) ? "<<bad>>" : path, result);
+-		ceph_mdsc_free_path(path, pathlen);
++			path_info.vino.ino, IS_ERR(path) ? "<<bad>>" : path, result);
++		ceph_mdsc_free_path_info(&path_info);
+ 
+ 		ceph_dir_clear_complete(req->r_parent);
+ 		if (!d_unhashed(dentry))
+@@ -791,8 +788,6 @@ int ceph_atomic_open(struct inode *dir,
+ 	int mask;
+ 	int err;
+ 	char *path;
+-	int pathlen;
+-	u64 pathbase;
+ 
+ 	doutc(cl, "%p %llx.%llx dentry %p '%pd' %s flags %d mode 0%o\n",
+ 	      dir, ceph_vinop(dir), dentry, dentry,
+@@ -814,7 +809,8 @@ int ceph_atomic_open(struct inode *dir,
+ 	if (!dn) {
+ 		try_async = false;
+ 	} else {
+-		path = ceph_mdsc_build_path(mdsc, dn, &pathlen, &pathbase, 0);
++		struct ceph_path_info path_info;
++		path = ceph_mdsc_build_path(mdsc, dn, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			try_async = false;
+ 			err = 0;
+@@ -826,7 +822,7 @@ int ceph_atomic_open(struct inode *dir,
+ 				mask |= MAY_WRITE;
+ 			err = ceph_mds_check_access(mdsc, path, mask);
+ 		}
+-		ceph_mdsc_free_path(path, pathlen);
++		ceph_mdsc_free_path_info(&path_info);
+ 		dput(dn);
+ 
+ 		/* For none EACCES cases will let the MDS do the mds auth check */
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -2483,22 +2483,21 @@ int __ceph_setattr(struct mnt_idmap *idm
+ 	int truncate_retry = 20; /* The RMW will take around 50ms */
+ 	struct dentry *dentry;
+ 	char *path;
+-	int pathlen;
+-	u64 pathbase;
+ 	bool do_sync = false;
+ 
+ 	dentry = d_find_alias(inode);
+ 	if (!dentry) {
+ 		do_sync = true;
+ 	} else {
+-		path = ceph_mdsc_build_path(mdsc, dentry, &pathlen, &pathbase, 0);
++		struct ceph_path_info path_info;
++		path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			do_sync = true;
+ 			err = 0;
+ 		} else {
+ 			err = ceph_mds_check_access(mdsc, path, MAY_WRITE);
+ 		}
+-		ceph_mdsc_free_path(path, pathlen);
++		ceph_mdsc_free_path_info(&path_info);
+ 		dput(dentry);
+ 
+ 		/* For none EACCES cases will let the MDS do the mds auth check */
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -2686,8 +2686,7 @@ static u8 *get_fscrypt_altname(const str
+  * ceph_mdsc_build_path - build a path string to a given dentry
+  * @mdsc: mds client
+  * @dentry: dentry to which path should be built
+- * @plen: returned length of string
+- * @pbase: returned base inode number
++ * @path_info: output path, length, base ino+snap, and freepath ownership flag
+  * @for_wire: is this path going to be sent to the MDS?
+  *
+  * Build a string that represents the path to the dentry. This is mostly called
+@@ -2705,7 +2704,7 @@ static u8 *get_fscrypt_altname(const str
+  *   foo/.snap/bar -> foo//bar
+  */
+ char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
+-			   int *plen, u64 *pbase, int for_wire)
++			   struct ceph_path_info *path_info, int for_wire)
+ {
+ 	struct ceph_client *cl = mdsc->fsc->client;
+ 	struct dentry *cur;
+@@ -2815,16 +2814,28 @@ retry:
+ 		return ERR_PTR(-ENAMETOOLONG);
+ 	}
+ 
+-	*pbase = base;
+-	*plen = PATH_MAX - 1 - pos;
++	/* Initialize the output structure */
++	memset(path_info, 0, sizeof(*path_info));
 +
-+	if (localio_O_DIRECT_semantics &&
-+	    test_bit(NFS_IOHDR_ODIRECT, &hdr->flags)) {
-+		iocb->kiocb.ki_filp = file;
-+		iocb->kiocb.ki_flags = IOCB_DIRECT;
-+	} else
-+		init_sync_kiocb(&iocb->kiocb, file);
++	path_info->vino.ino = base;
++	path_info->pathlen = PATH_MAX - 1 - pos;
++	path_info->path = path + pos;
++	path_info->freepath = true;
 +
- 	iocb->kiocb.ki_pos = hdr->args.offset;
- 	iocb->hdr = hdr;
- 	iocb->kiocb.ki_flags &= ~IOCB_APPEND;
-+	iocb->aio_complete_work = NULL;
++	/* Set snap from dentry if available */
++	if (d_inode(dentry))
++		path_info->vino.snap = ceph_snap(d_inode(dentry));
++	else
++		path_info->vino.snap = CEPH_NOSNAP;
 +
- 	return iocb;
+ 	doutc(cl, "on %p %d built %llx '%.*s'\n", dentry, d_count(dentry),
+-	      base, *plen, path + pos);
++	      base, PATH_MAX - 1 - pos, path + pos);
+ 	return path + pos;
  }
  
-@@ -345,6 +360,18 @@ nfs_local_pgio_release(struct nfs_local_kiocb *iocb)
- 	nfs_local_hdr_release(hdr, hdr->task.tk_ops);
+ static int build_dentry_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
+-			     struct inode *dir, const char **ppath, int *ppathlen,
+-			     u64 *pino, bool *pfreepath, bool parent_locked)
++			     struct inode *dir, struct ceph_path_info *path_info,
++			     bool parent_locked)
+ {
+ 	char *path;
+ 
+@@ -2833,41 +2844,47 @@ static int build_dentry_path(struct ceph
+ 		dir = d_inode_rcu(dentry->d_parent);
+ 	if (dir && parent_locked && ceph_snap(dir) == CEPH_NOSNAP &&
+ 	    !IS_ENCRYPTED(dir)) {
+-		*pino = ceph_ino(dir);
++		path_info->vino.ino = ceph_ino(dir);
++		path_info->vino.snap = ceph_snap(dir);
+ 		rcu_read_unlock();
+-		*ppath = dentry->d_name.name;
+-		*ppathlen = dentry->d_name.len;
++		path_info->path = dentry->d_name.name;
++		path_info->pathlen = dentry->d_name.len;
++		path_info->freepath = false;
+ 		return 0;
+ 	}
+ 	rcu_read_unlock();
+-	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
++	path = ceph_mdsc_build_path(mdsc, dentry, path_info, 1);
+ 	if (IS_ERR(path))
+ 		return PTR_ERR(path);
+-	*ppath = path;
+-	*pfreepath = true;
++	/*
++	 * ceph_mdsc_build_path already fills path_info, including snap handling.
++	 */
+ 	return 0;
  }
  
+-static int build_inode_path(struct inode *inode,
+-			    const char **ppath, int *ppathlen, u64 *pino,
+-			    bool *pfreepath)
++static int build_inode_path(struct inode *inode, struct ceph_path_info *path_info)
+ {
+ 	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
+ 	struct dentry *dentry;
+ 	char *path;
+ 
+ 	if (ceph_snap(inode) == CEPH_NOSNAP) {
+-		*pino = ceph_ino(inode);
+-		*ppathlen = 0;
++		path_info->vino.ino = ceph_ino(inode);
++		path_info->vino.snap = ceph_snap(inode);
++		path_info->pathlen = 0;
++		path_info->freepath = false;
+ 		return 0;
+ 	}
+ 	dentry = d_find_alias(inode);
+-	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
++	path = ceph_mdsc_build_path(mdsc, dentry, path_info, 1);
+ 	dput(dentry);
+ 	if (IS_ERR(path))
+ 		return PTR_ERR(path);
+-	*ppath = path;
+-	*pfreepath = true;
++	/*
++	 * ceph_mdsc_build_path already fills path_info, including snap from dentry.
++	 * Override with inode's snap since that's what this function is for.
++	 */
++	path_info->vino.snap = ceph_snap(inode);
+ 	return 0;
+ }
+ 
+@@ -2877,26 +2894,32 @@ static int build_inode_path(struct inode
+  */
+ static int set_request_path_attr(struct ceph_mds_client *mdsc, struct inode *rinode,
+ 				 struct dentry *rdentry, struct inode *rdiri,
+-				 const char *rpath, u64 rino, const char **ppath,
+-				 int *pathlen, u64 *ino, bool *freepath,
++				 const char *rpath, u64 rino,
++				 struct ceph_path_info *path_info,
+ 				 bool parent_locked)
+ {
+ 	struct ceph_client *cl = mdsc->fsc->client;
+ 	int r = 0;
+ 
++	/* Initialize the output structure */
++	memset(path_info, 0, sizeof(*path_info));
++
+ 	if (rinode) {
+-		r = build_inode_path(rinode, ppath, pathlen, ino, freepath);
++		r = build_inode_path(rinode, path_info);
+ 		doutc(cl, " inode %p %llx.%llx\n", rinode, ceph_ino(rinode),
+ 		      ceph_snap(rinode));
+ 	} else if (rdentry) {
+-		r = build_dentry_path(mdsc, rdentry, rdiri, ppath, pathlen, ino,
+-					freepath, parent_locked);
+-		doutc(cl, " dentry %p %llx/%.*s\n", rdentry, *ino, *pathlen, *ppath);
++		r = build_dentry_path(mdsc, rdentry, rdiri, path_info, parent_locked);
++		doutc(cl, " dentry %p %llx/%.*s\n", rdentry, path_info->vino.ino,
++		      path_info->pathlen, path_info->path);
+ 	} else if (rpath || rino) {
+-		*ino = rino;
+-		*ppath = rpath;
+-		*pathlen = rpath ? strlen(rpath) : 0;
+-		doutc(cl, " path %.*s\n", *pathlen, rpath);
++		path_info->vino.ino = rino;
++		path_info->vino.snap = CEPH_NOSNAP;
++		path_info->path = rpath;
++		path_info->pathlen = rpath ? strlen(rpath) : 0;
++		path_info->freepath = false;
++
++		doutc(cl, " path %.*s\n", path_info->pathlen, rpath);
+ 	}
+ 
+ 	return r;
+@@ -2973,11 +2996,8 @@ static struct ceph_msg *create_request_m
+ 	struct ceph_client *cl = mdsc->fsc->client;
+ 	struct ceph_msg *msg;
+ 	struct ceph_mds_request_head_legacy *lhead;
+-	const char *path1 = NULL;
+-	const char *path2 = NULL;
+-	u64 ino1 = 0, ino2 = 0;
+-	int pathlen1 = 0, pathlen2 = 0;
+-	bool freepath1 = false, freepath2 = false;
++	struct ceph_path_info path_info1 = {0};
++	struct ceph_path_info path_info2 = {0};
+ 	struct dentry *old_dentry = NULL;
+ 	int len;
+ 	u16 releases;
+@@ -2987,25 +3007,49 @@ static struct ceph_msg *create_request_m
+ 	u16 request_head_version = mds_supported_head_version(session);
+ 	kuid_t caller_fsuid = req->r_cred->fsuid;
+ 	kgid_t caller_fsgid = req->r_cred->fsgid;
++	bool parent_locked = test_bit(CEPH_MDS_R_PARENT_LOCKED, &req->r_req_flags);
+ 
+ 	ret = set_request_path_attr(mdsc, req->r_inode, req->r_dentry,
+-			      req->r_parent, req->r_path1, req->r_ino1.ino,
+-			      &path1, &pathlen1, &ino1, &freepath1,
+-			      test_bit(CEPH_MDS_R_PARENT_LOCKED,
+-					&req->r_req_flags));
++				    req->r_parent, req->r_path1, req->r_ino1.ino,
++				    &path_info1, parent_locked);
+ 	if (ret < 0) {
+ 		msg = ERR_PTR(ret);
+ 		goto out;
+ 	}
+ 
++	/*
++	 * When the parent directory's i_rwsem is *not* locked, req->r_parent may
++	 * have become stale (e.g. after a concurrent rename) between the time the
++	 * dentry was looked up and now.  If we detect that the stored r_parent
++	 * does not match the inode number we just encoded for the request, switch
++	 * to the correct inode so that the MDS receives a valid parent reference.
++	 */
++	if (!parent_locked && req->r_parent && path_info1.vino.ino &&
++	    ceph_ino(req->r_parent) != path_info1.vino.ino) {
++		struct inode *old_parent = req->r_parent;
++		struct inode *correct_dir = ceph_get_inode(mdsc->fsc->sb, path_info1.vino, NULL);
++		if (!IS_ERR(correct_dir)) {
++			WARN_ONCE(1, "ceph: r_parent mismatch (had %llx wanted %llx) - updating\n",
++			          ceph_ino(old_parent), path_info1.vino.ino);
++			/*
++			 * Transfer CEPH_CAP_PIN from the old parent to the new one.
++			 * The pin was taken earlier in ceph_mdsc_submit_request().
++			 */
++			ceph_put_cap_refs(ceph_inode(old_parent), CEPH_CAP_PIN);
++			iput(old_parent);
++			req->r_parent = correct_dir;
++			ceph_get_cap_refs(ceph_inode(req->r_parent), CEPH_CAP_PIN);
++		}
++	}
++
+ 	/* If r_old_dentry is set, then assume that its parent is locked */
+ 	if (req->r_old_dentry &&
+ 	    !(req->r_old_dentry->d_flags & DCACHE_DISCONNECTED))
+ 		old_dentry = req->r_old_dentry;
+ 	ret = set_request_path_attr(mdsc, NULL, old_dentry,
+-			      req->r_old_dentry_dir,
+-			      req->r_path2, req->r_ino2.ino,
+-			      &path2, &pathlen2, &ino2, &freepath2, true);
++				    req->r_old_dentry_dir,
++				    req->r_path2, req->r_ino2.ino,
++				    &path_info2, true);
+ 	if (ret < 0) {
+ 		msg = ERR_PTR(ret);
+ 		goto out_free1;
+@@ -3036,7 +3080,7 @@ static struct ceph_msg *create_request_m
+ 
+ 	/* filepaths */
+ 	len += 2 * (1 + sizeof(u32) + sizeof(u64));
+-	len += pathlen1 + pathlen2;
++	len += path_info1.pathlen + path_info2.pathlen;
+ 
+ 	/* cap releases */
+ 	len += sizeof(struct ceph_mds_request_release) *
+@@ -3044,9 +3088,9 @@ static struct ceph_msg *create_request_m
+ 		 !!req->r_old_inode_drop + !!req->r_old_dentry_drop);
+ 
+ 	if (req->r_dentry_drop)
+-		len += pathlen1;
++		len += path_info1.pathlen;
+ 	if (req->r_old_dentry_drop)
+-		len += pathlen2;
++		len += path_info2.pathlen;
+ 
+ 	/* MClientRequest tail */
+ 
+@@ -3159,8 +3203,8 @@ static struct ceph_msg *create_request_m
+ 	lhead->ino = cpu_to_le64(req->r_deleg_ino);
+ 	lhead->args = req->r_args;
+ 
+-	ceph_encode_filepath(&p, end, ino1, path1);
+-	ceph_encode_filepath(&p, end, ino2, path2);
++	ceph_encode_filepath(&p, end, path_info1.vino.ino, path_info1.path);
++	ceph_encode_filepath(&p, end, path_info2.vino.ino, path_info2.path);
+ 
+ 	/* make note of release offset, in case we need to replay */
+ 	req->r_request_release_offset = p - msg->front.iov_base;
+@@ -3223,11 +3267,9 @@ static struct ceph_msg *create_request_m
+ 	msg->hdr.data_off = cpu_to_le16(0);
+ 
+ out_free2:
+-	if (freepath2)
+-		ceph_mdsc_free_path((char *)path2, pathlen2);
++	ceph_mdsc_free_path_info(&path_info2);
+ out_free1:
+-	if (freepath1)
+-		ceph_mdsc_free_path((char *)path1, pathlen1);
++	ceph_mdsc_free_path_info(&path_info1);
+ out:
+ 	return msg;
+ out_err:
+@@ -4584,24 +4626,20 @@ static int reconnect_caps_cb(struct inod
+ 	struct ceph_pagelist *pagelist = recon_state->pagelist;
+ 	struct dentry *dentry;
+ 	struct ceph_cap *cap;
+-	char *path;
+-	int pathlen = 0, err;
+-	u64 pathbase;
++	struct ceph_path_info path_info = {0};
++	int err;
+ 	u64 snap_follows;
+ 
+ 	dentry = d_find_primary(inode);
+ 	if (dentry) {
+ 		/* set pathbase to parent dir when msg_version >= 2 */
+-		path = ceph_mdsc_build_path(mdsc, dentry, &pathlen, &pathbase,
++		char *path = ceph_mdsc_build_path(mdsc, dentry, &path_info,
+ 					    recon_state->msg_version >= 2);
+ 		dput(dentry);
+ 		if (IS_ERR(path)) {
+ 			err = PTR_ERR(path);
+ 			goto out_err;
+ 		}
+-	} else {
+-		path = NULL;
+-		pathbase = 0;
+ 	}
+ 
+ 	spin_lock(&ci->i_ceph_lock);
+@@ -4634,7 +4672,7 @@ static int reconnect_caps_cb(struct inod
+ 		rec.v2.wanted = cpu_to_le32(__ceph_caps_wanted(ci));
+ 		rec.v2.issued = cpu_to_le32(cap->issued);
+ 		rec.v2.snaprealm = cpu_to_le64(ci->i_snap_realm->ino);
+-		rec.v2.pathbase = cpu_to_le64(pathbase);
++		rec.v2.pathbase = cpu_to_le64(path_info.vino.ino);
+ 		rec.v2.flock_len = (__force __le32)
+ 			((ci->i_ceph_flags & CEPH_I_ERROR_FILELOCK) ? 0 : 1);
+ 	} else {
+@@ -4649,7 +4687,7 @@ static int reconnect_caps_cb(struct inod
+ 		ts = inode_get_atime(inode);
+ 		ceph_encode_timespec64(&rec.v1.atime, &ts);
+ 		rec.v1.snaprealm = cpu_to_le64(ci->i_snap_realm->ino);
+-		rec.v1.pathbase = cpu_to_le64(pathbase);
++		rec.v1.pathbase = cpu_to_le64(path_info.vino.ino);
+ 	}
+ 
+ 	if (list_empty(&ci->i_cap_snaps)) {
+@@ -4711,7 +4749,7 @@ encode_again:
+ 			    sizeof(struct ceph_filelock);
+ 		rec.v2.flock_len = cpu_to_le32(struct_len);
+ 
+-		struct_len += sizeof(u32) + pathlen + sizeof(rec.v2);
++		struct_len += sizeof(u32) + path_info.pathlen + sizeof(rec.v2);
+ 
+ 		if (struct_v >= 2)
+ 			struct_len += sizeof(u64); /* snap_follows */
+@@ -4735,7 +4773,7 @@ encode_again:
+ 			ceph_pagelist_encode_8(pagelist, 1);
+ 			ceph_pagelist_encode_32(pagelist, struct_len);
+ 		}
+-		ceph_pagelist_encode_string(pagelist, path, pathlen);
++		ceph_pagelist_encode_string(pagelist, (char *)path_info.path, path_info.pathlen);
+ 		ceph_pagelist_append(pagelist, &rec, sizeof(rec.v2));
+ 		ceph_locks_to_pagelist(flocks, pagelist,
+ 				       num_fcntl_locks, num_flock_locks);
+@@ -4746,17 +4784,17 @@ out_freeflocks:
+ 	} else {
+ 		err = ceph_pagelist_reserve(pagelist,
+ 					    sizeof(u64) + sizeof(u32) +
+-					    pathlen + sizeof(rec.v1));
++					    path_info.pathlen + sizeof(rec.v1));
+ 		if (err)
+ 			goto out_err;
+ 
+ 		ceph_pagelist_encode_64(pagelist, ceph_ino(inode));
+-		ceph_pagelist_encode_string(pagelist, path, pathlen);
++		ceph_pagelist_encode_string(pagelist, (char *)path_info.path, path_info.pathlen);
+ 		ceph_pagelist_append(pagelist, &rec, sizeof(rec.v1));
+ 	}
+ 
+ out_err:
+-	ceph_mdsc_free_path(path, pathlen);
++	ceph_mdsc_free_path_info(&path_info);
+ 	if (!err)
+ 		recon_state->nr_caps++;
+ 	return err;
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -612,14 +612,24 @@ extern int ceph_mds_check_access(struct
+ 
+ extern void ceph_mdsc_pre_umount(struct ceph_mds_client *mdsc);
+ 
+-static inline void ceph_mdsc_free_path(char *path, int len)
 +/*
-+ * Complete the I/O from iocb->kiocb.ki_complete()
-+ *
-+ * Note that this function can be called from a bottom half context,
-+ * hence we need to queue the rpc_call_done() etc to a workqueue
++ * Structure to group path-related output parameters for build_*_path functions
 + */
-+static inline void nfs_local_pgio_aio_complete(struct nfs_local_kiocb *iocb)
-+{
-+	INIT_WORK(&iocb->work, iocb->aio_complete_work);
-+	queue_work(nfsiod_workqueue, &iocb->work);
-+}
++struct ceph_path_info {
++	const char *path;
++	int pathlen;
++	struct ceph_vino vino;
++	bool freepath;
++};
 +
- static void
- nfs_local_read_done(struct nfs_local_kiocb *iocb, long status)
++static inline void ceph_mdsc_free_path_info(const struct ceph_path_info *path_info)
  {
-@@ -367,6 +394,23 @@ nfs_local_read_done(struct nfs_local_kiocb *iocb, long status)
- 			status > 0 ? status : 0, hdr->res.eof);
+-	if (!IS_ERR_OR_NULL(path))
+-		__putname(path - (PATH_MAX - 1 - len));
++	if (path_info && path_info->freepath && !IS_ERR_OR_NULL(path_info->path))
++		__putname((char *)path_info->path - (PATH_MAX - 1 - path_info->pathlen));
  }
  
-+static void nfs_local_read_aio_complete_work(struct work_struct *work)
-+{
-+	struct nfs_local_kiocb *iocb =
-+		container_of(work, struct nfs_local_kiocb, work);
-+
-+	nfs_local_pgio_release(iocb);
-+}
-+
-+static void nfs_local_read_aio_complete(struct kiocb *kiocb, long ret)
-+{
-+	struct nfs_local_kiocb *iocb =
-+		container_of(kiocb, struct nfs_local_kiocb, kiocb);
-+
-+	nfs_local_read_done(iocb, ret);
-+	nfs_local_pgio_aio_complete(iocb); /* Calls nfs_local_read_aio_complete_work */
-+}
-+
- static void nfs_local_call_read(struct work_struct *work)
- {
- 	struct nfs_local_kiocb *iocb =
-@@ -381,10 +425,10 @@ static void nfs_local_call_read(struct work_struct *work)
- 	nfs_local_iter_init(&iter, iocb, READ);
+ extern char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc,
+-				  struct dentry *dentry, int *plen, u64 *base,
++				  struct dentry *dentry, struct ceph_path_info *path_info,
+ 				  int for_wire);
  
- 	status = filp->f_op->read_iter(&iocb->kiocb, &iter);
--	WARN_ON_ONCE(status == -EIOCBQUEUED);
--
--	nfs_local_read_done(iocb, status);
--	nfs_local_pgio_release(iocb);
-+	if (status != -EIOCBQUEUED) {
-+		nfs_local_read_done(iocb, status);
-+		nfs_local_pgio_release(iocb);
-+	}
- 
- 	revert_creds(save_cred);
- }
-@@ -412,6 +456,11 @@ nfs_do_local_read(struct nfs_pgio_header *hdr,
- 	nfs_local_pgio_init(hdr, call_ops);
- 	hdr->res.eof = false;
- 
-+	if (iocb->kiocb.ki_flags & IOCB_DIRECT) {
-+		iocb->kiocb.ki_complete = nfs_local_read_aio_complete;
-+		iocb->aio_complete_work = nfs_local_read_aio_complete_work;
-+	}
-+
- 	INIT_WORK(&iocb->work, nfs_local_call_read);
- 	queue_work(nfslocaliod_workqueue, &iocb->work);
- 
-@@ -541,6 +590,24 @@ nfs_local_write_done(struct nfs_local_kiocb *iocb, long status)
- 	nfs_local_pgio_done(hdr, status);
- }
- 
-+static void nfs_local_write_aio_complete_work(struct work_struct *work)
-+{
-+	struct nfs_local_kiocb *iocb =
-+		container_of(work, struct nfs_local_kiocb, work);
-+
-+	nfs_local_vfs_getattr(iocb);
-+	nfs_local_pgio_release(iocb);
-+}
-+
-+static void nfs_local_write_aio_complete(struct kiocb *kiocb, long ret)
-+{
-+	struct nfs_local_kiocb *iocb =
-+		container_of(kiocb, struct nfs_local_kiocb, kiocb);
-+
-+	nfs_local_write_done(iocb, ret);
-+	nfs_local_pgio_aio_complete(iocb); /* Calls nfs_local_write_aio_complete_work */
-+}
-+
- static void nfs_local_call_write(struct work_struct *work)
- {
- 	struct nfs_local_kiocb *iocb =
-@@ -559,11 +626,11 @@ static void nfs_local_call_write(struct work_struct *work)
- 	file_start_write(filp);
- 	status = filp->f_op->write_iter(&iocb->kiocb, &iter);
- 	file_end_write(filp);
--	WARN_ON_ONCE(status == -EIOCBQUEUED);
--
--	nfs_local_write_done(iocb, status);
--	nfs_local_vfs_getattr(iocb);
--	nfs_local_pgio_release(iocb);
-+	if (status != -EIOCBQUEUED) {
-+		nfs_local_write_done(iocb, status);
-+		nfs_local_vfs_getattr(iocb);
-+		nfs_local_pgio_release(iocb);
-+	}
- 
- 	revert_creds(save_cred);
- 	current->flags = old_flags;
-@@ -599,10 +666,16 @@ nfs_do_local_write(struct nfs_pgio_header *hdr,
- 	case NFS_FILE_SYNC:
- 		iocb->kiocb.ki_flags |= IOCB_DSYNC|IOCB_SYNC;
- 	}
-+
- 	nfs_local_pgio_init(hdr, call_ops);
- 
- 	nfs_set_local_verifier(hdr->inode, hdr->res.verf, hdr->args.stable);
- 
-+	if (iocb->kiocb.ki_flags & IOCB_DIRECT) {
-+		iocb->kiocb.ki_complete = nfs_local_write_aio_complete;
-+		iocb->aio_complete_work = nfs_local_write_aio_complete_work;
-+	}
-+
- 	INIT_WORK(&iocb->work, nfs_local_call_write);
- 	queue_work(nfslocaliod_workqueue, &iocb->work);
- 
-diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
-index 12d8e47bc5a38..b48d94f099657 100644
---- a/include/linux/nfs_xdr.h
-+++ b/include/linux/nfs_xdr.h
-@@ -1637,6 +1637,7 @@ enum {
- 	NFS_IOHDR_RESEND_PNFS,
- 	NFS_IOHDR_RESEND_MDS,
- 	NFS_IOHDR_UNSTABLE_WRITES,
-+	NFS_IOHDR_ODIRECT,
- };
- 
- struct nfs_io_completion;
--- 
-2.51.0
-
+ extern void __ceph_mdsc_drop_dentry_lease(struct dentry *dentry);
 
 
