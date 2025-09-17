@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDA930BBB3;
-	Wed, 17 Sep 2025 12:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BA632899A;
+	Wed, 17 Sep 2025 12:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113337; cv=none; b=V9h94+nDLsGnTFwK5vnwUX18yQkoP1I1js4+LIbyluok6zRgN61Li343iZKpP4CDAu1G2wWsk3vpg0y2utX16f+6x5THCPJcI81yOvp/VNbEFOyhruiTzu85PKJn1heRlkwfFn5GXqDiE3gvj+c8j9vukoH9fEIXCRDSX1ZGqto=
+	t=1758113341; cv=none; b=JTQltL+DlYE0CzLDjlPga8PfzJk121LWO+cbqW5sNetnwjHh9AGDRHIkQrLcaXATtQStyraJ7TKb9ls3+zYjA9LbwhINYtw31uEBt2LTqeZPPKl3yUdVMTJBjLKdX1gTjz/SQzaWNootxJwFUTAT48DN/o55nC8El6NyLEOcjyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113337; c=relaxed/simple;
-	bh=HCkF2agkF6CZcF1qDdVlRt+e55WuB5TyQrcOS2koOcM=;
+	s=arc-20240116; t=1758113341; c=relaxed/simple;
+	bh=G7lsJrJ+reRK2ZwsXmBtbz1oAsgEzjpTQnNItxsmi/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I0W6ehrW1nMbaShO3DDKfwcjGSHuV/rR+4aiDIH0w+dtTyGxpBZDo8zqrr7UdlA+IlDIgbizMp4z+FLzQWEGuCPZ0EGNG8+m0S/mtDZtVaEMsdpDTmLXAzHAJ/nbwtHYN2xQ2JAJFxRsg5Q6SRz8llQBF75S3OJqOoZ+gYH+BqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V97rp1GC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cN4URodpI1Jhl+YLGPtVnYVwuOkOve1jtfD7CEsT+LKw8wGnEL3zU7timikdxxbLUBFmXi3l26/JXT9NFqCInoy/5YqRad3qfgjq86Ft+FzBhNbBrxn7yKK6M3C8RJGWbznK2/2FYN5/CkP7UlDdGPBtyMkjMGzMrJlA41oSX7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd/bdu9g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V97rp1GC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C58AC4CEF7;
-	Wed, 17 Sep 2025 12:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd/bdu9g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A668FC4CEF5;
+	Wed, 17 Sep 2025 12:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113337;
-	bh=HCkF2agkF6CZcF1qDdVlRt+e55WuB5TyQrcOS2koOcM=;
+	s=korg; t=1758113341;
+	bh=G7lsJrJ+reRK2ZwsXmBtbz1oAsgEzjpTQnNItxsmi/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V97rp1GCFR4Q3zZEe9izpuZIqyttRScRku8eUiUYB2b9LcW8HR882hHf7YSxM8MT6
-	 z6VcvPZJn5AAhjXfLGmFsT09MKlv7GTMl7WEwPv5n8nIjpIcIHIUrGHBAyOL+c8+aP
-	 NIW/Avqk5ZgvqrY4suZvELqCX9MeBsaTg4OYuKrA=
+	b=Sd/bdu9gGT5raXppXZaBT5cXOTxRUzCUIUBa09b2lWbtvj/nFwLZuJhGsWqzVsegj
+	 v5MxBhg8phFrYzT55WlWTomHZLhgOJT6/snA7pbAFPaLisKhjseS2DxVrz2ZGxGK1j
+	 56CBEgesvp/yCkQM6zF+5S93a41N37vjszIB4OHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 055/140] net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups
-Date: Wed, 17 Sep 2025 14:33:47 +0200
-Message-ID: <20250917123345.653871231@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Alexander Dahl <ada@thorsis.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 056/140] mtd: nand: raw: atmel: Respect tAR, tCLR in read setup timing
+Date: Wed, 17 Sep 2025 14:33:48 +0200
+Message-ID: <20250917123345.676807609@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -46,72 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 5537a4679403423e0b49c95b619983a4583d69c5 upstream.
+commit fd779eac2d659668be4d3dbdac0710afd5d6db12 upstream.
 
-Drop phylink_{suspend,resume}() from ax88772 PM callbacks.
+Having setup time 0 violates tAR, tCLR of some chips, for instance
+TOSHIBA TC58NVG2S3ETAI0 cannot be detected successfully (first ID byte
+being read duplicated, i.e. 98 98 dc 90 15 76 14 03 instead of
+98 dc 90 15 76 ...).
 
-MDIO bus accesses have their own runtime-PM handling and will try to
-wake the device if it is suspended. Such wake attempts must not happen
-from PM callbacks while the device PM lock is held. Since phylink
-{sus|re}sume may trigger MDIO, it must not be called in PM context.
+Atmel Application Notes postulated 1 cycle NRD_SETUP without explanation
+[1], but it looks more appropriate to just calculate setup time properly.
 
-No extra phylink PM handling is required for this driver:
-- .ndo_open/.ndo_stop control the phylink start/stop lifecycle.
-- ethtool/phylib entry points run in process context, not PM.
-- phylink MAC ops program the MAC on link changes after resume.
+[1] Link: https://ww1.microchip.com/downloads/aemDocuments/documents/MPU32/ApplicationNotes/ApplicationNotes/doc6255.pdf
 
-Fixes: e0bffe3e6894 ("net: asix: ax88772: migrate to phylink")
-Reported-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Tested-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20250908112619.2900723-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f9ce2eddf176 ("mtd: nand: atmel: Add ->setup_data_interface() hooks")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Tested-by: Alexander Dahl <ada@thorsis.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/asix_devices.c |   13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/mtd/nand/raw/atmel/nand-controller.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/asix_devices.c
-+++ b/drivers/net/usb/asix_devices.c
-@@ -607,15 +607,8 @@ static const struct net_device_ops ax887
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -1378,13 +1378,23 @@ static int atmel_smc_nand_prepare_smccon
+ 		return ret;
  
- static void ax88772_suspend(struct usbnet *dev)
- {
--	struct asix_common_private *priv = dev->driver_priv;
- 	u16 medium;
- 
--	if (netif_running(dev->net)) {
--		rtnl_lock();
--		phylink_suspend(priv->phylink, false);
--		rtnl_unlock();
--	}
--
- 	/* Stop MAC operation */
- 	medium = asix_read_medium_status(dev, 1);
- 	medium &= ~AX_MEDIUM_RE;
-@@ -644,12 +637,6 @@ static void ax88772_resume(struct usbnet
- 	for (i = 0; i < 3; i++)
- 		if (!priv->reset(dev, 1))
- 			break;
--
--	if (netif_running(dev->net)) {
--		rtnl_lock();
--		phylink_resume(priv->phylink);
--		rtnl_unlock();
--	}
- }
- 
- static int asix_resume(struct usb_interface *intf)
+ 	/*
++	 * Read setup timing depends on the operation done on the NAND:
++	 *
++	 * NRD_SETUP = max(tAR, tCLR)
++	 */
++	timeps = max(conf->timings.sdr.tAR_min, conf->timings.sdr.tCLR_min);
++	ncycles = DIV_ROUND_UP(timeps, mckperiodps);
++	totalcycles += ncycles;
++	ret = atmel_smc_cs_conf_set_setup(smcconf, ATMEL_SMC_NRD_SHIFT, ncycles);
++	if (ret)
++		return ret;
++
++	/*
+ 	 * The read cycle timing is directly matching tRC, but is also
+ 	 * dependent on the setup and hold timings we calculated earlier,
+ 	 * which gives:
+ 	 *
+-	 * NRD_CYCLE = max(tRC, NRD_PULSE + NRD_HOLD)
+-	 *
+-	 * NRD_SETUP is always 0.
++	 * NRD_CYCLE = max(tRC, NRD_SETUP + NRD_PULSE + NRD_HOLD)
+ 	 */
+ 	ncycles = DIV_ROUND_UP(conf->timings.sdr.tRC_min, mckperiodps);
+ 	ncycles = max(totalcycles, ncycles);
 
 
