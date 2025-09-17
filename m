@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AF931A7E0;
-	Wed, 17 Sep 2025 12:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F05731A7E9;
+	Wed, 17 Sep 2025 12:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113289; cv=none; b=rGpGdUC+snSjzvaMdN4qNzoOVAghVExh3rxTz9RLAQiBpHFksWW4c375hmCmHFVU3PBalpZ8CF3a4Vm97fIW+2ajCwwkw8bsU/y+Y3TV+NW30XIaUenKzy+0N+B/G3uPokyjfQhafFpKsSCnKTQ+q8t2tvfV9+5wbAbQUYsN9ec=
+	t=1758113292; cv=none; b=SKXFhNADryGOqYjxq6E9olxv/JsAIkiMBf2x59LSamNroKn2rZl4ZsP/Wmw93XNdVg4Q4IeSV/3IHpH1CYAJ/R0GrI7q3rs3MS1gotXdTBFQdRsM72r2GhNxQLJ+Ptw13aW6PIt1W6F+gqLK7E4UOMoLQSr4o1JIs94ZLDjP50g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113289; c=relaxed/simple;
-	bh=K/4MTja3ojOOavg9TYQIddIFt/c5p0EAo7mF8zCFl94=;
+	s=arc-20240116; t=1758113292; c=relaxed/simple;
+	bh=phg9I8u7yzqBAaqn27JlMy555nhsEXchaoX6RvYO22A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIWG2pNjiDEpRoU3FrkB6EBL40/efXpEPPB5oBRFLqZAbR4YgWyLx8YJ5szBIpdJUSAJkAJS/bGpj51xNe5fGpgzViNeUpw3cz6Ors2in8rGfwBRJ24e+OQ+s+NRCnISa+9TD8N19de7pn/GCdXff29c557PpKgaCa2bQMdnCIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hf4TxZmp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dMiCapTbdn2JBYIvCBdnhZNCnTzm92CMYrMBhBOQ/aoILrQTI8c0+VU6DioTGfiVQpTUJ6z4gurrlB0DY1BjXEc1uNUbT5daIfHL/MBORijNDufxxuuGWC2I33czWq8mJ+ycfExmxOKo3J8QW0oM7C8YuPu6TCzLyrmLHwp8Zwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V16N8lrw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hf4TxZmp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6125C4CEF0;
-	Wed, 17 Sep 2025 12:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V16N8lrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D73C4CEF0;
+	Wed, 17 Sep 2025 12:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113289;
-	bh=K/4MTja3ojOOavg9TYQIddIFt/c5p0EAo7mF8zCFl94=;
+	s=korg; t=1758113292;
+	bh=phg9I8u7yzqBAaqn27JlMy555nhsEXchaoX6RvYO22A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hf4TxZmppNcwwZJboXL4jemL3qShzpUPfjbZiCCMXQlXJ+cNG85Nu77MALQ1ApnRN
-	 btaHyFmYdtdn7yQX6MEANP4f7qCtR1MbrYbyifsvXLBvH/gEW0095n7oLblgWFsoyr
-	 /cDut1lDbagyENatBc5PkKQjHvCY94ZR5F642P3A=
+	b=V16N8lrwdunUJx12XEKkISZKs5EvMX5AbmoQ2X09G9jiaMNfekaJyszb9Ln7aCqQj
+	 5Wy45N05z5HyeNXMUAqi5oVba2B53LX8QqQI+LKx8dD9sQWjYHArlqYtZ4bvmzeAO7
+	 5iIXi2Y3c3s5Sl9kWF/1dyVz81C50Hnb2DFZstIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Stanislav Fort <disclosure@aisle.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/140] s390/cpum_cf: Deny all sampling events by counter PMU
-Date: Wed, 17 Sep 2025 14:33:33 +0200
-Message-ID: <20250917123345.308422165@linuxfoundation.org>
+Subject: [PATCH 6.12 042/140] bpf: Fix out-of-bounds dynptr write in bpf_crypto_crypt
+Date: Wed, 17 Sep 2025 14:33:34 +0200
+Message-ID: <20250917123345.333172747@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,48 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit ce971233242b5391d99442271f3ca096fb49818d ]
+[ Upstream commit f9bb6ffa7f5ad0f8ee0f53fc4a10655872ee4a14 ]
 
-Deny all sampling event by the CPUMF counter facility device driver
-and return -ENOENT. This return value is used to try other PMUs.
-Up to now events for type PERF_TYPE_HARDWARE were not tested for
-sampling and returned later on -EOPNOTSUPP. This ends the search
-for alternative PMUs. Change that behavior and try other PMUs
-instead.
+Stanislav reported that in bpf_crypto_crypt() the destination dynptr's
+size is not validated to be at least as large as the source dynptr's
+size before calling into the crypto backend with 'len = src_len'. This
+can result in an OOB write when the destination is smaller than the
+source.
 
-Fixes: 613a41b0d16e ("s390/cpum_cf: Reject request for sampling in event initialization")
-Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Concretely, in mentioned function, psrc and pdst are both linear
+buffers fetched from each dynptr:
+
+  psrc = __bpf_dynptr_data(src, src_len);
+  [...]
+  pdst = __bpf_dynptr_data_rw(dst, dst_len);
+  [...]
+  err = decrypt ?
+        ctx->type->decrypt(ctx->tfm, psrc, pdst, src_len, piv) :
+        ctx->type->encrypt(ctx->tfm, psrc, pdst, src_len, piv);
+
+The crypto backend expects pdst to be large enough with a src_len length
+that can be written. Add an additional src_len > dst_len check and bail
+out if it's the case. Note that these kfuncs are accessible under root
+privileges only.
+
+Fixes: 3e1c6f35409f ("bpf: make common crypto API for TC/XDP programs")
+Reported-by: Stanislav Fort <disclosure@aisle.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://lore.kernel.org/r/20250829143657.318524-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_cpum_cf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
-index 6d6b057b562fd..b017db3344cb5 100644
---- a/arch/s390/kernel/perf_cpum_cf.c
-+++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -761,8 +761,6 @@ static int __hw_perf_event_init(struct perf_event *event, unsigned int type)
- 		break;
+diff --git a/kernel/bpf/crypto.c b/kernel/bpf/crypto.c
+index 94854cd9c4cc3..83c4d9943084b 100644
+--- a/kernel/bpf/crypto.c
++++ b/kernel/bpf/crypto.c
+@@ -278,7 +278,7 @@ static int bpf_crypto_crypt(const struct bpf_crypto_ctx *ctx,
+ 	siv_len = siv ? __bpf_dynptr_size(siv) : 0;
+ 	src_len = __bpf_dynptr_size(src);
+ 	dst_len = __bpf_dynptr_size(dst);
+-	if (!src_len || !dst_len)
++	if (!src_len || !dst_len || src_len > dst_len)
+ 		return -EINVAL;
  
- 	case PERF_TYPE_HARDWARE:
--		if (is_sampling_event(event))	/* No sampling support */
--			return -ENOENT;
- 		ev = attr->config;
- 		if (!attr->exclude_user && attr->exclude_kernel) {
- 			/*
-@@ -860,6 +858,8 @@ static int cpumf_pmu_event_init(struct perf_event *event)
- 	unsigned int type = event->attr.type;
- 	int err = -ENOENT;
- 
-+	if (is_sampling_event(event))	/* No sampling support */
-+		return err;
- 	if (type == PERF_TYPE_HARDWARE || type == PERF_TYPE_RAW)
- 		err = __hw_perf_event_init(event, type);
- 	else if (event->pmu->type == type)
+ 	if (siv_len != ctx->siv_len)
 -- 
 2.51.0
 
