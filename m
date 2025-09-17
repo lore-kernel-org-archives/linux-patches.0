@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B534E3233FC;
-	Wed, 17 Sep 2025 12:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465B22C029C;
+	Wed, 17 Sep 2025 12:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113311; cv=none; b=jTgweOPivJnrLjDQjjOQkhdagaBD6Ila92HhFPyTyU9KhiKAhfI9dBFj2PwsgsX7LR9vS/rh364zjJcGBGKzweFky11zOKlI9vB/rbGLsZsRjI70F2MdkKT6LpEEpb1FTCV7Dfz6QlOr/a7cQw3Q9D7iMCGnyCSKTFTgrP11Z3E=
+	t=1758113315; cv=none; b=M+NCr3I96MEyZTmh7A0Q5z3DJBOiV1sQjX0SW9bN+q9dn4NifZRilVveCm5ElSc2N5pFwU/OqDOHn9sRGgsXhmniUiVlL3svlD6yWmoHXQf8mPbU4c6Rr3wD7LAAV7fgoQuwTTlE0LZgGKfBdZWOQBTb3k3Uvbsp1/QNlLEptws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113311; c=relaxed/simple;
-	bh=U0kQy7j8OMwF7phTItvAuRJv5oiYPmz5icDDxrHw8qs=;
+	s=arc-20240116; t=1758113315; c=relaxed/simple;
+	bh=cPjbg17bWBwZdy5vrPkHcI8xYcNWNuRTT3/ycvFgqNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBSR2VTDZoo7M+WccwpdGYAIoe2G1AgJTmIHlzQTnnV/gqlGvoUVPW8GV38p91XaqZy7VL7G7YetjWCN+Oq7g97D8zqthdnP3Pv87PgQ2YiCx5WIqEbuHKZvggYGhvLplDmLGNaRmiw3go58gvS7eFitLTmuWcMXvksC2k/ZI1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU6WIECi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tq5yMV4EgGYNe8DPr7zJ/Ijb1C61v1WEo9BeCzFE3H/NJf2Qe5QEjw2sHfTt0FA0AfMVNAzfihCTmDX7im+so2sIwWDHNmmaK/szOhtRxHitzAxQwbmXyiZSLglIKpDHiVJrmjPaVJtjgDKRjwiYnfYeMI725cZzGuGTg0mtcWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olfDr3a7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU6WIECi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34208C4CEF5;
-	Wed, 17 Sep 2025 12:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olfDr3a7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B7CC4CEF0;
+	Wed, 17 Sep 2025 12:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113311;
-	bh=U0kQy7j8OMwF7phTItvAuRJv5oiYPmz5icDDxrHw8qs=;
+	s=korg; t=1758113314;
+	bh=cPjbg17bWBwZdy5vrPkHcI8xYcNWNuRTT3/ycvFgqNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xU6WIECiPuvhwNqz7mWkXLBaBAUr9AqRc4bmxDe/CcGPwl5fzhj4wWFbbrdVsvKXs
-	 CrC+louwIs+IiEBq1MBmlaayPtTPEtm44m+8x2QG2S3L9/Be3bulxOuh5pWsqOQj2d
-	 PU7OZX5OUeHRKdoajCW6bPDtnQMqmakGJi6n/aWs=
+	b=olfDr3a7Rn25JR0Op0q0HuRaUBRd2ef3MjY3uylmeuiesdBagQtwsQ1qb2pFb8yaA
+	 bUUaJN73Dc8TIlAkKYn0MosqgbgEhObAvalwa/HN9zuc9pN9wQfrdxWvNMyjaZWlRI
+	 9EeFbme1gAUGqbZgg4QnJi9nJOUADAOOP5b0Y8Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.12 048/140] Revert "SUNRPC: Dont allow waiting for exiting tasks"
-Date: Wed, 17 Sep 2025 14:33:40 +0200
-Message-ID: <20250917123345.478773273@linuxfoundation.org>
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 031/140] ftrace/samples: Fix function size computation
+Date: Wed, 17 Sep 2025 14:33:23 +0200
+Message-ID: <20250917123345.070326937@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,35 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-commit 199cd9e8d14bc14bdbd1fa3031ce26dac9781507 upstream.
+[ Upstream commit 80d03a40837a9b26750a25122b906c052cc846c9 ]
 
-This reverts commit 14e41b16e8cb677bb440dca2edba8b041646c742.
+In my_tramp1 function .size directive was placed above
+ASM_RET instruction, leading to a wrong function size.
 
-This patch breaks the LTP acct02 test, so let's revert and look for a
-better solution.
-
-Reported-by: Mark Brown <broonie@kernel.org>
-Reported-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Link: https://lore.kernel.org/linux-nfs/7d4d57b0-39a3-49f1-8ada-60364743e3b4@sirena.org.uk/
-Cc: stable@vger.kernel.org # 6.15.x
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/aK3d7vxNcO52kEmg@vova-pc
+Fixes: 9d907f1ae80b ("samples/ftrace: Fix asm function ELF annotations")
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/sched.c |    2 --
- 1 file changed, 2 deletions(-)
+ samples/ftrace/ftrace-direct-modify.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -276,8 +276,6 @@ EXPORT_SYMBOL_GPL(rpc_destroy_wait_queue
+diff --git a/samples/ftrace/ftrace-direct-modify.c b/samples/ftrace/ftrace-direct-modify.c
+index 81220390851a3..328c6e60f024b 100644
+--- a/samples/ftrace/ftrace-direct-modify.c
++++ b/samples/ftrace/ftrace-direct-modify.c
+@@ -75,8 +75,8 @@ asm (
+ 	CALL_DEPTH_ACCOUNT
+ "	call my_direct_func1\n"
+ "	leave\n"
+-"	.size		my_tramp1, .-my_tramp1\n"
+ 	ASM_RET
++"	.size		my_tramp1, .-my_tramp1\n"
  
- static int rpc_wait_bit_killable(struct wait_bit_key *key, int mode)
- {
--	if (unlikely(current->flags & PF_EXITING))
--		return -EINTR;
- 	schedule();
- 	if (signal_pending_state(mode, current))
- 		return -ERESTARTSYS;
+ "	.type		my_tramp2, @function\n"
+ "	.globl		my_tramp2\n"
+-- 
+2.51.0
+
 
 
