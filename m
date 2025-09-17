@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD1A194C86;
-	Wed, 17 Sep 2025 12:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32B41E1E19;
+	Wed, 17 Sep 2025 12:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112596; cv=none; b=brtBRE9A+LZNVkju+buBpvWXAnmml5yKL0OfeYuielwr1eGfBJ/7TSiZ6K9yLRMSyYy0AsTxS0G7Zla4OJyGYnOqtQEA/cOLi5ARPVoS2MJ9PyMGtbsV1BdbNomMX2fwnaIPqL3slQ0kZ76k2zm4OeOnv4MUrOcVcm4ko5PuJ7g=
+	t=1758112600; cv=none; b=jhPLIysrbBnZlngvzFEMceCLgqNh8NOiM4vxS5jLEBJY7BL///zbCvjTerUncPmpOHaPZs87bKM1NAzr82VhdBxVs+CgJ8V+lbWZsPnRDXib0ERNd29PoNnkefsABYAaoCWxhCX3SFzmJqzddnDwFr3LdqGF1QtZEQFN1a++F88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112596; c=relaxed/simple;
-	bh=JfJQ38hQTa5DE73pWGbiuLXDiBklCB1qvUZ7mT0kBnk=;
+	s=arc-20240116; t=1758112600; c=relaxed/simple;
+	bh=SZ1wsK41XEO0M3rJy5fV02hO8vmUAMAzGcBGZD8UNuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jH2sdMS+gzLcVS3MCAicTx0YYtNKrZnRe2+ClY2BDlqwZd2iqb0O3BUlrV338VGtyiKPrKoUJtTYfzQnSn6MUQCl9QQvmdepKWMKiAa2mSHUKyIcRpc1WPYuVb33vBxAYKiL8cIqi+XQHIzJmcp+xiVOL4mFF8MgbTn4fq8rARA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVBKp1SQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nT1NKgh4aUmqBdQnIOFE1Ow2cfZDQzDt1WT3ygKrqb27+ym8Ss8SyAPersfi8wvfx6FfAeJOCinnB9wL5XHVkOnuiOtN79z+0wiJYAgOfRTRGJJbQ7FQ11Svdw0QKq7Vhv0ZsNIWdtLebzBAsQ64ZQpARk2nwGrYH2GsERGFuk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvUn2vPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVBKp1SQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE113C4CEF0;
-	Wed, 17 Sep 2025 12:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvUn2vPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D72FC4CEF0;
+	Wed, 17 Sep 2025 12:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112596;
-	bh=JfJQ38hQTa5DE73pWGbiuLXDiBklCB1qvUZ7mT0kBnk=;
+	s=korg; t=1758112599;
+	bh=SZ1wsK41XEO0M3rJy5fV02hO8vmUAMAzGcBGZD8UNuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVBKp1SQetPud85q+o5U/uAYhjDlB0M9SX0NZThZoXPXWx9xOv/xTM3E/nDCnryUl
-	 okGUooZ5KKLrOxNYsJxFD7rK3o3WQUZ/a1k1S+uAYbC+70p8zEFTTM1RXwjWaqiUn3
-	 ck5EFgAGIWw+okJbB/utH8KTw0CHg7A7M3Uqn3vk=
+	b=bvUn2vPG1iKtIRC7fsPbSfS9ubBJTNUFRBj26zlfnbc5CF7hVJgSW7jXFeK0RQ59J
+	 jl6M+c0JkFHGWdlknvwg0v3kFztTvmrHrKGDphEKwdBPsNJl6Ib3JQAHXg9k4EPG7n
+	 Xhen3e5CklnC59uAg9titVvbF6oejZR8zAZ6gEpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Haiden <scott.b.haiden@gmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Xiao Ni <xni@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 019/189] NFSv4: Dont clear capabilities that wont be reset
-Date: Wed, 17 Sep 2025 14:32:09 +0200
-Message-ID: <20250917123352.322489558@linuxfoundation.org>
+Subject: [PATCH 6.16 020/189] md: keep recovery_cp in mdp_superblock_s
+Date: Wed, 17 Sep 2025 14:32:10 +0200
+Message-ID: <20250917123352.347937089@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,33 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit 31f1a960ad1a14def94fa0b8c25d62b4c032813f ]
+[ Upstream commit c27973211ffcdf0a092eec265d5993e64b89adaf ]
 
-Don't clear the capabilities that are not going to get reset by the call
-to _nfs4_server_capabilities().
+commit 907a99c314a5 ("md: rename recovery_cp to resync_offset") replaces
+recovery_cp with resync_offset in mdp_superblock_s which is in md_p.h.
+md_p.h is used in userspace too. So mdadm building fails because of this.
+This patch revert this change.
 
-Reported-by: Scott Haiden <scott.b.haiden@gmail.com>
-Fixes: b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a new filesystem")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 907a99c314a5 ("md: rename recovery_cp to resync_offset")
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/linux-raid/20250815040028.18085-1-xni@redhat.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/md/md.c                | 6 +++---
+ include/uapi/linux/raid/md_p.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 7e203857f4668..fc86c75372b94 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -4082,7 +4082,6 @@ int nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *fhandle)
- 	};
- 	int err;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 3f355bb85797f..0f41573fa9f5e 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1406,7 +1406,7 @@ static int super_90_validate(struct mddev *mddev, struct md_rdev *freshest, stru
+ 		else {
+ 			if (sb->events_hi == sb->cp_events_hi &&
+ 				sb->events_lo == sb->cp_events_lo) {
+-				mddev->resync_offset = sb->resync_offset;
++				mddev->resync_offset = sb->recovery_cp;
+ 			} else
+ 				mddev->resync_offset = 0;
+ 		}
+@@ -1534,13 +1534,13 @@ static void super_90_sync(struct mddev *mddev, struct md_rdev *rdev)
+ 	mddev->minor_version = sb->minor_version;
+ 	if (mddev->in_sync)
+ 	{
+-		sb->resync_offset = mddev->resync_offset;
++		sb->recovery_cp = mddev->resync_offset;
+ 		sb->cp_events_hi = (mddev->events>>32);
+ 		sb->cp_events_lo = (u32)mddev->events;
+ 		if (mddev->resync_offset == MaxSector)
+ 			sb->state = (1<< MD_SB_CLEAN);
+ 	} else
+-		sb->resync_offset = 0;
++		sb->recovery_cp = 0;
  
--	nfs_server_set_init_caps(server);
- 	do {
- 		err = nfs4_handle_exception(server,
- 				_nfs4_server_capabilities(server, fhandle),
+ 	sb->layout = mddev->layout;
+ 	sb->chunk_size = mddev->chunk_sectors << 9;
+diff --git a/include/uapi/linux/raid/md_p.h b/include/uapi/linux/raid/md_p.h
+index b139462872775..ac74133a47688 100644
+--- a/include/uapi/linux/raid/md_p.h
++++ b/include/uapi/linux/raid/md_p.h
+@@ -173,7 +173,7 @@ typedef struct mdp_superblock_s {
+ #else
+ #error unspecified endianness
+ #endif
+-	__u32 resync_offset;	/* 11 resync checkpoint sector count	      */
++	__u32 recovery_cp;	/* 11 resync checkpoint sector count	      */
+ 	/* There are only valid for minor_version > 90 */
+ 	__u64 reshape_position;	/* 12,13 next address in array-space for reshape */
+ 	__u32 new_level;	/* 14 new level we are reshaping to	      */
 -- 
 2.51.0
 
