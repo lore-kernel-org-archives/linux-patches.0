@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6DD36D;
-	Wed, 17 Sep 2025 12:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FDC13B7A3;
+	Wed, 17 Sep 2025 12:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112623; cv=none; b=AIsnKTlt3OzSSL4G7W1wg677O+HKf/mXbh3l1DzcZoNeTC/xU/cNfcSbqkLH8i4K/uPMp2Uifs52F/s39EJxYpwb/YcHowW2eF4zQjhxIQLW4ljsjkfiGoi59hIjInTxYeFun06sbcaHBIV9gxBQoTRZXy9/k9E9QKMr59gUNbo=
+	t=1758112626; cv=none; b=GamwVzaeBaG9MKALsTfreQkZtV0YVut/n4hlNdEeyfj+QGjRCJqvJqR8DMEtjiCoupi4ZUPwj3atJtlawsrnIyzBF6dqfoS0keGA41MSOr0YCaWHcWJbPVs7JsJD9JSKh6Vt5gPKFToy5om7JTQEKFqI39QPIsl1x6yCyvqZpLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112623; c=relaxed/simple;
-	bh=5VJmtpqbf5Dv4/c0XDqyZ1kYoOvFd4E3rCHoWY7YfFI=;
+	s=arc-20240116; t=1758112626; c=relaxed/simple;
+	bh=3m7mrtfYt8kBBAdLBxSVrDSgJOL8kbLtaMjf1yHIQcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsqPc4k8EmejnW8d+ktH75R375Qy9lV7i/tWvDDz9sqRi0y81Nuao1zd4pocGpVmm1T9qMvHIxDwm2v+hhKjkZzuY+p0na4wcTsN6wQHf1FEVeO6Cxx9ST6QolmSaPwxJlZmTSUCeBatjlxdz7FHwEXkJ3+8Odg+JdkGeqE+/xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRVBxI8L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWmxgobxswnU2l3+rb85SKOniVTTe2rRFQQaQHw9SxXABxFHcL7YWEnjD/CAbDyZeprhmMvnhP+N3sIxPGsmo1uON4REuLnH4RWZ7/vmU81g8DGk4gKrgbejp9srOf6mj0auDGlcB0XLNm4gIq0DXky19zKDGngDqD0lZkBU0ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK/Kps98; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRVBxI8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F708C4CEF5;
-	Wed, 17 Sep 2025 12:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK/Kps98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6E3C4CEF0;
+	Wed, 17 Sep 2025 12:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112622;
-	bh=5VJmtpqbf5Dv4/c0XDqyZ1kYoOvFd4E3rCHoWY7YfFI=;
+	s=korg; t=1758112626;
+	bh=3m7mrtfYt8kBBAdLBxSVrDSgJOL8kbLtaMjf1yHIQcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yRVBxI8LZIUbeGAkEsQTPacqGDODp6t1sVAdteBviFNLRhCyrss7eCW9gJmzcPyvi
-	 eEK1yjyCBYW8IoimqCyy73cdCbtO7JMmZ0slghCjxDUs1cxah5UvC+zFiDw3u59aTh
-	 3Rr0f1LCCS6buO4y67pxYoiHesT1wTCWyWKsGjJE=
+	b=pK/Kps983E/E0ufXHW/yM/rfSs8v1ozO66q8obooeTWWN8+Lo0u/lRxx1OFldx35J
+	 EdmC2c3KusSdnC43vzMRZgAVvymjTUwqMfPyAGnwyZ/8ALqUcIXx9bSfGCcgYfk3OI
+	 fEr6QZedGzNLnGz/627Q8pMvLoImdevp19ZFoMX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 009/189] Bluetooth: hci_conn: Fix not cleaning up Broadcaster/Broadcast Source
-Date: Wed, 17 Sep 2025 14:31:59 +0200
-Message-ID: <20250917123352.078727318@linuxfoundation.org>
+Subject: [PATCH 6.16 027/189] ftrace/samples: Fix function size computation
+Date: Wed, 17 Sep 2025 14:32:17 +0200
+Message-ID: <20250917123352.518351124@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -50,33 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-[ Upstream commit 3ba486c5f3ce2c22ffd29c0103404cdbe21912b3 ]
+[ Upstream commit 80d03a40837a9b26750a25122b906c052cc846c9 ]
 
-This fixes Broadcaster/Broadcast Source not sending HCI_OP_LE_TERM_BIG
-because HCI_CONN_PER_ADV where not being set.
+In my_tramp1 function .size directive was placed above
+ASM_RET instruction, leading to a wrong function size.
 
-Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/aK3d7vxNcO52kEmg@vova-pc
+Fixes: 9d907f1ae80b ("samples/ftrace: Fix asm function ELF annotations")
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 2 +-
+ samples/ftrace/ftrace-direct-modify.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index ad5574e9a93ee..dc4f23ceff2a6 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2274,7 +2274,7 @@ struct hci_conn *hci_connect_bis(struct hci_dev *hdev, bdaddr_t *dst,
- 	 * the start periodic advertising and create BIG commands have
- 	 * been queued
- 	 */
--	hci_conn_hash_list_state(hdev, bis_mark_per_adv, PA_LINK,
-+	hci_conn_hash_list_state(hdev, bis_mark_per_adv, BIS_LINK,
- 				 BT_BOUND, &data);
+diff --git a/samples/ftrace/ftrace-direct-modify.c b/samples/ftrace/ftrace-direct-modify.c
+index cfea7a38befb0..da3a9f2091f55 100644
+--- a/samples/ftrace/ftrace-direct-modify.c
++++ b/samples/ftrace/ftrace-direct-modify.c
+@@ -75,8 +75,8 @@ asm (
+ 	CALL_DEPTH_ACCOUNT
+ "	call my_direct_func1\n"
+ "	leave\n"
+-"	.size		my_tramp1, .-my_tramp1\n"
+ 	ASM_RET
++"	.size		my_tramp1, .-my_tramp1\n"
  
- 	/* Queue start periodic advertising and create BIG */
+ "	.type		my_tramp2, @function\n"
+ "	.globl		my_tramp2\n"
 -- 
 2.51.0
 
