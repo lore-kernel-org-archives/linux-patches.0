@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32B41E1E19;
-	Wed, 17 Sep 2025 12:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DE218BBAE;
+	Wed, 17 Sep 2025 12:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112600; cv=none; b=jhPLIysrbBnZlngvzFEMceCLgqNh8NOiM4vxS5jLEBJY7BL///zbCvjTerUncPmpOHaPZs87bKM1NAzr82VhdBxVs+CgJ8V+lbWZsPnRDXib0ERNd29PoNnkefsABYAaoCWxhCX3SFzmJqzddnDwFr3LdqGF1QtZEQFN1a++F88=
+	t=1758112603; cv=none; b=gkYPwU6GDl4f8ctCD06q1q8i8EDp0kPRpFiWRfZanIAAxVrxYXbShu2NTUZn2WrxWWNgPjMTyMyhqETz+EQDQHpCQJ/aUeeHnSDVMXYErcG8Rtl9azJCphb1jRVrfTMSJC/9eXWWP9b8uVIpGfCATKA/X0ZCVnvbQxTVuJ2Ongk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112600; c=relaxed/simple;
-	bh=SZ1wsK41XEO0M3rJy5fV02hO8vmUAMAzGcBGZD8UNuA=;
+	s=arc-20240116; t=1758112603; c=relaxed/simple;
+	bh=Loy2bsHiwcRuENZua7URsmTXZacPEgSGzjBAb9N9zuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nT1NKgh4aUmqBdQnIOFE1Ow2cfZDQzDt1WT3ygKrqb27+ym8Ss8SyAPersfi8wvfx6FfAeJOCinnB9wL5XHVkOnuiOtN79z+0wiJYAgOfRTRGJJbQ7FQ11Svdw0QKq7Vhv0ZsNIWdtLebzBAsQ64ZQpARk2nwGrYH2GsERGFuk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvUn2vPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P8x1kr+Le+wVFZdNoOB2ZgMw6Lh/HiC7xQNQCPDnEi00kVGJTTyTbo/vzhnVhvqfJdJcLDBaQJDxZaWKhes1I4dv96dHNOhoYyWtmcvfbiJK5Y5cMAIYApZr88SIqyWKJONDWN/wuVepOYTsDoo8x7xKz68cEc9z3MbS5CVtRhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tets+A3S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvUn2vPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D72FC4CEF0;
-	Wed, 17 Sep 2025 12:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tets+A3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44BFC4CEF5;
+	Wed, 17 Sep 2025 12:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112599;
-	bh=SZ1wsK41XEO0M3rJy5fV02hO8vmUAMAzGcBGZD8UNuA=;
+	s=korg; t=1758112603;
+	bh=Loy2bsHiwcRuENZua7URsmTXZacPEgSGzjBAb9N9zuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvUn2vPG1iKtIRC7fsPbSfS9ubBJTNUFRBj26zlfnbc5CF7hVJgSW7jXFeK0RQ59J
-	 jl6M+c0JkFHGWdlknvwg0v3kFztTvmrHrKGDphEKwdBPsNJl6Ib3JQAHXg9k4EPG7n
-	 Xhen3e5CklnC59uAg9titVvbF6oejZR8zAZ6gEpM=
+	b=Tets+A3SzfZ6dnUV3wnGgoRdpJocps/CkaxHLVdiaQdUzKTRz+kcBrMEirEQdZRw9
+	 pNNIEb//FH2p9/+pVpB+iMQFfk0hUkT2E3NHNLDSdm6CsZ2ouyGY0toZR1mMSWfeqT
+	 hAeKtpkS3FKkGq9/6aTOL5Wo1GusCHif4qKJNtMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Ni <xni@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Ye Weihua <yeweihua4@huawei.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 020/189] md: keep recovery_cp in mdp_superblock_s
-Date: Wed, 17 Sep 2025 14:32:10 +0200
-Message-ID: <20250917123352.347937089@linuxfoundation.org>
+Subject: [PATCH 6.16 021/189] trace/fgraph: Fix error handling
+Date: Wed, 17 Sep 2025 14:32:11 +0200
+Message-ID: <20250917123352.371349576@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,67 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit c27973211ffcdf0a092eec265d5993e64b89adaf ]
+[ Upstream commit ab1396af7595e7d49a3850481b24d7fe7cbdfd31 ]
 
-commit 907a99c314a5 ("md: rename recovery_cp to resync_offset") replaces
-recovery_cp with resync_offset in mdp_superblock_s which is in md_p.h.
-md_p.h is used in userspace too. So mdadm building fails because of this.
-This patch revert this change.
+Commit edede7a6dcd7 ("trace/fgraph: Fix the warning caused by missing
+unregister notifier") added a call to unregister the PM notifier if
+register_ftrace_graph() failed. It does so unconditionally. However,
+the PM notifier is only registered with the first call to
+register_ftrace_graph(). If the first registration was successful and
+a subsequent registration failed, the notifier is now unregistered even
+if ftrace graphs are still registered.
 
-Fixes: 907a99c314a5 ("md: rename recovery_cp to resync_offset")
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Link: https://lore.kernel.org/linux-raid/20250815040028.18085-1-xni@redhat.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Fix the problem by only unregistering the PM notifier during error handling
+if there are no active fgraph registrations.
+
+Fixes: edede7a6dcd7 ("trace/fgraph: Fix the warning caused by missing unregister notifier")
+Closes: https://lore.kernel.org/all/63b0ba5a-a928-438e-84f9-93028dd72e54@roeck-us.net/
+Cc: Ye Weihua <yeweihua4@huawei.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250906050618.2634078-1-linux@roeck-us.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c                | 6 +++---
- include/uapi/linux/raid/md_p.h | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/fgraph.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 3f355bb85797f..0f41573fa9f5e 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1406,7 +1406,7 @@ static int super_90_validate(struct mddev *mddev, struct md_rdev *freshest, stru
- 		else {
- 			if (sb->events_hi == sb->cp_events_hi &&
- 				sb->events_lo == sb->cp_events_lo) {
--				mddev->resync_offset = sb->resync_offset;
-+				mddev->resync_offset = sb->recovery_cp;
- 			} else
- 				mddev->resync_offset = 0;
- 		}
-@@ -1534,13 +1534,13 @@ static void super_90_sync(struct mddev *mddev, struct md_rdev *rdev)
- 	mddev->minor_version = sb->minor_version;
- 	if (mddev->in_sync)
- 	{
--		sb->resync_offset = mddev->resync_offset;
-+		sb->recovery_cp = mddev->resync_offset;
- 		sb->cp_events_hi = (mddev->events>>32);
- 		sb->cp_events_lo = (u32)mddev->events;
- 		if (mddev->resync_offset == MaxSector)
- 			sb->state = (1<< MD_SB_CLEAN);
- 	} else
--		sb->resync_offset = 0;
-+		sb->recovery_cp = 0;
- 
- 	sb->layout = mddev->layout;
- 	sb->chunk_size = mddev->chunk_sectors << 9;
-diff --git a/include/uapi/linux/raid/md_p.h b/include/uapi/linux/raid/md_p.h
-index b139462872775..ac74133a47688 100644
---- a/include/uapi/linux/raid/md_p.h
-+++ b/include/uapi/linux/raid/md_p.h
-@@ -173,7 +173,7 @@ typedef struct mdp_superblock_s {
- #else
- #error unspecified endianness
- #endif
--	__u32 resync_offset;	/* 11 resync checkpoint sector count	      */
-+	__u32 recovery_cp;	/* 11 resync checkpoint sector count	      */
- 	/* There are only valid for minor_version > 90 */
- 	__u64 reshape_position;	/* 12,13 next address in array-space for reshape */
- 	__u32 new_level;	/* 14 new level we are reshaping to	      */
+diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+index dac2d58f39490..db40ec5cc9d73 100644
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -1393,7 +1393,8 @@ int register_ftrace_graph(struct fgraph_ops *gops)
+ 		ftrace_graph_active--;
+ 		gops->saved_func = NULL;
+ 		fgraph_lru_release_index(i);
+-		unregister_pm_notifier(&ftrace_suspend_notifier);
++		if (!ftrace_graph_active)
++			unregister_pm_notifier(&ftrace_suspend_notifier);
+ 	}
+ 	return ret;
+ }
 -- 
 2.51.0
 
