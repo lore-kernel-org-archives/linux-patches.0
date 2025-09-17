@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F92330D21;
-	Wed, 17 Sep 2025 12:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52725330D21;
+	Wed, 17 Sep 2025 12:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113730; cv=none; b=ntIwLI08WXquzMJ56T/ltbL8zMtPlMYGga2R9zzl8u6P4F1wPSJ22Mw5JsMdRql/fehuK0dBILWB9ZjkJqwzq+mqhQUqbdTZ+szbdyj8qKAKLw3diC2riFZOwy/Sm0GpedH4ZotDkvtb170lkU6xdZet8NdLY8HgEoQNRmAJKJs=
+	t=1758113734; cv=none; b=VbwyJftoeh2C7McLRJVr5MCTjsev5kLNuODSHo6krS5YBuXl1tUeRN6dOlL4UOUCPM0dGjF3fouA1hAZqVrF8flwKU301fZ/0g7IZq2WLrQKDERbFdQvqfHvrr/HQBoRRMnxKGoIpe/d/7qkQTu+oi0wO65nELsxaiMGaBRFiM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113730; c=relaxed/simple;
-	bh=qXqz+MwZPaJ+o82xrYy6R6gteJJ4buX19CkCA/CfR+o=;
+	s=arc-20240116; t=1758113734; c=relaxed/simple;
+	bh=zB+KSZQDJu/LiJIDDd+l+Z6CAGWY8ovAqDMcrde/xI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9S8JbRWVE9VPtHFXJHgwIwrrKsgpTJLF+cGz7Cc+At8e3wC34jpUv0foLR9SStlaP/SfwWDIyJFelAHm7gIdY6XHkhcbx4Et7gGgVF6eyrS/U/9jBrG1QeG9L/rCO/Simc/3niZVstVC2K02tIE+gVooaYzR8nnSe5EfFGCVS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqexQyn/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFf0rPEtTveHpUUvBj9GIqzY1KMoZ1BFtPw9G28rJ5Psi2YlEA7V4nmjhLv9ZQV6wi/jRwYl9E8qnuGHGwpoZr2S2NoXK0JjpQVeEMHKYjJ4vcs9CeC8Jn0UI4JTxweBMeJ9giq/XocENzP9RNgt6xegHqiNjbtCVHtcHd4j7cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKlZn0Zx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqexQyn/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C19AC4CEF0;
-	Wed, 17 Sep 2025 12:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKlZn0Zx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74174C4CEFA;
+	Wed, 17 Sep 2025 12:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113730;
-	bh=qXqz+MwZPaJ+o82xrYy6R6gteJJ4buX19CkCA/CfR+o=;
+	s=korg; t=1758113733;
+	bh=zB+KSZQDJu/LiJIDDd+l+Z6CAGWY8ovAqDMcrde/xI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CqexQyn/UQI+KAAlYt5eUXu84hwzvIydfUY+lCOTHHCjKRMv/QLypFND2va+puSgh
-	 hNrBd+9E06/YNOjg/GBZcXLQY42O4c0fDm/IjYd+dq4DTgGhcr5psZK9GjEhLuaKvw
-	 DcjZZeA9vs2M59tAh7oXdXnyc0hbg+GkUHBa/DJA=
+	b=bKlZn0ZxBOv4T0q2nCSPm55Wstku1vmOtq7CbG6HFiOycswAHbdNLvQRq5AxRCEst
+	 q/774DhwciPResS01/Fg00YzTwGA7R6bRPmM0quOGhHMy2iQhih5FdMzA0KAY7DZM6
+	 Xdx+ztUe9IuFLT3OPc1cppAWaKSa1VHEssQ0oiz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chiasheng Lee <chiasheng.lee@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 036/101] i2c: i801: Hide Intel Birch Stream SoC TCO WDT
-Date: Wed, 17 Sep 2025 14:34:19 +0200
-Message-ID: <20250917123337.719408949@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 019/101] NFSv4.2: Serialise O_DIRECT i/o and clone range
+Date: Wed, 17 Sep 2025 14:34:02 +0200
+Message-ID: <20250917123337.324160706@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -52,40 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chiasheng Lee <chiasheng.lee@linux.intel.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 664596bd98bb251dd417dfd3f9b615b661e1e44a upstream.
+[ Upstream commit c80ebeba1198eac8811ab0dba36ecc13d51e4438 ]
 
-Hide the Intel Birch Stream SoC TCO WDT feature since it was removed.
+Ensure that all O_DIRECT reads and writes complete before cloning a file
+range, so that both the source and destination are up to date.
 
-On platforms with PCH TCO WDT, this redundant device might be rendering
-errors like this:
-
-[   28.144542] sysfs: cannot create duplicate filename '/bus/platform/devices/iTCO_wdt'
-
-Fixes: 8c56f9ef25a3 ("i2c: i801: Add support for Intel Birch Stream SoC")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220320
-Signed-off-by: Chiasheng Lee <chiasheng.lee@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.7+
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250901125943.916522-1-chiasheng.lee@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a5864c999de6 ("NFS: Do not serialise O_DIRECT reads and writes")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1051,7 +1051,7 @@ static const struct pci_device_id i801_i
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_P_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_SOC_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_PCH_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
--	{ PCI_DEVICE_DATA(INTEL, BIRCH_STREAM_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
-+	{ PCI_DEVICE_DATA(INTEL, BIRCH_STREAM_SMBUS,		FEATURES_ICH5)			 },
- 	{ PCI_DEVICE_DATA(INTEL, ARROW_LAKE_H_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, PANTHER_LAKE_H_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, PANTHER_LAKE_P_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
+diff --git a/fs/nfs/nfs4file.c b/fs/nfs/nfs4file.c
+index 02788c3c85e5b..befdb0f4e6dc3 100644
+--- a/fs/nfs/nfs4file.c
++++ b/fs/nfs/nfs4file.c
+@@ -282,9 +282,11 @@ static loff_t nfs42_remap_file_range(struct file *src_file, loff_t src_off,
+ 
+ 	/* flush all pending writes on both src and dst so that server
+ 	 * has the latest data */
++	nfs_file_block_o_direct(NFS_I(src_inode));
+ 	ret = nfs_sync_inode(src_inode);
+ 	if (ret)
+ 		goto out_unlock;
++	nfs_file_block_o_direct(NFS_I(dst_inode));
+ 	ret = nfs_sync_inode(dst_inode);
+ 	if (ret)
+ 		goto out_unlock;
+-- 
+2.51.0
+
 
 
