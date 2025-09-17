@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48FB3233FC;
-	Wed, 17 Sep 2025 12:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50FE328977;
+	Wed, 17 Sep 2025 12:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113250; cv=none; b=NXmygdJAj0WAWk1XpKYthnP6CvE73Dxqbxpv7NX7RpEg2P5ZksWEKbhtir9aMN84xHD3KEYJab7wqZgN24Ty77TGYZQGy0TQ7+VbTYpslsNA3abPf7+Z44N9JXgvC/bvh2wME9EtPgVmosvP7uisieNePyFsLByT6bQIdWHv+Vs=
+	t=1758113254; cv=none; b=bL/6FIn2HlKRqsF+orR4WQErt7QjrwluJTAkL9LGGdnLEtxxS6VuHGglezwFdElvFhKchi96zMbBzN0yI/TvVtXOkQCor2iy7Qz2JmLDEeyTjWoqyxWlV9n7AQrs1GlznZ8lcewOLJAeSbFP9aXES6aw6KE9EG9A3g9aZk2WFSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113250; c=relaxed/simple;
-	bh=0JqWGvFj9oxCzZ+L+BuAhFPBnx6vKP6vdokmciKXfEY=;
+	s=arc-20240116; t=1758113254; c=relaxed/simple;
+	bh=RhU44sMsNFwRLE7LN8qhxN50fF0GTD26yfcqxdpV13Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4xrC1rC4q0ft+zsg1xnMg/VVHAKoVHYAunp1gCmtcs8/PsTJKeJsjGkvn2lkdsjwSPqMoXAY49qe+vyDbd/laVTip7MRdyZkH5f8JNR08udHjtue7iazij6w4GY59MkcZoW5g9D7PhihVvRehQ99nAYHUN38lrMMDNV4WnqtKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqgA8IUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S/2rmZ3ejju0MteOKApMA1X6qcnSaBxZ2C2BKfQa5L78u9YvAWxnA6YLF73elDZJ2LfhCcAbnbYIPIAIJSZ9uPQArFC0PxjJmFCPGJ3FKuMl5Af+5PWED5Zt3WJFkhl81Fw68I/W65XWxb64BfE0NGBHH91KSulh33T90oFdoN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JL82HbA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqgA8IUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4D2C4CEFF;
-	Wed, 17 Sep 2025 12:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JL82HbA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BC9C4CEF5;
+	Wed, 17 Sep 2025 12:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113250;
-	bh=0JqWGvFj9oxCzZ+L+BuAhFPBnx6vKP6vdokmciKXfEY=;
+	s=korg; t=1758113253;
+	bh=RhU44sMsNFwRLE7LN8qhxN50fF0GTD26yfcqxdpV13Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqgA8IUYi+BPpxBLvVHJflfTz+At7+FTFCuXqeGFfR0L4/6+Go+A3f0mx0NKOh3Y0
-	 U89aAExNFKYQJ1nMnTOMhJ9ewadE2GLR4Vt7PNkTByVh/H989IcmzLWm6odweCC9Ef
-	 8F1dcNTANqWB/ib9JF54LQboVaJDsNYYknYVA1ug=
+	b=JL82HbA+zB90M91HC+wfBUavmv/8cLU7BwbqD6Ge6rGoDWNPxsQqrZoP8nYQYZsIK
+	 z4Qp6hsZeV1/tCiRer4NY/SEb+zfV+gHLdKyefk8nHokplp9r5ZpA4cwCODUwITkAf
+	 IR/3v2/FAA0tv/4BpeBL5cOyBW7UX1y+Scsv4FS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/140] nfs/localio: remove extra indirect nfs_to call to check {read,write}_iter
-Date: Wed, 17 Sep 2025 14:33:20 +0200
-Message-ID: <20250917123344.995022051@linuxfoundation.org>
+Subject: [PATCH 6.12 003/140] dma-mapping: trace dma_alloc/free direction
+Date: Wed, 17 Sep 2025 14:32:55 +0200
+Message-ID: <20250917123344.402595521@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,119 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 0978e5b85fc0867f53c5f4e5b7d2a5536a623e16 ]
+[ Upstream commit 3afff779a725cba914e6caba360b696ae6f90249 ]
 
-Push the read_iter and write_iter availability checks down to
-nfs_do_local_read and nfs_do_local_write respectively.
+In preparation for using these tracepoints in a few more places, trace
+the DMA direction as well. For coherent allocations this is always
+bidirectional.
 
-This eliminates a redundant nfs_to->nfsd_file_file() call.
-
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: 992203a1fba5 ("nfs/localio: restore creds before releasing pageio data")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 7e2368a21741 ("dma-debug: don't enforce dma mapping check on noncoherent allocations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ include/trace/events/dma.h | 18 ++++++++++++------
+ kernel/dma/mapping.c       |  6 ++++--
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 21b2b38fae9f3..ab305dfc71269 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -274,7 +274,7 @@ nfs_local_iocb_free(struct nfs_local_kiocb *iocb)
+diff --git a/include/trace/events/dma.h b/include/trace/events/dma.h
+index b0f41265191c3..012729cc178f0 100644
+--- a/include/trace/events/dma.h
++++ b/include/trace/events/dma.h
+@@ -116,8 +116,9 @@ DEFINE_EVENT(dma_unmap, dma_unmap_resource,
  
- static struct nfs_local_kiocb *
- nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
--		     struct nfsd_file *localio, gfp_t flags)
-+		     struct file *file, gfp_t flags)
- {
- 	struct nfs_local_kiocb *iocb;
+ TRACE_EVENT(dma_alloc,
+ 	TP_PROTO(struct device *dev, void *virt_addr, dma_addr_t dma_addr,
+-		 size_t size, gfp_t flags, unsigned long attrs),
+-	TP_ARGS(dev, virt_addr, dma_addr, size, flags, attrs),
++		 size_t size, enum dma_data_direction dir, gfp_t flags,
++		 unsigned long attrs),
++	TP_ARGS(dev, virt_addr, dma_addr, size, dir, flags, attrs),
  
-@@ -287,9 +287,8 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
- 		kfree(iocb);
+ 	TP_STRUCT__entry(
+ 		__string(device, dev_name(dev))
+@@ -125,6 +126,7 @@ TRACE_EVENT(dma_alloc,
+ 		__field(u64, dma_addr)
+ 		__field(size_t, size)
+ 		__field(gfp_t, flags)
++		__field(enum dma_data_direction, dir)
+ 		__field(unsigned long, attrs)
+ 	),
+ 
+@@ -137,8 +139,9 @@ TRACE_EVENT(dma_alloc,
+ 		__entry->attrs = attrs;
+ 	),
+ 
+-	TP_printk("%s dma_addr=%llx size=%zu virt_addr=%p flags=%s attrs=%s",
++	TP_printk("%s dir=%s dma_addr=%llx size=%zu virt_addr=%p flags=%s attrs=%s",
+ 		__get_str(device),
++		decode_dma_data_direction(__entry->dir),
+ 		__entry->dma_addr,
+ 		__entry->size,
+ 		__entry->virt_addr,
+@@ -148,14 +151,15 @@ TRACE_EVENT(dma_alloc,
+ 
+ TRACE_EVENT(dma_free,
+ 	TP_PROTO(struct device *dev, void *virt_addr, dma_addr_t dma_addr,
+-		 size_t size, unsigned long attrs),
+-	TP_ARGS(dev, virt_addr, dma_addr, size, attrs),
++		 size_t size, enum dma_data_direction dir, unsigned long attrs),
++	TP_ARGS(dev, virt_addr, dma_addr, size, dir, attrs),
+ 
+ 	TP_STRUCT__entry(
+ 		__string(device, dev_name(dev))
+ 		__field(void *, virt_addr)
+ 		__field(u64, dma_addr)
+ 		__field(size_t, size)
++		__field(enum dma_data_direction, dir)
+ 		__field(unsigned long, attrs)
+ 	),
+ 
+@@ -164,11 +168,13 @@ TRACE_EVENT(dma_free,
+ 		__entry->virt_addr = virt_addr;
+ 		__entry->dma_addr = dma_addr;
+ 		__entry->size = size;
++		__entry->dir = dir;
+ 		__entry->attrs = attrs;
+ 	),
+ 
+-	TP_printk("%s dma_addr=%llx size=%zu virt_addr=%p attrs=%s",
++	TP_printk("%s dir=%s dma_addr=%llx size=%zu virt_addr=%p attrs=%s",
+ 		__get_str(device),
++		decode_dma_data_direction(__entry->dir),
+ 		__entry->dma_addr,
+ 		__entry->size,
+ 		__entry->virt_addr,
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index 74d453ec750a1..9720f3c157d9f 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -619,7 +619,8 @@ void *dma_alloc_attrs(struct device *dev, size_t size, dma_addr_t *dma_handle,
+ 	else
  		return NULL;
- 	}
--	init_sync_kiocb(&iocb->kiocb, nfs_to->nfsd_file_file(localio));
-+	init_sync_kiocb(&iocb->kiocb, file);
- 	iocb->kiocb.ki_pos = hdr->args.offset;
--	iocb->localio = localio;
- 	iocb->hdr = hdr;
- 	iocb->kiocb.ki_flags &= ~IOCB_APPEND;
- 	return iocb;
-@@ -396,13 +395,19 @@ nfs_do_local_read(struct nfs_pgio_header *hdr,
- 		  const struct rpc_call_ops *call_ops)
- {
- 	struct nfs_local_kiocb *iocb;
-+	struct file *file = nfs_to->nfsd_file_file(localio);
-+
-+	/* Don't support filesystems without read_iter */
-+	if (!file->f_op->read_iter)
-+		return -EAGAIN;
  
- 	dprintk("%s: vfs_read count=%u pos=%llu\n",
- 		__func__, hdr->args.count, hdr->args.offset);
+-	trace_dma_alloc(dev, cpu_addr, *dma_handle, size, flag, attrs);
++	trace_dma_alloc(dev, cpu_addr, *dma_handle, size, DMA_BIDIRECTIONAL,
++			flag, attrs);
+ 	debug_dma_alloc_coherent(dev, size, *dma_handle, cpu_addr, attrs);
+ 	return cpu_addr;
+ }
+@@ -644,7 +645,8 @@ void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
+ 	if (!cpu_addr)
+ 		return;
  
--	iocb = nfs_local_iocb_alloc(hdr, localio, GFP_KERNEL);
-+	iocb = nfs_local_iocb_alloc(hdr, file, GFP_KERNEL);
- 	if (iocb == NULL)
- 		return -ENOMEM;
-+	iocb->localio = localio;
- 
- 	nfs_local_pgio_init(hdr, call_ops);
- 	hdr->res.eof = false;
-@@ -570,14 +575,20 @@ nfs_do_local_write(struct nfs_pgio_header *hdr,
- 		   const struct rpc_call_ops *call_ops)
- {
- 	struct nfs_local_kiocb *iocb;
-+	struct file *file = nfs_to->nfsd_file_file(localio);
-+
-+	/* Don't support filesystems without write_iter */
-+	if (!file->f_op->write_iter)
-+		return -EAGAIN;
- 
- 	dprintk("%s: vfs_write count=%u pos=%llu %s\n",
- 		__func__, hdr->args.count, hdr->args.offset,
- 		(hdr->args.stable == NFS_UNSTABLE) ?  "unstable" : "stable");
- 
--	iocb = nfs_local_iocb_alloc(hdr, localio, GFP_NOIO);
-+	iocb = nfs_local_iocb_alloc(hdr, file, GFP_NOIO);
- 	if (iocb == NULL)
- 		return -ENOMEM;
-+	iocb->localio = localio;
- 
- 	switch (hdr->args.stable) {
- 	default:
-@@ -603,16 +614,9 @@ int nfs_local_doio(struct nfs_client *clp, struct nfsd_file *localio,
- 		   const struct rpc_call_ops *call_ops)
- {
- 	int status = 0;
--	struct file *filp = nfs_to->nfsd_file_file(localio);
- 
- 	if (!hdr->args.count)
- 		return 0;
--	/* Don't support filesystems without read_iter/write_iter */
--	if (!filp->f_op->read_iter || !filp->f_op->write_iter) {
--		nfs_local_disable(clp);
--		status = -EAGAIN;
--		goto out;
--	}
- 
- 	switch (hdr->rw_mode) {
- 	case FMODE_READ:
-@@ -626,8 +630,10 @@ int nfs_local_doio(struct nfs_client *clp, struct nfsd_file *localio,
- 			hdr->rw_mode);
- 		status = -EINVAL;
- 	}
--out:
-+
- 	if (status != 0) {
-+		if (status == -EAGAIN)
-+			nfs_local_disable(clp);
- 		nfs_to_nfsd_file_put_local(localio);
- 		hdr->task.tk_status = status;
- 		nfs_local_hdr_release(hdr, call_ops);
+-	trace_dma_free(dev, cpu_addr, dma_handle, size, attrs);
++	trace_dma_free(dev, cpu_addr, dma_handle, size, DMA_BIDIRECTIONAL,
++		       attrs);
+ 	debug_dma_free_coherent(dev, size, cpu_addr, dma_handle);
+ 	if (dma_alloc_direct(dev, ops))
+ 		dma_direct_free(dev, size, cpu_addr, dma_handle, attrs);
 -- 
 2.51.0
 
