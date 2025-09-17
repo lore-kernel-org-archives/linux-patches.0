@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F16C29B76F;
-	Wed, 17 Sep 2025 12:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C39E1F462C;
+	Wed, 17 Sep 2025 12:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113526; cv=none; b=lrt2XKM+Gt6HGzOs4V7PSLe2V6y6BiKx046zb4U8wp0Gq64Ez6IE6j6dUgmCY+JJQeMSySgMHoNAGKH/LR6c5xTwwZf3Vl2cuIDuZ4bnKcLWmQzMoT+cDxp+2LaWTvkL4u7CXz1MBU9L8WaEMmBkMSIhYNaOG5scIB02AlzT2YE=
+	t=1758113531; cv=none; b=BEkZU0E8V5EWeyyF0AVXr+Ig1jlbTc570Op1NTDw4N1jiqktFK1Iy+SAf7ShgNs45lvlu2p6+mCLNRm/5DfvIgHEQXafONfph/catdRl2rij+7FaXdBpaPSLAKTkXhSlE/kMy4CinPnpu97w7r8+rKkkCAdlMuvldDlylkHV4jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113526; c=relaxed/simple;
-	bh=cHjxHAUb6+Ox/S7z5InjfelfgwOTydLNWYtrYz53oVA=;
+	s=arc-20240116; t=1758113531; c=relaxed/simple;
+	bh=+iBSfQxsyKWhpFk+uYG1A9hAGZKQEeXeJrFgQOGkrhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuyBdV4YNXoW1sg5Ww7z8Vkrj4SmejdqpiM6u7zm2wWTyCQuaY9k9wfalq+MojR+VzPIYrJMqaIM04gHSQooPV9O4+fB4G1twD26uYnj6qzWOYS53dyDgyWrUJDmld9epDgD7AD8M60MKruyxj9RRl3zoWRVQ6HgiwWDPeAeMs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZ6GpAiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZdOi1myLgv1y+ib++4H7sQvvFf6YCQB6jNUO8le0ZOD2YLJ0iDdvTOt+xIVZHHymQmZpbvAENQEUT2z37wemEVekYchisoaG4tXo2fkM590RnadGqnWmK2e5YwQHQfL1PveCwRcrKltEiA7HODTcGO+qRbjTroF39tdTxtx/Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtwxeWV6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZ6GpAiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE3BC4CEF0;
-	Wed, 17 Sep 2025 12:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtwxeWV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BD1C4CEF0;
+	Wed, 17 Sep 2025 12:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113526;
-	bh=cHjxHAUb6+Ox/S7z5InjfelfgwOTydLNWYtrYz53oVA=;
+	s=korg; t=1758113529;
+	bh=+iBSfQxsyKWhpFk+uYG1A9hAGZKQEeXeJrFgQOGkrhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZ6GpAiI+2CztjYWpfD4Fx7PzMs9pOc7+9ZY2nW4JvRYmsIj3HwlLcF2ESpiZZdTF
-	 hV6p5njYTFvMiE2+tEGiFUyRaz+rp0UJ36HJnnxg36QUYj3wtdjGMwGS/Sr3Nw/Nb9
-	 rZI75xpbqaPpy82QW9ToCdisQj0y5wtHeI5s4tvg=
+	b=GtwxeWV6wt8K/sN6d9YS+NfZS+9E2Yb1PPYN4MIfYWcIzITas/EJtQtyvaqAO1I13
+	 +PKt888B3p56kUohjWje+w1K2nwaKDUXBoOyPrXrKvVNqDmb+vKTposagT+kp9TWVG
+	 CcDfuh5qhSIMtEl/CW1qQlchy5xuS9LSLb4AV/F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hanreich <s.hanreich@proxmox.com>,
-	Florian Westphal <fw@strlen.de>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/140] netfilter: nft_set_rbtree: continue traversal if element is inactive
-Date: Wed, 17 Sep 2025 14:34:44 +0200
-Message-ID: <20250917123347.044833495@linuxfoundation.org>
+Subject: [PATCH 6.12 113/140] netfilter: nf_tables: Reintroduce shortened deletion notifications
+Date: Wed, 17 Sep 2025 14:34:45 +0200
+Message-ID: <20250917123347.067172658@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,89 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit a60f7bf4a1524d8896b76ba89623080aebf44272 ]
+[ Upstream commit a1050dd071682d2c9d8d6d5c96119f8f401b62f0 ]
 
-When the rbtree lookup function finds a match in the rbtree, it sets the
-range start interval to a potentially inactive element.
+Restore commit 28339b21a365 ("netfilter: nf_tables: do not send complete
+notification of deletions") and fix it:
 
-Then, after tree lookup, if the matching element is inactive, it returns
-NULL and suppresses a matching result.
+- Avoid upfront modification of 'event' variable so the conditionals
+  become effective.
+- Always include NFTA_OBJ_TYPE attribute in object notifications, user
+  space requires it for proper deserialisation.
+- Catch DESTROY events, too.
 
-This is wrong and leads to false negative matches when a transaction has
-already entered the commit phase.
-
-cpu0					cpu1
-  has added new elements to clone
-  has marked elements as being
-  inactive in new generation
-					perform lookup in the set
-  enters commit phase:
-I) increments the genbit
-					A) observes new genbit
-					B) finds matching range
-					C) returns no match: found
-					range invalid in new generation
-II) removes old elements from the tree
-					C New nft_lookup happening now
-				       	  will find matching element,
-					  because it is no longer
-					  obscured by old, inactive one.
-
-Consider a packet matching range r1-r2:
-
-cpu0 processes following transaction:
-1. remove r1-r2
-2. add r1-r3
-
-P is contained in both ranges. Therefore, cpu1 should always find a match
-for P.  Due to above race, this is not the case:
-
-cpu1 does find r1-r2, but then ignores it due to the genbit indicating
-the range has been removed.  It does NOT test for further matches.
-
-The situation persists for all lookups until after cpu0 hits II) after
-which r1-r3 range start node is tested for the first time.
-
-Move the "interval start is valid" check ahead so that tree traversal
-continues if the starting interval is not valid in this generation.
-
-Thanks to Stefan Hanreich for providing an initial reproducer for this
-bug.
-
-Reported-by: Stefan Hanreich <s.hanreich@proxmox.com>
-Fixes: c1eda3c6394f ("netfilter: nft_rbtree: ignore inactive matching element with no descendants")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: b2f742c846ca ("netfilter: nf_tables: restart set lookup on base_seq change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c | 67 ++++++++++++++++++++++++++---------
+ 1 file changed, 50 insertions(+), 17 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 938a257c069e2..b1f04168ec937 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -77,7 +77,9 @@ __nft_rbtree_lookup(const struct net *net, const struct nft_set *set,
- 			    nft_rbtree_interval_end(rbe) &&
- 			    nft_rbtree_interval_start(interval))
- 				continue;
--			interval = rbe;
-+			if (nft_set_elem_active(&rbe->ext, genmask) &&
-+			    !nft_rbtree_elem_expired(rbe))
-+				interval = rbe;
- 		} else if (d > 0)
- 			parent = rcu_dereference_raw(parent->rb_right);
- 		else {
-@@ -102,8 +104,6 @@ __nft_rbtree_lookup(const struct net *net, const struct nft_set *set,
- 	}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 3743e4249dc8c..4430bfa34a993 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1017,9 +1017,9 @@ static int nf_tables_fill_table_info(struct sk_buff *skb, struct net *net,
+ {
+ 	struct nlmsghdr *nlh;
  
- 	if (set->flags & NFT_SET_INTERVAL && interval != NULL &&
--	    nft_set_elem_active(&interval->ext, genmask) &&
--	    !nft_rbtree_elem_expired(interval) &&
- 	    nft_rbtree_interval_start(interval))
- 		return &interval->ext;
+-	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+-	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++	nlh = nfnl_msg_put(skb, portid, seq,
++			   nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event),
++			   flags, family, NFNETLINK_V0, nft_base_seq(net));
+ 	if (!nlh)
+ 		goto nla_put_failure;
  
+@@ -1029,6 +1029,12 @@ static int nf_tables_fill_table_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_TABLE_PAD))
+ 		goto nla_put_failure;
+ 
++	if (event == NFT_MSG_DELTABLE ||
++	    event == NFT_MSG_DESTROYTABLE) {
++		nlmsg_end(skb, nlh);
++		return 0;
++	}
++
+ 	if (nla_put_be32(skb, NFTA_TABLE_FLAGS,
+ 			 htonl(table->flags & NFT_TABLE_F_MASK)))
+ 		goto nla_put_failure;
+@@ -1872,9 +1878,9 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
+ {
+ 	struct nlmsghdr *nlh;
+ 
+-	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+-	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++	nlh = nfnl_msg_put(skb, portid, seq,
++			   nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event),
++			   flags, family, NFNETLINK_V0, nft_base_seq(net));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -1884,6 +1890,13 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_CHAIN_PAD))
+ 		goto nla_put_failure;
+ 
++	if (!hook_list &&
++	    (event == NFT_MSG_DELCHAIN ||
++	     event == NFT_MSG_DESTROYCHAIN)) {
++		nlmsg_end(skb, nlh);
++		return 0;
++	}
++
+ 	if (nft_is_base_chain(chain)) {
+ 		const struct nft_base_chain *basechain = nft_base_chain(chain);
+ 		struct nft_stats __percpu *stats;
+@@ -4654,9 +4667,10 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 	u32 seq = ctx->seq;
+ 	int i;
+ 
+-	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+-	nlh = nfnl_msg_put(skb, portid, seq, event, flags, ctx->family,
+-			   NFNETLINK_V0, nft_base_seq(ctx->net));
++	nlh = nfnl_msg_put(skb, portid, seq,
++			   nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event),
++			   flags, ctx->family, NFNETLINK_V0,
++			   nft_base_seq(ctx->net));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -4668,6 +4682,12 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 			 NFTA_SET_PAD))
+ 		goto nla_put_failure;
+ 
++	if (event == NFT_MSG_DELSET ||
++	    event == NFT_MSG_DESTROYSET) {
++		nlmsg_end(skb, nlh);
++		return 0;
++	}
++
+ 	if (set->flags != 0)
+ 		if (nla_put_be32(skb, NFTA_SET_FLAGS, htonl(set->flags)))
+ 			goto nla_put_failure;
+@@ -7990,20 +8010,26 @@ static int nf_tables_fill_obj_info(struct sk_buff *skb, struct net *net,
+ {
+ 	struct nlmsghdr *nlh;
+ 
+-	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+-	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++	nlh = nfnl_msg_put(skb, portid, seq,
++			   nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event),
++			   flags, family, NFNETLINK_V0, nft_base_seq(net));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+ 	if (nla_put_string(skb, NFTA_OBJ_TABLE, table->name) ||
+ 	    nla_put_string(skb, NFTA_OBJ_NAME, obj->key.name) ||
++	    nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
+ 	    nla_put_be64(skb, NFTA_OBJ_HANDLE, cpu_to_be64(obj->handle),
+ 			 NFTA_OBJ_PAD))
+ 		goto nla_put_failure;
+ 
+-	if (nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
+-	    nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
++	if (event == NFT_MSG_DELOBJ ||
++	    event == NFT_MSG_DESTROYOBJ) {
++		nlmsg_end(skb, nlh);
++		return 0;
++	}
++
++	if (nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
+ 	    nft_object_dump(skb, NFTA_OBJ_DATA, obj, reset))
+ 		goto nla_put_failure;
+ 
+@@ -9008,9 +9034,9 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
+ 	struct nft_hook *hook;
+ 	struct nlmsghdr *nlh;
+ 
+-	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+-	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++	nlh = nfnl_msg_put(skb, portid, seq,
++			   nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event),
++			   flags, family, NFNETLINK_V0, nft_base_seq(net));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -9020,6 +9046,13 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
+ 			 NFTA_FLOWTABLE_PAD))
+ 		goto nla_put_failure;
+ 
++	if (!hook_list &&
++	    (event == NFT_MSG_DELFLOWTABLE ||
++	     event == NFT_MSG_DESTROYFLOWTABLE)) {
++		nlmsg_end(skb, nlh);
++		return 0;
++	}
++
+ 	if (nla_put_be32(skb, NFTA_FLOWTABLE_USE, htonl(flowtable->use)) ||
+ 	    nla_put_be32(skb, NFTA_FLOWTABLE_FLAGS, htonl(flowtable->data.flags)))
+ 		goto nla_put_failure;
 -- 
 2.51.0
 
