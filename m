@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374DC319603;
-	Wed, 17 Sep 2025 13:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A45518FDBD;
+	Wed, 17 Sep 2025 13:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114212; cv=none; b=Ey3tqKrAsxB4jAJzQr8BIrd7Cd8w5lc6plYRNZTFyrMq0kfkFWnreAJE2G9tL9N3GxLtGwhQBa+yLAymSTOdyQrCcULtRbPHFyq4Czs1cszU4rXp/cgYkVOdYpWg3IGp7tML1gfcOJpHA87HARuM2vSMTzFJAwu9irhAGK9yGfM=
+	t=1758114215; cv=none; b=jhRyR0JzpZCPyjGp8MDQWZfD9iCe2KtwmOBmKBw/t+CL9wGbrYutrV9VlmcnllhoqTnLzJGq70ZI8P4R2LD7i7Vyauz1S2OGQKj64IsuoeJRTHEO4l/YArmIxYIrkoeQfW5J3F/yE3A6ReUkjABRBawTcUikxkXek/FsXg+Tuc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114212; c=relaxed/simple;
-	bh=YwgUT+UAxxHbVci3qLZS8JC04p3EkPBUXQhBAqEnxW8=;
+	s=arc-20240116; t=1758114215; c=relaxed/simple;
+	bh=JlntoDesyhZq9cnCAEmgSlprw7eg4psbv6LP4I/3zl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mx5i6nYdTC394SXU8jG6iFTGydQrwTOx4tqCw58mvvZ9+Sbar9JZ0NaqGk2LoYwBpoN3bJZ2YysszPWR1HXsLlku+AA+g4FAzknrhyuqpdGChNtjfiEwgn9GLXl3QBR4V+xI1sU2FXXfqIHMkzGYkGddHFLNqA++XjdetokEVIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6Yc9Rkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6odvLtPhy+X/EYTeVnIjgGUxIsPTj2EtuAac/wrOrGyGm3NxMxMur38NK4YyU6otH3NT3zVuYft5FYVQcrm5/cuKni0a6iKwLe0xQrWJCadO6P3WCFhQkwbv8zwc+RIW0BSWa2SjcFGSkYwaE/DgtUH9eSj6AXfItn4/KV1lJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/e3GyA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6Yc9Rkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5872C4CEF0;
-	Wed, 17 Sep 2025 13:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/e3GyA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D3BC4CEF5;
+	Wed, 17 Sep 2025 13:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114212;
-	bh=YwgUT+UAxxHbVci3qLZS8JC04p3EkPBUXQhBAqEnxW8=;
+	s=korg; t=1758114215;
+	bh=JlntoDesyhZq9cnCAEmgSlprw7eg4psbv6LP4I/3zl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J6Yc9RklgAPlyBBfbhvFPEfNaIQBSVME9R58elPCyArlBSs/CezEbtXvWORanjUou
-	 Ul0mpNARGBG0stsP9Ir3rI2SprBv9qCnY7oYPgtLgZmPD2lOnanefWY/PYYOAunjrY
-	 O1/bQc+T4ZiB2D5TSGVf9PdZSJGTkZv/1zD3pBFM=
+	b=r/e3GyA6sIxk8TyKmGJ68aTyl7k6QjuCOweWIoG5/1ohfhHdlzWXF733kwYhrBBL0
+	 u0SvtD9/ZRp4zdG0WrGlzFUU3OQy56yvSC2v9Ni1qNmnEghv6A4RmNQzBOA5sKoC7P
+	 FT4hHF8OGWAThidIb7MkTa8mz4xQ8AVRHeTASXCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	SeongJae Park <sj@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	ze zuo <zuoze1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 35/78] mm/damon/reclaim: avoid divide-by-zero in damon_reclaim_apply_parameters()
-Date: Wed, 17 Sep 2025 14:34:56 +0200
-Message-ID: <20250917123330.417400846@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 26/78] mptcp: sockopt: make sync_socket_options propagate SOCK_KEEPOPEN
+Date: Wed, 17 Sep 2025 14:34:47 +0200
+Message-ID: <20250917123330.202164820@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -53,40 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanmin Yan <yanquanmin1@huawei.com>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit e6b543ca9806d7bced863f43020e016ee996c057 upstream.
+commit 648de37416b301f046f62f1b65715c7fa8ebaa67 upstream.
 
-When creating a new scheme of DAMON_RECLAIM, the calculation of
-'min_age_region' uses 'aggr_interval' as the divisor, which may lead to
-division-by-zero errors.  Fix it by directly returning -EINVAL when such a
-case occurs.
+Users reported a scenario where MPTCP connections that were configured
+with SO_KEEPALIVE prior to connect would fail to enable their keepalives
+if MTPCP fell back to TCP mode.
 
-Link: https://lkml.kernel.org/r/20250827115858.1186261-3-yanquanmin1@huawei.com
-Fixes: f5a79d7c0c87 ("mm/damon: introduce struct damos_access_pattern")
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: ze zuo <zuoze1@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.1+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+After investigating, this affects keepalives for any connection where
+sync_socket_options is called on a socket that is in the closed or
+listening state.  Joins are handled properly. For connects,
+sync_socket_options is called when the socket is still in the closed
+state.  The tcp_set_keepalive() function does not act on sockets that
+are closed or listening, hence keepalive is not immediately enabled.
+Since the SO_KEEPOPEN flag is absent, it is not enabled later in the
+connect sequence via tcp_finish_connect.  Setting the keepalive via
+sockopt after connect does work, but would not address any subsequently
+created flows.
+
+Fortunately, the fix here is straight-forward: set SOCK_KEEPOPEN on the
+subflow when calling sync_socket_options.
+
+The fix was valdidated both by using tcpdump to observe keepalive
+packets not being sent before the fix, and being sent after the fix.  It
+was also possible to observe via ss that the keepalive timer was not
+enabled on these sockets before the fix, but was enabled afterwards.
+
+Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/aL8dYfPZrwedCIh9@templeofstupid.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/reclaim.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/sockopt.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -157,6 +157,9 @@ static int damon_reclaim_apply_parameter
- 	struct damos *scheme, *old_scheme;
- 	int err = 0;
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -1347,13 +1347,12 @@ static void sync_socket_options(struct m
+ {
+ 	static const unsigned int tx_rx_locks = SOCK_RCVBUF_LOCK | SOCK_SNDBUF_LOCK;
+ 	struct sock *sk = (struct sock *)msk;
++	bool keep_open;
  
-+	if (!damon_reclaim_mon_attrs.aggr_interval)
-+		return -EINVAL;
-+
- 	err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
- 	if (err)
- 		return err;
+-	if (ssk->sk_prot->keepalive) {
+-		if (sock_flag(sk, SOCK_KEEPOPEN))
+-			ssk->sk_prot->keepalive(ssk, 1);
+-		else
+-			ssk->sk_prot->keepalive(ssk, 0);
+-	}
++	keep_open = sock_flag(sk, SOCK_KEEPOPEN);
++	if (ssk->sk_prot->keepalive)
++		ssk->sk_prot->keepalive(ssk, keep_open);
++	sock_valbool_flag(ssk, SOCK_KEEPOPEN, keep_open);
+ 
+ 	ssk->sk_priority = sk->sk_priority;
+ 	ssk->sk_bound_dev_if = sk->sk_bound_dev_if;
 
 
