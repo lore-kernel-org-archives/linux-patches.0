@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3E8332A32;
-	Wed, 17 Sep 2025 12:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCA8332A3A;
+	Wed, 17 Sep 2025 12:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113803; cv=none; b=Cp4bOVe7CSLAQPooHS+NDI/dI/8GghywNjsprHPcFYsvk04cxLX4U7KVTQOU985+/v+7w5cJF6zVP+D+q5+6SsOTT+Zi/O5l1vqZ8z398jfGu03A15Zz3+8b5gaH9r5gzNiUTYzcb1gCF9Iaiz2BUj5mIo/7ORs/js2SU67OQsQ=
+	t=1758113805; cv=none; b=tMM82LYMLjKWwDcwl81ncQpTPNOJvj+RCEGTxwA0AkxX8JJO7+KdK/5ozyP3U2q9vnbr0Ff+CYAg8gv5RjsyAHwG3+CWdmwzvu5DOKQTgvAzcSwhViYS+SzjDFkw1BD/efwxjappV4gByueP/VtanMMo2bKVJBnhQY4RBi8SfjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113803; c=relaxed/simple;
-	bh=Q5PicojlcyM5HM2+Nl4zGFVkYdQ6l0NJ/QgJrCSxelA=;
+	s=arc-20240116; t=1758113805; c=relaxed/simple;
+	bh=6F3PON2DzhSXnsJNjGIQnHEcxsGloG+mwaRhz2MseAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0kcyzRhbqhS5SUjH/WU6LQkavCTtgoHMRNc2kFpxVh3QXuGlkEX88rUw3vVp0E5cWX5ZfeBecPAoc1mOMJgtULMRQDs8Sni+VicChuSMLZbK0+CNDctW7M9qZV3I90onVNAWBgxOupby7loRVvknw4CQF6gPVJxW/jhnelf8UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jrs2lA7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OK7gITdNYJ/l6d8CJb03ITm+gBz4dvrmnEgC5hDmVQ5+d68FLV1HJbFTJVbLU/FNZYiSUbBezZaDzfOwE18S8ZeQrcb0f4fySHB3HLF1A+DW/QLBScVbDvvZ8VX3KVGHTV6JpZ3m806g8OJVPkVR49z1jeBSU9XbbypkcUD6ZjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwIC+dvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jrs2lA7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8E1C4CEF0;
-	Wed, 17 Sep 2025 12:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwIC+dvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F97C4CEF5;
+	Wed, 17 Sep 2025 12:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113802;
-	bh=Q5PicojlcyM5HM2+Nl4zGFVkYdQ6l0NJ/QgJrCSxelA=;
+	s=korg; t=1758113805;
+	bh=6F3PON2DzhSXnsJNjGIQnHEcxsGloG+mwaRhz2MseAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jrs2lA7wMsCF003ZlnNRKU6dzVPyB623KDHoVGX4Ls0k8gEVoU4GXQrGcuml069TR
-	 nhUsMFCFQq4PZ5wo9q9THpl/egT0x2sKEq6Gu2lD3Qf9YSmzEbZwwwjLvDjurJ/6HC
-	 tFdvvOjxDuYX92AFhzPPeSPFInY6kDnSAAzghyCk=
+	b=HwIC+dvHovlMXNCD0djOdqX42XiUl9ZIQUzdtAsd8zytMWn6AngQF97c5cHhy3kQu
+	 PJcq/8robTSjR2/UnkljZEbck1SH33ZWhqlt81u7oqDksZR9dQC/Oc4R1FxN2LPNfF
+	 OI7N7nzB19vwXOOJTP4jfiD6LC5J24unwKoNoui4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Barry Song <baohua@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Curley <jcurley@purestorage.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/101] mm/khugepaged: fix the address passed to notifier on testing young
-Date: Wed, 17 Sep 2025 14:34:39 +0200
-Message-ID: <20250917123338.196916128@linuxfoundation.org>
+Subject: [PATCH 6.6 021/101] NFSv4/flexfiles: Fix layout merge mirror check.
+Date: Wed, 17 Sep 2025 14:34:04 +0200
+Message-ID: <20250917123337.371249263@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -60,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Jonathan Curley <jcurley@purestorage.com>
 
-[ Upstream commit 394bfac1c7f7b701c2c93834c5761b9c9ceeebcf ]
+[ Upstream commit dd2fa82473453661d12723c46c9f43d9876a7efd ]
 
-Commit 8ee53820edfd ("thp: mmu_notifier_test_young") introduced
-mmu_notifier_test_young(), but we are passing the wrong address.
-In xxx_scan_pmd(), the actual iteration address is "_address" not
-"address".  We seem to misuse the variable on the very beginning.
+Typo in ff_lseg_match_mirrors makes the diff ineffective. This results
+in merge happening all the time. Merge happening all the time is
+problematic because it marks lsegs invalid. Marking lsegs invalid
+causes all outstanding IO to get restarted with EAGAIN and connections
+to get closed.
 
-Change it to the right one.
+Closing connections constantly triggers race conditions in the RDMA
+implementation...
 
-[akpm@linux-foundation.org fix whitespace, per everyone]
-Link: https://lkml.kernel.org/r/20250822063318.11644-1-richard.weiyang@gmail.com
-Fixes: 8ee53820edfd ("thp: mmu_notifier_test_young")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 660d1eb22301c ("pNFS/flexfile: Don't merge layout segments if the mirrors don't match")
+Signed-off-by: Jonathan Curley <jcurley@purestorage.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1374,8 +1374,8 @@ static int hpage_collapse_scan_pmd(struc
- 		 */
- 		if (cc->is_khugepaged &&
- 		    (pte_young(pteval) || folio_test_young(folio) ||
--		     folio_test_referenced(folio) || mmu_notifier_test_young(vma->vm_mm,
--								     address)))
-+		     folio_test_referenced(folio) ||
-+		     mmu_notifier_test_young(vma->vm_mm, _address)))
- 			referenced++;
- 	}
- 	if (!writable) {
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index b05dd4d3ed653..42c73c647a27f 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -276,7 +276,7 @@ ff_lseg_match_mirrors(struct pnfs_layout_segment *l1,
+ 		struct pnfs_layout_segment *l2)
+ {
+ 	const struct nfs4_ff_layout_segment *fl1 = FF_LAYOUT_LSEG(l1);
+-	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l1);
++	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l2);
+ 	u32 i;
+ 
+ 	if (fl1->mirror_array_cnt != fl2->mirror_array_cnt)
+-- 
+2.51.0
+
 
 
