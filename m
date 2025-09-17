@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BDF3090EC;
-	Wed, 17 Sep 2025 12:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DFE309DDD;
+	Wed, 17 Sep 2025 12:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113305; cv=none; b=LUIfmx+9giERbu5yLN7CRHVBdKtTdmzkN7zNFb6j7GwJqsSIsYUBV9pgL7e9Ii8BbtdboqIJMbaJnAgqEk8loVGMBUuz0jD7T0p+EglbCMQlL985WzgaFEiESIQKkY29wWeGS47FiPf6kzvPaHt4Sej4HDnP9ng+6w+5u9gfTJo=
+	t=1758113309; cv=none; b=JLPE1u8A1dfQILP7BKm4RZj7B6bFTKEgpKKoznfYes1Uls3/wsV2vyOu+qd7hEeXHQs/ixbd4YvYVemJOnf6qA7K7K/1B6194ZfO/iMpx9LIPO0u1ce/8N/Lynlb98fS2M2Vr8Wnm68jwguLROmnW3DnPRJcyLKYofhteZl9Fok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113305; c=relaxed/simple;
-	bh=HfpJjjTTWnUO3n4C3qOFvR7gMm83FB54XwXjit7Vfpc=;
+	s=arc-20240116; t=1758113309; c=relaxed/simple;
+	bh=oilpdPs7Q+0auvYLeO/v09aU2hRo7DCF2zKBwgfspZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dL7WGnmECrbOLZteAMmnQ4REpupB1jP8fPwJfxgve03SFTNrcoFYCGvHphkDOcOiVuTXwBjWXT7bLYY61cujM0ensYwrKMQv0YMK5FhnlqtYBUMzgVWfyhOOweT5PL53vOYHccPSXapbz3OWGIhaIbliasEXlmjgshDHKO9cTN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgRBNzgK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXJIAaNjX+kw8CV5j1UNX+pFPKmPl2sA6ufcxkYRwsoA1RIiE3636JNkc+LPYPaV4f/duM0lmbgLDxsZFtEun//7C9ONEchEDfPFf/djGHuc/YdPsikRXIgSBbYtz0b7xjIvKvPWCWhXX5efgFLYvdI8yi+Jt9aBE3Q4LNNcdeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/lTVDcc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgRBNzgK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC369C4CEF0;
-	Wed, 17 Sep 2025 12:48:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/lTVDcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F270AC4CEF0;
+	Wed, 17 Sep 2025 12:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113305;
-	bh=HfpJjjTTWnUO3n4C3qOFvR7gMm83FB54XwXjit7Vfpc=;
+	s=korg; t=1758113308;
+	bh=oilpdPs7Q+0auvYLeO/v09aU2hRo7DCF2zKBwgfspZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgRBNzgKWsgckshiD9w193XNqG/fRWAt27G3K1mIsYmx/tZ5o0zexLQz4Y8uXHmLX
-	 Ox52+TfPw5rhJzhOuIP7bL19ila8r0x79T5oXeJH1WTFcGY8SydGMU0LuYbIXvFmQX
-	 2itIQe5iBHFjsOfRlkdvHtyGs3JInG5dXesIkOoI=
+	b=L/lTVDccg6P7TeOkdZue1dzNmQbd0rI0KB8R8x5MubnaiYo334Iaojy0H1vFf/UWv
+	 hwz0tXrxTb5VGO85CG2BdKpu9aupLD0WqAdgOcna3gEZw2FCdoyLgsMK8bxxOxS+qv
+	 JUw1U8E4Wqfv6E1CN10MmmfacSxGRKxmCahTaKTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Brad Spengler <spender@grsecurity.net>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/140] proc: fix type confusion in pde_set_flags()
-Date: Wed, 17 Sep 2025 14:33:38 +0200
-Message-ID: <20250917123345.427181264@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.12 047/140] EDAC/altera: Delete an inappropriate dma_free_coherent() call
+Date: Wed, 17 Sep 2025 14:33:39 +0200
+Message-ID: <20250917123345.450970128@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -57,56 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-[ Upstream commit 0ce9398aa0830f15f92bbed73853f9861c3e74ff ]
+commit ff2a66d21fd2364ed9396d151115eec59612b200 upstream.
 
-Commit 2ce3d282bd50 ("proc: fix missing pde_set_flags() for net proc
-files") missed a key part in the definition of proc_dir_entry:
+dma_free_coherent() must only be called if the corresponding
+dma_alloc_coherent() call has succeeded. Calling it when the allocation fails
+leads to undefined behavior.
 
-union {
-	const struct proc_ops *proc_ops;
-	const struct file_operations *proc_dir_ops;
-};
+Delete the wrong call.
 
-So dereference of ->proc_ops assumes it is a proc_ops structure results in
-type confusion and make NULL check for 'proc_ops' not work for proc dir.
+  [ bp: Massage commit message. ]
 
-Add !S_ISDIR(dp->mode) test before calling pde_set_flags() to fix it.
-
-Link: https://lkml.kernel.org/r/20250904135715.3972782-1-wangzijie1@honor.com
-Fixes: 2ce3d282bd50 ("proc: fix missing pde_set_flags() for net proc files")
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reported-by: Brad Spengler <spender@grsecurity.net>
-Closes: https://lore.kernel.org/all/20250903065758.3678537-1-wangzijie1@honor.com/
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Stefano Brivio <sbrivio@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 71bcada88b0f3 ("edac: altera: Add Altera SDRAM EDAC support")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/aIrfzzqh4IzYtDVC@pc
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/edac/altera_edac.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index a87a9404e0d0c..eb49beff69bcb 100644
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -388,7 +388,8 @@ struct proc_dir_entry *proc_register(struct proc_dir_entry *dir,
- 	if (proc_alloc_inum(&dp->low_ino))
- 		goto out_free_entry;
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -128,7 +128,6 @@ static ssize_t altr_sdr_mc_err_inject_wr
  
--	pde_set_flags(dp);
-+	if (!S_ISDIR(dp->mode))
-+		pde_set_flags(dp);
- 
- 	write_lock(&proc_subdir_lock);
- 	dp->parent = dir;
--- 
-2.51.0
-
+ 	ptemp = dma_alloc_coherent(mci->pdev, 16, &dma_handle, GFP_KERNEL);
+ 	if (!ptemp) {
+-		dma_free_coherent(mci->pdev, 16, ptemp, dma_handle);
+ 		edac_printk(KERN_ERR, EDAC_MC,
+ 			    "Inject: Buffer Allocation error\n");
+ 		return -ENOMEM;
 
 
