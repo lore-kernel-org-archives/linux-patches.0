@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A45518FDBD;
-	Wed, 17 Sep 2025 13:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FA630CB39;
+	Wed, 17 Sep 2025 13:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114215; cv=none; b=jhRyR0JzpZCPyjGp8MDQWZfD9iCe2KtwmOBmKBw/t+CL9wGbrYutrV9VlmcnllhoqTnLzJGq70ZI8P4R2LD7i7Vyauz1S2OGQKj64IsuoeJRTHEO4l/YArmIxYIrkoeQfW5J3F/yE3A6ReUkjABRBawTcUikxkXek/FsXg+Tuc0=
+	t=1758114218; cv=none; b=k0kTnI2FhbJU/yTecz+WI1MqCTJ8cat7DE8sJ8Jwz2Jg8g34oyJQCHgTrNReSJOEQJ5RMgIHyUrIHUooec3IV9tg5uF0eZ2H1aAzx7T91dnqZd/O3tFd46zgyVZnlJEzBzMF6zSUPQOUlUZCE3lhOiyGHykWcZS1+GqvY8XRnv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114215; c=relaxed/simple;
-	bh=JlntoDesyhZq9cnCAEmgSlprw7eg4psbv6LP4I/3zl4=;
+	s=arc-20240116; t=1758114218; c=relaxed/simple;
+	bh=BIqZLJju64m1tTSKnQAE1ZaNu5spdrWiAcFvWtsrMjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R6odvLtPhy+X/EYTeVnIjgGUxIsPTj2EtuAac/wrOrGyGm3NxMxMur38NK4YyU6otH3NT3zVuYft5FYVQcrm5/cuKni0a6iKwLe0xQrWJCadO6P3WCFhQkwbv8zwc+RIW0BSWa2SjcFGSkYwaE/DgtUH9eSj6AXfItn4/KV1lJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/e3GyA6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y+kPriLqOxRgFNqMXLFUBlwHPnr342cA81K/kg9dOk3XeDQzAva7TC3SuYoD5uB233RIANWk2wKlUjJ4o0STAfDuGpCuW341CTFYOVWjyQrme6RflLJYkhRzrt5/arFNohR3ETDo2kBxg465gMbxxRP+PDDOLjDpQw+05yZ5v0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuxiUFJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/e3GyA6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D3BC4CEF5;
-	Wed, 17 Sep 2025 13:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuxiUFJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54ADC4CEF0;
+	Wed, 17 Sep 2025 13:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114215;
-	bh=JlntoDesyhZq9cnCAEmgSlprw7eg4psbv6LP4I/3zl4=;
+	s=korg; t=1758114218;
+	bh=BIqZLJju64m1tTSKnQAE1ZaNu5spdrWiAcFvWtsrMjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/e3GyA6sIxk8TyKmGJ68aTyl7k6QjuCOweWIoG5/1ohfhHdlzWXF733kwYhrBBL0
-	 u0SvtD9/ZRp4zdG0WrGlzFUU3OQy56yvSC2v9Ni1qNmnEghv6A4RmNQzBOA5sKoC7P
-	 FT4hHF8OGWAThidIb7MkTa8mz4xQ8AVRHeTASXCI=
+	b=TuxiUFJHAvd66bxOlGwz/CjIuiLtDOpZ0u39yuQ7Fd+PJfbnJ/h9s+HQSmqyAN64C
+	 eQjqAgsBIqfbJBvwHquofOYj9MPIxMs38l1UEfBB/emk5EmCsJq1HWDIMMFlKZ2wkx
+	 zvJJmDVNhQlJomQEOdV18l7e/7qMl10ClQdY0HS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 26/78] mptcp: sockopt: make sync_socket_options propagate SOCK_KEEPOPEN
-Date: Wed, 17 Sep 2025 14:34:47 +0200
-Message-ID: <20250917123330.202164820@linuxfoundation.org>
+	"Lin.Cao" <lincao12@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 75/78] drm/amdgpu: fix a memory leak in fence cleanup when unloading
+Date: Wed, 17 Sep 2025 14:35:36 +0200
+Message-ID: <20250917123331.416162682@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -46,71 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 648de37416b301f046f62f1b65715c7fa8ebaa67 upstream.
+[ Upstream commit 7838fb5f119191403560eca2e23613380c0e425e ]
 
-Users reported a scenario where MPTCP connections that were configured
-with SO_KEEPALIVE prior to connect would fail to enable their keepalives
-if MTPCP fell back to TCP mode.
+Commit b61badd20b44 ("drm/amdgpu: fix usage slab after free")
+reordered when amdgpu_fence_driver_sw_fini() was called after
+that patch, amdgpu_fence_driver_sw_fini() effectively became
+a no-op as the sched entities we never freed because the
+ring pointers were already set to NULL.  Remove the NULL
+setting.
 
-After investigating, this affects keepalives for any connection where
-sync_socket_options is called on a socket that is in the closed or
-listening state.  Joins are handled properly. For connects,
-sync_socket_options is called when the socket is still in the closed
-state.  The tcp_set_keepalive() function does not act on sockets that
-are closed or listening, hence keepalive is not immediately enabled.
-Since the SO_KEEPOPEN flag is absent, it is not enabled later in the
-connect sequence via tcp_finish_connect.  Setting the keepalive via
-sockopt after connect does work, but would not address any subsequently
-created flows.
-
-Fortunately, the fix here is straight-forward: set SOCK_KEEPOPEN on the
-subflow when calling sync_socket_options.
-
-The fix was valdidated both by using tcpdump to observe keepalive
-packets not being sent before the fix, and being sent after the fix.  It
-was also possible to observe via ss that the keepalive timer was not
-enabled on these sockets before the fix, but was enabled afterwards.
-
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Reported-by: Lin.Cao <lincao12@amd.com>
+Cc: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Fixes: b61badd20b44 ("drm/amdgpu: fix usage slab after free")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit a525fa37aac36c4591cc8b07ae8957862415fbd5)
 Cc: stable@vger.kernel.org
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/aL8dYfPZrwedCIh9@templeofstupid.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adapt to conditional check ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -1347,13 +1347,12 @@ static void sync_socket_options(struct m
- {
- 	static const unsigned int tx_rx_locks = SOCK_RCVBUF_LOCK | SOCK_SNDBUF_LOCK;
- 	struct sock *sk = (struct sock *)msk;
-+	bool keep_open;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -368,9 +368,6 @@ void amdgpu_ring_fini(struct amdgpu_ring
+ 	dma_fence_put(ring->vmid_wait);
+ 	ring->vmid_wait = NULL;
+ 	ring->me = 0;
+-
+-	if (!ring->is_mes_queue)
+-		ring->adev->rings[ring->idx] = NULL;
+ }
  
--	if (ssk->sk_prot->keepalive) {
--		if (sock_flag(sk, SOCK_KEEPOPEN))
--			ssk->sk_prot->keepalive(ssk, 1);
--		else
--			ssk->sk_prot->keepalive(ssk, 0);
--	}
-+	keep_open = sock_flag(sk, SOCK_KEEPOPEN);
-+	if (ssk->sk_prot->keepalive)
-+		ssk->sk_prot->keepalive(ssk, keep_open);
-+	sock_valbool_flag(ssk, SOCK_KEEPOPEN, keep_open);
- 
- 	ssk->sk_priority = sk->sk_priority;
- 	ssk->sk_bound_dev_if = sk->sk_bound_dev_if;
+ /**
 
 
