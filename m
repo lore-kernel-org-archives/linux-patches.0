@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3973931A7EE;
-	Wed, 17 Sep 2025 12:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2D61EB1AA;
+	Wed, 17 Sep 2025 12:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113767; cv=none; b=J8fmi4ZFGtlYeShL2xWfiJG2pNX8s8vXTO+sih69ODTqXyCtnUDihxTBriytT2FJPhoNscN0DqSrY5hAi4/WsiA3lyXG5zfNJR1W4M+Ppr2/SK55prp5NeXJ0kRUGa9VgKCi40EeyqyPZpRSzecwtYxCecsEe9VzaLvjgCF2J1Y=
+	t=1758113771; cv=none; b=qvhhB4DzEXGOQqi8XtuoSf75MxfwjFo0ob3rGXlmADRzVBL+kNOz+ZwX14hRFD5IYnGoifA8BkDAaqTsz3f/py7aOHiLPIRB5v5NY3wjI31gJJ0UyyQT+iVrBKjKkOJXVVArk8+yGi7uN31s2LchtkdopDkSn9MErdCdGtNer8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113767; c=relaxed/simple;
-	bh=JSXYldzeB6rjPnoVuHU+cFQQTO2/BqVoEgq/Ix0kgpg=;
+	s=arc-20240116; t=1758113771; c=relaxed/simple;
+	bh=VP9H9XSrAFQK0/kQr6sYsy/z1Bz5Mz5sXAeNQyftevA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckEIdkm9AogFzsIZgd7EmSfuZcuJYmqkbs/HcgAOowCq6E329dut9sg7vj9BTyEvk4OkobwRu0HzGQM7a2ImE9ro1S5IqY9KDUP/8UBat99WYM15CHsiBh+olI0axkf9ANrpe3gl/hOs+Fn73avw6P9kFs2y5Cw2HEttfAIeIKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6wNNdXu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDIVEyJfZjIagb1QLbnFHE8wkxAwUw7KPS5Y0vMiom4FDxF0swSUnBYCo2ebP+Ag8ltEIURqhXYQVvnizdBF3llvU+8ydBjrgPtRc83imI+ZF9P117kTU0VCV9l3an6GmghZQw1VdMRU+hpmFfYJKXqVZv5aJx3bfn95ArILUas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+UTQdpo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6wNNdXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81B9C4CEF0;
-	Wed, 17 Sep 2025 12:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+UTQdpo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC794C4CEF5;
+	Wed, 17 Sep 2025 12:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113767;
-	bh=JSXYldzeB6rjPnoVuHU+cFQQTO2/BqVoEgq/Ix0kgpg=;
+	s=korg; t=1758113770;
+	bh=VP9H9XSrAFQK0/kQr6sYsy/z1Bz5Mz5sXAeNQyftevA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6wNNdXunkqoB4Gpycs+WvLP0xOmZ0olLYasTkFHVzFNx4HhvtkuV6bQE6lZ/oG59
-	 KG9ad3egeHSg30tT9Atvb0zI9loY6AzId5w0DNiLyzJOZgWaTG9vl5Z4O+7fKkto1V
-	 3CPzWpbxuszYbubTm5pjxvoAMH3WDp+4XslzPb3c=
+	b=c+UTQdpoIp6MdX9vXSH52E1lg9lABItX25b1eKAiUofr76vXrnCRjnpXoemrIZUq7
+	 vwDK7tmoXJP/t/d5QI/WwRJcwT8Am+a8Mm/uUulyjp0G4EX3zmdzbe58aVP4Cma/RW
+	 cqyuHUlDytN/YjvawMTd+hB310k4AkaTonmqZutw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 046/101] drm/amdgpu/vcn4: Fix IB parsing with multiple engine info packages
-Date: Wed, 17 Sep 2025 14:34:29 +0200
-Message-ID: <20250917123337.956801292@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 020/101] NFSv4.2: Serialise O_DIRECT i/o and copy range
+Date: Wed, 17 Sep 2025 14:34:03 +0200
+Message-ID: <20250917123337.348631083@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -51,104 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 2b10cb58d7a3fd621ec9b2ba765a092e562ef998 upstream.
+[ Upstream commit ca247c89900ae90207f4d321e260cd93b7c7d104 ]
 
-There can be multiple engine info packages in one IB and the first one
-may be common engine, not decode/encode.
-We need to parse the entire IB instead of stopping after finding first
-engine info.
+Ensure that all O_DIRECT reads and writes complete before copying a file
+range, so that the destination is up to date.
 
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dc8f9f0f45166a6b37864e7a031c726981d6e5fc)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a5864c999de6 ("NFS: Do not serialise O_DIRECT reads and writes")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   52 +++++++++++++---------------------
- 1 file changed, 21 insertions(+), 31 deletions(-)
+ fs/nfs/nfs42proc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -1747,22 +1747,16 @@ out:
- 
- #define RADEON_VCN_ENGINE_TYPE_ENCODE			(0x00000002)
- #define RADEON_VCN_ENGINE_TYPE_DECODE			(0x00000003)
--
- #define RADEON_VCN_ENGINE_INFO				(0x30000001)
--#define RADEON_VCN_ENGINE_INFO_MAX_OFFSET		16
--
- #define RENCODE_ENCODE_STANDARD_AV1			2
- #define RENCODE_IB_PARAM_SESSION_INIT			0x00000003
--#define RENCODE_IB_PARAM_SESSION_INIT_MAX_OFFSET	64
- 
--/* return the offset in ib if id is found, -1 otherwise
-- * to speed up the searching we only search upto max_offset
-- */
--static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int max_offset)
-+/* return the offset in ib if id is found, -1 otherwise */
-+static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int start)
- {
- 	int i;
- 
--	for (i = 0; i < ib->length_dw && i < max_offset && ib->ptr[i] >= 8; i += ib->ptr[i]/4) {
-+	for (i = start; i < ib->length_dw && ib->ptr[i] >= 8; i += ib->ptr[i] / 4) {
- 		if (ib->ptr[i + 1] == id)
- 			return i;
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index 66fe885fc19a1..582cf8a469560 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -356,6 +356,7 @@ static ssize_t _nfs42_proc_copy(struct file *src,
+ 		return status;
  	}
-@@ -1777,33 +1771,29 @@ static int vcn_v4_0_ring_patch_cs_in_pla
- 	struct amdgpu_vcn_decode_buffer *decode_buffer;
- 	uint64_t addr;
- 	uint32_t val;
--	int idx;
-+	int idx = 0, sidx;
  
- 	/* The first instance can decode anything */
- 	if (!ring->me)
- 		return 0;
- 
--	/* RADEON_VCN_ENGINE_INFO is at the top of ib block */
--	idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO,
--			RADEON_VCN_ENGINE_INFO_MAX_OFFSET);
--	if (idx < 0) /* engine info is missing */
--		return 0;
--
--	val = amdgpu_ib_get_value(ib, idx + 2); /* RADEON_VCN_ENGINE_TYPE */
--	if (val == RADEON_VCN_ENGINE_TYPE_DECODE) {
--		decode_buffer = (struct amdgpu_vcn_decode_buffer *)&ib->ptr[idx + 6];
--
--		if (!(decode_buffer->valid_buf_flag  & 0x1))
--			return 0;
--
--		addr = ((u64)decode_buffer->msg_buffer_address_hi) << 32 |
--			decode_buffer->msg_buffer_address_lo;
--		return vcn_v4_0_dec_msg(p, job, addr);
--	} else if (val == RADEON_VCN_ENGINE_TYPE_ENCODE) {
--		idx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT,
--			RENCODE_IB_PARAM_SESSION_INIT_MAX_OFFSET);
--		if (idx >= 0 && ib->ptr[idx + 2] == RENCODE_ENCODE_STANDARD_AV1)
--			return vcn_v4_0_limit_sched(p, job);
-+	while ((idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO, idx)) >= 0) {
-+		val = amdgpu_ib_get_value(ib, idx + 2); /* RADEON_VCN_ENGINE_TYPE */
-+		if (val == RADEON_VCN_ENGINE_TYPE_DECODE) {
-+			decode_buffer = (struct amdgpu_vcn_decode_buffer *)&ib->ptr[idx + 6];
-+
-+			if (!(decode_buffer->valid_buf_flag & 0x1))
-+				return 0;
-+
-+			addr = ((u64)decode_buffer->msg_buffer_address_hi) << 32 |
-+				decode_buffer->msg_buffer_address_lo;
-+			return vcn_v4_0_dec_msg(p, job, addr);
-+		} else if (val == RADEON_VCN_ENGINE_TYPE_ENCODE) {
-+			sidx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT, idx);
-+			if (sidx >= 0 && ib->ptr[sidx + 2] == RENCODE_ENCODE_STANDARD_AV1)
-+				return vcn_v4_0_limit_sched(p, job);
-+		}
-+		idx += ib->ptr[idx] / 4;
- 	}
- 	return 0;
- }
++	nfs_file_block_o_direct(NFS_I(dst_inode));
+ 	status = nfs_sync_inode(dst_inode);
+ 	if (status)
+ 		return status;
+-- 
+2.51.0
+
 
 
