@@ -1,39 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360291EB1AA;
-	Wed, 17 Sep 2025 12:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7704613B2A4;
+	Wed, 17 Sep 2025 12:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113367; cv=none; b=bvooPHGA72kdX/nJMeIfe3QbkTlO0NPGFRNwyfKV/o7YQRpRqDX9tOXNEqJ/uKlEcb7QZg+aekIwekhW+CatxjqObzgdFOHppS5ZrsETSOy6RK0DknNv7z393gyLA8rgFHMLzGn6ruGnqMUNsjsgxlEQFQ0Xk2d0TXsqZQE71XQ=
+	t=1758113370; cv=none; b=CDcq4KeOZu3HkBX95gbVaJ2wemBGUsC6RLdNo+OfVESd0ISqY1Z35/mAH/lv4pLzbaAmQP21Pc6tB/qVyAOiCzipDW7DzmwtDiSyw/J92zcrXPXxnTAwW+wTn43Zm48CJ5BUt+GUYL2lnOiXIFWB9AZOat+IKpqgTUjIKz5eF8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113367; c=relaxed/simple;
-	bh=S8dk87Cbx7vWDxuU/wfxvO7aFx3B2xuMdpF2Ibd2/L0=;
+	s=arc-20240116; t=1758113370; c=relaxed/simple;
+	bh=02KDFAZNFvICtKJfz/wd3TkM0Mto4778RaA0BFPGZb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yb6sYO6oJRRpgNLZGpYaG7B/xUnb1sDhiXZMumAEqAYHTfDtxSU4Tz25McRZLj5ACRZVM2YKyVf9BU4lWw+Hr+AH0G0N+Gkm7vXAN/PmiFjG2HB36v/7JZ/U+DunpB4XtBoSIhwTOZGm0XzKBwZMhTS3LtKzwpiNBhKkjnJfMYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqAYvFFx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Czd3mwV+WSWxqvGj07kFzJRelqxIsC0ikgmiUlC1VDS5+b1vrA9D3soscNf5XE+rBEB70QgwbNZFoXPyyPjk4S31GoNzYQfY09RvRUg8icgOmOTyz5NEahQTUdXEPu/dztHmZJfPLrKoWZ6L0bU0FC0Bzm39w2kkvgmjLg56WgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAG8oVa/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqAYvFFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D07C4CEF0;
-	Wed, 17 Sep 2025 12:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAG8oVa/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B463EC4CEF0;
+	Wed, 17 Sep 2025 12:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113367;
-	bh=S8dk87Cbx7vWDxuU/wfxvO7aFx3B2xuMdpF2Ibd2/L0=;
+	s=korg; t=1758113370;
+	bh=02KDFAZNFvICtKJfz/wd3TkM0Mto4778RaA0BFPGZb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqAYvFFxBTPX7AyNHOr8Y2cYYn8ke+u78vKe+C0+muyMMVN+PAzw1pHBH8FGiIEEG
-	 Y3tW/cAd9GVzIQlDF8EppFkuXqACiRISUnAqoBHE+mykiHlliLXHz6vrcY8yBu1CSP
-	 evJVWsa1dqTPjWANyF+2xzPNzW8/7RjTy9u2DYJw=
+	b=YAG8oVa/6A/NJCu/kl6UFo7m9LPfO/EP17v4Ne0ujtiW/oN4mOmx4YVkzVCH5tZns
+	 vsJtyC4YGtN/xrVSOj/aN+wjIHOzewteiFesmE+SjVISZvZSfj9gj1/1sYi7dtQWdU
+	 pVefZZyT/KU8u8JzYpKE2Jkxpw2R2EHN07i1MfwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
+	Kyle Meyer <kyle.meyer@hpe.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
 	David Hildenbrand <david@redhat.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Borislav Betkov <bp@alien8.de>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Luck, Tony" <tony.luck@intel.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
 	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Russ Anderson <russ.anderson@hpe.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 063/140] mm/memory-failure: fix VM_BUG_ON_PAGE(PagePoisoned(page)) when unpoison memory
-Date: Wed, 17 Sep 2025 14:33:55 +0200
-Message-ID: <20250917123345.841213875@linuxfoundation.org>
+Subject: [PATCH 6.12 064/140] mm/memory-failure: fix redundant updates for already poisoned pages
+Date: Wed, 17 Sep 2025 14:33:56 +0200
+Message-ID: <20250917123345.866456002@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,108 +65,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Kyle Meyer <kyle.meyer@hpe.com>
 
-commit d613f53c83ec47089c4e25859d5e8e0359f6f8da upstream.
+commit 3be306cccdccede13e3cefd0c14e430cc2b7c9c7 upstream.
 
-When I did memory failure tests, below panic occurs:
+Duplicate memory errors can be reported by multiple sources.
 
-page dumped because: VM_BUG_ON_PAGE(PagePoisoned(page))
-kernel BUG at include/linux/page-flags.h:616!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 3 PID: 720 Comm: bash Not tainted 6.10.0-rc1-00195-g148743902568 #40
-RIP: 0010:unpoison_memory+0x2f3/0x590
-RSP: 0018:ffffa57fc8787d60 EFLAGS: 00000246
-RAX: 0000000000000037 RBX: 0000000000000009 RCX: ffff9be25fcdc9c8
-RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff9be25fcdc9c0
-RBP: 0000000000300000 R08: ffffffffb4956f88 R09: 0000000000009ffb
-R10: 0000000000000284 R11: ffffffffb4926fa0 R12: ffffe6b00c000000
-R13: ffff9bdb453dfd00 R14: 0000000000000000 R15: fffffffffffffffe
-FS:  00007f08f04e4740(0000) GS:ffff9be25fcc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000564787a30410 CR3: 000000010d4e2000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- unpoison_memory+0x2f3/0x590
- simple_attr_write_xsigned.constprop.0.isra.0+0xb3/0x110
- debugfs_attr_write+0x42/0x60
- full_proxy_write+0x5b/0x80
- vfs_write+0xd5/0x540
- ksys_write+0x64/0xe0
- do_syscall_64+0xb9/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f08f0314887
-RSP: 002b:00007ffece710078 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000009 RCX: 00007f08f0314887
-RDX: 0000000000000009 RSI: 0000564787a30410 RDI: 0000000000000001
-RBP: 0000564787a30410 R08: 000000000000fefe R09: 000000007fffffff
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
-R13: 00007f08f041b780 R14: 00007f08f0417600 R15: 00007f08f0416a00
- </TASK>
-Modules linked in: hwpoison_inject
----[ end trace 0000000000000000 ]---
-RIP: 0010:unpoison_memory+0x2f3/0x590
-RSP: 0018:ffffa57fc8787d60 EFLAGS: 00000246
-RAX: 0000000000000037 RBX: 0000000000000009 RCX: ffff9be25fcdc9c8
-RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff9be25fcdc9c0
-RBP: 0000000000300000 R08: ffffffffb4956f88 R09: 0000000000009ffb
-R10: 0000000000000284 R11: ffffffffb4926fa0 R12: ffffe6b00c000000
-R13: ffff9bdb453dfd00 R14: 0000000000000000 R15: fffffffffffffffe
-FS:  00007f08f04e4740(0000) GS:ffff9be25fcc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000564787a30410 CR3: 000000010d4e2000 CR4: 00000000000006f0
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: 0x31c00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
----[ end Kernel panic - not syncing: Fatal exception ]---
+Passing an already poisoned page to action_result() causes issues:
 
-The root cause is that unpoison_memory() tries to check the PG_HWPoison
-flags of an uninitialized page.  So VM_BUG_ON_PAGE(PagePoisoned(page)) is
-triggered.  This can be reproduced by below steps:
+* The amount of hardware corrupted memory is incorrectly updated.
+* Per NUMA node MF stats are incorrectly updated.
+* Redundant "already poisoned" messages are printed.
 
-1.Offline memory block:
+Avoid those issues by:
 
- echo offline > /sys/devices/system/memory/memory12/state
+* Skipping hardware corrupted memory updates for already poisoned pages.
+* Skipping per NUMA node MF stats updates for already poisoned pages.
+* Dropping redundant "already poisoned" messages.
 
-2.Get offlined memory pfn:
+Make MF_MSG_ALREADY_POISONED consistent with other action_page_types and
+make calls to action_result() consistent for already poisoned normal pages
+and huge pages.
 
- page-types -b n -rlN
-
-3.Write pfn to unpoison-pfn
-
- echo <pfn> > /sys/kernel/debug/hwpoison/unpoison-pfn
-
-This scenario can be identified by pfn_to_online_page() returning NULL.
-And ZONE_DEVICE pages are never expected, so we can simply fail if
-pfn_to_online_page() == NULL to fix the bug.
-
-Link: https://lkml.kernel.org/r/20250828024618.1744895-1-linmiaohe@huawei.com
-Fixes: f1dd2cd13c4b ("mm, memory_hotplug: do not associate hotadded memory to zones until online")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/aLCiHMy12Ck3ouwC@hpe.com
+Fixes: b8b9488d50b7 ("mm/memory-failure: improve memory failure action_result messages")
+Signed-off-by: Kyle Meyer <kyle.meyer@hpe.com>
+Reviewed-by: Jiaqi Yan <jiaqiyan@google.com>
 Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Jane Chu <jane.chu@oracle.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Kyle Meyer <kyle.meyer@hpe.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: "Luck, Tony" <tony.luck@intel.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Russ Anderson <russ.anderson@hpe.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ mm/memory-failure.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 --- a/mm/memory-failure.c
 +++ b/mm/memory-failure.c
-@@ -2570,10 +2570,9 @@ int unpoison_memory(unsigned long pfn)
- 	static DEFINE_RATELIMIT_STATE(unpoison_rs, DEFAULT_RATELIMIT_INTERVAL,
- 					DEFAULT_RATELIMIT_BURST);
+@@ -948,7 +948,7 @@ static const char * const action_page_ty
+ 	[MF_MSG_BUDDY]			= "free buddy page",
+ 	[MF_MSG_DAX]			= "dax page",
+ 	[MF_MSG_UNSPLIT_THP]		= "unsplit thp",
+-	[MF_MSG_ALREADY_POISONED]	= "already poisoned",
++	[MF_MSG_ALREADY_POISONED]	= "already poisoned page",
+ 	[MF_MSG_UNKNOWN]		= "unknown page",
+ };
  
--	if (!pfn_valid(pfn))
--		return -ENXIO;
+@@ -1341,9 +1341,10 @@ static int action_result(unsigned long p
+ {
+ 	trace_memory_failure_event(pfn, type, result);
+ 
+-	num_poisoned_pages_inc(pfn);
 -
--	p = pfn_to_page(pfn);
-+	p = pfn_to_online_page(pfn);
-+	if (!p)
-+		return -EIO;
- 	folio = page_folio(p);
+-	update_per_node_mf_stats(pfn, result);
++	if (type != MF_MSG_ALREADY_POISONED) {
++		num_poisoned_pages_inc(pfn);
++		update_per_node_mf_stats(pfn, result);
++	}
  
- 	mutex_lock(&mf_mutex);
+ 	pr_err("%#lx: recovery action for %s: %s\n",
+ 		pfn, action_page_types[type], action_name[result]);
+@@ -2086,12 +2087,11 @@ retry:
+ 		*hugetlb = 0;
+ 		return 0;
+ 	} else if (res == -EHWPOISON) {
+-		pr_err("%#lx: already hardware poisoned\n", pfn);
+ 		if (flags & MF_ACTION_REQUIRED) {
+ 			folio = page_folio(p);
+ 			res = kill_accessing_process(current, folio_pfn(folio), flags);
+-			action_result(pfn, MF_MSG_ALREADY_POISONED, MF_FAILED);
+ 		}
++		action_result(pfn, MF_MSG_ALREADY_POISONED, MF_FAILED);
+ 		return res;
+ 	} else if (res == -EBUSY) {
+ 		if (!(flags & MF_NO_RETRY)) {
+@@ -2273,7 +2273,6 @@ try_again:
+ 		goto unlock_mutex;
+ 
+ 	if (TestSetPageHWPoison(p)) {
+-		pr_err("%#lx: already hardware poisoned\n", pfn);
+ 		res = -EHWPOISON;
+ 		if (flags & MF_ACTION_REQUIRED)
+ 			res = kill_accessing_process(current, pfn, flags);
 
 
