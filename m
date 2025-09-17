@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C85189F5C;
-	Wed, 17 Sep 2025 12:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DBB1E7C2D;
+	Wed, 17 Sep 2025 12:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112805; cv=none; b=uFp8jXYytqFWATHUkGP7LG+96M8FB6yf/h8z/GQ3bOf+6lAFUk/F9sDlyZcysPxlAM1l4Vfb1BeANbzIs+xVxzXPlUI+vBOCLQDL3nmjvdufm9tXibx05FER93M1wBJ0yM8bg2e7zpp8Z3IVNYB63wPAuvPRZnNU77eG+hm3mdQ=
+	t=1758112808; cv=none; b=JjCaSYubkF6rjs1R2OP2KTmsGkfgCba8uxyV+peKgIfP2vpc08k8B7Sn4vdkPDoRSUuRBWc1tzF2IyHhplBcKe4Purzb1omiY6AXoVj1jE8VA+jg8zZe3A5fJw0HdNeXusfULuaS8z3SKiQB4Q8GCjw1WOq0UgCIBwt8IGH3mX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112805; c=relaxed/simple;
-	bh=hcyN68oHH9DHCZx58vlJ9yH6H4YoKxxKHFxpSwT3f5M=;
+	s=arc-20240116; t=1758112808; c=relaxed/simple;
+	bh=PilOcc9dPZ8a17J1F2XKqT0AwcNNH79aOYUo3uYEkbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFhzW7mWuXGt2AbrDEf9MvwXNohhfHNXq1W+RzadBILIXZngtbk2X95cEa5nyuCSAMMSrdTIQ08eRjUpPrIWBU+r7l7WaoGjZM/itkp5hfpO1wOprzS1zVrMZpf5e3PwZ8luozH2ciOfTz8HX3fOOHlWoFQ5lHQwho51Wmy1e5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFkOV9BS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMzaLSpnwnEgtmsq3ibvA2I4NmbPitQwk9JbME/M1G2/TVBtD15u2qO+Qa54s4bqn2ZEE8h+FqHkrOUkUDUXAVm+x4t7rJdRdHBppykm3veWPEGeRqfi2siC3wel5ywuffRKVwnY61dnwSWqILfMVoib9ncJvFagykn/Wrq7Ax8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPdB204h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFkOV9BS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F67C4CEF0;
-	Wed, 17 Sep 2025 12:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPdB204h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB825C4CEF0;
+	Wed, 17 Sep 2025 12:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112805;
-	bh=hcyN68oHH9DHCZx58vlJ9yH6H4YoKxxKHFxpSwT3f5M=;
+	s=korg; t=1758112808;
+	bh=PilOcc9dPZ8a17J1F2XKqT0AwcNNH79aOYUo3uYEkbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFkOV9BS/6ipHJJxpjV0NeNIZgGEmBMvrCJpS57BJokUpege3jGFWNRX1I996Iftk
-	 RRHoX4hpNXsFRzKBhcrBlmeM/H6xakPYUhS8nMXxAZ5uSwMdDxNGpNQ+IAwe7quYib
-	 4VdexUay5asQt7KOznKbhIshAB0apXUXcVpA229E=
+	b=dPdB204hENH/wAJhfPFQ17SFQEYoISBWX/qrBYLPyLN6PbkrdSAZ6hYHDwDOjzlNT
+	 wV2i/UWq7HAbhlMKifsR+UItcoSsT+CztCLtQWqncwWwer/sXjJa4KLYs0mfPjQjr+
+	 KBlomCZOJs9DSkUOKNEXdi9Tn+05EJTAM8KlUFec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	SeongJae Park <sj@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	ze zuo <zuoze1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 082/189] mm/damon/lru_sort: avoid divide-by-zero in damon_lru_sort_apply_parameters()
-Date: Wed, 17 Sep 2025 14:33:12 +0200
-Message-ID: <20250917123353.865987404@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.16 083/189] drm/mediatek: fix potential OF node use-after-free
+Date: Wed, 17 Sep 2025 14:33:13 +0200
+Message-ID: <20250917123353.890368733@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,56 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanmin Yan <yanquanmin1@huawei.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 711f19dfd783ffb37ca4324388b9c4cb87e71363 upstream.
+commit 4de37a48b6b58faaded9eb765047cf0d8785ea18 upstream.
 
-Patch series "mm/damon: avoid divide-by-zero in DAMON module's parameters
-application".
+The for_each_child_of_node() helper drops the reference it takes to each
+node as it iterates over children and an explicit of_node_put() is only
+needed when exiting the loop early.
 
-DAMON's RECLAIM and LRU_SORT modules perform no validation on
-user-configured parameters during application, which may lead to
-division-by-zero errors.
+Drop the recently introduced bogus additional reference count decrement
+at each iteration that could potentially lead to a use-after-free.
 
-Avoid the divide-by-zero by adding validation checks when DAMON modules
-attempt to apply the parameters.
-
-
-This patch (of 2):
-
-During the calculation of 'hot_thres' and 'cold_thres', either
-'sample_interval' or 'aggr_interval' is used as the divisor, which may
-lead to division-by-zero errors.  Fix it by directly returning -EINVAL
-when such a case occurs.  Additionally, since 'aggr_interval' is already
-required to be set no smaller than 'sample_interval' in damon_set_attrs(),
-only the case where 'sample_interval' is zero needs to be checked.
-
-Link: https://lkml.kernel.org/r/20250827115858.1186261-2-yanquanmin1@huawei.com
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Signed-off-by: Quanmin Yan <yanquanmin1@huawei.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: ze zuo <zuoze1@huawei.com>
-Cc: <stable@vger.kernel.org>	[6.0+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1f403699c40f ("drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv")
+Cc: Ma Ke <make24@iscas.ac.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250829090345.21075-2-johan@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/lru_sort.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -198,6 +198,11 @@ static int damon_lru_sort_apply_paramete
- 	if (err)
- 		return err;
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -388,11 +388,11 @@ static bool mtk_drm_get_all_drm_priv(str
  
-+	if (!damon_lru_sort_mon_attrs.sample_interval) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+
- 	err = damon_set_attrs(ctx, &damon_lru_sort_mon_attrs);
- 	if (err)
- 		goto out;
+ 		of_id = of_match_node(mtk_drm_of_ids, node);
+ 		if (!of_id)
+-			goto next_put_node;
++			continue;
+ 
+ 		pdev = of_find_device_by_node(node);
+ 		if (!pdev)
+-			goto next_put_node;
++			continue;
+ 
+ 		drm_dev = device_find_child(&pdev->dev, NULL, mtk_drm_match);
+ 		if (!drm_dev)
+@@ -418,11 +418,10 @@ next_put_device_drm_dev:
+ next_put_device_pdev_dev:
+ 		put_device(&pdev->dev);
+ 
+-next_put_node:
+-		of_node_put(node);
+-
+-		if (cnt == MAX_CRTC)
++		if (cnt == MAX_CRTC) {
++			of_node_put(node);
+ 			break;
++		}
+ 	}
+ 
+ 	if (drm_priv->data->mmsys_dev_num == cnt) {
 
 
