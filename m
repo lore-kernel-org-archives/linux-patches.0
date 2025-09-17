@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F85332A31;
-	Wed, 17 Sep 2025 12:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3E8332A32;
+	Wed, 17 Sep 2025 12:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113798; cv=none; b=bhToAr/pXRJ1iZ5sNF2CG9Aq4ZIGqtlJWrEu0NlyAT2g4w2wwsD3uU+FFC0J17RUEgRAdM8fm3T4+iZpWKGpAxvhpw/LzaW02t1pNZmnQP6mdNIU3y9b1vjQVzOZSeJeqsu2FW2fUNAIBQDQEMp5yzSgR0SUYTjGVY/XJTv0IPs=
+	t=1758113803; cv=none; b=Cp4bOVe7CSLAQPooHS+NDI/dI/8GghywNjsprHPcFYsvk04cxLX4U7KVTQOU985+/v+7w5cJF6zVP+D+q5+6SsOTT+Zi/O5l1vqZ8z398jfGu03A15Zz3+8b5gaH9r5gzNiUTYzcb1gCF9Iaiz2BUj5mIo/7ORs/js2SU67OQsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113798; c=relaxed/simple;
-	bh=QrnLAZ5Jl8yvyn22cTxhrPtBgDUK6lS6EBcifvaox3Q=;
+	s=arc-20240116; t=1758113803; c=relaxed/simple;
+	bh=Q5PicojlcyM5HM2+Nl4zGFVkYdQ6l0NJ/QgJrCSxelA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNvkbL9MbYGjP8R0OBU9P78fwyHyIGvu9rgaTh45++Y0Flx7fnwM9MtRRWtoWPWlQIFNzNs/JNTZEEeEU82wlYzVCMlPNnGXwTHFF8EnaxFXbZHCXidA4GVBdFaIf7vf/r9dwj/fLPWJolYJagK85YhZwvUu975oEqajL+wqYcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TN0qHYoC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0kcyzRhbqhS5SUjH/WU6LQkavCTtgoHMRNc2kFpxVh3QXuGlkEX88rUw3vVp0E5cWX5ZfeBecPAoc1mOMJgtULMRQDs8Sni+VicChuSMLZbK0+CNDctW7M9qZV3I90onVNAWBgxOupby7loRVvknw4CQF6gPVJxW/jhnelf8UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jrs2lA7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TN0qHYoC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52944C4CEF0;
-	Wed, 17 Sep 2025 12:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jrs2lA7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8E1C4CEF0;
+	Wed, 17 Sep 2025 12:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113798;
-	bh=QrnLAZ5Jl8yvyn22cTxhrPtBgDUK6lS6EBcifvaox3Q=;
+	s=korg; t=1758113802;
+	bh=Q5PicojlcyM5HM2+Nl4zGFVkYdQ6l0NJ/QgJrCSxelA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TN0qHYoCUvb2iUvaakmxy+qvCIm34T3WH/fF1AWhm5dwdN1YPBCTayr58qQsI8tum
-	 Ry6Uh3N2eUbS67M3khpwz6KSH9hPKMNmlzR22r8xzkU0QVDlO057bNCcZ7hAblVWDu
-	 tirzXDSDHcVRD8xW//znpIV/2f9c6Vp/1I+H7OVA=
+	b=Jrs2lA7wMsCF003ZlnNRKU6dzVPyB623KDHoVGX4Ls0k8gEVoU4GXQrGcuml069TR
+	 nhUsMFCFQq4PZ5wo9q9THpl/egT0x2sKEq6Gu2lD3Qf9YSmzEbZwwwjLvDjurJ/6HC
+	 tFdvvOjxDuYX92AFhzPPeSPFInY6kDnSAAzghyCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Barry Song <baohua@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/101] mm/khugepaged: convert hpage_collapse_scan_pmd() to use folios
-Date: Wed, 17 Sep 2025 14:34:38 +0200
-Message-ID: <20250917123338.172052752@linuxfoundation.org>
+Subject: [PATCH 6.6 056/101] mm/khugepaged: fix the address passed to notifier on testing young
+Date: Wed, 17 Sep 2025 14:34:39 +0200
+Message-ID: <20250917123338.196916128@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -55,100 +60,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Vishal Moola (Oracle)" <vishal.moola@gmail.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit 5c07ebb372d66423e508ecfb8e00324f8797f072 ]
+[ Upstream commit 394bfac1c7f7b701c2c93834c5761b9c9ceeebcf ]
 
-Replaces 5 calls to compound_head(), and removes 1385 bytes of kernel
-text.
+Commit 8ee53820edfd ("thp: mmu_notifier_test_young") introduced
+mmu_notifier_test_young(), but we are passing the wrong address.
+In xxx_scan_pmd(), the actual iteration address is "_address" not
+"address".  We seem to misuse the variable on the very beginning.
 
-Link: https://lkml.kernel.org/r/20231020183331.10770-3-vishal.moola@gmail.com
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Change it to the right one.
+
+[akpm@linux-foundation.org fix whitespace, per everyone]
+Link: https://lkml.kernel.org/r/20250822063318.11644-1-richard.weiyang@gmail.com
+Fixes: 8ee53820edfd ("thp: mmu_notifier_test_young")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 394bfac1c7f7 ("mm/khugepaged: fix the address passed to notifier on testing young")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ mm/khugepaged.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/mm/khugepaged.c
 +++ b/mm/khugepaged.c
-@@ -1240,6 +1240,7 @@ static int hpage_collapse_scan_pmd(struc
- 	int result = SCAN_FAIL, referenced = 0;
- 	int none_or_zero = 0, shared = 0;
- 	struct page *page = NULL;
-+	struct folio *folio = NULL;
- 	unsigned long _address;
- 	spinlock_t *ptl;
- 	int node = NUMA_NO_NODE, unmapped = 0;
-@@ -1326,29 +1327,28 @@ static int hpage_collapse_scan_pmd(struc
- 			}
- 		}
- 
--		page = compound_head(page);
--
-+		folio = page_folio(page);
- 		/*
- 		 * Record which node the original page is from and save this
- 		 * information to cc->node_load[].
- 		 * Khugepaged will allocate hugepage from the node has the max
- 		 * hit record.
- 		 */
--		node = page_to_nid(page);
-+		node = folio_nid(folio);
- 		if (hpage_collapse_scan_abort(node, cc)) {
- 			result = SCAN_SCAN_ABORT;
- 			goto out_unmap;
- 		}
- 		cc->node_load[node]++;
--		if (!PageLRU(page)) {
-+		if (!folio_test_lru(folio)) {
- 			result = SCAN_PAGE_LRU;
- 			goto out_unmap;
- 		}
--		if (PageLocked(page)) {
-+		if (folio_test_locked(folio)) {
- 			result = SCAN_PAGE_LOCK;
- 			goto out_unmap;
- 		}
--		if (!PageAnon(page)) {
-+		if (!folio_test_anon(folio)) {
- 			result = SCAN_PAGE_ANON;
- 			goto out_unmap;
- 		}
-@@ -1363,7 +1363,7 @@ static int hpage_collapse_scan_pmd(struc
- 		 * has excessive GUP pins (i.e. 512).  Anyway the same check
- 		 * will be done again later the risk seems low.
- 		 */
--		if (!is_refcount_suitable(page)) {
-+		if (!is_refcount_suitable(&folio->page)) {
- 			result = SCAN_PAGE_COUNT;
- 			goto out_unmap;
- 		}
-@@ -1373,8 +1373,8 @@ static int hpage_collapse_scan_pmd(struc
- 		 * enough young pte to justify collapsing the page
+@@ -1374,8 +1374,8 @@ static int hpage_collapse_scan_pmd(struc
  		 */
  		if (cc->is_khugepaged &&
--		    (pte_young(pteval) || page_is_young(page) ||
--		     PageReferenced(page) || mmu_notifier_test_young(vma->vm_mm,
-+		    (pte_young(pteval) || folio_test_young(folio) ||
-+		     folio_test_referenced(folio) || mmu_notifier_test_young(vma->vm_mm,
- 								     address)))
+ 		    (pte_young(pteval) || folio_test_young(folio) ||
+-		     folio_test_referenced(folio) || mmu_notifier_test_young(vma->vm_mm,
+-								     address)))
++		     folio_test_referenced(folio) ||
++		     mmu_notifier_test_young(vma->vm_mm, _address)))
  			referenced++;
  	}
-@@ -1396,7 +1396,7 @@ out_unmap:
- 		*mmap_locked = false;
- 	}
- out:
--	trace_mm_khugepaged_scan_pmd(mm, page, writable, referenced,
-+	trace_mm_khugepaged_scan_pmd(mm, &folio->page, writable, referenced,
- 				     none_or_zero, result, unmapped);
- 	return result;
- }
+ 	if (!writable) {
 
 
