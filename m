@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DBB1E7C2D;
-	Wed, 17 Sep 2025 12:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944AB238140;
+	Wed, 17 Sep 2025 12:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112808; cv=none; b=JjCaSYubkF6rjs1R2OP2KTmsGkfgCba8uxyV+peKgIfP2vpc08k8B7Sn4vdkPDoRSUuRBWc1tzF2IyHhplBcKe4Purzb1omiY6AXoVj1jE8VA+jg8zZe3A5fJw0HdNeXusfULuaS8z3SKiQB4Q8GCjw1WOq0UgCIBwt8IGH3mX4=
+	t=1758112811; cv=none; b=MWpdYDHu1ErTXm45bBtaOQpczjZvWYLHNzxl9j/pwh3D/0cQ+ZJ9z8QZ3XoaB2jI1AKsWZFnnLkI0J2hAlTKR9A0Rdyg0kI51MJAkDJiqtzPRgkVBQ/PuIq2O4y1kcQT7b8KK62g08lmOtJH/zffkmVkLW+gVMzWTZ4l1rlIIGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112808; c=relaxed/simple;
-	bh=PilOcc9dPZ8a17J1F2XKqT0AwcNNH79aOYUo3uYEkbQ=;
+	s=arc-20240116; t=1758112811; c=relaxed/simple;
+	bh=KQWCn+9ESROkD7mxymEUPEJuB9ViV+MmpHkPqggY7n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMzaLSpnwnEgtmsq3ibvA2I4NmbPitQwk9JbME/M1G2/TVBtD15u2qO+Qa54s4bqn2ZEE8h+FqHkrOUkUDUXAVm+x4t7rJdRdHBppykm3veWPEGeRqfi2siC3wel5ywuffRKVwnY61dnwSWqILfMVoib9ncJvFagykn/Wrq7Ax8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPdB204h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hhttl9Z31/osslFK0hNTHpWobn9dC1gnInue8Xxfyn8jD0OkBDdNZaX/6W5OcX1r4AjW5G6Wdjj/XqnbeYP+uo3xkWPLG1KAoMT2b08QggWLxW1t+fQ0rrauv/t6iGUSrU3vlelwTqIJSaw6loYHst3dNjTfj4hkW4G9Uchi7AI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqUp9BW4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPdB204h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB825C4CEF0;
-	Wed, 17 Sep 2025 12:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqUp9BW4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13437C4CEF0;
+	Wed, 17 Sep 2025 12:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112808;
-	bh=PilOcc9dPZ8a17J1F2XKqT0AwcNNH79aOYUo3uYEkbQ=;
+	s=korg; t=1758112811;
+	bh=KQWCn+9ESROkD7mxymEUPEJuB9ViV+MmpHkPqggY7n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPdB204hENH/wAJhfPFQ17SFQEYoISBWX/qrBYLPyLN6PbkrdSAZ6hYHDwDOjzlNT
-	 wV2i/UWq7HAbhlMKifsR+UItcoSsT+CztCLtQWqncwWwer/sXjJa4KLYs0mfPjQjr+
-	 KBlomCZOJs9DSkUOKNEXdi9Tn+05EJTAM8KlUFec=
+	b=iqUp9BW4/v5vhsxsQqUwQk5mjEtCgOaRdaqQ2mktCEJ+PpxERbv013scuPK70Seeq
+	 9ov5CfDm/1pA9CcZOgNPxJRTDNgiNGsATwaREPcLCLoyQ0C8pO8NA+dxkiYAcXcfAL
+	 6+fZN5UDnPJz8KnViMgBctZhxxJ8lcDwid+b8qSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Johan Hovold <johan@kernel.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.16 083/189] drm/mediatek: fix potential OF node use-after-free
-Date: Wed, 17 Sep 2025 14:33:13 +0200
-Message-ID: <20250917123353.890368733@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.16 084/189] drm/i915/power: fix size for for_each_set_bit() in abox iteration
+Date: Wed, 17 Sep 2025 14:33:14 +0200
+Message-ID: <20250917123353.912441940@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -47,66 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 4de37a48b6b58faaded9eb765047cf0d8785ea18 upstream.
+commit cfa7b7659757f8d0fc4914429efa90d0d2577dd7 upstream.
 
-The for_each_child_of_node() helper drops the reference it takes to each
-node as it iterates over children and an explicit of_node_put() is only
-needed when exiting the loop early.
+for_each_set_bit() expects size to be in bits, not bytes. The abox mask
+iteration uses bytes, but it works by coincidence, because the local
+variable holding the mask is unsigned long, and the mask only ever has
+bit 2 as the highest bit. Using a smaller type could lead to subtle and
+very hard to track bugs.
 
-Drop the recently introduced bogus additional reference count decrement
-at each iteration that could potentially lead to a use-after-free.
-
-Fixes: 1f403699c40f ("drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv")
-Cc: Ma Ke <make24@iscas.ac.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250829090345.21075-2-johan@kernel.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 62afef2811e4 ("drm/i915/rkl: RKL uses ABOX0 for pixel transfers")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: stable@vger.kernel.org # v5.9+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://lore.kernel.org/r/20250905104149.1144751-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7ea3baa6efe4bb93d11e1c0e6528b1468d7debf6)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_power.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -388,11 +388,11 @@ static bool mtk_drm_get_all_drm_priv(str
+--- a/drivers/gpu/drm/i915/display/intel_display_power.c
++++ b/drivers/gpu/drm/i915/display/intel_display_power.c
+@@ -1169,7 +1169,7 @@ static void icl_mbus_init(struct intel_d
+ 	if (DISPLAY_VER(display) == 12)
+ 		abox_regs |= BIT(0);
  
- 		of_id = of_match_node(mtk_drm_of_ids, node);
- 		if (!of_id)
--			goto next_put_node;
-+			continue;
+-	for_each_set_bit(i, &abox_regs, sizeof(abox_regs))
++	for_each_set_bit(i, &abox_regs, BITS_PER_TYPE(abox_regs))
+ 		intel_de_rmw(display, MBUS_ABOX_CTL(i), mask, val);
+ }
  
- 		pdev = of_find_device_by_node(node);
- 		if (!pdev)
--			goto next_put_node;
-+			continue;
+@@ -1630,11 +1630,11 @@ static void tgl_bw_buddy_init(struct int
+ 	if (table[config].page_mask == 0) {
+ 		drm_dbg_kms(display->drm,
+ 			    "Unknown memory configuration; disabling address buddy logic.\n");
+-		for_each_set_bit(i, &abox_mask, sizeof(abox_mask))
++		for_each_set_bit(i, &abox_mask, BITS_PER_TYPE(abox_mask))
+ 			intel_de_write(display, BW_BUDDY_CTL(i),
+ 				       BW_BUDDY_DISABLE);
+ 	} else {
+-		for_each_set_bit(i, &abox_mask, sizeof(abox_mask)) {
++		for_each_set_bit(i, &abox_mask, BITS_PER_TYPE(abox_mask)) {
+ 			intel_de_write(display, BW_BUDDY_PAGE_MASK(i),
+ 				       table[config].page_mask);
  
- 		drm_dev = device_find_child(&pdev->dev, NULL, mtk_drm_match);
- 		if (!drm_dev)
-@@ -418,11 +418,10 @@ next_put_device_drm_dev:
- next_put_device_pdev_dev:
- 		put_device(&pdev->dev);
- 
--next_put_node:
--		of_node_put(node);
--
--		if (cnt == MAX_CRTC)
-+		if (cnt == MAX_CRTC) {
-+			of_node_put(node);
- 			break;
-+		}
- 	}
- 
- 	if (drm_priv->data->mmsys_dev_num == cnt) {
 
 
