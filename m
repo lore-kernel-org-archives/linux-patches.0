@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9334E2BE039;
-	Wed, 17 Sep 2025 12:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB1D2BE622;
+	Wed, 17 Sep 2025 12:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112684; cv=none; b=e9tsLoMrRDisznz3hpTJtRuA9KCGJ6PcxZBV7WEoQpL0UpT4DcMsAuC2FyJvZRAdZZ6IW7siIeKYqUzrfsn8TzCZZ9ZgaZ86E961bW/aYwgmo0xo+aHgzG2NEribqhgDt93qIS2Xvu96ah8oVOQHqKnCuBmvB0/peg8Fl23WzTs=
+	t=1758112688; cv=none; b=OX5D0Xmj8zfnPYBs5rF0dydM+dQA3gleW5JpUeTpBNHqZ82Jnf5f5JiZt7uIkijvCvhYOopVOQXJpGSukIPtKzpWZvLl4Ii0CpMEiYLjWCitQ6bZisIjAXsfPnhVPTkSReQzn8juCD1xWli0Nm66xCYBy/Mr+FWUZufeqrKQ57w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112684; c=relaxed/simple;
-	bh=6UdmYTUjOMBamqT9QeVc6zl3hcFarTxKNQtBkFTCezo=;
+	s=arc-20240116; t=1758112688; c=relaxed/simple;
+	bh=+1HZBgzkAumFMG95NMXrXlNEQnOUNkehvLGNLN473Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSRKMfE3AoaLO00AvVvsH+hht19D/Ct/RrXXlDbUbqyB1FoMkhzLt9o/Mdz/EssgfgPGqUNax1P901DnNiaHW/ir1+RXvAwOlYfSE6TM2ZDBTKChKK7Q3ClXcVGeeXpiQ8tpnAciy/S7HuAxV/KkqtlCn27kwQ9+S8K/fCAtpYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tl6UsUc+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+lpVY4cb4ScssGs0iH1/3nqKIHi/UL0p+SzUgEg8SzqzznHRGy1JHcSjkMwmM1gAvutiqgXML9yd+LSA4NGpnxhNH+UolRleTW08W8yct5st5WxtYJktqO5eiN1JV3G0fuWidYcwCNAZ86eu1x95Mi5YXlXzWJ/p538NCaUUOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4CbuZhh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tl6UsUc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EB0C4CEF0;
-	Wed, 17 Sep 2025 12:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4CbuZhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBD3C4CEF0;
+	Wed, 17 Sep 2025 12:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112684;
-	bh=6UdmYTUjOMBamqT9QeVc6zl3hcFarTxKNQtBkFTCezo=;
+	s=korg; t=1758112687;
+	bh=+1HZBgzkAumFMG95NMXrXlNEQnOUNkehvLGNLN473Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tl6UsUc+4fKRuailqQMvaxiaTCNegLNBRbEda4vdMkhcTRHnQ91vy/s7Rj1njWhHh
-	 aoOgsxJoSozX1IFYc3+3Mb8tqMeC6vso9R9NQuswPQXsaI+gBMA6MaW+yaWXOKnhix
-	 jh69Da3qtDbiMLs+LoxlHWI9vHEnhLBdVgZkWVxk=
+	b=x4CbuZhh6T+OY2XmN8NrDMrEzjAtr5PJz7j2qfDHfN9NSfBlW14GPyaC/BTR5hor2
+	 o3laEwwL47iMv+MLCsyroctBAfHb6E2NTPfceN+Kibbt3HNEdNAF7EfOWahcxuFCte
+	 mhzsz9ufiJU1m2CLPMxAPy9xQdQ+atsB5RHwxrq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	KaFai Wan <kafai.wan@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Peilin Ye <yepeilin@google.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 044/189] bpf: Allow fall back to interpreter for programs with stack size <= 512
-Date: Wed, 17 Sep 2025 14:32:34 +0200
-Message-ID: <20250917123352.939591870@linuxfoundation.org>
+Subject: [PATCH 6.16 045/189] bpf: Tell memcg to use allow_spinning=false path in bpf_timer_init()
+Date: Wed, 17 Sep 2025 14:32:35 +0200
+Message-ID: <20250917123352.964142984@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,107 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KaFai Wan <kafai.wan@linux.dev>
+From: Peilin Ye <yepeilin@google.com>
 
-[ Upstream commit df0cb5cb50bd54d3cd4d0d83417ceec6a66404aa ]
+[ Upstream commit 6d78b4473cdb08b74662355a9e8510bde09c511e ]
 
-OpenWRT users reported regression on ARMv6 devices after updating to latest
-HEAD, where tcpdump filter:
+Currently, calling bpf_map_kmalloc_node() from __bpf_async_init() can
+cause various locking issues; see the following stack trace (edited for
+style) as one example:
 
-tcpdump "not ether host 3c37121a2b3c and not ether host 184ecbca2a3a \
-and not ether host 14130b4d3f47 and not ether host f0f61cf440b7 \
-and not ether host a84b4dedf471 and not ether host d022be17e1d7 \
-and not ether host 5c497967208b and not ether host 706655784d5b"
+...
+ [10.011566]  do_raw_spin_lock.cold
+ [10.011570]  try_to_wake_up             (5) double-acquiring the same
+ [10.011575]  kick_pool                      rq_lock, causing a hardlockup
+ [10.011579]  __queue_work
+ [10.011582]  queue_work_on
+ [10.011585]  kernfs_notify
+ [10.011589]  cgroup_file_notify
+ [10.011593]  try_charge_memcg           (4) memcg accounting raises an
+ [10.011597]  obj_cgroup_charge_pages        MEMCG_MAX event
+ [10.011599]  obj_cgroup_charge_account
+ [10.011600]  __memcg_slab_post_alloc_hook
+ [10.011603]  __kmalloc_node_noprof
+...
+ [10.011611]  bpf_map_kmalloc_node
+ [10.011612]  __bpf_async_init
+ [10.011615]  bpf_timer_init             (3) BPF calls bpf_timer_init()
+ [10.011617]  bpf_prog_xxxxxxxxxxxxxxxx_fcg_runnable
+ [10.011619]  bpf__sched_ext_ops_runnable
+ [10.011620]  enqueue_task_scx           (2) BPF runs with rq_lock held
+ [10.011622]  enqueue_task
+ [10.011626]  ttwu_do_activate
+ [10.011629]  sched_ttwu_pending         (1) grabs rq_lock
+...
 
-fails with warning: "Kernel filter failed: No error information"
-when using config:
- # CONFIG_BPF_JIT_ALWAYS_ON is not set
- CONFIG_BPF_JIT_DEFAULT_ON=y
+The above was reproduced on bpf-next (b338cf849ec8) by modifying
+./tools/sched_ext/scx_flatcg.bpf.c to call bpf_timer_init() during
+ops.runnable(), and hacking the memcg accounting code a bit to make
+a bpf_timer_init() call more likely to raise an MEMCG_MAX event.
 
-The issue arises because commits:
-1. "bpf: Fix array bounds error with may_goto" changed default runtime to
-   __bpf_prog_ret0_warn when jit_requested = 1
-2. "bpf: Avoid __bpf_prog_ret0_warn when jit fails" returns error when
-   jit_requested = 1 but jit fails
+We have also run into other similar variants (both internally and on
+bpf-next), including double-acquiring cgroup_file_kn_lock, the same
+worker_pool::lock, etc.
 
-This change restores interpreter fallback capability for BPF programs with
-stack size <= 512 bytes when jit fails.
+As suggested by Shakeel, fix this by using __GFP_HIGH instead of
+GFP_ATOMIC in __bpf_async_init(), so that e.g. if try_charge_memcg()
+raises an MEMCG_MAX event, we call __memcg_memory_event() with
+@allow_spinning=false and avoid calling cgroup_file_notify() there.
 
-Reported-by: Felix Fietkau <nbd@nbd.name>
-Closes: https://lore.kernel.org/bpf/2e267b4b-0540-45d8-9310-e127bf95fc63@nbd.name/
-Fixes: 6ebc5030e0c5 ("bpf: Fix array bounds error with may_goto")
-Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20250909144614.2991253-1-kafai.wan@linux.dev
+Depends on mm patch
+"memcg: skip cgroup_file_notify if spinning is not allowed":
+https://lore.kernel.org/bpf/20250905201606.66198-1-shakeel.butt@linux.dev/
+
+v0 approach s/bpf_map_kmalloc_node/bpf_mem_alloc/
+https://lore.kernel.org/bpf/20250905061919.439648-1-yepeilin@google.com/
+v1 approach:
+https://lore.kernel.org/bpf/20250905234547.862249-1-yepeilin@google.com/
+
+Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Peilin Ye <yepeilin@google.com>
+Link: https://lore.kernel.org/r/20250909095222.2121438-1-yepeilin@google.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ kernel/bpf/helpers.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index d966e971893ab..829f0792d8d83 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -2354,8 +2354,7 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
- 					 const struct bpf_insn *insn)
- {
- 	/* If this handler ever gets executed, then BPF_JIT_ALWAYS_ON
--	 * is not working properly, or interpreter is being used when
--	 * prog->jit_requested is not 0, so warn about it!
-+	 * is not working properly, so warn about it!
- 	 */
- 	WARN_ON_ONCE(1);
- 	return 0;
-@@ -2456,8 +2455,9 @@ static int bpf_check_tail_call(const struct bpf_prog *fp)
- 	return ret;
- }
- 
--static void bpf_prog_select_func(struct bpf_prog *fp)
-+static bool bpf_prog_select_interpreter(struct bpf_prog *fp)
- {
-+	bool select_interpreter = false;
- #ifndef CONFIG_BPF_JIT_ALWAYS_ON
- 	u32 stack_depth = max_t(u32, fp->aux->stack_depth, 1);
- 	u32 idx = (round_up(stack_depth, 32) / 32) - 1;
-@@ -2466,15 +2466,16 @@ static void bpf_prog_select_func(struct bpf_prog *fp)
- 	 * But for non-JITed programs, we don't need bpf_func, so no bounds
- 	 * check needed.
- 	 */
--	if (!fp->jit_requested &&
--	    !WARN_ON_ONCE(idx >= ARRAY_SIZE(interpreters))) {
-+	if (idx < ARRAY_SIZE(interpreters)) {
- 		fp->bpf_func = interpreters[idx];
-+		select_interpreter = true;
- 	} else {
- 		fp->bpf_func = __bpf_prog_ret0_warn;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index fdf8737542ac4..3abbdebb2d9ef 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1277,8 +1277,11 @@ static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u
+ 		goto out;
  	}
- #else
- 	fp->bpf_func = __bpf_prog_ret0_warn;
- #endif
-+	return select_interpreter;
- }
  
- /**
-@@ -2493,7 +2494,7 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
- 	/* In case of BPF to BPF calls, verifier did all the prep
- 	 * work with regards to JITing, etc.
- 	 */
--	bool jit_needed = fp->jit_requested;
-+	bool jit_needed = false;
- 
- 	if (fp->bpf_func)
- 		goto finalize;
-@@ -2502,7 +2503,8 @@ struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
- 	    bpf_prog_has_kfunc_call(fp))
- 		jit_needed = true;
- 
--	bpf_prog_select_func(fp);
-+	if (!bpf_prog_select_interpreter(fp))
-+		jit_needed = true;
- 
- 	/* eBPF JITs can rewrite the program in case constant
- 	 * blinding is active. However, in case of error during
+-	/* allocate hrtimer via map_kmalloc to use memcg accounting */
+-	cb = bpf_map_kmalloc_node(map, size, GFP_ATOMIC, map->numa_node);
++	/* Allocate via bpf_map_kmalloc_node() for memcg accounting. Until
++	 * kmalloc_nolock() is available, avoid locking issues by using
++	 * __GFP_HIGH (GFP_ATOMIC & ~__GFP_RECLAIM).
++	 */
++	cb = bpf_map_kmalloc_node(map, size, __GFP_HIGH, map->numa_node);
+ 	if (!cb) {
+ 		ret = -ENOMEM;
+ 		goto out;
 -- 
 2.51.0
 
