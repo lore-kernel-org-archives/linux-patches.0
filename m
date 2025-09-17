@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9466A1E7C2D;
-	Wed, 17 Sep 2025 12:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010D430CB41;
+	Wed, 17 Sep 2025 12:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112716; cv=none; b=dDTs7VfnuoLBR6JuvT8EPycFx7Gr2HwBqySrwls6ZRr2n/tSym+0WGiepG5mbzrsadYxkccll8b5rzJi3gQy63rZ0Gg41skBRAvNpvJezqqFDK0R2S+UjmXFXhXsrtL4yzqA6weL4ZHqScAyRUidMkcQeNQbR5XjMzorbImzRb4=
+	t=1758112720; cv=none; b=FyGO8Sl7O3mIsYviA5LjJAPRXttzKI09lmlc0MNt6gX+4diPXl+fnkzEQx203bcbOKI0Ys9Zo4v4miW0mvpZx1IMFh/bPR4tnxG3ZqoUoEbUiK++YzByKUwJ4Mf6+A8jzKZPX0E8eNOlr2UfBV11M7RjnLz3qPzHM2l1sDI9Zis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112716; c=relaxed/simple;
-	bh=UfSNHuC2ZQkWlnQeQ6PUfkQpOrFJcWpz3n1Rz3dD06A=;
+	s=arc-20240116; t=1758112720; c=relaxed/simple;
+	bh=9wGb2OKF8v0sPyFpPAc61mZb5TYMhwMtkxAdDUcaRxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzv9L6/AiT5k7+USQv8ZIAX9EUHR7iyi5Cr8t853hG+e/olP74Eoj0j1EKDMJ8fIaT5+ShLByP4QEGwe4XvYT4Jrwlc7SsAS0yNocmyB+sqpDZQEgOtLTvdB4K3QvYl08FaiGiy9e5fSXDPAesATS/xfZUtZHrJFSvJ+37KUUVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU+6CWt5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eQOD4lrExkiHVQEm1q19YsFRH3wLtu4SJJUCkzQcL7LJ8oSeOj9i5eFSFhKriP643roH9k8ofsDyV5/dikWxt4J2sFGzSN4WkHTuqkCJ5vtzoFeBIP5uhSgFb3Mh583hzPoXQQrKj2HHYZUx9XbScK20rSnMrgHgmkVc7ttwojY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHew81U0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU+6CWt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE35DC4CEF0;
-	Wed, 17 Sep 2025 12:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHew81U0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428BAC4CEF7;
+	Wed, 17 Sep 2025 12:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112716;
-	bh=UfSNHuC2ZQkWlnQeQ6PUfkQpOrFJcWpz3n1Rz3dD06A=;
+	s=korg; t=1758112719;
+	bh=9wGb2OKF8v0sPyFpPAc61mZb5TYMhwMtkxAdDUcaRxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU+6CWt56MFpDHHVnAjxIf9ghfXXBA40PP54E3O4/W8X0UiSSCrVkZE6ZM0ORi3d9
-	 wPiW0knJgPtPFUzua6tX96T52eMuHzJRlJCSQIheIVNheN6Sh4lPkPUsRHIPgyQu5O
-	 AgOaG5r0Rq7bDqwHAm6FyRHEKm1n3HrOhHA8EAl0=
+	b=YHew81U0+QdaeBZi0Hae7hI3HqO7SQZOnYrvBU4RF8R1UvDG1CBCJutCmyTy5LQ7P
+	 x4SPW0uFxVcBoPKtY/dr9KJNS/4YZJnDUjmbAx1ehvmkfWZy0Nwpen1i+IpSAJw1/2
+	 rqBNwmgwfpdtFaOvBF3197BZGr+MLdebi2rv2B1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
 	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.16 053/189] mptcp: sockopt: make sync_socket_options propagate SOCK_KEEPOPEN
-Date: Wed, 17 Sep 2025 14:32:43 +0200
-Message-ID: <20250917123353.161504117@linuxfoundation.org>
+Subject: [PATCH 6.16 054/189] doc: mptcp: net.mptcp.pm_type is deprecated
+Date: Wed, 17 Sep 2025 14:32:44 +0200
+Message-ID: <20250917123353.184685080@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,65 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 648de37416b301f046f62f1b65715c7fa8ebaa67 upstream.
+commit 6f021e95d0828edc8ed104a294594c2f9569383a upstream.
 
-Users reported a scenario where MPTCP connections that were configured
-with SO_KEEPALIVE prior to connect would fail to enable their keepalives
-if MTPCP fell back to TCP mode.
+The net.mptcp.pm_type sysctl knob has been deprecated in v6.15,
+net.mptcp.path_manager should be used instead.
 
-After investigating, this affects keepalives for any connection where
-sync_socket_options is called on a socket that is in the closed or
-listening state.  Joins are handled properly. For connects,
-sync_socket_options is called when the socket is still in the closed
-state.  The tcp_set_keepalive() function does not act on sockets that
-are closed or listening, hence keepalive is not immediately enabled.
-Since the SO_KEEPOPEN flag is absent, it is not enabled later in the
-connect sequence via tcp_finish_connect.  Setting the keepalive via
-sockopt after connect does work, but would not address any subsequently
-created flows.
+Adapt the section about path managers to suggest using the new sysctl
+knob instead of the deprecated one.
 
-Fortunately, the fix here is straight-forward: set SOCK_KEEPOPEN on the
-subflow when calling sync_socket_options.
-
-The fix was valdidated both by using tcpdump to observe keepalive
-packets not being sent before the fix, and being sent after the fix.  It
-was also possible to observe via ss that the keepalive timer was not
-enabled on these sockets before the fix, but was enabled afterwards.
-
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
+Fixes: 595c26d122d1 ("mptcp: sysctl: set path manager by name")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
 Reviewed-by: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/aL8dYfPZrwedCIh9@templeofstupid.com
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250908-net-mptcp-misc-fixes-6-17-rc5-v1-2-5f2168a66079@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ Documentation/networking/mptcp.rst |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -1508,13 +1508,12 @@ static void sync_socket_options(struct m
- {
- 	static const unsigned int tx_rx_locks = SOCK_RCVBUF_LOCK | SOCK_SNDBUF_LOCK;
- 	struct sock *sk = (struct sock *)msk;
-+	bool keep_open;
+--- a/Documentation/networking/mptcp.rst
++++ b/Documentation/networking/mptcp.rst
+@@ -60,10 +60,10 @@ address announcements. Typically, it is
+ and the server side that announces additional addresses via the ``ADD_ADDR`` and
+ ``REMOVE_ADDR`` options.
  
--	if (ssk->sk_prot->keepalive) {
--		if (sock_flag(sk, SOCK_KEEPOPEN))
--			ssk->sk_prot->keepalive(ssk, 1);
--		else
--			ssk->sk_prot->keepalive(ssk, 0);
--	}
-+	keep_open = sock_flag(sk, SOCK_KEEPOPEN);
-+	if (ssk->sk_prot->keepalive)
-+		ssk->sk_prot->keepalive(ssk, keep_open);
-+	sock_valbool_flag(ssk, SOCK_KEEPOPEN, keep_open);
- 
- 	ssk->sk_priority = sk->sk_priority;
- 	ssk->sk_bound_dev_if = sk->sk_bound_dev_if;
+-Path managers are controlled by the ``net.mptcp.pm_type`` sysctl knob -- see
+-mptcp-sysctl.rst. There are two types: the in-kernel one (type ``0``) where the
+-same rules are applied for all the connections (see: ``ip mptcp``) ; and the
+-userspace one (type ``1``), controlled by a userspace daemon (i.e. `mptcpd
++Path managers are controlled by the ``net.mptcp.path_manager`` sysctl knob --
++see mptcp-sysctl.rst. There are two types: the in-kernel one (``kernel``) where
++the same rules are applied for all the connections (see: ``ip mptcp``) ; and the
++userspace one (``userspace``), controlled by a userspace daemon (i.e. `mptcpd
+ <https://mptcpd.mptcp.dev/>`_) where different rules can be applied for each
+ connection. The path managers can be controlled via a Netlink API; see
+ netlink_spec/mptcp_pm.rst.
 
 
