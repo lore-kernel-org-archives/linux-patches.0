@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605001DFE22;
-	Wed, 17 Sep 2025 12:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A026F36D;
+	Wed, 17 Sep 2025 12:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112578; cv=none; b=o8UZzH4m3Hgq3hyJubRuMO3rbt1o2s6vBG3N0K1eUoQxRmM8Qkg+4ct44Y5SGEDvDBJQ1+5/3WIvKcSHJehU0W8/FNk4NBfLi9JrzVLZwDbVgY72GMT9wxuPSJrOVlTdYTio3VsqTGPytO4X76UjXHxACWrjiNpsu/rhinRpDo4=
+	t=1758112580; cv=none; b=bn6QF/njnQ1UPpMeb6MYbTOi9Ny1JwdCU7zg7x+1PWaXUgR+BVoFvtDEwbA28M00punRe5kjoMlL6F+ErCpSBEryjqkwjgHGM20CKXqjuymWhyvtiQkR3nFlT9eykjYsR1b6GGywCqUF+omAybU8p6BfsfQqZL6r1dVOOwNbM0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112578; c=relaxed/simple;
-	bh=0qENdMfXrZo76sLBLKwivYOOQnQVDQ45uBEwkjamHbI=;
+	s=arc-20240116; t=1758112580; c=relaxed/simple;
+	bh=WMXfmWgDnjRe9OLkqWlRk3lLzQGHhGQzn5nZYY8DnEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRbcJrShEwp3yLyDmEs6qeP0B9NiWwSeiS+Rmqh0HKHk9zHzBBY0KjE7oJQ2kluYzrH2y5TwZDj57Sttbij4ySZPhNJpQp7Vk00Te4o4T2AorJIX6gb63sPGTTQAjtR0QkvQ3j++kp0osTm+nF2nlCP+XpqREvi6+gSHUJ0gFAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWe88q5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JhyqI/NU7u2rZ2HrsTEIuoGO//SuDgAyIruLH+3WjgGYZ1NJtbROxp62FYWL9MNDHuTBCB8yZxbAGJsiDBwM7nVwFHbOEGO4bANlmdSBocLcmtl1JOq2gvo8y3vA4VDPPsJhevoshtiO8jZl6JLQ7QRuuHzt+7eGs4CK9OIg6u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/Ufm+PR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWe88q5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3C1C4CEF0;
-	Wed, 17 Sep 2025 12:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/Ufm+PR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F08C4CEF0;
+	Wed, 17 Sep 2025 12:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112576;
-	bh=0qENdMfXrZo76sLBLKwivYOOQnQVDQ45uBEwkjamHbI=;
+	s=korg; t=1758112580;
+	bh=WMXfmWgDnjRe9OLkqWlRk3lLzQGHhGQzn5nZYY8DnEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWe88q5ShLK3IbGFxV7TwCCP3Hm7cfi3cxTQgnHrLJfcndvf+V+UbqJLAvVeN4dqH
-	 2dDHnzMwaOmKNpZ6uvR88ktqqi0JZjdC7c6HGXAJb2LITOsLQJuIXyd5S/Ia9UPA4r
-	 FW7IhYVRFxOpQEbgvCLGGyHmKvwqFHO7GYtbEJRw=
+	b=r/Ufm+PRZKArKuCDVPHcFq8i4Z0gz5+0AKt1JEWJnvT0rwgatj2Tgkc+ceMAc0WFG
+	 3gUV1yCFmYQ0paY4wva3ctta/9yRA54ZjcoOcHqw36Z2PtmJrOX1XUOUOLrjcokbXm
+	 bCHQzQBHRKpiAXqaiiDcXhFjMly/arc6kMaqyae8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 005/189] fhandle: use more consistent rules for decoding file handle from userns
-Date: Wed, 17 Sep 2025 14:31:55 +0200
-Message-ID: <20250917123351.981812276@linuxfoundation.org>
+Subject: [PATCH 6.16 006/189] dma-debug: dont enforce dma mapping check on noncoherent allocations
+Date: Wed, 17 Sep 2025 14:31:56 +0200
+Message-ID: <20250917123352.003636148@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,62 +51,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit bb585591ebf00fb1f6a1fdd1ea96b5848bd9112d ]
+[ Upstream commit 7e2368a21741e2db542330b32aa6fdd8908e7cff ]
 
-Commit 620c266f39493 ("fhandle: relax open_by_handle_at() permission
-checks") relaxed the coditions for decoding a file handle from non init
-userns.
+As discussed in [1], there is no need to enforce dma mapping check on
+noncoherent allocations, a simple test on the returned CPU address is
+good enough.
 
-The conditions are that that decoded dentry is accessible from the user
-provided mountfd (or to fs root) and that all the ancestors along the
-path have a valid id mapping in the userns.
+Add a new pair of debug helpers and use them for noncoherent alloc/free
+to fix this issue.
 
-These conditions are intentionally more strict than the condition that
-the decoded dentry should be "lookable" by path from the mountfd.
-
-For example, the path /home/amir/dir/subdir is lookable by path from
-unpriv userns of user amir, because /home perms is 755, but the owner of
-/home does not have a valid id mapping in unpriv userns of user amir.
-
-The current code did not check that the decoded dentry itself has a
-valid id mapping in the userns.  There is no security risk in that,
-because that final open still performs the needed permission checks,
-but this is inconsistent with the checks performed on the ancestors,
-so the behavior can be a bit confusing.
-
-Add the check for the decoded dentry itself, so that the entire path,
-including the last component has a valid id mapping in the userns.
-
-Fixes: 620c266f39493 ("fhandle: relax open_by_handle_at() permission checks")
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://lore.kernel.org/20250827194309.1259650-1-amir73il@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: efa70f2fdc84 ("dma-mapping: add a new dma_alloc_pages API")
+Link: https://lore.kernel.org/all/ff6c1fe6-820f-4e58-8395-df06aa91706c@oss.qualcomm.com # 1
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250828-dma-debug-fix-noncoherent-dma-check-v1-1-76e9be0dd7fc@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fhandle.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/dma/debug.c   | 48 +++++++++++++++++++++++++++++++++++++++++++-
+ kernel/dma/debug.h   | 20 ++++++++++++++++++
+ kernel/dma/mapping.c |  4 ++--
+ 3 files changed, 69 insertions(+), 3 deletions(-)
 
-diff --git a/fs/fhandle.c b/fs/fhandle.c
-index e21ec857f2abc..52c72896e1c16 100644
---- a/fs/fhandle.c
-+++ b/fs/fhandle.c
-@@ -202,6 +202,14 @@ static int vfs_dentry_acceptable(void *context, struct dentry *dentry)
- 	if (!ctx->flags)
- 		return 1;
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index e43c6de2bce4e..b82399437db03 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -39,6 +39,7 @@ enum {
+ 	dma_debug_sg,
+ 	dma_debug_coherent,
+ 	dma_debug_resource,
++	dma_debug_noncoherent,
+ };
  
-+	/*
-+	 * Verify that the decoded dentry itself has a valid id mapping.
-+	 * In case the decoded dentry is the mountfd root itself, this
-+	 * verifies that the mountfd inode itself has a valid id mapping.
-+	 */
-+	if (!privileged_wrt_inode_uidgid(user_ns, idmap, d_inode(dentry)))
-+		return 0;
+ enum map_err_types {
+@@ -141,6 +142,7 @@ static const char *type2name[] = {
+ 	[dma_debug_sg] = "scatter-gather",
+ 	[dma_debug_coherent] = "coherent",
+ 	[dma_debug_resource] = "resource",
++	[dma_debug_noncoherent] = "noncoherent",
+ };
+ 
+ static const char *dir2name[] = {
+@@ -993,7 +995,8 @@ static void check_unmap(struct dma_debug_entry *ref)
+ 			   "[mapped as %s] [unmapped as %s]\n",
+ 			   ref->dev_addr, ref->size,
+ 			   type2name[entry->type], type2name[ref->type]);
+-	} else if (entry->type == dma_debug_coherent &&
++	} else if ((entry->type == dma_debug_coherent ||
++		    entry->type == dma_debug_noncoherent) &&
+ 		   ref->paddr != entry->paddr) {
+ 		err_printk(ref->dev, entry, "device driver frees "
+ 			   "DMA memory with different CPU address "
+@@ -1581,6 +1584,49 @@ void debug_dma_sync_sg_for_device(struct device *dev, struct scatterlist *sg,
+ 	}
+ }
+ 
++void debug_dma_alloc_pages(struct device *dev, struct page *page,
++			   size_t size, int direction,
++			   dma_addr_t dma_addr,
++			   unsigned long attrs)
++{
++	struct dma_debug_entry *entry;
 +
- 	/*
- 	 * It's racy as we're not taking rename_lock but we're able to ignore
- 	 * permissions and we just need an approximation whether we were able
++	if (unlikely(dma_debug_disabled()))
++		return;
++
++	entry = dma_entry_alloc();
++	if (!entry)
++		return;
++
++	entry->type      = dma_debug_noncoherent;
++	entry->dev       = dev;
++	entry->paddr	 = page_to_phys(page);
++	entry->size      = size;
++	entry->dev_addr  = dma_addr;
++	entry->direction = direction;
++
++	add_dma_entry(entry, attrs);
++}
++
++void debug_dma_free_pages(struct device *dev, struct page *page,
++			  size_t size, int direction,
++			  dma_addr_t dma_addr)
++{
++	struct dma_debug_entry ref = {
++		.type           = dma_debug_noncoherent,
++		.dev            = dev,
++		.paddr		= page_to_phys(page),
++		.dev_addr       = dma_addr,
++		.size           = size,
++		.direction      = direction,
++	};
++
++	if (unlikely(dma_debug_disabled()))
++		return;
++
++	check_unmap(&ref);
++}
++
+ static int __init dma_debug_driver_setup(char *str)
+ {
+ 	int i;
+diff --git a/kernel/dma/debug.h b/kernel/dma/debug.h
+index f525197d3cae6..48757ca13f314 100644
+--- a/kernel/dma/debug.h
++++ b/kernel/dma/debug.h
+@@ -54,6 +54,13 @@ extern void debug_dma_sync_sg_for_cpu(struct device *dev,
+ extern void debug_dma_sync_sg_for_device(struct device *dev,
+ 					 struct scatterlist *sg,
+ 					 int nelems, int direction);
++extern void debug_dma_alloc_pages(struct device *dev, struct page *page,
++				  size_t size, int direction,
++				  dma_addr_t dma_addr,
++				  unsigned long attrs);
++extern void debug_dma_free_pages(struct device *dev, struct page *page,
++				 size_t size, int direction,
++				 dma_addr_t dma_addr);
+ #else /* CONFIG_DMA_API_DEBUG */
+ static inline void debug_dma_map_page(struct device *dev, struct page *page,
+ 				      size_t offset, size_t size,
+@@ -126,5 +133,18 @@ static inline void debug_dma_sync_sg_for_device(struct device *dev,
+ 						int nelems, int direction)
+ {
+ }
++
++static inline void debug_dma_alloc_pages(struct device *dev, struct page *page,
++					 size_t size, int direction,
++					 dma_addr_t dma_addr,
++					 unsigned long attrs)
++{
++}
++
++static inline void debug_dma_free_pages(struct device *dev, struct page *page,
++					size_t size, int direction,
++					dma_addr_t dma_addr)
++{
++}
+ #endif /* CONFIG_DMA_API_DEBUG */
+ #endif /* _KERNEL_DMA_DEBUG_H */
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index 107e4a4d251df..56de28a3b1799 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -712,7 +712,7 @@ struct page *dma_alloc_pages(struct device *dev, size_t size,
+ 	if (page) {
+ 		trace_dma_alloc_pages(dev, page_to_virt(page), *dma_handle,
+ 				      size, dir, gfp, 0);
+-		debug_dma_map_page(dev, page, 0, size, dir, *dma_handle, 0);
++		debug_dma_alloc_pages(dev, page, size, dir, *dma_handle, 0);
+ 	} else {
+ 		trace_dma_alloc_pages(dev, NULL, 0, size, dir, gfp, 0);
+ 	}
+@@ -738,7 +738,7 @@ void dma_free_pages(struct device *dev, size_t size, struct page *page,
+ 		dma_addr_t dma_handle, enum dma_data_direction dir)
+ {
+ 	trace_dma_free_pages(dev, page_to_virt(page), dma_handle, size, dir, 0);
+-	debug_dma_unmap_page(dev, dma_handle, size, dir);
++	debug_dma_free_pages(dev, page, size, dir, dma_handle);
+ 	__dma_free_pages(dev, size, page, dma_handle, dir);
+ }
+ EXPORT_SYMBOL_GPL(dma_free_pages);
 -- 
 2.51.0
 
