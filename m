@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D821EB1AA;
-	Wed, 17 Sep 2025 13:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A49183CA6;
+	Wed, 17 Sep 2025 13:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114087; cv=none; b=K+AZlJfvWJbcaUhu8M+JceT6lwugZMJdrTOQ7XQeQE827gWu5eZlU0YmWpFtnmjwr4zTRvlIKS30qQ3NUwebDdT4rB6uifsD8u11HaqASSEF94ZzvFDa85ieZ8DjKu10LSWjnUmgosqWErMDC9SXkc9Rv7dYGU+Bq+G3o4yK5y8=
+	t=1758114090; cv=none; b=IdxtSDyrt46otIjTRFrQeBD8QU8/O+vlTtIG31MElcZYKXkjuYtY+3301fgcCiv6OhAIu71Ypi2ztqNW9LxsEQDXLM5p+oVK8o9vyOwqtZNPI4FWC74Addao8p5dRYFVXssDe0ASIL6FYukGfFiXFCRJctJFr9YRU/3vQq4W9PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114087; c=relaxed/simple;
-	bh=kmZMHegWoOdSKsyanf13qJpSFSaicZHr4B4JubP5lyY=;
+	s=arc-20240116; t=1758114090; c=relaxed/simple;
+	bh=CxD1ACyY7nqIdqsfJPTKN6A8GopMiqixr3YCTAz3jlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I223IM3NpDSsw5Q9/w8VDn8NyPdCx6hTV0eABaihQqNot96uo5t2xUeXvGNNUxNFaBoLNNcuHBb6X4tlWNV6YZcrlBNvcx8z0jAab+xRsMMPSgdwq9nY7QGIFeDgfgsRs6x+rbz442bujCIWmUuXW244hHS2WZSwxH2uv+m5BRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKI93X1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mwQj0UVC2fVgrhpfZglS5Yfo/eOd8czTio3NmcbHTTeIEmeGndSL5ASBXbsah82hLRSwnTuDnaz4U5sv3X7CwyZzewgrtWSbPwrgZerELeFAl3n8QAaNtNvrAitYh49LVtgM9Dtx9UoyfS5YyA00MWRImPdRWY+BGwqSl4nwOrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zVQTsfWk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKI93X1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABAFC4CEF0;
-	Wed, 17 Sep 2025 13:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVQTsfWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB4BC4CEF0;
+	Wed, 17 Sep 2025 13:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114087;
-	bh=kmZMHegWoOdSKsyanf13qJpSFSaicZHr4B4JubP5lyY=;
+	s=korg; t=1758114090;
+	bh=CxD1ACyY7nqIdqsfJPTKN6A8GopMiqixr3YCTAz3jlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rKI93X1hAWYw1eFkI5TDet4G+ZuPsGofI4uAbiWpdKZhi6qBl8WRWXd9jqYQqP3FD
-	 9KDy2FOmW7pCyKcitL2wLcfZCjVbmfchrASYn4HXY1anMG4Wt3blB8+4X15Cei8Ili
-	 QdE1OYpHe42PuOL3eW+V5IrAvbusUtfgikOBnJUA=
+	b=zVQTsfWkvkS/cX/5dJ8tajXVytitfPHs/+LpxMSSsFXwjSoWn/sVwW6blllBDVrgZ
+	 QnjPn1xalEraAs0Yg38/Pbcxeg4P9N0CY+waQscAF0df11Gp3MtNWJ0GqavGbSUxX2
+	 sXlvOQPwYhlSCtSm/zGJtHM6XLQ94Rj/9eSXdCRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 43/78] Input: iqs7222 - avoid enabling unused interrupts
-Date: Wed, 17 Sep 2025 14:35:04 +0200
-Message-ID: <20250917123330.617569957@linuxfoundation.org>
+Subject: [PATCH 6.1 44/78] Input: i8042 - add TUXEDO InfinityBook Pro Gen10 AMD to i8042 quirk table
+Date: Wed, 17 Sep 2025 14:35:05 +0200
+Message-ID: <20250917123330.640752108@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -50,37 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff LaBundy <jeff@labundy.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-commit c9ddc41cdd522f2db5d492eda3df8994d928be34 upstream.
+commit 1939a9fcb80353dd8b111aa1e79c691afbde08b4 upstream.
 
-If a proximity event node is defined so as to specify the wake-up
-properties of the touch surface, the proximity event interrupt is
-enabled unconditionally. This may result in unwanted interrupts.
+Occasionally wakes up from suspend with missing input on the internal
+keyboard. Setting the quirks appears to fix the issue for this device as
+well.
 
-Solve this problem by enabling the interrupt only if the event is
-mapped to a key or switch code.
-
-Signed-off-by: Jeff LaBundy <jeff@labundy.com>
-Link: https://lore.kernel.org/r/aKJxxgEWpNaNcUaW@nixie71
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250826142646.13516-1-wse@tuxedocomputers.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/iqs7222.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/input/serio/i8042-acpipnpio.h |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/input/misc/iqs7222.c
-+++ b/drivers/input/misc/iqs7222.c
-@@ -2038,6 +2038,9 @@ static int iqs7222_parse_chan(struct iqs
- 		if (error)
- 			return error;
- 
-+		if (!iqs7222->kp_type[chan_index][i])
-+			continue;
-+
- 		if (!dev_desc->event_offset)
- 			continue;
- 
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1155,6 +1155,20 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "XxHP4NAx"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
+ 	/*
+ 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
+ 	 * after suspend fixable with the forcenorestore quirk.
 
 
