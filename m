@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D4F330D27;
-	Wed, 17 Sep 2025 12:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632473161B0;
+	Wed, 17 Sep 2025 12:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113918; cv=none; b=KUvIU9Q5GASx6G67HuOKOzH4H8gCrZJoz9MEvgexsX3WrHCQ5/7G9OUPc3PytvX0TN0UCrofPMX+XgepTLiTafRsQlUb36CHc61IdjPHQ8pxh8/ubfDoD7okDUPH3GG4sCXL4hdl9fovEz1pnCXhkEPCMU2meRveTxrK+PgHJA8=
+	t=1758113921; cv=none; b=GEMegeyO42WNOWm9MXLfN9X6tU/MFiFL4ovTCFar0K+aQW0b/4KsYnbAVhsHJmKUH0RNj0Xh0uIgP/m9aq1lT/4rDE9cXZQbg6gKbFnODCJaoumX730xVdwRyJBSRZ9mVnX0LXxTTkbx8ReYjvL9HXt8af8yWytKaB3eizohVj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113918; c=relaxed/simple;
-	bh=oyDoUBKiQGcIZBXc76jClQcKsmP13wsoqvaMBoRnTcY=;
+	s=arc-20240116; t=1758113921; c=relaxed/simple;
+	bh=DZW/aEoWqadnMfzLzXbfBsx8jJkN22j+GWUrw+HF2Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ri7wahUVHYuazWGMaGsVX+oTv0Gt9idWnlGjoZa2QBfNWHiSv8pohWiUIcDY5ci8HM1XoQEmi4JD7zhI4l2Qt2pzmyy4qHfRXPb8i2fX+FVXm1vnyeMs/WnYynATt0EQUUu0dxvlQTUInwEtl2H5u+rf7QqOqLTUYEQOYDuZa6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l01VestP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5oCPWgcXX195qC0KFXosHrPUjViqCQcsCrByG36Kvdpx6cYyftMta++adrI31Uj0E3Z+Qg9WlDIfapwDANUlEixV64rymCqY2EMnuxQM5GkFWjo+9ag9ig9V7C9cTHaLc1vq7rHummh9Rmf3sAM3W+ZE2EKoy0kj4TJwmF4AEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQgsbFkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l01VestP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDFCC4CEF0;
-	Wed, 17 Sep 2025 12:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQgsbFkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B3BC4CEF0;
+	Wed, 17 Sep 2025 12:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113917;
-	bh=oyDoUBKiQGcIZBXc76jClQcKsmP13wsoqvaMBoRnTcY=;
+	s=korg; t=1758113921;
+	bh=DZW/aEoWqadnMfzLzXbfBsx8jJkN22j+GWUrw+HF2Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l01VestPz8V7Wpd03o2b8xWFbrtCLu13FCyEDRpSKN44vu8tC4B1WxFJhC2eKp9gV
-	 wmsTr21qTkpHRoaC7kKfWs5djzeDcmyt7qhUDRxCX28ozE7io2t0igTNLmtEVrxaZm
-	 KrFWBY9P2IJL7aX71ow6YWcWZB+joPUEV/LVGscE=
+	b=GQgsbFkXbE8+eMC0zVs5suvRtZxhyNJf1gQEwTskDW/1TzcTrd6ZeiSkc/wSiLn2/
+	 u1HVn8nvFZfP/KSGzHbwxv9LOZ1GKM/VN6y/keaj6iR08m8mT5Kqx5p1tIjfPZ+Cdx
+	 b4tykaE8kb08gQ/KhWnrl2im92rJPWplJtwQs+7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 093/101] usb: gadget: midi2: Fix MIDI2 IN EP max packet size
-Date: Wed, 17 Sep 2025 14:35:16 +0200
-Message-ID: <20250917123339.088544966@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 094/101] dmaengine: qcom: bam_dma: Fix DT error handling for num-channels/ees
+Date: Wed, 17 Sep 2025 14:35:17 +0200
+Message-ID: <20250917123339.111368550@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -50,56 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 116e79c679a1530cf833d0ff3007061d7a716bd9 upstream.
+commit 5068b5254812433e841a40886e695633148d362d upstream.
 
-The EP-IN of MIDI2 (altset 1) wasn't initialized in
-f_midi2_create_usb_configs() as it's an INT EP unlike others BULK
-EPs.  But this leaves rather the max packet size unchanged no matter
-which speed is used, resulting in the very slow access.
-And the wMaxPacketSize values set there look legit for INT EPs, so
-let's initialize the MIDI2 EP-IN there for achieving the equivalent
-speed as well.
+When we don't have a clock specified in the device tree, we have no way to
+ensure the BAM is on. This is often the case for remotely-controlled or
+remotely-powered BAM instances. In this case, we need to read num-channels
+from the DT to have all the necessary information to complete probing.
 
-Fixes: 8b645922b223 ("usb: gadget: Add support for USB MIDI 2.0 function driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20250905133240.20966-1-tiwai@suse.de
+However, at the moment invalid device trees without clock and without
+num-channels still continue probing, because the error handling is missing
+return statements. The driver will then later try to read the number of
+channels from the registers. This is unsafe, because it relies on boot
+firmware and lucky timing to succeed. Unfortunately, the lack of proper
+error handling here has been abused for several Qualcomm SoCs upstream,
+causing early boot crashes in several situations [1, 2].
+
+Avoid these early crashes by erroring out when any of the required DT
+properties are missing. Note that this will break some of the existing DTs
+upstream (mainly BAM instances related to the crypto engine). However,
+clearly these DTs have never been tested properly, since the error in the
+kernel log was just ignored. It's safer to disable the crypto engine for
+these broken DTBs.
+
+[1]: https://lore.kernel.org/r/CY01EKQVWE36.B9X5TDXAREPF@fairphone.com/
+[2]: https://lore.kernel.org/r/20230626145959.646747-1-krzysztof.kozlowski@linaro.org/
+
+Cc: stable@vger.kernel.org
+Fixes: 48d163b1aa6e ("dmaengine: qcom: bam_dma: get num-channels and num-ees from dt")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250212-bam-dma-fixes-v1-8-f560889e65d8@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi2.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/dma/qcom/bam_dma.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_midi2.c
-+++ b/drivers/usb/gadget/function/f_midi2.c
-@@ -1739,9 +1739,12 @@ static int f_midi2_create_usb_configs(st
- 	case USB_SPEED_HIGH:
- 		midi2_midi1_ep_out_desc.wMaxPacketSize = cpu_to_le16(512);
- 		midi2_midi1_ep_in_desc.wMaxPacketSize = cpu_to_le16(512);
--		for (i = 0; i < midi2->num_eps; i++)
-+		for (i = 0; i < midi2->num_eps; i++) {
- 			midi2_midi2_ep_out_desc[i].wMaxPacketSize =
- 				cpu_to_le16(512);
-+			midi2_midi2_ep_in_desc[i].wMaxPacketSize =
-+				cpu_to_le16(512);
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1283,13 +1283,17 @@ static int bam_dma_probe(struct platform
+ 	if (!bdev->bamclk) {
+ 		ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
+ 					   &bdev->num_channels);
+-		if (ret)
++		if (ret) {
+ 			dev_err(bdev->dev, "num-channels unspecified in dt\n");
++			return ret;
 +		}
- 		fallthrough;
- 	case USB_SPEED_FULL:
- 		midi1_in_eps = midi2_midi1_ep_in_descs;
-@@ -1750,9 +1753,12 @@ static int f_midi2_create_usb_configs(st
- 	case USB_SPEED_SUPER:
- 		midi2_midi1_ep_out_desc.wMaxPacketSize = cpu_to_le16(1024);
- 		midi2_midi1_ep_in_desc.wMaxPacketSize = cpu_to_le16(1024);
--		for (i = 0; i < midi2->num_eps; i++)
-+		for (i = 0; i < midi2->num_eps; i++) {
- 			midi2_midi2_ep_out_desc[i].wMaxPacketSize =
- 				cpu_to_le16(1024);
-+			midi2_midi2_ep_in_desc[i].wMaxPacketSize =
-+				cpu_to_le16(1024);
+ 
+ 		ret = of_property_read_u32(pdev->dev.of_node, "qcom,num-ees",
+ 					   &bdev->num_ees);
+-		if (ret)
++		if (ret) {
+ 			dev_err(bdev->dev, "num-ees unspecified in dt\n");
++			return ret;
 +		}
- 		midi1_in_eps = midi2_midi1_ep_in_ss_descs;
- 		midi1_out_eps = midi2_midi1_ep_out_ss_descs;
- 		break;
+ 	}
+ 
+ 	ret = clk_prepare_enable(bdev->bamclk);
 
 
