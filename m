@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC702C3278;
-	Wed, 17 Sep 2025 12:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030A617BB21;
+	Wed, 17 Sep 2025 12:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112924; cv=none; b=LIxqjuO1Lc8sYcjoNpvpU9h3kTkQlCVhR/Q+0lFKQdU+XbQaUCoCLofj9qktNe/6oiGMhNuIzXybLWY3/VunodmCqWe+SacTOBSJjP3Whev0ecn+MfaVc5omxKXP4ecvsRTgg93QNtlAfZXtohR1lGXbprEpdICk2TEV4XPSd0A=
+	t=1758112928; cv=none; b=N0iuEcfILp8Taw0OH0tv9cgE9h3JRnJ1UmyJpM54OsINWBDhu2HUYJ/IwcbK4u+t0QgeJsQI+WZoKp1Eeaj+8dTKppTRxH13+A1O73KbzK5s7FelvCJLWp+QAYoUe2jvmM4WZDdH+B7sBnL8VLTEifrUVHIEJKbK7UddfhTT5j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112924; c=relaxed/simple;
-	bh=j4hovHMgRAmBbyRgv4tXYIMlCyfil5pGEXLsmUj0gHk=;
+	s=arc-20240116; t=1758112928; c=relaxed/simple;
+	bh=SgLS6hR0DuNjyayqVfB+ntzd8GO0q6Nfup30WLrE5dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdfbbnoB/lcxWjAqkFFkFPxrATeW0jx9TZT36l72OA36iS0ixV8kZxy7vxMVHf3jVjq+kvhvBF8KXqmMpMASmBJpkufYUMpxYCcZE1+kYF55qon/OedYQTcHubS8+ONHkiwVEEtB22lDYu++mRABYRasMSBPahz/DA7XlXg6xk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+VofyMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZhFPNfM7NJTuP3l3yI+F732bQUupmHP9xuDz3rXyLBaBdcx8+FKm9jvp8M/QFVdEwN+fHGSglApp5mORqDzDHfOPZT6DRRZCnS/1qgfBN8Ea5XDIIuIOf3HVxTrcuZF302l9Elm9SIZzQS0UjghaaQdldayP20Ms7Mt82Ff/yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrSDLYHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+VofyMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E0AC4CEF0;
-	Wed, 17 Sep 2025 12:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrSDLYHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7692AC4CEF0;
+	Wed, 17 Sep 2025 12:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112924;
-	bh=j4hovHMgRAmBbyRgv4tXYIMlCyfil5pGEXLsmUj0gHk=;
+	s=korg; t=1758112927;
+	bh=SgLS6hR0DuNjyayqVfB+ntzd8GO0q6Nfup30WLrE5dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+VofyMy+lxsUCGD+/BxFnlJwO5sDDjUwSv9klQmgLoGj44YaMYo0eEBeCdXyiAD2
-	 bH3WO8LSYVWLIKYESftInHk1VZmFwrtidV/fuCwBxfZ0eRZsPBFiLmul/+/zGbiaTc
-	 YqOhakFxwW4W1HTC1iK/pr5x0kSA0AptONvthiHY=
+	b=zrSDLYHOE8OpbVbmyPlqlz3NgWKY6qhl8FHx7utZ72mKUqKxoNWCqzGl6jn4v1945
+	 /uTCsceaRVEH+0itToDnoMDehSJhkAEe8fELjdulhRlC2rBUS4QY6RNfIPvCkW3fap
+	 Y6KXW9g4j7iWqTdKSaw7P0CR2Nku2m92cbdG0du8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Lin <brandon@emergence.ltd>,
-	Sergey Belozyorcev <belozyorcev@ya.ru>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.16 118/189] Input: xpad - add support for Flydigi Apex 5
-Date: Wed, 17 Sep 2025 14:33:48 +0200
-Message-ID: <20250917123354.746617039@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.16 119/189] Revert "net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups"
+Date: Wed, 17 Sep 2025 14:33:49 +0200
+Message-ID: <20250917123354.771525533@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,40 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 47ddf62b43eced739b56422cd55e86b9b4bb7dac upstream.
+commit 63a796558bc22ec699e4193d5c75534757ddf2e6 upstream.
 
-Add Flydigi Apex 5 to the list of recognized controllers.
+This reverts commit 5537a4679403 ("net: usb: asix: ax88772: drop
+phylink use in PM to avoid MDIO runtime PM wakeups"), it breaks
+operation of asix ethernet usb dongle after system suspend-resume
+cycle.
 
-Reported-by: Brandon Lin <brandon@emergence.ltd>
-Reported-by: Sergey Belozyorcev <belozyorcev@ya.ru>
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://lore.kernel.org/r/20250903165114.2987905-1-lkml@antheas.dev
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/all/b5ea8296-f981-445d-a09a-2f389d7f6fdd@samsung.com/
+Fixes: 5537a4679403 ("net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups")
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/2945b9dbadb8ee1fee058b19554a5cb14f1763c1.1757601118.git.pabeni@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/asix_devices.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -422,6 +422,7 @@ static const struct xpad_device {
- 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
- 	{ 0x366c, 0x0005, "ByoWave Proteus Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE, FLAG_DELAY_INIT },
- 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
-+	{ 0x37d7, 0x2501, "Flydigi Apex 5", 0, XTYPE_XBOX360 },
- 	{ 0x413d, 0x2104, "Black Shark Green Ghost Gamepad", 0, XTYPE_XBOX360 },
- 	{ 0xffff, 0xffff, "Chinese-made Xbox Controller", 0, XTYPE_XBOX },
- 	{ 0x0000, 0x0000, "Generic X-Box pad", 0, XTYPE_UNKNOWN }
-@@ -578,6 +579,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
- 	XPAD_XBOXONE_VENDOR(0x3537),		/* GameSir Controllers */
- 	XPAD_XBOXONE_VENDOR(0x366c),		/* ByoWave controllers */
-+	XPAD_XBOX360_VENDOR(0x37d7),		/* Flydigi Controllers */
- 	XPAD_XBOX360_VENDOR(0x413d),		/* Black Shark Green Ghost Controller */
- 	{ }
- };
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -607,8 +607,15 @@ static const struct net_device_ops ax887
+ 
+ static void ax88772_suspend(struct usbnet *dev)
+ {
++	struct asix_common_private *priv = dev->driver_priv;
+ 	u16 medium;
+ 
++	if (netif_running(dev->net)) {
++		rtnl_lock();
++		phylink_suspend(priv->phylink, false);
++		rtnl_unlock();
++	}
++
+ 	/* Stop MAC operation */
+ 	medium = asix_read_medium_status(dev, 1);
+ 	medium &= ~AX_MEDIUM_RE;
+@@ -637,6 +644,12 @@ static void ax88772_resume(struct usbnet
+ 	for (i = 0; i < 3; i++)
+ 		if (!priv->reset(dev, 1))
+ 			break;
++
++	if (netif_running(dev->net)) {
++		rtnl_lock();
++		phylink_resume(priv->phylink);
++		rtnl_unlock();
++	}
+ }
+ 
+ static int asix_resume(struct usb_interface *intf)
 
 
