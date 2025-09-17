@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A05B330D52;
-	Wed, 17 Sep 2025 12:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA19330D41;
+	Wed, 17 Sep 2025 12:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113575; cv=none; b=FHwRu2to+aZsa+WqJuhKqueliNpnZzcVk1oYAysN2LHQiSIu8KEcsRAfR6Xv+Zb24chB3Qx9V/sLeJ/X1/9ciuLWLjjJSgrTzt8YnwG+YN5yNaR/i+FXSKR+wperbqTHpETK3Lg/unVTDmOYNmgSesVsSAVMt3uyIREqHJgebr4=
+	t=1758113578; cv=none; b=ZwtfFUZRvUp3JnDGtRuwn3zHX05Z6cCK2mrd/OrUScxodTY5V/kq8bLUnmsUXevyXOiI3qfYDU39cPMNLHkl1LJJCZTHQWGNJzMMIErpkXCW/M93wdzzrZDqfPXFBlEXsMyY6TYH2FjpQSGKQ5Yzhb2WqW72pJ8mR9eSEUXCvg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113575; c=relaxed/simple;
-	bh=o+zWm6bXFuqvUGWSgctobBYB7LsQqTsLSBCij9xf1WI=;
+	s=arc-20240116; t=1758113578; c=relaxed/simple;
+	bh=KJrRzL9oN/8/BgrIcrZeIP9fwaGEIl9Ql9FZkDmoLz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTtki2IsgzxlBYXqReX6iQMWHCUj1GqtS0j6O6qfu2w0kLz9Pwy0tMsBLVYeERqgbBEbGdkUgNRHTekhUuuokUqZ1mAyJgcFtRQsvMVFe6ulRNiG/gUFmMvmre3dUquaZ/7ICaugeGVD+pX0w4++W02NmAZXO0EeWbsYaZTHkVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecu9ehOq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yb5mticc+K698AUowPItSQvyY4XK1QgM794pDG8KGQlMhRotXS100ychBiwW7lO4qu+cz+NsyOXIdrAGn662OIxpHHE1emIVvqgFppKdyU5FHrIu1s3aRqg9M3FqwxHxigNY+WsQ2b3OD++3NQp6YL7q/b28SZmnpanfsvfwKqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dl7WP+AN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecu9ehOq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEA8C4CEF0;
-	Wed, 17 Sep 2025 12:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dl7WP+AN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2724C4CEF7;
+	Wed, 17 Sep 2025 12:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113575;
-	bh=o+zWm6bXFuqvUGWSgctobBYB7LsQqTsLSBCij9xf1WI=;
+	s=korg; t=1758113578;
+	bh=KJrRzL9oN/8/BgrIcrZeIP9fwaGEIl9Ql9FZkDmoLz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecu9ehOqFKqEGLKx7zC184e+nHtWfrWks7RdoMk7fqouff8N5B6bDizDHr8biLX/Q
-	 KWa/s8aKQvB2iCZJEStDgLO4VA+fDVzY1kz0TsNswy/oNR0FBHMTfkfQe0oMwUeCQD
-	 RXn/+/vfhkxhuwG5uRuRmszcEIeB23Ki1L6edXV0=
+	b=Dl7WP+AN8YE+J2koNWLz4HJESqkOJNdBKmiVitxv9WK0yjqoquBkFc7uhpm1eRQmK
+	 LvlG6npyicVdkjf78jiOtPRed7sUIiQrj3E6n491x8BMbsVYr6CY461pKaupIlQodi
+	 Rb9FxAfa68bP4L1mY4i7aDgJCJUN0RJLPS8cVxWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 085/140] hrtimers: Unconditionally update target CPU base after offline timer migration
-Date: Wed, 17 Sep 2025 14:34:17 +0200
-Message-ID: <20250917123346.386554223@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.12 076/140] libceph: fix invalid accesses to ceph_connection_v1_info
+Date: Wed, 17 Sep 2025 14:34:08 +0200
+Message-ID: <20250917123346.170338670@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,73 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit e895f8e29119c8c966ea794af9e9100b10becb88 upstream.
+commit cdbc9836c7afadad68f374791738f118263c5371 upstream.
 
-When testing softirq based hrtimers on an ARM32 board, with high resolution
-mode and NOHZ inactive, softirq based hrtimers fail to expire after being
-moved away from an offline CPU:
+There is a place where generic code in messenger.c is reading and
+another place where it is writing to con->v1 union member without
+checking that the union member is active (i.e. msgr1 is in use).
 
-CPU0				CPU1
-				hrtimer_start(..., HRTIMER_MODE_SOFT);
-cpu_down(CPU1)			...
-				hrtimers_cpu_dying()
-				  // Migrate timers to CPU0
-				  smp_call_function_single(CPU0, returgger_next_event);
-  retrigger_next_event()
-    if (!highres && !nohz)
-        return;
+On 64-bit systems, con->v1.auth_retry overlaps with con->v2.out_iter,
+so such a read is almost guaranteed to return a bogus value instead of
+0 when msgr2 is in use.  This ends up being fairly benign because the
+side effect is just the invalidation of the authorizer and successive
+fetching of new tickets.
 
-As retrigger_next_event() is a NOOP when both high resolution timers and
-NOHZ are inactive CPU0's hrtimer_cpu_base::softirq_expires_next is not
-updated and the migrated softirq timers never expire unless there is a
-softirq based hrtimer queued on CPU0 later.
+con->v1.connect_seq overlaps with con->v2.conn_bufs and the fact that
+it's being written to can cause more serious consequences, but luckily
+it's not something that happens often.
 
-Fix this by removing the hrtimer_hres_active() and tick_nohz_active() check
-in retrigger_next_event(), which enforces a full update of the CPU base.
-As this is not a fast path the extra cost does not matter.
-
-[ tglx: Massaged change log ]
-
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Co-developed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250805081025.54235-1-wangxiongfeng2@huawei.com
+Cc: stable@vger.kernel.org
+Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c |   11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ net/ceph/messenger.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -798,10 +798,10 @@ static void retrigger_next_event(void *a
- 	 * of the next expiring timer is enough. The return from the SMP
- 	 * function call will take care of the reprogramming in case the
- 	 * CPU was in a NOHZ idle sleep.
-+	 *
-+	 * In periodic low resolution mode, the next softirq expiration
-+	 * must also be updated.
+--- a/net/ceph/messenger.c
++++ b/net/ceph/messenger.c
+@@ -1524,7 +1524,7 @@ static void con_fault_finish(struct ceph
+ 	 * in case we faulted due to authentication, invalidate our
+ 	 * current tickets so that we can get new ones.
  	 */
--	if (!hrtimer_hres_active(base) && !tick_nohz_active)
--		return;
--
- 	raw_spin_lock(&base->lock);
- 	hrtimer_update_base(base);
- 	if (hrtimer_hres_active(base))
-@@ -2286,11 +2286,6 @@ int hrtimers_cpu_dying(unsigned int dyin
- 				     &new_base->clock_base[i]);
+-	if (con->v1.auth_retry) {
++	if (!ceph_msgr2(from_msgr(con->msgr)) && con->v1.auth_retry) {
+ 		dout("auth_retry %d, invalidating\n", con->v1.auth_retry);
+ 		if (con->ops->invalidate_authorizer)
+ 			con->ops->invalidate_authorizer(con);
+@@ -1714,9 +1714,10 @@ static void clear_standby(struct ceph_co
+ {
+ 	/* come back from STANDBY? */
+ 	if (con->state == CEPH_CON_S_STANDBY) {
+-		dout("clear_standby %p and ++connect_seq\n", con);
++		dout("clear_standby %p\n", con);
+ 		con->state = CEPH_CON_S_PREOPEN;
+-		con->v1.connect_seq++;
++		if (!ceph_msgr2(from_msgr(con->msgr)))
++			con->v1.connect_seq++;
+ 		WARN_ON(ceph_con_flag_test(con, CEPH_CON_F_WRITE_PENDING));
+ 		WARN_ON(ceph_con_flag_test(con, CEPH_CON_F_KEEPALIVE_PENDING));
  	}
- 
--	/*
--	 * The migration might have changed the first expiring softirq
--	 * timer on this CPU. Update it.
--	 */
--	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
- 	/* Tell the other CPU to retrigger the next event */
- 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
- 
 
 
