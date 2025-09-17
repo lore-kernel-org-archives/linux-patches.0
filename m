@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BBB333A9F;
-	Wed, 17 Sep 2025 12:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE5D333A9B;
+	Wed, 17 Sep 2025 12:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113990; cv=none; b=miyhoyIcst5hH3SYXbfw6NtjG0kU/kcQ3eHPFAe8k0szjEkC+lyKtfNcAPaQ9kMrnNBiwOX5kwiAig7VymLM51t34jOrDerngP45Laov1n3DuKCfqtWyg5l3guRfCeqIOHIjWkQ4GeETYGLoghxqLe+Prlry8iWgcIARXnw8a6Q=
+	t=1758113994; cv=none; b=WBMUsbZq/qTRbgwcoMuQBomlRdeXpZAhn+uQJ1AdCII6Xlz2egxDQ8SjBmEkGvT6ZJLsa5jwO827ZVhH56DgMLjDRwSamciW7u+fX3cF16E1zGu6VCYFLc6JDD0r4v/Tim/fPxbU0UmenKsFOTkHsQq8tEu4kwT9AHA6VNMcFC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113990; c=relaxed/simple;
-	bh=YTSPhMCkD9NsRv3ot8YUikNJHMGr4W8/fMp/zLvhHac=;
+	s=arc-20240116; t=1758113994; c=relaxed/simple;
+	bh=L/wqeGRw++Ta7BWgEXHoOvyZDHu2uWsV8onpUK9uDas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4V1goYESWdtXfRmBWVgc42+v0ddf+FrLMVEed8+pIARc4ApT3mP58mQSGCi3uJPK5UmWe2NXK5zFqWc7L3QpTAU5FYDs4JCDnT9WEcyAW0xrp9Xe3r5XthcyMteTZiAfxUDxutQjhtnc7MHMg02Sf6YBmGEbup37o6lW/fY7fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWlldLq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HwSCNBwMUH9AsMYFyTi/XDmayDjKxm2Y+5FnK9DlnA3pDo3Glunahq413QP2TMY0C9wJ7AlWplMLoORwsGXDkTH99rn92oXKXFdXt3oP0NWZaMbxtQ9NXn3JYSAwyNCxJJo0WSrrVM4bm3zKS/fjFuhVil0tJiNkOvk+rClgtuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uV7/VYbC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWlldLq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45ECC4CEF5;
-	Wed, 17 Sep 2025 12:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uV7/VYbC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9901C4CEF7;
+	Wed, 17 Sep 2025 12:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113990;
-	bh=YTSPhMCkD9NsRv3ot8YUikNJHMGr4W8/fMp/zLvhHac=;
+	s=korg; t=1758113994;
+	bh=L/wqeGRw++Ta7BWgEXHoOvyZDHu2uWsV8onpUK9uDas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWlldLq4UlbRjUWOe/owj/1n/XB+0Utbgqd/pTKFe+IhC2XECz1GnZxoT07IzJ7jq
-	 6mexFX5DMknLQaHTlnajhoe6wor7SLmw4rD3iSia1hSSzKghIlvT1JFovuYhCR/fLE
-	 HbUD3PI2g+lQIh2kEnYh8lRb0xtHaAgDwwM857hs=
+	b=uV7/VYbCBrbfA1hrTO3fsH5HBTZ1LslX1zhb6jo75R2S0XiyYGhswqC7b/YKgx0TV
+	 tliDNqyCdX4M/MCNVt/y9PeG6+Vj4zcA/i263aT7h/Vq/Y7KY1D3FRl8xnMXc8YSah
+	 a5giXO1MkA9H66E9cuIBgD2cMJYtsLdmE0LWSlok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jonathan Curley <jcurley@purestorage.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 14/78] ftrace/samples: Fix function size computation
-Date: Wed, 17 Sep 2025 14:34:35 +0200
-Message-ID: <20250917123329.916686583@linuxfoundation.org>
+Subject: [PATCH 6.1 15/78] NFSv4/flexfiles: Fix layout merge mirror check.
+Date: Wed, 17 Sep 2025 14:34:36 +0200
+Message-ID: <20250917123329.940445764@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -51,36 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Jonathan Curley <jcurley@purestorage.com>
 
-[ Upstream commit 80d03a40837a9b26750a25122b906c052cc846c9 ]
+[ Upstream commit dd2fa82473453661d12723c46c9f43d9876a7efd ]
 
-In my_tramp1 function .size directive was placed above
-ASM_RET instruction, leading to a wrong function size.
+Typo in ff_lseg_match_mirrors makes the diff ineffective. This results
+in merge happening all the time. Merge happening all the time is
+problematic because it marks lsegs invalid. Marking lsegs invalid
+causes all outstanding IO to get restarted with EAGAIN and connections
+to get closed.
 
-Link: https://lore.kernel.org/aK3d7vxNcO52kEmg@vova-pc
-Fixes: 9d907f1ae80b ("samples/ftrace: Fix asm function ELF annotations")
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Closing connections constantly triggers race conditions in the RDMA
+implementation...
+
+Fixes: 660d1eb22301c ("pNFS/flexfile: Don't merge layout segments if the mirrors don't match")
+Signed-off-by: Jonathan Curley <jcurley@purestorage.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/ftrace/ftrace-direct-modify.c | 2 +-
+ fs/nfs/flexfilelayout/flexfilelayout.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/samples/ftrace/ftrace-direct-modify.c b/samples/ftrace/ftrace-direct-modify.c
-index 39146fa83e20b..cbef49649ce01 100644
---- a/samples/ftrace/ftrace-direct-modify.c
-+++ b/samples/ftrace/ftrace-direct-modify.c
-@@ -36,8 +36,8 @@ asm (
- "	movq %rsp, %rbp\n"
- "	call my_direct_func1\n"
- "	leave\n"
--"	.size		my_tramp1, .-my_tramp1\n"
- 	ASM_RET
-+"	.size		my_tramp1, .-my_tramp1\n"
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 21016ee2eafc8..e84ac71bdc18f 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -276,7 +276,7 @@ ff_lseg_match_mirrors(struct pnfs_layout_segment *l1,
+ 		struct pnfs_layout_segment *l2)
+ {
+ 	const struct nfs4_ff_layout_segment *fl1 = FF_LAYOUT_LSEG(l1);
+-	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l1);
++	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l2);
+ 	u32 i;
  
- "	.type		my_tramp2, @function\n"
- "	.globl		my_tramp2\n"
+ 	if (fl1->mirror_array_cnt != fl2->mirror_array_cnt)
 -- 
 2.51.0
 
