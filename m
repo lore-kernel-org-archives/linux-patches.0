@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C39B2C3278;
-	Wed, 17 Sep 2025 12:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A921F09A5;
+	Wed, 17 Sep 2025 12:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112911; cv=none; b=d+Srkdy3gmRtEti3JPnR30i/Sfm3yk1gxxx6qpAuN0/vdpLxT/vckmjr+WKnSbOFd1glqh2EJZQELL9FD+X6BvhT4p/v/toKDXhBBF717JAcu272p9sQ82/nPwTJfyWrtQ8QYAEjIM4Hf+jSvj9kkXSMvE4+ZWTSHtXTalAF5gY=
+	t=1758112915; cv=none; b=mtKddNXZ+aNLOkQDwz/HNCAdNM5N1jb1OjMeTh7BNMFiS/xyx8zRO+2T73UAwhzipufhup8Bb2MrXF9WUTLCXgi6Mmy1K/EV1xtugnLdrvkkxjLnC0lRELcmIPQ/sPE89opu0fZMDdyAXYbYxP3qXdu+77DoyF9lJXKF44JpuoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112911; c=relaxed/simple;
-	bh=IDYd2H3kn7VQuHWvMfT+zbJWEzMbPtqRPKsEi787NGA=;
+	s=arc-20240116; t=1758112915; c=relaxed/simple;
+	bh=x3KQH2/OvCWAvwEjaAQG1O62UoOfE1J6JP2bS75oLNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoxvc7YvHsulTVPF2D9rC6hKQVjHVbFUHr9ptszUBmcY94Icbhkkwbji9QQWUEVrBloGJYGKGcdQvW1MoS0dl2wPipIFmumA20y3qcMmUvHvq3OtAwr24feRRYPIJbpvFBihlev2YnbcnlcY2SY4v34KAgEVd57n7Eqmc/7vBDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXpbNGNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iGoJkgH/jTmERTaKTkTDsTbmpmQEdcm2CpyujzJCEzfxs2ndCb+vSJDXIbQW/spX5Duv1I2cBYN5n7MZKH2NYiKTJa3r36KUc2Xv9BYmsiaqkAuTI3RLpHHq4bpPx3zlUeWzS+8+l0jAGQxDSqU0ZtYXMwxu4nZG4O58a8VCFPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P09PfcfO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXpbNGNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C25C4CEF0;
-	Wed, 17 Sep 2025 12:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P09PfcfO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6E7C4CEF0;
+	Wed, 17 Sep 2025 12:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112911;
-	bh=IDYd2H3kn7VQuHWvMfT+zbJWEzMbPtqRPKsEi787NGA=;
+	s=korg; t=1758112914;
+	bh=x3KQH2/OvCWAvwEjaAQG1O62UoOfE1J6JP2bS75oLNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WXpbNGNokk+lf/yH8eTHEGvqljfQ/x9P0VO82wIRCuMs6wmQNU030kmIrN4wGnZIw
-	 lCUBYc+vyKlJSPkojB4aNi0GxNobQDJrzPxmRqVgFg6hJlxkC1KTL0UxEaef/og1WI
-	 9eTNGwNNjmz4x97UP6CZSwxbvclvtpu3d3V6jIJE=
+	b=P09PfcfOwxZo2SyIdME4Aot6N79D4L4Sc+Lbeh+g15XA3TIq6jbEYQE4NUeoS/dHE
+	 oO+YfrxmkUWbYSVXEZpY/daZVw6fn2qDFXGctUWeJdsfQlT0jjgIr6UZVAM5HvF043
+	 R/mca71wDi5iI4a9XHhhVrzGp9zS6Bj/JllYMzXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.16 114/189] fs/resctrl: Eliminate false positive lockdep warning when reading SNC counters
-Date: Wed, 17 Sep 2025 14:33:44 +0200
-Message-ID: <20250917123354.652448236@linuxfoundation.org>
+Subject: [PATCH 6.16 115/189] x86/cpu/topology: Always try cpu_parse_topology_ext() on AMD/Hygon
+Date: Wed, 17 Sep 2025 14:33:45 +0200
+Message-ID: <20250917123354.674909691@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -50,124 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-commit d2e1b84c5141ff2ad465279acfc3cf943c960b78 upstream.
+commit cba4262a19afae21665ee242b3404bcede5a94d7 upstream.
 
-Running resctrl_tests on an SNC-2 system with lockdep debugging enabled
-triggers several warnings with following trace:
+Support for parsing the topology on AMD/Hygon processors using CPUID leaf 0xb
+was added in
 
-  WARNING: CPU: 0 PID: 1914 at kernel/cpu.c:528 lockdep_assert_cpus_held
-  ...
-  Call Trace:
-  __mon_event_count
-  ? __lock_acquire
-  ? __pfx___mon_event_count
-  mon_event_count
-  ? __pfx_smp_mon_event_count
-  smp_mon_event_count
-  smp_call_on_cpu_callback
+  3986a0a805e6 ("x86/CPU/AMD: Derive CPU topology from CPUID function 0xB when available").
 
-get_cpu_cacheinfo_level() called from __mon_event_count() requires CPU hotplug
-lock to be held. The hotplug lock is indeed held during this time, as
-confirmed by the lockdep_assert_cpus_held() within mon_event_read() that calls
-mon_event_count() via IPI, but the lockdep tracking is not able to follow the
-IPI.
+In an effort to keep all the topology parsing bits in one place, this commit
+also introduced a pseudo dependency on the TOPOEXT feature to parse the CPUID
+leaf 0xb.
 
-Fresh CPU cache information via get_cpu_cacheinfo_level() from
-__mon_event_count() was added to support the fix for the issue where resctrl
-inappropriately maintained links to L3 cache information that will be stale in
-the case when the associated CPU goes offline.
+The TOPOEXT feature (CPUID 0x80000001 ECX[22]) advertises the support for
+Cache Properties leaf 0x8000001d and the CPUID leaf 0x8000001e EAX for
+"Extended APIC ID" however support for 0xb was introduced alongside the x2APIC
+support not only on AMD [1], but also historically on x86 [2].
 
-Keep the cacheinfo ID in struct rdt_mon_domain to ensure that resctrl does not
-maintain stale cache information while CPUs can go offline. Return to using
-a pointer to the L3 cache information (struct cacheinfo) in struct rmid_read,
-rmid_read::ci. Initialize rmid_read::ci before the IPI where it is used. CPU
-hotplug lock is held across rmid_read::ci initialization and use to ensure
-that it points to accurate cache information.
+Similar to 0xb, the support for extended CPU topology leaf 0x80000026 too does
+not depend on the TOPOEXT feature.
 
-Fixes: 594902c986e2 ("x86,fs/resctrl: Remove inappropriate references to cacheinfo in the resctrl subsystem")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+The support for these leaves is expected to be confirmed by ensuring
+
+  leaf <= {extended_}cpuid_level
+
+and then parsing the level 0 of the respective leaf to confirm EBX[15:0]
+(LogProcAtThisLevel) is non-zero as stated in the definition of
+"CPUID_Fn0000000B_EAX_x00 [Extended Topology Enumeration]
+(Core::X86::Cpuid::ExtTopEnumEax0)" in Processor Programming Reference (PPR)
+for AMD Family 19h Model 01h Rev B1 Vol1 [3] Sec. 2.1.15.1 "CPUID Instruction
+Functions".
+
+This has not been a problem on baremetal platforms since support for TOPOEXT
+(Fam 0x15 and later) predates the support for CPUID leaf 0xb (Fam 0x17[Zen2]
+and later), however, for AMD guests on QEMU, the "x2apic" feature can be
+enabled independent of the "topoext" feature where QEMU expects topology and
+the initial APICID to be parsed using the CPUID leaf 0xb (especially when
+number of cores > 255) which is populated independent of the "topoext" feature
+flag.
+
+Unconditionally call cpu_parse_topology_ext() on AMD and Hygon processors to
+first parse the topology using the XTOPOLOGY leaves (0x80000026 / 0xb) before
+using the TOPOEXT leaf (0x8000001e).
+
+While at it, break down the single large comment in parse_topology_amd() to
+better highlight the purpose of each CPUID leaf.
+
+Fixes: 3986a0a805e6 ("x86/CPU/AMD: Derive CPU topology from CPUID function 0xB when available")
+Suggested-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org # Only v6.9 and above; depends on x86 topology rewrite
+Link: https://lore.kernel.org/lkml/1529686927-7665-1-git-send-email-suravee.suthikulpanit@amd.com/ [1]
+Link: https://lore.kernel.org/lkml/20080818181435.523309000@linux-os.sc.intel.com/ [2]
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 [3]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/resctrl/ctrlmondata.c | 2 +-
- fs/resctrl/internal.h    | 4 ++--
- fs/resctrl/monitor.c     | 6 ++----
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ arch/x86/kernel/cpu/topology_amd.c |   25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index d98e0d2de09f..3c39cfacb251 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -625,11 +625,11 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 		 */
- 		list_for_each_entry(d, &r->mon_domains, hdr.list) {
- 			if (d->ci_id == domid) {
--				rr.ci_id = d->ci_id;
- 				cpu = cpumask_any(&d->hdr.cpu_mask);
- 				ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
- 				if (!ci)
- 					continue;
-+				rr.ci = ci;
- 				mon_event_read(&rr, r, NULL, rdtgrp,
- 					       &ci->shared_cpu_map, evtid, false);
- 				goto checkresult;
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 0a1eedba2b03..9a8cf6f11151 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -98,7 +98,7 @@ struct mon_data {
-  *	   domains in @r sharing L3 @ci.id
-  * @evtid: Which monitor event to read.
-  * @first: Initialize MBM counter when true.
-- * @ci_id: Cacheinfo id for L3. Only set when @d is NULL. Used when summing domains.
-+ * @ci:    Cacheinfo for L3. Only set when @d is NULL. Used when summing domains.
-  * @err:   Error encountered when reading counter.
-  * @val:   Returned value of event counter. If @rgrp is a parent resource group,
-  *	   @val includes the sum of event counts from its child resource groups.
-@@ -112,7 +112,7 @@ struct rmid_read {
- 	struct rdt_mon_domain	*d;
- 	enum resctrl_event_id	evtid;
- 	bool			first;
--	unsigned int		ci_id;
-+	struct cacheinfo	*ci;
- 	int			err;
- 	u64			val;
- 	void			*arch_mon_ctx;
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index f5637855c3ac..7326c28a7908 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -361,7 +361,6 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+--- a/arch/x86/kernel/cpu/topology_amd.c
++++ b/arch/x86/kernel/cpu/topology_amd.c
+@@ -175,27 +175,30 @@ static void topoext_fixup(struct topo_sc
+ 
+ static void parse_topology_amd(struct topo_scan *tscan)
  {
- 	int cpu = smp_processor_id();
- 	struct rdt_mon_domain *d;
--	struct cacheinfo *ci;
- 	struct mbm_state *m;
- 	int err, ret;
- 	u64 tval = 0;
-@@ -389,8 +388,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
- 	}
- 
- 	/* Summing domains that share a cache, must be on a CPU for that cache. */
--	ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
--	if (!ci || ci->id != rr->ci_id)
-+	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
- 		return -EINVAL;
- 
+-	bool has_topoext = false;
+-
  	/*
-@@ -402,7 +400,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+-	 * If the extended topology leaf 0x8000_001e is available
+-	 * try to get SMT, CORE, TILE, and DIE shifts from extended
++	 * Try to get SMT, CORE, TILE, and DIE shifts from extended
+ 	 * CPUID leaf 0x8000_0026 on supported processors first. If
+ 	 * extended CPUID leaf 0x8000_0026 is not supported, try to
+-	 * get SMT and CORE shift from leaf 0xb first, then try to
+-	 * get the CORE shift from leaf 0x8000_0008.
++	 * get SMT and CORE shift from leaf 0xb. If either leaf is
++	 * available, cpu_parse_topology_ext() will return true.
  	 */
- 	ret = -EINVAL;
- 	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
--		if (d->ci_id != rr->ci_id)
-+		if (d->ci_id != rr->ci->id)
- 			continue;
- 		err = resctrl_arch_rmid_read(rr->r, d, closid, rmid,
- 					     rr->evtid, &tval, rr->arch_mon_ctx);
--- 
-2.51.0
-
+-	if (cpu_feature_enabled(X86_FEATURE_TOPOEXT))
+-		has_topoext = cpu_parse_topology_ext(tscan);
++	bool has_xtopology = cpu_parse_topology_ext(tscan);
+ 
+ 	if (cpu_feature_enabled(X86_FEATURE_AMD_HTR_CORES))
+ 		tscan->c->topo.cpu_type = cpuid_ebx(0x80000026);
+ 
+-	if (!has_topoext && !parse_8000_0008(tscan))
++	/*
++	 * If XTOPOLOGY leaves (0x26/0xb) are not available, try to
++	 * get the CORE shift from leaf 0x8000_0008 first.
++	 */
++	if (!has_xtopology && !parse_8000_0008(tscan))
+ 		return;
+ 
+-	/* Prefer leaf 0x8000001e if available */
+-	if (parse_8000_001e(tscan, has_topoext))
++	/*
++	 * Prefer leaf 0x8000001e if available to get the SMT shift and
++	 * the initial APIC ID if XTOPOLOGY leaves are not available.
++	 */
++	if (parse_8000_001e(tscan, has_xtopology))
+ 		return;
+ 
+ 	/* Try the NODEID MSR */
 
 
