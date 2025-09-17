@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D34328967;
-	Wed, 17 Sep 2025 12:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7851B30CB51;
+	Wed, 17 Sep 2025 12:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113260; cv=none; b=m7tjEJGFzbX1UivmpZgCl08o3VIIyihlm0rXSNHm5BJq5eqp3zzrVeipfjotDV3gOLDCtNr6FzyHeT/ePOuRx/ZamLWYC3BZk8lBS1mZp68utod8E4lPqDIJ5u13HMpSUdxXJTWb1NVZBVAX0hIpBLXfN5bZ1ycTXL5wDf4WhbE=
+	t=1758113263; cv=none; b=EJuheUayRyjJsz+2JDfVwMS56d6rck1OGv/NVfcbfWznOQuGlXj36Wxtl8Si3BsaPwoHu1ZSe/n0PGAAGz0JXGcoUNrwveoVGlncHCw7j4dxNd9FBeK/tM6PFcc3MKyxGRV8mXdzsNWsqNg6rZQoJBtOuT5AHqe7JsQBI5orzDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113260; c=relaxed/simple;
-	bh=PFctZpDZ/Ii4Smbl47JQ32yetbCWdqrjouVpl87cWwo=;
+	s=arc-20240116; t=1758113263; c=relaxed/simple;
+	bh=k4zUm1ho0xjaQKRmb1kWLYnppQtTtcksKWkGAlPBK2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFaPfnVNOhnf6/Z+mmrTvchk2YvKs0D0HXfKXTe6rwx+JAPY7ZNqQCfXa4eccphNbKF7lpgerc4FitXXqqCWXCgT7gGx+WkW2AIkB7LFE6VXFemgcAGhxyMPlTdLVSIof4XbtoZMw1P5XnCzc3k8w85nexZJyh5rQBav8JLYBIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e43V6IPV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GewIrKzVnHJxasCKGiUU6zZk4sCZg+V476Czhrld17BbF6e+DiZzPzRfZ0kNRGintEC0DuPj+stpeZzHYpI6HK34oQXDkXulidt3kqnJlzEnyfqDYHDDBfXasLSRpSrkd+kmZGhT1LcBVvxiD2kbNNnEKTaR2eeIXZF7Cs4gAw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZ0gXbmq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e43V6IPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6722AC4CEF0;
-	Wed, 17 Sep 2025 12:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZ0gXbmq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4E0C4CEF0;
+	Wed, 17 Sep 2025 12:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113259;
-	bh=PFctZpDZ/Ii4Smbl47JQ32yetbCWdqrjouVpl87cWwo=;
+	s=korg; t=1758113263;
+	bh=k4zUm1ho0xjaQKRmb1kWLYnppQtTtcksKWkGAlPBK2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e43V6IPV5hlwz0DjgA+zKBNr1Ua9cwyBwo9+85cruvnVYNTVyPhfy+5Rja8j45NtQ
-	 E1qAAuCBCX+WI5EfeUd8q2RZEClK6HEIh76NZrgHZ6tm5zjfwb+ceZ30sUgs/8zti4
-	 oi0gORqTpLvYV/ZmflwIoG7TGXPVCYM+ryMQywCE=
+	b=iZ0gXbmqvrQO8eIL3oCLUhmPWReMRdVahjNoPxOEIMB7IRHRvQ73iqIgSAks21Kfp
+	 7Zyxp/NlEKrcOT5hB7qDCefSUeEYwkz1+ClWGXuotMasQcRuvVX62/wlGOe0TTYV4B
+	 1ivKmMvP9ccHLZKtI2LulZZJ95RaaeqxzHWD2xUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/140] dma-mapping: trace more error paths
-Date: Wed, 17 Sep 2025 14:32:57 +0200
-Message-ID: <20250917123344.449257835@linuxfoundation.org>
+Subject: [PATCH 6.12 006/140] dma-debug: dont enforce dma mapping check on noncoherent allocations
+Date: Wed, 17 Sep 2025 14:32:58 +0200
+Message-ID: <20250917123344.473795889@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,156 +51,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 68b6dbf1f441c4eba3b8511728a41cf9b01dca35 ]
+[ Upstream commit 7e2368a21741e2db542330b32aa6fdd8908e7cff ]
 
-It can be surprising to the user if DMA functions are only traced on
-success. On failure, it can be unclear what the source of the problem
-is. Fix this by tracing all functions even when they fail. Cases where
-we BUG/WARN are skipped, since those should be sufficiently noisy
-already.
+As discussed in [1], there is no need to enforce dma mapping check on
+noncoherent allocations, a simple test on the returned CPU address is
+good enough.
 
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 7e2368a21741 ("dma-debug: don't enforce dma mapping check on noncoherent allocations")
+Add a new pair of debug helpers and use them for noncoherent alloc/free
+to fix this issue.
+
+Fixes: efa70f2fdc84 ("dma-mapping: add a new dma_alloc_pages API")
+Link: https://lore.kernel.org/all/ff6c1fe6-820f-4e58-8395-df06aa91706c@oss.qualcomm.com # 1
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250828-dma-debug-fix-noncoherent-dma-check-v1-1-76e9be0dd7fc@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/dma.h | 36 ++++++++++++++++++++++++++++++++++++
- kernel/dma/mapping.c       | 25 ++++++++++++++++++-------
- 2 files changed, 54 insertions(+), 7 deletions(-)
+ kernel/dma/debug.c   | 48 +++++++++++++++++++++++++++++++++++++++++++-
+ kernel/dma/debug.h   | 20 ++++++++++++++++++
+ kernel/dma/mapping.c |  4 ++--
+ 3 files changed, 69 insertions(+), 3 deletions(-)
 
-diff --git a/include/trace/events/dma.h b/include/trace/events/dma.h
-index 45cc0ca8287fe..63b55ccc4f00c 100644
---- a/include/trace/events/dma.h
-+++ b/include/trace/events/dma.h
-@@ -158,6 +158,7 @@ DEFINE_EVENT(dma_alloc_class, name, \
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index 4e3692afdf0d2..0221023e1120d 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -39,6 +39,7 @@ enum {
+ 	dma_debug_sg,
+ 	dma_debug_coherent,
+ 	dma_debug_resource,
++	dma_debug_noncoherent,
+ };
  
- DEFINE_ALLOC_EVENT(dma_alloc);
- DEFINE_ALLOC_EVENT(dma_alloc_pages);
-+DEFINE_ALLOC_EVENT(dma_alloc_sgt_err);
+ enum map_err_types {
+@@ -141,6 +142,7 @@ static const char *type2name[] = {
+ 	[dma_debug_sg] = "scatter-gather",
+ 	[dma_debug_coherent] = "coherent",
+ 	[dma_debug_resource] = "resource",
++	[dma_debug_noncoherent] = "noncoherent",
+ };
  
- TRACE_EVENT(dma_alloc_sgt,
- 	TP_PROTO(struct device *dev, struct sg_table *sgt, size_t size,
-@@ -322,6 +323,41 @@ TRACE_EVENT(dma_map_sg,
- 		decode_dma_attrs(__entry->attrs))
- );
+ static const char *dir2name[] = {
+@@ -993,7 +995,8 @@ static void check_unmap(struct dma_debug_entry *ref)
+ 			   "[mapped as %s] [unmapped as %s]\n",
+ 			   ref->dev_addr, ref->size,
+ 			   type2name[entry->type], type2name[ref->type]);
+-	} else if (entry->type == dma_debug_coherent &&
++	} else if ((entry->type == dma_debug_coherent ||
++		    entry->type == dma_debug_noncoherent) &&
+ 		   ref->paddr != entry->paddr) {
+ 		err_printk(ref->dev, entry, "device driver frees "
+ 			   "DMA memory with different CPU address "
+@@ -1573,6 +1576,49 @@ void debug_dma_sync_sg_for_device(struct device *dev, struct scatterlist *sg,
+ 	}
+ }
  
-+TRACE_EVENT(dma_map_sg_err,
-+	TP_PROTO(struct device *dev, struct scatterlist *sgl, int nents,
-+		 int err, enum dma_data_direction dir, unsigned long attrs),
-+	TP_ARGS(dev, sgl, nents, err, dir, attrs),
++void debug_dma_alloc_pages(struct device *dev, struct page *page,
++			   size_t size, int direction,
++			   dma_addr_t dma_addr,
++			   unsigned long attrs)
++{
++	struct dma_debug_entry *entry;
 +
-+	TP_STRUCT__entry(
-+		__string(device, dev_name(dev))
-+		__dynamic_array(u64, phys_addrs, nents)
-+		__field(int, err)
-+		__field(enum dma_data_direction, dir)
-+		__field(unsigned long, attrs)
-+	),
++	if (unlikely(dma_debug_disabled()))
++		return;
 +
-+	TP_fast_assign(
-+		struct scatterlist *sg;
-+		int i;
++	entry = dma_entry_alloc();
++	if (!entry)
++		return;
 +
-+		__assign_str(device);
-+		for_each_sg(sgl, sg, nents, i)
-+			((u64 *)__get_dynamic_array(phys_addrs))[i] = sg_phys(sg);
-+		__entry->err = err;
-+		__entry->dir = dir;
-+		__entry->attrs = attrs;
-+	),
++	entry->type      = dma_debug_noncoherent;
++	entry->dev       = dev;
++	entry->paddr	 = page_to_phys(page);
++	entry->size      = size;
++	entry->dev_addr  = dma_addr;
++	entry->direction = direction;
 +
-+	TP_printk("%s dir=%s dma_addrs=%s err=%d attrs=%s",
-+		__get_str(device),
-+		decode_dma_data_direction(__entry->dir),
-+		__print_array(__get_dynamic_array(phys_addrs),
-+			      __get_dynamic_array_len(phys_addrs) /
-+				sizeof(u64), sizeof(u64)),
-+		__entry->err,
-+		decode_dma_attrs(__entry->attrs))
-+);
++	add_dma_entry(entry, attrs);
++}
 +
- TRACE_EVENT(dma_unmap_sg,
- 	TP_PROTO(struct device *dev, struct scatterlist *sgl, int nents,
- 		 enum dma_data_direction dir, unsigned long attrs),
++void debug_dma_free_pages(struct device *dev, struct page *page,
++			  size_t size, int direction,
++			  dma_addr_t dma_addr)
++{
++	struct dma_debug_entry ref = {
++		.type           = dma_debug_noncoherent,
++		.dev            = dev,
++		.paddr		= page_to_phys(page),
++		.dev_addr       = dma_addr,
++		.size           = size,
++		.direction      = direction,
++	};
++
++	if (unlikely(dma_debug_disabled()))
++		return;
++
++	check_unmap(&ref);
++}
++
+ static int __init dma_debug_driver_setup(char *str)
+ {
+ 	int i;
+diff --git a/kernel/dma/debug.h b/kernel/dma/debug.h
+index f525197d3cae6..48757ca13f314 100644
+--- a/kernel/dma/debug.h
++++ b/kernel/dma/debug.h
+@@ -54,6 +54,13 @@ extern void debug_dma_sync_sg_for_cpu(struct device *dev,
+ extern void debug_dma_sync_sg_for_device(struct device *dev,
+ 					 struct scatterlist *sg,
+ 					 int nelems, int direction);
++extern void debug_dma_alloc_pages(struct device *dev, struct page *page,
++				  size_t size, int direction,
++				  dma_addr_t dma_addr,
++				  unsigned long attrs);
++extern void debug_dma_free_pages(struct device *dev, struct page *page,
++				 size_t size, int direction,
++				 dma_addr_t dma_addr);
+ #else /* CONFIG_DMA_API_DEBUG */
+ static inline void debug_dma_map_page(struct device *dev, struct page *page,
+ 				      size_t offset, size_t size,
+@@ -126,5 +133,18 @@ static inline void debug_dma_sync_sg_for_device(struct device *dev,
+ 						int nelems, int direction)
+ {
+ }
++
++static inline void debug_dma_alloc_pages(struct device *dev, struct page *page,
++					 size_t size, int direction,
++					 dma_addr_t dma_addr,
++					 unsigned long attrs)
++{
++}
++
++static inline void debug_dma_free_pages(struct device *dev, struct page *page,
++					size_t size, int direction,
++					dma_addr_t dma_addr)
++{
++}
+ #endif /* CONFIG_DMA_API_DEBUG */
+ #endif /* _KERNEL_DMA_DEBUG_H */
 diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index 690aeda8bd7da..32dcf8492bbcd 100644
+index 32dcf8492bbcd..c12c62ad8a6bf 100644
 --- a/kernel/dma/mapping.c
 +++ b/kernel/dma/mapping.c
-@@ -223,6 +223,7 @@ static int __dma_map_sg_attrs(struct device *dev, struct scatterlist *sg,
- 		debug_dma_map_sg(dev, sg, nents, ents, dir, attrs);
- 	} else if (WARN_ON_ONCE(ents != -EINVAL && ents != -ENOMEM &&
- 				ents != -EIO && ents != -EREMOTEIO)) {
-+		trace_dma_map_sg_err(dev, sg, nents, ents, dir, attrs);
- 		return -EIO;
- 	}
- 
-@@ -604,20 +605,26 @@ void *dma_alloc_attrs(struct device *dev, size_t size, dma_addr_t *dma_handle,
- 	if (WARN_ON_ONCE(flag & __GFP_COMP))
- 		return NULL;
- 
--	if (dma_alloc_from_dev_coherent(dev, size, dma_handle, &cpu_addr))
-+	if (dma_alloc_from_dev_coherent(dev, size, dma_handle, &cpu_addr)) {
-+		trace_dma_alloc(dev, cpu_addr, *dma_handle, size,
-+				DMA_BIDIRECTIONAL, flag, attrs);
- 		return cpu_addr;
-+	}
- 
- 	/* let the implementation decide on the zone to allocate from: */
- 	flag &= ~(__GFP_DMA | __GFP_DMA32 | __GFP_HIGHMEM);
- 
--	if (dma_alloc_direct(dev, ops))
-+	if (dma_alloc_direct(dev, ops)) {
- 		cpu_addr = dma_direct_alloc(dev, size, dma_handle, flag, attrs);
--	else if (use_dma_iommu(dev))
-+	} else if (use_dma_iommu(dev)) {
- 		cpu_addr = iommu_dma_alloc(dev, size, dma_handle, flag, attrs);
--	else if (ops->alloc)
-+	} else if (ops->alloc) {
- 		cpu_addr = ops->alloc(dev, size, dma_handle, flag, attrs);
--	else
-+	} else {
-+		trace_dma_alloc(dev, NULL, 0, size, DMA_BIDIRECTIONAL, flag,
-+				attrs);
- 		return NULL;
-+	}
- 
- 	trace_dma_alloc(dev, cpu_addr, *dma_handle, size, DMA_BIDIRECTIONAL,
- 			flag, attrs);
-@@ -642,11 +649,11 @@ void dma_free_attrs(struct device *dev, size_t size, void *cpu_addr,
- 	 */
- 	WARN_ON(irqs_disabled());
- 
-+	trace_dma_free(dev, cpu_addr, dma_handle, size, DMA_BIDIRECTIONAL,
-+		       attrs);
- 	if (!cpu_addr)
- 		return;
- 
--	trace_dma_free(dev, cpu_addr, dma_handle, size, DMA_BIDIRECTIONAL,
--		       attrs);
- 	debug_dma_free_coherent(dev, size, cpu_addr, dma_handle);
- 	if (dma_alloc_direct(dev, ops))
- 		dma_direct_free(dev, size, cpu_addr, dma_handle, attrs);
-@@ -688,6 +695,8 @@ struct page *dma_alloc_pages(struct device *dev, size_t size,
+@@ -694,7 +694,7 @@ struct page *dma_alloc_pages(struct device *dev, size_t size,
+ 	if (page) {
  		trace_dma_alloc_pages(dev, page_to_virt(page), *dma_handle,
  				      size, dir, gfp, 0);
- 		debug_dma_map_page(dev, page, 0, size, dir, *dma_handle, 0);
-+	} else {
-+		trace_dma_alloc_pages(dev, NULL, 0, size, dir, gfp, 0);
+-		debug_dma_map_page(dev, page, 0, size, dir, *dma_handle, 0);
++		debug_dma_alloc_pages(dev, page, size, dir, *dma_handle, 0);
+ 	} else {
+ 		trace_dma_alloc_pages(dev, NULL, 0, size, dir, gfp, 0);
  	}
- 	return page;
+@@ -720,7 +720,7 @@ void dma_free_pages(struct device *dev, size_t size, struct page *page,
+ 		dma_addr_t dma_handle, enum dma_data_direction dir)
+ {
+ 	trace_dma_free_pages(dev, page_to_virt(page), dma_handle, size, dir, 0);
+-	debug_dma_unmap_page(dev, dma_handle, size, dir);
++	debug_dma_free_pages(dev, page, size, dir, dma_handle);
+ 	__dma_free_pages(dev, size, page, dma_handle, dir);
  }
-@@ -772,6 +781,8 @@ struct sg_table *dma_alloc_noncontiguous(struct device *dev, size_t size,
- 		sgt->nents = 1;
- 		trace_dma_alloc_sgt(dev, sgt, size, dir, gfp, attrs);
- 		debug_dma_map_sg(dev, sgt->sgl, sgt->orig_nents, 1, dir, attrs);
-+	} else {
-+		trace_dma_alloc_sgt_err(dev, NULL, 0, size, gfp, dir, attrs);
- 	}
- 	return sgt;
- }
+ EXPORT_SYMBOL_GPL(dma_free_pages);
 -- 
 2.51.0
 
