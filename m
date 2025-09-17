@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA3332BC1A;
-	Wed, 17 Sep 2025 12:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7D532BC13;
+	Wed, 17 Sep 2025 12:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113279; cv=none; b=K9Iq30CzbTpIbCzPHFALbPeqvoFktYhvIvFN7Ea1RNW8s/DbglM4zn+nwJqY57nhGMA1HxkYr1++Pz6TmRqRHP8Ys6xtX1SvBjIjZ/utbrCfnN3HpUV9uktcuOce5Y23C3S5XtcON4/n9Br5z/796ay6nYd7z8nWnze2prITs5U=
+	t=1758113282; cv=none; b=adwNaJ6GPaPaYPZEQQPDRxBPlxiSzq4D5qUnPJfvpGj/i/dY1XZSk+NPwLwWNEPeRG/+R6H9jkgCAN6FVjhp+qzFQTfezpA1uZ35Yf6RHJ6W1nbxUcBCvAMbjV0euukbYhT5hgsqb3DQbfCOlrtsH/9UVAGf894vkLPzDueslsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113279; c=relaxed/simple;
-	bh=S5EYKO6O8JHNuAa7NZdNQj1p/bWO8GdPWjINnS+FgeE=;
+	s=arc-20240116; t=1758113282; c=relaxed/simple;
+	bh=86JORV4sAVTEFUSL6fJO+zYPe+8M4hV8pqoJAWX9fYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anR+Ea/u5z/xyeJqRp9Dbo+9VcRGfPNbTttO0Bg1m0jZG/SER8ziC6IQi/bpWfxWwmpG+ktf6d0s4MArObQuP60DrPvurvMNDkyRURpf8J1Dcf+0DYQrh2TeoJ8lyGZYnzjQIzLNT1JYqAwYSe4JYKt75+fVDM6RzQbKVJitE4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7vgEgWs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RGEUE/VblvFI+hBPfiAStnjc3w/0TcZdiokYJjEW95b6tiSdqNfDAQrjVPlro/oXO86OVYe8HhYd7E2NJ2c7eC3By/a7V1Eopt3V85V77V1xxNKJPmOW/Bo4MorQ/oFoI+sfg4EmYmt4cabF4YJKyaeTUl3V/5LfqwVwEEj45WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JF4JNLMX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7vgEgWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092CBC4CEF5;
-	Wed, 17 Sep 2025 12:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JF4JNLMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B92C4CEF0;
+	Wed, 17 Sep 2025 12:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113279;
-	bh=S5EYKO6O8JHNuAa7NZdNQj1p/bWO8GdPWjINnS+FgeE=;
+	s=korg; t=1758113282;
+	bh=86JORV4sAVTEFUSL6fJO+zYPe+8M4hV8pqoJAWX9fYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7vgEgWs0kakCZqkgv3fYHgvVjT4+Sz5Nmqvhw0eckO2VWh58fx9svIzSXBVPjEHI
-	 V3DFu06CI3d7RBToYNNOI3EOFOQ/CH01Wu0Tr/VPhfE+Jig0Q/rXLAAFZeiRbpLYol
-	 Yy8Wv+FCRKVcFuSv0tUb/PzTklqvk8Xiuvr/q/1A=
+	b=JF4JNLMX6sXcAY3Wsm9+xKN5cvt0CIooxyxMJZOg3hviDPxf5C0oLzSyJ6c9j9sSb
+	 hplLQFd44d4p0DsC/ahm0poW5KtNPuiWTfpVcjug+//gkS7OGieRYK3rGcZV0vj02p
+	 IIRFWrxA4J9uCH01d9A9Ue+1033ywoffD/SvHGcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	syzbot+161412ccaeff20ce4dde@syzkaller.appspotmail.com,
+	Pu Lehui <pulehui@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/140] nfs/localio: restore creds before releasing pageio data
-Date: Wed, 17 Sep 2025 14:33:22 +0200
-Message-ID: <20250917123345.043955682@linuxfoundation.org>
+Subject: [PATCH 6.12 039/140] tracing: Silence warning when chunk allocation fails in trace_pid_write
+Date: Wed, 17 Sep 2025 14:33:31 +0200
+Message-ID: <20250917123345.262300075@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,63 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 992203a1fba51b025c60ec0c8b0d9223343dea95 ]
+[ Upstream commit cd4453c5e983cf1fd5757e9acb915adb1e4602b6 ]
 
-Otherwise if the nfsd filecache code releases the nfsd_file
-immediately, it can trigger the BUG_ON(cred == current->cred) in
-__put_cred() when it puts the nfsd_file->nf_file->f-cred.
+Syzkaller trigger a fault injection warning:
 
-Fixes: b9f5dd57f4a5 ("nfs/localio: use dedicated workqueues for filesystem read and write")
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20250807164938.2395136-1-smayhew@redhat.com
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+WARNING: CPU: 1 PID: 12326 at tracepoint_add_func+0xbfc/0xeb0
+Modules linked in:
+CPU: 1 UID: 0 PID: 12326 Comm: syz.6.10325 Tainted: G U 6.14.0-rc5-syzkaller #0
+Tainted: [U]=USER
+Hardware name: Google Compute Engine/Google Compute Engine
+RIP: 0010:tracepoint_add_func+0xbfc/0xeb0 kernel/tracepoint.c:294
+Code: 09 fe ff 90 0f 0b 90 0f b6 74 24 43 31 ff 41 bc ea ff ff ff
+RSP: 0018:ffffc9000414fb48 EFLAGS: 00010283
+RAX: 00000000000012a1 RBX: ffffffff8e240ae0 RCX: ffffc90014b78000
+RDX: 0000000000080000 RSI: ffffffff81bbd78b RDI: 0000000000000001
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000001 R12: ffffffffffffffef
+R13: 0000000000000000 R14: dffffc0000000000 R15: ffffffff81c264f0
+FS:  00007f27217f66c0(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b2e80dff8 CR3: 00000000268f8000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tracepoint_probe_register_prio+0xc0/0x110 kernel/tracepoint.c:464
+ register_trace_prio_sched_switch include/trace/events/sched.h:222 [inline]
+ register_pid_events kernel/trace/trace_events.c:2354 [inline]
+ event_pid_write.isra.0+0x439/0x7a0 kernel/trace/trace_events.c:2425
+ vfs_write+0x24c/0x1150 fs/read_write.c:677
+ ksys_write+0x12b/0x250 fs/read_write.c:731
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+We can reproduce the warning by following the steps below:
+1. echo 8 >> set_event_notrace_pid. Let tr->filtered_pids owns one pid
+   and register sched_switch tracepoint.
+2. echo ' ' >> set_event_pid, and perform fault injection during chunk
+   allocation of trace_pid_list_alloc. Let pid_list with no pid and
+assign to tr->filtered_pids.
+3. echo ' ' >> set_event_pid. Let pid_list is NULL and assign to
+   tr->filtered_pids.
+4. echo 9 >> set_event_pid, will trigger the double register
+   sched_switch tracepoint warning.
+
+The reason is that syzkaller injects a fault into the chunk allocation
+in trace_pid_list_alloc, causing a failure in trace_pid_list_set, which
+may trigger double register of the same tracepoint. This only occurs
+when the system is about to crash, but to suppress this warning, let's
+add failure handling logic to trace_pid_list_set.
+
+Link: https://lore.kernel.org/20250908024658.2390398-1-pulehui@huaweicloud.com
+Fixes: 8d6e90983ade ("tracing: Create a sparse bitmask for pid filtering")
+Reported-by: syzbot+161412ccaeff20ce4dde@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67cb890e.050a0220.d8275.022e.GAE@google.com
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/trace/trace.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 8fb145124e93b..82a053304ad59 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -425,12 +425,13 @@ static void nfs_local_call_read(struct work_struct *work)
- 	nfs_local_iter_init(&iter, iocb, READ);
- 
- 	status = filp->f_op->read_iter(&iocb->kiocb, &iter);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 87a43c0f90764..91e6bf1b101a7 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -787,7 +787,10 @@ int trace_pid_write(struct trace_pid_list *filtered_pids,
+ 		/* copy the current bits to the new max */
+ 		ret = trace_pid_list_first(filtered_pids, &pid);
+ 		while (!ret) {
+-			trace_pid_list_set(pid_list, pid);
++			ret = trace_pid_list_set(pid_list, pid);
++			if (ret < 0)
++				goto out;
 +
-+	revert_creds(save_cred);
-+
- 	if (status != -EIOCBQUEUED) {
- 		nfs_local_read_done(iocb, status);
- 		nfs_local_pgio_release(iocb);
+ 			ret = trace_pid_list_next(filtered_pids, pid + 1, &pid);
+ 			nr_pids++;
+ 		}
+@@ -824,6 +827,7 @@ int trace_pid_write(struct trace_pid_list *filtered_pids,
+ 		trace_parser_clear(&parser);
+ 		ret = 0;
  	}
--
--	revert_creds(save_cred);
- }
++ out:
+ 	trace_parser_put(&parser);
  
- static int
-@@ -626,14 +627,15 @@ static void nfs_local_call_write(struct work_struct *work)
- 	file_start_write(filp);
- 	status = filp->f_op->write_iter(&iocb->kiocb, &iter);
- 	file_end_write(filp);
-+
-+	revert_creds(save_cred);
-+	current->flags = old_flags;
-+
- 	if (status != -EIOCBQUEUED) {
- 		nfs_local_write_done(iocb, status);
- 		nfs_local_vfs_getattr(iocb);
- 		nfs_local_pgio_release(iocb);
- 	}
--
--	revert_creds(save_cred);
--	current->flags = old_flags;
- }
- 
- static int
+ 	if (ret < 0) {
 -- 
 2.51.0
 
