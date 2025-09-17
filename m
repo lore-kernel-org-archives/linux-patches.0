@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA3836CDF4;
-	Wed, 17 Sep 2025 12:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB61036D;
+	Wed, 17 Sep 2025 12:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113423; cv=none; b=EEuC26GSPBnXwpnQbvrNbBI5NYbuPOdvO4joLPMltB2G2UH8i+fG6i2Uvba69lHALWI++RC0CF4KbfRHnw2onjIaYpgVY+r9/pILi+UtgkY49/uveN488xXvdipJpBPIK7pnpnCxsdFiXDV4cEKPVZif8pMF52bZhjB4icU/JK8=
+	t=1758113426; cv=none; b=lZhtorQxffqcuvRCb4bF+EuCVu8fIoMuHSHaSD88695XJi/7kwqLEm6sRsxcqKJDitsbXEqZFUprg7GrR6GAfVnQmNgzDatSpyrVRL3ZLtvYc3aZgIBC6VXw8LWJwiy2K8cy1mWDeRnyq9N8ypexJzHDLBCXYo1Hc/k3ujB91DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113423; c=relaxed/simple;
-	bh=yLwo7q/j+AOPa9QzPiv0KsJWB+mpAIQi0ZqJ2wqJzwY=;
+	s=arc-20240116; t=1758113426; c=relaxed/simple;
+	bh=UY3UaUIwbhu8IbagbV3CiMsicHArkRe1lCZxFUKEhZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/KvWF9tlIaXkhz3S1V63LoHa3zXR/jCgxkyfWIIMrKZ5ysdfYnFrGnmcGtG6cQuBVO/0gUdI87nLtvOOltfzg+CjdpY4W96AmydLLqqazWdvgMnhrDLb4bk7yEXve8gMF6/mPpdhDumLcuWSpNgu/Q0W4qJxBNfb1A4lQA/Zcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TiyBnEcZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2ZQl3PwAEKWCpjhoQh0M/dF0brn6bE9BRxP17HIh9i6BOnIa8zlPoM6PucL+EOX1i+0YtdhalzHPIdPpQTac/hX0NfOkOZxXMx07hTJrdNOPBcpDRwAXSjv8Ba7Il1+8ZBqhlUXbnCcFp85f45ur517HvRmXNa9cuqIxHxFuxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOJ2av26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiyBnEcZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C510EC4CEF7;
-	Wed, 17 Sep 2025 12:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOJ2av26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69A9C4CEF0;
+	Wed, 17 Sep 2025 12:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113423;
-	bh=yLwo7q/j+AOPa9QzPiv0KsJWB+mpAIQi0ZqJ2wqJzwY=;
+	s=korg; t=1758113426;
+	bh=UY3UaUIwbhu8IbagbV3CiMsicHArkRe1lCZxFUKEhZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiyBnEcZD/iN4klZUR9ladgB7Z0ohAwDUNf4npdgzidkl4zlKe6VPE9Fp0VtjjcZs
-	 NoQAdxLChXcQ9rFXXGGj//CCCQPyYGLf50kwIos7AyZ3YTKs7FYRG8QB45934ZQAfj
-	 bnDzBES7Ob/phzXy6TV0t4vPvCCETWdkiL8DTVZU=
+	b=uOJ2av26HW5BR+yEuMS0W/fbC+FMr5o/YXgZKMU6KJHhzVuqhQEiLkaDyJVwNu5YI
+	 4/6W43Dc7+aXKJc2E++3MuJZMb/mnAZ5mhkaaBmuPiCWbaKAHA1wZ40Spgc6QxOBho
+	 /k6AVrAfGXN5Zn+rY5TAtY75TyZ9HMRvAKg+yspw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jonathan Curley <jcurley@purestorage.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/140] NFS: nfs_invalidate_folio() must observe the offset and size arguments
-Date: Wed, 17 Sep 2025 14:33:29 +0200
-Message-ID: <20250917123345.215346870@linuxfoundation.org>
+Subject: [PATCH 6.12 038/140] NFSv4/flexfiles: Fix layout merge mirror check.
+Date: Wed, 17 Sep 2025 14:33:30 +0200
+Message-ID: <20250917123345.238168080@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -50,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jonathan Curley <jcurley@purestorage.com>
 
-[ Upstream commit b7b8574225e9d2b5f1fb5483886ab797892f43b5 ]
+[ Upstream commit dd2fa82473453661d12723c46c9f43d9876a7efd ]
 
-If we're truncating part of the folio, then we need to write out the
-data on the part that is not covered by the cancellation.
+Typo in ff_lseg_match_mirrors makes the diff ineffective. This results
+in merge happening all the time. Merge happening all the time is
+problematic because it marks lsegs invalid. Marking lsegs invalid
+causes all outstanding IO to get restarted with EAGAIN and connections
+to get closed.
 
-Fixes: d47992f86b30 ("mm: change invalidatepage prototype to accept length")
+Closing connections constantly triggers race conditions in the RDMA
+implementation...
+
+Fixes: 660d1eb22301c ("pNFS/flexfile: Don't merge layout segments if the mirrors don't match")
+Signed-off-by: Jonathan Curley <jcurley@purestorage.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/file.c  | 7 ++++---
- fs/nfs/write.c | 1 +
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/file.c b/fs/nfs/file.c
-index 033feeab8c346..a16a619fb8c33 100644
---- a/fs/nfs/file.c
-+++ b/fs/nfs/file.c
-@@ -437,10 +437,11 @@ static void nfs_invalidate_folio(struct folio *folio, size_t offset,
- 	dfprintk(PAGECACHE, "NFS: invalidate_folio(%lu, %zu, %zu)\n",
- 		 folio->index, offset, length);
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 69496aab9583e..6469846971966 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -292,7 +292,7 @@ ff_lseg_match_mirrors(struct pnfs_layout_segment *l1,
+ 		struct pnfs_layout_segment *l2)
+ {
+ 	const struct nfs4_ff_layout_segment *fl1 = FF_LAYOUT_LSEG(l1);
+-	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l1);
++	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l2);
+ 	u32 i;
  
--	if (offset != 0 || length < folio_size(folio))
--		return;
- 	/* Cancel any unstarted writes on this page */
--	nfs_wb_folio_cancel(inode, folio);
-+	if (offset != 0 || length < folio_size(folio))
-+		nfs_wb_folio(inode, folio);
-+	else
-+		nfs_wb_folio_cancel(inode, folio);
- 	folio_wait_private_2(folio); /* [DEPRECATED] */
- 	trace_nfs_invalidate_folio(inode, folio_pos(folio) + offset, length);
- }
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 2b6b3542405c3..fd86546fafd3f 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -2058,6 +2058,7 @@ int nfs_wb_folio_cancel(struct inode *inode, struct folio *folio)
- 		 * release it */
- 		nfs_inode_remove_request(req);
- 		nfs_unlock_and_release_request(req);
-+		folio_cancel_dirty(folio);
- 	}
- 
- 	return ret;
+ 	if (fl1->mirror_array_cnt != fl2->mirror_array_cnt)
 -- 
 2.51.0
 
