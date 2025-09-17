@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8A032340B;
-	Wed, 17 Sep 2025 12:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE7C323404;
+	Wed, 17 Sep 2025 12:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113321; cv=none; b=XuiJtW0UP6w1DxSVcX2px/1LfFS7N3DMDXFXO6xPnTBqou+tJrZDUb2AY9a0PR+RELTC1hRy5t11mRLjKyDvnTRfdZGF2hJSOjK6Cj7fS9KuIq0BZqamg5igp6l7JmKsCXZHFVnD6NUQgQBHlZxJ6jFTv2fzCdjHSS6y27B095c=
+	t=1758113324; cv=none; b=NaTMoWbJeh2A0ALN1cqdc8ZvtfUxdiqY7bI+XaSJpIb21VomzptASOP7YQGCMbqHF+tusHey0yywvxURnaZVw1CcJAsxdml2RzhpMawKsNTXfvc4mhC/TV7JXZIT4whsE7ZHHlgJCW6vYsOSnpSpjDM3M4Y7Qtc+7+94KKjpcYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113321; c=relaxed/simple;
-	bh=gym7gca1rCKUk2qjKw3/C+7EvcYJk6j+nHjnzHVH6gM=;
+	s=arc-20240116; t=1758113324; c=relaxed/simple;
+	bh=Uy5RYDbHWf3cCtBO7zUjd6zHE60qkxBW9rypM8jUv/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqBvICDA3iRG7wcsxDzqr5GWsEcI4taJ+EIIoqFJUliWt3ky5+EymrqQ7oApnYMztXe7k1lKbb5wy0Sglxxe2KuMuv5Q3kdZNQtxWGc+Mc/K9U5Ds/MY4tNVH04P1GJv3KJRvn5z8SQmU+PZkLeakuaI6DDTqXHhXaBv0hf/49c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfE+dEiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lfoei5H3q63E15hXg0NTqixObe0Ea86Wgmxaaf+T6TUaj2GAZuJfZOWg660M9iTkrLTtsD7oV7f8QQrPwPDal7y0E+mp+bLLwNTLUJdk338mgAoWSPi3fp7Bn3yo990qkfkE1IPTXw5WBRukM9iQWNed3v1AbblioFUBO14Agd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRztV1xb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfE+dEiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E56C4CEF0;
-	Wed, 17 Sep 2025 12:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRztV1xb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A831C4CEF0;
+	Wed, 17 Sep 2025 12:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113321;
-	bh=gym7gca1rCKUk2qjKw3/C+7EvcYJk6j+nHjnzHVH6gM=;
+	s=korg; t=1758113324;
+	bh=Uy5RYDbHWf3cCtBO7zUjd6zHE60qkxBW9rypM8jUv/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfE+dEiD/ynbf7iQLQ0Tzp3BxBqUIzHB+0Alfh+tKd93oF8xYmaSYs9FKXmEbG/H/
-	 eU+U1AOb9b1GZ+ESuobk9re3gu3zzDH0QUgE57yxcE9PQANp7HAqeT+tlaAWELRD+g
-	 tww5/x/ZOsXe9lFoYkotv6g0KQgAQBPQP6d6Bvs4=
+	b=qRztV1xbsbTvftuA1MFjKemAfynsMWr2DAEiA+E8ecedgygcZuaDB6dmqFYJZDnOa
+	 86iKMN/HdYhQWFfB9VHbwwyfxoeNBTNxKTQ3rYj8afPuih5ykteZEg7mTprz1vXgFm
+	 11uhOYNTNR8mdg/b6S9gFVjXXOHOkQ2P4bgMEiPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 050/140] mptcp: sockopt: make sync_socket_options propagate SOCK_KEEPOPEN
-Date: Wed, 17 Sep 2025 14:33:42 +0200
-Message-ID: <20250917123345.530142069@linuxfoundation.org>
+	Mark Tinguely <mark.tinguely@oracle.com>,
+	syzbot+541dcc6ee768f77103e7@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 051/140] ocfs2: fix recursive semaphore deadlock in fiemap call
+Date: Wed, 17 Sep 2025 14:33:43 +0200
+Message-ID: <20250917123345.554199264@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,65 +57,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Mark Tinguely <mark.tinguely@oracle.com>
 
-commit 648de37416b301f046f62f1b65715c7fa8ebaa67 upstream.
+commit 04100f775c2ea501927f508f17ad824ad1f23c8d upstream.
 
-Users reported a scenario where MPTCP connections that were configured
-with SO_KEEPALIVE prior to connect would fail to enable their keepalives
-if MTPCP fell back to TCP mode.
+syzbot detected a OCFS2 hang due to a recursive semaphore on a
+FS_IOC_FIEMAP of the extent list on a specially crafted mmap file.
 
-After investigating, this affects keepalives for any connection where
-sync_socket_options is called on a socket that is in the closed or
-listening state.  Joins are handled properly. For connects,
-sync_socket_options is called when the socket is still in the closed
-state.  The tcp_set_keepalive() function does not act on sockets that
-are closed or listening, hence keepalive is not immediately enabled.
-Since the SO_KEEPOPEN flag is absent, it is not enabled later in the
-connect sequence via tcp_finish_connect.  Setting the keepalive via
-sockopt after connect does work, but would not address any subsequently
-created flows.
+context_switch kernel/sched/core.c:5357 [inline]
+   __schedule+0x1798/0x4cc0 kernel/sched/core.c:6961
+   __schedule_loop kernel/sched/core.c:7043 [inline]
+   schedule+0x165/0x360 kernel/sched/core.c:7058
+   schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7115
+   rwsem_down_write_slowpath+0x872/0xfe0 kernel/locking/rwsem.c:1185
+   __down_write_common kernel/locking/rwsem.c:1317 [inline]
+   __down_write kernel/locking/rwsem.c:1326 [inline]
+   down_write+0x1ab/0x1f0 kernel/locking/rwsem.c:1591
+   ocfs2_page_mkwrite+0x2ff/0xc40 fs/ocfs2/mmap.c:142
+   do_page_mkwrite+0x14d/0x310 mm/memory.c:3361
+   wp_page_shared mm/memory.c:3762 [inline]
+   do_wp_page+0x268d/0x5800 mm/memory.c:3981
+   handle_pte_fault mm/memory.c:6068 [inline]
+   __handle_mm_fault+0x1033/0x5440 mm/memory.c:6195
+   handle_mm_fault+0x40a/0x8e0 mm/memory.c:6364
+   do_user_addr_fault+0x764/0x1390 arch/x86/mm/fault.c:1387
+   handle_page_fault arch/x86/mm/fault.c:1476 [inline]
+   exc_page_fault+0x76/0xf0 arch/x86/mm/fault.c:1532
+   asm_exc_page_fault+0x26/0x30 arch/x86/include/asm/idtentry.h:623
+RIP: 0010:copy_user_generic arch/x86/include/asm/uaccess_64.h:126 [inline]
+RIP: 0010:raw_copy_to_user arch/x86/include/asm/uaccess_64.h:147 [inline]
+RIP: 0010:_inline_copy_to_user include/linux/uaccess.h:197 [inline]
+RIP: 0010:_copy_to_user+0x85/0xb0 lib/usercopy.c:26
+Code: e8 00 bc f7 fc 4d 39 fc 72 3d 4d 39 ec 77 38 e8 91 b9 f7 fc 4c 89
+f7 89 de e8 47 25 5b fd 0f 01 cb 4c 89 ff 48 89 d9 4c 89 f6 <f3> a4 0f
+1f 00 48 89 cb 0f 01 ca 48 89 d8 5b 41 5c 41 5d 41 5e 41
+RSP: 0018:ffffc9000403f950 EFLAGS: 00050256
+RAX: ffffffff84c7f101 RBX: 0000000000000038 RCX: 0000000000000038
+RDX: 0000000000000000 RSI: ffffc9000403f9e0 RDI: 0000200000000060
+RBP: ffffc9000403fa90 R08: ffffc9000403fa17 R09: 1ffff92000807f42
+R10: dffffc0000000000 R11: fffff52000807f43 R12: 0000200000000098
+R13: 00007ffffffff000 R14: ffffc9000403f9e0 R15: 0000200000000060
+   copy_to_user include/linux/uaccess.h:225 [inline]
+   fiemap_fill_next_extent+0x1c0/0x390 fs/ioctl.c:145
+   ocfs2_fiemap+0x888/0xc90 fs/ocfs2/extent_map.c:806
+   ioctl_fiemap fs/ioctl.c:220 [inline]
+   do_vfs_ioctl+0x1173/0x1430 fs/ioctl.c:532
+   __do_sys_ioctl fs/ioctl.c:596 [inline]
+   __se_sys_ioctl+0x82/0x170 fs/ioctl.c:584
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f5f13850fd9
+RSP: 002b:00007ffe3b3518b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f5f13850fd9
+RDX: 0000200000000040 RSI: 00000000c020660b RDI: 0000000000000004
+RBP: 6165627472616568 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffe3b3518f0
+R13: 00007ffe3b351b18 R14: 431bde82d7b634db R15: 00007f5f1389a03b
 
-Fortunately, the fix here is straight-forward: set SOCK_KEEPOPEN on the
-subflow when calling sync_socket_options.
+ocfs2_fiemap() takes a read lock of the ip_alloc_sem semaphore (since
+v2.6.22-527-g7307de80510a) and calls fiemap_fill_next_extent() to read the
+extent list of this running mmap executable.  The user supplied buffer to
+hold the fiemap information page faults calling ocfs2_page_mkwrite() which
+will take a write lock (since v2.6.27-38-g00dc417fa3e7) of the same
+semaphore.  This recursive semaphore will hold filesystem locks and causes
+a hang of the fileystem.
 
-The fix was valdidated both by using tcpdump to observe keepalive
-packets not being sent before the fix, and being sent after the fix.  It
-was also possible to observe via ss that the keepalive timer was not
-enabled on these sockets before the fix, but was enabled afterwards.
+The ip_alloc_sem protects the inode extent list and size.  Release the
+read semphore before calling fiemap_fill_next_extent() in ocfs2_fiemap()
+and ocfs2_fiemap_inline().  This does an unnecessary semaphore lock/unlock
+on the last extent but simplifies the error path.
 
-Fixes: 1b3e7ede1365 ("mptcp: setsockopt: handle SO_KEEPALIVE and SO_PRIORITY")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/aL8dYfPZrwedCIh9@templeofstupid.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/61d1a62b-2631-4f12-81e2-cd689914360b@oracle.com
+Fixes: 00dc417fa3e7 ("ocfs2: fiemap support")
+Signed-off-by: Mark Tinguely <mark.tinguely@oracle.com>
+Reported-by: syzbot+541dcc6ee768f77103e7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=541dcc6ee768f77103e7
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/ocfs2/extent_map.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -1508,13 +1508,12 @@ static void sync_socket_options(struct m
- {
- 	static const unsigned int tx_rx_locks = SOCK_RCVBUF_LOCK | SOCK_SNDBUF_LOCK;
- 	struct sock *sk = (struct sock *)msk;
-+	bool keep_open;
+--- a/fs/ocfs2/extent_map.c
++++ b/fs/ocfs2/extent_map.c
+@@ -696,6 +696,8 @@ out:
+  * it not only handles the fiemap for inlined files, but also deals
+  * with the fast symlink, cause they have no difference for extent
+  * mapping per se.
++ *
++ * Must be called with ip_alloc_sem semaphore held.
+  */
+ static int ocfs2_fiemap_inline(struct inode *inode, struct buffer_head *di_bh,
+ 			       struct fiemap_extent_info *fieinfo,
+@@ -707,6 +709,7 @@ static int ocfs2_fiemap_inline(struct in
+ 	u64 phys;
+ 	u32 flags = FIEMAP_EXTENT_DATA_INLINE|FIEMAP_EXTENT_LAST;
+ 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
++	lockdep_assert_held_read(&oi->ip_alloc_sem);
  
--	if (ssk->sk_prot->keepalive) {
--		if (sock_flag(sk, SOCK_KEEPOPEN))
--			ssk->sk_prot->keepalive(ssk, 1);
--		else
--			ssk->sk_prot->keepalive(ssk, 0);
--	}
-+	keep_open = sock_flag(sk, SOCK_KEEPOPEN);
-+	if (ssk->sk_prot->keepalive)
-+		ssk->sk_prot->keepalive(ssk, keep_open);
-+	sock_valbool_flag(ssk, SOCK_KEEPOPEN, keep_open);
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ 	if (ocfs2_inode_is_fast_symlink(inode))
+@@ -722,8 +725,11 @@ static int ocfs2_fiemap_inline(struct in
+ 			phys += offsetof(struct ocfs2_dinode,
+ 					 id2.i_data.id_data);
  
- 	ssk->sk_priority = sk->sk_priority;
- 	ssk->sk_bound_dev_if = sk->sk_bound_dev_if;
++		/* Release the ip_alloc_sem to prevent deadlock on page fault */
++		up_read(&OCFS2_I(inode)->ip_alloc_sem);
+ 		ret = fiemap_fill_next_extent(fieinfo, 0, phys, id_count,
+ 					      flags);
++		down_read(&OCFS2_I(inode)->ip_alloc_sem);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+@@ -792,9 +798,11 @@ int ocfs2_fiemap(struct inode *inode, st
+ 		len_bytes = (u64)le16_to_cpu(rec.e_leaf_clusters) << osb->s_clustersize_bits;
+ 		phys_bytes = le64_to_cpu(rec.e_blkno) << osb->sb->s_blocksize_bits;
+ 		virt_bytes = (u64)le32_to_cpu(rec.e_cpos) << osb->s_clustersize_bits;
+-
++		/* Release the ip_alloc_sem to prevent deadlock on page fault */
++		up_read(&OCFS2_I(inode)->ip_alloc_sem);
+ 		ret = fiemap_fill_next_extent(fieinfo, virt_bytes, phys_bytes,
+ 					      len_bytes, fe_flags);
++		down_read(&OCFS2_I(inode)->ip_alloc_sem);
+ 		if (ret)
+ 			break;
+ 
 
 
