@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFF7309DDD;
-	Wed, 17 Sep 2025 12:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48FB3233FC;
+	Wed, 17 Sep 2025 12:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113247; cv=none; b=S7bXmsce6bCs2cL+pBTbsCdjhAh6N6grLRcXs9hdJ29uvUjh3qfG+lQnsp3pL4tNHoZpkOVGNH9HzMeMzzjW0CA/c4cWun57mf9avqGOCL/z81+3OEIdaDpn7bdpb3a0kOlLV/oqaudIXuyj2WRmcxm5KsA5diH7eCA1fYXSzDQ=
+	t=1758113250; cv=none; b=NXmygdJAj0WAWk1XpKYthnP6CvE73Dxqbxpv7NX7RpEg2P5ZksWEKbhtir9aMN84xHD3KEYJab7wqZgN24Ty77TGYZQGy0TQ7+VbTYpslsNA3abPf7+Z44N9JXgvC/bvh2wME9EtPgVmosvP7uisieNePyFsLByT6bQIdWHv+Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113247; c=relaxed/simple;
-	bh=CrsnM1diYIiYXjnkrDnOAPHUU7UlS8HegNPqTBgQs0Q=;
+	s=arc-20240116; t=1758113250; c=relaxed/simple;
+	bh=0JqWGvFj9oxCzZ+L+BuAhFPBnx6vKP6vdokmciKXfEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nwpNynkRKVQWRHer3hxrtCy15RFurtOd6DqjgS1HaRbkTbbrGjDHO9jm40NaDFnmI1IjxG0JovAakKasDxBIHn7OPzTamjrQto3c6PJzfx8oDCfLqXQ6kdb3ZlvWfxm519eWnR8TUOHVoAekXGoP91XPcwRA67tTDzOSZxzUeus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxdshyXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4xrC1rC4q0ft+zsg1xnMg/VVHAKoVHYAunp1gCmtcs8/PsTJKeJsjGkvn2lkdsjwSPqMoXAY49qe+vyDbd/laVTip7MRdyZkH5f8JNR08udHjtue7iazij6w4GY59MkcZoW5g9D7PhihVvRehQ99nAYHUN38lrMMDNV4WnqtKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqgA8IUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxdshyXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822C7C4CEF0;
-	Wed, 17 Sep 2025 12:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqgA8IUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4D2C4CEFF;
+	Wed, 17 Sep 2025 12:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113246;
-	bh=CrsnM1diYIiYXjnkrDnOAPHUU7UlS8HegNPqTBgQs0Q=;
+	s=korg; t=1758113250;
+	bh=0JqWGvFj9oxCzZ+L+BuAhFPBnx6vKP6vdokmciKXfEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kxdshyXY/pDBHoODZi2o1xrnEkEmAP8HBHxBIJYXRaWFK/10P7EKeRicQCBUu9Bzr
-	 Uootcj8s5yY1uSgxDcLDVzWpMi0dGjSXuzjqjmKtgp/cJMuKTipYVap7tgdsgb3z5X
-	 JXEEMAhCj77casqpzmGnp+V3MiSMOWteeH638fgg=
+	b=gqgA8IUYi+BPpxBLvVHJflfTz+At7+FTFCuXqeGFfR0L4/6+Go+A3f0mx0NKOh3Y0
+	 U89aAExNFKYQJ1nMnTOMhJ9ewadE2GLR4Vt7PNkTByVh/H989IcmzLWm6odweCC9Ef
+	 8F1dcNTANqWB/ib9JF54LQboVaJDsNYYknYVA1ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/140] tracing: Fix tracing_marker may trigger page fault during preempt_disable
-Date: Wed, 17 Sep 2025 14:33:19 +0200
-Message-ID: <20250917123344.971008787@linuxfoundation.org>
+Subject: [PATCH 6.12 028/140] nfs/localio: remove extra indirect nfs_to call to check {read,write}_iter
+Date: Wed, 17 Sep 2025 14:33:20 +0200
+Message-ID: <20250917123344.995022051@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,86 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 3d62ab32df065e4a7797204a918f6489ddb8a237 ]
+[ Upstream commit 0978e5b85fc0867f53c5f4e5b7d2a5536a623e16 ]
 
-Both tracing_mark_write and tracing_mark_raw_write call
-__copy_from_user_inatomic during preempt_disable. But in some case,
-__copy_from_user_inatomic may trigger page fault, and will call schedule()
-subtly. And if a task is migrated to other cpu, the following warning will
-be trigger:
-        if (RB_WARN_ON(cpu_buffer,
-                       !local_read(&cpu_buffer->committing)))
+Push the read_iter and write_iter availability checks down to
+nfs_do_local_read and nfs_do_local_write respectively.
 
-An example can illustrate this issue:
+This eliminates a redundant nfs_to->nfsd_file_file() call.
 
-process flow						CPU
----------------------------------------------------------------------
-
-tracing_mark_raw_write():				cpu:0
-   ...
-   ring_buffer_lock_reserve():				cpu:0
-      ...
-      cpu = raw_smp_processor_id()			cpu:0
-      cpu_buffer = buffer->buffers[cpu]			cpu:0
-      ...
-   ...
-   __copy_from_user_inatomic():				cpu:0
-      ...
-      # page fault
-      do_mem_abort():					cpu:0
-         ...
-         # Call schedule
-         schedule()					cpu:0
-	 ...
-   # the task schedule to cpu1
-   __buffer_unlock_commit():				cpu:1
-      ...
-      ring_buffer_unlock_commit():			cpu:1
-	 ...
-	 cpu = raw_smp_processor_id()			cpu:1
-	 cpu_buffer = buffer->buffers[cpu]		cpu:1
-
-As shown above, the process will acquire cpuid twice and the return values
-are not the same.
-
-To fix this problem using copy_from_user_nofault instead of
-__copy_from_user_inatomic, as the former performs 'access_ok' before
-copying.
-
-Link: https://lore.kernel.org/20250819105152.2766363-1-luogengkun@huaweicloud.com
-Fixes: 656c7f0d2d2b ("tracing: Replace kmap with copy_from_user() in trace_marker writing")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: 992203a1fba5 ("nfs/localio: restore creds before releasing pageio data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/localio.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index ba3358eef34ba..87a43c0f90764 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6949,7 +6949,7 @@ tracing_mark_write(struct file *filp, const char __user *ubuf,
- 	entry = ring_buffer_event_data(event);
- 	entry->ip = _THIS_IP_;
+diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
+index 21b2b38fae9f3..ab305dfc71269 100644
+--- a/fs/nfs/localio.c
++++ b/fs/nfs/localio.c
+@@ -274,7 +274,7 @@ nfs_local_iocb_free(struct nfs_local_kiocb *iocb)
  
--	len = __copy_from_user_inatomic(&entry->buf, ubuf, cnt);
-+	len = copy_from_user_nofault(&entry->buf, ubuf, cnt);
- 	if (len) {
- 		memcpy(&entry->buf, FAULTED_STR, FAULTED_SIZE);
- 		cnt = FAULTED_SIZE;
-@@ -7020,7 +7020,7 @@ tracing_mark_raw_write(struct file *filp, const char __user *ubuf,
+ static struct nfs_local_kiocb *
+ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
+-		     struct nfsd_file *localio, gfp_t flags)
++		     struct file *file, gfp_t flags)
+ {
+ 	struct nfs_local_kiocb *iocb;
  
- 	entry = ring_buffer_event_data(event);
+@@ -287,9 +287,8 @@ nfs_local_iocb_alloc(struct nfs_pgio_header *hdr,
+ 		kfree(iocb);
+ 		return NULL;
+ 	}
+-	init_sync_kiocb(&iocb->kiocb, nfs_to->nfsd_file_file(localio));
++	init_sync_kiocb(&iocb->kiocb, file);
+ 	iocb->kiocb.ki_pos = hdr->args.offset;
+-	iocb->localio = localio;
+ 	iocb->hdr = hdr;
+ 	iocb->kiocb.ki_flags &= ~IOCB_APPEND;
+ 	return iocb;
+@@ -396,13 +395,19 @@ nfs_do_local_read(struct nfs_pgio_header *hdr,
+ 		  const struct rpc_call_ops *call_ops)
+ {
+ 	struct nfs_local_kiocb *iocb;
++	struct file *file = nfs_to->nfsd_file_file(localio);
++
++	/* Don't support filesystems without read_iter */
++	if (!file->f_op->read_iter)
++		return -EAGAIN;
  
--	len = __copy_from_user_inatomic(&entry->id, ubuf, cnt);
-+	len = copy_from_user_nofault(&entry->id, ubuf, cnt);
- 	if (len) {
- 		entry->id = -1;
- 		memcpy(&entry->buf, FAULTED_STR, FAULTED_SIZE);
+ 	dprintk("%s: vfs_read count=%u pos=%llu\n",
+ 		__func__, hdr->args.count, hdr->args.offset);
+ 
+-	iocb = nfs_local_iocb_alloc(hdr, localio, GFP_KERNEL);
++	iocb = nfs_local_iocb_alloc(hdr, file, GFP_KERNEL);
+ 	if (iocb == NULL)
+ 		return -ENOMEM;
++	iocb->localio = localio;
+ 
+ 	nfs_local_pgio_init(hdr, call_ops);
+ 	hdr->res.eof = false;
+@@ -570,14 +575,20 @@ nfs_do_local_write(struct nfs_pgio_header *hdr,
+ 		   const struct rpc_call_ops *call_ops)
+ {
+ 	struct nfs_local_kiocb *iocb;
++	struct file *file = nfs_to->nfsd_file_file(localio);
++
++	/* Don't support filesystems without write_iter */
++	if (!file->f_op->write_iter)
++		return -EAGAIN;
+ 
+ 	dprintk("%s: vfs_write count=%u pos=%llu %s\n",
+ 		__func__, hdr->args.count, hdr->args.offset,
+ 		(hdr->args.stable == NFS_UNSTABLE) ?  "unstable" : "stable");
+ 
+-	iocb = nfs_local_iocb_alloc(hdr, localio, GFP_NOIO);
++	iocb = nfs_local_iocb_alloc(hdr, file, GFP_NOIO);
+ 	if (iocb == NULL)
+ 		return -ENOMEM;
++	iocb->localio = localio;
+ 
+ 	switch (hdr->args.stable) {
+ 	default:
+@@ -603,16 +614,9 @@ int nfs_local_doio(struct nfs_client *clp, struct nfsd_file *localio,
+ 		   const struct rpc_call_ops *call_ops)
+ {
+ 	int status = 0;
+-	struct file *filp = nfs_to->nfsd_file_file(localio);
+ 
+ 	if (!hdr->args.count)
+ 		return 0;
+-	/* Don't support filesystems without read_iter/write_iter */
+-	if (!filp->f_op->read_iter || !filp->f_op->write_iter) {
+-		nfs_local_disable(clp);
+-		status = -EAGAIN;
+-		goto out;
+-	}
+ 
+ 	switch (hdr->rw_mode) {
+ 	case FMODE_READ:
+@@ -626,8 +630,10 @@ int nfs_local_doio(struct nfs_client *clp, struct nfsd_file *localio,
+ 			hdr->rw_mode);
+ 		status = -EINVAL;
+ 	}
+-out:
++
+ 	if (status != 0) {
++		if (status == -EAGAIN)
++			nfs_local_disable(clp);
+ 		nfs_to_nfsd_file_put_local(localio);
+ 		hdr->task.tk_status = status;
+ 		nfs_local_hdr_release(hdr, call_ops);
 -- 
 2.51.0
 
