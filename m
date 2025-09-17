@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9B62C159C;
-	Wed, 17 Sep 2025 12:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531481A76BB;
+	Wed, 17 Sep 2025 12:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113507; cv=none; b=jt5mPe2tR8cbGXoKgeypL17IOHnbdlwpYVrsYe17Tie+xJezSAnlQcBl2otQXcJ5XRh49bWq+T+TwDoUyGUf8EQ5gtS+1hY2zwZ6gPXf+qCtZgIUTXOX39Kts4tvf45tdqcwY5SqD8IE0JXS6t1l9uTAPvr+w3tiwv7J1z66zXQ=
+	t=1758113510; cv=none; b=DTi3lOvQ3iaYI+WCsBeXQh/yuPycO0TTgQsq+J/mHqfebb3hD9W7BDyZKb6r/Y7raLChcXVfbVSnRyks6nssZv6bxhn/IKaYXEiRdIW5EYZIkEISL9xZNqHlDM7rQ9sZytl1WkUujXKvsM1lDJUbIqDJfQV3OPWlxYu9RJr3dhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113507; c=relaxed/simple;
-	bh=dtK+aS4l9HaXFtjunnWWzrYWXSyE7TRJQs4PZ9ift9I=;
+	s=arc-20240116; t=1758113510; c=relaxed/simple;
+	bh=+pjb5EOJIwCmdLi8Mt8CApy8ZESg96Lnk6rm81pNisI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXq3SYSU+J7sOdDbhd3kol2HQMjKqiB5qRNffZk0TiU6jnGiI7RC17ELhYQziCI06lnAWZwTsK1ZVgc9zOHjhCMbFuxnKDaGUeH2f6fhWr+jAPEFeHQ+Hvew5WulPkAl+6R8EPBOV1KE6o0kLqldGyNkcbZWq5FsUbEuPSA1MfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACTzLepx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzUrbEbLeS/S8i9ZHja/6OfJ0RaQ9wowuxtjT0UGJcxeZUrDxbKwjBXUk0I6b3O5R6cb9ne/cN1ICZJ6DJ49ZHoOlQGXdvLMDkkvffV2MdZXpGsztpoI8AQyd/oXxsU51Dk0/OItqcKeAex4HaHEIye4UcMUsGB5AKb0dTM3wxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfq3/x1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACTzLepx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B07C4CEF0;
-	Wed, 17 Sep 2025 12:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfq3/x1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17A0C4CEF0;
+	Wed, 17 Sep 2025 12:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113506;
-	bh=dtK+aS4l9HaXFtjunnWWzrYWXSyE7TRJQs4PZ9ift9I=;
+	s=korg; t=1758113510;
+	bh=+pjb5EOJIwCmdLi8Mt8CApy8ZESg96Lnk6rm81pNisI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACTzLepx0jYT/2AVLRUyX/tcb/liOFFeV1G1V3ycyKqpt7JAKrxU5vorpuUzakLOI
-	 r5t6w6HFR3N6aa1DOT2q/v8OR+wcHAgj/ikzjffJZS6tyORYB3FfbKvmsz8BAMWRn7
-	 QC5ddqtKGdz08ns8YG1HuA9vAbSR6Xq+xOK/Y5yw=
+	b=wfq3/x1lcHLfATGUzvPYCIlWGt4Dt4SwoV3ehQH6FAh+xIMMuT+LknyFabBZOScqc
+	 2TjDFrqtbn1yyN0nchyfVVnZuDP2ZNPpiTDhr3XHuyA/uasP+uJM+nNXDwLJzJGMKV
+	 ga2wTIaIdwEvt7psgkUQfILHUtK6BVXZUpqUHA9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/140] can: xilinx_can: xcan_write_frame(): fix use-after-free of transmitted SKB
-Date: Wed, 17 Sep 2025 14:34:38 +0200
-Message-ID: <20250917123346.899386131@linuxfoundation.org>
+Subject: [PATCH 6.12 107/140] netfilter: nft_set_pipapo: remove unused arguments
+Date: Wed, 17 Sep 2025 14:34:39 +0200
+Message-ID: <20250917123346.924708995@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,70 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ef79f00be72bd81d2e1e6f060d83cf7e425deee4 ]
+[ Upstream commit 7792c1e03054440c60d4bce0c06a31c134601997 ]
 
-can_put_echo_skb() takes ownership of the SKB and it may be freed
-during or after the call.
+They are not used anymore, so remove them.
 
-However, xilinx_can xcan_write_frame() keeps using SKB after the call.
-
-Fix that by only calling can_put_echo_skb() after the code is done
-touching the SKB.
-
-The tx_lock is held for the entire xcan_write_frame() execution and
-also on the can_get_echo_skb() side so the order of operations does not
-matter.
-
-An earlier fix commit 3d3c817c3a40 ("can: xilinx_can: Fix usage of skb
-memory") did not move the can_put_echo_skb() call far enough.
-
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Fixes: 1598efe57b3e ("can: xilinx_can: refactor code in preparation for CAN FD support")
-Link: https://patch.msgid.link/20250822095002.168389-1-anssi.hannula@bitwise.fi
-[mkl: add "commit" in front of sha1 in patch description]
-[mkl: fix indention]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: c4eaca2e1052 ("netfilter: nft_set_pipapo: don't check genbit from packetpath lookups")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/xilinx_can.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/netfilter/nft_set_pipapo.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/can/xilinx_can.c b/drivers/net/can/xilinx_can.c
-index 436c0e4b0344c..91382225f1140 100644
---- a/drivers/net/can/xilinx_can.c
-+++ b/drivers/net/can/xilinx_can.c
-@@ -690,14 +690,6 @@ static void xcan_write_frame(struct net_device *ndev, struct sk_buff *skb,
- 		dlc |= XCAN_DLCR_EDL_MASK;
- 	}
- 
--	if (!(priv->devtype.flags & XCAN_FLAG_TX_MAILBOXES) &&
--	    (priv->devtype.flags & XCAN_FLAG_TXFEMP))
--		can_put_echo_skb(skb, ndev, priv->tx_head % priv->tx_max, 0);
--	else
--		can_put_echo_skb(skb, ndev, 0, 0);
--
--	priv->tx_head++;
--
- 	priv->write_reg(priv, XCAN_FRAME_ID_OFFSET(frame_offset), id);
- 	/* If the CAN frame is RTR frame this write triggers transmission
- 	 * (not on CAN FD)
-@@ -730,6 +722,14 @@ static void xcan_write_frame(struct net_device *ndev, struct sk_buff *skb,
- 					data[1]);
- 		}
- 	}
-+
-+	if (!(priv->devtype.flags & XCAN_FLAG_TX_MAILBOXES) &&
-+	    (priv->devtype.flags & XCAN_FLAG_TXFEMP))
-+		can_put_echo_skb(skb, ndev, priv->tx_head % priv->tx_max, 0);
-+	else
-+		can_put_echo_skb(skb, ndev, 0, 0);
-+
-+	priv->tx_head++;
- }
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 9e4e25f2458f9..9ac48e6b4332c 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -502,8 +502,6 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
  
  /**
+  * pipapo_get() - Get matching element reference given key data
+- * @net:	Network namespace
+- * @set:	nftables API set representation
+  * @m:		storage containing active/existing elements
+  * @data:	Key data to be matched against existing elements
+  * @genmask:	If set, check that element is active in given genmask
+@@ -516,9 +514,7 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
+  *
+  * Return: pointer to &struct nft_pipapo_elem on match, error pointer otherwise.
+  */
+-static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+-					  const struct nft_set *set,
+-					  const struct nft_pipapo_match *m,
++static struct nft_pipapo_elem *pipapo_get(const struct nft_pipapo_match *m,
+ 					  const u8 *data, u8 genmask,
+ 					  u64 tstamp, gfp_t gfp)
+ {
+@@ -615,7 +611,7 @@ nft_pipapo_get(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo_match *m = rcu_dereference(priv->match);
+ 	struct nft_pipapo_elem *e;
+ 
+-	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
++	e = pipapo_get(m, (const u8 *)elem->key.val.data,
+ 		       nft_genmask_cur(net), get_jiffies_64(),
+ 		       GFP_ATOMIC);
+ 	if (IS_ERR(e))
+@@ -1344,7 +1340,7 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 	else
+ 		end = start;
+ 
+-	dup = pipapo_get(net, set, m, start, genmask, tstamp, GFP_KERNEL);
++	dup = pipapo_get(m, start, genmask, tstamp, GFP_KERNEL);
+ 	if (!IS_ERR(dup)) {
+ 		/* Check if we already have the same exact entry */
+ 		const struct nft_data *dup_key, *dup_end;
+@@ -1366,7 +1362,7 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 
+ 	if (PTR_ERR(dup) == -ENOENT) {
+ 		/* Look for partially overlapping entries */
+-		dup = pipapo_get(net, set, m, end, nft_genmask_next(net), tstamp,
++		dup = pipapo_get(m, end, nft_genmask_next(net), tstamp,
+ 				 GFP_KERNEL);
+ 	}
+ 
+@@ -1913,7 +1909,7 @@ nft_pipapo_deactivate(const struct net *net, const struct nft_set *set,
+ 	if (!m)
+ 		return NULL;
+ 
+-	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
++	e = pipapo_get(m, (const u8 *)elem->key.val.data,
+ 		       nft_genmask_next(net), nft_net_tstamp(net), GFP_KERNEL);
+ 	if (IS_ERR(e))
+ 		return NULL;
 -- 
 2.51.0
 
