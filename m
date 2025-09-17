@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7BC3195E5;
-	Wed, 17 Sep 2025 12:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CE53195F3;
+	Wed, 17 Sep 2025 12:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113886; cv=none; b=ndDEpi3Pz1G3a5YtDQ96shk98P/PdsyJa24yUqn8wCZeu0ctyCY6RvnZtUqAy/G0ZnfKrMSxJ1uwOzoubMCjvplAmWnSpnefngEP4lMre2rqGS6qrMSfyge7YoV75DHhL/Il1ERyHkAPxVhVZgpK1+JbSTl9KBHZYL/LDvDXN6c=
+	t=1758113889; cv=none; b=G31cFnojTugevCgJ0sXqGyZCWcDOuG9GjSJR79F3p7OzIYC2S3FRxiwaZ7CPdmmtZ7lNXmoU0K4VrPzMwLL54ObakdzBa5rxysE8CKQTsOIY8zYcmFWwgUlEhQWPm3x2RM/4Xp0zZA7vnt0eX3kOmmKK30d9Qjn+Y3KX5h7O2j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113886; c=relaxed/simple;
-	bh=236ZVXxd1JtJWG8CkGvYCDrS/vzdK18qnDi8My27t9g=;
+	s=arc-20240116; t=1758113889; c=relaxed/simple;
+	bh=g8Gk9/xWfvrRTa5uiv03Hk+8o4eKF/lzWYPyoOnjNIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EeaNhYleDexPH/bQTRWLPJNlAj4xp+MBp2cUex6Idoydllug9uRybzjhVkTUmCmBLXBqlsC5muWto9zru6Sf1AOToMO+pUO9HvYm7Ws1kPR9gebysmZtoqa0thulHEwsDFhnKh6N3pul/QQveybRek9dklJKst0goaF5/I6uEw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BJtVxQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G0PBfQXftDpSXj76FzJXWCeZ6GRX09PxBXQNT66n6gkMYJbuPyVxlFw2ELbnQKM6BogRX+cq6tKGIX5JDC406OKqQHZS28JtVahF7eHWcO3hOCr4scZUz3MG18j16+EvLY+DB7b3ismfQJY0RZDJkfodToMOWGjH29alRP8XM4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzuUpnqM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BJtVxQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93531C4CEF0;
-	Wed, 17 Sep 2025 12:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzuUpnqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5509C4CEF7;
+	Wed, 17 Sep 2025 12:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113886;
-	bh=236ZVXxd1JtJWG8CkGvYCDrS/vzdK18qnDi8My27t9g=;
+	s=korg; t=1758113889;
+	bh=g8Gk9/xWfvrRTa5uiv03Hk+8o4eKF/lzWYPyoOnjNIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BJtVxQ1gIBn06eyy7zQgJgLqh4wwZ9FqOk39TKCsrjFB+9mIk4W+jYyq/UQI/W1S
-	 J1eM7Q2nJPe06Qhk0HUvaerokd43unXI4kMI0abMy/jYkrCUHZ9V+2eKZ3mh0MYhjG
-	 ceHuravDGErHD+xCUDjj15+LztuytOyRNPsvh5dk=
+	b=BzuUpnqMyecYFRD5L4NPgmEwNdltvmMjnByDeMnyyaEohJUy6bEfZkMujYajr8ZG5
+	 Rr6n2xfFUCPfO/byQC+NZ2eUy7Zq9du8NBGIQK78j/vRP03aJA9/XK+1T32Rx9SEWw
+	 kM7RLrZ1cvxIplzM2Aej7pZB1el9++lFcXKcRzVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Damian Tometzki <damian@riscv-rocks.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/101] dmaengine: ti: edma: Fix memory allocation size for queue_priority_map
-Date: Wed, 17 Sep 2025 14:35:07 +0200
-Message-ID: <20250917123338.869729213@linuxfoundation.org>
+Subject: [PATCH 6.6 067/101] Disable SLUB_TINY for build testing
+Date: Wed, 17 Sep 2025 14:34:50 +0200
+Message-ID: <20250917123338.460501630@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -51,50 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anders Roxell <anders.roxell@linaro.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit e63419dbf2ceb083c1651852209c7f048089ac0f ]
+[ Upstream commit 6f110a5e4f9977c31ce76fefbfef6fd4eab6bfb7 ]
 
-Fix a critical memory allocation bug in edma_setup_from_hw() where
-queue_priority_map was allocated with insufficient memory. The code
-declared queue_priority_map as s8 (*)[2] (pointer to array of 2 s8),
-but allocated memory using sizeof(s8) instead of the correct size.
+... and don't error out so hard on missing module descriptions.
 
-This caused out-of-bounds memory writes when accessing:
-  queue_priority_map[i][0] = i;
-  queue_priority_map[i][1] = i;
+Before commit 6c6c1fc09de3 ("modpost: require a MODULE_DESCRIPTION()")
+we used to warn about missing module descriptions, but only when
+building with extra warnigns (ie 'W=1').
 
-The bug manifested as kernel crashes with "Oops - undefined instruction"
-on ARM platforms (BeagleBoard-X15) during EDMA driver probe, as the
-memory corruption triggered kernel hardening features on Clang.
+After that commit the warning became an unconditional hard error.
 
-Change the allocation to use sizeof(*queue_priority_map) which
-automatically gets the correct size for the 2D array structure.
+And it turns out not all modules have been converted despite the claims
+to the contrary.  As reported by Damian Tometzki, the slub KUnit test
+didn't have a module description, and apparently nobody ever really
+noticed.
 
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-Link: https://lore.kernel.org/r/20250830094953.3038012-1-anders.roxell@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The reason nobody noticed seems to be that the slub KUnit tests get
+disabled by SLUB_TINY, which also ends up disabling a lot of other code,
+both in tests and in slub itself.  And so anybody doing full build tests
+didn't actually see this failre.
+
+So let's disable SLUB_TINY for build-only tests, since it clearly ends
+up limiting build coverage.  Also turn the missing module descriptions
+error back into a warning, but let's keep it around for non-'W=1'
+builds.
+
+Reported-by: Damian Tometzki <damian@riscv-rocks.de>
+Link: https://lore.kernel.org/all/01070196099fd059-e8463438-7b1b-4ec8-816d-173874be9966-000000@eu-central-1.amazonses.com/
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6c6c1fc09de3 ("modpost: require a MODULE_DESCRIPTION()")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index c0fa541324675..f7ddf588b7f9b 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2063,8 +2063,8 @@ static int edma_setup_from_hw(struct device *dev, struct edma_soc_info *pdata,
- 	 * priority. So Q0 is the highest priority queue and the last queue has
- 	 * the lowest priority.
- 	 */
--	queue_priority_map = devm_kcalloc(dev, ecc->num_tc + 1, sizeof(s8),
--					  GFP_KERNEL);
-+	queue_priority_map = devm_kcalloc(dev, ecc->num_tc + 1,
-+					  sizeof(*queue_priority_map), GFP_KERNEL);
- 	if (!queue_priority_map)
- 		return -ENOMEM;
+diff --git a/mm/Kconfig b/mm/Kconfig
+index c11cd01169e8d..046c32686fc4d 100644
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -280,7 +280,7 @@ config SLAB
  
+ config SLUB_TINY
+ 	bool "Configure SLUB for minimal memory footprint"
+-	depends on SLUB && EXPERT
++	depends on SLUB && EXPERT && !COMPILE_TEST
+ 	select SLAB_MERGE_DEFAULT
+ 	help
+ 	   Configures the SLUB allocator in a way to achieve minimal memory
 -- 
 2.51.0
 
