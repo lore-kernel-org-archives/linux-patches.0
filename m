@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF581EE033;
-	Wed, 17 Sep 2025 12:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3AB29B795;
+	Wed, 17 Sep 2025 12:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112954; cv=none; b=jjYqzwBzCnVRkG9X44ywFQBnEGPZslEWFxsoCl3SqmzCckrEWo0Sirmmi/12GzyWjhduB7rrw71X45NzM0xl0FGMHsGMTfwxbwtnfLC8tpfwkt3oAjyaZLyxjgDmoqHTc3GimhlMeSts18aY5XQhnoLb9t5znMDS6ql1zkrmQwE=
+	t=1758112957; cv=none; b=YsHns8jpHeGpjYsbvF92q6NwZtDMDhC6/a51nEBBanLZfPY0uC0JI6W2PtBU+NEhiUBLYpoz3COn0nGAiLuHbNihg8Srg6OpFBEbP+S8kXMeJZyqhvqggGFX/mHKQBHfYe0a6JmNE6Onp0ldi+Elo/R9EPSgPSvKZ4gJtq/Yy5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112954; c=relaxed/simple;
-	bh=yMTyQ/OtBTkuGgaYrMVVKnGneT9B/c9u3QoQMbEkaLw=;
+	s=arc-20240116; t=1758112957; c=relaxed/simple;
+	bh=78bEsefXFXYkAGYJlFSn+fpve5onxg9EoyyraJp9wgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeLvooh+m8P14ILHqWnkwFWIeX0QWBpNjoZLWVYJA9mAAklW9ZJKNVW8a/UeOR2C6kbj4lVhNmc0du5Q+08YTDp172iiQv/1didb/aqcNcceKZ7UAt7V2PIKIkQyZeKNEr66apwrK0Lm8l0AOPJFrnBUKv3HKuoxBXSLEbKl9d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPQtIJl1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjgpewGm8PcZrTpgU0e6JTUFEylHEIMbdmdLOhbNqwp7zgMPVfDX7uV2yBK8ecNZQI59/BNje3ipH3xAgkJDeUBBcsh9NToDNxKtbadc1M6znrU+NqWdTW/jkN6ySF3dElN3XwmAloI929eyBNEbs4llbzu0ArRUis2WFD5s6ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DK4FvDuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPQtIJl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F95C4CEF0;
-	Wed, 17 Sep 2025 12:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DK4FvDuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2C5C4CEF0;
+	Wed, 17 Sep 2025 12:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112953;
-	bh=yMTyQ/OtBTkuGgaYrMVVKnGneT9B/c9u3QoQMbEkaLw=;
+	s=korg; t=1758112957;
+	bh=78bEsefXFXYkAGYJlFSn+fpve5onxg9EoyyraJp9wgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPQtIJl1qYvin/1U/9xGn+VFDN52uz2ThqjghgRmIBxflYcpvfZd8OlNC4kGObsMz
-	 Idj9AKq0e/qMJrmnMTzlCo/cNKPhu5fGtPkBNPDAvLhIHwg5KrPjOv6crzLPRLYNmv
-	 uqBMheXP3Da9oEljUNjl/rfzaiXQ3GuU2U1XvLys=
+	b=DK4FvDuoof+7Cjajr8/Yx1s1nnxa4OFu+ANkUJTawSU0WWUbtNw6OhqTkiTkd8hqj
+	 3u5Wx+1wnkl9SqFTFJX5ATZi/5buoYEhtvq7FTPJrIp6JaerLUUFkVtWB/jN2/PYJx
+	 p6K4ko7qsEKGFY241Ikl7mpbxbeV5ND2JzI4kP4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-I Wu <olvaffe@gmail.com>,
-	Steven Price <steven.price@arm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: [PATCH 6.16 126/189] drm/panthor: validate group queue count
-Date: Wed, 17 Sep 2025 14:33:56 +0200
-Message-ID: <20250917123354.937446802@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Richard Leitner <richard.leitner@skidata.com>,
+	Simon Horman <horms@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 127/189] net: fec: Fix possible NPD in fec_enet_phy_reset_after_clk_enable()
+Date: Wed, 17 Sep 2025 14:33:57 +0200
+Message-ID: <20250917123354.963294454@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,36 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-I Wu <olvaffe@gmail.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit a00f2015acdbd8a4b3d2382eaeebe11db1925fad ]
+[ Upstream commit 03e79de4608bdd48ad6eec272e196124cefaf798 ]
 
-A panthor group can have at most MAX_CS_PER_CSG panthor queues.
+The function of_phy_find_device may return NULL, so we need to take
+care before dereferencing phy_dev.
 
-Fixes: 4bdca11507928 ("drm/panthor: Add the driver frontend block")
-Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com> # v1
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250903192133.288477-1-olvaffe@gmail.com
+Fixes: 64a632da538a ("net: fec: Fix phy_device lookup for phy_reset_after_clk_enable()")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Cc: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Cc: Richard Leitner <richard.leitner@skidata.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250904091334.53965-1-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_drv.c b/drivers/gpu/drm/panthor/panthor_drv.c
-index 6200cad22563a..0f4ab9e5ef95c 100644
---- a/drivers/gpu/drm/panthor/panthor_drv.c
-+++ b/drivers/gpu/drm/panthor/panthor_drv.c
-@@ -1093,7 +1093,7 @@ static int panthor_ioctl_group_create(struct drm_device *ddev, void *data,
- 	struct drm_panthor_queue_create *queue_args;
- 	int ret;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 651b73163b6ee..5f15f42070c53 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -2358,7 +2358,8 @@ static void fec_enet_phy_reset_after_clk_enable(struct net_device *ndev)
+ 		 */
+ 		phy_dev = of_phy_find_device(fep->phy_node);
+ 		phy_reset_after_clk_enable(phy_dev);
+-		put_device(&phy_dev->mdio.dev);
++		if (phy_dev)
++			put_device(&phy_dev->mdio.dev);
+ 	}
+ }
  
--	if (!args->queues.count)
-+	if (!args->queues.count || args->queues.count > MAX_CS_PER_CSG)
- 		return -EINVAL;
- 
- 	ret = PANTHOR_UOBJ_GET_ARRAY(queue_args, &args->queues);
 -- 
 2.51.0
 
