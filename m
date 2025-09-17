@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EDF337EB9;
-	Wed, 17 Sep 2025 12:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5791E489;
+	Wed, 17 Sep 2025 12:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112986; cv=none; b=OAfNKq9ZdehuZKesIZq9M371kU8dvi3CXhgjGdjlxH25afw0jH1f5V7ndbJP2CWPNHv9UJ+unjzPkdwkFRDsBn0sWly+GhcltcmxBc3qNagJHmPPS6DIMu838lAvv3RtUiBVZGOg+FO3Y6mUxwFmmIi25C/xF0jeK8XwG20Xw1E=
+	t=1758112989; cv=none; b=gqZfJM0OWlAPK69lWSce47LwNPS/5TzqMDtEtpTzYGYQhxvuySi3RwBiEZ3IHo2O+7VBX84WW0OF3LduXLv/V9RrJdMOw7eZ71KfffqGQKlN/MahZiKDd4zRnvIbhi3os+blFz16/SYff8MhIW006NWKF70kiA4ewm+8aLnNzUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112986; c=relaxed/simple;
-	bh=t+o5DmSH//lhFndqnBKUTy9kGl1cI/79pBUwk3HSPaQ=;
+	s=arc-20240116; t=1758112989; c=relaxed/simple;
+	bh=sTPMpxYKwKQc9/cp5I+GdhWTOw9QJ+cHLa9g2ADLc2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p06fJUCsEu3/BPDyHKxlPZcaRw2Jm4mzW/99owXo5zDxR6CM9KltFB6xDaacBVKaLpom9zy8I4WVIfAAigHxmvfaceinfTxNVm40AqlCIcU07dvTGzgkCjUeFCe/qtX8/ama4YmNyKGGheULi7VCngJpy9yvs7PZZJfaS/GIEEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ogu8AlNC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdqLIud9RobeBHzI326SHkwyCH0pGsk5rs67eojbSX16otgsjr9ynObAuGc19fz1ODP9xzQt9VFloymg4nvy3SHiXIuH81iYlq35r9nS53eyZ8HLSkol9EH8rsxJuGrB85q3S9ifXuqFFTp3eMv6oG0nZUNqQUfjhQGDKooXKmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FUp1twS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogu8AlNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F707C4CEF0;
-	Wed, 17 Sep 2025 12:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FUp1twS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94592C4CEF7;
+	Wed, 17 Sep 2025 12:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112985;
-	bh=t+o5DmSH//lhFndqnBKUTy9kGl1cI/79pBUwk3HSPaQ=;
+	s=korg; t=1758112989;
+	bh=sTPMpxYKwKQc9/cp5I+GdhWTOw9QJ+cHLa9g2ADLc2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ogu8AlNCFZn2/JLtvb7DC/NENnuXMiHBkvNHzU0BBVBiev9Yca0KIz4w+Elnr1ma/
-	 n9NG/Wi5UMujGw7eOSW/58PSZR47eeq0hvVbGrm5C0W10gB88UszQsTp+tlJ9neFWS
-	 dQ8161LxvRPiAkxoVXVurX9a02f6sGNHq8kvtHjA=
+	b=0FUp1twSV2IllreY6iAGe7sa+SElJqGKTm+1rV4o0E41036tagfcliO5T7cs6RtgK
+	 j/Da8ke/NCgVJV/2M7GtoG8kHVYwheqIKbyGLxCYykszI1NQXFJht6oq+vC+6DdL9q
+	 IJTY9aH9foGSqiGQr8BUrgP3SP0M+36COhyDmy3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 135/189] genetlink: fix genl_bind() invoking bind() after -EPERM
-Date: Wed, 17 Sep 2025 14:34:05 +0200
-Message-ID: <20250917123355.158949429@linuxfoundation.org>
+Subject: [PATCH 6.16 136/189] net: dsa: b53: fix ageing time for BCM53101
+Date: Wed, 17 Sep 2025 14:34:06 +0200
+Message-ID: <20250917123355.186158921@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,45 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 1dbfb0363224f6da56f6655d596dc5097308d6f5 ]
+[ Upstream commit 674b34c4c770551e916ae707829c7faea4782d3a ]
 
-Per family bind/unbind callbacks were introduced to allow families
-to track multicast group consumer presence, e.g. to start or stop
-producing events depending on listeners.
+For some reason Broadcom decided that BCM53101 uses 0.5s increments for
+the ageing time register, but kept the field width the same [1]. Due to
+this, the actual ageing time was always half of what was configured.
 
-However, in genl_bind() the bind() callback was invoked even if
-capability checks failed and ret was set to -EPERM. This means that
-callbacks could run on behalf of unauthorized callers while the
-syscall still returned failure to user space.
+Fix this by adapting the limits and value calculation for BCM53101.
 
-Fix this by only invoking bind() after "if (ret) break;" check
-i.e. after permission checks have succeeded.
+So far it looks like this is the only chip with the increased tick
+speed:
 
-Fixes: 3de21a8990d3 ("genetlink: Add per family bind/unbind callbacks")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20250905135731.3026965-1-alok.a.tiwari@oracle.com
+$ grep -l -r "Specifies the aging time in 0.5 seconds" cdk/PKG/chip | sort
+cdk/PKG/chip/bcm53101/bcm53101_a0_defs.h
+
+$ grep -l -r "Specifies the aging time in seconds" cdk/PKG/chip | sort
+cdk/PKG/chip/bcm53010/bcm53010_a0_defs.h
+cdk/PKG/chip/bcm53020/bcm53020_a0_defs.h
+cdk/PKG/chip/bcm53084/bcm53084_a0_defs.h
+cdk/PKG/chip/bcm53115/bcm53115_a0_defs.h
+cdk/PKG/chip/bcm53118/bcm53118_a0_defs.h
+cdk/PKG/chip/bcm53125/bcm53125_a0_defs.h
+cdk/PKG/chip/bcm53128/bcm53128_a0_defs.h
+cdk/PKG/chip/bcm53134/bcm53134_a0_defs.h
+cdk/PKG/chip/bcm53242/bcm53242_a0_defs.h
+cdk/PKG/chip/bcm53262/bcm53262_a0_defs.h
+cdk/PKG/chip/bcm53280/bcm53280_a0_defs.h
+cdk/PKG/chip/bcm53280/bcm53280_b0_defs.h
+cdk/PKG/chip/bcm53600/bcm53600_a0_defs.h
+cdk/PKG/chip/bcm89500/bcm89500_a0_defs.h
+
+[1] https://github.com/Broadcom/OpenMDK/blob/a5d3fc9b12af3eeb68f2ca0ce7ec4056cd14d6c2/cdk/PKG/chip/bcm53101/bcm53101_a0_defs.h#L28966
+
+Fixes: e39d14a760c0 ("net: dsa: b53: implement setting ageing time")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250905124507.59186-1-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/genetlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/b53/b53_common.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 104732d345434..978c129c60950 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1836,6 +1836,9 @@ static int genl_bind(struct net *net, int group)
- 		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
- 			ret = -EPERM;
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index d15d912690c40..073d20241a4c9 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1229,9 +1229,15 @@ static int b53_setup(struct dsa_switch *ds)
+ 	 */
+ 	ds->untag_vlan_aware_bridge_pvid = true;
  
-+		if (ret)
-+			break;
-+
- 		if (family->bind)
- 			family->bind(i);
+-	/* Ageing time is set in seconds */
+-	ds->ageing_time_min = 1 * 1000;
+-	ds->ageing_time_max = AGE_TIME_MAX * 1000;
++	if (dev->chip_id == BCM53101_DEVICE_ID) {
++		/* BCM53101 uses 0.5 second increments */
++		ds->ageing_time_min = 1 * 500;
++		ds->ageing_time_max = AGE_TIME_MAX * 500;
++	} else {
++		/* Everything else uses 1 second increments */
++		ds->ageing_time_min = 1 * 1000;
++		ds->ageing_time_max = AGE_TIME_MAX * 1000;
++	}
  
+ 	ret = b53_reset_switch(dev);
+ 	if (ret) {
+@@ -2448,7 +2454,10 @@ int b53_set_ageing_time(struct dsa_switch *ds, unsigned int msecs)
+ 	else
+ 		reg = B53_AGING_TIME_CONTROL;
+ 
+-	atc = DIV_ROUND_CLOSEST(msecs, 1000);
++	if (dev->chip_id == BCM53101_DEVICE_ID)
++		atc = DIV_ROUND_CLOSEST(msecs, 500);
++	else
++		atc = DIV_ROUND_CLOSEST(msecs, 1000);
+ 
+ 	if (!is5325(dev) && !is5365(dev))
+ 		atc |= AGE_CHANGE;
 -- 
 2.51.0
 
