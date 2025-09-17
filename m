@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C37F30CB5D;
-	Wed, 17 Sep 2025 12:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FA030CB5D;
+	Wed, 17 Sep 2025 12:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113763; cv=none; b=qVmhuLibFJcBYx+uyym9a1EvpChMzBli5fkeyu2RUdubdH0Q5lRi58aB5KgnCZoQIee6UEndK6bP8k12PThU+5IEYF5H3nufpK/Cw63Q0Fw3TRBui+aris80kB1jraKhuCxf8aKtcbywLSFMSzgx9imMq9mFVe3CxFm3iVC57JQ=
+	t=1758113764; cv=none; b=thhjfW5O0XG0wngD6r109G/4bw3KP69xBQq1LrNkqxv/6Cp2vb4Vt62iHQe+C+xiODWJPYaQHsezpZegp0Idjj8/plKL/aIAQEW3gHByQDn9af4jS70rP2q0M6NXg9Q3GAz5PFkCeusL/x3MC1v0JmUvoHgM7/cqFUgP8+eaM+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113763; c=relaxed/simple;
-	bh=PHrOyTf30m88l3XD7YPhkajyRwR3opU7AY27xD++DQ4=;
+	s=arc-20240116; t=1758113764; c=relaxed/simple;
+	bh=rjeAla/1JH5sLmA/HfE4rhrmUzhAmfm6MTSOnM2R/Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2IekjwF6FUgQ8gH9V6b7JL/5zKkRFPhiMcH7HMFG3YPczojiGq2C6j0R+xR0iPKTZztk+BuncKbwP63Q5ALrQukiiGSLwt//ky0NCEjanwamGUWr/SukJMqkFfcgQeyQaWX2vFhJP64eBLnszXhwsRD5x+2RJtp2HBPIg/fXxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ok8K7rrF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fp07Ox4h9axbsDYlhhC5e+Yz7QHFAKi07TDDHUMSGoxEiRcdcDjC6jcVvCm+Ojyg8oobSdb1hj/B4Fr7pguLQfOl4ld0KQ86r/u+Ud+dSVKyUn4exmr/t67BLxlhZ+/y3bXzm6xvYtOZSedAn9oNO61mysguRJWK1VCzH41eUyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFJOq+Q/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ok8K7rrF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DCB4C4CEF0;
-	Wed, 17 Sep 2025 12:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFJOq+Q/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8249CC4CEF0;
+	Wed, 17 Sep 2025 12:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113760;
-	bh=PHrOyTf30m88l3XD7YPhkajyRwR3opU7AY27xD++DQ4=;
+	s=korg; t=1758113764;
+	bh=rjeAla/1JH5sLmA/HfE4rhrmUzhAmfm6MTSOnM2R/Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ok8K7rrFmThwUubldorBQPmnkD932JR6RlaVPhX7EaqcoGTHa98Ll/WCC6x50Zv7v
-	 WzBviwippBraz3uENpu70cUMYmzDqRZyOiHVb1I+lu8AYlSzXE6vZVxUVxlQoYPFK5
-	 IwnXzbapUZiwPaiUxBVzs7C0SRYqepHOAWx6huoU=
+	b=dFJOq+Q/qymDSp+VmnH5b6V005lsARGmPjLJOdzlkyiZT19N50fkuPVF8stM2uTyy
+	 3tw95OoFhzI05hF3AZcyXGzfUdUnjjldWajCxgCFLEm7TZC2jo43YLX6YNaiomoaeQ
+	 9sG7Iz134FG7ijippoJtulIjpWCSNb78ZuVosXRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Johan Hovold <johan@kernel.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.6 044/101] drm/mediatek: fix potential OF node use-after-free
-Date: Wed, 17 Sep 2025 14:34:27 +0200
-Message-ID: <20250917123337.911093571@linuxfoundation.org>
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 045/101] drm/amdgpu/vcn: Allow limiting ctx to instance 0 for AV1 at any time
+Date: Wed, 17 Sep 2025 14:34:28 +0200
+Message-ID: <20250917123337.933349623@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -53,60 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: David Rosca <david.rosca@amd.com>
 
-commit 4de37a48b6b58faaded9eb765047cf0d8785ea18 upstream.
+commit 3318f2d20ce48849855df5e190813826d0bc3653 upstream.
 
-The for_each_child_of_node() helper drops the reference it takes to each
-node as it iterates over children and an explicit of_node_put() is only
-needed when exiting the loop early.
+There is no reason to require this to happen on first submitted IB only.
+We need to wait for the queue to be idle, but it can be done at any
+time (including when there are multiple video sessions active).
 
-Drop the recently introduced bogus additional reference count decrement
-at each iteration that could potentially lead to a use-after-free.
-
-Fixes: 1f403699c40f ("drm/mediatek: Fix device/node reference count leaks in mtk_drm_get_all_drm_priv")
-Cc: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8908fdce0634a623404e9923ed2f536101a39db5)
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250829090345.21075-2-johan@kernel.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   12 ++++++++----
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   12 ++++++++----
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -365,11 +365,11 @@ static bool mtk_drm_get_all_drm_priv(str
- 
- 		of_id = of_match_node(mtk_drm_of_ids, node);
- 		if (!of_id)
--			goto next_put_node;
-+			continue;
- 
- 		pdev = of_find_device_by_node(node);
- 		if (!pdev)
--			goto next_put_node;
-+			continue;
- 
- 		drm_dev = device_find_child(&pdev->dev, NULL, mtk_drm_match);
- 		if (!drm_dev)
-@@ -395,11 +395,10 @@ next_put_device_drm_dev:
- next_put_device_pdev_dev:
- 		put_device(&pdev->dev);
- 
--next_put_node:
--		of_node_put(node);
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1765,15 +1765,19 @@ static int vcn_v3_0_limit_sched(struct a
+ 				struct amdgpu_job *job)
+ {
+ 	struct drm_gpu_scheduler **scheds;
 -
--		if (cnt == MAX_CRTC)
-+		if (cnt == MAX_CRTC) {
-+			of_node_put(node);
- 			break;
-+		}
- 	}
+-	/* The create msg must be in the first IB submitted */
+-	if (atomic_read(&job->base.entity->fence_seq))
+-		return -EINVAL;
++	struct dma_fence *fence;
  
- 	if (drm_priv->data->mmsys_dev_num == cnt) {
+ 	/* if VCN0 is harvested, we can't support AV1 */
+ 	if (p->adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)
+ 		return -EINVAL;
+ 
++	/* wait for all jobs to finish before switching to instance 0 */
++	fence = amdgpu_ctx_get_fence(p->ctx, job->base.entity, ~0ull);
++	if (fence) {
++		dma_fence_wait(fence, false);
++		dma_fence_put(fence);
++	}
++
+ 	scheds = p->adev->gpu_sched[AMDGPU_HW_IP_VCN_DEC]
+ 		[AMDGPU_RING_PRIO_DEFAULT].sched;
+ 	drm_sched_entity_modify_sched(job->base.entity, scheds, 1);
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1644,15 +1644,19 @@ static int vcn_v4_0_limit_sched(struct a
+ 				struct amdgpu_job *job)
+ {
+ 	struct drm_gpu_scheduler **scheds;
+-
+-	/* The create msg must be in the first IB submitted */
+-	if (atomic_read(&job->base.entity->fence_seq))
+-		return -EINVAL;
++	struct dma_fence *fence;
+ 
+ 	/* if VCN0 is harvested, we can't support AV1 */
+ 	if (p->adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)
+ 		return -EINVAL;
+ 
++	/* wait for all jobs to finish before switching to instance 0 */
++	fence = amdgpu_ctx_get_fence(p->ctx, job->base.entity, ~0ull);
++	if (fence) {
++		dma_fence_wait(fence, false);
++		dma_fence_put(fence);
++	}
++
+ 	scheds = p->adev->gpu_sched[AMDGPU_HW_IP_VCN_ENC]
+ 		[AMDGPU_RING_PRIO_0].sched;
+ 	drm_sched_entity_modify_sched(job->base.entity, scheds, 1);
 
 
