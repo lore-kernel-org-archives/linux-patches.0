@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6F31B3925;
-	Wed, 17 Sep 2025 12:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEA41F30BB;
+	Wed, 17 Sep 2025 12:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113354; cv=none; b=UM6a60vuM70lzGm50sNr59Ko9rkW4r3ovhpTqVi1bsParHQ/5g+MwDQh4w47eRXP8I1kf0jzM6v6tyo78hTbqK3X7Ze2OfhnV5YTB5q1DO0fVTXrrrdzWTrOejsMgcx2S7RH+hJ8I3QvPLF3gA6IsHxwKHtYFG+ANRNTitV7msk=
+	t=1758113357; cv=none; b=aclIXL8S2gH9ZQZIhq0Wg0CtT+rH2eXgbGf8l0BvUsuiZQTPma5pu17pHAEk26msBjO/FrBhzETsXeIHN2nJUh7t/o4RiCftDHKMGeBgQg+anXFkGcZwmhMheTQwBfr3mut6OlkSBqYj/K3d4SUpJ7cZp+c7ooLwCezyThxFaps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113354; c=relaxed/simple;
-	bh=704V2ZBsByqLSUyTUfUNh5aUx8J4rwklABWWYmKzIDI=;
+	s=arc-20240116; t=1758113357; c=relaxed/simple;
+	bh=KKgZH497zGYtDtHKLH3vtb6hJiktf07Y3mvIBqlAaR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jj+uvxYEkYkKNBnkgc/0u7fW1DN4f7rOu824WCTkynney1g5KtELiSRK6a3v8q4oNlQXwAz0ylFI4FcpW50BwqAWiDYWX9vX7nV2TBOogBnjReLMDPqn42R3tQjQJt8hWokLmJPLH9APmUcWcoj91PTJ1r0diEUByLjQrSpTyvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLn1ekdB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szPFhJiJSLnZGTNrdry14HMocqFQM2RKT3qexPualzV3z9yuKOlMiAKiz6tBVtVX0drpp99fPi2nL39ZQuYhIMQFNJjrvjQnWPm62hp4aGNaAj8QdEdFgX5LzC5sd0HHpgMvWO0fa8wzN8qUnpH1MIPDcqwufIf/m9Yj2JLDTjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tt3OYq5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLn1ekdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F7FC4CEF5;
-	Wed, 17 Sep 2025 12:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tt3OYq5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17342C4CEF0;
+	Wed, 17 Sep 2025 12:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113354;
-	bh=704V2ZBsByqLSUyTUfUNh5aUx8J4rwklABWWYmKzIDI=;
+	s=korg; t=1758113357;
+	bh=KKgZH497zGYtDtHKLH3vtb6hJiktf07Y3mvIBqlAaR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLn1ekdB65sUb8iSoQ6lIFgw7x55a2x+YVFXqdtB/HZZZkWdvbbpru60pLqIsigve
-	 9QZVeIq3E7bkcsMQSC29mbDWsK1vAy5CHO7RIIucGPnJ3D1qdXutpGy8WzSedCDTY4
-	 fl8StXjP82H845UxJV1T9eynZttvRFqmG7/OZGQ4=
+	b=Tt3OYq5pTcZdA3iBpTCntcVaKUxBNb705s5GzEm1dr2i5o0y53f0CRvyEVLHPwOp1
+	 rD/JjxCbtZSNtyWaqQrGeb0dW8YBjBzgI4Yk3NWKGiqnTQvps/L5gl+d5xZfoXUk3G
+	 TjI99ZBr61VzFjfAPgVmrhqWHgJsSvMySUMlfmpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Bernd Schubert <bschubert@ddn.com>,
+	Chunsheng Luo <luochunsheng@ustc.edu>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.12 059/140] fuse: do not allow mapping a non-regular backing file
-Date: Wed, 17 Sep 2025 14:33:51 +0200
-Message-ID: <20250917123345.748816532@linuxfoundation.org>
+Subject: [PATCH 6.12 060/140] fuse: check if copy_file_range() returns larger than requested size
+Date: Wed, 17 Sep 2025 14:33:52 +0200
+Message-ID: <20250917123345.771668612@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,36 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit e9c8da670e749f7dedc53e3af54a87b041918092 upstream.
+commit e5203209b3935041dac541bc5b37efb44220cc0b upstream.
 
-We do not support passthrough operations other than read/write on
-regular file, so allowing non-regular backing files makes no sense.
+Just like write(), copy_file_range() should check if the return value is
+less or equal to the requested number of bytes.
 
-Fixes: efad7153bf93 ("fuse: allow O_PATH fd for FUSE_DEV_IOC_BACKING_OPEN")
-Cc: stable@vger.kernel.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Bernd Schubert <bschubert@ddn.com>
+Reported-by: Chunsheng Luo <luochunsheng@ustc.edu>
+Closes: https://lore.kernel.org/all/20250807062425.694-1-luochunsheng@ustc.edu/
+Fixes: 88bc7d5097a1 ("fuse: add support for copy_file_range()")
+Cc: <stable@vger.kernel.org> # v4.20
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/passthrough.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/fuse/file.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/fuse/passthrough.c
-+++ b/fs/fuse/passthrough.c
-@@ -233,6 +233,11 @@ int fuse_backing_open(struct fuse_conn *
- 	if (!file)
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -3295,6 +3295,9 @@ static ssize_t __fuse_copy_file_range(st
+ 		fc->no_copy_file_range = 1;
+ 		err = -EOPNOTSUPP;
+ 	}
++	if (!err && outarg.size > len)
++		err = -EIO;
++
+ 	if (err)
  		goto out;
  
-+	/* read/write/splice/mmap passthrough only relevant for regular files */
-+	res = d_is_dir(file->f_path.dentry) ? -EISDIR : -EINVAL;
-+	if (!d_is_reg(file->f_path.dentry))
-+		goto out_fput;
-+
- 	backing_sb = file_inode(file)->i_sb;
- 	res = -ELOOP;
- 	if (backing_sb->s_stack_depth >= fc->max_stack_depth)
 
 
