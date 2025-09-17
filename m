@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E5B3728B6;
-	Wed, 17 Sep 2025 12:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4166316189;
+	Wed, 17 Sep 2025 12:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113613; cv=none; b=S0NAK3N3XeVJOn/arWiMHP5gpJPCI5Q0SCwEdvque6sg5m5q/tyTjrHdfpkpGL0clBGtfbv6BSUn6i1/V4MlQVC9Q1Oxr6rKRCItkjzph/CVwaZATtIcbFQWRMqKecMcZsgFgMySD1QLef/vHdzPIV7ZtyJ47+qajTUK3sg80JA=
+	t=1758113616; cv=none; b=t/LcCfhEO+SOcLlIXQ77FurErnYDUkZys0zanXJuWRkbA7vc3A5T7EHELm7Lg+OSXb2KVCJUUztDmZ2G36BdudXdrNgmv/lzTqz2qGKsLN7rpkbzGnGnIEHJdDYGOnfUMq9SDARQUK/88aLjyU9HamGAzJ9FeuH3rN2ySAD+RYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113613; c=relaxed/simple;
-	bh=mAK3+zf5rGadXuJJyUbX9of389vcrhpG+MMxyvUdzps=;
+	s=arc-20240116; t=1758113616; c=relaxed/simple;
+	bh=zobPbxIR+5e/SuG4F13gFk04gGCurz+h+YivVRfJYO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eeFoFEff3iJvZy/3xmDlbJiHTMZu5m4nkKRd4vk5qak1dmHy2v2n6zwbGVklPDksah2A4GqhaYtsTLrotslG/BNojBzxhmINz2Ffj39ERzzi7XQF8T3THSu6CLYzqHP1gM0T61CXkTjv4jrgXMSKoNq+ZjycjB/qo9Xq8zdDfTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJDlz9hR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDnIpsrs0yxGpxKJmY449OqTQj+yfXJCEt4RSLwE2vu2cQyRMhgVABc5CeZiYS+9patlJYREdc6bWifsHbzyuGYYwif3Ydpe2KJoYXBhN7yk2bVHKXG7+CZVvd2glMRIGZ4C49gFOZSoCnbGM9jS9FJFyIPqLLVhoJBhA6n7lS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0Inwc6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJDlz9hR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA85C4CEF7;
-	Wed, 17 Sep 2025 12:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0Inwc6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4204DC4CEF0;
+	Wed, 17 Sep 2025 12:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113613;
-	bh=mAK3+zf5rGadXuJJyUbX9of389vcrhpG+MMxyvUdzps=;
+	s=korg; t=1758113616;
+	bh=zobPbxIR+5e/SuG4F13gFk04gGCurz+h+YivVRfJYO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJDlz9hRZatZN9gwky8Ho8+zTpn7O03LuJzOPo4ID54JpoyenIPlwBUE6GZ+BBEwz
-	 RvpiQsoLjjbqMfodRlGGAgc3vnsw/9DOiomotnqrgVyPVzl9ricAbb0IIPnNeMZ3zO
-	 BEPl5whvlMpmp8iqxF63vSH1GpsF2e6LpAWCVcJY=
+	b=z0Inwc6jCpDFivVi6bhBdUVXbVIoL2VMM/LUncfKl4MBy9l3x2PA6cD1LMiOvN+Pz
+	 uMoWnbPiC9cSudy3b8yjXdX8d2Gi/2Mp9Ki2WR4Jysc8BoRqtQx/1sj0SSl+0jIu2g
+	 hmHk9lWd3vfopI+1u8tDQ2gK9Mhjm43NKdMHtVhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Andreas Kemnade <akemnade@kernel.org>,
+	Alistair Francis <alistair@alistair23.me>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/140] dmaengine: ti: edma: Fix memory allocation size for queue_priority_map
-Date: Wed, 17 Sep 2025 14:34:56 +0200
-Message-ID: <20250917123347.339953845@linuxfoundation.org>
+Subject: [PATCH 6.12 125/140] regulator: sy7636a: fix lifecycle of power good gpio
+Date: Wed, 17 Sep 2025 14:34:57 +0200
+Message-ID: <20250917123347.362397491@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,50 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anders Roxell <anders.roxell@linaro.org>
+From: Andreas Kemnade <akemnade@kernel.org>
 
-[ Upstream commit e63419dbf2ceb083c1651852209c7f048089ac0f ]
+[ Upstream commit c05d0b32eebadc8be6e53196e99c64cf2bed1d99 ]
 
-Fix a critical memory allocation bug in edma_setup_from_hw() where
-queue_priority_map was allocated with insufficient memory. The code
-declared queue_priority_map as s8 (*)[2] (pointer to array of 2 s8),
-but allocated memory using sizeof(s8) instead of the correct size.
+Attach the power good gpio to the regulator device devres instead of the
+parent device to fix problems if probe is run multiple times
+(rmmod/insmod or some deferral).
 
-This caused out-of-bounds memory writes when accessing:
-  queue_priority_map[i][0] = i;
-  queue_priority_map[i][1] = i;
-
-The bug manifested as kernel crashes with "Oops - undefined instruction"
-on ARM platforms (BeagleBoard-X15) during EDMA driver probe, as the
-memory corruption triggered kernel hardening features on Clang.
-
-Change the allocation to use sizeof(*queue_priority_map) which
-automatically gets the correct size for the 2D array structure.
-
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-Link: https://lore.kernel.org/r/20250830094953.3038012-1-anders.roxell@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 8c485bedfb785 ("regulator: sy7636a: Initial commit")
+Signed-off-by: Andreas Kemnade <akemnade@kernel.org>
+Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Message-ID: <20250906-sy7636-rsrc-v1-2-e2886a9763a7@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/sy7636a-regulator.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 7f861fb07cb83..6333426b4c96c 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2063,8 +2063,8 @@ static int edma_setup_from_hw(struct device *dev, struct edma_soc_info *pdata,
- 	 * priority. So Q0 is the highest priority queue and the last queue has
- 	 * the lowest priority.
- 	 */
--	queue_priority_map = devm_kcalloc(dev, ecc->num_tc + 1, sizeof(s8),
--					  GFP_KERNEL);
-+	queue_priority_map = devm_kcalloc(dev, ecc->num_tc + 1,
-+					  sizeof(*queue_priority_map), GFP_KERNEL);
- 	if (!queue_priority_map)
- 		return -ENOMEM;
+diff --git a/drivers/regulator/sy7636a-regulator.c b/drivers/regulator/sy7636a-regulator.c
+index d1e7ba1fb3e1a..27e3d939b7bb9 100644
+--- a/drivers/regulator/sy7636a-regulator.c
++++ b/drivers/regulator/sy7636a-regulator.c
+@@ -83,9 +83,11 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
+ 	if (!regmap)
+ 		return -EPROBE_DEFER;
  
+-	gdp = devm_gpiod_get(pdev->dev.parent, "epd-pwr-good", GPIOD_IN);
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
++
++	gdp = devm_gpiod_get(&pdev->dev, "epd-pwr-good", GPIOD_IN);
+ 	if (IS_ERR(gdp)) {
+-		dev_err(pdev->dev.parent, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
++		dev_err(&pdev->dev, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
+ 		return PTR_ERR(gdp);
+ 	}
+ 
+@@ -105,7 +107,6 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	config.dev = &pdev->dev;
+-	config.dev->of_node = pdev->dev.parent->of_node;
+ 	config.regmap = regmap;
+ 
+ 	rdev = devm_regulator_register(&pdev->dev, &desc, &config);
 -- 
 2.51.0
 
