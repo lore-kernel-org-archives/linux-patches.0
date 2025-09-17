@@ -1,42 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CC62FBDFF;
-	Wed, 17 Sep 2025 12:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAE42D480D;
+	Wed, 17 Sep 2025 12:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113269; cv=none; b=iVknUTt2vklLdngMtTVX7IryqWUo1NzfEwHJ3Ar26xnt8ojKk8dqe5GGp4YyIHCLKPWQ5TiF+jm7iy2ZAn5dhBEKyW1JQcotvrDJ8BzjMH/Z1uKR6DEjTIGuwlSvY1DRS08ZbGnGFEkZ9JS4ybYOJVCNN3CriEJzDKHHAPEmONM=
+	t=1758113272; cv=none; b=H5teOoW+H2PsXuGRDs3NP1IEff8uJ7QS0Ob0+4A8u9GdLo+1IG8DtGhW4dd96Yr3YNPCMFrC2I1dJSVBDsv+9JqV1sX29AFnecn7znEUaRcY0fODsWqML72rPW0rvNT/gGCnSZhcROQ/v5P57Q4OCfzgL4YxEWyBUHzngRDBkAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113269; c=relaxed/simple;
-	bh=yo4NqTqFf/8uKzy8Vjuh0ygzuZOMNWxTSrj5Lj4z3r8=;
+	s=arc-20240116; t=1758113272; c=relaxed/simple;
+	bh=QtA9+hyITH9OGdzYTMv+6PNaCcJA2x89pW+qUM9X9gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgrlX/CvDqzZ+oHqLSd6Hsx6HLjHWzoNrXf+FcvaOobQ5XQBAPyK6Sl7qh/zTHKz1q/tHwv12kIKcfH9KfV7Wgu65qHwp8LlSV7jYzdZpAawZGdzdgR4IGl2teuidmzQqanRaf8PtADh1tFIfxJN6rSEzPvUCSmFkmtAW9FAzms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLbuvdYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lhXr25Sa9hyhWCqL7rDnHkdI29dSXWlZNXJy09t5vE2t8CZsdFcQdeG8ztluFbQAYlFpjOBuqDaG1GGKaG/yUyx59CvIDMpd/VY5nrxW0zO/oxOJ2MmJ26n1g7KsadwscLv4sjkcD+SmEu7dA5YHMBQi/Bt8VUKg/9555c9Xd4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PG0zyhnk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLbuvdYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342BCC4CEF0;
-	Wed, 17 Sep 2025 12:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PG0zyhnk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFB7C4CEF7;
+	Wed, 17 Sep 2025 12:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113269;
-	bh=yo4NqTqFf/8uKzy8Vjuh0ygzuZOMNWxTSrj5Lj4z3r8=;
+	s=korg; t=1758113272;
+	bh=QtA9+hyITH9OGdzYTMv+6PNaCcJA2x89pW+qUM9X9gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLbuvdYavWrErfXHxEI8lO0BPBjXnhgXnpfvkXo1h6gEBALzd6O57ZSHfDGGvhjfd
-	 O/2RMkSYwarw2yBigyiHb1latBKjXm4r6K1QlLit1bAwV5v32OOaC1472Oj42ooGWN
-	 EJqcTpTzWp7F1QADgBZk0VfSJLcb7f9+0T5lwjo8=
+	b=PG0zyhnksw07vT9qoEmbDTvPWIJtQN7zNsE3A8V+2Csbc359AS34eQPvg6ylZB/8o
+	 336IB00u5QzM9Wj092jg7b26N+M9j6jZxXhdsGz4I4vpEUN/EqYWoBEf+oAdLMUxro
+	 jazW2x/bV0Xp4u7x24tC4Q+81Cm851HI2zPzzSBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Itamar Gozlan <igozlan@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jan Alexander Preissler <akendo@akendo.eu>,
-	Sujana Subramaniam <sujana.subramaniam@sap.com>
-Subject: [PATCH 6.12 008/140] net/mlx5: HWS, change error flow on matcher disconnect
-Date: Wed, 17 Sep 2025 14:33:00 +0200
-Message-ID: <20250917123344.523489396@linuxfoundation.org>
+	Harry Yoo <harry.yoo@oracle.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	bibo mao <maobibo@loongson.cn>,
+	Borislav Betkov <bp@alien8.de>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jane Chu <jane.chu@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Thomas Huth <thuth@redhat.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 009/140] mm: introduce and use {pgd,p4d}_populate_kernel()
+Date: Wed, 17 Sep 2025 14:33:01 +0200
+Message-ID: <20250917123344.545747822@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -55,93 +91,287 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-commit 1ce840c7a659aa53a31ef49f0271b4fd0dc10296 upstream.
+commit f2d2f9598ebb0158a3fe17cda0106d7752e654a2 upstream.
 
-Currently, when firmware failure occurs during matcher disconnect flow,
-the error flow of the function reconnects the matcher back and returns
-an error, which continues running the calling function and eventually
-frees the matcher that is being disconnected.
-This leads to a case where we have a freed matcher on the matchers list,
-which in turn leads to use-after-free and eventual crash.
+Introduce and use {pgd,p4d}_populate_kernel() in core MM code when
+populating PGD and P4D entries for the kernel address space.  These
+helpers ensure proper synchronization of page tables when updating the
+kernel portion of top-level page tables.
 
-This patch fixes that by not trying to reconnect the matcher back when
-some FW command fails during disconnect.
+Until now, the kernel has relied on each architecture to handle
+synchronization of top-level page tables in an ad-hoc manner.  For
+example, see commit 9b861528a801 ("x86-64, mem: Update all PGDs for direct
+mapping and vmemmap mapping changes").
 
-Note that we're dealing here with FW error. We can't overcome this
-problem. This might lead to bad steering state (e.g. wrong connection
-between matchers), and will also lead to resource leakage, as it is
-the case with any other error handling during resource destruction.
+However, this approach has proven fragile for following reasons:
 
-However, the goal here is to allow the driver to continue and not crash
-the machine with use-after-free error.
+  1) It is easy to forget to perform the necessary page table
+     synchronization when introducing new changes.
+     For instance, commit 4917f55b4ef9 ("mm/sparse-vmemmap: improve memory
+     savings for compound devmaps") overlooked the need to synchronize
+     page tables for the vmemmap area.
 
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Signed-off-by: Itamar Gozlan <igozlan@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250102181415.1477316-7-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Jan Alexander Preissler <akendo@akendo.eu>
-Signed-off-by: Sujana Subramaniam <sujana.subramaniam@sap.com>
+  2) It is also easy to overlook that the vmemmap and direct mapping areas
+     must not be accessed before explicit page table synchronization.
+     For example, commit 8d400913c231 ("x86/vmemmap: handle unpopulated
+     sub-pmd ranges")) caused crashes by accessing the vmemmap area
+     before calling sync_global_pgds().
+
+To address this, as suggested by Dave Hansen, introduce _kernel() variants
+of the page table population helpers, which invoke architecture-specific
+hooks to properly synchronize page tables.  These are introduced in a new
+header file, include/linux/pgalloc.h, so they can be called from common
+code.
+
+They reuse existing infrastructure for vmalloc and ioremap.
+Synchronization requirements are determined by ARCH_PAGE_TABLE_SYNC_MASK,
+and the actual synchronization is performed by
+arch_sync_kernel_mappings().
+
+This change currently targets only x86_64, so only PGD and P4D level
+helpers are introduced.  Currently, these helpers are no-ops since no
+architecture sets PGTBL_{PGD,P4D}_MODIFIED in ARCH_PAGE_TABLE_SYNC_MASK.
+
+In theory, PUD and PMD level helpers can be added later if needed by other
+architectures.  For now, 32-bit architectures (x86-32 and arm) only handle
+PGTBL_PMD_MODIFIED, so p*d_populate_kernel() will never affect them unless
+we introduce a PMD level helper.
+
+[harry.yoo@oracle.com: fix KASAN build error due to p*d_populate_kernel()]
+  Link: https://lkml.kernel.org/r/20250822020727.202749-1-harry.yoo@oracle.com
+Link: https://lkml.kernel.org/r/20250818020206.4517-3-harry.yoo@oracle.com
+Fixes: 8d400913c231 ("x86/vmemmap: handle unpopulated sub-pmd ranges")
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Kiryl Shutsemau <kas@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: bibo mao <maobibo@loongson.cn>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: Christoph Lameter (Ampere) <cl@gentwo.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Kevin Brodsky <kevin.brodsky@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adjust context ]
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c |   24 +++-------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ include/linux/pgalloc.h |   29 +++++++++++++++++++++++++++++
+ include/linux/pgtable.h |   13 +++++++------
+ mm/kasan/init.c         |   12 ++++++------
+ mm/percpu.c             |    6 +++---
+ mm/sparse-vmemmap.c     |    6 +++---
+ 5 files changed, 48 insertions(+), 18 deletions(-)
+ create mode 100644 include/linux/pgalloc.h
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_matcher.c
-@@ -165,14 +165,14 @@ static int hws_matcher_disconnect(struct
- 						    next->match_ste.rtc_0_id,
- 						    next->match_ste.rtc_1_id);
- 		if (ret) {
--			mlx5hws_err(tbl->ctx, "Failed to disconnect matcher\n");
--			goto matcher_reconnect;
-+			mlx5hws_err(tbl->ctx, "Fatal error, failed to disconnect matcher\n");
-+			return ret;
+--- /dev/null
++++ b/include/linux/pgalloc.h
+@@ -0,0 +1,29 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_PGALLOC_H
++#define _LINUX_PGALLOC_H
++
++#include <linux/pgtable.h>
++#include <asm/pgalloc.h>
++
++/*
++ * {pgd,p4d}_populate_kernel() are defined as macros to allow
++ * compile-time optimization based on the configured page table levels.
++ * Without this, linking may fail because callers (e.g., KASAN) may rely
++ * on calls to these functions being optimized away when passing symbols
++ * that exist only for certain page table levels.
++ */
++#define pgd_populate_kernel(addr, pgd, p4d)				\
++	do {								\
++		pgd_populate(&init_mm, pgd, p4d);			\
++		if (ARCH_PAGE_TABLE_SYNC_MASK & PGTBL_PGD_MODIFIED)	\
++			arch_sync_kernel_mappings(addr, addr);		\
++	} while (0)
++
++#define p4d_populate_kernel(addr, p4d, pud)				\
++	do {								\
++		p4d_populate(&init_mm, p4d, pud);			\
++		if (ARCH_PAGE_TABLE_SYNC_MASK & PGTBL_P4D_MODIFIED)	\
++			arch_sync_kernel_mappings(addr, addr);		\
++	} while (0)
++
++#endif /* _LINUX_PGALLOC_H */
+--- a/include/linux/pgtable.h
++++ b/include/linux/pgtable.h
+@@ -1699,8 +1699,8 @@ static inline int pmd_protnone(pmd_t pmd
+ 
+ /*
+  * Architectures can set this mask to a combination of PGTBL_P?D_MODIFIED values
+- * and let generic vmalloc and ioremap code know when arch_sync_kernel_mappings()
+- * needs to be called.
++ * and let generic vmalloc, ioremap and page table update code know when
++ * arch_sync_kernel_mappings() needs to be called.
+  */
+ #ifndef ARCH_PAGE_TABLE_SYNC_MASK
+ #define ARCH_PAGE_TABLE_SYNC_MASK 0
+@@ -1833,10 +1833,11 @@ static inline bool arch_has_pfn_modify_c
+ /*
+  * Page Table Modification bits for pgtbl_mod_mask.
+  *
+- * These are used by the p?d_alloc_track*() set of functions an in the generic
+- * vmalloc/ioremap code to track at which page-table levels entries have been
+- * modified. Based on that the code can better decide when vmalloc and ioremap
+- * mapping changes need to be synchronized to other page-tables in the system.
++ * These are used by the p?d_alloc_track*() and p*d_populate_kernel()
++ * functions in the generic vmalloc, ioremap and page table update code
++ * to track at which page-table levels entries have been modified.
++ * Based on that the code can better decide when page table changes need
++ * to be synchronized to other page-tables in the system.
+  */
+ #define		__PGTBL_PGD_MODIFIED	0
+ #define		__PGTBL_P4D_MODIFIED	1
+--- a/mm/kasan/init.c
++++ b/mm/kasan/init.c
+@@ -13,9 +13,9 @@
+ #include <linux/mm.h>
+ #include <linux/pfn.h>
+ #include <linux/slab.h>
++#include <linux/pgalloc.h>
+ 
+ #include <asm/page.h>
+-#include <asm/pgalloc.h>
+ 
+ #include "kasan.h"
+ 
+@@ -203,7 +203,7 @@ static int __ref zero_p4d_populate(pgd_t
+ 			pud_t *pud;
+ 			pmd_t *pmd;
+ 
+-			p4d_populate(&init_mm, p4d,
++			p4d_populate_kernel(addr, p4d,
+ 					lm_alias(kasan_early_shadow_pud));
+ 			pud = pud_offset(p4d, addr);
+ 			pud_populate(&init_mm, pud,
+@@ -224,7 +224,7 @@ static int __ref zero_p4d_populate(pgd_t
+ 			} else {
+ 				p = early_alloc(PAGE_SIZE, NUMA_NO_NODE);
+ 				pud_init(p);
+-				p4d_populate(&init_mm, p4d, p);
++				p4d_populate_kernel(addr, p4d, p);
+ 			}
  		}
- 	} else {
- 		ret = mlx5hws_table_connect_to_miss_table(tbl, tbl->default_miss.miss_tbl);
- 		if (ret) {
--			mlx5hws_err(tbl->ctx, "Failed to disconnect last matcher\n");
--			goto matcher_reconnect;
-+			mlx5hws_err(tbl->ctx, "Fatal error, failed to disconnect last matcher\n");
-+			return ret;
+ 		zero_pud_populate(p4d, addr, next);
+@@ -263,10 +263,10 @@ int __ref kasan_populate_early_shadow(co
+ 			 * puds,pmds, so pgd_populate(), pud_populate()
+ 			 * is noops.
+ 			 */
+-			pgd_populate(&init_mm, pgd,
++			pgd_populate_kernel(addr, pgd,
+ 					lm_alias(kasan_early_shadow_p4d));
+ 			p4d = p4d_offset(pgd, addr);
+-			p4d_populate(&init_mm, p4d,
++			p4d_populate_kernel(addr, p4d,
+ 					lm_alias(kasan_early_shadow_pud));
+ 			pud = pud_offset(p4d, addr);
+ 			pud_populate(&init_mm, pud,
+@@ -285,7 +285,7 @@ int __ref kasan_populate_early_shadow(co
+ 				if (!p)
+ 					return -ENOMEM;
+ 			} else {
+-				pgd_populate(&init_mm, pgd,
++				pgd_populate_kernel(addr, pgd,
+ 					early_alloc(PAGE_SIZE, NUMA_NO_NODE));
+ 			}
  		}
+--- a/mm/percpu.c
++++ b/mm/percpu.c
+@@ -3129,7 +3129,7 @@ out_free:
+ #endif /* BUILD_EMBED_FIRST_CHUNK */
+ 
+ #ifdef BUILD_PAGE_FIRST_CHUNK
+-#include <asm/pgalloc.h>
++#include <linux/pgalloc.h>
+ 
+ #ifndef P4D_TABLE_SIZE
+ #define P4D_TABLE_SIZE PAGE_SIZE
+@@ -3157,7 +3157,7 @@ void __init __weak pcpu_populate_pte(uns
+ 		p4d = memblock_alloc(P4D_TABLE_SIZE, P4D_TABLE_SIZE);
+ 		if (!p4d)
+ 			goto err_alloc;
+-		pgd_populate(&init_mm, pgd, p4d);
++		pgd_populate_kernel(addr, pgd, p4d);
  	}
  
-@@ -180,27 +180,19 @@ static int hws_matcher_disconnect(struct
- 	if (prev_ft_id == tbl->ft_id) {
- 		ret = mlx5hws_table_update_connected_miss_tables(tbl);
- 		if (ret) {
--			mlx5hws_err(tbl->ctx, "Fatal error, failed to update connected miss table\n");
--			goto matcher_reconnect;
-+			mlx5hws_err(tbl->ctx,
-+				    "Fatal error, failed to update connected miss table\n");
-+			return ret;
- 		}
+ 	p4d = p4d_offset(pgd, addr);
+@@ -3165,7 +3165,7 @@ void __init __weak pcpu_populate_pte(uns
+ 		pud = memblock_alloc(PUD_TABLE_SIZE, PUD_TABLE_SIZE);
+ 		if (!pud)
+ 			goto err_alloc;
+-		p4d_populate(&init_mm, p4d, pud);
++		p4d_populate_kernel(addr, p4d, pud);
  	}
  
- 	ret = mlx5hws_table_ft_set_default_next_ft(tbl, prev_ft_id);
- 	if (ret) {
- 		mlx5hws_err(tbl->ctx, "Fatal error, failed to restore matcher ft default miss\n");
--		goto matcher_reconnect;
-+		return ret;
- 	}
+ 	pud = pud_offset(p4d, addr);
+--- a/mm/sparse-vmemmap.c
++++ b/mm/sparse-vmemmap.c
+@@ -27,9 +27,9 @@
+ #include <linux/spinlock.h>
+ #include <linux/vmalloc.h>
+ #include <linux/sched.h>
++#include <linux/pgalloc.h>
  
- 	return 0;
--
--matcher_reconnect:
--	if (list_empty(&tbl->matchers_list) || !prev)
--		list_add(&matcher->list_node, &tbl->matchers_list);
--	else
--		/* insert after prev matcher */
--		list_add(&matcher->list_node, &prev->list_node);
--
--	return ret;
+ #include <asm/dma.h>
+-#include <asm/pgalloc.h>
+ 
+ /*
+  * Allocate a block of memory to be used to back the virtual memory map
+@@ -230,7 +230,7 @@ p4d_t * __meminit vmemmap_p4d_populate(p
+ 		if (!p)
+ 			return NULL;
+ 		pud_init(p);
+-		p4d_populate(&init_mm, p4d, p);
++		p4d_populate_kernel(addr, p4d, p);
+ 	}
+ 	return p4d;
  }
- 
- static void hws_matcher_set_rtc_attr_sz(struct mlx5hws_matcher *matcher,
+@@ -242,7 +242,7 @@ pgd_t * __meminit vmemmap_pgd_populate(u
+ 		void *p = vmemmap_alloc_block_zero(PAGE_SIZE, node);
+ 		if (!p)
+ 			return NULL;
+-		pgd_populate(&init_mm, pgd, p);
++		pgd_populate_kernel(addr, pgd, p);
+ 	}
+ 	return pgd;
+ }
 
 
