@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A3731A7F4;
-	Wed, 17 Sep 2025 13:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6973A330D51;
+	Wed, 17 Sep 2025 13:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114037; cv=none; b=RdhOyNpT655wrirK7ioXFPbX9tZ+QqW1YBXtirsmBt91ianzU2Vb7J7C8CWCvdUcZkOwvMxDXBfvW8EcxCMmEcsFuRUsa0jjgDDwoCjmda0gwQEurSMKnITefwdrjvBQjgdvxVcTvsY3sJNVrp9596azBE/3gwvSi2Qg+vZ8UFU=
+	t=1758114040; cv=none; b=IxuluzTnTTQ3CZeKQzE18BZogyXJYbb3rNyS1wirXM8FbdkieJELAiVJAr11/CYV1jp2oDDaX2hbGJrckn7HOvpiTaXghO+MIBShVvbKRcTo60gYGZ5ApIeRQ4kCoPRS7Oxdg0qVAZY7n2ASXYiTkUWV1fU/TH/OVQUERXenFH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114037; c=relaxed/simple;
-	bh=MnDwYjDnJtf+LbwdSVbNORiLIxyrl4x/7eaEUsZMOb0=;
+	s=arc-20240116; t=1758114040; c=relaxed/simple;
+	bh=dRma89Xuc1BJ+t/OMeL6BrqPf67AwBzl51EzW6b61SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWweiDHoOqZpO/4AS5TZZimnsMfC5lsm9yy8oPKv8V9EU0tzJa9MKgboeMloHlx3t/zYzwftAl0u8oyusCBZqtHD2qEmpnmOp42y66QchaaqFLn7iFKrY/dxwpTck1dlQ+htARTtsMjh+CsVAOcPsCGvFExasxfd2d2HDAKP7Yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2sX2Iyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UlMrKrlin9zSdx2WZCXdNQjY/9aSoo+VaG+SMTVMTv7ayUHPBq9Af6lKteOMMGsCCYSelWm3sp5KKFRodFbQ+JBpTDkhXFo4g8wuJ1tXgYgeYh0uSvGv/+l6g+kyAonA3TATBgEw83Otj9z5qWk42ADFGGvXJUWhHXCLWnMRPlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RuBkoVF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2sX2Iyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1A8C4CEF0;
-	Wed, 17 Sep 2025 13:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RuBkoVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9086C4CEF5;
+	Wed, 17 Sep 2025 13:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758114037;
-	bh=MnDwYjDnJtf+LbwdSVbNORiLIxyrl4x/7eaEUsZMOb0=;
+	s=korg; t=1758114040;
+	bh=dRma89Xuc1BJ+t/OMeL6BrqPf67AwBzl51EzW6b61SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2sX2IydT5pWky2UOw4XyPC6sV2YWJxJ+vnOctovNyQBnlwqAgDbDIDtpcV4HZRUr
-	 xfgzvNUmMSIihgoOdVGfsZi6HaYevQ/kwjbDwJ8+KSCCh60f334xk0bVnsER4uReuC
-	 vgrhU9wBl/tunvwCCGD66z7DXQOU8vLqur+T+l3E=
+	b=0RuBkoVF1ed8SafBMnub+o2Yl+gMJPjKGt2sJYUEiMHmPN49+jRmChSPm5rZAh3tm
+	 r6D3obHX6X4B4lzdQBDjK1H+dWGMQ6aIZPkmu1ZvyqTe8Nnmm+BuXRACKAiO6b4Y+C
+	 3OIzLsB82USfQcCMXaNuDIDy5iUyn9ZvSXNIi38Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexandre Courbot <acourbot@google.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/78] media: mtk-vcodec: venc: avoid -Wenum-compare-conditional warning
-Date: Wed, 17 Sep 2025 14:34:25 +0200
-Message-ID: <20250917123329.685372059@linuxfoundation.org>
+Subject: [PATCH 6.1 05/78] media: i2c: imx214: Fix link frequency validation
+Date: Wed, 17 Sep 2025 14:34:26 +0200
+Message-ID: <20250917123329.708093535@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123329.576087662@linuxfoundation.org>
 References: <20250917123329.576087662@linuxfoundation.org>
@@ -47,52 +47,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: André Apitzsch <git@apitzsch.eu>
 
-[ Upstream commit 07df4f23ef3ffe6fee697cd2e03623ad27108843 ]
+[ Upstream commit acc294519f1749041e1b8c74d46bbf6c57d8b061 ]
 
-This is one of three clang warnings about incompatible enum types
-in a conditional expression:
+The driver defines IMX214_DEFAULT_LINK_FREQ 480000000, and then
+IMX214_DEFAULT_PIXEL_RATE ((IMX214_DEFAULT_LINK_FREQ * 8LL) / 10),
+which works out as 384MPix/s. (The 8 is 4 lanes and DDR.)
 
-drivers/media/platform/mediatek/vcodec/encoder/venc/venc_h264_if.c:597:29: error: conditional expression between different enumeration types ('enum scp_ipi_id' and 'enum ipi_id') [-Werror,-Wenum-compare-conditional]
-  597 |         inst->vpu_inst.id = is_ext ? SCP_IPI_VENC_H264 : IPI_VENC_H264;
-      |                                    ^ ~~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~
+Parsing the PLL registers with the defined 24MHz input. We're in single
+PLL mode, so MIPI frequency is directly linked to pixel rate.  VTCK ends
+up being 1200MHz, and VTPXCK and OPPXCK both are 120MHz.  Section 5.3
+"Frame rate calculation formula" says "Pixel rate
+[pixels/s] = VTPXCK [MHz] * 4", so 120 * 4 = 480MPix/s, which basically
+agrees with my number above.
 
-The code is correct, so just rework it to avoid the warning.
+3.1.4. MIPI global timing setting says "Output bitrate = OPPXCK * reg
+0x113[7:0]", so 120MHz * 10, or 1200Mbit/s. That would be a link
+frequency of 600MHz due to DDR.
+That also matches to 480MPix/s * 10bpp / 4 lanes / 2 for DDR.
 
-Fixes: 0dc4b3286125 ("media: mtk-vcodec: venc: support SCP firmware")
+Keep the previous link frequency for backward compatibility.
+
+Acked-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+Fixes: 436190596241 ("media: imx214: Add imx214 camera sensor driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Alexandre Courbot <acourbot@google.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[ Adjust file paths ]
+[ changed dev_err() to dev_err_probe() for the final error case ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/media/i2c/imx214.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/venc/venc_h264_if.c
-@@ -611,7 +611,11 @@ static int h264_enc_init(struct mtk_vcod
+--- a/drivers/media/i2c/imx214.c
++++ b/drivers/media/i2c/imx214.c
+@@ -20,7 +20,9 @@
+ #include <media/v4l2-subdev.h>
  
- 	inst->ctx = ctx;
- 	inst->vpu_inst.ctx = ctx;
--	inst->vpu_inst.id = is_ext ? SCP_IPI_VENC_H264 : IPI_VENC_H264;
-+	if (is_ext)
-+		inst->vpu_inst.id = SCP_IPI_VENC_H264;
-+	else
-+		inst->vpu_inst.id = IPI_VENC_H264;
+ #define IMX214_DEFAULT_CLK_FREQ	24000000
+-#define IMX214_DEFAULT_LINK_FREQ 480000000
++#define IMX214_DEFAULT_LINK_FREQ	600000000
++/* Keep wrong link frequency for backward compatibility */
++#define IMX214_DEFAULT_LINK_FREQ_LEGACY	480000000
+ #define IMX214_DEFAULT_PIXEL_RATE ((IMX214_DEFAULT_LINK_FREQ * 8LL) / 10)
+ #define IMX214_FPS 30
+ #define IMX214_MBUS_CODE MEDIA_BUS_FMT_SRGGB10_1X10
+@@ -892,17 +894,26 @@ static int imx214_parse_fwnode(struct de
+ 		goto done;
+ 	}
+ 
+-	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++)
++	if (bus_cfg.nr_of_link_frequencies != 1)
++		dev_warn(dev, "Only one link-frequency supported, please review your DT. Continuing anyway\n");
 +
- 	inst->hw_base = mtk_vcodec_get_reg_addr(inst->ctx, VENC_SYS);
++	for (i = 0; i < bus_cfg.nr_of_link_frequencies; i++) {
+ 		if (bus_cfg.link_frequencies[i] == IMX214_DEFAULT_LINK_FREQ)
+ 			break;
+-
+-	if (i == bus_cfg.nr_of_link_frequencies) {
+-		dev_err(dev, "link-frequencies %d not supported, Please review your DT\n",
+-			IMX214_DEFAULT_LINK_FREQ);
+-		ret = -EINVAL;
+-		goto done;
++		if (bus_cfg.link_frequencies[i] ==
++		    IMX214_DEFAULT_LINK_FREQ_LEGACY) {
++			dev_warn(dev,
++				 "link-frequencies %d not supported, please review your DT. Continuing anyway\n",
++				 IMX214_DEFAULT_LINK_FREQ);
++			break;
++		}
+ 	}
  
- 	mtk_vcodec_debug_enter(inst);
++	if (i == bus_cfg.nr_of_link_frequencies)
++		ret = dev_err_probe(dev, -EINVAL,
++				    "link-frequencies %d not supported, please review your DT\n",
++				    IMX214_DEFAULT_LINK_FREQ);
++
+ done:
+ 	v4l2_fwnode_endpoint_free(&bus_cfg);
+ 	fwnode_handle_put(endpoint);
 
 
