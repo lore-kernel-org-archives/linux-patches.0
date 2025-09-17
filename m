@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EE0330D27;
-	Wed, 17 Sep 2025 12:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6955330D27;
+	Wed, 17 Sep 2025 12:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113911; cv=none; b=nIgkL3H96y5VZhfWa1owohciNki1EwdW8sorVa2bidFkZSLg290dq1X2PKR8i+4sVd9I8eJKmxvAmYFjSp1aXNrbKiGPYBuA6rs1fdhhkhR5NIBOW+eIEbnQ8lt8fqWqPKLIbJ/Pm7PF+vyFJ0y5cHxBaJ9wD5SlEbW3HkI5ChQ=
+	t=1758113914; cv=none; b=pgm7nuupvXxva6gSaBrHb+pGGGEq+cUqt1f1zod8XJxlTYBGl3LEqrAjV8FbCM1TGj+yJ+0Z52KrNejCGLGF6vobSBRvE4JYG0fPFBbOS+hqKehOYlf/nPTeD3RHvtv/074oHNKJ6sWPGJa8A/ExIlhLEqo9QfRgFpBwNtvVoHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113911; c=relaxed/simple;
-	bh=racLd7OPC5cCP9pkqs+CwP3oBl92GueOAXRVUioCeSo=;
+	s=arc-20240116; t=1758113914; c=relaxed/simple;
+	bh=8IgLQcWLvdEByU+ALFdAHB1n/9Ej57wkWUJBkQIEH9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0sNQlTqViaoiXUsIWXQ3J/AR17pyZ2g+cgtj7HjCFy4cCKQVOameJxZE/T6zYxgYfeXkzQ3UABzOGlgbjltfgOn+WtjorTUuk5UX4V6S3K65GReOHZjSBI1Q8IEQPFrAvlOnSxvJATOJczuzL6LD+OWYqn3ZAczkOnhCruN8So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxijME/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VD6yf55wjPfmXrEHmMoDz5UuQjAjmE21X7GbV8fue7tuuOfSaP2LxLpPCrWmjhl2yoKllJXx9eKkftakNhrXNldsWjg0b0+Y+2ojC9rvEy84TJ8wlK1gPMoAow2k+xlrupdo8i4BmjJEDT4gRpUf5j7roV9zuX9C5ac8BpiRoeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtFErkpi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxijME/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0334CC4CEF0;
-	Wed, 17 Sep 2025 12:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtFErkpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5057AC4CEF0;
+	Wed, 17 Sep 2025 12:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113911;
-	bh=racLd7OPC5cCP9pkqs+CwP3oBl92GueOAXRVUioCeSo=;
+	s=korg; t=1758113914;
+	bh=8IgLQcWLvdEByU+ALFdAHB1n/9Ej57wkWUJBkQIEH9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxijME/O+A4SVx2j7u2K8A6CiYz1HXJRc0SngqEOAUUXJ0aobLl8e7kT8QTfL5WzK
-	 02GTyfXmr5NcQMSRfDYYs/3kl5FEXpS6ylMLhQJibhE/mNPNenvAcL5xzcIhyMJz3I
-	 MpEiYH+OMG2geepMn2LHgMvJB/Ylnkmunj/TuZfw=
+	b=wtFErkpi2o93c1rGbF8X1ut3FVBnCrnsFX8OuZAJa9NikcRTU04VdiuLO8Z8ttalH
+	 zDNzliU2i7dj8P0IEQMfdkgQA5XYKM0pKk7osVmwdom2hdAC6LribVFVA0yAX++Tz7
+	 pPizy+4j1LZne8OqNAB2AaG/23np0CoifaIoUu50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
 	stable <stable@kernel.org>,
-	Yunseong Kim <ysk@kzalloc.com>,
-	syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 6.6 091/101] USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels
-Date: Wed, 17 Sep 2025 14:35:14 +0200
-Message-ID: <20250917123339.039606586@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 092/101] usb: gadget: midi2: Fix missing UMP group attributes initialization
+Date: Wed, 17 Sep 2025 14:35:15 +0200
+Message-ID: <20250917123339.065760564@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -53,90 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 8d63c83d8eb922f6c316320f50c82fa88d099bea upstream.
+commit 21d8525d2e061cde034277d518411b02eac764e2 upstream.
 
-Yunseong Kim and the syzbot fuzzer both reported a problem in
-RT-enabled kernels caused by the way dummy-hcd mixes interrupt
-management and spin-locking.  The pattern was:
+The gadget card driver forgot to call snd_ump_update_group_attrs()
+after adding FBs, and this leaves the UMP group attributes
+uninitialized.  As a result, -ENODEV error is returned at opening a
+legacy rawmidi device as an inactive group.
 
-	local_irq_save(flags);
-	spin_lock(&dum->lock);
-	...
-	spin_unlock(&dum->lock);
-	...		// calls usb_gadget_giveback_request()
-	local_irq_restore(flags);
+This patch adds the missing call to address the behavior above.
 
-The code was written this way because usb_gadget_giveback_request()
-needs to be called with interrupts disabled and the private lock not
-held.
-
-While this pattern works fine in non-RT kernels, it's not good when RT
-is enabled.  RT kernels handle spinlocks much like mutexes; in particular,
-spin_lock() may sleep.  But sleeping is not allowed while local
-interrupts are disabled.
-
-To fix the problem, rewrite the code to conform to the pattern used
-elsewhere in dummy-hcd and other UDC drivers:
-
-	spin_lock_irqsave(&dum->lock, flags);
-	...
-	spin_unlock(&dum->lock);
-	usb_gadget_giveback_request(...);
-	spin_lock(&dum->lock);
-	...
-	spin_unlock_irqrestore(&dum->lock, flags);
-
-This approach satisfies the RT requirements.
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 8b645922b223 ("usb: gadget: Add support for USB MIDI 2.0 function driver")
 Cc: stable <stable@kernel.org>
-Fixes: b4dbda1a22d2 ("USB: dummy-hcd: disable interrupts during req->complete")
-Reported-by: Yunseong Kim <ysk@kzalloc.com>
-Closes: <https://lore.kernel.org/linux-usb/5b337389-73b9-4ee4-a83e-7e82bf5af87a@kzalloc.com/>
-Reported-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
-Closes: <https://lore.kernel.org/linux-usb/68ac2411.050a0220.37038e.0087.GAE@google.com/>
-Tested-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
-CC: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-CC: stable@vger.kernel.org
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/bb192ae2-4eee-48ee-981f-3efdbbd0d8f0@rowland.harvard.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250904153932.13589-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_midi2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -764,8 +764,7 @@ static int dummy_dequeue(struct usb_ep *
- 	if (!dum->driver)
- 		return -ESHUTDOWN;
- 
--	local_irq_save(flags);
--	spin_lock(&dum->lock);
-+	spin_lock_irqsave(&dum->lock, flags);
- 	list_for_each_entry(iter, &ep->queue, queue) {
- 		if (&iter->req != _req)
- 			continue;
-@@ -775,15 +774,16 @@ static int dummy_dequeue(struct usb_ep *
- 		retval = 0;
- 		break;
+--- a/drivers/usb/gadget/function/f_midi2.c
++++ b/drivers/usb/gadget/function/f_midi2.c
+@@ -1601,6 +1601,7 @@ static int f_midi2_create_card(struct f_
+ 			strscpy(fb->info.name, ump_fb_name(b),
+ 				sizeof(fb->info.name));
+ 		}
++		snd_ump_update_group_attrs(ump);
  	}
--	spin_unlock(&dum->lock);
  
- 	if (retval == 0) {
- 		dev_dbg(udc_dev(dum),
- 				"dequeued req %p from %s, len %d buf %p\n",
- 				req, _ep->name, _req->length, _req->buf);
-+		spin_unlock(&dum->lock);
- 		usb_gadget_giveback_request(_ep, _req);
-+		spin_lock(&dum->lock);
- 	}
--	local_irq_restore(flags);
-+	spin_unlock_irqrestore(&dum->lock, flags);
- 	return retval;
- }
- 
+ 	for (i = 0; i < midi2->num_eps; i++) {
 
 
