@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C9D330D39;
-	Wed, 17 Sep 2025 12:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DF4215F4A;
+	Wed, 17 Sep 2025 12:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113588; cv=none; b=SXVwRNq8SbzhH/PLFV2FWLfDa9wGHCc8tLgZWOGR+lj5BF32yTsN70LYQk7twaMNBMV4sPiFfwMvDmFY3EEMgTdVgo5HZpE3Luj1CNEKxx5y3tLj9xIJprg02LTWK96FE9u4O0EsYEflTYssEUaWPYrLxb2EpXjxtNYp3ZXusLA=
+	t=1758113591; cv=none; b=DCBnE+z3uRp4c4roQZozU0aQ1WsXf6MPRuC2U/aTTzXO63foZ9/wQfB+dUejLi1dhpCjM51psOPZ8KnNMhn4JVtU0Y0DY5H+juz/EZqq1p7XSZ4dxfzZCbTxw+zsN6QHY+u2fE+05m4uytqyLhPZo48G8mgTNo4ol3PXE8laQFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113588; c=relaxed/simple;
-	bh=B1vIx43VTeoP63b65kCa2s9xgJZAiPN9cTCmP0aLW2w=;
+	s=arc-20240116; t=1758113591; c=relaxed/simple;
+	bh=FmVT2uXXNHYIML7JIf+ngogvSdZFtnW6cxUMcNpLd28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lu7/E2dF9OVOt0N4rqFsjEB7XRFE0h5kY0l4WeoVurOk2aISTNAjpAoASSCsLiSctiaI7x8rcbgttTUJLnEv2YrYbOtORzxpf2Mx9IMa5pWzdkKUR6Dar7DxAkVEhJnztctzxpZAosPxDouKkqOiosTzFtlF9mqugHENv0f52Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbtgqiER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6XKVa4qDGC0qm/upNOE4+tmz601QfpRktUNlCOoiOlzmQT4PhM7saGVezEzVYNoi9N4oju8eSVvxCRAY47QurJmxad2M06wZogtwJT6jTESBB9dYCQazQBPrZGr15VfhuAwFPfnIjI+JDOb2sIm5ZiuJ8OZOJaDjwLvSgfd0PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VV4BpC6V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbtgqiER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5214C4CEF0;
-	Wed, 17 Sep 2025 12:53:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VV4BpC6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1CBC4CEF0;
+	Wed, 17 Sep 2025 12:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113588;
-	bh=B1vIx43VTeoP63b65kCa2s9xgJZAiPN9cTCmP0aLW2w=;
+	s=korg; t=1758113591;
+	bh=FmVT2uXXNHYIML7JIf+ngogvSdZFtnW6cxUMcNpLd28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbtgqiERdLSU78Xom4eiPAfb4p+0Py5uwZX4xfTUFKfgy+rd2w6KzRKO1mDmFrNGa
-	 2UMHoqcm1MnjnfOJiln7X+Y327djdE7UtV1DtTmRz7a5ttQVYY/tmU8rRXL/5lOS9e
-	 oeAU1b+bbJR2gaPZ+Qihs5s/jI7GyeLiaeJ8/q10=
+	b=VV4BpC6VvOMQAqcGcF1m9EcGli2HzT7Tt8b2vX/KOq4bMgwiHIOqS+wjhbUccyBga
+	 OQCgMSFdlVOuUWiVh66Z8hQD1D9E5hi9ZaZrAX8MODaSMI2z/y6rrS6kBGc83tFUJT
+	 yEsXBk95WU289j2w8ji5DLARSJCJ3nFwcc/Ak/tY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	JC Kuo <jckuo@nvidia.com>,
+	Johan Hovold <johan@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 133/140] dmaengine: dw: dmamux: Fix device reference leak in rzn1_dmamux_route_allocate
-Date: Wed, 17 Sep 2025 14:35:05 +0200
-Message-ID: <20250917123347.568665794@linuxfoundation.org>
+Subject: [PATCH 6.12 134/140] phy: tegra: xusb: fix device and OF node leak at probe
+Date: Wed, 17 Sep 2025 14:35:06 +0200
+Message-ID: <20250917123347.595665133@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -51,63 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit aa2e1e4563d3ab689ffa86ca1412ecbf9fd3b308 upstream.
+commit bca065733afd1e3a89a02f05ffe14e966cd5f78e upstream.
 
-The reference taken by of_find_device_by_node()
-must be released when not needed anymore.
-Add missing put_device() call to fix device reference leaks.
+Make sure to drop the references taken to the PMC OF node and device by
+of_parse_phandle() and of_find_device_by_node() during probe.
 
-Fixes: 134d9c52fca2 ("dmaengine: dw: dmamux: Introduce RZN1 DMA router support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20250902090358.2423285-1-linmq006@gmail.com
+Note the holding a reference to the PMC device does not prevent the
+PMC regmap from going away (e.g. if the PMC driver is unbound) so there
+is no need to keep the reference.
+
+Fixes: 2d1021487273 ("phy: tegra: xusb: Add wake/sleepwalk for Tegra210")
+Cc: stable@vger.kernel.org	# 5.14
+Cc: JC Kuo <jckuo@nvidia.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250724131206.2211-2-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw/rzn1-dmamux.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/phy/tegra/xusb-tegra210.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/dw/rzn1-dmamux.c
-+++ b/drivers/dma/dw/rzn1-dmamux.c
-@@ -48,12 +48,16 @@ static void *rzn1_dmamux_route_allocate(
- 	u32 mask;
- 	int ret;
+--- a/drivers/phy/tegra/xusb-tegra210.c
++++ b/drivers/phy/tegra/xusb-tegra210.c
+@@ -3164,18 +3164,22 @@ tegra210_xusb_padctl_probe(struct device
+ 	}
  
--	if (dma_spec->args_count != RNZ1_DMAMUX_NCELLS)
--		return ERR_PTR(-EINVAL);
-+	if (dma_spec->args_count != RNZ1_DMAMUX_NCELLS) {
-+		ret = -EINVAL;
-+		goto put_device;
+ 	pdev = of_find_device_by_node(np);
++	of_node_put(np);
+ 	if (!pdev) {
+ 		dev_warn(dev, "PMC device is not available\n");
+ 		goto out;
+ 	}
+ 
+-	if (!platform_get_drvdata(pdev))
++	if (!platform_get_drvdata(pdev)) {
++		put_device(&pdev->dev);
+ 		return ERR_PTR(-EPROBE_DEFER);
 +	}
  
- 	map = kzalloc(sizeof(*map), GFP_KERNEL);
--	if (!map)
--		return ERR_PTR(-ENOMEM);
-+	if (!map) {
-+		ret = -ENOMEM;
-+		goto put_device;
-+	}
- 
- 	chan = dma_spec->args[0];
- 	map->req_idx = dma_spec->args[4];
-@@ -94,12 +98,15 @@ static void *rzn1_dmamux_route_allocate(
- 	if (ret)
- 		goto clear_bitmap;
+ 	padctl->regmap = dev_get_regmap(&pdev->dev, "usb_sleepwalk");
+ 	if (!padctl->regmap)
+ 		dev_info(dev, "failed to find PMC regmap\n");
  
 +	put_device(&pdev->dev);
- 	return map;
- 
- clear_bitmap:
- 	clear_bit(map->req_idx, dmamux->used_chans);
- free_map:
- 	kfree(map);
-+put_device:
-+	put_device(&pdev->dev);
- 
- 	return ERR_PTR(ret);
+ out:
+ 	return &padctl->base;
  }
 
 
