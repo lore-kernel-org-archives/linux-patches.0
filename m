@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083BF30CB24;
-	Wed, 17 Sep 2025 12:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CECD30CB22;
+	Wed, 17 Sep 2025 12:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113124; cv=none; b=RqwFlvw6PCJeXbwA4rTQF7i9PHFOb4dIVvlLKwtGQMsSfqGlBdPlLf+via6f88sb8rYK9XZFLTCDpF6PlCpxwQvXS2Yjsjcqul6YMXN3OETFXaQUD/8WQyUNNx+xX9keV4Afn46HHFbk8rbS0T60E1OFuCoUONCmOC9Xua8C0H0=
+	t=1758113127; cv=none; b=GeALNqm8XCiGyL0NvuixMD8SxGtWrhex6HEsnq8Ijvh3m230mLnsbUqdVf/UV73dNF/okiKKqjuSdYqkzfcJCOaJM0BM4jd/nEGozO611TTD5bqTA0hBtg1CzjHkqTO4FeZFrYELmnI8rxQtwREXKRBro1BX+WMZxOPbSa/wu5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113124; c=relaxed/simple;
-	bh=AXNU05eRhL4DXLxT/ID5GSfD785TxE9Sxi3w9odhz8w=;
+	s=arc-20240116; t=1758113127; c=relaxed/simple;
+	bh=gR4vRnDjcsH+fx/jimiyfJveNQcwThqdI0Oy5zExopI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7uVQChRhLKsO1mdv3JNef5XZY201ScwdzhSzEB6mXDCPnBscJA6MoIRuar6x4UmRRDquGoRCFw0cx0QhYL5oa++fkIJ3pJzgXtYNjQjhnNipy0A+nlx0pXX9LG3CvaAdHdeQarWI2ZhVPSFyXE+lO4gWOqKr4xJJ/DfNmWJDMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL3tvuUm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRhBx+WvEGy8kF5IZNRKy5uCPiNCkcCcJtxghVwa5xOHESj+D4jirrxQnmA7arnoQwxKo3jtY2P2DfKgmnjpsBKi7VaWH3zyS85497lumiUkO3FPcBgdvoervs56SiRwzyidqfWuaGQxUQjXFgCrErmin1ADYjz27wIE2xKr/IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bV657U8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL3tvuUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FB3C4CEF0;
-	Wed, 17 Sep 2025 12:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bV657U8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30F6C4CEF0;
+	Wed, 17 Sep 2025 12:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113123;
-	bh=AXNU05eRhL4DXLxT/ID5GSfD785TxE9Sxi3w9odhz8w=;
+	s=korg; t=1758113127;
+	bh=gR4vRnDjcsH+fx/jimiyfJveNQcwThqdI0Oy5zExopI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cL3tvuUmEB2EMKCLciCItyY3AT12Wp1dG3wlYVIMvz19Q/c6zGiWh8MfmvB2A8nre
-	 cLSbqEe9M4AmMWqOh+Ki2z2yaypmzbEzVL0i6nJROpr81zyHz7+pu99d2AWqwou7E6
-	 g2OFbZlQb2Q49C+Z7sBi0+ZicQFc04B09IU2etEg=
+	b=bV657U8LnJg8vHuAfkHr5qFNHWaH4MaSBZopQGssOZzmqhesGpeh82GMwFkDolr7d
+	 ZViHY/k5Lmt17EfOSCXYfUQIRXgOh3XeVxbVHE9jmCC+MZNfShiB//aoFDRUt/QAsP
+	 zqhC4MaTskUiog5tXYJXXbjs6jJdvSxLQ2hiQ5fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.16 179/189] xhci: fix memory leak regression when freeing xhci vdev devices depth first
-Date: Wed, 17 Sep 2025 14:34:49 +0200
-Message-ID: <20250917123356.258651275@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 153/189] netfilter: nft_set_pipapo: remove unused arguments
+Date: Wed, 17 Sep 2025 14:34:23 +0200
+Message-ID: <20250917123355.606211174@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,46 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit edcbe06453ddfde21f6aa763f7cab655f26133cc upstream.
+[ Upstream commit 7792c1e03054440c60d4bce0c06a31c134601997 ]
 
-Suspend-resume cycle test revealed a memory leak in 6.17-rc3
+They are not used anymore, so remove them.
 
-Turns out the slot_id race fix changes accidentally ends up calling
-xhci_free_virt_device() with an incorrect vdev parameter.
-The vdev variable was reused for temporary purposes right before calling
-xhci_free_virt_device().
-
-Fix this by passing the correct vdev parameter.
-
-The slot_id race fix that caused this regression was targeted for stable,
-so this needs to be applied there as well.
-
-Fixes: 2eb03376151b ("usb: xhci: Fix slot_id resource race conflict")
-Reported-by: David Wang <00107082@163.com>
-Closes: https://lore.kernel.org/linux-usb/20250829181354.4450-1-00107082@163.com
-Suggested-by: Michal Pecio <michal.pecio@gmail.com>
-Suggested-by: David Wang <00107082@163.com>
-Cc: stable@vger.kernel.org
-Tested-by: David Wang <00107082@163.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250902105306.877476-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: c4eaca2e1052 ("netfilter: nft_set_pipapo: don't check genbit from packetpath lookups")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_set_pipapo.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -962,7 +962,7 @@ static void xhci_free_virt_devices_depth
- out:
- 	/* we are now at a leaf device */
- 	xhci_debugfs_remove_slot(xhci, slot_id);
--	xhci_free_virt_device(xhci, vdev, slot_id);
-+	xhci_free_virt_device(xhci, xhci->devs[slot_id], slot_id);
- }
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 9e4e25f2458f9..9ac48e6b4332c 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -502,8 +502,6 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
  
- int xhci_alloc_virt_device(struct xhci_hcd *xhci, int slot_id,
+ /**
+  * pipapo_get() - Get matching element reference given key data
+- * @net:	Network namespace
+- * @set:	nftables API set representation
+  * @m:		storage containing active/existing elements
+  * @data:	Key data to be matched against existing elements
+  * @genmask:	If set, check that element is active in given genmask
+@@ -516,9 +514,7 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
+  *
+  * Return: pointer to &struct nft_pipapo_elem on match, error pointer otherwise.
+  */
+-static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+-					  const struct nft_set *set,
+-					  const struct nft_pipapo_match *m,
++static struct nft_pipapo_elem *pipapo_get(const struct nft_pipapo_match *m,
+ 					  const u8 *data, u8 genmask,
+ 					  u64 tstamp, gfp_t gfp)
+ {
+@@ -615,7 +611,7 @@ nft_pipapo_get(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo_match *m = rcu_dereference(priv->match);
+ 	struct nft_pipapo_elem *e;
+ 
+-	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
++	e = pipapo_get(m, (const u8 *)elem->key.val.data,
+ 		       nft_genmask_cur(net), get_jiffies_64(),
+ 		       GFP_ATOMIC);
+ 	if (IS_ERR(e))
+@@ -1344,7 +1340,7 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 	else
+ 		end = start;
+ 
+-	dup = pipapo_get(net, set, m, start, genmask, tstamp, GFP_KERNEL);
++	dup = pipapo_get(m, start, genmask, tstamp, GFP_KERNEL);
+ 	if (!IS_ERR(dup)) {
+ 		/* Check if we already have the same exact entry */
+ 		const struct nft_data *dup_key, *dup_end;
+@@ -1366,7 +1362,7 @@ static int nft_pipapo_insert(const struct net *net, const struct nft_set *set,
+ 
+ 	if (PTR_ERR(dup) == -ENOENT) {
+ 		/* Look for partially overlapping entries */
+-		dup = pipapo_get(net, set, m, end, nft_genmask_next(net), tstamp,
++		dup = pipapo_get(m, end, nft_genmask_next(net), tstamp,
+ 				 GFP_KERNEL);
+ 	}
+ 
+@@ -1913,7 +1909,7 @@ nft_pipapo_deactivate(const struct net *net, const struct nft_set *set,
+ 	if (!m)
+ 		return NULL;
+ 
+-	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
++	e = pipapo_get(m, (const u8 *)elem->key.val.data,
+ 		       nft_genmask_next(net), nft_net_tstamp(net), GFP_KERNEL);
+ 	if (IS_ERR(e))
+ 		return NULL;
+-- 
+2.51.0
+
 
 
