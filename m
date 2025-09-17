@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E760337EB4;
-	Wed, 17 Sep 2025 12:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C39B2C3278;
+	Wed, 17 Sep 2025 12:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112908; cv=none; b=uU582jdFPY/P9FpGSPqmQiH5TnT2xwBs+K9ZmsIdZ6RRVJMd4JtF1/ImU3IixjsSTZj1VwAJ+ZSygk1aQLKbeYTYzIOU1mj2bbw1DWxN5m6z2sxlYZGmiwlySvvzte70O148at3a5cHCsCv/V8RHeX9Ub5eAdZBT+yub8RfjFX8=
+	t=1758112911; cv=none; b=d+Srkdy3gmRtEti3JPnR30i/Sfm3yk1gxxx6qpAuN0/vdpLxT/vckmjr+WKnSbOFd1glqh2EJZQELL9FD+X6BvhT4p/v/toKDXhBBF717JAcu272p9sQ82/nPwTJfyWrtQ8QYAEjIM4Hf+jSvj9kkXSMvE4+ZWTSHtXTalAF5gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112908; c=relaxed/simple;
-	bh=z9jxRQHP0VxLiRMHYHhJ4fOSdNPE0ydf74rxxiNnYx0=;
+	s=arc-20240116; t=1758112911; c=relaxed/simple;
+	bh=IDYd2H3kn7VQuHWvMfT+zbJWEzMbPtqRPKsEi787NGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3a4n0fvay0cyEcjp5t+woO3KMLRIh16e7YnnlGSsq788Nh02tg0x4jv5gogpowEtecZS//Rp2ucvIJ8sxD0UIq5GEzd/JVLOiKI/aeOlxW+NWHEIfTyJKMdXN/az9XlE84Xdjnp557Tse/jHxviOxvVrDUGsAq6x10fL+dEqPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEYj212c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoxvc7YvHsulTVPF2D9rC6hKQVjHVbFUHr9ptszUBmcY94Icbhkkwbji9QQWUEVrBloGJYGKGcdQvW1MoS0dl2wPipIFmumA20y3qcMmUvHvq3OtAwr24feRRYPIJbpvFBihlev2YnbcnlcY2SY4v34KAgEVd57n7Eqmc/7vBDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXpbNGNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEYj212c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812AFC4CEF0;
-	Wed, 17 Sep 2025 12:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXpbNGNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C25C4CEF0;
+	Wed, 17 Sep 2025 12:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112907;
-	bh=z9jxRQHP0VxLiRMHYHhJ4fOSdNPE0ydf74rxxiNnYx0=;
+	s=korg; t=1758112911;
+	bh=IDYd2H3kn7VQuHWvMfT+zbJWEzMbPtqRPKsEi787NGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mEYj212cvaQkYFAuAnCjIGFOclY6xUpQljxmJJijSmYa3FHA61OL2gk5KAbUfsc/b
-	 FfaUb2KDRu1Er6SMKCPpCdZ+zmZg+WTnLMjRpMeWnGn4gy5db8u8qlA+d4ElekiOZ7
-	 /3ppFyqSvMrpgtNbVNWAPg6uSIqtrSvkrVQFuL98=
+	b=WXpbNGNokk+lf/yH8eTHEGvqljfQ/x9P0VO82wIRCuMs6wmQNU030kmIrN4wGnZIw
+	 lCUBYc+vyKlJSPkojB4aNi0GxNobQDJrzPxmRqVgFg6hJlxkC1KTL0UxEaef/og1WI
+	 9eTNGwNNjmz4x97UP6CZSwxbvclvtpu3d3V6jIJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.16 113/189] hrtimers: Unconditionally update target CPU base after offline timer migration
-Date: Wed, 17 Sep 2025 14:33:43 +0200
-Message-ID: <20250917123354.628268748@linuxfoundation.org>
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.16 114/189] fs/resctrl: Eliminate false positive lockdep warning when reading SNC counters
+Date: Wed, 17 Sep 2025 14:33:44 +0200
+Message-ID: <20250917123354.652448236@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -51,73 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-commit e895f8e29119c8c966ea794af9e9100b10becb88 upstream.
+commit d2e1b84c5141ff2ad465279acfc3cf943c960b78 upstream.
 
-When testing softirq based hrtimers on an ARM32 board, with high resolution
-mode and NOHZ inactive, softirq based hrtimers fail to expire after being
-moved away from an offline CPU:
+Running resctrl_tests on an SNC-2 system with lockdep debugging enabled
+triggers several warnings with following trace:
 
-CPU0				CPU1
-				hrtimer_start(..., HRTIMER_MODE_SOFT);
-cpu_down(CPU1)			...
-				hrtimers_cpu_dying()
-				  // Migrate timers to CPU0
-				  smp_call_function_single(CPU0, returgger_next_event);
-  retrigger_next_event()
-    if (!highres && !nohz)
-        return;
+  WARNING: CPU: 0 PID: 1914 at kernel/cpu.c:528 lockdep_assert_cpus_held
+  ...
+  Call Trace:
+  __mon_event_count
+  ? __lock_acquire
+  ? __pfx___mon_event_count
+  mon_event_count
+  ? __pfx_smp_mon_event_count
+  smp_mon_event_count
+  smp_call_on_cpu_callback
 
-As retrigger_next_event() is a NOOP when both high resolution timers and
-NOHZ are inactive CPU0's hrtimer_cpu_base::softirq_expires_next is not
-updated and the migrated softirq timers never expire unless there is a
-softirq based hrtimer queued on CPU0 later.
+get_cpu_cacheinfo_level() called from __mon_event_count() requires CPU hotplug
+lock to be held. The hotplug lock is indeed held during this time, as
+confirmed by the lockdep_assert_cpus_held() within mon_event_read() that calls
+mon_event_count() via IPI, but the lockdep tracking is not able to follow the
+IPI.
 
-Fix this by removing the hrtimer_hres_active() and tick_nohz_active() check
-in retrigger_next_event(), which enforces a full update of the CPU base.
-As this is not a fast path the extra cost does not matter.
+Fresh CPU cache information via get_cpu_cacheinfo_level() from
+__mon_event_count() was added to support the fix for the issue where resctrl
+inappropriately maintained links to L3 cache information that will be stale in
+the case when the associated CPU goes offline.
 
-[ tglx: Massaged change log ]
+Keep the cacheinfo ID in struct rdt_mon_domain to ensure that resctrl does not
+maintain stale cache information while CPUs can go offline. Return to using
+a pointer to the L3 cache information (struct cacheinfo) in struct rmid_read,
+rmid_read::ci. Initialize rmid_read::ci before the IPI where it is used. CPU
+hotplug lock is held across rmid_read::ci initialization and use to ensure
+that it points to accurate cache information.
 
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Co-developed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250805081025.54235-1-wangxiongfeng2@huawei.com
+Fixes: 594902c986e2 ("x86,fs/resctrl: Remove inappropriate references to cacheinfo in the resctrl subsystem")
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c |   11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ fs/resctrl/ctrlmondata.c | 2 +-
+ fs/resctrl/internal.h    | 4 ++--
+ fs/resctrl/monitor.c     | 6 ++----
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -787,10 +787,10 @@ static void retrigger_next_event(void *a
- 	 * of the next expiring timer is enough. The return from the SMP
- 	 * function call will take care of the reprogramming in case the
- 	 * CPU was in a NOHZ idle sleep.
-+	 *
-+	 * In periodic low resolution mode, the next softirq expiration
-+	 * must also be updated.
- 	 */
--	if (!hrtimer_hres_active(base) && !tick_nohz_active)
--		return;
--
- 	raw_spin_lock(&base->lock);
- 	hrtimer_update_base(base);
- 	if (hrtimer_hres_active(base))
-@@ -2295,11 +2295,6 @@ int hrtimers_cpu_dying(unsigned int dyin
- 				     &new_base->clock_base[i]);
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index d98e0d2de09f..3c39cfacb251 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -625,11 +625,11 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
+ 		 */
+ 		list_for_each_entry(d, &r->mon_domains, hdr.list) {
+ 			if (d->ci_id == domid) {
+-				rr.ci_id = d->ci_id;
+ 				cpu = cpumask_any(&d->hdr.cpu_mask);
+ 				ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
+ 				if (!ci)
+ 					continue;
++				rr.ci = ci;
+ 				mon_event_read(&rr, r, NULL, rdtgrp,
+ 					       &ci->shared_cpu_map, evtid, false);
+ 				goto checkresult;
+diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
+index 0a1eedba2b03..9a8cf6f11151 100644
+--- a/fs/resctrl/internal.h
++++ b/fs/resctrl/internal.h
+@@ -98,7 +98,7 @@ struct mon_data {
+  *	   domains in @r sharing L3 @ci.id
+  * @evtid: Which monitor event to read.
+  * @first: Initialize MBM counter when true.
+- * @ci_id: Cacheinfo id for L3. Only set when @d is NULL. Used when summing domains.
++ * @ci:    Cacheinfo for L3. Only set when @d is NULL. Used when summing domains.
+  * @err:   Error encountered when reading counter.
+  * @val:   Returned value of event counter. If @rgrp is a parent resource group,
+  *	   @val includes the sum of event counts from its child resource groups.
+@@ -112,7 +112,7 @@ struct rmid_read {
+ 	struct rdt_mon_domain	*d;
+ 	enum resctrl_event_id	evtid;
+ 	bool			first;
+-	unsigned int		ci_id;
++	struct cacheinfo	*ci;
+ 	int			err;
+ 	u64			val;
+ 	void			*arch_mon_ctx;
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index f5637855c3ac..7326c28a7908 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -361,7 +361,6 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+ {
+ 	int cpu = smp_processor_id();
+ 	struct rdt_mon_domain *d;
+-	struct cacheinfo *ci;
+ 	struct mbm_state *m;
+ 	int err, ret;
+ 	u64 tval = 0;
+@@ -389,8 +388,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
  	}
  
--	/*
--	 * The migration might have changed the first expiring softirq
--	 * timer on this CPU. Update it.
--	 */
--	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
- 	/* Tell the other CPU to retrigger the next event */
- 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
+ 	/* Summing domains that share a cache, must be on a CPU for that cache. */
+-	ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
+-	if (!ci || ci->id != rr->ci_id)
++	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
+ 		return -EINVAL;
  
+ 	/*
+@@ -402,7 +400,7 @@ static int __mon_event_count(u32 closid, u32 rmid, struct rmid_read *rr)
+ 	 */
+ 	ret = -EINVAL;
+ 	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
+-		if (d->ci_id != rr->ci_id)
++		if (d->ci_id != rr->ci->id)
+ 			continue;
+ 		err = resctrl_arch_rmid_read(rr->r, d, closid, rmid,
+ 					     rr->evtid, &tval, rr->arch_mon_ctx);
+-- 
+2.51.0
+
 
 
