@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B62436D;
-	Wed, 17 Sep 2025 12:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8512C36D;
+	Wed, 17 Sep 2025 12:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112629; cv=none; b=DJgMdoX2iL362xuBLvuaZcAxk5qlHs7rYT/b9I3haesCrsAn1/d5sacehc3oyKxWv5+bzYNV1gcO+USUfFOmzpU1p0BvGc6+EV2sSvcUsuYEIS1RTf9yt/NStGIZp9C5glIlF3SMTk/g4w2uo4GLoftpRq21IrZ3drA7TLg1CII=
+	t=1758112632; cv=none; b=sOMz7BrCJfCpTWV0aiP9JpWPRX3A6PyrOyn+37hHmX3Cj5wWGDMC4bTownEok+yQgAW2zYwI8p/Lg2bCkbSwBN3YPxtUVnukH9dNuJMa59YZwjEzoi1UopdghuySMP4jggr33bltveZRlIYjUYJAvxAPhcU7gUyhkCsThAazOEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112629; c=relaxed/simple;
-	bh=ZrSsW45VwnRTugYZp/3wnPxgOObLG1qiH8OYzfXNsB0=;
+	s=arc-20240116; t=1758112632; c=relaxed/simple;
+	bh=u4uiNawl4fU2hxMtFYjvRmfnlvQ+4Fbjo953u+A5eNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tz8B/OU9q57imXMKSjw6KmE17HpMdGRhbz8jsRrgJdq0fNJMfpDOOeMF+Yzj/sVwzuPgOwxPQlxZ1ibmUbF+ST1p3qnngdLPDDmuyeHaIKcG2VffChgvnoxedDqKY/gaakzBMl6jqCO0SyA4Wqgqf/zepHzNgFr0wFP86fKR8Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfxpWEmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvk4oKxtKZn96ISzEwNFdS5UrsG//DeRxBUg0wOMkITHHMA2MjFhavksAN6Ld88cz01n0MtVnP7D0uf2EPlWjIvVk5wz+W2OUDRzzlVEiJTa3HjnDdCNn+nQ4neIYsfaWUA/kRal3VSwUyP9MkS6i1HrXxzKJKa2TL9Un2XHrxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCjq5/TJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfxpWEmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB66C4CEF5;
-	Wed, 17 Sep 2025 12:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCjq5/TJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0268DC4CEF0;
+	Wed, 17 Sep 2025 12:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112629;
-	bh=ZrSsW45VwnRTugYZp/3wnPxgOObLG1qiH8OYzfXNsB0=;
+	s=korg; t=1758112632;
+	bh=u4uiNawl4fU2hxMtFYjvRmfnlvQ+4Fbjo953u+A5eNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfxpWEmH0Q6SBDElUS2N/xaobPZNr7zZSJcDjCKYWWFQYyj+PJfSSWGnebtAIb3bC
-	 iz3I4J/53rXy7zBbI4LjnrPkVxC5GNqHHWO74ZrfV8/HSIjQ5g9norwyz4nljyHOdn
-	 NqwAprMI71i6INSC840RVYsFJXxlq9XHvd9EGh94=
+	b=mCjq5/TJZP3oWeXmPncG9AkJUWU3PLlDSZyn7uzaedRLz+Vt2PuTv49VOnnQBbcD9
+	 olHn8REF0qVaVbbWqh8+aNWCfd7agEO6RQPVlhXQXqwnVLy/8Bm+5OPBMBDhGO2re4
+	 iuAS3Wh4XmGQg2RHRLnUP/xjTSQj2hdGn0OzfJzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mathieu.desnoyers@efficios.com,
-	tglozar@redhat.com,
-	Wang Liang <wangliang74@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 028/189] tracing/osnoise: Fix null-ptr-deref in bitmap_parselist()
-Date: Wed, 17 Sep 2025 14:32:18 +0200
-Message-ID: <20250917123352.541957142@linuxfoundation.org>
+Subject: [PATCH 6.16 029/189] NFS: Serialise O_DIRECT i/o and truncate()
+Date: Wed, 17 Sep 2025 14:32:19 +0200
+Message-ID: <20250917123352.565711574@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -54,61 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit c1628c00c4351dd0727ef7f670694f68d9e663d8 ]
+[ Upstream commit 9eb90f435415c7da4800974ed943e39b5578ee7f ]
 
-A crash was observed with the following output:
+Ensure that all O_DIRECT reads and writes are complete, and prevent the
+initiation of new i/o until the setattr operation that will truncate the
+file is complete.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000010
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 2 UID: 0 PID: 92 Comm: osnoise_cpus Not tainted 6.17.0-rc4-00201-gd69eb204c255 #138 PREEMPT(voluntary)
-RIP: 0010:bitmap_parselist+0x53/0x3e0
-Call Trace:
- <TASK>
- osnoise_cpus_write+0x7a/0x190
- vfs_write+0xf8/0x410
- ? do_sys_openat2+0x88/0xd0
- ksys_write+0x60/0xd0
- do_syscall_64+0xa4/0x260
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-This issue can be reproduced by below code:
-
-fd=open("/sys/kernel/debug/tracing/osnoise/cpus", O_WRONLY);
-write(fd, "0-2", 0);
-
-When user pass 'count=0' to osnoise_cpus_write(), kmalloc() will return
-ZERO_SIZE_PTR (16) and cpulist_parse() treat it as a normal value, which
-trigger the null pointer dereference. Add check for the parameter 'count'.
-
-Cc: <mhiramat@kernel.org>
-Cc: <mathieu.desnoyers@efficios.com>
-Cc: <tglozar@redhat.com>
-Link: https://lore.kernel.org/20250906035610.3880282-1-wangliang74@huawei.com
-Fixes: 17f89102fe23 ("tracing/osnoise: Allow arbitrarily long CPU string")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: a5864c999de6 ("NFS: Do not serialise O_DIRECT reads and writes")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_osnoise.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfs/inode.c    |  4 +++-
+ fs/nfs/internal.h | 10 ++++++++++
+ fs/nfs/io.c       | 13 ++-----------
+ 3 files changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
-index fd259da0aa645..337bc0eb5d71b 100644
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -2322,6 +2322,9 @@ osnoise_cpus_write(struct file *filp, const char __user *ubuf, size_t count,
- 	int running, err;
- 	char *buf __free(kfree) = NULL;
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index a2fa6bc4d74e3..a32cc45425e28 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -761,8 +761,10 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	trace_nfs_setattr_enter(inode);
  
-+	if (count < 1)
-+		return 0;
+ 	/* Write all dirty data */
+-	if (S_ISREG(inode->i_mode))
++	if (S_ISREG(inode->i_mode)) {
++		nfs_file_block_o_direct(NFS_I(inode));
+ 		nfs_sync_inode(inode);
++	}
+ 
+ 	fattr = nfs_alloc_fattr_with_label(NFS_SERVER(inode));
+ 	if (fattr == NULL) {
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 9dcbc33964922..0ef0fc6aba3b3 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -531,6 +531,16 @@ static inline bool nfs_file_io_is_buffered(struct nfs_inode *nfsi)
+ 	return test_bit(NFS_INO_ODIRECT, &nfsi->flags) == 0;
+ }
+ 
++/* Must be called with exclusively locked inode->i_rwsem */
++static inline void nfs_file_block_o_direct(struct nfs_inode *nfsi)
++{
++	if (test_bit(NFS_INO_ODIRECT, &nfsi->flags)) {
++		clear_bit(NFS_INO_ODIRECT, &nfsi->flags);
++		inode_dio_wait(&nfsi->vfs_inode);
++	}
++}
 +
- 	buf = kmalloc(count, GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
++
+ /* namespace.c */
+ #define NFS_PATH_CANONICAL 1
+ extern char *nfs_path(char **p, struct dentry *dentry,
+diff --git a/fs/nfs/io.c b/fs/nfs/io.c
+index 3388faf2acb9f..d275b0a250bf3 100644
+--- a/fs/nfs/io.c
++++ b/fs/nfs/io.c
+@@ -14,15 +14,6 @@
+ 
+ #include "internal.h"
+ 
+-/* Call with exclusively locked inode->i_rwsem */
+-static void nfs_block_o_direct(struct nfs_inode *nfsi, struct inode *inode)
+-{
+-	if (test_bit(NFS_INO_ODIRECT, &nfsi->flags)) {
+-		clear_bit(NFS_INO_ODIRECT, &nfsi->flags);
+-		inode_dio_wait(inode);
+-	}
+-}
+-
+ /**
+  * nfs_start_io_read - declare the file is being used for buffered reads
+  * @inode: file inode
+@@ -57,7 +48,7 @@ nfs_start_io_read(struct inode *inode)
+ 	err = down_write_killable(&inode->i_rwsem);
+ 	if (err)
+ 		return err;
+-	nfs_block_o_direct(nfsi, inode);
++	nfs_file_block_o_direct(nfsi);
+ 	downgrade_write(&inode->i_rwsem);
+ 
+ 	return 0;
+@@ -90,7 +81,7 @@ nfs_start_io_write(struct inode *inode)
+ 
+ 	err = down_write_killable(&inode->i_rwsem);
+ 	if (!err)
+-		nfs_block_o_direct(NFS_I(inode), inode);
++		nfs_file_block_o_direct(NFS_I(inode));
+ 	return err;
+ }
+ 
 -- 
 2.51.0
 
