@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3221E489;
-	Wed, 17 Sep 2025 12:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037062F7459;
+	Wed, 17 Sep 2025 12:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113024; cv=none; b=HajP/i54MKiN2O0i3mxIyedSVH+aJoWE4fqvOA2W/lNaf3Vg0EPyCDeisI9Z61b8U37LKHkmGBz3UluvNIHE4+mZqAu2hxPAMoUkG9M4UUtTsk/xrQTxVSIL54g8pFtcPpc9HgGXIug916m16ppuzjg8U6u3YzuaFGUUTix8bkY=
+	t=1758113028; cv=none; b=L/qe/x9KGwr05XslRbdPTIJ49MBKRD7xk4Zdc8P9N0+DaFyNXEHmoqPjf8DyfNYIbEtRfT0y9bAcHKT08ABaFb312C8NcscW4N0Q8ZfIK3IuBku/2XlSyqCN+SEsWxPGGzZc/WQmreWbDVeZ5hquKXV2XazNQ1oeQGrOgKUW6wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113024; c=relaxed/simple;
-	bh=I7gifj+nZ+xPqtpd+ID89J/D+Xb8Q5YUs5X02csJiTI=;
+	s=arc-20240116; t=1758113028; c=relaxed/simple;
+	bh=ZT0oonKPwO1nzW4aI8VxZ1kmbPKqBkWIiLBCM4E4opM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9hwzKgg/ES/hsA83Lu138FptWW97Ft0KFB2WyNMG4VFiXp5YYICyVjJBGbcPNUdmyp0pcQQrC2yRx2QivdCDtjRn5KA4dupzH8WrHUHYF7W+IB9OSSuDplfk5m6LU2P5SNFB6bl3LfQMDTPjl/22uPUrNK25oXSGbB2S3CyePc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDracnVy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJDOV5r2Qvz9MsYJyaxWhPLBRbURRYPK3IhaFcGtJaTtb5tihKjZtnaWTov48poHBxOmxroD7wUoXPxupx3jEWtAzzPtHin/QUe3KqRaF4o4q3lmUk4LqIgnjDC+0C9JGTFJyJgzcvhYDZMD0gSc7ciWHL6nuZT2zlSD0caFm4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqEWq1fR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDracnVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64B4C4CEF0;
-	Wed, 17 Sep 2025 12:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqEWq1fR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B626C4CEF5;
+	Wed, 17 Sep 2025 12:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113024;
-	bh=I7gifj+nZ+xPqtpd+ID89J/D+Xb8Q5YUs5X02csJiTI=;
+	s=korg; t=1758113027;
+	bh=ZT0oonKPwO1nzW4aI8VxZ1kmbPKqBkWIiLBCM4E4opM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jDracnVywLySpkqcHHIHRbgPYZ0d3nGGc0d/enMOgT4lGrDVz6jpApOCezyRYbiK3
-	 u5tdauvd8hvvWbGQsl0gEvBTISgV9tIUYfzHQIM5eVd/9gWGzzDVXXmGRgiJf+Hl6M
-	 I8YID94gzJ7onxKYABqyahgevVecJ1V9QO5jOzOA=
+	b=uqEWq1fRkefFtn7IfM0JXF/KOc+PDbBY0ZyMjSu2q9NCha9nabQDamOnRZeLPq9Qn
+	 dWMSgpA8bKikrtxh48GD6NIY+0Rd5/o+KA1dOPhJkIhbfYXdsZHqlPxBEfDHQ2qPZ2
+	 4TIzd/mZ3USSei9aAZ+ih09kjzJgAKXXLg89pMFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7e0f89fb6cae5d002de0@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 146/189] macsec: sync features on RTM_NEWLINK
-Date: Wed, 17 Sep 2025 14:34:16 +0200
-Message-ID: <20250917123355.435193987@linuxfoundation.org>
+Subject: [PATCH 6.16 147/189] selftests: can: enable CONFIG_CAN_VCAN as a module
+Date: Wed, 17 Sep 2025 14:34:17 +0200
+Message-ID: <20250917123355.461114065@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,78 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@fomichev.me>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit 0f82c3ba66c6b2e3cde0f255156a753b108ee9dc ]
+[ Upstream commit d013ebc3499fd87cb9dee1dafd0c58aeb05c27c1 ]
 
-Syzkaller managed to lock the lower device via ETHTOOL_SFEATURES:
+A proper kernel configuration for running kselftest can be obtained with:
 
- netdev_lock include/linux/netdevice.h:2761 [inline]
- netdev_lock_ops include/net/netdev_lock.h:42 [inline]
- netdev_sync_lower_features net/core/dev.c:10649 [inline]
- __netdev_update_features+0xcb1/0x1be0 net/core/dev.c:10819
- netdev_update_features+0x6d/0xe0 net/core/dev.c:10876
- macsec_notify+0x2f5/0x660 drivers/net/macsec.c:4533
- notifier_call_chain+0x1b3/0x3e0 kernel/notifier.c:85
- call_netdevice_notifiers_extack net/core/dev.c:2267 [inline]
- call_netdevice_notifiers net/core/dev.c:2281 [inline]
- netdev_features_change+0x85/0xc0 net/core/dev.c:1570
- __dev_ethtool net/ethtool/ioctl.c:3469 [inline]
- dev_ethtool+0x1536/0x19b0 net/ethtool/ioctl.c:3502
- dev_ioctl+0x392/0x1150 net/core/dev_ioctl.c:759
+ $ yes | make kselftest-merge
 
-It happens because lower features are out of sync with the upper:
+Build of 'vcan' driver is currently missing, while the other required knobs
+are already there because of net/link_netns.py [1]. Add a config file in
+selftests/net/can to store the minimum set of kconfig needed for CAN
+selftests.
 
-  __dev_ethtool (real_dev)
-    netdev_lock_ops(real_dev)
-    ETHTOOL_SFEATURES
-      __netdev_features_change
-        netdev_sync_upper_features
-          disable LRO on the lower
-    if (old_features != dev->features)
-      netdev_features_change
-        fires NETDEV_FEAT_CHANGE
-	macsec_notify
-	  NETDEV_FEAT_CHANGE
-	    netdev_update_features (for each macsec dev)
-	      netdev_sync_lower_features
-	        if (upper_features != lower_features)
-	          netdev_lock_ops(lower) # lower == real_dev
-		  stuck
-		  ...
+[1] https://patch.msgid.link/20250219125039.18024-14-shaw.leon@gmail.com
 
-    netdev_unlock_ops(real_dev)
-
-Per commit af5f54b0ef9e ("net: Lock lower level devices when updating
-features"), we elide the lock/unlock when the upper and lower features
-are synced. Makes sure the lower (real_dev) has proper features after
-the macsec link has been created. This makes sure we never hit the
-situation where we need to sync upper flags to the lower.
-
-Reported-by: syzbot+7e0f89fb6cae5d002de0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7e0f89fb6cae5d002de0
-Fixes: 7e4d784f5810 ("net: hold netdev instance lock during rtnetlink operations")
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250908173614.3358264-1-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 77442ffa83e8 ("selftests: can: Import tst-filter from can-tests")
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/fa4c0ea262ec529f25e5f5aa9269d84764c67321.1757516009.git.dcaratti@redhat.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/can/config | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 tools/testing/selftests/net/can/config
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 01329fe7451a1..0eca96eeed58a 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -4286,6 +4286,7 @@ static int macsec_newlink(struct net_device *dev,
- 	if (err < 0)
- 		goto del_dev;
- 
-+	netdev_update_features(dev);
- 	netif_stacked_transfer_operstate(real_dev, dev);
- 	linkwatch_fire_event(dev);
- 
+diff --git a/tools/testing/selftests/net/can/config b/tools/testing/selftests/net/can/config
+new file mode 100644
+index 0000000000000..188f797966709
+--- /dev/null
++++ b/tools/testing/selftests/net/can/config
+@@ -0,0 +1,3 @@
++CONFIG_CAN=m
++CONFIG_CAN_DEV=m
++CONFIG_CAN_VCAN=m
 -- 
 2.51.0
 
