@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD311E25EF;
-	Wed, 17 Sep 2025 12:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDA930BBB3;
+	Wed, 17 Sep 2025 12:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113334; cv=none; b=RN8ECcw1Aw0u/Mg3oFr49x16xQZOuu7PppViimn38cdVzuoYTN4EF7ViJ0U+ENhtRNC0iyg/rI8V/H84ykNeYq98YKrWo/UA+gObzcy0wZ17PXcyrDZVS1ZwjVrAQ+fsT41cG2KWBwfhtlwM8HKMueKjieo8863bzzGWJ+vRjn0=
+	t=1758113337; cv=none; b=V9h94+nDLsGnTFwK5vnwUX18yQkoP1I1js4+LIbyluok6zRgN61Li343iZKpP4CDAu1G2wWsk3vpg0y2utX16f+6x5THCPJcI81yOvp/VNbEFOyhruiTzu85PKJn1heRlkwfFn5GXqDiE3gvj+c8j9vukoH9fEIXCRDSX1ZGqto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113334; c=relaxed/simple;
-	bh=w+HGkW1C3PyniTMLKc2xU85tTKt/1bahclJYBOaQMUI=;
+	s=arc-20240116; t=1758113337; c=relaxed/simple;
+	bh=HCkF2agkF6CZcF1qDdVlRt+e55WuB5TyQrcOS2koOcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2lTB8VUEV5GsMeaCE/LEOKZLhB0UiPhOsefb9t/hTHp2/N8xpfDcepf/CvOcHRe66d1Uzvr1zN2vBpQROEuht85JoyWN745+4SVI1xNZXph4yB2s1/m71DelabBsth0GauhW8C1Ixt6AsmDD6I9WjFrl1vmwHVVGAlpJAPhmNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtjxZp6h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I0W6ehrW1nMbaShO3DDKfwcjGSHuV/rR+4aiDIH0w+dtTyGxpBZDo8zqrr7UdlA+IlDIgbizMp4z+FLzQWEGuCPZ0EGNG8+m0S/mtDZtVaEMsdpDTmLXAzHAJ/nbwtHYN2xQ2JAJFxRsg5Q6SRz8llQBF75S3OJqOoZ+gYH+BqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V97rp1GC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtjxZp6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0927DC4CEF0;
-	Wed, 17 Sep 2025 12:48:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V97rp1GC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C58AC4CEF7;
+	Wed, 17 Sep 2025 12:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113334;
-	bh=w+HGkW1C3PyniTMLKc2xU85tTKt/1bahclJYBOaQMUI=;
+	s=korg; t=1758113337;
+	bh=HCkF2agkF6CZcF1qDdVlRt+e55WuB5TyQrcOS2koOcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TtjxZp6hUHWMVkKECGpxTabi94vHi2bDMDiOXrg1+9qW7GTdxZD6qBdAXDHxv0u8T
-	 EEgcOmb0NJKELcyZExI5irmvnvjwv71DpvTAG1fmdzqy7vkkHli5fI/KKII9jpuqAI
-	 MQkSZAr+G/udVqfYNxZJLqn+Crs6N3DMP2vvBqJw=
+	b=V97rp1GCFR4Q3zZEe9izpuZIqyttRScRku8eUiUYB2b9LcW8HR882hHf7YSxM8MT6
+	 z6VcvPZJn5AAhjXfLGmFsT09MKlv7GTMl7WEwPv5n8nIjpIcIHIUrGHBAyOL+c8+aP
+	 NIW/Avqk5ZgvqrY4suZvELqCX9MeBsaTg4OYuKrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chiasheng Lee <chiasheng.lee@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 054/140] i2c: i801: Hide Intel Birch Stream SoC TCO WDT
-Date: Wed, 17 Sep 2025 14:33:46 +0200
-Message-ID: <20250917123345.628636228@linuxfoundation.org>
+	=?UTF-8?q?Hubert=20Wi=C5=9Bniewski?= <hubert.wisniewski.25632@gmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 055/140] net: usb: asix: ax88772: drop phylink use in PM to avoid MDIO runtime PM wakeups
+Date: Wed, 17 Sep 2025 14:33:47 +0200
+Message-ID: <20250917123345.653871231@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -46,46 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chiasheng Lee <chiasheng.lee@linux.intel.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 664596bd98bb251dd417dfd3f9b615b661e1e44a upstream.
+commit 5537a4679403423e0b49c95b619983a4583d69c5 upstream.
 
-Hide the Intel Birch Stream SoC TCO WDT feature since it was removed.
+Drop phylink_{suspend,resume}() from ax88772 PM callbacks.
 
-On platforms with PCH TCO WDT, this redundant device might be rendering
-errors like this:
+MDIO bus accesses have their own runtime-PM handling and will try to
+wake the device if it is suspended. Such wake attempts must not happen
+from PM callbacks while the device PM lock is held. Since phylink
+{sus|re}sume may trigger MDIO, it must not be called in PM context.
 
-[   28.144542] sysfs: cannot create duplicate filename '/bus/platform/devices/iTCO_wdt'
+No extra phylink PM handling is required for this driver:
+- .ndo_open/.ndo_stop control the phylink start/stop lifecycle.
+- ethtool/phylib entry points run in process context, not PM.
+- phylink MAC ops program the MAC on link changes after resume.
 
-Fixes: 8c56f9ef25a3 ("i2c: i801: Add support for Intel Birch Stream SoC")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220320
-Signed-off-by: Chiasheng Lee <chiasheng.lee@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.7+
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250901125943.916522-1-chiasheng.lee@linux.intel.com
+Fixes: e0bffe3e6894 ("net: asix: ax88772: migrate to phylink")
+Reported-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Tested-by: Hubert Wiśniewski <hubert.wisniewski.25632@gmail.com>
+Tested-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20250908112619.2900723-1-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/asix_devices.c |   13 -------------
+ 1 file changed, 13 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -1057,7 +1057,7 @@ static const struct pci_device_id i801_i
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_P_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_SOC_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_PCH_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
--	{ PCI_DEVICE_DATA(INTEL, BIRCH_STREAM_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
-+	{ PCI_DEVICE_DATA(INTEL, BIRCH_STREAM_SMBUS,		FEATURES_ICH5)			 },
- 	{ PCI_DEVICE_DATA(INTEL, ARROW_LAKE_H_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, PANTHER_LAKE_H_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, PANTHER_LAKE_P_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
+--- a/drivers/net/usb/asix_devices.c
++++ b/drivers/net/usb/asix_devices.c
+@@ -607,15 +607,8 @@ static const struct net_device_ops ax887
+ 
+ static void ax88772_suspend(struct usbnet *dev)
+ {
+-	struct asix_common_private *priv = dev->driver_priv;
+ 	u16 medium;
+ 
+-	if (netif_running(dev->net)) {
+-		rtnl_lock();
+-		phylink_suspend(priv->phylink, false);
+-		rtnl_unlock();
+-	}
+-
+ 	/* Stop MAC operation */
+ 	medium = asix_read_medium_status(dev, 1);
+ 	medium &= ~AX_MEDIUM_RE;
+@@ -644,12 +637,6 @@ static void ax88772_resume(struct usbnet
+ 	for (i = 0; i < 3; i++)
+ 		if (!priv->reset(dev, 1))
+ 			break;
+-
+-	if (netif_running(dev->net)) {
+-		rtnl_lock();
+-		phylink_resume(priv->phylink);
+-		rtnl_unlock();
+-	}
+ }
+ 
+ static int asix_resume(struct usb_interface *intf)
 
 
