@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CB137289E;
-	Wed, 17 Sep 2025 12:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340BC368086;
+	Wed, 17 Sep 2025 12:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113903; cv=none; b=ChSV/JMyJ556KaQPHBeEMiSA9VFyU5zdXoITh4GZbP6/C3Cg1zL0ubb47y6gY610sYyVIg3/daVf7fGep/VXW3EbOv35/kHSr0eEqeTTkTl1ydDkpImrGnTMTCsOEjcmK/Tco/zzzwahSpYufj82By73h0WlEKc9fCizMUt417A=
+	t=1758113905; cv=none; b=XtBLILWvkkLJJZPok979L0A6Q2c/wQXg6uk2COVe7n27C4iHoeWTx/qlObIW3OmOmKUX648dD0yckM8hs1ZGP64GdM9His2uS92biftsprDoa5gr79fwaFNxhwCgsYxM1czHu9H1x+mB8r489zhsoIkFA0XZdRq2SHzPnjfcU9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113903; c=relaxed/simple;
-	bh=qs0zn5H2Vwza9Gbh02DmNmIlYGdl23zuBbDMiv8CcLk=;
+	s=arc-20240116; t=1758113905; c=relaxed/simple;
+	bh=1W3fK+bHRCz9MOoB9SEH3cVITPGahdl3G8BuhSxSRCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbS4GuEn4Or+h77M/YZkismlzlxYCRpBmThovPwRSmgNJfvHTm5SAkoCYlTEOIRjXNac0VmGZAIvNIRv4jSVmpp08ZWK1kuFb5bChm+A7tRz1vVAiGICOGCy1KsalJqOTtjVBm43DJ8e4CG6Qv93H655x5+tec7ofPgbidw+o2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OAODape; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YbNPMGEtYiaL2EbIFTpHKxfmVl2ViID76qtlNxXyHMEOGSO7GB8nElBxD1l+wZ+ouAKib4hEb+NyiBKeSxPEd0b2hXf+MBhU8HX6jya+RM8I9bHJcIzgj3tVyXAebQJnlLbB05LxOO49L8XCi6m4XOqULfltgzSRkSEMe9x550Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fod13F3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OAODape"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BA7C4CEF0;
-	Wed, 17 Sep 2025 12:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fod13F3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0518C4CEF7;
+	Wed, 17 Sep 2025 12:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113901;
-	bh=qs0zn5H2Vwza9Gbh02DmNmIlYGdl23zuBbDMiv8CcLk=;
+	s=korg; t=1758113905;
+	bh=1W3fK+bHRCz9MOoB9SEH3cVITPGahdl3G8BuhSxSRCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1OAODapeJOTT0//uEZDkuZWPPEjIhCmizqvxoi2VdN9JJuHVy5Yp66HXGZ5noULgz
-	 aogeexbtCy1Z/5h5n1YG79mvHTHX3AQTVN6y4Wwoc9L76ZUJh9d7gCGllUf5pdcTPl
-	 jV7niaOoEqqUS9LkYIPMC1iLXRB5KqJSXfI8ezZA=
+	b=fod13F3RUrJzLuX2IcyIslGYUXvoOD/zUx7xPIKYCLNwFZy/LpC//dMyZRJgVMne9
+	 PGkf1f3pgGo8mstDXAVkpF26XLxaRaqTRMO0YWBILt3C/kQ9RSNUgJX6EHqGnaLLsb
+	 EHx7yEHE7s5c1eu5mFZpnDc2kQobA/FEmE+t62FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/101] hrtimers: Unconditionally update target CPU base after offline timer migration
-Date: Wed, 17 Sep 2025 14:35:11 +0200
-Message-ID: <20250917123338.964479797@linuxfoundation.org>
+Subject: [PATCH 6.6 089/101] RISC-V: Remove unnecessary include from compat.h
+Date: Wed, 17 Sep 2025 14:35:12 +0200
+Message-ID: <20250917123338.988988168@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -46,82 +44,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
 
-[ Upstream commit e895f8e29119c8c966ea794af9e9100b10becb88 ]
+[ Upstream commit 8d4f1e05ff821a5d59116ab8c3a30fcae81d8597 ]
 
-When testing softirq based hrtimers on an ARM32 board, with high resolution
-mode and NOHZ inactive, softirq based hrtimers fail to expire after being
-moved away from an offline CPU:
+Without this I get a bunch of build errors like
 
-CPU0				CPU1
-				hrtimer_start(..., HRTIMER_MODE_SOFT);
-cpu_down(CPU1)			...
-				hrtimers_cpu_dying()
-				  // Migrate timers to CPU0
-				  smp_call_function_single(CPU0, returgger_next_event);
-  retrigger_next_event()
-    if (!highres && !nohz)
-        return;
+    In file included from ./include/linux/sched/task_stack.h:12,
+                     from ./arch/riscv/include/asm/compat.h:12,
+                     from ./arch/riscv/include/asm/pgtable.h:115,
+                     from ./include/linux/pgtable.h:6,
+                     from ./include/linux/mm.h:30,
+                     from arch/riscv/kernel/asm-offsets.c:8:
+    ./include/linux/kasan.h:50:37: error: ‘MAX_PTRS_PER_PTE’ undeclared here (not in a function); did you mean ‘PTRS_PER_PTE’?
+       50 | extern pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
+          |                                     ^~~~~~~~~~~~~~~~
+          |                                     PTRS_PER_PTE
+    ./include/linux/kasan.h:51:8: error: unknown type name ‘pmd_t’; did you mean ‘pgd_t’?
+       51 | extern pmd_t kasan_early_shadow_pmd[MAX_PTRS_PER_PMD];
+          |        ^~~~~
+          |        pgd_t
+    ./include/linux/kasan.h:51:37: error: ‘MAX_PTRS_PER_PMD’ undeclared here (not in a function); did you mean ‘PTRS_PER_PGD’?
+       51 | extern pmd_t kasan_early_shadow_pmd[MAX_PTRS_PER_PMD];
+          |                                     ^~~~~~~~~~~~~~~~
+          |                                     PTRS_PER_PGD
+    ./include/linux/kasan.h:52:8: error: unknown type name ‘pud_t’; did you mean ‘pgd_t’?
+       52 | extern pud_t kasan_early_shadow_pud[MAX_PTRS_PER_PUD];
+          |        ^~~~~
+          |        pgd_t
+    ./include/linux/kasan.h:52:37: error: ‘MAX_PTRS_PER_PUD’ undeclared here (not in a function); did you mean ‘PTRS_PER_PGD’?
+       52 | extern pud_t kasan_early_shadow_pud[MAX_PTRS_PER_PUD];
+          |                                     ^~~~~~~~~~~~~~~~
+          |                                     PTRS_PER_PGD
+    ./include/linux/kasan.h:53:8: error: unknown type name ‘p4d_t’; did you mean ‘pgd_t’?
+       53 | extern p4d_t kasan_early_shadow_p4d[MAX_PTRS_PER_P4D];
+          |        ^~~~~
+          |        pgd_t
+    ./include/linux/kasan.h:53:37: error: ‘MAX_PTRS_PER_P4D’ undeclared here (not in a function); did you mean ‘PTRS_PER_PGD’?
+       53 | extern p4d_t kasan_early_shadow_p4d[MAX_PTRS_PER_P4D];
+          |                                     ^~~~~~~~~~~~~~~~
+          |                                     PTRS_PER_PGD
 
-As retrigger_next_event() is a NOOP when both high resolution timers and
-NOHZ are inactive CPU0's hrtimer_cpu_base::softirq_expires_next is not
-updated and the migrated softirq timers never expire unless there is a
-softirq based hrtimer queued on CPU0 later.
-
-Fix this by removing the hrtimer_hres_active() and tick_nohz_active() check
-in retrigger_next_event(), which enforces a full update of the CPU base.
-As this is not a fast path the extra cost does not matter.
-
-[ tglx: Massaged change log ]
-
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Co-developed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250805081025.54235-1-wangxiongfeng2@huawei.com
+Link: https://lore.kernel.org/r/20241126143250.29708-1-palmer@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/hrtimer.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ arch/riscv/include/asm/compat.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 0c3ad1755cc26..ccea52adcba67 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -808,10 +808,10 @@ static void retrigger_next_event(void *arg)
- 	 * of the next expiring timer is enough. The return from the SMP
- 	 * function call will take care of the reprogramming in case the
- 	 * CPU was in a NOHZ idle sleep.
-+	 *
-+	 * In periodic low resolution mode, the next softirq expiration
-+	 * must also be updated.
- 	 */
--	if (!hrtimer_hres_active(base) && !tick_nohz_active)
--		return;
--
- 	raw_spin_lock(&base->lock);
- 	hrtimer_update_base(base);
- 	if (hrtimer_hres_active(base))
-@@ -2289,11 +2289,6 @@ int hrtimers_cpu_dying(unsigned int dying_cpu)
- 				     &new_base->clock_base[i]);
- 	}
+diff --git a/arch/riscv/include/asm/compat.h b/arch/riscv/include/asm/compat.h
+index 2ac955b51148f..6b79287baecc0 100644
+--- a/arch/riscv/include/asm/compat.h
++++ b/arch/riscv/include/asm/compat.h
+@@ -9,7 +9,6 @@
+  */
+ #include <linux/types.h>
+ #include <linux/sched.h>
+-#include <linux/sched/task_stack.h>
+ #include <asm-generic/compat.h>
  
--	/*
--	 * The migration might have changed the first expiring softirq
--	 * timer on this CPU. Update it.
--	 */
--	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
- 	/* Tell the other CPU to retrigger the next event */
- 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
- 
+ static inline int is_compat_task(void)
 -- 
 2.51.0
 
