@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C70323419;
-	Wed, 17 Sep 2025 12:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77764323419;
+	Wed, 17 Sep 2025 12:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113494; cv=none; b=iuKBxHXgcaexh8WVwWOYckaKTbg88c/R7/dEkB9ydH5Y0F/lhTjLvmGSqCzbuPgeWPplzfl1wcysmlCXX1Agdkh+BX1iJ0HjLBaW+z753K9Rez7hQGrATMiyj3H5XwIvSLcphXDgXWqPaRZ406Tc0JZedB0S89Y54PA69V7eTto=
+	t=1758113497; cv=none; b=rXQiyXludCNTL/PabKP7Bi2y13F/aF0wyTnFUrz6Wadcwywpuy7N+banejtqkpxRbTuTzw8VhHL72YRN2iXl0b0+pqPuomBYb/uPe0jfoBtpBybRchg+mjmNQE525e31njESqHuHRurplO5PVtHYPX7btudg236jm9Fa0qv9lhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113494; c=relaxed/simple;
-	bh=de+4cVKpdiv3uiUUH7wVsmix0O52BZYDVm9+rHgLZyw=;
+	s=arc-20240116; t=1758113497; c=relaxed/simple;
+	bh=MaWTAwqWMXQeR+J67IZmRkS8UDckMifA+XDz2Pqj39I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3phpmPrIhavjuBtJ+ehzdlPnOpdHVyfSmLa5GAWgvU8hvKh1YH+yz0oY7HaIt0MR7soN0u0AIyjxBQ/Nc/nLqr3hg2uFCQtFs80/d6lkd3pYvwBBtleCzwpA7zOPK0ggQbCuJiKZ2AxXzjZGc6sTglp0Is0E6Bx/3yclcPH3gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UddIn3Of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=peFMUNF+7OFegM/0qJA8HyG2j9r6HcywdAyA8WZ08PnpfwGI1f5GC7Js2QLvZ8vKlIKLwhipEmGqPlrgp2/9wv1ka3ELtl5XtgLyEn8SbHM0CRv3UrpJOVX+bmig29fTonRfc+O9veSAh6HDzSeY6zKomirRkoJ34m5rbGj4Ydw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8IqCJFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UddIn3Of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34D8C4CEF0;
-	Wed, 17 Sep 2025 12:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8IqCJFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF2EC4CEF0;
+	Wed, 17 Sep 2025 12:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113494;
-	bh=de+4cVKpdiv3uiUUH7wVsmix0O52BZYDVm9+rHgLZyw=;
+	s=korg; t=1758113497;
+	bh=MaWTAwqWMXQeR+J67IZmRkS8UDckMifA+XDz2Pqj39I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UddIn3OfwA0tqaV33bB8KXpHfiQgzhSKN1r9UjajTTIFVCwE9HgXbIM451Qlrk5XY
-	 WVF4iQ2g+wvzvGpUTLMsLbdDoivVTIHDcYgLVnlYf5ZB6LQz7rYf+gFaxLtI1sVJ5e
-	 WGZ3590thKa1bq4bvRA3Adnu1hwaQ9EeMPKqhKqI=
+	b=Q8IqCJFUPZ+647vPD8SLG5My7voZ+fOWknnEVasRyubWvVPgiWo0k6nYvGEIzJki7
+	 Pnwr+USZnwZG3JD6ffpg9d+AZM93SLjhLKSs50mNfp1eE0yTISqWQVEcihVLsQhUOX
+	 hGBhrRZrff5s4Wocp5ilj0hWMaTWVHKYeeYtwfNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Chen <Wen.Chen3@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/140] drm/amd/display: use udelay rather than fsleep
-Date: Wed, 17 Sep 2025 14:34:35 +0200
-Message-ID: <20250917123346.822098445@linuxfoundation.org>
+Subject: [PATCH 6.12 104/140] can: j1939: j1939_sk_bind(): call j1939_priv_put() immediately when j1939_local_ecu_get() failed
+Date: Wed, 17 Sep 2025 14:34:36 +0200
+Message-ID: <20250917123346.849640383@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -54,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 1d66c3f2b8c0b5c51f3f4fe29b362c9851190c5a ]
+[ Upstream commit f214744c8a27c3c1da6b538c232da22cd027530e ]
 
-This function can be called from an atomic context so we can't use
-fsleep().
+Commit 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct
+callback") expects that a call to j1939_priv_put() can be unconditionally
+delayed until j1939_sk_sock_destruct() is called. But a refcount leak will
+happen when j1939_sk_bind() is called again after j1939_local_ecu_get()
+ from previous j1939_sk_bind() call returned an error. We need to call
+j1939_priv_put() before j1939_sk_bind() returns an error.
 
-Fixes: 01f60348d8fb ("drm/amd/display: Fix 'failed to blank crtc!'")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4549
-Cc: Wen Chen <Wen.Chen3@amd.com>
-Cc: Fangzhi Zuo <jerry.zuo@amd.com>
-Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 27e4dc2c0543fd1808cc52bd888ee1e0533c4a2e)
+Fixes: 25fe97cb7620 ("can: j1939: move j1939_priv_put() into sk_destruct callback")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/4f49a1bc-a528-42ad-86c0-187268ab6535@I-love.SAKURA.ne.jp
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/j1939/socket.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index 08fc2a2c399f6..d96f52a551940 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -945,7 +945,7 @@ enum dc_status dcn20_enable_stream_timing(
- 		return DC_ERROR_UNEXPECTED;
+diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
+index 17226b2341d03..75c2b9b233901 100644
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -520,6 +520,9 @@ static int j1939_sk_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	ret = j1939_local_ecu_get(priv, jsk->addr.src_name, jsk->addr.sa);
+ 	if (ret) {
+ 		j1939_netdev_stop(priv);
++		jsk->priv = NULL;
++		synchronize_rcu();
++		j1939_priv_put(priv);
+ 		goto out_release_sock;
  	}
  
--	fsleep(stream->timing.v_total * (stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz));
-+	udelay(stream->timing.v_total * (stream->timing.h_total * 10000u / stream->timing.pix_clk_100hz));
- 
- 	params.vertical_total_min = stream->adjust.v_total_min;
- 	params.vertical_total_max = stream->adjust.v_total_max;
 -- 
 2.51.0
 
