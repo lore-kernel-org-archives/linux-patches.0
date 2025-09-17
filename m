@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3661E7C2D;
-	Wed, 17 Sep 2025 12:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FB61E7C2D;
+	Wed, 17 Sep 2025 12:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113840; cv=none; b=XCvhVXYOY/uqlq4uPeSExXxv8NZmbUA9CfTciRezHohonUW/HcB83moGQ7eDP1MxMqPtoDeiF0APCgfgRFkb+7Rn9na28M8K+5T1bECntvH5D2U9TGz7kT54ri1yOwLFFtURqTWDy9ol2r9pQgcsmMG3niEfs9bwYs3ebjYXmuE=
+	t=1758113844; cv=none; b=rBgpHELVUdg7cncGnOnY1pqw/pIy10TcDitNIUZvedcpdD0FjVR3rBqzK9E1i37rdSkrbMqYBlvVdYJ2aG5LdjeKbYz3r5GOAZG0yIiT1p6r9ns03k23vFHTrauTq4Gw5IVfx5fTy3aAthwt/g42RtBLt5NmNcByvybd36PhdTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113840; c=relaxed/simple;
-	bh=tkoZdGuPQlElZI5x3GDbN9An4njzgdu66ZJmsPAKZEI=;
+	s=arc-20240116; t=1758113844; c=relaxed/simple;
+	bh=pbtsH8BgGjSeVwRzn3aUvVb6aEvb36lreYbkQWdES3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZKtyzb74mgzgSEZJwVHKp1v/8YlfML2SHf7uNOJOMP8SW9dT8Qibql/BotoH0uXayBMIbuXuPe3Fm4jvFQAYU9g4lbXj7HY+gUIeTKfI+EfBtt2P7M4MNUPlbRnsmTF5/g2shxzsgv5iOhGf5rxfmtfgVHayMPVw9PFFta02lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkZUjgDE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlG3r1xiCwIz2ng469E1ua7wZPem+rmvjwT0N50AtNzeTIczv8NRzhIjTdjAdyOTredYgfbdDrrgiLH4TQWiOgAkXU6G4SSAYaDsnkDrl5hhXOfHxEvglFn5KKVz+WxER2u3qUXTRU+l4ryDOkLmQKv+Yz46kZWXZfMiX30ckaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPWpXQ7F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkZUjgDE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F1DC4CEF0;
-	Wed, 17 Sep 2025 12:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPWpXQ7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C88C4CEF0;
+	Wed, 17 Sep 2025 12:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113840;
-	bh=tkoZdGuPQlElZI5x3GDbN9An4njzgdu66ZJmsPAKZEI=;
+	s=korg; t=1758113843;
+	bh=pbtsH8BgGjSeVwRzn3aUvVb6aEvb36lreYbkQWdES3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkZUjgDE7PvTgNJkIf2SnfKGU0fBc77r1TE5lJLI/B07FKqZzQaQ8IcaBLVkN7C20
-	 KiC2gmz3oBpOHIr1cz/6oSG3fTn35HEpP4zm0vzxh0tGIolt19DGlYFHtFrUqagLa8
-	 GVXoLQiIjaNKGsgwl9oatBZAEOQc2bUJ3V/+HCGk=
+	b=tPWpXQ7FhWgliN/g4veTI6ANgaxeur1kUoRK9FJjUcXLm3NVU07ytc7Sq2cYwAObX
+	 fLP4LwxV+kR2PYn6j+gHj2dny7X/pAk/Oxr7QWiSiHNY6QNpT60SMjfZ/CfeCwMZCK
+	 Po8AODJQsvXHTwl/A2IByiTckmgISsk4dRwpMoO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Peilin Ye <yepeilin@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+4cabd1d2fa917a456db8@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/101] bpf: Tell memcg to use allow_spinning=false path in bpf_timer_init()
-Date: Wed, 17 Sep 2025 14:34:07 +0200
-Message-ID: <20250917123337.442184862@linuxfoundation.org>
+Subject: [PATCH 6.6 025/101] tcp_bpf: Call sk_msg_free() when tcp_bpf_send_verdict() fails to allocate psock->cork.
+Date: Wed, 17 Sep 2025 14:34:08 +0200
+Message-ID: <20250917123337.465454873@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -52,90 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peilin Ye <yepeilin@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 6d78b4473cdb08b74662355a9e8510bde09c511e ]
+[ Upstream commit a3967baad4d533dc254c31e0d221e51c8d223d58 ]
 
-Currently, calling bpf_map_kmalloc_node() from __bpf_async_init() can
-cause various locking issues; see the following stack trace (edited for
-style) as one example:
+syzbot reported the splat below. [0]
 
-...
- [10.011566]  do_raw_spin_lock.cold
- [10.011570]  try_to_wake_up             (5) double-acquiring the same
- [10.011575]  kick_pool                      rq_lock, causing a hardlockup
- [10.011579]  __queue_work
- [10.011582]  queue_work_on
- [10.011585]  kernfs_notify
- [10.011589]  cgroup_file_notify
- [10.011593]  try_charge_memcg           (4) memcg accounting raises an
- [10.011597]  obj_cgroup_charge_pages        MEMCG_MAX event
- [10.011599]  obj_cgroup_charge_account
- [10.011600]  __memcg_slab_post_alloc_hook
- [10.011603]  __kmalloc_node_noprof
-...
- [10.011611]  bpf_map_kmalloc_node
- [10.011612]  __bpf_async_init
- [10.011615]  bpf_timer_init             (3) BPF calls bpf_timer_init()
- [10.011617]  bpf_prog_xxxxxxxxxxxxxxxx_fcg_runnable
- [10.011619]  bpf__sched_ext_ops_runnable
- [10.011620]  enqueue_task_scx           (2) BPF runs with rq_lock held
- [10.011622]  enqueue_task
- [10.011626]  ttwu_do_activate
- [10.011629]  sched_ttwu_pending         (1) grabs rq_lock
-...
+The repro does the following:
 
-The above was reproduced on bpf-next (b338cf849ec8) by modifying
-./tools/sched_ext/scx_flatcg.bpf.c to call bpf_timer_init() during
-ops.runnable(), and hacking the memcg accounting code a bit to make
-a bpf_timer_init() call more likely to raise an MEMCG_MAX event.
+  1. Load a sk_msg prog that calls bpf_msg_cork_bytes(msg, cork_bytes)
+  2. Attach the prog to a SOCKMAP
+  3. Add a socket to the SOCKMAP
+  4. Activate fault injection
+  5. Send data less than cork_bytes
 
-We have also run into other similar variants (both internally and on
-bpf-next), including double-acquiring cgroup_file_kn_lock, the same
-worker_pool::lock, etc.
+At 5., the data is carried over to the next sendmsg() as it is
+smaller than the cork_bytes specified by bpf_msg_cork_bytes().
 
-As suggested by Shakeel, fix this by using __GFP_HIGH instead of
-GFP_ATOMIC in __bpf_async_init(), so that e.g. if try_charge_memcg()
-raises an MEMCG_MAX event, we call __memcg_memory_event() with
-@allow_spinning=false and avoid calling cgroup_file_notify() there.
+Then, tcp_bpf_send_verdict() tries to allocate psock->cork to hold
+the data, but this fails silently due to fault injection + __GFP_NOWARN.
 
-Depends on mm patch
-"memcg: skip cgroup_file_notify if spinning is not allowed":
-https://lore.kernel.org/bpf/20250905201606.66198-1-shakeel.butt@linux.dev/
+If the allocation fails, we need to revert the sk->sk_forward_alloc
+change done by sk_msg_alloc().
 
-v0 approach s/bpf_map_kmalloc_node/bpf_mem_alloc/
-https://lore.kernel.org/bpf/20250905061919.439648-1-yepeilin@google.com/
-v1 approach:
-https://lore.kernel.org/bpf/20250905234547.862249-1-yepeilin@google.com/
+Let's call sk_msg_free() when tcp_bpf_send_verdict fails to allocate
+psock->cork.
 
-Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Signed-off-by: Peilin Ye <yepeilin@google.com>
-Link: https://lore.kernel.org/r/20250909095222.2121438-1-yepeilin@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The "*copied" also needs to be updated such that a proper error can
+be returned to the caller, sendmsg. It fails to allocate psock->cork.
+Nothing has been corked so far, so this patch simply sets "*copied"
+to 0.
+
+[0]:
+WARNING: net/ipv4/af_inet.c:156 at inet_sock_destruct+0x623/0x730 net/ipv4/af_inet.c:156, CPU#1: syz-executor/5983
+Modules linked in:
+CPU: 1 UID: 0 PID: 5983 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
+RIP: 0010:inet_sock_destruct+0x623/0x730 net/ipv4/af_inet.c:156
+Code: 0f 0b 90 e9 62 fe ff ff e8 7a db b5 f7 90 0f 0b 90 e9 95 fe ff ff e8 6c db b5 f7 90 0f 0b 90 e9 bb fe ff ff e8 5e db b5 f7 90 <0f> 0b 90 e9 e1 fe ff ff 89 f9 80 e1 07 80 c1 03 38 c1 0f 8c 9f fc
+RSP: 0018:ffffc90000a08b48 EFLAGS: 00010246
+RAX: ffffffff8a09d0b2 RBX: dffffc0000000000 RCX: ffff888024a23c80
+RDX: 0000000000000100 RSI: 0000000000000fff RDI: 0000000000000000
+RBP: 0000000000000fff R08: ffff88807e07c627 R09: 1ffff1100fc0f8c4
+R10: dffffc0000000000 R11: ffffed100fc0f8c5 R12: ffff88807e07c380
+R13: dffffc0000000000 R14: ffff88807e07c60c R15: 1ffff1100fc0f872
+FS:  00005555604c4500(0000) GS:ffff888125af1000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005555604df5c8 CR3: 0000000032b06000 CR4: 00000000003526f0
+Call Trace:
+ <IRQ>
+ __sk_destruct+0x86/0x660 net/core/sock.c:2339
+ rcu_do_batch kernel/rcu/tree.c:2605 [inline]
+ rcu_core+0xca8/0x1770 kernel/rcu/tree.c:2861
+ handle_softirqs+0x286/0x870 kernel/softirq.c:579
+ __do_softirq kernel/softirq.c:613 [inline]
+ invoke_softirq kernel/softirq.c:453 [inline]
+ __irq_exit_rcu+0xca/0x1f0 kernel/softirq.c:680
+ irq_exit_rcu+0x9/0x30 kernel/softirq.c:696
+ instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1052 [inline]
+ sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1052
+ </IRQ>
+
+Fixes: 4f738adba30a ("bpf: create tcp_bpf_ulp allowing BPF to monitor socket TX/RX data")
+Reported-by: syzbot+4cabd1d2fa917a456db8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68c0b6b5.050a0220.3c6139.0013.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20250909232623.4151337-1-kuniyu@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_bpf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 4b20a72ab8cff..90c281e1379ee 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1204,8 +1204,11 @@ static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u
- 		goto out;
- 	}
- 
--	/* allocate hrtimer via map_kmalloc to use memcg accounting */
--	cb = bpf_map_kmalloc_node(map, size, GFP_ATOMIC, map->numa_node);
-+	/* Allocate via bpf_map_kmalloc_node() for memcg accounting. Until
-+	 * kmalloc_nolock() is available, avoid locking issues by using
-+	 * __GFP_HIGH (GFP_ATOMIC & ~__GFP_RECLAIM).
-+	 */
-+	cb = bpf_map_kmalloc_node(map, size, __GFP_HIGH, map->numa_node);
- 	if (!cb) {
- 		ret = -ENOMEM;
- 		goto out;
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 5312237e80409..7518d2af63088 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -408,8 +408,11 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 		if (!psock->cork) {
+ 			psock->cork = kzalloc(sizeof(*psock->cork),
+ 					      GFP_ATOMIC | __GFP_NOWARN);
+-			if (!psock->cork)
++			if (!psock->cork) {
++				sk_msg_free(sk, msg);
++				*copied = 0;
+ 				return -ENOMEM;
++			}
+ 		}
+ 		memcpy(psock->cork, msg, sizeof(*msg));
+ 		return 0;
 -- 
 2.51.0
 
