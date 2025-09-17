@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066951F583D;
-	Wed, 17 Sep 2025 12:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24830BBBC;
+	Wed, 17 Sep 2025 12:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113063; cv=none; b=i29dbNIuQuSNLKmTydjWc5pE2dJyqx4P3VTdkisf+OFqI65+aRG0cqmDqOmctcEQJHkLe15wGy9ABpX/6JAJdfP6magQk+1SBFLtqJuA0Sk0fxQUSP+tBl+r1CRKtx/Xp3/4MKoV3flZ5UFrxEGtInMueCwJj62U7Gvccb4l8uw=
+	t=1758113066; cv=none; b=XvWHanDSUViA7aohQKZeV0sR6xT/uax/cgbMGfOzMpMOoFIFz4pCHbDTXZ2TXwwjB5UxZ9XvKhwltuiLvOxiKv0NctYIdimOCxaght01JQJ4QYQnAhFznx/Az5Yw6DD8hAzE7l1hAUfkxrYIq19TcwXdR+tTMYjRw5GWE4jopPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113063; c=relaxed/simple;
-	bh=P/CudsXeO5/cjLB13WLQ3w26AET60UKXMcEJyjeuksA=;
+	s=arc-20240116; t=1758113066; c=relaxed/simple;
+	bh=LzWsL4lhw2x4s7BVlgHC/uizME4Ep8kIL/S4k/qnZUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=im2Su7g25hAw26IZBkWee/mxUqUtD0rdaOAEqDhSX5PXUC/Qi6em9KjEgBNurYJf8AFAWLNnK71jPJLA19d+99P4fQ4Z3HAVeSiSW2BChoWj59LsKCqhkY2CZ70RtPiabe6wCosj0C4fi/KiX0BLN143GsM+vBfoyjSGKvqAw1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSEhLqUB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5PtNti3WCiQ6hvitgIBgurXADDOuPJQuT/LJg/43gXHrMo6QWxrpBv+Z2vyaDp0hWdRVEnqViNYjkVR6P7gr4HEw4eH57OHAGeEtmwR12ETkkQZPM2hNzabJl8498InbiiY7zR+BV2vB+GcW4uGjngdd8odH5AAyHl94jj49SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mI0KElAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSEhLqUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40184C4CEF0;
-	Wed, 17 Sep 2025 12:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI0KElAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6771EC4CEF0;
+	Wed, 17 Sep 2025 12:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113062;
-	bh=P/CudsXeO5/cjLB13WLQ3w26AET60UKXMcEJyjeuksA=;
+	s=korg; t=1758113065;
+	bh=LzWsL4lhw2x4s7BVlgHC/uizME4Ep8kIL/S4k/qnZUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSEhLqUBEHowyorZ+1KKfB/e3PsphTOZSSByDSjkJLuQspoPVQitUJdzFchPreJr2
-	 Ty2Zx8OdXiSaxYvPwVMU6eEYvjegXmfe/udeG2CsbNQ663CpysfWCwU5ZvvbILfLDC
-	 uvHQ0fXdskqL4hJFtjl/R6/qxJ2w65Q4Slis34Yw=
+	b=mI0KElAFoeXNIh0ozaRXSEMFjgOUTmzvXHi9VRh4zYZqYJ4rHJCrXnuw9ODVlx7OM
+	 L8GOLre9C+PeflM/UQUrXjJEicYMgSnIWGpHEckuucBNfD90pqk6F9bvzgAf2C87GI
+	 /prjsqi1mHx+o175SWUXAbyFU/WGk49vwsZALMEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 161/189] netfilter: nf_tables: make nft_set_do_lookup available unconditionally
-Date: Wed, 17 Sep 2025 14:34:31 +0200
-Message-ID: <20250917123355.808813076@linuxfoundation.org>
+Subject: [PATCH 6.16 162/189] netfilter: nf_tables: restart set lookup on base_seq change
+Date: Wed, 17 Sep 2025 14:34:32 +0200
+Message-ID: <20250917123355.832077150@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,92 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 11fe5a82e53ac3581a80c88e0e35fb8a80e15f48 ]
+[ Upstream commit b2f742c846cab9afc5953a5d8f17b54922dcc723 ]
 
-This function was added for retpoline mitigation and is replaced by a
-static inline helper if mitigations are not enabled.
+The hash, hash_fast, rhash and bitwise sets may indicate no result even
+though a matching element exists during a short time window while other
+cpu is finalizing the transaction.
 
-Enable this helper function unconditionally so next patch can add a lookup
-restart mechanism to fix possible false negatives while transactions are
-in progress.
+This happens when the hash lookup/bitwise lookup function has picked up
+the old genbit, right before it was toggled by nf_tables_commit(), but
+then the same cpu managed to unlink the matching old element from the
+hash table:
 
-Adding lookup restarts in nft_lookup_eval doesn't work as nft_objref would
-then need the same copypaste loop.
+cpu0					cpu1
+  has added new elements to clone
+  has marked elements as being
+  inactive in new generation
+					perform lookup in the set
+  enters commit phase:
+					A) observes old genbit
+   increments base_seq
+I) increments the genbit
+II) removes old element from the set
+					B) finds matching element
+					C) returns no match: found
+					element is not valid in old
+					generation
 
-This patch is separate to ease review of the actual bug fix.
+					Next lookup observes new genbit and
+					finds matching e2.
 
-Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Consider a packet matching element e1, e2.
+
+cpu0 processes following transaction:
+1. remove e1
+2. adds e2, which has same key as e1.
+
+P matches both e1 and e2.  Therefore, cpu1 should always find a match
+for P. Due to above race, this is not the case:
+
+cpu1 observed the old genbit.  e2 will not be considered once it is found.
+The element e1 is not found anymore if cpu0 managed to unlink it from the
+hlist before cpu1 found it during list traversal.
+
+The situation only occurs for a brief time period, lookups happening
+after I) observe new genbit and return e2.
+
+This problem exists in all set types except nft_set_pipapo, so fix it once
+in nft_lookup rather than each set ops individually.
+
+Sample the base sequence counter, which gets incremented right before the
+genbit is changed.
+
+Then, if no match is found, retry the lookup if the base sequence was
+altered in between.
+
+If the base sequence hasn't changed:
+ - No update took place: no-match result is expected.
+   This is the common case.  or:
+ - nf_tables_commit() hasn't progressed to genbit update yet.
+   Old elements were still visible and nomatch result is expected, or:
+ - nf_tables_commit updated the genbit:
+   We picked up the new base_seq, so the lookup function also picked
+   up the new genbit, no-match result is expected.
+
+If the old genbit was observed, then nft_lookup also picked up the old
+base_seq: nft_lookup_should_retry() returns true and relookup is performed
+in the new generation.
+
+This problem was added when the unconditional synchronize_rcu() call
+that followed the current/next generation bit toggle was removed.
+
+Thanks to Pablo Neira Ayuso for reviewing an earlier version of this
+patchset, for suggesting re-use of existing base_seq and placement of
+the restart loop in nft_set_do_lookup().
+
+Fixes: 0cbc06b3faba ("netfilter: nf_tables: remove synchronize_rcu in commit phase")
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: b2f742c846ca ("netfilter: nf_tables: restart set lookup on base_seq change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables_core.h | 10 ++--------
- net/netfilter/nft_lookup.c             | 17 ++++++++++++-----
- 2 files changed, 14 insertions(+), 13 deletions(-)
+ net/netfilter/nf_tables_api.c |  3 ++-
+ net/netfilter/nft_lookup.c    | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables_core.h b/include/net/netfilter/nf_tables_core.h
-index 6a52fb97b8443..04699eac5b524 100644
---- a/include/net/netfilter/nf_tables_core.h
-+++ b/include/net/netfilter/nf_tables_core.h
-@@ -109,17 +109,11 @@ nft_hash_lookup_fast(const struct net *net, const struct nft_set *set,
- const struct nft_set_ext *
- nft_hash_lookup(const struct net *net, const struct nft_set *set,
- 		const u32 *key);
-+#endif
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 5ea7a015504bb..cde63e5f18d8f 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -10971,7 +10971,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 	while (++base_seq == 0)
+ 		;
+ 
+-	WRITE_ONCE(net->nft.base_seq, base_seq);
++	/* pairs with smp_load_acquire in nft_lookup_eval */
++	smp_store_release(&net->nft.base_seq, base_seq);
+ 
+ 	gc_seq = nft_gc_seq_begin(nft_net);
+ 
+diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
+index 2c6909bf1b407..58c5b14889c47 100644
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -55,11 +55,40 @@ __nft_set_do_lookup(const struct net *net, const struct nft_set *set,
+ 	return set->ops->lookup(net, set, key);
+ }
+ 
++static unsigned int nft_base_seq(const struct net *net)
++{
++	/* pairs with smp_store_release() in nf_tables_commit() */
++	return smp_load_acquire(&net->nft.base_seq);
++}
++
++static bool nft_lookup_should_retry(const struct net *net, unsigned int seq)
++{
++	return unlikely(seq != nft_base_seq(net));
++}
 +
  const struct nft_set_ext *
  nft_set_do_lookup(const struct net *net, const struct nft_set *set,
- 		  const u32 *key);
--#else
--static inline const struct nft_set_ext *
--nft_set_do_lookup(const struct net *net, const struct nft_set *set,
--		  const u32 *key)
--{
--	return set->ops->lookup(net, set, key);
--}
--#endif
- 
- /* called from nft_pipapo_avx2.c */
- const struct nft_set_ext *
-diff --git a/net/netfilter/nft_lookup.c b/net/netfilter/nft_lookup.c
-index 40c602ffbcba7..2c6909bf1b407 100644
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -24,11 +24,11 @@ struct nft_lookup {
- 	struct nft_set_binding		binding;
- };
- 
--#ifdef CONFIG_MITIGATION_RETPOLINE
--const struct nft_set_ext *
--nft_set_do_lookup(const struct net *net, const struct nft_set *set,
--		  const u32 *key)
-+static const struct nft_set_ext *
-+__nft_set_do_lookup(const struct net *net, const struct nft_set *set,
-+		    const u32 *key)
+ 		  const u32 *key)
  {
-+#ifdef CONFIG_MITIGATION_RETPOLINE
- 	if (set->ops == &nft_set_hash_fast_type.ops)
- 		return nft_hash_lookup_fast(net, set, key);
- 	if (set->ops == &nft_set_hash_type.ops)
-@@ -51,10 +51,17 @@ nft_set_do_lookup(const struct net *net, const struct nft_set *set,
- 		return nft_rbtree_lookup(net, set, key);
- 
- 	WARN_ON_ONCE(1);
-+#endif
- 	return set->ops->lookup(net, set, key);
- }
+-	return __nft_set_do_lookup(net, set, key);
++	const struct nft_set_ext *ext;
++	unsigned int base_seq;
 +
-+const struct nft_set_ext *
-+nft_set_do_lookup(const struct net *net, const struct nft_set *set,
-+		  const u32 *key)
-+{
-+	return __nft_set_do_lookup(net, set, key);
-+}
++	do {
++		base_seq = nft_base_seq(net);
++
++		ext = __nft_set_do_lookup(net, set, key);
++		if (ext)
++			break;
++		/* No match?  There is a small chance that lookup was
++		 * performed in the old generation, but nf_tables_commit()
++		 * already unlinked a (matching) element.
++		 *
++		 * We need to repeat the lookup to make sure that we didn't
++		 * miss a matching element in the new generation.
++		 */
++	} while (nft_lookup_should_retry(net, base_seq));
++
++	return ext;
+ }
  EXPORT_SYMBOL_GPL(nft_set_do_lookup);
--#endif
  
- void nft_lookup_eval(const struct nft_expr *expr,
- 		     struct nft_regs *regs,
 -- 
 2.51.0
 
