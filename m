@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDD62F7ABF;
-	Wed, 17 Sep 2025 12:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A16C2F7ABF;
+	Wed, 17 Sep 2025 12:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113198; cv=none; b=D8glskFCpMulc1SEr/sDiWKA+FFCbFj5n612tAdrNwPdDysTixOmuJLy4aYQinTHMCDJnRAdDCoT71rClThOjKSKvDWc8tZvVbXb8iN/up33QyuY5knMObYKX6Wdjne7rwgsvPFnE2K52LBgzjNcZ7P5tbEJttqFjPWdQmFcWmw=
+	t=1758113202; cv=none; b=Y2PZ9siWx3z+axpe1VHvXxyBiEHeVYcXkyE9Nxzkz4xaDx/DdrGLEPNGNHKbVd7ItUin7rJL1fBHcR2sXjk1vP5wJZOa1e0Xu9DQjQZWFRCDrsD2foB2G3wFFz1mJI6P+n1L1fHMEvGI8jaecfG8o/tELaOunxkBb3PDzsD1hnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113198; c=relaxed/simple;
-	bh=wo/GE1SJ32GXEVYrkDJSwgkYJyTw2KY1/RkDE6TqajU=;
+	s=arc-20240116; t=1758113202; c=relaxed/simple;
+	bh=vuVj1RaMoAUBN42CNub/Amzklms5rgaz0XmNUEM5p+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJDF/2QEhAFYE9A0BBVAJku4Ej6AUMwbGHt0y6ZOnOLDZaUTaQrFaqQrWxfs4myVcoS+BAK3HJw79voVppmHY1D9imZVTPKrSA2lSVvA9k5ZU7o1WnHYKQqy2zKg7XDfeoLi7FrDVWWdJAXiAIcD8VJW4YGTlTkIDhRJb7X4obU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNTDqqIr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rDV+1MSY65xmDuJR6oUuAT24HWLcyiguZCPO1sCDLpXzXZDi1tn735CkGM42YWzr2hq08vf1N8Jsw7TU0tEvf0c5Jt/jyvlT14fDBiqk9hJ2DLXrmkZXh90cB+YeTfmE5n3MrnKlWeXb20/j/v4lFj05xpDZ+1h7eP+RCY7ciZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGSSSyZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNTDqqIr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD75C4CEF5;
-	Wed, 17 Sep 2025 12:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGSSSyZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4219AC4CEF0;
+	Wed, 17 Sep 2025 12:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113198;
-	bh=wo/GE1SJ32GXEVYrkDJSwgkYJyTw2KY1/RkDE6TqajU=;
+	s=korg; t=1758113201;
+	bh=vuVj1RaMoAUBN42CNub/Amzklms5rgaz0XmNUEM5p+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNTDqqIreT1gOK2w12+4OOR7i0+wzEcNkUBo0HJaV2dORWmgeGyk/u/wMxEuynnL5
-	 xr8mEQzN34rcZr6dPPOzL8dfgujine+FzMbPiO4j3hEBIT17WqvlLD5KGi2lZH6V5/
-	 BcnVuIG/dr4AlmhlG55sMwaiabxKbqQzmqoVxJlE=
+	b=GGSSSyZX2i82U2h6HBoT43HFuuMA9RIyNN9DFOfX4MaPAmB924TcyOvjvgXgVSEjv
+	 Xfqdh1iynpoJrf4B7S7OT85gc/mP/2O47CvNC0tECJRkJWW/FsxfTU3AwNKlaZLdtB
+	 vPxZBtJRleVKJ79dYHyhbLsuUBmYgonmvfLt6mlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huan Yang <link@vivo.com>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
-	Bingbu Cao <bingbu.cao@linux.intel.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/140] Revert "udmabuf: fix vmap_udmabuf error page set"
-Date: Wed, 17 Sep 2025 14:33:05 +0200
-Message-ID: <20250917123344.639004775@linuxfoundation.org>
+Subject: [PATCH 6.12 014/140] ext4: introduce linear search for dentries
+Date: Wed, 17 Sep 2025 14:33:06 +0200
+Message-ID: <20250917123344.662222544@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -46,90 +45,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huan Yang <link@vivo.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit ceb7b62eaaaacfcf87473bd2e99ac73a758620cb ]
+[ Upstream commit 9e28059d56649a7212d5b3f8751ec021154ba3dd ]
 
-This reverts commit 18d7de823b7150344d242c3677e65d68c5271b04.
+This patch addresses an issue where some files in case-insensitive
+directories become inaccessible due to changes in how the kernel
+function, utf8_casefold(), generates case-folded strings from the
+commit 5c26d2f1d3f5 ("unicode: Don't special case ignorable code
+points").
 
-We cannot use vmap_pfn() in vmap_udmabuf() as it would fail the pfn_valid()
-check in vmap_pfn_apply(). This is because vmap_pfn() is intended to be
-used for mapping non-struct-page memory such as PCIe BARs. Since, udmabuf
-mostly works with pages/folios backed by shmem/hugetlbfs/THP, vmap_pfn()
-is not the right tool or API to invoke for implementing vmap.
+There are good reasons why this change should be made; it's actually
+quite stupid that Unicode seems to think that the characters ❤ and ❤️
+should be casefolded.  Unfortimately because of the backwards
+compatibility issue, this commit was reverted in 231825b2e1ff.
 
-Signed-off-by: Huan Yang <link@vivo.com>
-Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Reported-by: Bingbu Cao <bingbu.cao@linux.intel.com>
-Closes: https://lore.kernel.org/dri-devel/eb7e0137-3508-4287-98c4-816c5fd98e10@vivo.com/T/#mbda4f64a3532b32e061f4e8763bc8e307bea3ca8
-Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://lore.kernel.org/r/20250428073831.19942-2-link@vivo.com
+This problem is addressed by instituting a brute-force linear fallback
+if a lookup fails on case-folded directory, which does result in a
+performance hit when looking up files affected by the changing how
+thekernel treats ignorable Uniode characters, or when attempting to
+look up non-existent file names.  So this fallback can be disabled by
+setting an encoding flag if in the future, the system administrator or
+the manufacturer of a mobile handset or tablet can be sure that there
+was no opportunity for a kernel to insert file names with incompatible
+encodings.
+
+Fixes: 5c26d2f1d3f5 ("unicode: Don't special case ignorable code points")
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/Kconfig   |  1 -
- drivers/dma-buf/udmabuf.c | 22 +++++++---------------
- 2 files changed, 7 insertions(+), 16 deletions(-)
+ fs/ext4/namei.c    | 14 ++++++++++----
+ include/linux/fs.h | 10 +++++++++-
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma-buf/Kconfig b/drivers/dma-buf/Kconfig
-index fee04fdb08220..b46eb8a552d7b 100644
---- a/drivers/dma-buf/Kconfig
-+++ b/drivers/dma-buf/Kconfig
-@@ -36,7 +36,6 @@ config UDMABUF
- 	depends on DMA_SHARED_BUFFER
- 	depends on MEMFD_CREATE || COMPILE_TEST
- 	depends on MMU
--	select VMAP_PFN
- 	help
- 	  A driver to let userspace turn memfd regions into dma-bufs.
- 	  Qemu can use this to create host dmabufs for guest framebuffers.
-diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
-index 959f690b12260..0e127a9109e75 100644
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -74,29 +74,21 @@ static int mmap_udmabuf(struct dma_buf *buf, struct vm_area_struct *vma)
- static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
- {
- 	struct udmabuf *ubuf = buf->priv;
--	unsigned long *pfns;
-+	struct page **pages;
- 	void *vaddr;
- 	pgoff_t pg;
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index 286f8fcb74cc9..29c7c0b8295fb 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1462,7 +1462,8 @@ static bool ext4_match(struct inode *parent,
+ 		 * sure cf_name was properly initialized before
+ 		 * considering the calculated hash.
+ 		 */
+-		if (IS_ENCRYPTED(parent) && fname->cf_name.name &&
++		if (sb_no_casefold_compat_fallback(parent->i_sb) &&
++		    IS_ENCRYPTED(parent) && fname->cf_name.name &&
+ 		    (fname->hinfo.hash != EXT4_DIRENT_HASH(de) ||
+ 		     fname->hinfo.minor_hash != EXT4_DIRENT_MINOR_HASH(de)))
+ 			return false;
+@@ -1595,10 +1596,15 @@ static struct buffer_head *__ext4_find_entry(struct inode *dir,
+ 		 * return.  Otherwise, fall back to doing a search the
+ 		 * old fashioned way.
+ 		 */
+-		if (!IS_ERR(ret) || PTR_ERR(ret) != ERR_BAD_DX_DIR)
++		if (IS_ERR(ret) && PTR_ERR(ret) == ERR_BAD_DX_DIR)
++			dxtrace(printk(KERN_DEBUG "ext4_find_entry: dx failed, "
++				       "falling back\n"));
++		else if (!sb_no_casefold_compat_fallback(dir->i_sb) &&
++			 *res_dir == NULL && IS_CASEFOLDED(dir))
++			dxtrace(printk(KERN_DEBUG "ext4_find_entry: casefold "
++				       "failed, falling back\n"));
++		else
+ 			goto cleanup_and_exit;
+-		dxtrace(printk(KERN_DEBUG "ext4_find_entry: dx failed, "
+-			       "falling back\n"));
+ 		ret = NULL;
+ 	}
+ 	nblocks = dir->i_size >> EXT4_BLOCK_SIZE_BITS(sb);
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index a6de8d93838d1..37a01c9d96583 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1197,11 +1197,19 @@ extern int send_sigurg(struct file *file);
+ #define SB_NOUSER       BIT(31)
  
- 	dma_resv_assert_held(buf->resv);
+ /* These flags relate to encoding and casefolding */
+-#define SB_ENC_STRICT_MODE_FL	(1 << 0)
++#define SB_ENC_STRICT_MODE_FL		(1 << 0)
++#define SB_ENC_NO_COMPAT_FALLBACK_FL	(1 << 1)
  
--	/**
--	 * HVO may free tail pages, so just use pfn to map each folio
--	 * into vmalloc area.
--	 */
--	pfns = kvmalloc_array(ubuf->pagecount, sizeof(*pfns), GFP_KERNEL);
--	if (!pfns)
-+	pages = kvmalloc_array(ubuf->pagecount, sizeof(*pages), GFP_KERNEL);
-+	if (!pages)
- 		return -ENOMEM;
+ #define sb_has_strict_encoding(sb) \
+ 	(sb->s_encoding_flags & SB_ENC_STRICT_MODE_FL)
  
--	for (pg = 0; pg < ubuf->pagecount; pg++) {
--		unsigned long pfn = folio_pfn(ubuf->folios[pg]);
--
--		pfn += ubuf->offsets[pg] >> PAGE_SHIFT;
--		pfns[pg] = pfn;
--	}
-+	for (pg = 0; pg < ubuf->pagecount; pg++)
-+		pages[pg] = &ubuf->folios[pg]->page;
- 
--	vaddr = vmap_pfn(pfns, ubuf->pagecount, PAGE_KERNEL);
--	kvfree(pfns);
-+	vaddr = vm_map_ram(pages, ubuf->pagecount, -1);
-+	kvfree(pages);
- 	if (!vaddr)
- 		return -EINVAL;
- 
++#if IS_ENABLED(CONFIG_UNICODE)
++#define sb_no_casefold_compat_fallback(sb) \
++	(sb->s_encoding_flags & SB_ENC_NO_COMPAT_FALLBACK_FL)
++#else
++#define sb_no_casefold_compat_fallback(sb) (1)
++#endif
++
+ /*
+  *	Umount options
+  */
 -- 
 2.51.0
 
