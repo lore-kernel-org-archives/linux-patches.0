@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131002638B2;
-	Wed, 17 Sep 2025 12:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0C41F873B;
+	Wed, 17 Sep 2025 12:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112964; cv=none; b=l3mc3yHWkepw1HeD+EAS9Lgm5T33g6ZiObudgfYlczt7P5OOtus2MX6W6MCW68SqegeVto8JOE5ZA7E9SXlrH3E+I6F3myeVNy/uVCW5A0wrjIda04OiAAGUBYvw0A5OGKi5TWsEMHUcnttqlTxOfqLQ36OIPFhN2SdmvtCj4Zg=
+	t=1758112967; cv=none; b=DFPxj00CADgfcluk/MDG+w58XxJutLdJ0CvrKSdUi8P3OoFTY1K0sQCGyUgnPfPMtBzTaHQoebO0vmI6BzuPaUApXFNQ6qM2m2IraTnxUOhXcD2Edh+8sk+hzHW5Y6XJfQntTtmvdeYIG8EkAsmmq492pvlHrWJsCWRq7TAXSvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112964; c=relaxed/simple;
-	bh=cddpF56Hc/D+ienmDNEoPW8ijN1rXQjH+pm/pomxal0=;
+	s=arc-20240116; t=1758112967; c=relaxed/simple;
+	bh=MKHA8LP7mnZoE6azn+IwX2T/OXRpnr8aBWtzSojzs+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+31DiueA7bImJT+Ug7Wn0ousHf+kcQ3YLT6gCm2sLhgkVGsrsNrJAl0+3nwll+Br3HmzJWFqDTAa9fE7+qN0Utru8fnf/7U7mHK2B+msosx+RVc/3NaVx2yzSKvwN/YF40GeEYmGz/TGyfn7POKhHgBbOSZ7jAHK09+xkK6iz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cr7vH6BH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fq4/NThqgOltwINxU5lOWILDh93g/JpUr+R5EDPre/Mo2S6glJEMDFejsQ8tDiTE+yJVPzdofCAN853cCX79xvpIxjRx6K/BCKhnUWUXgq/8pGkCDrd1uQ5Yj+9luCvacTparO+ZwDqjofUB9OhYfmQ3siw17bqgjWMqOjNZ99s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jd4nNtON; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cr7vH6BH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0D5C4CEF0;
-	Wed, 17 Sep 2025 12:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jd4nNtON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A8DC4CEF0;
+	Wed, 17 Sep 2025 12:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112963;
-	bh=cddpF56Hc/D+ienmDNEoPW8ijN1rXQjH+pm/pomxal0=;
+	s=korg; t=1758112966;
+	bh=MKHA8LP7mnZoE6azn+IwX2T/OXRpnr8aBWtzSojzs+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cr7vH6BH9XBo6aittN1HPl6PEZIXykN05WJaf31fYFuZPylqKIb8BEW1OFgeNdvqR
-	 ll8E0Wt4VzZpcS1+VXuuQvDXBog9Mq6gqbBqpvy11H9sYg16zAbdCsJXPl5JuvRZ5x
-	 AmL0vd2zaLlIb8V5eVun0CeOTdNXPifVOHBdhsZ4=
+	b=jd4nNtONiqxV3n18aQRWt4yBeLNUMGiyLwMAZ9oO1il//CHKPskhVpdsm5ZV3Y0Yj
+	 VP/9caR3q2wgLwjo8iPbHAZ+2V31E+WeZdgyHZiRO7cxCZbrxXVCzsr+zRfc8eaQK8
+	 qbtlL6bjGgH6T4WYm54UQq6cxyGT59NfssizcoIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 129/189] net: phy: transfer phy_config_inband() locking responsibility to phylink
-Date: Wed, 17 Sep 2025 14:33:59 +0200
-Message-ID: <20250917123355.010945795@linuxfoundation.org>
+Subject: [PATCH 6.16 130/189] wifi: ath12k: Fix missing station power save configuration
+Date: Wed, 17 Sep 2025 14:34:00 +0200
+Message-ID: <20250917123355.033918979@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,204 +52,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
 
-[ Upstream commit e2a10daba84968f6b5777d150985fd7d6abc9c84 ]
+[ Upstream commit 4b66d18918f8e4d85e51974a9e3ce9abad5c7c3d ]
 
-Problem description
-===================
+Commit afbab6e4e88d ("wifi: ath12k: modify ath12k_mac_op_bss_info_changed()
+for MLO") replaced the bss_info_changed() callback with vif_cfg_changed()
+and link_info_changed() to support Multi-Link Operation (MLO). As a result,
+the station power save configuration is no longer correctly applied in
+ath12k_mac_bss_info_changed().
 
-Lockdep reports a possible circular locking dependency (AB/BA) between
-&pl->state_mutex and &phy->lock, as follows.
+Move the handling of 'BSS_CHANGED_PS' into ath12k_mac_op_vif_cfg_changed()
+to align with the updated callback structure introduced for MLO, ensuring
+proper power-save behavior for station interfaces.
 
-phylink_resolve() // acquires &pl->state_mutex
--> phylink_major_config()
-   -> phy_config_inband() // acquires &pl->phydev->lock
+Tested-on: WCN7850 hw2.0 PCI WLAN.IOE_HMT.1.1-00011-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1
 
-whereas all the other call sites where &pl->state_mutex and
-&pl->phydev->lock have the locking scheme reversed. Everywhere else,
-&pl->phydev->lock is acquired at the top level, and &pl->state_mutex at
-the lower level. A clear example is phylink_bringup_phy().
-
-The outlier is the newly introduced phy_config_inband() and the existing
-lock order is the correct one. To understand why it cannot be the other
-way around, it is sufficient to consider phylink_phy_change(), phylink's
-callback from the PHY device's phy->phy_link_change() virtual method,
-invoked by the PHY state machine.
-
-phy_link_up() and phy_link_down(), the (indirect) callers of
-phylink_phy_change(), are called with &phydev->lock acquired.
-Then phylink_phy_change() acquires its own &pl->state_mutex, to
-serialize changes made to its pl->phy_state and pl->link_config.
-So all other instances of &pl->state_mutex and &phydev->lock must be
-consistent with this order.
-
-Problem impact
-==============
-
-I think the kernel runs a serious deadlock risk if an existing
-phylink_resolve() thread, which results in a phy_config_inband() call,
-is concurrent with a phy_link_up() or phy_link_down() call, which will
-deadlock on &pl->state_mutex in phylink_phy_change(). Practically
-speaking, the impact may be limited by the slow speed of the medium
-auto-negotiation protocol, which makes it unlikely for the current state
-to still be unresolved when a new one is detected, but I think the
-problem is there. Nonetheless, the problem was discovered using lockdep.
-
-Proposed solution
-=================
-
-Practically speaking, the phy_config_inband() requirement of having
-phydev->lock acquired must transfer to the caller (phylink is the only
-caller). There, it must bubble up until immediately before
-&pl->state_mutex is acquired, for the cases where that takes place.
-
-Solution details, considerations, notes
-=======================================
-
-This is the phy_config_inband() call graph:
-
-                          sfp_upstream_ops :: connect_phy()
-                          |
-                          v
-                          phylink_sfp_connect_phy()
-                          |
-                          v
-                          phylink_sfp_config_phy()
-                          |
-                          |   sfp_upstream_ops :: module_insert()
-                          |   |
-                          |   v
-                          |   phylink_sfp_module_insert()
-                          |   |
-                          |   |   sfp_upstream_ops :: module_start()
-                          |   |   |
-                          |   |   v
-                          |   |   phylink_sfp_module_start()
-                          |   |   |
-                          |   v   v
-                          |   phylink_sfp_config_optical()
- phylink_start()          |   |
-   |   phylink_resume()   v   v
-   |   |  phylink_sfp_set_config()
-   |   |  |
-   v   v  v
- phylink_mac_initial_config()
-   |   phylink_resolve()
-   |   |  phylink_ethtool_ksettings_set()
-   v   v  v
-   phylink_major_config()
-            |
-            v
-    phy_config_inband()
-
-phylink_major_config() caller #1, phylink_mac_initial_config(), does not
-acquire &pl->state_mutex nor do its callers. It must acquire
-&pl->phydev->lock prior to calling phylink_major_config().
-
-phylink_major_config() caller #2, phylink_resolve() acquires
-&pl->state_mutex, thus also needs to acquire &pl->phydev->lock.
-
-phylink_major_config() caller #3, phylink_ethtool_ksettings_set(), is
-completely uninteresting, because it only calls phylink_major_config()
-if pl->phydev is NULL (otherwise it calls phy_ethtool_ksettings_set()).
-We need to change nothing there.
-
-Other solutions
-===============
-
-The lock inversion between &pl->state_mutex and &pl->phydev->lock has
-occurred at least once before, as seen in commit c718af2d00a3 ("net:
-phylink: fix ethtool -A with attached PHYs"). The solution there was to
-simply not call phy_set_asym_pause() under the &pl->state_mutex. That
-cannot be extended to our case though, where the phy_config_inband()
-call is much deeper inside the &pl->state_mutex section.
-
-Fixes: 5fd0f1a02e75 ("net: phylink: add negotiation of in-band capabilities")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20250904125238.193990-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: afbab6e4e88d ("wifi: ath12k: modify ath12k_mac_op_bss_info_changed() for MLO")
+Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250908015025.1301398-1-miaoqing.pan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy.c     | 12 ++++--------
- drivers/net/phy/phylink.c |  9 +++++++++
- 2 files changed, 13 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 122 ++++++++++++++------------
+ 1 file changed, 67 insertions(+), 55 deletions(-)
 
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index 13df28445f020..c02da57a4da5e 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -1065,23 +1065,19 @@ EXPORT_SYMBOL_GPL(phy_inband_caps);
-  */
- int phy_config_inband(struct phy_device *phydev, unsigned int modes)
- {
--	int err;
-+	lockdep_assert_held(&phydev->lock);
- 
- 	if (!!(modes & LINK_INBAND_DISABLE) +
- 	    !!(modes & LINK_INBAND_ENABLE) +
- 	    !!(modes & LINK_INBAND_BYPASS) != 1)
- 		return -EINVAL;
- 
--	mutex_lock(&phydev->lock);
- 	if (!phydev->drv)
--		err = -EIO;
-+		return -EIO;
- 	else if (!phydev->drv->config_inband)
--		err = -EOPNOTSUPP;
--	else
--		err = phydev->drv->config_inband(phydev, modes);
--	mutex_unlock(&phydev->lock);
-+		return -EOPNOTSUPP;
- 
--	return err;
-+	return phydev->drv->config_inband(phydev, modes);
- }
- EXPORT_SYMBOL(phy_config_inband);
- 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 08cbb31e6dbc1..229a503d601ee 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -1411,6 +1411,7 @@ static void phylink_get_fixed_state(struct phylink *pl,
- static void phylink_mac_initial_config(struct phylink *pl, bool force_restart)
- {
- 	struct phylink_link_state link_state;
-+	struct phy_device *phy = pl->phydev;
- 
- 	switch (pl->req_link_an_mode) {
- 	case MLO_AN_PHY:
-@@ -1434,7 +1435,11 @@ static void phylink_mac_initial_config(struct phylink *pl, bool force_restart)
- 	link_state.link = false;
- 
- 	phylink_apply_manual_flow(pl, &link_state);
-+	if (phy)
-+		mutex_lock(&phy->lock);
- 	phylink_major_config(pl, force_restart, &link_state);
-+	if (phy)
-+		mutex_unlock(&phy->lock);
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index a885dd168a372..87944e4467050 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -3650,12 +3650,68 @@ static int ath12k_mac_fils_discovery(struct ath12k_link_vif *arvif,
+ 	return ret;
  }
  
- static const char *phylink_pause_to_str(int pause)
-@@ -1575,6 +1580,8 @@ static void phylink_resolve(struct work_struct *w)
- 
- 	mutex_lock(&pl->phydev_mutex);
- 	phy = pl->phydev;
-+	if (phy)
-+		mutex_lock(&phy->lock);
- 	mutex_lock(&pl->state_mutex);
- 	cur_link_state = phylink_link_is_up(pl);
- 
-@@ -1676,6 +1683,8 @@ static void phylink_resolve(struct work_struct *w)
- 		queue_work(system_power_efficient_wq, &pl->resolve);
++static void ath12k_mac_vif_setup_ps(struct ath12k_link_vif *arvif)
++{
++	struct ath12k *ar = arvif->ar;
++	struct ieee80211_vif *vif = arvif->ahvif->vif;
++	struct ieee80211_conf *conf = &ath12k_ar_to_hw(ar)->conf;
++	enum wmi_sta_powersave_param param;
++	struct ieee80211_bss_conf *info;
++	enum wmi_sta_ps_mode psmode;
++	int ret;
++	int timeout;
++	bool enable_ps;
++
++	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
++
++	if (vif->type != NL80211_IFTYPE_STATION)
++		return;
++
++	enable_ps = arvif->ahvif->ps;
++	if (enable_ps) {
++		psmode = WMI_STA_PS_MODE_ENABLED;
++		param = WMI_STA_PS_PARAM_INACTIVITY_TIME;
++
++		timeout = conf->dynamic_ps_timeout;
++		if (timeout == 0) {
++			info = ath12k_mac_get_link_bss_conf(arvif);
++			if (!info) {
++				ath12k_warn(ar->ab, "unable to access bss link conf in setup ps for vif %pM link %u\n",
++					    vif->addr, arvif->link_id);
++				return;
++			}
++
++			/* firmware doesn't like 0 */
++			timeout = ieee80211_tu_to_usec(info->beacon_int) / 1000;
++		}
++
++		ret = ath12k_wmi_set_sta_ps_param(ar, arvif->vdev_id, param,
++						  timeout);
++		if (ret) {
++			ath12k_warn(ar->ab, "failed to set inactivity time for vdev %d: %i\n",
++				    arvif->vdev_id, ret);
++			return;
++		}
++	} else {
++		psmode = WMI_STA_PS_MODE_DISABLED;
++	}
++
++	ath12k_dbg(ar->ab, ATH12K_DBG_MAC, "mac vdev %d psmode %s\n",
++		   arvif->vdev_id, psmode ? "enable" : "disable");
++
++	ret = ath12k_wmi_pdev_set_ps_mode(ar, arvif->vdev_id, psmode);
++	if (ret)
++		ath12k_warn(ar->ab, "failed to set sta power save mode %d for vdev %d: %d\n",
++			    psmode, arvif->vdev_id, ret);
++}
++
+ static void ath12k_mac_op_vif_cfg_changed(struct ieee80211_hw *hw,
+ 					  struct ieee80211_vif *vif,
+ 					  u64 changed)
+ {
+ 	struct ath12k_vif *ahvif = ath12k_vif_to_ahvif(vif);
+ 	unsigned long links = ahvif->links_map;
++	struct ieee80211_vif_cfg *vif_cfg;
+ 	struct ieee80211_bss_conf *info;
+ 	struct ath12k_link_vif *arvif;
+ 	struct ieee80211_sta *sta;
+@@ -3719,61 +3775,24 @@ static void ath12k_mac_op_vif_cfg_changed(struct ieee80211_hw *hw,
+ 			}
+ 		}
  	}
- 	mutex_unlock(&pl->state_mutex);
-+	if (phy)
-+		mutex_unlock(&phy->lock);
- 	mutex_unlock(&pl->phydev_mutex);
+-}
+-
+-static void ath12k_mac_vif_setup_ps(struct ath12k_link_vif *arvif)
+-{
+-	struct ath12k *ar = arvif->ar;
+-	struct ieee80211_vif *vif = arvif->ahvif->vif;
+-	struct ieee80211_conf *conf = &ath12k_ar_to_hw(ar)->conf;
+-	enum wmi_sta_powersave_param param;
+-	struct ieee80211_bss_conf *info;
+-	enum wmi_sta_ps_mode psmode;
+-	int ret;
+-	int timeout;
+-	bool enable_ps;
+ 
+-	lockdep_assert_wiphy(ath12k_ar_to_hw(ar)->wiphy);
++	if (changed & BSS_CHANGED_PS) {
++		links = ahvif->links_map;
++		vif_cfg = &vif->cfg;
+ 
+-	if (vif->type != NL80211_IFTYPE_STATION)
+-		return;
++		for_each_set_bit(link_id, &links, IEEE80211_MLD_MAX_NUM_LINKS) {
++			arvif = wiphy_dereference(hw->wiphy, ahvif->link[link_id]);
++			if (!arvif || !arvif->ar)
++				continue;
+ 
+-	enable_ps = arvif->ahvif->ps;
+-	if (enable_ps) {
+-		psmode = WMI_STA_PS_MODE_ENABLED;
+-		param = WMI_STA_PS_PARAM_INACTIVITY_TIME;
++			ar = arvif->ar;
+ 
+-		timeout = conf->dynamic_ps_timeout;
+-		if (timeout == 0) {
+-			info = ath12k_mac_get_link_bss_conf(arvif);
+-			if (!info) {
+-				ath12k_warn(ar->ab, "unable to access bss link conf in setup ps for vif %pM link %u\n",
+-					    vif->addr, arvif->link_id);
+-				return;
++			if (ar->ab->hw_params->supports_sta_ps) {
++				ahvif->ps = vif_cfg->ps;
++				ath12k_mac_vif_setup_ps(arvif);
+ 			}
+-
+-			/* firmware doesn't like 0 */
+-			timeout = ieee80211_tu_to_usec(info->beacon_int) / 1000;
+ 		}
+-
+-		ret = ath12k_wmi_set_sta_ps_param(ar, arvif->vdev_id, param,
+-						  timeout);
+-		if (ret) {
+-			ath12k_warn(ar->ab, "failed to set inactivity time for vdev %d: %i\n",
+-				    arvif->vdev_id, ret);
+-			return;
+-		}
+-	} else {
+-		psmode = WMI_STA_PS_MODE_DISABLED;
+ 	}
+-
+-	ath12k_dbg(ar->ab, ATH12K_DBG_MAC, "mac vdev %d psmode %s\n",
+-		   arvif->vdev_id, psmode ? "enable" : "disable");
+-
+-	ret = ath12k_wmi_pdev_set_ps_mode(ar, arvif->vdev_id, psmode);
+-	if (ret)
+-		ath12k_warn(ar->ab, "failed to set sta power save mode %d for vdev %d: %d\n",
+-			    psmode, arvif->vdev_id, ret);
  }
  
+ static bool ath12k_mac_supports_station_tpc(struct ath12k *ar,
+@@ -3795,7 +3814,6 @@ static void ath12k_mac_bss_info_changed(struct ath12k *ar,
+ {
+ 	struct ath12k_vif *ahvif = arvif->ahvif;
+ 	struct ieee80211_vif *vif = ath12k_ahvif_to_vif(ahvif);
+-	struct ieee80211_vif_cfg *vif_cfg = &vif->cfg;
+ 	struct cfg80211_chan_def def;
+ 	u32 param_id, param_value;
+ 	enum nl80211_band band;
+@@ -4069,12 +4087,6 @@ static void ath12k_mac_bss_info_changed(struct ath12k *ar,
+ 	}
+ 
+ 	ath12k_mac_fils_discovery(arvif, info);
+-
+-	if (changed & BSS_CHANGED_PS &&
+-	    ar->ab->hw_params->supports_sta_ps) {
+-		ahvif->ps = vif_cfg->ps;
+-		ath12k_mac_vif_setup_ps(arvif);
+-	}
+ }
+ 
+ static struct ath12k_vif_cache *ath12k_ahvif_get_link_cache(struct ath12k_vif *ahvif,
 -- 
 2.51.0
 
