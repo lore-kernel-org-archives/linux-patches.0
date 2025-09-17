@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC07C2C3261;
-	Wed, 17 Sep 2025 12:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DDA2EC0BD;
+	Wed, 17 Sep 2025 12:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758112691; cv=none; b=hHAdxlP6vQ54p9YLAnlrwjtj16bJ+Ly9D2EeYGUe2yTNnUa77YFPKBnCgI7twvlzw0bV8o32nmabDgA2C1PCdA8scD3gAvxgDWArJl/OJaqB/1jcDDh9ejFS3J5SfaEEB5siu/kh0v3yy1OXdQAldF57KlQpibEz2zs54BtXiOk=
+	t=1758112694; cv=none; b=ns9COxibdqSrrEpw27stgFf8q0oOK/h50rRNQ0JCMNwAFa7CLwW6QducCP7KPtq8teX8zbFeUg9aaEaVDE83nnpnA/u0iST1yeS+hPAFPAUEC9lmnIZ2B9hXXuXuazL1hh2NtPpkmqndq12Vz8NG2F1rLi6tJ5L3CEYR5kkZ4Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758112691; c=relaxed/simple;
-	bh=tVvbSUHeXbATpNi+YJHbBZyE/BD2m1pv7M4TX0gpb+U=;
+	s=arc-20240116; t=1758112694; c=relaxed/simple;
+	bh=5/UE2hwNfpzAW7/l6FJnarRVxWBSFoF2aZEToBBK/2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLrV+q/B/jeW7qJ06ulmD+ZfAQacnWqYuQhf1Y9u6TYt5sQJWGjWiqy2zfFGBPv0EJ3JENreEgDDftRZ+zndKSIHbkVHRYNh6iodaRRAqCOqpkmI87eIrTPcQXVjRJTFlvJT94T2yfncQKzKOHrimKcbGQ9KUd/XkMv/uZ4FJr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipWMk3zh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tXY8/Sfj9JKNoyFO5k9a7CXnhfqGxHmZSWBj2xVecQUfkiSzTf/iADuaPFRVhvdNz/Lwo7+M+KtDhbUEphgn4hM9bBhcz63VSZGf2FiGxY2hMP9w4LLHJ36/NAhr9YFntppys71mr90+S2Jf+Z/Xw/6hoDqKSwRWJnUmpavYV9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myjkCAme; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipWMk3zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECB6C4CEF0;
-	Wed, 17 Sep 2025 12:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myjkCAme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CED8C4CEF7;
+	Wed, 17 Sep 2025 12:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758112690;
-	bh=tVvbSUHeXbATpNi+YJHbBZyE/BD2m1pv7M4TX0gpb+U=;
+	s=korg; t=1758112694;
+	bh=5/UE2hwNfpzAW7/l6FJnarRVxWBSFoF2aZEToBBK/2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ipWMk3zhHmruB7Kf1ul+jsYkfUyNKYB9Lns/ncsxvK8oGdoBVeY2ajOeT8QbN9zV4
-	 0mTVCbqRcMw0of9Vjej4sgpLgA8FuBooUvr3K6DJhp/Ysg1sjb1A0n5EQhWZ3XAyK8
-	 pCLFu7AtlD5ImR3ktBgN2or76VUExC2KUZtzqZp4=
+	b=myjkCAmeDdBa20+Ljgm3CQ16n0Zcu0JJwvyASCXqTQcVmPFWPInVxo/bQ3xHwvBuW
+	 qDbFFbgsFpebIv5Lmau+0Z2mzUMU/UAYSz+zimxan9pOsxt7gZ9ygAox4h1iaeR6hG
+	 bFvENMrdUlgawGNYN9PvT2dZu3jfrVGwJQz0n2sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4cabd1d2fa917a456db8@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 046/189] tcp_bpf: Call sk_msg_free() when tcp_bpf_send_verdict() fails to allocate psock->cork.
-Date: Wed, 17 Sep 2025 14:32:36 +0200
-Message-ID: <20250917123352.987047305@linuxfoundation.org>
+Subject: [PATCH 6.16 011/189] iommu/vt-d: Create unique domain ops for each stage
+Date: Wed, 17 Sep 2025 14:32:01 +0200
+Message-ID: <20250917123352.126546069@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,95 +53,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit a3967baad4d533dc254c31e0d221e51c8d223d58 ]
+[ Upstream commit b33125296b5047115469b8a3b74c0fdbf4976548 ]
 
-syzbot reported the splat below. [0]
+Use the domain ops pointer to tell what kind of domain it is instead of
+the internal use_first_level indication. This also protects against
+wrongly using a SVA/nested/IDENTITY/BLOCKED domain type in places they
+should not be.
 
-The repro does the following:
+The only remaining uses of use_first_level outside the paging domain are in
+paging_domain_compatible() and intel_iommu_enforce_cache_coherency().
 
-  1. Load a sk_msg prog that calls bpf_msg_cork_bytes(msg, cork_bytes)
-  2. Attach the prog to a SOCKMAP
-  3. Add a socket to the SOCKMAP
-  4. Activate fault injection
-  5. Send data less than cork_bytes
+Thus, remove the useless sets of use_first_level in
+intel_svm_domain_alloc() and intel_iommu_domain_alloc_nested(). None of
+the unique ops for these domain types ever reference it on their call
+chains.
 
-At 5., the data is carried over to the next sendmsg() as it is
-smaller than the cork_bytes specified by bpf_msg_cork_bytes().
+Add a WARN_ON() check in domain_context_mapping_one() as it only works
+with second stage.
 
-Then, tcp_bpf_send_verdict() tries to allocate psock->cork to hold
-the data, but this fails silently due to fault injection + __GFP_NOWARN.
+This is preparation for iommupt which will have different ops for each of
+the stages.
 
-If the allocation fails, we need to revert the sk->sk_forward_alloc
-change done by sk_msg_alloc().
-
-Let's call sk_msg_free() when tcp_bpf_send_verdict fails to allocate
-psock->cork.
-
-The "*copied" also needs to be updated such that a proper error can
-be returned to the caller, sendmsg. It fails to allocate psock->cork.
-Nothing has been corked so far, so this patch simply sets "*copied"
-to 0.
-
-[0]:
-WARNING: net/ipv4/af_inet.c:156 at inet_sock_destruct+0x623/0x730 net/ipv4/af_inet.c:156, CPU#1: syz-executor/5983
-Modules linked in:
-CPU: 1 UID: 0 PID: 5983 Comm: syz-executor Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:inet_sock_destruct+0x623/0x730 net/ipv4/af_inet.c:156
-Code: 0f 0b 90 e9 62 fe ff ff e8 7a db b5 f7 90 0f 0b 90 e9 95 fe ff ff e8 6c db b5 f7 90 0f 0b 90 e9 bb fe ff ff e8 5e db b5 f7 90 <0f> 0b 90 e9 e1 fe ff ff 89 f9 80 e1 07 80 c1 03 38 c1 0f 8c 9f fc
-RSP: 0018:ffffc90000a08b48 EFLAGS: 00010246
-RAX: ffffffff8a09d0b2 RBX: dffffc0000000000 RCX: ffff888024a23c80
-RDX: 0000000000000100 RSI: 0000000000000fff RDI: 0000000000000000
-RBP: 0000000000000fff R08: ffff88807e07c627 R09: 1ffff1100fc0f8c4
-R10: dffffc0000000000 R11: ffffed100fc0f8c5 R12: ffff88807e07c380
-R13: dffffc0000000000 R14: ffff88807e07c60c R15: 1ffff1100fc0f872
-FS:  00005555604c4500(0000) GS:ffff888125af1000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005555604df5c8 CR3: 0000000032b06000 CR4: 00000000003526f0
-Call Trace:
- <IRQ>
- __sk_destruct+0x86/0x660 net/core/sock.c:2339
- rcu_do_batch kernel/rcu/tree.c:2605 [inline]
- rcu_core+0xca8/0x1770 kernel/rcu/tree.c:2861
- handle_softirqs+0x286/0x870 kernel/softirq.c:579
- __do_softirq kernel/softirq.c:613 [inline]
- invoke_softirq kernel/softirq.c:453 [inline]
- __irq_exit_rcu+0xca/0x1f0 kernel/softirq.c:680
- irq_exit_rcu+0x9/0x30 kernel/softirq.c:696
- instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1052 [inline]
- sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1052
- </IRQ>
-
-Fixes: 4f738adba30a ("bpf: create tcp_bpf_ulp allowing BPF to monitor socket TX/RX data")
-Reported-by: syzbot+4cabd1d2fa917a456db8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/68c0b6b5.050a0220.3c6139.0013.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250909232623.4151337-1-kuniyu@google.com
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/5-v3-dbbe6f7e7ae3+124ffe-vtd_prep_jgg@nvidia.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20250714045028.958850-8-baolu.lu@linux.intel.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: cee686775f9c ("iommu/vt-d: Make iotlb_sync_map a static property of dmar_domain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iommu/intel/cache.c  |  5 +--
+ drivers/iommu/intel/iommu.c  | 60 +++++++++++++++++++++++++-----------
+ drivers/iommu/intel/iommu.h  | 12 ++++++++
+ drivers/iommu/intel/nested.c |  4 +--
+ drivers/iommu/intel/svm.c    |  1 -
+ 5 files changed, 58 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index ba581785adb4b..a268e1595b22a 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -408,8 +408,11 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 		if (!psock->cork) {
- 			psock->cork = kzalloc(sizeof(*psock->cork),
- 					      GFP_ATOMIC | __GFP_NOWARN);
--			if (!psock->cork)
-+			if (!psock->cork) {
-+				sk_msg_free(sk, msg);
-+				*copied = 0;
- 				return -ENOMEM;
-+			}
+diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
+index c8b79de84d3fb..071f78e67fcba 100644
+--- a/drivers/iommu/intel/cache.c
++++ b/drivers/iommu/intel/cache.c
+@@ -370,7 +370,7 @@ static void cache_tag_flush_iotlb(struct dmar_domain *domain, struct cache_tag *
+ 	struct intel_iommu *iommu = tag->iommu;
+ 	u64 type = DMA_TLB_PSI_FLUSH;
+ 
+-	if (domain->use_first_level) {
++	if (intel_domain_is_fs_paging(domain)) {
+ 		qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid, addr,
+ 				    pages, ih, domain->qi_batch);
+ 		return;
+@@ -529,7 +529,8 @@ void cache_tag_flush_range_np(struct dmar_domain *domain, unsigned long start,
+ 			qi_batch_flush_descs(iommu, domain->qi_batch);
+ 		iommu = tag->iommu;
+ 
+-		if (!cap_caching_mode(iommu->cap) || domain->use_first_level) {
++		if (!cap_caching_mode(iommu->cap) ||
++		    intel_domain_is_fs_paging(domain)) {
+ 			iommu_flush_write_buffer(iommu);
+ 			continue;
  		}
- 		memcpy(psock->cork, msg, sizeof(*msg));
- 		return 0;
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index f9f16d9bbf0bc..207f87eeb47a2 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1479,6 +1479,9 @@ static int domain_context_mapping_one(struct dmar_domain *domain,
+ 	struct context_entry *context;
+ 	int ret;
+ 
++	if (WARN_ON(!intel_domain_is_ss_paging(domain)))
++		return -EINVAL;
++
+ 	pr_debug("Set context mapping for %02x:%02x.%d\n",
+ 		bus, PCI_SLOT(devfn), PCI_FUNC(devfn));
+ 
+@@ -1798,7 +1801,7 @@ static int domain_setup_first_level(struct intel_iommu *iommu,
+ static bool domain_need_iotlb_sync_map(struct dmar_domain *domain,
+ 				       struct intel_iommu *iommu)
+ {
+-	if (cap_caching_mode(iommu->cap) && !domain->use_first_level)
++	if (cap_caching_mode(iommu->cap) && intel_domain_is_ss_paging(domain))
+ 		return true;
+ 
+ 	if (rwbf_quirk || cap_rwbf(iommu->cap))
+@@ -1830,12 +1833,14 @@ static int dmar_domain_attach_device(struct dmar_domain *domain,
+ 
+ 	if (!sm_supported(iommu))
+ 		ret = domain_context_mapping(domain, dev);
+-	else if (domain->use_first_level)
++	else if (intel_domain_is_fs_paging(domain))
+ 		ret = domain_setup_first_level(iommu, domain, dev,
+ 					       IOMMU_NO_PASID, NULL);
+-	else
++	else if (intel_domain_is_ss_paging(domain))
+ 		ret = domain_setup_second_level(iommu, domain, dev,
+ 						IOMMU_NO_PASID, NULL);
++	else if (WARN_ON(true))
++		ret = -EINVAL;
+ 
+ 	if (ret)
+ 		goto out_block_translation;
+@@ -3306,7 +3311,6 @@ static struct dmar_domain *paging_domain_alloc(struct device *dev, bool first_st
+ 	domain->use_first_level = first_stage;
+ 
+ 	domain->domain.type = IOMMU_DOMAIN_UNMANAGED;
+-	domain->domain.ops = intel_iommu_ops.default_domain_ops;
+ 
+ 	/* calculate the address width */
+ 	addr_width = agaw_to_width(iommu->agaw);
+@@ -3364,6 +3368,8 @@ intel_iommu_domain_alloc_first_stage(struct device *dev,
+ 	dmar_domain = paging_domain_alloc(dev, true);
+ 	if (IS_ERR(dmar_domain))
+ 		return ERR_CAST(dmar_domain);
++
++	dmar_domain->domain.ops = &intel_fs_paging_domain_ops;
+ 	return &dmar_domain->domain;
+ }
+ 
+@@ -3392,6 +3398,7 @@ intel_iommu_domain_alloc_second_stage(struct device *dev,
+ 	if (IS_ERR(dmar_domain))
+ 		return ERR_CAST(dmar_domain);
+ 
++	dmar_domain->domain.ops = &intel_ss_paging_domain_ops;
+ 	dmar_domain->nested_parent = flags & IOMMU_HWPT_ALLOC_NEST_PARENT;
+ 
+ 	if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING)
+@@ -4110,12 +4117,15 @@ static int intel_iommu_set_dev_pasid(struct iommu_domain *domain,
+ 	if (ret)
+ 		goto out_remove_dev_pasid;
+ 
+-	if (dmar_domain->use_first_level)
++	if (intel_domain_is_fs_paging(dmar_domain))
+ 		ret = domain_setup_first_level(iommu, dmar_domain,
+ 					       dev, pasid, old);
+-	else
++	else if (intel_domain_is_ss_paging(dmar_domain))
+ 		ret = domain_setup_second_level(iommu, dmar_domain,
+ 						dev, pasid, old);
++	else if (WARN_ON(true))
++		ret = -EINVAL;
++
+ 	if (ret)
+ 		goto out_unwind_iopf;
+ 
+@@ -4390,6 +4400,32 @@ static struct iommu_domain identity_domain = {
+ 	},
+ };
+ 
++const struct iommu_domain_ops intel_fs_paging_domain_ops = {
++	.attach_dev = intel_iommu_attach_device,
++	.set_dev_pasid = intel_iommu_set_dev_pasid,
++	.map_pages = intel_iommu_map_pages,
++	.unmap_pages = intel_iommu_unmap_pages,
++	.iotlb_sync_map = intel_iommu_iotlb_sync_map,
++	.flush_iotlb_all = intel_flush_iotlb_all,
++	.iotlb_sync = intel_iommu_tlb_sync,
++	.iova_to_phys = intel_iommu_iova_to_phys,
++	.free = intel_iommu_domain_free,
++	.enforce_cache_coherency = intel_iommu_enforce_cache_coherency,
++};
++
++const struct iommu_domain_ops intel_ss_paging_domain_ops = {
++	.attach_dev = intel_iommu_attach_device,
++	.set_dev_pasid = intel_iommu_set_dev_pasid,
++	.map_pages = intel_iommu_map_pages,
++	.unmap_pages = intel_iommu_unmap_pages,
++	.iotlb_sync_map = intel_iommu_iotlb_sync_map,
++	.flush_iotlb_all = intel_flush_iotlb_all,
++	.iotlb_sync = intel_iommu_tlb_sync,
++	.iova_to_phys = intel_iommu_iova_to_phys,
++	.free = intel_iommu_domain_free,
++	.enforce_cache_coherency = intel_iommu_enforce_cache_coherency,
++};
++
+ const struct iommu_ops intel_iommu_ops = {
+ 	.blocked_domain		= &blocking_domain,
+ 	.release_domain		= &blocking_domain,
+@@ -4407,18 +4443,6 @@ const struct iommu_ops intel_iommu_ops = {
+ 	.is_attach_deferred	= intel_iommu_is_attach_deferred,
+ 	.def_domain_type	= device_def_domain_type,
+ 	.page_response		= intel_iommu_page_response,
+-	.default_domain_ops = &(const struct iommu_domain_ops) {
+-		.attach_dev		= intel_iommu_attach_device,
+-		.set_dev_pasid		= intel_iommu_set_dev_pasid,
+-		.map_pages		= intel_iommu_map_pages,
+-		.unmap_pages		= intel_iommu_unmap_pages,
+-		.iotlb_sync_map		= intel_iommu_iotlb_sync_map,
+-		.flush_iotlb_all        = intel_flush_iotlb_all,
+-		.iotlb_sync		= intel_iommu_tlb_sync,
+-		.iova_to_phys		= intel_iommu_iova_to_phys,
+-		.free			= intel_iommu_domain_free,
+-		.enforce_cache_coherency = intel_iommu_enforce_cache_coherency,
+-	}
+ };
+ 
+ static void quirk_iommu_igfx(struct pci_dev *dev)
+diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
+index 61f42802fe9e9..c699ed8810f23 100644
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -1381,6 +1381,18 @@ struct context_entry *iommu_context_addr(struct intel_iommu *iommu, u8 bus,
+ 					 u8 devfn, int alloc);
+ 
+ extern const struct iommu_ops intel_iommu_ops;
++extern const struct iommu_domain_ops intel_fs_paging_domain_ops;
++extern const struct iommu_domain_ops intel_ss_paging_domain_ops;
++
++static inline bool intel_domain_is_fs_paging(struct dmar_domain *domain)
++{
++	return domain->domain.ops == &intel_fs_paging_domain_ops;
++}
++
++static inline bool intel_domain_is_ss_paging(struct dmar_domain *domain)
++{
++	return domain->domain.ops == &intel_ss_paging_domain_ops;
++}
+ 
+ #ifdef CONFIG_INTEL_IOMMU
+ extern int intel_iommu_sm;
+diff --git a/drivers/iommu/intel/nested.c b/drivers/iommu/intel/nested.c
+index fc312f649f9ef..1b6ad9c900a5a 100644
+--- a/drivers/iommu/intel/nested.c
++++ b/drivers/iommu/intel/nested.c
+@@ -216,8 +216,7 @@ intel_iommu_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
+ 	/* Must be nested domain */
+ 	if (user_data->type != IOMMU_HWPT_DATA_VTD_S1)
+ 		return ERR_PTR(-EOPNOTSUPP);
+-	if (parent->ops != intel_iommu_ops.default_domain_ops ||
+-	    !s2_domain->nested_parent)
++	if (!intel_domain_is_ss_paging(s2_domain) || !s2_domain->nested_parent)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	ret = iommu_copy_struct_from_user(&vtd, user_data,
+@@ -229,7 +228,6 @@ intel_iommu_domain_alloc_nested(struct device *dev, struct iommu_domain *parent,
+ 	if (!domain)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	domain->use_first_level = true;
+ 	domain->s2_domain = s2_domain;
+ 	domain->s1_cfg = vtd;
+ 	domain->domain.ops = &intel_nested_domain_ops;
+diff --git a/drivers/iommu/intel/svm.c b/drivers/iommu/intel/svm.c
+index f3da596410b5e..3994521f6ea48 100644
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -214,7 +214,6 @@ struct iommu_domain *intel_svm_domain_alloc(struct device *dev,
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	domain->domain.ops = &intel_svm_domain_ops;
+-	domain->use_first_level = true;
+ 	INIT_LIST_HEAD(&domain->dev_pasids);
+ 	INIT_LIST_HEAD(&domain->cache_tags);
+ 	spin_lock_init(&domain->cache_lock);
 -- 
 2.51.0
 
