@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BC21E489;
-	Wed, 17 Sep 2025 12:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B01337EB9;
+	Wed, 17 Sep 2025 12:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113079; cv=none; b=EDo72a0uQXbB2OIlSY5OrGGqkHy9TGPTws9Y7jTjlOOjk9safJQsSxJdKLyou1BBoTpNW0dGU+8iiWe1HdJjzteAmc6eoJ+jSXG70Y1tu79W7mTwN2nYOchXTxA3bqPIA+3kH01uZnXRWBOHlwlZRB4zodGWBzoaOcdkamY4tEc=
+	t=1758113082; cv=none; b=BLjhuppf3uwZJINrAQAnNT5rX060OLcwxo/W/bMNjyBpG34SVoaRIfQGbptPptgagg8vMYAziBYbHSRKhrNGDBS77o+Pk1+XahXBk4InaEiMnGtMfNEz7DHzY8D+cBPCQJCEx841y7yWm19pFd0Iy3FH3e4oD+jGK+yeKt6aIQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113079; c=relaxed/simple;
-	bh=LU2Yqe4nWCnqp2h6y8KGyld4TQmYTzgyfZP4zHnYJz4=;
+	s=arc-20240116; t=1758113082; c=relaxed/simple;
+	bh=9G2Ox6d+qD6MVu2XzMM+0x64mWCwopSIAnLgCPdD5Ig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1ZsSEsKeMbXdbhiojmgu903EvLSUqVQAyooKTCXGWZe4RJKrbI7QPk19Dx89RkH2nE+x0GxkWmKH8NjwtUEwBrQmJIwkxppV6lc22PWR2UaRY988xHdwPp6UijvtsEKj2OsxV/HqUCJ77HPA1ncJnA8YinTqC4m1xG+Y6syQvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxY4EBWu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWoxhuYXXlEi6AZR5aSL2103G83pXvc+JKUS9cQerqhkqzk7rfpijFVx6nkRo5aik/12mQADQJLAxbHCzW3RTpeQzcVuPwq+m0qOYsqZzHnkTKzkjOq7PrgaXnzFNk+xFQuuFhA94O1tHLCl6uiggsRj/2VeuIFIhJeRgCHy0Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHwdAicZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxY4EBWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F85C4CEF5;
-	Wed, 17 Sep 2025 12:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHwdAicZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103D4C4CEF0;
+	Wed, 17 Sep 2025 12:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113079;
-	bh=LU2Yqe4nWCnqp2h6y8KGyld4TQmYTzgyfZP4zHnYJz4=;
+	s=korg; t=1758113082;
+	bh=9G2Ox6d+qD6MVu2XzMM+0x64mWCwopSIAnLgCPdD5Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YxY4EBWuQe5pZ5zvcNw/zKFvAcnNuRa5KYlF2t0KJxzeGKXskYr0ARNFw99BRx8by
-	 9VfQwguyyU/wocKJtAhhqFpyEMKhtC0qs9mZYVRlMS9bwzDl4dbAEfWTvFhPhShou5
-	 BtNl2Za6bka+2FNplZpHtH+BlCffe3PqMpF0CeLI=
+	b=XHwdAicZoGvQ8GvR+O1reZierfgXmu6zhiV8Mu1+puRRURWl9XwS3nZE5ldMlawDb
+	 McyGmUax/BQNdgDn1dFpkec7lK4fuzCN65Tis7Xy+g8nRYjHDg2vYkhiG2/+WY9Hpa
+	 feowzKuEYvGQfVcBNRM/ImFDwQydUgyqYWUc1NDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Yi Sun <yi.sun@intel.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 166/189] phy: qualcomm: phy-qcom-eusb2-repeater: fix override properties
-Date: Wed, 17 Sep 2025 14:34:36 +0200
-Message-ID: <20250917123355.934407496@linuxfoundation.org>
+Subject: [PATCH 6.16 167/189] dmaengine: idxd: Remove improper idxd_free
+Date: Wed, 17 Sep 2025 14:34:37 +0200
+Message-ID: <20250917123355.959623501@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -53,51 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Yi Sun <yi.sun@intel.com>
 
-[ Upstream commit 942e47ab228c7dd27c2ae043c17e7aab2028082c ]
+[ Upstream commit f41c538881eec4dcf5961a242097d447f848cda6 ]
 
-property "qcom,tune-usb2-preem" is for EUSB2_TUNE_USB2_PREEM
-property "qcom,tune-usb2-amplitude" is for EUSB2_TUNE_IUSB2
+The call to idxd_free() introduces a duplicate put_device() leading to a
+reference count underflow:
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 15 PID: 4428 at lib/refcount.c:28 refcount_warn_saturate+0xbe/0x110
+...
+Call Trace:
+ <TASK>
+  idxd_remove+0xe4/0x120 [idxd]
+  pci_device_remove+0x3f/0xb0
+  device_release_driver_internal+0x197/0x200
+  driver_detach+0x48/0x90
+  bus_remove_driver+0x74/0xf0
+  pci_unregister_driver+0x2e/0xb0
+  idxd_exit_module+0x34/0x7a0 [idxd]
+  __do_sys_delete_module.constprop.0+0x183/0x280
+  do_syscall_64+0x54/0xd70
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The downstream correspondence is as follows:
-EUSB2_TUNE_USB2_PREEM: Tx pre-emphasis tuning
-EUSB2_TUNE_IUSB2: HS trasmit amplitude
-EUSB2_TUNE_SQUELCH_U: Squelch detection threshold
-EUSB2_TUNE_HSDISC: HS disconnect threshold
-EUSB2_TUNE_EUSB_SLEW: slew rate
+The idxd_unregister_devices() which is invoked at the very beginning of
+idxd_remove(), already takes care of the necessary put_device() through the
+following call path:
+idxd_unregister_devices() -> device_unregister() -> put_device()
 
-Fixes: 31bc94de7602 ("phy: qualcomm: phy-qcom-eusb2-repeater: Don't zero-out registers")
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20250812093957.32235-1-mitltlatltl@gmail.com
+In addition, when CONFIG_DEBUG_KOBJECT_RELEASE is enabled, put_device() may
+trigger asynchronous cleanup via schedule_delayed_work(). If idxd_free() is
+called immediately after, it can result in a use-after-free.
+
+Remove the improper idxd_free() to avoid both the refcount underflow and
+potential memory corruption during module unload.
+
+Fixes: d5449ff1b04d ("dmaengine: idxd: Add missing idxd cleanup to fix memory leak in remove call")
+Signed-off-by: Yi Sun <yi.sun@intel.com>
+Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+
+Link: https://lore.kernel.org/r/20250729150313.1934101-2-yi.sun@intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/idxd/init.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-index d7493c2294ef2..3709fba42ebd8 100644
---- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-+++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-@@ -127,13 +127,13 @@ static int eusb2_repeater_init(struct phy *phy)
- 			     rptr->cfg->init_tbl[i].value);
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 80355d03004db..40cc9c070081f 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -1295,7 +1295,6 @@ static void idxd_remove(struct pci_dev *pdev)
+ 	idxd_cleanup(idxd);
+ 	pci_iounmap(pdev, idxd->reg_base);
+ 	put_device(idxd_confdev(idxd));
+-	idxd_free(idxd);
+ 	pci_disable_device(pdev);
+ }
  
- 	/* Override registers from devicetree values */
--	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &val))
-+	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
- 		regmap_write(regmap, base + EUSB2_TUNE_USB2_PREEM, val);
- 
- 	if (!of_property_read_u8(np, "qcom,tune-usb2-disc-thres", &val))
- 		regmap_write(regmap, base + EUSB2_TUNE_HSDISC, val);
- 
--	if (!of_property_read_u8(np, "qcom,tune-usb2-preem", &val))
-+	if (!of_property_read_u8(np, "qcom,tune-usb2-amplitude", &val))
- 		regmap_write(regmap, base + EUSB2_TUNE_IUSB2, val);
- 
- 	/* Wait for status OK */
 -- 
 2.51.0
 
