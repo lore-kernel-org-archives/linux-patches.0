@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF64C1E1E00;
-	Wed, 17 Sep 2025 12:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A03A13B2A4;
+	Wed, 17 Sep 2025 12:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113745; cv=none; b=LfWBvIfS7en68B/VkUz+o15mn/DcZsTTmZRbG4A2cEJlFFggmBjSiJlCu/DsiN/DBdsJuuRnGbID+hgXrGRGmYdm7yZmGIISBb36PqSIWFVoPySgqKy4WjzC5TJS2SysiOAkDWicx6THGaJnrWHhdp8dWQ5iiZkqObdJsBDhDFs=
+	t=1758113748; cv=none; b=by1h7n9RLIJ607bCpELXJBfy27VYemcbcovrbsUuer4PWKBMuS1hTIx7wo+zw9angeTMfaO0/vtu/m4ynyazt9RSIC4bQjtSUj3wZXwamEdQ5oZgUDxQR6QSAXyRwVG/yQbXz0Y0T+yfkhhpHc/gVWK7UgX6h6CAaL9RK3SnDAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113745; c=relaxed/simple;
-	bh=+/iHHOehYI9h7rhFZSOmvoaQ+HvMKrk4vXdCXsogAd8=;
+	s=arc-20240116; t=1758113748; c=relaxed/simple;
+	bh=fBPrxqricr63iwKLnQloDxjNhI4NLCICt4RHyyqnTEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4blR4VptnDYaCqQn0bPpsWHfJUoGKdVdCwfgk/IOYrOgTwWtuUXSt8t6BMzVVfMMCJrn42ohQx8ew4UyokMvIR/ARSkU5KHtsaDmfrXft+ZEhml1aKi1+z+7eIXxkpIrbbEfkHblouZrEBYp6gWH8nw/5LI04wp5aokgpxdD5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP7qh8pk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H3CNyofcgZ+VG/qPTZVsy3m5rlpdHoBsLlbpSvHZyKWxgUhyEnsRAY8D2A82eUM6sH14JqsxbiFifGqKdCKwfg+i0IaFZRvC1tTrf0uS7OqeT3kTOCsaLkySg0s1DGGwrkeWC2xL/lQqSLh/nTJJnFozhlHpmFIa2uVzLSxHfDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOMVrOok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP7qh8pk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EC5C4CEF0;
-	Wed, 17 Sep 2025 12:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOMVrOok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768E4C4CEF0;
+	Wed, 17 Sep 2025 12:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113744;
-	bh=+/iHHOehYI9h7rhFZSOmvoaQ+HvMKrk4vXdCXsogAd8=;
+	s=korg; t=1758113747;
+	bh=fBPrxqricr63iwKLnQloDxjNhI4NLCICt4RHyyqnTEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CP7qh8pk68n8P5j+0IKkSD9Yx7z+Dectd2PD6Xhv2qAPHS+L61XSU87FL7PzFKw9C
-	 B3hwdJ826jEnvrbsOrLgc3YbF2DJuChi70h5YF7BHMa4LjVoxexS/zpNy7m+KtDXTR
-	 AZ5qwcBr9CF2impaYtaLSz9odF3d26XbLFUudVLc=
+	b=dOMVrOokOERbZcC18I5CqJpQOFrV3+bwz2pl4oBW2C6xuiWtid9NfyYRf45xhf72/
+	 PdpuhnsuW7iOF6aiAvMVZ6bKlnlno4LoB9s6+zZA6JzycIBKf96VQ7cafU7W1dWl7P
+	 x3+0wz5+PFzM1/LVvP7W/EwJ4sTyi3KhjG8LC9TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 039/101] mtd: rawnand: stm32_fmc2: fix ECC overwrite
-Date: Wed, 17 Sep 2025 14:34:22 +0200
-Message-ID: <20250917123337.791143605@linuxfoundation.org>
+	Chunsheng Luo <luochunsheng@ustc.edu>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.6 040/101] fuse: check if copy_file_range() returns larger than requested size
+Date: Wed, 17 Sep 2025 14:34:23 +0200
+Message-ID: <20250917123337.814708067@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -50,49 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-commit 811c0da4542df3c065f6cb843ced68780e27bb44 upstream.
+commit e5203209b3935041dac541bc5b37efb44220cc0b upstream.
 
-In case OOB write is requested during a data write, ECC is currently
-lost. Avoid this issue by only writing in the free spare area.
-This issue has been seen with a YAFFS2 file system.
+Just like write(), copy_file_range() should check if the return value is
+less or equal to the requested number of bytes.
 
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Cc: stable@vger.kernel.org
-Fixes: 2cd457f328c1 ("mtd: rawnand: stm32_fmc2: add STM32 FMC2 NAND flash controller driver")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reported-by: Chunsheng Luo <luochunsheng@ustc.edu>
+Closes: https://lore.kernel.org/all/20250807062425.694-1-luochunsheng@ustc.edu/
+Fixes: 88bc7d5097a1 ("fuse: add support for copy_file_range()")
+Cc: <stable@vger.kernel.org> # v4.20
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/stm32_fmc2_nand.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/fuse/file.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-+++ b/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-@@ -968,9 +968,21 @@ static int stm32_fmc2_nfc_seq_write(stru
- 
- 	/* Write oob */
- 	if (oob_required) {
--		ret = nand_change_write_column_op(chip, mtd->writesize,
--						  chip->oob_poi, mtd->oobsize,
--						  false);
-+		unsigned int offset_in_page = mtd->writesize;
-+		const void *buf = chip->oob_poi;
-+		unsigned int len = mtd->oobsize;
-+
-+		if (!raw) {
-+			struct mtd_oob_region oob_free;
-+
-+			mtd_ooblayout_free(mtd, 0, &oob_free);
-+			offset_in_page += oob_free.offset;
-+			buf += oob_free.offset;
-+			len = oob_free.length;
-+		}
-+
-+		ret = nand_change_write_column_op(chip, offset_in_page,
-+						  buf, len, false);
- 		if (ret)
- 			return ret;
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -3172,6 +3172,9 @@ static ssize_t __fuse_copy_file_range(st
+ 		fc->no_copy_file_range = 1;
+ 		err = -EOPNOTSUPP;
  	}
++	if (!err && outarg.size > len)
++		err = -EIO;
++
+ 	if (err)
+ 		goto out;
+ 
 
 
