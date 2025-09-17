@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164CF1EB1AA;
-	Wed, 17 Sep 2025 12:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB651EB1AA;
+	Wed, 17 Sep 2025 12:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113388; cv=none; b=uSoV9YIN0LCVKqUL/idstByv5gWQnVA/Y5TeDWn0cjieDZC7we5RM/ahwRcP1tWhhfcJymNdqkOk+S+y9Vlos1c98xeEMYNOC+MptlhKxm6sK/FyEWlpsyrCv7ff2vkk+IP57d/KL8N4yOAIE55qRQSXXXrFkiod3/7GgtW00Qk=
+	t=1758113391; cv=none; b=sAk1odbX8XCZdvE+braUbcgrYuZB8bbNMB0vzOqbIRprlO8UPjLeAFXHysrsf7l2V2sPHSihsfCYVCMW6y390h2BmooRvmSmU2aXa+uv1pYv9+JMNGNYanBta0e+aTt/e/YoSjQbdITOjV4MtQEjj0gJ/TuakDGA7ogFChTgr90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113388; c=relaxed/simple;
-	bh=G2KnKmRUNFofYRem/YZ6s2zfLs8+ReJFpl3sTbk7uZw=;
+	s=arc-20240116; t=1758113391; c=relaxed/simple;
+	bh=v6sk01Nop+vS8Njv/UwcBt+sIwWyzxsQZ3KROsBGbjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/Des4Uxfgvhktv4OBfVYENdZ/JU+vv235Km06/jvOAnC8idWLbhFeWb8MnUb1H3mqXmTH0xqLLtG4cnsrQTAO2wXGJ38Bc5c9g0fLXuO0U85I1ILJCvx6ONZVc9qzYReuUqw6nMVxYti7ebVMMEPMr0BCFx9Y8No5Id3MelyGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFstNYfM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YbqFxQe+K/ZvcPGBR9FcjGtqG3EQB+LcRBI4v0uA21rmzFRe4efG5ZK/xIgmFO2C0u0d2XVBpaa0T60DdGVJ+7QCWmP69vtuMaL4rZwjLuGf9cV4bny/+2lvcQlEPY7D7vJfwj5mp20mVEBWJCL7aha5Gp7AlObYDldh5yWDUqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrGMijaB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFstNYfM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F71C4CEF0;
-	Wed, 17 Sep 2025 12:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrGMijaB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F1AC4CEF0;
+	Wed, 17 Sep 2025 12:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113387;
-	bh=G2KnKmRUNFofYRem/YZ6s2zfLs8+ReJFpl3sTbk7uZw=;
+	s=korg; t=1758113391;
+	bh=v6sk01Nop+vS8Njv/UwcBt+sIwWyzxsQZ3KROsBGbjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFstNYfMyIrZKKUsQhtJ0lyhs3+OpeRCsivAP8Rl7p2CNjttvRssik5X+FIJjix2G
-	 yI8cEuwfDl94oaQFQWYNVzrBs5SvXohQJc3/qMhr1jO52Hydjx5/2gWRIfw2OM/MFk
-	 A2urxc4TvIXggOolquRKzQQP4G/qy/1VuzhuNxy4=
+	b=ZrGMijaBe3sDaV8t3svc6v/IrDQbrNsXiEg+o+0WgKW5UpHZ1Hx+kRUq1TLJ6Vrz+
+	 MGPg9wTKfDw6VKbY5GFqQPcH2zXTqrZUfdEMAWh0064MTX0qE2ogrwhT3l0s3u+Ydq
+	 qL8LIFRhcbiA47z3FkhRXNGKjEafLS9oXS5uY1E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/140] NFS: Serialise O_DIRECT i/o and truncate()
-Date: Wed, 17 Sep 2025 14:33:25 +0200
-Message-ID: <20250917123345.118798706@linuxfoundation.org>
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 069/140] drm/amdgpu/vcn: Allow limiting ctx to instance 0 for AV1 at any time
+Date: Wed, 17 Sep 2025 14:34:01 +0200
+Message-ID: <20250917123345.995970906@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -50,100 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: David Rosca <david.rosca@amd.com>
 
-[ Upstream commit 9eb90f435415c7da4800974ed943e39b5578ee7f ]
+commit 3318f2d20ce48849855df5e190813826d0bc3653 upstream.
 
-Ensure that all O_DIRECT reads and writes are complete, and prevent the
-initiation of new i/o until the setattr operation that will truncate the
-file is complete.
+There is no reason to require this to happen on first submitted IB only.
+We need to wait for the queue to be idle, but it can be done at any
+time (including when there are multiple video sessions active).
 
-Fixes: a5864c999de6 ("NFS: Do not serialise O_DIRECT reads and writes")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8908fdce0634a623404e9923ed2f536101a39db5)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c    |  4 +++-
- fs/nfs/internal.h | 10 ++++++++++
- fs/nfs/io.c       | 13 ++-----------
- 3 files changed, 15 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   12 ++++++++----
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   12 ++++++++----
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 8827cb00f86d5..5bf5fb5ddd34c 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -761,8 +761,10 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	trace_nfs_setattr_enter(inode);
- 
- 	/* Write all dirty data */
--	if (S_ISREG(inode->i_mode))
-+	if (S_ISREG(inode->i_mode)) {
-+		nfs_file_block_o_direct(NFS_I(inode));
- 		nfs_sync_inode(inode);
-+	}
- 
- 	fattr = nfs_alloc_fattr_with_label(NFS_SERVER(inode));
- 	if (fattr == NULL) {
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 4860270f1be04..456b423402814 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -529,6 +529,16 @@ static inline bool nfs_file_io_is_buffered(struct nfs_inode *nfsi)
- 	return test_bit(NFS_INO_ODIRECT, &nfsi->flags) == 0;
- }
- 
-+/* Must be called with exclusively locked inode->i_rwsem */
-+static inline void nfs_file_block_o_direct(struct nfs_inode *nfsi)
-+{
-+	if (test_bit(NFS_INO_ODIRECT, &nfsi->flags)) {
-+		clear_bit(NFS_INO_ODIRECT, &nfsi->flags);
-+		inode_dio_wait(&nfsi->vfs_inode);
-+	}
-+}
-+
-+
- /* namespace.c */
- #define NFS_PATH_CANONICAL 1
- extern char *nfs_path(char **p, struct dentry *dentry,
-diff --git a/fs/nfs/io.c b/fs/nfs/io.c
-index 3388faf2acb9f..d275b0a250bf3 100644
---- a/fs/nfs/io.c
-+++ b/fs/nfs/io.c
-@@ -14,15 +14,6 @@
- 
- #include "internal.h"
- 
--/* Call with exclusively locked inode->i_rwsem */
--static void nfs_block_o_direct(struct nfs_inode *nfsi, struct inode *inode)
--{
--	if (test_bit(NFS_INO_ODIRECT, &nfsi->flags)) {
--		clear_bit(NFS_INO_ODIRECT, &nfsi->flags);
--		inode_dio_wait(inode);
--	}
--}
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1813,15 +1813,19 @@ static int vcn_v3_0_limit_sched(struct a
+ 				struct amdgpu_job *job)
+ {
+ 	struct drm_gpu_scheduler **scheds;
 -
- /**
-  * nfs_start_io_read - declare the file is being used for buffered reads
-  * @inode: file inode
-@@ -57,7 +48,7 @@ nfs_start_io_read(struct inode *inode)
- 	err = down_write_killable(&inode->i_rwsem);
- 	if (err)
- 		return err;
--	nfs_block_o_direct(nfsi, inode);
-+	nfs_file_block_o_direct(nfsi);
- 	downgrade_write(&inode->i_rwsem);
+-	/* The create msg must be in the first IB submitted */
+-	if (atomic_read(&job->base.entity->fence_seq))
+-		return -EINVAL;
++	struct dma_fence *fence;
  
- 	return 0;
-@@ -90,7 +81,7 @@ nfs_start_io_write(struct inode *inode)
+ 	/* if VCN0 is harvested, we can't support AV1 */
+ 	if (p->adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)
+ 		return -EINVAL;
  
- 	err = down_write_killable(&inode->i_rwsem);
- 	if (!err)
--		nfs_block_o_direct(NFS_I(inode), inode);
-+		nfs_file_block_o_direct(NFS_I(inode));
- 	return err;
- }
++	/* wait for all jobs to finish before switching to instance 0 */
++	fence = amdgpu_ctx_get_fence(p->ctx, job->base.entity, ~0ull);
++	if (fence) {
++		dma_fence_wait(fence, false);
++		dma_fence_put(fence);
++	}
++
+ 	scheds = p->adev->gpu_sched[AMDGPU_HW_IP_VCN_DEC]
+ 		[AMDGPU_RING_PRIO_DEFAULT].sched;
+ 	drm_sched_entity_modify_sched(job->base.entity, scheds, 1);
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1737,15 +1737,19 @@ static int vcn_v4_0_limit_sched(struct a
+ 				struct amdgpu_job *job)
+ {
+ 	struct drm_gpu_scheduler **scheds;
+-
+-	/* The create msg must be in the first IB submitted */
+-	if (atomic_read(&job->base.entity->fence_seq))
+-		return -EINVAL;
++	struct dma_fence *fence;
  
--- 
-2.51.0
-
+ 	/* if VCN0 is harvested, we can't support AV1 */
+ 	if (p->adev->vcn.harvest_config & AMDGPU_VCN_HARVEST_VCN0)
+ 		return -EINVAL;
+ 
++	/* wait for all jobs to finish before switching to instance 0 */
++	fence = amdgpu_ctx_get_fence(p->ctx, job->base.entity, ~0ull);
++	if (fence) {
++		dma_fence_wait(fence, false);
++		dma_fence_put(fence);
++	}
++
+ 	scheds = p->adev->gpu_sched[AMDGPU_HW_IP_VCN_ENC]
+ 		[AMDGPU_RING_PRIO_0].sched;
+ 	drm_sched_entity_modify_sched(job->base.entity, scheds, 1);
 
 
