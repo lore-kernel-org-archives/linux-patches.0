@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C5531BC93;
-	Wed, 17 Sep 2025 12:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761531A81D;
+	Wed, 17 Sep 2025 12:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113462; cv=none; b=YiQqNjLELQMTmd5qMzxVFsipdLkTTP8C8as2zEZZMG78SdgDkws9orsER+b9b2v5jjiCk8jmUrEmHEhXUu7vwcpu1pp2sWyZ6/1qKO6kiPSm9jqDXjXiclXuHcOKge9pGYLICRw4xHbsb0ooIKw9OlgBEJ4wK5FEbOBNkyxKomc=
+	t=1758113465; cv=none; b=iPFbENGuSQRAZJgf18nFbGGSbuAar9b8msal7ms74m/B2K0/WY732Z4ibfmp2dUV7CX0d4ujlnEr9dxoYiAuvom3LU+A6Ju+GuvvVRMw5BTocMjOIDQ6FLw9aGOAsq95/qe5ZSY+mTXps1Jb7I/enmwYDqzZ9GRKbKYpa+2pG5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113462; c=relaxed/simple;
-	bh=AkSfvze1deyWRlUqCHgYNMKo2/qFKrI0jzhY4YsBcFk=;
+	s=arc-20240116; t=1758113465; c=relaxed/simple;
+	bh=zDIOpSEjpVsRILIXLG3n+KuoKhF3wJNi5kCFETMKcY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsIoMgvo0MB17x0nshGWpuc8qd9gtixrGf97s1TXvrzU0sabdU0vdbM7zFUxLxGJnx4qXXlkaIRfd7dupcAEVsdXyp6uC6dkPXs8DQoaXuvqLPrzzAa1Lswk7jm77vRfMsXeknMH9RGPCv8ZZZGEMOciLlEnDs+qpxcvffh0fNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsbNEycn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTJavQ2bPsBOyQsc37D2tKfRRMYApKWAapegSrwtJjC10RLP6ywUwzU1tkDlMtqmRKH5iM8PZOn0wfrS6kusBUN6O2USW5ZGoyMF+CduyF4n/MKs9k6B6F14IdQMqck8vE/WrPi55WLFukwBhmxU+0uDCX7KipxoNuF2+QmC/8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H76+W5d2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsbNEycn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8556DC4CEF0;
-	Wed, 17 Sep 2025 12:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H76+W5d2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07B5C4CEFA;
+	Wed, 17 Sep 2025 12:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113462;
-	bh=AkSfvze1deyWRlUqCHgYNMKo2/qFKrI0jzhY4YsBcFk=;
+	s=korg; t=1758113465;
+	bh=zDIOpSEjpVsRILIXLG3n+KuoKhF3wJNi5kCFETMKcY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsbNEycn0ty7fNCbmieVF1iMdaVLRZw9b+kNEi5r7rGwOwVedvQHDja/0mgeDeRAM
-	 oa1xdUFJa/cpLBrg6bMjA4N7W19OPyIeHbS/YWUxCwJfIoxRyhmxWZk9zL4vLYTjFI
-	 C1BTq6ml91klB+fOrG8RX0LlxFbJZENt4Pppz7aQ=
+	b=H76+W5d2SZH4AZ+SH70CwLfQCQooxKEcs14Zyecj4E6HcTHUNBRC+3/h76594yPLh
+	 ygB5yBEhjEE9Bi4TgeO1DyFpBFMzuU7GClUIXsFGd/4hNn5r3/EzeEwPoglR0koVys
+	 Y90AJGvpOoifnLWdM4ETs0cDOpRf8WDHBKGsork4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damian Tometzki <damian@riscv-rocks.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/140] Disable SLUB_TINY for build testing
-Date: Wed, 17 Sep 2025 14:34:26 +0200
-Message-ID: <20250917123346.599146118@linuxfoundation.org>
+	Chia-I Wu <olvaffe@gmail.com>,
+	Steven Price <steven.price@arm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>
+Subject: [PATCH 6.12 095/140] drm/panthor: validate group queue count
+Date: Wed, 17 Sep 2025 14:34:27 +0200
+Message-ID: <20250917123346.622513488@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -53,57 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit 6f110a5e4f9977c31ce76fefbfef6fd4eab6bfb7 ]
+[ Upstream commit a00f2015acdbd8a4b3d2382eaeebe11db1925fad ]
 
-... and don't error out so hard on missing module descriptions.
+A panthor group can have at most MAX_CS_PER_CSG panthor queues.
 
-Before commit 6c6c1fc09de3 ("modpost: require a MODULE_DESCRIPTION()")
-we used to warn about missing module descriptions, but only when
-building with extra warnigns (ie 'W=1').
-
-After that commit the warning became an unconditional hard error.
-
-And it turns out not all modules have been converted despite the claims
-to the contrary.  As reported by Damian Tometzki, the slub KUnit test
-didn't have a module description, and apparently nobody ever really
-noticed.
-
-The reason nobody noticed seems to be that the slub KUnit tests get
-disabled by SLUB_TINY, which also ends up disabling a lot of other code,
-both in tests and in slub itself.  And so anybody doing full build tests
-didn't actually see this failre.
-
-So let's disable SLUB_TINY for build-only tests, since it clearly ends
-up limiting build coverage.  Also turn the missing module descriptions
-error back into a warning, but let's keep it around for non-'W=1'
-builds.
-
-Reported-by: Damian Tometzki <damian@riscv-rocks.de>
-Link: https://lore.kernel.org/all/01070196099fd059-e8463438-7b1b-4ec8-816d-173874be9966-000000@eu-central-1.amazonses.com/
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Fixes: 6c6c1fc09de3 ("modpost: require a MODULE_DESCRIPTION()")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 4bdca11507928 ("drm/panthor: Add the driver frontend block")
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com> # v1
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20250903192133.288477-1-olvaffe@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/Kconfig | 2 +-
+ drivers/gpu/drm/panthor/panthor_drv.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/Kconfig b/mm/Kconfig
-index 33fa51d608dc5..59c36bb9ce6b0 100644
---- a/mm/Kconfig
-+++ b/mm/Kconfig
-@@ -244,7 +244,7 @@ config SLUB
+diff --git a/drivers/gpu/drm/panthor/panthor_drv.c b/drivers/gpu/drm/panthor/panthor_drv.c
+index c520f156e2d73..03eb7d52209a2 100644
+--- a/drivers/gpu/drm/panthor/panthor_drv.c
++++ b/drivers/gpu/drm/panthor/panthor_drv.c
+@@ -1023,7 +1023,7 @@ static int panthor_ioctl_group_create(struct drm_device *ddev, void *data,
+ 	struct drm_panthor_queue_create *queue_args;
+ 	int ret;
  
- config SLUB_TINY
- 	bool "Configure for minimal memory footprint"
--	depends on EXPERT
-+	depends on EXPERT && !COMPILE_TEST
- 	select SLAB_MERGE_DEFAULT
- 	help
- 	   Configures the slab allocator in a way to achieve minimal memory
+-	if (!args->queues.count)
++	if (!args->queues.count || args->queues.count > MAX_CS_PER_CSG)
+ 		return -EINVAL;
+ 
+ 	ret = PANTHOR_UOBJ_GET_ARRAY(queue_args, &args->queues);
 -- 
 2.51.0
 
