@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A374D1E7C2D;
-	Wed, 17 Sep 2025 12:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3661E7C2D;
+	Wed, 17 Sep 2025 12:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113837; cv=none; b=ZbJak7x0jMjT6wOHvr4zLb2WAEoeecSH7NYoMF0PbtWQWCtl34nHVDZuGBYxuWbHnvz8ZHJ0OYoFyEQY7zIySjFEK+B5gOSSL+10Vd/mBKOJ9gJHkqZ/PrzP7iQbmdTO5/SJnbJXMj+QZt0DGg4zvTEqH+o00WPRlY79vwh/tFs=
+	t=1758113840; cv=none; b=XCvhVXYOY/uqlq4uPeSExXxv8NZmbUA9CfTciRezHohonUW/HcB83moGQ7eDP1MxMqPtoDeiF0APCgfgRFkb+7Rn9na28M8K+5T1bECntvH5D2U9TGz7kT54ri1yOwLFFtURqTWDy9ol2r9pQgcsmMG3niEfs9bwYs3ebjYXmuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113837; c=relaxed/simple;
-	bh=wv3nffoZGS2L3oTn3X/IEnCZHxQRk/BqwEL7Mc50qms=;
+	s=arc-20240116; t=1758113840; c=relaxed/simple;
+	bh=tkoZdGuPQlElZI5x3GDbN9An4njzgdu66ZJmsPAKZEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRe9qtdRseMfQzi9dUlQ46B/qKH+a82eUoJBNqAAm0Hc/VJqFEBiMJ65ODd8h/U7cLI07jZHA/nsjfngyG4DBcHY7oOdoTaGBr0BTkpbDS8B9g3djt4KidoeSU4z9mphnuqFb89mA5QYSqyJIMVC63DWs3pA95JUb9T1DD28vZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7nrN07v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZKtyzb74mgzgSEZJwVHKp1v/8YlfML2SHf7uNOJOMP8SW9dT8Qibql/BotoH0uXayBMIbuXuPe3Fm4jvFQAYU9g4lbXj7HY+gUIeTKfI+EfBtt2P7M4MNUPlbRnsmTF5/g2shxzsgv5iOhGf5rxfmtfgVHayMPVw9PFFta02lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkZUjgDE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7nrN07v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D57CC4CEF0;
-	Wed, 17 Sep 2025 12:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkZUjgDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F1DC4CEF0;
+	Wed, 17 Sep 2025 12:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113837;
-	bh=wv3nffoZGS2L3oTn3X/IEnCZHxQRk/BqwEL7Mc50qms=;
+	s=korg; t=1758113840;
+	bh=tkoZdGuPQlElZI5x3GDbN9An4njzgdu66ZJmsPAKZEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7nrN07v6rEePm3OtEC/DlKa09X3XyvmLiNhkpNA66lZ70Kafm037CmKOafPLW/Hr
-	 6GFR4acgkLGaQdPpS0d96kjDCjfl1hR4L/NVY/ChEuHT+lTVAhAC2lGkKUz73lepz9
-	 WyJ+lGLD9UqE3CyB2O46OUzYWnkKOeV6z8J0/JgQ=
+	b=vkZUjgDE7PvTgNJkIf2SnfKGU0fBc77r1TE5lJLI/B07FKqZzQaQ8IcaBLVkN7C20
+	 KiC2gmz3oBpOHIr1cz/6oSG3fTn35HEpP4zm0vzxh0tGIolt19DGlYFHtFrUqagLa8
+	 GVXoLQiIjaNKGsgwl9oatBZAEOQc2bUJ3V/+HCGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Peilin Ye <yepeilin@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/101] s390/cpum_cf: Deny all sampling events by counter PMU
-Date: Wed, 17 Sep 2025 14:34:06 +0200
-Message-ID: <20250917123337.418992026@linuxfoundation.org>
+Subject: [PATCH 6.6 024/101] bpf: Tell memcg to use allow_spinning=false path in bpf_timer_init()
+Date: Wed, 17 Sep 2025 14:34:07 +0200
+Message-ID: <20250917123337.442184862@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123336.863698492@linuxfoundation.org>
 References: <20250917123336.863698492@linuxfoundation.org>
@@ -52,48 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Peilin Ye <yepeilin@google.com>
 
-[ Upstream commit ce971233242b5391d99442271f3ca096fb49818d ]
+[ Upstream commit 6d78b4473cdb08b74662355a9e8510bde09c511e ]
 
-Deny all sampling event by the CPUMF counter facility device driver
-and return -ENOENT. This return value is used to try other PMUs.
-Up to now events for type PERF_TYPE_HARDWARE were not tested for
-sampling and returned later on -EOPNOTSUPP. This ends the search
-for alternative PMUs. Change that behavior and try other PMUs
-instead.
+Currently, calling bpf_map_kmalloc_node() from __bpf_async_init() can
+cause various locking issues; see the following stack trace (edited for
+style) as one example:
 
-Fixes: 613a41b0d16e ("s390/cpum_cf: Reject request for sampling in event initialization")
-Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+...
+ [10.011566]  do_raw_spin_lock.cold
+ [10.011570]  try_to_wake_up             (5) double-acquiring the same
+ [10.011575]  kick_pool                      rq_lock, causing a hardlockup
+ [10.011579]  __queue_work
+ [10.011582]  queue_work_on
+ [10.011585]  kernfs_notify
+ [10.011589]  cgroup_file_notify
+ [10.011593]  try_charge_memcg           (4) memcg accounting raises an
+ [10.011597]  obj_cgroup_charge_pages        MEMCG_MAX event
+ [10.011599]  obj_cgroup_charge_account
+ [10.011600]  __memcg_slab_post_alloc_hook
+ [10.011603]  __kmalloc_node_noprof
+...
+ [10.011611]  bpf_map_kmalloc_node
+ [10.011612]  __bpf_async_init
+ [10.011615]  bpf_timer_init             (3) BPF calls bpf_timer_init()
+ [10.011617]  bpf_prog_xxxxxxxxxxxxxxxx_fcg_runnable
+ [10.011619]  bpf__sched_ext_ops_runnable
+ [10.011620]  enqueue_task_scx           (2) BPF runs with rq_lock held
+ [10.011622]  enqueue_task
+ [10.011626]  ttwu_do_activate
+ [10.011629]  sched_ttwu_pending         (1) grabs rq_lock
+...
+
+The above was reproduced on bpf-next (b338cf849ec8) by modifying
+./tools/sched_ext/scx_flatcg.bpf.c to call bpf_timer_init() during
+ops.runnable(), and hacking the memcg accounting code a bit to make
+a bpf_timer_init() call more likely to raise an MEMCG_MAX event.
+
+We have also run into other similar variants (both internally and on
+bpf-next), including double-acquiring cgroup_file_kn_lock, the same
+worker_pool::lock, etc.
+
+As suggested by Shakeel, fix this by using __GFP_HIGH instead of
+GFP_ATOMIC in __bpf_async_init(), so that e.g. if try_charge_memcg()
+raises an MEMCG_MAX event, we call __memcg_memory_event() with
+@allow_spinning=false and avoid calling cgroup_file_notify() there.
+
+Depends on mm patch
+"memcg: skip cgroup_file_notify if spinning is not allowed":
+https://lore.kernel.org/bpf/20250905201606.66198-1-shakeel.butt@linux.dev/
+
+v0 approach s/bpf_map_kmalloc_node/bpf_mem_alloc/
+https://lore.kernel.org/bpf/20250905061919.439648-1-yepeilin@google.com/
+v1 approach:
+https://lore.kernel.org/bpf/20250905234547.862249-1-yepeilin@google.com/
+
+Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Peilin Ye <yepeilin@google.com>
+Link: https://lore.kernel.org/r/20250909095222.2121438-1-yepeilin@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_cpum_cf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/helpers.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
-index 65a66df5bb865..771e1cb17540d 100644
---- a/arch/s390/kernel/perf_cpum_cf.c
-+++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -757,8 +757,6 @@ static int __hw_perf_event_init(struct perf_event *event, unsigned int type)
- 		break;
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 4b20a72ab8cff..90c281e1379ee 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1204,8 +1204,11 @@ static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u
+ 		goto out;
+ 	}
  
- 	case PERF_TYPE_HARDWARE:
--		if (is_sampling_event(event))	/* No sampling support */
--			return -ENOENT;
- 		ev = attr->config;
- 		if (!attr->exclude_user && attr->exclude_kernel) {
- 			/*
-@@ -856,6 +854,8 @@ static int cpumf_pmu_event_init(struct perf_event *event)
- 	unsigned int type = event->attr.type;
- 	int err;
- 
-+	if (is_sampling_event(event))	/* No sampling support */
-+		return err;
- 	if (type == PERF_TYPE_HARDWARE || type == PERF_TYPE_RAW)
- 		err = __hw_perf_event_init(event, type);
- 	else if (event->pmu->type == type)
+-	/* allocate hrtimer via map_kmalloc to use memcg accounting */
+-	cb = bpf_map_kmalloc_node(map, size, GFP_ATOMIC, map->numa_node);
++	/* Allocate via bpf_map_kmalloc_node() for memcg accounting. Until
++	 * kmalloc_nolock() is available, avoid locking issues by using
++	 * __GFP_HIGH (GFP_ATOMIC & ~__GFP_RECLAIM).
++	 */
++	cb = bpf_map_kmalloc_node(map, size, __GFP_HIGH, map->numa_node);
+ 	if (!cb) {
+ 		ret = -ENOMEM;
+ 		goto out;
 -- 
 2.51.0
 
