@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A64E330D54;
-	Wed, 17 Sep 2025 12:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A05B330D52;
+	Wed, 17 Sep 2025 12:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113572; cv=none; b=At4I6oLyzjLVLW7Oe33OWsKVPXmiiw9roKUAR3gJAw6O33uTilsbDhm05/l2UdcWyRCoB4vPFgTc6NI+GLJsq0p+3f3ZIw4RPvn3p42ulXIHASD8JtyhtYksYH7qhmdICBAVxB2xswrMLJw48J46+FZyZ9B8HfSJRrlZHsLJGhk=
+	t=1758113575; cv=none; b=FHwRu2to+aZsa+WqJuhKqueliNpnZzcVk1oYAysN2LHQiSIu8KEcsRAfR6Xv+Zb24chB3Qx9V/sLeJ/X1/9ciuLWLjjJSgrTzt8YnwG+YN5yNaR/i+FXSKR+wperbqTHpETK3Lg/unVTDmOYNmgSesVsSAVMt3uyIREqHJgebr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113572; c=relaxed/simple;
-	bh=9+YI+drGvSUKKoLU2r7K/jgkLO7F3jJOvpkAdm8TIpc=;
+	s=arc-20240116; t=1758113575; c=relaxed/simple;
+	bh=o+zWm6bXFuqvUGWSgctobBYB7LsQqTsLSBCij9xf1WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vbt5+NpaVZoqn2uiZ/xnUwitqPAWweFKdknh/7WjHMrjgdnXo0ZKN/XGgF+uKZx7k6gfD8CLR7zrhqyAicL0Z2pCtEwWdFiaEQyyF4YUaHfZVcBRvml+RF/0QvRRHcFeMR3Egjhs5Pylu7rk2qkA3/vVfNjogyHPPvToejXiVWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tlf9EB20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QTtki2IsgzxlBYXqReX6iQMWHCUj1GqtS0j6O6qfu2w0kLz9Pwy0tMsBLVYeERqgbBEbGdkUgNRHTekhUuuokUqZ1mAyJgcFtRQsvMVFe6ulRNiG/gUFmMvmre3dUquaZ/7ICaugeGVD+pX0w4++W02NmAZXO0EeWbsYaZTHkVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecu9ehOq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlf9EB20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D79C4CEF0;
-	Wed, 17 Sep 2025 12:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecu9ehOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEA8C4CEF0;
+	Wed, 17 Sep 2025 12:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113572;
-	bh=9+YI+drGvSUKKoLU2r7K/jgkLO7F3jJOvpkAdm8TIpc=;
+	s=korg; t=1758113575;
+	bh=o+zWm6bXFuqvUGWSgctobBYB7LsQqTsLSBCij9xf1WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tlf9EB20/4qOTTWXaoaWMMGC4+im/K0blDiD7BcLUsXsfKeoi8mWKB9qV5p/Hr8jf
-	 I0z3JAk45uQLmkq4J1Amifcd5GaaD//IVUGNMbWWq3GAZfuIgJ31rzIo+MMYatTUBT
-	 vWxVTYi/hWxxvml9NXZ01Rcy7HW6nCqXKsmwn+Cw=
+	b=ecu9ehOqFKqEGLKx7zC184e+nHtWfrWks7RdoMk7fqouff8N5B6bDizDHr8biLX/Q
+	 KWa/s8aKQvB2iCZJEStDgLO4VA+fDVzY1kz0TsNswy/oNR0FBHMTfkfQe0oMwUeCQD
+	 RXn/+/vfhkxhuwG5uRuRmszcEIeB23Ki1L6edXV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/140] btrfs: fix corruption reading compressed range when block size is smaller than page size
-Date: Wed, 17 Sep 2025 14:34:16 +0200
-Message-ID: <20250917123346.363418378@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.12 085/140] hrtimers: Unconditionally update target CPU base after offline timer migration
+Date: Wed, 17 Sep 2025 14:34:17 +0200
+Message-ID: <20250917123346.386554223@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123344.315037637@linuxfoundation.org>
 References: <20250917123344.315037637@linuxfoundation.org>
@@ -52,229 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 9786531399a679fc2f4630d2c0a186205282ab2f ]
+commit e895f8e29119c8c966ea794af9e9100b10becb88 upstream.
 
-[BUG]
-With 64K page size (aarch64 with 64K page size config) and 4K btrfs
-block size, the following workload can easily lead to a corrupted read:
+When testing softirq based hrtimers on an ARM32 board, with high resolution
+mode and NOHZ inactive, softirq based hrtimers fail to expire after being
+moved away from an offline CPU:
 
-        mkfs.btrfs -f -s 4k $dev > /dev/null
-        mount -o compress $dev $mnt
-        xfs_io -f -c "pwrite -S 0xff 0 64k" $mnt/base > /dev/null
-	echo "correct result:"
-        od -Ad -t x1 $mnt/base
-        xfs_io -f -c "reflink $mnt/base 32k 0 32k" \
-		  -c "reflink $mnt/base 0 32k 32k" \
-		  -c "pwrite -S 0xff 60k 4k" $mnt/new > /dev/null
-	echo "incorrect result:"
-        od -Ad -t x1 $mnt/new
-        umount $mnt
+CPU0				CPU1
+				hrtimer_start(..., HRTIMER_MODE_SOFT);
+cpu_down(CPU1)			...
+				hrtimers_cpu_dying()
+				  // Migrate timers to CPU0
+				  smp_call_function_single(CPU0, returgger_next_event);
+  retrigger_next_event()
+    if (!highres && !nohz)
+        return;
 
-This shows the following result:
+As retrigger_next_event() is a NOOP when both high resolution timers and
+NOHZ are inactive CPU0's hrtimer_cpu_base::softirq_expires_next is not
+updated and the migrated softirq timers never expire unless there is a
+softirq based hrtimer queued on CPU0 later.
 
-correct result:
-0000000 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-*
-0065536
-incorrect result:
-0000000 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-*
-0032768 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-*
-0061440 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-*
-0065536
+Fix this by removing the hrtimer_hres_active() and tick_nohz_active() check
+in retrigger_next_event(), which enforces a full update of the CPU base.
+As this is not a fast path the extra cost does not matter.
 
-Notice the zero in the range [32K, 60K), which is incorrect.
+[ tglx: Massaged change log ]
 
-[CAUSE]
-With extra trace printk, it shows the following events during od:
-(some unrelated info removed like CPU and context)
-
- od-3457   btrfs_do_readpage: enter r/i=5/258 folio=0(65536) prev_em_start=0000000000000000
-
-The "r/i" is indicating the root and inode number. In our case the file
-"new" is using ino 258 from fs tree (root 5).
-
-Here notice the @prev_em_start pointer is NULL. This means the
-btrfs_do_readpage() is called from btrfs_read_folio(), not from
-btrfs_readahead().
-
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=0 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=4096 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=8192 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=12288 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=16384 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=20480 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=24576 got em start=0 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=28672 got em start=0 len=32768
-
-These above 32K blocks will be read from the first half of the
-compressed data extent.
-
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=32768 got em start=32768 len=32768
-
-Note here there is no btrfs_submit_compressed_read() call. Which is
-incorrect now.
-Although both extent maps at 0 and 32K are pointing to the same compressed
-data, their offsets are different thus can not be merged into the same
-read.
-
-So this means the compressed data read merge check is doing something
-wrong.
-
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=36864 got em start=32768 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=40960 got em start=32768 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=45056 got em start=32768 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=49152 got em start=32768 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=53248 got em start=32768 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=57344 got em start=32768 len=32768
- od-3457   btrfs_do_readpage: r/i=5/258 folio=0(65536) cur=61440 skip uptodate
- od-3457   btrfs_submit_compressed_read: cb orig_bio: file off=0 len=61440
-
-The function btrfs_submit_compressed_read() is only called at the end of
-folio read. The compressed bio will only have an extent map of range [0,
-32K), but the original bio passed in is for the whole 64K folio.
-
-This will cause the decompression part to only fill the first 32K,
-leaving the rest untouched (aka, filled with zero).
-
-This incorrect compressed read merge leads to the above data corruption.
-
-There were similar problems that happened in the past, commit 808f80b46790
-("Btrfs: update fix for read corruption of compressed and shared
-extents") is doing pretty much the same fix for readahead.
-
-But that's back to 2015, where btrfs still only supports bs (block size)
-== ps (page size) cases.
-This means btrfs_do_readpage() only needs to handle a folio which
-contains exactly one block.
-
-Only btrfs_readahead() can lead to a read covering multiple blocks.
-Thus only btrfs_readahead() passes a non-NULL @prev_em_start pointer.
-
-With v5.15 kernel btrfs introduced bs < ps support. This breaks the above
-assumption that a folio can only contain one block.
-
-Now btrfs_read_folio() can also read multiple blocks in one go.
-But btrfs_read_folio() doesn't pass a @prev_em_start pointer, thus the
-existing bio force submission check will never be triggered.
-
-In theory, this can also happen for btrfs with large folios, but since
-large folio is still experimental, we don't need to bother it, thus only
-bs < ps support is affected for now.
-
-[FIX]
-Instead of passing @prev_em_start to do the proper compressed extent
-check, introduce one new member, btrfs_bio_ctrl::last_em_start, so that
-the existing bio force submission logic will always be triggered.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
+Co-developed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250805081025.54235-1-wangxiongfeng2@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   40 ++++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ kernel/time/hrtimer.c |   11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -109,6 +109,24 @@ struct btrfs_bio_ctrl {
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -798,10 +798,10 @@ static void retrigger_next_event(void *a
+ 	 * of the next expiring timer is enough. The return from the SMP
+ 	 * function call will take care of the reprogramming in case the
+ 	 * CPU was in a NOHZ idle sleep.
++	 *
++	 * In periodic low resolution mode, the next softirq expiration
++	 * must also be updated.
  	 */
- 	unsigned long submit_bitmap;
- 	struct readahead_control *ractl;
-+
-+	/*
-+	 * The start offset of the last used extent map by a read operation.
-+	 *
-+	 * This is for proper compressed read merge.
-+	 * U64_MAX means we are starting the read and have made no progress yet.
-+	 *
-+	 * The current btrfs_bio_is_contig() only uses disk_bytenr as
-+	 * the condition to check if the read can be merged with previous
-+	 * bio, which is not correct. E.g. two file extents pointing to the
-+	 * same extent but with different offset.
-+	 *
-+	 * So here we need to do extra checks to only merge reads that are
-+	 * covered by the same extent map.
-+	 * Just extent_map::start will be enough, as they are unique
-+	 * inside the same inode.
-+	 */
-+	u64 last_em_start;
- };
+-	if (!hrtimer_hres_active(base) && !tick_nohz_active)
+-		return;
+-
+ 	raw_spin_lock(&base->lock);
+ 	hrtimer_update_base(base);
+ 	if (hrtimer_hres_active(base))
+@@ -2286,11 +2286,6 @@ int hrtimers_cpu_dying(unsigned int dyin
+ 				     &new_base->clock_base[i]);
+ 	}
  
- static void submit_one_bio(struct btrfs_bio_ctrl *bio_ctrl)
-@@ -955,7 +973,7 @@ static void btrfs_readahead_expand(struc
-  * return 0 on success, otherwise return error
-  */
- static int btrfs_do_readpage(struct folio *folio, struct extent_map **em_cached,
--		      struct btrfs_bio_ctrl *bio_ctrl, u64 *prev_em_start)
-+			     struct btrfs_bio_ctrl *bio_ctrl)
- {
- 	struct inode *inode = folio->mapping->host;
- 	struct btrfs_fs_info *fs_info = inode_to_fs_info(inode);
-@@ -1066,12 +1084,11 @@ static int btrfs_do_readpage(struct foli
- 		 * non-optimal behavior (submitting 2 bios for the same extent).
- 		 */
- 		if (compress_type != BTRFS_COMPRESS_NONE &&
--		    prev_em_start && *prev_em_start != (u64)-1 &&
--		    *prev_em_start != em->start)
-+		    bio_ctrl->last_em_start != U64_MAX &&
-+		    bio_ctrl->last_em_start != em->start)
- 			force_bio_submit = true;
- 
--		if (prev_em_start)
--			*prev_em_start = em->start;
-+		bio_ctrl->last_em_start = em->start;
- 
- 		free_extent_map(em);
- 		em = NULL;
-@@ -1115,12 +1132,15 @@ int btrfs_read_folio(struct file *file,
- 	const u64 start = folio_pos(folio);
- 	const u64 end = start + folio_size(folio) - 1;
- 	struct extent_state *cached_state = NULL;
--	struct btrfs_bio_ctrl bio_ctrl = { .opf = REQ_OP_READ };
-+	struct btrfs_bio_ctrl bio_ctrl = {
-+		.opf = REQ_OP_READ,
-+		.last_em_start = U64_MAX,
-+	};
- 	struct extent_map *em_cached = NULL;
- 	int ret;
- 
- 	btrfs_lock_and_flush_ordered_range(inode, start, end, &cached_state);
--	ret = btrfs_do_readpage(folio, &em_cached, &bio_ctrl, NULL);
-+	ret = btrfs_do_readpage(folio, &em_cached, &bio_ctrl);
- 	unlock_extent(&inode->io_tree, start, end, &cached_state);
- 
- 	free_extent_map(em_cached);
-@@ -2391,7 +2411,8 @@ void btrfs_readahead(struct readahead_co
- {
- 	struct btrfs_bio_ctrl bio_ctrl = {
- 		.opf = REQ_OP_READ | REQ_RAHEAD,
--		.ractl = rac
-+		.ractl = rac,
-+		.last_em_start = U64_MAX,
- 	};
- 	struct folio *folio;
- 	struct btrfs_inode *inode = BTRFS_I(rac->mapping->host);
-@@ -2399,12 +2420,11 @@ void btrfs_readahead(struct readahead_co
- 	const u64 end = start + readahead_length(rac) - 1;
- 	struct extent_state *cached_state = NULL;
- 	struct extent_map *em_cached = NULL;
--	u64 prev_em_start = (u64)-1;
- 
- 	btrfs_lock_and_flush_ordered_range(inode, start, end, &cached_state);
- 
- 	while ((folio = readahead_folio(rac)) != NULL)
--		btrfs_do_readpage(folio, &em_cached, &bio_ctrl, &prev_em_start);
-+		btrfs_do_readpage(folio, &em_cached, &bio_ctrl);
- 
- 	unlock_extent(&inode->io_tree, start, end, &cached_state);
+-	/*
+-	 * The migration might have changed the first expiring softirq
+-	 * timer on this CPU. Update it.
+-	 */
+-	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
+ 	/* Tell the other CPU to retrigger the next event */
+ 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
  
 
 
