@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC11EF36C;
-	Wed, 17 Sep 2025 12:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657A11E489;
+	Wed, 17 Sep 2025 12:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113037; cv=none; b=J9ZW9lNk4PCZ+wxBqc/+XcITTr8V0kDQAiNY8rco7blLfVo4rTBp46sc7MXNCHFKo253vdhZ1Fqs9DQ4CqWPvNOKdCpp9PxFtcT29ioK82EnVCW9LVjzXvo1qJiMhp+Mfk72y8vufZmaAVaE5yDzD9I/RPzWam8gD2ZVh8fte30=
+	t=1758113040; cv=none; b=fUICGlUGiwjlLI09nQ4k/RbDKolZsJ2M3grDZLtAN8pteYp1TTX0UOLcV+bxpvDwOkXg/p9nwVuWx2c1mljDZ2LaPWCkXVI+VoyEcXn84U3HIzvXXJTWPF1b9cOm23qp34G8gSx5IkJ0PunNe1Ji+5MwDxRJ19fZ9fRn/j4vBZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113037; c=relaxed/simple;
-	bh=00teFDujugHzMCAxUhpAuS72xLRco5mmJAuW6GP1Lu0=;
+	s=arc-20240116; t=1758113040; c=relaxed/simple;
+	bh=n1Xj2jNwdoAGwAMVI+Pv91gZhhXqyscfg8ET0FkpMIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pF7GiHuBiuhdfoBGKnLI/ohzdsogU/IIFalWaH6z/biQNox0PNCtUwH4UMBoQVynDWVvHUUDgJMPK3KZ431md0COm7y+nmplEQwkEfazZVfoLLkw1Vl1PusIQxjCddbtnnR1rP44HLjM5nPtjplClGszrBB5xmLllSjjwFzgS1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leWazWKz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTxw1BpoDw53wLU7VcQiEM7jKVz52IlYJNjSlyF0NpWI9xsGOXBzi+TPDgAIcbgqJ1VRY+IRR3M2poT0mHBMw2ss0y5k9WAiXFrg6WAu/aoIlfDV7ZkFJXGMRN/9lq2Jwx5He5Gm8E5pY/Y7ynKg1mT7LKvQxG76tqgHGHg8jz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXZA+ijz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leWazWKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8254C4CEF0;
-	Wed, 17 Sep 2025 12:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXZA+ijz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A0FC4CEF0;
+	Wed, 17 Sep 2025 12:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113037;
-	bh=00teFDujugHzMCAxUhpAuS72xLRco5mmJAuW6GP1Lu0=;
+	s=korg; t=1758113040;
+	bh=n1Xj2jNwdoAGwAMVI+Pv91gZhhXqyscfg8ET0FkpMIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=leWazWKz4YJiZ3kdUTeqRm+beaEKK03FFfrawSStcpQrY6Geajs1TgAnr98073Llj
-	 bxdcy2LkcFyGEZod0JTMfzTAXOMXZ2tgec1qAHrrqtMFsmsvdRHoPvc4BeFbwbZl3i
-	 ZBcf5eUXk9m7g2hLzh1pBfWB7xDoTMnTSJVpkUco=
+	b=UXZA+ijzSi9uORPNbICwuIPdFWnuP7syXLSzrqUrI/lajgn7UIvC4Sh5N6tFhZoPA
+	 O0GkKkFpAg0W7RtulFVaqDFp3ldOTGx9JpW/qrgDmih5XgoX5zT0NvdjuKbkmcnCbs
+	 IaI///W4BuWLiFWm2mcX8wcG2yjeAi/JcjrV+fE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sridharan S N <quic_sridsn@quicinc.com>,
-	Santhosh Kumar K <s-k6@ti.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 107/189] mtd: spinand: winbond: Fix oob_layout for W25N01JW
-Date: Wed, 17 Sep 2025 14:33:37 +0200
-Message-ID: <20250917123354.482488939@linuxfoundation.org>
+	Stanislav Fort <disclosure@aisle.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 108/189] mm/damon/sysfs: fix use-after-free in state_show()
+Date: Wed, 17 Sep 2025 14:33:38 +0200
+Message-ID: <20250917123354.507964964@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -52,84 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Santhosh Kumar K <s-k6@ti.com>
+From: Stanislav Fort <stanislav.fort@aisle.com>
 
-[ Upstream commit 4550d33e18112a11a740424c4eec063cd58e918c ]
+commit 3260a3f0828e06f5f13fac69fb1999a6d60d9cff upstream.
 
-Fix the W25N01JW's oob_layout according to the datasheet [1]
+state_show() reads kdamond->damon_ctx without holding damon_sysfs_lock.
+This allows a use-after-free race:
 
-[1] https://www.winbond.com/hq/product/code-storage-flash-memory/qspinand-flash/?__locale=en&partNo=W25N01JW
+CPU 0                         CPU 1
+-----                         -----
+state_show()                  damon_sysfs_turn_damon_on()
+ctx = kdamond->damon_ctx;     mutex_lock(&damon_sysfs_lock);
+                              damon_destroy_ctx(kdamond->damon_ctx);
+                              kdamond->damon_ctx = NULL;
+                              mutex_unlock(&damon_sysfs_lock);
+damon_is_running(ctx);        /* ctx is freed */
+mutex_lock(&ctx->kdamond_lock); /* UAF */
 
-Fixes: 6a804fb72de5 ("mtd: spinand: winbond: add support for serial NAND flash")
-Cc: Sridharan S N <quic_sridsn@quicinc.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+(The race can also occur with damon_sysfs_kdamonds_rm_dirs() and
+damon_sysfs_kdamond_release(), which free or replace the context under
+damon_sysfs_lock.)
+
+Fix by taking damon_sysfs_lock before dereferencing the context, mirroring
+the locking used in pid_show().
+
+The bug has existed since state_show() first accessed kdamond->damon_ctx.
+
+Link: https://lkml.kernel.org/r/20250905101046.2288-1-disclosure@aisle.com
+Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spaces monitoring")
+Signed-off-by: Stanislav Fort <disclosure@aisle.com>
+Reported-by: Stanislav Fort <disclosure@aisle.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/spi/winbond.c |   37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/mtd/nand/spi/winbond.c
-+++ b/drivers/mtd/nand/spi/winbond.c
-@@ -162,6 +162,36 @@ static const struct mtd_ooblayout_ops w2
- 	.free = w25n02kv_ooblayout_free,
- };
- 
-+static int w25n01jw_ooblayout_ecc(struct mtd_info *mtd, int section,
-+				  struct mtd_oob_region *region)
-+{
-+	if (section > 3)
-+		return -ERANGE;
-+
-+	region->offset = (16 * section) + 12;
-+	region->length = 4;
-+
-+	return 0;
-+}
-+
-+static int w25n01jw_ooblayout_free(struct mtd_info *mtd, int section,
-+				   struct mtd_oob_region *region)
-+{
-+	if (section > 3)
-+		return -ERANGE;
-+
-+	region->offset = (16 * section);
-+	region->length = 12;
-+
-+	/* Extract BBM */
-+	if (!section) {
-+		region->offset += 2;
-+		region->length -= 2;
-+	}
-+
-+	return 0;
-+}
-+
- static int w35n01jw_ooblayout_ecc(struct mtd_info *mtd, int section,
- 				  struct mtd_oob_region *region)
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1243,14 +1243,18 @@ static ssize_t state_show(struct kobject
  {
-@@ -192,6 +222,11 @@ static int w35n01jw_ooblayout_free(struc
- 	return 0;
- }
+ 	struct damon_sysfs_kdamond *kdamond = container_of(kobj,
+ 			struct damon_sysfs_kdamond, kobj);
+-	struct damon_ctx *ctx = kdamond->damon_ctx;
+-	bool running;
++	struct damon_ctx *ctx;
++	bool running = false;
  
-+static const struct mtd_ooblayout_ops w25n01jw_ooblayout = {
-+	.ecc = w25n01jw_ooblayout_ecc,
-+	.free = w25n01jw_ooblayout_free,
-+};
+-	if (!ctx)
+-		running = false;
+-	else
++	if (!mutex_trylock(&damon_sysfs_lock))
++		return -EBUSY;
 +
- static const struct mtd_ooblayout_ops w35n01jw_ooblayout = {
- 	.ecc = w35n01jw_ooblayout_ecc,
- 	.free = w35n01jw_ooblayout_free,
-@@ -307,7 +342,7 @@ static const struct spinand_info winbond
- 					      &write_cache_variants,
- 					      &update_cache_variants),
- 		     0,
--		     SPINAND_ECCINFO(&w25m02gv_ooblayout, NULL),
-+		     SPINAND_ECCINFO(&w25n01jw_ooblayout, NULL),
- 		     SPINAND_CONFIGURE_CHIP(w25n0xjw_hs_cfg)),
- 	SPINAND_INFO("W25N01KV", /* 3.3V */
- 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xae, 0x21),
++	ctx = kdamond->damon_ctx;
++	if (ctx)
+ 		running = damon_sysfs_ctx_running(ctx);
+ 
++	mutex_unlock(&damon_sysfs_lock);
++
+ 	return sysfs_emit(buf, "%s\n", running ?
+ 			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_ON] :
+ 			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_OFF]);
 
 
