@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182B51E489;
-	Wed, 17 Sep 2025 12:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC4E1E489;
+	Wed, 17 Sep 2025 12:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113092; cv=none; b=cxoufEym3Dyw38AEpuCUFBaGtr2uL4YNRsoafqm7uQtXW1TDN3rVckp/9c7YngRNOkoLCUjoBqgRvl/DrrNCrlcK/p9ZKylTEMnFz8zd6F+7AxsdNfoUqjCMi8jjYQOprwzKJ/y7eexxm0N/sBHXM+0TID9Jw/AnTHUhSjnr3F0=
+	t=1758113095; cv=none; b=NZ94LN9ZOwyRW/hjCdTY8V2FcVFFuJg/LQPqp2NRjMxG0TlgnPf7PqdFv9hTbb7Xlhdafcm8PK1i+LHzIA6RRkaCUnWgJAooU2IdcL995m00/ebp3Jhf+gFzSd05FiUmpqpSaYXNE4Syyr7jBzocm+EMiPPB/h5aCDq07jksjd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113092; c=relaxed/simple;
-	bh=CrRAy6a2JOpMBwH7yOBXkZ+V9q/czkIlZmhvPwaSBG4=;
+	s=arc-20240116; t=1758113095; c=relaxed/simple;
+	bh=XDL5Uw3lLfNYvyAAxutpf3yG+Bh525e+6d4IRGfgdfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDbOzb5V3BfaFlUbERjBqClYf4B3KPXzXWZDvPipoph4d0r6uXGlHavmSgOfCxz4FThfWqBU3bbmIAsQIuRzkWuSI87i/NL3IAWeWZ8087jlel+or8HjU+NI/5nieeqv7NTPO5DeqSJUh2/G91QAxYEbV99IwtcZfBZmecI7gic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU8+Z5/N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6zx3fn/exNmpKjRNk2r2+3o9zyYLuV4uc4Cd/3fXg+45nudouh4CqarY6g1maRxrAghwl4a771hVwRRF5Xzy6LoafHpJ5xgTAuqncgkTEU8HT9v9tGP4xKEx0eXtHZvA03tCHQrwBC9rhWSAoGNE4Z8EBIbHQV17EcATB71UuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DT9F+9vZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU8+Z5/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897A1C4CEF0;
-	Wed, 17 Sep 2025 12:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT9F+9vZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5F4C4CEF0;
+	Wed, 17 Sep 2025 12:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758113092;
-	bh=CrRAy6a2JOpMBwH7yOBXkZ+V9q/czkIlZmhvPwaSBG4=;
+	s=korg; t=1758113095;
+	bh=XDL5Uw3lLfNYvyAAxutpf3yG+Bh525e+6d4IRGfgdfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UU8+Z5/N0whWXKmDPPYmKLlQcf35kBLdIoO7bWVgSOJW9DVNtfG5KWUFMvQU5KyEB
-	 a4pEVGWZ4iWjFCtjnoyZ6hmG+q9vaVRVfPL3LC2EZURh7aHX0jLAKc4UrRspUot1VK
-	 bTIHXJbN9KP2tKHN6j9BiFifTejamTNED6aQl2u4=
+	b=DT9F+9vZVoJXEvqnIgQuNqZGBo+2r+6DszGm899/05CFNUh3Q9t1d02MENnu3ylDm
+	 QIahL8ozbDHDZP1ObyQ4g3iy+CZXmVb53G2eTbDaZiSOiFnqLhK5uyAqwt/lfePTUW
+	 n320buAksMQ7+PQH4QMCYomWoc6sLNi8S5ScmQEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 152/189] netfilter: nft_set_bitmap: fix lockdep splat due to missing annotation
-Date: Wed, 17 Sep 2025 14:34:22 +0200
-Message-ID: <20250917123355.582996966@linuxfoundation.org>
+Subject: [PATCH 6.16 170/189] erofs: get rid of {get,put}_page() for ztailpacking data
+Date: Wed, 17 Sep 2025 14:34:40 +0200
+Message-ID: <20250917123356.033383701@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250917123351.839989757@linuxfoundation.org>
 References: <20250917123351.839989757@linuxfoundation.org>
@@ -50,50 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 5e13f2c491a4100d208e77e92fe577fe3dbad6c2 ]
+[ Upstream commit 96debe8c27ee2494bbd78abf3744745a84a745f1 ]
 
-Running new 'set_flush_add_atomic_bitmap' test case for nftables.git
-with CONFIG_PROVE_RCU_LIST=y yields:
+The compressed data for the ztailpacking feature is fetched from
+the metadata inode (e.g., bd_inode), which is folio-based.
 
-net/netfilter/nft_set_bitmap.c:231 RCU-list traversed in non-reader section!!
-rcu_scheduler_active = 2, debug_locks = 1
-1 lock held by nft/4008:
- #0: ffff888147f79cd8 (&nft_net->commit_mutex){+.+.}-{4:4}, at: nf_tables_valid_genid+0x2f/0xd0
+Therefore, the folio interface should be used instead.
 
- lockdep_rcu_suspicious+0x116/0x160
- nft_bitmap_walk+0x22d/0x240
- nf_tables_delsetelem+0x1010/0x1a00
- ..
-
-This is a false positive, the list cannot be altered while the
-transaction mutex is held, so pass the relevant argument to the iterator.
-
-Fixes tag intentionally wrong; no point in picking this up if earlier
-false-positive-fixups were not applied.
-
-Fixes: 28b7a6b84c0a ("netfilter: nf_tables: avoid false-positive lockdep splats in set walker")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250626085459.339830-1-hsiangkao@linux.alibaba.com
+Stable-dep-of: 131897c65e2b ("erofs: fix invalid algorithm for encoded extents")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_bitmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/erofs/zdata.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/nft_set_bitmap.c b/net/netfilter/nft_set_bitmap.c
-index 12390d2e994fc..8a435cc0e98c4 100644
---- a/net/netfilter/nft_set_bitmap.c
-+++ b/net/netfilter/nft_set_bitmap.c
-@@ -221,7 +221,8 @@ static void nft_bitmap_walk(const struct nft_ctx *ctx,
- 	const struct nft_bitmap *priv = nft_set_priv(set);
- 	struct nft_bitmap_elem *be;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 9bb53f00c2c62..33c61f3b667c3 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -805,6 +805,7 @@ static int z_erofs_pcluster_begin(struct z_erofs_frontend *fe)
+ 	struct erofs_map_blocks *map = &fe->map;
+ 	struct super_block *sb = fe->inode->i_sb;
+ 	struct z_erofs_pcluster *pcl = NULL;
++	void *ptr;
+ 	int ret;
  
--	list_for_each_entry_rcu(be, &priv->list, head) {
-+	list_for_each_entry_rcu(be, &priv->list, head,
-+				lockdep_is_held(&nft_pernet(ctx->net)->commit_mutex)) {
- 		if (iter->count < iter->skip)
- 			goto cont;
+ 	DBG_BUGON(fe->pcl);
+@@ -854,15 +855,13 @@ static int z_erofs_pcluster_begin(struct z_erofs_frontend *fe)
+ 		/* bind cache first when cached decompression is preferred */
+ 		z_erofs_bind_cache(fe);
+ 	} else {
+-		void *mptr;
+-
+-		mptr = erofs_read_metabuf(&map->buf, sb, map->m_pa, false);
+-		if (IS_ERR(mptr)) {
+-			ret = PTR_ERR(mptr);
++		ptr = erofs_read_metabuf(&map->buf, sb, map->m_pa, false);
++		if (IS_ERR(ptr)) {
++			ret = PTR_ERR(ptr);
+ 			erofs_err(sb, "failed to get inline data %d", ret);
+ 			return ret;
+ 		}
+-		get_page(map->buf.page);
++		folio_get(page_folio(map->buf.page));
+ 		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, map->buf.page);
+ 		fe->pcl->pageofs_in = map->m_pa & ~PAGE_MASK;
+ 		fe->mode = Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE;
+@@ -1325,9 +1324,8 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, int err)
  
+ 	/* must handle all compressed pages before actual file pages */
+ 	if (pcl->from_meta) {
+-		page = pcl->compressed_bvecs[0].page;
++		folio_put(page_folio(pcl->compressed_bvecs[0].page));
+ 		WRITE_ONCE(pcl->compressed_bvecs[0].page, NULL);
+-		put_page(page);
+ 	} else {
+ 		/* managed folios are still left in compressed_bvecs[] */
+ 		for (i = 0; i < pclusterpages; ++i) {
 -- 
 2.51.0
 
