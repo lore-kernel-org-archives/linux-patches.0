@@ -1,177 +1,146 @@
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012018.outbound.protection.outlook.com [40.107.200.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AAF2E1EFD;
-	Thu, 18 Sep 2025 19:43:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758224621; cv=fail; b=hTkiiswtJ1yjvrufr7K7Ilqe4x7Zd+9pgMGcCwSV2HTedU0ajZpChnPMzFNifoKt3kN0xxH+xYdGRH/X5jgH0KZMzt1Ix6nosi7GjLldpGJx7edD1jPm1lKt4bj8YL5b/DppbhEGwbVKVPIV/oxC3KkJXZAfTiYaOgoTz3g8Ls8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758224621; c=relaxed/simple;
-	bh=CsbhLUCO5oEQAPPVycQmhmX34TICrqN9JwC82teJy7k=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qFiPVDwvMKS1noaRwpbJ9DKfpBdLjC9mzEvbnvMp8liMf1DeCisOfQmju/MiPWlYJr3dWYSv0j6sdFV3t+RuLUq1v4v9sa6NwbdS1uV91M1RVWLuMO39IZ1p9/2S9b6ps03bEgTUmnP+ril5DdOnt0dxP6/CLc3WzvT7f/4a2KI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=IqRqQn+V; arc=fail smtp.client-ip=40.107.200.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BA930C607
+	for <patches@lists.linux.dev>; Thu, 18 Sep 2025 19:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758225501; cv=none; b=DiZ2fjiJoCCZb7b7gpDOYzlpbYTjYkizmBwRyG2W7qgEgMq3asKRVb5Brb7ff/A+VAKHKeZMNV7Dflplp0jmQZUSqH6Mkk9A6kHJ5zHD7V2J/jVRHxte/HZ1i99GoJzPxc+qjsqAOQhQLtwFF3fj8oAsxxEeVh8r1l1WEUynwbc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758225501; c=relaxed/simple;
+	bh=hrTKVKMuOKbLilzSA+VEl+XSSF0VIocT2KvCzkuRjcw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iOuqnDzSzpuJaC2/tq+y/FVG5rKb8WjzIN7s8k88xlpScA+wM1je5TtdYOY4AuOLC3ckdBwc2YsTrIZzjCCzDtgBCrLnz9bA4sWYvwoCUfPxAVZx+VBynuY8+SXJO83FCAmd7tB8gxpxztlxZvROovMR53HusW/fkMh9wId1MPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RL93mThJ; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="IqRqQn+V"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DmSZZcxzDKnjt986oHPkLh6IuVO85rKtRha7IlonFjhajcBeAY3w7a4HgONUtBgRS3bGDfB+/eU5WdWj5ohkPIbXlJfnQZ1r4dnQsyqJ12SOO0NvI+VTmZojdkZFjpM4AfDXCm1vX5nwHrUb/BUPt+WNXrZba1Z2kzbV+g0y1LFkBEghvmj1OcF5vlmqvsROYxd1eP4qYCKO7gsW6rPtJi80HWP9ydhwg6j2ifydA9Az0J57KchmoMgUOnau4ke8RmwE5E8rjysemKTvLT76BhcOTQZMvUavsksiNo0t6FJQyGXxAf7Cgl3AqXQefkRCtpDE2FsHQl776CgJ+kKFfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HN8DhfP0wIT5lNR3f0xCrbMTuIOqEphYAvskRmP+HCk=;
- b=pHPR+Ejy3l7oJi4w/d2YbBuInbuOdJUneVWIrbcgdB60V4r99I370YXEd1wp0+eCMcTzPIaDuujEGSDQ2zgzWpyXsxj18s8ojjWgcivu/gdMuzB+EMNv63cWHQt4s4BH4cWK1PkQoUx6w/2oDT4I3ISiLvMJaBhWlLmHeMpadzS5DvSi0YkCIHTvdM8Hr1BPxwxTmjUqjZYAXY+qjYG2zkMvXh9xZWLFkWQdIgLEUvluHQQGC11k98BVNRNguw4nfbOuMcRO5ZM4YYI8fD9Lrq04sxCkJDEhgzD9I3xwktJnLJc9GRxMZ0POGZyLePnoqP+LStjg/RVpOxWYrRKmxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HN8DhfP0wIT5lNR3f0xCrbMTuIOqEphYAvskRmP+HCk=;
- b=IqRqQn+VDMYczu33PMOeQYc2wkFrZb3gEMXbyFhFxm2VV+G1zt2rDBINZIlhCNXIsjL6EU+ADptdwpdyd+Fk0Ui07IV5Y1BJ9akadYQ3pNkjB9IjcI23/QB+Au2V/gSMCJ+G10WV8SiTiqUYAFN1OPWuGWAL9UFESMj+1yTaiSvdBHaQm3mQirjC7xNmFxJDuKQg78FSS5JGbuG7P14FTao07oGTgwOIp1RPW50OThiG3GFSVQrwEP3KC4MwTOx/tl5Wshj7DVhFdJgICOLuSfcO8cvVbu6nQ5+Cr8+mh5cV+csk5fus5X0NKfPdgDdXKaj8dqTwzGDB+jWvj2VG0A==
-Received: from BY5PR04CA0004.namprd04.prod.outlook.com (2603:10b6:a03:1d0::14)
- by PH7PR12MB7453.namprd12.prod.outlook.com (2603:10b6:510:20a::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.22; Thu, 18 Sep
- 2025 19:43:35 +0000
-Received: from CO1PEPF000075EF.namprd03.prod.outlook.com
- (2603:10b6:a03:1d0:cafe::e7) by BY5PR04CA0004.outlook.office365.com
- (2603:10b6:a03:1d0::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.14 via Frontend Transport; Thu,
- 18 Sep 2025 19:43:35 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CO1PEPF000075EF.mail.protection.outlook.com (10.167.249.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9137.12 via Frontend Transport; Thu, 18 Sep 2025 19:43:34 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 18 Sep
- 2025 12:43:15 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Thu, 18 Sep 2025 12:43:15 -0700
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.126.190.182)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 18 Sep 2025 12:43:14 -0700
-Date: Thu, 18 Sep 2025 12:43:13 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Jonathan Corbet <corbet@lwn.net>, <iommu@lists.linux.dev>, Joerg Roedel
-	<joro@8bytes.org>, Justin Stitt <justinstitt@google.com>, Kevin Tian
-	<kevin.tian@intel.com>, <linux-doc@vger.kernel.org>,
-	<linux-kselftest@vger.kernel.org>, <llvm@lists.linux.dev>, Bill Wendling
-	<morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
-	<nick.desaulniers+lkml@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, "Robin
- Murphy" <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>, "Suravee
- Suthikulpanit" <suravee.suthikulpanit@amd.com>, Will Deacon
-	<will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>, Alejandro Jimenez
-	<alejandro.j.jimenez@oracle.com>, James Gowans <jgowans@amazon.com>, "Michael
- Roth" <michael.roth@amd.com>, Pasha Tatashin <pasha.tatashin@soleen.com>,
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH v5 01/15] genpt: Generic Page Table base API
-Message-ID: <aMxg0bulOYF8HBJo@Asurada-Nvidia>
-References: <0-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
- <1-v5-116c4948af3d+68091-iommu_pt_jgg@nvidia.com>
- <aMDzLC9nV47Xvud9@nvidia.com>
- <20250915155152.GC1057776@nvidia.com>
- <aMuxUzvxQLvouG3c@Asurada-Nvidia>
- <20250918144943.GP1391379@nvidia.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RL93mThJ"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b211ccfda1dso182202666b.3
+        for <patches@lists.linux.dev>; Thu, 18 Sep 2025 12:58:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758225496; x=1758830296; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9McvDjxp1cOQ8m8DQ7zr8KAOkClRv+R613f7KwPZqLk=;
+        b=RL93mThJU8b7zEA77/e343JwHhgIcIDild9DqYLWBT/2lWPAJVQm9qnxHV0U+SDcZD
+         eesu0m2kmelXZUsnL85EarFKrW9l4TVVKSvdyJwLqaM84tSgwMVfqJgsgS3CdeItaJF4
+         TfO+R3wRqmVZi/tWwKDfIAQKThvc2zj0n0HOoESh0asjaEucL2Lpm6NId8EY1SGubUVt
+         41VIy2OYhFUe8FYG7C/T6ly506C05X+Gsggc2ihjWsJwP+igo5sefV28jhVnVwlkl1pT
+         T0zSNv+8yOxccrNR9/CkGhHVoy6lAIxTZ1fV+iVYe7OU+EFdvtFa7ZCV4U9SxmuCP17/
+         4zYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758225496; x=1758830296;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9McvDjxp1cOQ8m8DQ7zr8KAOkClRv+R613f7KwPZqLk=;
+        b=cdbUEHUonKhjQ3HeO94LyUoxeawKo+HxCmBp5O9OPPMKPXOc2abkYY5PQx4V8ffTgp
+         DrTfmfunyoEmK0U+YV+/54ahBwrvofraDhIV5H8EJMDoA8zi3UOT1/v/n98hEo3Qp1iu
+         zKDyjIjBsPPbHxDmLRPZPdhw3+5Cdj0OHfXSGULZffMyzabod/TeJWwAYbG2HCY9AyVP
+         LkvC4Y4HnadSM4rkwabTrjjx8Wf3/W96ZFUUcxztPXNgGvBh91e99QOxIO1MY1YukV7l
+         a+GI5+NOpe2m1+4GEo6Wvxou14uSHci7+lIcwAjphiSQ7d1HFqo2lqRe0y4Aa2QODH8a
+         pMNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUXdkh/D/M+VXCbKs/qUeyBwHyOobFj9dquu6aVh1fzcPRqr4Fp6ovT1XKeNjmVyQOGxTrB8DYz@lists.linux.dev
+X-Gm-Message-State: AOJu0YwmwGpikKwdfSSS3P92VDCjwBbaJcIBuRMVANO9dh8xoyPTT/4S
+	EMM3Laz85V/hfjabfn6Q44ll+rgtZkLMmCmvu3F+YOGyc39nCQuZf5qR
+X-Gm-Gg: ASbGncvSmmK6e8MkJiCaXZd6xsxQJiCpcLI86RBE4uSd/i8JCUXICpYdR2mcyh5MlIS
+	m7+l2Kg+BiDzx2GxgaWNI5RUp2Bb8tLaaW293gK6ACyETuvwsVP/G0DTAG01gesQbPbFAEit4w/
+	TysWScnLFtxnf0Zt/3w0wz6kgJxUNZsblvqzgOAWIcQVfAMZrCkxfB7sq6ZpYpmLDBc3GWqcAVx
+	WHD5scGVxb4tkeCrW8N0AO7nUMxOs695XAcAkE0QH/BUGMrXGrdp3kS49u48mdK6DrmZkMro6pp
+	QwamOe0P47kmndIz4fM1hw6GegzC5B2KGl3yJNCkD9FL/KE5y7oGh7L8Z8hmoMPYLwkvnr9cbGx
+	HF0c/O5BAtOOVDr1YbFkllwi7eZfOLIiKynvCFA==
+X-Google-Smtp-Source: AGHT+IH2NBu6L+bASXNqg9sJUcZ42MFCB2aqzEFiqoDEW6um54A4CtHcJnO37auTgFbi6nwycKDm8A==
+X-Received: by 2002:a17:907:a089:b0:b19:969a:86 with SMTP id a640c23a62f3a-b24f35aa177mr45885966b.37.1758225496090;
+        Thu, 18 Sep 2025 12:58:16 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b1fd1101c44sm264530466b.82.2025.09.18.12.58.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Sep 2025 12:58:15 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: nschichan@freebox.fr
+Cc: akpm@linux-foundation.org,
+	andy.shevchenko@gmail.com,
+	axboe@kernel.dk,
+	brauner@kernel.org,
+	cyphar@cyphar.com,
+	devicetree@vger.kernel.org,
+	ecurtin@redhat.com,
+	email2tema@gmail.com,
+	graf@amazon.com,
+	gregkh@linuxfoundation.org,
+	hca@linux.ibm.com,
+	hch@lst.de,
+	hsiangkao@linux.alibaba.com,
+	initramfs@vger.kernel.org,
+	jack@suse.cz,
+	julian.stecklina@cyberus-technology.de,
+	kees@kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-alpha@vger.kernel.org,
+	linux-api@vger.kernel.org,
+	linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-block@vger.kernel.org,
+	linux-csky@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	linux-efi@vger.kernel.org,
+	linux-ext4@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-hexagon@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-m68k@lists.linux-m68k.org,
+	linux-mips@vger.kernel.org,
+	linux-openrisc@vger.kernel.org,
+	linux-parisc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-s390@vger.kernel.org,
+	linux-sh@vger.kernel.org,
+	linux-snps-arc@lists.infradead.org,
+	linux-um@lists.infradead.org,
+	linuxppc-dev@lists.ozlabs.org,
+	loongarch@lists.linux.dev,
+	mcgrof@kernel.org,
+	mingo@redhat.com,
+	monstr@monstr.eu,
+	mzxreary@0pointer.de,
+	patches@lists.linux.dev,
+	rob@landley.net,
+	safinaskar@gmail.com,
+	sparclinux@vger.kernel.org,
+	thomas.weissschuh@linutronix.de,
+	thorsten.blum@linux.dev,
+	torvalds@linux-foundation.org,
+	tytso@mit.edu,
+	viro@zeniv.linux.org.uk,
+	x86@kernel.org
+Subject: Re: [PATCH RESEND 00/62] initrd: remove classic initrd support
+Date: Thu, 18 Sep 2025 22:58:06 +0300
+Message-ID: <20250918195806.6337-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20250918152830.438554-1-nschichan@freebox.fr>
+References: <20250918152830.438554-1-nschichan@freebox.fr>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250918144943.GP1391379@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000075EF:EE_|PH7PR12MB7453:EE_
-X-MS-Office365-Filtering-Correlation-Id: 162e5e26-c93c-4e95-c0a1-08ddf6eba7df
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|376014|7416014|36860700013|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ieFqYqReNECdSp8mKXBuqxv4RfVNkBKTwwD5QCbKw1BKmypih6S0FK2ImcZy?=
- =?us-ascii?Q?MrVrxslJH9Q2w4raFtkNkcWUzJD3CTF768nS+e+4nEgnbJVWc2H1ZJk0fCZo?=
- =?us-ascii?Q?QQXPplvesoZNtSRPitvQoN0vIkoebUqZSSnr1nIIXGz3I5xqdL6rwqnbegsO?=
- =?us-ascii?Q?BLlN0XLelHLoniVsH3iqgvwhybXJX8yHAHyXwx2GuArjsqTsIc2UO+iysywT?=
- =?us-ascii?Q?gjnxYk0FSD4EJ6zkSTs87TG88d3U5lvJKvI8herD3C+fcI62y8yROZTXKafl?=
- =?us-ascii?Q?LQGLANa8EUGer0HwccWCnfCWNwB0SMluSaW/qkXWAAQ3YEhE5IvSJ6KiNorh?=
- =?us-ascii?Q?fyonUqD70ZGWDufPeWyj3PhDEYqQ+f2vVA29ehxsWajv3AhxI5JtKBGQGipg?=
- =?us-ascii?Q?8tJDoYiuS7epoBbmqe+mSWC2sR3efo6YUkP6gifA1K/RoAEt3N5duorpiroD?=
- =?us-ascii?Q?sM8y+KIBUzjuUatPGMcssufa9MQqp9KID1WHpl8TYw5W2mOnofHWDSODhRiC?=
- =?us-ascii?Q?j4fWsvSGdw3M4DASOP4GiZtNmKgBnevg9nh5XeSyWkpF1+8YrvfT9bg0x4ll?=
- =?us-ascii?Q?EsZjqwl7XVuloJiwNt4LFG7SHtVSV5rhi7MpVORVb/ieDtn3LXKhzB0Q4CKm?=
- =?us-ascii?Q?j23roJTIG4bpltsRVxpfCl2Ec3BLsoSTv0tX1bb0GxvHpshkM5+mPUosH8Jw?=
- =?us-ascii?Q?ZVio0+3O40orJ7AXl/Yl2TC+YCyFpdKCn2JsDJQLVF31xSycEYTaneKa0c1N?=
- =?us-ascii?Q?xZndoFlinRoLJkBLZleTnJ/V//21mabemvsyLGjHwU7eH6MXxSDttt7Sedxi?=
- =?us-ascii?Q?FXYU8owrv8M0Rjjzmf/4+BHHNsAcfANWCEww72aCrT1v1WQJ9NN5JttxO7i4?=
- =?us-ascii?Q?Vap+Tb+O3JlxeTPLGW2/ejyexQZkJOJ3CzRJEnqXLcNR/tOpvi3PIMgaSmc/?=
- =?us-ascii?Q?r3zHBxIYfp/Vfz1qm4gVpMEoMJLCIVpJ7sisPbQnWbzfsxZQ6FSqH4X3vd7K?=
- =?us-ascii?Q?HjVZJ6FCMjcLyINwc69J2/XC/kv7T6WJ9Hp3detffM/mw/b4xB0vd9kW8syB?=
- =?us-ascii?Q?GcgSYy2d28zYK1GERl6i9U3oxg4Xs41rW6rro6QFuqKdIRPHnjwLncIzdPrr?=
- =?us-ascii?Q?qk+dDymdmrwIX2wORXUVNPtywf04jn+1i/4B04WC3kuoJ2qp2SuM/LHEJqGO?=
- =?us-ascii?Q?ZW9w+Z7QGe5j35zhEAzsGaCHCNs3Xe+5BAOR1tNVUT/8eZ92OoLv5yPqvxhf?=
- =?us-ascii?Q?e6vMBZPkYRRMJ1swiDpqM94/f0TqyP+aSshzzpXrPvnepCvjW/ap27kWwUx4?=
- =?us-ascii?Q?cvdgGTsA8Xyoc3DpEW8oW5MLIcLl4oUOAiKqP+OAHRMNN9JDDe1gmC7gKjgQ?=
- =?us-ascii?Q?DPv7kmno9jrzaFdoKMNcUJs4huYKFbGzdD/3zXiCu56YTfT5Ow4JOcRofm9v?=
- =?us-ascii?Q?XvrnqUE8I54i+zatJGp0G/BmzLWhk19gxu2VqOjLj1QTj50kv0kGL3BhGMFv?=
- =?us-ascii?Q?YnKnszwlf2Ev1CseM+s+g5lhpRevUuu69Ddt?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2025 19:43:34.9748
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 162e5e26-c93c-4e95-c0a1-08ddf6eba7df
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CO1PEPF000075EF.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7453
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 18, 2025 at 11:49:43AM -0300, Jason Gunthorpe wrote:
-> On Thu, Sep 18, 2025 at 12:14:27AM -0700, Nicolin Chen wrote:
-> > > > Then, the "entry" sounds like a physical (v.s. "logical") table
-> > > > entry, e.g. a PTE that we usually say?
-> > > 
-> > > I choose entry because it is related to PTE and in most cases you want
-> > > to work on the entries. The replication of entry to item is somewhat
-> > > hidden.
-> > > 
-> > > From a HW perspective the TLB should be loading entries.
-> > 
-> > In that case, "entry" should be a single "physical" element v.s.
-> > "logical", right? Because that's what HW/TLB physically loads.
-> 
-> I would say HW/TLB loads logical entries when it supports
-> contiguity. It read a single table item and expand it to the larger
-> TLB "entry".
+> When booting with root=/dev/ram0 in the kernel commandline,
+> handle_initrd() where the deprecation message resides is never called,
+> which is rather unfortunate (init/do_mounts_initrd.c):
 
-Oh, I got wrong. Thanks for elaborating.
+Yes, this is unfortunate.
 
-"item" is a PTE and "entry" is a group of items/PTEs that set the
-CONTIG bit. TLB loads all those items/PTEs and combines them into
-a single TLB "entry".
+I personally still think that initrd should be removed.
 
-It seems difficult to define which one is physical or logical, as
-both "item" and "entry" physically exist in page table and in TLB
-respectively.
+I suggest using workaround I described in cover letter.
 
-Nicolin
+Also, for unknown reasons I didn't get your letter in my inbox.
+(Not even in spam folder.) I ocasionally found it on lore.kernel.org .
+
+-- 
+Askar Safin
