@@ -1,126 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8089E1607AC;
-	Thu, 18 Sep 2025 15:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4010230DEC8;
+	Thu, 18 Sep 2025 15:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758208058; cv=none; b=vC/fq12ScbsdzSJ9sLs0vIzguqZsjsZ8jJERLzhV+uP3I950VSWRLkfq90kjAtO2IbcEq3u+JTP8ZxwIo/2D/iaxJLyswab9mFoFfYgDQdfjgviVKXe+jq/LdZEGP/mllUoyxMjNT8bR7T/skq9jMAoG06WW6Km4Ldm7AwGHC2I=
+	t=1758209387; cv=none; b=Xnbbi1cIxfvhanPpZwMydvsJy0o1rwYHuCtKdn9AOyQ0488groAaSGfcAHoU+jHnyLdThkAKWP9QCQMADffJMZUktxd85ovcrPP1GkHn5v3tKDDy4yiZ2Yw/XmtR680cM6Z6cnEEW+sfSUmfwoFRVXaxjU1S+Ou9A58oamFhtkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758208058; c=relaxed/simple;
-	bh=sW/npsoqVvH2jZ1iYFeywDG41QnbgIzfrJf90iHIx94=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eYNuEjCN9+jJskTHbs4XDGmPeKXXXaiW5hh2KJ8LgwellK4VtkyC+P96X+4e8gA4bH0Dja1NqyfhvBApY4kvVMCw69FXZ9n/BP3//g0EPlBvILyyQ8lkp/bnQY+AI1FmOJ3YxlZ0gwRTeAHecT4o1J1HNjqSdz+7Qkn/ktQ0z08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kwZnl0bg; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kwZnl0bg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD3CC4CEEB;
-	Thu, 18 Sep 2025 15:07:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758208057;
-	bh=sW/npsoqVvH2jZ1iYFeywDG41QnbgIzfrJf90iHIx94=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kwZnl0bgzIv5G9GpaNIDQbuvO9HddfBAxifrvDjM5Ugs42X76RrBv51TpbdZm5Y1L
-	 mHQv8IAwm4Xd7QqDtWeChSyd0hXizLPuB2fIG09/9z0/ttqtVToJnG0xDvM7xZQN0y
-	 m2pRwIJx1HdEaHaPQRUPdlZi+AeKJfLhgt5uRqabPJ95o3Ib7FYa3KR/mz++sX1Lka
-	 ouGGsFcEH95nRzAxLtCilfOwp6ls1KG4xphq5ucvhDweyDOeUjwEszovJaqSF1pTVe
-	 1JVb1CKf7Cti5yxGTvJENeZRlV2K3Kjermk5ncw0x/qepBF3oLDwfHUQsk+YORmcjv
-	 fkxEbB7s/6Ojg==
-Date: Thu, 18 Sep 2025 16:07:27 +0100
-From: Simon Horman <horms@kernel.org>
-To: Tariq Toukan <tariqt@nvidia.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, linux-rdma@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Gal Pressman <gal@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>, Will Deacon <will@kernel.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Justin Stitt <justinstitt@google.com>, linux-s390@vger.kernel.org,
-	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
-	Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Salil Mehta <salil.mehta@huawei.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
-	Yisen Zhuang <yisen.zhuang@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
+	s=arc-20240116; t=1758209387; c=relaxed/simple;
+	bh=1E1TtPIzWv3UVjPPN5oafjjL60AY6+jP9kR4QCfSNnU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=aekfZfnoRhpySr9OiVBGU1wFEGfWNM4pJAgQXrp4Sw37L1dglz2RlqJORGZhb/mOmlzgGq/5rt/4/imTx+6kKDJFi9f4psacqXD49ECuwJXNfy/yuNQfT7kg48B8Tz3VYU27V8e/xCxQ7UNPK3dMroY9jSnnzuYQ4h1xbci/UHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=fail smtp.mailfrom=freebox.fr; arc=none smtp.client-ip=212.27.42.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=freebox.fr
+Received: from daria.iliad.local (unknown [213.36.7.13])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 179252003FC;
+	Thu, 18 Sep 2025 17:28:31 +0200 (CEST)
+From: Nicolas Schichan <nschichan@freebox.fr>
+To: safinaskar@gmail.com
+Cc: akpm@linux-foundation.org,
+	andy.shevchenko@gmail.com,
+	axboe@kernel.dk,
+	brauner@kernel.org,
+	cyphar@cyphar.com,
+	devicetree@vger.kernel.org,
+	ecurtin@redhat.com,
+	email2tema@gmail.com,
+	graf@amazon.com,
+	gregkh@linuxfoundation.org,
+	hca@linux.ibm.com,
+	hch@lst.de,
+	hsiangkao@linux.alibaba.com,
+	initramfs@vger.kernel.org,
+	jack@suse.cz,
+	julian.stecklina@cyberus-technology.de,
+	kees@kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-alpha@vger.kernel.org,
+	linux-api@vger.kernel.org,
+	linux-arch@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	Mark Rutland <mark.rutland@arm.com>,
-	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Patrisious Haddad <phaddad@nvidia.com>
-Subject: Re: [PATCH net-next V3] net/mlx5: Improve write-combining test
- reliability for ARM64 Grace CPUs
-Message-ID: <20250918150727.GX394836@horms.kernel.org>
-References: <1758178883-648295-1-git-send-email-tariqt@nvidia.com>
+	linux-block@vger.kernel.org,
+	linux-csky@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	linux-efi@vger.kernel.org,
+	linux-ext4@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-hexagon@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-m68k@lists.linux-m68k.org,
+	linux-mips@vger.kernel.org,
+	linux-openrisc@vger.kernel.org,
+	linux-parisc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-s390@vger.kernel.org,
+	linux-sh@vger.kernel.org,
+	linux-snps-arc@lists.infradead.org,
+	linux-um@lists.infradead.org,
+	linuxppc-dev@lists.ozlabs.org,
+	loongarch@lists.linux.dev,
+	mcgrof@kernel.org,
+	mingo@redhat.com,
+	monstr@monstr.eu,
+	mzxreary@0pointer.de,
+	patches@lists.linux.dev,
+	rob@landley.net,
+	sparclinux@vger.kernel.org,
+	thomas.weissschuh@linutronix.de,
+	thorsten.blum@linux.dev,
+	torvalds@linux-foundation.org,
+	tytso@mit.edu,
+	viro@zeniv.linux.org.uk,
+	x86@kernel.org,
+	nschichan@freebox.fr
+Subject: Re: [PATCH RESEND 00/62] initrd: remove classic initrd support
+Date: Thu, 18 Sep 2025 17:28:30 +0200
+Message-Id: <20250918152830.438554-1-nschichan@freebox.fr>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250913003842.41944-1-safinaskar@gmail.com>
+References: <20250913003842.41944-1-safinaskar@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1758178883-648295-1-git-send-email-tariqt@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 18, 2025 at 10:01:23AM +0300, Tariq Toukan wrote:
-> From: Patrisious Haddad <phaddad@nvidia.com>
-> 
-> Write combining is an optimization feature in CPUs that is frequently
-> used by modern devices to generate 32 or 64 byte TLPs at the PCIe level.
-> These large TLPs allow certain optimizations in the driver to HW
-> communication that improve performance. As WC is unpredictable and
-> optional the HW designs all tolerate cases where combining doesn't
-> happen and simply experience a performance degradation.
+Hello,
 
-...
+> Intro
+> ====
+> This patchset removes classic initrd (initial RAM disk) support,
+> which was deprecated in 2020.
 
-> Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-> Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-> Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-> Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-> ---
->  drivers/net/ethernet/mellanox/mlx5/core/wc.c | 28 ++++++++++++++++++--
->  1 file changed, 26 insertions(+), 2 deletions(-)
-> 
-> Find V2 here:
-> https://lore.kernel.org/all/1757925308-614943-1-git-send-email-tariqt@nvidia.com/
-> 
-> V3:
-> - Move the new copy assembly code to be inline, within the same file it
->   is used.
-> - Use ".arch_extension simd;\n\t" to avoid the need for separate file
->   and special compilation flags.
+This serie came a bit as a surprise, because even though the message
+notifying of the initrd deprecation was added in July 2020, the message
+was never displayed on our kernels.
 
-Hi Tariq, Patrisious, all,
+When booting with root=/dev/ram0 in the kernel commandline,
+handle_initrd() where the deprecation message resides is never called,
+which is rather unfortunate (init/do_mounts_initrd.c):
 
-This is not a full review - although I've been following this patch with
-much interest, I don't feel qualified to provide one.
+	if (rd_load_image("/initrd.image") && ROOT_DEV != Root_RAM0) {
+		init_unlink("/initrd.image");
+		handle_initrd(root_device_name); // shows the deprecation msg
+		return true;
+	}
 
-But what I can do is be the poor soul to report that unfortunately
-the patch doesn't compile against net-next. So at some point it will
-need to be rebased and reposted.
+It is likely we are not the alone booting with that particular
+configuration, so other people are probably going to be surprised when
+initrd support is removed, because they never saw the deprecation
+message.
 
-Thanks for your persistence on working on this, it is indeed a nettlesome issue.
+We do depend on initrd support a lot on our embedded platforms (more
+than a million devices with a yearlyish upgrade to the latest
+kernel). If it eventually becomes removed this is going to impact us.
+
+We use an initrd squashfs4 image, because coming from a time where
+embedded flash devices were fragile, we avoid having the root
+filesystem directly mounted (even when read only) on the flash
+block/mtd device, and have the bootloader load the root filesystem as
+an initrd.
+
+We use a squashfs4 because we can mount it and keep it compressed. The
+kernel would decompress data on demand in the page cache, and evict it
+as needed.
+
+Regards,
 
 -- 
-pw-bot: changes-requested
+Nicolas Schichan
