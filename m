@@ -1,99 +1,105 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E83245019
-	for <patches@lists.linux.dev>; Sun, 21 Sep 2025 09:28:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83F7226CFC;
+	Sun, 21 Sep 2025 09:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758446888; cv=none; b=IV8wDCV0Efu46+2OKu40tjIQKEXsIKwSJFufhp2pnniRmHYruGnGg5kUZcQ8QeD38SlEA/dxIciPUsZrmgQ3hMjk3Itj1Jc+JC7mpyH5jxDBo7SxBCEjYQ0mUIDNhFReCedBfYfySOfiL6e7JhZM0V21dWDjA0EKq4Ok0pqZtCM=
+	t=1758448463; cv=none; b=ppZiTJ9dGgA/rAJ5lOj/YxRRTBuVdCOvhpNG0xmmJ1TCEIjX7fuH3H7NnIx4rr0ZKNyAg6XbGoETzoZr325/2RH0uRQT1TZ2gwwqCpMhnL71PaL7O1GnaXOhcQqCEMHBt+SLHifiWCREISUa+c8oUzzegzIVl9qvb046hHPIwF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758446888; c=relaxed/simple;
-	bh=EtvX6spi3ViWv5XUhchmyhouze8VNd54v4OZj5G0rRs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sNKxLDUZVJH/cqk3UfHII65tGPrKmK5j2ChEpWuvnKzjZXQwrBT2Z27aO6kQ03vnSVuUKjx8wd+lMWxG5u4iLVFC6nOHBmr41MmqLBrMmRixEi1OAfxKWjNAehDW2YG7VF3Mx1iiB+l+XT8yzHb8pFFdkE9AX0MU0tAb3ZZpuno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cfbjtaas; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1758448463; c=relaxed/simple;
+	bh=S9kFNiU/TsLMpGfbfyUN6IbULHvch78ajpEs1fk0n14=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=aIvZ25hOzF5P+MoIS534frx+rb/usG3KlnMTkwzVrjQSy4kRJYSxZk5Ni7V3wbTF3dgki66Jvqb94Qpt3BYBoxetqkpuE89hUjSTz0nGudSXir4k2dpuNa9Z4F/ZUkyIHnZgFBWjH9qy8vpoHHuWhpy1PbuM+G/Qugp0kowBDW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Vh4B41k6; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cfbjtaas"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-267fa729a63so6468215ad.3
-        for <patches@lists.linux.dev>; Sun, 21 Sep 2025 02:28:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758446886; x=1759051686; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EtvX6spi3ViWv5XUhchmyhouze8VNd54v4OZj5G0rRs=;
-        b=Cfbjtaas6+tC5n3Hg9PmgxXZwa020JMPbgXHdbH6Wg9Qs/eHr5s4x+oyQHZAFAC+4Z
-         /t4dLOT4rTK8AwM7YV9UrrZZoj9Vb1Gaphap3tP9O3Ow295LA90B3zl8wzvZusSHAYO+
-         YYyZCrXoqWtBF9spb8eSlhu8GR5X5aOR+/OJLZr8kgD/11Yjwa3DM/g4r96Q71CSpnd+
-         EM7r8Tcen4ucxoZkaSSrw9mQDwLip70I+nsZ/bdizLPOZjqtbi2xWvhVFSwzrqNhBmNF
-         Zf+wqKsM8vOS4NWWDaGGyiWHbZEJMGGvMkBhDijNy3mdnHyg8mrXDHnfh5msoKP33dK3
-         dY4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758446886; x=1759051686;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EtvX6spi3ViWv5XUhchmyhouze8VNd54v4OZj5G0rRs=;
-        b=kc+v8wjs2Qk59pOb3+pu65SgnmYXQEHjRwlPVqCZ3a8jSg/xznJ2+1Mb98eP4PpEDt
-         hl1Q7RpY1Tm88/kt9SPF6oySzIMV6VBTleQgmF6d2+867WrHmk+KfG1aEiriEx+w3sze
-         NIDNm8njpnXFYqQ34+FA2wDTb6Ax77SeuUEbb+Krhs2k03RPGPnZCuoCIzCsHn5TTRqD
-         I3o91RG0vs/oIeVuXNJrW8ebL3LZP6XxatLq+6c0CzMnoX0iYw2ee1AF2iYwUZ9zZMKl
-         8g71QPfNGs2pi+talnSA1v1TCQcooDci4SYK+EmWQLwbIHI4PUpOvU3HOKlq/oF6Oukb
-         pXJw==
-X-Forwarded-Encrypted: i=1; AJvYcCXcXJy5g3gPp7aifZ485ZkF2sbRqp36TxW341bZu6ysIY9jqL8OkL9vhfokbk8Ed9zLY4R+B9GR@lists.linux.dev
-X-Gm-Message-State: AOJu0YytPDraBQLyrylYNsjrhctvL2OjVGyXCuYr/l1LWW/cPg1ykg3v
-	Zdntn6oo949A3q2QSxaDnqkcR4LVCJr34+rJW3R4X6VdLcpb3UyIotVWrY5HDmJSZnCyf3uBS7d
-	hUrh9i+BKQE0c3nEYh26GUX9M3wrNyF0=
-X-Gm-Gg: ASbGncvRPrBU6ZsA7aoQpdFWJuqw/riNYoSuXy8+QcXSL0W3aCaelw9YGmt+BGB9Era
-	WNpIJmpQG6oeQLQ2gvJ/GRO6v3O0SKKDMX9B4JYegp16DC8tPOsBgHUkHtB0OtVLoCHGoAOXRlA
-	68/2yl8LayfSOX75PY2WyntrSboPd2+vfK3PlTPyAxTahEzrbswLY8x6F4JWclJGRgIj9Y7K48E
-	8vRuhqdgJbCujHaObGsRXEiSUA+fFowrbK5VZgqEOvRsg3kOzmhWJ85FZRQBh/FzD5vVW4hHI3r
-	SADC6eQzN0cBcDuPYyna8xBTTg==
-X-Google-Smtp-Source: AGHT+IF+Dy0mlMIwczvjkrGSGBlKSHADOTMAlhPepZLysPmcUI5cC7xm/X9KEYN0oiR+8lSYpv07g4tim48igZ6n/UI=
-X-Received: by 2002:a17:903:60f:b0:269:af66:5e70 with SMTP id
- d9443c01a7336-269ba53ab71mr45154625ad.9.1758446886509; Sun, 21 Sep 2025
- 02:28:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Vh4B41k6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1758448462; x=1789984462;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=S9kFNiU/TsLMpGfbfyUN6IbULHvch78ajpEs1fk0n14=;
+  b=Vh4B41k6nT4IpMJa8wKvHCbOzcUip8uUZEp3ccgXXEdZx6VaQImAYqfL
+   J7+ymgDG/ykyNheE5IIb7reeNuyt39F6xJMEV8jY8mlqk/Gu6nl2EOvS1
+   luvEPgfTsOB4gb27BjLhfFwcE6E3pFEh1hz/SkQfyM/vJsYr+wLjrHkgm
+   gafcIRGRQ6ES0DeW76FcEuoh7icX+pmedP41DdHdeXFxDtuvrQXLQIEtK
+   3HLQaUVxbWYT8tkPLMLTtjQTr8sTYytQTV9g1Bfy7P3FCvHxw59hf8hBM
+   iU/maphny1ePDMAHXcsOqIzh7By/ZXnD6OOTYKFdNQXOtI/xUpjfIJ/hc
+   A==;
+X-CSE-ConnectionGUID: J5PncKIZTMCY3kYHULnmdg==
+X-CSE-MsgGUID: wHl2tzYDSUKDDFGIjmcS2w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="64560106"
+X-IronPort-AV: E=Sophos;i="6.18,283,1751266800"; 
+   d="scan'208";a="64560106"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 02:54:21 -0700
+X-CSE-ConnectionGUID: EH5qZSVTQa6hMI3rPZ1rvA==
+X-CSE-MsgGUID: tdoI1qJKQqKvqysxpo5CSA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,283,1751266800"; 
+   d="scan'208";a="177039600"
+Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.235.53]) ([10.124.235.53])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 02:54:19 -0700
+Message-ID: <debe1f51-e070-4efe-b88d-5111df9c9874@linux.intel.com>
+Date: Sun, 21 Sep 2025 17:54:01 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250910140212.997771-1-ojeda@kernel.org>
-In-Reply-To: <20250910140212.997771-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 21 Sep 2025 11:27:52 +0200
-X-Gm-Features: AS18NWAoOU3I-I-O4oc7FCAYxbAppgw72ctHtbKu_NpY6kqn7EZ9tMfGQmUs_fs
-Message-ID: <CANiq72kB5hCC9A9bXEx489E+SMMFcFMiJB68NHA7megz2aG5HA@mail.gmail.com>
-Subject: Re: [PATCH] rust: maple_tree: fix intra-doc link
-To: Miguel Ojeda <ojeda@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-Cc: "Liam R . Howlett" <Liam.Howlett@oracle.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Alice Ryhl <aliceryhl@google.com>, Andrew Ballance <andrewjballance@gmail.com>, 
-	maple-tree@lists.infradead.org, linux-mm@kvack.org, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Cc: baolu.lu@linux.intel.com, Kevin Tian <kevin.tian@intel.com>,
+ patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
+ Wei Wang <wei.w.wang@intel.com>
+Subject: Re: [PATCH v2 01/10] iommu/pages: Add support for a incoherent IOMMU
+ page walker
+To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+References: <1-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <1-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 10, 2025 at 4:02=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Andrew: as usual, please feel free to rebase if that is what you
-> normally do, of course. This was in next-20250910. Thanks!
+On 8/27/2025 1:26 AM, Jason Gunthorpe wrote:
+> Some IOMMU HW cannot snoop the CPU cache when it walks the IO page tables.
+> The CPU is required to flush the cache to make changes visible to the HW.
+> 
 
-(Somehow I didn't Cc akpm -- doing it now.)
+nit: how about make the subject like this,
 
-Could this be picked up? It blocks generation of docs for linux-next. Thank=
-s!
+iommu/pages: Add support for incoherent IOMMU page walkers
 
-By the way, there was a rebase -- the tag should now be:
+?
 
-Fixes: 6a25c101c7a2 ("rust: maple_tree: add MapleTree")
+> Provide some helpers from iommu-pages to manage this. The helpers combine
+> both the ARM and x86 (used in Intel VT-D) versions of the cache flushing
+> under a single API.
+> 
+> The ARM version uses the DMA API to access the cache flush on the
+> assumption that the iommu is using a direct mapping and is already marked
+> incoherent. The helpers will do the DMA API calls to set things up and
+> keep track of DMA mapped folios using a bit in the ioptdesc so that
+> unmapping on error paths is cleaner.
+> 
+> The Intel version just calls the arch cache flush call directly and has no
+> need to cleanup prior to destruction.
+> 
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> ---
+>   drivers/iommu/iommu-pages.c | 117 ++++++++++++++++++++++++++++++++++++
+>   drivers/iommu/iommu-pages.h |  45 +++++++++++++-
+>   2 files changed, 160 insertions(+), 2 deletions(-)
 
-Cheers,
-Miguel
+For the helpers and their implementation for the VT-d driver,
+
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+
+Thanks,
+baolu
