@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83F7226CFC;
-	Sun, 21 Sep 2025 09:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA491C01;
+	Sun, 21 Sep 2025 10:21:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758448463; cv=none; b=ppZiTJ9dGgA/rAJ5lOj/YxRRTBuVdCOvhpNG0xmmJ1TCEIjX7fuH3H7NnIx4rr0ZKNyAg6XbGoETzoZr325/2RH0uRQT1TZ2gwwqCpMhnL71PaL7O1GnaXOhcQqCEMHBt+SLHifiWCREISUa+c8oUzzegzIVl9qvb046hHPIwF8=
+	t=1758450115; cv=none; b=OJBuS7wVvNRiqGCxpENdH00RZszyeeMFZrODjy7RcpwKAlaKCkhV9CEZhK5/sEEoFncs8p3GEhtGSNxA6JK20uWxPmH238cfe0PboxaVhMpjMcODBnztdiPCatVBAgSZZVEl6MW/MKTUza5fN39iLKjsR9LAGOry1MtOLwBixjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758448463; c=relaxed/simple;
-	bh=S9kFNiU/TsLMpGfbfyUN6IbULHvch78ajpEs1fk0n14=;
+	s=arc-20240116; t=1758450115; c=relaxed/simple;
+	bh=odjqz9lqqnCoNlE22G131J95/VTke+fpRqKgVwfVKQA=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=aIvZ25hOzF5P+MoIS534frx+rb/usG3KlnMTkwzVrjQSy4kRJYSxZk5Ni7V3wbTF3dgki66Jvqb94Qpt3BYBoxetqkpuE89hUjSTz0nGudSXir4k2dpuNa9Z4F/ZUkyIHnZgFBWjH9qy8vpoHHuWhpy1PbuM+G/Qugp0kowBDW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Vh4B41k6; arc=none smtp.client-ip=192.198.163.12
+	 In-Reply-To:Content-Type; b=C01oqcHU2ANEa0X2n67+Nvk0DY0Ih0MDw/85tT4jc/CAGe/XyigoGVdm/Kiti7mW0S2il56SWg3FxSB6DRA3qfL1Ki3ZMzeB8i1TG8jC8Lv4/QihUp4LFsbv9ECIMkwxX4UOmMxXA6dNkftSnz7Og+jFopXE2sKEWIyzlcW5/3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HCwDN/Sy; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Vh4B41k6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HCwDN/Sy"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758448462; x=1789984462;
+  t=1758450113; x=1789986113;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=S9kFNiU/TsLMpGfbfyUN6IbULHvch78ajpEs1fk0n14=;
-  b=Vh4B41k6nT4IpMJa8wKvHCbOzcUip8uUZEp3ccgXXEdZx6VaQImAYqfL
-   J7+ymgDG/ykyNheE5IIb7reeNuyt39F6xJMEV8jY8mlqk/Gu6nl2EOvS1
-   luvEPgfTsOB4gb27BjLhfFwcE6E3pFEh1hz/SkQfyM/vJsYr+wLjrHkgm
-   gafcIRGRQ6ES0DeW76FcEuoh7icX+pmedP41DdHdeXFxDtuvrQXLQIEtK
-   3HLQaUVxbWYT8tkPLMLTtjQTr8sTYytQTV9g1Bfy7P3FCvHxw59hf8hBM
-   iU/maphny1ePDMAHXcsOqIzh7By/ZXnD6OOTYKFdNQXOtI/xUpjfIJ/hc
-   A==;
-X-CSE-ConnectionGUID: J5PncKIZTMCY3kYHULnmdg==
-X-CSE-MsgGUID: wHl2tzYDSUKDDFGIjmcS2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="64560106"
+  bh=odjqz9lqqnCoNlE22G131J95/VTke+fpRqKgVwfVKQA=;
+  b=HCwDN/Sy2eKv6zF0mGXcgrdbqvpuOWPaSlvB4LH90sdujThFTVjEsrkA
+   u+1dz80EfOEYdyqb5065B/k8yViYLWgrxdVfIs0/aZw93IVpcpzejTYIF
+   PeUf0mtgiG3ufhiQYvT8VUPQOyh7tgWAzjFXmFyEz6z+kSXAIghLqb2nm
+   cFnpZzCVHnjNIXrpngx9lI9mmJmP0NHF1tfhlG/itOttRwIjSQ5MjFDZ+
+   sZi/dRD86/64qOAEQeOh3H2p9LAlvXeBEWyfe+gHKOr323hOTOK9fqRR8
+   lT91t5+1GsYMGdj5eG8SkLvuTWZgmsuDQ6dkkO6zqRr+AKE9fG8wq02Uy
+   w==;
+X-CSE-ConnectionGUID: 7hJMsy4mR/SJtU568315mQ==
+X-CSE-MsgGUID: olhTPbVuSHWllBTLxO6/0g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="71364571"
 X-IronPort-AV: E=Sophos;i="6.18,283,1751266800"; 
-   d="scan'208";a="64560106"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 02:54:21 -0700
-X-CSE-ConnectionGUID: EH5qZSVTQa6hMI3rPZ1rvA==
-X-CSE-MsgGUID: tdoI1qJKQqKvqysxpo5CSA==
+   d="scan'208";a="71364571"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 03:21:52 -0700
+X-CSE-ConnectionGUID: lbTwN54LRoOEbeT0ALzzAg==
+X-CSE-MsgGUID: h0RVhgFGS6CDzK7/LdvtZA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.18,283,1751266800"; 
-   d="scan'208";a="177039600"
+   d="scan'208";a="181497049"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.235.53]) ([10.124.235.53])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 02:54:19 -0700
-Message-ID: <debe1f51-e070-4efe-b88d-5111df9c9874@linux.intel.com>
-Date: Sun, 21 Sep 2025 17:54:01 +0800
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 03:21:50 -0700
+Message-ID: <1735e8c7-bfda-4765-a2eb-4498cd68c735@linux.intel.com>
+Date: Sun, 21 Sep 2025 18:21:48 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,51 +55,28 @@ User-Agent: Mozilla Thunderbird
 Cc: baolu.lu@linux.intel.com, Kevin Tian <kevin.tian@intel.com>,
  patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
  Wei Wang <wei.w.wang@intel.com>
-Subject: Re: [PATCH v2 01/10] iommu/pages: Add support for a incoherent IOMMU
- page walker
+Subject: Re: [PATCH v2 02/10] iommupt: Add basic support for SW bits in the
+ page table
 To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
  iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
  Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-References: <1-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+References: <2-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <1-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+In-Reply-To: <2-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 8/27/2025 1:26 AM, Jason Gunthorpe wrote:
-> Some IOMMU HW cannot snoop the CPU cache when it walks the IO page tables.
-> The CPU is required to flush the cache to make changes visible to the HW.
-> 
-
-nit: how about make the subject like this,
-
-iommu/pages: Add support for incoherent IOMMU page walkers
-
-?
-
-> Provide some helpers from iommu-pages to manage this. The helpers combine
-> both the ARM and x86 (used in Intel VT-D) versions of the cache flushing
-> under a single API.
-> 
-> The ARM version uses the DMA API to access the cache flush on the
-> assumption that the iommu is using a direct mapping and is already marked
-> incoherent. The helpers will do the DMA API calls to set things up and
-> keep track of DMA mapped folios using a bit in the ioptdesc so that
-> unmapping on error paths is cleaner.
-> 
-> The Intel version just calls the arch cache flush call directly and has no
-> need to cleanup prior to destruction.
+> SW bits can be placed on items, including table entries, single OA's and
+> individual items within a contiguous OA. They are guaranteed to be ignored
+> by the HW. The API is very basic since the only use case so far is a
+> single bit.
 > 
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 > ---
->   drivers/iommu/iommu-pages.c | 117 ++++++++++++++++++++++++++++++++++++
->   drivers/iommu/iommu-pages.h |  45 +++++++++++++-
->   2 files changed, 160 insertions(+), 2 deletions(-)
-
-For the helpers and their implementation for the VT-d driver,
+>   drivers/iommu/generic_pt/pt_common.h       | 29 ++++++++++
+>   drivers/iommu/generic_pt/pt_fmt_defaults.h | 62 ++++++++++++++++++++++
+>   2 files changed, 91 insertions(+)
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-
-Thanks,
-baolu
