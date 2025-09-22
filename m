@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D692F0C5F;
-	Mon, 22 Sep 2025 19:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E7827B320;
+	Mon, 22 Sep 2025 19:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569783; cv=none; b=JXwLQjwd+o7BMAqG0/JXcDCW+i1/xQw0yBDXfeE8WvKByuPcsD9dY3Wejv3YpE72zcSgeYvW0vugMl0tEOdU2WYkuAgo8hWhVmDIb9Y5kRH5wFwletUyCQVfv9l9Dvo8TYiaKzL6flMlsijYxHfxKswMzz43wPbRPKYL4Ooq6iU=
+	t=1758569785; cv=none; b=BQb4M2JBXRZZWHWPvQ+lCSbr4OHCuAOh0nilIok7/z1BpHAWE0o8UqvVknPINNamTIHbZgpfit/SHau8EOuHBIipPDsAl7mlha3y7KV/UnD3WYlmDL8fyaA/dLyoKHZEJEnZq5yMe6/8jO1hLRZS8GUPwrcV4KvbsqJtyW3q1O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569783; c=relaxed/simple;
-	bh=UQz0gcPY4VDAdx98vDrMCtTnSdVLv3JPd3gAtHAX+/k=;
+	s=arc-20240116; t=1758569785; c=relaxed/simple;
+	bh=aoyLESXHLG9nwBtnOkSnNqKxAJV1qwNio6hguJb5zcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgPhla9RkiVbCXsSkw4PeNyHg2fIfb1Be0H7DzeeGLP+g+OOc/1zhrwgWD6JewQAlxYJ/ZlaVN825dZfxG9vZCQKPoLonrTMKiPG+J3LxgLgwDuWTMPYo0bLWT0HD9UUhpNA+zGuLRPTnaSd5rTGRvPlWOrdKSV01f/1Wan/2/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s398r1J1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxlb9o4xamY/n9QoS0cjYkSOU4Wxy1q0InKvMIHmL0He18Ao3b8TcG/ldqy8VuyFpOKBvYlL/ezEvNJOYpKHmgXImO6Ww/X0i+1VkCEnmgCBOynL8MN5Ej/l8Ox4O5o6HjUlQNoN3hXdMMoILjptSxZHLIeBbgBP6ioN3MLO2s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8nkaA3y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s398r1J1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E63C4CEF0;
-	Mon, 22 Sep 2025 19:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8nkaA3y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937DBC4CEF5;
+	Mon, 22 Sep 2025 19:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569782;
-	bh=UQz0gcPY4VDAdx98vDrMCtTnSdVLv3JPd3gAtHAX+/k=;
+	s=korg; t=1758569784;
+	bh=aoyLESXHLG9nwBtnOkSnNqKxAJV1qwNio6hguJb5zcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s398r1J11Q12g4QH2kCm4U9bfasoRuQLGgq9zaYQReJ1dD5ayENKAO5opCXBz95n4
-	 rNBzX1LaLcUCr1rcrJTuwg74jYhlxgwNeIp9GoPo+nV4VJaY4Y1teim5iH+HhQaU/I
-	 eMx+bWwUoslNBR21DRYojep9OppqFGy/UzG7pd84=
+	b=S8nkaA3yHJfQVJtypny/0VjOl1vHFaq2TPSD+wwZgKaBS7CDJwGlmhngHwIhwR8D/
+	 rv0htWU6Ma2ot5aJLJh4+17nHfKdypAuXNMOHNeeUabxGED/5vxf5VATdK+c0XuPFX
+	 gu955P3aX1IR5ec8jBF5LG0wlJ7RzSmBLAnX7kCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	David Laight <David.Laight@aculab.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 6.6 67/70] minmax: avoid overly complicated constant expressions in VM code
-Date: Mon, 22 Sep 2025 21:30:07 +0200
-Message-ID: <20250922192406.406542617@linuxfoundation.org>
+Subject: [PATCH 6.6 68/70] minmax: simplify and clarify min_t()/max_t() implementation
+Date: Mon, 22 Sep 2025 21:30:08 +0200
+Message-ID: <20250922192406.437051177@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -54,73 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 3a7e02c040b130b5545e4b115aada7bacd80a2b6 ]
+[ Upstream commit 017fa3e89187848fd056af757769c9e66ac3e93d ]
 
-The minmax infrastructure is overkill for simple constants, and can
-cause huge expansions because those simple constants are then used by
-other things.
+This simplifies the min_t() and max_t() macros by no longer making them
+work in the context of a C constant expression.
 
-For example, 'pageblock_order' is a core VM constant, but because it was
-implemented using 'min_t()' and all the type-checking that involves, it
-actually expanded to something like 2.5kB of preprocessor noise.
+That means that you can no longer use them for static initializers or
+for array sizes in type definitions, but there were only a couple of
+such uses, and all of them were converted (famous last words) to use
+MIN_T/MAX_T instead.
 
-And when that simple constant was then used inside other expansions:
-
-  #define pageblock_nr_pages      (1UL << pageblock_order)
-  #define pageblock_start_pfn(pfn)  ALIGN_DOWN((pfn), pageblock_nr_pages)
-
-and we then use that inside a 'max()' macro:
-
-	case ISOLATE_SUCCESS:
-		update_cached = false;
-		last_migrated_pfn = max(cc->zone->zone_start_pfn,
-			pageblock_start_pfn(cc->migrate_pfn - 1));
-
-the end result was that one statement expanding to 253kB in size.
-
-There are probably other cases of this, but this one case certainly
-stood out.
-
-I've added 'MIN_T()' and 'MAX_T()' macros for this kind of "core simple
-constant with specific type" use.  These macros skip the type checking,
-and as such need to be very sparingly used only for obvious cases that
-have active issues like this.
-
-Reported-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Link: https://lore.kernel.org/all/36aa2cad-1db1-4abf-8dd2-fb20484aabc3@lucifer.local/
 Cc: David Laight <David.Laight@aculab.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h          |    7 +++++++
- include/linux/pageblock-flags.h |    2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ include/linux/minmax.h |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -270,4 +270,11 @@ static inline bool in_range32(u32 val, u
- #define swap(a, b) \
- 	do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
+@@ -45,17 +45,20 @@
  
-+/*
-+ * Use these carefully: no type checking, and uses the arguments
-+ * multiple times. Use for obvious constants only.
-+ */
-+#define MIN_T(type,a,b) __cmp(min,(type)(a),(type)(b))
-+#define MAX_T(type,a,b) __cmp(max,(type)(a),(type)(b))
+ #define __cmp(op, x, y)	((x) __cmp_op_##op (y) ? (x) : (y))
+ 
+-#define __cmp_once(op, x, y, unique_x, unique_y) ({	\
+-	typeof(x) unique_x = (x);			\
+-	typeof(y) unique_y = (y);			\
++#define __cmp_once_unique(op, type, x, y, ux, uy) \
++	({ type ux = (x); type uy = (y); __cmp(op, ux, uy); })
 +
- #endif	/* _LINUX_MINMAX_H */
---- a/include/linux/pageblock-flags.h
-+++ b/include/linux/pageblock-flags.h
-@@ -41,7 +41,7 @@ extern unsigned int pageblock_order;
-  * Huge pages are a constant size, but don't exceed the maximum allocation
-  * granularity.
++#define __cmp_once(op, type, x, y) \
++	__cmp_once_unique(op, type, x, y, __UNIQUE_ID(x_), __UNIQUE_ID(y_))
++
++#define __careful_cmp_once(op, x, y) ({			\
+ 	static_assert(__types_ok(x, y),			\
+ 		#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
+-	__cmp(op, unique_x, unique_y); })
++	__cmp_once(op, __auto_type, x, y); })
+ 
+ #define __careful_cmp(op, x, y)					\
+ 	__builtin_choose_expr(__is_constexpr((x) - (y)),	\
+-		__cmp(op, x, y),				\
+-		__cmp_once(op, x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y)))
++		__cmp(op, x, y), __careful_cmp_once(op, x, y))
+ 
+ #define __clamp(val, lo, hi)	\
+ 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
+@@ -158,7 +161,7 @@
+  * @x: first value
+  * @y: second value
   */
--#define pageblock_order		min_t(unsigned int, HUGETLB_PAGE_ORDER, MAX_ORDER)
-+#define pageblock_order		MIN_T(unsigned int, HUGETLB_PAGE_ORDER, MAX_ORDER)
+-#define min_t(type, x, y)	__careful_cmp(min, (type)(x), (type)(y))
++#define min_t(type, x, y) __cmp_once(min, type, x, y)
  
- #endif /* CONFIG_HUGETLB_PAGE_SIZE_VARIABLE */
+ /**
+  * max_t - return maximum of two values, using the specified type
+@@ -166,7 +169,7 @@
+  * @x: first value
+  * @y: second value
+  */
+-#define max_t(type, x, y)	__careful_cmp(max, (type)(x), (type)(y))
++#define max_t(type, x, y) __cmp_once(max, type, x, y)
  
+ /*
+  * Do not check the array parameter using __must_be_array().
 
 
