@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAEF25F780;
-	Mon, 22 Sep 2025 19:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C705425F780;
+	Mon, 22 Sep 2025 19:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569812; cv=none; b=RRnz812ZzTvDYUvBOh2b/sAOc3K4zwA8HUM7Masyb4+9lrFVPCTT08HAt2erM/eCWdP+SKcU7er5U+h2EiAZUU1LnjMWMh5NEt79/ZqCUdSnhLJhRcld5NAnIt5hdOngAOIQR+bz+uz3Lp/U8/Ie1ZIBrbWe5cbxG30QWu8sCSE=
+	t=1758569814; cv=none; b=IOHLTZ51w0l02DzhmtHo+KpFkewAmbru43jzFqysjajykLgEFBF4yRA5bGz0b8T+Tx15prKnSLWVN70L4nuHnHOxuZ48/ksaI+66pov7/aUck+f4uSf8r8XiSHSRhyjSzaQUIQZg4MA67yuEABGiiLx2C5wUserkFv8lXlFVTXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569812; c=relaxed/simple;
-	bh=p4jryB07k7M5vKBTCrC4ou4exVH6wGIHL20RQE7fL9c=;
+	s=arc-20240116; t=1758569814; c=relaxed/simple;
+	bh=BtgGP0qkk4WOyPVaUoyzODdcgexn4g9OSfc4PjGvC5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ospaCLxTW08EwDXSaAD9WKzgRlahWFH+kLMoswB/cBOEPvf1zxRGB32UsRKs7c8YWd1xuzBl9MFlgBad9yxwAkLzilUZEUvQ7UdUFBAFbbZFhqgdmAOL/GFLWU+h09e/ay2Lekfui3NRqrGAj0h6ZHPTuLHG0u7Tg04iFLI2WaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnXWlzUD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZapQzcXBD+Fs559GvTESEIsrLgW65MWCo4E3MSIqwtoNP1XKseixySQrljtOLygE1AZE5s6hqDJmc0hUT+VKpDRzEnjJMRa/A30/HbAnNTdhsbnZpKnD4cMZD0oL9l7AZR1KLE60NYuIKADj0cemOmJ/AVXw3Zm9fMNVHaeJ/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtGh3Wzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnXWlzUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C8FC4CEF0;
-	Mon, 22 Sep 2025 19:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtGh3Wzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E382C4CEF0;
+	Mon, 22 Sep 2025 19:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569812;
-	bh=p4jryB07k7M5vKBTCrC4ou4exVH6wGIHL20RQE7fL9c=;
+	s=korg; t=1758569814;
+	bh=BtgGP0qkk4WOyPVaUoyzODdcgexn4g9OSfc4PjGvC5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DnXWlzUDNqYb//Og/ulau8DL0SssM6upbAac1qHnO0VgcihD7iLRWTa6T05mb8z94
-	 GyDhHveiabFLALcAzWjVf/5NVGQeXJ9ouNpss1RFCrwntwjT2PfMCeTRrOc8yf3vvp
-	 CAGRLWwZ2zV4JN6JET1XpQo9bHhC50RGn0PPv3cE=
+	b=rtGh3WzkPydV8u8EyGMSwKvDj9ScbwB3jp2lKFZ59UxzNKWCiL+wMC8Jt1Q5axJ0+
+	 pQaTwld5S2qxCrhdVXJnBejiYsDittjjuhzovqdJS3o1hqH9RGVGFqm4JtU0ppxcU8
+	 tMyKanR3Za0Mwo1yQx+Yv+otKYzoGhq+2P1z1KHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, jack@suse.cz, Eric Hagberg" <ehagberg@janestreet.com>,
-	Eric Hagberg <ehagberg@janestreet.com>
-Subject: [PATCH 6.6 70/70] Revert "loop: Avoid updating block size under exclusive owner"
-Date: Mon, 22 Sep 2025 21:30:10 +0200
-Message-ID: <20250922192406.492614870@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ajay Singh <ajay.kathat@microchip.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/105] wifi: wilc1000: avoid buffer overflow in WID string configuration
+Date: Mon, 22 Sep 2025 21:28:44 +0200
+Message-ID: <20250922192408.952807531@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
-References: <20250922192404.455120315@linuxfoundation.org>
+In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
+References: <20250922192408.913556629@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,109 +48,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Hagberg <ehagberg@janestreet.com>
+From: Ajay.Kathat@microchip.com <Ajay.Kathat@microchip.com>
 
-Revert commit ce8da5d13d8c2a7b30b2fb376a22e8eb1a70b8bb which is commit
-7e49538288e523427beedd26993d446afef1a6fb upstream.
+[ Upstream commit fe9e4d0c39311d0f97b024147a0d155333f388b5 ]
 
-This reverts commit ce8da5d13d8c ("loop: Avoid updating block size under
-exclusive owner") for the 6.6 kernel, because if the LTP ioctl_loop06 test is
-run with this patch in place, the test will fail, it leaves the host unable to
-kexec into the kernel again (hangs forever) and "losetup -a" will hang on
-attempting to access the /dev/loopN device that the test has set up.
+Fix the following copy overflow warning identified by Smatch checker.
 
-The patch doesn't need to be reverted from 6.12, as it works fine there.
+ drivers/net/wireless/microchip/wilc1000/wlan_cfg.c:184 wilc_wlan_parse_response_frame()
+        error: '__memcpy()' 'cfg->s[i]->str' copy overflow (512 vs 65537)
 
-Cc: stable@vger.kernel.org # 6.6.x
-Signed-off-by: Eric Hagberg <ehagberg@janestreet.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch introduces size check before accessing the memory buffer.
+The checks are base on the WID type of received data from the firmware.
+For WID string configuration, the size limit is determined by individual
+element size in 'struct wilc_cfg_str_vals' that is maintained in 'len' field
+of 'struct wilc_cfg_str'.
 
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-wireless/aLFbr9Yu9j_TQTey@stanley.mountain
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Ajay Singh <ajay.kathat@microchip.com>
+Link: https://patch.msgid.link/20250829225829.5423-1-ajay.kathat@microchip.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c |   38 ++++++++------------------------------
- 1 file changed, 8 insertions(+), 30 deletions(-)
+ .../wireless/microchip/wilc1000/wlan_cfg.c    | 37 ++++++++++++++-----
+ .../wireless/microchip/wilc1000/wlan_cfg.h    |  5 ++-
+ 2 files changed, 30 insertions(+), 12 deletions(-)
 
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1472,36 +1472,19 @@ static int loop_set_dio(struct loop_devi
- 	return error;
- }
+diff --git a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
+index 131388886acbf..cfabd5aebb540 100644
+--- a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
+@@ -41,10 +41,10 @@ static const struct wilc_cfg_word g_cfg_word[] = {
+ };
  
--static int loop_set_block_size(struct loop_device *lo, blk_mode_t mode,
--			       struct block_device *bdev, unsigned long arg)
-+static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
- {
- 	int err = 0;
+ static const struct wilc_cfg_str g_cfg_str[] = {
+-	{WID_FIRMWARE_VERSION, NULL},
+-	{WID_MAC_ADDR, NULL},
+-	{WID_ASSOC_RES_INFO, NULL},
+-	{WID_NIL, NULL}
++	{WID_FIRMWARE_VERSION, 0, NULL},
++	{WID_MAC_ADDR, 0, NULL},
++	{WID_ASSOC_RES_INFO, 0, NULL},
++	{WID_NIL, 0, NULL}
+ };
  
--	/*
--	 * If we don't hold exclusive handle for the device, upgrade to it
--	 * here to avoid changing device under exclusive owner.
--	 */
--	if (!(mode & BLK_OPEN_EXCL)) {
--		err = bd_prepare_to_claim(bdev, loop_set_block_size, NULL);
--		if (err)
--			return err;
--	}
--
--	err = mutex_lock_killable(&lo->lo_mutex);
--	if (err)
--		goto abort_claim;
--
--	if (lo->lo_state != Lo_bound) {
--		err = -ENXIO;
--		goto unlock;
--	}
-+	if (lo->lo_state != Lo_bound)
-+		return -ENXIO;
+ #define WILC_RESP_MSG_TYPE_CONFIG_REPLY		'R'
+@@ -147,44 +147,58 @@ static void wilc_wlan_parse_response_frame(struct wilc *wl, u8 *info, int size)
  
- 	err = blk_validate_block_size(arg);
- 	if (err)
- 		return err;
+ 		switch (FIELD_GET(WILC_WID_TYPE, wid)) {
+ 		case WID_CHAR:
++			len = 3;
++			if (len + 2  > size)
++				return;
++
+ 			while (cfg->b[i].id != WID_NIL && cfg->b[i].id != wid)
+ 				i++;
  
- 	if (lo->lo_queue->limits.logical_block_size == arg)
--		goto unlock;
-+		return 0;
+ 			if (cfg->b[i].id == wid)
+ 				cfg->b[i].val = info[4];
  
- 	sync_blockdev(lo->lo_device);
- 	invalidate_bdev(lo->lo_device);
-@@ -1513,11 +1496,6 @@ static int loop_set_block_size(struct lo
- 	loop_update_dio(lo);
- 	blk_mq_unfreeze_queue(lo->lo_queue);
+-			len = 3;
+ 			break;
  
--unlock:
--	mutex_unlock(&lo->lo_mutex);
--abort_claim:
--	if (!(mode & BLK_OPEN_EXCL))
--		bd_abort_claiming(bdev, loop_set_block_size);
- 	return err;
- }
+ 		case WID_SHORT:
++			len = 4;
++			if (len + 2  > size)
++				return;
++
+ 			while (cfg->hw[i].id != WID_NIL && cfg->hw[i].id != wid)
+ 				i++;
  
-@@ -1536,6 +1514,9 @@ static int lo_simple_ioctl(struct loop_d
- 	case LOOP_SET_DIRECT_IO:
- 		err = loop_set_dio(lo, arg);
- 		break;
-+	case LOOP_SET_BLOCK_SIZE:
-+		err = loop_set_block_size(lo, arg);
-+		break;
- 	default:
- 		err = -EINVAL;
- 	}
-@@ -1590,12 +1571,9 @@ static int lo_ioctl(struct block_device
- 		break;
- 	case LOOP_GET_STATUS64:
- 		return loop_get_status64(lo, argp);
--	case LOOP_SET_BLOCK_SIZE:
--		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
--			return -EPERM;
--		return loop_set_block_size(lo, mode, bdev, arg);
- 	case LOOP_SET_CAPACITY:
- 	case LOOP_SET_DIRECT_IO:
-+	case LOOP_SET_BLOCK_SIZE:
- 		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
- 			return -EPERM;
- 		fallthrough;
+ 			if (cfg->hw[i].id == wid)
+ 				cfg->hw[i].val = get_unaligned_le16(&info[4]);
+ 
+-			len = 4;
+ 			break;
+ 
+ 		case WID_INT:
++			len = 6;
++			if (len + 2  > size)
++				return;
++
+ 			while (cfg->w[i].id != WID_NIL && cfg->w[i].id != wid)
+ 				i++;
+ 
+ 			if (cfg->w[i].id == wid)
+ 				cfg->w[i].val = get_unaligned_le32(&info[4]);
+ 
+-			len = 6;
+ 			break;
+ 
+ 		case WID_STR:
++			len = 2 + get_unaligned_le16(&info[2]);
++
+ 			while (cfg->s[i].id != WID_NIL && cfg->s[i].id != wid)
+ 				i++;
+ 
+-			if (cfg->s[i].id == wid)
++			if (cfg->s[i].id == wid) {
++				if (len > cfg->s[i].len || (len + 2  > size))
++					return;
++
+ 				memcpy(cfg->s[i].str, &info[2],
+-				       get_unaligned_le16(&info[2]) + 2);
++				       len);
++			}
+ 
+-			len = 2 + get_unaligned_le16(&info[2]);
+ 			break;
+ 
+ 		default:
+@@ -384,12 +398,15 @@ int wilc_wlan_cfg_init(struct wilc *wl)
+ 	/* store the string cfg parameters */
+ 	wl->cfg.s[i].id = WID_FIRMWARE_VERSION;
+ 	wl->cfg.s[i].str = str_vals->firmware_version;
++	wl->cfg.s[i].len = sizeof(str_vals->firmware_version);
+ 	i++;
+ 	wl->cfg.s[i].id = WID_MAC_ADDR;
+ 	wl->cfg.s[i].str = str_vals->mac_address;
++	wl->cfg.s[i].len = sizeof(str_vals->mac_address);
+ 	i++;
+ 	wl->cfg.s[i].id = WID_ASSOC_RES_INFO;
+ 	wl->cfg.s[i].str = str_vals->assoc_rsp;
++	wl->cfg.s[i].len = sizeof(str_vals->assoc_rsp);
+ 	i++;
+ 	wl->cfg.s[i].id = WID_NIL;
+ 	wl->cfg.s[i].str = NULL;
+diff --git a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
+index 7038b74f8e8ff..5ae74bced7d74 100644
+--- a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
++++ b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
+@@ -24,12 +24,13 @@ struct wilc_cfg_word {
+ 
+ struct wilc_cfg_str {
+ 	u16 id;
++	u16 len;
+ 	u8 *str;
+ };
+ 
+ struct wilc_cfg_str_vals {
+-	u8 mac_address[7];
+-	u8 firmware_version[129];
++	u8 mac_address[8];
++	u8 firmware_version[130];
+ 	u8 assoc_rsp[WILC_MAX_ASSOC_RESP_FRAME_SIZE];
+ };
+ 
+-- 
+2.51.0
+
 
 
