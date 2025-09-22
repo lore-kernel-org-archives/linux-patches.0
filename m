@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D1C27B320;
-	Mon, 22 Sep 2025 19:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B90725F780;
+	Mon, 22 Sep 2025 19:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569804; cv=none; b=t7tGIYyIMu8GcBXfav9dpRC3wZWQUxH7miiOhdg2/UQbURAIl4ZwDyOZHsTmLdZ/bjpeM8xROVs+SvyeSI8Dlr8adOWH/ZZQXOE5zB8aJq3iI/rx2D8Iv1GcKwyVTGHMUQ/Iiz0Ft7jWhBKKh0PEwt8CU5g5V5hnh60tZqShhDg=
+	t=1758569807; cv=none; b=ZBcCSkpRdqtMoKlZLgHM8u9Ozun173rsr16c+cg1kdbfZlwh6cYAvxdUjLldFz89oNLlkxwFrf9nNb3rk4sqxJXzJjUuQEbIUk5wobH1NNy7SED2DukuvSSDLCwxUFkT/8e1XDHo3AZ4yL+dpMEY9MhpT2FiUkOFgWyhbHdjYqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569804; c=relaxed/simple;
-	bh=J4sDDASNib1DGiyfwOplGalAALzXvwhuz42TXppVFCo=;
+	s=arc-20240116; t=1758569807; c=relaxed/simple;
+	bh=NW3YjLCaqvbY43GNjfgpWTe0oRX4oA5WuMAhw5k3knE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cc7nmP0ab5gMZe2UxKCLzzlq3PtWJkl2Xu7iXLdgCRV3TBr0I8mpnBPiZ0o4o9YMUTwEnd9jZDUlPItg3zoes3FS0/1ykOgEG4/Ketv9i7O6dymzD89c0PBwmg0AI8eeGR+j52+J+dlhoqCdgv/ThLz3EqtE2SFcqfz79CVEZcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frLyq8Ok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cdwawFDYwkl4wZVVtYn8+jv+Z8pfByYw5h/ysjT2JmKUsKjw6g5zVmSnVcBXNKq8ILfFejrOhU7SqQT9WO87JzyJDe+TdQLIHZ930K/Ek6KglO4ZkC6iPT0YrEBizBI/l2GOc6uQ+4V6SAob9CRfmTfEOqC7/klNeakrzdzecfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meKyzRRb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frLyq8Ok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EB2C4CEF0;
-	Mon, 22 Sep 2025 19:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meKyzRRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8900C4CEF0;
+	Mon, 22 Sep 2025 19:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569804;
-	bh=J4sDDASNib1DGiyfwOplGalAALzXvwhuz42TXppVFCo=;
+	s=korg; t=1758569807;
+	bh=NW3YjLCaqvbY43GNjfgpWTe0oRX4oA5WuMAhw5k3knE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=frLyq8OkES43QyOcjgdUvS1Ixyv0OM8prp4BY4C4/NjRXcYdSazZUsntrBET7Z0BH
-	 Kf1yLTOhOpthXI1k0Wp9WslwYK9P03yhlHfWj9D2F6e1iI3LlGCqk1lvNt9XEc9G3N
-	 IlSsBEw0qD3qR3dhys21idXjo57e9NI5LiDLelUc=
+	b=meKyzRRbGE+/RchNC+MWiCSujz/6NqWiWNeFvFf1rR6zbedfgtij8l2UllRm7TRUu
+	 ZAF9CTbcY7Ucv4va0pgVtyNMaZe+rjHMevluOXZXVIAAWcMJTwSECjXUWgw1Q23HHc
+	 PY4Kc7aIO/lPioQ3g++1iEwBN+Oqixv+wA8TJPds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 63/70] xhci: dbc: Fix full DbC transfer ring after several reconnects
-Date: Mon, 22 Sep 2025 21:30:03 +0200
-Message-ID: <20250922192406.295583832@linuxfoundation.org>
+Subject: [PATCH 6.6 64/70] iommu/amd/pgtbl: Fix possible race while increase page table level
+Date: Mon, 22 Sep 2025 21:30:04 +0200
+Message-ID: <20250922192406.321492658@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -50,88 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit a5c98e8b1398534ae1feb6e95e2d3ee5215538ed ]
+[ Upstream commit 1e56310b40fd2e7e0b9493da9ff488af145bdd0c ]
 
-Pending requests will be flushed on disconnect, and the corresponding
-TRBs will be turned into No-op TRBs, which are ignored by the xHC
-controller once it starts processing the ring.
+The AMD IOMMU host page table implementation supports dynamic page table levels
+(up to 6 levels), starting with a 3-level configuration that expands based on
+IOVA address. The kernel maintains a root pointer and current page table level
+to enable proper page table walks in alloc_pte()/fetch_pte() operations.
 
-If the USB debug cable repeatedly disconnects before ring is started
-then the ring will eventually be filled with No-op TRBs.
-No new transfers can be queued when the ring is full, and driver will
-print the following error message:
+The IOMMU IOVA allocator initially starts with 32-bit address and onces its
+exhuasted it switches to 64-bit address (max address is determined based
+on IOMMU and device DMA capability). To support larger IOVA, AMD IOMMU
+driver increases page table level.
 
-    "xhci_hcd 0000:00:14.0: failed to queue trbs"
+But in unmap path (iommu_v1_unmap_pages()), fetch_pte() reads
+pgtable->[root/mode] without lock. So its possible that in exteme corner case,
+when increase_address_space() is updating pgtable->[root/mode], fetch_pte()
+reads wrong page table level (pgtable->mode). It does compare the value with
+level encoded in page table and returns NULL. This will result is
+iommu_unmap ops to fail and upper layer may retry/log WARN_ON.
 
-This is a normal case for 'in' transfers where TRBs are always enqueued
-in advance, ready to take on incoming data. If no data arrives, and
-device is disconnected, then ring dequeue will remain at beginning of
-the ring while enqueue points to first free TRB after last cancelled
-No-op TRB.
-s
-Solve this by reinitializing the rings when the debug cable disconnects
-and DbC is leaving the configured state.
-Clear the whole ring buffer and set enqueue and dequeue to the beginning
-of ring, and set cycle bit to its initial state.
+CPU 0                                         CPU 1
+------                                       ------
+map pages                                    unmap pages
+alloc_pte() -> increase_address_space()      iommu_v1_unmap_pages() -> fetch_pte()
+  pgtable->root = pte (new root value)
+                                             READ pgtable->[mode/root]
+					       Reads new root, old mode
+  Updates mode (pgtable->mode += 1)
 
+Since Page table level updates are infrequent and already synchronized with a
+spinlock, implement seqcount to enable lock-free read operations on the read path.
+
+Fixes: 754265bcab7 ("iommu/amd: Fix race in increase_address_space()")
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Cc: stable@vger.kernel.org
-Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250902105306.877476-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+[ Adapted pgtable->mode and pgtable->root to use domain->iop.mode and domain->iop.root ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgcap.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h |    1 +
+ drivers/iommu/amd/io_pgtable.c      |   26 ++++++++++++++++++++++----
+ 2 files changed, 23 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/host/xhci-dbgcap.c
-+++ b/drivers/usb/host/xhci-dbgcap.c
-@@ -447,6 +447,25 @@ static void xhci_dbc_ring_init(struct xh
- 	xhci_initialize_ring_info(ring, 1);
- }
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -540,6 +540,7 @@ struct amd_irte_ops;
+ 	container_of((x), struct amd_io_pgtable, pgtbl_cfg)
  
-+static int xhci_dbc_reinit_ep_rings(struct xhci_dbc *dbc)
-+{
-+	struct xhci_ring *in_ring = dbc->eps[BULK_IN].ring;
-+	struct xhci_ring *out_ring = dbc->eps[BULK_OUT].ring;
+ struct amd_io_pgtable {
++	seqcount_t		seqcount;	/* Protects root/mode update */
+ 	struct io_pgtable_cfg	pgtbl_cfg;
+ 	struct io_pgtable	iop;
+ 	int			mode;
+--- a/drivers/iommu/amd/io_pgtable.c
++++ b/drivers/iommu/amd/io_pgtable.c
+@@ -17,6 +17,7 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/dma-mapping.h>
++#include <linux/seqlock.h>
+ 
+ #include <asm/barrier.h>
+ 
+@@ -171,8 +172,11 @@ static bool increase_address_space(struc
+ 
+ 	*pte = PM_LEVEL_PDE(domain->iop.mode, iommu_virt_to_phys(domain->iop.root));
+ 
++	write_seqcount_begin(&domain->iop.seqcount);
+ 	domain->iop.root  = pte;
+ 	domain->iop.mode += 1;
++	write_seqcount_end(&domain->iop.seqcount);
 +
-+	if (!in_ring || !out_ring || !dbc->ctx) {
-+		dev_warn(dbc->dev, "Can't re-init unallocated endpoints\n");
-+		return -ENODEV;
-+	}
-+
-+	xhci_dbc_ring_init(in_ring);
-+	xhci_dbc_ring_init(out_ring);
-+
-+	/* set ep context enqueue, dequeue, and cycle to initial values */
-+	xhci_dbc_init_ep_contexts(dbc);
-+
-+	return 0;
-+}
-+
- static struct xhci_ring *
- xhci_dbc_ring_alloc(struct device *dev, enum xhci_ring_type type, gfp_t flags)
+ 	amd_iommu_update_and_flush_device_table(domain);
+ 	amd_iommu_domain_flush_complete(domain);
+ 
+@@ -199,6 +203,7 @@ static u64 *alloc_pte(struct protection_
+ 		      gfp_t gfp,
+ 		      bool *updated)
  {
-@@ -871,7 +890,7 @@ static enum evtreturn xhci_dbc_do_handle
- 			dev_info(dbc->dev, "DbC cable unplugged\n");
- 			dbc->state = DS_ENABLED;
- 			xhci_dbc_flush_requests(dbc);
--
-+			xhci_dbc_reinit_ep_rings(dbc);
- 			return EVT_DISC;
- 		}
++	unsigned int seqcount;
+ 	int level, end_lvl;
+ 	u64 *pte, *page;
  
-@@ -881,7 +900,7 @@ static enum evtreturn xhci_dbc_do_handle
- 			writel(portsc, &dbc->regs->portsc);
- 			dbc->state = DS_ENABLED;
- 			xhci_dbc_flush_requests(dbc);
--
-+			xhci_dbc_reinit_ep_rings(dbc);
- 			return EVT_DISC;
- 		}
+@@ -214,8 +219,14 @@ static u64 *alloc_pte(struct protection_
+ 	}
  
+ 
+-	level   = domain->iop.mode - 1;
+-	pte     = &domain->iop.root[PM_LEVEL_INDEX(level, address)];
++	do {
++		seqcount = read_seqcount_begin(&domain->iop.seqcount);
++
++		level   = domain->iop.mode - 1;
++		pte     = &domain->iop.root[PM_LEVEL_INDEX(level, address)];
++	} while (read_seqcount_retry(&domain->iop.seqcount, seqcount));
++
++
+ 	address = PAGE_SIZE_ALIGN(address, page_size);
+ 	end_lvl = PAGE_SIZE_LEVEL(page_size);
+ 
+@@ -292,6 +303,7 @@ static u64 *fetch_pte(struct amd_io_pgta
+ 		      unsigned long *page_size)
+ {
+ 	int level;
++	unsigned int seqcount;
+ 	u64 *pte;
+ 
+ 	*page_size = 0;
+@@ -299,8 +311,12 @@ static u64 *fetch_pte(struct amd_io_pgta
+ 	if (address > PM_LEVEL_SIZE(pgtable->mode))
+ 		return NULL;
+ 
+-	level	   =  pgtable->mode - 1;
+-	pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	do {
++		seqcount = read_seqcount_begin(&pgtable->seqcount);
++		level	   =  pgtable->mode - 1;
++		pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
++
+ 	*page_size =  PTE_LEVEL_PAGE_SIZE(level);
+ 
+ 	while (level > 0) {
+@@ -524,6 +540,8 @@ static struct io_pgtable *v1_alloc_pgtab
+ 	cfg->oas            = IOMMU_OUT_ADDR_BIT_SIZE,
+ 	cfg->tlb            = &v1_flush_ops;
+ 
++	seqcount_init(&pgtable->seqcount);
++
+ 	pgtable->iop.ops.map_pages    = iommu_v1_map_pages;
+ 	pgtable->iop.ops.unmap_pages  = iommu_v1_unmap_pages;
+ 	pgtable->iop.ops.iova_to_phys = iommu_v1_iova_to_phys;
 
 
