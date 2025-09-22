@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF8527B320;
-	Mon, 22 Sep 2025 19:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D692F0C5F;
+	Mon, 22 Sep 2025 19:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569780; cv=none; b=GxODB8W8AhS1gsSFwMWcmM/XisrFzVLQFrL4Ft6bMz6ktglZMWr4+ICM8yyDMVJd4MXyqNRW0iLVuWwIfjxqn//6GY+deaW7tWmVV8eMkTBGS9YU8ui+rMHES5qFGwTQs8nYP7Ihm5ckrXaAGT/qrq3zOBMVi79YSbx4/9XIoxY=
+	t=1758569783; cv=none; b=JXwLQjwd+o7BMAqG0/JXcDCW+i1/xQw0yBDXfeE8WvKByuPcsD9dY3Wejv3YpE72zcSgeYvW0vugMl0tEOdU2WYkuAgo8hWhVmDIb9Y5kRH5wFwletUyCQVfv9l9Dvo8TYiaKzL6flMlsijYxHfxKswMzz43wPbRPKYL4Ooq6iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569780; c=relaxed/simple;
-	bh=WU4mnf1CY5ncwtaKcIwOTbUe1DzsknEH/L3GyJOCxpA=;
+	s=arc-20240116; t=1758569783; c=relaxed/simple;
+	bh=UQz0gcPY4VDAdx98vDrMCtTnSdVLv3JPd3gAtHAX+/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QnJrmyF+aWwykFwcVFRj4spfE/bcXQN4zg0Oe7TI9wvLTT9xOolOYfXoG/TsggipXOmDPI7H2MFZi+wTLAykktW/R6miYD4IJKxS4d/JKwk6zZtpJDpLjb+NRA+AmrtI8KTOQuU/2fESPsdarqAmTXDa8xHjF/Zrq/iQmwnlb0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9Y8amzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DgPhla9RkiVbCXsSkw4PeNyHg2fIfb1Be0H7DzeeGLP+g+OOc/1zhrwgWD6JewQAlxYJ/ZlaVN825dZfxG9vZCQKPoLonrTMKiPG+J3LxgLgwDuWTMPYo0bLWT0HD9UUhpNA+zGuLRPTnaSd5rTGRvPlWOrdKSV01f/1Wan/2/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s398r1J1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9Y8amzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FE1C4CEF0;
-	Mon, 22 Sep 2025 19:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s398r1J1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E63C4CEF0;
+	Mon, 22 Sep 2025 19:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569780;
-	bh=WU4mnf1CY5ncwtaKcIwOTbUe1DzsknEH/L3GyJOCxpA=;
+	s=korg; t=1758569782;
+	bh=UQz0gcPY4VDAdx98vDrMCtTnSdVLv3JPd3gAtHAX+/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9Y8amzTwaG28IcZH03p28lzL2z0SQrWxgXLY4ZDM4KXv1MhzjkF+LlmrprskIgZf
-	 DzIHQF8GVx6a+JcZKhawr6AshaxUBnGW/onvsyjslLnQt0Mddo+7SWjHaIjD9VcOm2
-	 GxOmaCsHtTvKswaXfX7ekY3WcQF7OS9PXTzWe7gw=
+	b=s398r1J11Q12g4QH2kCm4U9bfasoRuQLGgq9zaYQReJ1dD5ayENKAO5opCXBz95n4
+	 rNBzX1LaLcUCr1rcrJTuwg74jYhlxgwNeIp9GoPo+nV4VJaY4Y1teim5iH+HhQaU/I
+	 eMx+bWwUoslNBR21DRYojep9OppqFGy/UzG7pd84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 66/70] mptcp: propagate shutdown to subflows when possible
-Date: Mon, 22 Sep 2025 21:30:06 +0200
-Message-ID: <20250922192406.379170994@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	David Laight <David.Laight@aculab.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 6.6 67/70] minmax: avoid overly complicated constant expressions in VM code
+Date: Mon, 22 Sep 2025 21:30:07 +0200
+Message-ID: <20250922192406.406542617@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -53,81 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit f755be0b1ff429a2ecf709beeb1bcd7abc111c2b ]
+[ Upstream commit 3a7e02c040b130b5545e4b115aada7bacd80a2b6 ]
 
-When the MPTCP DATA FIN have been ACKed, there is no more MPTCP related
-metadata to exchange, and all subflows can be safely shutdown.
+The minmax infrastructure is overkill for simple constants, and can
+cause huge expansions because those simple constants are then used by
+other things.
 
-Before this patch, the subflows were actually terminated at 'close()'
-time. That's certainly fine most of the time, but not when the userspace
-'shutdown()' a connection, without close()ing it. When doing so, the
-subflows were staying in LAST_ACK state on one side -- and consequently
-in FIN_WAIT2 on the other side -- until the 'close()' of the MPTCP
-socket.
+For example, 'pageblock_order' is a core VM constant, but because it was
+implemented using 'min_t()' and all the type-checking that involves, it
+actually expanded to something like 2.5kB of preprocessor noise.
 
-Now, when the DATA FIN have been ACKed, all subflows are shutdown. A
-consequence of this is that the TCP 'FIN' flag can be set earlier now,
-but the end result is the same. This affects the packetdrill tests
-looking at the end of the MPTCP connections, but for a good reason.
+And when that simple constant was then used inside other expansions:
 
-Note that tcp_shutdown() will check the subflow state, so no need to do
-that again before calling it.
+  #define pageblock_nr_pages      (1UL << pageblock_order)
+  #define pageblock_start_pfn(pfn)  ALIGN_DOWN((pfn), pageblock_nr_pages)
 
-Fixes: 3721b9b64676 ("mptcp: Track received DATA_FIN sequence number and add related helpers")
-Cc: stable@vger.kernel.org
-Fixes: 16a9a9da1723 ("mptcp: Add helper to process acks of DATA_FIN")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250912-net-mptcp-fix-sft-connect-v1-1-d40e77cbbf02@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+and we then use that inside a 'max()' macro:
+
+	case ISOLATE_SUCCESS:
+		update_cached = false;
+		last_migrated_pfn = max(cc->zone->zone_start_pfn,
+			pageblock_start_pfn(cc->migrate_pfn - 1));
+
+the end result was that one statement expanding to 253kB in size.
+
+There are probably other cases of this, but this one case certainly
+stood out.
+
+I've added 'MIN_T()' and 'MAX_T()' macros for this kind of "core simple
+constant with specific type" use.  These macros skip the type checking,
+and as such need to be very sparingly used only for obvious cases that
+have active issues like this.
+
+Reported-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Link: https://lore.kernel.org/all/36aa2cad-1db1-4abf-8dd2-fb20484aabc3@lucifer.local/
+Cc: David Laight <David.Laight@aculab.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ include/linux/minmax.h          |    7 +++++++
+ include/linux/pageblock-flags.h |    2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -415,6 +415,20 @@ static void mptcp_close_wake_up(struct s
- 		sk_wake_async(sk, SOCK_WAKE_WAITD, POLL_IN);
- }
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -270,4 +270,11 @@ static inline bool in_range32(u32 val, u
+ #define swap(a, b) \
+ 	do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
  
-+static void mptcp_shutdown_subflows(struct mptcp_sock *msk)
-+{
-+	struct mptcp_subflow_context *subflow;
++/*
++ * Use these carefully: no type checking, and uses the arguments
++ * multiple times. Use for obvious constants only.
++ */
++#define MIN_T(type,a,b) __cmp(min,(type)(a),(type)(b))
++#define MAX_T(type,a,b) __cmp(max,(type)(a),(type)(b))
 +
-+	mptcp_for_each_subflow(msk, subflow) {
-+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		bool slow;
-+
-+		slow = lock_sock_fast(ssk);
-+		tcp_shutdown(ssk, SEND_SHUTDOWN);
-+		unlock_sock_fast(ssk, slow);
-+	}
-+}
-+
- static bool mptcp_pending_data_fin_ack(struct sock *sk)
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
-@@ -438,6 +452,7 @@ static void mptcp_check_data_fin_ack(str
- 			break;
- 		case TCP_CLOSING:
- 		case TCP_LAST_ACK:
-+			mptcp_shutdown_subflows(msk);
- 			mptcp_set_state(sk, TCP_CLOSE);
- 			break;
- 		}
-@@ -605,6 +620,7 @@ static bool mptcp_check_data_fin(struct
- 			mptcp_set_state(sk, TCP_CLOSING);
- 			break;
- 		case TCP_FIN_WAIT2:
-+			mptcp_shutdown_subflows(msk);
- 			mptcp_set_state(sk, TCP_CLOSE);
- 			break;
- 		default:
+ #endif	/* _LINUX_MINMAX_H */
+--- a/include/linux/pageblock-flags.h
++++ b/include/linux/pageblock-flags.h
+@@ -41,7 +41,7 @@ extern unsigned int pageblock_order;
+  * Huge pages are a constant size, but don't exceed the maximum allocation
+  * granularity.
+  */
+-#define pageblock_order		min_t(unsigned int, HUGETLB_PAGE_ORDER, MAX_ORDER)
++#define pageblock_order		MIN_T(unsigned int, HUGETLB_PAGE_ORDER, MAX_ORDER)
+ 
+ #endif /* CONFIG_HUGETLB_PAGE_SIZE_VARIABLE */
+ 
 
 
