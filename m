@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9B92F0C52;
-	Mon, 22 Sep 2025 19:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5A02F2909;
+	Mon, 22 Sep 2025 19:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570257; cv=none; b=nY+GxRXMNAHsVMsqgOWS8OwMtw9Khhf+JeCJYhI2OLr0CG1SffDP3lWsb+mZYJAHBroPsKUbTtnxlFuBIaTW2nIGvs7KM6FraVrTbpwXUT+cS1PToaxOfbkhQNTpU2QuAaWS0bZXfedvW5IRXNhFVEX6OXcmng7uxUU7EZ6sf6g=
+	t=1758570260; cv=none; b=KSno3MzwqI1PAinYUsxrtFL/UrZSQcATDWx4E/jOLFtWAXeoQIYZrgXQJW3RtGVO4Mr8vABHVEjWhkPY77ocmKjBWsUyrwEmdkcQO9OfVNjrbM5rCft9NmNOKFC045E3dy1Av5SN0px3HtUwE1+jQSASRsvXAIrj7abiP2G5Ybs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570257; c=relaxed/simple;
-	bh=X5uYsqRYzicbobVkpzBZT9FvOUKPeXKjTqallLbWvrI=;
+	s=arc-20240116; t=1758570260; c=relaxed/simple;
+	bh=GLvXu4lgQ5nXDffQTrijckeWzQrfQJdbeRxzcYFWwy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCjwGmaBF+ThsgZU85lcXp7Q+LhJv1Oest/hiq+NnfzWXTTXBhTi2iVrlCEPEGSqTkvG86zSuRJMcNhyZsnYgVEj5CMrewj07NsBC6UCqMngAlvBGmfTS6jMFSjTW8ZQETGcBQZxGIo4HjQFF0Bz4sGWmLkkxcILIPU3LabFRAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jL0xpL6O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XL2WjbOzmQZPSHy9hpX4fohgtOvYVqL7PtWfZ1gYEHv66eFBTxKOL7ATTemdyRXq8hDL9nWibEXoxDyjZfx7J7X1qfqy5dxjTfoFp2qIyIDdCc/SLccq5SJKctWgTHywACHd9Zb/5I8v12/sRITWsCMvxcZMKeBkA37Lt/ss3/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaH9XZiD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jL0xpL6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A97C4CEF0;
-	Mon, 22 Sep 2025 19:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaH9XZiD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C424C4CEF0;
+	Mon, 22 Sep 2025 19:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570256;
-	bh=X5uYsqRYzicbobVkpzBZT9FvOUKPeXKjTqallLbWvrI=;
+	s=korg; t=1758570259;
+	bh=GLvXu4lgQ5nXDffQTrijckeWzQrfQJdbeRxzcYFWwy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jL0xpL6Ow3mpvhOSuSo+GbXFL5in2ElCVYb4s3MPhRLOIfg/zW8D5wreTV2yE0dRH
-	 sj9Me5ubJJqzN/aREOR3cieqPkIacEYaqJaplbA47oa/u39hGQEBt0zGLVzHrvsZCY
-	 0RdlDPoxg3Ie43mu0nO3NC12r5TwIgPOCJnGaL3U=
+	b=KaH9XZiDKTxi92f561NMMygukUPJqLk8b6GjsFIG1tZK6ZrRdysbFV7EsMCJzXXl3
+	 dKnMSA9VrdTSoAz2BroE/yeyWl6hwCWp9mgjipVuXCbF50TD1KarC9bA0pGS7Zqjw2
+	 gDwSdnv3rBn59hM5TuqEIkY52NuxSbFOlZn3WU1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Koira <eugkoira@amazon.com>,
-	Nicolas Saenz Julienne <nsaenz@amazon.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.16 078/149] iommu/vt-d: Fix __domain_mapping()s usage of switch_to_super_page()
-Date: Mon, 22 Sep 2025 21:29:38 +0200
-Message-ID: <20250922192414.850962300@linuxfoundation.org>
+Subject: [PATCH 6.16 079/149] iommu/amd: Fix ivrs_base memleak in early_amd_iommu_init()
+Date: Mon, 22 Sep 2025 21:29:39 +0200
+Message-ID: <20250922192414.874376533@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -53,67 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugene Koira <eugkoira@amazon.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit dce043c07ca1ac19cfbe2844a6dc71e35c322353 upstream.
+commit 923b70581cb6acede90f8aaf4afe5d1c58c67b71 upstream.
 
-switch_to_super_page() assumes the memory range it's working on is aligned
-to the target large page level. Unfortunately, __domain_mapping() doesn't
-take this into account when using it, and will pass unaligned ranges
-ultimately freeing a PTE range larger than expected.
+Fix a permanent ACPI table memory leak in early_amd_iommu_init() when
+CMPXCHG16B feature is not supported
 
-Take for example a mapping with the following iov_pfn range [0x3fe400,
-0x4c0600), which should be backed by the following mappings:
-
-   iov_pfn [0x3fe400, 0x3fffff] covered by 2MiB pages
-   iov_pfn [0x400000, 0x4bffff] covered by 1GiB pages
-   iov_pfn [0x4c0000, 0x4c05ff] covered by 2MiB pages
-
-Under this circumstance, __domain_mapping() will pass [0x400000, 0x4c05ff]
-to switch_to_super_page() at a 1 GiB granularity, which will in turn
-free PTEs all the way to iov_pfn 0x4fffff.
-
-Mitigate this by rounding down the iov_pfn range passed to
-switch_to_super_page() in __domain_mapping()
-to the target large page level.
-
-Additionally add range alignment checks to switch_to_super_page.
-
-Fixes: 9906b9352a35 ("iommu/vt-d: Avoid duplicate removing in __domain_mapping()")
-Signed-off-by: Eugene Koira <eugkoira@amazon.com>
+Fixes: 82582f85ed22 ("iommu/amd: Disable AMD IOMMU if CMPXCHG16B feature is not supported")
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Link: https://lore.kernel.org/r/20250826143816.38686-1-eugkoira@amazon.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/20250822024915.673427-1-zhen.ni@easystack.cn
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/init.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1592,6 +1592,10 @@ static void switch_to_super_page(struct
- 	unsigned long lvl_pages = lvl_to_nr_pages(level);
- 	struct dma_pte *pte = NULL;
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3048,7 +3048,8 @@ static int __init early_amd_iommu_init(v
  
-+	if (WARN_ON(!IS_ALIGNED(start_pfn, lvl_pages) ||
-+		    !IS_ALIGNED(end_pfn + 1, lvl_pages)))
-+		return;
-+
- 	while (start_pfn <= end_pfn) {
- 		if (!pte)
- 			pte = pfn_to_dma_pte(domain, start_pfn, &level,
-@@ -1667,7 +1671,8 @@ __domain_mapping(struct dmar_domain *dom
- 				unsigned long pages_to_remove;
+ 	if (!boot_cpu_has(X86_FEATURE_CX16)) {
+ 		pr_err("Failed to initialize. The CMPXCHG16B feature is required.\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
  
- 				pteval |= DMA_PTE_LARGE_PAGE;
--				pages_to_remove = min_t(unsigned long, nr_pages,
-+				pages_to_remove = min_t(unsigned long,
-+							round_down(nr_pages, lvl_pages),
- 							nr_pte_to_next_page(pte) * lvl_pages);
- 				end_pfn = iov_pfn + pages_to_remove - 1;
- 				switch_to_super_page(domain, iov_pfn, end_pfn, largepage_lvl);
+ 	/*
 
 
