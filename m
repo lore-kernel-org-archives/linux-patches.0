@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106E2820D1;
-	Mon, 22 Sep 2025 19:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF0C2820D1;
+	Mon, 22 Sep 2025 19:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569988; cv=none; b=mCjA1S92Em/wREROv3mGigH0koNtJ97dsaD7EDJMtRygvyX6H5GeY3xTlKyAIOBTJ48nHLXL3tNjY6L7aQOwLQeMbI48tPXcSrILOfvo5Jy/4Lz5GidZv+3qCKq/PohVhp4PuzW+/I2PE3b6C4ZQzqxqNcaMvWg2vxltLosBzyw=
+	t=1758569990; cv=none; b=VQxjXrROEnbfaFQC02VqeDfSSVV+lsq67pI2idppvwiBkaGCl3ChkDXYzaQ8/KsxyTc6QFaAHuDq6g89D8WuejkvMoitAi4m09BU/VU40QsOjsdvTVDHjbnctqVoUvMIXn1ueyBNrqcdaT8IICnGuUL89tflKjUqpNL1Ryz8xA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569988; c=relaxed/simple;
-	bh=c3xejx3Z+ml017A9EZ5DcgBz/X7ms+ZNH739Y+1M4Ec=;
+	s=arc-20240116; t=1758569990; c=relaxed/simple;
+	bh=xraCf5WCc6Bf9bUejpn6O3J/gywUYtdYeM5TxxZekeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtg9rICe+wQ41DQhYRE+VE/D/p1fVNMKwnUPTXYT0qMmQgMu9h99oDyKUGcRXFncBRhmDQVH3hyWGW7sPQayWz7nNZj1p9HxuvQz4Iian3obltQF74tEwFNkhv4F1Y8S6XehUBoFJF3fFl1qqjBs/d2h7hNusZ8sNeO4usvhDk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTxvxTQV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d0zNX3YTPBqvcJVQDatN+QoY3trFWO5G/Z5LxmlrtREx0liqf5zdk8dvrcJAT2+UJdXb0DOeoveJ7meN9IAJL89gUfdcF6ih7PIjR9/aaMDkW/mrpxcbCFC8gxZG6yAt4/eUYn7bobSa4GAtnWeoa3RdYAXPNr8R7VQNqzdL2iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jkQmUa8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTxvxTQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECDD4C4CEF0;
-	Mon, 22 Sep 2025 19:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jkQmUa8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BFCC4CEF0;
+	Mon, 22 Sep 2025 19:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569988;
-	bh=c3xejx3Z+ml017A9EZ5DcgBz/X7ms+ZNH739Y+1M4Ec=;
+	s=korg; t=1758569990;
+	bh=xraCf5WCc6Bf9bUejpn6O3J/gywUYtdYeM5TxxZekeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTxvxTQVHIraeNRKVaF5RBZdwM5gsELXZ7+LmWgXSGYWU/Q3d+W34PwqjWLwHX/eC
-	 Zj6jKZc6EAfBvji9eU1botARSHESz0XyNkYHgkvsFMLWWoE+l/0cRp5qZNKWIARqNQ
-	 QJMfkuPVZTdmpTynJt4Tzy8/fOExlzGp2B0uJUNQ=
+	b=0jkQmUa8v2DAV2uHpp+ojAsTNQW87pXo99gJUVYkg6v9zI/UK+sXjBKD0rXc0UB17
+	 /Hcw5u/gDba1fGnjVy3mnUpWedOdwMYrja7P0NG6e9DFdkOogyjS+vqI2ngMYpT4TN
+	 EPwnfS9jPV1kJlviZQ6iDsvJWQF5m+HNSYSYNTko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benedek Thaler <thaler@thaler.hu>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 067/105] io_uring: backport io_should_terminate_tw()
-Date: Mon, 22 Sep 2025 21:29:50 +0200
-Message-ID: <20250922192410.663177022@linuxfoundation.org>
+Subject: [PATCH 6.12 068/105] io_uring: include dying ring in task_work "should cancel" state
+Date: Mon, 22 Sep 2025 21:29:51 +0200
+Message-ID: <20250922192410.689653392@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,64 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Parts of commit b6f58a3f4aa8dba424356c7a69388a81f4459300 upstream.
+Commit 3539b1467e94336d5854ebf976d9627bfb65d6c3 upstream.
 
-Backport io_should_terminate_tw() helper to judge whether task_work
-should be run or terminated.
+When running task_work for an exiting task, rather than perform the
+issue retry attempt, the task_work is canceled. However, this isn't
+done for a ring that has been closed. This can lead to requests being
+successfully completed post the ring being closed, which is somewhat
+confusing and surprising to an application.
 
+Rather than just check the task exit state, also include the ring
+ref state in deciding whether or not to terminate a given request when
+run from task_work.
+
+Cc: stable@vger.kernel.org # 6.1+
+Link: https://github.com/axboe/liburing/discussions/1459
+Reported-by: Benedek Thaler <thaler@thaler.hu>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c  |    3 +--
- io_uring/io_uring.h  |   13 +++++++++++++
- io_uring/poll.c      |    3 +--
+ io_uring/io_uring.c  |    6 ++++--
+ io_uring/io_uring.h  |    4 ++--
+ io_uring/poll.c      |    2 +-
  io_uring/timeout.c   |    2 +-
  io_uring/uring_cmd.c |    2 +-
- 5 files changed, 17 insertions(+), 6 deletions(-)
+ 5 files changed, 9 insertions(+), 7 deletions(-)
 
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -1359,8 +1359,7 @@ static void io_req_task_cancel(struct io
+@@ -1358,8 +1358,10 @@ static void io_req_task_cancel(struct io
+ 
  void io_req_task_submit(struct io_kiocb *req, struct io_tw_state *ts)
  {
- 	io_tw_lock(req->ctx, ts);
--	/* req->task == current here, checking PF_EXITING is safe */
--	if (unlikely(req->task->flags & PF_EXITING))
-+	if (unlikely(io_should_terminate_tw()))
+-	io_tw_lock(req->ctx, ts);
+-	if (unlikely(io_should_terminate_tw()))
++	struct io_ring_ctx *ctx = req->ctx;
++
++	io_tw_lock(ctx, ts);
++	if (unlikely(io_should_terminate_tw(ctx)))
  		io_req_defer_failed(req, -EFAULT);
  	else if (req->flags & REQ_F_FORCE_ASYNC)
  		io_queue_iowq(req);
 --- a/io_uring/io_uring.h
 +++ b/io_uring/io_uring.h
-@@ -421,6 +421,19 @@ static inline bool io_allowed_run_tw(str
- 		      ctx->submitter_task == current);
+@@ -429,9 +429,9 @@ static inline bool io_allowed_run_tw(str
+  * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
+  *    our fallback task_work.
+  */
+-static inline bool io_should_terminate_tw(void)
++static inline bool io_should_terminate_tw(struct io_ring_ctx *ctx)
+ {
+-	return current->flags & (PF_KTHREAD | PF_EXITING);
++	return (current->flags & (PF_KTHREAD | PF_EXITING)) || percpu_ref_is_dying(&ctx->refs);
  }
  
-+/*
-+ * Terminate the request if either of these conditions are true:
-+ *
-+ * 1) It's being executed by the original task, but that task is marked
-+ *    with PF_EXITING as it's exiting.
-+ * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
-+ *    our fallback task_work.
-+ */
-+static inline bool io_should_terminate_tw(void)
-+{
-+	return current->flags & (PF_KTHREAD | PF_EXITING);
-+}
-+
  static inline void io_req_queue_tw_complete(struct io_kiocb *req, s32 res)
- {
- 	io_req_set_res(req, res, 0);
 --- a/io_uring/poll.c
 +++ b/io_uring/poll.c
-@@ -265,8 +265,7 @@ static int io_poll_check_events(struct i
+@@ -265,7 +265,7 @@ static int io_poll_check_events(struct i
  {
  	int v;
  
--	/* req->task == current here, checking PF_EXITING is safe */
--	if (unlikely(req->task->flags & PF_EXITING))
-+	if (unlikely(io_should_terminate_tw()))
+-	if (unlikely(io_should_terminate_tw()))
++	if (unlikely(io_should_terminate_tw(req->ctx)))
  		return -ECANCELED;
  
  	do {
@@ -118,8 +123,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	int ret = -ENOENT;
  
  	if (prev) {
--		if (!(req->task->flags & PF_EXITING)) {
-+		if (!io_should_terminate_tw()) {
+-		if (!io_should_terminate_tw()) {
++		if (!io_should_terminate_tw(req->ctx)) {
  			struct io_cancel_data cd = {
  				.ctx		= req->ctx,
  				.data		= prev->cqe.user_data,
@@ -129,8 +134,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
  	unsigned int flags = IO_URING_F_COMPLETE_DEFER;
  
--	if (current->flags & (PF_EXITING | PF_KTHREAD))
-+	if (io_should_terminate_tw())
+-	if (io_should_terminate_tw())
++	if (io_should_terminate_tw(req->ctx))
  		flags |= IO_URING_F_TASK_DEAD;
  
  	/* task_work executor checks the deffered list completion */
