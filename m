@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7552E285C;
-	Mon, 22 Sep 2025 19:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA1A2EDD5D;
+	Mon, 22 Sep 2025 19:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569770; cv=none; b=DB/vBtZXIs553illi9iTvfVXJQVy6uyqOaXNfPPaMRYEbpISUUQdSi2GAGHoD3TUl5DhTmfqV9RrtjH0VWuni9lH+8qIi7Xh0+lg/5y3+LMiF9204YQs690kCdfDnIL+9dDArE2gnHz715jqC7keb1VqY6pB6QAM5uKChRdgGNY=
+	t=1758569773; cv=none; b=jsy5m82lW9scLuKUvoef2EVYX5pKxMi5SJPHfVFlzuxxi1gPX98Cvj8sftMvr9fu0GFNmEXeXcmAlyFR4LxmfmvHCuWVYas+OjPvocXHgiUpr2MFxg3mcxE2xVKdps/Qb7abGS6zyyn0G1o1FoRn/Cnh7RORnAbfEU55/RfvYB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569770; c=relaxed/simple;
-	bh=JjM9vMMWmw7ibm6gnV/OXnghTDEb9zkBy6N4HoPolgw=;
+	s=arc-20240116; t=1758569773; c=relaxed/simple;
+	bh=F5oTZeF7v/UVu/Rg0HNZRxT0ivErx1lRHEGjaVzVXQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYMuhBvp/v/BZZoU/UkSK6GdEqG4I4YS83t07FJXb1OEUyBrHs2TUX7pWy2+pT1xJCVhTlBTEssdXZ8FOh4F3HiET9o9OeCRCbN13oh4wEg2rKVrauVO6W6FiWOO9SoA4RzbCbuJDLCp16msJ/MbpNtGdAW4bGtvuzS+8ylP10g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/1gkgsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aw52zawPVIN+NUf6l3ErfLMnoN72URywyHVDkmcoJFRqHkjuHTSEGCPaJkCGBe/FRDcIED0mgti2Nnt4+gzq/gpi3IFgQVYw2PGKhe8cFMBLS9f5JTjSXew5TgNkHP1AU9q+ZIsBXWUP2xsVCWCxi1VxBeBb951r8RedwJJ9Qrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMVAf8T1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/1gkgsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D436EC4CEF0;
-	Mon, 22 Sep 2025 19:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMVAf8T1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FABC4CEF0;
+	Mon, 22 Sep 2025 19:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569770;
-	bh=JjM9vMMWmw7ibm6gnV/OXnghTDEb9zkBy6N4HoPolgw=;
+	s=korg; t=1758569772;
+	bh=F5oTZeF7v/UVu/Rg0HNZRxT0ivErx1lRHEGjaVzVXQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/1gkgsTvpkHAuRVcxwtkdYnMkwmNlkXQC+Adt+oypeXjzImUmvKQgWKaUYL/8N6N
-	 ikMWhL8+iptkquQRi7QEsRjL64dtb6VUoHCjB/AynAMm3PbKVQLO7tdOxh7VCpPgJ2
-	 Uxl7Flc5bjF2DHAy8bGmcSTv6GLm/4DEEX6u+7mE=
+	b=bMVAf8T1Fu9raq/fJeuA5gyFe3tQ9nrRjWEoX+zYDXU4cKALlJtDkq0d/3w7Qcv2B
+	 cBD+4mdGBxzmSzGL9LVi84I2fLiiAQJk7ZyvQN59zZKm0wxYlwNVX1Ao5h6W9FgXAh
+	 Vcql4EU6bNwoZewMbPFFeIiQlTalJth2SiSymKtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankur Tyagi <ankur.tyagi85@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 50/70] ASoC: wm8940: Correct typo in control name
-Date: Mon, 22 Sep 2025 21:29:50 +0200
-Message-ID: <20250922192405.952267245@linuxfoundation.org>
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 41/70] KVM: SVM: Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active
+Date: Mon, 22 Sep 2025 21:29:41 +0200
+Message-ID: <20250922192405.720081603@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -52,36 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-[ Upstream commit b4799520dcd6fe1e14495cecbbe9975d847cd482 ]
+commit d02e48830e3fce9701265f6c5a58d9bdaf906a76 upstream.
 
-Fixes: 0b5e92c5e020 ("ASoC WM8940 Driver")
-Reported-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Tested-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
-Link: https://patch.msgid.link/20250821082639.1301453-3-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Commit 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+inhibited pre-VMRUN sync of TPR from LAPIC into VMCB::V_TPR in
+sync_lapic_to_cr8() when AVIC is active.
+
+AVIC does automatically sync between these two fields, however it does
+so only on explicit guest writes to one of these fields, not on a bare
+VMRUN.
+
+This meant that when AVIC is enabled host changes to TPR in the LAPIC
+state might not get automatically copied into the V_TPR field of VMCB.
+
+This is especially true when it is the userspace setting LAPIC state via
+KVM_SET_LAPIC ioctl() since userspace does not have access to the guest
+VMCB.
+
+Practice shows that it is the V_TPR that is actually used by the AVIC to
+decide whether to issue pending interrupts to the CPU (not TPR in TASKPRI),
+so any leftover value in V_TPR will cause serious interrupt delivery issues
+in the guest when AVIC is enabled.
+
+Fix this issue by doing pre-VMRUN TPR sync from LAPIC into VMCB::V_TPR
+even when AVIC is enabled.
+
+Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/c231be64280b1461e854e1ce3595d70cde3a2e9d.1756139678.git.maciej.szmigiero@oracle.com
+[sean: tag for stable@]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wm8940.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/svm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8940.c b/sound/soc/codecs/wm8940.c
-index eff7d1369d01a..39d2c8e85d9db 100644
---- a/sound/soc/codecs/wm8940.c
-+++ b/sound/soc/codecs/wm8940.c
-@@ -220,7 +220,7 @@ static const struct snd_kcontrol_new wm8940_snd_controls[] = {
- 	SOC_SINGLE_TLV("Digital Capture Volume", WM8940_ADCVOL,
- 		       0, 255, 0, wm8940_adc_tlv),
- 	SOC_ENUM("Mic Bias Level", wm8940_mic_bias_level_enum),
--	SOC_SINGLE_TLV("Capture Boost Volue", WM8940_ADCBOOST,
-+	SOC_SINGLE_TLV("Capture Boost Volume", WM8940_ADCBOOST,
- 		       8, 1, 0, wm8940_capture_boost_vol_tlv),
- 	SOC_SINGLE_TLV("Speaker Playback Volume", WM8940_SPKVOL,
- 		       0, 63, 0, wm8940_spk_vol_tlv),
--- 
-2.51.0
-
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4029,8 +4029,7 @@ static inline void sync_lapic_to_cr8(str
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	u64 cr8;
+ 
+-	if (nested_svm_virtualize_tpr(vcpu) ||
+-	    kvm_vcpu_apicv_active(vcpu))
++	if (nested_svm_virtualize_tpr(vcpu))
+ 		return;
+ 
+ 	cr8 = kvm_get_cr8(vcpu);
 
 
