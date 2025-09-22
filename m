@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8FDC8E6;
-	Mon, 22 Sep 2025 19:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1652BC8E6;
+	Mon, 22 Sep 2025 19:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569596; cv=none; b=OSowsJXo3idLWjieZmGm+XemvmR3WH8Mi8vTdwtOhxqKtE3ufu/wPezr7jc4A6Mc1AOX/k7gghc3edWKV2RQxWDyUr8y24nrgoSskZRVk9PdKBm4IOG5D74Q5ZF0t/qMMtsKJlSKbzZpL8e337gV1TgjLGjAlRWU9/QkVuGDs10=
+	t=1758569599; cv=none; b=il/n999RUtEOM9lNfL+s/SVof2T3rKorXonAJ/LlkVIfSawsS+aFLz/p93mHcci7gHv83WOGTTLhaqHHCQP1DRo97JI2a3wLY4YWLM+IFSfMYlYpgdHsXAPAzf6fOflO7/W9W9/9079Q1lohQg96foytjqLlHldCEKJJM/IO4jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569596; c=relaxed/simple;
-	bh=sfT+IJse1FrSPI1QrtOhgBawGx7fENamNyLEGl6DQCQ=;
+	s=arc-20240116; t=1758569599; c=relaxed/simple;
+	bh=luTmsAIj9CP/8Q+emcvxAmejTatbDed6ZKRLGVcxF4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/5TjzfWY7tpa+111WVzKw1KYafN7ECGcIreVKRYu66yEpslT5qHWR0QwoQ2tM7YcpNZIfmstaEN331j5Y1hi6VLgNQQZ9yVCyYCJUcvr3fJ4fK1M8UQshHdhD8Ihl9x6h7GCjHxS3Gfpy65HKJNeO1fR1/IZUIG2DivDso4g9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19wjZ0P3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFOTgm1r9pbw+X8QuT9F8sxjbHeZgrJ27QQA6QL07mtkXyPDJEuC9ErdTUiiccgeEmxVYVPQH0lIPd1PQ120wzNSseY0F69Mymfe08+s8u40hMsqUJQfmVz/iWK7L+xqqFYen5HENF/Hc1h0WJqZULI5RWP3lu/SOMVIXDvSUlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPvfBXq1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19wjZ0P3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4CCC4CEF0;
-	Mon, 22 Sep 2025 19:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPvfBXq1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41F2C4CEF0;
+	Mon, 22 Sep 2025 19:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569596;
-	bh=sfT+IJse1FrSPI1QrtOhgBawGx7fENamNyLEGl6DQCQ=;
+	s=korg; t=1758569599;
+	bh=luTmsAIj9CP/8Q+emcvxAmejTatbDed6ZKRLGVcxF4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19wjZ0P3zj2FO9YarwEjb0Q51ScXiGZlJJLakxhYFNt7mrax7hxbZcwbeHjElOiK0
-	 XqIg7jqWZi3Mu/cS4Ar2pMEvHa2VTuBXCOS5vNlvkA7du0M2eXnUfHs2Woo5trFvdN
-	 rbcKQ7CCeiRQnJLz8ZdCx40ZLigpIPZryHTqr2Kk=
+	b=uPvfBXq1bb7PLgcLWBh/Gfw9ZdR75IDY89p9e2XGGstnVpOLmZEIXDuAyu4a8ea//
+	 1L0/90hk/JbMS/DTyYr5xb7XxFpx1dZjAZ9WNBtAeHByhAn9TRpL0t0zcTSOFIin3s
+	 4b/Pk4Muybb+tnZdlSi2TfjTMyQRxyKKFDPZjZ3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
+	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Matthew Wilcox <willy@infradead.org>,
-	linux-crypto@vger.kernel.org,
-	netdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 43/61] crypto: af_alg: Indent the loop in af_alg_sendmsg()
-Date: Mon, 22 Sep 2025 21:29:36 +0200
-Message-ID: <20250922192404.764714238@linuxfoundation.org>
+Subject: [PATCH 6.1 44/61] crypto: af_alg - Set merge to zero early in af_alg_sendmsg
+Date: Mon, 22 Sep 2025 21:29:37 +0200
+Message-ID: <20250922192404.796697469@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -59,99 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 73d7409cfdad7fd08a9203eb2912c1c77e527776 ]
+[ Upstream commit 9574b2330dbd2b5459b74d3b5e9619d39299fc6f ]
 
-Put the loop in af_alg_sendmsg() into an if-statement to indent it to make
-the next patch easier to review as that will add another branch to handle
-MSG_SPLICE_PAGES to the if-statement.
+If an error causes af_alg_sendmsg to abort, ctx->merge may contain
+a garbage value from the previous loop.  This may then trigger a
+crash on the next entry into af_alg_sendmsg when it attempts to do
+a merge that can't be done.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Jens Axboe <axboe@kernel.dk>
-cc: Matthew Wilcox <willy@infradead.org>
-cc: linux-crypto@vger.kernel.org
-cc: netdev@vger.kernel.org
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 9574b2330dbd ("crypto: af_alg - Set merge to zero early in af_alg_sendmsg")
+Fix this by setting ctx->merge to zero near the start of the loop.
+
+Fixes: 8ff590903d5 ("crypto: algif_skcipher - User-space interface for skcipher operations")
+Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c | 51 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 24 deletions(-)
+ crypto/af_alg.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index fef69d2a6b183..d5a8368a47c5c 100644
+index d5a8368a47c5c..aca9d72553e8f 100644
 --- a/crypto/af_alg.c
 +++ b/crypto/af_alg.c
-@@ -927,35 +927,38 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 		if (sgl->cur)
- 			sg_unmark_end(sg + sgl->cur - 1);
+@@ -908,6 +908,8 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 			continue;
+ 		}
  
--		do {
--			struct page *pg;
--			unsigned int i = sgl->cur;
-+		if (1 /* TODO check MSG_SPLICE_PAGES */) {
-+			do {
-+				struct page *pg;
-+				unsigned int i = sgl->cur;
- 
--			plen = min_t(size_t, len, PAGE_SIZE);
-+				plen = min_t(size_t, len, PAGE_SIZE);
- 
--			pg = alloc_page(GFP_KERNEL);
--			if (!pg) {
--				err = -ENOMEM;
--				goto unlock;
--			}
-+				pg = alloc_page(GFP_KERNEL);
-+				if (!pg) {
-+					err = -ENOMEM;
-+					goto unlock;
-+				}
- 
--			sg_assign_page(sg + i, pg);
-+				sg_assign_page(sg + i, pg);
- 
--			err = memcpy_from_msg(page_address(sg_page(sg + i)),
--					      msg, plen);
--			if (err) {
--				__free_page(sg_page(sg + i));
--				sg_assign_page(sg + i, NULL);
--				goto unlock;
--			}
-+				err = memcpy_from_msg(
-+					page_address(sg_page(sg + i)),
-+					msg, plen);
-+				if (err) {
-+					__free_page(sg_page(sg + i));
-+					sg_assign_page(sg + i, NULL);
-+					goto unlock;
-+				}
- 
--			sg[i].length = plen;
--			len -= plen;
--			ctx->used += plen;
--			copied += plen;
--			size -= plen;
--			sgl->cur++;
--		} while (len && sgl->cur < MAX_SGL_ENTS);
-+				sg[i].length = plen;
-+				len -= plen;
-+				ctx->used += plen;
-+				copied += plen;
-+				size -= plen;
-+				sgl->cur++;
-+			} while (len && sgl->cur < MAX_SGL_ENTS);
-+		}
- 
- 		if (!size)
- 			sg_mark_end(sg + sgl->cur - 1);
++		ctx->merge = 0;
++
+ 		if (!af_alg_writable(sk)) {
+ 			err = af_alg_wait_for_wmem(sk, msg->msg_flags);
+ 			if (err)
 -- 
 2.51.0
 
