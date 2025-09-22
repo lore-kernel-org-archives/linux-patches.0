@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF9A2F0C5C;
-	Mon, 22 Sep 2025 19:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE0C2F0C5C;
+	Mon, 22 Sep 2025 19:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570280; cv=none; b=bMFnQuR++Wb4EnHbUudEM/fCJQnHbL3ringbSudW0iGSjYyXlxqD58R4pdirMXwTeLFsuFPk8GOgYZZljogdRHdYRd7Afu83eacZf+YFtxagw+f3PGF80FtEYomETz4qzu8K2PKn+0HuSZSp8Cio0CW8oKQYrJLO6zpRK+CQX4s=
+	t=1758570282; cv=none; b=iP7S/Ou6iu/Qy7OCyMPAuIkMCu2lCrFGXIMYbZjImQ96YUKPdYSW9m4fO/E4ryjUU2up2NqCnkp2LuLmdpfVUCD8f1dL5Ft/5QhRraBJE8kz2/j5Yi0htlCGDyQfH49Rf7pCNBbtT1q3uw1DdM6T9Uq6x8ncbQhHqfTAu7ZTVNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570280; c=relaxed/simple;
-	bh=jcys/min0QlXdWznCnPq6wvju/1LI6hWp0XqI8rsUwY=;
+	s=arc-20240116; t=1758570282; c=relaxed/simple;
+	bh=lafH5kJiaqeRgxFRdUdoQ04DiPl4juTv6X+mnlBiLeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3z2+PYXLmBh3h2F3P7K3aIk/wjj+UFBo7ddKjzrHipod+t/Gnw/xBVWam76TEVrR0sJ0c98IHn/fgmTv9b+UJAvbp8r6BCgqmCC9dxDmXQ9hvXMeYs9eAkediVY+0vjLn175mifAtiehl9Kx/V4nolobvRbmHxu52x2vmuMTg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJR4jfTo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyw0cXTbmIrRsBDWov7g5dJu8JTs4UWmQAmJnPXsQVwRENjlBO6cME8qAYQcLnVV9uGEDiLQKGH3oX4Sio3p9qHpdJefHCAHn9SSjBUXxcVjf28GHLTMlI0H3W2UNb1uUFXhasxOM+ZvRW8olOLNyD/QMj4jfmHUWWPlDzdQ114=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQm9CEod; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJR4jfTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68373C4CEF0;
-	Mon, 22 Sep 2025 19:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQm9CEod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF866C4CEF0;
+	Mon, 22 Sep 2025 19:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570279;
-	bh=jcys/min0QlXdWznCnPq6wvju/1LI6hWp0XqI8rsUwY=;
+	s=korg; t=1758570282;
+	bh=lafH5kJiaqeRgxFRdUdoQ04DiPl4juTv6X+mnlBiLeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJR4jfTok+687vKJSKZvw/J6Dka3SetSctJp24Hy8NWYK1hSIRRX0QwWjAODsVdhT
-	 Lziq/GxoPhYJ/5ABJquNVl/fam5g61odtQnbK9WqiWurv+iO/WZgVYtSIjZzby9Y5e
-	 A/qzuftcbDmmBSKM9OPZM8u9/WTYEmDlNEe7YHGQ=
+	b=JQm9CEodlDP8dhxcwD/heVSPMSZIOj0aWFrgi04gb9I4ddM0iY9Fg20/uwOr5eAk4
+	 Owag9Mmik/Tir7y8uhGRnin5uA+b+JqRQ0uwj7Rh3ZK8iRCh/0tMMcHrJsO/vuJXhS
+	 Floy8zdHLcxhMxDVWRoWhANDMGY8bEN0XU/RtFkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 075/149] LoongArch: KVM: Avoid copy_*_user() with lock hold in kvm_eiointc_sw_status_access()
-Date: Mon, 22 Sep 2025 21:29:35 +0200
-Message-ID: <20250922192414.774526466@linuxfoundation.org>
+Subject: [PATCH 6.16 066/149] objtool/LoongArch: Mark special atomic instruction as INSN_BUG type
+Date: Mon, 22 Sep 2025 21:29:26 +0200
+Message-ID: <20250922192414.546521469@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -50,127 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 01a8e68396a6d51f5ba92021ad1a4b8eaabdd0e7 upstream.
+commit 539d7344d4feaea37e05863e9aa86bd31f28e46f upstream.
 
-Function copy_from_user() and copy_to_user() may sleep because of page
-fault, and they cannot be called in spin_lock hold context. Here move
-funtcion calling of copy_from_user() and copy_to_user() out of function
-kvm_eiointc_sw_status_access().
+When compiling with LLVM and CONFIG_RUST is set, there exists the
+following objtool warning:
 
-Otherwise there will be possible warning such as:
+  rust/compiler_builtins.o: warning: objtool: __rust__unordsf2(): unexpected end of section .text.unlikely.
 
-BUG: sleeping function called from invalid context at include/linux/uaccess.h:192
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 6292, name: qemu-system-loo
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 0
-hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-hardirqs last disabled at (0): [<9000000004c4a554>] copy_process+0x90c/0x1d40
-softirqs last  enabled at (0): [<9000000004c4a554>] copy_process+0x90c/0x1d40
-softirqs last disabled at (0): [<0000000000000000>] 0x0
-CPU: 41 UID: 0 PID: 6292 Comm: qemu-system-loo Tainted: G W 6.17.0-rc3+ #31 PREEMPT(full)
-Tainted: [W]=WARN
-Stack : 0000000000000076 0000000000000000 9000000004c28264 9000100092ff4000
-        9000100092ff7b80 9000100092ff7b88 0000000000000000 9000100092ff7cc8
-        9000100092ff7cc0 9000100092ff7cc0 9000100092ff7a00 0000000000000001
-        0000000000000001 9000100092ff7b88 947d2f9216a5e8b9 900010008773d880
-        00000000ffff8b9f fffffffffffffffe 0000000000000ba1 fffffffffffffffe
-        000000000000003e 900000000825a15b 000010007ad38000 9000100092ff7ec0
-        0000000000000000 0000000000000000 9000000006f3ac60 9000000007252000
-        0000000000000000 00007ff746ff2230 0000000000000053 9000200088a021b0
-        0000555556c9d190 0000000000000000 9000000004c2827c 000055556cfb5f40
-        00000000000000b0 0000000000000007 0000000000000007 0000000000071c1d
-Call Trace:
-[<9000000004c2827c>] show_stack+0x5c/0x180
-[<9000000004c20fac>] dump_stack_lvl+0x94/0xe4
-[<9000000004c99c7c>] __might_resched+0x26c/0x290
-[<9000000004f68968>] __might_fault+0x20/0x88
-[<ffff800002311de0>] kvm_eiointc_sw_status_access.isra.0+0x88/0x380 [kvm]
-[<ffff8000022f8514>] kvm_device_ioctl+0x194/0x290 [kvm]
-[<900000000506b0d8>] sys_ioctl+0x388/0x1010
-[<90000000063ed210>] do_syscall+0xb0/0x2d8
-[<9000000004c25ef8>] handle_syscall+0xb8/0x158
+objdump shows that the end of section .text.unlikely is an atomic
+instruction:
+
+  amswap.w        $zero, $ra, $zero
+
+According to the LoongArch Reference Manual, if the amswap.w atomic
+memory access instruction has the same register number as rd and rj,
+the execution will trigger an Instruction Non-defined Exception, so
+mark the above instruction as INSN_BUG type to fix the warning.
 
 Cc: stable@vger.kernel.org
-Fixes: 1ad7efa552fd5 ("LoongArch: KVM: Add EIOINTC user mode read and write functions")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c |   29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ tools/arch/loongarch/include/asm/inst.h |   12 ++++++++++++
+ tools/objtool/arch/loongarch/decode.c   |   21 +++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
---- a/arch/loongarch/kvm/intc/eiointc.c
-+++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -911,19 +911,17 @@ static int kvm_eiointc_regs_access(struc
+--- a/tools/arch/loongarch/include/asm/inst.h
++++ b/tools/arch/loongarch/include/asm/inst.h
+@@ -51,6 +51,10 @@ enum reg2i16_op {
+ 	bgeu_op		= 0x1b,
+ };
  
- static int kvm_eiointc_sw_status_access(struct kvm_device *dev,
- 					struct kvm_device_attr *attr,
--					bool is_write)
-+					bool is_write, int *data)
- {
- 	int addr, ret = 0;
- 	unsigned long flags;
- 	void *p = NULL;
--	void __user *data;
- 	struct loongarch_eiointc *s;
- 
- 	s = dev->kvm->arch.eiointc;
- 	addr = attr->attr;
- 	addr &= 0xffff;
- 
--	data = (void __user *)attr->addr;
- 	switch (addr) {
- 	case KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_NUM_CPU:
- 		if (is_write)
-@@ -945,13 +943,10 @@ static int kvm_eiointc_sw_status_access(
- 		return -EINVAL;
- 	}
- 	spin_lock_irqsave(&s->lock, flags);
--	if (is_write) {
--		if (copy_from_user(p, data, 4))
--			ret = -EFAULT;
--	} else {
--		if (copy_to_user(data, p, 4))
--			ret = -EFAULT;
--	}
-+	if (is_write)
-+		memcpy(p, data, 4);
-+	else
-+		memcpy(data, p, 4);
- 	spin_unlock_irqrestore(&s->lock, flags);
- 
- 	return ret;
-@@ -973,7 +968,14 @@ static int kvm_eiointc_get_attr(struct k
- 
- 		return ret;
- 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS:
--		return kvm_eiointc_sw_status_access(dev, attr, false);
-+		ret = kvm_eiointc_sw_status_access(dev, attr, false, &data);
-+		if (ret)
-+			return ret;
++enum reg3_op {
++	amswapw_op	= 0x70c0,
++};
 +
-+		if (copy_to_user((void __user *)attr->addr, &data, 4))
-+			ret = -EFAULT;
-+
-+		return ret;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -993,7 +995,10 @@ static int kvm_eiointc_set_attr(struct k
+ struct reg0i15_format {
+ 	unsigned int immediate : 15;
+ 	unsigned int opcode : 17;
+@@ -96,6 +100,13 @@ struct reg2i16_format {
+ 	unsigned int opcode : 6;
+ };
  
- 		return kvm_eiointc_regs_access(dev, attr, true, &data);
- 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS:
--		return kvm_eiointc_sw_status_access(dev, attr, true);
-+		if (copy_from_user(&data, (void __user *)attr->addr, 4))
-+			return -EFAULT;
++struct reg3_format {
++	unsigned int rd : 5;
++	unsigned int rj : 5;
++	unsigned int rk : 5;
++	unsigned int opcode : 17;
++};
 +
-+		return kvm_eiointc_sw_status_access(dev, attr, true, &data);
- 	default:
- 		return -EINVAL;
- 	}
+ union loongarch_instruction {
+ 	unsigned int word;
+ 	struct reg0i15_format	reg0i15_format;
+@@ -105,6 +116,7 @@ union loongarch_instruction {
+ 	struct reg2i12_format	reg2i12_format;
+ 	struct reg2i14_format	reg2i14_format;
+ 	struct reg2i16_format	reg2i16_format;
++	struct reg3_format	reg3_format;
+ };
+ 
+ #define LOONGARCH_INSN_SIZE	sizeof(union loongarch_instruction)
+--- a/tools/objtool/arch/loongarch/decode.c
++++ b/tools/objtool/arch/loongarch/decode.c
+@@ -278,6 +278,25 @@ static bool decode_insn_reg2i16_fomat(un
+ 	return true;
+ }
+ 
++static bool decode_insn_reg3_fomat(union loongarch_instruction inst,
++				   struct instruction *insn)
++{
++	switch (inst.reg3_format.opcode) {
++	case amswapw_op:
++		if (inst.reg3_format.rd == LOONGARCH_GPR_ZERO &&
++		    inst.reg3_format.rk == LOONGARCH_GPR_RA &&
++		    inst.reg3_format.rj == LOONGARCH_GPR_ZERO) {
++			/* amswap.w $zero, $ra, $zero */
++			insn->type = INSN_BUG;
++		}
++		break;
++	default:
++		return false;
++	}
++
++	return true;
++}
++
+ int arch_decode_instruction(struct objtool_file *file, const struct section *sec,
+ 			    unsigned long offset, unsigned int maxlen,
+ 			    struct instruction *insn)
+@@ -309,6 +328,8 @@ int arch_decode_instruction(struct objto
+ 		return 0;
+ 	if (decode_insn_reg2i16_fomat(inst, insn))
+ 		return 0;
++	if (decode_insn_reg3_fomat(inst, insn))
++		return 0;
+ 
+ 	if (inst.word == 0) {
+ 		/* andi $zero, $zero, 0x0 */
 
 
