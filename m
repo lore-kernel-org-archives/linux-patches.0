@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC0618C2C;
-	Mon, 22 Sep 2025 19:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C6518C2C;
+	Mon, 22 Sep 2025 19:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570440; cv=none; b=T3miXO3AZOuQB4DbroAkQA4bKY3eIoeeg0j87J8Cfj3EpPYFsWryAOKpzwYObw59TITe/zueyolnhJBDQfu9vu7jMoGqOLxjj8x1qSU5F8CgesQY9VuVtA72L5ardc3TS/csz8N4O3cVLAZrpSCgt9p+RsFwXTCqxl+fijFkZpg=
+	t=1758570442; cv=none; b=aYpLO/2SR9Az9ssWL06cjHgLW0Pw7FNgdUKAXytL+LR/bq0bcDpJl0NN8xVg0C9ovaSLF60s/+bZ/qYR4D7jpWWH3YypZfNshB+VPrZwX4IpAGos6Zhn+Xw9vpCQGypkKPJrGEUuSS5XDISPVRqndAwZiSV+PdxlhIaJk54rF2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570440; c=relaxed/simple;
-	bh=3kaPCucswmDEL7740QcRPllkEzIou3iXnT0Ixv9+Qp4=;
+	s=arc-20240116; t=1758570442; c=relaxed/simple;
+	bh=/c7B+zlqemw3tO/K4i3oFs1a6nxBzrfv2e3GRxKRGCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PbbCKPi69aGDOvSYTcnEXknMN2BPZex8AfeCyRIS+Kbtp+qYGfQVyCS3yjHx6wtv/uTDNbp4dQb/Kg38VKa2PgJk+rWAlHXZD+SMp1tNIVH7uQTjj800QR2bUhyl2cLVUkNAxv3V7FsnFdokHoaVb7P+k4ZPXTcBTtAx6D1+HdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVvLeITU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FF/Cpd6HApPzcM8/xR3uvzwwMytVy+x1qokfN8Np0gH6Xv8XzE8EXYa4nVN0ytCUZ8worwEv07xM/W1sv58fEahTUphXU7752JXcQopcm8kbdLCYatXsPgak/tTnj3ni9JVZCSjckcAPeYeVpoexFRfNk2zYKab7vd6YU0itOyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvxRdokR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVvLeITU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F41DC4CEF0;
-	Mon, 22 Sep 2025 19:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvxRdokR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FD4C4CEF0;
+	Mon, 22 Sep 2025 19:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570439;
-	bh=3kaPCucswmDEL7740QcRPllkEzIou3iXnT0Ixv9+Qp4=;
+	s=korg; t=1758570442;
+	bh=/c7B+zlqemw3tO/K4i3oFs1a6nxBzrfv2e3GRxKRGCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVvLeITU4D44LuPLVSf/yUwaSfAk0KiSRgrCXS3gZpB06AVa02tzbm7jrlbqS0uZ4
-	 whtLN+sC5aHocyRZaCV/FfttuS9Hpd8l61m1GdaMAqISXp0IpztW2uvc8ZxyoMG8TS
-	 HIazZWfYhTBs2tl8zQIVzGPMsaoGNezO+vAJ+kmc=
+	b=hvxRdokRIFAFC6acgRW0L8XtY749FmBDonizWWOQCQBaM7KNaKBdtveGjmcqCYBQS
+	 1tvRNjfpxPuzZjoafLH5SktzFgpRmwtZ6oKOK19xvWIx3JIAQMo3z7AVBPI9N9G6ah
+	 nLqbIh6n1xdBUMilJJzEToIm24foOpOK8QQIOO9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandra <rahul@chandra.net>,
-	stable@kernel.org,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.16 140/149] platform/x86: asus-wmi: Re-add extra keys to ignore_key_wlan quirk
-Date: Mon, 22 Sep 2025 21:30:40 +0200
-Message-ID: <20250922192416.397528145@linuxfoundation.org>
+	Marek Majkowski <marek@cloudflare.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.16 141/149] mptcp: pm: nl: announce deny-join-id0 flag
+Date: Mon, 22 Sep 2025 21:30:41 +0200
+Message-ID: <20250922192416.422574961@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -46,46 +46,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 225d1ee0f5ba3218d1814d36564fdb5f37b50474 upstream.
+commit 2293c57484ae64c9a3c847c8807db8c26a3a4d41 upstream.
 
-It turns out that the dual screen models use 0x5E for attaching and
-detaching the keyboard instead of 0x5F. So, re-add the codes by
-reverting commit cf3940ac737d ("platform/x86: asus-wmi: Remove extra
-keys from ignore_key_wlan quirk"). For our future reference, add a
-comment next to 0x5E indicating that it is used for that purpose.
+During the connection establishment, a peer can tell the other one that
+it cannot establish new subflows to the initial IP address and port by
+setting the 'C' flag [1]. Doing so makes sense when the sender is behind
+a strict NAT, operating behind a legacy Layer 4 load balancer, or using
+anycast IP address for example.
 
-Fixes: cf3940ac737d ("platform/x86: asus-wmi: Remove extra keys from ignore_key_wlan quirk")
-Reported-by: Rahul Chandra <rahul@chandra.net>
-Closes: https://lore.kernel.org/all/10020-68c90c80-d-4ac6c580@106290038/
-Cc: stable@kernel.org
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20250916072818.196462-1-lkml@antheas.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+When this 'C' flag is set, the path-managers must then not try to
+establish new subflows to the other peer's initial IP address and port.
+The in-kernel PM has access to this info, but the userspace PM didn't.
+
+The RFC8684 [1] is strict about that:
+
+  (...) therefore the receiver MUST NOT try to open any additional
+  subflows toward this address and port.
+
+So it is important to tell the userspace about that as it is responsible
+for the respect of this flag.
+
+When a new connection is created and established, the Netlink events
+now contain the existing but not currently used 'flags' attribute. When
+MPTCP_PM_EV_FLAG_DENY_JOIN_ID0 is set, it means no other subflows
+to the initial IP address and port -- info that are also part of the
+event -- can be established.
+
+Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.1-20.6 [1]
+Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
+Reported-by: Marek Majkowski <marek@cloudflare.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/532
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-2-40171884ade8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in mptcp_pm.yaml, because the indentation has been modified
+  in commit ec362192aa9e ("netlink: specs: fix up indentation errors"),
+  which is not in this version. Applying the same modifications, but at
+  a different level. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/netlink/specs/mptcp_pm.yaml |    4 ++--
+ include/uapi/linux/mptcp.h                |    2 ++
+ include/uapi/linux/mptcp_pm.h             |    4 ++--
+ net/mptcp/pm_netlink.c                    |    7 +++++++
+ 4 files changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -670,6 +670,8 @@ static void asus_nb_wmi_key_filter(struc
- 		if (atkbd_reports_vol_keys)
- 			*code = ASUS_WMI_KEY_IGNORE;
- 		break;
-+	case 0x5D: /* Wireless console Toggle */
-+	case 0x5E: /* Wireless console Enable / Keyboard Attach, Detach */
- 	case 0x5F: /* Wireless console Disable / Special Key */
- 		if (quirks->key_wlan_event)
- 			*code = quirks->key_wlan_event;
+--- a/Documentation/netlink/specs/mptcp_pm.yaml
++++ b/Documentation/netlink/specs/mptcp_pm.yaml
+@@ -28,13 +28,13 @@ definitions:
+         traffic-patterns it can take a long time until the
+         MPTCP_EVENT_ESTABLISHED is sent.
+         Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6, sport,
+-        dport, server-side.
++        dport, server-side, [flags].
+      -
+       name: established
+       doc: >-
+         A MPTCP connection is established (can start new subflows).
+         Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6, sport,
+-        dport, server-side.
++        dport, server-side, [flags].
+      -
+       name: closed
+       doc: >-
+--- a/include/uapi/linux/mptcp.h
++++ b/include/uapi/linux/mptcp.h
+@@ -31,6 +31,8 @@
+ #define MPTCP_INFO_FLAG_FALLBACK		_BITUL(0)
+ #define MPTCP_INFO_FLAG_REMOTE_KEY_RECEIVED	_BITUL(1)
+ 
++#define MPTCP_PM_EV_FLAG_DENY_JOIN_ID0		_BITUL(0)
++
+ #define MPTCP_PM_ADDR_FLAG_SIGNAL                      (1 << 0)
+ #define MPTCP_PM_ADDR_FLAG_SUBFLOW                     (1 << 1)
+ #define MPTCP_PM_ADDR_FLAG_BACKUP                      (1 << 2)
+--- a/include/uapi/linux/mptcp_pm.h
++++ b/include/uapi/linux/mptcp_pm.h
+@@ -16,10 +16,10 @@
+  *   good time to allocate memory and send ADD_ADDR if needed. Depending on the
+  *   traffic-patterns it can take a long time until the MPTCP_EVENT_ESTABLISHED
+  *   is sent. Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6,
+- *   sport, dport, server-side.
++ *   sport, dport, server-side, [flags].
+  * @MPTCP_EVENT_ESTABLISHED: A MPTCP connection is established (can start new
+  *   subflows). Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6,
+- *   sport, dport, server-side.
++ *   sport, dport, server-side, [flags].
+  * @MPTCP_EVENT_CLOSED: A MPTCP connection has stopped. Attribute: token.
+  * @MPTCP_EVENT_ANNOUNCED: A new address has been announced by the peer.
+  *   Attributes: token, rem_id, family, daddr4 | daddr6 [, dport].
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -408,6 +408,7 @@ static int mptcp_event_created(struct sk
+ 			       const struct sock *ssk)
+ {
+ 	int err = nla_put_u32(skb, MPTCP_ATTR_TOKEN, READ_ONCE(msk->token));
++	u16 flags = 0;
+ 
+ 	if (err)
+ 		return err;
+@@ -415,6 +416,12 @@ static int mptcp_event_created(struct sk
+ 	if (nla_put_u8(skb, MPTCP_ATTR_SERVER_SIDE, READ_ONCE(msk->pm.server_side)))
+ 		return -EMSGSIZE;
+ 
++	if (READ_ONCE(msk->pm.remote_deny_join_id0))
++		flags |= MPTCP_PM_EV_FLAG_DENY_JOIN_ID0;
++
++	if (flags && nla_put_u16(skb, MPTCP_ATTR_FLAGS, flags))
++		return -EMSGSIZE;
++
+ 	return mptcp_event_add_subflow(skb, ssk);
+ }
+ 
 
 
