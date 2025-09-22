@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A5017A2EA;
-	Mon, 22 Sep 2025 19:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB03C8E6;
+	Mon, 22 Sep 2025 19:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569581; cv=none; b=cOR2etJp2EYhgtxm357I8hFGYiEN//8Y2xzrE6lVY35lQdO2u9tQYtLKtMmR/hKUsweQWtyRcTudnYeVy44nxHXyUtWGTAhX5jWN4eKvuvi3NSVc38nKA1PagBJ+EMak4vm2SNS1AOAD6QE1QllBpitg7rsRHxFnguwThSyoNLA=
+	t=1758569584; cv=none; b=T9H2D4K4dhDSX6L4Ylb3+kFzv76e5tPYMe07ktzsYAsLFR6Xu0RhIGmGCNtjBydS7eIA1q/Mro1LVsF3gHtjC5VUq2YlnGI6v4n2ULq9KI8A3SkSIh3YIvOfXjZuuTHkYJyGz7ADkw65RAGqBSOoA4Ge8NSybz+kGMz7ZCVm7Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569581; c=relaxed/simple;
-	bh=y8In/KbXwM469K+r6cc8CZuz67dDLt+yzyh+2T0Zgyw=;
+	s=arc-20240116; t=1758569584; c=relaxed/simple;
+	bh=mgYy49SUbNJGvTlk/nPTLHHxogx8IvWfcEfcXmlNbHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAovSwmDX9bffFEerk9VjcB/ByFSlJ/moPR6Pa6Ky0MmBV5bXCzkwkfAlrMTdYdt4ZvtSDY9FZ3dFnonaBzVLRam2BQV+99eum9xO4gSPxxYvK+qlzn+5Za6p+ii2OZsSowp+QGTpBmW+w2pt87GMDUynh45QAitape2PYB23l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7Xv4lCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRiwY+206H+m0LaUMrgn5mliMDdwAZdFgujzm+pGCG+y4QAbTkTat68qlc1pzkYIKrsgGTcZfp35EMPuzUXo20Kljd34H6xD4wwooMErRivbbUhhPlTT4JL6lcLmfwwLiNGd2NBHt0BaZdZy5pL4wD5YyxLMWdk+sszLETqLvhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nue+4k8o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7Xv4lCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6A1C4CEF0;
-	Mon, 22 Sep 2025 19:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nue+4k8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD239C4CEF0;
+	Mon, 22 Sep 2025 19:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569581;
-	bh=y8In/KbXwM469K+r6cc8CZuz67dDLt+yzyh+2T0Zgyw=;
+	s=korg; t=1758569584;
+	bh=mgYy49SUbNJGvTlk/nPTLHHxogx8IvWfcEfcXmlNbHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7Xv4lCvzSs5hEBnNsE66NhaNDyHnZNv8LH+I9HVoZJVPeZaxbi2tJpwpgJCFKXdb
-	 lOz0kkXmQdJPMQqJ7Ai0gdGfcTyW22uR36jqhMdGTf+kJq0y546jpVtGNDWy8MXR1V
-	 LIMlD8PkBVieEuoWaj0EWWdc6rs30OY65lrp33ZE=
+	b=Nue+4k8os4ByInCVgCpm9SALnkvb5bbUWmzIcQAAf4rqX9gH7Yaks1HYzzfxir51c
+	 1yFdM4699cQPnMLHVIVgWDRBwFrBul4b4WD1Z63M4VAg+yK1jJbQ2KskE1oafgs/nF
+	 WpRx7IjWovXBOyktwoyHl1duzFFX3KUDTdt+BZrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 41/61] drm: bridge: anx7625: Fix NULL pointer dereference with early IRQ
-Date: Mon, 22 Sep 2025 21:29:34 +0200
-Message-ID: <20250922192404.703112947@linuxfoundation.org>
+Subject: [PATCH 6.1 50/61] phy: ti: omap-usb2: fix device leak at unbind
+Date: Mon, 22 Sep 2025 21:29:43 +0200
+Message-ID: <20250922192404.993922051@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -51,51 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit a10f910c77f280327b481e77eab909934ec508f0 ]
+[ Upstream commit 64961557efa1b98f375c0579779e7eeda1a02c42 ]
 
-If the interrupt occurs before resource initialization is complete, the
-interrupt handler/worker may access uninitialized data such as the I2C
-tcpc_client device, potentially leading to NULL pointer dereference.
+Make sure to drop the reference to the control device taken by
+of_find_device_by_node() during probe when the driver is unbound.
 
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250709085438.56188-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 478b6c7436c2 ("usb: phy: omap-usb2: Don't use omap_get_control_dev()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724131206.2211-3-johan@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/ti/phy-omap-usb2.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index e14c9fdabe2ba..690a0e7f5f6e2 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -2697,7 +2697,7 @@ static int anx7625_i2c_probe(struct i2c_client *client)
- 		ret = devm_request_threaded_irq(dev, platform->pdata.intp_irq,
- 						NULL, anx7625_intr_hpd_isr,
- 						IRQF_TRIGGER_FALLING |
--						IRQF_ONESHOT,
-+						IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 						"anx7625-intp", platform);
- 		if (ret) {
- 			DRM_DEV_ERROR(dev, "fail to request irq\n");
-@@ -2767,8 +2767,10 @@ static int anx7625_i2c_probe(struct i2c_client *client)
- 	}
+--- a/drivers/phy/ti/phy-omap-usb2.c
++++ b/drivers/phy/ti/phy-omap-usb2.c
+@@ -363,6 +363,13 @@ static void omap_usb2_init_errata(struct
+ 		phy->flags |= OMAP_USB2_DISABLE_CHRG_DET;
+ }
  
- 	/* Add work function */
--	if (platform->pdata.intp_irq)
-+	if (platform->pdata.intp_irq) {
-+		enable_irq(platform->pdata.intp_irq);
- 		queue_work(platform->workqueue, &platform->work);
-+	}
++static void omap_usb2_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int omap_usb2_probe(struct platform_device *pdev)
+ {
+ 	struct omap_usb	*phy;
+@@ -373,6 +380,7 @@ static int omap_usb2_probe(struct platfo
+ 	struct device_node *control_node;
+ 	struct platform_device *control_pdev;
+ 	const struct usb_phy_data *phy_data;
++	int ret;
  
- 	if (platform->pdata.audio_en)
- 		anx7625_register_audio(dev, platform);
--- 
-2.51.0
-
+ 	phy_data = device_get_match_data(&pdev->dev);
+ 	if (!phy_data)
+@@ -423,6 +431,11 @@ static int omap_usb2_probe(struct platfo
+ 			return -EINVAL;
+ 		}
+ 		phy->control_dev = &control_pdev->dev;
++
++		ret = devm_add_action_or_reset(&pdev->dev, omap_usb2_put_device,
++					       phy->control_dev);
++		if (ret)
++			return ret;
+ 	} else {
+ 		if (of_property_read_u32_index(node,
+ 					       "syscon-phy-power", 1,
 
 
