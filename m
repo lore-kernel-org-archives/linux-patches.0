@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE91191F66;
-	Mon, 22 Sep 2025 19:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33262191F66;
+	Mon, 22 Sep 2025 19:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569706; cv=none; b=d1AFp9p7nnVo9oSW+1cY9hBBprOnN6qIHFR82gy2vOK6B7fhkLF75epRo9QSOq3pn8kJpnBJYdwGuMfdjUT5qQ2ezSdJYPVK1/B8NjLaArOlNt6PWC5LlselE77FUwYs4KIM1MbrW6Vxdi4jkTRtg8I2I2Is0ibUC1+S+rHq7Gk=
+	t=1758569710; cv=none; b=ShWvYQrOTLXglIrxXdyJ8tTvRlssgnXHznE4A3kkU4AZTGKSrHnjtYTupiqW9rpXwAhHV+fLvMcgNAEjzqYabQF+VW8ayENpVxaHnoNqfhJSPdpjjZdH6ZvAuhsbrxDwUMaicHbTy1hNDXBoGEPAHrZsAS9mXqrgD2PbJ9Ufi9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569706; c=relaxed/simple;
-	bh=7zeZlM939qvrgRATpOfh+6GEzlGEanXNH6mgG4eYW7w=;
+	s=arc-20240116; t=1758569710; c=relaxed/simple;
+	bh=WW+zsyaqgI8gc78tCf7Acd/6rFTYU1Cn+ogiJASDQOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mW5nv6LH44am+wnAPIvkF+EoBk5bD2ha+SgtqoZc//TgyoGaickIYHk68ggmiC8iQpx2vEhDo0QO8mvn1ozOALMBm6JG7XdBuvEpwORZg6QGuui0o+g4e15Ajulj3TpuFbzld9N4GkxOrf1WKHBh+TqVdm8BrDjCyS0Y8P5C3tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMgZkY9H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ILkaCNYRxvcU7iIDfWFO17Hon9JGoxyNt5fjbTM/9Q9QJqTRg9hD7/ByPw5ABIX4JdFEbQnBqtUTMTgua9h94nqKbytq7JOQ3GpkTeL368T8im9GyAGzXJ2QEugAk7a3HdkPrLMJCoRTrM9HNUD2Ef0yiKV6eqqasCSe87G4Puw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmLXsJY2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMgZkY9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD66C4CEF0;
-	Mon, 22 Sep 2025 19:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmLXsJY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A361FC4CEF0;
+	Mon, 22 Sep 2025 19:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569706;
-	bh=7zeZlM939qvrgRATpOfh+6GEzlGEanXNH6mgG4eYW7w=;
+	s=korg; t=1758569710;
+	bh=WW+zsyaqgI8gc78tCf7Acd/6rFTYU1Cn+ogiJASDQOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMgZkY9HSF/kZ9+ma3xenleeLTIzhzJ1ah6CiSyql206MU+RS96BChvwtOfIqlK9P
-	 U3jdJhlL3TYNKCTsyL2yCh/UrbggNlp/ynFHGzdGKiAvcibceytTtZvezChQYQLJ1b
-	 FhTXbIssfI2cCnEsgPhAVkP9xPYeIIf+5fEjtgas=
+	b=VmLXsJY2fO1+spYSoJES1Nf+1ad+CoEMtXIjLU2mLkQCQPwmRq9ADxwC7rD/xFnjS
+	 n6BU65Hj/C5/E94IlgbeJNFXPaqQyLFh/OsNT0ggLfgvbfTN4bGl9/YV8B8eYG0+xy
+	 U9TO+fSkjV6AMOIzzvND9OjXZTGoa7fKy+rAjT50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 29/70] crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg
-Date: Mon, 22 Sep 2025 21:29:29 +0200
-Message-ID: <20250922192405.367140476@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 38/70] ASoC: qcom: q6apm-lpass-dais: Fix NULL pointer dereference if source graph failed
+Date: Mon, 22 Sep 2025 21:29:38 +0200
+Message-ID: <20250922192405.640729661@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -51,76 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 1b34cbbf4f011a121ef7b2d7d6e6920a036d5285 upstream.
+commit 68f27f7c7708183e7873c585ded2f1b057ac5b97 upstream.
 
-Issuing two writes to the same af_alg socket is bogus as the
-data will be interleaved in an unpredictable fashion.  Furthermore,
-concurrent writes may create inconsistencies in the internal
-socket state.
+If earlier opening of source graph fails (e.g. ADSP rejects due to
+incorrect audioreach topology), the graph is closed and
+"dai_data->graph[dai->id]" is assigned NULL.  Preparing the DAI for sink
+graph continues though and next call to q6apm_lpass_dai_prepare()
+receives dai_data->graph[dai->id]=NULL leading to NULL pointer
+exception:
 
-Disallow this by adding a new ctx->write field that indiciates
-exclusive ownership for writing.
+  qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
+  qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
+  q6apm-lpass-dais 30000000.remoteproc:glink-edge:gpr:service@1:bedais: fail to start APM port 78
+  q6apm-lpass-dais 30000000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC: error at snd_soc_pcm_dai_prepare on TX_CODEC_DMA_TX_3: -22
+  Unable to handle kernel NULL pointer dereference at virtual address 00000000000000a8
+  ...
+  Call trace:
+   q6apm_graph_media_format_pcm+0x48/0x120 (P)
+   q6apm_lpass_dai_prepare+0x110/0x1b4
+   snd_soc_pcm_dai_prepare+0x74/0x108
+   __soc_pcm_prepare+0x44/0x160
+   dpcm_be_dai_prepare+0x124/0x1c0
 
-Fixes: 8ff590903d5 ("crypto: algif_skcipher - User-space interface for skcipher operations")
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 30ad723b93ad ("ASoC: qdsp6: audioreach: add q6apm lpass dai support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Message-ID: <20250904101849.121503-2-krzysztof.kozlowski@linaro.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/af_alg.c         |    7 +++++++
- include/crypto/if_alg.h |   10 ++++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -969,6 +969,12 @@ int af_alg_sendmsg(struct socket *sock,
- 	}
+--- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
++++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+@@ -207,8 +207,10 @@ static int q6apm_lpass_dai_prepare(struc
  
- 	lock_sock(sk);
-+	if (ctx->write) {
-+		release_sock(sk);
-+		return -EBUSY;
+ 	return 0;
+ err:
+-	q6apm_graph_close(dai_data->graph[dai->id]);
+-	dai_data->graph[dai->id] = NULL;
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
++		q6apm_graph_close(dai_data->graph[dai->id]);
++		dai_data->graph[dai->id] = NULL;
 +	}
-+	ctx->write = true;
-+
- 	if (ctx->init && !ctx->more) {
- 		if (ctx->used) {
- 			err = -EINVAL;
-@@ -1103,6 +1109,7 @@ int af_alg_sendmsg(struct socket *sock,
- 
- unlock:
- 	af_alg_data_wakeup(sk);
-+	ctx->write = false;
- 	release_sock(sk);
- 
- 	return copied ?: err;
---- a/include/crypto/if_alg.h
-+++ b/include/crypto/if_alg.h
-@@ -134,6 +134,7 @@ struct af_alg_async_req {
-  *			SG?
-  * @enc:		Cryptographic operation to be performed when
-  *			recvmsg is invoked.
-+ * @write:		True if we are in the middle of a write.
-  * @init:		True if metadata has been sent.
-  * @len:		Length of memory allocated for this data structure.
-  * @inflight:		Non-zero when AIO requests are in flight.
-@@ -149,10 +150,11 @@ struct af_alg_ctx {
- 	size_t used;
- 	atomic_t rcvused;
- 
--	bool more;
--	bool merge;
--	bool enc;
--	bool init;
-+	u32		more:1,
-+			merge:1,
-+			enc:1,
-+			write:1,
-+			init:1;
- 
- 	unsigned int len;
+ 	return rc;
+ }
  
 
 
