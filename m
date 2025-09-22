@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7972F0C52;
-	Mon, 22 Sep 2025 19:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15782285C92;
+	Mon, 22 Sep 2025 19:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569931; cv=none; b=mXA6Xhn3fvFAWiYeT0mJmw/kvdnjtkHSNvsa9OWEcMrjRknVMWtew8Vv92I4F3m64Zdlibrfkbotj5VQp3wjIcY5g4bqNpymDO0orHLO6boo31nNJDElSwKZ7WJv4PF988ic+1kL0NZ23PUeXkDge4q0xgSBZl6lNKLpqHQ1OnQ=
+	t=1758569934; cv=none; b=TwcTtdZjBMJNFSyLPUXm1QGnfZ4XPbC6DdoTGlYe2fweaPhR9KBNQZGagPWTvA400DRyl5Gy1tMFOcPKKLeF4p6OrmwZopXQbDrhFfrKc1y0tQpW+2ZKIuAdYXwDehT6Z7yRDq1feWG3eKa8zXYLPx4WiLEBOEcYeaYaNcvObh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569931; c=relaxed/simple;
-	bh=P87LzlnqZlcUylrEI26Nit7wEM+IWAh1fuobTOpNp/4=;
+	s=arc-20240116; t=1758569934; c=relaxed/simple;
+	bh=nJ2P2k+M5NOVkJV+JVBj0A4jVyMPnbwn4U3gT4lB69E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCyC5BphLVyLmIlS62Ebedg3I+dqbafqvFTGsyeEU0GyiAq30tnB4aioJhrZvnuEgnHGFMxHzTxDeK4BxTeKGRoF5uc25+wHu9Hp+yUgeJDzuQAWeIrS88XsdBqnQyNxOfH+J6PcRNd27VwpSjcvxpxOxqE3D73uiAVCA8KJnUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tUeU4zIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2Qz8XDStXMARZ2jsH1K10XNSCvumJzhy42PBHNsKzVYaxn1n6tEDU2Z88Cx4u1C5jb4XSaniM53bA7Pq5tjsu4LVJXdSFn+CZ+ZJiFBpoQ8sY5nYftO6yov5JECaMxCpMJZ4a6vMpHof8Jlms71ni/xmDPR2o1N6egGwU14epM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqCo/Sit; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tUeU4zIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C37CC4CEF0;
-	Mon, 22 Sep 2025 19:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqCo/Sit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2451C4CEF0;
+	Mon, 22 Sep 2025 19:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569931;
-	bh=P87LzlnqZlcUylrEI26Nit7wEM+IWAh1fuobTOpNp/4=;
+	s=korg; t=1758569934;
+	bh=nJ2P2k+M5NOVkJV+JVBj0A4jVyMPnbwn4U3gT4lB69E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUeU4zIYZELsU8a/0cER8/EFFfzSKLwNjxuaxLYr9BWbBBpg1Xo8ebdpp51mKYrQp
-	 XpdHLZhy6SPycxvERCaQMXvF/WTMUxXUPpCEmduySkIGdMsxJ2ux9i9wU9pFQj/XZN
-	 WLVsRuhOt+Sk+WlYRyrIZe1XEQN2YsTScNEWeyEY=
+	b=tqCo/SitPBRAh+pWk3zcKx6ZVi3ue2pkGkny8I/rD6nDOGEiYW6YeO8+8BYx9B88u
+	 Ly7DMD1IK9i39bHUtsq6gXTySzu5OvS+ec2jWyoT6LEBF4bDleDDCI06KWm9nRGC4Z
+	 BULl1vkRf+NgXbipF1KzXVXIEDEiSv6ein3rswiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <202321181@mail.sdu.edu.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 048/105] LoongArch: vDSO: Check kcalloc() result in init_vdso()
-Date: Mon, 22 Sep 2025 21:29:31 +0200
-Message-ID: <20250922192410.176624002@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 057/105] mmc: mvsdio: Fix dma_unmap_sg() nents value
+Date: Mon, 22 Sep 2025 21:29:40 +0200
+Message-ID: <20250922192410.408331126@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -50,34 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <202321181@mail.sdu.edu.cn>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit ac398f570724c41e5e039d54e4075519f6af7408 upstream.
+commit 8ab2f1c35669bff7d7ed1bb16bf5cc989b3e2e17 upstream.
 
-Add a NULL-pointer check after the kcalloc() call in init_vdso(). If
-allocation fails, return -ENOMEM to prevent a possible dereference of
-vdso_info.code_mapping.pages when it is NULL.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
+Fixes: 236caa7cc351 ("mmc: SDIO driver for Marvell SoCs")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Cc: stable@vger.kernel.org
-Fixes: 2ed119aef60d ("LoongArch: Set correct size for vDSO code mapping")
-Signed-off-by: Guangshuo Li <202321181@mail.sdu.edu.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/vdso.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/mvsdio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/vdso.c
-+++ b/arch/loongarch/kernel/vdso.c
-@@ -108,6 +108,9 @@ static int __init init_vdso(void)
- 	vdso_info.code_mapping.pages =
- 		kcalloc(vdso_info.size / PAGE_SIZE, sizeof(struct page *), GFP_KERNEL);
+--- a/drivers/mmc/host/mvsdio.c
++++ b/drivers/mmc/host/mvsdio.c
+@@ -292,7 +292,7 @@ static u32 mvsd_finish_data(struct mvsd_
+ 		host->pio_ptr = NULL;
+ 		host->pio_size = 0;
+ 	} else {
+-		dma_unmap_sg(mmc_dev(host->mmc), data->sg, host->sg_frags,
++		dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
+ 			     mmc_get_dma_dir(data));
+ 	}
  
-+	if (!vdso_info.code_mapping.pages)
-+		return -ENOMEM;
-+
- 	pfn = __phys_to_pfn(__pa_symbol(vdso_info.vdso));
- 	for (i = 0; i < vdso_info.size / PAGE_SIZE; i++)
- 		vdso_info.code_mapping.pages[i] = pfn_to_page(pfn + i);
 
 
