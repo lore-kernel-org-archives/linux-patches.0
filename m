@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3A127B320;
-	Mon, 22 Sep 2025 19:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8806A191F66;
+	Mon, 22 Sep 2025 19:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569696; cv=none; b=usS7Irx1qOuweqNzHpt4AnbV9bdwmUQvFHVsn+j1kY/4XUCHzahnAnuolO8YhysyJBxbPBXy33q5EooKRVSgI/fjqQBL39rKaWVv9deGxIdGu2xmU2IYbVtWDPXhAnDFs8PBNjDrxCwM6aYm2hklDqHTPr7/bUg7HiIhkOSjMqY=
+	t=1758569698; cv=none; b=us2GxAdVnp9a0bCKy8gVboWxqlcLB5aewcLLB/IGhIKYbZK0zrdw67wY9Vz2ejeW4TtwGkWCw9+OH+tt8pECr5rk8GV25lamK1rO6tDk3aiJpQz4pNJ0D7V5Tj5Ii/Mc30wbjznJclow6XRiD2POHpGlrBiZpttdUXbWd+jB3vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569696; c=relaxed/simple;
-	bh=Wk34eKU/tJ2WER10WP8WvyF7vYUtBn6fOC74uwxmg3A=;
+	s=arc-20240116; t=1758569698; c=relaxed/simple;
+	bh=pEQDqdwO4WNZlJngPMU+omxjQeehNixo3uo+qwjujBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTIdRPHIbEi19betbLyvX0dVfcLyMK7fASW6P0o2iIyypGflEyTB3BHcUfV+VxoZlFCaSZiifHpGyrMixOC05TmhZQT23infpxQB6yK4VChY4Wr0PitwlCr4RZaf1lfyP/upA7dWDwvh7Scb4Ow851VQR0RQZYgrEU9JTVRcgYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih/B/pqR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+GYKALI7AbYdUhseBSOKRmWjE1IuYd4wU7Le8G0TDN6LrIBIYCzZ2BEJ6UvcwHI5RIpDevZw4fsm0VaT7X7QrVKBZFkygiQ4qNwBbTbjMJA4IdhTWR37hYKimQ3Ud64A6e1iwWF2yIKWwH+PJBf5ZHZCsS61/OEgEdrMp8Gmi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fr5j6eWJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih/B/pqR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8859BC4CEF0;
-	Mon, 22 Sep 2025 19:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fr5j6eWJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2152AC4CEF0;
+	Mon, 22 Sep 2025 19:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569695;
-	bh=Wk34eKU/tJ2WER10WP8WvyF7vYUtBn6fOC74uwxmg3A=;
+	s=korg; t=1758569698;
+	bh=pEQDqdwO4WNZlJngPMU+omxjQeehNixo3uo+qwjujBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ih/B/pqRu2bTiqQchO/mssRSSd3sl6PyEHIMe2PaDatbT/aOwCfTmrxe8wFj38aI/
-	 jqGi7jLcEjU8AqVFrIysWZgrZsabYoQKMSl8EUhR922VYL34lm3rcwRvaDzG+QneNz
-	 k06CqmVCKOPYVksh+SYoxW5+I7lJLF9+BmLltVYk=
+	b=Fr5j6eWJetDuMOV3PUsWfhPaLEBy504HPUxXKSG2NnETn0l3j68gvrRv6XtoZNCKf
+	 u1ZwH+CpUN8+HvptN91CmDbugldWHk9POBh5re/AlLrK1rEa0SUtSbsXZl97zf1mG/
+	 QWVLdzt/eSN2U0P0Yw17Ut3J5bUW0cFBZEYAZuvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Lee Jones <lee@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 20/70] tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().
-Date: Mon, 22 Sep 2025 21:29:20 +0200
-Message-ID: <20250922192405.099262371@linuxfoundation.org>
+Subject: [PATCH 6.6 21/70] tls: make sure to abort the stream if headers are bogus
+Date: Mon, 22 Sep 2025 21:29:21 +0200
+Message-ID: <20250922192405.127501935@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -52,92 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 45c8a6cc2bcd780e634a6ba8e46bffbdf1fc5c01 ]
+[ Upstream commit 0aeb54ac4cd5cf8f60131b4d9ec0b6dc9c27b20d ]
 
-syzbot reported the splat below where a socket had tcp_sk(sk)->fastopen_rsk
-in the TCP_ESTABLISHED state. [0]
+Normally we wait for the socket to buffer up the whole record
+before we service it. If the socket has a tiny buffer, however,
+we read out the data sooner, to prevent connection stalls.
+Make sure that we abort the connection when we find out late
+that the record is actually invalid. Retrying the parsing is
+fine in itself but since we copy some more data each time
+before we parse we can overflow the allocated skb space.
 
-syzbot reused the server-side TCP Fast Open socket as a new client before
-the TFO socket completes 3WHS:
+Constructing a scenario in which we're under pressure without
+enough data in the socket to parse the length upfront is quite
+hard. syzbot figured out a way to do this by serving us the header
+in small OOB sends, and then filling in the recvbuf with a large
+normal send.
 
-  1. accept()
-  2. connect(AF_UNSPEC)
-  3. connect() to another destination
+Make sure that tls_rx_msg_size() aborts strp, if we reach
+an invalid record there's really no way to recover.
 
-As of accept(), sk->sk_state is TCP_SYN_RECV, and tcp_disconnect() changes
-it to TCP_CLOSE and makes connect() possible, which restarts timers.
-
-Since tcp_disconnect() forgot to clear tcp_sk(sk)->fastopen_rsk, the
-retransmit timer triggered the warning and the intended packet was not
-retransmitted.
-
-Let's call reqsk_fastopen_remove() in tcp_disconnect().
-
-[0]:
-WARNING: CPU: 2 PID: 0 at net/ipv4/tcp_timer.c:542 tcp_retransmit_timer (net/ipv4/tcp_timer.c:542 (discriminator 7))
-Modules linked in:
-CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 6.17.0-rc5-g201825fb4278 #62 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:tcp_retransmit_timer (net/ipv4/tcp_timer.c:542 (discriminator 7))
-Code: 41 55 41 54 55 53 48 8b af b8 08 00 00 48 89 fb 48 85 ed 0f 84 55 01 00 00 0f b6 47 12 3c 03 74 0c 0f b6 47 12 3c 04 74 04 90 <0f> 0b 90 48 8b 85 c0 00 00 00 48 89 ef 48 8b 40 30 e8 6a 4f 06 3e
-RSP: 0018:ffffc900002f8d40 EFLAGS: 00010293
-RAX: 0000000000000002 RBX: ffff888106911400 RCX: 0000000000000017
-RDX: 0000000002517619 RSI: ffffffff83764080 RDI: ffff888106911400
-RBP: ffff888106d5c000 R08: 0000000000000001 R09: ffffc900002f8de8
-R10: 00000000000000c2 R11: ffffc900002f8ff8 R12: ffff888106911540
-R13: ffff888106911480 R14: ffff888106911840 R15: ffffc900002f8de0
-FS:  0000000000000000(0000) GS:ffff88907b768000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f8044d69d90 CR3: 0000000002c30003 CR4: 0000000000370ef0
-Call Trace:
- <IRQ>
- tcp_write_timer (net/ipv4/tcp_timer.c:738)
- call_timer_fn (kernel/time/timer.c:1747)
- __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2372)
- timer_expire_remote (kernel/time/timer.c:2385 kernel/time/timer.c:2376 kernel/time/timer.c:2135)
- tmigr_handle_remote_up (kernel/time/timer_migration.c:944 kernel/time/timer_migration.c:1035)
- __walk_groups.isra.0 (kernel/time/timer_migration.c:533 (discriminator 1))
- tmigr_handle_remote (kernel/time/timer_migration.c:1096)
- handle_softirqs (./arch/x86/include/asm/jump_label.h:36 ./include/trace/events/irq.h:142 kernel/softirq.c:580)
- irq_exit_rcu (kernel/softirq.c:614 kernel/softirq.c:453 kernel/softirq.c:680 kernel/softirq.c:696)
- sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1050 (discriminator 35) arch/x86/kernel/apic/apic.c:1050 (discriminator 35))
- </IRQ>
-
-Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250915175800.118793-2-kuniyu@google.com
+Reported-by: Lee Jones <lee@kernel.org>
+Fixes: 84c61fe1a75b ("tls: rx: do not use the standard strparser")
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20250917002814.1743558-1-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/tls/tls.h      |  1 +
+ net/tls/tls_strp.c | 14 +++++++++-----
+ net/tls/tls_sw.c   |  3 +--
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index a4bbe959d1e25..40a2f172be2cb 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3011,6 +3011,7 @@ int tcp_disconnect(struct sock *sk, int flags)
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	int old_state = sk->sk_state;
-+	struct request_sock *req;
- 	u32 seq;
+diff --git a/net/tls/tls.h b/net/tls/tls.h
+index 5dc61c85c076e..a3c5c5a59fda6 100644
+--- a/net/tls/tls.h
++++ b/net/tls/tls.h
+@@ -141,6 +141,7 @@ void update_sk_prot(struct sock *sk, struct tls_context *ctx);
  
- 	if (old_state != TCP_CLOSE)
-@@ -3121,6 +3122,10 @@ int tcp_disconnect(struct sock *sk, int flags)
+ int wait_on_pending_writer(struct sock *sk, long *timeo);
+ void tls_err_abort(struct sock *sk, int err);
++void tls_strp_abort_strp(struct tls_strparser *strp, int err);
  
+ int tls_set_sw_offload(struct sock *sk, struct tls_context *ctx, int tx);
+ void tls_update_rx_zc_capable(struct tls_context *tls_ctx);
+diff --git a/net/tls/tls_strp.c b/net/tls/tls_strp.c
+index 6ce64a6e4495e..ae723cd6af397 100644
+--- a/net/tls/tls_strp.c
++++ b/net/tls/tls_strp.c
+@@ -12,7 +12,7 @@
  
- 	/* Clean up fastopen related fields */
-+	req = rcu_dereference_protected(tp->fastopen_rsk,
-+					lockdep_sock_is_held(sk));
-+	if (req)
-+		reqsk_fastopen_remove(sk, req, false);
- 	tcp_free_fastopen_req(tp);
- 	inet_clear_bit(DEFER_CONNECT, sk);
- 	tp->fastopen_client_fail = 0;
+ static struct workqueue_struct *tls_strp_wq;
+ 
+-static void tls_strp_abort_strp(struct tls_strparser *strp, int err)
++void tls_strp_abort_strp(struct tls_strparser *strp, int err)
+ {
+ 	if (strp->stopped)
+ 		return;
+@@ -210,11 +210,17 @@ static int tls_strp_copyin_frag(struct tls_strparser *strp, struct sk_buff *skb,
+ 				struct sk_buff *in_skb, unsigned int offset,
+ 				size_t in_len)
+ {
++	unsigned int nfrag = skb->len / PAGE_SIZE;
+ 	size_t len, chunk;
+ 	skb_frag_t *frag;
+ 	int sz;
+ 
+-	frag = &skb_shinfo(skb)->frags[skb->len / PAGE_SIZE];
++	if (unlikely(nfrag >= skb_shinfo(skb)->nr_frags)) {
++		DEBUG_NET_WARN_ON_ONCE(1);
++		return -EMSGSIZE;
++	}
++
++	frag = &skb_shinfo(skb)->frags[nfrag];
+ 
+ 	len = in_len;
+ 	/* First make sure we got the header */
+@@ -519,10 +525,8 @@ static int tls_strp_read_sock(struct tls_strparser *strp)
+ 	tls_strp_load_anchor_with_queue(strp, inq);
+ 	if (!strp->stm.full_len) {
+ 		sz = tls_rx_msg_size(strp, strp->anchor);
+-		if (sz < 0) {
+-			tls_strp_abort_strp(strp, sz);
++		if (sz < 0)
+ 			return sz;
+-		}
+ 
+ 		strp->stm.full_len = sz;
+ 
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 27ce1feb79e14..435235a351e2f 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2441,8 +2441,7 @@ int tls_rx_msg_size(struct tls_strparser *strp, struct sk_buff *skb)
+ 	return data_len + TLS_HEADER_SIZE;
+ 
+ read_failure:
+-	tls_err_abort(strp->sk, ret);
+-
++	tls_strp_abort_strp(strp, ret);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
