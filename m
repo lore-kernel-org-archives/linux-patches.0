@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219F82F0C52;
-	Mon, 22 Sep 2025 19:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC32E2F2909;
+	Mon, 22 Sep 2025 19:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570241; cv=none; b=kFT2Lmj6ST06Fvb4czEdw3UUfovi68eeZr1Wr1BwxOspof49NEJyIe1mt8jYrPaS0WHNPY8boTzPP6lmcoNi/H45sHyN3LPoM3eFsKmXWmQYnbyEyDTm0pfEK6BL6r3FiFGqREKmSCAABRYEZWXbdQE0tOjvmVlNeTcOTVJ1kzU=
+	t=1758570243; cv=none; b=s97xrh7UB3EtMpQ2kQhArTcmrESWvXAiZDUEGqWHHX5cCp+1IDV+7BUpmbt5SH+pNQgocfli9fXiPjpK22zC1LImY2nTA3fUdCh6dnFxKrt9KvmUDncpL0RUHFrGw/tX30Dm2jvNUh7eT+rv1P3C9Hery44NodKEAtcauw6X3fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570241; c=relaxed/simple;
-	bh=4/FlbNyk14T/84dH6be2H1bk1/Hm0/bOebmlRLRqIfk=;
+	s=arc-20240116; t=1758570243; c=relaxed/simple;
+	bh=Fte7vkDdIQrq3psNyhJHNM5RGqsw0khzh4N1KkyolQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2C1fWrtUWWwIjcK8ooW16LKFmAtjcKChHciOuDvwS+g82tLf028vxXOB0YTcVxu5kb4U5LLurodHG9QoZHzv2LR2f9QP3NZBV4FZ9XxgGL5OTthsnz0/M/RkP5BztlwdL4ZB5K0GDk+c937+ABzzim/4aRuRR8cVhnobwbFNcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/R907Zn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLOIvOjoJP7Piq3XtrVF48NCXYggLz+mwaSTRnIAUCrC4010oUOMi2uA3J+wwUWrDi0/f2zLn2vWktDjUDiHobjNSXl5M47vPbqkBUyg6F1wRyzEVVQ6V0RFQrc0DSBtluX0/znHRRSIGECEArVuan9b/SgZqjA1uiEMB5ezYO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLZPouzj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/R907Zn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A218C4CEF0;
-	Mon, 22 Sep 2025 19:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLZPouzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC89C4CEF0;
+	Mon, 22 Sep 2025 19:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570241;
-	bh=4/FlbNyk14T/84dH6be2H1bk1/Hm0/bOebmlRLRqIfk=;
+	s=korg; t=1758570243;
+	bh=Fte7vkDdIQrq3psNyhJHNM5RGqsw0khzh4N1KkyolQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/R907ZnDiAkf1jHvkUwGW9ZkPuCJ9pEwuLNQ1vVmPdDZ07xWICdI3qa9YUKk+1uX
-	 c/+hFMvIZ4G42LQ8ay7ExRFLdjnARXsVS6LRc5Vi7DWqOBzfXZ9GYjHdVtaF2AhG8B
-	 Hmd+vTsEcbar4LygP+kKbBj+MubGuB45EDweQi0k=
+	b=HLZPouzjUonUkAG5kirOSa6ciubtJf0AxgMfXrU3CJMXZNQSnwk50uw1Wcc2PpCoX
+	 q58xWjHSHbK4a7DWws/QERHjpo6Ys1DCiin+Nf5/1/zf7tIlMlV32JmNir5H2113mv
+	 VENaSVaG16gpG4O6RDSkiRdEv+um551FmvqhMk9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -50,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuanchu Xie <yuanchu@google.com>,
 	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 061/149] mm/gup: local lru_add_drain() to avoid lru_add_drain_all()
-Date: Mon, 22 Sep 2025 21:29:21 +0200
-Message-ID: <20250922192414.422164822@linuxfoundation.org>
+Subject: [PATCH 6.16 062/149] mm: revert "mm: vmscan.c: fix OOM on swap stress test"
+Date: Mon, 22 Sep 2025 21:29:22 +0200
+Message-ID: <20250922192414.447705571@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -73,19 +73,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugh Dickins <hughd@google.com>
 
-commit a09a8a1fbb374e0053b97306da9dbc05bd384685 upstream.
+commit 8d79ed36bfc83d0583ab72216b7980340478cdfb upstream.
 
-In many cases, if collect_longterm_unpinnable_folios() does need to drain
-the LRU cache to release a reference, the cache in question is on this
-same CPU, and much more efficiently drained by a preliminary local
-lru_add_drain(), than the later cross-CPU lru_add_drain_all().
+This reverts commit 0885ef470560: that was a fix to the reverted
+33dfe9204f29b415bbc0abb1a50642d1ba94f5e9.
 
-Marked for stable, to counter the increase in lru_add_drain_all()s from
-"mm/gup: check ref_count instead of lru before migration".  Note for clean
-backports: can take 6.16 commit a03db236aebf ("gup: optimize longterm
-pin_user_pages() for large folio") first.
-
-Link: https://lkml.kernel.org/r/66f2751f-283e-816d-9530-765db7edc465@google.com
+Link: https://lkml.kernel.org/r/aa0e9d67-fbcd-9d79-88a1-641dfbe1d9d1@google.com
 Signed-off-by: Hugh Dickins <hughd@google.com>
 Acked-by: David Hildenbrand <david@redhat.com>
 Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
@@ -112,41 +105,19 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/vmscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2333,8 +2333,8 @@ static unsigned long collect_longterm_un
- 		struct pages_or_folios *pofs)
- {
- 	unsigned long collected = 0;
--	bool drain_allow = true;
- 	struct folio *folio;
-+	int drained = 0;
- 	long i = 0;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4505,7 +4505,7 @@ static bool sort_folio(struct lruvec *lr
+ 	}
  
- 	for (folio = pofs_get_folio(pofs, i); folio;
-@@ -2353,10 +2353,17 @@ static unsigned long collect_longterm_un
- 			continue;
- 		}
- 
--		if (drain_allow && folio_ref_count(folio) !=
--				   folio_expected_ref_count(folio) + 1) {
-+		if (drained == 0 &&
-+				folio_ref_count(folio) !=
-+				folio_expected_ref_count(folio) + 1) {
-+			lru_add_drain();
-+			drained = 1;
-+		}
-+		if (drained == 1 &&
-+				folio_ref_count(folio) !=
-+				folio_expected_ref_count(folio) + 1) {
- 			lru_add_drain_all();
--			drain_allow = false;
-+			drained = 2;
- 		}
- 
- 		if (!folio_isolate_lru(folio))
+ 	/* ineligible */
+-	if (!folio_test_lru(folio) || zone > sc->reclaim_idx) {
++	if (zone > sc->reclaim_idx) {
+ 		gen = folio_inc_gen(lruvec, folio, false);
+ 		list_move_tail(&folio->lru, &lrugen->folios[gen][type][zone]);
+ 		return true;
 
 
