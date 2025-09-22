@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314352E765E;
-	Mon, 22 Sep 2025 19:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBAD1F91E3;
+	Mon, 22 Sep 2025 19:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570332; cv=none; b=gZVKimHP6qntkoNCq81xIkhASNI5QuTLBE2UBdsS/fidyAexcioACETuE7GIYGv8LaKPwsgeLYC6G3W37+XrFFdOfSqLk73OADRchp/foaw5fSajjJCSL2RD33hHkz8zxuHyy1Sk+GbIlUKbI15/MSL0afyk5vYuN97oh+zwEeU=
+	t=1758570334; cv=none; b=XyA0DhRhlvrmc+u1v5JijMQ+hq2TyRX5lxTudEUnFa2odyVcZ5dpjKy8ewhR+dlHrcv2maj8yYEk8//Azrkm1vW6jbwIv5wCP0tflz1gCvzTO2N8UMRuTrAjsndhsVAe6fi9UG9/A6gZ91tKWmhMqcXOe8LEb6YIJv2NT8CfQiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570332; c=relaxed/simple;
-	bh=ql8bxpdWGIWop5zFV/hnqC3T3pthrYZPyYidyxyrWd8=;
+	s=arc-20240116; t=1758570334; c=relaxed/simple;
+	bh=9hk5Dw82ZPvwzusfg5GgeSVEU+XzegNK8SVe1dsQMsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRMuXyhKolArPzwhZfJ4Z8uQgPFzZntab4FEAtayToVAzHk/fB+SKMLGHDlvKkoxWd3iAVVQm1Msi+SR6VenNI4SMXflVMCVVFdCBSHtSXJxpBiwZVeVUFsDId0eu/D+tegDtZl+5RGQHY/xrEQ+7cLZOqJLeRK3YCFyiBwMRWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZibbkSI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BXfzq5dstZO7Ptaw+X6ngxZ7UskeLmzLNRz6o2KYrE2lWp0sw+CJzducf3L2La65jekGnhEXKAwElfUUXv3SFdq9Dpb0QkMozPzym/5uMxFcJlNu4Gl16F6byf72nbD6pPicOBtBL1fy6v6CEIDeqcCjjuNodU42r+/58kFHYc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnuusKW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZibbkSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF469C4CEF0;
-	Mon, 22 Sep 2025 19:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnuusKW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49444C4CEF0;
+	Mon, 22 Sep 2025 19:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570332;
-	bh=ql8bxpdWGIWop5zFV/hnqC3T3pthrYZPyYidyxyrWd8=;
+	s=korg; t=1758570334;
+	bh=9hk5Dw82ZPvwzusfg5GgeSVEU+XzegNK8SVe1dsQMsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZibbkSI1hALzRxPaWFH7jHvuKMY8uuaeqww+Z4/bUufcMd35rCG72HpoGl7V/G5s
-	 CCAnBFRgzNS2iq52mw9n6kJ+9TstXQQe+tHH13gJH9e6weTq964MN0VpaCm7xlTvv8
-	 V+RtuVqDlU8EjyXvUtIVxkxJ5DecedEiU2XzFqMc=
+	b=cnuusKW3sV6bf0sY5neHCmrqttNTG5IOgCgoHXHYCbCsO7giWNxZoriuQr+ODrdiX
+	 W7NS4oBsAewoVaVY/XHPHZGIXw4RSGTrwlvXVXXspUuo/8YLJU20ubYa5kmwwy24Z4
+	 61tSq8hrQmdU5dskKRhvRBnnzFqzYwoNCVbUl820=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praful Adiga <praful.adiga@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.16 107/149] ALSA: hda/realtek: Fix mute led for HP Laptop 15-dw4xx
-Date: Mon, 22 Sep 2025 21:30:07 +0200
-Message-ID: <20250922192415.578869467@linuxfoundation.org>
+	Ankur Tyagi <ankur.tyagi85@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 108/149] ASoC: wm8940: Correct PLL rate rounding
+Date: Mon, 22 Sep 2025 21:30:08 +0200
+Message-ID: <20250922192415.604083698@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -50,30 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praful Adiga <praful.adiga@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-commit d33c3471047fc54966621d19329e6a23ebc8ec50 upstream.
+[ Upstream commit d05afb53c683ef7ed1228b593c3360f4d3126c58 ]
 
-This laptop uses the ALC236 codec with COEF 0x7 and idx 1 to
-control the mute LED. Enable the existing quirk for this device.
+Using a single value of 22500000 for both 48000Hz and 44100Hz audio
+will sometimes result in returning wrong dividers due to rounding.
+Update the code to use the actual value for both.
 
-Signed-off-by: Praful Adiga <praful.adiga@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 294833fc9eb4 ("ASoC: wm8940: Rewrite code to set proper clocks")
+Reported-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Tested-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
+Link: https://patch.msgid.link/20250821082639.1301453-2-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wm8940.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10752,6 +10752,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8992, "HP EliteBook 845 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8994, "HP EliteBook 855 G9", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8995, "HP EliteBook 855 G9", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x89a0, "HP Laptop 15-dw4xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x89a4, "HP ProBook 440 G9", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89a6, "HP ProBook 450 G9", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89aa, "HP EliteBook 630 G9", ALC236_FIXUP_HP_GPIO_LED),
+diff --git a/sound/soc/codecs/wm8940.c b/sound/soc/codecs/wm8940.c
+index 401ee20897b1b..46c16c9bc17a8 100644
+--- a/sound/soc/codecs/wm8940.c
++++ b/sound/soc/codecs/wm8940.c
+@@ -693,7 +693,12 @@ static int wm8940_update_clocks(struct snd_soc_dai *dai)
+ 	f = wm8940_get_mclkdiv(priv->mclk, fs256, &mclkdiv);
+ 	if (f != priv->mclk) {
+ 		/* The PLL performs best around 90MHz */
+-		fpll = wm8940_get_mclkdiv(22500000, fs256, &mclkdiv);
++		if (fs256 % 8000)
++			f = 22579200;
++		else
++			f = 24576000;
++
++		fpll = wm8940_get_mclkdiv(f, fs256, &mclkdiv);
+ 	}
+ 
+ 	wm8940_set_dai_pll(dai, 0, 0, priv->mclk, fpll);
+-- 
+2.51.0
+
 
 
