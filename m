@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCBE2E2847;
-	Mon, 22 Sep 2025 19:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAEF25F780;
+	Mon, 22 Sep 2025 19:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569809; cv=none; b=mdSQniYIlmFutOrBoTFDx7XRhhedAUNiME2tA85keiv3jdijPjMkb7VT0SDI4M8TbDa0+QFKaBkbYEH5fzHzLharNR4C2dhPWyBOJv7tbEanE5W7TLcucWJ9zKjuD9Sw4INVQwv6zrqIgurS1W7MtACNKl0kSdBQf0eZe2W6xgM=
+	t=1758569812; cv=none; b=RRnz812ZzTvDYUvBOh2b/sAOc3K4zwA8HUM7Masyb4+9lrFVPCTT08HAt2erM/eCWdP+SKcU7er5U+h2EiAZUU1LnjMWMh5NEt79/ZqCUdSnhLJhRcld5NAnIt5hdOngAOIQR+bz+uz3Lp/U8/Ie1ZIBrbWe5cbxG30QWu8sCSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569809; c=relaxed/simple;
-	bh=rk/DxQ+ChFHUbqXiVvDJaH7kHh0+mq9kmcu9oMmD4x0=;
+	s=arc-20240116; t=1758569812; c=relaxed/simple;
+	bh=p4jryB07k7M5vKBTCrC4ou4exVH6wGIHL20RQE7fL9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Roi/IGUIUoYSQdFfQWjj95/++UvWW/uFemBH7c+Llq0uNfFrhxOluc4GgBrwNeEf7Hdk8xEc7QqDtMwjfX6RdTu1/FLO+pgIzOCj+MWKs55YCFMzaltIYxnugMFeuQdhkc6PaL8yrlGy7YgwdKdsBix6fqBSBuh3QFmAlB8hCdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzbsUGsV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ospaCLxTW08EwDXSaAD9WKzgRlahWFH+kLMoswB/cBOEPvf1zxRGB32UsRKs7c8YWd1xuzBl9MFlgBad9yxwAkLzilUZEUvQ7UdUFBAFbbZFhqgdmAOL/GFLWU+h09e/ay2Lekfui3NRqrGAj0h6ZHPTuLHG0u7Tg04iFLI2WaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnXWlzUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzbsUGsV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669C9C4CEF0;
-	Mon, 22 Sep 2025 19:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnXWlzUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C8FC4CEF0;
+	Mon, 22 Sep 2025 19:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569809;
-	bh=rk/DxQ+ChFHUbqXiVvDJaH7kHh0+mq9kmcu9oMmD4x0=;
+	s=korg; t=1758569812;
+	bh=p4jryB07k7M5vKBTCrC4ou4exVH6wGIHL20RQE7fL9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzbsUGsVbvlOYHsvylUQMZCAbHeIUhF6sQVbWV0yryMo/TEDmXaAzhVjry4zzxasi
-	 0AfPT1okep2U6x2ki5H4awqbFGFp7fb1ixXetVvV4pL4s2d6YnMLkWYEnV0+C/AIbr
-	 qd088C+u03heV0RzhEizJ1J/NqOfD+Us8+KYKiUo=
+	b=DnXWlzUDNqYb//Og/ulau8DL0SssM6upbAac1qHnO0VgcihD7iLRWTa6T05mb8z94
+	 GyDhHveiabFLALcAzWjVf/5NVGQeXJ9ouNpss1RFCrwntwjT2PfMCeTRrOc8yf3vvp
+	 CAGRLWwZ2zV4JN6JET1XpQo9bHhC50RGn0PPv3cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 55/70] crypto: af_alg - Set merge to zero early in af_alg_sendmsg
-Date: Mon, 22 Sep 2025 21:29:55 +0200
-Message-ID: <20250922192406.081774571@linuxfoundation.org>
+	"stable@vger.kernel.org, jack@suse.cz, Eric Hagberg" <ehagberg@janestreet.com>,
+	Eric Hagberg <ehagberg@janestreet.com>
+Subject: [PATCH 6.6 70/70] Revert "loop: Avoid updating block size under exclusive owner"
+Date: Mon, 22 Sep 2025 21:30:10 +0200
+Message-ID: <20250922192406.492614870@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -52,49 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Eric Hagberg <ehagberg@janestreet.com>
 
-[ Upstream commit 9574b2330dbd2b5459b74d3b5e9619d39299fc6f ]
+Revert commit ce8da5d13d8c2a7b30b2fb376a22e8eb1a70b8bb which is commit
+7e49538288e523427beedd26993d446afef1a6fb upstream.
 
-If an error causes af_alg_sendmsg to abort, ctx->merge may contain
-a garbage value from the previous loop.  This may then trigger a
-crash on the next entry into af_alg_sendmsg when it attempts to do
-a merge that can't be done.
+This reverts commit ce8da5d13d8c ("loop: Avoid updating block size under
+exclusive owner") for the 6.6 kernel, because if the LTP ioctl_loop06 test is
+run with this patch in place, the test will fail, it leaves the host unable to
+kexec into the kernel again (hangs forever) and "losetup -a" will hang on
+attempting to access the /dev/loopN device that the test has set up.
 
-Fix this by setting ctx->merge to zero near the start of the loop.
+The patch doesn't need to be reverted from 6.12, as it works fine there.
 
-Fixes: 8ff590903d5 ("crypto: algif_skcipher - User-space interface for skcipher operations")
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 6.6.x
+Signed-off-by: Eric Hagberg <ehagberg@janestreet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
 ---
- crypto/af_alg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/loop.c |   38 ++++++++------------------------------
+ 1 file changed, 8 insertions(+), 30 deletions(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index dbddcf52b9920..886eccb97b041 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1024,6 +1024,8 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 			continue;
- 		}
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -1472,36 +1472,19 @@ static int loop_set_dio(struct loop_devi
+ 	return error;
+ }
  
-+		ctx->merge = 0;
-+
- 		if (!af_alg_writable(sk)) {
- 			err = af_alg_wait_for_wmem(sk, msg->msg_flags);
- 			if (err)
-@@ -1063,7 +1065,6 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 			ctx->used += plen;
- 			copied += plen;
- 			size -= plen;
--			ctx->merge = 0;
- 		} else {
- 			do {
- 				struct page *pg;
--- 
-2.51.0
-
+-static int loop_set_block_size(struct loop_device *lo, blk_mode_t mode,
+-			       struct block_device *bdev, unsigned long arg)
++static int loop_set_block_size(struct loop_device *lo, unsigned long arg)
+ {
+ 	int err = 0;
+ 
+-	/*
+-	 * If we don't hold exclusive handle for the device, upgrade to it
+-	 * here to avoid changing device under exclusive owner.
+-	 */
+-	if (!(mode & BLK_OPEN_EXCL)) {
+-		err = bd_prepare_to_claim(bdev, loop_set_block_size, NULL);
+-		if (err)
+-			return err;
+-	}
+-
+-	err = mutex_lock_killable(&lo->lo_mutex);
+-	if (err)
+-		goto abort_claim;
+-
+-	if (lo->lo_state != Lo_bound) {
+-		err = -ENXIO;
+-		goto unlock;
+-	}
++	if (lo->lo_state != Lo_bound)
++		return -ENXIO;
+ 
+ 	err = blk_validate_block_size(arg);
+ 	if (err)
+ 		return err;
+ 
+ 	if (lo->lo_queue->limits.logical_block_size == arg)
+-		goto unlock;
++		return 0;
+ 
+ 	sync_blockdev(lo->lo_device);
+ 	invalidate_bdev(lo->lo_device);
+@@ -1513,11 +1496,6 @@ static int loop_set_block_size(struct lo
+ 	loop_update_dio(lo);
+ 	blk_mq_unfreeze_queue(lo->lo_queue);
+ 
+-unlock:
+-	mutex_unlock(&lo->lo_mutex);
+-abort_claim:
+-	if (!(mode & BLK_OPEN_EXCL))
+-		bd_abort_claiming(bdev, loop_set_block_size);
+ 	return err;
+ }
+ 
+@@ -1536,6 +1514,9 @@ static int lo_simple_ioctl(struct loop_d
+ 	case LOOP_SET_DIRECT_IO:
+ 		err = loop_set_dio(lo, arg);
+ 		break;
++	case LOOP_SET_BLOCK_SIZE:
++		err = loop_set_block_size(lo, arg);
++		break;
+ 	default:
+ 		err = -EINVAL;
+ 	}
+@@ -1590,12 +1571,9 @@ static int lo_ioctl(struct block_device
+ 		break;
+ 	case LOOP_GET_STATUS64:
+ 		return loop_get_status64(lo, argp);
+-	case LOOP_SET_BLOCK_SIZE:
+-		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
+-			return -EPERM;
+-		return loop_set_block_size(lo, mode, bdev, arg);
+ 	case LOOP_SET_CAPACITY:
+ 	case LOOP_SET_DIRECT_IO:
++	case LOOP_SET_BLOCK_SIZE:
+ 		if (!(mode & BLK_OPEN_WRITE) && !capable(CAP_SYS_ADMIN))
+ 			return -EPERM;
+ 		fallthrough;
 
 
