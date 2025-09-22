@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8305818C2C;
-	Mon, 22 Sep 2025 19:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025FF1547CC;
+	Mon, 22 Sep 2025 19:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570432; cv=none; b=RekfJABrjMyxHxIIlESPNEl9kyaop8kuYrSHLTk9JlmSSlncx2VVi0aqlXFPnYBhHVbTTyImROEqn/W0Plw0jTbOzgZqHIP7JukzafkdVLvz9oC1xy5KiovE5bPM5p3JSXIR4M8NluLTryrwGHsaDkuMaqS0N7PwUobDnVj0I90=
+	t=1758570435; cv=none; b=aK60En9gZVXV6SPSlOXRd//AgrhOWdYrNPRxvTjHIPF3dwrU7faUXiYPHrPK0P1EapiJYJBfP3SJLmL3BQO4vySQ+oQ9e+gbMXYebbk6q9GUJdbJ84DbOZFQ9NgFCJg+kfHt7ftwhvNavcLc8NjtC5QO31++DqA3VoubcA6qpSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570432; c=relaxed/simple;
-	bh=ehShPMRpDaaZ6eEfJjZr+6bXgT1acQItcXporc1kRd8=;
+	s=arc-20240116; t=1758570435; c=relaxed/simple;
+	bh=a+EHCMLX2ccCchkTvYZe3GtYnhGYAcUHR44qosIzjPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EBki2syW3IH9noyIs9XdhI7X+tMDqAsawoYn8VgSlS0tYED46PALdASYETBh1YRmuMkAsilMoBbeXewMsHT8eHxA9Onxfsf6m2+KXtqaYxRPDjQbeb2A8tWLYAws/E8X7EYZ3XaO+z0WfAYmnUY7hmBr8buUAySExj/6HTUVjIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT9q9Rqb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YM8TJy5H3zVNpOlpeQorWeC2Q/QBZOJ+tSBVMhT9qHEMmXwIItCxjwMFkhNHXydsGrHvMuist/OadpeaveJo9+UgJ4vEb51+4nHurehqPNTWz278WwpRPc91QTcAzRk3evcsOo2STzZKnQmHfcvasjOf5Fu76N4pQoME8ut8nuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C50HOCH9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT9q9Rqb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E28AC4CEF0;
-	Mon, 22 Sep 2025 19:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C50HOCH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917CCC4CEF5;
+	Mon, 22 Sep 2025 19:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570432;
-	bh=ehShPMRpDaaZ6eEfJjZr+6bXgT1acQItcXporc1kRd8=;
+	s=korg; t=1758570434;
+	bh=a+EHCMLX2ccCchkTvYZe3GtYnhGYAcUHR44qosIzjPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FT9q9Rqb4tj9vRhqRMU/zEFj26aqD4yYN65n39QrSrW9ikuVzCkEf/OVPZhSz0nOz
-	 G/TmVvNPGYjEMUG76pL6TpxAgh4jRf70Db2OPye9HtH6o9JzyBgXqPFpNaiRqVA9cC
-	 Up78HBGF572dQnmQWxzP7U7UUdu6Hok50FHeT2Fc=
+	b=C50HOCH93hSuVT7fiU4ueSU7kQS1Q33uwfcgw/c9qgaLgUIjQh2ulFoQQmwfYxHT4
+	 dUn5Ufp3uUcAWedrn/oh/Z6O1RHPZbPfO1Ycq4AThaII8bZafQ93dLYBY7h961MTUw
+	 aRGsSrizb5iUatV0HDj2gUdDFIteCXPaW/m6ZjnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.16 139/149] platform/x86: asus-wmi: Fix ROG button mapping, tablet mode on ASUS ROG Z13
-Date: Mon, 22 Sep 2025 21:30:39 +0200
-Message-ID: <20250922192416.372469455@linuxfoundation.org>
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>
+Subject: [PATCH 6.16 148/149] clk: sunxi-ng: mp: Fix dual-divider clock rate readback
+Date: Mon, 22 Sep 2025 21:30:48 +0200
+Message-ID: <20250922192416.600829456@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -44,115 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Chen-Yu Tsai <wens@csie.org>
 
-commit 132bfcd24925d4d4531a19b87acb8474be82a017 upstream.
+commit 25fbbaf515acd13399589bd5ee6de5f35740cef2 upstream.
 
-On commit 9286dfd5735b ("platform/x86: asus-wmi: Fix spurious rfkill on
-UX8406MA"), Mathieu adds a quirk for the Zenbook Duo to ignore the code
-0x5f (WLAN button disable). On that laptop, this code is triggered when
-the device keyboard is attached.
+When dual-divider clock support was introduced, the P divider offset was
+left out of the .recalc_rate readback function. This causes the clock
+rate to become bogus or even zero (possibly due to the P divider being
+1, leading to a divide-by-zero).
 
-On the ASUS ROG Z13 2025, this code is triggered when pressing the side
-button of the device, which is used to open Armoury Crate in Windows.
+Fix this by incorporating the P divider offset into the calculation.
 
-As this is becoming a pattern, where newer Asus laptops use this keycode
-for emitting events, let's convert the wlan ignore quirk to instead
-allow emitting codes, so that userspace programs can listen to it and
-so that it does not interfere with the rfkill state.
-
-With this patch, the Z13 wil emit KEY_PROG3 and the Duo will remain
-unchanged and emit no event. While at it, add a quirk for the Z13 to
-switch into tablet mode when removing the keyboard.
-
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://lore.kernel.org/r/20250808154710.8981-2-lkml@antheas.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 45717804b75e ("clk: sunxi-ng: mp: introduce dual-divider clock")
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20250830170901.1996227-4-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c |   23 +++++++++++++++++++----
- drivers/platform/x86/asus-wmi.h    |    3 ++-
- 2 files changed, 21 insertions(+), 5 deletions(-)
+ drivers/clk/sunxi-ng/ccu_mp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -147,7 +147,12 @@ static struct quirk_entry quirk_asus_ign
- };
+diff --git a/drivers/clk/sunxi-ng/ccu_mp.c b/drivers/clk/sunxi-ng/ccu_mp.c
+index 354c981943b6..4221b1888b38 100644
+--- a/drivers/clk/sunxi-ng/ccu_mp.c
++++ b/drivers/clk/sunxi-ng/ccu_mp.c
+@@ -185,7 +185,7 @@ static unsigned long ccu_mp_recalc_rate(struct clk_hw *hw,
+ 	p &= (1 << cmp->p.width) - 1;
  
- static struct quirk_entry quirk_asus_zenbook_duo_kbd = {
--	.ignore_key_wlan = true,
-+	.key_wlan_event = ASUS_WMI_KEY_IGNORE,
-+};
-+
-+static struct quirk_entry quirk_asus_z13 = {
-+	.key_wlan_event = ASUS_WMI_KEY_ARMOURY,
-+	.tablet_switch_mode = asus_wmi_kbd_dock_devid,
- };
+ 	if (cmp->common.features & CCU_FEATURE_DUAL_DIV)
+-		rate = (parent_rate / p) / m;
++		rate = (parent_rate / (p + cmp->p.offset)) / m;
+ 	else
+ 		rate = (parent_rate >> p) / m;
  
- static int dmi_matched(const struct dmi_system_id *dmi)
-@@ -539,6 +544,15 @@ static const struct dmi_system_id asus_q
- 		},
- 		.driver_data = &quirk_asus_zenbook_duo_kbd,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "ASUS ROG Z13",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
-+		},
-+		.driver_data = &quirk_asus_z13,
-+	},
- 	{},
- };
- 
-@@ -636,6 +650,7 @@ static const struct key_entry asus_nb_wm
- 	{ KE_IGNORE, 0xCF, },	/* AC mode */
- 	{ KE_KEY, 0xFA, { KEY_PROG2 } },           /* Lid flip action */
- 	{ KE_KEY, 0xBD, { KEY_PROG2 } },           /* Lid flip action on ROG xflow laptops */
-+	{ KE_KEY, ASUS_WMI_KEY_ARMOURY, { KEY_PROG3 } },
- 	{ KE_END, 0},
- };
- 
-@@ -655,9 +670,9 @@ static void asus_nb_wmi_key_filter(struc
- 		if (atkbd_reports_vol_keys)
- 			*code = ASUS_WMI_KEY_IGNORE;
- 		break;
--	case 0x5F: /* Wireless console Disable */
--		if (quirks->ignore_key_wlan)
--			*code = ASUS_WMI_KEY_IGNORE;
-+	case 0x5F: /* Wireless console Disable / Special Key */
-+		if (quirks->key_wlan_event)
-+			*code = quirks->key_wlan_event;
- 		break;
- 	}
- }
---- a/drivers/platform/x86/asus-wmi.h
-+++ b/drivers/platform/x86/asus-wmi.h
-@@ -18,6 +18,7 @@
- #include <linux/i8042.h>
- 
- #define ASUS_WMI_KEY_IGNORE (-1)
-+#define ASUS_WMI_KEY_ARMOURY	0xffff01
- #define ASUS_WMI_BRN_DOWN	0x2e
- #define ASUS_WMI_BRN_UP		0x2f
- 
-@@ -40,7 +41,7 @@ struct quirk_entry {
- 	bool wmi_force_als_set;
- 	bool wmi_ignore_fan;
- 	bool filter_i8042_e1_extended_codes;
--	bool ignore_key_wlan;
-+	int key_wlan_event;
- 	enum asus_wmi_tablet_switch_mode tablet_switch_mode;
- 	int wapf;
- 	/*
+-- 
+2.51.0
+
 
 
