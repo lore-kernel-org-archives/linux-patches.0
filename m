@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA432F2910;
-	Mon, 22 Sep 2025 19:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AA72F2910;
+	Mon, 22 Sep 2025 19:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570075; cv=none; b=UOVnD/FAEZp2FwWjA75AfFkCyfiETt0AvXVdxWwqOP9CASCjDqp4h8MHssrSY1/aohI1JHITzqHVglQ+ybi52mVXrcQ61jeNQSAx69BAMUPhsKH8UUp2B4lkcdVERf0APW37vAMKyePkXAnf7TYKQ8D1cIMRYTSAIHMBXg6ab3c=
+	t=1758570076; cv=none; b=bNMxGnYfGMDEGNgkU1vTxMqduv5g6zUsiVWy/MyAySEB3IysSGlZf1RPu2LbQOTwpOumOcLRYjjVTTTszTDXaWR8BRS+JduVcEEOrwEVjwpgGfgCnpjm+qX/KV8EZHefWPJHPKfuXNCniMvnArlC0ysamETOwlnAhyPGk+0iA08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570075; c=relaxed/simple;
-	bh=uvwvi6F3DHDbdGDUo4v33GSbAAgCL8VM0o+OQGRANqw=;
+	s=arc-20240116; t=1758570076; c=relaxed/simple;
+	bh=KMJFkXpCrD4UM7WmA5WelY6QAN/D/FzN6qz2scK37wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVZL5+RFpUrhXLwV7buF0aXem1JDxdtqOzjyGPVCYcnRouC0sK3z4ZnD7exFNy9UcF2yG0LeWB4RKoHXSm9qvrWHD2UBzGbAnpBN2lT0DEG6QAW8t1Hf3IEvOK7gk7L8bi4NZoufX92AIvmlhCxgf/IN4AkVDKAnH7JAuI2mxBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3ZQ9xmj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l24WkcUjcP4LkW2Eu7qgrgWJg9Yxjr+Bbfi9Av6x6CLuPg0ykSQpUZCKPDPz0JimI8+rhtsTHfGArAyymnhfooWR3xOzKRvbF428FUmSt85aOR9RaU5L9iY04dJcfD216U1CYPu80cR1SrNdHwlVoaHWNSzxalBS5LmvuHFHKcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUP7am4E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3ZQ9xmj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4935C4CEF0;
-	Mon, 22 Sep 2025 19:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUP7am4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D316C4CEF5;
+	Mon, 22 Sep 2025 19:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570074;
-	bh=uvwvi6F3DHDbdGDUo4v33GSbAAgCL8VM0o+OQGRANqw=;
+	s=korg; t=1758570076;
+	bh=KMJFkXpCrD4UM7WmA5WelY6QAN/D/FzN6qz2scK37wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3ZQ9xmj90/4y4NRhiD3qzeViEFeqsoUIEXv/sziJojWxUdMQuYPCmAYamtqZaN2m
-	 mZbO6Yc2f6/sv+r1lYO0rCJRMs0WB+DEOz8xdPwFlxegLqzppIekL9fIRGemwbHnQd
-	 uMpds098XhiGLKXpSD+HgiEkGRXZj3ugDoJQJOQ0=
+	b=fUP7am4EApD4MuXepQ1Ug8RnnG+ldPR3TErC+gDJUL+4buLX8/tPJelBfXAAgW/lM
+	 FZ7vLCTTQnEfCtF6p99Wyc2bqwS+8+XsJiqBAxNtZI5e9G2hxLT0WcGdANqjkBrzBP
+	 ZV+WFHgWd3/9/GQz8a8zGHAcoM3QiwQBeDeqqWQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pedro Falcato <pedro.falcato@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 6.12 105/105] minmax.h: remove some #defines that are only expanded once
-Date: Mon, 22 Sep 2025 21:30:28 +0200
-Message-ID: <20250922192411.598566184@linuxfoundation.org>
+Subject: [PATCH 6.12 103/105] minmax.h: move all the clamp() definitions after the min/max() ones
+Date: Mon, 22 Sep 2025 21:30:26 +0200
+Message-ID: <20250922192411.555614362@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -63,20 +63,13 @@ Content-Transfer-Encoding: 8bit
 
 From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit 2b97aaf74ed534fb838d09867d09a3ca5d795208 ]
+commit c3939872ee4a6b8bdcd0e813c66823b31e6e26f7 upstream.
 
-The bodies of __signed_type_use() and __unsigned_type_use() are much the
-same size as their names - so put the bodies in the only line that expands
-them.
+At some point the definitions for clamp() got added in the middle of the
+ones for min() and max().  Re-order the definitions so they are more
+sensibly grouped.
 
-Similarly __signed_type() is defined separately for 64bit and then used
-exactly once just below.
-
-Change the test for __signed_type from CONFIG_64BIT to one based on gcc
-defined macros so that the code is valid if it gets used outside of a
-kernel build.
-
-Link: https://lkml.kernel.org/r/9386d1ebb8974fbabbed2635160c3975@AcuMS.aculab.com
+Link: https://lkml.kernel.org/r/8bb285818e4846469121c8abc3dfb6e2@AcuMS.aculab.com
 Signed-off-by: David Laight <david.laight@aculab.com>
 Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Arnd Bergmann <arnd@kernel.org>
@@ -92,48 +85,159 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ include/linux/minmax.h |  109 ++++++++++++++++++++++---------------------------
+ 1 file changed, 51 insertions(+), 58 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -46,10 +46,8 @@
-  * comparison, and these expressions only need to be careful to not cause
-  * warnings for pointer use.
+@@ -99,22 +99,6 @@
+ #define __careful_cmp(op, x, y) \
+ 	__careful_cmp_once(op, x, y, __UNIQUE_ID(x_), __UNIQUE_ID(y_))
+ 
+-#define __clamp(val, lo, hi)	\
+-	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
+-
+-#define __clamp_once(val, lo, hi, uval, ulo, uhi) ({				\
+-	__auto_type uval = (val);						\
+-	__auto_type ulo = (lo);							\
+-	__auto_type uhi = (hi);							\
+-	BUILD_BUG_ON_MSG(statically_true(ulo > uhi),				\
+-		"clamp() low limit " #lo " greater than high limit " #hi);	\
+-	BUILD_BUG_ON_MSG(!__types_ok3(uval, ulo, uhi),				\
+-		"clamp("#val", "#lo", "#hi") signedness error");		\
+-	__clamp(uval, ulo, uhi); })
+-
+-#define __careful_clamp(val, lo, hi) \
+-	__clamp_once(val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
+-
+ /**
+  * min - return minimum of two values of the same or compatible types
+  * @x: first value
+@@ -171,6 +155,22 @@
+ 	__careful_op3(max, x, y, z, __UNIQUE_ID(x_), __UNIQUE_ID(y_), __UNIQUE_ID(z_))
+ 
+ /**
++ * min_t - return minimum of two values, using the specified type
++ * @type: data type to use
++ * @x: first value
++ * @y: second value
++ */
++#define min_t(type, x, y) __cmp_once(min, type, x, y)
++
++/**
++ * max_t - return maximum of two values, using the specified type
++ * @type: data type to use
++ * @x: first value
++ * @y: second value
++ */
++#define max_t(type, x, y) __cmp_once(max, type, x, y)
++
++/**
+  * min_not_zero - return the minimum that is _not_ zero, unless both are zero
+  * @x: value1
+  * @y: value2
+@@ -180,6 +180,22 @@
+ 	typeof(y) __y = (y);			\
+ 	__x == 0 ? __y : ((__y == 0) ? __x : min(__x, __y)); })
+ 
++#define __clamp(val, lo, hi)	\
++	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
++
++#define __clamp_once(val, lo, hi, uval, ulo, uhi) ({				\
++	__auto_type uval = (val);						\
++	__auto_type ulo = (lo);							\
++	__auto_type uhi = (hi);							\
++	BUILD_BUG_ON_MSG(statically_true(ulo > uhi),				\
++		"clamp() low limit " #lo " greater than high limit " #hi);	\
++	BUILD_BUG_ON_MSG(!__types_ok3(uval, ulo, uhi),				\
++		"clamp("#val", "#lo", "#hi") signedness error");		\
++	__clamp(uval, ulo, uhi); })
++
++#define __careful_clamp(val, lo, hi) \
++	__clamp_once(val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
++
+ /**
+  * clamp - return a value clamped to a given range with strict typechecking
+  * @val: current value
+@@ -191,28 +207,30 @@
   */
--#define __signed_type_use(ux) (2 + __is_nonneg(ux))
--#define __unsigned_type_use(ux) (1 + 2 * (sizeof(ux) < 4))
- #define __sign_use(ux) (is_signed_type(typeof(ux)) ? \
--	__signed_type_use(ux) : __unsigned_type_use(ux))
-+	(2 + __is_nonneg(ux)) : (1 + 2 * (sizeof(ux) < 4)))
+ #define clamp(val, lo, hi) __careful_clamp(val, lo, hi)
+ 
+-/*
+- * ..and if you can't take the strict
+- * types, you can specify one yourself.
+- *
+- * Or not use min/max/clamp at all, of course.
+- */
+-
+ /**
+- * min_t - return minimum of two values, using the specified type
+- * @type: data type to use
+- * @x: first value
+- * @y: second value
++ * clamp_t - return a value clamped to a given range using a given type
++ * @type: the type of variable to use
++ * @val: current value
++ * @lo: minimum allowable value
++ * @hi: maximum allowable value
++ *
++ * This macro does no typechecking and uses temporary variables of type
++ * @type to make all the comparisons.
+  */
+-#define min_t(type, x, y) __cmp_once(min, type, x, y)
++#define clamp_t(type, val, lo, hi) __careful_clamp((type)(val), (type)(lo), (type)(hi))
+ 
+ /**
+- * max_t - return maximum of two values, using the specified type
+- * @type: data type to use
+- * @x: first value
+- * @y: second value
++ * clamp_val - return a value clamped to a given range using val's type
++ * @val: current value
++ * @lo: minimum allowable value
++ * @hi: maximum allowable value
++ *
++ * This macro does no typechecking and uses temporary variables of whatever
++ * type the input argument @val is.  This is useful when @val is an unsigned
++ * type and @lo and @hi are literals that will otherwise be assigned a signed
++ * integer type.
+  */
+-#define max_t(type, x, y) __cmp_once(max, type, x, y)
++#define clamp_val(val, lo, hi) clamp_t(typeof(val), val, lo, hi)
  
  /*
-  * Check whether a signed value is always non-negative.
-@@ -57,7 +55,7 @@
-  * A cast is needed to avoid any warnings from values that aren't signed
-  * integer types (in which case the result doesn't matter).
-  *
-- * On 64-bit any integer or pointer type can safely be cast to 'long'.
-+ * On 64-bit any integer or pointer type can safely be cast to 'long long'.
-  * But on 32-bit we need to avoid warnings about casting pointers to integers
-  * of different sizes without truncating 64-bit values so 'long' or 'long long'
-  * must be used depending on the size of the value.
-@@ -66,12 +64,12 @@
-  * them, but we do not use s128 types in the kernel (we do use 'u128',
-  * but they are handled by the !is_signed_type() case).
+  * Do not check the array parameter using __must_be_array().
+@@ -257,31 +275,6 @@
   */
--#ifdef CONFIG_64BIT
--  #define __signed_type(ux) long
-+#if __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG__
-+#define __is_nonneg(ux) statically_true((long long)(ux) >= 0)
- #else
--  #define __signed_type(ux) typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L))
-+#define __is_nonneg(ux) statically_true( \
-+	(typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L)))(ux) >= 0)
- #endif
--#define __is_nonneg(ux) statically_true((__signed_type(ux))(ux) >= 0)
+ #define max_array(array, len) __minmax_array(max, array, len)
  
- #define __types_ok(ux, uy) \
- 	(__sign_use(ux) & __sign_use(uy))
+-/**
+- * clamp_t - return a value clamped to a given range using a given type
+- * @type: the type of variable to use
+- * @val: current value
+- * @lo: minimum allowable value
+- * @hi: maximum allowable value
+- *
+- * This macro does no typechecking and uses temporary variables of type
+- * @type to make all the comparisons.
+- */
+-#define clamp_t(type, val, lo, hi) __careful_clamp((type)(val), (type)(lo), (type)(hi))
+-
+-/**
+- * clamp_val - return a value clamped to a given range using val's type
+- * @val: current value
+- * @lo: minimum allowable value
+- * @hi: maximum allowable value
+- *
+- * This macro does no typechecking and uses temporary variables of whatever
+- * type the input argument @val is.  This is useful when @val is an unsigned
+- * type and @lo and @hi are literals that will otherwise be assigned a signed
+- * integer type.
+- */
+-#define clamp_val(val, lo, hi) clamp_t(typeof(val), val, lo, hi)
+-
+ static inline bool in_range64(u64 val, u64 start, u64 len)
+ {
+ 	return (val - start) < len;
 
 
