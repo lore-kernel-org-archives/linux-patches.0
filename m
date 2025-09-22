@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB6827B320;
-	Mon, 22 Sep 2025 19:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1841F2F0C5F;
+	Mon, 22 Sep 2025 19:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569874; cv=none; b=O7X8+ybA/zQRp4+d1+8y+h3493g+uXxMj1kqvfdWUf/5tNLnKTaZofFGpwfFJd+czfngtssngpCo9CwQnw0cXG1IOSkqN1eyc4YdZHLSqa5ZBSl6icZk1HWpfxh3tMnd9xZNbaZ3Tm6R06uOhv1O1UFVJo14niod1LRtyDzvipo=
+	t=1758569877; cv=none; b=cSzZFmlEYXxF+MQoyGUJepIe0YLcJjep/Fy8bP/oR/P2a37ArLDf2wl5yV2oEYTPAfh0Gj3yUzkCPPeBNpQtv+dibRZ4vrT06jta1yvq8JuU8UEl5dE6pTqeNR9a9TOMGutZK8dzgTFYpa4KVKkuLEnEWD/O+v8+Z2DdMtbtJzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569874; c=relaxed/simple;
-	bh=cr60HvZ34oheV/X9RIZJPLj+48uUvrQ8eIkUBSIaXz0=;
+	s=arc-20240116; t=1758569877; c=relaxed/simple;
+	bh=kN8IVcQZkCaq+VDw9HzdMNOLWWPxKG4KtfNRI6GDdAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMzIbfiwy7SV2lqwna2zbh+fwKaL78yehcZAhQ+3dIqGxIEdG+x6oF9VVMHG/ZzgCikM3t7NqOpT84m4yLdaJUrTDn9+Vy9/lBOfs8P/sGekDwBroBQO+CaJKCXwNyNs/pFDtIjTmZzMfUB+sIXWQawl8VvXyXcNnVjoxgWsgTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5SyJdLa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlS+9VXPuahLtgwEzRQWSdNcgAUgHK9V7ZUQCPKxepLIZB9EKUJZuBfNKEvAXhHw2DmvlbRxR7H1oFkEgdtKwV0PWsJwVKZKnQE9k8JpNpY+CuecjIS9kEPP5c4lZboiQ0ssqb2hhmRvrjR4xJ+3HUVbrhmUppWfo9rd11sC4v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHqNPs1W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5SyJdLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3380AC4CEF0;
-	Mon, 22 Sep 2025 19:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHqNPs1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51B4C4CEF0;
+	Mon, 22 Sep 2025 19:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569874;
-	bh=cr60HvZ34oheV/X9RIZJPLj+48uUvrQ8eIkUBSIaXz0=;
+	s=korg; t=1758569877;
+	bh=kN8IVcQZkCaq+VDw9HzdMNOLWWPxKG4KtfNRI6GDdAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5SyJdLaUDVunJsQ/i8AZNsiyEVr1CCwLkgXS7i197n8GHvccnbO26Tj/bHcfmYlL
-	 RJt0EoqUahvZxtfxhKY44FsHQQqDeX3jC2ljL4Y3XUpjjsAkZVu6jwxQ3NkB3H3GMO
-	 ieIvvT8igPB/FcdP7LBtZNqFSzpm8+TUw/+xyq8s=
+	b=PHqNPs1W4t+mzANczd4uE92WadW/MLfYGqBwhJhqsKl7j6vECIY4x80l9BFt4C77u
+	 IE70K/IxkS45ZEiKGeXJyKCWi1L+BzjPvuG9M8PPLYzja5fn1lLOaBIqQniU6mMeWp
+	 w4OJB5FimTWVa4txsS0gHz1NBZ/mfixoUAnl3Qf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vince Weaver <vincent.weaver@maine.edu>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Angel Adetula <angeladetula@google.com>
-Subject: [PATCH 6.12 033/105] perf/x86/intel: Fix crash in icl_update_topdown_event()
-Date: Mon, 22 Sep 2025 21:29:16 +0200
-Message-ID: <20250922192409.779383460@linuxfoundation.org>
+	Kohei Enju <enjuk@amazon.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 023/105] igc: dont fail igc_probe() on LED setup error
+Date: Mon, 22 Sep 2025 21:29:06 +0200
+Message-ID: <20250922192409.518721995@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -54,67 +56,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-commit b0823d5fbacb1c551d793cbfe7af24e0d1fa45ed upstream.
+[ Upstream commit 528eb4e19ec0df30d0c9ae4074ce945667dde919 ]
 
-The perf_fuzzer found a hard-lockup crash on a RaptorLake machine:
+When igc_led_setup() fails, igc_probe() fails and triggers kernel panic
+in free_netdev() since unregister_netdev() is not called. [1]
+This behavior can be tested using fault-injection framework, especially
+the failslab feature. [2]
 
-  Oops: general protection fault, maybe for address 0xffff89aeceab400: 0000
-  CPU: 23 UID: 0 PID: 0 Comm: swapper/23
-  Tainted: [W]=WARN
-  Hardware name: Dell Inc. Precision 9660/0VJ762
-  RIP: 0010:native_read_pmc+0x7/0x40
-  Code: cc e8 8d a9 01 00 48 89 03 5b cd cc cc cc cc 0f 1f ...
-  RSP: 000:fffb03100273de8 EFLAGS: 00010046
-  ....
-  Call Trace:
-    <TASK>
-    icl_update_topdown_event+0x165/0x190
-    ? ktime_get+0x38/0xd0
-    intel_pmu_read_event+0xf9/0x210
-    __perf_event_read+0xf9/0x210
+Since LED support is not mandatory, treat LED setup failures as
+non-fatal and continue probe with a warning message, consequently
+avoiding the kernel panic.
 
-CPUs 16-23 are E-core CPUs that don't support the perf metrics feature.
-The icl_update_topdown_event() should not be invoked on these CPUs.
+[1]
+ kernel BUG at net/core/dev.c:12047!
+ Oops: invalid opcode: 0000 [#1] SMP NOPTI
+ CPU: 0 UID: 0 PID: 937 Comm: repro-igc-led-e Not tainted 6.17.0-rc4-enjuk-tnguy-00865-gc4940196ab02 #64 PREEMPT(voluntary)
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ RIP: 0010:free_netdev+0x278/0x2b0
+ [...]
+ Call Trace:
+  <TASK>
+  igc_probe+0x370/0x910
+  local_pci_probe+0x3a/0x80
+  pci_device_probe+0xd1/0x200
+ [...]
 
-It's a regression of commit:
+[2]
+ #!/bin/bash -ex
 
-  f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+ FAILSLAB_PATH=/sys/kernel/debug/failslab/
+ DEVICE=0000:00:05.0
+ START_ADDR=$(grep " igc_led_setup" /proc/kallsyms \
+         | awk '{printf("0x%s", $1)}')
+ END_ADDR=$(printf "0x%x" $((START_ADDR + 0x100)))
 
-The bug introduced by that commit is that the is_topdown_event() function
-is mistakenly used to replace the is_topdown_count() call to check if the
-topdown functions for the perf metrics feature should be invoked.
+ echo $START_ADDR > $FAILSLAB_PATH/require-start
+ echo $END_ADDR > $FAILSLAB_PATH/require-end
+ echo 1 > $FAILSLAB_PATH/times
+ echo 100 > $FAILSLAB_PATH/probability
+ echo N > $FAILSLAB_PATH/ignore-gfp-wait
 
-Fix it.
+ echo $DEVICE > /sys/bus/pci/drivers/igc/bind
 
-Fixes: f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
-Closes: https://lore.kernel.org/lkml/352f0709-f026-cd45-e60c-60dfd97f73f3@maine.edu/
-Reported-by: Vince Weaver <vincent.weaver@maine.edu>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Vince Weaver <vincent.weaver@maine.edu>
-Cc: stable@vger.kernel.org # v6.15+
-Link: https://lore.kernel.org/r/20250612143818.2889040-1-kan.liang@linux.intel.com
-[ omitted PEBS check ]
+Fixes: ea578703b03d ("igc: Add support for LEDs on i225/i226")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Reviewed-by: Kurt Kanzenbach <kurt@linutronix.de>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Angel Adetula <angeladetula@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc.h      |  1 +
+ drivers/net/ethernet/intel/igc/igc_main.c | 12 +++++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2793,7 +2793,7 @@ static void intel_pmu_read_event(struct
- 		if (pmu_enabled)
- 			intel_pmu_disable_all();
+diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
+index 323db1e2be388..79d5fc5ac4fce 100644
+--- a/drivers/net/ethernet/intel/igc/igc.h
++++ b/drivers/net/ethernet/intel/igc/igc.h
+@@ -336,6 +336,7 @@ struct igc_adapter {
+ 	/* LEDs */
+ 	struct mutex led_mutex;
+ 	struct igc_led_classdev *leds;
++	bool leds_available;
+ };
  
--		if (is_topdown_event(event))
-+		if (is_topdown_count(event))
- 			static_call(intel_pmu_update_topdown_event)(event);
- 		else
- 			intel_pmu_drain_pebs_buffer();
+ void igc_up(struct igc_adapter *adapter);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index aadc0667fa04a..9ba41a427e141 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -7169,8 +7169,14 @@ static int igc_probe(struct pci_dev *pdev,
+ 
+ 	if (IS_ENABLED(CONFIG_IGC_LEDS)) {
+ 		err = igc_led_setup(adapter);
+-		if (err)
+-			goto err_register;
++		if (err) {
++			netdev_warn_once(netdev,
++					 "LED init failed (%d); continuing without LED support\n",
++					 err);
++			adapter->leds_available = false;
++		} else {
++			adapter->leds_available = true;
++		}
+ 	}
+ 
+ 	return 0;
+@@ -7226,7 +7232,7 @@ static void igc_remove(struct pci_dev *pdev)
+ 	cancel_work_sync(&adapter->watchdog_task);
+ 	hrtimer_cancel(&adapter->hrtimer);
+ 
+-	if (IS_ENABLED(CONFIG_IGC_LEDS))
++	if (IS_ENABLED(CONFIG_IGC_LEDS) && adapter->leds_available)
+ 		igc_led_free(adapter);
+ 
+ 	/* Release control of h/w to f/w.  If f/w is AMT enabled, this
+-- 
+2.51.0
+
 
 
