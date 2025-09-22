@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC0225F780;
-	Mon, 22 Sep 2025 19:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85572EDD5D;
+	Mon, 22 Sep 2025 19:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569777; cv=none; b=Yofv/RC8qnZT0GnBI0YIXNQfomukvRggdE3jWHUpROerkpWOyiV6M9TVs881L3YbK/AUZUxMwQa3lCv+lS/TI5nqxHbwyzZ8Vm8UJvq8zvXn7Tg27neqXU4e5jb2/LdrHm8Q4qej3da927jiimqRtShH9Kek3g5zUSRyC9X9KsE=
+	t=1758569777; cv=none; b=rwOBvtzc+/gJM2DO5fZ9mO5Hc9jjsQQUCouZhFwtSeOa66a45EHD3+18ONS1b4ytGALSc0pbmPBYT8zFgzwtvmxFDMOvNYzcK33O/aV5hYO9JynipTXJtEXPRNJGP/l8KGcrMxreSzUGGvgf7dul7SiIoacL+35jIzhpG2gG9Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758569777; c=relaxed/simple;
-	bh=/d0WtFypLkBlpphRnMqS1gnElWSINaCGF5SNfO7P9qE=;
+	bh=U167C+QGuTBgb1He854QVnBKvVY1JfwN3YmT2oi8Zy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRvdIgxdw1o9gqVsb/e0jnuAe9v7sQnBYikdWzQt2U0ydO6jvuh1vyLhzp21Xwe65sxfriAG51vlmgW8CQi8pl5oRvs8QpW94FDeL0xCQRk0PFZHwoqGgV8StAUOqVtJC4cyDG+8nxIQYJ24Jvn7arR9CDlJE/vu6m6R+WIKOJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaTux2sE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZ2g84PGtNOETH8BD5oy2ZB+JpTEf5ZIiZd+hOVuTIm+xWX2EF5cGuL76d77EeaHQxG+/EoHl9O4tBNFbZlrvQ+SkWJ0HLeMD34tOSxw+NIjQnMOPQkK+xu518Frm2uaqXCOkBZHEtCLioOhuNSEK04xyAGbQ00AZJC7/ECMXTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/y3J4EX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaTux2sE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F01C4CEF5;
-	Mon, 22 Sep 2025 19:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/y3J4EX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2856C4CEF0;
+	Mon, 22 Sep 2025 19:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569777;
-	bh=/d0WtFypLkBlpphRnMqS1gnElWSINaCGF5SNfO7P9qE=;
+	s=korg; t=1758569775;
+	bh=U167C+QGuTBgb1He854QVnBKvVY1JfwN3YmT2oi8Zy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaTux2sEDKAgqBt+VJtv0jvf3k8Bn3M3UnCI5Wsq7WUuE5IVk5fNh15rzVRLc85DH
-	 Nq3hsf1RlmuwpSLxoAPpzwEWYFZwTD6zdJJeoPcOTQ0sRXMmqUeWXpUKCG7ReFsn2E
-	 HHk+Dqw+ulmOsX7X/lCxmJLF0N7Vt6ooSmv7Oq6I=
+	b=J/y3J4EXkW4RqeiFZXXR7tu9KpeMfsZgmswJvOndD+RZLAwkXNZ6ExCumxMvZhgDh
+	 WXcfVadyodwbL2PBsK6nfYYv4l/TfRXpmmXzkI9DUD1Yu3TmxPiyTH87j2DBFfoLfB
+	 N0bpgS83rs+P1wAeIDC5GOyQRTjA1DRgI26FMslo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-rtc@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Elena Popa <elena.popa@nxp.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Bruno Thomsen <bruno.thomsen@gmail.com>
-Subject: [PATCH 6.6 65/70] rtc: pcf2127: fix SPI command byte for PCF2131 backport
-Date: Mon, 22 Sep 2025 21:30:05 +0200
-Message-ID: <20250922192406.350816259@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 56/70] smb: client: fix smbdirect_recv_io leak in smbd_negotiate() error path
+Date: Mon, 22 Sep 2025 21:29:56 +0200
+Message-ID: <20250922192406.105845403@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -53,55 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bruno Thomsen <bruno.thomsen@gmail.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-When commit fa78e9b606a472495ef5b6b3d8b45c37f7727f9d upstream was
-backported to LTS branches linux-6.12.y and linux-6.6.y, the SPI regmap
-config fix got applied to the I2C regmap config. Most likely due to a new
-RTC get/set parm feature introduced in 6.14 causing regmap config sections
-in the buttom of the driver to move. LTS branch linux-6.1.y and earlier
-does not have PCF2131 device support.
+[ Upstream commit daac51c7032036a0ca5f1aa419ad1b0471d1c6e0 ]
 
-Issue can be seen in buttom of this diff in stable/linux.git tree:
-git diff master..linux-6.12.y -- drivers/rtc/rtc-pcf2127.c
+During tests of another unrelated patch I was able to trigger this
+error: Objects remaining on __kmem_cache_shutdown()
 
-Fixes: ee61aec8529e ("rtc: pcf2127: fix SPI command byte for PCF2131")
-Fixes: 5cdd1f73401d ("rtc: pcf2127: fix SPI command byte for PCF2131")
-Cc: stable@vger.kernel.org
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: Elena Popa <elena.popa@nxp.com>
-Cc: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Signed-off-by: Bruno Thomsen <bruno.thomsen@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf2127.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/smb/client/smbdirect.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/rtc/rtc-pcf2127.c
-+++ b/drivers/rtc/rtc-pcf2127.c
-@@ -1383,11 +1383,6 @@ static int pcf2127_i2c_probe(struct i2c_
- 		variant = &pcf21xx_cfg[type];
- 	}
- 
--	if (variant->type == PCF2131) {
--		config.read_flag_mask = 0x0;
--		config.write_flag_mask = 0x0;
--	}
--
- 	config.max_register = variant->max_register,
- 
- 	regmap = devm_regmap_init(&client->dev, &pcf2127_i2c_regmap,
-@@ -1461,6 +1456,11 @@ static int pcf2127_spi_probe(struct spi_
- 		variant = &pcf21xx_cfg[type];
- 	}
- 
-+	if (variant->type == PCF2131) {
-+		config.read_flag_mask = 0x0;
-+		config.write_flag_mask = 0x0;
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index 713bd1dcd39cc..be9be8f363319 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1064,8 +1064,10 @@ static int smbd_negotiate(struct smbd_connection *info)
+ 	log_rdma_event(INFO, "smbd_post_recv rc=%d iov.addr=0x%llx iov.length=%u iov.lkey=0x%x\n",
+ 		       rc, response->sge.addr,
+ 		       response->sge.length, response->sge.lkey);
+-	if (rc)
++	if (rc) {
++		put_receive_buffer(info, response);
+ 		return rc;
 +	}
-+
- 	config.max_register = variant->max_register;
  
- 	regmap = devm_regmap_init_spi(spi, &config);
+ 	init_completion(&info->negotiate_completion);
+ 	info->negotiate_done = false;
+-- 
+2.51.0
+
 
 
