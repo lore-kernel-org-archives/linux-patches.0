@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19FE2F0C64;
-	Mon, 22 Sep 2025 19:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609462F0C5C;
+	Mon, 22 Sep 2025 19:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570251; cv=none; b=Dq+swHS2GoA4jNlDJWXB3lsjKJhegJofJwdhdIzGmsMaHRnirek8FOyCuMh5a3Md63BAhGer7yn+HACN2NYGCsceTIq8mWSorq5VAZh55LbqfBrYlq+9IBy4d3pICGsadTMuMcpf1b+XINPkP0kHdMRCTBL57GzpP1cyZ43oBLQ=
+	t=1758570254; cv=none; b=RLmOms95eiwE0B3uJhlv6PKJaWJN7zfelWiHWbGCyEcmjtmJhlmhozSSRhngVzDjXz8YkOW6BCzpkIxjVHlkQc2FcIVdSwDgRc/vuqFWIGxaq/qdIRIGvMcmCfK4Iz7avKysYfYBYsh5ruaRgmMPJRagDtgygw450RcC4rvMvpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570251; c=relaxed/simple;
-	bh=Ca/4zOsLRleHgaCwcvc+DIP7aTxfbw12DxhIRCaMAIA=;
+	s=arc-20240116; t=1758570254; c=relaxed/simple;
+	bh=/kn5cfA+gDwjgiImUxJWomrG0AElGgZV7+L7wsxTHRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLyPgE8o/nf09MK7ZbRE/T2l2E4j6V/lyLW2fLIiWAd9yxDmvLbgI5Bv+Isi6817wJULC9lUAIzBLJizQYeQLEDeFLv2OTEDCv5rAgp7oQHQMYMandgY5y04qPS1/DwN8SAxjzdVYiGIXLxhhqfF/JbFU6eyog2BF0eE0RMmggQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1RxO8W3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cPkHGUWRu4xpzGTCUir4KtjVERqvZdS33ftj87VvkCO5iAINsPNTz5O3YWw29JmxGecK+Vap3Lqo83oOnIdAV+4UIqndfj+BDh87h2obVvmZR5GYenSyTXVbYRW+D9gOUzZrnthaWWd4/tepKFdDB22DCg08UgdnuIoh65Wg9uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaksCnbu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1RxO8W3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62850C4CEF5;
-	Mon, 22 Sep 2025 19:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaksCnbu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC840C4CEF0;
+	Mon, 22 Sep 2025 19:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570251;
-	bh=Ca/4zOsLRleHgaCwcvc+DIP7aTxfbw12DxhIRCaMAIA=;
+	s=korg; t=1758570254;
+	bh=/kn5cfA+gDwjgiImUxJWomrG0AElGgZV7+L7wsxTHRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1RxO8W3XurT/lf8RhwACKVyqph0GHuqO0CFsfrfRpmDzMbSaHdiwYkpMm2OEHh1C
-	 blfpN9i7Ak/UfaWn+nDHYKFmDytI5KUydaJyLE7y2J4hoPkFzGlH+MkctYeXGuGAf/
-	 hp/ojUjrck581gukCQ47MXCMU2vYiMgrfje6jkmc=
+	b=eaksCnbuI3d1VH69ZoluSfc12nFawqyG3yqBp4fpouXtbTg8bi0qdyLUmeH0NqXQQ
+	 Ovb9JC5Zqxx4B2q5ZAsjZmJKahrMxPCaXLwLhM/uPvongEi5T2ifi8FeOcL4ZIieDM
+	 RLIIJtV6fpypHdn4hREXxOR4zOIY5++ecJX+QCu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 076/149] LoongArch: KVM: Avoid copy_*_user() with lock hold in kvm_pch_pic_regs_access()
-Date: Mon, 22 Sep 2025 21:29:36 +0200
-Message-ID: <20250922192414.798518931@linuxfoundation.org>
+Subject: [PATCH 6.16 077/149] LoongArch: KVM: Fix VM migration failure with PTW enabled
+Date: Mon, 22 Sep 2025 21:29:37 +0200
+Message-ID: <20250922192414.827196616@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,97 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-commit 8dc5245673cf7f33743e5c0d2a4207c0b8df3067 upstream.
+commit f58c9aa1065f73d243904b267c71f6a9d1e9f90e upstream.
 
-Function copy_from_user() and copy_to_user() may sleep because of page
-fault, and they cannot be called in spin_lock hold context. Here move
-function calling of copy_from_user() and copy_to_user() out of spinlock
-context in function kvm_pch_pic_regs_access().
+With PTW disabled system, bit _PAGE_DIRTY is a HW bit for page writing.
+However with PTW enabled system, bit _PAGE_WRITE is also a "HW bit" for
+page writing, because hardware synchronizes _PAGE_WRITE to _PAGE_DIRTY
+automatically. Previously, _PAGE_WRITE is treated as a SW bit to record
+the page writeable attribute for the fast page fault handling in the
+secondary MMU, however with PTW enabled machine, this bit is used by HW
+already (so setting it will silence the TLB modify exception).
 
-Otherwise there will be possible warning such as:
-
-BUG: sleeping function called from invalid context at include/linux/uaccess.h:192
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 6292, name: qemu-system-loo
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 0
-hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-hardirqs last disabled at (0): [<9000000004c4a554>] copy_process+0x90c/0x1d40
-softirqs last  enabled at (0): [<9000000004c4a554>] copy_process+0x90c/0x1d40
-softirqs last disabled at (0): [<0000000000000000>] 0x0
-CPU: 41 UID: 0 PID: 6292 Comm: qemu-system-loo Tainted: G W 6.17.0-rc3+ #31 PREEMPT(full)
-Tainted: [W]=WARN
-Stack : 0000000000000076 0000000000000000 9000000004c28264 9000100092ff4000
-        9000100092ff7b80 9000100092ff7b88 0000000000000000 9000100092ff7cc8
-        9000100092ff7cc0 9000100092ff7cc0 9000100092ff7a00 0000000000000001
-        0000000000000001 9000100092ff7b88 947d2f9216a5e8b9 900010008773d880
-        00000000ffff8b9f fffffffffffffffe 0000000000000ba1 fffffffffffffffe
-        000000000000003e 900000000825a15b 000010007ad38000 9000100092ff7ec0
-        0000000000000000 0000000000000000 9000000006f3ac60 9000000007252000
-        0000000000000000 00007ff746ff2230 0000000000000053 9000200088a021b0
-        0000555556c9d190 0000000000000000 9000000004c2827c 000055556cfb5f40
-        00000000000000b0 0000000000000007 0000000000000007 0000000000071c1d
-Call Trace:
-[<9000000004c2827c>] show_stack+0x5c/0x180
-[<9000000004c20fac>] dump_stack_lvl+0x94/0xe4
-[<9000000004c99c7c>] __might_resched+0x26c/0x290
-[<9000000004f68968>] __might_fault+0x20/0x88
-[<ffff800002311de0>] kvm_pch_pic_regs_access.isra.0+0x88/0x380 [kvm]
-[<ffff8000022f8514>] kvm_device_ioctl+0x194/0x290 [kvm]
-[<900000000506b0d8>] sys_ioctl+0x388/0x1010
-[<90000000063ed210>] do_syscall+0xb0/0x2d8
-[<9000000004c25ef8>] handle_syscall+0xb8/0x158
+Here define KVM_PAGE_WRITEABLE with the SW bit _PAGE_MODIFIED, so that
+it can work on both PTW disabled and enabled machines. And for HW write
+bits, both _PAGE_DIRTY and _PAGE_WRITE are set or clear together.
 
 Cc: stable@vger.kernel.org
-Fixes: d206d95148732 ("LoongArch: KVM: Add PCHPIC user mode read and write functions")
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/pch_pic.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ arch/loongarch/include/asm/kvm_mmu.h |   20 ++++++++++++++++----
+ arch/loongarch/kvm/mmu.c             |    8 ++++----
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
---- a/arch/loongarch/kvm/intc/pch_pic.c
-+++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -348,6 +348,7 @@ static int kvm_pch_pic_regs_access(struc
- 				struct kvm_device_attr *attr,
- 				bool is_write)
- {
-+	char buf[8];
- 	int addr, offset, len = 8, ret = 0;
- 	void __user *data;
- 	void *p = NULL;
-@@ -397,17 +398,23 @@ static int kvm_pch_pic_regs_access(struc
- 		return -EINVAL;
- 	}
+--- a/arch/loongarch/include/asm/kvm_mmu.h
++++ b/arch/loongarch/include/asm/kvm_mmu.h
+@@ -16,6 +16,13 @@
+  */
+ #define KVM_MMU_CACHE_MIN_PAGES	(CONFIG_PGTABLE_LEVELS - 1)
  
--	spin_lock(&s->lock);
--	/* write or read value according to is_write */
- 	if (is_write) {
--		if (copy_from_user(p, data, len))
--			ret = -EFAULT;
--	} else {
--		if (copy_to_user(data, p, len))
--			ret = -EFAULT;
-+		if (copy_from_user(buf, data, len))
-+			return -EFAULT;
- 	}
++/*
++ * _PAGE_MODIFIED is a SW pte bit, it records page ever written on host
++ * kernel, on secondary MMU it records the page writeable attribute, in
++ * order for fast path handling.
++ */
++#define KVM_PAGE_WRITEABLE	_PAGE_MODIFIED
 +
-+	spin_lock(&s->lock);
-+	if (is_write)
-+		memcpy(p, buf, len);
-+	else
-+		memcpy(buf, p, len);
- 	spin_unlock(&s->lock);
- 
-+	if (!is_write) {
-+		if (copy_to_user(data, buf, len))
-+			return -EFAULT;
-+	}
-+
- 	return ret;
+ #define _KVM_FLUSH_PGTABLE	0x1
+ #define _KVM_HAS_PGMASK		0x2
+ #define kvm_pfn_pte(pfn, prot)	(((pfn) << PFN_PTE_SHIFT) | pgprot_val(prot))
+@@ -52,10 +59,10 @@ static inline void kvm_set_pte(kvm_pte_t
+ 	WRITE_ONCE(*ptep, val);
  }
  
+-static inline int kvm_pte_write(kvm_pte_t pte) { return pte & _PAGE_WRITE; }
+-static inline int kvm_pte_dirty(kvm_pte_t pte) { return pte & _PAGE_DIRTY; }
+ static inline int kvm_pte_young(kvm_pte_t pte) { return pte & _PAGE_ACCESSED; }
+ static inline int kvm_pte_huge(kvm_pte_t pte) { return pte & _PAGE_HUGE; }
++static inline int kvm_pte_dirty(kvm_pte_t pte) { return pte & __WRITEABLE; }
++static inline int kvm_pte_writeable(kvm_pte_t pte) { return pte & KVM_PAGE_WRITEABLE; }
+ 
+ static inline kvm_pte_t kvm_pte_mkyoung(kvm_pte_t pte)
+ {
+@@ -69,12 +76,12 @@ static inline kvm_pte_t kvm_pte_mkold(kv
+ 
+ static inline kvm_pte_t kvm_pte_mkdirty(kvm_pte_t pte)
+ {
+-	return pte | _PAGE_DIRTY;
++	return pte | __WRITEABLE;
+ }
+ 
+ static inline kvm_pte_t kvm_pte_mkclean(kvm_pte_t pte)
+ {
+-	return pte & ~_PAGE_DIRTY;
++	return pte & ~__WRITEABLE;
+ }
+ 
+ static inline kvm_pte_t kvm_pte_mkhuge(kvm_pte_t pte)
+@@ -87,6 +94,11 @@ static inline kvm_pte_t kvm_pte_mksmall(
+ 	return pte & ~_PAGE_HUGE;
+ }
+ 
++static inline kvm_pte_t kvm_pte_mkwriteable(kvm_pte_t pte)
++{
++	return pte | KVM_PAGE_WRITEABLE;
++}
++
+ static inline int kvm_need_flush(kvm_ptw_ctx *ctx)
+ {
+ 	return ctx->flag & _KVM_FLUSH_PGTABLE;
+--- a/arch/loongarch/kvm/mmu.c
++++ b/arch/loongarch/kvm/mmu.c
+@@ -569,7 +569,7 @@ static int kvm_map_page_fast(struct kvm_
+ 	/* Track access to pages marked old */
+ 	new = kvm_pte_mkyoung(*ptep);
+ 	if (write && !kvm_pte_dirty(new)) {
+-		if (!kvm_pte_write(new)) {
++		if (!kvm_pte_writeable(new)) {
+ 			ret = -EFAULT;
+ 			goto out;
+ 		}
+@@ -856,9 +856,9 @@ retry:
+ 		prot_bits |= _CACHE_SUC;
+ 
+ 	if (writeable) {
+-		prot_bits |= _PAGE_WRITE;
++		prot_bits = kvm_pte_mkwriteable(prot_bits);
+ 		if (write)
+-			prot_bits |= __WRITEABLE;
++			prot_bits = kvm_pte_mkdirty(prot_bits);
+ 	}
+ 
+ 	/* Disable dirty logging on HugePages */
+@@ -904,7 +904,7 @@ retry:
+ 	kvm_release_faultin_page(kvm, page, false, writeable);
+ 	spin_unlock(&kvm->mmu_lock);
+ 
+-	if (prot_bits & _PAGE_DIRTY)
++	if (kvm_pte_dirty(prot_bits))
+ 		mark_page_dirty_in_slot(kvm, memslot, gfn);
+ 
+ out:
 
 
