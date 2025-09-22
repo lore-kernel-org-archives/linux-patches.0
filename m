@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD402F0C52;
-	Mon, 22 Sep 2025 19:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0A71C1ADB;
+	Mon, 22 Sep 2025 19:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569948; cv=none; b=ekSfUo7CIEAlNDkWDJRzlwAtbhtorwTFMLIIlns5bz6XzSo5GPgfZmYshCcOj3Hu6PfVJrgJ2rPxSmxYLaqng2c6Naz/R/WjzzpKij5XFJB0OzlTUWduQKlidK32FPmP55YvtWogo9pl+jFrQku03hCA/lylTvhkkoKICyxC4BY=
+	t=1758569951; cv=none; b=GNq6v/fr0ZLlZIsq3ka1V6dii6sF3ABu8UDicePLhVrSbfy4WTd+leyIBjJrtLtRHTD1/sDg2uNsNWG6DTukI8GlYn0da5WH8hc3fnxPfa2zFtDLLK67zn8AWzgGPyBVNb6OsS61EB7VnnGk0zHbthsPietddgJhu98Ka1Qj7OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569948; c=relaxed/simple;
-	bh=8NTlvOueA/7oDB7JkzQ/20A9tOZdTUtWob+r3CxAk24=;
+	s=arc-20240116; t=1758569951; c=relaxed/simple;
+	bh=vdRhyoF+f67Dkylm054p+MoX0HFbuWdQ525p0FfEWPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uI4zKeXwhyTaubgeMvh/IYDXe18EPBB9c93Bv10B+xlV3g35d2j6EjIPMSKMKYFQLKGGHQwDK5QqHJ0pk0/7WH3ARWGgXpxUQdkqouz/+bFFzDieUgLgjc7MDt2efkMVvAtVWTZS5R5Bnwbq5zC+CbpAgc1uJ0mA44WI40+JO5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moNgMwZq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMjYHzQSheZvqesDrwSpd8k1gNbS52jN0fTJf6wv2Jf4IeGPNNCt3tun3Rj/ajqDeIuzF1xv8kmGEC0bY8GGpdbs0869BJgrD2WevCTn+BMOl6w6Tj0LLRjs6yRo2dELUmeho/DVhIaTY7mFysP30wBFUGsK739c9+XcmRIF2OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTm//THJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moNgMwZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BBAC4CEF0;
-	Mon, 22 Sep 2025 19:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTm//THJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE6DC4CEF0;
+	Mon, 22 Sep 2025 19:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569948;
-	bh=8NTlvOueA/7oDB7JkzQ/20A9tOZdTUtWob+r3CxAk24=;
+	s=korg; t=1758569951;
+	bh=vdRhyoF+f67Dkylm054p+MoX0HFbuWdQ525p0FfEWPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moNgMwZqHrXQrmrPSxcjljYf1ikx+QrP74llZnIZTiNeTcnovlARmKS+yt1DyHD3c
-	 u+wVes4fn5sokgoYwLQaFNn6CECXd8nSsxtYBFO0sEpL/9Q06XJm8hRSlGqLZ9WuHM
-	 FYs8PmpxsM6bsOZv4gov5KaiELL1Zl4RPyYil6Hg=
+	b=QTm//THJ2zy0wC6ruGhdLiByCRCv3CMx8T+wpvy4SHO8EX5CzL6rGLGirnW9GVJ6r
+	 8AFLh15HzWxUNyDPy9K65TbATMoo2i3ffZDkvCJMQ/YyD4TEu/GTiVDGVN56xB13ia
+	 xNTpJKB8rWNuYNYla9Jg9sEs0vh8KE5GbWpuTXOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.12 052/105] iommu/amd/pgtbl: Fix possible race while increase page table level
-Date: Mon, 22 Sep 2025 21:29:35 +0200
-Message-ID: <20250922192410.277723153@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 053/105] btrfs: tree-checker: fix the incorrect inode ref size check
+Date: Mon, 22 Sep 2025 21:29:36 +0200
+Message-ID: <20250922192410.303744774@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -53,139 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 1e56310b40fd2e7e0b9493da9ff488af145bdd0c upstream.
+commit 96fa515e70f3e4b98685ef8cac9d737fc62f10e1 upstream.
 
-The AMD IOMMU host page table implementation supports dynamic page table levels
-(up to 6 levels), starting with a 3-level configuration that expands based on
-IOVA address. The kernel maintains a root pointer and current page table level
-to enable proper page table walks in alloc_pte()/fetch_pte() operations.
+[BUG]
+Inside check_inode_ref(), we need to make sure every structure,
+including the btrfs_inode_extref header, is covered by the item.  But
+our code is incorrectly using "sizeof(iref)", where @iref is just a
+pointer.
 
-The IOMMU IOVA allocator initially starts with 32-bit address and onces its
-exhuasted it switches to 64-bit address (max address is determined based
-on IOMMU and device DMA capability). To support larger IOVA, AMD IOMMU
-driver increases page table level.
+This means "sizeof(iref)" will always be "sizeof(void *)", which is much
+smaller than "sizeof(struct btrfs_inode_extref)".
 
-But in unmap path (iommu_v1_unmap_pages()), fetch_pte() reads
-pgtable->[root/mode] without lock. So its possible that in exteme corner case,
-when increase_address_space() is updating pgtable->[root/mode], fetch_pte()
-reads wrong page table level (pgtable->mode). It does compare the value with
-level encoded in page table and returns NULL. This will result is
-iommu_unmap ops to fail and upper layer may retry/log WARN_ON.
+This will allow some bad inode extrefs to sneak in, defeating tree-checker.
 
-CPU 0                                         CPU 1
-------                                       ------
-map pages                                    unmap pages
-alloc_pte() -> increase_address_space()      iommu_v1_unmap_pages() -> fetch_pte()
-  pgtable->root = pte (new root value)
-                                             READ pgtable->[mode/root]
-					       Reads new root, old mode
-  Updates mode (pgtable->mode += 1)
+[FIX]
+Fix the typo by calling "sizeof(*iref)", which is the same as
+"sizeof(struct btrfs_inode_extref)", and will be the correct behavior we
+want.
 
-Since Page table level updates are infrequent and already synchronized with a
-spinlock, implement seqcount to enable lock-free read operations on the read path.
-
-Fixes: 754265bcab7 ("iommu/amd: Fix race in increase_address_space()")
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Cc: stable@vger.kernel.org
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 71bf92a9b877 ("btrfs: tree-checker: Add check for INODE_REF")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |    1 +
- drivers/iommu/amd/io_pgtable.c      |   25 +++++++++++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ fs/btrfs/tree-checker.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -545,6 +545,7 @@ struct gcr3_tbl_info {
- };
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1744,10 +1744,10 @@ static int check_inode_ref(struct extent
+ 	while (ptr < end) {
+ 		u16 namelen;
  
- struct amd_io_pgtable {
-+	seqcount_t		seqcount;	/* Protects root/mode update */
- 	struct io_pgtable	pgtbl;
- 	int			mode;
- 	u64			*root;
---- a/drivers/iommu/amd/io_pgtable.c
-+++ b/drivers/iommu/amd/io_pgtable.c
-@@ -17,6 +17,7 @@
- #include <linux/slab.h>
- #include <linux/types.h>
- #include <linux/dma-mapping.h>
-+#include <linux/seqlock.h>
+-		if (unlikely(ptr + sizeof(iref) > end)) {
++		if (unlikely(ptr + sizeof(*iref) > end)) {
+ 			inode_ref_err(leaf, slot,
+ 			"inode ref overflow, ptr %lu end %lu inode_ref_size %zu",
+-				ptr, end, sizeof(iref));
++				ptr, end, sizeof(*iref));
+ 			return -EUCLEAN;
+ 		}
  
- #include <asm/barrier.h>
- 
-@@ -144,8 +145,11 @@ static bool increase_address_space(struc
- 
- 	*pte = PM_LEVEL_PDE(pgtable->mode, iommu_virt_to_phys(pgtable->root));
- 
-+	write_seqcount_begin(&pgtable->seqcount);
- 	pgtable->root  = pte;
- 	pgtable->mode += 1;
-+	write_seqcount_end(&pgtable->seqcount);
-+
- 	amd_iommu_update_and_flush_device_table(domain);
- 
- 	pte = NULL;
-@@ -167,6 +171,7 @@ static u64 *alloc_pte(struct amd_io_pgta
- {
- 	unsigned long last_addr = address + (page_size - 1);
- 	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
-+	unsigned int seqcount;
- 	int level, end_lvl;
- 	u64 *pte, *page;
- 
-@@ -184,8 +189,14 @@ static u64 *alloc_pte(struct amd_io_pgta
- 	}
- 
- 
--	level   = pgtable->mode - 1;
--	pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	do {
-+		seqcount = read_seqcount_begin(&pgtable->seqcount);
-+
-+		level   = pgtable->mode - 1;
-+		pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
-+
-+
- 	address = PAGE_SIZE_ALIGN(address, page_size);
- 	end_lvl = PAGE_SIZE_LEVEL(page_size);
- 
-@@ -262,6 +273,7 @@ static u64 *fetch_pte(struct amd_io_pgta
- 		      unsigned long *page_size)
- {
- 	int level;
-+	unsigned int seqcount;
- 	u64 *pte;
- 
- 	*page_size = 0;
-@@ -269,8 +281,12 @@ static u64 *fetch_pte(struct amd_io_pgta
- 	if (address > PM_LEVEL_SIZE(pgtable->mode))
- 		return NULL;
- 
--	level	   =  pgtable->mode - 1;
--	pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	do {
-+		seqcount = read_seqcount_begin(&pgtable->seqcount);
-+		level	   =  pgtable->mode - 1;
-+		pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
-+
- 	*page_size =  PTE_LEVEL_PAGE_SIZE(level);
- 
- 	while (level > 0) {
-@@ -552,6 +568,7 @@ static struct io_pgtable *v1_alloc_pgtab
- 	if (!pgtable->root)
- 		return NULL;
- 	pgtable->mode = PAGE_MODE_3_LEVEL;
-+	seqcount_init(&pgtable->seqcount);
- 
- 	cfg->pgsize_bitmap  = amd_iommu_pgsize_bitmap;
- 	cfg->ias            = IOMMU_IN_ADDR_BIT_SIZE;
 
 
