@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF28D27B320;
-	Mon, 22 Sep 2025 19:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2289E17A2EA;
+	Mon, 22 Sep 2025 19:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569576; cv=none; b=gLtMduoMlUejsILHTcz8fDdlIoHXKm586WUCHgeW2KxQ9g8lx2Ynplr+bpmwXmX8f1tw4hkx83LqrhuJ5snVichZXg1ZSSD10MWtX8A8MRmPnWREFci2Y2ycvN7tuSJRyswsACx7dYrjNTainFRIoxdBF/xvyVNMBHO2oOOKGNA=
+	t=1758569579; cv=none; b=LJryvzByOc9OwNd9z+aTuv8FDN6OPnOXFKZ80nfWlkJ1ZKbdwJxy+UMNjEhEOx8cabWLZA8lTxcC1VIVWPEm+WQvxWjBNi4Pg7EjsaYB+C5n2sZX4bNwV0lRowQLLqGIY8Ueovfw5ZTys9uM6MptYwsyk2UAMsclI1U6V8/ua44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569576; c=relaxed/simple;
-	bh=JzdEhYd134Vq1Aw25z6wiGuZPEAVTvHwiLY8RhsfvEA=;
+	s=arc-20240116; t=1758569579; c=relaxed/simple;
+	bh=zaBkIEjL/G0NMRpwVPoGg461ywyiIdHbQ8s9Fb713pQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hx6s74QEMtONTx8w8kiQ111O2k7dt2LDmjC9DZ+cJgsSi2u+6b9iR/iVROhdVFXLABOwwdgzDdAuWvzWgsTKNrK9jAuSKSGpyQoKFMVnRYjannX/OxG4EmBUzYUiY13CiC8IQi0WWyz1JyYtkX+eybqM1jJAYquU6ixIruiMhYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNHF6e4s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pf4mNrn81OCAgpSmzP4+Mk/mhDwoxERRf+JlnxbecFcHSe8PoARhrSwIEjLpZb7uboiMNcgn6BiEIEZCQIIKgrIyg1mls+8J62/6oIiXV0ga41ClgqfHE4UEOE/B8eS9rKZu18Ns5XHtqde3h6Wy2SLatDRZWtUPnwtNCiF8tQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNAtsRQA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNHF6e4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEC9C4CEF0;
-	Mon, 22 Sep 2025 19:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNAtsRQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF2BC4CEF0;
+	Mon, 22 Sep 2025 19:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569576;
-	bh=JzdEhYd134Vq1Aw25z6wiGuZPEAVTvHwiLY8RhsfvEA=;
+	s=korg; t=1758569579;
+	bh=zaBkIEjL/G0NMRpwVPoGg461ywyiIdHbQ8s9Fb713pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNHF6e4se9sBvc0LHfE2h4a1IKoiJWjvElhP2zwO10x+d5qx+/9oyLvIxMQAqlCBH
-	 Afx7jVvRpPDdlrcgMgxavJrht8K+peu9UWo9/wwvIM/difbwaA0Mw4cT5pOxearg2k
-	 /pHtFdKCyTYSP9CbLT4+xtkLchNGBVwahZqFTgM0=
+	b=KNAtsRQAemuF6Bh6oAjoNDWRzROyWI6IPXMuUPwTfiLmG1O95Fb0QjVV/VIOZFn9+
+	 BEduo2X921lneuuoG/GPwIK2dVcuF0dgZddouE/IrET2QAIMS04BGRd4AdLWJefpNP
+	 y0FNGV36789JgshHUCatQJySBmdQk1jmpKhzyJtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praful Adiga <praful.adiga@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 35/61] ALSA: hda/realtek: Fix mute led for HP Laptop 15-dw4xx
-Date: Mon, 22 Sep 2025 21:29:28 +0200
-Message-ID: <20250922192404.529906956@linuxfoundation.org>
+	Tao Cui <cuitao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 26/61] LoongArch: Check the return value when creating kobj
+Date: Mon, 22 Sep 2025 21:29:19 +0200
+Message-ID: <20250922192404.271285305@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -50,30 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praful Adiga <praful.adiga@gmail.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit d33c3471047fc54966621d19329e6a23ebc8ec50 upstream.
+commit 51adb03e6b865c0c6790f29659ff52d56742de2e upstream.
 
-This laptop uses the ALC236 codec with COEF 0x7 and idx 1 to
-control the mute LED. Enable the existing quirk for this device.
+Add a check for the return value of kobject_create_and_add(), to ensure
+that the kobj allocation succeeds for later use.
 
-Signed-off-by: Praful Adiga <praful.adiga@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/kernel/env.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10005,6 +10005,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8992, "HP EliteBook 845 G9", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8994, "HP EliteBook 855 G9", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8995, "HP EliteBook 855 G9", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x89a0, "HP Laptop 15-dw4xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x89a4, "HP ProBook 440 G9", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89a6, "HP ProBook 450 G9", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89aa, "HP EliteBook 630 G9", ALC236_FIXUP_HP_GPIO_LED),
+--- a/arch/loongarch/kernel/env.c
++++ b/arch/loongarch/kernel/env.c
+@@ -70,6 +70,8 @@ static int __init boardinfo_init(void)
+ 	struct kobject *loongson_kobj;
+ 
+ 	loongson_kobj = kobject_create_and_add("loongson", firmware_kobj);
++	if (!loongson_kobj)
++		return -ENOMEM;
+ 
+ 	return sysfs_create_file(loongson_kobj, &boardinfo_attr.attr);
+ }
 
 
