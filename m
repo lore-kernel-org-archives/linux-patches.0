@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69412F2617;
-	Mon, 22 Sep 2025 19:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4A3314A6A;
+	Mon, 22 Sep 2025 19:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569916; cv=none; b=gPPv++gREzzp5jyhBalQRsrMNlU0RX55wU9r0sY4C6z+hMO4RjbGeHxqBPUArlSPVhjoOpcYVorO8SMhcheZvFZOVxzx+IA02MXYQ939G4TzUQyS0AeE9LKsLaJTco+uLNmOquwiXejYnKbl2lxlJm6owdUnTd0H9NbILFVTpEw=
+	t=1758569919; cv=none; b=V/4AOZRODKxGKpEBfqoPn0b2iVQc7eNcCE6A6yf1zxiESPvmPOFwpXJp/6/j/0DN/DDiaMy+J/gw1bcM5uCNjnxlVMos/ICyRFBI/3CxnXHPCWbdIkEuZxkr5+UVoS0w38XI1bIasAUL76E1Rj41WMVR0pWRiWiPIn9GkQyCFhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569916; c=relaxed/simple;
-	bh=VlP3k7yT8JTI0S+TGL/Lqq9Jr/NqxERy2LXgwjsu4CE=;
+	s=arc-20240116; t=1758569919; c=relaxed/simple;
+	bh=qpBHLLWr2lihmJ2CASeV67Xe+7ErXeskBK/hEU++xUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7+OfnuojzH+opnyb1UKALkbBrYsyL9znNirzbNTfOtfDzfNOcnWHK1GpRs+uQQs2MrnKHkY8B+8XlUKD56WlEd/ucvOLF96oG/jung8e/l5EKnQCX4IP+CsQbGaDUkSU+0FfsMS/80t4vOVsSgNrM98V5BbGzSNkTQn/t8bOko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PentoVJf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PIA+HysNOlMi4jSpF9Tz98i8Xu3qluVKWeUsZu8mQp17DSap98+oRbYhYhSTSrS3gDIypmhVjxy5OIZMUkWs+zEYnihI0GmgvzH7q+G8xH/NAiTAV159NhR3gwqmT0POBxKJv2Szgqpc9o5D0NyFsOeRAO7baM7gD5o8nQmft+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iod4Ll+E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PentoVJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D27C113D0;
-	Mon, 22 Sep 2025 19:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iod4Ll+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6220C4CEF5;
+	Mon, 22 Sep 2025 19:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569916;
-	bh=VlP3k7yT8JTI0S+TGL/Lqq9Jr/NqxERy2LXgwjsu4CE=;
+	s=korg; t=1758569919;
+	bh=qpBHLLWr2lihmJ2CASeV67Xe+7ErXeskBK/hEU++xUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PentoVJfN3XfBwF41HJ0x7C08/DgVN0+IUd5vW6Jhj5Ee62QFvl/J8Jh2zLIqoMtI
-	 Ts8Uo4xYRJ1feQVIXO6nJODmaJpg1w5rrL84lA8wFOzafDUDvYg6mF5FCIDOOt7Gmt
-	 sfYMhWGYjtLGB1km4qqPAihWciWRHjrn37+omtbg=
+	b=iod4Ll+E5hG6pdBhaL6lufmv0KIls5iuOASIA2sZQNn3gJTidFZKSxpVeujANRDzG
+	 1qMr6ImoeWAVmvx8fXDWTGoyE7WXGPdcdZWtMpHlMpx4BLVSUzxl/zi+3/cIJXX669
+	 VwcAsYgZjIenrXSboTVnWFT0sDWmxMDY+YNMJ5Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Lv <Jerry.Lv@axis.com>,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 039/105] power: supply: bq27xxx: restrict no-battery detection to bq27000
-Date: Mon, 22 Sep 2025 21:29:22 +0200
-Message-ID: <20250922192409.938927963@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 040/105] dm-raid: dont set io_min and io_opt for raid1
+Date: Mon, 22 Sep 2025 21:29:23 +0200
+Message-ID: <20250922192409.965650112@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,48 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 1e451977e1703b6db072719b37cd1b8e250b9cc9 upstream.
+commit a86556264696b797d94238d99d8284d0d34ed960 upstream.
 
-There are fuel gauges in the bq27xxx series (e.g. bq27z561) which may in some
-cases report 0xff as the value of BQ27XXX_REG_FLAGS that should not be
-interpreted as "no battery" like for a disconnected battery with some built
-in bq27000 chip.
+These commands
+ modprobe brd rd_size=1048576
+ vgcreate vg /dev/ram*
+ lvcreate -m4 -L10 -n lv vg
+trigger the following warnings:
+device-mapper: table: 252:10: adding target device (start sect 0 len 24576) caused an alignment inconsistency
+device-mapper: table: 252:10: adding target device (start sect 0 len 24576) caused an alignment inconsistency
 
-So restrict the no-battery detection originally introduced by
+The warnings are caused by the fact that io_min is 512 and physical block
+size is 4096.
 
-    commit 3dd843e1c26a ("bq27000: report missing device better.")
+If there's chunk-less raid, such as raid1, io_min shouldn't be set to zero
+because it would be raised to 512 and it would trigger the warning.
 
-to the bq27000.
-
-There is no need to backport further because this was hidden before
-
-	commit f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
-
-Fixes: f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
-Suggested-by: Jerry Lv <Jerry.Lv@axis.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Link: https://lore.kernel.org/r/dd979fa6855fd051ee5117016c58daaa05966e24.1755945297.git.hns@goldelico.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-raid.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1909,8 +1909,8 @@ static void bq27xxx_battery_update_unloc
- 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -3811,8 +3811,10 @@ static void raid_io_hints(struct dm_targ
+ 	struct raid_set *rs = ti->private;
+ 	unsigned int chunk_size_bytes = to_bytes(rs->md.chunk_sectors);
  
- 	cache.flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, has_singe_flag);
--	if ((cache.flags & 0xff) == 0xff)
--		cache.flags = -ENODEV; /* read error */
-+	if (di->chip == BQ27000 && (cache.flags & 0xff) == 0xff)
-+		cache.flags = -ENODEV; /* bq27000 hdq read error */
- 	if (cache.flags >= 0) {
- 		cache.capacity = bq27xxx_battery_read_soc(di);
+-	limits->io_min = chunk_size_bytes;
+-	limits->io_opt = chunk_size_bytes * mddev_data_stripes(rs);
++	if (chunk_size_bytes) {
++		limits->io_min = chunk_size_bytes;
++		limits->io_opt = chunk_size_bytes * mddev_data_stripes(rs);
++	}
+ }
  
+ static void raid_presuspend(struct dm_target *ti)
 
 
