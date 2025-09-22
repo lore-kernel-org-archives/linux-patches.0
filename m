@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609462F0C5C;
-	Mon, 22 Sep 2025 19:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9B92F0C52;
+	Mon, 22 Sep 2025 19:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570254; cv=none; b=RLmOms95eiwE0B3uJhlv6PKJaWJN7zfelWiHWbGCyEcmjtmJhlmhozSSRhngVzDjXz8YkOW6BCzpkIxjVHlkQc2FcIVdSwDgRc/vuqFWIGxaq/qdIRIGvMcmCfK4Iz7avKysYfYBYsh5ruaRgmMPJRagDtgygw450RcC4rvMvpc=
+	t=1758570257; cv=none; b=nY+GxRXMNAHsVMsqgOWS8OwMtw9Khhf+JeCJYhI2OLr0CG1SffDP3lWsb+mZYJAHBroPsKUbTtnxlFuBIaTW2nIGvs7KM6FraVrTbpwXUT+cS1PToaxOfbkhQNTpU2QuAaWS0bZXfedvW5IRXNhFVEX6OXcmng7uxUU7EZ6sf6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570254; c=relaxed/simple;
-	bh=/kn5cfA+gDwjgiImUxJWomrG0AElGgZV7+L7wsxTHRo=;
+	s=arc-20240116; t=1758570257; c=relaxed/simple;
+	bh=X5uYsqRYzicbobVkpzBZT9FvOUKPeXKjTqallLbWvrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPkHGUWRu4xpzGTCUir4KtjVERqvZdS33ftj87VvkCO5iAINsPNTz5O3YWw29JmxGecK+Vap3Lqo83oOnIdAV+4UIqndfj+BDh87h2obVvmZR5GYenSyTXVbYRW+D9gOUzZrnthaWWd4/tepKFdDB22DCg08UgdnuIoh65Wg9uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaksCnbu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCjwGmaBF+ThsgZU85lcXp7Q+LhJv1Oest/hiq+NnfzWXTTXBhTi2iVrlCEPEGSqTkvG86zSuRJMcNhyZsnYgVEj5CMrewj07NsBC6UCqMngAlvBGmfTS6jMFSjTW8ZQETGcBQZxGIo4HjQFF0Bz4sGWmLkkxcILIPU3LabFRAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jL0xpL6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaksCnbu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC840C4CEF0;
-	Mon, 22 Sep 2025 19:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jL0xpL6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A97C4CEF0;
+	Mon, 22 Sep 2025 19:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570254;
-	bh=/kn5cfA+gDwjgiImUxJWomrG0AElGgZV7+L7wsxTHRo=;
+	s=korg; t=1758570256;
+	bh=X5uYsqRYzicbobVkpzBZT9FvOUKPeXKjTqallLbWvrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaksCnbuI3d1VH69ZoluSfc12nFawqyG3yqBp4fpouXtbTg8bi0qdyLUmeH0NqXQQ
-	 Ovb9JC5Zqxx4B2q5ZAsjZmJKahrMxPCaXLwLhM/uPvongEi5T2ifi8FeOcL4ZIieDM
-	 RLIIJtV6fpypHdn4hREXxOR4zOIY5++ecJX+QCu4=
+	b=jL0xpL6Ow3mpvhOSuSo+GbXFL5in2ElCVYb4s3MPhRLOIfg/zW8D5wreTV2yE0dRH
+	 sj9Me5ubJJqzN/aREOR3cieqPkIacEYaqJaplbA47oa/u39hGQEBt0zGLVzHrvsZCY
+	 0RdlDPoxg3Ie43mu0nO3NC12r5TwIgPOCJnGaL3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 077/149] LoongArch: KVM: Fix VM migration failure with PTW enabled
-Date: Mon, 22 Sep 2025 21:29:37 +0200
-Message-ID: <20250922192414.827196616@linuxfoundation.org>
+	Eugene Koira <eugkoira@amazon.com>,
+	Nicolas Saenz Julienne <nsaenz@amazon.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.16 078/149] iommu/vt-d: Fix __domain_mapping()s usage of switch_to_super_page()
+Date: Mon, 22 Sep 2025 21:29:38 +0200
+Message-ID: <20250922192414.850962300@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -50,118 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Eugene Koira <eugkoira@amazon.com>
 
-commit f58c9aa1065f73d243904b267c71f6a9d1e9f90e upstream.
+commit dce043c07ca1ac19cfbe2844a6dc71e35c322353 upstream.
 
-With PTW disabled system, bit _PAGE_DIRTY is a HW bit for page writing.
-However with PTW enabled system, bit _PAGE_WRITE is also a "HW bit" for
-page writing, because hardware synchronizes _PAGE_WRITE to _PAGE_DIRTY
-automatically. Previously, _PAGE_WRITE is treated as a SW bit to record
-the page writeable attribute for the fast page fault handling in the
-secondary MMU, however with PTW enabled machine, this bit is used by HW
-already (so setting it will silence the TLB modify exception).
+switch_to_super_page() assumes the memory range it's working on is aligned
+to the target large page level. Unfortunately, __domain_mapping() doesn't
+take this into account when using it, and will pass unaligned ranges
+ultimately freeing a PTE range larger than expected.
 
-Here define KVM_PAGE_WRITEABLE with the SW bit _PAGE_MODIFIED, so that
-it can work on both PTW disabled and enabled machines. And for HW write
-bits, both _PAGE_DIRTY and _PAGE_WRITE are set or clear together.
+Take for example a mapping with the following iov_pfn range [0x3fe400,
+0x4c0600), which should be backed by the following mappings:
 
+   iov_pfn [0x3fe400, 0x3fffff] covered by 2MiB pages
+   iov_pfn [0x400000, 0x4bffff] covered by 1GiB pages
+   iov_pfn [0x4c0000, 0x4c05ff] covered by 2MiB pages
+
+Under this circumstance, __domain_mapping() will pass [0x400000, 0x4c05ff]
+to switch_to_super_page() at a 1 GiB granularity, which will in turn
+free PTEs all the way to iov_pfn 0x4fffff.
+
+Mitigate this by rounding down the iov_pfn range passed to
+switch_to_super_page() in __domain_mapping()
+to the target large page level.
+
+Additionally add range alignment checks to switch_to_super_page.
+
+Fixes: 9906b9352a35 ("iommu/vt-d: Avoid duplicate removing in __domain_mapping()")
+Signed-off-by: Eugene Koira <eugkoira@amazon.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+Link: https://lore.kernel.org/r/20250826143816.38686-1-eugkoira@amazon.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/kvm_mmu.h |   20 ++++++++++++++++----
- arch/loongarch/kvm/mmu.c             |    8 ++++----
- 2 files changed, 20 insertions(+), 8 deletions(-)
+ drivers/iommu/intel/iommu.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/include/asm/kvm_mmu.h
-+++ b/arch/loongarch/include/asm/kvm_mmu.h
-@@ -16,6 +16,13 @@
-  */
- #define KVM_MMU_CACHE_MIN_PAGES	(CONFIG_PGTABLE_LEVELS - 1)
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -1592,6 +1592,10 @@ static void switch_to_super_page(struct
+ 	unsigned long lvl_pages = lvl_to_nr_pages(level);
+ 	struct dma_pte *pte = NULL;
  
-+/*
-+ * _PAGE_MODIFIED is a SW pte bit, it records page ever written on host
-+ * kernel, on secondary MMU it records the page writeable attribute, in
-+ * order for fast path handling.
-+ */
-+#define KVM_PAGE_WRITEABLE	_PAGE_MODIFIED
++	if (WARN_ON(!IS_ALIGNED(start_pfn, lvl_pages) ||
++		    !IS_ALIGNED(end_pfn + 1, lvl_pages)))
++		return;
 +
- #define _KVM_FLUSH_PGTABLE	0x1
- #define _KVM_HAS_PGMASK		0x2
- #define kvm_pfn_pte(pfn, prot)	(((pfn) << PFN_PTE_SHIFT) | pgprot_val(prot))
-@@ -52,10 +59,10 @@ static inline void kvm_set_pte(kvm_pte_t
- 	WRITE_ONCE(*ptep, val);
- }
+ 	while (start_pfn <= end_pfn) {
+ 		if (!pte)
+ 			pte = pfn_to_dma_pte(domain, start_pfn, &level,
+@@ -1667,7 +1671,8 @@ __domain_mapping(struct dmar_domain *dom
+ 				unsigned long pages_to_remove;
  
--static inline int kvm_pte_write(kvm_pte_t pte) { return pte & _PAGE_WRITE; }
--static inline int kvm_pte_dirty(kvm_pte_t pte) { return pte & _PAGE_DIRTY; }
- static inline int kvm_pte_young(kvm_pte_t pte) { return pte & _PAGE_ACCESSED; }
- static inline int kvm_pte_huge(kvm_pte_t pte) { return pte & _PAGE_HUGE; }
-+static inline int kvm_pte_dirty(kvm_pte_t pte) { return pte & __WRITEABLE; }
-+static inline int kvm_pte_writeable(kvm_pte_t pte) { return pte & KVM_PAGE_WRITEABLE; }
- 
- static inline kvm_pte_t kvm_pte_mkyoung(kvm_pte_t pte)
- {
-@@ -69,12 +76,12 @@ static inline kvm_pte_t kvm_pte_mkold(kv
- 
- static inline kvm_pte_t kvm_pte_mkdirty(kvm_pte_t pte)
- {
--	return pte | _PAGE_DIRTY;
-+	return pte | __WRITEABLE;
- }
- 
- static inline kvm_pte_t kvm_pte_mkclean(kvm_pte_t pte)
- {
--	return pte & ~_PAGE_DIRTY;
-+	return pte & ~__WRITEABLE;
- }
- 
- static inline kvm_pte_t kvm_pte_mkhuge(kvm_pte_t pte)
-@@ -87,6 +94,11 @@ static inline kvm_pte_t kvm_pte_mksmall(
- 	return pte & ~_PAGE_HUGE;
- }
- 
-+static inline kvm_pte_t kvm_pte_mkwriteable(kvm_pte_t pte)
-+{
-+	return pte | KVM_PAGE_WRITEABLE;
-+}
-+
- static inline int kvm_need_flush(kvm_ptw_ctx *ctx)
- {
- 	return ctx->flag & _KVM_FLUSH_PGTABLE;
---- a/arch/loongarch/kvm/mmu.c
-+++ b/arch/loongarch/kvm/mmu.c
-@@ -569,7 +569,7 @@ static int kvm_map_page_fast(struct kvm_
- 	/* Track access to pages marked old */
- 	new = kvm_pte_mkyoung(*ptep);
- 	if (write && !kvm_pte_dirty(new)) {
--		if (!kvm_pte_write(new)) {
-+		if (!kvm_pte_writeable(new)) {
- 			ret = -EFAULT;
- 			goto out;
- 		}
-@@ -856,9 +856,9 @@ retry:
- 		prot_bits |= _CACHE_SUC;
- 
- 	if (writeable) {
--		prot_bits |= _PAGE_WRITE;
-+		prot_bits = kvm_pte_mkwriteable(prot_bits);
- 		if (write)
--			prot_bits |= __WRITEABLE;
-+			prot_bits = kvm_pte_mkdirty(prot_bits);
- 	}
- 
- 	/* Disable dirty logging on HugePages */
-@@ -904,7 +904,7 @@ retry:
- 	kvm_release_faultin_page(kvm, page, false, writeable);
- 	spin_unlock(&kvm->mmu_lock);
- 
--	if (prot_bits & _PAGE_DIRTY)
-+	if (kvm_pte_dirty(prot_bits))
- 		mark_page_dirty_in_slot(kvm, memslot, gfn);
- 
- out:
+ 				pteval |= DMA_PTE_LARGE_PAGE;
+-				pages_to_remove = min_t(unsigned long, nr_pages,
++				pages_to_remove = min_t(unsigned long,
++							round_down(nr_pages, lvl_pages),
+ 							nr_pte_to_next_page(pte) * lvl_pages);
+ 				end_pfn = iov_pfn + pages_to_remove - 1;
+ 				switch_to_super_page(domain, iov_pfn, end_pfn, largepage_lvl);
 
 
