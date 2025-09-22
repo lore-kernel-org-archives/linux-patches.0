@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F91C8E6;
-	Mon, 22 Sep 2025 19:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473A5C8E6;
+	Mon, 22 Sep 2025 19:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569481; cv=none; b=PN5bqMGp/lyNJtZmxJtNasfkM77UR4AEIEwuNNzqftssyUT1AEg8R/k64yaFin7ELoMieKloSHpDl43Xk2BuxrBT03Rie0DwW7d/qaxtQ0vk4fQdCHyadpmSoM0trapj0liT54ba0qmEZmIytvoqzQSh6NV3z7HQzKUBwzZXaOE=
+	t=1758569484; cv=none; b=hnh4+qLDcEcBTXGM/stXns8SW+VOvb2PzZdTzfe5RNKWv4B24NzfViR1s0x4+s0wvLV16gohMuPyDbRc+Kz2PZwmwuVD3W1PuB2bbxZa1Ao8aF+bUisG5GK5SQ+phk1NMuMVaOOXDo3JyRs5iTY3sF+ru89fMwgZS6n/Yl/PPgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569481; c=relaxed/simple;
-	bh=tZdWqNXndI6M8qggNvAJ43tWo2JmdnpWjYh27A55GVg=;
+	s=arc-20240116; t=1758569484; c=relaxed/simple;
+	bh=L6rDeb1hlh9t4gwBLm+RZT0XTardFQN62SYEanFuEEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQSFOGUS3TsPogr0hDWGAg9zU6YpPkTiEpaNSwBGZiWFcet7OFuTfz856e0Zwd0mwCJ/jNCXFmBed0exYTVbnWSKLsyeMZhAQPYqcGeB/i6DAdZhvU0Q3HClHbIf7Cw7lE/MCYF8Yqil+he6dBW0/hdxn3euGpmrqUPavMSMWmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rNsnEUM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYXaax96m6SRZOoniGE34X2N8t9HtIAMTU19ue4d/3zFVHrQx+vEpxICKg42W/dqBU9YngHOLjCKQkNSBupGuf2rIRHys7wB8j1jxOr2gZCE1cm/ujNjVU8Oj5iAg8z8yRR0/ZMDdPT4twWgSj0cQQAab5S2GouOAgQcc3SfRnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZRUpcDm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rNsnEUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09427C4CEF0;
-	Mon, 22 Sep 2025 19:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZRUpcDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81557C4CEF0;
+	Mon, 22 Sep 2025 19:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569481;
-	bh=tZdWqNXndI6M8qggNvAJ43tWo2JmdnpWjYh27A55GVg=;
+	s=korg; t=1758569483;
+	bh=L6rDeb1hlh9t4gwBLm+RZT0XTardFQN62SYEanFuEEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rNsnEUMW8q0zJeSH/LffzdfDz9ZIMx/tpm0KDejWgzSrzSIxi1WeBxT3ImjWSSdm
-	 NmI8Iy7dspVjHRI5aIQe083j2+EB0EdEZM1SZ0WtxQiO5JiD0d1AODe7UjtBjmG6Ls
-	 7TAvAE5euMW0tY69ABnXyzEWYSZkDQpJPu7xQgIE=
+	b=UZRUpcDmqHLiVnVuDgqzO6p8gWjgV8VS3zRImyyTBsUOvkHz1LfzhrkWIpLxUUi+h
+	 gbPSytvIdNAg57ciY1hVAx5hbKEZ+s7RM1TbAnRQlxp5Cqe2L3WwMMvrLaIDVqGKST
+	 VxBC4BhbVhfDeWEFVDtD/x7+l13DJUhKxW/iRaaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 01/61] ALSA: firewire-motu: drop EPOLLOUT from poll return values as write is not supported
-Date: Mon, 22 Sep 2025 21:28:54 +0200
-Message-ID: <20250922192403.573877035@linuxfoundation.org>
+Subject: [PATCH 6.1 10/61] mptcp: set remote_deny_join_id0 on SYN recv
+Date: Mon, 22 Sep 2025 21:29:03 +0200
+Message-ID: <20250922192403.831896713@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -51,43 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit aea3493246c474bc917d124d6fb627663ab6bef0 ]
+[ Upstream commit 96939cec994070aa5df852c10fad5fc303a97ea3 ]
 
-The ALSA HwDep character device of the firewire-motu driver incorrectly
-returns EPOLLOUT in poll(2), even though the driver implements no operation
-for write(2). This misleads userspace applications to believe write() is
-allowed, potentially resulting in unnecessarily wakeups.
+When a SYN containing the 'C' flag (deny join id0) was received, this
+piece of information was not propagated to the path-manager.
 
-This issue dates back to the driver's initial code added by a commit
-71c3797779d3 ("ALSA: firewire-motu: add hwdep interface"), and persisted
-when POLLOUT was updated to EPOLLOUT by a commit a9a08845e9ac ('vfs: do
-bulk POLL* -> EPOLL* replacement("").').
+Even if this flag is mainly set on the server side, a client can also
+tell the server it cannot try to establish new subflows to the client's
+initial IP address and port. The server's PM should then record such
+info when received, and before sending events about the new connection.
 
-This commit fixes the bug.
-
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/20250829233749.366222-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: df377be38725 ("mptcp: add deny_join_id0 in mptcp_options_received")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-1-40171884ade8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/motu/motu-hwdep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/subflow.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
-index 88d1f4b56e4be..a220ac0c8eb83 100644
---- a/sound/firewire/motu/motu-hwdep.c
-+++ b/sound/firewire/motu/motu-hwdep.c
-@@ -111,7 +111,7 @@ static __poll_t hwdep_poll(struct snd_hwdep *hwdep, struct file *file,
- 		events = 0;
- 	spin_unlock_irq(&motu->lock);
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index cff2328106928..2ff72b7940fe9 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -773,6 +773,10 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 				goto fallback;
  
--	return events | EPOLLOUT;
-+	return events;
- }
+ 			owner = mptcp_sk(ctx->conn);
++
++			if (mp_opt.deny_join_id0)
++				WRITE_ONCE(owner->pm.remote_deny_join_id0, true);
++
+ 			mptcp_pm_new_connection(owner, child, 1);
  
- static int hwdep_get_info(struct snd_motu *motu, void __user *arg)
+ 			/* with OoO packets we can reach here without ingress
 -- 
 2.51.0
 
