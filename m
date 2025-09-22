@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6E2820D1;
-	Mon, 22 Sep 2025 19:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399112820D1;
+	Mon, 22 Sep 2025 19:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569995; cv=none; b=idrwykr1CfjS8JC5To7fqCmqiNK0oBFTsNXRQeTI+cIK2YKle/04Ko+8knGSQiUDydMDCm7y8bzdatRlkyDRLgXiY7tTnqae49J/Xwb3W4bNiZOsewx7KI1QbK89d48v1bfh2+w4MtNJ70zoC6sJY2qfuna1XISn5N16M6ag4sM=
+	t=1758569998; cv=none; b=qNARSmFn272DqDVB8fElk66aTsNE0zBDnEvAi1Hprkq5/lyt1DejEKMA+H3onixl4HlmQuIVR8VcirCqqxCAucmneLpHRNn7YlnQ+prFnFm5W99Cetiba+U0Toj1bpSZtggorVm3r+ThhbjDP/dM3DfdpIaNvsM628Rl/n6ZCg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569995; c=relaxed/simple;
-	bh=sGtjosNp28G7SNw6DZIypOe/tuh07DvmbJ6ZCX2bl/s=;
+	s=arc-20240116; t=1758569998; c=relaxed/simple;
+	bh=33j6wfpBTOnQNpNMCt2O2slgDpuq2tKzbyCbJz2pA8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxpNvq2vemponMrAunI9D8t//BEMMjine79aAQAjATeaeiilm0YAOFZ7gIhKeGfcevTnGup4dP/KCI3aM/AiK3/FVw8AxUp6eh8yxONGHEG7rNA33Z+x5QYprUsAa9mk2Dvb25c+PfTZyVktctdUggzoa/XqGHMNJ3wS2yuI2Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWW18RXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NBhMkI9UOYasYCEJn2WVtdfb6ElZ1tGSnpfalGcnXRFWOZzGNY7ViQimqgBLHVp6SsxNuKbYyi7LhMwAY0UjHet3U6fLeTvDukLy8lCVQ6VHzLFVnm45g7U9B5ASYaZrEjgZD1Vb9J/d3TNvFeOFfULrF1iLrH1fw9x63AopjeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BN6VIZ+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWW18RXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAFBC4CEF0;
-	Mon, 22 Sep 2025 19:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BN6VIZ+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C404CC4CEF0;
+	Mon, 22 Sep 2025 19:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569995;
-	bh=sGtjosNp28G7SNw6DZIypOe/tuh07DvmbJ6ZCX2bl/s=;
+	s=korg; t=1758569998;
+	bh=33j6wfpBTOnQNpNMCt2O2slgDpuq2tKzbyCbJz2pA8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWW18RXpMtpj7AdVZJCiU5cR3doPaESSNNvCT5e1zqJGGytvWd3eRoGyue1fwdwni
-	 5V8z6KWtSXm5W8ghVTu2GVwPYsT1wY5CBb1WsKF2JLzeSKBuRmHUpKbThRcA7WX/Qx
-	 OqmiyveU8IO1XbDIOEGc6r888Ftnw9cHgq0tVNjk=
+	b=BN6VIZ+9+IW2lttekvZYMxB313F00If+U8TQANMLhLcNge/d99hx5QCgRuvPNdTyU
+	 kkF/SYXzznY3Pn8Bgc+daC21J+71nkRHA9TAkUrqF9m8ZG2CSXFf9FzMAgVpkWkBlK
+	 WJcxcgyfJKf5TD0m7/7AUEGZ6maFhbcG+gfE2WpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 060/105] net: rfkill: gpio: Fix crash due to dereferencering uninitialized pointer
-Date: Mon, 22 Sep 2025 21:29:43 +0200
-Message-ID: <20250922192410.486862611@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 075/105] ASoC: Intel: catpt: Expose correct bit depth to userspace
+Date: Mon, 22 Sep 2025 21:29:58 +0200
+Message-ID: <20250922192410.862249071@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -45,62 +47,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-commit b6f56a44e4c1014b08859dcf04ed246500e310e5 upstream.
+[ Upstream commit 690aa09b1845c0d5c3c29dabd50a9d0488c97c48 ]
 
-Since commit 7d5e9737efda ("net: rfkill: gpio: get the name and type from
-device property") rfkill_find_type() gets called with the possibly
-uninitialized "const char *type_name;" local variable.
+Currently wrong bit depth is exposed in hw params, causing clipped
+volume during playback. Expose correct parameters.
 
-On x86 systems when rfkill-gpio binds to a "BCM4752" or "LNV4752"
-acpi_device, the rfkill->type is set based on the ACPI acpi_device_id:
-
-        rfkill->type = (unsigned)id->driver_data;
-
-and there is no "type" property so device_property_read_string() will fail
-and leave type_name uninitialized, leading to a potential crash.
-
-rfkill_find_type() does accept a NULL pointer, fix the potential crash
-by initializing type_name to NULL.
-
-Note likely sofar this has not been caught because:
-
-1. Not many x86 machines actually have a "BCM4752"/"LNV4752" acpi_device
-2. The stack happened to contain NULL where type_name is stored
-
-Fixes: 7d5e9737efda ("net: rfkill: gpio: get the name and type from device property")
-Cc: stable@vger.kernel.org
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20250913113515.21698-1-hansg@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a126750fc865 ("ASoC: Intel: catpt: PCM operations")
+Reported-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Tested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Message-ID: <20250909092829.375953-1-amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rfkill/rfkill-gpio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/catpt/pcm.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -94,10 +94,10 @@ static const struct dmi_system_id rfkill
- static int rfkill_gpio_probe(struct platform_device *pdev)
+diff --git a/sound/soc/intel/catpt/pcm.c b/sound/soc/intel/catpt/pcm.c
+index 81a2f0339e055..ff1fa01acb85b 100644
+--- a/sound/soc/intel/catpt/pcm.c
++++ b/sound/soc/intel/catpt/pcm.c
+@@ -568,8 +568,9 @@ static const struct snd_pcm_hardware catpt_pcm_hardware = {
+ 				  SNDRV_PCM_INFO_RESUME |
+ 				  SNDRV_PCM_INFO_NO_PERIOD_WAKEUP,
+ 	.formats		= SNDRV_PCM_FMTBIT_S16_LE |
+-				  SNDRV_PCM_FMTBIT_S24_LE |
+ 				  SNDRV_PCM_FMTBIT_S32_LE,
++	.subformats		= SNDRV_PCM_SUBFMTBIT_MSBITS_24 |
++				  SNDRV_PCM_SUBFMTBIT_MSBITS_MAX,
+ 	.period_bytes_min	= PAGE_SIZE,
+ 	.period_bytes_max	= CATPT_BUFFER_MAX_SIZE / CATPT_PCM_PERIODS_MIN,
+ 	.periods_min		= CATPT_PCM_PERIODS_MIN,
+@@ -699,14 +700,18 @@ static struct snd_soc_dai_driver dai_drivers[] = {
+ 		.channels_min = 2,
+ 		.channels_max = 2,
+ 		.rates = SNDRV_PCM_RATE_48000,
+-		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S32_LE,
++		.subformats = SNDRV_PCM_SUBFMTBIT_MSBITS_24 |
++			      SNDRV_PCM_SUBFMTBIT_MSBITS_MAX,
+ 	},
+ 	.capture = {
+ 		.stream_name = "Analog Capture",
+ 		.channels_min = 2,
+ 		.channels_max = 4,
+ 		.rates = SNDRV_PCM_RATE_48000,
+-		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S32_LE,
++		.subformats = SNDRV_PCM_SUBFMTBIT_MSBITS_24 |
++			      SNDRV_PCM_SUBFMTBIT_MSBITS_MAX,
+ 	},
+ },
  {
- 	struct rfkill_gpio_data *rfkill;
--	struct gpio_desc *gpio;
-+	const char *type_name = NULL;
- 	const char *name_property;
- 	const char *type_property;
--	const char *type_name;
-+	struct gpio_desc *gpio;
- 	int ret;
- 
- 	if (dmi_check_system(rfkill_gpio_deny_table))
+@@ -718,7 +723,9 @@ static struct snd_soc_dai_driver dai_drivers[] = {
+ 		.channels_min = 2,
+ 		.channels_max = 2,
+ 		.rates = SNDRV_PCM_RATE_8000_192000,
+-		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S32_LE,
++		.subformats = SNDRV_PCM_SUBFMTBIT_MSBITS_24 |
++			      SNDRV_PCM_SUBFMTBIT_MSBITS_MAX,
+ 	},
+ },
+ {
+@@ -730,7 +737,9 @@ static struct snd_soc_dai_driver dai_drivers[] = {
+ 		.channels_min = 2,
+ 		.channels_max = 2,
+ 		.rates = SNDRV_PCM_RATE_8000_192000,
+-		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S32_LE,
++		.subformats = SNDRV_PCM_SUBFMTBIT_MSBITS_24 |
++			      SNDRV_PCM_SUBFMTBIT_MSBITS_MAX,
+ 	},
+ },
+ {
+@@ -742,7 +751,9 @@ static struct snd_soc_dai_driver dai_drivers[] = {
+ 		.channels_min = 2,
+ 		.channels_max = 2,
+ 		.rates = SNDRV_PCM_RATE_48000,
+-		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE,
++		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S32_LE,
++		.subformats = SNDRV_PCM_SUBFMTBIT_MSBITS_24 |
++			      SNDRV_PCM_SUBFMTBIT_MSBITS_MAX,
+ 	},
+ },
+ {
+-- 
+2.51.0
+
 
 
