@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15782285C92;
-	Mon, 22 Sep 2025 19:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813B02F0C52;
+	Mon, 22 Sep 2025 19:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569934; cv=none; b=TwcTtdZjBMJNFSyLPUXm1QGnfZ4XPbC6DdoTGlYe2fweaPhR9KBNQZGagPWTvA400DRyl5Gy1tMFOcPKKLeF4p6OrmwZopXQbDrhFfrKc1y0tQpW+2ZKIuAdYXwDehT6Z7yRDq1feWG3eKa8zXYLPx4WiLEBOEcYeaYaNcvObh0=
+	t=1758569936; cv=none; b=ppHDldecxrzVsRcKf26FSGgrSrYzHgmkkfr+ik4aGIkIDUzePTFesrG1wd8JRdFQia64+dAcGKaQKwu7MtE7iUq5HCkmqY547O7StJTRic/p0HyDJt8+A8gC2jwE7rodNHyQRxaF/b+rQJiiTSdriW1HJ8/53JOmc4DcIOiUhZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569934; c=relaxed/simple;
-	bh=nJ2P2k+M5NOVkJV+JVBj0A4jVyMPnbwn4U3gT4lB69E=;
+	s=arc-20240116; t=1758569936; c=relaxed/simple;
+	bh=JbAR2i1tLG0qgor1eEXXWmayOC8Zpkg+6vTop9Rd2Ro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2Qz8XDStXMARZ2jsH1K10XNSCvumJzhy42PBHNsKzVYaxn1n6tEDU2Z88Cx4u1C5jb4XSaniM53bA7Pq5tjsu4LVJXdSFn+CZ+ZJiFBpoQ8sY5nYftO6yov5JECaMxCpMJZ4a6vMpHof8Jlms71ni/xmDPR2o1N6egGwU14epM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqCo/Sit; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6GsXVhaF3phAowdrT9Du80eVEVO6bDuTb1ls/x6bZpMFiFbh4qjCvwlZh8lntOuDmvPa6B0u5mrkMgnjEkEUX3rA+URSNJ/mf31fp4c7x81xexgaTdy6K0qVtqJih8wBaruLMwqvxNpAFXSZk4YCKimOgf4D7AHd8rR+MnCla0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOAJXilY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqCo/Sit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2451C4CEF0;
-	Mon, 22 Sep 2025 19:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOAJXilY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B87DC4CEF0;
+	Mon, 22 Sep 2025 19:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569934;
-	bh=nJ2P2k+M5NOVkJV+JVBj0A4jVyMPnbwn4U3gT4lB69E=;
+	s=korg; t=1758569936;
+	bh=JbAR2i1tLG0qgor1eEXXWmayOC8Zpkg+6vTop9Rd2Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqCo/SitPBRAh+pWk3zcKx6ZVi3ue2pkGkny8I/rD6nDOGEiYW6YeO8+8BYx9B88u
-	 Ly7DMD1IK9i39bHUtsq6gXTySzu5OvS+ec2jWyoT6LEBF4bDleDDCI06KWm9nRGC4Z
-	 BULl1vkRf+NgXbipF1KzXVXIEDEiSv6ein3rswiw=
+	b=eOAJXilY97VLf6Kb2RnJbGP0xdVDhxrGeRaY+OmSEk5yXAovWnmVdYOpieDlSjp9H
+	 0u0ZX2tiXxAFf3QEkbUeR1r2q8auvX5Xd9EkG1LDSUvSuXG2kKETR+QRy6H+2Vg0As
+	 8//WDjCKahoIfTHNMraHMdyQFaPZSn18P5b5vOTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 057/105] mmc: mvsdio: Fix dma_unmap_sg() nents value
-Date: Mon, 22 Sep 2025 21:29:40 +0200
-Message-ID: <20250922192410.408331126@linuxfoundation.org>
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 058/105] KVM: SVM: Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active
+Date: Mon, 22 Sep 2025 21:29:41 +0200
+Message-ID: <20250922192410.436237046@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,33 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-commit 8ab2f1c35669bff7d7ed1bb16bf5cc989b3e2e17 upstream.
+commit d02e48830e3fce9701265f6c5a58d9bdaf906a76 upstream.
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+Commit 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+inhibited pre-VMRUN sync of TPR from LAPIC into VMCB::V_TPR in
+sync_lapic_to_cr8() when AVIC is active.
 
-Fixes: 236caa7cc351 ("mmc: SDIO driver for Marvell SoCs")
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+AVIC does automatically sync between these two fields, however it does
+so only on explicit guest writes to one of these fields, not on a bare
+VMRUN.
+
+This meant that when AVIC is enabled host changes to TPR in the LAPIC
+state might not get automatically copied into the V_TPR field of VMCB.
+
+This is especially true when it is the userspace setting LAPIC state via
+KVM_SET_LAPIC ioctl() since userspace does not have access to the guest
+VMCB.
+
+Practice shows that it is the V_TPR that is actually used by the AVIC to
+decide whether to issue pending interrupts to the CPU (not TPR in TASKPRI),
+so any leftover value in V_TPR will cause serious interrupt delivery issues
+in the guest when AVIC is enabled.
+
+Fix this issue by doing pre-VMRUN TPR sync from LAPIC into VMCB::V_TPR
+even when AVIC is enabled.
+
+Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/c231be64280b1461e854e1ce3595d70cde3a2e9d.1756139678.git.maciej.szmigiero@oracle.com
+[sean: tag for stable@]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mvsdio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/svm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/mmc/host/mvsdio.c
-+++ b/drivers/mmc/host/mvsdio.c
-@@ -292,7 +292,7 @@ static u32 mvsd_finish_data(struct mvsd_
- 		host->pio_ptr = NULL;
- 		host->pio_size = 0;
- 	} else {
--		dma_unmap_sg(mmc_dev(host->mmc), data->sg, host->sg_frags,
-+		dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
- 			     mmc_get_dma_dir(data));
- 	}
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4044,8 +4044,7 @@ static inline void sync_lapic_to_cr8(str
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	u64 cr8;
  
+-	if (nested_svm_virtualize_tpr(vcpu) ||
+-	    kvm_vcpu_apicv_active(vcpu))
++	if (nested_svm_virtualize_tpr(vcpu))
+ 		return;
+ 
+ 	cr8 = kvm_get_cr8(vcpu);
 
 
