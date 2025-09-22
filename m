@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E022FFDD7;
-	Mon, 22 Sep 2025 11:17:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF911E480;
+	Mon, 22 Sep 2025 13:01:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758539829; cv=none; b=lKQwO0Esi/h9+YNEFhp2bwnUKDxDKDx2KPl75NKcHL8uouFtOdB07l+uUiVal51DLuXC46lbEAVipfL/Gj4ORftLQ4Wy7ujP+voMp8cesMCb8gsf7B3TWiZSb/5fNTIemFOpihiZDV+aYV7g6cx2kYue7gX3nHlVFYsBH1JX75Q=
+	t=1758546066; cv=none; b=lgCwVP41GWH7omyyoFLXTcVEUIHSkhAsk4ApsAVwKLLlE6GeBp9SXubHRs1QDE5UAB8grwNjeb1LPgu+B4PuFH1wwbMdOuUKR36cZwHhOHczL8iWHDb45p4X+zR1d1alU8Qcgaln0Ky3Ua5jAjv6pJ+U1GFcM2EyT3jjRtRc7jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758539829; c=relaxed/simple;
-	bh=lH9VwiNy6Nu7QO4PMzso5D1oOtUAcurDD/Uxg6ZQsi8=;
+	s=arc-20240116; t=1758546066; c=relaxed/simple;
+	bh=O0vKtIqC3VtmXy33eTVnNcXrqKZtRpf/iMG7p7bLjd4=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CBEKVP5GXJ4qY8P5keR3HA4JDw2F2nqxg7Utz4WOK6VSGFTYV+SZGYsTxrE2NdCi6uCOR/UxtbRuUzjqGxkImqTavgRRTjiOIuvqk2brDEPd2T8H5n94Jem0oojs0CHEHyb2hpshmnLE3vftEvZ+VZPVN2xwccCxMlOqOOiwCUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b3xf/D5c; arc=none smtp.client-ip=192.198.163.16
+	 In-Reply-To:Content-Type; b=m97qZnEfm2iXnB7Hp40kAbFjAV4fQqFlYQr2o7q4wCj3ZPJp7qahO3BbIWhdF+7nIWmpEctnyXI/zrlE+VD9UyxnwFX5x10yTxf3NFqvlR6P7xQuYdkXljw8sCFeKMuTn97he6ltZ/Po3krLUdAqzRefK965v6buksSvGcctbgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YpekgQFC; arc=none smtp.client-ip=198.175.65.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b3xf/D5c"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YpekgQFC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758539827; x=1790075827;
+  t=1758546063; x=1790082063;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=lH9VwiNy6Nu7QO4PMzso5D1oOtUAcurDD/Uxg6ZQsi8=;
-  b=b3xf/D5c3Lb3kMZ3t9Ib/iK5ZWLTaQV9CKyW9+dxybexaMvqv7xI9Hz0
-   2N9evrC7vdX7IDFFAN3IQR9iOP9kSglSM8pm1jolmh1k68u9ofU2DF9k3
-   3zN30r0qgxa9Qtczf7fXB1ienKCwlBsJQapYqM2j7LEspkHyno11udlYj
-   lDMlrOhBjUeTmYeaD63J4U9/OX72PCXlpZGuZX4HvGwIIp0Y3LtUSyUrc
-   N+6w3o5fiPZMLsFfjJmiU7+f62+xFccPJgCslFKHcE9xWuTNmscByXfJ1
-   M5cCfKIGOOdEbxHK2K4OtuKfzd3PxY3aJEwBq6HSKLljddTFQwP8bklck
-   w==;
-X-CSE-ConnectionGUID: mmZ0OAD1QeKxQrdfIIpHxQ==
-X-CSE-MsgGUID: scQH9J86Qq+v+aI9jJQUkA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11560"; a="48376615"
+  bh=O0vKtIqC3VtmXy33eTVnNcXrqKZtRpf/iMG7p7bLjd4=;
+  b=YpekgQFCR1gmNk0p4MsVhuAptIlUQgOU+A3tia9VbTN1ASMjVIo9lOiu
+   l1065cW1xr7x5zYTKX2lLMA4OKuvfti3zxZlyYB/bufzaF4HVFPKsuUqr
+   jZOteZTE2OH7VuAiwCDhBALHu+4IWxtzwSkHfoAWQCUTS2ftShcpVc4ir
+   2NLdMVp847BnDs0lcoe++Bktt3Z+P7D58Y1ZEC1ZVFYeTKdjsP8i3mlAK
+   3AVHcS/GxI19zA9wnA8r5IEucZpzQvpAUrEohpfqgcMSGgqu3rjHFLqWL
+   CqkHrx0nov2USfPtc1cHbybRVVliIus+uFkHKW5FRXqdOVAJzy7U1sENr
+   A==;
+X-CSE-ConnectionGUID: MXXlJpdBRE2wxuAVc0j1aQ==
+X-CSE-MsgGUID: aKvRy8F6QNy6MeiJlZc+Yg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11560"; a="64445760"
 X-IronPort-AV: E=Sophos;i="6.18,285,1751266800"; 
-   d="scan'208";a="48376615"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2025 04:17:07 -0700
-X-CSE-ConnectionGUID: yPl64IL+QcKr4LyVmSYJTg==
-X-CSE-MsgGUID: c2gtXOMIS/+mqOy7tMErXA==
+   d="scan'208";a="64445760"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2025 06:01:03 -0700
+X-CSE-ConnectionGUID: T60RKy9PTG+81Jm+ymeZEg==
+X-CSE-MsgGUID: 1HWbQDKIRNe1cDl02ltOJg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.18,285,1751266800"; 
-   d="scan'208";a="176065717"
+   d="scan'208";a="176542481"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.235.53]) ([10.124.235.53])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2025 04:17:04 -0700
-Message-ID: <6a42747d-1115-4667-bd01-78f6629332b3@linux.intel.com>
-Date: Mon, 22 Sep 2025 19:17:02 +0800
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2025 06:01:00 -0700
+Message-ID: <f342858b-2420-42dd-9848-c92bccade6a3@linux.intel.com>
+Date: Mon, 22 Sep 2025 21:00:57 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,81 +55,40 @@ User-Agent: Mozilla Thunderbird
 Cc: baolu.lu@linux.intel.com, Kevin Tian <kevin.tian@intel.com>,
  patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>,
  Wei Wang <wei.w.wang@intel.com>
-Subject: Re: [PATCH v2 08/10] iommu/vt-d: Use the generic iommu page table
+Subject: Re: [PATCH v2 09/10] iommu/vt-d: Follow PT_FEAT_DMA_INCOHERENT into
+ the PASID entry
 To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
  iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
  Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-References: <8-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+References: <9-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <8-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+In-Reply-To: <9-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 8/27/2025 1:26 AM, Jason Gunthorpe wrote:
-> Replace the VT-D iommu_domain implementation of the VTD second stage and
-> first stage page tables with the iommupt VTDSS and x86_64
-> pagetables. x86_64 is shared with the AMD driver.
+> Currently a incoherent walk domain cannot be attached do a coherent
+> capable iommu. Kevin says HW probably doesn't exist with such a mixture,
+> but make the driver make logical sense anyhow.
 > 
-> There are a couple notable things in VT-D:
-> - Like AMD the second stage format is not sign extended, unlike AMD it
->    cannot decode a full 64 bits. The first stage format is a normal sign
->    extended x86 page table
-> - The HW caps can indicate how many levels, how many address bits and what
->    leaf page sizes are supported in HW. As before the highest number of
->    levels that can translate the entire supported address width is used.
->    The supported page sizes are adjusted directly from the dedicated
->    first/second stage cap bits.
-> - VTD requires flushing 'write buffers'. This logic is left unchanged,
->    the write buffer flushes on any gather flush or through iotlb_sync_map.
-> - Like ARM, VTD has an optional non-coherent page table walker that
->    requires cache flushing. This is supported through PT_FEAT_DMA_INCOHERENT
->    the same as ARM, however x86 can't use the DMA API for flush, it must
->    call the arch function clflush_cache_range()
-> - The PT_FEAT_DYNAMIC_TOP can probably be supported on VTD someday for the
->    second stage when it uses 128 bit atomic stores for the HW context
->    structures.
-> - PT_FEAT_VTDSS_FORCE_WRITEABLE is used to work around ERRATA_772415_SPR17
-> - A kernel command line parameter "sp_off" disables all page sizes except
->    4k
+> When building the PASID entry the PWSNP (Page Walk Snoop) bit tells the HW
+> if it should issue snoops. If the page table is cache flushed because of
+> PT_FEAT_DMA_INCOHERENT then it is fine to set this bit to 0 even if the HW
+> supports 1.
 > 
-> Remove all the unused iommu_domain page table code. The debugfs paths have
-> their own independent page table walker that is left alone for now.
+> Weaken the compatible check to permit a coherent instance to accept an
+> incoherent table and fix the PASID table construction to set PWSNP from
+> PT_FEAT_DMA_INCOHERENT.
 > 
-> This corrects a race with the non-coherent walker that the ARM
-> implementations have fixed:
+> SVA always sets PWSNP.
 > 
->       CPU 0                               CPU 1
->    pfn_to_dma_pte()                    pfn_to_dma_pte()
->     pte = &parent[offset];
->     if (!dma_pte_present(pte)) {
->       try_cmpxchg64(&pte->val)
-> 					pte = &parent[offset];
-> 					.. dma_pte_present(pte) ..
-> 				        [...]
-> 					// iommu_map() completes
-> 					// Device does DMA
->       domain_flush_cache(pte)
-> 
-> The CPU 1 mapping operation shares a page table level with the CPU 0
-> mapping operation. CPU 0 installed a new page table level but has not
-> flushed it yet. CPU1 returns from iommu_map() and the device does DMA. The
-> non coherent walker fails to see the new table level installed by CPU 0
-> and fails the DMA with non-present.
-> 
-> The iommupt PT_FEAT_DMA_INCOHERENT implementation uses the ARM design of
-> storing a flag when CPU 0 completes the flush. If the flag is not set CPU
-> 1 will also flush to ensure the HW can fully walk to the PTE being
-> installed.
-> 
-> Cc: Tina Zhang<tina.zhang@intel.com>
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 > ---
->   drivers/iommu/intel/Kconfig  |   4 +
->   drivers/iommu/intel/iommu.c  | 896 ++++++-----------------------------
->   drivers/iommu/intel/iommu.h  |  99 +---
->   drivers/iommu/intel/nested.c |   5 -
->   drivers/iommu/intel/pasid.c  |  29 +-
->   5 files changed, 175 insertions(+), 858 deletions(-)
+>   drivers/iommu/intel/iommu.c |  8 ++++++--
+>   drivers/iommu/intel/pasid.c | 31 ++++++++++++++-----------------
+>   drivers/iommu/intel/pasid.h |  1 +
+>   drivers/iommu/intel/svm.c   |  1 +
+>   4 files changed, 22 insertions(+), 19 deletions(-)
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
