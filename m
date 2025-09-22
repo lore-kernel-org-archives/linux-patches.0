@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09061F91E3;
-	Mon, 22 Sep 2025 19:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEA72517AC;
+	Mon, 22 Sep 2025 19:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570321; cv=none; b=eR1M8SBZtxBNKhkxe2qQAOwviLoaN0wOOxjIiTBNh17CddDW/20NOg9et06NG8j5bMzXHuNskWGZah+UCsJK/7WZlf9mj+ELbSbR3/Yn0udSqG12HiE1OVrEvBjFaa0UicAMmoN7akpRMBA1Rj0IkY8D1f1hZUPiA+gFrO7JnB4=
+	t=1758570324; cv=none; b=gkAbEtB9ID0IJkx2vpvptjSaYqKFf+0iaklygXEosRwTI/ONbtRAQ8nEA3MiThwib5RvDv8UQSJPzQ7+MvaKPg4064L+k4OeVHPC/JEWtjlDIF2FTSdl4ef3AcWdovJp/F27VpL2d/sLhWt+zHavVSQE7+UQ9IoXTnaKXB+NebE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570321; c=relaxed/simple;
-	bh=IvmhSVm0/C8LLsKEBqSfipVsQEMe3X76xK4C+7y+RfM=;
+	s=arc-20240116; t=1758570324; c=relaxed/simple;
+	bh=w2vhWEyzV+FP4nmgHy28cd7e17zE9IJTOIaUeRFOYpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7gnxgy/B6z5/L5iSJhB5jxDgPp9SgX6XrYxwxmvvyjdeGd9idTRlV4L9bg9LtB24ptyTYoNjBXawjB9L/59ukWe/2jd/t3lmasKNZveXZ/nIBUMf1UrQgJDWrxoJYbPtINQhdBlQzi8R4umI5W79Z4FYYL5nYjR07PH442kqN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zh8/MePL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W2I57tlRNRLH/tMdc8GHF6vvs0Eo+jLgUVyy9LPwjtaF45gND5TtacwyMaTjprZywv4p0f/HbBxavfYMNHfMZKOUngaTGxCqds3aL2ahZHNCgKqlFi/67UDY2l9im86Hsf/MHhY4gaLyuiO9hQFRxQlsSSepHlJcixSsjN+1Pq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2jkQTbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zh8/MePL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D73CC4CEF0;
-	Mon, 22 Sep 2025 19:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2jkQTbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ACDC4CEF0;
+	Mon, 22 Sep 2025 19:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570320;
-	bh=IvmhSVm0/C8LLsKEBqSfipVsQEMe3X76xK4C+7y+RfM=;
+	s=korg; t=1758570324;
+	bh=w2vhWEyzV+FP4nmgHy28cd7e17zE9IJTOIaUeRFOYpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zh8/MePLEBDaLf850ynj9ihDZdx6Yh05XkbY4VdgbWjj2ePA6ADMj3JyuwASwHEp4
-	 rYNCLHpnxD4xN3yjzg4rpSTCD6XGmC9GKXkiKkkQ0CvKiLpBrWSL5AoAzidUPaFgLB
-	 R1UTEWYZckFPCsdpnsvO+0sX7/F0x6shcvz58WEQ=
+	b=p2jkQTbOiQPXjLynd9VJrrlzLryjFHjBhkyF+VcjXJGSQVoZ+GUxy1XoPcuAK3lY6
+	 GlE0lORPAp0281cq7XWmBL4tTV0Z/O4kIc0xo9Q72GqlX8MYwskWKzCLvRCFOV176L
+	 URybDnT9xuXb29wJ3FSqI0Ntfl2ZJNvwbposFU0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.16 089/149] mmc: sdhci: Move the code related to setting the clock from sdhci_set_ios_common() into sdhci_set_ios()
-Date: Mon, 22 Sep 2025 21:29:49 +0200
-Message-ID: <20250922192415.128920824@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.16 080/149] iommu/amd/pgtbl: Fix possible race while increase page table level
+Date: Mon, 22 Sep 2025 21:29:40 +0200
+Message-ID: <20250922192414.897781267@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -51,90 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-commit 7b7e71683b4ccbe0dbd7d434707623327e852f20 upstream.
+commit 1e56310b40fd2e7e0b9493da9ff488af145bdd0c upstream.
 
-The sdhci_set_clock() is called in sdhci_set_ios_common() and
-__sdhci_uhs2_set_ios(). According to Section 3.13.2 "Card Interface
-Detection Sequence" of the SD Host Controller Standard Specification
-Version 7.00, the SD clock is supplied after power is supplied, so we only
-need one in __sdhci_uhs2_set_ios(). Let's move the code related to setting
-the clock from sdhci_set_ios_common() into sdhci_set_ios() and modify
-the parameters passed to sdhci_set_clock() in __sdhci_uhs2_set_ios().
+The AMD IOMMU host page table implementation supports dynamic page table levels
+(up to 6 levels), starting with a 3-level configuration that expands based on
+IOVA address. The kernel maintains a root pointer and current page table level
+to enable proper page table walks in alloc_pte()/fetch_pte() operations.
 
-Fixes: 10c8298a052b ("mmc: sdhci-uhs2: add set_ios()")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The IOMMU IOVA allocator initially starts with 32-bit address and onces its
+exhuasted it switches to 64-bit address (max address is determined based
+on IOMMU and device DMA capability). To support larger IOVA, AMD IOMMU
+driver increases page table level.
+
+But in unmap path (iommu_v1_unmap_pages()), fetch_pte() reads
+pgtable->[root/mode] without lock. So its possible that in exteme corner case,
+when increase_address_space() is updating pgtable->[root/mode], fetch_pte()
+reads wrong page table level (pgtable->mode). It does compare the value with
+level encoded in page table and returns NULL. This will result is
+iommu_unmap ops to fail and upper layer may retry/log WARN_ON.
+
+CPU 0                                         CPU 1
+------                                       ------
+map pages                                    unmap pages
+alloc_pte() -> increase_address_space()      iommu_v1_unmap_pages() -> fetch_pte()
+  pgtable->root = pte (new root value)
+                                             READ pgtable->[mode/root]
+					       Reads new root, old mode
+  Updates mode (pgtable->mode += 1)
+
+Since Page table level updates are infrequent and already synchronized with a
+spinlock, implement seqcount to enable lock-free read operations on the read path.
+
+Fixes: 754265bcab7 ("iommu/amd: Fix race in increase_address_space()")
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: stable@vger.kernel.org
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-uhs2.c |    3 ++-
- drivers/mmc/host/sdhci.c      |   34 +++++++++++++++++-----------------
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h |    1 +
+ drivers/iommu/amd/io_pgtable.c      |   25 +++++++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/sdhci-uhs2.c
-+++ b/drivers/mmc/host/sdhci-uhs2.c
-@@ -295,7 +295,8 @@ static void __sdhci_uhs2_set_ios(struct
- 	else
- 		sdhci_uhs2_set_power(host, ios->power_mode, ios->vdd);
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -551,6 +551,7 @@ struct gcr3_tbl_info {
+ };
  
--	sdhci_set_clock(host, host->clock);
-+	sdhci_set_clock(host, ios->clock);
-+	host->clock = ios->clock;
- }
+ struct amd_io_pgtable {
++	seqcount_t		seqcount;	/* Protects root/mode update */
+ 	struct io_pgtable	pgtbl;
+ 	int			mode;
+ 	u64			*root;
+--- a/drivers/iommu/amd/io_pgtable.c
++++ b/drivers/iommu/amd/io_pgtable.c
+@@ -17,6 +17,7 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/dma-mapping.h>
++#include <linux/seqlock.h>
  
- static int sdhci_uhs2_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -2367,23 +2367,6 @@ void sdhci_set_ios_common(struct mmc_hos
- 		(ios->power_mode == MMC_POWER_UP) &&
- 		!(host->quirks2 & SDHCI_QUIRK2_PRESET_VALUE_BROKEN))
- 		sdhci_enable_preset_value(host, false);
--
--	if (!ios->clock || ios->clock != host->clock) {
--		host->ops->set_clock(host, ios->clock);
--		host->clock = ios->clock;
--
--		if (host->quirks & SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK &&
--		    host->clock) {
--			host->timeout_clk = mmc->actual_clock ?
--						mmc->actual_clock / 1000 :
--						host->clock / 1000;
--			mmc->max_busy_timeout =
--				host->ops->get_max_timeout_count ?
--				host->ops->get_max_timeout_count(host) :
--				1 << 27;
--			mmc->max_busy_timeout /= host->timeout_clk;
--		}
--	}
- }
- EXPORT_SYMBOL_GPL(sdhci_set_ios_common);
+ #include <asm/barrier.h>
  
-@@ -2410,6 +2393,23 @@ void sdhci_set_ios(struct mmc_host *mmc,
+@@ -130,8 +131,11 @@ static bool increase_address_space(struc
  
- 	sdhci_set_ios_common(mmc, ios);
+ 	*pte = PM_LEVEL_PDE(pgtable->mode, iommu_virt_to_phys(pgtable->root));
  
-+	if (!ios->clock || ios->clock != host->clock) {
-+		host->ops->set_clock(host, ios->clock);
-+		host->clock = ios->clock;
++	write_seqcount_begin(&pgtable->seqcount);
+ 	pgtable->root  = pte;
+ 	pgtable->mode += 1;
++	write_seqcount_end(&pgtable->seqcount);
 +
-+		if (host->quirks & SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK &&
-+		    host->clock) {
-+			host->timeout_clk = mmc->actual_clock ?
-+						mmc->actual_clock / 1000 :
-+						host->clock / 1000;
-+			mmc->max_busy_timeout =
-+				host->ops->get_max_timeout_count ?
-+				host->ops->get_max_timeout_count(host) :
-+				1 << 27;
-+			mmc->max_busy_timeout /= host->timeout_clk;
-+		}
-+	}
+ 	amd_iommu_update_and_flush_device_table(domain);
+ 
+ 	pte = NULL;
+@@ -153,6 +157,7 @@ static u64 *alloc_pte(struct amd_io_pgta
+ {
+ 	unsigned long last_addr = address + (page_size - 1);
+ 	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
++	unsigned int seqcount;
+ 	int level, end_lvl;
+ 	u64 *pte, *page;
+ 
+@@ -170,8 +175,14 @@ static u64 *alloc_pte(struct amd_io_pgta
+ 	}
+ 
+ 
+-	level   = pgtable->mode - 1;
+-	pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	do {
++		seqcount = read_seqcount_begin(&pgtable->seqcount);
 +
- 	if (host->ops->set_power)
- 		host->ops->set_power(host, ios->power_mode, ios->vdd);
- 	else
++		level   = pgtable->mode - 1;
++		pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
++
++
+ 	address = PAGE_SIZE_ALIGN(address, page_size);
+ 	end_lvl = PAGE_SIZE_LEVEL(page_size);
+ 
+@@ -249,6 +260,7 @@ static u64 *fetch_pte(struct amd_io_pgta
+ 		      unsigned long *page_size)
+ {
+ 	int level;
++	unsigned int seqcount;
+ 	u64 *pte;
+ 
+ 	*page_size = 0;
+@@ -256,8 +268,12 @@ static u64 *fetch_pte(struct amd_io_pgta
+ 	if (address > PM_LEVEL_SIZE(pgtable->mode))
+ 		return NULL;
+ 
+-	level	   =  pgtable->mode - 1;
+-	pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	do {
++		seqcount = read_seqcount_begin(&pgtable->seqcount);
++		level	   =  pgtable->mode - 1;
++		pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
++
+ 	*page_size =  PTE_LEVEL_PAGE_SIZE(level);
+ 
+ 	while (level > 0) {
+@@ -541,6 +557,7 @@ static struct io_pgtable *v1_alloc_pgtab
+ 	if (!pgtable->root)
+ 		return NULL;
+ 	pgtable->mode = PAGE_MODE_3_LEVEL;
++	seqcount_init(&pgtable->seqcount);
+ 
+ 	cfg->pgsize_bitmap  = amd_iommu_pgsize_bitmap;
+ 	cfg->ias            = IOMMU_IN_ADDR_BIT_SIZE;
 
 
