@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A35725F780;
-	Mon, 22 Sep 2025 19:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC23725F780;
+	Mon, 22 Sep 2025 19:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569646; cv=none; b=CbGCTv1QYfWgSB4YC1agqFljY/TnI6fC5tXhLsZ9zsVPLBdyEG15KawOn8xz8ABgibola1tjG0Gi6GxpE6bmKEP0OAs584ZFY5HSGPWoWeLU0jZRq5n+WT2ZhGis/h2m0WqtyVaM0cY0TMQEEzUWyIOXB9VNO6h8gxY78C1OkWc=
+	t=1758569649; cv=none; b=bLmOLyZGxJkUN45f8GwGD8vFUFkq+E+9NnJMMnQ4OAlOFeJkr54RZ6ihl9eaDUt8IvQ+Xe0nb1TMaaDFl24bOalZwNM4/+BUzC5f85kawKvhlwyHgpjIIbaohJc0CXT0aqyFcR5gxolkj38qioN/jcd6YCvobNsTtcUooS20Ab0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569646; c=relaxed/simple;
-	bh=/816tELNWaTboIpd0SQrm8jrqL4f0hAl+52g2u8E3RI=;
+	s=arc-20240116; t=1758569649; c=relaxed/simple;
+	bh=hFqzmN9+yCxmYhzYpOpJFD3WQOu7K1/m59G/J9whqFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8oto+yj4YIwm5QhDYf0xpm1qO2YyhMsd/fzivJFV55UlMQmww3LUOPHZE8whWl+leEFovU6RL8sPQS1xO3cEiG80DJfirZh6XaC469CsPfmRsGtyulLqFiJ0Wy9gtRTxbIjZ4guV8Q+4W2b+Rd9Wy0NQCaSgd7elSROeOUxmxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwbyXGBW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s/nzt1cXf8WPjOeB7WRmv37n1XGoLC4SMQTnIFhsqnenH+6PfVo9ctkXtqgZQouwtu+MqdK7sR4bq9AUXdAECcR4TBVCFroMSmU9KURRNQ0ajGliCHALTW/OMd1t5ZcUvD00RdPyOf8zSu+k8p+e5rJB8GZa8nIXZZu81zOTqs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBeCqmgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwbyXGBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11277C4CEF0;
-	Mon, 22 Sep 2025 19:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBeCqmgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8380FC4CEF5;
+	Mon, 22 Sep 2025 19:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569646;
-	bh=/816tELNWaTboIpd0SQrm8jrqL4f0hAl+52g2u8E3RI=;
+	s=korg; t=1758569648;
+	bh=hFqzmN9+yCxmYhzYpOpJFD3WQOu7K1/m59G/J9whqFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwbyXGBWti9+Q1Et6VcfpWdB3P+7kKmpCWqQzVSZnlLAxBfKFngp5Onjpsn9v/hY0
-	 4LYTyZnWVAgKLzonUxrute5/RF//HrgqMIKjRNcGAa4YwzEIg1d2hZbxTzD5aeAAXk
-	 nwIqISui2bO97jDVAodt7VOKqvjTZ6ECNmu+Xhrg=
+	b=rBeCqmgtW+1MlseM/Vf4Ncibj5wXINBf+YyfOWgNRzF/GOcgCL6HM9hkVSGXrtIGk
+	 pWxmFQ0i3VoQeDwK1EqCu+mozUeD7vicLl3vnzHrCbheabcfoVjaUy5+qfViC4qa1U
+	 h19GL8dD0QBczRFlo0hfJb6a4O8nQnzNmRfA4omg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 02/70] ALSA: firewire-motu: drop EPOLLOUT from poll return values as write is not supported
-Date: Mon, 22 Sep 2025 21:29:02 +0200
-Message-ID: <20250922192404.529536508@linuxfoundation.org>
+Subject: [PATCH 6.6 03/70] wifi: mac80211: increase scan_ies_len for S1G
+Date: Mon, 22 Sep 2025 21:29:03 +0200
+Message-ID: <20250922192404.558718817@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -51,43 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit aea3493246c474bc917d124d6fb627663ab6bef0 ]
+[ Upstream commit 7e2f3213e85eba00acb4cfe6d71647892d63c3a1 ]
 
-The ALSA HwDep character device of the firewire-motu driver incorrectly
-returns EPOLLOUT in poll(2), even though the driver implements no operation
-for write(2). This misleads userspace applications to believe write() is
-allowed, potentially resulting in unnecessarily wakeups.
+Currently the S1G capability element is not taken into account
+for the scan_ies_len, which leads to a buffer length validation
+failure in ieee80211_prep_hw_scan() and subsequent WARN in
+__ieee80211_start_scan(). This prevents hw scanning from functioning.
+To fix ensure we accommodate for the S1G capability length.
 
-This issue dates back to the driver's initial code added by a commit
-71c3797779d3 ("ALSA: firewire-motu: add hwdep interface"), and persisted
-when POLLOUT was updated to EPOLLOUT by a commit a9a08845e9ac ('vfs: do
-bulk POLL* -> EPOLL* replacement("").').
-
-This commit fixes the bug.
-
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/20250829233749.366222-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20250826085437.3493-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/motu/motu-hwdep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/main.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
-index 88d1f4b56e4be..a220ac0c8eb83 100644
---- a/sound/firewire/motu/motu-hwdep.c
-+++ b/sound/firewire/motu/motu-hwdep.c
-@@ -111,7 +111,7 @@ static __poll_t hwdep_poll(struct snd_hwdep *hwdep, struct file *file,
- 		events = 0;
- 	spin_unlock_irq(&motu->lock);
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index 3a6fff98748b8..80b143bde93d6 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -965,7 +965,7 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 	int result, i;
+ 	enum nl80211_band band;
+ 	int channels, max_bitrates;
+-	bool supp_ht, supp_vht, supp_he, supp_eht;
++	bool supp_ht, supp_vht, supp_he, supp_eht, supp_s1g;
+ 	struct cfg80211_chan_def dflt_chandef = {};
  
--	return events | EPOLLOUT;
-+	return events;
- }
+ 	if (ieee80211_hw_check(hw, QUEUE_CONTROL) &&
+@@ -1081,6 +1081,7 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 	supp_vht = false;
+ 	supp_he = false;
+ 	supp_eht = false;
++	supp_s1g = false;
+ 	for (band = 0; band < NUM_NL80211_BANDS; band++) {
+ 		struct ieee80211_supported_band *sband;
  
- static int hwdep_get_info(struct snd_motu *motu, void __user *arg)
+@@ -1127,6 +1128,7 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 			max_bitrates = sband->n_bitrates;
+ 		supp_ht = supp_ht || sband->ht_cap.ht_supported;
+ 		supp_vht = supp_vht || sband->vht_cap.vht_supported;
++		supp_s1g = supp_s1g || sband->s1g_cap.s1g;
+ 
+ 		for (i = 0; i < sband->n_iftype_data; i++) {
+ 			const struct ieee80211_sband_iftype_data *iftd;
+@@ -1253,6 +1255,9 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
+ 		local->scan_ies_len +=
+ 			2 + sizeof(struct ieee80211_vht_cap);
+ 
++	if (supp_s1g)
++		local->scan_ies_len += 2 + sizeof(struct ieee80211_s1g_cap);
++
+ 	/*
+ 	 * HE cap element is variable in size - set len to allow max size */
+ 	if (supp_he) {
 -- 
 2.51.0
 
