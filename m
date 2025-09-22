@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E108F1F91E3;
-	Mon, 22 Sep 2025 19:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63107136351;
+	Mon, 22 Sep 2025 19:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570365; cv=none; b=M26vqhY5SGNzcQX9RRdv3fkLSjpFC2A606u4N7htiB5wFV5li5DT0K2PyDEChWy5ffqN7rYMVCQN302mxnALrcZ0MbvLeS8wuuu7hBTk61yui3kcL5tuoipMnX5zpZeim6cn6h5C3jlg/aK6BEIcx5itgVB+305p+47F+4TW30o=
+	t=1758570367; cv=none; b=nCU3JTwnwdNchszNxxQ0VMxuDcP0f6GhfYpUnuTxUIcEAWVrkBj8TvEv57BC2GfGNSynHYEBgkfUxvuK3hmFVa7WcJMET1EwEZ2qf8q3vNFtsQ4MYa3EiqlItlCvcrodgCu0o2ycsxcnk9iJ9DeTDulsaxs5XvaD9Y4isHtP5lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570365; c=relaxed/simple;
-	bh=dxiD2YU895bk+WP8WgFXQ4PAfyR/sarOkEj0rhq/I7w=;
+	s=arc-20240116; t=1758570367; c=relaxed/simple;
+	bh=qhh2n9+Ou5ylrj4q/dsKsEVHFSr37UyLRE6SM43DyAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJeOjembRyBtOZrh4cXApR5c1uvmPoTq6HzW85yjmDGqeQFQ39Ed0RjO6xCjWmCCmcGsxDLO5mar7ddwI8fVPp7R/g0zym+R1Mv+orL9KsD53J+HO9KAMy8qMX0awqhgQw1U78mamKoZG0u3KGi9qhzb48KtOAn2fnDKl4iprrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlhEutPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxCmxiAHOizc8HD3UOtibqfq8Vv/Gs5wFGpkOsojD+vqNtONbx5IJ4qs+2PvmC/8unGvAzRBVvjqYLFZnfuA8qkWKziFCLFaJ6SuVNxKPky+cOr7n3d/kXe7rx/jDup/58+9b7gQUjKimW6kFJQk3COnNel2foaSCt1gCJL6XCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywbB7Nyz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlhEutPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A87DC4CEF0;
-	Mon, 22 Sep 2025 19:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywbB7Nyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05B5C4CEF0;
+	Mon, 22 Sep 2025 19:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570364;
-	bh=dxiD2YU895bk+WP8WgFXQ4PAfyR/sarOkEj0rhq/I7w=;
+	s=korg; t=1758570367;
+	bh=qhh2n9+Ou5ylrj4q/dsKsEVHFSr37UyLRE6SM43DyAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NlhEutPpxPF9KeEDXJcgkdkTnQkEHgAMHZU+bm/mKdeKoIjLIZb6dwh+LMKE+N51T
-	 Xn5HBE8QlcY6gNZZLSQxQKB+/ebzspVoyfOPl5ZJNlgYVYifARRjMCAEcIAH7b83Ao
-	 Ia6xcsVSjN4Cl7yG/ujM0h4u+bKRH4NhRTrcmloM=
+	b=ywbB7Nyz/XoIL+VRxOkTwf6Yt3eowo65l1zZ9IBvUKBvRgOf2uT7VmnQ4eEFe/zgW
+	 u6RU1M/CvQmyleTBzRkUtPrxTrS4vDzOtD1qj1fHGtOyGhkWMbiLQ0kGNY6ppHz8ZQ
+	 JZJm9WIYP06ZGSF2N1nC6sqS+SbeXnafDUpVCX/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Qi Xi <xiqi2@huawei.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 120/149] drm: bridge: cdns-mhdp8546: Fix missing mutex unlock on error path
-Date: Mon, 22 Sep 2025 21:30:20 +0200
-Message-ID: <20250922192415.900134818@linuxfoundation.org>
+Subject: [PATCH 6.16 121/149] drm/xe: Fix a NULL vs IS_ERR() in xe_vm_add_compute_exec_queue()
+Date: Mon, 22 Sep 2025 21:30:21 +0200
+Message-ID: <20250922192415.927019629@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -53,41 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 288dac9fb6084330d968459c750c838fd06e10e6 ]
+[ Upstream commit cbc7f3b4f6ca19320e2eacf8fc1403d6f331ce14 ]
 
-Add missing mutex unlock before returning from the error path in
-cdns_mhdp_atomic_enable().
+The xe_preempt_fence_create() function returns error pointers.  It
+never returns NULL.  Update the error checking to match.
 
-Fixes: 935a92a1c400 ("drm: bridge: cdns-mhdp8546: Fix possible null pointer dereference")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250904034447.665427-1-xiqi2@huawei.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/aJTMBdX97cof_009@stanley.mountain
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 75cc23ffe5b422bc3cbd5cf0956b8b86e4b0e162)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_vm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index b431e7efd1f0d..dbef0ca1a22a3 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -1984,8 +1984,10 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
- 	mhdp_state = to_cdns_mhdp_bridge_state(new_state);
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index 84052b98002d1..92ce7374a79ce 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -240,8 +240,8 @@ int xe_vm_add_compute_exec_queue(struct xe_vm *vm, struct xe_exec_queue *q)
  
- 	mhdp_state->current_mode = drm_mode_duplicate(bridge->dev, mode);
--	if (!mhdp_state->current_mode)
--		return;
-+	if (!mhdp_state->current_mode) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
- 	drm_mode_set_name(mhdp_state->current_mode);
+ 	pfence = xe_preempt_fence_create(q, q->lr.context,
+ 					 ++q->lr.seqno);
+-	if (!pfence) {
+-		err = -ENOMEM;
++	if (IS_ERR(pfence)) {
++		err = PTR_ERR(pfence);
+ 		goto out_fini;
+ 	}
  
 -- 
 2.51.0
