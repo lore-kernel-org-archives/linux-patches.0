@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA362820D1;
-	Mon, 22 Sep 2025 19:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D1C285C92;
+	Mon, 22 Sep 2025 19:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570005; cv=none; b=UmQuWJfk1D9+F8d6u13OfBPW5o8ZaXPIBLmJjPSHWitpJ2Cj5AJD/xnHC0gmlu7le0W5srNNOgX09R0IPX0Hb/em78nwGPeXbWfg7BzOIMNoZNC/Gf/bVhqe9nRs4sETGMnoucVeNUCsh1IM62qbayuF9fV5MzTooS9A+yEw5f4=
+	t=1758570008; cv=none; b=dlUhjXXgxlv7qPHIaHW7Z7ueCzpVAaJkf+8sOrRr7YVb46/ytTBeNP9ZCArFvkvFJRLFDoXTetmQsd8DVZBL+N19x1JhQwv0pLObRskAEvNsWeA9nUGTV3h+i0NrT2y5kqBz6z4gt2nAP9rq74j32lPwD/8xDzT+9RhIigjV8N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570005; c=relaxed/simple;
-	bh=OV+NzmVSAT1uP6WSR89vyvHvrvwRRAYvh2XJXB6pGno=;
+	s=arc-20240116; t=1758570008; c=relaxed/simple;
+	bh=34xiGBIquLqfxd90j+p+6ADCk6Q+OAvg3C/WMqSqOQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=am4bYlfNVMlmtJEknwvhYcie1qEVaPLwr8ZvvJ74LlbwB46nf8/s8ghxab8xO6Zqc37Twu6tyKDbnTUkWvHoVQlUvsrHFNZVUNpSHQAENHDo9sLbQYDEYrF3jyQ1Jr5pNqWa0EhzRXHCWikqezM+T2Jg5TVKdiLCQzQTzHULLZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8TCuHs3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UROlmsBQbvGbsvU+3VaHvZWe+bgpqLkGHbMj612CDqW+hdAa8Vrf8nrppehY7m6gzkl7414wd5X+hDoXNahkuWTuoRzYwRSPoBsFweDS9cncPeHvd694DbQxV2U6PhqBei5/priy8hF4OAgBZdiqKyB2UUs8SiUeuWkmLsjMhtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2pFd1s/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8TCuHs3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585DCC4CEF0;
-	Mon, 22 Sep 2025 19:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pFd1s/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58D2C4CEF0;
+	Mon, 22 Sep 2025 19:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570005;
-	bh=OV+NzmVSAT1uP6WSR89vyvHvrvwRRAYvh2XJXB6pGno=;
+	s=korg; t=1758570008;
+	bh=34xiGBIquLqfxd90j+p+6ADCk6Q+OAvg3C/WMqSqOQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8TCuHs3wHWn4DtC5qdQ+1V6wJB21fC2mGXMuRPJ8HRSXkGynzlKHMb7qkXsBrsUB
-	 j38+OQUemnk71B/BTNEyJhC/zHwSOkFuOrBTZmVO+bhoChqJHfKtoTDT4Z3L/rs00j
-	 A3YdFpQhk08hWP48zyXfP+cBwNybvcyKmiDZuKvk=
+	b=2pFd1s/E+KEbLrRe0PFwIjisy0RqFqPMAGhQsBKY7P2uG7sxrYOFKy6ATPPe8GDQN
+	 RU0h7b4QeE/MGCHxtP1ooQqlrTD1RBjk8gIWp0wsrzo21BSyQbQ7fgAAKelPy39lKJ
+	 V5coTn0kRV3B809DmSCwOLoPUSLB9YDeuiyKhn7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandra <rahul@chandra.net>,
-	stable@kernel.org,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 086/105] platform/x86: asus-wmi: Re-add extra keys to ignore_key_wlan quirk
-Date: Mon, 22 Sep 2025 21:30:09 +0200
-Message-ID: <20250922192411.154472252@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 087/105] x86/bugs: Add SRSO_USER_KERNEL_NO support
+Date: Mon, 22 Sep 2025 21:30:10 +0200
+Message-ID: <20250922192411.177790312@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -46,46 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 225d1ee0f5ba3218d1814d36564fdb5f37b50474 upstream.
+commit 877818802c3e970f67ccb53012facc78bef5f97a upstream.
 
-It turns out that the dual screen models use 0x5E for attaching and
-detaching the keyboard instead of 0x5F. So, re-add the codes by
-reverting commit cf3940ac737d ("platform/x86: asus-wmi: Remove extra
-keys from ignore_key_wlan quirk"). For our future reference, add a
-comment next to 0x5E indicating that it is used for that purpose.
+If the machine has:
 
-Fixes: cf3940ac737d ("platform/x86: asus-wmi: Remove extra keys from ignore_key_wlan quirk")
-Reported-by: Rahul Chandra <rahul@chandra.net>
-Closes: https://lore.kernel.org/all/10020-68c90c80-d-4ac6c580@106290038/
-Cc: stable@kernel.org
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20250916072818.196462-1-lkml@antheas.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  CPUID Fn8000_0021_EAX[30] (SRSO_USER_KERNEL_NO) -- If this bit is 1,
+  it indicates the CPU is not subject to the SRSO vulnerability across
+  user/kernel boundaries.
+
+have it fall back to IBPB on VMEXIT only, in the case it is going to run
+VMs:
+
+  Speculative Return Stack Overflow: Mitigation: IBPB on VMEXIT only
+
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: https://lore.kernel.org/r/20241202120416.6054-2-bp@kernel.org
+[ Harshit: Conflicts resolved as this commit: 7c62c442b6eb ("x86/vmscape:
+  Enumerate VMSCAPE bug") has been applied already to 6.12.y ]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/include/asm/cpufeatures.h |    1 +
+ arch/x86/kernel/cpu/bugs.c         |    4 ++++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -669,6 +669,8 @@ static void asus_nb_wmi_key_filter(struc
- 		if (atkbd_reports_vol_keys)
- 			*code = ASUS_WMI_KEY_IGNORE;
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -464,6 +464,7 @@
+ #define X86_FEATURE_SBPB		(20*32+27) /* Selective Branch Prediction Barrier */
+ #define X86_FEATURE_IBPB_BRTYPE		(20*32+28) /* MSR_PRED_CMD[IBPB] flushes all branch type predictions */
+ #define X86_FEATURE_SRSO_NO		(20*32+29) /* CPU is not affected by SRSO */
++#define X86_FEATURE_SRSO_USER_KERNEL_NO	(20*32+30) /* CPU is not affected by SRSO across user/kernel boundaries */
+ 
+ /*
+  * Extended auxiliary flags: Linux defined - for features scattered in various
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -2810,6 +2810,9 @@ static void __init srso_select_mitigatio
  		break;
-+	case 0x5D: /* Wireless console Toggle */
-+	case 0x5E: /* Wireless console Enable / Keyboard Attach, Detach */
- 	case 0x5F: /* Wireless console Disable / Special Key */
- 		if (quirks->key_wlan_event)
- 			*code = quirks->key_wlan_event;
+ 
+ 	case SRSO_CMD_SAFE_RET:
++		if (boot_cpu_has(X86_FEATURE_SRSO_USER_KERNEL_NO))
++			goto ibpb_on_vmexit;
++
+ 		if (IS_ENABLED(CONFIG_MITIGATION_SRSO)) {
+ 			/*
+ 			 * Enable the return thunk for generated code
+@@ -2861,6 +2864,7 @@ static void __init srso_select_mitigatio
+ 		}
+ 		break;
+ 
++ibpb_on_vmexit:
+ 	case SRSO_CMD_IBPB_ON_VMEXIT:
+ 		if (IS_ENABLED(CONFIG_MITIGATION_IBPB_ENTRY)) {
+ 			if (has_microcode) {
 
 
