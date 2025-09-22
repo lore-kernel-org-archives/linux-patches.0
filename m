@@ -1,38 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347242F0C5C;
-	Mon, 22 Sep 2025 19:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD722F0C5C;
+	Mon, 22 Sep 2025 19:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570213; cv=none; b=G8lg5PvaDuPFp6nvnSrMTovFMeMBrdj3OwUf9//0nK0gpsmfpOeAiW/ylKKxjrQB7N0cDcpUorxPOEVMhQLK8AXiXfLhQ/dgqek0YJh5GtrJoTBsz4MNgJlNYwGOl87ARuDn9MtoQICxjNUB9/0YMiplQrvi9+7Vvc1EZKj+wqg=
+	t=1758570215; cv=none; b=UNgsu+Ku6sSO/nxwXUfKS+mvZ5q0W76glkiTylnSdIA1d+lDtDPrtzFcAv0HFlsrU32iHKKuCHhgkMNRZnGNEK2xgcT9svrTRQsCeZSIuEt0nRXuA20Nh7Wu2mHf8FlmxHSUK4R5pckKNNAhBSe/uYiIbyT8TNRlkgurpF3sUjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570213; c=relaxed/simple;
-	bh=jivfD8tEK48UZWPfq94v42/n3FoVQaF5BqsrugQvuCM=;
+	s=arc-20240116; t=1758570215; c=relaxed/simple;
+	bh=sFo2O+TdVdk5QN1nPGNL8qMzh2Gv498PvX9e8zvb8x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y/VwjE9njDINaW9NCyw2AUSSub/rB20zdCscKCUIT7b73I4knGyeeN5zD1U8QIh2Lhm7wA/NSngMbRDc+5+sJIaCNmnwfPJAJ9gy/1Ex900YmRuKtRabk7vnd1iaaZYIVtKcMEZks//HjYQy3GZQcywVzNZ4XwY5b7Ut4Cu555U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rskKq3wd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMAsu7HofLUzLr7VB2g6x0Va5tl30fCYdp2gTSrbWR8q4lI9ipwKd0MzaJrh+xSnHbgO5wz1IO4sRrlp7afNcM875+o/HTh3hI2I9khEwsU2KVp2vcsh6SRCLrd/C/fBlnRp3NwcVn7mqzyDSy2K7WiMtSr3jhe8Stalf+Xn6lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3i7T6qt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rskKq3wd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18E0C4CEF0;
-	Mon, 22 Sep 2025 19:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3i7T6qt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B996C4CEF0;
+	Mon, 22 Sep 2025 19:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570213;
-	bh=jivfD8tEK48UZWPfq94v42/n3FoVQaF5BqsrugQvuCM=;
+	s=korg; t=1758570215;
+	bh=sFo2O+TdVdk5QN1nPGNL8qMzh2Gv498PvX9e8zvb8x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rskKq3wdGySozUnIYJeboA0vk6UeDCHqxRzOypRfdcHcZcyxzzy9DOLlRkvEnOUF1
-	 vl86P1aZPJWvPMX0rrFdmTcTMMWuX789zz2WyyUpEo41pBcsH2UAYsyWM+eDWeLsDF
-	 zVi+UXK+BqYUJ+e0EfddWP7QsiCxVYnrt/ey1xAE=
+	b=B3i7T6qt0C6bxuwQv2W45t5f/fVw1RpRCDObLCBCrksl4PVoBaDulcKuUfEeYWla7
+	 DiytLmMPYJ7zoD3jQP+yet/sJoSX4TbxprAxjoYbPIWb/BzcFdKyDYkiP8X4l0QNUJ
+	 wiJB/kuUrXbXzeavzvlV9KjuswGlobwW5bVfhbQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.16 054/149] Revert "sched_ext: Skip per-CPU tasks in scx_bpf_reenqueue_local()"
-Date: Mon, 22 Sep 2025 21:29:14 +0200
-Message-ID: <20250922192414.221600309@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Keir Fraser <keirf@google.com>,
+	Konstantin Khlebnikov <koct9i@gmail.com>,
+	Li Zhe <lizhe.67@bytedance.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Peter Xu <peterx@redhat.com>,
+	Rik van Riel <riel@surriel.com>,
+	Shivank Garg <shivankg@amd.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wei Xu <weixugc@google.com>,
+	Will Deacon <will@kernel.org>,
+	yangge <yangge1116@126.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.16 063/149] mm: folio_may_be_lru_cached() unless folio_test_large()
+Date: Mon, 22 Sep 2025 21:29:23 +0200
+Message-ID: <20250922192414.472294077@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -45,106 +65,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit 0b47b6c3543efd65f2e620e359b05f4938314fbd upstream.
+commit 2da6de30e60dd9bb14600eff1cc99df2fa2ddae3 upstream.
 
-scx_bpf_reenqueue_local() can be called from ops.cpu_release() when a
-CPU is taken by a higher scheduling class to give tasks queued to the
-CPU's local DSQ a chance to be migrated somewhere else, instead of
-waiting indefinitely for that CPU to become available again.
+mm/swap.c and mm/mlock.c agree to drain any per-CPU batch as soon as a
+large folio is added: so collect_longterm_unpinnable_folios() just wastes
+effort when calling lru_add_drain[_all]() on a large folio.
 
-In doing so, we decided to skip migration-disabled tasks, under the
-assumption that they cannot be migrated anyway.
+But although there is good reason not to batch up PMD-sized folios, we
+might well benefit from batching a small number of low-order mTHPs (though
+unclear how that "small number" limitation will be implemented).
 
-However, when a higher scheduling class preempts a CPU, the running task
-is always inserted at the head of the local DSQ as a migration-disabled
-task. This means it is always skipped by scx_bpf_reenqueue_local(), and
-ends up being confined to the same CPU even if that CPU is heavily
-contended by other higher scheduling class tasks.
+So ask if folio_may_be_lru_cached() rather than !folio_test_large(), to
+insulate those particular checks from future change.  Name preferred to
+"folio_is_batchable" because large folios can well be put on a batch: it's
+just the per-CPU LRU caches, drained much later, which need care.
 
-As an example, let's consider the following scenario:
+Marked for stable, to counter the increase in lru_add_drain_all()s from
+"mm/gup: check ref_count instead of lru before migration".
 
- $ schedtool -a 0,1, -e yes > /dev/null
- $ sudo schedtool -F -p 99 -a 0, -e \
-   stress-ng -c 1 --cpu-load 99 --cpu-load-slice 1000
-
-The first task (SCHED_EXT) can run on CPU0 or CPU1. The second task
-(SCHED_FIFO) is pinned to CPU0 and consumes ~99% of it. If the SCHED_EXT
-task initially runs on CPU0, it will remain there because it always sees
-CPU0 as "idle" in the short gaps left by the RT task, resulting in ~1%
-utilization while CPU1 stays idle:
-
-    0[||||||||||||||||||||||100.0%]   8[                        0.0%]
-    1[                        0.0%]   9[                        0.0%]
-    2[                        0.0%]  10[                        0.0%]
-    3[                        0.0%]  11[                        0.0%]
-    4[                        0.0%]  12[                        0.0%]
-    5[                        0.0%]  13[                        0.0%]
-    6[                        0.0%]  14[                        0.0%]
-    7[                        0.0%]  15[                        0.0%]
-  PID USER       PRI  NI  S CPU  CPU%▽MEM%   TIME+  Command
- 1067 root        RT   0  R   0  99.0  0.2  0:31.16 stress-ng-cpu [run]
-  975 arighi      20   0  R   0   1.0  0.0  0:26.32 yes
-
-By allowing scx_bpf_reenqueue_local() to re-enqueue migration-disabled
-tasks, the scheduler can choose to migrate them to other CPUs (CPU1 in
-this case) via ops.enqueue(), leading to better CPU utilization:
-
-    0[||||||||||||||||||||||100.0%]   8[                        0.0%]
-    1[||||||||||||||||||||||100.0%]   9[                        0.0%]
-    2[                        0.0%]  10[                        0.0%]
-    3[                        0.0%]  11[                        0.0%]
-    4[                        0.0%]  12[                        0.0%]
-    5[                        0.0%]  13[                        0.0%]
-    6[                        0.0%]  14[                        0.0%]
-    7[                        0.0%]  15[                        0.0%]
-  PID USER       PRI  NI  S CPU  CPU%▽MEM%   TIME+  Command
-  577 root        RT   0  R   0 100.0  0.2  0:23.17 stress-ng-cpu [run]
-  555 arighi      20   0  R   1 100.0  0.0  0:28.67 yes
-
-It's debatable whether per-CPU tasks should be re-enqueued as well, but
-doing so is probably safer: the scheduler can recognize re-enqueued
-tasks through the %SCX_ENQ_REENQ flag, reassess their placement, and
-either put them back at the head of the local DSQ or let another task
-attempt to take the CPU.
-
-This also prevents giving per-CPU tasks an implicit priority boost,
-which would otherwise make them more likely to reclaim CPUs preempted by
-higher scheduling classes.
-
-Fixes: 97e13ecb02668 ("sched_ext: Skip per-CPU tasks in scx_bpf_reenqueue_local()")
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Acked-by: Changwoo Min <changwoo@igalia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://lkml.kernel.org/r/57d2eaf8-3607-f318-e0c5-be02dce61ad0@google.com
+Fixes: 9a4e9f3b2d73 ("mm: update get_user_pages_longterm to migrate pages allocated from CMA region")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Keir Fraser <keirf@google.com>
+Cc: Konstantin Khlebnikov <koct9i@gmail.com>
+Cc: Li Zhe <lizhe.67@bytedance.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shivank Garg <shivankg@amd.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: yangge <yangge1116@126.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/linux/swap.h |   10 ++++++++++
+ mm/gup.c             |    4 ++--
+ mm/mlock.c           |    6 +++---
+ mm/swap.c            |    2 +-
+ 4 files changed, 16 insertions(+), 6 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6794,12 +6794,8 @@ __bpf_kfunc u32 scx_bpf_reenqueue_local(
- 		 * CPUs disagree, they use %ENQUEUE_RESTORE which is bypassed to
- 		 * the current local DSQ for running tasks and thus are not
- 		 * visible to the BPF scheduler.
--		 *
--		 * Also skip re-enqueueing tasks that can only run on this
--		 * CPU, as they would just be re-added to the same local
--		 * DSQ without any benefit.
- 		 */
--		if (p->migration_pending || is_migration_disabled(p) || p->nr_cpus_allowed == 1)
-+		if (p->migration_pending)
- 			continue;
+--- a/include/linux/swap.h
++++ b/include/linux/swap.h
+@@ -384,6 +384,16 @@ void folio_add_lru_vma(struct folio *, s
+ void mark_page_accessed(struct page *);
+ void folio_mark_accessed(struct folio *);
  
- 		dispatch_dequeue(rq, p);
++static inline bool folio_may_be_lru_cached(struct folio *folio)
++{
++	/*
++	 * Holding PMD-sized folios in per-CPU LRU cache unbalances accounting.
++	 * Holding small numbers of low-order mTHP folios in per-CPU LRU cache
++	 * will be sensible, but nobody has implemented and tested that yet.
++	 */
++	return !folio_test_large(folio);
++}
++
+ extern atomic_t lru_disable_count;
+ 
+ static inline bool lru_cache_disabled(void)
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2353,13 +2353,13 @@ static unsigned long collect_longterm_un
+ 			continue;
+ 		}
+ 
+-		if (drained == 0 &&
++		if (drained == 0 && folio_may_be_lru_cached(folio) &&
+ 				folio_ref_count(folio) !=
+ 				folio_expected_ref_count(folio) + 1) {
+ 			lru_add_drain();
+ 			drained = 1;
+ 		}
+-		if (drained == 1 &&
++		if (drained == 1 && folio_may_be_lru_cached(folio) &&
+ 				folio_ref_count(folio) !=
+ 				folio_expected_ref_count(folio) + 1) {
+ 			lru_add_drain_all();
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -255,7 +255,7 @@ void mlock_folio(struct folio *folio)
+ 
+ 	folio_get(folio);
+ 	if (!folio_batch_add(fbatch, mlock_lru(folio)) ||
+-	    folio_test_large(folio) || lru_cache_disabled())
++	    !folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		mlock_folio_batch(fbatch);
+ 	local_unlock(&mlock_fbatch.lock);
+ }
+@@ -278,7 +278,7 @@ void mlock_new_folio(struct folio *folio
+ 
+ 	folio_get(folio);
+ 	if (!folio_batch_add(fbatch, mlock_new(folio)) ||
+-	    folio_test_large(folio) || lru_cache_disabled())
++	    !folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		mlock_folio_batch(fbatch);
+ 	local_unlock(&mlock_fbatch.lock);
+ }
+@@ -299,7 +299,7 @@ void munlock_folio(struct folio *folio)
+ 	 */
+ 	folio_get(folio);
+ 	if (!folio_batch_add(fbatch, folio) ||
+-	    folio_test_large(folio) || lru_cache_disabled())
++	    !folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		mlock_folio_batch(fbatch);
+ 	local_unlock(&mlock_fbatch.lock);
+ }
+--- a/mm/swap.c
++++ b/mm/swap.c
+@@ -192,7 +192,7 @@ static void __folio_batch_add_and_move(s
+ 		local_lock(&cpu_fbatches.lock);
+ 
+ 	if (!folio_batch_add(this_cpu_ptr(fbatch), folio) ||
+-			folio_test_large(folio) || lru_cache_disabled())
++			!folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		folio_batch_move_lru(this_cpu_ptr(fbatch), move_fn);
+ 
+ 	if (disable_irq)
 
 
