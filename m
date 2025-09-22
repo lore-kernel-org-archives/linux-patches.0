@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D8C25F780;
-	Mon, 22 Sep 2025 19:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42732F0C5F;
+	Mon, 22 Sep 2025 19:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569862; cv=none; b=IZ3tr6+fI3DNBwCjcGhm4EgrqnqaI3x6clsn2pIWH/hU9GXiDSSZN/+b8B+h2BMlQhbStLhIz4Rx/kIuc4kG5gFBjQSsxkAyYZyDQysk4WQ9DOot5YcwBm6WECAHXLVHYmI1eSTHM+hMR094X0LhUHe8fnGKuXPQrv1tpYT9U6M=
+	t=1758569864; cv=none; b=GxXWD8DCfPBFSIosL0PiF/ZLJ8BqtrXYc4ovs0gPXWNsI163stwhMQSJJ/nPywp6foVr4tpCk3ANq4PrBiGrpuxAaS4bYqwYc3sOOj622dacBPI+q1Fa1KjAKUb7/GDO+cvfCPzyxw2neeSUR92FGifD7Piy5MWsLaeTxY6PIlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569862; c=relaxed/simple;
-	bh=0d16DfxHNVv9CqH1SHLM5zkuCpS9758pKV5Go8pMbt0=;
+	s=arc-20240116; t=1758569864; c=relaxed/simple;
+	bh=AZ4mRvYvZdYVqBsX7uHUsg/8+mbXlOQRozTVHEnpBd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eR4059Hf90rO50cUTwhKlV0UNEjyjfKoxpl4wVxd8IVzWMFIw8xJEfpRYXgrbdkc6P13ombK/c6A5zg0sRw+2p2Iyd3mBpCI9qDSGyAKKhLoiSb1qo4AVPo8isTrZKBrsfdNqxQpCZngSMDTh+KAv5eI0mTRUzp3RPumeTERFzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liGXv4iF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihDU+Sc/X3/1/B0Z1COwfXT2Ydhd7INcN+9M+7DgQjG8Z2NHVMYFeGkACk55FJQ5ad3Wo6GGtRQ3j3QpFfvuzuo5aHxk/88JZZtQ+k7gWLMXNVsR7dYNQt+8Jo252zvMWG19YlalUQHvBhr70aWJnjfdUZLrM82DJ4YS9KBVzmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT/lUQ7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liGXv4iF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11ECC113D0;
-	Mon, 22 Sep 2025 19:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT/lUQ7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349D4C4CEF0;
+	Mon, 22 Sep 2025 19:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569862;
-	bh=0d16DfxHNVv9CqH1SHLM5zkuCpS9758pKV5Go8pMbt0=;
+	s=korg; t=1758569864;
+	bh=AZ4mRvYvZdYVqBsX7uHUsg/8+mbXlOQRozTVHEnpBd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liGXv4iFeSkejJt2cGguuLnK5glchp2Yx+pPfRbHRPHJ4r+ClH4z2LueZKFuWs4Qp
-	 nZloaeaf+PUl4QjkTtt58NFqc1aOTOHxCtkKmAkaFBAsnr9OHAkI7nbLB5AVXM/BRj
-	 AqEOJ9kaBtNSr6hKhe3E7SkYMZxusKGsRW18Qw7Q=
+	b=AT/lUQ7bc6ysLTxh/cqQPF6JNT7N1U7CsxiicrufwVU3os7ecxpYpzsNc7KtIZFTP
+	 kMWfUcNNWdx9GAtaywFrKL6DJ9+Of684w/j1mSLfVyALG/gaBlZgl6ECeEG8/Vl1Gl
+	 0V5xNQygCiXjDpq0e5bKK4u6guchwioOhDTB95As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/105] mptcp: tfo: record deny join id0 info
-Date: Mon, 22 Sep 2025 21:29:00 +0200
-Message-ID: <20250922192409.361545037@linuxfoundation.org>
+Subject: [PATCH 6.12 008/105] btrfs: fix invalid extref key setup when replaying dentry
+Date: Mon, 22 Sep 2025 21:28:51 +0200
+Message-ID: <20250922192409.121629866@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 92da495cb65719583aa06bc946aeb18a10e1e6e2 ]
+[ Upstream commit b62fd63ade7cb573b114972ef8f9fa505be8d74a ]
 
-When TFO is used, the check to see if the 'C' flag (deny join id0) was
-set was bypassed.
+The offset for an extref item's key is not the object ID of the parent
+dir, otherwise we would not need the extref item and would use plain ref
+items. Instead the offset is the result of a hash computation that uses
+the object ID of the parent dir and the name associated to the entry.
+So fix this by setting the key offset at replay_one_name() to be the
+result of calling btrfs_extref_hash().
 
-This flag can be set when TFO is used, so the check should also be done
-when TFO is used.
-
-Note that the set_fully_established label is also used when a 4th ACK is
-received. In this case, deny_join_id0 will not be set.
-
-Fixes: dfc8d0603033 ("mptcp: implement delayed seq generation for passive fastopen")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-4-40171884ade8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 725af92a6251 ("btrfs: Open-code name_in_log_ref in replay_one_name")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/tree-log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index 7d4718a57bdcc..479a3bfa87aa2 100644
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -985,13 +985,13 @@ static bool check_fully_established(struct mptcp_sock *msk, struct sock *ssk,
- 		return false;
- 	}
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index f917fdae7e672..0022ad003791f 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1946,7 +1946,7 @@ static noinline int replay_one_name(struct btrfs_trans_handle *trans,
  
--	if (mp_opt->deny_join_id0)
--		WRITE_ONCE(msk->pm.remote_deny_join_id0, true);
--
- 	if (unlikely(!READ_ONCE(msk->pm.server_side)))
- 		pr_warn_once("bogus mpc option on established client sk");
- 
- set_fully_established:
-+	if (mp_opt->deny_join_id0)
-+		WRITE_ONCE(msk->pm.remote_deny_join_id0, true);
-+
- 	mptcp_data_lock((struct sock *)msk);
- 	__mptcp_subflow_fully_established(msk, subflow, mp_opt);
- 	mptcp_data_unlock((struct sock *)msk);
+ 	search_key.objectid = log_key.objectid;
+ 	search_key.type = BTRFS_INODE_EXTREF_KEY;
+-	search_key.offset = key->objectid;
++	search_key.offset = btrfs_extref_hash(key->objectid, name.name, name.len);
+ 	ret = backref_in_log(root->log_root, &search_key, key->objectid, &name);
+ 	if (ret < 0) {
+ 		goto out;
 -- 
 2.51.0
 
