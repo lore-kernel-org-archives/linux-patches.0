@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEE92517AC;
-	Mon, 22 Sep 2025 19:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3658C253B5C;
+	Mon, 22 Sep 2025 19:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570339; cv=none; b=oszWLFbzz7VrJP6uiaE+P2PSBTtNEfsN4WjoYSkwD4kfo7ujeM8m5lvQKGf0kWoQTjIEJQxVDEaUBazOJw3siOgOSAkVg92l0Wvi8Z2fE6luRUJ5kR2fTg8P3XDG6xe5zKMLbsk8G7SgUavj6RSt+S2uGBzhfulTddnDmi3nssM=
+	t=1758570342; cv=none; b=cKXAgKeJmBysgCoGv1/LSAji1GwvAh+wxz8QcTS9OZdPcTpNDfGaOoyRQDO6Qkkxjq0pcesJHxHUnQWP9ZK31eCsH1CarOMJlWmoNEdVxeTJB3l7LlnZfCn9FS7iOCztkR+E+iOHTaCjQ3YyeeK5NzBCtHKp18IW4R0WkH4UL7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570339; c=relaxed/simple;
-	bh=EsU0fYavsBxf9grkx85QV+Cfl2v5CfOp/DFEfFAGJQs=;
+	s=arc-20240116; t=1758570342; c=relaxed/simple;
+	bh=hWjWNrDCZ2LED/W/8YhOmDuT7LOJ5LZ5Hyp9uHS722Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptSOWOrrivwhFSJ4FNFXI83xSDwJb44TIAr+Lk1GGogVvg8nR8pNgvaqEFA5eXSnVGhGN24reZwyDCkSGUNNXF5pFal2p0rXxvDpn60xMj/Si4701XJqAtSyLX0uhdvFHtTZVRPrlY+7MZMnciNxb66hxBVQTNcnt18wnGWnh54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRWY8Cq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tL9j5d7CWI3q9sJpgx2H3gCaAWGsKPC6PKsKW4xzXFr2ylrUUG3uMppeCpgrxo1ncgCH/ugvxxdSWkOhqPvtLK5B1RI2i7VwzJOtYn1ZS7lgTm8YR9rJQjSQ6L35u/ShosL+sC64IiViOt8yren8Xys9nML+nGWd9tBbDcPHoGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4Xw/RLs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRWY8Cq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499ECC4CEF0;
-	Mon, 22 Sep 2025 19:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4Xw/RLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD4CC4CEF0;
+	Mon, 22 Sep 2025 19:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570339;
-	bh=EsU0fYavsBxf9grkx85QV+Cfl2v5CfOp/DFEfFAGJQs=;
+	s=korg; t=1758570342;
+	bh=hWjWNrDCZ2LED/W/8YhOmDuT7LOJ5LZ5Hyp9uHS722Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRWY8Cq4KmgRR/MHLamJhCnoRhHdy7a7D85Lv7Ak1bcHwu8zi5hg2P7sPyTqR9AZJ
-	 csHnlGr5YSVIoaROjTNQ4xq0S3h6hQuxrcBWsWpTssZRXcOo6LQGJyWcJIjZhQmPm+
-	 IO1VbhPKRyqymTYKiFRZzwX2eaH6WbiLxS5HOubk=
+	b=t4Xw/RLs2HESuaja9HwdjcvjJX1VNvuuAhPqF3jwHvtwUxv/dU8xl7gs0Ifz9KhhK
+	 xz+E5Tu6HSg4goBNIi6kcW5pZxJMFhGCOn4OBsqGt83vZjXxoCfxtU2esqcQULn9hB
+	 3DpUQJxUggUABg9s9sJEL5BqfuMZOaE3qCU0TAIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Fengnan Chang <changfengnan@bytedance.com>,
+	Benedek Thaler <thaler@thaler.hu>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.16 098/149] io_uring/io-wq: fix `max_workers` breakage and `nr_workers` underflow
-Date: Mon, 22 Sep 2025 21:29:58 +0200
-Message-ID: <20250922192415.354953654@linuxfoundation.org>
+Subject: [PATCH 6.16 099/149] io_uring: include dying ring in task_work "should cancel" state
+Date: Mon, 22 Sep 2025 21:29:59 +0200
+Message-ID: <20250922192415.381281604@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -51,63 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit cd4ea81be3eb94047ad023c631afd9bd6c295400 upstream.
+commit 3539b1467e94336d5854ebf976d9627bfb65d6c3 upstream.
 
-Commit 88e6c42e40de ("io_uring/io-wq: add check free worker before
-create new worker") reused the variable `do_create` for something
-else, abusing it for the free worker check.
+When running task_work for an exiting task, rather than perform the
+issue retry attempt, the task_work is canceled. However, this isn't
+done for a ring that has been closed. This can lead to requests being
+successfully completed post the ring being closed, which is somewhat
+confusing and surprising to an application.
 
-This caused the value to effectively always be `true` at the time
-`nr_workers < max_workers` was checked, but it should really be
-`false`.  This means the `max_workers` setting was ignored, and worse:
-if the limit had already been reached, incrementing `nr_workers` was
-skipped even though another worker would be created.
+Rather than just check the task exit state, also include the ring
+ref state in deciding whether or not to terminate a given request when
+run from task_work.
 
-When later lots of workers exit, the `nr_workers` field could easily
-underflow, making the problem worse because more and more workers
-would be created without incrementing `nr_workers`.
-
-The simple solution is to use a different variable for the free worker
-check instead of using one variable for two different things.
-
-Cc: stable@vger.kernel.org
-Fixes: 88e6c42e40de ("io_uring/io-wq: add check free worker before create new worker")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Fengnan Chang <changfengnan@bytedance.com>
+Cc: stable@vger.kernel.org # 6.1+
+Link: https://github.com/axboe/liburing/discussions/1459
+Reported-by: Benedek Thaler <thaler@thaler.hu>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c  |    6 ++++--
+ io_uring/io_uring.h  |    4 ++--
+ io_uring/poll.c      |    2 +-
+ io_uring/timeout.c   |    2 +-
+ io_uring/uring_cmd.c |    2 +-
+ 5 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 17dfaa0395c4..1d03b2fc4b25 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -352,16 +352,16 @@ static void create_worker_cb(struct callback_head *cb)
- 	struct io_wq *wq;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1371,8 +1371,10 @@ static void io_req_task_cancel(struct io
  
- 	struct io_wq_acct *acct;
--	bool do_create = false;
-+	bool activated_free_worker, do_create = false;
+ void io_req_task_submit(struct io_kiocb *req, io_tw_token_t tw)
+ {
+-	io_tw_lock(req->ctx, tw);
+-	if (unlikely(io_should_terminate_tw()))
++	struct io_ring_ctx *ctx = req->ctx;
++
++	io_tw_lock(ctx, tw);
++	if (unlikely(io_should_terminate_tw(ctx)))
+ 		io_req_defer_failed(req, -EFAULT);
+ 	else if (req->flags & REQ_F_FORCE_ASYNC)
+ 		io_queue_iowq(req);
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -470,9 +470,9 @@ static inline bool io_allowed_run_tw(str
+  * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
+  *    our fallback task_work.
+  */
+-static inline bool io_should_terminate_tw(void)
++static inline bool io_should_terminate_tw(struct io_ring_ctx *ctx)
+ {
+-	return current->flags & (PF_KTHREAD | PF_EXITING);
++	return (current->flags & (PF_KTHREAD | PF_EXITING)) || percpu_ref_is_dying(&ctx->refs);
+ }
  
- 	worker = container_of(cb, struct io_worker, create_work);
- 	wq = worker->wq;
- 	acct = worker->acct;
+ static inline void io_req_queue_tw_complete(struct io_kiocb *req, s32 res)
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -224,7 +224,7 @@ static int io_poll_check_events(struct i
+ {
+ 	int v;
  
- 	rcu_read_lock();
--	do_create = !io_acct_activate_free_worker(acct);
-+	activated_free_worker = io_acct_activate_free_worker(acct);
- 	rcu_read_unlock();
--	if (!do_create)
-+	if (activated_free_worker)
- 		goto no_need_create;
+-	if (unlikely(io_should_terminate_tw()))
++	if (unlikely(io_should_terminate_tw(req->ctx)))
+ 		return -ECANCELED;
  
- 	raw_spin_lock(&acct->workers_lock);
--- 
-2.51.0
-
+ 	do {
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -324,7 +324,7 @@ static void io_req_task_link_timeout(str
+ 	int ret;
+ 
+ 	if (prev) {
+-		if (!io_should_terminate_tw()) {
++		if (!io_should_terminate_tw(req->ctx)) {
+ 			struct io_cancel_data cd = {
+ 				.ctx		= req->ctx,
+ 				.data		= prev->cqe.user_data,
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -123,7 +123,7 @@ static void io_uring_cmd_work(struct io_
+ 	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
+ 	unsigned int flags = IO_URING_F_COMPLETE_DEFER;
+ 
+-	if (io_should_terminate_tw())
++	if (io_should_terminate_tw(req->ctx))
+ 		flags |= IO_URING_F_TASK_DEAD;
+ 
+ 	/* task_work executor checks the deffered list completion */
 
 
