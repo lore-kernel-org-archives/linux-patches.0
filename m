@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF6E1F91E3;
-	Mon, 22 Sep 2025 19:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482251F91E3;
+	Mon, 22 Sep 2025 19:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570344; cv=none; b=Ag3itzeidVFydnRKOqh6egMHQNYGLY/tQciVc63EvLq0bSFK+ht+coUmGVLBND1kelpvNfPFoFpx/ztivJimHOpuLoJQPROfOpMtFF4KgtQKLbCRswWX83FkBO/jLVs8Ssu7VYPV3yPSgxhRSmgc1ykXltw9MMA8BNZS6zYI1qw=
+	t=1758570347; cv=none; b=ZOwLqxl88EdFvn2ilpu2wvP/6LhPD3kT/LIScmSnQvZtmlDz1IXuiDUHB2tAL/UmG8bMkI4OkPu/dYFMYV1gcb6IbvK0pUvR9y+BkFB0APqQ3WrSysFQHCDblCU5WNcp5or9ExCqLVScwxDIb7DJKDwXS6xqB5ZetqHagRGZlxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570344; c=relaxed/simple;
-	bh=CksHH4xfdKQSip6tdqInQfR8xg4Iu9gHHZT1U67Nxas=;
+	s=arc-20240116; t=1758570347; c=relaxed/simple;
+	bh=7NEpnA/f7cM1HUEQQFJJAIHWT0/v6Ec0BC+XeROY7K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXsQIohpa5UKTjpQyfaCuz3vKdWI8rXzJJ+NiCu3cl+QXgqKqz6t3/rmSOBiCh+l+bwlTbpYFO4xMR94PgIiFf7dnKt4056zK7jKzTqWRv5LmMiNtwY5Zl8Usnalx+kLssZLR2NRXZorhH73q0sCVO7v6+7zEE/y8X/aiQrk7Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1ny3fr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=avfNq/hJ/UyfSoDB4UMrhtLzNUw6RW4/Hjcx77WjqBeJ4yp5lFnToFvLRcoC/V93xir92WSF2mImhmUpISZZC0qK3t+vFrxtwcfFzsMQ9Ja1hz/1EeulnzhaZRVxBTVG5gkN2TXV+cjVT22TQQPxO26waxrZVbIPyH8yMp96zD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmN6SXUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1ny3fr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576CAC4CEF0;
-	Mon, 22 Sep 2025 19:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmN6SXUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B8CC4CEF0;
+	Mon, 22 Sep 2025 19:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570344;
-	bh=CksHH4xfdKQSip6tdqInQfR8xg4Iu9gHHZT1U67Nxas=;
+	s=korg; t=1758570347;
+	bh=7NEpnA/f7cM1HUEQQFJJAIHWT0/v6Ec0BC+XeROY7K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1ny3fr2tQ3hDxa0k1cK8RnnJsRdHfuXFaciXJqndMCIT7ShfYiJQ3J3rrAty4MVB
-	 JpbeX6uJ1N6vm1yoZjoCZE9CaBme1yo5j3Aw4t58ecoHNwCN7fcw3DW4EcN4EKIuOS
-	 Y6grX/2YxR/bZgwbBJz8XsB8IVBQhSVSo4y05G94=
+	b=xmN6SXUfY6E82pBZo2YEFy3tb52RmFxFUkVqUJMdQMqqAIM7erN6yL8mvu07TC3kc
+	 Rtt6E2+rlLP8hpWROHyVL6AADBxmZbyByklNB4bDNTK4afQ2Uif+C4+TifUji6QrHj
+	 PjT/DMcbt/IYkpCud25r71/Fca0CMDlX0VdnaVTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?S=C3=A9bastien=20Szymanski?= <sebastien.szymanski@armadeus.com>,
 	Hans de Goede <hansg@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.16 100/149] net: rfkill: gpio: Fix crash due to dereferencering uninitialized pointer
-Date: Mon, 22 Sep 2025 21:30:00 +0200
-Message-ID: <20250922192415.409509290@linuxfoundation.org>
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Calvin Owens <calvin@wbinvd.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.16 101/149] gpiolib: acpi: initialize acpi_gpio_info struct
+Date: Mon, 22 Sep 2025 21:30:01 +0200
+Message-ID: <20250922192415.434516925@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -45,62 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
 
-commit b6f56a44e4c1014b08859dcf04ed246500e310e5 upstream.
+commit 19c839a98c731169f06d32e7c9e00c78a0086ebe upstream.
 
-Since commit 7d5e9737efda ("net: rfkill: gpio: get the name and type from
-device property") rfkill_find_type() gets called with the possibly
-uninitialized "const char *type_name;" local variable.
+Since commit 7c010d463372 ("gpiolib: acpi: Make sure we fill struct
+acpi_gpio_info"), uninitialized acpi_gpio_info struct are passed to
+__acpi_find_gpio() and later in the call stack info->quirks is used in
+acpi_populate_gpio_lookup. This breaks the i2c_hid_cpi driver:
 
-On x86 systems when rfkill-gpio binds to a "BCM4752" or "LNV4752"
-acpi_device, the rfkill->type is set based on the ACPI acpi_device_id:
+[   58.122916] i2c_hid_acpi i2c-UNIW0001:00: HID over i2c has not been provided an Int IRQ
+[   58.123097] i2c_hid_acpi i2c-UNIW0001:00: probe with driver i2c_hid_acpi failed with error -22
 
-        rfkill->type = (unsigned)id->driver_data;
+Fix this by initializing the acpi_gpio_info pass to __acpi_find_gpio()
 
-and there is no "type" property so device_property_read_string() will fail
-and leave type_name uninitialized, leading to a potential crash.
-
-rfkill_find_type() does accept a NULL pointer, fix the potential crash
-by initializing type_name to NULL.
-
-Note likely sofar this has not been caught because:
-
-1. Not many x86 machines actually have a "BCM4752"/"LNV4752" acpi_device
-2. The stack happened to contain NULL where type_name is stored
-
-Fixes: 7d5e9737efda ("net: rfkill: gpio: get the name and type from device property")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220388
+Fixes: 7c010d463372 ("gpiolib: acpi: Make sure we fill struct acpi_gpio_info")
+Signed-off-by: Sébastien Szymanski <sebastien.szymanski@armadeus.com>
+Tested-by: Hans de Goede <hansg@kernel.org>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-By: Calvin Owens <calvin@wbinvd.org>
 Cc: stable@vger.kernel.org
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20250913113515.21698-1-hansg@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rfkill/rfkill-gpio.c |    4 ++--
+ drivers/gpio/gpiolib-acpi-core.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -94,10 +94,10 @@ static const struct dmi_system_id rfkill
- static int rfkill_gpio_probe(struct platform_device *pdev)
+--- a/drivers/gpio/gpiolib-acpi-core.c
++++ b/drivers/gpio/gpiolib-acpi-core.c
+@@ -942,7 +942,7 @@ struct gpio_desc *acpi_find_gpio(struct
  {
- 	struct rfkill_gpio_data *rfkill;
--	struct gpio_desc *gpio;
-+	const char *type_name = NULL;
- 	const char *name_property;
- 	const char *type_property;
--	const char *type_name;
-+	struct gpio_desc *gpio;
+ 	struct acpi_device *adev = to_acpi_device_node(fwnode);
+ 	bool can_fallback = acpi_can_fallback_to_crs(adev, con_id);
+-	struct acpi_gpio_info info;
++	struct acpi_gpio_info info = {};
+ 	struct gpio_desc *desc;
+ 
+ 	desc = __acpi_find_gpio(fwnode, con_id, idx, can_fallback, &info);
+@@ -992,7 +992,7 @@ int acpi_dev_gpio_irq_wake_get_by(struct
  	int ret;
  
- 	if (dmi_check_system(rfkill_gpio_deny_table))
+ 	for (i = 0, idx = 0; idx <= index; i++) {
+-		struct acpi_gpio_info info;
++		struct acpi_gpio_info info = {};
+ 		struct gpio_desc *desc;
+ 
+ 		/* Ignore -EPROBE_DEFER, it only matters if idx matches */
 
 
