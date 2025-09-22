@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A67A2F3608;
-	Mon, 22 Sep 2025 19:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8473A2F0C52;
+	Mon, 22 Sep 2025 19:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570205; cv=none; b=Ys7odJBlV+izny2GBg4wWc3/8QzJQm82I8XJ+1w2bNPkwP2h7jcuBwwpQDRG1LPeHfk+3vOeAPcn3HeYI5QLCp7G7wupD7gP1f9iUPkq2WwXTyxhf+dtXEOdA1vdK2NuhzZmWobtLlj+J7wTSANnlpOxjkrWgDwtCJ+inpaBVY8=
+	t=1758570207; cv=none; b=YbOtNOPZjyq+E1vG4nF1pnIRCracVZUuUDji5eMNnfF39HbyR5DmADaaXU27zUt0SDKddgjBpDkAvd8FuTIKWDS8B+SdxxCxx7ng5KLncKFtGtTfWbhU43b9ZLHlI/asES4l8O4s8QbdSBC4vJ4BOw9v69q660OLX2m2hMs4RhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570205; c=relaxed/simple;
-	bh=UD2liwUQki7lsYr3zsG6qcGN7cXgRTDJV0SoW+AH3b8=;
+	s=arc-20240116; t=1758570207; c=relaxed/simple;
+	bh=lVyV+apTjMaeqHJOaDRHdj3HOSKCtu+0ynLsnWqqg0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOV0G45Yz8wmtJAuOD0CkKHwJCFv9vu/BO5QY7mlsCPlHce5XaeKpA038OOYXp2h2JXfD20FpO9JkZnNvqzfELLsspwPhYRZv7czop1bu644OeN5w2YiOmQqt22Jxf7bBu9rzc9TYRFzWRB8hx8iTCTUIJqNRi+3TRmLedya9cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ysYCoH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iypu6AfhhuqNaK3GxQTnuDl+xSivmVQtRKyPRnBC9icFBUJmKH/qSLHK5bhYsWrXHHtYITeOtZfP9SfMQgqzFrwVx8/CqLIgN66wbGzdVOcPwRZ4HeStO6iy4x8/T4SckmKE8WaTu0EZaB6+RdVw5TEMvKYfilzA8NQYf0kB/MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOuKs4Rd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ysYCoH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50BBC4CEF0;
-	Mon, 22 Sep 2025 19:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOuKs4Rd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE08C4CEF0;
+	Mon, 22 Sep 2025 19:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570205;
-	bh=UD2liwUQki7lsYr3zsG6qcGN7cXgRTDJV0SoW+AH3b8=;
+	s=korg; t=1758570207;
+	bh=lVyV+apTjMaeqHJOaDRHdj3HOSKCtu+0ynLsnWqqg0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ysYCoH8bDUUcIMW9CMOu4AOIM77p79XR/7a6NqrhU/8GSa9C2w6N/Ia7cfjBacMM
-	 YfRFZYrxj2SH/ixi4co5qZUbjU7+FB+9bl2I0tYZ7UdR1MQoLDWqV8lc5A18syYW4V
-	 qeyTjzDCtzbc8KWGBnv/AuMTb6cGYSsVLh9oVJYs=
+	b=bOuKs4Rd9r/WsUTyPnsyaHg1BdthMdZ97ywalwqczdBlqevR9ggxzBe/A6e4aHEEA
+	 TWYK331AIgnPHB0qZqDjpyMPVkc/9Ptcd5qm3CoT5hTJcwh/BzRTQD3qhDWy+XFYdD
+	 9kQSI5sm8PPx2x9GTL38btYHykxBciomUJis3WgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 046/149] octeontx2-pf: Fix use-after-free bugs in otx2_sync_tstamp()
-Date: Mon, 22 Sep 2025 21:29:06 +0200
-Message-ID: <20250922192414.025020490@linuxfoundation.org>
+	Stefan Metzmacher <metze@samba.org>,
+	"Luigino Camastra, Aisle Research" <luigino.camastra@aisle.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.16 047/149] ksmbd: smbdirect: validate data_offset and data_length field of smb_direct_data_transfer
+Date: Mon, 22 Sep 2025 21:29:07 +0200
+Message-ID: <20250922192414.050024563@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,121 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f8b4687151021db61841af983f1cb7be6915d4ef ]
+commit 5282491fc49d5614ac6ddcd012e5743eecb6a67c upstream.
 
-The original code relies on cancel_delayed_work() in otx2_ptp_destroy(),
-which does not ensure that the delayed work item synctstamp_work has fully
-completed if it was already running. This leads to use-after-free scenarios
-where otx2_ptp is deallocated by otx2_ptp_destroy(), while synctstamp_work
-remains active and attempts to dereference otx2_ptp in otx2_sync_tstamp().
-Furthermore, the synctstamp_work is cyclic, the likelihood of triggering
-the bug is nonnegligible.
+If data_offset and data_length of smb_direct_data_transfer struct are
+invalid, out of bounds issue could happen.
+This patch validate data_offset and data_length field in recv_done.
 
-A typical race condition is illustrated below:
-
-CPU 0 (cleanup)           | CPU 1 (delayed work callback)
-otx2_remove()             |
-  otx2_ptp_destroy()      | otx2_sync_tstamp()
-    cancel_delayed_work() |
-    kfree(ptp)            |
-                          |   ptp = container_of(...); //UAF
-                          |   ptp-> //UAF
-
-This is confirmed by a KASAN report:
-
-BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
-Write of size 8 at addr ffff88800aa09a18 by task bash/136
-...
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x55/0x70
- print_report+0xcf/0x610
- ? __run_timer_base.part.0+0x7d7/0x8c0
- kasan_report+0xb8/0xf0
- ? __run_timer_base.part.0+0x7d7/0x8c0
- __run_timer_base.part.0+0x7d7/0x8c0
- ? __pfx___run_timer_base.part.0+0x10/0x10
- ? __pfx_read_tsc+0x10/0x10
- ? ktime_get+0x60/0x140
- ? lapic_next_event+0x11/0x20
- ? clockevents_program_event+0x1d4/0x2a0
- run_timer_softirq+0xd1/0x190
- handle_softirqs+0x16a/0x550
- irq_exit_rcu+0xaf/0xe0
- sysvec_apic_timer_interrupt+0x70/0x80
- </IRQ>
-...
-Allocated by task 1:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- otx2_ptp_init+0xb1/0x860
- otx2_probe+0x4eb/0xc30
- local_pci_probe+0xdc/0x190
- pci_device_probe+0x2fe/0x470
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __driver_attach+0xd2/0x310
- bus_for_each_dev+0xed/0x170
- bus_add_driver+0x208/0x500
- driver_register+0x132/0x460
- do_one_initcall+0x89/0x300
- kernel_init_freeable+0x40d/0x720
- kernel_init+0x1a/0x150
- ret_from_fork+0x10c/0x1a0
- ret_from_fork_asm+0x1a/0x30
-
-Freed by task 136:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x3f/0x50
- kfree+0x137/0x370
- otx2_ptp_destroy+0x38/0x80
- otx2_remove+0x10d/0x4c0
- pci_device_remove+0xa6/0x1d0
- device_release_driver_internal+0xf8/0x210
- pci_stop_bus_device+0x105/0x150
- pci_stop_and_remove_bus_device_locked+0x15/0x30
- remove_store+0xcc/0xe0
- kernfs_fop_write_iter+0x2c3/0x440
- vfs_write+0x871/0xd70
- ksys_write+0xee/0x1c0
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
-
-Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
-that the delayed work item is properly canceled before the otx2_ptp is
-deallocated.
-
-This bug was initially identified through static analysis. To reproduce
-and test it, I simulated the OcteonTX2 PCI device in QEMU and introduced
-artificial delays within the otx2_sync_tstamp() function to increase the
-likelihood of triggering the bug.
-
-Fixes: 2958d17a8984 ("octeontx2-pf: Add support for ptp 1-step mode on CN10K silicon")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 2ea086e35c3d ("ksmbd: add buffer validation for smb direct")
+Reviewed-by: Stefan Metzmacher <metze@samba.org>
+Reported-by: Luigino Camastra, Aisle Research <luigino.camastra@aisle.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/transport_rdma.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
-@@ -491,7 +491,7 @@ void otx2_ptp_destroy(struct otx2_nic *p
- 	if (!ptp)
- 		return;
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -554,7 +554,7 @@ static void recv_done(struct ib_cq *cq,
+ 	case SMB_DIRECT_MSG_DATA_TRANSFER: {
+ 		struct smb_direct_data_transfer *data_transfer =
+ 			(struct smb_direct_data_transfer *)recvmsg->packet;
+-		unsigned int data_length;
++		unsigned int data_offset, data_length;
+ 		int avail_recvmsg_count, receive_credits;
  
--	cancel_delayed_work(&pfvf->ptp->synctstamp_work);
-+	cancel_delayed_work_sync(&pfvf->ptp->synctstamp_work);
+ 		if (wc->byte_len <
+@@ -565,14 +565,15 @@ static void recv_done(struct ib_cq *cq,
+ 		}
  
- 	ptp_clock_unregister(ptp->ptp_clock);
- 	kfree(ptp);
+ 		data_length = le32_to_cpu(data_transfer->data_length);
+-		if (data_length) {
+-			if (wc->byte_len < sizeof(struct smb_direct_data_transfer) +
+-			    (u64)data_length) {
+-				put_recvmsg(t, recvmsg);
+-				smb_direct_disconnect_rdma_connection(t);
+-				return;
+-			}
++		data_offset = le32_to_cpu(data_transfer->data_offset);
++		if (wc->byte_len < data_offset ||
++		    wc->byte_len < (u64)data_offset + data_length) {
++			put_recvmsg(t, recvmsg);
++			smb_direct_disconnect_rdma_connection(t);
++			return;
++		}
+ 
++		if (data_length) {
+ 			if (t->full_packet_received)
+ 				recvmsg->first_segment = true;
+ 
 
 
