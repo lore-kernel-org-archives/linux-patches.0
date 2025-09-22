@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D6A2517AC;
-	Mon, 22 Sep 2025 19:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD23221F00;
+	Mon, 22 Sep 2025 19:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570374; cv=none; b=rWhti442cVK0XwtCijoez0KrN5B+3C5xeryGhv4mR9hvLgKfUHQ7mbrs2LFVOYHzbSTM6UF0GK3TSQwNFwG6OcVLQ8XMb34HnDCrqChxquJ1kndLjsW9xhrESQpmsmM6hezeIjoiPxVoeXaLVOf6ZW5GX5PSAJR3pcRs3xoVe0M=
+	t=1758570377; cv=none; b=CfknKo0CfAD187LY0KjQdeLctRYmElz0SHcAWuVUtUCJuNZHp9lN8XEZwdIbsDN4udhQsWu6TI8HuF6mV11ZOIADgbDBOYdN2w19cbFXoFn+l6XeDMiDqr2eVzDTEi53MPGGmytv1sFDH2bdV6GaMJJaP0/a+y0oWWReRVpYUD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570374; c=relaxed/simple;
-	bh=ouwKnYS0us8+omkEKsKl3RpAfkI08CeqWs8qYU/Psew=;
+	s=arc-20240116; t=1758570377; c=relaxed/simple;
+	bh=zWRwZfZAShoVoqbvZYwGWjdg5MzNGYOoQa5pjaHWmvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B61Ltmd4RMvyZdL4jp7T15MmUUT/aualtCW4vBD6poNtsUD1M73hrCCGgztwKcIq5KgoLpbBqj98JaP42KgwX6Wbd4MBmXgiuepHokzqZNYl1eHYDIjGKH8v7zYqxuGa19fY92Hglp3ag7jw9S5chc5qitN6+lIBSBwkEl8WI38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbnJfXS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SRhqGqJCI6yjWWdaWlwRg9W58VaEikXf518+Eo1Kppo40pBUbhedjdgtr81a2NN0pDErJ+TtCpEUlzYehO1fBWyRCiYeY7Bmnb9qwFQWjScGiNdFGDkmtvhnOsoKAssAxMEDk0/UWu5SJkbSC9TUhPI97hXlDXq+AnxK1uWs0gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ts33+vkA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbnJfXS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6015AC4CEF0;
-	Mon, 22 Sep 2025 19:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ts33+vkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5334C4CEF0;
+	Mon, 22 Sep 2025 19:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570374;
-	bh=ouwKnYS0us8+omkEKsKl3RpAfkI08CeqWs8qYU/Psew=;
+	s=korg; t=1758570377;
+	bh=zWRwZfZAShoVoqbvZYwGWjdg5MzNGYOoQa5pjaHWmvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbnJfXS+aPUOK++vyry7DYzqOaBAUT3NCfgoG5ppVjb/CEDlwaQSUj+30i4J0lK43
-	 5JzBQxuQJ5ztWowfnWW+SKsICX0SF/wi8IBhxOFgk31l13bi8M7EKfpwEYEiyCtsBl
-	 n7N+EH7E3mPtXJQ4dhuNxi9eASEkogMz+6TgUWCs=
+	b=ts33+vkAa6sj+Eyj5fnFOZeKU9/Q4+7185j5v14winWG/ynASQNUCg8KPcWQGtwRF
+	 eCC1jU8HeG4A3VrQheqAbQsFNm9NR3jV4znmsaK77E8TacOUfY9nNbkw2dMxR3sEkY
+	 V3jahmLDPz/8qeYenGSuRVVMvqDdgtC8t70oZKso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 112/149] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
-Date: Mon, 22 Sep 2025 21:30:12 +0200
-Message-ID: <20250922192415.698910151@linuxfoundation.org>
+Subject: [PATCH 6.16 113/149] ASoC: SDCA: Fix return value in sdca_regmap_mbq_size()
+Date: Mon, 22 Sep 2025 21:30:13 +0200
+Message-ID: <20250922192415.725755780@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,37 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
+[ Upstream commit f81e63047600d023cbfda372b6de8f2821ff6839 ]
 
-The dev_err message is reporting an error about capture streams however
-it is using the incorrect variable num_playback instead of num_capture.
-Fix this by using the correct variable num_capture.
+The MBQ size function returns an integer representing the size of a
+Control. Currently if the Control is not found the function will return
+false which makes little sense. Correct this typo to return -EINVAL.
 
-Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
+Fixes: e3f7caf74b79 ("ASoC: SDCA: Add generic regmap SDCA helpers")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Message-ID: <20250820163717.1095846-2-ckeepax@opensource.cirrus.com>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-stream.c | 2 +-
+ sound/soc/sdca/sdca_regmap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
-index aa6b0247d5c99..a34f472ef1751 100644
---- a/sound/soc/sof/intel/hda-stream.c
-+++ b/sound/soc/sof/intel/hda-stream.c
-@@ -890,7 +890,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
+diff --git a/sound/soc/sdca/sdca_regmap.c b/sound/soc/sdca/sdca_regmap.c
+index c41c67c2204a4..ff1f8fe2a39bb 100644
+--- a/sound/soc/sdca/sdca_regmap.c
++++ b/sound/soc/sdca/sdca_regmap.c
+@@ -196,7 +196,7 @@ int sdca_regmap_mbq_size(struct sdca_function_data *function, unsigned int reg)
  
- 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
- 		dev_err(sdev->dev, "error: too many capture streams %d\n",
--			num_playback);
-+			num_capture);
- 		return -EINVAL;
- 	}
+ 	control = function_find_control(function, reg);
+ 	if (!control)
+-		return false;
++		return -EINVAL;
  
+ 	return clamp_val(control->nbits / BITS_PER_BYTE, sizeof(u8), sizeof(u32));
+ }
 -- 
 2.51.0
 
