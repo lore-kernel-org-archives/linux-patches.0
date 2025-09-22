@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3DF2DEA79;
-	Mon, 22 Sep 2025 19:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2BA2DEA79;
+	Mon, 22 Sep 2025 19:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570032; cv=none; b=g+SXlUec7McabMDmRpLheiQFE4LFtm/zKql8apH4PdewHy5uh9lcUfRZHdrRLzA5zo3Fmb3DkmC6zNhijrhF93InctQX/LoR0oM0VSNIMKbqTXuo9uEkHxX7Qbuh537dJrh0MCneGwSGLwhggeBZw7xDCZ7aoSv9jVVGuv0kf2M=
+	t=1758570035; cv=none; b=PgBFV1d9cpqhd026xnThk/Pf6p1Uq0/eNeQnCELUpuxzKg/wkSlfp/zOPwGfE5kb/Ja6VjwcBnvLtOLaVHGGrMduke2m8j13USwfCQbxrPHBbiVBETgXtOR28ssdFBDJ9SkdvdkoxhQNfLmHejfxy87C08F/oalX5z/spjkrdUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570032; c=relaxed/simple;
-	bh=3LyVNgj33xLG6tqMrcdwci5GO7Rd6E9EXSEavE7XAVI=;
+	s=arc-20240116; t=1758570035; c=relaxed/simple;
+	bh=0KVgWfmqb85K7fdCZISPvNOGq6cN/8R1osdLZzNfkmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9U86bZndJcsdzaAVC3QpvjzHqJdU2Un0kW+5h/7ICK4/WGYz6FouZksZti3Vsy7Db07/UQaBiqv6QQHJhkA+JkxpS7iwaZPZrU7adeiGIxykEdD1GKSIBnYzSQ9a5pDNDfmgxJ68FEenryuXXvLtWZoNzgP6MyyKpg7GS7oXAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XilH6IPN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pwyUlHOhEv9U+TPhyJAINQAG7j+UITnd8szmP1nCTYaE2PZa72P9lecP3JO5Ej7aK+oe2ZsXsIccTWAYqI+8NmHtyXEWDpLjoLkd/68bI6M86SO8EJFmiO6EfP9TV6iccvkKcUQhAWBXWoog++n6xHXq7Osn9IFIgIYGqGpucKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQYkZ7It; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XilH6IPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C6BC4CEF5;
-	Mon, 22 Sep 2025 19:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQYkZ7It"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5B2C4CEF0;
+	Mon, 22 Sep 2025 19:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570032;
-	bh=3LyVNgj33xLG6tqMrcdwci5GO7Rd6E9EXSEavE7XAVI=;
+	s=korg; t=1758570034;
+	bh=0KVgWfmqb85K7fdCZISPvNOGq6cN/8R1osdLZzNfkmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XilH6IPN2rG3Xk4HXSaaXqG9MbRd/VtyTkQS0B+jqM2V1DPNBtx/QtsB29HGfVFYL
-	 dsiPqZw04+d5ETf/vToUEeqVhRTmJQrGUGKfRUjw4zsGv0jdLfvCI6hdykjXzaHW+o
-	 fuJ0DbZ/+YAOWM52XCWXlrh84Vja49xJKfcxerlc=
+	b=oQYkZ7ItnTuI6OjqLDDsB4u85+6T8M3tvuPFwID46tsyuHp9fWmrUuo58326qfWKT
+	 2hfLey4zh7i/F0njPUUsEoBsSSeGX/wQQgDf3SIqYorVLGfdoWwFrZzSeYg/KW0Y7J
+	 O+qZjROMka7BSiRiXbvKRuvvT+t6l0XxTQzZimcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/105] smb: client: fix smbdirect_recv_io leak in smbd_negotiate() error path
-Date: Mon, 22 Sep 2025 21:30:06 +0200
-Message-ID: <20250922192411.075611876@linuxfoundation.org>
+Subject: [PATCH 6.12 074/105] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
+Date: Mon, 22 Sep 2025 21:29:57 +0200
+Message-ID: <20250922192410.836054099@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -57,43 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit daac51c7032036a0ca5f1aa419ad1b0471d1c6e0 ]
+[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
 
-During tests of another unrelated patch I was able to trigger this
-error: Objects remaining on __kmem_cache_shutdown()
+The dev_err message is reporting an error about capture streams however
+it is using the incorrect variable num_playback instead of num_capture.
+Fix this by using the correct variable num_capture.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/sof/intel/hda-stream.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index 6284252aa4882..b1548269c308a 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1075,8 +1075,10 @@ static int smbd_negotiate(struct smbd_connection *info)
- 	log_rdma_event(INFO, "smbd_post_recv rc=%d iov.addr=0x%llx iov.length=%u iov.lkey=0x%x\n",
- 		       rc, response->sge.addr,
- 		       response->sge.length, response->sge.lkey);
--	if (rc)
-+	if (rc) {
-+		put_receive_buffer(info, response);
- 		return rc;
-+	}
+diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
+index 3ac63ce67ab1c..24f3cc7676142 100644
+--- a/sound/soc/sof/intel/hda-stream.c
++++ b/sound/soc/sof/intel/hda-stream.c
+@@ -864,7 +864,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
  
- 	init_completion(&info->negotiate_completion);
- 	info->negotiate_done = false;
+ 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
+ 		dev_err(sdev->dev, "error: too many capture streams %d\n",
+-			num_playback);
++			num_capture);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.51.0
 
