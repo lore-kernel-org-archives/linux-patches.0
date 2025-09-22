@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBA2262D14;
-	Mon, 22 Sep 2025 19:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6DD27B320;
+	Mon, 22 Sep 2025 19:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569742; cv=none; b=UCj0NpVtZ6pCb2LPa0Ox5ocR8XA8Xcvb2a6nVC39vZhexvOpg69N1/REeRirWRbOxC6AHzpfQwWYSmFrfpiDu0VyGTvS0Us/pIWNH2kIc7jYlWn5LC4qmNxwqJc+KsCnp2ExZ4YAhLPyLDy+3awMbelcxIdyCw/3TbNinBdbdfM=
+	t=1758569745; cv=none; b=V77OoUb2qL9TKKvZQleSUQXymPKCBmMZlBSoZv5I698jGKgTwv+y8cm1PGlAv413rAwYMGN6xGD7suK5FaOpivIT9r+gf78YrRaYygsNrepHrE/+/FxwbqpC8QXPAu4dPZmMel2gXxSk6QxxtSFdoNjpSjqEOwpnp2ti2dKUU2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569742; c=relaxed/simple;
-	bh=6lh5BPmJQjRm4a0ti1+VsZdirBgzc3+GROGm9200s9c=;
+	s=arc-20240116; t=1758569745; c=relaxed/simple;
+	bh=yxlIa5f0j+oK/EP5NZ8LqDvOwE++VjYnS6yl8Td2TxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjRqpAIEG8r7WnNjN7NcjSlA2cIwfQ8uN3lSq/KHQqgPwWakYOAQFXRDKTzQN6sh6zC9eaMDzympoPDRycnhgNvBPacRkQIA0opBgeyP/ZJlZRJp1XkeZr0x3pu4iJ6fQFanIEARByIDGA+Of+t+x2J5xaEBc5+FxEK1wACTnb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dh0/rq4T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1UGKw/DGYh84x7IB9zyiDQrEDsanpELrxQe2lAVKh72Zgl1ii9wpeqy4XIHSurtkL2faa182q8cu+s0UC6a7FdYNgQ+bCA6ZrsfET+YKmTOLLfF45NlK8a5M3PCMJCgmDrdMSbi5o97WkQF7JPpH4sFEempCi0kdo2lcy7++Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdnKgyFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dh0/rq4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23599C4CEF0;
-	Mon, 22 Sep 2025 19:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdnKgyFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C45C4CEF0;
+	Mon, 22 Sep 2025 19:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569742;
-	bh=6lh5BPmJQjRm4a0ti1+VsZdirBgzc3+GROGm9200s9c=;
+	s=korg; t=1758569744;
+	bh=yxlIa5f0j+oK/EP5NZ8LqDvOwE++VjYnS6yl8Td2TxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dh0/rq4ThCl+rOcg05pRA/feANBH9QkqOZ8M1hsSn8342NvfIr7X0LBUM7Cea/GpS
-	 3VuBduxrTmYvNzvB5iZec7oJLsVxOxD4yegE15Cna9lF+cb1gPxV78wj12/Tovs6nS
-	 Z8OPCxq0hYzf9DlAMlkS4R9Xh/GVFWgAIEnRupXw=
+	b=LdnKgyFuLSr8/UdNFBog5ocu0+fxozSKePvwizYbnORp6KFcxoYn4A0KXm/L2iEhn
+	 LjA9DsAmt/8ZOHIofytdEU8KcdPZLDmJ3yeTMwstdxi1bNQfXbKOX8Mc/1MfIVmFZf
+	 dksbqxNd15T1/XzGp8M7Gl8qTRJ4TI8gLDVvuT6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 51/70] ASoC: wm8974: Correct PLL rate rounding
-Date: Mon, 22 Sep 2025 21:29:51 +0200
-Message-ID: <20250922192405.978510901@linuxfoundation.org>
+Subject: [PATCH 6.6 52/70] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
+Date: Mon, 22 Sep 2025 21:29:52 +0200
+Message-ID: <20250922192406.003940044@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 9b17d3724df55ecc2bc67978822585f2b023be48 ]
+[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
 
-Using a single value of 22500000 for both 48000Hz and 44100Hz audio
-will sometimes result in returning wrong dividers due to rounding.
-Update the code to use the actual value for both.
+The dev_err message is reporting an error about capture streams however
+it is using the incorrect variable num_playback instead of num_capture.
+Fix this by using the correct variable num_capture.
 
-Fixes: 51b2bb3f2568 ("ASoC: wm8974: configure pll and mclk divider automatically")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250821082639.1301453-4-ckeepax@opensource.cirrus.com
+Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8974.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/sof/intel/hda-stream.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8974.c b/sound/soc/codecs/wm8974.c
-index 260bac695b20a..2aaa1cbe68b71 100644
---- a/sound/soc/codecs/wm8974.c
-+++ b/sound/soc/codecs/wm8974.c
-@@ -419,10 +419,14 @@ static int wm8974_update_clocks(struct snd_soc_dai *dai)
- 	fs256 = 256 * priv->fs;
+diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
+index 0b0087abcc50e..3bb743cb167a5 100644
+--- a/sound/soc/sof/intel/hda-stream.c
++++ b/sound/soc/sof/intel/hda-stream.c
+@@ -842,7 +842,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
  
- 	f = wm8974_get_mclkdiv(priv->mclk, fs256, &mclkdiv);
--
- 	if (f != priv->mclk) {
- 		/* The PLL performs best around 90MHz */
--		fpll = wm8974_get_mclkdiv(22500000, fs256, &mclkdiv);
-+		if (fs256 % 8000)
-+			f = 22579200;
-+		else
-+			f = 24576000;
-+
-+		fpll = wm8974_get_mclkdiv(f, fs256, &mclkdiv);
+ 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
+ 		dev_err(sdev->dev, "error: too many capture streams %d\n",
+-			num_playback);
++			num_capture);
+ 		return -EINVAL;
  	}
  
- 	wm8974_set_dai_pll(dai, 0, 0, priv->mclk, fpll);
 -- 
 2.51.0
 
