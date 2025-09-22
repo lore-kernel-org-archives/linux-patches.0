@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BD22F3623;
-	Mon, 22 Sep 2025 19:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDE23128C4;
+	Mon, 22 Sep 2025 19:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570054; cv=none; b=Pz8zyjYBxdEIQGuaknSpozNkhRQv/4XMkL6L+SCJ6eKE243aKL103vRTVbjEuFXgJ16rUbwLiBFmIuVF67Z22bDBpuQi67NVsDSPtaXD12pbH/WSUl/cy9rUIS78kkaxEccX3MeowQyfVnZXTxhGRCo+0YfCTz5RYVjbwn8YshE=
+	t=1758570057; cv=none; b=aVkPm+9ZHEMA8SvXwd4Nb0yXpck3PVVtMRmcYjYvq97jqfxJDHyBKPmdf/n0UFEcoiPQ/GcHNYJapVtWpAW0c06NI0os/DeHVx3zT6G43ri/6b7RU1lCcEzR6+x+E6JW/sdtFzMGs9dcBIqFWo1qN2ZJd0dYjtyqgryzxoqB1fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570054; c=relaxed/simple;
-	bh=Ou+IegcwJw//EYjUgkTuO3dynB9t9dSIJree1jcEl9s=;
+	s=arc-20240116; t=1758570057; c=relaxed/simple;
+	bh=0QUdpxpuebStllIz7ckDFHG3zcxdRcK613MWOzgeP/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXR8AveVM3/aB/P96hW4qDR2AjpOe+bResx1JXAhOm7II3eO27zMFKMf8A9E9C2WVPhPmRuw0r9v6kIqO5fHXF3rSD2dMGtPurEtz3BTq8BJ/8llKL9mHU5Wz5qHx7JtN96Fu6DR4icvrFvLafuDj4ev16umFT7oariwa7T5Xw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFBgT8Zy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPexSskQ4XR3yOjGHeLaVrm49dEGDTTyabdDEOMbJxx6ph1drGoaZjm2BqLc4QLWM1Y97TAnYdIT7LoYa7Wv8+A5h+BmZ8EuL0+9ZIpbjYfdRWwCTmOuCXtxnSnWVnNxd+AaLf6SDCOxVP0bm96qlp4i3iMwVG/ncgzhioI6Q2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSJRN2c0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFBgT8Zy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361C7C4CEF0;
-	Mon, 22 Sep 2025 19:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSJRN2c0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0431C4CEF5;
+	Mon, 22 Sep 2025 19:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570054;
-	bh=Ou+IegcwJw//EYjUgkTuO3dynB9t9dSIJree1jcEl9s=;
+	s=korg; t=1758570057;
+	bh=0QUdpxpuebStllIz7ckDFHG3zcxdRcK613MWOzgeP/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uFBgT8Zyuwj+Xx1Fc/cs2stBU5YIwlgmZjZsZ44O998XQJ29ZRdM711eMFSNvp+Bd
-	 fV2WaNxx95Tgkn0lDFm4kTgvMB9IuqM9I7pCnwv9Q0P04gJXGd5Q3Ib5sL6kKlC1nN
-	 dmU0VU+pbnPx+h8qO2zVld8b7/wfGHmchYzMUHT4=
+	b=wSJRN2c0aKtMvb34zFEYF3XdtDiJnZekpVC6BNKNIMidjvwXZvxPlGj+VhAQIUbzq
+	 tOq48gwEfC4/bE6tQhNOaFgrJrgdv4dRzUtg8BdeDRsxSedsZvY/y+Sap1XRKh6VYf
+	 I8zhh1zFL2NpR6B4Ja11ekDhmBcKcsgTp7Z8agqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Majkowski <marek@cloudflare.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 093/105] mptcp: pm: nl: announce deny-join-id0 flag
-Date: Mon, 22 Sep 2025 21:30:16 +0200
-Message-ID: <20250922192411.337136523@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Niklas Neronin <niklas.neronin@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 094/105] usb: xhci: introduce macro for ring segment list iteration
+Date: Mon, 22 Sep 2025 21:30:17 +0200
+Message-ID: <20250922192411.360465269@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,121 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Niklas Neronin <niklas.neronin@linux.intel.com>
 
-commit 2293c57484ae64c9a3c847c8807db8c26a3a4d41 upstream.
+[ Upstream commit 3f970bd06c5295e742ef4f9cf7808a3cb74a6816 ]
 
-During the connection establishment, a peer can tell the other one that
-it cannot establish new subflows to the initial IP address and port by
-setting the 'C' flag [1]. Doing so makes sense when the sender is behind
-a strict NAT, operating behind a legacy Layer 4 load balancer, or using
-anycast IP address for example.
+Add macro to streamline and standardize the iteration over ring
+segment list.
 
-When this 'C' flag is set, the path-managers must then not try to
-establish new subflows to the other peer's initial IP address and port.
-The in-kernel PM has access to this info, but the userspace PM didn't.
+xhci_for_each_ring_seg(): Iterates over the entire ring segment list.
 
-The RFC8684 [1] is strict about that:
+The xhci_free_segments_for_ring() function's while loop has not been
+updated to use the new macro. This function has some underlying issues,
+and as a result, it will be handled separately in a future patch.
 
-  (...) therefore the receiver MUST NOT try to open any additional
-  subflows toward this address and port.
-
-So it is important to tell the userspace about that as it is responsible
-for the respect of this flag.
-
-When a new connection is created and established, the Netlink events
-now contain the existing but not currently used 'flags' attribute. When
-MPTCP_PM_EV_FLAG_DENY_JOIN_ID0 is set, it means no other subflows
-to the initial IP address and port -- info that are also part of the
-event -- can be established.
-
-Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.1-20.6 [1]
-Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
-Reported-by: Marek Majkowski <marek@cloudflare.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/532
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-2-40171884ade8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in mptcp_pm.yaml, because the indentation has been modified
-  in commit ec362192aa9e ("netlink: specs: fix up indentation errors"),
-  which is not in this version. Applying the same modifications, but at
-  a different level. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241106101459.775897-11-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a5c98e8b1398 ("xhci: dbc: Fix full DbC transfer ring after several reconnects")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/netlink/specs/mptcp_pm.yaml |    4 ++--
- include/uapi/linux/mptcp.h                |    2 ++
- include/uapi/linux/mptcp_pm.h             |    4 ++--
- net/mptcp/pm_netlink.c                    |    7 +++++++
- 4 files changed, 13 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci-debugfs.c |    5 +----
+ drivers/usb/host/xhci-mem.c     |   24 +++++++-----------------
+ drivers/usb/host/xhci.c         |   20 ++++++++------------
+ drivers/usb/host/xhci.h         |    3 +++
+ 4 files changed, 19 insertions(+), 33 deletions(-)
 
---- a/Documentation/netlink/specs/mptcp_pm.yaml
-+++ b/Documentation/netlink/specs/mptcp_pm.yaml
-@@ -28,13 +28,13 @@ definitions:
-         traffic-patterns it can take a long time until the
-         MPTCP_EVENT_ESTABLISHED is sent.
-         Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6, sport,
--        dport, server-side.
-+        dport, server-side, [flags].
-      -
-       name: established
-       doc: >-
-         A MPTCP connection is established (can start new subflows).
-         Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6, sport,
--        dport, server-side.
-+        dport, server-side, [flags].
-      -
-       name: closed
-       doc: >-
---- a/include/uapi/linux/mptcp.h
-+++ b/include/uapi/linux/mptcp.h
-@@ -31,6 +31,8 @@
- #define MPTCP_INFO_FLAG_FALLBACK		_BITUL(0)
- #define MPTCP_INFO_FLAG_REMOTE_KEY_RECEIVED	_BITUL(1)
+--- a/drivers/usb/host/xhci-debugfs.c
++++ b/drivers/usb/host/xhci-debugfs.c
+@@ -214,14 +214,11 @@ static void xhci_ring_dump_segment(struc
  
-+#define MPTCP_PM_EV_FLAG_DENY_JOIN_ID0		_BITUL(0)
-+
- #define MPTCP_PM_ADDR_FLAG_SIGNAL                      (1 << 0)
- #define MPTCP_PM_ADDR_FLAG_SUBFLOW                     (1 << 1)
- #define MPTCP_PM_ADDR_FLAG_BACKUP                      (1 << 2)
---- a/include/uapi/linux/mptcp_pm.h
-+++ b/include/uapi/linux/mptcp_pm.h
-@@ -16,10 +16,10 @@
-  *   good time to allocate memory and send ADD_ADDR if needed. Depending on the
-  *   traffic-patterns it can take a long time until the MPTCP_EVENT_ESTABLISHED
-  *   is sent. Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6,
-- *   sport, dport, server-side.
-+ *   sport, dport, server-side, [flags].
-  * @MPTCP_EVENT_ESTABLISHED: A MPTCP connection is established (can start new
-  *   subflows). Attributes: token, family, saddr4 | saddr6, daddr4 | daddr6,
-- *   sport, dport, server-side.
-+ *   sport, dport, server-side, [flags].
-  * @MPTCP_EVENT_CLOSED: A MPTCP connection has stopped. Attribute: token.
-  * @MPTCP_EVENT_ANNOUNCED: A new address has been announced by the peer.
-  *   Attributes: token, rem_id, family, daddr4 | daddr6 [, dport].
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -2211,6 +2211,7 @@ static int mptcp_event_created(struct sk
- 			       const struct sock *ssk)
+ static int xhci_ring_trb_show(struct seq_file *s, void *unused)
  {
- 	int err = nla_put_u32(skb, MPTCP_ATTR_TOKEN, READ_ONCE(msk->token));
-+	u16 flags = 0;
+-	int			i;
+ 	struct xhci_ring	*ring = *(struct xhci_ring **)s->private;
+ 	struct xhci_segment	*seg = ring->first_seg;
  
- 	if (err)
- 		return err;
-@@ -2218,6 +2219,12 @@ static int mptcp_event_created(struct sk
- 	if (nla_put_u8(skb, MPTCP_ATTR_SERVER_SIDE, READ_ONCE(msk->pm.server_side)))
- 		return -EMSGSIZE;
+-	for (i = 0; i < ring->num_segs; i++) {
++	xhci_for_each_ring_seg(ring->first_seg, seg)
+ 		xhci_ring_dump_segment(s, seg);
+-		seg = seg->next;
+-	}
  
-+	if (READ_ONCE(msk->pm.remote_deny_join_id0))
-+		flags |= MPTCP_PM_EV_FLAG_DENY_JOIN_ID0;
-+
-+	if (flags && nla_put_u16(skb, MPTCP_ATTR_FLAGS, flags))
-+		return -EMSGSIZE;
-+
- 	return mptcp_event_add_subflow(skb, ssk);
+ 	return 0;
+ }
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -224,7 +224,6 @@ static int xhci_update_stream_segment_ma
+ 		struct radix_tree_root *trb_address_map,
+ 		struct xhci_ring *ring,
+ 		struct xhci_segment *first_seg,
+-		struct xhci_segment *last_seg,
+ 		gfp_t mem_flags)
+ {
+ 	struct xhci_segment *seg;
+@@ -234,28 +233,22 @@ static int xhci_update_stream_segment_ma
+ 	if (WARN_ON_ONCE(trb_address_map == NULL))
+ 		return 0;
+ 
+-	seg = first_seg;
+-	do {
++	xhci_for_each_ring_seg(first_seg, seg) {
+ 		ret = xhci_insert_segment_mapping(trb_address_map,
+ 				ring, seg, mem_flags);
+ 		if (ret)
+ 			goto remove_streams;
+-		if (seg == last_seg)
+-			return 0;
+-		seg = seg->next;
+-	} while (seg != first_seg);
++	}
+ 
+ 	return 0;
+ 
+ remove_streams:
+ 	failed_seg = seg;
+-	seg = first_seg;
+-	do {
++	xhci_for_each_ring_seg(first_seg, seg) {
+ 		xhci_remove_segment_mapping(trb_address_map, seg);
+ 		if (seg == failed_seg)
+ 			return ret;
+-		seg = seg->next;
+-	} while (seg != first_seg);
++	}
+ 
+ 	return ret;
+ }
+@@ -267,17 +260,14 @@ static void xhci_remove_stream_mapping(s
+ 	if (WARN_ON_ONCE(ring->trb_address_map == NULL))
+ 		return;
+ 
+-	seg = ring->first_seg;
+-	do {
++	xhci_for_each_ring_seg(ring->first_seg, seg)
+ 		xhci_remove_segment_mapping(ring->trb_address_map, seg);
+-		seg = seg->next;
+-	} while (seg != ring->first_seg);
  }
  
+ static int xhci_update_stream_mapping(struct xhci_ring *ring, gfp_t mem_flags)
+ {
+ 	return xhci_update_stream_segment_mapping(ring->trb_address_map, ring,
+-			ring->first_seg, ring->last_seg, mem_flags);
++			ring->first_seg, mem_flags);
+ }
+ 
+ /* XXX: Do we need the hcd structure in all these functions? */
+@@ -438,7 +428,7 @@ int xhci_ring_expansion(struct xhci_hcd
+ 
+ 	if (ring->type == TYPE_STREAM) {
+ 		ret = xhci_update_stream_segment_mapping(ring->trb_address_map,
+-						ring, first, last, flags);
++						ring, first, flags);
+ 		if (ret)
+ 			goto free_segments;
+ 	}
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -41,15 +41,15 @@ MODULE_PARM_DESC(quirks, "Bit flags for
+ 
+ static bool td_on_ring(struct xhci_td *td, struct xhci_ring *ring)
+ {
+-	struct xhci_segment *seg = ring->first_seg;
++	struct xhci_segment *seg;
+ 
+ 	if (!td || !td->start_seg)
+ 		return false;
+-	do {
++
++	xhci_for_each_ring_seg(ring->first_seg, seg) {
+ 		if (seg == td->start_seg)
+ 			return true;
+-		seg = seg->next;
+-	} while (seg && seg != ring->first_seg);
++	}
+ 
+ 	return false;
+ }
+@@ -764,14 +764,10 @@ static void xhci_clear_command_ring(stru
+ 	struct xhci_segment *seg;
+ 
+ 	ring = xhci->cmd_ring;
+-	seg = ring->deq_seg;
+-	do {
+-		memset(seg->trbs, 0,
+-			sizeof(union xhci_trb) * (TRBS_PER_SEGMENT - 1));
+-		seg->trbs[TRBS_PER_SEGMENT - 1].link.control &=
+-			cpu_to_le32(~TRB_CYCLE);
+-		seg = seg->next;
+-	} while (seg != ring->deq_seg);
++	xhci_for_each_ring_seg(ring->deq_seg, seg) {
++		memset(seg->trbs, 0, sizeof(union xhci_trb) * (TRBS_PER_SEGMENT - 1));
++		seg->trbs[TRBS_PER_SEGMENT - 1].link.control &= cpu_to_le32(~TRB_CYCLE);
++	}
+ 
+ 	xhci_initialize_ring_info(ring, 1);
+ 	/*
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1263,6 +1263,9 @@ static inline const char *xhci_trb_type_
+ #define AVOID_BEI_INTERVAL_MIN	8
+ #define AVOID_BEI_INTERVAL_MAX	32
+ 
++#define xhci_for_each_ring_seg(head, seg) \
++	for (seg = head; seg != NULL; seg = (seg->next != head ? seg->next : NULL))
++
+ struct xhci_segment {
+ 	union xhci_trb		*trbs;
+ 	/* private to HCD */
 
 
