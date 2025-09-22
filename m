@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2BA2DEA79;
-	Mon, 22 Sep 2025 19:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8447A2F28E0;
+	Mon, 22 Sep 2025 19:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570035; cv=none; b=PgBFV1d9cpqhd026xnThk/Pf6p1Uq0/eNeQnCELUpuxzKg/wkSlfp/zOPwGfE5kb/Ja6VjwcBnvLtOLaVHGGrMduke2m8j13USwfCQbxrPHBbiVBETgXtOR28ssdFBDJ9SkdvdkoxhQNfLmHejfxy87C08F/oalX5z/spjkrdUs=
+	t=1758570037; cv=none; b=SoYlso9mndIb+8dk4LJXicg1ax4X1U3AnnXRqP06VQj8J6cjy228bGDahNKIzMn3v2+Xmpo6Cag+xGQCFPYvzOq+8IxMl53B1QQYo8f3cWD6OChPMpP+86ghLuDqJjlcWLqQ9oX8+A7Dp++hDd5DPow7zmdtTEq/C4Q7hfWROX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570035; c=relaxed/simple;
-	bh=0KVgWfmqb85K7fdCZISPvNOGq6cN/8R1osdLZzNfkmA=;
+	s=arc-20240116; t=1758570037; c=relaxed/simple;
+	bh=/JsK0Olw/cRu+/PLXSlxRbluQXUiQYcftH0s9GbEtjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwyUlHOhEv9U+TPhyJAINQAG7j+UITnd8szmP1nCTYaE2PZa72P9lecP3JO5Ej7aK+oe2ZsXsIccTWAYqI+8NmHtyXEWDpLjoLkd/68bI6M86SO8EJFmiO6EfP9TV6iccvkKcUQhAWBXWoog++n6xHXq7Osn9IFIgIYGqGpucKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQYkZ7It; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YskuHwwJLf9KiMSVYIe2W5t8fCR54xbgGm2ijqCbkM7B/A+83AQqNigc37vZMHFbM5aJOzt3wBCCQ/Qxi6nXECxGDIpWTFcAE874wff/Rbg9nqG7LcR3MlgFPUn7ePi7diQ9EaNAHFWs4xZ25GMmY6oQTfKMvz+jvq5aS5yGDbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpFEnGMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQYkZ7It"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5B2C4CEF0;
-	Mon, 22 Sep 2025 19:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpFEnGMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17488C4CEF5;
+	Mon, 22 Sep 2025 19:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570034;
-	bh=0KVgWfmqb85K7fdCZISPvNOGq6cN/8R1osdLZzNfkmA=;
+	s=korg; t=1758570037;
+	bh=/JsK0Olw/cRu+/PLXSlxRbluQXUiQYcftH0s9GbEtjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oQYkZ7ItnTuI6OjqLDDsB4u85+6T8M3tvuPFwID46tsyuHp9fWmrUuo58326qfWKT
-	 2hfLey4zh7i/F0njPUUsEoBsSSeGX/wQQgDf3SIqYorVLGfdoWwFrZzSeYg/KW0Y7J
-	 O+qZjROMka7BSiRiXbvKRuvvT+t6l0XxTQzZimcc=
+	b=OpFEnGMCoNrRqTMxiD7khfmoZlSGjImaCZ/4pBP1iVkor7JdhgKIzDQgnDoBm5TvX
+	 Xa0PCZXicmohtiZc+ChHixSqa2ElBt4pJNv2vB39yMhvIvUWAbFpxp9SBCgIsT79VK
+	 Zlv7oZvags1vh5KJuDkpSgO+tIB96jmxtHT9U614=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/105] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
-Date: Mon, 22 Sep 2025 21:29:57 +0200
-Message-ID: <20250922192410.836054099@linuxfoundation.org>
+	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
+	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ajay Kaher <ajay.kaher@broadcom.com>
+Subject: [PATCH 6.12 090/105] vmxnet3: unregister xdp rxq info in the reset path
+Date: Mon, 22 Sep 2025 21:30:13 +0200
+Message-ID: <20250922192411.264402793@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,39 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
 
-[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
+commit 0dd765fae295832934bf28e45dd5a355e0891ed4 upstream.
 
-The dev_err message is reporting an error about capture streams however
-it is using the incorrect variable num_playback instead of num_capture.
-Fix this by using the correct variable num_capture.
+vmxnet3 does not unregister xdp rxq info in the
+vmxnet3_reset_work() code path as vmxnet3_rq_destroy()
+is not invoked in this code path. So, we get below message with a
+backtrace.
 
-Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Missing unregister, handled but fix driver
+WARNING: CPU:48 PID: 500 at net/core/xdp.c:182
+__xdp_rxq_info_reg+0x93/0xf0
+
+This patch fixes the problem by moving the unregister
+code of XDP from vmxnet3_rq_destroy() to vmxnet3_rq_cleanup().
+
+Fixes: 54f00cce1178 ("vmxnet3: Add XDP support.")
+Signed-off-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
+Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
+Link: https://patch.msgid.link/20250320045522.57892-1-sankararaman.jayaraman@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Ajay: Modified to apply on v6.6, v6.12 ]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/hda-stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vmxnet3/vmxnet3_drv.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
-index 3ac63ce67ab1c..24f3cc7676142 100644
---- a/sound/soc/sof/intel/hda-stream.c
-+++ b/sound/soc/sof/intel/hda-stream.c
-@@ -864,7 +864,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
+--- a/drivers/net/vmxnet3/vmxnet3_drv.c
++++ b/drivers/net/vmxnet3/vmxnet3_drv.c
+@@ -2051,6 +2051,11 @@ vmxnet3_rq_cleanup(struct vmxnet3_rx_que
  
- 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
- 		dev_err(sdev->dev, "error: too many capture streams %d\n",
--			num_playback);
-+			num_capture);
- 		return -EINVAL;
+ 	rq->comp_ring.gen = VMXNET3_INIT_GEN;
+ 	rq->comp_ring.next2proc = 0;
++
++	if (xdp_rxq_info_is_reg(&rq->xdp_rxq))
++		xdp_rxq_info_unreg(&rq->xdp_rxq);
++	page_pool_destroy(rq->page_pool);
++	rq->page_pool = NULL;
+ }
+ 
+ 
+@@ -2091,11 +2096,6 @@ static void vmxnet3_rq_destroy(struct vm
+ 		}
  	}
  
--- 
-2.51.0
-
+-	if (xdp_rxq_info_is_reg(&rq->xdp_rxq))
+-		xdp_rxq_info_unreg(&rq->xdp_rxq);
+-	page_pool_destroy(rq->page_pool);
+-	rq->page_pool = NULL;
+-
+ 	if (rq->data_ring.base) {
+ 		dma_free_coherent(&adapter->pdev->dev,
+ 				  rq->rx_ring[0].size * rq->data_ring.desc_size,
 
 
