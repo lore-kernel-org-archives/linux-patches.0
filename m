@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813B02F0C52;
-	Mon, 22 Sep 2025 19:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BAB2F0C78;
+	Mon, 22 Sep 2025 19:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569936; cv=none; b=ppHDldecxrzVsRcKf26FSGgrSrYzHgmkkfr+ik4aGIkIDUzePTFesrG1wd8JRdFQia64+dAcGKaQKwu7MtE7iUq5HCkmqY547O7StJTRic/p0HyDJt8+A8gC2jwE7rodNHyQRxaF/b+rQJiiTSdriW1HJ8/53JOmc4DcIOiUhZg=
+	t=1758569939; cv=none; b=mjyqFVBVeOHuhbu9oKkL4AXtPh39mmNU7ioOu+V9MKcbIO/Cjdmo1eWmrVNZp9nKRPLBDEe6yZ2adpaI7maA/74gF6pu7T8pXqrCLmonHFDw21wvp3owUuOwlFhu+VaO047CCaHaC1L8ZXg3Qq+HqLuPiJZQNtrGUoS/b+O5TdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569936; c=relaxed/simple;
-	bh=JbAR2i1tLG0qgor1eEXXWmayOC8Zpkg+6vTop9Rd2Ro=;
+	s=arc-20240116; t=1758569939; c=relaxed/simple;
+	bh=lBuRInhTL2XX34QZJrnslI9nfM461wQjY7ytG9CBe7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6GsXVhaF3phAowdrT9Du80eVEVO6bDuTb1ls/x6bZpMFiFbh4qjCvwlZh8lntOuDmvPa6B0u5mrkMgnjEkEUX3rA+URSNJ/mf31fp4c7x81xexgaTdy6K0qVtqJih8wBaruLMwqvxNpAFXSZk4YCKimOgf4D7AHd8rR+MnCla0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOAJXilY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOv2RAdZ3t0MlA2atHc7WicO2ecXKgsgDCXX/24EhsyrmmHzgyHhL4F6ljo/UUl1ok/lPghY019k2sqxZvIQe5Oxa3FfZjdxKsBVKPNOftAUtDVE+QVjKKAj11c9ri0rSJDMZvlh55S7nEYIhHIH0vEMXufhmfn3F9RDWKMGH3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAxldoll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOAJXilY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B87DC4CEF0;
-	Mon, 22 Sep 2025 19:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAxldoll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F92CC4CEF0;
+	Mon, 22 Sep 2025 19:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569936;
-	bh=JbAR2i1tLG0qgor1eEXXWmayOC8Zpkg+6vTop9Rd2Ro=;
+	s=korg; t=1758569938;
+	bh=lBuRInhTL2XX34QZJrnslI9nfM461wQjY7ytG9CBe7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOAJXilY97VLf6Kb2RnJbGP0xdVDhxrGeRaY+OmSEk5yXAovWnmVdYOpieDlSjp9H
-	 0u0ZX2tiXxAFf3QEkbUeR1r2q8auvX5Xd9EkG1LDSUvSuXG2kKETR+QRy6H+2Vg0As
-	 8//WDjCKahoIfTHNMraHMdyQFaPZSn18P5b5vOTk=
+	b=kAxldollt+ZqHsEhgkiNhpia9obFPFwcXy8koFIZRBt3jVmqe+7+N9kI1EWL3lP31
+	 HN+DK4whcPfetDyXbID1guhm8oULhMb34COwK4UeWpXHnPPWEWsqP79MAs2DJarVt3
+	 TBpyCSCchmasfafu8OzPQu2P9eRaiYTw5Pt/R3Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 058/105] KVM: SVM: Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active
-Date: Mon, 22 Sep 2025 21:29:41 +0200
-Message-ID: <20250922192410.436237046@linuxfoundation.org>
+	Sun peng Li <sunpeng.li@amd.com>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 059/105] drm/amd/display: Allow RX6xxx & RX7700 to invoke amdgpu_irq_get/put
+Date: Mon, 22 Sep 2025 21:29:42 +0200
+Message-ID: <20250922192410.462101939@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,56 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+From: Ivan Lipski <ivan.lipski@amd.com>
 
-commit d02e48830e3fce9701265f6c5a58d9bdaf906a76 upstream.
+commit 29a2f430475357f760679b249f33e7282688e292 upstream.
 
-Commit 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
-inhibited pre-VMRUN sync of TPR from LAPIC into VMCB::V_TPR in
-sync_lapic_to_cr8() when AVIC is active.
+[Why&How]
+As reported on https://gitlab.freedesktop.org/drm/amd/-/issues/3936,
+SMU hang can occur if the interrupts are not enabled appropriately,
+causing a vblank timeout.
 
-AVIC does automatically sync between these two fields, however it does
-so only on explicit guest writes to one of these fields, not on a bare
-VMRUN.
+This patch reverts commit 5009628d8509 ("drm/amd/display: Remove unnecessary
+amdgpu_irq_get/put"), but only for RX6xxx & RX7700 GPUs, on which the
+issue was observed.
 
-This meant that when AVIC is enabled host changes to TPR in the LAPIC
-state might not get automatically copied into the V_TPR field of VMCB.
+This will re-enable interrupts regardless of whether the user space needed
+it or not.
 
-This is especially true when it is the userspace setting LAPIC state via
-KVM_SET_LAPIC ioctl() since userspace does not have access to the guest
-VMCB.
-
-Practice shows that it is the V_TPR that is actually used by the AVIC to
-decide whether to issue pending interrupts to the CPU (not TPR in TASKPRI),
-so any leftover value in V_TPR will cause serious interrupt delivery issues
-in the guest when AVIC is enabled.
-
-Fix this issue by doing pre-VMRUN TPR sync from LAPIC into VMCB::V_TPR
-even when AVIC is enabled.
-
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+Fixes: 5009628d8509 ("drm/amd/display: Remove unnecessary amdgpu_irq_get/put")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3936
+Suggested-by: Sun peng Li <sunpeng.li@amd.com>
+Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 95d168b367aa28a59f94fc690ff76ebf69312c6d)
 Cc: stable@vger.kernel.org
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/c231be64280b1461e854e1ce3595d70cde3a2e9d.1756139678.git.maciej.szmigiero@oracle.com
-[sean: tag for stable@]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   39 +++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4044,8 +4044,7 @@ static inline void sync_lapic_to_cr8(str
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	u64 cr8;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8462,7 +8462,16 @@ static int amdgpu_dm_encoder_init(struct
+ static void manage_dm_interrupts(struct amdgpu_device *adev,
+ 				 struct amdgpu_crtc *acrtc,
+ 				 struct dm_crtc_state *acrtc_state)
+-{
++{	/*
++	 * We cannot be sure that the frontend index maps to the same
++	 * backend index - some even map to more than one.
++	 * So we have to go through the CRTC to find the right IRQ.
++	 */
++	int irq_type = amdgpu_display_crtc_idx_to_irq_type(
++			adev,
++			acrtc->crtc_id);
++	struct drm_device *dev = adev_to_drm(adev);
++
+ 	struct drm_vblank_crtc_config config = {0};
+ 	struct dc_crtc_timing *timing;
+ 	int offdelay;
+@@ -8515,7 +8524,35 @@ static void manage_dm_interrupts(struct
  
--	if (nested_svm_virtualize_tpr(vcpu) ||
--	    kvm_vcpu_apicv_active(vcpu))
-+	if (nested_svm_virtualize_tpr(vcpu))
- 		return;
- 
- 	cr8 = kvm_get_cr8(vcpu);
+ 		drm_crtc_vblank_on_config(&acrtc->base,
+ 					  &config);
++		/* Allow RX6xxx, RX7700, RX7800 GPUs to call amdgpu_irq_get.*/
++		switch (amdgpu_ip_version(adev, DCE_HWIP, 0)) {
++		case IP_VERSION(3, 0, 0):
++		case IP_VERSION(3, 0, 2):
++		case IP_VERSION(3, 0, 3):
++		case IP_VERSION(3, 2, 0):
++			if (amdgpu_irq_get(adev, &adev->pageflip_irq, irq_type))
++				drm_err(dev, "DM_IRQ: Cannot get pageflip irq!\n");
++#if defined(CONFIG_DRM_AMD_SECURE_DISPLAY)
++			if (amdgpu_irq_get(adev, &adev->vline0_irq, irq_type))
++				drm_err(dev, "DM_IRQ: Cannot get vline0 irq!\n");
++#endif
++		}
++
+ 	} else {
++		/* Allow RX6xxx, RX7700, RX7800 GPUs to call amdgpu_irq_put.*/
++		switch (amdgpu_ip_version(adev, DCE_HWIP, 0)) {
++		case IP_VERSION(3, 0, 0):
++		case IP_VERSION(3, 0, 2):
++		case IP_VERSION(3, 0, 3):
++		case IP_VERSION(3, 2, 0):
++#if defined(CONFIG_DRM_AMD_SECURE_DISPLAY)
++			if (amdgpu_irq_put(adev, &adev->vline0_irq, irq_type))
++				drm_err(dev, "DM_IRQ: Cannot put vline0 irq!\n");
++#endif
++			if (amdgpu_irq_put(adev, &adev->pageflip_irq, irq_type))
++				drm_err(dev, "DM_IRQ: Cannot put pageflip irq!\n");
++		}
++
+ 		drm_crtc_vblank_off(&acrtc->base);
+ 	}
+ }
 
 
