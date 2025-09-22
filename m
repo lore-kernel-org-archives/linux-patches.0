@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0892A2F1FE3;
-	Mon, 22 Sep 2025 19:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9030E2F0C5C;
+	Mon, 22 Sep 2025 19:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570275; cv=none; b=fqVrN04z+ncxcQxCBmtBR8OPAfYLXRoyGPO8gCYFb9kKXQPjKjKVTGzcpIdroyRPTNpxm0feJJ7lTId++nSlW1LFAY4gqdkCNrEpG/A3tq1yFiAPmN2EqulHtfQKkOkt8eYAhIlvweem83OPFtf3KYA2O3nZSDKgenX/sWs5+W4=
+	t=1758570277; cv=none; b=snU1Wlva7NqFmGoTpySV4bYTc4+jusKfbtIlECCAb5ObOkik/Br19R/QAIKz0obRYtm9asazcNJqmoaonR2Gch6ilWQFseeCNIxWktpgri3r3lUDaNFm7dH2TgAYCK/YPZsaZOJObI6VNGmz7uX8d54nT+K+eXCl+iaiNFNRJyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570275; c=relaxed/simple;
-	bh=OtfqAJ00uK+ouLD518GyRXh8dA02PbWugBxDhnreusI=;
+	s=arc-20240116; t=1758570277; c=relaxed/simple;
+	bh=u4bLze1FT4QReiMyO4gn5TpcArWUt4tZTwMP1GFhCcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmGH1tecT+n2ysL+TCgqw+aBTR4tZ+3u/o34/71VWsreVQl0PUlxpESiRD7PLg7/VebgaJJ05KyuMSNpTtK1ZQG/AAylGhkqwrrsnVRAHKMZuLi9aTbTtLbD8bVbnKl3437V1o0bw5y+FJ4L4WShAnM4hGqgLsGXb1CjVlf/ks0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuZKcq3B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8ysYViJ9p4HUUlkxwZIPWFFBuu05eAXrCWjTWuDUjcfSOrxptIJTJgevaWH4ak7e1BU+WqWOSfLhZVXGZrshXp7xUQMCytFsugmWFwlz413fiAp5yXRQaVFptT4eeCFmYAR3WSRJ8Nld+EXE+rRIQVpZLEhuQ3BSdigKnWSj58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdnbHmMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuZKcq3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68450C4CEF0;
-	Mon, 22 Sep 2025 19:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdnbHmMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE30EC4CEF0;
+	Mon, 22 Sep 2025 19:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570274;
-	bh=OtfqAJ00uK+ouLD518GyRXh8dA02PbWugBxDhnreusI=;
+	s=korg; t=1758570277;
+	bh=u4bLze1FT4QReiMyO4gn5TpcArWUt4tZTwMP1GFhCcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuZKcq3BT9PbaVs/cBq67aGHDpAq9v70ftmsITfikcxKcQs7nhuNLbXkiGB+MGHG+
-	 ZZpax9K/GiHF/ZAfcnXASzbPkE18xMXOp9oMbUpo4nnYb+qY0muCnd8Jpqz8fxVoUz
-	 SFIwKrv9hzoMveNSHXhP5bKVNUCdJYORWsnQ32lk=
+	b=XdnbHmMlpm07O3VnDmXzSlPN76duJTXgYQQ+5SsvTEaFSfXKF/7QhSXuih4QOWZES
+	 7jOoRc6HmbBnWjuiq9ai26c3IWLpgjRyPxDWM4fKw/FoazOlgrIZKZmPFINHr3wAMr
+	 t2DMqK3xnsB1+UjxSwUixwFPJWpI+B4wAy1C+TsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 073/149] LoongArch: KVM: Avoid copy_*_user() with lock hold in kvm_eiointc_ctrl_access()
-Date: Mon, 22 Sep 2025 21:29:33 +0200
-Message-ID: <20250922192414.723234811@linuxfoundation.org>
+Subject: [PATCH 6.16 074/149] LoongArch: KVM: Avoid copy_*_user() with lock hold in kvm_eiointc_regs_access()
+Date: Mon, 22 Sep 2025 21:29:34 +0200
+Message-ID: <20250922192414.749261179@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-commit 47256c4c8b1bfbc63223a0da2d4fa90b6ede5cbb upstream.
+commit 62f11796a0dfa1a2ef5f50a2d1bc81c81628fb8e upstream.
 
 Function copy_from_user() and copy_to_user() may sleep because of page
 fault, and they cannot be called in spin_lock hold context. Here move
@@ -88,7 +88,7 @@ Call Trace:
 [<9000000004c20fac>] dump_stack_lvl+0x94/0xe4
 [<9000000004c99c7c>] __might_resched+0x26c/0x290
 [<9000000004f68968>] __might_fault+0x20/0x88
-[<ffff800002311de0>] kvm_eiointc_ctrl_access.isra.0+0x88/0x380 [kvm]
+[<ffff800002311de0>] kvm_eiointc_regs_access.isra.0+0x88/0x380 [kvm]
 [<ffff8000022f8514>] kvm_device_ioctl+0x194/0x290 [kvm]
 [<900000000506b0d8>] sys_ioctl+0x388/0x1010
 [<90000000063ed210>] do_syscall+0xb0/0x2d8
@@ -100,47 +100,87 @@ Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/eiointc.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ arch/loongarch/kvm/intc/eiointc.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
 --- a/arch/loongarch/kvm/intc/eiointc.c
 +++ b/arch/loongarch/kvm/intc/eiointc.c
-@@ -810,21 +810,26 @@ static int kvm_eiointc_ctrl_access(struc
- 	struct loongarch_eiointc *s = dev->kvm->arch.eiointc;
+@@ -851,19 +851,17 @@ static int kvm_eiointc_ctrl_access(struc
  
- 	data = (void __user *)attr->addr;
--	spin_lock_irqsave(&s->lock, flags);
- 	switch (type) {
- 	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_NUM_CPU:
-+	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_FEATURE:
- 		if (copy_from_user(&val, data, 4))
+ static int kvm_eiointc_regs_access(struct kvm_device *dev,
+ 					struct kvm_device_attr *attr,
+-					bool is_write)
++					bool is_write, int *data)
+ {
+ 	int addr, cpu, offset, ret = 0;
+ 	unsigned long flags;
+ 	void *p = NULL;
+-	void __user *data;
+ 	struct loongarch_eiointc *s;
+ 
+ 	s = dev->kvm->arch.eiointc;
+ 	addr = attr->attr;
+ 	cpu = addr >> 16;
+ 	addr &= 0xffff;
+-	data = (void __user *)attr->addr;
+ 	switch (addr) {
+ 	case EIOINTC_NODETYPE_START ... EIOINTC_NODETYPE_END:
+ 		offset = (addr - EIOINTC_NODETYPE_START) / 4;
+@@ -902,13 +900,10 @@ static int kvm_eiointc_regs_access(struc
+ 	}
+ 
+ 	spin_lock_irqsave(&s->lock, flags);
+-	if (is_write) {
+-		if (copy_from_user(p, data, 4))
 -			ret = -EFAULT;
--		else {
--			if (val >= EIOINTC_ROUTE_MAX_VCPUS)
--				ret = -EINVAL;
--			else
--				s->num_cpu = val;
--		}
-+			return -EFAULT;
-+		break;
-+	default:
-+		break;
-+	}
+-	} else {
+-		if (copy_to_user(data, p, 4))
+-			ret = -EFAULT;
+-	}
++	if (is_write)
++		memcpy(p, data, 4);
++	else
++		memcpy(data, p, 4);
+ 	spin_unlock_irqrestore(&s->lock, flags);
+ 
+ 	return ret;
+@@ -965,9 +960,18 @@ static int kvm_eiointc_sw_status_access(
+ static int kvm_eiointc_get_attr(struct kvm_device *dev,
+ 				struct kvm_device_attr *attr)
+ {
++	int ret, data;
 +
-+	spin_lock_irqsave(&s->lock, flags);
-+	switch (type) {
-+	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_NUM_CPU:
-+		if (val >= EIOINTC_ROUTE_MAX_VCPUS)
-+			ret = -EINVAL;
-+		else
-+			s->num_cpu = val;
- 		break;
- 	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_FEATURE:
--		if (copy_from_user(&s->features, data, 4))
--			ret = -EFAULT;
-+		s->features = val;
- 		if (!(s->features & BIT(EIOINTC_HAS_VIRT_EXTENSION)))
- 			s->status |= BIT(EIOINTC_ENABLE);
- 		break;
+ 	switch (attr->group) {
+ 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_REGS:
+-		return kvm_eiointc_regs_access(dev, attr, false);
++		ret = kvm_eiointc_regs_access(dev, attr, false, &data);
++		if (ret)
++			return ret;
++
++		if (copy_to_user((void __user *)attr->addr, &data, 4))
++			ret = -EFAULT;
++
++		return ret;
+ 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS:
+ 		return kvm_eiointc_sw_status_access(dev, attr, false);
+ 	default:
+@@ -978,11 +982,16 @@ static int kvm_eiointc_get_attr(struct k
+ static int kvm_eiointc_set_attr(struct kvm_device *dev,
+ 				struct kvm_device_attr *attr)
+ {
++	int data;
++
+ 	switch (attr->group) {
+ 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_CTRL:
+ 		return kvm_eiointc_ctrl_access(dev, attr);
+ 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_REGS:
+-		return kvm_eiointc_regs_access(dev, attr, true);
++		if (copy_from_user(&data, (void __user *)attr->addr, 4))
++			return -EFAULT;
++
++		return kvm_eiointc_regs_access(dev, attr, true, &data);
+ 	case KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS:
+ 		return kvm_eiointc_sw_status_access(dev, attr, true);
+ 	default:
 
 
