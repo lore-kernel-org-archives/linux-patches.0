@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987F527B320;
-	Mon, 22 Sep 2025 19:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D12927B320;
+	Mon, 22 Sep 2025 19:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569737; cv=none; b=bFVZhiwZBnw8TiNXs90++KPb3jIRe2grBKFF7EeDctVfNq11uBM6dXSakzFJg7Af92OnzttpMmXvWuzL3J+uuTPNfv6JiRlweXaeeBZkgiw7HqIbBU4US2FmWZGrad8GH5QIxuhesDgG2flpkjaBkCx1jY2nqbXfU8X4SX7GPdA=
+	t=1758569740; cv=none; b=aJiCpa40wwhKwWQcbFFZIRmZjScIASvoKncF6tr5nepOsz2FDZdGbhWIJONo5SHYrKrJ93J4gQtQmA/fK+dgRFuaQm4yXFaYp587E32pC8GsFM8v2Z6i8a3p+kBspoCob7jAP+ZL0WtAvqs+Ydu58Xf1axs2vq5cO3qU2v2rvy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569737; c=relaxed/simple;
-	bh=tyZ9hZzHQy5DmXaBifh3KIKKyYN4JIrz1cfJewzNb2k=;
+	s=arc-20240116; t=1758569740; c=relaxed/simple;
+	bh=RTUZwhcPe+jmMiD0l67l41IpfSgeliBCvQkp+VabuI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sksqMgjLUPHmUwfuThsRK32+wDAIwLs0nAp5wU4befbmG6Y1pWF8txN/RUjf5LNO+VFYWbJbXrpJiBhMrtkJsZ7wnROG1T9bP7/eM7pJc/Wk+RXKoDybyMxtygyqyGHKbla0jscVcqdhrrwyKwOeCQCzYd+tRp/708eFwDfEGDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOrm5B8G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GCbdDPurOKs1KB9obiDw8AbDX0281mnxY2xfa/TD+YbTkcQMZ7N7T9OfMBXUJqvh476og7pGMO5PzhsJ+XKpifUOpUYDvquR8rJQoQJGw1iLa19jNb/Q6iaqparpLjD2xn/XVtnXrlt0Cwq+6/2rY1Jx/slS0fSTi9EoaZzSUoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Mam6kcw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOrm5B8G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ED2C4CEF5;
-	Mon, 22 Sep 2025 19:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Mam6kcw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA34AC4CEF0;
+	Mon, 22 Sep 2025 19:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569737;
-	bh=tyZ9hZzHQy5DmXaBifh3KIKKyYN4JIrz1cfJewzNb2k=;
+	s=korg; t=1758569740;
+	bh=RTUZwhcPe+jmMiD0l67l41IpfSgeliBCvQkp+VabuI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOrm5B8GBLYfQPegjf5xbp3yIyfMA/Nv2RXydVq8YUP64kZKNR0UgYNqAzu0hpJZl
-	 v7oWf9CW7mc0DrOwaOv4F1M/1emTNQAyoiyVhtUx9bTB4EBTzKmWE1VhpP/zFAE/H+
-	 o3zK46pVqG2Qz9BdbmqBxLgMHCgwojdb7IvITL44=
+	b=2Mam6kcwYtZINgsraCVfjEk8HhhqIW/l46zTfJcrTxf1H7pE4Fm8XLIGUvDipNCjb
+	 i6HxOpaJpS8479HbWTfsJ71/r73kBZtiLiSaoR0Vnwbl6ykxktPP/pmtEi4drpy3gZ
+	 2TiSBjPNFzXQ1LvWlwPVSqnbSeSJVfWp7UnqGjLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 28/70] nilfs2: fix CFI failure when accessing /sys/fs/nilfs2/features/*
-Date: Mon, 22 Sep 2025 21:29:28 +0200
-Message-ID: <20250922192405.335313974@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 42/70] net: rfkill: gpio: Fix crash due to dereferencering uninitialized pointer
+Date: Mon, 22 Sep 2025 21:29:42 +0200
+Message-ID: <20250922192405.746172092@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -52,95 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Hans de Goede <hansg@kernel.org>
 
-commit 025e87f8ea2ae3a28bf1fe2b052bfa412c27ed4a upstream.
+commit b6f56a44e4c1014b08859dcf04ed246500e310e5 upstream.
 
-When accessing one of the files under /sys/fs/nilfs2/features when
-CONFIG_CFI_CLANG is enabled, there is a CFI violation:
+Since commit 7d5e9737efda ("net: rfkill: gpio: get the name and type from
+device property") rfkill_find_type() gets called with the possibly
+uninitialized "const char *type_name;" local variable.
 
-  CFI failure at kobj_attr_show+0x59/0x80 (target: nilfs_feature_revision_show+0x0/0x30; expected type: 0xfc392c4d)
-  ...
-  Call Trace:
-   <TASK>
-   sysfs_kf_seq_show+0x2a6/0x390
-   ? __cfi_kobj_attr_show+0x10/0x10
-   kernfs_seq_show+0x104/0x15b
-   seq_read_iter+0x580/0xe2b
-  ...
+On x86 systems when rfkill-gpio binds to a "BCM4752" or "LNV4752"
+acpi_device, the rfkill->type is set based on the ACPI acpi_device_id:
 
-When the kobject of the kset for /sys/fs/nilfs2 is initialized, its ktype
-is set to kset_ktype, which has a ->sysfs_ops of kobj_sysfs_ops.  When
-nilfs_feature_attr_group is added to that kobject via
-sysfs_create_group(), the kernfs_ops of each files is sysfs_file_kfops_rw,
-which will call sysfs_kf_seq_show() when ->seq_show() is called.
-sysfs_kf_seq_show() in turn calls kobj_attr_show() through
-->sysfs_ops->show().  kobj_attr_show() casts the provided attribute out to
-a 'struct kobj_attribute' via container_of() and calls ->show(), resulting
-in the CFI violation since neither nilfs_feature_revision_show() nor
-nilfs_feature_README_show() match the prototype of ->show() in 'struct
-kobj_attribute'.
+        rfkill->type = (unsigned)id->driver_data;
 
-Resolve the CFI violation by adjusting the second parameter in
-nilfs_feature_{revision,README}_show() from 'struct attribute' to 'struct
-kobj_attribute' to match the expected prototype.
+and there is no "type" property so device_property_read_string() will fail
+and leave type_name uninitialized, leading to a potential crash.
 
-Link: https://lkml.kernel.org/r/20250906144410.22511-1-konishi.ryusuke@gmail.com
-Fixes: aebe17f68444 ("nilfs2: add /sys/fs/nilfs2/features group")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202509021646.bc78d9ef-lkp@intel.com/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+rfkill_find_type() does accept a NULL pointer, fix the potential crash
+by initializing type_name to NULL.
+
+Note likely sofar this has not been caught because:
+
+1. Not many x86 machines actually have a "BCM4752"/"LNV4752" acpi_device
+2. The stack happened to contain NULL where type_name is stored
+
+Fixes: 7d5e9737efda ("net: rfkill: gpio: get the name and type from device property")
+Cc: stable@vger.kernel.org
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20250913113515.21698-1-hansg@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sysfs.c |    4 ++--
- fs/nilfs2/sysfs.h |    8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ net/rfkill/rfkill-gpio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/sysfs.c
-+++ b/fs/nilfs2/sysfs.c
-@@ -1075,7 +1075,7 @@ void nilfs_sysfs_delete_device_group(str
-  ************************************************************************/
- 
- static ssize_t nilfs_feature_revision_show(struct kobject *kobj,
--					    struct attribute *attr, char *buf)
-+					    struct kobj_attribute *attr, char *buf)
+--- a/net/rfkill/rfkill-gpio.c
++++ b/net/rfkill/rfkill-gpio.c
+@@ -79,10 +79,10 @@ static int rfkill_gpio_acpi_probe(struct
+ static int rfkill_gpio_probe(struct platform_device *pdev)
  {
- 	return sysfs_emit(buf, "%d.%d\n",
- 			NILFS_CURRENT_REV, NILFS_MINOR_REV);
-@@ -1087,7 +1087,7 @@ static const char features_readme_str[]
- 	"(1) revision\n\tshow current revision of NILFS file system driver.\n";
+ 	struct rfkill_gpio_data *rfkill;
+-	struct gpio_desc *gpio;
++	const char *type_name = NULL;
+ 	const char *name_property;
+ 	const char *type_property;
+-	const char *type_name;
++	struct gpio_desc *gpio;
+ 	int ret;
  
- static ssize_t nilfs_feature_README_show(struct kobject *kobj,
--					 struct attribute *attr,
-+					 struct kobj_attribute *attr,
- 					 char *buf)
- {
- 	return sysfs_emit(buf, features_readme_str);
---- a/fs/nilfs2/sysfs.h
-+++ b/fs/nilfs2/sysfs.h
-@@ -50,16 +50,16 @@ struct nilfs_sysfs_dev_subgroups {
- 	struct completion sg_segments_kobj_unregister;
- };
- 
--#define NILFS_COMMON_ATTR_STRUCT(name) \
-+#define NILFS_KOBJ_ATTR_STRUCT(name) \
- struct nilfs_##name##_attr { \
- 	struct attribute attr; \
--	ssize_t (*show)(struct kobject *, struct attribute *, \
-+	ssize_t (*show)(struct kobject *, struct kobj_attribute *, \
- 			char *); \
--	ssize_t (*store)(struct kobject *, struct attribute *, \
-+	ssize_t (*store)(struct kobject *, struct kobj_attribute *, \
- 			 const char *, size_t); \
- }
- 
--NILFS_COMMON_ATTR_STRUCT(feature);
-+NILFS_KOBJ_ATTR_STRUCT(feature);
- 
- #define NILFS_DEV_ATTR_STRUCT(name) \
- struct nilfs_##name##_attr { \
+ 	rfkill = devm_kzalloc(&pdev->dev, sizeof(*rfkill), GFP_KERNEL);
 
 
