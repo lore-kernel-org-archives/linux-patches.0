@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C705425F780;
-	Mon, 22 Sep 2025 19:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4931627B320;
+	Mon, 22 Sep 2025 19:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569814; cv=none; b=IOHLTZ51w0l02DzhmtHo+KpFkewAmbru43jzFqysjajykLgEFBF4yRA5bGz0b8T+Tx15prKnSLWVN70L4nuHnHOxuZ48/ksaI+66pov7/aUck+f4uSf8r8XiSHSRhyjSzaQUIQZg4MA67yuEABGiiLx2C5wUserkFv8lXlFVTXQ=
+	t=1758569817; cv=none; b=OqOh2WmmUZYqmJDMeo28ViKGylCqkR6teGV0mL91TBnrk23ZlTTv8MbO5qMRJkLwJq3Z0AlnXry7XWdeMIH1FvShGFNAt+coJfx4S7SatfwYaRSXsaapHjyPLjn5eVX9KNbuH1mh6saTeEUHq+bJHnhrl+uqf158sO/tZeA1Mr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569814; c=relaxed/simple;
-	bh=BtgGP0qkk4WOyPVaUoyzODdcgexn4g9OSfc4PjGvC5I=;
+	s=arc-20240116; t=1758569817; c=relaxed/simple;
+	bh=lWF8iIgQBnpIg9sDIud6XGMwOB0KkibCUwF7nu4Ssrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZapQzcXBD+Fs559GvTESEIsrLgW65MWCo4E3MSIqwtoNP1XKseixySQrljtOLygE1AZE5s6hqDJmc0hUT+VKpDRzEnjJMRa/A30/HbAnNTdhsbnZpKnD4cMZD0oL9l7AZR1KLE60NYuIKADj0cemOmJ/AVXw3Zm9fMNVHaeJ/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtGh3Wzk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3j9IMfGkBht7RhKoRXiBaOor9tPiowU6nT6RGsG4TeJy9xluoSZKPqd4PzEJf2F5pjzCgimDCAP3Ogxu7bx2+yGrhS4VZ0K2KJLDF+60Z37CZsxp1C+BUHDbgtzx/mEtGxZflLxQ+06bTIQN6aXlqgOxHijXfD0Vouu5v0VSi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBA3oAuD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtGh3Wzk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E382C4CEF0;
-	Mon, 22 Sep 2025 19:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBA3oAuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2807C4CEF0;
+	Mon, 22 Sep 2025 19:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569814;
-	bh=BtgGP0qkk4WOyPVaUoyzODdcgexn4g9OSfc4PjGvC5I=;
+	s=korg; t=1758569817;
+	bh=lWF8iIgQBnpIg9sDIud6XGMwOB0KkibCUwF7nu4Ssrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtGh3WzkPydV8u8EyGMSwKvDj9ScbwB3jp2lKFZ59UxzNKWCiL+wMC8Jt1Q5axJ0+
-	 pQaTwld5S2qxCrhdVXJnBejiYsDittjjuhzovqdJS3o1hqH9RGVGFqm4JtU0ppxcU8
-	 tMyKanR3Za0Mwo1yQx+Yv+otKYzoGhq+2P1z1KHg=
+	b=TBA3oAuD3Jb/vDuVY4qoZECUPlNQL1hfrHBNpl8SmpbBBeqkYvPy49I5tnWeZuY/T
+	 wesg5R31ldsNsjEOzuHdsOhXe7ifc6btT1AqzHSkHg2yk55zheo3VzE+hW7+Doti/j
+	 2wnuQl2qv5VrSe0dKkvDjzxMcwe9/dTr7p/8wvD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ajay Singh <ajay.kathat@microchip.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/105] wifi: wilc1000: avoid buffer overflow in WID string configuration
-Date: Mon, 22 Sep 2025 21:28:44 +0200
-Message-ID: <20250922192408.952807531@linuxfoundation.org>
+Subject: [PATCH 6.12 002/105] nvme: fix PI insert on write
+Date: Mon, 22 Sep 2025 21:28:45 +0200
+Message-ID: <20250922192408.976486542@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,153 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ajay.Kathat@microchip.com <Ajay.Kathat@microchip.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit fe9e4d0c39311d0f97b024147a0d155333f388b5 ]
+[ Upstream commit 7ac3c2889bc060c3f67cf44df0dbb093a835c176 ]
 
-Fix the following copy overflow warning identified by Smatch checker.
+I recently ran into an issue where the PI generated using the block layer
+integrity code differs from that from a kernel using the PRACT fallback
+when the block layer integrity code is disabled, and I tracked this down
+to us using PRACT incorrectly.
 
- drivers/net/wireless/microchip/wilc1000/wlan_cfg.c:184 wilc_wlan_parse_response_frame()
-        error: '__memcpy()' 'cfg->s[i]->str' copy overflow (512 vs 65537)
+The NVM Command Set Specification (section 5.33 in 1.2, similar in older
+versions) specifies the PRACT insert behavior as:
 
-This patch introduces size check before accessing the memory buffer.
-The checks are base on the WID type of received data from the firmware.
-For WID string configuration, the size limit is determined by individual
-element size in 'struct wilc_cfg_str_vals' that is maintained in 'len' field
-of 'struct wilc_cfg_str'.
+  Inserted protection information consists of the computed CRC for the
+  protection information format (refer to section 5.3.1) in the Guard
+  field, the LBAT field value in the Application Tag field, the LBST
+  field value in the Storage Tag field, if defined, and the computed
+  reference tag in the Logical Block Reference Tag.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-wireless/aLFbr9Yu9j_TQTey@stanley.mountain
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Ajay Singh <ajay.kathat@microchip.com>
-Link: https://patch.msgid.link/20250829225829.5423-1-ajay.kathat@microchip.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Where the computed reference tag is defined as following for type 1 and
+type 2 using the text below that is duplicated in the respective bullet
+points:
+
+  the value of the computed reference tag for the first logical block of
+  the command is the value contained in the Initial Logical Block
+  Reference Tag (ILBRT) or Expected Initial Logical Block Reference Tag
+  (EILBRT) field in the command, and the computed reference tag is
+  incremented for each subsequent logical block.
+
+So we need to set ILBRT field, but we currently don't.  Interestingly
+this works fine on my older type 1 formatted SSD, but Qemu trips up on
+this.  We already set ILBRT for Write Same since commit aeb7bb061be5
+("nvme: set the PRACT bit when using Write Zeroes with T10 PI").
+
+To ease this, move the PI type check into nvme_set_ref_tag.
+
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/microchip/wilc1000/wlan_cfg.c    | 37 ++++++++++++++-----
- .../wireless/microchip/wilc1000/wlan_cfg.h    |  5 ++-
- 2 files changed, 30 insertions(+), 12 deletions(-)
+ drivers/nvme/host/core.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
-index 131388886acbf..cfabd5aebb540 100644
---- a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
-+++ b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.c
-@@ -41,10 +41,10 @@ static const struct wilc_cfg_word g_cfg_word[] = {
- };
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 9e223574db7f7..24d82d35041b5 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -890,6 +890,15 @@ static void nvme_set_ref_tag(struct nvme_ns *ns, struct nvme_command *cmnd,
+ 	u32 upper, lower;
+ 	u64 ref48;
  
- static const struct wilc_cfg_str g_cfg_str[] = {
--	{WID_FIRMWARE_VERSION, NULL},
--	{WID_MAC_ADDR, NULL},
--	{WID_ASSOC_RES_INFO, NULL},
--	{WID_NIL, NULL}
-+	{WID_FIRMWARE_VERSION, 0, NULL},
-+	{WID_MAC_ADDR, 0, NULL},
-+	{WID_ASSOC_RES_INFO, 0, NULL},
-+	{WID_NIL, 0, NULL}
- };
- 
- #define WILC_RESP_MSG_TYPE_CONFIG_REPLY		'R'
-@@ -147,44 +147,58 @@ static void wilc_wlan_parse_response_frame(struct wilc *wl, u8 *info, int size)
- 
- 		switch (FIELD_GET(WILC_WID_TYPE, wid)) {
- 		case WID_CHAR:
-+			len = 3;
-+			if (len + 2  > size)
-+				return;
++	/* only type1 and type 2 PI formats have a reftag */
++	switch (ns->head->pi_type) {
++	case NVME_NS_DPS_PI_TYPE1:
++	case NVME_NS_DPS_PI_TYPE2:
++		break;
++	default:
++		return;
++	}
 +
- 			while (cfg->b[i].id != WID_NIL && cfg->b[i].id != wid)
- 				i++;
+ 	/* both rw and write zeroes share the same reftag format */
+ 	switch (ns->head->guard_type) {
+ 	case NVME_NVM_NS_16B_GUARD:
+@@ -929,13 +938,7 @@ static inline blk_status_t nvme_setup_write_zeroes(struct nvme_ns *ns,
  
- 			if (cfg->b[i].id == wid)
- 				cfg->b[i].val = info[4];
+ 	if (nvme_ns_has_pi(ns->head)) {
+ 		cmnd->write_zeroes.control |= cpu_to_le16(NVME_RW_PRINFO_PRACT);
+-
+-		switch (ns->head->pi_type) {
+-		case NVME_NS_DPS_PI_TYPE1:
+-		case NVME_NS_DPS_PI_TYPE2:
+-			nvme_set_ref_tag(ns, cmnd, req);
+-			break;
+-		}
++		nvme_set_ref_tag(ns, cmnd, req);
+ 	}
  
--			len = 3;
- 			break;
+ 	return BLK_STS_OK;
+@@ -1014,6 +1017,7 @@ static inline blk_status_t nvme_setup_rw(struct nvme_ns *ns,
+ 			if (WARN_ON_ONCE(!nvme_ns_has_pi(ns->head)))
+ 				return BLK_STS_NOTSUPP;
+ 			control |= NVME_RW_PRINFO_PRACT;
++			nvme_set_ref_tag(ns, cmnd, req);
+ 		}
  
- 		case WID_SHORT:
-+			len = 4;
-+			if (len + 2  > size)
-+				return;
-+
- 			while (cfg->hw[i].id != WID_NIL && cfg->hw[i].id != wid)
- 				i++;
- 
- 			if (cfg->hw[i].id == wid)
- 				cfg->hw[i].val = get_unaligned_le16(&info[4]);
- 
--			len = 4;
- 			break;
- 
- 		case WID_INT:
-+			len = 6;
-+			if (len + 2  > size)
-+				return;
-+
- 			while (cfg->w[i].id != WID_NIL && cfg->w[i].id != wid)
- 				i++;
- 
- 			if (cfg->w[i].id == wid)
- 				cfg->w[i].val = get_unaligned_le32(&info[4]);
- 
--			len = 6;
- 			break;
- 
- 		case WID_STR:
-+			len = 2 + get_unaligned_le16(&info[2]);
-+
- 			while (cfg->s[i].id != WID_NIL && cfg->s[i].id != wid)
- 				i++;
- 
--			if (cfg->s[i].id == wid)
-+			if (cfg->s[i].id == wid) {
-+				if (len > cfg->s[i].len || (len + 2  > size))
-+					return;
-+
- 				memcpy(cfg->s[i].str, &info[2],
--				       get_unaligned_le16(&info[2]) + 2);
-+				       len);
-+			}
- 
--			len = 2 + get_unaligned_le16(&info[2]);
- 			break;
- 
- 		default:
-@@ -384,12 +398,15 @@ int wilc_wlan_cfg_init(struct wilc *wl)
- 	/* store the string cfg parameters */
- 	wl->cfg.s[i].id = WID_FIRMWARE_VERSION;
- 	wl->cfg.s[i].str = str_vals->firmware_version;
-+	wl->cfg.s[i].len = sizeof(str_vals->firmware_version);
- 	i++;
- 	wl->cfg.s[i].id = WID_MAC_ADDR;
- 	wl->cfg.s[i].str = str_vals->mac_address;
-+	wl->cfg.s[i].len = sizeof(str_vals->mac_address);
- 	i++;
- 	wl->cfg.s[i].id = WID_ASSOC_RES_INFO;
- 	wl->cfg.s[i].str = str_vals->assoc_rsp;
-+	wl->cfg.s[i].len = sizeof(str_vals->assoc_rsp);
- 	i++;
- 	wl->cfg.s[i].id = WID_NIL;
- 	wl->cfg.s[i].str = NULL;
-diff --git a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
-index 7038b74f8e8ff..5ae74bced7d74 100644
---- a/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
-+++ b/drivers/net/wireless/microchip/wilc1000/wlan_cfg.h
-@@ -24,12 +24,13 @@ struct wilc_cfg_word {
- 
- struct wilc_cfg_str {
- 	u16 id;
-+	u16 len;
- 	u8 *str;
- };
- 
- struct wilc_cfg_str_vals {
--	u8 mac_address[7];
--	u8 firmware_version[129];
-+	u8 mac_address[8];
-+	u8 firmware_version[130];
- 	u8 assoc_rsp[WILC_MAX_ASSOC_RESP_FRAME_SIZE];
- };
- 
+ 		switch (ns->head->pi_type) {
 -- 
 2.51.0
 
