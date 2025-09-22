@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67491C1ADB;
-	Mon, 22 Sep 2025 19:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6600B1C1ADB;
+	Mon, 22 Sep 2025 19:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570390; cv=none; b=VDnFGqVCOS3QbS7sqWm5EY5BDO0CNn/679kJr8dhK4T4YiU+ILr4goG51GDV/1HJUxaAljs7r7pw8YTnfU2wxS36pNh/lYtGd386N9yZm0+XcRYFFfVvNCFx3IG60JgV9tQrMfSixHUJZO+e24hk9P/ZpYcWnn6b5cEDPec0mWs=
+	t=1758570392; cv=none; b=bsJN1JZ1L33K9pkcKOwMQhI3zZumbMmCQ1cia1Li/UfANruDqvQF4zF8xgdwDlkot7sd0HgNqP14ZyQjvI0unLmePDN4vqcfv8NlNRvjrm5uraupv7WPj+c8meu3E6kEuIqUwfapcCiQogTzYDd2fAGlpmQOaERUc+gc4Orewh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570390; c=relaxed/simple;
-	bh=atOLcaiW517+Q2JbDjqCOg3N5i1Vc3HcFvpSI3YtXy0=;
+	s=arc-20240116; t=1758570392; c=relaxed/simple;
+	bh=xcGUOybTOVyN9wFoNwpJS3lMBd5tMtperaEM1pBcR2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p88i+dGHqMNjw3E6mHx6A1daC82NOffokIcZT1LLXcCRHsR46ngu5sYSTybu0OuuDPf3LmtLKS6YAHKreXEbe+syF129UWcaRHGzY2UX9j54WE1/rroPWNxrOM4Ss721zUERZVuBITYp2mzKZRrAqGsSjkYE4HAB0BAHyJFZJFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMyJBitx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SPzwQaCC3o8/g6sMUbMLZJO7xvFkmqD3F2ynxNjQ/JFPDFru05m7mE7z4wRUpDw5P5D3xd2OzTO4xPK7x8k/w56CPKGGtBEFqfGl4kkt95ktZaf6qxnA9CYBUZ2GVJQ+7gkMXa4KBSOdJZAzZFJ2RNE4FlOwonpHZ4ZQc1MPf4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRjsG3bC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMyJBitx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFFFC4CEF0;
-	Mon, 22 Sep 2025 19:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRjsG3bC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02387C4CEF5;
+	Mon, 22 Sep 2025 19:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570389;
-	bh=atOLcaiW517+Q2JbDjqCOg3N5i1Vc3HcFvpSI3YtXy0=;
+	s=korg; t=1758570392;
+	bh=xcGUOybTOVyN9wFoNwpJS3lMBd5tMtperaEM1pBcR2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sMyJBitxp1XSazyEohiSfKtfulr1U9w8AkhaW17DzDS2qUkjwrJry80F4bR1VM/9f
-	 tB+Ee3IQdwsxEf3aeScqwEaHC1zycKgxgcgXgZx0/1ccHgChNjeLzEI1LGvIAReMNp
-	 qQF+vvzPa+sIm1QoecvnJV7n9lTDCYqtaCps3SKg=
+	b=KRjsG3bCSGmc/zGvnPkAnuPk1Mwfau8bIjQBR5MbUGrX8SN7KB9CHm+PC/wz+Fa6/
+	 bImWCoENLQBONhUuM/tB270hquC5JIwVjxqc/7pMQDj+AICbz67ZjLUJb8/vDOW4yI
+	 NJAmxi07I/zI9ew9+YiL1aJ/ZfTiHPCxJtArYATM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Piotr=20Pi=C3=B3rkowski?= <piotr.piorkowski@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 118/149] drm/xe/pf: Drop rounddown_pow_of_two fair LMEM limitation
-Date: Mon, 22 Sep 2025 21:30:18 +0200
-Message-ID: <20250922192415.851338941@linuxfoundation.org>
+Subject: [PATCH 6.16 119/149] drm: bridge: anx7625: Fix NULL pointer dereference with early IRQ
+Date: Mon, 22 Sep 2025 21:30:19 +0200
+Message-ID: <20250922192415.875967816@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -46,59 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Wajdeczko <michal.wajdeczko@intel.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit fef8b64e48e836344574b85132a1c317f4260022 ]
+[ Upstream commit a10f910c77f280327b481e77eab909934ec508f0 ]
 
-This effectively reverts commit 4c3fe5eae46b ("drm/xe/pf: Limit
-fair VF LMEM provisioning") since we don't need it any more after
-non-contig VRAM allocations were fixed. This allows larger LMEM
-auto-provisioning for VFs, so instead:
+If the interrupt occurs before resource initialization is complete, the
+interrupt handler/worker may access uninitialized data such as the I2C
+tcpc_client device, potentially leading to NULL pointer dereference.
 
- [ ] GT0: PF: LMEM available(14096M) fair(1 x 8192M)
- [ ] GT0: PF: VF1 provisioned with 8589934592 (8.00 GiB) LMEM
-or
- [ ] GT0: PF: LMEM available(14096M) fair(2 x 4096M)
- [ ] GT0: PF: VF1..VF2 provisioned with 4294967296 (4.00 GiB) LMEM
-
-we may get:
-
- [ ] GT0: PF: LMEM available(14096M) fair(1 x 14096M)
- [ ] GT0: PF: VF1 provisioned with 14780727296 (13.8 GiB) LMEM
-and
- [ ] GT0: PF: LMEM available(14096M) fair(2 x 7048M)
- [ ] GT0: PF: VF1..VF2 provisioned with 7390363648 (6.88 GiB) LMEM
-
-Fixes: 1e32ffbc9dc8 ("drm/xe/sriov: support non-contig VRAM provisioning")
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Piotr Piórkowski <piotr.piorkowski@intel.com>
-Link: https://lore.kernel.org/r/20250910222439.32869-1-michal.wajdeczko@intel.com
-(cherry picked from commit 95c1cfa306087142989bff34ea0e05dcd95ddc58)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250709085438.56188-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-index 53a44702c04af..c15dc600dcae7 100644
---- a/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-+++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf_config.c
-@@ -1600,7 +1600,6 @@ static u64 pf_estimate_fair_lmem(struct xe_gt *gt, unsigned int num_vfs)
- 	u64 fair;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 8a9079c2ed5c2..8257132a8ee9d 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2678,7 +2678,7 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 		ret = devm_request_threaded_irq(dev, platform->pdata.intp_irq,
+ 						NULL, anx7625_intr_hpd_isr,
+ 						IRQF_TRIGGER_FALLING |
+-						IRQF_ONESHOT,
++						IRQF_ONESHOT | IRQF_NO_AUTOEN,
+ 						"anx7625-intp", platform);
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev, "fail to request irq\n");
+@@ -2747,8 +2747,10 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 	}
  
- 	fair = div_u64(available, num_vfs);
--	fair = rounddown_pow_of_two(fair);	/* XXX: ttm_vram_mgr & drm_buddy limitation */
- 	fair = ALIGN_DOWN(fair, alignment);
- #ifdef MAX_FAIR_LMEM
- 	fair = min_t(u64, MAX_FAIR_LMEM, fair);
+ 	/* Add work function */
+-	if (platform->pdata.intp_irq)
++	if (platform->pdata.intp_irq) {
++		enable_irq(platform->pdata.intp_irq);
+ 		queue_work(platform->workqueue, &platform->work);
++	}
+ 
+ 	if (platform->pdata.audio_en)
+ 		anx7625_register_audio(dev, platform);
 -- 
 2.51.0
 
