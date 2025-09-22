@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5983A2DEA79;
-	Mon, 22 Sep 2025 19:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3DF2DEA79;
+	Mon, 22 Sep 2025 19:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570031; cv=none; b=topiZZHLeCClwrgP1vSrs46cYdI1pvnrHq5idvo6XCJsKKidYqBA76o28beCbFIrpBquQa7XjKAHR5BsF+N0i/+4KSou9TDl25LSZ0axu5HFStZtY3hblfBGrKVsA/9x5pR7/jVF+B36aIej/RBuLtwXyfoF2cgfZsEYL/FhUZM=
+	t=1758570032; cv=none; b=g+SXlUec7McabMDmRpLheiQFE4LFtm/zKql8apH4PdewHy5uh9lcUfRZHdrRLzA5zo3Fmb3DkmC6zNhijrhF93InctQX/LoR0oM0VSNIMKbqTXuo9uEkHxX7Qbuh537dJrh0MCneGwSGLwhggeBZw7xDCZ7aoSv9jVVGuv0kf2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570031; c=relaxed/simple;
-	bh=iq1uhupk6+IGqiAMyYVU7H34u6gmdfPESPhA/993m5k=;
+	s=arc-20240116; t=1758570032; c=relaxed/simple;
+	bh=3LyVNgj33xLG6tqMrcdwci5GO7Rd6E9EXSEavE7XAVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vfv6MxBCYmaNmfIN4K2CUi+PR5kb5K2/zh3dp13OePqDhLCacWvocsVULGSUMWS7c8p8mTbqbw0kJlSgkFVgD8sbbouNP4Q5kEgY5vAJNWsS+RKtqQaogbKQrSne97WqAI/+rY722t8h3EM7buDJjVlMZmeQZ29NbhPS4SGSYLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kstgEd5L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9U86bZndJcsdzaAVC3QpvjzHqJdU2Un0kW+5h/7ICK4/WGYz6FouZksZti3Vsy7Db07/UQaBiqv6QQHJhkA+JkxpS7iwaZPZrU7adeiGIxykEdD1GKSIBnYzSQ9a5pDNDfmgxJ68FEenryuXXvLtWZoNzgP6MyyKpg7GS7oXAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XilH6IPN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kstgEd5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBB0C4CEF0;
-	Mon, 22 Sep 2025 19:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XilH6IPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C6BC4CEF5;
+	Mon, 22 Sep 2025 19:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570029;
-	bh=iq1uhupk6+IGqiAMyYVU7H34u6gmdfPESPhA/993m5k=;
+	s=korg; t=1758570032;
+	bh=3LyVNgj33xLG6tqMrcdwci5GO7Rd6E9EXSEavE7XAVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kstgEd5Lvn7wJN7G3LHbcujR/hdK0WOQZJOZU6XiSt6O6bdUPwUspPe9VfLbS4238
-	 r7qmR7kmGIL98NDkCX6bwYcS1B94SLB/HPynlE6NN0CimbK8KZxE1TLZyzKO2Ggxyn
-	 FbYgcrtN8qS0xdsqdc8gqAaKKh+KL0yfPA5f1oRE=
+	b=XilH6IPN2rG3Xk4HXSaaXqG9MbRd/VtyTkQS0B+jqM2V1DPNBtx/QtsB29HGfVFYL
+	 dsiPqZw04+d5ETf/vToUEeqVhRTmJQrGUGKfRUjw4zsGv0jdLfvCI6hdykjXzaHW+o
+	 fuJ0DbZ/+YAOWM52XCWXlrh84Vja49xJKfcxerlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>,
-	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/105] crypto: af_alg - Set merge to zero early in af_alg_sendmsg
-Date: Mon, 22 Sep 2025 21:30:05 +0200
-Message-ID: <20250922192411.047919676@linuxfoundation.org>
+Subject: [PATCH 6.12 083/105] smb: client: fix smbdirect_recv_io leak in smbd_negotiate() error path
+Date: Mon, 22 Sep 2025 21:30:06 +0200
+Message-ID: <20250922192411.075611876@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,47 +57,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 9574b2330dbd2b5459b74d3b5e9619d39299fc6f ]
+[ Upstream commit daac51c7032036a0ca5f1aa419ad1b0471d1c6e0 ]
 
-If an error causes af_alg_sendmsg to abort, ctx->merge may contain
-a garbage value from the previous loop.  This may then trigger a
-crash on the next entry into af_alg_sendmsg when it attempts to do
-a merge that can't be done.
+During tests of another unrelated patch I was able to trigger this
+error: Objects remaining on __kmem_cache_shutdown()
 
-Fix this by setting ctx->merge to zero near the start of the loop.
-
-Fixes: 8ff590903d5 ("crypto: algif_skcipher - User-space interface for skcipher operations")
-Reported-by: Muhammad Alifa Ramdhan <ramdhan@starlabs.sg>
-Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/smbdirect.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index f02c5586a8ab3..ca6fdcc6c54ac 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -1025,6 +1025,8 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 			continue;
- 		}
+diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
+index 6284252aa4882..b1548269c308a 100644
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1075,8 +1075,10 @@ static int smbd_negotiate(struct smbd_connection *info)
+ 	log_rdma_event(INFO, "smbd_post_recv rc=%d iov.addr=0x%llx iov.length=%u iov.lkey=0x%x\n",
+ 		       rc, response->sge.addr,
+ 		       response->sge.length, response->sge.lkey);
+-	if (rc)
++	if (rc) {
++		put_receive_buffer(info, response);
+ 		return rc;
++	}
  
-+		ctx->merge = 0;
-+
- 		if (!af_alg_writable(sk)) {
- 			err = af_alg_wait_for_wmem(sk, msg->msg_flags);
- 			if (err)
-@@ -1064,7 +1066,6 @@ int af_alg_sendmsg(struct socket *sock, struct msghdr *msg, size_t size,
- 			ctx->used += plen;
- 			copied += plen;
- 			size -= plen;
--			ctx->merge = 0;
- 		} else {
- 			do {
- 				struct page *pg;
+ 	init_completion(&info->negotiate_completion);
+ 	info->negotiate_done = false;
 -- 
 2.51.0
 
