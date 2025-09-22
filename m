@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEA72517AC;
-	Mon, 22 Sep 2025 19:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3249B2517AC;
+	Mon, 22 Sep 2025 19:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570324; cv=none; b=gkAbEtB9ID0IJkx2vpvptjSaYqKFf+0iaklygXEosRwTI/ONbtRAQ8nEA3MiThwib5RvDv8UQSJPzQ7+MvaKPg4064L+k4OeVHPC/JEWtjlDIF2FTSdl4ef3AcWdovJp/F27VpL2d/sLhWt+zHavVSQE7+UQ9IoXTnaKXB+NebE=
+	t=1758570327; cv=none; b=ETz34Hmr86q8Ed5xasjGYEfZ8HGepkMzZ23Wu3lhX5l+fadtHVkLdUua7LDsIQIwa8iSde+4PMTnGrcP6A5yBM1pTWxkWeTV1zZsIYGeRvFPBcwYJDcqocw1VLJT+LxWnqCT2bho1LsobVSkidycpxyHXKHFQTm8d2ZKPz/tMHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570324; c=relaxed/simple;
-	bh=w2vhWEyzV+FP4nmgHy28cd7e17zE9IJTOIaUeRFOYpM=;
+	s=arc-20240116; t=1758570327; c=relaxed/simple;
+	bh=wZ793RLk0g3en9na4lEz6iDtQoHFo0IhKHSH0QnkIuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2I57tlRNRLH/tMdc8GHF6vvs0Eo+jLgUVyy9LPwjtaF45gND5TtacwyMaTjprZywv4p0f/HbBxavfYMNHfMZKOUngaTGxCqds3aL2ahZHNCgKqlFi/67UDY2l9im86Hsf/MHhY4gaLyuiO9hQFRxQlsSSepHlJcixSsjN+1Pq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2jkQTbO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mIeeKw7TsnELNFO9yv8RaW5yzfkjHrtKSAOP9sXNCXN3a0apkF97gjsSZkGfZOouuHyGNuC6hd9qIqokpeoixkV4o5KQyeIfuEsGVU/H0hB97VnjLzwwR9ItwT9sGy3ic8Dvo8FZV91/A+U+QqmZFXQbj7K5BaswKCINIlfmrqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZL4WZA/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2jkQTbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ACDC4CEF0;
-	Mon, 22 Sep 2025 19:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZL4WZA/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01A1C4CEF0;
+	Mon, 22 Sep 2025 19:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570324;
-	bh=w2vhWEyzV+FP4nmgHy28cd7e17zE9IJTOIaUeRFOYpM=;
+	s=korg; t=1758570327;
+	bh=wZ793RLk0g3en9na4lEz6iDtQoHFo0IhKHSH0QnkIuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2jkQTbOiQPXjLynd9VJrrlzLryjFHjBhkyF+VcjXJGSQVoZ+GUxy1XoPcuAK3lY6
-	 GlE0lORPAp0281cq7XWmBL4tTV0Z/O4kIc0xo9Q72GqlX8MYwskWKzCLvRCFOV176L
-	 URybDnT9xuXb29wJ3FSqI0Ntfl2ZJNvwbposFU0A=
+	b=ZL4WZA/oSz/00hVRkhDxt0zDfFNZPJepiUfU4O4cm0LuckwvGkDd50WdaYM38Y+bW
+	 r2w0KN4HcQUw+MR+RaNJGiTMEChIep5TEbdAogdpayJXPfOtGwnNw6VTi921p1oST1
+	 r+P4w1wSAcTtyrGSHmAiPhz17EJzdvl3e01/dYLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.16 080/149] iommu/amd/pgtbl: Fix possible race while increase page table level
-Date: Mon, 22 Sep 2025 21:29:40 +0200
-Message-ID: <20250922192414.897781267@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20L=C3=A9cuyer?= <jerome.4a4c@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.16 097/149] drm/amd: Only restore cached manual clock settings in restore if OD enabled
+Date: Mon, 22 Sep 2025 21:29:57 +0200
+Message-ID: <20250922192415.331193907@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -47,145 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 1e56310b40fd2e7e0b9493da9ff488af145bdd0c upstream.
+commit f9b80514a7227c589291792cb6743b0ddf41c2bc upstream.
 
-The AMD IOMMU host page table implementation supports dynamic page table levels
-(up to 6 levels), starting with a 3-level configuration that expands based on
-IOVA address. The kernel maintains a root pointer and current page table level
-to enable proper page table walks in alloc_pte()/fetch_pte() operations.
+If OD is not enabled then restoring cached clock settings doesn't make
+sense and actually leads to errors in resume.
 
-The IOMMU IOVA allocator initially starts with 32-bit address and onces its
-exhuasted it switches to 64-bit address (max address is determined based
-on IOMMU and device DMA capability). To support larger IOVA, AMD IOMMU
-driver increases page table level.
+Check if enabled before restoring settings.
 
-But in unmap path (iommu_v1_unmap_pages()), fetch_pte() reads
-pgtable->[root/mode] without lock. So its possible that in exteme corner case,
-when increase_address_space() is updating pgtable->[root/mode], fetch_pte()
-reads wrong page table level (pgtable->mode). It does compare the value with
-level encoded in page table and returns NULL. This will result is
-iommu_unmap ops to fail and upper layer may retry/log WARN_ON.
-
-CPU 0                                         CPU 1
-------                                       ------
-map pages                                    unmap pages
-alloc_pte() -> increase_address_space()      iommu_v1_unmap_pages() -> fetch_pte()
-  pgtable->root = pte (new root value)
-                                             READ pgtable->[mode/root]
-					       Reads new root, old mode
-  Updates mode (pgtable->mode += 1)
-
-Since Page table level updates are infrequent and already synchronized with a
-spinlock, implement seqcount to enable lock-free read operations on the read path.
-
-Fixes: 754265bcab7 ("iommu/amd: Fix race in increase_address_space()")
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Fixes: 4e9526924d09 ("drm/amd: Restore cached manual clock settings during resume")
+Reported-by: Jérôme Lécuyer <jerome.4a4c@gmail.com>
+Closes: https://lore.kernel.org/amd-gfx/0ffe2692-7bfa-4821-856e-dd0f18e2c32b@amd.com/T/#me6db8ddb192626360c462b7570ed7eba0c6c9733
+Suggested-by: Jérôme Lécuyer <jerome.4a4c@gmail.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1a4dd33cc6e1baaa81efdbe68227a19f51c50f20)
 Cc: stable@vger.kernel.org
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |    1 +
- drivers/iommu/amd/io_pgtable.c      |   25 +++++++++++++++++++++----
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -551,6 +551,7 @@ struct gcr3_tbl_info {
- };
- 
- struct amd_io_pgtable {
-+	seqcount_t		seqcount;	/* Protects root/mode update */
- 	struct io_pgtable	pgtbl;
- 	int			mode;
- 	u64			*root;
---- a/drivers/iommu/amd/io_pgtable.c
-+++ b/drivers/iommu/amd/io_pgtable.c
-@@ -17,6 +17,7 @@
- #include <linux/slab.h>
- #include <linux/types.h>
- #include <linux/dma-mapping.h>
-+#include <linux/seqlock.h>
- 
- #include <asm/barrier.h>
- 
-@@ -130,8 +131,11 @@ static bool increase_address_space(struc
- 
- 	*pte = PM_LEVEL_PDE(pgtable->mode, iommu_virt_to_phys(pgtable->root));
- 
-+	write_seqcount_begin(&pgtable->seqcount);
- 	pgtable->root  = pte;
- 	pgtable->mode += 1;
-+	write_seqcount_end(&pgtable->seqcount);
-+
- 	amd_iommu_update_and_flush_device_table(domain);
- 
- 	pte = NULL;
-@@ -153,6 +157,7 @@ static u64 *alloc_pte(struct amd_io_pgta
- {
- 	unsigned long last_addr = address + (page_size - 1);
- 	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
-+	unsigned int seqcount;
- 	int level, end_lvl;
- 	u64 *pte, *page;
- 
-@@ -170,8 +175,14 @@ static u64 *alloc_pte(struct amd_io_pgta
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -2185,7 +2185,7 @@ static int smu_resume(struct amdgpu_ip_b
+ 			return ret;
  	}
  
- 
--	level   = pgtable->mode - 1;
--	pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	do {
-+		seqcount = read_seqcount_begin(&pgtable->seqcount);
-+
-+		level   = pgtable->mode - 1;
-+		pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
-+
-+
- 	address = PAGE_SIZE_ALIGN(address, page_size);
- 	end_lvl = PAGE_SIZE_LEVEL(page_size);
- 
-@@ -249,6 +260,7 @@ static u64 *fetch_pte(struct amd_io_pgta
- 		      unsigned long *page_size)
- {
- 	int level;
-+	unsigned int seqcount;
- 	u64 *pte;
- 
- 	*page_size = 0;
-@@ -256,8 +268,12 @@ static u64 *fetch_pte(struct amd_io_pgta
- 	if (address > PM_LEVEL_SIZE(pgtable->mode))
- 		return NULL;
- 
--	level	   =  pgtable->mode - 1;
--	pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	do {
-+		seqcount = read_seqcount_begin(&pgtable->seqcount);
-+		level	   =  pgtable->mode - 1;
-+		pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
-+	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
-+
- 	*page_size =  PTE_LEVEL_PAGE_SIZE(level);
- 
- 	while (level > 0) {
-@@ -541,6 +557,7 @@ static struct io_pgtable *v1_alloc_pgtab
- 	if (!pgtable->root)
- 		return NULL;
- 	pgtable->mode = PAGE_MODE_3_LEVEL;
-+	seqcount_init(&pgtable->seqcount);
- 
- 	cfg->pgsize_bitmap  = amd_iommu_pgsize_bitmap;
- 	cfg->ias            = IOMMU_IN_ADDR_BIT_SIZE;
+-	if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
++	if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL && smu->od_enabled) {
+ 		ret = smu_od_edit_dpm_table(smu, PP_OD_COMMIT_DPM_TABLE, NULL, 0);
+ 		if (ret)
+ 			return ret;
 
 
