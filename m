@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E692F0C64;
-	Mon, 22 Sep 2025 19:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E4B2F0C64;
+	Mon, 22 Sep 2025 19:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570081; cv=none; b=eulZnBMFsAVgmpx3sTCexXq2HGIcsCK6OHFiGGA8G4JtOzz4p5DUW192bj/wNWAtsihPGAyWd3vn7ineVISyOgRZ2cG5OxpZjjkWjlQhDVaEWIRLUFKDpBJNx6XcxOUbyiMo9ksiNPrd40YAb58HZ5500o/9mY6iKe5thU/h5gM=
+	t=1758570084; cv=none; b=o6wYOJP6IHlQ7naW8XEaHUMYANCTrmhoMo9TwTADCdt7oj7OCeva35HGlvpGCBIoY2Un4PfT36j/yyMSBzGrOKKcLFkHWdGO2BM1r8ZY8kg0JoxekVLq6WTprvyBcg8Gp8cGRRa9HmeNtmWy8s6BN1sroqSYg4Air0dX1MEwwfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570081; c=relaxed/simple;
-	bh=R5mIbbGvZPiiXiqSaUK1XxdbU2w/YHxmxWAkvTM6GOc=;
+	s=arc-20240116; t=1758570084; c=relaxed/simple;
+	bh=PbPaE3MT9Qvi6E9ooBHxEfTsXUcg1D3qZvbID8Kj2qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jTS8fdZE7YwkL2fEoCQAgUvrMYHumgcWu8wBJRwxNiFiJLjhpjdHb9Yr/gVQQOQ+tTnN/rp2p0uOacxf4+L7gRWDkEyFPGp29Z8EmezymmnRpreBqlTupVWATd44fob+rLdKsLHfFq6XNmKH6wIvHEDxE9aROB9GRIXBijobs/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1TaypHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlHXCgpBQpb6mvemMfs+m3licub4xBqMrGADsCbAEUIVWfpRsMI0qCz5230XvC3HlAMsDME320HgUyszaY4D+eKXigGdep7k1fge1agn1YUXzcs9NKm1x+r3eHsX+pdWkM/F8rPIWGGpdQYmEfeCgiFJE6r5hO6waRzP6lGO08E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzdOx1ZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1TaypHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE89C4CEF0;
-	Mon, 22 Sep 2025 19:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzdOx1ZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2EDC4CEF0;
+	Mon, 22 Sep 2025 19:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570081;
-	bh=R5mIbbGvZPiiXiqSaUK1XxdbU2w/YHxmxWAkvTM6GOc=;
+	s=korg; t=1758570084;
+	bh=PbPaE3MT9Qvi6E9ooBHxEfTsXUcg1D3qZvbID8Kj2qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1TaypHM+pyRqFEM0/ARgiDPEt8PHg8tLZ2tVH7ew3ZqRNGsLkbukxRKwui8EZ0aN
-	 wiLDpJVNbbizTzzKqb548IvqDJCSK8mopHWmM0B06HNvsq3qj+7q6rJRROvWKGbXJC
-	 QhJd92/FnKmGqqKIs4D1JEMa3YOATA9WxZVHZz9U=
+	b=PzdOx1ZGqbVubdV98BcVagTICS3w//ksd9ZC0ajPmLMpHaG18uo00+zVTuAkPQBAh
+	 GcdI4AejbFoZcz0ktJGpWVEfO9T1tnM6Ty+l1UuM/aHjVu10wls6jRQXDuGPratm4f
+	 OtSCTdorDZM2fReUadlG0SMelWUO3ZMR1dKhi7j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 002/149] btrfs: fix invalid extref key setup when replaying dentry
-Date: Mon, 22 Sep 2025 21:28:22 +0200
-Message-ID: <20250922192412.955238184@linuxfoundation.org>
+Subject: [PATCH 6.16 003/149] btrfs: zoned: fix incorrect ASSERT in btrfs_zoned_reserve_data_reloc_bg()
+Date: Mon, 22 Sep 2025 21:28:23 +0200
+Message-ID: <20250922192412.980934474@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -51,39 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit b62fd63ade7cb573b114972ef8f9fa505be8d74a ]
+[ Upstream commit 5b8d2964754102323ca24495ba94892426284e3a ]
 
-The offset for an extref item's key is not the object ID of the parent
-dir, otherwise we would not need the extref item and would use plain ref
-items. Instead the offset is the result of a hash computation that uses
-the object ID of the parent dir and the name associated to the entry.
-So fix this by setting the key offset at replay_one_name() to be the
-result of calling btrfs_extref_hash().
+When moving a block-group to the dedicated data relocation space-info in
+btrfs_zoned_reserve_data_reloc_bg() it is asserted that the newly
+created block group for data relocation does not contain any
+zone_unusable bytes.
 
-Fixes: 725af92a6251 ("btrfs: Open-code name_in_log_ref in replay_one_name")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+But on disks with zone_capacity < zone_size, the difference between
+zone_size and zone_capacity is accounted as zone_unusable.
+
+Instead of asserting that the block-group does not contain any
+zone_unusable bytes, remove them from the block-groups total size.
+
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Link: https://lore.kernel.org/linux-block/CAHj4cs8-cS2E+-xQ-d2Bj6vMJZ+CwT_cbdWBTju4BV35LsvEYw@mail.gmail.com/
+Fixes: daa0fde322350 ("btrfs: zoned: fix data relocation block group reservation")
+Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 2 +-
+ fs/btrfs/zoned.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 56d30ec0f52fc..5466a93a28f58 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -1933,7 +1933,7 @@ static noinline int replay_one_name(struct btrfs_trans_handle *trans,
- 
- 	search_key.objectid = log_key.objectid;
- 	search_key.type = BTRFS_INODE_EXTREF_KEY;
--	search_key.offset = key->objectid;
-+	search_key.offset = btrfs_extref_hash(key->objectid, name.name, name.len);
- 	ret = backref_in_log(root->log_root, &search_key, key->objectid, &name);
- 	if (ret < 0) {
- 		goto out;
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index d7a1193332d94..60937127a0bc6 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2577,9 +2577,9 @@ void btrfs_zoned_reserve_data_reloc_bg(struct btrfs_fs_info *fs_info)
+ 			spin_lock(&space_info->lock);
+ 			space_info->total_bytes -= bg->length;
+ 			space_info->disk_total -= bg->length * factor;
++			space_info->disk_total -= bg->zone_unusable;
+ 			/* There is no allocation ever happened. */
+ 			ASSERT(bg->used == 0);
+-			ASSERT(bg->zone_unusable == 0);
+ 			/* No super block in a block group on the zoned setup. */
+ 			ASSERT(bg->bytes_super == 0);
+ 			spin_unlock(&space_info->lock);
 -- 
 2.51.0
 
