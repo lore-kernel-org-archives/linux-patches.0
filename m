@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F922F0C5C;
-	Mon, 22 Sep 2025 19:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD902F3613;
+	Mon, 22 Sep 2025 19:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570178; cv=none; b=Mm60pEgmkvdzSWzxMHNZjvdGCN99Ho608qSTWwBrtt7/uWfZOZm5cLzTH20Eob3TGu8UUS5aTrzOVAn08yNkj6VGTm1ak8bX/nV0/oO/6ZuIulgqcoPRUWTQRgNvri245C82pVP1d6mwnInfgak7joe9TO0cz4hwbwaggMOCDpQ=
+	t=1758570181; cv=none; b=iC5S+/wIU5YxAnO+SauLhABu68V8WSC5Jl7SqyFoGZdKuEjvedmbRtYpW/howqdQDLanX2tiqFBiaF9KJqZSL04jSCHmc29lIKjZVGok3PhEptRxGseOU3yJRFXYyTBINWBbnpOFDwpSKLyHfi6bJ+GunCsMfiJKcBI4U6MwSVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570178; c=relaxed/simple;
-	bh=VVsHC8TeBgA6+DlVk4R1iuAUWs2UFOxzGBBZJ51xQ9o=;
+	s=arc-20240116; t=1758570181; c=relaxed/simple;
+	bh=CKPnYtsmT0/tnAtnbkvO97V48qHakEUy/ohCoKwMkWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uREXiGQLupLP/Rf96xArSXCX2tjTBVPVkcOn9xrYABsbJaxRlThaPVGLbPwMSW6BLoxIfAWev/a+HdaAwHnkWGsM9sYG2YcQWNbXtQHrvOx140QX4FLj//lA6gfQGJcw08qi5grC+EGwEUGF0no5F4V2njcEjrMUsGumjd6G1h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7Dh1mAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pri85nd7L/OKdMYo/u0SB4Q1moo8vYTYrTbwkM8LozuVo6JscUciScP6uH4z7Oc4R+vqZYxrVSo2AEVF2ipstRNdi4zEtIpoRXI8On5xbc8vL4eb0wWlKUC9h/VbEoXMHwrJ0Y1vdVdTswZjbPxG/n2a8/Pzoli9/jqcbyThLmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBAomgVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7Dh1mAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6153AC4CEF0;
-	Mon, 22 Sep 2025 19:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBAomgVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA74AC19422;
+	Mon, 22 Sep 2025 19:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570178;
-	bh=VVsHC8TeBgA6+DlVk4R1iuAUWs2UFOxzGBBZJ51xQ9o=;
+	s=korg; t=1758570181;
+	bh=CKPnYtsmT0/tnAtnbkvO97V48qHakEUy/ohCoKwMkWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S7Dh1mAqjbKSgCBpzUJePxMpJU/77eCONIu7lyT7vx0vKVMNiIM4UwZPEQWUpytv1
-	 aSNQsk6SWgL/0zuqDkQ3g+ReBlO7PDOxP5Ty7gSKtUSardItf1Vp4RpftVxyg36DDn
-	 lEmbkXZM5Dh2dMv8QdHt1pc/6eASgCc5MmeUYaj0=
+	b=oBAomgVy3dOPQzA30IfD1PA0t4pVJIWObD1Cw3cd8XtrSUO/6kmHTnkMu4GXZCefV
+	 wtw/Hy72wMnmRPfgQQFtk1Yz+X18ykODQU9ECIa+aWyBOMkfbKqfbUiw3hIqAFOOPu
+	 CMCSwRbDkdtkGHJnGZwJHsHcMiwMI2u8KyBYBb8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Changhui Zhong <czhong@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	kernel test robot <oliver.sang@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 049/149] zram: fix slot write race condition
-Date: Mon, 22 Sep 2025 21:29:09 +0200
-Message-ID: <20250922192414.096023082@linuxfoundation.org>
+Subject: [PATCH 6.16 050/149] nilfs2: fix CFI failure when accessing /sys/fs/nilfs2/features/*
+Date: Mon, 22 Sep 2025 21:29:10 +0200
+Message-ID: <20250922192414.120628211@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -53,86 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit ce4be9e4307c5a60701ff6e0cafa74caffdc54ce upstream.
+commit 025e87f8ea2ae3a28bf1fe2b052bfa412c27ed4a upstream.
 
-Parallel concurrent writes to the same zram index result in leaked
-zsmalloc handles.  Schematically we can have something like this:
+When accessing one of the files under /sys/fs/nilfs2/features when
+CONFIG_CFI_CLANG is enabled, there is a CFI violation:
 
-CPU0                              CPU1
-zram_slot_lock()
-zs_free(handle)
-zram_slot_lock()
-				zram_slot_lock()
-				zs_free(handle)
-				zram_slot_lock()
+  CFI failure at kobj_attr_show+0x59/0x80 (target: nilfs_feature_revision_show+0x0/0x30; expected type: 0xfc392c4d)
+  ...
+  Call Trace:
+   <TASK>
+   sysfs_kf_seq_show+0x2a6/0x390
+   ? __cfi_kobj_attr_show+0x10/0x10
+   kernfs_seq_show+0x104/0x15b
+   seq_read_iter+0x580/0xe2b
+  ...
 
-compress			compress
-handle = zs_malloc()		handle = zs_malloc()
-zram_slot_lock
-zram_set_handle(handle)
-zram_slot_lock
-				zram_slot_lock
-				zram_set_handle(handle)
-				zram_slot_lock
+When the kobject of the kset for /sys/fs/nilfs2 is initialized, its ktype
+is set to kset_ktype, which has a ->sysfs_ops of kobj_sysfs_ops.  When
+nilfs_feature_attr_group is added to that kobject via
+sysfs_create_group(), the kernfs_ops of each files is sysfs_file_kfops_rw,
+which will call sysfs_kf_seq_show() when ->seq_show() is called.
+sysfs_kf_seq_show() in turn calls kobj_attr_show() through
+->sysfs_ops->show().  kobj_attr_show() casts the provided attribute out to
+a 'struct kobj_attribute' via container_of() and calls ->show(), resulting
+in the CFI violation since neither nilfs_feature_revision_show() nor
+nilfs_feature_README_show() match the prototype of ->show() in 'struct
+kobj_attribute'.
 
-Either CPU0 or CPU1 zsmalloc handle will leak because zs_free() is done
-too early.  In fact, we need to reset zram entry right before we set its
-new handle, all under the same slot lock scope.
+Resolve the CFI violation by adjusting the second parameter in
+nilfs_feature_{revision,README}_show() from 'struct attribute' to 'struct
+kobj_attribute' to match the expected prototype.
 
-Link: https://lkml.kernel.org/r/20250909045150.635345-1-senozhatsky@chromium.org
-Fixes: 71268035f5d7 ("zram: free slot memory early during write")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reported-by: Changhui Zhong <czhong@redhat.com>
-Closes: https://lore.kernel.org/all/CAGVVp+UtpGoW5WEdEU7uVTtsSCjPN=ksN6EcvyypAtFDOUf30A@mail.gmail.com/
-Tested-by: Changhui Zhong <czhong@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
+Link: https://lkml.kernel.org/r/20250906144410.22511-1-konishi.ryusuke@gmail.com
+Fixes: aebe17f68444 ("nilfs2: add /sys/fs/nilfs2/features group")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202509021646.bc78d9ef-lkp@intel.com/
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/nilfs2/sysfs.c |    4 ++--
+ fs/nilfs2/sysfs.h |    8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1794,6 +1794,7 @@ static int write_same_filled_page(struct
- 				  u32 index)
+--- a/fs/nilfs2/sysfs.c
++++ b/fs/nilfs2/sysfs.c
+@@ -1075,7 +1075,7 @@ void nilfs_sysfs_delete_device_group(str
+  ************************************************************************/
+ 
+ static ssize_t nilfs_feature_revision_show(struct kobject *kobj,
+-					    struct attribute *attr, char *buf)
++					    struct kobj_attribute *attr, char *buf)
  {
- 	zram_slot_lock(zram, index);
-+	zram_free_page(zram, index);
- 	zram_set_flag(zram, index, ZRAM_SAME);
- 	zram_set_handle(zram, index, fill);
- 	zram_slot_unlock(zram, index);
-@@ -1831,6 +1832,7 @@ static int write_incompressible_page(str
- 	kunmap_local(src);
+ 	return sysfs_emit(buf, "%d.%d\n",
+ 			NILFS_CURRENT_REV, NILFS_MINOR_REV);
+@@ -1087,7 +1087,7 @@ static const char features_readme_str[]
+ 	"(1) revision\n\tshow current revision of NILFS file system driver.\n";
  
- 	zram_slot_lock(zram, index);
-+	zram_free_page(zram, index);
- 	zram_set_flag(zram, index, ZRAM_HUGE);
- 	zram_set_handle(zram, index, handle);
- 	zram_set_obj_size(zram, index, PAGE_SIZE);
-@@ -1854,11 +1856,6 @@ static int zram_write_page(struct zram *
- 	unsigned long element;
- 	bool same_filled;
+ static ssize_t nilfs_feature_README_show(struct kobject *kobj,
+-					 struct attribute *attr,
++					 struct kobj_attribute *attr,
+ 					 char *buf)
+ {
+ 	return sysfs_emit(buf, features_readme_str);
+--- a/fs/nilfs2/sysfs.h
++++ b/fs/nilfs2/sysfs.h
+@@ -50,16 +50,16 @@ struct nilfs_sysfs_dev_subgroups {
+ 	struct completion sg_segments_kobj_unregister;
+ };
  
--	/* First, free memory allocated to this slot (if any) */
--	zram_slot_lock(zram, index);
--	zram_free_page(zram, index);
--	zram_slot_unlock(zram, index);
--
- 	mem = kmap_local_page(page);
- 	same_filled = page_same_filled(mem, &element);
- 	kunmap_local(mem);
-@@ -1900,6 +1897,7 @@ static int zram_write_page(struct zram *
- 	zcomp_stream_put(zstrm);
+-#define NILFS_COMMON_ATTR_STRUCT(name) \
++#define NILFS_KOBJ_ATTR_STRUCT(name) \
+ struct nilfs_##name##_attr { \
+ 	struct attribute attr; \
+-	ssize_t (*show)(struct kobject *, struct attribute *, \
++	ssize_t (*show)(struct kobject *, struct kobj_attribute *, \
+ 			char *); \
+-	ssize_t (*store)(struct kobject *, struct attribute *, \
++	ssize_t (*store)(struct kobject *, struct kobj_attribute *, \
+ 			 const char *, size_t); \
+ }
  
- 	zram_slot_lock(zram, index);
-+	zram_free_page(zram, index);
- 	zram_set_handle(zram, index, handle);
- 	zram_set_obj_size(zram, index, comp_len);
- 	zram_slot_unlock(zram, index);
+-NILFS_COMMON_ATTR_STRUCT(feature);
++NILFS_KOBJ_ATTR_STRUCT(feature);
+ 
+ #define NILFS_DEV_ATTR_STRUCT(name) \
+ struct nilfs_##name##_attr { \
 
 
