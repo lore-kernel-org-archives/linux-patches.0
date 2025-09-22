@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678CF222590;
-	Mon, 22 Sep 2025 19:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CCB222590;
+	Mon, 22 Sep 2025 19:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570158; cv=none; b=fyHbEf0WBVDl5/6RahF4pSjXb0rsKRFVrZbFyFZiodLwuqBoKkrFtdE0//22uBoJfEvIO2QQ7ZB7Ja+j15mGg0QvcLW14ZvDeNw1ZBUT43Uu+PU74oVtqchl0SKgyoPrZW++mMSLvTHhKNh4D1PYxRk4IZcnZ2r9ojPFChGsneQ=
+	t=1758570161; cv=none; b=afJMh3oR6vs+sNSzTCW7olopa404tWoZVmwvH4s5bVlg5n+AbfQUH8PfTEO96eXPkIoj56yIhUnqFMGlwtMeemIADI55WcSiyFSZKv2hVS9iFWF58iXhaRPAEXix1xe4SO1ObdWkKCzjlRojqKErDQcJ9GG0bbs2sq6JSx/OqS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570158; c=relaxed/simple;
-	bh=PHQxS5H3hgqCD+iVVt2z6F7CozTq9F8rrbtn+Ae6gc8=;
+	s=arc-20240116; t=1758570161; c=relaxed/simple;
+	bh=UyiE5sjXsI8DbTrWHH2a/gyEfcvTP+S9+z8Ln8oiBZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qU7dxOmCXX4v6Ucm+o/+wCNYk02MRTur1+sYR/ZoqpohHHYVnpqRQWqY2UeAX+0teasr1+1/CdaXzI6G4h20Od+xVxzuVavdlmozYvVfofTub51abPTDuSFCvCnXF8s2akzOYCqgFHUpQH6bl9ueRNmqlxPkqj7rTGGZ9TROiPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgXVYNDc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f8t7e8QdDMGx7hsXx6BGPzKo/Vi2FigB5ecnwlrWwcLpuQLkgJvLBMpkhpSIs/OTMCIdepdC0VENJEdwEHB3zfNDFp0yI5qTfovxs49obV2Nu3XWMCFMurp3dj7KNHMqytN13fsCC2JmQSHqxUowuG7hmF3IlAzt3ArSyks+q+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ho/x53zH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgXVYNDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F62C4CEF0;
-	Mon, 22 Sep 2025 19:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ho/x53zH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDD5C4CEF0;
+	Mon, 22 Sep 2025 19:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570158;
-	bh=PHQxS5H3hgqCD+iVVt2z6F7CozTq9F8rrbtn+Ae6gc8=;
+	s=korg; t=1758570160;
+	bh=UyiE5sjXsI8DbTrWHH2a/gyEfcvTP+S9+z8Ln8oiBZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgXVYNDcuef553fw8ZlqroLSr/P3E7EmNVjVpSIlvmMm5mud8cLHlbF3ljTUtMu0y
-	 bSLBc3zP/JGZ1W0tHjLxN0x0DxjXsOEI+NCFeHn/Ta8UtzMEzfGhVIHbR9ObPJdZe+
-	 kF46t8+kiHdOYmgtdY4JUNFjgXBDbtP6EwhY9Ezw=
+	b=Ho/x53zHkf/ob5TIHJYzEXFrCIJlMfG/tcJHz+cKQZchZ+vrbbkgIth2/PdPRGRl8
+	 WtYhhyrbOhi5FMp0H1EFXGtNOG2+m3+Yf8R+X3hMcXZCI/gwktI3f4lMxpzv7mGXiB
+	 mj9y5aT7uVmaL645HmIN4dXo8yye/yXpfqQeG/54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Yeounsu Moon <yyyynoom@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 028/149] selftests: mptcp: sockopt: fix error messages
-Date: Mon, 22 Sep 2025 21:28:48 +0200
-Message-ID: <20250922192413.578446234@linuxfoundation.org>
+Subject: [PATCH 6.16 029/149] net: natsemi: fix `rx_dropped` double accounting on `netif_rx()` failure
+Date: Mon, 22 Sep 2025 21:28:49 +0200
+Message-ID: <20250922192413.602277222@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,75 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Yeounsu Moon <yyyynoom@gmail.com>
 
-[ Upstream commit b86418beade11d45540a2d20c4ec1128849b6c27 ]
+[ Upstream commit 93ab4881a4e2b9657bdce4b8940073bfb4ed5eab ]
 
-This patch fixes several issues in the error reporting of the MPTCP sockopt
-selftest:
+`netif_rx()` already increments `rx_dropped` core stat when it fails.
+The driver was also updating `ndev->stats.rx_dropped` in the same path.
+Since both are reported together via `ip -s -s` command, this resulted
+in drops being counted twice in user-visible stats.
 
-1. Fix diff not printed: The error messages for counter mismatches had
-   the actual difference ('diff') as argument, but it was missing in the
-   format string. Displaying it makes the debugging easier.
+Keep the driver update on `if (unlikely(!skb))`, but skip it after
+`netif_rx()` errors.
 
-2. Fix variable usage: The error check for 'mptcpi_bytes_acked' incorrectly
-   used 'ret2' (sent bytes) for both the expected value and the difference
-   calculation. It now correctly uses 'ret' (received bytes), which is the
-   expected value for bytes_acked.
-
-3. Fix off-by-one in diff: The calculation for the 'mptcpi_rcv_delta' diff
-   was 's.mptcpi_rcv_delta - ret', which is off-by-one. It has been
-   corrected to 's.mptcpi_rcv_delta - (ret + 1)' to match the expected
-   value in the condition above it.
-
-Fixes: 5dcff89e1455 ("selftests: mptcp: explicitly tests aggregate counters")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-5-40171884ade8@kernel.org
+Fixes: caf586e5f23c ("net: add a core netdev->rx_dropped counter")
+Signed-off-by: Yeounsu Moon <yyyynoom@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250913060135.35282-3-yyyynoom@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/mptcp/mptcp_sockopt.c  | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/natsemi/ns83820.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_sockopt.c b/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-index e934dd26a59d9..112c07c4c37a3 100644
---- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-@@ -667,22 +667,26 @@ static void process_one_client(int fd, int pipefd)
+diff --git a/drivers/net/ethernet/natsemi/ns83820.c b/drivers/net/ethernet/natsemi/ns83820.c
+index 56d5464222d97..cdbf82affa7be 100644
+--- a/drivers/net/ethernet/natsemi/ns83820.c
++++ b/drivers/net/ethernet/natsemi/ns83820.c
+@@ -820,7 +820,7 @@ static void rx_irq(struct net_device *ndev)
+ 	struct ns83820 *dev = PRIV(ndev);
+ 	struct rx_info *info = &dev->rx_info;
+ 	unsigned next_rx;
+-	int rx_rc, len;
++	int len;
+ 	u32 cmdsts;
+ 	__le32 *desc;
+ 	unsigned long flags;
+@@ -881,8 +881,10 @@ static void rx_irq(struct net_device *ndev)
+ 		if (likely(CMDSTS_OK & cmdsts)) {
+ #endif
+ 			skb_put(skb, len);
+-			if (unlikely(!skb))
++			if (unlikely(!skb)) {
++				ndev->stats.rx_dropped++;
+ 				goto netdev_mangle_me_harder_failed;
++			}
+ 			if (cmdsts & CMDSTS_DEST_MULTI)
+ 				ndev->stats.multicast++;
+ 			ndev->stats.rx_packets++;
+@@ -901,15 +903,12 @@ static void rx_irq(struct net_device *ndev)
+ 				__vlan_hwaccel_put_tag(skb, htons(ETH_P_IPV6), tag);
+ 			}
+ #endif
+-			rx_rc = netif_rx(skb);
+-			if (NET_RX_DROP == rx_rc) {
+-netdev_mangle_me_harder_failed:
+-				ndev->stats.rx_dropped++;
+-			}
++			netif_rx(skb);
+ 		} else {
+ 			dev_kfree_skb_irq(skb);
+ 		}
  
- 	do_getsockopts(&s, fd, ret, ret2);
- 	if (s.mptcpi_rcv_delta != (uint64_t)ret + 1)
--		xerror("mptcpi_rcv_delta %" PRIu64 ", expect %" PRIu64, s.mptcpi_rcv_delta, ret + 1, s.mptcpi_rcv_delta - ret);
-+		xerror("mptcpi_rcv_delta %" PRIu64 ", expect %" PRIu64 ", diff %" PRId64,
-+		       s.mptcpi_rcv_delta, ret + 1, s.mptcpi_rcv_delta - (ret + 1));
- 
- 	/* be nice when running on top of older kernel */
- 	if (s.pkt_stats_avail) {
- 		if (s.last_sample.mptcpi_bytes_sent != ret2)
--			xerror("mptcpi_bytes_sent %" PRIu64 ", expect %" PRIu64,
-+			xerror("mptcpi_bytes_sent %" PRIu64 ", expect %" PRIu64
-+			       ", diff %" PRId64,
- 			       s.last_sample.mptcpi_bytes_sent, ret2,
- 			       s.last_sample.mptcpi_bytes_sent - ret2);
- 		if (s.last_sample.mptcpi_bytes_received != ret)
--			xerror("mptcpi_bytes_received %" PRIu64 ", expect %" PRIu64,
-+			xerror("mptcpi_bytes_received %" PRIu64 ", expect %" PRIu64
-+			       ", diff %" PRId64,
- 			       s.last_sample.mptcpi_bytes_received, ret,
- 			       s.last_sample.mptcpi_bytes_received - ret);
- 		if (s.last_sample.mptcpi_bytes_acked != ret)
--			xerror("mptcpi_bytes_acked %" PRIu64 ", expect %" PRIu64,
--			       s.last_sample.mptcpi_bytes_acked, ret2,
--			       s.last_sample.mptcpi_bytes_acked - ret2);
-+			xerror("mptcpi_bytes_acked %" PRIu64 ", expect %" PRIu64
-+			       ", diff %" PRId64,
-+			       s.last_sample.mptcpi_bytes_acked, ret,
-+			       s.last_sample.mptcpi_bytes_acked - ret);
- 	}
- 
- 	close(fd);
++netdev_mangle_me_harder_failed:
+ 		nr++;
+ 		next_rx = info->next_rx;
+ 		desc = info->descs + (DESC_SIZE * next_rx);
 -- 
 2.51.0
 
