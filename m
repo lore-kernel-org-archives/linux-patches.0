@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D182F1FE3;
-	Mon, 22 Sep 2025 19:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8F02F1FE3;
+	Mon, 22 Sep 2025 19:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570263; cv=none; b=FJ/VQ8L20MMso0nA7Vtdf1h5CDHI/HWtDwPNS8GYu1qs1lIV02xJm121WfH6rI1tmQdGeWgEsJDXoaqI2ZO7nbaMN+GptsgagoN3uo/KfQMTQYoXUyCRDFEXM+EJQcweld7RkKDM1NSQi/nUMj6IzqtcHKL3oH+gX8lTFbaVtUk=
+	t=1758570264; cv=none; b=hWj5J8I1epVKm1PayEN28UCP1QFkpvAB4fdXqI/yG1eNAJQCTjRSNLZwL22l8pNv9+lA+m7RK6GcihjJzkOHZ7s+QgipecmzndtBTEWjZFnhWTkh4w0ybHYcXiMzekeM55NJWA9+jMc84NaIDVafPIUhfe9ewgqX664H+xiljJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570263; c=relaxed/simple;
-	bh=1BgTo53oJGiDG5m7ln1ns7Tl6bv69DWtV5vUpyLK/V0=;
+	s=arc-20240116; t=1758570264; c=relaxed/simple;
+	bh=YS/Ss4awfFQQCkggH5AOhAHYjJhn6fM6ULX4SDUvdTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFlpQK0ETzLe0Ck6ox7csUE+goeCdw+HVzXUlXgdXofpPMuEeOAeT8kifW3weOdANKb/46+TWlT7x7PKjtipLtNVSUwhCDC00mvEY+o+odaku0+oWFIVYi0X80JUasQcMoqc4A7YkuGGZGGUupY+kk9s9Fxm66d5dqv4jEfz/Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfbM0mMz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxaU4OBr5UFFA4igNWs3NnBw1KBJ2VmfztbuI1MpQx236gf4HQKQezZ8bLib87dpsnqC79+f6ez/2zkzQaefyfhSpyw9sC+dgnHwjz408zrgwyy/TYK+KCau4mURZvrOXgydpNRiBh59+rK/DMeIT9ogoP8m1gxj182Uc2lB+74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+oaTG5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfbM0mMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9B8C4CEF0;
-	Mon, 22 Sep 2025 19:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+oaTG5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C42C4CEF5;
+	Mon, 22 Sep 2025 19:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570262;
-	bh=1BgTo53oJGiDG5m7ln1ns7Tl6bv69DWtV5vUpyLK/V0=;
+	s=korg; t=1758570264;
+	bh=YS/Ss4awfFQQCkggH5AOhAHYjJhn6fM6ULX4SDUvdTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfbM0mMzUWdPjuyAWj4ZOnA2I9iOJYZaR7z3eE+mD6I69JdLFm4+sBBOH1Kfr9Z8A
-	 MEXZN1nP1mB9VDXLqnFevpZU0Se89s5xuLJ2x5LZDX9ES86tflfdqm0viNUYdMXZ06
-	 ZL+J94vTEHMRuxQimFKdKxPWnjA3rBXS/uS1USyg=
+	b=d+oaTG5J8FSomok6oxHrG1tNTyquDWgslGfANONOeVI+Nt4z8UUWPH+5p/YRZseDh
+	 rvs0Rb3nqbP+zO33bwnPoz1yKj3kcBdZYMlVy6rPaH80PdtRIfViY5wICK+bLv2f8U
+	 aupACXVYBs/BshJlZCwElgW0tEzMs/FR2ZQEoEO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <202321181@mail.sdu.edu.cn>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 068/149] LoongArch: vDSO: Check kcalloc() result in init_vdso()
-Date: Mon, 22 Sep 2025 21:29:28 +0200
-Message-ID: <20250922192414.602064969@linuxfoundation.org>
+Subject: [PATCH 6.16 069/149] LoongArch: Align ACPI structures if ARCH_STRICT_ALIGN enabled
+Date: Mon, 22 Sep 2025 21:29:29 +0200
+Message-ID: <20250922192414.627820625@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -50,34 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <202321181@mail.sdu.edu.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit ac398f570724c41e5e039d54e4075519f6af7408 upstream.
+commit a9d13433fe17be0e867e51e71a1acd2731fbef8d upstream.
 
-Add a NULL-pointer check after the kcalloc() call in init_vdso(). If
-allocation fails, return -ENOMEM to prevent a possible dereference of
-vdso_info.code_mapping.pages when it is NULL.
+ARCH_STRICT_ALIGN is used for hardware without UAL, now it only control
+the -mstrict-align flag. However, ACPI structures are packed by default
+so will cause unaligned accesses.
+
+To avoid this, define ACPI_MISALIGNMENT_NOT_SUPPORTED in asm/acenv.h to
+align ACPI structures if ARCH_STRICT_ALIGN enabled.
 
 Cc: stable@vger.kernel.org
-Fixes: 2ed119aef60d ("LoongArch: Set correct size for vDSO code mapping")
-Signed-off-by: Guangshuo Li <202321181@mail.sdu.edu.cn>
+Reported-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Suggested-by: Xi Ruoyao <xry111@xry111.site>
+Suggested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/vdso.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/include/asm/acenv.h |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/kernel/vdso.c
-+++ b/arch/loongarch/kernel/vdso.c
-@@ -54,6 +54,9 @@ static int __init init_vdso(void)
- 	vdso_info.code_mapping.pages =
- 		kcalloc(vdso_info.size / PAGE_SIZE, sizeof(struct page *), GFP_KERNEL);
+--- a/arch/loongarch/include/asm/acenv.h
++++ b/arch/loongarch/include/asm/acenv.h
+@@ -10,9 +10,8 @@
+ #ifndef _ASM_LOONGARCH_ACENV_H
+ #define _ASM_LOONGARCH_ACENV_H
  
-+	if (!vdso_info.code_mapping.pages)
-+		return -ENOMEM;
-+
- 	pfn = __phys_to_pfn(__pa_symbol(vdso_info.vdso));
- 	for (i = 0; i < vdso_info.size / PAGE_SIZE; i++)
- 		vdso_info.code_mapping.pages[i] = pfn_to_page(pfn + i);
+-/*
+- * This header is required by ACPI core, but we have nothing to fill in
+- * right now. Will be updated later when needed.
+- */
++#ifdef CONFIG_ARCH_STRICT_ALIGN
++#define ACPI_MISALIGNMENT_NOT_SUPPORTED
++#endif /* CONFIG_ARCH_STRICT_ALIGN */
+ 
+ #endif /* _ASM_LOONGARCH_ACENV_H */
 
 
