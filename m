@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D61117A2EA;
-	Mon, 22 Sep 2025 19:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261BB17A2EA;
+	Mon, 22 Sep 2025 19:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569556; cv=none; b=e5/yUkTO69GTRV4ONlpS+SXjGFOdhM5sJu1QsVstsHMKaLh1fJG5Gl0e97pLi/7g2kcNwvlxtckeCQjTyyEV7kUwO78Dhwjj7g1sq0+BiwCFp7GfDzn8S161wHrw4wwoVvoZYzF9scy7Sqb7uGbU747B0u9zQ62dgKxQShajPks=
+	t=1758569559; cv=none; b=jBMLuGaUBPcoDukdg303LIWKMnMCIFeT460ju4goRjwmqJV7HDlMS1NDgnh9TGjT+q3TvGpEkW1hDeDEX4SUiJMbzN9/WSX0i3GNUHQTxIylJL1CCk9LS5ade/FcOzmMa8lOggk7AdYYS1y1nBd8jTx0+SGj4UVqD2F3GmcUj1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569556; c=relaxed/simple;
-	bh=rlKIa+fJIWQNRVEoJLp+aIwlO9oxH5zeio9SeotJIXA=;
+	s=arc-20240116; t=1758569559; c=relaxed/simple;
+	bh=5yxKekCAJtTPONS0DgP3jd12yvvYKDE3mx8QuZoCD9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNJDdfOX4MqSSOPSKPd7//hRdEpjpwlZjq6NZn95Q0PuWZwJ1Mba73mzQkjSOeHx67XeRfCdv+b1ysoAGBcW2kJLqSOWo+e0dKQR6zeMAGVV1Nrm50qjt0Z0SYKi/dK6dDOXG/NGayXtaLZkeyTsOo9GT0qnl9lAPinI7JFieVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D47O8Hh9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ve8F/cin/nJapv36KanKyLeeapIFyQnZiZFhnpMkjAm9WBtk12+bVoVT8nKB5Uxn5K4IiQ+6Nu7/SZelMXaV0OVRpp9WIwCHVyB6f+UyW6kmf68Gw6F+v5tuIfmkwk3xfDHnXWVE+EL+Mj4rMRnjEcgH+GbPIQ2zMpgx7J49Ac4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whFpKGo3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D47O8Hh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25356C4CEF0;
-	Mon, 22 Sep 2025 19:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whFpKGo3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54DAC4CEF0;
+	Mon, 22 Sep 2025 19:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569556;
-	bh=rlKIa+fJIWQNRVEoJLp+aIwlO9oxH5zeio9SeotJIXA=;
+	s=korg; t=1758569559;
+	bh=5yxKekCAJtTPONS0DgP3jd12yvvYKDE3mx8QuZoCD9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D47O8Hh9OfLgWF3kGMkeApu4/XOEa79Rvi3kRhm6Tvd7VyuESFuk6h8Qsxv5Mqii1
-	 hlePb801q3bYvb6RdbNXGYIy6cZ6C2Eo4CnLv4aYDrzn8HYX6+Y45WRbrut+Tcy5Ks
-	 1MAHeu9praiGaJ16Uz3juKm3lwqqqT1x/BeZ1pyY=
+	b=whFpKGo3IgF2AAG8iB59T0pxU9ethYtFjfV3AHT8vX41B2EkV7ugTfMIOVItJTQl7
+	 BcVaOrb6zDbp+9GVaO1YTLmPBsKwBswumLmNpdhp4zKey5Uw2rlI1oK6hWe/CelMk9
+	 IlWaeAz6oo8nzUjiEWopNuPovFPr+4LvFBghtjiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 39/61] ASoC: wm8974: Correct PLL rate rounding
-Date: Mon, 22 Sep 2025 21:29:32 +0200
-Message-ID: <20250922192404.646759674@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 28/61] btrfs: tree-checker: fix the incorrect inode ref size check
+Date: Mon, 22 Sep 2025 21:29:21 +0200
+Message-ID: <20250922192404.326530795@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -51,46 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 9b17d3724df55ecc2bc67978822585f2b023be48 ]
+commit 96fa515e70f3e4b98685ef8cac9d737fc62f10e1 upstream.
 
-Using a single value of 22500000 for both 48000Hz and 44100Hz audio
-will sometimes result in returning wrong dividers due to rounding.
-Update the code to use the actual value for both.
+[BUG]
+Inside check_inode_ref(), we need to make sure every structure,
+including the btrfs_inode_extref header, is covered by the item.  But
+our code is incorrectly using "sizeof(iref)", where @iref is just a
+pointer.
 
-Fixes: 51b2bb3f2568 ("ASoC: wm8974: configure pll and mclk divider automatically")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250821082639.1301453-4-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This means "sizeof(iref)" will always be "sizeof(void *)", which is much
+smaller than "sizeof(struct btrfs_inode_extref)".
+
+This will allow some bad inode extrefs to sneak in, defeating tree-checker.
+
+[FIX]
+Fix the typo by calling "sizeof(*iref)", which is the same as
+"sizeof(struct btrfs_inode_extref)", and will be the correct behavior we
+want.
+
+Fixes: 71bf92a9b877 ("btrfs: tree-checker: Add check for INODE_REF")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wm8974.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/btrfs/tree-checker.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8974.c b/sound/soc/codecs/wm8974.c
-index 1becbf2c6ffad..587e200913767 100644
---- a/sound/soc/codecs/wm8974.c
-+++ b/sound/soc/codecs/wm8974.c
-@@ -419,10 +419,14 @@ static int wm8974_update_clocks(struct snd_soc_dai *dai)
- 	fs256 = 256 * priv->fs;
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1612,10 +1612,10 @@ static int check_inode_ref(struct extent
+ 	while (ptr < end) {
+ 		u16 namelen;
  
- 	f = wm8974_get_mclkdiv(priv->mclk, fs256, &mclkdiv);
--
- 	if (f != priv->mclk) {
- 		/* The PLL performs best around 90MHz */
--		fpll = wm8974_get_mclkdiv(22500000, fs256, &mclkdiv);
-+		if (fs256 % 8000)
-+			f = 22579200;
-+		else
-+			f = 24576000;
-+
-+		fpll = wm8974_get_mclkdiv(f, fs256, &mclkdiv);
- 	}
+-		if (unlikely(ptr + sizeof(iref) > end)) {
++		if (unlikely(ptr + sizeof(*iref) > end)) {
+ 			inode_ref_err(leaf, slot,
+ 			"inode ref overflow, ptr %lu end %lu inode_ref_size %zu",
+-				ptr, end, sizeof(iref));
++				ptr, end, sizeof(*iref));
+ 			return -EUCLEAN;
+ 		}
  
- 	wm8974_set_dai_pll(dai, 0, 0, priv->mclk, fpll);
--- 
-2.51.0
-
 
 
