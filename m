@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9E42F2909;
-	Mon, 22 Sep 2025 19:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A03A2F0C5C;
+	Mon, 22 Sep 2025 19:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570224; cv=none; b=lRzwqfko8BEOW9H562IjLbBXapezPC8j1hac/4la+k0/2a3W2ZKNoBi5AdKoq+LxMIgmVVa38PyyLGHG5wIXm0cQc5I10eXKgIm3FIIrjQEivZVokR2aVgBczzY6XJFXpd9MMJY/oG3OA21X6liIHRPVPA7Oh4VOS598kODTV0Q=
+	t=1758570227; cv=none; b=OzpoyZRFrcjUumM4mztw9pff6Jjuffz9vWuKhETT0Dqv+arr6swPqTc/7/nAE5me1t4BqYxJpApscKsBPJ/yL6W7VstlwgOB6T3rmkA/0A8SE1Arn8DIKlo3TDrLRB2M15cQ8+rnHvaKxGYLvaqcm2AmrjLvXi3Y21jkgAXr7nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570224; c=relaxed/simple;
-	bh=bRV92q0l9t5k6J/kRI0NcfBqDTIi05EdafOIaTY8Rqc=;
+	s=arc-20240116; t=1758570227; c=relaxed/simple;
+	bh=EK2Ub3BW78SbjX00dZ9laMja90tBZw1eDmAN6fOiTFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbrwZaeqqVR/wiDAoJyQm0vJCUoVVMMgMQLXbcWb+0js02aLWQKjw7dVc3MalE7TYi1tZqd7G+SDfDsaVlSmEAG1A/OU+TXFOzoIwLvWR6s9PtZl0XSAdMZo8NSru8FN+YB8kF1nyKRQRHykanVPfUkJJcp13rNq4Xyj5cXRjw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNvVshHn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hUnm9GUzX+MY/41FfvftOv4WPY1nqIzO2Vs5AsYOii1VnXFo3Khl4TCqN2f1YN+ORxQNf7mT28w/9WAQx145svSJ88d9ASwgyvDFPN6JTK55EfRZISlTaH/Ce1JMgNSnQpCnU/9b+QPvoAfjpZGRz6tLcksNPHtQz8XWs7nUjLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqt85W+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNvVshHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252CFC4CEF0;
-	Mon, 22 Sep 2025 19:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqt85W+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9695C4CEF0;
+	Mon, 22 Sep 2025 19:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570224;
-	bh=bRV92q0l9t5k6J/kRI0NcfBqDTIi05EdafOIaTY8Rqc=;
+	s=korg; t=1758570227;
+	bh=EK2Ub3BW78SbjX00dZ9laMja90tBZw1eDmAN6fOiTFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNvVshHnj+CEgeLT/AYrzeBu2xKkpH2vKQbZR2yHYotXQgMTY87PDxmhiOUG3+osJ
-	 30yAzQ9Ur2aisau3/Gzkw5bn/OiGWVNRGtHhdxxjw4GyM8VAqyleyZMRCVIAjfv9kQ
-	 xvQPeJlfGZbhsh+f0h//dHnZZgJYoY1OhhO2hozs=
+	b=tqt85W+0FKb92GUFFsc2/fAdmjIWZnspkV72bjs3xOUHxdIltmmkncnBvLJfhzk1O
+	 VoN53XKH+ZC2zDz8Nxf/2EW50HSYYASBysLXBtnoZZB7bEXhweUSbo2Snd9r45bxXh
+	 A6dl6nk7It0IiOW5q4TlBV9RumnMeciqVwExGK3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	austinchang <austinchang@synology.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.16 055/149] btrfs: initialize inode::file_extent_tree after i_mode has been set
-Date: Mon, 22 Sep 2025 21:29:15 +0200
-Message-ID: <20250922192414.249015858@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.16 056/149] dm-raid: dont set io_min and io_opt for raid1
+Date: Mon, 22 Sep 2025 21:29:16 +0200
+Message-ID: <20250922192414.288006730@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -51,82 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: austinchang <austinchang@synology.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 8679d2687c351824d08cf1f0e86f3b65f22a00fe upstream.
+commit a86556264696b797d94238d99d8284d0d34ed960 upstream.
 
-btrfs_init_file_extent_tree() uses S_ISREG() to determine if the file is
-a regular file. In the beginning of btrfs_read_locked_inode(), the i_mode
-hasn't been read from inode item, then file_extent_tree won't be used at
-all in volumes without NO_HOLES.
+These commands
+ modprobe brd rd_size=1048576
+ vgcreate vg /dev/ram*
+ lvcreate -m4 -L10 -n lv vg
+trigger the following warnings:
+device-mapper: table: 252:10: adding target device (start sect 0 len 24576) caused an alignment inconsistency
+device-mapper: table: 252:10: adding target device (start sect 0 len 24576) caused an alignment inconsistency
 
-Fix this by calling btrfs_init_file_extent_tree() after i_mode is
-initialized in btrfs_read_locked_inode().
+The warnings are caused by the fact that io_min is 512 and physical block
+size is 4096.
 
-Fixes: 3d7db6e8bd22e6 ("btrfs: don't allocate file extent tree for non regular files")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: austinchang <austinchang@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+If there's chunk-less raid, such as raid1, io_min shouldn't be set to zero
+because it would be raised to 512 and it would trigger the warning.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/delayed-inode.c |    3 ---
- fs/btrfs/inode.c         |   11 +++++------
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ drivers/md/dm-raid.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -1843,7 +1843,6 @@ static void fill_stack_inode_item(struct
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -3810,8 +3810,10 @@ static void raid_io_hints(struct dm_targ
+ 	struct raid_set *rs = ti->private;
+ 	unsigned int chunk_size_bytes = to_bytes(rs->md.chunk_sectors);
  
- int btrfs_fill_inode(struct btrfs_inode *inode, u32 *rdev)
- {
--	struct btrfs_fs_info *fs_info = inode->root->fs_info;
- 	struct btrfs_delayed_node *delayed_node;
- 	struct btrfs_inode_item *inode_item;
- 	struct inode *vfs_inode = &inode->vfs_inode;
-@@ -1864,8 +1863,6 @@ int btrfs_fill_inode(struct btrfs_inode
- 	i_uid_write(vfs_inode, btrfs_stack_inode_uid(inode_item));
- 	i_gid_write(vfs_inode, btrfs_stack_inode_gid(inode_item));
- 	btrfs_i_size_write(inode, btrfs_stack_inode_size(inode_item));
--	btrfs_inode_set_file_extent_range(inode, 0,
--			round_up(i_size_read(vfs_inode), fs_info->sectorsize));
- 	vfs_inode->i_mode = btrfs_stack_inode_mode(inode_item);
- 	set_nlink(vfs_inode, btrfs_stack_inode_nlink(inode_item));
- 	inode_set_bytes(vfs_inode, btrfs_stack_inode_nbytes(inode_item));
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -3881,10 +3881,6 @@ static int btrfs_read_locked_inode(struc
- 	bool filled = false;
- 	int first_xattr_slot;
+-	limits->io_min = chunk_size_bytes;
+-	limits->io_opt = chunk_size_bytes * mddev_data_stripes(rs);
++	if (chunk_size_bytes) {
++		limits->io_min = chunk_size_bytes;
++		limits->io_opt = chunk_size_bytes * mddev_data_stripes(rs);
++	}
+ }
  
--	ret = btrfs_init_file_extent_tree(inode);
--	if (ret)
--		goto out;
--
- 	ret = btrfs_fill_inode(inode, &rdev);
- 	if (!ret)
- 		filled = true;
-@@ -3916,8 +3912,6 @@ static int btrfs_read_locked_inode(struc
- 	i_uid_write(vfs_inode, btrfs_inode_uid(leaf, inode_item));
- 	i_gid_write(vfs_inode, btrfs_inode_gid(leaf, inode_item));
- 	btrfs_i_size_write(inode, btrfs_inode_size(leaf, inode_item));
--	btrfs_inode_set_file_extent_range(inode, 0,
--			round_up(i_size_read(vfs_inode), fs_info->sectorsize));
- 
- 	inode_set_atime(vfs_inode, btrfs_timespec_sec(leaf, &inode_item->atime),
- 			btrfs_timespec_nsec(leaf, &inode_item->atime));
-@@ -3948,6 +3942,11 @@ static int btrfs_read_locked_inode(struc
- 	btrfs_update_inode_mapping_flags(inode);
- 
- cache_index:
-+	ret = btrfs_init_file_extent_tree(inode);
-+	if (ret)
-+		goto out;
-+	btrfs_inode_set_file_extent_range(inode, 0,
-+			round_up(i_size_read(vfs_inode), fs_info->sectorsize));
- 	/*
- 	 * If we were modified in the current generation and evicted from memory
- 	 * and then re-read we need to do a full sync since we don't have any
+ static void raid_presuspend(struct dm_target *ti)
 
 
