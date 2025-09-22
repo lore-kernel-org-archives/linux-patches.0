@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169D531C57B;
-	Mon, 22 Sep 2025 19:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54FB31CA4A;
+	Mon, 22 Sep 2025 19:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570014; cv=none; b=pYiehfZZJOyDi2xQmXsmQjTytKaQ2GFqnrmwwHxjvlvYF6G3tAHAzd9+9NuoBTTYCEVX0yIjlT6lf1cTGFENR7w0DxNTg6kQETMpsziNC7FhcnzYHMFpkT075yvqgnWFdgC24IJB7fN9llpNUwN9oth8DwpWLtQwwRUElfEud0Y=
+	t=1758570017; cv=none; b=RDC65DiomLKr9Uy+NvMI00f5BKh+gYMrAN+c89VICjNbPRdNhbGBPqm+8vY9pTNJdLIYCtX64ATXMtYP3rMlCk2Qbd4USVD4y3SNbTrHEGX047sjbC9y0iDGsmJncqCLMC2XI67quVEK8ulzZwGyFTiHPHzUAUYa98eoijthDwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570014; c=relaxed/simple;
-	bh=QP2hKpTZRQ3zxndFKZXgtWtgw5k12ckoClCPf71XHWU=;
+	s=arc-20240116; t=1758570017; c=relaxed/simple;
+	bh=nUTjOb0/DpWB1k06olfa3M6hxtqcX/Gy/ueeF86Gd1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UU55BM5O544q/4QOhfWdeKJNxXz2t1d0bKy6A0K2c7c5EYst7CJt1lvhTtm+BG2y4En2XgMF3uKVaxJx2rcCQUEKl+uysWLycTfXtl9b3qN4VPlMOMFMx2PxHuBNgekgloT8Gq87JPJ5+owrdohEhMWmhS0Qr0AQmp4D1ttbchs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnvO2nXl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ljg64Qjpr6Hm3K/HNHslmLMFP82k0uAZdVicJ4P2WM9538pF1j7a6xpxpd6hIS4kGU4RoAea0KBCbMja+05cmcNhO//ihr+FHRaqFCJ8G6hbLNtNE6wP8QNkhNyq+NEzhxCSBk/yN2qOLo5RoSHNdRWORtqE6cWIwDNXe2BTM9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMS2mKqU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnvO2nXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1929BC116C6;
-	Mon, 22 Sep 2025 19:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMS2mKqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0202C4CEF0;
+	Mon, 22 Sep 2025 19:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570013;
-	bh=QP2hKpTZRQ3zxndFKZXgtWtgw5k12ckoClCPf71XHWU=;
+	s=korg; t=1758570017;
+	bh=nUTjOb0/DpWB1k06olfa3M6hxtqcX/Gy/ueeF86Gd1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnvO2nXlje37o5Pl7g3s3Fg69HYwouxjbQccBd5GeGfw/mlQ3Fpy/BT+UGXoenlhE
-	 1+VQt8YB8yCZKq77f2Di5+8r5WiFcpLMSG7XB0UbEfChctOkM6vECee6T7hSHqbO+j
-	 aWMDm3VzedXQNMiTlBVVU3FVPy1cdvdLT/i9/VeU=
+	b=BMS2mKqUpzH3Uz+NPENcd4w7a0T0ic+C9Yk1Q+ELmHkmrGh6hR/0m5eT49yMI7DQC
+	 +jbbIBhiqWFq80lRiAsL0kmNrS5roTo0ezKjsXg5KQi+qjc8gwi7mKASv43gzCRiTj
+	 U0Zcm/Gp+RyeuQFpKJ29rfhszMzaIk6gaQ3B62FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/105] drm/xe/tile: Release kobject for the failure path
-Date: Mon, 22 Sep 2025 21:29:59 +0200
-Message-ID: <20250922192410.887466867@linuxfoundation.org>
+Subject: [PATCH 6.12 077/105] drm: bridge: anx7625: Fix NULL pointer dereference with early IRQ
+Date: Mon, 22 Sep 2025 21:30:00 +0200
+Message-ID: <20250922192410.910807487@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -54,55 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 013e484dbd687a9174acf8f4450217bdb86ad788 ]
+[ Upstream commit a10f910c77f280327b481e77eab909934ec508f0 ]
 
-Call kobject_put() for the failure path to release the kobject
+If the interrupt occurs before resource initialization is complete, the
+interrupt handler/worker may access uninitialized data such as the I2C
+tcpc_client device, potentially leading to NULL pointer dereference.
 
-v2: remove extra newline. (Matt)
-
-Fixes: e3d0839aa501 ("drm/xe/tile: Abort driver load for sysfs creation failure")
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://lore.kernel.org/r/20250819153950.2973344-2-shuicheng.lin@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit b98775bca99511cc22ab459a2de646cd2fa7241f)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250709085438.56188-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_tile_sysfs.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_tile_sysfs.c b/drivers/gpu/drm/xe/xe_tile_sysfs.c
-index b804234a65516..9e1236a9ec673 100644
---- a/drivers/gpu/drm/xe/xe_tile_sysfs.c
-+++ b/drivers/gpu/drm/xe/xe_tile_sysfs.c
-@@ -44,16 +44,18 @@ int xe_tile_sysfs_init(struct xe_tile *tile)
- 	kt->tile = tile;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index c036bbc92ba96..7244c3abb7f99 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2683,7 +2683,7 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 		ret = devm_request_threaded_irq(dev, platform->pdata.intp_irq,
+ 						NULL, anx7625_intr_hpd_isr,
+ 						IRQF_TRIGGER_FALLING |
+-						IRQF_ONESHOT,
++						IRQF_ONESHOT | IRQF_NO_AUTOEN,
+ 						"anx7625-intp", platform);
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev, "fail to request irq\n");
+@@ -2753,8 +2753,10 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 	}
  
- 	err = kobject_add(&kt->base, &dev->kobj, "tile%d", tile->id);
--	if (err) {
--		kobject_put(&kt->base);
--		return err;
--	}
-+	if (err)
-+		goto err_object;
+ 	/* Add work function */
+-	if (platform->pdata.intp_irq)
++	if (platform->pdata.intp_irq) {
++		enable_irq(platform->pdata.intp_irq);
+ 		queue_work(platform->workqueue, &platform->work);
++	}
  
- 	tile->sysfs = &kt->base;
- 
- 	err = xe_vram_freq_sysfs_init(tile);
- 	if (err)
--		return err;
-+		goto err_object;
- 
- 	return devm_add_action_or_reset(xe->drm.dev, tile_sysfs_fini, tile);
-+
-+err_object:
-+	kobject_put(&kt->base);
-+	return err;
- }
+ 	if (platform->pdata.audio_en)
+ 		anx7625_register_audio(dev, platform);
 -- 
 2.51.0
 
