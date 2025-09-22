@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A112E285C;
-	Mon, 22 Sep 2025 19:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD402F0C52;
+	Mon, 22 Sep 2025 19:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569946; cv=none; b=f7/ngnhRmn+uUaVMzY6DRcb+swgCHvCtIWZXcPhiqX+MJa09wnO5+hL2PB++VE6ZUg78/TWp0Zvx/03UQYgP/DpavyCUNwqSPkhJyfPNHIvzuRdW2AaFJ/a9am64vt6QXyFCk+Lc993AV3JEsQoITGZi+tjVb/YE09tCnThZZ8I=
+	t=1758569948; cv=none; b=ekSfUo7CIEAlNDkWDJRzlwAtbhtorwTFMLIIlns5bz6XzSo5GPgfZmYshCcOj3Hu6PfVJrgJ2rPxSmxYLaqng2c6Naz/R/WjzzpKij5XFJB0OzlTUWduQKlidK32FPmP55YvtWogo9pl+jFrQku03hCA/lylTvhkkoKICyxC4BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569946; c=relaxed/simple;
-	bh=azBgL02JVSHYiF0RzpkUUu0allSAduv3qHHApN7uQ9k=;
+	s=arc-20240116; t=1758569948; c=relaxed/simple;
+	bh=8NTlvOueA/7oDB7JkzQ/20A9tOZdTUtWob+r3CxAk24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=erZT3U/eMvrsxSgZc8sOdft/g3qOIQ2oyuGklrS+K1RTOpDGd/3AJIGosoxZ8qDnnVx61MzO65+CHXuwVZDB6eNXVUAmnO7/FJzdOu5lvrg9d+FlAL9q3EZzBiENSLW4k3y2q9gfPdPnDqhqM3nsHTWDQ2pMmvafaqY+QpXISE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiNxmXnt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uI4zKeXwhyTaubgeMvh/IYDXe18EPBB9c93Bv10B+xlV3g35d2j6EjIPMSKMKYFQLKGGHQwDK5QqHJ0pk0/7WH3ARWGgXpxUQdkqouz/+bFFzDieUgLgjc7MDt2efkMVvAtVWTZS5R5Bnwbq5zC+CbpAgc1uJ0mA44WI40+JO5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moNgMwZq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiNxmXnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7952C4CEF0;
-	Mon, 22 Sep 2025 19:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moNgMwZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BBAC4CEF0;
+	Mon, 22 Sep 2025 19:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569946;
-	bh=azBgL02JVSHYiF0RzpkUUu0allSAduv3qHHApN7uQ9k=;
+	s=korg; t=1758569948;
+	bh=8NTlvOueA/7oDB7JkzQ/20A9tOZdTUtWob+r3CxAk24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YiNxmXntiptafkrzFEAE/+4El41sq82tsfU46PmoqHEq1BWh2RTw5CNlmUiEpugsD
-	 cFdJhkQ5T93XcJSMTY2l572MM4S+lyYsu4RSPtykgqIUHtpKLfd8NYCLJL9QZDuCug
-	 5NlYgPpeQbj6V/LmIQeRiLsuvusDIB/rp25jy0yU=
+	b=moNgMwZqHrXQrmrPSxcjljYf1ikx+QrP74llZnIZTiNeTcnovlARmKS+yt1DyHD3c
+	 u+wVes4fn5sokgoYwLQaFNn6CECXd8nSsxtYBFO0sEpL/9Q06XJm8hRSlGqLZ9WuHM
+	 FYs8PmpxsM6bsOZv4gov5KaiELL1Zl4RPyYil6Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Koira <eugkoira@amazon.com>,
-	Nicolas Saenz Julienne <nsaenz@amazon.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.12 051/105] iommu/vt-d: Fix __domain_mapping()s usage of switch_to_super_page()
-Date: Mon, 22 Sep 2025 21:29:34 +0200
-Message-ID: <20250922192410.251319210@linuxfoundation.org>
+Subject: [PATCH 6.12 052/105] iommu/amd/pgtbl: Fix possible race while increase page table level
+Date: Mon, 22 Sep 2025 21:29:35 +0200
+Message-ID: <20250922192410.277723153@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -53,67 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugene Koira <eugkoira@amazon.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-commit dce043c07ca1ac19cfbe2844a6dc71e35c322353 upstream.
+commit 1e56310b40fd2e7e0b9493da9ff488af145bdd0c upstream.
 
-switch_to_super_page() assumes the memory range it's working on is aligned
-to the target large page level. Unfortunately, __domain_mapping() doesn't
-take this into account when using it, and will pass unaligned ranges
-ultimately freeing a PTE range larger than expected.
+The AMD IOMMU host page table implementation supports dynamic page table levels
+(up to 6 levels), starting with a 3-level configuration that expands based on
+IOVA address. The kernel maintains a root pointer and current page table level
+to enable proper page table walks in alloc_pte()/fetch_pte() operations.
 
-Take for example a mapping with the following iov_pfn range [0x3fe400,
-0x4c0600), which should be backed by the following mappings:
+The IOMMU IOVA allocator initially starts with 32-bit address and onces its
+exhuasted it switches to 64-bit address (max address is determined based
+on IOMMU and device DMA capability). To support larger IOVA, AMD IOMMU
+driver increases page table level.
 
-   iov_pfn [0x3fe400, 0x3fffff] covered by 2MiB pages
-   iov_pfn [0x400000, 0x4bffff] covered by 1GiB pages
-   iov_pfn [0x4c0000, 0x4c05ff] covered by 2MiB pages
+But in unmap path (iommu_v1_unmap_pages()), fetch_pte() reads
+pgtable->[root/mode] without lock. So its possible that in exteme corner case,
+when increase_address_space() is updating pgtable->[root/mode], fetch_pte()
+reads wrong page table level (pgtable->mode). It does compare the value with
+level encoded in page table and returns NULL. This will result is
+iommu_unmap ops to fail and upper layer may retry/log WARN_ON.
 
-Under this circumstance, __domain_mapping() will pass [0x400000, 0x4c05ff]
-to switch_to_super_page() at a 1 GiB granularity, which will in turn
-free PTEs all the way to iov_pfn 0x4fffff.
+CPU 0                                         CPU 1
+------                                       ------
+map pages                                    unmap pages
+alloc_pte() -> increase_address_space()      iommu_v1_unmap_pages() -> fetch_pte()
+  pgtable->root = pte (new root value)
+                                             READ pgtable->[mode/root]
+					       Reads new root, old mode
+  Updates mode (pgtable->mode += 1)
 
-Mitigate this by rounding down the iov_pfn range passed to
-switch_to_super_page() in __domain_mapping()
-to the target large page level.
+Since Page table level updates are infrequent and already synchronized with a
+spinlock, implement seqcount to enable lock-free read operations on the read path.
 
-Additionally add range alignment checks to switch_to_super_page.
-
-Fixes: 9906b9352a35 ("iommu/vt-d: Avoid duplicate removing in __domain_mapping()")
-Signed-off-by: Eugene Koira <eugkoira@amazon.com>
+Fixes: 754265bcab7 ("iommu/amd: Fix race in increase_address_space()")
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Link: https://lore.kernel.org/r/20250826143816.38686-1-eugkoira@amazon.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/amd_iommu_types.h |    1 +
+ drivers/iommu/amd/io_pgtable.c      |   25 +++++++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -1768,6 +1768,10 @@ static void switch_to_super_page(struct
- 	unsigned long lvl_pages = lvl_to_nr_pages(level);
- 	struct dma_pte *pte = NULL;
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -545,6 +545,7 @@ struct gcr3_tbl_info {
+ };
  
-+	if (WARN_ON(!IS_ALIGNED(start_pfn, lvl_pages) ||
-+		    !IS_ALIGNED(end_pfn + 1, lvl_pages)))
-+		return;
+ struct amd_io_pgtable {
++	seqcount_t		seqcount;	/* Protects root/mode update */
+ 	struct io_pgtable	pgtbl;
+ 	int			mode;
+ 	u64			*root;
+--- a/drivers/iommu/amd/io_pgtable.c
++++ b/drivers/iommu/amd/io_pgtable.c
+@@ -17,6 +17,7 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/dma-mapping.h>
++#include <linux/seqlock.h>
+ 
+ #include <asm/barrier.h>
+ 
+@@ -144,8 +145,11 @@ static bool increase_address_space(struc
+ 
+ 	*pte = PM_LEVEL_PDE(pgtable->mode, iommu_virt_to_phys(pgtable->root));
+ 
++	write_seqcount_begin(&pgtable->seqcount);
+ 	pgtable->root  = pte;
+ 	pgtable->mode += 1;
++	write_seqcount_end(&pgtable->seqcount);
 +
- 	while (start_pfn <= end_pfn) {
- 		if (!pte)
- 			pte = pfn_to_dma_pte(domain, start_pfn, &level,
-@@ -1844,7 +1848,8 @@ __domain_mapping(struct dmar_domain *dom
- 				unsigned long pages_to_remove;
+ 	amd_iommu_update_and_flush_device_table(domain);
  
- 				pteval |= DMA_PTE_LARGE_PAGE;
--				pages_to_remove = min_t(unsigned long, nr_pages,
-+				pages_to_remove = min_t(unsigned long,
-+							round_down(nr_pages, lvl_pages),
- 							nr_pte_to_next_page(pte) * lvl_pages);
- 				end_pfn = iov_pfn + pages_to_remove - 1;
- 				switch_to_super_page(domain, iov_pfn, end_pfn, largepage_lvl);
+ 	pte = NULL;
+@@ -167,6 +171,7 @@ static u64 *alloc_pte(struct amd_io_pgta
+ {
+ 	unsigned long last_addr = address + (page_size - 1);
+ 	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
++	unsigned int seqcount;
+ 	int level, end_lvl;
+ 	u64 *pte, *page;
+ 
+@@ -184,8 +189,14 @@ static u64 *alloc_pte(struct amd_io_pgta
+ 	}
+ 
+ 
+-	level   = pgtable->mode - 1;
+-	pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	do {
++		seqcount = read_seqcount_begin(&pgtable->seqcount);
++
++		level   = pgtable->mode - 1;
++		pte     = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
++
++
+ 	address = PAGE_SIZE_ALIGN(address, page_size);
+ 	end_lvl = PAGE_SIZE_LEVEL(page_size);
+ 
+@@ -262,6 +273,7 @@ static u64 *fetch_pte(struct amd_io_pgta
+ 		      unsigned long *page_size)
+ {
+ 	int level;
++	unsigned int seqcount;
+ 	u64 *pte;
+ 
+ 	*page_size = 0;
+@@ -269,8 +281,12 @@ static u64 *fetch_pte(struct amd_io_pgta
+ 	if (address > PM_LEVEL_SIZE(pgtable->mode))
+ 		return NULL;
+ 
+-	level	   =  pgtable->mode - 1;
+-	pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	do {
++		seqcount = read_seqcount_begin(&pgtable->seqcount);
++		level	   =  pgtable->mode - 1;
++		pte	   = &pgtable->root[PM_LEVEL_INDEX(level, address)];
++	} while (read_seqcount_retry(&pgtable->seqcount, seqcount));
++
+ 	*page_size =  PTE_LEVEL_PAGE_SIZE(level);
+ 
+ 	while (level > 0) {
+@@ -552,6 +568,7 @@ static struct io_pgtable *v1_alloc_pgtab
+ 	if (!pgtable->root)
+ 		return NULL;
+ 	pgtable->mode = PAGE_MODE_3_LEVEL;
++	seqcount_init(&pgtable->seqcount);
+ 
+ 	cfg->pgsize_bitmap  = amd_iommu_pgsize_bitmap;
+ 	cfg->ias            = IOMMU_IN_ADDR_BIT_SIZE;
 
 
