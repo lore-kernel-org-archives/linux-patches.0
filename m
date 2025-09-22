@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3249B2517AC;
-	Mon, 22 Sep 2025 19:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9511253B5C;
+	Mon, 22 Sep 2025 19:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570327; cv=none; b=ETz34Hmr86q8Ed5xasjGYEfZ8HGepkMzZ23Wu3lhX5l+fadtHVkLdUua7LDsIQIwa8iSde+4PMTnGrcP6A5yBM1pTWxkWeTV1zZsIYGeRvFPBcwYJDcqocw1VLJT+LxWnqCT2bho1LsobVSkidycpxyHXKHFQTm8d2ZKPz/tMHE=
+	t=1758570329; cv=none; b=ezq1TOEO4dvgRQY/CHM2TzA6g4y3V3pcbOohD8zhFyyMj1O0zDa1+HR2HNg6XErfFAdXymTZDL7CaBr3Dnh8W4/Dk9PwpQWlrdqrMUskM575ZJfIrcI+XBNlfk+LztU5KsJY2zKTFx7Slw8nAmobeZ87Q6V7BZhDDrQEE1L3DBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570327; c=relaxed/simple;
-	bh=wZ793RLk0g3en9na4lEz6iDtQoHFo0IhKHSH0QnkIuc=;
+	s=arc-20240116; t=1758570329; c=relaxed/simple;
+	bh=SqqKkPGF79c5dGQnY9D5uNWTkldB8wYR8PoByOdjSSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mIeeKw7TsnELNFO9yv8RaW5yzfkjHrtKSAOP9sXNCXN3a0apkF97gjsSZkGfZOouuHyGNuC6hd9qIqokpeoixkV4o5KQyeIfuEsGVU/H0hB97VnjLzwwR9ItwT9sGy3ic8Dvo8FZV91/A+U+QqmZFXQbj7K5BaswKCINIlfmrqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZL4WZA/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GhRRndPGWC0lrVa4tvlzIDHZB+gg6JOPHnO2O1N4s0ERDpqO6PbROUkyo9Zj8jlDzseOh5xUcfRFoH5/C+E833yj2z4KRJ5MiB42ieF/K0F2AE2sJ9jT82rwnE2Lw08xHtWcLI6V8QlXWKwRHwj7jZ4epRlZ7YNiE0Yf/uLj79k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INRqN+MJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZL4WZA/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01A1C4CEF0;
-	Mon, 22 Sep 2025 19:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INRqN+MJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44291C4CEF0;
+	Mon, 22 Sep 2025 19:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570327;
-	bh=wZ793RLk0g3en9na4lEz6iDtQoHFo0IhKHSH0QnkIuc=;
+	s=korg; t=1758570329;
+	bh=SqqKkPGF79c5dGQnY9D5uNWTkldB8wYR8PoByOdjSSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZL4WZA/oSz/00hVRkhDxt0zDfFNZPJepiUfU4O4cm0LuckwvGkDd50WdaYM38Y+bW
-	 r2w0KN4HcQUw+MR+RaNJGiTMEChIep5TEbdAogdpayJXPfOtGwnNw6VTi921p1oST1
-	 r+P4w1wSAcTtyrGSHmAiPhz17EJzdvl3e01/dYLQ=
+	b=INRqN+MJzD1m5a2HIMK/AFCVBuXNlw/Wj3pp/4DPjrBCKKGEqZW7zoo2KhiU+keOb
+	 ipqTTUAOklO9kJIStJMsKQgLS4tOHa+RGPZBcK+Px94QXArIWTbv8ubxRRe9yNwRfa
+	 EgZJYhJ7fiCiZadCsmW1IGiAPlmdOLiJOQJbct2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20L=C3=A9cuyer?= <jerome.4a4c@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.16 097/149] drm/amd: Only restore cached manual clock settings in restore if OD enabled
-Date: Mon, 22 Sep 2025 21:29:57 +0200
-Message-ID: <20250922192415.331193907@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.16 106/149] selftests: mptcp: avoid spurious errors on TCP disconnect
+Date: Mon, 22 Sep 2025 21:30:06 +0200
+Message-ID: <20250922192415.554142042@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -45,46 +47,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit f9b80514a7227c589291792cb6743b0ddf41c2bc upstream.
+commit 8708c5d8b3fb3f6d5d3b9e6bfe01a505819f519a upstream.
 
-If OD is not enabled then restoring cached clock settings doesn't make
-sense and actually leads to errors in resume.
+The disconnect test-case, with 'plain' TCP sockets generates spurious
+errors, e.g.
 
-Check if enabled before restoring settings.
+  07 ns1 TCP   -> ns1 (dead:beef:1::1:10006) MPTCP
+  read: Connection reset by peer
+  read: Connection reset by peer
+  (duration   155ms) [FAIL] client exit code 3, server 3
 
-Fixes: 4e9526924d09 ("drm/amd: Restore cached manual clock settings during resume")
-Reported-by: Jérôme Lécuyer <jerome.4a4c@gmail.com>
-Closes: https://lore.kernel.org/amd-gfx/0ffe2692-7bfa-4821-856e-dd0f18e2c32b@amd.com/T/#me6db8ddb192626360c462b7570ed7eba0c6c9733
-Suggested-by: Jérôme Lécuyer <jerome.4a4c@gmail.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1a4dd33cc6e1baaa81efdbe68227a19f51c50f20)
+  netns ns1-FloSdv (listener) socket stat for 10006:
+  TcpActiveOpens                  2                  0.0
+  TcpPassiveOpens                 2                  0.0
+  TcpEstabResets                  2                  0.0
+  TcpInSegs                       274                0.0
+  TcpOutSegs                      276                0.0
+  TcpOutRsts                      3                  0.0
+  TcpExtPruneCalled               2                  0.0
+  TcpExtRcvPruned                 1                  0.0
+  TcpExtTCPPureAcks               104                0.0
+  TcpExtTCPRcvCollapsed           2                  0.0
+  TcpExtTCPBacklogCoalesce        42                 0.0
+  TcpExtTCPRcvCoalesce            43                 0.0
+  TcpExtTCPChallengeACK           1                  0.0
+  TcpExtTCPFromZeroWindowAdv      42                 0.0
+  TcpExtTCPToZeroWindowAdv        41                 0.0
+  TcpExtTCPWantZeroWindowAdv      13                 0.0
+  TcpExtTCPOrigDataSent           164                0.0
+  TcpExtTCPDelivered              165                0.0
+  TcpExtTCPRcvQDrop               1                  0.0
+
+In the failing scenarios (TCP -> MPTCP), the involved sockets are
+actually plain TCP ones, as fallbacks for passive sockets at 2WHS time
+cause the MPTCP listeners to actually create 'plain' TCP sockets.
+
+Similar to commit 218cc166321f ("selftests: mptcp: avoid spurious errors
+on disconnect"), the root cause is in the user-space bits: the test
+program tries to disconnect as soon as all the pending data has been
+spooled, generating an RST. If such option reaches the peer before the
+connection has reached the closed status, the TCP socket will report an
+error to the user-space, as per protocol specification, causing the
+above failure. Note that it looks like this issue got more visible since
+the "tcp: receiver changes" series from commit 06baf9bfa6ca ("Merge
+branch 'tcp-receiver-changes'").
+
+Address the issue by explicitly waiting for the TCP sockets (-t) to
+reach a closed status before performing the disconnect. More precisely,
+the test program now waits for plain TCP sockets or TCP subflows in
+addition to the MPTCP sockets that were already monitored.
+
+While at it, use 'ss' with '-n' to avoid resolving service names, which
+is not needed here.
+
+Fixes: 218cc166321f ("selftests: mptcp: avoid spurious errors on disconnect")
 Cc: stable@vger.kernel.org
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250912-net-mptcp-fix-sft-connect-v1-3-d40e77cbbf02@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -2185,7 +2185,7 @@ static int smu_resume(struct amdgpu_ip_b
- 			return ret;
- 	}
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -1248,7 +1248,7 @@ void xdisconnect(int fd)
+ 	else
+ 		xerror("bad family");
  
--	if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
-+	if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL && smu->od_enabled) {
- 		ret = smu_od_edit_dpm_table(smu, PP_OD_COMMIT_DPM_TABLE, NULL, 0);
- 		if (ret)
- 			return ret;
+-	strcpy(cmd, "ss -M | grep -q ");
++	strcpy(cmd, "ss -Mnt | grep -q ");
+ 	cmdlen = strlen(cmd);
+ 	if (!inet_ntop(addr.ss_family, raw_addr, &cmd[cmdlen],
+ 		       sizeof(cmd) - cmdlen))
+@@ -1258,7 +1258,7 @@ void xdisconnect(int fd)
+ 
+ 	/*
+ 	 * wait until the pending data is completely flushed and all
+-	 * the MPTCP sockets reached the closed status.
++	 * the sockets reached the closed status.
+ 	 * disconnect will bypass/ignore/drop any pending data.
+ 	 */
+ 	for (i = 0; ; i += msec_sleep) {
 
 
