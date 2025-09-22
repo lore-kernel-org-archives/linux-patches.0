@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42732F0C5F;
-	Mon, 22 Sep 2025 19:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2514727B320;
+	Mon, 22 Sep 2025 19:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569864; cv=none; b=GxXWD8DCfPBFSIosL0PiF/ZLJ8BqtrXYc4ovs0gPXWNsI163stwhMQSJJ/nPywp6foVr4tpCk3ANq4PrBiGrpuxAaS4bYqwYc3sOOj622dacBPI+q1Fa1KjAKUb7/GDO+cvfCPzyxw2neeSUR92FGifD7Piy5MWsLaeTxY6PIlM=
+	t=1758569867; cv=none; b=NiyeZyly5A5qe3T54tG3yZj6jpXQtEB3dGbQ2KfVU2yZ3RCE7B3GA5dNqU++eXqjvedVCP82jTcIPgf1g9k1bIIFrvJUuvft/23vZwYCE4ZXMYKqNbNuYUwjbne/Lp5kE11WsHPtppdo3WS88AUAYbu6gld4rXF0oCcmPnoDoGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569864; c=relaxed/simple;
-	bh=AZ4mRvYvZdYVqBsX7uHUsg/8+mbXlOQRozTVHEnpBd4=;
+	s=arc-20240116; t=1758569867; c=relaxed/simple;
+	bh=5lEGyOczTHF3nZ6GJKGH0a8LiQ6OA1UMheTQdJJQ1f0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihDU+Sc/X3/1/B0Z1COwfXT2Ydhd7INcN+9M+7DgQjG8Z2NHVMYFeGkACk55FJQ5ad3Wo6GGtRQ3j3QpFfvuzuo5aHxk/88JZZtQ+k7gWLMXNVsR7dYNQt+8Jo252zvMWG19YlalUQHvBhr70aWJnjfdUZLrM82DJ4YS9KBVzmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT/lUQ7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Su+N+CFWz8lHoWD+GPiE/hP9TAnROlTcoKdkkxjnbcyXvPsqm98hCbI1SukE9Fdtr9HQFR4QJV6UJ0vpzRQsIaL6FK4Em9eQvJiOOUez5ZDx3brqMP/qCfFSe6HXHCWnM49+az20n1+HhD4wnwJUhJXnIMmA7XSvl/vSQCwlrMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxPYR2wa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT/lUQ7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349D4C4CEF0;
-	Mon, 22 Sep 2025 19:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxPYR2wa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1757C4CEF0;
+	Mon, 22 Sep 2025 19:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569864;
-	bh=AZ4mRvYvZdYVqBsX7uHUsg/8+mbXlOQRozTVHEnpBd4=;
+	s=korg; t=1758569867;
+	bh=5lEGyOczTHF3nZ6GJKGH0a8LiQ6OA1UMheTQdJJQ1f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AT/lUQ7bc6ysLTxh/cqQPF6JNT7N1U7CsxiicrufwVU3os7ecxpYpzsNc7KtIZFTP
-	 kMWfUcNNWdx9GAtaywFrKL6DJ9+Of684w/j1mSLfVyALG/gaBlZgl6ECeEG8/Vl1Gl
-	 0V5xNQygCiXjDpq0e5bKK4u6guchwioOhDTB95As=
+	b=MxPYR2wa1Vgx/Dyy829mpHzIGZY2vHu+pVVeZgVoiDPbjUmRFrBwmA6cp5m+9uBVQ
+	 YFTXt1leYuym85DvTdJu4+Ew2Op4Cc/OilLf7c7Abx/iuNATawQtBkVR2GS9lxqIdG
+	 fddacAJtNEBt8t7CDV9mL3bARh4rZrt8G84VGTJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/105] btrfs: fix invalid extref key setup when replaying dentry
-Date: Mon, 22 Sep 2025 21:28:51 +0200
-Message-ID: <20250922192409.121629866@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 022/105] i40e: remove redundant memory barrier when cleaning Tx descs
+Date: Mon, 22 Sep 2025 21:29:05 +0200
+Message-ID: <20250922192409.489502882@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,39 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit b62fd63ade7cb573b114972ef8f9fa505be8d74a ]
+[ Upstream commit e37084a26070c546ae7961ee135bbfb15fbe13fd ]
 
-The offset for an extref item's key is not the object ID of the parent
-dir, otherwise we would not need the extref item and would use plain ref
-items. Instead the offset is the result of a hash computation that uses
-the object ID of the parent dir and the name associated to the entry.
-So fix this by setting the key offset at replay_one_name() to be the
-result of calling btrfs_extref_hash().
+i40e has a feature which writes to memory location last descriptor
+successfully sent. Memory barrier in i40e_clean_tx_irq() was used to
+avoid forward-reading descriptor fields in case DD bit was not set.
+Having mentioned feature in place implies that such situation will not
+happen as we know in advance how many descriptors HW has dealt with.
 
-Fixes: 725af92a6251 ("btrfs: Open-code name_in_log_ref in replay_one_name")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Besides, this barrier placement was wrong. Idea is to have this
+protection *after* reading DD bit from HW descriptor, not before.
+Digging through git history showed me that indeed barrier was before DD
+bit check, anyways the commit introducing i40e_get_head() should have
+wiped it out altogether.
+
+Also, there was one commit doing s/read_barrier_depends/smp_rmb when get
+head feature was already in place, but it was only theoretical based on
+ixgbe experiences, which is different in these terms as that driver has
+to read DD bit from HW descriptor.
+
+Fixes: 1943d8ba9507 ("i40e/i40evf: enable hardware feature head write back")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index f917fdae7e672..0022ad003791f 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -1946,7 +1946,7 @@ static noinline int replay_one_name(struct btrfs_trans_handle *trans,
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index c006f716a3bdb..ca7517a68a2c3 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -947,9 +947,6 @@ static bool i40e_clean_tx_irq(struct i40e_vsi *vsi,
+ 		if (!eop_desc)
+ 			break;
  
- 	search_key.objectid = log_key.objectid;
- 	search_key.type = BTRFS_INODE_EXTREF_KEY;
--	search_key.offset = key->objectid;
-+	search_key.offset = btrfs_extref_hash(key->objectid, name.name, name.len);
- 	ret = backref_in_log(root->log_root, &search_key, key->objectid, &name);
- 	if (ret < 0) {
- 		goto out;
+-		/* prevent any other reads prior to eop_desc */
+-		smp_rmb();
+-
+ 		i40e_trace(clean_tx_irq, tx_ring, tx_desc, tx_buf);
+ 		/* we have caught up to head, no work left to do */
+ 		if (tx_head == tx_desc)
 -- 
 2.51.0
 
