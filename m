@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290C525F780;
-	Mon, 22 Sep 2025 19:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB6827B320;
+	Mon, 22 Sep 2025 19:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569872; cv=none; b=Bp4eXmtCOelOJOnV8C6asyXePaOoFn/dEMJPsjJFfhNzN0tauft1fc61bGxjSZPcK6DJUzisVbHcRSeNl8Vsw+tcOl7xo/CKoq/eRYlD5C0gqfjSTb2rPU0TxQOzXAhi/UXQCx/YQXjsV9JcDP8pGc8xq/FgBRcAx5AVivWvJuU=
+	t=1758569874; cv=none; b=O7X8+ybA/zQRp4+d1+8y+h3493g+uXxMj1kqvfdWUf/5tNLnKTaZofFGpwfFJd+czfngtssngpCo9CwQnw0cXG1IOSkqN1eyc4YdZHLSqa5ZBSl6icZk1HWpfxh3tMnd9xZNbaZ3Tm6R06uOhv1O1UFVJo14niod1LRtyDzvipo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569872; c=relaxed/simple;
-	bh=kBUlrZ+TuK+Tyt2vZtGch2aWym1JEd+1uFkdulCCDZI=;
+	s=arc-20240116; t=1758569874; c=relaxed/simple;
+	bh=cr60HvZ34oheV/X9RIZJPLj+48uUvrQ8eIkUBSIaXz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMIiMSttcKgjGUjgOWjtoELH60u/Z1YKt3D4GhwLUcIeXeithjgVXNFMH6YDr1mcc4/8XdtiVJUADRlSRQKRh948RYBPXGGN6E20iS0um/RNvMxamFNKFWy7/hh36vtw+Z7TsOCZIvEqnLPAN+lM/uC6h2BXGgDoqonXtgh1IXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bB9fUFJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMzIbfiwy7SV2lqwna2zbh+fwKaL78yehcZAhQ+3dIqGxIEdG+x6oF9VVMHG/ZzgCikM3t7NqOpT84m4yLdaJUrTDn9+Vy9/lBOfs8P/sGekDwBroBQO+CaJKCXwNyNs/pFDtIjTmZzMfUB+sIXWQawl8VvXyXcNnVjoxgWsgTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5SyJdLa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bB9fUFJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1458C4CEF0;
-	Mon, 22 Sep 2025 19:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5SyJdLa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3380AC4CEF0;
+	Mon, 22 Sep 2025 19:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569872;
-	bh=kBUlrZ+TuK+Tyt2vZtGch2aWym1JEd+1uFkdulCCDZI=;
+	s=korg; t=1758569874;
+	bh=cr60HvZ34oheV/X9RIZJPLj+48uUvrQ8eIkUBSIaXz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bB9fUFJKU4ScbVTv/G/tLZMnAMSGbcsFQK49jfyd0XFB6C0D1qMc9o1ur9Hrk+mfa
-	 xrs0KCCHx9PZ/N1zd9PApN2AcF40MLBx/v6KClZqTI07ep49TsKJW7BUdXikuAkN8e
-	 MPdcfUXkq6UyZZr0ai6aKoBYyO9gYp8/qeeju9WM=
+	b=e5SyJdLaUDVunJsQ/i8AZNsiyEVr1CCwLkgXS7i197n8GHvccnbO26Tj/bHcfmYlL
+	 RJt0EoqUahvZxtfxhKY44FsHQQqDeX3jC2ljL4Y3XUpjjsAkZVu6jwxQ3NkB3H3GMO
+	 ieIvvT8igPB/FcdP7LBtZNqFSzpm8+TUw/+xyq8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/105] octeontx2-pf: Fix use-after-free bugs in otx2_sync_tstamp()
-Date: Mon, 22 Sep 2025 21:29:15 +0200
-Message-ID: <20250922192409.752379913@linuxfoundation.org>
+	Vince Weaver <vincent.weaver@maine.edu>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Angel Adetula <angeladetula@google.com>
+Subject: [PATCH 6.12 033/105] perf/x86/intel: Fix crash in icl_update_topdown_event()
+Date: Mon, 22 Sep 2025 21:29:16 +0200
+Message-ID: <20250922192409.779383460@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,126 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit f8b4687151021db61841af983f1cb7be6915d4ef ]
+commit b0823d5fbacb1c551d793cbfe7af24e0d1fa45ed upstream.
 
-The original code relies on cancel_delayed_work() in otx2_ptp_destroy(),
-which does not ensure that the delayed work item synctstamp_work has fully
-completed if it was already running. This leads to use-after-free scenarios
-where otx2_ptp is deallocated by otx2_ptp_destroy(), while synctstamp_work
-remains active and attempts to dereference otx2_ptp in otx2_sync_tstamp().
-Furthermore, the synctstamp_work is cyclic, the likelihood of triggering
-the bug is nonnegligible.
+The perf_fuzzer found a hard-lockup crash on a RaptorLake machine:
 
-A typical race condition is illustrated below:
+  Oops: general protection fault, maybe for address 0xffff89aeceab400: 0000
+  CPU: 23 UID: 0 PID: 0 Comm: swapper/23
+  Tainted: [W]=WARN
+  Hardware name: Dell Inc. Precision 9660/0VJ762
+  RIP: 0010:native_read_pmc+0x7/0x40
+  Code: cc e8 8d a9 01 00 48 89 03 5b cd cc cc cc cc 0f 1f ...
+  RSP: 000:fffb03100273de8 EFLAGS: 00010046
+  ....
+  Call Trace:
+    <TASK>
+    icl_update_topdown_event+0x165/0x190
+    ? ktime_get+0x38/0xd0
+    intel_pmu_read_event+0xf9/0x210
+    __perf_event_read+0xf9/0x210
 
-CPU 0 (cleanup)           | CPU 1 (delayed work callback)
-otx2_remove()             |
-  otx2_ptp_destroy()      | otx2_sync_tstamp()
-    cancel_delayed_work() |
-    kfree(ptp)            |
-                          |   ptp = container_of(...); //UAF
-                          |   ptp-> //UAF
+CPUs 16-23 are E-core CPUs that don't support the perf metrics feature.
+The icl_update_topdown_event() should not be invoked on these CPUs.
 
-This is confirmed by a KASAN report:
+It's a regression of commit:
 
-BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
-Write of size 8 at addr ffff88800aa09a18 by task bash/136
-...
-Call Trace:
- <IRQ>
- dump_stack_lvl+0x55/0x70
- print_report+0xcf/0x610
- ? __run_timer_base.part.0+0x7d7/0x8c0
- kasan_report+0xb8/0xf0
- ? __run_timer_base.part.0+0x7d7/0x8c0
- __run_timer_base.part.0+0x7d7/0x8c0
- ? __pfx___run_timer_base.part.0+0x10/0x10
- ? __pfx_read_tsc+0x10/0x10
- ? ktime_get+0x60/0x140
- ? lapic_next_event+0x11/0x20
- ? clockevents_program_event+0x1d4/0x2a0
- run_timer_softirq+0xd1/0x190
- handle_softirqs+0x16a/0x550
- irq_exit_rcu+0xaf/0xe0
- sysvec_apic_timer_interrupt+0x70/0x80
- </IRQ>
-...
-Allocated by task 1:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x7f/0x90
- otx2_ptp_init+0xb1/0x860
- otx2_probe+0x4eb/0xc30
- local_pci_probe+0xdc/0x190
- pci_device_probe+0x2fe/0x470
- really_probe+0x1ca/0x5c0
- __driver_probe_device+0x248/0x310
- driver_probe_device+0x44/0x120
- __driver_attach+0xd2/0x310
- bus_for_each_dev+0xed/0x170
- bus_add_driver+0x208/0x500
- driver_register+0x132/0x460
- do_one_initcall+0x89/0x300
- kernel_init_freeable+0x40d/0x720
- kernel_init+0x1a/0x150
- ret_from_fork+0x10c/0x1a0
- ret_from_fork_asm+0x1a/0x30
+  f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
 
-Freed by task 136:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x3f/0x50
- kfree+0x137/0x370
- otx2_ptp_destroy+0x38/0x80
- otx2_remove+0x10d/0x4c0
- pci_device_remove+0xa6/0x1d0
- device_release_driver_internal+0xf8/0x210
- pci_stop_bus_device+0x105/0x150
- pci_stop_and_remove_bus_device_locked+0x15/0x30
- remove_store+0xcc/0xe0
- kernfs_fop_write_iter+0x2c3/0x440
- vfs_write+0x871/0xd70
- ksys_write+0xee/0x1c0
- do_syscall_64+0xac/0x280
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-...
+The bug introduced by that commit is that the is_topdown_event() function
+is mistakenly used to replace the is_topdown_count() call to check if the
+topdown functions for the perf metrics feature should be invoked.
 
-Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
-that the delayed work item is properly canceled before the otx2_ptp is
-deallocated.
+Fix it.
 
-This bug was initially identified through static analysis. To reproduce
-and test it, I simulated the OcteonTX2 PCI device in QEMU and introduced
-artificial delays within the otx2_sync_tstamp() function to increase the
-likelihood of triggering the bug.
-
-Fixes: 2958d17a8984 ("octeontx2-pf: Add support for ptp 1-step mode on CN10K silicon")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f9bdf1f95339 ("perf/x86/intel: Avoid disable PMU if !cpuc->enabled in sample read")
+Closes: https://lore.kernel.org/lkml/352f0709-f026-cd45-e60c-60dfd97f73f3@maine.edu/
+Reported-by: Vince Weaver <vincent.weaver@maine.edu>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Vince Weaver <vincent.weaver@maine.edu>
+Cc: stable@vger.kernel.org # v6.15+
+Link: https://lore.kernel.org/r/20250612143818.2889040-1-kan.liang@linux.intel.com
+[ omitted PEBS check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Angel Adetula <angeladetula@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c | 2 +-
+ arch/x86/events/intel/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
-index 63130ba37e9df..69b435ed8fbbe 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
-@@ -491,7 +491,7 @@ void otx2_ptp_destroy(struct otx2_nic *pfvf)
- 	if (!ptp)
- 		return;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2793,7 +2793,7 @@ static void intel_pmu_read_event(struct
+ 		if (pmu_enabled)
+ 			intel_pmu_disable_all();
  
--	cancel_delayed_work(&pfvf->ptp->synctstamp_work);
-+	cancel_delayed_work_sync(&pfvf->ptp->synctstamp_work);
- 
- 	ptp_clock_unregister(ptp->ptp_clock);
- 	kfree(ptp);
--- 
-2.51.0
-
+-		if (is_topdown_event(event))
++		if (is_topdown_count(event))
+ 			static_call(intel_pmu_update_topdown_event)(event);
+ 		else
+ 			intel_pmu_drain_pebs_buffer();
 
 
