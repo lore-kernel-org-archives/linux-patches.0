@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001DF27B320;
-	Mon, 22 Sep 2025 19:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C8C1C1ADB;
+	Mon, 22 Sep 2025 19:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569902; cv=none; b=I6O4iIBiWhB2iurfoHqhRQ8lw4P4OM/o6ThgtlLA86siHSzc4ubI7PMfkFzeEUJg3eHj/+BnbZ41kcsa+uHcVLn4Tp3YjoNgohL/UfxlBXIXSZcbqptH1O5vS4XVEMnCpL5QU22u2saCSb5FSphFLlzu78qTeazuXHMpFa6dQtw=
+	t=1758569904; cv=none; b=sZiCs3/on1jOoWnNK6I+6Bum0r7YWli2qnLAnKYKroXjH0wthniwSZd9fp5j2Q1mqJnd4isdNFVJLYUd6j8ynm8gQDJbGkaws7wrqdedsJBgh9uuPeli0kYFj67yfNCWCDNAubn28/oq/w1wcqWGFxgvX6FNySZpwKRQglLBHCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569902; c=relaxed/simple;
-	bh=20bxNPjk271TquIjBDfCHU9gCabreZQlCEateRXdacg=;
+	s=arc-20240116; t=1758569904; c=relaxed/simple;
+	bh=DfX/ERQPFljgTtUMIuui5HKGClzYFa2otPEaRqtJhTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoYQAKJGmlbjvOVL/PPcAGPiCo6FRIl8CsNLgdZZjGHyhcrxuE8zxiiVGgCZTJiwCRsgrPpDSP4YNyuamniOoESZ9qWB5560Z13Txvhi/Ooy7CQRokylOl9Gair2BM99KIdIeCr4ewYXFhrr8mLnLWu8BMamTOWitNqhdwku3tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvl1r5Rs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghlY9pgUfiqbzcBuNl4GV/TZHqYBnHD2yYMPPenuobhRtRy7DDfSnOgTW0lu1gayAsQ6zynCZbL89CFHP70pUhfFpdsCC/Tl9CJ2RMR/Sog8xEOWHTS27giIDwUshCFY3kkTUd0H0La7pmUtrVBM0Hjw5zJCpOOELg8pq+eSQ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/QggWxY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvl1r5Rs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82697C4CEF0;
-	Mon, 22 Sep 2025 19:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/QggWxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034A3C4CEF0;
+	Mon, 22 Sep 2025 19:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569901;
-	bh=20bxNPjk271TquIjBDfCHU9gCabreZQlCEateRXdacg=;
+	s=korg; t=1758569904;
+	bh=DfX/ERQPFljgTtUMIuui5HKGClzYFa2otPEaRqtJhTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvl1r5Rs8KDc8uiWfnFWTgJM8VTgbBEcYyum4ynYlKovnO7Fv8S/3mdtPY7ixbgHj
-	 wweNWYS6O/Uk4FPZYY5L1oZ1Le/5iEbtlxj04a4NDSXmB7uz1dd8CQvmpIKb3a+qMQ
-	 6UGbY+W9ChURxGpQ73bCHKDuqf3YEO+gjmDDsGgs=
+	b=t/QggWxYnVkkhnx3e25mTzUgFNrORMEVRAXB+p5wQV9o0uqYkU/8mYmsmGAZLfQw5
+	 m6zCfpgvg6+FxrgxXkMAPCeLHUMgv3ha3k8pimnhcBT8zM1xzayYXBFif1qpollDoZ
+	 cNJIaRC79rDSWko7hWC+SXYolSFJpbv5LRgXogSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	WANG Rui <wangrui@loongson.cn>,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 044/105] LoongArch: Update help info of ARCH_STRICT_ALIGN
-Date: Mon, 22 Sep 2025 21:29:27 +0200
-Message-ID: <20250922192410.072127888@linuxfoundation.org>
+Subject: [PATCH 6.12 045/105] objtool/LoongArch: Mark types based on break immediate code
+Date: Mon, 22 Sep 2025 21:29:28 +0200
+Message-ID: <20250922192410.097890670@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,41 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit f5003098e2f337d8e8a87dc636250e3fa978d9ad upstream.
+commit baad7830ee9a56756b3857348452fe756cb0a702 upstream.
 
-Loongson-3A6000 and 3C6000 CPUs also support unaligned memory access, so
-the current description is out of date to some extent.
+If the break immediate code is 0, it should mark the type as
+INSN_TRAP. If the break immediate code is 1, it should mark the
+type as INSN_BUG.
 
-Actually, all of Loongson-3 series processors based on LoongArch support
-unaligned memory access, this hardware capability is indicated by the bit
-20 (UAL) of CPUCFG1 register, update the help info to reflect the reality.
+While at it, format the code style and add the code comment for nop.
 
 Cc: stable@vger.kernel.org
+Suggested-by: WANG Rui <wangrui@loongson.cn>
 Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/Kconfig |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/objtool/arch/loongarch/decode.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -540,10 +540,14 @@ config ARCH_STRICT_ALIGN
- 	  -mstrict-align build parameter to prevent unaligned accesses.
+--- a/tools/objtool/arch/loongarch/decode.c
++++ b/tools/objtool/arch/loongarch/decode.c
+@@ -313,10 +313,16 @@ int arch_decode_instruction(struct objto
+ 	if (decode_insn_reg2i16_fomat(inst, insn))
+ 		return 0;
  
- 	  CPUs with h/w unaligned access support:
--	  Loongson-2K2000/2K3000/3A5000/3C5000/3D5000.
-+	  Loongson-2K2000/2K3000 and all of Loongson-3 series processors
-+	  based on LoongArch.
- 
- 	  CPUs without h/w unaligned access support:
--	  Loongson-2K500/2K1000.
-+	  Loongson-2K0300/2K0500/2K1000.
-+
-+	  If you want to make sure whether to support unaligned memory access
-+	  on your hardware, please read the bit 20 (UAL) of CPUCFG1 register.
- 
- 	  This option is enabled by default to make the kernel be able to run
- 	  on all LoongArch systems. But you can disable it manually if you want
+-	if (inst.word == 0)
++	if (inst.word == 0) {
++		/* andi $zero, $zero, 0x0 */
+ 		insn->type = INSN_NOP;
+-	else if (inst.reg0i15_format.opcode == break_op) {
+-		/* break */
++	} else if (inst.reg0i15_format.opcode == break_op &&
++		   inst.reg0i15_format.immediate == 0x0) {
++		/* break 0x0 */
++		insn->type = INSN_TRAP;
++	} else if (inst.reg0i15_format.opcode == break_op &&
++		   inst.reg0i15_format.immediate == 0x1) {
++		/* break 0x1 */
+ 		insn->type = INSN_BUG;
+ 	} else if (inst.reg2_format.opcode == ertn_op) {
+ 		/* ertn */
 
 
