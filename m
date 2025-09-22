@@ -1,86 +1,88 @@
-Received: from mail.netfilter.org (mail.netfilter.org [217.70.190.124])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C4A2472AA
-	for <patches@lists.linux.dev>; Sun, 21 Sep 2025 23:00:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.190.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FD32ED14E;
+	Mon, 22 Sep 2025 02:15:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758495610; cv=none; b=ISwMapqufzm+bWCsQgMZAxqLrRE8kVEwJv29nhRQlj902oJPPllUiOFI3QMYhY00y9y6frXyUgqkS+LUrP4bsYGXUjS82la4afQomY/D8OZpIMTzj9mPctyvCafgBjwKuJvCtG1VGL3iHucrwYUk7DwHF7txThqhpXF2lVrZMU8=
+	t=1758507318; cv=none; b=DTWV1a82ZCDA12rHIT9dGjvhkFzLyibRaYvZ6hv5qTU0ldGRJAWodpWfVICNIeeGHFzQW45noJJtEtcgM8XFj77ly0I0Yo8zZej7OJ4Ug+5BeaXSU8L4ElKSTLhcgC0r8t0nBcLoa2ib9lenTA6FmNPP+Yu29M+8veP/XeTP1gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758495610; c=relaxed/simple;
-	bh=ELXgiFpL4fiMAZS+SkuTbOgj6eoEEfijwrUVviCqOdM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=slHWMa0VB5xZMf9axPhuJElxTBJK9554VNlE38OqxjQYbc+thBmQSGyb2U4OZTLApZ0oA/C1U630QW7SI4gmv5Mj+yji4UOF6qsrrYt0+YV39vH5zpCQ5Esuk0oMRNnzcs06L+V8Pbj6ic+uRijgW2vEHNrfAjzxho+FOfByfjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=netfilter.org; spf=pass smtp.mailfrom=netfilter.org; dkim=pass (2048-bit key) header.d=netfilter.org header.i=@netfilter.org header.b=BOuJoRQJ; dkim=pass (2048-bit key) header.d=netfilter.org header.i=@netfilter.org header.b=eWQf20dt; arc=none smtp.client-ip=217.70.190.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=netfilter.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=netfilter.org
+	s=arc-20240116; t=1758507318; c=relaxed/simple;
+	bh=fL/f9GCY4PNtyWFGNG+WiRGSw0k8XnBnFC1Y3+Hg0ho=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nPkRV4hNvaNhF/z+ytTI166751ryAT4YzvEs1102ghrBuo+ST+79tKw//hzdSgTGN6LWc04Q6o0bfrKSdSyI9pncWSY98mQUm8Ae/Jq5MS3+zVpTwygYNLsLBMCpTYBWyBHCTYb7JKGHRoOpu5n+ofok1K3F6uCGmz1Uoejq5W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Z3XfLEoI; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=netfilter.org header.i=@netfilter.org header.b="BOuJoRQJ";
-	dkim=pass (2048-bit key) header.d=netfilter.org header.i=@netfilter.org header.b="eWQf20dt"
-Received: by mail.netfilter.org (Postfix, from userid 109)
-	id 0FAEA602A3; Mon, 22 Sep 2025 01:00:00 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netfilter.org;
-	s=2025; t=1758495600;
-	bh=r1p8honBNF1FMRtvU+WulJzqohTj6V/MCmBNuD2fyUU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BOuJoRQJvNNPwBgkhhqJGAmt//rXOw0TWwesAe9i+00YmMwHTG0xWjQ96vPqrQnLG
-	 PvdJupfgsXB7lXmJtyjKRjeMhs+d8x1AX/YENl/+59Xh28Ev0z3IHjyqEGAW/duHbV
-	 3sOwEzuGccIvSk1m5wWEyR8lQnI1uICUmRpTnd7AIlVpaUeN6Nn7aHyC8dpT2Ah1n+
-	 P4sJK9QJpxTEvPYubdCGlIcoPgyxtSDs3jtHmgkLqG38a5uLvZsJLTwJp85G/cUO12
-	 dSymanF/33caRzL356L4C2O/VbOFO3UfKtXrVFSN5+ORHtM347/+gyB3ODnXBt6S0b
-	 gJ/TcKDXwWNuw==
-X-Spam-Level: 
-Received: from netfilter.org (mail-agni [217.70.190.124])
-	by mail.netfilter.org (Postfix) with ESMTPSA id 076B56029D;
-	Mon, 22 Sep 2025 00:59:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netfilter.org;
-	s=2025; t=1758495599;
-	bh=r1p8honBNF1FMRtvU+WulJzqohTj6V/MCmBNuD2fyUU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eWQf20dtSrDHgSEQW+O3jp83aZAbC5KkhO8/D3MB6NUAtFvb86UiX4krwXnQg21np
-	 BE+ojDcgx7D++Jsg5gVhGaHphiBUFpWraSxpLW2LViD/Zfz4F9oz7uuNMJNAL4Mjlx
-	 kSUHVqgZ3X1lfzjQEFa0DKNVGGQSHZPVtgCabR8fiXSPYM/wP5DoYu7hauy1xdepQH
-	 i8SBH3nHi3Bnia1CJPdlhinRDj5qSiAZ1gJ554eKLwoP1q5xgicZt6ygRsegur1bX2
-	 v165LtnCqF2j13+Y5alBs6g8SPe8ufyI2jTqqhyPR4QIwkYxYeqDTLYZDTi2YxYKsi
-	 jpoQlGm/JXLIg==
-Date: Mon, 22 Sep 2025 00:59:55 +0200
-From: Pablo Neira Ayuso <pablo@netfilter.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Phil Sutter <phil@nwl.cc>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 113/140] netfilter: nf_tables: Reintroduce shortened
- deletion notifications
-Message-ID: <aNCDa_09aU4x5I_4@calendula>
-References: <20250917123344.315037637@linuxfoundation.org>
- <20250917123347.067172658@linuxfoundation.org>
- <C2AE0418-CB38-4660-80F8-238FEF0D47E4@nwl.cc>
- <2025092148-unsheathe-gooey-9836@gregkh>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Z3XfLEoI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1758507317; x=1790043317;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=fL/f9GCY4PNtyWFGNG+WiRGSw0k8XnBnFC1Y3+Hg0ho=;
+  b=Z3XfLEoIQZbIgSgVesrwEacuh9GI3HYeTC9cfhG1hXkZJFDB5A6ApBxS
+   2w+bDIl+aARKDtzCWxHWaEoGO/9ybHCQE/f9+AO8nsMOx5+bjadivxUOj
+   J/2b+gtdnI5kZofM8/xuGEAVPSmqsLkz3lRIgtGrjIN+hQJYczhrR8K1+
+   w2XgTTWB6CrIJEMnpghqVa7EPQCWDCbW8c4OjuhfnnA1H83DMz/msLFkC
+   tQKWbDN/UyAPmPST3vRM91D0HUAX5YP8zz95aAd9e6woN5ox0Rg7oxJe/
+   gp5MOmnsq9YFj/9y+w13baaOpoX+EdlTwTl359O34e4LVcBOuPC2/e2ai
+   Q==;
+X-CSE-ConnectionGUID: 5HNZoC+GTcy0rZVDPiAAeg==
+X-CSE-MsgGUID: 2Vi45XwpTsC6ak+8UnQDBg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11560"; a="48343514"
+X-IronPort-AV: E=Sophos;i="6.18,283,1751266800"; 
+   d="scan'208";a="48343514"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 19:15:16 -0700
+X-CSE-ConnectionGUID: h+kku1w5T/qkegOTrjAXuw==
+X-CSE-MsgGUID: pZJP/p6ISp6JRWbFIdiIqA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,283,1751266800"; 
+   d="scan'208";a="180776450"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2025 19:15:14 -0700
+Message-ID: <79da2a28-3c05-4afa-90d8-dfc664f101b1@linux.intel.com>
+Date: Mon, 22 Sep 2025 10:12:15 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2025092148-unsheathe-gooey-9836@gregkh>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/10] iommupt: Flush the CPU cache after any writes to
+ the page table
+To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+Cc: Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev,
+ Tina Zhang <tina.zhang@intel.com>, Wei Wang <wei.w.wang@intel.com>
+References: <4-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <4-v2-44d4d9e727e7+18ad8-iommu_pt_vtd_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Greg,
+On 8/27/25 01:26, Jason Gunthorpe wrote:
+> @@ -195,6 +218,10 @@ static void record_dirty(struct pt_state *pts,
+>   				dirty_len);
+>   
+>   	if (!(dirty->flags & IOMMU_DIRTY_NO_CLEAR)) {
+> +		/*
+> +		 * No write log required because DMA incoherence and atomic
+> +		 * dirty tracking bits can't work together
+> +		 */
 
-On Sun, Sep 21, 2025 at 07:06:09PM +0200, Greg Kroah-Hartman wrote:
-> On Sat, Sep 20, 2025 at 09:12:21AM +0200, Phil Sutter wrote:
-> > Hi Greg,
-> > 
-> > please skip this one, it's a pure feature which requires user space modifications.
-> 
-> It's already in a release.  And why would a kernel change need userspace
-> changes, that sounds like a regression.
+Could you elaborate a bit on this comment? Is this a hardware or
+software requirement? Are there any software checks or enforcement in
+the subsystem?
 
-Old userspace version cannot handle the feature in this patch, this is
-an issue for stable distributions where userspace remains static while
-stable kernel are being upgraded.
+>   		pt_entry_set_write_clean(pts);
+>   		iommu_iotlb_gather_add_range(dirty->dirty->gather,
+>   					     pts->range->va, dirty_len);
 
-Please revert this patch. If this stable dependency is not so straight
-forward to revert, I can send you backport revert.
-
-Let me know, thanks.
+Thanks,
+baolu
