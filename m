@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C5118C2C;
-	Mon, 22 Sep 2025 19:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5BE18C2C;
+	Mon, 22 Sep 2025 19:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570450; cv=none; b=m9Gth/Wb25a+13m+kOl1krOf7Ab991jVPe5Y1E1cx0G9drcDeLjN0P/xcrfFtMuHpPRb/PwHzGaYsOkXE/M4Om2KpKXRO0j7Jo5OcYp5haxepKBwaV2kH7rd/pZ2SNjyf/rS5iuxcGz0XaIbO4z/R79Yhp1rROP5NXfhSgU7UPI=
+	t=1758570452; cv=none; b=YmApfgD70IW/A906X3dhzRmQsGXmcxPQJQLGBt+1eau1Q1KmbvT23uzirPVF1+jM5qrEeRpdr9yuMbGIIP5ugo/241T7KdIFgwBE6T1H520BdtFjngAHca8vQqfH3RZWRm2D01Wo/FQWpoXeEerLGVuKSVBWJ6iOcWr63JAtH5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570450; c=relaxed/simple;
-	bh=yJ09nhmvXDNh5vk3MCGdICTonHIt6zs6QhTY5UILUy4=;
+	s=arc-20240116; t=1758570452; c=relaxed/simple;
+	bh=/9AD4ftddu+/BjLW5TN6m0HxyzC5gwitff3VsvHnaFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kti+E0A+YGHqGEos9YJbiPWM3OfpTzgk4gSFtx5gHjsd0ZIccMigsabWjM/afQ5DQHeqRq6/ThA9UsUhcfMk1fOYC7RNIO6EP80tB65FLb3hZ7YHpaCAYLHzY/66C1FUsFwWOOqdXH+F+z6SOeGdC0VaHy2qb4pu/qpza6cSIf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciHzUcx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fBtaO/191pBEvybHg3Tg4TETVg1Kn0ZrxE5Evk5Ju8Dc+C1rfNkPOh3Dmrd3jLs8qBKduXxPgNwTkVXjoEQsSfOpCJeA9VRuKypd2OVxjL4eT6r8hHsY4g3GUPQmSTdrSuFnvupL3kt+cx24A7HFOxN1gLsBixNAtjpH9H/8dV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipyPwnJC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciHzUcx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9817BC4CEF0;
-	Mon, 22 Sep 2025 19:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipyPwnJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165D1C4CEF0;
+	Mon, 22 Sep 2025 19:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570449;
-	bh=yJ09nhmvXDNh5vk3MCGdICTonHIt6zs6QhTY5UILUy4=;
+	s=korg; t=1758570452;
+	bh=/9AD4ftddu+/BjLW5TN6m0HxyzC5gwitff3VsvHnaFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciHzUcx5zhNRIiQuPj7/L1EJss/CLos4C2UkDsVlLt89wm07o7NL4ApHcZgxm+Hov
-	 0zLUWNrroJ+Xig56YtUMxItiyVFOD/OjLewo28FLz6ewPmuAHcVNKS0WchzFAgtM+R
-	 Cer8G/VdACzYpyO5y7t5aiqKmdHnb1+hqxU7GhK0=
+	b=ipyPwnJCqmhMFC2EhRTtbL38RqQMXe5XS5t53/1ySAak3vTJPlare+3pF5xaOZYTf
+	 CM0x0i1aGamiuBOkjA/OyuyEsjzOo7t60Nc9dvRZzosI/LPDtQ8vf+dmcpIv7IrRrX
+	 v2CwK13MvE1YEle2L3FPHdb3kZ/3UMopFsRM6/a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Conor Dooley <conor@kernel.org>,
-	Alex Elder <elder@riscstar.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 144/149] dt-bindings: serial: 8250: move a constraint
-Date: Mon, 22 Sep 2025 21:30:44 +0200
-Message-ID: <20250922192416.499027415@linuxfoundation.org>
+Subject: [PATCH 6.16 145/149] samples/damon/prcl: fix boot time enable crash
+Date: Mon, 22 Sep 2025 21:30:45 +0200
+Message-ID: <20250922192416.522466581@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -53,97 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@riscstar.com>
+From: SeongJae Park <sj@kernel.org>
 
-[ Upstream commit 387d00028cccee7575f6416953bef62f849d83e3 ]
+[ Upstream commit 2780505ec2b42c07853b34640bc63279ac2bb53b ]
 
-A block that required a "spacemit,k1-uart" compatible node to
-specify two clocks was placed in the wrong spot in the binding.
-Conor Dooley pointed out it belongs earlier in the file, as part
-of the initial "allOf".
+If 'enable' parameter of the 'prcl' DAMON sample module is set at boot
+time via the kernel command line, memory allocation is tried before the
+slab is initialized.  As a result kernel NULL pointer dereference BUG can
+happen.  Fix it by checking the initialization status.
 
-Fixes: 2c0594f9f0629 ("dt-bindings: serial: 8250: support an optional second clock")
-Cc: stable <stable@kernel.org>
-Reported-by: Conor Dooley <conor@kernel.org>
-Closes: https://lore.kernel.org/lkml/20250729-reshuffle-contented-e6def76b540b@spud/
-Signed-off-by: Alex Elder <elder@riscstar.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20250813032151.2330616-1-elder@riscstar.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20250706193207.39810-3-sj@kernel.org
+Fixes: 2aca254620a8 ("samples/damon: introduce a skeleton of a smaple DAMON module for proactive reclamation")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: c62cff40481c ("samples/damon/mtier: avoid starting DAMON before initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/serial/8250.yaml |   46 ++++++++++-----------
- 1 file changed, 22 insertions(+), 24 deletions(-)
+ samples/damon/prcl.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/Documentation/devicetree/bindings/serial/8250.yaml
-+++ b/Documentation/devicetree/bindings/serial/8250.yaml
-@@ -48,7 +48,6 @@ allOf:
-       oneOf:
-         - required: [ clock-frequency ]
-         - required: [ clocks ]
--
-   - if:
-       properties:
-         compatible:
-@@ -66,6 +65,28 @@ allOf:
-           items:
-             - const: core
-             - const: bus
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - spacemit,k1-uart
-+              - nxp,lpc1850-uart
-+    then:
-+      required:
-+        - clocks
-+        - clock-names
-+      properties:
-+        clocks:
-+          minItems: 2
-+        clock-names:
-+          minItems: 2
-+    else:
-+      properties:
-+        clocks:
-+          maxItems: 1
-+        clock-names:
-+          maxItems: 1
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -109,6 +109,8 @@ static void damon_sample_prcl_stop(void)
+ 		put_pid(target_pidp);
+ }
  
- properties:
-   compatible:
-@@ -264,29 +285,6 @@ required:
-   - reg
-   - interrupts
++static bool init_called;
++
+ static int damon_sample_prcl_enable_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+@@ -134,6 +136,14 @@ static int damon_sample_prcl_enable_stor
  
--if:
--  properties:
--    compatible:
--      contains:
--        enum:
--          - spacemit,k1-uart
--          - nxp,lpc1850-uart
--then:
--  required:
--    - clocks
--    - clock-names
--  properties:
--    clocks:
--      minItems: 2
--    clock-names:
--      minItems: 2
--else:
--  properties:
--    clocks:
--      maxItems: 1
--    clock-names:
--      maxItems: 1
--
- unevaluatedProperties: false
+ static int __init damon_sample_prcl_init(void)
+ {
++	int err = 0;
++
++	init_called = true;
++	if (enable) {
++		err = damon_sample_prcl_start();
++		if (err)
++			enable = false;
++	}
+ 	return 0;
+ }
  
- examples:
 
 
