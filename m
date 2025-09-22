@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4A3314A6A;
-	Mon, 22 Sep 2025 19:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5EB2820D1;
+	Mon, 22 Sep 2025 19:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569919; cv=none; b=V/4AOZRODKxGKpEBfqoPn0b2iVQc7eNcCE6A6yf1zxiESPvmPOFwpXJp/6/j/0DN/DDiaMy+J/gw1bcM5uCNjnxlVMos/ICyRFBI/3CxnXHPCWbdIkEuZxkr5+UVoS0w38XI1bIasAUL76E1Rj41WMVR0pWRiWiPIn9GkQyCFhY=
+	t=1758569921; cv=none; b=ZBC6yfjenJuhvZQmeM6k3jjoEoj7UT9XMp6u+UgR/hcZ4dxdYYSLcTJRoH74dJURDj3i5B9Vy0wyJ9WheiTcLxec2Z/pldwDDfKJviwACnbu0zLgouXHNoSZpjEv0NZ5OAK3pLdU6CWh099MCOwstoF3JpaUH9D0nu7BKoZ4LCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569919; c=relaxed/simple;
-	bh=qpBHLLWr2lihmJ2CASeV67Xe+7ErXeskBK/hEU++xUg=;
+	s=arc-20240116; t=1758569921; c=relaxed/simple;
+	bh=QLn8X0ylLalcq2XFdn5Fv6p/UagEmsGOt9fFLMM8vWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PIA+HysNOlMi4jSpF9Tz98i8Xu3qluVKWeUsZu8mQp17DSap98+oRbYhYhSTSrS3gDIypmhVjxy5OIZMUkWs+zEYnihI0GmgvzH7q+G8xH/NAiTAV159NhR3gwqmT0POBxKJv2Szgqpc9o5D0NyFsOeRAO7baM7gD5o8nQmft+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iod4Ll+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E+GRYU9uk+RwhQYUPWS+AX975Lh4iwNIWHiYyEP/MN6WZDbFGOZvIwHIKrNET1+nM+H5Dc4IXXz2WVFCB5Kon6IxfFMR6YYJlXSdrrQHhQ2XL96BnrkwtIOO3IqjenuTaE99Kb/4t3mhiIHyKf0M8pR/O2ghx5kA/FU/Sajnv68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G86ncNgn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iod4Ll+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6220C4CEF5;
-	Mon, 22 Sep 2025 19:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G86ncNgn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573A7C4CEF0;
+	Mon, 22 Sep 2025 19:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569919;
-	bh=qpBHLLWr2lihmJ2CASeV67Xe+7ErXeskBK/hEU++xUg=;
+	s=korg; t=1758569921;
+	bh=QLn8X0ylLalcq2XFdn5Fv6p/UagEmsGOt9fFLMM8vWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iod4Ll+E5hG6pdBhaL6lufmv0KIls5iuOASIA2sZQNn3gJTidFZKSxpVeujANRDzG
-	 1qMr6ImoeWAVmvx8fXDWTGoyE7WXGPdcdZWtMpHlMpx4BLVSUzxl/zi+3/cIJXX669
-	 VwcAsYgZjIenrXSboTVnWFT0sDWmxMDY+YNMJ5Uc=
+	b=G86ncNgnzSESjt2tA+sM6Uc5X9HN9uLf3ibB/K6UqcdbGWUpOBRaSQxk+xtx0lUqc
+	 CXKZiOeiGMLihDlJmc0H+qLvZGnbuwBOcHwnJuOG4wuFBPd0/jlkQQSknShknjXwwY
+	 5bXbZyd5/CSdHF3MoOhJogvq1YJcB8n4goLu244I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 040/105] dm-raid: dont set io_min and io_opt for raid1
-Date: Mon, 22 Sep 2025 21:29:23 +0200
-Message-ID: <20250922192409.965650112@linuxfoundation.org>
+	John Garry <john.g.garry@oracle.com>,
+	Dongsheng Yang <dongsheng.yang@linux.dev>
+Subject: [PATCH 6.12 041/105] dm-stripe: fix a possible integer overflow
+Date: Mon, 22 Sep 2025 21:29:24 +0200
+Message-ID: <20250922192409.992574108@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,44 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit a86556264696b797d94238d99d8284d0d34ed960 upstream.
+commit 1071d560afb4c245c2076494226df47db5a35708 upstream.
 
-These commands
- modprobe brd rd_size=1048576
- vgcreate vg /dev/ram*
- lvcreate -m4 -L10 -n lv vg
-trigger the following warnings:
-device-mapper: table: 252:10: adding target device (start sect 0 len 24576) caused an alignment inconsistency
-device-mapper: table: 252:10: adding target device (start sect 0 len 24576) caused an alignment inconsistency
-
-The warnings are caused by the fact that io_min is 512 and physical block
-size is 4096.
-
-If there's chunk-less raid, such as raid1, io_min shouldn't be set to zero
-because it would be raised to 512 and it would trigger the warning.
+There's a possible integer overflow in stripe_io_hints if we have too
+large chunk size. Test if the overflow happened, and if it did, don't set
+limits->io_min and limits->io_opt;
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Suggested-by: Dongsheng Yang <dongsheng.yang@linux.dev>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-raid.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/md/dm-stripe.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-raid.c
-+++ b/drivers/md/dm-raid.c
-@@ -3811,8 +3811,10 @@ static void raid_io_hints(struct dm_targ
- 	struct raid_set *rs = ti->private;
- 	unsigned int chunk_size_bytes = to_bytes(rs->md.chunk_sectors);
+--- a/drivers/md/dm-stripe.c
++++ b/drivers/md/dm-stripe.c
+@@ -457,11 +457,15 @@ static void stripe_io_hints(struct dm_ta
+ 			    struct queue_limits *limits)
+ {
+ 	struct stripe_c *sc = ti->private;
+-	unsigned int chunk_size = sc->chunk_size << SECTOR_SHIFT;
++	unsigned int io_min, io_opt;
  
--	limits->io_min = chunk_size_bytes;
--	limits->io_opt = chunk_size_bytes * mddev_data_stripes(rs);
-+	if (chunk_size_bytes) {
-+		limits->io_min = chunk_size_bytes;
-+		limits->io_opt = chunk_size_bytes * mddev_data_stripes(rs);
+ 	limits->chunk_sectors = sc->chunk_size;
+-	limits->io_min = chunk_size;
+-	limits->io_opt = chunk_size * sc->stripes;
++
++	if (!check_shl_overflow(sc->chunk_size, SECTOR_SHIFT, &io_min) &&
++	    !check_mul_overflow(io_min, sc->stripes, &io_opt)) {
++		limits->io_min = io_min;
++		limits->io_opt = io_opt;
 +	}
  }
  
- static void raid_presuspend(struct dm_target *ti)
+ static struct target_type stripe_target = {
 
 
