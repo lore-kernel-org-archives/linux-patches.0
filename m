@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7517191F66;
-	Mon, 22 Sep 2025 19:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3A127B320;
+	Mon, 22 Sep 2025 19:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569693; cv=none; b=pp5NDedoB7zDiO82bNeezSyRIW+QtkhOpf3kEHP9wATjeRTq2Cwe822grtmP/JKGYKGmIZC54g19CaLw4N/s5nEQPAiZy/7rcw6U0jNgoLUFwvyNyZdaiOQJvE0qaFfkTk3bfTz4zxeLVdTwH8TeuZpVOqLo6vDHQkoXO2HKE3I=
+	t=1758569696; cv=none; b=usS7Irx1qOuweqNzHpt4AnbV9bdwmUQvFHVsn+j1kY/4XUCHzahnAnuolO8YhysyJBxbPBXy33q5EooKRVSgI/fjqQBL39rKaWVv9deGxIdGu2xmU2IYbVtWDPXhAnDFs8PBNjDrxCwM6aYm2hklDqHTPr7/bUg7HiIhkOSjMqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569693; c=relaxed/simple;
-	bh=0nQQoDdrvYw2KvBxjX5tHWdFPeo8EjNkNwbO0gWAgwM=;
+	s=arc-20240116; t=1758569696; c=relaxed/simple;
+	bh=Wk34eKU/tJ2WER10WP8WvyF7vYUtBn6fOC74uwxmg3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qypnFZ48vDO7GMblaXUJbmsLSh06subR5YJI8RhM6cWsVTNKLzLj3HsrRXPwgiWyMzdpsVYuczxPgLofY01O0Rdad7g/tNpJPmrTuGjLTitPFrcaqOPuxmz8pkVW+LR+6FUx4yXDsk69FEha+039L1nJntmxuBmplc2ZR2Y92lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjgXihW8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JTIdRPHIbEi19betbLyvX0dVfcLyMK7fASW6P0o2iIyypGflEyTB3BHcUfV+VxoZlFCaSZiifHpGyrMixOC05TmhZQT23infpxQB6yK4VChY4Wr0PitwlCr4RZaf1lfyP/upA7dWDwvh7Scb4Ow851VQR0RQZYgrEU9JTVRcgYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih/B/pqR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjgXihW8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19802C4CEF0;
-	Mon, 22 Sep 2025 19:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih/B/pqR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8859BC4CEF0;
+	Mon, 22 Sep 2025 19:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569693;
-	bh=0nQQoDdrvYw2KvBxjX5tHWdFPeo8EjNkNwbO0gWAgwM=;
+	s=korg; t=1758569695;
+	bh=Wk34eKU/tJ2WER10WP8WvyF7vYUtBn6fOC74uwxmg3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjgXihW8qSAt0d7p0H0giEwQIAaGgW/dlYL3DgvkNdqPGqXrTINr+IoDJpjHyt39Y
-	 ifrkF9fLoyPhQK8Nrz2x9dWMamYosolE+IYHRHsdkSP1YjJhp1lqpyZuVh/QogAXvW
-	 UyuraXVH/gXHT6NdPofkLI6aslTvBQEfI5FxYz3Y=
+	b=ih/B/pqRu2bTiqQchO/mssRSSd3sl6PyEHIMe2PaDatbT/aOwCfTmrxe8wFj38aI/
+	 jqGi7jLcEjU8AqVFrIysWZgrZsabYoQKMSl8EUhR922VYL34lm3rcwRvaDzG+QneNz
+	 k06CqmVCKOPYVksh+SYoxW5+I7lJLF9+BmLltVYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wilder <wilder@us.ibm.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 19/70] bonding: dont set oif to bond dev when getting NS target destination
-Date: Mon, 22 Sep 2025 21:29:19 +0200
-Message-ID: <20250922192405.070765154@linuxfoundation.org>
+Subject: [PATCH 6.6 20/70] tcp: Clear tcp_sk(sk)->fastopen_rsk in tcp_disconnect().
+Date: Mon, 22 Sep 2025 21:29:20 +0200
+Message-ID: <20250922192405.099262371@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -53,47 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit a8ba87f04ca9cdec06776ce92dce1395026dc3bb ]
+[ Upstream commit 45c8a6cc2bcd780e634a6ba8e46bffbdf1fc5c01 ]
 
-Unlike IPv4, IPv6 routing strictly requires the source address to be valid
-on the outgoing interface. If the NS target is set to a remote VLAN interface,
-and the source address is also configured on a VLAN over a bond interface,
-setting the oif to the bond device will fail to retrieve the correct
-destination route.
+syzbot reported the splat below where a socket had tcp_sk(sk)->fastopen_rsk
+in the TCP_ESTABLISHED state. [0]
 
-Fix this by not setting the oif to the bond device when retrieving the NS
-target destination. This allows the correct destination device (the VLAN
-interface) to be determined, so that bond_verify_device_path can return the
-proper VLAN tags for sending NS messages.
+syzbot reused the server-side TCP Fast Open socket as a new client before
+the TFO socket completes 3WHS:
 
-Reported-by: David Wilder <wilder@us.ibm.com>
-Closes: https://lore.kernel.org/netdev/aGOKggdfjv0cApTO@fedora/
-Suggested-by: Jay Vosburgh <jv@jvosburgh.net>
-Tested-by: David Wilder <wilder@us.ibm.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Fixes: 4e24be018eb9 ("bonding: add new parameter ns_targets")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20250916080127.430626-1-liuhangbin@gmail.com
+  1. accept()
+  2. connect(AF_UNSPEC)
+  3. connect() to another destination
+
+As of accept(), sk->sk_state is TCP_SYN_RECV, and tcp_disconnect() changes
+it to TCP_CLOSE and makes connect() possible, which restarts timers.
+
+Since tcp_disconnect() forgot to clear tcp_sk(sk)->fastopen_rsk, the
+retransmit timer triggered the warning and the intended packet was not
+retransmitted.
+
+Let's call reqsk_fastopen_remove() in tcp_disconnect().
+
+[0]:
+WARNING: CPU: 2 PID: 0 at net/ipv4/tcp_timer.c:542 tcp_retransmit_timer (net/ipv4/tcp_timer.c:542 (discriminator 7))
+Modules linked in:
+CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 6.17.0-rc5-g201825fb4278 #62 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:tcp_retransmit_timer (net/ipv4/tcp_timer.c:542 (discriminator 7))
+Code: 41 55 41 54 55 53 48 8b af b8 08 00 00 48 89 fb 48 85 ed 0f 84 55 01 00 00 0f b6 47 12 3c 03 74 0c 0f b6 47 12 3c 04 74 04 90 <0f> 0b 90 48 8b 85 c0 00 00 00 48 89 ef 48 8b 40 30 e8 6a 4f 06 3e
+RSP: 0018:ffffc900002f8d40 EFLAGS: 00010293
+RAX: 0000000000000002 RBX: ffff888106911400 RCX: 0000000000000017
+RDX: 0000000002517619 RSI: ffffffff83764080 RDI: ffff888106911400
+RBP: ffff888106d5c000 R08: 0000000000000001 R09: ffffc900002f8de8
+R10: 00000000000000c2 R11: ffffc900002f8ff8 R12: ffff888106911540
+R13: ffff888106911480 R14: ffff888106911840 R15: ffffc900002f8de0
+FS:  0000000000000000(0000) GS:ffff88907b768000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f8044d69d90 CR3: 0000000002c30003 CR4: 0000000000370ef0
+Call Trace:
+ <IRQ>
+ tcp_write_timer (net/ipv4/tcp_timer.c:738)
+ call_timer_fn (kernel/time/timer.c:1747)
+ __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2372)
+ timer_expire_remote (kernel/time/timer.c:2385 kernel/time/timer.c:2376 kernel/time/timer.c:2135)
+ tmigr_handle_remote_up (kernel/time/timer_migration.c:944 kernel/time/timer_migration.c:1035)
+ __walk_groups.isra.0 (kernel/time/timer_migration.c:533 (discriminator 1))
+ tmigr_handle_remote (kernel/time/timer_migration.c:1096)
+ handle_softirqs (./arch/x86/include/asm/jump_label.h:36 ./include/trace/events/irq.h:142 kernel/softirq.c:580)
+ irq_exit_rcu (kernel/softirq.c:614 kernel/softirq.c:453 kernel/softirq.c:680 kernel/softirq.c:696)
+ sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1050 (discriminator 35) arch/x86/kernel/apic/apic.c:1050 (discriminator 35))
+ </IRQ>
+
+Fixes: 8336886f786f ("tcp: TCP Fast Open Server - support TFO listeners")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250915175800.118793-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/ipv4/tcp.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 291f33c772161..f7ed129fc8110 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -3261,7 +3261,6 @@ static void bond_ns_send_all(struct bonding *bond, struct slave *slave)
- 		/* Find out through which dev should the packet go */
- 		memset(&fl6, 0, sizeof(struct flowi6));
- 		fl6.daddr = targets[i];
--		fl6.flowi6_oif = bond->dev->ifindex;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index a4bbe959d1e25..40a2f172be2cb 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3011,6 +3011,7 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct tcp_sock *tp = tcp_sk(sk);
+ 	int old_state = sk->sk_state;
++	struct request_sock *req;
+ 	u32 seq;
  
- 		dst = ip6_route_output(dev_net(bond->dev), NULL, &fl6);
- 		if (dst->error) {
+ 	if (old_state != TCP_CLOSE)
+@@ -3121,6 +3122,10 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 
+ 
+ 	/* Clean up fastopen related fields */
++	req = rcu_dereference_protected(tp->fastopen_rsk,
++					lockdep_sock_is_held(sk));
++	if (req)
++		reqsk_fastopen_remove(sk, req, false);
+ 	tcp_free_fastopen_req(tp);
+ 	inet_clear_bit(DEFER_CONNECT, sk);
+ 	tp->fastopen_client_fail = 0;
 -- 
 2.51.0
 
