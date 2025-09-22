@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031F0222590;
-	Mon, 22 Sep 2025 19:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCD22F0C52;
+	Mon, 22 Sep 2025 19:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570166; cv=none; b=XfjDWuwtg05ZIpWcECTJ7TAOrQlzWkeXx8pQC34OmDs+NDDaXHqFEbI6yurc5m30Jql/0Os0jllqmKg8rwjLgM0QQXH3Y/J/eoDKRzOLiwrH+J36kGx7pIFNEhjXwbA4MiZhDbd8uRFuBkFPQYllDLoJ0GmY2W7rldg8yA/JLUc=
+	t=1758570168; cv=none; b=gUQbgbHvhQiENqIqMrKC+UHt2nlrIuyML4uLeK56kkIryAtmLF71DI/OsovIKaE7AFWsBEVesvxmDpDee1B74nPs0HXV+76jxDAiD1rWCQMdWn5A8Ju6BORnCNbyWjJshByKE+XVqNz40TJuE7kjyfOkRx0TSRWbEu0ypiJ6I9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570166; c=relaxed/simple;
-	bh=FHrCxBQyDMvOURtycSjTIAYs1zRMQ7rpf8L04K+fPNc=;
+	s=arc-20240116; t=1758570168; c=relaxed/simple;
+	bh=bqzdgY/LvEsVVDZR7bp9JtVvNcUw7yUb+6FIjujVaHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9AqAADY0gF8oKxdNeR8Um923MT0KDDjYGyPBhagi9g9M7YxcEkRvxZhksHljCjx1uyd4DqQMXhzaXiIbnqQwuadQkKzfcpGrxLAIniwsCQt+B9DwRaCfVN/5Pkv6KE4pTybLZvnM8ESXJwlM5Z4QkpNW9uXfvjau/fUHxUwgKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXWzFbFU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KjMrbL+KaACQ6TtfxC9fhxWwKjmfGXEprle873iEXfYiuXSFWO1c2pxHhFqzWyk11JgxiXGXDnVOfwbTLOxRl00rgaZ7Y4LmTGtd+Te61QuV0X8VLFOWgAVroCcj46LQuAI4iEFAC9dM2X/l59/REgvwKBJCU4f+4WSdowxHdjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbE57hnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXWzFbFU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8927AC4CEF0;
-	Mon, 22 Sep 2025 19:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbE57hnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D82C4CEF0;
+	Mon, 22 Sep 2025 19:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570165;
-	bh=FHrCxBQyDMvOURtycSjTIAYs1zRMQ7rpf8L04K+fPNc=;
+	s=korg; t=1758570168;
+	bh=bqzdgY/LvEsVVDZR7bp9JtVvNcUw7yUb+6FIjujVaHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXWzFbFUMKlDfpuN62FloU0x6eLwLDO3304xZaMqE9Nbfo0VLM8XmoGCjeq7QHzil
-	 Gp4KJND2Mih4rK5gjkRMtr9Mc8lvqXHn9+B3Mikzl9jhCGl6NX5CX9ihlTGN2gn2f9
-	 fhGbvOYrDGlqC7b7n2eyMxGG1zZ8JZX0SdHzJvvs=
+	b=JbE57hnrLfbeMUsNdweXjDAUtrIYol5IGWfimOXxsgTMOW+tY5lPvtLQy5mh1RmNf
+	 2L/LbDPUtTKZwMuApoezdj29SEJfg0ayTJ0sNI3URrazP8XIzQVTo0YdokkRKDKAtH
+	 vqXMJZ6RgMVhy2at9GwizSpltVNCxuAo3mO63A5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.16 031/149] i40e: remove redundant memory barrier when cleaning Tx descs
-Date: Mon, 22 Sep 2025 21:28:51 +0200
-Message-ID: <20250922192413.649111625@linuxfoundation.org>
+Subject: [PATCH 6.16 032/149] ixgbe: initialize aci.lock before its used
+Date: Mon, 22 Sep 2025 21:28:52 +0200
+Message-ID: <20250922192413.676333639@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -53,51 +56,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
 
-[ Upstream commit e37084a26070c546ae7961ee135bbfb15fbe13fd ]
+[ Upstream commit b85936e95a4bd2a07e134af71e2c0750a69d2b8b ]
 
-i40e has a feature which writes to memory location last descriptor
-successfully sent. Memory barrier in i40e_clean_tx_irq() was used to
-avoid forward-reading descriptor fields in case DD bit was not set.
-Having mentioned feature in place implies that such situation will not
-happen as we know in advance how many descriptors HW has dealt with.
+Currently aci.lock is initialized too late. A bunch of ACI callbacks
+using the lock are called prior it's initialized.
 
-Besides, this barrier placement was wrong. Idea is to have this
-protection *after* reading DD bit from HW descriptor, not before.
-Digging through git history showed me that indeed barrier was before DD
-bit check, anyways the commit introducing i40e_get_head() should have
-wiped it out altogether.
+Commit 337369f8ce9e ("locking/mutex: Add MUTEX_WARN_ON() into fast path")
+highlights that issue what results in call trace.
 
-Also, there was one commit doing s/read_barrier_depends/smp_rmb when get
-head feature was already in place, but it was only theoretical based on
-ixgbe experiences, which is different in these terms as that driver has
-to read DD bit from HW descriptor.
+[    4.092899] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+[    4.092910] WARNING: CPU: 0 PID: 578 at kernel/locking/mutex.c:154 mutex_lock+0x6d/0x80
+[    4.098757] Call Trace:
+[    4.098847]  <TASK>
+[    4.098922]  ixgbe_aci_send_cmd+0x8c/0x1e0 [ixgbe]
+[    4.099108]  ? hrtimer_try_to_cancel+0x18/0x110
+[    4.099277]  ixgbe_aci_get_fw_ver+0x52/0xa0 [ixgbe]
+[    4.099460]  ixgbe_check_fw_error+0x1fc/0x2f0 [ixgbe]
+[    4.099650]  ? usleep_range_state+0x69/0xd0
+[    4.099811]  ? usleep_range_state+0x8c/0xd0
+[    4.099964]  ixgbe_probe+0x3b0/0x12d0 [ixgbe]
+[    4.100132]  local_pci_probe+0x43/0xa0
+[    4.100267]  work_for_cpu_fn+0x13/0x20
+[    4.101647]  </TASK>
 
-Fixes: 1943d8ba9507 ("i40e/i40evf: enable hardware feature head write back")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Move aci.lock mutex initialization to ixgbe_sw_init() before any ACI
+command is sent. Along with that move also related SWFW semaphore in
+order to reduce size of ixgbe_probe() and that way all locks are
+initialized in ixgbe_sw_init().
+
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Fixes: 4600cdf9f5ac ("ixgbe: Enable link management in E610 device")
+Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
 Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_txrx.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index c006f716a3bdb..ca7517a68a2c3 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -947,9 +947,6 @@ static bool i40e_clean_tx_irq(struct i40e_vsi *vsi,
- 		if (!eop_desc)
- 			break;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index cba860f0e1f15..2a857037dd102 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -6801,6 +6801,13 @@ static int ixgbe_sw_init(struct ixgbe_adapter *adapter,
+ 		break;
+ 	}
  
--		/* prevent any other reads prior to eop_desc */
--		smp_rmb();
++	/* Make sure the SWFW semaphore is in a valid state */
++	if (hw->mac.ops.init_swfw_sync)
++		hw->mac.ops.init_swfw_sync(hw);
++
++	if (hw->mac.type == ixgbe_mac_e610)
++		mutex_init(&hw->aci.lock);
++
+ #ifdef IXGBE_FCOE
+ 	/* FCoE support exists, always init the FCoE lock */
+ 	spin_lock_init(&adapter->fcoe.lock);
+@@ -11474,10 +11481,6 @@ static int ixgbe_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (err)
+ 		goto err_sw_init;
+ 
+-	/* Make sure the SWFW semaphore is in a valid state */
+-	if (hw->mac.ops.init_swfw_sync)
+-		hw->mac.ops.init_swfw_sync(hw);
 -
- 		i40e_trace(clean_tx_irq, tx_ring, tx_desc, tx_buf);
- 		/* we have caught up to head, no work left to do */
- 		if (tx_head == tx_desc)
+ 	if (ixgbe_check_fw_error(adapter))
+ 		return ixgbe_recovery_probe(adapter);
+ 
+@@ -11681,8 +11684,6 @@ static int ixgbe_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	ether_addr_copy(hw->mac.addr, hw->mac.perm_addr);
+ 	ixgbe_mac_set_default_filter(adapter);
+ 
+-	if (hw->mac.type == ixgbe_mac_e610)
+-		mutex_init(&hw->aci.lock);
+ 	timer_setup(&adapter->service_timer, ixgbe_service_timer, 0);
+ 
+ 	if (ixgbe_removed(hw->hw_addr)) {
+@@ -11838,9 +11839,9 @@ static int ixgbe_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	devl_unlock(adapter->devlink);
+ 	ixgbe_release_hw_control(adapter);
+ 	ixgbe_clear_interrupt_scheme(adapter);
++err_sw_init:
+ 	if (hw->mac.type == ixgbe_mac_e610)
+ 		mutex_destroy(&adapter->hw.aci.lock);
+-err_sw_init:
+ 	ixgbe_disable_sriov(adapter);
+ 	adapter->flags2 &= ~IXGBE_FLAG2_SEARCH_FOR_SFP;
+ 	iounmap(adapter->io_addr);
 -- 
 2.51.0
 
