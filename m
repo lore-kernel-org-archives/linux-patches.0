@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3658C253B5C;
-	Mon, 22 Sep 2025 19:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF6E1F91E3;
+	Mon, 22 Sep 2025 19:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570342; cv=none; b=cKXAgKeJmBysgCoGv1/LSAji1GwvAh+wxz8QcTS9OZdPcTpNDfGaOoyRQDO6Qkkxjq0pcesJHxHUnQWP9ZK31eCsH1CarOMJlWmoNEdVxeTJB3l7LlnZfCn9FS7iOCztkR+E+iOHTaCjQ3YyeeK5NzBCtHKp18IW4R0WkH4UL7c=
+	t=1758570344; cv=none; b=Ag3itzeidVFydnRKOqh6egMHQNYGLY/tQciVc63EvLq0bSFK+ht+coUmGVLBND1kelpvNfPFoFpx/ztivJimHOpuLoJQPROfOpMtFF4KgtQKLbCRswWX83FkBO/jLVs8Ssu7VYPV3yPSgxhRSmgc1ykXltw9MMA8BNZS6zYI1qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570342; c=relaxed/simple;
-	bh=hWjWNrDCZ2LED/W/8YhOmDuT7LOJ5LZ5Hyp9uHS722Q=;
+	s=arc-20240116; t=1758570344; c=relaxed/simple;
+	bh=CksHH4xfdKQSip6tdqInQfR8xg4Iu9gHHZT1U67Nxas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tL9j5d7CWI3q9sJpgx2H3gCaAWGsKPC6PKsKW4xzXFr2ylrUUG3uMppeCpgrxo1ncgCH/ugvxxdSWkOhqPvtLK5B1RI2i7VwzJOtYn1ZS7lgTm8YR9rJQjSQ6L35u/ShosL+sC64IiViOt8yren8Xys9nML+nGWd9tBbDcPHoGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4Xw/RLs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXsQIohpa5UKTjpQyfaCuz3vKdWI8rXzJJ+NiCu3cl+QXgqKqz6t3/rmSOBiCh+l+bwlTbpYFO4xMR94PgIiFf7dnKt4056zK7jKzTqWRv5LmMiNtwY5Zl8Usnalx+kLssZLR2NRXZorhH73q0sCVO7v6+7zEE/y8X/aiQrk7Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1ny3fr2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4Xw/RLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD4CC4CEF0;
-	Mon, 22 Sep 2025 19:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1ny3fr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576CAC4CEF0;
+	Mon, 22 Sep 2025 19:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570342;
-	bh=hWjWNrDCZ2LED/W/8YhOmDuT7LOJ5LZ5Hyp9uHS722Q=;
+	s=korg; t=1758570344;
+	bh=CksHH4xfdKQSip6tdqInQfR8xg4Iu9gHHZT1U67Nxas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4Xw/RLs2HESuaja9HwdjcvjJX1VNvuuAhPqF3jwHvtwUxv/dU8xl7gs0Ifz9KhhK
-	 xz+E5Tu6HSg4goBNIi6kcW5pZxJMFhGCOn4OBsqGt83vZjXxoCfxtU2esqcQULn9hB
-	 3DpUQJxUggUABg9s9sJEL5BqfuMZOaE3qCU0TAIE=
+	b=d1ny3fr2tQ3hDxa0k1cK8RnnJsRdHfuXFaciXJqndMCIT7ShfYiJQ3J3rrAty4MVB
+	 JpbeX6uJ1N6vm1yoZjoCZE9CaBme1yo5j3Aw4t58ecoHNwCN7fcw3DW4EcN4EKIuOS
+	 Y6grX/2YxR/bZgwbBJz8XsB8IVBQhSVSo4y05G94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benedek Thaler <thaler@thaler.hu>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.16 099/149] io_uring: include dying ring in task_work "should cancel" state
-Date: Mon, 22 Sep 2025 21:29:59 +0200
-Message-ID: <20250922192415.381281604@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.16 100/149] net: rfkill: gpio: Fix crash due to dereferencering uninitialized pointer
+Date: Mon, 22 Sep 2025 21:30:00 +0200
+Message-ID: <20250922192415.409509290@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -50,94 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Hans de Goede <hansg@kernel.org>
 
-commit 3539b1467e94336d5854ebf976d9627bfb65d6c3 upstream.
+commit b6f56a44e4c1014b08859dcf04ed246500e310e5 upstream.
 
-When running task_work for an exiting task, rather than perform the
-issue retry attempt, the task_work is canceled. However, this isn't
-done for a ring that has been closed. This can lead to requests being
-successfully completed post the ring being closed, which is somewhat
-confusing and surprising to an application.
+Since commit 7d5e9737efda ("net: rfkill: gpio: get the name and type from
+device property") rfkill_find_type() gets called with the possibly
+uninitialized "const char *type_name;" local variable.
 
-Rather than just check the task exit state, also include the ring
-ref state in deciding whether or not to terminate a given request when
-run from task_work.
+On x86 systems when rfkill-gpio binds to a "BCM4752" or "LNV4752"
+acpi_device, the rfkill->type is set based on the ACPI acpi_device_id:
 
-Cc: stable@vger.kernel.org # 6.1+
-Link: https://github.com/axboe/liburing/discussions/1459
-Reported-by: Benedek Thaler <thaler@thaler.hu>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+        rfkill->type = (unsigned)id->driver_data;
+
+and there is no "type" property so device_property_read_string() will fail
+and leave type_name uninitialized, leading to a potential crash.
+
+rfkill_find_type() does accept a NULL pointer, fix the potential crash
+by initializing type_name to NULL.
+
+Note likely sofar this has not been caught because:
+
+1. Not many x86 machines actually have a "BCM4752"/"LNV4752" acpi_device
+2. The stack happened to contain NULL where type_name is stored
+
+Fixes: 7d5e9737efda ("net: rfkill: gpio: get the name and type from device property")
+Cc: stable@vger.kernel.org
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20250913113515.21698-1-hansg@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c  |    6 ++++--
- io_uring/io_uring.h  |    4 ++--
- io_uring/poll.c      |    2 +-
- io_uring/timeout.c   |    2 +-
- io_uring/uring_cmd.c |    2 +-
- 5 files changed, 9 insertions(+), 7 deletions(-)
+ net/rfkill/rfkill-gpio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1371,8 +1371,10 @@ static void io_req_task_cancel(struct io
- 
- void io_req_task_submit(struct io_kiocb *req, io_tw_token_t tw)
+--- a/net/rfkill/rfkill-gpio.c
++++ b/net/rfkill/rfkill-gpio.c
+@@ -94,10 +94,10 @@ static const struct dmi_system_id rfkill
+ static int rfkill_gpio_probe(struct platform_device *pdev)
  {
--	io_tw_lock(req->ctx, tw);
--	if (unlikely(io_should_terminate_tw()))
-+	struct io_ring_ctx *ctx = req->ctx;
-+
-+	io_tw_lock(ctx, tw);
-+	if (unlikely(io_should_terminate_tw(ctx)))
- 		io_req_defer_failed(req, -EFAULT);
- 	else if (req->flags & REQ_F_FORCE_ASYNC)
- 		io_queue_iowq(req);
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -470,9 +470,9 @@ static inline bool io_allowed_run_tw(str
-  * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
-  *    our fallback task_work.
-  */
--static inline bool io_should_terminate_tw(void)
-+static inline bool io_should_terminate_tw(struct io_ring_ctx *ctx)
- {
--	return current->flags & (PF_KTHREAD | PF_EXITING);
-+	return (current->flags & (PF_KTHREAD | PF_EXITING)) || percpu_ref_is_dying(&ctx->refs);
- }
- 
- static inline void io_req_queue_tw_complete(struct io_kiocb *req, s32 res)
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -224,7 +224,7 @@ static int io_poll_check_events(struct i
- {
- 	int v;
- 
--	if (unlikely(io_should_terminate_tw()))
-+	if (unlikely(io_should_terminate_tw(req->ctx)))
- 		return -ECANCELED;
- 
- 	do {
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -324,7 +324,7 @@ static void io_req_task_link_timeout(str
+ 	struct rfkill_gpio_data *rfkill;
+-	struct gpio_desc *gpio;
++	const char *type_name = NULL;
+ 	const char *name_property;
+ 	const char *type_property;
+-	const char *type_name;
++	struct gpio_desc *gpio;
  	int ret;
  
- 	if (prev) {
--		if (!io_should_terminate_tw()) {
-+		if (!io_should_terminate_tw(req->ctx)) {
- 			struct io_cancel_data cd = {
- 				.ctx		= req->ctx,
- 				.data		= prev->cqe.user_data,
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -123,7 +123,7 @@ static void io_uring_cmd_work(struct io_
- 	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
- 	unsigned int flags = IO_URING_F_COMPLETE_DEFER;
- 
--	if (io_should_terminate_tw())
-+	if (io_should_terminate_tw(req->ctx))
- 		flags |= IO_URING_F_TASK_DEAD;
- 
- 	/* task_work executor checks the deffered list completion */
+ 	if (dmi_check_system(rfkill_gpio_deny_table))
 
 
