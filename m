@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9013B2F0C6C;
-	Mon, 22 Sep 2025 19:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE162F2617;
+	Mon, 22 Sep 2025 19:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569762; cv=none; b=HRilrb9+kN+PiOBHl8YexQV0p1kHo70BYlkQimECgjp6SQJJdEDySMoq1ioPvtrDt+JbTFIKimsBZmpuDZX5kfqQDLKzBDhogx9Do5SabnLcW5xW6NrbHXIovECVUf9KTfJZKEkltOnEvuRGw+1m2s4TdX3fhIxeiGF62LXE36M=
+	t=1758569765; cv=none; b=tHFVkR/2tXPRno9S9mWjczGNuMGBZOQW/UnKKZFqN9cMq74FIQbCGSRVuXYUrm0i19wGE7mLMWFH5hm6SGt1//W9M1E/bfjvZ6C3EbDh07g29sRuIbdEp7tU/4acLrHeJXhM2RUneRkXV/BO43pEj346pvI54/kflpsORo4LfmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569762; c=relaxed/simple;
-	bh=93FOMFpooQKOVxf+kAUR88MyuiZyHHIf/XqMHXv87YY=;
+	s=arc-20240116; t=1758569765; c=relaxed/simple;
+	bh=n2yZ5DQwrsW8CDwm2VjukjInu34dNBGLnKdypy1NgEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtW+DWWSHUF62E8+XYnx0xRxdJz7G8TJ/Xv4G9NOc5+pCvNVLXJL85FVdxZAVpib6lXURuWcke1ra3L024AFhAZM2Lcy0CeNysI3wywn5+v2uhRBgmMxJ5LNvnR4b0KgtAO7x+r/GMWWnBpl2QDIGk2QYHnNzcnhhBXiITVS9xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzCf5ZJB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=no6calibV/elr5I3mc9s97nym+sQ4CAJHd1L4E2XPcdXfOggpfhYFQVlbkJC7WQbrOvYh+EUumQenwDnWhM/SO9nlVyqGodxpUS/2mN1d+a0r11MvQPoUqj05ZzSx3JZSG811jHe8ULxf4YOva1kxOnMDrpivAJ+F2owcSFF+hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppAaZD2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzCf5ZJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2F6C4CEF5;
-	Mon, 22 Sep 2025 19:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppAaZD2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB473C4CEF0;
+	Mon, 22 Sep 2025 19:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569762;
-	bh=93FOMFpooQKOVxf+kAUR88MyuiZyHHIf/XqMHXv87YY=;
+	s=korg; t=1758569765;
+	bh=n2yZ5DQwrsW8CDwm2VjukjInu34dNBGLnKdypy1NgEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzCf5ZJBBO8Qx3Liy1NQY1ZLpuQ64r7wqwhn0QtucRyZkegT265sfBU5fS8ZnOfJr
-	 PZHV3sJZJmUdx2Ggcr1IEO0gRCz0lIldvOPnDifR42nTgoyuQ6a2vu+H3owg7Or057
-	 nxlWrbzKEeRZigeYWUVxlykGL3Igf237ljuyRJP4=
+	b=ppAaZD2stuCyOtscVsHuI2+R07Olfr9ypUT4PdHxY59dbIVY9M8oJb8mKxJSXQnws
+	 8fQy0IlsZwt/bu1SU168KYmFI5G8oT5ox9F6d//aOhq2Mbi8eyKOvACt3LOumZA+Pi
+	 SOh1KbvP69Ioc6FdUAq6foT8PPUjTFcbxlRU46qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benedek Thaler <thaler@thaler.hu>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 47/70] io_uring: backport io_should_terminate_tw()
-Date: Mon, 22 Sep 2025 21:29:47 +0200
-Message-ID: <20250922192405.874781794@linuxfoundation.org>
+Subject: [PATCH 6.6 48/70] io_uring: include dying ring in task_work "should cancel" state
+Date: Mon, 22 Sep 2025 21:29:48 +0200
+Message-ID: <20250922192405.900266742@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -51,63 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Parts of commit b6f58a3f4aa8dba424356c7a69388a81f4459300 upstream.
+Commit 3539b1467e94336d5854ebf976d9627bfb65d6c3 upstream.
 
-Backport io_should_terminate_tw() helper to judge whether task_work
-should be run or terminated.
+When running task_work for an exiting task, rather than perform the
+issue retry attempt, the task_work is canceled. However, this isn't
+done for a ring that has been closed. This can lead to requests being
+successfully completed post the ring being closed, which is somewhat
+confusing and surprising to an application.
 
+Rather than just check the task exit state, also include the ring
+ref state in deciding whether or not to terminate a given request when
+run from task_work.
+
+Cc: stable@vger.kernel.org # 6.1+
+Link: https://github.com/axboe/liburing/discussions/1459
+Reported-by: Benedek Thaler <thaler@thaler.hu>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    3 +--
- io_uring/io_uring.h |   13 +++++++++++++
- io_uring/poll.c     |    3 +--
+ io_uring/io_uring.c |    6 ++++--
+ io_uring/io_uring.h |    4 ++--
+ io_uring/poll.c     |    2 +-
  io_uring/timeout.c  |    2 +-
- 4 files changed, 16 insertions(+), 5 deletions(-)
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -1460,8 +1460,7 @@ static void io_req_task_cancel(struct io
+@@ -1459,8 +1459,10 @@ static void io_req_task_cancel(struct io
+ 
  void io_req_task_submit(struct io_kiocb *req, struct io_tw_state *ts)
  {
- 	io_tw_lock(req->ctx, ts);
--	/* req->task == current here, checking PF_EXITING is safe */
--	if (unlikely(req->task->flags & PF_EXITING))
-+	if (unlikely(io_should_terminate_tw()))
+-	io_tw_lock(req->ctx, ts);
+-	if (unlikely(io_should_terminate_tw()))
++	struct io_ring_ctx *ctx = req->ctx;
++
++	io_tw_lock(ctx, ts);
++	if (unlikely(io_should_terminate_tw(ctx)))
  		io_req_defer_failed(req, -EFAULT);
  	else if (req->flags & REQ_F_FORCE_ASYNC)
  		io_queue_iowq(req);
 --- a/io_uring/io_uring.h
 +++ b/io_uring/io_uring.h
-@@ -394,6 +394,19 @@ static inline bool io_allowed_run_tw(str
- 		      ctx->submitter_task == current);
+@@ -402,9 +402,9 @@ static inline bool io_allowed_run_tw(str
+  * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
+  *    our fallback task_work.
+  */
+-static inline bool io_should_terminate_tw(void)
++static inline bool io_should_terminate_tw(struct io_ring_ctx *ctx)
+ {
+-	return current->flags & (PF_KTHREAD | PF_EXITING);
++	return (current->flags & (PF_KTHREAD | PF_EXITING)) || percpu_ref_is_dying(&ctx->refs);
  }
  
-+/*
-+ * Terminate the request if either of these conditions are true:
-+ *
-+ * 1) It's being executed by the original task, but that task is marked
-+ *    with PF_EXITING as it's exiting.
-+ * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
-+ *    our fallback task_work.
-+ */
-+static inline bool io_should_terminate_tw(void)
-+{
-+	return current->flags & (PF_KTHREAD | PF_EXITING);
-+}
-+
  static inline void io_req_queue_tw_complete(struct io_kiocb *req, s32 res)
- {
- 	io_req_set_res(req, res, 0);
 --- a/io_uring/poll.c
 +++ b/io_uring/poll.c
-@@ -258,8 +258,7 @@ static int io_poll_check_events(struct i
+@@ -258,7 +258,7 @@ static int io_poll_check_events(struct i
  {
  	int v;
  
--	/* req->task == current here, checking PF_EXITING is safe */
--	if (unlikely(req->task->flags & PF_EXITING))
-+	if (unlikely(io_should_terminate_tw()))
+-	if (unlikely(io_should_terminate_tw()))
++	if (unlikely(io_should_terminate_tw(req->ctx)))
  		return -ECANCELED;
  
  	do {
@@ -117,8 +122,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	int ret = -ENOENT;
  
  	if (prev) {
--		if (!(req->task->flags & PF_EXITING)) {
-+		if (!io_should_terminate_tw()) {
+-		if (!io_should_terminate_tw()) {
++		if (!io_should_terminate_tw(req->ctx)) {
  			struct io_cancel_data cd = {
  				.ctx		= req->ctx,
  				.data		= prev->cqe.user_data,
