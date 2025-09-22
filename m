@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DD617A2EA;
-	Mon, 22 Sep 2025 19:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AF9C8E6;
+	Mon, 22 Sep 2025 19:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569504; cv=none; b=MxNAgXzlXMSxx9o6bbxPfPzAA/Yvi4ggs5YWW6b3WOTUEQBAJb0+2paWDZ10/Q9jdBBhdHoFCuYGzGnkSzcPwm03ThLKN5HGJf8W8G2JCY5+F+PV8Jgg2EIC0PUnijmGP1fPWAwCvdXJ2EGhz6K5Ha9tKcTXhfDuO2q2iHD5TCo=
+	t=1758569508; cv=none; b=SRUP26jKGNGwSqGBoqAzUSw3pnsuxjwEiOTw7ubsYabW71FC5DkMU9t9li/RBLPF1V1qgLAPInryER/iy64X1305jeV/Jluui09K+uaEAwN1gxATI00tV3nJmqmVqZVwX9ak/klqoyuGhETFoPLY0m8IV0b6g81XDJ0LCyb+17A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569504; c=relaxed/simple;
-	bh=epuEB0g8bJHtYBjWAToAzHgO/mtx2n7y8wd3iweiyfc=;
+	s=arc-20240116; t=1758569508; c=relaxed/simple;
+	bh=LvbzLfrlA7bP8jMd7xk9sVVY9nWvft44qjiV/Ut7OQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ry/Btq6eVDCYFigx+sTsiXT7VUbG1SoW6MTUqJvY016S9myaT7LGkszV0SOfZYOicq7Z8IRDPX+/6CoEbSlMG3Ed5hK1JZkpw+xi2EV+1egbqC9CjQc0PuSZxKpoLwRDJnMw3wdur8L5zZ/vF57Gd5nqN/bmIMXfmP+i2y07aJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJ0jrYn+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2r2jHwuXRyLYmmHhyJpqGkLck2Jn2yNaj/CqAL7oc6pFmXIrJgVWw57hJp6W7KsmPs6LLzV6Ls5GLAelu7JV9av8FnRUdQcW3QJw09Ya15PHOvpzrbxAZWDYAzWoJCa2P3+njC5ctr5Po55QOmjo4/Fl3xGg3PlqILoELOWT/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAIpFQiU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJ0jrYn+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16A4C4CEF0;
-	Mon, 22 Sep 2025 19:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAIpFQiU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0F4C4CEF0;
+	Mon, 22 Sep 2025 19:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569504;
-	bh=epuEB0g8bJHtYBjWAToAzHgO/mtx2n7y8wd3iweiyfc=;
+	s=korg; t=1758569506;
+	bh=LvbzLfrlA7bP8jMd7xk9sVVY9nWvft44qjiV/Ut7OQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJ0jrYn+eApM1xGnPdoVloSUTs1sDV5olxI8mNRp6IjOn2lSNg3xQRzK3dRf1E1Zm
-	 X2edzujPY92csrnW4uAJZgMmil5iTSpXpNNfgL0HPoaGfvJ2FtYxNgdKRqIcFQHZxi
-	 ls4TAe2fyqvYMEdUnwgw1UO5EqeptIyDMBZRxSI0=
+	b=eAIpFQiUG3Jh6k5ATb4OCbGnONoMPdwRZSiZjUXQm5FEl3dHUD/2kuCQlsmWIkrG9
+	 FmyyFoqPeDPQ7miBaEZBCzCRs4o/HX2EgVBO+CslRm9u9RuX6TxzfizcWic9rnAbKC
+	 eVD/Egelv9NJc/8cY9PStPbLh6XAZbWq9EXkiv6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jamie Bainbridge <jamie.bainbridge@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/61] dpaa2-switch: fix buffer pool seeding for control traffic
-Date: Mon, 22 Sep 2025 21:29:01 +0200
-Message-ID: <20250922192403.777691328@linuxfoundation.org>
+Subject: [PATCH 6.1 09/61] qed: Dont collect too many protection override GRC elements
+Date: Mon, 22 Sep 2025 21:29:02 +0200
+Message-ID: <20250922192403.803984852@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -51,67 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Jamie Bainbridge <jamie.bainbridge@gmail.com>
 
-[ Upstream commit 2690cb089502b80b905f2abdafd1bf2d54e1abef ]
+[ Upstream commit 56c0a2a9ddc2f5b5078c5fb0f81ab76bbc3d4c37 ]
 
-Starting with commit c50e7475961c ("dpaa2-switch: Fix error checking in
-dpaa2_switch_seed_bp()"), the probing of a second DPSW object errors out
-like below.
+In the protection override dump path, the firmware can return far too
+many GRC elements, resulting in attempting to write past the end of the
+previously-kmalloc'ed dump buffer.
 
-fsl_dpaa2_switch dpsw.1: fsl_mc_driver_probe failed: -12
-fsl_dpaa2_switch dpsw.1: probe with driver fsl_dpaa2_switch failed with error -12
+This will result in a kernel panic with reason:
 
-The aforementioned commit brought to the surface the fact that seeding
-buffers into the buffer pool destined for control traffic is not
-successful and an access violation recoverable error can be seen in the
-MC firmware log:
+ BUG: unable to handle kernel paging request at ADDRESS
 
-[E, qbman_rec_isr:391, QBMAN]  QBMAN recoverable event 0x1000000
+where "ADDRESS" is just past the end of the protection override dump
+buffer. The start address of the buffer is:
+ p_hwfn->cdev->dbg_features[DBG_FEATURE_PROTECTION_OVERRIDE].dump_buf
+and the size of the buffer is buf_size in the same data structure.
 
-This happens because the driver incorrectly used the ID of the DPBP
-object instead of the hardware buffer pool ID when trying to release
-buffers into it.
+The panic can be arrived at from either the qede Ethernet driver path:
 
-This is because any DPSW object uses two buffer pools, one managed by
-the Linux driver and destined for control traffic packet buffers and the
-other one managed by the MC firmware and destined only for offloaded
-traffic. And since the buffer pool managed by the MC firmware does not
-have an external facing DPBP equivalent, any subsequent DPBP objects
-created after the first DPSW will have a DPBP id different to the
-underlying hardware buffer ID.
+    [exception RIP: qed_grc_dump_addr_range+0x108]
+ qed_protection_override_dump at ffffffffc02662ed [qed]
+ qed_dbg_protection_override_dump at ffffffffc0267792 [qed]
+ qed_dbg_feature at ffffffffc026aa8f [qed]
+ qed_dbg_all_data at ffffffffc026b211 [qed]
+ qed_fw_fatal_reporter_dump at ffffffffc027298a [qed]
+ devlink_health_do_dump at ffffffff82497f61
+ devlink_health_report at ffffffff8249cf29
+ qed_report_fatal_error at ffffffffc0272baf [qed]
+ qede_sp_task at ffffffffc045ed32 [qede]
+ process_one_work at ffffffff81d19783
 
-The issue was not caught earlier because these two numbers can be
-identical when all DPBP objects are created before the DPSW objects are.
-This is the case when the DPL file is used to describe the entire DPAA2
-object layout and objects are created at boot time and it's also true
-for the first DPSW being created dynamically using ls-addsw.
+or the qedf storage driver path:
 
-Fix this by using the buffer pool ID instead of the DPBP id when
-releasing buffers into the pool.
+    [exception RIP: qed_grc_dump_addr_range+0x108]
+ qed_protection_override_dump at ffffffffc068b2ed [qed]
+ qed_dbg_protection_override_dump at ffffffffc068c792 [qed]
+ qed_dbg_feature at ffffffffc068fa8f [qed]
+ qed_dbg_all_data at ffffffffc0690211 [qed]
+ qed_fw_fatal_reporter_dump at ffffffffc069798a [qed]
+ devlink_health_do_dump at ffffffff8aa95e51
+ devlink_health_report at ffffffff8aa9ae19
+ qed_report_fatal_error at ffffffffc0697baf [qed]
+ qed_hw_err_notify at ffffffffc06d32d7 [qed]
+ qed_spq_post at ffffffffc06b1011 [qed]
+ qed_fcoe_destroy_conn at ffffffffc06b2e91 [qed]
+ qedf_cleanup_fcport at ffffffffc05e7597 [qedf]
+ qedf_rport_event_handler at ffffffffc05e7bf7 [qedf]
+ fc_rport_work at ffffffffc02da715 [libfc]
+ process_one_work at ffffffff8a319663
 
-Fixes: 2877e4f7e189 ("staging: dpaa2-switch: setup buffer pool and RX path rings")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20250910144825.2416019-1-ioana.ciornei@nxp.com
+Resolve this by clamping the firmware's return value to the maximum
+number of legal elements the firmware should return.
+
+Fixes: d52c89f120de8 ("qed*: Utilize FW 8.37.2.0")
+Signed-off-by: Jamie Bainbridge <jamie.bainbridge@gmail.com>
+Link: https://patch.msgid.link/f8e1182934aa274c18d0682a12dbaf347595469c.1757485536.git.jamie.bainbridge@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qed/qed_debug.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 732fd2e389c41..e928fea16e841 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -2680,7 +2680,7 @@ static int dpaa2_switch_setup_dpbp(struct ethsw_core *ethsw)
- 		dev_err(dev, "dpsw_ctrl_if_set_pools() failed\n");
- 		goto err_get_attr;
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+index cdcead614e9fa..ae421c2707785 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+@@ -4461,10 +4461,11 @@ static enum dbg_status qed_protection_override_dump(struct qed_hwfn *p_hwfn,
+ 		goto out;
  	}
--	ethsw->bpid = dpbp_attrs.id;
-+	ethsw->bpid = dpbp_attrs.bpid;
  
- 	return 0;
- 
+-	/* Add override window info to buffer */
++	/* Add override window info to buffer, preventing buffer overflow */
+ 	override_window_dwords =
+-		qed_rd(p_hwfn, p_ptt, GRC_REG_NUMBER_VALID_OVERRIDE_WINDOW) *
+-		PROTECTION_OVERRIDE_ELEMENT_DWORDS;
++		min(qed_rd(p_hwfn, p_ptt, GRC_REG_NUMBER_VALID_OVERRIDE_WINDOW) *
++		PROTECTION_OVERRIDE_ELEMENT_DWORDS,
++		PROTECTION_OVERRIDE_DEPTH_DWORDS);
+ 	if (override_window_dwords) {
+ 		addr = BYTES_TO_DWORDS(GRC_REG_PROTECTION_OVERRIDE_WINDOW);
+ 		offset += qed_grc_dump_addr_range(p_hwfn,
 -- 
 2.51.0
 
