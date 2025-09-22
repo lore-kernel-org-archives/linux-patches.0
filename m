@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083382F49E3;
-	Mon, 22 Sep 2025 19:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8305818C2C;
+	Mon, 22 Sep 2025 19:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570430; cv=none; b=lhP5mBUpUkzxrGOU5WGcMBoBJ0QDMNLhH1wBqOVCvS3N28eK95Qgs5YUwAz8UjiIwMmd6dPTsc5r30gWNAXuO7SjnkgLjr43wE8dwrywsZXWZ0q6SZ0XsQX9VxadHD+IghDs0hKdvmmF6r7drLmOXObZWXdxvKbrddxZuuX+tHY=
+	t=1758570432; cv=none; b=RekfJABrjMyxHxIIlESPNEl9kyaop8kuYrSHLTk9JlmSSlncx2VVi0aqlXFPnYBhHVbTTyImROEqn/W0Plw0jTbOzgZqHIP7JukzafkdVLvz9oC1xy5KiovE5bPM5p3JSXIR4M8NluLTryrwGHsaDkuMaqS0N7PwUobDnVj0I90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570430; c=relaxed/simple;
-	bh=aFjS+tkzJPD7qqmPwimWFk11BpY34P+lwthELgDl/gg=;
+	s=arc-20240116; t=1758570432; c=relaxed/simple;
+	bh=ehShPMRpDaaZ6eEfJjZr+6bXgT1acQItcXporc1kRd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+ShmMXBswwA+dKE25r5a7Rg5tefPNcitAppcdZXPqM8Kzac6bzhqTeNO29O7d3TOvme/6f4DB9QBHzWMgHcLVHUuXDXoZxOf+NwkrxRudz1WwPXljVqYKjsEWx9PP17c+Hq8ols3i3DD9PjreomoNgeByRgzI/4G8z8nJnZDc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNAYxwnd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EBki2syW3IH9noyIs9XdhI7X+tMDqAsawoYn8VgSlS0tYED46PALdASYETBh1YRmuMkAsilMoBbeXewMsHT8eHxA9Onxfsf6m2+KXtqaYxRPDjQbeb2A8tWLYAws/E8X7EYZ3XaO+z0WfAYmnUY7hmBr8buUAySExj/6HTUVjIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT9q9Rqb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNAYxwnd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9494DC4CEF0;
-	Mon, 22 Sep 2025 19:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT9q9Rqb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E28AC4CEF0;
+	Mon, 22 Sep 2025 19:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570429;
-	bh=aFjS+tkzJPD7qqmPwimWFk11BpY34P+lwthELgDl/gg=;
+	s=korg; t=1758570432;
+	bh=ehShPMRpDaaZ6eEfJjZr+6bXgT1acQItcXporc1kRd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNAYxwndrUt8L/TsiT1gBS7QVDer9EcoYcx98eHKh5hSkZfO+w+Po6rmMZ62KE/V4
-	 pCtQEurW9ehm9esTM7T1deAh8PMHhYKfhuYpwvysNDDbfm9bK5QIBEsMumUE2srPDS
-	 cp++UqQ9bGkz2XoJhK6NFGtHF77t9BcMSf0oaGVo=
+	b=FT9q9Rqb4tj9vRhqRMU/zEFj26aqD4yYN65n39QrSrW9ikuVzCkEf/OVPZhSz0nOz
+	 G/TmVvNPGYjEMUG76pL6TpxAgh4jRf70Db2OPye9HtH6o9JzyBgXqPFpNaiRqVA9cC
+	 Up78HBGF572dQnmQWxzP7U7UUdu6Hok50FHeT2Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 124/149] drm/xe/guc: Enable extended CAT error reporting
-Date: Mon, 22 Sep 2025 21:30:24 +0200
-Message-ID: <20250922192415.999468393@linuxfoundation.org>
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.16 139/149] platform/x86: asus-wmi: Fix ROG button mapping, tablet mode on ASUS ROG Z13
+Date: Mon, 22 Sep 2025 21:30:39 +0200
+Message-ID: <20250922192416.372469455@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -47,264 +44,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit a7ffcea8631af91479cab10aa7fbfd0722f01d9a ]
+commit 132bfcd24925d4d4531a19b87acb8474be82a017 upstream.
 
-On newer HW (Xe2 onwards + PVC) it is possible to get extra information
-when a CAT error occurs, specifically a dword reporting the error type.
-To enable this extra reporting, we need to opt-in with the GuC, which is
-done via a specific per-VF feature opt-in H2G.
+On commit 9286dfd5735b ("platform/x86: asus-wmi: Fix spurious rfkill on
+UX8406MA"), Mathieu adds a quirk for the Zenbook Duo to ignore the code
+0x5f (WLAN button disable). On that laptop, this code is triggered when
+the device keyboard is attached.
 
-On platforms where the HW does not support the extra reporting, the GuC
-will set the type to 0xdeadbeef, so we can keep the code simple and
-opt-in to the feature on every platform and then just discard the data
-if it is invalid.
+On the ASUS ROG Z13 2025, this code is triggered when pressing the side
+button of the device, which is used to open Armoury Crate in Windows.
 
-Note that on native/PF we're guaranteed that the opt in is available
-because we don't support any GuC old enough to not have it, but if we're
-a VF we might be running on a non-XE PF with an older GuC, so we need to
-handle that case. We can re-use the invalid type above to handle this
-scenario the same way as if the feature was not supported in HW.
+As this is becoming a pattern, where newer Asus laptops use this keycode
+for emitting events, let's convert the wlan ignore quirk to instead
+allow emitting codes, so that userspace programs can listen to it and
+so that it does not interfere with the rfkill state.
 
-Given that this patch is the first user of the guc_buf_cache on native
-and VF, it also extends that feature to non-PF use-cases.
+With this patch, the Z13 wil emit KEY_PROG3 and the Duo will remain
+unchanged and emit no event. While at it, add a quirk for the Z13 to
+switch into tablet mode when removing the keyboard.
 
-v2: simpler print for the error type (John), rebase
-v3: use guc_buf_cache instead of new alloc, simpler doc (Michal)
-
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com> #v1
-Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://lore.kernel.org/r/20250625205405.1653212-3-daniele.ceraolospurio@intel.com
-Stable-dep-of: 26caeae9fb48 ("drm/xe/guc: Set RCS/CCS yield policy")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://lore.kernel.org/r/20250808154710.8981-2-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/abi/guc_actions_abi.h |  4 ++
- drivers/gpu/drm/xe/abi/guc_klvs_abi.h    | 15 +++++++
- drivers/gpu/drm/xe/xe_guc.c              | 56 ++++++++++++++++++++++++
- drivers/gpu/drm/xe/xe_guc.h              |  1 +
- drivers/gpu/drm/xe/xe_guc_submit.c       | 21 +++++++--
- drivers/gpu/drm/xe/xe_uc.c               |  4 ++
- 6 files changed, 98 insertions(+), 3 deletions(-)
+ drivers/platform/x86/asus-nb-wmi.c |   23 +++++++++++++++++++----
+ drivers/platform/x86/asus-wmi.h    |    3 ++-
+ 2 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/abi/guc_actions_abi.h b/drivers/gpu/drm/xe/abi/guc_actions_abi.h
-index 448afb86e05c7..b55d4cfb483a1 100644
---- a/drivers/gpu/drm/xe/abi/guc_actions_abi.h
-+++ b/drivers/gpu/drm/xe/abi/guc_actions_abi.h
-@@ -142,6 +142,7 @@ enum xe_guc_action {
- 	XE_GUC_ACTION_SET_ENG_UTIL_BUFF = 0x550A,
- 	XE_GUC_ACTION_SET_DEVICE_ENGINE_ACTIVITY_BUFFER = 0x550C,
- 	XE_GUC_ACTION_SET_FUNCTION_ENGINE_ACTIVITY_BUFFER = 0x550D,
-+	XE_GUC_ACTION_OPT_IN_FEATURE_KLV = 0x550E,
- 	XE_GUC_ACTION_NOTIFY_MEMORY_CAT_ERROR = 0x6000,
- 	XE_GUC_ACTION_REPORT_PAGE_FAULT_REQ_DESC = 0x6002,
- 	XE_GUC_ACTION_PAGE_FAULT_RES_DESC = 0x6003,
-@@ -240,4 +241,7 @@ enum xe_guc_g2g_type {
- #define XE_G2G_DEREGISTER_TILE	REG_GENMASK(15, 12)
- #define XE_G2G_DEREGISTER_TYPE	REG_GENMASK(11, 8)
- 
-+/* invalid type for XE_GUC_ACTION_NOTIFY_MEMORY_CAT_ERROR */
-+#define XE_GUC_CAT_ERR_TYPE_INVALID 0xdeadbeef
-+
- #endif
-diff --git a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
-index 7de8f827281fc..5b2502bec2dcc 100644
---- a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
-+++ b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
-@@ -16,6 +16,7 @@
-  *  +===+=======+==============================================================+
-  *  | 0 | 31:16 | **KEY** - KLV key identifier                                 |
-  *  |   |       |   - `GuC Self Config KLVs`_                                  |
-+ *  |   |       |   - `GuC Opt In Feature KLVs`_                               |
-  *  |   |       |   - `GuC VGT Policy KLVs`_                                   |
-  *  |   |       |   - `GuC VF Configuration KLVs`_                             |
-  *  |   |       |                                                              |
-@@ -124,6 +125,20 @@ enum  {
- 	GUC_CONTEXT_POLICIES_KLV_NUM_IDS = 5,
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -147,7 +147,12 @@ static struct quirk_entry quirk_asus_ign
  };
  
-+/**
-+ * DOC: GuC Opt In Feature KLVs
-+ *
-+ * `GuC KLV`_ keys available for use with OPT_IN_FEATURE_KLV
-+ *
-+ *  _`GUC_KLV_OPT_IN_FEATURE_EXT_CAT_ERR_TYPE` : 0x4001
-+ *      Adds an extra dword to the XE_GUC_ACTION_NOTIFY_MEMORY_CAT_ERROR G2H
-+ *      containing the type of the CAT error. On HW that does not support
-+ *      reporting the CAT error type, the extra dword is set to 0xdeadbeef.
-+ */
+ static struct quirk_entry quirk_asus_zenbook_duo_kbd = {
+-	.ignore_key_wlan = true,
++	.key_wlan_event = ASUS_WMI_KEY_IGNORE,
++};
 +
-+#define GUC_KLV_OPT_IN_FEATURE_EXT_CAT_ERR_TYPE_KEY 0x4001
-+#define GUC_KLV_OPT_IN_FEATURE_EXT_CAT_ERR_TYPE_LEN 0u
-+
- /**
-  * DOC: GuC VGT Policy KLVs
-  *
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index bac5471a1a780..2efc0298e1a4c 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -29,6 +29,7 @@
- #include "xe_guc_db_mgr.h"
- #include "xe_guc_engine_activity.h"
- #include "xe_guc_hwconfig.h"
-+#include "xe_guc_klv_helpers.h"
- #include "xe_guc_log.h"
- #include "xe_guc_pc.h"
- #include "xe_guc_relay.h"
-@@ -570,6 +571,57 @@ static int guc_g2g_start(struct xe_guc *guc)
- 	return err;
++static struct quirk_entry quirk_asus_z13 = {
++	.key_wlan_event = ASUS_WMI_KEY_ARMOURY,
++	.tablet_switch_mode = asus_wmi_kbd_dock_devid,
+ };
+ 
+ static int dmi_matched(const struct dmi_system_id *dmi)
+@@ -539,6 +544,15 @@ static const struct dmi_system_id asus_q
+ 		},
+ 		.driver_data = &quirk_asus_zenbook_duo_kbd,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "ASUS ROG Z13",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
++		},
++		.driver_data = &quirk_asus_z13,
++	},
+ 	{},
+ };
+ 
+@@ -636,6 +650,7 @@ static const struct key_entry asus_nb_wm
+ 	{ KE_IGNORE, 0xCF, },	/* AC mode */
+ 	{ KE_KEY, 0xFA, { KEY_PROG2 } },           /* Lid flip action */
+ 	{ KE_KEY, 0xBD, { KEY_PROG2 } },           /* Lid flip action on ROG xflow laptops */
++	{ KE_KEY, ASUS_WMI_KEY_ARMOURY, { KEY_PROG3 } },
+ 	{ KE_END, 0},
+ };
+ 
+@@ -655,9 +670,9 @@ static void asus_nb_wmi_key_filter(struc
+ 		if (atkbd_reports_vol_keys)
+ 			*code = ASUS_WMI_KEY_IGNORE;
+ 		break;
+-	case 0x5F: /* Wireless console Disable */
+-		if (quirks->ignore_key_wlan)
+-			*code = ASUS_WMI_KEY_IGNORE;
++	case 0x5F: /* Wireless console Disable / Special Key */
++		if (quirks->key_wlan_event)
++			*code = quirks->key_wlan_event;
+ 		break;
+ 	}
  }
+--- a/drivers/platform/x86/asus-wmi.h
++++ b/drivers/platform/x86/asus-wmi.h
+@@ -18,6 +18,7 @@
+ #include <linux/i8042.h>
  
-+static int __guc_opt_in_features_enable(struct xe_guc *guc, u64 addr, u32 num_dwords)
-+{
-+	u32 action[] = {
-+		XE_GUC_ACTION_OPT_IN_FEATURE_KLV,
-+		lower_32_bits(addr),
-+		upper_32_bits(addr),
-+		num_dwords
-+	};
-+
-+	return xe_guc_ct_send_block(&guc->ct, action, ARRAY_SIZE(action));
-+}
-+
-+#define OPT_IN_MAX_DWORDS 16
-+int xe_guc_opt_in_features_enable(struct xe_guc *guc)
-+{
-+	struct xe_device *xe = guc_to_xe(guc);
-+	CLASS(xe_guc_buf, buf)(&guc->buf, OPT_IN_MAX_DWORDS);
-+	u32 count = 0;
-+	u32 *klvs;
-+	int ret;
-+
-+	if (!xe_guc_buf_is_valid(buf))
-+		return -ENOBUFS;
-+
-+	klvs = xe_guc_buf_cpu_ptr(buf);
-+
-+	/*
-+	 * The extra CAT error type opt-in was added in GuC v70.17.0, which maps
-+	 * to compatibility version v1.7.0.
-+	 * Note that the GuC allows enabling this KLV even on platforms that do
-+	 * not support the extra type; in such case the returned type variable
-+	 * will be set to a known invalid value which we can check against.
-+	 */
-+	if (GUC_SUBMIT_VER(guc) >= MAKE_GUC_VER(1, 7, 0))
-+		klvs[count++] = PREP_GUC_KLV_TAG(OPT_IN_FEATURE_EXT_CAT_ERR_TYPE);
-+
-+	if (count) {
-+		xe_assert(xe, count <= OPT_IN_MAX_DWORDS);
-+
-+		ret = __guc_opt_in_features_enable(guc, xe_guc_buf_flush(buf), count);
-+		if (ret < 0) {
-+			xe_gt_err(guc_to_gt(guc),
-+				  "failed to enable GuC opt-in features: %pe\n",
-+				  ERR_PTR(ret));
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static void guc_fini_hw(void *arg)
- {
- 	struct xe_guc *guc = arg;
-@@ -763,6 +815,10 @@ int xe_guc_post_load_init(struct xe_guc *guc)
+ #define ASUS_WMI_KEY_IGNORE (-1)
++#define ASUS_WMI_KEY_ARMOURY	0xffff01
+ #define ASUS_WMI_BRN_DOWN	0x2e
+ #define ASUS_WMI_BRN_UP		0x2f
  
- 	xe_guc_ads_populate_post_load(&guc->ads);
- 
-+	ret = xe_guc_opt_in_features_enable(guc);
-+	if (ret)
-+		return ret;
-+
- 	if (xe_guc_g2g_wanted(guc_to_xe(guc))) {
- 		ret = guc_g2g_start(guc);
- 		if (ret)
-diff --git a/drivers/gpu/drm/xe/xe_guc.h b/drivers/gpu/drm/xe/xe_guc.h
-index 58338be445585..4a66575f017d2 100644
---- a/drivers/gpu/drm/xe/xe_guc.h
-+++ b/drivers/gpu/drm/xe/xe_guc.h
-@@ -33,6 +33,7 @@ int xe_guc_reset(struct xe_guc *guc);
- int xe_guc_upload(struct xe_guc *guc);
- int xe_guc_min_load_for_hwconfig(struct xe_guc *guc);
- int xe_guc_enable_communication(struct xe_guc *guc);
-+int xe_guc_opt_in_features_enable(struct xe_guc *guc);
- int xe_guc_suspend(struct xe_guc *guc);
- void xe_guc_notify(struct xe_guc *guc);
- int xe_guc_auth_huc(struct xe_guc *guc, u32 rsa_addr);
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 45a21af126927..e670dcb0f0932 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -2088,12 +2088,16 @@ int xe_guc_exec_queue_memory_cat_error_handler(struct xe_guc *guc, u32 *msg,
- 	struct xe_gt *gt = guc_to_gt(guc);
- 	struct xe_exec_queue *q;
- 	u32 guc_id;
-+	u32 type = XE_GUC_CAT_ERR_TYPE_INVALID;
- 
--	if (unlikely(len < 1))
-+	if (unlikely(!len || len > 2))
- 		return -EPROTO;
- 
- 	guc_id = msg[0];
- 
-+	if (len == 2)
-+		type = msg[1];
-+
- 	if (guc_id == GUC_ID_UNKNOWN) {
- 		/*
- 		 * GuC uses GUC_ID_UNKNOWN if it can not map the CAT fault to any PF/VF
-@@ -2107,8 +2111,19 @@ int xe_guc_exec_queue_memory_cat_error_handler(struct xe_guc *guc, u32 *msg,
- 	if (unlikely(!q))
- 		return -EPROTO;
- 
--	xe_gt_dbg(gt, "Engine memory cat error: engine_class=%s, logical_mask: 0x%x, guc_id=%d",
--		  xe_hw_engine_class_to_str(q->class), q->logical_mask, guc_id);
-+	/*
-+	 * The type is HW-defined and changes based on platform, so we don't
-+	 * decode it in the kernel and only check if it is valid.
-+	 * See bspec 54047 and 72187 for details.
-+	 */
-+	if (type != XE_GUC_CAT_ERR_TYPE_INVALID)
-+		xe_gt_dbg(gt,
-+			  "Engine memory CAT error [%u]: class=%s, logical_mask: 0x%x, guc_id=%d",
-+			  type, xe_hw_engine_class_to_str(q->class), q->logical_mask, guc_id);
-+	else
-+		xe_gt_dbg(gt,
-+			  "Engine memory CAT error: class=%s, logical_mask: 0x%x, guc_id=%d",
-+			  xe_hw_engine_class_to_str(q->class), q->logical_mask, guc_id);
- 
- 	trace_xe_exec_queue_memory_cat_error(q);
- 
-diff --git a/drivers/gpu/drm/xe/xe_uc.c b/drivers/gpu/drm/xe/xe_uc.c
-index 3a8751a8b92dd..5c45b0f072a4c 100644
---- a/drivers/gpu/drm/xe/xe_uc.c
-+++ b/drivers/gpu/drm/xe/xe_uc.c
-@@ -165,6 +165,10 @@ static int vf_uc_init_hw(struct xe_uc *uc)
- 
- 	uc->guc.submission_state.enabled = true;
- 
-+	err = xe_guc_opt_in_features_enable(&uc->guc);
-+	if (err)
-+		return err;
-+
- 	err = xe_gt_record_default_lrcs(uc_to_gt(uc));
- 	if (err)
- 		return err;
--- 
-2.51.0
-
+@@ -40,7 +41,7 @@ struct quirk_entry {
+ 	bool wmi_force_als_set;
+ 	bool wmi_ignore_fan;
+ 	bool filter_i8042_e1_extended_codes;
+-	bool ignore_key_wlan;
++	int key_wlan_event;
+ 	enum asus_wmi_tablet_switch_mode tablet_switch_mode;
+ 	int wapf;
+ 	/*
 
 
