@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0A71C1ADB;
-	Mon, 22 Sep 2025 19:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56E2306494;
+	Mon, 22 Sep 2025 19:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569951; cv=none; b=GNq6v/fr0ZLlZIsq3ka1V6dii6sF3ABu8UDicePLhVrSbfy4WTd+leyIBjJrtLtRHTD1/sDg2uNsNWG6DTukI8GlYn0da5WH8hc3fnxPfa2zFtDLLK67zn8AWzgGPyBVNb6OsS61EB7VnnGk0zHbthsPietddgJhu98Ka1Qj7OI=
+	t=1758569953; cv=none; b=FeRTp3ysGSeHNIzZKm1kkkraPLXCDy/49rQCOX4nuTbCLKsY8sOOqacckZYaFdky6gYP9aS62tfDUyxwqnfaF8IRbVZVitoLyLiDflPVvUbvx13aDfVom5qNuc0jtO0T/uSaUEBvKorVohjTZRxwW1464d712USsP2SGdnB/vHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569951; c=relaxed/simple;
-	bh=vdRhyoF+f67Dkylm054p+MoX0HFbuWdQ525p0FfEWPo=;
+	s=arc-20240116; t=1758569953; c=relaxed/simple;
+	bh=ax7APLxVM/qYcj03auzZph1PdP7oSB4XPf0bWuj9Fmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hMjYHzQSheZvqesDrwSpd8k1gNbS52jN0fTJf6wv2Jf4IeGPNNCt3tun3Rj/ajqDeIuzF1xv8kmGEC0bY8GGpdbs0869BJgrD2WevCTn+BMOl6w6Tj0LLRjs6yRo2dELUmeho/DVhIaTY7mFysP30wBFUGsK739c9+XcmRIF2OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTm//THJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pr7bIwnJmS3jhuTbhOFpk24ZbU9wlLxI2BOKItsfYCRcpSGTHYeCqkfXmNAJUfvLzsk0eRJ8PG5pYWa0H1NFhAZNZbslo+4RUZi1oTAtKB9yLVJcm78UQVNTLtX4bWcOAJegxgo4SahLMdXjXc374bHM81lJEiVPjLgJhB0CJYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mgz8KEtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTm//THJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE6DC4CEF0;
-	Mon, 22 Sep 2025 19:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mgz8KEtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA24C4CEF5;
+	Mon, 22 Sep 2025 19:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569951;
-	bh=vdRhyoF+f67Dkylm054p+MoX0HFbuWdQ525p0FfEWPo=;
+	s=korg; t=1758569953;
+	bh=ax7APLxVM/qYcj03auzZph1PdP7oSB4XPf0bWuj9Fmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTm//THJ2zy0wC6ruGhdLiByCRCv3CMx8T+wpvy4SHO8EX5CzL6rGLGirnW9GVJ6r
-	 8AFLh15HzWxUNyDPy9K65TbATMoo2i3ffZDkvCJMQ/YyD4TEu/GTiVDGVN56xB13ia
-	 xNTpJKB8rWNuYNYla9Jg9sEs0vh8KE5GbWpuTXOI=
+	b=Mgz8KEtDFWhr+rIhGf2UuoWeHN6aH32jv1cJDMTzUBkYTUVFGZ2NwDBM/erCKmWH8
+	 D4adOgxbBNfh2u66eNFgBlZ0bVUbxiKEiMupsVryHnMi5KNN1mEu7dFWpbMTVTiBQC
+	 I7Y4Dv7b/Y41Gv0pcpRwZ5OocgmwXI/e7NdRlRUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 053/105] btrfs: tree-checker: fix the incorrect inode ref size check
-Date: Mon, 22 Sep 2025 21:29:36 +0200
-Message-ID: <20250922192410.303744774@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 054/105] ASoC: qcom: audioreach: Fix lpaif_type configuration for the I2S interface
+Date: Mon, 22 Sep 2025 21:29:37 +0200
+Message-ID: <20250922192410.332808346@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -52,52 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
 
-commit 96fa515e70f3e4b98685ef8cac9d737fc62f10e1 upstream.
+commit 5f1af203ef964e7f7bf9d32716dfa5f332cc6f09 upstream.
 
-[BUG]
-Inside check_inode_ref(), we need to make sure every structure,
-including the btrfs_inode_extref header, is covered by the item.  But
-our code is incorrectly using "sizeof(iref)", where @iref is just a
-pointer.
+Fix missing lpaif_type configuration for the I2S interface.
+The proper lpaif interface type required to allow DSP to vote
+appropriate clock setting for I2S interface.
 
-This means "sizeof(iref)" will always be "sizeof(void *)", which is much
-smaller than "sizeof(struct btrfs_inode_extref)".
-
-This will allow some bad inode extrefs to sneak in, defeating tree-checker.
-
-[FIX]
-Fix the typo by calling "sizeof(*iref)", which is the same as
-"sizeof(struct btrfs_inode_extref)", and will be the correct behavior we
-want.
-
-Fixes: 71bf92a9b877 ("btrfs: tree-checker: Add check for INODE_REF")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 25ab80db6b133 ("ASoC: qdsp6: audioreach: add module configuration command helpers")
+Cc: stable@vger.kernel.org
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Message-ID: <20250908053631.70978-2-mohammad.rafi.shaik@oss.qualcomm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/qcom/qdsp6/audioreach.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1744,10 +1744,10 @@ static int check_inode_ref(struct extent
- 	while (ptr < end) {
- 		u16 namelen;
+--- a/sound/soc/qcom/qdsp6/audioreach.c
++++ b/sound/soc/qcom/qdsp6/audioreach.c
+@@ -971,6 +971,7 @@ static int audioreach_i2s_set_media_form
+ 	param_data->param_id = PARAM_ID_I2S_INTF_CFG;
+ 	param_data->param_size = ic_sz - APM_MODULE_PARAM_DATA_SIZE;
  
--		if (unlikely(ptr + sizeof(iref) > end)) {
-+		if (unlikely(ptr + sizeof(*iref) > end)) {
- 			inode_ref_err(leaf, slot,
- 			"inode ref overflow, ptr %lu end %lu inode_ref_size %zu",
--				ptr, end, sizeof(iref));
-+				ptr, end, sizeof(*iref));
- 			return -EUCLEAN;
- 		}
++	intf_cfg->cfg.lpaif_type = module->hw_interface_type;
+ 	intf_cfg->cfg.intf_idx = module->hw_interface_idx;
+ 	intf_cfg->cfg.sd_line_idx = module->sd_line_idx;
  
 
 
