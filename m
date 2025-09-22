@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53F3285C92;
-	Mon, 22 Sep 2025 19:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7801E2F0C5C;
+	Mon, 22 Sep 2025 19:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569844; cv=none; b=c3rBuErxkzwISRXWwLV2N68xcirt8MSO2SRiFpEcdO3zmQ01tRhtRBFp/AE2TIr311YQBQul6Seqm8tDR5w5AgftS3GwRePkbeSpZw85H7CAGjvylRgluwInHC+y7gy/bR1watgycu1NS1LgUY+ZnPkFkP5KPRZASQK3Mv3Lxlc=
+	t=1758569848; cv=none; b=Vyo81S5UApfBLUy4TkdnDAmZKg7Uhhaqlkx6qwvTCrDFxJBJx4rcoRwdzb1tZsGKwpwnn/zZK284lUhXFQ3XkP0O7RWI+R5WjCv50mSheuc3m+vnx5RtGQBxBrFLrH+GMZ1HELGhlPZKKfUmbaf9iFcZMi3kFuJtP1TBpCvEZ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569844; c=relaxed/simple;
-	bh=LW7hCxJ+/v0BQ5mMASXQh+Y2lcx0nXn/EFxkJVC4fyI=;
+	s=arc-20240116; t=1758569848; c=relaxed/simple;
+	bh=1Dh2uYdkWgB0ncKswym2UMj4Tpbzj4e0HAURQnpuOFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+q04mMW9GaSFpPZzwgLxhfMi3PnZ1jjJbMR7uQCSlzJF90FpodWtXBxmU33s8jKM8faaNj+FMpNqZoOEz9mQgcQUIMRmPjhQ2b6nDtd+6v/MPnRQMMz65JNHquZdYDjRwAd1euzOhWgiKjLg42GFNIO0WtQxynE5RBzSJ1wLhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEs1210m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdYs/m37Fv387Ycuqk3BNnPYMRB8X4KCGkyfAxEesI4ZpzUAVEFZMOYBa0zT4ZaLqWuwu9/j/qxTuBRMsekk26NkLyQ3k27M1O3kV4EGgRGhjK3zd4zOia3QdcpXP3evKIGdDq06FMnt10BkMyuhVqBNpX3bQgHRiib1tOiQ+gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhjLK62z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEs1210m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4A6C4CEF0;
-	Mon, 22 Sep 2025 19:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhjLK62z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B556CC4CEF0;
+	Mon, 22 Sep 2025 19:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569844;
-	bh=LW7hCxJ+/v0BQ5mMASXQh+Y2lcx0nXn/EFxkJVC4fyI=;
+	s=korg; t=1758569847;
+	bh=1Dh2uYdkWgB0ncKswym2UMj4Tpbzj4e0HAURQnpuOFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEs1210mPOKTsotsGx6rvCoqXrgFgzmg1Yd1KUtDnrjn+D5+aaP61sWDKk6DB0GdV
-	 liwdrteaim4nBkaA6kIyNP4p1BZc+nh+k9HUKvbuQVLbmRrMGuCMVKUKPBtc4Q+SQt
-	 yEdvD6BlOLmkSLcMzTw46EI7jUfCrHGfV1idBS2I=
+	b=bhjLK62zwyaCZQSP5jJNCvThcKYrH+uBjXUKkmazpmYe5Br+IGxWRRa+CKqoFIgyW
+	 fyz4kfn66Kf6BmPWznNU99iTCrkXTenUMtAI/LBl2KahqLDc9MA2jRq2sJ2oU3mdJv
+	 vCwCxh/MiMpHBRLoDoO27oOLL2EbCvpDXf5UR3gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/105] um: Fix FD copy size in os_rcv_fd_msg()
-Date: Mon, 22 Sep 2025 21:28:53 +0200
-Message-ID: <20250922192409.168954642@linuxfoundation.org>
+Subject: [PATCH 6.12 011/105] dpaa2-switch: fix buffer pool seeding for control traffic
+Date: Mon, 22 Sep 2025 21:28:54 +0200
+Message-ID: <20250922192409.197404363@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,33 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit df447a3b4a4b961c9979b4b3ffb74317394b9b40 ]
+[ Upstream commit 2690cb089502b80b905f2abdafd1bf2d54e1abef ]
 
-When copying FDs, the copy size should not include the control
-message header (cmsghdr). Fix it.
+Starting with commit c50e7475961c ("dpaa2-switch: Fix error checking in
+dpaa2_switch_seed_bp()"), the probing of a second DPSW object errors out
+like below.
 
-Fixes: 5cde6096a4dd ("um: generalize os_rcv_fd")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+fsl_dpaa2_switch dpsw.1: fsl_mc_driver_probe failed: -12
+fsl_dpaa2_switch dpsw.1: probe with driver fsl_dpaa2_switch failed with error -12
+
+The aforementioned commit brought to the surface the fact that seeding
+buffers into the buffer pool destined for control traffic is not
+successful and an access violation recoverable error can be seen in the
+MC firmware log:
+
+[E, qbman_rec_isr:391, QBMAN]  QBMAN recoverable event 0x1000000
+
+This happens because the driver incorrectly used the ID of the DPBP
+object instead of the hardware buffer pool ID when trying to release
+buffers into it.
+
+This is because any DPSW object uses two buffer pools, one managed by
+the Linux driver and destined for control traffic packet buffers and the
+other one managed by the MC firmware and destined only for offloaded
+traffic. And since the buffer pool managed by the MC firmware does not
+have an external facing DPBP equivalent, any subsequent DPBP objects
+created after the first DPSW will have a DPBP id different to the
+underlying hardware buffer ID.
+
+The issue was not caught earlier because these two numbers can be
+identical when all DPBP objects are created before the DPSW objects are.
+This is the case when the DPL file is used to describe the entire DPAA2
+object layout and objects are created at boot time and it's also true
+for the first DPSW being created dynamically using ls-addsw.
+
+Fix this by using the buffer pool ID instead of the DPBP id when
+releasing buffers into the pool.
+
+Fixes: 2877e4f7e189 ("staging: dpaa2-switch: setup buffer pool and RX path rings")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20250910144825.2416019-1-ioana.ciornei@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/os-Linux/file.c | 2 +-
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/um/os-Linux/file.c b/arch/um/os-Linux/file.c
-index f1d03cf3957fe..62c176a2c1ac4 100644
---- a/arch/um/os-Linux/file.c
-+++ b/arch/um/os-Linux/file.c
-@@ -556,7 +556,7 @@ ssize_t os_rcv_fd_msg(int fd, int *fds, unsigned int n_fds,
- 	    cmsg->cmsg_type != SCM_RIGHTS)
- 		return n;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index cbd3859ea475b..980daecab8ea3 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -2735,7 +2735,7 @@ static int dpaa2_switch_setup_dpbp(struct ethsw_core *ethsw)
+ 		dev_err(dev, "dpsw_ctrl_if_set_pools() failed\n");
+ 		goto err_get_attr;
+ 	}
+-	ethsw->bpid = dpbp_attrs.id;
++	ethsw->bpid = dpbp_attrs.bpid;
  
--	memcpy(fds, CMSG_DATA(cmsg), cmsg->cmsg_len);
-+	memcpy(fds, CMSG_DATA(cmsg), cmsg->cmsg_len - CMSG_LEN(0));
- 	return n;
- }
+ 	return 0;
  
 -- 
 2.51.0
