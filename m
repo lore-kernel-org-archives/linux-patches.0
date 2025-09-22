@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD212E2847;
-	Mon, 22 Sep 2025 19:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420FEC8E6;
+	Mon, 22 Sep 2025 19:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569674; cv=none; b=swheEZIIftD6QdhTu/ZoYvQaG3/WIDB/CsWzwZmK3JtG+nVlBhUz/FtkZdps7JDBQw7otO02CnhaXjTCH0ef1sjh7mdlZsdmggCus2R2Eut9mWCOdAS9KEbkEzBqTlDRnUKk5fotHKSRp8u5HGwdGtvdBYiqXVga4ZqdXR6r3wM=
+	t=1758569676; cv=none; b=I2nuvG5RHn5C11F5Y196sSssRVFLCjXBgJ8/R1M293aLaQ5ia3iIZyJ9+2qjFvOjRQIy6QZVu+/sxlcwzvGp/w4RNtg1kOV6BZV2gry1zedDTOB+6i1GQRGvnh4MUOJNZlXLkwNX58kNAvRFn8EM8/ZDRjN6GRI7jm32yp39CmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569674; c=relaxed/simple;
-	bh=0AzPbMtc3w4WiW1M9ZNHh8J2zURSkbYVyE/RkFbC7XQ=;
+	s=arc-20240116; t=1758569676; c=relaxed/simple;
+	bh=780xiQTpst6u6TOqLrWfwvVhcZBGnU6zW516yaQcC3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=odMa1tEvNMh+cT3ZNySXied4QZRkaibnpmcYBFotwYcMI0MSHgl+dHoYaak1X1iDx2D9njKmSx6l0IXVRjBSzyykk75OV6xVWDBq4cbSt17KHOzDpjKQYDNwAYBUN5s6LovVUZY5+aQ9paSeFblGZEKfsM1PUJMW+gRIfLcQypI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzmSqTSL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=To5edhd4GG2x/cYevsJwtaB12zI4vngxhQmmmboDkIfqTIfDUvoR7Q7av+uJFxtoQ1yqrG/nX/RcZZ4G/6nrQyj7PEav+FmVE2PEFuqGD18bCak/JPFnSYkXkf8gC9TsexXtp9hOJlNDatb8qjKH1BgE3jgBm+0h3XzmtVux2Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IohRbFXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzmSqTSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58608C4CEF0;
-	Mon, 22 Sep 2025 19:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IohRbFXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09B3C4CEF0;
+	Mon, 22 Sep 2025 19:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569673;
-	bh=0AzPbMtc3w4WiW1M9ZNHh8J2zURSkbYVyE/RkFbC7XQ=;
+	s=korg; t=1758569676;
+	bh=780xiQTpst6u6TOqLrWfwvVhcZBGnU6zW516yaQcC3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VzmSqTSLnTSwn94RATt1pG+eeR6403zeS/Vl0vIHBcybwIS7lX68O8Z0WgwMlTh97
-	 70xay4rJz+VZeWCA6s+oeEqrI/6s4ozLdjBYmDIi/16TUkaxUl20q8W56LCwbjUQ1J
-	 1Z2yNcCDy79mnLaB2fFLepFHC157K718GD7ZHE2M=
+	b=IohRbFXqb8ogj7PlFFx+NSG0IeG9jkHH+ATTrGBu4lO25C5N6fmF7JX54UDgk+Wa1
+	 zoU2mpNHtphNEo7Pe5lVsfXfsXjFxHhPorJ7Ql8psIIL8WTOBe2GYyRhqqXCYagFUQ
+	 NAGjf1/AfCkmOMUqWvY5rHHL8YNHpWA52jRnBeB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Duoming Zhou <duoming@zju.edu.cn>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 24/70] cnic: Fix use-after-free bugs in cnic_delete_task
-Date: Mon, 22 Sep 2025 21:29:24 +0200
-Message-ID: <20250922192405.214298464@linuxfoundation.org>
+Subject: [PATCH 6.6 25/70] octeontx2-pf: Fix use-after-free bugs in otx2_sync_tstamp()
+Date: Mon, 22 Sep 2025 21:29:25 +0200
+Message-ID: <20250922192405.242083280@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -45,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -54,69 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit cfa7d9b1e3a8604afc84e9e51d789c29574fb216 ]
+[ Upstream commit f8b4687151021db61841af983f1cb7be6915d4ef ]
 
-The original code uses cancel_delayed_work() in cnic_cm_stop_bnx2x_hw(),
-which does not guarantee that the delayed work item 'delete_task' has
-fully completed if it was already running. Additionally, the delayed work
-item is cyclic, the flush_workqueue() in cnic_cm_stop_bnx2x_hw() only
-blocks and waits for work items that were already queued to the
-workqueue prior to its invocation. Any work items submitted after
-flush_workqueue() is called are not included in the set of tasks that the
-flush operation awaits. This means that after the cyclic work items have
-finished executing, a delayed work item may still exist in the workqueue.
-This leads to use-after-free scenarios where the cnic_dev is deallocated
-by cnic_free_dev(), while delete_task remains active and attempt to
-dereference cnic_dev in cnic_delete_task().
+The original code relies on cancel_delayed_work() in otx2_ptp_destroy(),
+which does not ensure that the delayed work item synctstamp_work has fully
+completed if it was already running. This leads to use-after-free scenarios
+where otx2_ptp is deallocated by otx2_ptp_destroy(), while synctstamp_work
+remains active and attempts to dereference otx2_ptp in otx2_sync_tstamp().
+Furthermore, the synctstamp_work is cyclic, the likelihood of triggering
+the bug is nonnegligible.
 
 A typical race condition is illustrated below:
 
-CPU 0 (cleanup)              | CPU 1 (delayed work callback)
-cnic_netdev_event()          |
-  cnic_stop_hw()             | cnic_delete_task()
-    cnic_cm_stop_bnx2x_hw()  | ...
-      cancel_delayed_work()  | /* the queue_delayed_work()
-      flush_workqueue()      |    executes after flush_workqueue()*/
-                             | queue_delayed_work()
-  cnic_free_dev(dev)//free   | cnic_delete_task() //new instance
-                             |   dev = cp->dev; //use
+CPU 0 (cleanup)           | CPU 1 (delayed work callback)
+otx2_remove()             |
+  otx2_ptp_destroy()      | otx2_sync_tstamp()
+    cancel_delayed_work() |
+    kfree(ptp)            |
+                          |   ptp = container_of(...); //UAF
+                          |   ptp-> //UAF
+
+This is confirmed by a KASAN report:
+
+BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x7d7/0x8c0
+Write of size 8 at addr ffff88800aa09a18 by task bash/136
+...
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0x55/0x70
+ print_report+0xcf/0x610
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ kasan_report+0xb8/0xf0
+ ? __run_timer_base.part.0+0x7d7/0x8c0
+ __run_timer_base.part.0+0x7d7/0x8c0
+ ? __pfx___run_timer_base.part.0+0x10/0x10
+ ? __pfx_read_tsc+0x10/0x10
+ ? ktime_get+0x60/0x140
+ ? lapic_next_event+0x11/0x20
+ ? clockevents_program_event+0x1d4/0x2a0
+ run_timer_softirq+0xd1/0x190
+ handle_softirqs+0x16a/0x550
+ irq_exit_rcu+0xaf/0xe0
+ sysvec_apic_timer_interrupt+0x70/0x80
+ </IRQ>
+...
+Allocated by task 1:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x7f/0x90
+ otx2_ptp_init+0xb1/0x860
+ otx2_probe+0x4eb/0xc30
+ local_pci_probe+0xdc/0x190
+ pci_device_probe+0x2fe/0x470
+ really_probe+0x1ca/0x5c0
+ __driver_probe_device+0x248/0x310
+ driver_probe_device+0x44/0x120
+ __driver_attach+0xd2/0x310
+ bus_for_each_dev+0xed/0x170
+ bus_add_driver+0x208/0x500
+ driver_register+0x132/0x460
+ do_one_initcall+0x89/0x300
+ kernel_init_freeable+0x40d/0x720
+ kernel_init+0x1a/0x150
+ ret_from_fork+0x10c/0x1a0
+ ret_from_fork_asm+0x1a/0x30
+
+Freed by task 136:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3a/0x60
+ __kasan_slab_free+0x3f/0x50
+ kfree+0x137/0x370
+ otx2_ptp_destroy+0x38/0x80
+ otx2_remove+0x10d/0x4c0
+ pci_device_remove+0xa6/0x1d0
+ device_release_driver_internal+0xf8/0x210
+ pci_stop_bus_device+0x105/0x150
+ pci_stop_and_remove_bus_device_locked+0x15/0x30
+ remove_store+0xcc/0xe0
+ kernfs_fop_write_iter+0x2c3/0x440
+ vfs_write+0x871/0xd70
+ ksys_write+0xee/0x1c0
+ do_syscall_64+0xac/0x280
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
 
 Replace cancel_delayed_work() with cancel_delayed_work_sync() to ensure
-that the cyclic delayed work item is properly canceled and that any
-ongoing execution of the work item completes before the cnic_dev is
-deallocated. Furthermore, since cancel_delayed_work_sync() uses
-__flush_work(work, true) to synchronously wait for any currently
-executing instance of the work item to finish, the flush_workqueue()
-becomes redundant and should be removed.
+that the delayed work item is properly canceled before the otx2_ptp is
+deallocated.
 
-This bug was identified through static analysis. To reproduce the issue
-and validate the fix, I simulated the cnic PCI device in QEMU and
-introduced intentional delays — such as inserting calls to ssleep()
-within the cnic_delete_task() function — to increase the likelihood
-of triggering the bug.
+This bug was initially identified through static analysis. To reproduce
+and test it, I simulated the OcteonTX2 PCI device in QEMU and introduced
+artificial delays within the otx2_sync_tstamp() function to increase the
+likelihood of triggering the bug.
 
-Fixes: fdf24086f475 ("cnic: Defer iscsi connection cleanup")
+Fixes: 2958d17a8984 ("octeontx2-pf: Add support for ptp 1-step mode on CN10K silicon")
 Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/cnic.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/cnic.c b/drivers/net/ethernet/broadcom/cnic.c
-index 7926aaef8f0c5..ad2745c07c1ae 100644
---- a/drivers/net/ethernet/broadcom/cnic.c
-+++ b/drivers/net/ethernet/broadcom/cnic.c
-@@ -4220,8 +4220,7 @@ static void cnic_cm_stop_bnx2x_hw(struct cnic_dev *dev)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
+index 3a72b0793d4a7..82725923555c5 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ptp.c
+@@ -476,7 +476,7 @@ void otx2_ptp_destroy(struct otx2_nic *pfvf)
+ 	if (!ptp)
+ 		return;
  
- 	cnic_bnx2x_delete_wait(dev, 0);
+-	cancel_delayed_work(&pfvf->ptp->synctstamp_work);
++	cancel_delayed_work_sync(&pfvf->ptp->synctstamp_work);
  
--	cancel_delayed_work(&cp->delete_task);
--	flush_workqueue(cnic_wq);
-+	cancel_delayed_work_sync(&cp->delete_task);
- 
- 	if (atomic_read(&cp->iscsi_conn) != 0)
- 		netdev_warn(dev->netdev, "%d iSCSI connections not destroyed\n",
+ 	ptp_clock_unregister(ptp->ptp_clock);
+ 	kfree(ptp);
 -- 
 2.51.0
 
