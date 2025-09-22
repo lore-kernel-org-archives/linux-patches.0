@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA1A2EDD5D;
-	Mon, 22 Sep 2025 19:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC0225F780;
+	Mon, 22 Sep 2025 19:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569773; cv=none; b=jsy5m82lW9scLuKUvoef2EVYX5pKxMi5SJPHfVFlzuxxi1gPX98Cvj8sftMvr9fu0GFNmEXeXcmAlyFR4LxmfmvHCuWVYas+OjPvocXHgiUpr2MFxg3mcxE2xVKdps/Qb7abGS6zyyn0G1o1FoRn/Cnh7RORnAbfEU55/RfvYB8=
+	t=1758569777; cv=none; b=Yofv/RC8qnZT0GnBI0YIXNQfomukvRggdE3jWHUpROerkpWOyiV6M9TVs881L3YbK/AUZUxMwQa3lCv+lS/TI5nqxHbwyzZ8Vm8UJvq8zvXn7Tg27neqXU4e5jb2/LdrHm8Q4qej3da927jiimqRtShH9Kek3g5zUSRyC9X9KsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569773; c=relaxed/simple;
-	bh=F5oTZeF7v/UVu/Rg0HNZRxT0ivErx1lRHEGjaVzVXQg=;
+	s=arc-20240116; t=1758569777; c=relaxed/simple;
+	bh=/d0WtFypLkBlpphRnMqS1gnElWSINaCGF5SNfO7P9qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aw52zawPVIN+NUf6l3ErfLMnoN72URywyHVDkmcoJFRqHkjuHTSEGCPaJkCGBe/FRDcIED0mgti2Nnt4+gzq/gpi3IFgQVYw2PGKhe8cFMBLS9f5JTjSXew5TgNkHP1AU9q+ZIsBXWUP2xsVCWCxi1VxBeBb951r8RedwJJ9Qrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMVAf8T1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WRvdIgxdw1o9gqVsb/e0jnuAe9v7sQnBYikdWzQt2U0ydO6jvuh1vyLhzp21Xwe65sxfriAG51vlmgW8CQi8pl5oRvs8QpW94FDeL0xCQRk0PFZHwoqGgV8StAUOqVtJC4cyDG+8nxIQYJ24Jvn7arR9CDlJE/vu6m6R+WIKOJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaTux2sE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMVAf8T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FABC4CEF0;
-	Mon, 22 Sep 2025 19:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaTux2sE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F01C4CEF5;
+	Mon, 22 Sep 2025 19:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569772;
-	bh=F5oTZeF7v/UVu/Rg0HNZRxT0ivErx1lRHEGjaVzVXQg=;
+	s=korg; t=1758569777;
+	bh=/d0WtFypLkBlpphRnMqS1gnElWSINaCGF5SNfO7P9qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bMVAf8T1Fu9raq/fJeuA5gyFe3tQ9nrRjWEoX+zYDXU4cKALlJtDkq0d/3w7Qcv2B
-	 cBD+4mdGBxzmSzGL9LVi84I2fLiiAQJk7ZyvQN59zZKm0wxYlwNVX1Ao5h6W9FgXAh
-	 Vcql4EU6bNwoZewMbPFFeIiQlTalJth2SiSymKtI=
+	b=aaTux2sEDKAgqBt+VJtv0jvf3k8Bn3M3UnCI5Wsq7WUuE5IVk5fNh15rzVRLc85DH
+	 Nq3hsf1RlmuwpSLxoAPpzwEWYFZwTD6zdJJeoPcOTQ0sRXMmqUeWXpUKCG7ReFsn2E
+	 HHk+Dqw+ulmOsX7X/lCxmJLF0N7Vt6ooSmv7Oq6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-rtc@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 41/70] KVM: SVM: Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active
-Date: Mon, 22 Sep 2025 21:29:41 +0200
-Message-ID: <20250922192405.720081603@linuxfoundation.org>
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Elena Popa <elena.popa@nxp.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Bruno Thomsen <bruno.thomsen@gmail.com>
+Subject: [PATCH 6.6 65/70] rtc: pcf2127: fix SPI command byte for PCF2131 backport
+Date: Mon, 22 Sep 2025 21:30:05 +0200
+Message-ID: <20250922192406.350816259@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -51,56 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+From: Bruno Thomsen <bruno.thomsen@gmail.com>
 
-commit d02e48830e3fce9701265f6c5a58d9bdaf906a76 upstream.
+When commit fa78e9b606a472495ef5b6b3d8b45c37f7727f9d upstream was
+backported to LTS branches linux-6.12.y and linux-6.6.y, the SPI regmap
+config fix got applied to the I2C regmap config. Most likely due to a new
+RTC get/set parm feature introduced in 6.14 causing regmap config sections
+in the buttom of the driver to move. LTS branch linux-6.1.y and earlier
+does not have PCF2131 device support.
 
-Commit 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
-inhibited pre-VMRUN sync of TPR from LAPIC into VMCB::V_TPR in
-sync_lapic_to_cr8() when AVIC is active.
+Issue can be seen in buttom of this diff in stable/linux.git tree:
+git diff master..linux-6.12.y -- drivers/rtc/rtc-pcf2127.c
 
-AVIC does automatically sync between these two fields, however it does
-so only on explicit guest writes to one of these fields, not on a bare
-VMRUN.
-
-This meant that when AVIC is enabled host changes to TPR in the LAPIC
-state might not get automatically copied into the V_TPR field of VMCB.
-
-This is especially true when it is the userspace setting LAPIC state via
-KVM_SET_LAPIC ioctl() since userspace does not have access to the guest
-VMCB.
-
-Practice shows that it is the V_TPR that is actually used by the AVIC to
-decide whether to issue pending interrupts to the CPU (not TPR in TASKPRI),
-so any leftover value in V_TPR will cause serious interrupt delivery issues
-in the guest when AVIC is enabled.
-
-Fix this issue by doing pre-VMRUN TPR sync from LAPIC into VMCB::V_TPR
-even when AVIC is enabled.
-
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+Fixes: ee61aec8529e ("rtc: pcf2127: fix SPI command byte for PCF2131")
+Fixes: 5cdd1f73401d ("rtc: pcf2127: fix SPI command byte for PCF2131")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/c231be64280b1461e854e1ce3595d70cde3a2e9d.1756139678.git.maciej.szmigiero@oracle.com
-[sean: tag for stable@]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Elena Popa <elena.popa@nxp.com>
+Cc: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Signed-off-by: Bruno Thomsen <bruno.thomsen@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/rtc/rtc-pcf2127.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4029,8 +4029,7 @@ static inline void sync_lapic_to_cr8(str
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	u64 cr8;
+--- a/drivers/rtc/rtc-pcf2127.c
++++ b/drivers/rtc/rtc-pcf2127.c
+@@ -1383,11 +1383,6 @@ static int pcf2127_i2c_probe(struct i2c_
+ 		variant = &pcf21xx_cfg[type];
+ 	}
  
--	if (nested_svm_virtualize_tpr(vcpu) ||
--	    kvm_vcpu_apicv_active(vcpu))
-+	if (nested_svm_virtualize_tpr(vcpu))
- 		return;
+-	if (variant->type == PCF2131) {
+-		config.read_flag_mask = 0x0;
+-		config.write_flag_mask = 0x0;
+-	}
+-
+ 	config.max_register = variant->max_register,
  
- 	cr8 = kvm_get_cr8(vcpu);
+ 	regmap = devm_regmap_init(&client->dev, &pcf2127_i2c_regmap,
+@@ -1461,6 +1456,11 @@ static int pcf2127_spi_probe(struct spi_
+ 		variant = &pcf21xx_cfg[type];
+ 	}
+ 
++	if (variant->type == PCF2131) {
++		config.read_flag_mask = 0x0;
++		config.write_flag_mask = 0x0;
++	}
++
+ 	config.max_register = variant->max_register;
+ 
+ 	regmap = devm_regmap_init_spi(spi, &config);
 
 
