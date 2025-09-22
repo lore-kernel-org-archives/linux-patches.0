@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506872820D1;
-	Mon, 22 Sep 2025 19:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7346B285C92;
+	Mon, 22 Sep 2025 19:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569893; cv=none; b=YMEPYvtMG2IgC6x2p1S3zo0smmnmUVk1WVJ6RhUMg3lBwRrfHlz84dEBwaIEdmCUfJX1XGk7RjPYLtopGENmQZ6ew1qqX5EYrTn2SYzhsRfTp1mzod0sejwWMFxa+7jn+wf0d8cRRwg2C/jtDKC3b+SPs3EUu1WGJKIl7bBF0W4=
+	t=1758569894; cv=none; b=NbQIAa/6a87YMepznl1r/8eKJgNbjm8mLEUvhok8kLOvILdHpPKoA8Lc4UvCiA0fFHwFXn4sk9C4sLqUEL0md9IPuPO9z23wHg482GifgXp04XfDiE8HDyto2rxmUw/59798w5kdnJEny4OGMOkzaPvFAk+A22T9JzZ8EuVkgeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569893; c=relaxed/simple;
-	bh=VKlEI2KIu+zixvANU1fMBH4xVsWZD5fjHmfVN1qVvfU=;
+	s=arc-20240116; t=1758569894; c=relaxed/simple;
+	bh=1UiOja34AIWGiOYjffT8EcytZOLXh3+p+U5hzoVIsBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0lRT9HuxPtw93YqbkqU981WrYjCyNvcn32sn4mpgoxojgwM/0d2CQgGag1ju1JLhS49NS2oo+BC0gXKmkmzV//Tp1y/e9/oisZNhJC6+sdcKjiU9uOzP/TfaTqdFPI3nIKcdt5yUNOG6jIoBeuOD8KFbXMMnRkqOFhQlDOusYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oBujByc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ke8u4atM+L0AE1XoV0icAXr3dj0/5M4MbSi0lznH20lYP/PijxaCAQF99QuWTuVadDFkNlqJgv9/fkNvPOtNJ2ie1HQkZs2MH3gwjBezian7iTTYMYzczs4dHFs+lnyV1hTp01Gvbke8vKx7IrQOkq2dnb0gkSmJdZGGSm3pNfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTBj9mEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oBujByc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA7FC4CEF0;
-	Mon, 22 Sep 2025 19:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTBj9mEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C11BC4CEF5;
+	Mon, 22 Sep 2025 19:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569891;
-	bh=VKlEI2KIu+zixvANU1fMBH4xVsWZD5fjHmfVN1qVvfU=;
+	s=korg; t=1758569894;
+	bh=1UiOja34AIWGiOYjffT8EcytZOLXh3+p+U5hzoVIsBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2oBujByc7uHysAE1mQm4+FI5kkCpFIkLjMH3I3Rp0q6lYM2V1eELbirNKq9CVLrey
-	 3he3v8O13ZlcAI9tov8K7g63TDiE9aP9Wrq2DIcPURU4yDcitplu4n9PSDI3Aw9/Cf
-	 N7OZPSDFEdemwVh8BHdXKAAJW/+saN8pYmIzGAOA=
+	b=wTBj9mEK8zGTmeYKZfn+NFHbXzvAsaqgG/UMd6emAMUkBXO5Ptffcs5VXmkZyv26p
+	 TMHhiL3wr733Vmv0JQvxBMsdBQWwmXovo/F0lUzXbL0JfNSMmsWtqiNLCeavRqfy/N
+	 FH2+B6a5g/XJAzFVucDFAlq/DoFm7GmA04QtqEv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexey Nepomnyashih <sdl@nppct.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/105] Revert "net/mlx5e: Update and set Xon/Xoff upon port speed set"
-Date: Mon, 22 Sep 2025 21:29:12 +0200
-Message-ID: <20250922192409.675171117@linuxfoundation.org>
+Subject: [PATCH 6.12 030/105] net: liquidio: fix overflow in octeon_init_instr_queue()
+Date: Mon, 22 Sep 2025 21:29:13 +0200
+Message-ID: <20250922192409.699937726@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,37 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tariq Toukan <tariqt@nvidia.com>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-[ Upstream commit 3fbfe251cc9f6d391944282cdb9bcf0bd02e01f8 ]
+[ Upstream commit cca7b1cfd7b8a0eff2a3510c5e0f10efe8fa3758 ]
 
-This reverts commit d24341740fe48add8a227a753e68b6eedf4b385a.
-It causes errors when trying to configure QoS, as well as
-loss of L2 connectivity (on multi-host devices).
+The expression `(conf->instr_type == 64) << iq_no` can overflow because
+`iq_no` may be as high as 64 (`CN23XX_MAX_RINGS_PER_PF`). Casting the
+operand to `u64` ensures correct 64-bit arithmetic.
 
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/20250910170011.70528106@kernel.org
-Fixes: d24341740fe4 ("net/mlx5e: Update and set Xon/Xoff upon port speed set")
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: f21fb3ed364b ("Add support of Cavium Liquidio ethernet adapters")
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/request_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 6176457b846bc..de2327ffb0f78 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -135,8 +135,6 @@ void mlx5e_update_carrier(struct mlx5e_priv *priv)
- 	if (up) {
- 		netdev_info(priv->netdev, "Link up\n");
- 		netif_carrier_on(priv->netdev);
--		mlx5e_port_manual_buffer_config(priv, 0, priv->netdev->mtu,
--						NULL, NULL, NULL);
- 	} else {
- 		netdev_info(priv->netdev, "Link down\n");
- 		netif_carrier_off(priv->netdev);
+diff --git a/drivers/net/ethernet/cavium/liquidio/request_manager.c b/drivers/net/ethernet/cavium/liquidio/request_manager.c
+index de8a6ce86ad7e..12105ffb5dac6 100644
+--- a/drivers/net/ethernet/cavium/liquidio/request_manager.c
++++ b/drivers/net/ethernet/cavium/liquidio/request_manager.c
+@@ -126,7 +126,7 @@ int octeon_init_instr_queue(struct octeon_device *oct,
+ 	oct->io_qmask.iq |= BIT_ULL(iq_no);
+ 
+ 	/* Set the 32B/64B mode for each input queue */
+-	oct->io_qmask.iq64B |= ((conf->instr_type == 64) << iq_no);
++	oct->io_qmask.iq64B |= ((u64)(conf->instr_type == 64) << iq_no);
+ 	iq->iqcmd_64B = (conf->instr_type == 64);
+ 
+ 	oct->fn_list.setup_iq_regs(oct, iq_no);
 -- 
 2.51.0
 
