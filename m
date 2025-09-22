@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE8E27B320;
-	Mon, 22 Sep 2025 19:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279D6285C92;
+	Mon, 22 Sep 2025 19:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569752; cv=none; b=WdqJSAtCuoAeQHaA3XxBG11As9fp9mePiU8FsCdkt2edLup8YQD5kNZT0yaMD5IvO/7UiD6huLdxknW8BK5sSfnDexutn+FrK9NbzMZGl8hwfjBF1nU6yq7jPwBkELCvcnvwvQ485uREV2LqVhj8kzJ/dESckEZZz6HIcpurfM4=
+	t=1758569755; cv=none; b=DeqqgM90R/qeU6BYoblqy3iw9NUR3HzEZYYE0I6ScCc6kGlRS0KZR1OpxFm6F81Nb8TubX5dKvgjsl6vTu7B2Mv4FDfJLMnOmj9Lv+/H11089XRvMLcLbAt/yONpOvs5mqKiMRg4kEQmtC2QCAY9gO+3pGrsQSov4yP1IynUNMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569752; c=relaxed/simple;
-	bh=Tj/nsJ442b3poWJDWjYTq1zZquA+6qkPq3N2938Kbs0=;
+	s=arc-20240116; t=1758569755; c=relaxed/simple;
+	bh=MIkqEtTCGoanBmSMEDkj8hI8UJbFa1dlivIZdgtoswo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ry3zW1Wq054mtvJpgLi++EGa5tNVGH49QLSW/Yi1PpyUTb2S474Ef8Gp8hoRTF9UhIHQstEiQut350s4bBkRAZeGhim6qdphCTOzDS6p/lyMewfTfy4HbvRN0uc/Yg9zS0mNSUS0AfC9xU8zNkf1JwAzwgojy2iKcFixQhRBaK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aP1CvYrU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EibkKtDdFILSzd3sfzxHuF23L9MTvdLob5KuI+vV0/VoSnBUj4p4KRcr8Le1BWxEHuNWgX31/vZkdHEysx2XmXf1qmhwBuX793sTENuZnjaRhSkbzM8AfQ6bNDw0Jp5lZk6UVHxs+Y0OkPB05OIaFxwgaw8eDG8+RlHPfXuXvIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qg0TW5Ht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aP1CvYrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148EBC4CEF0;
-	Mon, 22 Sep 2025 19:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qg0TW5Ht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D6AC113D0;
+	Mon, 22 Sep 2025 19:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569752;
-	bh=Tj/nsJ442b3poWJDWjYTq1zZquA+6qkPq3N2938Kbs0=;
+	s=korg; t=1758569754;
+	bh=MIkqEtTCGoanBmSMEDkj8hI8UJbFa1dlivIZdgtoswo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aP1CvYrU1Z0TqwGi1MLC2HHKqJXETz1Ke8P+WRYXzej1jYLpD1v+qY3q/NHd00YRa
-	 61cZC1cb2872bxR97yxxpzXjAB8mZojmlT2iJspYuWJ+Z3JdSSWdlwUBtqpOUC1MDw
-	 ArDHdZn72fz/53aVvaP01MWIDXOJK6H5RAgqdN34=
+	b=Qg0TW5HtagqxUcFIttkfHu9FeTvqdBI3C95an7koM4xJ6dpx8hNo6ynyCaLTTGH8p
+	 oE3c/O3IubZ0ZPd+33ztLSYmsrQ9Pof2ywgfCTHqgjeFO70aEAkFBJx30nHWj7DhTx
+	 y57iXAS21q4+QeIUETwIfzMzzl2fNEwCjhYhxTLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Allison Henderson <allison.henderson@oracle.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 43/70] rds: ib: Increment i_fastreg_wrs before bailing out
-Date: Mon, 22 Sep 2025 21:29:43 +0200
-Message-ID: <20250922192405.771818518@linuxfoundation.org>
+Subject: [PATCH 6.6 44/70] selftests: mptcp: connect: catch IO errors on listen side
+Date: Mon, 22 Sep 2025 21:29:44 +0200
+Message-ID: <20250922192405.797143176@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -45,86 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 4351ca3fcb3ffecf12631b4996bf085a2dad0db6 upstream.
+commit 14e22b43df25dbd4301351b882486ea38892ae4f upstream.
 
-We need to increment i_fastreg_wrs before we bail out from
-rds_ib_post_reg_frmr().
+IO errors were correctly printed to stderr, and propagated up to the
+main loop for the server side, but the returned value was ignored. As a
+consequence, the program for the listener side was no longer exiting
+with an error code in case of IO issues.
 
-We have a fixed budget of how many FRWR operations that can be
-outstanding using the dedicated QP used for memory registrations and
-de-registrations. This budget is enforced by the atomic_t
-i_fastreg_wrs. If we bail out early in rds_ib_post_reg_frmr(), we will
-"leak" the possibility of posting an FRWR operation, and if that
-accumulates, no FRWR operation can be carried out.
+Because of that, some issues might not have been seen. But very likely,
+most issues either had an effect on the client side, or the file
+transfer was not the expected one, e.g. the connection got reset before
+the end. Still, it is better to fix this.
 
-Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
-Fixes: 3a2886cca703 ("net/rds: Keep track of and wait for FRWR segments in use upon shutdown")
+The main consequence of this issue is the error that was reported by the
+selftests: the received and sent files were different, and the MIB
+counters were not printed. Also, when such errors happened during the
+'disconnect' tests, the program tried to continue until the timeout.
+
+Now when an IO error is detected, the program exits directly with an
+error.
+
+Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
 Cc: stable@vger.kernel.org
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
-Link: https://patch.msgid.link/20250911133336.451212-1-haakon.bugge@oracle.com
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250912-net-mptcp-fix-sft-connect-v1-2-d40e77cbbf02@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/ib_frmr.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/rds/ib_frmr.c
-+++ b/net/rds/ib_frmr.c
-@@ -133,12 +133,15 @@ static int rds_ib_post_reg_frmr(struct r
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -1079,6 +1079,7 @@ int main_loop_s(int listensock)
+ 	struct pollfd polls;
+ 	socklen_t salen;
+ 	int remotesock;
++	int err = 0;
+ 	int fd = 0;
  
- 	ret = ib_map_mr_sg_zbva(frmr->mr, ibmr->sg, ibmr->sg_dma_len,
- 				&off, PAGE_SIZE);
--	if (unlikely(ret != ibmr->sg_dma_len))
--		return ret < 0 ? ret : -EINVAL;
-+	if (unlikely(ret != ibmr->sg_dma_len)) {
-+		ret = ret < 0 ? ret : -EINVAL;
-+		goto out_inc;
-+	}
+ again:
+@@ -1111,7 +1112,7 @@ again:
+ 		SOCK_TEST_TCPULP(remotesock, 0);
  
--	if (cmpxchg(&frmr->fr_state,
--		    FRMR_IS_FREE, FRMR_IS_INUSE) != FRMR_IS_FREE)
--		return -EBUSY;
-+	if (cmpxchg(&frmr->fr_state, FRMR_IS_FREE, FRMR_IS_INUSE) != FRMR_IS_FREE) {
-+		ret = -EBUSY;
-+		goto out_inc;
-+	}
+ 		memset(&winfo, 0, sizeof(winfo));
+-		copyfd_io(fd, remotesock, 1, true, &winfo);
++		err = copyfd_io(fd, remotesock, 1, true, &winfo);
+ 	} else {
+ 		perror("accept");
+ 		return 1;
+@@ -1120,10 +1121,10 @@ again:
+ 	if (cfg_input)
+ 		close(fd);
  
- 	atomic_inc(&ibmr->ic->i_fastreg_inuse_count);
+-	if (--cfg_repeat > 0)
++	if (!err && --cfg_repeat > 0)
+ 		goto again;
  
-@@ -166,11 +169,10 @@ static int rds_ib_post_reg_frmr(struct r
- 		/* Failure here can be because of -ENOMEM as well */
- 		rds_transition_frwr_state(ibmr, FRMR_IS_INUSE, FRMR_IS_STALE);
- 
--		atomic_inc(&ibmr->ic->i_fastreg_wrs);
- 		if (printk_ratelimit())
- 			pr_warn("RDS/IB: %s returned error(%d)\n",
- 				__func__, ret);
--		goto out;
-+		goto out_inc;
- 	}
- 
- 	/* Wait for the registration to complete in order to prevent an invalid
-@@ -179,8 +181,10 @@ static int rds_ib_post_reg_frmr(struct r
- 	 */
- 	wait_event(frmr->fr_reg_done, !frmr->fr_reg);
- 
--out:
-+	return ret;
- 
-+out_inc:
-+	atomic_inc(&ibmr->ic->i_fastreg_wrs);
- 	return ret;
+-	return 0;
++	return err;
  }
  
+ static void init_rng(void)
 
 
