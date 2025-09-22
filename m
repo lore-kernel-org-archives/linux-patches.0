@@ -1,58 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC32E2F2909;
-	Mon, 22 Sep 2025 19:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690A72F0C52;
+	Mon, 22 Sep 2025 19:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570243; cv=none; b=s97xrh7UB3EtMpQ2kQhArTcmrESWvXAiZDUEGqWHHX5cCp+1IDV+7BUpmbt5SH+pNQgocfli9fXiPjpK22zC1LImY2nTA3fUdCh6dnFxKrt9KvmUDncpL0RUHFrGw/tX30Dm2jvNUh7eT+rv1P3C9Hery44NodKEAtcauw6X3fA=
+	t=1758570246; cv=none; b=TPjwYeTkAchRlOBlkOT9QGNyYWec0tIG5AjuihP8FVaBwGfAraGWsPHxgrqB1gqjJjSKkMFuqB3EqvwvWnVO77cQMN30jlRYOHvC5muKfsDwxTvYhbw9d20Y/RxS9IdUmu1gCNvEiRLA+egE4F1qgdrUZkG9y7ktiNKh6MJlSi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570243; c=relaxed/simple;
-	bh=Fte7vkDdIQrq3psNyhJHNM5RGqsw0khzh4N1KkyolQU=;
+	s=arc-20240116; t=1758570246; c=relaxed/simple;
+	bh=G8PmkeiUMNDn0aN+UInXhte93C1Z0HNx8e9iLjk7ijA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rLOIvOjoJP7Piq3XtrVF48NCXYggLz+mwaSTRnIAUCrC4010oUOMi2uA3J+wwUWrDi0/f2zLn2vWktDjUDiHobjNSXl5M47vPbqkBUyg6F1wRyzEVVQ6V0RFQrc0DSBtluX0/znHRRSIGECEArVuan9b/SgZqjA1uiEMB5ezYO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLZPouzj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7VynoFJBia8/MIj80hPlEde2j6i6MqCx/jcnOkNdOZl9b7gnAIRP/n6BvNOyenSAhq1CLKZ+/Bvc0l6vJXVqnVG0sLrYobPv0pNX47+Znh3dXfeFfhJ5WKopUpmYEBpC5PAnDLSyJOSKtPnCyKSIvtTm6RZFepTMBWhGiYhKPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRYFmZsy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLZPouzj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC89C4CEF0;
-	Mon, 22 Sep 2025 19:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRYFmZsy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01861C4CEF0;
+	Mon, 22 Sep 2025 19:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570243;
-	bh=Fte7vkDdIQrq3psNyhJHNM5RGqsw0khzh4N1KkyolQU=;
+	s=korg; t=1758570246;
+	bh=G8PmkeiUMNDn0aN+UInXhte93C1Z0HNx8e9iLjk7ijA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLZPouzjUonUkAG5kirOSa6ciubtJf0AxgMfXrU3CJMXZNQSnwk50uw1Wcc2PpCoX
-	 q58xWjHSHbK4a7DWws/QERHjpo6Ys1DCiin+Nf5/1/zf7tIlMlV32JmNir5H2113mv
-	 VENaSVaG16gpG4O6RDSkiRdEv+um551FmvqhMk9s=
+	b=vRYFmZsyg6WK7cFT8l3QH+1y33GwA++YDR1Ms9UmS5XbLFx4xLgXZzFXwYRnvAk04
+	 Ed9pWqiPSkoK/lm+mPGtL4MM42YxpNXbgyrC5c6lwbcPMQXxEGtxRd5A/w3m8CEahj
+	 /Cbo1ASDxzD2vosYy2KM1c7a3dGxNcE1Gi3/Ee18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Chris Li <chrisl@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Keir Fraser <keirf@google.com>,
-	Konstantin Khlebnikov <koct9i@gmail.com>,
-	Li Zhe <lizhe.67@bytedance.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Peter Xu <peterx@redhat.com>,
-	Rik van Riel <riel@surriel.com>,
-	Shivank Garg <shivankg@amd.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Wei Xu <weixugc@google.com>,
-	Will Deacon <will@kernel.org>,
-	yangge <yangge1116@126.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 062/149] mm: revert "mm: vmscan.c: fix OOM on swap stress test"
-Date: Mon, 22 Sep 2025 21:29:22 +0200
-Message-ID: <20250922192414.447705571@linuxfoundation.org>
+	Jerry Lv <Jerry.Lv@axis.com>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.16 053/149] power: supply: bq27xxx: restrict no-battery detection to bq27000
+Date: Mon, 22 Sep 2025 21:29:13 +0200
+Message-ID: <20250922192414.192896502@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -71,53 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: H. Nikolaus Schaller <hns@goldelico.com>
 
-commit 8d79ed36bfc83d0583ab72216b7980340478cdfb upstream.
+commit 1e451977e1703b6db072719b37cd1b8e250b9cc9 upstream.
 
-This reverts commit 0885ef470560: that was a fix to the reverted
-33dfe9204f29b415bbc0abb1a50642d1ba94f5e9.
+There are fuel gauges in the bq27xxx series (e.g. bq27z561) which may in some
+cases report 0xff as the value of BQ27XXX_REG_FLAGS that should not be
+interpreted as "no battery" like for a disconnected battery with some built
+in bq27000 chip.
 
-Link: https://lkml.kernel.org/r/aa0e9d67-fbcd-9d79-88a1-641dfbe1d9d1@google.com
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Keir Fraser <keirf@google.com>
-Cc: Konstantin Khlebnikov <koct9i@gmail.com>
-Cc: Li Zhe <lizhe.67@bytedance.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Shivank Garg <shivankg@amd.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: yangge <yangge1116@126.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+So restrict the no-battery detection originally introduced by
+
+    commit 3dd843e1c26a ("bq27000: report missing device better.")
+
+to the bq27000.
+
+There is no need to backport further because this was hidden before
+
+	commit f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
+
+Fixes: f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
+Suggested-by: Jerry Lv <Jerry.Lv@axis.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+Link: https://lore.kernel.org/r/dd979fa6855fd051ee5117016c58daaa05966e24.1755945297.git.hns@goldelico.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/bq27xxx_battery.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4505,7 +4505,7 @@ static bool sort_folio(struct lruvec *lr
- 	}
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1919,8 +1919,8 @@ static void bq27xxx_battery_update_unloc
+ 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
  
- 	/* ineligible */
--	if (!folio_test_lru(folio) || zone > sc->reclaim_idx) {
-+	if (zone > sc->reclaim_idx) {
- 		gen = folio_inc_gen(lruvec, folio, false);
- 		list_move_tail(&folio->lru, &lrugen->folios[gen][type][zone]);
- 		return true;
+ 	cache.flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, has_singe_flag);
+-	if ((cache.flags & 0xff) == 0xff)
+-		cache.flags = -ENODEV; /* read error */
++	if (di->chip == BQ27000 && (cache.flags & 0xff) == 0xff)
++		cache.flags = -ENODEV; /* bq27000 hdq read error */
+ 	if (cache.flags >= 0) {
+ 		cache.capacity = bq27xxx_battery_read_soc(di);
+ 
 
 
