@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7801E2F0C5C;
-	Mon, 22 Sep 2025 19:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7F425F780;
+	Mon, 22 Sep 2025 19:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569848; cv=none; b=Vyo81S5UApfBLUy4TkdnDAmZKg7Uhhaqlkx6qwvTCrDFxJBJx4rcoRwdzb1tZsGKwpwnn/zZK284lUhXFQ3XkP0O7RWI+R5WjCv50mSheuc3m+vnx5RtGQBxBrFLrH+GMZ1HELGhlPZKKfUmbaf9iFcZMi3kFuJtP1TBpCvEZ50=
+	t=1758569849; cv=none; b=KlCTYahn6xM06EQnnBY5qZZVtcx2FuOUd21u8eKpZAItxs9Sf2pK0Db0/zikTnxOUARfg+E7IN1SFfBCYnmcjfrq2yxOSK2LmbAmyO25aZbbKHCdsReZNuVlrxS0UIkhxhdAEN7FPIoWgzW4iVbv4MuMw9P4KZ2aynOzk0ECiBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569848; c=relaxed/simple;
-	bh=1Dh2uYdkWgB0ncKswym2UMj4Tpbzj4e0HAURQnpuOFg=;
+	s=arc-20240116; t=1758569849; c=relaxed/simple;
+	bh=xofNqn5Ogaw6W0dAq4lJUxvz6BQ5QdFmJ7TsRbq2WRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdYs/m37Fv387Ycuqk3BNnPYMRB8X4KCGkyfAxEesI4ZpzUAVEFZMOYBa0zT4ZaLqWuwu9/j/qxTuBRMsekk26NkLyQ3k27M1O3kV4EGgRGhjK3zd4zOia3QdcpXP3evKIGdDq06FMnt10BkMyuhVqBNpX3bQgHRiib1tOiQ+gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhjLK62z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=asvirMZK0Q4eBkObs+R8hsiFu5tNVLSNRe7T2d+i+KlIjpmp3XGpiupCbbDr9PCLuJEA5UDGkP2NzEow/2zrJI0cnk32pekniiVliInT6c0m8swF3mZuJ7OYUiY74hdQtebq8/CHKcieJEdACDiR/lYYunwOx6mZFrcVKcYwSKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Lw6t4jG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhjLK62z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B556CC4CEF0;
-	Mon, 22 Sep 2025 19:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Lw6t4jG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA10C4CEF5;
+	Mon, 22 Sep 2025 19:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569847;
-	bh=1Dh2uYdkWgB0ncKswym2UMj4Tpbzj4e0HAURQnpuOFg=;
+	s=korg; t=1758569849;
+	bh=xofNqn5Ogaw6W0dAq4lJUxvz6BQ5QdFmJ7TsRbq2WRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhjLK62zwyaCZQSP5jJNCvThcKYrH+uBjXUKkmazpmYe5Br+IGxWRRa+CKqoFIgyW
-	 fyz4kfn66Kf6BmPWznNU99iTCrkXTenUMtAI/LBl2KahqLDc9MA2jRq2sJ2oU3mdJv
-	 vCwCxh/MiMpHBRLoDoO27oOLL2EbCvpDXf5UR3gc=
+	b=2Lw6t4jG/5WZDBuafvK0N9Kj5528HTqXSxmQ9RpFNqgJXZO14oHeeqbYZDVv8O5j4
+	 WlxcwI3yepUcZSgHaq3CyB5A3A4BGId9uRNzLcFTIsvwxilvOzNRzW9Qb9I8QuR/9B
+	 ANYjmG542QzBT3L0A/pEBXfmmiEoh3hs5cLbDL4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/105] dpaa2-switch: fix buffer pool seeding for control traffic
-Date: Mon, 22 Sep 2025 21:28:54 +0200
-Message-ID: <20250922192409.197404363@linuxfoundation.org>
+Subject: [PATCH 6.12 012/105] net/tcp: Fix a NULL pointer dereference when using TCP-AO with TCP_REPAIR
+Date: Mon, 22 Sep 2025 21:28:55 +0200
+Message-ID: <20250922192409.224226248@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -51,67 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Anderson Nascimento <anderson@allelesecurity.com>
 
-[ Upstream commit 2690cb089502b80b905f2abdafd1bf2d54e1abef ]
+[ Upstream commit 2e7bba08923ebc675b1f0e0e0959e68e53047838 ]
 
-Starting with commit c50e7475961c ("dpaa2-switch: Fix error checking in
-dpaa2_switch_seed_bp()"), the probing of a second DPSW object errors out
-like below.
+A NULL pointer dereference can occur in tcp_ao_finish_connect() during a
+connect() system call on a socket with a TCP-AO key added and TCP_REPAIR
+enabled.
 
-fsl_dpaa2_switch dpsw.1: fsl_mc_driver_probe failed: -12
-fsl_dpaa2_switch dpsw.1: probe with driver fsl_dpaa2_switch failed with error -12
+The function is called with skb being NULL and attempts to dereference it
+on tcp_hdr(skb)->seq without a prior skb validation.
 
-The aforementioned commit brought to the surface the fact that seeding
-buffers into the buffer pool destined for control traffic is not
-successful and an access violation recoverable error can be seen in the
-MC firmware log:
+Fix this by checking if skb is NULL before dereferencing it.
 
-[E, qbman_rec_isr:391, QBMAN]  QBMAN recoverable event 0x1000000
+The commentary is taken from bpf_skops_established(), which is also called
+in the same flow. Unlike the function being patched,
+bpf_skops_established() validates the skb before dereferencing it.
 
-This happens because the driver incorrectly used the ID of the DPBP
-object instead of the hardware buffer pool ID when trying to release
-buffers into it.
+int main(void){
+	struct sockaddr_in sockaddr;
+	struct tcp_ao_add tcp_ao;
+	int sk;
+	int one = 1;
 
-This is because any DPSW object uses two buffer pools, one managed by
-the Linux driver and destined for control traffic packet buffers and the
-other one managed by the MC firmware and destined only for offloaded
-traffic. And since the buffer pool managed by the MC firmware does not
-have an external facing DPBP equivalent, any subsequent DPBP objects
-created after the first DPSW will have a DPBP id different to the
-underlying hardware buffer ID.
+	memset(&sockaddr,'\0',sizeof(sockaddr));
+	memset(&tcp_ao,'\0',sizeof(tcp_ao));
 
-The issue was not caught earlier because these two numbers can be
-identical when all DPBP objects are created before the DPSW objects are.
-This is the case when the DPL file is used to describe the entire DPAA2
-object layout and objects are created at boot time and it's also true
-for the first DPSW being created dynamically using ls-addsw.
+	sk = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-Fix this by using the buffer pool ID instead of the DPBP id when
-releasing buffers into the pool.
+	sockaddr.sin_family = AF_INET;
 
-Fixes: 2877e4f7e189 ("staging: dpaa2-switch: setup buffer pool and RX path rings")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20250910144825.2416019-1-ioana.ciornei@nxp.com
+	memcpy(tcp_ao.alg_name,"cmac(aes128)",12);
+	memcpy(tcp_ao.key,"ABCDEFGHABCDEFGH",16);
+	tcp_ao.keylen = 16;
+
+	memcpy(&tcp_ao.addr,&sockaddr,sizeof(sockaddr));
+
+	setsockopt(sk, IPPROTO_TCP, TCP_AO_ADD_KEY, &tcp_ao,
+	sizeof(tcp_ao));
+	setsockopt(sk, IPPROTO_TCP, TCP_REPAIR, &one, sizeof(one));
+
+	sockaddr.sin_family = AF_INET;
+	sockaddr.sin_port = htobe16(123);
+
+	inet_aton("127.0.0.1", &sockaddr.sin_addr);
+
+	connect(sk,(struct sockaddr *)&sockaddr,sizeof(sockaddr));
+
+return 0;
+}
+
+$ gcc tcp-ao-nullptr.c -o tcp-ao-nullptr -Wall
+$ unshare -Urn
+
+BUG: kernel NULL pointer dereference, address: 00000000000000b6
+PGD 1f648d067 P4D 1f648d067 PUD 1982e8067 PMD 0
+Oops: Oops: 0000 [#1] SMP NOPTI
+Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop
+Reference Platform, BIOS 6.00 11/12/2020
+RIP: 0010:tcp_ao_finish_connect (net/ipv4/tcp_ao.c:1182)
+
+Fixes: 7c2ffaf21bd6 ("net/tcp: Calculate TCP-AO traffic keys")
+Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
+Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250911230743.2551-3-anderson@allelesecurity.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_ao.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index cbd3859ea475b..980daecab8ea3 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -2735,7 +2735,7 @@ static int dpaa2_switch_setup_dpbp(struct ethsw_core *ethsw)
- 		dev_err(dev, "dpsw_ctrl_if_set_pools() failed\n");
- 		goto err_get_attr;
- 	}
--	ethsw->bpid = dpbp_attrs.id;
-+	ethsw->bpid = dpbp_attrs.bpid;
+diff --git a/net/ipv4/tcp_ao.c b/net/ipv4/tcp_ao.c
+index bbb8d5f0eae7d..3338b6cc85c48 100644
+--- a/net/ipv4/tcp_ao.c
++++ b/net/ipv4/tcp_ao.c
+@@ -1178,7 +1178,9 @@ void tcp_ao_finish_connect(struct sock *sk, struct sk_buff *skb)
+ 	if (!ao)
+ 		return;
  
- 	return 0;
+-	WRITE_ONCE(ao->risn, tcp_hdr(skb)->seq);
++	/* sk with TCP_REPAIR_ON does not have skb in tcp_finish_connect */
++	if (skb)
++		WRITE_ONCE(ao->risn, tcp_hdr(skb)->seq);
+ 	ao->rcv_sne = 0;
  
+ 	hlist_for_each_entry_rcu(key, &ao->head, node, lockdep_sock_is_held(sk))
 -- 
 2.51.0
 
