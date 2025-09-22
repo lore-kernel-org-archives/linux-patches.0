@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690A72F0C52;
-	Mon, 22 Sep 2025 19:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3928C2F0C52;
+	Mon, 22 Sep 2025 19:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570246; cv=none; b=TPjwYeTkAchRlOBlkOT9QGNyYWec0tIG5AjuihP8FVaBwGfAraGWsPHxgrqB1gqjJjSKkMFuqB3EqvwvWnVO77cQMN30jlRYOHvC5muKfsDwxTvYhbw9d20Y/RxS9IdUmu1gCNvEiRLA+egE4F1qgdrUZkG9y7ktiNKh6MJlSi0=
+	t=1758570249; cv=none; b=J4+TR9EVeRP3StshGeiMZopKToU5G+Go1Ys0skDmMpJR2r6o6BRgSSAN+g6bGxCq3gUYO6AvLjbh7VHV76qc0tgaNGCIb+ubA6c5Q5AGIK3AiwKQSAWO4YiESJ17S9xPMgGY6wVY7k2AsVaUWmaccr3kUMkhD8caaxXKjRXLswk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570246; c=relaxed/simple;
-	bh=G8PmkeiUMNDn0aN+UInXhte93C1Z0HNx8e9iLjk7ijA=;
+	s=arc-20240116; t=1758570249; c=relaxed/simple;
+	bh=ImaWNKbQL/njaLSxAgXkUBnfoTMJnLVmcGo9r3ySbK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7VynoFJBia8/MIj80hPlEde2j6i6MqCx/jcnOkNdOZl9b7gnAIRP/n6BvNOyenSAhq1CLKZ+/Bvc0l6vJXVqnVG0sLrYobPv0pNX47+Znh3dXfeFfhJ5WKopUpmYEBpC5PAnDLSyJOSKtPnCyKSIvtTm6RZFepTMBWhGiYhKPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRYFmZsy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z5SWbqIef3Vlbf6ncsOOcwhK+K+1mYsEqy2dnxtn9WxUEZGFTGWINShLWrWeZv/0wBPT58bwLmDL1tDUT/TQwRPDuUi7CLtOarnFLtECr4gcQ/pGDXcda7TxOFlyToLkNuuxGJPKG9ckk//vI+ECZj5dMjz2adnh27dbJmxnJLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOqpi9yu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRYFmZsy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01861C4CEF0;
-	Mon, 22 Sep 2025 19:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOqpi9yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4501C4CEF0;
+	Mon, 22 Sep 2025 19:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570246;
-	bh=G8PmkeiUMNDn0aN+UInXhte93C1Z0HNx8e9iLjk7ijA=;
+	s=korg; t=1758570249;
+	bh=ImaWNKbQL/njaLSxAgXkUBnfoTMJnLVmcGo9r3ySbK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRYFmZsyg6WK7cFT8l3QH+1y33GwA++YDR1Ms9UmS5XbLFx4xLgXZzFXwYRnvAk04
-	 Ed9pWqiPSkoK/lm+mPGtL4MM42YxpNXbgyrC5c6lwbcPMQXxEGtxRd5A/w3m8CEahj
-	 /Cbo1ASDxzD2vosYy2KM1c7a3dGxNcE1Gi3/Ee18=
+	b=nOqpi9yu5I7Cegi5Qr1Mgk0BN7JPEF3997a525od6H/EYXDvkOjmFjPyTQ+/hiz5h
+	 BMN9DduuzM/xIVruhJ40NMzCCVVI2hPRBKEclUZUr9bkRheEc91JFr9lgDN4FMaEGd
+	 6y0OSwVw6R4vKWmhqry6elew9IOVxdU/0X4JZSyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Lv <Jerry.Lv@axis.com>,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.16 053/149] power: supply: bq27xxx: restrict no-battery detection to bq27000
-Date: Mon, 22 Sep 2025 21:29:13 +0200
-Message-ID: <20250922192414.192896502@linuxfoundation.org>
+	Xi Zhang <zhangxi@kylinos.cn>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.16 067/149] LoongArch: Fix unreliable stack for live patching
+Date: Mon, 22 Sep 2025 21:29:27 +0200
+Message-ID: <20250922192414.574061689@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -51,48 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 1e451977e1703b6db072719b37cd1b8e250b9cc9 upstream.
+commit 677d4a52d4dc4a147d5e84af9ff207832578be70 upstream.
 
-There are fuel gauges in the bq27xxx series (e.g. bq27z561) which may in some
-cases report 0xff as the value of BQ27XXX_REG_FLAGS that should not be
-interpreted as "no battery" like for a disconnected battery with some built
-in bq27000 chip.
+When testing the kernel live patching with "modprobe livepatch-sample",
+there is a timeout over 15 seconds from "starting patching transition"
+to "patching complete". The dmesg command shows "unreliable stack" for
+user tasks in debug mode, here is one of the messages:
 
-So restrict the no-battery detection originally introduced by
+  livepatch: klp_try_switch_task: bash:1193 has an unreliable stack
 
-    commit 3dd843e1c26a ("bq27000: report missing device better.")
+The "unreliable stack" is because it can not unwind from do_syscall()
+to its previous frame handle_syscall(). It should use fp to find the
+original stack top due to secondary stack in do_syscall(), but fp is
+not used for some other functions, then fp can not be restored by the
+next frame of do_syscall(), so it is necessary to save fp if task is
+not current, in order to get the stack top of do_syscall().
 
-to the bq27000.
+Here are the call chains:
 
-There is no need to backport further because this was hidden before
+  klp_enable_patch()
+    klp_try_complete_transition()
+      klp_try_switch_task()
+        klp_check_and_switch_task()
+          klp_check_stack()
+            stack_trace_save_tsk_reliable()
+              arch_stack_walk_reliable()
 
-	commit f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
+When executing "rmmod livepatch-sample", there exists a similar issue.
+With this patch, it takes a short time for patching and unpatching.
 
-Fixes: f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
-Suggested-by: Jerry Lv <Jerry.Lv@axis.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Link: https://lore.kernel.org/r/dd979fa6855fd051ee5117016c58daaa05966e24.1755945297.git.hns@goldelico.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Before:
+
+  # modprobe livepatch-sample
+  # dmesg -T | tail -3
+  [Sat Sep  6 11:00:20 2025] livepatch: 'livepatch_sample': starting patching transition
+  [Sat Sep  6 11:00:35 2025] livepatch: signaling remaining tasks
+  [Sat Sep  6 11:00:36 2025] livepatch: 'livepatch_sample': patching complete
+
+  # echo 0 > /sys/kernel/livepatch/livepatch_sample/enabled
+  # rmmod livepatch_sample
+  rmmod: ERROR: Module livepatch_sample is in use
+  # rmmod livepatch_sample
+  # dmesg -T | tail -3
+  [Sat Sep  6 11:06:05 2025] livepatch: 'livepatch_sample': starting unpatching transition
+  [Sat Sep  6 11:06:20 2025] livepatch: signaling remaining tasks
+  [Sat Sep  6 11:06:21 2025] livepatch: 'livepatch_sample': unpatching complete
+
+After:
+
+  # modprobe livepatch-sample
+  # dmesg -T | tail -2
+  [Tue Sep 16 16:19:30 2025] livepatch: 'livepatch_sample': starting patching transition
+  [Tue Sep 16 16:19:31 2025] livepatch: 'livepatch_sample': patching complete
+
+  # echo 0 > /sys/kernel/livepatch/livepatch_sample/enabled
+  # rmmod livepatch_sample
+  # dmesg -T | tail -2
+  [Tue Sep 16 16:19:36 2025] livepatch: 'livepatch_sample': starting unpatching transition
+  [Tue Sep 16 16:19:37 2025] livepatch: 'livepatch_sample': unpatching complete
+
+Cc: stable@vger.kernel.org # v6.9+
+Fixes: 199cc14cb4f1 ("LoongArch: Add kernel livepatching support")
+Reported-by: Xi Zhang <zhangxi@kylinos.cn>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/kernel/stacktrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1919,8 +1919,8 @@ static void bq27xxx_battery_update_unloc
- 	bool has_singe_flag = di->opts & BQ27XXX_O_ZERO;
+--- a/arch/loongarch/kernel/stacktrace.c
++++ b/arch/loongarch/kernel/stacktrace.c
+@@ -51,12 +51,13 @@ int arch_stack_walk_reliable(stack_trace
+ 	if (task == current) {
+ 		regs->regs[3] = (unsigned long)__builtin_frame_address(0);
+ 		regs->csr_era = (unsigned long)__builtin_return_address(0);
++		regs->regs[22] = 0;
+ 	} else {
+ 		regs->regs[3] = thread_saved_fp(task);
+ 		regs->csr_era = thread_saved_ra(task);
++		regs->regs[22] = task->thread.reg22;
+ 	}
+ 	regs->regs[1] = 0;
+-	regs->regs[22] = 0;
  
- 	cache.flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, has_singe_flag);
--	if ((cache.flags & 0xff) == 0xff)
--		cache.flags = -ENODEV; /* read error */
-+	if (di->chip == BQ27000 && (cache.flags & 0xff) == 0xff)
-+		cache.flags = -ENODEV; /* bq27000 hdq read error */
- 	if (cache.flags >= 0) {
- 		cache.capacity = bq27xxx_battery_read_soc(di);
- 
+ 	for (unwind_start(&state, task, regs);
+ 	     !unwind_done(&state) && !unwind_error(&state); unwind_next_frame(&state)) {
 
 
