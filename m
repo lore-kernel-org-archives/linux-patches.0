@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D12927B320;
-	Mon, 22 Sep 2025 19:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBA2262D14;
+	Mon, 22 Sep 2025 19:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569740; cv=none; b=aJiCpa40wwhKwWQcbFFZIRmZjScIASvoKncF6tr5nepOsz2FDZdGbhWIJONo5SHYrKrJ93J4gQtQmA/fK+dgRFuaQm4yXFaYp587E32pC8GsFM8v2Z6i8a3p+kBspoCob7jAP+ZL0WtAvqs+Ydu58Xf1axs2vq5cO3qU2v2rvy4=
+	t=1758569742; cv=none; b=UCj0NpVtZ6pCb2LPa0Ox5ocR8XA8Xcvb2a6nVC39vZhexvOpg69N1/REeRirWRbOxC6AHzpfQwWYSmFrfpiDu0VyGTvS0Us/pIWNH2kIc7jYlWn5LC4qmNxwqJc+KsCnp2ExZ4YAhLPyLDy+3awMbelcxIdyCw/3TbNinBdbdfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569740; c=relaxed/simple;
-	bh=RTUZwhcPe+jmMiD0l67l41IpfSgeliBCvQkp+VabuI4=;
+	s=arc-20240116; t=1758569742; c=relaxed/simple;
+	bh=6lh5BPmJQjRm4a0ti1+VsZdirBgzc3+GROGm9200s9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCbdDPurOKs1KB9obiDw8AbDX0281mnxY2xfa/TD+YbTkcQMZ7N7T9OfMBXUJqvh476og7pGMO5PzhsJ+XKpifUOpUYDvquR8rJQoQJGw1iLa19jNb/Q6iaqparpLjD2xn/XVtnXrlt0Cwq+6/2rY1Jx/slS0fSTi9EoaZzSUoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Mam6kcw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjRqpAIEG8r7WnNjN7NcjSlA2cIwfQ8uN3lSq/KHQqgPwWakYOAQFXRDKTzQN6sh6zC9eaMDzympoPDRycnhgNvBPacRkQIA0opBgeyP/ZJlZRJp1XkeZr0x3pu4iJ6fQFanIEARByIDGA+Of+t+x2J5xaEBc5+FxEK1wACTnb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dh0/rq4T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Mam6kcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA34AC4CEF0;
-	Mon, 22 Sep 2025 19:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dh0/rq4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23599C4CEF0;
+	Mon, 22 Sep 2025 19:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569740;
-	bh=RTUZwhcPe+jmMiD0l67l41IpfSgeliBCvQkp+VabuI4=;
+	s=korg; t=1758569742;
+	bh=6lh5BPmJQjRm4a0ti1+VsZdirBgzc3+GROGm9200s9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Mam6kcwYtZINgsraCVfjEk8HhhqIW/l46zTfJcrTxf1H7pE4Fm8XLIGUvDipNCjb
-	 i6HxOpaJpS8479HbWTfsJ71/r73kBZtiLiSaoR0Vnwbl6ykxktPP/pmtEi4drpy3gZ
-	 2TiSBjPNFzXQ1LvWlwPVSqnbSeSJVfWp7UnqGjLA=
+	b=dh0/rq4ThCl+rOcg05pRA/feANBH9QkqOZ8M1hsSn8342NvfIr7X0LBUM7Cea/GpS
+	 3VuBduxrTmYvNzvB5iZec7oJLsVxOxD4yegE15Cna9lF+cb1gPxV78wj12/Tovs6nS
+	 Z8OPCxq0hYzf9DlAMlkS4R9Xh/GVFWgAIEnRupXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 42/70] net: rfkill: gpio: Fix crash due to dereferencering uninitialized pointer
-Date: Mon, 22 Sep 2025 21:29:42 +0200
-Message-ID: <20250922192405.746172092@linuxfoundation.org>
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 51/70] ASoC: wm8974: Correct PLL rate rounding
+Date: Mon, 22 Sep 2025 21:29:51 +0200
+Message-ID: <20250922192405.978510901@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -51,56 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-commit b6f56a44e4c1014b08859dcf04ed246500e310e5 upstream.
+[ Upstream commit 9b17d3724df55ecc2bc67978822585f2b023be48 ]
 
-Since commit 7d5e9737efda ("net: rfkill: gpio: get the name and type from
-device property") rfkill_find_type() gets called with the possibly
-uninitialized "const char *type_name;" local variable.
+Using a single value of 22500000 for both 48000Hz and 44100Hz audio
+will sometimes result in returning wrong dividers due to rounding.
+Update the code to use the actual value for both.
 
-On x86 systems when rfkill-gpio binds to a "BCM4752" or "LNV4752"
-acpi_device, the rfkill->type is set based on the ACPI acpi_device_id:
-
-        rfkill->type = (unsigned)id->driver_data;
-
-and there is no "type" property so device_property_read_string() will fail
-and leave type_name uninitialized, leading to a potential crash.
-
-rfkill_find_type() does accept a NULL pointer, fix the potential crash
-by initializing type_name to NULL.
-
-Note likely sofar this has not been caught because:
-
-1. Not many x86 machines actually have a "BCM4752"/"LNV4752" acpi_device
-2. The stack happened to contain NULL where type_name is stored
-
-Fixes: 7d5e9737efda ("net: rfkill: gpio: get the name and type from device property")
-Cc: stable@vger.kernel.org
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20250913113515.21698-1-hansg@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 51b2bb3f2568 ("ASoC: wm8974: configure pll and mclk divider automatically")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250821082639.1301453-4-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rfkill/rfkill-gpio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wm8974.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/rfkill/rfkill-gpio.c
-+++ b/net/rfkill/rfkill-gpio.c
-@@ -79,10 +79,10 @@ static int rfkill_gpio_acpi_probe(struct
- static int rfkill_gpio_probe(struct platform_device *pdev)
- {
- 	struct rfkill_gpio_data *rfkill;
--	struct gpio_desc *gpio;
-+	const char *type_name = NULL;
- 	const char *name_property;
- 	const char *type_property;
--	const char *type_name;
-+	struct gpio_desc *gpio;
- 	int ret;
+diff --git a/sound/soc/codecs/wm8974.c b/sound/soc/codecs/wm8974.c
+index 260bac695b20a..2aaa1cbe68b71 100644
+--- a/sound/soc/codecs/wm8974.c
++++ b/sound/soc/codecs/wm8974.c
+@@ -419,10 +419,14 @@ static int wm8974_update_clocks(struct snd_soc_dai *dai)
+ 	fs256 = 256 * priv->fs;
  
- 	rfkill = devm_kzalloc(&pdev->dev, sizeof(*rfkill), GFP_KERNEL);
+ 	f = wm8974_get_mclkdiv(priv->mclk, fs256, &mclkdiv);
+-
+ 	if (f != priv->mclk) {
+ 		/* The PLL performs best around 90MHz */
+-		fpll = wm8974_get_mclkdiv(22500000, fs256, &mclkdiv);
++		if (fs256 % 8000)
++			f = 22579200;
++		else
++			f = 24576000;
++
++		fpll = wm8974_get_mclkdiv(f, fs256, &mclkdiv);
+ 	}
+ 
+ 	wm8974_set_dai_pll(dai, 0, 0, priv->mclk, fpll);
+-- 
+2.51.0
+
 
 
