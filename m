@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928A01C1ADB;
-	Mon, 22 Sep 2025 19:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE04F2820D1;
+	Mon, 22 Sep 2025 19:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569968; cv=none; b=dySXt6glPXtFe7u6rwkD0ZMP4CoEmOuOWnrRu3YeO+OyBCLAul2KtnKAea11xcL/0axpkQwroLQZF19tZ6Mj8VuMtwWAB2k0vGCBnYER1sTCgCpTY/keG4j+/ukdR9A4wMdvLgSrMKhS9zMcAgsjYmMRth+OOapwb6gGVam+iRk=
+	t=1758569968; cv=none; b=q4xp3kUGwDUQZcDo/juDYSICNxoGdAW4p1sTKBSRxt1cx2mFEmO2zA9GMBgKxwEdwqoJGlkKhp4yyxAyRUK6gN8AT5lajfqw4FXgTN+fvXmD5mzh8abt7gTWkeW36GTsPxg4XaGoPHj+MbLVH/NiMevWMvNftBt8iIgC0u1a7QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758569968; c=relaxed/simple;
-	bh=SwpkfGvBXftHTVzRpQQfdRYTcBpsjrewvtRzHq8G/K0=;
+	bh=H7sguuAodPDZJuMqswIbGNCkzzzY2vA/JRG0e2wXibk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npdyyOiQyq43CFFEVrDot8ZkQcvsryTqkaU8VbfjfDQ+6ji9taJfMzzybhx6wRrg9GmZpeF0sTjtcMnZPiYcPUCrdPkUREHbx66HF6NwZTwpAEY0paLuc/Nxu3eVkJiCJUC9EF3quAANl4RQ0waClU1YntHKyJYoq4EWnpWm8g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIywb+KR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWg+Ogeyls7mA5DmKK58zQr8TbgTLWQ46KWi9ls+N0/XC9L+sOCVOJolHdvdtmxJ3i5vZs7TRVpGh1W4xWaQqzFIg+KYAzhgwX6bhh7NuqNVBmAvvmb/fJ5uyCKWEt7IXfhYVXPtB4ZFb3w88MqD/omBXBsCuMZnWGXOwZwH29g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vu8PiziJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIywb+KR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55D1C4CEF0;
-	Mon, 22 Sep 2025 19:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vu8PiziJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C48C4CEF5;
+	Mon, 22 Sep 2025 19:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569966;
-	bh=SwpkfGvBXftHTVzRpQQfdRYTcBpsjrewvtRzHq8G/K0=;
+	s=korg; t=1758569968;
+	bh=H7sguuAodPDZJuMqswIbGNCkzzzY2vA/JRG0e2wXibk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIywb+KRZeFW9nKl6QidVmplCWvSX7JUwQhdFtaoZiLXkw6YCZ8B3S90qpwDjIMf9
-	 Pjs+WmsSJcWewIhTmpD5TzJ8oNlw0ryF6Lxk3ZOW1xniKYPIAyUlq+DcJlj/QSseOi
-	 SH21tiHwUhYr4Gs/Iq9ZYMLGABMSOogGi9LYVbE4=
+	b=Vu8PiziJ0ZIAGHU3oE4OTWaeC3/yQDbJJsrOTP6J4AI+kr0qtI2naUgKSVRz7sdFP
+	 Meoqj44xGkZWeZHRMZGiylN07uO5GU/y4SlnA99r80r7NsnoAtW+pkx7K1GstoACWj
+	 naF9KIZOuSLxzJMp8XmW/J0Zq8UtYGp0/jUW0RfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 070/105] io_uring/kbuf: drop WARN_ON_ONCE() from incremental length check
-Date: Mon, 22 Sep 2025 21:29:53 +0200
-Message-ID: <20250922192410.739180672@linuxfoundation.org>
+	Ankur Tyagi <ankur.tyagi85@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 071/105] ASoC: wm8940: Correct PLL rate rounding
+Date: Mon, 22 Sep 2025 21:29:54 +0200
+Message-ID: <20250922192410.762143720@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
 References: <20250922192408.913556629@linuxfoundation.org>
@@ -49,29 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-Partially based on commit 98b6fa62c84f2e129161e976a5b9b3cb4ccd117b upstream.
+[ Upstream commit d05afb53c683ef7ed1228b593c3360f4d3126c58 ]
 
-This can be triggered by userspace, so just drop it. The condition
-is appropriately handled.
+Using a single value of 22500000 for both 48000Hz and 44100Hz audio
+will sometimes result in returning wrong dividers due to rounding.
+Update the code to use the actual value for both.
 
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 294833fc9eb4 ("ASoC: wm8940: Rewrite code to set proper clocks")
+Reported-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Tested-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
+Link: https://patch.msgid.link/20250821082639.1301453-2-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/kbuf.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/wm8940.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/io_uring/kbuf.h
-+++ b/io_uring/kbuf.h
-@@ -143,7 +143,7 @@ static inline bool io_kbuf_commit(struct
- 		struct io_uring_buf *buf;
+diff --git a/sound/soc/codecs/wm8940.c b/sound/soc/codecs/wm8940.c
+index 8a532f7d750c8..5e8ed8a2c270a 100644
+--- a/sound/soc/codecs/wm8940.c
++++ b/sound/soc/codecs/wm8940.c
+@@ -693,7 +693,12 @@ static int wm8940_update_clocks(struct snd_soc_dai *dai)
+ 	f = wm8940_get_mclkdiv(priv->mclk, fs256, &mclkdiv);
+ 	if (f != priv->mclk) {
+ 		/* The PLL performs best around 90MHz */
+-		fpll = wm8940_get_mclkdiv(22500000, fs256, &mclkdiv);
++		if (fs256 % 8000)
++			f = 22579200;
++		else
++			f = 24576000;
++
++		fpll = wm8940_get_mclkdiv(f, fs256, &mclkdiv);
+ 	}
  
- 		buf = io_ring_head_to_buf(bl->buf_ring, bl->head, bl->mask);
--		if (WARN_ON_ONCE(len > buf->len))
-+		if (len > buf->len)
- 			len = buf->len;
- 		buf->len -= len;
- 		if (buf->len) {
+ 	wm8940_set_dai_pll(dai, 0, 0, priv->mclk, fpll);
+-- 
+2.51.0
+
 
 
