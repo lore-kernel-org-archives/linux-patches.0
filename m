@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD402F0C5C;
-	Mon, 22 Sep 2025 19:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F348E2F0C5C;
+	Mon, 22 Sep 2025 19:43:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570197; cv=none; b=RaxPlIHDgRsZUTb3uPeXLO26/OS2GJXjlks5hRPBBocSIksPaWJlm3ZBnEhmqzH3pvgoZYQ0uoVkNsJiC9NAVSfvILIn1+oa7zrDK3xWfWixu6dQsqbFp2sg45HAie6CqAKKjBf5gsUshcStzfP5meRmxepazuefyXGutX/n8cc=
+	t=1758570201; cv=none; b=XnzRgNATfcjdjtF2GnN8zAPB59RWarJN9iXGih9qCVUB1oc5EC6hbCjIUDg61elFHBcJHZ6ZL7D4+pIVwTuqpv9GeciB5ZdsalKlKpFEVVO7eXjlJ0xpGPD3YP56glwsyoF8d0hW0E8iW42yL1grgpE5PaGuJW6xk538iw5GGXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570197; c=relaxed/simple;
-	bh=8dBvb8DSp3dNnpXP48lEx6o4tYUcb9OWJrn3SpZYm58=;
+	s=arc-20240116; t=1758570201; c=relaxed/simple;
+	bh=cpIeZ5ARMLPTySaC8ikmFxN7Ajo8YOXze4Y2PwRG4fQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3tRpdkm8MrFkM1SQLT/O43ytPVEPjnS09OYy+yqooPfzuX4BpV6AxYjYGPL7wsBITcNny1E8bWoemDss4HoubhxuOYht750MsA6ZcEOCzweNdWFdeR/k+ePYQGo7ixnxNPZG4DCJ369ZvhiRm1VqciOUBNabClUl8NFpmyUEPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQdJMtTz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pJYyD9t3bXarGX3FbRUYwJFNiGZANF3X1GcDoTXaNpWnTSm7I6jyqYBy8uY05IFKt+ydiDKhDjDU2W76W4SLi8hqAm9ZXwWLcVwOfl0aMZm0+VpcX1sbdgIs3RsA4Qlj7EEdPLV/ZaoO0O22l0ucBwS4iMtST7dAoOQdhC5FvQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7HaAEiQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQdJMtTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC15FC4CEF5;
-	Mon, 22 Sep 2025 19:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7HaAEiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CBEC4CEF0;
+	Mon, 22 Sep 2025 19:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570197;
-	bh=8dBvb8DSp3dNnpXP48lEx6o4tYUcb9OWJrn3SpZYm58=;
+	s=korg; t=1758570199;
+	bh=cpIeZ5ARMLPTySaC8ikmFxN7Ajo8YOXze4Y2PwRG4fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQdJMtTzLl3Pig6S5LpfEleHsjZCWgNFysiTg2xS2Q3PAJjT9FvtWVDEnnSLn0R87
-	 aCru1xu64Fdv21n55FsYgNAzzSHDUyRc30AU+HCgwliVHIr3e2/oDfF9I62vSn9ak2
-	 2LqsdBOdERfXzAjtdEUjSSI7YA6KzeD0kxQXoMVE=
+	b=Z7HaAEiQ+RQgzeO14w86YsEEyW0HBtyATpDTHGU/FtDE0STJw3LP7WHdpYx5Yiwnn
+	 9pVO65t2oYXNGGA4Brb4rIBQSY1JJF22e4Cn6tKOwdwQz+3YFt9AnVRALZFdYVxvMX
+	 CrXRCSlA/VrhxZuYDb8JldF0qwKqlZbYOSY6ZAdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Alexey Nepomnyashih <sdl@nppct.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 043/149] net: clear sk->sk_ino in sk_set_socket(sk, NULL)
-Date: Mon, 22 Sep 2025 21:29:03 +0200
-Message-ID: <20250922192413.952284388@linuxfoundation.org>
+Subject: [PATCH 6.16 044/149] net: liquidio: fix overflow in octeon_init_instr_queue()
+Date: Mon, 22 Sep 2025 21:29:04 +0200
+Message-ID: <20250922192413.977007064@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,57 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-[ Upstream commit 87ebb628a5acb892eba41ef1d8989beb8f036034 ]
+[ Upstream commit cca7b1cfd7b8a0eff2a3510c5e0f10efe8fa3758 ]
 
-Andrei Vagin reported that blamed commit broke CRIU.
+The expression `(conf->instr_type == 64) << iq_no` can overflow because
+`iq_no` may be as high as 64 (`CN23XX_MAX_RINGS_PER_PF`). Casting the
+operand to `u64` ensures correct 64-bit arithmetic.
 
-Indeed, while we want to keep sk_uid unchanged when a socket
-is cloned, we want to clear sk->sk_ino.
-
-Otherwise, sock_diag might report multiple sockets sharing
-the same inode number.
-
-Move the clearing part from sock_orphan() to sk_set_socket(sk, NULL),
-called both from sock_orphan() and sk_clone_lock().
-
-Fixes: 5d6b58c932ec ("net: lockless sock_i_ino()")
-Closes: https://lore.kernel.org/netdev/aMhX-VnXkYDpKd9V@google.com/
-Closes: https://github.com/checkpoint-restore/criu/issues/2744
-Reported-by: Andrei Vagin <avagin@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Andrei Vagin <avagin@google.com>
-Link: https://patch.msgid.link/20250917135337.1736101-1-edumazet@google.com
+Fixes: f21fb3ed364b ("Add support of Cavium Liquidio ethernet adapters")
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/request_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index a348ae145eda4..6e9f4c126672d 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2061,6 +2061,9 @@ static inline void sk_set_socket(struct sock *sk, struct socket *sock)
- 	if (sock) {
- 		WRITE_ONCE(sk->sk_uid, SOCK_INODE(sock)->i_uid);
- 		WRITE_ONCE(sk->sk_ino, SOCK_INODE(sock)->i_ino);
-+	} else {
-+		/* Note: sk_uid is unchanged. */
-+		WRITE_ONCE(sk->sk_ino, 0);
- 	}
- }
+diff --git a/drivers/net/ethernet/cavium/liquidio/request_manager.c b/drivers/net/ethernet/cavium/liquidio/request_manager.c
+index de8a6ce86ad7e..12105ffb5dac6 100644
+--- a/drivers/net/ethernet/cavium/liquidio/request_manager.c
++++ b/drivers/net/ethernet/cavium/liquidio/request_manager.c
+@@ -126,7 +126,7 @@ int octeon_init_instr_queue(struct octeon_device *oct,
+ 	oct->io_qmask.iq |= BIT_ULL(iq_no);
  
-@@ -2082,8 +2085,6 @@ static inline void sock_orphan(struct sock *sk)
- 	sock_set_flag(sk, SOCK_DEAD);
- 	sk_set_socket(sk, NULL);
- 	sk->sk_wq  = NULL;
--	/* Note: sk_uid is unchanged. */
--	WRITE_ONCE(sk->sk_ino, 0);
- 	write_unlock_bh(&sk->sk_callback_lock);
- }
+ 	/* Set the 32B/64B mode for each input queue */
+-	oct->io_qmask.iq64B |= ((conf->instr_type == 64) << iq_no);
++	oct->io_qmask.iq64B |= ((u64)(conf->instr_type == 64) << iq_no);
+ 	iq->iqcmd_64B = (conf->instr_type == 64);
  
+ 	oct->fn_list.setup_iq_regs(oct, iq_no);
 -- 
 2.51.0
 
