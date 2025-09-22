@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7552F0C64;
-	Mon, 22 Sep 2025 19:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0824191F66;
+	Mon, 22 Sep 2025 19:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569514; cv=none; b=BD5ZmevmFN8CDCpYR6DGB9ZOS/nyyG7N3eQ0QjQBuzSZXcz14Qa9HM25Sqhe3V1t6hWvHRRpA6lj6Vf6iEsUtqojTLKNIeuV6NHtluhR+33zMHYvpqV779j5C2R5y+rniDPLojslmninbWwRfxxQO06m+YKEdBoKfaw4zjrrmr4=
+	t=1758569516; cv=none; b=ajn6V/ufsQHsI7ChOZXRb6v1ddp8h5iPrmUfSwNOkznnM2h7lEUUgWLyrp9GMIYDOstEQZa2tD36rtTudwAhfaYhF1jrozi+TBNFw7u+OfWqDMf9OTZvfGCYrnGeCaUC66uTsrN8Ezid00Cdk5LevqckN0R0FhA9XFGcfi/0SWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569514; c=relaxed/simple;
-	bh=PIBz8LgnT1Yh6Lk5lXd7KREL3wqyrFbBj9tqKCIGfrY=;
+	s=arc-20240116; t=1758569516; c=relaxed/simple;
+	bh=TwYEtDF4wRTiwmfBVu912lyTYmal8JkR4kzNrHfth1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8cHwfXrM4I5jd+BSkoimpEIJQwIDfG9XiAl+FXrVaKX1/p++nsNduRXFLy6WlLrMSc5ktOBL2ghWa02Ye2HCAiF9RR802FtOx0gdiEUW3u7Wm4Nzh62TGKFYWRlmXn5dWu/EHfhaoNGWERX1tertml55A3p3ajGnlepsg/m6q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLTKV1QV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dkFqvDFaFfBweXf9NF8trPA+l6WMsjtUdSMDbVkwQgWyUg1YCDaylPlmEtZKsx25UZdO3YF6fqjDi4aZ6Nnm1JmcfSaef2hfQ+lxR0DBm17EeV4PfmxjsO46bSttN0927j0/VBJgl9XNA3khoYkzCWaaYTxnz4JzFSXOe4jBJys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dyb0QTWG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLTKV1QV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4B9C4CEF0;
-	Mon, 22 Sep 2025 19:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dyb0QTWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBA5C4CEF0;
+	Mon, 22 Sep 2025 19:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569514;
-	bh=PIBz8LgnT1Yh6Lk5lXd7KREL3wqyrFbBj9tqKCIGfrY=;
+	s=korg; t=1758569516;
+	bh=TwYEtDF4wRTiwmfBVu912lyTYmal8JkR4kzNrHfth1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLTKV1QVNmyVXeuRiXmAnhqzVt629rTi4X5VhH3Ibv0oUJ1+Bbw/+/X+4IYzcp0i7
-	 sz46aipndB7MQrMZ0KbzY7qeZYKcrI4Gu4dejhbEe/4P18jFRRmFFZnoD96Efs94uO
-	 QEFI0mZC5qz9B3Dw2SPBtNSeNRhI0cAskzXajt40=
+	b=Dyb0QTWGv5d326x/+x8roEv51wNDHSzE1+X/0+pbfch73sY0BztWFOO7NwrrVdR95
+	 xKVOLW3IrjFpeqKMWIveNKnl0DlFyeLpHuYup4INUpWzfmvOG7IUIUUGvoZrzSbrkC
+	 iQnNzKWeAshJSIGdZxDDdel1cmjIliuRF0lxqIAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 22/61] nilfs2: fix CFI failure when accessing /sys/fs/nilfs2/features/*
-Date: Mon, 22 Sep 2025 21:29:15 +0200
-Message-ID: <20250922192404.161881924@linuxfoundation.org>
+	Jerry Lv <Jerry.Lv@axis.com>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.1 23/61] power: supply: bq27xxx: fix error return in case of no bq27000 hdq battery
+Date: Mon, 22 Sep 2025 21:29:16 +0200
+Message-ID: <20250922192404.188398667@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -52,95 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: H. Nikolaus Schaller <hns@goldelico.com>
 
-commit 025e87f8ea2ae3a28bf1fe2b052bfa412c27ed4a upstream.
+commit 2c334d038466ac509468fbe06905a32d202117db upstream.
 
-When accessing one of the files under /sys/fs/nilfs2/features when
-CONFIG_CFI_CLANG is enabled, there is a CFI violation:
+Since commit
 
-  CFI failure at kobj_attr_show+0x59/0x80 (target: nilfs_feature_revision_show+0x0/0x30; expected type: 0xfc392c4d)
-  ...
-  Call Trace:
-   <TASK>
-   sysfs_kf_seq_show+0x2a6/0x390
-   ? __cfi_kobj_attr_show+0x10/0x10
-   kernfs_seq_show+0x104/0x15b
-   seq_read_iter+0x580/0xe2b
-  ...
+	commit f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
 
-When the kobject of the kset for /sys/fs/nilfs2 is initialized, its ktype
-is set to kset_ktype, which has a ->sysfs_ops of kobj_sysfs_ops.  When
-nilfs_feature_attr_group is added to that kobject via
-sysfs_create_group(), the kernfs_ops of each files is sysfs_file_kfops_rw,
-which will call sysfs_kf_seq_show() when ->seq_show() is called.
-sysfs_kf_seq_show() in turn calls kobj_attr_show() through
-->sysfs_ops->show().  kobj_attr_show() casts the provided attribute out to
-a 'struct kobj_attribute' via container_of() and calls ->show(), resulting
-in the CFI violation since neither nilfs_feature_revision_show() nor
-nilfs_feature_README_show() match the prototype of ->show() in 'struct
-kobj_attribute'.
+the console log of some devices with hdq enabled but no bq27000 battery
+(like e.g. the Pandaboard) is flooded with messages like:
 
-Resolve the CFI violation by adjusting the second parameter in
-nilfs_feature_{revision,README}_show() from 'struct attribute' to 'struct
-kobj_attribute' to match the expected prototype.
+[   34.247833] power_supply bq27000-battery: driver failed to report 'status' property: -1
 
-Link: https://lkml.kernel.org/r/20250906144410.22511-1-konishi.ryusuke@gmail.com
-Fixes: aebe17f68444 ("nilfs2: add /sys/fs/nilfs2/features group")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202509021646.bc78d9ef-lkp@intel.com/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+as soon as user-space is finding a /sys entry and trying to read the
+"status" property.
+
+It turns out that the offending commit changes the logic to now return the
+value of cache.flags if it is <0. This is likely under the assumption that
+it is an error number. In normal errors from bq27xxx_read() this is indeed
+the case.
+
+But there is special code to detect if no bq27000 is installed or accessible
+through hdq/1wire and wants to report this. In that case, the cache.flags
+are set historically by
+
+	commit 3dd843e1c26a ("bq27000: report missing device better.")
+
+to constant -1 which did make reading properties return -ENODEV. So everything
+appeared to be fine before the return value was passed upwards.
+
+Now the -1 is returned as -EPERM instead of -ENODEV, triggering the error
+condition in power_supply_format_property() which then floods the console log.
+
+So we change the detection of missing bq27000 battery to simply set
+
+	cache.flags = -ENODEV
+
+instead of -1.
+
+Fixes: f16d9fb6cf03 ("power: supply: bq27xxx: Retrieve again when busy")
+Cc: Jerry Lv <Jerry.Lv@axis.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+Link: https://lore.kernel.org/r/692f79eb6fd541adb397038ea6e750d4de2deddf.1755945297.git.hns@goldelico.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sysfs.c |    4 ++--
- fs/nilfs2/sysfs.h |    8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/sysfs.c
-+++ b/fs/nilfs2/sysfs.c
-@@ -1075,7 +1075,7 @@ void nilfs_sysfs_delete_device_group(str
-  ************************************************************************/
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1873,7 +1873,7 @@ static void bq27xxx_battery_update_unloc
  
- static ssize_t nilfs_feature_revision_show(struct kobject *kobj,
--					    struct attribute *attr, char *buf)
-+					    struct kobj_attribute *attr, char *buf)
- {
- 	return sysfs_emit(buf, "%d.%d\n",
- 			NILFS_CURRENT_REV, NILFS_MINOR_REV);
-@@ -1087,7 +1087,7 @@ static const char features_readme_str[]
- 	"(1) revision\n\tshow current revision of NILFS file system driver.\n";
- 
- static ssize_t nilfs_feature_README_show(struct kobject *kobj,
--					 struct attribute *attr,
-+					 struct kobj_attribute *attr,
- 					 char *buf)
- {
- 	return sysfs_emit(buf, features_readme_str);
---- a/fs/nilfs2/sysfs.h
-+++ b/fs/nilfs2/sysfs.h
-@@ -50,16 +50,16 @@ struct nilfs_sysfs_dev_subgroups {
- 	struct completion sg_segments_kobj_unregister;
- };
- 
--#define NILFS_COMMON_ATTR_STRUCT(name) \
-+#define NILFS_KOBJ_ATTR_STRUCT(name) \
- struct nilfs_##name##_attr { \
- 	struct attribute attr; \
--	ssize_t (*show)(struct kobject *, struct attribute *, \
-+	ssize_t (*show)(struct kobject *, struct kobj_attribute *, \
- 			char *); \
--	ssize_t (*store)(struct kobject *, struct attribute *, \
-+	ssize_t (*store)(struct kobject *, struct kobj_attribute *, \
- 			 const char *, size_t); \
- }
- 
--NILFS_COMMON_ATTR_STRUCT(feature);
-+NILFS_KOBJ_ATTR_STRUCT(feature);
- 
- #define NILFS_DEV_ATTR_STRUCT(name) \
- struct nilfs_##name##_attr { \
+ 	cache.flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, has_singe_flag);
+ 	if ((cache.flags & 0xff) == 0xff)
+-		cache.flags = -1; /* read error */
++		cache.flags = -ENODEV; /* read error */
+ 	if (cache.flags >= 0) {
+ 		cache.temperature = bq27xxx_battery_read_temperature(di);
+ 		if (di->regs[BQ27XXX_REG_TTE] != INVALID_REG_ADDR)
 
 
