@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D306817A2EA;
-	Mon, 22 Sep 2025 19:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607E3C8E6;
+	Mon, 22 Sep 2025 19:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569541; cv=none; b=r6A7vNzKQ/DyiVGe75bmdwWDw6njrGaiC276rwoWwttBtPI9dC/t9mj2XlOzRakSZcszeVnm/zKmtmS1OBnw10OBtQG0sNQmz+d13ig1t/mv2uRD9CbwgJ46zOESPZA8KLD7sG9G3cb0td9YRjcKkvpeQrv19Vf0Az7IbivzAyg=
+	t=1758569544; cv=none; b=tWFiDWPlYRiou7ECkQmdNJGYHxUVonpPbNxNAaggQvdZWthiVlTf0d2pC9JIKJctfR0zQiP1z2GzsExDJzmTpEqzN96S2SD3m5cTMxtJ2w0CVdOZs00HGIomYtCjxNfyoNDZKbpfC4tsw18hz2CsII5bKhgaBsFjNMm27PfVAZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569541; c=relaxed/simple;
-	bh=HU/LkVE4xK7U6YYazTC/lhk+ASfRqyKfhcWbdecCmLo=;
+	s=arc-20240116; t=1758569544; c=relaxed/simple;
+	bh=I9Qm24cn+DKRtgVN3i1lMgQ0Zi+OH2qtTKYIfKoEyn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0/Tcbz2VZAmqdtelRJ0tW9UytR/aqVCdqiTiKxMI0K4bPWQ9/4K0e/tlKrTYgBiaxl4MjvNSF5IIMSGlWs1AGtcNJV/pSJZqdB1j5+tAHyx3j7ULRiVnPvKlOQ8YqxAlZW4NaSEJKY8hA4qNaDXPlIKwFP3R1gJvDo8a9Zqo/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7EdgjeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C4zmwldgVnm5q2yWg6iuEtqo/NBJRct3u2HPtPEpC3XkfM3u+evTjDIn1J0pwG2RMSs3O8aRBQGaQhHCZ0K4IOtMgc02ApJ2Hv3Qu2pu5jsa9ILgeenIs8pRVXV8UKIlHhDRTcf6ETh/hI8FMaYJKRkJorph7YUJCYHeQR7vGbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zui917lR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7EdgjeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288FEC4CEF0;
-	Mon, 22 Sep 2025 19:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zui917lR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92B8C4CEF0;
+	Mon, 22 Sep 2025 19:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569541;
-	bh=HU/LkVE4xK7U6YYazTC/lhk+ASfRqyKfhcWbdecCmLo=;
+	s=korg; t=1758569544;
+	bh=I9Qm24cn+DKRtgVN3i1lMgQ0Zi+OH2qtTKYIfKoEyn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7EdgjeHmTSdUpHOemZlldwEImHZN/ZAZ6jelnQZV9ksOQK18HOL4b9d61NOU06Dg
-	 D6BhG6AnS/SyTdOfl4f6kPErdO44DKHSz7Yrki1ZKsO1kYIZDKPekXqDUOR3V37u3B
-	 +JsD99p7e60xiHKK1AMhPu+HB0M+fateJrWgADrk=
+	b=Zui917lRx/Ez1gpapJrHxbd0sMnMmbRG4+7Daw5zhyZOE/hO+IBM7pK+efbC4+d8S
+	 B9y41w4x3/8H2YmOjdNzt5Eb9mOAeVvTXaSEVyiTEkH4XkV4YXKXOSEfZouiUqN92r
+	 b/C/q7LR2iPF3se/ujOEKOg7n0EjySXBllHq180Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 21/61] ksmbd: smbdirect: verify remaining_data_length respects max_fragmented_recv_size
-Date: Mon, 22 Sep 2025 21:29:14 +0200
-Message-ID: <20250922192404.133503441@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.1 12/61] i40e: remove redundant memory barrier when cleaning Tx descs
+Date: Mon, 22 Sep 2025 21:29:05 +0200
+Message-ID: <20250922192403.884638115@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -55,59 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-commit e1868ba37fd27c6a68e31565402b154beaa65df0 upstream.
+[ Upstream commit e37084a26070c546ae7961ee135bbfb15fbe13fd ]
 
-This is inspired by the check for data_offset + data_length.
+i40e has a feature which writes to memory location last descriptor
+successfully sent. Memory barrier in i40e_clean_tx_irq() was used to
+avoid forward-reading descriptor fields in case DD bit was not set.
+Having mentioned feature in place implies that such situation will not
+happen as we know in advance how many descriptors HW has dealt with.
 
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Cc: stable@vger.kernel.org
-Fixes: 2ea086e35c3d ("ksmbd: add buffer validation for smb direct")
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Besides, this barrier placement was wrong. Idea is to have this
+protection *after* reading DD bit from HW descriptor, not before.
+Digging through git history showed me that indeed barrier was before DD
+bit check, anyways the commit introducing i40e_get_head() should have
+wiped it out altogether.
+
+Also, there was one commit doing s/read_barrier_depends/smp_rmb when get
+head feature was already in place, but it was only theoretical based on
+ixgbe experiences, which is different in these terms as that driver has
+to read DD bit from HW descriptor.
+
+Fixes: 1943d8ba9507 ("i40e/i40evf: enable hardware feature head write back")
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_rdma.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -548,7 +548,7 @@ static void recv_done(struct ib_cq *cq,
- 	case SMB_DIRECT_MSG_DATA_TRANSFER: {
- 		struct smb_direct_data_transfer *data_transfer =
- 			(struct smb_direct_data_transfer *)recvmsg->packet;
--		unsigned int data_offset, data_length;
-+		u32 remaining_data_length, data_offset, data_length;
- 		int avail_recvmsg_count, receive_credits;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index 3d83fccf742b1..2ede35ba3919b 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -949,9 +949,6 @@ static bool i40e_clean_tx_irq(struct i40e_vsi *vsi,
+ 		if (!eop_desc)
+ 			break;
  
- 		if (wc->byte_len <
-@@ -558,6 +558,7 @@ static void recv_done(struct ib_cq *cq,
- 			return;
- 		}
- 
-+		remaining_data_length = le32_to_cpu(data_transfer->remaining_data_length);
- 		data_length = le32_to_cpu(data_transfer->data_length);
- 		data_offset = le32_to_cpu(data_transfer->data_offset);
- 		if (wc->byte_len < data_offset ||
-@@ -565,6 +566,14 @@ static void recv_done(struct ib_cq *cq,
- 			put_recvmsg(t, recvmsg);
- 			smb_direct_disconnect_rdma_connection(t);
- 			return;
-+		}
-+		if (remaining_data_length > t->max_fragmented_recv_size ||
-+		    data_length > t->max_fragmented_recv_size ||
-+		    (u64)remaining_data_length + (u64)data_length >
-+		    (u64)t->max_fragmented_recv_size) {
-+			put_recvmsg(t, recvmsg);
-+			smb_direct_disconnect_rdma_connection(t);
-+			return;
- 		}
- 
- 		if (data_length) {
+-		/* prevent any other reads prior to eop_desc */
+-		smp_rmb();
+-
+ 		i40e_trace(clean_tx_irq, tx_ring, tx_desc, tx_buf);
+ 		/* we have caught up to head, no work left to do */
+ 		if (tx_head == tx_desc)
+-- 
+2.51.0
+
 
 
