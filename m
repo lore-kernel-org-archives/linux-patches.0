@@ -1,43 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844A82F0C52;
-	Mon, 22 Sep 2025 19:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219F82F0C52;
+	Mon, 22 Sep 2025 19:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570238; cv=none; b=A36vsgacZbB/4CpJIIFhmgYxG/6ajTKc7D30yJgYWoSYo9jBV9ddq0hsuCB9aoIGvUnQOYjTr9jI5yhCq16iYWAqWzhgmPIIKh0aRTdROwxrTpL3ihZVgs56FPlJ2gXMcmyZfuodFI9dBCmiiHjvBLFH6Qw7dSTt1t6dSFzIG9s=
+	t=1758570241; cv=none; b=kFT2Lmj6ST06Fvb4czEdw3UUfovi68eeZr1Wr1BwxOspof49NEJyIe1mt8jYrPaS0WHNPY8boTzPP6lmcoNi/H45sHyN3LPoM3eFsKmXWmQYnbyEyDTm0pfEK6BL6r3FiFGqREKmSCAABRYEZWXbdQE0tOjvmVlNeTcOTVJ1kzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570238; c=relaxed/simple;
-	bh=kx31ylSRz9djZwS31wsJkYKXF7JB5ReqH4cDGKSbycI=;
+	s=arc-20240116; t=1758570241; c=relaxed/simple;
+	bh=4/FlbNyk14T/84dH6be2H1bk1/Hm0/bOebmlRLRqIfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4j4nfSmnOlzhHbq8HvKEr+w4c257G9BS9gPIsLKQTCa0jdOJYM39x6d/BcYzQBeHnM4zdSCb6JEjrZHgDlTuH912YjhP9mgKe24TarqzrBMCZnCvbh73d45hjsUCwozmNx0y9Hds/Q4WkqVZw1sc8NV5+uMkPiRCqR4YfGHmuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffov56a4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h2C1fWrtUWWwIjcK8ooW16LKFmAtjcKChHciOuDvwS+g82tLf028vxXOB0YTcVxu5kb4U5LLurodHG9QoZHzv2LR2f9QP3NZBV4FZ9XxgGL5OTthsnz0/M/RkP5BztlwdL4ZB5K0GDk+c937+ABzzim/4aRuRR8cVhnobwbFNcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/R907Zn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffov56a4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCF6C4CEF0;
-	Mon, 22 Sep 2025 19:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/R907Zn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A218C4CEF0;
+	Mon, 22 Sep 2025 19:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570238;
-	bh=kx31ylSRz9djZwS31wsJkYKXF7JB5ReqH4cDGKSbycI=;
+	s=korg; t=1758570241;
+	bh=4/FlbNyk14T/84dH6be2H1bk1/Hm0/bOebmlRLRqIfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ffov56a4Lwl71BpMcDGLbx2MF05dDiF/9ElcZ2vgWib2XWbMeWCMKQxr7KQIzNiVO
-	 5yEaBQP6pS0J/bo7jsHXdq0XJyuhsk3F5c+zbXUbaMdFcoerync83GVjKLNbcX2t/9
-	 Sze41tPKwdXSxm6kNghuTl4r5RFdOaU4ewfAhjAg=
+	b=S/R907ZnDiAkf1jHvkUwGW9ZkPuCJ9pEwuLNQ1vVmPdDZ07xWICdI3qa9YUKk+1uX
+	 c/+hFMvIZ4G42LQ8ay7ExRFLdjnARXsVS6LRc5Vi7DWqOBzfXZ9GYjHdVtaF2AhG8B
+	 Hmd+vTsEcbar4LygP+kKbBj+MubGuB45EDweQi0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhe <lizhe.67@bytedance.com>,
+	Hugh Dickins <hughd@google.com>,
 	David Hildenbrand <david@redhat.com>,
-	Dev Jain <dev.jain@arm.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>,
 	Jason Gunthorpe <jgg@ziepe.ca>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	John Hubbard <jhubbard@nvidia.com>,
-	Muchun Song <muchun.song@linux.dev>,
+	Keir Fraser <keirf@google.com>,
+	Konstantin Khlebnikov <koct9i@gmail.com>,
+	Li Zhe <lizhe.67@bytedance.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Peter Xu <peterx@redhat.com>,
+	Rik van Riel <riel@surriel.com>,
+	Shivank Garg <shivankg@amd.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wei Xu <weixugc@google.com>,
+	Will Deacon <will@kernel.org>,
+	yangge <yangge1116@126.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.16 060/149] gup: optimize longterm pin_user_pages() for large folio
-Date: Mon, 22 Sep 2025 21:29:20 +0200
-Message-ID: <20250922192414.394799141@linuxfoundation.org>
+Subject: [PATCH 6.16 061/149] mm/gup: local lru_add_drain() to avoid lru_add_drain_all()
+Date: Mon, 22 Sep 2025 21:29:21 +0200
+Message-ID: <20250922192414.422164822@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -56,132 +71,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhe <lizhe.67@bytedance.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit a03db236aebfaeadf79396dbd570896b870bda01 upstream.
+commit a09a8a1fbb374e0053b97306da9dbc05bd384685 upstream.
 
-In the current implementation of longterm pin_user_pages(), we invoke
-collect_longterm_unpinnable_folios().  This function iterates through the
-list to check whether each folio belongs to the "longterm_unpinnabled"
-category.  The folios in this list essentially correspond to a contiguous
-region of userspace addresses, with each folio representing a physical
-address in increments of PAGESIZE.
+In many cases, if collect_longterm_unpinnable_folios() does need to drain
+the LRU cache to release a reference, the cache in question is on this
+same CPU, and much more efficiently drained by a preliminary local
+lru_add_drain(), than the later cross-CPU lru_add_drain_all().
 
-If this userspace address range is mapped with large folio, we can
-optimize the performance of function collect_longterm_unpinnable_folios()
-by reducing the using of READ_ONCE() invoked in
-pofs_get_folio()->page_folio()->_compound_head().
+Marked for stable, to counter the increase in lru_add_drain_all()s from
+"mm/gup: check ref_count instead of lru before migration".  Note for clean
+backports: can take 6.16 commit a03db236aebf ("gup: optimize longterm
+pin_user_pages() for large folio") first.
 
-Also, we can simplify the logic of collect_longterm_unpinnable_folios().
-Instead of comparing with prev_folio after calling pofs_get_folio(), we
-can check whether the next page is within the same folio.
-
-The performance test results, based on v6.15, obtained through the
-gup_test tool from the kernel source tree are as follows.  We achieve an
-improvement of over 66% for large folio with pagesize=2M.  For small
-folio, we have only observed a very slight degradation in performance.
-
-Without this patch:
-
-    [root@localhost ~] ./gup_test -HL -m 8192 -n 512
-    TAP version 13
-    1..1
-    # PIN_LONGTERM_BENCHMARK: Time: get:14391 put:10858 us#
-    ok 1 ioctl status 0
-    # Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
-    [root@localhost ~]# ./gup_test -LT -m 8192 -n 512
-    TAP version 13
-    1..1
-    # PIN_LONGTERM_BENCHMARK: Time: get:130538 put:31676 us#
-    ok 1 ioctl status 0
-    # Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
-
-With this patch:
-
-    [root@localhost ~] ./gup_test -HL -m 8192 -n 512
-    TAP version 13
-    1..1
-    # PIN_LONGTERM_BENCHMARK: Time: get:4867 put:10516 us#
-    ok 1 ioctl status 0
-    # Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
-    [root@localhost ~]# ./gup_test -LT -m 8192 -n 512
-    TAP version 13
-    1..1
-    # PIN_LONGTERM_BENCHMARK: Time: get:131798 put:31328 us#
-    ok 1 ioctl status 0
-    # Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
-
-[lizhe.67@bytedance.com: whitespace fix, per David]
-  Link: https://lkml.kernel.org/r/20250606091917.91384-1-lizhe.67@bytedance.com
-Link: https://lkml.kernel.org/r/20250606023742.58344-1-lizhe.67@bytedance.com
-Signed-off-by: Li Zhe <lizhe.67@bytedance.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dev Jain <dev.jain@arm.com>
+Link: https://lkml.kernel.org/r/66f2751f-283e-816d-9530-765db7edc465@google.com
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Christoph Hellwig <hch@infradead.org>
 Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
 Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Keir Fraser <keirf@google.com>
+Cc: Konstantin Khlebnikov <koct9i@gmail.com>
+Cc: Li Zhe <lizhe.67@bytedance.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Peter Xu <peterx@redhat.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shivank Garg <shivankg@amd.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: yangge <yangge1116@126.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |   38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ mm/gup.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 --- a/mm/gup.c
 +++ b/mm/gup.c
-@@ -2300,6 +2300,31 @@ static void pofs_unpin(struct pages_or_f
- 		unpin_user_pages(pofs->pages, pofs->nr_entries);
- }
- 
-+static struct folio *pofs_next_folio(struct folio *folio,
-+		struct pages_or_folios *pofs, long *index_ptr)
-+{
-+	long i = *index_ptr + 1;
-+
-+	if (!pofs->has_folios && folio_test_large(folio)) {
-+		const unsigned long start_pfn = folio_pfn(folio);
-+		const unsigned long end_pfn = start_pfn + folio_nr_pages(folio);
-+
-+		for (; i < pofs->nr_entries; i++) {
-+			unsigned long pfn = page_to_pfn(pofs->pages[i]);
-+
-+			/* Is this page part of this folio? */
-+			if (pfn < start_pfn || pfn >= end_pfn)
-+				break;
-+		}
-+	}
-+
-+	if (unlikely(i == pofs->nr_entries))
-+		return NULL;
-+	*index_ptr = i;
-+
-+	return pofs_get_folio(pofs, i);
-+}
-+
- /*
-  * Returns the number of collected folios. Return value is always >= 0.
-  */
-@@ -2307,16 +2332,13 @@ static unsigned long collect_longterm_un
- 		struct list_head *movable_folio_list,
+@@ -2333,8 +2333,8 @@ static unsigned long collect_longterm_un
  		struct pages_or_folios *pofs)
  {
--	unsigned long i, collected = 0;
--	struct folio *prev_folio = NULL;
-+	unsigned long collected = 0;
- 	bool drain_allow = true;
-+	struct folio *folio;
-+	long i = 0;
+ 	unsigned long collected = 0;
+-	bool drain_allow = true;
+ 	struct folio *folio;
++	int drained = 0;
+ 	long i = 0;
  
--	for (i = 0; i < pofs->nr_entries; i++) {
--		struct folio *folio = pofs_get_folio(pofs, i);
--
--		if (folio == prev_folio)
--			continue;
--		prev_folio = folio;
-+	for (folio = pofs_get_folio(pofs, i); folio;
-+	     folio = pofs_next_folio(folio, pofs, &i)) {
- 
- 		if (folio_is_longterm_pinnable(folio))
+ 	for (folio = pofs_get_folio(pofs, i); folio;
+@@ -2353,10 +2353,17 @@ static unsigned long collect_longterm_un
  			continue;
+ 		}
+ 
+-		if (drain_allow && folio_ref_count(folio) !=
+-				   folio_expected_ref_count(folio) + 1) {
++		if (drained == 0 &&
++				folio_ref_count(folio) !=
++				folio_expected_ref_count(folio) + 1) {
++			lru_add_drain();
++			drained = 1;
++		}
++		if (drained == 1 &&
++				folio_ref_count(folio) !=
++				folio_expected_ref_count(folio) + 1) {
+ 			lru_add_drain_all();
+-			drain_allow = false;
++			drained = 2;
+ 		}
+ 
+ 		if (!folio_isolate_lru(folio))
 
 
