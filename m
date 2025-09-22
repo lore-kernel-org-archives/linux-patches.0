@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F1327FB2D;
-	Mon, 22 Sep 2025 19:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DB8191F66;
+	Mon, 22 Sep 2025 19:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569606; cv=none; b=VJMGCBnm9u2uWGRa0dKhfTyLyf3ZmlSO1Jhd9brmcAPBC7hYmTk8kKgnf5UAdzLURwmovUSEKeh/hDuV+uDAv89Xa9IRfBjxz5MNXKIWBSQuLeA9igmo6PUBQIUS5YBTQDKWqKYEDUj+mFoIijAfDCOuj5aHO34WsiSkdsm0UxY=
+	t=1758569609; cv=none; b=dNLj5uXMjMP+USRIPChgfvwygyg/8zWipu26dWRhSpyG8JKCIXECJjLtF9Aq9HGpipvmgWvvXnemkGeg25X1XIdHSB17Xd8aWNxnMKpS0uy1ePQGheGGJ82SMR2NcHvn69wOKc6DnznhqsJYDp39PWP9VdI+2Enwd0BfWrURa2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569606; c=relaxed/simple;
-	bh=lITYIzMjPhKg/6Y+65FGy2AlRzVOeJmk4F6ym/bWclw=;
+	s=arc-20240116; t=1758569609; c=relaxed/simple;
+	bh=z5Mzoh4EpHT7qupwkRlPNieNmHF/ForOSviCfDCz9Fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3TW2J6gF5i7gkcJ+X9l35kP+Cc6G2M6QW1XHB/K/QUgmPAAAEPlM+HPEthEKODCUhY9hlqHmFBX0IIQJZbPQj7K8ZgT5WtvLI5RMFR162zwn2KP83PmD0d0zENvinS1PleHII6SshZH194mgRRevn5rlUkbdFNdpx/vFDKWYPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDbyp4P/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/wbCaf0rkwqZpEdaGk/4+X24tEUK0LEfFIlzMV2CTG5eUa31QQ0RKah869220sZs5BISpc8c+yzw6gABeD6dF5tpG2eRNWzGsLkSYTPYZNwAIKEyUuqMUtsULJ4odf0k1Q4RA1zzmg3rqjTDkzmb8Lf+DGQVwsg6k+Wx5NcT0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciBLcIo1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDbyp4P/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2301AC4CEF0;
-	Mon, 22 Sep 2025 19:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciBLcIo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BE5C4CEF0;
+	Mon, 22 Sep 2025 19:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569606;
-	bh=lITYIzMjPhKg/6Y+65FGy2AlRzVOeJmk4F6ym/bWclw=;
+	s=korg; t=1758569608;
+	bh=z5Mzoh4EpHT7qupwkRlPNieNmHF/ForOSviCfDCz9Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDbyp4P/IiRVc/U8t50kmrw9jzOvgwjOWjR+GvTCTz5IwfUi/ASkfR1zWroD8GlvP
-	 ns7vJqP+xNynCtXSHoqoTADAE7oH1AzSKQ/4YorFZclti1SR8sv9HXL3eEY3jdxyI0
-	 0O7N5YKEoA26uCJo97TEO6nyDPwYSH4ljADC+zcs=
+	b=ciBLcIo1+ZLiO9NAETHDnJwN25v1kTs0y8GN2pe5S3bHKrx1WiHjuMIgUrjyT3IhN
+	 6kIsOhYro1zAi9nQ3le0uwgsen0w7kNF3t/0FTPEYY6Bxqo6qd1NVaflLZF04+GPGC
+	 IHHDFRqF1j8wlEiZhgL9vAMjy0vsOKNCyF3i+1Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 47/61] selftests: mptcp: userspace pm: validate deny-join-id0 flag
-Date: Mon, 22 Sep 2025 21:29:40 +0200
-Message-ID: <20250922192404.896032253@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 48/61] phy: broadcom: ns-usb3: fix Wvoid-pointer-to-enum-cast warning
+Date: Mon, 22 Sep 2025 21:29:41 +0200
+Message-ID: <20250922192404.927856381@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -51,101 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 24733e193a0d68f20d220e86da0362460c9aa812 upstream.
+[ Upstream commit bd6e74a2f0a0c76dda8e44d26f9b91a797586c3b ]
 
-The previous commit adds the MPTCP_PM_EV_FLAG_DENY_JOIN_ID0 flag. Make
-sure it is correctly announced by the other peer when it has been
-received.
+'family' is an enum, thus cast of pointer on 64-bit compile test with
+W=1 causes:
 
-pm_nl_ctl will now display 'deny_join_id0:1' when monitoring the events,
-and when this flag was set by the other peer.
+  drivers/phy/broadcom/phy-bcm-ns-usb3.c:209:17: error: cast to smaller integer type 'enum bcm_ns_family' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-3-40171884ade8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflict in userspace_pm.sh, because of a difference in the context,
-  introduced by commit c66fb480a330 ("selftests: userspace pm: avoid
-  relaunching pm events"), which is not in this version. The same lines
-  can still be added at the same place.
-  Conflicts in userspace_pm.sh, because of different refactoring, like
-  with commit ae1fa39da991 ("selftests: mptcp: add evts_get_info
-  helper"), and commit e198ad759273 ("selftests: mptcp: userspace_pm:
-  uniform results printing"). The modifications have been adapted to the
-  old version, without the new helpers. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230810111958.205705-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 64961557efa1 ("phy: ti: omap-usb2: fix device leak at unbind")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/pm_nl_ctl.c     |    7 +++++++
- tools/testing/selftests/net/mptcp/userspace_pm.sh |   14 ++++++++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ drivers/phy/broadcom/phy-bcm-ns-usb3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-+++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-@@ -188,6 +188,13 @@ static int capture_events(int fd, int ev
- 					fprintf(stderr, ",error:%u", *(__u8 *)RTA_DATA(attrs));
- 				else if (attrs->rta_type == MPTCP_ATTR_SERVER_SIDE)
- 					fprintf(stderr, ",server_side:%u", *(__u8 *)RTA_DATA(attrs));
-+				else if (attrs->rta_type == MPTCP_ATTR_FLAGS) {
-+					__u16 flags = *(__u16 *)RTA_DATA(attrs);
-+
-+					/* only print when present, easier */
-+					if (flags & MPTCP_PM_EV_FLAG_DENY_JOIN_ID0)
-+						fprintf(stderr, ",deny_join_id0:1");
-+				}
+--- a/drivers/phy/broadcom/phy-bcm-ns-usb3.c
++++ b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
+@@ -206,7 +206,7 @@ static int bcm_ns_usb3_mdio_probe(struct
+ 	of_id = of_match_device(bcm_ns_usb3_id_table, dev);
+ 	if (!of_id)
+ 		return -EINVAL;
+-	usb3->family = (enum bcm_ns_family)of_id->data;
++	usb3->family = (uintptr_t)of_id->data;
  
- 				attrs = RTA_NEXT(attrs, msg_len);
- 			}
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -139,6 +139,9 @@ make_connection()
- 		is_v6="v4"
- 	fi
- 
-+	# set this on the client side only: will not affect the rest
-+	ip netns exec "$ns2" sysctl -q net.mptcp.allow_join_initial_addr_port=0
-+
- 	# Capture netlink events over the two network namespaces running
- 	# the MPTCP client and server
- 	local client_evts
-@@ -173,21 +176,28 @@ make_connection()
- 	local client_token
- 	local client_port
- 	local client_serverside
-+	local client_nojoin
- 	local server_token
- 	local server_serverside
-+	local server_nojoin
- 
- 	client_token=$(sed --unbuffered -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q' "$client_evts")
- 	client_port=$(sed --unbuffered -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q' "$client_evts")
- 	client_serverside=$(sed --unbuffered -n 's/.*\(server_side:\)\([[:digit:]]*\).*$/\2/p;q'\
- 				      "$client_evts")
-+	client_nojoin=$(sed --unbuffered -n 's/.*\(deny_join_id0:\)\([[:digit:]]*\).*$/\2/p;q'\
-+				      "$client_evts")
- 	kill_wait $server_evts_pid
- 	server_token=$(sed --unbuffered -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q' "$server_evts")
- 	server_serverside=$(sed --unbuffered -n 's/.*\(server_side:\)\([[:digit:]]*\).*$/\2/p;q'\
- 				      "$server_evts")
-+	server_nojoin=$(sed --unbuffered -n 's/.*\(deny_join_id0:\)\([[:digit:]]*\).*$/\2/p;q'\
-+				      "$server_evts")
- 	rm -f "$client_evts" "$server_evts" "$file"
- 
--	if [ "$client_token" != "" ] && [ "$server_token" != "" ] && [ "$client_serverside" = 0 ] &&
--		   [ "$server_serverside" = 1 ]
-+	if [ "${client_token}" != "" ] && [ "${server_token}" != "" ] &&
-+	   [ "${client_serverside}" = 0 ] && [ "${server_serverside}" = 1 ] &&
-+	   [ "${client_nojoin:-0}" = 0 ] && [ "${server_nojoin:-0}" = 1 ]
- 	then
- 		stdbuf -o0 -e0 printf "Established IP%s MPTCP Connection ns2 => ns1    \t\t[OK]\n" $is_v6
- 	else
+ 	syscon_np = of_parse_phandle(dev->of_node, "usb3-dmp-syscon", 0);
+ 	err = of_address_to_resource(syscon_np, 0, &res);
 
 
