@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949BE2F1FE3;
-	Mon, 22 Sep 2025 19:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0892A2F1FE3;
+	Mon, 22 Sep 2025 19:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758570272; cv=none; b=bUqcHX55uShmASMC8MZgI+MEXtf9Q7h7au/LMgslxcL0ohec5u5BNgbQlxJ1u2HAGwaT3FVKj3YsUh4OIgs4TKM707LR73da+UY7VuEqNd29FJgzY5XWkGfML251xx0aDfcqNOZ/Qdudxd7SGCCPe5pdq1bvl1rPUcNvMBYFzYM=
+	t=1758570275; cv=none; b=fqVrN04z+ncxcQxCBmtBR8OPAfYLXRoyGPO8gCYFb9kKXQPjKjKVTGzcpIdroyRPTNpxm0feJJ7lTId++nSlW1LFAY4gqdkCNrEpG/A3tq1yFiAPmN2EqulHtfQKkOkt8eYAhIlvweem83OPFtf3KYA2O3nZSDKgenX/sWs5+W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758570272; c=relaxed/simple;
-	bh=gDYcfhcobfuljAwndTPJp7VEE+ajFlBDnP/bp3a0XOw=;
+	s=arc-20240116; t=1758570275; c=relaxed/simple;
+	bh=OtfqAJ00uK+ouLD518GyRXh8dA02PbWugBxDhnreusI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEOs/rq7ul2Dp2Dr+5DsvUpN7GCQXLpRUHaZbYV5kcbTRk7HlpGHEuGVqqqFRz0HENNS3dJjWWUx7387NyaecuTFOrs3l/rX8y7diidBVR9vGLwDnibz3Dey3dYrVBeR3Gh4YjJGcoj/OIh9SWmRVe+qySZjf1Pz6IjxJPMAvfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGzXZSjj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmGH1tecT+n2ysL+TCgqw+aBTR4tZ+3u/o34/71VWsreVQl0PUlxpESiRD7PLg7/VebgaJJ05KyuMSNpTtK1ZQG/AAylGhkqwrrsnVRAHKMZuLi9aTbTtLbD8bVbnKl3437V1o0bw5y+FJ4L4WShAnM4hGqgLsGXb1CjVlf/ks0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuZKcq3B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGzXZSjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E191EC4CEF0;
-	Mon, 22 Sep 2025 19:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuZKcq3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68450C4CEF0;
+	Mon, 22 Sep 2025 19:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758570272;
-	bh=gDYcfhcobfuljAwndTPJp7VEE+ajFlBDnP/bp3a0XOw=;
+	s=korg; t=1758570274;
+	bh=OtfqAJ00uK+ouLD518GyRXh8dA02PbWugBxDhnreusI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGzXZSjjOkHTMDFbTHFmQLPAVbFIA0fXzDQi8Ndwzzki4O3Nz5pE0XsGVS3IZRbb6
-	 PDNbC2pRe4WbO+7Xr7suPFeaAHgyNkpEoPdjRXu0UrH9U27mMADuhTguTWqN4k9HGl
-	 0FJz6cYvlceu19J0BXY0QnF2FNWvgAk3JcmSS/uA=
+	b=HuZKcq3BT9PbaVs/cBq67aGHDpAq9v70ftmsITfikcxKcQs7nhuNLbXkiGB+MGHG+
+	 ZZpax9K/GiHF/ZAfcnXASzbPkE18xMXOp9oMbUpo4nnYb+qY0muCnd8Jpqz8fxVoUz
+	 SFIwKrv9hzoMveNSHXhP5bKVNUCdJYORWsnQ32lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	WANG Rui <wangrui@loongson.cn>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.16 072/149] LoongArch: Handle jump tables options for RUST
-Date: Mon, 22 Sep 2025 21:29:32 +0200
-Message-ID: <20250922192414.700724139@linuxfoundation.org>
+Subject: [PATCH 6.16 073/149] LoongArch: KVM: Avoid copy_*_user() with lock hold in kvm_eiointc_ctrl_access()
+Date: Mon, 22 Sep 2025 21:29:33 +0200
+Message-ID: <20250922192414.723234811@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
 References: <20250922192412.885919229@linuxfoundation.org>
@@ -52,79 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit 74f8295c6fb8436bec9995baf6ba463151b6fb68 upstream.
+commit 47256c4c8b1bfbc63223a0da2d4fa90b6ede5cbb upstream.
 
-When compiling with LLVM and CONFIG_RUST is set, there exist objtool
-warnings in rust/core.o and rust/kernel.o, like this:
+Function copy_from_user() and copy_to_user() may sleep because of page
+fault, and they cannot be called in spin_lock hold context. Here move
+function calling of copy_from_user() and copy_to_user() before spinlock
+context in function kvm_eiointc_ctrl_access().
 
-    rust/core.o: warning: objtool:
-_RNvXs1_NtNtCs5QSdWC790r4_4core5ascii10ascii_charNtB5_9AsciiCharNtNtB9_3fmt5Debug3fmt+0x54:
-sibling call from callable instruction with modified stack frame
+Otherwise there will be possible warning such as:
 
-For this special case, the related object file shows that there is no
-generated relocation section '.rela.discard.tablejump_annotate' for the
-table jump instruction jirl, thus objtool can not know that what is the
-actual destination address.
-
-If rustc has the option "-Cllvm-args=--loongarch-annotate-tablejump",
-pass the option to enable jump tables for objtool, otherwise it should
-pass "-Zno-jump-tables" to keep compatibility with older rustc.
-
-How to test:
-
-  $ rustup component add rust-src
-  $ make LLVM=1 rustavailable
-  $ make ARCH=loongarch LLVM=1 clean defconfig
-  $ scripts/config -d MODVERSIONS \
-    -e RUST -e SAMPLES -e SAMPLES_RUST \
-    -e SAMPLE_RUST_CONFIGFS -e SAMPLE_RUST_MINIMAL \
-    -e SAMPLE_RUST_MISC_DEVICE -e SAMPLE_RUST_PRINT \
-    -e SAMPLE_RUST_DMA -e SAMPLE_RUST_DRIVER_PCI \
-    -e SAMPLE_RUST_DRIVER_PLATFORM -e SAMPLE_RUST_DRIVER_FAUX \
-    -e SAMPLE_RUST_DRIVER_AUXILIARY -e SAMPLE_RUST_HOSTPROGS
-  $ make ARCH=loongarch LLVM=1 olddefconfig all
+BUG: sleeping function called from invalid context at include/linux/uaccess.h:192
+in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 6292, name: qemu-system-loo
+preempt_count: 1, expected: 0
+RCU nest depth: 0, expected: 0
+INFO: lockdep is turned off.
+irq event stamp: 0
+hardirqs last  enabled at (0): [<0000000000000000>] 0x0
+hardirqs last disabled at (0): [<9000000004c4a554>] copy_process+0x90c/0x1d40
+softirqs last  enabled at (0): [<9000000004c4a554>] copy_process+0x90c/0x1d40
+softirqs last disabled at (0): [<0000000000000000>] 0x0
+CPU: 41 UID: 0 PID: 6292 Comm: qemu-system-loo Tainted: G W 6.17.0-rc3+ #31 PREEMPT(full)
+Tainted: [W]=WARN
+Stack : 0000000000000076 0000000000000000 9000000004c28264 9000100092ff4000
+        9000100092ff7b80 9000100092ff7b88 0000000000000000 9000100092ff7cc8
+        9000100092ff7cc0 9000100092ff7cc0 9000100092ff7a00 0000000000000001
+        0000000000000001 9000100092ff7b88 947d2f9216a5e8b9 900010008773d880
+        00000000ffff8b9f fffffffffffffffe 0000000000000ba1 fffffffffffffffe
+        000000000000003e 900000000825a15b 000010007ad38000 9000100092ff7ec0
+        0000000000000000 0000000000000000 9000000006f3ac60 9000000007252000
+        0000000000000000 00007ff746ff2230 0000000000000053 9000200088a021b0
+        0000555556c9d190 0000000000000000 9000000004c2827c 000055556cfb5f40
+        00000000000000b0 0000000000000007 0000000000000007 0000000000071c1d
+Call Trace:
+[<9000000004c2827c>] show_stack+0x5c/0x180
+[<9000000004c20fac>] dump_stack_lvl+0x94/0xe4
+[<9000000004c99c7c>] __might_resched+0x26c/0x290
+[<9000000004f68968>] __might_fault+0x20/0x88
+[<ffff800002311de0>] kvm_eiointc_ctrl_access.isra.0+0x88/0x380 [kvm]
+[<ffff8000022f8514>] kvm_device_ioctl+0x194/0x290 [kvm]
+[<900000000506b0d8>] sys_ioctl+0x388/0x1010
+[<90000000063ed210>] do_syscall+0xb0/0x2d8
+[<9000000004c25ef8>] handle_syscall+0xb8/0x158
 
 Cc: stable@vger.kernel.org
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/rust-for-linux/CANiq72mNeCuPkCDrG2db3w=AX+O-zYrfprisDPmRac_qh65Dmg@mail.gmail.com/
-Suggested-by: WANG Rui <wangrui@loongson.cn>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Fixes: 1ad7efa552fd5 ("LoongArch: KVM: Add EIOINTC user mode read and write functions")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/Kconfig  |    4 ++++
- arch/loongarch/Makefile |    5 +++++
- 2 files changed, 9 insertions(+)
+ arch/loongarch/kvm/intc/eiointc.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -301,6 +301,10 @@ config AS_HAS_LVZ_EXTENSION
- config CC_HAS_ANNOTATE_TABLEJUMP
- 	def_bool $(cc-option,-mannotate-tablejump)
+--- a/arch/loongarch/kvm/intc/eiointc.c
++++ b/arch/loongarch/kvm/intc/eiointc.c
+@@ -810,21 +810,26 @@ static int kvm_eiointc_ctrl_access(struc
+ 	struct loongarch_eiointc *s = dev->kvm->arch.eiointc;
  
-+config RUSTC_HAS_ANNOTATE_TABLEJUMP
-+	depends on RUST
-+	def_bool $(rustc-option,-Cllvm-args=--loongarch-annotate-tablejump)
+ 	data = (void __user *)attr->addr;
+-	spin_lock_irqsave(&s->lock, flags);
+ 	switch (type) {
+ 	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_NUM_CPU:
++	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_FEATURE:
+ 		if (copy_from_user(&val, data, 4))
+-			ret = -EFAULT;
+-		else {
+-			if (val >= EIOINTC_ROUTE_MAX_VCPUS)
+-				ret = -EINVAL;
+-			else
+-				s->num_cpu = val;
+-		}
++			return -EFAULT;
++		break;
++	default:
++		break;
++	}
 +
- menu "Kernel type and options"
- 
- source "kernel/Kconfig.hz"
---- a/arch/loongarch/Makefile
-+++ b/arch/loongarch/Makefile
-@@ -106,6 +106,11 @@ KBUILD_CFLAGS			+= -mannotate-tablejump
- else
- KBUILD_CFLAGS			+= -fno-jump-tables # keep compatibility with older compilers
- endif
-+ifdef CONFIG_RUSTC_HAS_ANNOTATE_TABLEJUMP
-+KBUILD_RUSTFLAGS		+= -Cllvm-args=--loongarch-annotate-tablejump
-+else
-+KBUILD_RUSTFLAGS		+= -Zno-jump-tables # keep compatibility with older compilers
-+endif
- ifdef CONFIG_LTO_CLANG
- # The annotate-tablejump option can not be passed to LLVM backend when LTO is enabled.
- # Ensure it is aware of linker with LTO, '--loongarch-annotate-tablejump' also needs to
++	spin_lock_irqsave(&s->lock, flags);
++	switch (type) {
++	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_NUM_CPU:
++		if (val >= EIOINTC_ROUTE_MAX_VCPUS)
++			ret = -EINVAL;
++		else
++			s->num_cpu = val;
+ 		break;
+ 	case KVM_DEV_LOONGARCH_EXTIOI_CTRL_INIT_FEATURE:
+-		if (copy_from_user(&s->features, data, 4))
+-			ret = -EFAULT;
++		s->features = val;
+ 		if (!(s->features & BIT(EIOINTC_HAS_VIRT_EXTENSION)))
+ 			s->status |= BIT(EIOINTC_ENABLE);
+ 		break;
 
 
