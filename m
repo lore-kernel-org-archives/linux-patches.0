@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F57170A37;
-	Mon, 22 Sep 2025 19:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1748170A37;
+	Mon, 22 Sep 2025 19:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569494; cv=none; b=a1eGyj9y4MAKfQzpnt7eJlKVdk3sWLqM9+La181HAalsldYHdU8b3MZzrOIVdp/yrn7PvNRZnjldNpS7+cp0HVDbFXmy0clMuuxWuEq4oLN/ar5zEBY2ygTZ0YATbU+XHw1saBRVcQaNsnVOQ7oFEoNJPO3SXhf+e/yVXWrpxak=
+	t=1758569496; cv=none; b=gz4xxlcbpqlbAj22sWq77dO9w1PxUzj8Uyqx1W5PBXjTK6WtvrG/ezIsLzfFBcYSjmnvIdhZGAlqk2D2CN9w8LGVh0esHWJHCPnDJKnf4K8UmZbK8+chsSw/niPpa6IBZkvVtA84sYHTOTDs0lanzTNfE/GGJl/nkO1jJnTtQPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569494; c=relaxed/simple;
-	bh=TxDhY+GfxsBmGHKTAd1lPj/+XgAeUtrMIK7SNoUn3Wo=;
+	s=arc-20240116; t=1758569496; c=relaxed/simple;
+	bh=BaMdugfPyHN9n6HfyPzqUUt2Glzeo7eajEP0uwaH9js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XFz7vq31/CieUnCKUCQqokKLM9NAxJhguB7VLyf1ASxrLjle44fyWMT4k0+fim2T5PHeMFDWXNUVxH2AFkywFP9wCGUMa8oL/2QF4JYlSh3UtAboJfOpeX4t9uM/8JzDsDPFi91jdwOoRWpFHBHB2lQm6gB0QTTPFVbFsffPo1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHdJR95x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZOsVCBEaQp4RsyFkcfxw8lKtIvvO9n6KGjbDQ8TDZB9HUU1yiZrC6NQ6+ny8PDpxphVpUw2wrle7auttR1tPaC1PZoP/9PTDFbe7bYhLX2Js/duGieeORxHhgLCU+cczzs8tpiGOfOIttNn2P9ZbEdDkKXKHKS08A1XWfSwoYUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGD+eRVO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHdJR95x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1900C4CEF0;
-	Mon, 22 Sep 2025 19:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGD+eRVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51924C4CEF0;
+	Mon, 22 Sep 2025 19:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569494;
-	bh=TxDhY+GfxsBmGHKTAd1lPj/+XgAeUtrMIK7SNoUn3Wo=;
+	s=korg; t=1758569496;
+	bh=BaMdugfPyHN9n6HfyPzqUUt2Glzeo7eajEP0uwaH9js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHdJR95xxKkS8QVtaOUbFdLzJIphBZRQZfnFN+aaQymiEUS0xRfCk8QwvPXdvjIUk
-	 fHM96RPRLb7vVwvy/l+yi8asRZNjjaHMppsZMnjOkDv+8cQrihbIhs1WZgm8rgeyQj
-	 rlSqwIZjQvH0z2z/Cg7C4t84CtNuA/YBGA0o75r0=
+	b=wGD+eRVOSezy0fTdvBi+0vHRGG7SFeFRL1EPa4iinXn+J3ML7ACz66BapaIvWXbpF
+	 dWMtpN64sAgPj3+LacWT5PkzOonR6xgw/bSy2P+OS7946Zdav2ES/gQhzgSrjLPJFl
+	 1J9XJXcX3DcoW3zy63ZqBWwR/ii5yGb4eMxBlYIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Gao Yingjie <gaoyingjie@uniontech.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Teju Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/61] pcmcia: omap_cf: Mark driver struct with __refdata to prevent section mismatch
-Date: Mon, 22 Sep 2025 21:28:57 +0200
-Message-ID: <20250922192403.666169740@linuxfoundation.org>
+Subject: [PATCH 6.1 05/61] cgroup: split cgroup_destroy_wq into 3 workqueues
+Date: Mon, 22 Sep 2025 21:28:58 +0200
+Message-ID: <20250922192403.694104160@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -54,46 +53,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit d1dfcdd30140c031ae091868fb5bed084132bca1 ]
+[ Upstream commit 79f919a89c9d06816dbdbbd168fa41d27411a7f9 ]
 
-As described in the added code comment, a reference to .exit.text is ok
-for drivers registered via platform_driver_probe().  Make this explicit
-to prevent the following section mismatch warning
+A hung task can occur during [1] LTP cgroup testing when repeatedly
+mounting/unmounting perf_event and net_prio controllers with
+systemd.unified_cgroup_hierarchy=1. The hang manifests in
+cgroup_lock_and_drain_offline() during root destruction.
 
-    WARNING: modpost: drivers/pcmcia/omap_cf: section mismatch in reference: omap_cf_driver+0x4 (section: .data) -> omap_cf_remove (section: .exit.text)
+Related case:
+cgroup_fj_function_perf_event cgroup_fj_function.sh perf_event
+cgroup_fj_function_net_prio cgroup_fj_function.sh net_prio
 
-that triggers on an omap1_defconfig + CONFIG_OMAP_CF=m build.
+Call Trace:
+	cgroup_lock_and_drain_offline+0x14c/0x1e8
+	cgroup_destroy_root+0x3c/0x2c0
+	css_free_rwork_fn+0x248/0x338
+	process_one_work+0x16c/0x3b8
+	worker_thread+0x22c/0x3b0
+	kthread+0xec/0x100
+	ret_from_fork+0x10/0x20
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+Root Cause:
+
+CPU0                            CPU1
+mount perf_event                umount net_prio
+cgroup1_get_tree                cgroup_kill_sb
+rebind_subsystems               // root destruction enqueues
+				// cgroup_destroy_wq
+// kill all perf_event css
+                                // one perf_event css A is dying
+                                // css A offline enqueues cgroup_destroy_wq
+                                // root destruction will be executed first
+                                css_free_rwork_fn
+                                cgroup_destroy_root
+                                cgroup_lock_and_drain_offline
+                                // some perf descendants are dying
+                                // cgroup_destroy_wq max_active = 1
+                                // waiting for css A to die
+
+Problem scenario:
+1. CPU0 mounts perf_event (rebind_subsystems)
+2. CPU1 unmounts net_prio (cgroup_kill_sb), queuing root destruction work
+3. A dying perf_event CSS gets queued for offline after root destruction
+4. Root destruction waits for offline completion, but offline work is
+   blocked behind root destruction in cgroup_destroy_wq (max_active=1)
+
+Solution:
+Split cgroup_destroy_wq into three dedicated workqueues:
+cgroup_offline_wq – Handles CSS offline operations
+cgroup_release_wq – Manages resource release
+cgroup_free_wq – Performs final memory deallocation
+
+This separation eliminates blocking in the CSS free path while waiting for
+offline operations to complete.
+
+[1] https://github.com/linux-test-project/ltp/blob/master/runtest/controllers
+Fixes: 334c3679ec4b ("cgroup: reimplement rebind_subsystems() using cgroup_apply_control() and friends")
+Reported-by: Gao Yingjie <gaoyingjie@uniontech.com>
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Suggested-by: Teju Heo <tj@kernel.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/omap_cf.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/cgroup/cgroup.c | 43 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pcmcia/omap_cf.c b/drivers/pcmcia/omap_cf.c
-index e22a752052f2f..b8260dd12b1a8 100644
---- a/drivers/pcmcia/omap_cf.c
-+++ b/drivers/pcmcia/omap_cf.c
-@@ -305,7 +305,13 @@ static int __exit omap_cf_remove(struct platform_device *pdev)
- 	return 0;
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index 7997c8021b62f..9742574ec62fd 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -123,8 +123,31 @@ DEFINE_PERCPU_RWSEM(cgroup_threadgroup_rwsem);
+  * of concurrent destructions.  Use a separate workqueue so that cgroup
+  * destruction work items don't end up filling up max_active of system_wq
+  * which may lead to deadlock.
++ *
++ * A cgroup destruction should enqueue work sequentially to:
++ * cgroup_offline_wq: use for css offline work
++ * cgroup_release_wq: use for css release work
++ * cgroup_free_wq: use for free work
++ *
++ * Rationale for using separate workqueues:
++ * The cgroup root free work may depend on completion of other css offline
++ * operations. If all tasks were enqueued to a single workqueue, this could
++ * create a deadlock scenario where:
++ * - Free work waits for other css offline work to complete.
++ * - But other css offline work is queued after free work in the same queue.
++ *
++ * Example deadlock scenario with single workqueue (cgroup_destroy_wq):
++ * 1. umount net_prio
++ * 2. net_prio root destruction enqueues work to cgroup_destroy_wq (CPUx)
++ * 3. perf_event CSS A offline enqueues work to same cgroup_destroy_wq (CPUx)
++ * 4. net_prio cgroup_destroy_root->cgroup_lock_and_drain_offline.
++ * 5. net_prio root destruction blocks waiting for perf_event CSS A offline,
++ *    which can never complete as it's behind in the same queue and
++ *    workqueue's max_active is 1.
+  */
+-static struct workqueue_struct *cgroup_destroy_wq;
++static struct workqueue_struct *cgroup_offline_wq;
++static struct workqueue_struct *cgroup_release_wq;
++static struct workqueue_struct *cgroup_free_wq;
+ 
+ /* generate an array of cgroup subsystem pointers */
+ #define SUBSYS(_x) [_x ## _cgrp_id] = &_x ## _cgrp_subsys,
+@@ -5444,7 +5467,7 @@ static void css_release_work_fn(struct work_struct *work)
+ 	cgroup_unlock();
+ 
+ 	INIT_RCU_WORK(&css->destroy_rwork, css_free_rwork_fn);
+-	queue_rcu_work(cgroup_destroy_wq, &css->destroy_rwork);
++	queue_rcu_work(cgroup_free_wq, &css->destroy_rwork);
  }
  
--static struct platform_driver omap_cf_driver = {
-+/*
-+ * omap_cf_remove() lives in .exit.text. For drivers registered via
-+ * platform_driver_probe() this is ok because they cannot get unbound at
-+ * runtime. So mark the driver struct with __refdata to prevent modpost
-+ * triggering a section mismatch warning.
-+ */
-+static struct platform_driver omap_cf_driver __refdata = {
- 	.driver = {
- 		.name	= driver_name,
- 	},
+ static void css_release(struct percpu_ref *ref)
+@@ -5453,7 +5476,7 @@ static void css_release(struct percpu_ref *ref)
+ 		container_of(ref, struct cgroup_subsys_state, refcnt);
+ 
+ 	INIT_WORK(&css->destroy_work, css_release_work_fn);
+-	queue_work(cgroup_destroy_wq, &css->destroy_work);
++	queue_work(cgroup_release_wq, &css->destroy_work);
+ }
+ 
+ static void init_and_link_css(struct cgroup_subsys_state *css,
+@@ -5575,7 +5598,7 @@ static struct cgroup_subsys_state *css_create(struct cgroup *cgrp,
+ err_free_css:
+ 	list_del_rcu(&css->rstat_css_node);
+ 	INIT_RCU_WORK(&css->destroy_rwork, css_free_rwork_fn);
+-	queue_rcu_work(cgroup_destroy_wq, &css->destroy_rwork);
++	queue_rcu_work(cgroup_free_wq, &css->destroy_rwork);
+ 	return ERR_PTR(err);
+ }
+ 
+@@ -5811,7 +5834,7 @@ static void css_killed_ref_fn(struct percpu_ref *ref)
+ 
+ 	if (atomic_dec_and_test(&css->online_cnt)) {
+ 		INIT_WORK(&css->destroy_work, css_killed_work_fn);
+-		queue_work(cgroup_destroy_wq, &css->destroy_work);
++		queue_work(cgroup_offline_wq, &css->destroy_work);
+ 	}
+ }
+ 
+@@ -6183,8 +6206,14 @@ static int __init cgroup_wq_init(void)
+ 	 * We would prefer to do this in cgroup_init() above, but that
+ 	 * is called before init_workqueues(): so leave this until after.
+ 	 */
+-	cgroup_destroy_wq = alloc_workqueue("cgroup_destroy", 0, 1);
+-	BUG_ON(!cgroup_destroy_wq);
++	cgroup_offline_wq = alloc_workqueue("cgroup_offline", 0, 1);
++	BUG_ON(!cgroup_offline_wq);
++
++	cgroup_release_wq = alloc_workqueue("cgroup_release", 0, 1);
++	BUG_ON(!cgroup_release_wq);
++
++	cgroup_free_wq = alloc_workqueue("cgroup_free", 0, 1);
++	BUG_ON(!cgroup_free_wq);
+ 	return 0;
+ }
+ core_initcall(cgroup_wq_init);
 -- 
 2.51.0
 
