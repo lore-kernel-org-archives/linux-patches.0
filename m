@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563CA2F1FDD;
-	Mon, 22 Sep 2025 19:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B112F0C5F;
+	Mon, 22 Sep 2025 19:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569790; cv=none; b=VWPjv3/azx1FCipF7HPu/x7A9Bmu8/lxRVrEzi+QlHIU71ncD4eGRQ2/3jIIOxL3jkn4+dHikjHILZGJaRDakXW4u4OGwLfGAXZRnFgJdlH79fAZZnHMRGQ8DliYmjeQRFObTSdkQFnhBuYjBZgL3TEB+qp1F/w0Fu+kYjYQmU8=
+	t=1758569792; cv=none; b=IxtAB0bvx85+yc8p5Kc3IE7TW2lg4/q02hgm1K4J7+1pmMpszP+de/d4LzbV1Nx3hMs+Fhli+JuHuImlEcXrK2r40Nfcu/oQCCa74gNd0u7w9MbMim4UquG0L59yM9Ok1vGuzN8Zp7sJpNpsssIFeV8nuwF7tYROxs9752kK20E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569790; c=relaxed/simple;
-	bh=mu6MInHChtZwsvyig1MNMJJFV+DIpAoMFsfixexogu8=;
+	s=arc-20240116; t=1758569792; c=relaxed/simple;
+	bh=QvAC5SbQmzHtyleNyzo/mCpic92Hsbk+MQZyL9BFcXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uu9B2NWsJMyxicNDCykY9N9AxU19VjLAMnx89c9AmEGVNJLLDbgy7O/pJGYqFgzIC4mIIGjy4OSMzhEm6qC5ED0Vr6mwP+NKvJCidVeEoU2nwJsesbw2PgcyT8b91k/AibYUkJWgOSCAkNl0zr63Kx0pcF1os6mUCRxRunwaQ3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEFar+am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=INYcbnrRjPOlaptgnbI176gMYQv/0NVqFqSeYPdK0ogbp1/9uJSTIQ+rtewkFUT2f+YG7a/69hG1Km7Cp89ztfht/pe4ACaaraDA1uL5EiLAk89DCxBhl+xRwhTdMDG/o6Lhu9Pd1KQE8l7vl+JRhiQbddI+VOtIymPqfH9MQuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/AYpn3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEFar+am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC4FC4CEF0;
-	Mon, 22 Sep 2025 19:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/AYpn3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF0BC4CEF0;
+	Mon, 22 Sep 2025 19:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569789;
-	bh=mu6MInHChtZwsvyig1MNMJJFV+DIpAoMFsfixexogu8=;
+	s=korg; t=1758569792;
+	bh=QvAC5SbQmzHtyleNyzo/mCpic92Hsbk+MQZyL9BFcXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEFar+amrrMj0tMt0ZYHveD9Zqc6Bg6ZTcWjLsNUdFNzn5xRiNcqSZImLdeAiLIXy
-	 qJSYcQRBsLcNfyRMTVO9hC1LRileqtZndfkgeovmm4/E9ubZzomcDFm5VCV+L6hNXa
-	 QkVutBoKbzfQRVSYBwCDYUmAvTOxUIB9vVBCPKJQ=
+	b=v/AYpn3I9moPw+BqvP8xWmYUqN2pSokpMU8vCJw/e5IIOKeLtfnf8GWpDKePS6wUZ
+	 wBzKh3T9gX26DZBSwGdr8sZGID5WGKTWqk8t4Y59mECXt+KF3Wkfh8H4VxT4pbwcjK
+	 IHGZlz4/pmP1uoaagdAQAmp2q/DuUTNEaFZ5esNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 6.6 57/70] vmxnet3: unregister xdp rxq info in the reset path
-Date: Mon, 22 Sep 2025 21:29:57 +0200
-Message-ID: <20250922192406.132680350@linuxfoundation.org>
+	Marek Majkowski <marek@cloudflare.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 58/70] mptcp: pm: nl: announce deny-join-id0 flag
+Date: Mon, 22 Sep 2025 21:29:58 +0200
+Message-ID: <20250922192406.158522686@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -52,59 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 0dd765fae295832934bf28e45dd5a355e0891ed4 upstream.
+commit 2293c57484ae64c9a3c847c8807db8c26a3a4d41 upstream.
 
-vmxnet3 does not unregister xdp rxq info in the
-vmxnet3_reset_work() code path as vmxnet3_rq_destroy()
-is not invoked in this code path. So, we get below message with a
-backtrace.
+During the connection establishment, a peer can tell the other one that
+it cannot establish new subflows to the initial IP address and port by
+setting the 'C' flag [1]. Doing so makes sense when the sender is behind
+a strict NAT, operating behind a legacy Layer 4 load balancer, or using
+anycast IP address for example.
 
-Missing unregister, handled but fix driver
-WARNING: CPU:48 PID: 500 at net/core/xdp.c:182
-__xdp_rxq_info_reg+0x93/0xf0
+When this 'C' flag is set, the path-managers must then not try to
+establish new subflows to the other peer's initial IP address and port.
+The in-kernel PM has access to this info, but the userspace PM didn't.
 
-This patch fixes the problem by moving the unregister
-code of XDP from vmxnet3_rq_destroy() to vmxnet3_rq_cleanup().
+The RFC8684 [1] is strict about that:
 
-Fixes: 54f00cce1178 ("vmxnet3: Add XDP support.")
-Signed-off-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
-Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Link: https://patch.msgid.link/20250320045522.57892-1-sankararaman.jayaraman@broadcom.com
+  (...) therefore the receiver MUST NOT try to open any additional
+  subflows toward this address and port.
+
+So it is important to tell the userspace about that as it is responsible
+for the respect of this flag.
+
+When a new connection is created and established, the Netlink events
+now contain the existing but not currently used 'flags' attribute. When
+MPTCP_PM_EV_FLAG_DENY_JOIN_ID0 is set, it means no other subflows
+to the initial IP address and port -- info that are also part of the
+event -- can be established.
+
+Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.1-20.6 [1]
+Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
+Reported-by: Marek Majkowski <marek@cloudflare.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/532
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-2-40171884ade8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Ajay: Modified to apply on v6.6, v6.12 ]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+[ Conflicts in mptcp_pm.yaml, and mptcp_pm.h, because these files have
+  been added later by commit bc8aeb2045e2 ("Documentation: netlink: add
+  a YAML spec for mptcp"), and commit 9d1ed17f93ce ("uapi: mptcp: use
+  header file generated from YAML spec"), which are not in this version.
+  Applying the same modifications, but only in mptcp.h.
+  Conflict in pm_netlink.c, because of a difference in the context,
+  introduced by commit b9f4554356f6 ("mptcp: annotate lockless access
+  for token"), which is not in this version. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/uapi/linux/mptcp.h |    6 ++++--
+ net/mptcp/pm_netlink.c     |    7 +++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1981,6 +1981,11 @@ vmxnet3_rq_cleanup(struct vmxnet3_rx_que
+--- a/include/uapi/linux/mptcp.h
++++ b/include/uapi/linux/mptcp.h
+@@ -81,6 +81,8 @@ enum {
  
- 	rq->comp_ring.gen = VMXNET3_INIT_GEN;
- 	rq->comp_ring.next2proc = 0;
+ #define MPTCP_PM_ADDR_ATTR_MAX (__MPTCP_PM_ADDR_ATTR_MAX - 1)
+ 
++#define MPTCP_PM_EV_FLAG_DENY_JOIN_ID0		_BITUL(0)
 +
-+	if (xdp_rxq_info_is_reg(&rq->xdp_rxq))
-+		xdp_rxq_info_unreg(&rq->xdp_rxq);
-+	page_pool_destroy(rq->page_pool);
-+	rq->page_pool = NULL;
+ #define MPTCP_PM_ADDR_FLAG_SIGNAL			(1 << 0)
+ #define MPTCP_PM_ADDR_FLAG_SUBFLOW			(1 << 1)
+ #define MPTCP_PM_ADDR_FLAG_BACKUP			(1 << 2)
+@@ -132,13 +134,13 @@ struct mptcp_info {
+ 
+ /*
+  * MPTCP_EVENT_CREATED: token, family, saddr4 | saddr6, daddr4 | daddr6,
+- *                      sport, dport
++ *                      sport, dport, server-side, [flags]
+  * A new MPTCP connection has been created. It is the good time to allocate
+  * memory and send ADD_ADDR if needed. Depending on the traffic-patterns
+  * it can take a long time until the MPTCP_EVENT_ESTABLISHED is sent.
+  *
+  * MPTCP_EVENT_ESTABLISHED: token, family, saddr4 | saddr6, daddr4 | daddr6,
+- *			    sport, dport
++ *			    sport, dport, server-side, [flags]
+  * A MPTCP connection is established (can start new subflows).
+  *
+  * MPTCP_EVENT_CLOSED: token
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -2252,6 +2252,7 @@ static int mptcp_event_created(struct sk
+ 			       const struct sock *ssk)
+ {
+ 	int err = nla_put_u32(skb, MPTCP_ATTR_TOKEN, msk->token);
++	u16 flags = 0;
+ 
+ 	if (err)
+ 		return err;
+@@ -2259,6 +2260,12 @@ static int mptcp_event_created(struct sk
+ 	if (nla_put_u8(skb, MPTCP_ATTR_SERVER_SIDE, READ_ONCE(msk->pm.server_side)))
+ 		return -EMSGSIZE;
+ 
++	if (READ_ONCE(msk->pm.remote_deny_join_id0))
++		flags |= MPTCP_PM_EV_FLAG_DENY_JOIN_ID0;
++
++	if (flags && nla_put_u16(skb, MPTCP_ATTR_FLAGS, flags))
++		return -EMSGSIZE;
++
+ 	return mptcp_event_add_subflow(skb, ssk);
  }
  
- 
-@@ -2021,11 +2026,6 @@ static void vmxnet3_rq_destroy(struct vm
- 		}
- 	}
- 
--	if (xdp_rxq_info_is_reg(&rq->xdp_rxq))
--		xdp_rxq_info_unreg(&rq->xdp_rxq);
--	page_pool_destroy(rq->page_pool);
--	rq->page_pool = NULL;
--
- 	if (rq->data_ring.base) {
- 		dma_free_coherent(&adapter->pdev->dev,
- 				  rq->rx_ring[0].size * rq->data_ring.desc_size,
 
 
