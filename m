@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881B6C8E6;
-	Mon, 22 Sep 2025 19:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08638C8E6;
+	Mon, 22 Sep 2025 19:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569546; cv=none; b=IZKo8MqCDbPJoZpb2cjbC7T3XGQn2Cp3iWRk/2Nsh8T/QFCnFQpxf7DLaLIiw39/c0302cgXiGoZdGYVpOh+qcUD+GmxiSemb6ezMnOxUHcWio4J21tO+k9sMcQI8vgcByPuXAQhlHvQBMuyzxYrCFeuShlMqxAqMkKYALHyuy4=
+	t=1758569549; cv=none; b=ZUNSRR3tgXPQ/f0yFbLyThb470cdTyJwhwYJFUemS6UxpizJ86O5luvjp9gKUuTN97UmGnBhcnWMUGYnx3KN8fFOyMtsWqr3RQ7lcFLGT3IOeBPOuBQdJY/UjvMiome8BEq71RNq7rIaH4VuaqA1KN69MRrO9Q+MriYkcLAbSZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569546; c=relaxed/simple;
-	bh=ev6BSBGf0virjsvm1ZGrkCmvlpN7UgwTOKEatiSzjAE=;
+	s=arc-20240116; t=1758569549; c=relaxed/simple;
+	bh=DULn5ssjtZtJ0v+tHXcjypTSy8btLsmO6vD4Lt34yh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5pAItZEoA/OXVGdqyRcUjoVeb/PXZ9aaudsCXv1xdIT5NO3uPyoWl3C1iXuF43kX9AXOPJal6vok3aaScJWg+GaKXYoly/ZFAbjQ6NTmNG396xvEjMl3djbNFdsDrlsaLJtYwnt9MG5vC9/O7W0eSlbGB995Q/mWOp7G+K8phI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUqMTLiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALK+tJa2SkMdIzMMaMfTJ5rXux0qXtdPs5tmBir0wwEPdgh+y5OPqL7Kn8iQFl8DR7XRwdEPobv8UuwN5mlw1myHpi38DGNodkwF5m9a+wisYjseICOu3U3aCI96MtoVU3XQoqGvLufHmGeLhH593H6dLGGNK/Ny3I99HyL0zdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnMxDBc/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUqMTLiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20130C4CEF0;
-	Mon, 22 Sep 2025 19:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnMxDBc/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963DFC4CEF0;
+	Mon, 22 Sep 2025 19:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569546;
-	bh=ev6BSBGf0virjsvm1ZGrkCmvlpN7UgwTOKEatiSzjAE=;
+	s=korg; t=1758569548;
+	bh=DULn5ssjtZtJ0v+tHXcjypTSy8btLsmO6vD4Lt34yh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUqMTLiIvhgRHS7Ftj4Fgk8jNfQXRvb9MhUxkomUI2zn/7A417YEwZO3ljYKQ90rl
-	 +8ms2Fmxk59aPBdpUNBuHlWzw70wdXIW2r6LgCcSVZ6LHDpcqGB8CFmU8rrMXRnmEJ
-	 TXIXSnuNF4npnct/WMxj7W2whdzAHzBoxWglFYig=
+	b=jnMxDBc/E8Z3oxVlcMspTdqsqxj+/9BXLh/yl4aueYScTiNvvSP57KtqospGgt+8B
+	 jHCFXJwx7/w4qHnx4SUYxXyMrMErOeoKTRqnYV6Ve/N+xCv8qg4n/hSNYmfjX2WeND
+	 XWBLwRf6sn+aFLJzq3XSvSpRGzY5SBjPOSFqq/Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Koira <eugkoira@amazon.com>,
-	Nicolas Saenz Julienne <nsaenz@amazon.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.1 27/61] iommu/vt-d: Fix __domain_mapping()s usage of switch_to_super_page()
-Date: Mon, 22 Sep 2025 21:29:20 +0200
-Message-ID: <20250922192404.299527245@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 36/61] io_uring: backport io_should_terminate_tw()
+Date: Mon, 22 Sep 2025 21:29:29 +0200
+Message-ID: <20250922192404.557793883@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -53,67 +49,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugene Koira <eugkoira@amazon.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit dce043c07ca1ac19cfbe2844a6dc71e35c322353 upstream.
+Parts of commit b6f58a3f4aa8dba424356c7a69388a81f4459300 upstream.
 
-switch_to_super_page() assumes the memory range it's working on is aligned
-to the target large page level. Unfortunately, __domain_mapping() doesn't
-take this into account when using it, and will pass unaligned ranges
-ultimately freeing a PTE range larger than expected.
+Backport io_should_terminate_tw() helper to judge whether task_work
+should be run or terminated.
 
-Take for example a mapping with the following iov_pfn range [0x3fe400,
-0x4c0600), which should be backed by the following mappings:
-
-   iov_pfn [0x3fe400, 0x3fffff] covered by 2MiB pages
-   iov_pfn [0x400000, 0x4bffff] covered by 1GiB pages
-   iov_pfn [0x4c0000, 0x4c05ff] covered by 2MiB pages
-
-Under this circumstance, __domain_mapping() will pass [0x400000, 0x4c05ff]
-to switch_to_super_page() at a 1 GiB granularity, which will in turn
-free PTEs all the way to iov_pfn 0x4fffff.
-
-Mitigate this by rounding down the iov_pfn range passed to
-switch_to_super_page() in __domain_mapping()
-to the target large page level.
-
-Additionally add range alignment checks to switch_to_super_page.
-
-Fixes: 9906b9352a35 ("iommu/vt-d: Avoid duplicate removing in __domain_mapping()")
-Signed-off-by: Eugene Koira <eugkoira@amazon.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Link: https://lore.kernel.org/r/20250826143816.38686-1-eugkoira@amazon.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |    5 ++---
+ io_uring/io_uring.h |   13 +++++++++++++
+ io_uring/poll.c     |    3 +--
+ io_uring/timeout.c  |    2 +-
+ 4 files changed, 17 insertions(+), 6 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -2205,6 +2205,10 @@ static void switch_to_super_page(struct
- 	struct dma_pte *pte = NULL;
- 	unsigned long i;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1249,8 +1249,7 @@ static void io_req_task_cancel(struct io
+ void io_req_task_submit(struct io_kiocb *req, bool *locked)
+ {
+ 	io_tw_lock(req->ctx, locked);
+-	/* req->task == current here, checking PF_EXITING is safe */
+-	if (likely(!(req->task->flags & PF_EXITING)))
++	if (likely(!io_should_terminate_tw()))
+ 		io_queue_sqe(req);
+ 	else
+ 		io_req_complete_failed(req, -EFAULT);
+@@ -1773,7 +1772,7 @@ static int io_issue_sqe(struct io_kiocb
+ int io_poll_issue(struct io_kiocb *req, bool *locked)
+ {
+ 	io_tw_lock(req->ctx, locked);
+-	if (unlikely(req->task->flags & PF_EXITING))
++	if (unlikely(io_should_terminate_tw()))
+ 		return -EFAULT;
+ 	return io_issue_sqe(req, IO_URING_F_NONBLOCK|IO_URING_F_MULTISHOT);
+ }
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -395,6 +395,19 @@ static inline bool io_allowed_run_tw(str
+ 		      ctx->submitter_task == current);
+ }
  
-+	if (WARN_ON(!IS_ALIGNED(start_pfn, lvl_pages) ||
-+		    !IS_ALIGNED(end_pfn + 1, lvl_pages)))
-+		return;
++/*
++ * Terminate the request if either of these conditions are true:
++ *
++ * 1) It's being executed by the original task, but that task is marked
++ *    with PF_EXITING as it's exiting.
++ * 2) PF_KTHREAD is set, in which case the invoker of the task_work is
++ *    our fallback task_work.
++ */
++static inline bool io_should_terminate_tw(void)
++{
++	return current->flags & (PF_KTHREAD | PF_EXITING);
++}
 +
- 	while (start_pfn <= end_pfn) {
- 		if (!pte)
- 			pte = pfn_to_dma_pte(domain, start_pfn, &level);
-@@ -2272,7 +2276,8 @@ __domain_mapping(struct dmar_domain *dom
- 				unsigned long pages_to_remove;
+ static inline void io_req_queue_tw_complete(struct io_kiocb *req, s32 res)
+ {
+ 	io_req_set_res(req, res, 0);
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -241,8 +241,7 @@ static int io_poll_check_events(struct i
+ 	struct io_ring_ctx *ctx = req->ctx;
+ 	int v;
  
- 				pteval |= DMA_PTE_LARGE_PAGE;
--				pages_to_remove = min_t(unsigned long, nr_pages,
-+				pages_to_remove = min_t(unsigned long,
-+							round_down(nr_pages, lvl_pages),
- 							nr_pte_to_next_page(pte) * lvl_pages);
- 				end_pfn = iov_pfn + pages_to_remove - 1;
- 				switch_to_super_page(domain, iov_pfn, end_pfn, largepage_lvl);
+-	/* req->task == current here, checking PF_EXITING is safe */
+-	if (unlikely(req->task->flags & PF_EXITING))
++	if (unlikely(io_should_terminate_tw()))
+ 		return -ECANCELED;
+ 
+ 	do {
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -275,7 +275,7 @@ static void io_req_task_link_timeout(str
+ 	int ret = -ENOENT;
+ 
+ 	if (prev) {
+-		if (!(req->task->flags & PF_EXITING)) {
++		if (!io_should_terminate_tw()) {
+ 			struct io_cancel_data cd = {
+ 				.ctx		= req->ctx,
+ 				.data		= prev->cqe.user_data,
 
 
