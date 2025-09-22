@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0A0C8E6;
-	Mon, 22 Sep 2025 19:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9BC8E6;
+	Mon, 22 Sep 2025 19:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569564; cv=none; b=lYHyZ6V/u9YNh3xXHyHcfTzNvPSDMR6mEtKxdBcJNHBnnxksSXKk6OBhQhB9+2ZtstLSVwv2NkbqRRWhigWi9aEeLMf2F3pOFUlZcyG1Bscfkl2/mgB/STY4i1a1nU7UVnVQhDWeFypzzBTrt2eLOHNlko/+iPSY9WUfvmImmKs=
+	t=1758569566; cv=none; b=mwW0peRDS7qYTNCeYvhDezAzyJ0n1+512l6KxpRPqwg6kGPXa3+ctQbjTAPpPFh8egYtqqXwQCX5ev5c1MEdnBfn/gtbq64m/nExNXdJneWnYUuHol/FCZed3kTZNHmOCTg3v6fblLQlEwfFP9f5n+PxU0mwB2DZprDO/Oby0dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569564; c=relaxed/simple;
-	bh=u+EYXCHdbAu5uEdOL4pjngCmeIiWrThj9TwklyORGfY=;
+	s=arc-20240116; t=1758569566; c=relaxed/simple;
+	bh=YRb2D7Vh4nVRCTCz8xiOWZBXLsDMtzt0bSpv4GZBqPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBUO3dZ/zNexfPQjTquecviDSb5P6o8jZMFg4cOdc3UTxDDE/W4Br/MPPapLFy70b0iPu0vUeYv5FeFDB7ZhwaxJMv/71CGn27PMveS62vLDVQsI2oskr3VEay+XSJcwJQt3VnwVgbUISCzfD7z4q2CEM7JyCIsy/1AAQBIlvgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkqjQ//n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEBvPxzbS0UJNIXyV025Efqoj1V18PY7hvA+N89k3oNs0BQ5WqBm640mW6Xs8+N2BBvWRgOXxs+B72CVBrFTRHFFckPagjCy1wkQgzY8OUzywu/RVhdhnak4rDfKEsf0FI/FTBa0Fc4uREmb5Ok6sIGfpW+ARKiDOqdV1GJ8DaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvy7LOYg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkqjQ//n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913EAC4CEF0;
-	Mon, 22 Sep 2025 19:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvy7LOYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F47C4CEF0;
+	Mon, 22 Sep 2025 19:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569564;
-	bh=u+EYXCHdbAu5uEdOL4pjngCmeIiWrThj9TwklyORGfY=;
+	s=korg; t=1758569566;
+	bh=YRb2D7Vh4nVRCTCz8xiOWZBXLsDMtzt0bSpv4GZBqPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IkqjQ//nRAnIpIO6zeLgRiNya1NgBa3dYMGbor9ysH2vTHxCqg6hASRBHu0gpZSZi
-	 mBesxJ2puNa5zu8vBfYCt7ksRkUv7EBD1FuH6EgT6Dl/iakLV33dYJRjEMWUFUE1LA
-	 V4lITBm1XIr7phsLCLXEoPsK/8oBf8AoYycM+Mc0=
+	b=zvy7LOYgHEvo64X1HsgdZ4krJhTXmhD43EljHYzTsucEYSIz+z7YpETyZNYnGcNjU
+	 JFcNISo7RalseMl4liLNVAJdL7nV/oWteMqbJDM2mtPsrhPR/q8zxUoiBLXRN/4MAv
+	 PutHev3gcncCrrJ1aP6k0mzlUXwQvFFfqoD3gR4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 30/61] ASoC: qcom: q6apm-lpass-dais: Fix missing set_fmt DAI op for I2S
-Date: Mon, 22 Sep 2025 21:29:23 +0200
-Message-ID: <20250922192404.381408211@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 31/61] mmc: mvsdio: Fix dma_unmap_sg() nents value
+Date: Mon, 22 Sep 2025 21:29:24 +0200
+Message-ID: <20250922192404.408023502@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -51,35 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 33b55b94bca904ca25a9585e3cd43d15f0467969 upstream.
+commit 8ab2f1c35669bff7d7ed1bb16bf5cc989b3e2e17 upstream.
 
-The q6i2s_set_fmt() function was defined but never linked into the
-I2S DAI operations, resulting DAI format settings is being ignored
-during stream setup. This change fixes the issue by properly linking
-the .set_fmt handler within the DAI ops.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 30ad723b93ade ("ASoC: qdsp6: audioreach: add q6apm lpass dai support")
+Fixes: 236caa7cc351 ("mmc: SDIO driver for Marvell SoCs")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Message-ID: <20250908053631.70978-3-mohammad.rafi.shaik@oss.qualcomm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/mvsdio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-@@ -204,6 +204,7 @@ static const struct snd_soc_dai_ops q6dm
- 	.shutdown	= q6apm_lpass_dai_shutdown,
- 	.set_channel_map  = q6dma_set_channel_map,
- 	.hw_params        = q6dma_hw_params,
-+	.set_fmt	= q6i2s_set_fmt,
- };
+--- a/drivers/mmc/host/mvsdio.c
++++ b/drivers/mmc/host/mvsdio.c
+@@ -292,7 +292,7 @@ static u32 mvsd_finish_data(struct mvsd_
+ 		host->pio_ptr = NULL;
+ 		host->pio_size = 0;
+ 	} else {
+-		dma_unmap_sg(mmc_dev(host->mmc), data->sg, host->sg_frags,
++		dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
+ 			     mmc_get_dma_dir(data));
+ 	}
  
- static const struct snd_soc_dai_ops q6i2s_ops = {
 
 
