@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91592F0C5E;
-	Mon, 22 Sep 2025 19:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2742F28F6;
+	Mon, 22 Sep 2025 19:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569668; cv=none; b=J+aP0YArxLHk+Pj7Pe5y2e03zAslhO1/LBiO4FiVXzQ3CzgZPHeuXSqbpjHpGu5oNrg1tDmGp8tZmINumQQEOHE63RjO6j6NrOhznYDbJ361UsnWn1a84+wA3D+iLlahE+QrU8/OFYAvGT5mA0CHS9NXIJBtYAqC9cq+jU54z74=
+	t=1758569671; cv=none; b=Z+RCUO3fsQvYXRUkLO0LCDtEZctMuefZf4/ZTNFhEzG/uMTtTegSgknNHUbQebpUz3T+9Z3SFIkRPox5KSmxkbP5N0dewbDFRLe3or121shnTLkDJA44/keh9oQKvYoNPccLPLaXydDOARnsidkSeVFh7z6XuzKGOLqk5XGU8Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569668; c=relaxed/simple;
-	bh=0J8XijI1nvbWz5FYvTnIvaxwYQwOvF0KsZ6k7mLQMJo=;
+	s=arc-20240116; t=1758569671; c=relaxed/simple;
+	bh=WeBZYku2iNTgGSXimXmVAkSjeqaaADCKt5Lt0CBgA+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/woKTAKLaeWTmwvkeNCdGtn5EMeaFOWmc11udVkGZs19aohNMaQAJPdqIAeCWQjGBlt1GBEL7jd2KzW9b5b9whzh+ZcFTpW/8XyVogR12dDQ9UoIq8WsLBPsy6LY+WT/TyEAF/nkrlXw84n2MJAURQCm3FhpcERrF25BvgD7w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaTl3wXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJF1dKAVE6fkhiMaQpv7AK+Csad3CwOWxbJfH/D7tKkK94Y1CckMzGfgdu4KGnTs/ipxZb9dF0pEcfM6EmBJQYPBPC0fW65eO5LkquvRV94eK/L1cf79aacb7P7NzBuQB6OVY/TzI9jz77AdISWmdPoCYGiVvrFHQxg+ZFC8M+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLfmQqbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaTl3wXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73526C4CEF0;
-	Mon, 22 Sep 2025 19:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLfmQqbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1C4C4CEF0;
+	Mon, 22 Sep 2025 19:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569668;
-	bh=0J8XijI1nvbWz5FYvTnIvaxwYQwOvF0KsZ6k7mLQMJo=;
+	s=korg; t=1758569671;
+	bh=WeBZYku2iNTgGSXimXmVAkSjeqaaADCKt5Lt0CBgA+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaTl3wXvNpLMIlfXgV2C0DWt8l7F8e9QibCea78l8AXuzQ9n1dH+vrfq09ttyvN8S
-	 ejFq/704NS7SzOApejJ+T1GdG2J7by1B0ilIK4LYgsM2pD43z+A5gLQMh2ZHeK5uqX
-	 mnv73jA16GFzKiwRmrHlGTAvmlPXOMKA2Cpdl/XI=
+	b=gLfmQqbPgxH0qxceKfb8/ytMiGeFGf9jLXdqKNoXAQnUJF08UA490wYQTc6SSKLaV
+	 wNWal+KLoV3Gj4mewBeJ1HqQ8VDBMf+3vKYv9/bKtXFYLVcqtFW6zDfgRvkhJnEWbK
+	 yj/mwMI4EEkhkS+aOF8j7RtnjoEBw8x2V2JsbXqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Alexey Nepomnyashih <sdl@nppct.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 14/70] selftests: mptcp: sockopt: fix error messages
-Date: Mon, 22 Sep 2025 21:29:14 +0200
-Message-ID: <20250922192404.900623676@linuxfoundation.org>
+Subject: [PATCH 6.6 23/70] net: liquidio: fix overflow in octeon_init_instr_queue()
+Date: Mon, 22 Sep 2025 21:29:23 +0200
+Message-ID: <20250922192405.185035417@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
 References: <20250922192404.455120315@linuxfoundation.org>
@@ -52,75 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-[ Upstream commit b86418beade11d45540a2d20c4ec1128849b6c27 ]
+[ Upstream commit cca7b1cfd7b8a0eff2a3510c5e0f10efe8fa3758 ]
 
-This patch fixes several issues in the error reporting of the MPTCP sockopt
-selftest:
+The expression `(conf->instr_type == 64) << iq_no` can overflow because
+`iq_no` may be as high as 64 (`CN23XX_MAX_RINGS_PER_PF`). Casting the
+operand to `u64` ensures correct 64-bit arithmetic.
 
-1. Fix diff not printed: The error messages for counter mismatches had
-   the actual difference ('diff') as argument, but it was missing in the
-   format string. Displaying it makes the debugging easier.
-
-2. Fix variable usage: The error check for 'mptcpi_bytes_acked' incorrectly
-   used 'ret2' (sent bytes) for both the expected value and the difference
-   calculation. It now correctly uses 'ret' (received bytes), which is the
-   expected value for bytes_acked.
-
-3. Fix off-by-one in diff: The calculation for the 'mptcpi_rcv_delta' diff
-   was 's.mptcpi_rcv_delta - ret', which is off-by-one. It has been
-   corrected to 's.mptcpi_rcv_delta - (ret + 1)' to match the expected
-   value in the condition above it.
-
-Fixes: 5dcff89e1455 ("selftests: mptcp: explicitly tests aggregate counters")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250912-net-mptcp-pm-uspace-deny_join_id0-v1-5-40171884ade8@kernel.org
+Fixes: f21fb3ed364b ("Add support of Cavium Liquidio ethernet adapters")
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/mptcp/mptcp_sockopt.c  | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/request_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_sockopt.c b/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-index 926b0be87c990..1dc2bd6ee4a50 100644
---- a/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-@@ -658,22 +658,26 @@ static void process_one_client(int fd, int pipefd)
+diff --git a/drivers/net/ethernet/cavium/liquidio/request_manager.c b/drivers/net/ethernet/cavium/liquidio/request_manager.c
+index de8a6ce86ad7e..12105ffb5dac6 100644
+--- a/drivers/net/ethernet/cavium/liquidio/request_manager.c
++++ b/drivers/net/ethernet/cavium/liquidio/request_manager.c
+@@ -126,7 +126,7 @@ int octeon_init_instr_queue(struct octeon_device *oct,
+ 	oct->io_qmask.iq |= BIT_ULL(iq_no);
  
- 	do_getsockopts(&s, fd, ret, ret2);
- 	if (s.mptcpi_rcv_delta != (uint64_t)ret + 1)
--		xerror("mptcpi_rcv_delta %" PRIu64 ", expect %" PRIu64, s.mptcpi_rcv_delta, ret + 1, s.mptcpi_rcv_delta - ret);
-+		xerror("mptcpi_rcv_delta %" PRIu64 ", expect %" PRIu64 ", diff %" PRId64,
-+		       s.mptcpi_rcv_delta, ret + 1, s.mptcpi_rcv_delta - (ret + 1));
+ 	/* Set the 32B/64B mode for each input queue */
+-	oct->io_qmask.iq64B |= ((conf->instr_type == 64) << iq_no);
++	oct->io_qmask.iq64B |= ((u64)(conf->instr_type == 64) << iq_no);
+ 	iq->iqcmd_64B = (conf->instr_type == 64);
  
- 	/* be nice when running on top of older kernel */
- 	if (s.pkt_stats_avail) {
- 		if (s.last_sample.mptcpi_bytes_sent != ret2)
--			xerror("mptcpi_bytes_sent %" PRIu64 ", expect %" PRIu64,
-+			xerror("mptcpi_bytes_sent %" PRIu64 ", expect %" PRIu64
-+			       ", diff %" PRId64,
- 			       s.last_sample.mptcpi_bytes_sent, ret2,
- 			       s.last_sample.mptcpi_bytes_sent - ret2);
- 		if (s.last_sample.mptcpi_bytes_received != ret)
--			xerror("mptcpi_bytes_received %" PRIu64 ", expect %" PRIu64,
-+			xerror("mptcpi_bytes_received %" PRIu64 ", expect %" PRIu64
-+			       ", diff %" PRId64,
- 			       s.last_sample.mptcpi_bytes_received, ret,
- 			       s.last_sample.mptcpi_bytes_received - ret);
- 		if (s.last_sample.mptcpi_bytes_acked != ret)
--			xerror("mptcpi_bytes_acked %" PRIu64 ", expect %" PRIu64,
--			       s.last_sample.mptcpi_bytes_acked, ret2,
--			       s.last_sample.mptcpi_bytes_acked - ret2);
-+			xerror("mptcpi_bytes_acked %" PRIu64 ", expect %" PRIu64
-+			       ", diff %" PRId64,
-+			       s.last_sample.mptcpi_bytes_acked, ret,
-+			       s.last_sample.mptcpi_bytes_acked - ret);
- 	}
- 
- 	close(fd);
+ 	oct->fn_list.setup_iq_regs(oct, iq_no);
 -- 
 2.51.0
 
