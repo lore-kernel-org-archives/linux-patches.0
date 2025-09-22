@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2289E17A2EA;
-	Mon, 22 Sep 2025 19:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A5017A2EA;
+	Mon, 22 Sep 2025 19:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758569579; cv=none; b=LJryvzByOc9OwNd9z+aTuv8FDN6OPnOXFKZ80nfWlkJ1ZKbdwJxy+UMNjEhEOx8cabWLZA8lTxcC1VIVWPEm+WQvxWjBNi4Pg7EjsaYB+C5n2sZX4bNwV0lRowQLLqGIY8Ueovfw5ZTys9uM6MptYwsyk2UAMsclI1U6V8/ua44=
+	t=1758569581; cv=none; b=cOR2etJp2EYhgtxm357I8hFGYiEN//8Y2xzrE6lVY35lQdO2u9tQYtLKtMmR/hKUsweQWtyRcTudnYeVy44nxHXyUtWGTAhX5jWN4eKvuvi3NSVc38nKA1PagBJ+EMak4vm2SNS1AOAD6QE1QllBpitg7rsRHxFnguwThSyoNLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758569579; c=relaxed/simple;
-	bh=zaBkIEjL/G0NMRpwVPoGg461ywyiIdHbQ8s9Fb713pQ=;
+	s=arc-20240116; t=1758569581; c=relaxed/simple;
+	bh=y8In/KbXwM469K+r6cc8CZuz67dDLt+yzyh+2T0Zgyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pf4mNrn81OCAgpSmzP4+Mk/mhDwoxERRf+JlnxbecFcHSe8PoARhrSwIEjLpZb7uboiMNcgn6BiEIEZCQIIKgrIyg1mls+8J62/6oIiXV0ga41ClgqfHE4UEOE/B8eS9rKZu18Ns5XHtqde3h6Wy2SLatDRZWtUPnwtNCiF8tQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNAtsRQA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAovSwmDX9bffFEerk9VjcB/ByFSlJ/moPR6Pa6Ky0MmBV5bXCzkwkfAlrMTdYdt4ZvtSDY9FZ3dFnonaBzVLRam2BQV+99eum9xO4gSPxxYvK+qlzn+5Za6p+ii2OZsSowp+QGTpBmW+w2pt87GMDUynh45QAitape2PYB23l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7Xv4lCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNAtsRQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF2BC4CEF0;
-	Mon, 22 Sep 2025 19:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7Xv4lCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6A1C4CEF0;
+	Mon, 22 Sep 2025 19:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758569579;
-	bh=zaBkIEjL/G0NMRpwVPoGg461ywyiIdHbQ8s9Fb713pQ=;
+	s=korg; t=1758569581;
+	bh=y8In/KbXwM469K+r6cc8CZuz67dDLt+yzyh+2T0Zgyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNAtsRQAemuF6Bh6oAjoNDWRzROyWI6IPXMuUPwTfiLmG1O95Fb0QjVV/VIOZFn9+
-	 BEduo2X921lneuuoG/GPwIK2dVcuF0dgZddouE/IrET2QAIMS04BGRd4AdLWJefpNP
-	 y0FNGV36789JgshHUCatQJySBmdQk1jmpKhzyJtQ=
+	b=i7Xv4lCvzSs5hEBnNsE66NhaNDyHnZNv8LH+I9HVoZJVPeZaxbi2tJpwpgJCFKXdb
+	 lOz0kkXmQdJPMQqJ7Ai0gdGfcTyW22uR36jqhMdGTf+kJq0y546jpVtGNDWy8MXR1V
+	 LIMlD8PkBVieEuoWaj0EWWdc6rs30OY65lrp33ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 26/61] LoongArch: Check the return value when creating kobj
-Date: Mon, 22 Sep 2025 21:29:19 +0200
-Message-ID: <20250922192404.271285305@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 41/61] drm: bridge: anx7625: Fix NULL pointer dereference with early IRQ
+Date: Mon, 22 Sep 2025 21:29:34 +0200
+Message-ID: <20250922192404.703112947@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
 References: <20250922192403.524848428@linuxfoundation.org>
@@ -50,31 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-commit 51adb03e6b865c0c6790f29659ff52d56742de2e upstream.
+[ Upstream commit a10f910c77f280327b481e77eab909934ec508f0 ]
 
-Add a check for the return value of kobject_create_and_add(), to ensure
-that the kobj allocation succeeds for later use.
+If the interrupt occurs before resource initialization is complete, the
+interrupt handler/worker may access uninitialized data such as the I2C
+tcpc_client device, potentially leading to NULL pointer dereference.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Fixes: 8bdfc5dae4e3 ("drm/bridge: anx7625: Add anx7625 MIPI DSI/DPI to DP")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250709085438.56188-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/env.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/loongarch/kernel/env.c
-+++ b/arch/loongarch/kernel/env.c
-@@ -70,6 +70,8 @@ static int __init boardinfo_init(void)
- 	struct kobject *loongson_kobj;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index e14c9fdabe2ba..690a0e7f5f6e2 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -2697,7 +2697,7 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 		ret = devm_request_threaded_irq(dev, platform->pdata.intp_irq,
+ 						NULL, anx7625_intr_hpd_isr,
+ 						IRQF_TRIGGER_FALLING |
+-						IRQF_ONESHOT,
++						IRQF_ONESHOT | IRQF_NO_AUTOEN,
+ 						"anx7625-intp", platform);
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev, "fail to request irq\n");
+@@ -2767,8 +2767,10 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 	}
  
- 	loongson_kobj = kobject_create_and_add("loongson", firmware_kobj);
-+	if (!loongson_kobj)
-+		return -ENOMEM;
+ 	/* Add work function */
+-	if (platform->pdata.intp_irq)
++	if (platform->pdata.intp_irq) {
++		enable_irq(platform->pdata.intp_irq);
+ 		queue_work(platform->workqueue, &platform->work);
++	}
  
- 	return sysfs_create_file(loongson_kobj, &boardinfo_attr.attr);
- }
+ 	if (platform->pdata.audio_en)
+ 		anx7625_register_audio(dev, platform);
+-- 
+2.51.0
+
 
 
