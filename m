@@ -1,196 +1,174 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010056.outbound.protection.outlook.com [52.101.193.56])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5C9288530;
-	Tue, 23 Sep 2025 12:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.56
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758630748; cv=fail; b=nee7cEtux2sKO2Ubrc9T1jCUaFwra+qDmN1zuA5h3sDsgBsdnb0uk3EHb6r0GSaF3yCgay56T4df5/0A/NyUaAweYYRyaasIwWIA87W4DogCyfSmJNsSc7y+x6MqMIscfttIXagjn34aFuaAsTJw1IkDFqeaaPdrX8nzKEL0dRU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758630748; c=relaxed/simple;
-	bh=sCUUdOtzUM/Ut7efoyzUxLiiWE5uMBJ6Emio+1k0GXs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=bhN6bv5bBEhVCDgVRD+4/SnPc5mfNOCAPPLpZA2AQqx3grpE6LpQ+d+SUQL9bINHagZH+Fed1yLDCwaYEEqezswW8r4MBYrS55B4VNa2diKsN75u1TjXMnlsr3MeZbrsG9UKbcd0oJ2btxe2rhC0lqXYViBIqpQAYZnKS6Cf2Nk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ngOG0ovO; arc=fail smtp.client-ip=52.101.193.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53122323F59
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 12:58:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758632290; cv=none; b=u2ICmGrOUWUJ/syEDIFqkHsMGrnrrd/VrvCli4qXXw4cm+x41TquJK+aXtkBDSH1L3gcQHs3gf3VPT8AEvJjGywFSFyJJqOoHrHOBs2HzExnWtpnhtUpFsPPSnrCiy0A8Pdf9bHkpQqY2bjr5MtV9PrPJXS4vBCnIwrtPPg7HyQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758632290; c=relaxed/simple;
+	bh=A2IMMdRVOaoGx4CmZT7VA864qaSMJOoHUZNtkeMI/VU=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fR3J9PQCIsxhniQsH/zbL0eo+AHo4dYuDgF95L6rWQXJulc2dB1ScJpAwc6FcpTx9v4dzObyMFd4rjSWDOOn4BN9JpCESd+c/9PLc5EuM5HiguY6f75GMwZ7PWywVXV+gusrQQMoHu4a9ut0LfOIiGGxObiuKKdy2pyVduey2hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RunkEksx; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ngOG0ovO"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IjDYKW5EL3t8i0Dp+ZcSutlW2vAtt59IZq2fAV8AqAu9wn3OjMLteZ3XfdI7nvIrOT8T1RF9N1Lh1/sEpZYntD9DEOIW8Ze7oIxZNsHXcqztyP2wll3nTUu6wvnW50SIKKslamyF34owloO44aQtesQZG1zcw3FkoKqr/FxMUA/ze4zxf/4cz4roAMHzJb4k5JeuIZuI824GJQ0fFVUHzuZC0pDyXyHTe7SqR+4fGWCIOxBtq0bMHUNha+7vO0B/iBYiCPQ2wzcUpdd0+O7YqehGLHKN8DWWs5jCO7cIDZQFdJmcM+RSNz74nFsTWgfACs+SzMycjkkiHryVmSmzQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IaMefZ2gRqUl+kWDE4hmhF0z1Afpoj0piJejBdPvsC4=;
- b=MHatVO9++D79T7HW6aapBylSu7KBiL+6NaQkNo9GtVY6+1JgR/TwlK0nrXFJgiwnK4WFqGhhtXaFsh+1uX0JKpjHyNCiTvdJ/f2+hza9WVnjc22r8w6CEgjP3SdA4UJl7Pz5K03vFLX0oNG84P9nOJQjSLT+f/+nFjpnryjvGHBZQaGgsdBdrItEJ9cEosBe+u0wKsr/rNPokloouUmUt/uxSrHRm2Q1tfATeXaTvLquXwy/Ff1cfxa5iKmIQWI9v6RppSy7X6kh7UijknHhavnGBJtyLvHBEnbjyxrkSbdtFHE7DNDTS48zrsQgx+zG+ukXOhzkBwKHh7/lEFMBVQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IaMefZ2gRqUl+kWDE4hmhF0z1Afpoj0piJejBdPvsC4=;
- b=ngOG0ovOcq2cvEp4SToNL35q4iA+kfhzBbUpTdDfnKcqkHNSvJrxHsQVS5wEFmYgHHAXqoIKue8dxee3CF8dzAgT45zBFUxB34ePB7NxjlpElNEPQeT6ZEyfAnW5/nZ/L7pcj/IQ0JL3/p9BwzVoOjOl0UXFFI26H2UpyR0/6TEtBadOnDipzWMYUHap8hxV/vtfTqhv9JGI+4NZBezMWzrH99FhY/2ClZcrrTYIQiKX3t5sa/I4C/yU8zohZoJk8ntNwPKGltEu3h3DhpyO9kZZrPlQQBuLefsPGa3y6qlapC04mSL7K+qOZPxfBofY7fqkBpgwpEbpyGqBR6KZWg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
- by PH7PR12MB5595.namprd12.prod.outlook.com (2603:10b6:510:135::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.19; Tue, 23 Sep
- 2025 12:32:20 +0000
-Received: from PH7PR12MB5757.namprd12.prod.outlook.com
- ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
- ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9137.018; Tue, 23 Sep 2025
- 12:32:20 +0000
-Date: Tue, 23 Sep 2025 09:32:18 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alex Williamson <alex.williamson@redhat.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RunkEksx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1758632287;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5Tq8eV1TAeYiGLz8ruZSC4SaM9je4JKLFfQxF5hcnMA=;
+	b=RunkEksxs9/0cxA3/8usOFHtRjhv0+aYpxdKUYNRRG+JD1AF0yYkHfeZgZqsTtdy2SUchT
+	C4z2fLRvhtHig/s8zVK3wVyYA/cb6s5i1Pu306Tf8GDa4zVSRDSK96rcSU3kpTNA8qRRm/
+	uvCsqLQGQHRiOwwqTccaIcYUtCSTvBg=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-435-8ABCYdr_PmizWjJ8iRuHEA-1; Tue, 23 Sep 2025 08:58:05 -0400
+X-MC-Unique: 8ABCYdr_PmizWjJ8iRuHEA-1
+X-Mimecast-MFC-AGG-ID: 8ABCYdr_PmizWjJ8iRuHEA_1758632285
+Received: by mail-il1-f197.google.com with SMTP id e9e14a558f8ab-4257e5a8f1fso2567665ab.1
+        for <patches@lists.linux.dev>; Tue, 23 Sep 2025 05:58:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758632285; x=1759237085;
+        h=content-transfer-encoding:mime-version:organization:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5Tq8eV1TAeYiGLz8ruZSC4SaM9je4JKLFfQxF5hcnMA=;
+        b=SjnUvol3y6dSvyvmTyM0lpqLkVjGXRP2pK8p4OPAiUOzGzgzIRNMsMErIfuXW7nT1P
+         w5ulJchmF7gd09dmFVISvuwJGmqfhjq0ZCRXcEOzfQqqBeW2UI8x7DMsFcunrdb3Ar5H
+         xqN8XuxO0PJLpBPHUH/QRQEfaaizqXwRXwEgYJCFhE+H1hGB/qValBKwz4TzLymRyyng
+         iAY6Eus43zWrq+DvlokBqNidqLOQkbLeuwwWqiWxcwjdpI4dctpcj+Wm+w0+pyJItR9i
+         /XeAseoTKliEggqVlX0dsc7O410LUO5OGdmNEaKpPQyBExWxsN+iF7OhCfgjb05fko6A
+         SdlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXwRzypnwMC/fnTlDHrCmceOqO78UTKqGiLVBL9VHW7ldOEDENo1Gpup0aueVkx9KK2SCrqTiC5@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyf4badeo57seaZmmYJvrnWybYNr26ZmPsTwlrHtlfaqHmFXKvA
+	947Ef04fS13qaWRX033Ah/00Qk6HGQZydKap8DRQ3YPP5OKs6QQGUdXPRpgXtkOcJ2/eNvLXNeA
+	Ccox3k3RJvbQ+2mSBU0mgjCzvh9TtT9+aUkebE9CHls9GpaLafVRtjh0WDeQ=
+X-Gm-Gg: ASbGncstJLkSLOO1r8P4sxLBKpKajwf2PFaRNhgiJ5pULAXTiGTt/iHe8YSpIGYHukU
+	M1qyoKiancqYX8oK6UGsacil9nZIujWYtTA9CNTSTmCTTfsGxzoKZLQJ7VoPrioVqlt3cTx2vt4
+	MCZr6LepSc7IsIQ4GsgMK7wYAeT/lnXHUAPQ3/WkkI4iqd9e/bKYevVDtpqvWMzvWQWMhqUYm2G
+	v1iKZxK5iKiH9BZqhgR+5mWwnWYcXWsBpxcuWWBBzhi7PuTmhFmmc80NYkFpg5Z7zE2czmfz8ae
+	XkENOZ5fsg0a7SDVUZf4aqkWyDo/ZAz4B+FGksfaWes=
+X-Received: by 2002:a05:6602:3fc4:b0:897:42c1:bcd3 with SMTP id ca18e2360f4ac-8e20e8ff164mr163411039f.5.1758632284969;
+        Tue, 23 Sep 2025 05:58:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWbkj/uISty5Vh6ighMEa8imB4zODbgJ/1fX320gi/1h2UE0ETTQaM30bBEliykOTPs5/KCA==
+X-Received: by 2002:a05:6602:3fc4:b0:897:42c1:bcd3 with SMTP id ca18e2360f4ac-8e20e8ff164mr163408639f.5.1758632284492;
+        Tue, 23 Sep 2025 05:58:04 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8d7f8f481bfsm138390739f.24.2025.09.23.05.58.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 05:58:03 -0700 (PDT)
+Date: Tue, 23 Sep 2025 06:58:01 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Donald Dutile <ddutile@redhat.com>, Bjorn Helgaas <bhelgaas@google.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
-	galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	maorg@nvidia.com, patches@lists.linux.dev, tdave@nvidia.com,
-	Tony Zhu <tony.zhu@intel.com>
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, Will Deacon
+ <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+ galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>, Kevin Tian
+ <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
+ patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
 Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
  switches
-Message-ID: <20250923123218.GI1391379@nvidia.com>
+Message-ID: <20250923065801.3c6a23e4.alex.williamson@redhat.com>
+In-Reply-To: <20250923123218.GI1391379@nvidia.com>
 References: <20250702010407.GB1051729@nvidia.com>
- <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
- <20250717202744.GA2250220@nvidia.com>
- <2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
- <20250718133259.GD2250220@nvidia.com>
- <20250922163200.14025a41.alex.williamson@redhat.com>
- <20250922231541.GF1391379@nvidia.com>
- <20250922191029.7a000d64.alex.williamson@redhat.com>
- <066e288e-8421-4daf-ae62-f24e54f8be68@redhat.com>
- <20250922205027.229614fa.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250922205027.229614fa.alex.williamson@redhat.com>
-X-ClientProxiedBy: SJ0PR05CA0117.namprd05.prod.outlook.com
- (2603:10b6:a03:334::32) To PH7PR12MB5757.namprd12.prod.outlook.com
- (2603:10b6:510:1d0::13)
+	<c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
+	<20250717202744.GA2250220@nvidia.com>
+	<2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
+	<20250718133259.GD2250220@nvidia.com>
+	<20250922163200.14025a41.alex.williamson@redhat.com>
+	<20250922231541.GF1391379@nvidia.com>
+	<20250922191029.7a000d64.alex.williamson@redhat.com>
+	<066e288e-8421-4daf-ae62-f24e54f8be68@redhat.com>
+	<20250922205027.229614fa.alex.williamson@redhat.com>
+	<20250923123218.GI1391379@nvidia.com>
+Organization: Red Hat
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|PH7PR12MB5595:EE_
-X-MS-Office365-Filtering-Correlation-Id: 95e5e665-d9cc-48b3-a20a-08ddfa9d3d0e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?MBpUClbxiIOZLO8eqBssZyKNwBvDDVtQwXuGSER3VkmXVSVV8xLOhql0PUdW?=
- =?us-ascii?Q?CUqno66OMwsbj8CDMEJ5nL1QJGQvUta/MwYTHzsGNaEcLC9dp+QVGrvZBfFF?=
- =?us-ascii?Q?cuXycHDkuBXHJCdq94I/J+MZWnduEFcds8s0DEPDmrv4HJ/cRCUpKI5jbK5Y?=
- =?us-ascii?Q?yX+wZwTQ/mb+t3LLWLszWVhFbfephO9dNSf8s4Roae2wO5GrVcJnAA2Y+6+K?=
- =?us-ascii?Q?jCCuZ1YuJ5+E58PFKW2VdniTFDX/sf56WDQMoDgPQdZWGrd+3Q1SrG5o1lef?=
- =?us-ascii?Q?IOoisOL8kx7NqEV6UgCocL3/hJ2zEurP2JX5RKQEE7Za4/2+lLJ6Jo13qDk5?=
- =?us-ascii?Q?OEdd2JD8HRnMbxLLiGFoiiAyLOBiGni8JSLIR9MDjijm7bOjaU57Djg2F8Q2?=
- =?us-ascii?Q?A09Qf/+BHrxuhAvFAtU/8f4uqQNlk3KY5twsUpy436Qj7fo8KI+Tmo6WUzTG?=
- =?us-ascii?Q?rh1YqMk9O1SqmYdyUiFW5dX0I+kquVYSlluKZF85Mmgd5MIU4C7BqqRPIYjo?=
- =?us-ascii?Q?puH9UFr7XAvbUwnbBY0UO38oNVBkzH3zswAXaMiEzVfwVjkbWgkhVySX89y/?=
- =?us-ascii?Q?yi+1nTCY0+ueEneaA33YoNSo3Roo6V9pFQ+U6gmiUPE6zqqSCEwJibaA3+XY?=
- =?us-ascii?Q?YDPJmEecsfuTQAcxKedoNER6vsFfXzXzjz0i8ePopnmxz/daAIayHxR1edTh?=
- =?us-ascii?Q?ThFqCGLhYach0oBh/n10rq9ergl0vhvhKpCIWRujPX/77FiYH0yccshKmFln?=
- =?us-ascii?Q?FJiHo7RKex5CyUeZJzah06sJ/lgZO0RTW0nHe07e9scEI4WDmkvHVMBaPmLB?=
- =?us-ascii?Q?h3cYgwK5PIvkGr9Rp+i2N/CaAGCO1VfUx+SEId6fxeyQoZXhI6WLsWflljHg?=
- =?us-ascii?Q?ZgXSH1ZEUQ/E4+SaYip+bQE0euvc7xNMKJE2dLoKr4GkOC3PfItPRdAE2zRW?=
- =?us-ascii?Q?Lp8WiAhxUysECK8p0SZWXNXvwGocQU3KUkjys1fFiqmPtTkOh4nt8TiEuCpt?=
- =?us-ascii?Q?EKzE9k5x2TPM3E6KlmRa/EtIMxa3aR5VlYJIm2NXHURmmAQzKyJuxRtkeROF?=
- =?us-ascii?Q?VdGMGr7iY47VLamcKq9kr2ZGnhvM/u6YI98nRfpYmHKTKgAq+EM84ViLuF6S?=
- =?us-ascii?Q?yhEJ5xRgeikfvtgaAZIcwMtoJ6L2J5GaQr//K+8yg2SUckN1ZhglUdxhaohN?=
- =?us-ascii?Q?Yxqp/wg9u8D2kb1XtC1Uk2wMGfwG543r0E/O0dfoDF9EumI5Wq8EujT6r0LW?=
- =?us-ascii?Q?gfRBOleTngrTyO/nrIgBgxM/s0DIc9VvHsTWVXnhHYDbASU1wCULNIFz6CAQ?=
- =?us-ascii?Q?7nT2CMdJeBDKlvgseKh9GDoJ7II9mtmHYhMcPbvqv2uuit3HRIdhglD7/fbJ?=
- =?us-ascii?Q?IyfxaIvMlecsp28dvfls5TsTJCWhjkcbfiSFqKbgwiKIUWakQX/EMAUi2DG6?=
- =?us-ascii?Q?uiGwnD/DVa8=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?233LCqJ+mNsLp7cXtZvD0ww/ZQQek3CQS+bMBPQKawIqzMsw6jVt7s3xhf3K?=
- =?us-ascii?Q?ROAx9AsO95NNlZ6eCe4H/TcRR1kzC1Qrg/OAcA1FsGbz8A9q81On764nODDW?=
- =?us-ascii?Q?k0cFrbIkHcq9hbTqDVOioPbji5DjYvLyDH+WM0B4P7pRhTASkr68ilymRu03?=
- =?us-ascii?Q?T2BUmlFaYAfRZGpShp0dDbhw1orbzx6wsKt5vCcFi7KJzszHt2QbXSiyx5I/?=
- =?us-ascii?Q?N0ig/pjc+4ExmXSQ/i7U5mOJc6lmZytQaJyS/m/JFybcapGLA2sbtNzhiK6Q?=
- =?us-ascii?Q?pY3MR0kEuf//rA9zj96GncDk4B7blehnRzE3lvG+ugdgsDs5RFS54ir0An4J?=
- =?us-ascii?Q?saEoCwWIR+lJKHtkKKAGknOy7zj0ajNLRdNWelKJMgPqSTExulUt4eUl/8zd?=
- =?us-ascii?Q?fb9z30T7nouC0ehM8ae45RNh0UP+KA9arx9Veo06iM+5EW3m0Xa1Lyf6VKbB?=
- =?us-ascii?Q?ZCPMt3Re5l6AFMSpwisXyP+fD0dzYuqkgakGnRFwcyMdCbtVJ4ajPfFEWQGX?=
- =?us-ascii?Q?BzwYT8PotP9NQdzK+OazsvDF4P/fYyt4KmRqMO65J2TzFV+yFnajz9jaCBEU?=
- =?us-ascii?Q?IpviNaU8BxI5Zx2+8XU2OOKi4/AogWf3DZkeCjfPNeZtK2meiOjV+3U61aK3?=
- =?us-ascii?Q?eiXQ3/6Ipp1C9fF+I6/QaO9yLw+0iZyifEhPh6KjShwzWZwBt13HioWx6/b8?=
- =?us-ascii?Q?Km6Mg6eMhVrSz97bjZmoreNpdZ1aib+UBOyOuHuK9aJlZrGTF1qsJeDNtMYv?=
- =?us-ascii?Q?L/ljw5rJuDg/jC0FvTa45gPO7iRSWNxcyHVRyjHYLyWEaSWyQJQfzynrSQXa?=
- =?us-ascii?Q?pbIoJFVt7hElpzUauWOBOLg8l1C7hzC41A2VeO+fX2a3kFoThoS76h5udkUY?=
- =?us-ascii?Q?pf56uU2Ga5MjC3cwjSTmcPjo/wt7bMQ4GUBnuvKgYdO3DPk3xz4QumbhCP9L?=
- =?us-ascii?Q?XFctkayqp5LmuySdU2oW7Vtwjdq+JUkWEjueytFTKeW+sFB+bkjgIOvS8wF6?=
- =?us-ascii?Q?OBG79bi2H4CKF2CKEtN4C4sU0+YI9esPFm/52w6OZvRe4rQSRa1r288kQ6u8?=
- =?us-ascii?Q?RcR/9y6oLbg6QE4lOgTyMs5CnGBUOHXq/k5O6KYA7Teiy3EITQqLuzm7k9YC?=
- =?us-ascii?Q?weizmO6q0s38rMrDv+psCmefYp84Fre2dMV759CbHpFb0QDEPIorEKEBFmk+?=
- =?us-ascii?Q?bfane/tlP6T2p1wVFeztveWpQzZe5E5LnxaRZ+av9dReoF8lzPul/CtARJbl?=
- =?us-ascii?Q?m0jfhecrjHIRzBznRIQcbbWPc3FXDVGAWbO+0txBDuN0jsZRsgOYczCSmGvp?=
- =?us-ascii?Q?c+JtaCfWtvmtgZbClMidNhfErwxYBOjzKujp1JdUC7/t9knt4R4EcqrDIdQy?=
- =?us-ascii?Q?rnchFayjf8af0QI4ipUx1LTBsx0pmG8RUY2u75uXhiFDWe9hbN5ookQWE+Wy?=
- =?us-ascii?Q?UIuSmp4R5nCTxAWF7Ru81kmR6I6RuBcZ1foZafEUPd13SVU8qYWzbJI8t5BU?=
- =?us-ascii?Q?QODPifU/6RhzpojD6rKWOBO01jtpxfi/TQ1TMtI4jtBuVwc7k/auYg4IyhQf?=
- =?us-ascii?Q?znt9ErOG/k1zPsFy08xhwxZDfk+UpePjBnJ+RMk/?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95e5e665-d9cc-48b3-a20a-08ddfa9d3d0e
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2025 12:32:19.9442
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gHTzUxpWM0y/UTskCb2QjO0efZlOZ7z/OcnsHfnowLriZsxQhcmVu6ff8KdywFT8
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5595
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: JIJVZWIcZrjL2rXTjY3XecJC4vFQ9hofS9aKeykjmLQ_1758632285
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 22, 2025 at 08:50:27PM -0600, Alex Williamson wrote:
-> That's not what the spec is doing.  We're misinterpreting it.  The
-> sections of the spec you're quoting are saying that if a MFD function
-> supports ACS it must support this specific p2p set of capability and
-> control bits unless the device does not support internal p2p.
+On Tue, 23 Sep 2025 09:32:18 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Bjorn raised that too, but it doesn't actually say that. The wording
-is meaningfully different from the preceeding section that does
-explicitly say the language only applies if the ACS cap is present.
+> On Mon, Sep 22, 2025 at 08:50:27PM -0600, Alex Williamson wrote:
+> > That's not what the spec is doing.  We're misinterpreting it.  The
+> > sections of the spec you're quoting are saying that if a MFD function
+> > supports ACS it must support this specific p2p set of capability and
+> > control bits unless the device does not support internal p2p.  
+> 
+> Bjorn raised that too, but it doesn't actually say that. The wording
+> is meaningfully different from the preceeding section that does
+> explicitly say the language only applies if the ACS cap is present.
 
-IMHO, from a spec perspective, prior to this language, internal MFD
-loopback was *undefined*.
+What then is a "Multi-Function Device ACS Function".  I think we need
+to take context from the parent and previous sections to understand
+this applies to functions implementing the ACS extended capability.
 
-You are advocating for a very pessimistic position that undefined must
-mean the worst interpretation for everyone. It doesn't, undefined
-means we don't know.
+> IMHO, from a spec perspective, prior to this language, internal MFD
+> loopback was *undefined*.
+> 
+> You are advocating for a very pessimistic position that undefined must
+> mean the worst interpretation for everyone. It doesn't, undefined
+> means we don't know.
 
-A big part of the argument here is that in the modern world the HW
-community has aligned that MFDs should not have internal loopback
-because it harms virtualization.
+Right, we don't know if p2p is implemented, we're implementing a
+security related feature, therefore we assume the worst case and allow
+for quirks in instances where the vendor can vouch that p2p is not
+possible.
 
-We are here a decade later and we can choose to require quirks on
-devices that choose to implement internal loopback, because they are
-certainly now the minority of HW.
+> A big part of the argument here is that in the modern world the HW
+> community has aligned that MFDs should not have internal loopback
+> because it harms virtualization.
+> 
+> We are here a decade later and we can choose to require quirks on
+> devices that choose to implement internal loopback, because they are
+> certainly now the minority of HW.
 
-> We've had NIC vendors implement an empty ACS capability to convey the
-> fact that the device does not support internal p2p.  There is precedent
-> for the interpretation I'm describing.
+This seems like optimistic speculation.
 
-IMHO it just shows Linux has the power to convince device vendors to
-do things.
+> > We've had NIC vendors implement an empty ACS capability to convey the
+> > fact that the device does not support internal p2p.  There is precedent
+> > for the interpretation I'm describing.  
+> 
+> IMHO it just shows Linux has the power to convince device vendors to
+> do things.
 
-> Are we going to expect users to opt-in to securing their system?
+And now we're effectively punishing vendors that have gone to this
+effort to expose isolation by hand waving that it should exist by now...
+ 
+> > Are we going to expect users to opt-in to securing their system?  
+> 
+> Since the grouping isn't working right today we are already
+> effectively doing this.
+> 
+> All this is arguing that the burden shifts from people with modern
+> systems to people with ancient systems.
 
-Since the grouping isn't working right today we are already
-effectively doing this.
+AIUI there's a narrow case of downstream switch ports implemented as
+separate slots that is misrepresented.  This should be fixed.  There's
+also an effort here to consider both egress traffic (as done today) as
+well as ingress traffic (new).  IMO this will inevitably cause
+regressions and users may need to opt-in to make their grouping less
+secure for previous compatibility.
 
-All this is arguing that the burden shifts from people with modern
-systems to people with ancient systems.
+Requiring users to opt-in to secure their system is fundamentally
+different from requiring users to opt-in to a reduced isolation
+paradigm.  Thanks,
 
-Jason
+Alex
+
