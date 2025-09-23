@@ -1,82 +1,259 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C58B224D6;
-	Tue, 23 Sep 2025 20:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502CB27F732
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 21:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758660414; cv=none; b=OC7913LExLWlNPvd5aFiSH3KZ04vDokwX5pxbzb62Ae5orQk0Mwxvgha8Fudv/1RJAy0IpKI/tGI4pxarYwfmrRD0SNKDY7E5uzJ6eN3aWfS2GWiKXHVQyl+MHRzipjgo5aYtIu+/gp0NIYJYwGX96x2GJUrTIniWC31vmutxyA=
+	t=1758663002; cv=none; b=XCe7sU1YpU/0w2Jt2ru6HpM5GzMM3LL+Jb6pB2U66u8mjKR0PycBxhXskXTbxB3/mpVBVOYKu6DleB/SmvWK3Ag95J0RDaUXdKJgQA++P2h8LgawCULn6iW/B3YYopEGpw56uzu5T02lfNPs4djaM69PaKlmHuR2bDu+EcGuBLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758660414; c=relaxed/simple;
-	bh=JXxNDYBUj7pTLBQL2Yva3Lyig2/mOxe4nlA0nI+OW4w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbW0NgYjnC4GCX7e+n8DI/nmIFRkXeGXtz6qT4bVwKUBybXMQW5VBgpJn6MQ7qoyJJGCn0dqpEbmxA2t39XaneAvN6Gil2LjVKBNw1ZGBdLEUTM9enQ42DcG6jNFblLZ4WGcgSUft0ssQXe8kaRkZmPZOEL0/Pt2WRLr+6eH1nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T6dOf5Ze; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758663002; c=relaxed/simple;
+	bh=diLmI3F9ueElFIp3AVZrlwoYbNK3yJmxfOshhCFqkqA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ix2zl/+YWsVoz5Yki5/WxTfgAXDvJUmiMDfSZC6669Pe7oi7Z53cHO0uv6bque8rLW3LlQkPnpB7A1FcXcc7EzbhFX1uJ36saswcJ6+TNeVsQ/uKRfpxUXpiJkbQY1yDDbqsUO5cfI/3nOadyEmdNxlHDSeGUH4z98pKhzlWHSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MNU5+1Zn; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T6dOf5Ze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C9DC4CEF5;
-	Tue, 23 Sep 2025 20:46:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758660414;
-	bh=JXxNDYBUj7pTLBQL2Yva3Lyig2/mOxe4nlA0nI+OW4w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6dOf5Ze8WZnII+H8HHnA2UcPWjcZMmRmh6PTT1Xi7UQM0ehxS5pJSFZPJzDSh5+s
-	 AjKWFgAq7+GfaGZzl9yslXBGyYkPUYjgJWQKPs1ke4SjL0LBq9KdzKCU6sjVA0QTNm
-	 h1kObxNgv4tTQgHT8KBXEpgLpT2WY7Cy3GfZwEUKC96Lqlrmnj05KbDhllRV6RNIIq
-	 cHKo8hAsHiTorjZWD9URbz6HOpyRB0cNPf+BYHpDdmp9AHjo6KtWEzDsFyN3/ydYw5
-	 G5Dv0ptiIg6S37172wJtOl7lpLcJhFPKA9hNDfKG1RABjkM7A2efdfiX9Jt1UoFgEN
-	 Mj65FSyXS5M/w==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.16 000/149] 6.16.9-rc1 review
-Date: Tue, 23 Sep 2025 22:46:44 +0200
-Message-ID: <20250923204644.692613-1-ojeda@kernel.org>
-In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
-References: <20250922192412.885919229@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MNU5+1Zn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1758662999;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=BXIM6CPTozGtmiCIPPeqmZu4P29aqw7ByjaXAGTyiDo=;
+	b=MNU5+1ZnmiuNxMRXXWR88W6eGv/QrfCNNCcL9ELUlfGe3YgRYessLPKeobiGtC8RneWK7M
+	9eZxbdUQS2GYU5mRvgH6H+XKOpy7Ew9Q/SdxOxjFnSVNeJrke0MyXsNUMqzm98n4T4BcGi
+	bm4NTkWctpF5lxgviqA0iTBqItKuaEg=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-142-3G9ka498Nu69ep34ErckyQ-1; Tue, 23 Sep 2025 17:29:58 -0400
+X-MC-Unique: 3G9ka498Nu69ep34ErckyQ-1
+X-Mimecast-MFC-AGG-ID: 3G9ka498Nu69ep34ErckyQ_1758662997
+Received: by mail-io1-f69.google.com with SMTP id ca18e2360f4ac-8c24aa3f7f5so41405039f.3
+        for <patches@lists.linux.dev>; Tue, 23 Sep 2025 14:29:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758662997; x=1759267797;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BXIM6CPTozGtmiCIPPeqmZu4P29aqw7ByjaXAGTyiDo=;
+        b=T6M2yvAhMzkdN37nGZN4t15+xaZKOABotwRSlYlxkzktf8OCQcEtO4rMHuVS7yrdQ6
+         PFMf0kK9w498n9ZZs69GPVG1nCYBWQbQgRl4uE2aIEXPolyKR3XUT2FTywFeFZ+O79OE
+         +XECR4yx362vDCuAziugAiCzPkxk2fItiHPfCjevpGbOqFpcMpXDtMyK7t1aqhH97Hu9
+         qY86lCSVQefW9YVHZREudTMbatY1cJdLn/Dw0df0tNKUy/6+ssgA4oKIJl/sxZpeht1s
+         AMd2oFZloyt5uvrNbYUm3Cqijdu32VEUgXxTOQjicWgPfZX2jVzY4TJDnIJz+A95+iqo
+         arkw==
+X-Forwarded-Encrypted: i=1; AJvYcCVaH5713ogRK2woLmiFSM9rDFR7SdilLz6ur9gi9eHXsbaUgHbpJVFjYT96pN7JUnATLF91g00j@lists.linux.dev
+X-Gm-Message-State: AOJu0YyFFfS3svHPZ0KiiG7omPpiiy0cFbsc9onPkZBK/VJ8JOtamSXR
+	nKXKPHjrwdOLmCmjIlmDQtEbrf7quXzqZeohV8/gjGcFBfoVj+ub5fl3DH+lj+ePKyd/7TFoMiA
+	zmDV7LyrErrI+jbPPjEePLA+PNmSPN1ISaHpKFphDTKRZM/9U97+5Hg53fRs=
+X-Gm-Gg: ASbGncsjIcmEj9phAD/pjja4LetZzv05Z4wnO1k3MWkn8E0pHnilOlTrCW4+ZLbJ4XM
+	XmQhbBD7pBkYIwiAupBzREkA7RuGJ03LRafzYg2lbNokn4CXjTkNBxiVVKVAKep13K51K/KrUv7
+	bnsKKWtXHDaW25vFY+XZp7yoE86ks1lSTmQ0xZm865bIWa7c3NiUXB80RzjEP0EkJWI85OZLc6D
+	DF5MwP5c/p1ehvBGBKkmuzMVosubvX3eIKgbbt8Bmzzj+icES6HU1+W12/r7fwePe5+dQYVKPAd
+	puuL7iPN0pD0QR32LYuL/vbUSq/9p9EL+QVQOvZoga4=
+X-Received: by 2002:a05:6e02:b27:b0:423:fd07:d3fe with SMTP id e9e14a558f8ab-42581e0924amr22860015ab.2.1758662997126;
+        Tue, 23 Sep 2025 14:29:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFUOBnlXrTOWgoZY/P7THmX3Jn4R3nM9Okb+VwIix6He0SbPySRgexEN+IvhQOjyWjxMklug==
+X-Received: by 2002:a05:6e02:b27:b0:423:fd07:d3fe with SMTP id e9e14a558f8ab-42581e0924amr22859855ab.2.1758662996625;
+        Tue, 23 Sep 2025 14:29:56 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-4257c9b22afsm25902175ab.26.2025.09.23.14.29.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 14:29:55 -0700 (PDT)
+Date: Tue, 23 Sep 2025 15:29:52 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Donald Dutile <ddutile@redhat.com>, Bjorn Helgaas <bhelgaas@google.com>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, Will Deacon
+ <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+ galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>, Kevin Tian
+ <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
+ patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
+ switches
+Message-ID: <20250923152952.1f6c4b2f.alex.williamson@redhat.com>
+In-Reply-To: <20250923130341.GJ1391379@nvidia.com>
+References: <3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+	<20250701132905.67d29191.alex.williamson@redhat.com>
+	<20250702010407.GB1051729@nvidia.com>
+	<c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
+	<20250717202744.GA2250220@nvidia.com>
+	<2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
+	<20250718133259.GD2250220@nvidia.com>
+	<20250922163200.14025a41.alex.williamson@redhat.com>
+	<20250922231541.GF1391379@nvidia.com>
+	<20250922191029.7a000d64.alex.williamson@redhat.com>
+	<20250923130341.GJ1391379@nvidia.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: t_Rt5Yu3bALC30OuXK03r2--0VMar3PfiNBy6X8fveo_1758662997
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, 22 Sep 2025 21:28:20 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.16.9 release.
-> There are 149 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 24 Sep 2025 19:23:52 +0000.
-> Anything received after that time might be too late.
+On Tue, 23 Sep 2025 10:03:41 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for arm and loongarch64:
+> On Mon, Sep 22, 2025 at 07:10:29PM -0600, Alex Williamson wrote:
+> > On Mon, 22 Sep 2025 20:15:41 -0300
+> > Jason Gunthorpe <jgg@nvidia.com> wrote:
+> >   
+> > > On Mon, Sep 22, 2025 at 04:32:00PM -0600, Alex Williamson wrote:  
+> > > > The ACS capability was only introduced in PCIe 2.0 and vendors have
+> > > > only become more diligent about implementing it as it's become
+> > > > important for device isolation and assignment.      
+> > > 
+> > > IDK about this, I have very new systems and they still not have ACS
+> > > flags according to this interpretation.  
+> > 
+> > But how can we assume that lack of a non-required capability means
+> > anything at all??
+> >    
+> > > > IMO, we can't assume anything at all about a multifunction device
+> > > > that does not implement ACS.    
+> > > 
+> > > Yeah this is all true. 
+> > > 
+> > > But we are already assuming. Today we assume MFDs without caps must
+> > > have internal loopback in some cases, and then in other cases we
+> > > assume they don't.  
+> > 
+> > Where?  Is this in reference to our handling of multi-function
+> > endpoints vs whether downstream switch ports are represented as
+> > multi-function vs multi-slot?  
+> 
+> If you have a MFD Linux with no ACS it will group the whole MFD if any
+> of it lacks ACS caps because it assumes there is an internal loopback
+> between functions.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Yes
 
-Thanks!
+> If the MFD has a single function with ACS then only that function is
+> removed from the group. The only way we can understand this as correct
+> by our grouping definition is to require the MFD have no internal
+> loopback. ACS is an egress control, not an ingress control.
 
-Cheers,
-Miguel
+Yes, current grouping is focused on creating sets of devices that
+cannot perform DMA outside of their group without passing through a
+translation agent.  It doesn't account for ingress from other devices.
+
+One of the few examples of this that seems to exist is something like
+you're describing where we have a MFD and one of the functions is
+quirked or reports an empty ACS capability to create another group.
+The ACS/quirk device is believed not to have the capability to DMA into
+the non-ACS/quirk devices, but the opposite is not guaranteed.  In
+practice the ACS/quirk device is typically the only device that's
+worthwhile to assign, so the host is still isolated from the userspace
+driver.  Arguably the userspace device may not be isolated from the
+host devices, but without things like TDISP, there's already a degree
+of trust in other host drivers and devices.
+
+I'm afraid that including the ingress potential in the group
+configuration is going to blow up existing groups, for not much
+practical gain.  I wonder if there's an approach where a group split in
+this way might taint the non-ACS/quirk group to prevent vfio use cases
+and whether that would sufficiently close this gap with minimal
+breakage.
+
+> If a MFD function is a bridge/port then the group doesn't propogate
+> the group downstream of the bridge - again this requires assuming
+> there is no internal loopback between functions.
+
+I think that if we have a multi-function root port without ACS/quirks
+that all the functions and downstream devices are grouped together.
+For a long while this was the typical case on consumer grade hardware,
+CPU root ports were multifunction without ACS and we only had
+ACS/quirks for chipset-based root ports on such systems.
+
+> It is taking the undefined behavior in the spec and selectively making
+> both interpretations at once.
+
+The intention is that undefined behavior should be considered
+non-isolated.  We try to define that boundary of a group based on
+provable egress DMA.
+
+> > > Assuming the MFD does not have internal loopback, while not entirely
+> > > satisfactory, is the one that gives the least practical breakage.  
+> > 
+> > Seems like it's fixing one gap and opening another.  I don't see that we
+> > can implement ingress and egress isolation without breakage.    
+> 
+> Yeah, either we risk more insecurities or we risk large group sizes.
+> 
+> > We may need an opt-in to continue egress only isolation.  
+> 
+> It isn't "egress only isolation" - the thing is I can't really
+> articulate what the current rules even fully are..
+> 
+> I'm not keen on an opt in. I'd rather find some rules we can live
+> with.
+> 
+> How about we answer the question "does this MFD have internal
+> loopback" as:
+>  - NO if any function has an appropriate ACS cap or quirk.
+
+In this case rather than split the one ACS/quirk function into a group
+we split each function into a group.  Now we potentially have singleton
+groups for non-ACS/quirk functions that we really have no basis to
+believe are isolated from other similar devices.  Currently the poor
+grouping of such devices generally deters assignment, narrowing the
+exposure.
+
+>  - NO if any function is bridge/port
+
+This would hand-wave away grouping multi-function downstream ports
+without ACS/quirks with no justification afaict.
+
+>  - YES otherwise - all functions are end functions and no ACS declared
+> 
+> As above this is quite a bit closer to what Linux is doing now. It is
+> a practical estimation of the undefined spec behavior based on the
+> historical security posture of Linux.
+
+It's really not what we're doing now.  We currently consider undefined
+behavior to be non-isolated, or we try to.  The above makes broad and
+unwarranted (IMO) isolation claims.
+
+> > And hardware vendors are going to volunteer that they lack p2p
+> > isolation and we need to add a quirk to reduce the isolation...
+> > dynamics are not in our favor.  Hardware vendors have no incentive to
+> > do the right thing.   
+> 
+> They do, otherwise they have major security holes in
+> virtualization. In an enterprise setting I have no doubt it is already
+> being done right, and has been for a decade.
+> 
+> I think the above rules will broadly be pessimistic toward add in
+> cards and optimistic toward the root complex.
+
+This puts data at risk more so than assuming undefined behavior is
+non-isolated.  Currently bad grouping makes it difficult to attach
+devices to userspace drivers.  If the bad grouping reaches a
+sufficiently high profile and is the result of lack of ACS then we
+reach out to the hardware vendor to determine if isolation is actually
+present, create quirks if confirmed, and encourage use of ACS to avoid
+such problems in the future.  If not confirmed, then the grouping is
+unfortunate, users can and do patch their kernel to create overrides,
+but they're on their own when they meet unreliable behavior.  I think
+this model has been working.
+
+Should we re-evaluate how we handle downstream switch ports exposed as
+separate slots, certainly.  Should we consider how to handle a
+potential lack of ingress isolation, probably, though we really need a
+compelling example.  Should we fundamentally reverse various policies
+we've been using for over a decade in determining DMA isolation, IMO no.
+Thanks,
+
+Alex
+
