@@ -1,105 +1,282 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3039726CE04
-	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 02:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB0619258E
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 02:42:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758595193; cv=none; b=YG4BYiOCaJfuufBrD4n7+ogZTjOuERJpITMIwOZEA8h7gM9qCKumJm0a34dEWfEEsUvC7USmCqwRdKOTIS7K8vrEjHNfgbuR5nU/nqVubUxKXbDRHu1WT3h5GTvUkE2dE8gMwTJAW8oLOCo27cxgLcjIvhBAntV4zWNYNoWtUl8=
+	t=1758595365; cv=none; b=MBULVYBy3k0Sl3q8GiB7r2JG8+Y+LdTnN25Ln7iUCqWAVzgZkv2k27SG4+gzX3BTltF5IcnwhA7mYcAn5xOtWbHlSAMsotl959SxBE6KPsSkTECyI0/MunIMwTGLTXobKMNNNo3XzbaDqhT6tmUqMq1qVcoLhzM9mY57t5RK9Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758595193; c=relaxed/simple;
-	bh=1/d2HFVGLGHQMmxjDB/j0xkRdNQfTVZWtuk56ZysKew=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jj9BOH64meLrV3fTZPrMP9b1cZsJ8uQHPc4JYaZI6d+rrOeuU3zNecnkVvdT5EQNiwjOFXgUGEoP+oTThMU2EjiJTwq5GIn1M+lDjQn74+dcEjQiJHw8rLFf/MXDtBEle5pvifJNvW9Hby17dEvuCZLcdaYFot7jM4i37Sh+u0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=QRcuSxUs; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1758595365; c=relaxed/simple;
+	bh=U8BfRIfWRxGPkTZ8ZlsPBJ0ty1yw0P2zFNdvUm5eF80=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G3v63nVSoDt7+ziwh2YHV+pGBtaJ2u+HVT+Ifh/11B7NFq4azJDILGCmlvMJy/PRhlIwxnvex5tgsC5mPQ9S0bCs+3YmF33V9roi70hHpyGjnDUoRyw00h81Wsl81NkzDuO78ET0+4AUnyPqXxGjkWQTLEsaplBsNU0BgVOfim8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IjLsk/tI; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="QRcuSxUs"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-4240784860bso20782835ab.1
-        for <patches@lists.linux.dev>; Mon, 22 Sep 2025 19:39:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1758595190; x=1759199990; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rEqc5Nhg0kVbwLVE1FmI2uJU0IwqC3G08jt+br7HVvY=;
-        b=QRcuSxUsjTzKgAOix6D2s2EuVLSYhYjQM9t4rgZm/HbMLufsXdHRYyQ+wV9t38P7Nv
-         O0Z3gHcUr/tcduKnJcYJFctUQtDYaNHP1KfWDaVdZgwBfQUikIppcISdcPTe2ys66hv4
-         Gx1GY/baiwZ7eqMEwDB4Xaf/Fz93vhBnBA6PA=
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IjLsk/tI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1758595362;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ovRbpMfovzcRmf0L4bDDYQZTgg4Svx+RqRpiV3ItuuI=;
+	b=IjLsk/tI6cAqcKH4E4HECvlScD9Y3y6zR7kONlVcrh6BoFikfekF/WwKpLVkZitOAUn5cS
+	QY52KKAoGTi7snDGpbP2e2k4fj/uUqx67ZBGuES+kGaYX2D7RQ8lfWpZlXa1Vq8/05dmXt
+	pf+bhzaS7TkXIH/ATAk4IAH52NUqW3A=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-tu6xvdhlPxSzYmj1SUTifw-1; Mon, 22 Sep 2025 22:42:40 -0400
+X-MC-Unique: tu6xvdhlPxSzYmj1SUTifw-1
+X-Mimecast-MFC-AGG-ID: tu6xvdhlPxSzYmj1SUTifw_1758595360
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-827061b4ca9so942611285a.3
+        for <patches@lists.linux.dev>; Mon, 22 Sep 2025 19:42:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758595190; x=1759199990;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rEqc5Nhg0kVbwLVE1FmI2uJU0IwqC3G08jt+br7HVvY=;
-        b=NSpJitr1Q787ZKrP8dilpfraK1sShGN/jKJBaneifC297JNz0Zn+LsX5eT5C/En1NI
-         Ulys8lzS1jBwoYhMcyUlFcTs8gFCgaIZ9ADo7CfPIGZeDNidUxalZHCEAQAyblf02mTA
-         qEiPEagA3BI3poQueXO5nvrY6Qo1l61K8AHRGbxOTAnjof0CZWTC5qQtplLxHWYPxFYL
-         7vi+LnPp287HIaPHyS4IJ4wXgcJus1i8PemSanhhwmRyO0Rme1qlHAw8Jk2WdRYo4Uea
-         G3tCki49jQR9FqoCSREVxzYVq0nY+7TdvLrGX2WSQ7pHeHKecOtjXL1KRNrd+OPoV8FU
-         tUpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVIQeBjZmAhOxwkEqRFGiiFQKcglqbW54j+Sg3GlxzCGFzFzFNheuYR6DDsNV6MizsHItG6WNbk@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxc8UvCH3BBSfsR1tY2yWjdIivYj21UC08aAWOZK7RUqcxfDEXH
-	210H9MLhSnyXTbpWaPZyXyhWHaMvEhrvx3Iwb7Tq/3BU+NmaJM0qLiSFXM9EIs10vQ==
-X-Gm-Gg: ASbGncvwhz6S/uwbVWRgCsxA3o2+KT1hkw2ftCAOt1RZt6niETmPOn4sriLDz5Ydhl0
-	arT89sq3h7TOXQ/x6t+lyMUpY7n3gY7thKY9CDEVqekjNP+AdDEdZhe+mc+m6sf4cy2reAetURt
-	58EsiXEBsR49WAzdTVoSf5QD56YTzg2L3vke6JnYuz4O7Eb2uAwvjFI+l1WQKl3lCoF12EWLWFE
-	R5xtY+PyyCKm5f+3+I2U/W6yxC/9ulNN+eXpsFcf32jpd+Fa5+qOeJjVKMv/2UND+LbPjRZAGaS
-	eQmT1pGRpCky4fwF9tEkl9t58IV3CKP4XEXwap5PTxFSn51uF30yXH7uxt5UiWTm3ZKKQFFU1C+
-	c7Ak62SLTYlsNtGIEVptSpynrHXg09lQuEfGwn5P+mG4=
-X-Google-Smtp-Source: AGHT+IGG2xktWuC5rnCJ77VprZKayFRcKDJYjnoABifuSNMEumClFcB3oEYBOA6ij/ifYDVwewko4Q==
-X-Received: by 2002:a05:6e02:2509:b0:425:79a0:94d3 with SMTP id e9e14a558f8ab-42581e2ddb6mr20016565ab.12.1758595190167;
-        Mon, 22 Sep 2025 19:39:50 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([216.147.123.46])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d3b015dd8sm6369599173.13.2025.09.22.19.39.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Sep 2025 19:39:49 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Mon, 22 Sep 2025 20:39:47 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	achill@achill.org
-Subject: Re: [PATCH 6.16 000/149] 6.16.9-rc1 review
-Message-ID: <aNIIc9Yf8hfkELs2@fedora64.linuxtx.org>
-References: <20250922192412.885919229@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1758595360; x=1759200160;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ovRbpMfovzcRmf0L4bDDYQZTgg4Svx+RqRpiV3ItuuI=;
+        b=q8D8ivLsOv/WDgXZPBs+ml7miJKotFsXKWxhplePiXwSCRJA3iQA+dhTjeUYVnAxDF
+         iz1cOty+BgA2tuPZAbGsaArVGi/3ZUVi0cXkZO8b51ZSrv3IuUDqp9RJD0uo3Ugd1sCI
+         gjk8qE9474E7aE7oHuZRIWcQUPgPAXOGVA2xhStL75dhDxtBMMhjHu4OTFmMo6vBPWKQ
+         O9YHUD4m21tc5SBt1M3q8zzFsgJucmNYk7ltije5CWe9ERegTdrlh/hMYN00oqyqq937
+         7Pr+v2w6liDxZI8prrTnlzHglhHGqcGLibmKmbMuzb8D2OYRYvNhfQkcypTp6g8Ritdw
+         Kp3w==
+X-Forwarded-Encrypted: i=1; AJvYcCVNeryBAstbLfcgKolMOktk/NcnQNWAGswB4vVyMAXqfsBp2p9oc0tP1pQVsuFeWQFt9+grYmPk@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzv2Ulp9mek59tSZjuYdHp9KfxhiHs1CKx78ytYQ/HKu/TT1c+Q
+	rrxPpAUNaKZZMGWjkc996Uw5IcWyJXQo6laJVv6Sa6JjSRt1M6CYTJI0vZWDNkfcePRMXyi5m6b
+	j9eRfvpf+RdIM9/cdtfcbqwAu1aBONc7qoBpLDD3o+DV2/C7YtRxs072vTQw=
+X-Gm-Gg: ASbGncsH7vOLuUhsgLXM/uimlGChr1AXm8+x7u+UkdxE3WBXc3HmxGMMaA3qYiyS/UY
+	PiujQjIkiilQjVhze1LshmnEv9AZWgP/jMvA+PPRmMtWMT6YoHKQDFegSzl5FbbW0Lc87PfpeX4
+	oHC3l/I7pTzvq2Y4GU3DeepyB7frMr7lsggkvNpLFdXueh48oJybsploGzzXpTVufpiFsxh/Y1y
+	XOabYfSHGEfFF8d29KH5nyl01lK9/v2Tfyaqpcczu9T5dULOsV4kwnlavDyc56apLETYg4VSuxo
+	HVWAGKE+H3XbOc8XUDwtvdE4Sb5RNLTtrCy+v3C9
+X-Received: by 2002:a05:620a:1912:b0:811:33d6:1aca with SMTP id af79cd13be357-851691163acmr151324485a.1.1758595360123;
+        Mon, 22 Sep 2025 19:42:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHx86NaRHJS5fRx0oc5vlKW3pGIJTq3UlFlPY31i7XkkxTNEwNFeSs9bG+4eASgNFJ24f848A==
+X-Received: by 2002:a05:620a:1912:b0:811:33d6:1aca with SMTP id af79cd13be357-851691163acmr151323285a.1.1758595359707;
+        Mon, 22 Sep 2025 19:42:39 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-852847b70f4sm19413785a.15.2025.09.22.19.42.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Sep 2025 19:42:39 -0700 (PDT)
+Message-ID: <0eb2e721-8b9c-40d0-afe7-c81c6b765f49@redhat.com>
+Date: Mon, 22 Sep 2025 22:42:37 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/11] Fix incorrect iommu_groups with PCIe ACS
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
+ Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+ galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>,
+ Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
+ patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+References: <0-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
+ <20250922163947.5a8304d4.alex.williamson@redhat.com>
+ <e9d4f76a-5355-4068-a322-a6d5c081e406@redhat.com>
+ <20250922200654.1d4ff8b8.alex.williamson@redhat.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <20250922200654.1d4ff8b8.alex.williamson@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: V-haw7CGuv76-vOor5nm-TZBwkVDViSwswOAh-wOLkc_1758595360
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 22, 2025 at 09:28:20PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.16.9 release.
-> There are 149 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 24 Sep 2025 19:23:52 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.16.9-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.16.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+On 9/22/25 10:06 PM, Alex Williamson wrote:
+> On Mon, 22 Sep 2025 21:44:27 -0400
+> Donald Dutile <ddutile@redhat.com> wrote:
+> 
+>> On 9/22/25 6:39 PM, Alex Williamson wrote:
+>>> On Fri,  5 Sep 2025 15:06:15 -0300
+>>> Jason Gunthorpe <jgg@nvidia.com> wrote:
+>>>    
+>>>> The series patches have extensive descriptions as to the problem and
+>>>> solution, but in short the ACS flags are not analyzed according to the
+>>>> spec to form the iommu_groups that VFIO is expecting for security.
+>>>>
+>>>> ACS is an egress control only. For a path the ACS flags on each hop only
+>>>> effect what other devices the TLP is allowed to reach. It does not prevent
+>>>> other devices from reaching into this path.
+>>>>
+>>>> For VFIO if device A is permitted to access device B's MMIO then A and B
+>>>> must be grouped together. This says that even if a path has isolating ACS
+>>>> flags on each hop, off-path devices with non-isolating ACS can still reach
+>>>> into that path and must be grouped gother.
+>>>>
+>>>> For switches, a PCIe topology like:
+>>>>
+>>>>                                  -- DSP 02:00.0 -> End Point A
+>>>>    Root 00:00.0 -> USP 01:00.0 --|
+>>>>                                  -- DSP 02:03.0 -> End Point B
+>>>>
+>>>> Will generate unique single device groups for every device even if ACS is
+>>>> not enabled on the two DSP ports. It should at least group A/B together
+>>>> because no ACS means A can reach the MMIO of B. This is a serious failure
+>>>> for the VFIO security model.
+>>>>
+>>>> For multi-function-devices, a PCIe topology like:
+>>>>
+>>>>                     -- MFD 00:1f.0 ACS not supported
+>>>>     Root 00:00.00 --|- MFD 00:1f.2 ACS not supported
+>>>>                     |- MFD 00:1f.6 ACS = REQ_ACS_FLAGS
+>>>>
+>>>> Will group [1f.0, 1f.2] and 1f.6 gets a single device group. However from
+>>>> a spec perspective each device should get its own group, because ACS not
+>>>> supported can assume no loopback is possible by spec.
+>>>
+>>> I just dug through the thread with Don that I think tries to justify
+>>> this, but I have a lot of concerns about this.  I think the "must be
+>>> implemented by Functions that support peer-to-peer traffic with other
+>>> Functions" language is specifying that IF the device implements an ACS
+>>> capability AND does not implement the specific ACS P2P flag being
+>>> described, then and only then can we assume that form of P2P is not
+>>> supported.  OTOH, we cannot assume anything regarding internal P2P of an
+>>> MFD that does not implement an ACS capability at all.
+>>>    
+>> The first, non-IF'd, non-AND'd req in PCIe spec 7.0, section 6.12.1.2 is:
+>> "ACS P2P Request Redirect: must be implemented by Functions that
+>> support peer-to-peer traffic with other Functions. This includes
+>> SR-IOV Virtual Functions (VFs)." There is not further statement about
+>> control of peer-to-peer traffic, just the ability to do so, or not.
+>>
+>> Note: ACS P2P Request Redirect.
+>>
+>> Later in that section it says:
+>> ACS P2P Completion Redirect: must be implemented by Functions that
+>> implement ACS P2P Request Redirect.
+>>
+>> That can be read as an 'IF Request-Redirect is implemented, than ACS
+>> Completion Request must be implemented. IOW, the Completion Direct
+>> control is required if Request Redirect is implemented, and not
+>> necessary if Request Redirect is omitted.
+>>
+>> If ACS P2P Require Redirect isn't implemented, than per the first
+>> requirement for MFDs, the PCIe device does not support peer-to-peer
+>> traffic amongst its function or virtual functions.
+>>
+>> It goes on...
+>> ACS Direct Translated P2P: must be implemented if the Function
+>> supports Address Translation Services (ATS) and also peer-to-peer
+>> traffic with other Functions.
+>>
+>> If an MFD does not do peer-to-peer, and P2P Request Redirect would be
+>> implemented if it did, than this ACS control does not have to be
+>> implemented either.
+>>
+>> Egress control structures are either optional or dependent on Request
+>> Redirect &/or Direct Translated P2P control, which have been
+>> addressed above as not needed if on peer-to-peer btwn functions in an
+>> MFD (and their VFs).
+>>
+>>
+>> Now, if previous PCIe spec versions (which I didn't read & re-read &
+>> re-read like the 6.12 section of PCIe spec 7.0) had more IF and ANDs,
+>> than that could be cause for less than clear specmanship enabling
+>> vendors of MFDs to yield a non-PCIe-7.0 conformant MFD wrt ACS
+>> structures. I searched section 6.12.1.2 for if/IF and AND/and, and
+>> did not yield any conditions not stated above.
+> 
+> Back up to 6.12.1:
+> 
+>    ACS functionality is reported and managed via ACS Extended Capability
+>    structures. PCI Express components are permitted to implement ACS
+>    Extended Capability structures in some, none, or all of their
+>    applicable Functions. The extent of what is implemented is
+>    communicated through capability bits in each ACS Extended Capability
+>    structure. A given Function with an ACS Extended Capability structure
+>    may be required or forbidden to implement certain capabilities,
+>    depending upon the specific type of the Function and whether it is
+>    part of a Multi-Function Device.
+> 
+Right, depending on type of function or part of MFD.
+Maybe I mis-understood your point, or vice-versa:
+section 6.12.1.2 is for MFDs, and I was only discussing MFD ACS structs.
+I did not mean to imply the sections I was quoting was for anything but an MFD.
+
+> What you're quoting are the requirements for the individual p2p
+> capabilities IF the ACS extended capability is implemented.
+> 
+No, I'm not.  I'm quoting 6.12.1.2, which is MFD-specific.
+
+> Section 6.12.1.1 describing ACS for downstream ports begins:
+> 
+>    This section applies to Root Ports and Switch Downstream Ports that
+>    implement an ACS Extended Capability structure.
+> 
+> Section 6.12.1.2 for SR-IOV, SIOV and MFDs begins:
+> 
+>    This section applies to Multi-Function Device ACS Functions, with the
+>    exception of Downstream Port Functions, which are covered in the
+>    preceding section.
+> 
+Right.  I wasn't discussing Downstream port functions.
+
+> While not as explicit, what is a Multi-Function Device ACS Function if
+> not a function of a MFD that implements ACS?
+> 
+I think you are inferring too much into that less-than-optimally worded section.
+
+>>> I believe we even reached agreement with some NIC vendors in the
+>>> early days of IOMMU groups that they needed to implement an "empty"
+>>> ACS capability on their multifunction NICs such that they could
+>>> describe in this way that internal P2P is not supported by the
+>>> device.  Thanks,
+>> In the early days -- gen1->gen3 (2009->2015) I could see that
+>> happening. I think time (a decade) has closed those defaults to
+>> less-common quirks. If 'empty ACS' is how they liked to do it back
+>> than, sure. [A definition of empty ACS may be needed to fully
+>> appreciate that statement, though.] If this patch series needs to
+>> support an 'empty ACS' for this older case, let's add it now, or
+>> follow-up with another fix.
+> 
+> An "empty" ACS capability is an ACS extended capability where the ACS
+> capability register reads as zero, precisely to match the spec in
+> indicating that the device does not support p2p.  Again, I don't see
+> how time passing plays a role here.  A MFD must implement ACS to infer
+> anything about internal p2p behavior.
+>   
+Again, I don't read the 'must' in the spec.
+Although I'll agree that your definition of an empty ACS makes it unambiguous.
+
+>> In summary, I still haven't found the IF and AND you refer to in
+>> section 6.12.1.2 for MFDs, so if you want to quote those sections I
+>> mis-read, or mis-interpreted their (subtle?) existence, than I'm not
+>> immovable on the spec interpretation.
+> 
+> As above, I think it's covered by 6.12.1 and the introductory sentence
+> of 6.12.1.2 defining the requirements for ACS functions.  Thanks,
+> 
+6.12.1 is not specific enough about what MFDs must or must not support;
+it's a broad description of ACS in different PCIe functions.
+As for 6.12.1.2, I stand by the statement that ACS P2P Request Redirect
+must be implemented if peer-to-peer is implemented in an MFD.
+It's not inferred, it's not unambiguous.
+You are intepreting the first sentence in 6.12.1.2 as indirectly saying
+that the reqs only apply to an MFD with ACS.  The title of the section is:
+"ACS Functions in SR-IOV, SIOV, and Multi-Function Devices"  not
+ACS requirements for ACS-controlled SR-IOV, SIOV, and Multi-Function Devices",
+in which case, I could agree with the interpretation you gave of that first sentence.
+
+I think it's time to reach out to the PCI-SIG, and the authors of this section
+to dissect these interpretations and get some clarity.
+
+- Don
+
+> Alex
+> 
+
