@@ -1,282 +1,228 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB0619258E
-	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 02:42:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F388E15ECCC
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 02:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758595365; cv=none; b=MBULVYBy3k0Sl3q8GiB7r2JG8+Y+LdTnN25Ln7iUCqWAVzgZkv2k27SG4+gzX3BTltF5IcnwhA7mYcAn5xOtWbHlSAMsotl959SxBE6KPsSkTECyI0/MunIMwTGLTXobKMNNNo3XzbaDqhT6tmUqMq1qVcoLhzM9mY57t5RK9Jw=
+	t=1758595835; cv=none; b=L0kxts4VG4CQqzaUlInRmiiEfwvrhM1iOmnSsdQx4HuSGoeP/ZfOnSKjzuWQ8NcbNawJMt19V1lXhl0yH69966qcSlrYKWlflDGnBeoY6wHmTHDc4EORhYmeMaUUOe5jVn++Ga0MQ2d5p7nK6SEwjcQ8+E92xzKcfmL0hZ/XEe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758595365; c=relaxed/simple;
-	bh=U8BfRIfWRxGPkTZ8ZlsPBJ0ty1yw0P2zFNdvUm5eF80=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G3v63nVSoDt7+ziwh2YHV+pGBtaJ2u+HVT+Ifh/11B7NFq4azJDILGCmlvMJy/PRhlIwxnvex5tgsC5mPQ9S0bCs+3YmF33V9roi70hHpyGjnDUoRyw00h81Wsl81NkzDuO78ET0+4AUnyPqXxGjkWQTLEsaplBsNU0BgVOfim8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IjLsk/tI; arc=none smtp.client-ip=170.10.129.124
+	s=arc-20240116; t=1758595835; c=relaxed/simple;
+	bh=B5UZq78SmLPBLQDonRYWTTxpdHcXfRxob/mh8nqKjbE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bROHd+SjFiiGDivFQi2zmcV3hNWBIKCLC168ALNBCCYPo42QFvSmcL71wYjPNk2brD4IFv0G3yra5FZ5BONJpMu9uE8wkE9wt05PLxDKOSSM7bQEpuUBARxlPAabFn4KxekjM8Apl2ZDHZ+Ufmt47Xn2ZgSfqo/EFbnmcUTvqxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ChbSJ9sF; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IjLsk/tI"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ChbSJ9sF"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758595362;
+	s=mimecast20190719; t=1758595832;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ovRbpMfovzcRmf0L4bDDYQZTgg4Svx+RqRpiV3ItuuI=;
-	b=IjLsk/tI6cAqcKH4E4HECvlScD9Y3y6zR7kONlVcrh6BoFikfekF/WwKpLVkZitOAUn5cS
-	QY52KKAoGTi7snDGpbP2e2k4fj/uUqx67ZBGuES+kGaYX2D7RQ8lfWpZlXa1Vq8/05dmXt
-	pf+bhzaS7TkXIH/ATAk4IAH52NUqW3A=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=4udPH4/1Y13/H09/59iHoIfRmw8jUmZ5GDbzFDDZnRs=;
+	b=ChbSJ9sF+HwlVoZMGImXtdxuK2N2VvTLcbg1x87mrT1+tr+1wltYQXLM5O1owei/LBCHUV
+	LJRaVbRie2Tg3WE8Cd/TD1K20ZqyDNMt/odcQKGdqi0AmloI65edSRQRb3b0hfBLIppQU7
+	KruJADcLKeJM0tfw4wzPkui+QYFl1Z0=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-161-tu6xvdhlPxSzYmj1SUTifw-1; Mon, 22 Sep 2025 22:42:40 -0400
-X-MC-Unique: tu6xvdhlPxSzYmj1SUTifw-1
-X-Mimecast-MFC-AGG-ID: tu6xvdhlPxSzYmj1SUTifw_1758595360
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-827061b4ca9so942611285a.3
-        for <patches@lists.linux.dev>; Mon, 22 Sep 2025 19:42:40 -0700 (PDT)
+ us-mta-184-Be8Tse0GPRyVUvXvJ0Kvnw-1; Mon, 22 Sep 2025 22:50:31 -0400
+X-MC-Unique: Be8Tse0GPRyVUvXvJ0Kvnw-1
+X-Mimecast-MFC-AGG-ID: Be8Tse0GPRyVUvXvJ0Kvnw_1758595831
+Received: by mail-il1-f200.google.com with SMTP id e9e14a558f8ab-42571642af9so6647505ab.0
+        for <patches@lists.linux.dev>; Mon, 22 Sep 2025 19:50:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758595360; x=1759200160;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ovRbpMfovzcRmf0L4bDDYQZTgg4Svx+RqRpiV3ItuuI=;
-        b=q8D8ivLsOv/WDgXZPBs+ml7miJKotFsXKWxhplePiXwSCRJA3iQA+dhTjeUYVnAxDF
-         iz1cOty+BgA2tuPZAbGsaArVGi/3ZUVi0cXkZO8b51ZSrv3IuUDqp9RJD0uo3Ugd1sCI
-         gjk8qE9474E7aE7oHuZRIWcQUPgPAXOGVA2xhStL75dhDxtBMMhjHu4OTFmMo6vBPWKQ
-         O9YHUD4m21tc5SBt1M3q8zzFsgJucmNYk7ltije5CWe9ERegTdrlh/hMYN00oqyqq937
-         7Pr+v2w6liDxZI8prrTnlzHglhHGqcGLibmKmbMuzb8D2OYRYvNhfQkcypTp6g8Ritdw
-         Kp3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVNeryBAstbLfcgKolMOktk/NcnQNWAGswB4vVyMAXqfsBp2p9oc0tP1pQVsuFeWQFt9+grYmPk@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzv2Ulp9mek59tSZjuYdHp9KfxhiHs1CKx78ytYQ/HKu/TT1c+Q
-	rrxPpAUNaKZZMGWjkc996Uw5IcWyJXQo6laJVv6Sa6JjSRt1M6CYTJI0vZWDNkfcePRMXyi5m6b
-	j9eRfvpf+RdIM9/cdtfcbqwAu1aBONc7qoBpLDD3o+DV2/C7YtRxs072vTQw=
-X-Gm-Gg: ASbGncsH7vOLuUhsgLXM/uimlGChr1AXm8+x7u+UkdxE3WBXc3HmxGMMaA3qYiyS/UY
-	PiujQjIkiilQjVhze1LshmnEv9AZWgP/jMvA+PPRmMtWMT6YoHKQDFegSzl5FbbW0Lc87PfpeX4
-	oHC3l/I7pTzvq2Y4GU3DeepyB7frMr7lsggkvNpLFdXueh48oJybsploGzzXpTVufpiFsxh/Y1y
-	XOabYfSHGEfFF8d29KH5nyl01lK9/v2Tfyaqpcczu9T5dULOsV4kwnlavDyc56apLETYg4VSuxo
-	HVWAGKE+H3XbOc8XUDwtvdE4Sb5RNLTtrCy+v3C9
-X-Received: by 2002:a05:620a:1912:b0:811:33d6:1aca with SMTP id af79cd13be357-851691163acmr151324485a.1.1758595360123;
-        Mon, 22 Sep 2025 19:42:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHx86NaRHJS5fRx0oc5vlKW3pGIJTq3UlFlPY31i7XkkxTNEwNFeSs9bG+4eASgNFJ24f848A==
-X-Received: by 2002:a05:620a:1912:b0:811:33d6:1aca with SMTP id af79cd13be357-851691163acmr151323285a.1.1758595359707;
-        Mon, 22 Sep 2025 19:42:39 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-852847b70f4sm19413785a.15.2025.09.22.19.42.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 19:42:39 -0700 (PDT)
-Message-ID: <0eb2e721-8b9c-40d0-afe7-c81c6b765f49@redhat.com>
-Date: Mon, 22 Sep 2025 22:42:37 -0400
+        d=1e100.net; s=20230601; t=1758595830; x=1759200630;
+        h=content-transfer-encoding:mime-version:organization:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4udPH4/1Y13/H09/59iHoIfRmw8jUmZ5GDbzFDDZnRs=;
+        b=H7+DG4sKvk/Xnl5cA45ghS1hFUDN84Eq1d1EOKn6NzP+FkfIs+j+f8OwVVjk7NGTZ+
+         04FwbPHVwo/8qLpAb9MGYhToHmxNwPtLU8IRTS3z5MvrR/pfrwWslUa4w/n4yD6Y/E69
+         dgBw57HoUWQra7r/GPlG6uk/EkVSfxI/gFM7ElQRV72bz1BFp6SoD6HjS8Y1sFKXwi2V
+         i0yiRs+vdolW+kQ6MW0IORToF/1AZcOg49H8Pe5BdLNyvinhSpWNMYDyRzVKGiTjqD4S
+         Uu49qGpedIcrvV6j7ZkcQEmFGGjS6kTttnvvSSXHbmSMNstFMIFPZKdyx1QJ7suis2B9
+         kfOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVHdB0E7ZzXKnLVycM53pOahFGI7c4LL79tWrO8gOYq0BSZORL3FLTkgTBPBVg16K1NhCwzydUn@lists.linux.dev
+X-Gm-Message-State: AOJu0YxcnN8OOjAgLQx9J0FJrWpZW7WZ64SS5aKVeL1AQKfv9Wq3UdCu
+	EhadPF5VemBX6N33G10JHZHPPMCgmNy+VobT6xHF+B34qVWObnoRO2S69jIoVz2KF/taadvWejG
+	SQ7cwk3HZ0/g6JQjEKSdkgUh7Ar4rWRZI+psWMbkyJUPWuG8D2HeZ9UXrLhI=
+X-Gm-Gg: ASbGnctenaH8T68SFwLWU9TqKUjqb/V6qlW+tIZPaZx2huEyjH0lPeM3fMiEjazGGZx
+	bCt7WWYMnGJobyX+LuhaAncT14mRmlrHPocEDy8irUogQpXZtbb5PCucUEGUnlo9tGMvjKGI8yS
+	I83zv2GbIdlEnqpI5/dncGPW2/sdD6I6cMO099KXYCn0L2in91Beus4Sw/YyCfCkZSp8onSA6Ij
+	TGEvC2sLj5fY/B4ROKMS2kkvOa0sIEGYDHqJoXgM/ITBmRf1kDxpqNXibw4p8x/5VY6xz3AWk4h
+	c4l8yBs4A7+cgUfcpAPKtrV7WJySsxAf/GgsFNXqvr0=
+X-Received: by 2002:a05:6e02:164d:b0:424:2357:d5e with SMTP id e9e14a558f8ab-42581ea6a8emr6488165ab.4.1758595830491;
+        Mon, 22 Sep 2025 19:50:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoQrJ13c3z3iAGYF/0szcdLw1mCi6EExZIWeSbCSUNM58sLO+eFzEGXdLrV3LqCv/AG2p4nA==
+X-Received: by 2002:a05:6e02:164d:b0:424:2357:d5e with SMTP id e9e14a558f8ab-42581ea6a8emr6488055ab.4.1758595829980;
+        Mon, 22 Sep 2025 19:50:29 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d401eea19sm6445439173.34.2025.09.22.19.50.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Sep 2025 19:50:29 -0700 (PDT)
+Date: Mon, 22 Sep 2025 20:50:27 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Donald Dutile <ddutile@redhat.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, Will Deacon
+ <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+ galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>, Kevin Tian
+ <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
+ patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
+Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
+ switches
+Message-ID: <20250922205027.229614fa.alex.williamson@redhat.com>
+In-Reply-To: <066e288e-8421-4daf-ae62-f24e54f8be68@redhat.com>
+References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+	<3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
+	<20250701132905.67d29191.alex.williamson@redhat.com>
+	<20250702010407.GB1051729@nvidia.com>
+	<c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
+	<20250717202744.GA2250220@nvidia.com>
+	<2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
+	<20250718133259.GD2250220@nvidia.com>
+	<20250922163200.14025a41.alex.williamson@redhat.com>
+	<20250922231541.GF1391379@nvidia.com>
+	<20250922191029.7a000d64.alex.williamson@redhat.com>
+	<066e288e-8421-4daf-ae62-f24e54f8be68@redhat.com>
+Organization: Red Hat
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/11] Fix incorrect iommu_groups with PCIe ACS
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
- galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>,
- Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
- patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-References: <0-v3-8827cc7fc4e0+23f-pcie_switch_groups_jgg@nvidia.com>
- <20250922163947.5a8304d4.alex.williamson@redhat.com>
- <e9d4f76a-5355-4068-a322-a6d5c081e406@redhat.com>
- <20250922200654.1d4ff8b8.alex.williamson@redhat.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250922200654.1d4ff8b8.alex.williamson@redhat.com>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: V-haw7CGuv76-vOor5nm-TZBwkVDViSwswOAh-wOLkc_1758595360
+X-Mimecast-MFC-PROC-ID: N-3IWp9xhX9YvYr7N0jJo8KPNlLY7xP6QfFBOPzgKpM_1758595831
 X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
+On Mon, 22 Sep 2025 22:26:26 -0400
+Donald Dutile <ddutile@redhat.com> wrote:
 
+> On 9/22/25 9:10 PM, Alex Williamson wrote:
+> > On Mon, 22 Sep 2025 20:15:41 -0300
+> > Jason Gunthorpe <jgg@nvidia.com> wrote:
+> >   
+> >> On Mon, Sep 22, 2025 at 04:32:00PM -0600, Alex Williamson wrote:  
+> >>> The ACS capability was only introduced in PCIe 2.0 and vendors have
+> >>> only become more diligent about implementing it as it's become
+> >>> important for device isolation and assignment.  
+> >>
+> >> IDK about this, I have very new systems and they still not have ACS
+> >> flags according to this interpretation.  
+> > 
+> > But how can we assume that lack of a non-required capability means
+> > anything at all??
+> >     
+> ok, I'll bite on the the dumb answer...
+> lots of non-support is represented by lack of a control structure.
+> ... should we assume there are hidden VFs b/c there is a lack of a vf cap structure?
+> ... <insert your favorite dumb answer here> :-)
 
-On 9/22/25 10:06 PM, Alex Williamson wrote:
-> On Mon, 22 Sep 2025 21:44:27 -0400
-> Donald Dutile <ddutile@redhat.com> wrote:
-> 
->> On 9/22/25 6:39 PM, Alex Williamson wrote:
->>> On Fri,  5 Sep 2025 15:06:15 -0300
->>> Jason Gunthorpe <jgg@nvidia.com> wrote:
->>>    
->>>> The series patches have extensive descriptions as to the problem and
->>>> solution, but in short the ACS flags are not analyzed according to the
->>>> spec to form the iommu_groups that VFIO is expecting for security.
->>>>
->>>> ACS is an egress control only. For a path the ACS flags on each hop only
->>>> effect what other devices the TLP is allowed to reach. It does not prevent
->>>> other devices from reaching into this path.
->>>>
->>>> For VFIO if device A is permitted to access device B's MMIO then A and B
->>>> must be grouped together. This says that even if a path has isolating ACS
->>>> flags on each hop, off-path devices with non-isolating ACS can still reach
->>>> into that path and must be grouped gother.
->>>>
->>>> For switches, a PCIe topology like:
->>>>
->>>>                                  -- DSP 02:00.0 -> End Point A
->>>>    Root 00:00.0 -> USP 01:00.0 --|
->>>>                                  -- DSP 02:03.0 -> End Point B
->>>>
->>>> Will generate unique single device groups for every device even if ACS is
->>>> not enabled on the two DSP ports. It should at least group A/B together
->>>> because no ACS means A can reach the MMIO of B. This is a serious failure
->>>> for the VFIO security model.
->>>>
->>>> For multi-function-devices, a PCIe topology like:
->>>>
->>>>                     -- MFD 00:1f.0 ACS not supported
->>>>     Root 00:00.00 --|- MFD 00:1f.2 ACS not supported
->>>>                     |- MFD 00:1f.6 ACS = REQ_ACS_FLAGS
->>>>
->>>> Will group [1f.0, 1f.2] and 1f.6 gets a single device group. However from
->>>> a spec perspective each device should get its own group, because ACS not
->>>> supported can assume no loopback is possible by spec.
->>>
->>> I just dug through the thread with Don that I think tries to justify
->>> this, but I have a lot of concerns about this.  I think the "must be
->>> implemented by Functions that support peer-to-peer traffic with other
->>> Functions" language is specifying that IF the device implements an ACS
->>> capability AND does not implement the specific ACS P2P flag being
->>> described, then and only then can we assume that form of P2P is not
->>> supported.  OTOH, we cannot assume anything regarding internal P2P of an
->>> MFD that does not implement an ACS capability at all.
->>>    
->> The first, non-IF'd, non-AND'd req in PCIe spec 7.0, section 6.12.1.2 is:
->> "ACS P2P Request Redirect: must be implemented by Functions that
->> support peer-to-peer traffic with other Functions. This includes
->> SR-IOV Virtual Functions (VFs)." There is not further statement about
->> control of peer-to-peer traffic, just the ability to do so, or not.
->>
->> Note: ACS P2P Request Redirect.
->>
->> Later in that section it says:
->> ACS P2P Completion Redirect: must be implemented by Functions that
->> implement ACS P2P Request Redirect.
->>
->> That can be read as an 'IF Request-Redirect is implemented, than ACS
->> Completion Request must be implemented. IOW, the Completion Direct
->> control is required if Request Redirect is implemented, and not
->> necessary if Request Redirect is omitted.
->>
->> If ACS P2P Require Redirect isn't implemented, than per the first
->> requirement for MFDs, the PCIe device does not support peer-to-peer
->> traffic amongst its function or virtual functions.
->>
->> It goes on...
->> ACS Direct Translated P2P: must be implemented if the Function
->> supports Address Translation Services (ATS) and also peer-to-peer
->> traffic with other Functions.
->>
->> If an MFD does not do peer-to-peer, and P2P Request Redirect would be
->> implemented if it did, than this ACS control does not have to be
->> implemented either.
->>
->> Egress control structures are either optional or dependent on Request
->> Redirect &/or Direct Translated P2P control, which have been
->> addressed above as not needed if on peer-to-peer btwn functions in an
->> MFD (and their VFs).
->>
->>
->> Now, if previous PCIe spec versions (which I didn't read & re-read &
->> re-read like the 6.12 section of PCIe spec 7.0) had more IF and ANDs,
->> than that could be cause for less than clear specmanship enabling
->> vendors of MFDs to yield a non-PCIe-7.0 conformant MFD wrt ACS
->> structures. I searched section 6.12.1.2 for if/IF and AND/and, and
->> did not yield any conditions not stated above.
-> 
-> Back up to 6.12.1:
-> 
->    ACS functionality is reported and managed via ACS Extended Capability
->    structures. PCI Express components are permitted to implement ACS
->    Extended Capability structures in some, none, or all of their
->    applicable Functions. The extent of what is implemented is
->    communicated through capability bits in each ACS Extended Capability
->    structure. A given Function with an ACS Extended Capability structure
->    may be required or forbidden to implement certain capabilities,
->    depending upon the specific type of the Function and whether it is
->    part of a Multi-Function Device.
-> 
-Right, depending on type of function or part of MFD.
-Maybe I mis-understood your point, or vice-versa:
-section 6.12.1.2 is for MFDs, and I was only discussing MFD ACS structs.
-I did not mean to imply the sections I was quoting was for anything but an MFD.
+This is not how an additive specification works.  We start with a base
+specification.  We add capabilities to describe features of the device.
+If a device doesn't support an SR-IOV capability, it doesn't support
+VFs.  But likewise we cannot add an optional capability and
+retroactively declare that anything that does not support this
+capability must have some specific behavior.
 
-> What you're quoting are the requirements for the individual p2p
-> capabilities IF the ACS extended capability is implemented.
-> 
-No, I'm not.  I'm quoting 6.12.1.2, which is MFD-specific.
+That's not what the spec is doing.  We're misinterpreting it.  The
+sections of the spec you're quoting are saying that if a MFD function
+supports ACS it must support this specific p2p set of capability and
+control bits unless the device does not support internal p2p.
 
-> Section 6.12.1.1 describing ACS for downstream ports begins:
-> 
->    This section applies to Root Ports and Switch Downstream Ports that
->    implement an ACS Extended Capability structure.
-> 
-> Section 6.12.1.2 for SR-IOV, SIOV and MFDs begins:
-> 
->    This section applies to Multi-Function Device ACS Functions, with the
->    exception of Downstream Port Functions, which are covered in the
->    preceding section.
-> 
-Right.  I wasn't discussing Downstream port functions.
+> I can certainly see why a hw vendor would -not- put a control structure
+> into a piece of hw that is not needed, as the spec states.
+> For every piece of hw one creates, one has to invest resources to verify
+> it is working correctly, and if verification is done correctly, verify it
+> doesn't cause unexpected errors.  I've seen this resource req back in
+> my HDL days (developers design w/HDL; hw verification engineers are the
+> QE equivalent to sw, verifying the hw does and does not do what it is spec'd).
 
-> While not as explicit, what is a Multi-Function Device ACS Function if
-> not a function of a MFD that implements ACS?
-> 
-I think you are inferring too much into that less-than-optimally worded section.
+As previously noted, an "empty" ACS capability serves this purpose with
+minimal verification.
 
->>> I believe we even reached agreement with some NIC vendors in the
->>> early days of IOMMU groups that they needed to implement an "empty"
->>> ACS capability on their multifunction NICs such that they could
->>> describe in this way that internal P2P is not supported by the
->>> device.  Thanks,
->> In the early days -- gen1->gen3 (2009->2015) I could see that
->> happening. I think time (a decade) has closed those defaults to
->> less-common quirks. If 'empty ACS' is how they liked to do it back
->> than, sure. [A definition of empty ACS may be needed to fully
->> appreciate that statement, though.] If this patch series needs to
->> support an 'empty ACS' for this older case, let's add it now, or
->> follow-up with another fix.
-> 
-> An "empty" ACS capability is an ACS extended capability where the ACS
-> capability register reads as zero, precisely to match the spec in
-> indicating that the device does not support p2p.  Again, I don't see
-> how time passing plays a role here.  A MFD must implement ACS to infer
-> anything about internal p2p behavior.
->   
-Again, I don't read the 'must' in the spec.
-Although I'll agree that your definition of an empty ACS makes it unambiguous.
+> Penalizing a hw vendor for following the spec, and saving resources,
+> seems wrong to me, to require them to quirk their spec-correct device.
 
->> In summary, I still haven't found the IF and AND you refer to in
->> section 6.12.1.2 for MFDs, so if you want to quote those sections I
->> mis-read, or mis-interpreted their (subtle?) existence, than I'm not
->> immovable on the spec interpretation.
-> 
-> As above, I think it's covered by 6.12.1 and the introductory sentence
-> of 6.12.1.2 defining the requirements for ACS functions.  Thanks,
-> 
-6.12.1 is not specific enough about what MFDs must or must not support;
-it's a broad description of ACS in different PCIe functions.
-As for 6.12.1.2, I stand by the statement that ACS P2P Request Redirect
-must be implemented if peer-to-peer is implemented in an MFD.
-It's not inferred, it's not unambiguous.
-You are intepreting the first sentence in 6.12.1.2 as indirectly saying
-that the reqs only apply to an MFD with ACS.  The title of the section is:
-"ACS Functions in SR-IOV, SIOV, and Multi-Function Devices"  not
-ACS requirements for ACS-controlled SR-IOV, SIOV, and Multi-Function Devices",
-in which case, I could agree with the interpretation you gave of that first sentence.
+IMO, we're clearly conflating the implementation of the ACS p2p
+capability bits with the implementation of the ACS extended capability
+itself.
 
-I think it's time to reach out to the PCI-SIG, and the authors of this section
-to dissect these interpretations and get some clarity.
+> I suspect section 6.12.1.2 was written by hw vendors, looking to reduce
+> their hw design & verification efforts.  If written by sw vendors, it
+> would have likely required 'empty ACS' structs as you have mentioned in other thread(s).
 
-- Don
+We've had NIC vendors implement an empty ACS capability to convey the
+fact that the device does not support internal p2p.  There is precedent
+for the interpretation I'm describing.
 
-> Alex
+> >>> IMO, we can't assume anything at all about a multifunction device
+> >>> that does not implement ACS.  
+> >>
+> >> Yeah this is all true.
+> >>
+> >> But we are already assuming. Today we assume MFDs without caps must
+> >> have internal loopback in some cases, and then in other cases we
+> >> assume they don't.  
+> > 
+> > Where?  Is this in reference to our handling of multi-function
+> > endpoints vs whether downstream switch ports are represented as
+> > multi-function vs multi-slot?
+> > 
+> > I believe we consider multifunction endpoints and root ports to lack
+> > isolation if they do not expose an ACS capability and an "empty" ACS
+> > capability on a multifunction endpoint is sufficient to declare that
+> > the device does not support internal p2p.  Everything else is quirks.
+> >   
+> >> I've sent and people have tested various different rules - please tell
+> >> me what you can live with.  
+> > 
+> > I think this interpretation that lack of an ACS capability implies
+> > anything is wrong.  Lack of a specific p2p capability within an ACS
+> > capability does imply lack of p2p support.
+> >   
+> >> Assuming the MFD does not have internal loopback, while not entirely
+> >> satisfactory, is the one that gives the least practical breakage.  
+> > 
+> > Seems like it's fixing one gap and opening another.  I don't see that we
+> > can implement ingress and egress isolation without breakage.  We may
+> > need an opt-in to continue egress only isolation.
+> >   
+> >> I think it most accurately reflects the majority of real hardware out
+> >> there.
+> >>
+> >> We can quirk to fix the remainder.
+> >>
+> >> This is the best plan I've got..  
+> > 
+> > And hardware vendors are going to volunteer that they lack p2p
+> > isolation and we need to add a quirk to reduce the isolation... the
+> > dynamics are not in our favor.  Hardware vendors have no incentive to
+> > do the right thing.  Thanks,
+> >   
+> I gave an example above why hw vendors have every incentive not to
+> add an ACS structure if they don't need it. Not doing so, when they
+> can do p2p, is a clear PCIe spec violation.  Punishing the correct
+> implementations for the incorrect ones is not appropriate, and is
+> further incentive to continue to be incorrect.
 > 
+> Don't we have the hooks with kernel cmdline disable_acs_redir &
+> config_acs params to solve the insecure cases that may (would) be
+> found, so breaking the isolation is relatively easy to fix vs adding
+> quirks as is done today for proper spec interpretation?
+
+Are we going to expect users to opt-in to securing their system?  This
+is just doubling down on an incorrect spec interpretation.  Lack of an
+optional extended capability cannot convey anything about the p2p
+capabilities of the device <full stop>.  Thanks,
+
+Alex
 
