@@ -1,82 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD4430FC37;
-	Tue, 23 Sep 2025 13:12:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0372326D58
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 13:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758633136; cv=none; b=K3osxnd4KoB3SZv5oC0rIFDq+Y55bGSqQzAtQQtS9rAXdLXB4jTgcyMK8vc4lcdp0Sgfo0DMLtcbYnvAWGCwly8iH5RbkgrrjEuq+Lkfq2t/GPExxGJdH8dP4Cl2EjfHR3fnxXJuoQiSaAW+z6kZbz8Itg/FrkBE0ORahfAaWYw=
+	t=1758634946; cv=none; b=O9e0OuuciJGGoKEC4KseNQeHh2r8anibw2ITS21MLuSNYX3j0jCrOFUSeGQ6OZOITYBQpeHoNSCHxiN/eS32cgZL77HBK6hjEMwfXRuW5aVIwHnrrrdu6P1aK1Qro9KfRFDtgwli/RC4psO/1ww1410TYwTEMhWp+77oPh8oNbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758633136; c=relaxed/simple;
-	bh=o9DNvZSUSXacN7bDm/2qYulrQJg0t8KH7lVaQJvX7G4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ucd44KYuO3AFOKR9ffudoTXySvSMLmASC8i40KvafZVy3NneYeSri4Gwa4I9AkGdyI9oLsiFpLPvEuKQEqc7qkbwZBAOUnMq+NaCLVtaOR6I41WcWnhyj6ehh6e4y3YA3ml+QN+cuunCDd1VtDpKtw7ulhy2aPI/RE/y7Z8/bEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AxvF3xEi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758634946; c=relaxed/simple;
+	bh=HS9NBcbYrfF6iVaTRVwQjnuNP9ZIEYwzdwsQ7rWcF6Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VEz6bBvcBxrJrwWqhYIYuYps2wpi/OQ0/hY20UfMy9A75mEp+fVNtxuBzFPSiRVEgdXxQJ1fwaud3hSCRb6+S4dYq3xplAGA6vBoEpZ31NfwYIOlK9cnDX3x50apw/EOr81ya5XxodLyCWgYWt/bJAy6Hg7hRRaxdNm8EDH4WjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com; spf=pass smtp.mailfrom=ciq.com; dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b=bH7F3aa7; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ciq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AxvF3xEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542B8C4CEF5;
-	Tue, 23 Sep 2025 13:12:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758633135;
-	bh=o9DNvZSUSXacN7bDm/2qYulrQJg0t8KH7lVaQJvX7G4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AxvF3xEi7NP+WQYr3CnmXaAgucSt/DhUMAfAOtrTVIkT1HWmaynvwuVufMIF9Qy8B
-	 xO/mPF0bd4tlH0ssp7kxu6J8i10+EU0zu+J1yOXulYfFk2vMoPAVhTY0d4ckpE6lfM
-	 8oddEhTgHS6LaoBQoUAsd97NtRVR/GFHeIkUiOl2qrZzhC2AXTJknCdSrO8QQua6u2
-	 vfvygSgN20Kobm5p7dcwjwdSKYzKZnNk5gXliSl5tVIeGsPpvNVhNTno1H9q8Ow7xt
-	 G2G3X/RS1gUev/RyRChX1k+qn95NCAAqYcotHMNko30fHwfzp9/i99ZUbe3b+kWU40
-	 U3dVR39CFyCJw==
-Date: Tue, 23 Sep 2025 15:12:12 +0200
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, achill@achill.org
-Subject: Re: [PATCH 6.1 00/61] 6.1.154-rc1 review
-Message-ID: <aNKcrF2c-RflyEbc@finisterre.sirena.org.uk>
-References: <20250922192403.524848428@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b="bH7F3aa7"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4b5ed9d7e20so54396341cf.0
+        for <patches@lists.linux.dev>; Tue, 23 Sep 2025 06:42:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ciq.com; s=s1; t=1758634944; x=1759239744; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BJZq8+MPLRJ3ip5LcrsBDiUfLaLP/BnDgi1MJHXazU8=;
+        b=bH7F3aa7dCqwQdXRuvC6M8kPRyj96QsOxLwUcCdXBjWymM8XV9yv18GEuBegY8/qfR
+         1aPsY9SejDyf2KPG+bKceDj6/sSDNlxoZ30OYzAqUpAy52noA1buLUZK3eqwwcvat7cB
+         +dSYLmOlV83A4/OKHRZg+uZywoJQqt5F1cub0qHimTryp/sKVlvJQuX2CIaOiQCtYjzC
+         25r65TWLpsKAbieevziuq3/U5MpMONcTv1ipG6xa/llhJRBOBpA6wlMfC+NDrduHJyBr
+         XPHwZ24aHr6ClNBR9Iie0whgwx14JfPwnzodq/CgSa6OQecLoxCVz0Eb6pNic4Csfl4g
+         CIsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758634944; x=1759239744;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BJZq8+MPLRJ3ip5LcrsBDiUfLaLP/BnDgi1MJHXazU8=;
+        b=ViNYJzivaXzdoGt07s3Aw75eIFlk10gjydpnSuA50v1EKI4sYe1+dUscjZXZ9W3YHZ
+         e9nhvaGe+pesNrdnZOJxeeiZiRNsahvh7LNBfe+nJ1bNCNWrJm3LXwMGIS+uOwmcAkR4
+         QN48L5atnNujhhqVGIagxhE+knKqM6hKEJrFXHrHHtH3J9JYBiSl0zaCi9CVTiMjYW8J
+         8LPmXIqCreyTIXffZGdUKSkArV7cieD45IHeCV19DL7/KGNNDbnjGqXBgKmnV9M0jtST
+         kF9y+tam53Ma8lWpv13ALSbOdD0f5b6/rDfZ/7llBtIsF3yrymRhEcmPpxBsmAtU3zqn
+         3k9g==
+X-Forwarded-Encrypted: i=1; AJvYcCX7RuBS3pAvilg+l7vP2Vbe/rS4Ly42l1k3Gq/YZwsZOFUmJ459I2MLia4HQHjjIWMiqwsBQAC+@lists.linux.dev
+X-Gm-Message-State: AOJu0YzpA1jI32hmCqW4avDniRHi0Tqsbmf4Vo36VPBffWzWusbPJ48f
+	1gFd8a+xt7v3nFnUZPC75rs1/ou1p85g3V9S4mQFLCJppXJ3ut6SofPsQotad7lpjFffeCZghaW
+	/ALUpKGJfMPyMXPjxVO00gkSZp1QoXhNMJNrNAIybDA==
+X-Gm-Gg: ASbGncuT+cUbrAi9GuXYwHc6TsCdh96u7/HqLNWZBSdSwCin2nTlqINKA3Qq/+PXhfJ
+	VnQZ+JNcwXwP6CCb9cw0YqV/4AeGk7qk2j+7LuEHc4j5LWA24rNNQbVLWm6dgTstjnRGjAO4Ocx
+	ytHlLKyKwnNgUvpKkE4H39aW2VyH/xSEbg/ybxUBPsnLj/Qlk9nABX0atnMT9jhqy7Q3ITyFbiD
+	cIAdxxE
+X-Google-Smtp-Source: AGHT+IEqCByMJIyOisFneYcEhg1XccZAqMYXIft+cqIQMRrJVBiZ/D9q5dXHkPruO+JLDBqSs2MuwjOhSz0Yq99OO8o=
+X-Received: by 2002:a05:622a:4a18:b0:4d2:6ecf:9123 with SMTP id
+ d75a77b69052e-4d36a18d5c2mr26501131cf.34.1758634943106; Tue, 23 Sep 2025
+ 06:42:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Nx2syEKLnx6gt5ms"
-Content-Disposition: inline
-In-Reply-To: <20250922192403.524848428@linuxfoundation.org>
-X-Cookie: Filmed before a live audience.
+References: <20250922192408.913556629@linuxfoundation.org>
+In-Reply-To: <20250922192408.913556629@linuxfoundation.org>
+From: Brett Mastbergen <bmastbergen@ciq.com>
+Date: Tue, 23 Sep 2025 09:42:12 -0400
+X-Gm-Features: AS18NWDivHJSj_z1iQ5jwb40ouc0fUOHoSfttu2yx42awG0vFzK1u2_FMqUyWE0
+Message-ID: <CAOBMUvhU3VMwD2OnmR3zewO=MQhT0o6WbE=4rEbZiC=xTn_xcQ@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/105] 6.12.49-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
---Nx2syEKLnx6gt5ms
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Mon, Sep 22, 2025 at 09:28:53PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.154 release.
-> There are 61 patches in this series, all will be posted as a response
+On Mon, Sep 22, 2025 at 3:37=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.49 release.
+> There are 105 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Wed, 24 Sep 2025 19:23:52 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.49-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Builds successfully.  Boots and works on qemu and Dell XPS 15 9520 w/
+Intel Core i7-12600H
 
---Nx2syEKLnx6gt5ms
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Brett Mastbergen <bmastbergen@ciq.com>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjSnKsACgkQJNaLcl1U
-h9D/KQf/aheu4nXGRRA4g2ZEWcKf6N2wI8u0ahDbOX4vR51R06fLRbCXdrgAbJZo
-+2xB8SEdFShRYrvTIuHMUCwy8fqZB+INbY7jVOcvfHt0Ta7fhqlUXQTFg6kNUxEG
-5ljhvFFipFXJXO6D8MGgFrS5Km9yy/KwzWeeUCG/JmXR1oYq3MsIzjEP5wq55iQM
-xphgYwPKAKRewaofpwiT4+VWiNEdM06h4Knax1RZKIpGOs47OBSUNwp5rbHAYI1H
-6i/9FPwWdLLX0PdE90IC/VTDwhadMTiRrt2jX0jE3ARBHs4rdSKad7drNtR8BbEE
-ANBrCpuTy+qBF+OWSGtlHH/lghxCLw==
-=qcYh
------END PGP SIGNATURE-----
-
---Nx2syEKLnx6gt5ms--
+Thanks,
+Brett
