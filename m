@@ -1,74 +1,39 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from 0.smtp.remotehost.it (0.smtp.remotehost.it [213.190.28.75])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEED4262FFC
-	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 10:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8355431A057
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 10:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.190.28.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758622580; cv=none; b=EYEktyIuv21Xcf4uASAXFLZSmq2/qmfKPb8jKDHDrYsPggcNiL6c1PdKPqIJc2fINsSON+e9nCZ5AjBhbW4TWiMe8pJWSWMVAFw1y+dPxJAxeEmiJj//Fbhx9CXfj+eEL2GCPRkmOMHIijy5wlNAS6oP3g1upp41t031mXj0zF4=
+	t=1758623333; cv=none; b=n/u89XxEIXlWoXB6FyK8D5Xko9GAAvcQEdbwBrlxVYkcMsSp8fUTI3Qawtz75pHdUPAdzix7f9EzPbQspDfApHzZMBv9+UrKMqAHVyj5h+HRj5eTjpBKSrvSPAI8kGF4i2B8sYIZX2kU/rhH801VKWiwTs5/UsSWKjKRvhhQgN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758622580; c=relaxed/simple;
-	bh=RYzPGdtC8EGMXt14i4heCA6P0dBRkz9jYtGI/l4OWoE=;
+	s=arc-20240116; t=1758623333; c=relaxed/simple;
+	bh=b8bcRx/n1OGRt62h2Bk98ANdLaycS6HGYHRPiFKofCI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q31aybk5D5neNcnOTGZPD8KEWTj1BZRhMDVqUgsbvmxLC7XCSL12L40lMZUI41wY8LRPXsA/D8VZ28uzxlVcSkzH7796aIYgnzi23yIFoblKFfHeLv5Btwdo1dU/p4yd/NHmMHpiK3gFj+O2R4zhnVC4u08NdEQ8ISxlrxPU/Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=bGJmjxox; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=m2n8RIv9/i5WFUFTqgg5kvv6YJa9XArmKwqKGH3hBKjn2pdMWn5ne6kVV4ExI2YGwSvfCNemwTnHDAsIQGiCrgT4DWfBMdfr0uGpeZfF0BLWSqBwBqtFaONXh5KvgbzoVpr62FHo/UWgXvlfOFrDWNjYVDCRlSqjPE9bDMbNXBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net; spf=pass smtp.mailfrom=hardfalcon.net; dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b=NmryPoUk; arc=none smtp.client-ip=213.190.28.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hardfalcon.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hardfalcon.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="bGJmjxox"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45ed646b656so47087225e9.3
-        for <patches@lists.linux.dev>; Tue, 23 Sep 2025 03:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1758622577; x=1759227377; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=z+sf++HoPCnwTrMW6zlIxHwkbmsZIiPjDZjaq8+brNA=;
-        b=bGJmjxoxQgDV39N6FDQfTRY7MJCb3YhJGTDb7sVVF5+XRLBcOOjNWVdXS8hu+6Scbk
-         icl4hPxw8R2NbOf8wi3+5fWTeb7SodjwvMqxTok3V6tc2kM9SNxy/Zvoz0Hx+ngm/eat
-         gyb5tjr97p7vN5VcBJCANb9J97qYEZCFuoDpfSzkP06fEm2gCPGTVJE6p9yxYYvrm4zi
-         JUpp6eUn8MOnLRMx8L8+uIUwGMi2MCXmzoZNrDdhdFXg8nsFtibcTsJKF8p4jkq6REG0
-         AC0R4G9F5HZoN70i5I5BLFtkFCHfGnW1R0vmvU7KJeGXdXCjQCPLAf0+sTjsymJfLF3y
-         x5qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758622577; x=1759227377;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+sf++HoPCnwTrMW6zlIxHwkbmsZIiPjDZjaq8+brNA=;
-        b=kk1+kwF71UQV8M+lwW5Z2j7hSbXkUFb43mxQageWRvxNhVJM5VyujPwyaRkNifoZ6m
-         6nK/kRQcRe3eklDJNs2jzyWkbf+RaRmsvd3UWSIEjbxhCFSqV+SzLoLnca/cTV6XnMzU
-         4GjGw8nmOHkbG6YRXXQ4UzDBnQAits+ECGJY2ptjDhokh8tZai/uity5ioJsV5nSzN24
-         UMHKDjv/rDt5TAvKcq+mZJ7G8xoE5OlDVTC2lKUfZW6umyt+WmL21/r4wvdXQn+RuTXC
-         QFje9c3gfvGjY81AB3cfWIrKLcUnYI8vQyTcZogcAXxEaqfFs/o4WWTa/jSng98EIgTX
-         zNEw==
-X-Gm-Message-State: AOJu0Yw1Te9ZvdYMS/tiU7vyugDk4POdLqw76LsEf/QA0N8YTz2mvcCr
-	kvV6YlH1WP7p/NA98pZqeaxy6B3GFGnmSaYA5zLs9AkEX4tZcI1TaqU=
-X-Gm-Gg: ASbGncv4/aVyE5TPaznB1BxOdMiIGPfM6JV0hN8vuAKkZN7Jkd07Ha95Ze6sGIqPDrh
-	j/9VrMv8+tYJkEAABLgXtKO5nTpc/BlZOrSvYtmavrpcMYuosc6+IlFAnayuYSSCess+rGSTE/c
-	7NuFNTcbOlV0C+AFQxTqH6o91oR2Bek45WN5TApdju2iQDO+A6sd3BDkHwJwGUZBae1zkwAik4S
-	AAK3EIdGAYb2IXTCjePbfo6dkxlaKAFoXWAUBn9Aq3lMrLNIgKR3yL7Yw6JJzOs5DPt5+iF0aEH
-	tyTIq7Xznh4Mz+B5bcDsgIoXTF5OM+Ws2NRJnAOXZdLIZCfkRKMMtlxh4iA4jZVY2QHVNhP9MGA
-	+pPM7Pq1dYSQc355wtaIMliaCW4tfRxogM+9gCk2pbt2crXV3dKNWgl+IahHP9+Z2SMF+iNMcEb
-	h7
-X-Google-Smtp-Source: AGHT+IFVoBHgZs4WjGNNOI/TU/wazag77uFfteBay5mPYzOkv/vWLLx6YVSIzFhKxrqMSBUuEzeiOg==
-X-Received: by 2002:a05:600c:154b:b0:459:d3ce:2cbd with SMTP id 5b1f17b1804b1-46e1d98a525mr20043875e9.13.1758622576895;
-        Tue, 23 Sep 2025 03:16:16 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac1a7.dip0.t-ipconnect.de. [91.42.193.167])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46d51e5d863sm75027915e9.24.2025.09.23.03.16.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Sep 2025 03:16:16 -0700 (PDT)
-Message-ID: <f89a5541-9f06-4696-8d05-961e4fd9a4ce@googlemail.com>
-Date: Tue, 23 Sep 2025 12:16:15 +0200
+	dkim=permerror (0-bit key) header.d=hardfalcon.net header.i=@hardfalcon.net header.b="NmryPoUk"
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=hardfalcon.net;
+	s=dkim_2024-02-03; t=1758623320;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=A+2z8cWCQfG8IRmhTODqUr/zfTopUrOovmHV0vclgM0=;
+	b=NmryPoUkW+EDPuxmcpz0h+LIrguoMTrlpez+D04mDUdKhJWjPOK+xk4aFGw8EL0PqbwXXO
+	X87ST627jpUqZcBQ==
+Message-ID: <d6c6182a-837d-4722-a6f6-b29f30c5f5a1@hardfalcon.net>
+Date: Tue, 23 Sep 2025 12:28:38 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 00/70] 6.6.108-rc1 review
-Content-Language: de-DE
+Subject: Re: [PATCH 6.16 000/149] 6.16.9-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -77,32 +42,29 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org
-References: <20250922192404.455120315@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250922192404.455120315@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250922192412.885919229@linuxfoundation.org>
+Content-Language: en-US, de-DE, en-US-large
+From: Pascal Ernster <git@hardfalcon.net>
+In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Am 22.09.2025 um 21:29 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.108 release.
-> There are 70 patches in this series, all will be posted as a response
+[2025-09-22 21:28] Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.16.9 release.
+> There are 149 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Wed, 24 Sep 2025 19:23:52 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.16.9-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.16.y
+> and the diffstat can be found below.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Kernel 6.16.9-rc1 compiles fine for x86_64 using GCC 15.2.1+r22+gc4e96a094636 and binutils 2.45+r29+g2b2e51a31ec7, and the resulting kernel boots and runs without any discernible issues on various physical machines of mine (Ivy Bridge, Haswell, Kaby Lake, Coffee Lake) and on a Zen 2 VM and a bunch of Kaby Lake VMs.
 
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Tested-by: Pascal Ernster <git@hardfalcon.net>
