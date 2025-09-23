@@ -1,228 +1,230 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F388E15ECCC
-	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 02:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F9F28726E
+	for <patches@lists.linux.dev>; Tue, 23 Sep 2025 05:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758595835; cv=none; b=L0kxts4VG4CQqzaUlInRmiiEfwvrhM1iOmnSsdQx4HuSGoeP/ZfOnSKjzuWQ8NcbNawJMt19V1lXhl0yH69966qcSlrYKWlflDGnBeoY6wHmTHDc4EORhYmeMaUUOe5jVn++Ga0MQ2d5p7nK6SEwjcQ8+E92xzKcfmL0hZ/XEe8=
+	t=1758604512; cv=none; b=Mh09qG8tenFzbuBiv5leLFvVxPruCTiqJQtrkP+R1tX6vEVuPNF4BWVkLTScg+mIDLtDACY8SO7lx3aEJQ5x7D5PZkAq1tGJ0MgsXp/xcjJoXjpACYIG3JU4rEj7xssNQ8HJCBAfNrTnra+Y/Sgp1wQhu9iiPsqneN5cAMWSB7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758595835; c=relaxed/simple;
-	bh=B5UZq78SmLPBLQDonRYWTTxpdHcXfRxob/mh8nqKjbE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bROHd+SjFiiGDivFQi2zmcV3hNWBIKCLC168ALNBCCYPo42QFvSmcL71wYjPNk2brD4IFv0G3yra5FZ5BONJpMu9uE8wkE9wt05PLxDKOSSM7bQEpuUBARxlPAabFn4KxekjM8Apl2ZDHZ+Ufmt47Xn2ZgSfqo/EFbnmcUTvqxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ChbSJ9sF; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1758604512; c=relaxed/simple;
+	bh=7xO/w8Ux8Q94lDae1VbNusDmpntZTLs83b9gcG70/VM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gdNJZMIFKvlwquoqte9TIlvm1AjvZQevOyQpup0M/f5f5RkFRURTfasOiveiIaQRAAEMiGTvP2ojeIlEZiG+b1e45mLstff/Y3WVnDzuezeejR+3Hq/Q1GzjNCS+BRrxdNYH8rbqZSi3vC2fpA/1Nr8l+RKgLb6V7vwrKs0wkxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Hm2cjNP4; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ChbSJ9sF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758595832;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4udPH4/1Y13/H09/59iHoIfRmw8jUmZ5GDbzFDDZnRs=;
-	b=ChbSJ9sF+HwlVoZMGImXtdxuK2N2VvTLcbg1x87mrT1+tr+1wltYQXLM5O1owei/LBCHUV
-	LJRaVbRie2Tg3WE8Cd/TD1K20ZqyDNMt/odcQKGdqi0AmloI65edSRQRb3b0hfBLIppQU7
-	KruJADcLKeJM0tfw4wzPkui+QYFl1Z0=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-184-Be8Tse0GPRyVUvXvJ0Kvnw-1; Mon, 22 Sep 2025 22:50:31 -0400
-X-MC-Unique: Be8Tse0GPRyVUvXvJ0Kvnw-1
-X-Mimecast-MFC-AGG-ID: Be8Tse0GPRyVUvXvJ0Kvnw_1758595831
-Received: by mail-il1-f200.google.com with SMTP id e9e14a558f8ab-42571642af9so6647505ab.0
-        for <patches@lists.linux.dev>; Mon, 22 Sep 2025 19:50:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Hm2cjNP4"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3324523dfb2so1996006a91.0
+        for <patches@lists.linux.dev>; Mon, 22 Sep 2025 22:15:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758604510; x=1759209310; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=f7i9pmTrdIrbqnHasCnEr2Ik3GCVKcKjWftLq0bTHq4=;
+        b=Hm2cjNP42YunEm8qJJht8TbFeJ91pC3bVTshl1m9gjgsY2ONjYTu6+gA0gj7eWhGnT
+         lYmmrnqIi9jT8R6ptPQkKdDh6/1m+5XscAJKnBwMY692vEJF7RKX/C+E/bElB+s7f9dy
+         Tx7ghGeQrp3BQJJoWvmy7eZgALp1SB8yO2gPdyUUVQ/x8NdTNawzwLJyy38YkG0VioyG
+         ajZp6i4VPD5S4Yp3q9YM70n0X/2kOmCEeb1FUTewmu/6+i4kmIjwYqTd1aKHfJ+Ou80R
+         7mQX4kT5xAIY+yik7JpdkasYW+UBHtilmBf6Eb0yiQWN24fNULjEBiaLDJD4O59JqddP
+         pMww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758595830; x=1759200630;
-        h=content-transfer-encoding:mime-version:organization:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4udPH4/1Y13/H09/59iHoIfRmw8jUmZ5GDbzFDDZnRs=;
-        b=H7+DG4sKvk/Xnl5cA45ghS1hFUDN84Eq1d1EOKn6NzP+FkfIs+j+f8OwVVjk7NGTZ+
-         04FwbPHVwo/8qLpAb9MGYhToHmxNwPtLU8IRTS3z5MvrR/pfrwWslUa4w/n4yD6Y/E69
-         dgBw57HoUWQra7r/GPlG6uk/EkVSfxI/gFM7ElQRV72bz1BFp6SoD6HjS8Y1sFKXwi2V
-         i0yiRs+vdolW+kQ6MW0IORToF/1AZcOg49H8Pe5BdLNyvinhSpWNMYDyRzVKGiTjqD4S
-         Uu49qGpedIcrvV6j7ZkcQEmFGGjS6kTttnvvSSXHbmSMNstFMIFPZKdyx1QJ7suis2B9
-         kfOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVHdB0E7ZzXKnLVycM53pOahFGI7c4LL79tWrO8gOYq0BSZORL3FLTkgTBPBVg16K1NhCwzydUn@lists.linux.dev
-X-Gm-Message-State: AOJu0YxcnN8OOjAgLQx9J0FJrWpZW7WZ64SS5aKVeL1AQKfv9Wq3UdCu
-	EhadPF5VemBX6N33G10JHZHPPMCgmNy+VobT6xHF+B34qVWObnoRO2S69jIoVz2KF/taadvWejG
-	SQ7cwk3HZ0/g6JQjEKSdkgUh7Ar4rWRZI+psWMbkyJUPWuG8D2HeZ9UXrLhI=
-X-Gm-Gg: ASbGnctenaH8T68SFwLWU9TqKUjqb/V6qlW+tIZPaZx2huEyjH0lPeM3fMiEjazGGZx
-	bCt7WWYMnGJobyX+LuhaAncT14mRmlrHPocEDy8irUogQpXZtbb5PCucUEGUnlo9tGMvjKGI8yS
-	I83zv2GbIdlEnqpI5/dncGPW2/sdD6I6cMO099KXYCn0L2in91Beus4Sw/YyCfCkZSp8onSA6Ij
-	TGEvC2sLj5fY/B4ROKMS2kkvOa0sIEGYDHqJoXgM/ITBmRf1kDxpqNXibw4p8x/5VY6xz3AWk4h
-	c4l8yBs4A7+cgUfcpAPKtrV7WJySsxAf/GgsFNXqvr0=
-X-Received: by 2002:a05:6e02:164d:b0:424:2357:d5e with SMTP id e9e14a558f8ab-42581ea6a8emr6488165ab.4.1758595830491;
-        Mon, 22 Sep 2025 19:50:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoQrJ13c3z3iAGYF/0szcdLw1mCi6EExZIWeSbCSUNM58sLO+eFzEGXdLrV3LqCv/AG2p4nA==
-X-Received: by 2002:a05:6e02:164d:b0:424:2357:d5e with SMTP id e9e14a558f8ab-42581ea6a8emr6488055ab.4.1758595829980;
-        Mon, 22 Sep 2025 19:50:29 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-53d401eea19sm6445439173.34.2025.09.22.19.50.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Sep 2025 19:50:29 -0700 (PDT)
-Date: Mon, 22 Sep 2025 20:50:27 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Donald Dutile <ddutile@redhat.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, Bjorn Helgaas <bhelgaas@google.com>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, Will Deacon
- <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
- galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>, Kevin Tian
- <kevin.tian@intel.com>, kvm@vger.kernel.org, maorg@nvidia.com,
- patches@lists.linux.dev, tdave@nvidia.com, Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
- switches
-Message-ID: <20250922205027.229614fa.alex.williamson@redhat.com>
-In-Reply-To: <066e288e-8421-4daf-ae62-f24e54f8be68@redhat.com>
-References: <0-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-	<3-v1-74184c5043c6+195-pcie_switch_groups_jgg@nvidia.com>
-	<20250701132905.67d29191.alex.williamson@redhat.com>
-	<20250702010407.GB1051729@nvidia.com>
-	<c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
-	<20250717202744.GA2250220@nvidia.com>
-	<2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
-	<20250718133259.GD2250220@nvidia.com>
-	<20250922163200.14025a41.alex.williamson@redhat.com>
-	<20250922231541.GF1391379@nvidia.com>
-	<20250922191029.7a000d64.alex.williamson@redhat.com>
-	<066e288e-8421-4daf-ae62-f24e54f8be68@redhat.com>
-Organization: Red Hat
+        d=1e100.net; s=20230601; t=1758604510; x=1759209310;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f7i9pmTrdIrbqnHasCnEr2Ik3GCVKcKjWftLq0bTHq4=;
+        b=hOh8IukOPcll9RIX6Zmcgkrm0WtuzA8XB/vXLBk/cTsmP65pV1H2QpeFdrsk+a1A7g
+         slGL8BhXHw8YBT4fcmY+1wi9cl9XlGhTRiMOcnKOjJP+K6QIKV/i9CE0ruKxBDew2axz
+         7CgN+C4CjzOiT7eRS+PuFWMxVQ7l/UzAsEFf6Dy8zfNV2AYqUkvlEPmPR3jEjh/6plJc
+         6VH6Swl4F9lg5YrgpaoE4/XdjZjeNgC46V3vwpv6zVFSz3EjAL9JaEzWfJGvFC+vy6Bt
+         bsBDutSvdHVMWb3OuEhK00POHmJOZ7suNufAoDFf341hSehvToThux1Un1SEdR+uoSWP
+         hXFw==
+X-Forwarded-Encrypted: i=1; AJvYcCW4CPzZll+yQshsCBETphsLWhgiZjBN/XBtEpBVigvnyEAl4lpldgoUVKSMTT5ht6wypeR6rPTh@lists.linux.dev
+X-Gm-Message-State: AOJu0YzJT0Tf9GLHRcbz9FR1Ywq6Rzgh20wmtda+TTsJdRZ0CNz6S22V
+	y9Ct1HKe5g0U0v6fqV6vWGFvgJep5uYTToAlMHK0G/Qz7wmjpgW61N49rkWFdX+x4BHkL1/1E4n
+	2fMxEO7wdPA8O2oYbbtnoLjZRt2okk0vHWNvWIX2qUg==
+X-Gm-Gg: ASbGnctOSskfsshC/MHdTJ1s89V6IPzhXtezJKa0evIjo9XRjk+kiknonIFZzUmiR/6
+	YQ5QnyJ/QXjPttovjnVqZZExRSkAW0oWiFUb1pr0t3PJEv+O+ZDY+qL9sJbiFdTRQsx+FSx8Ch0
+	9nG1cA+vkI4DLBNS9xXjfTsQuRQAWjlbT5HDuVUengNxXP31F7ng+KdrIzJokgPq9nBEDzt1Vt2
+	pns8Ssc7Ohpkk/nqK7Rjyx7xIR2T2yFLwPaldSi
+X-Google-Smtp-Source: AGHT+IHkyyCZ4aLQZ1Y0xjlVL+qqA0NCcCbmE4WuYZchPsfa/VVDefDXqBjV83WLM8h+6HezJQO1BpZc/a10Bjf4AW0=
+X-Received: by 2002:a17:90b:4cc5:b0:32b:6820:6509 with SMTP id
+ 98e67ed59e1d1-332a92da3bamr1474811a91.9.1758604509894; Mon, 22 Sep 2025
+ 22:15:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: N-3IWp9xhX9YvYr7N0jJo8KPNlLY7xP6QfFBOPzgKpM_1758595831
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20250922192412.885919229@linuxfoundation.org>
+In-Reply-To: <20250922192412.885919229@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 23 Sep 2025 10:44:58 +0530
+X-Gm-Features: AS18NWB826YLcDy8jjmwFSMKmbn-OofuLGovoRwJaNxOpvEac_vZ-fqEi4wyT2Y
+Message-ID: <CA+G9fYtNrr62bYOxqG8cXkE1Qv6neuq3CoB6v61SWxzUm6MxLA@mail.gmail.com>
+Subject: Re: [PATCH 6.16 000/149] 6.16.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 22 Sep 2025 22:26:26 -0400
-Donald Dutile <ddutile@redhat.com> wrote:
+On Tue, 23 Sept 2025 at 01:11, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.16.9 release.
+> There are 149 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 24 Sep 2025 19:23:52 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.16.9-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.16.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> On 9/22/25 9:10 PM, Alex Williamson wrote:
-> > On Mon, 22 Sep 2025 20:15:41 -0300
-> > Jason Gunthorpe <jgg@nvidia.com> wrote:
-> >   
-> >> On Mon, Sep 22, 2025 at 04:32:00PM -0600, Alex Williamson wrote:  
-> >>> The ACS capability was only introduced in PCIe 2.0 and vendors have
-> >>> only become more diligent about implementing it as it's become
-> >>> important for device isolation and assignment.  
-> >>
-> >> IDK about this, I have very new systems and they still not have ACS
-> >> flags according to this interpretation.  
-> > 
-> > But how can we assume that lack of a non-required capability means
-> > anything at all??
-> >     
-> ok, I'll bite on the the dumb answer...
-> lots of non-support is represented by lack of a control structure.
-> ... should we assume there are hidden VFs b/c there is a lack of a vf cap structure?
-> ... <insert your favorite dumb answer here> :-)
 
-This is not how an additive specification works.  We start with a base
-specification.  We add capabilities to describe features of the device.
-If a device doesn't support an SR-IOV capability, it doesn't support
-VFs.  But likewise we cannot add an optional capability and
-retroactively declare that anything that does not support this
-capability must have some specific behavior.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-That's not what the spec is doing.  We're misinterpreting it.  The
-sections of the spec you're quoting are saying that if a MFD function
-supports ACS it must support this specific p2p set of capability and
-control bits unless the device does not support internal p2p.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> I can certainly see why a hw vendor would -not- put a control structure
-> into a piece of hw that is not needed, as the spec states.
-> For every piece of hw one creates, one has to invest resources to verify
-> it is working correctly, and if verification is done correctly, verify it
-> doesn't cause unexpected errors.  I've seen this resource req back in
-> my HDL days (developers design w/HDL; hw verification engineers are the
-> QE equivalent to sw, verifying the hw does and does not do what it is spec'd).
+## Build
+* kernel: 6.16.9-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: fef8d1e3eca6557cae4f0149eb2071123c473c26
+* git describe: v6.16.8-150-gfef8d1e3eca6
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.16.y/build/v6.16=
+.8-150-gfef8d1e3eca6
 
-As previously noted, an "empty" ACS capability serves this purpose with
-minimal verification.
+## Test Regressions (compared to v6.16.6-198-gfb25a6be32b3)
 
-> Penalizing a hw vendor for following the spec, and saving resources,
-> seems wrong to me, to require them to quirk their spec-correct device.
+## Metric Regressions (compared to v6.16.6-198-gfb25a6be32b3)
 
-IMO, we're clearly conflating the implementation of the ACS p2p
-capability bits with the implementation of the ACS extended capability
-itself.
+## Test Fixes (compared to v6.16.6-198-gfb25a6be32b3)
 
-> I suspect section 6.12.1.2 was written by hw vendors, looking to reduce
-> their hw design & verification efforts.  If written by sw vendors, it
-> would have likely required 'empty ACS' structs as you have mentioned in other thread(s).
+## Metric Fixes (compared to v6.16.6-198-gfb25a6be32b3)
 
-We've had NIC vendors implement an empty ACS capability to convey the
-fact that the device does not support internal p2p.  There is precedent
-for the interpretation I'm describing.
+## Test result summary
+total: 349618, pass: 322571, fail: 6726, skip: 20321, xfail: 0
 
-> >>> IMO, we can't assume anything at all about a multifunction device
-> >>> that does not implement ACS.  
-> >>
-> >> Yeah this is all true.
-> >>
-> >> But we are already assuming. Today we assume MFDs without caps must
-> >> have internal loopback in some cases, and then in other cases we
-> >> assume they don't.  
-> > 
-> > Where?  Is this in reference to our handling of multi-function
-> > endpoints vs whether downstream switch ports are represented as
-> > multi-function vs multi-slot?
-> > 
-> > I believe we consider multifunction endpoints and root ports to lack
-> > isolation if they do not expose an ACS capability and an "empty" ACS
-> > capability on a multifunction endpoint is sufficient to declare that
-> > the device does not support internal p2p.  Everything else is quirks.
-> >   
-> >> I've sent and people have tested various different rules - please tell
-> >> me what you can live with.  
-> > 
-> > I think this interpretation that lack of an ACS capability implies
-> > anything is wrong.  Lack of a specific p2p capability within an ACS
-> > capability does imply lack of p2p support.
-> >   
-> >> Assuming the MFD does not have internal loopback, while not entirely
-> >> satisfactory, is the one that gives the least practical breakage.  
-> > 
-> > Seems like it's fixing one gap and opening another.  I don't see that we
-> > can implement ingress and egress isolation without breakage.  We may
-> > need an opt-in to continue egress only isolation.
-> >   
-> >> I think it most accurately reflects the majority of real hardware out
-> >> there.
-> >>
-> >> We can quirk to fix the remainder.
-> >>
-> >> This is the best plan I've got..  
-> > 
-> > And hardware vendors are going to volunteer that they lack p2p
-> > isolation and we need to add a quirk to reduce the isolation... the
-> > dynamics are not in our favor.  Hardware vendors have no incentive to
-> > do the right thing.  Thanks,
-> >   
-> I gave an example above why hw vendors have every incentive not to
-> add an ACS structure if they don't need it. Not doing so, when they
-> can do p2p, is a clear PCIe spec violation.  Punishing the correct
-> implementations for the incorrect ones is not appropriate, and is
-> further incentive to continue to be incorrect.
-> 
-> Don't we have the hooks with kernel cmdline disable_acs_redir &
-> config_acs params to solve the insecure cases that may (would) be
-> found, so breaking the isolation is relatively easy to fix vs adding
-> quirks as is done today for proper spec interpretation?
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 139 total, 138 passed, 1 failed
+* arm64: 57 total, 56 passed, 1 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 34 total, 27 passed, 7 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 40 total, 39 passed, 1 failed
+* riscv: 25 total, 25 passed, 0 failed
+* s390: 22 total, 22 passed, 0 failed
+* sh: 5 total, 5 passed, 0 failed
+* sparc: 4 total, 3 passed, 1 failed
+* x86_64: 49 total, 47 passed, 2 failed
 
-Are we going to expect users to opt-in to securing their system?  This
-is just doubling down on an incorrect spec interpretation.  Lack of an
-optional extended capability cannot convey anything about the p2p
-capabilities of the device <full stop>.  Thanks,
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mm
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-rust
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* modules
+* perf
+* rcutorture
+* rt-tests-cyclicdeadline
+* rt-tests-pi-stress
+* rt-tests-pmqtest
+* rt-tests-rt-migrate-test
+* rt-tests-signaltest
 
-Alex
-
+--
+Linaro LKFT
+https://lkft.linaro.org
