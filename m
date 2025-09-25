@@ -1,481 +1,303 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A5C223715
-	for <patches@lists.linux.dev>; Thu, 25 Sep 2025 13:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758805953; cv=none; b=sIygLZwtnBJm7pTFIQEWHLrTvIjkgYfCubX01oQ5vixMpUNopIHuXAUEBsqFerh8W6YovfsXmxyHHQCGRqtSIzbddKb7JG44QoiV199UVPKOeuyAVXDQRdFXzXOz7ZP3cWDTkAoUtut2V7w7T38NFrSvznBAxQlxrHDKnXyTdPI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758805953; c=relaxed/simple;
-	bh=9AXpZB1bwcU/tOfhENucqnGAndFUojEuOkjiz/Zv4RQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ogYry3VhC1DjqjEvUoX2hHhSL3OeG9XWf/S3RgcIXvbNU7Te0FATpQ5rbdWsW6PhLMFA/RDnTnittWfNKcCTjNsih1Sm7HiOM8SqUYu7DheSlWacd4NKSr92taM88PGNzAmaHSN5FxEqBkhxkkA/HoC9TF+YAXZd1eEdRaLPBJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=xsF5LBBK; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D6F2727FD
+	for <patches@lists.linux.dev>; Thu, 25 Sep 2025 13:44:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758807850; cv=fail; b=evkJkNABN3e8mMjNIN0faO+cJ6BvlZbt0t8SLGeky4XoHC7h1uwqtu9keShb7IlgqoKkyQVMbDlVPjIuyPV4Ri424wP7S8x0Ne0MWmK4IVmljDdKNfRwMxZ0C9AsUHeE/y7XGPQjD+iQTLAkoZHAKJqYF6at7AlAhJ/vUX2glaM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758807850; c=relaxed/simple;
+	bh=HeDj5Iol41uI62M/phpLUzWjAQs8E2gr08wk+FjUN9U=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Fyd+qFPBksWh+HgDFaQgeqsNYXtX8PPUgWjBKiHpRWSF537trTvd+6aptwk2rIXKYFG3LPjhtgi4tgOcCsUp3oLyBtYKSt1zsxYo0r96dcRGMbFZGtitnF3Q5s66AKE4Vb7Wdk4ruewzcQv9DGzEvldgUpjhEf/QLYwBTYrFw3k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=LZzdK5Ff; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=a/Q0APvF; arc=fail smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="xsF5LBBK"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3fc36b99e92so1277650f8f.0
-        for <patches@lists.linux.dev>; Thu, 25 Sep 2025 06:12:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="LZzdK5Ff";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="a/Q0APvF"
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PAtdCt017831;
+	Thu, 25 Sep 2025 13:44:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=5AzI2ud6TIbvzXbpgByz5ivvRmab9U8sVOYmOHxNK3s=; b=
+	LZzdK5Ffk6t5UVSfHUJJv0JaRYpPvt7Y1BHO1o6aIEDm/xINdJoJCidehOL6JkXS
+	gVTShkHPCudUjK3VXJcxi11FNtifpwdT6VIOUd5GYE+c7rmE47UIZYiyTpuP8ZdE
+	Drpt247ZesmM+esB4xVcE3z4RQ3PoUKO2E3vayH1H/AaF32yFXKNG26VcO7a2xsk
+	bOqy8JwBm9ajlZw42VzVL5EoHAS19CyTyKAhCI+NH3vhsib01Y6moQMFszIuqQVV
+	IYyD4T+z/dehIjsbKp/7xULTKXzdIPntrNRgJi8v04E1XZsHevvN1OdqrOUjONp4
+	ZHh550/vyBpkFnCLcpa2fw==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 499mada49n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 25 Sep 2025 13:44:05 +0000 (GMT)
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 58PCbeXF014604;
+	Thu, 25 Sep 2025 13:44:04 GMT
+Received: from dm1pr04cu001.outbound.protection.outlook.com (mail-centralusazon11010041.outbound.protection.outlook.com [52.101.61.41])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 49a9525pc7-2
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 25 Sep 2025 13:44:04 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=H/fN7kJLg/7fN9ubdow3xn39UoYLkEjdnntzFmZ5P4GmRBqDV5FnV3HS5xfKjFA2p50/Daj9nDl3LBb75+LRUu5L0KuCAKFnVYQQ/fpFkjTtzp3a6LToFsSNhDtjk3Y2mPTpzWkaQMlAABeB541odNIRx9FD26w/4RdVVpx/5oAYrDB4VShdUK5263OETJ1oiHodbl1xR/95jPxpzGqTW9+dz/A4K96SBkWfs6UYHlu/EcuzOElgrb3DMzuYwAU79MNvcMqyhlvbWsuEYWqKwXUNUOsNYANZDHsJZ923N9mslLY5doUFwp504A3xc2q6y8Hn8wxW5AxTbZYMzSOgSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5AzI2ud6TIbvzXbpgByz5ivvRmab9U8sVOYmOHxNK3s=;
+ b=r5DumSpuD1vphOtLOca/yo0fsYmIR1xZ/HdM3vehHmcuMMdWKYEVTMVglwbZ745TPZ3AHy6Cn+JciYZJ3ooaLJBQLOVJFuIKTnmbpBt9CIGsA5NvHvQKloEhJImI23A8MVbpPYOzI0m33BeDPqzOXeWySoA3ktOvjKvdlpLwUYuH6+dh0CcmkjTdc5/pVFAlEvK9Bxjm0QKxUfuwQAWNpxFEIlPr840vWNrnV6p+lHSuJ83+p5wFHFSNITD6uyq5mwD/trlrzOJM7TLgQKHXQfWQL8S8wKclpMZZE64rFGz7NhA4Qjaao/r9t8fygTFqiC56fX1cnWNX1Tm9MqXD0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1758805948; x=1759410748; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NfJVwYFcsQ06QJkEnurciWiF3KgCM9rgqn4VVbABEtQ=;
-        b=xsF5LBBKN3m1yxxMCQx4dN/uQeNULU2CUnoYrL+IVjk1OXlh8kZzxQxT5JBkKEVSTY
-         H4NB/1oAbGIh1EKWFkRRa6O0HBiJ4JDBcmeU116SX8dMiFMtGzDSLPuxX2yi4qcal7QI
-         WN6RC/FXFNNSvDvKCVuMTX/rViz5oz5YLAED2XBX6XgYGyg36nsvgOiuxTgGQYu+8D41
-         Q0yaPz3zsu7JmcVVseP1xvtol5dIcCKf1+op27APBIJgu5DczJEows2PxqXniAOuD6OU
-         11983J8x//AMKGE9icNz1yoqHyOAeUwoe4E84jWbxpg8Jd0PMnwRx+Ne2EBo9whg7+GI
-         0KXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758805948; x=1759410748;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NfJVwYFcsQ06QJkEnurciWiF3KgCM9rgqn4VVbABEtQ=;
-        b=IHO6hT0mfFO2e0Iptf+P+9sneVihPDgkOo9ouVPmVPA/rFh1Jgp76Wl+kjpcnWh06b
-         g84nbULSAFRXJxGaqtXfwtNRsBpVzNowvU2I96hYSMNOdESN5yhQbcXFQJjVkzH3v2Be
-         vXKlwsiIsgAYtHuYh8LgGvxiOcrSkbmQoA23hAaOfqhYKcJiTxTWhj7pk/uDgRkVoZVx
-         qE9ljkqKuCJuM1bs+ESD1ecR2fCZ6D61thOl4sg6KngT3Ik0CpOCmHt5+DPlqMyZ8ojc
-         UC7IJvLcMp2yWXJiCqdZ92LlmdhMQp8ZaiucoWT8QWe/AxkK23RPhOwassCGp3b7FZ9S
-         XdSg==
-X-Forwarded-Encrypted: i=1; AJvYcCWup2gv70BSxJAMtwAxG5QtSeYKZAAcG1ZQBswbrnj20vemhKkK8i5sdIDMXF1NYCEvQhgJ+rP2@lists.linux.dev
-X-Gm-Message-State: AOJu0YxBxkMR0vVQ3R0nv7VUTntWcC0vrQWonXEPhSQ6Zn9DGeRzngEL
-	SvelwpGiuk7VTHcyfvPkqW7R9WejgCz+5XLafkb8InOUuWuzLLfg62SPM7fd7hrbowM=
-X-Gm-Gg: ASbGncvw4D6lWKWNXCJLZySljMim3QtAesy8dcS+FOmyQ9VCinvoysaj3fhMEFGiPie
-	lniZLquknPTf0JGjZfAFldScvYupvZ/n5tn/CWkdz97p2Nwb8Z1hON3fBJf0pS3nT063WK8MEPl
-	KTdkOfC4ykh3kXUj+zoX2t3x/VyQWC8Ck9cgn0uW5k73AJ5nLqzowh9E7XTB6JvnS7ovRh11UXr
-	FC57eElxLvsCdcKEkcbMCElRZjSlpt8hfDFqg/OWkCzR3+0dd0V+x3AmSA6ac3KTRXu8Szw+jg+
-	VgGmLwQtQ7roakqbrzezkQwh3aUMlq9tRmwBHJOKqhww4tNw7Jx8SKdMZAJz+BYHpkD3Z/hWRXG
-	SOYIYP7vcTztYHsZqT/uWJnFAjB7moWQPKRBDoSgkXmnuxEPGtw==
-X-Google-Smtp-Source: AGHT+IGfEDsgYy1Y3V7mn/9vw12xwbotyOf9S0qvgxiLF/dTs1GE6jSNXI03j1w/2hgZi5tVGzAx+Q==
-X-Received: by 2002:a05:6000:290e:b0:3fc:cbfc:fbee with SMTP id ffacd0b85a97d-40f65bbb807mr2115268f8f.19.1758805948078;
-        Thu, 25 Sep 2025 06:12:28 -0700 (PDT)
-Received: from daria.iliad.local (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e33bef4b4sm32929635e9.20.2025.09.25.06.12.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 06:12:27 -0700 (PDT)
-From: nschichan@freebox.fr
-To: nschichan@freebox.fr
-Cc: akpm@linux-foundation.org,
-	andy.shevchenko@gmail.com,
-	axboe@kernel.dk,
-	brauner@kernel.org,
-	cyphar@cyphar.com,
-	devicetree@vger.kernel.org,
-	ecurtin@redhat.com,
-	email2tema@gmail.com,
-	graf@amazon.com,
-	gregkh@linuxfoundation.org,
-	hca@linux.ibm.com,
-	hch@lst.de,
-	hsiangkao@linux.alibaba.com,
-	initramfs@vger.kernel.org,
-	jack@suse.cz,
-	julian.stecklina@cyberus-technology.de,
-	kees@kernel.org,
-	linux-acpi@vger.kernel.org,
-	linux-alpha@vger.kernel.org,
-	linux-api@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-block@vger.kernel.org,
-	linux-csky@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-efi@vger.kernel.org,
-	linux-ext4@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-hexagon@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-m68k@lists.linux-m68k.org,
-	linux-mips@vger.kernel.org,
-	linux-openrisc@vger.kernel.org,
-	linux-parisc@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-s390@vger.kernel.org,
-	linux-sh@vger.kernel.org,
-	linux-snps-arc@lists.infradead.org,
-	linux-um@lists.infradead.org,
-	linuxppc-dev@lists.ozlabs.org,
-	loongarch@lists.linux.dev,
-	mcgrof@kernel.org,
-	mingo@redhat.com,
-	monstr@monstr.eu,
-	mzxreary@0pointer.de,
-	patches@lists.linux.dev,
-	rob@landley.net,
-	safinaskar@gmail.com,
-	sparclinux@vger.kernel.org,
-	thomas.weissschuh@linutronix.de,
-	thorsten.blum@linux.dev,
-	torvalds@linux-foundation.org,
-	tytso@mit.edu,
-	viro@zeniv.linux.org.uk,
-	x86@kernel.org
-Subject: [PATCH-RFC] init: simplify initrd code (was Re: [PATCH RESEND 00/62] initrd: remove classic initrd support).
-Date: Thu, 25 Sep 2025 15:10:56 +0200
-Message-Id: <20250925131055.3933381-1-nschichan@freebox.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <CAHNNwZC7gC7zaZGiSBhobSAb4m2O1BuoZ4r=SQBF-tCQyuAPvw@mail.gmail.com>
-References: <CAHNNwZC7gC7zaZGiSBhobSAb4m2O1BuoZ4r=SQBF-tCQyuAPvw@mail.gmail.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5AzI2ud6TIbvzXbpgByz5ivvRmab9U8sVOYmOHxNK3s=;
+ b=a/Q0APvFqGEsvlPQxaPZAW2Xq6U4x6PBQ1LdCetpVVqdBaTW3OCdXYJ116hQG99Nv9uSs8FG6yn5UXe0wATtLiWAJZ1gfmq6n5uqYN75yR6qa+oKb1cDolAzlHbwTF1Uaj46hjPCZW5vQGabTKAfwji6OBCOTbDRXtT3FQBqlAo=
+Received: from BN0PR10MB5128.namprd10.prod.outlook.com (2603:10b6:408:117::24)
+ by PH7PR10MB6649.namprd10.prod.outlook.com (2603:10b6:510:208::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.20; Thu, 25 Sep
+ 2025 13:44:00 +0000
+Received: from BN0PR10MB5128.namprd10.prod.outlook.com
+ ([fe80::743a:3154:40da:cf90]) by BN0PR10MB5128.namprd10.prod.outlook.com
+ ([fe80::743a:3154:40da:cf90%4]) with mapi id 15.20.9160.008; Thu, 25 Sep 2025
+ 13:44:00 +0000
+Message-ID: <6669bd1e-ba37-433a-8f8c-5cd9787b846f@oracle.com>
+Date: Thu, 25 Sep 2025 09:43:58 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] nfsd: Move strlen declaration in
+ nfsd4_encode_components_esc()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: NeilBrown <neil@brown.name>, Olga Kornievskaia <okorniev@redhat.com>,
+        Dai Ngo <Dai.Ngo@oracle.com>, Tom Talpey <tom@talpey.com>,
+        Simon Horman <horms@kernel.org>, linux-nfs@vger.kernel.org,
+        patches@lists.linux.dev, Jeff Layton <jlayton@kernel.org>,
+        Anna Schumaker <anna.schumaker@oracle.com>
+References: <20250925-nfsd-fix-trace-printk-strlen-error-v1-1-1360530e4c6b@kernel.org>
+Content-Language: en-US
+From: Chuck Lever <chuck.lever@oracle.com>
+In-Reply-To: <20250925-nfsd-fix-trace-printk-strlen-error-v1-1-1360530e4c6b@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH5P223CA0008.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:610:1f3::29) To BN0PR10MB5128.namprd10.prod.outlook.com
+ (2603:10b6:408:117::24)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN0PR10MB5128:EE_|PH7PR10MB6649:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01d27743-6775-4a34-58bc-08ddfc399508
+X-LD-Processed: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+ =?utf-8?B?ZlRjNElubnZFWlBDckhNZ3pOVWdtc2xOa0o4YkNFcjNxbjZRU09qd2lKSERO?=
+ =?utf-8?B?cThCeXBMOC8xSERFV21LWnI4T0U0SjRITks3TE9qZThFSjJaclF6Mk1PdU8y?=
+ =?utf-8?B?TlB2RTduai93ZkM5V2ZqaVdXWVY3cXNHVUtKSWV0VjNyYkZvVXR2QVNFOUVr?=
+ =?utf-8?B?Z2xXN0JPYlU0ZWNEQVpUdEZhQmxMdnFjUWRkbXZyOXFTVGpaNWxaWjRzTENr?=
+ =?utf-8?B?dzUyMDVEVGdFUEJxbjIyYTdpQTJGZStZUWdMYm5RSmpDOXdKYzRLZDgvQnl6?=
+ =?utf-8?B?c3YrZ01zWXFZODVSZUNtQWkwclVOK2sxTjV0MjdFeDFHVy9qdEV0c0FVZyto?=
+ =?utf-8?B?M2NmQWdZRHljK0Jod2N0bXNJNk1MNDg3SHVyOXdHclR6d2N2QUJKYW1xQ1hU?=
+ =?utf-8?B?cERsMGVIbGxMemRFQmw2b3NQbDVjRDhhS08zTWJxTGFNSTFQQy9lZjlOUHU5?=
+ =?utf-8?B?OFY4ZVpJYlZkcjhMOXRrcDhPcWdGREREMGdqRWxxaGt1MEYwK0dSaHJRWmVU?=
+ =?utf-8?B?NkNYR3cyQnFRRVBzOHBRQ3N1VTNTTTlNQS9DUFlRUmFsbzU4ZWw4Z2RneG5v?=
+ =?utf-8?B?bkdpeWhtZUs5Y3JTL3RwN29KVUFXYUVEQUZzVnJiWkFjc01mcGxsU1oxRFVs?=
+ =?utf-8?B?QlgwWDJOVGFnN2FZZWJqWEJnUmdoZmFzbm9HNU9aN29OTkM5UnpzQ1JLdEcx?=
+ =?utf-8?B?N2RQMldoUFd3UlMra0VzRDNuWTlLcjEzdTRtWFNoZ0dUNzlNUEdBa3NoYTIz?=
+ =?utf-8?B?WkJacWpib0RvNllid3RJbjR0ZTJCK0lMdU9Xd3NHSURLM3RLL1FLVjJJL1N0?=
+ =?utf-8?B?MCtJUTVhdDUyRzMyOHV5YVBIM1ZZeXRBOEhzV1VxOXROVVVqR0RYQUlNTzlm?=
+ =?utf-8?B?QzNDY0ZmUld5TVc2K1JmV0xQNFJuS25wR25vaGdVanhaTHFMdVMzdkFJZWVr?=
+ =?utf-8?B?dDBvcDRCNHZnNVR3NmJLN094bHkvRk12ejBkTXU5UEFsUUNoQVlUbUVjSnov?=
+ =?utf-8?B?a2xMVXpxeFJ0V3k4Sk42ZncwMiszWm92bVRyOWczaEdyZGxoUkQ4OE5zNUdu?=
+ =?utf-8?B?eHhkMTlTbEhzREw4aXFnM2lDVG5Ldm43R1V1YVdrbGhwVEF2SzNUcE9uSWNh?=
+ =?utf-8?B?ajRwc09jbVEybWVoWVNrdlphS2k4cVdCeUVGblNkcDh4cVNnMDVyc1BlZE1C?=
+ =?utf-8?B?OGtNTWN0dVR4RkxvYXdtYUp6K1Jxb2lIcTdYb0xSclZvY0dFNXRYZStWMmRP?=
+ =?utf-8?B?Tlg2MXpRNlhISlI3a3UxNlhxM0hVQ2pkUGdYRFFiQlhxdzJuQlF5SGcrV2Jn?=
+ =?utf-8?B?cHVHdDNhT2dnT2hHY0c0VzBETWRyMW1pNWF5c3dJS2x6MWk2NTVyazZ6WEVG?=
+ =?utf-8?B?MnV4YUZuQUxHVVVKSTZ0LzhpZlo5MG5CMHR0bFN0RlNYSldBRHVycEdBV2l5?=
+ =?utf-8?B?cXpZV3Z5L3lBY2xDLzZqU04zbFV6UTdScjAwd0xrdGl6UTlaVDZwZXhrL3pQ?=
+ =?utf-8?B?VTg2WUlSOUxydHZZWXNNa091Um83TDJOV0F5eWkrcklMSksrVG83Uk54blVH?=
+ =?utf-8?B?Q0dMaHQzNnpCcTBiU2pYK0NpVk5xMndrdmNReVJwdHR2UXdQYlN6bUQ5QnZT?=
+ =?utf-8?B?eVFZQ2RQLy90dkRUZmlaQ3N1L2JTS1ZlY3g2T2RRTGhpQ01say9lMmc1cXhv?=
+ =?utf-8?B?ZUNMdHZENjBJNk5tdE9TOHRaNFAwWGprMTc5VlE1S2VFK1JPUCtLY1hvMXFu?=
+ =?utf-8?B?NCtJMXFPRVkzOWRMclNKZUpIeGg0YTAvY0wrcGovWXdLb1lBMksrWGZyZkFo?=
+ =?utf-8?B?OENzOHFObk1mdTUvc05DMUF2MWdqY0d0Y2p1eFo5ZE1za2k5aXI2TnVqTW8r?=
+ =?utf-8?B?dmxYQVU4VTBOZVR3UTQ1YmFwbE9vdE5waXJXY21sY1RuS3ZuaVViMy9wS1lC?=
+ =?utf-8?Q?9sK/nS85ius=3D?=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN0PR10MB5128.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?MXRFUC9mK2xOckh0NkJTZmhRS0lTMjZQZjgrRWkrNEZ1cFFxZG1MQ1lTckZL?=
+ =?utf-8?B?bjFMdGlhbXdGTFF2QTNjb2dWd2ZzcUZRMjV4cmx3Z2pzSnlrSHl2THdIcHRl?=
+ =?utf-8?B?RXdEZG5vS2dtdUcxeTVmQWVrOWo4MWhvZXgrNmQrUU5DMW40QlQ5dEU2Y3ZN?=
+ =?utf-8?B?ZW1NdUhLTS9zUEc3d2NzSUwyQjQrTE15Y2dCRE4xcWFHTVVGTzJ2U3VHZ0dy?=
+ =?utf-8?B?VEJaZkZVWjZwMTIwZ01nc2h3YXkrRnFyV0RzdkJ1ZkhHUzJpOUVGZUlJekor?=
+ =?utf-8?B?a1NnZnN1L251aE02ZlpJWjcwTWk2NnJkL0VXOXllZ1JLbTlWYWd4c09aNDJx?=
+ =?utf-8?B?REo1d1lEQlBuQ1lXbGE3MGRCcURoS0J5VnFKNnh2VVdwbjRvNHVlQ0VXd0hp?=
+ =?utf-8?B?N1p6QU95S1UwUVp5ZFJtQlhsWHp0Z2l3b21CRHF0MmZlQmhIN1NyQ2x2anVy?=
+ =?utf-8?B?UmRzbjdFY2dvUlBzUElWTTM4dWtWTms4eHNmL3BSSTZ0Ukl1bFI0L0NOOExN?=
+ =?utf-8?B?dnhkNHdlTFpYeVcrTWlhRzc2VlNGTElicSszQTc3d2IrK3habVpWWVI0QUpZ?=
+ =?utf-8?B?aDFjci9LaXhLUlB3VUhJN1krazZlb0JyR045eEtCdkYwbFVSTnNxZ2tmSnNn?=
+ =?utf-8?B?Z0hiMWtzcHN0REZxeHM0cmUyaHhBNWU2dGd6cGlGNDRrYXRTdjFjR0p4aDR2?=
+ =?utf-8?B?NHVld1AvSnVwMzBwZy9CejJhS0NOWk9MNi9Kc2o4eHZDSy82ZGRocWVUSUpP?=
+ =?utf-8?B?UUc4cHlQQWRCSm1nK1lOMmQ4a3F4ZjFTeTdxWFJ2YUI5Y2RLRnNyWkloaW1y?=
+ =?utf-8?B?MGNSdGp5UEtWS0k4OHVlT1NUVmtxMEtxU2VxMU5xRXN6Y1dvei84a0pQN1dP?=
+ =?utf-8?B?NGlEb2U3WS9VSXVnTVJtM1RtdmdmcDUyMXBMZVdBZXZ2cDBIeUVPWWRvYWdH?=
+ =?utf-8?B?ZDFmQVZRNUhFS2dhU1I1NjRhajY5Rk9kVktTRGNOKzZtN0JYemFkeHNSR0Ri?=
+ =?utf-8?B?dUhmaHRxWDdaNUh6NVAwb1NoU3NjckNLalo5OWxEcmsvajZtbi9TbHpUZjZ1?=
+ =?utf-8?B?U0tBQ01hVVkyVmYwbHhOM2RCS2tubHhqTHJzTXc4MWlOMGxSdFk5b1dya1Ry?=
+ =?utf-8?B?bU43VE5wSlpqOFFXRmU1dnRGbEdjbDcySDFVOGh6ZC9iWWVQWG1iSEYxY2xu?=
+ =?utf-8?B?MWUzYWFSOWdJS2FMeTFqY0xpK2RHSjdVMUcrVnVVZzFkWDd5bGV6MWxDaWRV?=
+ =?utf-8?B?Wmo3OGw5dkwwQkg0STlLdnJLM2FEYTlLNWdmM0xjZUd3aHZGTFlhU2RRejF4?=
+ =?utf-8?B?ZlBUUHIreUJ1Nzh1ZS9UTEhMR2c3M3gxaTY0Z2FWTG9JeHJqWnVzZ2JIM1hD?=
+ =?utf-8?B?RWNZdkR5ZTU3RTJKQ2xJWW9vWWFNd1VySUtCN1Y4am1xWlczVVR1YkI3aUJ6?=
+ =?utf-8?B?a2xuczZURVFNaHV4S3JjSFM0SEl5VCszNkcyMjNmL1UzeUV3RWVsUm1LaHR2?=
+ =?utf-8?B?T0hsNHliU0Fzc2hZOEJjSHNwbFV5Z2lTdmtwUi9HaVptazhpVGZiM2QrdjhL?=
+ =?utf-8?B?Ni9HWkorQldWaWswRlRXMVhtUXI5aElveWdmaXgrWTNMU3NXWU1tcVdRdWJX?=
+ =?utf-8?B?RXdiTGE5ZXRNLy9zdGtWMGdyYjZLWnZtNmowczZDbUhFWjJxc1NYZERISnpi?=
+ =?utf-8?B?aWtJblNGa3RYa1VRSERNVGJlbjJZUi9wTGxHVmp4czlsd0FUTHNTQVR2b1M4?=
+ =?utf-8?B?dmdVQWJmSTJOZ3lueGZlR0ZlbzJjK2w4Uy94MDg1emRZM3hZUHJqZk1jZXhB?=
+ =?utf-8?B?Y2ZKM2ZHOUxNQ1BZZHYxYjR2Ukk5NG0rRnYzeEI1dnJyRlZtZkl1ZTNqK05l?=
+ =?utf-8?B?bDR5YnJQUjQ0di9TYmpsRnNJNkQ0MmhSWFg4OTdsbHhhMHoveWt3Q3VMc3oy?=
+ =?utf-8?B?eVl5cnI2d0RaUVhpUU9aRXcrMEFzVGxWN2JhSEd4Y2N0QU40cUxUelBiRDhi?=
+ =?utf-8?B?WDFtVE9XSElIQXJwdVBnMlFpaVNjdnl6cUt1ZWlqREM5ODhNYkdHT1JXdHhS?=
+ =?utf-8?B?cDhCL2Q5ek16a3FkVXVhSktVUzI2NVRzRWV4Y0FxWGhwS2VXWDd3Ri9TbmdR?=
+ =?utf-8?Q?odc1mR01ln3A2IESJZmjOcQEV?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	Y3OiTEhN7zuZkvw68n8yxFSunhoeXcmlr3xWBBRRnYP8vccSZITpXZzpfpL/atRFLJQuioIjdlW06eo61RL/8zBB+j28ZWsGrjD2pmRFgt1s5BzXaY8hLGa18Zq9mGUzT530+cASAbP/eP3Hb/fk289+XmPP4cfX3F2JSWcjXJKH/7pgZEZ1hrG7PKxQs8auTG817zGYJAOFBKAQ9cRKiHDsjJyiDp+nap+QepFTphgLk/IUOa4m/pw7R2ha8mwiswBB8O3qH6WeXJurERgTCqL40y/pd/osJazxvQyJU8p8xwWO1epRsPBC3IV3q2XejbFoZDULu0JJAsr1jkvfwddHq5JpgQm1rkOsMsdXQddHaWNVN1Wc7qByOlTw1TKK4XtfbkT7PmlEChuGIPafZUZXeKxIPPtW6urif7/BZT3HLonj5SKVI5I/CizB6mWwt1qJjc2RqZpw7pjul0QJZNnQhdth7FJOPyxWR0VNYA6vrfvjqOvvoUL2sVi866E1WP6R7C/zxIte7kXREosmrGdVljhqexj7prekR6LSi7tpuXv0CgN/7mHoMEP1Wb+2abwwJPBEL/pOiCGwC1YNJRZ2F7c+bGEL54sH2i/K1eY=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01d27743-6775-4a34-58bc-08ddfc399508
+X-MS-Exchange-CrossTenant-AuthSource: BN0PR10MB5128.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2025 13:44:00.1598
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ErcnASL6WKPRMNQU1DgNVdP30Bm+MB/HTMg6EViv1uSlNQP3Gi4l/7X05eS1bJbiFiTLBgv0OLgF0rd9zPwnkA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6649
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 adultscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 spamscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2508110000 definitions=main-2509250128
+X-Proofpoint-ORIG-GUID: AmfL35PLxGco_8WrFsD_MlSvV9TemX-e
+X-Proofpoint-GUID: AmfL35PLxGco_8WrFsD_MlSvV9TemX-e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyOSBTYWx0ZWRfX9PJWjMYv7wSu
+ W6WHpF185BCJjkMWso7tqemjAr8N4mATrnU6n7rjCYhBD71MdLc6bicnX3Y+B2Ir0IidGJqw7y6
+ 66X5cdO8Y6eiPQ1Wy+ZZsq+UtDfSzMGmm+7pHQbK1DY5+JQX68lq6YHqmAQwVVCDr76OdTefMpD
+ POWIqjd4KDCXx58RPPS3neyOASPAjAs2dlUa0fo4GjLaViCr8+9drtqzCfnjTb/NjwyHzHxC+Zu
+ SKzJdiVvI9MD1LEV0jZASsN0dWvXCH3eIE6qtaAMG7wZQRkj5XUBfgnIYToLraZ0wrKej9/zgmT
+ /ACQBs1oCAv9LITgi3bIFZoXBuaSNhOSPQtB4ltd3bOW0EQBPtwxXxEO+TcFOYWzjvgb3aqcb75
+ 2o7ujFrTE+BlaZBUXeJnILgb8tve2Q==
+X-Authority-Analysis: v=2.4 cv=Vfv3PEp9 c=1 sm=1 tr=0 ts=68d54725 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=JE85pbngJOHBN0uRewkA:9
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:12090
 
-From: Nicolas Schichan <nschichan@freebox.fr>
+On 9/25/25 5:14 AM, Nathan Chancellor wrote:
+> There is an error building nfs4xdr.c with CONFIG_SUNRPC_DEBUG_TRACE=y
+> and CONFIG_FORTIFY_SOURCE=n due to the local variable strlen conflicting
+> with the function strlen():
+> 
+>   In file included from include/linux/cpumask.h:11,
+>                    from arch/x86/include/asm/paravirt.h:21,
+>                    from arch/x86/include/asm/irqflags.h:102,
+>                    from include/linux/irqflags.h:18,
+>                    from include/linux/spinlock.h:59,
+>                    from include/linux/mmzone.h:8,
+>                    from include/linux/gfp.h:7,
+>                    from include/linux/slab.h:16,
+>                    from fs/nfsd/nfs4xdr.c:37:
+>   fs/nfsd/nfs4xdr.c: In function 'nfsd4_encode_components_esc':
+>   include/linux/kernel.h:321:46: error: called object 'strlen' is not a function or function pointer
+>     321 |                 __trace_puts(_THIS_IP_, str, strlen(str));              \
+>         |                                              ^~~~~~
+>   include/linux/kernel.h:265:17: note: in expansion of macro 'trace_puts'
+>     265 |                 trace_puts(fmt);                        \
+>         |                 ^~~~~~~~~~
+>   include/linux/sunrpc/debug.h:34:41: note: in expansion of macro 'trace_printk'
+>      34 | #  define __sunrpc_printk(fmt, ...)     trace_printk(fmt, ##__VA_ARGS__)
+>         |                                         ^~~~~~~~~~~~
+>   include/linux/sunrpc/debug.h:42:17: note: in expansion of macro '__sunrpc_printk'
+>      42 |                 __sunrpc_printk(fmt, ##__VA_ARGS__);                    \
+>         |                 ^~~~~~~~~~~~~~~
+>   include/linux/sunrpc/debug.h:25:9: note: in expansion of macro 'dfprintk'
+>      25 |         dfprintk(FACILITY, fmt, ##__VA_ARGS__)
+>         |         ^~~~~~~~
+>   fs/nfsd/nfs4xdr.c:2646:9: note: in expansion of macro 'dprintk'
+>    2646 |         dprintk("nfsd4_encode_components(%s)\n", components);
+>         |         ^~~~~~~
+>   fs/nfsd/nfs4xdr.c:2643:13: note: declared here
+>    2643 |         int strlen, count=0;
+>         |             ^~~~~~
+> 
+> Move the declaration of strlen into the while loop (as that is the only
+> place where it is used), which is after the call to dprintk, to clear up
+> the error.
+> 
+> Fixes: ec7d8e68ef0e ("sunrpc: add a Kconfig option to redirect dfprintk() output to trace buffer")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> This solution may be too subtle but given that dprintk() seems to be on
+> its way out, maybe it is fine. An alternative would be a rename such as
+> str_len but there is some symmetry with pathlen so I opted for this one
+> up front.
+> ---
+>  fs/nfsd/nfs4xdr.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+> index ea91bad4eee2..580bfa8011c7 100644
+> --- a/fs/nfsd/nfs4xdr.c
+> +++ b/fs/nfsd/nfs4xdr.c
+> @@ -2640,7 +2640,7 @@ static __be32 nfsd4_encode_components_esc(struct xdr_stream *xdr, char sep,
+>  	__be32 *p;
+>  	__be32 pathlen;
+>  	int pathlen_offset;
+> -	int strlen, count=0;
+> +	int count=0;
+>  	char *str, *end, *next;
+>  
+>  	dprintk("nfsd4_encode_components(%s)\n", components);
+> @@ -2654,6 +2654,7 @@ static __be32 nfsd4_encode_components_esc(struct xdr_stream *xdr, char sep,
+>  	end = str = components;
+>  	while (*end) {
+>  		bool found_esc = false;
+> +		int strlen;
+>  
+>  		/* try to parse as esc_start, ..., esc_end, sep */
+>  		if (*str == esc_enter) {
+> 
+> ---
+> base-commit: 3fadfaec904dffab02ebf63dd9c2ae8fa15c6d32
+> change-id: 20250925-nfsd-fix-trace-printk-strlen-error-2a24413eb186
+> 
+> Best regards,
+> --  
+> Nathan Chancellor <nathan@kernel.org>
+> 
 
-- drop prompt_ramdisk and ramdisk_start kernel parameters
-- drop compression support
-- drop image autodetection, the whole /initrd.image content is now
-  copied into /dev/ram0
-- remove rd_load_disk() which doesn't seem to be used anywhere.
+Would anyone be heartbroken if this patch removed the dprintk call site?
 
-There is now no more limitation on the type of initrd filesystem that
-can be loaded since the code trying to guess the initrd filesystem
-size is gone (the whole /initrd.image file is used).
+I think renaming the strlen variable to a name with a lower collision
+risk would be sensible as well.
 
-A few global variables in do_mounts_rd.c are now put as local
-variables in rd_load_image() since they do not need to be visible
-outside this function.
----
 
-Hello,
-
-Hopefully my email config is now better and reaches gmail users
-correctly.
-
-The patch below could probably split in a few patches, but I think
-this simplify the code greatly without removing the functionality we
-depend on (and this allows now to use EROFS initrd images).
-
-Coupled with keeping the function populate_initrd_image() in
-init/initramfs.c, this will keep what we need from the initrd code.
-
-This removes support of loading bzip/gz/xz/... compressed images as
-well, not sure if many user depend on this feature anymore.
-
-No signoff because I'm only seeking comments about those changes right
-now.
-
- init/do_mounts.h    |   2 -
- init/do_mounts_rd.c | 243 +-------------------------------------------
- 2 files changed, 4 insertions(+), 241 deletions(-)
-
-diff --git a/init/do_mounts.h b/init/do_mounts.h
-index 6069ea3eb80d..c0028ee3cff6 100644
---- a/init/do_mounts.h
-+++ b/init/do_mounts.h
-@@ -24,12 +24,10 @@ static inline __init int create_dev(char *name, dev_t dev)
- 
- #ifdef CONFIG_BLK_DEV_RAM
- 
--int __init rd_load_disk(int n);
- int __init rd_load_image(char *from);
- 
- #else
- 
--static inline int rd_load_disk(int n) { return 0; }
- static inline int rd_load_image(char *from) { return 0; }
- 
- #endif
-diff --git a/init/do_mounts_rd.c b/init/do_mounts_rd.c
-index ac021ae6e6fa..5a69ff43f5ee 100644
---- a/init/do_mounts_rd.c
-+++ b/init/do_mounts_rd.c
-@@ -14,173 +14,9 @@
- 
- #include <linux/decompress/generic.h>
- 
--static struct file *in_file, *out_file;
--static loff_t in_pos, out_pos;
--
--static int __init prompt_ramdisk(char *str)
--{
--	pr_warn("ignoring the deprecated prompt_ramdisk= option\n");
--	return 1;
--}
--__setup("prompt_ramdisk=", prompt_ramdisk);
--
--int __initdata rd_image_start;		/* starting block # of image */
--
--static int __init ramdisk_start_setup(char *str)
--{
--	rd_image_start = simple_strtol(str,NULL,0);
--	return 1;
--}
--__setup("ramdisk_start=", ramdisk_start_setup);
--
--static int __init crd_load(decompress_fn deco);
--
--/*
-- * This routine tries to find a RAM disk image to load, and returns the
-- * number of blocks to read for a non-compressed image, 0 if the image
-- * is a compressed image, and -1 if an image with the right magic
-- * numbers could not be found.
-- *
-- * We currently check for the following magic numbers:
-- *	minix
-- *	ext2
-- *	romfs
-- *	cramfs
-- *	squashfs
-- *	gzip
-- *	bzip2
-- *	lzma
-- *	xz
-- *	lzo
-- *	lz4
-- */
--static int __init
--identify_ramdisk_image(struct file *file, loff_t pos,
--		decompress_fn *decompressor)
--{
--	const int size = 512;
--	struct minix_super_block *minixsb;
--	struct romfs_super_block *romfsb;
--	struct cramfs_super *cramfsb;
--	struct squashfs_super_block *squashfsb;
--	int nblocks = -1;
--	unsigned char *buf;
--	const char *compress_name;
--	unsigned long n;
--	int start_block = rd_image_start;
--
--	buf = kmalloc(size, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
--
--	minixsb = (struct minix_super_block *) buf;
--	romfsb = (struct romfs_super_block *) buf;
--	cramfsb = (struct cramfs_super *) buf;
--	squashfsb = (struct squashfs_super_block *) buf;
--	memset(buf, 0xe5, size);
--
--	/*
--	 * Read block 0 to test for compressed kernel
--	 */
--	pos = start_block * BLOCK_SIZE;
--	kernel_read(file, buf, size, &pos);
--
--	*decompressor = decompress_method(buf, size, &compress_name);
--	if (compress_name) {
--		printk(KERN_NOTICE "RAMDISK: %s image found at block %d\n",
--		       compress_name, start_block);
--		if (!*decompressor)
--			printk(KERN_EMERG
--			       "RAMDISK: %s decompressor not configured!\n",
--			       compress_name);
--		nblocks = 0;
--		goto done;
--	}
--
--	/* romfs is at block zero too */
--	if (romfsb->word0 == ROMSB_WORD0 &&
--	    romfsb->word1 == ROMSB_WORD1) {
--		printk(KERN_NOTICE
--		       "RAMDISK: romfs filesystem found at block %d\n",
--		       start_block);
--		nblocks = (ntohl(romfsb->size)+BLOCK_SIZE-1)>>BLOCK_SIZE_BITS;
--		goto done;
--	}
--
--	if (cramfsb->magic == CRAMFS_MAGIC) {
--		printk(KERN_NOTICE
--		       "RAMDISK: cramfs filesystem found at block %d\n",
--		       start_block);
--		nblocks = (cramfsb->size + BLOCK_SIZE - 1) >> BLOCK_SIZE_BITS;
--		goto done;
--	}
--
--	/* squashfs is at block zero too */
--	if (le32_to_cpu(squashfsb->s_magic) == SQUASHFS_MAGIC) {
--		printk(KERN_NOTICE
--		       "RAMDISK: squashfs filesystem found at block %d\n",
--		       start_block);
--		nblocks = (le64_to_cpu(squashfsb->bytes_used) + BLOCK_SIZE - 1)
--			 >> BLOCK_SIZE_BITS;
--		goto done;
--	}
--
--	/*
--	 * Read 512 bytes further to check if cramfs is padded
--	 */
--	pos = start_block * BLOCK_SIZE + 0x200;
--	kernel_read(file, buf, size, &pos);
--
--	if (cramfsb->magic == CRAMFS_MAGIC) {
--		printk(KERN_NOTICE
--		       "RAMDISK: cramfs filesystem found at block %d\n",
--		       start_block);
--		nblocks = (cramfsb->size + BLOCK_SIZE - 1) >> BLOCK_SIZE_BITS;
--		goto done;
--	}
--
--	/*
--	 * Read block 1 to test for minix and ext2 superblock
--	 */
--	pos = (start_block + 1) * BLOCK_SIZE;
--	kernel_read(file, buf, size, &pos);
--
--	/* Try minix */
--	if (minixsb->s_magic == MINIX_SUPER_MAGIC ||
--	    minixsb->s_magic == MINIX_SUPER_MAGIC2) {
--		printk(KERN_NOTICE
--		       "RAMDISK: Minix filesystem found at block %d\n",
--		       start_block);
--		nblocks = minixsb->s_nzones << minixsb->s_log_zone_size;
--		goto done;
--	}
--
--	/* Try ext2 */
--	n = ext2_image_size(buf);
--	if (n) {
--		printk(KERN_NOTICE
--		       "RAMDISK: ext2 filesystem found at block %d\n",
--		       start_block);
--		nblocks = n;
--		goto done;
--	}
--
--	printk(KERN_NOTICE
--	       "RAMDISK: Couldn't find valid RAM disk image starting at %d.\n",
--	       start_block);
--
--done:
--	kfree(buf);
--	return nblocks;
--}
--
- static unsigned long nr_blocks(struct file *file)
- {
--	struct inode *inode = file->f_mapping->host;
--
--	if (!S_ISBLK(inode->i_mode))
--		return 0;
--	return i_size_read(inode) >> 10;
-+	return i_size_read(file->f_mapping->host) >> 10;
- }
- 
- int __init rd_load_image(char *from)
-@@ -190,10 +26,11 @@ int __init rd_load_image(char *from)
- 	int nblocks, i;
- 	char *buf = NULL;
- 	unsigned short rotate = 0;
--	decompress_fn decompressor = NULL;
- #if !defined(CONFIG_S390)
- 	char rotator[4] = { '|' , '/' , '-' , '\\' };
- #endif
-+	struct file *in_file, *out_file;
-+	loff_t in_pos = 0, out_pos = 0;
- 
- 	out_file = filp_open("/dev/ram", O_RDWR, 0);
- 	if (IS_ERR(out_file))
-@@ -203,17 +40,6 @@ int __init rd_load_image(char *from)
- 	if (IS_ERR(in_file))
- 		goto noclose_input;
- 
--	in_pos = rd_image_start * BLOCK_SIZE;
--	nblocks = identify_ramdisk_image(in_file, in_pos, &decompressor);
--	if (nblocks < 0)
--		goto done;
--
--	if (nblocks == 0) {
--		if (crd_load(decompressor) == 0)
--			goto successful_load;
--		goto done;
--	}
--
- 	/*
- 	 * NOTE NOTE: nblocks is not actually blocks but
- 	 * the number of kibibytes of data to load into a ramdisk.
-@@ -228,10 +54,7 @@ int __init rd_load_image(char *from)
- 	/*
- 	 * OK, time to copy in the data
- 	 */
--	if (strcmp(from, "/initrd.image") == 0)
--		devblocks = nblocks;
--	else
--		devblocks = nr_blocks(in_file);
-+	nblocks = devblocks = nr_blocks(in_file);
- 
- 	if (devblocks == 0) {
- 		printk(KERN_ERR "RAMDISK: could not determine device size\n");
-@@ -264,7 +87,6 @@ int __init rd_load_image(char *from)
- 	}
- 	pr_cont("done.\n");
- 
--successful_load:
- 	res = 1;
- done:
- 	fput(in_file);
-@@ -275,60 +97,3 @@ int __init rd_load_image(char *from)
- 	init_unlink("/dev/ram");
- 	return res;
- }
--
--int __init rd_load_disk(int n)
--{
--	create_dev("/dev/root", ROOT_DEV);
--	create_dev("/dev/ram", MKDEV(RAMDISK_MAJOR, n));
--	return rd_load_image("/dev/root");
--}
--
--static int exit_code;
--static int decompress_error;
--
--static long __init compr_fill(void *buf, unsigned long len)
--{
--	long r = kernel_read(in_file, buf, len, &in_pos);
--	if (r < 0)
--		printk(KERN_ERR "RAMDISK: error while reading compressed data");
--	else if (r == 0)
--		printk(KERN_ERR "RAMDISK: EOF while reading compressed data");
--	return r;
--}
--
--static long __init compr_flush(void *window, unsigned long outcnt)
--{
--	long written = kernel_write(out_file, window, outcnt, &out_pos);
--	if (written != outcnt) {
--		if (decompress_error == 0)
--			printk(KERN_ERR
--			       "RAMDISK: incomplete write (%ld != %ld)\n",
--			       written, outcnt);
--		decompress_error = 1;
--		return -1;
--	}
--	return outcnt;
--}
--
--static void __init error(char *x)
--{
--	printk(KERN_ERR "%s\n", x);
--	exit_code = 1;
--	decompress_error = 1;
--}
--
--static int __init crd_load(decompress_fn deco)
--{
--	int result;
--
--	if (!deco) {
--		pr_emerg("Invalid ramdisk decompression routine.  "
--			 "Select appropriate config option.\n");
--		panic("Could not decompress initial ramdisk image.");
--	}
--
--	result = deco(NULL, 0, compr_fill, compr_flush, NULL, NULL, error);
--	if (decompress_error)
--		result = 1;
--	return result;
--}
 -- 
-2.34.1
-
+Chuck Lever
