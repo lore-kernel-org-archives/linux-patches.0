@@ -1,246 +1,315 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012020.outbound.protection.outlook.com [40.107.209.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62D1196C7C;
-	Thu, 25 Sep 2025 11:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758800907; cv=none; b=t3u3binP5KgJalk0OtAA0tRXUrq4inw6gwRzoYaRQlmJSfbMtvWhmo1xUBFVb/aKTBAbqDFcaoMSuxZGyd/9Ns+F1kCAdQ/xNdr8zxvAo9AqWRA+Q55oWCkcD2HKpJVlQ4SCHnHNTdlC1rej7+0C/lDwyuVvFZOndg1gNzp6XzU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758800907; c=relaxed/simple;
-	bh=5w81ezOaaF41p/S5CHaccMXnGUac88Byfo4gYX2de5c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kk9x5wbFWe2YHGt1TTJDaIuB5iNEXLKzPcwzi6v61CEICelK2V0OYjIAf9brfhNvBDVSbEDRzamNuLdTv6CIPzyLo2kxMjW7fEQEBdudA05o/v+NydrYyj+D1JCbI+1IiKjuamg6ftfB99q2Vy94Y9uO3cBbQq60w7J29jQ3gRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CowtnxL5; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0B92F83A0;
+	Thu, 25 Sep 2025 11:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758800959; cv=fail; b=TxnxDgFLCIhp9/1F3z9Q+sLDW6th3WTZNROymbsq72SbmzUw/quY4dGZ0iQLOSBjHs6/JGNLhcOL8RvWF4xuni49ZGvSkuDwbfKXth/8N52Qsk7qwfX3QCXhP8hYHdo3ig4L3fmDGfMkqdZ+xqrrm/t/PgYKWhXTzGbwG8Hekv4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758800959; c=relaxed/simple;
+	bh=/kLC3yVhjtmZ3kZWqnInMhT+4Tzlw3cqSFYphUHzsFY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=vDnxbnVkeg6zD1zEQ5i3/hbcbIZYEnUBawAf3TloRJZn1iUBQRYGcA5QlS2e3QOwxnq2sc9BqwRoMFyaqjc6wknogEcdni3nzk3gy7dAVl3ERRsv9dAUvqXyOyiQZu3XGmiK5hY/gLyMcXMPEoFFWhFBfVEc3gqW0c0MTT0LW6c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=eK9xK0AY; arc=fail smtp.client-ip=40.107.209.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CowtnxL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E3FC4CEF0;
-	Thu, 25 Sep 2025 11:48:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758800906;
-	bh=5w81ezOaaF41p/S5CHaccMXnGUac88Byfo4gYX2de5c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CowtnxL55+J7xuzBKxYOUuZo/A1iaiThthxpJFtIWWEhLHIrzjXXDF+dUqSwR5q5N
-	 XZ/xlDiFqBPjZXlFM2p3HEX9yDss4QkjLVYExlmoAZQTRMZ1wnbCWrSE6AU7E6JN0m
-	 2y2Z1tQ+VOuuMluiCNcvb8zTuYpbCHoPbqfxVTXBOLyEGcQcPYVxpxtyKwxcg1SVpV
-	 9JGZ96BuNe3AuqAPIXtxZsC1O1k5LkdXnofb4rPvdnom13RqNqFX9RJ2ilyOO9syUB
-	 0qZWGbNRjQ/cVSftBu+Fk6pqArKqF+bSmJQRNPKPTCJwIto3LsLNGY3w/t3lnfUD0C
-	 K3doHuULD2DHA==
-Date: Thu, 25 Sep 2025 12:48:22 +0100
-From: Lee Jones <lee@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Jann Horn <jannh@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH 6.1 070/132] af_unix: Dont leave consecutive consumed OOB
- skbs.
-Message-ID: <20250925114822.GF8757@google.com>
-References: <20250703143939.370927276@linuxfoundation.org>
- <20250703143942.167088603@linuxfoundation.org>
- <20250925090827.GA514097@google.com>
- <2025092526-grandpa-rebound-6473@gregkh>
- <20250925104732.GB8757@google.com>
- <20250925104914.GC8757@google.com>
- <aNUrEjlvNM6vd0uz@laps>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="eK9xK0AY"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GHC9HhesbeywgAhXRnL+a1tGjPf4mII+ga6dTXtem8j6DLR07RtHsS4gNPGDA9cDyoN2nkJAp0xcctJh+77tl4ol/t6VWab7oGgHNE7d5HGx7zUm+NyDegcGZ2ZMeDJEpXY/lTVeFZ7bWnTu9x++3y5t8s89YKKe60n40fRlO8EvJ8rJaRvejLz/uucOYGMSrwtfdaZUUnnO+hm0bzIEu6SSHgyjp3n0P+z2EYhDyNyD3DI5ne9SRn3W9dPtGZk6XK0qmrBMab0Dr29kiWEHjJ1L0BB3ks6MWu/11rv6L8dSw9dn/x9AOfQ3ST636C5zwh1Ax/rMZ/nvk+U/9kEBDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WLUxv73iJZo8FT5b8dNeDuoaqjhLiJrQQLcKHiTh47k=;
+ b=jb0xq9oRXWSAUavJCP11z/fpdQ7g8Mw4gDg5lrKpOTBYLCXmQLynJFtaPUCbF4WZpYPzplrcoZ13aRbUFNluKhKZ4Q2dhki8nOx3kffIl90K5sDne+tCMSSENmVZMcswvl5peco88v4v5CUGdh9MZZtqyzh4zhReZpY1986SGeShjzuZWLwSK7KZ/0t9JLLOZQTGNhEXBQTzrlXK3d0sQylpoxH7WTyhq3M57gmCMPlC6qCgpeUtpHWqGZC8Lr13KGjoyQ9m0icBUUklWh/C/d9KvZ80nEbMswfZ5Mw0M0dAK8hb5U4S3T5OddEmejIAudbzcsYxFu7c2Lpa3b44xw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=arm.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WLUxv73iJZo8FT5b8dNeDuoaqjhLiJrQQLcKHiTh47k=;
+ b=eK9xK0AY+8xvXmQOeGMWpxhk/IMq4V7kvh+WFFDBzl+6clWw1awE5TcEtTQIq/6c4wdvToQa4GEZFsHpcOJwa8dutQhrdpXTxzTp6TfhKtibk75aK0RBq3D717Ecc1y7ISNtuu5PkyUabf//m3GgnJUMWr7bWYOSIrVwLz0gJdiBUlNKtPISYEGkfmWg5goqxES7u2vx6hD/p3lWVFe8zlidqKbyXRGaBVSut7frkeiTMksoilXSnGpgZ1cqqxzP8oTXbGqzJKGJokDX6qm2jMiY6FLRS7kkKNSRx4HRKRCYh5cxNv7qq5u1SnbgKQ9UxCMtCHnqDYJyUo0V/BKkmQ==
+Received: from CH2PR18CA0012.namprd18.prod.outlook.com (2603:10b6:610:4f::22)
+ by CH3PR12MB8305.namprd12.prod.outlook.com (2603:10b6:610:12e::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.10; Thu, 25 Sep
+ 2025 11:49:13 +0000
+Received: from CH2PEPF0000013D.namprd02.prod.outlook.com
+ (2603:10b6:610:4f:cafe::4f) by CH2PR18CA0012.outlook.office365.com
+ (2603:10b6:610:4f::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.20 via Frontend Transport; Thu,
+ 25 Sep 2025 11:49:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH2PEPF0000013D.mail.protection.outlook.com (10.167.244.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9160.9 via Frontend Transport; Thu, 25 Sep 2025 11:49:12 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 25 Sep
+ 2025 04:49:00 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 25 Sep
+ 2025 04:49:00 -0700
+Received: from vdi.nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server id 15.2.1544.14 via Frontend Transport; Thu, 25
+ Sep 2025 04:48:48 -0700
+From: Tariq Toukan <tariqt@nvidia.com>
+To: Catalin Marinas <catalin.marinas@arm.com>, Eric Dumazet
+	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
+	<pabeni@redhat.com>, Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+	<davem@davemloft.net>
+CC: Saeed Mahameed <saeedm@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>, Mark Bloch <mbloch@nvidia.com>,
+	<netdev@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, Gal Pressman <gal@nvidia.com>, "Leon
+ Romanovsky" <leonro@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>, "Michael
+ Guralnik" <michaelgur@nvidia.com>, Moshe Shemesh <moshe@nvidia.com>, "Will
+ Deacon" <will@kernel.org>, Alexander Gordeev <agordeev@linux.ibm.com>,
+	"Andrew Morton" <akpm@linux-foundation.org>, Christian Borntraeger
+	<borntraeger@linux.ibm.com>, Borislav Petkov <bp@alien8.de>, Dave Hansen
+	<dave.hansen@linux.intel.com>, Gerald Schaefer
+	<gerald.schaefer@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, "Heiko
+ Carstens" <hca@linux.ibm.com>, "H. Peter Anvin" <hpa@zytor.com>, Justin Stitt
+	<justinstitt@google.com>, <linux-s390@vger.kernel.org>,
+	<llvm@lists.linux.dev>, Ingo Molnar <mingo@redhat.com>, Bill Wendling
+	<morbo@google.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers
+	<ndesaulniers@google.com>, Salil Mehta <salil.mehta@huawei.com>, "Sven
+ Schnelle" <svens@linux.ibm.com>, Thomas Gleixner <tglx@linutronix.de>,
+	<x86@kernel.org>, Yisen Zhuang <yisen.zhuang@huawei.com>, Arnd Bergmann
+	<arnd@arndb.de>, Leon Romanovsky <leonro@mellanox.com>,
+	<linux-arch@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>, "Mark
+ Rutland" <mark.rutland@arm.com>, Michael Guralnik <michaelgur@mellanox.com>,
+	<patches@lists.linux.dev>, Niklas Schnelle <schnelle@linux.ibm.com>, "Jijie
+ Shao" <shaojijie@huawei.com>, Simon Horman <horms@kernel.org>, "Patrisious
+ Haddad" <phaddad@nvidia.com>
+Subject: [PATCH net-next V5] net/mlx5: Improve write-combining test reliability for ARM64 Grace CPUs
+Date: Thu, 25 Sep 2025 14:48:33 +0300
+Message-ID: <1758800913-830383-1-git-send-email-tariqt@nvidia.com>
+X-Mailer: git-send-email 2.8.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aNUrEjlvNM6vd0uz@laps>
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000013D:EE_|CH3PR12MB8305:EE_
+X-MS-Office365-Filtering-Correlation-Id: 425ff62d-3a05-4894-3b4b-08ddfc298c1a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|36860700013|82310400026|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?z28YfANJKp8dU2Kt1UcTr0sXVmWDdqNp4wPDtkEDLzvMshWXh1PIRduHnRUg?=
+ =?us-ascii?Q?ESwAN+VYnjQ5PruPav39BKDJEBBEOOkOjjNksW3k3Q4/ABIPIgAMXuggSWBA?=
+ =?us-ascii?Q?nTjYzax4z7nUhqttgTeifn+n0Aq7yHvBxZFCjPEm/epT/Xdz0B9oAXLoUJnd?=
+ =?us-ascii?Q?tBD1VEYfIgRx06wzKc/HAArjt2ZswYctGqKMW9S3SDJZbJ5J5Sy+F7cfONrf?=
+ =?us-ascii?Q?3xikl3kuhQAznXw8rZ6BVcR/8/bOsu4QIl0wJwuPQ94EayW5J4pCsW3EPBZw?=
+ =?us-ascii?Q?LsmZQM2vC00vZyN4S12eyc1+Jw16FyrihA3BJ/+Gw9LUb5jT3r4rjYzaDRxo?=
+ =?us-ascii?Q?MhkDjklgVZI2xiOB+6uy3+gnAfOY7DV2oEfFCujKuOUJ7fbprkCSOENVZx5+?=
+ =?us-ascii?Q?7lvCah7WMgrpoKKeQ63jDGMuudTioO5oUPvIOpOzlk/W5kvqmUL2nd73NwkK?=
+ =?us-ascii?Q?9QVvKbC5QL8RykbgEmRQi9L2zV1938rO/OCWN5ULI41oTqYVVIL2sb6g47gs?=
+ =?us-ascii?Q?lCHyLVnpww+JTSBSUUyoxS8VfWZ0Z3qLASF4zQP/LhGxdhQmV6CPYYsVLdce?=
+ =?us-ascii?Q?XRirt+1510LK3m/iIvGnVg7dp3BaV+pNguxwSVXIgNjxrj5BPIVDbs/wBKSn?=
+ =?us-ascii?Q?87IUt9WGnYxG5mhnm8Q6TUam2y0D/n/8D0IbeOTK840aQsWQDDlAT3vpnZui?=
+ =?us-ascii?Q?nP4MnlYFr2AZTXxOzZUPFaKqilPj9NyjkYJaw7GzIrMRUfA1Lha1UPccJQXU?=
+ =?us-ascii?Q?0gc0utrD4EKvfEkN+qkv+/B9doupcDIwpZHv/3R2XTjnRk5lYVib08q6qDds?=
+ =?us-ascii?Q?aznG+H7ZaCQ5xOld4WUOCfYq2YOhOXMTmekAIbYPrH56t7V+GCd5NNOk9Fqk?=
+ =?us-ascii?Q?KN41CjO26ZK8jJdaX/BLL9Xroo4s4ht5+9LOZzBqj64/Xtj5a1MLXco1ScPB?=
+ =?us-ascii?Q?0xdhnpdpNcS7cV5W9ozMT8RwTJAuQiHsBnQIa6nvXwOJgk+Dm5epJEgRBQLK?=
+ =?us-ascii?Q?SlqIOCFZH6N9a2XTUqgBe8N7S/G535CROJMaxYCxPdpua4boQPoV9ZPIzjjZ?=
+ =?us-ascii?Q?RT5rHK6BomnYeBPLamAlUrOjht+R9G8s+gIxcB62nB0XmmYC+xHJw4i7g75S?=
+ =?us-ascii?Q?BoAbIw6SinxzJfgszcHGQeb3EkSoQWOkXg4kcyJmuCruKvscpECAssOQvwh4?=
+ =?us-ascii?Q?QRIwla1HlyoldpjA3tOmM/0uNLM+3D0fJmY2kWsP7VMNA4cphAg9RhnyHY2F?=
+ =?us-ascii?Q?iYtw2kIYtnCkJC2Z0m1TJ+1jJG4hk6piGJeO14J+7nSSzRvCsVEjNgSi61O3?=
+ =?us-ascii?Q?ekCRlwzrSv1D+ewVL+unlnPk/hOqMd2rEgijWNbMKADhsK0ZH9fd5zj0ZVaa?=
+ =?us-ascii?Q?3Ec7C6ji05UKqxGx/akopFsvKvryHpYIdNmukWRySyjTdMEDAsPrXnxuEUCI?=
+ =?us-ascii?Q?SCLYGSJjH9KyBsUWsQXl0CZuezaURKF5CyeVs5/lRf6M0AnZ1mnnpJRSW0Wa?=
+ =?us-ascii?Q?l+526OH+MbehJX5mYoeCBFFQGM2KV1UlCA4ciz507OWgkI2vBulI/1JhbQ?=
+ =?us-ascii?Q?=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(36860700013)(82310400026)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2025 11:49:12.9633
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 425ff62d-3a05-4894-3b4b-08ddfc298c1a
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF0000013D.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8305
 
-On Thu, 25 Sep 2025, Sasha Levin wrote:
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-> On Thu, Sep 25, 2025 at 11:49:14AM +0100, Lee Jones wrote:
-> > On Thu, 25 Sep 2025, Lee Jones wrote:
-> > 
-> > > On Thu, 25 Sep 2025, Greg Kroah-Hartman wrote:
-> > > 
-> > > > On Thu, Sep 25, 2025 at 10:08:27AM +0100, Lee Jones wrote:
-> > > > > On Thu, 03 Jul 2025, Greg Kroah-Hartman wrote:
-> > > > >
-> > > > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > > > > >
-> > > > > > ------------------
-> > > > > >
-> > > > > > From: Kuniyuki Iwashima <kuniyu@google.com>
-> > > > > >
-> > > > > > [ Upstream commit 32ca245464e1479bfea8592b9db227fdc1641705 ]
-> > > > > >
-> > > > > > Jann Horn reported a use-after-free in unix_stream_read_generic().
-> > > > > >
-> > > > > > The following sequences reproduce the issue:
-> > > > > >
-> > > > > >   $ python3
-> > > > > >   from socket import *
-> > > > > >   s1, s2 = socketpair(AF_UNIX, SOCK_STREAM)
-> > > > > >   s1.send(b'x', MSG_OOB)
-> > > > > >   s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
-> > > > > >   s1.send(b'y', MSG_OOB)
-> > > > > >   s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
-> > > > > >   s1.send(b'z', MSG_OOB)
-> > > > > >   s2.recv(1)              # recv 'z' illegally
-> > > > > >   s2.recv(1, MSG_OOB)     # access 'z' skb (use-after-free)
-> > > > > >
-> > > > > > Even though a user reads OOB data, the skb holding the data stays on
-> > > > > > the recv queue to mark the OOB boundary and break the next recv().
-> > > > > >
-> > > > > > After the last send() in the scenario above, the sk2's recv queue has
-> > > > > > 2 leading consumed OOB skbs and 1 real OOB skb.
-> > > > > >
-> > > > > > Then, the following happens during the next recv() without MSG_OOB
-> > > > > >
-> > > > > >   1. unix_stream_read_generic() peeks the first consumed OOB skb
-> > > > > >   2. manage_oob() returns the next consumed OOB skb
-> > > > > >   3. unix_stream_read_generic() fetches the next not-yet-consumed OOB skb
-> > > > > >   4. unix_stream_read_generic() reads and frees the OOB skb
-> > > > > >
-> > > > > > , and the last recv(MSG_OOB) triggers KASAN splat.
-> > > > > >
-> > > > > > The 3. above occurs because of the SO_PEEK_OFF code, which does not
-> > > > > > expect unix_skb_len(skb) to be 0, but this is true for such consumed
-> > > > > > OOB skbs.
-> > > > > >
-> > > > > >   while (skip >= unix_skb_len(skb)) {
-> > > > > >     skip -= unix_skb_len(skb);
-> > > > > >     skb = skb_peek_next(skb, &sk->sk_receive_queue);
-> > > > > >     ...
-> > > > > >   }
-> > > > > >
-> > > > > > In addition to this use-after-free, there is another issue that
-> > > > > > ioctl(SIOCATMARK) does not function properly with consecutive consumed
-> > > > > > OOB skbs.
-> > > > > >
-> > > > > > So, nothing good comes out of such a situation.
-> > > > > >
-> > > > > > Instead of complicating manage_oob(), ioctl() handling, and the next
-> > > > > > ECONNRESET fix by introducing a loop for consecutive consumed OOB skbs,
-> > > > > > let's not leave such consecutive OOB unnecessarily.
-> > > > > >
-> > > > > > Now, while receiving an OOB skb in unix_stream_recv_urg(), if its
-> > > > > > previous skb is a consumed OOB skb, it is freed.
-> > > > > >
-> > > > > > [0]:
-> > > > > > BUG: KASAN: slab-use-after-free in unix_stream_read_actor (net/unix/af_unix.c:3027)
-> > > > > > Read of size 4 at addr ffff888106ef2904 by task python3/315
-> > > > > >
-> > > > > > CPU: 2 UID: 0 PID: 315 Comm: python3 Not tainted 6.16.0-rc1-00407-gec315832f6f9 #8 PREEMPT(voluntary)
-> > > > > > Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.fc42 04/01/2014
-> > > > > > Call Trace:
-> > > > > >  <TASK>
-> > > > > >  dump_stack_lvl (lib/dump_stack.c:122)
-> > > > > >  print_report (mm/kasan/report.c:409 mm/kasan/report.c:521)
-> > > > > >  kasan_report (mm/kasan/report.c:636)
-> > > > > >  unix_stream_read_actor (net/unix/af_unix.c:3027)
-> > > > > >  unix_stream_read_generic (net/unix/af_unix.c:2708 net/unix/af_unix.c:2847)
-> > > > > >  unix_stream_recvmsg (net/unix/af_unix.c:3048)
-> > > > > >  sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
-> > > > > >  __sys_recvfrom (net/socket.c:2278)
-> > > > > >  __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
-> > > > > >  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
-> > > > > >  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-> > > > > > RIP: 0033:0x7f8911fcea06
-> > > > > > Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
-> > > > > > RSP: 002b:00007fffdb0dccb0 EFLAGS: 00000202 ORIG_RAX: 000000000000002d
-> > > > > > RAX: ffffffffffffffda RBX: 00007fffdb0dcdc8 RCX: 00007f8911fcea06
-> > > > > > RDX: 0000000000000001 RSI: 00007f8911a5e060 RDI: 0000000000000006
-> > > > > > RBP: 00007fffdb0dccd0 R08: 0000000000000000 R09: 0000000000000000
-> > > > > > R10: 0000000000000001 R11: 0000000000000202 R12: 00007f89119a7d20
-> > > > > > R13: ffffffffc4653600 R14: 0000000000000000 R15: 0000000000000000
-> > > > > >  </TASK>
-> > > > > >
-> > > > > > Allocated by task 315:
-> > > > > >  kasan_save_stack (mm/kasan/common.c:48)
-> > > > > >  kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
-> > > > > >  __kasan_slab_alloc (mm/kasan/common.c:348)
-> > > > > >  kmem_cache_alloc_node_noprof (./include/linux/kasan.h:250 mm/slub.c:4148 mm/slub.c:4197 mm/slub.c:4249)
-> > > > > >  __alloc_skb (net/core/skbuff.c:660 (discriminator 4))
-> > > > > >  alloc_skb_with_frags (./include/linux/skbuff.h:1336 net/core/skbuff.c:6668)
-> > > > > >  sock_alloc_send_pskb (net/core/sock.c:2993)
-> > > > > >  unix_stream_sendmsg (./include/net/sock.h:1847 net/unix/af_unix.c:2256 net/unix/af_unix.c:2418)
-> > > > > >  __sys_sendto (net/socket.c:712 (discriminator 20) net/socket.c:727 (discriminator 20) net/socket.c:2226 (discriminator 20))
-> > > > > >  __x64_sys_sendto (net/socket.c:2233 (discriminator 1) net/socket.c:2229 (discriminator 1) net/socket.c:2229 (discriminator 1))
-> > > > > >  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
-> > > > > >  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-> > > > > >
-> > > > > > Freed by task 315:
-> > > > > >  kasan_save_stack (mm/kasan/common.c:48)
-> > > > > >  kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
-> > > > > >  kasan_save_free_info (mm/kasan/generic.c:579 (discriminator 1))
-> > > > > >  __kasan_slab_free (mm/kasan/common.c:271)
-> > > > > >  kmem_cache_free (mm/slub.c:4643 (discriminator 3) mm/slub.c:4745 (discriminator 3))
-> > > > > >  unix_stream_read_generic (net/unix/af_unix.c:3010)
-> > > > > >  unix_stream_recvmsg (net/unix/af_unix.c:3048)
-> > > > > >  sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
-> > > > > >  __sys_recvfrom (net/socket.c:2278)
-> > > > > >  __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
-> > > > > >  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
-> > > > > >  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-> > > > > >
-> > > > > > The buggy address belongs to the object at ffff888106ef28c0
-> > > > > >  which belongs to the cache skbuff_head_cache of size 224
-> > > > > > The buggy address is located 68 bytes inside of
-> > > > > >  freed 224-byte region [ffff888106ef28c0, ffff888106ef29a0)
-> > > > > >
-> > > > > > The buggy address belongs to the physical page:
-> > > > > > page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888106ef3cc0 pfn:0x106ef2
-> > > > > > head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-> > > > > > flags: 0x200000000000040(head|node=0|zone=2)
-> > > > > > page_type: f5(slab)
-> > > > > > raw: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
-> > > > > > raw: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
-> > > > > > head: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
-> > > > > > head: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
-> > > > > > head: 0200000000000001 ffffea00041bbc81 00000000ffffffff 00000000ffffffff
-> > > > > > head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-> > > > > > page dumped because: kasan: bad access detected
-> > > > > >
-> > > > > > Memory state around the buggy address:
-> > > > > >  ffff888106ef2800: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
-> > > > > >  ffff888106ef2880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-> > > > > > >ffff888106ef2900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-> > > > > >                    ^
-> > > > > >  ffff888106ef2980: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc
-> > > > > >  ffff888106ef2a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-> > > > > >
-> > > > > > Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-> > > > >
-> > > > > Do we know why this stopped at v6.1?
-> > > > >
-> > > > > The Fixes: commit was added in v5.15 and this appears to apply fine.
-> > > > >
-> > > > > If it helps, the upstream commit was:
-> > > > >
-> > > > >   32ca245464e1 af_unix: Don't leave consecutive consumed OOB skbs.
-> > > >
-> > > > Commits that are not explicitly tagged with "cc: stable@" are not always
-> > > > backported everywhere.  They are done on a "hey, let's run a script and
-> > > > see what falls out" type of method as the maintainer and developer
-> > > > involved didn't explicitly ask for it to be applied.
-> > > 
-> > > Right.  I'm just surprised that it was backported to some branches, but
-> > > not others, despite seemingly applying just fine and the Fixes: tag
-> > > indicating that it should be applied to v5.15 as well.
-> > > 
-> > > > If you think it should be added to other branches, please always let us
-> > > > know and ideally, send a working backport :)
-> > > 
-> > > I just did let you know. :)
-> > > 
-> > > No backport required.  It should just apply.
-> > 
-> > I applied it again and submitted it for build testing.
-> > 
-> > Once complete, I'll let you know the result.
-> 
-> At least on my end there's a big scary build error when I try this on 5.15 :)
+Write combining is an optimization feature in CPUs that is frequently
+used by modern devices to generate 32 or 64 byte TLPs at the PCIe level.
+These large TLPs allow certain optimizations in the driver to HW
+communication that improve performance. As WC is unpredictable and
+optional the HW designs all tolerate cases where combining doesn't
+happen and simply experience a performance degradation.
 
-That could well be it.  Any chance of a paste?
+Unfortunately many virtualization environments on all architectures have
+done things that completely disable WC inside the VM with no generic way
+to detect this. For example WC was fully blocked in ARM64 KVM until
+commit 8c47ce3e1d2c ("KVM: arm64: Set io memory s2 pte as normalnc for
+vfio pci device").
 
+Trying to use WC when it is known not to work has a measurable
+performance cost (~5%). Long ago mlx5 developed an boot time algorithm
+to test if WC is available or not by using unique mlx5 HW features to
+measure how many large TLPs the device is receiving. The SW generates a
+large number of combining opportunities and if any succeed then WC is
+declared working.
+
+In mlx5 the WC optimization feature is never used by the kernel except
+for the boot time test. The WC is only used by userspace in rdma-core.
+
+Sadly modern ARM CPUs, especially NVIDIA Grace, have a combining
+implementation that is very unreliable compared to pretty much
+everything prior. This is being fixed architecturally in new CPUs with a
+new ST64B instruction, but current shipping devices suffer this problem.
+
+Unreliable means the SW can present thousands of combining opportunities
+and the HW will not combine for any of them, which creates a performance
+degradation, and critically fails the mlx5 boot test. However, the CPU
+is very sensitive to the instruction sequence used, with the better
+options being sufficiently good that the performance loss from the
+unreliable CPU is not measurable.
+
+Broadly there are several options, from worst to best:
+1) A C loop doing a u64 memcpy.
+   This was used prior to commit ef302283ddfc
+   ("IB/mlx5: Use __iowrite64_copy() for write combining stores")
+   and failed almost all the time on Grace CPUs.
+
+2) ARM64 assembly with consecutive 8 byte stores. This was implemented
+   as an arch-generic __iowriteXX_copy() family of functions suitable
+   for performance use in drivers for WC. commit ead79118dae6
+   ("arm64/io: Provide a WC friendly __iowriteXX_copy()") provided the
+   ARM implementation.
+
+3) ARM64 assembly with consecutive 16 byte stores. This was rejected
+   from kernel use over fears of virtualization failures. Common ARM
+   VMMs will crash if STP is used against emulated memory.
+
+4) A single NEON store instruction. Userspace has used this option for a
+   very long time, it performs well.
+
+5) For future silicon the new ST64B instruction is guaranteed to
+   generate a 64 byte TLP 100% of the time
+
+The past upgrade from #1 to #2 was thought to be sufficient to solve
+this problem. However, more testing on more systems shows that #3 is
+still problematic at a low frequency and the kernel test fails.
+
+Thus, make the mlx5 use the same instructions as userspace during the
+boot time WC self test. This way the WC test matches the userspace and
+will properly detect the ability of HW to support the WC workload that
+userspace will generate. While #4 still has imperfect combining
+performance, it is substantially better than #2, and does actually give
+a performance win to applications. Self-test failures with #2 are like
+3/10 boots, on some systems, #4 has never seen a boot failure.
+
+There is no real general use case for a NEON based WC flow in the
+kernel. This is not suitable for any performance path work as getting
+into/out of a NEON context is fairly expensive compared to the gain of
+WC. Future CPUs are going to fix this issue by using an new ARM
+instruction and __iowriteXX_copy() will be updated to use that
+automatically, probably using the ALTERNATES mechanism.
+
+Since this problem is constrained to mlx5's unique situation of needing
+a non-performance code path to duplicate what mlx5 userspace is doing as
+a matter of self-testing, implement it as a one line inline assembly in
+the driver directly.
+
+Lastly, this was concluded from the discussion with ARM maintainers
+which confirms that this is the best approach for the solution:
+https://lore.kernel.org/r/aHqN_hpJl84T1Usi@arm.com
+
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+---
+ drivers/net/ethernet/mellanox/mlx5/core/wc.c | 28 ++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
+
+Find V4 here:
+https://lore.kernel.org/all/1758528951-817323-1-git-send-email-tariqt@nvidia.com/
+
+V5:
+- Force the usage of the new assembly code for ARM64 systems only to
+  avoid compilation issues on other systems.
+
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/wc.c b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
+index 999d6216648a..10d2685167bb 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/wc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/wc.c
+@@ -7,6 +7,10 @@
+ #include "mlx5_core.h"
+ #include "wq.h"
+ 
++#if defined(CONFIG_KERNEL_MODE_NEON) && defined(CONFIG_ARM64)
++#include <asm/neon.h>
++#endif
++
+ #define TEST_WC_NUM_WQES 255
+ #define TEST_WC_LOG_CQ_SZ (order_base_2(TEST_WC_NUM_WQES))
+ #define TEST_WC_SQ_LOG_WQ_SZ TEST_WC_LOG_CQ_SZ
+@@ -255,6 +259,27 @@ static void mlx5_wc_destroy_sq(struct mlx5_wc_sq *sq)
+ 	mlx5_wq_destroy(&sq->wq_ctrl);
+ }
+ 
++static void mlx5_iowrite64_copy(struct mlx5_wc_sq *sq, __be32 mmio_wqe[16],
++				size_t mmio_wqe_size, unsigned int offset)
++{
++#if defined(CONFIG_KERNEL_MODE_NEON) && defined(CONFIG_ARM64)
++	if (cpu_has_neon()) {
++		kernel_neon_begin();
++		asm volatile
++		(".arch_extension simd;\n\t"
++		"ld1 {v0.16b, v1.16b, v2.16b, v3.16b}, [%0]\n\t"
++		"st1 {v0.16b, v1.16b, v2.16b, v3.16b}, [%1]"
++		:
++		: "r"(mmio_wqe), "r"(sq->bfreg.map + offset)
++		: "memory", "v0", "v1", "v2", "v3");
++		kernel_neon_end();
++		return;
++	}
++#endif
++	__iowrite64_copy(sq->bfreg.map + offset, mmio_wqe,
++			 mmio_wqe_size / 8);
++}
++
+ static void mlx5_wc_post_nop(struct mlx5_wc_sq *sq, unsigned int *offset,
+ 			     bool signaled)
+ {
+@@ -289,8 +314,7 @@ static void mlx5_wc_post_nop(struct mlx5_wc_sq *sq, unsigned int *offset,
+ 	 */
+ 	wmb();
+ 
+-	__iowrite64_copy(sq->bfreg.map + *offset, mmio_wqe,
+-			 sizeof(mmio_wqe) / 8);
++	mlx5_iowrite64_copy(sq, mmio_wqe, sizeof(mmio_wqe), *offset);
+ 
+ 	*offset ^= buf_size;
+ }
+
+base-commit: a1f1f2422e098485b09e55a492de05cf97f9954d
 -- 
-Lee Jones [李琼斯]
+2.31.1
+
