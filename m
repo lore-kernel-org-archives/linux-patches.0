@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167A831E8B3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F68D31E8BE
 	for <patches@lists.linux.dev>; Thu, 25 Sep 2025 20:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758830650; cv=none; b=RNOcTBqceZemZAn68U1ZoO5NbNS6GIsPe0neLsfO11hQQB0esLYnkwYQ3HQMkyYc0XB6db/Atxe4Urk0x/BEjjWME1XkTEMwTJHWHLNCqVzbOfoDfp2QdrfUgbewm3yDwmzKZbX4X7AyyqnaSYBY7yYqylkRbBq/LhJC663nCZQ=
+	t=1758830650; cv=none; b=Vti18oAmDrwShVjZxpQ2tOpTfO25Zcod/tMT9jPU1Bu3tXyrfcuBTr/TC1hP2xGrqtPVLbVcYfd5FeRg6Cf0UD1nvis59IsxYiYzyW34wASwEXb0In6295gu8j+TMKgvCKgKYhHS0qmkDiADFBIDzYeLfDvskCBtSQi6wQvsI9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758830650; c=relaxed/simple;
-	bh=IjzQ6pFyAEvXMme6bmcXQStx7GqYf4uw5lkgRlZejjI=;
+	bh=Bbr49C589CtICSxXRwinuWAvo1jHIw7lqV+CUlNYv2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkxsOBrb3bqtZyONrwMW0BkrSqWyNjNeHfLPishEEEQT17twgpnvS2Ts3cxZ2sNhVHmKWfz+AdVWCtP4A9Ey15zdRF4jBldZ7TUgiJQxohUvGoFK1lnY3KYZjNvVY1gkRvXdvFlMclpyAAHNjtBdgI80jMMbxvvouErx4jGDReU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T3BsrJ1V; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=WUhMjRY2S0OyxBtVfLPnLw84FPIdgx86jNjmYY7/PsQsOIArxz3Le5O5ddrbSNl/+lGyITQh+/7MLzse2qR6I3BFvfd3yKscTNTUpiLHZq3BoJxPy8AO/tyKwlPLtpMSjr21h6lUbQr2xVjpHTSVbjG3hfMyuI3/0xwKjm6juQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ieWIgNsk; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T3BsrJ1V"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ieWIgNsk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1758830649; x=1790366649;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=IjzQ6pFyAEvXMme6bmcXQStx7GqYf4uw5lkgRlZejjI=;
-  b=T3BsrJ1V5OundlaEfb3wjhAJbnBmQx+fttCyey+eDH9J+EYafkmcnld8
-   tVnAKgi0/QC8EU007pibTOgYK4LdTtevcH9icBeyVp0Ia0XNknsiP71rv
-   YMBqGo3rvqlpTMbHz6aV6ZG59YEggSaGT4a0Qlb63EMRXjrBKY6aOwbWd
-   a+en6Sd2svPAquh8WX8993u/LVOYyG9MyWsX3H918nieNcj0+SYKEd/zE
-   qlFUrgZbkQXIew+SnxI8XwGf7/dZMDztgrGQ2wH9QUMzZaW++PjEOBFgv
-   XBYVrnudc9oI7c3f0qqwGfZS24+h19SHqAhftaQWMMBEyWUMC6zW49ZNz
-   w==;
-X-CSE-ConnectionGUID: K/QNavufRwW87cSzOwkwGw==
-X-CSE-MsgGUID: 6616Z7hnQNecpUG1ghp8ig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="61074170"
+  bh=Bbr49C589CtICSxXRwinuWAvo1jHIw7lqV+CUlNYv2U=;
+  b=ieWIgNskoEk+E91mkaV41dXSHOJt0OoqhUt68UyhJaMNI+7unL7d8Tks
+   TXJviuvrlA9uXxmGqjh7XKeMIhFIjDbrqF33TwUYUgvlEqaB8/9QJQuIh
+   zg4+w9k/jrleFvGzTWyqqQj/Pk22PzBhpozTUmomEOUyi5iB7N6Wn+/7e
+   JqzidNkmk5afDi3WmDJtuuEF5zuiOKnRsS9sOI64fC+6euflOzGZ1GY2T
+   If+zRz/mXu23jD7sQ5ShomaVG6yG1B0XvLh62jtbAKZlPe0xqOR+7IAHg
+   7UUIrBg/T1nvT4rAEEsTEq467WZIgY3xsAyfON74i5vU4DYlS7vjNJAWm
+   Q==;
+X-CSE-ConnectionGUID: 8mAJ3hyOTSmBujSFhwqfYQ==
+X-CSE-MsgGUID: ePLW0ciqRE6sV/33o5AuJw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="61074178"
 X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="61074170"
+   d="scan'208";a="61074178"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
   by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2025 13:04:06 -0700
-X-CSE-ConnectionGUID: rhu7a/ONTCWaQYFpgLIK2Q==
-X-CSE-MsgGUID: CVjBWNrdSJWOAvWZthUxeg==
+X-CSE-ConnectionGUID: ZCFfF8XSRK2YKPXr9RanJQ==
+X-CSE-MsgGUID: SPkuPOS4QYqfWUCiR5llQw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.18,293,1751266800"; 
-   d="scan'208";a="177003612"
+   d="scan'208";a="177003615"
 Received: from inaky-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.206])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2025 13:04:05 -0700
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2025 13:04:06 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v11 05/31] x86,fs/resctrl: Refactor domain create/remove using struct rdt_domain_hdr
-Date: Thu, 25 Sep 2025 13:02:59 -0700
-Message-ID: <20250925200328.64155-6-tony.luck@intel.com>
+Subject: [PATCH v11 06/31] x86,fs/resctrl: Use struct rdt_domain_hdr when reading counters
+Date: Thu, 25 Sep 2025 13:03:00 -0700
+Message-ID: <20250925200328.64155-7-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250925200328.64155-1-tony.luck@intel.com>
 References: <20250925200328.64155-1-tony.luck@intel.com>
@@ -71,346 +71,272 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Up until now, all monitoring events were associated with the L3 resource
-and it made sense to use the L3 specific "struct rdt_mon_domain *"
-arguments to functions manipulating domains.
-
-To simplify enabling of enumeration of domains for events in other
-resources change the calling convention to pass the generic struct
-rdt_domain_hdr and use that to find the domain specific structure
-where needed.
+Use a generic struct rdt_domain_hdr representing a generic domain
+header in struct rmid_read in order to support other telemetry events'
+domains besides an L3 one. Adjust the code interacting with it to the
+new struct layout.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/resctrl.h            |  4 +-
- fs/resctrl/internal.h              |  2 +-
- arch/x86/kernel/cpu/resctrl/core.c |  4 +-
- fs/resctrl/ctrlmondata.c           | 15 ++++---
- fs/resctrl/rdtgroup.c              | 65 ++++++++++++++++++++----------
- 5 files changed, 58 insertions(+), 32 deletions(-)
+ include/linux/resctrl.h               |  8 +++----
+ fs/resctrl/internal.h                 | 18 +++++++-------
+ arch/x86/kernel/cpu/resctrl/monitor.c | 17 +++++++++++---
+ fs/resctrl/ctrlmondata.c              |  7 +-----
+ fs/resctrl/monitor.c                  | 34 +++++++++++++++++----------
+ 5 files changed, 50 insertions(+), 34 deletions(-)
 
 diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index dfc91c5e8483..0b55809af5d7 100644
+index 0b55809af5d7..0fef3045cac3 100644
 --- a/include/linux/resctrl.h
 +++ b/include/linux/resctrl.h
-@@ -504,9 +504,9 @@ int resctrl_arch_update_one(struct rdt_resource *r, struct rdt_ctrl_domain *d,
- u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_ctrl_domain *d,
- 			    u32 closid, enum resctrl_conf_type type);
- int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d);
--int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d);
-+int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr);
- void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d);
--void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d);
-+void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr);
- void resctrl_online_cpu(unsigned int cpu);
- void resctrl_offline_cpu(unsigned int cpu);
+@@ -514,7 +514,7 @@ void resctrl_offline_cpu(unsigned int cpu);
+  * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
+  *			      for this resource and domain.
+  * @r:			resource that the counter should be read from.
+- * @d:			domain that the counter should be read from.
++ * @hdr:		Header of domain that the counter should be read from.
+  * @closid:		closid that matches the rmid. Depending on the architecture, the
+  *			counter may match traffic of both @closid and @rmid, or @rmid
+  *			only.
+@@ -535,7 +535,7 @@ void resctrl_offline_cpu(unsigned int cpu);
+  * Return:
+  * 0 on success, or -EIO, -EINVAL etc on error.
+  */
+-int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
++int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
+ 			   u32 closid, u32 rmid, enum resctrl_event_id eventid,
+ 			   u64 *val, void *arch_mon_ctx);
+ 
+@@ -630,7 +630,7 @@ void resctrl_arch_config_cntr(struct rdt_resource *r, struct rdt_mon_domain *d,
+  *			      assigned to the RMID, event pair for this resource
+  *			      and domain.
+  * @r:		Resource that the counter should be read from.
+- * @d:		Domain that the counter should be read from.
++ * @hdr:	Header of domain that the counter should be read from.
+  * @closid:	CLOSID that matches the RMID.
+  * @rmid:	The RMID to which @cntr_id is assigned.
+  * @cntr_id:	The counter to read.
+@@ -644,7 +644,7 @@ void resctrl_arch_config_cntr(struct rdt_resource *r, struct rdt_mon_domain *d,
+  * Return:
+  * 0 on success, or -EIO, -EINVAL etc on error.
+  */
+-int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_mon_domain *d,
++int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
+ 			   u32 closid, u32 rmid, int cntr_id,
+ 			   enum resctrl_event_id eventid, u64 *val);
  
 diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index cf1fd82dc5a9..22fdb3a9b6f4 100644
+index 22fdb3a9b6f4..698ed84fd073 100644
 --- a/fs/resctrl/internal.h
 +++ b/fs/resctrl/internal.h
-@@ -362,7 +362,7 @@ void mon_event_count(void *info);
- int rdtgroup_mondata_show(struct seq_file *m, void *arg);
- 
- void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
--		    struct rdt_mon_domain *d, struct rdtgroup *rdtgrp,
-+		    struct rdt_domain_hdr *hdr, struct rdtgroup *rdtgrp,
- 		    cpumask_t *cpumask, int evtid, int first);
- 
- int resctrl_mon_resource_init(void);
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 28c8e28bb1dd..2d93387b9251 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -529,7 +529,7 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
- 
- 	list_add_tail_rcu(&d->hdr.list, add_pos);
- 
--	err = resctrl_online_mon_domain(r, d);
-+	err = resctrl_online_mon_domain(r, &d->hdr);
- 	if (err) {
- 		list_del_rcu(&d->hdr.list);
- 		synchronize_rcu();
-@@ -655,7 +655,7 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
- 
- 		d = container_of(hdr, struct rdt_mon_domain, hdr);
- 		hw_dom = resctrl_to_arch_mon_dom(d);
--		resctrl_offline_mon_domain(r, d);
-+		resctrl_offline_mon_domain(r, hdr);
- 		list_del_rcu(&hdr->list);
- 		synchronize_rcu();
- 		mon_domain_free(hw_dom);
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index f248eaf50d3c..3ceef35208be 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -547,11 +547,16 @@ struct rdt_domain_hdr *resctrl_find_domain(struct list_head *h, int id,
- }
- 
- void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
--		    struct rdt_mon_domain *d, struct rdtgroup *rdtgrp,
-+		    struct rdt_domain_hdr *hdr, struct rdtgroup *rdtgrp,
- 		    cpumask_t *cpumask, int evtid, int first)
- {
-+	struct rdt_mon_domain *d;
- 	int cpu;
- 
-+	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
-+		return;
-+	d = container_of(hdr, struct rdt_mon_domain, hdr);
-+
- 	/* When picking a CPU from cpu_mask, ensure it can't race with cpuhp */
- 	lockdep_assert_cpus_held();
- 
-@@ -598,7 +603,6 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 	enum resctrl_event_id evtid;
- 	struct rdt_domain_hdr *hdr;
- 	struct rmid_read rr = {0};
--	struct rdt_mon_domain *d;
- 	struct rdtgroup *rdtgrp;
- 	int domid, cpu, ret = 0;
- 	struct rdt_resource *r;
-@@ -623,6 +627,8 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 	r = resctrl_arch_get_resource(resid);
- 
- 	if (md->sum) {
-+		struct rdt_mon_domain *d;
-+
- 		/*
- 		 * This file requires summing across all domains that share
- 		 * the L3 cache id that was provided in the "domid" field of the
-@@ -649,12 +655,11 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 		 * the resource to find the domain with "domid".
- 		 */
- 		hdr = resctrl_find_domain(&r->mon_domains, domid, NULL);
--		if (!hdr || !domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, resid)) {
-+		if (!hdr) {
- 			ret = -ENOENT;
- 			goto out;
- 		}
--		d = container_of(hdr, struct rdt_mon_domain, hdr);
--		mon_event_read(&rr, r, d, rdtgrp, &d->hdr.cpu_mask, evtid, false);
-+		mon_event_read(&rr, r, hdr, rdtgrp, &hdr->cpu_mask, evtid, false);
- 	}
- 
- checkresult:
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 0320360cd7a6..e3b83e48f2d9 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -3164,13 +3164,18 @@ static void mon_rmdir_one_subdir(struct kernfs_node *pkn, char *name, char *subn
-  * when last domain being summed is removed.
+@@ -106,24 +106,26 @@ struct mon_data {
+  *	   resource group then its event count is summed with the count from all
+  *	   its child resource groups.
+  * @r:	   Resource describing the properties of the event being read.
+- * @d:	   Domain that the counter should be read from. If NULL then sum all
+- *	   domains in @r sharing L3 @ci.id
++ * @hdr:   Header of domain that the counter should be read from. If NULL then
++ *	   sum all domains in @r sharing L3 @ci.id
+  * @evtid: Which monitor event to read.
+  * @first: Initialize MBM counter when true.
+- * @ci:    Cacheinfo for L3. Only set when @d is NULL. Used when summing domains.
++ * @ci:    Cacheinfo for L3. Only set when @hdr is NULL. Used when summing
++ *	   domains.
+  * @is_mbm_cntr: true if "mbm_event" counter assignment mode is enabled and it
+  *	   is an MBM event.
+  * @err:   Error encountered when reading counter.
+- * @val:   Returned value of event counter. If @rgrp is a parent resource group,
+- *	   @val includes the sum of event counts from its child resource groups.
+- *	   If @d is NULL, @val includes the sum of all domains in @r sharing @ci.id,
+- *	   (summed across child resource groups if @rgrp is a parent resource group).
++ * @val:   Returned value of event counter. If @rgrp is a parent resource
++ *	   group, @val includes the sum of event counts from its child
++ *	   resource groups.  If @hdr is NULL, @val includes the sum of all
++ *	   domains in @r sharing @ci.id, (summed across child resource groups
++ *	   if @rgrp is a parent resource group).
+  * @arch_mon_ctx: Hardware monitor allocated for this read request (MPAM only).
   */
- static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
--					   struct rdt_mon_domain *d)
-+					   struct rdt_domain_hdr *hdr)
- {
- 	struct rdtgroup *prgrp, *crgrp;
-+	struct rdt_mon_domain *d;
- 	char subname[32];
- 	bool snc_mode;
- 	char name[32];
- 
-+	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
-+		return;
-+
-+	d = container_of(hdr, struct rdt_mon_domain, hdr);
- 	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
- 	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci_id : d->hdr.id);
- 	if (snc_mode)
-@@ -3184,19 +3189,18 @@ static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
- 	}
+ struct rmid_read {
+ 	struct rdtgroup		*rgrp;
+ 	struct rdt_resource	*r;
+-	struct rdt_mon_domain	*d;
++	struct rdt_domain_hdr	*hdr;
+ 	enum resctrl_event_id	evtid;
+ 	bool			first;
+ 	struct cacheinfo	*ci;
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index c8945610d455..cee1cd7fbdce 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -238,17 +238,23 @@ static u64 get_corrected_val(struct rdt_resource *r, struct rdt_mon_domain *d,
+ 	return chunks * hw_res->mon_scale;
  }
  
--static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
-+static int mon_add_all_files(struct kernfs_node *kn, struct rdt_domain_hdr *hdr,
- 			     struct rdt_resource *r, struct rdtgroup *prgrp,
--			     bool do_sum)
-+			     int domid, bool do_sum)
+-int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_mon_domain *d,
++int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
+ 			   u32 unused, u32 rmid, enum resctrl_event_id eventid,
+ 			   u64 *val, void *ignored)
  {
- 	struct rmid_read rr = {0};
- 	struct mon_data *priv;
- 	struct mon_evt *mevt;
--	int ret, domid;
-+	int ret;
- 
- 	for_each_mon_event(mevt) {
- 		if (mevt->rid != r->rid || !mevt->enabled)
- 			continue;
--		domid = do_sum ? d->ci_id : d->hdr.id;
- 		priv = mon_get_kn_priv(r->rid, domid, mevt, do_sum);
- 		if (WARN_ON_ONCE(!priv))
- 			return -EINVAL;
-@@ -3206,23 +3210,28 @@ static int mon_add_all_files(struct kernfs_node *kn, struct rdt_mon_domain *d,
- 			return ret;
- 
- 		if (!do_sum && resctrl_is_mbm_event(mevt->evtid))
--			mon_event_read(&rr, r, d, prgrp, &d->hdr.cpu_mask, mevt->evtid, true);
-+			mon_event_read(&rr, r, hdr, prgrp, &hdr->cpu_mask, mevt->evtid, true);
- 	}
- 
- 	return 0;
- }
- 
- static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
--				struct rdt_mon_domain *d,
-+				struct rdt_domain_hdr *hdr,
- 				struct rdt_resource *r, struct rdtgroup *prgrp)
- {
- 	struct kernfs_node *kn, *ckn;
+-	int cpu = cpumask_any(&d->hdr.cpu_mask);
 +	struct rdt_mon_domain *d;
- 	char name[32];
- 	bool snc_mode;
- 	int ret = 0;
+ 	u64 msr_val;
+ 	u32 prmid;
++	int cpu;
+ 	int ret;
  
- 	lockdep_assert_held(&rdtgroup_mutex);
+ 	resctrl_arch_rmid_read_context_check();
  
 +	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
 +		return -EINVAL;
 +
 +	d = container_of(hdr, struct rdt_mon_domain, hdr);
- 	snc_mode = r->mon_scope == RESCTRL_L3_NODE;
- 	sprintf(name, "mon_%s_%02d", r->name, snc_mode ? d->ci_id : d->hdr.id);
- 	kn = kernfs_find_and_get(parent_kn, name);
-@@ -3240,13 +3249,13 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
- 		ret = rdtgroup_kn_set_ugid(kn);
- 		if (ret)
- 			goto out_destroy;
--		ret = mon_add_all_files(kn, d, r, prgrp, snc_mode);
-+		ret = mon_add_all_files(kn, hdr, r, prgrp, hdr->id, snc_mode);
- 		if (ret)
- 			goto out_destroy;
- 	}
- 
- 	if (snc_mode) {
--		sprintf(name, "mon_sub_%s_%02d", r->name, d->hdr.id);
-+		sprintf(name, "mon_sub_%s_%02d", r->name, hdr->id);
- 		ckn = kernfs_create_dir(kn, name, parent_kn->mode, prgrp);
- 		if (IS_ERR(ckn)) {
- 			ret = -EINVAL;
-@@ -3257,7 +3266,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
- 		if (ret)
- 			goto out_destroy;
- 
--		ret = mon_add_all_files(ckn, d, r, prgrp, false);
-+		ret = mon_add_all_files(ckn, hdr, r, prgrp, hdr->id, false);
- 		if (ret)
- 			goto out_destroy;
- 	}
-@@ -3275,7 +3284,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
-  * and "monitor" groups with given domain id.
-  */
- static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
--					   struct rdt_mon_domain *d)
-+					   struct rdt_domain_hdr *hdr)
- {
- 	struct kernfs_node *parent_kn;
- 	struct rdtgroup *prgrp, *crgrp;
-@@ -3283,12 +3292,12 @@ static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
- 
- 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
- 		parent_kn = prgrp->mon.mon_data_kn;
--		mkdir_mondata_subdir(parent_kn, d, r, prgrp);
-+		mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
- 
- 		head = &prgrp->mon.crdtgrp_list;
- 		list_for_each_entry(crgrp, head, mon.crdtgrp_list) {
- 			parent_kn = crgrp->mon.mon_data_kn;
--			mkdir_mondata_subdir(parent_kn, d, r, crgrp);
-+			mkdir_mondata_subdir(parent_kn, hdr, r, crgrp);
- 		}
++	cpu = cpumask_any(&hdr->cpu_mask);
+ 	prmid = logical_rmid_to_physical_rmid(cpu, rmid);
+ 	ret = __rmid_read_phys(prmid, eventid, &msr_val);
+ 	if (ret)
+@@ -312,13 +318,18 @@ void resctrl_arch_reset_cntr(struct rdt_resource *r, struct rdt_mon_domain *d,
  	}
  }
-@@ -3297,14 +3306,14 @@ static int mkdir_mondata_subdir_alldom(struct kernfs_node *parent_kn,
- 				       struct rdt_resource *r,
- 				       struct rdtgroup *prgrp)
+ 
+-int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_mon_domain *d,
++int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
+ 			   u32 unused, u32 rmid, int cntr_id,
+ 			   enum resctrl_event_id eventid, u64 *val)
  {
--	struct rdt_mon_domain *dom;
-+	struct rdt_domain_hdr *hdr;
++	struct rdt_mon_domain *d;
+ 	u64 msr_val;
  	int ret;
  
- 	/* Walking r->domains, ensure it can't race with cpuhp */
++	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
++		return -EINVAL;
++
++	d = container_of(hdr, struct rdt_mon_domain, hdr);
+ 	ret = __cntr_id_read(cntr_id, &msr_val);
+ 	if (ret)
+ 		return ret;
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index 3ceef35208be..7b9fc5d3bdc8 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -550,13 +550,8 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
+ 		    struct rdt_domain_hdr *hdr, struct rdtgroup *rdtgrp,
+ 		    cpumask_t *cpumask, int evtid, int first)
+ {
+-	struct rdt_mon_domain *d;
+ 	int cpu;
+ 
+-	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
+-		return;
+-	d = container_of(hdr, struct rdt_mon_domain, hdr);
+-
+ 	/* When picking a CPU from cpu_mask, ensure it can't race with cpuhp */
  	lockdep_assert_cpus_held();
  
--	list_for_each_entry(dom, &r->mon_domains, hdr.list) {
--		ret = mkdir_mondata_subdir(parent_kn, dom, r, prgrp);
-+	list_for_each_entry(hdr, &r->mon_domains, list) {
-+		ret = mkdir_mondata_subdir(parent_kn, hdr, r, prgrp);
- 		if (ret)
- 			return ret;
+@@ -566,7 +561,7 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
+ 	rr->rgrp = rdtgrp;
+ 	rr->evtid = evtid;
+ 	rr->r = r;
+-	rr->d = d;
++	rr->hdr = hdr;
+ 	rr->first = first;
+ 	if (resctrl_arch_mbm_cntr_assign_enabled(r) &&
+ 	    resctrl_is_mbm_event(evtid)) {
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 4076336fbba6..32116361a5f6 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -159,7 +159,7 @@ void __check_limbo(struct rdt_mon_domain *d, bool force_free)
+ 			break;
+ 
+ 		entry = __rmid_entry(idx);
+-		if (resctrl_arch_rmid_read(r, d, entry->closid, entry->rmid,
++		if (resctrl_arch_rmid_read(r, &d->hdr, entry->closid, entry->rmid,
+ 					   QOS_L3_OCCUP_EVENT_ID, &val,
+ 					   arch_mon_ctx)) {
+ 			rmid_dirty = true;
+@@ -424,8 +424,12 @@ static int __mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+ 	int err, ret;
+ 	u64 tval = 0;
+ 
++	if (!domain_header_is_valid(rr->hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
++		return -EINVAL;
++	d = container_of(rr->hdr, struct rdt_mon_domain, hdr);
++
+ 	if (rr->is_mbm_cntr) {
+-		cntr_id = mbm_cntr_get(rr->r, rr->d, rdtgrp, rr->evtid);
++		cntr_id = mbm_cntr_get(rr->r, d, rdtgrp, rr->evtid);
+ 		if (cntr_id < 0) {
+ 			rr->err = -ENOENT;
+ 			return -EINVAL;
+@@ -434,24 +438,24 @@ static int __mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+ 
+ 	if (rr->first) {
+ 		if (rr->is_mbm_cntr)
+-			resctrl_arch_reset_cntr(rr->r, rr->d, closid, rmid, cntr_id, rr->evtid);
++			resctrl_arch_reset_cntr(rr->r, d, closid, rmid, cntr_id, rr->evtid);
+ 		else
+-			resctrl_arch_reset_rmid(rr->r, rr->d, closid, rmid, rr->evtid);
+-		m = get_mbm_state(rr->d, closid, rmid, rr->evtid);
++			resctrl_arch_reset_rmid(rr->r, d, closid, rmid, rr->evtid);
++		m = get_mbm_state(d, closid, rmid, rr->evtid);
+ 		if (m)
+ 			memset(m, 0, sizeof(struct mbm_state));
+ 		return 0;
  	}
-@@ -4187,8 +4196,10 @@ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain
- 	mutex_unlock(&rdtgroup_mutex);
- }
  
--void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
-+void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
- {
+-	if (rr->d) {
++	if (rr->hdr) {
+ 		/* Reading a single domain, must be on a CPU in that domain. */
+-		if (!cpumask_test_cpu(cpu, &rr->d->hdr.cpu_mask))
++		if (!cpumask_test_cpu(cpu, &rr->hdr->cpu_mask))
+ 			return -EINVAL;
+ 		if (rr->is_mbm_cntr)
+-			rr->err = resctrl_arch_cntr_read(rr->r, rr->d, closid, rmid, cntr_id,
++			rr->err = resctrl_arch_cntr_read(rr->r, rr->hdr, closid, rmid, cntr_id,
+ 							 rr->evtid, &tval);
+ 		else
+-			rr->err = resctrl_arch_rmid_read(rr->r, rr->d, closid, rmid,
++			rr->err = resctrl_arch_rmid_read(rr->r, rr->hdr, closid, rmid,
+ 							 rr->evtid, &tval, rr->arch_mon_ctx);
+ 		if (rr->err)
+ 			return rr->err;
+@@ -477,10 +481,10 @@ static int __mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+ 		if (d->ci_id != rr->ci->id)
+ 			continue;
+ 		if (rr->is_mbm_cntr)
+-			err = resctrl_arch_cntr_read(rr->r, d, closid, rmid, cntr_id,
++			err = resctrl_arch_cntr_read(rr->r, &d->hdr, closid, rmid, cntr_id,
+ 						     rr->evtid, &tval);
+ 		else
+-			err = resctrl_arch_rmid_read(rr->r, d, closid, rmid,
++			err = resctrl_arch_rmid_read(rr->r, &d->hdr, closid, rmid,
+ 						     rr->evtid, &tval, rr->arch_mon_ctx);
+ 		if (!err) {
+ 			rr->val += tval;
+@@ -511,9 +515,13 @@ static void mbm_bw_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+ 	u64 cur_bw, bytes, cur_bytes;
+ 	u32 closid = rdtgrp->closid;
+ 	u32 rmid = rdtgrp->mon.rmid;
 +	struct rdt_mon_domain *d;
-+
- 	mutex_lock(&rdtgroup_mutex);
+ 	struct mbm_state *m;
  
- 	/*
-@@ -4196,8 +4207,12 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
- 	 * per domain monitor data directories.
- 	 */
- 	if (resctrl_mounted && resctrl_arch_mon_capable())
--		rmdir_mondata_subdir_allrdtgrp(r, d);
-+		rmdir_mondata_subdir_allrdtgrp(r, hdr);
+-	m = get_mbm_state(rr->d, closid, rmid, rr->evtid);
++	if (!domain_header_is_valid(rr->hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
++		return;
++	d = container_of(rr->hdr, struct rdt_mon_domain, hdr);
++	m = get_mbm_state(d, closid, rmid, rr->evtid);
+ 	if (WARN_ON_ONCE(!m))
+ 		return;
  
-+	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
-+		goto out_unlock;
-+
-+	d = container_of(hdr, struct rdt_mon_domain, hdr);
- 	if (resctrl_is_mbm_enabled())
- 		cancel_delayed_work(&d->mbm_over);
- 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
-@@ -4214,7 +4229,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d
- 	}
+@@ -686,7 +694,7 @@ static void mbm_update_one_event(struct rdt_resource *r, struct rdt_mon_domain *
+ 	struct rmid_read rr = {0};
  
- 	domain_destroy_mon_state(d);
--
-+out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
- }
- 
-@@ -4287,12 +4302,17 @@ int resctrl_online_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d
- 	return err;
- }
- 
--int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
-+int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
- {
--	int err;
-+	struct rdt_mon_domain *d;
-+	int err = -EINVAL;
- 
- 	mutex_lock(&rdtgroup_mutex);
- 
-+	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
-+		goto out_unlock;
-+
-+	d = container_of(hdr, struct rdt_mon_domain, hdr);
- 	err = domain_setup_mon_state(r, d);
- 	if (err)
- 		goto out_unlock;
-@@ -4306,6 +4326,7 @@ int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
- 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID))
- 		INIT_DELAYED_WORK(&d->cqm_limbo, cqm_handle_limbo);
- 
-+	err = 0;
- 	/*
- 	 * If the filesystem is not mounted then only the default resource group
- 	 * exists. Creation of its directories is deferred until mount time
-@@ -4313,7 +4334,7 @@ int resctrl_online_mon_domain(struct rdt_resource *r, struct rdt_mon_domain *d)
- 	 * If resctrl is mounted, add per domain monitor data directories.
- 	 */
- 	if (resctrl_mounted && resctrl_arch_mon_capable())
--		mkdir_mondata_subdir_allrdtgrp(r, d);
-+		mkdir_mondata_subdir_allrdtgrp(r, hdr);
- 
- out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
+ 	rr.r = r;
+-	rr.d = d;
++	rr.hdr = &d->hdr;
+ 	rr.evtid = evtid;
+ 	if (resctrl_arch_mbm_cntr_assign_enabled(r)) {
+ 		rr.is_mbm_cntr = true;
 -- 
 2.51.0
 
