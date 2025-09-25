@@ -1,158 +1,105 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E4E32779D
-	for <patches@lists.linux.dev>; Thu, 25 Sep 2025 20:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BD84204E;
+	Thu, 25 Sep 2025 20:30:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758830669; cv=none; b=Cxqbgt1p0eB/xdC29CMaWRwN0m5KuVl+Wwj29fzlyRi+3p0IrTLNgbgrdtx1KJSq0baAMaNzXapJJEw+hsjw+enNOwo8/AXQa89K3NWhp5+g3titvxR22sb2SF2aH27ymTGbUgRoHUxKDuei8fDOSDjiERRzA2oDmwAIB7soA8A=
+	t=1758832258; cv=none; b=VIIa8TU9Gyz2SMkWvJ3RUmMdI2PvOgE93/fGzJiQSdsunNGxtlAO7AoWef2qxYjSB+5Q54UAvwtzNLiTBq6RO+EKc4JzAMUviKfggiOpiuZRwQHIIi3bZ6CzLjloN2+xAVGNdbn2BT5KpZnJpL7H1wdPcY6ADGtW5r3vDR/D1No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758830669; c=relaxed/simple;
-	bh=KKZ76b6f1fVw3YfuVP6not30dWXnaMRHgFBHlr5XoWI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UULNXurTYiAJAElslQ/BC4D+ag/MoivFX6oLKFLINmk7C2u0TSDkQGXqKYloc9jh9JPkEALfD0cL2okWKSnNpeVvHmVv2QZrHnCsIEuESTGzYMXbZHdmcCJqS6D1AY+Zc5eDbVuVG2iBYKq4zyMIT3Kjc4+Shk/dNjbo0zo1+VU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OSSQAgT6; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1758832258; c=relaxed/simple;
+	bh=SB7VFFS497fVqOtw/xEspRqIe+JuY6wZmouhpT9nChM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XmJjEZYNvhRRn2lfjVyCcd4VDxDuGuTAYY8+uoNE6K86ysEnWzBEza/XWJvTpdug0dWNviViaFzp0nzVxvWgYYcXdnWQYKlsgVCC51NqqT3N41jogl3rOvuQcCLID/Md8LEUAt0t69j74KywjBXXxo6bKdbA3cLUT2mUObSEbK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oG2Nik8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OSSQAgT6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758830668; x=1790366668;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=KKZ76b6f1fVw3YfuVP6not30dWXnaMRHgFBHlr5XoWI=;
-  b=OSSQAgT62s6u15Jr9OkvVBRRDMbY7Hy6KKMNcE7dBITySXXAq4r4tPWh
-   aauC1TZV5Ib4zohY3YcspeXHl4GGVoHN90dOZoDoSSU44MG6lxgnIyQVO
-   M4wPRSqEDKq7h41T7plp40kps1MTrmt+qER5R1O29Z/9CC28e8el9o9pf
-   UD4nxPfphYTANcIXZxtDGvA83nrZ9Vf+2Wh4CqF56oSieFpeAP80V/IOx
-   2166Eg36TS1OjKOFzgY+2d/mFAMqQmbw/3wvoVWcM5zSZxuzCeKqUB87o
-   yUGTLDXmj3g2ra1Y5+3ErISTnsa3xQSjJ5wSp6utM9qAKsq7Qb4H6eFm6
-   A==;
-X-CSE-ConnectionGUID: aIDZKE/9QwqDuDR0FfCHuA==
-X-CSE-MsgGUID: 7tXmU5gSTKujD2z9cPSoKw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="61074413"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="61074413"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2025 13:04:16 -0700
-X-CSE-ConnectionGUID: K0RKm+OUSNqvhPHncTdHuA==
-X-CSE-MsgGUID: 02TGTeRXQN2qyC4Yyn4/+g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,293,1751266800"; 
-   d="scan'208";a="177003714"
-Received: from inaky-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.206])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2025 13:04:16 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v11 31/31] fs/resctrl: Some kerneldoc updates
-Date: Thu, 25 Sep 2025 13:03:25 -0700
-Message-ID: <20250925200328.64155-32-tony.luck@intel.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250925200328.64155-1-tony.luck@intel.com>
-References: <20250925200328.64155-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oG2Nik8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C23C4CEF7;
+	Thu, 25 Sep 2025 20:30:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758832258;
+	bh=SB7VFFS497fVqOtw/xEspRqIe+JuY6wZmouhpT9nChM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oG2Nik8gzsWZh4y8F/lhqAYk70kCj3etLu0UGMrA3eCDJxAuVemwc+TzmdzEQBjHj
+	 szCeNajFGVSbmWl0E5fE2bfTT4cojKEiGrB8uXKYhC6jrcfOcLnHEPr08n3HJoRIeb
+	 xs6y50qus7EtCoTO2axKKvR2V+7hnnT4Jpye1ubwF5dQQkEthyW4VS9MQQsxADG1Z8
+	 SLNn1xX5M0kJB1UMOxRdinekft352a5qQwDP3kGNJz0OLXKFWnxNmAbi5mGBhK2w6U
+	 Fs5gUTiXssFLJ3H5ccv/xjrxK6P0VRVFykGtqwstFdgh6Le+MDfMDlQMsczF8w2IG3
+	 MoLr8DuugM0Dw==
+Date: Thu, 25 Sep 2025 16:30:46 -0400
+From: Nathan Chancellor <nathan@kernel.org>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Jason Gunthorpe <jgg@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S . Miller" <davem@davemloft.net>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, Mark Bloch <mbloch@nvidia.com>,
+	Netdev <netdev@vger.kernel.org>, linux-rdma@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Gal Pressman <gal@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>, Will Deacon <will@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>, linux-s390@vger.kernel.org,
+	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
+	Bill Wendling <morbo@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Leon Romanovsky <leonro@mellanox.com>,
+	Linux-Arch <linux-arch@vger.kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jijie Shao <shaojijie@huawei.com>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH net-next V5] net/mlx5: Improve write-combining test
+ reliability for ARM64 Grace CPUs
+Message-ID: <20250925203046.GA491548@ax162>
+References: <1758800913-830383-1-git-send-email-tariqt@nvidia.com>
+ <20250925115433.GU2617119@nvidia.com>
+ <d548b14e-ae28-4807-9b29-9961543ea549@nvidia.com>
+ <20250925122139.GW2617119@nvidia.com>
+ <13c5072c-dc93-477c-b72e-02156a0ecc2e@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <13c5072c-dc93-477c-b72e-02156a0ecc2e@app.fastmail.com>
 
-resctrl event monitoring on Sub-NUMA Cluster (SNC) systems sums the
-counts for events across all nodes sharing an L3 cache.
+On Thu, Sep 25, 2025 at 03:05:52PM +0200, Arnd Bergmann wrote:
+> On the other hand, I would in general strongly prefer
+> 
+>      if (IS_ENABLED(CONFIG_FOO)) {
+>             ...
+>      }
+> 
+> over any of the preprocessor conditionals, both for readability
+> and for improving compile-time coverage of the conditional code.
+> 
+> Unfortunately that does not work here because kernel_neon_begin()
+> etc are only defined on Arm.
 
-Update the kerneldoc for rmid_read::sum and the do_sum argument to
-mon_get_kn_priv() to say these are only used on the RDT_RESOURCE_L3
-resource.
-
-Add Return: value description for l3_mon_domain_mbm_alloc(),
-resctrl_l3_mon_resource_init(), and domain_setup_l3_mon_state()
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- fs/resctrl/internal.h              | 4 ++--
- arch/x86/kernel/cpu/resctrl/core.c | 2 ++
- fs/resctrl/monitor.c               | 2 +-
- fs/resctrl/rdtgroup.c              | 5 +++--
- 4 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 223a6cc6a64a..0dd89d3fa31a 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -96,8 +96,8 @@ extern struct mon_evt mon_event_all[QOS_NUM_EVENTS];
-  * @list:            Member of the global @mon_data_kn_priv_list list.
-  * @rid:             Resource id associated with the event file.
-  * @evt:             Event structure associated with the event file.
-- * @sum:             Set when event must be summed across multiple
-- *                   domains.
-+ * @sum:             Set for RDT_RESOURCE_L3 when event must be summed
-+ *                   across multiple domains.
-  * @domid:           When @sum is zero this is the domain to which
-  *                   the event file belongs. When @sum is one this
-  *                   is the id of the L3 cache that all domains to be
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 48ed6242d136..78c176e15b93 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -418,6 +418,8 @@ static int domain_setup_ctrlval(struct rdt_resource *r, struct rdt_ctrl_domain *
-  * l3_mon_domain_mbm_alloc() - Allocate arch private storage for the MBM counters
-  * @num_rmid:	The size of the MBM counter array
-  * @hw_dom:	The domain that owns the allocated arrays
-+ *
-+ * Return:	%0 for success; Error code otherwise.
-  */
- static int l3_mon_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_l3_mon_domain *hw_dom)
- {
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index c0e1b672afce..4cc310b9e78e 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -1811,7 +1811,7 @@ static void closid_num_dirty_rmid_free(void)
-  * Resctrl's cpuhp callbacks may be called before this point to bring a domain
-  * online.
-  *
-- * Returns 0 for success, or -ENOMEM.
-+ * Return: %0 for success; Error code otherwise.
-  */
- int resctrl_l3_mon_resource_init(void)
- {
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 16b088c5f2be..04765dad3d31 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -3037,7 +3037,8 @@ static void rmdir_all_sub(void)
-  * @rid:    The resource id for the event file being created.
-  * @domid:  The domain id for the event file being created.
-  * @mevt:   The type of event file being created.
-- * @do_sum: Whether SNC summing monitors are being created.
-+ * @do_sum: Whether SNC summing monitors are being created. Only set
-+ *          when @rid == RDT_RESOURCE_L3.
-  */
- static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
- 					struct mon_evt *mevt,
-@@ -4281,7 +4282,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
-  * at mount time. This means the rdt_l3_mon_domain::mbm_states[] and
-  * rdt_l3_mon_domain::rmid_busy_llc allocations may be larger than needed.
-  *
-- * Returns 0 for success, or -ENOMEM.
-+ * Return: %0 for success; Error code otherwise.
-  */
- static int domain_setup_l3_mon_state(struct rdt_resource *r, struct rdt_l3_mon_domain *d)
- {
--- 
-2.51.0
-
+Even if the neon macros/functions were to be dummy defined, I suspect
+clang may complain about the vector register clobbers on architectures
+other than arm64, since it will validate some inline assembly even in
+dead code.
