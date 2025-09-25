@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90AB4502A
-	for <patches@lists.linux.dev>; Thu, 25 Sep 2025 23:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89F454F81
+	for <patches@lists.linux.dev>; Thu, 25 Sep 2025 23:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758843977; cv=none; b=fPKUba8IqPxUC8AKArW/2JYuhgo25wapyMHqXr2eCwOulKC6jVPrM+4MQWJWqIfarBj8qapmjiqqz6AVPglXDE2qsX+ExwtLL4IRhdY33wCzSy5C0UiYaQH2A7aCO1vPFeB0C9MBCrVBH8NUTKa/oSMooOwGaYKW/0Dsmgb+5L4=
+	t=1758843979; cv=none; b=Pc1S1Q5h50wU2jQKP01tJXgTbL3tT2gB0mVMHuyN2BFK/D41gaHb6HwQjmnanwP0zz7KKLsFZ99MBsq19f2QHGwVvpkguOgawc/43vI11m1TsAmKtlgwmhSWYCZkWaVgx1Ze1BtfSlMDdOzhIZY/RUd6sQgaq7luNYUeyp8XHu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758843977; c=relaxed/simple;
-	bh=jy6XpX73dzULscHEsspzWI272121ql+W/8qzRykVrYw=;
+	s=arc-20240116; t=1758843979; c=relaxed/simple;
+	bh=gAxMMO8iLbRfWUQ4XZXNybZmAABcJXpeoRBJ86bPuRc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OKtxSChd98IG1KeCzAJUa7ebbQK7eEfmgN+SB2TFrEHMXVU58NxJRtk93+Fdiqsp6Q8PAbhwBQ1Dlj8tYXHcqgLcYF8T1V+URquIcE+AxUhxO4nXoPCJdNi5kNH1Q9WJCZktYw4P6LKtmGXO3u++BhX8SHDZx/7S4iiT+aOij64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jW8SEeu/; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=m+/9g+DMxq41JZo+IIXgsjkx7pk7ocuGd670tlg+DMwf3b8DAkR1L7MRIevII3I2xAfs7cse+8J1Pc+SNEWgp6lcQ/wm8FbFZ54QX8p4jgU2f+mO4Nr1il0JoiuSHs+MeL+hoCkYBJqJH0BymNRhRw+2MMUopWTQna2nLj/86Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kKxVye+3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jW8SEeu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3096FC4CEF5;
-	Thu, 25 Sep 2025 23:46:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kKxVye+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E618BC4CEF0;
+	Thu, 25 Sep 2025 23:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758843976;
-	bh=jy6XpX73dzULscHEsspzWI272121ql+W/8qzRykVrYw=;
+	s=k20201202; t=1758843979;
+	bh=gAxMMO8iLbRfWUQ4XZXNybZmAABcJXpeoRBJ86bPuRc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=jW8SEeu/EqILn9p3g3Lc3UEpDoC65BCidi263ce7vw1jhKXx0XuNnFeTK+KLQivpy
-	 PXtMEapZ7EpiVFCc1kUHLc7tafQOv0neAjpa7Mm+lAIir1AVyIGguWRm0Ny+AZzHeN
-	 b4q/7z7dBxivOkf4wsBAKOfYE1F3dqR81nOavq3CDk7l0mU/lP885FW9gr3vE3urOH
-	 V3Hh4/qoPY7647RmF0nxVsns6ReqUxidoPkAh3BXsaRU8WiYNsowqg7AseifHrmBRr
-	 Z1Hj/wgPfl7K37YPYEO57MYmdMENJX5FExuUwDGINC5hflPiZJcaWY+5hYRoN+JV9E
-	 uAAkrTPHd78IA==
+	b=kKxVye+3Izk9Gil8d0gYEG3VBsDXau0c2QJZb4YGVXnPcBOiDPtYQx1Secx/X25fG
+	 D7k0dAyr3Pw5j1CWJQbDOqCvAwUgezBPFTdaVL9RYIFwkFmlvKd2JsdPJRq2VIKeF6
+	 IP6RhJamtXE5/xungZKqnHa0fBfHlr/kJFmvT+Zni9L55woDYMvXpAbUQgAKOc+7Sd
+	 hTerWBXo85W9LiioUtfaY1gUywnh/+HgTcNkBga6z/bwmWw1pDKR3JAo+eOvc/Dovv
+	 Vux54+isn3hQl4RXk3iDEw2PrmuaMdyb9wMoZ91016cLO1BTvf2orKosq+KAxznJxg
+	 3RpMoUxnrCGKQ==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 25 Sep 2025 19:46:06 -0400
-Subject: [PATCH 1/2] powerpc/powermac: Include linux/of.h in backlight.c
+Date: Thu, 25 Sep 2025 19:46:07 -0400
+Subject: [PATCH 2/2] macintosh/via-pmu-backlight: Include linux/of.h and
+ uapi/linux/fb.h
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,7 +38,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-1-d256858d86a6@kernel.org>
+Message-Id: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-2-d256858d86a6@kernel.org>
 References: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-0-d256858d86a6@kernel.org>
 In-Reply-To: <20250925-ppc-fixes-for-backlight-fb-h-removal-v1-0-d256858d86a6@kernel.org>
 To: Lee Jones <lee@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
@@ -48,52 +49,57 @@ Cc: Madhavan Srinivasan <maddy@linux.ibm.com>,
  Simona Vetter <simona.vetter@ffwll.ch>, linuxppc-dev@lists.ozlabs.org, 
  patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2082; i=nathan@kernel.org;
- h=from:subject:message-id; bh=jy6XpX73dzULscHEsspzWI272121ql+W/8qzRykVrYw=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDBlXrzjZcf9vrA8PmPpkgfqyNC2FO5cC3l5k2B63qps/l
- W/1rolrOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEQpgZGSYsUPcycnfwl6ks
- 017xcMPy+JlXtYxYTVfEHbZZKMQjtJbhn+m/Mz8YL+oKxXHu7Jphy6m4IP7xTY0VS3+uLSp3dvu
- WzAkA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2124; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=gAxMMO8iLbRfWUQ4XZXNybZmAABcJXpeoRBJ86bPuRc=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDBlXrzg//Zlr5/Nn4qbse7+EVU87vnS/v0e47UlEm96dr
+ Wd0S7llO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEzk1n+Ctunn5VfU++zpPY
+ dZayqztfPHvnJrDFQFV72rzD035mqPExMqypecY3bdk5h5n6k40aa67/F1aucOZue/1y04zjyfG
+ az3kB
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
 After the recent removal of the fb.h include from backlight.h, which
-transitively included of.h, there are several errors in the powermac backlight
-driver:
+transitively included of.h, there are several errors from
+via-pmu-backlight.c (errors from bl_curve not being properly defined
+omitted):
 
-  arch/powerpc/platforms/powermac/backlight.c: In function 'pmac_has_backlight_type':
-  arch/powerpc/platforms/powermac/backlight.c:59:39: error: implicit declaration of function 'of_find_node_by_name'; did you mean 'bus_find_device_by_name'? [-Wimplicit-function-declaration]
-     59 |         struct device_node* bk_node = of_find_node_by_name(NULL, "backlight");
-        |                                       ^~~~~~~~~~~~~~~~~~~~
-        |                                       bus_find_device_by_name
-  arch/powerpc/platforms/powermac/backlight.c:59:39: error: initialization of 'struct device_node *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-  arch/powerpc/platforms/powermac/backlight.c:60:17: error: implicit declaration of function 'of_property_match_string' [-Wimplicit-function-declaration]
-     60 |         int i = of_property_match_string(bk_node, "backlight-control", type);
+  drivers/macintosh/via-pmu-backlight.c:22:20: error: 'FB_BACKLIGHT_LEVELS' undeclared here (not in a function)
+     22 | static u8 bl_curve[FB_BACKLIGHT_LEVELS];
+        |                    ^~~~~~~~~~~~~~~~~~~
+  drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_get_level_brightness':
+  drivers/macintosh/via-pmu-backlight.c:63:38: error: 'FB_BACKLIGHT_MAX' undeclared (first use in this function); did you mean 'BACKLIGHT_RAW'?
+     63 |         pmulevel = bl_curve[level] * FB_BACKLIGHT_MAX / MAX_PMU_LEVEL;
+        |                                      ^~~~~~~~~~~~~~~~
+        |                                      BACKLIGHT_RAW
+  drivers/macintosh/via-pmu-backlight.c: In function 'pmu_backlight_init':
+  drivers/macintosh/via-pmu-backlight.c:144:17: error: implicit declaration of function 'of_machine_is_compatible' [-Wimplicit-function-declaration]
+    144 |                 of_machine_is_compatible("AAPL,3400/2400") ||
         |                 ^~~~~~~~~~~~~~~~~~~~~~~~
-  arch/powerpc/platforms/powermac/backlight.c:62:9: error: implicit declaration of function 'of_node_put' [-Wimplicit-function-declaration]
-     62 |         of_node_put(bk_node);
-        |         ^~~~~~~~~~~
 
-Explicitly include of.h to resolve the errors.
+FB_BACKLIGHT_{LEVELS,MAX} are available from the userspace API fb.h so
+just include that avoid dragging in the full fb.h header unnecessarily.
+Include linux/of.h for of_machine_is_compatible().
 
 Fixes: 9f218f9bb9d2 ("backlight: Do not include <linux/fb.h> in header file")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/powerpc/platforms/powermac/backlight.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/macintosh/via-pmu-backlight.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/platforms/powermac/backlight.c b/arch/powerpc/platforms/powermac/backlight.c
-index 79741370c40c..9afb64723649 100644
---- a/arch/powerpc/platforms/powermac/backlight.c
-+++ b/arch/powerpc/platforms/powermac/backlight.c
-@@ -14,6 +14,7 @@
- #include <linux/pmu.h>
- #include <linux/atomic.h>
- #include <linux/export.h>
+diff --git a/drivers/macintosh/via-pmu-backlight.c b/drivers/macintosh/via-pmu-backlight.c
+index 26bd9ed5e664..f7b7853b3802 100644
+--- a/drivers/macintosh/via-pmu-backlight.c
++++ b/drivers/macintosh/via-pmu-backlight.c
+@@ -11,7 +11,9 @@
+ #include <asm/ptrace.h>
+ #include <linux/adb.h>
+ #include <linux/backlight.h>
 +#include <linux/of.h>
+ #include <linux/pmu.h>
++#include <uapi/linux/fb.h>
  #include <asm/backlight.h>
  
- #define OLD_BACKLIGHT_MAX 15
+ #define MAX_PMU_LEVEL 0xFF
 
 -- 
 2.51.0
