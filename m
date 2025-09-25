@@ -1,81 +1,270 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3A021C9F4;
-	Thu, 25 Sep 2025 01:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE7A2747B;
+	Thu, 25 Sep 2025 09:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758762550; cv=none; b=lqPDJlSwzERMsUsHIO3yRpV+nwJVN3qVLRL1z5mq1OXLoK9NrjT8Hq57JlPR7LtePKli2Za5RId79NPFTlbiOFgMnYiGtCG7Izb41Bxj+S753PokrB48DifRChK35j2oFa1fNXjfnk2LZWaTnAd4EZUObQxGIh6Ee25/g2Vhegs=
+	t=1758791312; cv=none; b=uUzmWCmbAWbLu724cCsgeb0ZkiHAtD4YiF3C/m88Ma9/Qp21Au9zJp4sTGTtu5B3WBv3boQKx3eoPe+KTquo5+nH/63MP2G/HnJw2VYqOxd5YYv4Y2cYt0WLsFCYY5+V8sRTDnzGlBGmQKJCKcCIAYUkasmeL5SXfZ7i6Sq64Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758762550; c=relaxed/simple;
-	bh=dHxDOJhnkECbkUUwQmUp3zM1Xow79G90WP64t2bY+rw=;
+	s=arc-20240116; t=1758791312; c=relaxed/simple;
+	bh=ZgQSFSVCbyCH99ccwjJcdermQtFfcjbB/ldguPOCflg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MqzvuYBCgeRhoyiMAreG1d3DMH1WCD0TWq9kkpvvpHEgtJmqC74ibWuPuTljgPTwaOPYRIMDMFl1qDFyQqB4vbIHLBtxorfFvGcnJkgCLuuMwLk9uV8mHkc+xZInQ9GMY8os2YdSLO9cG/bh6qU/ZZJPEihF32WdHvVEHV6zVwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C1I3viug; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=O/a0yaalHdRGc4wu3JBC5hDBfu0QLDJJg+xXSAfnY816YC/0MgzA7phhd9Jz/rt3+ysn8zLs9O1FR8/MdJOp0UtD1NRmbddyVMG8/33OeR/b7UDZGe5A6wtHcQJ7KexX6YSYO+RSRPRpRMevnCQ/aaEiOAdvDaF7gyZxMftmvqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FelzbsVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C1I3viug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8815FC4CEE7;
-	Thu, 25 Sep 2025 01:09:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FelzbsVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CA8C4CEF0;
+	Thu, 25 Sep 2025 09:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758762549;
-	bh=dHxDOJhnkECbkUUwQmUp3zM1Xow79G90WP64t2bY+rw=;
+	s=k20201202; t=1758791311;
+	bh=ZgQSFSVCbyCH99ccwjJcdermQtFfcjbB/ldguPOCflg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C1I3viugqZPRdIw7VSAQjbeRMw4u7cwU5+mbB6hczhbRxc8XIqbBUgXy4l3Nmj8xo
-	 N18KKmI0Kt4jKAlBOVdKl+s6J8irWyPEa6WtUEWqP0zPmGzcEV2LA3rISp1Lmklb4w
-	 oqR47e5f2Re0brYjzEYWcq0bJNDD+KMLCtDCBJ0jlnVAKybND8Hfj5kCPq7jKtOcOd
-	 HuhWwcRqh//Q9j1ZXAcjjfY5fjBcXihx4QCZsZQIdHJQyBEpRy4K3sOPPwmvx0slcS
-	 C+2bpxqM34yXVeaUlb5+ppsc216QwDmERGgKV3cC9JH0y0sIAnRdatz2iFJ+EffNO6
-	 2lWyx9rR2TWEA==
-Date: Wed, 24 Sep 2025 21:09:08 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>, srini@kernel.org,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.16-6.6] ASoC: qcom: sc8280xp: Enable DAI format
- configuration for MI2S interfaces
-Message-ID: <aNSWNE2F4gmLgUQ1@laps>
-References: <20250922175751.3747114-1-sashal@kernel.org>
- <20250922175751.3747114-5-sashal@kernel.org>
- <aNJJe20u8bEOE3VP@hovoldconsulting.com>
+	b=FelzbsVuCzKOOLqNvbiR+mDiaHV0/CP035lZMmu9Nqtpw1DSakRrqQtDDRPwMPWvH
+	 /TwFzf/N+AsIcKLJijCdBtm4dfQjfLXJh3mqPX6iJvmgKq7WkUvkgCRa6XEQz/MF4M
+	 o+iJ+ZIUNyUfhVQU+Lx1t8c02bWenDaKH+JSXxbFnGOMueWEXMyr29uyNWgRVx7JEP
+	 57bbmPJz4JTxvhq3ovnDdw2qYSGO/mDv+SALN3awFOBiXONkeTCq4qJdSG6vYGmT61
+	 JO3paq8wMUTC2XS16sisdxbFQfJ/qQE0i0+Ivs0BGlxW9oc8+7M2FC90SxYv+jV1dy
+	 vJ1e7sUK+fmVQ==
+Date: Thu, 25 Sep 2025 10:08:27 +0100
+From: Lee Jones <lee@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Jann Horn <jannh@google.com>, Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 070/132] af_unix: Dont leave consecutive consumed OOB
+ skbs.
+Message-ID: <20250925090827.GA514097@google.com>
+References: <20250703143939.370927276@linuxfoundation.org>
+ <20250703143942.167088603@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aNJJe20u8bEOE3VP@hovoldconsulting.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250703143942.167088603@linuxfoundation.org>
 
-On Tue, Sep 23, 2025 at 09:17:15AM +0200, Johan Hovold wrote:
->On Mon, Sep 22, 2025 at 01:57:36PM -0400, Sasha Levin wrote:
->> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
->>
->> [ Upstream commit 596e8ba2faf0d2beb9bb68801622fa6461918c1d ]
->>
->> Add support for configuring the DAI format on MI2S interfaces,
->> this enhancement allows setting the appropriate bit clock and
->> frame clock polarity, ensuring correct audio data transmission
->> over MI2S.
->>
->> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
->> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
->> Rule: add
->> Link: https://lore.kernel.org/stable/20250908053631.70978-4-mohammad.rafi.shaik%40oss.qualcomm.com
->> Message-ID: <20250908053631.70978-4-mohammad.rafi.shaik@oss.qualcomm.com>
->> Signed-off-by: Mark Brown <broonie@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>
->> LLM Generated explanations, may be completely bogus:
->
->Yeah, it's bogus. Please drop.
+On Thu, 03 Jul 2025, Greg Kroah-Hartman wrote:
 
-Ack
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Kuniyuki Iwashima <kuniyu@google.com>
+> 
+> [ Upstream commit 32ca245464e1479bfea8592b9db227fdc1641705 ]
+> 
+> Jann Horn reported a use-after-free in unix_stream_read_generic().
+> 
+> The following sequences reproduce the issue:
+> 
+>   $ python3
+>   from socket import *
+>   s1, s2 = socketpair(AF_UNIX, SOCK_STREAM)
+>   s1.send(b'x', MSG_OOB)
+>   s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
+>   s1.send(b'y', MSG_OOB)
+>   s2.recv(1, MSG_OOB)     # leave a consumed OOB skb
+>   s1.send(b'z', MSG_OOB)
+>   s2.recv(1)              # recv 'z' illegally
+>   s2.recv(1, MSG_OOB)     # access 'z' skb (use-after-free)
+> 
+> Even though a user reads OOB data, the skb holding the data stays on
+> the recv queue to mark the OOB boundary and break the next recv().
+> 
+> After the last send() in the scenario above, the sk2's recv queue has
+> 2 leading consumed OOB skbs and 1 real OOB skb.
+> 
+> Then, the following happens during the next recv() without MSG_OOB
+> 
+>   1. unix_stream_read_generic() peeks the first consumed OOB skb
+>   2. manage_oob() returns the next consumed OOB skb
+>   3. unix_stream_read_generic() fetches the next not-yet-consumed OOB skb
+>   4. unix_stream_read_generic() reads and frees the OOB skb
+> 
+> , and the last recv(MSG_OOB) triggers KASAN splat.
+> 
+> The 3. above occurs because of the SO_PEEK_OFF code, which does not
+> expect unix_skb_len(skb) to be 0, but this is true for such consumed
+> OOB skbs.
+> 
+>   while (skip >= unix_skb_len(skb)) {
+>     skip -= unix_skb_len(skb);
+>     skb = skb_peek_next(skb, &sk->sk_receive_queue);
+>     ...
+>   }
+> 
+> In addition to this use-after-free, there is another issue that
+> ioctl(SIOCATMARK) does not function properly with consecutive consumed
+> OOB skbs.
+> 
+> So, nothing good comes out of such a situation.
+> 
+> Instead of complicating manage_oob(), ioctl() handling, and the next
+> ECONNRESET fix by introducing a loop for consecutive consumed OOB skbs,
+> let's not leave such consecutive OOB unnecessarily.
+> 
+> Now, while receiving an OOB skb in unix_stream_recv_urg(), if its
+> previous skb is a consumed OOB skb, it is freed.
+> 
+> [0]:
+> BUG: KASAN: slab-use-after-free in unix_stream_read_actor (net/unix/af_unix.c:3027)
+> Read of size 4 at addr ffff888106ef2904 by task python3/315
+> 
+> CPU: 2 UID: 0 PID: 315 Comm: python3 Not tainted 6.16.0-rc1-00407-gec315832f6f9 #8 PREEMPT(voluntary)
+> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-4.fc42 04/01/2014
+> Call Trace:
+>  <TASK>
+>  dump_stack_lvl (lib/dump_stack.c:122)
+>  print_report (mm/kasan/report.c:409 mm/kasan/report.c:521)
+>  kasan_report (mm/kasan/report.c:636)
+>  unix_stream_read_actor (net/unix/af_unix.c:3027)
+>  unix_stream_read_generic (net/unix/af_unix.c:2708 net/unix/af_unix.c:2847)
+>  unix_stream_recvmsg (net/unix/af_unix.c:3048)
+>  sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
+>  __sys_recvfrom (net/socket.c:2278)
+>  __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
+>  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+>  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+> RIP: 0033:0x7f8911fcea06
+> Code: 5d e8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 75 19 83 e2 39 83 fa 08 75 11 e8 26 ff ff ff 66 0f 1f 44 00 00 48 8b 45 10 0f 05 <48> 8b 5d f8 c9 c3 0f 1f 40 00 f3 0f 1e fa 55 48 89 e5 48 83 ec 08
+> RSP: 002b:00007fffdb0dccb0 EFLAGS: 00000202 ORIG_RAX: 000000000000002d
+> RAX: ffffffffffffffda RBX: 00007fffdb0dcdc8 RCX: 00007f8911fcea06
+> RDX: 0000000000000001 RSI: 00007f8911a5e060 RDI: 0000000000000006
+> RBP: 00007fffdb0dccd0 R08: 0000000000000000 R09: 0000000000000000
+> R10: 0000000000000001 R11: 0000000000000202 R12: 00007f89119a7d20
+> R13: ffffffffc4653600 R14: 0000000000000000 R15: 0000000000000000
+>  </TASK>
+> 
+> Allocated by task 315:
+>  kasan_save_stack (mm/kasan/common.c:48)
+>  kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
+>  __kasan_slab_alloc (mm/kasan/common.c:348)
+>  kmem_cache_alloc_node_noprof (./include/linux/kasan.h:250 mm/slub.c:4148 mm/slub.c:4197 mm/slub.c:4249)
+>  __alloc_skb (net/core/skbuff.c:660 (discriminator 4))
+>  alloc_skb_with_frags (./include/linux/skbuff.h:1336 net/core/skbuff.c:6668)
+>  sock_alloc_send_pskb (net/core/sock.c:2993)
+>  unix_stream_sendmsg (./include/net/sock.h:1847 net/unix/af_unix.c:2256 net/unix/af_unix.c:2418)
+>  __sys_sendto (net/socket.c:712 (discriminator 20) net/socket.c:727 (discriminator 20) net/socket.c:2226 (discriminator 20))
+>  __x64_sys_sendto (net/socket.c:2233 (discriminator 1) net/socket.c:2229 (discriminator 1) net/socket.c:2229 (discriminator 1))
+>  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+>  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+> 
+> Freed by task 315:
+>  kasan_save_stack (mm/kasan/common.c:48)
+>  kasan_save_track (mm/kasan/common.c:60 (discriminator 1) mm/kasan/common.c:69 (discriminator 1))
+>  kasan_save_free_info (mm/kasan/generic.c:579 (discriminator 1))
+>  __kasan_slab_free (mm/kasan/common.c:271)
+>  kmem_cache_free (mm/slub.c:4643 (discriminator 3) mm/slub.c:4745 (discriminator 3))
+>  unix_stream_read_generic (net/unix/af_unix.c:3010)
+>  unix_stream_recvmsg (net/unix/af_unix.c:3048)
+>  sock_recvmsg (net/socket.c:1063 (discriminator 20) net/socket.c:1085 (discriminator 20))
+>  __sys_recvfrom (net/socket.c:2278)
+>  __x64_sys_recvfrom (net/socket.c:2291 (discriminator 1) net/socket.c:2287 (discriminator 1) net/socket.c:2287 (discriminator 1))
+>  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+>  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+> 
+> The buggy address belongs to the object at ffff888106ef28c0
+>  which belongs to the cache skbuff_head_cache of size 224
+> The buggy address is located 68 bytes inside of
+>  freed 224-byte region [ffff888106ef28c0, ffff888106ef29a0)
+> 
+> The buggy address belongs to the physical page:
+> page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888106ef3cc0 pfn:0x106ef2
+> head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+> flags: 0x200000000000040(head|node=0|zone=2)
+> page_type: f5(slab)
+> raw: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
+> raw: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
+> head: 0200000000000040 ffff8881001d28c0 ffffea000422fe00 0000000000000004
+> head: ffff888106ef3cc0 0000000080190010 00000000f5000000 0000000000000000
+> head: 0200000000000001 ffffea00041bbc81 00000000ffffffff 00000000ffffffff
+> head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+> page dumped because: kasan: bad access detected
+> 
+> Memory state around the buggy address:
+>  ffff888106ef2800: 00 00 00 00 00 00 00 00 00 00 00 00 fc fc fc fc
+>  ffff888106ef2880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+> >ffff888106ef2900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>                    ^
+>  ffff888106ef2980: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc
+>  ffff888106ef2a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+> 
+> Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+
+Do we know why this stopped at v6.1?
+
+The Fixes: commit was added in v5.15 and this appears to apply fine.
+
+If it helps, the upstream commit was:
+
+  32ca245464e1 af_unix: Don't leave consecutive consumed OOB skbs.
+
+Thanks.
+
+> Reported-by: Jann Horn <jannh@google.com>
+> Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+> Reviewed-by: Jann Horn <jannh@google.com>
+> Link: https://patch.msgid.link/20250619041457.1132791-2-kuni1840@gmail.com
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  net/unix/af_unix.c | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+> 
+> diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+> index 9ef6011a055b1..01de31a0f22fe 100644
+> --- a/net/unix/af_unix.c
+> +++ b/net/unix/af_unix.c
+> @@ -2612,11 +2612,11 @@ struct unix_stream_read_state {
+>  #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
+>  static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+>  {
+> +	struct sk_buff *oob_skb, *read_skb = NULL;
+>  	struct socket *sock = state->socket;
+>  	struct sock *sk = sock->sk;
+>  	struct unix_sock *u = unix_sk(sk);
+>  	int chunk = 1;
+> -	struct sk_buff *oob_skb;
+>  
+>  	mutex_lock(&u->iolock);
+>  	unix_state_lock(sk);
+> @@ -2631,9 +2631,16 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+>  
+>  	oob_skb = u->oob_skb;
+>  
+> -	if (!(state->flags & MSG_PEEK))
+> +	if (!(state->flags & MSG_PEEK)) {
+>  		WRITE_ONCE(u->oob_skb, NULL);
+>  
+> +		if (oob_skb->prev != (struct sk_buff *)&sk->sk_receive_queue &&
+> +		    !unix_skb_len(oob_skb->prev)) {
+> +			read_skb = oob_skb->prev;
+> +			__skb_unlink(read_skb, &sk->sk_receive_queue);
+> +		}
+> +	}
+> +
+>  	spin_unlock(&sk->sk_receive_queue.lock);
+>  	unix_state_unlock(sk);
+>  
+> @@ -2644,6 +2651,8 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+>  
+>  	mutex_unlock(&u->iolock);
+>  
+> +	consume_skb(read_skb);
+> +
+>  	if (chunk < 0)
+>  		return -EFAULT;
+>  
+> -- 
+> 2.39.5
+> 
+> 
+> 
 
 -- 
-Thanks,
-Sasha
+Lee Jones [李琼斯]
