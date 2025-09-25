@@ -1,76 +1,99 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010059.outbound.protection.outlook.com [40.93.198.59])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013004.outbound.protection.outlook.com [40.93.196.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EBD3009E7;
-	Thu, 25 Sep 2025 12:20:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.59
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338122FBE1A;
+	Thu, 25 Sep 2025 12:21:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.4
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758802834; cv=fail; b=R97C7SORaPysffomNnxIHPia8VRJYWwD3u4Wnc7Mxy8QvW53e1rgaj0Z0e93d3YruqSL0fzl6/+X4E6Hy8Nsf4WWc0AS8zXqnuqRmCILh+uZINu/G2pMUCGR1Gel0qz5LIQO68Z0OmItAKab6b6HeHuXWknOChwAXRAUFGSvLdo=
+	t=1758802907; cv=fail; b=dh+7C0q8HChWNrvQxx4lOrqyAOWiAWtH+gPL3IWvx50AOYY5usaaGpUvXCm5zmKQpO7A4VgYr4YGoHxmww2JVOKt6INBX6ZjVozgRrAtonc4zR/OIUDJJeB9hnTdp3yfXozmt+iIvOqr9thFugBTTqt4pi7V/D4ZvU7UNOUylq0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758802834; c=relaxed/simple;
-	bh=myAsuZ6PPUR4q+jrEZebILx+K85j8jK9r0oPBz8jufU=;
+	s=arc-20240116; t=1758802907; c=relaxed/simple;
+	bh=cm3TG5HPYCvcWiLhRr1hGCUE6g0Zz/qsXwldlf3eZF4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=JFwe3iDNp2nTFKUvEnwiqArhIGEzdoQ3Ml1VeGh8tTnnua5/1BE9XohFrnsg6EczYsPz8/fkIkOvR3FnCDBIh6IAFNCy+3gq6ebfdHUdV/wKQi4EILCjuUAv4UNhyGPSibxtnkgjAxfaDvuOl3ruyLMPkn7fGeicSy+D0UnAdaY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=PNkk8UbS; arc=fail smtp.client-ip=40.93.198.59
+	 Content-Disposition:In-Reply-To:MIME-Version; b=eWJAeqjvTVznFZPQrEcVsoN/dv/lhGuP8l3WdtCjYyisFy899bnlYuYv9Gqpf9Q4L2z5AXi3wp6OvGZjyAXNqwy4Ufpp+ftwpfOJ8zrlBcaPu24qMggGRfTOn4tEHZkdJdpJ85eBCrcXjXfSgXW/lx64cQ+NLDCvLyKsBBeVm2U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CscnSF8U; arc=fail smtp.client-ip=40.93.196.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PNkk8UbS"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CscnSF8U"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tQigW33qsxmGJfiiB0xDW1odQsri4t3mVH6rwxz3SvhTihEGr1mpyjKXDuC3ahlUbzTcWNzs51TXs4XopRDgtRTmMYdbD04B0Hb9XivsMta8I5rekLwcTYx44QWvVhJj9gpnQPEvO1cHu5FumvOuv1XjXivcacAP4gMb8AzVYhGZhsmIc0eyX3egzgSS4i4L5EYI4+vt2k+p1+ws9zPbspFMTdlvxAXEY9Q7S75Mthz1C8w2eCDj5XhHSF3vBUsyLKkFVV3glukm1Bsuwxkx0rtf2OvZpihGAlBglowf1c464CaxUI8+gY2iULJKlzFts3erOOBhS+2OA7jX/c1krA==
+ b=wbb0j1YsRx4GcpSxtR/OTlnV1e8G/vQJ1B7Tv/5UTVPhnQiXvHuGzDFGyMU015b+dB6EIvIZJrAVxkbryO3MiQKaVqntDDtl5bgd951DPTMAXQuoAWmGcOSOTyal+48y+mWri5I0dYkG4FWULnvdyMq1fZHhNNdC+hch+VdCiUDmnK9Wg5AJrHgzvxNnQhs7LTZ+2dkEaSAmQ2T2zodWeTor621CVDOZtyANNUsDFrilRAA68OyHawqsO3gi/VBD6G6rm1D/7hktaVReMXDlPM221IIBk5Foca9AnnCq98aND+Y9zPKhNDqxuIih9jjFJsKQu4Goyf8sK+qOw+Onwg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=r/vcPIAqpBShxYHTPTjS5TuzHjo8TtH7KC6C0uUpgP0=;
- b=D3muMmxv4MtJVymXModb+7It1q+1rJ8vwh14l49SoDIiVgmUb/r+JtRFP+8EpoR3GPSNKKTCgLhYQY4Z7f/jFK8QSDdXplVL/p0knUFj7uy+MEchh29LyhSUk5JCkltKg/jSEHBkaA/Wkhy6J1KIPA+SSm+s70EjVefMg0hekeh0mUU7bbNEmsp/gpzi5gdPG5fKkc6uM72BmYLRzBOPZu29TNjp3xqVQCMF28D0SFXxRudCQCdg7UQDk9BBG+bJFUazAFlGKfuFk0XMCbEdhnyT9Ydz8BlQOGK3oSG81v0rpUxMAxzm13i8mLUoVcM2v4P76dxmUpI/lyevl6lNXQ==
+ bh=uX8YkeusmhfTNoEkcfVemAzMql2PPy18BCHSOfBEKjw=;
+ b=qEwCvVjeuw61Ljb5EnNv5ryErJGlGxuFVu4QZUEipr/WQE1Xyr1u3ASVqAdMfSfSl5XyRJdYWcYnC5a6CIIHK4DkbAQMiKNgj4NYxYlKactBoMW/XOjyZLlHSOZ2j+4BgaLavpDJP2cVfqxWX/vPXSqKUqoBMD9MD+2qVzB5pSLFQpLk9UCsxQe/iqZtDQa0wMHioWzeavLegiNxwittZreyGPHspkH5/akwWvoG9nODnSY3Cfzk6x6UBT2nO+Uww67agxIHTQvPVbLKVN2ekt8QhqaJYN0NZNBe5QVOTOqBi2lsuSWLNtZwEkQ10qLLZtX15fUK5fEjX3GOKp2NyQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=r/vcPIAqpBShxYHTPTjS5TuzHjo8TtH7KC6C0uUpgP0=;
- b=PNkk8UbSPVvstK9xSmP25SXbgxm585JAPTBdjgUGrKNhOz7k3D0v7gGjPisYSxtUYdI+4FKyXKdH8Jix+dGMkY1Sw3Vfzpx9iXDPbKUuxPwcRu4bwXzwC0ZXP8zshBaxo3QpQJ/Ai+SwIEK+INwTwt9lWMkpjlR5PM2uE1s2ITnI/R9y2hhzTbl7Rr6Px+Is1rIXShwX0l+s+/FNl12wRwMfN1qERSqMV7o8VXtUjyHpaRJqJndpZkx5DMMGOV8Ga5tpWJr2W0C3EKvdFa8ATlauvk12A9vr2+IbxLSzuCXitlL7OPMa9UZbKGHXTjL3H7OhUdmn2CFDmjN9YnwFnw==
+ bh=uX8YkeusmhfTNoEkcfVemAzMql2PPy18BCHSOfBEKjw=;
+ b=CscnSF8U6tuSYVkd87XsitfuJtcBAwpB1G0ZqdayQSHvRFFVUZDYY4hKctKpKY96QmII5EJiRrYDH/Hq6SaUNOlU57RFbXzS2sLA5YUUnDApH0R8ZrbyeKdFnuvTrz26h715+4Zshv84rxrPzXo/hZNUHeM/7N9qTK44aR2k+uMv27j/X1C1o3Ig1Qb4awqDasd4cFUq1A33K+aT9DLQHDlsSxp7mIt8yiNui/R9Iie5FLJjbYBKVNLf9i7OF0NAHGH6GeNVVevo24gVtl0jD5IX12n5d/voTXabqcKujbCiMdqXnvGSS36rZ2+/i20MjXsAzHTQOOsHl2/8VWQnsw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
- by DS0PR12MB8504.namprd12.prod.outlook.com (2603:10b6:8:155::11) with
+ by DS0PR12MB7993.namprd12.prod.outlook.com (2603:10b6:8:14b::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.9; Thu, 25 Sep
- 2025 12:20:28 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.10; Thu, 25 Sep
+ 2025 12:21:42 +0000
 Received: from PH7PR12MB5757.namprd12.prod.outlook.com
  ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
  ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9137.021; Thu, 25 Sep 2025
- 12:20:28 +0000
-Date: Thu, 25 Sep 2025 09:20:26 -0300
+ 12:21:41 +0000
+Date: Thu, 25 Sep 2025 09:21:39 -0300
 From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: Donald Dutile <ddutile@redhat.com>, Bjorn Helgaas <bhelgaas@google.com>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-pci@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
-	galshalom@nvidia.com, Joerg Roedel <jroedel@suse.de>,
-	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
-	maorg@nvidia.com, patches@lists.linux.dev, tdave@nvidia.com,
-	Tony Zhu <tony.zhu@intel.com>
-Subject: Re: [PATCH 03/11] iommu: Compute iommu_groups properly for PCIe
- switches
-Message-ID: <20250925122026.GV2617119@nvidia.com>
-References: <20250702010407.GB1051729@nvidia.com>
- <c05104a1-7c8e-4ce9-bfa3-bcbc8c9e0ef5@redhat.com>
- <20250717202744.GA2250220@nvidia.com>
- <2cb00715-bfa8-427a-a785-fa36667f91f9@redhat.com>
- <20250718133259.GD2250220@nvidia.com>
- <20250922163200.14025a41.alex.williamson@redhat.com>
- <20250922231541.GF1391379@nvidia.com>
- <20250922191029.7a000d64.alex.williamson@redhat.com>
- <20250923130341.GJ1391379@nvidia.com>
- <20250923152952.1f6c4b2f.alex.williamson@redhat.com>
+To: Patrisious Haddad <phaddad@nvidia.com>
+Cc: Tariq Toukan <tariqt@nvidia.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, linux-rdma@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Gal Pressman <gal@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>, Will Deacon <will@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>, linux-s390@vger.kernel.org,
+	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jijie Shao <shaojijie@huawei.com>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH net-next V5] net/mlx5: Improve write-combining test
+ reliability for ARM64 Grace CPUs
+Message-ID: <20250925122139.GW2617119@nvidia.com>
+References: <1758800913-830383-1-git-send-email-tariqt@nvidia.com>
+ <20250925115433.GU2617119@nvidia.com>
+ <d548b14e-ae28-4807-9b29-9961543ea549@nvidia.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250923152952.1f6c4b2f.alex.williamson@redhat.com>
-X-ClientProxiedBy: DS0PR17CA0011.namprd17.prod.outlook.com
- (2603:10b6:8:191::13) To PH7PR12MB5757.namprd12.prod.outlook.com
+In-Reply-To: <d548b14e-ae28-4807-9b29-9961543ea549@nvidia.com>
+X-ClientProxiedBy: DS0PR17CA0014.namprd17.prod.outlook.com
+ (2603:10b6:8:191::10) To PH7PR12MB5757.namprd12.prod.outlook.com
  (2603:10b6:510:1d0::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -79,232 +102,96 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|DS0PR12MB8504:EE_
-X-MS-Office365-Filtering-Correlation-Id: 56692540-a63f-4917-014a-08ddfc2de990
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|DS0PR12MB7993:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ac25156-c1a6-4d4f-84c5-08ddfc2e151e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?/j0Wdmrrioq+0ypgGcAuRPp2uutk1HIGNdcrIhKugTIzI9VRlYynMCBKWhoH?=
- =?us-ascii?Q?ZN9KjFM4yzUJrJWBQrrskRONELkO2Gx9nMCSvjd5SMF5wWgByqY0ggA3m7Gh?=
- =?us-ascii?Q?CLiapkY4PTKNxZ3fLQyjoYdSX5tU/LDgbO8iwM4szSvhBHUvNfKnNSROXzlu?=
- =?us-ascii?Q?UelwmUTrqfyVKRFTEn/KFPbPeKJAf8dDbvWnWmZaSj0SnzHtRFZ6SHB1g+9S?=
- =?us-ascii?Q?NAbH7CpU8lQ8Atm9O0VjFrqyQqZzHiNBjBXCBIhWQJRttus6CNAPqbwr/r59?=
- =?us-ascii?Q?apwId48W3LpmW/ADqPO403oZdiPfCDLIeCCkibpkkCTSFMmYMlsWNWls4N6H?=
- =?us-ascii?Q?o4wdXSxCEL9DSp6Gvh3OxNxb9kSWkOdiT8FmjY5bLXc7Jfp+kiYXYmgJ0j8h?=
- =?us-ascii?Q?ouy6wRmhs8UXHOX2HReauyEV+P3LXLFUBsd3w4k4DL1q7wLkc953UTwyNgrg?=
- =?us-ascii?Q?7IivJQWUvC98yiGZcpD25kZB6rfBPu79YkZ1rfuPNGhrj0QMlxCSK25VJvwU?=
- =?us-ascii?Q?A0VNCijhqdldS9haoj7Od+3woXVBvwkY1Q5TcmOmi3qQNi24pcUMSYcgP5Zh?=
- =?us-ascii?Q?wxjf5Uxvgw0gUQWoRnZBc/qv3BJ9x096MFbQFIt7JJHM/4kL1bdRC+sV0+Sx?=
- =?us-ascii?Q?v+jOuz6NHn9TLmE++Q1ifHqx0tb+o+8yYX80c/ByBvnVlt9Op5T5NEiSyw3T?=
- =?us-ascii?Q?r6w9tbIYzvahZG+EGu/rVUzvHmcpI6erZDwW+dSmNahS3eBEZnRNR0rt4+Fm?=
- =?us-ascii?Q?VtA8T0QNaGG85JVqYP+Ch1jDVUULIRSzBxgq7a5HciF9AfdqHH20CGfhpWGo?=
- =?us-ascii?Q?i/pBUQaSr/DT3UUxoKfX5oLnFrJlKbF7PitEFWbCEbo7aeM6MnqE5Owc9zv5?=
- =?us-ascii?Q?9Y5vIDKzjQjEIjkza6tc9EfLhFzOVZnpjAylulg0XdENpWGMc8QCMSx71t5A?=
- =?us-ascii?Q?gKjhBpAQGWp+GzTIq8szY6XW2Ed9GGqt8tme7J/Jjanlrik9S0of1GT09hYt?=
- =?us-ascii?Q?sAgMOV0/+eEIAYiu4DSRyLoPfbMVAvKXAdGP6JcdN+6Wc89/F7p3fbl2Cd/y?=
- =?us-ascii?Q?lCWa4lE7jgXIBT5MeGrv49HXj8dx12t/zdBlSX7RKieMhPI4P32EkZWa9mV5?=
- =?us-ascii?Q?Ny9vjGU7IKbYlMAr8+5KNxb8KymLbgZ6RH5MIUWT6J4l+JeCEW7aHIF+LMH0?=
- =?us-ascii?Q?ED2LUQxrzvpyy8q16s7Y3GidJDM5IseTaO+d0+pTiXfhkYqUrAfHQF/X4kWj?=
- =?us-ascii?Q?4U46sjreuuFWavI25+dJM++Yd7EUx5stTMXPgBCxBmktL2A078Z06SZUeZrb?=
- =?us-ascii?Q?83HSO51JkPeiNCVUZpfUUcN8/IS/2Q6nfsbIw2VI3mQPgz5cPzcpZDy7pOvv?=
- =?us-ascii?Q?2sNUFq11i88VnJ+gFdx/y4F+89nNQkjW8c6h5knMA0cvUe43w1fM4FeCEZ6z?=
- =?us-ascii?Q?N3jVLPwzBYBmIcLp7wtP3pNNf8IcJJbmPZ6J3gg/vkHG7ocWnlag6w=3D=3D?=
+	=?us-ascii?Q?k5JBA2NWdC0qCiOzXh4YtWKm6HOVY2Khju5GHc+7eImtMzR1gIkj8sTPo76Q?=
+ =?us-ascii?Q?o/nOktghBmu5uJ7ww2Tqx3nY9iEsnFPAbM7/9YlTeWNWYK7EyWPi3vwc2wpv?=
+ =?us-ascii?Q?0mSV5CHPUieeoL4BUndatsTiv0gzKTTSZQ3eq8sGmyqG9EpAK89gvK3UNhaG?=
+ =?us-ascii?Q?1Qq6tlD9Pb0Z3dQC5qC7ap799TcSs7xxFyhXVJ1uHQTsrdUWR9xZneuTvWFv?=
+ =?us-ascii?Q?9IDIxBcbn+HQULkcEN3zxn17OqMIfVBcp0jH+warLFRNoptfECqcj7qe3cPi?=
+ =?us-ascii?Q?ypLwbTDh5i7Rt82pWY9LfmoB5rK2LlUo62NISYSxbuyT+ojy8d/id2S/jlXi?=
+ =?us-ascii?Q?AlvpdmxoGn64t7yxeVpN6OezODysl+3Gw+bm2u/nprikx4DAT0qZX0AX14uq?=
+ =?us-ascii?Q?VUlebsR30KkY5heWR2O4WhOCvhxofqExrYh5lvvG2vglOgGsSqfArwdAqDPf?=
+ =?us-ascii?Q?x6eFHa4zYOVT8RWMRDRvrb5ST89Natt7VWipvu097SC0Pl99bV/KUBUS8Ist?=
+ =?us-ascii?Q?ojubMl+/UfwrzNxSPsJ9t+l3qc2nc1MBNveMfzqvMFx6FXxRhQkOusObmu6f?=
+ =?us-ascii?Q?vT55Xb5NfQ1DYHHTh1qmYLGdGFs/Jo/18HEHfcpHwLdpTtGZ7c0gg72v8eXv?=
+ =?us-ascii?Q?vtJHanRN71BZljWzZasNG2dRIIupsDit2XpX1cdwE7I8ZHk7Jkx4kw0ssmst?=
+ =?us-ascii?Q?sjSM6NbfWgMsCfY/pGmVys3TSBO5D0P90753A75+OBYg4yGLHb9K2zKqSj4N?=
+ =?us-ascii?Q?HBNRL7BlG6i76OYp1w2wn/DyKX9uJxuquaQi/deHybPr/dApdD93YfEhlePo?=
+ =?us-ascii?Q?1ARMpbLvN7vpM9nZj0OzhzqGjKSp6CXg2Xwykuakn31vDjICeBeR689/uK0T?=
+ =?us-ascii?Q?TcsMKaZn6beD8eNMe7X/WTPRuLB/tq8/WRX49j7F4796ISx2G7M2Th13gwwu?=
+ =?us-ascii?Q?uw7CdrEchwuggmkElYWjmecVtJPV/AXpjgwK6pYaMvxr7Bz6ozjrEerlOaKO?=
+ =?us-ascii?Q?079cEakPUsG4AS7ch+c5lAOIngqqCcEFbIBP6AIuxPgMhAzpwD3/tv3Gn5jA?=
+ =?us-ascii?Q?e1REEvDUu4VvQ/Ko/620Yym+vr9QkIO1liplXAspiK7Fe+GfXZeo5hPFGZsG?=
+ =?us-ascii?Q?Iz24acxP09vSGnQkWFEQq9e3V+9QIB2Peu7gLR1avkARkJrvwm13Lm18i6Zg?=
+ =?us-ascii?Q?zkk1l+orEe9CO8T1w8oFaB1KgSsf1dxoXuaYusnzQ1dSAB7Y+vIq2ZjKWrIZ?=
+ =?us-ascii?Q?Ca39RFpxhJSX7Jb6I4ne27YaiEjlbr7RDo68ZYTlruugku95quSi5b/bs0By?=
+ =?us-ascii?Q?dV7SzMtcbozl0zy5GKDonViV/IMoaWEYAzKk7+osUtMouk/ZeExT5eS/4R7T?=
+ =?us-ascii?Q?3LzJYAWPvJNWeAcGgL6CN/Ax1JfuULtVQyReX3GtzeU7fvDTkOItk4v80BSf?=
+ =?us-ascii?Q?05zeOqaEg9Ojv85zDrLArVJ1L+doRFcK?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?vFDxc7bdem87XIF5WJLmYXH01W0WlK1qqA6+H+XedMPyr3ED/Cv1EbNKRxjq?=
- =?us-ascii?Q?60hW2cNt4SZFzgNVElStkkWWd9DbxfMNvCb5Nk0TzC1oMNgi5VvvfDQx4HZN?=
- =?us-ascii?Q?SjLcHkGgp6XcPHSujVCHH7Np2cI/ltZ8hJVyhV7vwM+nr4oUD571tiUR0O2T?=
- =?us-ascii?Q?ksYyIV4CDR17xj2N0eZHKLJyWr2oQQx9S9a5LcbEFlh9PJbtnN58Q/inWcu4?=
- =?us-ascii?Q?rMtf/AxLRN1EWb9ik8oFko5ZBZWXOsXfctWFBm/8gjCER/OirFu7X22UAo4i?=
- =?us-ascii?Q?vz6tyvJ1KTOcAssMiWHqEuw7CgeX3I6EzYjR+Uv7mb2+8H6HSoXv3Xbk/RLB?=
- =?us-ascii?Q?XUEdplaLU4Jzd5tW5Hu4jtUeWs9d2buJGtIufVva/GG9Ex5JaXuSOaVfRT0a?=
- =?us-ascii?Q?DUL1VXv05VCuJO0fSF8+ti+O/w6WUXcsvWplCnSzz20YLDDRjxJGZpZGURIs?=
- =?us-ascii?Q?51f6HHU+hA3RBypZejO7t6C2sGmQmuDRSajSWiGvC1NQtxa/A9hkr4v3kCws?=
- =?us-ascii?Q?FHK0u//AhYdaZQD2LO7XkgqWiFVlKuzG6X6NGB6T1byUw1y3JunGyPUzuRaC?=
- =?us-ascii?Q?Bm2RBRbcZFNSCACkCSYAPOzqbRcOyBc5SWhRN35o+kD/XS55q+QN2ofxLumU?=
- =?us-ascii?Q?fxwCDf+Pw6IJVulmghZtz/+DBA5wlyN7wOys5yunzH4gOdWJ9Sph+Flc1ro1?=
- =?us-ascii?Q?rsr5BdhG1WrVTm0SsP+QH8GT6UYf4qXYTG7VzCYT+iKmbguFi0e+dA+qh6Km?=
- =?us-ascii?Q?gw4ymMg7Q40ALyZmWmCl50d7DfCFkXJdxzLe2zk087rOGw/gNGjWy9DAYOZI?=
- =?us-ascii?Q?2NVzy/EWUMQJy3jElzTJ7kvJI8ia28PlwxKAcjZYJ//D8dK/ggKyhS0QWHYB?=
- =?us-ascii?Q?zOP8UzCEc8h3zdmchwfyEsttWkKtKDKEbgEYfrh1KOl3XgF87MR6e8oDKCcz?=
- =?us-ascii?Q?aXdCBuWFEO027b3F46JWEuEidoB1Z9mkQDNd5HPjlSCibuv4CT0JieNwCbo+?=
- =?us-ascii?Q?psoOVo81Pd2zprbV+48gB0kgqYnop+BLmkBn8qfuvGBgn7jIYLR9eFu5o5fF?=
- =?us-ascii?Q?3PlRAvmwjSLCNmlGb12/5fI7ClKL6JrQFZJ7jTH4hFQTLFYjdxeNS8JmnNvm?=
- =?us-ascii?Q?P46Ajv+CqAKEaAPv1HX2STHn2g5oON5ZiOdMQewwkzF7M63xkq2a0LTYJf2d?=
- =?us-ascii?Q?KkVc1S9DFNzCpzXbwAopSGuCfwV05uk/5rOaywCyZYbGv1fd+xu6VWWsO7UA?=
- =?us-ascii?Q?b3DpFoaMF71CMlOH/TQpfG5uwI9QzJEPjRfowf61IxImgtVDBDkuIdAOda5S?=
- =?us-ascii?Q?SdaAJHMh5MoY5G4dW79NtThDfDOnFwrGiWF0wbsTqP7RqqBtGmbeQHGFZIid?=
- =?us-ascii?Q?2r3tNIRJBrJ+TQEDMPVoAG2xeuZx2dvTFczngSMQrFmAIjc4K7wEtkmvTuJb?=
- =?us-ascii?Q?rYz4QCm+ugYpiUQcRY6XT9uDidmn2/X9JnrYZAClRbZVzV5z2vu3DoON9kLL?=
- =?us-ascii?Q?tgmZpUYv+/LN7dWaTYNvbesk58vCH2cMbk+lYiG3DvP6vo4RNmp0N4eghP6h?=
- =?us-ascii?Q?IS0rhrJbG1CQud9jZBLdYcma5hGUCkb4UeIckDL0?=
+	=?us-ascii?Q?DPQUp8U1r+X/uLD/pybdwnt/uDfUASmI41LsIU9ylrGYrOb0KtaL1gRr/5BS?=
+ =?us-ascii?Q?xJxc9soBSBa+M/Hn+tlLQPKVF4KdJohu5fbqpMygJlWZVPZBp8cBYR3ou+dL?=
+ =?us-ascii?Q?rISSEk0rS0TpKa4C0GTIHa8jCM/z8UVPtTYv8so/Qr37ucRof/0zEIg1VC1H?=
+ =?us-ascii?Q?gcVrr0yg2BL0FCEttPWaENyVdZzKjFPI/8Sc4uU8ZxDU+V0iYAb7mVoJyP4z?=
+ =?us-ascii?Q?fPVOp7tUknFwofL+pDWoCy7bvcWAb2o5d7JfyyjvIFVh55TKUK0DCvOfrKqq?=
+ =?us-ascii?Q?l2+CqML3fBGLSefKZlMCeE7HJnjgQE+qoCeRfHTHnvLUFJPuew36AKrX7rOt?=
+ =?us-ascii?Q?qseBLFAsIiffB/sPbcHqHOdLd61QXleLkQWE4lI+cSGpYzKfnPBmKbbiP2NV?=
+ =?us-ascii?Q?XfVZJe08UqeDEtolVOnl9HbqZpDXRYDGqWDE2LzFkpHhX9H+2Kg0aWQI+PGT?=
+ =?us-ascii?Q?CKvxodo69AwSnN0I+M3MHZ0n5HLNwWvmoA0qCJrVtIwcDdrsLBrFEC+BKjVX?=
+ =?us-ascii?Q?JhFdQrKXxk6VyOWVSM+iq0ojqrFUcyhvxOm/RfJo5uz53XBHY1u+YAkrrXTt?=
+ =?us-ascii?Q?10LOjFaLClBFCqHte4l3Cu8X3IYnjHUrzZ2TZ5jIxaAbWnTgLUgc2iWZXtq8?=
+ =?us-ascii?Q?pdsqJKk+TuDd5JnboMj4sUPrfePa874otcfBFczF6FhEFiNpBZwSCW9NyY+C?=
+ =?us-ascii?Q?ymsn0KgsgxyCasz0RKIHm8C88jgF3oPlhNU0zr7Twk06l7/cwAXbGYiZfq/D?=
+ =?us-ascii?Q?Q4w8+p9yGiKf35sjWO+r7/hAkmPEibYOm0QTXL8j1nqP8In6sxhTzn3YuHAC?=
+ =?us-ascii?Q?Mj7GDixL40WpSn+A8HJ3gbe96Hf5R2ciqu8sCOD+8GDIgX38mD0+jciJo3NI?=
+ =?us-ascii?Q?TSXXpUC5OBFeJGd0HoqQfWm55pWarDioRvu6mKrzGPokFmcEa9F2tukI+o/K?=
+ =?us-ascii?Q?wipUL57ExZQMZW68BFYFcslUges9g1BCUsnwmqfHqOffHk2k7TJ+Um2eERSG?=
+ =?us-ascii?Q?6jdvgMH8jWL8SZN6Gtr4Z1ZVyzFqS8dm+1ZF15HzkhuLtIM3d3RjAGhwPoDI?=
+ =?us-ascii?Q?i3T9rEY9kOabDQuAnFL8s2JzmwQUPiwHLfwX0GY37LJk1S0sa+1IOpZ5beI9?=
+ =?us-ascii?Q?pL75U2fW6xKpmgppZUFze5UdAW3R4jNadGU0InnopqLKLR+uUnkDjlRamWeF?=
+ =?us-ascii?Q?kaQcD6BSJZnKf/ph9lzNulJD0/7xSk4cpAcxKIdW3wG6eyl2vij+xVW4Fvap?=
+ =?us-ascii?Q?7ekClstuEa7Jh5hA57Z3e7siwYPZTZK/XPm4PzUyjutC89A0GedMUQcOqxJ6?=
+ =?us-ascii?Q?wAhfmukc4IT+dAKsYCdAEV4nmILxjlzgYco3i3W2h3DU7rYybDU4XDTmsoYd?=
+ =?us-ascii?Q?I/xBGXjY8iuqgrblFYA6GFNVBBcDdKtX9xu4lObCpuh4ouk4jq8eOHBRlJAJ?=
+ =?us-ascii?Q?NBxkqcyaIvYvHC4+uFY7X2W2No4V3EWm/+Il8rsZ6ifBzJCbHfhwjIplXRgE?=
+ =?us-ascii?Q?bN7ZA4s/SXapifgnxQusKflEnT/y3zZQ7d+w9xZt/qZWcbdvUfDk73zgMNU6?=
+ =?us-ascii?Q?cin9km/8CiTzb7LYCVQucjybjl+giVRHfFPFN7k9?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 56692540-a63f-4917-014a-08ddfc2de990
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ac25156-c1a6-4d4f-84c5-08ddfc2e151e
 X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2025 12:20:28.0424
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2025 12:21:41.1198
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Fy6BQYWl3aIsXANIx2CQ3DFov+tb2h61d1+uCy1bOWnmhvbiR0x0VNSsVQDax1w1
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8504
+X-MS-Exchange-CrossTenant-UserPrincipalName: BlCAQyTsqqG6ss+jy7zlUp3puVoYlJobrLIwgaK9l1ZOgo/wwh5oUQpIx9avNvH4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7993
 
-On Tue, Sep 23, 2025 at 03:29:52PM -0600, Alex Williamson wrote:
-> > > Where?  Is this in reference to our handling of multi-function
-> > > endpoints vs whether downstream switch ports are represented as
-> > > multi-function vs multi-slot?  
-> > 
-> > If you have a MFD Linux with no ACS it will group the whole MFD if any
-> > of it lacks ACS caps because it assumes there is an internal loopback
-> > between functions.
+On Thu, Sep 25, 2025 at 03:15:46PM +0300, Patrisious Haddad wrote:
 > 
-> Yes
-> 
-> > If the MFD has a single function with ACS then only that function is
-> > removed from the group. The only way we can understand this as correct
-> > by our grouping definition is to require the MFD have no internal
-> > loopback. ACS is an egress control, not an ingress control.
-> 
-> Yes, current grouping is focused on creating sets of devices that
-> cannot perform DMA outside of their group without passing through a
-> translation agent.  It doesn't account for ingress from other devices.
+> On 9/25/2025 2:54 PM, Jason Gunthorpe wrote:
+> > On Thu, Sep 25, 2025 at 02:48:33PM +0300, Tariq Toukan wrote:
+> > > +static void mlx5_iowrite64_copy(struct mlx5_wc_sq *sq, __be32 mmio_wqe[16],
+> > > +				size_t mmio_wqe_size, unsigned int offset)
+> > > +{
+> > > +#if defined(CONFIG_KERNEL_MODE_NEON) && defined(CONFIG_ARM64)
+> > IS_ENABLED() not defined()
+> I just wonder why, Is there a preference in the driver from like
+> aesthetic/convention point of view?
+> Since here it technically doesnt matter - IS_ENABLED have no functional
+> difference from defined since these are boolean configs not *tristate*ones
+> (cant be loaded as module).
 
-That isn't the definition of groups at all. If any two devices can DMA
-to each other they must be in the same group.
-
-There is no ingress or egress rational with groups. The fact the
-implementation is creating these inconsistencies with ingress vs
-egress is a BUG and not in anyway part of the security definition.
-
-> One of the few examples of this that seems to exist is something like
-> you're describing where we have a MFD and one of the functions is
-> quirked or reports an empty ACS capability to create another group.
-
-Yes, one of my test systems has an intel NIC like this. 
-
-> The ACS/quirk device is believed not to have the capability to DMA into
-> the non-ACS/quirk devices, but the opposite is not guaranteed.  
-
-I don't think so. The quirk should have been applied to the whole
-MFD. Because the code has this behavior people got away with quirking
-the NIC only. IMHO the way to understand that quirk is applying to the
-whole MFD.
-
-> In practice the ACS/quirk device is typically the only device that's
-> worthwhile to assign, so the host is still isolated from the
-> userspace driver.  Arguably the userspace device may not be isolated
-> from the host devices, but without things like TDISP, there's
-> already a degree of trust in other host drivers and devices.
-
-No way! That isn't how any of this should work with hand waving around
-"worthwhile to assign" guessing.
-
-> I'm afraid that including the ingress potential in the group
-> configuration is going to blow up existing groups, for not much
-> practical gain.  
-
-You are aruging both ways. The current design does not follow the
-spec, and does not implement the security defintion for groups.
-
-Dismissing that as "no practical gain" for correcting the security is
-perhaps true, but then don't argue against this series that it
-slightly weakens the security if it has "no practical gain". :(
-
-> I wonder if there's an approach where a group split in
-> this way might taint the non-ACS/quirk group to prevent vfio use cases
-> and whether that would sufficiently close this gap with minimal
-> breakage.
-
-You want to build asymmetric groups now?? It is already too
-complicated - this really brings no value IMHO.
-
-> > If a MFD function is a bridge/port then the group doesn't propogate
-> > the group downstream of the bridge - again this requires assuming
-> > there is no internal loopback between functions.
-> 
-> I think that if we have a multi-function root port without ACS/quirks
-> that all the functions and downstream devices are grouped together.
-
-Yes, if the MFD bridge has ACS then yes it wrongly blocks the
-propogation. Again the only way to understand this behavior as making
-sense is if it is assuming there is no internal MFD loopback.
-
-> > It is taking the undefined behavior in the spec and selectively making
-> > both interpretations at once.
-> 
-> The intention is that undefined behavior should be considered
-> non-isolated.
-
-Sure, but it doesn't do that
-
-> We try to define that boundary of a group based on provable egress
-> DMA.
-
-It's a bug. That logic doesn't match the security defintion of groups.
-
-> > How about we answer the question "does this MFD have internal
-> > loopback" as:
-> >  - NO if any function has an appropriate ACS cap or quirk.
-> 
-> In this case rather than split the one ACS/quirk function into a group
-> we split each function into a group.  Now we potentially have singleton
-> groups for non-ACS/quirk functions that we really have no basis to
-> believe are isolated from other similar devices.  
-
-No, that's too strong. Given that ACS is an egress control it is
-totally pointless for a vendor to make an ACS that egress controls one
-function but the MFD has internal loopback allowing other functions to
-ingress.
-
-We are making the assumption, that Linux is already making, where if
-some vendor has added/quirked ACS then it actually provides egress and
-ingress isolation to that function. Meaning there is no MFD internal
-loopback.
-
-I'm propsing the consistently broaden this assumption to the whole MFD.
-
-> >  - NO if any function is bridge/port
-> 
-> This would hand-wave away grouping multi-function downstream ports
-> without ACS/quirks with no justification afaict.
-
-We can drop this if the bridge functions have ACS already today to get
-their groups split.
-
-> >  - YES otherwise - all functions are end functions and no ACS declared
-> > 
-> > As above this is quite a bit closer to what Linux is doing now. It is
-> > a practical estimation of the undefined spec behavior based on the
-> > historical security posture of Linux.
-> 
-> It's really not what we're doing now.  We currently consider undefined
-> behavior to be non-isolated, or we try to.  
-
-Maybe it wanted to, but it isn't implemented right.
-
-> The above makes broad and unwarranted (IMO) isolation claims.
-
-I agree, it is trying to match the bugs in the current code with a
-grounding in something explainable and understandable that matches our
-security definition for groups.
-
-> This puts data at risk more so than assuming undefined behavior is
-> non-isolated.
-
-I already sent a series that actually assumed undefined behavior was
-non-isolated.
-
-It breaks alot of systems because doing that *correctly* is extremely
-pessimistic toward real world HW.
-
-> Should we re-evaluate how we handle downstream switch ports exposed as
-> separate slots, certainly.  
-
-So lets start with that, we can stop this series after it fixes the
-switch ports.
+I think it is an aesthetic convention to avoid defined(CONFIG_*) as
+the reasoning it is not tristate is a bit tricky.
 
 Jason
