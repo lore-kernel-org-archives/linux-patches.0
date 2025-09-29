@@ -1,206 +1,244 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA292848A5
-	for <patches@lists.linux.dev>; Sun, 28 Sep 2025 23:30:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DD5284695
+	for <patches@lists.linux.dev>; Mon, 29 Sep 2025 09:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759102208; cv=none; b=Dosi5dgNiELwR6noC/outILBp/OXLPyVWl/z+t76cNdFg8zvFwIMYPYtxaDtpjP5UU9NLxP+CPshp2G5Bgq7xGwIjKlJY7UkGiw3NmClvwqD/gsO5KUmcahRJry2EqEBWLbg+2pASDIGHcH7HHnTTB7eAcJLMQlWFys+gXHYqgc=
+	t=1759137226; cv=none; b=IkIvqkNAQvrdvS2KqYQnMYfkmK7Y2IQErnBy0bZgPgp6Q9192ctfyjKtUeKczHcKx9zburUaGix2RLFnsitWwfVafh6hk2tfshe/Vznq+OkRq8wPes1QTzQOUw1Gdbvv0BWQpT4vFjHYouj9l6KeVk76j+bJkykXtoy/vOU6yAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759102208; c=relaxed/simple;
-	bh=DMRQHjLSw1VCWcf3ldL1qLFHyTozspDLDa+x6M7CPKU=;
-	h=Content-Type:MIME-Version:From:To:Cc:Subject:In-reply-to:
-	 References:Date:Message-id; b=QZH6ZnoQJbxWqpNH4D/UH3lNaRy6VzRgTljIlvKx9MYeLvS3Ql4v9vlsLApIGu0XJqtB+Ga5Jcc8v6evMwIOge4BtKH4Bqs6ZiQHroxa9UuEb2bweM1AUFJS595TrZx9KxFk1ec/EGaGQcvfW7l5qDYm0qwZLoteXjRB5wAl45M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net; spf=pass smtp.mailfrom=ownmail.net; dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b=eUJV2Hu+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p4IPUtFj; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ownmail.net
+	s=arc-20240116; t=1759137226; c=relaxed/simple;
+	bh=jtJHKeg4V3hrJtslZs+qvCCY9ECaZmET93hB+vqILeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=guWj08s9oDxaai9BQpI4QQWkrVI8FaIb0IbWYzbHmBlqv+XcEyMaRSiz/BC9ejkf71OdlC07tfvttdzR/n/Y1rLkDmkyGeAphSc4pqalDTfHWznWbC1tKzzXMkW9hh8uTstxta0Lk8vJke/+kDCbo6Np16ZHIHz9snt0ush+6Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Hq4pd3FL; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=b25DWtEA; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=hMG0X5o7; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ZWV8cEdM; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b="eUJV2Hu+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p4IPUtFj"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D207A7A0035;
-	Sun, 28 Sep 2025 19:30:04 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Sun, 28 Sep 2025 19:30:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ownmail.net; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:reply-to:subject:subject:to:to; s=fm2; t=
-	1759102204; x=1759188604; bh=4ahUixXHjBP5M8iod6LXmRiIaHvcATvU3tK
-	vmfeS/4Y=; b=eUJV2Hu+mvRN8w5ASFdoDC5zwCGAbtiYeWywrTZjgj1amWUal8S
-	71uQU8YIfsfhJLR6rvE8sBf+YRrmfC09Wp82Ehog8Vb2VwUh4FpVmQjUfgVYrt0e
-	rv2ROwEFzOff/V1Y856/KhYQh1n7rVk8OChDdXWWZ+1ObBQd6WgmH8ORO8for1FZ
-	2VH2hphg5zRG3k9cJBLSoDD92CwcoYOkLXgMDkzurlKSZsApBDWO5wYtiRwYeHYC
-	jKlfiXTzOfxrJzw9jB3T9eWRFeEhwJ0aApJ1aubxk903NqRbOCUsW/I5AfbAbRlE
-	RYtwsI2GH11gQwh4SkjWfnppSc91wpqtNTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759102204; x=
-	1759188604; bh=4ahUixXHjBP5M8iod6LXmRiIaHvcATvU3tKvmfeS/4Y=; b=p
-	4IPUtFjhYLM9xSvC2Ms1b6LlOjjUq1Ta1RHLSvc0S0r5CDf6SFmE9vfeq4MfM8ST
-	7cqK7TrGUFywRdF23BaoXTYOFBWrbg6jRqIKIbkr7KEKXhF5+aYEJEqmZXao8YRb
-	/X1uu1Qp2s0L30ZL6LM9+Rxj/BYiPGHjFKQnivrpnGAaMNHqJ3BbyD+Sv6Ooi+P9
-	CTwoyUinw0MvyI3zImEy9WJml5iqXQgUCuzvxENRaoZIUO5x7YtBQwIVUbaWlU3y
-	ai7eG+6zKt2D9OeoQeMnKqY2GbICMW1qiHRd9XjgN0E62kWawfnF4bAaqdOkbNsX
-	xf6YEmPcgH+HRr6C+rcPA==
-X-ME-Sender: <xms:_MTZaDJSuhZ866iHcT6pe1k_4Jf5qXiiBPUW8rH6AD62TH0A-yxx1A>
-    <xme:_MTZaKPsumWZdiswajzhCP5R1VJ8ng3dcdvA3_zs8pfu6xvu6ko6brxBJNqtDI6oL
-    Bc4gdwrazU1kdmGgKEYp__G_wOHz6lcyC_AWWFTqPYQE8zqjQ>
-X-ME-Received: <xmr:_MTZaGULkx32EmTsRPu8lvj3ecXeYYHY6t7W-KB8dhm8no8D3h_5FzX3D9CJtmdPc-VcDfTMgSrWf0in-m1tk6gobI03OtNMxGxYBRBOdJN->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejieeghecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpegtgfgghffvvefujghffffkrhesthhqredttddtjeenucfhrhhomheppfgvihhluehr
-    ohifnhcuoehnvghilhgssehofihnmhgrihhlrdhnvghtqeenucggtffrrghtthgvrhhnpe
-    ffteefvdegveejlefhhfekgfffjedvtdevffdtgeeuieevffejueekffekfeekhfenucff
-    ohhmrghinhepmhhsghhiugdrlhhinhhknecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepnhgvihhlsgesohifnhhmrghilhdrnhgvthdpnhgspghr
-    tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlihhnuhigqd
-    hnfhhssehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhomhesthgrlhhp
-    vgihrdgtohhmpdhrtghpthhtohepohhkohhrnhhivghvsehrvgguhhgrthdrtghomhdprh
-    gtphhtthhopegthhhutghkrdhlvghvvghrsehorhgrtghlvgdrtghomhdprhgtphhtthho
-    pegrnhhnrgdrshgthhhumhgrkhgvrhesohhrrggtlhgvrdgtohhmpdhrtghpthhtohepug
-    grihdrnhhgohesohhrrggtlhgvrdgtohhmpdhrtghpthhtohepphgrthgthhgvsheslhhi
-    shhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehnrghthhgrnheskhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepjhhlrgihthhonheskhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:_MTZaIkP96M5eNNxJNLK3eOKxFoIdken9wZJb0lp5W7RBSvlw2_Rxg>
-    <xmx:_MTZaFMcM3zJ4BRwUF5ZL-gl3RMtJ3u9eHDOlel_vI6GFd9APnhuEA>
-    <xmx:_MTZaAKyK6YnE63auevcrgnp0yyyLELdnAW3fgAq43_BBo5HZsc6_w>
-    <xmx:_MTZaP1Y22G07bVpXrcS-6f2-auTTnM5bZ6CPCKQSkE7hJuj0BA-VA>
-    <xmx:_MTZaHqitHrLzS0_T4_5_AjdsGSA-VSqCeLMd48xxJ7lqEL-HMvB9M2f>
-Feedback-ID: iab3e480c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 28 Sep 2025 19:30:01 -0400 (EDT)
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Hq4pd3FL";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="b25DWtEA";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="hMG0X5o7";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ZWV8cEdM"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id A184628A42;
+	Mon, 29 Sep 2025 09:13:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759137220; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=krawKFrMK6CfXJGZRbum6m0whh/VNnnKuCLw/mlg22U=;
+	b=Hq4pd3FLlIHlpsq/WIWIpKTQIK1u5uVC206WcP0fQUSFrI19DANzMPCVUP75KY+hBZcL0Q
+	dtdVgf8LzRHS+mLGqBHxvAYy4l40BsAWLIlpobyu01j8D02b0I98f1+p5dw6q44ptuX62H
+	m9Zo3mhg2ZXRKipx4DYunUuhbPd04E4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759137220;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=krawKFrMK6CfXJGZRbum6m0whh/VNnnKuCLw/mlg22U=;
+	b=b25DWtEAGkPFc4sT9issDmqy/BMl9Qbnlh5ruisp0J1gFMCT/qNvoATff8AwO5EUhSceEL
+	kSBiQsu7tqSUuVAA==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hMG0X5o7;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ZWV8cEdM
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1759137219; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=krawKFrMK6CfXJGZRbum6m0whh/VNnnKuCLw/mlg22U=;
+	b=hMG0X5o7qx5uLzOvtPU6oAOR/sM1jQy2B6QsQik0JJGzKLSrpedSDbKzqP6/qSgL4E6z5c
+	PYEIwt7LMqEi6gairxqjXKFRdyD4dFJYTy2ovOneowKDznaaZr9VZ4B/+OwUlRFxMrvTSI
+	pzIsg61tXM/wB+hrp8gOffgcwit1QxI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1759137219;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=krawKFrMK6CfXJGZRbum6m0whh/VNnnKuCLw/mlg22U=;
+	b=ZWV8cEdMR8rl5mD9g70Zqdfp6Osb2Z+ASfy/UIiBlSB9+DmXXVL0n2mnz3VGfUEWe6Zu2m
+	Fw46i1nCG69w1gBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CB9D413782;
+	Mon, 29 Sep 2025 09:13:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id q2iJILJN2mgkQwAAD6G6ig
+	(envelope-from <ddiss@suse.de>); Mon, 29 Sep 2025 09:13:22 +0000
+Date: Mon, 29 Sep 2025 19:13:16 +1000
+From: David Disseldorp <ddiss@suse.de>
+To: nschichan@freebox.fr
+Cc: akpm@linux-foundation.org, andy.shevchenko@gmail.com, axboe@kernel.dk,
+ brauner@kernel.org, cyphar@cyphar.com, devicetree@vger.kernel.org,
+ ecurtin@redhat.com, email2tema@gmail.com, graf@amazon.com,
+ gregkh@linuxfoundation.org, hca@linux.ibm.com, hch@lst.de,
+ hsiangkao@linux.alibaba.com, initramfs@vger.kernel.org, jack@suse.cz,
+ julian.stecklina@cyberus-technology.de, kees@kernel.org,
+ linux-acpi@vger.kernel.org, linux-alpha@vger.kernel.org,
+ linux-api@vger.kernel.org, linux-arch@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-block@vger.kernel.org,
+ linux-csky@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-efi@vger.kernel.org, linux-ext4@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-hexagon@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
+ linux-mips@vger.kernel.org, linux-openrisc@vger.kernel.org,
+ linux-parisc@vger.kernel.org, linux-riscv@lists.infradead.org,
+ linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+ linux-snps-arc@lists.infradead.org, linux-um@lists.infradead.org,
+ linuxppc-dev@lists.ozlabs.org, loongarch@lists.linux.dev,
+ mcgrof@kernel.org, mingo@redhat.com, monstr@monstr.eu,
+ mzxreary@0pointer.de, patches@lists.linux.dev, rob@landley.net,
+ safinaskar@gmail.com, sparclinux@vger.kernel.org,
+ thomas.weissschuh@linutronix.de, thorsten.blum@linux.dev,
+ torvalds@linux-foundation.org, tytso@mit.edu, viro@zeniv.linux.org.uk,
+ x86@kernel.org
+Subject: Re: [PATCH-RFC] init: simplify initrd code (was Re: [PATCH RESEND
+ 00/62] initrd: remove classic initrd support).
+Message-ID: <20250929171652.50b7a959.ddiss@suse.de>
+In-Reply-To: <20250925131055.3933381-1-nschichan@freebox.fr>
+References: <CAHNNwZC7gC7zaZGiSBhobSAb4m2O1BuoZ4r=SQBF-tCQyuAPvw@mail.gmail.com>
+	<20250925131055.3933381-1-nschichan@freebox.fr>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: NeilBrown <neilb@ownmail.net>
-To: "Nathan Chancellor" <nathan@kernel.org>
-Cc: "Chuck Lever" <chuck.lever@oracle.com>, "Jeff Layton" <jlayton@kernel.org>,
- "Anna Schumaker" <anna.schumaker@oracle.com>,
- "Olga Kornievskaia" <okorniev@redhat.com>, "Dai Ngo" <Dai.Ngo@oracle.com>,
- "Tom Talpey" <tom@talpey.com>, "Simon Horman" <horms@kernel.org>,
- linux-nfs@vger.kernel.org, patches@lists.linux.dev,
- "Nathan Chancellor" <nathan@kernel.org>
-Subject:
- Re: [PATCH v2] nfsd: Avoid strlen conflict in nfsd4_encode_components_esc()
-In-reply-to:
- <20250928-nfsd-fix-trace-printk-strlen-error-v2-1-108def6ff41c@kernel.org>
-References:
- <20250928-nfsd-fix-trace-printk-strlen-error-v2-1-108def6ff41c@kernel.org>
-Date: Mon, 29 Sep 2025 09:29:56 +1000
-Message-id: <175910219642.1696783.1969092567455681202@noble.neil.brown.name>
-Reply-To: NeilBrown <neil@brown.name>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Rspamd-Queue-Id: A184628A42
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[linux-foundation.org,gmail.com,kernel.dk,kernel.org,cyphar.com,vger.kernel.org,redhat.com,amazon.com,linuxfoundation.org,linux.ibm.com,lst.de,linux.alibaba.com,suse.cz,cyberus-technology.de,lists.infradead.org,lists.linux-m68k.org,lists.ozlabs.org,lists.linux.dev,monstr.eu,0pointer.de,landley.net,linutronix.de,linux.dev,mit.edu,zeniv.linux.org.uk];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	R_RATELIMIT(0.00)[to_ip_from(RL4bphh9snz1w7feaus4qmzef6)];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_DN_NONE(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[56];
+	MISSING_XM_UA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
+X-Spam-Score: -2.01
 
-On Mon, 29 Sep 2025, Nathan Chancellor wrote:
-> There is an error building nfs4xdr.c with CONFIG_SUNRPC_DEBUG_TRACE=3Dy
-> and CONFIG_FORTIFY_SOURCE=3Dn due to the local variable strlen conflicting
-> with the function strlen():
->=20
->   In file included from include/linux/cpumask.h:11,
->                    from arch/x86/include/asm/paravirt.h:21,
->                    from arch/x86/include/asm/irqflags.h:102,
->                    from include/linux/irqflags.h:18,
->                    from include/linux/spinlock.h:59,
->                    from include/linux/mmzone.h:8,
->                    from include/linux/gfp.h:7,
->                    from include/linux/slab.h:16,
->                    from fs/nfsd/nfs4xdr.c:37:
->   fs/nfsd/nfs4xdr.c: In function 'nfsd4_encode_components_esc':
->   include/linux/kernel.h:321:46: error: called object 'strlen' is not a fun=
-ction or function pointer
->     321 |                 __trace_puts(_THIS_IP_, str, strlen(str));       =
-       \
->         |                                              ^~~~~~
->   include/linux/kernel.h:265:17: note: in expansion of macro 'trace_puts'
->     265 |                 trace_puts(fmt);                        \
->         |                 ^~~~~~~~~~
->   include/linux/sunrpc/debug.h:34:41: note: in expansion of macro 'trace_pr=
-intk'
->      34 | #  define __sunrpc_printk(fmt, ...)     trace_printk(fmt, ##__VA_=
-ARGS__)
->         |                                         ^~~~~~~~~~~~
->   include/linux/sunrpc/debug.h:42:17: note: in expansion of macro '__sunrpc=
-_printk'
->      42 |                 __sunrpc_printk(fmt, ##__VA_ARGS__);             =
-       \
->         |                 ^~~~~~~~~~~~~~~
->   include/linux/sunrpc/debug.h:25:9: note: in expansion of macro 'dfprintk'
->      25 |         dfprintk(FACILITY, fmt, ##__VA_ARGS__)
->         |         ^~~~~~~~
->   fs/nfsd/nfs4xdr.c:2646:9: note: in expansion of macro 'dprintk'
->    2646 |         dprintk("nfsd4_encode_components(%s)\n", components);
->         |         ^~~~~~~
->   fs/nfsd/nfs4xdr.c:2643:13: note: declared here
->    2643 |         int strlen, count=3D0;
->         |             ^~~~~~
->=20
-> This dprintk() instance is not particularly useful, so just remove it
-> altogether.
->=20
-> At the same time, rename the strlen local variable to avoid any
-> potential conflicts with strlen().
->=20
-> Fixes: ec7d8e68ef0e ("sunrpc: add a Kconfig option to redirect dfprintk() o=
-utput to trace buffer")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Hi Nicolas,
+
+On Thu, 25 Sep 2025 15:10:56 +0200, nschichan@freebox.fr wrote:
+
+> From: Nicolas Schichan <nschichan@freebox.fr>
+> 
+> - drop prompt_ramdisk and ramdisk_start kernel parameters
+> - drop compression support
+> - drop image autodetection, the whole /initrd.image content is now
+>   copied into /dev/ram0
+> - remove rd_load_disk() which doesn't seem to be used anywhere.
+> 
+> There is now no more limitation on the type of initrd filesystem that
+> can be loaded since the code trying to guess the initrd filesystem
+> size is gone (the whole /initrd.image file is used).
+> 
+> A few global variables in do_mounts_rd.c are now put as local
+> variables in rd_load_image() since they do not need to be visible
+> outside this function.
 > ---
-> Changes in v2:
-> - Remove dprintk() to remove usage of strlen()
-> - Rename local strlen variable to avoid potential conflict in the future
-> - Link to v1: https://patch.msgid.link/20250925-nfsd-fix-trace-printk-strle=
-n-error-v1-1-1360530e4c6b@kernel.org
-> ---
->  fs/nfsd/nfs4xdr.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
->=20
-> diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-> index ea91bad4eee2..9fe8a413f688 100644
-> --- a/fs/nfsd/nfs4xdr.c
-> +++ b/fs/nfsd/nfs4xdr.c
-> @@ -2640,11 +2640,9 @@ static __be32 nfsd4_encode_components_esc(struct xdr=
-_stream *xdr, char sep,
->  	__be32 *p;
->  	__be32 pathlen;
->  	int pathlen_offset;
-> -	int strlen, count=3D0;
-> +	int str_len, count=3D0;
->  	char *str, *end, *next;
-> =20
-> -	dprintk("nfsd4_encode_components(%s)\n", components);
+> 
+> Hello,
+> 
+> Hopefully my email config is now better and reaches gmail users
+> correctly.
+> 
+> The patch below could probably split in a few patches, but I think
+> this simplify the code greatly without removing the functionality we
+> depend on (and this allows now to use EROFS initrd images).
+> 
+> Coupled with keeping the function populate_initrd_image() in
+> init/initramfs.c, this will keep what we need from the initrd code.
+> 
+> This removes support of loading bzip/gz/xz/... compressed images as
+> well, not sure if many user depend on this feature anymore.
+> 
+> No signoff because I'm only seeking comments about those changes right
+> now.
+> 
+>  init/do_mounts.h    |   2 -
+>  init/do_mounts_rd.c | 243 +-------------------------------------------
+>  2 files changed, 4 insertions(+), 241 deletions(-)
+
+This seems like a reasonable improvement to me. FWIW, one alternative
+approach to clean up the FS specific code here was proposed by Al:
+https://lore.kernel.org/all/20250321020826.GB2023217@ZenIV/
+
+...
+> diff --git a/init/do_mounts_rd.c b/init/do_mounts_rd.c
+> index ac021ae6e6fa..5a69ff43f5ee 100644
+> --- a/init/do_mounts_rd.c
+> +++ b/init/do_mounts_rd.c
+> @@ -14,173 +14,9 @@
+>  
+>  #include <linux/decompress/generic.h>
+>  
+> -static struct file *in_file, *out_file;
+> -static loff_t in_pos, out_pos;
 > -
->  	pathlen_offset =3D xdr->buf->len;
->  	p =3D xdr_reserve_space(xdr, 4);
->  	if (!p)
-> @@ -2670,9 +2668,9 @@ static __be32 nfsd4_encode_components_esc(struct xdr_=
-stream *xdr, char sep,
->  			for (; *end && (*end !=3D sep); end++)
->  				/* find sep or end of string */;
-> =20
-> -		strlen =3D end - str;
-> -		if (strlen) {
-> -			if (xdr_stream_encode_opaque(xdr, str, strlen) < 0)
-> +		str_len =3D end - str;
-> +		if (str_len) {
-> +			if (xdr_stream_encode_opaque(xdr, str, str_len) < 0)
->  				return nfserr_resource;
+> -static int __init prompt_ramdisk(char *str)
+> -{
+> -	pr_warn("ignoring the deprecated prompt_ramdisk= option\n");
+> -	return 1;
+> -}
+> -__setup("prompt_ramdisk=", prompt_ramdisk);
+> -
+> -int __initdata rd_image_start;		/* starting block # of image */
+> -
+> -static int __init ramdisk_start_setup(char *str)
+> -{
+> -	rd_image_start = simple_strtol(str,NULL,0);
+> -	return 1;
+> -}
+> -__setup("ramdisk_start=", ramdisk_start_setup);
 
-I probably should have said something earlier, and this is definitely
-bike-shedding material, but .... "str_len" is not a whole lot nicer than
-"strlen" (or "i") ...
+There are a couple of other places that mention these parameters, which
+should also be cleaned up.
 
+...
+>  static unsigned long nr_blocks(struct file *file)
+>  {
+> -	struct inode *inode = file->f_mapping->host;
+> -
+> -	if (!S_ISBLK(inode->i_mode))
+> -		return 0;
+> -	return i_size_read(inode) >> 10;
+> +	return i_size_read(file->f_mapping->host) >> 10;
 
-   if (end > str) {
-	if (xdr_stream_encode_opaque(xdr, str, end - str) < 0)
-
-??
-
-NeilBrown
+This should be >> BLOCK_SIZE_BITS, and dropped as a wrapper function
+IMO.
