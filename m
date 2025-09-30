@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA3D1F152D;
-	Tue, 30 Sep 2025 15:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446B8217F55;
+	Tue, 30 Sep 2025 15:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244710; cv=none; b=QKiY+IQ7fNHy5J1LUYsknDvhrQ/kbCXtL3Q7tD5vAkQD5LKQ+aXYJ9JvPXqYyWNYS5PfgOQA0dlipT8HnbeOxix6SgDTftyQPAOpFE79GCKPzNimfaln7GZJuzU6SKtTSS7awDkrBkBN45ZNKuwQUAFnDl1G3FMxxxNCQ9Fx+vg=
+	t=1759244713; cv=none; b=VAhpg82mKdUAbmT/I9aeYpCfPku11dv4q+/REKlH4g/8vvSOfLRWVevF/K0hITDqhPbrg2S4Bo3VzmSHe3iRKGq0K83RkJy5hMyXJJcAfOoH1LIiC0mGmz57V8UbLuBFrXPOf+6svlCedALWeHDx1NIZEXXO+scv0xfjrBXdTxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244710; c=relaxed/simple;
-	bh=ydZ2E5Xye4n0LVRgsIzQG9/xkaZ54mPN0fAN2LgcGBk=;
+	s=arc-20240116; t=1759244713; c=relaxed/simple;
+	bh=MZ1P2yeymS5/0fMUTMn6MGmEsGNUYC1lRCwuQGehN3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qk7j2aLvx7zOj3Kds757aQUF9Y+wNM3KX8KpLkiJcJmFQae6In3QP2qd4IHyDs8bRuXJIH6pUt2GrdmtlpNfHDt9a8rGXTQWzWV6dzXwj/5/X0II+GkfHuCHx7rEt+Lif4BFnp9A//Wt4iM1ZYwFBEyHzUUH5Vm7/AL8il29m3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLC7ZDW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IwJ/hoXIfRG+Pz1ZETAsWRUJVzewC5YfGaIRj3tO7lZqrL4lB2RwRehhKV91e+1+dDLRnHhGolN3HJANmkZmbjruXvUq+ulgPg//cmMX6O3l0HNtu2FMUx13BnmZOIFNUFN1a3B3yJgR7WHWQFyodds2ZsGh6yztAaMmdvU0ZZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e11KxyGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLC7ZDW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47567C4CEF0;
-	Tue, 30 Sep 2025 15:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e11KxyGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD48AC4CEF0;
+	Tue, 30 Sep 2025 15:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244709;
-	bh=ydZ2E5Xye4n0LVRgsIzQG9/xkaZ54mPN0fAN2LgcGBk=;
+	s=korg; t=1759244713;
+	bh=MZ1P2yeymS5/0fMUTMn6MGmEsGNUYC1lRCwuQGehN3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLC7ZDW+005zPufT0mucbSq0VNAWu7oEJgYgCN/RpefrcQibpTb/jeijcWm35TrFO
-	 91dFKwv3JVNhYwAL4xs2criuK3b5WFt0Gumq0VC0p900FdYVCd0Rv9T0BRdxI5dcn5
-	 MLVe+yYyYg5hBxya8XtAL2rttiHRvR8HrmDypCC8=
+	b=e11KxyGANU4KDcdXcTxe/afSIwcPj6l2fuI5LQFtXuaX03X9aG6j04KSorKJTYT/z
+	 c7OmTS97676xdDu11g3W6KYHKuMN2d29bcg6RnBiJPH4spP3g3W23Mx0vEAgWx+yL2
+	 SIhUy270VwGwNBAbuY3f6q9gKGncIOiFkjqRcJXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a25ee9d20d31e483ba7b@syzkaller.appspotmail.com,
+	Xiumei Mu <xmu@redhat.com>,
 	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 058/143] xfrm: xfrm_alloc_spi shouldnt use 0 as SPI
-Date: Tue, 30 Sep 2025 16:46:22 +0200
-Message-ID: <20250930143833.541305076@linuxfoundation.org>
+Subject: [PATCH 6.16 059/143] xfrm: fix offloading of cross-family tunnels
+Date: Tue, 30 Sep 2025 16:46:23 +0200
+Message-ID: <20250930143833.579801906@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -55,48 +56,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit cd8ae32e4e4652db55bce6b9c79267d8946765a9 ]
+[ Upstream commit 91d8a53db2199eefc73ecf3682e0665ea6895696 ]
 
-x->id.spi == 0 means "no SPI assigned", but since commit
-94f39804d891 ("xfrm: Duplicate SPI Handling"), we now create states
-and add them to the byspi list with this value.
+Xiumei reported a regression in IPsec offload tests over xfrmi, where
+the traffic for IPv6 over IPv4 tunnels is processed in SW instead of
+going through crypto offload, after commit
+cc18f482e8b6 ("xfrm: provide common xdo_dev_offload_ok callback
+implementation").
 
-__xfrm_state_delete doesn't remove those states from the byspi list,
-since they shouldn't be there, and this shows up as a UAF the next
-time we go through the byspi list.
+Commit cc18f482e8b6 added a generic version of existing checks
+attempting to prevent packets with IPv4 options or IPv6 extension
+headers from being sent to HW that doesn't support offloading such
+packets. The check mistakenly uses x->props.family (the outer family)
+to determine the inner packet's family and verify if
+options/extensions are present.
 
-Reported-by: syzbot+a25ee9d20d31e483ba7b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a25ee9d20d31e483ba7b
-Fixes: 94f39804d891 ("xfrm: Duplicate SPI Handling")
+In the case of IPv6 over IPv4, the check compares some of the traffic
+class bits to the expected no-options ihl value (5). The original
+check was introduced in commit 2ac9cfe78223 ("net/mlx5e: IPSec, Add
+Innova IPSec offload TX data path"), and then duplicated in the other
+drivers. Before commit cc18f482e8b6, the loose check (ihl > 5) passed
+because those traffic class bits were not set to a value that
+triggered the no-offload codepath. Packets with options/extension
+headers that should have been handled in SW went through the offload
+path, and were likely dropped by the NIC or incorrectly
+processed. Since commit cc18f482e8b6, the check is now strict (ihl !=
+5), and in a basic setup (no traffic class configured), all packets go
+through the no-offload codepath.
+
+The commits that introduced the incorrect family checks in each driver
+are:
+2ac9cfe78223 ("net/mlx5e: IPSec, Add Innova IPSec offload TX data path")
+8362ea16f69f ("crypto: chcr - ESN for Inline IPSec Tx")
+859a497fe80c ("nfp: implement xfrm callbacks and expose ipsec offload feature to upper layer")
+32188be805d0 ("cn10k-ipsec: Allow ipsec crypto offload for skb with SA")
+[ixgbe/ixgbevf commits are ignored, as that HW does not support tunnel
+mode, thus no cross-family setups are possible]
+
+Fixes: cc18f482e8b6 ("xfrm: provide common xdo_dev_offload_ok callback implementation")
+Reported-by: Xiumei Mu <xmu@redhat.com>
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/xfrm/xfrm_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 86337453709ba..4b2eb260f5c2e 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2578,6 +2578,8 @@ int xfrm_alloc_spi(struct xfrm_state *x, u32 low, u32 high,
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index c7a1f080d2de3..44b9de6e4e778 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -438,7 +438,7 @@ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x)
  
- 	for (h = 0; h < range; h++) {
- 		u32 spi = (low == high) ? low : get_random_u32_inclusive(low, high);
-+		if (spi == 0)
-+			goto next;
- 		newspi = htonl(spi);
- 
- 		spin_lock_bh(&net->xfrm.xfrm_state_lock);
-@@ -2593,6 +2595,7 @@ int xfrm_alloc_spi(struct xfrm_state *x, u32 low, u32 high,
- 		xfrm_state_put(x0);
- 		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
- 
-+next:
- 		if (signal_pending(current)) {
- 			err = -ERESTARTSYS;
- 			goto unlock;
+ 	check_tunnel_size = x->xso.type == XFRM_DEV_OFFLOAD_PACKET &&
+ 			    x->props.mode == XFRM_MODE_TUNNEL;
+-	switch (x->props.family) {
++	switch (x->inner_mode.family) {
+ 	case AF_INET:
+ 		/* Check for IPv4 options */
+ 		if (ip_hdr(skb)->ihl != 5)
 -- 
 2.51.0
 
