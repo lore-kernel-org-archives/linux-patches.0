@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EF42F5301;
-	Tue, 30 Sep 2025 15:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CF0223DD6;
+	Tue, 30 Sep 2025 15:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245192; cv=none; b=qz2NctdmQCPfi2UIlAIkDQ1/Yb/5JmAxYQ9asPwDgJ9eTRsUdZ4ttPNyB0XSeUZndsWRBrwKjTxyZUxzAJYm9V8zu+V76DbziJAv1dTXw27ZoaStAU6a2TjlccQkQphnA+zlvSQLpkvhTREiKvJ0NqvQQO6Gs9eINukwV1abLQE=
+	t=1759245197; cv=none; b=o5qJJwYDI2q7iUAeQ9QVrYRP05Gvvn+reokBwPL8xYXOE+EJqrfRpK5boXkx6P5dKHDZ6fHxnqk9Qr+k+8ZJf6nDUJiFpC8eP0nLg93b64uVb182wewL1pz1qwP2TbkUiErb0oTxhliqyc8Yxqpmb8DGxKvmT85G4CdFbzcU1c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245192; c=relaxed/simple;
-	bh=ZHPfMm8kebs98q4CWxLnwqFJahlIh512EINm/UKNA3w=;
+	s=arc-20240116; t=1759245197; c=relaxed/simple;
+	bh=zoty6v551NW4OImh+Qv75Pu9lPJJUJyT/Ho62B91glg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+g90McXihJX8jP3D+WYIAst8fLgcr1AqN+Pefvny5pX7QQEK8C5n1j3Q4USdGQkrxuf1iPRUJiN3VL7Yx0Arb3cYjCfz1xoQt3CggqpZZxNg6D1X+DCXJiKGXpeP3jG85k3DC3Sk7pWsNGYxVrwBg2KJq7Ljb+kd2xSzbsW4eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QYtovwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4FEuTRLVfPnl5tN34AQjwXj1ZtJesiqe3IaRWT9TK0KuM+WVqgt1gsQSMLFrKZCmrItwhcPMd7YqgxtEB6QxAnNkrvXMDiZzfhOXHIl9uhhk9qAfs3tG2AWyJydWa7EJdeo2r6h7VL3pSQEilo7ztchAoTxqf7F3/LU84q0HZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RT/O7qEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QYtovwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6464C4CEF0;
-	Tue, 30 Sep 2025 15:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RT/O7qEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FCFC4CEF0;
+	Tue, 30 Sep 2025 15:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245192;
-	bh=ZHPfMm8kebs98q4CWxLnwqFJahlIh512EINm/UKNA3w=;
+	s=korg; t=1759245195;
+	bh=zoty6v551NW4OImh+Qv75Pu9lPJJUJyT/Ho62B91glg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QYtovwJAgt8OPPgL0/u1/HWv7YJnrz0fWMLIkYRDwKpSDbUinMCe4olyzHJo5iYB
-	 +m8kBlML5kF6mAlhIsDZwtCxD6hQvs4EC5KeVpIShL0oc3vl2vhLKME4y/Cl6sPWUK
-	 JjgNdm+Hj+0Qz8f8ucoqdXPTbONKcKln7mKti7GE=
+	b=RT/O7qEyj8+T7UGphzLZryXXZlBC8NKRXpNaak6IKupXR+FQDOeSgs/wMOja94mj5
+	 yfU9DKSClyscx4x/6Jnmm3tQcJKQmwJlj3C4zv9eUbGCsDpu+4aB0Bkq8ZmsqL8mQ8
+	 75Q1icJqiP+/cQZzJ4O24aCXPTMt/3neir6pXAxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/151] ASoC: wm8974: Correct PLL rate rounding
-Date: Tue, 30 Sep 2025 16:46:56 +0200
-Message-ID: <20250930143831.023724204@linuxfoundation.org>
+Subject: [PATCH 5.15 095/151] phy: broadcom: ns-usb3: fix Wvoid-pointer-to-enum-cast warning
+Date: Tue, 30 Sep 2025 16:47:05 +0200
+Message-ID: <20250930143831.379909315@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 9b17d3724df55ecc2bc67978822585f2b023be48 ]
+[ Upstream commit bd6e74a2f0a0c76dda8e44d26f9b91a797586c3b ]
 
-Using a single value of 22500000 for both 48000Hz and 44100Hz audio
-will sometimes result in returning wrong dividers due to rounding.
-Update the code to use the actual value for both.
+'family' is an enum, thus cast of pointer on 64-bit compile test with
+W=1 causes:
 
-Fixes: 51b2bb3f2568 ("ASoC: wm8974: configure pll and mclk divider automatically")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250821082639.1301453-4-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  drivers/phy/broadcom/phy-bcm-ns-usb3.c:209:17: error: cast to smaller integer type 'enum bcm_ns_family' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230810111958.205705-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 64961557efa1 ("phy: ti: omap-usb2: fix device leak at unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wm8974.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/phy/broadcom/phy-bcm-ns-usb3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8974.c b/sound/soc/codecs/wm8974.c
-index 9eeac34435664..914b7d04b09ca 100644
---- a/sound/soc/codecs/wm8974.c
-+++ b/sound/soc/codecs/wm8974.c
-@@ -419,10 +419,14 @@ static int wm8974_update_clocks(struct snd_soc_dai *dai)
- 	fs256 = 256 * priv->fs;
+--- a/drivers/phy/broadcom/phy-bcm-ns-usb3.c
++++ b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
+@@ -206,7 +206,7 @@ static int bcm_ns_usb3_mdio_probe(struct
+ 	of_id = of_match_device(bcm_ns_usb3_id_table, dev);
+ 	if (!of_id)
+ 		return -EINVAL;
+-	usb3->family = (enum bcm_ns_family)of_id->data;
++	usb3->family = (uintptr_t)of_id->data;
  
- 	f = wm8974_get_mclkdiv(priv->mclk, fs256, &mclkdiv);
--
- 	if (f != priv->mclk) {
- 		/* The PLL performs best around 90MHz */
--		fpll = wm8974_get_mclkdiv(22500000, fs256, &mclkdiv);
-+		if (fs256 % 8000)
-+			f = 22579200;
-+		else
-+			f = 24576000;
-+
-+		fpll = wm8974_get_mclkdiv(f, fs256, &mclkdiv);
- 	}
- 
- 	wm8974_set_dai_pll(dai, 0, 0, priv->mclk, fpll);
--- 
-2.51.0
-
+ 	syscon_np = of_parse_phandle(dev->of_node, "usb3-dmp-syscon", 0);
+ 	err = of_address_to_resource(syscon_np, 0, &res);
 
 
