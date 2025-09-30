@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5617A223DD6;
-	Tue, 30 Sep 2025 15:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F07223DD6;
+	Tue, 30 Sep 2025 15:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245291; cv=none; b=c84aGTaEV1TaVK8CQFiD0KE6Gb5ImQsRGhRMiNlpKL9eJ630OCQEF1EFPe6mX47evBYcG1NnECGp1OTufEmpU+Z754v9fF0loaEo7uKgMSxTVRu647swppqpbrjHTCcpPiD7699mHqxjL/ph+IxgHfc/yNdA0oyOvIpZOP9TdqM=
+	t=1759245294; cv=none; b=ddGji0T4UTktUtfeNuyUTx9q+fjuIFV5MLT++3/p209M8IB98ZRa4TLYss13EYUt3UiNvIJ1hetcyqKOyhEHUXv3GSO6nFaaCVpjiG5Kz1cr9pyLv14eduCiqdJOnYxEMPXSFwCUnj2QIbsYbkMHfpPvpikjD6fMdFYth9gQofU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245291; c=relaxed/simple;
-	bh=zoLZkceUPnJ1r5nBR8BfHyrquz58Sx+JwILlEE/cY9k=;
+	s=arc-20240116; t=1759245294; c=relaxed/simple;
+	bh=UGsTRQf7U+wVW3/rMo/HGBEK3A4fLPgtwH7V/BUsXXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELpp9k077IYN/ffhlKgK1yL1w4dP4ew4isHVrMPO9lfTon63vMfhhWzCGvLVmIglJ88O9BQBr24Dlu9I3tykx5FQGC6VQ7gyj6CfpRJQ0AVO0C+vrdqkb14UVkfT32Tcz8a9K+a/Xd8NEkPqBSpnmy+ub+tS9GALwV6jZKECNVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xjip2Bf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dq20Hv9QFH1WBnRja2oxoqWckf7zQYuehj093P6ACuos4XtrJZLnc8yVvRw0RbsBK8n01pfuxPwtxYmdXA2klUnLTOiuhGw/zPDB9mijn/tf+6BX/lU1pjDI91D1R39ccckgMKfbCkQPD0301KQL8d9iF9yZCygkmlIVc8r1UO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiQHtqQj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xjip2Bf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15A1C4CEF0;
-	Tue, 30 Sep 2025 15:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiQHtqQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8FDC4CEF0;
+	Tue, 30 Sep 2025 15:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245291;
-	bh=zoLZkceUPnJ1r5nBR8BfHyrquz58Sx+JwILlEE/cY9k=;
+	s=korg; t=1759245294;
+	bh=UGsTRQf7U+wVW3/rMo/HGBEK3A4fLPgtwH7V/BUsXXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xjip2Bf+JL7+eH1oEZmVgxfPggi2bnskxokPkkqDiTc7NCX4fkxf5F9AxVj23ytkq
-	 1rdQjdAQ47HPu+GgBIgH0u71D9vcDhI+xDoVEAxZmszaWHopZ8nFAiXkQhw/oYD4ip
-	 uYv7WjqI4qXjgxruUPUecbEBb+FtcXTH9vgFUYgE=
+	b=AiQHtqQjTiwiqEP5uYeRyd0/VkXjksmwBL3raTm33uMDJo/aVgMKgoxq0/ar1WolO
+	 XR9akiujp1kdROmfwOGMyvHNXvGphUtH2E5AWZdVbHILt11P+ApLoCJGfOy7iUoSob
+	 o+TMMH83P0BWREJ6AsnUXO/6p02TAEpjFkkwSIsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/151] xhci: dbc: Fix full DbC transfer ring after several reconnects
-Date: Tue, 30 Sep 2025 16:47:02 +0200
-Message-ID: <20250930143831.260690914@linuxfoundation.org>
+Subject: [PATCH 5.15 093/151] usb: gadget: dummy_hcd: remove usage of list iterator past the loop body
+Date: Tue, 30 Sep 2025 16:47:03 +0200
+Message-ID: <20250930143831.300363109@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -50,88 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Jakob Koschel <jakobkoschel@gmail.com>
 
-[ Upstream commit a5c98e8b1398534ae1feb6e95e2d3ee5215538ed ]
+[ Upstream commit 7975f080d3557725160a878b1a64339043ba3d91 ]
 
-Pending requests will be flushed on disconnect, and the corresponding
-TRBs will be turned into No-op TRBs, which are ignored by the xHC
-controller once it starts processing the ring.
+To move the list iterator variable into the list_for_each_entry_*()
+macro in the future it should be avoided to use the list iterator
+variable after the loop body.
 
-If the USB debug cable repeatedly disconnects before ring is started
-then the ring will eventually be filled with No-op TRBs.
-No new transfers can be queued when the ring is full, and driver will
-print the following error message:
+To *never* use the list iterator variable after the loop it was
+concluded to use a separate iterator variable [1].
 
-    "xhci_hcd 0000:00:14.0: failed to queue trbs"
-
-This is a normal case for 'in' transfers where TRBs are always enqueued
-in advance, ready to take on incoming data. If no data arrives, and
-device is disconnected, then ring dequeue will remain at beginning of
-the ring while enqueue points to first free TRB after last cancelled
-No-op TRB.
-s
-Solve this by reinitializing the rings when the debug cable disconnects
-and DbC is leaving the configured state.
-Clear the whole ring buffer and set enqueue and dequeue to the beginning
-of ring, and set cycle bit to its initial state.
-
-Cc: stable@vger.kernel.org
-Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20250902105306.877476-3-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/all/YhdfEIwI4EdtHdym@kroah.com/
+Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
+Link: https://lore.kernel.org/r/20220308171818.384491-26-jakobkoschel@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8d63c83d8eb9 ("USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgcap.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/host/xhci-dbgcap.c
-+++ b/drivers/usb/host/xhci-dbgcap.c
-@@ -447,6 +447,25 @@ static void xhci_dbc_ring_init(struct xh
- 	xhci_initialize_ring_info(ring, 1);
- }
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -751,7 +751,7 @@ static int dummy_dequeue(struct usb_ep *
+ 	struct dummy		*dum;
+ 	int			retval = -EINVAL;
+ 	unsigned long		flags;
+-	struct dummy_request	*req = NULL;
++	struct dummy_request	*req = NULL, *iter;
  
-+static int xhci_dbc_reinit_ep_rings(struct xhci_dbc *dbc)
-+{
-+	struct xhci_ring *in_ring = dbc->eps[BULK_IN].ring;
-+	struct xhci_ring *out_ring = dbc->eps[BULK_OUT].ring;
-+
-+	if (!in_ring || !out_ring || !dbc->ctx) {
-+		dev_warn(dbc->dev, "Can't re-init unallocated endpoints\n");
-+		return -ENODEV;
-+	}
-+
-+	xhci_dbc_ring_init(in_ring);
-+	xhci_dbc_ring_init(out_ring);
-+
-+	/* set ep context enqueue, dequeue, and cycle to initial values */
-+	xhci_dbc_init_ep_contexts(dbc);
-+
-+	return 0;
-+}
-+
- static struct xhci_ring *
- xhci_dbc_ring_alloc(struct device *dev, enum xhci_ring_type type, gfp_t flags)
- {
-@@ -871,7 +890,7 @@ static enum evtreturn xhci_dbc_do_handle
- 			dev_info(dbc->dev, "DbC cable unplugged\n");
- 			dbc->state = DS_ENABLED;
- 			xhci_dbc_flush_requests(dbc);
--
-+			xhci_dbc_reinit_ep_rings(dbc);
- 			return EVT_DISC;
- 		}
+ 	if (!_ep || !_req)
+ 		return retval;
+@@ -763,13 +763,14 @@ static int dummy_dequeue(struct usb_ep *
  
-@@ -881,7 +900,7 @@ static enum evtreturn xhci_dbc_do_handle
- 			writel(portsc, &dbc->regs->portsc);
- 			dbc->state = DS_ENABLED;
- 			xhci_dbc_flush_requests(dbc);
--
-+			xhci_dbc_reinit_ep_rings(dbc);
- 			return EVT_DISC;
- 		}
+ 	local_irq_save(flags);
+ 	spin_lock(&dum->lock);
+-	list_for_each_entry(req, &ep->queue, queue) {
+-		if (&req->req == _req) {
+-			list_del_init(&req->queue);
+-			_req->status = -ECONNRESET;
+-			retval = 0;
+-			break;
+-		}
++	list_for_each_entry(iter, &ep->queue, queue) {
++		if (&iter->req != _req)
++			continue;
++		list_del_init(&iter->queue);
++		_req->status = -ECONNRESET;
++		req = iter;
++		retval = 0;
++		break;
+ 	}
+ 	spin_unlock(&dum->lock);
  
 
 
