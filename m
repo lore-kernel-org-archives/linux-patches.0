@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B9B303A29;
-	Tue, 30 Sep 2025 15:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFE627056D;
+	Tue, 30 Sep 2025 15:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244451; cv=none; b=aglGJi0z5iv2UCnr6pBWaAGbUCyDbMgVDxVT0iQLhmbEIr184vU43mYPqhcDmtbBje83bNOYDqAVcdPEsQ2wpMXK15PIGmEJ/xCKcsbv+z+INOPUe/uB/grZ7HsWagiMzpKDJeoLtAHhbgxUFVczudZDPYOuwza37U8hbaPIfrg=
+	t=1759244454; cv=none; b=BSGW716J0Au9wyfCk9goAf6TODIgguBgcx9IK1vzAMZelXdXGyLFyVo1SvKac3PTlrs1QAgNqcaJ27Uda8ziAKb3iybVwDsNDlZ7ZtAGz8kFEY+RPaK+WAHjtYFpVgxvr2SgIu9uJ6HFnLoy11CndITn4a3JdL2Sq0xl1peD+sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244451; c=relaxed/simple;
-	bh=1xmrfcKFFFtuV/+CXx+A0B5UxO0nulz7sXO1crmyoPI=;
+	s=arc-20240116; t=1759244454; c=relaxed/simple;
+	bh=hF4Bu2/c2EgFiHlUjHng9T/5S2RRpYsSL3YSe4RLbUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdd6P6oEfNzSEw4mFNenZUewf9xURTkmypFrRUkcSc1DVj9tfA09TFX/wZlI++zs7ldvKeZjo4mjhHpxQJYbaZ1xzoyDvYAvi40LqzDyPeNlavK0jW8FhBXVtUH8Hjq+Rts71qHDzb/henUhXATylKKX0Ljo4pO4Dr/6qJrCkD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrFVyNzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b8Zlfg/pKzjcF8G6oNHQV0wX1XoHcJmBOBvepEVmVwQf29WDAJhOYs9R7aFsm2rbSf61c6Fw0k3w14WTtRNdqkZKg0hgesCYPq5Wm1iiyWCI1YUypxnf73sAPFyuwJGORC2cf2BPjhs6JXH/cHmSsEgnkWXTU35BFDuHsEctOKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph16WTCe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrFVyNzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99841C4CEF0;
-	Tue, 30 Sep 2025 15:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph16WTCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29706C4CEF0;
+	Tue, 30 Sep 2025 15:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244451;
-	bh=1xmrfcKFFFtuV/+CXx+A0B5UxO0nulz7sXO1crmyoPI=;
+	s=korg; t=1759244454;
+	bh=hF4Bu2/c2EgFiHlUjHng9T/5S2RRpYsSL3YSe4RLbUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrFVyNzmLT3yR62w1bQAN4kiz4kn3bYLBElwnkPnFz+fGu2czBRhnltJuGy38/5IT
-	 U++gpZaJyQRyXOEZxnSLQjHkqlqDzm323oDtCLYKn9GEOEY7HHr8fItBK3n9pjfN37
-	 +WcGBMtbb2HK89n3j2/AMkqFChIVPmGiIsLI8Kqo=
+	b=ph16WTCeYluZj/oAh/qmGu2FZsPXn46cGNgVwOAV1qBv+SPbRZqcScC+LfJlhbXnH
+	 gCS9sEjnBYepbweWPLLd2kQOlrRFFpr2souoJZMgK5xJKF0W9modu62rg1367e9WBI
+	 +6ATPYh7uXo9Noh8c470/Z+cJBHykOKkyZXvse/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aditya Garg <gargaditya08@live.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 011/143] HID: multitouch: Get the contact ID from HID_DG_TRANSDUCER_INDEX fields in case of Apple Touch Bar
-Date: Tue, 30 Sep 2025 16:45:35 +0200
-Message-ID: <20250930143831.696749869@linuxfoundation.org>
+Subject: [PATCH 6.16 012/143] HID: multitouch: support getting the tip state from HID_DG_TOUCH fields in Apple Touch Bar
+Date: Tue, 30 Sep 2025 16:45:36 +0200
+Message-ID: <20250930143831.735949136@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -55,11 +55,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Kerem Karabay <kekrby@gmail.com>
 
-[ Upstream commit f41d736acc039d86512951f4e874b0f5e666babf ]
+[ Upstream commit e0976a61a543b5e03bc0d08030a0ea036ee3751d ]
 
-In Apple Touch Bar, the contact ID is contained in fields with the
-HID_DG_TRANSDUCER_INDEX usage rather than HID_DG_CONTACTID, thus differing
-from the HID spec. Add a quirk for the same.
+In Apple Touch Bar, the tip state is contained in fields with the
+HID_DG_TOUCH usage. This feature is gated by a quirk in order to
+prevent breaking other devices, see commit c2ef8f21ea8f
+("HID: multitouch: add support for trackpads").
 
 Acked-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Kerem Karabay <kekrby@gmail.com>
@@ -68,57 +69,42 @@ Signed-off-by: Aditya Garg <gargaditya08@live.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/hid/hid-multitouch.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 4c22bd2ba1708..c1be2978c0987 100644
+index c1be2978c0987..20e0958d0fa9f 100644
 --- a/drivers/hid/hid-multitouch.c
 +++ b/drivers/hid/hid-multitouch.c
-@@ -73,6 +73,7 @@ MODULE_LICENSE("GPL");
- #define MT_QUIRK_FORCE_MULTI_INPUT	BIT(20)
- #define MT_QUIRK_DISABLE_WAKEUP		BIT(21)
- #define MT_QUIRK_ORIENTATION_INVERT	BIT(22)
-+#define MT_QUIRK_APPLE_TOUCHBAR		BIT(23)
+@@ -827,6 +827,17 @@ static int mt_touch_input_mapping(struct hid_device *hdev, struct hid_input *hi,
  
- #define MT_INPUTMODE_TOUCHSCREEN	0x02
- #define MT_INPUTMODE_TOUCHPAD		0x03
-@@ -625,6 +626,7 @@ static struct mt_application *mt_find_application(struct mt_device *td,
- static struct mt_report_data *mt_allocate_report_data(struct mt_device *td,
- 						      struct hid_report *report)
- {
-+	struct mt_class *cls = &td->mtclass;
- 	struct mt_report_data *rdata;
- 	struct hid_field *field;
- 	int r, n;
-@@ -649,7 +651,11 @@ static struct mt_report_data *mt_allocate_report_data(struct mt_device *td,
- 
- 		if (field->logical == HID_DG_FINGER || td->hdev->group != HID_GROUP_MULTITOUCH_WIN_8) {
- 			for (n = 0; n < field->report_count; n++) {
--				if (field->usage[n].hid == HID_DG_CONTACTID) {
-+				unsigned int hid = field->usage[n].hid;
-+
-+				if (hid == HID_DG_CONTACTID ||
-+				   (cls->quirks & MT_QUIRK_APPLE_TOUCHBAR &&
-+				   hid == HID_DG_TRANSDUCER_INDEX)) {
- 					rdata->is_mt_collection = true;
- 					break;
- 				}
-@@ -827,6 +833,14 @@ static int mt_touch_input_mapping(struct hid_device *hdev, struct hid_input *hi,
- 						     EV_KEY, BTN_TOUCH);
- 			MT_STORE_FIELD(tip_state);
+ 			MT_STORE_FIELD(confidence_state);
  			return 1;
-+		case HID_DG_TRANSDUCER_INDEX:
++		case HID_DG_TOUCH:
 +			/*
-+			 * Contact ID in case of Apple Touch Bars is contained
-+			 * in fields with HID_DG_TRANSDUCER_INDEX usage.
++			 * Legacy devices use TIPSWITCH and not TOUCH.
++			 * One special case here is of the Apple Touch Bars.
++			 * In these devices, the tip state is contained in
++			 * fields with the HID_DG_TOUCH usage.
++			 * Let's just ignore this field for other devices.
 +			 */
 +			if (!(cls->quirks & MT_QUIRK_APPLE_TOUCHBAR))
-+				return 0;
++				return -1;
 +			fallthrough;
- 		case HID_DG_CONTACTID:
- 			MT_STORE_FIELD(contactid);
- 			app->touches_by_report++;
+ 		case HID_DG_TIPSWITCH:
+ 			if (field->application != HID_GD_SYSTEM_MULTIAXIS)
+ 				input_set_capability(hi->input,
+@@ -897,10 +908,6 @@ static int mt_touch_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+ 		case HID_DG_CONTACTMAX:
+ 			/* contact max are global to the report */
+ 			return -1;
+-		case HID_DG_TOUCH:
+-			/* Legacy devices use TIPSWITCH and not TOUCH.
+-			 * Let's just ignore this field. */
+-			return -1;
+ 		}
+ 		/* let hid-input decide for the others */
+ 		return 0;
 -- 
 2.51.0
 
