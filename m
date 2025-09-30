@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B674216A956;
-	Tue, 30 Sep 2025 15:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFC825FA0F;
+	Tue, 30 Sep 2025 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246125; cv=none; b=P2mxrHRCDicaetzsrwYsbNZqkFcGM8GmaIg8bKA7q+SW0z/b/Wb+7y1dm4SIybCh55eojz6YHJ5DL+MTv2ngqQ+jN0FxOkvsT0jhQH9PxkKfOmF7xzmvteMaRwAjo36h4aaclIosgZCbqjk/lQG3EjtFRirAE4+VFwCFK5v1EM8=
+	t=1759246129; cv=none; b=aS8g6ktgDhM62n0fsf2tOXiWrmB8z/YVlq5Os6S0py2laxN7+Uut/xjSvduXfcQlUrSzrMyPx2E6XGaQTcBrIMiNzRHw/SXnS0ZH69IKQH30cdd2RqDBCsA3q/RuVMhZK0M6FxtJ/v4KdxVJ7qrCc8cQSWys+RcBuNLqBOz6K1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246125; c=relaxed/simple;
-	bh=NX8a28l6juInexf8gJztvhwRC6GawN7IlOSoSYo5Rxo=;
+	s=arc-20240116; t=1759246129; c=relaxed/simple;
+	bh=yDOmtIbX8BrrxxAdlbSW/ww5BNyWrtlTW52jYdmzp8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ms0YBMCSIovRZ8hUb3J7N4NBbzOu5VVmMUYhuLWNhFkiilB8m59lDgi/NN5d7MNmWbwlMQeSjxJKk9voD7xZMVfQaPSqX9MpnBVnOZkFzREJPpmN14DcG2BkeonMlTspgJka2b9qwhDcfiuwYk5D1O7RG9j0UnafLeE501/lJgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPoONs/r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZBCR53OrpYAbIgjTkCyezj6ng5vlI5GOl4f1VurvwdO1jIjpJltT8He5sUjsYUUf0dVuEte4K5J2LqJRoxLmXRT0V/JOo+vyAGGmUd1BuDFhrMpBI342bH0boY0kjeJZ/xHGeLbzLh8OzmScEdkB7AQ1n5CZBx0K2Qha+qc2idA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCx07N09; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPoONs/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125B5C4CEF0;
-	Tue, 30 Sep 2025 15:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCx07N09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4CDC4CEF0;
+	Tue, 30 Sep 2025 15:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246125;
-	bh=NX8a28l6juInexf8gJztvhwRC6GawN7IlOSoSYo5Rxo=;
+	s=korg; t=1759246128;
+	bh=yDOmtIbX8BrrxxAdlbSW/ww5BNyWrtlTW52jYdmzp8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oPoONs/rw8oFCv02MJyrjW8lGIFpMVi56bxLRqSmfiSA3vur+sUt4JM5dbXCWC0XW
-	 mgNgbiW7X3eZDFWn5bogM9RYKR+8l1VSSeT9HM7jABmvttsEL/FVwPT+xQD4pV3lh6
-	 xiOUrQndOho6fDteIWi4xPrfY56FBO72FVgJBm9s=
+	b=rCx07N09ehslsgGAKmLStPJWS3B9eY9NGqxe1rwlDm4GpG4N+WqfDFYRwfo6GIRYW
+	 hF21aWiHSuqPy6vY1Uqs7jTClAJbk5b/H9nlProPThEM2UQOx3/xmiX3+eEE9hj0/J
+	 IAMhlwHDiMD5jiRBd1RmzR0CEmbYjFVkiRP2XFEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 59/89] mm: revert "mm/gup: clear the LRU flag of a page before adding to LRU batch"
-Date: Tue, 30 Sep 2025 16:48:13 +0200
-Message-ID: <20250930143824.363221716@linuxfoundation.org>
+Subject: [PATCH 6.12 60/89] mm: folio_may_be_lru_cached() unless folio_test_large()
+Date: Tue, 30 Sep 2025 16:48:14 +0200
+Message-ID: <20250930143824.404583389@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -74,29 +74,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit afb99e9f500485160f34b8cad6d3763ada3e80e8 ]
+[ Upstream commit 2da6de30e60dd9bb14600eff1cc99df2fa2ddae3 ]
 
-This reverts commit 33dfe9204f29: now that
-collect_longterm_unpinnable_folios() is checking ref_count instead of lru,
-and mlock/munlock do not participate in the revised LRU flag clearing,
-those changes are misleading, and enlarge the window during which
-mlock/munlock may miss an mlock_count update.
+mm/swap.c and mm/mlock.c agree to drain any per-CPU batch as soon as a
+large folio is added: so collect_longterm_unpinnable_folios() just wastes
+effort when calling lru_add_drain[_all]() on a large folio.
 
-It is possible (I'd hesitate to claim probable) that the greater
-likelihood of missed mlock_count updates would explain the "Realtime
-threads delayed due to kcompactd0" observed on 6.12 in the Link below.  If
-that is the case, this reversion will help; but a complete solution needs
-also a further patch, beyond the scope of this series.
+But although there is good reason not to batch up PMD-sized folios, we
+might well benefit from batching a small number of low-order mTHPs (though
+unclear how that "small number" limitation will be implemented).
 
-Included some 80-column cleanup around folio_batch_add_and_move().
+So ask if folio_may_be_lru_cached() rather than !folio_test_large(), to
+insulate those particular checks from future change.  Name preferred to
+"folio_is_batchable" because large folios can well be put on a batch: it's
+just the per-CPU LRU caches, drained much later, which need care.
 
-The role of folio_test_clear_lru() (before taking per-memcg lru_lock) is
-questionable since 6.13 removed mem_cgroup_move_account() etc; but perhaps
-there are still some races which need it - not examined here.
+Marked for stable, to counter the increase in lru_add_drain_all()s from
+"mm/gup: check ref_count instead of lru before migration".
 
-Link: https://lore.kernel.org/linux-mm/DU0PR01MB10385345F7153F334100981888259A@DU0PR01MB10385.eurprd01.prod.exchangelabs.com/
-Link: https://lkml.kernel.org/r/05905d7b-ed14-68b1-79d8-bdec30367eba@google.com
+Link: https://lkml.kernel.org/r/57d2eaf8-3607-f318-e0c5-be02dce61ad0@google.com
+Fixes: 9a4e9f3b2d73 ("mm: update get_user_pages_longterm to migrate pages allocated from CMA region")
 Signed-off-by: Hugh Dickins <hughd@google.com>
+Suggested-by: David Hildenbrand <david@redhat.com>
 Acked-by: David Hildenbrand <david@redhat.com>
 Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
 Cc: Axel Rasmussen <axelrasmussen@google.com>
@@ -120,152 +119,101 @@ Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: Yu Zhao <yuzhao@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Resolved conflicts in applying the revert to this tree ]
+[ Clean cherry-pick now into this tree ]
 Signed-off-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/swap.c | 51 +++++++++++++++++++++++++++------------------------
- 1 file changed, 27 insertions(+), 24 deletions(-)
+ include/linux/swap.h | 10 ++++++++++
+ mm/gup.c             |  4 ++--
+ mm/mlock.c           |  6 +++---
+ mm/swap.c            |  2 +-
+ 4 files changed, 16 insertions(+), 6 deletions(-)
 
+diff --git a/include/linux/swap.h b/include/linux/swap.h
+index f3e0ac20c2e8c..63f85b3fee238 100644
+--- a/include/linux/swap.h
++++ b/include/linux/swap.h
+@@ -382,6 +382,16 @@ void folio_add_lru_vma(struct folio *, struct vm_area_struct *);
+ void mark_page_accessed(struct page *);
+ void folio_mark_accessed(struct folio *);
+ 
++static inline bool folio_may_be_lru_cached(struct folio *folio)
++{
++	/*
++	 * Holding PMD-sized folios in per-CPU LRU cache unbalances accounting.
++	 * Holding small numbers of low-order mTHP folios in per-CPU LRU cache
++	 * will be sensible, but nobody has implemented and tested that yet.
++	 */
++	return !folio_test_large(folio);
++}
++
+ extern atomic_t lru_disable_count;
+ 
+ static inline bool lru_cache_disabled(void)
+diff --git a/mm/gup.c b/mm/gup.c
+index 4dd0eb70988b2..d105817a0c9aa 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2376,13 +2376,13 @@ static unsigned long collect_longterm_unpinnable_folios(
+ 			continue;
+ 		}
+ 
+-		if (drained == 0 &&
++		if (drained == 0 && folio_may_be_lru_cached(folio) &&
+ 				folio_ref_count(folio) !=
+ 				folio_expected_ref_count(folio) + 1) {
+ 			lru_add_drain();
+ 			drained = 1;
+ 		}
+-		if (drained == 1 &&
++		if (drained == 1 && folio_may_be_lru_cached(folio) &&
+ 				folio_ref_count(folio) !=
+ 				folio_expected_ref_count(folio) + 1) {
+ 			lru_add_drain_all();
+diff --git a/mm/mlock.c b/mm/mlock.c
+index cde076fa7d5e5..8c8d522efdd59 100644
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -255,7 +255,7 @@ void mlock_folio(struct folio *folio)
+ 
+ 	folio_get(folio);
+ 	if (!folio_batch_add(fbatch, mlock_lru(folio)) ||
+-	    folio_test_large(folio) || lru_cache_disabled())
++	    !folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		mlock_folio_batch(fbatch);
+ 	local_unlock(&mlock_fbatch.lock);
+ }
+@@ -278,7 +278,7 @@ void mlock_new_folio(struct folio *folio)
+ 
+ 	folio_get(folio);
+ 	if (!folio_batch_add(fbatch, mlock_new(folio)) ||
+-	    folio_test_large(folio) || lru_cache_disabled())
++	    !folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		mlock_folio_batch(fbatch);
+ 	local_unlock(&mlock_fbatch.lock);
+ }
+@@ -299,7 +299,7 @@ void munlock_folio(struct folio *folio)
+ 	 */
+ 	folio_get(folio);
+ 	if (!folio_batch_add(fbatch, folio) ||
+-	    folio_test_large(folio) || lru_cache_disabled())
++	    !folio_may_be_lru_cached(folio) || lru_cache_disabled())
+ 		mlock_folio_batch(fbatch);
+ 	local_unlock(&mlock_fbatch.lock);
+ }
 diff --git a/mm/swap.c b/mm/swap.c
-index 59f30a981c6f9..d4cb4898f573e 100644
+index d4cb4898f573e..ff846915db454 100644
 --- a/mm/swap.c
 +++ b/mm/swap.c
-@@ -195,6 +195,10 @@ static void folio_batch_move_lru(struct folio_batch *fbatch, move_fn_t move_fn)
- 	for (i = 0; i < folio_batch_count(fbatch); i++) {
- 		struct folio *folio = fbatch->folios[i];
- 
-+		/* block memcg migration while the folio moves between lru */
-+		if (move_fn != lru_add && !folio_test_clear_lru(folio))
-+			continue;
-+
- 		folio_lruvec_relock_irqsave(folio, &lruvec, &flags);
- 		move_fn(lruvec, folio);
- 
-@@ -207,14 +211,10 @@ static void folio_batch_move_lru(struct folio_batch *fbatch, move_fn_t move_fn)
- }
- 
- static void __folio_batch_add_and_move(struct folio_batch __percpu *fbatch,
--		struct folio *folio, move_fn_t move_fn,
--		bool on_lru, bool disable_irq)
-+		struct folio *folio, move_fn_t move_fn, bool disable_irq)
- {
- 	unsigned long flags;
- 
--	if (on_lru && !folio_test_clear_lru(folio))
--		return;
--
- 	folio_get(folio);
- 
- 	if (disable_irq)
-@@ -222,8 +222,8 @@ static void __folio_batch_add_and_move(struct folio_batch __percpu *fbatch,
- 	else
+@@ -223,7 +223,7 @@ static void __folio_batch_add_and_move(struct folio_batch __percpu *fbatch,
  		local_lock(&cpu_fbatches.lock);
  
--	if (!folio_batch_add(this_cpu_ptr(fbatch), folio) || folio_test_large(folio) ||
--	    lru_cache_disabled())
-+	if (!folio_batch_add(this_cpu_ptr(fbatch), folio) ||
-+			folio_test_large(folio) || lru_cache_disabled())
+ 	if (!folio_batch_add(this_cpu_ptr(fbatch), folio) ||
+-			folio_test_large(folio) || lru_cache_disabled())
++			!folio_may_be_lru_cached(folio) || lru_cache_disabled())
  		folio_batch_move_lru(this_cpu_ptr(fbatch), move_fn);
  
  	if (disable_irq)
-@@ -232,13 +232,13 @@ static void __folio_batch_add_and_move(struct folio_batch __percpu *fbatch,
- 		local_unlock(&cpu_fbatches.lock);
- }
- 
--#define folio_batch_add_and_move(folio, op, on_lru)						\
--	__folio_batch_add_and_move(								\
--		&cpu_fbatches.op,								\
--		folio,										\
--		op,										\
--		on_lru,										\
--		offsetof(struct cpu_fbatches, op) >= offsetof(struct cpu_fbatches, lock_irq)	\
-+#define folio_batch_add_and_move(folio, op)		\
-+	__folio_batch_add_and_move(			\
-+		&cpu_fbatches.op,			\
-+		folio,					\
-+		op,					\
-+		offsetof(struct cpu_fbatches, op) >=	\
-+		offsetof(struct cpu_fbatches, lock_irq)	\
- 	)
- 
- static void lru_move_tail(struct lruvec *lruvec, struct folio *folio)
-@@ -262,10 +262,10 @@ static void lru_move_tail(struct lruvec *lruvec, struct folio *folio)
- void folio_rotate_reclaimable(struct folio *folio)
- {
- 	if (folio_test_locked(folio) || folio_test_dirty(folio) ||
--	    folio_test_unevictable(folio))
-+	    folio_test_unevictable(folio) || !folio_test_lru(folio))
- 		return;
- 
--	folio_batch_add_and_move(folio, lru_move_tail, true);
-+	folio_batch_add_and_move(folio, lru_move_tail);
- }
- 
- void lru_note_cost(struct lruvec *lruvec, bool file,
-@@ -354,10 +354,11 @@ static void folio_activate_drain(int cpu)
- 
- void folio_activate(struct folio *folio)
- {
--	if (folio_test_active(folio) || folio_test_unevictable(folio))
-+	if (folio_test_active(folio) || folio_test_unevictable(folio) ||
-+	    !folio_test_lru(folio))
- 		return;
- 
--	folio_batch_add_and_move(folio, lru_activate, true);
-+	folio_batch_add_and_move(folio, lru_activate);
- }
- 
- #else
-@@ -510,7 +511,7 @@ void folio_add_lru(struct folio *folio)
- 	    lru_gen_in_fault() && !(current->flags & PF_MEMALLOC))
- 		folio_set_active(folio);
- 
--	folio_batch_add_and_move(folio, lru_add, false);
-+	folio_batch_add_and_move(folio, lru_add);
- }
- EXPORT_SYMBOL(folio_add_lru);
- 
-@@ -685,10 +686,10 @@ void lru_add_drain_cpu(int cpu)
- void deactivate_file_folio(struct folio *folio)
- {
- 	/* Deactivating an unevictable folio will not accelerate reclaim */
--	if (folio_test_unevictable(folio))
-+	if (folio_test_unevictable(folio) || !folio_test_lru(folio))
- 		return;
- 
--	folio_batch_add_and_move(folio, lru_deactivate_file, true);
-+	folio_batch_add_and_move(folio, lru_deactivate_file);
- }
- 
- /*
-@@ -701,10 +702,11 @@ void deactivate_file_folio(struct folio *folio)
-  */
- void folio_deactivate(struct folio *folio)
- {
--	if (folio_test_unevictable(folio) || !(folio_test_active(folio) || lru_gen_enabled()))
-+	if (folio_test_unevictable(folio) || !folio_test_lru(folio) ||
-+	    !(folio_test_active(folio) || lru_gen_enabled()))
- 		return;
- 
--	folio_batch_add_and_move(folio, lru_deactivate, true);
-+	folio_batch_add_and_move(folio, lru_deactivate);
- }
- 
- /**
-@@ -717,10 +719,11 @@ void folio_deactivate(struct folio *folio)
- void folio_mark_lazyfree(struct folio *folio)
- {
- 	if (!folio_test_anon(folio) || !folio_test_swapbacked(folio) ||
-+	    !folio_test_lru(folio) ||
- 	    folio_test_swapcache(folio) || folio_test_unevictable(folio))
- 		return;
- 
--	folio_batch_add_and_move(folio, lru_lazyfree, true);
-+	folio_batch_add_and_move(folio, lru_lazyfree);
- }
- 
- void lru_add_drain(void)
 -- 
 2.51.0
 
