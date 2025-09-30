@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D7E20E334;
-	Tue, 30 Sep 2025 15:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0F0173;
+	Tue, 30 Sep 2025 15:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245660; cv=none; b=Tt3mY1WTEjSupEhwewxwLXO/eiLLC7tS5+mywBK71TK3tmZjTbc7tUiilgIbWdGgxevDFIkY+BxyoIom0eYYcCnt9JflPSjLF5YVp4hkaD7SuHpMrHwiU0s5+YzUu3V+/32Umsd/La1IdPStzsjTNjcuSBosgtHNgzGXMINbaBY=
+	t=1759245664; cv=none; b=DPrYCzHh8ztX/ZsFDRGywH5q/Jc2BsYsFrponqxOIU2oiGUnHbfmDwA1/6Xi7oQGfLTvFDcAAqfwb7mlIJtZ1o7nFttASAdz2DC259XlSjvB1/A+3FNEuiu6eAoEFHDR9LPeAv8jkZHyVIubehUsys5IhtmPqELtzTAmUwvWOfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245660; c=relaxed/simple;
-	bh=eyoS5/gXB/B+WYSrLqDtdjL51Y3kzrGw4wOJZWlfX0U=;
+	s=arc-20240116; t=1759245664; c=relaxed/simple;
+	bh=9zzpYcNvTr5jOw1+Ek15Ny7YzM1Sa46KEAMSIPydwqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SITBiithgfk0lbHO3zRRhKi8PRon766mLaeC0PrQCBjS1LGXYkUpbv1Qpl6bMm/tK9EK2rdZcnkFsLeqGJkmU1tArpgfH0z/+oIJi+SE4JQPAbE4wEkxaU3OjrpoUXD+XhwrQlfPOr403BRRt44JrCmBFVgMiDy7Y4p9qeezFdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnYweD1g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4dKDJHzRfhXHWWxpzOyrCr1hE3EyRmz5aI5vWM6iYoZRJHoWtH/Z8YneXEslHXXNjE0xk9LinfF+HlGAHlXgY1SvYvtRj7QU2WkfMuLxXuTecDeW/DMCu7KyTZ4A3QwZIEywIaOxhAGij60tx24Fp/IlCc2wvrfLUovnZ/+uGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPPsCc4o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnYweD1g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB43C4CEF0;
-	Tue, 30 Sep 2025 15:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPPsCc4o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F119C4AF0B;
+	Tue, 30 Sep 2025 15:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245660;
-	bh=eyoS5/gXB/B+WYSrLqDtdjL51Y3kzrGw4wOJZWlfX0U=;
+	s=korg; t=1759245663;
+	bh=9zzpYcNvTr5jOw1+Ek15Ny7YzM1Sa46KEAMSIPydwqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jnYweD1gBR50QYH/W5UwleXCcW0hSTLaSSyfgF+c4UI95h1Ff5E25h/ccgqgs/WG4
-	 SN9d/kmGQVZdx0FblmNM56KBrVU7BEaqXchUxqRWivRaqwydQHR3TaFS5Qx1Hw8BTx
-	 0yNpqzfuSalWNyfipPTO6dUOwf+2TXDz4MLJgtOI=
+	b=rPPsCc4oeFLRuu6PHiRCrelcKkZXAkRzoIWf9IV8DcJp9LU0Itt4uW1YB42bmO4+x
+	 V81GlEE2c3NNm2BaNU7ajPZZFJ2JCzBJjSOissLnSYYlpZ4HCIODvV18khHPjrKZ/z
+	 KhO9fRqFVmEhUpo7KTwBZkkEwl3+yuT5ZUGe70vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Kerem Karabay <kekrby@gmail.com>,
-	Aditya Garg <gargaditya08@live.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 12/91] HID: multitouch: specify that Apple Touch Bar is direct
-Date: Tue, 30 Sep 2025 16:47:11 +0200
-Message-ID: <20250930143821.637000809@linuxfoundation.org>
+Subject: [PATCH 6.6 13/91] ALSA: usb-audio: Convert comma to semicolon
+Date: Tue, 30 Sep 2025 16:47:12 +0200
+Message-ID: <20250930143821.679246737@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -53,42 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kerem Karabay <kekrby@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 45ca23c5ee8b2b3074377fecc92fa72aa595f7c9 ]
+[ Upstream commit 9ca30a1b007d5fefb5752428f852a2d8d7219c1c ]
 
-Currently the driver determines the device type based on the
-application, but this value is not reliable on Apple Touch Bar, where
-the application is HID_DG_TOUCHPAD even though this device is direct,
-so add a quirk for the same.
+Replace comma between expressions with semicolons.
 
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Kerem Karabay <kekrby@gmail.com>
-Co-developed-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Using a ',' in place of a ';' can have unintended side effects.
+Although that is not the case here, it is seems best to use ';'
+unless ',' is intended.
+
+Found by inspection.
+No functional change intended.
+Compile tested only.
+
+Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20250612060228.1518028-1-nichen@iscas.ac.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/usb/mixer_quirks.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 8e9f71e69dd8c..d8fee341c096e 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1336,6 +1336,13 @@ static int mt_touch_input_configured(struct hid_device *hdev,
- 	if (td->serial_maybe)
- 		mt_post_parse_default_settings(td, app);
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 95fa1c31ae550..f1b663a05f295 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -758,9 +758,9 @@ static int snd_dualsense_jack_create(struct usb_mixer_interface *mixer,
  
-+	/*
-+	 * The application for Apple Touch Bars is HID_DG_TOUCHPAD,
-+	 * but these devices are direct.
-+	 */
-+	if (cls->quirks & MT_QUIRK_APPLE_TOUCHBAR)
-+		app->mt_flags |= INPUT_MT_DIRECT;
-+
- 	if (cls->is_indirect)
- 		app->mt_flags |= INPUT_MT_POINTER;
+ 	mei->ih.event = snd_dualsense_ih_event;
+ 	mei->ih.match = snd_dualsense_ih_match;
+-	mei->ih.connect = snd_dualsense_ih_connect,
+-	mei->ih.disconnect = snd_dualsense_ih_disconnect,
+-	mei->ih.start = snd_dualsense_ih_start,
++	mei->ih.connect = snd_dualsense_ih_connect;
++	mei->ih.disconnect = snd_dualsense_ih_disconnect;
++	mei->ih.start = snd_dualsense_ih_start;
+ 	mei->ih.name = name;
+ 	mei->ih.id_table = mei->id_table;
  
 -- 
 2.51.0
