@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75634307AE5;
-	Tue, 30 Sep 2025 15:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F932FD1DD;
+	Tue, 30 Sep 2025 15:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245948; cv=none; b=a9WbmCLLCWvMWHncXdhF2Go+C5wwObvCRHUgq6scsXjv7sATn73bTJG6xTqimWEGvMt6wPqyQfPrglD70vBanlMbEo86lTw0H9SEUcuEXV4BMSk/R8f1Rkp5tiZUWPRkyfUUMTpfYMXoU7oO1eL8clEl9y2edJv/NtPaDCNfeik=
+	t=1759245951; cv=none; b=dC0ygCduT9KGPVYvmg63ElsgzEqUSqF6TG40YhLSbCjM/MSpaQSqT4gycMVViUTtjJBtafAULapDJ+6lAbAElO7N60SdnGk2jK2creBEcLM7IA+EXMteqvkZt3y4Zi7BU0pIJT51Y05kzA0hPhlfYTgXuzHpHymQCR4nEA6XVL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245948; c=relaxed/simple;
-	bh=7s990RIa1oyl+1+95eeFSORrgkM18SDfgRb3J//snp8=;
+	s=arc-20240116; t=1759245951; c=relaxed/simple;
+	bh=mBlRVG+cMAy/xo+vXyOZvQIv5dJV4iw8Owpp5WNCUYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0IDrdWE85HjcbmfGNoxfP/Q5vGgetFHAOOq5ITn+QmqbjSlPat1fKOqXUW+p1XC20bt8i5tU+6RVmc6FNb4rnMw7KF3wIf4X0ZqCvhTBwc5xiR4+h5/vRAWhcixjZ415AF/ELDupskCtQJwTBDmjAk1XrflN2J1Q+o97DvH5m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASSqyt9B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=imowRWYlOe+POP+yk8x47WXi/wSuM4FIqC6J39jugPut0rHi7CAdh/pcSOVMrABddoLalvBQiqj5rIxRL+tneaAQt3dSdWAlMPvSY0RZlMXARPRhFLEj9yTagqne34bE4Vf8RS5y7ep9ouE036AEZm5BoWWSVj6I7d8jf56ifto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3u8Lm3M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASSqyt9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9FEC4CEF0;
-	Tue, 30 Sep 2025 15:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3u8Lm3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008FFC4CEF0;
+	Tue, 30 Sep 2025 15:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245948;
-	bh=7s990RIa1oyl+1+95eeFSORrgkM18SDfgRb3J//snp8=;
+	s=korg; t=1759245951;
+	bh=mBlRVG+cMAy/xo+vXyOZvQIv5dJV4iw8Owpp5WNCUYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASSqyt9BFV3c+tw8+TeHeS6XZaABC6SX3Yfs/obsrw4IcSZr+zsji9Q6zjJuaaxvj
-	 8d4wuVp50fjYL6U3iO0l08cbs8qZ6U1SE1fZ2KPKzvDFgymVOs4SnZlVxcou6ElzKJ
-	 2k8FHBcroaiWXqF3GUyYj1qQyHUcVGjwZAKah3qI=
+	b=R3u8Lm3Mbrzo+kFDnYna7OBnhPbhjsp7Q0GwcyVqLLPzzGVx2Kl1JyMnErRUPrj1p
+	 v6/7umv9y3v7r4euPm5uIF+g9p8+H167MbPfeVV4hE8DyKEkRKSUgVyJAMYyoIBwL9
+	 bz3Uy3YlbDQv7e/Q2QxyiY+oOY8MqDgydKc1ZU/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pedro Falcato <pedro.falcato@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 6.6 90/91] minmax.h: simplify the variants of clamp()
-Date: Tue, 30 Sep 2025 16:48:29 +0200
-Message-ID: <20250930143824.915925907@linuxfoundation.org>
+Subject: [PATCH 6.6 91/91] minmax.h: remove some #defines that are only expanded once
+Date: Tue, 30 Sep 2025 16:48:30 +0200
+Message-ID: <20250930143824.956829932@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -63,15 +63,20 @@ Content-Transfer-Encoding: 8bit
 
 From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit 495bba17cdf95e9703af1b8ef773c55ef0dfe703 ]
+[ Upstream commit 2b97aaf74ed534fb838d09867d09a3ca5d795208 ]
 
-Always pass a 'type' through to __clamp_once(), pass '__auto_type' from
-clamp() itself.
+The bodies of __signed_type_use() and __unsigned_type_use() are much the
+same size as their names - so put the bodies in the only line that expands
+them.
 
-The expansion of __types_ok3() is reasonable so it isn't worth the added
-complexity of avoiding it when a fixed type is used for all three values.
+Similarly __signed_type() is defined separately for 64bit and then used
+exactly once just below.
 
-Link: https://lkml.kernel.org/r/8f69f4deac014f558bab186444bac2e8@AcuMS.aculab.com
+Change the test for __signed_type from CONFIG_64BIT to one based on gcc
+defined macros so that the code is valid if it gets used outside of a
+kernel build.
+
+Link: https://lkml.kernel.org/r/9386d1ebb8974fbabbed2635160c3975@AcuMS.aculab.com
 Signed-off-by: David Laight <david.laight@aculab.com>
 Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Arnd Bergmann <arnd@kernel.org>
@@ -87,68 +92,48 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ include/linux/minmax.h |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -183,29 +183,29 @@
- #define __clamp(val, lo, hi)	\
- 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
- 
--#define __clamp_once(val, lo, hi, uval, ulo, uhi) ({				\
--	__auto_type uval = (val);						\
--	__auto_type ulo = (lo);							\
--	__auto_type uhi = (hi);							\
-+#define __clamp_once(type, val, lo, hi, uval, ulo, uhi) ({			\
-+	type uval = (val);							\
-+	type ulo = (lo);							\
-+	type uhi = (hi);							\
- 	BUILD_BUG_ON_MSG(statically_true(ulo > uhi),				\
- 		"clamp() low limit " #lo " greater than high limit " #hi);	\
- 	BUILD_BUG_ON_MSG(!__types_ok3(uval, ulo, uhi),				\
- 		"clamp("#val", "#lo", "#hi") signedness error");		\
- 	__clamp(uval, ulo, uhi); })
- 
--#define __careful_clamp(val, lo, hi) \
--	__clamp_once(val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
-+#define __careful_clamp(type, val, lo, hi) \
-+	__clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
- 
- /**
-- * clamp - return a value clamped to a given range with strict typechecking
-+ * clamp - return a value clamped to a given range with typechecking
-  * @val: current value
-  * @lo: lowest allowable value
-  * @hi: highest allowable value
-  *
-- * This macro does strict typechecking of @lo/@hi to make sure they are of the
-- * same type as @val.  See the unnecessary pointer comparisons.
-+ * This macro checks @val/@lo/@hi to make sure they have compatible
-+ * signedness.
+@@ -46,10 +46,8 @@
+  * comparison, and these expressions only need to be careful to not cause
+  * warnings for pointer use.
   */
--#define clamp(val, lo, hi) __careful_clamp(val, lo, hi)
-+#define clamp(val, lo, hi) __careful_clamp(__auto_type, val, lo, hi)
- 
- /**
-  * clamp_t - return a value clamped to a given range using a given type
-@@ -217,7 +217,7 @@
-  * This macro does no typechecking and uses temporary variables of type
-  * @type to make all the comparisons.
-  */
--#define clamp_t(type, val, lo, hi) __careful_clamp((type)(val), (type)(lo), (type)(hi))
-+#define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
- 
- /**
-  * clamp_val - return a value clamped to a given range using val's type
-@@ -230,7 +230,7 @@
-  * type and @lo and @hi are literals that will otherwise be assigned a signed
-  * integer type.
-  */
--#define clamp_val(val, lo, hi) clamp_t(typeof(val), val, lo, hi)
-+#define clamp_val(val, lo, hi) __careful_clamp(typeof(val), val, lo, hi)
+-#define __signed_type_use(ux) (2 + __is_nonneg(ux))
+-#define __unsigned_type_use(ux) (1 + 2 * (sizeof(ux) < 4))
+ #define __sign_use(ux) (is_signed_type(typeof(ux)) ? \
+-	__signed_type_use(ux) : __unsigned_type_use(ux))
++	(2 + __is_nonneg(ux)) : (1 + 2 * (sizeof(ux) < 4)))
  
  /*
-  * Do not check the array parameter using __must_be_array().
+  * Check whether a signed value is always non-negative.
+@@ -57,7 +55,7 @@
+  * A cast is needed to avoid any warnings from values that aren't signed
+  * integer types (in which case the result doesn't matter).
+  *
+- * On 64-bit any integer or pointer type can safely be cast to 'long'.
++ * On 64-bit any integer or pointer type can safely be cast to 'long long'.
+  * But on 32-bit we need to avoid warnings about casting pointers to integers
+  * of different sizes without truncating 64-bit values so 'long' or 'long long'
+  * must be used depending on the size of the value.
+@@ -66,12 +64,12 @@
+  * them, but we do not use s128 types in the kernel (we do use 'u128',
+  * but they are handled by the !is_signed_type() case).
+  */
+-#ifdef CONFIG_64BIT
+-  #define __signed_type(ux) long
++#if __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG__
++#define __is_nonneg(ux) statically_true((long long)(ux) >= 0)
+ #else
+-  #define __signed_type(ux) typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L))
++#define __is_nonneg(ux) statically_true( \
++	(typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L)))(ux) >= 0)
+ #endif
+-#define __is_nonneg(ux) statically_true((__signed_type(ux))(ux) >= 0)
+ 
+ #define __types_ok(ux, uy) \
+ 	(__sign_use(ux) & __sign_use(uy))
 
 
