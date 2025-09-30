@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E1C304989;
-	Tue, 30 Sep 2025 14:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4C7302755;
+	Tue, 30 Sep 2025 14:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244372; cv=none; b=a+ek9mFJwZFkADE0HKX/st6qgwc6IQvaMnWXmUB2oyE0/MipIhrPbRz41CcgQDf7uuWtJjIz24/mZfDbc5JZoCsmlg0vC0TpX6a58Zw8LP1E5cUhftNOJOsygiTE5mAw4vS4jCAJQnvWQe+zBhF5TW+vT6yKcmYPDsM311Oh6MM=
+	t=1759244376; cv=none; b=t8jVDUZhuIJNGg+To9dgB0hqh+ui8o1kk9SPDw6tW347Fozr0Go4PW/b4VE3Q5uTI7mtBeqJplyYO1+QKiydJmajT7OxvCO6QyBLzpC5fWguuY08ZaA9FQ3a2ClFJctxKHXUVxy0JpPtipLo7WLPpObXQSJ7EmlEIA70GlqempI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244372; c=relaxed/simple;
-	bh=Z7exjtIzi3KLBAxA9exneNpyYQ6K93A/Ccn5izeQXHs=;
+	s=arc-20240116; t=1759244376; c=relaxed/simple;
+	bh=D/YOMKIhXcwhinSC+aRAYswI413G2aEZbULRYDm5+Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPJyc3J/cbxaUg9r8V+9Zm/9F/p+e5C40qPvzbZMVe5SJHfH2gyCjC3HkfgVWNREVF0Gd0ieL4VLvwxhr3tZzKhEXE1AYk3WlFRJKBhrJdRxVlOwJWE6Oqf+oZOZN0B3R8ZauHfppM2+PdhpLhxh2g05oO14vaq2ItSN+kgKysE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QA17LruM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hj8XKdLnDQ/SF1NVyLFEOIsfb33B7qZZynjDRXHTcpiXyK1bWF848pFcV8jY0Ikw1ZW9lTW+RO0EzxkB9903levtzvbu5f3VeeTvhmsCJvFT6Qg815h8nEyGo8svtvtmU6qX6rv5MtmpJRQrlzmShBhtTSKHmo0a5dz4BC1bXvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIIoFObX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QA17LruM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8DFC116B1;
-	Tue, 30 Sep 2025 14:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIIoFObX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F61AC113D0;
+	Tue, 30 Sep 2025 14:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244372;
-	bh=Z7exjtIzi3KLBAxA9exneNpyYQ6K93A/Ccn5izeQXHs=;
+	s=korg; t=1759244375;
+	bh=D/YOMKIhXcwhinSC+aRAYswI413G2aEZbULRYDm5+Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QA17LruM8DzgjH38lHpXiEXSsQOIRWBJJYd6wGUsrwPr62yv30OM6+fDP4lCYTor+
-	 DPE/t9PqqO9ZIM8bvuapa0kurYHopSLMlLOfY/50Gy8Q253popZtwQ9MlvLD82HPQ2
-	 Tu7GKm+pzQypFrtD/PoI2juTCCNXucmZ3yjwi3nk=
+	b=rIIoFObXKFnDGfQI3NJoITjPyzck5tPjm8uI185Q5y5EewXR5YZ4b1rLwesfcvwky
+	 MUPMhGrj3YCQWWZ5kj4z89sU71iEXCDIVW8dJDhto2BbBAGOgyVXee46bVYgU4iCbD
+	 D2ECOMImWdyW67PXiWXnJJ6+0H4/sobE/mH+bacc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/122] crypto: af_alg - Fix incorrect boolean values in af_alg_ctx
-Date: Tue, 30 Sep 2025 16:47:20 +0200
-Message-ID: <20250930143827.432567384@linuxfoundation.org>
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kamakshi Nellore <nellorex.kamakshi@intel.com>
+Subject: [PATCH 5.10 110/122] i40e: fix idx validation in i40e_validate_queue_map
+Date: Tue, 30 Sep 2025 16:47:21 +0200
+Message-ID: <20250930143827.473346440@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -51,48 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit d0ca0df179c4b21e2a6c4a4fb637aa8fa14575cb ]
+commit aa68d3c3ac8d1dcec40d52ae27e39f6d32207009 upstream.
 
-Commit 1b34cbbf4f01 ("crypto: af_alg - Disallow concurrent writes in
-af_alg_sendmsg") changed some fields from bool to 1-bit bitfields of
-type u32.
+Ensure idx is within range of active/initialized TCs when iterating over
+vf->ch[idx] in i40e_validate_queue_map().
 
-However, some assignments to these fields, specifically 'more' and
-'merge', assign values greater than 1.  These relied on C's implicit
-conversion to bool, such that zero becomes false and nonzero becomes
-true.
-
-With a 1-bit bitfields of type u32 instead, mod 2 of the value is taken
-instead, resulting in 0 being assigned in some cases when 1 was intended.
-
-Fix this by restoring the bool type.
-
-Fixes: 1b34cbbf4f01 ("crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg")
+Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/crypto/if_alg.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/crypto/if_alg.h b/include/crypto/if_alg.h
-index 1424200fe88cf..9af84cad92e93 100644
---- a/include/crypto/if_alg.h
-+++ b/include/crypto/if_alg.h
-@@ -152,7 +152,7 @@ struct af_alg_ctx {
- 	size_t used;
- 	atomic_t rcvused;
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2397,8 +2397,10 @@ static int i40e_validate_queue_map(struc
+ 	u16 vsi_queue_id, queue_id;
  
--	u32		more:1,
-+	bool		more:1,
- 			merge:1,
- 			enc:1,
- 			write:1,
--- 
-2.51.0
-
+ 	for_each_set_bit(vsi_queue_id, &queuemap, I40E_MAX_VSI_QP) {
+-		if (vf->adq_enabled) {
+-			vsi_id = vf->ch[vsi_queue_id / I40E_MAX_VF_VSI].vsi_id;
++		u16 idx = vsi_queue_id / I40E_MAX_VF_VSI;
++
++		if (vf->adq_enabled && idx < vf->num_tc) {
++			vsi_id = vf->ch[idx].vsi_id;
+ 			queue_id = (vsi_queue_id % I40E_DEFAULT_QUEUES_PER_VF);
+ 		} else {
+ 			queue_id = vsi_queue_id;
 
 
