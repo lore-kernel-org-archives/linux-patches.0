@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63022236EB;
-	Tue, 30 Sep 2025 15:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9045C266B65;
+	Tue, 30 Sep 2025 15:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244862; cv=none; b=d2XxDeekx1CNBr4VzLthPtracL2kkufRTseHVxD7KsZjhjNouoa2UVS9ljeYOtSnGVaZynDh1vynC8ZQW6NOLylg2952usZhqnmWaO2BHHJMIgHdnxLMt4vVT6USDtGV1Yz716JSZcUHLN2WFEO0TtGNaGbDsiwfUKyZnjEYRRI=
+	t=1759244866; cv=none; b=k1bOQvBGe45f73yO+k7bZE8DkmniYGE4cGluBXYDEa87WeWbLrCUigAZfegbwjs2PcBNjgiDQILaGONRn32LC3RYAM09z6Pr26CtKWOm89kxqSr++TweatTHkGQGokE3id849L111faW/AjxXjiFTbAiLuiWSCh6ZRFB/Ka4L/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244862; c=relaxed/simple;
-	bh=oJwWbzi/oZ/CBPbQItD1a52EOXjuHpIp8JK1eSRXNCQ=;
+	s=arc-20240116; t=1759244866; c=relaxed/simple;
+	bh=ASG9BmfpRktW1n5njYmyef0O2t8FQQ4go2DNlhEkY0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3ILqfB3pkF+F8R/elRoZadhBk23LzFbou+LlnDTQvhDhunMERVPUxPLjGzIKIC3tNX8oE8CtFkbuOZ8M3ZBDsno71LY6e9YSoXkeNODgoZe/l/hsu82OGrAKru8u4L7Zq5lTEvXuoAGMMg8lz/Exdq/OvduWSib7jgULM8uk/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTGq3D7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FK1fhl0nWt7k2bfuys0ro6c0z1C3ENrdn6Uz6BSmVrt8XOcD/48yVF/1vayzVrPxYIgDiQYy760EgHOV8iCod+3nFJZcPB5mTW3Q2J3sbKpT0knKyxWEVVH9iya8rw5nzwnr71R2oDrDhXyP1igMu9gJxbpO2kkByk2dNX+8E3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbZLWtZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTGq3D7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD27C4CEF0;
-	Tue, 30 Sep 2025 15:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbZLWtZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A109DC4CEF0;
+	Tue, 30 Sep 2025 15:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244862;
-	bh=oJwWbzi/oZ/CBPbQItD1a52EOXjuHpIp8JK1eSRXNCQ=;
+	s=korg; t=1759244866;
+	bh=ASG9BmfpRktW1n5njYmyef0O2t8FQQ4go2DNlhEkY0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTGq3D7LCge5naJHZykCChsbKV3f73pLCRrZ7vzydl+AdPRJYkRzFHMIG5Yd7V9bE
-	 sr4NkTF7Lw44VFLD7pTEwHKzQQqxpVImW6beXggRm4hmCe3rkq0vEJogCh7mIkpoDJ
-	 q+dZRohTPYbhfFSYDgWmUMPa5esF1RIkTpyQwqlc=
+	b=BbZLWtZRzS890jSeOXmt+88yynJpyfn9TSWGAI+CkUXnrgHwzWFe7Rv7K9UgaQgYb
+	 gW2eJ2pJgL/zLJ+UavFzcgvRjTRsqRqTLG1QJxP750yGJzGxZt5Yh50zEEFm6/kfOx
+	 zWl3qOhiX/EdN02jlgXqk5oxo2/NcMgAx2vcf8FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Wang <00107082@163.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.16 137/143] wifi: iwlwifi: fix byte count table for old devices
-Date: Tue, 30 Sep 2025 16:47:41 +0200
-Message-ID: <20250930143836.694968860@linuxfoundation.org>
+Subject: [PATCH 6.16 138/143] wifi: iwlwifi: pcie: fix byte count table for some devices
+Date: Tue, 30 Sep 2025 16:47:42 +0200
+Message-ID: <20250930143836.735830887@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -53,33 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-commit 586e3cb33ba6890054b95aa0ade0a165890efabd upstream.
+commit a38108a23ab558b834d71d542d32c05ab0fb64d4 upstream.
 
-For devices handled by iwldvm, bc_table_dword was never set, but I missed
-that during the removal thereof. Change the logic to not treat the byte
-count table as dwords for devices older than 9000 series to fix that.
+In my previous fix for this condition, I erroneously listed 9000
+instead of 7000 family, when 7000/8000 were already using iwlmvm.
+Thus the condition ended up wrong, causing the issue I had fixed
+for older devices to suddenly appear on 7000/8000 family devices.
+Correct the condition accordingly.
 
-Fixes: 6570ea227826 ("wifi: iwlwifi: remove bc_table_dword transport config")
+Reported-by: David Wang <00107082@163.com>
+Closes: https://lore.kernel.org/r/20250909165811.10729-1-00107082@163.com/
+Fixes: 586e3cb33ba6 ("wifi: iwlwifi: fix byte count table for old devices")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250828095500.eccd7d3939f1.Ibaffa06d0b3aa5f35a9451d94af34de208b8a2bc@changeid
+Link: https://patch.msgid.link/20250915102743.777aaafbcc6c.I84404edfdfbf400501f6fb06def5b86c501da198@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/tx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/tx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
 +++ b/drivers/net/wireless/intel/iwlwifi/pcie/tx.c
-@@ -2093,7 +2093,8 @@ static void iwl_txq_gen1_update_byte_cnt
+@@ -2093,7 +2093,7 @@ static void iwl_txq_gen1_update_byte_cnt
  		break;
  	}
  
--	if (trans->mac_cfg->device_family < IWL_DEVICE_FAMILY_AX210)
-+	if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_9000 &&
-+	    trans->mac_cfg->device_family < IWL_DEVICE_FAMILY_AX210)
+-	if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_9000 &&
++	if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_7000 &&
+ 	    trans->mac_cfg->device_family < IWL_DEVICE_FAMILY_AX210)
  		len = DIV_ROUND_UP(len, 4);
  
- 	if (WARN_ON(len > 0xFFF || write_ptr >= TFD_QUEUE_SIZE_MAX))
 
 
