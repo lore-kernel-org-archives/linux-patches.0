@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DB623506A;
-	Tue, 30 Sep 2025 15:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7B523506A;
+	Tue, 30 Sep 2025 15:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244676; cv=none; b=iHWwApAKcmePUY97w9a8yQuSGiihpxYstqJif6v1kEXQHXH1q02r4kES94lRne8kQYDBRbF88sFRez/N8n5OYBS431WPRCs2SsyXH6pgMOVOuwE7eKM2y5Ofs+NYMzoqrk6ZRN8/+bLrZHzn+ruVncOybTn+Nmmd8/rojRRDCGU=
+	t=1759244680; cv=none; b=jNJg5EMHfELL3zuVHwoKLbJZ7uHYiz6jQXVIxe1RL9fKL3lDyJuxZiNpYAM+cgasanaogpAg623xzEKRah1KDcfkGjUqKfizSiDVU6wki1lhp7bHnw1Tf5Siqq8nJc2sOqBnr1bcrDjXl3epu1GTBi0U38BVUDRL8Fc5Sod9GbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244676; c=relaxed/simple;
-	bh=/0JoDeLLbUC24cblWDyvzxISn9L97AxLhmqL4OVPmlg=;
+	s=arc-20240116; t=1759244680; c=relaxed/simple;
+	bh=IG8zWT/ViJKRPhdJiYPscDAqok0jM+Ua77q3Pr9cB80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c01Y2LzWD/XRKVy+g2OTZSaqZ5BH8HDl/o+T2jlVb+epC/nsoOkERH9jJNWO0troFLNRNH+2oRnVa8rydk25BXNkbo3f/OD23W5/sTEO22Ubl7FASCQA/Saz7QiTWbGvMKSzqSzhRSA0ju+WhJSuv5y0k77g9zjMcor9BQGPZGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNmJOsET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0HSbndphkn/fZKYKQyVsqBNjzXvGBcjO1lW1dXBxOmJbOrU5twMwkQoldxlGgveuCXGSj1rXvUHrUZRXaQp+A/LlyYeZA2DT0Emu61S4R6HJNzeHt19vdi3IiZB83Oj8G+24dykOmSnyDDh3kMh9Q3qXq3qhOQZ2tPFyilEmM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcY5H/JI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNmJOsET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A3DC113D0;
-	Tue, 30 Sep 2025 15:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcY5H/JI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D6AC113D0;
+	Tue, 30 Sep 2025 15:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244676;
-	bh=/0JoDeLLbUC24cblWDyvzxISn9L97AxLhmqL4OVPmlg=;
+	s=korg; t=1759244680;
+	bh=IG8zWT/ViJKRPhdJiYPscDAqok0jM+Ua77q3Pr9cB80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNmJOsETB/MpD0c0eEyAJHBK0Cxi22DmqRCoZz5UP0eL5OMJrwLbFHrysglbqs7Z8
-	 3aLBWU2VUIzdFOyBAeG/jz7xMkhYDazTAoh8/6IraV3pHsw9lne3zIcSzvR1lnuur6
-	 IwOBwy669UqTZ1GCAohEni9IaCKPi3m2XuAHtdq8=
+	b=lcY5H/JIZXRqAh5bwpkOimgKJVCBIueC/iI8gMEAFIfcxLvEsgJZKafGyKi7vAPHQ
+	 Jxb8Q3KmYV0sc9McENt3B2keXNZXs7vtikj/l3hXi6iffAye1+ZNbV96zu60LzO+0f
+	 l9NWJHLeOy61lJKSMPdgYk0f5oHfOZWhtixLVi6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Dogaru <vdogaru@nvidia.com>,
 	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 080/143] net/mlx5: HWS, remove unused create_dest_array parameter
-Date: Tue, 30 Sep 2025 16:46:44 +0200
-Message-ID: <20250930143834.426545264@linuxfoundation.org>
+Subject: [PATCH 6.16 081/143] net/mlx5: HWS, ignore flow level for multi-dest table
+Date: Tue, 30 Sep 2025 16:46:45 +0200
+Message-ID: <20250930143834.466994492@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -54,111 +54,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Dogaru <vdogaru@nvidia.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit 60afb51c89414b3d0061226415651f29a7eaf932 ]
+[ Upstream commit efb877cf27e300e47e1c051f4e8fd80fc42325d5 ]
 
-`flow_source` is not used anywhere in mlx5hws_action_create_dest_array.
+When HWS creates multi-dest FW table and adds rules to
+forward to other tables, ignore the flow level enforcement
+in FW, because HWS is responsible for table levels.
 
-Signed-off-by: Vlad Dogaru <vdogaru@nvidia.com>
+This fixes the following error:
+
+  mlx5_core 0000:08:00.0: mlx5_cmd_out_err:818:(pid 192306):
+     SET_FLOW_TABLE_ENTRY(0x936) op_mod(0x0) failed,
+     status bad parameter(0x3), syndrome (0x6ae84c), err(-22)
+
+Fixes: 504e536d9010 ("net/mlx5: HWS, added actions handling")
 Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20250703185431.445571-2-mbloch@nvidia.com
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1758525094-816583-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: efb877cf27e3 ("net/mlx5: HWS, ignore flow level for multi-dest table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/steering/hws/action.c      |  7 ++-----
- .../mellanox/mlx5/core/steering/hws/fs_hws.c      | 15 ++++++---------
- .../mellanox/mlx5/core/steering/hws/mlx5hws.h     |  8 ++------
- 3 files changed, 10 insertions(+), 20 deletions(-)
+ .../ethernet/mellanox/mlx5/core/steering/hws/action.c |  4 ++--
+ .../ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c | 11 +++--------
+ .../mellanox/mlx5/core/steering/hws/mlx5hws.h         |  3 +--
+ 3 files changed, 6 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c
-index 8e4a085f4a2ec..6b36a4a7d895f 100644
+index 6b36a4a7d895f..fe56b59e24c59 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/action.c
-@@ -1358,12 +1358,9 @@ mlx5hws_action_create_modify_header(struct mlx5hws_context *ctx,
- }
- 
+@@ -1360,7 +1360,7 @@ mlx5hws_action_create_modify_header(struct mlx5hws_context *ctx,
  struct mlx5hws_action *
--mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx,
--				 size_t num_dest,
-+mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx, size_t num_dest,
+ mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx, size_t num_dest,
  				 struct mlx5hws_action_dest_attr *dests,
--				 bool ignore_flow_level,
--				 u32 flow_source,
--				 u32 flags)
-+				 bool ignore_flow_level, u32 flags)
+-				 bool ignore_flow_level, u32 flags)
++				 u32 flags)
  {
  	struct mlx5hws_cmd_set_fte_dest *dest_list = NULL;
  	struct mlx5hws_cmd_ft_create_attr ft_attr = {0};
+@@ -1397,7 +1397,7 @@ mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx, size_t num_dest,
+ 				MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
+ 			dest_list[i].destination_id = dests[i].dest->dest_obj.obj_id;
+ 			fte_attr.action_flags |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+-			fte_attr.ignore_flow_level = ignore_flow_level;
++			fte_attr.ignore_flow_level = 1;
+ 			if (dests[i].is_wire_ft)
+ 				last_dest_idx = i;
+ 			break;
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-index 47e3947e7b512..131e74b2b7743 100644
+index 131e74b2b7743..6a4c4cccd6434 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
-@@ -572,14 +572,12 @@ static void mlx5_fs_put_dest_action_sampler(struct mlx5_fs_hws_context *fs_ctx,
+@@ -572,12 +572,12 @@ static void mlx5_fs_put_dest_action_sampler(struct mlx5_fs_hws_context *fs_ctx,
  static struct mlx5hws_action *
  mlx5_fs_create_action_dest_array(struct mlx5hws_context *ctx,
  				 struct mlx5hws_action_dest_attr *dests,
--				 u32 num_of_dests, bool ignore_flow_level,
--				 u32 flow_source)
-+				 u32 num_of_dests, bool ignore_flow_level)
+-				 u32 num_of_dests, bool ignore_flow_level)
++				 u32 num_of_dests)
  {
  	u32 flags = MLX5HWS_ACTION_FLAG_HWS_FDB | MLX5HWS_ACTION_FLAG_SHARED;
  
  	return mlx5hws_action_create_dest_array(ctx, num_of_dests, dests,
--						ignore_flow_level,
--						flow_source, flags);
-+						ignore_flow_level, flags);
+-						ignore_flow_level, flags);
++						flags);
  }
  
  static struct mlx5hws_action *
-@@ -1016,7 +1014,6 @@ static int mlx5_fs_fte_get_hws_actions(struct mlx5_flow_root_namespace *ns,
+@@ -1014,19 +1014,14 @@ static int mlx5_fs_fte_get_hws_actions(struct mlx5_flow_root_namespace *ns,
  		}
  		(*ractions)[num_actions++].action = dest_actions->dest;
  	} else if (num_dest_actions > 1) {
--		u32 flow_source = fte->act_dests.flow_context.flow_source;
- 		bool ignore_flow_level;
- 
+-		bool ignore_flow_level;
+-
  		if (num_actions == MLX5_FLOW_CONTEXT_ACTION_MAX ||
-@@ -1026,10 +1023,10 @@ static int mlx5_fs_fte_get_hws_actions(struct mlx5_flow_root_namespace *ns,
+ 		    num_fs_actions == MLX5_FLOW_CONTEXT_ACTION_MAX) {
+ 			err = -EOPNOTSUPP;
+ 			goto free_actions;
  		}
- 		ignore_flow_level =
- 			!!(fte_action->flags & FLOW_ACT_IGNORE_FLOW_LEVEL);
--		tmp_action = mlx5_fs_create_action_dest_array(ctx, dest_actions,
--							      num_dest_actions,
--							      ignore_flow_level,
--							      flow_source);
-+		tmp_action =
-+			mlx5_fs_create_action_dest_array(ctx, dest_actions,
-+							 num_dest_actions,
-+							 ignore_flow_level);
+-		ignore_flow_level =
+-			!!(fte_action->flags & FLOW_ACT_IGNORE_FLOW_LEVEL);
+ 		tmp_action =
+ 			mlx5_fs_create_action_dest_array(ctx, dest_actions,
+-							 num_dest_actions,
+-							 ignore_flow_level);
++							 num_dest_actions);
  		if (!tmp_action) {
  			err = -EOPNOTSUPP;
  			goto free_actions;
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
-index a2fe2f9e832d2..32d7d75bc6daf 100644
+index 32d7d75bc6daf..e6ba5a2129075 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws.h
-@@ -728,18 +728,14 @@ mlx5hws_action_create_push_vlan(struct mlx5hws_context *ctx, u32 flags);
+@@ -727,7 +727,6 @@ mlx5hws_action_create_push_vlan(struct mlx5hws_context *ctx, u32 flags);
+  * @num_dest: The number of dests attributes.
   * @dests: The destination array. Each contains a destination action and can
   *	   have additional actions.
-  * @ignore_flow_level: Whether to turn on 'ignore_flow_level' for this dest.
-- * @flow_source: Source port of the traffic for this actions.
+- * @ignore_flow_level: Whether to turn on 'ignore_flow_level' for this dest.
   * @flags: Action creation flags (enum mlx5hws_action_flags).
   *
   * Return: pointer to mlx5hws_action on success NULL otherwise.
-  */
+@@ -735,7 +734,7 @@ mlx5hws_action_create_push_vlan(struct mlx5hws_context *ctx, u32 flags);
  struct mlx5hws_action *
--mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx,
--				 size_t num_dest,
-+mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx, size_t num_dest,
+ mlx5hws_action_create_dest_array(struct mlx5hws_context *ctx, size_t num_dest,
  				 struct mlx5hws_action_dest_attr *dests,
--				 bool ignore_flow_level,
--				 u32 flow_source,
--				 u32 flags);
-+				 bool ignore_flow_level, u32 flags);
+-				 bool ignore_flow_level, u32 flags);
++				 u32 flags);
  
  /**
   * mlx5hws_action_create_insert_header - Create insert header action.
