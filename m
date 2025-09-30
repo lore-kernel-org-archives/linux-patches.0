@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661162236EB;
-	Tue, 30 Sep 2025 15:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A59F2FD1DD;
+	Tue, 30 Sep 2025 15:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245179; cv=none; b=nRGn1HPx8TaDLudzbq239vMZbYUm3w4HR7CqM6iePEEAZM1c0XWjfn1oyDb3uZet9po32wTQ+JL39Ww1OmLUVDhayyYePNzmaz6r0WxewLu516wQSxZVUcEeX1DroiPbW+/O23NY65SDUg9eJfPZIXbZAmttS1C956JHAbkIXEs=
+	t=1759245182; cv=none; b=uuOHyLMCwcxuUAYIXzPUjJjv1/v0GZdsjP+bGsdG0nASbAMgXy+fmQBPbmEI/wxCgM9newtL62lkvMQFfJqToe6anQbjASmmt2EbWqeQamEog5rhv01gu6cMnfD3s+K3hhNQOICPdn8De8kgPtbfO70ugT5k0qm3K/Dp7myCy2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245179; c=relaxed/simple;
-	bh=F71B4EjoD6UCYnaMUeFEiSrZiLRlWW2W0xy/79gic78=;
+	s=arc-20240116; t=1759245182; c=relaxed/simple;
+	bh=C8Gts0J4sGQgYD7T+gvInGeRe8P6yNYGA8ulGCvBRAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNN4P2hONkvtQNEfsv4CDgWr4SrF9rhehqCTSRBp+6++wp63fcho9vNS+k3SKtbhKZRgBanWFR65cJvMxIkxj094961PhMEwZ1HJVT+5omrKCiq3lkG0cSFcPvjUL2X/lOiMIEeYVE4nGWEdUJogPBJTxD0OW3oqVcRBd8aSnGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YTx5Gaz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qK/wDsR2H4UrKMPvYupguIifqt7MRgeM9xbinAmh0yCrLwzrMxFH4QC4zDtOuXFjAoEsEKHXobiAXSMxFXoDugRV+X+TfRSypivtY5nskAIap2gh+i1XBD7RVes+OpS04aDqZeW5/VfjwgILWEtjtPriMKznfaBPJIbk5cbJeRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBin3OIe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YTx5Gaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4495C4CEF0;
-	Tue, 30 Sep 2025 15:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBin3OIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6D5C4CEF0;
+	Tue, 30 Sep 2025 15:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245179;
-	bh=F71B4EjoD6UCYnaMUeFEiSrZiLRlWW2W0xy/79gic78=;
+	s=korg; t=1759245182;
+	bh=C8Gts0J4sGQgYD7T+gvInGeRe8P6yNYGA8ulGCvBRAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YTx5Gaz48BgZgNeMHEsyqnSH2wpNvRBk7wyrP41eXq+fUpxpHRfy9T0wDFeszwFs
-	 7/p+qYkwK7c8ZRwFPCJhgxyePk4Ghrx2BDjnmGR9avtQzHnZtDuJEGVF9mkbVJzhVc
-	 KRCTUdYFh4tcfCMAENRmQro4WcQwAWRtjuKtY+oE=
+	b=DBin3OIem8JCyqX4PQitfPZcN7cAvxJaPMjQAFqobR606LAcJ4O+AGrvazd86sZGN
+	 71jkaqbfypwqvUHRQUeTs4ko93xPZf3VSGqsantwtIyrVbpVtpJzdvyQ6OWNp1GtCb
+	 0j1WnEJec2Z14mILHpsfr2xzbc/2lIM0qF7hmqNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	JC Kuo <jckuo@nvidia.com>,
+	Roger Quadros <rogerq@kernel.org>,
 	Johan Hovold <johan@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 058/151] phy: tegra: xusb: fix device and OF node leak at probe
-Date: Tue, 30 Sep 2025 16:46:28 +0200
-Message-ID: <20250930143829.913178905@linuxfoundation.org>
+Subject: [PATCH 5.15 059/151] phy: ti-pipe3: fix device leak at unbind
+Date: Tue, 30 Sep 2025 16:46:29 +0200
+Message-ID: <20250930143829.952805198@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -54,52 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit bca065733afd1e3a89a02f05ffe14e966cd5f78e upstream.
+commit e19bcea99749ce8e8f1d359f68ae03210694ad56 upstream.
 
-Make sure to drop the references taken to the PMC OF node and device by
-of_parse_phandle() and of_find_device_by_node() during probe.
+Make sure to drop the reference to the control device taken by
+of_find_device_by_node() during probe when the driver is unbound.
 
-Note the holding a reference to the PMC device does not prevent the
-PMC regmap from going away (e.g. if the PMC driver is unbound) so there
-is no need to keep the reference.
-
-Fixes: 2d1021487273 ("phy: tegra: xusb: Add wake/sleepwalk for Tegra210")
-Cc: stable@vger.kernel.org	# 5.14
-Cc: JC Kuo <jckuo@nvidia.com>
+Fixes: 918ee0d21ba4 ("usb: phy: omap-usb3: Don't use omap_get_control_dev()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Roger Quadros <rogerq@kernel.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20250724131206.2211-2-johan@kernel.org
+Link: https://lore.kernel.org/r/20250724131206.2211-4-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/tegra/xusb-tegra210.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/phy/ti/phy-ti-pipe3.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/phy/tegra/xusb-tegra210.c
-+++ b/drivers/phy/tegra/xusb-tegra210.c
-@@ -3165,18 +3165,22 @@ tegra210_xusb_padctl_probe(struct device
- 	}
- 
- 	pdev = of_find_device_by_node(np);
-+	of_node_put(np);
- 	if (!pdev) {
- 		dev_warn(dev, "PMC device is not available\n");
- 		goto out;
- 	}
- 
--	if (!platform_get_drvdata(pdev))
-+	if (!platform_get_drvdata(pdev)) {
-+		put_device(&pdev->dev);
- 		return ERR_PTR(-EPROBE_DEFER);
-+	}
- 
- 	padctl->regmap = dev_get_regmap(&pdev->dev, "usb_sleepwalk");
- 	if (!padctl->regmap)
- 		dev_info(dev, "failed to find PMC regmap\n");
- 
-+	put_device(&pdev->dev);
- out:
- 	return &padctl->base;
+--- a/drivers/phy/ti/phy-ti-pipe3.c
++++ b/drivers/phy/ti/phy-ti-pipe3.c
+@@ -666,12 +666,20 @@ static int ti_pipe3_get_clk(struct ti_pi
+ 	return 0;
  }
+ 
++static void ti_pipe3_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int ti_pipe3_get_sysctrl(struct ti_pipe3 *phy)
+ {
+ 	struct device *dev = phy->dev;
+ 	struct device_node *node = dev->of_node;
+ 	struct device_node *control_node;
+ 	struct platform_device *control_pdev;
++	int ret;
+ 
+ 	phy->phy_power_syscon = syscon_regmap_lookup_by_phandle(node,
+ 							"syscon-phy-power");
+@@ -702,6 +710,11 @@ static int ti_pipe3_get_sysctrl(struct t
+ 		}
+ 
+ 		phy->control_dev = &control_pdev->dev;
++
++		ret = devm_add_action_or_reset(dev, ti_pipe3_put_device,
++					       phy->control_dev);
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	if (phy->mode == PIPE3_MODE_PCIE) {
 
 
