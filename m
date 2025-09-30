@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74B5303A0B;
-	Tue, 30 Sep 2025 14:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171B51FCCF8;
+	Tue, 30 Sep 2025 14:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244156; cv=none; b=HwrlHhZZb6/gMm72NSIEPaXxmVySi6Q3sK8eFbXDN5p97Ar2To8l+sef2+6YZre0PbXl6zGi7XXPwXKq7IyECbw1v2cpoTxhfqG7mLbSaMmpvLEvb25sqYTQ8txbzMc0x60hpLCaJ2zIT5DDNqN1J/gC9p3eDVIpfDi0JO2opoM=
+	t=1759244160; cv=none; b=LmlnQfMIOYU5JMB6us9h0WPBPWXyXi5kR4PAsjO1YXQH/OPkAjCHNkIaYNNbnPS/fTNPZY3YwhiX9if51nuJq/OGXVaa6+Z8hLnRiYeuzrB2vBWZ3OjvBu7QuONibMiFaCPjq6e/w+a6/zudb64/0tzI/XLxVS2Rz1k3WO8Sqz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244156; c=relaxed/simple;
-	bh=axtIWGQqP+m0n1nWkII2NZIGjruEEzSHgkjDDf9QX8o=;
+	s=arc-20240116; t=1759244160; c=relaxed/simple;
+	bh=39Se7AoEBtCE0nhMI6h5n2Ae9/NK9K4i2jtC7mVghQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5wGFj60vaQAepIKNR0RuJQnTPx5HOM35c8j3yLPVa8aI9p/2Bq2ony7kImfdHZt40rSFcNAHqzMBlaVmV/4DnovIf7frwcNc+HZNj3P5ULgBW6UJ6KQHz8GJEolOUPGnsiCy+rzNiJuQvTP5hX3Y8uUIX4jCmbfkQARLGFxYxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wI239x9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tWg516El4J1E4gBni0rcl7vJh73cB0qm1YKqqu4cgYFE0dv++hv2fx2Us/IH9I4QG51IAHCpjKOuLnvRj+o3ZwbyN9QpqwSGss0x9iNchFptVfIoCO1tSDRsg8+ET/rv5ScZR7UbnKCl505xb78qBe5sNggUznfdX0Io1+kaBQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et3dLHPx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wI239x9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E746C4CEF0;
-	Tue, 30 Sep 2025 14:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et3dLHPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76200C4CEF0;
+	Tue, 30 Sep 2025 14:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244156;
-	bh=axtIWGQqP+m0n1nWkII2NZIGjruEEzSHgkjDDf9QX8o=;
+	s=korg; t=1759244160;
+	bh=39Se7AoEBtCE0nhMI6h5n2Ae9/NK9K4i2jtC7mVghQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wI239x9TV0VRajM86wxAlLR5BKbphALhiUHZYaZycfXdPHu3m9LaUfFToEZqjTJyS
-	 wtfi11JDqdShENhg1DKWlHl64EU21Qaabi6qoKBu9jMa5mCY7GEepexDyevEdP2uWQ
-	 BCllM8ksC+XQu0NpW+H3tfvvDMQdOCnZtsWWD5HA=
+	b=Et3dLHPxSxmtBxZmNu/6hU2P6Cn/V6geaoKChSqF0N95E0tvOMAu42PGpnRXSHRD9
+	 4iL7MGIrrCoECrWPYWnMEBd8gdmNmoq1qHUPTdl1adStKW0yyCupo/LmA10+kbRydr
+	 CBxEB7zzHgDjLROwZ92bhPaFEPo71iWDmjU/tim0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tinguely <mark.tinguely@oracle.com>,
-	syzbot+541dcc6ee768f77103e7@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 017/122] ocfs2: fix recursive semaphore deadlock in fiemap call
-Date: Tue, 30 Sep 2025 16:45:48 +0200
-Message-ID: <20250930143823.696931679@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 044/122] drm/i915/power: fix size for for_each_set_bit() in abox iteration
+Date: Tue, 30 Sep 2025 16:46:15 +0200
+Message-ID: <20250930143824.806276818@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -51,144 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Tinguely <mark.tinguely@oracle.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 04100f775c2ea501927f508f17ad824ad1f23c8d upstream.
+[ Upstream commit cfa7b7659757f8d0fc4914429efa90d0d2577dd7 ]
 
-syzbot detected a OCFS2 hang due to a recursive semaphore on a
-FS_IOC_FIEMAP of the extent list on a specially crafted mmap file.
+for_each_set_bit() expects size to be in bits, not bytes. The abox mask
+iteration uses bytes, but it works by coincidence, because the local
+variable holding the mask is unsigned long, and the mask only ever has
+bit 2 as the highest bit. Using a smaller type could lead to subtle and
+very hard to track bugs.
 
-context_switch kernel/sched/core.c:5357 [inline]
-   __schedule+0x1798/0x4cc0 kernel/sched/core.c:6961
-   __schedule_loop kernel/sched/core.c:7043 [inline]
-   schedule+0x165/0x360 kernel/sched/core.c:7058
-   schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7115
-   rwsem_down_write_slowpath+0x872/0xfe0 kernel/locking/rwsem.c:1185
-   __down_write_common kernel/locking/rwsem.c:1317 [inline]
-   __down_write kernel/locking/rwsem.c:1326 [inline]
-   down_write+0x1ab/0x1f0 kernel/locking/rwsem.c:1591
-   ocfs2_page_mkwrite+0x2ff/0xc40 fs/ocfs2/mmap.c:142
-   do_page_mkwrite+0x14d/0x310 mm/memory.c:3361
-   wp_page_shared mm/memory.c:3762 [inline]
-   do_wp_page+0x268d/0x5800 mm/memory.c:3981
-   handle_pte_fault mm/memory.c:6068 [inline]
-   __handle_mm_fault+0x1033/0x5440 mm/memory.c:6195
-   handle_mm_fault+0x40a/0x8e0 mm/memory.c:6364
-   do_user_addr_fault+0x764/0x1390 arch/x86/mm/fault.c:1387
-   handle_page_fault arch/x86/mm/fault.c:1476 [inline]
-   exc_page_fault+0x76/0xf0 arch/x86/mm/fault.c:1532
-   asm_exc_page_fault+0x26/0x30 arch/x86/include/asm/idtentry.h:623
-RIP: 0010:copy_user_generic arch/x86/include/asm/uaccess_64.h:126 [inline]
-RIP: 0010:raw_copy_to_user arch/x86/include/asm/uaccess_64.h:147 [inline]
-RIP: 0010:_inline_copy_to_user include/linux/uaccess.h:197 [inline]
-RIP: 0010:_copy_to_user+0x85/0xb0 lib/usercopy.c:26
-Code: e8 00 bc f7 fc 4d 39 fc 72 3d 4d 39 ec 77 38 e8 91 b9 f7 fc 4c 89
-f7 89 de e8 47 25 5b fd 0f 01 cb 4c 89 ff 48 89 d9 4c 89 f6 <f3> a4 0f
-1f 00 48 89 cb 0f 01 ca 48 89 d8 5b 41 5c 41 5d 41 5e 41
-RSP: 0018:ffffc9000403f950 EFLAGS: 00050256
-RAX: ffffffff84c7f101 RBX: 0000000000000038 RCX: 0000000000000038
-RDX: 0000000000000000 RSI: ffffc9000403f9e0 RDI: 0000200000000060
-RBP: ffffc9000403fa90 R08: ffffc9000403fa17 R09: 1ffff92000807f42
-R10: dffffc0000000000 R11: fffff52000807f43 R12: 0000200000000098
-R13: 00007ffffffff000 R14: ffffc9000403f9e0 R15: 0000200000000060
-   copy_to_user include/linux/uaccess.h:225 [inline]
-   fiemap_fill_next_extent+0x1c0/0x390 fs/ioctl.c:145
-   ocfs2_fiemap+0x888/0xc90 fs/ocfs2/extent_map.c:806
-   ioctl_fiemap fs/ioctl.c:220 [inline]
-   do_vfs_ioctl+0x1173/0x1430 fs/ioctl.c:532
-   __do_sys_ioctl fs/ioctl.c:596 [inline]
-   __se_sys_ioctl+0x82/0x170 fs/ioctl.c:584
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f5f13850fd9
-RSP: 002b:00007ffe3b3518b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f5f13850fd9
-RDX: 0000200000000040 RSI: 00000000c020660b RDI: 0000000000000004
-RBP: 6165627472616568 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffe3b3518f0
-R13: 00007ffe3b351b18 R14: 431bde82d7b634db R15: 00007f5f1389a03b
-
-ocfs2_fiemap() takes a read lock of the ip_alloc_sem semaphore (since
-v2.6.22-527-g7307de80510a) and calls fiemap_fill_next_extent() to read the
-extent list of this running mmap executable.  The user supplied buffer to
-hold the fiemap information page faults calling ocfs2_page_mkwrite() which
-will take a write lock (since v2.6.27-38-g00dc417fa3e7) of the same
-semaphore.  This recursive semaphore will hold filesystem locks and causes
-a hang of the fileystem.
-
-The ip_alloc_sem protects the inode extent list and size.  Release the
-read semphore before calling fiemap_fill_next_extent() in ocfs2_fiemap()
-and ocfs2_fiemap_inline().  This does an unnecessary semaphore lock/unlock
-on the last extent but simplifies the error path.
-
-Link: https://lkml.kernel.org/r/61d1a62b-2631-4f12-81e2-cd689914360b@oracle.com
-Fixes: 00dc417fa3e7 ("ocfs2: fiemap support")
-Signed-off-by: Mark Tinguely <mark.tinguely@oracle.com>
-Reported-by: syzbot+541dcc6ee768f77103e7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=541dcc6ee768f77103e7
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 62afef2811e4 ("drm/i915/rkl: RKL uses ABOX0 for pixel transfers")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: stable@vger.kernel.org # v5.9+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://lore.kernel.org/r/20250905104149.1144751-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7ea3baa6efe4bb93d11e1c0e6528b1468d7debf6)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+[ adapted struct intel_display *display parameters to struct drm_i915_private *dev_priv ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/extent_map.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display_power.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/extent_map.c
-+++ b/fs/ocfs2/extent_map.c
-@@ -698,6 +698,8 @@ out:
-  * it not only handles the fiemap for inlined files, but also deals
-  * with the fast symlink, cause they have no difference for extent
-  * mapping per se.
-+ *
-+ * Must be called with ip_alloc_sem semaphore held.
-  */
- static int ocfs2_fiemap_inline(struct inode *inode, struct buffer_head *di_bh,
- 			       struct fiemap_extent_info *fieinfo,
-@@ -709,6 +711,7 @@ static int ocfs2_fiemap_inline(struct in
- 	u64 phys;
- 	u32 flags = FIEMAP_EXTENT_DATA_INLINE|FIEMAP_EXTENT_LAST;
- 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
-+	lockdep_assert_held_read(&oi->ip_alloc_sem);
+--- a/drivers/gpu/drm/i915/display/intel_display_power.c
++++ b/drivers/gpu/drm/i915/display/intel_display_power.c
+@@ -4780,7 +4780,7 @@ static void icl_mbus_init(struct drm_i91
+ 	if (IS_GEN(dev_priv, 12))
+ 		abox_regs |= BIT(0);
  
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 	if (ocfs2_inode_is_fast_symlink(inode))
-@@ -724,8 +727,11 @@ static int ocfs2_fiemap_inline(struct in
- 			phys += offsetof(struct ocfs2_dinode,
- 					 id2.i_data.id_data);
+-	for_each_set_bit(i, &abox_regs, sizeof(abox_regs))
++	for_each_set_bit(i, &abox_regs, BITS_PER_TYPE(abox_regs))
+ 		intel_de_rmw(dev_priv, MBUS_ABOX_CTL(i), mask, val);
+ }
  
-+		/* Release the ip_alloc_sem to prevent deadlock on page fault */
-+		up_read(&OCFS2_I(inode)->ip_alloc_sem);
- 		ret = fiemap_fill_next_extent(fieinfo, 0, phys, id_count,
- 					      flags);
-+		down_read(&OCFS2_I(inode)->ip_alloc_sem);
- 		if (ret < 0)
- 			return ret;
- 	}
-@@ -794,9 +800,11 @@ int ocfs2_fiemap(struct inode *inode, st
- 		len_bytes = (u64)le16_to_cpu(rec.e_leaf_clusters) << osb->s_clustersize_bits;
- 		phys_bytes = le64_to_cpu(rec.e_blkno) << osb->sb->s_blocksize_bits;
- 		virt_bytes = (u64)le32_to_cpu(rec.e_cpos) << osb->s_clustersize_bits;
--
-+		/* Release the ip_alloc_sem to prevent deadlock on page fault */
-+		up_read(&OCFS2_I(inode)->ip_alloc_sem);
- 		ret = fiemap_fill_next_extent(fieinfo, virt_bytes, phys_bytes,
- 					      len_bytes, fe_flags);
-+		down_read(&OCFS2_I(inode)->ip_alloc_sem);
- 		if (ret)
- 			break;
+@@ -5277,11 +5277,11 @@ static void tgl_bw_buddy_init(struct drm
+ 	if (table[config].page_mask == 0) {
+ 		drm_dbg(&dev_priv->drm,
+ 			"Unknown memory configuration; disabling address buddy logic.\n");
+-		for_each_set_bit(i, &abox_mask, sizeof(abox_mask))
++		for_each_set_bit(i, &abox_mask, BITS_PER_TYPE(abox_mask))
+ 			intel_de_write(dev_priv, BW_BUDDY_CTL(i),
+ 				       BW_BUDDY_DISABLE);
+ 	} else {
+-		for_each_set_bit(i, &abox_mask, sizeof(abox_mask)) {
++		for_each_set_bit(i, &abox_mask, BITS_PER_TYPE(abox_mask)) {
+ 			intel_de_write(dev_priv, BW_BUDDY_PAGE_MASK(i),
+ 				       table[config].page_mask);
  
 
 
