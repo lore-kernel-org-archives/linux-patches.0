@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620533081D2;
-	Tue, 30 Sep 2025 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A028246795;
+	Tue, 30 Sep 2025 15:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245297; cv=none; b=tQweAXlvJVSTuhz+vRbb1QkDLVBSIzV8+mIhoGXJofJJvfaFDQZVbAetcvglQONN8Cd/RbgLXuPGtaLOjKssOxkNV2qb8OTgasx5a5lAHVfBTwk1Skqg5VLNCFFJeqFm1MgEHlZg6zZt1iJ1vtVudJX92hjVkWLzE2NcqRL63BA=
+	t=1759245300; cv=none; b=uu5LITKnrpzlA2gHT6BFsSt9m4Hj7ou42Dq5dxJltXr5MW4lE7UDg56tjmJWWB8aVWX0+EFqmEQl6JkzETVwM1iKo2z7d6EYTCcJWhJF+I0RjZfUIFTBMfgEmiy8c6pJX+++ZJptxMhfEQjdEWii4ikC+U0HxwLaryxjQWDU2S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245297; c=relaxed/simple;
-	bh=I5isv2tjyKwEFhsRDeMCn4gBt9LFE8a0ep0vHwB5K8k=;
+	s=arc-20240116; t=1759245300; c=relaxed/simple;
+	bh=ecnYhkKI1s89DwT4mr+M3GhX0w38t8fRz0eXAoeIvFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8T0nUx9Ttcj74hEiUUtYU5ZA+tUtg1cqROZCV5wgc7MqBORVxPJWjNazK8gK/RKY8jtmrLHO9X/ltncGiR3siPlEBXEydd4t7nMWwMJPua22SRkJlwV4gKaef29MIMyqW+iLDPNZ/QuE5ptWzv07gKqC60ow5Q5bMPRgpp4aTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2NTYvrB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVx/bBj4ETqbxK8/xeyI+NeZaeT0t/n743kpOnz4zCYvzWDF2rsPiA73Mh6rUchYZX4PwNKTbWYXy03O7/JbPOFEy9yQ6vDP5+DJA38or8o/ev1kLx+hudM9kfYikBwRdRUure7DsCrJVClcbTxRqXc9vQ59K974uAysRJE0wis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqFzvCfl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2NTYvrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7F2C19425;
-	Tue, 30 Sep 2025 15:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqFzvCfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61C9C4CEF0;
+	Tue, 30 Sep 2025 15:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245297;
-	bh=I5isv2tjyKwEFhsRDeMCn4gBt9LFE8a0ep0vHwB5K8k=;
+	s=korg; t=1759245300;
+	bh=ecnYhkKI1s89DwT4mr+M3GhX0w38t8fRz0eXAoeIvFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2NTYvrBhbUYj9rHsfEjXI+EZQR5LxEgOAA1L56KkwAfv131wHG2QteE7yXYJaGgN
-	 EZ/qWXeivuRZW6Q1pBFHuq5A9tN2R5gaB6iyI41mQGqHm1UOZEb2ZXPSck8LAEs4nR
-	 bmL/aMH91Ayd/O0QcObCibmgQD0gbkZZYUbdmsas=
+	b=MqFzvCflk3IjRyMlmTGOQ1b6my5dx2N+OvrclbefCZPbwV5r64ju0O8FqYj3E59qb
+	 ml+uXF/VeICH2iAxTCCUwNDxFwTW3d5TrPxdNy6scvQpjTlcdWM9NnHJfjvN/MUYAs
+	 lEd6PXgHLbDwbtB0CgWqJ0ctEz0+9eFhArzLoxVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>,
-	Yunseong Kim <ysk@kzalloc.com>,
-	syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Ankur Tyagi <ankur.tyagi85@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/151] USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels
-Date: Tue, 30 Sep 2025 16:47:04 +0200
-Message-ID: <20250930143831.340009572@linuxfoundation.org>
+Subject: [PATCH 5.15 085/151] ASoC: wm8940: Correct typo in control name
+Date: Tue, 30 Sep 2025 16:46:55 +0200
+Message-ID: <20250930143830.983312516@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -54,92 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 8d63c83d8eb922f6c316320f50c82fa88d099bea ]
+[ Upstream commit b4799520dcd6fe1e14495cecbbe9975d847cd482 ]
 
-Yunseong Kim and the syzbot fuzzer both reported a problem in
-RT-enabled kernels caused by the way dummy-hcd mixes interrupt
-management and spin-locking.  The pattern was:
-
-	local_irq_save(flags);
-	spin_lock(&dum->lock);
-	...
-	spin_unlock(&dum->lock);
-	...		// calls usb_gadget_giveback_request()
-	local_irq_restore(flags);
-
-The code was written this way because usb_gadget_giveback_request()
-needs to be called with interrupts disabled and the private lock not
-held.
-
-While this pattern works fine in non-RT kernels, it's not good when RT
-is enabled.  RT kernels handle spinlocks much like mutexes; in particular,
-spin_lock() may sleep.  But sleeping is not allowed while local
-interrupts are disabled.
-
-To fix the problem, rewrite the code to conform to the pattern used
-elsewhere in dummy-hcd and other UDC drivers:
-
-	spin_lock_irqsave(&dum->lock, flags);
-	...
-	spin_unlock(&dum->lock);
-	usb_gadget_giveback_request(...);
-	spin_lock(&dum->lock);
-	...
-	spin_unlock_irqrestore(&dum->lock, flags);
-
-This approach satisfies the RT requirements.
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable <stable@kernel.org>
-Fixes: b4dbda1a22d2 ("USB: dummy-hcd: disable interrupts during req->complete")
-Reported-by: Yunseong Kim <ysk@kzalloc.com>
-Closes: <https://lore.kernel.org/linux-usb/5b337389-73b9-4ee4-a83e-7e82bf5af87a@kzalloc.com/>
-Reported-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
-Closes: <https://lore.kernel.org/linux-usb/68ac2411.050a0220.37038e.0087.GAE@google.com/>
-Tested-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
-CC: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-CC: stable@vger.kernel.org
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/bb192ae2-4eee-48ee-981f-3efdbbd0d8f0@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0b5e92c5e020 ("ASoC WM8940 Driver")
+Reported-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Tested-by: Ankur Tyagi <ankur.tyagi85@gmail.com>
+Link: https://patch.msgid.link/20250821082639.1301453-3-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/codecs/wm8940.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -761,8 +761,7 @@ static int dummy_dequeue(struct usb_ep *
- 	if (!dum->driver)
- 		return -ESHUTDOWN;
- 
--	local_irq_save(flags);
--	spin_lock(&dum->lock);
-+	spin_lock_irqsave(&dum->lock, flags);
- 	list_for_each_entry(iter, &ep->queue, queue) {
- 		if (&iter->req != _req)
- 			continue;
-@@ -772,15 +771,16 @@ static int dummy_dequeue(struct usb_ep *
- 		retval = 0;
- 		break;
- 	}
--	spin_unlock(&dum->lock);
- 
- 	if (retval == 0) {
- 		dev_dbg(udc_dev(dum),
- 				"dequeued req %p from %s, len %d buf %p\n",
- 				req, _ep->name, _req->length, _req->buf);
-+		spin_unlock(&dum->lock);
- 		usb_gadget_giveback_request(_ep, _req);
-+		spin_lock(&dum->lock);
- 	}
--	local_irq_restore(flags);
-+	spin_unlock_irqrestore(&dum->lock, flags);
- 	return retval;
- }
- 
+diff --git a/sound/soc/codecs/wm8940.c b/sound/soc/codecs/wm8940.c
+index 440d048ef0c02..03f5aedab4a54 100644
+--- a/sound/soc/codecs/wm8940.c
++++ b/sound/soc/codecs/wm8940.c
+@@ -218,7 +218,7 @@ static const struct snd_kcontrol_new wm8940_snd_controls[] = {
+ 	SOC_SINGLE_TLV("Digital Capture Volume", WM8940_ADCVOL,
+ 		       0, 255, 0, wm8940_adc_tlv),
+ 	SOC_ENUM("Mic Bias Level", wm8940_mic_bias_level_enum),
+-	SOC_SINGLE_TLV("Capture Boost Volue", WM8940_ADCBOOST,
++	SOC_SINGLE_TLV("Capture Boost Volume", WM8940_ADCBOOST,
+ 		       8, 1, 0, wm8940_capture_boost_vol_tlv),
+ 	SOC_SINGLE_TLV("Speaker Playback Volume", WM8940_SPKVOL,
+ 		       0, 63, 0, wm8940_spk_vol_tlv),
+-- 
+2.51.0
+
 
 
