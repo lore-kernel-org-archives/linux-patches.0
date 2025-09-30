@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C62236EB;
-	Tue, 30 Sep 2025 15:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1582236EB;
+	Tue, 30 Sep 2025 15:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244932; cv=none; b=OgjqjpaUyhG4W3to7DEtYCt8qS7X2mOxfCOeHNwfctblgqZc99jMw8Wq5R9NYA85eZbvYlt89f5nauZ0iXAPow93E6MbsNf/BtWVAhTa/Y2zr554GwxQTj6gj8nDQrjX4nvIqa20ijHLBzSxWYenC6lkU7vn/e4zUlXn/pSxAF4=
+	t=1759244935; cv=none; b=TSQ6Rn9+LJM/SSAMqStW6iLHyzzLA9Lwr8UQTdOnyiftNoDsgA2aP3B/WX4l7/0l3qucQFQVGLJNzjiptX7G95FQ8IJAUYNYFOQmv5UXvbyMtToRa+eeLM0ZkLXyzLe4opKt2xVBTar2Od8Jk5Dlymg4Y1LhbwMGEhWfKTli99o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244932; c=relaxed/simple;
-	bh=er4b4xTgYtvpnT7Otc/yaPeuppluckEU9kfQBek9jok=;
+	s=arc-20240116; t=1759244935; c=relaxed/simple;
+	bh=YxjJaN91RSpHYbtycnBbaCvxaqzuRUCfDopgCeWv6Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DrORgI/gtokGZapmcDH5tmgrxdwo2SzhCebH4/gYzP3BbfptMdVlNqDQybqtLk99xcpoFFhPJ3LDRwOG4j333TwVVvESEqnCDQB4x//sTrOktXVwEfL+YRpgKN6H1+dbrWkHbt0i6OtZIlxO8iVumtsaLcL6+XltiQaVZMbZIqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcR0XCm1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qQR9gZg6EJzGFiaSaTyhITXPgusxLqHgWOL8bF6p1tM3vzHWcT7ZnxF9PuyvieRvQRwWHlwFiF44rFLoKFZufH7s7ZVFB/GzQ9zA56qIMF1HO5Z2AW577pKia6iMAaVRRXzs7LnGvs7PYxp1Kied12rumx+h+29qSzZrCuI5M3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1D6OHiJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcR0XCm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE77AC4CEF0;
-	Tue, 30 Sep 2025 15:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1D6OHiJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD53C4CEF0;
+	Tue, 30 Sep 2025 15:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244932;
-	bh=er4b4xTgYtvpnT7Otc/yaPeuppluckEU9kfQBek9jok=;
+	s=korg; t=1759244935;
+	bh=YxjJaN91RSpHYbtycnBbaCvxaqzuRUCfDopgCeWv6Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcR0XCm1Gzyfses4ecpBKDV7AoPLR3zk8lbitHTDdpIFOGfw3UodyRnhTiUJHipTD
-	 J5O6CSMa7rSvXmy13Bl3zucimhzA846onbYQdOvWFCOMh4Os/wAmFk56M/40nkCU2t
-	 +9ENUD7iC5tUZnb1TyRxP4IIr5cQlqlitQdwKb1s=
+	b=i1D6OHiJZEfthXABAnikfYvGgWJ6dNziegIVndnNOspHSwfn9vC2C6EVViRbXPvyZ
+	 3LZwOaN2Etb2WpW4gfTJ8pnBlBrkLdLPYvPTAcEzym+mzdEqsx0oyZ5cEZAdtanBf7
+	 c4Gq4RArAklKc8QPQ5W+407MPEpwGdlFTE1VfaSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Jonathan Curley <jcurley@purestorage.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/151] tracing: Fix tracing_marker may trigger page fault during preempt_disable
-Date: Tue, 30 Sep 2025 16:45:44 +0200
-Message-ID: <20250930143828.173404668@linuxfoundation.org>
+Subject: [PATCH 5.15 015/151] NFSv4/flexfiles: Fix layout merge mirror check.
+Date: Tue, 30 Sep 2025 16:45:45 +0200
+Message-ID: <20250930143828.212107318@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,86 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Jonathan Curley <jcurley@purestorage.com>
 
-[ Upstream commit 3d62ab32df065e4a7797204a918f6489ddb8a237 ]
+[ Upstream commit dd2fa82473453661d12723c46c9f43d9876a7efd ]
 
-Both tracing_mark_write and tracing_mark_raw_write call
-__copy_from_user_inatomic during preempt_disable. But in some case,
-__copy_from_user_inatomic may trigger page fault, and will call schedule()
-subtly. And if a task is migrated to other cpu, the following warning will
-be trigger:
-        if (RB_WARN_ON(cpu_buffer,
-                       !local_read(&cpu_buffer->committing)))
+Typo in ff_lseg_match_mirrors makes the diff ineffective. This results
+in merge happening all the time. Merge happening all the time is
+problematic because it marks lsegs invalid. Marking lsegs invalid
+causes all outstanding IO to get restarted with EAGAIN and connections
+to get closed.
 
-An example can illustrate this issue:
+Closing connections constantly triggers race conditions in the RDMA
+implementation...
 
-process flow						CPU
----------------------------------------------------------------------
-
-tracing_mark_raw_write():				cpu:0
-   ...
-   ring_buffer_lock_reserve():				cpu:0
-      ...
-      cpu = raw_smp_processor_id()			cpu:0
-      cpu_buffer = buffer->buffers[cpu]			cpu:0
-      ...
-   ...
-   __copy_from_user_inatomic():				cpu:0
-      ...
-      # page fault
-      do_mem_abort():					cpu:0
-         ...
-         # Call schedule
-         schedule()					cpu:0
-	 ...
-   # the task schedule to cpu1
-   __buffer_unlock_commit():				cpu:1
-      ...
-      ring_buffer_unlock_commit():			cpu:1
-	 ...
-	 cpu = raw_smp_processor_id()			cpu:1
-	 cpu_buffer = buffer->buffers[cpu]		cpu:1
-
-As shown above, the process will acquire cpuid twice and the return values
-are not the same.
-
-To fix this problem using copy_from_user_nofault instead of
-__copy_from_user_inatomic, as the former performs 'access_ok' before
-copying.
-
-Link: https://lore.kernel.org/20250819105152.2766363-1-luogengkun@huaweicloud.com
-Fixes: 656c7f0d2d2b ("tracing: Replace kmap with copy_from_user() in trace_marker writing")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 660d1eb22301c ("pNFS/flexfile: Don't merge layout segments if the mirrors don't match")
+Signed-off-by: Jonathan Curley <jcurley@purestorage.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 7af8bbc57531c..a6040a707abb7 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7233,7 +7233,7 @@ tracing_mark_write(struct file *filp, const char __user *ubuf,
- 	entry = ring_buffer_event_data(event);
- 	entry->ip = _THIS_IP_;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index 798e2e32b3fb6..24d97d7ba12d5 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -270,7 +270,7 @@ ff_lseg_match_mirrors(struct pnfs_layout_segment *l1,
+ 		struct pnfs_layout_segment *l2)
+ {
+ 	const struct nfs4_ff_layout_segment *fl1 = FF_LAYOUT_LSEG(l1);
+-	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l1);
++	const struct nfs4_ff_layout_segment *fl2 = FF_LAYOUT_LSEG(l2);
+ 	u32 i;
  
--	len = __copy_from_user_inatomic(&entry->buf, ubuf, cnt);
-+	len = copy_from_user_nofault(&entry->buf, ubuf, cnt);
- 	if (len) {
- 		memcpy(&entry->buf, FAULTED_STR, FAULTED_SIZE);
- 		cnt = FAULTED_SIZE;
-@@ -7308,7 +7308,7 @@ tracing_mark_raw_write(struct file *filp, const char __user *ubuf,
- 
- 	entry = ring_buffer_event_data(event);
- 
--	len = __copy_from_user_inatomic(&entry->id, ubuf, cnt);
-+	len = copy_from_user_nofault(&entry->id, ubuf, cnt);
- 	if (len) {
- 		entry->id = -1;
- 		memcpy(&entry->buf, FAULTED_STR, FAULTED_SIZE);
+ 	if (fl1->mirror_array_cnt != fl2->mirror_array_cnt)
 -- 
 2.51.0
 
