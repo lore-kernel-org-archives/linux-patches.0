@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679AD846F;
-	Tue, 30 Sep 2025 15:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3FC846F;
+	Tue, 30 Sep 2025 15:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245773; cv=none; b=H4OMQs07x4y/POwoIkm2qK7WQCeolY2aEiJO+1SvsY7aG1CEfS56uJqqX/qmFVRQpxBwyjVa8+6YKIaLmb+N7igFnaldshtuy0+rYwUl8gRmTPF0qu2RRp5w0rIYnJT+rRfV2W3RQAg0Y6fMzWKMYGumGrFm+wkom5I9VGpvADY=
+	t=1759245776; cv=none; b=UXzuwxWNjsF3nHN1x8BrMbWqKpAS0l/CfU/I8kpDI8getDpJVxRHjqSt1ckGSvKSGFRMFdveQaj3VvuGYzTdCfrBx3J6TCoNKj7lEugCkFGZM7kA1AGPBP9HAp/lIpq9He8Fho39YmLCv/m2he7QD6S8NffbKJ/DedFYk99wqDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245773; c=relaxed/simple;
-	bh=Q6N2DV1ACmq05NrGOhNG1t8KGfcs7Kqh/fjul3A0/vI=;
+	s=arc-20240116; t=1759245776; c=relaxed/simple;
+	bh=K/MEkCMjc1wKGYm9qvpFNLcPISYXJrxHu1iV30vhp1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SU87+Wsefma1vygAaFGkIiugqwTU9iANDrhOOvfvDBtLOd6LeSL8Ou+h8prz2PIW6TjhmLc00h4rjNo48Mf7wYfXWIWCi/ADEc7iHVxlSOzbHUSGMI6H2dxZTmSYvNrnmBY14AxJoXJwdt9jCtO6VDGh1VXkgcDn3XaJvTjyfGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJc8uFQ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AHkTCDHfQJ7aM6qCJr3mMGzU6ImUqNbpSYf3O5GC1foe5MC+MzrMyMeFwQWKlWRKvOpA91KWXFBAS1ez692WRbh4akwcUKGnvkCcdJeBIOD+decioqWeMjn66ukWo3tGrid/KmQcEI+WJL0k7+KAbDJ0MODZEDTu7phg2ObLSjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFaLh7iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJc8uFQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0221C4CEF0;
-	Tue, 30 Sep 2025 15:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFaLh7iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB0CC4CEF0;
+	Tue, 30 Sep 2025 15:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245773;
-	bh=Q6N2DV1ACmq05NrGOhNG1t8KGfcs7Kqh/fjul3A0/vI=;
+	s=korg; t=1759245776;
+	bh=K/MEkCMjc1wKGYm9qvpFNLcPISYXJrxHu1iV30vhp1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJc8uFQ7Mkll1ddVNGMHD8b6S8C+qZIvgEiGEARsI0F5K8S0U2mUbbR33g5Pw5TG/
-	 yOhnAkYpmvdWCZ7K3VOvPx1+G2hydNBoUDi9WPVgaEHoDYh32Rldjzka8kGV8N2guO
-	 oMFHvHliJx+iDqu30KTdPF1TvYt+ZmWVW9jQ3MRk=
+	b=QFaLh7iyegQu/TARM6GmhCiA+zACoz/cs5KhoAcH09ZISrWvfejvZhHdxFDv8vorm
+	 LmIwdi81Pi8omeGhy5VEtPTvBLGNxEPR6SJh2LkpoogZh/fa2gujloJ3GK7RgDdhBt
+	 bXwwooDT2Toglf6S43GLCbqC+8pn2XXK8UiCngVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Baron <jbaron@akamai.com>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+6596516dd2b635ba2350@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 45/91] net: allow alloc_skb_with_frags() to use MAX_SKB_FRAGS
-Date: Tue, 30 Sep 2025 16:47:44 +0200
-Message-ID: <20250930143823.046297855@linuxfoundation.org>
+Subject: [PATCH 6.6 46/91] nexthop: Forbid FDB status change while nexthop is in a group
+Date: Tue, 30 Sep 2025 16:47:45 +0200
+Message-ID: <20250930143823.087377841@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -52,45 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Baron <jbaron@akamai.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit ca9f9cdc4de97d0221100b11224738416696163c ]
+[ Upstream commit 390b3a300d7872cef9588f003b204398be69ce08 ]
 
-Currently, alloc_skb_with_frags() will only fill (MAX_SKB_FRAGS - 1)
-slots. I think it should use all MAX_SKB_FRAGS slots, as callers of
-alloc_skb_with_frags() will size their allocation of frags based
-on MAX_SKB_FRAGS.
+The kernel forbids the creation of non-FDB nexthop groups with FDB
+nexthops:
 
-This issue was discovered via a test patch that sets 'order' to 0
-in alloc_skb_with_frags(), which effectively tests/simulates high
-fragmentation. In this case sendmsg() on unix sockets will fail every
-time for large allocations. If the PAGE_SIZE is 4K, then data_len will
-request 68K or 17 pages, but alloc_skb_with_frags() can only allocate
-64K in this case or 16 pages.
+ # ip nexthop add id 1 via 192.0.2.1 fdb
+ # ip nexthop add id 2 group 1
+ Error: Non FDB nexthop group cannot have fdb nexthops.
 
-Fixes: 09c2c90705bb ("net: allow alloc_skb_with_frags() to allocate bigger packets")
-Signed-off-by: Jason Baron <jbaron@akamai.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250922191957.2855612-1-jbaron@akamai.com
+And vice versa:
+
+ # ip nexthop add id 3 via 192.0.2.2 dev dummy1
+ # ip nexthop add id 4 group 3 fdb
+ Error: FDB nexthop group can only have fdb nexthops.
+
+However, as long as no routes are pointing to a non-FDB nexthop group,
+the kernel allows changing the type of a nexthop from FDB to non-FDB and
+vice versa:
+
+ # ip nexthop add id 5 via 192.0.2.2 dev dummy1
+ # ip nexthop add id 6 group 5
+ # ip nexthop replace id 5 via 192.0.2.2 fdb
+ # echo $?
+ 0
+
+This configuration is invalid and can result in a NPD [1] since FDB
+nexthops are not associated with a nexthop device:
+
+ # ip route add 198.51.100.1/32 nhid 6
+ # ping 198.51.100.1
+
+Fix by preventing nexthop FDB status change while the nexthop is in a
+group:
+
+ # ip nexthop add id 7 via 192.0.2.2 dev dummy1
+ # ip nexthop add id 8 group 7
+ # ip nexthop replace id 7 via 192.0.2.2 fdb
+ Error: Cannot change nexthop FDB status while in a group.
+
+[1]
+BUG: kernel NULL pointer dereference, address: 00000000000003c0
+[...]
+Oops: Oops: 0000 [#1] SMP
+CPU: 6 UID: 0 PID: 367 Comm: ping Not tainted 6.17.0-rc6-virtme-gb65678cacc03 #1 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-4.fc41 04/01/2014
+RIP: 0010:fib_lookup_good_nhc+0x1e/0x80
+[...]
+Call Trace:
+ <TASK>
+ fib_table_lookup+0x541/0x650
+ ip_route_output_key_hash_rcu+0x2ea/0x970
+ ip_route_output_key_hash+0x55/0x80
+ __ip4_datagram_connect+0x250/0x330
+ udp_connect+0x2b/0x60
+ __sys_connect+0x9c/0xd0
+ __x64_sys_connect+0x18/0x20
+ do_syscall_64+0xa4/0x2a0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 38428d68719c ("nexthop: support for fdb ecmp nexthops")
+Reported-by: syzbot+6596516dd2b635ba2350@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/68c9a4d2.050a0220.3c6139.0e63.GAE@google.com/
+Tested-by: syzbot+6596516dd2b635ba2350@syzkaller.appspotmail.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250921150824.149157-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/nexthop.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 21a83e26f004b..867832f8bbaea 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6330,7 +6330,7 @@ struct sk_buff *alloc_skb_with_frags(unsigned long header_len,
- 		return NULL;
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 8d41b03942197..fab550633ec9f 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2136,6 +2136,13 @@ static int replace_nexthop_single(struct net *net, struct nexthop *old,
+ 		return -EINVAL;
+ 	}
  
- 	while (data_len) {
--		if (nr_frags == MAX_SKB_FRAGS - 1)
-+		if (nr_frags == MAX_SKB_FRAGS)
- 			goto failure;
- 		while (order && PAGE_ALIGN(data_len) < (PAGE_SIZE << order))
- 			order--;
++	if (!list_empty(&old->grp_list) &&
++	    rtnl_dereference(new->nh_info)->fdb_nh !=
++	    rtnl_dereference(old->nh_info)->fdb_nh) {
++		NL_SET_ERR_MSG(extack, "Cannot change nexthop FDB status while in a group");
++		return -EINVAL;
++	}
++
+ 	err = call_nexthop_notifiers(net, NEXTHOP_EVENT_REPLACE, new, extack);
+ 	if (err)
+ 		return err;
 -- 
 2.51.0
 
