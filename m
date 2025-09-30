@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F07223DD6;
-	Tue, 30 Sep 2025 15:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620533081D2;
+	Tue, 30 Sep 2025 15:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245294; cv=none; b=ddGji0T4UTktUtfeNuyUTx9q+fjuIFV5MLT++3/p209M8IB98ZRa4TLYss13EYUt3UiNvIJ1hetcyqKOyhEHUXv3GSO6nFaaCVpjiG5Kz1cr9pyLv14eduCiqdJOnYxEMPXSFwCUnj2QIbsYbkMHfpPvpikjD6fMdFYth9gQofU=
+	t=1759245297; cv=none; b=tQweAXlvJVSTuhz+vRbb1QkDLVBSIzV8+mIhoGXJofJJvfaFDQZVbAetcvglQONN8Cd/RbgLXuPGtaLOjKssOxkNV2qb8OTgasx5a5lAHVfBTwk1Skqg5VLNCFFJeqFm1MgEHlZg6zZt1iJ1vtVudJX92hjVkWLzE2NcqRL63BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245294; c=relaxed/simple;
-	bh=UGsTRQf7U+wVW3/rMo/HGBEK3A4fLPgtwH7V/BUsXXg=;
+	s=arc-20240116; t=1759245297; c=relaxed/simple;
+	bh=I5isv2tjyKwEFhsRDeMCn4gBt9LFE8a0ep0vHwB5K8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dq20Hv9QFH1WBnRja2oxoqWckf7zQYuehj093P6ACuos4XtrJZLnc8yVvRw0RbsBK8n01pfuxPwtxYmdXA2klUnLTOiuhGw/zPDB9mijn/tf+6BX/lU1pjDI91D1R39ccckgMKfbCkQPD0301KQL8d9iF9yZCygkmlIVc8r1UO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiQHtqQj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8T0nUx9Ttcj74hEiUUtYU5ZA+tUtg1cqROZCV5wgc7MqBORVxPJWjNazK8gK/RKY8jtmrLHO9X/ltncGiR3siPlEBXEydd4t7nMWwMJPua22SRkJlwV4gKaef29MIMyqW+iLDPNZ/QuE5ptWzv07gKqC60ow5Q5bMPRgpp4aTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2NTYvrB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiQHtqQj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8FDC4CEF0;
-	Tue, 30 Sep 2025 15:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2NTYvrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7F2C19425;
+	Tue, 30 Sep 2025 15:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245294;
-	bh=UGsTRQf7U+wVW3/rMo/HGBEK3A4fLPgtwH7V/BUsXXg=;
+	s=korg; t=1759245297;
+	bh=I5isv2tjyKwEFhsRDeMCn4gBt9LFE8a0ep0vHwB5K8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AiQHtqQjTiwiqEP5uYeRyd0/VkXjksmwBL3raTm33uMDJo/aVgMKgoxq0/ar1WolO
-	 XR9akiujp1kdROmfwOGMyvHNXvGphUtH2E5AWZdVbHILt11P+ApLoCJGfOy7iUoSob
-	 o+TMMH83P0BWREJ6AsnUXO/6p02TAEpjFkkwSIsE=
+	b=p2NTYvrBhbUYj9rHsfEjXI+EZQR5LxEgOAA1L56KkwAfv131wHG2QteE7yXYJaGgN
+	 EZ/qWXeivuRZW6Q1pBFHuq5A9tN2R5gaB6iyI41mQGqHm1UOZEb2ZXPSck8LAEs4nR
+	 bmL/aMH91Ayd/O0QcObCibmgQD0gbkZZYUbdmsas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jakobkoschel@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>,
+	Yunseong Kim <ysk@kzalloc.com>,
+	syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/151] usb: gadget: dummy_hcd: remove usage of list iterator past the loop body
-Date: Tue, 30 Sep 2025 16:47:03 +0200
-Message-ID: <20250930143831.300363109@linuxfoundation.org>
+Subject: [PATCH 5.15 094/151] USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels
+Date: Tue, 30 Sep 2025 16:47:04 +0200
+Message-ID: <20250930143831.340009572@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -50,60 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakob Koschel <jakobkoschel@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 7975f080d3557725160a878b1a64339043ba3d91 ]
+[ Upstream commit 8d63c83d8eb922f6c316320f50c82fa88d099bea ]
 
-To move the list iterator variable into the list_for_each_entry_*()
-macro in the future it should be avoided to use the list iterator
-variable after the loop body.
+Yunseong Kim and the syzbot fuzzer both reported a problem in
+RT-enabled kernels caused by the way dummy-hcd mixes interrupt
+management and spin-locking.  The pattern was:
 
-To *never* use the list iterator variable after the loop it was
-concluded to use a separate iterator variable [1].
+	local_irq_save(flags);
+	spin_lock(&dum->lock);
+	...
+	spin_unlock(&dum->lock);
+	...		// calls usb_gadget_giveback_request()
+	local_irq_restore(flags);
 
-Link: https://lore.kernel.org/all/YhdfEIwI4EdtHdym@kroah.com/
-Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
-Link: https://lore.kernel.org/r/20220308171818.384491-26-jakobkoschel@gmail.com
+The code was written this way because usb_gadget_giveback_request()
+needs to be called with interrupts disabled and the private lock not
+held.
+
+While this pattern works fine in non-RT kernels, it's not good when RT
+is enabled.  RT kernels handle spinlocks much like mutexes; in particular,
+spin_lock() may sleep.  But sleeping is not allowed while local
+interrupts are disabled.
+
+To fix the problem, rewrite the code to conform to the pattern used
+elsewhere in dummy-hcd and other UDC drivers:
+
+	spin_lock_irqsave(&dum->lock, flags);
+	...
+	spin_unlock(&dum->lock);
+	usb_gadget_giveback_request(...);
+	spin_lock(&dum->lock);
+	...
+	spin_unlock_irqrestore(&dum->lock, flags);
+
+This approach satisfies the RT requirements.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable <stable@kernel.org>
+Fixes: b4dbda1a22d2 ("USB: dummy-hcd: disable interrupts during req->complete")
+Reported-by: Yunseong Kim <ysk@kzalloc.com>
+Closes: <https://lore.kernel.org/linux-usb/5b337389-73b9-4ee4-a83e-7e82bf5af87a@kzalloc.com/>
+Reported-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
+Closes: <https://lore.kernel.org/linux-usb/68ac2411.050a0220.37038e.0087.GAE@google.com/>
+Tested-by: syzbot+8baacc4139f12fa77909@syzkaller.appspotmail.com
+CC: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+CC: stable@vger.kernel.org
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/bb192ae2-4eee-48ee-981f-3efdbbd0d8f0@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 8d63c83d8eb9 ("USB: gadget: dummy-hcd: Fix locking bug in RT-enabled kernels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/drivers/usb/gadget/udc/dummy_hcd.c
 +++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -751,7 +751,7 @@ static int dummy_dequeue(struct usb_ep *
- 	struct dummy		*dum;
- 	int			retval = -EINVAL;
- 	unsigned long		flags;
--	struct dummy_request	*req = NULL;
-+	struct dummy_request	*req = NULL, *iter;
+@@ -761,8 +761,7 @@ static int dummy_dequeue(struct usb_ep *
+ 	if (!dum->driver)
+ 		return -ESHUTDOWN;
  
- 	if (!_ep || !_req)
- 		return retval;
-@@ -763,13 +763,14 @@ static int dummy_dequeue(struct usb_ep *
- 
- 	local_irq_save(flags);
- 	spin_lock(&dum->lock);
--	list_for_each_entry(req, &ep->queue, queue) {
--		if (&req->req == _req) {
--			list_del_init(&req->queue);
--			_req->status = -ECONNRESET;
--			retval = 0;
--			break;
--		}
-+	list_for_each_entry(iter, &ep->queue, queue) {
-+		if (&iter->req != _req)
-+			continue;
-+		list_del_init(&iter->queue);
-+		_req->status = -ECONNRESET;
-+		req = iter;
-+		retval = 0;
-+		break;
+-	local_irq_save(flags);
+-	spin_lock(&dum->lock);
++	spin_lock_irqsave(&dum->lock, flags);
+ 	list_for_each_entry(iter, &ep->queue, queue) {
+ 		if (&iter->req != _req)
+ 			continue;
+@@ -772,15 +771,16 @@ static int dummy_dequeue(struct usb_ep *
+ 		retval = 0;
+ 		break;
  	}
- 	spin_unlock(&dum->lock);
+-	spin_unlock(&dum->lock);
+ 
+ 	if (retval == 0) {
+ 		dev_dbg(udc_dev(dum),
+ 				"dequeued req %p from %s, len %d buf %p\n",
+ 				req, _ep->name, _req->length, _req->buf);
++		spin_unlock(&dum->lock);
+ 		usb_gadget_giveback_request(_ep, _req);
++		spin_lock(&dum->lock);
+ 	}
+-	local_irq_restore(flags);
++	spin_unlock_irqrestore(&dum->lock, flags);
+ 	return retval;
+ }
  
 
 
