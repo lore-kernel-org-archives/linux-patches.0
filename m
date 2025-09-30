@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F0016A956;
-	Tue, 30 Sep 2025 15:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14410244665;
+	Tue, 30 Sep 2025 15:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246145; cv=none; b=r/SJYapoZfPcsPmOp2HjVW7RX+ni+QUsOYUwwUCogTxr2x/F0qYarlVIsGPUjEzewrKicjwVxTQt9pVIzMhHgPfaEVPJMGbnL20HsJr5LxckywDTNi2IDYE2PsFe+7eOuup6lG77Z+ELxoV3Q8tTYBxKP3KWeOjkdnUcD7Z9qTs=
+	t=1759246147; cv=none; b=n6wu3b13YNxjCF0Qv/f8+jamTw9cyOk2GMQJlA4VDVQzaezqYXFwk0kfHMZtlTkI++5D7GXkSxAhdj7CeEfWTK+Y0KJpHRY8nR9wLC3zbgVUtlfbv2qvp0vJtNz/SrX/A9E45nRg1kzqj4DO7+qV6wPI4+eGSvXUZameJreYTFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246145; c=relaxed/simple;
-	bh=SpqlaYcQ1sFznTFXQRF5VJNInP8n/54dHZXqqBRzo3c=;
+	s=arc-20240116; t=1759246147; c=relaxed/simple;
+	bh=mB/WkvF1SjgG0kiOHyEwwA9MOqxF2l+Fy/OBohZwV2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psNu3B11sNSDD/RbIxkC+RezZ2H2DnxHFhbyZZ90Ck94qY3b1Cycm2wHwZnB0ygBneYls8u2tb9Trkc33YRo3J1qFw+nShl/dUrnY82vAo+R3TUeUqTUjFn04XPEOByhieTDq+UqBNVGpcxUV+GGOdJ9ZQTFadP7GiKF5g2/DgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFVYeEyP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZ+NMKiKWm7dkATSxyMPcroPP2SGbb3KNikgE+b/sJXjPh2fZO9U7T7ratjxhpWUK7RYhT418DZfY/VSIH+Eawgu//JrPg9BqSlUr8zFfZn2+yZkhWad44J50Yhcw4sb6gbt0C+LB6vwqIdoGLCZwBw0MKkgBuZscWOlVQEe37E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhylxcL6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFVYeEyP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6BCC4CEF0;
-	Tue, 30 Sep 2025 15:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhylxcL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90771C4CEF0;
+	Tue, 30 Sep 2025 15:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246143;
-	bh=SpqlaYcQ1sFznTFXQRF5VJNInP8n/54dHZXqqBRzo3c=;
+	s=korg; t=1759246146;
+	bh=mB/WkvF1SjgG0kiOHyEwwA9MOqxF2l+Fy/OBohZwV2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IFVYeEyP9oGemv969aeb9b1358upu5EoGi9FGvHlNRHgp3smqNJOzF56WrTlRIL3T
-	 uh9kKYtJkozRG5DNkEhufM5StjT1WfQUKZNrFZa1dzomcG4CqJ8k3/dYFnNxowug8L
-	 cEkqfVNJAGZXajJPRwFp+Yopq0jzRrGST0F24ids=
+	b=vhylxcL6B72yzdEY04D11awk/en0vEZKbdNUCB5C9hbfFFL0PYW+XGA9sJyHe9b2A
+	 9LEStljcKvwd9H+AS+w2X7ou1c35NJ9xWCYmwrpk/OKOAK8bUuUnfhknZw65OgA0NG
+	 LMrc/M4fq2QMOv2EY4+SQ1VlLCuGe0MtHAOpDiTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	James Guan <guan_yufei@163.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 35/89] btrfs: dont allow adding block device of less than 1 MB
-Date: Tue, 30 Sep 2025 16:47:49 +0200
-Message-ID: <20250930143823.374860018@linuxfoundation.org>
+Subject: [PATCH 6.12 36/89] wifi: virt_wifi: Fix page fault on connect
+Date: Tue, 30 Sep 2025 16:47:50 +0200
+Message-ID: <20250930143823.418629376@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -52,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: James Guan <guan_yufei@163.com>
 
-[ Upstream commit 3d1267475b94b3df7a61e4ea6788c7c5d9e473c4 ]
+[ Upstream commit 9c600589e14f5fc01b8be9a5d0ad1f094b8b304b ]
 
-Commit 15ae0410c37a79 ("btrfs-progs: add error handling for
-device_get_partition_size_fd_stat()") in btrfs-progs inadvertently
-changed it so that if the BLKGETSIZE64 ioctl on a block device returned
-a size of 0, this was no longer seen as an error condition.
+This patch prevents page fault in __cfg80211_connect_result()[1]
+when connecting a virt_wifi device, while ensuring that virt_wifi
+can connect properly.
 
-Unfortunately this is how disconnected NBD devices behave, meaning that
-with btrfs-progs 6.16 it's now possible to add a device you can't
-remove:
+[1] https://lore.kernel.org/linux-wireless/20250909063213.1055024-1-guan_yufei@163.com/
 
-  # btrfs device add /dev/nbd0 /root/temp
-  # btrfs device remove /dev/nbd0 /root/temp
-  ERROR: error removing device '/dev/nbd0': Invalid argument
-
-This check should always have been done kernel-side anyway, so add a
-check in btrfs_init_new_device() that the new device doesn't have a size
-less than BTRFS_DEVICE_RANGE_RESERVED (i.e. 1 MB).
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Closes: https://lore.kernel.org/linux-wireless/20250909063213.1055024-1-guan_yufei@163.com/
+Signed-off-by: James Guan <guan_yufei@163.com>
+Link: https://patch.msgid.link/20250910111929.137049-1-guan_yufei@163.com
+[remove irrelevant network-manager instructions]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/virtual/virt_wifi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 58e0cac5779dd..ce991a8390466 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2699,6 +2699,11 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 		goto error;
- 	}
+diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
+index 4ee3740804667..a77a27c36bdbe 100644
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -277,7 +277,9 @@ static void virt_wifi_connect_complete(struct work_struct *work)
+ 		priv->is_connected = true;
  
-+	if (bdev_nr_bytes(file_bdev(bdev_file)) <= BTRFS_DEVICE_RANGE_RESERVED) {
-+		ret = -EINVAL;
-+		goto error;
-+	}
-+
- 	if (fs_devices->seeding) {
- 		seeding_dev = true;
- 		down_write(&sb->s_umount);
+ 	/* Schedules an event that acquires the rtnl lock. */
+-	cfg80211_connect_result(priv->upperdev, requested_bss, NULL, 0, NULL, 0,
++	cfg80211_connect_result(priv->upperdev,
++				priv->is_connected ? fake_router_bssid : NULL,
++				NULL, 0, NULL, 0,
+ 				status, GFP_KERNEL);
+ 	netif_carrier_on(priv->upperdev);
+ }
 -- 
 2.51.0
 
