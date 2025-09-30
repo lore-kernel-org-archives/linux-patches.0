@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4BC305E2F;
-	Tue, 30 Sep 2025 14:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBDF303C9B;
+	Tue, 30 Sep 2025 14:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244190; cv=none; b=g/ZYfEwGr5aeF61D4Y+c31p5t9FI7jPVKSttPaeOq10dPq7/QDkhZBVALGLP1gdnrre/Oi/S1RVI7qPxxdSpMrcyt+w3SlM+pmA862ehKn14Yts5IxjmlNTxFNm8pyEsZc60pM2bMUoLtWp/qtfgDolJsTXyy9MTj8NsDS4G5Pc=
+	t=1759244193; cv=none; b=Hv5+0tUE/0EglXg35QcWu3XTNCG67Gq0zLdIh5GCJeJEFm5gKZCzsZgTkFgeEJVipa4iNGQhO3rIwqzDPdvgbywvE6gR4hilCf/tHWArqAaKVIYtdX35Ql5LEiDzXJ/upk+q68yhOLMXKZuAA6zPM9HYjYutmwr6Efuc5JLGrsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244190; c=relaxed/simple;
-	bh=z8W0NGypZBEAriDMJ4D8a2NkWLkb3JnWwOu/YuoMBE0=;
+	s=arc-20240116; t=1759244193; c=relaxed/simple;
+	bh=s1lYkbb+4CyWmvQY8AvrB88kdw5TrnIzjIYKm0N4Tlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2h9jikioiAzP6jv/wYqakZtIh5R/7TVS/mKOk+TkA4fxj6WoSZM2W3WRkYDDlPCjbCXY27kbF+xqdne9Nwa6GC+meaWfyX4pi7xFf+epYFQnImMQTfrEizbM1whslwhllmr5WzN9/SuXCyfDI33r68+q66aIVb3foyjbw7pm6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKJEhNp4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KdckguwWFjeyCI+ZQ1oxBmdLHpS89xbprdeTbx04l1EIPFKKnO442c6FaHpZ7lHMj8QKEIvSOeG/Ad6IN6QZqJKbv+edW0S3Ngpv3jZyn09F21DgFPbhp9B76ugnS3IWtf0sGK9XKzJV2Q/p2gUoeosW7gSMBscQQTj25t8uBxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRp74jbw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKJEhNp4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936ECC4CEF0;
-	Tue, 30 Sep 2025 14:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRp74jbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7E0C113D0;
+	Tue, 30 Sep 2025 14:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244190;
-	bh=z8W0NGypZBEAriDMJ4D8a2NkWLkb3JnWwOu/YuoMBE0=;
+	s=korg; t=1759244193;
+	bh=s1lYkbb+4CyWmvQY8AvrB88kdw5TrnIzjIYKm0N4Tlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKJEhNp42MbQ9bXksIkKGvIDip3Ufo0hlhNran1FaYPk7BrTqP+7XfWus/7kjVWmR
-	 vA06D+aFpmqFDFD2zFL2YqkKJBk6QV7ZrFOkGuLg4AZt7pmkT/tvBq4xg26PW55z3m
-	 ML7hLvjDWV3SR9dlBwVlM7zM2s/gsjlx+acm93Dk=
+	b=FRp74jbwkfpajSXk9hwd0qLDn7agwdg+CmbLtbLbR1cOWZnHK2CPViw4yBgEAOTiz
+	 CAcijJHDtQPlb5RHpNL1GpM9RPX4cnPeGtL4rVV94mctn6FUktQ03oVvX3hL2nUtIe
+	 8o46zzE51jTDuVsz61NzzLoIpfCJYu6pc6ggLvt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/122] mtd: rawnand: stm32_fmc2: avoid overlapping mappings on ECC buffer
-Date: Tue, 30 Sep 2025 16:45:54 +0200
-Message-ID: <20250930143823.947378926@linuxfoundation.org>
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	linux-hardening@vger.kernel.org,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 5.10 014/122] overflow: Allow mixed type arguments
+Date: Tue, 30 Sep 2025 16:45:45 +0200
+Message-ID: <20250930143823.574238011@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -51,135 +56,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 513c40e59d5a414ab763a9c84797534b5e8c208d ]
+commit d219d2a9a92e39aa92799efe8f2aa21259b6dd82 upstream.
 
-Avoid below overlapping mappings by using a contiguous
-non-cacheable buffer.
+When the check_[op]_overflow() helpers were introduced, all arguments
+were required to be the same type to make the fallback macros simpler.
+However, now that the fallback macros have been removed[1], it is fine
+to allow mixed types, which makes using the helpers much more useful,
+as they can be used to test for type-based overflows (e.g. adding two
+large ints but storing into a u8), as would be handy in the drm core[2].
 
-[    4.077708] DMA-API: stm32_fmc2_nfc 48810000.nand-controller: cacheline tracking EEXIST,
-overlapping mappings aren't supported
-[    4.089103] WARNING: CPU: 1 PID: 44 at kernel/dma/debug.c:568 add_dma_entry+0x23c/0x300
-[    4.097071] Modules linked in:
-[    4.100101] CPU: 1 PID: 44 Comm: kworker/u4:2 Not tainted 6.1.82 #1
-[    4.106346] Hardware name: STMicroelectronics STM32MP257F VALID1 SNOR / MB1704 (LPDDR4 Power discrete) + MB1703 + MB1708 (SNOR MB1730) (DT)
-[    4.118824] Workqueue: events_unbound deferred_probe_work_func
-[    4.124674] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    4.131624] pc : add_dma_entry+0x23c/0x300
-[    4.135658] lr : add_dma_entry+0x23c/0x300
-[    4.139792] sp : ffff800009dbb490
-[    4.143016] x29: ffff800009dbb4a0 x28: 0000000004008022 x27: ffff8000098a6000
-[    4.150174] x26: 0000000000000000 x25: ffff8000099e7000 x24: ffff8000099e7de8
-[    4.157231] x23: 00000000ffffffff x22: 0000000000000000 x21: ffff8000098a6a20
-[    4.164388] x20: ffff000080964180 x19: ffff800009819ba0 x18: 0000000000000006
-[    4.171545] x17: 6361727420656e69 x16: 6c6568636163203a x15: 72656c6c6f72746e
-[    4.178602] x14: 6f632d646e616e2e x13: ffff800009832f58 x12: 00000000000004ec
-[    4.185759] x11: 00000000000001a4 x10: ffff80000988af58 x9 : ffff800009832f58
-[    4.192916] x8 : 00000000ffffefff x7 : ffff80000988af58 x6 : 80000000fffff000
-[    4.199972] x5 : 000000000000bff4 x4 : 0000000000000000 x3 : 0000000000000000
-[    4.207128] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000812d2c40
-[    4.214185] Call trace:
-[    4.216605]  add_dma_entry+0x23c/0x300
-[    4.220338]  debug_dma_map_sg+0x198/0x350
-[    4.224373]  __dma_map_sg_attrs+0xa0/0x110
-[    4.228411]  dma_map_sg_attrs+0x10/0x2c
-[    4.232247]  stm32_fmc2_nfc_xfer.isra.0+0x1c8/0x3fc
-[    4.237088]  stm32_fmc2_nfc_seq_read_page+0xc8/0x174
-[    4.242127]  nand_read_oob+0x1d4/0x8e0
-[    4.245861]  mtd_read_oob_std+0x58/0x84
-[    4.249596]  mtd_read_oob+0x90/0x150
-[    4.253231]  mtd_read+0x68/0xac
+Remove the restriction, and add additional self-tests that exercise
+some of the mixed-type overflow cases, and double-check for accidental
+macro side-effects.
 
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
-Cc: stable@vger.kernel.org
-Fixes: 2cd457f328c1 ("mtd: rawnand: stm32_fmc2: add STM32 FMC2 NAND flash controller driver")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1] https://git.kernel.org/linus/4eb6bd55cfb22ffc20652732340c4962f3ac9a91
+[2] https://lore.kernel.org/lkml/20220824084514.2261614-2-gwan-gyeong.mun@intel.com
+
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: linux-hardening@vger.kernel.org
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Tested-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+[ dropped the test portion of the commit as that doesn't apply to
+  5.15.y - gregkh]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/stm32_fmc2_nand.c |   28 +++++++++-------------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+ include/linux/overflow.h |   72 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 41 insertions(+), 31 deletions(-)
 
---- a/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-+++ b/drivers/mtd/nand/raw/stm32_fmc2_nand.c
-@@ -261,6 +261,7 @@ struct stm32_fmc2_nfc {
- 	struct sg_table dma_data_sg;
- 	struct sg_table dma_ecc_sg;
- 	u8 *ecc_buf;
-+	dma_addr_t dma_ecc_addr;
- 	int dma_ecc_len;
+--- a/include/linux/overflow.h
++++ b/include/linux/overflow.h
+@@ -51,40 +51,50 @@ static inline bool __must_check __must_c
+ 	return unlikely(overflow);
+ }
  
- 	struct completion complete;
-@@ -881,17 +882,10 @@ static int stm32_fmc2_nfc_xfer(struct na
+-/*
+- * For simplicity and code hygiene, the fallback code below insists on
+- * a, b and *d having the same type (similar to the min() and max()
+- * macros), whereas gcc's type-generic overflow checkers accept
+- * different types. Hence we don't just make check_add_overflow an
+- * alias for __builtin_add_overflow, but add type checks similar to
+- * below.
++/** check_add_overflow() - Calculate addition with overflow checking
++ *
++ * @a: first addend
++ * @b: second addend
++ * @d: pointer to store sum
++ *
++ * Returns 0 on success.
++ *
++ * *@d holds the results of the attempted addition, but is not considered
++ * "safe for use" on a non-zero return value, which indicates that the
++ * sum has overflowed or been truncated.
+  */
+-#define check_add_overflow(a, b, d) __must_check_overflow(({	\
+-	typeof(a) __a = (a);			\
+-	typeof(b) __b = (b);			\
+-	typeof(d) __d = (d);			\
+-	(void) (&__a == &__b);			\
+-	(void) (&__a == __d);			\
+-	__builtin_add_overflow(__a, __b, __d);	\
+-}))
++#define check_add_overflow(a, b, d)	\
++	__must_check_overflow(__builtin_add_overflow(a, b, d))
  
- 	if (!write_data && !raw) {
- 		/* Configure DMA ECC status */
--		p = nfc->ecc_buf;
- 		for_each_sg(nfc->dma_ecc_sg.sgl, sg, eccsteps, s) {
--			sg_set_buf(sg, p, nfc->dma_ecc_len);
--			p += nfc->dma_ecc_len;
--		}
--
--		ret = dma_map_sg(nfc->dev, nfc->dma_ecc_sg.sgl,
--				 eccsteps, dma_data_dir);
--		if (!ret) {
--			ret = -EIO;
--			goto err_unmap_data;
-+			sg_dma_address(sg) = nfc->dma_ecc_addr +
-+					     s * nfc->dma_ecc_len;
-+			sg_dma_len(sg) = nfc->dma_ecc_len;
- 		}
+-#define check_sub_overflow(a, b, d) __must_check_overflow(({	\
+-	typeof(a) __a = (a);			\
+-	typeof(b) __b = (b);			\
+-	typeof(d) __d = (d);			\
+-	(void) (&__a == &__b);			\
+-	(void) (&__a == __d);			\
+-	__builtin_sub_overflow(__a, __b, __d);	\
+-}))
++/** check_sub_overflow() - Calculate subtraction with overflow checking
++ *
++ * @a: minuend; value to subtract from
++ * @b: subtrahend; value to subtract from @a
++ * @d: pointer to store difference
++ *
++ * Returns 0 on success.
++ *
++ * *@d holds the results of the attempted subtraction, but is not considered
++ * "safe for use" on a non-zero return value, which indicates that the
++ * difference has underflowed or been truncated.
++ */
++#define check_sub_overflow(a, b, d)	\
++	__must_check_overflow(__builtin_sub_overflow(a, b, d))
  
- 		desc_ecc = dmaengine_prep_slave_sg(nfc->dma_ecc_ch,
-@@ -900,7 +894,7 @@ static int stm32_fmc2_nfc_xfer(struct na
- 						   DMA_PREP_INTERRUPT);
- 		if (!desc_ecc) {
- 			ret = -ENOMEM;
--			goto err_unmap_ecc;
-+			goto err_unmap_data;
- 		}
+-#define check_mul_overflow(a, b, d) __must_check_overflow(({	\
+-	typeof(a) __a = (a);			\
+-	typeof(b) __b = (b);			\
+-	typeof(d) __d = (d);			\
+-	(void) (&__a == &__b);			\
+-	(void) (&__a == __d);			\
+-	__builtin_mul_overflow(__a, __b, __d);	\
+-}))
++/** check_mul_overflow() - Calculate multiplication with overflow checking
++ *
++ * @a: first factor
++ * @b: second factor
++ * @d: pointer to store product
++ *
++ * Returns 0 on success.
++ *
++ * *@d holds the results of the attempted multiplication, but is not
++ * considered "safe for use" on a non-zero return value, which indicates
++ * that the product has overflowed or been truncated.
++ */
++#define check_mul_overflow(a, b, d)	\
++	__must_check_overflow(__builtin_mul_overflow(a, b, d))
  
- 		reinit_completion(&nfc->dma_ecc_complete);
-@@ -908,7 +902,7 @@ static int stm32_fmc2_nfc_xfer(struct na
- 		desc_ecc->callback_param = &nfc->dma_ecc_complete;
- 		ret = dma_submit_error(dmaengine_submit(desc_ecc));
- 		if (ret)
--			goto err_unmap_ecc;
-+			goto err_unmap_data;
- 
- 		dma_async_issue_pending(nfc->dma_ecc_ch);
- 	}
-@@ -928,7 +922,7 @@ static int stm32_fmc2_nfc_xfer(struct na
- 		if (!write_data && !raw)
- 			dmaengine_terminate_all(nfc->dma_ecc_ch);
- 		ret = -ETIMEDOUT;
--		goto err_unmap_ecc;
-+		goto err_unmap_data;
- 	}
- 
- 	/* Wait DMA data transfer completion */
-@@ -948,11 +942,6 @@ static int stm32_fmc2_nfc_xfer(struct na
- 		}
- 	}
- 
--err_unmap_ecc:
--	if (!write_data && !raw)
--		dma_unmap_sg(nfc->dev, nfc->dma_ecc_sg.sgl,
--			     eccsteps, dma_data_dir);
--
- err_unmap_data:
- 	dma_unmap_sg(nfc->dev, nfc->dma_data_sg.sgl, eccsteps, dma_data_dir);
- 
-@@ -1590,7 +1579,8 @@ static int stm32_fmc2_nfc_dma_setup(stru
- 		return ret;
- 
- 	/* Allocate a buffer to store ECC status registers */
--	nfc->ecc_buf = devm_kzalloc(nfc->dev, FMC2_MAX_ECC_BUF_LEN, GFP_KERNEL);
-+	nfc->ecc_buf = dmam_alloc_coherent(nfc->dev, FMC2_MAX_ECC_BUF_LEN,
-+					   &nfc->dma_ecc_addr, GFP_KERNEL);
- 	if (!nfc->ecc_buf)
- 		return -ENOMEM;
- 
+ /** check_shl_overflow() - Calculate a left-shifted value and check overflow
+  *
 
 
