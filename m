@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96461F152D;
-	Tue, 30 Sep 2025 15:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585AB23506A;
+	Tue, 30 Sep 2025 15:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244689; cv=none; b=HLh1DXqzBBDd1TAUjSsieaIrFTBUnS7RPJ6/7KL5AxiSotXYo7K8Cj2ReqRWAYu59G+ekgNft/AphlTif9yLb9PIAKZIv3x6001AvHXmRx1F3QyR8nKVDqXva0ZOcIir31dCije6qxpykIXp4hC5lYT0BYB7rKB5XXrFtCezbi8=
+	t=1759244693; cv=none; b=Vt9G5wbVNWm7Wmjw96y3PRj9HbluoZEabvEv6EWlt7fNwHccjxKe5jhc8cDjYz/ZSr3CYdFWhMSyK/Q6Nn/dvZfCRkciSi+ES4x6WRBLc/UZsnMk3f3F4w961vIag7I3slfmgW6YHVjLANwIsevGt5r9Cs17OPYy9s97ofl4H9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244689; c=relaxed/simple;
-	bh=wZbQKnaanteGfp8G4TLJ2BThy6HeyhVRqtQjQgr/sqI=;
+	s=arc-20240116; t=1759244693; c=relaxed/simple;
+	bh=3VyWWHW3A+qAYErHDPUnq2OoRDufxLxFcDWeCcdsMDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5kmI5YY8ajlFbLOpzY14D2LBmzIVt2JNDiuH8TilGi4FyBBU4iHXuZI41wRwVA3RdrcFNDcitjt4Zq7z2uN6Flw0d3G/qV7qy0sIexahFObf0FgTo/jM61Qxpo3jTrnzpzIv8FG4WGAmvgbOdXZRFK+ooOsZHlkCKjyjMnt/xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swRYsQXM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AU4lxbqIGw3gywefQJ8wv9dsoz4xy8H43P7KAXd/H8l5tNnZbG2g/f0vGFQvZjjtNZanMdvMk6en+3iy6A3F2aI9+hAhw2S18Ph0l6OLvHwtwA/eMKAZ5mOnl1xAsXiXDnCzpp4SwJcaSriUS0mpalbKscLxJaODEz6fLNsd0oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BH5oKEX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swRYsQXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32987C4CEF0;
-	Tue, 30 Sep 2025 15:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BH5oKEX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC440C113D0;
+	Tue, 30 Sep 2025 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244689;
-	bh=wZbQKnaanteGfp8G4TLJ2BThy6HeyhVRqtQjQgr/sqI=;
+	s=korg; t=1759244693;
+	bh=3VyWWHW3A+qAYErHDPUnq2OoRDufxLxFcDWeCcdsMDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swRYsQXMeo/+FcQ44l3rkiTlnXvF4d3OO9QExf5+xvaVyGoqUv+T1t9jBJox74dd/
-	 hNNN9cn2S0kj3HWMCZnzQ28aG2MThxaxDpocoTVgHklpJ5b36OBEvtUR3ajH5XKTRW
-	 q5IIq81dkVp41AmCilBHo/pssu8rbP8x3lUKkSXk=
+	b=BH5oKEX3Q+tZleJ7B4kPFZ3bCFfjC4jw1Fb8/CIWSIYnLeQOVvqWBCRG1zKpGSzdY
+	 oUUNHO6cbw54vEu5qQmWSbsUEUusjV50uRT3VCmuIOZFZ2rtJPUn7gyX8JzlaeCDxw
+	 /CeVUEv+y1jujYOJZoPSfx/OoJe2Mq9jz4MtoBKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Daniel Golle <daniel@makrotopia.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 083/143] net: dsa: lantiq_gswip: move gswip_add_single_port_br() call to port_setup()
-Date: Tue, 30 Sep 2025 16:46:47 +0200
-Message-ID: <20250930143834.544361423@linuxfoundation.org>
+Subject: [PATCH 6.16 084/143] net: dsa: lantiq_gswip: suppress -EINVAL errors for bridge FDB entries added to the CPU port
+Date: Tue, 30 Sep 2025 16:46:48 +0200
+Message-ID: <20250930143834.580813176@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -54,92 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit c0054b25e2f1045f47b4954cf13a539e5e6047df ]
+[ Upstream commit 987afe147965ef7a8e7d144ffef0d70af14bb1d4 ]
 
-A port added to a "single port bridge" operates as standalone, and this
-is mutually exclusive to being part of a Linux bridge. In fact,
-gswip_port_bridge_join() calls gswip_add_single_port_br() with
-add=false, i.e. removes the port from the "single port bridge" to enable
-autonomous forwarding.
+The blamed commit and others in that patch set started the trend
+of reusing existing DSA driver API for a new purpose: calling
+ds->ops->port_fdb_add() on the CPU port.
 
-The blamed commit seems to have incorrectly thought that ds->ops->port_enable()
-is called one time per port, during the setup phase of the switch.
+The lantiq_gswip driver was not prepared to handle that, as can be seen
+from the many errors that Daniel presents in the logs:
 
-However, it is actually called during the ndo_open() implementation of
-DSA user ports, which is to say that this sequence of events:
+[  174.050000] gswip 1e108000.switch: port 2 failed to add fa:aa:72:f4:8b:1e vid 1 to fdb: -22
+[  174.060000] gswip 1e108000.switch lan2: entered promiscuous mode
+[  174.070000] gswip 1e108000.switch: port 2 failed to add 00:01:02:03:04:02 vid 0 to fdb: -22
+[  174.090000] gswip 1e108000.switch: port 2 failed to add 00:01:02:03:04:02 vid 1 to fdb: -22
+[  174.090000] gswip 1e108000.switch: port 2 failed to delete fa:aa:72:f4:8b:1e vid 1 from fdb: -2
 
-1. ip link set swp0 down
-2. ip link add br0 type bridge
-3. ip link set swp0 master br0
-4. ip link set swp0 up
+The errors are because gswip_port_fdb() wants to get a handle to the
+bridge that originated these FDB events, to associate it with a FID.
+Absolutely honourable purpose, however this only works for user ports.
 
-would cause swp0 to join back the "single port bridge" which step 3 had
-just removed it from.
+To get the bridge that generated an FDB entry for the CPU port, one
+would need to look at the db.bridge.dev argument. But this was
+introduced in commit c26933639b54 ("net: dsa: request drivers to perform
+FDB isolation"), first appeared in v5.18, and when the blamed commit was
+introduced in v5.14, no such API existed.
 
-The correct DSA hook for one-time actions per port at switch init time
-is ds->ops->port_setup(). This is what seems to match the coder's
-intention; also see the comment at the beginning of the file:
+So the core DSA feature was introduced way too soon for lantiq_gswip.
+Not acting on these host FDB entries and suppressing any errors has no
+other negative effect, and practically returns us to not supporting the
+host filtering feature at all - peacefully, this time.
 
- * At the initialization the driver allocates one bridge table entry for
-   ~~~~~~~~~~~~~~~~~~~~~
- * each switch port which is used when the port is used without an
- * explicit bridge.
-
-Fixes: 8206e0ce96b3 ("net: dsa: lantiq: Add VLAN unaware bridge offloading")
+Fixes: 10fae4ac89ce ("net: dsa: include bridge addresses which are local in the host fdb list")
+Reported-by: Daniel Golle <daniel@makrotopia.org>
+Closes: https://lore.kernel.org/netdev/aJfNMLNoi1VOsPrN@pidgin.makrotopia.org/
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250918072142.894692-2-vladimir.oltean@nxp.com
+Link: https://patch.msgid.link/20250918072142.894692-3-vladimir.oltean@nxp.com
 Tested-by: Daniel Golle <daniel@makrotopia.org>
 Reviewed-by: Daniel Golle <daniel@makrotopia.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lantiq_gswip.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/net/dsa/lantiq_gswip.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
-index 6eb3140d40444..d416c072dd28c 100644
+index d416c072dd28c..84dc6e517acf9 100644
 --- a/drivers/net/dsa/lantiq_gswip.c
 +++ b/drivers/net/dsa/lantiq_gswip.c
-@@ -685,18 +685,27 @@ static int gswip_add_single_port_br(struct gswip_priv *priv, int port, bool add)
- 	return 0;
- }
- 
--static int gswip_port_enable(struct dsa_switch *ds, int port,
--			     struct phy_device *phydev)
-+static int gswip_port_setup(struct dsa_switch *ds, int port)
- {
- 	struct gswip_priv *priv = ds->priv;
+@@ -1368,8 +1368,9 @@ static int gswip_port_fdb(struct dsa_switch *ds, int port,
+ 	int i;
  	int err;
  
- 	if (!dsa_is_cpu_port(ds, port)) {
--		u32 mdio_phy = 0;
--
- 		err = gswip_add_single_port_br(priv, port, true);
- 		if (err)
- 			return err;
-+	}
-+
-+	return 0;
-+}
-+
-+static int gswip_port_enable(struct dsa_switch *ds, int port,
-+			     struct phy_device *phydev)
-+{
-+	struct gswip_priv *priv = ds->priv;
-+
-+	if (!dsa_is_cpu_port(ds, port)) {
-+		u32 mdio_phy = 0;
++	/* Operation not supported on the CPU port, don't throw errors */
+ 	if (!bridge)
+-		return -EINVAL;
++		return 0;
  
- 		if (phydev)
- 			mdio_phy = phydev->mdio.addr & GSWIP_MDIO_PHY_ADDR_MASK;
-@@ -1829,6 +1838,7 @@ static const struct phylink_mac_ops gswip_phylink_mac_ops = {
- static const struct dsa_switch_ops gswip_xrx200_switch_ops = {
- 	.get_tag_protocol	= gswip_get_tag_protocol,
- 	.setup			= gswip_setup,
-+	.port_setup		= gswip_port_setup,
- 	.port_enable		= gswip_port_enable,
- 	.port_disable		= gswip_port_disable,
- 	.port_bridge_join	= gswip_port_bridge_join,
+ 	for (i = max_ports; i < ARRAY_SIZE(priv->vlans); i++) {
+ 		if (priv->vlans[i].bridge == bridge) {
 -- 
 2.51.0
 
