@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DD1846F;
-	Tue, 30 Sep 2025 15:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03A7846F;
+	Tue, 30 Sep 2025 15:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245763; cv=none; b=MIis+23SxvRJMJpJKtSBoznyEUNH7Cy3UtxYVfCVTZATw0yjAiTFhGdWPTbS/YrU09c3E194kziV/YrfITCQU6rlXzgO6BO8dkOkm7bVm8AMpOobEF2aFm7lEj3bkgHG/cpl/n2huJiTYCYc2tb6rYY5MXahxvJ695q187Vm9Dw=
+	t=1759245767; cv=none; b=o0tM3u36Z3tFaKcbqHs0E4XjEDGQKfDAeD8vVqlZfi/+EmBd73X6WutFPvDWmr0NGJ2o7sozjYiN7SrItJIitjx7zeYVdicQvePU6TrjbWewRCAWvsHWOVMOXfyX5ANsvfePl75h+I8ALii/CFS7rBTg8kS0D0r/7vmLjKTPjmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245763; c=relaxed/simple;
-	bh=/YGrGvT2o2nJSBu/1niqwaSiIo4+6gH738slDWEp0RY=;
+	s=arc-20240116; t=1759245767; c=relaxed/simple;
+	bh=hcMTHqJvgv54wFaBVKnGDm+i1DdExOIMLTO4V1Wd6uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2Hsw8S1rx9DFAm2U8RCvfkv9ZwbPDGBnb9I3Xs2pTwNL26Cd0+YD9czmLNXpTqX3jobBiWyME2NS9N71WduVVxp7gNbbN4Lv3bp1S7XS5TfrwJ96J6wpn0UhEX1FP/Jyfuzsw5jR/tDyUQTM65lj2uNtvHkN8CB2X9+prL+Xks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmYqwXdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwSUHJcTAnCNSPbBmp+zUVLKsFXZnr/HssJ2iRpXuu+yLHB/NBAEvkYR9mxxKr/jGxSNnUsKHXzCTbRYLfIlq6m4D+dONJgoBuVYjOOlAA7x9BBQ+9v0huvhQZ+p7kPuguT/yw3qbwDg0suou54UiD+Kb72ltA3hJrPA/IMf4ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn0uru/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmYqwXdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00C3C4CEF0;
-	Tue, 30 Sep 2025 15:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn0uru/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C54DC4CEF0;
+	Tue, 30 Sep 2025 15:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245763;
-	bh=/YGrGvT2o2nJSBu/1niqwaSiIo4+6gH738slDWEp0RY=;
+	s=korg; t=1759245766;
+	bh=hcMTHqJvgv54wFaBVKnGDm+i1DdExOIMLTO4V1Wd6uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmYqwXdJRgkt/LZI1YJfnK94X3zIfdagu3EW3G9vNto7oTP0PgQ1ddhnxzoIxSwJ5
-	 gQOobRUIendb4ZnafrK+F3uqT/TwM96h/Xvj+PvlGWkbMXpukYq2ztz+V34SpmatvT
-	 IOTMekLYqbq3AHOW99cvS5b6kyW+qRnPnWRdZqcU=
+	b=Wn0uru/UntfonZ+rUYNGvM4Ls7dT4+tfskbaDxjoQgoeJXiVW1wYFUJhrxI28mzn9
+	 LN3KLcTPaaUKXFh0PC0p/5rg3QPDsMxZhMaQjjAmTOys+mmn1MTVBB+17OqKwk8FSe
+	 7l0zsyxI/Y0WCUJYoL5RnNmhpbuGCQNUgcqhWgmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 42/91] Bluetooth: hci_event: Fix UAF in hci_acl_create_conn_sync
-Date: Tue, 30 Sep 2025 16:47:41 +0200
-Message-ID: <20250930143822.918733067@linuxfoundation.org>
+Subject: [PATCH 6.6 43/91] vhost: Take a reference on the task in struct vhost_task.
+Date: Tue, 30 Sep 2025 16:47:42 +0200
+Message-ID: <20250930143822.961025954@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -51,197 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 9e622804d57e2d08f0271200606bd1270f75126f ]
+[ Upstream commit afe16653e05db07d658b55245c7a2e0603f136c0 ]
 
-This fixes the following UFA in hci_acl_create_conn_sync where a
-connection still pending is command submission (conn->state == BT_OPEN)
-maybe freed, also since this also can happen with the likes of
-hci_le_create_conn_sync fix it as well:
+vhost_task_create() creates a task and keeps a reference to its
+task_struct. That task may exit early via a signal and its task_struct
+will be released.
+A pending vhost_task_wake() will then attempt to wake the task and
+access a task_struct which is no longer there.
 
-BUG: KASAN: slab-use-after-free in hci_acl_create_conn_sync+0x5ef/0x790 net/bluetooth/hci_sync.c:6861
-Write of size 2 at addr ffff88805ffcc038 by task kworker/u11:2/9541
+Acquire a reference on the task_struct while creating the thread and
+release the reference while the struct vhost_task itself is removed.
+If the task exits early due to a signal, then the vhost_task_wake() will
+still access a valid task_struct. The wake is safe and will be skipped
+in this case.
 
-CPU: 1 UID: 0 PID: 9541 Comm: kworker/u11:2 Not tainted 6.16.0-rc7 #3 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
-Workqueue: hci3 hci_cmd_sync_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x230 mm/kasan/report.c:480
- kasan_report+0x118/0x150 mm/kasan/report.c:593
- hci_acl_create_conn_sync+0x5ef/0x790 net/bluetooth/hci_sync.c:6861
- hci_cmd_sync_work+0x210/0x3a0 net/bluetooth/hci_sync.c:332
- process_one_work kernel/workqueue.c:3238 [inline]
- process_scheduled_works+0xae1/0x17b0 kernel/workqueue.c:3321
- worker_thread+0x8a0/0xda0 kernel/workqueue.c:3402
- kthread+0x70e/0x8a0 kernel/kthread.c:464
- ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 home/kwqcheii/source/fuzzing/kernel/kasan/linux-6.16-rc7/arch/x86/entry/entry_64.S:245
- </TASK>
-
-Allocated by task 123736:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __kmalloc_cache_noprof+0x230/0x3d0 mm/slub.c:4359
- kmalloc_noprof include/linux/slab.h:905 [inline]
- kzalloc_noprof include/linux/slab.h:1039 [inline]
- __hci_conn_add+0x233/0x1b30 net/bluetooth/hci_conn.c:939
- hci_conn_add_unset net/bluetooth/hci_conn.c:1051 [inline]
- hci_connect_acl+0x16c/0x4e0 net/bluetooth/hci_conn.c:1634
- pair_device+0x418/0xa70 net/bluetooth/mgmt.c:3556
- hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
- hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:727
- sock_write_iter+0x258/0x330 net/socket.c:1131
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x54b/0xa90 fs/read_write.c:686
- ksys_write+0x145/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 103680:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x62/0x70 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2381 [inline]
- slab_free mm/slub.c:4643 [inline]
- kfree+0x18e/0x440 mm/slub.c:4842
- device_release+0x9c/0x1c0
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x22b/0x480 lib/kobject.c:737
- hci_conn_cleanup net/bluetooth/hci_conn.c:175 [inline]
- hci_conn_del+0x8ff/0xcb0 net/bluetooth/hci_conn.c:1173
- hci_conn_complete_evt+0x3c7/0x1040 net/bluetooth/hci_event.c:3199
- hci_event_func net/bluetooth/hci_event.c:7477 [inline]
- hci_event_packet+0x7e0/0x1200 net/bluetooth/hci_event.c:7531
- hci_rx_work+0x46a/0xe80 net/bluetooth/hci_core.c:4070
- process_one_work kernel/workqueue.c:3238 [inline]
- process_scheduled_works+0xae1/0x17b0 kernel/workqueue.c:3321
- worker_thread+0x8a0/0xda0 kernel/workqueue.c:3402
- kthread+0x70e/0x8a0 kernel/kthread.c:464
- ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 home/kwqcheii/source/fuzzing/kernel/kasan/linux-6.16-rc7/arch/x86/entry/entry_64.S:245
-
-Last potentially related work creation:
- kasan_save_stack+0x3e/0x60 mm/kasan/common.c:47
- kasan_record_aux_stack+0xbd/0xd0 mm/kasan/generic.c:548
- insert_work+0x3d/0x330 kernel/workqueue.c:2183
- __queue_work+0xbd9/0xfe0 kernel/workqueue.c:2345
- queue_delayed_work_on+0x18b/0x280 kernel/workqueue.c:2561
- pairing_complete+0x1e7/0x2b0 net/bluetooth/mgmt.c:3451
- pairing_complete_cb+0x1ac/0x230 net/bluetooth/mgmt.c:3487
- hci_connect_cfm include/net/bluetooth/hci_core.h:2064 [inline]
- hci_conn_failed+0x24d/0x310 net/bluetooth/hci_conn.c:1275
- hci_conn_complete_evt+0x3c7/0x1040 net/bluetooth/hci_event.c:3199
- hci_event_func net/bluetooth/hci_event.c:7477 [inline]
- hci_event_packet+0x7e0/0x1200 net/bluetooth/hci_event.c:7531
- hci_rx_work+0x46a/0xe80 net/bluetooth/hci_core.c:4070
- process_one_work kernel/workqueue.c:3238 [inline]
- process_scheduled_works+0xae1/0x17b0 kernel/workqueue.c:3321
- worker_thread+0x8a0/0xda0 kernel/workqueue.c:3402
- kthread+0x70e/0x8a0 kernel/kthread.c:464
- ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 home/kwqcheii/source/fuzzing/kernel/kasan/linux-6.16-rc7/arch/x86/entry/entry_64.S:245
-
-Fixes: aef2aa4fa98e ("Bluetooth: hci_event: Fix creating hci_conn object on error status")
-Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f9010dbdce911 ("fork, vhost: Use CLONE_THREAD to fix freezer/ps regression")
+Reported-by: Sean Christopherson <seanjc@google.com>
+Closes: https://lore.kernel.org/all/aKkLEtoDXKxAAWju@google.com/
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Message-Id: <20250918181144.Ygo8BZ-R@linutronix.de>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 21 +++++++++++++++++++++
- net/bluetooth/hci_event.c        | 26 +++++++++++++++++++++++---
- 2 files changed, 44 insertions(+), 3 deletions(-)
+ kernel/vhost_task.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 4f067599e6e9e..62135b7782f5b 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1169,6 +1169,27 @@ static inline struct hci_conn *hci_conn_hash_lookup_ba(struct hci_dev *hdev,
- 	return NULL;
- }
- 
-+static inline struct hci_conn *hci_conn_hash_lookup_role(struct hci_dev *hdev,
-+							 __u8 type, __u8 role,
-+							 bdaddr_t *ba)
-+{
-+	struct hci_conn_hash *h = &hdev->conn_hash;
-+	struct hci_conn  *c;
-+
-+	rcu_read_lock();
-+
-+	list_for_each_entry_rcu(c, &h->list, list) {
-+		if (c->type == type && c->role == role && !bacmp(&c->dst, ba)) {
-+			rcu_read_unlock();
-+			return c;
-+		}
-+	}
-+
-+	rcu_read_unlock();
-+
-+	return NULL;
-+}
-+
- static inline struct hci_conn *hci_conn_hash_lookup_le(struct hci_dev *hdev,
- 						       bdaddr_t *ba,
- 						       __u8 ba_type)
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 5eed23b8d6c33..7bda00dcb0b2f 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3048,8 +3048,18 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
- 
- 	hci_dev_lock(hdev);
- 
-+	/* Check for existing connection:
-+	 *
-+	 * 1. If it doesn't exist then it must be receiver/slave role.
-+	 * 2. If it does exist confirm that it is connecting/BT_CONNECT in case
-+	 *    of initiator/master role since there could be a collision where
-+	 *    either side is attempting to connect or something like a fuzzing
-+	 *    testing is trying to play tricks to destroy the hcon object before
-+	 *    it even attempts to connect (e.g. hcon->state == BT_OPEN).
-+	 */
- 	conn = hci_conn_hash_lookup_ba(hdev, ev->link_type, &ev->bdaddr);
--	if (!conn) {
-+	if (!conn ||
-+	    (conn->role == HCI_ROLE_MASTER && conn->state != BT_CONNECT)) {
- 		/* In case of error status and there is no connection pending
- 		 * just unlock as there is nothing to cleanup.
- 		 */
-@@ -5615,8 +5625,18 @@ static void le_conn_complete_evt(struct hci_dev *hdev, u8 status,
+diff --git a/kernel/vhost_task.c b/kernel/vhost_task.c
+index 8800f5acc0071..5a2116356428f 100644
+--- a/kernel/vhost_task.c
++++ b/kernel/vhost_task.c
+@@ -100,6 +100,7 @@ void vhost_task_stop(struct vhost_task *vtsk)
+ 	 * freeing it below.
  	 */
- 	hci_dev_clear_flag(hdev, HCI_LE_ADV);
+ 	wait_for_completion(&vtsk->exited);
++	put_task_struct(vtsk->task);
+ 	kfree(vtsk);
+ }
+ EXPORT_SYMBOL_GPL(vhost_task_stop);
+@@ -148,7 +149,7 @@ struct vhost_task *vhost_task_create(bool (*fn)(void *),
+ 		return NULL;
+ 	}
  
--	conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, bdaddr);
--	if (!conn) {
-+	/* Check for existing connection:
-+	 *
-+	 * 1. If it doesn't exist then use the role to create a new object.
-+	 * 2. If it does exist confirm that it is connecting/BT_CONNECT in case
-+	 *    of initiator/master role since there could be a collision where
-+	 *    either side is attempting to connect or something like a fuzzing
-+	 *    testing is trying to play tricks to destroy the hcon object before
-+	 *    it even attempts to connect (e.g. hcon->state == BT_OPEN).
-+	 */
-+	conn = hci_conn_hash_lookup_role(hdev, LE_LINK, role, bdaddr);
-+	if (!conn ||
-+	    (conn->role == HCI_ROLE_MASTER && conn->state != BT_CONNECT)) {
- 		/* In case of error status and there is no connection pending
- 		 * just unlock as there is nothing to cleanup.
- 		 */
+-	vtsk->task = tsk;
++	vtsk->task = get_task_struct(tsk);
+ 	return vtsk;
+ }
+ EXPORT_SYMBOL_GPL(vhost_task_create);
 -- 
 2.51.0
 
