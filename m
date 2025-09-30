@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD28823A995;
-	Tue, 30 Sep 2025 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA3A1F4C8E;
+	Tue, 30 Sep 2025 15:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246180; cv=none; b=rDAS/JgDAWCrkU1ZhNTmE7YqVJvlm8PPjrNkiaPde12nly8Gx6BAy+ZpzqKWZHqUPhF1apYaFgdLUV6swssROlPqZaXDZh4vDUltCo/9uxLzrqBxLovd3oa9cwR6O385bNRSno6RvkRHto8sMpVAUzi6LzcJNBrsAK6Pyy6YUMU=
+	t=1759246184; cv=none; b=jVNA/bbGJC4IjaYfz017CZ8RFurGEdmxD2WxOtw90JqmgF/F4lrAvDiuG4MUYQPYgUN/3dVdnK1hQ5tpV8zNgKdMH4VodInzfgsWB3xV3cnYWBpyHTKFkzWqd5khYroXQ6gSp1A+Kvp1Q+c7WHXLEDn/meyUOtNFTHuzX+PKrEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246180; c=relaxed/simple;
-	bh=Z2WWmLDcmG4dkeHIniZtgbDYB6oReLRNqbCKfZzy5Jk=;
+	s=arc-20240116; t=1759246184; c=relaxed/simple;
+	bh=4cf1PIToJlDNbtFgri2wTvOt1uFTtU3N++CdoCTX5h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RlVIE4YX41GHsyxPfO+w0uCEj904dyjymsu7W7ohYc6fKfy/3an4L2k4j5WklSl7DEr/BLKpHwKadgdIThvAa5/VUB3byqIl3U/QwVWWYoiEWnCuk9ckjGUsLd0TO6hWRiiFNHmmniS9uiIp8ptlKclEcp1Wq/1FDUb+Fmw3Ads=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsjH7tnz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qkG1afwxLTsg8e5CtglehLsjHLzLBaIGlVWh2+uiJTvkrQUm1XJVuXoTIkh13mU83j2Sij2gPX3u/wKbcgF73QXezFl+YNaT0nWEEaMJVGAFgU6t+2f99gr4KMizKDYeCusABw7LwwiXwMV7bjXgWPg3Yu5FMBOvG2Xn4n3dJi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0K9vU8y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsjH7tnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CF6C4CEF0;
-	Tue, 30 Sep 2025 15:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0K9vU8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAADC4CEF0;
+	Tue, 30 Sep 2025 15:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246180;
-	bh=Z2WWmLDcmG4dkeHIniZtgbDYB6oReLRNqbCKfZzy5Jk=;
+	s=korg; t=1759246183;
+	bh=4cf1PIToJlDNbtFgri2wTvOt1uFTtU3N++CdoCTX5h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsjH7tnzv77gbTTnqUI8MVX+yCBU2Qid+Bt3BRLlwhC5z/kyK44Ejw7jqyQPeIP90
-	 eHtmHM7U9cc2sN4sEjQElsrSXFo8DL8UTT5n2qyLaXDKvnsu1wp+DTtxyTbXx24maC
-	 9fn9xlwsE2TxJfWb/WmKPKM0eGvWOpqVBtpdbIvw=
+	b=E0K9vU8yGpJFxmun/hCV6ysA/eu+UlwdBZtKrn5ODeFsJEeotiwFXzeec9KY1faDu
+	 MBU81yccdA/fINj+bqaAWteotOzNRQOiUQpusP9u1G4e0NymgN3wF22K4hJPWOHxfx
+	 VKBvIE08/aT+J8pl9OAPLppa20EDlm3Q3mdKL56Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josua Mayer <josua@solid-run.com>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>
-Subject: [PATCH 6.12 78/89] arm64: dts: marvell: cn9132-clearfog: disable eMMC high-speed modes
-Date: Tue, 30 Sep 2025 16:48:32 +0200
-Message-ID: <20250930143825.127841062@linuxfoundation.org>
+Subject: [PATCH 6.12 79/89] arm64: dts: marvell: cn9132-clearfog: fix multi-lane pci x2 and x4 ports
+Date: Tue, 30 Sep 2025 16:48:33 +0200
+Message-ID: <20250930143825.166640091@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -52,15 +52,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Josua Mayer <josua@solid-run.com>
 
-commit 48b51799a5461707705454568453618cdd7307f4 upstream.
+commit 794a066688038df46c01e177cc6faebded0acba4 upstream.
 
-Similar to MacchiatoBIN the high-speed modes are unstable on the CN9132
-CEX-7 module, leading to failed transactions under normal use.
+The mvebu-comphy driver does not currently know how to pass correct
+lane-count to ATF while configuring the serdes lanes.
 
-Disable all high-speed modes including UHS.
+This causes the system to hard reset during reconfiguration, if a pci
+card is present and has established a link during bootloader.
 
-Additionally add no-sdio and non-removable properties as appropriate for
-eMMC.
+Remove the comphy handles from the respective pci nodes to avoid runtime
+reconfiguration, relying solely on bootloader configuration - while
+avoiding the hard reset.
+
+When bootloader has configured the lanes correctly, the pci ports are
+functional under Linux.
+
+This issue may be addressed in the comphy driver at a future point.
 
 Fixes: e9ff907f4076 ("arm64: dts: add description for solidrun cn9132 cex7 module and clearfog board")
 Cc: stable@vger.kernel.org
@@ -68,25 +75,40 @@ Signed-off-by: Josua Mayer <josua@solid-run.com>
 Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/marvell/cn9132-clearfog.dts | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi b/arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi
-index afc041c1c448..bb2bb47fd77c 100644
---- a/arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi
-+++ b/arch/arm64/boot/dts/marvell/cn9132-sr-cex7.dtsi
-@@ -137,6 +137,14 @@ &ap_sdhci0 {
- 	pinctrl-0 = <&ap_mmc0_pins>;
- 	pinctrl-names = "default";
- 	vqmmc-supply = <&v_1_8>;
+diff --git a/arch/arm64/boot/dts/marvell/cn9132-clearfog.dts b/arch/arm64/boot/dts/marvell/cn9132-clearfog.dts
+index 115c55d73786..6f237d3542b9 100644
+--- a/arch/arm64/boot/dts/marvell/cn9132-clearfog.dts
++++ b/arch/arm64/boot/dts/marvell/cn9132-clearfog.dts
+@@ -413,7 +413,13 @@ fixed-link {
+ /* SRDS #0,#1,#2,#3 - PCIe */
+ &cp0_pcie0 {
+ 	num-lanes = <4>;
+-	phys = <&cp0_comphy0 0>, <&cp0_comphy1 0>, <&cp0_comphy2 0>, <&cp0_comphy3 0>;
 +	/*
-+	 * Not stable in HS modes - phy needs "more calibration", so disable
-+	 * UHS (by preventing voltage switch), SDR104, SDR50 and DDR50 modes.
++	 * The mvebu-comphy driver does not currently know how to pass correct
++	 * lane-count to ATF while configuring the serdes lanes.
++	 * Rely on bootloader configuration only.
++	 *
++	 * phys = <&cp0_comphy0 0>, <&cp0_comphy1 0>, <&cp0_comphy2 0>, <&cp0_comphy3 0>;
 +	 */
-+	no-1-8-v;
-+	no-sd;
-+	no-sdio;
-+	non-removable;
+ 	status = "okay";
+ };
+ 
+@@ -475,7 +481,13 @@ &cp1_eth0 {
+ /* SRDS #0,#1 - PCIe */
+ &cp1_pcie0 {
+ 	num-lanes = <2>;
+-	phys = <&cp1_comphy0 0>, <&cp1_comphy1 0>;
++	/*
++	 * The mvebu-comphy driver does not currently know how to pass correct
++	 * lane-count to ATF while configuring the serdes lanes.
++	 * Rely on bootloader configuration only.
++	 *
++	 * phys = <&cp1_comphy0 0>, <&cp1_comphy1 0>;
++	 */
  	status = "okay";
  };
  
