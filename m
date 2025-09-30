@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F932FD1DD;
-	Tue, 30 Sep 2025 15:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5962FD1DD;
+	Tue, 30 Sep 2025 15:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245951; cv=none; b=dC0ygCduT9KGPVYvmg63ElsgzEqUSqF6TG40YhLSbCjM/MSpaQSqT4gycMVViUTtjJBtafAULapDJ+6lAbAElO7N60SdnGk2jK2creBEcLM7IA+EXMteqvkZt3y4Zi7BU0pIJT51Y05kzA0hPhlfYTgXuzHpHymQCR4nEA6XVL4=
+	t=1759245954; cv=none; b=cN9WlCnTyrP4vS77nKeutAXoAUnJbQFrVjQTzS4eFS2giXLQuaP+nHsMgUbxxGgBvOgRCRAF6yXr/bvgXLHiCdjARqrBQjPBdJozOfCsLM5cSP12wYD70KqShoR4WzNBOvdhJ7nJOJ7qmmRy+1bo/BFzc5fHN7zuLOaUIlQK0+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245951; c=relaxed/simple;
-	bh=mBlRVG+cMAy/xo+vXyOZvQIv5dJV4iw8Owpp5WNCUYk=;
+	s=arc-20240116; t=1759245954; c=relaxed/simple;
+	bh=uB28tNfskViGCS/1Gyap5HFpQ1ktVi7SSDUnARlEsr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imowRWYlOe+POP+yk8x47WXi/wSuM4FIqC6J39jugPut0rHi7CAdh/pcSOVMrABddoLalvBQiqj5rIxRL+tneaAQt3dSdWAlMPvSY0RZlMXARPRhFLEj9yTagqne34bE4Vf8RS5y7ep9ouE036AEZm5BoWWSVj6I7d8jf56ifto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3u8Lm3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwRmrB8viyuLg0ZBbpPOkuWH/yNqXl9dsH1SWueGpPoOc9tE7qw67WsLS+qhb++798I2J4Q/XC75f0X5Q6bl2r8l06KGzUPoDnJ9Linuv/xXBMuvVXvCFsqnL46/3tZG6LRlEKSa1NDZAwB2xo2EhWTbKE/ousTzCDeVkhHIvPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoOMAvpE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3u8Lm3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008FFC4CEF0;
-	Tue, 30 Sep 2025 15:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoOMAvpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFE6C4CEF0;
+	Tue, 30 Sep 2025 15:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245951;
-	bh=mBlRVG+cMAy/xo+vXyOZvQIv5dJV4iw8Owpp5WNCUYk=;
+	s=korg; t=1759245954;
+	bh=uB28tNfskViGCS/1Gyap5HFpQ1ktVi7SSDUnARlEsr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3u8Lm3Mbrzo+kFDnYna7OBnhPbhjsp7Q0GwcyVqLLPzzGVx2Kl1JyMnErRUPrj1p
-	 v6/7umv9y3v7r4euPm5uIF+g9p8+H167MbPfeVV4hE8DyKEkRKSUgVyJAMYyoIBwL9
-	 bz3Uy3YlbDQv7e/Q2QxyiY+oOY8MqDgydKc1ZU/E=
+	b=MoOMAvpEC51cnMaexNgMfkGUOWhMA8cnYA1VHOpfbJYch0R4ORRLfN/wT+r2n+MOg
+	 j+WtmHklnnOmH6Cz7z9IIjObRduLzhjSv/ec1m9dyRmb3ov95HFzpyKFMENpWoE7pk
+	 8jApobYx1+sKZFfXYafXO2/A0YC2oM3rPMoJh4Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -40,9 +40,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pedro Falcato <pedro.falcato@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Eliav Farber <farbere@amazon.com>
-Subject: [PATCH 6.6 91/91] minmax.h: remove some #defines that are only expanded once
-Date: Tue, 30 Sep 2025 16:48:30 +0200
-Message-ID: <20250930143824.956829932@linuxfoundation.org>
+Subject: [PATCH 6.6 86/91] minmax.h: update some comments
+Date: Tue, 30 Sep 2025 16:48:25 +0200
+Message-ID: <20250930143824.749615869@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -63,20 +63,16 @@ Content-Transfer-Encoding: 8bit
 
 From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit 2b97aaf74ed534fb838d09867d09a3ca5d795208 ]
+[ Upstream commit 10666e99204818ef45c702469488353b5bb09ec7 ]
 
-The bodies of __signed_type_use() and __unsigned_type_use() are much the
-same size as their names - so put the bodies in the only line that expands
-them.
+- Change three to several.
+- Remove the comment about retaining constant expressions, no longer true.
+- Realign to nearer 80 columns and break on major punctiation.
+- Add a leading comment to the block before __signed_type() and __is_nonneg()
+  Otherwise the block explaining the cast is a bit 'floating'.
+  Reword the rest of that comment to improve readability.
 
-Similarly __signed_type() is defined separately for 64bit and then used
-exactly once just below.
-
-Change the test for __signed_type from CONFIG_64BIT to one based on gcc
-defined macros so that the code is valid if it gets used outside of a
-kernel build.
-
-Link: https://lkml.kernel.org/r/9386d1ebb8974fbabbed2635160c3975@AcuMS.aculab.com
+Link: https://lkml.kernel.org/r/85b050c81c1d4076aeb91a6cded45fee@AcuMS.aculab.com
 Signed-off-by: David Laight <david.laight@aculab.com>
 Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Cc: Arnd Bergmann <arnd@kernel.org>
@@ -92,48 +88,98 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |   14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ include/linux/minmax.h |   61 ++++++++++++++++++++++---------------------------
+ 1 file changed, 28 insertions(+), 33 deletions(-)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -46,10 +46,8 @@
-  * comparison, and these expressions only need to be careful to not cause
-  * warnings for pointer use.
-  */
--#define __signed_type_use(ux) (2 + __is_nonneg(ux))
--#define __unsigned_type_use(ux) (1 + 2 * (sizeof(ux) < 4))
- #define __sign_use(ux) (is_signed_type(typeof(ux)) ? \
--	__signed_type_use(ux) : __unsigned_type_use(ux))
-+	(2 + __is_nonneg(ux)) : (1 + 2 * (sizeof(ux) < 4)))
+@@ -8,13 +8,10 @@
+ #include <linux/types.h>
  
  /*
-  * Check whether a signed value is always non-negative.
-@@ -57,7 +55,7 @@
-  * A cast is needed to avoid any warnings from values that aren't signed
-  * integer types (in which case the result doesn't matter).
+- * min()/max()/clamp() macros must accomplish three things:
++ * min()/max()/clamp() macros must accomplish several things:
   *
-- * On 64-bit any integer or pointer type can safely be cast to 'long'.
-+ * On 64-bit any integer or pointer type can safely be cast to 'long long'.
-  * But on 32-bit we need to avoid warnings about casting pointers to integers
-  * of different sizes without truncating 64-bit values so 'long' or 'long long'
-  * must be used depending on the size of the value.
-@@ -66,12 +64,12 @@
-  * them, but we do not use s128 types in the kernel (we do use 'u128',
-  * but they are handled by the !is_signed_type() case).
+  * - Avoid multiple evaluations of the arguments (so side-effects like
+  *   "x++" happen only once) when non-constant.
+- * - Retain result as a constant expressions when called with only
+- *   constant expressions (to avoid tripping VLA warnings in stack
+- *   allocation usage).
+  * - Perform signed v unsigned type-checking (to generate compile
+  *   errors instead of nasty runtime surprises).
+  * - Unsigned char/short are always promoted to signed int and can be
+@@ -31,25 +28,23 @@
+  *   bit #0 set if ok for unsigned comparisons
+  *   bit #1 set if ok for signed comparisons
+  *
+- * In particular, statically non-negative signed integer
+- * expressions are ok for both.
++ * In particular, statically non-negative signed integer expressions
++ * are ok for both.
+  *
+- * NOTE! Unsigned types smaller than 'int' are implicitly
+- * converted to 'int' in expressions, and are accepted for
+- * signed conversions for now. This is debatable.
+- *
+- * Note that 'x' is the original expression, and 'ux' is
+- * the unique variable that contains the value.
+- *
+- * We use 'ux' for pure type checking, and 'x' for when
+- * we need to look at the value (but without evaluating
+- * it for side effects! Careful to only ever evaluate it
+- * with sizeof() or __builtin_constant_p() etc).
+- *
+- * Pointers end up being checked by the normal C type
+- * rules at the actual comparison, and these expressions
+- * only need to be careful to not cause warnings for
+- * pointer use.
++ * NOTE! Unsigned types smaller than 'int' are implicitly converted to 'int'
++ * in expressions, and are accepted for signed conversions for now.
++ * This is debatable.
++ *
++ * Note that 'x' is the original expression, and 'ux' is the unique variable
++ * that contains the value.
++ *
++ * We use 'ux' for pure type checking, and 'x' for when we need to look at the
++ * value (but without evaluating it for side effects!
++ * Careful to only ever evaluate it with sizeof() or __builtin_constant_p() etc).
++ *
++ * Pointers end up being checked by the normal C type rules at the actual
++ * comparison, and these expressions only need to be careful to not cause
++ * warnings for pointer use.
   */
--#ifdef CONFIG_64BIT
--  #define __signed_type(ux) long
-+#if __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG__
-+#define __is_nonneg(ux) statically_true((long long)(ux) >= 0)
- #else
--  #define __signed_type(ux) typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L))
-+#define __is_nonneg(ux) statically_true( \
-+	(typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L)))(ux) >= 0)
- #endif
--#define __is_nonneg(ux) statically_true((__signed_type(ux))(ux) >= 0)
+ #define __signed_type_use(x, ux) (2 + __is_nonneg(x, ux))
+ #define __unsigned_type_use(x, ux) (1 + 2 * (sizeof(ux) < 4))
+@@ -57,19 +52,19 @@
+ 	__signed_type_use(x, ux) : __unsigned_type_use(x, ux))
  
- #define __types_ok(ux, uy) \
- 	(__sign_use(ux) & __sign_use(uy))
+ /*
+- * To avoid warnings about casting pointers to integers
+- * of different sizes, we need that special sign type.
++ * Check whether a signed value is always non-negative.
+  *
+- * On 64-bit we can just always use 'long', since any
+- * integer or pointer type can just be cast to that.
++ * A cast is needed to avoid any warnings from values that aren't signed
++ * integer types (in which case the result doesn't matter).
+  *
+- * This does not work for 128-bit signed integers since
+- * the cast would truncate them, but we do not use s128
+- * types in the kernel (we do use 'u128', but they will
+- * be handled by the !is_signed_type() case).
+- *
+- * NOTE! The cast is there only to avoid any warnings
+- * from when values that aren't signed integer types.
++ * On 64-bit any integer or pointer type can safely be cast to 'long'.
++ * But on 32-bit we need to avoid warnings about casting pointers to integers
++ * of different sizes without truncating 64-bit values so 'long' or 'long long'
++ * must be used depending on the size of the value.
++ *
++ * This does not work for 128-bit signed integers since the cast would truncate
++ * them, but we do not use s128 types in the kernel (we do use 'u128',
++ * but they are handled by the !is_signed_type() case).
+  */
+ #ifdef CONFIG_64BIT
+   #define __signed_type(ux) long
 
 
