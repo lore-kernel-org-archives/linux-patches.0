@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EA61F3FED;
-	Tue, 30 Sep 2025 15:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE49D1F3FED;
+	Tue, 30 Sep 2025 15:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245996; cv=none; b=EOIMdXpx7m+A8+imD9FbCMrRl4WUHbk6Do3hlQLrqKOj++kcCE8U3JLRUPUSvNN8pinZGtyZZj8+rNurEBYR3OMdxAWwP0tLgKh7sQdt+wf9i43pWwJ7Cnn0ayHi/J31UtISGoE/sdwx2a06AMNMa+BnNBVJKcHvXzmf7FjlXFY=
+	t=1759245999; cv=none; b=Jk1z9Rri9vfFRtDp+WYNyereVsRpUwsnS1Wb1bQmxaRjIv/2uUw/TUhq/1uokIrA6OU/LE2zHMAYJRr7T+d/3Lg4/gNSsxLhbeOcwvlUkyUebZMNhpY42hvfEnhhbaOcOoH8VZISfkFhXrBzx1UDj3pJqXwzLVFVjLaQYlwpGuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245996; c=relaxed/simple;
-	bh=D7RHVwTT3GViuNNwawXYyWl/IFOz/KmdrqWT26fxOHM=;
+	s=arc-20240116; t=1759245999; c=relaxed/simple;
+	bh=J3NuxUzIDu+RlU87PWWPTVXHKMdCKM8qt22PaUX2vO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hDdY4PBBDvf4nmJObtJGeXQgPnpGJ5/vAPY29Op8Z/i4BPOPkf00/SZW/m2zSMkWa6thRJd757NynFegmhOuK6iU+yAA12WRC0NpfxdRB2lQxY/X01U04lLDIlul7KcX30GfjwUxWeIpFOV0lTpqi2llDbglhUj8EoCAAWqZdTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgzVejD0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mrt0sNkwMRZxG9ALGjSpABNqQnfLqzPHK7HWo3WWm3ze/VF5yGhsKcDiinNBUPEqNrGQwO3pemeZ+LqomcmIJG3fEI/hf6SViF6Y2psukFE+cAejkuqdQ3qiX0qyOVLlhQEEUvuBeDy07nGz1eqs5UZXsACqUAE6+YFMgPNANaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3iJP0Il; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgzVejD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D215DC113D0;
-	Tue, 30 Sep 2025 15:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3iJP0Il"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31611C4CEF0;
+	Tue, 30 Sep 2025 15:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245996;
-	bh=D7RHVwTT3GViuNNwawXYyWl/IFOz/KmdrqWT26fxOHM=;
+	s=korg; t=1759245999;
+	bh=J3NuxUzIDu+RlU87PWWPTVXHKMdCKM8qt22PaUX2vO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kgzVejD0jZJSvWlajXj9Ustxg1GrOrCenWTXcinRgjBF+/VQ035D5h8cOya2BTWp7
-	 aveCpPr61VTdLZUT4qg46CKpkHnHLPPpeBeBKsQi+I0osfYKpTq90LpD5olL8PrIat
-	 1KfOBTASruytePeS7UQ33UCYgmg+2PycV0h1uabA=
+	b=s3iJP0IlDeuPZka+V6SLs5ky37UfadYutCMngW79TonT3cYc/Gp1Yod5E7VqZaVD+
+	 O2ZYlA2FrBmMLKbWqoknN15fLKN7tfySt/0upAgIHX5L8255S72Bs3dZ+L+wQkAYVQ
+	 qd6l9VR90dor6HwDYard5+IalEF/EvC7+lfRaGNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 20/89] mmc: sdhci-cadence: add Mobileye eyeQ support
-Date: Tue, 30 Sep 2025 16:47:34 +0200
-Message-ID: <20250930143822.727545393@linuxfoundation.org>
+Subject: [PATCH 6.12 21/89] i2c: designware: Add quirk for Intel Xe
+Date: Tue, 30 Sep 2025 16:47:35 +0200
+Message-ID: <20250930143822.771030193@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -45,58 +48,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@bootlin.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-[ Upstream commit 120ffe250dd95b5089d032f582c5be9e3a04b94b ]
+[ Upstream commit f6a8e9f3de4567c71ef9f5f13719df69a8b96081 ]
 
-The MMC/SDHCI controller implemented by Mobileye needs the preset value
-quirks to configure the clock properly at speed slower than HS200.
-It otherwise works as a standard sd4hc controller.
+The regmap is coming from the parent also in case of Xe
+GPUs. Reusing the Wangxun quirk for that.
 
-Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
-Link: https://lore.kernel.org/r/e97f409650495791e07484589e1666ead570fa12.1750156323.git.benoit.monin@bootlin.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Co-developed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20250701122252.2590230-3-heikki.krogerus@linux.intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[Rodrigo fixed the co-developed tags while merging]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-cadence.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/i2c/busses/i2c-designware-platdrv.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-cadence.c b/drivers/mmc/host/sdhci-cadence.c
-index be1505e8c536e..7759531ccca70 100644
---- a/drivers/mmc/host/sdhci-cadence.c
-+++ b/drivers/mmc/host/sdhci-cadence.c
-@@ -433,6 +433,13 @@ static const struct sdhci_cdns_drv_data sdhci_elba_drv_data = {
- 	},
- };
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index a3e86930bf418..ef9bed2f2dccb 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -101,7 +101,7 @@ static int bt1_i2c_request_regs(struct dw_i2c_dev *dev)
+ }
+ #endif
  
-+static const struct sdhci_cdns_drv_data sdhci_eyeq_drv_data = {
-+	.pltfm_data = {
-+		.ops = &sdhci_cdns_ops,
-+		.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN,
-+	},
-+};
+-static int txgbe_i2c_request_regs(struct dw_i2c_dev *dev)
++static int dw_i2c_get_parent_regmap(struct dw_i2c_dev *dev)
+ {
+ 	dev->map = dev_get_regmap(dev->dev->parent, NULL);
+ 	if (!dev->map)
+@@ -123,12 +123,15 @@ static int dw_i2c_plat_request_regs(struct dw_i2c_dev *dev)
+ 	struct platform_device *pdev = to_platform_device(dev->dev);
+ 	int ret;
+ 
++	if (device_is_compatible(dev->dev, "intel,xe-i2c"))
++		return dw_i2c_get_parent_regmap(dev);
 +
- static const struct sdhci_cdns_drv_data sdhci_cdns_drv_data = {
- 	.pltfm_data = {
- 		.ops = &sdhci_cdns_ops,
-@@ -595,6 +602,10 @@ static const struct of_device_id sdhci_cdns_match[] = {
- 		.compatible = "amd,pensando-elba-sd4hc",
- 		.data = &sdhci_elba_drv_data,
- 	},
-+	{
-+		.compatible = "mobileye,eyeq-sd4hc",
-+		.data = &sdhci_eyeq_drv_data,
-+	},
- 	{ .compatible = "cdns,sd4hc" },
- 	{ /* sentinel */ }
- };
+ 	switch (dev->flags & MODEL_MASK) {
+ 	case MODEL_BAIKAL_BT1:
+ 		ret = bt1_i2c_request_regs(dev);
+ 		break;
+ 	case MODEL_WANGXUN_SP:
+-		ret = txgbe_i2c_request_regs(dev);
++		ret = dw_i2c_get_parent_regmap(dev);
+ 		break;
+ 	default:
+ 		dev->base = devm_platform_ioremap_resource(pdev, 0);
 -- 
 2.51.0
 
