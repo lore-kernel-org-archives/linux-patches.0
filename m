@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A511EE02F;
-	Tue, 30 Sep 2025 15:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAA6173;
+	Tue, 30 Sep 2025 15:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244573; cv=none; b=nkaPYO64nCXpHT8PRrTYnZ0mWcdXWbF6wZVT1172+W582iJhFrQHcYXrlZYo6+3WYvsmgXafYNW/o5UkzEuOdqVDXzEDv98mpGV/AyxMAhoyOZVhFqaT/M48qWRpM6/q29iqbnHqqF2u55v/bS3yCLRzrzEp7yzWrET34xwIMos=
+	t=1759244577; cv=none; b=WGKIvcntDQMMy8tKOYm/Uf6sN6W9Zu58N9kWQK50sGpvzRkCk3CrP8LTNu48bufo3VkujuTFMjSmrOxv4FNTJHjUUZKHJeLBq9OB1EZ9N1BNjx9ZTXQ2l9Z/8IwVC7XP6hXv5wI5VPgOln6IviArAs8YIEHiDEkOup8lJRi+dYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244573; c=relaxed/simple;
-	bh=paS5Rvj02XN/MXAHTrH7eKZFoDcotofx0pG1hQhmTxQ=;
+	s=arc-20240116; t=1759244577; c=relaxed/simple;
+	bh=YuYC9inX43D78xW0nbaRkukcRc4krcV4+ZIoKnj67mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPcJEJM7+vvlx/zkxXI+4MkRty7u6FcZuqdESElnChTFadwugKP5qu8SNckHXUr4/dQ6eKTu4deNlWI7rrYL90FQDgW6ik5RDRmy0Cb+lD63NdHUkAE3iBSW6gOaOzZQTeQBrTrFDXr1SjEnC/HGkCyRFgwx0tsEehRNVTrply4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQ+Rl+la; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LbJzg2NWd5O3WkdbIbfqx+zJmXW+GyiC+YHLq74uL+D9T4uU/unzKxaW3XLJjCpJR8kvGCFSsYiVwTbfI6mTuYk4+d9cWq6YDQepkMqdHrXuZ8aPguYmiUZ0ceuFDfeh8YV/UgFyUBGZ+mKYn8dLiMRJIVMwSKKS4OvcEQl9CxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haAHDsEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQ+Rl+la"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E754C4CEF0;
-	Tue, 30 Sep 2025 15:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haAHDsEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77EAC4CEF0;
+	Tue, 30 Sep 2025 15:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244573;
-	bh=paS5Rvj02XN/MXAHTrH7eKZFoDcotofx0pG1hQhmTxQ=;
+	s=korg; t=1759244577;
+	bh=YuYC9inX43D78xW0nbaRkukcRc4krcV4+ZIoKnj67mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQ+Rl+laurt7SogcheksFQz3FfVO33aP19H4j/5BUxKBT9JT30HrektFIuC7bxPG/
-	 65J9E7itnxvbff8YfoZkvQIil1dyFM73BVisc/qntwb+qocmtz0X/Bac2fab5FcpPz
-	 bKqaEWDDFrrQCoXCEYhONoKN9zxcBMCgEye2Xm7k=
+	b=haAHDsEn1kc8YV7VjcvAT5zju+ju9cN4FqOf7+93WnzBE+48xx4d0FaajLDbKOFGw
+	 KwhkAMaDPWkHpMxB0YFLeo9dBdm4JgVzbOOIXvYzB5Bgg+xKqbP4ovYf9QoZWCPugs
+	 3yjxtrUG4GnPwCvnr6zLFyrJ/xPSRGmJROISraBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Xing Guo <higuoxing@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 021/143] drm/panfrost: Drop duplicated Mediatek supplies arrays
-Date: Tue, 30 Sep 2025 16:45:45 +0200
-Message-ID: <20250930143832.087483745@linuxfoundation.org>
+Subject: [PATCH 6.16 048/143] selftests/fs/mount-notify: Fix compilation failure.
+Date: Tue, 30 Sep 2025 16:46:12 +0200
+Message-ID: <20250930143833.148586862@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -51,94 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
+From: Xing Guo <higuoxing@gmail.com>
 
-[ Upstream commit 6905b0d9813176087fc0f28bc5e4ee2b86e6ce13 ]
+[ Upstream commit e51bd0e595476c1527bb0b4def095a6fd16b2563 ]
 
-In the panfrost driver, the platform data of several Mediatek SoC
-declares and uses custom supplies array definitions
-(mediatek_mt8192_supplies, mediatek_mt8183_b_supplies), that are the
-same as default_supplies (used by default platform data).
+Commit c6d9775c2066 ("selftests/fs/mount-notify: build with tools include
+dir") introduces the struct __kernel_fsid_t to decouple dependency with
+headers_install.  The commit forgets to define a macro for __kernel_fsid_t
+and it will cause type re-definition issue.
 
-So drop these duplicated definitions and use default_supplies instead.
-Also, rename mediatek_mt8183_supplies to a more generic name too
-(legacy_supplies).
-
-Signed-off-by: Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://lore.kernel.org/r/20250509-mt8370-enable-gpu-v6-2-2833888cb1d3@collabora.com
-Stable-dep-of: 81645377c231 ("drm/panfrost: Add support for Mali on the MT8370 SoC")
+Signed-off-by: Xing Guo <higuoxing@gmail.com>
+Link: https://lore.kernel.org/20250813031647.96411-1-higuoxing@gmail.com
+Acked-by: Amir Goldstein <amir73il@gmail.com>
+Closes: https://lore.kernel.org/oe-lkp/202508110628.65069d92-lkp@intel.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_drv.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ .../mount-notify/mount-notify_test.c           | 17 ++++++++---------
+ .../mount-notify/mount-notify_test_ns.c        | 18 ++++++++----------
+ 2 files changed, 16 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index f1ec3b02f15a0..7b899a9b2120c 100644
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -797,19 +797,18 @@ static const struct panfrost_compatible amlogic_data = {
-  * On new devicetrees please use the _b variant with a single and
-  * coupled regulators instead.
-  */
--static const char * const mediatek_mt8183_supplies[] = { "mali", "sram", NULL };
-+static const char * const legacy_supplies[] = { "mali", "sram", NULL };
- static const char * const mediatek_mt8183_pm_domains[] = { "core0", "core1", "core2" };
- static const struct panfrost_compatible mediatek_mt8183_data = {
--	.num_supplies = ARRAY_SIZE(mediatek_mt8183_supplies) - 1,
--	.supply_names = mediatek_mt8183_supplies,
-+	.num_supplies = ARRAY_SIZE(legacy_supplies) - 1,
-+	.supply_names = legacy_supplies,
- 	.num_pm_domains = ARRAY_SIZE(mediatek_mt8183_pm_domains),
- 	.pm_domain_names = mediatek_mt8183_pm_domains,
- };
+diff --git a/tools/testing/selftests/filesystems/mount-notify/mount-notify_test.c b/tools/testing/selftests/filesystems/mount-notify/mount-notify_test.c
+index 63ce708d93ed0..e4b7c2b457ee7 100644
+--- a/tools/testing/selftests/filesystems/mount-notify/mount-notify_test.c
++++ b/tools/testing/selftests/filesystems/mount-notify/mount-notify_test.c
+@@ -2,6 +2,13 @@
+ // Copyright (c) 2025 Miklos Szeredi <miklos@szeredi.hu>
  
--static const char * const mediatek_mt8183_b_supplies[] = { "mali", NULL };
- static const struct panfrost_compatible mediatek_mt8183_b_data = {
--	.num_supplies = ARRAY_SIZE(mediatek_mt8183_b_supplies) - 1,
--	.supply_names = mediatek_mt8183_b_supplies,
-+	.num_supplies = ARRAY_SIZE(default_supplies) - 1,
-+	.supply_names = default_supplies,
- 	.num_pm_domains = ARRAY_SIZE(mediatek_mt8183_pm_domains),
- 	.pm_domain_names = mediatek_mt8183_pm_domains,
- 	.pm_features = BIT(GPU_PM_CLK_DIS) | BIT(GPU_PM_VREG_OFF),
-@@ -817,8 +816,8 @@ static const struct panfrost_compatible mediatek_mt8183_b_data = {
+ #define _GNU_SOURCE
++
++// Needed for linux/fanotify.h
++typedef struct {
++	int	val[2];
++} __kernel_fsid_t;
++#define __kernel_fsid_t __kernel_fsid_t
++
+ #include <fcntl.h>
+ #include <sched.h>
+ #include <stdio.h>
+@@ -10,20 +17,12 @@
+ #include <sys/mount.h>
+ #include <unistd.h>
+ #include <sys/syscall.h>
++#include <sys/fanotify.h>
  
- static const char * const mediatek_mt8186_pm_domains[] = { "core0", "core1" };
- static const struct panfrost_compatible mediatek_mt8186_data = {
--	.num_supplies = ARRAY_SIZE(mediatek_mt8183_b_supplies) - 1,
--	.supply_names = mediatek_mt8183_b_supplies,
-+	.num_supplies = ARRAY_SIZE(default_supplies) - 1,
-+	.supply_names = default_supplies,
- 	.num_pm_domains = ARRAY_SIZE(mediatek_mt8186_pm_domains),
- 	.pm_domain_names = mediatek_mt8186_pm_domains,
- 	.pm_features = BIT(GPU_PM_CLK_DIS) | BIT(GPU_PM_VREG_OFF),
-@@ -826,20 +825,19 @@ static const struct panfrost_compatible mediatek_mt8186_data = {
+ #include "../../kselftest_harness.h"
+ #include "../statmount/statmount.h"
+ #include "../utils.h"
  
- /* MT8188 uses the same power domains and power supplies as MT8183 */
- static const struct panfrost_compatible mediatek_mt8188_data = {
--	.num_supplies = ARRAY_SIZE(mediatek_mt8183_b_supplies) - 1,
--	.supply_names = mediatek_mt8183_b_supplies,
-+	.num_supplies = ARRAY_SIZE(default_supplies) - 1,
-+	.supply_names = default_supplies,
- 	.num_pm_domains = ARRAY_SIZE(mediatek_mt8183_pm_domains),
- 	.pm_domain_names = mediatek_mt8183_pm_domains,
- 	.pm_features = BIT(GPU_PM_CLK_DIS) | BIT(GPU_PM_VREG_OFF),
- 	.gpu_quirks = BIT(GPU_QUIRK_FORCE_AARCH64_PGTABLE),
- };
+-// Needed for linux/fanotify.h
+-#ifndef __kernel_fsid_t
+-typedef struct {
+-	int	val[2];
+-} __kernel_fsid_t;
+-#endif
+-
+-#include <sys/fanotify.h>
+-
+ static const char root_mntpoint_templ[] = "/tmp/mount-notify_test_root.XXXXXX";
  
--static const char * const mediatek_mt8192_supplies[] = { "mali", NULL };
- static const char * const mediatek_mt8192_pm_domains[] = { "core0", "core1", "core2",
- 							   "core3", "core4" };
- static const struct panfrost_compatible mediatek_mt8192_data = {
--	.num_supplies = ARRAY_SIZE(mediatek_mt8192_supplies) - 1,
--	.supply_names = mediatek_mt8192_supplies,
-+	.num_supplies = ARRAY_SIZE(default_supplies) - 1,
-+	.supply_names = default_supplies,
- 	.num_pm_domains = ARRAY_SIZE(mediatek_mt8192_pm_domains),
- 	.pm_domain_names = mediatek_mt8192_pm_domains,
- 	.pm_features = BIT(GPU_PM_CLK_DIS) | BIT(GPU_PM_VREG_OFF),
+ static const int mark_cmds[] = {
+diff --git a/tools/testing/selftests/filesystems/mount-notify/mount-notify_test_ns.c b/tools/testing/selftests/filesystems/mount-notify/mount-notify_test_ns.c
+index 090a5ca65004a..9f57ca46e3afa 100644
+--- a/tools/testing/selftests/filesystems/mount-notify/mount-notify_test_ns.c
++++ b/tools/testing/selftests/filesystems/mount-notify/mount-notify_test_ns.c
+@@ -2,6 +2,13 @@
+ // Copyright (c) 2025 Miklos Szeredi <miklos@szeredi.hu>
+ 
+ #define _GNU_SOURCE
++
++// Needed for linux/fanotify.h
++typedef struct {
++	int	val[2];
++} __kernel_fsid_t;
++#define __kernel_fsid_t __kernel_fsid_t
++
+ #include <fcntl.h>
+ #include <sched.h>
+ #include <stdio.h>
+@@ -10,21 +17,12 @@
+ #include <sys/mount.h>
+ #include <unistd.h>
+ #include <sys/syscall.h>
++#include <sys/fanotify.h>
+ 
+ #include "../../kselftest_harness.h"
+-#include "../../pidfd/pidfd.h"
+ #include "../statmount/statmount.h"
+ #include "../utils.h"
+ 
+-// Needed for linux/fanotify.h
+-#ifndef __kernel_fsid_t
+-typedef struct {
+-	int	val[2];
+-} __kernel_fsid_t;
+-#endif
+-
+-#include <sys/fanotify.h>
+-
+ static const char root_mntpoint_templ[] = "/tmp/mount-notify_test_root.XXXXXX";
+ 
+ static const int mark_types[] = {
 -- 
 2.51.0
 
