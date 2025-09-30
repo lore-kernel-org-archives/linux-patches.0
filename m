@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E6D1F3FED;
-	Tue, 30 Sep 2025 15:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D731F3FED;
+	Tue, 30 Sep 2025 15:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245918; cv=none; b=tgyyQtXVC/HCmRnpZ2e77wr+k4ra8dLQuIClaCLihDTY6tYbw7kqlWKul2pkjUkRabQIHZomAlD8ronPbaqYPJLKEYosreDwtuvtdRB9NObnavUg29BsZ1IFXYjq+sELabmtaSNuoI6AMhyXJfxD37SXaHocHj9lMNSrrzGHjHw=
+	t=1759245922; cv=none; b=hwkdZVt5/ExvZrBKVQuSisWsRHWq3I5P1tfRsLQBXBlXTInUmLgflJTb53vITxG/stA7MVs2X0hrPgVfaE64z720K7gNTzV5+iAGtwfaGZ4z/oyp1mtruBWi2js+DrWQgZZoddZCWDvbybcBZ1zhiU9D92JsU8aUg2sAsJSQZfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245918; c=relaxed/simple;
-	bh=E40aEd+Kuvp+M3QpLiY1SKH3o+U71A8LVy0OeVqFRvo=;
+	s=arc-20240116; t=1759245922; c=relaxed/simple;
+	bh=ZxEfE/edvgbYVzoccplrECp6+www/WdQpz0dW+PQ8p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxdYjhdkEvrng8BIB4yU1trH7T/VI2mWPsDSPvZ3XoFX784mpCvIZWGbFBPWEUdtk5c7PjXnRHs3A+nqci3YUWxUhMzBAT5jiBM+lLNIel2Tn/FKRQF8tCijNO8jDahlvS8lEaDXQ4jVOB2lB5mim/wf6PMdM6svBO629O+8DHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ID6D58hX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9vJJLpHJKVCZ3cteT92dfEjPK9rKEgARhOGWSkCoNOTjHSXuXyXcMF5O7/7gSuxUbDZ2fkVAZkCgy1JVE+fG3QQ2PQ5wPrf7A6aniCM1pnJrPKBFzezhxTO3fAC1hvvuMTWNwe4OrGZhF9Q34qCS9lsV7NU1ofGllz2gUxQVvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuZ+y4o5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ID6D58hX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC676C4CEF0;
-	Tue, 30 Sep 2025 15:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuZ+y4o5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C052C4CEF0;
+	Tue, 30 Sep 2025 15:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245918;
-	bh=E40aEd+Kuvp+M3QpLiY1SKH3o+U71A8LVy0OeVqFRvo=;
+	s=korg; t=1759245921;
+	bh=ZxEfE/edvgbYVzoccplrECp6+www/WdQpz0dW+PQ8p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ID6D58hXNnhtrn9RMBdUH1oHD+0ciOSwSHbDxRfCBSfNzTL2V0aZnwBNj6KANkfIJ
-	 DZCVawcWDDv5ItyGiFGcktjnBT5/G8I+magPk2Bd4M1lgse6TZpz4mqRSej59nZ89N
-	 kBStPIEx9KtnZLi1cdzzcEUIeZE9+JvcEj1Azd8I=
+	b=JuZ+y4o5O3kaKZoAiUWF+aGlzFNtSoktLrkgTXToORsZ+q5OtxjswQtQpKbFkcXPQ
+	 2tgOnOmYrJHcpJZgl3VbuTDvtRGfUqq4t0Ah+VjgPSDEbEbxc8uaOZRWMQyf516N5k
+	 NUXZC+KX0Rss6O0iW6F0XqpFQLjacyS2GTOdMP7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.6 58/91] i40e: fix input validation logic for action_meta
-Date: Tue, 30 Sep 2025 16:47:57 +0200
-Message-ID: <20250930143823.601786969@linuxfoundation.org>
+Subject: [PATCH 6.6 59/91] i40e: fix validation of VF state in get resources
+Date: Tue, 30 Sep 2025 16:47:58 +0200
+Message-ID: <20250930143823.643832639@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -56,11 +56,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-commit 9739d5830497812b0bdeaee356ddefbe60830b88 upstream.
+commit 877b7e6ffc23766448236e8732254534c518ba42 upstream.
 
-Fix condition to check 'greater or equal' to prevent OOB dereference.
+VF state I40E_VF_STATE_ACTIVE is not the only state in which
+VF is actually active so it should not be used to determine
+if a VF is allowed to obtain resources.
 
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
+Use I40E_VF_STATE_RESOURCES_LOADED that is set only in
+i40e_vc_get_vf_resources_msg() and cleared during reset.
+
+Fixes: 61125b8be85d ("i40e: Fix failed opcode appearing if handling messages from VF")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
@@ -70,19 +75,51 @@ Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    7 ++++++-
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h |    3 ++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3595,7 +3595,7 @@ static int i40e_validate_cloud_filter(st
+@@ -1459,6 +1459,7 @@ static void i40e_trigger_vf_reset(struct
+ 	 * functions that may still be running at this point.
+ 	 */
+ 	clear_bit(I40E_VF_STATE_INIT, &vf->vf_states);
++	clear_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
  
- 	/* action_meta is TC number here to which the filter is applied */
- 	if (!tc_filter->action_meta ||
--	    tc_filter->action_meta > vf->num_tc) {
-+	    tc_filter->action_meta >= vf->num_tc) {
- 		dev_info(&pf->pdev->dev, "VF %d: Invalid TC number %u\n",
- 			 vf->vf_id, tc_filter->action_meta);
+ 	/* In the case of a VFLR, the HW has already reset the VF and we
+ 	 * just need to clean up, so don't hit the VFRTRIG register.
+@@ -2125,7 +2126,10 @@ static int i40e_vc_get_vf_resources_msg(
+ 	size_t len = 0;
+ 	int ret;
+ 
+-	if (!i40e_sync_vf_state(vf, I40E_VF_STATE_INIT)) {
++	i40e_sync_vf_state(vf, I40E_VF_STATE_INIT);
++
++	if (!test_bit(I40E_VF_STATE_INIT, &vf->vf_states) ||
++	    test_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states)) {
+ 		aq_ret = -EINVAL;
  		goto err;
+ 	}
+@@ -2228,6 +2232,7 @@ static int i40e_vc_get_vf_resources_msg(
+ 				vf->default_lan_addr.addr);
+ 	}
+ 	set_bit(I40E_VF_STATE_ACTIVE, &vf->vf_states);
++	set_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
+ 
+ err:
+ 	/* send the response back to the VF */
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
+@@ -41,7 +41,8 @@ enum i40e_vf_states {
+ 	I40E_VF_STATE_MC_PROMISC,
+ 	I40E_VF_STATE_UC_PROMISC,
+ 	I40E_VF_STATE_PRE_ENABLE,
+-	I40E_VF_STATE_RESETTING
++	I40E_VF_STATE_RESETTING,
++	I40E_VF_STATE_RESOURCES_LOADED,
+ };
+ 
+ /* VF capabilities */
 
 
