@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6686D846F;
-	Tue, 30 Sep 2025 15:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE1C846F;
+	Tue, 30 Sep 2025 15:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244776; cv=none; b=HnHiUlIk7RaETU8tySM0G1Blb9GP9eyuT3/p5HW29GQ0wilw2mTY+qjqYqlBI8TqIs2agEm+GjzMXjUO6VZWLO4lNQKmPd8XtxmRaI0HRv/fQwRPTUAz7IKDRC9Du+Ct+7GoSgsV6IgzEigntKfgHaCThKYgDVamRh+ZtiMcWdk=
+	t=1759244780; cv=none; b=TtDQoWb43c4j421mGK2elKFHukPTUmEO6fxGWteweqvLZN/xZMSeqLtQ58ump7guTwQ9Obc1NsIHX2+UhMNwaJRRRu+nCKp/kfMUtnaK9JSQfTVnFPqa9oJSxfbN/hvW5F1SztmD2QdqmC3drHJRQakxz6rsp5PxOCi4lpJoHYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244776; c=relaxed/simple;
-	bh=rNJuxAAWzTxFdOYJdKjvZaRw8A8P313GxFixKmGk/+Y=;
+	s=arc-20240116; t=1759244780; c=relaxed/simple;
+	bh=JeD6GkkkPgjSmSb2n0g5DZhWRrq6w/+9pczmmYKVWrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhDtB+BpXBRZahe1UtZcx6ni9ApoToWGRYmdJ/4KNW1eFs/rhDefPP8xlqDVQEml+30nB2KSUWcXgzkkgnULFsd0pToRGdFEB/FiC64Z7G6ZtBrxIoNO7t0S9pFI5Gr+DTCbBfPYDjUHX+zkwIBf/gW5TjQ+dnZXlnHSy+H4a50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcIWJ7+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvR2WPOa1xwQz6knjL1DC0IOoZRW48wp8EDYynlcWmufo5ChEVv67ZPrus+r0DuyBM7Aur6nIrVK6KB++Y8timK5TBk+E7iXDfT0+BaNQ+MFp7d6sQZuLIw9JTlqPqD9FpCXfZDjZqshpObZh0wAoYEKCmxQNjNP2MWDnXVGvKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogjxp0wY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcIWJ7+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0562C4CEF0;
-	Tue, 30 Sep 2025 15:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogjxp0wY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1880BC4CEF0;
+	Tue, 30 Sep 2025 15:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244776;
-	bh=rNJuxAAWzTxFdOYJdKjvZaRw8A8P313GxFixKmGk/+Y=;
+	s=korg; t=1759244780;
+	bh=JeD6GkkkPgjSmSb2n0g5DZhWRrq6w/+9pczmmYKVWrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcIWJ7+dCCDxgdca7Hu+j21JiCmGtl0JLSVz+kzkm/D8S6FiramX8kV2Vsny5SpnA
-	 CYHcRQAqBJvIizLCQW7oHAn4i/kvMn40eNTPUiKl9WevzOY1cIsLg+rYfPlsqbVL9W
-	 MhWYPEDdaAUKP4DnS6llf2aZ9f/M6JXRBWlodR8Q=
+	b=ogjxp0wY162UH/toPXC1cOSxT5DI3vBgJDhCLwT4+RpWfxuRbeH96FCDmksXatEqZ
+	 6yuzW2j8hV/cumQpI/dPLPvT94dgbNbsDEJtIpwtV3BMtMwgadNtZdSZZ9m5C1VYu2
+	 4PRy6KsW8dNAXO8PIWZh2pJ2LNoSyWXpaBXcQAH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.16 110/143] crypto: af_alg - Fix incorrect boolean values in af_alg_ctx
-Date: Tue, 30 Sep 2025 16:47:14 +0200
-Message-ID: <20250930143835.618534398@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.16 111/143] tracing: dynevent: Add a missing lockdown check on dynevent
+Date: Tue, 30 Sep 2025 16:47:15 +0200
+Message-ID: <20250930143835.657750305@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -50,43 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit d0ca0df179c4b21e2a6c4a4fb637aa8fa14575cb upstream.
+commit 456c32e3c4316654f95f9d49c12cbecfb77d5660 upstream.
 
-Commit 1b34cbbf4f01 ("crypto: af_alg - Disallow concurrent writes in
-af_alg_sendmsg") changed some fields from bool to 1-bit bitfields of
-type u32.
+Since dynamic_events interface on tracefs is compatible with
+kprobe_events and uprobe_events, it should also check the lockdown
+status and reject if it is set.
 
-However, some assignments to these fields, specifically 'more' and
-'merge', assign values greater than 1.  These relied on C's implicit
-conversion to bool, such that zero becomes false and nonzero becomes
-true.
+Link: https://lore.kernel.org/all/175824455687.45175.3734166065458520748.stgit@devnote2/
 
-With a 1-bit bitfields of type u32 instead, mod 2 of the value is taken
-instead, resulting in 0 being assigned in some cases when 1 was intended.
-
-Fix this by restoring the bool type.
-
-Fixes: 1b34cbbf4f01 ("crypto: af_alg - Disallow concurrent writes in af_alg_sendmsg")
+Fixes: 17911ff38aa5 ("tracing: Add locked_down checks to the open calls of files created for tracefs")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/crypto/if_alg.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_dynevent.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/crypto/if_alg.h
-+++ b/include/crypto/if_alg.h
-@@ -152,7 +152,7 @@ struct af_alg_ctx {
- 	size_t used;
- 	atomic_t rcvused;
+--- a/kernel/trace/trace_dynevent.c
++++ b/kernel/trace/trace_dynevent.c
+@@ -230,6 +230,10 @@ static int dyn_event_open(struct inode *
+ {
+ 	int ret;
  
--	u32		more:1,
-+	bool		more:1,
- 			merge:1,
- 			enc:1,
- 			write:1,
++	ret = security_locked_down(LOCKDOWN_TRACEFS);
++	if (ret)
++		return ret;
++
+ 	ret = tracing_check_open_get_tr(NULL);
+ 	if (ret)
+ 		return ret;
 
 
