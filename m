@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB151FF1C8;
-	Tue, 30 Sep 2025 15:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B921EE02F;
+	Tue, 30 Sep 2025 15:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244611; cv=none; b=PyS4eQj1UDUO2pDMRPqdAf6UgYNd13k6+/Am2FUnyfwbR5JH9O/JxeFpMm+10fd2u12ds60cgWlAi10Ual61A6eOQG83A5qj9TDPrqsMky4zr/4GUKdZQ9w6iFpqX9ajsZMX+fbbh7cQCfidJrMuau9l2+MeAELxXtSzqDOrdTs=
+	t=1759244614; cv=none; b=cNjSrP8n0KncmoCszFACCm17gJLStkLvBR+Kb0q0I+4MbQPu8AHCWQxlLk8P44lUy0SaQ9umJuixvFnrw7OwsGzMaRtGc4qBqJ3KGUfrfGeeNXcPqod0UgtiaAtC/01hjTiQV0d4cwuyRrhBwinbln159gpx4sMGyoWhvPeWQ1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244611; c=relaxed/simple;
-	bh=EnPtj/ddQj5jZBQYLejAubFMoIcTOrTX7JfnXHeQn5Q=;
+	s=arc-20240116; t=1759244614; c=relaxed/simple;
+	bh=10BxeJ3y0dL4zRL2EUljyWw0CwcB5661Kx0WS8FOk10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihw00BhuQyIe6qQPB5taAUT8s9Ttp+jSIHY2b4MJnHS/D6zwkIj1zT6W81oF52npJWGus/IdVyXSnDIaKbCq912uhAk6ggKY93uulkEi7dAdsQrB3V+e03PV2z7NL4/SGD/gQp6fRWruoLs5yNuizHqPnNFxd/uT5zlILUObXIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG+5E6g0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8NNUWj2G2GaWE/U0pfVW3R6/6zMZ6D3kaBV7gvRXboRECkICLDmuA95a089nfkwwbLGExhuoYZpmFa5/iv4+GEM6eRExHgMf6PQUQn1b+Ex0g06ZyWGC+n1V1XBGYEysh8wmA1tMxKQh7Z1FN4sR5jK7j4GExFrfZ8fvgnAlO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8DFM3sU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG+5E6g0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721A9C4CEF0;
-	Tue, 30 Sep 2025 15:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8DFM3sU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCEDC4CEF0;
+	Tue, 30 Sep 2025 15:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244610;
-	bh=EnPtj/ddQj5jZBQYLejAubFMoIcTOrTX7JfnXHeQn5Q=;
+	s=korg; t=1759244614;
+	bh=10BxeJ3y0dL4zRL2EUljyWw0CwcB5661Kx0WS8FOk10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RG+5E6g0y712JjfzLkZJK88+U2ABNLCuVJOeD8yvNkGh7YA9NCNV6pLrXvXdc1t32
-	 FoLMTGx+jH44x+wYy9eSokye0RCnt/00dzFVhjYPFPI5UXnRIEUXEVn/DqN5Lc5Kou
-	 /zbWaQ5cvrYsX24xquImn3XN/4vyHX5nmDCjoyiM=
+	b=j8DFM3sUcqW/ByHk/gkTZdd+7yWp9P7aOYgXbZK/huqz1uAlRFE/X04i7RYZ4ef+1
+	 1Uo12jXCFiOU1vx7CyAZsYeuCOzxfRtqBzwDNV251Y0MYYPE57e6zD/D0FoMeu4CrX
+	 iLfQ9xcSrtBOtXdis5s9WnpP7KeQ3EIyt5yM75R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 053/143] amd/amdkfd: correct mem limit calculation for small APUs
-Date: Tue, 30 Sep 2025 16:46:17 +0200
-Message-ID: <20250930143833.346996651@linuxfoundation.org>
+Subject: [PATCH 6.16 062/143] can: sun4i_can: populate ndo_change_mtu() to prevent buffer overflow
+Date: Tue, 30 Sep 2025 16:46:26 +0200
+Message-ID: <20250930143833.701228734@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -52,116 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit 53503556273a5ead8b75534085e2dcb46e96f883 ]
+[ Upstream commit 61da0bd4102c459823fbe6b8b43b01fb6ace4a22 ]
 
-Current mem limit check leaks some GTT memory (reserved_for_pt
-reserved_for_ras + adev->vram_pin_size) for small APUs.
+Sending an PF_PACKET allows to bypass the CAN framework logic and to
+directly reach the xmit() function of a CAN driver. The only check
+which is performed by the PF_PACKET framework is to make sure that
+skb->len fits the interface's MTU.
 
-Since carveout VRAM is tunable on APUs, there are three case
-regarding the carveout VRAM size relative to GTT:
+Unfortunately, because the sun4i_can driver does not populate its
+net_device_ops->ndo_change_mtu(), it is possible for an attacker to
+configure an invalid MTU by doing, for example:
 
-1. 0 < carveout < gtt
-   apu_prefer_gtt = true, is_app_apu = false
+  $ ip link set can0 mtu 9999
 
-2. carveout > gtt / 2
-   apu_prefer_gtt = false, is_app_apu = false
+After doing so, the attacker could open a PF_PACKET socket using the
+ETH_P_CANXL protocol:
 
-3. 0 = carveout
-   apu_prefer_gtt = true, is_app_apu = true
+	socket(PF_PACKET, SOCK_RAW, htons(ETH_P_CANXL))
 
-It doesn't make sense to check below limitation in case 1
-(default case, small carveout) because the values in the below
-expression are mixed with carveout and gtt.
+to inject a malicious CAN XL frames. For example:
 
-adev->kfd.vram_used[xcp_id] + vram_needed >
-    vram_size - reserved_for_pt - reserved_for_ras -
-    atomic64_read(&adev->vram_pin_size)
+	struct canxl_frame frame = {
+		.flags = 0xff,
+		.len = 2048,
+	};
 
-gtt: kfd.vram_used, vram_needed, vram_size
-carveout: reserved_for_pt, reserved_for_ras, adev->vram_pin_size
+The CAN drivers' xmit() function are calling can_dev_dropped_skb() to
+check that the skb is valid, unfortunately under above conditions, the
+malicious packet is able to go through can_dev_dropped_skb() checks:
 
-In case 1, vram allocation will go to gtt domain, skip vram check
-since ttm_mem_limit check already cover this allocation.
+  1. the skb->protocol is set to ETH_P_CANXL which is valid (the
+     function does not check the actual device capabilities).
 
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fa7c99f04f6dd299388e9282812b14e95558ac8e)
+  2. the length is a valid CAN XL length.
+
+And so, sun4ican_start_xmit() receives a CAN XL frame which it is not
+able to correctly handle and will thus misinterpret it as a CAN frame.
+
+This can result in a buffer overflow. The driver will consume cf->len
+as-is with no further checks on this line:
+
+	dlc = cf->len;
+
+Here, cf->len corresponds to the flags field of the CAN XL frame. In
+our previous example, we set canxl_frame->flags to 0xff. Because the
+maximum expected length is 8, a buffer overflow of 247 bytes occurs a
+couple line below when doing:
+
+	for (i = 0; i < dlc; i++)
+		writel(cf->data[i], priv->base + (dreg + i * 4));
+
+Populate net_device_ops->ndo_change_mtu() to ensure that the
+interface's MTU can not be set to anything bigger than CAN_MTU. By
+fixing the root cause, this prevents the buffer overflow.
+
+Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-3-0d1cada9393b@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c  | 44 ++++++++++++++-----
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ drivers/net/can/sun4i_can.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 260165bbe3736..b16cce7c22c37 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -213,19 +213,35 @@ int amdgpu_amdkfd_reserve_mem_limit(struct amdgpu_device *adev,
- 	spin_lock(&kfd_mem_limit.mem_limit_lock);
+diff --git a/drivers/net/can/sun4i_can.c b/drivers/net/can/sun4i_can.c
+index 6fcb301ef611d..53bfd873de9bd 100644
+--- a/drivers/net/can/sun4i_can.c
++++ b/drivers/net/can/sun4i_can.c
+@@ -768,6 +768,7 @@ static const struct net_device_ops sun4ican_netdev_ops = {
+ 	.ndo_open = sun4ican_open,
+ 	.ndo_stop = sun4ican_close,
+ 	.ndo_start_xmit = sun4ican_start_xmit,
++	.ndo_change_mtu = can_change_mtu,
+ };
  
- 	if (kfd_mem_limit.system_mem_used + system_mem_needed >
--	    kfd_mem_limit.max_system_mem_limit)
-+	    kfd_mem_limit.max_system_mem_limit) {
- 		pr_debug("Set no_system_mem_limit=1 if using shared memory\n");
-+		if (!no_system_mem_limit) {
-+			ret = -ENOMEM;
-+			goto release;
-+		}
-+	}
- 
--	if ((kfd_mem_limit.system_mem_used + system_mem_needed >
--	     kfd_mem_limit.max_system_mem_limit && !no_system_mem_limit) ||
--	    (kfd_mem_limit.ttm_mem_used + ttm_mem_needed >
--	     kfd_mem_limit.max_ttm_mem_limit) ||
--	    (adev && xcp_id >= 0 && adev->kfd.vram_used[xcp_id] + vram_needed >
--	     vram_size - reserved_for_pt - reserved_for_ras - atomic64_read(&adev->vram_pin_size))) {
-+	if (kfd_mem_limit.ttm_mem_used + ttm_mem_needed >
-+		kfd_mem_limit.max_ttm_mem_limit) {
- 		ret = -ENOMEM;
- 		goto release;
- 	}
- 
-+	/*if is_app_apu is false and apu_prefer_gtt is true, it is an APU with
-+	 * carve out < gtt. In that case, VRAM allocation will go to gtt domain, skip
-+	 * VRAM check since ttm_mem_limit check already cover this allocation
-+	 */
-+
-+	if (adev && xcp_id >= 0 && (!adev->apu_prefer_gtt || adev->gmc.is_app_apu)) {
-+		uint64_t vram_available =
-+			vram_size - reserved_for_pt - reserved_for_ras -
-+			atomic64_read(&adev->vram_pin_size);
-+		if (adev->kfd.vram_used[xcp_id] + vram_needed > vram_available) {
-+			ret = -ENOMEM;
-+			goto release;
-+		}
-+	}
-+
- 	/* Update memory accounting by decreasing available system
- 	 * memory, TTM memory and GPU memory as computed above
- 	 */
-@@ -1626,11 +1642,15 @@ size_t amdgpu_amdkfd_get_available_memory(struct amdgpu_device *adev,
- 	uint64_t vram_available, system_mem_available, ttm_mem_available;
- 
- 	spin_lock(&kfd_mem_limit.mem_limit_lock);
--	vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
--		- adev->kfd.vram_used_aligned[xcp_id]
--		- atomic64_read(&adev->vram_pin_size)
--		- reserved_for_pt
--		- reserved_for_ras;
-+	if (adev->apu_prefer_gtt && !adev->gmc.is_app_apu)
-+		vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
-+			- adev->kfd.vram_used_aligned[xcp_id];
-+	else
-+		vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
-+			- adev->kfd.vram_used_aligned[xcp_id]
-+			- atomic64_read(&adev->vram_pin_size)
-+			- reserved_for_pt
-+			- reserved_for_ras;
- 
- 	if (adev->apu_prefer_gtt) {
- 		system_mem_available = no_system_mem_limit ?
+ static const struct ethtool_ops sun4ican_ethtool_ops = {
 -- 
 2.51.0
 
