@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A412F39C0;
-	Tue, 30 Sep 2025 15:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B902FFDE6;
+	Tue, 30 Sep 2025 15:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245394; cv=none; b=B9Zxk2xRz9RhA3G8Ym1OoDH65+Yf8oJDgqk7Vw2gmBRo0ZPb7iO6dj+kEz25AP3j81JUVVy94/Vslbr4zyMZ9IUYVJ7gfp3SZ84lE99pc2obaPQE1Nf6XdRr7E1pSMwHu96IKaPN/c6v+/uxTuLMOjq2uTBWba48JpNpYlrthV4=
+	t=1759245398; cv=none; b=M8ExGYc2R24YC8oPcNFqq6qRccsDWA8dJjjTpGgstyNgZaPWfKekg22UO9qrCG0TizNGBuuvzq5NwFRyB6HXJ9Ucpeo+eOiGVRXXaYB7oYbgWA1bD6rI2V35Ne5ssaXbg4/S7kllKGLsLZI0PWeH7G7lASb/1QNLpP1WeZseDP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245394; c=relaxed/simple;
-	bh=8oiZdLu4qJ9qJyx62cT0mqLfVcQTbtm3vLn6nmDiIXo=;
+	s=arc-20240116; t=1759245398; c=relaxed/simple;
+	bh=mtJqOqb3+xOAKNSPER/ZBEiOheByy5kXVGhBsmX0wGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YPPqo+9xkFHV8hwJIdWNH/Ne9qGUSxdGQqSQbM+JDteenXi08nhlISAdXQes5oO898v66+sbvk6LA86T5uh0J9+NsnlPnpabihq80966iSlxjASJg4sVHOET+YYNgi7JI+J5f7IpcAey+DIwoD2gDakbzsVPjg2EGm5H0zJAces=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wi6ypYXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UbMd0DBAguDrD4O7GIGEB4U/WoRaejmUz4AwZKlRyL7WKqx15vBNM7pUBxWTLgsmdgXuHpSuH4xEQKPbOTb/r+vzx/1qOY7q2t2tskxslIXafLhlG0oD6xldS9apb91TmjUKWnLP55yRHKespvaXKdgAWLCpbEvpWP5BDgS9wSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaQlNJCO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wi6ypYXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E8DC4CEF0;
-	Tue, 30 Sep 2025 15:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaQlNJCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76728C4CEF0;
+	Tue, 30 Sep 2025 15:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245394;
-	bh=8oiZdLu4qJ9qJyx62cT0mqLfVcQTbtm3vLn6nmDiIXo=;
+	s=korg; t=1759245397;
+	bh=mtJqOqb3+xOAKNSPER/ZBEiOheByy5kXVGhBsmX0wGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wi6ypYXvDKc2qRpK+ZEOPB+dN2+E/dweRH2nkA+m9SnGKueqNjnzclChihnJRgmh1
-	 kufB4q89s2100blwiIarR17zbLBpWXRrnVKXrPFHdjX3e011fws9q/VMiAro4ZndDI
-	 4F4LY+KJBgFSltcmONYjfCZgK6ySHZjANwWLXrZQ=
+	b=PaQlNJCOI0RSy+yeXwy5yohdqu+PbROynolkCzmS6RvPA84huBh3u7BY7kACNEJLL
+	 8hGQGXgPZuCFbvfjY1NdhiQ19DV/8sZScY6NlZ2zUuBzQc0cPAzqiZ0N2R7D4xYcyk
+	 cq+UQXqWxT3OZu+UxZLO6hFkK0gz16ConA0FV5gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?St=C3=A9phane=20Grosjean?= <stephane.grosjean@hms-networks.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Petr Malat <oss@malat.biz>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 127/151] can: peak_usb: fix shift-out-of-bounds issue
-Date: Tue, 30 Sep 2025 16:47:37 +0200
-Message-ID: <20250930143832.663599661@linuxfoundation.org>
+Subject: [PATCH 5.15 128/151] ethernet: rvu-af: Remove slash from the driver name
+Date: Tue, 30 Sep 2025 16:47:38 +0200
+Message-ID: <20250930143832.703295364@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -45,46 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stéphane Grosjean <stephane.grosjean@hms-networks.com>
+From: Petr Malat <oss@malat.biz>
 
-[ Upstream commit c443be70aaee42c2d1d251e0329e0a69dd96ae54 ]
+[ Upstream commit b65678cacc030efd53c38c089fb9b741a2ee34c8 ]
 
-Explicitly uses a 64-bit constant when the number of bits used for its
-shifting is 32 (which is the case for PC CAN FD interfaces supported by
-this driver).
+Having a slash in the driver name leads to EIO being returned while
+reading /sys/module/rvu_af/drivers content.
 
-Signed-off-by: Stéphane Grosjean <stephane.grosjean@hms-networks.com>
-Link: https://patch.msgid.link/20250918132413.30071-1-stephane.grosjean@free.fr
-Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Closes: https://lore.kernel.org/20250917-aboriginal-refined-honeybee-82b1aa-mkl@pengutronix.de
-Fixes: bb4785551f64 ("can: usb: PEAK-System Technik USB adapters driver core")
-[mkl: update subject, apply manually]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Remove DRV_STRING as it's not used anywhere.
+
+Fixes: 91c6945ea1f9 ("octeontx2-af: cn10k: Add RPM MAC support")
+Signed-off-by: Petr Malat <oss@malat.biz>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250918152106.1798299-1-oss@malat.biz
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_core.c b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
-index 6107fef9f4a03..11ca70173fb57 100644
---- a/drivers/net/can/usb/peak_usb/pcan_usb_core.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
-@@ -89,7 +89,7 @@ void peak_usb_update_ts_now(struct peak_time_ref *time_ref, u32 ts_now)
- 		u32 delta_ts = time_ref->ts_dev_2 - time_ref->ts_dev_1;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index 4dec201158956..d97a4123438f0 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -21,8 +21,7 @@
+ #include "rvu.h"
+ #include "lmac_common.h"
  
- 		if (time_ref->ts_dev_2 < time_ref->ts_dev_1)
--			delta_ts &= (1 << time_ref->adapter->ts_used_bits) - 1;
-+			delta_ts &= (1ULL << time_ref->adapter->ts_used_bits) - 1;
+-#define DRV_NAME	"Marvell-CGX/RPM"
+-#define DRV_STRING      "Marvell CGX/RPM Driver"
++#define DRV_NAME	"Marvell-CGX-RPM"
  
- 		time_ref->ts_total += delta_ts;
- 	}
+ static LIST_HEAD(cgx_list);
+ 
 -- 
 2.51.0
 
