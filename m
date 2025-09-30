@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F32E217F55;
-	Tue, 30 Sep 2025 15:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ACC1F1302;
+	Tue, 30 Sep 2025 15:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245404; cv=none; b=Tkt8lI/fzWiynqqzlPhfMB3ZYRREAT+7csiCzje6aCgY/GJEsPamO1KlBb6Ly9HkzsQrSuKtOeORoyn1IoKUboaTaJdtH0lQthQDvQqbuO/5VCQYvCD+HqYNMqdi6Ijvas52UGbTFKbgvqJ5Eqn+XM6q/ERNF/bhTaKUslEEp1k=
+	t=1759245407; cv=none; b=mMwxcGZHHa/1mQIYfHguZhFRD+ttAgbSgdJvExsYXtpqGm83aL2a8S8Qfo6Y2ineY7RrcitpbqwMsCW6zEMB/sGhGo/EM95czeJ/jPDWe4YJdN7l0LU8qkJakMWsYGASDmZa1UDVXCxT1sUd4r+Ctfvy5gtS8bj5HfKCNcNCF4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245404; c=relaxed/simple;
-	bh=hvzPtjosgf9uvB/G/J2/w1+WxgHzvjPjXy7ItL9HU5c=;
+	s=arc-20240116; t=1759245407; c=relaxed/simple;
+	bh=bZM9y2c975G3WjsTpZi5nBejqpDGGv3DoAA7b734G8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6aVanDCalZ+eOOomtt/lnZRBpEZwbKiltTVqHz1P9QrX0T0Cqra9CaUL10+B8wSc+UbCPb5pSp2EjqvU2X5hpq0REBLVJxmMS2rrzsaL8MhZ5T119QKDkW0+N+tR2bjH8oHi63X+2FenomlSLyczIWjA1MiJ6wkMdEfaj6ROr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dh1eZzEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CfkoU6FjBMgpemzgD5rRHCJsf171W1k4JH9cVgZuuQlVcC6FN+m3RRU6ZP6cfL0EDc+tahr/B2cwxhNKr3Ot6XBhKb0i4ZVaanPaSX7mnT2QSXyAugDatSNk52O9BGY04y4hESs7/UliWBCU5w8WbO0y/vjhGBbmgGp+OBaPXVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ll1+F9AW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dh1eZzEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA9DC4CEF0;
-	Tue, 30 Sep 2025 15:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ll1+F9AW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C32C4CEF0;
+	Tue, 30 Sep 2025 15:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245403;
-	bh=hvzPtjosgf9uvB/G/J2/w1+WxgHzvjPjXy7ItL9HU5c=;
+	s=korg; t=1759245407;
+	bh=bZM9y2c975G3WjsTpZi5nBejqpDGGv3DoAA7b734G8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dh1eZzEwpiLy5usHFcgSg/xu+6eVg51MMU3mIrpJBNmsXqr0gCaZRDhtx+RZ7kf1I
-	 C8dZDdTRHKQeSkzzVrPw530A/Shvok/xnXyz5n/Yo1VDMCreiAMPhlsVFItctZjjdW
-	 kM1Z6gFiXp+V+miHTWnpPx+L2z8pi5CW0jIry+zc=
+	b=Ll1+F9AWFO/4vgk21XW3SCg7uEm4dh+1T7gWjnp4HMvc48eYt6/QNOTAYNHdXv9yy
+	 GToK5Xy2qrvEpvAulLwYSVEy4bhk5aekEi7jcXiRYHvQgp07Ul9Bop85qN5YlvBMil
+	 SLD6taOJyqJCnXbYDJICgWMHCGqSMREXLuiDFCpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/151] can: dev: add generic function can_eth_ioctl_hwts()
-Date: Tue, 30 Sep 2025 16:47:30 +0200
-Message-ID: <20250930143832.386675419@linuxfoundation.org>
+Subject: [PATCH 6.1 01/73] ALSA: usb-audio: Fix block comments in mixer_quirks
+Date: Tue, 30 Sep 2025 16:47:05 +0200
+Message-ID: <20250930143820.601749242@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
-References: <20250930143827.587035735@linuxfoundation.org>
+In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
+References: <20250930143820.537407601@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,89 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 90f942c5a6d775bad1be33ba214755314105da4a ]
+[ Upstream commit 231225d8a20f8668b4fd6601d54a2fac0e0ab7a5 ]
 
-Tools based on libpcap (such as tcpdump) expect the SIOCSHWTSTAMP
-ioctl call to be supported. This is also specified in the kernel doc
-[1]. The purpose of this ioctl is to toggle the hardware timestamps.
+Address a couple of comment formatting issues indicated by
+checkpatch.pl:
 
-Currently, CAN devices which support hardware timestamping have those
-always activated. can_eth_ioctl_hwts() is a dumb function that will
-always succeed when requested to set tx_type to HWTSTAMP_TX_ON or
-rx_filter to HWTSTAMP_FILTER_ALL.
+  WARNING: Block comments use a trailing */ on a separate line
 
-[1] Kernel doc: Timestamping, section 3.1 "Hardware Timestamping
-Implementation: Device Drivers"
-Link: https://docs.kernel.org/networking/timestamping.html#hardware-timestamping-implementation-device-drivers
-
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://lore.kernel.org/all/20220727101641.198847-9-mailhol.vincent@wanadoo.fr
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 38c0abad45b1 ("can: etas_es58x: populate ndo_change_mtu() to prevent buffer overflow")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-4-1a821463b632@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/dev.c | 29 +++++++++++++++++++++++++++++
- include/linux/can/dev.h   |  1 +
- 2 files changed, 30 insertions(+)
+ sound/usb/mixer_quirks.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index d429a2940e83f..645564b9bff00 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -331,6 +331,35 @@ int can_change_mtu(struct net_device *dev, int new_mtu)
- }
- EXPORT_SYMBOL_GPL(can_change_mtu);
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 68c82e344d3ba..4ce470e291b25 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -76,7 +76,8 @@ static int snd_create_std_mono_ctl_offset(struct usb_mixer_interface *mixer,
+ 	cval->idx_off = idx_off;
  
-+/* generic implementation of netdev_ops::ndo_eth_ioctl for CAN devices
-+ * supporting hardware timestamps
-+ */
-+int can_eth_ioctl_hwts(struct net_device *netdev, struct ifreq *ifr, int cmd)
-+{
-+	struct hwtstamp_config hwts_cfg = { 0 };
-+
-+	switch (cmd) {
-+	case SIOCSHWTSTAMP: /* set */
-+		if (copy_from_user(&hwts_cfg, ifr->ifr_data, sizeof(hwts_cfg)))
-+			return -EFAULT;
-+		if (hwts_cfg.tx_type == HWTSTAMP_TX_ON &&
-+		    hwts_cfg.rx_filter == HWTSTAMP_FILTER_ALL)
-+			return 0;
-+		return -ERANGE;
-+
-+	case SIOCGHWTSTAMP: /* get */
-+		hwts_cfg.tx_type = HWTSTAMP_TX_ON;
-+		hwts_cfg.rx_filter = HWTSTAMP_FILTER_ALL;
-+		if (copy_to_user(ifr->ifr_data, &hwts_cfg, sizeof(hwts_cfg)))
-+			return -EFAULT;
-+		return 0;
-+
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+}
-+EXPORT_SYMBOL(can_eth_ioctl_hwts);
-+
- /* generic implementation of ethtool_ops::get_ts_info for CAN devices
-  * supporting hardware timestamps
-  */
-diff --git a/include/linux/can/dev.h b/include/linux/can/dev.h
-index 23f1c9f0109d7..c439735dce6a7 100644
---- a/include/linux/can/dev.h
-+++ b/include/linux/can/dev.h
-@@ -133,6 +133,7 @@ struct can_priv *safe_candev_priv(struct net_device *dev);
- int open_candev(struct net_device *dev);
- void close_candev(struct net_device *dev);
- int can_change_mtu(struct net_device *dev, int new_mtu);
-+int can_eth_ioctl_hwts(struct net_device *netdev, struct ifreq *ifr, int cmd);
- int can_ethtool_op_get_ts_info_hwts(struct net_device *dev,
- 				    struct ethtool_ts_info *info);
- 
+ 	/* get_min_max() is called only for integer volumes later,
+-	 * so provide a short-cut for booleans */
++	 * so provide a short-cut for booleans
++	 */
+ 	cval->min = 0;
+ 	cval->max = 1;
+ 	cval->res = 0;
+@@ -3546,7 +3547,8 @@ static void snd_dragonfly_quirk_db_scale(struct usb_mixer_interface *mixer,
+ 					 struct snd_kcontrol *kctl)
+ {
+ 	/* Approximation using 10 ranges based on output measurement on hw v1.2.
+-	 * This seems close to the cubic mapping e.g. alsamixer uses. */
++	 * This seems close to the cubic mapping e.g. alsamixer uses.
++	 */
+ 	static const DECLARE_TLV_DB_RANGE(scale,
+ 		 0,  1, TLV_DB_MINMAX_ITEM(-5300, -4970),
+ 		 2,  5, TLV_DB_MINMAX_ITEM(-4710, -4160),
 -- 
 2.51.0
 
