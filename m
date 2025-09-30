@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088B5201017;
-	Tue, 30 Sep 2025 14:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE1C2F39C5;
+	Tue, 30 Sep 2025 14:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244312; cv=none; b=G5St207CTMUBDjZ44CrUs50KbzdckfSdHZAxsZcA4M0rjd8SjlL/CqtL/ilAVj7+h1WwGQjonfILAX2YckcU+5djYpoUNRNWQeBMY2V0JxGQQm5wHcNVAlw7VZ65Qr4WuuKPNAgIysZKmdE4rQAJqfFY10YIx75wq56eL+fmuKc=
+	t=1759244316; cv=none; b=Q45+48MuS2qmECxlb0rC2/c5+5r9eAs60wx4NAtS+U2B9UArNp6QiVkN0IHir8kr6U2OFCT5ikpJuUHKXgsL9xOG4W4AqtxyyqpSCtWb79vTOVBSG/tlZMLSgwP1/nduxtLo9Mt+dtxef1m0rwQRNZrdqnBoxAJgll0W2xM/QdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244312; c=relaxed/simple;
-	bh=jWtywtrJqpqpb/qIkNNLU93OTBTiJImUzkHvpJZtLV4=;
+	s=arc-20240116; t=1759244316; c=relaxed/simple;
+	bh=p0rEeWnBs+R424CnDmrt58uGmxjFld890rxyUPzjdsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrP9Ms1tEuEvgSvoknXFV9FJCgWawIjD9LvOT4GE444zJKqaDQu97LL2sBTh4tPdpx46tWi5ckGUBPUV5mLESpXIuNMROrGaUAemK7PhY5+hRz28JykNrI4wQ1iSVeCQlfkSo827bkfiW+7oBM4iVVHZA7GjWYaTS4b1Gzm9yiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yj5i4FII; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEwfimFZlehwbjcnkKYipGF28zlANILdjZmiMMD88+sG0WK0g54hUGaWFhgrEVR7LNqN2/C3pvP17vWF92SNOfk3bUUMc0lCNcplk+gRqnzyo17yfAIs04bUfWgcHIs0W1KSW7fwyM18oqZ/R4priTlNs/I4rBlm0aYegvDwKzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZQ08xqF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yj5i4FII"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF6DC4CEF0;
-	Tue, 30 Sep 2025 14:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZQ08xqF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5B1C4CEF0;
+	Tue, 30 Sep 2025 14:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244311;
-	bh=jWtywtrJqpqpb/qIkNNLU93OTBTiJImUzkHvpJZtLV4=;
+	s=korg; t=1759244315;
+	bh=p0rEeWnBs+R424CnDmrt58uGmxjFld890rxyUPzjdsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yj5i4FIIK0O8WnT++D0UU/l2Sy3RQl2uOALi28r2ouST34kYriEM/bRn2lGDkPgK+
-	 50pCEcNuXQKg/4tlAp8QZiVyBdqAFOCmiiM6eOiTFuuhAW+xroQCoGlgpwXbaXFOfe
-	 PUn2E3l+Am4ChLlfK3R6VAj2wHlDa8uxeEmVtsoU=
+	b=yZQ08xqFezOsgNmhqPx1GZIHKneBTStfMcbiclewQ8GCXMIiUI2y36U43RH+kWzPU
+	 HxAvz19ARIFt3ykwkMKo0M3TNkgVaTB+vPvmNcXLSuWb4f9dTXipYZ8hh3nYpGGQsA
+	 2WlbiCiDw/Qhr6w8SfIT3D9Hxs0fx+G2JJsUfbX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/122] ALSA: usb-audio: Fix block comments in mixer_quirks
-Date: Tue, 30 Sep 2025 16:46:55 +0200
-Message-ID: <20250930143826.440626198@linuxfoundation.org>
+Subject: [PATCH 5.10 093/122] IB/mlx5: Fix obj_type mismatch for SRQ event subscriptions
+Date: Tue, 30 Sep 2025 16:47:04 +0200
+Message-ID: <20250930143826.802429703@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -51,47 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit 231225d8a20f8668b4fd6601d54a2fac0e0ab7a5 ]
+[ Upstream commit 85fe9f565d2d5af95ac2bbaa5082b8ce62b039f5 ]
 
-Address a couple of comment formatting issues indicated by
-checkpatch.pl:
+Fix a bug where the driver's event subscription logic for SRQ-related
+events incorrectly sets obj_type for RMP objects.
 
-  WARNING: Block comments use a trailing */ on a separate line
+When subscribing to SRQ events, get_legacy_obj_type() did not handle
+the MLX5_CMD_OP_CREATE_RMP case, which caused obj_type to be 0
+(default).
+This led to a mismatch between the obj_type used during subscription
+(0) and the value used during notification (1, taken from the event's
+type field). As a result, event mapping for SRQ objects could fail and
+event notification would not be delivered correctly.
 
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250526-dualsense-alsa-jack-v1-4-1a821463b632@collabora.com
+This fix adds handling for MLX5_CMD_OP_CREATE_RMP in get_legacy_obj_type,
+returning MLX5_EVENT_QUEUE_TYPE_RQ so obj_type is consistent between
+subscription and notification.
+
+Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
+Link: https://patch.msgid.link/r/8f1048e3fdd1fde6b90607ce0ed251afaf8a148c.1755088962.git.leon@kernel.org
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Reviewed-by: Edward Srouji <edwards@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/devx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 866b5470f84bd..14b0a91c19d34 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -76,7 +76,8 @@ static int snd_create_std_mono_ctl_offset(struct usb_mixer_interface *mixer,
- 	cval->idx_off = idx_off;
- 
- 	/* get_min_max() is called only for integer volumes later,
--	 * so provide a short-cut for booleans */
-+	 * so provide a short-cut for booleans
-+	 */
- 	cval->min = 0;
- 	cval->max = 1;
- 	cval->res = 0;
-@@ -3267,7 +3268,8 @@ static void snd_dragonfly_quirk_db_scale(struct usb_mixer_interface *mixer,
- 					 struct snd_kcontrol *kctl)
+diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
+index 301c061bb3190..679d85db26f4f 100644
+--- a/drivers/infiniband/hw/mlx5/devx.c
++++ b/drivers/infiniband/hw/mlx5/devx.c
+@@ -194,6 +194,7 @@ static u16 get_legacy_obj_type(u16 opcode)
  {
- 	/* Approximation using 10 ranges based on output measurement on hw v1.2.
--	 * This seems close to the cubic mapping e.g. alsamixer uses. */
-+	 * This seems close to the cubic mapping e.g. alsamixer uses.
-+	 */
- 	static const DECLARE_TLV_DB_RANGE(scale,
- 		 0,  1, TLV_DB_MINMAX_ITEM(-5300, -4970),
- 		 2,  5, TLV_DB_MINMAX_ITEM(-4710, -4160),
+ 	switch (opcode) {
+ 	case MLX5_CMD_OP_CREATE_RQ:
++	case MLX5_CMD_OP_CREATE_RMP:
+ 		return MLX5_EVENT_QUEUE_TYPE_RQ;
+ 	case MLX5_CMD_OP_CREATE_QP:
+ 		return MLX5_EVENT_QUEUE_TYPE_QP;
 -- 
 2.51.0
 
