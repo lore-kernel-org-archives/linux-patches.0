@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C65266B65;
-	Tue, 30 Sep 2025 15:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3392F9D9E;
+	Tue, 30 Sep 2025 15:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244813; cv=none; b=iCjT4UGx1uz0CHyZw3JcB5zZ5c72tofuljy80zSxAdgCqgkMMKRfOn5C77cTmuyPJPm5HkbIpcAcWO6TkSenb9Huyuw/nlAFoll2fGLtmdT02HNa6s9L0P0b68OwQMmy42803IZkqbHjo57ypWD8HXNDFOS6RrdUYCV94a+5RfQ=
+	t=1759244816; cv=none; b=hPHmki6VNAODOOJF9l6DDxKy2RXN7KubAv4ODfAbQgnEg9xkgJ/L+2UJwKJNy70Zz7yAqorKUGZ92TL47qWD2nqmP5llMkpoaCtASYONwUo6tFrgrPCZnhmUGEpnPLHp1t3EoYlAkRyl8cj9N+QYWAli/rBXklfU7kpYnojgz4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244813; c=relaxed/simple;
-	bh=dpJ1iJACEavZerUzgvbG6Dr5CPDxrmf+aqggLjIIVq0=;
+	s=arc-20240116; t=1759244816; c=relaxed/simple;
+	bh=Ib7EsOT7P/yp/UoGfNXwlJOdz643++wO6DOV6qQvX6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQJ6SkN5wCVbUTdnWJ534Sn0wTJK2qmIpQe2ITwrv6gNlNA/OvhMItf1Jj1iYhfUWph5AnYGQQPaW7Ew1TPAxsmh+0lf+4kNUwSqWVwzTwVLzNTfC0MdHpyD88xWmjw0Jg0g+Cdv/pvoAfmr0M4GXA4Uweege5jKY1dhfWs/BJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVeK0Oyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OClteLatNfxvhpGScD1Az7RYL2ZYmS6exLURRajUtBGUMuM3UdYLBFpX8e10R1wdynD5sg7lPNO41sRDNHxNXiErEOB3ftCg1NTWMy4BNueCA6VMXiUu+QacJ/4Zp/cv+ah0427OPkiabJlQsJ5eudU0iZbFtjSm6qL6BsyOhoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w071OgUR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVeK0Oyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286E8C4CEF0;
-	Tue, 30 Sep 2025 15:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w071OgUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BA0C116B1;
+	Tue, 30 Sep 2025 15:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244812;
-	bh=dpJ1iJACEavZerUzgvbG6Dr5CPDxrmf+aqggLjIIVq0=;
+	s=korg; t=1759244815;
+	bh=Ib7EsOT7P/yp/UoGfNXwlJOdz643++wO6DOV6qQvX6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVeK0Oybj3Lw1inc8TmNDBkLiRXZb4PZj+DQm9MegyfBd2INZesqSnUu+zDBeJHtl
-	 c5bSBNKkpPHUl9Fdx8RAEDRGCx7i2zTRbvn8gzTh+/YNYBrY3lrx5kiTZs2I5wYk2b
-	 xCQHkGDJ5HjwqzNFighVmvAPehj8uFe/8ZXTDa6c=
+	b=w071OgURaumAWxZAaC3b1wa2iZBHLLw3fO1p8ET+pmBVlUEs7ad6qMeKf1128A3PZ
+	 /Xn+lPQyjF+yVH9Fy/vXwUQSViVmLmfz2N3KTvN1MiYlJz+xxcL3yfUgV8kn8o+DLy
+	 WjESDzlZmeHXorVGu/BSRqmdVay3+bobR1Gj/Oq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.16 120/143] drm/amd/display: Only restore backlight after amdgpu_dm_init or dm_resume
-Date: Tue, 30 Sep 2025 16:47:24 +0200
-Message-ID: <20250930143836.014468142@linuxfoundation.org>
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.16 091/143] drm/i915/ddi: Guard reg_val against a INVALID_TRANSCODER
+Date: Tue, 30 Sep 2025 16:46:55 +0200
+Message-ID: <20250930143834.855878350@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -51,110 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-commit 44b0fed0a5947f54fd14255cd0766df952267bc5 upstream.
+[ Upstream commit 7f97a0a871d9532f2e1a5ee7d16d0e364215bcac ]
 
-On clients that utilize AMD_PRIVATE_COLOR properties for HDR support,
-brightness sliders can include a hardware controlled portion and a
-gamma-based portion. This is the case on the Steam Deck OLED when using
-gamescope with Steam as a client.
+Currently we check if the encoder is INVALID or -1 and throw a
+WARN_ON but we still end up writing the temp value which will
+overflow and corrupt the whole programmed value.
 
-When a user sets a brightness level while HDR is active, the gamma-based
-portion and/or hardware portion are adjusted to achieve the desired
-brightness. However, when a modeset takes place while the gamma-based
-portion is in-use, restoring the hardware brightness level overrides the
-user's overall brightness level and results in a mismatch between what
-the slider reports and the display's current brightness.
+--v2
+-Assign a bogus transcoder to master in case we get a INVALID
+TRANSCODER [Jani]
 
-To avoid overriding gamma-based brightness, only restore HW backlight
-level after boot or resume. This ensures that the backlight level is
-set correctly after the DC layer resets it while avoiding interference
-with subsequent modesets.
-
-Fixes: 7875afafba84 ("drm/amd/display: Fix brightness level not retained over reboot")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4551
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a490c8d77d500b5981e739be3d59c60cfe382536)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6671c367a9bea ("drm/i915/tgl: Select master transcoder for MST stream")
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lore.kernel.org/r/20250908042208.1011144-1-suraj.kandpal@intel.com
+(cherry picked from commit c8e8e9ab14a6ea926641d161768e1e3ef286a853)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 ++++++++----
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |    7 +++++++
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_ddi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2035,6 +2035,8 @@ static int amdgpu_dm_init(struct amdgpu_
+diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
+index d58f8fc373265..55b8bfcf364ae 100644
+--- a/drivers/gpu/drm/i915/display/intel_ddi.c
++++ b/drivers/gpu/drm/i915/display/intel_ddi.c
+@@ -593,8 +593,9 @@ intel_ddi_transcoder_func_reg_val_get(struct intel_encoder *encoder,
+ 			enum transcoder master;
  
- 	dc_hardware_init(adev->dm.dc);
- 
-+	adev->dm.restore_backlight = true;
-+
- 	adev->dm.hpd_rx_offload_wq = hpd_rx_irq_create_workqueue(adev);
- 	if (!adev->dm.hpd_rx_offload_wq) {
- 		drm_err(adev_to_drm(adev), "amdgpu: failed to create hpd rx offload workqueue.\n");
-@@ -3396,6 +3398,7 @@ static int dm_resume(struct amdgpu_ip_bl
- 		dc_set_power_state(dm->dc, DC_ACPI_CM_POWER_STATE_D0);
- 
- 		dc_resume(dm->dc);
-+		adev->dm.restore_backlight = true;
- 
- 		amdgpu_dm_irq_resume_early(adev);
- 
-@@ -9801,7 +9804,6 @@ static void amdgpu_dm_commit_streams(str
- 	bool mode_set_reset_required = false;
- 	u32 i;
- 	struct dc_commit_streams_params params = {dc_state->streams, dc_state->stream_count};
--	bool set_backlight_level = false;
- 
- 	/* Disable writeback */
- 	for_each_old_connector_in_state(state, connector, old_con_state, i) {
-@@ -9921,7 +9923,6 @@ static void amdgpu_dm_commit_streams(str
- 			acrtc->hw_mode = new_crtc_state->mode;
- 			crtc->hwmode = new_crtc_state->mode;
- 			mode_set_reset_required = true;
--			set_backlight_level = true;
- 		} else if (modereset_required(new_crtc_state)) {
- 			drm_dbg_atomic(dev,
- 				       "Atomic commit: RESET. crtc id %d:[%p]\n",
-@@ -9978,13 +9979,16 @@ static void amdgpu_dm_commit_streams(str
- 	 * to fix a flicker issue.
- 	 * It will cause the dm->actual_brightness is not the current panel brightness
- 	 * level. (the dm->brightness is the correct panel level)
--	 * So we set the backlight level with dm->brightness value after set mode
-+	 * So we set the backlight level with dm->brightness value after initial
-+	 * set mode. Use restore_backlight flag to avoid setting backlight level
-+	 * for every subsequent mode set.
- 	 */
--	if (set_backlight_level) {
-+	if (dm->restore_backlight) {
- 		for (i = 0; i < dm->num_of_edps; i++) {
- 			if (dm->backlight_dev[i])
- 				amdgpu_dm_backlight_set_level(dm, i, dm->brightness[i]);
+ 			master = crtc_state->mst_master_transcoder;
+-			drm_WARN_ON(display->drm,
+-				    master == INVALID_TRANSCODER);
++			if (drm_WARN_ON(display->drm,
++					master == INVALID_TRANSCODER))
++				master = TRANSCODER_A;
+ 			temp |= TRANS_DDI_MST_TRANSPORT_SELECT(master);
  		}
-+		dm->restore_backlight = false;
- 	}
- }
- 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -611,6 +611,13 @@ struct amdgpu_display_manager {
- 	u32 actual_brightness[AMDGPU_DM_MAX_NUM_EDP];
- 
- 	/**
-+	 * @restore_backlight:
-+	 *
-+	 * Flag to indicate whether to restore backlight after modeset.
-+	 */
-+	bool restore_backlight;
-+
-+	/**
- 	 * @aux_hpd_discon_quirk:
- 	 *
- 	 * quirk for hpd discon while aux is on-going.
+ 	} else {
+-- 
+2.51.0
+
 
 
