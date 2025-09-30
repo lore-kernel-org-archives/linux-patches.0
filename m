@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434523064B9;
-	Tue, 30 Sep 2025 15:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3EA217F55;
+	Tue, 30 Sep 2025 15:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245498; cv=none; b=uFXsxbFmkB/I16dY7Qzycj24v4X9xKzI704kxRG400T0RbVhz7tLhgUC+68KSxLLsHQh+mc3QxqCZkIL9DdYrWmCXlNtzCvpJwe65O73dMy4OE1AvaIwhBsNKzv2izbVLJN/0Xmzs/24RAtiYmgz1IUJslmlViLid37ClLYWkzM=
+	t=1759245501; cv=none; b=ClIt42M92O/5meAlFYBf7CgIP1e4DMaXpFYaVgH36iBcyvbMTmt8/KMmoCbnZoUUGltcS/bIKkyVN1AMiibUA/1LwsMJQoymgZmx3pMspPxgeOLRDyZ0a2yaafahSQ09dLvUEav+EjVzyiLk22gKSuC1Fpn1oMTqCnhvKp6PgEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245498; c=relaxed/simple;
-	bh=JY4DDcqzxSdRQ1oyw4cm0jqPwKWie/ei3c5EmNOtlx0=;
+	s=arc-20240116; t=1759245501; c=relaxed/simple;
+	bh=4wyVwS+lQUoNtHjJ4ftAOhtA7bqsPdaJwdKiODWTSUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHCO/gVjYWrpJ8KWJknZwX70Co+e0eLYgkdXYDd9J1itoiuLhw5Zg8pUSBPyXYXAi9yudmjGtfywpjmOVs/9hFCCr9JN1cdXP/ohndyc0JouwctkS4mImpzhZsJwRmlsV3y/DRZemHKFaSY25cW73Qa0sPnj195cQXc5Xd+QY3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfB30+Z1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vh5lMicv7oCrUABgv/3Hni7KKmZU4Xw5zrwUfv+sqiBYzbp09wTe6462Frh995vKeqSODreQuf2f/8aJ+Pm7/CKPwRQWA3J7RgGw8fO/q+bobnalW3R4R0LDcD/5TEvFubhOr7CEDz64q1WWxZjlDkjW0/EJmNrIJzJ5iw3T+Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GT31R2Y/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfB30+Z1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8484C4CEF0;
-	Tue, 30 Sep 2025 15:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GT31R2Y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106A3C4CEF0;
+	Tue, 30 Sep 2025 15:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245498;
-	bh=JY4DDcqzxSdRQ1oyw4cm0jqPwKWie/ei3c5EmNOtlx0=;
+	s=korg; t=1759245501;
+	bh=4wyVwS+lQUoNtHjJ4ftAOhtA7bqsPdaJwdKiODWTSUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dfB30+Z11VMTHW9Ls2gQB4EGRMI0mm260nlRhNO6dq89x4iCnLvMxzgariJEH5Q5A
-	 5bM2h5ml7h/wtmGuL6JjrVkakrNzhxFKZEOYWatEoluaNu/fn8JIzauc28YPqmr74g
-	 NOWdZ2/fGoxC3SelvHd2U0qsnXu83jcAI/jkkn4U=
+	b=GT31R2Y/UL9yweJils4EwZ3AE+vjQUUCF3CxZPTPYQIH0+QrKTRtZrgWa8GULvn7R
+	 jgMcsts8YJHUCjyFKs2wnsLniolhQHDzMSqx8LD01OM9FE1961Aa4HWYKUQUKOr18f
+	 3N2wuLZ3pY5X6VKDsUFrR2tT8ILpn1OF6C1nuUqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/73] can: etas_es58x: sort the includes by alphabetic order
-Date: Tue, 30 Sep 2025 16:47:32 +0200
-Message-ID: <20250930143821.747148906@linuxfoundation.org>
+Subject: [PATCH 6.1 37/73] bnxt_en: correct offset handling for IPv6 destination address
+Date: Tue, 30 Sep 2025 16:47:41 +0200
+Message-ID: <20250930143822.131466692@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -51,113 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 8fd9323ef7210b90d1d209dd4f0d65a8411b60e1 ]
+[ Upstream commit 3d3aa9472c6dd0704e9961ed4769caac5b1c8d52 ]
 
-Follow the best practices, reorder the includes.
+In bnxt_tc_parse_pedit(), the code incorrectly writes IPv6
+destination values to the source address field (saddr) when
+processing pedit offsets within the destination address range.
 
-While doing so, bump up copyright year of each modified files.
+This patch corrects the assignment to use daddr instead of saddr,
+ensuring that pedit operations on IPv6 destination addresses are
+applied correctly.
 
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://lore.kernel.org/all/20221126160525.87036-1-mailhol.vincent@wanadoo.fr
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 38c0abad45b1 ("can: etas_es58x: populate ndo_change_mtu() to prevent buffer overflow")
+Fixes: 9b9eb518e338 ("bnxt_en: Add support for NAT(L3/L4 rewrite)")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Link: https://patch.msgid.link/20250920121157.351921-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/etas_es58x/es581_4.c    | 4 ++--
- drivers/net/can/usb/etas_es58x/es58x_core.c | 6 +++---
- drivers/net/can/usb/etas_es58x/es58x_core.h | 8 ++++----
- drivers/net/can/usb/etas_es58x/es58x_fd.c   | 4 ++--
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/etas_es58x/es581_4.c b/drivers/net/can/usb/etas_es58x/es581_4.c
-index 1bcdcece5ec72..4151b18fd045d 100644
---- a/drivers/net/can/usb/etas_es58x/es581_4.c
-+++ b/drivers/net/can/usb/etas_es58x/es581_4.c
-@@ -6,12 +6,12 @@
-  *
-  * Copyright (c) 2019 Robert Bosch Engineering and Business Solutions. All rights reserved.
-  * Copyright (c) 2020 ETAS K.K.. All rights reserved.
-- * Copyright (c) 2020, 2021 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-+ * Copyright (c) 2020-2022 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-  */
- 
-+#include <asm/unaligned.h>
- #include <linux/kernel.h>
- #include <linux/units.h>
--#include <asm/unaligned.h>
- 
- #include "es58x_core.h"
- #include "es581_4.h"
-diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
-index ddb7c5735c9ac..5aba168496037 100644
---- a/drivers/net/can/usb/etas_es58x/es58x_core.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
-@@ -7,15 +7,15 @@
-  *
-  * Copyright (c) 2019 Robert Bosch Engineering and Business Solutions. All rights reserved.
-  * Copyright (c) 2020 ETAS K.K.. All rights reserved.
-- * Copyright (c) 2020, 2021 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-+ * Copyright (c) 2020-2022 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-  */
- 
-+#include <asm/unaligned.h>
-+#include <linux/crc16.h>
- #include <linux/ethtool.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/usb.h>
--#include <linux/crc16.h>
--#include <asm/unaligned.h>
- 
- #include "es58x_core.h"
- 
-diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.h b/drivers/net/can/usb/etas_es58x/es58x_core.h
-index 640fe0a1df636..4a082fd69e6ff 100644
---- a/drivers/net/can/usb/etas_es58x/es58x_core.h
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.h
-@@ -6,17 +6,17 @@
-  *
-  * Copyright (c) 2019 Robert Bosch Engineering and Business Solutions. All rights reserved.
-  * Copyright (c) 2020 ETAS K.K.. All rights reserved.
-- * Copyright (c) 2020, 2021 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-+ * Copyright (c) 2020-2022 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-  */
- 
- #ifndef __ES58X_COMMON_H__
- #define __ES58X_COMMON_H__
- 
--#include <linux/types.h>
--#include <linux/usb.h>
--#include <linux/netdevice.h>
- #include <linux/can.h>
- #include <linux/can/dev.h>
-+#include <linux/netdevice.h>
-+#include <linux/types.h>
-+#include <linux/usb.h>
- 
- #include "es581_4.h"
- #include "es58x_fd.h"
-diff --git a/drivers/net/can/usb/etas_es58x/es58x_fd.c b/drivers/net/can/usb/etas_es58x/es58x_fd.c
-index c97ffa71fd758..fa87b0b78e3eb 100644
---- a/drivers/net/can/usb/etas_es58x/es58x_fd.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_fd.c
-@@ -8,12 +8,12 @@
-  *
-  * Copyright (c) 2019 Robert Bosch Engineering and Business Solutions. All rights reserved.
-  * Copyright (c) 2020 ETAS K.K.. All rights reserved.
-- * Copyright (c) 2020, 2021 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-+ * Copyright (c) 2020-2022 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-  */
- 
-+#include <asm/unaligned.h>
- #include <linux/kernel.h>
- #include <linux/units.h>
--#include <asm/unaligned.h>
- 
- #include "es58x_core.h"
- #include "es58x_fd.h"
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
+index 4d6663ff84722..72677d140a888 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
+@@ -244,7 +244,7 @@ bnxt_tc_parse_pedit(struct bnxt *bp, struct bnxt_tc_actions *actions,
+ 			   offset < offset_of_ip6_daddr + 16) {
+ 			actions->nat.src_xlate = false;
+ 			idx = (offset - offset_of_ip6_daddr) / 4;
+-			actions->nat.l3.ipv6.saddr.s6_addr32[idx] = htonl(val);
++			actions->nat.l3.ipv6.daddr.s6_addr32[idx] = htonl(val);
+ 		} else {
+ 			netdev_err(bp->dev,
+ 				   "%s: IPv6_hdr: Invalid pedit field\n",
 -- 
 2.51.0
 
