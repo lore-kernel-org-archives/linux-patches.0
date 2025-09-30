@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43A846F;
-	Tue, 30 Sep 2025 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679AD846F;
+	Tue, 30 Sep 2025 15:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245770; cv=none; b=Z3RVkktueKEDsFbrph5SlrUUSKJv0OyyOzUbFeftAQCi3ee7XI+99ZYzSHlRmZRccrqg05k+1kO2s2WMe00CNzM4pMRFaq9xoZTPx89gWtz6KQPk52k7x53fmXotYzGcS7WTvxBllnHXo5crH/33pQqrNJRTroYExFSTfrd7T/U=
+	t=1759245773; cv=none; b=H4OMQs07x4y/POwoIkm2qK7WQCeolY2aEiJO+1SvsY7aG1CEfS56uJqqX/qmFVRQpxBwyjVa8+6YKIaLmb+N7igFnaldshtuy0+rYwUl8gRmTPF0qu2RRp5w0rIYnJT+rRfV2W3RQAg0Y6fMzWKMYGumGrFm+wkom5I9VGpvADY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245770; c=relaxed/simple;
-	bh=vv7KViAnXvcNe/aLUpZ8k2e4qvuZJY71sBrGO5qO3QQ=;
+	s=arc-20240116; t=1759245773; c=relaxed/simple;
+	bh=Q6N2DV1ACmq05NrGOhNG1t8KGfcs7Kqh/fjul3A0/vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a62BKkOUR57gF+1aab3Q0uPEkqBAUa52P8jBOYTXckmVpEQghNxcrzQi6/ThcMuno6T1xnTw/Nkri8HbBKIDCcreHDOJabiiEmW60wlQ/Ej8NRgdFyqD2oOrn85pdFpN1c7z4Yo/7sGQT/QVrG+S3UgA7jDTQ7VLq5JcnePTP0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmDNlPJ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SU87+Wsefma1vygAaFGkIiugqwTU9iANDrhOOvfvDBtLOd6LeSL8Ou+h8prz2PIW6TjhmLc00h4rjNo48Mf7wYfXWIWCi/ADEc7iHVxlSOzbHUSGMI6H2dxZTmSYvNrnmBY14AxJoXJwdt9jCtO6VDGh1VXkgcDn3XaJvTjyfGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJc8uFQ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmDNlPJ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8684AC4CEF0;
-	Tue, 30 Sep 2025 15:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJc8uFQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0221C4CEF0;
+	Tue, 30 Sep 2025 15:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245770;
-	bh=vv7KViAnXvcNe/aLUpZ8k2e4qvuZJY71sBrGO5qO3QQ=;
+	s=korg; t=1759245773;
+	bh=Q6N2DV1ACmq05NrGOhNG1t8KGfcs7Kqh/fjul3A0/vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmDNlPJ52PvIOXVM+HsHgn+TMnFMgCYlHPQj3R2iS9A8nPB+XTSG7CuGPZZiJwIUA
-	 4a0rufMHoO/55jJcxFk+sSIv+niv0u491/8hn8R9YCkVF7bFeAl1B6ZFTgORjkdY04
-	 FXrouvgYXPZq3X965AcIFZeFtk7rZvsRssr1mUco=
+	b=cJc8uFQ7Mkll1ddVNGMHD8b6S8C+qZIvgEiGEARsI0F5K8S0U2mUbbR33g5Pw5TG/
+	 yOhnAkYpmvdWCZ7K3VOvPx1+G2hydNBoUDi9WPVgaEHoDYh32Rldjzka8kGV8N2guO
+	 oMFHvHliJx+iDqu30KTdPF1TvYt+ZmWVW9jQ3MRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Jason Baron <jbaron@akamai.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 44/91] bnxt_en: correct offset handling for IPv6 destination address
-Date: Tue, 30 Sep 2025 16:47:43 +0200
-Message-ID: <20250930143823.004336776@linuxfoundation.org>
+Subject: [PATCH 6.6 45/91] net: allow alloc_skb_with_frags() to use MAX_SKB_FRAGS
+Date: Tue, 30 Sep 2025 16:47:44 +0200
+Message-ID: <20250930143823.046297855@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -52,41 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Jason Baron <jbaron@akamai.com>
 
-[ Upstream commit 3d3aa9472c6dd0704e9961ed4769caac5b1c8d52 ]
+[ Upstream commit ca9f9cdc4de97d0221100b11224738416696163c ]
 
-In bnxt_tc_parse_pedit(), the code incorrectly writes IPv6
-destination values to the source address field (saddr) when
-processing pedit offsets within the destination address range.
+Currently, alloc_skb_with_frags() will only fill (MAX_SKB_FRAGS - 1)
+slots. I think it should use all MAX_SKB_FRAGS slots, as callers of
+alloc_skb_with_frags() will size their allocation of frags based
+on MAX_SKB_FRAGS.
 
-This patch corrects the assignment to use daddr instead of saddr,
-ensuring that pedit operations on IPv6 destination addresses are
-applied correctly.
+This issue was discovered via a test patch that sets 'order' to 0
+in alloc_skb_with_frags(), which effectively tests/simulates high
+fragmentation. In this case sendmsg() on unix sockets will fail every
+time for large allocations. If the PAGE_SIZE is 4K, then data_len will
+request 68K or 17 pages, but alloc_skb_with_frags() can only allocate
+64K in this case or 16 pages.
 
-Fixes: 9b9eb518e338 ("bnxt_en: Add support for NAT(L3/L4 rewrite)")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Link: https://patch.msgid.link/20250920121157.351921-1-alok.a.tiwari@oracle.com
+Fixes: 09c2c90705bb ("net: allow alloc_skb_with_frags() to allocate bigger packets")
+Signed-off-by: Jason Baron <jbaron@akamai.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250922191957.2855612-1-jbaron@akamai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c | 2 +-
+ net/core/skbuff.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-index 273c9ba48f09a..b896f8d20ff33 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-@@ -244,7 +244,7 @@ bnxt_tc_parse_pedit(struct bnxt *bp, struct bnxt_tc_actions *actions,
- 			   offset < offset_of_ip6_daddr + 16) {
- 			actions->nat.src_xlate = false;
- 			idx = (offset - offset_of_ip6_daddr) / 4;
--			actions->nat.l3.ipv6.saddr.s6_addr32[idx] = htonl(val);
-+			actions->nat.l3.ipv6.daddr.s6_addr32[idx] = htonl(val);
- 		} else {
- 			netdev_err(bp->dev,
- 				   "%s: IPv6_hdr: Invalid pedit field\n",
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 21a83e26f004b..867832f8bbaea 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6330,7 +6330,7 @@ struct sk_buff *alloc_skb_with_frags(unsigned long header_len,
+ 		return NULL;
+ 
+ 	while (data_len) {
+-		if (nr_frags == MAX_SKB_FRAGS - 1)
++		if (nr_frags == MAX_SKB_FRAGS)
+ 			goto failure;
+ 		while (order && PAGE_ALIGN(data_len) < (PAGE_SIZE << order))
+ 			order--;
 -- 
 2.51.0
 
