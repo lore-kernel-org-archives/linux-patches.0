@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF092236EB;
-	Tue, 30 Sep 2025 15:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2951C2236EB;
+	Tue, 30 Sep 2025 15:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244905; cv=none; b=klOegp/W8LxnDqUSFyXXEmh20lVg9VGBO9p/WjSdxg/SUYyoyYRLPgH9cvXZng4dqf7I62vwPrsSgc3e5e/juVw4Y0mUQKsFcRx2iq/IWbhlWhdSptqbCmSpsX7Xt8dId0ZM223Rh3gai7OqNBsjFPHVp3vfgDWPa1gT+udFcFY=
+	t=1759244909; cv=none; b=i7DqjGQV84kwavaKfAbZ/M3WEc35HVzBdEFoqIYEPihTisLbdvNVPuVDXbsEaZBKn04bziORzvIh/dsA0/VENc2KRegSiLliw0LRZuAiiURbO9MuiZjJteGDzt/MAmQK4PYETA4rORuyHWiRiFTE9ggAi9+znr6B4bO5th35RbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244905; c=relaxed/simple;
-	bh=uaKFsbYWFe/oVSKXL982miuGa8roWsZYIphEteojVDU=;
+	s=arc-20240116; t=1759244909; c=relaxed/simple;
+	bh=itPbgRsdqLs+kEAkk19pyrIgKXzyQk2ae7r8yI2XYrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqqYV0y+LpGQg5XhFMd1dmxledsVTnrQjSYN1ItDKuOmkynmasUFQQ/cECD0xRGWv/nJ3N4j3P/+WnIO2weQsMLKvgotgiOeNbHZVEBgeSS1zSfssQ7D4fiUYekXl2cBXqSaZAYAIfnoKgcwBwiL0su+Sz4ToRGbwtEgsBkF9gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLB3o2Rk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CoBCx0kpcqQ+S20W9YqiTR/X6aMSGZYK19v+AF89wgHi8QBNao/T9S+SkJXt85iKosvtGk0vA/6cRXVp+/lEYEFTlVN1OR7lsZJ/5kHrDGkr44DIXMges0FwRSFoQrxVr5gfEDX0QdGkqpJbLnVk2xEucXCHK2C4CSI8k1yIkeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNGedoAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLB3o2Rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A303C4CEF0;
-	Tue, 30 Sep 2025 15:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNGedoAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5C4C4CEF0;
+	Tue, 30 Sep 2025 15:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244905;
-	bh=uaKFsbYWFe/oVSKXL982miuGa8roWsZYIphEteojVDU=;
+	s=korg; t=1759244909;
+	bh=itPbgRsdqLs+kEAkk19pyrIgKXzyQk2ae7r8yI2XYrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLB3o2RkTzjklmp8tEzgfatMe5SlfrtqDK/yxywzSQpp6GumxQdFChbYDtT5gMdl/
-	 FCl4OyX0CnZWYA06i/F3vPSoRSyftkg/XxCN812at0pvHzekrc4kkr52sklbFryKXx
-	 +tFaYJt9AQWHs9+rnAdZq/UeGesis/M8YUV1j6ZE=
+	b=fNGedoAO4qwm9qe3F7EfIPGZo2sZ33FilMhrJCslFRnEV3YNBPGSa+Qt3W9p1FKLq
+	 LrUPbCV+KMEUijtaUDXmX5JcI4l6xqVfvlc8pHcdZlQNDUXTErcCiiojGm5NyntUpI
+	 1JAxYSz9+ZD6h/kS3WIkFuCipygCLQgHJjOFrwkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.16 129/143] netfs: fix reference leak
-Date: Tue, 30 Sep 2025 16:47:33 +0200
-Message-ID: <20250930143836.371690436@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.16 130/143] riscv: Use an atomic xchg in pudp_huge_get_and_clear()
+Date: Tue, 30 Sep 2025 16:47:34 +0200
+Message-ID: <20250930143836.411138061@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -54,302 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit 4d428dca252c858bfac691c31fa95d26cd008706 upstream.
+commit 546e42c8c6d9498d5eac14bf2aca0383a11b145a upstream.
 
-Commit 20d72b00ca81 ("netfs: Fix the request's work item to not
-require a ref") modified netfs_alloc_request() to initialize the
-reference counter to 2 instead of 1.  The rationale was that the
-requet's "work" would release the second reference after completion
-(via netfs_{read,write}_collection_worker()).  That works most of the
-time if all goes well.
+Make sure we return the right pud value and not a value that could
+have been overwritten in between by a different core.
 
-However, it leaks this additional reference if the request is released
-before the I/O operation has been submitted: the error code path only
-decrements the reference counter once and the work item will never be
-queued because there will never be a completion.
-
-This has caused outages of our whole server cluster today because
-tasks were blocked in netfs_wait_for_outstanding_io(), leading to
-deadlocks in Ceph (another bug that I will address soon in another
-patch).  This was caused by a netfs_pgpriv2_begin_copy_to_cache() call
-which failed in fscache_begin_write_operation().  The leaked
-netfs_io_request was never completed, leaving `netfs_inode.io_count`
-with a positive value forever.
-
-All of this is super-fragile code.  Finding out which code paths will
-lead to an eventual completion and which do not is hard to see:
-
-- Some functions like netfs_create_write_req() allocate a request, but
-  will never submit any I/O.
-
-- netfs_unbuffered_read_iter_locked() calls netfs_unbuffered_read()
-  and then netfs_put_request(); however, netfs_unbuffered_read() can
-  also fail early before submitting the I/O request, therefore another
-  netfs_put_request() call must be added there.
-
-A rule of thumb is that functions that return a `netfs_io_request` do
-not submit I/O, and all of their callers must be checked.
-
-For my taste, the whole netfs code needs an overhaul to make reference
-counting easier to understand and less fragile & obscure.  But to fix
-this bug here and now and produce a patch that is adequate for a
-stable backport, I tried a minimal approach that quickly frees the
-request object upon early failure.
-
-I decided against adding a second netfs_put_request() each time
-because that would cause code duplication which obscures the code
-further.  Instead, I added the function netfs_put_failed_request()
-which frees such a failed request synchronously under the assumption
-that the reference count is exactly 2 (as initially set by
-netfs_alloc_request() and never touched), verified by a
-WARN_ON_ONCE().  It then deinitializes the request object (without
-going through the "cleanup_work" indirection) and frees the allocation
-(with RCU protection to protect against concurrent access by
-netfs_requests_seq_start()).
-
-All code paths that fail early have been changed to call
-netfs_put_failed_request() instead of netfs_put_request().
-Additionally, I have added a netfs_put_request() call to
-netfs_unbuffered_read() as explained above because the
-netfs_put_failed_request() approach does not work there.
-
-Fixes: 20d72b00ca81 ("netfs: Fix the request's work item to not require a ref")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: c3cc2a4a3a23 ("riscv: Add support for PUD THP")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20250814-dev-alex-thp_pud_xchg-v1-1-b4704dfae206@rivosinc.com
+[pjw@kernel.org: use xchg rather than atomic_long_xchg; avoid atomic op for !CONFIG_SMP like x86]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/buffered_read.c | 10 +++++-----
- fs/netfs/direct_read.c   |  7 ++++++-
- fs/netfs/direct_write.c  |  6 +++++-
- fs/netfs/internal.h      |  1 +
- fs/netfs/objects.c       | 30 +++++++++++++++++++++++++++---
- fs/netfs/read_pgpriv2.c  |  2 +-
- fs/netfs/read_single.c   |  2 +-
- fs/netfs/write_issue.c   |  3 +--
- 8 files changed, 47 insertions(+), 14 deletions(-)
+ arch/riscv/include/asm/pgtable.h |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index 18b3dc74c70e..37ab6f28b5ad 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -369,7 +369,7 @@ void netfs_readahead(struct readahead_control *ractl)
- 	return netfs_put_request(rreq, netfs_rreq_trace_put_return);
- 
- cleanup_free:
--	return netfs_put_request(rreq, netfs_rreq_trace_put_failed);
-+	return netfs_put_failed_request(rreq);
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -964,6 +964,23 @@ static inline int pudp_test_and_clear_yo
+ 	return ptep_test_and_clear_young(vma, address, (pte_t *)pudp);
  }
- EXPORT_SYMBOL(netfs_readahead);
  
-@@ -472,7 +472,7 @@ static int netfs_read_gaps(struct file *file, struct folio *folio)
- 	return ret < 0 ? ret : 0;
- 
- discard:
--	netfs_put_request(rreq, netfs_rreq_trace_put_discard);
-+	netfs_put_failed_request(rreq);
- alloc_error:
- 	folio_unlock(folio);
- 	return ret;
-@@ -532,7 +532,7 @@ int netfs_read_folio(struct file *file, struct folio *folio)
- 	return ret < 0 ? ret : 0;
- 
- discard:
--	netfs_put_request(rreq, netfs_rreq_trace_put_discard);
-+	netfs_put_failed_request(rreq);
- alloc_error:
- 	folio_unlock(folio);
- 	return ret;
-@@ -699,7 +699,7 @@ int netfs_write_begin(struct netfs_inode *ctx,
- 	return 0;
- 
- error_put:
--	netfs_put_request(rreq, netfs_rreq_trace_put_failed);
-+	netfs_put_failed_request(rreq);
- error:
- 	if (folio) {
- 		folio_unlock(folio);
-@@ -754,7 +754,7 @@ int netfs_prefetch_for_write(struct file *file, struct folio *folio,
- 	return ret < 0 ? ret : 0;
- 
- error_put:
--	netfs_put_request(rreq, netfs_rreq_trace_put_discard);
-+	netfs_put_failed_request(rreq);
- error:
- 	_leave(" = %d", ret);
- 	return ret;
-diff --git a/fs/netfs/direct_read.c b/fs/netfs/direct_read.c
-index a05e13472baf..a498ee8d6674 100644
---- a/fs/netfs/direct_read.c
-+++ b/fs/netfs/direct_read.c
-@@ -131,6 +131,7 @@ static ssize_t netfs_unbuffered_read(struct netfs_io_request *rreq, bool sync)
- 
- 	if (rreq->len == 0) {
- 		pr_err("Zero-sized read [R=%x]\n", rreq->debug_id);
-+		netfs_put_request(rreq, netfs_rreq_trace_put_discard);
- 		return -EIO;
- 	}
- 
-@@ -205,7 +206,7 @@ ssize_t netfs_unbuffered_read_iter_locked(struct kiocb *iocb, struct iov_iter *i
- 	if (user_backed_iter(iter)) {
- 		ret = netfs_extract_user_iter(iter, rreq->len, &rreq->buffer.iter, 0);
- 		if (ret < 0)
--			goto out;
-+			goto error_put;
- 		rreq->direct_bv = (struct bio_vec *)rreq->buffer.iter.bvec;
- 		rreq->direct_bv_count = ret;
- 		rreq->direct_bv_unpin = iov_iter_extract_will_pin(iter);
-@@ -238,6 +239,10 @@ ssize_t netfs_unbuffered_read_iter_locked(struct kiocb *iocb, struct iov_iter *i
- 	if (ret > 0)
- 		orig_count -= ret;
- 	return ret;
++#define __HAVE_ARCH_PUDP_HUGE_GET_AND_CLEAR
++static inline pud_t pudp_huge_get_and_clear(struct mm_struct *mm,
++					    unsigned long address,  pud_t *pudp)
++{
++#ifdef CONFIG_SMP
++	pud_t pud = __pud(xchg(&pudp->pud, 0));
++#else
++	pud_t pud = *pudp;
 +
-+error_put:
-+	netfs_put_failed_request(rreq);
-+	return ret;
- }
- EXPORT_SYMBOL(netfs_unbuffered_read_iter_locked);
- 
-diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
-index a16660ab7f83..a9d1c3b2c084 100644
---- a/fs/netfs/direct_write.c
-+++ b/fs/netfs/direct_write.c
-@@ -57,7 +57,7 @@ ssize_t netfs_unbuffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *
- 			n = netfs_extract_user_iter(iter, len, &wreq->buffer.iter, 0);
- 			if (n < 0) {
- 				ret = n;
--				goto out;
-+				goto error_put;
- 			}
- 			wreq->direct_bv = (struct bio_vec *)wreq->buffer.iter.bvec;
- 			wreq->direct_bv_count = n;
-@@ -101,6 +101,10 @@ ssize_t netfs_unbuffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *
- out:
- 	netfs_put_request(wreq, netfs_rreq_trace_put_return);
- 	return ret;
++	pud_clear(pudp);
++#endif
 +
-+error_put:
-+	netfs_put_failed_request(wreq);
-+	return ret;
- }
- EXPORT_SYMBOL(netfs_unbuffered_write_iter_locked);
- 
-diff --git a/fs/netfs/internal.h b/fs/netfs/internal.h
-index d4f16fefd965..4319611f5354 100644
---- a/fs/netfs/internal.h
-+++ b/fs/netfs/internal.h
-@@ -87,6 +87,7 @@ struct netfs_io_request *netfs_alloc_request(struct address_space *mapping,
- void netfs_get_request(struct netfs_io_request *rreq, enum netfs_rreq_ref_trace what);
- void netfs_clear_subrequests(struct netfs_io_request *rreq);
- void netfs_put_request(struct netfs_io_request *rreq, enum netfs_rreq_ref_trace what);
-+void netfs_put_failed_request(struct netfs_io_request *rreq);
- struct netfs_io_subrequest *netfs_alloc_subrequest(struct netfs_io_request *rreq);
- 
- static inline void netfs_see_request(struct netfs_io_request *rreq,
-diff --git a/fs/netfs/objects.c b/fs/netfs/objects.c
-index e8c99738b5bb..40a1c7d6f6e0 100644
---- a/fs/netfs/objects.c
-+++ b/fs/netfs/objects.c
-@@ -116,10 +116,8 @@ static void netfs_free_request_rcu(struct rcu_head *rcu)
- 	netfs_stat_d(&netfs_n_rh_rreq);
- }
- 
--static void netfs_free_request(struct work_struct *work)
-+static void netfs_deinit_request(struct netfs_io_request *rreq)
++	page_table_check_pud_clear(mm, pud);
++
++	return pud;
++}
++
+ static inline int pud_young(pud_t pud)
  {
--	struct netfs_io_request *rreq =
--		container_of(work, struct netfs_io_request, cleanup_work);
- 	struct netfs_inode *ictx = netfs_inode(rreq->inode);
- 	unsigned int i;
- 
-@@ -149,6 +147,14 @@ static void netfs_free_request(struct work_struct *work)
- 
- 	if (atomic_dec_and_test(&ictx->io_count))
- 		wake_up_var(&ictx->io_count);
-+}
-+
-+static void netfs_free_request(struct work_struct *work)
-+{
-+	struct netfs_io_request *rreq =
-+		container_of(work, struct netfs_io_request, cleanup_work);
-+
-+	netfs_deinit_request(rreq);
- 	call_rcu(&rreq->rcu, netfs_free_request_rcu);
- }
- 
-@@ -167,6 +173,24 @@ void netfs_put_request(struct netfs_io_request *rreq, enum netfs_rreq_ref_trace
- 	}
- }
- 
-+/*
-+ * Free a request (synchronously) that was just allocated but has
-+ * failed before it could be submitted.
-+ */
-+void netfs_put_failed_request(struct netfs_io_request *rreq)
-+{
-+	int r = refcount_read(&rreq->ref);
-+
-+	/* new requests have two references (see
-+	 * netfs_alloc_request(), and this function is only allowed on
-+	 * new request objects
-+	 */
-+	WARN_ON_ONCE(r != 2);
-+
-+	trace_netfs_rreq_ref(rreq->debug_id, r, netfs_rreq_trace_put_failed);
-+	netfs_free_request(&rreq->cleanup_work);
-+}
-+
- /*
-  * Allocate and partially initialise an I/O request structure.
-  */
-diff --git a/fs/netfs/read_pgpriv2.c b/fs/netfs/read_pgpriv2.c
-index 8097bc069c1d..a1489aa29f78 100644
---- a/fs/netfs/read_pgpriv2.c
-+++ b/fs/netfs/read_pgpriv2.c
-@@ -118,7 +118,7 @@ static struct netfs_io_request *netfs_pgpriv2_begin_copy_to_cache(
- 	return creq;
- 
- cancel_put:
--	netfs_put_request(creq, netfs_rreq_trace_put_return);
-+	netfs_put_failed_request(creq);
- cancel:
- 	rreq->copy_to_cache = ERR_PTR(-ENOBUFS);
- 	clear_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &rreq->flags);
-diff --git a/fs/netfs/read_single.c b/fs/netfs/read_single.c
-index fa622a6cd56d..5c0dc4efc792 100644
---- a/fs/netfs/read_single.c
-+++ b/fs/netfs/read_single.c
-@@ -189,7 +189,7 @@ ssize_t netfs_read_single(struct inode *inode, struct file *file, struct iov_ite
- 	return ret;
- 
- cleanup_free:
--	netfs_put_request(rreq, netfs_rreq_trace_put_failed);
-+	netfs_put_failed_request(rreq);
- 	return ret;
- }
- EXPORT_SYMBOL(netfs_read_single);
-diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index 0584cba1a043..dd8743bc8d7f 100644
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -133,8 +133,7 @@ struct netfs_io_request *netfs_create_write_req(struct address_space *mapping,
- 
- 	return wreq;
- nomem:
--	wreq->error = -ENOMEM;
--	netfs_put_request(wreq, netfs_rreq_trace_put_failed);
-+	netfs_put_failed_request(wreq);
- 	return ERR_PTR(-ENOMEM);
- }
- 
--- 
-2.51.0
-
+ 	return pte_young(pud_pte(pud));
 
 
