@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C933064AA;
-	Tue, 30 Sep 2025 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C94306B08;
+	Tue, 30 Sep 2025 15:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244464; cv=none; b=s2TTqW3zs2UYfu/GY9vWCPuaE98z7AxVCoFQ7+OQMweZsKbxoA62KpVbOtPJZ8Pc2AYqrj8y03vWIwd2cyust/vxYGXR7S8uRxYirkQUg28soHACKv61aCY4uBkpn5ZmttVheGmPHZQ40e8Vcgb/IemfDMIFOXx5iMQ2kwuQbU4=
+	t=1759244467; cv=none; b=dg+Yy028Axo8dcZ8Eyk5cK8H3FAHBgtqiCDDj51ppvG/Am0PnIfAIqUZxGFlu+gaJCGhaCOTdvE0NJj5edVqHWmSigMA69Z3nWQ4V7uf3Im22YaLYBwbtdw7wllza2Z2K9xBoAuEyOrMPi6nLMGo3mwahLRQ9hMLZL2/ofSAVMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244464; c=relaxed/simple;
-	bh=djRVKbkp99ORuo2oazP3QHd+N8zQ/3bDQHJcvHXJ0lE=;
+	s=arc-20240116; t=1759244467; c=relaxed/simple;
+	bh=cjS4TuywVrPVWO+yzivs5T6P9Bwyxw8HFOOQAYpenHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQ+V2r+4cIYJcC8Im5+vkg6JmWImu6VROz6F6uE8HvC9/6561UcPqYZIduJxoXXGZYWBnNdk1XPpj0T8pZbWMqyFZE54MhlZD6o0GMftgT3hSV+nwBvgBYNPUKYVYXufoU0RqlPNN8mI2hShMetSgL2STM4FZXkp5EcZWnK5Zyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSuDIHuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HO78tpM0dcatr3G2EqHBE2OoDzpV8p010iu1roTOYXkAMkAx4K6qoWey+cRpGxZAQfV6PQvKvLSkU0kjjnbG/1ql4vepy2riEVon3kS+OTLZ3cNI0s2lqLvTMeUTzu23DDpDVNuehBZXCFrkqL0rppL5WoFs9sJB48S8V2vz/8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txr2TM+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSuDIHuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFE9C4CEF0;
-	Tue, 30 Sep 2025 15:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txr2TM+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E63C4CEF0;
+	Tue, 30 Sep 2025 15:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244464;
-	bh=djRVKbkp99ORuo2oazP3QHd+N8zQ/3bDQHJcvHXJ0lE=;
+	s=korg; t=1759244467;
+	bh=cjS4TuywVrPVWO+yzivs5T6P9Bwyxw8HFOOQAYpenHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSuDIHuRmsjZSVcIl21Ybt1ZIX/RHIMJmEY8BkFLxeLif1G/vlel1ssZJqWaDQ2Ih
-	 2Wu8tEW+XG2oQO8PCD/UlhJxT1BBqluaX/DxRPVIuUkvyFLmtExrwwVvg7ERLcfuW2
-	 zdHeCHjOKWohrupqjWrnvq25cICDDw0Rj7NNtPyc=
+	b=Txr2TM+Wz52/CNrAcBizprMXKSXd6IY8G2O4JWxD9BblWV4F358Flu0xpAOPUIRrb
+	 FpuifH8FyaqOu4cyz0LTn44ZOcVIy37YCLc6ntoIhuycqidJuakXjjlaQXuvo2dSgw
+	 pKIQ/1H8fbDvDEco/9iJXaF0RU/zOFC9xqo+FCiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 015/143] ALSA: usb-audio: Convert comma to semicolon
-Date: Tue, 30 Sep 2025 16:45:39 +0200
-Message-ID: <20250930143831.853311188@linuxfoundation.org>
+Subject: [PATCH 6.16 016/143] ALSA: hda/realtek: Add support for ASUS NUC using CS35L41 HDA
+Date: Tue, 30 Sep 2025 16:45:40 +0200
+Message-ID: <20250930143831.892578455@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -52,47 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 9ca30a1b007d5fefb5752428f852a2d8d7219c1c ]
+[ Upstream commit 84fc8896f0d9d1c075e0e08a416faedbd73907fa ]
 
-Replace comma between expressions with semicolons.
+Add support for ASUS NUC14LNS.
 
-Using a ',' in place of a ';' can have unintended side effects.
-Although that is not the case here, it is seems best to use ';'
-unless ',' is intended.
+This NUC uses a single CS35L41 Amp in using Internal Boost with SPI.
+To support the Single Amp, a new quirk is required.
 
-Found by inspection.
-No functional change intended.
-Compile tested only.
-
-Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20250612060228.1518028-1-nichen@iscas.ac.cn
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250612160029.848104-3-sbinding@opensource.cirrus.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_realtek.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 28842e49700d8..8cb98b5d31124 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -762,9 +762,9 @@ static int snd_dualsense_jack_create(struct usb_mixer_interface *mixer,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4819bd332f039..fa28e3e85861c 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7298,6 +7298,11 @@ static void cs35l41_fixup_spi_two(struct hda_codec *codec, const struct hda_fixu
+ 	comp_generic_fixup(codec, action, "spi", "CSC3551", "-%s:00-cs35l41-hda.%d", 2);
+ }
  
- 	mei->ih.event = snd_dualsense_ih_event;
- 	mei->ih.match = snd_dualsense_ih_match;
--	mei->ih.connect = snd_dualsense_ih_connect,
--	mei->ih.disconnect = snd_dualsense_ih_disconnect,
--	mei->ih.start = snd_dualsense_ih_start,
-+	mei->ih.connect = snd_dualsense_ih_connect;
-+	mei->ih.disconnect = snd_dualsense_ih_disconnect;
-+	mei->ih.start = snd_dualsense_ih_start;
- 	mei->ih.name = name;
- 	mei->ih.id_table = mei->id_table;
- 
++static void cs35l41_fixup_spi_one(struct hda_codec *codec, const struct hda_fixup *fix, int action)
++{
++	comp_generic_fixup(codec, action, "spi", "CSC3551", "-%s:00-cs35l41-hda.%d", 1);
++}
++
+ static void cs35l41_fixup_spi_four(struct hda_codec *codec, const struct hda_fixup *fix, int action)
+ {
+ 	comp_generic_fixup(codec, action, "spi", "CSC3551", "-%s:00-cs35l41-hda.%d", 4);
+@@ -7991,6 +7996,7 @@ enum {
+ 	ALC287_FIXUP_CS35L41_I2C_2,
+ 	ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED,
+ 	ALC287_FIXUP_CS35L41_I2C_4,
++	ALC245_FIXUP_CS35L41_SPI_1,
+ 	ALC245_FIXUP_CS35L41_SPI_2,
+ 	ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED,
+ 	ALC245_FIXUP_CS35L41_SPI_4,
+@@ -10120,6 +10126,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cs35l41_fixup_spi_two,
+ 	},
++	[ALC245_FIXUP_CS35L41_SPI_1] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cs35l41_fixup_spi_one,
++	},
+ 	[ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cs35l41_fixup_spi_two,
+@@ -11099,6 +11109,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x8398, "ASUS P1005", ALC269_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x83ce, "ASUS P1005", ALC269_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x8516, "ASUS X101CH", ALC269_FIXUP_ASUS_X101),
++	SND_PCI_QUIRK(0x1043, 0x88f4, "ASUS NUC14LNS", ALC245_FIXUP_CS35L41_SPI_1),
+ 	SND_PCI_QUIRK(0x104d, 0x9073, "Sony VAIO", ALC275_FIXUP_SONY_VAIO_GPIO2),
+ 	SND_PCI_QUIRK(0x104d, 0x907b, "Sony VAIO", ALC275_FIXUP_SONY_HWEQ),
+ 	SND_PCI_QUIRK(0x104d, 0x9084, "Sony VAIO", ALC275_FIXUP_SONY_HWEQ),
 -- 
 2.51.0
 
