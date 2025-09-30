@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B83A4D8CE;
-	Tue, 30 Sep 2025 14:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB531F03D2;
+	Tue, 30 Sep 2025 14:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243937; cv=none; b=CWLYjC70+q5DPZWl1ITcz591SGkMVsw7NvbEEDvP7KDmIULj27whwpZ1c08aaoepr0y+AfBFlEHmPPOycvkaWZSVIRLNHvpO9wCzt+HIRAX9n8B39NEr1WhZrsPGiNNW6BM83rxs3Q05+Qiuz6YZtj+9dD6eNxIne/txWkVT7yU=
+	t=1759243941; cv=none; b=TGcJ4S+6dGcS4ecsNUEUV6gvP5HvfY3Kh4TMhAN65fLXA54f5e6STVHMqH2xBHawjahe7WA+juhHH4pG8GPahxoMRaKTOBCXmkWVx5wg+hFt92kxZFQ2FfXMtpFefkKhPeLkguPceWDYqmhOkwEswiT5ZbK2AB81VIHLcPJEKpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243937; c=relaxed/simple;
-	bh=wafWAn49hK+DHJmClqd5Tuy3Val+h4UBJmCWBmjc5Do=;
+	s=arc-20240116; t=1759243941; c=relaxed/simple;
+	bh=OZPjz+N/SalNquu++mvz9O4xl3pdHtP7nXT24vg+JLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofsI7ee5BFmznxEW4kruRlE0kc+J9PDEv+ImMxisrdSxFSix5mdwpcHeBNPrTyU6f80J03qQ31/1sO2L8Y8oC8SqeHkf5liDu5AnrDkhwd6c1fd2yJQp8I2RVyf10nb2q8jGRjhsK2DbpsCvm5/lD5UZdmGgrdbAnecjaQNrn5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNxY9a+F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rts8xfV2CB51I7dTXxE5R+eiademsjgn09C6oxQUEycEtP6CPWHRyYZKQBBHvlQg/YbgEgNmN8Xvslv4rL6+OF3yVfMl34z0IYDyf0YXlenufSIdCv6jDnr9AoWlxuabNmx8NYHYIPhRbs4sLn4yQJYwZ/cFyiDHK/uEasWnVG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMzvAXvu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNxY9a+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE7BC4CEF0;
-	Tue, 30 Sep 2025 14:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMzvAXvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A66C4CEF0;
+	Tue, 30 Sep 2025 14:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759243937;
-	bh=wafWAn49hK+DHJmClqd5Tuy3Val+h4UBJmCWBmjc5Do=;
+	s=korg; t=1759243940;
+	bh=OZPjz+N/SalNquu++mvz9O4xl3pdHtP7nXT24vg+JLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNxY9a+FwKVb8tk/Dc9scu5m+dfQeY3oesropQztQUPUG+klypVgQoh7XjHyp7dDk
-	 e30gRnA+W68DvOfWJuFjDjJ5KE3RdIDXkl5JfP96CJQzYrQ/01DZQtoUmhX1TGoNUL
-	 RG8UtKuCLkf9hPkFONwdR/U0ZxdTwb4RhSgrXi+E=
+	b=aMzvAXvu+XqOR0exa8Td+dhjI1+1/vXCRrR0+fhWB3XDPFyf+RwXno/UigsHhMUy9
+	 +rhCpB5Y9aFbqO7eT0DMOutTNnSX95aHGxvdVoTxIkkpa6A1TE90wIQZLQEEPiDF2X
+	 MYao6tcKyUDQ7bmPyVkyzC/tZ/KXIXgKhP1T7mg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 30/81] mm/memory-failure: fix VM_BUG_ON_PAGE(PagePoisoned(page)) when unpoison memory
-Date: Tue, 30 Sep 2025 16:46:32 +0200
-Message-ID: <20250930143820.928129957@linuxfoundation.org>
+Subject: [PATCH 5.4 31/81] ALSA: firewire-motu: drop EPOLLOUT from poll return values as write is not supported
+Date: Tue, 30 Sep 2025 16:46:33 +0200
+Message-ID: <20250930143820.968714695@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
 References: <20250930143819.654157320@linuxfoundation.org>
@@ -53,110 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit d613f53c83ec47089c4e25859d5e8e0359f6f8da ]
+[ Upstream commit aea3493246c474bc917d124d6fb627663ab6bef0 ]
 
-When I did memory failure tests, below panic occurs:
+The ALSA HwDep character device of the firewire-motu driver incorrectly
+returns EPOLLOUT in poll(2), even though the driver implements no operation
+for write(2). This misleads userspace applications to believe write() is
+allowed, potentially resulting in unnecessarily wakeups.
 
-page dumped because: VM_BUG_ON_PAGE(PagePoisoned(page))
-kernel BUG at include/linux/page-flags.h:616!
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 3 PID: 720 Comm: bash Not tainted 6.10.0-rc1-00195-g148743902568 #40
-RIP: 0010:unpoison_memory+0x2f3/0x590
-RSP: 0018:ffffa57fc8787d60 EFLAGS: 00000246
-RAX: 0000000000000037 RBX: 0000000000000009 RCX: ffff9be25fcdc9c8
-RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff9be25fcdc9c0
-RBP: 0000000000300000 R08: ffffffffb4956f88 R09: 0000000000009ffb
-R10: 0000000000000284 R11: ffffffffb4926fa0 R12: ffffe6b00c000000
-R13: ffff9bdb453dfd00 R14: 0000000000000000 R15: fffffffffffffffe
-FS:  00007f08f04e4740(0000) GS:ffff9be25fcc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000564787a30410 CR3: 000000010d4e2000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- unpoison_memory+0x2f3/0x590
- simple_attr_write_xsigned.constprop.0.isra.0+0xb3/0x110
- debugfs_attr_write+0x42/0x60
- full_proxy_write+0x5b/0x80
- vfs_write+0xd5/0x540
- ksys_write+0x64/0xe0
- do_syscall_64+0xb9/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f08f0314887
-RSP: 002b:00007ffece710078 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000009 RCX: 00007f08f0314887
-RDX: 0000000000000009 RSI: 0000564787a30410 RDI: 0000000000000001
-RBP: 0000564787a30410 R08: 000000000000fefe R09: 000000007fffffff
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000009
-R13: 00007f08f041b780 R14: 00007f08f0417600 R15: 00007f08f0416a00
- </TASK>
-Modules linked in: hwpoison_inject
----[ end trace 0000000000000000 ]---
-RIP: 0010:unpoison_memory+0x2f3/0x590
-RSP: 0018:ffffa57fc8787d60 EFLAGS: 00000246
-RAX: 0000000000000037 RBX: 0000000000000009 RCX: ffff9be25fcdc9c8
-RDX: 0000000000000000 RSI: 0000000000000027 RDI: ffff9be25fcdc9c0
-RBP: 0000000000300000 R08: ffffffffb4956f88 R09: 0000000000009ffb
-R10: 0000000000000284 R11: ffffffffb4926fa0 R12: ffffe6b00c000000
-R13: ffff9bdb453dfd00 R14: 0000000000000000 R15: fffffffffffffffe
-FS:  00007f08f04e4740(0000) GS:ffff9be25fcc0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000564787a30410 CR3: 000000010d4e2000 CR4: 00000000000006f0
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: 0x31c00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
----[ end Kernel panic - not syncing: Fatal exception ]---
+This issue dates back to the driver's initial code added by a commit
+71c3797779d3 ("ALSA: firewire-motu: add hwdep interface"), and persisted
+when POLLOUT was updated to EPOLLOUT by a commit a9a08845e9ac ('vfs: do
+bulk POLL* -> EPOLL* replacement("").').
 
-The root cause is that unpoison_memory() tries to check the PG_HWPoison
-flags of an uninitialized page.  So VM_BUG_ON_PAGE(PagePoisoned(page)) is
-triggered.  This can be reproduced by below steps:
+This commit fixes the bug.
 
-1.Offline memory block:
-
- echo offline > /sys/devices/system/memory/memory12/state
-
-2.Get offlined memory pfn:
-
- page-types -b n -rlN
-
-3.Write pfn to unpoison-pfn
-
- echo <pfn> > /sys/kernel/debug/hwpoison/unpoison-pfn
-
-This scenario can be identified by pfn_to_online_page() returning NULL.
-And ZONE_DEVICE pages are never expected, so we can simply fail if
-pfn_to_online_page() == NULL to fix the bug.
-
-Link: https://lkml.kernel.org/r/20250828024618.1744895-1-linmiaohe@huawei.com
-Fixes: f1dd2cd13c4b ("mm, memory_hotplug: do not associate hotadded memory to zones until online")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Adjust context ]
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://patch.msgid.link/20250829233749.366222-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ sound/firewire/motu/motu-hwdep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1543,10 +1543,9 @@ int unpoison_memory(unsigned long pfn)
- 	static DEFINE_RATELIMIT_STATE(unpoison_rs, DEFAULT_RATELIMIT_INTERVAL,
- 					DEFAULT_RATELIMIT_BURST);
+diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
+index 0764a477052a2..5e1254f106bf8 100644
+--- a/sound/firewire/motu/motu-hwdep.c
++++ b/sound/firewire/motu/motu-hwdep.c
+@@ -73,7 +73,7 @@ static __poll_t hwdep_poll(struct snd_hwdep *hwdep, struct file *file,
+ 		events = 0;
+ 	spin_unlock_irq(&motu->lock);
  
--	if (!pfn_valid(pfn))
--		return -ENXIO;
--
--	p = pfn_to_page(pfn);
-+	p = pfn_to_online_page(pfn);
-+	if (!p)
-+		return -EIO;
- 	page = compound_head(p);
+-	return events | EPOLLOUT;
++	return events;
+ }
  
- 	if (!PageHWPoison(p)) {
+ static int hwdep_get_info(struct snd_motu *motu, void __user *arg)
+-- 
+2.51.0
+
 
 
