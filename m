@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3392F9D9E;
-	Tue, 30 Sep 2025 15:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D02F9D9E;
+	Tue, 30 Sep 2025 15:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244816; cv=none; b=hPHmki6VNAODOOJF9l6DDxKy2RXN7KubAv4ODfAbQgnEg9xkgJ/L+2UJwKJNy70Zz7yAqorKUGZ92TL47qWD2nqmP5llMkpoaCtASYONwUo6tFrgrPCZnhmUGEpnPLHp1t3EoYlAkRyl8cj9N+QYWAli/rBXklfU7kpYnojgz4E=
+	t=1759244819; cv=none; b=Dpc+j2pmO63vPvpUX5my3hzUsgxMYxMML7CF6HBf5Fa6QAQMZk8d9kJnMxlz7Xb/8IWiZnBZMuf2/Lv8DYUo5W1P/a8SffuRhSneqHemfDWLiFlX9W2a7LeYPnWJp2FRV3ncwEQxiU9/xP/c3mDClmmaxoWFhMzv6YvaRuYAhaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244816; c=relaxed/simple;
-	bh=Ib7EsOT7P/yp/UoGfNXwlJOdz643++wO6DOV6qQvX6E=;
+	s=arc-20240116; t=1759244819; c=relaxed/simple;
+	bh=5v9EokhHB5qgC05cQyL3EYc9RvItXzynXKrm7Qa0+1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OClteLatNfxvhpGScD1Az7RYL2ZYmS6exLURRajUtBGUMuM3UdYLBFpX8e10R1wdynD5sg7lPNO41sRDNHxNXiErEOB3ftCg1NTWMy4BNueCA6VMXiUu+QacJ/4Zp/cv+ah0427OPkiabJlQsJ5eudU0iZbFtjSm6qL6BsyOhoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w071OgUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MYkIemZj+t9ZpXZqd95PScSrEHCFMHbYJ5BCa29EMWMHZzjfYhhAXSPKbw2+vsuIzVdfvKFpngovdTYaW+5eQCouhGkH59lbozCSTLJEhL0BrOoxK8ZQoc1jkMFF5rcQWN0z/fv6wUDCFXztCH632PPrQ2Xsbrl62QhUTykeu/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgbClB/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w071OgUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BA0C116B1;
-	Tue, 30 Sep 2025 15:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgbClB/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D923C4CEF0;
+	Tue, 30 Sep 2025 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244815;
-	bh=Ib7EsOT7P/yp/UoGfNXwlJOdz643++wO6DOV6qQvX6E=;
+	s=korg; t=1759244818;
+	bh=5v9EokhHB5qgC05cQyL3EYc9RvItXzynXKrm7Qa0+1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w071OgURaumAWxZAaC3b1wa2iZBHLLw3fO1p8ET+pmBVlUEs7ad6qMeKf1128A3PZ
-	 /Xn+lPQyjF+yVH9Fy/vXwUQSViVmLmfz2N3KTvN1MiYlJz+xxcL3yfUgV8kn8o+DLy
-	 WjESDzlZmeHXorVGu/BSRqmdVay3+bobR1Gj/Oq0=
+	b=jgbClB/cxy6oDEFCP9WxTEi0fAo3pVsiWKj8YM6rrp4jEiw2z4AHCGXy8Q7+PccO/
+	 7RKcCpv8SpnfGhM6BY1IGU+rgV5nTqZgPBeh5q5VEmlp8AOvPQbMVu8XYr10gsWDKm
+	 YOqJYSNeisO0CIyluvbznjy6s9B1U1GAQHeJeueQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 091/143] drm/i915/ddi: Guard reg_val against a INVALID_TRANSCODER
-Date: Tue, 30 Sep 2025 16:46:55 +0200
-Message-ID: <20250930143834.855878350@linuxfoundation.org>
+Subject: [PATCH 6.16 092/143] drm/amd/display: remove output_tf_change flag
+Date: Tue, 30 Sep 2025 16:46:56 +0200
+Message-ID: <20250930143834.895342925@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -52,45 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit 7f97a0a871d9532f2e1a5ee7d16d0e364215bcac ]
+[ Upstream commit 41b1f9fcba62b06195e625bb88c1031102892439 ]
 
-Currently we check if the encoder is INVALID or -1 and throw a
-WARN_ON but we still end up writing the temp value which will
-overflow and corrupt the whole programmed value.
+Remove this flag as the driver stopped managing it individually since
+commit a4056c2a6344 ("drm/amd/display: use HW hdr mult for brightness
+boost"). After some back and forth it was reintroduced as a condition to
+`set_output_transfer_func()` in [1]. Without direct management, this
+flag only changes value when all surface update flags are set true on
+UPDATE_TYPE_FULL with no output TF status meaning.
 
---v2
--Assign a bogus transcoder to master in case we get a INVALID
-TRANSCODER [Jani]
-
-Fixes: 6671c367a9bea ("drm/i915/tgl: Select master transcoder for MST stream")
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://lore.kernel.org/r/20250908042208.1011144-1-suraj.kandpal@intel.com
-(cherry picked from commit c8e8e9ab14a6ea926641d161768e1e3ef286a853)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: bb622e0c0044 ("drm/amd/display: program output tf when required") [1]
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 752e6f283ec59ae007aa15a93d5a4b2eefa8cec9)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                       | 1 -
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c   | 6 ++----
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 6 ++----
+ 3 files changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
-index d58f8fc373265..55b8bfcf364ae 100644
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -593,8 +593,9 @@ intel_ddi_transcoder_func_reg_val_get(struct intel_encoder *encoder,
- 			enum transcoder master;
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 7dfbfb18593c1..f037f2d83400b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1292,7 +1292,6 @@ union surface_update_flags {
+ 		uint32_t in_transfer_func_change:1;
+ 		uint32_t input_csc_change:1;
+ 		uint32_t coeff_reduction_change:1;
+-		uint32_t output_tf_change:1;
+ 		uint32_t pixel_format_change:1;
+ 		uint32_t plane_size_change:1;
+ 		uint32_t gamut_remap_change:1;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+index 454e362ff096a..c0127d8b5b396 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -1990,10 +1990,8 @@ static void dcn20_program_pipe(
+ 	 * updating on slave planes
+ 	 */
+ 	if (pipe_ctx->update_flags.bits.enable ||
+-		pipe_ctx->update_flags.bits.plane_changed ||
+-		pipe_ctx->stream->update_flags.bits.out_tf ||
+-		(pipe_ctx->plane_state &&
+-			pipe_ctx->plane_state->update_flags.bits.output_tf_change))
++	    pipe_ctx->update_flags.bits.plane_changed ||
++	    pipe_ctx->stream->update_flags.bits.out_tf)
+ 		hws->funcs.set_output_transfer_func(dc, pipe_ctx, pipe_ctx->stream);
  
- 			master = crtc_state->mst_master_transcoder;
--			drm_WARN_ON(display->drm,
--				    master == INVALID_TRANSCODER);
-+			if (drm_WARN_ON(display->drm,
-+					master == INVALID_TRANSCODER))
-+				master = TRANSCODER_A;
- 			temp |= TRANS_DDI_MST_TRANSPORT_SELECT(master);
- 		}
- 	} else {
+ 	/* If the pipe has been enabled or has a different opp, we
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index c4177a9a662fa..c68d01f378602 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -2289,10 +2289,8 @@ void dcn401_program_pipe(
+ 	 * updating on slave planes
+ 	 */
+ 	if (pipe_ctx->update_flags.bits.enable ||
+-		pipe_ctx->update_flags.bits.plane_changed ||
+-		pipe_ctx->stream->update_flags.bits.out_tf ||
+-		(pipe_ctx->plane_state &&
+-			pipe_ctx->plane_state->update_flags.bits.output_tf_change))
++	    pipe_ctx->update_flags.bits.plane_changed ||
++	    pipe_ctx->stream->update_flags.bits.out_tf)
+ 		hws->funcs.set_output_transfer_func(dc, pipe_ctx, pipe_ctx->stream);
+ 
+ 	/* If the pipe has been enabled or has a different opp, we
 -- 
 2.51.0
 
