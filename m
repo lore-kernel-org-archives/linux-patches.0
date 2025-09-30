@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBC73C465;
-	Tue, 30 Sep 2025 14:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDA7265CCD;
+	Tue, 30 Sep 2025 14:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243791; cv=none; b=GtFDqah1j7G6T91X+hgf3OSvuTx6dKp9xhC310O2Pj2ZPVtQbmnmmm5+k+XDRk7vZV855DLjntgc/etR0ajD4ew8Nvs9yGNN1SH4x+OuJ2CKSG6SpiLgEcOnUYaEIwicRYL9AQeDsenbLG506GkoqVo2K9QUob+RccWiQPSIrMA=
+	t=1759243794; cv=none; b=NqghLvcWXb1EW4f+/k7305ZXFchEvVdviJBY8feCNaxj6gqG5uoyu9dECv8zqseEzMrz9bNvJ0CVa51AE5cfQ3uB2VT8/B0vl3LlIk4qGB9nuaIxOsJ2p3Ltl6zbwRtbIsxO8jidBre8DEw6l9VvCabEQClP0PBCGTD927jXEIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243791; c=relaxed/simple;
-	bh=mADAgQTGpTJjGdFucB/kIR8x1vbP7mQRPvoTCKGHYXI=;
+	s=arc-20240116; t=1759243794; c=relaxed/simple;
+	bh=ZkEaLy2/607+rkNfYKika4aWuForz6OzYCIRxEwUOI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQFU34DsO8/MNetpHs7O9XomacVugwbUQFEbt9URvyytaRHFbPHTZB/Oqzps6R0TgaR+FvrQuWrodCbYElEYxDSJA7VWm+pyNffqz8T1ZgjH7CUwpMiNcGPA7riBBllTMpoh1jyQ6IPFU5mCpcj/Qr6fWHoo3YCVNx4ihsCWP3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx+T986D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UH5BQM/NRhb8PK1XCKrLJdvf3pOSFqrdeSL5un0+R+dS5olvHjzP6OR5P0zIIs1g7AKboFnVlBp9QGQuZfu632yb4hZ3LPpJLAKREZLG6GRB36I53ua7DhrMIH3DxonubKF7j4OmgXnALqfQwrqatPLIx2g8p03tKvtJM+dQBv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfT6m5hC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx+T986D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1996C4CEF0;
-	Tue, 30 Sep 2025 14:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfT6m5hC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E3FC116B1;
+	Tue, 30 Sep 2025 14:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759243791;
-	bh=mADAgQTGpTJjGdFucB/kIR8x1vbP7mQRPvoTCKGHYXI=;
+	s=korg; t=1759243794;
+	bh=ZkEaLy2/607+rkNfYKika4aWuForz6OzYCIRxEwUOI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hx+T986DQKQEOReakgz8moriTji2litCR6fzz5MfdI45c2i+pEF1jfEV4FFhMUPY3
-	 WxoQmJqFS2IT4bHtNs+D7aWDOUTZUh5WrzNPkA8teZWCWzxSBHCyRpnvYHwapLSJoJ
-	 KMSCD8+T5bAuCQl+Ps8cX8bv+3TcU9nP3CDZ8VOA=
+	b=nfT6m5hCmvvK+h93OfH2WYmac1Kkaxp+CR3DjPARpn2dAVRRKY0H7eIGhcgyaoIXy
+	 L2gHHtw4JOpKK+vdu6+WR81f7CvSdTkdZeyBIt1KZC0s0lN7MaM/8avzfqJMNwFkET
+	 iRNqsr6ufuujoYS5j/+tQNEdsEZikl2kJ6f7GO8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Garry <john.garry@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 19/81] genirq/affinity: Add irq_update_affinity_desc()
-Date: Tue, 30 Sep 2025 16:46:21 +0200
-Message-ID: <20250930143820.473385277@linuxfoundation.org>
+Subject: [PATCH 5.4 02/81] net: Fix null-ptr-deref by sock_lock_init_class_and_name() and rmmod.
+Date: Tue, 30 Sep 2025 16:46:04 +0200
+Message-ID: <20250930143819.761226505@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
 References: <20250930143819.654157320@linuxfoundation.org>
@@ -52,143 +51,272 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.garry@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 1d3aec89286254487df7641c30f1b14ad1d127a5 ]
+commit 0bb2f7a1ad1f11d861f58e5ee5051c8974ff9569 upstream.
 
-Add a function to allow the affinity of an interrupt be switched to
-managed, such that interrupts allocated for platform devices may be
-managed.
+When I ran the repro [0] and waited a few seconds, I observed two
+LOCKDEP splats: a warning immediately followed by a null-ptr-deref. [1]
 
-This new interface has certain limitations, and attempts to use it in the
-following circumstances will fail:
-- For when the kernel is configured for generic IRQ reservation mode (in
-  config GENERIC_IRQ_RESERVATION_MODE). The reason being that it could
-  conflict with managed vs. non-managed interrupt accounting.
-- The interrupt is already started, which should not be the case during
-  init
-- The interrupt is already configured as managed, which means double init
+Reproduction Steps:
 
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: John Garry <john.garry@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/1606905417-183214-2-git-send-email-john.garry@huawei.com
-Stable-dep-of: 915470e1b44e ("i40e: fix IRQ freeing in i40e_vsi_request_irq_msix error path")
+  1) Mount CIFS
+  2) Add an iptables rule to drop incoming FIN packets for CIFS
+  3) Unmount CIFS
+  4) Unload the CIFS module
+  5) Remove the iptables rule
+
+At step 3), the CIFS module calls sock_release() for the underlying
+TCP socket, and it returns quickly.  However, the socket remains in
+FIN_WAIT_1 because incoming FIN packets are dropped.
+
+At this point, the module's refcnt is 0 while the socket is still
+alive, so the following rmmod command succeeds.
+
+  # ss -tan
+  State      Recv-Q Send-Q Local Address:Port  Peer Address:Port
+  FIN-WAIT-1 0      477        10.0.2.15:51062   10.0.0.137:445
+
+  # lsmod | grep cifs
+  cifs                 1159168  0
+
+This highlights a discrepancy between the lifetime of the CIFS module
+and the underlying TCP socket.  Even after CIFS calls sock_release()
+and it returns, the TCP socket does not die immediately in order to
+close the connection gracefully.
+
+While this is generally fine, it causes an issue with LOCKDEP because
+CIFS assigns a different lock class to the TCP socket's sk->sk_lock
+using sock_lock_init_class_and_name().
+
+Once an incoming packet is processed for the socket or a timer fires,
+sk->sk_lock is acquired.
+
+Then, LOCKDEP checks the lock context in check_wait_context(), where
+hlock_class() is called to retrieve the lock class.  However, since
+the module has already been unloaded, hlock_class() logs a warning
+and returns NULL, triggering the null-ptr-deref.
+
+If LOCKDEP is enabled, we must ensure that a module calling
+sock_lock_init_class_and_name() (CIFS, NFS, etc) cannot be unloaded
+while such a socket is still alive to prevent this issue.
+
+Let's hold the module reference in sock_lock_init_class_and_name()
+and release it when the socket is freed in sk_prot_free().
+
+Note that sock_lock_init() clears sk->sk_owner for svc_create_socket()
+that calls sock_lock_init_class_and_name() for a listening socket,
+which clones a socket by sk_clone_lock() without GFP_ZERO.
+
+[0]:
+CIFS_SERVER="10.0.0.137"
+CIFS_PATH="//${CIFS_SERVER}/Users/Administrator/Desktop/CIFS_TEST"
+DEV="enp0s3"
+CRED="/root/WindowsCredential.txt"
+
+MNT=$(mktemp -d /tmp/XXXXXX)
+mount -t cifs ${CIFS_PATH} ${MNT} -o vers=3.0,credentials=${CRED},cache=none,echo_interval=1
+
+iptables -A INPUT -s ${CIFS_SERVER} -j DROP
+
+for i in $(seq 10);
+do
+    umount ${MNT}
+    rmmod cifs
+    sleep 1
+done
+
+rm -r ${MNT}
+
+iptables -D INPUT -s ${CIFS_SERVER} -j DROP
+
+[1]:
+DEBUG_LOCKS_WARN_ON(1)
+WARNING: CPU: 10 PID: 0 at kernel/locking/lockdep.c:234 hlock_class (kernel/locking/lockdep.c:234 kernel/locking/lockdep.c:223)
+Modules linked in: cifs_arc4 nls_ucs2_utils cifs_md4 [last unloaded: cifs]
+CPU: 10 UID: 0 PID: 0 Comm: swapper/10 Not tainted 6.14.0 #36
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:hlock_class (kernel/locking/lockdep.c:234 kernel/locking/lockdep.c:223)
+...
+Call Trace:
+ <IRQ>
+ __lock_acquire (kernel/locking/lockdep.c:4853 kernel/locking/lockdep.c:5178)
+ lock_acquire (kernel/locking/lockdep.c:469 kernel/locking/lockdep.c:5853 kernel/locking/lockdep.c:5816)
+ _raw_spin_lock_nested (kernel/locking/spinlock.c:379)
+ tcp_v4_rcv (./include/linux/skbuff.h:1678 ./include/net/tcp.h:2547 net/ipv4/tcp_ipv4.c:2350)
+...
+
+BUG: kernel NULL pointer dereference, address: 00000000000000c4
+ PF: supervisor read access in kernel mode
+ PF: error_code(0x0000) - not-present page
+PGD 0
+Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 10 UID: 0 PID: 0 Comm: swapper/10 Tainted: G        W          6.14.0 #36
+Tainted: [W]=WARN
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+RIP: 0010:__lock_acquire (kernel/locking/lockdep.c:4852 kernel/locking/lockdep.c:5178)
+Code: 15 41 09 c7 41 8b 44 24 20 25 ff 1f 00 00 41 09 c7 8b 84 24 a0 00 00 00 45 89 7c 24 20 41 89 44 24 24 e8 e1 bc ff ff 4c 89 e7 <44> 0f b6 b8 c4 00 00 00 e8 d1 bc ff ff 0f b6 80 c5 00 00 00 88 44
+RSP: 0018:ffa0000000468a10 EFLAGS: 00010046
+RAX: 0000000000000000 RBX: ff1100010091cc38 RCX: 0000000000000027
+RDX: ff1100081f09ca48 RSI: 0000000000000001 RDI: ff1100010091cc88
+RBP: ff1100010091c200 R08: ff1100083fe6e228 R09: 00000000ffffbfff
+R10: ff1100081eca0000 R11: ff1100083fe10dc0 R12: ff1100010091cc88
+R13: 0000000000000001 R14: 0000000000000000 R15: 00000000000424b1
+FS:  0000000000000000(0000) GS:ff1100081f080000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000000c4 CR3: 0000000002c4a003 CR4: 0000000000771ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <IRQ>
+ lock_acquire (kernel/locking/lockdep.c:469 kernel/locking/lockdep.c:5853 kernel/locking/lockdep.c:5816)
+ _raw_spin_lock_nested (kernel/locking/spinlock.c:379)
+ tcp_v4_rcv (./include/linux/skbuff.h:1678 ./include/net/tcp.h:2547 net/ipv4/tcp_ipv4.c:2350)
+ ip_protocol_deliver_rcu (net/ipv4/ip_input.c:205 (discriminator 1))
+ ip_local_deliver_finish (./include/linux/rcupdate.h:878 net/ipv4/ip_input.c:234)
+ ip_sublist_rcv_finish (net/ipv4/ip_input.c:576)
+ ip_list_rcv_finish (net/ipv4/ip_input.c:628)
+ ip_list_rcv (net/ipv4/ip_input.c:670)
+ __netif_receive_skb_list_core (net/core/dev.c:5939 net/core/dev.c:5986)
+ netif_receive_skb_list_internal (net/core/dev.c:6040 net/core/dev.c:6129)
+ napi_complete_done (./include/linux/list.h:37 ./include/net/gro.h:519 ./include/net/gro.h:514 net/core/dev.c:6496)
+ e1000_clean (drivers/net/ethernet/intel/e1000/e1000_main.c:3815)
+ __napi_poll.constprop.0 (net/core/dev.c:7191)
+ net_rx_action (net/core/dev.c:7262 net/core/dev.c:7382)
+ handle_softirqs (kernel/softirq.c:561)
+ __irq_exit_rcu (kernel/softirq.c:596 kernel/softirq.c:435 kernel/softirq.c:662)
+ irq_exit_rcu (kernel/softirq.c:680)
+ common_interrupt (arch/x86/kernel/irq.c:280 (discriminator 14))
+  </IRQ>
+ <TASK>
+ asm_common_interrupt (./arch/x86/include/asm/idtentry.h:693)
+RIP: 0010:default_idle (./arch/x86/include/asm/irqflags.h:37 ./arch/x86/include/asm/irqflags.h:92 arch/x86/kernel/process.c:744)
+Code: 4c 01 c7 4c 29 c2 e9 72 ff ff ff 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d c3 2b 15 00 fb f4 <fa> c3 cc cc cc cc 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90
+RSP: 0018:ffa00000000ffee8 EFLAGS: 00000202
+RAX: 000000000000640b RBX: ff1100010091c200 RCX: 0000000000061aa4
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff812f30c5
+RBP: 000000000000000a R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000002 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ ? do_idle (kernel/sched/idle.c:186 kernel/sched/idle.c:325)
+ default_idle_call (./include/linux/cpuidle.h:143 kernel/sched/idle.c:118)
+ do_idle (kernel/sched/idle.c:186 kernel/sched/idle.c:325)
+ cpu_startup_entry (kernel/sched/idle.c:422 (discriminator 1))
+ start_secondary (arch/x86/kernel/smpboot.c:315)
+ common_startup_64 (arch/x86/kernel/head_64.S:421)
+ </TASK>
+Modules linked in: cifs_arc4 nls_ucs2_utils cifs_md4 [last unloaded: cifs]
+CR2: 00000000000000c4
+
+Fixes: ed07536ed673 ("[PATCH] lockdep: annotate nfs/nfsd in-kernel sockets")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250407163313.22682-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ no ns_tracker and sk_user_frags fields ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/interrupt.h |  8 +++++
- kernel/irq/manage.c       | 70 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+)
+ include/net/sock.h |   40 ++++++++++++++++++++++++++++++++++++++--
+ net/core/sock.c    |    5 +++++
+ 2 files changed, 43 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 7b8bdc468492e..a601715279f50 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -341,6 +341,8 @@ extern int irq_can_set_affinity(unsigned int irq);
- extern int irq_select_affinity(unsigned int irq);
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -321,6 +321,8 @@ struct bpf_sk_storage;
+   *	@sk_clockid: clockid used by time-based scheduling (SO_TXTIME)
+   *	@sk_txtime_deadline_mode: set deadline mode for SO_TXTIME
+   *	@sk_txtime_unused: unused txtime flags
++  *	@sk_owner: reference to the real owner of the socket that calls
++  *		   sock_lock_init_class_and_name().
+   */
+ struct sock {
+ 	/*
+@@ -515,6 +517,10 @@ struct sock {
+ 	struct bpf_sk_storage __rcu	*sk_bpf_storage;
+ #endif
+ 	struct rcu_head		sk_rcu;
++
++#if IS_ENABLED(CONFIG_PROVE_LOCKING) && IS_ENABLED(CONFIG_MODULES)
++	struct module		*sk_owner;
++#endif
+ };
  
- extern int irq_set_affinity_hint(unsigned int irq, const struct cpumask *m);
-+extern int irq_update_affinity_desc(unsigned int irq,
-+				    struct irq_affinity_desc *affinity);
- 
- extern int
- irq_set_affinity_notifier(unsigned int irq, struct irq_affinity_notify *notify);
-@@ -376,6 +378,12 @@ static inline int irq_set_affinity_hint(unsigned int irq,
- 	return -EINVAL;
+ enum sk_pacing {
+@@ -1525,6 +1531,35 @@ static inline void sock_release_ownershi
+ 	}
  }
  
-+static inline int irq_update_affinity_desc(unsigned int irq,
-+					   struct irq_affinity_desc *affinity)
++#if IS_ENABLED(CONFIG_PROVE_LOCKING) && IS_ENABLED(CONFIG_MODULES)
++static inline void sk_owner_set(struct sock *sk, struct module *owner)
 +{
-+	return -EINVAL;
++	__module_get(owner);
++	sk->sk_owner = owner;
 +}
 +
- static inline int
- irq_set_affinity_notifier(unsigned int irq, struct irq_affinity_notify *notify)
- {
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 2a8a5e1779c9c..44d77e834c229 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -332,6 +332,76 @@ int irq_set_affinity_locked(struct irq_data *data, const struct cpumask *mask,
- 	return ret;
- }
++static inline void sk_owner_clear(struct sock *sk)
++{
++	sk->sk_owner = NULL;
++}
++
++static inline void sk_owner_put(struct sock *sk)
++{
++	module_put(sk->sk_owner);
++}
++#else
++static inline void sk_owner_set(struct sock *sk, struct module *owner)
++{
++}
++
++static inline void sk_owner_clear(struct sock *sk)
++{
++}
++
++static inline void sk_owner_put(struct sock *sk)
++{
++}
++#endif
+ /*
+  * Macro so as to not evaluate some arguments when
+  * lockdep is not enabled.
+@@ -1534,13 +1569,14 @@ static inline void sock_release_ownershi
+  */
+ #define sock_lock_init_class_and_name(sk, sname, skey, name, key)	\
+ do {									\
++	sk_owner_set(sk, THIS_MODULE);					\
+ 	sk->sk_lock.owned = 0;						\
+ 	init_waitqueue_head(&sk->sk_lock.wq);				\
+ 	spin_lock_init(&(sk)->sk_lock.slock);				\
+ 	debug_check_no_locks_freed((void *)&(sk)->sk_lock,		\
+-			sizeof((sk)->sk_lock));				\
++				   sizeof((sk)->sk_lock));		\
+ 	lockdep_set_class_and_name(&(sk)->sk_lock.slock,		\
+-				(skey), (sname));				\
++				   (skey), (sname));			\
+ 	lockdep_init_map(&(sk)->sk_lock.dep_map, (name), (key), 0);	\
+ } while (0)
  
-+/**
-+ * irq_update_affinity_desc - Update affinity management for an interrupt
-+ * @irq:	The interrupt number to update
-+ * @affinity:	Pointer to the affinity descriptor
-+ *
-+ * This interface can be used to configure the affinity management of
-+ * interrupts which have been allocated already.
-+ *
-+ * There are certain limitations on when it may be used - attempts to use it
-+ * for when the kernel is configured for generic IRQ reservation mode (in
-+ * config GENERIC_IRQ_RESERVATION_MODE) will fail, as it may conflict with
-+ * managed/non-managed interrupt accounting. In addition, attempts to use it on
-+ * an interrupt which is already started or which has already been configured
-+ * as managed will also fail, as these mean invalid init state or double init.
-+ */
-+int irq_update_affinity_desc(unsigned int irq,
-+			     struct irq_affinity_desc *affinity)
-+{
-+	struct irq_desc *desc;
-+	unsigned long flags;
-+	bool activated;
-+	int ret = 0;
-+
-+	/*
-+	 * Supporting this with the reservation scheme used by x86 needs
-+	 * some more thought. Fail it for now.
-+	 */
-+	if (IS_ENABLED(CONFIG_GENERIC_IRQ_RESERVATION_MODE))
-+		return -EOPNOTSUPP;
-+
-+	desc = irq_get_desc_buslock(irq, &flags, 0);
-+	if (!desc)
-+		return -EINVAL;
-+
-+	/* Requires the interrupt to be shut down */
-+	if (irqd_is_started(&desc->irq_data)) {
-+		ret = -EBUSY;
-+		goto out_unlock;
-+	}
-+
-+	/* Interrupts which are already managed cannot be modified */
-+	if (irqd_affinity_is_managed(&desc->irq_data)) {
-+		ret = -EBUSY;
-+		goto out_unlock;
-+	}
-+
-+	/*
-+	 * Deactivate the interrupt. That's required to undo
-+	 * anything an earlier activation has established.
-+	 */
-+	activated = irqd_is_activated(&desc->irq_data);
-+	if (activated)
-+		irq_domain_deactivate_irq(&desc->irq_data);
-+
-+	if (affinity->is_managed) {
-+		irqd_set(&desc->irq_data, IRQD_AFFINITY_MANAGED);
-+		irqd_set(&desc->irq_data, IRQD_MANAGED_SHUTDOWN);
-+	}
-+
-+	cpumask_copy(desc->irq_common_data.affinity, &affinity->mask);
-+
-+	/* Restore the activation state */
-+	if (activated)
-+		irq_domain_activate_irq(&desc->irq_data, false);
-+
-+out_unlock:
-+	irq_put_desc_busunlock(desc, flags);
-+	return ret;
-+}
-+
- int __irq_set_affinity(unsigned int irq, const struct cpumask *mask, bool force)
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1567,6 +1567,8 @@ lenout:
+  */
+ static inline void sock_lock_init(struct sock *sk)
  {
- 	struct irq_desc *desc = irq_to_desc(irq);
--- 
-2.51.0
-
++	sk_owner_clear(sk);
++
+ 	if (sk->sk_kern_sock)
+ 		sock_lock_init_class_and_name(
+ 			sk,
+@@ -1652,6 +1654,9 @@ static void sk_prot_free(struct proto *p
+ 	cgroup_sk_free(&sk->sk_cgrp_data);
+ 	mem_cgroup_sk_free(sk);
+ 	security_sk_free(sk);
++
++	sk_owner_put(sk);
++
+ 	if (slab != NULL)
+ 		kmem_cache_free(slab, sk);
+ 	else
 
 
