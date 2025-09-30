@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE75B205E3B;
-	Tue, 30 Sep 2025 15:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91E120E334;
+	Tue, 30 Sep 2025 15:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245680; cv=none; b=uKKsY0eL3fT+RZy06e2+hUMldPqML1w8+6FNrawY9cU2m+rQe5BLIzrhu+jBZ4NkdrPUsEg3A6pyVMVCYrUKV5CsmxoMf9UWLEjO4QaaYZyo87RnbqjAjcULZf/p/08liF/WkrJxlXK+/pfck8rR7H6+XhrcbWYLDvUTFkeM+5k=
+	t=1759245682; cv=none; b=bD2AUaopPHNdDgWHb7gBMghaTWYSVJWc+2mvigwA+ZBMRaxQhxAoBir0I19idZ5OqsXzNjcOutbAtXyMqyG4Qe9LxozrjF5Vj8sy0JT90QMkIk2gcAhTKgRNg5m0P26tgatr4sPk/Q+KrSpI2/FodR5q7ZEl+fkZcx8w0t8af/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245680; c=relaxed/simple;
-	bh=Sfj4yhQFu4/BNuLtyaOl8IPgUtZM07GtWB4it4Zj4K4=;
+	s=arc-20240116; t=1759245682; c=relaxed/simple;
+	bh=lnAuQUWIiIH4IqkwDrrKrtzZ50x6WIuW9GSWB0IqbD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGhGyMruIUlasJzLn6aGwqn/8guFqqJUpU/T43ShhnyiNzdED+LV5gogEomgsWPsgZ/TYAyvemVpBgHamPRUHUUcGUFv14DWGHANIE769OzS1kvc4TvQLWmtvlI3TsBJcNc1t/1j2BYWPX8wrh9h/dig7FmwL2bmHA+FqZvfDpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6fZkiQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK6gCj2YKbCAt4Xd346Q9DxmP0R06IAOXlwC5tCW2Tyg1EL3Qu+uujY+TWBWdM2ft90RayLwVMmO4VPQ7vpwqNjboMnitN0GiY9vqDBX6F5bnc8ghlPs9gHGWp7yU4tNypruzk0qz68mtrYI1bqMQJJR+H4n/N0WBdgOA73R59Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewSO5mAC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6fZkiQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A6AC4CEF0;
-	Tue, 30 Sep 2025 15:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewSO5mAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCD0C4CEF0;
+	Tue, 30 Sep 2025 15:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245679;
-	bh=Sfj4yhQFu4/BNuLtyaOl8IPgUtZM07GtWB4it4Zj4K4=;
+	s=korg; t=1759245682;
+	bh=lnAuQUWIiIH4IqkwDrrKrtzZ50x6WIuW9GSWB0IqbD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6fZkiQihhYuVFhBVxvqXKes+N8vzHG0dvIXCP64qYNdb/i0GRDskughjNZdI8YhE
-	 apsGtEXqqnhVXChOhpU8KuX5lKo0CFuRLgfPd/LxpRx6I3SOotiqERNk8OyfzPa7w9
-	 tvfINY+qjOTZtKR1sW6Hv4zSxIcffXFxG4HpJ3H8=
+	b=ewSO5mAC5vDK1FFB2tuK1v5vrMf9fBwoRJrDbPfllFT+fBtFP3owBsF5GOo+PuP4A
+	 5TeOfzcpg4z0579OXw4tRjZb8wui5eJd4Ts+n9WSugKQK70uf7MqfY02B2ub3QlzBA
+	 t9bjM6+Zy4vwzmK4PtyLWm71i21V4a1uehd8ranI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"noble.yang" <noble.yang@comtrue-inc.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 18/91] ALSA: usb-audio: Add DSD support for Comtrue USB Audio device
-Date: Tue, 30 Sep 2025 16:47:17 +0200
-Message-ID: <20250930143821.888042942@linuxfoundation.org>
+Subject: [PATCH 6.6 02/91] firewire: core: fix overlooked update of subsystem ABI version
+Date: Tue, 30 Sep 2025 16:47:01 +0200
+Message-ID: <20250930143821.219790888@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -51,38 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: noble.yang <noble.yang@comtrue-inc.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit e9df1755485dd90a89656e8a21ec4d71c909fa30 ]
+[ Upstream commit 853a57ba263adfecf4430b936d6862bc475b4bb5 ]
 
-The vendor Comtrue Inc. (0x2fc6) produces USB audio chipsets like
-the CT7601 which are capable of Native DSD playback.
+In kernel v6.5, several functions were added to the cdev layer. This
+required updating the default version of subsystem ABI up to 6, but
+this requirement was overlooked.
 
-This patch adds QUIRK_FLAG_DSD_RAW for Comtrue (VID 0x2fc6), which enables
-native DSD playback (DSD_U32_LE) on their USB Audio device. This has been
-verified under Ubuntu 25.04 with JRiver.
+This commit updates the version accordingly.
 
-Signed-off-by: noble.yang <noble.yang@comtrue-inc.com>
-Link: https://patch.msgid.link/20250731110614.4070-1-noble228@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 6add87e9764d ("firewire: cdev: add new version of ABI to notify time stamp at request/response subaction of transaction#")
+Link: https://lore.kernel.org/r/20250920025148.163402-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firewire/core-cdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index f19c808444c97..def326ddef267 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2305,6 +2305,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x2d87, /* Cayin device */
- 		   QUIRK_FLAG_DSD_RAW),
-+	VENDOR_FLG(0x2fc6, /* Comture-inc devices */
-+		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x3336, /* HEM devices */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x3353, /* Khadas devices */
+diff --git a/drivers/firewire/core-cdev.c b/drivers/firewire/core-cdev.c
+index 73cc2f2dcbf92..bdf4b035325e9 100644
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -39,7 +39,7 @@
+ /*
+  * ABI version history is documented in linux/firewire-cdev.h.
+  */
+-#define FW_CDEV_KERNEL_VERSION			5
++#define FW_CDEV_KERNEL_VERSION			6
+ #define FW_CDEV_VERSION_EVENT_REQUEST2		4
+ #define FW_CDEV_VERSION_ALLOCATE_REGION_END	4
+ #define FW_CDEV_VERSION_AUTO_FLUSH_ISO_OVERFLOW	5
 -- 
 2.51.0
 
