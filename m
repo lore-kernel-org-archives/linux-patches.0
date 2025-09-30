@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D951AB6F1;
-	Tue, 30 Sep 2025 14:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0178305045;
+	Tue, 30 Sep 2025 14:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244226; cv=none; b=NQmNtDxPq6uk7jzYkEnluMtCG6Ma/gU6T8H+ewlZlAF9VkBznIkrsT800hE64yIjIYomadSIgYhiQH+XxEHoeGNaVsxreCnGVs/Xop+IBFR6BCOK7oar0viYQyCavXYxKzSFSzah6AY19pQLN+dc4/YaQ8EA5saWqA3KkgnTwXs=
+	t=1759244229; cv=none; b=OUJuHjzPl8q4u3Kb5769Dsg7eVGxJERJwMndsY22sB1+gxFytiNfeBDcuq6T5CaQXzIoTl/EWVDB8LEWj/NBXRjNp3nV2fL+QBlmFxLAeP5tAgRf1ZSQousRzfPNuo2lAgIC4YJAtLkAInZU4kBixMRlJiVxtgrK3jSVDmyf7FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244226; c=relaxed/simple;
-	bh=eb7A6ZGXb3vx2+bqWwab4r5i62caa5ILHvJiqDjpIxs=;
+	s=arc-20240116; t=1759244229; c=relaxed/simple;
+	bh=ueJcc9tk9r6eXY3/YhQP17n3rY4h8T7v/Lhzx7/OU3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSRvqX5YKC2QoGfnWD+twKKItqxC44XpYgH8WDURveqETyrWnKNnf4qXVRHHnRTZldyzZ4/rlfYsVqs2Uj/Mdd9VutZ2xngpeBFSLur82bYMqQxsPlkJgWCZNdd6nlKWUh8JA2b2mad6ETFiPtdoujuthP5SKs34CSBgpXo8Z9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEJ5nPuS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6eEF7Lk8/RMFcYJOD/cdz9X12xEyieL/gccMiQ3BSon7b5KdnVqcGeXym3YQYF/zSa09ea5n/6KZ+zeBWRFpqvj0mozREc2X++Mw9nC3TBqnDw0SvegKtGmL7OkTncAE7QUlaySlq9bYtCNARXx0KFiczPlkp+TYBliGa0ce/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRzDaDt/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEJ5nPuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBF7C4CEF0;
-	Tue, 30 Sep 2025 14:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRzDaDt/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2060FC113D0;
+	Tue, 30 Sep 2025 14:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244226;
-	bh=eb7A6ZGXb3vx2+bqWwab4r5i62caa5ILHvJiqDjpIxs=;
+	s=korg; t=1759244229;
+	bh=ueJcc9tk9r6eXY3/YhQP17n3rY4h8T7v/Lhzx7/OU3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEJ5nPuSeT1+aaTNIMVBtIhz++F6cwKJrKmtWqbPdYdrzAjnuH1t3huSxRYCbKy56
-	 syrVj7zYQslZMSXzk1f7w0ArsZZS48rd3e1CsfV+ud4h3En1Nx3DyNT/LcVykEDrni
-	 b70Xhmwo78366P9cl9UhBv4v22WFOXDq/zjWDFSo=
+	b=iRzDaDt/uZjSsJ0+tdz+Nqzu2eSkD/7C97iY9nTp/dUTH6X8lTSJI1bgHY34U5yQF
+	 DnK6m0SSxu9D32v95gRjgZt+b1+Ga2OJWwtHh+VkXG07EQsdvFHzLyLNfvI8VUIQzH
+	 YPizCxX9N7kgc/r5k1yjrSkSWJzmsng4k12AtSsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hulk Robot <hulkci@huawei.com>,
+	Qi Xi <xiqi2@huawei.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/122] ASoC: SOF: Intel: hda-stream: Fix incorrect variable used in error message
-Date: Tue, 30 Sep 2025 16:46:37 +0200
-Message-ID: <20250930143825.708407410@linuxfoundation.org>
+Subject: [PATCH 5.10 067/122] drm: bridge: cdns-mhdp8546: Fix missing mutex unlock on error path
+Date: Tue, 30 Sep 2025 16:46:38 +0200
+Message-ID: <20250930143825.747682767@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -52,36 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-[ Upstream commit 35fc531a59694f24a2456569cf7d1a9c6436841c ]
+[ Upstream commit 288dac9fb6084330d968459c750c838fd06e10e6 ]
 
-The dev_err message is reporting an error about capture streams however
-it is using the incorrect variable num_playback instead of num_capture.
-Fix this by using the correct variable num_capture.
+Add missing mutex unlock before returning from the error path in
+cdns_mhdp_atomic_enable().
 
-Fixes: a1d1e266b445 ("ASoC: SOF: Intel: Add Intel specific HDA stream operations")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20250902120639.2626861-1-colin.i.king@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 935a92a1c400 ("drm: bridge: cdns-mhdp8546: Fix possible null pointer dereference")
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250904034447.665427-1-xiqi2@huawei.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-stream.c b/sound/soc/sof/intel/hda-stream.c
-index 0e09ede922c7a..ea4fe28cbdace 100644
---- a/sound/soc/sof/intel/hda-stream.c
-+++ b/sound/soc/sof/intel/hda-stream.c
-@@ -771,7 +771,7 @@ int hda_dsp_stream_init(struct snd_sof_dev *sdev)
+diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+index ae99d04f00456..5876589d42b7d 100644
+--- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
++++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
+@@ -1978,8 +1978,10 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
+ 	mhdp_state = to_cdns_mhdp_bridge_state(new_state);
  
- 	if (num_capture >= SOF_HDA_CAPTURE_STREAMS) {
- 		dev_err(sdev->dev, "error: too many capture streams %d\n",
--			num_playback);
-+			num_capture);
- 		return -EINVAL;
- 	}
+ 	mhdp_state->current_mode = drm_mode_duplicate(bridge->dev, mode);
+-	if (!mhdp_state->current_mode)
+-		return;
++	if (!mhdp_state->current_mode) {
++		ret = -EINVAL;
++		goto out;
++	}
+ 
+ 	drm_mode_set_name(mhdp_state->current_mode);
  
 -- 
 2.51.0
