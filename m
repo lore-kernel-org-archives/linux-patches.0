@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1E227B328;
-	Tue, 30 Sep 2025 15:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856E0173;
+	Tue, 30 Sep 2025 15:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245528; cv=none; b=sKZB0BQ2l6WbSTVEyUnHjQj1laPMB0lNTnzMz0TiC7EKL74h01zRbwIy08b8fiJsj/SzjSxma9NYu4YruO5G64oREPiCRqZMpOLl2QZu31KN2MyaecWscd5BTuQGR0I/OwTduWzreufrDg/MhywVm70534Nf505vmL5810xkH2k=
+	t=1759245532; cv=none; b=oaQzE+bFuLF1F4754XeYdmbjCN6WHVit0bbtP0kV9d8Pzkv9BnOVXYgV9pp5fn2jDtlt5XkHDjBnqX0ydNMuAvEjLPPes2tl7p6tkDOdMxBOHn26NeWPW405BQEY/+F1eCI+SmhO2ZxUJcpz4I5UEEG5A3ULR/LVkylYRXHsFtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245528; c=relaxed/simple;
-	bh=+a1JwmM1WfUj8jFfW9TMcSPDgl52RqdVprAKK6yqASk=;
+	s=arc-20240116; t=1759245532; c=relaxed/simple;
+	bh=H+a1ufMH7CX+raQccqYx1ObBpH+0rDOHvukG3oGEjXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZtYPixmKqlDZKu71XJpXn5b0mMBwjK8z9vSfbIi1aeTocqR51eu49XaewNPIKvxv+hKQ1/3Nagu4EUoyYca+npxLP3uGUGwibmLGG7y0n8fRedJq+Pa+MFW7bD34h4m/fs93N+NYcf9msHDm0aPZRk7G8yL9aToCEEVtpoc5BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2IYp9sF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oANfLIShVR++9Hj7kTn+TMtUaTmdFhTrngn8Od+0em9KOJP84ZN3kezkGYNV0j2sjGuDtwUK+hXuxSYpO8XPuneg8dBY/3nlePcySFfJ3CNByxxi/7yNjqSLQXLhTqWN0X2DcSiEEWE1QxK9VhJUnElWrfdSk2DbNld0Qvr4CIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNqh9f9T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2IYp9sF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D237C4CEF0;
-	Tue, 30 Sep 2025 15:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNqh9f9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC5AC4CEF0;
+	Tue, 30 Sep 2025 15:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245528;
-	bh=+a1JwmM1WfUj8jFfW9TMcSPDgl52RqdVprAKK6yqASk=;
+	s=korg; t=1759245531;
+	bh=H+a1ufMH7CX+raQccqYx1ObBpH+0rDOHvukG3oGEjXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2IYp9sF1C5kr0Cab6MrJp/Wo5Ue4mWi1Fn3wGsHBVJRDI/JtpAOmI4RXQKkOn5X8
-	 NIKYFVLxWuFjFfIwkrCeqgJRomluVqa0kWT6xYQjDYchG1sM6laUVm0jt6BatEaMSo
-	 5ntochUQrDg+Z5QCQeaZcl3GleslQsoDQWvV0bb0=
+	b=mNqh9f9THZCwkf3CLrIAmaTynfs6K0RXVgeQjCJH+vxxnVYw6wWCbxjuXJctfnUow
+	 YF0nUXKv3EfzOv04zDnUzRlN/u9OJKBFB1+YUQo8xcAhoTfD6H07SfXv0Buva3fYo/
+	 MFukjFHqlp7eZupiUUwZQgXDUl+i1Xz1m74KQ1L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+034246a838a10d181e78@syzkaller.appspotmail.com,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 45/73] futex: Prevent use-after-free during requeue-PI
-Date: Tue, 30 Sep 2025 16:47:49 +0200
-Message-ID: <20250930143822.473817038@linuxfoundation.org>
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kamakshi Nellore <nellorex.kamakshi@intel.com>
+Subject: [PATCH 6.1 46/73] i40e: fix idx validation in i40e_validate_queue_map
+Date: Tue, 30 Sep 2025 16:47:50 +0200
+Message-ID: <20250930143822.518053703@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -52,88 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit b549113738e8c751b613118032a724b772aa83f2 ]
+commit aa68d3c3ac8d1dcec40d52ae27e39f6d32207009 upstream.
 
-syzbot managed to trigger the following race:
+Ensure idx is within range of active/initialized TCs when iterating over
+vf->ch[idx] in i40e_validate_queue_map().
 
-   T1                               T2
-
- futex_wait_requeue_pi()
-   futex_do_wait()
-     schedule()
-                               futex_requeue()
-                                 futex_proxy_trylock_atomic()
-                                   futex_requeue_pi_prepare()
-                                   requeue_pi_wake_futex()
-                                     futex_requeue_pi_complete()
-                                      /* preempt */
-
-         * timeout/ signal wakes T1 *
-
-   futex_requeue_pi_wakeup_sync() // Q_REQUEUE_PI_LOCKED
-   futex_hash_put()
-  // back to userland, on stack futex_q is garbage
-
-                                      /* back */
-                                     wake_up_state(q->task, TASK_NORMAL);
-
-In this scenario futex_wait_requeue_pi() is able to leave without using
-futex_q::lock_ptr for synchronization.
-
-This can be prevented by reading futex_q::task before updating the
-futex_q::requeue_state. A reference on the task_struct is not needed
-because requeue_pi_wake_futex() is invoked with a spinlock_t held which
-implies a RCU read section.
-
-Even if T1 terminates immediately after, the task_struct will remain valid
-during T2's wake_up_state().  A READ_ONCE on futex_q::task before
-futex_requeue_pi_complete() is enough because it ensures that the variable
-is read before the state is updated.
-
-Read futex_q::task before updating the requeue state, use it for the
-following wakeup.
-
-Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
-Reported-by: syzbot+034246a838a10d181e78@syzkaller.appspotmail.com
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Closes: https://lore.kernel.org/all/68b75989.050a0220.3db4df.01dd.GAE@google.com/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/futex/requeue.c | 6 ++++--
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/futex/requeue.c b/kernel/futex/requeue.c
-index cba8b1a6a4cc2..7e43839ca7b05 100644
---- a/kernel/futex/requeue.c
-+++ b/kernel/futex/requeue.c
-@@ -223,18 +223,20 @@ static inline
- void requeue_pi_wake_futex(struct futex_q *q, union futex_key *key,
- 			   struct futex_hash_bucket *hb)
- {
--	q->key = *key;
-+	struct task_struct *task;
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2457,8 +2457,10 @@ static int i40e_validate_queue_map(struc
+ 	u16 vsi_queue_id, queue_id;
  
-+	q->key = *key;
- 	__futex_unqueue(q);
- 
- 	WARN_ON(!q->rt_waiter);
- 	q->rt_waiter = NULL;
- 
- 	q->lock_ptr = &hb->lock;
-+	task = READ_ONCE(q->task);
- 
- 	/* Signal locked state to the waiter */
- 	futex_requeue_pi_complete(q, 1);
--	wake_up_state(q->task, TASK_NORMAL);
-+	wake_up_state(task, TASK_NORMAL);
- }
- 
- /**
--- 
-2.51.0
-
+ 	for_each_set_bit(vsi_queue_id, &queuemap, I40E_MAX_VSI_QP) {
+-		if (vf->adq_enabled) {
+-			vsi_id = vf->ch[vsi_queue_id / I40E_MAX_VF_VSI].vsi_id;
++		u16 idx = vsi_queue_id / I40E_MAX_VF_VSI;
++
++		if (vf->adq_enabled && idx < vf->num_tc) {
++			vsi_id = vf->ch[idx].vsi_id;
+ 			queue_id = (vsi_queue_id % I40E_DEFAULT_QUEUES_PER_VF);
+ 		} else {
+ 			queue_id = vsi_queue_id;
 
 
