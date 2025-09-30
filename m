@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C889205E3B;
-	Tue, 30 Sep 2025 15:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E946B237163;
+	Tue, 30 Sep 2025 15:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245750; cv=none; b=F915ZcgTBJywUQo66M4TZPZ9tLGZehREH8tDF/FhTVo9OuA0wdbk/zsJ2QFWtcDhY59XG0B/PpbJxgpXiJMDma1yAbg9aNCBfZGUgjNyIUiIRrCOd7Qk4dEYRqzlo67m80qaHPa54lUsW812Ll1222nl8+3XsOydTluyNrAVn4U=
+	t=1759245753; cv=none; b=oCZnTZf9S98aCka6uiTbiJpcrGwKsfrGUkUr4skNhUAzyPol9NwhU7DbAPOT0U0i0VoWT7HI2S1hxNT6PGAONcVIPdC/EquJMRDL5ccGW2B4PrhXhsVQ+32S6vbx9J9ge0oKo61ut5m5q4VITPXDulTyEjJXIOFX52Z8nb1RzJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245750; c=relaxed/simple;
-	bh=FPxUO3uo0EqRUkxWpkQbQH28xiT4mWo8A7V+lx/S4SI=;
+	s=arc-20240116; t=1759245753; c=relaxed/simple;
+	bh=PqhGvbw9gYxn2qDYIWsZ5CbxfrHrzTHcL7rLEafVirI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lscqXOT6C1QFoXo8sfVNw8AdJ9Z7DmMeLd5kqrf4YlGVP35dmLoZFBjVO42KpbYCor9fjvMQlpKiNeB9eaFSJwoyPtDBhGv3AkfVllGTYysVqpJulq8NuuuNviVS6KuyMCxu6TtkwfEIMJIqF00SpBhjJDtxYEIdY8ASf0C+fP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTzQA4P2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UcoaYrea2MV9N0gRZgDrzbxpPKlc9Bg5h/yNDHtQW4tiTZ0fcY7trQT0hC5fBX6zyXszjRQ9ByG9Ebp1SNCheyEaIHfW5hCJehxAd6A8rcICvmyOCT7xTcWLUgrc5rkcKzuFk6RZ4iFGstekQz7dQDrHl+XzNCuZ8E4W4kn1Jz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuIQzDqG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTzQA4P2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4327C4CEF0;
-	Tue, 30 Sep 2025 15:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuIQzDqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DA9C4CEF0;
+	Tue, 30 Sep 2025 15:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245749;
-	bh=FPxUO3uo0EqRUkxWpkQbQH28xiT4mWo8A7V+lx/S4SI=;
+	s=korg; t=1759245752;
+	bh=PqhGvbw9gYxn2qDYIWsZ5CbxfrHrzTHcL7rLEafVirI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTzQA4P23q8x2dDmNXR9cd/Gul7jSE9ddBbOi0Z49WUu8f/zf8yTVx4oa0cwxI0qg
-	 G0JJ4A5phsYlVeLLfQ7Yykw2HWC9XAo72Hi9QOLbHCQ1OEJRc4qGGxwNtKb6uVumeP
-	 03y41TgJs8hlw5L72tmOq0+Pxu5tETntDcCUOqzk=
+	b=NuIQzDqGR1V5gbG66JqeESlxuRjNUyZCC1DZXl/euFUo1xYct0mnikO2D6P/2bBDL
+	 RNuU0G2vtTvS3iXx4WwOxS6YHffWocpOzvJrJnaJ21wPHaOIm5kocNiaZvwxeC1Gug
+	 ftdWa6gJGodqeCEaTWI1TV5QFYY9CnOM5N3pHWDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	=?UTF-8?q?St=C3=A9phane=20Grosjean?= <stephane.grosjean@hms-networks.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 21/91] IB/mlx5: Fix obj_type mismatch for SRQ event subscriptions
-Date: Tue, 30 Sep 2025 16:47:20 +0200
-Message-ID: <20250930143822.014889115@linuxfoundation.org>
+Subject: [PATCH 6.6 39/91] can: peak_usb: fix shift-out-of-bounds issue
+Date: Tue, 30 Sep 2025 16:47:38 +0200
+Message-ID: <20250930143822.793727263@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -47,54 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Stéphane Grosjean <stephane.grosjean@hms-networks.com>
 
-[ Upstream commit 85fe9f565d2d5af95ac2bbaa5082b8ce62b039f5 ]
+[ Upstream commit c443be70aaee42c2d1d251e0329e0a69dd96ae54 ]
 
-Fix a bug where the driver's event subscription logic for SRQ-related
-events incorrectly sets obj_type for RMP objects.
+Explicitly uses a 64-bit constant when the number of bits used for its
+shifting is 32 (which is the case for PC CAN FD interfaces supported by
+this driver).
 
-When subscribing to SRQ events, get_legacy_obj_type() did not handle
-the MLX5_CMD_OP_CREATE_RMP case, which caused obj_type to be 0
-(default).
-This led to a mismatch between the obj_type used during subscription
-(0) and the value used during notification (1, taken from the event's
-type field). As a result, event mapping for SRQ objects could fail and
-event notification would not be delivered correctly.
-
-This fix adds handling for MLX5_CMD_OP_CREATE_RMP in get_legacy_obj_type,
-returning MLX5_EVENT_QUEUE_TYPE_RQ so obj_type is consistent between
-subscription and notification.
-
-Fixes: 759738537142 ("IB/mlx5: Enable subscription for device events over DEVX")
-Link: https://patch.msgid.link/r/8f1048e3fdd1fde6b90607ce0ed251afaf8a148c.1755088962.git.leon@kernel.org
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Edward Srouji <edwards@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Stéphane Grosjean <stephane.grosjean@hms-networks.com>
+Link: https://patch.msgid.link/20250918132413.30071-1-stephane.grosjean@free.fr
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/20250917-aboriginal-refined-honeybee-82b1aa-mkl@pengutronix.de
+Fixes: bb4785551f64 ("can: usb: PEAK-System Technik USB adapters driver core")
+[mkl: update subject, apply manually]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/usb/peak_usb/pcan_usb_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index 3f1fa45d93682..388c95562a927 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -191,6 +191,7 @@ static u16 get_legacy_obj_type(u16 opcode)
- {
- 	switch (opcode) {
- 	case MLX5_CMD_OP_CREATE_RQ:
-+	case MLX5_CMD_OP_CREATE_RMP:
- 		return MLX5_EVENT_QUEUE_TYPE_RQ;
- 	case MLX5_CMD_OP_CREATE_QP:
- 		return MLX5_EVENT_QUEUE_TYPE_QP;
+diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_core.c b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
+index 24ad9f593a773..9d162d1004c26 100644
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_core.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
+@@ -111,7 +111,7 @@ void peak_usb_update_ts_now(struct peak_time_ref *time_ref, u32 ts_now)
+ 		u32 delta_ts = time_ref->ts_dev_2 - time_ref->ts_dev_1;
+ 
+ 		if (time_ref->ts_dev_2 < time_ref->ts_dev_1)
+-			delta_ts &= (1 << time_ref->adapter->ts_used_bits) - 1;
++			delta_ts &= (1ULL << time_ref->adapter->ts_used_bits) - 1;
+ 
+ 		time_ref->ts_total += delta_ts;
+ 	}
 -- 
 2.51.0
 
