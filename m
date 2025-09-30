@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC53173;
-	Tue, 30 Sep 2025 15:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3D4173;
+	Tue, 30 Sep 2025 15:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244560; cv=none; b=ieuP0PKb9FAwArMP8jEVrnfHdnEkcMkrwFmzfdFfm4Eh4OHLX/LYd+lGuxiOocAHiyTrWFw6N7If9PIx8YlXEK8idrpsP9jbKWnQiHgzm5+70gZMWDy9tN0jAJQ4RjwzTqF/XFO5cu0Wjge1xnBzTEiihao6qWCwsfeqQ1py6EA=
+	t=1759244561; cv=none; b=fbHnJ/MZ5WdTs+8MXD630BIerNh4A4An+ujvWhg7ranWFx6devCiFlTpE+DJ4AKT8wnhISx1Dw6kPY/jQW3y8zk2yrbnKaa4oOb7aYeIEQu0mghup1IoqsKCMjIu47yMrgE224Pz5d9HXvew/gikNv76KumJrOId5ujck0OukDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244560; c=relaxed/simple;
-	bh=lxin8/TFbNd/TVqmUTUG4PucwPt5V1Gi6768aWmMqJQ=;
+	s=arc-20240116; t=1759244561; c=relaxed/simple;
+	bh=m/DjoQew7AmbsFqmkFdYFWIHvtMJ2kW2CJrof4Py/Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXSIDsuN6Vy7drC1d54mXDqFDWS/j0WQoJGm+0SEa+QAXkHN6ORcnPN6vbSz4CP1iGjn7NtwiD0SWyw7iX5werfKxEwvDe3h93gcoRZq1+35llTROCvRxGAhP06TV6T7NLaQz6oMpG43jNYQ/CUfk1BsbykYI3WIIf4lCv5Xqm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfmHrlXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CpQaDc1DLZzt7j+aDrg2wzd+EwiKjDIeQH7m6cphcJqIZOl7xDfyuIb6cjGHEIVI5x/+cXIjUsQ/6/jX1SuqQhWexz++qaPiAjPKnZUrRWFoCT1Ce9w9fc9SyrUmEGwF9WSQYTyCK6wgqasrboAP1zmFu3vbp6Fxp8ACmKtxLCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8IopciC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfmHrlXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317CCC4CEF0;
-	Tue, 30 Sep 2025 15:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8IopciC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563E1C4CEF0;
+	Tue, 30 Sep 2025 15:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244557;
-	bh=lxin8/TFbNd/TVqmUTUG4PucwPt5V1Gi6768aWmMqJQ=;
+	s=korg; t=1759244560;
+	bh=m/DjoQew7AmbsFqmkFdYFWIHvtMJ2kW2CJrof4Py/Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TfmHrlXYuFx9ddUoI3Q7OppyCLjw44GoEbwEiZyOOMGyUMs8t280A4K4HmMRCzQGn
-	 PM2o4UEUcu0VXu/WplqkHz2R/LwwL31Lst6K89REBtcoGTy6vXRWUWa+QYFzqdJGn9
-	 iRIoBDyB7TlYZOg311R+918YzdKGuzK3qEs3zqQQ=
+	b=s8IopciCyyMVU1XN9Ybd4PQ64Tu+ROmB3/KoYSuCen9Dcpa19rzNkAImsu1A74WLj
+	 JkpSz1RLOf1GfZ8fPQWZ91mCFgwg4ZHKIx65KvlN3om/1fOk6Td21rtsdDBswDCyiH
+	 0gVcmP5GhOM0rTXQdEuM+Mcc813E4o5A2riV3z8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 043/143] ARM: dts: kirkwood: Fix sound DAI cells for OpenRD clients
-Date: Tue, 30 Sep 2025 16:46:07 +0200
-Message-ID: <20250930143832.952530719@linuxfoundation.org>
+Subject: [PATCH 6.16 044/143] cpufreq: Initialize cpufreq-based invariance before subsys
+Date: Tue, 30 Sep 2025 16:46:08 +0200
+Message-ID: <20250930143832.992769329@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -52,43 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 29341c6c18b8ad2a9a4a68a61be7e1272d842f21 ]
+[ Upstream commit 8ffe28b4e8d8b18cb2f2933410322c24f039d5d6 ]
 
-A previous commit changed the '#sound-dai-cells' property for the
-kirkwood audio controller from 1 to 0 in the kirkwood.dtsi file,
-but did not update the corresponding 'sound-dai' property in the
-kirkwood-openrd-client.dts file.
+commit 2a6c72738706 ("cpufreq: Initialize cpufreq-based
+frequency-invariance later") postponed the frequency invariance
+initialization to avoid disabling it in the error case.
+This isn't locking safe, instead move the initialization up before
+the subsys interface is registered (which will rebuild the
+sched_domains) and add the corresponding disable on the error path.
 
-This created a mismatch, causing a dtbs_check validation error where
-the dts provides one cell (<&audio0 0>) while the .dtsi expects zero.
+Observed lockdep without this patch:
+[    0.989686] ======================================================
+[    0.989688] WARNING: possible circular locking dependency detected
+[    0.989690] 6.17.0-rc4-cix-build+ #31 Tainted: G S
+[    0.989691] ------------------------------------------------------
+[    0.989692] swapper/0/1 is trying to acquire lock:
+[    0.989693] ffff800082ada7f8 (sched_energy_mutex){+.+.}-{4:4}, at: rebuild_sched_domains_energy+0x30/0x58
+[    0.989705]
+               but task is already holding lock:
+[    0.989706] ffff000088c89bc8 (&policy->rwsem){+.+.}-{4:4}, at: cpufreq_online+0x7f8/0xbe0
+[    0.989713]
+               which lock already depends on the new lock.
 
-Remove the extraneous cell from the 'sound-dai' property to fix the
-schema validation warning and align with the updated binding.
-
-Fixes: e662e70fa419 ("arm: dts: kirkwood: fix error in #sound-dai-cells size")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 2a6c72738706 ("cpufreq: Initialize cpufreq-based frequency-invariance later")
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/marvell/kirkwood-openrd-client.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm/boot/dts/marvell/kirkwood-openrd-client.dts b/arch/arm/boot/dts/marvell/kirkwood-openrd-client.dts
-index d4e0b8150a84c..cf26e2ceaaa07 100644
---- a/arch/arm/boot/dts/marvell/kirkwood-openrd-client.dts
-+++ b/arch/arm/boot/dts/marvell/kirkwood-openrd-client.dts
-@@ -38,7 +38,7 @@
- 		simple-audio-card,mclk-fs = <256>;
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 628f5b633b61f..b2da1cda4cebd 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2956,6 +2956,15 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 			goto err_null_driver;
+ 	}
  
- 		simple-audio-card,cpu {
--			sound-dai = <&audio0 0>;
-+			sound-dai = <&audio0>;
- 		};
++	/*
++	 * Mark support for the scheduler's frequency invariance engine for
++	 * drivers that implement target(), target_index() or fast_switch().
++	 */
++	if (!cpufreq_driver->setpolicy) {
++		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
++		pr_debug("cpufreq: supports frequency invariance\n");
++	}
++
+ 	ret = subsys_interface_register(&cpufreq_interface);
+ 	if (ret)
+ 		goto err_boost_unreg;
+@@ -2977,21 +2986,14 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	hp_online = ret;
+ 	ret = 0;
  
- 		simple-audio-card,codec {
+-	/*
+-	 * Mark support for the scheduler's frequency invariance engine for
+-	 * drivers that implement target(), target_index() or fast_switch().
+-	 */
+-	if (!cpufreq_driver->setpolicy) {
+-		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
+-		pr_debug("supports frequency invariance");
+-	}
+-
+ 	pr_debug("driver %s up and running\n", driver_data->name);
+ 	goto out;
+ 
+ err_if_unreg:
+ 	subsys_interface_unregister(&cpufreq_interface);
+ err_boost_unreg:
++	if (!cpufreq_driver->setpolicy)
++		static_branch_disable_cpuslocked(&cpufreq_freq_invariance);
+ 	remove_boost_sysfs_file();
+ err_null_driver:
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
 -- 
 2.51.0
 
