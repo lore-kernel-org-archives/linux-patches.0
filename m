@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B61FCCF8;
-	Tue, 30 Sep 2025 14:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5906C303C9B;
+	Tue, 30 Sep 2025 14:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244066; cv=none; b=FHmUeF5I0IvXaFgL7DsAW56JlAI/3DJhFnKCV5UiRN6i6lfRAPAvZZPIF4Qm93tf6fwlPEK+v2N+Jb7RQuCtci+Ud4LAQRVL1wlO3uTQfaleLEBr8pI4evKOAYVAyrkd/CvXn2FDFX3M+bp7zDT18RJjTI02UNw6FsS28T5wtm8=
+	t=1759244070; cv=none; b=HlYqqpVJTh+0J72Vevys8pn30z0aG88z+5aNRpstQ1mlFFKIdcxa+HmkJvz/Zr2wbENTttZV0YroqD6TzswQ8heUywfQut6/hyLXuAlS6xZs6s+MaNMC5HS4t5OEhzyqrapkxHwBcS6O7bSel/v2X8ngH9DBX1ld9u53/OtaV5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244066; c=relaxed/simple;
-	bh=kJDZGNDXQCWl4y8Ne2kqSLU47ZiR1gnqI8Wu5XZBd0Q=;
+	s=arc-20240116; t=1759244070; c=relaxed/simple;
+	bh=qBawuQWqGTeOsDGC9lDxWyOTTncKO2XJiEOt4inZK1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xy8yl5BYTIPutx3sVjeraqOnu8mE6/IfJpbFfNnNPKvP+3kP76EN6TtSU2V7tg5/DnJH32a50SIdbmcfOAdw65lqVxdrjB+/UGGL6K8rzJKX3sg2bF97mGVQdtIjIBnGyS/okb9p8GspIUD6TVh6qK9u/IZyhsAOJeLD6XW9qhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ps/Vwhu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AaYCIoORaAWsQaMxe8WG7+VnNK60HckKMAruMjS0Gt+fF1xA57h4e0yBIL7IBDAI3hOnfQTtYoQZWaJirQG38OZNdATun35AfwGP0IgxaEN04ZGJGL00utPRcpuWD+IoDDNnJOKcXdpVE/PcuGkUGLHWIfR9uBHKL5YWRxQFxi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TL8bWMk6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ps/Vwhu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E171EC4CEF0;
-	Tue, 30 Sep 2025 14:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL8bWMk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D6CC16AAE;
+	Tue, 30 Sep 2025 14:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244066;
-	bh=kJDZGNDXQCWl4y8Ne2kqSLU47ZiR1gnqI8Wu5XZBd0Q=;
+	s=korg; t=1759244069;
+	bh=qBawuQWqGTeOsDGC9lDxWyOTTncKO2XJiEOt4inZK1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ps/Vwhu9f0ol+XPfDKajeT6qQxegzCBREad8CwPVAi98oZwnBG6mKkvvhmh2uyTDp
-	 MX/UUByzyIad7z47gwSxyeM0iIYt+qRSJRg7OGJT1WNnrHAIwhXKgaedHmlGLTzdeU
-	 nVbvPb96uknT2TLV2GhaKBIWebf84MZXro4T/ujY=
+	b=TL8bWMk6YxDgJSDbQ681JMkrFkWD5VYHP5+dd6I5c9HMaoAquo4q0uqPcr3Qu61/t
+	 MgCw03MqVXWvM2VvxQu5HV36VkN48aQnX4VOoC0OU5W7TS/6c0CxN2qa9pAInhv5jC
+	 n3K8OqE5izzpWx70oI0HJhKAnnjFIqOn9eEJFwe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>,
+	Scott Haiden <scott.b.haiden@gmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/122] flexfiles/pNFS: fix NULL checks on result of ff_layout_choose_ds_for_read
-Date: Tue, 30 Sep 2025 16:45:37 +0200
-Message-ID: <20250930143823.229211231@linuxfoundation.org>
+Subject: [PATCH 5.10 007/122] NFSv4: Dont clear capabilities that wont be reset
+Date: Tue, 30 Sep 2025 16:45:38 +0200
+Message-ID: <20250930143823.274940227@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -52,87 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5a46d2339a5ae268ede53a221f20433d8ea4f2f9 ]
+[ Upstream commit 31f1a960ad1a14def94fa0b8c25d62b4c032813f ]
 
-Recent commit f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS
-errors") has changed the error return type of ff_layout_choose_ds_for_read() from
-NULL to an error pointer. However, not all code paths have been updated
-to match the change. Thus, some non-NULL checks will accept error pointers
-as a valid return value.
+Don't clear the capabilities that are not going to get reset by the call
+to _nfs4_server_capabilities().
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: f06bedfa62d5 ("pNFS/flexfiles: don't attempt pnfs on fatal DS errors")
-Signed-off-by: Tigran Mkrtchyan <tigran.mkrtchyan@desy.de>
+Reported-by: Scott Haiden <scott.b.haiden@gmail.com>
+Fixes: b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a new filesystem")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ fs/nfs/nfs4proc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
-index 57150b27c0fd2..43aefff2e6b06 100644
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -750,8 +750,11 @@ ff_layout_choose_ds_for_read(struct pnfs_layout_segment *lseg,
- 			continue;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 973b708ff3328..c094413c17541 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3935,7 +3935,6 @@ int nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *fhandle)
+ 	};
+ 	int err;
  
- 		if (check_device &&
--		    nfs4_test_deviceid_unavailable(&mirror->mirror_ds->id_node))
-+		    nfs4_test_deviceid_unavailable(&mirror->mirror_ds->id_node)) {
-+			// reinitialize the error state in case if this is the last iteration
-+			ds = ERR_PTR(-EINVAL);
- 			continue;
-+		}
- 
- 		*best_idx = idx;
- 		break;
-@@ -781,7 +784,7 @@ ff_layout_choose_best_ds_for_read(struct pnfs_layout_segment *lseg,
- 	struct nfs4_pnfs_ds *ds;
- 
- 	ds = ff_layout_choose_valid_ds_for_read(lseg, start_idx, best_idx);
--	if (ds)
-+	if (!IS_ERR(ds))
- 		return ds;
- 	return ff_layout_choose_any_ds_for_read(lseg, start_idx, best_idx);
- }
-@@ -795,7 +798,7 @@ ff_layout_get_ds_for_read(struct nfs_pageio_descriptor *pgio,
- 
- 	ds = ff_layout_choose_best_ds_for_read(lseg, pgio->pg_mirror_idx,
- 					       best_idx);
--	if (ds || !pgio->pg_mirror_idx)
-+	if (!IS_ERR(ds) || !pgio->pg_mirror_idx)
- 		return ds;
- 	return ff_layout_choose_best_ds_for_read(lseg, 0, best_idx);
- }
-@@ -856,7 +859,7 @@ ff_layout_pg_init_read(struct nfs_pageio_descriptor *pgio,
- 	req->wb_nio = 0;
- 
- 	ds = ff_layout_get_ds_for_read(pgio, &ds_idx);
--	if (!ds) {
-+	if (IS_ERR(ds)) {
- 		if (!ff_layout_no_fallback_to_mds(pgio->pg_lseg))
- 			goto out_mds;
- 		pnfs_generic_pg_cleanup(pgio);
-@@ -1066,11 +1069,13 @@ static void ff_layout_resend_pnfs_read(struct nfs_pgio_header *hdr)
- {
- 	u32 idx = hdr->pgio_mirror_idx + 1;
- 	u32 new_idx = 0;
-+	struct nfs4_pnfs_ds *ds;
- 
--	if (ff_layout_choose_any_ds_for_read(hdr->lseg, idx, &new_idx))
--		ff_layout_send_layouterror(hdr->lseg);
--	else
-+	ds = ff_layout_choose_any_ds_for_read(hdr->lseg, idx, &new_idx);
-+	if (IS_ERR(ds))
- 		pnfs_error_mark_layout_for_return(hdr->inode, hdr->lseg);
-+	else
-+		ff_layout_send_layouterror(hdr->lseg);
- 	pnfs_read_resend_pnfs(hdr, new_idx);
- }
- 
+-	nfs_server_set_init_caps(server);
+ 	do {
+ 		err = nfs4_handle_exception(server,
+ 				_nfs4_server_capabilities(server, fhandle),
 -- 
 2.51.0
 
