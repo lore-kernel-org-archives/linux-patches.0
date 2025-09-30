@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE7020468D;
-	Tue, 30 Sep 2025 15:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD083043B8;
+	Tue, 30 Sep 2025 15:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759246159; cv=none; b=ENwLzRsYHA4sbFGmcykI+B6DIgvgS90EseCjarUrXDmRUqQTlL7WXgR3SBmOfgAorq+jYGGopVIliEYh0hX7unVj+9FHdolVk64PQswgjPsyUPldctBBIjWjJ+sTJrxwzSd8aQiVRZ+ndML7rEsBEk0DBRDzmO4WEVXCaGQj+t4=
+	t=1759246162; cv=none; b=p6ZgO2oBM45T4D4tG1PJhsIuRMLw5qyGh2hAvzq1Nif7j+lHMHwEfjCJ9XIartj8Puo+nl1Pp3jIKTWBu1XwAHcuE29pRb5eR8Get8BJX2KrX830chzkXEfBfylx5GinpuKTDGq7HGK78xeXzGsvQ2vzAQyKGR/EUT3QzVWzoJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759246159; c=relaxed/simple;
-	bh=5dDKugh/54At+e11E2cMLzm4iLMtecHvsdZvmt6rKAc=;
+	s=arc-20240116; t=1759246162; c=relaxed/simple;
+	bh=Rsa01uu6rAgYSaXZwZaGHpBnqviSiBgY5/nUjGCsKsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxvlv62c9chwbWTKEZGFu3aLJW20AcyjWVM9/l7LjwIn2+G1xwoby3hNYhGru3n7viFSAalZxe0kYvpfl2XpDm+7FMthglUXgG507P20/rOkUi+oPswNEfUNa9ERMMcZ09baqgDSZm1e6QK76gQ3HQ+qtbMsBzYTdOkN6cZblww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBOwwkwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cADChJPCoGn2MDgTdvLo8PicBDOK4+uOXd5xhZbFC+QCB8to21zG4OOHWy/qBp5Thju16ZkLkl7K/AQLOmdWD3yuqokM1OKNgYqhBUpu2qD+LBJBnyYdIhf4Lc3UWxGMFhAPylZBoS3ebFbK3qc1/7ed0jTyyq2e++EUmlClUJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7N0orK7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBOwwkwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9290DC4CEF0;
-	Tue, 30 Sep 2025 15:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7N0orK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7611BC4CEF0;
+	Tue, 30 Sep 2025 15:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759246159;
-	bh=5dDKugh/54At+e11E2cMLzm4iLMtecHvsdZvmt6rKAc=;
+	s=korg; t=1759246161;
+	bh=Rsa01uu6rAgYSaXZwZaGHpBnqviSiBgY5/nUjGCsKsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBOwwkwisXf0FbylEZhDJrTBQzpfXtYWBwo0Iv6SNHSWbyvjzXvxLUpKyIsdhbl5p
-	 JrMDv5JevCPyk1cCyus6S3K7B8S17uWTCEVWO0ft9CrOkIEvaXvsb7m2pLPC2wqZwa
-	 RsW7TQijGDENCxMtmFsN6q0bUuf1n2ezFv8ScHys=
+	b=r7N0orK79BzfV6tQ8AmvQvZaZ5MDPZExW4RcjTsERxRpDCPYIgMsgqDlEXpkFXTnQ
+	 YjsjXjQ9ahIbwx3f88I2XI/s9icR74u88TIJCvoHiTKbg/Xapi6lfQn0nUVHPIR3EC
+	 0Euh5iItpUUz1x7wm3oXm9xfkmiH2ysCPQQpAwFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 40/89] can: etas_es58x: populate ndo_change_mtu() to prevent buffer overflow
-Date: Tue, 30 Sep 2025 16:47:54 +0200
-Message-ID: <20250930143823.583552383@linuxfoundation.org>
+Subject: [PATCH 6.12 31/89] cpufreq: Initialize cpufreq-based invariance before subsys
+Date: Tue, 30 Sep 2025 16:47:45 +0200
+Message-ID: <20250930143823.196811681@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.852512002@linuxfoundation.org>
 References: <20250930143821.852512002@linuxfoundation.org>
@@ -51,96 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 38c0abad45b190a30d8284a37264d2127a6ec303 ]
+[ Upstream commit 8ffe28b4e8d8b18cb2f2933410322c24f039d5d6 ]
 
-Sending an PF_PACKET allows to bypass the CAN framework logic and to
-directly reach the xmit() function of a CAN driver. The only check
-which is performed by the PF_PACKET framework is to make sure that
-skb->len fits the interface's MTU.
+commit 2a6c72738706 ("cpufreq: Initialize cpufreq-based
+frequency-invariance later") postponed the frequency invariance
+initialization to avoid disabling it in the error case.
+This isn't locking safe, instead move the initialization up before
+the subsys interface is registered (which will rebuild the
+sched_domains) and add the corresponding disable on the error path.
 
-Unfortunately, because the etas_es58x driver does not populate its
-net_device_ops->ndo_change_mtu(), it is possible for an attacker to
-configure an invalid MTU by doing, for example:
+Observed lockdep without this patch:
+[    0.989686] ======================================================
+[    0.989688] WARNING: possible circular locking dependency detected
+[    0.989690] 6.17.0-rc4-cix-build+ #31 Tainted: G S
+[    0.989691] ------------------------------------------------------
+[    0.989692] swapper/0/1 is trying to acquire lock:
+[    0.989693] ffff800082ada7f8 (sched_energy_mutex){+.+.}-{4:4}, at: rebuild_sched_domains_energy+0x30/0x58
+[    0.989705]
+               but task is already holding lock:
+[    0.989706] ffff000088c89bc8 (&policy->rwsem){+.+.}-{4:4}, at: cpufreq_online+0x7f8/0xbe0
+[    0.989713]
+               which lock already depends on the new lock.
 
-  $ ip link set can0 mtu 9999
-
-After doing so, the attacker could open a PF_PACKET socket using the
-ETH_P_CANXL protocol:
-
-	socket(PF_PACKET, SOCK_RAW, htons(ETH_P_CANXL));
-
-to inject a malicious CAN XL frames. For example:
-
-	struct canxl_frame frame = {
-		.flags = 0xff,
-		.len = 2048,
-	};
-
-The CAN drivers' xmit() function are calling can_dev_dropped_skb() to
-check that the skb is valid, unfortunately under above conditions, the
-malicious packet is able to go through can_dev_dropped_skb() checks:
-
-  1. the skb->protocol is set to ETH_P_CANXL which is valid (the
-     function does not check the actual device capabilities).
-
-  2. the length is a valid CAN XL length.
-
-And so, es58x_start_xmit() receives a CAN XL frame which it is not
-able to correctly handle and will thus misinterpret it as a CAN(FD)
-frame.
-
-This can result in a buffer overflow. For example, using the es581.4
-variant, the frame will be dispatched to es581_4_tx_can_msg(), go
-through the last check at the beginning of this function:
-
-	if (can_is_canfd_skb(skb))
-		return -EMSGSIZE;
-
-and reach this line:
-
-	memcpy(tx_can_msg->data, cf->data, cf->len);
-
-Here, cf->len corresponds to the flags field of the CAN XL frame. In
-our previous example, we set canxl_frame->flags to 0xff. Because the
-maximum expected length is 8, a buffer overflow of 247 bytes occurs!
-
-Populate net_device_ops->ndo_change_mtu() to ensure that the
-interface's MTU can not be set to anything bigger than CAN_MTU or
-CANFD_MTU (depending on the device capabilities). By fixing the root
-cause, this prevents the buffer overflow.
-
-Fixes: 8537257874e9 ("can: etas_es58x: add core support for ETAS ES58X CAN USB interfaces")
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-1-0d1cada9393b@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 2a6c72738706 ("cpufreq: Initialize cpufreq-based frequency-invariance later")
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/etas_es58x/es58x_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
-index 71f24dc0a9271..4fc9bed0d2e1e 100644
---- a/drivers/net/can/usb/etas_es58x/es58x_core.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
-@@ -7,7 +7,7 @@
-  *
-  * Copyright (c) 2019 Robert Bosch Engineering and Business Solutions. All rights reserved.
-  * Copyright (c) 2020 ETAS K.K.. All rights reserved.
-- * Copyright (c) 2020-2022 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-+ * Copyright (c) 2020-2025 Vincent Mailhol <mailhol@kernel.org>
-  */
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index bd55c23563035..9600a96f91176 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2973,6 +2973,15 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 			goto err_null_driver;
+ 	}
  
- #include <linux/unaligned.h>
-@@ -1977,6 +1977,7 @@ static const struct net_device_ops es58x_netdev_ops = {
- 	.ndo_stop = es58x_stop,
- 	.ndo_start_xmit = es58x_start_xmit,
- 	.ndo_eth_ioctl = can_eth_ioctl_hwts,
-+	.ndo_change_mtu = can_change_mtu,
- };
++	/*
++	 * Mark support for the scheduler's frequency invariance engine for
++	 * drivers that implement target(), target_index() or fast_switch().
++	 */
++	if (!cpufreq_driver->setpolicy) {
++		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
++		pr_debug("cpufreq: supports frequency invariance\n");
++	}
++
+ 	ret = subsys_interface_register(&cpufreq_interface);
+ 	if (ret)
+ 		goto err_boost_unreg;
+@@ -2994,21 +3003,14 @@ int cpufreq_register_driver(struct cpufreq_driver *driver_data)
+ 	hp_online = ret;
+ 	ret = 0;
  
- static const struct ethtool_ops es58x_ethtool_ops = {
+-	/*
+-	 * Mark support for the scheduler's frequency invariance engine for
+-	 * drivers that implement target(), target_index() or fast_switch().
+-	 */
+-	if (!cpufreq_driver->setpolicy) {
+-		static_branch_enable_cpuslocked(&cpufreq_freq_invariance);
+-		pr_debug("supports frequency invariance");
+-	}
+-
+ 	pr_debug("driver %s up and running\n", driver_data->name);
+ 	goto out;
+ 
+ err_if_unreg:
+ 	subsys_interface_unregister(&cpufreq_interface);
+ err_boost_unreg:
++	if (!cpufreq_driver->setpolicy)
++		static_branch_disable_cpuslocked(&cpufreq_freq_invariance);
+ 	remove_boost_sysfs_file();
+ err_null_driver:
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
 -- 
 2.51.0
 
