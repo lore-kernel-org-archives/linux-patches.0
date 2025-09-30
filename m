@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0178305045;
-	Tue, 30 Sep 2025 14:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FD830594A;
+	Tue, 30 Sep 2025 14:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244229; cv=none; b=OUJuHjzPl8q4u3Kb5769Dsg7eVGxJERJwMndsY22sB1+gxFytiNfeBDcuq6T5CaQXzIoTl/EWVDB8LEWj/NBXRjNp3nV2fL+QBlmFxLAeP5tAgRf1ZSQousRzfPNuo2lAgIC4YJAtLkAInZU4kBixMRlJiVxtgrK3jSVDmyf7FQ=
+	t=1759244234; cv=none; b=TdXx3B7++GX72Ss7eJ+BIVZBils33jDkMpp5CfVVkLAiuNyA1995luYpgPsBpym+IhLvxss/P+66qhtdyDo6t2DROyHCcoX8nfUAD9q/OT3ZRapKz1jJBi8KYAZDTSlebzdrIljeqVPoAdqqbX1IPmuUhn1tmGo3w6p4IF+Y2q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244229; c=relaxed/simple;
-	bh=ueJcc9tk9r6eXY3/YhQP17n3rY4h8T7v/Lhzx7/OU3I=;
+	s=arc-20240116; t=1759244234; c=relaxed/simple;
+	bh=agdfvtNKSQPiZ+1VQaiSSEPjKZUUywTk/xV/mnF9AD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6eEF7Lk8/RMFcYJOD/cdz9X12xEyieL/gccMiQ3BSon7b5KdnVqcGeXym3YQYF/zSa09ea5n/6KZ+zeBWRFpqvj0mozREc2X++Mw9nC3TBqnDw0SvegKtGmL7OkTncAE7QUlaySlq9bYtCNARXx0KFiczPlkp+TYBliGa0ce/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRzDaDt/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QkXl4JkteJFKRK9WTuOBQUhQRR7+EL25VWWuOdaQHWzLbltEejJ9PQ7c4n1DGpwof36EXZGc/iyT9DNLnvVkzOG+AsMt/d2JHRF3G+cpWUIGtl0rcDz7Kfith0bHlLvGhsa2N6hS8JdZYgG6Y3ACAx/cRRKyHryc0L2bsOXTq+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2l0HpVif; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRzDaDt/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2060FC113D0;
-	Tue, 30 Sep 2025 14:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2l0HpVif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA1FC4CEF0;
+	Tue, 30 Sep 2025 14:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244229;
-	bh=ueJcc9tk9r6eXY3/YhQP17n3rY4h8T7v/Lhzx7/OU3I=;
+	s=korg; t=1759244233;
+	bh=agdfvtNKSQPiZ+1VQaiSSEPjKZUUywTk/xV/mnF9AD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRzDaDt/uZjSsJ0+tdz+Nqzu2eSkD/7C97iY9nTp/dUTH6X8lTSJI1bgHY34U5yQF
-	 DnK6m0SSxu9D32v95gRjgZt+b1+Ga2OJWwtHh+VkXG07EQsdvFHzLyLNfvI8VUIQzH
-	 YPizCxX9N7kgc/r5k1yjrSkSWJzmsng4k12AtSsg=
+	b=2l0HpVifRiziJM5fhpLlLtSC4ScvAH6nJiYdAWrhQTkoHAq4aNYwzVyhJBM84+yYB
+	 4LlyCN3v7EQDcRSH+m8DbQx7iBFDwYpnTHD1n4axzMkWxDYFjT8196ghB0wIO0rtYo
+	 JWSdGA5fdvL53HmxYaS0VEMw+mieiDcHEyoaRAxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Qi Xi <xiqi2@huawei.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/122] drm: bridge: cdns-mhdp8546: Fix missing mutex unlock on error path
-Date: Tue, 30 Sep 2025 16:46:38 +0200
-Message-ID: <20250930143825.747682767@linuxfoundation.org>
+Subject: [PATCH 5.10 050/122] um: virtio_uml: Fix use-after-free after put_device in probe
+Date: Tue, 30 Sep 2025 16:46:21 +0200
+Message-ID: <20250930143825.052095962@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -53,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 288dac9fb6084330d968459c750c838fd06e10e6 ]
+[ Upstream commit 7ebf70cf181651fe3f2e44e95e7e5073d594c9c0 ]
 
-Add missing mutex unlock before returning from the error path in
-cdns_mhdp_atomic_enable().
+When register_virtio_device() fails in virtio_uml_probe(),
+the code sets vu_dev->registered = 1 even though
+the device was not successfully registered.
+This can lead to use-after-free or other issues.
 
-Fixes: 935a92a1c400 ("drm: bridge: cdns-mhdp8546: Fix possible null pointer dereference")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250904034447.665427-1-xiqi2@huawei.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 04e5b1fb0183 ("um: virtio: Remove device on disconnect")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 6 ++++--
+ arch/um/drivers/virtio_uml.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index ae99d04f00456..5876589d42b7d 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -1978,8 +1978,10 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
- 	mhdp_state = to_cdns_mhdp_bridge_state(new_state);
+diff --git a/arch/um/drivers/virtio_uml.c b/arch/um/drivers/virtio_uml.c
+index d5d768188b3ba..0178d33e59469 100644
+--- a/arch/um/drivers/virtio_uml.c
++++ b/arch/um/drivers/virtio_uml.c
+@@ -1129,10 +1129,12 @@ static int virtio_uml_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, vu_dev);
  
- 	mhdp_state->current_mode = drm_mode_duplicate(bridge->dev, mode);
--	if (!mhdp_state->current_mode)
--		return;
-+	if (!mhdp_state->current_mode) {
-+		ret = -EINVAL;
-+		goto out;
+ 	rc = register_virtio_device(&vu_dev->vdev);
+-	if (rc)
++	if (rc) {
+ 		put_device(&vu_dev->vdev.dev);
++		return rc;
 +	}
+ 	vu_dev->registered = 1;
+-	return rc;
++	return 0;
  
- 	drm_mode_set_name(mhdp_state->current_mode);
- 
+ error_init:
+ 	os_close_file(vu_dev->sock);
 -- 
 2.51.0
 
