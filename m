@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61EE8F7D;
-	Tue, 30 Sep 2025 14:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD7A226CF7;
+	Tue, 30 Sep 2025 14:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759243995; cv=none; b=faxg+uKphv4yGkj3O6/R7667o3spz4kh5nOoJrNFzqajPeHJs0dMkfbwTBBVGC/eDYLTYR+aeEoztH9vDzaSncJu6ZVC3A2HFXa9vTKvmjcw+8JJYSiVdeCmF9VUSeOHjpJh/SEvw0rdB5nRfTxVDg+TfP/gun1aj1IpS755SHk=
+	t=1759244001; cv=none; b=Gs4ig/TAh7amLm62wg0Nr2QLQul8GK79UL+s9kJKUFAZaQwwATgOOPjwa/MlLHqVA/RtcBQWP9E3WBYYedIxcUoUg9PRxgFm7pM2gZwe4rBlqufFjL+p2FsyKwsVZb9sn8p0cZbExAj6+zT014FAkVYXZUUdSNN8SuDnnfP+gjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759243995; c=relaxed/simple;
-	bh=w0TkskhZalLCl/EhklwXHt4MU1oc3cU44n7U68B+7xw=;
+	s=arc-20240116; t=1759244001; c=relaxed/simple;
+	bh=VNbTrl+if6W0qk97CejhmpPwBVS6t1g4XkKMedR4NA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1+yDM5puvZ+vtDoWKovRnVXW97EcBSsJEZzblA9d7XpgVcMbZCeJpH9QccU/H8bqn27R4cRN75muMBlyOC7bp9drHfW2SSLZjf9jXkcw1dx2016C3x/k8eoOoEvZNSKxIcsyiyuzer9Wrqba+tNJthLXpCIJdWYPCaqHftMNew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FexY7CCh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yp3oa/lwQqgm1CdCeGqQcowvY2gsxhd7LVBOjT7QNmFc02G/aZJkri3QiARZDudQbt7jgecmDBF0qdgAa7WUTtg4Nd798Mpo6TtLEiDSmHIT1b4Tn3MK2Ys+7jCy5Mqy9VfzgnW1s3tvGvMvjSh+0RfE3HaPHM8+r9Mnn3FnOR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIEgJ38Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FexY7CCh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A6AC4CEF0;
-	Tue, 30 Sep 2025 14:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIEgJ38Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A813C4CEF0;
+	Tue, 30 Sep 2025 14:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759243995;
-	bh=w0TkskhZalLCl/EhklwXHt4MU1oc3cU44n7U68B+7xw=;
+	s=korg; t=1759243998;
+	bh=VNbTrl+if6W0qk97CejhmpPwBVS6t1g4XkKMedR4NA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FexY7CChRnqty3OW0vAro4lDy4kEtoW06WS9bRLFedtbP/1LbEr0VtdQ6xkWBbVP8
-	 j4zB66YNe8nGeU0c38h1ZEi7f5Ht7ySW4Xo2RvXtFnMrWAybsyq5FJYoD7tSDEq7Et
-	 aG95giJQjXPL+IC8ys7SXIdawLmc5sda4pRiYZwE=
+	b=pIEgJ38Qhp0gxku47D0pw9/MUC4p5wSswIvshvS91MHH1yzJgo25/R6ctZma4J8af
+	 skBn2FIVGPMo9L0ohIEATWC46BqkPULHJ+2wcy75udo6CA8kHKrVrKDCdHojk2+gPE
+	 0WCdtE/C2cNnM7Fsdi5A201jwHE/idvw0TtRMhzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lukasz Czapnik <lukasz.czapnik@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 61/81] ALSA: usb-audio: Fix build with CONFIG_INPUT=n
-Date: Tue, 30 Sep 2025 16:47:03 +0200
-Message-ID: <20250930143822.233185361@linuxfoundation.org>
+Subject: [PATCH 5.4 79/81] i40e: fix validation of VF state in get resources
+Date: Tue, 30 Sep 2025 16:47:21 +0200
+Message-ID: <20250930143823.027733471@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143819.654157320@linuxfoundation.org>
 References: <20250930143819.654157320@linuxfoundation.org>
@@ -52,61 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Lukasz Czapnik <lukasz.czapnik@intel.com>
 
-[ Upstream commit d0630a0b80c08530857146e3bf183a7d6b743847 ]
+[ Upstream commit 877b7e6ffc23766448236e8732254534c518ba42 ]
 
-The recent addition of DualSense mixer quirk relies on the input
-device handle, and the build can fail if CONFIG_INPUT isn't set.
-Put (rather ugly) workarounds to wrap with IS_REACHABLE() for avoiding
-the build error.
+VF state I40E_VF_STATE_ACTIVE is not the only state in which
+VF is actually active so it should not be used to determine
+if a VF is allowed to obtain resources.
 
-Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202506130733.gnPKw2l3-lkp@intel.com/
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20250613081543.7404-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Use I40E_VF_STATE_RESOURCES_LOADED that is set only in
+i40e_vc_get_vf_resources_msg() and cleared during reset.
+
+Fixes: 61125b8be85d ("i40e: Fix failed opcode appearing if handling messages from VF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    7 ++++++-
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h |    3 ++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 833f894a692c7..974926d907c2f 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -527,6 +527,7 @@ static int snd_emu0204_controls_create(struct usb_mixer_interface *mixer)
- 					  &snd_emu0204_control, NULL);
- }
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -1389,6 +1389,7 @@ static void i40e_trigger_vf_reset(struct
+ 	 * functions that may still be running at this point.
+ 	 */
+ 	clear_bit(I40E_VF_STATE_INIT, &vf->vf_states);
++	clear_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
  
-+#if IS_REACHABLE(CONFIG_INPUT)
- /*
-  * Sony DualSense controller (PS5) jack detection
-  *
-@@ -783,6 +784,7 @@ static int snd_dualsense_controls_create(struct usb_mixer_interface *mixer)
+ 	/* In the case of a VFLR, the HW has already reset the VF and we
+ 	 * just need to clean up, so don't hit the VFRTRIG register.
+@@ -2062,7 +2063,10 @@ static int i40e_vc_get_vf_resources_msg(
+ 	size_t len = 0;
+ 	int ret;
  
- 	return snd_dualsense_jack_create(mixer, "Headset Mic Jack", false);
- }
-+#endif /* IS_REACHABLE(CONFIG_INPUT) */
+-	if (!i40e_sync_vf_state(vf, I40E_VF_STATE_INIT)) {
++	i40e_sync_vf_state(vf, I40E_VF_STATE_INIT);
++
++	if (!test_bit(I40E_VF_STATE_INIT, &vf->vf_states) ||
++	    test_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states)) {
+ 		aq_ret = I40E_ERR_PARAM;
+ 		goto err;
+ 	}
+@@ -2158,6 +2162,7 @@ static int i40e_vc_get_vf_resources_msg(
+ 				vf->default_lan_addr.addr);
+ 	}
+ 	set_bit(I40E_VF_STATE_ACTIVE, &vf->vf_states);
++	set_bit(I40E_VF_STATE_RESOURCES_LOADED, &vf->vf_states);
  
- /* ASUS Xonar U1 / U3 controls */
+ err:
+ 	/* send the response back to the VF */
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
+@@ -41,7 +41,8 @@ enum i40e_vf_states {
+ 	I40E_VF_STATE_MC_PROMISC,
+ 	I40E_VF_STATE_UC_PROMISC,
+ 	I40E_VF_STATE_PRE_ENABLE,
+-	I40E_VF_STATE_RESETTING
++	I40E_VF_STATE_RESETTING,
++	I40E_VF_STATE_RESOURCES_LOADED,
+ };
  
-@@ -2639,10 +2641,12 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
- 		err = snd_emu0204_controls_create(mixer);
- 		break;
- 
-+#if IS_REACHABLE(CONFIG_INPUT)
- 	case USB_ID(0x054c, 0x0ce6): /* Sony DualSense controller (PS5) */
- 	case USB_ID(0x054c, 0x0df2): /* Sony DualSense Edge controller (PS5) */
- 		err = snd_dualsense_controls_create(mixer);
- 		break;
-+#endif /* IS_REACHABLE(CONFIG_INPUT) */
- 
- 	case USB_ID(0x0763, 0x2030): /* M-Audio Fast Track C400 */
- 	case USB_ID(0x0763, 0x2031): /* M-Audio Fast Track C400 */
--- 
-2.51.0
-
+ /* VF capabilities */
 
 
