@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4952FD1DD;
-	Tue, 30 Sep 2025 15:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E7D27056D;
+	Tue, 30 Sep 2025 15:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245796; cv=none; b=KsnZiSGaaTejpiPHkC55Q4O6y19QvAwiBbgMFgQLQhmzYwwl1sgRbz2mho+tSNAYm+FrifDYZ6pEIUB8zkPT4mxwZvnQjLOXu0Fx2+Q53gKrjY8O5DPgyg6SERr2VN7HGDem0DqgM6PGIW4gLIBMN9koOMu2/MI930Hs54t+LFU=
+	t=1759245800; cv=none; b=do6f0E7EkqTeZ/vIR5/qFPiAu3ffrjt9JZS3SDuh/Ir3YP3Bo6L6teIFP1lWGidYCmcJasYWwB1kFy9w4+iE78cW0pVdNv0i8tVo9OiCF2iqtdu80KMZOujdD7TN3BDsLki8IJmmMQ4i6tUnexqqd5uOcupk43xbiKkrBnOeF5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245796; c=relaxed/simple;
-	bh=OaML9MWwHuLo1pp4jiI9zYTOs1f+mxGHblojGl6Rces=;
+	s=arc-20240116; t=1759245800; c=relaxed/simple;
+	bh=7//x2NvAvgbljN05Ks6r4it1DpagUQppYEhj8ydA+9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bM4mbDHRIn9wUuMBIE4foRjKPJN6UfVKxlTs7hDd9xf3dP1hc+q+k59oLyNiTdxwoEIap1glvJ0QiTUjwG9GcIYQXkZrJznivNXj5NSI+MKM896s2NAQxTaV/YpkUvE04ENpZpTXKw+rRcomc3/bA2QANwqK4GJqGFtV+roWWJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMXrhL7e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8A+VPvga0vR1YdWA25q6p0PcBwIyUPoCkmWsIMA7Xhe1eVsADOawSKt7CwbO53qX9VnwsQiXrvmvFVIITlgzRj04tXnesVSqPfqu2L6IC4m9/4oktp7RJ85flrnMzpW6zeK6SsPB0QRvitCACyb8tk97yVGijwRebL86ZQhwAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCzAy8E4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMXrhL7e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4A2C4CEF0;
-	Tue, 30 Sep 2025 15:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCzAy8E4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA92C4CEF0;
+	Tue, 30 Sep 2025 15:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245796;
-	bh=OaML9MWwHuLo1pp4jiI9zYTOs1f+mxGHblojGl6Rces=;
+	s=korg; t=1759245799;
+	bh=7//x2NvAvgbljN05Ks6r4it1DpagUQppYEhj8ydA+9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMXrhL7edvUASIS+kP5+ApUjSApGoBummvLaMsboZcFhyDxt8vcPtcOegaDGiIc1U
-	 juJFkA4gg/cdpGI1Z7f2dyNJcQV6tIwCsmNVkF7koNAjBmo24qhtV1CL2rHAIFXc+x
-	 itMMb9eSwxNxhWZU9UNDTCsCWzjLLxRd/icUeUoo=
+	b=kCzAy8E4cUL9k+Qnxzc1qJlpsVApUZApabExgS314lSwe1qrdgiwy1ZQDt1apWmRZ
+	 vor6yx134Mxos4sUdZs++gmslqScCAR8bISw86J19NzPbO4av/TxnPNCVYYJsKvMfV
+	 eVK0S7Vx512HiJxXAP1VQKr+djkebWIIfitOgSfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zabelin Nikita <n.zabelin@mt-integration.ru>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 51/91] octeontx2-pf: Fix potential use after free in otx2_tc_add_flow()
-Date: Tue, 30 Sep 2025 16:47:50 +0200
-Message-ID: <20250930143823.302970654@linuxfoundation.org>
+Subject: [PATCH 6.6 52/91] drm/gma500: Fix null dereference in hdmi teardown
+Date: Tue, 30 Sep 2025 16:47:51 +0200
+Message-ID: <20250930143823.350408140@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -52,45 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Zabelin Nikita <n.zabelin@mt-integration.ru>
 
-[ Upstream commit d9c70e93ec5988ab07ad2a92d9f9d12867f02c56 ]
+[ Upstream commit 352e66900cde63f3dadb142364d3c35170bbaaff ]
 
-This code calls kfree_rcu(new_node, rcu) and then dereferences "new_node"
-and then dereferences it on the next line.  Two lines later, we take
-a mutex so I don't think this is an RCU safe region.  Re-order it to do
-the dereferences before queuing up the free.
+pci_set_drvdata sets the value of pdev->driver_data to NULL,
+after which the driver_data obtained from the same dev is
+dereferenced in oaktrail_hdmi_i2c_exit, and the i2c_dev is
+extracted from it. To prevent this, swap these calls.
 
-Fixes: 68fbff68dbea ("octeontx2-pf: Add police action for TC flower")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/aNKCL1jKwK8GRJHh@stanley.mountain
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Found by Linux Verification Center (linuxtesting.org) with Svacer.
+
+Fixes: 1b082ccf5901 ("gma500: Add Oaktrail support")
+Signed-off-by: Zabelin Nikita <n.zabelin@mt-integration.ru>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://lore.kernel.org/r/20250918150703.2562604-1-n.zabelin@mt-integration.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 2 +-
+ drivers/gpu/drm/gma500/oaktrail_hdmi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-index 46bdbee9d38ad..635cfb9a3e2c5 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -1116,7 +1116,6 @@ static int otx2_tc_add_flow(struct otx2_nic *nic,
+diff --git a/drivers/gpu/drm/gma500/oaktrail_hdmi.c b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
+index ed8626c73541c..f0ae675581d9a 100644
+--- a/drivers/gpu/drm/gma500/oaktrail_hdmi.c
++++ b/drivers/gpu/drm/gma500/oaktrail_hdmi.c
+@@ -726,8 +726,8 @@ void oaktrail_hdmi_teardown(struct drm_device *dev)
  
- free_leaf:
- 	otx2_tc_del_from_flow_list(flow_cfg, new_node);
--	kfree_rcu(new_node, rcu);
- 	if (new_node->is_act_police) {
- 		mutex_lock(&nic->mbox.lock);
- 
-@@ -1136,6 +1135,7 @@ static int otx2_tc_add_flow(struct otx2_nic *nic,
- 
- 		mutex_unlock(&nic->mbox.lock);
- 	}
-+	kfree_rcu(new_node, rcu);
- 
- 	return rc;
- }
+ 	if (hdmi_dev) {
+ 		pdev = hdmi_dev->dev;
+-		pci_set_drvdata(pdev, NULL);
+ 		oaktrail_hdmi_i2c_exit(pdev);
++		pci_set_drvdata(pdev, NULL);
+ 		iounmap(hdmi_dev->regs);
+ 		kfree(hdmi_dev);
+ 		pci_dev_put(pdev);
 -- 
 2.51.0
 
