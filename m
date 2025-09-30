@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E810B1EE02F;
-	Tue, 30 Sep 2025 15:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997C92FCBFC;
+	Tue, 30 Sep 2025 15:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244516; cv=none; b=Oy2JxggAOnSoS/kAU452RI830C7F8gEWmcQK7+goJEN1NPBtg41RPTn1TIn1gZJvDziOIgJ9Mo/NqT+nRf9RPytyv8B7U2S0chSnibGAw6edek+ZVKUCh9cfpIDO04tTNYrcXBfXDC3wbCwazvIJ9rdcVC+E83YWkAsf/UjpSNs=
+	t=1759244518; cv=none; b=jBetkwByDyM4CZBlctvilNpdb4hVXbzPFWLSDnBbRAuRdsUKaCBOfwLl7lczzH/4/YTe5SlTsYIMQKMkJ8I5kMsw5vbRoFZi3CyXMR2eQ+t3d4OXsvu/meCm3W5vaaIbtGJAxq8AstuV41T8jCJahISumOUHAr6F9Cpwdh3YCQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244516; c=relaxed/simple;
-	bh=5bGP7PxUcHk2DD+HlSQMCFcoAbuuZCvXLroKRBCnlbE=;
+	s=arc-20240116; t=1759244518; c=relaxed/simple;
+	bh=oc5ux2SZ4rn8tQM3e9bxXWn0W6hHq/mYU1Rn+ubHygE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXnl3eiPoawCHYy5cJvP0Tym8ySn1iZxS9WwGjoTM5dhJmXNA9HVRParFgz8b3t0v16SJnVz4t4z6+c3HellZHJniuEE2yT95M0molGTO5O5ObuzI39pnF5xJsWvR8OCIAgMYQGs4tfISTZpOo3SxUtrFQz7G+22QCnsqPYnHek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AuK1DWyp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SozoHb9oyXU43ffVOkYC8Ky8lNgEEs4cv04YUVx9c5qYywBu1ZBIq897CebkGOEupF04e5XFVng1fMyLhkom/fS75CcsOb88StctLA2Lnb4+4JDnubV7xQh4YT8bSGrvqF4jS0Mo0nhZWcOwLU9Ft0ZzugblQ+va2u7yce8lpJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Z8gLyzW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AuK1DWyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A952C4CEF0;
-	Tue, 30 Sep 2025 15:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Z8gLyzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7723CC4CEF0;
+	Tue, 30 Sep 2025 15:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244514;
-	bh=5bGP7PxUcHk2DD+HlSQMCFcoAbuuZCvXLroKRBCnlbE=;
+	s=korg; t=1759244518;
+	bh=oc5ux2SZ4rn8tQM3e9bxXWn0W6hHq/mYU1Rn+ubHygE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AuK1DWypoHUwRrwTAVlQkK215t7B809xtddSwkjDn5k3zCT46YYNU6pzg42WmfNpP
-	 D748wcBF+tc5RTPT5smK2aDGiBBW60+D3Wmlitv6Qxx5kjFKCFJuvcCxLvXvL2zYCj
-	 M1sTb9udCspRm+GOCVY0FdCS3nBrmGLUHVZdQQ7A=
+	b=1Z8gLyzW9WphdTkFSskAn+rGIQ2pPCyJ7oHljV1SLa0CqTAcQAW5Fs2MZwyfqVd9y
+	 X2UXSe4GU76Es7/5xaMEk2XpsgOrSR7nceq1F59JbAyNx6RrbuSR1D9VPb9PVQ74zV
+	 WTEjqsVbp06FV6DMMQJ2OU8rPjk/fH9tSNc4+qYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Chaudhari <amitchaudhari@mac.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 031/143] gpiolib: acpi: Add quirk for ASUS ProArt PX13
-Date: Tue, 30 Sep 2025 16:45:55 +0200
-Message-ID: <20250930143832.484270364@linuxfoundation.org>
+Subject: [PATCH 6.16 032/143] ALSA: usb-audio: move mixer_quirks min_mute into common quirk
+Date: Tue, 30 Sep 2025 16:45:56 +0200
+Message-ID: <20250930143832.525013821@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -53,53 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 23800ad1265f10c2bc6f42154ce4d20e59f2900e ]
+[ Upstream commit 2c3ca8cc55a3afc7a4fa99ed8f5f5d05dd2e65b3 ]
 
-The ASUS ProArt PX13 has a spurious wakeup event from the touchpad
-a few moments after entering hardware sleep.  This can be avoided
-by preventing the touchpad from being a wake source.
+We have found more and more devices that have the same problem, that
+the mixer's minimum value is muted. Accroding to pipewire's MR[1]
+and Arch Linux wiki[2], this should be a very common problem in USB
+audio devices. Move the quirk into common quirk,as a preparation of
+more devices' quirk's patch coming on the road[3].
 
-Add to the wakeup ignore list.
+1. https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/2514
+2. https://wiki.archlinux.org/index.php?title=PipeWire&oldid=804138#No_sound_from_USB_DAC_until_30%_volume
+3. On the road, in the physical sense. We have been buying ton of
+   these devices for testing the problem.
 
-Reported-by: Amit Chaudhari <amitchaudhari@mac.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4482
-Tested-by: Amit Chaudhari <amitchaudhari@mac.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/20250814183430.3887973-1-superm1@kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Link: https://patch.msgid.link/20250827-sound-quirk-min-mute-v1-1-4717aa8a4f6a@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-acpi-quirks.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/usb/mixer_quirks.c | 10 +++-------
+ sound/usb/quirks.c       | 12 ++++++++++--
+ sound/usb/usbaudio.h     |  4 ++++
+ 3 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi-quirks.c b/drivers/gpio/gpiolib-acpi-quirks.c
-index c13545dce3492..bfb04e67c4bc8 100644
---- a/drivers/gpio/gpiolib-acpi-quirks.c
-+++ b/drivers/gpio/gpiolib-acpi-quirks.c
-@@ -344,6 +344,20 @@ static const struct dmi_system_id gpiolib_acpi_quirks[] __initconst = {
- 			.ignore_interrupt = "AMDI0030:00@8",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups from TP_ATTN# pin
-+		 * Found in BIOS 5.35
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/4482
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "ProArt PX13"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "ASCP1A00:00@8",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 6b47b3145d2cf..3df537fdb9f1c 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -4608,16 +4608,12 @@ void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
+ 		if (unitid == 7 && cval->control == UAC_FU_VOLUME)
+ 			snd_dragonfly_quirk_db_scale(mixer, cval, kctl);
+ 		break;
++	}
++
+ 	/* lowest playback value is muted on some devices */
+-	case USB_ID(0x0572, 0x1b09): /* Conexant Systems (Rockwell), Inc. */
+-	case USB_ID(0x0d8c, 0x000c): /* C-Media */
+-	case USB_ID(0x0d8c, 0x0014): /* C-Media */
+-	case USB_ID(0x19f7, 0x0003): /* RODE NT-USB */
+-	case USB_ID(0x2d99, 0x0026): /* HECATE G2 GAMING HEADSET */
++	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_MIN_MUTE)
+ 		if (strstr(kctl->id.name, "Playback"))
+ 			cval->min_mute = 1;
+-		break;
+-	}
  
+ 	/* ALSA-ify some Plantronics headset control names */
+ 	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index e75b0b1df6eb2..8bc1e247cdf1a 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2199,6 +2199,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_SET_IFACE_FIRST),
+ 	DEVICE_FLG(0x0556, 0x0014, /* Phoenix Audio TMX320VC */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x05a3, 0x9420, /* ELP HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x05a7, 0x1020, /* Bose Companion 5 */
+@@ -2245,8 +2247,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0c45, 0x636b, /* Microdia JP001 USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+-	DEVICE_FLG(0x0d8c, 0x0014, /* USB Audio Device */
+-		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x0d8c, 0x000c, /* C-Media */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
++	DEVICE_FLG(0x0d8c, 0x0014, /* C-Media */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+@@ -2293,6 +2297,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	DEVICE_FLG(0x19f7, 0x0003, /* RODE NT-USB */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x19f7, 0x0035, /* RODE NT-USB+ */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x1bcf, 0x2281, /* HD Webcam */
+@@ -2353,6 +2359,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
++		   QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 158ec053dc44d..1ef4d39978df3 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -196,6 +196,9 @@ extern bool snd_usb_skip_validation;
+  *  for the given endpoint.
+  * QUIRK_FLAG_MIC_RES_16 and QUIRK_FLAG_MIC_RES_384
+  *  Set the fixed resolution for Mic Capture Volume (mostly for webcams)
++ * QUIRK_FLAG_MIXER_MIN_MUTE
++ *  Set minimum volume control value as mute for devices where the lowest
++ *  playback value represents muted state instead of minimum audible volume
+  */
+ 
+ #define QUIRK_FLAG_GET_SAMPLE_RATE	(1U << 0)
+@@ -222,5 +225,6 @@ extern bool snd_usb_skip_validation;
+ #define QUIRK_FLAG_FIXED_RATE		(1U << 21)
+ #define QUIRK_FLAG_MIC_RES_16		(1U << 22)
+ #define QUIRK_FLAG_MIC_RES_384		(1U << 23)
++#define QUIRK_FLAG_MIXER_MIN_MUTE	(1U << 24)
+ 
+ #endif /* __USBAUDIO_H */
 -- 
 2.51.0
 
