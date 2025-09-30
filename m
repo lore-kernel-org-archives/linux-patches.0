@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5906C303C9B;
-	Tue, 30 Sep 2025 14:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962F12FFDE6;
+	Tue, 30 Sep 2025 14:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244070; cv=none; b=HlYqqpVJTh+0J72Vevys8pn30z0aG88z+5aNRpstQ1mlFFKIdcxa+HmkJvz/Zr2wbENTttZV0YroqD6TzswQ8heUywfQut6/hyLXuAlS6xZs6s+MaNMC5HS4t5OEhzyqrapkxHwBcS6O7bSel/v2X8ngH9DBX1ld9u53/OtaV5M=
+	t=1759244073; cv=none; b=AWCfy5cwIMaMApdlygWklsP9qK7hYBExgCa9TItY5KyOL+0gn6eCqLoR9htbXecI+lBtJjctpRZr+IjgzPvMTI1BlRmMVWFVBq2e997FGRGR4XWS82MoLcvJVPNflOQw9kMT8LZ8gp/uBXxAHw1G2teQO+6VsBrEMYpqZQ+vna8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244070; c=relaxed/simple;
-	bh=qBawuQWqGTeOsDGC9lDxWyOTTncKO2XJiEOt4inZK1I=;
+	s=arc-20240116; t=1759244073; c=relaxed/simple;
+	bh=dNHJ8n/oHnSBnpfaDoe3CT+2wdzJbcPLcw7jEug21do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AaYCIoORaAWsQaMxe8WG7+VnNK60HckKMAruMjS0Gt+fF1xA57h4e0yBIL7IBDAI3hOnfQTtYoQZWaJirQG38OZNdATun35AfwGP0IgxaEN04ZGJGL00utPRcpuWD+IoDDNnJOKcXdpVE/PcuGkUGLHWIfR9uBHKL5YWRxQFxi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TL8bWMk6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DM8Fz8WMZpjJJFiROp4QzPyKAf/ZmIkRq+tMTuDWoiJsQ528/Yk+oORrdVTg5W8tgzUOa4LRq3egj7SFALYjQjpWGVRMs/9Na0GHWET6X+YQnwrQALx2DzCWIyM+scn1zzTOzTqn4CmKTO7z8B77HTOHVEZg2fHGpchgL4lzNZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=napoRXTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL8bWMk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D6CC16AAE;
-	Tue, 30 Sep 2025 14:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="napoRXTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8B5C113D0;
+	Tue, 30 Sep 2025 14:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244069;
-	bh=qBawuQWqGTeOsDGC9lDxWyOTTncKO2XJiEOt4inZK1I=;
+	s=korg; t=1759244073;
+	bh=dNHJ8n/oHnSBnpfaDoe3CT+2wdzJbcPLcw7jEug21do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TL8bWMk6YxDgJSDbQ681JMkrFkWD5VYHP5+dd6I5c9HMaoAquo4q0uqPcr3Qu61/t
-	 MgCw03MqVXWvM2VvxQu5HV36VkN48aQnX4VOoC0OU5W7TS/6c0CxN2qa9pAInhv5jC
-	 n3K8OqE5izzpWx70oI0HJhKAnnjFIqOn9eEJFwe8=
+	b=napoRXTxbRrXBRPtCEEHL8KpPU0y4fXiC0bOdJeJnE8176fk9CVJ3mOlkdWC92LiL
+	 gU5QUT2vy9pJLw+/hFi9USIuthXdyxZhXpkSHnxV3El4BAu9jT9gCnWMsYwjZEt/GJ
+	 ryx22uJm7yxrhjeF+6zfk+7T41Z55Z9+Nycwg1Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Haiden <scott.b.haiden@gmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/122] NFSv4: Dont clear capabilities that wont be reset
-Date: Tue, 30 Sep 2025 16:45:38 +0200
-Message-ID: <20250930143823.274940227@linuxfoundation.org>
+Subject: [PATCH 5.10 008/122] NFSv4: Clear the NFS_CAP_XATTR flag if not supported by the server
+Date: Tue, 30 Sep 2025 16:45:39 +0200
+Message-ID: <20250930143823.315126498@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 References: <20250930143822.939301999@linuxfoundation.org>
@@ -53,31 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 31f1a960ad1a14def94fa0b8c25d62b4c032813f ]
+[ Upstream commit 4fb2b677fc1f70ee642c0beecc3cabf226ef5707 ]
 
-Don't clear the capabilities that are not going to get reset by the call
-to _nfs4_server_capabilities().
+nfs_server_set_fsinfo() shouldn't assume that NFS_CAP_XATTR is unset
+on entry to the function.
 
-Reported-by: Scott Haiden <scott.b.haiden@gmail.com>
-Fixes: b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a new filesystem")
+Fixes: b78ef845c35d ("NFSv4.2: query the server for extended attribute support")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/nfs/client.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 973b708ff3328..c094413c17541 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -3935,7 +3935,6 @@ int nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *fhandle)
- 	};
- 	int err;
+diff --git a/fs/nfs/client.c b/fs/nfs/client.c
+index ac2fbbba1521a..6134101184fae 100644
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -850,6 +850,8 @@ static void nfs_server_set_fsinfo(struct nfs_server *server,
  
--	nfs_server_set_init_caps(server);
- 	do {
- 		err = nfs4_handle_exception(server,
- 				_nfs4_server_capabilities(server, fhandle),
+ 	if (fsinfo->xattr_support)
+ 		server->caps |= NFS_CAP_XATTR;
++	else
++		server->caps &= ~NFS_CAP_XATTR;
+ #endif
+ }
+ 
 -- 
 2.51.0
 
