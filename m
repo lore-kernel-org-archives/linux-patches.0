@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80DE2236EB;
-	Tue, 30 Sep 2025 15:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE99C2F9D88;
+	Tue, 30 Sep 2025 15:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245156; cv=none; b=sFo4ACMEx4c5HcCxYtmgA8VXhiGc6IGOrroDKJvWxvCFXJNV/ZxPB6bVvQxolmLkcmEZyU0+RBMmeoaxV2jJjdt49AB+S0E06HI2U+0zPN+7M79MZ7DZk8QCoenPN/G2FI5nSKWN8YgtjTXrasEECvLYMo8xU4wEBSoDO8Yx3ZE=
+	t=1759245159; cv=none; b=GRdgYJHQh9EQ9A9nfYx1xLjae05Wr9nL3WFi2V2/PnstGC9XsOiNXNd0zUCWJQL/mQCknTxfbWgvFkTPijs3rdz+R9KNgRk91HGA+JjbX5wjgDV1qVFVbPHZx6+G8uRdSKhic0mUUJLmOYI/90ICUMo+h2hOdEtvOAPz+Ezw6jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245156; c=relaxed/simple;
-	bh=CXDinBqWpp4MToYbEOjsPy+eN+lRrKGVyy4OvfD3Js8=;
+	s=arc-20240116; t=1759245159; c=relaxed/simple;
+	bh=TuoxS7gvonhSGv9OaUhGqRgPVhJliINhjD5VnwGbOVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAGBKg4AuQUF95qdfhteIhcsNLDYUgVzGk1LAu8ADa9uT5mRQGD7EiILkBAuUe8khHGLJxjXa1gZzEBLnHLS3bc2T2NfqNgHkEYAoYkXA2ldHhADH30r/t65nqvjGLc/5ssulNvUQxeYc1obI6bqtBNJPbOZVDbP5F5Kg4uMqHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqLmf1ip; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJknpWkJtPlbZgXK8bIEmjf8aXAYEjjF8jhj4kEoKBNwwrlHbRbO8JPFqutIRbU1zHfu4u3KPeLHrEJ2tWeWQhPuqpT3wxaUqUc5d+/pKn/nufMkKQ/X3cGSQ/3R+UbyFIclNRRKmrJVibcN00WiFXPRsDn4V+mBuIKU/vCWitA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXAnPTj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqLmf1ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D91CC4CEF0;
-	Tue, 30 Sep 2025 15:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXAnPTj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73602C4CEF0;
+	Tue, 30 Sep 2025 15:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245155;
-	bh=CXDinBqWpp4MToYbEOjsPy+eN+lRrKGVyy4OvfD3Js8=;
+	s=korg; t=1759245158;
+	bh=TuoxS7gvonhSGv9OaUhGqRgPVhJliINhjD5VnwGbOVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqLmf1ipQ7qshQSfIlxi4xVVljkI6ffHtusilZOROynmCyXi/+OWxqnWxGU6X5Uru
-	 Z+mPzxQMWo8SsnyD+aJbnWr9bKGwgN2r+CMX9dZOUn2LFuBJ8KxoHhIq/HVB3WBNxA
-	 7Cgmlh5ZCKSNSjdQx0A6Q9ywijzoGmGY7cWsfMGw=
+	b=rXAnPTj9PjPe5VYa75obNtQnBEw/Xlg9A0LKOHCq+dt5bBVVtnHVaKG9hJDJL3dxQ
+	 lPpDYr+bvKmJ+irH3lCnGMhzbwQTkx0uuyfVAuQ/RssIPiUEIukGaLjhUev8qnFQeR
+	 D1tEn08wZid9OLUeiWsu6ZN2E8z450EfN9dPkDLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/151] hrtimer: Remove unused function
-Date: Tue, 30 Sep 2025 16:46:24 +0200
-Message-ID: <20250930143829.757309921@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 081/151] btrfs: tree-checker: fix the incorrect inode ref size check
+Date: Tue, 30 Sep 2025 16:46:51 +0200
+Message-ID: <20250930143830.817215196@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,60 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 82ccdf062a64f3c4ac575c16179ce68edbbbe8e4 ]
+commit 96fa515e70f3e4b98685ef8cac9d737fc62f10e1 upstream.
 
-The function is defined, but not called anywhere:
+[BUG]
+Inside check_inode_ref(), we need to make sure every structure,
+including the btrfs_inode_extref header, is covered by the item.  But
+our code is incorrectly using "sizeof(iref)", where @iref is just a
+pointer.
 
-  kernel/time/hrtimer.c:1880:20: warning: unused function '__hrtimer_peek_ahead_timers'.
+This means "sizeof(iref)" will always be "sizeof(void *)", which is much
+smaller than "sizeof(struct btrfs_inode_extref)".
 
-Remove it.
+This will allow some bad inode extrefs to sneak in, defeating tree-checker.
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240322070441.29646-1-jiapeng.chong@linux.alibaba.com
-Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=8611
-Stable-dep-of: e895f8e29119 ("hrtimers: Unconditionally update target CPU base after offline timer migration")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[FIX]
+Fix the typo by calling "sizeof(*iref)", which is the same as
+"sizeof(struct btrfs_inode_extref)", and will be the correct behavior we
+want.
+
+Fixes: 71bf92a9b877 ("btrfs: tree-checker: Add check for INODE_REF")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
+ fs/btrfs/tree-checker.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 2e4b63f3c6dda..a8fbf4b1ea197 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1873,25 +1873,7 @@ void hrtimer_interrupt(struct clock_event_device *dev)
- 	tick_program_event(expires_next, 1);
- 	pr_warn_once("hrtimer: interrupt took %llu ns\n", ktime_to_ns(delta));
- }
--
--/* called with interrupts disabled */
--static inline void __hrtimer_peek_ahead_timers(void)
--{
--	struct tick_device *td;
--
--	if (!hrtimer_hres_active())
--		return;
--
--	td = this_cpu_ptr(&tick_cpu_device);
--	if (td && td->evtdev)
--		hrtimer_interrupt(td->evtdev);
--}
--
--#else /* CONFIG_HIGH_RES_TIMERS */
--
--static inline void __hrtimer_peek_ahead_timers(void) { }
--
--#endif	/* !CONFIG_HIGH_RES_TIMERS */
-+#endif /* !CONFIG_HIGH_RES_TIMERS */
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1595,10 +1595,10 @@ static int check_inode_ref(struct extent
+ 	while (ptr < end) {
+ 		u16 namelen;
  
- /*
-  * Called from run_local_timers in hardirq context every jiffy
--- 
-2.51.0
-
+-		if (unlikely(ptr + sizeof(iref) > end)) {
++		if (unlikely(ptr + sizeof(*iref) > end)) {
+ 			inode_ref_err(leaf, slot,
+ 			"inode ref overflow, ptr %lu end %lu inode_ref_size %zu",
+-				ptr, end, sizeof(iref));
++				ptr, end, sizeof(*iref));
+ 			return -EUCLEAN;
+ 		}
+ 
 
 
