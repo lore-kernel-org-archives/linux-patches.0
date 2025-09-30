@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C541816A956;
-	Tue, 30 Sep 2025 15:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9EF16A956;
+	Tue, 30 Sep 2025 15:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245888; cv=none; b=S0S5YM1KHclRoGTwiSqei6VW36xi9g2C1g+C6E99shm9oPla/R3Ij9uWPMKCkgjiwuJu8Cvb0DyOHs57bJ7PPWIQSaiYKQLR8P8dHk/2s631Y+Dwyis3OJl2GEQIu3vMMllW0IRaUQ3aOE+YshpmesfWD/0y3ZnEthJyrlryTAs=
+	t=1759245891; cv=none; b=s80vq2yCq6maO/yqkYGt7zFws04K2/vC/8yZ0a2wNZjwOZPDGZ6Mu9VOyeSTod7tYXcirJtTRXT9Ofpw/kC8CkIwtKLLX98x35LVYVy+Dj6jcbnVGp41Le4xWxdLmIUVQLoQHDlDiIpfDuDNcixEmKE1unNJxgxPw5Ow27Ytz3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245888; c=relaxed/simple;
-	bh=IKo6/kR27bm07+7ydQRCuInwO5rLTTL6KuZIKYhCqPM=;
+	s=arc-20240116; t=1759245891; c=relaxed/simple;
+	bh=WhpEIdNofhr2ZLRhJ8GUfwqQ+lwqiJV51ev3+UyZLog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gS3lPxcXOu3UZ/Rm0yG4Hv1k+cRbBnqyMh02WeZD65JKnHnNk7hym5uCFEzF+faTn+gK5ABrWihmHYdQhEQOl3bbo0zKasXyn4/WGSZV8rqGO+TO14ceR6nQJMwwdkOeO7QX6pj5Ue3+2ZHrPDBRGC7qqPaA6FhY7IXX8a/bvsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ue0pBMNK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KGsGLHt4Gb2TVFc0SuQ0pO3W5+C1flnbSAX7YM80w5ilRK8bS9KhkMGdwLtTSeQoS6i6goeBXKCBH6lp3opg2jJBHazgyFa43hWMq/OgmotF/9UcZc2yUZMvXAKbOuGoFFwZJe9S3CJOG3/pcN2owVVVnTAcf2lRodHg4fxhhdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WDKgMpC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue0pBMNK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B4EC113D0;
-	Tue, 30 Sep 2025 15:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WDKgMpC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60245C4CEF0;
+	Tue, 30 Sep 2025 15:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245887;
-	bh=IKo6/kR27bm07+7ydQRCuInwO5rLTTL6KuZIKYhCqPM=;
+	s=korg; t=1759245890;
+	bh=WhpEIdNofhr2ZLRhJ8GUfwqQ+lwqiJV51ev3+UyZLog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ue0pBMNKV2OjrF3U7mSFjpQroJkbhvgCU3yF4+nkJJjN/Ztk4iYVuahnOcrMRnGCt
-	 N3fHrg+V8L+Yxtl+89BM4h/J5ccdVZwE2LRJzn88jnIphxckQSExHM2mfkTvH5UGBr
-	 mULVYSlKOyQYpDQbNIB3Cw+6epcjFPlB6TQx4cQ8=
+	b=0WDKgMpCKm1V8uBgomkP7yTdjHXjfz4p7vegeNs4tPH6oikCmGKyUKb61Rtjx4Jh9
+	 vQtdHZMEN+Tejzk3JB7iR+GZQLc9S+FkPyHcjixE6XCstIxCr6XwA8TnWHXlv9asZF
+	 vqbJhyeK75q5ZwacCe/6yhlasz89PQzcxecHIXIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Czapnik <lukasz.czapnik@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 79/91] i40e: add validation for ring_len param
-Date: Tue, 30 Sep 2025 16:48:18 +0200
-Message-ID: <20250930143824.463660722@linuxfoundation.org>
+	David Laight <David.Laight@aculab.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eliav Farber <farbere@amazon.com>
+Subject: [PATCH 6.6 80/91] minmax: make generic MIN() and MAX() macros available everywhere
+Date: Tue, 30 Sep 2025 16:48:19 +0200
+Message-ID: <20250930143824.503977053@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143821.118938523@linuxfoundation.org>
 References: <20250930143821.118938523@linuxfoundation.org>
@@ -55,63 +52,416 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Czapnik <lukasz.czapnik@intel.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 55d225670def06b01af2e7a5e0446fbe946289e8 ]
+[ Upstream commit 1a251f52cfdc417c84411a056bc142cbd77baef4 ]
 
-The `ring_len` parameter provided by the virtual function (VF)
-is assigned directly to the hardware memory context (HMC) without
-any validation.
+This just standardizes the use of MIN() and MAX() macros, with the very
+traditional semantics.  The goal is to use these for C constant
+expressions and for top-level / static initializers, and so be able to
+simplify the min()/max() macros.
 
-To address this, introduce an upper boundary check for both Tx and Rx
-queue lengths. The maximum number of descriptors supported by the
-hardware is 8k-32.
-Additionally, enforce alignment constraints: Tx rings must be a multiple
-of 8, and Rx rings must be a multiple of 32.
+These macro names were used by various kernel code - they are very
+traditional, after all - and all such users have been fixed up, with a
+few different approaches:
 
-Fixes: 5c3c48ac6bf5 ("i40e: implement virtual device interface")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ - trivial duplicated macro definitions have been removed
+
+   Note that 'trivial' here means that it's obviously kernel code that
+   already included all the major kernel headers, and thus gets the new
+   generic MIN/MAX macros automatically.
+
+ - non-trivial duplicated macro definitions are guarded with #ifndef
+
+   This is the "yes, they define their own versions, but no, the include
+   situation is not entirely obvious, and maybe they don't get the
+   generic version automatically" case.
+
+ - strange use case #1
+
+   A couple of drivers decided that the way they want to describe their
+   versioning is with
+
+	#define MAJ 1
+	#define MIN 2
+	#define DRV_VERSION __stringify(MAJ) "." __stringify(MIN)
+
+   which adds zero value and I just did my Alexander the Great
+   impersonation, and rewrote that pointless Gordian knot as
+
+	#define DRV_VERSION "1.2"
+
+   instead.
+
+ - strange use case #2
+
+   A couple of drivers thought that it's a good idea to have a random
+   'MIN' or 'MAX' define for a value or index into a table, rather than
+   the traditional macro that takes arguments.
+
+   These values were re-written as C enum's instead. The new
+   function-line macros only expand when followed by an open
+   parenthesis, and thus don't clash with enum use.
+
+Happily, there weren't really all that many of these cases, and a lot of
+users already had the pattern of using '#ifndef' guarding (or in one
+case just using '#undef MIN') before defining their own private version
+that does the same thing. I left such cases alone.
+
+Cc: David Laight <David.Laight@aculab.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+v2:
+  - Add missing #ifndef guards around MIN/MAX macro definitions
+    to avoid redefinition errors in:
+      * drivers/gpu/drm/amd/amdgpu/amdgpu.h
+      * drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+      * drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+      * drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -657,6 +657,13 @@ static int i40e_config_vsi_tx_queue(stru
+ arch/um/drivers/mconsole_user.c                                       |    2 
+ drivers/edac/skx_common.h                                             |    1 
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h                                   |    2 
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c                   |    2 
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppevvmath.h                    |   14 ++++-
+ drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c               |    2 
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c                  |    3 +
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c                  |    3 +
+ drivers/gpu/drm/radeon/evergreen_cs.c                                 |    2 
+ drivers/hwmon/adt7475.c                                               |   24 +++++-----
+ drivers/media/dvb-frontends/stv0367_priv.h                            |    3 +
+ drivers/net/fjes/fjes_main.c                                          |    4 -
+ drivers/nfc/pn544/i2c.c                                               |    2 
+ drivers/platform/x86/sony-laptop.c                                    |    1 
+ drivers/scsi/isci/init.c                                              |    6 --
+ drivers/staging/media/atomisp/pci/hive_isp_css_include/math_support.h |    5 --
+ include/linux/minmax.h                                                |    2 
+ kernel/trace/preemptirq_delay_test.c                                  |    2 
+ lib/btree.c                                                           |    1 
+ lib/decompress_unlzma.c                                               |    2 
+ mm/zsmalloc.c                                                         |    2 
+ tools/testing/selftests/mm/mremap_test.c                              |    2 
+ tools/testing/selftests/seccomp/seccomp_bpf.c                         |    2 
+ 23 files changed, 51 insertions(+), 38 deletions(-)
+
+--- a/arch/um/drivers/mconsole_user.c
++++ b/arch/um/drivers/mconsole_user.c
+@@ -71,7 +71,9 @@ static struct mconsole_command *mconsole
+ 	return NULL;
+ }
  
- 	/* only set the required fields */
- 	tx_ctx.base = info->dma_ring_addr / 128;
++#ifndef MIN
+ #define MIN(a,b) ((a)<(b) ? (a):(b))
++#endif
+ 
+ #define STRINGX(x) #x
+ #define STRING(x) STRINGX(x)
+--- a/drivers/edac/skx_common.h
++++ b/drivers/edac/skx_common.h
+@@ -45,7 +45,6 @@
+ #define I10NM_NUM_CHANNELS	MAX(I10NM_NUM_DDR_CHANNELS, I10NM_NUM_HBM_CHANNELS)
+ #define I10NM_NUM_DIMMS		MAX(I10NM_NUM_DDR_DIMMS, I10NM_NUM_HBM_DIMMS)
+ 
+-#define MAX(a, b)	((a) > (b) ? (a) : (b))
+ #define NUM_IMC		MAX(SKX_NUM_IMC, I10NM_NUM_IMC)
+ #define NUM_CHANNELS	MAX(SKX_NUM_CHANNELS, I10NM_NUM_CHANNELS)
+ #define NUM_DIMMS	MAX(SKX_NUM_DIMMS, I10NM_NUM_DIMMS)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1285,7 +1285,9 @@ int emu_soc_asic_init(struct amdgpu_devi
+ 	for (i = ffs(inst_mask); i-- != 0; \
+ 	     i = ffs(inst_mask & BIT_MASK_UPPER(i + 1)))
+ 
++#ifndef MIN
+ #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
++#endif
+ 
+ /* Common functions */
+ bool amdgpu_device_has_job_running(struct amdgpu_device *adev);
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
+@@ -25,7 +25,9 @@
+ 
+ #include "hdcp.h"
+ 
++#ifndef MIN
+ #define MIN(a, b) ((a) < (b) ? (a) : (b))
++#endif
+ #define HDCP_I2C_ADDR 0x3a	/* 0x74 >> 1*/
+ #define KSV_READ_SIZE 0xf	/* 0x6803b - 0x6802c */
+ #define HDCP_MAX_AUX_TRANSACTION_SIZE 16
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppevvmath.h
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppevvmath.h
+@@ -22,12 +22,18 @@
+  */
+ #include <asm/div64.h>
+ 
+-#define SHIFT_AMOUNT 16 /* We multiply all original integers with 2^SHIFT_AMOUNT to get the fInt representation */
++enum ppevvmath_constants {
++	/* We multiply all original integers with 2^SHIFT_AMOUNT to get the fInt representation */
++	SHIFT_AMOUNT	= 16,
+ 
+-#define PRECISION 5 /* Change this value to change the number of decimal places in the final output - 5 is a good default */
++	/* Change this value to change the number of decimal places in the final output - 5 is a good default */
++	PRECISION	=  5,
+ 
+-#define SHIFTED_2 (2 << SHIFT_AMOUNT)
+-#define MAX (1 << (SHIFT_AMOUNT - 1)) - 1 /* 32767 - Might change in the future */
++	SHIFTED_2	= (2 << SHIFT_AMOUNT),
 +
-+	/* ring_len has to be multiple of 8 */
-+	if (!IS_ALIGNED(info->ring_len, 8) ||
-+	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
-+		ret = -EINVAL;
-+		goto error_context;
-+	}
- 	tx_ctx.qlen = info->ring_len;
- 	tx_ctx.rdylist = le16_to_cpu(vsi->info.qs_handle[0]);
- 	tx_ctx.rdylist_act = 0;
-@@ -722,6 +729,13 @@ static int i40e_config_vsi_rx_queue(stru
++	/* 32767 - Might change in the future */
++	MAX		= (1 << (SHIFT_AMOUNT - 1)) - 1,
++};
  
- 	/* only set the required fields */
- 	rx_ctx.base = info->dma_ring_addr / 128;
+ /* -------------------------------------------------------------------------------
+  * NEW TYPE - fINT
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
+@@ -2082,7 +2082,9 @@ static int sienna_cichlid_display_disabl
+ 	return ret;
+ }
+ 
++#ifndef MAX
+ #define MAX(a, b)	((a) > (b) ? (a) : (b))
++#endif
+ 
+ static int sienna_cichlid_update_pcie_parameters(struct smu_context *smu,
+ 						 uint8_t pcie_gen_cap,
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1696,7 +1696,10 @@ static int smu_v13_0_0_get_thermal_tempe
+ 	return 0;
+ }
+ 
++#ifndef MAX
+ #define MAX(a, b)	((a) > (b) ? (a) : (b))
++#endif
 +
-+	/* ring_len has to be multiple of 32 */
-+	if (!IS_ALIGNED(info->ring_len, 32) ||
-+	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
-+		ret = -EINVAL;
-+		goto error_param;
-+	}
- 	rx_ctx.qlen = info->ring_len;
+ static ssize_t smu_v13_0_0_get_gpu_metrics(struct smu_context *smu,
+ 					   void **table)
+ {
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -1674,7 +1674,10 @@ static int smu_v13_0_7_get_thermal_tempe
+ 	return 0;
+ }
  
- 	if (info->splithdr_enabled) {
++#ifndef MAX
+ #define MAX(a, b)	((a) > (b) ? (a) : (b))
++#endif
++
+ static ssize_t smu_v13_0_7_get_gpu_metrics(struct smu_context *smu,
+ 					   void **table)
+ {
+--- a/drivers/gpu/drm/radeon/evergreen_cs.c
++++ b/drivers/gpu/drm/radeon/evergreen_cs.c
+@@ -33,8 +33,10 @@
+ #include "evergreen_reg_safe.h"
+ #include "cayman_reg_safe.h"
+ 
++#ifndef MIN
+ #define MAX(a,b)                   (((a)>(b))?(a):(b))
+ #define MIN(a,b)                   (((a)<(b))?(a):(b))
++#endif
+ 
+ #define REG_SAFE_BM_SIZE ARRAY_SIZE(evergreen_reg_safe_bm)
+ 
+--- a/drivers/hwmon/adt7475.c
++++ b/drivers/hwmon/adt7475.c
+@@ -22,23 +22,23 @@
+ #include <linux/util_macros.h>
+ 
+ /* Indexes for the sysfs hooks */
+-
+-#define INPUT		0
+-#define MIN		1
+-#define MAX		2
+-#define CONTROL		3
+-#define OFFSET		3
+-#define AUTOMIN		4
+-#define THERM		5
+-#define HYSTERSIS	6
+-
++enum adt_sysfs_id {
++	INPUT		= 0,
++	MIN		= 1,
++	MAX		= 2,
++	CONTROL		= 3,
++	OFFSET		= 3,	// Dup
++	AUTOMIN		= 4,
++	THERM		= 5,
++	HYSTERSIS	= 6,
+ /*
+  * These are unique identifiers for the sysfs functions - unlike the
+  * numbers above, these are not also indexes into an array
+  */
++	ALARM		= 9,
++	FAULT		= 10,
++};
+ 
+-#define ALARM		9
+-#define FAULT		10
+ 
+ /* 7475 Common Registers */
+ 
+--- a/drivers/media/dvb-frontends/stv0367_priv.h
++++ b/drivers/media/dvb-frontends/stv0367_priv.h
+@@ -25,8 +25,11 @@
+ #endif
+ 
+ /* MACRO definitions */
++#ifndef MIN
+ #define MAX(X, Y) ((X) >= (Y) ? (X) : (Y))
+ #define MIN(X, Y) ((X) <= (Y) ? (X) : (Y))
++#endif
++
+ #define INRANGE(X, Y, Z) \
+ 	((((X) <= (Y)) && ((Y) <= (Z))) || \
+ 	(((Z) <= (Y)) && ((Y) <= (X))) ? 1 : 0)
+--- a/drivers/net/fjes/fjes_main.c
++++ b/drivers/net/fjes/fjes_main.c
+@@ -14,9 +14,7 @@
+ #include "fjes.h"
+ #include "fjes_trace.h"
+ 
+-#define MAJ 1
+-#define MIN 2
+-#define DRV_VERSION __stringify(MAJ) "." __stringify(MIN)
++#define DRV_VERSION "1.2"
+ #define DRV_NAME	"fjes"
+ char fjes_driver_name[] = DRV_NAME;
+ char fjes_driver_version[] = DRV_VERSION;
+--- a/drivers/nfc/pn544/i2c.c
++++ b/drivers/nfc/pn544/i2c.c
+@@ -126,8 +126,6 @@ struct pn544_i2c_fw_secure_blob {
+ #define PN544_FW_CMD_RESULT_COMMAND_REJECTED 0xE0
+ #define PN544_FW_CMD_RESULT_CHUNK_ERROR 0xE6
+ 
+-#define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
+-
+ #define PN544_FW_WRITE_BUFFER_MAX_LEN 0x9f7
+ #define PN544_FW_I2C_MAX_PAYLOAD PN544_HCI_I2C_LLC_MAX_SIZE
+ #define PN544_FW_I2C_WRITE_FRAME_HEADER_LEN 8
+--- a/drivers/platform/x86/sony-laptop.c
++++ b/drivers/platform/x86/sony-laptop.c
+@@ -757,7 +757,6 @@ static union acpi_object *__call_snc_met
+ 	return result;
+ }
+ 
+-#define MIN(a, b)	(a > b ? b : a)
+ static int sony_nc_buffer_call(acpi_handle handle, char *name, u64 *value,
+ 		void *buffer, size_t buflen)
+ {
+--- a/drivers/scsi/isci/init.c
++++ b/drivers/scsi/isci/init.c
+@@ -65,11 +65,7 @@
+ #include "task.h"
+ #include "probe_roms.h"
+ 
+-#define MAJ 1
+-#define MIN 2
+-#define BUILD 0
+-#define DRV_VERSION __stringify(MAJ) "." __stringify(MIN) "." \
+-	__stringify(BUILD)
++#define DRV_VERSION "1.2.0"
+ 
+ MODULE_VERSION(DRV_VERSION);
+ 
+--- a/drivers/staging/media/atomisp/pci/hive_isp_css_include/math_support.h
++++ b/drivers/staging/media/atomisp/pci/hive_isp_css_include/math_support.h
+@@ -31,11 +31,6 @@
+ /* A => B */
+ #define IMPLIES(a, b)        (!(a) || (b))
+ 
+-/* for preprocessor and array sizing use MIN and MAX
+-   otherwise use min and max */
+-#define MAX(a, b)            (((a) > (b)) ? (a) : (b))
+-#define MIN(a, b)            (((a) < (b)) ? (a) : (b))
+-
+ #define ROUND_DIV(a, b)      (((b) != 0) ? ((a) + ((b) >> 1)) / (b) : 0)
+ #define CEIL_DIV(a, b)       (((b) != 0) ? ((a) + (b) - 1) / (b) : 0)
+ #define CEIL_MUL(a, b)       (CEIL_DIV(a, b) * (b))
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -277,6 +277,8 @@ static inline bool in_range32(u32 val, u
+  * Use these carefully: no type checking, and uses the arguments
+  * multiple times. Use for obvious constants only.
+  */
++#define MIN(a,b) __cmp(min,a,b)
++#define MAX(a,b) __cmp(max,a,b)
+ #define MIN_T(type,a,b) __cmp(min,(type)(a),(type)(b))
+ #define MAX_T(type,a,b) __cmp(max,(type)(a),(type)(b))
+ 
+--- a/kernel/trace/preemptirq_delay_test.c
++++ b/kernel/trace/preemptirq_delay_test.c
+@@ -34,8 +34,6 @@ MODULE_PARM_DESC(cpu_affinity, "Cpu num
+ 
+ static struct completion done;
+ 
+-#define MIN(x, y) ((x) < (y) ? (x) : (y))
+-
+ static void busy_wait(ulong time)
+ {
+ 	u64 start, end;
+--- a/lib/btree.c
++++ b/lib/btree.c
+@@ -43,7 +43,6 @@
+ #include <linux/slab.h>
+ #include <linux/module.h>
+ 
+-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+ #define NODESIZE MAX(L1_CACHE_BYTES, 128)
+ 
+ struct btree_geo {
+--- a/lib/decompress_unlzma.c
++++ b/lib/decompress_unlzma.c
+@@ -37,7 +37,9 @@
+ 
+ #include <linux/decompress/mm.h>
+ 
++#ifndef MIN
+ #define	MIN(a, b) (((a) < (b)) ? (a) : (b))
++#endif
+ 
+ static long long INIT read_int(unsigned char *ptr, int size)
+ {
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -119,8 +119,6 @@
+ #define ISOLATED_BITS	5
+ #define MAGIC_VAL_BITS	8
+ 
+-#define MAX(a, b) ((a) >= (b) ? (a) : (b))
+-
+ #define ZS_MAX_PAGES_PER_ZSPAGE	(_AC(CONFIG_ZSMALLOC_CHAIN_SIZE, UL))
+ 
+ /* ZS_MIN_ALLOC_SIZE must be multiple of ZS_ALIGN */
+--- a/tools/testing/selftests/mm/mremap_test.c
++++ b/tools/testing/selftests/mm/mremap_test.c
+@@ -22,7 +22,9 @@
+ #define VALIDATION_DEFAULT_THRESHOLD 4	/* 4MB */
+ #define VALIDATION_NO_THRESHOLD 0	/* Verify the entire region */
+ 
++#ifndef MIN
+ #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
++#endif
+ 
+ struct config {
+ 	unsigned long long src_alignment;
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -60,7 +60,9 @@
+ #define SKIP(s, ...)	XFAIL(s, ##__VA_ARGS__)
+ #endif
+ 
++#ifndef MIN
+ #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
++#endif
+ 
+ #ifndef PR_SET_PTRACER
+ # define PR_SET_PTRACER 0x59616d61
 
 
