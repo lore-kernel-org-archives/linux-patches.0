@@ -1,219 +1,79 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1B54C81
-	for <patches@lists.linux.dev>; Tue, 30 Sep 2025 22:03:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88EC9229B2A
+	for <patches@lists.linux.dev>; Tue, 30 Sep 2025 23:06:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759269784; cv=none; b=tMmbGLJoTEb5OUOtQUcC3OYV3DvdDE50A43MuOsy+nXp13pMhxP0LBhTxEIRk+7HPhDDCMKGUREbkrR4YwSZY1osD4lwc+8je6SsnZ4beVAlUODJV+3YlkYS8v/KqXQmaaEzPfjXI8diCYhhMBUfb54Q8IC6epsMdzGtAhzK/jk=
+	t=1759273576; cv=none; b=b3KqigWlpc9tZnKLpjysRbeY8H7rXAj/8HWNfBEYqHR4OfPgQCYiyLwsdHja/gsdFvP3sMZBYv/+fFAdhs/sq8VyMzF7fwx6cvsRUaJBSx+vdW9gKRwBoATmgR80kRSazh04Oha3yIGOmE6aJBVIvMLcd/4jrkgTbt6Vh5NlbHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759269784; c=relaxed/simple;
-	bh=/41JNrz0g7iRbGlujyL2p+eN+QGCZ09XZBdb1Kz5A/I=;
-	h=Content-Type:MIME-Version:From:To:Cc:Subject:In-reply-to:
-	 References:Date:Message-id; b=DahzUb+Iok1Zmz1ngLQlLmH3vqPIhxmjq1di3hyVXuD5/9sXqxMZQTd5IKY1HHgQzylszVGQ9E9FMlhWJ/cJebspqsUxEX2tdmhrrvhWtnsU9foyQ1IEnhY+If4ZFX5jiqJGOTzRUa7LmOGfm7eIWnIampqvjrfnHsPXysnDZDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net; spf=pass smtp.mailfrom=ownmail.net; dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b=RvkNr/fi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=buq5W8z8; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ownmail.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ownmail.net
+	s=arc-20240116; t=1759273576; c=relaxed/simple;
+	bh=szDdDwtgfZnLrFWVhLjFoVGQWUsLeMIC4k0JDdLabws=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gnIwNWAcBe2Ku/ydwMJwj56iKWqmqD6jJ+kDCzTwaRBQ5q9oG8yv3pudyIL5fdxRsSOoBhVTIKQRHrbyKETDTyTkxuTBONq5oQP5Wp3vxeex6IMIBw1ujJaOdBQJmUpsO+auBkkHd5P2q4b3e13Jr/y0q4/kYQjBQTKr5XFSAoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=qYnwYtx4; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b="RvkNr/fi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="buq5W8z8"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7B9311D000B4;
-	Tue, 30 Sep 2025 18:03:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 30 Sep 2025 18:03:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ownmail.net; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:reply-to:subject:subject:to:to; s=fm2; t=
-	1759269781; x=1759356181; bh=JciTx/6iZy4K4i2v9NjmQtlRHCxI5/CHe2M
-	zSjIqMho=; b=RvkNr/fiJFcCI3h1sgwtLc1oJq1CpQc3xQQ3AZpWKom0uV9IcPS
-	zzsFgYW1cm/uUAW8BRue44hqzri+30o0ayHk+lSiJqCTNRsiVupZ8ClXnKY+0b8/
-	2pjz/wv/3Bn0RQt7779Jwuu99C7b4uFVIv0QnufBvKP9+or0TvElCvbHxcUftS3c
-	YzPHiyguDbgT4AfE1bDSzIxPIik9v9ZjQqLRoBcwXN5YyJANrzjUZElkjbB7qPsw
-	w0ed8AMS5i2I3rBUVg8lp7OdXWtE31hgIpXu9745fntV3tGEvBWYcOtPLrxZ/HWz
-	HRHxdcoLUaEI7gAOXKkA5srM/zIZG+VMrmQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1759269781; x=
-	1759356181; bh=JciTx/6iZy4K4i2v9NjmQtlRHCxI5/CHe2MzSjIqMho=; b=b
-	uq5W8z8J9f1z7oJybqpuvoOEjvBOjxLKGCZ9Of6XTEvqXYWS2l81KYPUcLhDW2Ge
-	CcJhmgwOxuN2v3b9v6ZGPFNQ2oFnD06d9c60vPLve0LxugY5elrbzkazJ618WQRV
-	9w8AHpP6rRbaITa0CIrLCaA688PJasRYlRAg2jwDZovN6QZV41aJURxbzZXkmU7w
-	k7mclegapDJrDVeoDcpi0SqVNZoW+BCuY2rzzevu1XiT+n5HFi+bfXEEMitZzijd
-	KUAk9HDnt9xVOpt8VR42a7Vrik9HRShjb4eky2MrIKTe+M1zUiKxV/f/dXgA5sn+
-	B2jkDnWdDDOmaxjuQQ3EQ==
-X-ME-Sender: <xms:lFPcaIpqJJsSlqejQwnqSCJpECbk9DXKhoOnc-wLcLm3-7kHav7Hxg>
-    <xme:lFPcaBta5tnLDmv7pKh_s8Nl5HuT1RrhunKXB7QhEOXoM-zGeprp6jUNwWndOffrY
-    CgybiiuhfbRc-yVn2BACVDeD7cOotdsR8ZmV0skhkhRy36RfQ>
-X-ME-Received: <xmr:lFPcaH13CpMEnlCc8nahutjYkLj2Rq_zXP8Q_rYeS_Psp_0zGkhecxSCedfgdEMlNLwAMnBFwMFRqoEzrncEePD_s2DjZSqJob1JSSVGPL4G>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdekudeijecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpegtgfgghffvvefujghffffkrhesthhqredttddtjeenucfhrhhomheppfgvihhluehr
-    ohifnhcuoehnvghilhgssehofihnmhgrihhlrdhnvghtqeenucggtffrrghtthgvrhhnpe
-    ffteefvdegveejlefhhfekgfffjedvtdevffdtgeeuieevffejueekffekfeekhfenucff
-    ohhmrghinhepmhhsghhiugdrlhhinhhknecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepnhgvihhlsgesohifnhhmrghilhdrnhgvthdpnhgspghr
-    tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlihhnuhigqd
-    hnfhhssehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhomhesthgrlhhp
-    vgihrdgtohhmpdhrtghpthhtohepohhkohhrnhhivghvsehrvgguhhgrthdrtghomhdprh
-    gtphhtthhopegthhhutghkrdhlvghvvghrsehorhgrtghlvgdrtghomhdprhgtphhtthho
-    pegrnhhnrgdrshgthhhumhgrkhgvrhesohhrrggtlhgvrdgtohhmpdhrtghpthhtohepug
-    grihdrnhhgohesohhrrggtlhgvrdgtohhmpdhrtghpthhtohepphgrthgthhgvsheslhhi
-    shhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehnrghthhgrnheskhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepjhhlrgihthhonheskhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:lFPcaMGlDWkShzayVtv7kcFMm9TGA2gcMZGyUZAm6ydLgmr4nLUZjg>
-    <xmx:lFPcaCtiZ70aiq6Pmi06yY9du7EpJiRWcR3TlVTt3aGCiM4lbZRRSg>
-    <xmx:lFPcaPp-TROlKsPOCrXjjWSCMq1XFZNn0foqFHW_Q9-m7BKbem8bZw>
-    <xmx:lFPcaJVuBjw0feRwrXly9Da6nUZvucSoa9bz0jB13ka3DhNFzQrm8w>
-    <xmx:lVPcaFKm8RAsoB_61si5GVwu-UGo8PvGyu-4QMpMDSwbo4Pa76CE7WGs>
-Feedback-ID: iab3e480c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Sep 2025 18:02:57 -0400 (EDT)
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="qYnwYtx4"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 8DA9E14C2D3;
+	Wed,  1 Oct 2025 01:05:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1759273564;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FmFeZ1v5uOZjZ7aeAHzofBoLFsltvLy7eHvIFyvV/go=;
+	b=qYnwYtx4Cfg6dZdODlQ3/OI59MQkTmkgn5a8JKljlpKiDcf/1djforil4kk17e/urlv8qe
+	bmR8c1Gwt7Yo96rBOrBeldeSrr/212Wx1n3tyJlZfuvFbF1835kplxx0bHN+ciEzu3DXw8
+	BzpOA1vQVqNL7E94uR5qlsu8ica7m1G9U6PJ4Sis8PsS5blJUx7urfaMFPgBsrpBqtIUvS
+	8Tc452/dTaGQu5arJ71ju+hRoaUezwxFVOWLQPphxBR8sNyQdStSMSh9Ylcjy7joWZfOeE
+	oYad0Y3kpUrOTQpZRBCQZIsyZdu4Rg+sZ3eSgB1eqgt6MdKW4+8eh/zpoEUlBA==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 1008360f;
+	Tue, 30 Sep 2025 23:05:57 +0000 (UTC)
+Date: Wed, 1 Oct 2025 08:05:42 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+Subject: Re: [PATCH 5.10 000/122] 5.10.245-rc1 review
+Message-ID: <aNxiRgzpyDGMA4ec@codewreck.org>
+References: <20250930143822.939301999@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: NeilBrown <neilb@ownmail.net>
-To: "Nathan Chancellor" <nathan@kernel.org>
-Cc: "Chuck Lever" <chuck.lever@oracle.com>, "Jeff Layton" <jlayton@kernel.org>,
- "Anna Schumaker" <anna.schumaker@oracle.com>,
- "Olga Kornievskaia" <okorniev@redhat.com>, "Dai Ngo" <Dai.Ngo@oracle.com>,
- "Tom Talpey" <tom@talpey.com>, "Simon Horman" <horms@kernel.org>,
- linux-nfs@vger.kernel.org, patches@lists.linux.dev,
- "Nathan Chancellor" <nathan@kernel.org>
-Subject:
- Re: [PATCH v3] nfsd: Avoid strlen conflict in nfsd4_encode_components_esc()
-In-reply-to:
- <20250930-nfsd-fix-trace-printk-strlen-error-v3-1-536cc9822ee6@kernel.org>
-References:
- <20250930-nfsd-fix-trace-printk-strlen-error-v3-1-536cc9822ee6@kernel.org>
-Date: Wed, 01 Oct 2025 08:02:46 +1000
-Message-id: <175926976627.1696783.15337965299766035409@noble.neil.brown.name>
-Reply-To: NeilBrown <neil@brown.name>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250930143822.939301999@linuxfoundation.org>
 
-On Wed, 01 Oct 2025, Nathan Chancellor wrote:
-> There is an error building nfs4xdr.c with CONFIG_SUNRPC_DEBUG_TRACE=3Dy
-> and CONFIG_FORTIFY_SOURCE=3Dn due to the local variable strlen conflicting
-> with the function strlen():
->=20
->   In file included from include/linux/cpumask.h:11,
->                    from arch/x86/include/asm/paravirt.h:21,
->                    from arch/x86/include/asm/irqflags.h:102,
->                    from include/linux/irqflags.h:18,
->                    from include/linux/spinlock.h:59,
->                    from include/linux/mmzone.h:8,
->                    from include/linux/gfp.h:7,
->                    from include/linux/slab.h:16,
->                    from fs/nfsd/nfs4xdr.c:37:
->   fs/nfsd/nfs4xdr.c: In function 'nfsd4_encode_components_esc':
->   include/linux/kernel.h:321:46: error: called object 'strlen' is not a fun=
-ction or function pointer
->     321 |                 __trace_puts(_THIS_IP_, str, strlen(str));       =
-       \
->         |                                              ^~~~~~
->   include/linux/kernel.h:265:17: note: in expansion of macro 'trace_puts'
->     265 |                 trace_puts(fmt);                        \
->         |                 ^~~~~~~~~~
->   include/linux/sunrpc/debug.h:34:41: note: in expansion of macro 'trace_pr=
-intk'
->      34 | #  define __sunrpc_printk(fmt, ...)     trace_printk(fmt, ##__VA_=
-ARGS__)
->         |                                         ^~~~~~~~~~~~
->   include/linux/sunrpc/debug.h:42:17: note: in expansion of macro '__sunrpc=
-_printk'
->      42 |                 __sunrpc_printk(fmt, ##__VA_ARGS__);             =
-       \
->         |                 ^~~~~~~~~~~~~~~
->   include/linux/sunrpc/debug.h:25:9: note: in expansion of macro 'dfprintk'
->      25 |         dfprintk(FACILITY, fmt, ##__VA_ARGS__)
->         |         ^~~~~~~~
->   fs/nfsd/nfs4xdr.c:2646:9: note: in expansion of macro 'dprintk'
->    2646 |         dprintk("nfsd4_encode_components(%s)\n", components);
->         |         ^~~~~~~
->   fs/nfsd/nfs4xdr.c:2643:13: note: declared here
->    2643 |         int strlen, count=3D0;
->         |             ^~~~~~
->=20
-> This dprintk() instance is not particularly useful, so just remove it
-> altogether to get rid of the immediate strlen() conflict.
->=20
-> At the same time, eliminate the local strlen variable to avoid potential
-> conflicts with strlen() in the future.
->=20
-> Fixes: ec7d8e68ef0e ("sunrpc: add a Kconfig option to redirect dfprintk() o=
-utput to trace buffer")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Greg Kroah-Hartman wrote on Tue, Sep 30, 2025 at 04:45:31PM +0200:
+> This is the start of the stable review cycle for the 5.10.245 release.
+> There are 122 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 02 Oct 2025 14:37:59 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.245-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-Reviewed-by: NeilBrown <neil@brown.name>
+Tested 9abf794d1d5c ("Linux 5.10.245-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-Thanks for doing this,
-
-NeilBrown
-
-
-> ---
-> Changes in v3:
-> - Eliminate local strlen variable altogether (NeilBrown)
-> - Link to v2: https://patch.msgid.link/20250928-nfsd-fix-trace-printk-strle=
-n-error-v2-1-108def6ff41c@kernel.org
->=20
-> Changes in v2:
-> - Remove dprintk() to remove usage of strlen()
-> - Rename local strlen variable to avoid potential conflict in the future
-> - Link to v1: https://patch.msgid.link/20250925-nfsd-fix-trace-printk-strle=
-n-error-v1-1-1360530e4c6b@kernel.org
-> ---
->  fs/nfsd/nfs4xdr.c | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
->=20
-> diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
-> index ea91bad4eee2..07350931488d 100644
-> --- a/fs/nfsd/nfs4xdr.c
-> +++ b/fs/nfsd/nfs4xdr.c
-> @@ -2640,11 +2640,9 @@ static __be32 nfsd4_encode_components_esc(struct xdr=
-_stream *xdr, char sep,
->  	__be32 *p;
->  	__be32 pathlen;
->  	int pathlen_offset;
-> -	int strlen, count=3D0;
-> +	int count=3D0;
->  	char *str, *end, *next;
-> =20
-> -	dprintk("nfsd4_encode_components(%s)\n", components);
-> -
->  	pathlen_offset =3D xdr->buf->len;
->  	p =3D xdr_reserve_space(xdr, 4);
->  	if (!p)
-> @@ -2670,9 +2668,8 @@ static __be32 nfsd4_encode_components_esc(struct xdr_=
-stream *xdr, char sep,
->  			for (; *end && (*end !=3D sep); end++)
->  				/* find sep or end of string */;
-> =20
-> -		strlen =3D end - str;
-> -		if (strlen) {
-> -			if (xdr_stream_encode_opaque(xdr, str, strlen) < 0)
-> +		if (end > str) {
-> +			if (xdr_stream_encode_opaque(xdr, str, end - str) < 0)
->  				return nfserr_resource;
->  			count++;
->  		} else
->=20
-> ---
-> base-commit: 3fadfaec904dffab02ebf63dd9c2ae8fa15c6d32
-> change-id: 20250925-nfsd-fix-trace-printk-strlen-error-2a24413eb186
->=20
-> Best regards,
-> -- =20
-> Nathan Chancellor <nathan@kernel.org>
->=20
->=20
-
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+-- 
+Dominique Martinet
