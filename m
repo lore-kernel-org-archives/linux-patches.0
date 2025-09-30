@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ECE1F152D;
-	Tue, 30 Sep 2025 15:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA3D1F152D;
+	Tue, 30 Sep 2025 15:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244706; cv=none; b=IyRQ999Z1WmSnb6SwSav0qiT6c5q1wzgyKlpwp0/6X6HFtp1Pyury9K9spK6ebIU+EtcDuYGCv/rSW9SVeS9YfnAoARO7YEDzky4YZCY0A2R9vUWmGTsX8Vw+i9MWEOInrV3rxuQ+b7gom9yHUObRQq+cG4mO6yuFqaTpvt0ww8=
+	t=1759244710; cv=none; b=QKiY+IQ7fNHy5J1LUYsknDvhrQ/kbCXtL3Q7tD5vAkQD5LKQ+aXYJ9JvPXqYyWNYS5PfgOQA0dlipT8HnbeOxix6SgDTftyQPAOpFE79GCKPzNimfaln7GZJuzU6SKtTSS7awDkrBkBN45ZNKuwQUAFnDl1G3FMxxxNCQ9Fx+vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244706; c=relaxed/simple;
-	bh=9/ofTBLWazO7801LlFf+Gs07KU8DXEMFap6wgNok0xE=;
+	s=arc-20240116; t=1759244710; c=relaxed/simple;
+	bh=ydZ2E5Xye4n0LVRgsIzQG9/xkaZ54mPN0fAN2LgcGBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVqyiACd0WlQk1cMYE7JipNvzyt0H5y+y+pC8nCxyzH3Nqzt7LdHg9hJiuBRZpQRHiuuqYMoPZsadYQQpL3qZg1CT02gvMZOG1KVDpzzTINS9zYulBBC52rkxcYgInvK9dpeQ4v71p4M8n4OFE66LQZ7z08yL4RyDHW7rCIFhxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMsPc27C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qk7j2aLvx7zOj3Kds757aQUF9Y+wNM3KX8KpLkiJcJmFQae6In3QP2qd4IHyDs8bRuXJIH6pUt2GrdmtlpNfHDt9a8rGXTQWzWV6dzXwj/5/X0II+GkfHuCHx7rEt+Lif4BFnp9A//Wt4iM1ZYwFBEyHzUUH5Vm7/AL8il29m3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLC7ZDW+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMsPc27C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41A6C4CEF0;
-	Tue, 30 Sep 2025 15:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLC7ZDW+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47567C4CEF0;
+	Tue, 30 Sep 2025 15:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244706;
-	bh=9/ofTBLWazO7801LlFf+Gs07KU8DXEMFap6wgNok0xE=;
+	s=korg; t=1759244709;
+	bh=ydZ2E5Xye4n0LVRgsIzQG9/xkaZ54mPN0fAN2LgcGBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMsPc27CX9H+IHNbwRPn0QHU51bIvKIPktrsrNIfF5f/lMqFgYuxNi2xfizrTdwBm
-	 lli9eJ5OFbUNauPf2BhlZYup643oUAerylIG02qP/6ax3vRNoTfnITwLyGdjtN+uqy
-	 YZhKzISOVhE/jPjqmQeVDyblvqm/HGl+2WNjhdHo=
+	b=pLC7ZDW+005zPufT0mucbSq0VNAWu7oEJgYgCN/RpefrcQibpTb/jeijcWm35TrFO
+	 91dFKwv3JVNhYwAL4xs2criuK3b5WFt0Gumq0VC0p900FdYVCd0Rv9T0BRdxI5dcn5
+	 MLVe+yYyYg5hBxya8XtAL2rttiHRvR8HrmDypCC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+a25ee9d20d31e483ba7b@syzkaller.appspotmail.com,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 057/143] selftests/bpf: Skip timer cases when bpf_timer is not supported
-Date: Tue, 30 Sep 2025 16:46:21 +0200
-Message-ID: <20250930143833.503095053@linuxfoundation.org>
+Subject: [PATCH 6.16 058/143] xfrm: xfrm_alloc_spi shouldnt use 0 as SPI
+Date: Tue, 30 Sep 2025 16:46:22 +0200
+Message-ID: <20250930143833.541305076@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -51,113 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit fbdd61c94bcb09b0c0eb0655917bf4193d07aac1 ]
+[ Upstream commit cd8ae32e4e4652db55bce6b9c79267d8946765a9 ]
 
-When enable CONFIG_PREEMPT_RT, verifier will reject bpf_timer with
-returning -EOPNOTSUPP.
+x->id.spi == 0 means "no SPI assigned", but since commit
+94f39804d891 ("xfrm: Duplicate SPI Handling"), we now create states
+and add them to the byspi list with this value.
 
-Therefore, skip test cases when errno is EOPNOTSUPP.
+__xfrm_state_delete doesn't remove those states from the byspi list,
+since they shouldn't be there, and this shows up as a UAF the next
+time we go through the byspi list.
 
-cd tools/testing/selftests/bpf
-./test_progs -t timer
-125     free_timer:SKIP
-456     timer:SKIP
-457/1   timer_crash/array:SKIP
-457/2   timer_crash/hash:SKIP
-457     timer_crash:SKIP
-458     timer_lockup:SKIP
-459     timer_mim:SKIP
-Summary: 5/0 PASSED, 6 SKIPPED, 0 FAILED
-
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/r/20250910125740.52172-3-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: syzbot+a25ee9d20d31e483ba7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a25ee9d20d31e483ba7b
+Fixes: 94f39804d891 ("xfrm: Duplicate SPI Handling")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/free_timer.c   | 4 ++++
- tools/testing/selftests/bpf/prog_tests/timer.c        | 4 ++++
- tools/testing/selftests/bpf/prog_tests/timer_crash.c  | 4 ++++
- tools/testing/selftests/bpf/prog_tests/timer_lockup.c | 4 ++++
- tools/testing/selftests/bpf/prog_tests/timer_mim.c    | 4 ++++
- 5 files changed, 20 insertions(+)
+ net/xfrm/xfrm_state.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/free_timer.c b/tools/testing/selftests/bpf/prog_tests/free_timer.c
-index b7b77a6b29799..0de8facca4c5b 100644
---- a/tools/testing/selftests/bpf/prog_tests/free_timer.c
-+++ b/tools/testing/selftests/bpf/prog_tests/free_timer.c
-@@ -124,6 +124,10 @@ void test_free_timer(void)
- 	int err;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 86337453709ba..4b2eb260f5c2e 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2578,6 +2578,8 @@ int xfrm_alloc_spi(struct xfrm_state *x, u32 low, u32 high,
  
- 	skel = free_timer__open_and_load();
-+	if (!skel && errno == EOPNOTSUPP) {
-+		test__skip();
-+		return;
-+	}
- 	if (!ASSERT_OK_PTR(skel, "open_load"))
- 		return;
+ 	for (h = 0; h < range; h++) {
+ 		u32 spi = (low == high) ? low : get_random_u32_inclusive(low, high);
++		if (spi == 0)
++			goto next;
+ 		newspi = htonl(spi);
  
-diff --git a/tools/testing/selftests/bpf/prog_tests/timer.c b/tools/testing/selftests/bpf/prog_tests/timer.c
-index d66687f1ee6a8..56f660ca567ba 100644
---- a/tools/testing/selftests/bpf/prog_tests/timer.c
-+++ b/tools/testing/selftests/bpf/prog_tests/timer.c
-@@ -86,6 +86,10 @@ void serial_test_timer(void)
- 	int err;
+ 		spin_lock_bh(&net->xfrm.xfrm_state_lock);
+@@ -2593,6 +2595,7 @@ int xfrm_alloc_spi(struct xfrm_state *x, u32 low, u32 high,
+ 		xfrm_state_put(x0);
+ 		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
  
- 	timer_skel = timer__open_and_load();
-+	if (!timer_skel && errno == EOPNOTSUPP) {
-+		test__skip();
-+		return;
-+	}
- 	if (!ASSERT_OK_PTR(timer_skel, "timer_skel_load"))
- 		return;
- 
-diff --git a/tools/testing/selftests/bpf/prog_tests/timer_crash.c b/tools/testing/selftests/bpf/prog_tests/timer_crash.c
-index f74b82305da8c..b841597c8a3a3 100644
---- a/tools/testing/selftests/bpf/prog_tests/timer_crash.c
-+++ b/tools/testing/selftests/bpf/prog_tests/timer_crash.c
-@@ -12,6 +12,10 @@ static void test_timer_crash_mode(int mode)
- 	struct timer_crash *skel;
- 
- 	skel = timer_crash__open_and_load();
-+	if (!skel && errno == EOPNOTSUPP) {
-+		test__skip();
-+		return;
-+	}
- 	if (!ASSERT_OK_PTR(skel, "timer_crash__open_and_load"))
- 		return;
- 	skel->bss->pid = getpid();
-diff --git a/tools/testing/selftests/bpf/prog_tests/timer_lockup.c b/tools/testing/selftests/bpf/prog_tests/timer_lockup.c
-index 1a2f99596916f..eb303fa1e09af 100644
---- a/tools/testing/selftests/bpf/prog_tests/timer_lockup.c
-+++ b/tools/testing/selftests/bpf/prog_tests/timer_lockup.c
-@@ -59,6 +59,10 @@ void test_timer_lockup(void)
- 	}
- 
- 	skel = timer_lockup__open_and_load();
-+	if (!skel && errno == EOPNOTSUPP) {
-+		test__skip();
-+		return;
-+	}
- 	if (!ASSERT_OK_PTR(skel, "timer_lockup__open_and_load"))
- 		return;
- 
-diff --git a/tools/testing/selftests/bpf/prog_tests/timer_mim.c b/tools/testing/selftests/bpf/prog_tests/timer_mim.c
-index 9ff7843909e7d..c930c7d7105b9 100644
---- a/tools/testing/selftests/bpf/prog_tests/timer_mim.c
-+++ b/tools/testing/selftests/bpf/prog_tests/timer_mim.c
-@@ -65,6 +65,10 @@ void serial_test_timer_mim(void)
- 		goto cleanup;
- 
- 	timer_skel = timer_mim__open_and_load();
-+	if (!timer_skel && errno == EOPNOTSUPP) {
-+		test__skip();
-+		return;
-+	}
- 	if (!ASSERT_OK_PTR(timer_skel, "timer_skel_load"))
- 		goto cleanup;
- 
++next:
+ 		if (signal_pending(current)) {
+ 			err = -ERESTARTSYS;
+ 			goto unlock;
 -- 
 2.51.0
 
