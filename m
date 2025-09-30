@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A90217F55;
-	Tue, 30 Sep 2025 15:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9527B846F;
+	Tue, 30 Sep 2025 15:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244726; cv=none; b=Eld9X/PEEiffD9EsrLWo93Zz3BYP9+iUMXWEmy4C+x64tId8wMlW2ayzCSDJJj4dI5It3Fntr0bD8SmHlvbRWlkECTBbj3l/S5Ks/nleB7NterONZxSWfLoiCBGrAkIPsK2u6vZR5XAxZ3QsdXO4LrN/E5TquWZ4gO57L5OfXfk=
+	t=1759244730; cv=none; b=OdgYmiyzVUS3YvdYaejA1TW3atzLDZBxxtssLyJZZF6SKUGm3A1Q5e4iyHxoNqfKICF6tQGfiUzkg59WBj5oHBoXyx4kQH9ssRERmSbsHnhZoImx8h9YesawXqUBe2+WzVKlXh99HGCM0lR0bRqNSpy7/o8CoPlHOIIybAF8iPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244726; c=relaxed/simple;
-	bh=twY2Ml5qcH1zHZetQNKUBn6XTyK71rgQnmHLY60Oh7s=;
+	s=arc-20240116; t=1759244730; c=relaxed/simple;
+	bh=SzvdGeCvmh1Cr6WbYEPdgsyaPYA7fRqFL4VxWT2Reng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fLZbVUWxDT+bvRqffzlmE14ND5S2GnfEgsWEnkOXBzXGher3n5aWemdhj80YxgJedkDOohW9KUTX9E0EKMT2HAumpMa1m73FkYp10mt8qZK2zLvqVFfDgIWc63zIsasAH3RsgM98twbaSs9ZlotlHTyq1J7LX77uZPRXOluMX14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuUsCg2i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oKNU1Qx7br5z1XUtxhjWsC2KnV1M0q5AzI7+6GmaHXPAgSAuQnMVeyyWQQqGRDI0u2/odqvZna4thr4juqG2tbtFGWGynvUngQM9GI9P3dFCGsNSXtxpeQhaN/hzZLLrmNnfYW+ewDEefB5wE503j61rllml/fTzkSfxxI6elG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bA4JOzz/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuUsCg2i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44154C4CEF0;
-	Tue, 30 Sep 2025 15:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bA4JOzz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3181C4CEF0;
+	Tue, 30 Sep 2025 15:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244726;
-	bh=twY2Ml5qcH1zHZetQNKUBn6XTyK71rgQnmHLY60Oh7s=;
+	s=korg; t=1759244730;
+	bh=SzvdGeCvmh1Cr6WbYEPdgsyaPYA7fRqFL4VxWT2Reng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CuUsCg2i1fwOmr/d4n/oOSKm0eMXrXawPl7UmeVtMlOEVMri6ruQ73kE+PbUCn9lq
-	 ZOB/F+7teIIug/u5xgu75pqgndr1quS+6hHKdM3rGEKN5hA4zHHTUs54H3kAg0mO3I
-	 q8zXYSSXpxfcKbL+EoWXfaX7a48cJLM1lk1vHPx4=
+	b=bA4JOzz//2qUahanBfk2NpsrkQLD8OsaNkdu1E/l3FsTVgBks7OnkECiXVd624URV
+	 LpjX1bWfnoFhDn0I035Bz529eHnzxuhVQ58GTSk1nNdPNVkkbux2wF6CmPLN8hWNTY
+	 u7yb8X9KvOar8QReNe5KKvR9Aw/f6zLn/E7iHqtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	=?UTF-8?q?Iy=C3=A1n=20M=C3=A9ndez=20Veiga?= <me@iyanmv.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 088/143] gpio: regmap: fix memory leak of gpio_regmap structure
-Date: Tue, 30 Sep 2025 16:46:52 +0200
-Message-ID: <20250930143834.738981635@linuxfoundation.org>
+Subject: [PATCH 6.16 097/143] Revert "drm/xe/guc: Set RCS/CCS yield policy"
+Date: Tue, 30 Sep 2025 16:47:01 +0200
+Message-ID: <20250930143835.093175158@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -46,43 +44,224 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.16-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+This reverts commit dd1a415dcfd5984bf83abd804c3cd9e0ff9dde30.
 
-[ Upstream commit 3bd44edd6c55828fd4e11cb0efce5b7160bfa2de ]
-
-The gpio_regmap structure is leaked on the error path. Fix this by
-jumping to the appropriate kfree instead of returning directly.
-
-Fixes: db305161880a ("gpio: regmap: Allow ngpio to be read from the property")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Suggested-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Link: https://lore.kernel.org/r/20250922142427.3310221-7-ioana.ciornei@nxp.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reported-by: Iyán Méndez Veiga <me@iyanmv.com>
+Link: https://lore.kernel.org/stable/aNlW7ekiC0dNPxU3@laps/T/#t
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-regmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/abi/guc_actions_abi.h |  1 -
+ drivers/gpu/drm/xe/abi/guc_klvs_abi.h    | 25 ---------
+ drivers/gpu/drm/xe/xe_gt.c               |  3 +-
+ drivers/gpu/drm/xe/xe_guc.c              |  6 ++-
+ drivers/gpu/drm/xe/xe_guc_submit.c       | 66 ------------------------
+ drivers/gpu/drm/xe/xe_guc_submit.h       |  2 -
+ 6 files changed, 5 insertions(+), 98 deletions(-)
 
-diff --git a/drivers/gpio/gpio-regmap.c b/drivers/gpio/gpio-regmap.c
-index 87c4225784cfa..b3b84a404485e 100644
---- a/drivers/gpio/gpio-regmap.c
-+++ b/drivers/gpio/gpio-regmap.c
-@@ -274,7 +274,7 @@ struct gpio_regmap *gpio_regmap_register(const struct gpio_regmap_config *config
- 	if (!chip->ngpio) {
- 		ret = gpiochip_get_ngpios(chip, chip->parent);
- 		if (ret)
--			return ERR_PTR(ret);
-+			goto err_free_gpio;
+diff --git a/drivers/gpu/drm/xe/abi/guc_actions_abi.h b/drivers/gpu/drm/xe/abi/guc_actions_abi.h
+index 4d9896e14649c..b55d4cfb483a1 100644
+--- a/drivers/gpu/drm/xe/abi/guc_actions_abi.h
++++ b/drivers/gpu/drm/xe/abi/guc_actions_abi.h
+@@ -117,7 +117,6 @@ enum xe_guc_action {
+ 	XE_GUC_ACTION_ENTER_S_STATE = 0x501,
+ 	XE_GUC_ACTION_EXIT_S_STATE = 0x502,
+ 	XE_GUC_ACTION_GLOBAL_SCHED_POLICY_CHANGE = 0x506,
+-	XE_GUC_ACTION_UPDATE_SCHEDULING_POLICIES_KLV = 0x509,
+ 	XE_GUC_ACTION_SCHED_CONTEXT = 0x1000,
+ 	XE_GUC_ACTION_SCHED_CONTEXT_MODE_SET = 0x1001,
+ 	XE_GUC_ACTION_SCHED_CONTEXT_MODE_DONE = 0x1002,
+diff --git a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
+index 89034bc97ec5a..5b2502bec2dcc 100644
+--- a/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
++++ b/drivers/gpu/drm/xe/abi/guc_klvs_abi.h
+@@ -17,7 +17,6 @@
+  *  | 0 | 31:16 | **KEY** - KLV key identifier                                 |
+  *  |   |       |   - `GuC Self Config KLVs`_                                  |
+  *  |   |       |   - `GuC Opt In Feature KLVs`_                               |
+- *  |   |       |   - `GuC Scheduling Policies KLVs`_                          |
+  *  |   |       |   - `GuC VGT Policy KLVs`_                                   |
+  *  |   |       |   - `GuC VF Configuration KLVs`_                             |
+  *  |   |       |                                                              |
+@@ -140,30 +139,6 @@ enum  {
+ #define GUC_KLV_OPT_IN_FEATURE_EXT_CAT_ERR_TYPE_KEY 0x4001
+ #define GUC_KLV_OPT_IN_FEATURE_EXT_CAT_ERR_TYPE_LEN 0u
+ 
+-/**
+- * DOC: GuC Scheduling Policies KLVs
+- *
+- * `GuC KLV`_ keys available for use with UPDATE_SCHEDULING_POLICIES_KLV.
+- *
+- * _`GUC_KLV_SCHEDULING_POLICIES_RENDER_COMPUTE_YIELD` : 0x1001
+- *      Some platforms do not allow concurrent execution of RCS and CCS
+- *      workloads from different address spaces. By default, the GuC prioritizes
+- *      RCS submissions over CCS ones, which can lead to CCS workloads being
+- *      significantly (or completely) starved of execution time. This KLV allows
+- *      the driver to specify a quantum (in ms) and a ratio (percentage value
+- *      between 0 and 100), and the GuC will prioritize the CCS for that
+- *      percentage of each quantum. For example, specifying 100ms and 30% will
+- *      make the GuC prioritize the CCS for 30ms of every 100ms.
+- *      Note that this does not necessarly mean that RCS and CCS engines will
+- *      only be active for their percentage of the quantum, as the restriction
+- *      only kicks in if both classes are fully busy with non-compatible address
+- *      spaces; i.e., if one engine is idle or running the same address space,
+- *      a pending job on the other engine will still be submitted to the HW no
+- *      matter what the ratio is
+- */
+-#define GUC_KLV_SCHEDULING_POLICIES_RENDER_COMPUTE_YIELD_KEY	0x1001
+-#define GUC_KLV_SCHEDULING_POLICIES_RENDER_COMPUTE_YIELD_LEN	2u
+-
+ /**
+  * DOC: GuC VGT Policy KLVs
+  *
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index eaf7569a7c1d1..e3517ce2e18c1 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -41,7 +41,6 @@
+ #include "xe_gt_topology.h"
+ #include "xe_guc_exec_queue_types.h"
+ #include "xe_guc_pc.h"
+-#include "xe_guc_submit.h"
+ #include "xe_hw_fence.h"
+ #include "xe_hw_engine_class_sysfs.h"
+ #include "xe_irq.h"
+@@ -98,7 +97,7 @@ void xe_gt_sanitize(struct xe_gt *gt)
+ 	 * FIXME: if xe_uc_sanitize is called here, on TGL driver will not
+ 	 * reload
+ 	 */
+-	xe_guc_submit_disable(&gt->uc.guc);
++	gt->uc.guc.submission_state.enabled = false;
+ }
+ 
+ static void xe_gt_enable_host_l2_vram(struct xe_gt *gt)
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index b9d21fdaad48b..2efc0298e1a4c 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -825,7 +825,9 @@ int xe_guc_post_load_init(struct xe_guc *guc)
+ 			return ret;
  	}
  
- 	/* if not set, assume there is only one register */
+-	return xe_guc_submit_enable(guc);
++	guc->submission_state.enabled = true;
++
++	return 0;
+ }
+ 
+ int xe_guc_reset(struct xe_guc *guc)
+@@ -1519,7 +1521,7 @@ void xe_guc_sanitize(struct xe_guc *guc)
+ {
+ 	xe_uc_fw_sanitize(&guc->fw);
+ 	xe_guc_ct_disable(&guc->ct);
+-	xe_guc_submit_disable(guc);
++	guc->submission_state.enabled = false;
+ }
+ 
+ int xe_guc_reset_prepare(struct xe_guc *guc)
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+index 18ddbb7b98a15..e670dcb0f0932 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -32,7 +32,6 @@
+ #include "xe_guc_ct.h"
+ #include "xe_guc_exec_queue_types.h"
+ #include "xe_guc_id_mgr.h"
+-#include "xe_guc_klv_helpers.h"
+ #include "xe_guc_submit_types.h"
+ #include "xe_hw_engine.h"
+ #include "xe_hw_fence.h"
+@@ -317,71 +316,6 @@ int xe_guc_submit_init(struct xe_guc *guc, unsigned int num_ids)
+ 	return drmm_add_action_or_reset(&xe->drm, guc_submit_fini, guc);
+ }
+ 
+-/*
+- * Given that we want to guarantee enough RCS throughput to avoid missing
+- * frames, we set the yield policy to 20% of each 80ms interval.
+- */
+-#define RC_YIELD_DURATION	80	/* in ms */
+-#define RC_YIELD_RATIO		20	/* in percent */
+-static u32 *emit_render_compute_yield_klv(u32 *emit)
+-{
+-	*emit++ = PREP_GUC_KLV_TAG(SCHEDULING_POLICIES_RENDER_COMPUTE_YIELD);
+-	*emit++ = RC_YIELD_DURATION;
+-	*emit++ = RC_YIELD_RATIO;
+-
+-	return emit;
+-}
+-
+-#define SCHEDULING_POLICY_MAX_DWORDS 16
+-static int guc_init_global_schedule_policy(struct xe_guc *guc)
+-{
+-	u32 data[SCHEDULING_POLICY_MAX_DWORDS];
+-	u32 *emit = data;
+-	u32 count = 0;
+-	int ret;
+-
+-	if (GUC_SUBMIT_VER(guc) < MAKE_GUC_VER(1, 1, 0))
+-		return 0;
+-
+-	*emit++ = XE_GUC_ACTION_UPDATE_SCHEDULING_POLICIES_KLV;
+-
+-	if (CCS_MASK(guc_to_gt(guc)))
+-		emit = emit_render_compute_yield_klv(emit);
+-
+-	count = emit - data;
+-	if (count > 1) {
+-		xe_assert(guc_to_xe(guc), count <= SCHEDULING_POLICY_MAX_DWORDS);
+-
+-		ret = xe_guc_ct_send_block(&guc->ct, data, count);
+-		if (ret < 0) {
+-			xe_gt_err(guc_to_gt(guc),
+-				  "failed to enable GuC sheduling policies: %pe\n",
+-				  ERR_PTR(ret));
+-			return ret;
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+-int xe_guc_submit_enable(struct xe_guc *guc)
+-{
+-	int ret;
+-
+-	ret = guc_init_global_schedule_policy(guc);
+-	if (ret)
+-		return ret;
+-
+-	guc->submission_state.enabled = true;
+-
+-	return 0;
+-}
+-
+-void xe_guc_submit_disable(struct xe_guc *guc)
+-{
+-	guc->submission_state.enabled = false;
+-}
+-
+ static void __release_guc_id(struct xe_guc *guc, struct xe_exec_queue *q, u32 xa_count)
+ {
+ 	int i;
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.h b/drivers/gpu/drm/xe/xe_guc_submit.h
+index 0d126b807c104..9b71a986c6ca6 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.h
++++ b/drivers/gpu/drm/xe/xe_guc_submit.h
+@@ -13,8 +13,6 @@ struct xe_exec_queue;
+ struct xe_guc;
+ 
+ int xe_guc_submit_init(struct xe_guc *guc, unsigned int num_ids);
+-int xe_guc_submit_enable(struct xe_guc *guc);
+-void xe_guc_submit_disable(struct xe_guc *guc);
+ 
+ int xe_guc_submit_reset_prepare(struct xe_guc *guc);
+ void xe_guc_submit_reset_wait(struct xe_guc *guc);
 -- 
 2.51.0
 
