@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D33F2FD1DD;
-	Tue, 30 Sep 2025 15:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B811F1302;
+	Tue, 30 Sep 2025 15:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245103; cv=none; b=TDMFep1c0XieR/0hTlXsI+P3tb079L65oC2ki5fJTjCdlCFOJlLIgAnHNGnJGEUyTLQmuJA3ZM3VYAUgt2iDZLLgL+7FEYTbfIfKSwC/gyrkHHXi4gQYlu3lFQAzZuqiR1+3x88O3gBgpfDlCZj92QwPCIrepMhu08BU5rDsC8I=
+	t=1759245106; cv=none; b=RgmW2yyMiCKRLe+0Hc73SZVMPfdmA6UwpRutUE11kwin4TsyKq5s/CXBFPf27833q/9MQWYWqpZgRuzEW/IT65RbTa9Vzwoqpl5I1K7wVBWx3jPBHFdFwZRQo7+ZVR/3B38swzTpAcFlzNJ/dwF7Zq8a3nfBOztWC7WgQYqzIlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245103; c=relaxed/simple;
-	bh=LpH7Atfa1HyxORtKkPswUHIj5ZVMESq2ZgWb1DkqAuQ=;
+	s=arc-20240116; t=1759245106; c=relaxed/simple;
+	bh=k8znFv3zxCBpStJWdXunUOlLrTrpZL2YOKeNix52QX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kn++NA1Q1uzPcrhW4Q7EOR6+0ux4i7lbt49+Ok/SB6YSZmYyNSiuAfjS0WXEhVcOCKgHmBScsXTkMSVJobl0s4F01yhUkcIvesDUW/2maoA2rj/mYyHtcTrkk70QQZBNj+8XyxFAIShk/eiDRf/amwwkqQ80i+vyRt1FQXRr5eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EML0QkaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgAOjaWW/6lKcG9pE5GpBLBJCoYI285CX4nko6XISQ8o8UypD8BP37EUC67ycsox/BF9mXwntR5bnnzlCfwN37zwMhy+QisOVIe5QUyY1Am3GkJyql9rOebcm3NcaHAIgwf/gfS6CIYnV7u1KbpnmLf7aOsnFzKVQ7v0MZTPaAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2rO3b/g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EML0QkaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7605C113D0;
-	Tue, 30 Sep 2025 15:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2rO3b/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A9AC4CEF0;
+	Tue, 30 Sep 2025 15:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245103;
-	bh=LpH7Atfa1HyxORtKkPswUHIj5ZVMESq2ZgWb1DkqAuQ=;
+	s=korg; t=1759245106;
+	bh=k8znFv3zxCBpStJWdXunUOlLrTrpZL2YOKeNix52QX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EML0QkaPFU0cqyZ35Z2PeIWf0tjup8pkoa21vFjg+xldoY/xbSj0M+Ars9Ts5A4hi
-	 B7vnD7EPcMycEPADqheI8Se6TlQnBYhtve1ldkAMm8CwZv68R5j8QPoEF+n1VNW5nf
-	 C251nxGw8apDPIepXhdoQxmPpMymaLJ5Sd0m7vPM=
+	b=v2rO3b/g7EEhkAZ3Io6fqjrPKffE7cD1Bdft/zP1rikPbxtiuvQPg+Jfq1Gq3fZ4K
+	 SE3aH2jAzHUURnmRfqe95JEgwVxxqbTafdOLqvBG1yjZUOrb3npDkoeIw0YUTyNRmE
+	 TlY8qr13IOK7NI6fdSvNEXHogzJavm6IAJDlIQXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andreas Kemnade <akemnade@kernel.org>,
+	Alistair Francis <alistair@alistair23.me>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/151] dpaa2-switch: fix buffer pool seeding for control traffic
-Date: Tue, 30 Sep 2025 16:46:40 +0200
-Message-ID: <20250930143830.386428778@linuxfoundation.org>
+Subject: [PATCH 5.15 053/151] regulator: sy7636a: fix lifecycle of power good gpio
+Date: Tue, 30 Sep 2025 16:46:23 +0200
+Message-ID: <20250930143829.718498052@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -51,67 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Andreas Kemnade <akemnade@kernel.org>
 
-[ Upstream commit 2690cb089502b80b905f2abdafd1bf2d54e1abef ]
+[ Upstream commit c05d0b32eebadc8be6e53196e99c64cf2bed1d99 ]
 
-Starting with commit c50e7475961c ("dpaa2-switch: Fix error checking in
-dpaa2_switch_seed_bp()"), the probing of a second DPSW object errors out
-like below.
+Attach the power good gpio to the regulator device devres instead of the
+parent device to fix problems if probe is run multiple times
+(rmmod/insmod or some deferral).
 
-fsl_dpaa2_switch dpsw.1: fsl_mc_driver_probe failed: -12
-fsl_dpaa2_switch dpsw.1: probe with driver fsl_dpaa2_switch failed with error -12
-
-The aforementioned commit brought to the surface the fact that seeding
-buffers into the buffer pool destined for control traffic is not
-successful and an access violation recoverable error can be seen in the
-MC firmware log:
-
-[E, qbman_rec_isr:391, QBMAN]  QBMAN recoverable event 0x1000000
-
-This happens because the driver incorrectly used the ID of the DPBP
-object instead of the hardware buffer pool ID when trying to release
-buffers into it.
-
-This is because any DPSW object uses two buffer pools, one managed by
-the Linux driver and destined for control traffic packet buffers and the
-other one managed by the MC firmware and destined only for offloaded
-traffic. And since the buffer pool managed by the MC firmware does not
-have an external facing DPBP equivalent, any subsequent DPBP objects
-created after the first DPSW will have a DPBP id different to the
-underlying hardware buffer ID.
-
-The issue was not caught earlier because these two numbers can be
-identical when all DPBP objects are created before the DPSW objects are.
-This is the case when the DPL file is used to describe the entire DPAA2
-object layout and objects are created at boot time and it's also true
-for the first DPSW being created dynamically using ls-addsw.
-
-Fix this by using the buffer pool ID instead of the DPBP id when
-releasing buffers into the pool.
-
-Fixes: 2877e4f7e189 ("staging: dpaa2-switch: setup buffer pool and RX path rings")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20250910144825.2416019-1-ioana.ciornei@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8c485bedfb785 ("regulator: sy7636a: Initial commit")
+Signed-off-by: Andreas Kemnade <akemnade@kernel.org>
+Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Message-ID: <20250906-sy7636-rsrc-v1-2-e2886a9763a7@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/sy7636a-regulator.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 6448e06dcf826..1e6b29c047710 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -2682,7 +2682,7 @@ static int dpaa2_switch_setup_dpbp(struct ethsw_core *ethsw)
- 		dev_err(dev, "dpsw_ctrl_if_set_pools() failed\n");
- 		goto err_get_attr;
+diff --git a/drivers/regulator/sy7636a-regulator.c b/drivers/regulator/sy7636a-regulator.c
+index 8360b3947eada..e29ea02f65424 100644
+--- a/drivers/regulator/sy7636a-regulator.c
++++ b/drivers/regulator/sy7636a-regulator.c
+@@ -80,9 +80,11 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
+ 	if (!regmap)
+ 		return -EPROBE_DEFER;
+ 
+-	gdp = devm_gpiod_get(pdev->dev.parent, "epd-pwr-good", GPIOD_IN);
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
++
++	gdp = devm_gpiod_get(&pdev->dev, "epd-pwr-good", GPIOD_IN);
+ 	if (IS_ERR(gdp)) {
+-		dev_err(pdev->dev.parent, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
++		dev_err(&pdev->dev, "Power good GPIO fault %ld\n", PTR_ERR(gdp));
+ 		return PTR_ERR(gdp);
  	}
--	ethsw->bpid = dpbp_attrs.id;
-+	ethsw->bpid = dpbp_attrs.bpid;
  
- 	return 0;
+@@ -102,7 +104,6 @@ static int sy7636a_regulator_probe(struct platform_device *pdev)
+ 	}
  
+ 	config.dev = &pdev->dev;
+-	config.dev->of_node = pdev->dev.parent->of_node;
+ 	config.regmap = regmap;
+ 
+ 	rdev = devm_regulator_register(&pdev->dev, &desc, &config);
 -- 
 2.51.0
 
