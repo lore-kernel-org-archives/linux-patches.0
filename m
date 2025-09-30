@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856E0173;
-	Tue, 30 Sep 2025 15:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6376C173;
+	Tue, 30 Sep 2025 15:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245532; cv=none; b=oaQzE+bFuLF1F4754XeYdmbjCN6WHVit0bbtP0kV9d8Pzkv9BnOVXYgV9pp5fn2jDtlt5XkHDjBnqX0ydNMuAvEjLPPes2tl7p6tkDOdMxBOHn26NeWPW405BQEY/+F1eCI+SmhO2ZxUJcpz4I5UEEG5A3ULR/LVkylYRXHsFtc=
+	t=1759245534; cv=none; b=qj6hcWAuH6VyPbyCEf0jbDy/OCWRkz1jPtFawycK4pS+B0SoWTXezhPyHj39QASRN/CfjISF30zXFoxqK9ONfzZmJjG1sVkmiz53ZZw/2NDIkI9Ne7ZG9QqKWU+qetK2M3BE/CZ3IMNHNn/S1e9SO9po8+Q8RZ5wE+DiolMbL5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245532; c=relaxed/simple;
-	bh=H+a1ufMH7CX+raQccqYx1ObBpH+0rDOHvukG3oGEjXw=;
+	s=arc-20240116; t=1759245534; c=relaxed/simple;
+	bh=adXr7qICde1lzHKPRWEnHFHMJPHQ8D55BzOO+oDvJDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oANfLIShVR++9Hj7kTn+TMtUaTmdFhTrngn8Od+0em9KOJP84ZN3kezkGYNV0j2sjGuDtwUK+hXuxSYpO8XPuneg8dBY/3nlePcySFfJ3CNByxxi/7yNjqSLQXLhTqWN0X2DcSiEEWE1QxK9VhJUnElWrfdSk2DbNld0Qvr4CIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNqh9f9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KOB207sjpCDtuYJcJyBNEiIID4qqxxBXu3fUDevCr2SGZnesXW+oDL3jsk09NRDKGWhwa7UEpK6oCwmaK0YFiqZ+8OOPxfvOfYiTaecsKs/mmesMhB87spCCKP/oKkdgVOBK4qNpM4yTa0Hz2eeAXCAw/D9K+t/C42tkc/kO/x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqy7GMUz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNqh9f9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC5AC4CEF0;
-	Tue, 30 Sep 2025 15:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqy7GMUz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AD7C113D0;
+	Tue, 30 Sep 2025 15:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245531;
-	bh=H+a1ufMH7CX+raQccqYx1ObBpH+0rDOHvukG3oGEjXw=;
+	s=korg; t=1759245534;
+	bh=adXr7qICde1lzHKPRWEnHFHMJPHQ8D55BzOO+oDvJDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNqh9f9THZCwkf3CLrIAmaTynfs6K0RXVgeQjCJH+vxxnVYw6wWCbxjuXJctfnUow
-	 YF0nUXKv3EfzOv04zDnUzRlN/u9OJKBFB1+YUQo8xcAhoTfD6H07SfXv0Buva3fYo/
-	 MFukjFHqlp7eZupiUUwZQgXDUl+i1Xz1m74KQ1L0=
+	b=wqy7GMUzhxyg80y8tCR+LJaipePOaxEso/Pi3wBTKQ8Vbo910rn7FaUtMdk1EX0Yp
+	 X1H075WMMcjky6tsgr3OgLs6nGg3p03kuTzKMpmaHXpwSjSJ7sq0gdIeHL9kxryOBh
+	 fdxFlmxtUHLqInh5sXmHQSZ4xVvvJJb/9CWKI2mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Czapnik <lukasz.czapnik@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Kamakshi Nellore <nellorex.kamakshi@intel.com>
-Subject: [PATCH 6.1 46/73] i40e: fix idx validation in i40e_validate_queue_map
-Date: Tue, 30 Sep 2025 16:47:50 +0200
-Message-ID: <20250930143822.518053703@linuxfoundation.org>
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 29/73] can: etas_es58x: populate ndo_change_mtu() to prevent buffer overflow
+Date: Tue, 30 Sep 2025 16:47:33 +0200
+Message-ID: <20250930143821.790750306@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143820.537407601@linuxfoundation.org>
 References: <20250930143820.537407601@linuxfoundation.org>
@@ -54,40 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Czapnik <lukasz.czapnik@intel.com>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-commit aa68d3c3ac8d1dcec40d52ae27e39f6d32207009 upstream.
+[ Upstream commit 38c0abad45b190a30d8284a37264d2127a6ec303 ]
 
-Ensure idx is within range of active/initialized TCs when iterating over
-vf->ch[idx] in i40e_validate_queue_map().
+Sending an PF_PACKET allows to bypass the CAN framework logic and to
+directly reach the xmit() function of a CAN driver. The only check
+which is performed by the PF_PACKET framework is to make sure that
+skb->len fits the interface's MTU.
 
-Fixes: c27eac48160d ("i40e: Enable ADq and create queue channel/s on VF")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lukasz Czapnik <lukasz.czapnik@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Kamakshi Nellore <nellorex.kamakshi@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Unfortunately, because the etas_es58x driver does not populate its
+net_device_ops->ndo_change_mtu(), it is possible for an attacker to
+configure an invalid MTU by doing, for example:
+
+  $ ip link set can0 mtu 9999
+
+After doing so, the attacker could open a PF_PACKET socket using the
+ETH_P_CANXL protocol:
+
+	socket(PF_PACKET, SOCK_RAW, htons(ETH_P_CANXL));
+
+to inject a malicious CAN XL frames. For example:
+
+	struct canxl_frame frame = {
+		.flags = 0xff,
+		.len = 2048,
+	};
+
+The CAN drivers' xmit() function are calling can_dev_dropped_skb() to
+check that the skb is valid, unfortunately under above conditions, the
+malicious packet is able to go through can_dev_dropped_skb() checks:
+
+  1. the skb->protocol is set to ETH_P_CANXL which is valid (the
+     function does not check the actual device capabilities).
+
+  2. the length is a valid CAN XL length.
+
+And so, es58x_start_xmit() receives a CAN XL frame which it is not
+able to correctly handle and will thus misinterpret it as a CAN(FD)
+frame.
+
+This can result in a buffer overflow. For example, using the es581.4
+variant, the frame will be dispatched to es581_4_tx_can_msg(), go
+through the last check at the beginning of this function:
+
+	if (can_is_canfd_skb(skb))
+		return -EMSGSIZE;
+
+and reach this line:
+
+	memcpy(tx_can_msg->data, cf->data, cf->len);
+
+Here, cf->len corresponds to the flags field of the CAN XL frame. In
+our previous example, we set canxl_frame->flags to 0xff. Because the
+maximum expected length is 8, a buffer overflow of 247 bytes occurs!
+
+Populate net_device_ops->ndo_change_mtu() to ensure that the
+interface's MTU can not be set to anything bigger than CAN_MTU or
+CANFD_MTU (depending on the device capabilities). By fixing the root
+cause, this prevents the buffer overflow.
+
+Fixes: 8537257874e9 ("can: etas_es58x: add core support for ETAS ES58X CAN USB interfaces")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20250918-can-fix-mtu-v1-1-0d1cada9393b@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/etas_es58x/es58x_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2457,8 +2457,10 @@ static int i40e_validate_queue_map(struc
- 	u16 vsi_queue_id, queue_id;
+diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
+index 5aba168496037..41bea531234db 100644
+--- a/drivers/net/can/usb/etas_es58x/es58x_core.c
++++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
+@@ -7,7 +7,7 @@
+  *
+  * Copyright (c) 2019 Robert Bosch Engineering and Business Solutions. All rights reserved.
+  * Copyright (c) 2020 ETAS K.K.. All rights reserved.
+- * Copyright (c) 2020-2022 Vincent Mailhol <mailhol.vincent@wanadoo.fr>
++ * Copyright (c) 2020-2025 Vincent Mailhol <mailhol@kernel.org>
+  */
  
- 	for_each_set_bit(vsi_queue_id, &queuemap, I40E_MAX_VSI_QP) {
--		if (vf->adq_enabled) {
--			vsi_id = vf->ch[vsi_queue_id / I40E_MAX_VF_VSI].vsi_id;
-+		u16 idx = vsi_queue_id / I40E_MAX_VF_VSI;
-+
-+		if (vf->adq_enabled && idx < vf->num_tc) {
-+			vsi_id = vf->ch[idx].vsi_id;
- 			queue_id = (vsi_queue_id % I40E_DEFAULT_QUEUES_PER_VF);
- 		} else {
- 			queue_id = vsi_queue_id;
+ #include <asm/unaligned.h>
+@@ -1976,6 +1976,7 @@ static const struct net_device_ops es58x_netdev_ops = {
+ 	.ndo_stop = es58x_stop,
+ 	.ndo_start_xmit = es58x_start_xmit,
+ 	.ndo_eth_ioctl = can_eth_ioctl_hwts,
++	.ndo_change_mtu = can_change_mtu,
+ };
+ 
+ static const struct ethtool_ops es58x_ethtool_ops = {
+-- 
+2.51.0
+
 
 
