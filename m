@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19C32F6167;
-	Tue, 30 Sep 2025 15:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4C3223DD6;
+	Tue, 30 Sep 2025 15:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245241; cv=none; b=oFNQBEAIO5fRjpcyhiimSiE4yBjpDfulWBdTe8X4Sv+rzHKrSxIe7i8Ma8kbkof5m5CnaK2/apJ+gY/3XvgVRJVBCAfU298LcK2TXf9vaH69xaEyAZv9SAje1mnJ6ijG4xbMa4pA1H1z/vEUT0fGVWrwDLXRPCzLg47mdh3VJh4=
+	t=1759245247; cv=none; b=fNJTT8o1ZGGfXY/UW/AFgLIU7hmD+66mo/ySq5xPPgl2kTkT4FLYKPM/a3f2qv1HYY6/rUP7Qfuc0OeFxgJbx+aMKYxYFle+XL0C11NXd05ldFcwk5kXKq7xOogixKo9jtHDdy19EO2SsLaIIw/wpplEKMfhgXhnPgy4ytR9t3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759245241; c=relaxed/simple;
-	bh=ifh2GDAFRzFbMBcYABecW//abb3Zbe/yIh+oDJTZHYw=;
+	s=arc-20240116; t=1759245247; c=relaxed/simple;
+	bh=bQTpliJ9Or/EuIloP7LzC1107D6pX8LGoMSOxQeSBpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XciHsGWciZIbHsScX1Ws9jqgxdzMUDKlLf8nwq6XYUeCRZ1e/RSLxP4Bf2CeZYSRRlDu/RXtWLDB6ijj/Qd2FbhlZE1PRAha6Wf3LciSMPF+6QD43eR4O0VASfNso4QM0pY0qjTEvZ+s0dPFMZfIV6g+VvXaugNBDxeF6Wpu3mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omRTxCKu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwC6zw2UZz0pARtnGnemzkLa3ruuDZ0cXgFw97f8/a7quX5L+Lc8vBbL+iSX8YEnA+NXlG34i5NQlarvhD9upIFOoO1wj9WLIeEOThNyDAKH7rRSheYXUopK8vxGifJgsAz5Hv+ItElgkZqX7yIjeAzwtyi2Sp/LyBHWWKI0/jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEw6b+y9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omRTxCKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D37C4CEF0;
-	Tue, 30 Sep 2025 15:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEw6b+y9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7BCC4CEF0;
+	Tue, 30 Sep 2025 15:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245241;
-	bh=ifh2GDAFRzFbMBcYABecW//abb3Zbe/yIh+oDJTZHYw=;
+	s=korg; t=1759245244;
+	bh=bQTpliJ9Or/EuIloP7LzC1107D6pX8LGoMSOxQeSBpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omRTxCKu5mvpSWpET4U4FHvFwpqBpwgDL67niGDtFRl0YOLHPYDky+la4WqhvDdum
-	 lDRlJqnMRUTyrVpY6cYc/kZxp4HdI3UV7ZIw8ko9f4+bcLB2yK/Zx2UhPzSEdlwp7I
-	 NHq3svw911tU6ie0vdZFELHjKOfJe6qyzkybbPYg=
+	b=JEw6b+y9vSIds+SCF2HSBCmotAdRm9+XU+7PBk4hC6hfCDgvQcrRJkahJgNeJw0gE
+	 gIN4dQJE3vUSL0hBTjYV6kTvthG3SJ2Qh0ijPDdypvC9+egFBa3GWIFuaxDb9eoX0H
+	 HcakbMk5uurplG37t606/kQQdtUOx62+7sBhyptk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
+	kernel test robot <lkp@intel.com>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/151] ALSA: usb-audio: Convert comma to semicolon
-Date: Tue, 30 Sep 2025 16:47:19 +0200
-Message-ID: <20250930143831.950698943@linuxfoundation.org>
+Subject: [PATCH 5.15 110/151] ALSA: usb-audio: Fix build with CONFIG_INPUT=n
+Date: Tue, 30 Sep 2025 16:47:20 +0200
+Message-ID: <20250930143831.989159025@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -52,47 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9ca30a1b007d5fefb5752428f852a2d8d7219c1c ]
+[ Upstream commit d0630a0b80c08530857146e3bf183a7d6b743847 ]
 
-Replace comma between expressions with semicolons.
-
-Using a ',' in place of a ';' can have unintended side effects.
-Although that is not the case here, it is seems best to use ';'
-unless ',' is intended.
-
-Found by inspection.
-No functional change intended.
-Compile tested only.
+The recent addition of DualSense mixer quirk relies on the input
+device handle, and the build can fail if CONFIG_INPUT isn't set.
+Put (rather ugly) workarounds to wrap with IS_REACHABLE() for avoiding
+the build error.
 
 Fixes: 79d561c4ec04 ("ALSA: usb-audio: Add mixer quirk for Sony DualSense PS5")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202506130733.gnPKw2l3-lkp@intel.com/
 Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20250612060228.1518028-1-nichen@iscas.ac.cn
+Link: https://patch.msgid.link/20250613081543.7404-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/mixer_quirks.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index fc62ad4c8ef11..9b59d90ab8ca5 100644
+index 9b59d90ab8ca5..177f64107bb1e 100644
 --- a/sound/usb/mixer_quirks.c
 +++ b/sound/usb/mixer_quirks.c
-@@ -758,9 +758,9 @@ static int snd_dualsense_jack_create(struct usb_mixer_interface *mixer,
+@@ -528,6 +528,7 @@ static int snd_emu0204_controls_create(struct usb_mixer_interface *mixer)
+ 					  &snd_emu0204_control, NULL);
+ }
  
- 	mei->ih.event = snd_dualsense_ih_event;
- 	mei->ih.match = snd_dualsense_ih_match;
--	mei->ih.connect = snd_dualsense_ih_connect,
--	mei->ih.disconnect = snd_dualsense_ih_disconnect,
--	mei->ih.start = snd_dualsense_ih_start,
-+	mei->ih.connect = snd_dualsense_ih_connect;
-+	mei->ih.disconnect = snd_dualsense_ih_disconnect;
-+	mei->ih.start = snd_dualsense_ih_start;
- 	mei->ih.name = name;
- 	mei->ih.id_table = mei->id_table;
++#if IS_REACHABLE(CONFIG_INPUT)
+ /*
+  * Sony DualSense controller (PS5) jack detection
+  *
+@@ -784,6 +785,7 @@ static int snd_dualsense_controls_create(struct usb_mixer_interface *mixer)
  
+ 	return snd_dualsense_jack_create(mixer, "Headset Mic Jack", false);
+ }
++#endif /* IS_REACHABLE(CONFIG_INPUT) */
+ 
+ /* ASUS Xonar U1 / U3 controls */
+ 
+@@ -3630,10 +3632,12 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
+ 		err = snd_emu0204_controls_create(mixer);
+ 		break;
+ 
++#if IS_REACHABLE(CONFIG_INPUT)
+ 	case USB_ID(0x054c, 0x0ce6): /* Sony DualSense controller (PS5) */
+ 	case USB_ID(0x054c, 0x0df2): /* Sony DualSense Edge controller (PS5) */
+ 		err = snd_dualsense_controls_create(mixer);
+ 		break;
++#endif /* IS_REACHABLE(CONFIG_INPUT) */
+ 
+ 	case USB_ID(0x0763, 0x2030): /* M-Audio Fast Track C400 */
+ 	case USB_ID(0x0763, 0x2031): /* M-Audio Fast Track C400 */
 -- 
 2.51.0
 
