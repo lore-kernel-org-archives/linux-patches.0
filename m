@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B89D30506E;
-	Tue, 30 Sep 2025 15:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822951EE02F;
+	Tue, 30 Sep 2025 15:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759244538; cv=none; b=DKRSOenAhbQuPUCUgA3R4newHXnuP6PhUCBiB1F6KqGLjZ+WCgNUwwCyw/sp+Y49R+6OMtSZyuV00D/oumUXnOuZHdTb9H8byy28ZBeh3rrJ1QD7ml/dubD1/cxQLlCjYITa7CpXxpfy3Ilv8Z0nwGx3pxc90XSSr/cwWZpoAoI=
+	t=1759244541; cv=none; b=RmzwUB8EybyRV/99bDywPPkCWQbSy5zidyDciVyGK8gDPbwav4mmQiHaPR9/jPD61Dsm4JbH8Q2UKbjVOIAqAYHy2ImHBD42SHGmuoruI83HcjqvVpE7MjlsIEKd5LBVKrUzBcLeQxDdDUdlOk/Ms18B0LndifZWIpWWWSS8WEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759244538; c=relaxed/simple;
-	bh=J6Cta1M5TzEWSFX/YUJ6jxylJTvN8DyD/JwTGhZqDxI=;
+	s=arc-20240116; t=1759244541; c=relaxed/simple;
+	bh=40DngJyD2tU/RUeGE8XcAssTtLNQyMf2K2z5WM4WBkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLbgtY7yZx8hZOMjwxrHufcBkGBzNj4NNfa32eCZwJfGuyAMwaLtz4zttFSFf1wEnzgjOeqCWO4iGUFU/BBodeYA6waYnh7USRiaZhICTIr3syZ58ZLAGVQjreGHnxnjhSVsnrKwBXibTm107MwV+54+cy5MsEoUJaPAgcgNja8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMmQtX1Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8YuXNwBBXHlTiYEubHl+F00RyzZhMdffR6wkEgLa6v40dm/aBNW9Zwy/fQJXnBZmtx5jy8tZ9UQRNz+Q7v5OU/33DoqRd5dTf4Ut5GnfxNqo2OrKDceB99NzHtl463nTlq0VC83oKe/dHFnNwSuIfuJ4jkxessp905N28Dh/O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvTD4Y2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMmQtX1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3061C4CEF0;
-	Tue, 30 Sep 2025 15:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvTD4Y2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68B9C113D0;
+	Tue, 30 Sep 2025 15:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759244538;
-	bh=J6Cta1M5TzEWSFX/YUJ6jxylJTvN8DyD/JwTGhZqDxI=;
+	s=korg; t=1759244541;
+	bh=40DngJyD2tU/RUeGE8XcAssTtLNQyMf2K2z5WM4WBkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMmQtX1QYcMnJuXLbirM1RrzVpPOwaXuXN+mYrtHWBps/CWJ9PshnlfFvTZKyc4wZ
-	 srKn2MMAEjCpnAuMNhSl0s4gUTlClv2iJNIVyGHRnvISwNkz5Sei9IJhGa+/G7e9xJ
-	 jhBka3EHcav/C4TDPSp6l6A+jIo/Uo5clvf9JCME=
+	b=AvTD4Y2yoW1YmCcNklRSuZwHOfMs6UMdp/AEdf7Gcn0Ng0Y+r33fVjfArlvfoaHQz
+	 /RlnTEefxvr5sx/+8LoUB1NnwVmjrPllVxic5kKnqCalT+aZg2exiZOYaAGIqZzf/D
+	 dVDoAO4wY8UWscx5Fa15+A8/ncjZ63utprKqb2/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jimmy Hon <honyuenkwun@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.16 020/143] net: sfp: add quirk for Potron SFP+ XGSPON ONU Stick
-Date: Tue, 30 Sep 2025 16:45:44 +0200
-Message-ID: <20250930143832.049462991@linuxfoundation.org>
+Subject: [PATCH 6.16 038/143] arm64: dts: rockchip: Fix the headphone detection on the orangepi 5
+Date: Tue, 30 Sep 2025 16:46:02 +0200
+Message-ID: <20250930143832.758612322@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143831.236060637@linuxfoundation.org>
 References: <20250930143831.236060637@linuxfoundation.org>
@@ -51,74 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Jimmy Hon <honyuenkwun@gmail.com>
 
-[ Upstream commit dfec1c14aecee6813f9bafc7b560cc3a31d24079 ]
+[ Upstream commit 0f860eef417df93eb0ae70bbfa8d26cb7e29244d ]
 
-Add quirk for Potron SFP+ XGSPON ONU Stick (YV SFP+ONT-XGSPON).
+The logic of the headphone detect pin seems to be inverted, with this
+change headphones actually output sound when plugged in.
 
-This device uses pins 2 and 7 for UART communication, so disable
-TX_FAULT and LOS. Additionally as it is an embedded system in an
-SFP+ form factor provide it enough time to fully boot before we
-attempt to use it.
+Does not need workaround of using pin-switches to enable output.
 
-https://www.potrontec.com/index/index/list/cat_id/2.html#11-83
-https://pon.wiki/xgs-pon/ont/potron-technology/x-onu-sfpp/
+Verified by checking /sys/kernel/debug/gpio.
 
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20250617180324.229487-1-macroalpha82@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ae46756faff8 ("arm64: dts: rockchip: analog audio on Orange Pi 5")
+Signed-off-by: Jimmy Hon <honyuenkwun@gmail.com>
+Link: https://lore.kernel.org/r/20250904030150.986042-1-honyuenkwun@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 347c1e0e94d95..5347c95d1e772 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -361,6 +361,11 @@ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
- 	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
- }
- 
-+static void sfp_fixup_ignore_hw(struct sfp *sfp, unsigned int mask)
-+{
-+	sfp->state_hw_mask &= ~mask;
-+}
-+
- static void sfp_fixup_nokia(struct sfp *sfp)
- {
- 	sfp_fixup_long_startup(sfp);
-@@ -409,7 +414,19 @@ static void sfp_fixup_halny_gsfp(struct sfp *sfp)
- 	 * these are possibly used for other purposes on this
- 	 * module, e.g. a serial port.
- 	 */
--	sfp->state_hw_mask &= ~(SFP_F_TX_FAULT | SFP_F_LOS);
-+	sfp_fixup_ignore_hw(sfp, SFP_F_TX_FAULT | SFP_F_LOS);
-+}
-+
-+static void sfp_fixup_potron(struct sfp *sfp)
-+{
-+	/*
-+	 * The TX_FAULT and LOS pins on this device are used for serial
-+	 * communication, so ignore them. Additionally, provide extra
-+	 * time for this device to fully start up.
-+	 */
-+
-+	sfp_fixup_long_startup(sfp);
-+	sfp_fixup_ignore_hw(sfp, SFP_F_TX_FAULT | SFP_F_LOS);
- }
- 
- static void sfp_fixup_rollball_cc(struct sfp *sfp)
-@@ -512,6 +529,8 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK_F("Walsun", "HXSX-ATRC-1", sfp_fixup_fs_10gt),
- 	SFP_QUIRK_F("Walsun", "HXSX-ATRI-1", sfp_fixup_fs_10gt),
- 
-+	SFP_QUIRK_F("YV", "SFP+ONU-XGSPON", sfp_fixup_potron),
-+
- 	// OEM SFP-GE-T is a 1000Base-T module with broken TX_FAULT indicator
- 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
- 
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dtsi
+index 4fedc50cce8c8..11940c77f2bd0 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dtsi
+@@ -42,9 +42,8 @@
+ 		simple-audio-card,bitclock-master = <&masterdai>;
+ 		simple-audio-card,format = "i2s";
+ 		simple-audio-card,frame-master = <&masterdai>;
+-		simple-audio-card,hp-det-gpios = <&gpio1 RK_PD5 GPIO_ACTIVE_LOW>;
++		simple-audio-card,hp-det-gpios = <&gpio1 RK_PD5 GPIO_ACTIVE_HIGH>;
+ 		simple-audio-card,mclk-fs = <256>;
+-		simple-audio-card,pin-switches = "Headphones";
+ 		simple-audio-card,routing =
+ 			"Headphones", "LOUT1",
+ 			"Headphones", "ROUT1",
 -- 
 2.51.0
 
