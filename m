@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096373074BB;
-	Tue, 30 Sep 2025 15:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A88307AD2;
+	Tue, 30 Sep 2025 15:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759245315; cv=none; b=IBgcCIG3TrPiMeoQ+gCoeB+cyq2uAKgpPOvIUFuXH80mWAh1GwgRCvUm6ynTMVaKTrt3Bb0WdjhuMHBf/33a1vK+PYngnkrdnl9CLGLgeoVP4KtWWCEaUwbl7hA+gefwiev7+yGQNFyvDaK92j0oV7cJ3KBdXN3lZIc+FLg6gtE=
+	t=1759245315; cv=none; b=a5/WGCuq5p/auU69r2Fs6MlshZzwOHSzNxHQKGjxDYEpKlVUNnP0KVhUQ22dlr77ULj/0XKKzl/pWVywTibN9rhrSrlpvE9SPg576OJoKLrVkOpxdcf/xcRJMaJrc3B9JmILpb+iThfll0rEJEQrSWc7zYElIKVOBFV/GYsNIXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759245315; c=relaxed/simple;
-	bh=fSjBmLBDsP5tYyQ51/0sH/ORYDy1aZ6LBJikCuO08GY=;
+	bh=dKtb9YfC1+5H5VOdlizcardYxO77Ohdq/S1yHrPXESc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXL+HFOB5lUHkaJYIywZzPCzqiiBd3/d8gi8ZD+r7et+7MK1fvH2lzdYad7DX+tEq9PHup7/a8hkWjoVn7pLX+z47IRlmI+wM2PXlG1jErCb+t+2MbfyfI91cDGzNt/uH73oX1axCDIiqV5CuJeMs9y8zf0qHSjJwR9dHsVVVqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hfz0ti2c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5wkb/bgcfSqC5nutmVrAUkNEyoyNirpt1dTrT023jBy199DYBGNu2Mc4N9pMVm1CVGQxaCNp41WGWphwc/6vcT9LlPP/ycagZki8pHnbG7SpgQSN4F5xt6TqVk6IYIEf32WZkjNf/wQQwyY/TEvR3onmIRgVy0HKbOa/0LHkHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vn6djIUg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hfz0ti2c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F02EC4CEF0;
-	Tue, 30 Sep 2025 15:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vn6djIUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A5AC113D0;
+	Tue, 30 Sep 2025 15:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759245312;
-	bh=fSjBmLBDsP5tYyQ51/0sH/ORYDy1aZ6LBJikCuO08GY=;
+	s=korg; t=1759245315;
+	bh=dKtb9YfC1+5H5VOdlizcardYxO77Ohdq/S1yHrPXESc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hfz0ti2cqwQii21C/8LE875wwBeLZRIeu/bGNsQBt24E1XvY2gOWTHKs2T/zoEeLJ
-	 7XMzGvjQ4QHh7hMiF87CF8VN+j1i1jvCWMXBgqZWAAv0TlEHGjTYRDMvW2fXp+R/ec
-	 VdSr67PrCSeAnIwcuXMRTWsjiKJXb8ML46ODu7nA=
+	b=Vn6djIUgY9WaWOC6R5CGINArlBjq5P6FjfKcJzhDolTIabeU7girsZ6CMusTzRPXr
+	 hQ7zs1V21oUimSn2cXNvlxAjM/J/ejr+LGY7pRGA35jWZiuIp4zfmnNgLxNpgLgytH
+	 QbjCZ7SMtYJLi9cYRD+LKeYD9PgYEPm5XzlVTJ4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Schiller <ms@dev.tdt.de>,
-	Hauke Mehrtens <hauke@hauke-m.de>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/151] net: dsa: lantiq_gswip: do also enable or disable cpu port
-Date: Tue, 30 Sep 2025 16:47:42 +0200
-Message-ID: <20250930143832.858093804@linuxfoundation.org>
+Subject: [PATCH 5.15 133/151] net: dsa: lantiq_gswip: move gswip_add_single_port_br() call to port_setup()
+Date: Tue, 30 Sep 2025 16:47:43 +0200
+Message-ID: <20250930143832.897933137@linuxfoundation.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930143827.587035735@linuxfoundation.org>
 References: <20250930143827.587035735@linuxfoundation.org>
@@ -53,82 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 86b9ea6412af41914ef6549f85a849c3b987f4f3 ]
+[ Upstream commit c0054b25e2f1045f47b4954cf13a539e5e6047df ]
 
-Before commit 74be4babe72f ("net: dsa: do not enable or disable non user
-ports"), gswip_port_enable/disable() were also executed for the cpu port
-in gswip_setup() which disabled the cpu port during initialization.
+A port added to a "single port bridge" operates as standalone, and this
+is mutually exclusive to being part of a Linux bridge. In fact,
+gswip_port_bridge_join() calls gswip_add_single_port_br() with
+add=false, i.e. removes the port from the "single port bridge" to enable
+autonomous forwarding.
 
-Let's restore this by removing the dsa_is_user_port checks. Also, let's
-clean up the gswip_port_enable() function so that we only have to check
-for the cpu port once. The operation reordering done here is safe.
+The blamed commit seems to have incorrectly thought that ds->ops->port_enable()
+is called one time per port, during the setup phase of the switch.
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Acked-by: Hauke Mehrtens <hauke@hauke-m.de>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20240611135434.3180973-7-ms@dev.tdt.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c0054b25e2f1 ("net: dsa: lantiq_gswip: move gswip_add_single_port_br() call to port_setup()")
+However, it is actually called during the ndo_open() implementation of
+DSA user ports, which is to say that this sequence of events:
+
+1. ip link set swp0 down
+2. ip link add br0 type bridge
+3. ip link set swp0 master br0
+4. ip link set swp0 up
+
+would cause swp0 to join back the "single port bridge" which step 3 had
+just removed it from.
+
+The correct DSA hook for one-time actions per port at switch init time
+is ds->ops->port_setup(). This is what seems to match the coder's
+intention; also see the comment at the beginning of the file:
+
+ * At the initialization the driver allocates one bridge table entry for
+   ~~~~~~~~~~~~~~~~~~~~~
+ * each switch port which is used when the port is used without an
+ * explicit bridge.
+
+Fixes: 8206e0ce96b3 ("net: dsa: lantiq: Add VLAN unaware bridge offloading")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250918072142.894692-2-vladimir.oltean@nxp.com
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lantiq_gswip.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+ drivers/net/dsa/lantiq_gswip.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
-index 2240a3d351225..f1ed7fff23e27 100644
+index f1ed7fff23e27..97d88c25fc992 100644
 --- a/drivers/net/dsa/lantiq_gswip.c
 +++ b/drivers/net/dsa/lantiq_gswip.c
-@@ -661,13 +661,18 @@ static int gswip_port_enable(struct dsa_switch *ds, int port,
- 	struct gswip_priv *priv = ds->priv;
- 	int err;
- 
--	if (!dsa_is_user_port(ds, port))
--		return 0;
--
- 	if (!dsa_is_cpu_port(ds, port)) {
-+		u32 mdio_phy = 0;
-+
- 		err = gswip_add_single_port_br(priv, port, true);
- 		if (err)
- 			return err;
-+
-+		if (phydev)
-+			mdio_phy = phydev->mdio.addr & GSWIP_MDIO_PHY_ADDR_MASK;
-+
-+		gswip_mdio_mask(priv, GSWIP_MDIO_PHY_ADDR_MASK, mdio_phy,
-+				GSWIP_MDIO_PHYp(port));
- 	}
- 
- 	/* RMON Counter Enable for port */
-@@ -680,16 +685,6 @@ static int gswip_port_enable(struct dsa_switch *ds, int port,
- 	gswip_switch_mask(priv, 0, GSWIP_SDMA_PCTRL_EN,
- 			  GSWIP_SDMA_PCTRLp(port));
- 
--	if (!dsa_is_cpu_port(ds, port)) {
--		u32 mdio_phy = 0;
--
--		if (phydev)
--			mdio_phy = phydev->mdio.addr & GSWIP_MDIO_PHY_ADDR_MASK;
--
--		gswip_mdio_mask(priv, GSWIP_MDIO_PHY_ADDR_MASK, mdio_phy,
--				GSWIP_MDIO_PHYp(port));
--	}
--
+@@ -655,18 +655,27 @@ static int gswip_add_single_port_br(struct gswip_priv *priv, int port, bool add)
  	return 0;
  }
  
-@@ -697,9 +692,6 @@ static void gswip_port_disable(struct dsa_switch *ds, int port)
+-static int gswip_port_enable(struct dsa_switch *ds, int port,
+-			     struct phy_device *phydev)
++static int gswip_port_setup(struct dsa_switch *ds, int port)
  {
  	struct gswip_priv *priv = ds->priv;
+ 	int err;
  
--	if (!dsa_is_user_port(ds, port))
--		return;
+ 	if (!dsa_is_cpu_port(ds, port)) {
+-		u32 mdio_phy = 0;
 -
- 	gswip_switch_mask(priv, GSWIP_FDMA_PCTRL_EN, 0,
- 			  GSWIP_FDMA_PCTRLp(port));
- 	gswip_switch_mask(priv, GSWIP_SDMA_PCTRL_EN, 0,
+ 		err = gswip_add_single_port_br(priv, port, true);
+ 		if (err)
+ 			return err;
++	}
++
++	return 0;
++}
++
++static int gswip_port_enable(struct dsa_switch *ds, int port,
++			     struct phy_device *phydev)
++{
++	struct gswip_priv *priv = ds->priv;
++
++	if (!dsa_is_cpu_port(ds, port)) {
++		u32 mdio_phy = 0;
+ 
+ 		if (phydev)
+ 			mdio_phy = phydev->mdio.addr & GSWIP_MDIO_PHY_ADDR_MASK;
+@@ -1794,6 +1803,7 @@ static int gswip_get_sset_count(struct dsa_switch *ds, int port, int sset)
+ static const struct dsa_switch_ops gswip_xrx200_switch_ops = {
+ 	.get_tag_protocol	= gswip_get_tag_protocol,
+ 	.setup			= gswip_setup,
++	.port_setup		= gswip_port_setup,
+ 	.port_enable		= gswip_port_enable,
+ 	.port_disable		= gswip_port_disable,
+ 	.port_bridge_join	= gswip_port_bridge_join,
 -- 
 2.51.0
 
